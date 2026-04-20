@@ -902,7 +902,7 @@ config.libs = [
             Object(NonMatching, "MSL_C/MSL_Common/mem.c", mw_version="GC/1.3", cflags=cflags_msl_gc13_runtime),
             Object(NonMatching, "MSL_C/MSL_Common/mem_funcs.c", cflags=cflags_runtime),
             Object(NonMatching, "MSL_C/MSL_Common/misc_io.c", cflags=cflags_runtime),
-            Object(NonMatching, "MSL_C/MSL_Common/printf.c", cflags=cflags_msl_runtime_c),
+            Object(NonMatching, "MSL_C/MSL_Common/printf.c", mw_version="GC/1.3", cflags=cflags_msl_runtime_c),
             Object(NonMatching, "MSL_C/MSL_Common/qsort.c", cflags=cflags_msl_runtime_c),
             Object(NonMatching, "MSL_C/MSL_Common/rand.c", cflags=cflags_runtime),
             Object(NonMatching, "MSL_C/MSL_Common/scanf.c", cflags=cflags_runtime + ["-inline deferred"]),
