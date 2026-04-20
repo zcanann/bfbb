@@ -604,7 +604,7 @@ double __dec2num(const decimal* d)
 		if (d->sig.length == 1)
 			*ll |= 0x8000000000000;
 		else {
-			unsigned char* p    = (unsigned char*)&result + 1;
+			u8* p               = (u8*)&result + 1;
 			int placed_non_zero = 0;
 			int low             = 1;
 			int i;
@@ -613,12 +613,12 @@ double __dec2num(const decimal* d)
 				e = 14;
 
 			for (i = 1; i < e; ++i) {
-				unsigned char c = d->sig.text[i];
+				u8 c = d->sig.text[i];
 
-				if (isdigit(c)) {
+				if (_isdigit(c)) {
 					c -= '0';
 				} else {
-					c = (unsigned char)(tolower(c) - 'a' + 10);
+					c = (u8)(_tolower(c) - 'a' + 10);
 				}
 
 				if (c != 0) {
@@ -628,7 +628,7 @@ double __dec2num(const decimal* d)
 				if (low) {
 					*p++ |= c;
 				} else {
-					*p = (unsigned char)(c << 4);
+					*p = (u8)(c << 4);
 				}
 
 				low = !low;
@@ -745,8 +745,8 @@ double __dec2num(const decimal* d)
 				}
 			} else {
 				decimal feedback2, difflow, diffhigh;
-				double next_guess       = first_guess;
-				unsigned long long* ull = (unsigned long long*)&next_guess;
+				double next_guess = first_guess;
+				u64* ull          = (u64*)&next_guess;
 				--*ull;
 
 				__num2dec_internal(&feedback2, next_guess);
@@ -762,7 +762,7 @@ double __dec2num(const decimal* d)
 				__minus_dec(&diffhigh, &feedback1, &dec);
 
 				if (__equals_dec(&difflow, &diffhigh)) {
-					if (*(unsigned long long*)&first_guess & 1) {
+					if (*(u64*)&first_guess & 1) {
 						first_guess = next_guess;
 					}
 				} else if (__less_dec(&difflow, &diffhigh)) {

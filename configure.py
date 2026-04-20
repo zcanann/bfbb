@@ -887,7 +887,7 @@ config.libs = [
             Object(NonMatching, "MSL_C/PPC_EABI/abort_exit.c", cflags=cflags_runtime),
             Object(NonMatching, "MSL_C/MSL_Common/alloc.c", cflags=cflags_msl_runtime_c),
             Object(NonMatching, "MSL_C/MSL_Common/ansi_files.c", mw_version="GC/1.3", cflags=cflags_msl_gc13_runtime),
-            Object(NonMatching, "MSL_C/MSL_Common_Embedded/ansi_fp.c"),
+            Object(NonMatching, "MSL_C/MSL_Common_Embedded/ansi_fp.c", cflags=cflags_msl_runtime_c),
             Object(NonMatching, "MSL_C/MSL_Common/arith.c", cflags=cflags_runtime),
             Object(NonMatching, "MSL_C/MSL_Common/bsearch.c"),
             Object(NonMatching, "MSL_C/MSL_Common/buffer_io.c", cflags=cflags_runtime),
