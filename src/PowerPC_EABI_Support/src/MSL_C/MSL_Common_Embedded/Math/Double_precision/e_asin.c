@@ -82,7 +82,7 @@ static inline double local_sqrt(double x)
         return NAN;
     }
 
-    return HUGE_VAL;
+    return *(float*)__float_huge;
 }
 
 #ifdef __STDC__
