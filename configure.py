@@ -259,6 +259,17 @@ cflags_msl_gc13_runtime = [
     "-lang=c",
 ]
 
+cflags_msl_runtime_c = [
+    *cflags_base,
+    "-use_lmw_stmw on",
+    "-str reuse,pool,readonly",
+    "-common off",
+    "-inline deferred,auto",
+    "-fp_contract off",
+    "-char signed",
+    "-lang=c",
+]
+
 cflags_msl_runtime_cpp = [
     *cflags_runtime,
     "-lang=c++",
@@ -874,7 +885,7 @@ config.libs = [
         ["-str pool", "-opt level=0, peephole, schedule, nospace", "-inline off", "-sym on"],
         [
             Object(NonMatching, "MSL_C/PPC_EABI/abort_exit.c"),
-            Object(NonMatching, "MSL_C/MSL_Common/alloc.c"),
+            Object(NonMatching, "MSL_C/MSL_Common/alloc.c", cflags=cflags_msl_runtime_c),
             Object(NonMatching, "MSL_C/MSL_Common/ansi_files.c", mw_version="GC/1.3", cflags=cflags_msl_gc13_runtime),
             Object(NonMatching, "MSL_C/MSL_Common_Embedded/ansi_fp.c"),
             Object(NonMatching, "MSL_C/MSL_Common/arith.c", cflags=cflags_runtime),
@@ -884,20 +895,20 @@ config.libs = [
             Object(NonMatching, "MSL_C/MSL_Common/ctype.c", cflags=cflags_runtime),
             Object(NonMatching, "MSL_C/MSL_Common/direct_io.c", cflags=cflags_runtime),
             Object(Matching, "MSL_C/MSL_Common/errno.c"),
-            Object(NonMatching, "MSL_C/MSL_Common/file_io.c", cflags=cflags_runtime + ["-D_MSL_WIDE_CHAR"]),
+            Object(NonMatching, "MSL_C/MSL_Common/file_io.c", cflags=cflags_msl_runtime_c + ["-D_MSL_WIDE_CHAR"]),
             Object(NonMatching, "MSL_C/MSL_Common/FILE_POS.C", cflags=cflags_msl_runtime_cpp),
             Object(Matching, "MSL_C/MSL_Common/locale.c"),
             Object(NonMatching, "MSL_C/MSL_Common/mbstring.c", mw_version="GC/1.3", cflags=cflags_msl_gc13_runtime),
             Object(NonMatching, "MSL_C/MSL_Common/mem.c", mw_version="GC/1.3", cflags=cflags_msl_gc13_runtime),
             Object(NonMatching, "MSL_C/MSL_Common/mem_funcs.c", cflags=cflags_runtime),
             Object(NonMatching, "MSL_C/MSL_Common/misc_io.c", cflags=cflags_runtime),
-            Object(NonMatching, "MSL_C/MSL_Common/printf.c"),
-            Object(NonMatching, "MSL_C/MSL_Common/qsort.c"),
+            Object(NonMatching, "MSL_C/MSL_Common/printf.c", cflags=cflags_msl_runtime_c),
+            Object(NonMatching, "MSL_C/MSL_Common/qsort.c", cflags=cflags_msl_runtime_c),
             Object(NonMatching, "MSL_C/MSL_Common/rand.c", cflags=cflags_runtime),
             Object(NonMatching, "MSL_C/MSL_Common/scanf.c", cflags=cflags_runtime + ["-inline deferred"]),
             Object(NonMatching, "MSL_C/MSL_Common/signal.c", cflags=cflags_msl_gc13_runtime),
             Object(NonMatching, "MSL_C/MSL_Common/string.c", cflags=cflags_runtime),
-            Object(NonMatching, "MSL_C/MSL_Common/strtold.c"),
+            Object(NonMatching, "MSL_C/MSL_Common/strtold.c", cflags=cflags_msl_runtime_c),
             Object(NonMatching, "MSL_C/MSL_Common/strtoul.c", cflags=cflags_runtime),
             Object(Matching, "MSL_C/MSL_Common/float.c"),
             Object(NonMatching, "MSL_C/MSL_Common/char_io.c", cflags=cflags_runtime),
