@@ -1174,9 +1174,25 @@ static void* __StringWrite(void* pCtrl, const char* pBuffer, size_t char_num)
 	return (void*)1;
 }
 
-void printf(const char* format, ...)
+int printf(const char* format, ...)
 {
-	// UNUSED FUNCTION
+	int ret;
+
+	if (fwide(stdout, -1) >= 0) {
+		return -1;
+	}
+
+	__begin_critical_region(stdin_access);
+
+	{
+		va_list args;
+		va_start(args, format);
+		ret = __pformatter(&__FileWrite, (void*)stdout, format, args);
+		va_end(args);
+	}
+
+	__end_critical_region(stdin_access);
+	return ret;
 }
 
 int fprintf(FILE* file, const char* format, ...)
