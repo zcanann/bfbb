@@ -514,7 +514,7 @@ done:
 
 void __num2dec_internal(decimal* d, f64 x)
 {
-	s8 sign = (s8)(SIGNBIT(x) != 0);
+	signed char sign = (signed char)(signbit(x) != 0);
 
 	if (x == 0) {
 		d->sign        = sign;
@@ -528,7 +528,7 @@ void __num2dec_internal(decimal* d, f64 x)
 		d->sign        = sign;
 		d->exp         = 0;
 		d->sig.length  = 1;
-		d->sig.text[0] = fpclassify(x) == 1 ? 'N' : 'I';
+		d->sig.text[0] = isnan(x) ? 'N' : 'I';
 		return;
 	}
 
@@ -538,14 +538,14 @@ void __num2dec_internal(decimal* d, f64 x)
 
 	{
 		int exp;
-		f64 frac             = frexp(x, &exp);
-		s32 num_bits_extract = DBL_MANT_DIG - __count_trailing_zero(frac);
-		f64 integer;
+		double frac = frexp(x, &exp);
+		long num_bits_extract = DBL_MANT_DIG - __count_trailing_zero(frac);
+		double integer;
 		decimal int_d, pow2_d;
 
 		__two_exp(&pow2_d, exp - num_bits_extract);
 		frac = modf(ldexp(frac, num_bits_extract), &integer);
-		__ull2dec(&int_d, (u64)integer);
+		__ull2dec(&int_d, (unsigned long long)integer);
 		__timesdec(d, &int_d, &pow2_d);
 		d->sign = sign;
 	}
