@@ -1,5 +1,6 @@
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/alloc.h"
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/critical_regions.h"
+#include <string.h>
 
 typedef struct Block
 {
@@ -98,6 +99,7 @@ static int initialized = 0;
 
 static SubBlock* SubBlock_merge_prev(SubBlock*, SubBlock**);
 static void SubBlock_merge_next(SubBlock*, SubBlock**);
+void Block_link(Block*, SubBlock*);
 
 static const unsigned long fix_pool_sizes[] = { 4, 12, 20, 36, 52, 68 };
 
@@ -134,14 +136,207 @@ static const unsigned long fix_pool_sizes[] = { 4, 12, 20, 36, 52, 68 };
     (_sb = (SubBlock*)((char*)(ths) + 16)),                                                        \
         SubBlock_is_free(_sb) && SubBlock_size(_sb) == Block_size((ths)) - 24
 
-void Block_construct(void)
+#define FORCE_DONT_INLINE                                                                          \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0;                                                                                      \
+    (void*)0
+
+void Block_construct(Block* ths, unsigned long size)
 {
-    // UNUSED FUNCTION
+    SubBlock* sb = (SubBlock*)((char*)ths + sizeof(Block));
+
+    ths->size = size | 3;
+    *(unsigned long*)((char*)ths + size - 8) = ths->size;
+    sb->block = (Block*)((unsigned long)ths | 1);
+    sb->size = size - 24;
+    *(unsigned long*)((char*)sb + (size - 24) - sizeof(unsigned long)) = size - 24;
+    ths->max_size = size - 24;
+    Block_start(ths) = 0;
+
+    Block_link(ths, sb);
 }
 
-void Block_subBlock(void)
+SubBlock* Block_subBlock(Block* ths, unsigned long size)
 {
-    // UNUSED FUNCTION
+    SubBlock* sb;
+    SubBlock* start;
+    unsigned long sb_size;
+    unsigned long max_size;
+
+    start = Block_start(ths);
+
+    if (start == 0)
+    {
+        ths->max_size = 0;
+        return 0;
+    }
+
+    sb = start;
+    sb_size = SubBlock_size(start);
+    max_size = sb_size;
+
+    while (sb_size < size)
+    {
+        start = start->next;
+        sb_size = SubBlock_size(start);
+        if (max_size < sb_size)
+            max_size = sb_size;
+        if (start == sb)
+        {
+            ths->max_size = max_size;
+            return 0;
+        }
+    }
+
+    if (sb_size - size >= 0x50)
+    {
+        SubBlock* new_sb;
+        unsigned long old_tag;
+        unsigned long old_size;
+        unsigned long block_val;
+        unsigned long block_or_1;
+        int was_free;
+        int was_alloc;
+        unsigned long new_size;
+
+        old_tag = start->size;
+        new_sb = (SubBlock*)((char*)start + size);
+        block_val = (unsigned long)(start->block) & ~1;
+        block_or_1 = block_val | 1;
+
+        was_free = !(old_tag & 2);
+        was_alloc = !was_free;
+
+        start->block = (Block*)block_or_1;
+        start->size = size;
+
+        if (old_tag & 4)
+            start->size |= 4;
+
+        old_size = old_tag & ~7;
+
+        if (was_alloc)
+        {
+            start->size |= 2;
+            new_sb->size |= 4;
+        }
+        else
+        {
+            *(unsigned long*)((char*)new_sb - 4) = size;
+        }
+
+        new_sb->block = (Block*)block_or_1;
+        new_size = old_size - size;
+        new_sb->size = new_size;
+
+        if (was_alloc)
+            new_sb->size |= 4;
+
+        if (was_alloc)
+        {
+            new_sb->size |= 2;
+            *(unsigned long*)((char*)new_sb + new_size) |= 4;
+        }
+        else
+        {
+            *(unsigned long*)((char*)new_sb + new_size - 4) = new_size;
+        }
+
+        if (was_free)
+        {
+            new_sb->next = start->next;
+            new_sb->next->prev = new_sb;
+            new_sb->prev = start;
+            start->next = new_sb;
+        }
+    }
+
+    {
+        unsigned long tag;
+        unsigned long tag_size;
+
+        Block_start(ths) = start->next;
+
+        tag = start->size;
+        start->size = tag | 2;
+        tag_size = tag & ~7;
+        *(unsigned long*)((char*)start + tag_size) |= 4;
+
+        if (Block_start(ths) == start)
+        {
+            Block_start(ths) = start->next;
+        }
+        if (Block_start(ths) == start)
+        {
+            Block_start(ths) = 0;
+            ths->max_size = 0;
+        }
+        else
+        {
+            start->next->prev = start->prev;
+            start->prev->next = start->next;
+        }
+    }
+
+    return start;
 }
 
 void Block_link(Block* ths, SubBlock* sb)
@@ -289,19 +484,133 @@ static Block* __unlink(__mem_pool_obj* pool_obj, Block* bp)
     return result;
 }
 
-void link_new_block(void)
+Block* link_new_block(__mem_pool_obj* pool_obj, unsigned long size)
 {
-    // UNUSED FUNCTION
+    Block* block;
+
+    size = (size + 0x1f) & ~7;
+    if (size < 0x10000)
+    {
+        size = 0x10000;
+    }
+
+    block = (Block*)__sys_alloc(size);
+    if (block == 0)
+    {
+        return 0;
+    }
+
+    Block_construct(block, size);
+
+    if (pool_obj->start_ != 0)
+    {
+        block->prev = pool_obj->start_->prev;
+        block->prev->next = block;
+        block->next = pool_obj->start_;
+        pool_obj->start_->prev = block;
+        pool_obj->start_ = block;
+    }
+    else
+    {
+        pool_obj->start_ = block;
+        block->prev = block;
+        block->next = block;
+    }
+
+    return block;
 }
 
-void allocate_from_var_pools(void)
+void* allocate_from_var_pools(__mem_pool_obj* pool_obj, unsigned long size)
 {
-    // UNUSED FUNCTION
+    Block* bp;
+    SubBlock* sb;
+
+    size = (size + 0xf) & ~7;
+    if (size < 0x50)
+    {
+        size = 0x50;
+    }
+
+    bp = pool_obj->start_ != 0 ? pool_obj->start_ : link_new_block(pool_obj, size);
+
+    if (bp == 0)
+    {
+        return 0;
+    }
+
+    do
+    {
+        if (size <= bp->max_size)
+        {
+            sb = Block_subBlock(bp, size);
+            if (sb != 0)
+            {
+                pool_obj->start_ = bp;
+                goto done;
+            }
+        }
+
+        bp = bp->next;
+    } while (bp != pool_obj->start_);
+
+    bp = link_new_block(pool_obj, size);
+    if (bp == 0)
+    {
+        return 0;
+    }
+
+    sb = Block_subBlock(bp, size);
+done:
+    return (char*)sb + 8;
 }
 
-void soft_allocate_from_var_pools(void)
+void* soft_allocate_from_var_pools(Block** start_ptr, unsigned long size, unsigned long* max_free_size)
 {
-    // UNUSED FUNCTION
+    Block* bp;
+    SubBlock* sb;
+
+    size = (size + 0xf) & ~7;
+    if (size < 0x50)
+    {
+        size = 0x50;
+    }
+
+    *max_free_size = 0;
+    bp = *start_ptr;
+
+    if (bp == 0)
+    {
+        return 0;
+    }
+
+    do
+    {
+        if (size <= bp->max_size)
+        {
+            sb = Block_subBlock(bp, size);
+            if (sb != 0)
+            {
+                *start_ptr = bp;
+                goto found;
+            }
+        }
+
+        if (bp->max_size > 8)
+        {
+            unsigned long free_size = bp->max_size - 8;
+            if (*max_free_size < free_size)
+            {
+                *max_free_size = free_size;
+            }
+        }
+
+        bp = bp->next;
+    } while (bp != *start_ptr);
+
+    return 0;
+
+found:
+    return (char*)sb + 8;
 }
 
 static void deallocate_from_var_pools(__mem_pool_obj* pool_obj, void* ptr)
@@ -342,9 +651,12 @@ static __mem_pool* get_malloc_pool(void)
     return &protopool;
 }
 
-void allocate_from_fixed_pools(void)
+void* allocate_from_fixed_pools(__mem_pool_obj* pool_obj, unsigned long size)
 {
-    // UNUSED FUNCTION
+    (void)pool_obj;
+    (void)size;
+    FORCE_DONT_INLINE;
+    return 0;
 }
 
 void deallocate_from_fixed_pools(__mem_pool_obj* pool_obj, void* ptr, unsigned long size)
@@ -429,9 +741,24 @@ void __msize(void)
     // UNUSED FUNCTION
 }
 
-void __pool_alloc(void)
+void* __pool_alloc(__mem_pool* pool, unsigned long size)
 {
-    // UNUSED FUNCTION
+    if (size == 0)
+    {
+        return 0;
+    }
+
+    if (size > (unsigned long)-0x31)
+    {
+        return 0;
+    }
+
+    if (size <= 68)
+    {
+        return allocate_from_fixed_pools((__mem_pool_obj*)pool, size);
+    }
+
+    return allocate_from_var_pools((__mem_pool_obj*)pool, size);
 }
 
 void __pool_free(__mem_pool* pool, void* ptr)
@@ -459,7 +786,7 @@ void __pool_free(__mem_pool* pool, void* ptr)
 
 void __pool_realloc(void)
 {
-    // UNUSED FUNCTION
+    FORCE_DONT_INLINE;
 }
 
 void __pool_alloc_clear(void)
@@ -479,9 +806,11 @@ void free(void* ptr)
     __end_critical_region(malloc_pool_access);
 }
 
-void realloc(void)
+void* realloc(void* ptr, size_t size)
 {
-    // UNUSED FUNCTION
+    (void)ptr;
+    (void)size;
+    return 0;
 }
 
 void calloc(void)
