@@ -102,6 +102,7 @@ static void SubBlock_merge_next(SubBlock*, SubBlock**);
 static void SubBlock_construct(SubBlock*, unsigned long, Block*, int, int);
 static SubBlock* SubBlock_split(SubBlock*, unsigned long);
 static void FixBlock_construct(FixBlock*, FixBlock*, FixBlock*, unsigned long, FixSubBlock*, unsigned long);
+static void Block_unlink(Block*, SubBlock*);
 void Block_link(Block*, SubBlock*);
 
 static const unsigned long fix_pool_sizes[] = { 4, 12, 20, 36, 52, 68 };
@@ -217,6 +218,34 @@ void Block_construct(Block* ths, unsigned long size)
     Block_link(ths, sb);
 }
 
+static void Block_unlink(Block* block, SubBlock* sb)
+{
+    SubBlock** st;
+    unsigned long tag;
+    unsigned long tag_size;
+
+    tag = sb->size;
+    sb->size = tag | 2;
+    tag_size = tag & ~7;
+    *(unsigned long*)((char*)sb + tag_size) |= 4;
+
+    st = &Block_start(block);
+    if (*st == sb)
+    {
+        *st = sb->next;
+    }
+    if (*st == sb)
+    {
+        *st = 0;
+        block->max_size = 0;
+    }
+    else
+    {
+        sb->next->prev = sb->prev;
+        sb->prev->next = sb->next;
+    }
+}
+
 SubBlock* Block_subBlock(Block* ths, unsigned long size)
 {
     SubBlock* sb;
@@ -225,7 +254,6 @@ SubBlock* Block_subBlock(Block* ths, unsigned long size)
     unsigned long max_size;
 
     start = Block_start(ths);
-
     if (start == 0)
     {
         ths->max_size = 0;
@@ -233,16 +261,18 @@ SubBlock* Block_subBlock(Block* ths, unsigned long size)
     }
 
     sb = start;
-    sb_size = SubBlock_size(start);
+    sb_size = SubBlock_size(sb);
     max_size = sb_size;
 
     while (sb_size < size)
     {
-        start = start->next;
-        sb_size = SubBlock_size(start);
+        sb = sb->next;
+        sb_size = SubBlock_size(sb);
         if (max_size < sb_size)
+        {
             max_size = sb_size;
-        if (start == sb)
+        }
+        if (sb == start)
         {
             ths->max_size = max_size;
             return 0;
@@ -251,95 +281,13 @@ SubBlock* Block_subBlock(Block* ths, unsigned long size)
 
     if (sb_size - size >= 0x50)
     {
-        SubBlock* new_sb;
-        unsigned long old_tag;
-        unsigned long old_size;
-        unsigned long block_val;
-        unsigned long block_or_1;
-        int was_free;
-        int was_alloc;
-        unsigned long new_size;
-
-        old_tag = start->size;
-        new_sb = (SubBlock*)((char*)start + size);
-        block_val = (unsigned long)(start->block) & ~1;
-        block_or_1 = block_val | 1;
-
-        was_free = !(old_tag & 2);
-        was_alloc = !was_free;
-
-        start->block = (Block*)block_or_1;
-        start->size = size;
-
-        if (old_tag & 4)
-            start->size |= 4;
-
-        old_size = old_tag & ~7;
-
-        if (was_alloc)
-        {
-            start->size |= 2;
-            new_sb->size |= 4;
-        }
-        else
-        {
-            *(unsigned long*)((char*)new_sb - 4) = size;
-        }
-
-        new_sb->block = (Block*)block_or_1;
-        new_size = old_size - size;
-        new_sb->size = new_size;
-
-        if (was_alloc)
-            new_sb->size |= 4;
-
-        if (was_alloc)
-        {
-            new_sb->size |= 2;
-            *(unsigned long*)((char*)new_sb + new_size) |= 4;
-        }
-        else
-        {
-            *(unsigned long*)((char*)new_sb + new_size - 4) = new_size;
-        }
-
-        if (was_free)
-        {
-            new_sb->next = start->next;
-            new_sb->next->prev = new_sb;
-            new_sb->prev = start;
-            start->next = new_sb;
-        }
+        SubBlock_split(sb, size);
     }
 
-    {
-        unsigned long tag;
-        unsigned long tag_size;
+    Block_start(ths) = sb->next;
+    Block_unlink(ths, sb);
 
-        Block_start(ths) = start->next;
-
-        tag = start->size;
-        start->size = tag | 2;
-        tag_size = tag & ~7;
-        *(unsigned long*)((char*)start + tag_size) |= 4;
-
-        if (Block_start(ths) == start)
-        {
-            Block_start(ths) = start->next;
-        }
-        if (Block_start(ths) == start)
-        {
-            Block_start(ths) = 0;
-            ths->max_size = 0;
-        }
-        else
-        {
-            start->next->prev = start->prev;
-            start->prev->next = start->next;
-        }
-    }
-
-    return start;
+    return sb;
 }
 
 void Block_link(Block* ths, SubBlock* sb)
@@ -366,11 +314,6 @@ void Block_link(Block* ths, SubBlock* sb)
     }
     if (ths->max_size < SubBlock_size(*st))
         ths->max_size = SubBlock_size(*st);
-}
-
-void Block_unlink(void)
-{
-    // UNUSED FUNCTION
 }
 
 void Block_report(void)
@@ -947,6 +890,11 @@ void* __pool_realloc(__mem_pool* pool, void* ptr, unsigned long size)
     {
         if (classify(ptr))
         {
+            if (size > (unsigned long)-0x31)
+            {
+                return 0;
+            }
+
             sz = (size + 0xF) & ~7;
             if (sz < 0x50)
             {
