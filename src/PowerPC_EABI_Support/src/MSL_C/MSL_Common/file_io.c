@@ -97,63 +97,13 @@ inline static FILE* freopen(const char* name, const char* mode, FILE* file)
 int fclose(FILE* file)
 {
 	int flush_result, close_result;
-	u32 pos;
 
 	if (file == NULL)
 		return (-1);
 	if (file->mMode.file_kind == __closed_file)
 		return (0);
 
-	if (file == NULL)
-	{
-		flush_result = __flush_all();
-	}
-	else if (file->mState.error != 0 || file->mMode.file_kind == __closed_file)
-	{
-		flush_result = -1;
-	}
-	else if (file->mMode.io_mode == 1)
-	{
-		flush_result = 0;
-	}
-	else
-	{
-		if (file->mState.io_state >= 3)
-		{
-			file->mState.io_state = 2;
-		}
-
-		if (file->mState.io_state == 2)
-		{
-			file->mBufferLength = 0;
-		}
-
-		if (file->mState.io_state != 1)
-		{
-			flush_result = 0;
-			file->mState.io_state = flush_result;
-		}
-		else
-		{
-			if (file->mMode.file_kind != __disk_file || (pos = ftell(file)) < 0)
-				pos = 0;
-
-			if (__flush_buffer(file, 0) != 0)
-			{
-				file->mState.error = 1;
-				file->mBufferLength = 0;
-				flush_result = -1;
-			}
-			else
-			{
-				flush_result = 0;
-				file->mState.io_state = flush_result;
-				file->mPosition = pos;
-				file->mBufferLength = flush_result;
-			}
-		}
-	}
-
+	flush_result = fflush(file);
 	close_result = (*file->closeFunc)(file->mHandle);
 
 	file->mMode.file_kind = __closed_file;
