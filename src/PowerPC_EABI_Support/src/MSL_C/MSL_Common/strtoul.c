@@ -20,141 +20,38 @@ enum scan_states {
 #define unfetch(c)              (*ReadProc)(ReadProcArg, c, __UngetAChar)
 
 unsigned long __strtoul(int base, int max_width, int (*ReadProc)(void*, int, int), void* ReadProcArg, int* chars_scanned, int* negative,
-                        int* overflow)
+                        int* overflow);
+unsigned long long __strtoull(int base, int max_width, int (*ReadProc)(void*, int, int), void* ReadProcArg, int* chars_scanned,
+                              int* negative, int* overflow);
+
+int atoi(const char* str)
 {
-	int scan_state          = start;
-	int count               = 0;
-	int spaces              = 0;
-	unsigned long value     = 0;
-	unsigned long value_max = 0;
-	int c;
+	unsigned long uvalue;
+	int svalue;
+	int overflow, negative, count;
 
-	*negative = *overflow = 0;
+	__InStrCtrl isc;
+	isc.NextChar         = (char*)str;
+	isc.NullCharDetected = 0;
 
-	if (base < 0 || base == 1 || base > 36 || max_width < 1) {
-		scan_state = failure;
+	uvalue = __strtoul(10, 0x7FFFFFFF, &__StringRead, (void*)&isc, &count, &negative, &overflow);
+
+	if (overflow || (!negative && uvalue > INT_MAX) || (negative && uvalue > -INT_MIN)) {
+		svalue = (negative ? -INT_MIN : INT_MAX);
+		errno  = ERANGE;
 	} else {
-		c = fetch();
+		svalue = (negative ? (int)-uvalue : (int)uvalue);
 	}
 
-	if (base != 0) {
-		value_max = ULONG_MAX / base;
-	}
-
-	while (count <= max_width && c != -1 && !final_state(scan_state)) {
-		switch (scan_state) {
-		case start:
-			if (_isspace(c)) {
-				c = fetch();
-				count--;
-				spaces++;
-				break;
-			}
-
-			if (c == '+') {
-				c = fetch();
-			} else if (c == '-') {
-				c         = fetch();
-				*negative = 1;
-			}
-
-			scan_state = check_for_zero;
-			break;
-
-		case check_for_zero:
-			if (base == 0 || base == 16) {
-				if (c == '0') {
-					scan_state = leading_zero;
-					c          = fetch();
-					break;
-				}
-			}
-
-			scan_state = need_digit;
-			break;
-
-		case 4:
-			if (c == 'X' || c == 'x') {
-				base       = 16;
-				scan_state = need_digit;
-				c          = fetch();
-				break;
-			}
-
-			if (base == 0) {
-				base = 8;
-			}
-
-			scan_state = digit_loop;
-			break;
-
-		case need_digit:
-		case digit_loop:
-			if (base == 0) {
-				base = 10;
-			}
-
-			if (!value_max) {
-				value_max = ULONG_MAX / base;
-			}
-
-			if (_isdigit(c)) {
-				if ((c -= '0') >= base) {
-					if (scan_state == digit_loop) {
-						scan_state = finished;
-					} else {
-						scan_state = failure;
-					}
-
-					c += '0';
-					break;
-				}
-			} else if (!_isalpha(c) || (_toupper(c) - 'A' + 10) >= base) {
-				if (scan_state == digit_loop) {
-					scan_state = finished;
-				} else {
-					scan_state = failure;
-				}
-
-				break;
-			} else {
-				c = _toupper(c) - 'A' + 10;
-			}
-
-			if (value > value_max) {
-				*overflow = 1;
-			}
-
-			value *= base;
-
-			if (c > (ULONG_MAX - value)) {
-				*overflow = 1;
-			}
-
-			value += c;
-			scan_state = digit_loop;
-			c          = fetch();
-			break;
-		}
-	}
-
-	if (!success(scan_state)) {
-		count = value = *chars_scanned = 0;
-	} else {
-		count--;
-		*chars_scanned = count + spaces;
-	}
-
-	unfetch(c);
-	return value;
+	return svalue;
 }
 
 unsigned long long __strtoull(int base, int max_width, int (*ReadProc)(void*, int, int), void* ReadProcArg, int* chars_scanned,
                               int* negative, int* overflow)
 {
-	int scan_state               = start;
-	int count                    = 0;
-	int spaces                   = 0;
+	int scan_state          = start;
+	int count               = 0;
+	int spaces              = 0;
 	unsigned long long value     = 0;
 	unsigned long long value_max = 0;
 	unsigned long long ullmax    = ULLONG_MAX;
@@ -204,7 +101,7 @@ unsigned long long __strtoull(int base, int max_width, int (*ReadProc)(void*, in
 			scan_state = need_digit;
 			break;
 
-		case leading_zero:
+		case 4:
 			if (c == 'X' || c == 'x') {
 				base       = 16;
 				scan_state = need_digit;
@@ -271,7 +168,6 @@ unsigned long long __strtoull(int base, int max_width, int (*ReadProc)(void*, in
 
 	if (!success(scan_state)) {
 		count = value = *chars_scanned = 0;
-		
 	} else {
 		count--;
 		*chars_scanned = count + spaces;
@@ -281,24 +177,133 @@ unsigned long long __strtoull(int base, int max_width, int (*ReadProc)(void*, in
 	return value;
 }
 
-int atoi(const char* str)
+unsigned long __strtoul(int base, int max_width, int (*ReadProc)(void*, int, int), void* ReadProcArg, int* chars_scanned, int* negative,
+                        int* overflow)
 {
-	unsigned long uvalue;
-	int svalue;
-	int overflow, negative, count;
+	int scan_state          = start;
+	int count               = 0;
+	int spaces              = 0;
+	unsigned long value     = 0;
+	unsigned long value_max = 0;
+	int c;
 
-	__InStrCtrl isc;
-	isc.NextChar         = (char*)str;
-	isc.NullCharDetected = 0;
+	*negative = *overflow = 0;
 
-	uvalue = __strtoul(10, 0x7FFFFFFF, &__StringRead, (void*)&isc, &count, &negative, &overflow);
-
-	if (overflow || (!negative && uvalue > INT_MAX) || (negative && uvalue > -INT_MIN)) {
-		svalue = (negative ? -INT_MIN : INT_MAX);
-		errno  = ERANGE;
+	if (base < 0 || base == 1 || base > 36 || max_width < 1) {
+		scan_state = failure;
 	} else {
-		svalue = (negative ? (int)-uvalue : (int)uvalue);
+		c = fetch();
 	}
 
-	return svalue;
+	if (base != 0) {
+		value_max = ULONG_MAX / base;
+	}
+
+	while (count <= max_width && c != -1 && !final_state(scan_state)) {
+		switch (scan_state) {
+		case start:
+			if (_isspace(c)) {
+				c = fetch();
+				count--;
+				spaces++;
+				break;
+			}
+
+			if (c == '+') {
+				c = fetch();
+			} else if (c == '-') {
+				c         = fetch();
+				*negative = 1;
+			}
+
+			scan_state = check_for_zero;
+			break;
+
+		case check_for_zero:
+			if (base == 0 || base == 16) {
+				if (c == '0') {
+					scan_state = leading_zero;
+					c          = fetch();
+					break;
+				}
+			}
+
+			scan_state = need_digit;
+			break;
+
+		case leading_zero:
+			if (c == 'X' || c == 'x') {
+				base       = 16;
+				scan_state = need_digit;
+				c          = fetch();
+				break;
+			}
+
+			if (base == 0) {
+				base = 8;
+			}
+
+			scan_state = digit_loop;
+			break;
+
+		case need_digit:
+		case digit_loop:
+			if (base == 0) {
+				base = 10;
+			}
+
+			if (!value_max) {
+				value_max = ULONG_MAX / base;
+			}
+
+			if (_isdigit(c)) {
+				if ((c -= '0') >= base) {
+					if (scan_state == digit_loop) {
+						scan_state = finished;
+					} else {
+						scan_state = failure;
+					}
+
+					c += '0';
+					break;
+				}
+			} else if (!_isalpha(c) || (_toupper(c) - 'A' + 10) >= base) {
+				if (scan_state == digit_loop) {
+					scan_state = finished;
+				} else {
+					scan_state = failure;
+				}
+
+				break;
+			} else {
+				c = _toupper(c) - 'A' + 10;
+			}
+
+			if (value > value_max) {
+				*overflow = 1;
+			}
+
+			value *= base;
+
+			if (c > (ULONG_MAX - value)) {
+				*overflow = 1;
+			}
+
+			value += c;
+			scan_state = digit_loop;
+			c          = fetch();
+			break;
+		}
+	}
+
+	if (!success(scan_state)) {
+		count = value = *chars_scanned = 0;
+		
+	} else {
+		count--;
+		*chars_scanned = count + spaces;
+	}
+
+	unfetch(c);
+	return value;
 }
