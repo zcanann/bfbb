@@ -99,6 +99,9 @@ static int initialized = 0;
 
 static SubBlock* SubBlock_merge_prev(SubBlock*, SubBlock**);
 static void SubBlock_merge_next(SubBlock*, SubBlock**);
+static void SubBlock_construct(SubBlock*, unsigned long, Block*, int, int);
+static SubBlock* SubBlock_split(SubBlock*, unsigned long);
+static void FixBlock_construct(FixBlock*, FixBlock*, FixBlock*, unsigned long, FixSubBlock*, unsigned long);
 void Block_link(Block*, SubBlock*);
 
 static const unsigned long fix_pool_sizes[] = { 4, 12, 20, 36, 52, 68 };
@@ -375,14 +378,49 @@ void Block_report(void)
     // UNUSED FUNCTION
 }
 
-void SubBlock_construct(void)
+static void SubBlock_construct(SubBlock* ths, unsigned long size, Block* bp, int prev_alloc, int this_alloc)
 {
-    // UNUSED FUNCTION
+    ths->block = (Block*)((unsigned long)bp | 0x1);
+    ths->size = size;
+    if (prev_alloc)
+    {
+        ths->size |= 0x4;
+    }
+    if (this_alloc)
+    {
+        ths->size |= 0x2;
+        *(unsigned long*)((char*)ths + size) |= 0x4;
+    }
+    else
+    {
+        *(unsigned long*)((char*)ths + size - sizeof(unsigned long)) = size;
+    }
 }
 
-void SubBlock_split(void)
+static SubBlock* SubBlock_split(SubBlock* ths, unsigned long sz)
 {
-    // UNUSED FUNCTION
+    unsigned long origsize;
+    int isfree;
+    int isprevalloc;
+    SubBlock* np;
+    Block* bp;
+
+    origsize = SubBlock_size(ths);
+    isfree = SubBlock_is_free(ths);
+    isprevalloc = ths->size & 0x04;
+    np = (SubBlock*)((char*)ths + sz);
+    bp = SubBlock_block(ths);
+
+    SubBlock_construct(ths, sz, bp, isprevalloc, !isfree);
+    SubBlock_construct(np, origsize - sz, bp, !isfree, !isfree);
+    if (isfree)
+    {
+        np->next = ths->next;
+        np->next->prev = np;
+        np->prev = ths;
+        ths->next = np;
+    }
+    return np;
 }
 
 static SubBlock* SubBlock_merge_prev(SubBlock* ths, SubBlock** start)
@@ -628,9 +666,37 @@ static void deallocate_from_var_pools(__mem_pool_obj* pool_obj, void* ptr)
     }
 }
 
-void FixBlock_construct(void)
+static void FixBlock_construct(
+    FixBlock* ths, FixBlock* prev, FixBlock* next, unsigned long index, FixSubBlock* chunk, unsigned long chunk_size
+)
 {
-    // UNUSED FUNCTION
+    unsigned long fixSubBlock_size;
+    unsigned long n;
+    unsigned long k;
+
+    ths->prev_ = prev;
+    ths->next_ = next;
+    prev->next_ = ths;
+    next->prev_ = ths;
+    ths->client_size_ = fix_pool_sizes[index];
+    fixSubBlock_size = fix_pool_sizes[index] + 4;
+    n = chunk_size / fixSubBlock_size;
+    {
+        char* p = (char*)chunk;
+        char* np;
+
+        for (k = 0; k < n - 1; k++)
+        {
+            np = p + fixSubBlock_size;
+            ((FixSubBlock*)p)->block_ = ths;
+            ((FixSubBlock*)p)->next_ = (FixSubBlock*)np;
+            p = np;
+        }
+        ((FixSubBlock*)p)->block_ = ths;
+        ((FixSubBlock*)p)->next_ = 0;
+    }
+    ths->start_ = (FixSubBlock*)((char*)ths + 0x14);
+    ths->n_allocated_ = 0;
 }
 
 void __init_pool_obj(__mem_pool* pool_obj)
@@ -653,10 +719,85 @@ static __mem_pool* get_malloc_pool(void)
 
 void* allocate_from_fixed_pools(__mem_pool_obj* pool_obj, unsigned long size)
 {
-    (void)pool_obj;
-    (void)size;
-    FORCE_DONT_INLINE;
-    return 0;
+    unsigned long i = 0;
+    FixStart* fs;
+
+    while (size > fix_pool_sizes[i])
+    {
+        ++i;
+    }
+
+    fs = &pool_obj->fix_start[i];
+
+    if ((fs->head_ == 0) || (fs->head_->start_ == 0))
+    {
+        const unsigned long* pool_sizes = fix_pool_sizes;
+        unsigned long n = 0xFEC / (pool_sizes[i] + 4);
+        unsigned long max_n;
+        void* block;
+        unsigned long max_free_size;
+        unsigned long msize;
+
+        if (n > 0x100)
+        {
+            n = 0x100;
+        }
+
+        max_n = n;
+
+        while (n >= 10)
+        {
+            block = soft_allocate_from_var_pools(&pool_obj->start_, n * (pool_sizes[i] + 4) + 0x14, &max_free_size);
+            if (block != 0)
+            {
+                break;
+            }
+
+            if (max_free_size > 0x14)
+            {
+                n = (max_free_size - 0x14) / (pool_sizes[i] + 4);
+            }
+            else
+            {
+                n = 0;
+            }
+        }
+
+        if ((block == 0) && (n < max_n))
+        {
+            block = allocate_from_var_pools(pool_obj, max_n * (pool_sizes[i] + 4) + 0x14);
+            if (block == 0)
+            {
+                return 0;
+            }
+        }
+
+        msize = __msize_inline(block);
+
+        if (fs->head_ == 0)
+        {
+            fs->head_ = (FixBlock*)block;
+            fs->tail_ = (FixBlock*)block;
+        }
+
+        FixBlock_construct((FixBlock*)block, fs->tail_, fs->head_, i, (FixSubBlock*)((char*)block + 0x14), msize - 0x14);
+        fs->head_ = (FixBlock*)block;
+    }
+
+    {
+        FixSubBlock* p = fs->head_->start_;
+
+        fs->head_->start_ = p->next_;
+        ++fs->head_->n_allocated_;
+
+        if (fs->head_->start_ == 0)
+        {
+            fs->head_ = fs->head_->next_;
+            fs->tail_ = fs->tail_->next_;
+        }
+
+        return (char*)p + 4;
+    }
 }
 
 void deallocate_from_fixed_pools(__mem_pool_obj* pool_obj, void* ptr, unsigned long size)
@@ -784,9 +925,72 @@ void __pool_free(__mem_pool* pool, void* ptr)
     }
 }
 
-void __pool_realloc(void)
+void* __pool_realloc(__mem_pool* pool, void* ptr, unsigned long size)
 {
-    FORCE_DONT_INLINE;
+    unsigned long current_size;
+    unsigned long sz;
+    SubBlock* sb;
+    void* newptr;
+
+    if (ptr == 0)
+    {
+        return __pool_alloc(pool, size);
+    }
+    if (size == 0)
+    {
+        __pool_free(pool, ptr);
+        return 0;
+    }
+
+    current_size = __msize_inline(ptr);
+    if (size > current_size)
+    {
+        if (classify(ptr))
+        {
+            sz = (size + 0xF) & ~7;
+            if (sz < 0x50)
+            {
+                sz = 0x50;
+            }
+
+            sb = SubBlock_from_pointer(ptr);
+            SubBlock_merge_next(sb, &Block_start(SubBlock_block(sb)));
+            if (SubBlock_size(sb) >= sz)
+            {
+                if (SubBlock_size(sb) - sz >= 0x50)
+                {
+                    Block_link(SubBlock_block(sb), SubBlock_split(sb, sz));
+                }
+                return ptr;
+            }
+        }
+
+        newptr = __pool_alloc(pool, size);
+        if (newptr == 0)
+        {
+            return 0;
+        }
+        memcpy(newptr, ptr, current_size);
+        __pool_free(pool, ptr);
+        return newptr;
+    }
+
+    if (classify(ptr))
+    {
+        sz = (size + 0xF) & ~7;
+        if (sz < 0x50)
+        {
+            sz = 0x50;
+        }
+
+        sb = SubBlock_from_pointer(ptr);
+        if (SubBlock_size(sb) - sz >= 0x50)
+        {
+            Block_link(SubBlock_block(sb), SubBlock_split(sb, sz));
+        }
+    }
+
+    return ptr;
 }
 
 void __pool_alloc_clear(void)
@@ -808,9 +1012,13 @@ void free(void* ptr)
 
 void* realloc(void* ptr, size_t size)
 {
-    (void)ptr;
-    (void)size;
-    return 0;
+    void* block;
+
+    __begin_critical_region(malloc_pool_access);
+    block = __pool_realloc(get_malloc_pool(), ptr, size);
+    __end_critical_region(malloc_pool_access);
+
+    return block;
 }
 
 void calloc(void)
