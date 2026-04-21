@@ -1,42 +1,6 @@
 #include "types.h"
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/mem_funcs.h"
 
-int memcmp(const void* lhs, const void* rhs, size_t count)
-{
-    const unsigned char* p1;
-    const unsigned char* p2;
-
-    for (p1 = (const unsigned char*)lhs - 1, p2 = (const unsigned char*)rhs - 1, count++; --count;)
-        if (*++p1 != *++p2)
-            return ((*p1 < *p2) ? -1 : +1);
-
-    return 0;
-}
-
-void* __memrchr(const void* ptr, int ch, size_t count)
-{
-    const unsigned char* p;
-    unsigned long v = (ch & 0xFF);
-
-    for (p = (unsigned char*)ptr + count, count++; --count;)
-        if (*--p == v)
-            return (void*)p;
-
-    return NULL;
-}
-
-void* memchr(const void* ptr, int ch, size_t count)
-{
-    const unsigned char* p;
-    unsigned long v = (ch & 0xFF);
-
-    for (p = (unsigned char*)ptr - 1, count++; --count;)
-        if ((*++p & 0xFF) == v)
-            return (void*)p;
-
-    return NULL;
-}
-
 void* memmove(void* dst, const void* src, size_t n)
 {
     const char* csrc;
@@ -72,4 +36,40 @@ void* memmove(void* dst, const void* src, size_t n)
     }
 
     return dst;
+}
+
+void* memchr(const void* ptr, int ch, size_t count)
+{
+    const unsigned char* p;
+    unsigned long v = (ch & 0xFF);
+
+    for (p = (unsigned char*)ptr - 1, count++; --count;)
+        if ((*++p & 0xFF) == v)
+            return (void*)p;
+
+    return NULL;
+}
+
+void* __memrchr(const void* ptr, int ch, size_t count)
+{
+    const unsigned char* p;
+    unsigned long v = (ch & 0xFF);
+
+    for (p = (unsigned char*)ptr + count, count++; --count;)
+        if (*--p == v)
+            return (void*)p;
+
+    return NULL;
+}
+
+int memcmp(const void* lhs, const void* rhs, size_t count)
+{
+    const unsigned char* p1;
+    const unsigned char* p2;
+
+    for (p1 = (const unsigned char*)lhs - 1, p2 = (const unsigned char*)rhs - 1, count++; --count;)
+        if (*++p1 != *++p2)
+            return ((*p1 < *p2) ? -1 : +1);
+
+    return 0;
 }

@@ -61,11 +61,6 @@ unsigned char __upper_map[256] = {
     0xF0, 0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF8, 0xF9, 0xFA, 0xFB, 0xFC, 0xFD, 0xFE, 0xFF,
 };
 
-__declspec(weak) int isprint(int c)
-{
-    return __ctype_map[c & 0xff] & __printable;
-}
-
 int tolower(int c)
 {
     if (c == -1) {
@@ -73,4 +68,9 @@ int tolower(int c)
     }
 
     return (unsigned int)__lower_map[c & 0xff];
+}
+
+__declspec(weak) int isprint(int c)
+{
+    return __ctype_map[c & 0xff] & __printable;
 }
