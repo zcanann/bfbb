@@ -999,7 +999,7 @@ config.libs = [
         "MSL_C.PPCEABI.bare.H",
         [],
         [
-            Object(NonMatching, "MSL_C/MSL_Common/extras.c")
+            Object(Matching, "MSL_C/MSL_Common/extras.c")
         ]
     ),
     RenderWareLib(
