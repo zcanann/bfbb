@@ -1,6 +1,6 @@
 #include "PowerPC_EABI_Support/MetroTRK/trk.h"
 
-UARTError WriteUART1(u8 arg0);
+UARTError WriteUART1(s8 arg0);
 UARTError WriteUARTFlush(void);
 
 /*
@@ -32,7 +32,7 @@ void TRKMessageGet(void)
  */
 DSError TRKMessageSend(TRKBuffer* msg)
 {
-	u8 checksum;
+	s32 checksum;
 	u8 ch;
 	u8 checksumByte;
 	s32 result;
