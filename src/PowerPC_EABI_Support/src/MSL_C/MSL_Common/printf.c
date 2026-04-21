@@ -62,10 +62,12 @@ static const char* parse_format(const char* format_string, va_list* arg, print_f
 	f.field_width           = 0;
 	f.precision             = 0;
 
-	if ((c = *++s) == '%') {
+	c = *(volatile const unsigned char*)(format_string + 1);
+	++s;
+	if (c == '%') {
 		f.conversion_char = c;
 		*format           = f;
-		return ((const char*)s + 1);
+		return s + 1;
 	}
 
 	for (;;) {
