@@ -199,7 +199,6 @@ DSError TRKSuppAccessFile(u32 file_handle, u8* data, size_t* count,
 	int bufferId;
 	TRKBuffer* buffer;
 	u32 length;
-	const BOOL doRead = read;
 	u32 done;
 	u8 replyIOResult;
 	u16 replyLength;
@@ -224,8 +223,8 @@ DSError TRKSuppAccessFile(u32 file_handle, u8* data, size_t* count,
 		error = TRKGetFreeBuffer(&bufferId, &buffer);
 
 		if (error == DS_NoError)
-			error = TRKAppendBuffer1_ui8(buffer, doRead ? DSMSG_ReadFile
-			                                          : DSMSG_WriteFile);
+			error = TRKAppendBuffer1_ui8(buffer, read ? DSMSG_ReadFile
+			                                        : DSMSG_WriteFile);
 
 		if (error == DS_NoError)
 			error = TRKAppendBuffer1_ui32(buffer, file_handle);
@@ -233,7 +232,7 @@ DSError TRKSuppAccessFile(u32 file_handle, u8* data, size_t* count,
 		if (error == DS_NoError)
 			error = TRKAppendBuffer1_ui16(buffer, length);
 
-		if (!doRead && error == DS_NoError)
+		if (!read && error == DS_NoError)
 			error = TRKAppendBuffer_ui8(buffer, data + done, length);
 
 		if (error == DS_NoError) {
@@ -241,9 +240,9 @@ DSError TRKSuppAccessFile(u32 file_handle, u8* data, size_t* count,
 				replyLength   = 0;
 				replyIOResult = 0;
 
-				error = (0, TRKRequestSend(buffer, &replyBufferId,
-				                           doRead ? 5 : 5, 3,
-				                           !(doRead && file_handle == 0)));
+				error = TRKRequestSend(buffer, &replyBufferId,
+				                       read ? 5 : 5, 3,
+				                       !(read && file_handle == 0));
 				if (error == DS_NoError) {
 					replyBuffer = (TRKBuffer*)TRKGetBuffer(replyBufferId);
 					TRKSetBufferPosition(replyBuffer, 2);
@@ -255,7 +254,7 @@ DSError TRKSuppAccessFile(u32 file_handle, u8* data, size_t* count,
 				if (error == DS_NoError)
 					error = TRKReadBuffer1_ui16(replyBuffer, &replyLength);
 
-				if (doRead && error == DS_NoError) {
+				if (read && error == DS_NoError) {
 					if (replyBuffer->length != replyLength + 5) {
 						replyLength = replyBuffer->length - 5;
 						if (replyIOResult == 0)
@@ -268,7 +267,7 @@ DSError TRKSuppAccessFile(u32 file_handle, u8* data, size_t* count,
 				}
 
 				if (replyLength != length) {
-					if ((!doRead || replyLength >= length)
+					if ((!read || replyLength >= length)
 					    && replyIOResult == 0)
 						replyIOResult = 1;
 					length = replyLength;
