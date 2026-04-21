@@ -922,16 +922,16 @@ void* __pool_realloc(__mem_pool* pool, void* ptr, unsigned long size)
 
     if (classify(ptr))
     {
-        sz = (size + 0xF) & ~7;
-        if (sz < 0x50)
+        size = (size + 0xF) & ~7;
+        if (size < 0x50)
         {
-            sz = 0x50;
+            size = 0x50;
         }
 
         sb = SubBlock_from_pointer(ptr);
-        if (SubBlock_size(sb) - sz >= 0x50)
+        if (SubBlock_size(sb) - size >= 0x50)
         {
-            Block_link(SubBlock_block(sb), SubBlock_split(sb, sz));
+            Block_link(SubBlock_block(sb), SubBlock_split(sb, size));
         }
     }
 
