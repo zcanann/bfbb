@@ -94,9 +94,6 @@ typedef struct mem_pool_obj
 
 } mem_pool_obj;
 
-mem_pool_obj __malloc_pool;
-static int initialized = 0;
-
 static SubBlock* SubBlock_merge_prev(SubBlock*, SubBlock**);
 static void SubBlock_merge_next(SubBlock*, SubBlock**);
 static void SubBlock_construct(SubBlock*, unsigned long, Block*, int, int);
