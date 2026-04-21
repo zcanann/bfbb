@@ -977,7 +977,7 @@ config.libs = [
             Object(Matching, "debugger/embedded/MetroTRK/Processor/ppc/Generic/mpc_7xx_603e.c"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Os/dolphin/dolphin_trk.c", mw_version="GC/1.3", cflags=cflags_trk),
             Object(NonMatching, "debugger/embedded/MetroTRK/Os/dolphin/usr_put.c"),
-            Object(NonMatching, "debugger/embedded/MetroTRK/Os/dolphin/dolphin_trk_glue.c"),
+            Object(NonMatching, "debugger/embedded/MetroTRK/Os/dolphin/dolphin_trk_glue.c", mw_version="GC/1.3", cflags=cflags_trk),
             Object(Matching, "debugger/embedded/MetroTRK/Os/dolphin/targcont.c"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Os/dolphin/target_options.c"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Os/dolphin/UDP_Stubs.c"),
