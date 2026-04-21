@@ -1,5 +1,8 @@
 #include "PowerPC_EABI_Support/MetroTRK/trk.h"
 
+UARTError WriteUART1(u8 arg0);
+UARTError WriteUARTFlush(void);
+
 /*
  * --INFO--
  * Address:	........
@@ -25,9 +28,64 @@ void TRKMessageGet(void)
 /*
  * --INFO--
  * Address:	8021C4A4
- * Size:	000028
+ * Size:	0001DC
  */
-DSError TRKMessageSend(TRKBuffer* param_1)
+DSError TRKMessageSend(TRKBuffer* msg)
 {
-	return TRKWriteUARTN(param_1->data, param_1->length);
+	u8 checksum;
+	u8 ch;
+	u8 checksumByte;
+	s32 result;
+	s32 i;
+
+	checksum = 0;
+	for (i = 0; i < msg->length; i++) {
+		checksum += msg->data[i];
+	}
+	checksum ^= 0xFF;
+
+	result = WriteUART1(0x7E);
+	if (result == DS_NoError) {
+		for (i = 0; i < msg->length; i++) {
+			ch = msg->data[i];
+			if (ch == 0x7E || ch == 0x7D) {
+				result = WriteUART1(0x7D);
+				ch ^= 0x20;
+				if (result != DS_NoError) {
+					break;
+				}
+			}
+			result = WriteUART1(ch);
+			if (result != DS_NoError) {
+				break;
+			}
+		}
+	}
+
+	if (result == DS_NoError) {
+		checksumByte = checksum;
+		for (i = 0; i < 1; i++) {
+			if (checksumByte == 0x7E || checksumByte == 0x7D) {
+				result = WriteUART1(0x7D);
+				checksumByte ^= 0x20;
+				if (result != DS_NoError) {
+					break;
+				}
+			}
+			result = WriteUART1(checksumByte);
+			if (result != DS_NoError) {
+				break;
+			}
+		}
+	}
+
+	if (result == DS_NoError) {
+		result = WriteUART1(0x7E);
+	}
+
+	if (result == DS_NoError) {
+		result = WriteUARTFlush();
+	}
+
+	return result;
 }
