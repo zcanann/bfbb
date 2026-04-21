@@ -17,7 +17,23 @@ void usr_putchar_serial(void)
  */
 BOOL usr_puts_serial(const char* msg)
 {
-	// UNUSED FUNCTION
+	BOOL connect_ = FALSE;
+	char c;
+	char buf[2];
+
+	while (!connect_ && (c = *msg++) != '\0') {
+		BOOL connect = GetTRKConnected();
+
+		buf[0] = c;
+		buf[1] = '\0';
+
+		SetTRKConnected(FALSE);
+		OSReport(buf);
+
+		SetTRKConnected(connect);
+		connect_ = FALSE;
+	}
+	return connect_;
 }
 
 /*
