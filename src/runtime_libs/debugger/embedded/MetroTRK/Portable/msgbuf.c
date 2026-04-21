@@ -37,23 +37,18 @@ DSError TRKInitializeMessageBuffers(void)
  */
 DSError TRKGetFreeBuffer(int* msgID, TRKBuffer** outMsg)
 {
-	int i;
-	DSError error = DS_NoMessageBufferAvailable;
 	TRKBuffer* buf;
+	DSError error = DS_NoMessageBufferAvailable;
+	int i;
 	*outMsg = NULL;
 
 	for (i = 0; i < 3; i++) {
-		buf = NULL;
-
-		if (i >= 0 && i < 3) {
-			buf = &gTRKMsgBufs[i];
-		}
+		buf = TRKGetBuffer(i);
 
 		TRKAcquireMutex(buf);
 		if (!buf->isInUse) {
-			buf->length = 0;
-			buf->position = 0;
-			buf->isInUse = TRUE;
+			TRKResetBuffer(buf, TRUE);
+			TRKSetBufferUsed(buf, TRUE);
 			error   = DS_NoError;
 			*outMsg = buf;
 			*msgID  = i;
