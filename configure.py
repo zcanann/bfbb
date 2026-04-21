@@ -981,7 +981,12 @@ config.libs = [
             Object(Matching, "debugger/embedded/MetroTRK/Os/dolphin/targcont.c"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Os/dolphin/target_options.c"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Os/dolphin/UDP_Stubs.c"),
-            Object(NonMatching, "debugger/embedded/MetroTRK/Export/mslsupp.c"),
+            Object(
+                NonMatching,
+                "debugger/embedded/MetroTRK/Export/mslsupp.c",
+                mw_version="GC/1.3",
+                cflags=cflags_trk,
+            ),
 
             Object(NonMatching, "gamedev/cust_connection/cc/exi2/GCN/EXI2_DDH_GCN/main.c"),
             Object(NonMatching, "gamedev/cust_connection/utils/common/CircleBuffer.c"),
