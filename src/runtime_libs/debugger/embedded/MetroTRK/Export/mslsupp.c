@@ -132,8 +132,8 @@ int __open_file(const char* name, file_modes mode, __file_handle* handle)
 
     modeBytes = (const u8*)&mode;
     trkMode = 0;
-    openMode = (modeBytes[0] >> 6) & 0x03;
-    ioMode = (modeBytes[0] >> 3) & 0x07;
+    openMode = mode.open_mode;
+    ioMode = mode.io_mode;
     binaryIO = (modeBytes[1] >> 3) & 0x01;
 
     switch (openMode)
