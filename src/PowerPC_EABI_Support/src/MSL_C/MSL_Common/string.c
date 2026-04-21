@@ -49,8 +49,7 @@ static const char msl_string_table_1[] = "\0"
     "No such process\0"
     "Unknown error\0"
     "Cross-device link\0"
-    "Unknown Error (%d)\0"
-    "\0";
+    "Unknown Error (%d)";
 
 char* strtok_null = (char*)msl_string_table_1;
 char* strtok_ptr  = (char*)msl_string_table_1;
