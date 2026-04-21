@@ -21,7 +21,7 @@ static u32 TRK_ISR_OFFSETS[15] = { PPC_SystemReset,
                                    PPC_SystemManagementInterrupt,
                                    PPC_ThermalManagementInterrupt };
 
-void __TRK_reset()
+__declspec(section ".init") void __TRK_reset()
 {
     __TRK_copy_vectors();
 }
