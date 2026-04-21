@@ -23,76 +23,17 @@
 enum __io_results { __no_io_error, __io_error, __io_EOF };
 
 void* malloc(size_t size);
+int __load_buffer(FILE* file, size_t* bytes_loaded, int mode);
+int __flush_buffer(FILE* file, size_t* bytes_flushed);
+void __prep_buffer(FILE* file);
 
 inline void __convert_from_newlines(char* buffer, size_t* length) {}
-
-void __prep_buffer(FILE* file)
+inline void __prep_buffer_inline(FILE* file)
 {
     file->mBufferPtr = file->mBuffer;
     file->mBufferLength = file->mBufferSize;
     file->mBufferLength -= file->mPosition & file->mBufferAlignment;
     file->mBufferPosition = file->mPosition;
-}
-
-int __load_buffer(FILE* file, size_t* bytes_loaded, int mode)
-{
-    int ioresult;
-
-    __prep_buffer(file);
-
-    if (mode == 1) {
-        file->mBufferLength = file->mBufferSize;
-    }
-
-    ioresult = file->readFunc(file->mHandle, file->mBuffer, &file->mBufferLength, file->ref_con);
-
-    if (ioresult == __io_EOF) {
-        file->mBufferLength = 0;
-    }
-
-    if (bytes_loaded != NULL) {
-        *bytes_loaded = file->mBufferLength;
-    }
-
-    if (ioresult != __no_io_error) {
-        return ioresult;
-    }
-
-    file->mPosition += file->mBufferLength;
-
-    return __no_io_error;
-}
-
-int __flush_buffer(FILE* file, size_t* bytes_flushed)
-{
-    size_t buffer_len;
-    int ioresult;
-
-    buffer_len = file->mBufferPtr - file->mBuffer;
-
-    if (buffer_len) {
-        file->mBufferLength = buffer_len;
-
-        if (!file->mMode.binary_io) {
-            __convert_from_newlines(file->mBuffer, &file->mBufferLength);
-        }
-
-        ioresult = file->writeFunc(file->mHandle, file->mBuffer, &file->mBufferLength, file->ref_con);
-
-        if (bytes_flushed) {
-            *bytes_flushed = file->mBufferLength;
-        }
-
-        if (ioresult) {
-            return ioresult;
-        }
-
-        file->mPosition += file->mBufferLength;
-    }
-
-    __prep_buffer(file);
-
-    return __no_io_error;
 }
 
 int setvbuf(FILE* file, char* buffer, int mode, size_t size)
@@ -153,4 +94,67 @@ int setvbuf(FILE* file, char* buffer, int mode, size_t size)
 
     __end_critical_region(2);
     return 0;
+}
+
+int __flush_buffer(FILE* file, size_t* bytes_flushed)
+{
+    size_t buffer_len;
+    int ioresult;
+
+    buffer_len = file->mBufferPtr - file->mBuffer;
+
+    if (buffer_len) {
+        file->mBufferLength = buffer_len;
+
+        if (!file->mMode.binary_io)
+            __convert_from_newlines(file->mBuffer, (size_t*)&file->mBufferLength);
+
+        ioresult = file->writeFunc(file->mHandle, file->mBuffer, (size_t*)&file->mBufferLength, file->ref_con);
+
+        if (bytes_flushed)
+            *bytes_flushed = file->mBufferLength;
+
+        if (ioresult)
+            return ioresult;
+
+        file->mPosition += file->mBufferLength;
+    }
+
+    __prep_buffer_inline(file);
+
+    return __no_io_error;
+}
+
+int __load_buffer(FILE* file, size_t* bytes_loaded, int mode)
+{
+    int ioresult;
+
+    __prep_buffer_inline(file);
+
+    if (mode == 1) {
+        file->mBufferLength = file->mBufferSize;
+    }
+
+    ioresult = file->readFunc(file->mHandle, file->mBuffer, &file->mBufferLength, file->ref_con);
+
+    if (ioresult == __io_EOF) {
+        file->mBufferLength = 0;
+    }
+
+    if (bytes_loaded != NULL) {
+        *bytes_loaded = file->mBufferLength;
+    }
+
+    if (ioresult != __no_io_error) {
+        return ioresult;
+    }
+
+    file->mPosition += file->mBufferLength;
+
+    return __no_io_error;
+}
+
+void __prep_buffer(FILE* file)
+{
+    __prep_buffer_inline(file);
 }

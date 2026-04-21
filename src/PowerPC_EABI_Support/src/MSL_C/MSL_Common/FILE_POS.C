@@ -49,14 +49,15 @@ inline fpos_t _ftell(FILE* file)
     return (position);
 }
 
-int ftell(FILE* stream)
+int fseek(FILE* stream, fpos_t offset, int whence)
 {
-    int retval;
-
+    fpos_t start;
+    int code;
+    start = offset;
     __begin_critical_region(stdin_access);
-    retval = (long)_ftell(stream);
+    code = _fseek(stream, start, whence); // 0 if successful, -1 if error
     __end_critical_region(stdin_access);
-    return retval;
+    return code;
 }
 
 int _fseek(FILE* file, fpos_t offset, int whence)
@@ -132,13 +133,12 @@ int _fseek(FILE* file, fpos_t offset, int whence)
     return 0;
 }
 
-int fseek(FILE* stream, fpos_t offset, int whence)
+int ftell(FILE* stream)
 {
-    fpos_t start;
-    int code;
-    start = offset;
+    int retval;
+
     __begin_critical_region(stdin_access);
-    code = _fseek(stream, start, whence); // 0 if successful, -1 if error
+    retval = (long)_ftell(stream);
     __end_critical_region(stdin_access);
-    return code;
+    return retval;
 }
