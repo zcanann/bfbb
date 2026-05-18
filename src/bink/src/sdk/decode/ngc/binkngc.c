@@ -3,11 +3,6 @@
 #include "dolphin/os/OSAlloc.h"
 #include "dolphin/os/OSTime.h"
 
-static RADMEMALLOC usermalloc = NULL;
-static RADMEMFREE userfree = NULL;
-static RADMEMALLOC userarammalloc = NULL;
-static RADMEMFREE useraramfree = NULL;
-
 /* OSGetTime runs at the GameCube timer clock: 40.5 MHz, or 40500 ticks/ms. */
 #define RAD_TIMER_TICKS_PER_MS 40500
 #define RAD_TIMER_HIGH_QUOTIENT 0x19e40
@@ -142,7 +137,7 @@ void radmemset16(void PTR4* dest, u16 value, u32 size) {
 
 u32 RADTimerRead(void)
 {
-    static OSTime starttime;
+    static OSTime starttime = 0;
     OSTime now;
     u32 quotient;
     u32 high_prod;
@@ -226,6 +221,11 @@ void ReadTimeBase(u32 PTR4* dest)
 {
     radtimebase((RADTimebase PTR4*)dest);
 }
+
+static RADMEMALLOC usermalloc = NULL;
+static RADMEMFREE userfree = NULL;
+static RADMEMALLOC userarammalloc = NULL;
+static RADMEMFREE useraramfree = NULL;
 
 void RADSetMemory(RADMEMALLOC malloc_fn, RADMEMFREE free_fn) {
     usermalloc = malloc_fn;
