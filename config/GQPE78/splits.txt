@@ -2368,14 +2368,13 @@ SB/Core/x/xCM.cpp:
 bink/src/sdk/decode/ngc/binkngc.c:
 	.text       start:0x80196880 end:0x80196D74
 	.text       start:0x80196D74 end:0x80196D74
-	.rodata     start:0x80274D50 end:0x80274D80
 	.sdata      start:0x803CADD8 end:0x803CADF0
 	.sdata      start:0x803CADF0 end:0x803CADF0
 
 bink/src/sdk/decode/ngc/ngcsnd.c:
 	.text       start:0x80196D74 end:0x80198250
 	.text       start:0x80198250 end:0x80198250
-	.rodata     start:0x80274D80 end:0x80274E00
+	.rodata     start:0x80274D50 end:0x80274E00
 	.data       start:0x802A1F34 end:0x802A1F34 align:4
 	.bss        start:0x80362B88 end:0x80362B88
 	.sdata      start:0x803CADF0 end:0x803CADF0
