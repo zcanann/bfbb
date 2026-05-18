@@ -22,9 +22,6 @@
 #define RAD_INVALID_USER_ALLOC ((void PTR4*)-1)
 #define RAD_MEMSET16_PER_WORD 2
 #define RAD_MEMSET16_WORD_SHIFT 16
-#define RAD_TIMEBASE_HIGH_WORD 0
-#define RAD_TIMEBASE_LOW_WORD 1
-
 typedef enum RADAllocOwner
 {
     RAD_ALLOC_SYSTEM_OWNED = 0,
@@ -203,18 +200,8 @@ void RADCycleTimerStartAddr64(u64 PTR4* dest)
 void RADCycleTimerDeltaAddr64(u64 PTR4* dest)
 {
     RADTimebase tb;
-    u32 PTR4* delta = (u32 PTR4*)dest;
-    u32 prevhi, prevlo, nowhi, nowlo;
-    u32 dlo, dhi;
     radtimebase(&tb);
-    prevhi = delta[RAD_TIMEBASE_HIGH_WORD];
-    prevlo = delta[RAD_TIMEBASE_LOW_WORD];
-    nowhi = tb.high;
-    nowlo = tb.low;
-    /* Store the unsigned 64-bit delta in the same high/low memory layout. */
-    __asm__("subfc %0, %2, %4\n\tsubfe %1, %3, %5" : "=r"(dlo), "=r"(dhi) : "r"(prevlo), "r"(prevhi), "r"(nowlo), "r"(nowhi));
-    delta[RAD_TIMEBASE_LOW_WORD] = dlo;
-    delta[RAD_TIMEBASE_HIGH_WORD] = dhi;
+    *dest = *(u64 PTR4*)&tb - *dest;
 }
 
 void ReadTimeBase(u32 PTR4* dest)
