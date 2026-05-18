@@ -2672,7 +2672,6 @@ extern "C" void YUV_blit_16bpp(void PTR4* dest,
 static void dounaligned16a4rowm2h(u32 phase, u32 count)
 {
     const u32 PTR4* ytable;
-    const u32 PTR4* atable;
     u8 y;
     u8 a;
     u16 pixel;
@@ -2683,13 +2682,12 @@ static void dounaligned16a4rowm2h(u32 phase, u32 count)
     }
 
     ytable = mono16;
-    atable = clamp_a4;
     do {
         y = *(u8 PTR4*)S.y0;
         a = *(u8 PTR4*)S.a0;
         S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + 1);
         S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
-        pixel = (u16)atable[a] | (u16)ytable[y];
+        pixel = (u16)ytable[y] | (u16)clamp_a4[a];
         *(u16 PTR4*)S.dest0 = pixel;
         *(u16 PTR4*)(S.dest0 + S.pitch) = pixel;
         S.dest0 += 2;
@@ -2699,28 +2697,26 @@ static void dounaligned16a4rowm2h(u32 phase, u32 count)
 static u32 dounaligned16a4colm2h(u32 count, s32 phase)
 {
     const u32 PTR4* ytable;
-    const u32 PTR4* atable;
     u32 remaining;
     u8 y;
     u8 a;
     u16 pixel;
 
     ytable = mono16;
-    atable = clamp_a4;
     remaining = count;
     do {
         y = *(u8 PTR4*)S.y0;
         a = *(u8 PTR4*)S.a0;
         S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + 1);
         S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
-        pixel = (u16)atable[a] | (u16)ytable[y];
+        pixel = (u16)ytable[y] | (u16)clamp_a4[a];
         *(u16 PTR4*)S.dest0 = pixel;
         *(u16 PTR4*)(S.dest0 + S.pitch) = pixel;
         y = *(u8 PTR4*)S.y1;
         a = *(u8 PTR4*)S.a1;
         S.a1 = (u32 PTR4*)((u8 PTR4*)S.a1 + 1);
         S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + 1);
-        pixel = (u16)atable[a] | (u16)ytable[y];
+        pixel = (u16)ytable[y] | (u16)clamp_a4[a];
         *(u16 PTR4*)S.dest1 = pixel;
         *(u16 PTR4*)(S.dest1 + S.pitch) = pixel;
         S.dest0 += 2;
@@ -2733,6 +2729,7 @@ static u32 dounaligned16a4colm2h(u32 count, s32 phase)
 
 static void dounaligned16a4rowm2w(u32 phase, u32 count)
 {
+    const u32 PTR4* ytable;
     u8 y;
     u8 a;
     u16 pixel;
@@ -2742,12 +2739,13 @@ static void dounaligned16a4rowm2w(u32 phase, u32 count)
         return;
     }
 
+    ytable = mono16;
     do {
         y = *(u8 PTR4*)S.y0;
         a = *(u8 PTR4*)S.a0;
         S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + 1);
         S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
-        pixel = RGB565_M_A4(y, a);
+        pixel = (u16)ytable[y] | (u16)clamp_a4[a];
         ((u16 PTR4*)S.dest0)[0] = pixel;
         ((u16 PTR4*)S.dest0)[1] = pixel;
         S.dest0 += YUV_PACKED_WORD_BYTES;
@@ -2757,28 +2755,26 @@ static void dounaligned16a4rowm2w(u32 phase, u32 count)
 static u32 dounaligned16a4colm2w(u32 count, s32 phase)
 {
     const u32 PTR4* ytable;
-    const u32 PTR4* atable;
     u32 remaining;
     u8 y;
     u8 a;
     u16 pixel;
 
     ytable = mono16;
-    atable = clamp_a4;
     remaining = count;
     do {
         y = *(u8 PTR4*)S.y0;
         a = *(u8 PTR4*)S.a0;
         S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + 1);
         S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
-        pixel = (u16)ytable[y] | (u16)atable[a];
+        pixel = (u16)ytable[y] | (u16)clamp_a4[a];
         ((u16 PTR4*)S.dest0)[0] = pixel;
         ((u16 PTR4*)S.dest0)[1] = pixel;
         y = *(u8 PTR4*)S.y1;
         a = *(u8 PTR4*)S.a1;
         S.a1 = (u32 PTR4*)((u8 PTR4*)S.a1 + 1);
         S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + 1);
-        pixel = (u16)ytable[y] | (u16)atable[a];
+        pixel = (u16)ytable[y] | (u16)clamp_a4[a];
         ((u16 PTR4*)S.dest1)[0] = pixel;
         ((u16 PTR4*)S.dest1)[1] = pixel;
         S.dest0 += YUV_PACKED_WORD_BYTES;
@@ -2791,6 +2787,7 @@ static u32 dounaligned16a4colm2w(u32 count, s32 phase)
 
 static void dounaligned16a4rowm2wh(u32 phase, u32 count)
 {
+    const u32 PTR4* ytable;
     u8 y;
     u8 a;
     u16 pixel;
@@ -2800,12 +2797,13 @@ static void dounaligned16a4rowm2wh(u32 phase, u32 count)
         return;
     }
 
+    ytable = mono16;
     do {
         y = *(u8 PTR4*)S.y0;
         a = *(u8 PTR4*)S.a0;
         S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + 1);
         S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
-        pixel = RGB565_M_A4(y, a);
+        pixel = (u16)ytable[y] | (u16)clamp_a4[a];
         ((u16 PTR4*)S.dest0)[0] = pixel;
         ((u16 PTR4*)S.dest0)[1] = pixel;
         *(u16 PTR4*)(S.dest0 + S.pitch) = pixel;
@@ -2816,18 +2814,20 @@ static void dounaligned16a4rowm2wh(u32 phase, u32 count)
 
 static u32 dounaligned16a4colm2wh(u32 count, s32 phase)
 {
+    const u32 PTR4* ytable;
     u32 remaining;
     u8 y;
     u8 a;
     u16 pixel;
 
+    ytable = mono16;
     remaining = count;
     do {
         y = *(u8 PTR4*)S.y0;
         a = *(u8 PTR4*)S.a0;
         S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + 1);
         S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
-        pixel = RGB565_M_A4(y, a);
+        pixel = (u16)ytable[y] | (u16)clamp_a4[a];
         ((u16 PTR4*)S.dest0)[0] = pixel;
         ((u16 PTR4*)S.dest0)[1] = pixel;
         *(u16 PTR4*)(S.dest0 + S.pitch) = pixel;
@@ -2836,7 +2836,7 @@ static u32 dounaligned16a4colm2wh(u32 count, s32 phase)
         a = *(u8 PTR4*)S.a1;
         S.a1 = (u32 PTR4*)((u8 PTR4*)S.a1 + 1);
         S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + 1);
-        pixel = RGB565_M_A4(y, a);
+        pixel = (u16)ytable[y] | (u16)clamp_a4[a];
         ((u16 PTR4*)S.dest1)[0] = pixel;
         ((u16 PTR4*)S.dest1)[1] = pixel;
         *(u16 PTR4*)(S.dest1 + S.pitch) = pixel;
@@ -3103,6 +3103,7 @@ static u32 dounaligned16a4col2wh(u32 count, s32 phase)
 
 static void dounaligned16a4rowm(u32 phase, u32 count)
 {
+    const u32 PTR4* ytable;
     u8 y;
     u8 a;
 
@@ -3111,12 +3112,13 @@ static void dounaligned16a4rowm(u32 phase, u32 count)
         return;
     }
 
+    ytable = mono16;
     do {
         y = *(u8 PTR4*)S.y0;
         a = *(u8 PTR4*)S.a0;
         S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + 1);
         S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
-        *(u16 PTR4*)S.dest0 = RGB565_M_A4(y, a);
+        *(u16 PTR4*)S.dest0 = (u16)ytable[y] | (u16)clamp_a4[a];
         S.dest0 += 2;
     } while (count-- != 0);
 }
@@ -3124,25 +3126,23 @@ static void dounaligned16a4rowm(u32 phase, u32 count)
 static u32 dounaligned16a4colm(u32 count, s32 phase)
 {
     const u32 PTR4* ytable;
-    const u32 PTR4* atable;
     u32 remaining;
     u8 y;
     u8 a;
 
     ytable = mono16;
-    atable = clamp_a4;
     remaining = count;
     do {
         y = *(u8 PTR4*)S.y0;
         a = *(u8 PTR4*)S.a0;
         S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + 1);
         S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
-        *(u16 PTR4*)S.dest0 = (u16)ytable[y] | (u16)atable[a];
+        *(u16 PTR4*)S.dest0 = (u16)ytable[y] | (u16)clamp_a4[a];
         y = *(u8 PTR4*)S.y1;
         a = *(u8 PTR4*)S.a1;
         S.a1 = (u32 PTR4*)((u8 PTR4*)S.a1 + 1);
         S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + 1);
-        *(u16 PTR4*)S.dest1 = (u16)ytable[y] | (u16)atable[a];
+        *(u16 PTR4*)S.dest1 = (u16)ytable[y] | (u16)clamp_a4[a];
         S.dest0 += 2;
         S.dest1 += 2;
         remaining--;
