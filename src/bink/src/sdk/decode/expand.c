@@ -208,7 +208,7 @@ static inline u32 exp_get_bits(EXPBITS PTR4* bits, u32 count)
 
     mask = GetBitsLen(count);
     bitcount = bits->bitlen;
-    if (bitcount > count - 1) {
+    if (bitcount >= count) {
         bitbuf = bits->bits;
         bits->bitlen = bitcount - count;
         bits->bits = bitbuf >> count;
