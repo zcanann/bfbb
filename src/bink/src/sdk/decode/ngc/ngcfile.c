@@ -17,6 +17,8 @@
 
 void PTR4* memmove(void PTR4* dest, const void PTR4* src, u32 len);
 s32 DVDConvertPathToEntrynum(const char PTR4* path);
+BOOL OSDisableInterrupts(void);
+BOOL OSRestoreInterrupts(BOOL level);
 
 typedef enum NGCBinkFileOwnership
 {
