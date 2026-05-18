@@ -212,10 +212,10 @@ void RADCycleTimerDeltaAddr64(u64 PTR4* dest)
     u32 prevhi, prevlo, nowhi, nowlo;
     u32 dlo, dhi;
     radtimebase(&tb);
-    nowlo = tb.low;
     prevhi = delta[RAD_TIMEBASE_HIGH_WORD];
     prevlo = delta[RAD_TIMEBASE_LOW_WORD];
     nowhi = tb.high;
+    nowlo = tb.low;
     /* Store the unsigned 64-bit delta in the same high/low memory layout. */
     __asm__("subfc %0, %2, %4\n\tsubfe %1, %3, %5" : "=r"(dlo), "=r"(dhi) : "r"(prevlo), "r"(prevhi), "r"(nowlo), "r"(nowhi));
     delta[RAD_TIMEBASE_LOW_WORD] = dlo;
