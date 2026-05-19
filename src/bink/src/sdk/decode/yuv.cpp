@@ -2998,10 +2998,10 @@ static void dounaligned16a4row2h(u32 phase, u32 count)
     u32 ybase;
     u16 pixel;
 
+    remaining = count - 1;
     if (count == 0) {
         return;
     }
-    remaining = count - 1;
 
     btable = YUVTables;
     gb_utable = YUVTables + YUV_U_TO_GB_OFFSET;
@@ -3095,10 +3095,10 @@ static void dounaligned16a4row2w(u32 phase, u32 count)
     u32 ybase;
     u16 pixel;
 
+    remaining = count - 1;
     if (count == 0) {
         return;
     }
-    remaining = count - 1;
 
     btable = YUVTables;
     gb_utable = YUVTables + YUV_U_TO_GB_OFFSET;
@@ -3347,10 +3347,10 @@ static void dounaligned16a4row(u32 phase, u32 count)
     u8 a;
     u32 ybase;
 
+    remaining = count - 1;
     if (count == 0) {
         return;
     }
-    remaining = count - 1;
 
     btable = YUVTables;
     gb_utable = YUVTables + YUV_U_TO_GB_OFFSET;
