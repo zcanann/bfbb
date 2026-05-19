@@ -71,18 +71,17 @@ void YUY2_4x2(u32 count)
     u = S.u;
     v = S.v;
     while (pairs-- != 0) {
-        u32 y0 = y[0];
+        u32 y0 = *y++;
         u32 u0 = *(u32 PTR4*)u;
         u32 v0 = *(u32 PTR4*)v;
 
         *dest++ = YUY2_PACK_4Y01(y0, YUY2_CHROMA0_U(u0), YUY2_CHROMA0_V(v0));
         *dest++ = YUY2_PACK_4Y23(y0, YUY2_CHROMA1_U(u0), YUY2_CHROMA1_V(v0));
 
-        y0 = y[1];
+        y0 = *y++;
         u += YUY2_PAIR_STRIDE;
         v += YUY2_PAIR_STRIDE;
         *dest++ = YUY2_PACK_4Y01(y0, YUY2_CHROMA2_U(u0), YUY2_CHROMA2_V(v0));
-        y += YUY2_PAIR_STRIDE;
         *dest++ = YUY2_PACK_4Y23(y0, YUY2_CHROMA3_U(u0), YUY2_CHROMA3_V(v0));
 
     }
@@ -102,18 +101,17 @@ void YUY2_4x2(u32 count)
     u = S.u;
     v = S.v;
     while (pairs-- != 0) {
-        u32 y0 = y[0];
+        u32 y0 = *y++;
         u32 u0 = *(u32 PTR4*)u;
         u32 v0 = *(u32 PTR4*)v;
 
         *dest++ = YUY2_PACK_4Y01(y0, YUY2_CHROMA0_U(u0), YUY2_CHROMA0_V(v0));
         *dest++ = YUY2_PACK_4Y23(y0, YUY2_CHROMA1_U(u0), YUY2_CHROMA1_V(v0));
 
-        y0 = y[1];
+        y0 = *y++;
         u += YUY2_PAIR_STRIDE;
         v += YUY2_PAIR_STRIDE;
         *dest++ = YUY2_PACK_4Y01(y0, YUY2_CHROMA2_U(u0), YUY2_CHROMA2_V(v0));
-        y += YUY2_PAIR_STRIDE;
         *dest++ = YUY2_PACK_4Y23(y0, YUY2_CHROMA3_U(u0), YUY2_CHROMA3_V(v0));
 
     }
@@ -312,18 +310,17 @@ void YUY2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, const u32 PTR4
 
     pairs = YUY2_BLOCK_PAIRS(count);
     for (; pairs != 0; --pairs) {
-        u32 y0 = y[0];
+        u32 y0 = *y++;
         u32 u0 = *u;
         u32 v0 = *v;
 
         *dest++ = YUY2_PACK_4Y01(y0, YUY2_CHROMA0_U(u0), YUY2_CHROMA0_V(v0));
         *dest++ = YUY2_PACK_4Y23(y0, YUY2_CHROMA1_U(u0), YUY2_CHROMA1_V(v0));
 
-        y0 = y[1];
+        y0 = *y++;
         ++u;
         ++v;
         *dest++ = YUY2_PACK_4Y01(y0, YUY2_CHROMA2_U(u0), YUY2_CHROMA2_V(v0));
-        y += YUY2_PAIR_STRIDE;
         *dest++ = YUY2_PACK_4Y23(y0, YUY2_CHROMA3_U(u0), YUY2_CHROMA3_V(v0));
 
     }
