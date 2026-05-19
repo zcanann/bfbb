@@ -2494,16 +2494,14 @@ static void dounaligned16row2h(u32 phase, u32 count)
     const s32 PTR4* gb_utable;
     const s32 PTR4* gb_vtable;
     const s32 PTR4* rtable;
-    u32 remaining;
     u8 PTR4* yptr;
     u8 y;
     u32 ybase;
     u16 pixel;
 
-    if (count == 0) {
+    if (count-- == 0) {
         return;
     }
-    remaining = count - 1;
 
     btable = YUVTables;
     gb_utable = YUVTables + YUV_U_TO_GB_OFFSET;
@@ -2526,7 +2524,7 @@ static void dounaligned16row2h(u32 phase, u32 count)
             S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
             S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
         }
-    } while (remaining-- != 0);
+    } while (count-- != 0);
 }
 
 static u32 dounaligned16col2h(u32 count, s32 phase)
@@ -2588,10 +2586,9 @@ static void dounaligned16row2w(u32 phase, u32 count)
     u32 ybase;
     u16 pixel;
 
-    if (count == 0) {
+    if (count-- == 0) {
         return;
     }
-    remaining = count - 1;
 
     btable = YUVTables;
     gb_utable = YUVTables + YUV_U_TO_GB_OFFSET;
@@ -2614,7 +2611,7 @@ static void dounaligned16row2w(u32 phase, u32 count)
             S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
             S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
         }
-    } while (remaining-- != 0);
+    } while (count-- != 0);
 }
 
 static u32 dounaligned16col2w(u32 count, s32 phase)
@@ -2670,16 +2667,14 @@ static void dounaligned16row2wh(u32 phase, u32 count)
     const s32 PTR4* gb_utable;
     const s32 PTR4* gb_vtable;
     const s32 PTR4* rtable;
-    u32 remaining;
     u8 PTR4* yptr;
     u8 y;
     u32 ybase;
     u16 pixel;
 
-    if (count == 0) {
+    if (count-- == 0) {
         return;
     }
-    remaining = count - 1;
 
     btable = YUVTables;
     gb_utable = YUVTables + YUV_U_TO_GB_OFFSET;
@@ -2704,7 +2699,7 @@ static void dounaligned16row2wh(u32 phase, u32 count)
             S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
             S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
         }
-    } while (remaining-- != 0);
+    } while (count-- != 0);
 }
 
 static u32 dounaligned16col2wh(u32 count, s32 phase)
@@ -2806,15 +2801,13 @@ static void dounaligned16row(u32 phase, u32 count)
     const s32 PTR4* gb_utable;
     const s32 PTR4* gb_vtable;
     const s32 PTR4* rtable;
-    u32 remaining;
     u8 PTR4* yptr;
     u8 y;
     u32 ybase;
 
-    if (count == 0) {
+    if (count-- == 0) {
         return;
     }
-    remaining = count - 1;
 
     btable = YUVTables;
     gb_utable = YUVTables + YUV_U_TO_GB_OFFSET;
@@ -2835,7 +2828,7 @@ static void dounaligned16row(u32 phase, u32 count)
             S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
             S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
         }
-    } while (remaining-- != 0);
+    } while (count-- != 0);
 }
 
 static u32 dounaligned16col(u32 count, s32 phase)
@@ -3082,7 +3075,6 @@ static void dounaligned16a4row2h(u32 phase, u32 count)
     const s32 PTR4* gb_utable;
     const s32 PTR4* gb_vtable;
     const s32 PTR4* rtable;
-    u32 remaining;
     u8 PTR4* yptr;
     u8 PTR4* aptr;
     u8 y;
@@ -3090,8 +3082,7 @@ static void dounaligned16a4row2h(u32 phase, u32 count)
     u32 ybase;
     u16 pixel;
 
-    remaining = count - 1;
-    if (count == 0) {
+    if (count-- == 0) {
         return;
     }
 
@@ -3119,7 +3110,7 @@ static void dounaligned16a4row2h(u32 phase, u32 count)
             S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
             S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
         }
-    } while (remaining-- != 0);
+    } while (count-- != 0);
 }
 
 static u32 dounaligned16a4col2h(u32 count, s32 phase)
@@ -3182,7 +3173,6 @@ static void dounaligned16a4row2w(u32 phase, u32 count)
     const s32 PTR4* gb_utable;
     const s32 PTR4* gb_vtable;
     const s32 PTR4* rtable;
-    u32 remaining;
     u8 PTR4* yptr;
     u8 PTR4* aptr;
     u8 y;
@@ -3190,8 +3180,7 @@ static void dounaligned16a4row2w(u32 phase, u32 count)
     u32 ybase;
     u16 pixel;
 
-    remaining = count - 1;
-    if (count == 0) {
+    if (count-- == 0) {
         return;
     }
 
@@ -3219,7 +3208,7 @@ static void dounaligned16a4row2w(u32 phase, u32 count)
             S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
             S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
         }
-    } while (remaining-- != 0);
+    } while (count-- != 0);
 }
 
 static u32 dounaligned16a4col2w(u32 count, s32 phase)
@@ -3282,7 +3271,6 @@ static void dounaligned16a4row2wh(u32 phase, u32 count)
     const s32 PTR4* gb_utable;
     const s32 PTR4* gb_vtable;
     const s32 PTR4* rtable;
-    u32 remaining;
     u8 PTR4* yptr;
     u8 PTR4* aptr;
     u8 y;
@@ -3290,8 +3278,7 @@ static void dounaligned16a4row2wh(u32 phase, u32 count)
     u32 ybase;
     u16 pixel;
 
-    remaining = count - 1;
-    if (count == 0) {
+    if (count-- == 0) {
         return;
     }
 
@@ -3321,7 +3308,7 @@ static void dounaligned16a4row2wh(u32 phase, u32 count)
             S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
             S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
         }
-    } while (remaining-- != 0);
+    } while (count-- != 0);
 }
 
 static u32 dounaligned16a4col2wh(u32 count, s32 phase)
@@ -3438,15 +3425,13 @@ static void dounaligned16a4row(u32 phase, u32 count)
     const s32 PTR4* gb_utable;
     const s32 PTR4* gb_vtable;
     const s32 PTR4* rtable;
-    u32 remaining;
     u8 PTR4* yptr;
     u8 PTR4* aptr;
     u8 y;
     u8 a;
     u32 ybase;
 
-    remaining = count - 1;
-    if (count == 0) {
+    if (count-- == 0) {
         return;
     }
 
@@ -3472,7 +3457,7 @@ static void dounaligned16a4row(u32 phase, u32 count)
             S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
             S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
         }
-    } while (remaining-- != 0);
+    } while (count-- != 0);
 }
 
 static u32 dounaligned16a4col(u32 count, s32 phase)
