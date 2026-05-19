@@ -2986,6 +2986,10 @@ static u32 dounaligned16a4colm2wh(u32 count, s32 phase)
 
 static void dounaligned16a4row2h(u32 phase, u32 count)
 {
+    const s32 PTR4* btable;
+    const s32 PTR4* gb_utable;
+    const s32 PTR4* gb_vtable;
+    const s32 PTR4* rtable;
     u32 remaining;
     u8 PTR4* yptr;
     u8 PTR4* aptr;
@@ -2999,11 +3003,15 @@ static void dounaligned16a4row2h(u32 phase, u32 count)
     }
     remaining = count - 1;
 
+    btable = YUVTables;
+    gb_utable = YUVTables + YUV_U_TO_GB_OFFSET;
+    gb_vtable = YUVTables + YUV_V_TO_GB_OFFSET;
+    rtable = YUVTables + YUV_V_TO_R_OFFSET;
     do {
         phase++;
-        S.b = YUVTables[*(u8 PTR4*)S.u];
-        S.gb = YUVTables[YUV_U_TO_GB_OFFSET + *(u8 PTR4*)S.u] + YUVTables[YUV_V_TO_GB_OFFSET + *(u8 PTR4*)S.v];
-        S.r = YUVTables[YUV_V_TO_R_OFFSET + *(u8 PTR4*)S.v];
+        S.b = btable[*(u8 PTR4*)S.u];
+        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
+        S.r = rtable[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         aptr = (u8 PTR4*)S.a0;
         y = *yptr++;
@@ -3024,17 +3032,25 @@ static void dounaligned16a4row2h(u32 phase, u32 count)
 
 static u32 dounaligned16a4col2h(u32 count, s32 phase)
 {
+    const s32 PTR4* btable;
+    const s32 PTR4* gb_utable;
+    const s32 PTR4* gb_vtable;
+    const s32 PTR4* rtable;
     u8 PTR4* yptr;
     u8 y;
     u8 a;
     u32 ybase;
     u16 pixel;
 
+    btable = YUVTables;
+    gb_utable = YUVTables + YUV_U_TO_GB_OFFSET;
+    gb_vtable = YUVTables + YUV_V_TO_GB_OFFSET;
+    rtable = YUVTables + YUV_V_TO_R_OFFSET;
     do {
         phase++;
-        S.b = YUVTables[*(u8 PTR4*)S.u];
-        S.gb = YUVTables[YUV_U_TO_GB_OFFSET + *(u8 PTR4*)S.u] + YUVTables[YUV_V_TO_GB_OFFSET + *(u8 PTR4*)S.v];
-        S.r = YUVTables[YUV_V_TO_R_OFFSET + *(u8 PTR4*)S.v];
+        S.b = btable[*(u8 PTR4*)S.u];
+        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
+        S.r = rtable[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         y = *yptr++;
         S.y0 = (u32 PTR4*)yptr;
@@ -3067,6 +3083,10 @@ static u32 dounaligned16a4col2h(u32 count, s32 phase)
 
 static void dounaligned16a4row2w(u32 phase, u32 count)
 {
+    const s32 PTR4* btable;
+    const s32 PTR4* gb_utable;
+    const s32 PTR4* gb_vtable;
+    const s32 PTR4* rtable;
     u32 remaining;
     u8 PTR4* yptr;
     u8 PTR4* aptr;
@@ -3080,11 +3100,15 @@ static void dounaligned16a4row2w(u32 phase, u32 count)
     }
     remaining = count - 1;
 
+    btable = YUVTables;
+    gb_utable = YUVTables + YUV_U_TO_GB_OFFSET;
+    gb_vtable = YUVTables + YUV_V_TO_GB_OFFSET;
+    rtable = YUVTables + YUV_V_TO_R_OFFSET;
     do {
         phase++;
-        S.b = YUVTables[*(u8 PTR4*)S.u];
-        S.gb = YUVTables[YUV_U_TO_GB_OFFSET + *(u8 PTR4*)S.u] + YUVTables[YUV_V_TO_GB_OFFSET + *(u8 PTR4*)S.v];
-        S.r = YUVTables[YUV_V_TO_R_OFFSET + *(u8 PTR4*)S.v];
+        S.b = btable[*(u8 PTR4*)S.u];
+        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
+        S.r = rtable[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         aptr = (u8 PTR4*)S.a0;
         y = *yptr++;
@@ -3105,17 +3129,25 @@ static void dounaligned16a4row2w(u32 phase, u32 count)
 
 static u32 dounaligned16a4col2w(u32 count, s32 phase)
 {
+    const s32 PTR4* btable;
+    const s32 PTR4* gb_utable;
+    const s32 PTR4* gb_vtable;
+    const s32 PTR4* rtable;
     u8 PTR4* yptr;
     u8 y;
     u8 a;
     u32 ybase;
     u16 pixel;
 
+    btable = YUVTables;
+    gb_utable = YUVTables + YUV_U_TO_GB_OFFSET;
+    gb_vtable = YUVTables + YUV_V_TO_GB_OFFSET;
+    rtable = YUVTables + YUV_V_TO_R_OFFSET;
     do {
         phase++;
-        S.b = YUVTables[*(u8 PTR4*)S.u];
-        S.gb = YUVTables[YUV_U_TO_GB_OFFSET + *(u8 PTR4*)S.u] + YUVTables[YUV_V_TO_GB_OFFSET + *(u8 PTR4*)S.v];
-        S.r = YUVTables[YUV_V_TO_R_OFFSET + *(u8 PTR4*)S.v];
+        S.b = btable[*(u8 PTR4*)S.u];
+        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
+        S.r = rtable[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         y = *yptr++;
         S.y0 = (u32 PTR4*)yptr;
@@ -3148,6 +3180,10 @@ static u32 dounaligned16a4col2w(u32 count, s32 phase)
 
 static void dounaligned16a4row2wh(u32 phase, u32 count)
 {
+    const s32 PTR4* btable;
+    const s32 PTR4* gb_utable;
+    const s32 PTR4* gb_vtable;
+    const s32 PTR4* rtable;
     u32 remaining;
     u8 PTR4* yptr;
     u8 PTR4* aptr;
@@ -3156,16 +3192,20 @@ static void dounaligned16a4row2wh(u32 phase, u32 count)
     u32 ybase;
     u16 pixel;
 
+    remaining = count - 1;
     if (count == 0) {
         return;
     }
-    remaining = count - 1;
 
+    btable = YUVTables;
+    gb_utable = YUVTables + YUV_U_TO_GB_OFFSET;
+    gb_vtable = YUVTables + YUV_V_TO_GB_OFFSET;
+    rtable = YUVTables + YUV_V_TO_R_OFFSET;
     do {
         phase++;
-        S.b = YUVTables[*(u8 PTR4*)S.u];
-        S.gb = YUVTables[YUV_U_TO_GB_OFFSET + *(u8 PTR4*)S.u] + YUVTables[YUV_V_TO_GB_OFFSET + *(u8 PTR4*)S.v];
-        S.r = YUVTables[YUV_V_TO_R_OFFSET + *(u8 PTR4*)S.v];
+        S.b = btable[*(u8 PTR4*)S.u];
+        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
+        S.r = rtable[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         aptr = (u8 PTR4*)S.a0;
         y = *yptr++;
@@ -3188,6 +3228,10 @@ static void dounaligned16a4row2wh(u32 phase, u32 count)
 
 static u32 dounaligned16a4col2wh(u32 count, s32 phase)
 {
+    const s32 PTR4* btable;
+    const s32 PTR4* gb_utable;
+    const s32 PTR4* gb_vtable;
+    const s32 PTR4* rtable;
     u8 PTR4* yptr;
     u8 PTR4* aptr;
     u8 y;
@@ -3195,11 +3239,15 @@ static u32 dounaligned16a4col2wh(u32 count, s32 phase)
     u32 ybase;
     u16 pixel;
 
+    btable = YUVTables;
+    gb_utable = YUVTables + YUV_U_TO_GB_OFFSET;
+    gb_vtable = YUVTables + YUV_V_TO_GB_OFFSET;
+    rtable = YUVTables + YUV_V_TO_R_OFFSET;
     do {
         phase++;
-        S.b = YUVTables[*(u8 PTR4*)S.u];
-        S.gb = YUVTables[YUV_U_TO_GB_OFFSET + *(u8 PTR4*)S.u] + YUVTables[YUV_V_TO_GB_OFFSET + *(u8 PTR4*)S.v];
-        S.r = YUVTables[YUV_V_TO_R_OFFSET + *(u8 PTR4*)S.v];
+        S.b = btable[*(u8 PTR4*)S.u];
+        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
+        S.r = rtable[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         aptr = (u8 PTR4*)S.a0;
         y = *yptr++;
@@ -3288,6 +3336,10 @@ static u32 dounaligned16a4colm(u32 count, s32 phase)
 
 static void dounaligned16a4row(u32 phase, u32 count)
 {
+    const s32 PTR4* btable;
+    const s32 PTR4* gb_utable;
+    const s32 PTR4* gb_vtable;
+    const s32 PTR4* rtable;
     u32 remaining;
     u8 PTR4* yptr;
     u8 PTR4* aptr;
@@ -3300,11 +3352,15 @@ static void dounaligned16a4row(u32 phase, u32 count)
     }
     remaining = count - 1;
 
+    btable = YUVTables;
+    gb_utable = YUVTables + YUV_U_TO_GB_OFFSET;
+    gb_vtable = YUVTables + YUV_V_TO_GB_OFFSET;
+    rtable = YUVTables + YUV_V_TO_R_OFFSET;
     do {
         phase++;
-        S.b = YUVTables[*(u8 PTR4*)S.u];
-        S.gb = YUVTables[YUV_U_TO_GB_OFFSET + *(u8 PTR4*)S.u] + YUVTables[YUV_V_TO_GB_OFFSET + *(u8 PTR4*)S.v];
-        S.r = YUVTables[YUV_V_TO_R_OFFSET + *(u8 PTR4*)S.v];
+        S.b = btable[*(u8 PTR4*)S.u];
+        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
+        S.r = rtable[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         aptr = (u8 PTR4*)S.a0;
         y = *yptr++;
@@ -3323,16 +3379,24 @@ static void dounaligned16a4row(u32 phase, u32 count)
 
 static u32 dounaligned16a4col(u32 count, s32 phase)
 {
+    const s32 PTR4* btable;
+    const s32 PTR4* gb_utable;
+    const s32 PTR4* gb_vtable;
+    const s32 PTR4* rtable;
     u8 PTR4* yptr;
     u8 y;
     u8 a;
     u32 ybase;
 
+    btable = YUVTables;
+    gb_utable = YUVTables + YUV_U_TO_GB_OFFSET;
+    gb_vtable = YUVTables + YUV_V_TO_GB_OFFSET;
+    rtable = YUVTables + YUV_V_TO_R_OFFSET;
     do {
         phase++;
-        S.b = YUVTables[*(u8 PTR4*)S.u];
-        S.gb = YUVTables[YUV_U_TO_GB_OFFSET + *(u8 PTR4*)S.u] + YUVTables[YUV_V_TO_GB_OFFSET + *(u8 PTR4*)S.v];
-        S.r = YUVTables[YUV_V_TO_R_OFFSET + *(u8 PTR4*)S.v];
+        S.b = btable[*(u8 PTR4*)S.u];
+        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
+        S.r = rtable[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         y = *yptr++;
         S.y0 = (u32 PTR4*)yptr;
