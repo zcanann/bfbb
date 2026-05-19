@@ -2477,7 +2477,7 @@ static s32 trysplit(BINKRECT PTR4* outa, BINKRECT PTR4* outb, const BINKRECT PTR
         smallestrect(&second_half, mask, pitch, &split_rect);
         split_score = (rect->Width * rect->Height - first_half.Width * first_half.Height) -
                       second_half.Width * second_half.Height;
-        if (best_score < split_score) {
+        if (split_score > best_score) {
             *outa = first_half;
             *outb = second_half;
             return split_score;
