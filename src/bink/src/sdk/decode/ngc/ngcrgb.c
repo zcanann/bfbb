@@ -83,13 +83,13 @@ void YUV_32_4x2_even(u32 count)
     pitch = S.pitch;
     tiledPitch = RGB_TILE_PITCH32(pitch);
 
+    S.dest0 += count * RGB_32_4X2_ROW_BYTES;
+    S.dest1 += count * RGB_32_4X2_ROW_BYTES;
+
     row0 = RGB_TILE_ROW(dest0, base, pitch);
     row1 = RGB_TILE_ROW(dest1, base, pitch);
     dest0 = (u32 PTR4*)RGB_TILE_LOC(base, dest0, pitch, tiledPitch, row0);
     dest1 = (u32 PTR4*)RGB_TILE_LOC(base, dest1, pitch, tiledPitch, row1);
-
-    S.dest0 += count * RGB_32_4X2_ROW_BYTES;
-    S.dest1 += count * RGB_32_4X2_ROW_BYTES;
     y1 = S.y1;
     y0 = S.y0;
     u = S.u;
@@ -185,13 +185,13 @@ void YUV_32x2_4x2_even(u32 count)
     pitch = S.pitch;
     tiledPitch = RGB_TILE_PITCH32(pitch);
 
+    S.dest0 += count * RGB_32_X2_4X2_ROW_BYTES;
+    S.dest1 += count * RGB_32_X2_4X2_ROW_BYTES;
+
     row0 = RGB_TILE_ROW(dest0, base, pitch);
     row1 = RGB_TILE_ROW(dest1, base, pitch);
     dest0 = (u32 PTR4*)RGB_TILE_LOC(base, dest0, pitch, tiledPitch, row0);
     dest1 = (u32 PTR4*)RGB_TILE_LOC(base, dest1, pitch, tiledPitch, row1);
-
-    S.dest0 += count * RGB_32_X2_4X2_ROW_BYTES;
-    S.dest1 += count * RGB_32_X2_4X2_ROW_BYTES;
     y1 = S.y1;
     y0 = S.y0;
     u = S.u;
@@ -277,27 +277,23 @@ void YUV_32m_4x2(u32 count)
     u32 PTR4* y1;
     u32 pitch;
     u8 PTR4* base;
-    u8 PTR4* dest0_start;
-    u8 PTR4* dest1_start;
     s32 row0;
     s32 row1;
     u32 tiledPitch;
 
-    dest0_start = S.dest0;
+    dest0 = (u32 PTR4*)S.dest0;
     base = S.base;
-    dest1_start = S.dest1;
-    dest0 = (u32 PTR4*)dest0_start;
-    dest1 = (u32 PTR4*)dest1_start;
+    dest1 = (u32 PTR4*)S.dest1;
     pitch = S.pitch;
     tiledPitch = RGB_TILE_PITCH32(pitch);
+
+    S.dest0 += count * RGB_32_4X2_ROW_BYTES;
+    S.dest1 += count * RGB_32_4X2_ROW_BYTES;
 
     row0 = RGB_TILE_ROW(dest0, base, pitch);
     row1 = RGB_TILE_ROW(dest1, base, pitch);
     dest0 = (u32 PTR4*)RGB_TILE_LOC(base, dest0, pitch, tiledPitch, row0);
     dest1 = (u32 PTR4*)RGB_TILE_LOC(base, dest1, pitch, tiledPitch, row1);
-
-    S.dest0 = dest0_start + count * RGB_32_4X2_ROW_BYTES;
-    S.dest1 = dest1_start + count * RGB_32_4X2_ROW_BYTES;
 
     y0 = S.y0;
     y1 = S.y1;
@@ -341,27 +337,23 @@ void YUV_32mx2_4x2(u32 count)
     u32 PTR4* y1;
     u32 pitch;
     u8 PTR4* base;
-    u8 PTR4* dest0_start;
-    u8 PTR4* dest1_start;
     s32 row0;
     s32 row1;
     u32 tiledPitch;
 
-    dest0_start = S.dest0;
+    dest0 = (u32 PTR4*)S.dest0;
     base = S.base;
-    dest1_start = S.dest1;
-    dest0 = (u32 PTR4*)dest0_start;
-    dest1 = (u32 PTR4*)dest1_start;
+    dest1 = (u32 PTR4*)S.dest1;
     pitch = S.pitch;
     tiledPitch = RGB_TILE_PITCH32(pitch);
+
+    S.dest0 += count * RGB_32_X2_4X2_ROW_BYTES;
+    S.dest1 += count * RGB_32_X2_4X2_ROW_BYTES;
 
     row0 = RGB_TILE_ROW(dest0, base, pitch);
     row1 = RGB_TILE_ROW(dest1, base, pitch);
     dest0 = (u32 PTR4*)RGB_TILE_LOC(base, dest0, pitch, tiledPitch, row0);
     dest1 = (u32 PTR4*)RGB_TILE_LOC(base, dest1, pitch, tiledPitch, row1);
-
-    S.dest0 = dest0_start + count * RGB_32_X2_4X2_ROW_BYTES;
-    S.dest1 = dest1_start + count * RGB_32_X2_4X2_ROW_BYTES;
 
     y0 = S.y0;
     y1 = S.y1;
@@ -447,13 +439,13 @@ void YUV_16_4x2_even(u32 count)
     clamp_g_base = clamp_g + RGB_CLAMP_BIAS;
     clamp_b_base = clamp_b + RGB_CLAMP_BIAS;
 
+    S.dest0 += count * RGB_16_4X2_ROW_BYTES;
+    S.dest1 += count * RGB_16_4X2_ROW_BYTES;
+
     row0 = RGB_TILE_ROW(dest0, base, pitch);
     row1 = RGB_TILE_ROW(dest1, base, pitch);
     dest0 = (u32 PTR4*)RGB_TILE_LOC(base, dest0, pitch, tiledPitch, row0);
     dest1 = (u32 PTR4*)RGB_TILE_LOC(base, dest1, pitch, tiledPitch, row1);
-
-    S.dest0 += count * RGB_16_4X2_ROW_BYTES;
-    S.dest1 += count * RGB_16_4X2_ROW_BYTES;
 
     do {
         u32 uhi;
@@ -553,13 +545,13 @@ void YUV_16x2_4x2_even(u32 count)
     clamp_g_base = clamp_g + RGB_CLAMP_BIAS;
     clamp_b_base = clamp_b + RGB_CLAMP_BIAS;
 
+    S.dest0 += count * RGB_16_X2_4X2_ROW_BYTES;
+    S.dest1 += count * RGB_16_X2_4X2_ROW_BYTES;
+
     row0 = RGB_TILE_ROW(dest0, base, pitch);
     row1 = RGB_TILE_ROW(dest1, base, pitch);
     dest0 = (u32 PTR4*)RGB_TILE_LOC(base, dest0, pitch, tiledPitch, row0);
     dest1 = (u32 PTR4*)RGB_TILE_LOC(base, dest1, pitch, tiledPitch, row1);
-
-    S.dest0 += count * RGB_16_X2_4X2_ROW_BYTES;
-    S.dest1 += count * RGB_16_X2_4X2_ROW_BYTES;
 
     do {
         u32 uhi;
@@ -634,17 +626,13 @@ void YUV_16m_4x2(u32 count)
     u32 PTR4* y1;
     u32 pitch;
     u8 PTR4* base;
-    u8 PTR4* dest0_start;
-    u8 PTR4* dest1_start;
     s32 row0;
     s32 row1;
     u32 tiledPitch;
     u32 PTR4* table;
 
-    dest0_start = S.dest0;
-    dest1_start = S.dest1;
-    dest0 = (u32 PTR4*)dest0_start;
-    dest1 = (u32 PTR4*)dest1_start;
+    dest0 = (u32 PTR4*)S.dest0;
+    dest1 = (u32 PTR4*)S.dest1;
     y0 = S.y0;
     y1 = S.y1;
     pitch = S.pitch;
@@ -652,13 +640,13 @@ void YUV_16m_4x2(u32 count)
     tiledPitch = RGB_TILE_PITCH16(pitch);
     table = mono16;
 
+    S.dest0 += count * RGB_16_4X2_ROW_BYTES;
+    S.dest1 += count * RGB_16_4X2_ROW_BYTES;
+
     row0 = RGB_TILE_ROW(dest0, base, pitch);
     row1 = RGB_TILE_ROW(dest1, base, pitch);
     dest0 = (u32 PTR4*)RGB_TILE_LOC(base, dest0, pitch, tiledPitch, row0);
     dest1 = (u32 PTR4*)RGB_TILE_LOC(base, dest1, pitch, tiledPitch, row1);
-
-    S.dest0 = dest0_start + count * RGB_16_4X2_ROW_BYTES;
-    S.dest1 = dest1_start + count * RGB_16_4X2_ROW_BYTES;
 
     do {
         u32 yv0 = *y0++;
@@ -695,17 +683,13 @@ void YUV_16mx2_4x2(u32 count)
     u32 PTR4* y1;
     u32 pitch;
     u8 PTR4* base;
-    u8 PTR4* dest0_start;
-    u8 PTR4* dest1_start;
     s32 row0;
     s32 row1;
     u32 tiledPitch;
     u32 PTR4* table;
 
-    dest0_start = S.dest0;
-    dest1_start = S.dest1;
-    dest0 = (u32 PTR4*)dest0_start;
-    dest1 = (u32 PTR4*)dest1_start;
+    dest0 = (u32 PTR4*)S.dest0;
+    dest1 = (u32 PTR4*)S.dest1;
     y0 = S.y0;
     y1 = S.y1;
     pitch = S.pitch;
@@ -713,13 +697,13 @@ void YUV_16mx2_4x2(u32 count)
     tiledPitch = RGB_TILE_PITCH16(pitch);
     table = mono16;
 
+    S.dest0 += count * RGB_16_X2_4X2_ROW_BYTES;
+    S.dest1 += count * RGB_16_X2_4X2_ROW_BYTES;
+
     row0 = RGB_TILE_ROW(dest0, base, pitch);
     row1 = RGB_TILE_ROW(dest1, base, pitch);
     dest0 = (u32 PTR4*)RGB_TILE_LOC(base, dest0, pitch, tiledPitch, row0);
     dest1 = (u32 PTR4*)RGB_TILE_LOC(base, dest1, pitch, tiledPitch, row1);
-
-    S.dest0 = dest0_start + count * RGB_16_X2_4X2_ROW_BYTES;
-    S.dest1 = dest1_start + count * RGB_16_X2_4X2_ROW_BYTES;
 
     do {
         u32 yv0 = *y0++;
@@ -794,13 +778,13 @@ void YUV_32a_4x2_even(u32 count)
     u_to_gb = YUVTables + YUV_U_TO_GB_OFFSET;
     v_to_r = YUVTables + YUV_V_TO_R_OFFSET;
 
+    S.dest0 += count * RGB_32_4X2_ROW_BYTES;
+    S.dest1 += count * RGB_32_4X2_ROW_BYTES;
+
     row0 = RGB_TILE_ROW(dest0, base, pitch);
     row1 = RGB_TILE_ROW(dest1, base, pitch);
     dest0 = (u32 PTR4*)RGB_TILE_LOC(base, dest0, pitch, tiledPitch, row0);
     dest1 = (u32 PTR4*)RGB_TILE_LOC(base, dest1, pitch, tiledPitch, row1);
-
-    S.dest0 += count * RGB_32_4X2_ROW_BYTES;
-    S.dest1 += count * RGB_32_4X2_ROW_BYTES;
 
     do {
         u32 vhi;
@@ -897,13 +881,13 @@ void YUV_32ax2_4x2_even(u32 count)
     pitch = S.pitch;
     tiledPitch = RGB_TILE_PITCH32(pitch);
 
+    S.dest0 += count * RGB_32_X2_4X2_ROW_BYTES;
+    S.dest1 += count * RGB_32_X2_4X2_ROW_BYTES;
+
     row0 = RGB_TILE_ROW(dest0, base, pitch);
     row1 = RGB_TILE_ROW(dest1, base, pitch);
     dest0 = (u32 PTR4*)RGB_TILE_LOC(base, dest0, pitch, tiledPitch, row0);
     dest1 = (u32 PTR4*)RGB_TILE_LOC(base, dest1, pitch, tiledPitch, row1);
-
-    S.dest0 += count * RGB_32_X2_4X2_ROW_BYTES;
-    S.dest1 += count * RGB_32_X2_4X2_ROW_BYTES;
     y1 = S.y1;
     y0 = S.y0;
     u = S.u;
@@ -1018,13 +1002,13 @@ void YUV_32am_4x2(u32 count)
     pitch = S.pitch;
     tiledPitch = RGB_TILE_PITCH32(pitch);
 
+    S.dest0 += count * RGB_32_4X2_ROW_BYTES;
+    S.dest1 += count * RGB_32_4X2_ROW_BYTES;
+
     row0 = RGB_TILE_ROW(dest0, base, pitch);
     row1 = RGB_TILE_ROW(dest1, base, pitch);
     dest0 = (u32 PTR4*)RGB_TILE_LOC(base, dest0, pitch, tiledPitch, row0);
     dest1 = (u32 PTR4*)RGB_TILE_LOC(base, dest1, pitch, tiledPitch, row1);
-
-    S.dest0 += count * RGB_32_4X2_ROW_BYTES;
-    S.dest1 += count * RGB_32_4X2_ROW_BYTES;
 
     y0 = S.y0;
     y1 = S.y1;
@@ -1088,13 +1072,13 @@ void YUV_32amx2_4x2(u32 count)
     pitch = S.pitch;
     tiledPitch = RGB_TILE_PITCH32(pitch);
 
+    S.dest0 += count * RGB_32_X2_4X2_ROW_BYTES;
+    S.dest1 += count * RGB_32_X2_4X2_ROW_BYTES;
+
     row0 = RGB_TILE_ROW(dest0, base, pitch);
     row1 = RGB_TILE_ROW(dest1, base, pitch);
     dest0 = (u32 PTR4*)RGB_TILE_LOC(base, dest0, pitch, tiledPitch, row0);
     dest1 = (u32 PTR4*)RGB_TILE_LOC(base, dest1, pitch, tiledPitch, row1);
-
-    S.dest0 += count * RGB_32_X2_4X2_ROW_BYTES;
-    S.dest1 += count * RGB_32_X2_4X2_ROW_BYTES;
 
     y0 = S.y0;
     y1 = S.y1;
@@ -1194,13 +1178,13 @@ void YUV_16a4_4x2_even(u32 count)
     u_to_gb = YUVTables + YUV_U_TO_GB_OFFSET;
     v_to_r = YUVTables + YUV_V_TO_R_OFFSET;
 
+    S.dest0 += count * RGB_16_4X2_ROW_BYTES;
+    S.dest1 += count * RGB_16_4X2_ROW_BYTES;
+
     row0 = RGB_TILE_ROW(dest0, base, pitch);
     row1 = RGB_TILE_ROW(dest1, base, pitch);
     dest0 = (u32 PTR4*)RGB_TILE_LOC(base, dest0, pitch, tiledPitch, row0);
     dest1 = (u32 PTR4*)RGB_TILE_LOC(base, dest1, pitch, tiledPitch, row1);
-
-    S.dest0 += count * RGB_16_4X2_ROW_BYTES;
-    S.dest1 += count * RGB_16_4X2_ROW_BYTES;
 
     do {
         u32 uhi;
@@ -1312,13 +1296,13 @@ void YUV_16a4x2_4x2_even(u32 count)
     clamp_b_base = clamp_b + RGB_CLAMP_BIAS;
     clamp_a4_base = clamp_a4;
 
+    S.dest0 += count * RGB_16_X2_4X2_ROW_BYTES;
+    S.dest1 += count * RGB_16_X2_4X2_ROW_BYTES;
+
     row0 = RGB_TILE_ROW(dest0, base, pitch);
     row1 = RGB_TILE_ROW(dest1, base, pitch);
     dest0 = (u32 PTR4*)RGB_TILE_LOC(base, dest0, pitch, tiledPitch, row0);
     dest1 = (u32 PTR4*)RGB_TILE_LOC(base, dest1, pitch, tiledPitch, row1);
-
-    S.dest0 += count * RGB_16_X2_4X2_ROW_BYTES;
-    S.dest1 += count * RGB_16_X2_4X2_ROW_BYTES;
 
     do {
         u32 uhi;
@@ -1400,16 +1384,12 @@ void YUV_16a4m_4x2(u32 count)
     u32 PTR4* a1;
     u32 pitch;
     u8 PTR4* base;
-    u8 PTR4* dest0_start;
-    u8 PTR4* dest1_start;
     s32 row0;
     s32 row1;
     u32 tiledPitch;
 
-    dest0_start = S.dest0;
-    dest1_start = S.dest1;
-    dest0 = (u32 PTR4*)dest0_start;
-    dest1 = (u32 PTR4*)dest1_start;
+    dest0 = (u32 PTR4*)S.dest0;
+    dest1 = (u32 PTR4*)S.dest1;
     y0 = S.y0;
     y1 = S.y1;
     a0 = S.a0;
@@ -1418,13 +1398,13 @@ void YUV_16a4m_4x2(u32 count)
     base = S.base;
     tiledPitch = RGB_TILE_PITCH16(pitch);
 
+    S.dest0 += count * RGB_16_4X2_ROW_BYTES;
+    S.dest1 += count * RGB_16_4X2_ROW_BYTES;
+
     row0 = RGB_TILE_ROW(dest0, base, pitch);
     row1 = RGB_TILE_ROW(dest1, base, pitch);
     dest0 = (u32 PTR4*)RGB_TILE_LOC(base, dest0, pitch, tiledPitch, row0);
     dest1 = (u32 PTR4*)RGB_TILE_LOC(base, dest1, pitch, tiledPitch, row1);
-
-    S.dest0 = dest0_start + count * RGB_16_4X2_ROW_BYTES;
-    S.dest1 = dest1_start + count * RGB_16_4X2_ROW_BYTES;
 
     do {
         u32 av0 = *a0++;
@@ -1467,16 +1447,12 @@ void YUV_16a4mx2_4x2(u32 count)
     u32 PTR4* a1;
     u32 pitch;
     u8 PTR4* base;
-    u8 PTR4* dest0_start;
-    u8 PTR4* dest1_start;
     s32 row0;
     s32 row1;
     u32 tiledPitch;
 
-    dest0_start = S.dest0;
-    dest1_start = S.dest1;
-    dest0 = (u32 PTR4*)dest0_start;
-    dest1 = (u32 PTR4*)dest1_start;
+    dest0 = (u32 PTR4*)S.dest0;
+    dest1 = (u32 PTR4*)S.dest1;
     y0 = S.y0;
     y1 = S.y1;
     a0 = S.a0;
@@ -1485,13 +1461,13 @@ void YUV_16a4mx2_4x2(u32 count)
     base = S.base;
     tiledPitch = RGB_TILE_PITCH16(pitch);
 
+    S.dest0 += count * RGB_16_X2_4X2_ROW_BYTES;
+    S.dest1 += count * RGB_16_X2_4X2_ROW_BYTES;
+
     row0 = RGB_TILE_ROW(dest0, base, pitch);
     row1 = RGB_TILE_ROW(dest1, base, pitch);
     dest0 = (u32 PTR4*)RGB_TILE_LOC(base, dest0, pitch, tiledPitch, row0);
     dest1 = (u32 PTR4*)RGB_TILE_LOC(base, dest1, pitch, tiledPitch, row1);
-
-    S.dest0 = dest0_start + count * RGB_16_X2_4X2_ROW_BYTES;
-    S.dest1 = dest1_start + count * RGB_16_X2_4X2_ROW_BYTES;
 
     do {
         u32 av0 = *a0++;
