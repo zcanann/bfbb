@@ -2047,6 +2047,8 @@ static u32 dounaligned32acol2wh(u32 count, s32 phase)
 static void dounaligned32arowm(u32 phase, u32 count)
 {
     u32 remaining;
+    u8 PTR4* yptr;
+    u8 PTR4* aptr;
     u8 y;
     u8 a;
 
@@ -2057,11 +2059,13 @@ static void dounaligned32arowm(u32 phase, u32 count)
     }
 
     do {
-        y = *(u8 PTR4*)S.y0;
-        a = *(u8 PTR4*)S.a0;
-        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + 1);
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
+        yptr = (u8 PTR4*)S.y0;
+        aptr = (u8 PTR4*)S.a0;
+        y = *yptr++;
+        a = *aptr++;
         *(u32 PTR4*)S.dest0 = RGB32_M_A(y, a);
+        S.a0 = (u32 PTR4*)aptr;
+        S.y0 = (u32 PTR4*)yptr;
         S.dest0 += YUV_PACKED_WORD_BYTES;
     } while (remaining-- != 0);
 }
@@ -2073,6 +2077,7 @@ static u32 dounaligned32acolm(u32 count, s32 phase)
     u8 PTR4* aptr;
     u8 y;
     u8 a;
+    u32 pixel;
 
     remaining = count;
     do {
@@ -2080,16 +2085,18 @@ static u32 dounaligned32acolm(u32 count, s32 phase)
         aptr = (u8 PTR4*)S.a0;
         y = *yptr++;
         a = *aptr++;
-        S.y0 = (u32 PTR4*)yptr;
+        pixel = RGB32_M_A(y, a);
+        *(u32 PTR4*)S.dest0 = pixel;
         S.a0 = (u32 PTR4*)aptr;
-        *(u32 PTR4*)S.dest0 = RGB32_M_A(y, a);
+        S.y0 = (u32 PTR4*)yptr;
         yptr = (u8 PTR4*)S.y1;
         aptr = (u8 PTR4*)S.a1;
         y = *yptr++;
         a = *aptr++;
-        S.y1 = (u32 PTR4*)yptr;
+        pixel = RGB32_M_A(y, a);
+        *(u32 PTR4*)S.dest1 = pixel;
         S.a1 = (u32 PTR4*)aptr;
-        *(u32 PTR4*)S.dest1 = RGB32_M_A(y, a);
+        S.y1 = (u32 PTR4*)yptr;
         S.dest0 += YUV_PACKED_WORD_BYTES;
         S.dest1 += YUV_PACKED_WORD_BYTES;
         remaining--;
