@@ -1905,9 +1905,9 @@ static void dounaligned32arow2w(u32 phase, u32 count)
         y = *yptr++;
         S.y0 = (u32 PTR4*)yptr;
         ytable = clamp_ytable[y];
-        a = *aptr;
+        a = *aptr++;
         pixel = ytable[S.b] | (ytable[S.gb] << 8) | (ytable[S.r] << 16) | ((u32)a << 24);
-        S.a0 = (u32 PTR4*)(aptr + 1);
+        S.a0 = (u32 PTR4*)aptr;
         ((u32 PTR4*)S.dest0)[0] = pixel;
         ((u32 PTR4*)S.dest0)[1] = pixel;
         S.dest0 += 8;
@@ -1999,9 +1999,9 @@ static void dounaligned32arow2h(u32 phase, u32 count)
         y = *yptr++;
         S.y0 = (u32 PTR4*)yptr;
         ytable = clamp_ytable[y];
-        a = *aptr;
+        a = *aptr++;
         pixel = ytable[S.b] | (ytable[S.gb] << 8) | (ytable[S.r] << 16) | ((u32)a << 24);
-        S.a0 = (u32 PTR4*)(aptr + 1);
+        S.a0 = (u32 PTR4*)aptr;
         *(u32 PTR4*)S.dest0 = pixel;
         *(u32 PTR4*)(S.dest0 + S.pitch) = pixel;
         S.dest0 += YUV_PACKED_WORD_BYTES;
@@ -2093,9 +2093,9 @@ static void dounaligned32arow2wh(u32 phase, u32 count)
         y = *yptr++;
         S.y0 = (u32 PTR4*)yptr;
         ytable = clamp_ytable[y];
-        a = *aptr;
+        a = *aptr++;
         pixel = ytable[S.b] | (ytable[S.gb] << 8) | (ytable[S.r] << 16) | ((u32)a << 24);
-        S.a0 = (u32 PTR4*)(aptr + 1);
+        S.a0 = (u32 PTR4*)aptr;
         ((u32 PTR4*)S.dest0)[0] = pixel;
         ((u32 PTR4*)S.dest0)[1] = pixel;
         *(u32 PTR4*)(S.dest0 + S.pitch) = pixel;
@@ -2253,9 +2253,9 @@ static void dounaligned32arow(u32 phase, u32 count)
         y = *yptr++;
         S.y0 = (u32 PTR4*)yptr;
         ytable = clamp_ytable[y];
-        a = *aptr;
+        a = *aptr++;
         *(u32 PTR4*)S.dest0 = ytable[S.b] | (ytable[S.gb] << 8) | (ytable[S.r] << 16) | ((u32)a << 24);
-        S.a0 = (u32 PTR4*)(aptr + 1);
+        S.a0 = (u32 PTR4*)aptr;
         S.dest0 += YUV_PACKED_WORD_BYTES;
         if (((phase ^ 1) & 1) != 0) {
             S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
