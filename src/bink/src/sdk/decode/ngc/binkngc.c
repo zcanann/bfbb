@@ -58,17 +58,16 @@ static inline u32 radcntlzw(u32 value)
 u32 mult64anddiv(u32 left, u32 right, u32 divisor)
 {
     u32 hi;
-    u32 lo;
     u32 quotient;
 
-    __asm__("mulhwu %0, %2, %3\n\tmullw %1, %2, %3" : "=&r"(hi), "=&r"(lo) : "r"(left), "r"(right));
+    __asm__("mulhwu %0, %1, %2\n\tmullw %1, %1, %2" : "=&r"(hi), "+r"(left) : "r"(right));
 
     /* Fast path for exact power-of-two divisors after the 64-bit multiply. */
     if (RAD_DIV_IS_POWER_OF_TWO(divisor)) {
         u32 clz = radcntlzw(divisor);
-        lo >>= (31 - clz);
+        left >>= (31 - clz);
         hi <<= (clz + 1);
-        return lo | hi;
+        return left | hi;
     }
 
     {
@@ -90,7 +89,7 @@ u32 mult64anddiv(u32 left, u32 right, u32 divisor)
             {
                 u32 prod_hi, prod_lo;
                 __asm__("mulhwu %0, %2, %3\n\tmullw %1, %2, %3" : "=&r"(prod_hi), "=&r"(prod_lo) : "r"(est), "r"(divisor));
-                __asm__("subfc %0, %3, %0\n\tsubfe %1, %2, %1" : "+r"(lo), "+r"(hi) : "r"(prod_hi), "r"(prod_lo));
+                __asm__("subfc %0, %3, %0\n\tsubfe %1, %2, %1" : "+r"(left), "+r"(hi) : "r"(prod_hi), "r"(prod_lo));
             }
         }
 
@@ -98,11 +97,11 @@ u32 mult64anddiv(u32 left, u32 right, u32 divisor)
             u32 step = recip * hi;
             u32 prod_hi, prod_lo;
             __asm__("mulhwu %0, %2, %3\n\tmullw %1, %2, %3" : "=&r"(prod_hi), "=&r"(prod_lo) : "r"(step), "r"(divisor));
-            __asm__("subfc %0, %3, %0\n\tsubfe %1, %2, %1" : "+r"(lo), "+r"(hi) : "r"(prod_hi), "r"(prod_lo));
+            __asm__("subfc %0, %3, %0\n\tsubfe %1, %2, %1" : "+r"(left), "+r"(hi) : "r"(prod_hi), "r"(prod_lo));
             quotient += step;
         }
 
-        quotient += lo / divisor;
+        quotient += left / divisor;
     }
 
     return quotient;
