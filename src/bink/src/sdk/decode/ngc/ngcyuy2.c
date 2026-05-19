@@ -309,7 +309,7 @@ void YUY2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, const u32 PTR4
     s32 pairs;
 
     pairs = YUY2_BLOCK_PAIRS(count);
-    for (; pairs != 0; --pairs) {
+    while (pairs-- != 0) {
         u32 y0 = *y++;
         u32 u0 = *u;
         u32 v0 = *v;
