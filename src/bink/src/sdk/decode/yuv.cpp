@@ -2036,8 +2036,8 @@ static u32 dounaligned32acol2h(u32 count, s32 phase)
         S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
         ytable = clamp_ytable[y];
         a = *(u8 PTR4*)S.a0;
-        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + 1);
         pixel = ytable[S.b] | (ytable[S.gb] << 8) | (ytable[S.r] << 16) | ((u32)a << 24);
+        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + 1);
         *(u32 PTR4*)S.dest0 = pixel;
         *(u32 PTR4*)(S.dest0 + S.pitch) = pixel;
         y = *(u8 PTR4*)S.y1;
