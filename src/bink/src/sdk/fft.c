@@ -132,8 +132,6 @@ void rdft(u32 n, s32 isgn, f32 PTR4* a, s32 PTR4* ip, f32 PTR4* w)
 void ddct(u32 n, s32 isgn, f32 PTR4* a, s32 PTR4* ip, f32 PTR4* w)
 {
     f32 xr;
-    f32 xi;
-    f32 yr;
     s32 j;
     s32 nw;
     s32 nc;
@@ -151,31 +149,14 @@ void ddct(u32 n, s32 isgn, f32 PTR4* a, s32 PTR4* ip, f32 PTR4* w)
     }
 
     if (isgn < 0) {
-        j = n - 2;
         xr = a[n - 1];
-        if (1 < j) {
-            f32 PTR4* p = a + j;
-            do {
-                f32 tmp;
-                f32 sum;
-                f32 diff;
-
-                xi = p[0];
-                j -= 2;
-                tmp = p[-1];
-                diff = xi - tmp;
-                p[1] = diff;
-                sum = xi + tmp;
-                p[0] = sum;
-                p -= 2;
-            } while (1 < j);
+        for (j = n - 2; j >= 2; j -= 2) {
+            a[j + 1] = a[j] - a[j - 1];
+            a[j] += a[j - 1];
         }
 
-        xi = a[0];
-        yr = xi + xr;
-        a[0] = yr;
-        xr = xi - xr;
-        a[1] = xr;
+        a[1] = a[0] - xr;
+        a[0] += xr;
 
         if ((s32)n > FFT_CFT_2_REAL_SIZE) {
             rftbsub(n, a, nc, w + nw);
@@ -195,29 +176,13 @@ void ddct(u32 n, s32 isgn, f32 PTR4* a, s32 PTR4* ip, f32 PTR4* w)
             cftfsub(FFT_CFT_2_REAL_SIZE, a, ip + FFT_WORK_INDEX_OFFSET, nw, w);
         }
 
-        xr = a[0];
-        j = 2;
-        xi = a[1];
-        a[0] = xr + xi;
-        xi = xr - xi;
-        if (j < (s32)n) {
-            f32 PTR4* p = a + 2;
-            do {
-                f32 tmp;
-                f32 sum;
-                f32 diff;
-
-                yr = p[0];
-                j += 2;
-                tmp = p[1];
-                diff = yr - tmp;
-                p[-1] = diff;
-                sum = yr + tmp;
-                p[0] = sum;
-                p += 2;
-            } while (j < (s32)n);
+        xr = a[0] - a[1];
+        a[0] += a[1];
+        for (j = 2; j < (s32)n; j += 2) {
+            a[j - 1] = a[j] - a[j + 1];
+            a[j] += a[j + 1];
         }
-        a[n - 1] = xi;
+        a[n - 1] = xr;
     }
 }
 
