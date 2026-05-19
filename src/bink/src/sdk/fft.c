@@ -2349,7 +2349,6 @@ static void rftbsub(s32 n, f32 PTR4* a, s32 nc, f32 PTR4* c)
 static void dctsub(s32 n, f32 PTR4* a, s32 nc, f32 PTR4* c)
 {
     f32 xr;
-    f32 yr;
     f32 wkr;
     f32 wki;
     s32 j;
@@ -2364,12 +2363,11 @@ static void dctsub(s32 n, f32 PTR4* a, s32 nc, f32 PTR4* c)
     for (j = 1; j < m; ++j) {
         k = n - j;
         kk += ks;
-        xr = a[k];
-        yr = a[j];
-        wkr = c[kk] + c[nc - kk];
-        wki = c[kk] - c[nc - kk];
-        a[j] = wki * yr + wkr * xr;
-        a[k] = wkr * yr - wki * xr;
+        wkr = c[kk] - c[nc - kk];
+        wki = c[kk] + c[nc - kk];
+        xr = wki * a[j] - wkr * a[k];
+        a[j] = wkr * a[j] + wki * a[k];
+        a[k] = xr;
     }
     a[m] *= c[0];
 }
