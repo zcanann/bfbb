@@ -91,6 +91,7 @@ u32 RGBshift[RGB_SHIFT_TABLE_SIZE] RAD_ATTRIBUTE_ALIGN(NGC_TABLE_ALIGNMENT) = { 
 #define NGC_CALLBACK_WORKING(io) (NGC_DATA(io)->callback_working)
 #define NGC_READ_START_TIME(io) (NGC_DATA(io)->read_start_time)
 #define NGC_OWNER(io) (NGC_DATA(io)->owner)
+#define NGC_DATA_FROM_DVD(fileInfo) ((NGCBinkIOData PTR4*)(fileInfo))
 #define NGC_VOLATILE_U32(field) (*(volatile u32 PTR4*)&(field))
 
 #define NGC_DVD_ALIGNMENT DVD_MIN_TRANSFER_SIZE
@@ -240,7 +241,7 @@ static void dosimulate(BINKIO PTR4* io, u32 read_size, u32 start)
 static void DVDReadCallback(s32 result, DVDFileInfo PTR4* fileInfo)
 {
     /* DVDFileInfo is the first field of NGCBinkIOData, so the callback can recover owner. */
-    BINKIO PTR4* io = ((NGCBinkIOData PTR4*)fileInfo)->owner;
+    BINKIO PTR4* io = NGC_DATA_FROM_DVD(fileInfo)->owner;
 
     if (NGC_CANCEL_READ(io) == 0) {
         u32 extra;
