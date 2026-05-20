@@ -800,7 +800,7 @@ check_tasks:
         if (NGC_SOUND_STATE(snd)->play_cursor >= play_pos || play_pos - NGC_SOUND_STATE(snd)->play_cursor > NGC_SOUND_STATE(snd)->frame_size) {
             index = 0;
             for (;;) {
-                if ((NGC_TASK(state, index)->owner & NGC_TASK_BUSY_FLAG) == 0) {
+                if (!NGC_TASK_BUSY(NGC_TASK(state, index))) {
                     break;
                 }
                 ++index;
