@@ -2907,7 +2907,7 @@ static void dounaligned16a4rowm2h(u32 phase, u32 count)
         a = *(u8 PTR4*)S.a0;
         S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + 1);
         S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
-        pixel = (u16)ytable[y] | (u16)clamp_a4[a];
+        pixel = (u16)clamp_a4[a] | (u16)ytable[y];
         *(u16 PTR4*)S.dest0 = pixel;
         *(u16 PTR4*)(S.dest0 + S.pitch) = pixel;
         S.dest0 += 2;
