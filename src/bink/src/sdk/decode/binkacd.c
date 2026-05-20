@@ -39,6 +39,9 @@
 #define BINKAC_TRANSFORM_ROOT_SCALE 2.0f
 #define BINKAC_START_FRAME 1
 #define BINKAC_MONO_CHANNELS 1
+#define BINKAC_BAND_SENTINEL_COUNT 1
+#define BINKAC_THRESHOLD_COUNT (TOTBANDS + BINKAC_BAND_SENTINEL_COUNT)
+#define BINKAC_BAND_LIMIT_COUNT(num_bands) ((num_bands) + BINKAC_BAND_SENTINEL_COUNT)
 #define BINKAC_RSQRT_NEWTON_HALF 0.5
 #define BINKAC_RSQRT_NEWTON_THREE 3.0
 #define BINKAC_LOAD32(ptr) (*(const u32 PTR4*)(ptr))
@@ -264,7 +267,7 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
                    u32 num_bands, const u32 PTR4* bands,
                    f32 transform_size_root)
 {
-    f32 threshold[TOTBANDS + 1];
+    f32 threshold[BINKAC_THRESHOLD_COUNT];
     VARBITS vb;
     f32 decoded[MAX_TRANSFORM];
     u32 ch;
@@ -380,7 +383,7 @@ HBINKAUDIODECOMP BinkAudioDecompressOpen(u32 rate, u32 chans, u32 flags)
     }
 
     num_bands = i;
-    pushmalloc((void PTR4* PTR4*)&bands, (num_bands + 1) * sizeof(*bands));
+    pushmalloc((void PTR4* PTR4*)&bands, BINKAC_BAND_LIMIT_COUNT(num_bands) * sizeof(*bands));
     pushmalloc((void PTR4* PTR4*)&fft_work, BINKAC_FFT_WORK_BYTES(transform_size_half, fft_work));
     if ((flags & BINKACNEWFORMAT) != 0) {
         pushmalloc((void PTR4* PTR4*)&fft_coeffs, BINKAC_DCT_COEFF_BYTES(transform_size));
