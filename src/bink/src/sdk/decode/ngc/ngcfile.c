@@ -106,6 +106,7 @@ u32 RGBshift[RGB_SHIFT_TABLE_SIZE] RAD_ATTRIBUTE_ALIGN(NGC_TABLE_ALIGNMENT) = { 
 #define NGC_READ_BLOCK_MASK (NGC_READ_BLOCK_SIZE - 1)
 #define NGC_ASYNC_WHOLE_BLOCK NGC_READ_BLOCK_SIZE
 #define NGC_DVD_PRIORITY_LOW 0
+#define NGC_DVD_ENTRY_NOT_FOUND -1
 #define NGC_MILLISECONDS_PER_SECOND 1000
 #define BINK_FILE_CURRENT_OFFSET -1
 #define NGC_DVD_STATUS_FAILED(status)                                                             \
@@ -578,7 +579,7 @@ s32 BinkFileOpen(BINKIO PTR4* io, const char PTR4* name, u32 flags)
     } else {
         s32 entry = DVDConvertPathToEntrynum(name);
 
-        if (entry == -1 || DVDFastOpen(entry, NGC_DVD(io)) == 0) {
+        if (entry == NGC_DVD_ENTRY_NOT_FOUND || DVDFastOpen(entry, NGC_DVD(io)) == 0) {
             return 0;
         }
     }
