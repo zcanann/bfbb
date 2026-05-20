@@ -73,6 +73,7 @@ extern const char BINK_ERROR_OUT_OF_MEMORY[];
 #define BINK_SOUND_ON 1
 #define BINK_VIDEO_OFF 0
 #define BINK_VIDEO_ON 1
+#define BINK_DEFAULT_TRACK_ID 0
 #define BINK_MASK_PLANE_GUARD_BYTES BINK_MASK_BLOCK_SIZE
 #define BINK_RECT_NO_SPLIT_INDEX -1
 #define BINK_RECT_MIN_SPLIT_SCORE 0
@@ -124,7 +125,7 @@ typedef struct BINKTRACKFRAME
 
 static char binkerr[BINK_ERROR_BUFFER_SIZE];
 
-static u32 TrackNums[BINK_MAX_TRACKS] = { 0 };
+static u32 TrackNums[BINK_MAX_TRACKS] = { BINK_DEFAULT_TRACK_ID };
 u32 LogoData[BINK_LOGO_DWORDS] = {
     0x42494B69, 0xF8390000, 0x01000000, 0xCC390000, 0x01000000, 0xE0000000, 0xFC000000, 0x0A000000,
     0x01000000, 0x00000000, 0x00000000, 0x35000000, 0x003A0000, 0xEC2B0000, 0xBE6315EC, 0x38C6B0CE,
@@ -969,7 +970,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
 
     open = (BINKIOOPEN)BinkFileOpen;
     if ((flags & BINKSNDTRACK) == 0) {
-        TrackNums[0] = 0;
+        TrackNums[0] = BINK_DEFAULT_TRACK_ID;
         TotTracks = 1;
     }
 
@@ -1246,7 +1247,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
                     }
                 }
             }
-            TrackNums[0] = 0;
+            TrackNums[0] = BINK_DEFAULT_TRACK_ID;
             TotTracks = 1;
             if (out->playingtracks != 0) {
                 u32 playing = 0;
