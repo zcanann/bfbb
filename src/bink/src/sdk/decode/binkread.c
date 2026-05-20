@@ -2514,24 +2514,16 @@ s32 BinkGetRects(HBINK bnk, u32 flags)
                 s32 best_index;
                 s32 best_score;
 
-                i = 0;
                 best_index = -1;
                 best_score = 0;
-                if (i < bnk->NumRects) {
-                    s32 PTR4* score;
+                for (i = 0; i < bnk->NumRects; ++i) {
+                    s32 score_value;
 
-                    score = scores;
-                    do {
-                        s32 score_value;
-
-                        score_value = *score;
-                        if (score_value > best_score) {
-                            best_score = score_value;
-                            best_index = i;
-                        }
-                        ++score;
-                        ++i;
-                    } while (i < bnk->NumRects);
+                    score_value = scores[i];
+                    if (score_value > best_score) {
+                        best_score = score_value;
+                        best_index = i;
+                    }
                 }
                 if (best_index == -1) {
                     break;
