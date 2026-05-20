@@ -24,6 +24,8 @@
 #define VQLENGTH 8
 #define BINKAC_S16_MAX 0x7fff
 #define BINKAC_S16_MIN (-0x8000)
+#define BINKAC_DC_COEFF_0 0
+#define BINKAC_DC_COEFF_1 1
 #define BINKAC_FIRST_COEFF 2
 #define BINKAC_BAND_LIMIT_SCALE 2
 #define BINKAC_THRESHOLD_BITS 8
@@ -292,8 +294,8 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
     for (ch = 0; ch < chans; ++ch) {
         u32 i;
 
-        channel[0] = fxptof(read_bits(&vb, FXPBITS));
-        channel[1] = fxptof(read_bits(&vb, FXPBITS));
+        channel[BINKAC_DC_COEFF_0] = fxptof(read_bits(&vb, FXPBITS));
+        channel[BINKAC_DC_COEFF_1] = fxptof(read_bits(&vb, FXPBITS));
 
         for (i = 0; i < num_bands; ++i) {
             s32 q = read_bits(&vb, BINKAC_THRESHOLD_BITS);
