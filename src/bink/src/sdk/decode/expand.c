@@ -8,6 +8,8 @@
 #define BINK_BLOCK_SHIFT 3
 #define BINK_BLOCK_SIDE 8
 #define BINK_BLOCK_PIXELS (BINK_BLOCK_SIDE * BINK_BLOCK_SIDE)
+#define BINK_BLOCK_ROW_WORD_0 0
+#define BINK_BLOCK_ROW_WORD_1 1
 #define BINK_RUN_BLOCK_LAST_PIXEL (BINK_BLOCK_PIXELS - 1)
 #define BINK_BLOCK_ROUND_MASK (BINK_BLOCK_SIDE - 1)
 #define BINK_BLOCK_ROUND(value) (((value) + BINK_BLOCK_ROUND_MASK) & ~BINK_BLOCK_ROUND_MASK)
@@ -1035,8 +1037,10 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
             case BINK_BLOCK_SKIP: {
                 u32 i;
                 for (i = 0; i < BINK_BLOCK_SIDE; ++i) {
-                    BINK_BLOCK_ROW_WORD(dest, pitch, i, 0) = BINK_BLOCK_ROW_WORD(old, pitch, i, 0);
-                    BINK_BLOCK_ROW_WORD(dest, pitch, i, 1) = BINK_BLOCK_ROW_WORD(old, pitch, i, 1);
+                    BINK_BLOCK_ROW_WORD(dest, pitch, i, BINK_BLOCK_ROW_WORD_0) =
+                        BINK_BLOCK_ROW_WORD(old, pitch, i, BINK_BLOCK_ROW_WORD_0);
+                    BINK_BLOCK_ROW_WORD(dest, pitch, i, BINK_BLOCK_ROW_WORD_1) =
+                        BINK_BLOCK_ROW_WORD(old, pitch, i, BINK_BLOCK_ROW_WORD_1);
                 }
                 break;
             }
@@ -1051,8 +1055,10 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 yoff.cur_ptr++;
                 motion = BINK_MOTION_SOURCE(old, pitch, mx, my);
                 for (i = 0; i < BINK_BLOCK_SIDE; ++i) {
-                    BINK_BLOCK_ROW_WORD(dest, pitch, i, 0) = BINK_BLOCK_ROW_WORD(motion, pitch, i, 0);
-                    BINK_BLOCK_ROW_WORD(dest, pitch, i, 1) = BINK_BLOCK_ROW_WORD(motion, pitch, i, 1);
+                    BINK_BLOCK_ROW_WORD(dest, pitch, i, BINK_BLOCK_ROW_WORD_0) =
+                        BINK_BLOCK_ROW_WORD(motion, pitch, i, BINK_BLOCK_ROW_WORD_0);
+                    BINK_BLOCK_ROW_WORD(dest, pitch, i, BINK_BLOCK_ROW_WORD_1) =
+                        BINK_BLOCK_ROW_WORD(motion, pitch, i, BINK_BLOCK_ROW_WORD_1);
                 }
                 break;
             }
@@ -1067,10 +1073,10 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 yoff.cur_ptr++;
                 motion = BINK_MOTION_SOURCE(old, pitch, mx, my);
                 for (i = 0; i < BINK_BLOCK_SIDE; ++i) {
-                    BINK_LINEAR_BLOCK_ROW_WORD(motion_block, i, 0) =
-                        BINK_BLOCK_ROW_WORD(motion, pitch, i, 0);
-                    BINK_LINEAR_BLOCK_ROW_WORD(motion_block, i, 1) =
-                        BINK_BLOCK_ROW_WORD(motion, pitch, i, 1);
+                    BINK_LINEAR_BLOCK_ROW_WORD(motion_block, i, BINK_BLOCK_ROW_WORD_0) =
+                        BINK_BLOCK_ROW_WORD(motion, pitch, i, BINK_BLOCK_ROW_WORD_0);
+                    BINK_LINEAR_BLOCK_ROW_WORD(motion_block, i, BINK_BLOCK_ROW_WORD_1) =
+                        BINK_BLOCK_ROW_WORD(motion, pitch, i, BINK_BLOCK_ROW_WORD_1);
                 }
                 ReadBPLossyWithMotion((char PTR4*)dest, (s32)pitch, (BPBITSTREAM PTR4*)&bitstate,
                                       exp_get_bits(&bitstate, BINK_RESIDUE_LIMIT_BITS),
@@ -1098,10 +1104,10 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 yoff.cur_ptr++;
                 motion = BINK_MOTION_SOURCE(old, pitch, mx, my);
                 for (i = 0; i < BINK_BLOCK_SIDE; ++i) {
-                    BINK_LINEAR_BLOCK_ROW_WORD(motion_block, i, 0) =
-                        BINK_BLOCK_ROW_WORD(motion, pitch, i, 0);
-                    BINK_LINEAR_BLOCK_ROW_WORD(motion_block, i, 1) =
-                        BINK_BLOCK_ROW_WORD(motion, pitch, i, 1);
+                    BINK_LINEAR_BLOCK_ROW_WORD(motion_block, i, BINK_BLOCK_ROW_WORD_0) =
+                        BINK_BLOCK_ROW_WORD(motion, pitch, i, BINK_BLOCK_ROW_WORD_0);
+                    BINK_LINEAR_BLOCK_ROW_WORD(motion_block, i, BINK_BLOCK_ROW_WORD_1) =
+                        BINK_BLOCK_ROW_WORD(motion, pitch, i, BINK_BLOCK_ROW_WORD_1);
                 }
                 ReadBPLossless(dct_block, (BPBITSTREAM PTR4*)&bitstate);
                 quant = exp_get_bits(&bitstate, BINK_DCT_QUANT_BITS);
@@ -1116,8 +1122,8 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
                 colors.cur_ptr++;
                 for (i = 0; i < BINK_BLOCK_SIDE; ++i) {
-                    BINK_BLOCK_ROW_WORD(dest, pitch, i, 0) = fill;
-                    BINK_BLOCK_ROW_WORD(dest, pitch, i, 1) = fill;
+                    BINK_BLOCK_ROW_WORD(dest, pitch, i, BINK_BLOCK_ROW_WORD_0) = fill;
+                    BINK_BLOCK_ROW_WORD(dest, pitch, i, BINK_BLOCK_ROW_WORD_1) = fill;
                 }
                 break;
             }
@@ -1130,10 +1136,10 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
 
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
                 for (i = 0; i < BINK_BLOCK_SIDE; ++i) {
-                    BINK_BLOCK_ROW_WORD(dest, pitch, i, 0) =
-                        BINK_LINEAR_BLOCK_ROW_WORD(colors.cur_ptr, i, 0);
-                    BINK_BLOCK_ROW_WORD(dest, pitch, i, 1) =
-                        BINK_LINEAR_BLOCK_ROW_WORD(colors.cur_ptr, i, 1);
+                    BINK_BLOCK_ROW_WORD(dest, pitch, i, BINK_BLOCK_ROW_WORD_0) =
+                        BINK_LINEAR_BLOCK_ROW_WORD(colors.cur_ptr, i, BINK_BLOCK_ROW_WORD_0);
+                    BINK_BLOCK_ROW_WORD(dest, pitch, i, BINK_BLOCK_ROW_WORD_1) =
+                        BINK_LINEAR_BLOCK_ROW_WORD(colors.cur_ptr, i, BINK_BLOCK_ROW_WORD_1);
                 }
                 colors.cur_ptr += BINK_COLOR_BLOCK_BYTES;
                 break;
