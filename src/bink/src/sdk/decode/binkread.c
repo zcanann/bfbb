@@ -74,6 +74,8 @@ extern const char BINK_ERROR_OUT_OF_MEMORY[];
 #define BINK_VIDEO_OFF 0
 #define BINK_VIDEO_ON 1
 #define BINK_MASK_PLANE_GUARD_BYTES BINK_MASK_BLOCK_SIZE
+#define BINK_RECT_NO_SPLIT_INDEX -1
+#define BINK_RECT_MIN_SPLIT_SCORE 0
 #define BINK_MEMORY_HEADER_WORDS (sizeof(BINKHDR) / sizeof(u32))
 #define BINK_SOUND_BUFFER_ALIGNMENT 0x100
 #define BINK_SOUND_SAMPLE_ALIGNMENT 4
@@ -2516,8 +2518,8 @@ s32 BinkGetRects(HBINK bnk, u32 flags)
                 s32 best_index;
                 s32 best_score;
 
-                best_index = -1;
-                best_score = 0;
+                best_index = BINK_RECT_NO_SPLIT_INDEX;
+                best_score = BINK_RECT_MIN_SPLIT_SCORE;
                 for (i = 0; i < bnk->NumRects; ++i) {
                     s32 score_value;
 
@@ -2527,7 +2529,7 @@ s32 BinkGetRects(HBINK bnk, u32 flags)
                         best_index = i;
                     }
                 }
-                if (best_index == -1) {
+                if (best_index == BINK_RECT_NO_SPLIT_INDEX) {
                     break;
                 }
 
