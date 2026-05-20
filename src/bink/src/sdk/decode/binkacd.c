@@ -46,6 +46,7 @@
 #define BINKAC_BAND_LIMIT_COUNT(num_bands) ((num_bands) + BINKAC_BAND_SENTINEL_COUNT)
 #define BINKAC_RSQRT_NEWTON_HALF 0.5
 #define BINKAC_RSQRT_NEWTON_THREE 3.0
+#define BINKAC_SAMPLE_COUNT_UNDERFLOW ((u32)-1)
 #define BINKAC_LOAD32(ptr) (*(const u32 PTR4*)(ptr))
 #define BINKAC_BAND_SAMPLE_LIMIT(band_limits, band) ((band_limits)[band] * BINKAC_BAND_LIMIT_SCALE)
 #define BINKAC_RLE_SAMPLE_RUN(index) (bink_rlelens_snd[(index)] * VQLENGTH)
@@ -128,7 +129,7 @@ static void quanttos16chans2(s16 PTR4* dest, const f32 PTR4* src, f32 scale, u32
     u32 stride;
 
     remaining = count - 1;
-    if (remaining != (u32)-1) {
+    if (remaining != BINKAC_SAMPLE_COUNT_UNDERFLOW) {
         stride = count;
         do {
             s16 PTR4* out = dest;
