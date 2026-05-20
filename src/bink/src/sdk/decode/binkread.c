@@ -76,6 +76,7 @@ extern const char BINK_ERROR_OUT_OF_MEMORY[];
 #define BINK_MASK_PLANE_GUARD_BYTES BINK_MASK_BLOCK_SIZE
 #define BINK_RECT_NO_SPLIT_INDEX -1
 #define BINK_RECT_MIN_SPLIT_SCORE 0
+#define BINK_TRACK_NOT_FOUND -1
 #define BINK_MEMORY_HEADER_WORDS (sizeof(BINKHDR) / sizeof(u32))
 #define BINK_SOUND_BUFFER_ALIGNMENT 0x100
 #define BINK_SOUND_SAMPLE_ALIGNMENT 4
@@ -2642,7 +2643,7 @@ static s32 idtoindex(HBINK bnk, u32 trackid)
         }
     }
 
-    return -1;
+    return BINK_TRACK_NOT_FOUND;
 }
 
 void BinkSetVolume(HBINK bnk, u32 trackid, s32 volume)
@@ -2653,7 +2654,7 @@ void BinkSetVolume(HBINK bnk, u32 trackid, s32 volume)
 
     if (bnk != 0 && bnk->playingtracks != 0) {
         index = idtoindex(bnk, trackid);
-        if (index != -1) {
+        if (index != BINK_TRACK_NOT_FOUND) {
             snd = &bnk->bsnd[index];
             volume_callback = snd->Volume;
             if (volume_callback != 0) {
@@ -2671,7 +2672,7 @@ void BinkSetMixBins(HBINK bnk, u32 trackid, u32 PTR4* mix_bins, u32 total)
 
     if (bnk != 0 && bnk->playingtracks != 0) {
         index = idtoindex(bnk, trackid);
-        if (index != -1) {
+        if (index != BINK_TRACK_NOT_FOUND) {
             snd = &bnk->bsnd[index];
             mix_bins_callback = snd->MixBins;
             if (mix_bins_callback != 0) {
@@ -2689,7 +2690,7 @@ void BinkSetMixBinVolumes(HBINK bnk, u32 trackid, u32 PTR4* vol_mix_bins, s32 PT
 
     if (bnk != 0 && bnk->playingtracks != 0) {
         index = idtoindex(bnk, trackid);
-        if (index != -1) {
+        if (index != BINK_TRACK_NOT_FOUND) {
             snd = &bnk->bsnd[index];
             mix_bin_vols_callback = snd->MixBinVols;
             if (mix_bin_vols_callback != 0) {
@@ -2707,7 +2708,7 @@ void BinkSetPan(HBINK bnk, u32 trackid, s32 pan)
 
     if (bnk != 0 && bnk->playingtracks != 0) {
         index = idtoindex(bnk, trackid);
-        if (index != -1) {
+        if (index != BINK_TRACK_NOT_FOUND) {
             snd = &bnk->bsnd[index];
             pan_callback = snd->Pan;
             if (pan_callback != 0) {
