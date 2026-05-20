@@ -46,6 +46,7 @@ f32 powf(f32 x, f32 y);
 #define AX_PB_FORMAT_PCM16 10
 #define AX_PB_FORMAT_PCM8 25
 #define AX_MIX_MODE_DEFAULT 3
+#define AX_ADDR_LOOP_ON 1
 #define AX_ADDR_HIGH_SHIFT 16
 #define AX_SYNC_VOLUME_MIX (AX_SYNC_FLAG_COPYVOL | AX_SYNC_FLAG_COPYAXPBMIX | AX_SYNC_FLAG_COPYMXRCTRL)
 
@@ -402,7 +403,7 @@ static s32 NGC_SoundInit(BINKSND PTR4* snd)
                state->address_shift) -
               1;
 
-        addr.loopFlag = 1;
+        addr.loopFlag = AX_ADDR_LOOP_ON;
         addr.format = (NGC_SND(snd)->bits == NGC_SOUND_BITS_16) ? AX_PB_FORMAT_PCM16 : AX_PB_FORMAT_PCM8;
         addr.loopAddressHi = start >> AX_ADDR_HIGH_SHIFT;
         addr.loopAddressLo = start;
