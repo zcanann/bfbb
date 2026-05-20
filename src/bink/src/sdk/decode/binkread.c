@@ -106,6 +106,8 @@ extern const char BINK_ERROR_OUT_OF_MEMORY[];
 #define BINK_FIRST_FRAME 1
 #define BINK_RECTS_UNCALCULATED -1
 #define BINK_MAX_CONSECUTIVE_SKIPS 4
+#define BINK_RUNTIME_CURRENT_SLOT 0
+#define BINK_RUNTIME_PREVIOUS_SLOT 1
 #define BINK_ARRAY_BYTES(count, ptr) ((count) * sizeof(*(ptr)))
 #define BINK_FRAME_OFFSETS_BYTES(frames, ptr) (((frames) + 1) * sizeof(*(ptr)))
 #define BINK_SOUND_BUFFER_BYTES(bytes) (((bytes) + BINK_SOUND_BUFFER_ALIGN_MASK) & ~BINK_SOUND_BUFFER_ALIGN_MASK)
@@ -1119,12 +1121,12 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
     if (out != 0) {
         memcpy(out, &bnk, sizeof(*out));
         out->bio.bink = out;
-        out->rtadecomptimes[0] = 0;
-        out->rtvdecomptimes[0] = 0;
-        out->rtblittimes[0] = 0;
-        out->rtreadtimes[0] = 0;
-        out->rtidlereadtimes[0] = 0;
-        out->rtthreadreadtimes[0] = 0;
+        out->rtadecomptimes[BINK_RUNTIME_CURRENT_SLOT] = 0;
+        out->rtvdecomptimes[BINK_RUNTIME_CURRENT_SLOT] = 0;
+        out->rtblittimes[BINK_RUNTIME_CURRENT_SLOT] = 0;
+        out->rtreadtimes[BINK_RUNTIME_CURRENT_SLOT] = 0;
+        out->rtidlereadtimes[BINK_RUNTIME_CURRENT_SLOT] = 0;
+        out->rtthreadreadtimes[BINK_RUNTIME_CURRENT_SLOT] = 0;
 
         if ((flags & BINKFROMMEMORY) == 0) {
             out->bio.ReadHeader(&out->bio, -1, out->tracksizes,
@@ -1546,20 +1548,20 @@ s32 BinkDoFrame(HBINK bnk)
     memmove(bnk->rtidlereadtimes + 1, bnk->rtidlereadtimes, bnk->runtimemoveamt);
     memmove(bnk->rtthreadreadtimes + 1, bnk->rtthreadreadtimes, bnk->runtimemoveamt);
 
-    bnk->rtframetimes[0] = bnk->startframetime;
-    bnk->rtvdecomptimes[0] = bnk->timevdecomp;
-    bnk->rtadecomptimes[0] = bnk->timeadecomp;
-    bnk->rtblittimes[0] = bnk->timeblit;
-    bnk->rtreadtimes[0] = bnk->bio.ForegroundTime;
-    bnk->rtidlereadtimes[0] = bnk->bio.IdleTime;
-    bnk->rtthreadreadtimes[0] = bnk->bio.ThreadTime;
+    bnk->rtframetimes[BINK_RUNTIME_CURRENT_SLOT] = bnk->startframetime;
+    bnk->rtvdecomptimes[BINK_RUNTIME_CURRENT_SLOT] = bnk->timevdecomp;
+    bnk->rtadecomptimes[BINK_RUNTIME_CURRENT_SLOT] = bnk->timeadecomp;
+    bnk->rtblittimes[BINK_RUNTIME_CURRENT_SLOT] = bnk->timeblit;
+    bnk->rtreadtimes[BINK_RUNTIME_CURRENT_SLOT] = bnk->bio.ForegroundTime;
+    bnk->rtidlereadtimes[BINK_RUNTIME_CURRENT_SLOT] = bnk->bio.IdleTime;
+    bnk->rtthreadreadtimes[BINK_RUNTIME_CURRENT_SLOT] = bnk->bio.ThreadTime;
 
     if (bnk->firstframetime == 0) {
         u32 frame_time;
 
         frame_time = mult64anddiv(BINK_MILLISECONDS_PER_SECOND, bnk->fileframeratediv,
                                   bnk->fileframerate);
-        bnk->rtframetimes[1] = bnk->startframetime - frame_time;
+        bnk->rtframetimes[BINK_RUNTIME_PREVIOUS_SLOT] = bnk->startframetime - frame_time;
         bnk->bio.ThreadTime = 0;
         bnk->bio.IdleTime = 0;
         bnk->firstframetime = bnk->startframetime;
@@ -2330,18 +2332,24 @@ void BinkGetRealtime(HBINK bink, BINKREALTIME PTR4* run, u32 frames)
 
     run->Frames = frames;
 
-    diff = bink->rtframetimes[0] - bink->rtframetimes[frames];
+    diff = bink->rtframetimes[BINK_RUNTIME_CURRENT_SLOT] - bink->rtframetimes[frames];
     run->FramesTime = diff;
     if (diff == 0) {
         run->FramesTime = 1;
     }
 
-    run->FramesVideoDecompTime = bink->rtvdecomptimes[0] - bink->rtvdecomptimes[frames];
-    run->FramesAudioDecompTime = bink->rtadecomptimes[0] - bink->rtadecomptimes[frames];
-    run->FramesBlitTime = bink->rtblittimes[0] - bink->rtblittimes[frames];
-    run->FramesReadTime = bink->rtreadtimes[0] - bink->rtreadtimes[frames];
-    run->FramesIdleReadTime = bink->rtidlereadtimes[0] - bink->rtidlereadtimes[frames];
-    run->FramesThreadReadTime = bink->rtthreadreadtimes[0] - bink->rtthreadreadtimes[frames];
+    run->FramesVideoDecompTime =
+        bink->rtvdecomptimes[BINK_RUNTIME_CURRENT_SLOT] - bink->rtvdecomptimes[frames];
+    run->FramesAudioDecompTime =
+        bink->rtadecomptimes[BINK_RUNTIME_CURRENT_SLOT] - bink->rtadecomptimes[frames];
+    run->FramesBlitTime =
+        bink->rtblittimes[BINK_RUNTIME_CURRENT_SLOT] - bink->rtblittimes[frames];
+    run->FramesReadTime =
+        bink->rtreadtimes[BINK_RUNTIME_CURRENT_SLOT] - bink->rtreadtimes[frames];
+    run->FramesIdleReadTime =
+        bink->rtidlereadtimes[BINK_RUNTIME_CURRENT_SLOT] - bink->rtidlereadtimes[frames];
+    run->FramesThreadReadTime =
+        bink->rtthreadreadtimes[BINK_RUNTIME_CURRENT_SLOT] - bink->rtthreadreadtimes[frames];
 }
 
 static s32 smallestrect(BINKRECT PTR4* out, const u8 PTR4* mask, s32 pitch, const BINKRECT PTR4* rect)
