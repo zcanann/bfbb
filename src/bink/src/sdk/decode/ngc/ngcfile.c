@@ -109,6 +109,10 @@ u32 RGBshift[RGB_SHIFT_TABLE_SIZE] RAD_ATTRIBUTE_ALIGN(NGC_TABLE_ALIGNMENT) = { 
 #define NGC_DVD_ENTRY_NOT_FOUND -1
 #define NGC_MILLISECONDS_PER_SECOND 1000
 #define BINK_FILE_CURRENT_OFFSET -1
+#define NGC_DVD_STATUS_IDLE(status) \
+    ((status) == DVD_STATE_END || (status) == DVD_STATE_CANCELED)
+#define NGC_DVD_STATUS_BUSY_OR_WAITING(status) \
+    ((u32)((status) - DVD_STATE_BUSY) <= (DVD_STATE_WAITING - DVD_STATE_BUSY))
 #define NGC_DVD_STATUS_FAILED(status)                                                             \
     ((status) <= DVD_STATE_IGNORED ?                                                              \
          ((status) > DVD_STATE_WAITING || (status) == DVD_STATE_FATAL_ERROR) :                     \
@@ -316,8 +320,7 @@ static void ReadKickoff(BINKIO PTR4* io)
         return;
     }
 
-    if (NGC_CANCEL_READ(io) == 0 &&
-        (status == DVD_STATE_END || status == DVD_STATE_CANCELED)) {
+    if (NGC_CANCEL_READ(io) == 0 && NGC_DVD_STATUS_IDLE(status)) {
         if (NGC_FREE_SIZE(io) < NGC_READ_BLOCK_SIZE) {
             io->CurBufSize = io->CurBufUsed;
         } else if (remaining != 0) {
@@ -389,7 +392,7 @@ static void CancelReadRequests(BINKIO PTR4* io)
 
     do {
         status = DVDGetCommandBlockStatus(&NGC_DVD(io)->cb);
-    } while ((u32)(status - DVD_STATE_BUSY) <= (DVD_STATE_WAITING - DVD_STATE_BUSY));
+    } while (NGC_DVD_STATUS_BUSY_OR_WAITING(status));
 
     NGC_VOLATILE_U32(NGC_CANCEL_READ(io)) = 0;
     io->DoingARead = 0;
