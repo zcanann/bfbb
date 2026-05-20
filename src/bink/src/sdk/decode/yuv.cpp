@@ -464,7 +464,15 @@ static void setup_scaling(u32 flags, u32 PTR4* pitch, u32 width, u32 srcpitch, B
         checkzoombufs(YUV_BLIT_ROW_BYTES(width, blits));
         *pitch *= 2;
         *pitch_delta = *pitch - YUV_BLIT_ROW_BYTES(width, blits);
-        if ((flags & BINKGRAYSCALE) == 0) {
+        if ((flags & BINKGRAYSCALE) != 0) {
+            step = blits->masked_step;
+            EVENx = blits->masked;
+            ODDx = EVENx;
+            EVEN = (CoreBlitFn)zoom2heven;
+            ODD = (CoreBlitFn)zoom2hodd;
+            dounalignedrow = blits->rowm2h;
+            dounalignedcol = blits->colm2h;
+        } else {
             step = blits->odd_step;
             EVENx = blits->even;
             ODDx = blits->odd;
@@ -475,18 +483,16 @@ static void setup_scaling(u32 flags, u32 PTR4* pitch, u32 width, u32 srcpitch, B
             if (step < blits->even_step) {
                 step = blits->even_step;
             }
-        } else {
-            step = blits->masked_step;
-            EVENx = blits->masked;
-            ODDx = EVENx;
-            EVEN = (CoreBlitFn)zoom2heven;
-            ODD = (CoreBlitFn)zoom2hodd;
-            dounalignedrow = blits->rowm2h;
-            dounalignedcol = blits->colm2h;
         }
     } else if (mode == BINKCOPY2XW || mode == BINKCOPY2XWHI) {
         *pitch_delta = *pitch - YUV_BLIT_ROW_BYTES_X2(width, blits);
-        if ((flags & BINKGRAYSCALE) == 0) {
+        if ((flags & BINKGRAYSCALE) != 0) {
+            step = blits->masked_x2_step;
+            EVEN = blits->masked_x2;
+            ODD = EVEN;
+            dounalignedrow = blits->rowm2w;
+            dounalignedcol = blits->colm2w;
+        } else {
             step = blits->odd_x2_step;
             EVEN = blits->even_x2;
             ODD = blits->odd_x2;
@@ -495,18 +501,20 @@ static void setup_scaling(u32 flags, u32 PTR4* pitch, u32 width, u32 srcpitch, B
             if (step < blits->even_x2_step) {
                 step = blits->even_x2_step;
             }
-        } else {
-            step = blits->masked_x2_step;
-            EVEN = blits->masked_x2;
-            ODD = EVEN;
-            dounalignedrow = blits->rowm2w;
-            dounalignedcol = blits->colm2w;
         }
     } else if (mode == BINKCOPY2XWH) {
         checkzoombufs(YUV_BLIT_ROW_BYTES_X2(width, blits));
         *pitch *= 2;
         *pitch_delta = *pitch - YUV_BLIT_ROW_BYTES_X2(width, blits);
-        if ((flags & BINKGRAYSCALE) == 0) {
+        if ((flags & BINKGRAYSCALE) != 0) {
+            step = blits->masked_x2_step;
+            EVENx = blits->masked_x2;
+            ODDx = EVENx;
+            EVEN = (CoreBlitFn)zoom2heven;
+            ODD = (CoreBlitFn)zoom2hodd;
+            dounalignedrow = blits->rowm2wh;
+            dounalignedcol = blits->colm2wh;
+        } else {
             step = blits->odd_x2_step;
             EVENx = blits->even_x2;
             ODDx = blits->odd_x2;
@@ -517,18 +525,16 @@ static void setup_scaling(u32 flags, u32 PTR4* pitch, u32 width, u32 srcpitch, B
             if (step < blits->even_x2_step) {
                 step = blits->even_x2_step;
             }
-        } else {
-            step = blits->masked_x2_step;
-            EVENx = blits->masked_x2;
-            ODDx = EVENx;
-            EVEN = (CoreBlitFn)zoom2heven;
-            ODD = (CoreBlitFn)zoom2hodd;
-            dounalignedrow = blits->rowm2wh;
-            dounalignedcol = blits->colm2wh;
         }
     } else {
         *pitch_delta = *pitch - YUV_BLIT_ROW_BYTES(width, blits);
-        if ((flags & BINKGRAYSCALE) == 0) {
+        if ((flags & BINKGRAYSCALE) != 0) {
+            step = blits->masked_step;
+            EVEN = blits->masked;
+            ODD = EVEN;
+            dounalignedrow = blits->rowm;
+            dounalignedcol = blits->colm;
+        } else {
             step = blits->odd_step;
             EVEN = blits->even;
             ODD = blits->odd;
@@ -537,12 +543,6 @@ static void setup_scaling(u32 flags, u32 PTR4* pitch, u32 width, u32 srcpitch, B
             if (step < blits->even_step) {
                 step = blits->even_step;
             }
-        } else {
-            step = blits->masked_step;
-            EVEN = blits->masked;
-            ODD = EVEN;
-            dounalignedrow = blits->rowm;
-            dounalignedcol = blits->colm;
         }
     }
 
