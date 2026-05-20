@@ -78,6 +78,8 @@ typedef BITSTYPE EXPBITSTYPE;
 #define BINK_BUNDLE_COUNT_BITS(width, count_base) \
     getbitlevelvar(((width) + (count_base)) & EXP_U16_MASK)
 #define BINK_BUNDLE_INITIAL_VALUE(shift) (1 << ((shift) - 1))
+#define BINK_BUNDLE_NO_INITIAL_VALUE 0
+#define BINK_BUNDLE_USE_INITIAL_VALUE 1
 #define BINK_BUNDLE_STORAGE_SIZE(width, rows, bits, pitch) \
     ((((width) * (bits)) >> BINK_BLOCK_SHIFT) + \
      ((BINK_BLOCK_ROWS(rows) * (pitch) * (bits)) >> BINK_BLOCK_SHIFT))
@@ -969,23 +971,26 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
     VarBitsOpen(bitstate, bundles);
 
     OpenReadBundle(table->typeptr, &block_types,
-                   BINK_BUNDLE_WIDTH, width, BINK_BLOCK_TYPE_BITS, 1, 0);
+                   BINK_BUNDLE_WIDTH, width, BINK_BLOCK_TYPE_BITS, 1,
+                   BINK_BUNDLE_NO_INITIAL_VALUE);
     OpenReadBundle(table->type16ptr, &subblock_types,
-                   BINK_BUNDLE_WIDTH, width >> BINK_CHROMA_SHIFT, BINK_BLOCK_TYPE_BITS, 1, 0);
+                   BINK_BUNDLE_WIDTH, width >> BINK_CHROMA_SHIFT, BINK_BLOCK_TYPE_BITS, 1,
+                   BINK_BUNDLE_NO_INITIAL_VALUE);
     OpenReadBundle(table->colorptr, &colors, BINK_BUNDLE_WIDTH, width,
-                   BINK_COLOR_BITS, BINK_COLOR_BLOCK_BYTES, 0);
+                   BINK_COLOR_BITS, BINK_COLOR_BLOCK_BYTES, BINK_BUNDLE_NO_INITIAL_VALUE);
     OpenReadBundle(table->bits2ptr, &patterns_bundle,
-                   BINK_BUNDLE_WIDTH, width, BINK_PATTERN_BITS, BINK_PATTERN_BLOCK_BYTES, 0);
+                   BINK_BUNDLE_WIDTH, width, BINK_PATTERN_BITS, BINK_PATTERN_BLOCK_BYTES,
+                   BINK_BUNDLE_NO_INITIAL_VALUE);
     OpenReadBundle(table->motionXptr, &xoff, BINK_BUNDLE_WIDTH, width,
-                   BINK_MOTION_BITS, 1, 1);
+                   BINK_MOTION_BITS, 1, BINK_BUNDLE_USE_INITIAL_VALUE);
     OpenReadBundle(table->motionYptr, &yoff, BINK_BUNDLE_WIDTH, width,
-                   BINK_MOTION_BITS, 1, 1);
+                   BINK_MOTION_BITS, 1, BINK_BUNDLE_USE_INITIAL_VALUE);
     OpenReadBundle(table->dctptr, &intra_dc, BINK_BUNDLE_WIDTH,
-                   width, BINK_DC_START_BITS, 1, 0);
+                   width, BINK_DC_START_BITS, 1, BINK_BUNDLE_NO_INITIAL_VALUE);
     OpenReadBundle(table->mdctptr, &inter_dc, BINK_BUNDLE_WIDTH,
-                   width, BINK_DC_START_BITS, 1, 1);
+                   width, BINK_DC_START_BITS, 1, BINK_BUNDLE_USE_INITIAL_VALUE);
     OpenReadBundle(table->patptr, &runs, BINK_BUNDLE_WIDTH, width,
-                   BINK_RUN_BITS, BINK_RUN_BLOCK_BYTES, 0);
+                   BINK_RUN_BITS, BINK_RUN_BLOCK_BYTES, BINK_BUNDLE_NO_INITIAL_VALUE);
 
     StartReadHuff4Bundle(&block_types, &bitstate);
     StartReadHuff4Bundle(&subblock_types, &bitstate);
