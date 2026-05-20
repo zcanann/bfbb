@@ -117,6 +117,12 @@ typedef union BPLOSSYBLOCK
     s16 words[BP_LOSSY_OUTPUT_COEFFS];
 } BPLOSSYBLOCK;
 
+typedef struct BPLOSSYREADTREE
+{
+    u8 roots[BP_LOSSY_ROOT_NODES];
+    u8 nodes[BP_BLOCK_COEFFS];
+} BPLOSSYREADTREE;
+
 void readlossy(void PTR4* out, BPBITSTREAM PTR4* bits, s32 limit);
 
 #define BP_STREAM(bits) ((BPBITSTREAM*)(bits))
@@ -1272,7 +1278,7 @@ void readlossy(void PTR4* out, BPBITSTREAM PTR4* bits, s32 limit)
     BPBITSTYPE word;
     u8 PTR4* next_node_ptr;
     s32 sample_count;
-    u8 tree[BP_TREE_NODES];
+    BPLOSSYREADTREE tree;
     u8 order[BP_BLOCK_COEFFS];
     BPBITSTREAM bitcopy;
     u32 PTR4* words;
@@ -1307,14 +1313,14 @@ void readlossy(void PTR4* out, BPBITSTREAM PTR4* bits, s32 limit)
         code = word & BP_BYTE_MASK;
     }
     levels_remaining = (code & BP_LOSSY_LEVEL_MASK) + 1;
-    tree[0] = BP_READ_TREE_GROUP1_ROOT;
-    tree[1] = BP_READ_TREE_GROUP6_ROOT;
-    tree[2] = BP_READ_TREE_GROUP11_ROOT;
+    tree.roots[0] = BP_READ_TREE_GROUP1_ROOT;
+    tree.roots[1] = BP_READ_TREE_GROUP6_ROOT;
+    tree.roots[2] = BP_READ_TREE_GROUP11_ROOT;
     bit_value = (s32)(s8)(1 << (code & BP_LOSSY_LEVEL_MASK));
-    tree[3] = BP_READ_TREE_BRANCH(0);
-    tree_end = tree + BP_LOSSY_ROOT_NODES;
+    tree.roots[3] = BP_READ_TREE_BRANCH(0);
+    tree_end = tree.nodes;
     active_count = 0;
-    node_ptr = tree;
+    node_ptr = tree.roots;
     do {
         if (levels_remaining == 0) {
             goto done;
