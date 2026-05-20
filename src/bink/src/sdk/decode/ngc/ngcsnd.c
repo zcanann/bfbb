@@ -16,6 +16,11 @@ f32 powf(f32 x, f32 y);
 /* ARQRequest.owner keeps the NGCSoundState pointer with bit 0 as an in-flight latch. */
 #define NGC_TASK_BUSY_FLAG 1
 #define NGC_TASK_OWNER_MASK (~NGC_TASK_BUSY_FLAG)
+#define NGC_TASK_OWNER(task) ((NGCSoundState PTR4*)((task)->owner & NGC_TASK_OWNER_MASK))
+#define NGC_TASK_BUSY(task) (((task)->owner & NGC_TASK_BUSY_FLAG) != 0)
+#define NGC_TASK_MARK_BUSY(task) ((task)->owner |= NGC_TASK_BUSY_FLAG)
+#define NGC_TASK_CLEAR_BUSY(task) ((task)->owner &= NGC_TASK_OWNER_MASK)
+#define NGC_TASK_SET_OWNER(task, state) ((task)->owner = (u32)(state))
 #define NGC_SOUND_BITS_16 16
 #define NGC_SOUND_FRAME_ALIGN ARQ_DMA_ALIGNMENT
 #define NGC_SOUND_FRAME_ALIGN_MASK (NGC_SOUND_FRAME_ALIGN - 1)
@@ -183,7 +188,7 @@ const f64 BINK_NGC_SOUND_SIGN_BIAS = 2147483648.0;
 static void startVoices(u32 task)
 {
     ARQRequest PTR4* arq_task = (ARQRequest PTR4*)task;
-    NGCSoundState PTR4* state = (NGCSoundState PTR4*)(arq_task->owner & NGC_TASK_OWNER_MASK);
+    NGCSoundState PTR4* state = NGC_TASK_OWNER(arq_task);
 
     if (state != 0 && state->play_state == NGC_PLAY_STATE_STOPPED) {
         AXVPB PTR4* voice = NGC_LEFT_VOICE(state);
@@ -200,7 +205,7 @@ static void startVoices(u32 task)
         state->play_state = NGC_PLAY_STATE_RUNNING;
     }
 
-    arq_task->owner &= NGC_TASK_OWNER_MASK; /* clear the in-flight latch after the left upload */
+    NGC_TASK_CLEAR_BUSY(arq_task); /* clear the in-flight latch after the left upload */
 }
 static void NGC_SoundPlay(BINKSND PTR4* snd, u32 index, u32 size)
 {
@@ -581,7 +586,7 @@ static s32 Unlock(BINKSND PTR4* snd, u32 filled)
     }
 
     state = NGC_SOUND_STATE(ngc_snd);
-    NGC_TASK(state, state->lock_index)->owner |= NGC_TASK_BUSY_FLAG;
+    NGC_TASK_MARK_BUSY(NGC_TASK(state, state->lock_index));
 
     if (ngc_snd->chans == NGC_SOUND_STEREO_CHANNELS) {
         /* Split the temporary interleaved stereo buffer into the two ARQ upload buffers. */
@@ -688,7 +693,7 @@ static void NGC_StarvedClear(BINKSND PTR4* snd)
 check_busy:
     /* Wait for one staging half to be free before injecting silence. */
     side = i & NGC_SOUND_LAST_LOCK_INDEX;
-    if ((NGC_TASK(state, side)->owner & NGC_TASK_BUSY_FLAG) != 0) {
+    if (NGC_TASK_BUSY(NGC_TASK(state, side))) {
         goto busy;
     }
     start = state->play_cursor;
