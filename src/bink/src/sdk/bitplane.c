@@ -129,6 +129,18 @@ typedef struct BPLOSSLESSREADTREE
     u8 nodes[BP_TREE_NODES - BP_LOSSLESS_ROOT_NODES];
 } BPLOSSLESSREADTREE;
 
+typedef struct BPLOSSLESSWRITETREE
+{
+    u16 roots[BP_LOSSLESS_ROOT_NODES];
+    u16 nodes[BP_BLOCK_COEFFS - BP_LOSSLESS_ROOT_NODES];
+} BPLOSSLESSWRITETREE;
+
+typedef struct BPLOSSYWRITETREE
+{
+    u16 roots[BP_LOSSY_ROOT_NODES];
+    u16 nodes[BP_BLOCK_COEFFS - BP_LOSSY_ROOT_NODES];
+} BPLOSSYWRITETREE;
+
 void readlossy(void PTR4* out, BPBITSTREAM PTR4* bits, s32 limit);
 
 #define BP_STREAM(bits) ((BPBITSTREAM*)(bits))
@@ -188,7 +200,7 @@ u32 LenBPLossless(s16 PTR4* vals)
     u16 PTR4* end;
     u16 PTR4* roots;
     s32 total;
-    u16 tree_nodes[BP_TREE_NODES];
+    BPLOSSLESSWRITETREE tree;
     u8 lens[BP_BLOCK_COEFFS];
     u8 groups[BP_TREE_GROUPS];
     u8 hi_groups[BP_TREE_HIGH_GROUPS];
@@ -269,7 +281,7 @@ u32 LenBPLossless(s16 PTR4* vals)
     if (groups[BP_TREE_GROUP1_INDEX] < groups[BP_TREE_HIGH_GROUP0_INDEX]) {
         groups[BP_TREE_GROUP1_INDEX] = groups[BP_TREE_HIGH_GROUP0_INDEX];
     }
-    roots = tree_nodes + BP_TREE_CHILD_COUNT;
+    roots = tree.roots;
     roots[0] = groups[BP_TREE_GROUP1_INDEX] | BP_GROUP1_NODE_BASE;
     if (groups[BP_TREE_GROUP6_INDEX] < groups[BP_TREE_HIGH_GROUP1_INDEX]) {
         groups[BP_TREE_GROUP6_INDEX] = groups[BP_TREE_HIGH_GROUP1_INDEX];
@@ -426,7 +438,7 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
     u16 PTR4* restart;
     u16 PTR4* end;
     u16 PTR4* roots;
-    u16 tree_nodes[BP_TREE_NODES];
+    BPLOSSLESSWRITETREE tree;
     u8 lens[BP_BLOCK_COEFFS];
     u8 groups[BP_TREE_GROUPS];
     u8 hi_groups[BP_TREE_HIGH_GROUPS];
@@ -542,7 +554,7 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
     if (groups[BP_TREE_GROUP1_INDEX] < groups[BP_TREE_HIGH_GROUP0_INDEX]) {
         groups[BP_TREE_GROUP1_INDEX] = groups[BP_TREE_HIGH_GROUP0_INDEX];
     }
-    roots = tree_nodes + BP_TREE_CHILD_COUNT;
+    roots = tree.roots;
     roots[0] = groups[BP_TREE_GROUP1_INDEX] | BP_GROUP1_NODE_BASE;
     if (groups[BP_TREE_GROUP6_INDEX] < groups[BP_TREE_HIGH_GROUP1_INDEX]) {
         groups[BP_TREE_GROUP6_INDEX] = groups[BP_TREE_HIGH_GROUP1_INDEX];
@@ -1025,7 +1037,7 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     u16 PTR4* roots;
     u16 mask;
     s16 node_entry;
-    u16 tree_nodes[BP_TREE_NODES];
+    BPLOSSYWRITETREE tree;
     u8 lens[BP_BLOCK_COEFFS];
     u8 groups[BP_TREE_GROUPS];
     u8 hi_groups[BP_TREE_HIGH_GROUPS];
@@ -1141,7 +1153,7 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     if (groups[BP_TREE_GROUP1_INDEX] < groups[BP_TREE_HIGH_GROUP0_INDEX]) {
         groups[BP_TREE_GROUP1_INDEX] = groups[BP_TREE_HIGH_GROUP0_INDEX];
     }
-    roots = tree_nodes + BP_TREE_CHILD_COUNT;
+    roots = tree.roots;
     roots[0] = groups[BP_TREE_GROUP1_INDEX] | BP_GROUP1_NODE_BASE;
     if (groups[BP_TREE_GROUP6_INDEX] < groups[BP_TREE_HIGH_GROUP1_INDEX]) {
         groups[BP_TREE_GROUP6_INDEX] = groups[BP_TREE_HIGH_GROUP1_INDEX];
