@@ -1601,11 +1601,11 @@ s32 BinkDoFrame(HBINK bnk)
                         } while (playing_index < (s32)bnk->playingtracks);
                     }
                     if (playing_index >= (s32)bnk->playingtracks) {
-                        playing_index = -1;
+                        playing_index = BINK_TRACK_NOT_FOUND;
                     }
 
                     next_frame_data = BINK_NEXT_TRACK_FRAME(frame_data);
-                    if (playing_index != -1 && frame_data->size != 0) {
+                    if (playing_index != BINK_TRACK_NOT_FOUND && frame_data->size != 0) {
                         void PTR4* in;
                         u32 in_bytes;
 
