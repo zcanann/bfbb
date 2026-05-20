@@ -343,7 +343,7 @@ static s32 NGC_SoundInit(BINKSND PTR4* snd)
     AXPBADDR addr;
     AXPBSRC src;
     AXVPB PTR4** voices;
-    NGCSoundState PTR4* owner;
+    NGCSoundState PTR4* state;
 
     NGC_SOUND_STATE(snd)->starvation_time = NGC_DEFAULT_STARVATION_TIME;
     NGC_SOUND_STATE(snd)->lock_index = -1;
@@ -380,26 +380,26 @@ static s32 NGC_SoundInit(BINKSND PTR4* snd)
         return 0;
     }
 
-    owner = NGC_SOUND_STATE(snd);
+    state = NGC_SOUND_STATE(snd);
     NGC_SOUND_STATE(snd)->address_shift = (NGC_SND(snd)->bits == NGC_SOUND_BITS_16);
 
     for (i = 0; i < NGC_SOUND_ARQ_TASK_COUNT; ++i) {
-        owner->tasks[i].owner = (u32)owner; /* seed owner and clear the busy latch */
+        state->tasks[i].owner = (u32)state; /* seed owner and clear the busy latch */
     }
 
     NGC_SOUND_STATE(snd)->play_cursor = (u32)NGC_SOUND_STATE(snd)->audio_buffer;
     NGC_SOUND_STATE(snd)->pending_end = 0;
 
-    voices = &owner->left_voice;
+    voices = &state->left_voice;
     for (i = 0; i < NGC_SND(snd)->chans; ++i) {
         voices[i] = AXAcquireVoice(AX_VOICE_PRIORITY_BINK, 0, 0);
         if (voices[i] == 0) {
             return 0;
         }
 
-        start = ((u32)owner->audio_buffer + (i * owner->channel_stride)) >> owner->address_shift;
-        end = (((u32)owner->audio_buffer + ((i + 1) * owner->channel_stride)) >>
-               owner->address_shift) -
+        start = ((u32)state->audio_buffer + (i * state->channel_stride)) >> state->address_shift;
+        end = (((u32)state->audio_buffer + ((i + 1) * state->channel_stride)) >>
+               state->address_shift) -
               1;
 
         addr.loopFlag = 1;
