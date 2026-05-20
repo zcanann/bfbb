@@ -13,6 +13,8 @@
 #define YUY2_X2_WORDS_PER_BLOCK 4
 #define YUY2_WORD_BYTES 4
 #define YUY2_PAIR_STRIDE 2
+#define YUY2_PAIR_LUMA_WORD_0 0
+#define YUY2_PAIR_LUMA_WORD_1 1
 #define YUY2_BLOCK_PAIRS(count) ((s32)(count) >> 1)
 #define YUY2_HAS_TAIL_BLOCK(count) (((count) & 1) != 0)
 #define YUY2_ROW_BYTES(count) ((count) * YUY2_WORDS_PER_BLOCK * YUY2_WORD_BYTES)
@@ -87,7 +89,7 @@ void YUY2_4x2(u32 count)
     }
 
     if (YUY2_HAS_TAIL_BLOCK(count)) {
-        u32 y0 = y[0];
+        u32 y0 = y[YUY2_PAIR_LUMA_WORD_0];
         u16 u0 = *u;
         u16 v0 = *v;
 
@@ -117,7 +119,7 @@ void YUY2_4x2(u32 count)
     }
 
     if (YUY2_HAS_TAIL_BLOCK(count)) {
-        u32 y0 = y[0];
+        u32 y0 = y[YUY2_PAIR_LUMA_WORD_0];
         u16 u0 = *u;
         u16 v0 = *v;
 
@@ -147,7 +149,7 @@ void YUY2_x2_4x2(u32 count)
     u = S.u;
     v = S.v;
     while (pairs-- != 0) {
-        u32 y0 = y[0];
+        u32 y0 = y[YUY2_PAIR_LUMA_WORD_0];
         u32 u0 = *(u32 PTR4*)u;
         u32 v0 = *(u32 PTR4*)v;
         u32 chroma0 = YUY2_CHROMA0(u0, v0);
@@ -160,7 +162,7 @@ void YUY2_x2_4x2(u32 count)
         *dest++ = YUY2_PACK_X2Y2(y0, chroma1);
         *dest++ = YUY2_PACK_X2Y3(y0, chroma1);
 
-        y0 = y[1];
+        y0 = y[YUY2_PAIR_LUMA_WORD_1];
         *dest++ = YUY2_PACK_X2Y0(y0, chroma2);
         *dest++ = YUY2_PACK_X2Y1(y0, chroma2);
         *dest++ = YUY2_PACK_X2Y2(y0, chroma3);
@@ -172,7 +174,7 @@ void YUY2_x2_4x2(u32 count)
     }
 
     if (YUY2_HAS_TAIL_BLOCK(count)) {
-        u32 y0 = y[0];
+        u32 y0 = y[YUY2_PAIR_LUMA_WORD_0];
         u16 u0 = *u;
         u16 v0 = *v;
         u32 chroma0 = YUY2_TAIL_CHROMA0(u0, v0);
@@ -190,7 +192,7 @@ void YUY2_x2_4x2(u32 count)
     u = S.u;
     v = S.v;
     while (pairs-- != 0) {
-        u32 y0 = y[0];
+        u32 y0 = y[YUY2_PAIR_LUMA_WORD_0];
         u32 u0 = *(u32 PTR4*)u;
         u32 v0 = *(u32 PTR4*)v;
         u32 chroma0 = YUY2_CHROMA0(u0, v0);
@@ -203,7 +205,7 @@ void YUY2_x2_4x2(u32 count)
         *dest++ = YUY2_PACK_X2Y2(y0, chroma1);
         *dest++ = YUY2_PACK_X2Y3(y0, chroma1);
 
-        y0 = y[1];
+        y0 = y[YUY2_PAIR_LUMA_WORD_1];
         *dest++ = YUY2_PACK_X2Y0(y0, chroma2);
         *dest++ = YUY2_PACK_X2Y1(y0, chroma2);
         *dest++ = YUY2_PACK_X2Y2(y0, chroma3);
@@ -215,7 +217,7 @@ void YUY2_x2_4x2(u32 count)
     }
 
     if (YUY2_HAS_TAIL_BLOCK(count)) {
-        u32 y0 = y[0];
+        u32 y0 = y[YUY2_PAIR_LUMA_WORD_0];
         u16 u0 = *u;
         u16 v0 = *v;
         u32 chroma0 = YUY2_TAIL_CHROMA0(u0, v0);
@@ -326,7 +328,7 @@ void YUY2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, const u32 PTR4
     }
 
     if (YUY2_HAS_TAIL_BLOCK(count)) {
-        u32 y0 = y[0];
+        u32 y0 = y[YUY2_PAIR_LUMA_WORD_0];
         u16 u0 = *(const u16 PTR4*)u;
         u16 v0 = *(const u16 PTR4*)v;
 
@@ -344,7 +346,7 @@ void YUY2_x2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, const u32 P
     while (pairs-- != 0) {
         u32 u0 = *u;
         u32 v0 = *v;
-        u32 y0 = y[0];
+        u32 y0 = y[YUY2_PAIR_LUMA_WORD_0];
         u32 chroma0 = YUY2_CHROMA0(u0, v0);
         u32 chroma1 = YUY2_CHROMA1(u0, v0);
         u32 chroma2 = YUY2_CHROMA2(u0, v0);
@@ -356,7 +358,7 @@ void YUY2_x2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, const u32 P
         *dest++ = YUY2_PACK_X2Y2(y0, chroma1);
         *dest++ = YUY2_PACK_X2Y3(y0, chroma1);
 
-        y0 = y[1];
+        y0 = y[YUY2_PAIR_LUMA_WORD_1];
         ++v;
         *dest++ = YUY2_PACK_X2Y0(y0, chroma2);
         *dest++ = YUY2_PACK_X2Y1(y0, chroma2);
@@ -367,7 +369,7 @@ void YUY2_x2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, const u32 P
     }
 
     if (YUY2_HAS_TAIL_BLOCK(count)) {
-        u32 y0 = y[0];
+        u32 y0 = y[YUY2_PAIR_LUMA_WORD_0];
         u16 u0 = *(const u16 PTR4*)u;
         u16 v0 = *(const u16 PTR4*)v;
         u32 chroma0 = YUY2_TAIL_CHROMA0(u0, v0);
