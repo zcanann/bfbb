@@ -470,7 +470,7 @@ static void NGC_SoundShutdown(BINKSND PTR4* snd)
     AXVPB PTR4** voices;
     NGCSoundState PTR4* state;
 
-    NGC_SOUND_STATE(snd)->paused = 1;
+    NGC_SOUND_STATE(snd)->paused = NGC_SOUND_PAUSED;
 
     state = NGC_SOUND_STATE(snd);
     voice = NGC_LEFT_VOICE(state);
@@ -874,7 +874,7 @@ static s32 Pause(BINKSND PTR4* snd, s32 status)
         NGC_SOUND_STATE(snd)->paused = NGC_SOUND_PAUSED;
     } else {
         NGC_SoundResume(snd);
-        NGC_SOUND_STATE(snd)->paused = status;
+        NGC_SOUND_STATE(snd)->paused = NGC_SOUND_UNPAUSED;
     }
 
     return NGC_SOUND_STATE(snd)->paused;
