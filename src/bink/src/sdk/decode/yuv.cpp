@@ -1075,18 +1075,18 @@ extern "C" void YUV_init(u32 flags)
     white = (RGB_CHANNEL_MAX >> red_down) | ((RGB_CHANNEL_MAX >> green_down) << red_bits) |
             ((RGB_CHANNEL_MAX >> blue_down) << blue_shift);
 
-    RGBshift[0] = 0;
-    RGBshift[1] = 0;
-    RGBshift[2] = red_bits;
-    RGBshift[3] = 0;
-    RGBshift[4] = blue_shift;
-    RGBshift[5] = 0;
-    RGBshift[6] = red_down;
-    RGBshift[7] = green_down;
-    RGBshift[8] = blue_down;
-    RGBshift[9] = 0;
-    RGBshift[10] = 0;
-    RGBshift[11] = 0;
+    RGBshift[RGB_SHIFT_RESERVED0] = 0;
+    RGBshift[RGB_SHIFT_RESERVED1] = 0;
+    RGBshift[RGB_SHIFT_RED_BITS] = red_bits;
+    RGBshift[RGB_SHIFT_RESERVED3] = 0;
+    RGBshift[RGB_SHIFT_BLUE_SHIFT] = blue_shift;
+    RGBshift[RGB_SHIFT_RESERVED5] = 0;
+    RGBshift[RGB_SHIFT_RED_DOWN] = red_down;
+    RGBshift[RGB_SHIFT_GREEN_DOWN] = green_down;
+    RGBshift[RGB_SHIFT_BLUE_DOWN] = blue_down;
+    RGBshift[RGB_SHIFT_RESERVED9] = 0;
+    RGBshift[RGB_SHIFT_RESERVED10] = 0;
+    RGBshift[RGB_SHIFT_RESERVED11] = 0;
     for (i = 0; i < YUV_TABLE_PLANE_SIZE; i++) {
         u32 mono;
         u32 red;
