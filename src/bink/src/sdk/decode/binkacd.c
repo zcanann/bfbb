@@ -281,8 +281,8 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
 
     vb.init = inptr;
     vb.cur = inptr;
-    vb.bits = 0;
     vb.bitlen = 0;
+    vb.bits = 0;
 
     if ((flags & BINKACNEWFORMAT) != 0) {
         /* New-format streams reserve two leading bits before the coefficient payload. */
