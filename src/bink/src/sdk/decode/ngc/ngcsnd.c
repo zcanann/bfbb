@@ -11,6 +11,7 @@ f32 powf(f32 x, f32 y);
 #define NGC_SOUND_STEREO_CHANNELS 2
 #define NGC_SOUND_LOCK_BUFFER_COUNT 2
 #define NGC_SOUND_ARQ_TASK_COUNT (NGC_SOUND_LOCK_BUFFER_COUNT * NGC_SOUND_STEREO_CHANNELS)
+#define NGC_SOUND_NO_LOCK_INDEX -1
 #define NGC_SOUND_LAST_LOCK_INDEX (NGC_SOUND_LOCK_BUFFER_COUNT - 1)
 #define NGC_SOUND_RIGHT_TASK_OFFSET NGC_SOUND_STEREO_CHANNELS
 /* ARQRequest.owner keeps the NGCSoundState pointer with bit 0 as an in-flight latch. */
@@ -267,7 +268,7 @@ static s32 NGC_SoundReinit(BINKSND PTR4* snd)
     }
 
     addr = (u32)NGC_SOUND_STATE(snd)->audio_buffer;
-    NGC_SOUND_STATE(snd)->lock_index = -1;
+    NGC_SOUND_STATE(snd)->lock_index = NGC_SOUND_NO_LOCK_INDEX;
     NGC_SOUND_STATE(snd)->play_state = NGC_PLAY_STATE_STOPPED;
     NGC_SOUND_STATE(snd)->play_cursor = addr;
 
@@ -347,7 +348,7 @@ static s32 NGC_SoundInit(BINKSND PTR4* snd)
     NGCSoundState PTR4* state;
 
     NGC_SOUND_STATE(snd)->starvation_time = NGC_DEFAULT_STARVATION_MILLISECONDS;
-    NGC_SOUND_STATE(snd)->lock_index = -1;
+    NGC_SOUND_STATE(snd)->lock_index = NGC_SOUND_NO_LOCK_INDEX;
     NGC_SOUND_STATE(snd)->play_state = NGC_PLAY_STATE_STOPPED;
 
     rate_bytes = NGC_SOUND_RATE_BYTES(NGC_SND(snd));
@@ -579,7 +580,7 @@ static s32 Unlock(BINKSND PTR4* snd, u32 filled)
     u32 padded;
 
     ngc_snd = NGC_SND(snd);
-    if (NGC_SOUND_STATE(ngc_snd)->lock_index == -1) {
+    if (NGC_SOUND_STATE(ngc_snd)->lock_index == NGC_SOUND_NO_LOCK_INDEX) {
         return 0;
     }
 
@@ -749,7 +750,7 @@ static s32 Ready(BINKSND PTR4* snd)
     u32 play_pos;
     u32 end_pos;
 
-    index = -1;
+    index = NGC_SOUND_NO_LOCK_INDEX;
     if (NGC_SOUND_STATE(snd)->paused != 0 || NGC_SND(snd)->OnOff == NGC_SOUND_OFF ||
         NGC_SOUND_STATE(snd)->left_voice == 0) {
         return 0;
@@ -803,7 +804,7 @@ check_tasks:
                 }
                 ++index;
                 if (index > NGC_SOUND_LAST_LOCK_INDEX) {
-                    index = -1;
+                    index = NGC_SOUND_NO_LOCK_INDEX;
                     break;
                 }
             }
@@ -812,7 +813,7 @@ check_tasks:
 
     NGC_SOUND_STATE(snd)->last_ready_time = now;
     NGC_SOUND_STATE(snd)->lock_index = index;
-    return index != -1;
+    return index != NGC_SOUND_NO_LOCK_INDEX;
 }
 
 static void Volume(BINKSND PTR4* snd, s32 volume)
