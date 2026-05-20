@@ -80,6 +80,7 @@ extern const char BINK_ERROR_OUT_OF_MEMORY[];
 #define BINK_MEMORY_HEADER_WORDS (sizeof(BINKHDR) / sizeof(u32))
 #define BINK_SOUND_BUFFER_ALIGNMENT 0x100
 #define BINK_SOUND_SAMPLE_ALIGNMENT 4
+#define BINK_SOUND_BEST_SIZE_MASK_ALL -1
 #define BINK_SOUND_BUFFER_ALIGN_MASK (BINK_SOUND_BUFFER_ALIGNMENT - 1)
 #define BINK_SOUND_SAMPLE_ALIGN_MASK (BINK_SOUND_SAMPLE_ALIGNMENT - 1)
 #define BINK_SOUND_BITS_8 8
@@ -1273,7 +1274,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
 
                             if (sndopen(snd, freq, bits, chans, out->OpenFlags, out) != 0) {
                                 if (snd->BestSizeMask == 0) {
-                                    snd->BestSizeMask = -1;
+                                    snd->BestSizeMask = BINK_SOUND_BEST_SIZE_MASK_ALL;
                                 }
                                 snd->sndbufsize = BINK_SOUND_BUFFER_BYTES(out->tracksizes[track]);
                                 snd->sndbuf = bpopmalloc(out, snd->sndbufsize);
