@@ -763,10 +763,12 @@ static void checksound(HBINK bnk)
                                     len >>= 1;
                                 }
                                 bnk->bsnd[i].Unlock(&bnk->bsnd[i], len);
-                                continue;
+                            } else {
+                                break;
                             }
+                        } else {
+                            break;
                         }
-                        break;
                     }
 
                     i = next;
