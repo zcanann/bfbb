@@ -123,7 +123,7 @@ static void quanttos16chans2(s16 PTR4* dest, const f32 PTR4* src, f32 scale, u32
     u32 stride;
 
     remaining = count - 1;
-    if (count != 0) {
+    if (remaining != (u32)-1) {
         stride = count;
         do {
             s16 PTR4* out = dest++;
