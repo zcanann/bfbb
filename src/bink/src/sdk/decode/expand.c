@@ -80,6 +80,7 @@ typedef BITSTYPE EXPBITSTYPE;
 #define BINK_BUNDLE_COUNT_BITS(width, count_base) \
     getbitlevelvar(((width) + (count_base)) & EXP_U16_MASK)
 #define BINK_BUNDLE_INITIAL_VALUE(shift) (1 << ((shift) - 1))
+#define BINK_BUNDLE_INITIAL_VALUE_NONE 0
 #define BINK_BUNDLE_NO_INITIAL_VALUE 0
 #define BINK_BUNDLE_USE_INITIAL_VALUE 1
 #define BINK_BUNDLE_STORAGE_SIZE(width, rows, bits, pitch) \
@@ -197,7 +198,7 @@ static void OpenReadBundle(u8 PTR4* bits, READBUNDLE PTR4* rb, s32 width, u32 ro
     if (use_initial_value) {
         rb->initial_value = BINK_BUNDLE_INITIAL_VALUE(shift);
     } else {
-        rb->initial_value = 0;
+        rb->initial_value = BINK_BUNDLE_INITIAL_VALUE_NONE;
     }
     rb->data = bits;
 }
@@ -793,7 +794,7 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     }
 
     dest = (s16 PTR4*)bundle->data;
-    if (bundle->initial_value == 0) {
+    if (bundle->initial_value == BINK_BUNDLE_INITIAL_VALUE_NONE) {
         current = exp_get_bits(bits, bundle->bit_size) & EXP_U16_MASK;
     } else {
         current = exp_get_bits(bits, bundle->bit_size - 1) & EXP_U16_MASK;
