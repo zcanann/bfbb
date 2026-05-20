@@ -50,6 +50,10 @@ f32 powf(f32 x, f32 y);
 #define AX_ADDR_LOOP_ON 1
 #define AX_ADDR_HIGH_SHIFT 16
 #define AX_SYNC_VOLUME_MIX (AX_SYNC_FLAG_COPYVOL | AX_SYNC_FLAG_COPYAXPBMIX | AX_SYNC_FLAG_COPYMXRCTRL)
+#define AX_SRC_LAST_SAMPLE_0 0
+#define AX_SRC_LAST_SAMPLE_1 1
+#define AX_SRC_LAST_SAMPLE_2 2
+#define AX_SRC_LAST_SAMPLE_3 3
 
 #define NGC_SAMPLE_HALF_SHIFT 16
 #define NGC_SAMPLE_BYTE_SHIFT 8
@@ -421,10 +425,10 @@ static s32 NGC_SoundInit(BINKSND PTR4* snd)
             src.ratioHi = 1;
             src.ratioLo = 0;
             src.currentAddressFrac = 0;
-            src.last_samples[0] = 0;
-            src.last_samples[1] = 0;
-            src.last_samples[2] = 0;
-            src.last_samples[3] = 0;
+            src.last_samples[AX_SRC_LAST_SAMPLE_0] = 0;
+            src.last_samples[AX_SRC_LAST_SAMPLE_1] = 0;
+            src.last_samples[AX_SRC_LAST_SAMPLE_2] = 0;
+            src.last_samples[AX_SRC_LAST_SAMPLE_3] = 0;
             AXSetVoiceSrc(voices[i], &src);
             AXSetVoiceSrcRatio(voices[i], (f32)NGC_SND(snd)->freq / NGC_SOUND_AX_SAMPLE_RATE);
         }
