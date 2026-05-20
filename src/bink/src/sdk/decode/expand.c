@@ -155,8 +155,8 @@ const u32 BINK_HUFF4_RLE_LENGTHS_PACKED = 0x04080c20;
 
 typedef struct READBUNDLE
 {
-    u8 PTR4* cur;
-    u8 PTR4* end;
+    u8 PTR4* cur_ptr;    /* Next decoded symbol to be consumed. */
+    u8 PTR4* cur_dec;    /* End of the currently decoded symbols. */
     u32 bit_size;      /* Bits per direct bundle element. */
     u32 initial_value;
     u8 values[HUFF4_SYMBOLS]; /* Huffman symbol to Bink symbol translation list. */
@@ -186,8 +186,8 @@ static void OpenReadBundle(u8 PTR4* bits, READBUNDLE PTR4* rb, s32 width, u32 ro
     u32 count_base;
 
     rb->bit_size = shift;
-    rb->cur = 0;
-    rb->end = 0;
+    rb->cur_ptr = 0;
+    rb->cur_dec = 0;
     count_base = BINK_BUNDLE_COUNT_BASE(rows, pitch);
     rb->count_bits = BINK_BUNDLE_COUNT_BITS(width, count_base);
     if (use_initial_value) {
@@ -487,20 +487,20 @@ static void CheckReadRLEHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     const u8 PTR4* decode;
     u32 peek;
 
-    if (bundle->cur != bundle->end) {
+    if (bundle->cur_ptr != bundle->cur_dec) {
         return;
     }
 
     count = exp_get_bits(bits, bundle->count_bits);
     if (count == 0) {
-        /* Empty bundles point cur past data so callers see no decoded elements. */
-        bundle->end = bundle->data;
-        bundle->cur = BINK_BUNDLE_EMPTY_CUR(bundle);
+        /* Empty bundles point cur_ptr past data so callers see no decoded elements. */
+        bundle->cur_dec = bundle->data;
+        bundle->cur_ptr = BINK_BUNDLE_EMPTY_CUR(bundle);
         return;
     }
 
-    bundle->cur = bundle->data;
-    bundle->end = bundle->data + count;
+    bundle->cur_ptr = bundle->data;
+    bundle->cur_dec = bundle->data + count;
     if (exp_get_bit(bits) == 0) {
         /* Literal Huff4 values above 11 repeat the previous decoded symbol. */
         dest = bundle->data;
@@ -550,22 +550,22 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
     s32 remaining;
     s32 prev_remaining;
 
-    if (bundle->cur != bundle->end) {
+    if (bundle->cur_ptr != bundle->cur_dec) {
         return;
     }
 
     count = exp_get_bits(bits, bundle->count_bits);
     if (count == 0) {
         /* The empty sentinel matches the other bundle readers. */
-        bundle->end = bundle->data;
-        bundle->cur = BINK_BUNDLE_EMPTY_CUR(bundle);
+        bundle->cur_dec = bundle->data;
+        bundle->cur_ptr = BINK_BUNDLE_EMPTY_CUR(bundle);
         return;
     }
 
     dest = bundle->data;
     peek = bundle->bits_to_peek;
-    bundle->cur = dest;
-    bundle->end = dest + count;
+    bundle->cur_ptr = dest;
+    bundle->cur_dec = dest + count;
     decode = bundle->decode;
     state = huff8_table->state;
     if (exp_get_bit(bits) != 0) {
@@ -609,21 +609,21 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
     s32 remaining;
     s32 prev_remaining;
 
-    if (bundle->cur != bundle->end) {
+    if (bundle->cur_ptr != bundle->cur_dec) {
         return;
     }
 
     count = exp_get_bits(bits, bundle->count_bits);
     if (count == 0) {
-        bundle->end = bundle->data;
-        bundle->cur = BINK_BUNDLE_EMPTY_CUR(bundle);
+        bundle->cur_dec = bundle->data;
+        bundle->cur_ptr = BINK_BUNDLE_EMPTY_CUR(bundle);
         return;
     }
 
     dest = bundle->data;
     peek = bundle->bits_to_peek;
-    bundle->cur = dest;
-    bundle->end = dest + count;
+    bundle->cur_ptr = dest;
+    bundle->cur_dec = dest + count;
     decode = bundle->decode;
     state = huff8_table->state;
     if (exp_get_bit(bits) != 0) {
@@ -656,19 +656,19 @@ static void CheckReadHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     u32 peek;
     u32 value;
 
-    if (bundle->cur != bundle->end) {
+    if (bundle->cur_ptr != bundle->cur_dec) {
         return;
     }
 
     count = exp_get_bits(bits, bundle->count_bits);
     if (count == 0) {
-        bundle->end = bundle->data;
-        bundle->cur = BINK_BUNDLE_EMPTY_CUR(bundle);
+        bundle->cur_dec = bundle->data;
+        bundle->cur_ptr = BINK_BUNDLE_EMPTY_CUR(bundle);
         return;
     }
 
-    bundle->cur = bundle->data;
-    bundle->end = bundle->data + count;
+    bundle->cur_ptr = bundle->data;
+    bundle->cur_dec = bundle->data + count;
     if (exp_get_bit(bits) == 0) {
         /* Direct Huff4 bundles decode one nibble-sized symbol per byte. */
         dest = bundle->data;
@@ -695,20 +695,20 @@ static void CheckReadHuff4PairBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits
     u32 first;
     u32 second;
 
-    if (bundle->cur != bundle->end) {
+    if (bundle->cur_ptr != bundle->cur_dec) {
         return;
     }
 
     count = exp_get_bits(bits, bundle->count_bits);
     if (count == 0) {
-        bundle->end = bundle->data;
-        bundle->cur = BINK_BUNDLE_EMPTY_CUR(bundle);
+        bundle->cur_dec = bundle->data;
+        bundle->cur_ptr = BINK_BUNDLE_EMPTY_CUR(bundle);
         return;
     }
 
     dest = bundle->data;
-    bundle->cur = dest;
-    bundle->end = dest + count;
+    bundle->cur_ptr = dest;
+    bundle->cur_dec = dest + count;
     values = bundle->values;
     decode = bundle->decode;
     peek = bundle->bits_to_peek;
@@ -730,19 +730,19 @@ static void CheckReadHuff4SBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     u32 peek;
     s32 value;
 
-    if (bundle->cur != bundle->end) {
+    if (bundle->cur_ptr != bundle->cur_dec) {
         return;
     }
 
     count = exp_get_bits(bits, bundle->count_bits);
     if (count == 0) {
-        bundle->end = bundle->data;
-        bundle->cur = BINK_BUNDLE_EMPTY_CUR(bundle);
+        bundle->cur_dec = bundle->data;
+        bundle->cur_ptr = BINK_BUNDLE_EMPTY_CUR(bundle);
         return;
     }
 
-    bundle->cur = bundle->data;
-    bundle->end = bundle->data + count;
+    bundle->cur_ptr = bundle->data;
+    bundle->cur_dec = bundle->data + count;
     if (exp_get_bit(bits) == 0) {
         /* Signed Huff4 bundles store a sign bit only for nonzero symbols. */
         dest = bundle->data;
@@ -777,14 +777,14 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     s32 delta;
     s16 PTR4* dest;
 
-    if (bundle->cur != bundle->end) {
+    if (bundle->cur_ptr != bundle->cur_dec) {
         return;
     }
 
     count = exp_get_bits(bits, bundle->count_bits);
     if (count == 0) {
-        bundle->end = bundle->data;
-        bundle->cur = BINK_BUNDLE_EMPTY_CUR(bundle);
+        bundle->cur_dec = bundle->data;
+        bundle->cur_ptr = BINK_BUNDLE_EMPTY_CUR(bundle);
         return;
     }
 
@@ -800,8 +800,8 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
 
     *dest++ = (s16)current;
     remaining = count - 1;
-    bundle->cur = bundle->data;
-    bundle->end = bundle->data + count * sizeof(*dest);
+    bundle->cur_ptr = bundle->data;
+    bundle->cur_dec = bundle->data + count * sizeof(*dest);
     while (remaining != 0) {
         group_count = remaining;
         if (group_count > BINK_DELTA16_GROUP_MAX) {
@@ -843,12 +843,12 @@ static inline void expand_run_block(u8 PTR4* dest,
     do {
         u32 count;
 
-        count = *runs->cur++ + 1;
+        count = *runs->cur_ptr++ + 1;
         filled += count;
         if (exp_get_bit(bits) != 0) {
             u8 value;
 
-            value = *colors->cur++;
+            value = *colors->cur_ptr++;
             do {
                 u32 offset;
 
@@ -860,7 +860,7 @@ static inline void expand_run_block(u8 PTR4* dest,
                 u32 offset;
 
                 offset = *scan++;
-                dest[BINK_BLOCK_PATTERN_OFFSET(offset, pitch)] = *colors->cur++;
+                dest[BINK_BLOCK_PATTERN_OFFSET(offset, pitch)] = *colors->cur_ptr++;
             } while (--count != 0);
         }
     } while (filled < BINK_RUN_BLOCK_LAST_PIXEL);
@@ -869,7 +869,7 @@ static inline void expand_run_block(u8 PTR4* dest,
         u32 offset;
 
         offset = *scan++;
-        dest[BINK_BLOCK_PATTERN_OFFSET(offset, pitch)] = *colors->cur++;
+        dest[BINK_BLOCK_PATTERN_OFFSET(offset, pitch)] = *colors->cur_ptr++;
     }
 }
 
@@ -882,14 +882,14 @@ static inline void expand_pattern_block(u8 PTR4* dest,
     u8 color1;
     u32 i;
 
-    color0 = colors->cur[0];
-    color1 = colors->cur[1];
-    colors->cur += 2;
+    color0 = colors->cur_ptr[0];
+    color1 = colors->cur_ptr[1];
+    colors->cur_ptr += 2;
     for (i = 0; i < BINK_BLOCK_SIDE; ++i) {
         u32 bits;
         u32 j;
 
-        bits = *patterns_bundle->cur++;
+        bits = *patterns_bundle->cur_ptr++;
         for (j = 0; j < BINK_BLOCK_SIDE; ++j) {
             dest[i * pitch + j] = (bits & 1) != 0 ? color1 : color0;
             bits >>= 1;
@@ -1015,8 +1015,8 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
         col = 0;
         work_col = 0;
         while (col < width) {
-            block_type = *block_types.cur;
-            block_types.cur++;
+            block_type = *block_types.cur_ptr;
+            block_types.cur_ptr++;
 
             if (BINK_BLOCK_ODD_ROW(row) && block_type == BINK_BLOCK_SCALED) {
                 col += BINK_BLOCK_SIDE;
@@ -1036,14 +1036,14 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 break;
             }
             case BINK_BLOCK_MOTION: {
-                s32 mx = *(s8 PTR4*)xoff.cur;
-                s32 my = *(s8 PTR4*)yoff.cur;
+                s32 mx = *(s8 PTR4*)xoff.cur_ptr;
+                s32 my = *(s8 PTR4*)yoff.cur_ptr;
                 u8 PTR4* motion;
                 u32 i;
 
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
-                xoff.cur++;
-                yoff.cur++;
+                xoff.cur_ptr++;
+                yoff.cur_ptr++;
                 motion = BINK_MOTION_SOURCE(old, pitch, mx, my);
                 for (i = 0; i < BINK_BLOCK_SIDE; ++i) {
                     BINK_BLOCK_ROW_WORD(dest, pitch, i, 0) = BINK_BLOCK_ROW_WORD(motion, pitch, i, 0);
@@ -1052,14 +1052,14 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 break;
             }
             case BINK_BLOCK_RESIDUE: {
-                s32 mx = *(s8 PTR4*)xoff.cur;
-                s32 my = *(s8 PTR4*)yoff.cur;
+                s32 mx = *(s8 PTR4*)xoff.cur_ptr;
+                s32 my = *(s8 PTR4*)yoff.cur_ptr;
                 u8 PTR4* motion;
                 u32 i;
 
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
-                xoff.cur++;
-                yoff.cur++;
+                xoff.cur_ptr++;
+                yoff.cur_ptr++;
                 motion = BINK_MOTION_SOURCE(old, pitch, mx, my);
                 for (i = 0; i < BINK_BLOCK_SIDE; ++i) {
                     BINK_LINEAR_BLOCK_ROW_WORD(motion_block, i, 0) =
@@ -1074,23 +1074,23 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
             }
             case BINK_BLOCK_INTRA:
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
-                dct_block[0] = *(s16 PTR4*)intra_dc.cur;
-                intra_dc.cur += BINK_DC_BYTES;
+                dct_block[0] = *(s16 PTR4*)intra_dc.cur_ptr;
+                intra_dc.cur_ptr += BINK_DC_BYTES;
                 ReadBPLossless(dct_block, (BPBITSTREAM PTR4*)&bitstate);
                 quant = exp_get_bits(&bitstate, BINK_DCT_QUANT_BITS);
                 FastIDCT8x8(dest, pitch, dct_block, quant);
                 break;
             case BINK_BLOCK_INTER: {
-                s32 mx = *(s8 PTR4*)xoff.cur;
-                s32 my = *(s8 PTR4*)yoff.cur;
+                s32 mx = *(s8 PTR4*)xoff.cur_ptr;
+                s32 my = *(s8 PTR4*)yoff.cur_ptr;
                 u8 PTR4* motion;
                 u32 i;
 
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
-                dct_block[0] = *(s16 PTR4*)inter_dc.cur;
-                inter_dc.cur += BINK_DC_BYTES;
-                xoff.cur++;
-                yoff.cur++;
+                dct_block[0] = *(s16 PTR4*)inter_dc.cur_ptr;
+                inter_dc.cur_ptr += BINK_DC_BYTES;
+                xoff.cur_ptr++;
+                yoff.cur_ptr++;
                 motion = BINK_MOTION_SOURCE(old, pitch, mx, my);
                 for (i = 0; i < BINK_BLOCK_SIDE; ++i) {
                     BINK_LINEAR_BLOCK_ROW_WORD(motion_block, i, 0) =
@@ -1104,12 +1104,12 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 break;
             }
             case BINK_BLOCK_FILL: {
-                u8 value = *colors.cur;
+                u8 value = *colors.cur_ptr;
                 u32 fill = BINK_FILL_WORD(value);
                 u32 i;
 
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
-                colors.cur++;
+                colors.cur_ptr++;
                 for (i = 0; i < BINK_BLOCK_SIDE; ++i) {
                     BINK_BLOCK_ROW_WORD(dest, pitch, i, 0) = fill;
                     BINK_BLOCK_ROW_WORD(dest, pitch, i, 1) = fill;
@@ -1126,11 +1126,11 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
                 for (i = 0; i < BINK_BLOCK_SIDE; ++i) {
                     BINK_BLOCK_ROW_WORD(dest, pitch, i, 0) =
-                        BINK_LINEAR_BLOCK_ROW_WORD(colors.cur, i, 0);
+                        BINK_LINEAR_BLOCK_ROW_WORD(colors.cur_ptr, i, 0);
                     BINK_BLOCK_ROW_WORD(dest, pitch, i, 1) =
-                        BINK_LINEAR_BLOCK_ROW_WORD(colors.cur, i, 1);
+                        BINK_LINEAR_BLOCK_ROW_WORD(colors.cur_ptr, i, 1);
                 }
-                colors.cur += BINK_COLOR_BLOCK_BYTES;
+                colors.cur_ptr += BINK_COLOR_BLOCK_BYTES;
                 break;
             }
             case BINK_BLOCK_RUN:
@@ -1138,18 +1138,18 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 expand_run_block(dest, pitch, &colors, &runs, &bitstate);
                 break;
             case BINK_BLOCK_SCALED:
-                block_type = *subblock_types.cur;
-                subblock_types.cur++;
+                block_type = *subblock_types.cur_ptr;
+                subblock_types.cur_ptr++;
                 if (block_type == BINK_BLOCK_FILL) {
-                    colors.cur++;
+                    colors.cur_ptr++;
                 } else if (block_type == BINK_BLOCK_PATTERN) {
-                    colors.cur += 2;
-                    patterns_bundle.cur += BINK_PATTERN_BLOCK_BYTES;
+                    colors.cur_ptr += 2;
+                    patterns_bundle.cur_ptr += BINK_PATTERN_BLOCK_BYTES;
                 } else if (block_type == BINK_BLOCK_RAW) {
-                    colors.cur += BINK_COLOR_BLOCK_BYTES;
+                    colors.cur_ptr += BINK_COLOR_BLOCK_BYTES;
                 } else if (block_type == BINK_BLOCK_INTRA) {
-                    dct_block[0] = *(s16 PTR4*)intra_dc.cur;
-                    intra_dc.cur += BINK_DC_BYTES;
+                    dct_block[0] = *(s16 PTR4*)intra_dc.cur_ptr;
+                    intra_dc.cur_ptr += BINK_DC_BYTES;
                     ReadBPLossless(dct_block, (BPBITSTREAM PTR4*)&bitstate);
                     quant = exp_get_bits(&bitstate, BINK_DCT_QUANT_BITS);
                     FastIDCT8x8d(dest, pitch, dct_block, quant);
