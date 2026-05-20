@@ -36,6 +36,8 @@
 #define BINKAC_FFT_WORK_EXTRA 2
 #define BINKAC_DCT_COEFF_BYTES_PER_SAMPLE 5
 #define BINKAC_RDFT_COEFF_TAIL_ADJUST 1
+#define BINKAC_DCT_INVERSE 1
+#define BINKAC_RDFT_INVERSE -1
 #define BINKAC_TRANSFORM_ROOT_SCALE 2.0f
 #define BINKAC_START_FRAME 1
 #define BINKAC_MONO_CHANNELS 1
@@ -300,9 +302,9 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
 
         read_rle_samples(channel, transform_size, &vb, threshold, bands);
         if ((flags & BINKACNEWFORMAT) != 0) {
-            ddct(transform_size, 1, channel, fft_work, fft_coeffs);
+            ddct(transform_size, BINKAC_DCT_INVERSE, channel, fft_work, fft_coeffs);
         } else {
-            rdft(transform_size, -1, channel, fft_work, fft_coeffs);
+            rdft(transform_size, BINKAC_RDFT_INVERSE, channel, fft_work, fft_coeffs);
         }
 
         channel += transform_size;
