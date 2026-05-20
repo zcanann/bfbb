@@ -382,20 +382,21 @@ void YUY2_x2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, const u32 P
 
 void YUY2_m_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y)
 {
-    if (count != 0) {
-        do {
-            u32 y0 = *y++;
+    u32 i;
 
-            *dest++ = YUY2_PACK_M4Y01(y0);
-            *dest++ = YUY2_PACK_M4Y23(y0);
+    for (i = 0; i < count; ++i) {
+        u32 y0 = *y++;
 
-        } while (--count != 0);
+        *dest++ = YUY2_PACK_M4Y01(y0);
+        *dest++ = YUY2_PACK_M4Y23(y0);
     }
 }
 
 void YUY2_mx2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y)
 {
-    while (count-- != 0) {
+    u32 i;
+
+    for (i = 0; i < count; ++i) {
         u32 y0 = *y++;
 
         *dest++ = YUY2_PACK_X2Y0(y0, YUY2_NEUTRAL_CHROMA);
