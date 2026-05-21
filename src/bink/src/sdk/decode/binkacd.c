@@ -50,7 +50,7 @@
 #define BINKAC_RSQRT_NEWTON_THREE 3.0
 #define BINKAC_SAMPLE_COUNT_UNDERFLOW ((u32)-1)
 #define BINKAC_LOAD32(ptr) (*(const u32 PTR4*)(ptr))
-#define BINKAC_BAND_SAMPLE_LIMIT(band_limits, band) ((band_limits)[band] * BINKAC_BAND_LIMIT_SCALE)
+#define BINKAC_BAND_SAMPLE_LIMIT(bands, band) ((bands)[band] * BINKAC_BAND_LIMIT_SCALE)
 #define BINKAC_RLE_SAMPLE_RUN(index) (bink_rlelens_snd[(index)] * VQLENGTH)
 #define BINKAC_WINDOW_BYTES(buffer_size) ((buffer_size) / WINDOWRATIO)
 #define BINKAC_OUTPUT_BYTES(buffer_size, window_size) ((buffer_size) - (window_size))
@@ -193,15 +193,15 @@ static inline u32 read_bit(VARBITS PTR4* vb)
 }
 
 static void read_rle_samples(f32 PTR4* samples, u32 transform_size, VARBITS PTR4* vb,
-                             const f32 PTR4* threshold, const u32 PTR4* band_limits)
+                             const f32 PTR4* thresholds, const u32 PTR4* bands)
 {
     u32 i;
     u32 band = 0;
     f32 scale = 0.0f;
     f32 PTR4* out;
 
-    while (BINKAC_BAND_SAMPLE_LIMIT(band_limits, band) < BINKAC_FIRST_COEFF) {
-        scale = threshold[band];
+    while (BINKAC_BAND_SAMPLE_LIMIT(bands, band) < BINKAC_FIRST_COEFF) {
+        scale = thresholds[band];
         ++band;
     }
 
@@ -232,14 +232,14 @@ static void read_rle_samples(f32 PTR4* samples, u32 transform_size, VARBITS PTR4
             out += end - i;
             i = end;
 
-            while (i > BINKAC_BAND_SAMPLE_LIMIT(band_limits, band)) {
-                scale = threshold[band];
+            while (i > BINKAC_BAND_SAMPLE_LIMIT(bands, band)) {
+                scale = thresholds[band];
                 ++band;
             }
         } else {
             while (i < end) {
-                if (i == BINKAC_BAND_SAMPLE_LIMIT(band_limits, band)) {
-                    scale = threshold[band];
+                if (i == BINKAC_BAND_SAMPLE_LIMIT(bands, band)) {
+                    scale = thresholds[band];
                     ++band;
                 }
 
@@ -275,7 +275,7 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
                    u32 num_bands, const u32 PTR4* bands,
                    f32 transform_size_root)
 {
-    f32 threshold[BINKAC_THRESHOLD_COUNT];
+    f32 thresholds[BINKAC_THRESHOLD_COUNT];
     VARBITS vb;
     f32 decoded[MAX_TRANSFORM];
     u32 ch;
@@ -303,10 +303,10 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
         for (i = 0; i < num_bands; ++i) {
             s32 q = read_bits(&vb, BINKAC_THRESHOLD_BITS);
 
-            threshold[i] = Undecibel((f32)q * BINKAC_QUANT_INDEX_SCALE);
+            thresholds[i] = Undecibel((f32)q * BINKAC_QUANT_INDEX_SCALE);
         }
 
-        read_rle_samples(channel, transform_size, &vb, threshold, bands);
+        read_rle_samples(channel, transform_size, &vb, thresholds, bands);
         if ((flags & BINKACNEWFORMAT) != 0) {
             ddct(transform_size, BINKAC_DCT_INVERSE, channel, fft_work, fft_coeffs);
         } else {
@@ -354,7 +354,7 @@ HBINKAUDIODECOMP BinkAudioDecompressOpen(u32 rate, u32 chans, u32 flags)
     u32 transform_size;
     u32 buffer_size;
     u32 transform_size_half;
-    s32 nyquist;
+    s32 nyq;
     u32 num_bands;
     u32 i;
     f32 transform_size_root;
@@ -381,11 +381,11 @@ HBINKAUDIODECOMP BinkAudioDecompressOpen(u32 rate, u32 chans, u32 flags)
         chans = BINKAC_MONO_CHANNELS;
     }
 
-    nyquist = (rate + BINKAC_NYQUIST_ROUNDING) / BINKAC_NYQUIST_DIVISOR;
+    nyq = (rate + BINKAC_NYQUIST_ROUNDING) / BINKAC_NYQUIST_DIVISOR;
     transform_size_half = transform_size / BINKAC_TRANSFORM_HALF_DIVISOR;
     /* Calculate the number of critical bands below Nyquist. */
     for (i = 0; i < TOTBANDS; ++i) {
-        if (bink_bandtopfreq[i] >= (u32)nyquist) {
+        if (bink_bandtopfreq[i] >= (u32)nyq) {
             break;
         }
     }
@@ -423,7 +423,7 @@ HBINKAUDIODECOMP BinkAudioDecompressOpen(u32 rate, u32 chans, u32 flags)
     ba->transform_size_root = transform_size_root;
 
     for (i = 0; i < num_bands; ++i) {
-        ba->bands[i] = (bink_bandtopfreq[i] * transform_size_half) / nyquist;
+        ba->bands[i] = (bink_bandtopfreq[i] * transform_size_half) / nyq;
         if (ba->bands[i] == 0) {
             ba->bands[i] = 1;
         }
