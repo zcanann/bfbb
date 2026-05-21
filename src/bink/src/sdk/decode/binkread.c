@@ -86,6 +86,7 @@ extern const char BINK_ERROR_OUT_OF_MEMORY[];
 #define BINK_SOUND_SAMPLE_ALIGN_MASK (BINK_SOUND_SAMPLE_ALIGNMENT - 1)
 #define BINK_SOUND_BITS_8 8
 #define BINK_SOUND_BITS_16 16
+#define BINK_SOUND_BITS_TO_BYTES_SHIFT 3
 #define BINK_SOUND_BYTES_PER_16_BIT_SAMPLE sizeof(s16)
 #define BINK_SOUND_PRIME_MILLISECONDS 750
 #define BINK_SOUND_END_PREROLL_NUMERATOR 3
@@ -662,7 +663,7 @@ open_sound:
 
 static u8 PTR4* conv16to8(u8 PTR4* dest, const s16 PTR4* src, u32 bytes)
 {
-    u32 count = bytes >> 1;
+    u32 count = bytes / BINK_SOUND_BYTES_PER_16_BIT_SAMPLE;
 
     while (count != 0) {
         *dest++ = *src++ >> BINK_16_TO_8_SAMPLE_SHIFT;
@@ -681,8 +682,8 @@ static u32 dosilence(BINKSND PTR4* snd)
         u32 bytes = prime - amt;
         u32 silence_ms =
             bytes * BINK_MILLISECONDS_PER_SECOND / (((snd->freq * snd->bits) *
-                             snd->chans) >>
-                            3);
+                            snd->chans) >>
+                            BINK_SOUND_BITS_TO_BYTES_SHIFT);
         u8 PTR4* pos = snd->sndreadpos - bytes;
         u8 PTR4* start = snd->sndbuf;
 
