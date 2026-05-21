@@ -241,13 +241,13 @@ static void makewt(s32 nw, s32 PTR4* ip, f32 PTR4* w)
             w[next + 1] = cos_nwh;
 
             if (nwh > 3) {
-                f32 x6;
                 f32 x4;
+                f32 x6;
 
-                x6 = w[offset + 6];
                 x4 = w[offset + 4];
-                w[next + 3] = half_recip / x6;
+                x6 = w[offset + 6];
                 w[next + 2] = half_recip / x4;
+                w[next + 3] = half_recip / x6;
             }
 
             j = 4;
