@@ -400,8 +400,7 @@ static void bitrv2(s32 n, s32 PTR4* ip, f32 PTR4* a)
         for (j = 0; j < m; ++j) {
             ip[m + j] = ip[j] + l;
         }
-        m2 = FFT_TABLE_DOUBLE_SIZE(m);
-        m = m2;
+        m += m;
     }
 
     m2 = FFT_TABLE_DOUBLE_SIZE(m);
@@ -520,11 +519,10 @@ static void bitrv2conj(s32 n, s32 PTR4* ip, f32 PTR4* a)
     m = 1;
     while ((m << 3) < l) {
         l >>= 1;
-        m2 = FFT_TABLE_DOUBLE_SIZE(m);
         for (j = 0; j < m; ++j) {
             ip[m + j] = ip[j] + l;
         }
-        m = m2;
+        m += m;
     }
 
     m2 = FFT_TABLE_DOUBLE_SIZE(m);
