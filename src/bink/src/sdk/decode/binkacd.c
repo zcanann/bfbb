@@ -4,13 +4,14 @@
 #include "../fft.h"
 #include "../varbits.h"
 
-#define MAX_TRANSFORM 4096
 #define WINDOWRATIO 16
 #define BINKAC_RATE_44K 44100
 #define BINKAC_RATE_22K 22050
 #define BINKAC_TRANSFORM_44K 2048
 #define BINKAC_TRANSFORM_22K 1024
 #define BINKAC_TRANSFORM_11K 512
+#define BINKAC_MAX_CHANNELS 2
+#define MAX_TRANSFORM (BINKAC_TRANSFORM_44K * BINKAC_MAX_CHANNELS)
 #define TOTBANDS 25
 #define RLEBITS 4
 #define MAXRLE (1 << RLEBITS)
@@ -53,6 +54,7 @@
 #define BINKAC_BAND_SAMPLE_LIMIT(bands, band) ((bands)[band] * BINKAC_BAND_LIMIT_SCALE)
 #define BINKAC_RLE_SAMPLE_RUN(index) (bink_rlelens_snd[(index)] * VQLENGTH)
 #define BINKAC_WINDOW_BYTES(buffer_size) ((buffer_size) / WINDOWRATIO)
+#define BINKAC_WINDOW_SAMPLES(window_size) ((window_size) / sizeof(s16))
 #define BINKAC_OUTPUT_BYTES(buffer_size, window_size) ((buffer_size) - (window_size))
 #define BINKAC_SAMPLE_BYTES(samples) ((samples) * sizeof(s16))
 #define BINKAC_FFT_WORK_BYTES(transform_size_half, work) \
@@ -466,7 +468,7 @@ void BinkAudioDecompress(HBINKAUDIODECOMP ba, void PTR4* PTR4* outptr, u32 PTR4*
         ba->start_frame = 0;
     } else {
         u32 i;
-        u32 count = ba->window_size_in_bytes / sizeof(*ba->samples);
+        u32 count = BINKAC_WINDOW_SAMPLES(ba->window_size_in_bytes);
 
         for (i = 0; i < count; ++i) {
             ba->samples[i] = (ba->samples[i] * i + ba->overlap[i] * (count - i)) / count;
