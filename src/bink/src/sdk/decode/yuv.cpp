@@ -988,13 +988,15 @@ extern "C" void YUV_init(u32 flags)
     // clamp tables when the destination surface format changes.
     if (donetables == 0) {
         for (i = 0; i < YUV_TABLE_PLANE_SIZE; i++) {
-            if (i < YUV_LUMA_BLACK_CUTOFF) {
-                y = 0;
-            } else if (i < YUV_LUMA_WHITE_CUTOFF) {
-                y = i - YUV_LUMA_BLACK;
-                y = yuv_round15(y * YUV_COEFF_Y_TO_RGB);
+            if (i > YUV_LUMA_BLACK) {
+                if (i < YUV_LUMA_WHITE_CUTOFF) {
+                    y = i - YUV_LUMA_BLACK;
+                    y = yuv_round15(y * YUV_COEFF_Y_TO_RGB);
+                } else {
+                    y = YUV_LUMA_MAX;
+                }
             } else {
-                y = YUV_LUMA_MAX;
+                y = 0;
             }
 
             ytable[i] = y;
