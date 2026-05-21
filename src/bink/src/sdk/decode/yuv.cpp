@@ -129,6 +129,8 @@ static inline s32 yuv_round15(s32 value)
 #define RGB32_M(y) (mono32[(y)])
 #define RGB32_M_A(y, a) (RGB32_M((y)) | ((u32)(a) << 24))
 #define YUY2_M(y0, y1) ((u32)(y0) | YUY2_NEUTRAL_CHROMA | ((u32)(y1) << 16))
+#define YUY2_COLOR_PAIR(y0, u, y1, v) \
+    ((u32)(y0) | ((u32)(u) << 8) | ((u32)(y1) << 16) | ((u32)(v) << 24))
 
 #define DECL_CORE(name) extern "C" void name(u32)
 DECL_CORE(YUV_32_4x2_even);
@@ -3879,7 +3881,7 @@ static void dounalignedYUY2row2h(u32 phase, u32 count)
         v = *(u8 PTR4*)S.v;
         S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
         S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 2);
-        pixel = y0 | ((u32)u << 8) | ((u32)y1 << 16) | ((u32)v << 24);
+        pixel = YUY2_COLOR_PAIR(y0, u, y1, v);
         *(u32 PTR4*)S.dest0 = pixel;
         *(u32 PTR4*)(S.dest0 + S.pitch) = pixel;
         S.dest0 += YUV_PACKED_WORD_BYTES;
@@ -3906,7 +3908,7 @@ static u32 dounalignedYUY2col2h(u32 count, s32 phase)
         S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
         S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
         S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 2);
-        pixel = y0 | ((u32)u << 8) | ((u32)y1 << 16) | ((u32)v << 24);
+        pixel = YUY2_COLOR_PAIR(y0, u, y1, v);
         *(u32 PTR4*)S.dest0 = pixel;
         *(u32 PTR4*)(S.dest0 + S.pitch) = pixel;
         pixel &= YUY2_CHROMA_MASK;
@@ -3999,7 +4001,7 @@ static void dounalignedYUY2row(u32 phase, u32 count)
         v = *(u8 PTR4*)S.v;
         S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
         S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 2);
-        pixel = y0 | ((u32)u << 8) | ((u32)y1 << 16) | ((u32)v << 24);
+        pixel = YUY2_COLOR_PAIR(y0, u, y1, v);
         *(u32 PTR4*)S.dest0 = pixel;
         S.dest0 += YUV_PACKED_WORD_BYTES;
         remaining -= 2;
@@ -4025,7 +4027,7 @@ static u32 dounalignedYUY2col(u32 count, s32 phase)
         S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
         S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
         S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 2);
-        pixel = y0 | ((u32)u << 8) | ((u32)y1 << 16) | ((u32)v << 24);
+        pixel = YUY2_COLOR_PAIR(y0, u, y1, v);
         *(u32 PTR4*)S.dest0 = pixel;
         pixel &= YUY2_CHROMA_MASK;
         y0 = *(u8 PTR4*)S.y1;
