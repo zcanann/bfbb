@@ -883,7 +883,7 @@ static inline void expand_run_block(u8 PTR4* dest,
 static inline void expand_pattern_block(u8 PTR4* dest,
                                         u32 pitch,
                                         READBUNDLE PTR4* colors,
-                                        READBUNDLE PTR4* patterns_bundle)
+                                        READBUNDLE PTR4* patterns)
 {
     u8 color0;
     u8 color1;
@@ -896,7 +896,7 @@ static inline void expand_pattern_block(u8 PTR4* dest,
         u32 bits;
         u32 j;
 
-        bits = *patterns_bundle->cur_ptr++;
+        bits = *patterns->cur_ptr++;
         for (j = 0; j < BINK_BLOCK_SIDE; ++j) {
             dest[i * pitch + j] = (bits & 1) != 0 ? color1 : color0;
             bits >>= 1;
@@ -948,7 +948,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
     READBUNDLE block_types;
     READBUNDLE subblock_types;
     READBUNDLE colors;
-    READBUNDLE patterns_bundle;
+    READBUNDLE patterns;
     READBUNDLE xoff;
     READBUNDLE yoff;
     READBUNDLE intra_dc;
@@ -983,7 +983,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                    BINK_BUNDLE_NO_INITIAL_VALUE);
     OpenReadBundle(table->colorptr, &colors, BINK_BUNDLE_WIDTH, width,
                    BINK_COLOR_BITS, BINK_COLOR_BLOCK_BYTES, BINK_BUNDLE_NO_INITIAL_VALUE);
-    OpenReadBundle(table->bits2ptr, &patterns_bundle,
+    OpenReadBundle(table->bits2ptr, &patterns,
                    BINK_BUNDLE_WIDTH, width, BINK_PATTERN_BITS, BINK_PATTERN_BLOCK_BYTES,
                    BINK_BUNDLE_NO_INITIAL_VALUE);
     OpenReadBundle(table->motionXptr, &xoff, BINK_BUNDLE_WIDTH, width,
@@ -1000,7 +1000,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
     StartReadHuff4Bundle(&block_types, &bitstate);
     StartReadHuff4Bundle(&subblock_types, &bitstate);
     StartReadHuff8Bundle(&colors, &bitstate, &huff8_table);
-    StartReadHuff4Bundle(&patterns_bundle, &bitstate);
+    StartReadHuff4Bundle(&patterns, &bitstate);
     StartReadHuff4Bundle(&xoff, &bitstate);
     StartReadHuff4Bundle(&yoff, &bitstate);
     StartReadHuff4Bundle(&runs, &bitstate);
@@ -1015,7 +1015,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
         CheckReadRLEHuff4Bundle(&block_types, &bitstate);
         CheckReadRLEHuff4Bundle(&subblock_types, &bitstate);
         read_huff8(&colors, &bitstate, &huff8_table);
-        CheckReadHuff4PairBundle(&patterns_bundle, &bitstate);
+        CheckReadHuff4PairBundle(&patterns, &bitstate);
         CheckReadHuff4SBundle(&xoff, &bitstate);
         CheckReadHuff4SBundle(&yoff, &bitstate);
         CheckReadDelta16Bundle(&intra_dc, &bitstate);
@@ -1132,7 +1132,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
             }
             case BINK_BLOCK_PATTERN:
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
-                expand_pattern_block(dest, pitch, &colors, &patterns_bundle);
+                expand_pattern_block(dest, pitch, &colors, &patterns);
                 break;
             case BINK_BLOCK_RAW: {
                 u32 i;
@@ -1158,7 +1158,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                     colors.cur_ptr++;
                 } else if (block_type == BINK_BLOCK_PATTERN) {
                     colors.cur_ptr += 2;
-                    patterns_bundle.cur_ptr += BINK_PATTERN_BLOCK_BYTES;
+                    patterns.cur_ptr += BINK_PATTERN_BLOCK_BYTES;
                 } else if (block_type == BINK_BLOCK_RAW) {
                     colors.cur_ptr += BINK_COLOR_BLOCK_BYTES;
                 } else if (block_type == BINK_BLOCK_INTRA) {
