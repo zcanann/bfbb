@@ -232,6 +232,7 @@ static inline u32 exp_get_bits(EXPBITS PTR4* bits, u32 count)
 static inline u32 exp_get_bit(EXPBITS PTR4* bits)
 {
     EXPBITSTYPE bitbuf;
+    u32 value;
 
     if (bits->bitlen != 0) {
         bitbuf = bits->bits;
@@ -243,7 +244,8 @@ static inline u32 exp_get_bit(EXPBITS PTR4* bits)
         bits->bits = bitbuf >> 1;
     }
 
-    return bitbuf & 1;
+    value = bitbuf & 1;
+    return value;
 }
 
 static void simpmergesort(EXPBITS PTR4* bits, u8 PTR4* out, u8 PTR4* left,
