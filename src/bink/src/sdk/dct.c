@@ -1175,35 +1175,45 @@ void FastFDCT8x8(s32 PTR4* out, u8 PTR4* in)
     row = out;
     /* Forward DCT scales unsigned pixels into fixed-point workspace rows. */
     for (i = DCT_BLOCK_WIDTH; i != 0; --i) {
-        s32 d0 = (in[DCT_COL0] - in[DCT_COL7]) * DCT_INPUT_SCALE;
-        s32 d1 = (in[DCT_COL1] - in[DCT_COL6]) * DCT_INPUT_SCALE;
-        s32 d2 = (in[DCT_COL2] - in[DCT_COL5]) * DCT_INPUT_SCALE;
-        s32 d3 = (in[DCT_COL3] - in[DCT_COL4]) * DCT_INPUT_SCALE;
-        s32 b7 = d1 + d0;
-        s32 b6 = d3 + d2;
-        s32 c0 = DCT_FIXED_MUL(b6 - b7, DCT_FIX_0_382683433);
-        s32 a3 = (in[DCT_COL3] + in[DCT_COL4]) * DCT_INPUT_SCALE;
-        s32 a2 = (in[DCT_COL2] + in[DCT_COL5]) * DCT_INPUT_SCALE;
-        s32 a0 = (in[DCT_COL0] + in[DCT_COL7]) * DCT_INPUT_SCALE;
-        s32 a1 = (in[DCT_COL1] + in[DCT_COL6]) * DCT_INPUT_SCALE;
-        s32 c3 = DCT_FIXED_MUL(d2 + d1, DCT_FIX_0_707106781);
-        s32 b1 = a0 - a3;
-        s32 c6 = DCT_FIXED_MUL(a1 - a2 + b1, DCT_FIX_0_707106781);
-        s32 b4 = a1 + a2;
-        s32 b3 = a0 + a3;
-        s32 c1 = DCT_FIXED_MUL(b6, DCT_FIX_0_541196100) + c0;
-        s32 c2 = DCT_FIXED_MUL(b7, DCT_FIX_1_306562965) + c0;
-        s32 c4 = d0 - c3;
-        s32 c5 = d0 + c3;
+        s32 tmp0 = (in[DCT_COL0] + in[DCT_COL7]) * DCT_INPUT_SCALE;
+        s32 tmp7 = (in[DCT_COL0] - in[DCT_COL7]) * DCT_INPUT_SCALE;
+        s32 tmp1 = (in[DCT_COL1] + in[DCT_COL6]) * DCT_INPUT_SCALE;
+        s32 tmp6 = (in[DCT_COL1] - in[DCT_COL6]) * DCT_INPUT_SCALE;
+        s32 tmp2 = (in[DCT_COL2] + in[DCT_COL5]) * DCT_INPUT_SCALE;
+        s32 tmp5 = (in[DCT_COL2] - in[DCT_COL5]) * DCT_INPUT_SCALE;
+        s32 tmp3 = (in[DCT_COL3] + in[DCT_COL4]) * DCT_INPUT_SCALE;
+        s32 tmp4 = (in[DCT_COL3] - in[DCT_COL4]) * DCT_INPUT_SCALE;
+        s32 tmp10 = tmp0 + tmp3;
+        s32 tmp13 = tmp0 - tmp3;
+        s32 tmp11 = tmp1 + tmp2;
+        s32 tmp12 = tmp1 - tmp2;
+        s32 z1 = DCT_FIXED_MUL(tmp12 + tmp13, DCT_FIX_0_707106781);
+        s32 z3;
+        s32 z5;
+        s32 z2;
+        s32 z4;
+        s32 z11;
+        s32 z13;
 
-        row[DCT_COL0] = b3 + b4;
-        row[DCT_COL4] = b3 - b4;
-        row[DCT_COL2] = b1 + c6;
-        row[DCT_COL6] = b1 - c6;
-        row[DCT_COL5] = c4 + c1;
-        row[DCT_COL3] = c4 - c1;
-        row[DCT_COL1] = c5 + c2;
-        row[DCT_COL7] = c5 - c2;
+        row[DCT_COL0] = tmp10 + tmp11;
+        row[DCT_COL4] = tmp10 - tmp11;
+        row[DCT_COL2] = tmp13 + z1;
+        row[DCT_COL6] = tmp13 - z1;
+
+        tmp10 = tmp4 + tmp5;
+        tmp11 = tmp5 + tmp6;
+        tmp12 = tmp6 + tmp7;
+        z5 = DCT_FIXED_MUL(tmp10 - tmp12, DCT_FIX_0_382683433);
+        z2 = DCT_FIXED_MUL(tmp10, DCT_FIX_0_541196100) + z5;
+        z4 = DCT_FIXED_MUL(tmp12, DCT_FIX_1_306562965) + z5;
+        z3 = DCT_FIXED_MUL(tmp11, DCT_FIX_0_707106781);
+        z11 = tmp7 + z3;
+        z13 = tmp7 - z3;
+
+        row[DCT_COL5] = z13 + z2;
+        row[DCT_COL3] = z13 - z2;
+        row[DCT_COL1] = z11 + z4;
+        row[DCT_COL7] = z11 - z4;
 
         in += DCT_BLOCK_WIDTH;
         row += DCT_BLOCK_WIDTH;
@@ -1211,36 +1221,45 @@ void FastFDCT8x8(s32 PTR4* out, u8 PTR4* in)
 
     /* Column pass completes the transform coefficients. */
     for (i = DCT_BLOCK_WIDTH; i != 0; --i) {
-        s32 d3 = out[DCT_ROW3] - out[DCT_ROW4];
-        s32 a3 = out[DCT_ROW3] + out[DCT_ROW4];
-        s32 d0 = out[DCT_ROW0] - out[DCT_ROW7];
-        s32 a0 = out[DCT_ROW0] + out[DCT_ROW7];
-        s32 d2 = out[DCT_ROW2] - out[DCT_ROW5];
-        s32 a2 = out[DCT_ROW2] + out[DCT_ROW5];
-        s32 b6 = d3 + d2;
-        s32 d1 = out[DCT_ROW1] - out[DCT_ROW6];
-        s32 b1 = a0 - a3;
-        s32 b7 = d1 + d0;
-        s32 c3_in = d2 + d1;
-        s32 c0 = DCT_FIXED_MUL(b6 - b7, DCT_FIX_0_382683433);
-        s32 a1 = out[DCT_ROW1] + out[DCT_ROW6];
-        s32 c1 = DCT_FIXED_MUL(b6, DCT_FIX_0_541196100) + c0;
-        s32 c6 = DCT_FIXED_MUL(a1 - a2 + b1, DCT_FIX_0_707106781);
-        s32 b4 = a1 + a2;
-        s32 b3 = a0 + a3;
-        s32 c2 = DCT_FIXED_MUL(b7, DCT_FIX_1_306562965) + c0;
-        s32 c3 = DCT_FIXED_MUL(c3_in, DCT_FIX_0_707106781);
-        s32 c5 = d0 + c3;
-        s32 c4 = d0 - c3;
+        s32 tmp0 = out[DCT_ROW0] + out[DCT_ROW7];
+        s32 tmp7 = out[DCT_ROW0] - out[DCT_ROW7];
+        s32 tmp1 = out[DCT_ROW1] + out[DCT_ROW6];
+        s32 tmp6 = out[DCT_ROW1] - out[DCT_ROW6];
+        s32 tmp2 = out[DCT_ROW2] + out[DCT_ROW5];
+        s32 tmp5 = out[DCT_ROW2] - out[DCT_ROW5];
+        s32 tmp3 = out[DCT_ROW3] + out[DCT_ROW4];
+        s32 tmp4 = out[DCT_ROW3] - out[DCT_ROW4];
+        s32 tmp10 = tmp0 + tmp3;
+        s32 tmp13 = tmp0 - tmp3;
+        s32 tmp11 = tmp1 + tmp2;
+        s32 tmp12 = tmp1 - tmp2;
+        s32 z1 = DCT_FIXED_MUL(tmp12 + tmp13, DCT_FIX_0_707106781);
+        s32 z3;
+        s32 z5;
+        s32 z2;
+        s32 z4;
+        s32 z11;
+        s32 z13;
 
-        out[DCT_ROW4] = b3 - b4;
-        out[DCT_ROW0] = b3 + b4;
-        out[DCT_ROW5] = c4 + c1;
-        out[DCT_ROW3] = c4 - c1;
-        out[DCT_ROW2] = b1 + c6;
-        out[DCT_ROW6] = b1 - c6;
-        out[DCT_ROW1] = c5 + c2;
-        out[DCT_ROW7] = c5 - c2;
+        out[DCT_ROW0] = tmp10 + tmp11;
+        out[DCT_ROW4] = tmp10 - tmp11;
+        out[DCT_ROW2] = tmp13 + z1;
+        out[DCT_ROW6] = tmp13 - z1;
+
+        tmp10 = tmp4 + tmp5;
+        tmp11 = tmp5 + tmp6;
+        tmp12 = tmp6 + tmp7;
+        z5 = DCT_FIXED_MUL(tmp10 - tmp12, DCT_FIX_0_382683433);
+        z2 = DCT_FIXED_MUL(tmp10, DCT_FIX_0_541196100) + z5;
+        z4 = DCT_FIXED_MUL(tmp12, DCT_FIX_1_306562965) + z5;
+        z3 = DCT_FIXED_MUL(tmp11, DCT_FIX_0_707106781);
+        z11 = tmp7 + z3;
+        z13 = tmp7 - z3;
+
+        out[DCT_ROW5] = z13 + z2;
+        out[DCT_ROW3] = z13 - z2;
+        out[DCT_ROW1] = z11 + z4;
+        out[DCT_ROW7] = z11 - z4;
 
         ++out;
     }
@@ -1254,83 +1273,91 @@ void FastFDCTs8x8(s32 PTR4* out, s8 PTR4* in)
     row = out;
     /* Signed forward DCT uses already-centered residual samples. */
     for (i = DCT_BLOCK_WIDTH; i != 0; --i) {
-        s32 a0 = (in[DCT_COL2] + in[DCT_COL5]) * DCT_INPUT_SCALE;
-        s32 a1 = (in[DCT_COL3] + in[DCT_COL4]) * DCT_INPUT_SCALE;
-        s32 a2 = (in[DCT_COL0] + in[DCT_COL7]) * DCT_INPUT_SCALE;
-        s32 a3 = (in[DCT_COL1] + in[DCT_COL6]) * DCT_INPUT_SCALE;
-        s32 b3 = (in[DCT_COL0] - in[DCT_COL7]) * DCT_INPUT_SCALE;
-        s32 b4 = (in[DCT_COL1] - in[DCT_COL6]) * DCT_INPUT_SCALE;
-        s32 b5 = (in[DCT_COL2] - in[DCT_COL5]) * DCT_INPUT_SCALE;
-        s32 b0 = a2 - a1;
-        s32 b1 = a2 + a1;
-        s32 b2 = a3 + a0;
-        s32 b6 = b4 + b3;
-        s32 b7 = (in[DCT_COL3] - in[DCT_COL4]) * DCT_INPUT_SCALE + b5;
-        s32 c0;
-        s32 c1;
-        s32 c2;
-        s32 c3;
-        s32 c4;
-        s32 c5;
-        s32 c6;
+        s32 tmp0 = (in[DCT_COL0] + in[DCT_COL7]) * DCT_INPUT_SCALE;
+        s32 tmp7 = (in[DCT_COL0] - in[DCT_COL7]) * DCT_INPUT_SCALE;
+        s32 tmp1 = (in[DCT_COL1] + in[DCT_COL6]) * DCT_INPUT_SCALE;
+        s32 tmp6 = (in[DCT_COL1] - in[DCT_COL6]) * DCT_INPUT_SCALE;
+        s32 tmp2 = (in[DCT_COL2] + in[DCT_COL5]) * DCT_INPUT_SCALE;
+        s32 tmp5 = (in[DCT_COL2] - in[DCT_COL5]) * DCT_INPUT_SCALE;
+        s32 tmp3 = (in[DCT_COL3] + in[DCT_COL4]) * DCT_INPUT_SCALE;
+        s32 tmp4 = (in[DCT_COL3] - in[DCT_COL4]) * DCT_INPUT_SCALE;
+        s32 tmp10 = tmp0 + tmp3;
+        s32 tmp13 = tmp0 - tmp3;
+        s32 tmp11 = tmp1 + tmp2;
+        s32 tmp12 = tmp1 - tmp2;
+        s32 z1 = DCT_FIXED_MUL(tmp12 + tmp13, DCT_FIX_0_707106781);
+        s32 z3;
+        s32 z5;
+        s32 z2;
+        s32 z4;
+        s32 z11;
+        s32 z13;
 
-        row[DCT_COL0] = b1 + b2;
-        row[DCT_COL4] = b1 - b2;
+        row[DCT_COL0] = tmp10 + tmp11;
+        row[DCT_COL4] = tmp10 - tmp11;
         in += DCT_BLOCK_WIDTH;
-        c0 = DCT_FIXED_MUL(b7 - b6, DCT_FIX_0_382683433);
-        c1 = DCT_FIXED_MUL(b6, DCT_FIX_1_306562965) + c0;
-        c2 = DCT_FIXED_MUL(b7, DCT_FIX_0_541196100) + c0;
-        c3 = DCT_FIXED_MUL(b5 + b4, DCT_FIX_0_707106781);
-        c4 = b3 - c3;
-        c5 = b3 + c3;
-        c6 = DCT_FIXED_MUL(a3 - a0 + b0, DCT_FIX_0_707106781);
-        row[DCT_COL2] = b0 + c6;
-        row[DCT_COL6] = b0 - c6;
-        row[DCT_COL5] = c4 + c2;
-        row[DCT_COL3] = c4 - c2;
-        row[DCT_COL1] = c5 + c1;
-        row[DCT_COL7] = c5 - c1;
+        row[DCT_COL2] = tmp13 + z1;
+        row[DCT_COL6] = tmp13 - z1;
+
+        tmp10 = tmp4 + tmp5;
+        tmp11 = tmp5 + tmp6;
+        tmp12 = tmp6 + tmp7;
+        z5 = DCT_FIXED_MUL(tmp10 - tmp12, DCT_FIX_0_382683433);
+        z2 = DCT_FIXED_MUL(tmp10, DCT_FIX_0_541196100) + z5;
+        z4 = DCT_FIXED_MUL(tmp12, DCT_FIX_1_306562965) + z5;
+        z3 = DCT_FIXED_MUL(tmp11, DCT_FIX_0_707106781);
+        z11 = tmp7 + z3;
+        z13 = tmp7 - z3;
+
+        row[DCT_COL5] = z13 + z2;
+        row[DCT_COL3] = z13 - z2;
+        row[DCT_COL1] = z11 + z4;
+        row[DCT_COL7] = z11 - z4;
 
         row += DCT_BLOCK_WIDTH;
     }
 
     /* Column pass completes the transform coefficients. */
     for (i = DCT_BLOCK_WIDTH; i != 0; --i) {
-        s32 a0 = out[DCT_ROW0] - out[DCT_ROW7];
-        s32 a1 = out[DCT_ROW0] + out[DCT_ROW7];
-        s32 a2 = out[DCT_ROW1] + out[DCT_ROW6];
-        s32 a3 = out[DCT_ROW1] - out[DCT_ROW6];
-        s32 a4 = out[DCT_ROW2] + out[DCT_ROW5];
-        s32 a5 = out[DCT_ROW2] - out[DCT_ROW5];
-        s32 a6 = a2 + a4;
-        s32 a7 = out[DCT_ROW3] + out[DCT_ROW4];
-        s32 a8 = a1 - a7;
-        s32 a9 = a1 + a7;
-        s32 b0 = out[DCT_ROW3] - out[DCT_ROW4] + a5;
-        s32 b1 = a3 + a0;
-        s32 c0;
-        s32 c1;
-        s32 c2;
-        s32 c3;
-        s32 c4;
-        s32 c5;
-        s32 c6;
+        s32 tmp0 = out[DCT_ROW0] + out[DCT_ROW7];
+        s32 tmp7 = out[DCT_ROW0] - out[DCT_ROW7];
+        s32 tmp1 = out[DCT_ROW1] + out[DCT_ROW6];
+        s32 tmp6 = out[DCT_ROW1] - out[DCT_ROW6];
+        s32 tmp2 = out[DCT_ROW2] + out[DCT_ROW5];
+        s32 tmp5 = out[DCT_ROW2] - out[DCT_ROW5];
+        s32 tmp3 = out[DCT_ROW3] + out[DCT_ROW4];
+        s32 tmp4 = out[DCT_ROW3] - out[DCT_ROW4];
+        s32 tmp10 = tmp0 + tmp3;
+        s32 tmp13 = tmp0 - tmp3;
+        s32 tmp11 = tmp1 + tmp2;
+        s32 tmp12 = tmp1 - tmp2;
+        s32 z1 = DCT_FIXED_MUL(tmp12 + tmp13, DCT_FIX_0_707106781);
+        s32 z3;
+        s32 z5;
+        s32 z2;
+        s32 z4;
+        s32 z11;
+        s32 z13;
 
-        out[DCT_ROW0] = a9 + a6;
-        out[DCT_ROW4] = a9 - a6;
-        c0 = DCT_FIXED_MUL(b0 - b1, DCT_FIX_0_382683433);
-        c1 = DCT_FIXED_MUL(b0, DCT_FIX_0_541196100) + c0;
-        c2 = DCT_FIXED_MUL(b1, DCT_FIX_1_306562965) + c0;
-        c3 = DCT_FIXED_MUL(a5 + a3, DCT_FIX_0_707106781);
-        c4 = a0 - c3;
-        c5 = a0 + c3;
-        c6 = DCT_FIXED_MUL(a2 - a4 + a8, DCT_FIX_0_707106781);
-        out[DCT_ROW2] = a8 + c6;
-        out[DCT_ROW6] = a8 - c6;
-        out[DCT_ROW5] = c4 + c1;
-        out[DCT_ROW3] = c4 - c1;
-        out[DCT_ROW1] = c5 + c2;
-        out[DCT_ROW7] = c5 - c2;
+        out[DCT_ROW0] = tmp10 + tmp11;
+        out[DCT_ROW4] = tmp10 - tmp11;
+        out[DCT_ROW2] = tmp13 + z1;
+        out[DCT_ROW6] = tmp13 - z1;
+
+        tmp10 = tmp4 + tmp5;
+        tmp11 = tmp5 + tmp6;
+        tmp12 = tmp6 + tmp7;
+        z5 = DCT_FIXED_MUL(tmp10 - tmp12, DCT_FIX_0_382683433);
+        z2 = DCT_FIXED_MUL(tmp10, DCT_FIX_0_541196100) + z5;
+        z4 = DCT_FIXED_MUL(tmp12, DCT_FIX_1_306562965) + z5;
+        z3 = DCT_FIXED_MUL(tmp11, DCT_FIX_0_707106781);
+        z11 = tmp7 + z3;
+        z13 = tmp7 - z3;
+
+        out[DCT_ROW5] = z13 + z2;
+        out[DCT_ROW3] = z13 - z2;
+        out[DCT_ROW1] = z11 + z4;
+        out[DCT_ROW7] = z11 - z4;
 
         ++out;
     }
