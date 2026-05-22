@@ -346,9 +346,6 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
     u8 merge23[HUFF4_MERGE_PAIR_SIZE];
     u8 merge45[HUFF4_MERGE_PAIR_SIZE];
     u8 merge67[HUFF4_MERGE_PAIR_SIZE];
-    u8 PTR4* out;
-
-    out = values;
 
     /* Each table stores a 4-bit codebook index plus a 16-entry symbol remap. */
     mode = exp_get_bits(vb, HUFF4_USED_SHIFT);
@@ -356,7 +353,7 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
     *bits_to_peek = (u8)BINK_HUFF4_BITS_TO_PEEK[mode];
     if (mode == 0) {
         for (j = 0; j < HUFF4_SYMBOLS; ++j) {
-            out[j] = j;
+            values[j] = j;
         }
         return;
     }
@@ -369,13 +366,12 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
             count = HUFF4_PAIR_COUNT;
             do {
                 if (exp_get_bit(vb) != 0) {
-                    out[1] = i;
-                    out[0] = i + 1;
+                    values[i + 1] = i;
+                    values[i] = i + 1;
                 } else {
-                    out[0] = i;
-                    out[1] = i + 1;
+                    values[i] = i;
+                    values[i + 1] = i + 1;
                 }
-                out += HUFF4_PAIR_SYMBOLS;
                 i += HUFF4_PAIR_SYMBOLS;
                 count--;
             } while (count != 0);
