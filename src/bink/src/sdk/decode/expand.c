@@ -778,50 +778,49 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     }
 
     count = exp_get_bits(bits, bundle->count_bits);
-    if (count == 0) {
-        bundle->cur_dec = bundle->data;
-        bundle->cur_ptr = BINK_BUNDLE_EMPTY_CUR(bundle);
-        return;
-    }
-
-    dest = (s16 PTR4*)bundle->data;
-    if (bundle->initial_value == BINK_BUNDLE_INITIAL_VALUE_NONE) {
-        current = exp_get_bits(bits, bundle->bit_size) & EXP_U16_MASK;
-    } else {
-        current = exp_get_bits(bits, bundle->bit_size - 1) & EXP_U16_MASK;
-        if (current != 0 && exp_get_bit(bits) != 0) {
-            current = -current & EXP_U16_MASK;
-        }
-    }
-
-    *dest++ = (s16)current;
-    remaining = count - 1;
-    bundle->cur_ptr = bundle->data;
-    bundle->cur_dec = bundle->data + count * sizeof(*dest);
-    while (remaining != 0) {
-        group_count = remaining;
-        if (group_count > BINK_DELTA16_GROUP_MAX) {
-            group_count = BINK_DELTA16_GROUP_MAX;
-        }
-
-        bit_count = exp_get_bits(bits, HUFF4_USED_SHIFT);
-        if (bit_count == 0) {
-            radmemset16(dest, (u16)current, group_count * sizeof(*dest));
-            dest += group_count;
-            remaining -= group_count;
+    if (count != 0) {
+        dest = (s16 PTR4*)bundle->data;
+        if (bundle->initial_value == BINK_BUNDLE_INITIAL_VALUE_NONE) {
+            current = exp_get_bits(bits, bundle->bit_size) & EXP_U16_MASK;
         } else {
-            remaining -= group_count;
-            while (group_count != 0) {
-                group_count--;
-                value = exp_get_bits(bits, bit_count) & EXP_U16_MASK;
-                delta = (s32)(s16)value;
-                if (delta != 0 && exp_get_bit(bits) != 0) {
-                    delta = (s32)(s16)-value;
-                }
-                current = (current + delta) & EXP_U16_MASK;
-                *dest++ = (s16)current;
+            current = exp_get_bits(bits, bundle->bit_size - 1) & EXP_U16_MASK;
+            if (current != 0 && exp_get_bit(bits) != 0) {
+                current = -current & EXP_U16_MASK;
             }
         }
+
+        *dest++ = (s16)current;
+        remaining = count - 1;
+        bundle->cur_ptr = bundle->data;
+        bundle->cur_dec = bundle->data + count * sizeof(*dest);
+        while (remaining != 0) {
+            group_count = remaining;
+            if (group_count > BINK_DELTA16_GROUP_MAX) {
+                group_count = BINK_DELTA16_GROUP_MAX;
+            }
+
+            bit_count = exp_get_bits(bits, HUFF4_USED_SHIFT);
+            if (bit_count == 0) {
+                radmemset16(dest, (u16)current, group_count * sizeof(*dest));
+                dest += group_count;
+                remaining -= group_count;
+            } else {
+                remaining -= group_count;
+                while (group_count != 0) {
+                    group_count--;
+                    value = exp_get_bits(bits, bit_count) & EXP_U16_MASK;
+                    delta = (s32)(s16)value;
+                    if (delta != 0 && exp_get_bit(bits) != 0) {
+                        delta = (s32)(s16)-value;
+                    }
+                    current = (current + delta) & EXP_U16_MASK;
+                    *dest++ = (s16)current;
+                }
+            }
+        }
+    } else {
+        bundle->cur_dec = bundle->data;
+        bundle->cur_ptr = BINK_BUNDLE_EMPTY_CUR(bundle);
     }
 }
 
