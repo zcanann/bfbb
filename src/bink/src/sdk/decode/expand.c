@@ -1218,8 +1218,6 @@ void ExpandBink(u8 PTR4* yout,
                 u32 aflags)
 {
     u32 PTR4* next;
-    u32 uv_width;
-    u32 uv_height;
     u32 uv_size;
 
     if ((aflags & BINKALPHA) != 0) {
@@ -1245,13 +1243,13 @@ void ExpandBink(u8 PTR4* yout,
         yout = yout + pitch * uvpitch;
         yprev = yprev + pitch * uvpitch;
         uvpitch >>= BINK_CHROMA_SHIFT;
-        uv_width = BINK_BLOCK_ROUND(BINK_CHROMA_ROUND(width));
-        uv_height = BINK_BLOCK_ROUND(BINK_CHROMA_ROUND(height));
+        width = BINK_BLOCK_ROUND(BINK_CHROMA_ROUND(width));
+        height = BINK_BLOCK_ROUND(BINK_CHROMA_ROUND(height));
         pitch >>= BINK_CHROMA_SHIFT;
-        next = ExpandPlane(yout, yprev, uv_width, uv_height, pitch, next, key_frame, work,
+        next = ExpandPlane(yout, yprev, width, height, pitch, next, key_frame, work,
                            BINK_CHROMA_PLANE_SCALE, table, yflags);
         uv_size = pitch * uvpitch;
-        ExpandPlane(yout + uv_size, yprev + uv_size, uv_width, uv_height, pitch,
+        ExpandPlane(yout + uv_size, yprev + uv_size, width, height, pitch,
                     next, key_frame, work, BINK_CHROMA_PLANE_SCALE, table, yflags);
     }
 }
