@@ -170,13 +170,13 @@ static u32 radreadngc(DVDFileInfo PTR4* file, u32 offset, void PTR4* dest, u32 s
                 break;
             }
             if (status <= DVD_STATE_END) {
-                if (status != DVD_STATE_FATAL_ERROR) {
-                    continue;
+                if (status == DVD_STATE_FATAL_ERROR) {
+                    return 0;
                 }
-                return 0;
+                continue;
             }
             if (status <= DVD_STATE_RETRY) {
-                if (status > DVD_STATE_WAITING) {
+                if (status >= DVD_STATE_WAITING + 1) {
                     return 0;
                 }
             }
