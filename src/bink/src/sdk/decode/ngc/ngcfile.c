@@ -113,9 +113,9 @@ u32 RGBshift[RGB_SHIFT_TABLE_SIZE] RAD_ATTRIBUTE_ALIGN(NGC_TABLE_ALIGNMENT) = { 
     ((status) == DVD_STATE_END || (status) == DVD_STATE_CANCELED)
 #define NGC_DVD_STATUS_BUSY_OR_WAITING(status) \
     ((u32)((status) - DVD_STATE_BUSY) <= (DVD_STATE_WAITING - DVD_STATE_BUSY))
-#define NGC_DVD_STATUS_FAILED(status)                                                             \
-    ((status) <= DVD_STATE_IGNORED ?                                                              \
-         ((status) >= DVD_STATE_IGNORED || (status) == DVD_STATE_FATAL_ERROR) :                    \
+#define NGC_DVD_STATUS_FAILED(status)                                                              \
+    ((status) <= DVD_STATE_IGNORED ?                                                               \
+         ((status) >= DVD_STATE_WAITING + 1 || (status) == DVD_STATE_FATAL_ERROR) :                \
          (status) == DVD_STATE_RETRY)
 
 static void ReadKickoff(BINKIO PTR4* io);
