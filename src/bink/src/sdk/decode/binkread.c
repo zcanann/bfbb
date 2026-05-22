@@ -723,57 +723,56 @@ static void checksound(HBINK bnk)
                     while (bnk->bsnd[i].sndamt > bnk->bsnd[i].BestSizeIn16 ||
                            ((s32)bnk->FrameNum > (s32)bnk->bsnd[i].sndendframe &&
                             bnk->bsnd[i].sndamt != 0)) {
-                        if (bnk->bsnd[i].Ready(&bnk->bsnd[i]) != 0) {
-                            u8 PTR4* addr;
-                            u32 len;
+                        u8 PTR4* addr;
+                        u32 len;
 
-                            if (bnk->bsnd[i].Lock(&bnk->bsnd[i], &addr, &len) != 0) {
-                                u32 tail;
+                        if (bnk->bsnd[i].Ready(&bnk->bsnd[i]) == 0) {
+                            break;
+                        }
+                        if (bnk->bsnd[i].Lock(&bnk->bsnd[i], &addr, &len) != 0) {
+                            u32 tail;
 
-                                if (bnk->bsnd[i].sndconvert8 != 0) {
-                                    len += len;
-                                }
-                                if (len > bnk->bsnd[i].sndamt) {
-                                    len = bnk->bsnd[i].sndamt;
-                                }
-                                if ((s32)bnk->FrameNum <= (s32)bnk->bsnd[i].sndendframe) {
-                                    len &= bnk->bsnd[i].BestSizeMask << bnk->bsnd[i].sndconvert8;
-                                }
-
-                                bnk->bsnd[i].sndamt -= len;
-                                tail = bnk->bsnd[i].sndend - bnk->bsnd[i].sndreadpos;
-                                if (tail < len) {
-                                    if (tail != 0) {
-                                        if (bnk->bsnd[i].sndconvert8 != 0) {
-                                            addr = conv16to8(addr, (s16 PTR4*)bnk->bsnd[i].sndreadpos, tail);
-                                        } else {
-                                            memcpy(addr, bnk->bsnd[i].sndreadpos, tail);
-                                            addr += tail;
-                                        }
-                                    }
-
-                                    if (bnk->bsnd[i].sndconvert8 != 0) {
-                                        conv16to8(addr, (s16 PTR4*)bnk->bsnd[i].sndbuf, len - tail);
-                                    } else {
-                                        memcpy(addr, bnk->bsnd[i].sndbuf, len - tail);
-                                    }
-                                    bnk->bsnd[i].sndreadpos = bnk->bsnd[i].sndbuf + (len - tail);
-                                } else {
-                                    if (bnk->bsnd[i].sndconvert8 != 0) {
-                                        conv16to8(addr, (s16 PTR4*)bnk->bsnd[i].sndreadpos, len);
-                                    } else {
-                                        memcpy(addr, bnk->bsnd[i].sndreadpos, len);
-                                    }
-                                    bnk->bsnd[i].sndreadpos += len;
-                                }
-
-                                if (bnk->bsnd[i].sndconvert8 != 0) {
-                                    len >>= 1;
-                                }
-                                bnk->bsnd[i].Unlock(&bnk->bsnd[i], len);
-                            } else {
-                                break;
+                            if (bnk->bsnd[i].sndconvert8 != 0) {
+                                len += len;
                             }
+                            if (len > bnk->bsnd[i].sndamt) {
+                                len = bnk->bsnd[i].sndamt;
+                            }
+                            if ((s32)bnk->FrameNum <= (s32)bnk->bsnd[i].sndendframe) {
+                                len &= bnk->bsnd[i].BestSizeMask << bnk->bsnd[i].sndconvert8;
+                            }
+
+                            bnk->bsnd[i].sndamt -= len;
+                            tail = bnk->bsnd[i].sndend - bnk->bsnd[i].sndreadpos;
+                            if (tail < len) {
+                                if (tail != 0) {
+                                    if (bnk->bsnd[i].sndconvert8 != 0) {
+                                        addr = conv16to8(addr, (s16 PTR4*)bnk->bsnd[i].sndreadpos, tail);
+                                    } else {
+                                        memcpy(addr, bnk->bsnd[i].sndreadpos, tail);
+                                        addr += tail;
+                                    }
+                                }
+
+                                if (bnk->bsnd[i].sndconvert8 != 0) {
+                                    conv16to8(addr, (s16 PTR4*)bnk->bsnd[i].sndbuf, len - tail);
+                                } else {
+                                    memcpy(addr, bnk->bsnd[i].sndbuf, len - tail);
+                                }
+                                bnk->bsnd[i].sndreadpos = bnk->bsnd[i].sndbuf + (len - tail);
+                            } else {
+                                if (bnk->bsnd[i].sndconvert8 != 0) {
+                                    conv16to8(addr, (s16 PTR4*)bnk->bsnd[i].sndreadpos, len);
+                                } else {
+                                    memcpy(addr, bnk->bsnd[i].sndreadpos, len);
+                                }
+                                bnk->bsnd[i].sndreadpos += len;
+                            }
+
+                            if (bnk->bsnd[i].sndconvert8 != 0) {
+                                len >>= 1;
+                            }
+                            bnk->bsnd[i].Unlock(&bnk->bsnd[i], len);
                         } else {
                             break;
                         }
