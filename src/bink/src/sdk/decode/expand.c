@@ -737,34 +737,33 @@ static void CheckReadHuff4SBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     }
 
     count = exp_get_bits(bits, bundle->count_bits);
-    if (count == 0) {
-        bundle->cur_dec = bundle->data;
-        bundle->cur_ptr = BINK_BUNDLE_EMPTY_CUR(bundle);
-        return;
-    }
-
-    bundle->cur_ptr = bundle->data;
-    bundle->cur_dec = bundle->data + count;
-    if (exp_get_bit(bits) == 0) {
-        /* Signed Huff4 bundles store a sign bit only for nonzero symbols. */
-        dest = bundle->data;
-        values = bundle->values;
-        decode = bundle->decode;
-        peek = bundle->bits_to_peek;
-        count--;
-        do {
-            value = (s32)exp_read_huff4(bits, peek, decode, values);
+    if (count != 0) {
+        bundle->cur_ptr = bundle->data;
+        bundle->cur_dec = bundle->data + count;
+        if (exp_get_bit(bits) == 0) {
+            /* Signed Huff4 bundles store a sign bit only for nonzero symbols. */
+            dest = bundle->data;
+            values = bundle->values;
+            decode = bundle->decode;
+            peek = bundle->bits_to_peek;
+            count--;
+            do {
+                value = (s32)exp_read_huff4(bits, peek, decode, values);
+                if (value != 0 && exp_get_bit(bits) != 0) {
+                    value = -value;
+                }
+                *dest++ = (s8)value;
+            } while (count-- != 0);
+        } else {
+            value = (s32)exp_get_bits(bits, HUFF4_USED_SHIFT);
             if (value != 0 && exp_get_bit(bits) != 0) {
                 value = -value;
             }
-            *dest++ = (s8)value;
-        } while (count-- != 0);
-    } else {
-        value = (s32)exp_get_bits(bits, HUFF4_USED_SHIFT);
-        if (value != 0 && exp_get_bit(bits) != 0) {
-            value = -value;
+            memset(bundle->data, value, count);
         }
-        memset(bundle->data, value, count);
+    } else {
+        bundle->cur_dec = bundle->data;
+        bundle->cur_ptr = BINK_BUNDLE_EMPTY_CUR(bundle);
     }
 }
 
