@@ -581,6 +581,7 @@ static s32 Unlock(BINKSND PTR4* snd, u32 filled)
 {
     NGCBinkSound PTR4* ngc_snd;
     NGCSoundState PTR4* state;
+    ARQRequest PTR4* task;
     u32 padded;
 
     ngc_snd = NGC_SND(snd);
@@ -589,11 +590,11 @@ static s32 Unlock(BINKSND PTR4* snd, u32 filled)
     }
 
     state = NGC_SOUND_STATE(ngc_snd);
-    NGC_TASK_MARK_BUSY(NGC_TASK(state, state->lock_index));
+    task = NGC_TASK(state, state->lock_index);
+    NGC_TASK_MARK_BUSY(task);
 
     if (ngc_snd->chans == NGC_SOUND_STEREO_CHANNELS) {
         /* Split the temporary interleaved stereo buffer into the two ARQ upload buffers. */
-        ARQRequest PTR4* task = NGC_TASK(state, state->lock_index);
         u8 PTR4* left = (u8 PTR4*)task->source;
         u8 PTR4* right = (u8 PTR4*)NGC_TASK(state, state->lock_index +
                                                  NGC_SOUND_RIGHT_TASK_OFFSET)->source;
