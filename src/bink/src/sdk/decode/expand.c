@@ -557,45 +557,43 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
     }
 
     count = exp_get_bits(bits, bundle->count_bits);
-    if (count == 0) {
-        /* The empty sentinel matches the other bundle readers. */
+    if (count != 0) {
+        dest = bundle->data;
+        peek = bundle->bits_to_peek;
+        bundle->cur_ptr = dest;
+        bundle->cur_dec = dest + count;
+        decode = bundle->decode;
+        state = huff8_table->state;
+        if (exp_get_bit(bits) != 0) {
+            /* Negative remaining marks the old-format repeat packet variant. */
+            count = -(count + BUNDLE_REPEAT_EXTRA);
+        }
+        values = bundle->values;
+        remaining = (s32)count;
+        do {
+            prev_remaining = remaining;
+            high = exp_read_huff8(bits, state, huff8_table);
+            state = high;
+            low = exp_read_huff4(bits, peek, decode, values);
+            value = ((high & HUFF4_SYMBOL_MASK) << HUFF4_USED_SHIFT) | low;
+            if ((value & BINK_SIGNED_BYTE_BIAS) == 0) {
+                value |= BINK_SIGNED_BYTE_BIAS;
+            } else {
+                value = BINK_SIGNED_BYTE_BIAS - (value & BINK_SIGNED_BYTE_MASK);
+            }
+            *dest++ = (u8)value;
+            remaining = prev_remaining - 1;
+        } while (remaining > 0);
+
+        if (remaining < -BUNDLE_REPEAT_THRESHOLD) {
+            /* Repeat packets back-fill the whole bundle with the first decoded byte. */
+            memset(bundle->data, *bundle->data, -(prev_remaining + BUNDLE_REPEAT_EXTRA));
+        }
+        huff8_table->state = state;
+    } else {
         bundle->cur_dec = bundle->data;
         bundle->cur_ptr = BINK_BUNDLE_EMPTY_CUR(bundle);
-        return;
     }
-
-    dest = bundle->data;
-    peek = bundle->bits_to_peek;
-    bundle->cur_ptr = dest;
-    bundle->cur_dec = dest + count;
-    decode = bundle->decode;
-    state = huff8_table->state;
-    if (exp_get_bit(bits) != 0) {
-        /* Negative remaining marks the old-format repeat packet variant. */
-        count = -(count + BUNDLE_REPEAT_EXTRA);
-    }
-    values = bundle->values;
-    remaining = (s32)count;
-    do {
-        prev_remaining = remaining;
-        high = exp_read_huff8(bits, state, huff8_table);
-        state = high;
-        low = exp_read_huff4(bits, peek, decode, values);
-        value = ((high & HUFF4_SYMBOL_MASK) << HUFF4_USED_SHIFT) | low;
-        if ((value & BINK_SIGNED_BYTE_BIAS) == 0) {
-            value |= BINK_SIGNED_BYTE_BIAS;
-        } else {
-            value = BINK_SIGNED_BYTE_BIAS - (value & BINK_SIGNED_BYTE_MASK);
-        }
-        *dest++ = (u8)value;
-        remaining = prev_remaining - 1;
-    } while (remaining > 0);
-
-    if (remaining < -BUNDLE_REPEAT_THRESHOLD) {
-        /* Repeat packets back-fill the whole bundle with the first decoded byte. */
-        memset(bundle->data, *bundle->data, -(prev_remaining + BUNDLE_REPEAT_EXTRA));
-    }
-    huff8_table->state = state;
 }
 
 static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
