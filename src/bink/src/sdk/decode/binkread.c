@@ -1446,7 +1446,7 @@ do_blit:
     }
 
     bnk->lastblitflags = blitflags;
-    if ((s32)blitflags >= 0 && bnk->MaskLength <= strlen((char PTR4*)bnk->MaskPlane)) {
+    if ((s32)blitflags < 0 || strlen((char PTR4*)bnk->MaskPlane) >= bnk->MaskLength) {
         flags = blitflags & BINKSURFACEMASK;
         if (flags == BINKSURFACE4444) {
             if (bnk->APlane[0] != 0) {
