@@ -596,8 +596,8 @@ static s32 Unlock(BINKSND PTR4* snd, u32 filled)
     if (ngc_snd->chans == NGC_SOUND_STEREO_CHANNELS) {
         /* Split the temporary interleaved stereo buffer into the two ARQ upload buffers. */
         u8 PTR4* left = (u8 PTR4*)task->source;
-        u8 PTR4* right = (u8 PTR4*)NGC_TASK(state, state->lock_index +
-                                                 NGC_SOUND_RIGHT_TASK_OFFSET)->source;
+        u8 PTR4* right = (u8 PTR4*)NGC_TASK_FOR_INDEX(state, NGC_SOUND_STEREO_CHANNELS - 1,
+                                                       state->lock_index)->source;
         u8 PTR4* src = state->stereo_buffer;
 
         if (ngc_snd->bits == NGC_SOUND_BITS_16) {
