@@ -2459,6 +2459,7 @@ static s32 trysplit(BINKRECT PTR4* outa, BINKRECT PTR4* outb, const BINKRECT PTR
     BINKRECT second_half;
     BINKRECT split_rect;
     s32 best_score;
+    s32 split_score;
     u32 split;
 
     if (rect->Width >= BINK_DIRTY_SPLIT_MIN_SIZE) {
@@ -2479,8 +2480,6 @@ static s32 trysplit(BINKRECT PTR4* outa, BINKRECT PTR4* outb, const BINKRECT PTR
     }
 
     if (rect->Height >= BINK_DIRTY_SPLIT_MIN_SIZE) {
-        s32 split_score;
-
         split_rect = *rect;
         split = (split_rect.Height / BINK_COPY_SCALE + BINK_MASK_BLOCK_ROUND_MASK) &
                 ~BINK_MASK_BLOCK_ROUND_MASK;
