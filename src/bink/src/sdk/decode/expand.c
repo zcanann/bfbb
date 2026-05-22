@@ -701,25 +701,24 @@ static void CheckReadHuff4PairBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits
     }
 
     count = exp_get_bits(bits, bundle->count_bits);
-    if (count == 0) {
+    if (count != 0) {
+        dest = bundle->data;
+        bundle->cur_ptr = dest;
+        bundle->cur_dec = dest + count;
+        values = bundle->values;
+        decode = bundle->decode;
+        peek = bundle->bits_to_peek;
+        do {
+            /* Pair bundles pack two Huff4 symbols into each output byte. */
+            count--;
+            first = exp_read_huff4(bits, peek, decode, values);
+            second = exp_read_huff4(bits, peek, decode, values);
+            *dest++ = (u8)(first | (second << HUFF4_USED_SHIFT));
+        } while (count != 0);
+    } else {
         bundle->cur_dec = bundle->data;
         bundle->cur_ptr = BINK_BUNDLE_EMPTY_CUR(bundle);
-        return;
     }
-
-    dest = bundle->data;
-    bundle->cur_ptr = dest;
-    bundle->cur_dec = dest + count;
-    values = bundle->values;
-    decode = bundle->decode;
-    peek = bundle->bits_to_peek;
-    do {
-        /* Pair bundles pack two Huff4 symbols into each output byte. */
-        count--;
-        first = exp_read_huff4(bits, peek, decode, values);
-        second = exp_read_huff4(bits, peek, decode, values);
-        *dest++ = (u8)(first | (second << HUFF4_USED_SHIFT));
-    } while (count != 0);
 }
 
 static void CheckReadHuff4SBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
