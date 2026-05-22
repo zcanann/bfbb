@@ -614,37 +614,36 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
     }
 
     count = exp_get_bits(bits, bundle->count_bits);
-    if (count == 0) {
+    if (count != 0) {
+        dest = bundle->data;
+        peek = bundle->bits_to_peek;
+        bundle->cur_ptr = dest;
+        bundle->cur_dec = dest + count;
+        decode = bundle->decode;
+        state = huff8_table->state;
+        if (exp_get_bit(bits) != 0) {
+            /* New-format Huff8 repeat packets keep the byte unsigned. */
+            count = -count - BUNDLE_REPEAT_EXTRA;
+        }
+        values = bundle->values;
+        remaining = (s32)count;
+        do {
+            prev_remaining = remaining;
+            state = exp_read_huff8(bits, state, huff8_table);
+            low = exp_read_huff4(bits, peek, decode, values);
+            *dest++ = (u8)(low | (state << HUFF4_USED_SHIFT));
+            remaining = prev_remaining - 1;
+        } while (remaining > 0);
+
+        if (remaining < -BUNDLE_REPEAT_THRESHOLD) {
+            /* Match old-format repeat handling after the one-byte payload is decoded. */
+            memset(bundle->data, *bundle->data, -(prev_remaining + BUNDLE_REPEAT_EXTRA));
+        }
+        huff8_table->state = state;
+    } else {
         bundle->cur_dec = bundle->data;
         bundle->cur_ptr = BINK_BUNDLE_EMPTY_CUR(bundle);
-        return;
     }
-
-    dest = bundle->data;
-    peek = bundle->bits_to_peek;
-    bundle->cur_ptr = dest;
-    bundle->cur_dec = dest + count;
-    decode = bundle->decode;
-    state = huff8_table->state;
-    if (exp_get_bit(bits) != 0) {
-        /* New-format Huff8 repeat packets keep the byte unsigned. */
-        count = -count - BUNDLE_REPEAT_EXTRA;
-    }
-    values = bundle->values;
-    remaining = (s32)count;
-    do {
-        prev_remaining = remaining;
-        state = exp_read_huff8(bits, state, huff8_table);
-        low = exp_read_huff4(bits, peek, decode, values);
-        *dest++ = (u8)(low | (state << HUFF4_USED_SHIFT));
-        remaining = prev_remaining - 1;
-    } while (remaining > 0);
-
-    if (remaining < -BUNDLE_REPEAT_THRESHOLD) {
-        /* Match old-format repeat handling after the one-byte payload is decoded. */
-        memset(bundle->data, *bundle->data, -(prev_remaining + BUNDLE_REPEAT_EXTRA));
-    }
-    huff8_table->state = state;
 }
 
 static void CheckReadHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
