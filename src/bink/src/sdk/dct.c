@@ -956,7 +956,7 @@ void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4* q)
     s32 temp[DCT_BLOCK_COEFFS];
     s32 PTR4* out;
     u32 PTR4* d0;
-    u32 PTR4* d1;
+    s32 doublepitch;
     s32 i;
 
     out = temp;
@@ -1018,9 +1018,10 @@ void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4* q)
 
     out = temp;
     d0 = dest;
-    d1 = DCT_ADVANCE_U32_BYTES(dest, pitch);
+    doublepitch = pitch + pitch;
     /* The doubled variant expands each row into two adjacent output rows. */
     for (i = DCT_BLOCK_WIDTH; i != 0; --i) {
+        u32 PTR4* d1 = DCT_ADVANCE_U32_BYTES(d0, pitch);
         s32 a0 = out[DCT_COL2] + out[DCT_COL6];
         s32 a1 = out[DCT_COL0] + out[DCT_COL4];
         s32 a2 = a1 - a0;
@@ -1057,8 +1058,7 @@ void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4* q)
         d1[DCT_COL3] = p3;
 
         out += DCT_BLOCK_WIDTH;
-        d0 = DCT_ADVANCE_U32_BYTES(d0, pitch * 2);
-        d1 = DCT_ADVANCE_U32_BYTES(d1, pitch * 2);
+        d0 = DCT_ADVANCE_U32_BYTES(d0, doublepitch);
     }
 }
 
