@@ -422,7 +422,8 @@ static u32 BinkFileReadFrame(BINKIO PTR4* io, u32 frame_num, s32 offset, void PT
             u8 PTR4* ptr;
 
             /* A forward seek already buffered by DVD can be consumed by advancing the ring pointer. */
-            NGC_VOLATILE_U32(NGC_FREE_SIZE(io)) = NGC_FREE_SIZE(io) + skip;
+            NGC_VOLATILE_U32(NGC_FREE_SIZE(io)) =
+                NGC_VOLATILE_U32(NGC_FREE_SIZE(io)) + skip;
             ptr = NGC_READ_PTR(io) + skip;
             NGC_CONSUME_CURSOR(io) = offset;
             NGC_READ_PTR(io) = ptr;
