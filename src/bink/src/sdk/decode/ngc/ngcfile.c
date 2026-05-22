@@ -115,7 +115,7 @@ u32 RGBshift[RGB_SHIFT_TABLE_SIZE] RAD_ATTRIBUTE_ALIGN(NGC_TABLE_ALIGNMENT) = { 
     ((u32)((status) - DVD_STATE_BUSY) <= (DVD_STATE_WAITING - DVD_STATE_BUSY))
 #define NGC_DVD_STATUS_FAILED(status)                                                             \
     ((status) <= DVD_STATE_IGNORED ?                                                              \
-         ((status) > DVD_STATE_WAITING || (status) == DVD_STATE_FATAL_ERROR) :                     \
+         ((status) >= DVD_STATE_IGNORED || (status) == DVD_STATE_FATAL_ERROR) :                    \
          (status) == DVD_STATE_RETRY)
 
 static void ReadKickoff(BINKIO PTR4* io);
@@ -176,7 +176,7 @@ static u32 radreadngc(DVDFileInfo PTR4* file, u32 offset, void PTR4* dest, u32 s
                 continue;
             }
             if (status <= DVD_STATE_RETRY) {
-                if (status >= DVD_STATE_WAITING + 1) {
+                if (status >= DVD_STATE_IGNORED) {
                     return 0;
                 }
             }
@@ -498,7 +498,8 @@ static u32 BinkFileReadFrame(BINKIO PTR4* io, u32 frame_num, s32 offset, void PT
 
                     enabled = OSDisableInterrupts();
                     io->CurBufUsed -= first;
-                    NGC_VOLATILE_U32(NGC_FREE_SIZE(io)) = NGC_FREE_SIZE(io) + first;
+                    NGC_VOLATILE_U32(NGC_FREE_SIZE(io)) =
+                        NGC_VOLATILE_U32(NGC_FREE_SIZE(io)) + first;
                     OSRestoreInterrupts(enabled);
                 }
 
@@ -511,7 +512,8 @@ static u32 BinkFileReadFrame(BINKIO PTR4* io, u32 frame_num, s32 offset, void PT
 
                     enabled = OSDisableInterrupts();
                     io->CurBufUsed -= amount;
-                    NGC_VOLATILE_U32(NGC_FREE_SIZE(io)) = NGC_FREE_SIZE(io) + amount;
+                    NGC_VOLATILE_U32(NGC_FREE_SIZE(io)) =
+                        NGC_VOLATILE_U32(NGC_FREE_SIZE(io)) + amount;
                     OSRestoreInterrupts(enabled);
                 }
             }
