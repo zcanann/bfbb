@@ -226,12 +226,14 @@ static u32 BinkFileReadHeader(BINKIO PTR4* io, s32 offset, void PTR4* dest, u32 
 
 static void dosimulate(BINKIO PTR4* io, u32 read_size, u32 start)
 {
-    u32 last;
     s32 delay;
+    u32 last;
+    u32 elapsed;
 
     delay = mult64anddiv(read_size, NGC_MILLISECONDS_PER_SECOND, NGC_SIMULATE_RATE(io));
     last = RADTimerRead();
-    delay -= last - start;
+    elapsed = last - start;
+    delay -= elapsed;
     NGC_SIMULATE_DELAY(io) += delay;
 
     while (NGC_SIMULATE_DELAY(io) > 0) {
