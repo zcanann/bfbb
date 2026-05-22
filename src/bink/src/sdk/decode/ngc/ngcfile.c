@@ -231,8 +231,7 @@ static void dosimulate(BINKIO PTR4* io, u32 read_size, u32 start)
 
     delay = mult64anddiv(read_size, NGC_MILLISECONDS_PER_SECOND, NGC_SIMULATE_RATE(io));
     last = RADTimerRead();
-    start = last - start;
-    delay -= start;
+    delay -= last - start;
     NGC_SIMULATE_DELAY(io) += delay;
 
     while (NGC_SIMULATE_DELAY(io) > 0) {
