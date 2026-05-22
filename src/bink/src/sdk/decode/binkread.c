@@ -1420,7 +1420,7 @@ s32 BinkCopyToBufferRect(HBINK bnk, void PTR4* dest, s32 destpitch, u32 destheig
                 if (count + 1 >= BINK_MAX_CONSECUTIVE_SKIPS) {
                     bnk->skipped_in_a_row = 0;
                 } else {
-                    if ((flags & BINKNOSKIP) == 0 && (bnk->OpenFlags & BINKNOSKIP) == 0) {
+                    if ((blitflags & BINKNOSKIP) == 0 && (bnk->OpenFlags & BINKNOSKIP) == 0) {
                         bnk->bio.Working = 0;
                         bnk->skippedlastblit = 1;
                         bnk->skippedblits++;
