@@ -664,27 +664,26 @@ static void CheckReadHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     }
 
     count = exp_get_bits(bits, bundle->count_bits);
-    if (count == 0) {
-        bundle->cur_dec = bundle->data;
-        bundle->cur_ptr = BINK_BUNDLE_EMPTY_CUR(bundle);
-        return;
-    }
-
-    bundle->cur_ptr = bundle->data;
-    bundle->cur_dec = bundle->data + count;
-    if (exp_get_bit(bits) == 0) {
-        /* Direct Huff4 bundles decode one nibble-sized symbol per byte. */
-        dest = bundle->data;
-        values = bundle->values;
-        decode = bundle->decode;
-        peek = bundle->bits_to_peek;
-        while (count != 0) {
-            *dest++ = (u8)exp_read_huff4(bits, peek, decode, values);
-            count--;
+    if (count != 0) {
+        bundle->cur_ptr = bundle->data;
+        bundle->cur_dec = bundle->data + count;
+        if (exp_get_bit(bits) == 0) {
+            /* Direct Huff4 bundles decode one nibble-sized symbol per byte. */
+            dest = bundle->data;
+            values = bundle->values;
+            decode = bundle->decode;
+            peek = bundle->bits_to_peek;
+            while (count != 0) {
+                *dest++ = (u8)exp_read_huff4(bits, peek, decode, values);
+                count--;
+            }
+        } else {
+            value = exp_get_bits(bits, HUFF4_USED_SHIFT);
+            memset(bundle->data, value, count);
         }
     } else {
-        value = exp_get_bits(bits, HUFF4_USED_SHIFT);
-        memset(bundle->data, value, count);
+        bundle->cur_dec = bundle->data;
+        bundle->cur_ptr = BINK_BUNDLE_EMPTY_CUR(bundle);
     }
 }
 
