@@ -720,15 +720,13 @@ static void checksound(HBINK bnk)
 
                 do {
                     next = i + 1;
-                    while (bnk->bsnd[i].sndamt > bnk->bsnd[i].BestSizeIn16 ||
-                           ((s32)bnk->FrameNum > (s32)bnk->bsnd[i].sndendframe &&
-                            bnk->bsnd[i].sndamt != 0)) {
+                    while (bnk->bsnd[i].Ready(&bnk->bsnd[i]) != 0 &&
+                           (bnk->bsnd[i].sndamt > bnk->bsnd[i].BestSizeIn16 ||
+                            ((s32)bnk->FrameNum > (s32)bnk->bsnd[i].sndendframe &&
+                             bnk->bsnd[i].sndamt != 0))) {
                         u8 PTR4* addr;
                         u32 len;
 
-                        if (bnk->bsnd[i].Ready(&bnk->bsnd[i]) == 0) {
-                            break;
-                        }
                         if (bnk->bsnd[i].Lock(&bnk->bsnd[i], &addr, &len) != 0) {
                             u32 tail;
 
