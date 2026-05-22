@@ -495,46 +495,45 @@ static void CheckReadRLEHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     }
 
     count = exp_get_bits(bits, bundle->count_bits);
-    if (count == 0) {
+    if (count != 0) {
+        bundle->cur_ptr = bundle->data;
+        bundle->cur_dec = bundle->data + count;
+        if (exp_get_bit(bits) == 0) {
+            /* Literal Huff4 values above 11 repeat the previous decoded symbol. */
+            dest = bundle->data;
+            last = 0;
+            values = bundle->values;
+            decode = bundle->decode;
+            peek = (u8)bundle->bits_to_peek;
+            while (count != 0) {
+                value = exp_read_huff4(bits, peek, decode, values);
+                if (value > HUFF4_RLE_LITERAL_COUNT - 1) {
+                    u32 fill;
+
+                    /* Packed word stores four copies of the last byte for the run fill. */
+                    fill = last | (last << BINK_BYTE_BITS);
+                    run = BINK_HUFF4_RLE_LENGTH(value);
+                    count -= run;
+                    fill |= fill << BINK_BUNDLE_MIN_WORD_BITS;
+                    do {
+                        *(u32 PTR4*)dest = fill;
+                        dest += EXP_WORD_BYTES;
+                        run -= EXP_WORD_BYTES;
+                    } while (run != 0);
+                } else {
+                    *dest++ = (u8)value;
+                    count--;
+                    last = value;
+                }
+            }
+        } else {
+            value = exp_get_bits(bits, HUFF4_USED_SHIFT);
+            memset(bundle->data, value, count);
+        }
+    } else {
         /* Empty bundles point cur_ptr past data so callers see no decoded elements. */
         bundle->cur_dec = bundle->data;
         bundle->cur_ptr = BINK_BUNDLE_EMPTY_CUR(bundle);
-        return;
-    }
-
-    bundle->cur_ptr = bundle->data;
-    bundle->cur_dec = bundle->data + count;
-    if (exp_get_bit(bits) == 0) {
-        /* Literal Huff4 values above 11 repeat the previous decoded symbol. */
-        dest = bundle->data;
-        last = 0;
-        values = bundle->values;
-        decode = bundle->decode;
-        peek = (u8)bundle->bits_to_peek;
-        while (count != 0) {
-            value = exp_read_huff4(bits, peek, decode, values);
-            if (value > HUFF4_RLE_LITERAL_COUNT - 1) {
-                u32 fill;
-
-                /* Packed word stores four copies of the last byte for the run fill. */
-                fill = last | (last << BINK_BYTE_BITS);
-                run = BINK_HUFF4_RLE_LENGTH(value);
-                count -= run;
-                fill |= fill << BINK_BUNDLE_MIN_WORD_BITS;
-                do {
-                    *(u32 PTR4*)dest = fill;
-                    dest += EXP_WORD_BYTES;
-                    run -= EXP_WORD_BYTES;
-                } while (run != 0);
-            } else {
-                *dest++ = (u8)value;
-                count--;
-                last = value;
-            }
-        }
-    } else {
-        value = exp_get_bits(bits, HUFF4_USED_SHIFT);
-        memset(bundle->data, value, count);
     }
 }
 
