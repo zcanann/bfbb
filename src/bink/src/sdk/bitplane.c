@@ -148,7 +148,7 @@ typedef struct BPLOSSYWRITETREE
     u16 nodes[BP_BLOCK_COEFFS - BP_LOSSY_ROOT_NODES];
 } BPLOSSYWRITETREE;
 
-void readlossy(void PTR4* out, BPBITSTREAM PTR4* bits, s32 limit);
+static void readlossy(void PTR4* out, BPBITSTREAM PTR4* bits, s32 limit);
 
 #define BP_STREAM(bits) ((BPBITSTREAM*)(bits))
 #define BP_STREAM_CUR(bits) (BP_STREAM(bits)->cur)
@@ -1285,7 +1285,7 @@ handle_lossy_children:
 }
 
 #pragma dont_inline on
-void readlossy(void PTR4* out, BPBITSTREAM PTR4* bits, s32 limit)
+static void readlossy(void PTR4* out, BPBITSTREAM PTR4* bits, s32 limit)
 {
     s32 reached_limit;
     s8 sample;
