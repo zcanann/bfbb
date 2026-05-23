@@ -49,6 +49,7 @@
 #define YUY2_CHROMA3(u, v) (((u) & YUY2_CHROMA8_MASK) << 16) + ((v) & YUY2_CHROMA8_MASK)
 #define YUY2_TAIL_CHROMA0(u, v) (((u) & YUY2_CHROMA_LOW16_MASK) << 8) + ((v) >> 8)
 #define YUY2_TAIL_CHROMA1(u, v) (((u) & YUY2_CHROMA8_MASK) << 16) + ((v) & YUY2_CHROMA8_MASK)
+#define YUY2_NO_REMAINING ((u32)-1)
 
 // Helpers operate on one destination row; the public 4x2 entry points call the
 // same packing logic for S.dest0 and S.dest1, then advance the shared context.
@@ -248,27 +249,27 @@ void YUY2_m_4x2(u32 count)
     remaining = count - 1;
     dest = (u32 PTR4*)S.dest0;
     y = S.y0;
-    if (remaining != (u32)-1) {
+    if (remaining != YUY2_NO_REMAINING) {
         do {
             u32 y0 = *y++;
 
             --remaining;
             *dest++ = YUY2_PACK_M4Y01(y0);
             *dest++ = YUY2_PACK_M4Y23(y0);
-        } while (remaining != (u32)-1);
+        } while (remaining != YUY2_NO_REMAINING);
     }
 
     remaining = count - 1;
     dest = (u32 PTR4*)S.dest1;
     y = S.y1;
-    if (remaining != (u32)-1) {
+    if (remaining != YUY2_NO_REMAINING) {
         do {
             u32 y0 = *y++;
 
             --remaining;
             *dest++ = YUY2_PACK_M4Y01(y0);
             *dest++ = YUY2_PACK_M4Y23(y0);
-        } while (remaining != (u32)-1);
+        } while (remaining != YUY2_NO_REMAINING);
     }
 
     S.dest0 += YUY2_ROW_BYTES(count);
@@ -286,7 +287,7 @@ void YUY2_mx2_4x2(u32 count)
     remaining = count - 1;
     dest = (u32 PTR4*)S.dest0;
     y = S.y0;
-    if (remaining != (u32)-1) {
+    if (remaining != YUY2_NO_REMAINING) {
         do {
             u32 y0 = *y++;
 
@@ -295,13 +296,13 @@ void YUY2_mx2_4x2(u32 count)
             *dest++ = YUY2_PACK_X2Y1(y0, YUY2_NEUTRAL_CHROMA);
             *dest++ = YUY2_PACK_X2Y2(y0, YUY2_NEUTRAL_CHROMA);
             *dest++ = YUY2_PACK_X2Y3(y0, YUY2_NEUTRAL_CHROMA);
-        } while (remaining != (u32)-1);
+        } while (remaining != YUY2_NO_REMAINING);
     }
 
     remaining = count - 1;
     dest = (u32 PTR4*)S.dest1;
     y = S.y1;
-    if (remaining != (u32)-1) {
+    if (remaining != YUY2_NO_REMAINING) {
         do {
             u32 y0 = *y++;
 
@@ -310,7 +311,7 @@ void YUY2_mx2_4x2(u32 count)
             *dest++ = YUY2_PACK_X2Y1(y0, YUY2_NEUTRAL_CHROMA);
             *dest++ = YUY2_PACK_X2Y2(y0, YUY2_NEUTRAL_CHROMA);
             *dest++ = YUY2_PACK_X2Y3(y0, YUY2_NEUTRAL_CHROMA);
-        } while (remaining != (u32)-1);
+        } while (remaining != YUY2_NO_REMAINING);
     }
 
     S.dest0 += YUY2_X2_ROW_BYTES(count);
@@ -401,14 +402,14 @@ static void YUY2_m_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y)
 {
     u32 remaining = count - 1;
 
-    if (remaining != (u32)-1) {
+    if (remaining != YUY2_NO_REMAINING) {
         do {
             u32 y0 = *y++;
 
             --remaining;
             *dest++ = YUY2_PACK_M4Y01(y0);
             *dest++ = YUY2_PACK_M4Y23(y0);
-        } while (remaining != (u32)-1);
+        } while (remaining != YUY2_NO_REMAINING);
     }
 }
 
@@ -416,7 +417,7 @@ static void YUY2_mx2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y)
 {
     u32 remaining = count - 1;
 
-    if (remaining != (u32)-1) {
+    if (remaining != YUY2_NO_REMAINING) {
         do {
             u32 y0 = *y++;
 
@@ -425,6 +426,6 @@ static void YUY2_mx2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y)
             *dest++ = YUY2_PACK_X2Y1(y0, YUY2_NEUTRAL_CHROMA);
             *dest++ = YUY2_PACK_X2Y2(y0, YUY2_NEUTRAL_CHROMA);
             *dest++ = YUY2_PACK_X2Y3(y0, YUY2_NEUTRAL_CHROMA);
-        } while (remaining != (u32)-1);
+        } while (remaining != YUY2_NO_REMAINING);
     }
 }
