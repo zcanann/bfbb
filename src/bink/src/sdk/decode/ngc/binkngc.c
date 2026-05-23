@@ -297,13 +297,12 @@ void radaudiofree(void PTR4* ptr) {
 
 u32 div64(u32 high, u32 low, u32 divisor)
 {
-    u32 hi = high;
     u32 quotient;
 
     /* 64-bit numerator, 32-bit divisor helper used by the Bink platform layer. */
     if (RAD_DIV_IS_POWER_OF_TWO(divisor)) {
         u32 clz = radcntlzw(divisor);
-        return (low >> (31 - clz)) | (hi << (clz + 1));
+        return (low >> (31 - clz)) | (high << (clz + 1));
     }
 
     {
@@ -313,8 +312,8 @@ u32 div64(u32 high, u32 low, u32 divisor)
         quotient = 0;
 
         if (upper != 0) {
-            u32 clz = radcntlzw(hi);
-            u32 est = (hi << clz) / upper;
+            u32 clz = radcntlzw(high);
+            u32 est = (high << clz) / upper;
             s32 adj = 16 - (s32)clz;
             s32 sign = adj >> 31;
             u32 rshift = (u32)(-(s32)adj) & (u32)sign;
@@ -324,15 +323,15 @@ u32 div64(u32 high, u32 low, u32 divisor)
             {
                 u32 prod_hi, prod_lo;
                 __asm__("mulhwu %0, %2, %3\n\tmullw %1, %2, %3" : "=&r"(prod_hi), "=&r"(prod_lo) : "r"(est), "r"(divisor));
-                __asm__("subfc %0, %3, %0\n\tsubfe %1, %2, %1" : "+r"(low), "+r"(hi) : "r"(prod_hi), "r"(prod_lo));
+                __asm__("subfc %0, %3, %0\n\tsubfe %1, %2, %1" : "+r"(low), "+r"(high) : "r"(prod_hi), "r"(prod_lo));
             }
         }
 
-        while (hi != 0) {
-            u32 step = recip * hi;
+        while (high != 0) {
+            u32 step = recip * high;
             u32 prod_hi, prod_lo;
             __asm__("mulhwu %0, %2, %3\n\tmullw %1, %2, %3" : "=&r"(prod_hi), "=&r"(prod_lo) : "r"(step), "r"(divisor));
-            __asm__("subfc %0, %3, %0\n\tsubfe %1, %2, %1" : "+r"(low), "+r"(hi) : "r"(prod_hi), "r"(prod_lo));
+            __asm__("subfc %0, %3, %0\n\tsubfe %1, %2, %1" : "+r"(low), "+r"(high) : "r"(prod_hi), "r"(prod_lo));
             quotient += step;
         }
 
