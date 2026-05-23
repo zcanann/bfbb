@@ -1188,10 +1188,9 @@ void FastmIDCT8x8WithMotion(u8 PTR4* dest, s32 pitch, s16 PTR4* in, u32 quant, u
 
 void FastFDCT8x8(s32 PTR4* out, u8 PTR4* in)
 {
-    s32 PTR4* row;
+    s32 PTR4* row = out;
     s32 i;
 
-    row = out;
     /* Forward DCT scales unsigned pixels into fixed-point workspace rows. */
     for (i = DCT_BLOCK_WIDTH; i != 0; --i) {
         s32 tmp0 = (in[DCT_COL0] + in[DCT_COL7]) * DCT_INPUT_SCALE;
@@ -1288,10 +1287,9 @@ void FastFDCT8x8(s32 PTR4* out, u8 PTR4* in)
 
 void FastFDCTs8x8(s32 PTR4* out, s8 PTR4* in)
 {
-    s32 PTR4* row;
+    s32 PTR4* row = out;
     s32 i;
 
-    row = out;
     /* Signed forward DCT uses already-centered residual samples. */
     for (i = DCT_BLOCK_WIDTH; i != 0; --i) {
         s32 tmp0 = (in[DCT_COL0] + in[DCT_COL7]) * DCT_INPUT_SCALE;
