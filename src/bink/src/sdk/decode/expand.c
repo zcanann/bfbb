@@ -341,11 +341,11 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
     u32 mask;
     u32 j;
     u32 i;
-    u8 order[HUFF4_SYMBOLS];
     u8 merge01[HUFF4_MERGE_PAIR_SIZE];
     u8 merge23[HUFF4_MERGE_PAIR_SIZE];
     u8 merge45[HUFF4_MERGE_PAIR_SIZE];
     u8 merge67[HUFF4_MERGE_PAIR_SIZE];
+    u8 order[HUFF4_SYMBOLS];
 
     /* Each table stores a 4-bit codebook index plus a 16-entry symbol remap. */
     mode = exp_get_bits(vb, HUFF4_USED_SHIFT);
