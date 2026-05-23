@@ -52,12 +52,12 @@
 
 // Helpers operate on one destination row; the public 4x2 entry points call the
 // same packing logic for S.dest0 and S.dest1, then advance the shared context.
-void YUY2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, const u16 PTR4* u,
-                    const u16 PTR4* v);
-void YUY2_x2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, const u16 PTR4* u,
-                       const u16 PTR4* v);
-void YUY2_m_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y);
-void YUY2_mx2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y);
+static void YUY2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, const u16 PTR4* u,
+                           const u16 PTR4* v);
+static void YUY2_x2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, const u16 PTR4* u,
+                              const u16 PTR4* v);
+static void YUY2_m_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y);
+static void YUY2_mx2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y);
 
 void YUY2_4x2(u32 count)
 {
@@ -320,8 +320,8 @@ void YUY2_mx2_4x2(u32 count)
     S.y1 += count;
 }
 
-void YUY2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, const u16 PTR4* u,
-                    const u16 PTR4* v)
+static void YUY2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, const u16 PTR4* u,
+                           const u16 PTR4* v)
 {
     s32 pairs;
 
@@ -352,8 +352,8 @@ void YUY2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, const u16 PTR4
     }
 }
 
-void YUY2_x2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, const u16 PTR4* u,
-                       const u16 PTR4* v)
+static void YUY2_x2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, const u16 PTR4* u,
+                              const u16 PTR4* v)
 {
     s32 pairs;
 
@@ -397,7 +397,7 @@ void YUY2_x2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, const u16 P
     }
 }
 
-void YUY2_m_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y)
+static void YUY2_m_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y)
 {
     u32 remaining = count - 1;
 
@@ -412,7 +412,7 @@ void YUY2_m_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y)
     }
 }
 
-void YUY2_mx2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y)
+static void YUY2_mx2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y)
 {
     u32 remaining = count - 1;
 
