@@ -339,9 +339,9 @@ static void NGC_SoundVolume(BINKSND PTR4* snd)
 
 static s32 NGC_SoundInit(BINKSND PTR4* snd)
 {
-    u32 rate_bytes;
+    u32 bytes_per_second;
     u32 frame_size;
-    u32 buf_size;
+    u32 channel_stride;
     u32 i;
     u32 start;
     u32 end;
@@ -354,15 +354,16 @@ static s32 NGC_SoundInit(BINKSND PTR4* snd)
     NGC_SOUND_STATE(snd)->lock_index = NGC_SOUND_NO_LOCK_INDEX;
     NGC_SOUND_STATE(snd)->play_state = NGC_PLAY_STATE_STOPPED;
 
-    rate_bytes = NGC_SOUND_RATE_BYTES(NGC_SND(snd));
-    frame_size = NGC_ALIGN_UP(rate_bytes / NGC_SOUND_FRAMES_PER_SECOND, NGC_SOUND_FRAME_ALIGN_MASK);
-    buf_size = NGC_ALIGN_UP((rate_bytes * NGC_SOUND_BUFFER_MILLISECONDS) / NGC_SOUND_MILLISECONDS_PER_SECOND,
-                            NGC_SOUND_BUFFER_ALIGN_MASK);
+    bytes_per_second = NGC_SOUND_RATE_BYTES(NGC_SND(snd));
+    frame_size = NGC_ALIGN_UP(bytes_per_second / NGC_SOUND_FRAMES_PER_SECOND, NGC_SOUND_FRAME_ALIGN_MASK);
+    channel_stride = NGC_ALIGN_UP((bytes_per_second * NGC_SOUND_BUFFER_MILLISECONDS) / NGC_SOUND_MILLISECONDS_PER_SECOND,
+                                  NGC_SOUND_BUFFER_ALIGN_MASK);
 
     NGC_SOUND_STATE(snd)->frame_size = frame_size;
-    NGC_SOUND_STATE(snd)->channel_stride = buf_size;
+    NGC_SOUND_STATE(snd)->channel_stride = channel_stride;
     NGC_SND(snd)->BestSizeIn16 = frame_size * NGC_SND(snd)->chans;
-    NGC_SOUND_STATE(snd)->starvation_threshold = buf_size - (buf_size * NGC_SOUND_STARVATION_PERCENT) / NGC_SOUND_PERCENT_SCALE;
+    NGC_SOUND_STATE(snd)->starvation_threshold =
+        channel_stride - (channel_stride * NGC_SOUND_STARVATION_PERCENT) / NGC_SOUND_PERCENT_SCALE;
     if (NGC_SND(snd)->bits != NGC_SOUND_BITS_16) {
         NGC_SND(snd)->BestSizeIn16 = frame_size * NGC_SND(snd)->chans * sizeof(s16);
     }
