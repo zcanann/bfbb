@@ -226,11 +226,13 @@ static u32 BinkFileReadHeader(BINKIO PTR4* io, s32 offset, void PTR4* dest, u32 
 static void dosimulate(BINKIO PTR4* io, u32 read_size, u32 start)
 {
     u32 last;
+    u32 elapsed;
     s32 delay;
 
     delay = mult64anddiv(read_size, NGC_MILLISECONDS_PER_SECOND, NGC_SIMULATE_RATE(io));
     last = RADTimerRead();
-    delay -= last - start;
+    elapsed = last - start;
+    delay -= elapsed;
     NGC_SIMULATE_DELAY(io) += delay;
 
     while (NGC_SIMULATE_DELAY(io) > 0) {
@@ -367,14 +369,13 @@ static u32 BinkFileIdle(BINKIO PTR4* io)
         return io->DoingARead;
     }
 
-    if (status > DVD_STATE_END) {
-        return io->DoingARead;
-    }
-    if (status == DVD_STATE_FATAL_ERROR) {
-        goto read_error;
-    }
-    if (status == DVD_STATE_END) {
-        ReadKickoff(io);
+    if (status <= DVD_STATE_END) {
+        if (status == DVD_STATE_FATAL_ERROR) {
+            goto read_error;
+        }
+        if (status == DVD_STATE_END) {
+            ReadKickoff(io);
+        }
     }
     return io->DoingARead;
 
