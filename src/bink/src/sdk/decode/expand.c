@@ -338,9 +338,12 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
     u32 subtype;
     u32 count;
     u32 remaining;
-    u32 mask;
     u32 j;
     u32 i;
+    u8 merge01[HUFF4_MERGE_PAIR_SIZE];
+    u8 merge23[HUFF4_MERGE_PAIR_SIZE];
+    u8 merge45[HUFF4_MERGE_PAIR_SIZE];
+    u8 merge67[HUFF4_MERGE_PAIR_SIZE];
     u8 order[HUFF4_SYMBOLS];
 
     /* Each table stores a 4-bit codebook index plus a 16-entry symbol remap. */
@@ -403,11 +406,6 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
                               order + HUFF4_LAST_QUARTER_SYMBOL,
                               order + HUFF4_LAST_PAIR_SYMBOL, HUFF4_PAIR_SYMBOLS);
             } else {
-                u8 merge01[HUFF4_MERGE_PAIR_SIZE];
-                u8 merge23[HUFF4_MERGE_PAIR_SIZE];
-                u8 merge45[HUFF4_MERGE_PAIR_SIZE];
-                u8 merge67[HUFF4_MERGE_PAIR_SIZE];
-
                 simpmergesort(vb, merge01, order, order + HUFF4_PAIR_SYMBOLS,
                               HUFF4_PAIR_SYMBOLS);
                 simpmergesort(vb, merge23, order + HUFF4_QUARTER_SYMBOLS,
@@ -441,15 +439,14 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
         }
 
         i = 0;
-        mask = remaining;
         do {
-            if ((mask & 1) != 0) {
+            if ((remaining & 1) != 0) {
                 subtype++;
                 values[subtype] = i;
             }
             i++;
-            mask >>= 1;
-        } while (mask != 0);
+            remaining >>= 1;
+        } while (remaining != 0);
     }
 }
 
