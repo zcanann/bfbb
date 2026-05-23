@@ -180,6 +180,15 @@ typedef struct HUFF8TABLE
     u32 state;
 } HUFF8TABLE;
 
+typedef struct HUFF4MERGES
+{
+    u8 order[HUFF4_SYMBOLS];
+    u8 merge01[HUFF4_MERGE_PAIR_SIZE];
+    u8 merge23[HUFF4_MERGE_PAIR_SIZE];
+    u8 merge45[HUFF4_MERGE_PAIR_SIZE];
+    u8 merge67[HUFF4_MERGE_PAIR_SIZE];
+} HUFF4MERGES;
+
 typedef VARBITS EXPBITS;
 
 static void ReadHuffTable(EXPBITS PTR4* bits, const u8 PTR4* PTR4* decode,
@@ -340,11 +349,7 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
     u32 remaining;
     u32 j;
     u32 i;
-    u8 merge01[HUFF4_MERGE_PAIR_SIZE];
-    u8 merge23[HUFF4_MERGE_PAIR_SIZE];
-    u8 merge45[HUFF4_MERGE_PAIR_SIZE];
-    u8 merge67[HUFF4_MERGE_PAIR_SIZE];
-    u8 order[HUFF4_SYMBOLS];
+    HUFF4MERGES merges;
 
     /* Each table stores a 4-bit codebook index plus a 16-entry symbol remap. */
     VarBitsGet(mode, u32, *vb, HUFF4_USED_SHIFT);
@@ -382,49 +387,56 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
             right = 1;
             for (i = 0; i < HUFF4_PAIR_COUNT; ++i) {
                 if (exp_get_bit(vb) != 0) {
-                    order[left] = right;
-                    order[right] = left;
+                    merges.order[left] = right;
+                    merges.order[right] = left;
                 } else {
-                    order[left] = left;
-                    order[right] = right;
+                    merges.order[left] = left;
+                    merges.order[right] = right;
                 }
                 left += HUFF4_PAIR_SYMBOLS;
                 right += HUFF4_PAIR_SYMBOLS;
             }
 
             if (subtype == 1) {
-                simpmergesort(vb, values, order, order + HUFF4_PAIR_SYMBOLS, HUFF4_PAIR_SYMBOLS);
+                simpmergesort(vb, values, merges.order,
+                              merges.order + HUFF4_PAIR_SYMBOLS, HUFF4_PAIR_SYMBOLS);
                 simpmergesort(vb, values + HUFF4_QUARTER_SYMBOLS,
-                              order + HUFF4_QUARTER_SYMBOLS,
-                              order + HUFF4_QUARTER_SYMBOLS + HUFF4_PAIR_SYMBOLS,
+                              merges.order + HUFF4_QUARTER_SYMBOLS,
+                              merges.order + HUFF4_QUARTER_SYMBOLS + HUFF4_PAIR_SYMBOLS,
                               HUFF4_PAIR_SYMBOLS);
                 simpmergesort(vb, values + HUFF4_HALF_SYMBOLS,
-                              order + HUFF4_HALF_SYMBOLS,
-                              order + HUFF4_HALF_SYMBOLS + HUFF4_PAIR_SYMBOLS,
+                              merges.order + HUFF4_HALF_SYMBOLS,
+                              merges.order + HUFF4_HALF_SYMBOLS + HUFF4_PAIR_SYMBOLS,
                               HUFF4_PAIR_SYMBOLS);
                 simpmergesort(vb, values + HUFF4_LAST_QUARTER_SYMBOL,
-                              order + HUFF4_LAST_QUARTER_SYMBOL,
-                              order + HUFF4_LAST_PAIR_SYMBOL, HUFF4_PAIR_SYMBOLS);
+                              merges.order + HUFF4_LAST_QUARTER_SYMBOL,
+                              merges.order + HUFF4_LAST_PAIR_SYMBOL, HUFF4_PAIR_SYMBOLS);
             } else {
-                simpmergesort(vb, merge01, order, order + HUFF4_PAIR_SYMBOLS,
+                simpmergesort(vb, merges.merge01, merges.order,
+                              merges.order + HUFF4_PAIR_SYMBOLS,
                               HUFF4_PAIR_SYMBOLS);
-                simpmergesort(vb, merge23, order + HUFF4_QUARTER_SYMBOLS,
-                              order + HUFF4_QUARTER_SYMBOLS + HUFF4_PAIR_SYMBOLS,
+                simpmergesort(vb, merges.merge23,
+                              merges.order + HUFF4_QUARTER_SYMBOLS,
+                              merges.order + HUFF4_QUARTER_SYMBOLS + HUFF4_PAIR_SYMBOLS,
                               HUFF4_PAIR_SYMBOLS);
-                simpmergesort(vb, merge45, order + HUFF4_HALF_SYMBOLS,
-                              order + HUFF4_HALF_SYMBOLS + HUFF4_PAIR_SYMBOLS,
+                simpmergesort(vb, merges.merge45, merges.order + HUFF4_HALF_SYMBOLS,
+                              merges.order + HUFF4_HALF_SYMBOLS + HUFF4_PAIR_SYMBOLS,
                               HUFF4_PAIR_SYMBOLS);
-                simpmergesort(vb, merge67, order + HUFF4_LAST_QUARTER_SYMBOL,
-                              order + HUFF4_LAST_PAIR_SYMBOL, HUFF4_PAIR_SYMBOLS);
+                simpmergesort(vb, merges.merge67,
+                              merges.order + HUFF4_LAST_QUARTER_SYMBOL,
+                              merges.order + HUFF4_LAST_PAIR_SYMBOL, HUFF4_PAIR_SYMBOLS);
                 if (subtype == 2) {
-                    simpmergesort(vb, values, merge01, merge23, HUFF4_QUARTER_SYMBOLS);
-                    simpmergesort(vb, values + HUFF4_HALF_SYMBOLS, merge45, merge67,
+                    simpmergesort(vb, values, merges.merge01, merges.merge23,
                                   HUFF4_QUARTER_SYMBOLS);
+                    simpmergesort(vb, values + HUFF4_HALF_SYMBOLS,
+                                  merges.merge45, merges.merge67, HUFF4_QUARTER_SYMBOLS);
                 } else {
-                    simpmergesort(vb, order, merge01, merge23, HUFF4_QUARTER_SYMBOLS);
-                    simpmergesort(vb, order + HUFF4_HALF_SYMBOLS, merge45, merge67,
+                    simpmergesort(vb, merges.order, merges.merge01, merges.merge23,
                                   HUFF4_QUARTER_SYMBOLS);
-                    simpmergesort(vb, values, order, order + HUFF4_HALF_SYMBOLS,
+                    simpmergesort(vb, merges.order + HUFF4_HALF_SYMBOLS,
+                                  merges.merge45, merges.merge67, HUFF4_QUARTER_SYMBOLS);
+                    simpmergesort(vb, values, merges.order,
+                                  merges.order + HUFF4_HALF_SYMBOLS,
                                   HUFF4_HALF_SYMBOLS);
                 }
             }
