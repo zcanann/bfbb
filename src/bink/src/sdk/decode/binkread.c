@@ -2897,10 +2897,10 @@ s32 BinkSetSoundOnOff(HBINK bnk, s32 onoff)
 
     ret = 0;
     if (bnk != 0) {
-        u32 suspended;
+        u32 sound_callback_suspended;
         u32 i;
 
-        suspended = 0;
+        sound_callback_suspended = 0;
         i = 0;
         if (ret < bnk->playingtracks) {
             u32 one;
@@ -2908,8 +2908,8 @@ s32 BinkSetSoundOnOff(HBINK bnk, s32 onoff)
             one = 1;
             do {
                 if (bnk->bsnd[i].SetOnOff != 0) {
-                    if (suspended == 0) {
-                        suspended = 1;
+                    if (sound_callback_suspended == 0) {
+                        sound_callback_suspended = 1;
                         RADCB_suspend_callback(cb_bink_sound, BINK_SOUND_CALLBACK(bnk));
                     }
 
@@ -2940,7 +2940,7 @@ s32 BinkSetSoundOnOff(HBINK bnk, s32 onoff)
             } while (i < bnk->playingtracks);
         }
 
-        if (suspended != 0) {
+        if (sound_callback_suspended != 0) {
             RADCB_resume_callback(cb_bink_sound, BINK_SOUND_CALLBACK(bnk));
         }
     }
