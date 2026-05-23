@@ -467,7 +467,7 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
     i = 0;
     do {
         entry = (u16)ordered[i];
-        sign = (s16)entry >> BP_S16_SIGN_SHIFT;
+        sign = (u16)((s16)entry >> BP_S16_SIGN_SHIFT);
         absvals[i] = BP_ABS_COEFF(entry, sign);
         i++;
         count--;
