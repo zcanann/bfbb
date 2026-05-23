@@ -1676,31 +1676,31 @@ static void cftmdl2(s32 n, f32 PTR4* a, f32 PTR4* w)
 }
 static void cftfx41(s32 n, f32 PTR4* a, s32 nw, f32 PTR4* w)
 {
-    if (n == 0x80) {
-        cftf161(a, &w[nw - 8]);
-        cftf162(a + 0x20, &w[nw - 32]);
-        cftf161(a + 0x40, &w[nw - 8]);
-        cftf161(a + 0x60, &w[nw - 8]);
+    if (n == FFT_CFT_16_REAL_SIZE * 4) {
+        cftf161(a, &w[nw - FFT_CFT_4_REAL_SIZE]);
+        cftf162(a + FFT_CFT_16_REAL_SIZE, &w[nw - FFT_CFT_16_REAL_SIZE]);
+        cftf161(a + FFT_CFT_16_REAL_SIZE * 2, &w[nw - FFT_CFT_4_REAL_SIZE]);
+        cftf161(a + FFT_CFT_16_REAL_SIZE * 3, &w[nw - FFT_CFT_4_REAL_SIZE]);
     } else {
-        cftf081(a, &w[nw - 16]);
-        cftf082(a + 0x10, &w[nw - 16]);
-        cftf081(a + 0x20, &w[nw - 16]);
-        cftf081(a + 0x30, &w[nw - 16]);
+        cftf081(a, &w[nw - FFT_CFT_8_REAL_SIZE]);
+        cftf082(a + FFT_CFT_8_REAL_SIZE, &w[nw - FFT_CFT_8_REAL_SIZE]);
+        cftf081(a + FFT_CFT_8_REAL_SIZE * 2, &w[nw - FFT_CFT_8_REAL_SIZE]);
+        cftf081(a + FFT_CFT_8_REAL_SIZE * 3, &w[nw - FFT_CFT_8_REAL_SIZE]);
     }
 }
 
 static void cftfx42(s32 n, f32 PTR4* a, s32 nw, f32 PTR4* w)
 {
-    if (n == 0x80) {
-        cftf161(a, &w[nw - 8]);
-        cftf162(a + 0x20, &w[nw - 32]);
-        cftf161(a + 0x40, &w[nw - 8]);
-        cftf162(a + 0x60, &w[nw - 32]);
+    if (n == FFT_CFT_16_REAL_SIZE * 4) {
+        cftf161(a, &w[nw - FFT_CFT_4_REAL_SIZE]);
+        cftf162(a + FFT_CFT_16_REAL_SIZE, &w[nw - FFT_CFT_16_REAL_SIZE]);
+        cftf161(a + FFT_CFT_16_REAL_SIZE * 2, &w[nw - FFT_CFT_4_REAL_SIZE]);
+        cftf162(a + FFT_CFT_16_REAL_SIZE * 3, &w[nw - FFT_CFT_16_REAL_SIZE]);
     } else {
-        cftf081(a, &w[nw - 16]);
-        cftf082(a + 0x10, &w[nw - 16]);
-        cftf081(a + 0x20, &w[nw - 16]);
-        cftf082(a + 0x30, &w[nw - 16]);
+        cftf081(a, &w[nw - FFT_CFT_8_REAL_SIZE]);
+        cftf082(a + FFT_CFT_8_REAL_SIZE, &w[nw - FFT_CFT_8_REAL_SIZE]);
+        cftf081(a + FFT_CFT_8_REAL_SIZE * 2, &w[nw - FFT_CFT_8_REAL_SIZE]);
+        cftf082(a + FFT_CFT_8_REAL_SIZE * 3, &w[nw - FFT_CFT_8_REAL_SIZE]);
     }
 }
 static void cftf161(f32 PTR4* a, f32 PTR4* w)
