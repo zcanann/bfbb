@@ -843,7 +843,7 @@ const u8 patterns[DCT_PATTERN_BYTES] RAD_ATTRIBUTE_ALIGN(32) = {
     0x1e, 0x1f, 0x16, 0x17, 0x0e, 0x0f, 0x06, 0x07
 };
 
-void fastidct8x8(u8 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4* q)
+static void fastidct8x8(u8 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4* q)
 {
     s32 temp[DCT_BLOCK_COEFFS];
     s32 PTR4* out;
@@ -951,7 +951,7 @@ void fastidct8x8(u8 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4* q)
     }
 }
 
-void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4* q)
+static void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4* q)
 {
     s32 temp[DCT_BLOCK_COEFFS];
     s32 PTR4* out;
