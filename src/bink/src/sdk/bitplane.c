@@ -697,7 +697,11 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
     memset(&coeffs, 0, sizeof(coeffs));
 
     /* The stream starts with the maximum active lossless bitplane level. */
-    if (bitcount < BP_LOSSLESS_LEVEL_BITS) {
+    if (bitcount >= BP_LOSSLESS_LEVEL_BITS) {
+        code = bitbuf & BP_BYTE_MASK;
+        bitbuf >>= BP_LOSSLESS_LEVEL_BITS;
+        bitcount -= BP_LOSSLESS_LEVEL_BITS;
+    } else {
         shift = BP_LOSSLESS_LEVEL_BITS - bitcount;
         code = bitbuf & BP_BYTE_MASK;
         bitbuf = *words;
@@ -705,10 +709,6 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
         code |= bitbuf << bitcount;
         bitbuf >>= shift;
         bitcount = bitcount + BP_BITS_PER_WORD - BP_LOSSLESS_LEVEL_BITS;
-    } else {
-        code = bitbuf & BP_BYTE_MASK;
-        bitbuf >>= BP_LOSSLESS_LEVEL_BITS;
-        bitcount -= BP_LOSSLESS_LEVEL_BITS;
     }
 
     maxlevel = code & BP_LOSSLESS_LEVEL_MASK;
