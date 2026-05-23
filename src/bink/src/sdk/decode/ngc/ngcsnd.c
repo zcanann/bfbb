@@ -253,13 +253,12 @@ static void NGC_SoundPlay(BINKSND PTR4* snd, u32 index, u32 size)
 
 static s32 NGC_SoundReinit(BINKSND PTR4* snd)
 {
-    NGCSoundState PTR4* state;
+    NGCSoundState PTR4* state = NGC_SOUND_STATE(snd);
     AXVPB PTR4* voice;
     u32 addr;
     u32 end;
     u32 i;
 
-    state = NGC_SOUND_STATE(snd);
     voice = NGC_LEFT_VOICE(state);
     if (voice != 0) {
         AXSetVoiceState(voice, AX_PB_STATE_STOP);
@@ -271,9 +270,9 @@ static s32 NGC_SoundReinit(BINKSND PTR4* snd)
     }
 
     addr = (u32)state->audio_buffer;
-    state->lock_index = NGC_SOUND_NO_LOCK_INDEX;
     state->play_state = NGC_PLAY_STATE_STOPPED;
     state->play_cursor = addr;
+    state->lock_index = NGC_SOUND_NO_LOCK_INDEX;
 
     AXSetVoiceCurrentAddr(NGC_LEFT_VOICE(state), NGC_AX_ADDR(addr, NGC_ADDRESS_SHIFT(state)));
     voice = NGC_RIGHT_VOICE(state);
