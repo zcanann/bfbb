@@ -52,7 +52,20 @@ void VarBitsCopy(VARBITS PTR4* dest, VARBITS PTR4* src, u32 size)
     }
 
     if (size) {
-        VarBitsGet(value, u32, *src, size);
+        u32 bitlen = src->bitlen;
+
+        if (bitlen >= size) {
+            value = src->bits & GetBitsLen(size);
+            src->bits >>= size;
+            src->bitlen = bitlen - size;
+        } else {
+            register VARBITSTEMP word = *src->cur;
+
+            value = (src->bits | (word << bitlen)) & GetBitsLen(size);
+            src->bits = word >> (size - bitlen);
+            src->bitlen = bitlen + BITSTYPELEN - size;
+            VARBITS_ADVANCE_CUR(src->cur);
+        }
         VarBitsPut(*dest, value, size);
     }
 }
