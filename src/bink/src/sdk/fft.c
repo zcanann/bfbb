@@ -286,6 +286,7 @@ static void makect(s32 nc, s32 PTR4* ip, f32 PTR4* c)
     s32 nch;
     f32 delta;
     f32 x;
+    f32 center;
     f64 half;
 
     ip[1] = nc;
@@ -295,8 +296,9 @@ static void makect(s32 nc, s32 PTR4* ip, f32 PTR4* c)
         j = 1;
         delta = atanf(DCT_TRIG_ONE) / (f32)nch;
         x = cosf(delta * (f32)nch);
+        center = x * DCT_CENTER_SCALE;
         c[0] = x;
-        c[nch] = x * DCT_CENTER_SCALE;
+        c[nch] = center;
 
         if (j < nch) {
             f32 PTR4* fwd = c + 1;
