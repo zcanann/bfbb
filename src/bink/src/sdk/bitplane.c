@@ -111,6 +111,13 @@ typedef struct BPCOEFFPAIR
     s16 second;
 } BPCOEFFPAIR;
 
+typedef union BPLOSSLESSCOEFFS
+{
+    u16 values[BP_BLOCK_COEFFS];
+    BPCOEFFPAIR pairs[BP_LOSSY_OUTPUT_COEFFS];
+    u32 words[BP_LOSSY_OUTPUT_COEFFS];
+} BPLOSSLESSCOEFFS;
+
 typedef union BPLOSSYBLOCK
 {
     s8 bytes[BP_BLOCK_COEFFS];
@@ -680,14 +687,14 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
     u8 kind;
     u32 base;
     BPLOSSLESSREADTREE tree;
-    u16 coeffs[BP_BLOCK_COEFFS];
+    BPLOSSLESSCOEFFS coeffs;
     BPBITSTREAM bitcopy;
 
     bitcopy = *bits;
     words = bitcopy.cur;
     bitbuf = bitcopy.bits;
     bitcount = bitcopy.bitlen;
-    memset(coeffs, 0, sizeof(coeffs));
+    memset(&coeffs, 0, sizeof(coeffs));
 
     /* The stream starts with the maximum active lossless bitplane level. */
     if (bitcount < BP_LOSSLESS_LEVEL_BITS) {
@@ -789,7 +796,7 @@ next_lossless_read_node:
                                     if ((code & 1) != 0) {
                                         value = -value;
                                     }
-                                    coeffs[BP_READ_TREE_INDEX(node)] = (u16)value;
+                                    coeffs.values[BP_READ_TREE_INDEX(node)] = (u16)value;
                                     *cur = 0;
                                 }
                                 goto next_lossless_read_node;
@@ -845,7 +852,7 @@ next_lossless_read_node:
                             if ((code & 1) != 0) {                                                                     \
                                 value = -value;                                                                        \
                             }                                                                                          \
-                            coeffs[slot] = (u16)value;                                                                 \
+                            coeffs.values[slot] = (u16)value;                                                          \
                         } while (0)
                         READ_LOSSLESS_CHILD(base, after_lossless_child0);
 after_lossless_child0:
@@ -917,7 +924,8 @@ next_lossless_final_node:
                                     code = bitbuf & 1;
                                     bitbuf >>= 1;
                                 }
-                                coeffs[BP_READ_TREE_INDEX(node)] = (code & 1) ? BP_NEGATIVE_COEFF_SIGN : BP_POSITIVE_COEFF_SIGN;
+                                coeffs.values[BP_READ_TREE_INDEX(node)] =
+                                    (code & 1) ? BP_NEGATIVE_COEFF_SIGN : BP_POSITIVE_COEFF_SIGN;
                                 *cur = 0;
                             }
                             goto next_lossless_final_node;
@@ -959,7 +967,7 @@ next_lossless_final_node:
                             code = bitbuf & 1;                                                                          \
                             bitbuf >>= 1;                                                                               \
                         }                                                                                               \
-                        coeffs[slot] = (code & 1) ? BP_NEGATIVE_COEFF_SIGN : BP_POSITIVE_COEFF_SIGN;                                                        \
+                        coeffs.values[slot] = (code & 1) ? BP_NEGATIVE_COEFF_SIGN : BP_POSITIVE_COEFF_SIGN;                                                  \
                     } while (0)
                     READ_LOSSLESS_FINAL_CHILD(base, after_lossless_final0);
 after_lossless_final0:
@@ -983,9 +991,9 @@ after_lossless_final3:
     (void)tree;
 
     /* Scatter scan-order coefficients back into the 8x8 block. */
-    out[1] = coeffs[1];
+    out[1] = coeffs.values[1];
 #define COPY_BP_COEFF_PAIR(out_index, coeff_index)                                                                      \
-    (*(BPCOEFFPAIR PTR4*)(out + (out_index)) = *(BPCOEFFPAIR PTR4*)(coeffs + (coeff_index)))
+    (*(BPCOEFFPAIR PTR4*)(out + (out_index)) = coeffs.pairs[(coeff_index) / 2])
     COPY_BP_COEFF_PAIR(2, 4);
     COPY_BP_COEFF_PAIR(4, 8);
     COPY_BP_COEFF_PAIR(6, 12);
