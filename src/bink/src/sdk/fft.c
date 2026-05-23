@@ -335,7 +335,7 @@ void cftfsub(s32 n, f32 PTR4* a, s32 PTR4* ip, s32 nw, f32 PTR4* w)
         bitrv2(n, ip, a);
     } else if (n > FFT_CFT_4_REAL_SIZE) {
         if (n == FFT_CFT_16_REAL_SIZE) {
-            cftf161(a, &w[nw - 8]);
+            cftf161(a, &w[nw - FFT_CFT_4_REAL_SIZE]);
             bitrv216(a);
         } else {
             cftf081(a, w);
@@ -368,7 +368,7 @@ static void cftbsub(s32 n, f32 PTR4* a, s32 PTR4* ip, s32 nw, f32 PTR4* w)
         bitrv2conj(n, ip, a);
     } else if (n > FFT_CFT_4_REAL_SIZE) {
         if (n == FFT_CFT_16_REAL_SIZE) {
-            cftf161(a, &w[nw - 8]);
+            cftf161(a, &w[nw - FFT_CFT_4_REAL_SIZE]);
             bitrv216neg(a);
         } else {
             cftf081(a, w);
