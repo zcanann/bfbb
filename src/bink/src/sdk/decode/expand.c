@@ -342,13 +342,9 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
     u32 j;
     u32 i;
     u8 order[HUFF4_SYMBOLS];
-    u8 merge01[HUFF4_MERGE_PAIR_SIZE];
-    u8 merge23[HUFF4_MERGE_PAIR_SIZE];
-    u8 merge45[HUFF4_MERGE_PAIR_SIZE];
-    u8 merge67[HUFF4_MERGE_PAIR_SIZE];
 
     /* Each table stores a 4-bit codebook index plus a 16-entry symbol remap. */
-    mode = exp_get_bits(vb, HUFF4_USED_SHIFT);
+    VarBitsGet(mode, u32, *vb, HUFF4_USED_SHIFT);
     *decode = huff4decodes[mode];
     *bits_to_peek = (u8)BINK_HUFF4_BITS_TO_PEEK[mode];
     if (mode == 0) {
@@ -360,7 +356,7 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
 
     if (exp_get_bit(vb) == 0) {
         /* Compact symbol shuffling: merge adjacent pair, quarter, and half lists. */
-        subtype = exp_get_bits(vb, HUFF4_SUBTYPE_BITS);
+        VarBitsGet(subtype, u32, *vb, HUFF4_SUBTYPE_BITS);
         if (subtype == 0) {
             i = 0;
             count = HUFF4_PAIR_COUNT;
@@ -407,6 +403,11 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
                               order + HUFF4_LAST_QUARTER_SYMBOL,
                               order + HUFF4_LAST_PAIR_SYMBOL, HUFF4_PAIR_SYMBOLS);
             } else {
+                u8 merge01[HUFF4_MERGE_PAIR_SIZE];
+                u8 merge23[HUFF4_MERGE_PAIR_SIZE];
+                u8 merge45[HUFF4_MERGE_PAIR_SIZE];
+                u8 merge67[HUFF4_MERGE_PAIR_SIZE];
+
                 simpmergesort(vb, merge01, order, order + HUFF4_PAIR_SYMBOLS,
                               HUFF4_PAIR_SYMBOLS);
                 simpmergesort(vb, merge23, order + HUFF4_QUARTER_SYMBOLS,
@@ -431,10 +432,10 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
             }
         }
     } else {
-        subtype = exp_get_bits(vb, HUFF4_EXPLICIT_SUBTYPE_BITS);
+        VarBitsGet(subtype, u32, *vb, HUFF4_EXPLICIT_SUBTYPE_BITS);
         remaining = HUFF4_ALL_SYMBOLS_MASK;
         for (count = 0; count <= subtype; ++count) {
-            mode = exp_get_bits(vb, HUFF4_USED_SHIFT);
+            VarBitsGet(mode, u32, *vb, HUFF4_USED_SHIFT);
             values[count] = mode;
             remaining &= ~(1 << mode);
         }
