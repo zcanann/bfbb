@@ -149,7 +149,7 @@ void YUY2_x2_4x2(u32 count)
     u = S.u;
     v = S.v;
     while (pairs-- != 0) {
-        u32 y0 = y[YUY2_PAIR_LUMA_WORD_0];
+        u32 y0 = *y++;
         u32 u0 = *(u32 PTR4*)u;
         u32 v0 = *(u32 PTR4*)v;
         u32 chroma0 = YUY2_CHROMA0(u0, v0);
@@ -162,13 +162,12 @@ void YUY2_x2_4x2(u32 count)
         *dest++ = YUY2_PACK_X2Y2(y0, chroma1);
         *dest++ = YUY2_PACK_X2Y3(y0, chroma1);
 
-        y0 = y[YUY2_PAIR_LUMA_WORD_1];
+        y0 = *y++;
         *dest++ = YUY2_PACK_X2Y0(y0, chroma2);
         *dest++ = YUY2_PACK_X2Y1(y0, chroma2);
         *dest++ = YUY2_PACK_X2Y2(y0, chroma3);
         *dest++ = YUY2_PACK_X2Y3(y0, chroma3);
 
-        y += YUY2_PAIR_STRIDE;
         u += YUY2_PAIR_STRIDE;
         v += YUY2_PAIR_STRIDE;
     }
@@ -192,7 +191,7 @@ void YUY2_x2_4x2(u32 count)
     u = S.u;
     v = S.v;
     while (pairs-- != 0) {
-        u32 y0 = y[YUY2_PAIR_LUMA_WORD_0];
+        u32 y0 = *y++;
         u32 u0 = *(u32 PTR4*)u;
         u32 v0 = *(u32 PTR4*)v;
         u32 chroma0 = YUY2_CHROMA0(u0, v0);
@@ -205,13 +204,12 @@ void YUY2_x2_4x2(u32 count)
         *dest++ = YUY2_PACK_X2Y2(y0, chroma1);
         *dest++ = YUY2_PACK_X2Y3(y0, chroma1);
 
-        y0 = y[YUY2_PAIR_LUMA_WORD_1];
+        y0 = *y++;
         *dest++ = YUY2_PACK_X2Y0(y0, chroma2);
         *dest++ = YUY2_PACK_X2Y1(y0, chroma2);
         *dest++ = YUY2_PACK_X2Y2(y0, chroma3);
         *dest++ = YUY2_PACK_X2Y3(y0, chroma3);
 
-        y += YUY2_PAIR_STRIDE;
         u += YUY2_PAIR_STRIDE;
         v += YUY2_PAIR_STRIDE;
     }
