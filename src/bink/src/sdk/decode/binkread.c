@@ -78,7 +78,6 @@ extern const char BINK_ERROR_OUT_OF_MEMORY[];
 #define BINK_RECT_NO_SPLIT_INDEX -1
 #define BINK_RECT_MIN_SPLIT_SCORE 0
 #define BINK_TRACK_NOT_FOUND -1
-#define BINK_MEMORY_HEADER_WORDS (sizeof(BINKHDR) / sizeof(u32))
 #define BINK_SOUND_BUFFER_ALIGNMENT 0x100
 #define BINK_SOUND_SAMPLE_ALIGNMENT 4
 #define BINK_SOUND_BEST_SIZE_MASK_ALL -1
@@ -1136,7 +1135,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
             out->bio.ReadHeader(&out->bio, -1, out->frameoffsets,
                                 BINK_FRAME_OFFSETS_BYTES(out->InternalFrames, out->frameoffsets));
         } else {
-            out->tracksizes = (u32 PTR4*)name + BINK_MEMORY_HEADER_WORDS;
+            out->tracksizes = (u32 PTR4*)((BINKHDR PTR4*)name + 1);
             out->tracktypes = out->tracksizes + out->NumTracks;
             out->trackIDs = out->tracktypes + out->NumTracks;
             out->frameoffsets = out->trackIDs + out->NumTracks;
