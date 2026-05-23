@@ -297,13 +297,17 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
     channel = decoded;
     for (ch = 0; ch < chans; ++ch) {
         u32 i;
+        u32 coeff;
 
-        channel[BINKAC_DC_COEFF_0] = fxptof(read_bits(&vb, FXPBITS));
-        channel[BINKAC_DC_COEFF_1] = fxptof(read_bits(&vb, FXPBITS));
+        VarBitsGet(coeff, u32, vb, FXPBITS);
+        channel[BINKAC_DC_COEFF_0] = fxptof(coeff);
+        VarBitsGet(coeff, u32, vb, FXPBITS);
+        channel[BINKAC_DC_COEFF_1] = fxptof(coeff);
 
         for (i = 0; i < num_bands; ++i) {
-            s32 q = read_bits(&vb, BINKAC_THRESHOLD_BITS);
+            s32 q;
 
+            VarBitsGet(q, s32, vb, BINKAC_THRESHOLD_BITS);
             thresholds[i] = Undecibel((f32)q * BINKAC_QUANT_INDEX_SCALE);
         }
 
