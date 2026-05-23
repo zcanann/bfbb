@@ -239,28 +239,34 @@ void YUY2_x2_4x2(u32 count)
 
 void YUY2_m_4x2(u32 count)
 {
-    u32 n;
+    u32 remaining;
     u32 PTR4* dest;
     const u32 PTR4* y;
 
-    n = count;
+    remaining = count - 1;
     dest = (u32 PTR4*)S.dest0;
     y = S.y0;
-    while (n-- != 0) {
-        u32 y0 = *y++;
+    if (remaining != (u32)-1) {
+        do {
+            u32 y0 = *y++;
 
-        *dest++ = YUY2_PACK_M4Y01(y0);
-        *dest++ = YUY2_PACK_M4Y23(y0);
+            --remaining;
+            *dest++ = YUY2_PACK_M4Y01(y0);
+            *dest++ = YUY2_PACK_M4Y23(y0);
+        } while (remaining != (u32)-1);
     }
 
-    n = count;
+    remaining = count - 1;
     dest = (u32 PTR4*)S.dest1;
     y = S.y1;
-    while (n-- != 0) {
-        u32 y0 = *y++;
+    if (remaining != (u32)-1) {
+        do {
+            u32 y0 = *y++;
 
-        *dest++ = YUY2_PACK_M4Y01(y0);
-        *dest++ = YUY2_PACK_M4Y23(y0);
+            --remaining;
+            *dest++ = YUY2_PACK_M4Y01(y0);
+            *dest++ = YUY2_PACK_M4Y23(y0);
+        } while (remaining != (u32)-1);
     }
 
     S.dest0 += YUY2_ROW_BYTES(count);
@@ -271,32 +277,38 @@ void YUY2_m_4x2(u32 count)
 
 void YUY2_mx2_4x2(u32 count)
 {
-    u32 n;
+    u32 remaining;
     u32 PTR4* dest;
     const u32 PTR4* y;
 
-    n = count;
+    remaining = count - 1;
     dest = (u32 PTR4*)S.dest0;
     y = S.y0;
-    while (n-- != 0) {
-        u32 y0 = *y++;
+    if (remaining != (u32)-1) {
+        do {
+            u32 y0 = *y++;
 
-        *dest++ = YUY2_PACK_X2Y0(y0, YUY2_NEUTRAL_CHROMA);
-        *dest++ = YUY2_PACK_X2Y1(y0, YUY2_NEUTRAL_CHROMA);
-        *dest++ = YUY2_PACK_X2Y2(y0, YUY2_NEUTRAL_CHROMA);
-        *dest++ = YUY2_PACK_X2Y3(y0, YUY2_NEUTRAL_CHROMA);
+            --remaining;
+            *dest++ = YUY2_PACK_X2Y0(y0, YUY2_NEUTRAL_CHROMA);
+            *dest++ = YUY2_PACK_X2Y1(y0, YUY2_NEUTRAL_CHROMA);
+            *dest++ = YUY2_PACK_X2Y2(y0, YUY2_NEUTRAL_CHROMA);
+            *dest++ = YUY2_PACK_X2Y3(y0, YUY2_NEUTRAL_CHROMA);
+        } while (remaining != (u32)-1);
     }
 
-    n = count;
+    remaining = count - 1;
     dest = (u32 PTR4*)S.dest1;
     y = S.y1;
-    while (n-- != 0) {
-        u32 y0 = *y++;
+    if (remaining != (u32)-1) {
+        do {
+            u32 y0 = *y++;
 
-        *dest++ = YUY2_PACK_X2Y0(y0, YUY2_NEUTRAL_CHROMA);
-        *dest++ = YUY2_PACK_X2Y1(y0, YUY2_NEUTRAL_CHROMA);
-        *dest++ = YUY2_PACK_X2Y2(y0, YUY2_NEUTRAL_CHROMA);
-        *dest++ = YUY2_PACK_X2Y3(y0, YUY2_NEUTRAL_CHROMA);
+            --remaining;
+            *dest++ = YUY2_PACK_X2Y0(y0, YUY2_NEUTRAL_CHROMA);
+            *dest++ = YUY2_PACK_X2Y1(y0, YUY2_NEUTRAL_CHROMA);
+            *dest++ = YUY2_PACK_X2Y2(y0, YUY2_NEUTRAL_CHROMA);
+            *dest++ = YUY2_PACK_X2Y3(y0, YUY2_NEUTRAL_CHROMA);
+        } while (remaining != (u32)-1);
     }
 
     S.dest0 += YUY2_X2_ROW_BYTES(count);
