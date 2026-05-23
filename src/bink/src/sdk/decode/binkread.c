@@ -2234,7 +2234,7 @@ s32 BinkPause(HBINK bnk, s32 pause)
         do {
             BINKSND PTR4* snd;
 
-            snd = &bnk->bsnd[i];
+            snd = bnk->bsnd + i;
             snd->Pause(snd, pause);
             ++i;
         } while (i < bnk->playingtracks);
