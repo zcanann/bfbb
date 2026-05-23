@@ -1527,9 +1527,9 @@ blit_done:
 
 s32 BinkDoFrame(HBINK bnk)
 {
-    s32 suspended;
+    s32 sound_callback_suspended;
 
-    suspended = 0;
+    sound_callback_suspended = 0;
     if (bnk == 0 || bnk->lastdecompframe == bnk->FrameNum) {
         return 0;
     }
@@ -1613,8 +1613,8 @@ s32 BinkDoFrame(HBINK bnk)
 
                         in = frame_data->data;
                         in_bytes = frame_data->decoded_size;
-                        if (suspended == 0) {
-                            suspended = 1;
+                        if (sound_callback_suspended == 0) {
+                            sound_callback_suspended = 1;
                             RADCB_suspend_callback(cb_bink_sound, BINK_SOUND_CALLBACK(bnk));
                         }
 
@@ -1675,7 +1675,7 @@ s32 BinkDoFrame(HBINK bnk)
             }
         }
 
-        if (suspended != 0) {
+        if (sound_callback_suspended != 0) {
             RADCB_resume_callback(cb_bink_sound, BINK_SOUND_CALLBACK(bnk));
         }
 
