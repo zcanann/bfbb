@@ -201,9 +201,9 @@ void RADCycleTimerStartAddr64(u64 PTR4* dest)
 
 void RADCycleTimerDeltaAddr64(u64 PTR4* dest)
 {
-    RADTimebase tb;
-    radtimebase(&tb);
-    *dest = *(u64 PTR4*)&tb - *dest;
+    u64 now;
+    radtimebase((RADTimebase PTR4*)&now);
+    *dest = now - *dest;
 }
 
 void ReadTimeBase(u32 PTR4* dest)
