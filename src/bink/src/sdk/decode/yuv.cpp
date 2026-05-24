@@ -3335,6 +3335,7 @@ static u32 dounaligned16a4col2wh(u32 count, s32 phase)
     const s32 PTR4* gb_utable;
     const s32 PTR4* gb_vtable;
     const s32 PTR4* rtable;
+    u32 out_phase;
     u8 PTR4* yptr;
     u8 PTR4* aptr;
     u8 y;
@@ -3346,8 +3347,9 @@ static u32 dounaligned16a4col2wh(u32 count, s32 phase)
     gb_utable = YUVTables + YUV_U_TO_GB_OFFSET;
     gb_vtable = YUVTables + YUV_V_TO_GB_OFFSET;
     rtable = YUVTables + YUV_V_TO_R_OFFSET;
+    out_phase = phase;
     do {
-        phase++;
+        out_phase++;
         S.b = btable[*(u8 PTR4*)S.u];
         S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
         S.r = rtable[*(u8 PTR4*)S.v];
@@ -3377,14 +3379,14 @@ static u32 dounaligned16a4col2wh(u32 count, s32 phase)
         *(u16 PTR4*)(S.dest1 + S.pitch + 2) = pixel;
         S.dest0 += YUV_PACKED_WORD_BYTES;
         S.dest1 += YUV_PACKED_WORD_BYTES;
-        if (((phase ^ 1) & 1) != 0) {
+        if (((out_phase ^ 1) & 1) != 0) {
             S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
             S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
         }
         count--;
     } while (count != 0);
 
-    return phase;
+    return out_phase;
 }
 
 static void dounaligned16a4rowm(u32 phase, u32 count)
@@ -3484,6 +3486,7 @@ static u32 dounaligned16a4col(u32 count, s32 phase)
     const s32 PTR4* gb_utable;
     const s32 PTR4* gb_vtable;
     const s32 PTR4* rtable;
+    u32 out_phase;
     u8 PTR4* yptr;
     u8 PTR4* aptr;
     u8 y;
@@ -3494,8 +3497,9 @@ static u32 dounaligned16a4col(u32 count, s32 phase)
     gb_utable = YUVTables + YUV_U_TO_GB_OFFSET;
     gb_vtable = YUVTables + YUV_V_TO_GB_OFFSET;
     rtable = YUVTables + YUV_V_TO_R_OFFSET;
+    out_phase = phase;
     do {
-        phase++;
+        out_phase++;
         S.b = btable[*(u8 PTR4*)S.u];
         S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
         S.r = rtable[*(u8 PTR4*)S.v];
@@ -3517,14 +3521,14 @@ static u32 dounaligned16a4col(u32 count, s32 phase)
         *(u16 PTR4*)S.dest1 = RGB565_A4(ybase, S.r, S.gb, S.b, a);
         S.dest0 += 2;
         S.dest1 += 2;
-        if (((phase ^ 1) & 1) != 0) {
+        if (((out_phase ^ 1) & 1) != 0) {
             S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
             S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
         }
         count--;
     } while (count != 0);
 
-    return phase;
+    return out_phase;
 }
 
 extern "C" void YUV_blit_16a4bpp(void PTR4* dest,
