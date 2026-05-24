@@ -762,7 +762,10 @@ static s32 Ready(BINKSND PTR4* snd)
     state = NGC_SOUND_STATE(snd);
     play_pos = NGC_AX_CURRENT_CURSOR(voice, NGC_ADDRESS_SHIFT(state));
     if (NGC_SOUND_STATE(snd)->play_state == NGC_PLAY_STATE_RUNNING) {
+        u32 pending;
+
         end_pos = NGC_AX_END_CURSOR(voice, NGC_ADDRESS_SHIFT(state));
+        pending = 0;
         /* A pending wrapped end address becomes valid once playback crosses the wrap. */
         if (play_pos < NGC_SOUND_STATE(snd)->pending_end) {
             end_pos = NGC_SOUND_STATE(snd)->pending_end;
@@ -776,8 +779,6 @@ static s32 Ready(BINKSND PTR4* snd)
         }
 
         if ((now - NGC_SOUND_STATE(snd)->last_ready_time) < NGC_SOUND_STATE(snd)->starvation_time) {
-            u32 pending;
-
             pending = NGC_SOUND_STATE(snd)->play_cursor;
             if (play_pos < pending) {
                 pending -= play_pos;
