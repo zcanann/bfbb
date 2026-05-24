@@ -752,6 +752,7 @@ static s32 Ready(BINKSND PTR4* snd)
     u32 now;
     NGCSoundState PTR4* state;
     AXVPB PTR4* voice;
+    ARQRequest PTR4* task;
     u32 play_pos;
     u32 end_pos;
 
@@ -804,8 +805,12 @@ check_tasks:
         /* Only offer a lock when the writer is safely ahead of the AX cursor. */
         if (NGC_SOUND_STATE(snd)->play_cursor >= play_pos || play_pos - NGC_SOUND_STATE(snd)->play_cursor > NGC_SOUND_STATE(snd)->frame_size) {
             index = 0;
+            task = NGC_TASK(state, index);
             for (;;) {
-                if (!NGC_TASK_BUSY(NGC_TASK(state, index))) {
+                u32 owner = task->owner;
+
+                ++task;
+                if ((owner & NGC_TASK_BUSY_FLAG) == 0) {
                     break;
                 }
                 ++index;
