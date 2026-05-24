@@ -2352,7 +2352,6 @@ void BinkGetRealtime(HBINK bink, BINKREALTIME PTR4* run, u32 frames)
 
 static s32 smallestrect(BINKRECT PTR4* out, const u8 PTR4* mask, s32 pitch, const BINKRECT PTR4* rect)
 {
-    const BINKRECT PTR4* src;
     s32 width_blocks;
     s32 height_blocks;
     const u8 PTR4* rect_mask;
@@ -2363,10 +2362,9 @@ static s32 smallestrect(BINKRECT PTR4* out, const u8 PTR4* mask, s32 pitch, cons
     s32 col;
     s32 value;
 
-    src = rect;
-    rect_mask = mask + BINK_MASK_BLOCKS(src->Left) + BINK_MASK_BLOCKS(src->Top) * pitch;
-    height_blocks = BINK_MASK_BLOCKS(src->Height);
-    width_blocks = BINK_MASK_BLOCKS(src->Width);
+    rect_mask = mask + BINK_MASK_BLOCKS(rect->Left) + BINK_MASK_BLOCKS(rect->Top) * pitch;
+    height_blocks = BINK_MASK_BLOCKS(rect->Height);
+    width_blocks = BINK_MASK_BLOCKS(rect->Width);
 
     top_scan = rect_mask;
 
@@ -2385,8 +2383,8 @@ static s32 smallestrect(BINKRECT PTR4* out, const u8 PTR4* mask, s32 pitch, cons
 found_top:
     rect_mask += top_blocks * pitch;
     height_blocks -= top_blocks;
-    out->Top = src->Top + top_blocks * BINK_MASK_BLOCK_SIZE;
-    value = src->Height - top_blocks * BINK_MASK_BLOCK_SIZE;
+    out->Top = rect->Top + top_blocks * BINK_MASK_BLOCK_SIZE;
+    value = rect->Height - top_blocks * BINK_MASK_BLOCK_SIZE;
     out->Height = value;
 
     if (value > 1) {
@@ -2424,8 +2422,8 @@ found_bottom:
 found_left:
     width_blocks -= left_blocks;
     rect_mask += left_blocks;
-    out->Left = src->Left + left_blocks * BINK_MASK_BLOCK_SIZE;
-    value = src->Width - left_blocks * BINK_MASK_BLOCK_SIZE;
+    out->Left = rect->Left + left_blocks * BINK_MASK_BLOCK_SIZE;
+    value = rect->Width - left_blocks * BINK_MASK_BLOCK_SIZE;
     out->Width = value;
 
     if (value > 1) {
