@@ -253,7 +253,8 @@ static void NGC_SoundPlay(BINKSND PTR4* snd, u32 index, u32 size)
 
 static s32 NGC_SoundReinit(BINKSND PTR4* snd)
 {
-    NGCSoundState PTR4* state = NGC_SOUND_STATE(snd);
+    NGCBinkSound PTR4* ngc_snd = NGC_SND(snd);
+    NGCSoundState PTR4* state = NGC_SOUND_STATE(ngc_snd);
     AXVPB PTR4* voice;
     u32 addr;
     u32 end;
