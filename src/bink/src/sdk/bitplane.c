@@ -248,9 +248,8 @@ u32 LenBPLossless(s16 PTR4* vals)
     len = BP_FIRST_LOSSLESS_TREE_GROUP_INDEX;
     count = BP_TREE_LAST_GROUP;
     group_ptr = lens + BP_FIRST_LOSSLESS_TREE_GROUP_END_INDEX;
-    len_ptr = lens;
+    len_ptr = lens + BP_FIRST_LOSSLESS_TREE_GROUP_INDEX;
     do {
-        len_ptr = BP_NEXT_TREE_GROUP(len_ptr);
         bits = *len_ptr;
         if (*len_ptr < len_ptr[1]) {
             bits = len_ptr[1];
@@ -263,6 +262,7 @@ u32 LenBPLossless(s16 PTR4* vals)
         }
         groups[BP_LOSSLESS_TREE_GROUP_INDEX(len)] = (u8)bits;
         group_ptr = BP_NEXT_TREE_GROUP(group_ptr);
+        len_ptr = BP_NEXT_TREE_GROUP(len_ptr);
         len += BP_TREE_CHILD_COUNT;
         count--;
     } while (count != 0);
