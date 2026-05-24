@@ -234,12 +234,10 @@ static void read_rle_samples(f32 PTR4* samples, u32 transform_size, VARBITS PTR4
     while (i < transform_size) {
         u32 end;
         u32 bitlen;
-        u32 has_run;
 
         /* Each sparse coefficient packet is either 5 bits (literal VQ run) or
            9 bits (RLE flag, 4-bit run index, 4-bit coefficient bit length). */
-        has_run = read_bit(vb);
-        if (has_run != 0) {
+        if (read_bit(vb) != 0) {
             u32 run = read_rle_bits(vb);
 
             end = i + BINKAC_RLE_SAMPLE_RUN(run);
@@ -304,8 +302,10 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
     VARBITS vb;
     f32 decoded[MAX_TRANSFORM];
     f32 PTR4* channel;
+    f32 sample_scale;
     u32 ch;
 
+    sample_scale = transform_size_root;
     vb.init = inptr;
     vb.cur = inptr;
     vb.bitlen = 0;
@@ -354,9 +354,9 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
     }
 
     if (chans == BINKAC_MONO_CHANNELS) {
-        quanttos16s(samples, decoded, transform_size_root, transform_size);
+        quanttos16s(samples, decoded, sample_scale, transform_size);
     } else {
-        quanttos16chans2(samples, decoded, transform_size_root, transform_size);
+        quanttos16chans2(samples, decoded, sample_scale, transform_size);
     }
 
     vb.bitlen = 0;
