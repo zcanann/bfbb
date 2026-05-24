@@ -1190,7 +1190,7 @@ void FastmIDCT8x8WithMotion(u8 PTR4* dest, s32 pitch, s16 PTR4* in, u32 quant, u
 
 void FastFDCT8x8(s32 PTR4* out, u8 PTR4* in)
 {
-    s32 PTR4* saveout = out;
+    s32 PTR4* rowout = out;
     s32 i;
 
     /* Forward DCT scales unsigned pixels into fixed-point workspace rows. */
@@ -1215,11 +1215,11 @@ void FastFDCT8x8(s32 PTR4* out, u8 PTR4* in)
         s32 z11;
         s32 z13;
 
-        out[DCT_COL0] = tmp10 + tmp11;
-        out[DCT_COL4] = tmp10 - tmp11;
+        rowout[DCT_COL0] = tmp10 + tmp11;
+        rowout[DCT_COL4] = tmp10 - tmp11;
         z1 = DCT_FIXED_MUL(tmp12 + tmp13, DCT_FIX_0_707106781);
-        out[DCT_COL2] = tmp13 + z1;
-        out[DCT_COL6] = tmp13 - z1;
+        rowout[DCT_COL2] = tmp13 + z1;
+        rowout[DCT_COL6] = tmp13 - z1;
 
         tmp10 = tmp4 + tmp5;
         tmp11 = tmp5 + tmp6;
@@ -1231,16 +1231,14 @@ void FastFDCT8x8(s32 PTR4* out, u8 PTR4* in)
         z11 = tmp7 + z3;
         z13 = tmp7 - z3;
 
-        out[DCT_COL5] = z13 + z2;
-        out[DCT_COL3] = z13 - z2;
-        out[DCT_COL1] = z11 + z4;
-        out[DCT_COL7] = z11 - z4;
+        rowout[DCT_COL5] = z13 + z2;
+        rowout[DCT_COL3] = z13 - z2;
+        rowout[DCT_COL1] = z11 + z4;
+        rowout[DCT_COL7] = z11 - z4;
 
         in += DCT_BLOCK_WIDTH;
-        out += DCT_BLOCK_WIDTH;
+        rowout += DCT_BLOCK_WIDTH;
     }
-
-    out = saveout;
 
     /* Column pass completes the transform coefficients. */
     for (i = DCT_BLOCK_WIDTH; i != 0; --i) {
