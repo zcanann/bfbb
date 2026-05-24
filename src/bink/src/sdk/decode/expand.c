@@ -790,13 +790,13 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     VarBitsGet(count, u32, *bits, bundle->count_bits);
     if (count != 0) {
         dest = (s16 PTR4*)bundle->data;
-        if (bundle->initial_value == BINK_BUNDLE_INITIAL_VALUE_NONE) {
-            current = exp_get_bits(bits, bundle->bit_size) & EXP_U16_MASK;
-        } else {
+        if (bundle->initial_value != BINK_BUNDLE_INITIAL_VALUE_NONE) {
             current = exp_get_bits(bits, bundle->bit_size - 1) & EXP_U16_MASK;
             if (current != 0 && exp_get_bit(bits) != 0) {
                 current = -current & EXP_U16_MASK;
             }
+        } else {
+            current = exp_get_bits(bits, bundle->bit_size) & EXP_U16_MASK;
         }
 
         *dest++ = (s16)current;
