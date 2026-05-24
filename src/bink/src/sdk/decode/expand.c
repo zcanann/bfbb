@@ -195,7 +195,7 @@ static void ReadHuffTable(EXPBITS PTR4* bits, const u8 PTR4* PTR4* decode,
                           u32 PTR4* bits_to_peek, u8 PTR4* values);
 
 static void OpenReadBundle(u8 PTR4* bits, READBUNDLE PTR4* rb, s32 width, u32 rows,
-                           s32 shift, s32 pitch, u32 use_initial_value)
+                           s32 shift, s32 pitch, s32 use_initial_value)
 {
     u32 count_base;
 
