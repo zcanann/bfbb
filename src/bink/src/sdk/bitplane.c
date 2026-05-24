@@ -213,7 +213,7 @@ u32 LenBPLossless(s16 PTR4* vals)
     u32 bits;
     u32 maxbits;
     s32 i;
-    s32 len;
+    u32 len;
     s32 count;
     u8 PTR4* group_ptr;
     u8 PTR4* len_ptr;
