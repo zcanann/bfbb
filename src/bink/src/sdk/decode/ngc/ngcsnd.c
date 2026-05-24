@@ -253,10 +253,10 @@ static void NGC_SoundPlay(BINKSND PTR4* snd, u32 index, u32 size)
 
 static s32 NGC_SoundReinit(BINKSND PTR4* snd)
 {
-    NGCBinkSound PTR4* ngc_snd = NGC_SND(snd);
-    NGCSoundState PTR4* state = NGC_SOUND_STATE(ngc_snd);
+    NGCSoundState PTR4* state = NGC_SOUND_STATE(snd);
     AXVPB PTR4* voice;
     u32 addr;
+    u32 ax_addr;
     u32 end;
     u32 i;
 
@@ -271,11 +271,13 @@ static s32 NGC_SoundReinit(BINKSND PTR4* snd)
     }
 
     addr = (u32)state->audio_buffer;
+    voice = NGC_LEFT_VOICE(state);
+    ax_addr = NGC_AX_ADDR(addr, NGC_ADDRESS_SHIFT(state));
     state->play_state = NGC_PLAY_STATE_STOPPED;
     state->play_cursor = addr;
     state->lock_index = NGC_SOUND_NO_LOCK_INDEX;
 
-    AXSetVoiceCurrentAddr(NGC_LEFT_VOICE(state), NGC_AX_ADDR(addr, NGC_ADDRESS_SHIFT(state)));
+    AXSetVoiceCurrentAddr(voice, ax_addr);
     voice = NGC_RIGHT_VOICE(state);
     if (voice != 0) {
         AXSetVoiceCurrentAddr(voice, NGC_AX_RIGHT_ADDR(state, addr));
@@ -683,12 +685,11 @@ static void NGC_StarvedClear(BINKSND PTR4* snd)
     NGCBinkSound PTR4* ngc_snd;
     NGCSoundState PTR4* state;
     ARQRequest PTR4* task;
-    ARQRequest PTR4* right_task;
     u8 PTR4* out;
     AXVPB PTR4* voice;
 
     ngc_snd = NGC_SND(snd);
-    state = NGC_SOUND_STATE(ngc_snd);
+    state = NGC_SOUND_STATE(snd);
     i = 0;
 check_busy:
     /* Wait for one staging half to be free before injecting silence. */
@@ -707,8 +708,7 @@ check_busy:
 
     memset(out, 0, state->frame_size);
     task = NGC_TASK(state, side);
-    right_task = task + NGC_SOUND_RIGHT_TASK_OFFSET;
-    right_task->source = (u32)out;
+    task[NGC_SOUND_RIGHT_TASK_OFFSET].source = (u32)out;
     task->source = (u32)out;
     NGC_SoundPlay(snd, side, state->frame_size);
 
