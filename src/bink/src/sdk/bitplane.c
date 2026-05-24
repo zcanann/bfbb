@@ -697,9 +697,6 @@ handle_lossless_children:
 void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
 {
     u32 code;
-    u32 PTR4* words;
-    BPBITSTYPE bitbuf;
-    u32 bitcount;
     s32 shift;
     u32 level;
     u32 maxlevel;
@@ -717,9 +714,9 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
     BPBITSTREAM bitcopy;
 
     bitcopy = *bits;
-    words = bitcopy.cur;
-    bitbuf = bitcopy.bits;
-    bitcount = bitcopy.bitlen;
+#define words bitcopy.cur
+#define bitbuf bitcopy.bits
+#define bitcount bitcopy.bitlen
     coeffs.values[1] = 0;
     memset(coeffs.values + BP_COEFF2_INDEX, 0, sizeof(coeffs) - BP_COEFF2_INDEX * sizeof(coeffs.values[0]));
 
@@ -1014,6 +1011,9 @@ after_lossless_final3:
     bitcopy.bits = bitbuf;
     bitcopy.bitlen = bitcount;
     *bits = bitcopy;
+#undef words
+#undef bitbuf
+#undef bitcount
     (void)tree;
 
     /* Scatter scan-order coefficients back into the 8x8 block. */
@@ -1342,18 +1342,13 @@ static void readlossy(void PTR4* out, BPBITSTREAM PTR4* bits, s32 limit)
     BPLOSSYREADTREE tree;
     u8 order[BP_BLOCK_COEFFS];
     BPBITSTREAM bitcopy;
-    u32 PTR4* words;
-    BPBITSTYPE bitbuf;
-    u32 bitcount;
     s8 PTR4* dest;
-    BPBITSTREAM PTR4* bitstate;
 
     dest = (s8 PTR4*)out;
     bitcopy = *bits;
-    bitstate = &bitcopy;
-    words = bitstate->cur;
-    bitbuf = bitstate->bits;
-    bitcount = bitstate->bitlen;
+#define words bitcopy.cur
+#define bitbuf bitcopy.bits
+#define bitcount bitcopy.bitlen
     sample_count = 0;
     memset(dest, 0, BP_BLOCK_COEFFS);
 
@@ -1675,6 +1670,9 @@ done:
     bitcopy.cur = words;
     bitcopy.bits = bitbuf;
     *bits = bitcopy;
+#undef words
+#undef bitbuf
+#undef bitcount
 }
 #pragma dont_inline reset
 
