@@ -405,9 +405,10 @@ static s32 NGC_SoundInit(BINKSND PTR4* snd)
             return 0;
         }
 
-        start = ((u32)state->audio_buffer + (i * state->channel_stride)) >> state->address_shift;
-        end = (((u32)state->audio_buffer + ((i + 1) * state->channel_stride)) >>
-               state->address_shift) -
+        start = ((u32)NGC_SOUND_STATE(snd)->audio_buffer + (i * NGC_SOUND_STATE(snd)->channel_stride)) >>
+                NGC_SOUND_STATE(snd)->address_shift;
+        end = (((u32)NGC_SOUND_STATE(snd)->audio_buffer + ((i + 1) * NGC_SOUND_STATE(snd)->channel_stride)) >>
+               NGC_SOUND_STATE(snd)->address_shift) -
               1;
 
         addr.loopFlag = AX_ADDR_LOOP_ON;
