@@ -126,24 +126,28 @@ typedef union BPLOSSYBLOCK
 
 typedef struct BPLOSSYREADTREE
 {
+    u8 pending[BP_TREE_NODES];
     u8 roots[BP_LOSSY_ROOT_NODES];
     u8 nodes[BP_BLOCK_COEFFS];
 } BPLOSSYREADTREE;
 
 typedef struct BPLOSSLESSREADTREE
 {
+    u8 pending[BP_TREE_NODES];
     u8 roots[BP_LOSSLESS_ROOT_NODES];
     u8 nodes[BP_TREE_NODES - BP_LOSSLESS_ROOT_NODES];
 } BPLOSSLESSREADTREE;
 
 typedef struct BPLOSSLESSWRITETREE
 {
+    u16 pending[BP_TREE_NODES];
     u16 roots[BP_LOSSLESS_ROOT_NODES];
     u16 nodes[BP_BLOCK_COEFFS - BP_LOSSLESS_ROOT_NODES];
 } BPLOSSLESSWRITETREE;
 
 typedef struct BPLOSSYWRITETREE
 {
+    u16 pending[BP_TREE_NODES];
     u16 roots[BP_LOSSY_ROOT_NODES];
     u16 nodes[BP_BLOCK_COEFFS - BP_LOSSY_ROOT_NODES];
 } BPLOSSYWRITETREE;
@@ -694,7 +698,8 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
     words = bitcopy.cur;
     bitbuf = bitcopy.bits;
     bitcount = bitcopy.bitlen;
-    memset(&coeffs, 0, sizeof(coeffs));
+    coeffs.values[1] = 0;
+    memset(coeffs.values + BP_COEFF2_INDEX, 0, sizeof(coeffs) - BP_COEFF2_INDEX * sizeof(coeffs.values[0]));
 
     /* The stream starts with the maximum active lossless bitplane level. */
     if (bitcount >= BP_LOSSLESS_LEVEL_BITS) {
