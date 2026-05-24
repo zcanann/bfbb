@@ -449,7 +449,8 @@ handle_final_children:
 void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
 {
     u16 entry;
-    u16 sign;
+    s32 value;
+    s32 sign;
     u16 kind;
     s32 i;
     s32 count;
@@ -467,9 +468,9 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
     BPLOSSLESSWRITETREE tree;
     u8 lens[BP_BLOCK_COEFFS];
     u8 groups[BP_TREE_GROUPS];
-    u8 hi_groups[BP_TREE_HIGH_GROUPS];
     u16 absvals[BP_BLOCK_COEFFS];
     s16 ordered[BP_BLOCK_COEFFS];
+    u8 hi_groups[BP_TREE_HIGH_GROUPS];
 
     /* Put coefficients in scan order before building bit-depth tables. */
     count = BP_BLOCK_COEFFS;
@@ -485,9 +486,9 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
     count = BP_BLOCK_COEFFS;
     i = 0;
     do {
-        entry = (u16)ordered[i];
-        sign = (u16)((s16)entry >> BP_S16_SIGN_SHIFT);
-        absvals[i] = BP_ABS_COEFF(entry, sign);
+        value = ordered[i];
+        sign = value >> BP_S32_SIGN_SHIFT;
+        absvals[i] = BP_ABS_COEFF(value, sign);
         i++;
         count--;
     } while (count != 0);
@@ -1074,10 +1075,10 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     BPLOSSYWRITETREE tree;
     u8 lens[BP_BLOCK_COEFFS];
     u8 groups[BP_TREE_GROUPS];
-    u8 hi_groups[BP_TREE_HIGH_GROUPS];
     u8 ordered[BP_BLOCK_COEFFS];
     u8 absvals[BP_BLOCK_COEFFS];
     u8 temp[BP_BLOCK_COEFFS];
+    u8 hi_groups[BP_TREE_HIGH_GROUPS];
 
     /* Lossy bitplanes scan all 64 byte coefficients, including DC. */
     count = BP_BLOCK_COEFFS;
