@@ -115,7 +115,7 @@ u32 RGBshift[RGB_SHIFT_TABLE_SIZE] RAD_ATTRIBUTE_ALIGN(NGC_TABLE_ALIGNMENT) = { 
     ((u32)((status) - DVD_STATE_BUSY) <= (DVD_STATE_WAITING - DVD_STATE_BUSY))
 #define NGC_DVD_STATUS_FAILED(status)                                                              \
     ((status) <= DVD_STATE_IGNORED ?                                                               \
-         ((status) > DVD_STATE_WAITING || (status) == DVD_STATE_FATAL_ERROR) :                     \
+         ((status) >= DVD_STATE_COVER_CLOSED || (status) == DVD_STATE_FATAL_ERROR) :               \
          (status) == DVD_STATE_RETRY)
 
 static void ReadKickoff(BINKIO PTR4* io);
@@ -226,13 +226,11 @@ static u32 BinkFileReadHeader(BINKIO PTR4* io, s32 offset, void PTR4* dest, u32 
 static void dosimulate(BINKIO PTR4* io, u32 read_size, u32 start)
 {
     s32 delay;
-    s32 elapsed;
     u32 last;
 
     delay = mult64anddiv(read_size, NGC_MILLISECONDS_PER_SECOND, NGC_SIMULATE_RATE(io));
     last = RADTimerRead();
-    elapsed = last - start;
-    delay -= elapsed;
+    delay -= last - start;
     NGC_SIMULATE_DELAY(io) += delay;
 
     while (NGC_SIMULATE_DELAY(io) > 0) {
