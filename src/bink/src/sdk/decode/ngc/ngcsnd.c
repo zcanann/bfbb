@@ -270,12 +270,12 @@ static s32 NGC_SoundReinit(BINKSND PTR4* snd)
         AXSetVoiceState(voice, AX_PB_STATE_STOP);
     }
 
-    addr = (u32)state->audio_buffer;
+    addr = (u32)NGC_SOUND_STATE(snd)->audio_buffer;
     voice = NGC_LEFT_VOICE(state);
-    ax_addr = NGC_AX_ADDR(addr, NGC_ADDRESS_SHIFT(state));
-    state->lock_index = NGC_SOUND_NO_LOCK_INDEX;
-    state->play_state = NGC_PLAY_STATE_STOPPED;
-    state->play_cursor = addr;
+    ax_addr = NGC_AX_ADDR(addr, NGC_SOUND_STATE(snd)->address_shift);
+    NGC_SOUND_STATE(snd)->lock_index = NGC_SOUND_NO_LOCK_INDEX;
+    NGC_SOUND_STATE(snd)->play_state = NGC_PLAY_STATE_STOPPED;
+    NGC_SOUND_STATE(snd)->play_cursor = addr;
 
     AXSetVoiceCurrentAddr(voice, ax_addr);
     voice = NGC_RIGHT_VOICE(state);
@@ -283,15 +283,15 @@ static s32 NGC_SoundReinit(BINKSND PTR4* snd)
         AXSetVoiceCurrentAddr(voice, NGC_AX_RIGHT_ADDR(state, addr));
     }
 
-    addr = state->play_cursor;
-    AXSetVoiceLoopAddr(NGC_LEFT_VOICE(state), NGC_AX_ADDR(addr, NGC_ADDRESS_SHIFT(state)));
+    addr = NGC_SOUND_STATE(snd)->play_cursor;
+    AXSetVoiceLoopAddr(NGC_LEFT_VOICE(state), NGC_AX_ADDR(addr, NGC_SOUND_STATE(snd)->address_shift));
     voice = NGC_RIGHT_VOICE(state);
     if (voice != 0) {
         AXSetVoiceLoopAddr(voice, NGC_AX_RIGHT_ADDR(state, addr));
     }
 
-    end = state->play_cursor + state->channel_stride;
-    AXSetVoiceEndAddr(NGC_LEFT_VOICE(state), NGC_AX_END_ADDR(end, NGC_ADDRESS_SHIFT(state)));
+    end = NGC_SOUND_STATE(snd)->play_cursor + NGC_SOUND_STATE(snd)->channel_stride;
+    AXSetVoiceEndAddr(NGC_LEFT_VOICE(state), NGC_AX_END_ADDR(end, NGC_SOUND_STATE(snd)->address_shift));
     voice = NGC_RIGHT_VOICE(state);
     if (voice != 0) {
         AXSetVoiceEndAddr(voice, NGC_AX_RIGHT_END_ADDR(state, end));
