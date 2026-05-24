@@ -7,6 +7,7 @@
 #define BP_WORD_TOP_BIT (BP_BITS_PER_WORD - 1)
 #define BP_S32_SIGN_SHIFT BP_WORD_TOP_BIT
 #define BP_S16_SIGN_SHIFT 15
+#define BP_S8_SIGN_SHIFT 7
 #define BP_BLOCK_COEFFS 64
 #define BP_AC_COEFFS (BP_BLOCK_COEFFS - 1)
 #define BP_LOSSY_OUTPUT_COEFFS 32
@@ -1072,8 +1073,8 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     i = 0;
     count = BP_BLOCK_COEFFS;
     do {
-        entry = (s8)ordered[i] >> 7;
-        absvals[i] = (entry ^ ordered[i]) - entry;
+        entry = (u16)((s8)ordered[i] >> BP_S8_SIGN_SHIFT);
+        absvals[i] = BP_ABS_COEFF((u16)ordered[i], entry);
         i++;
         count--;
     } while (count != 0);
