@@ -567,7 +567,7 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
         return;
     }
 
-    count = exp_get_bits(bits, bundle->count_bits);
+    VarBitsGet(count, u32, *bits, bundle->count_bits);
     if (count != 0) {
         dest = bundle->data;
         peek = bundle->bits_to_peek;
@@ -624,7 +624,7 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
         return;
     }
 
-    count = exp_get_bits(bits, bundle->count_bits);
+    VarBitsGet(count, u32, *bits, bundle->count_bits);
     if (count != 0) {
         dest = bundle->data;
         peek = bundle->bits_to_peek;
