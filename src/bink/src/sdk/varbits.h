@@ -162,7 +162,7 @@ static RADINLINE u32 getbitlevelvar(register u32 value)
     {                                                                                             \
         u32 __s = (size);                                                                         \
         u32 __count = (vb).bitlen;                                                                \
-        if (__count > (__s - 1)) {                                                                \
+        if (__count >= __s) {                                                                     \
             (val) = (type)(((vb).bits) & GetBitsLen(__s));                                        \
             ((vb).bits) >>= __s;                                                                  \
             ((vb).bitlen) = __count - __s;                                                        \
