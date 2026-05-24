@@ -357,10 +357,11 @@ static void YUY2_x2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, cons
 {
     s32 pairs;
 
-    for (pairs = YUY2_BLOCK_PAIRS(count); pairs != 0; --pairs) {
+    pairs = YUY2_BLOCK_PAIRS(count);
+    while (pairs-- != 0) {
         u32 u0 = *(const u32 PTR4*)u;
         u32 v0 = *(const u32 PTR4*)v;
-        u32 y0 = y[YUY2_PAIR_LUMA_WORD_0];
+        u32 y0 = *y++;
         u32 chroma;
 
         u += YUY2_PAIR_STRIDE;
@@ -371,9 +372,8 @@ static void YUY2_x2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, cons
         *dest++ = YUY2_PACK_X2Y2(y0, chroma);
         *dest++ = YUY2_PACK_X2Y3(y0, chroma);
 
-        y0 = y[YUY2_PAIR_LUMA_WORD_1];
+        y0 = *y++;
         v += YUY2_PAIR_STRIDE;
-        y += YUY2_PAIR_STRIDE;
         chroma = YUY2_CHROMA2(u0, v0);
         *dest++ = YUY2_PACK_X2Y0(y0, chroma);
         *dest++ = YUY2_PACK_X2Y1(y0, chroma);
