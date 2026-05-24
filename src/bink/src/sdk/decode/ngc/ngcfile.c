@@ -358,7 +358,7 @@ static u32 BinkFileIdle(BINKIO PTR4* io)
         if (status == DVD_STATE_CANCELED) {
             return io->DoingARead;
         }
-        if (status <= DVD_STATE_IGNORED) {
+        if (status < DVD_STATE_CANCELED) {
             goto read_error;
         }
         if (status == DVD_STATE_RETRY) {
