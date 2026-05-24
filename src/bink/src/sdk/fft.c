@@ -45,7 +45,7 @@ f32 sinf(f32 x);
 #define FFT_QUARTER_SIZE(n) ((s32)(n) >> 2)
 #define FFT_HALF_SIZE(n) ((n) >> 1)
 #define FFT_TABLE_FULL_SIZE(n) ((n) << 2)
-#define FFT_TABLE_DOUBLE_SIZE(n) ((n) << 1)
+#define FFT_TABLE_DOUBLE_SIZE(n) ((n) + (n))
 #define FFT_CFT_16_REAL_SIZE 32
 #define FFT_CFT_8_REAL_SIZE 16
 #define FFT_CFT_4_REAL_SIZE 8
@@ -424,7 +424,7 @@ static void bitrv2(s32 n, s32 PTR4* ip, f32 PTR4* a)
                         a[j1 + 1] = xi;
 
                         k1 += m2;
-                        j1 += m * 4;
+                        j1 += m2 + m2;
                         xr = a[k1];
                         xi = a[k1 + 1];
                         yr = a[j1 + 1];
@@ -444,7 +444,7 @@ static void bitrv2(s32 n, s32 PTR4* ip, f32 PTR4* a)
                         a[j1 + 1] = xi;
 
                         k1 += m2;
-                        j1 += m * 4;
+                        j1 += m2 + m2;
                         xr = a[k1];
                         xi = a[k1 + 1];
                         yr = a[j1 + 1];
@@ -546,7 +546,7 @@ static void bitrv2conj(s32 n, s32 PTR4* ip, f32 PTR4* a)
                         a[j1 + 1] = -xi;
 
                         k1 += m2;
-                        j1 += m * 4;
+                        j1 += m2 + m2;
                         xr = a[k1];
                         xi = a[k1 + 1];
                         yr = a[j1 + 1];
@@ -566,7 +566,7 @@ static void bitrv2conj(s32 n, s32 PTR4* ip, f32 PTR4* a)
                         a[j1 + 1] = -xi;
 
                         k1 += m2;
-                        j1 += m * 4;
+                        j1 += m2 + m2;
                         xr = a[k1];
                         xi = a[k1 + 1];
                         yr = a[j1 + 1];
