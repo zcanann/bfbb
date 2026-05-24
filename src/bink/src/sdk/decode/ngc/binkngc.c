@@ -22,6 +22,8 @@
 #define RAD_INVALID_USER_ALLOC ((void PTR4*)-1)
 #define RAD_MEMSET16_PER_WORD 2
 #define RAD_MEMSET16_WORD_SHIFT 16
+#define RAD_TIMEBASE_LOW_SPR "268"
+#define RAD_TIMEBASE_HIGH_SPR "269"
 typedef enum RADAllocOwner
 {
     RAD_ALLOC_SYSTEM_OWNED = 0,
@@ -164,9 +166,9 @@ static inline void radtimebase(RADTimebase PTR4* dest)
     /* Read TBU/TBL/TBU until the high word is stable across the low-word read. */
     __asm__ volatile(
         "0:\n\t"
-        "mftb %0, 269\n\t"
-        "mftb %1, 268\n\t"
-        "mftb %2, 269\n\t"
+        "mftb %0, " RAD_TIMEBASE_HIGH_SPR "\n\t"
+        "mftb %1, " RAD_TIMEBASE_LOW_SPR "\n\t"
+        "mftb %2, " RAD_TIMEBASE_HIGH_SPR "\n\t"
         "cmpw %0, %2\n\t"
         "bne 0b\n\t"
         "stw %0, 0(%3)\n\t"
