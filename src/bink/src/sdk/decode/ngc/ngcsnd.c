@@ -659,7 +659,7 @@ static s32 Unlock(BINKSND PTR4* snd, u32 filled)
 
         padded = NGC_ALIGN_UP(filled, NGC_SOUND_FRAME_ALIGN_MASK);
         for (i = 0; i < NGC_SND(snd)->chans; ++i) {
-            memset((u8 PTR4*)NGC_TASK_FOR_INDEX(state, i, state->lock_index)->source + filled, 0,
+            memset((u8 PTR4*)NGC_TASK(state, state->lock_index + i + i)->source + filled, 0,
                    padded - filled);
         }
     }
