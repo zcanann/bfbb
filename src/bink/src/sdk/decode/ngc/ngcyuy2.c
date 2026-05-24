@@ -358,7 +358,7 @@ static void YUY2_x2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, cons
     s32 pairs;
 
     pairs = YUY2_BLOCK_PAIRS(count);
-    while (pairs-- != 0) {
+    while (pairs != 0) {
         u32 u0 = *(const u32 PTR4*)u;
         u32 v0 = *(const u32 PTR4*)v;
         u32 y0 = *y++;
@@ -380,6 +380,8 @@ static void YUY2_x2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, cons
         chroma = YUY2_CHROMA3(u0, v0);
         *dest++ = YUY2_PACK_X2Y2(y0, chroma);
         *dest++ = YUY2_PACK_X2Y3(y0, chroma);
+
+        --pairs;
     }
 
     if (YUY2_HAS_TAIL_BLOCK(count)) {
