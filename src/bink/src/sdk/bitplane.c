@@ -678,7 +678,6 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
     s32 shift;
     u32 level;
     u32 maxlevel;
-    u32 active;
     u32 highbit;
     u32 value;
     u32 mask;
@@ -715,7 +714,6 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
     }
 
     maxlevel = code & BP_LOSSLESS_LEVEL_MASK;
-    active = maxlevel != 0;
     /* Root nodes mirror WriteBPLossless: three grouped roots plus coeffs 1..3. */
     tree.roots[0] = BP_READ_TREE_GROUP1_ROOT;
     tree.roots[1] = BP_READ_TREE_GROUP6_ROOT;
@@ -876,7 +874,7 @@ after_lossless_child3:
     }
 
     /* Level one coeffs need only a sign bit; their magnitude is implicit. */
-    if (active && cur < tree_end) {
+    if (maxlevel && cur < tree_end) {
         next = cur;
         do {
             node = *cur;
