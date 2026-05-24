@@ -707,8 +707,8 @@ check_busy:
 
     memset(out, 0, state->frame_size);
     task = NGC_TASK(state, side);
-    task[NGC_SOUND_RIGHT_TASK_OFFSET].source = (u32)out;
     task->source = (u32)out;
+    NGC_TASK(state, side + NGC_SOUND_RIGHT_TASK_OFFSET)->source = (u32)out;
     NGC_SoundPlay(snd, side, state->frame_size);
 
     /* Re-anchor playback to the silent frame if AX has already passed it. */
