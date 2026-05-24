@@ -1055,6 +1055,8 @@ after_lossless_final3:
 u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
 {
     u16 entry;
+    s32 value;
+    s32 sign;
     s32 i;
     s32 count;
     u8 PTR4* group_ptr;
@@ -1089,8 +1091,9 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     i = 0;
     count = BP_BLOCK_COEFFS;
     do {
-        entry = (u16)((s8)ordered[i] >> BP_S8_SIGN_SHIFT);
-        absvals[i] = BP_ABS_COEFF((u16)ordered[i], entry);
+        value = (s8)ordered[i];
+        sign = value >> BP_S32_SIGN_SHIFT;
+        absvals[i] = (u8)BP_ABS_COEFF(value, sign);
         i++;
         count--;
     } while (count != 0);
