@@ -175,8 +175,6 @@ static const f32 BINK_NGC_AX_SAMPLE_RATE = 32000.0f;
 static const f64 BINK_NGC_S32_TO_F64_BIAS = 4503601774854144.0;
 static const f32 BINK_NGC_PAN_TO_FLOAT = 0.0000152587890625f;
 static const f32 BINK_NGC_PAN_CENTER = 0.5f;
-static const f64 BINK_NGC_SOUND_U32_TO_F64_BIAS = 4503599627370496.0;
-static const f64 BINK_NGC_SOUND_SIGN_BIAS = 2147483648.0;
 
 static void NGC_SoundPlay(BINKSND PTR4* snd, u32 index, u32 size);
 static void NGC_StarvedClear(BINKSND PTR4* snd);
@@ -186,6 +184,8 @@ const char BINK_ERROR_OPENING_FILE[] = "Error opening file.";
 const char BINK_ERROR_NOT_BINK[20] = "Not a Bink file.";
 const char BINK_ERROR_NO_COMPRESSED_FRAMES[] = "The file doesn't contain any compressed frames yet.";
 const char BINK_ERROR_OUT_OF_MEMORY[20] = "Out of memory.";
+static const f64 BINK_NGC_SOUND_U32_TO_F64_BIAS = 4503599627370496.0;
+static const f64 BINK_NGC_SOUND_SIGN_BIAS = 2147483648.0;
 
 static void startVoices(u32 task)
 {
