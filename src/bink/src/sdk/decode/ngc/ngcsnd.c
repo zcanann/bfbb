@@ -681,6 +681,7 @@ static void NGC_StarvedClear(BINKSND PTR4* snd)
 {
     u32 i;
     u32 side;
+    u32 right_side;
     u32 start;
     u32 end;
     NGCBinkSound PTR4* ngc_snd;
@@ -695,7 +696,8 @@ static void NGC_StarvedClear(BINKSND PTR4* snd)
 check_busy:
     /* Wait for one staging half to be free before injecting silence. */
     side = i & NGC_SOUND_LAST_LOCK_INDEX;
-    if (NGC_TASK_BUSY(NGC_TASK(state, side))) {
+    task = NGC_TASK(state, side);
+    if (NGC_TASK_BUSY(task)) {
         goto busy;
     }
     start = state->play_cursor;
@@ -710,7 +712,8 @@ check_busy:
     memset(out, 0, state->frame_size);
     task = NGC_TASK(state, side);
     task->source = (u32)out;
-    NGC_TASK(state, side + NGC_SOUND_RIGHT_TASK_OFFSET)->source = (u32)out;
+    right_side = side + NGC_SOUND_RIGHT_TASK_OFFSET;
+    NGC_TASK(state, right_side)->source = (u32)out;
     NGC_SoundPlay(snd, side, state->frame_size);
 
     /* Re-anchor playback to the silent frame if AX has already passed it. */
