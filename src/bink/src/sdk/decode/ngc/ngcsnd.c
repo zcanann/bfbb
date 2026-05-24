@@ -273,9 +273,9 @@ static s32 NGC_SoundReinit(BINKSND PTR4* snd)
     addr = (u32)state->audio_buffer;
     voice = NGC_LEFT_VOICE(state);
     ax_addr = NGC_AX_ADDR(addr, NGC_ADDRESS_SHIFT(state));
+    state->lock_index = NGC_SOUND_NO_LOCK_INDEX;
     state->play_state = NGC_PLAY_STATE_STOPPED;
     state->play_cursor = addr;
-    state->lock_index = NGC_SOUND_NO_LOCK_INDEX;
 
     AXSetVoiceCurrentAddr(voice, ax_addr);
     voice = NGC_RIGHT_VOICE(state);
@@ -594,8 +594,7 @@ static s32 Unlock(BINKSND PTR4* snd, u32 filled)
     if (NGC_SND(snd)->chans == NGC_SOUND_STEREO_CHANNELS) {
         /* Split the temporary interleaved stereo buffer into the two ARQ upload buffers. */
         u8 PTR4* left = (u8 PTR4*)task->source;
-        u8 PTR4* right = (u8 PTR4*)NGC_TASK_FOR_INDEX(state, NGC_SOUND_STEREO_CHANNELS - 1,
-                                                       state->lock_index)->source;
+        u8 PTR4* right = (u8 PTR4*)NGC_TASK(state, state->lock_index + NGC_SOUND_RIGHT_TASK_OFFSET)->source;
         u8 PTR4* src = state->stereo_buffer;
 
         if (NGC_SND(snd)->bits == NGC_SOUND_BITS_16) {
