@@ -2251,7 +2251,7 @@ static void rftfsub(s32 n, f32 PTR4* a, s32 nc, f32 PTR4* c)
     f32 yi;
     f32 wkr;
     f32 wki;
-    f32 half = RFT_HALF_SCALE;
+    f32 half;
     s32 m;
     s32 ks;
     s32 kk;
@@ -2261,7 +2261,12 @@ static void rftfsub(s32 n, f32 PTR4* a, s32 nc, f32 PTR4* c)
     m = n >> 1;
     ks = (nc + nc) / m;
     kk = 0;
-    for (j = 2; j < m; j += 2) {
+    j = 2;
+    if (j >= m) {
+        return;
+    }
+    half = RFT_HALF_SCALE;
+    do {
         k = n - j;
         kk += ks;
         wkr = half - c[nc - kk];
@@ -2274,7 +2279,8 @@ static void rftfsub(s32 n, f32 PTR4* a, s32 nc, f32 PTR4* c)
         a[j + 1] -= yi;
         a[k] += yr;
         a[k + 1] -= yi;
-    }
+        j += 2;
+    } while (j < m);
 }
 
 static void rftbsub(s32 n, f32 PTR4* a, s32 nc, f32 PTR4* c)
@@ -2285,7 +2291,7 @@ static void rftbsub(s32 n, f32 PTR4* a, s32 nc, f32 PTR4* c)
     f32 yi;
     f32 wkr;
     f32 wki;
-    f32 half = RFT_INV_HALF_SCALE;
+    f32 half;
     s32 m;
     s32 ks;
     s32 kk;
@@ -2295,7 +2301,12 @@ static void rftbsub(s32 n, f32 PTR4* a, s32 nc, f32 PTR4* c)
     m = n >> 1;
     ks = (nc + nc) / m;
     kk = 0;
-    for (j = 2; j < m; j += 2) {
+    j = 2;
+    if (j >= m) {
+        return;
+    }
+    half = RFT_INV_HALF_SCALE;
+    do {
         k = n - j;
         kk += ks;
         wkr = half - c[nc - kk];
@@ -2308,7 +2319,8 @@ static void rftbsub(s32 n, f32 PTR4* a, s32 nc, f32 PTR4* c)
         a[j + 1] -= yi;
         a[k] += yr;
         a[k + 1] -= yi;
-    }
+        j += 2;
+    } while (j < m);
 }
 
 static void dctsub(s32 n, f32 PTR4* a, s32 nc, f32 PTR4* c)
