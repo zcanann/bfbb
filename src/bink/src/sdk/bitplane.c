@@ -215,7 +215,6 @@ u32 LenBPLossless(s16 PTR4* vals)
     u8 lens[BP_BLOCK_COEFFS];
     u8 groups[BP_TREE_GROUPS];
     u8 hi_groups[BP_TREE_HIGH_GROUPS];
-    s32 active;
 
     /* Lossless bitplanes code AC coefficient magnitudes by zigzag bit depth. */
     count = BP_AC_COEFFS;
@@ -236,7 +235,6 @@ u32 LenBPLossless(s16 PTR4* vals)
     /* Each four-coefficient subtree inherits the deepest child bit depth. */
     len = BP_FIRST_LOSSLESS_TREE_GROUP_INDEX;
     count = BP_TREE_LAST_GROUP;
-    active = maxbits != 0;
     group_ptr = lens + BP_FIRST_LOSSLESS_TREE_GROUP_END_INDEX;
     len_ptr = lens;
     do {
@@ -371,7 +369,7 @@ handle_children:
         cur = restart;
     }
 
-    if (active && (total = len, restart = cur, cur < end)) {
+    if (maxbits && (total = len, restart = cur, cur < end)) {
         do {
             entry = *cur;
             len = total;
