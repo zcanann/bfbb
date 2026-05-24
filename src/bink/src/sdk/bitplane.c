@@ -209,14 +209,15 @@ u32 LenBPLossless(s16 PTR4* vals)
 {
     u16 entry;
     u16 kind;
-    u32 sign;
+    s32 sign;
     u32 bits;
     u32 maxbits;
+    s32 i;
     s32 len;
     s32 count;
     u8 PTR4* group_ptr;
     u8 PTR4* len_ptr;
-    u32 value;
+    s32 value;
     u16 PTR4* cur;
     u16 PTR4* restart;
     u16 PTR4* end;
@@ -230,16 +231,16 @@ u32 LenBPLossless(s16 PTR4* vals)
     /* Lossless bitplanes code AC coefficient magnitudes by zigzag bit depth. */
     count = BP_AC_COEFFS;
     maxbits = 0;
-    len = 1;
+    i = 1;
     do {
-        value = (u32)BP_ZIGZAG_COEFF(vals, len);
-        sign = (s32)value >> BP_S32_SIGN_SHIFT;
+        value = BP_ZIGZAG_COEFF(vals, i);
+        sign = value >> BP_S32_SIGN_SHIFT;
         bits = getbitlevelvar(BP_ABS_COEFF(value, sign) & BP_U16_MASK) & BP_BYTE_MASK;
         if (maxbits < bits) {
             maxbits = bits;
         }
-        lens[len] = (u8)bits;
-        len++;
+        lens[i] = (u8)bits;
+        i++;
         count--;
     } while (count != 0);
 
