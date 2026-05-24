@@ -1465,8 +1465,7 @@ decode_node:
                     words = words + 1;
                     if ((word & 1) != 0) {
 push_0:
-                        next_node_ptr = next_node_ptr + -1;
-                        *next_node_ptr = BP_READ_TREE_BASE(node) + BP_READ_TREE_COEFF_NODE;
+                        *--next_node_ptr = BP_READ_TREE_BASE(node) + BP_READ_TREE_COEFF_NODE;
                         goto after_0;
                     }
                 } else {
@@ -1509,8 +1508,7 @@ after_0:
                     words = words + 1;
                     if ((word & 1) != 0) {
 push_1:
-                        next_node_ptr = next_node_ptr + -1;
-                        *next_node_ptr = BP_READ_TREE_COEFF(node);
+                        *--next_node_ptr = BP_READ_TREE_COEFF(node);
                         goto after_1;
                     }
                 } else {
@@ -1553,8 +1551,7 @@ after_1:
                     words = words + 1;
                     if ((word & 1) != 0) {
 push_2:
-                        next_node_ptr = next_node_ptr + -1;
-                        *next_node_ptr = BP_READ_TREE_COEFF(node);
+                        *--next_node_ptr = BP_READ_TREE_COEFF(node);
                         goto after_2;
                     }
                 } else {
@@ -1624,8 +1621,7 @@ after_2:
                         goto done;
                     }
                 } else {
-                    next_node_ptr = next_node_ptr + -1;
-                    *next_node_ptr = BP_READ_TREE_COEFF(node);
+                    *--next_node_ptr = BP_READ_TREE_COEFF(node);
                 }
             }
 node_done:
