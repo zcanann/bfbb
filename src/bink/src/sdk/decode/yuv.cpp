@@ -983,18 +983,12 @@ extern "C" void YUV_init(u32 flags)
     u32 green_mask;
     u32 blue_mask;
     u32 white;
-    s32 PTR4* u_to_b;
-    s32 PTR4* v_to_gb;
-    s32 PTR4* u_to_gb;
-    s32 PTR4* v_to_r;
+    s32 PTR4* yuv_tables;
 
     // Build luma/chroma contribution tables once, then rebuild the packed RGB
     // clamp tables when the destination surface format changes.
     if (donetables == 0) {
-        u_to_b = YUVTables;
-        v_to_gb = YUVTables + YUV_V_TO_GB_OFFSET;
-        u_to_gb = YUVTables + YUV_U_TO_GB_OFFSET;
-        v_to_r = YUVTables + YUV_V_TO_R_OFFSET;
+        yuv_tables = YUVTables;
         for (i = 0; i < YUV_TABLE_PLANE_SIZE; i++) {
             if (i > YUV_LUMA_BLACK) {
                 if (i < YUV_LUMA_WHITE_CUTOFF) {
@@ -1011,10 +1005,10 @@ extern "C" void YUV_init(u32 flags)
 
             uv = i - YUV_CHROMA_CENTER;
             ytable_x4[i] = y << 2;
-            *v_to_gb++ = -yuv_round15(uv * YUV_COEFF_V_TO_GB);
-            *u_to_gb++ = -yuv_round15(uv * YUV_COEFF_U_TO_GB);
-            *v_to_r++ = yuv_round15(uv * YUV_COEFF_V_TO_R);
-            *u_to_b++ = yuv_round15(uv * YUV_COEFF_U_TO_B);
+            yuv_tables[YUV_V_TO_GB_OFFSET + i] = -yuv_round15(uv * YUV_COEFF_V_TO_GB);
+            yuv_tables[YUV_U_TO_GB_OFFSET + i] = -yuv_round15(uv * YUV_COEFF_U_TO_GB);
+            yuv_tables[YUV_V_TO_R_OFFSET + i] = yuv_round15(uv * YUV_COEFF_V_TO_R);
+            yuv_tables[i] = yuv_round15(uv * YUV_COEFF_U_TO_B);
         }
 
         for (i = 0; i < YUV_TABLE_PLANE_SIZE; i++) {
