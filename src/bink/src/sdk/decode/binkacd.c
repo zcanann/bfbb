@@ -35,6 +35,7 @@
 #define BINKAC_QUANT_POWER_BASE 10.0
 #define BINKAC_QUANT_INDEX_SCALE 0.664f
 #define BINKAC_QUANT_POWER_SCALE 0.10f
+#define BINKAC_SAMPLE_ZERO 0.0f
 #define BINKAC_NYQUIST_ROUNDING 1
 #define BINKAC_FFT_WORK_EXTRA 2
 #define BINKAC_DCT_COEFF_BYTES_PER_SAMPLE 5
@@ -49,6 +50,7 @@
 #define BINKAC_BAND_LIMIT_COUNT(num_bands) ((num_bands) + BINKAC_BAND_SENTINEL_COUNT)
 #define BINKAC_RSQRT_NEWTON_HALF 0.5
 #define BINKAC_RSQRT_NEWTON_THREE 3.0
+#define BINKAC_RSQRT_ZERO 0.0f
 #define BINKAC_SAMPLE_COUNT_UNDERFLOW ((u32)-1)
 #define BINKAC_LOAD32(ptr) (*(const u32 PTR4*)(ptr))
 #define BINKAC_BAND_SAMPLE_LIMIT(bands, band) ((bands)[band] * BINKAC_BAND_LIMIT_SCALE)
@@ -80,14 +82,6 @@ static u32 bink_bandtopfreq[TOTBANDS] = {
     0,   100,  200,  300,  400,  510,  630,  770,   920,   1080,  1270, 1480, 1720,
     2000, 2320, 2700, 3150, 3700, 4400, 5300, 6400, 7700, 9500, 12000, 15500
 };
-
-static const f32 BINKAC_SAMPLE_ZERO = 0.0f;
-static const f32 BINKAC_QUANT_INDEX_SCALE_CONST = BINKAC_QUANT_INDEX_SCALE;
-static const f32 BINKAC_QUANT_POWER_SCALE_CONST = BINKAC_QUANT_POWER_SCALE;
-static const f64 BINKAC_QUANT_POWER_BASE_CONST = BINKAC_QUANT_POWER_BASE;
-static const f32 BINKAC_RSQRT_ZERO = 0.0f;
-static const f64 BINKAC_RSQRT_NEWTON_HALF_CONST = BINKAC_RSQRT_NEWTON_HALF;
-static const f64 BINKAC_RSQRT_NEWTON_THREE_CONST = BINKAC_RSQRT_NEWTON_THREE;
 
 /* Reciprocals used by fxptof for the 29-bit packed fixed-point coefficients. */
 static f64 bink_invertbins[BINKAC_INVERT_BINS] = {
@@ -302,7 +296,7 @@ f64 pow(f64 x, f64 y);
 
 static inline f32 Undecibel(f32 d)
 {
-    return (f32)pow(BINKAC_QUANT_POWER_BASE_CONST, d * BINKAC_QUANT_POWER_SCALE_CONST);
+    return (f32)pow(BINKAC_QUANT_POWER_BASE, d * BINKAC_QUANT_POWER_SCALE);
 }
 
 static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
@@ -341,7 +335,7 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
 
         for (i = 0; i < num_bands; ++i) {
             VarBitsGet(q, s32, vb, BINKAC_THRESHOLD_BITS);
-            thresholds[i] = Undecibel((f32)q * BINKAC_QUANT_INDEX_SCALE_CONST);
+            thresholds[i] = Undecibel((f32)q * BINKAC_QUANT_INDEX_SCALE);
         }
 
         read_rle_samples(channel, transform_size, &vb, thresholds, bands);
@@ -373,14 +367,14 @@ static inline f32 radfsqrt(f32 value)
         __asm__ volatile("frsqrte %0,%1" : "=f"(square) : "f"(value));
         guess = square;
         square = guess * guess;
-        guess = BINKAC_RSQRT_NEWTON_HALF_CONST * guess *
-                (BINKAC_RSQRT_NEWTON_THREE_CONST - square * value);
+        guess = BINKAC_RSQRT_NEWTON_HALF * guess *
+                (BINKAC_RSQRT_NEWTON_THREE - square * value);
         square = guess * guess;
-        guess = BINKAC_RSQRT_NEWTON_HALF_CONST * guess *
-                (BINKAC_RSQRT_NEWTON_THREE_CONST - square * value);
+        guess = BINKAC_RSQRT_NEWTON_HALF * guess *
+                (BINKAC_RSQRT_NEWTON_THREE - square * value);
         square = guess * guess;
-        guess = BINKAC_RSQRT_NEWTON_HALF_CONST * guess *
-                (BINKAC_RSQRT_NEWTON_THREE_CONST - square * value);
+        guess = BINKAC_RSQRT_NEWTON_HALF * guess *
+                (BINKAC_RSQRT_NEWTON_THREE - square * value);
         return value * guess;
     }
 
