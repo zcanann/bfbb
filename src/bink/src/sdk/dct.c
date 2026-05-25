@@ -697,7 +697,7 @@ static const s32 ifmquantlevels8[DCT_QUANT_LEVELS][DCT_BLOCK_COEFFS] = {
     },
 };
 static const double ifmquantlevels8align = 0.0;
-const double zigzagalign = 0.0;
+static const double zigzagalign = 0.0;
 /* Bink DCT and residue 8x8 block scan order. */
 const u8 zigzag[DCT_BLOCK_COEFFS] RAD_ATTRIBUTE_ALIGN(32) = {
     0x00, 0x01, 0x08, 0x09, 0x02, 0x03, 0x0a, 0x0b,
@@ -710,7 +710,7 @@ const u8 zigzag[DCT_BLOCK_COEFFS] RAD_ATTRIBUTE_ALIGN(32) = {
     0x34, 0x35, 0x3c, 0x3d, 0x36, 0x37, 0x3e, 0x3f
 };
 
-const double patternsalign = 0.0;
+static const double patternsalign = 0.0;
 /* Sixteen custom scan orders used by run and pattern-coded blocks. */
 const u8 patterns[DCT_PATTERN_BYTES] RAD_ATTRIBUTE_ALIGN(32) = {
     0x00, 0x08, 0x10, 0x18, 0x20, 0x28, 0x30, 0x38,
