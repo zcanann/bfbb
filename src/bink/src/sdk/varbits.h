@@ -161,16 +161,15 @@ static RADINLINE u32 getbitlevelvar(register u32 value)
 #define VarBitsGet(val, type, vb, size)                                                           \
     {                                                                                             \
         u32 __count = (vb).bitlen;                                                                \
-        u32 __s = (size);                                                                         \
-        if (__count >= __s) {                                                                     \
-            (val) = (type)(((vb).bits) & GetBitsLen(__s));                                        \
-            ((vb).bits) >>= __s;                                                                  \
-            ((vb).bitlen) = __count - __s;                                                        \
+        if (__count >= (size)) {                                                                  \
+            (val) = (type)(((vb).bits) & GetBitsLen(size));                                       \
+            ((vb).bits) >>= (size);                                                               \
+            ((vb).bitlen) = __count - (size);                                                     \
         } else {                                                                                  \
             register VARBITSTEMP __word = *((vb).cur);                                            \
-            (val) = (type)((((vb).bits) | (__word << __count)) & GetBitsLen(__s));                \
-            ((vb).bits) = __word >> (__s - __count);                                              \
-            ((vb).bitlen) = __count + BITSTYPELEN - __s;                                          \
+            (val) = (type)((((vb).bits) | (__word << __count)) & GetBitsLen(size));               \
+            ((vb).bits) = __word >> ((size) - __count);                                           \
+            ((vb).bitlen) = __count + BITSTYPELEN - (size);                                       \
             VARBITS_ADVANCE_CUR((vb).cur);                                                        \
         }                                                                                         \
     }
