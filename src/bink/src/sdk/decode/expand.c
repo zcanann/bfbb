@@ -265,7 +265,7 @@ static void simpmergesort(EXPBITS PTR4* bits, u8 PTR4* out, u8 PTR4* left,
 
     left_count = count;
     for (;;) {
-        if (exp_get_bit(bits) != 0) {
+        if (exp_get_bit(bits)) {
             value = *right++;
             count--;
         } else {
