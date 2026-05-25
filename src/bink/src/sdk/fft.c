@@ -1,22 +1,6 @@
 #include "bink.h"
 #include "fft.h"
 
-extern const u32 BINK_RDFT_INVERSE_SCALE_BITS[];
-extern const u32 BINK_FFT_TRIG_ONE_BITS[];
-extern const u32 BINK_FFT_HALF_SECANT_SCALE_BITS[];
-extern const u32 BINK_FFT_SIX_BITS[];
-extern const u32 BINK_FFT_THREE_BITS[];
-extern const u32 BINK_FFT_HALF_RECIP_SCALE_BITS[];
-extern const u32 BINK_DCT_TRIG_ONE_BITS[];
-extern const u32 BINK_DCT_CENTER_SCALE_BITS[];
-extern const u32 BINK_DCT_HALF_SCALE_BITS[];
-extern const u32 BINK_CFT_ROT_ONE_BITS[];
-extern const u32 BINK_CFT_ROT_ZERO_BITS[];
-extern const u32 BINK_CFT_INV_ROT_ONE_BITS[];
-extern const u32 BINK_CFT_INV_ROT_ZERO_BITS[];
-extern const u32 BINK_RFT_HALF_SCALE_BITS[];
-extern const u32 BINK_RFT_INV_HALF_SCALE_BITS[];
-
 f32 atanf(f32 x);
 f32 cosf(f32 x);
 f32 sinf(f32 x);
@@ -40,55 +24,55 @@ f32 sinf(f32 x);
 #define RFT_HALF_SCALE F32CONST(BINK_RFT_HALF_SCALE_BITS)
 #define RFT_INV_HALF_SCALE F32CONST(BINK_RFT_INV_HALF_SCALE_BITS)
 
-const u32 BINK_RDFT_INVERSE_SCALE_BITS[] = {
+static const u32 BINK_RDFT_INVERSE_SCALE_BITS[] = {
     0x3f000000,
 };
-const u32 BINK_FFT_TRIG_ONE_BITS[] = {
+static const u32 BINK_FFT_TRIG_ONE_BITS[] = {
     0x3f800000,
 };
-const u32 BINK_FFT_INT_TO_FLOAT_BIAS[] = {
+static const u32 BINK_FFT_INT_TO_FLOAT_BIAS[] = {
     0x43300000, 0x80000000,
 };
-const u32 BINK_FFT_HALF_SECANT_SCALE_BITS[] = {
+static const u32 BINK_FFT_HALF_SECANT_SCALE_BITS[] = {
     0x3fe00000, 0x00000000,
 };
-const u32 BINK_FFT_SIX_BITS[] = {
+static const u32 BINK_FFT_SIX_BITS[] = {
     0x40c00000,
 };
-const u32 BINK_FFT_THREE_BITS[] = {
+static const u32 BINK_FFT_THREE_BITS[] = {
     0x40400000,
 };
-const u32 BINK_FFT_HALF_RECIP_SCALE_BITS[] = {
+static const u32 BINK_FFT_HALF_RECIP_SCALE_BITS[] = {
     0x3f000000,
 };
-const u32 BINK_DCT_TRIG_ONE_BITS[] = {
+static const u32 BINK_DCT_TRIG_ONE_BITS[] = {
     0x3f800000,
 };
-const u32 BINK_DCT_INT_TO_FLOAT_BIAS[] = {
+static const u32 BINK_DCT_INT_TO_FLOAT_BIAS[] = {
     0x43300000, 0x80000000,
 };
-const u32 BINK_DCT_CENTER_SCALE_BITS[] = {
+static const u32 BINK_DCT_CENTER_SCALE_BITS[] = {
     0x3f000000, 0x00000000,
 };
-const u32 BINK_DCT_HALF_SCALE_BITS[] = {
+static const u32 BINK_DCT_HALF_SCALE_BITS[] = {
     0x3fe00000, 0x00000000,
 };
-const u32 BINK_CFT_ROT_ONE_BITS[] = {
+static const u32 BINK_CFT_ROT_ONE_BITS[] = {
     0x3f800000,
 };
-const u32 BINK_CFT_ROT_ZERO_BITS[] = {
+static const u32 BINK_CFT_ROT_ZERO_BITS[] = {
     0x00000000,
 };
-const u32 BINK_CFT_INV_ROT_ONE_BITS[] = {
+static const u32 BINK_CFT_INV_ROT_ONE_BITS[] = {
     0x3f800000,
 };
-const u32 BINK_CFT_INV_ROT_ZERO_BITS[] = {
+static const u32 BINK_CFT_INV_ROT_ZERO_BITS[] = {
     0x00000000,
 };
-const u32 BINK_RFT_HALF_SCALE_BITS[] = {
+static const u32 BINK_RFT_HALF_SCALE_BITS[] = {
     0x3f000000,
 };
-const u32 BINK_RFT_INV_HALF_SCALE_BITS[] = {
+static const u32 BINK_RFT_INV_HALF_SCALE_BITS[] = {
     0x3f000000, 0x00000000, 0x00000000,
 };
 
