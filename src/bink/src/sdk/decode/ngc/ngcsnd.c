@@ -560,8 +560,9 @@ static s32 Lock(BINKSND PTR4* snd, u8 PTR4* PTR4* addr, u32 PTR4* len)
         writable *= chans;
         task->source = (u32)out;
         out_addr = out;
+        out += NGC_SOUND_STATE(snd)->channel_stride;
         right_task = NGC_TASK(state, NGC_SOUND_STATE(snd)->lock_index + NGC_SOUND_RIGHT_TASK_OFFSET);
-        right_task->source = (u32)(out + NGC_SOUND_STATE(snd)->channel_stride);
+        right_task->source = (u32)out;
 
         if (snd->chans == NGC_SOUND_STEREO_CHANNELS) {
             /* Bink decodes interleaved stereo; AX/ARAM playback uses split left/right channels. */
