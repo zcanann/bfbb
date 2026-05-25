@@ -235,6 +235,7 @@ static void makewt(s32 nw, s32 PTR4* ip, f32 PTR4* w)
     f32 x;
     f32 cos_nwh;
     f32 half_recip;
+    f64 half_secant;
 
     ip[1] = 1;
     ip[0] = nw;
@@ -248,8 +249,10 @@ static void makewt(s32 nw, s32 PTR4* ip, f32 PTR4* w)
         w[0] = FFT_TRIG_ONE;
 
         if (nwh > 3) {
-            w[2] = FFT_HALF_SECANT_SCALE / cosf(delta + delta);
-            w[3] = FFT_HALF_SECANT_SCALE / cosf(delta * FFT_SIX);
+            x = cosf(delta + delta);
+            half_secant = FFT_HALF_SECANT_SCALE;
+            w[2] = half_secant / x;
+            w[3] = half_secant / cosf(delta * FFT_SIX);
         }
 
         j = 4;
