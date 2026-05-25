@@ -137,7 +137,6 @@ typedef union BPLOSSYBLOCK
 
 typedef struct BPLOSSYREADTREE
 {
-    u8 pending[BP_TREE_NODES];
     u8 roots[BP_LOSSY_ROOT_NODES];
     u8 nodes[BP_BLOCK_COEFFS];
 } BPLOSSYREADTREE;
