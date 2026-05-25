@@ -424,10 +424,10 @@ void YUV_16_4x2_even(u32 count)
 
     dest0 = (u32 PTR4*)S.dest0;
     dest1 = (u32 PTR4*)S.dest1;
-    y0 = S.y0;
-    y1 = S.y1;
     u = S.u;
     v = S.v;
+    y0 = S.y0;
+    y1 = S.y1;
     pitch = S.pitch;
     base = S.base;
     tiledPitch = RGB_TILE_PITCH16(pitch);
@@ -530,10 +530,10 @@ void YUV_16x2_4x2_even(u32 count)
 
     dest0 = (u32 PTR4*)S.dest0;
     dest1 = (u32 PTR4*)S.dest1;
-    y0 = S.y0;
-    y1 = S.y1;
     u = S.u;
     v = S.v;
+    y0 = S.y0;
+    y1 = S.y1;
     pitch = S.pitch;
     base = S.base;
     tiledPitch = RGB_TILE_PITCH16(pitch);
@@ -1164,10 +1164,10 @@ void YUV_16a4_4x2_even(u32 count)
 
     dest0 = (u32 PTR4*)S.dest0;
     dest1 = (u32 PTR4*)S.dest1;
-    y0 = S.y0;
-    y1 = S.y1;
     u = S.u;
     v = S.v;
+    y0 = S.y0;
+    y1 = S.y1;
     a0 = S.a0;
     a1 = S.a1;
     pitch = S.pitch;
@@ -1278,10 +1278,10 @@ void YUV_16a4x2_4x2_even(u32 count)
 
     dest0 = (u32 PTR4*)S.dest0;
     dest1 = (u32 PTR4*)S.dest1;
-    y0 = S.y0;
-    y1 = S.y1;
     u = S.u;
     v = S.v;
+    y0 = S.y0;
+    y1 = S.y1;
     a0 = S.a0;
     a1 = S.a1;
     pitch = S.pitch;
