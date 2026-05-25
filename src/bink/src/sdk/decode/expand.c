@@ -648,7 +648,7 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
 
         if (remaining < -BUNDLE_REPEAT_THRESHOLD) {
             /* Match old-format repeat handling after the one-byte payload is decoded. */
-            memset(bundle->data, *bundle->data, -(prev_remaining + BUNDLE_REPEAT_EXTRA));
+            memset(bundle->data, *bundle->data, -(remaining + BUNDLE_REPEAT_EXTRA + 1));
         }
         huff8_table->state = state;
     } else {
