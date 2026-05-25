@@ -141,10 +141,9 @@ static void quanttos16chans2(s16 PTR4* dest, const f32 PTR4* src, f32 scale, u32
     if (remaining != BINKAC_SAMPLE_COUNT_UNDERFLOW) {
         stride = count;
         while (remaining != BINKAC_SAMPLE_COUNT_UNDERFLOW) {
-            s16 PTR4* out = dest;
+            s16 PTR4* out = dest++;
             s32 value = (s32)(src[0] * scale);
 
-            dest = out + 1;
             *out = clamp_to_s16(value);
             out = dest++;
             value = (s32)(src[stride] * scale);
@@ -308,6 +307,9 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
     f32 decoded[MAX_TRANSFORM];
     f32 PTR4* channel;
     u32 ch;
+    u32 i;
+    u32 coeff;
+    s32 q;
 
     vb.init = inptr;
     vb.cur = inptr;
@@ -323,25 +325,13 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
 
     channel = decoded;
     for (ch = 0; ch < chans; ++ch) {
-        u32 i;
+        VarBitsGet(coeff, u32, vb, FXPBITS);
+        channel[BINKAC_DC_COEFF_0] = fxptof(coeff);
 
-        {
-            u32 coeff;
-
-            VarBitsGet(coeff, u32, vb, FXPBITS);
-            channel[BINKAC_DC_COEFF_0] = fxptof(coeff);
-        }
-
-        {
-            u32 coeff;
-
-            VarBitsGet(coeff, u32, vb, FXPBITS);
-            channel[BINKAC_DC_COEFF_1] = fxptof(coeff);
-        }
+        VarBitsGet(coeff, u32, vb, FXPBITS);
+        channel[BINKAC_DC_COEFF_1] = fxptof(coeff);
 
         for (i = 0; i < num_bands; ++i) {
-            s32 q;
-
             VarBitsGet(q, s32, vb, BINKAC_THRESHOLD_BITS);
             thresholds[i] = Undecibel((f32)q * BINKAC_QUANT_INDEX_SCALE);
         }
