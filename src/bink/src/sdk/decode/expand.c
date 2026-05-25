@@ -603,7 +603,6 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
     u32 low;
     u32 value;
     s32 remaining;
-    s32 prev_remaining;
 
     if (bundle->cur_ptr != bundle->cur_dec) {
         return;
@@ -625,7 +624,6 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
         mask = GetBitsLen(peek);
         remaining = (s32)count;
         do {
-            prev_remaining = remaining;
             high = exp_read_huff8(bits, state, huff8_table);
             state = high;
             low = exp_read_huff4_mask(bits, peek, decode, values, mask);
@@ -636,12 +634,12 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
                 value |= BINK_SIGNED_BYTE_BIAS;
             }
             *dest++ = (u8)value;
-            remaining = prev_remaining - 1;
+            remaining--;
         } while (remaining > 0);
 
         if (remaining < -BUNDLE_REPEAT_THRESHOLD) {
             /* Repeat packets back-fill the whole bundle with the first decoded byte. */
-            memset(bundle->data, *bundle->data, -(prev_remaining + BUNDLE_REPEAT_EXTRA));
+            memset(bundle->data, *bundle->data, -(remaining + BUNDLE_REPEAT_EXTRA + 1));
         }
         huff8_table->state = state;
     } else {
