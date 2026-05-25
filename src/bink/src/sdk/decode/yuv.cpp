@@ -1675,8 +1675,8 @@ static u32 dounaligned32col(u32 count, s32 phase)
         S.dest0 += YUV_PACKED_WORD_BYTES;
         S.dest1 += YUV_PACKED_WORD_BYTES;
         if (((phase ^ 1) & 1) != 0) {
-            S.u++;
-            S.v++;
+            S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
+            S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
         }
         count--;
     } while (count != 0);
