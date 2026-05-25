@@ -603,7 +603,7 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
     roots[5] = lens[BP_COEFF3_INDEX] + BP_COEFF3_LEAF_BASE;
 
     cur = roots;
-    end = roots + BP_LOSSLESS_ROOT_NODES;
+    end = tree.nodes;
     do {
         if (maxbits == 0) {
             return;
@@ -1209,7 +1209,7 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     roots[3] = groups[0] + BP_TREE_BRANCH_NODE;
 
     cur = roots;
-    next_node = roots + BP_LOSSY_ROOT_NODES;
+    next_node = tree.nodes;
     mask = (u16)(1 << (maxbits - 1));
     i = 0;
     for (; maxbits != 0; maxbits = (maxbits - 1) & BP_BYTE_MASK) {
