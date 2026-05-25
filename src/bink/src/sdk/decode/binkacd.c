@@ -64,6 +64,11 @@
 #define BINKAC_RDFT_COEFF_BYTES(transform_size_half, coeffs) \
     ((transform_size_half) * sizeof(*(coeffs)) - BINKAC_RDFT_COEFF_TAIL_ADJUST)
 #define BINKAC_OVERLAP_BYTES(buffer_size) ((buffer_size) / BINKAC_TRANSFORM_HALF_DIVISOR)
+#define BINKAC_VARBITS_USED_BYTES(bits) \
+    (((u32)((u8 PTR4*)(bits).cur - (u8 PTR4*)(bits).init)) & FXP_VALUE_MASK)
+#define BINKAC_OVERLAP_SOURCE(samples, buffer_size, window_size) \
+    ((u8 PTR4*)(samples) + ((buffer_size) - (window_size)))
+#define BINKAC_INPUT_ADVANCE(ptr, bytes) ((u8 PTR4*)(ptr) + (bytes))
 
 /* RLE code lengths, in VQLENGTH sample groups, for sparse audio coefficients. */
 static u8 bink_rlelens_snd[MAXRLE] = {
@@ -358,7 +363,7 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
     }
 
     vb.bitlen = 0;
-    return ((u32)((u8 PTR4*)vb.cur - (u8 PTR4*)vb.init)) & FXP_VALUE_MASK;
+    return BINKAC_VARBITS_USED_BYTES(vb);
 }
 
 static inline f32 radfsqrt(f32 value)
@@ -509,7 +514,8 @@ void BinkAudioDecompress(HBINKAUDIODECOMP ba, void PTR4* PTR4* outptr, u32 PTR4*
     }
 
     /* Save the trailing window for the next frame's overlap blend. */
-    memcpy(ba->overlap, (u8 PTR4*)ba->samples + (ba->buffer_size - ba->window_size_in_bytes),
+    memcpy(ba->overlap,
+           BINKAC_OVERLAP_SOURCE(ba->samples, ba->buffer_size, ba->window_size_in_bytes),
            ba->window_size_in_bytes);
 
     if (outbytes != 0) {
@@ -523,7 +529,7 @@ void BinkAudioDecompress(HBINKAUDIODECOMP ba, void PTR4* PTR4* outptr, u32 PTR4*
 
     if (inoutptr != 0) {
         /* Return the compressed stream cursor after the bits consumed by Unquant. */
-        *inoutptr = (u8 PTR4*)inptr + used;
+        *inoutptr = BINKAC_INPUT_ADVANCE(inptr, used);
     }
 }
 
