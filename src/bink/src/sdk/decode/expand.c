@@ -185,11 +185,11 @@ typedef struct HUFF8TABLE
 
 typedef struct HUFF4MERGES
 {
-    u8 order[HUFF4_SYMBOLS];
     u8 merge01[HUFF4_MERGE_PAIR_SIZE];
     u8 merge23[HUFF4_MERGE_PAIR_SIZE];
     u8 merge45[HUFF4_MERGE_PAIR_SIZE];
     u8 merge67[HUFF4_MERGE_PAIR_SIZE];
+    u8 order[HUFF4_SYMBOLS];
 } HUFF4MERGES;
 
 typedef VARBITS EXPBITS;
