@@ -334,6 +334,44 @@ static inline u32 exp_read_huff4(EXPBITS PTR4* bits, u32 bits_to_peek,
     return value;
 }
 
+static inline u32 exp_read_huff4_mask(EXPBITS PTR4* bits, u32 bits_to_peek,
+                                      const u8 PTR4* decode, u8 PTR4* values,
+                                      u32 mask)
+{
+    u32 bitcount;
+    EXPBITSTYPE bitbuf;
+    EXPBITSTYPE word;
+    u8 code;
+    u32 used;
+    u32 value;
+
+    bitcount = bits->bitlen;
+    if (bitcount >= bits_to_peek) {
+        bitbuf = bits->bits & mask;
+        code = decode[bitbuf];
+        used = HUFF4_CODE_USED(code);
+        value = HUFF4_CODE_VALUE(code, values);
+        bits->bits >>= used;
+        bits->bitlen = bitcount - used;
+    } else {
+        word = *bits->cur;
+        bitbuf = (bits->bits | (word << bitcount)) & mask;
+        code = decode[bitbuf];
+        used = HUFF4_CODE_USED(code);
+        value = HUFF4_CODE_VALUE(code, values);
+        if (bitcount >= used) {
+            bits->bits >>= used;
+            bits->bitlen = bitcount - used;
+        } else {
+            bits->bits = word >> (used - bitcount);
+            bits->bitlen = bitcount + EXP_BITS_PER_WORD - used;
+            bits->cur++;
+        }
+    }
+
+    return value;
+}
+
 static inline u32 exp_read_huff8(EXPBITS PTR4* bits, u32 state, HUFF8TABLE PTR4* table)
 {
     return exp_read_huff4(bits, table->bits_to_peek[state], table->decode[state],
@@ -698,6 +736,7 @@ static void CheckReadHuff4PairBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits
     u8 PTR4* values;
     const u8 PTR4* decode;
     u32 peek;
+    u32 mask;
     u32 first;
     u32 second;
 
@@ -713,11 +752,12 @@ static void CheckReadHuff4PairBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits
         values = bundle->values;
         decode = bundle->decode;
         peek = bundle->bits_to_peek;
+        mask = GetBitsLen(peek);
         do {
             /* Pair bundles pack two Huff4 symbols into each output byte. */
             count--;
-            first = exp_read_huff4(bits, peek, decode, values);
-            second = exp_read_huff4(bits, peek, decode, values);
+            first = exp_read_huff4_mask(bits, peek, decode, values, mask);
+            second = exp_read_huff4_mask(bits, peek, decode, values, mask);
             *dest++ = (u8)(first | (second << HUFF4_USED_SHIFT));
         } while (count != 0);
     } else {
