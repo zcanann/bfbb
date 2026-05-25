@@ -1322,7 +1322,6 @@ handle_lossy_children:
 #pragma dont_inline on
 static void readlossy(void PTR4* out, BPBITSTREAM PTR4* bits, s32 limit)
 {
-    s32 reached_limit;
     s8 sample;
     u32 old_bitcount;
     u32 levels_remaining;
@@ -1402,9 +1401,7 @@ static void readlossy(void PTR4* out, BPBITSTREAM PTR4* bits, s32 limit)
                         delta = -bit_value;
                     }
                     dest[(u32)order[scan]] = sample + (s8)delta;
-                    reached_limit = sample_count == limit;
-                    sample_count = sample_count + 1;
-                    if (reached_limit) {
+                    if (sample_count++ == limit) {
                         goto done;
                     }
                 }
@@ -1475,9 +1472,7 @@ decode_node:
                             delta = bit_value;
                         }
                         dest[(u32)BP_READ_TREE_INDEX(node)] = (s8)delta;
-                        reached_limit = sample_count == limit;
-                        sample_count = sample_count + 1;
-                        if (reached_limit) {
+                        if (sample_count++ == limit) {
                             goto done;
                         }
                         *node_ptr = 0;
@@ -1523,9 +1518,7 @@ push_0:
                     delta = bit_value;
                 }
                 dest[code] = (s8)delta;
-                reached_limit = sample_count == limit;
-                sample_count = sample_count + 1;
-                if (reached_limit) {
+                if (sample_count++ == limit) {
                     goto done;
                 }
 after_0:
@@ -1566,9 +1559,7 @@ push_1:
                     delta = bit_value;
                 }
                 dest[code + BP_TREE_CHILD1_INDEX] = (s8)delta;
-                reached_limit = sample_count == limit;
-                sample_count = sample_count + 1;
-                if (reached_limit) {
+                if (sample_count++ == limit) {
                     goto done;
                 }
 after_1:
@@ -1608,9 +1599,7 @@ push_2:
                     delta = bit_value;
                 }
                 dest[code + BP_TREE_CHILD2_INDEX] = (s8)delta;
-                reached_limit = sample_count == limit;
-                sample_count = sample_count + 1;
-                if (reached_limit) {
+                if (sample_count++ == limit) {
                     goto done;
                 }
 after_2:
@@ -1644,9 +1633,7 @@ after_2:
                         delta = bit_value;
                     }
                     dest[code + BP_TREE_CHILD3_INDEX] = (s8)delta;
-                    reached_limit = sample_count == limit;
-                    sample_count = sample_count + 1;
-                    if (reached_limit) {
+                    if (sample_count++ == limit) {
                         goto done;
                     }
                 } else {
