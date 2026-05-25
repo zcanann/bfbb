@@ -23,7 +23,7 @@
 #define BP_TREE_CHILD1_BASE (BP_TREE_CHILD_COUNT * 1)
 #define BP_TREE_CHILD2_BASE (BP_TREE_CHILD_COUNT * 2)
 #define BP_TREE_CHILD3_BASE (BP_TREE_CHILD_COUNT * 3)
-#define BP_TREE_GROUP_INDEX(index) ((index) >> 2)
+#define BP_TREE_GROUP_INDEX(index) ((index) / BP_TREE_CHILD_COUNT)
 #define BP_LOSSLESS_TREE_GROUP_INDEX(index) (BP_TREE_GROUP_INDEX(index) - 1)
 #define BP_NEXT_TREE_GROUP(ptr) ((ptr) + BP_TREE_CHILD_COUNT)
 #define BP_FIRST_LOSSLESS_TREE_GROUP_INDEX BP_TREE_CHILD_COUNT
@@ -213,7 +213,7 @@ u32 LenBPLossless(s16 PTR4* vals)
     u32 bits;
     u32 maxbits;
     s32 i;
-    u32 len;
+    s32 len;
     s32 count;
     u8 PTR4* group_ptr;
     u8 PTR4* len_ptr;
