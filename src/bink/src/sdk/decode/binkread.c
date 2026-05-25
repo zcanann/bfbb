@@ -42,6 +42,7 @@ extern const char BINK_ERROR_OUT_OF_MEMORY[];
 #define BINK_FROM_SOUND_CALLBACK(callback) BINK_CONTAINER_OF(callback, BINK, snd_callback_buffer.callback)
 #define BINK_IO_CALLBACK(io) ((RADCB_CALLBACK PTR4*)&(io)->callback_control.callback)
 #define BINK_SOUND_CALLBACK(bink) (&(bink)->snd_callback_buffer.callback)
+#define BINK_HEADER_TRACK_SIZES(header) ((u32 PTR4*)((BINKHDR PTR4*)(header) + 1))
 #define BINK_NEXT_TRACK_FRAME(frame) \
     ((BINKTRACKFRAME PTR4*)((u8 PTR4*)(frame) + sizeof((frame)->size) + (frame)->size))
 #define BINK_SOUND_CALLBACK_PRIORITY 20
@@ -1135,7 +1136,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
             out->bio.ReadHeader(&out->bio, -1, out->frameoffsets,
                                 BINK_FRAME_OFFSETS_BYTES(out->InternalFrames, out->frameoffsets));
         } else {
-            out->tracksizes = (u32 PTR4*)((BINKHDR PTR4*)name + 1);
+            out->tracksizes = BINK_HEADER_TRACK_SIZES(name);
             out->tracktypes = out->tracksizes + out->NumTracks;
             out->trackIDs = out->tracktypes + out->NumTracks;
             out->frameoffsets = out->trackIDs + out->NumTracks;
