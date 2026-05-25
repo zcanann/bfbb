@@ -320,7 +320,7 @@ static void ReadKickoff(BINKIO PTR4* io)
     u32 remaining = NGC_BYTES_LEFT_TO_READ(io);
 
     if (status <= DVD_STATE_IGNORED) {
-        if (DVD_STATE_COVER_CLOSED <= status) {
+        if (status >= DVD_STATE_COVER_CLOSED) {
             goto read_error;
         }
         if (status == DVD_STATE_FATAL_ERROR) {
@@ -370,7 +370,7 @@ static u32 BinkFileIdle(BINKIO PTR4* io)
         if (status == DVD_STATE_CANCELED) {
             return io->DoingARead;
         }
-        if (status <= DVD_STATE_IGNORED) {
+        if (status < DVD_STATE_CANCELED) {
             goto read_error;
         }
         if (status == DVD_STATE_RETRY) {
