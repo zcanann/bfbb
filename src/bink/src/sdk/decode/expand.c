@@ -561,7 +561,7 @@ static void CheckReadRLEHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
                     /* Packed word stores four copies of the last byte for the run fill. */
                     fill = last | (last << BINK_BYTE_BITS);
                     value -= HUFF4_RLE_LITERAL_COUNT;
-                    run = ((u8 PTR4*)&BINK_HUFF4_RLE_LENGTHS_PACKED)[value];
+                    run = BINK_HUFF4_RLE_LENGTH(value);
                     count -= run;
                     fill |= fill << BINK_BUNDLE_MIN_WORD_BITS;
                     do {
