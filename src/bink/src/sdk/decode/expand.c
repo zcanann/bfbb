@@ -587,10 +587,10 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
             state = high;
             low = exp_read_huff4(bits, peek, decode, values);
             value = ((high & HUFF4_SYMBOL_MASK) << HUFF4_USED_SHIFT) | low;
-            if ((value & BINK_SIGNED_BYTE_BIAS) == 0) {
-                value |= BINK_SIGNED_BYTE_BIAS;
+            if ((value & BINK_SIGNED_BYTE_BIAS) != 0) {
+                value = -BINK_SIGNED_BYTE_BIAS - (value & BINK_SIGNED_BYTE_MASK);
             } else {
-                value = BINK_SIGNED_BYTE_BIAS - (value & BINK_SIGNED_BYTE_MASK);
+                value |= BINK_SIGNED_BYTE_BIAS;
             }
             *dest++ = (u8)value;
             remaining = prev_remaining - 1;
