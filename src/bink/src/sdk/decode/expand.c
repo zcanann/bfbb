@@ -618,7 +618,6 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
     u32 state;
     u32 low;
     s32 remaining;
-    s32 prev_remaining;
 
     if (bundle->cur_ptr != bundle->cur_dec) {
         return;
@@ -639,11 +638,10 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
         }
         remaining = (s32)count;
         do {
-            prev_remaining = remaining;
             state = exp_read_huff8(bits, state, huff8_table);
             low = exp_read_huff4(bits, peek, decode, values);
             *dest++ = (u8)(low | (state << HUFF4_USED_SHIFT));
-            remaining = prev_remaining - 1;
+            remaining--;
         } while (remaining > 0);
 
         if (remaining < -BUNDLE_REPEAT_THRESHOLD) {
