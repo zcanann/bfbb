@@ -510,11 +510,11 @@ static void CheckReadRLEHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
         bundle->cur_dec = bundle->data + count;
         if (exp_get_bit(bits) == 0) {
             /* Literal Huff4 values above 11 repeat the previous decoded symbol. */
+            values = bundle->values;
+            peek = (u8)bundle->bits_to_peek;
             dest = bundle->data;
             last = 0;
-            values = bundle->values;
             decode = bundle->decode;
-            peek = (u8)bundle->bits_to_peek;
             while (count != 0) {
                 value = exp_read_huff4(bits, peek, decode, values);
                 if (value > HUFF4_RLE_LITERAL_COUNT - 1) {
