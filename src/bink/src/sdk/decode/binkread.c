@@ -38,8 +38,8 @@ extern const char BINK_ERROR_OUT_OF_MEMORY[];
 #define BINK_FRAME_OFFSET(frameoffset) ((frameoffset) & BINKFRAMEOFFSETMASK)
 #define BINK_FRAME_KEY(frameoffset) ((frameoffset) & BINKFRAMEKEYFLAG)
 #define BINK_MEMBER_OFFSET(type, member) ((u32)&((type*)0)->member)
-#define BINK_SND_CALLBACK_OFFSET BINK_MEMBER_OFFSET(BINK, snd_callback_buffer.callback)
-#define BINK_FROM_SOUND_CALLBACK(callback) ((HBINK)((u8 PTR4*)(callback) - BINK_SND_CALLBACK_OFFSET))
+#define BINK_CONTAINER_OF(ptr, type, member) ((type PTR4*)((u8 PTR4*)(ptr) - BINK_MEMBER_OFFSET(type, member)))
+#define BINK_FROM_SOUND_CALLBACK(callback) BINK_CONTAINER_OF(callback, BINK, snd_callback_buffer.callback)
 #define BINK_IO_CALLBACK(io) ((RADCB_CALLBACK PTR4*)&(io)->callback_control.callback)
 #define BINK_SOUND_CALLBACK(bink) (&(bink)->snd_callback_buffer.callback)
 #define BINK_NEXT_TRACK_FRAME(frame) \
