@@ -698,17 +698,17 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
 {
     u32 code;
     s32 shift;
-    u32 level;
-    u32 maxlevel;
-    u32 highbit;
-    u32 value;
-    u32 mask;
+    u8 level;
+    u8 maxlevel;
+    s16 highbit;
+    s16 value;
+    u16 mask;
     u8 PTR4* cur;
     u8 PTR4* next;
     u8 PTR4* tree_end;
     u8 node;
     u8 kind;
-    u32 base;
+    u8 base;
     BPLOSSLESSREADTREE tree;
     BPLOSSLESSCOEFFS coeffs;
     BPBITSTREAM bitcopy;
