@@ -322,7 +322,7 @@ u32 LenBPLossless(s16 PTR4* vals)
     roots[4] = lens[BP_COEFF2_INDEX] + BP_COEFF2_LEAF_BASE;
     roots[5] = lens[BP_COEFF3_INDEX] + BP_COEFF3_LEAF_BASE;
     cur = roots;
-    end = roots + BP_LOSSLESS_ROOT_NODES;
+    end = tree.nodes;
 
     /* Expand pending group/branch/coeff nodes one bitplane level at a time. */
     for (; 1 < maxbits; maxbits = (maxbits - 1) & BP_BYTE_MASK) {
