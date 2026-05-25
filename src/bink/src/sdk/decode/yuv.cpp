@@ -1592,14 +1592,14 @@ static u32 dounaligned32colm(u32 count, s32 phase)
     do {
         yptr = (u8 PTR4*)S.y0;
         y = *yptr++;
-        S.y0 = (u32 PTR4*)yptr;
         pixel = RGB32_M(y);
         *(u32 PTR4*)S.dest0 = pixel;
+        S.y0 = (u32 PTR4*)yptr;
         yptr = (u8 PTR4*)S.y1;
         y = *yptr++;
-        S.y1 = (u32 PTR4*)yptr;
         pixel = RGB32_M(y);
         *(u32 PTR4*)S.dest1 = pixel;
+        S.y1 = (u32 PTR4*)yptr;
         S.dest0 += YUV_PACKED_WORD_BYTES;
         S.dest1 += YUV_PACKED_WORD_BYTES;
         remaining--;
