@@ -177,9 +177,10 @@ static u32 radreadngc(DVDFileInfo PTR4* file, u32 offset, void PTR4* dest, u32 s
                     return 0;
                 }
             } else if (status <= DVD_STATE_RETRY) {
-                if (status >= DVD_STATE_COVER_CLOSED) {
-                    return 0;
+                if (status < DVD_STATE_COVER_CLOSED) {
+                    continue;
                 }
+                return 0;
             }
 
         } while (1);
@@ -318,7 +319,15 @@ static void ReadKickoff(BINKIO PTR4* io)
     s32 status = DVDGetCommandBlockStatus(&NGC_DVD(io)->cb);
     u32 remaining = NGC_BYTES_LEFT_TO_READ(io);
 
-    if (NGC_DVD_STATUS_FAILED(status)) {
+    if (status <= DVD_STATE_IGNORED) {
+        if (DVD_STATE_COVER_CLOSED <= status) {
+            goto read_error;
+        }
+        if (status == DVD_STATE_FATAL_ERROR) {
+            goto read_error;
+        }
+    } else if (status == DVD_STATE_RETRY) {
+    read_error:
         io->ReadError = 1;
         return;
     }
