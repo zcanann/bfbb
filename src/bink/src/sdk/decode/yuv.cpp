@@ -3821,10 +3821,10 @@ static void dounalignedYUY2row2w(u32 phase, u32 count)
 
     do {
         u = *(u8 PTR4*)S.u;
-        S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
         y0 = *(u8 PTR4*)S.y0;
         v = *(u8 PTR4*)S.v;
         S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+        S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
         pixel = YUY2_COLOR_PAIR(y0, u, y0, v);
         ((u32 PTR4*)S.dest0)[0] = pixel;
         y1 = *((u8 PTR4*)S.y0 + 1);
@@ -3849,10 +3849,10 @@ static u32 dounalignedYUY2col2w(u32 count, s32 phase)
     do {
         remaining -= 2;
         u = *(u8 PTR4*)S.u;
-        S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
         y0 = *(u8 PTR4*)S.y0;
         v = *(u8 PTR4*)S.v;
         S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+        S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
         pixel = YUY2_COLOR_PAIR(y0, u, y0, v);
         ((u32 PTR4*)S.dest0)[0] = pixel;
         chroma = pixel & YUY2_CHROMA_MASK;
