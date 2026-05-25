@@ -651,10 +651,10 @@ void YUV_16m_4x2(u32 count)
     do {
         u32 yv0 = *y0++;
         u32 yv1 = *y1++;
-        u32 a = (u16)table[RGB_WORD_BYTE3(yv0)];
-        u32 b = (u16)table[RGB_WORD_BYTE2(yv0)];
-        u32 c = (u16)table[RGB_WORD_BYTE1(yv0)];
-        u32 d = (u16)table[RGB_WORD_BYTE0(yv0)];
+        u16 a = (u16)table[RGB_WORD_BYTE3(yv0)];
+        u16 b = (u16)table[RGB_WORD_BYTE2(yv0)];
+        u16 c = (u16)table[RGB_WORD_BYTE1(yv0)];
+        u16 d = (u16)table[RGB_WORD_BYTE0(yv0)];
 
         dest0[0] = (a << 16) | b;
         dest0[1] = (c << 16) | d;
@@ -708,10 +708,10 @@ void YUV_16mx2_4x2(u32 count)
     do {
         u32 yv0 = *y0++;
         u32 yv1 = *y1++;
-        u32 a = (u16)table[RGB_WORD_BYTE3(yv0)];
-        u32 b = (u16)table[RGB_WORD_BYTE2(yv0)];
-        u32 c = (u16)table[RGB_WORD_BYTE1(yv0)];
-        u32 d = (u16)table[RGB_WORD_BYTE0(yv0)];
+        u16 a = (u16)table[RGB_WORD_BYTE3(yv0)];
+        u16 b = (u16)table[RGB_WORD_BYTE2(yv0)];
+        u16 c = (u16)table[RGB_WORD_BYTE1(yv0)];
+        u16 d = (u16)table[RGB_WORD_BYTE0(yv0)];
 
         dest0[0] = (a << 16) | a;
         dest0[1] = (b << 16) | b;
