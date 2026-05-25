@@ -1384,13 +1384,11 @@ static void cftexp2(s32 n, f32 PTR4* a, s32 nw, f32 PTR4* w)
     s32 m;
     s32 mh;
     s32 h;
-    s32 next;
 
     h = n >> 1;
     m = n >> 2;
     while (m > 128) {
         k = m;
-        next = m >> 2;
         if (k < h) {
             mh = k >> 1;
             do {
@@ -1405,7 +1403,7 @@ static void cftexp2(s32 n, f32 PTR4* a, s32 nw, f32 PTR4* w)
                 k <<= 2;
             } while (k < h);
         }
-        m = next;
+        m >>= 2;
     }
 
     k = m;
