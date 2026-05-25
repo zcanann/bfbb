@@ -91,7 +91,10 @@ u32 RGBshift[RGB_SHIFT_TABLE_SIZE] RAD_ATTRIBUTE_ALIGN(NGC_TABLE_ALIGNMENT) = { 
 #define NGC_CALLBACK_WORKING(io) (NGC_DATA(io)->callback_working)
 #define NGC_READ_START_TIME(io) (NGC_DATA(io)->read_start_time)
 #define NGC_OWNER(io) (NGC_DATA(io)->owner)
-#define NGC_DATA_FROM_DVD(fileInfo) ((NGCBinkIOData PTR4*)(fileInfo))
+#define NGC_MEMBER_OFFSET(type, member) ((u32)&((type*)0)->member)
+#define NGC_CONTAINER_OF(ptr, type, member) \
+    ((type PTR4*)((u8 PTR4*)(ptr) - NGC_MEMBER_OFFSET(type, member)))
+#define NGC_DATA_FROM_DVD(fileInfo) NGC_CONTAINER_OF(fileInfo, NGCBinkIOData, file)
 #define NGC_VOLATILE_U32(field) (*(volatile u32 PTR4*)&(field))
 
 #define NGC_DVD_ALIGNMENT DVD_MIN_TRANSFER_SIZE
