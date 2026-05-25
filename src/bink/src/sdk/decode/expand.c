@@ -578,7 +578,7 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
         state = huff8_table->state;
         if (exp_get_bit(bits) != 0) {
             /* Negative remaining marks the old-format repeat packet variant. */
-            count = -(count + BUNDLE_REPEAT_EXTRA);
+            count = -count - BUNDLE_REPEAT_EXTRA;
         }
         remaining = (s32)count;
         do {
