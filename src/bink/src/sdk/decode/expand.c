@@ -88,6 +88,9 @@ typedef BITSTYPE EXPBITSTYPE;
      ((BINK_BLOCK_ROWS(rows) * (pitch) * (bits)) >> BINK_BLOCK_SHIFT))
 #define BINK_BUNDLE_ALIGN_SIZE(size) (((size) + BINK_WORD_ALIGN_MASK) & ~BINK_WORD_ALIGN_MASK)
 #define BINK_BUNDLE_EMPTY_CUR(bundle) ((bundle)->data + EXP_WORD_BYTES)
+#define BINK_BUNDLE_CHUNK_NEXT(bundle) ((u32 PTR4*)((u8 PTR4*)(bundle) + *(bundle)))
+#define BINK_BUNDLE_PAYLOAD_NEXT(bundle) \
+    ((u32 PTR4*)((u8 PTR4*)(bundle) + (bundle)[-1] - EXP_WORD_BYTES))
 #define BINK_MARK_WORK_BLOCK(work_row, work_col) ((work_row)[(work_col) >> BINK_CHROMA_SHIFT] = 1)
 #define BINK_MOTION_SOURCE(old, pitch, mx, my) ((old) + (my) * (s32)(pitch) + (mx))
 #define BINK_DCT_PATTERN_SCAN(pattern) (patterns + (pattern) * BINK_BLOCK_PIXELS)
@@ -1265,7 +1268,7 @@ void ExpandBink(u8 PTR4* yout,
                         pitch, bundles + 1, key_frame, work, BINK_LUMA_PLANE_SCALE, table,
                         yflags);
         }
-        bundles = (u32 PTR4*)((u8 PTR4*)bundles + *bundles);
+        bundles = BINK_BUNDLE_CHUNK_NEXT(bundles);
     }
 
     if ((yflags & BINKOLDFRAMEFORMAT) == 0) {
@@ -1275,7 +1278,7 @@ void ExpandBink(u8 PTR4* yout,
     next = ExpandPlane(yout, yprev, BINK_BLOCK_ROUND(width), BINK_BLOCK_ROUND(height),
                        pitch, bundles, key_frame, work, BINK_LUMA_PLANE_SCALE, table, yflags);
     if ((yflags & BINKOLDFRAMEFORMAT) == 0) {
-        next = (u32 PTR4*)((u8 PTR4*)bundles + bundles[-1] - EXP_WORD_BYTES);
+        next = BINK_BUNDLE_PAYLOAD_NEXT(bundles);
     }
 
     if ((yflags & BINKGRAYSCALE) == 0) {
