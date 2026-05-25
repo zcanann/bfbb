@@ -574,12 +574,12 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
         bundle->cur_ptr = dest;
         bundle->cur_dec = dest + count;
         decode = bundle->decode;
+        values = bundle->values;
         state = huff8_table->state;
         if (exp_get_bit(bits) != 0) {
             /* Negative remaining marks the old-format repeat packet variant. */
             count = -(count + BUNDLE_REPEAT_EXTRA);
         }
-        values = bundle->values;
         remaining = (s32)count;
         do {
             prev_remaining = remaining;
@@ -631,12 +631,12 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
         bundle->cur_ptr = dest;
         bundle->cur_dec = dest + count;
         decode = bundle->decode;
+        values = bundle->values;
         state = huff8_table->state;
         if (exp_get_bit(bits) != 0) {
             /* New-format Huff8 repeat packets keep the byte unsigned. */
             count = -count - BUNDLE_REPEAT_EXTRA;
         }
-        values = bundle->values;
         remaining = (s32)count;
         do {
             prev_remaining = remaining;
