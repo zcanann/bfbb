@@ -101,7 +101,7 @@ typedef BITSTYPE EXPBITSTYPE;
 #define BINK_LINEAR_BLOCK_ROW_WORD(ptr, row, word) \
     (*(u32 PTR4*)((ptr) + (row) * BINK_BLOCK_SIDE + (word) * BINK_PLANE_WORD_BYTES))
 #define BINK_HUFF4_RLE_LENGTH(value) \
-    ((u8 PTR4*)&BINK_HUFF4_RLE_LENGTHS_PACKED)[(value) - HUFF4_RLE_LITERAL_COUNT]
+    ((u8 PTR4*)&BINK_HUFF4_RLE_LENGTHS_PACKED)[(value)]
 
 enum BINKBLOCKTYPE
 {
