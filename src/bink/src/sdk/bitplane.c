@@ -1350,9 +1350,13 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 limit)
     memset(dest, 0, BP_BLOCK_COEFFS);
 
     /* Lossy blocks store max level minus one in the stream header. */
-    word = bitbuf;
     old_bitcount = bitcount;
-    if (bitcount < BP_LOSSY_LEVEL_BITS) {
+    if (bitcount >= BP_LOSSY_LEVEL_BITS) {
+        word = bitbuf;
+        bitcount = bitcount - BP_LOSSY_LEVEL_BITS;
+        bitbuf = bitbuf >> BP_LOSSY_LEVEL_BITS;
+        code = word & BP_BYTE_MASK;
+    } else {
         bit_value = BP_LOSSY_LEVEL_BITS - bitcount;
         code = bitbuf & BP_BYTE_MASK;
         word = *words;
@@ -1360,10 +1364,6 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 limit)
         words = words + 1;
         bitbuf = word >> bit_value;
         code = code | word << old_bitcount;
-    } else {
-        bitcount = bitcount - BP_LOSSY_LEVEL_BITS;
-        bitbuf = bitbuf >> BP_LOSSY_LEVEL_BITS;
-        code = word & BP_BYTE_MASK;
     }
     levels_remaining = (code & BP_LOSSY_LEVEL_MASK) + 1;
     tree.roots[0] = BP_READ_TREE_GROUP1_ROOT;
