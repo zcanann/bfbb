@@ -807,11 +807,7 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
             }
 
             bit_count = exp_get_bits(bits, HUFF4_USED_SHIFT);
-            if (bit_count == 0) {
-                radmemset16(dest, (u16)current, group_count * sizeof(*dest));
-                dest += group_count;
-                remaining -= group_count;
-            } else {
+            if (bit_count != 0) {
                 remaining -= group_count;
                 while (group_count != 0) {
                     group_count--;
@@ -823,6 +819,10 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
                     current = current + delta;
                     *dest++ = (s16)current;
                 }
+            } else {
+                radmemset16(dest, (u16)current, group_count * sizeof(*dest));
+                dest += group_count;
+                remaining -= group_count;
             }
         }
     } else {
