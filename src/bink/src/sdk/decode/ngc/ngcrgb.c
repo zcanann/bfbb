@@ -51,6 +51,7 @@
 #define RGB565_A4(y, r, g, b, a) (RGB565((y), (r), (g), (b)) | (u16)clamp_a4[(a)])
 #define RGB565_A4_BIASED(cr, cg, cb, ca, y, r, g, b, a)                                                               \
     ((u16)(cb)[(y) + (r)] | (u16)(cr)[(y) + (b)] | (u16)(cg)[(y) + (g)] | (u16)(ca)[(a)])
+#define RGB32_M(y) (mono32[(y)])
 
 // Core kernels consume two luma rows and one chroma row, producing a 4x2 tile
 // chunk. The monochrome paths use mono16/mono32 directly, while color paths
@@ -301,20 +302,20 @@ void YUV_32m_4x2(u32 count)
     do {
         u32 yv0 = *y0++;
         u32 yv1 = *y1++;
-        u32 a = mono32[RGB_WORD_BYTE3(yv0)];
-        u32 b = mono32[RGB_WORD_BYTE2(yv0)];
-        u32 c = mono32[RGB_WORD_BYTE1(yv0)];
-        u32 d = mono32[RGB_WORD_BYTE0(yv0)];
+        u32 a = RGB32_M(RGB_WORD_BYTE3(yv0));
+        u32 b = RGB32_M(RGB_WORD_BYTE2(yv0));
+        u32 c = RGB32_M(RGB_WORD_BYTE1(yv0));
+        u32 d = RGB32_M(RGB_WORD_BYTE0(yv0));
 
         dest0[0] = (a & RGB_WORD_HI_MASK) | (b >> 16);
         dest0[1] = (c & RGB_WORD_HI_MASK) | (d >> 16);
         dest0[8] = (a << 16) | (b & RGB_WORD_LO_MASK);
         dest0[9] = (c << 16) | (d & RGB_WORD_LO_MASK);
 
-        a = mono32[RGB_WORD_BYTE3(yv1)];
-        b = mono32[RGB_WORD_BYTE2(yv1)];
-        c = mono32[RGB_WORD_BYTE1(yv1)];
-        d = mono32[RGB_WORD_BYTE0(yv1)];
+        a = RGB32_M(RGB_WORD_BYTE3(yv1));
+        b = RGB32_M(RGB_WORD_BYTE2(yv1));
+        c = RGB32_M(RGB_WORD_BYTE1(yv1));
+        d = RGB32_M(RGB_WORD_BYTE0(yv1));
         dest1[0] = (a & RGB_WORD_HI_MASK) | (b >> 16);
         dest1[1] = (c & RGB_WORD_HI_MASK) | (d >> 16);
         dest1[8] = (a << 16) | (b & RGB_WORD_LO_MASK);
@@ -361,10 +362,10 @@ void YUV_32mx2_4x2(u32 count)
     do {
         u32 yv0 = *y0++;
         u32 yv1 = *y1++;
-        u32 a = mono32[RGB_WORD_BYTE3(yv0)];
-        u32 b = mono32[RGB_WORD_BYTE2(yv0)];
-        u32 c = mono32[RGB_WORD_BYTE1(yv0)];
-        u32 d = mono32[RGB_WORD_BYTE0(yv0)];
+        u32 a = RGB32_M(RGB_WORD_BYTE3(yv0));
+        u32 b = RGB32_M(RGB_WORD_BYTE2(yv0));
+        u32 c = RGB32_M(RGB_WORD_BYTE1(yv0));
+        u32 d = RGB32_M(RGB_WORD_BYTE0(yv0));
 
         dest0[0] = (a & RGB_WORD_HI_MASK) | (a >> 16);
         dest0[1] = (b & RGB_WORD_HI_MASK) | (b >> 16);
@@ -375,10 +376,10 @@ void YUV_32mx2_4x2(u32 count)
         dest0[24] = (c << 16) | (c & RGB_WORD_LO_MASK);
         dest0[25] = (d << 16) | (d & RGB_WORD_LO_MASK);
 
-        a = mono32[RGB_WORD_BYTE3(yv1)];
-        b = mono32[RGB_WORD_BYTE2(yv1)];
-        c = mono32[RGB_WORD_BYTE1(yv1)];
-        d = mono32[RGB_WORD_BYTE0(yv1)];
+        a = RGB32_M(RGB_WORD_BYTE3(yv1));
+        b = RGB32_M(RGB_WORD_BYTE2(yv1));
+        c = RGB32_M(RGB_WORD_BYTE1(yv1));
+        d = RGB32_M(RGB_WORD_BYTE0(yv1));
         dest1[0] = (a & RGB_WORD_HI_MASK) | (a >> 16);
         dest1[1] = (b & RGB_WORD_HI_MASK) | (b >> 16);
         dest1[8] = (a << 16) | (a & RGB_WORD_LO_MASK);
@@ -1020,10 +1021,10 @@ void YUV_32am_4x2(u32 count)
         u32 av0 = *a0++;
         u32 yv1 = *y1++;
         u32 av1 = *a1++;
-        u32 p0 = mono32[RGB_WORD_BYTE3(yv0)];
-        u32 p1 = mono32[RGB_WORD_BYTE2(yv0)];
-        u32 p2 = mono32[RGB_WORD_BYTE1(yv0)];
-        u32 p3 = mono32[RGB_WORD_BYTE0(yv0)];
+        u32 p0 = RGB32_M(RGB_WORD_BYTE3(yv0));
+        u32 p1 = RGB32_M(RGB_WORD_BYTE2(yv0));
+        u32 p2 = RGB32_M(RGB_WORD_BYTE1(yv0));
+        u32 p3 = RGB32_M(RGB_WORD_BYTE0(yv0));
 
         dest0[0] = (av0 & RGB_ALPHA0_MASK) | (p0 & RGB_WORD_HI_MASK) | (p1 >> 16) | ((av0 >> 8) & RGB_ALPHA2_MASK);
         dest0[1] =
@@ -1031,10 +1032,10 @@ void YUV_32am_4x2(u32 count)
         dest0[8] = (p0 << 16) | (p1 & RGB_WORD_LO_MASK);
         dest0[9] = (p2 << 16) | (p3 & RGB_WORD_LO_MASK);
 
-        p0 = mono32[RGB_WORD_BYTE3(yv1)];
-        p1 = mono32[RGB_WORD_BYTE2(yv1)];
-        p2 = mono32[RGB_WORD_BYTE1(yv1)];
-        p3 = mono32[RGB_WORD_BYTE0(yv1)];
+        p0 = RGB32_M(RGB_WORD_BYTE3(yv1));
+        p1 = RGB32_M(RGB_WORD_BYTE2(yv1));
+        p2 = RGB32_M(RGB_WORD_BYTE1(yv1));
+        p3 = RGB32_M(RGB_WORD_BYTE0(yv1));
         dest1[0] = (av1 & RGB_ALPHA0_MASK) | (p0 & RGB_WORD_HI_MASK) | (p1 >> 16) | ((av1 >> 8) & RGB_ALPHA2_MASK);
         dest1[1] =
             ((av1 & RGB_ALPHA2_MASK) << 16) | (p2 & RGB_WORD_HI_MASK) | (p3 >> 16) | (RGB_WORD_BYTE0(av1) << 8);
@@ -1090,10 +1091,10 @@ void YUV_32amx2_4x2(u32 count)
         u32 av0 = *a0++;
         u32 yv1 = *y1++;
         u32 av1 = *a1++;
-        u32 p0 = mono32[RGB_WORD_BYTE3(yv0)];
-        u32 p1 = mono32[RGB_WORD_BYTE2(yv0)];
-        u32 p2 = mono32[RGB_WORD_BYTE1(yv0)];
-        u32 p3 = mono32[RGB_WORD_BYTE0(yv0)];
+        u32 p0 = RGB32_M(RGB_WORD_BYTE3(yv0));
+        u32 p1 = RGB32_M(RGB_WORD_BYTE2(yv0));
+        u32 p2 = RGB32_M(RGB_WORD_BYTE1(yv0));
+        u32 p3 = RGB32_M(RGB_WORD_BYTE0(yv0));
         u32 a_hi0 = av0 & RGB_ALPHA0_MASK;
         u32 a_hi1 = RGB_WORD_BYTE2(av0) << 24;
         u32 a_lo0 = RGB_WORD_BYTE3(av0) << 8;
@@ -1108,10 +1109,10 @@ void YUV_32amx2_4x2(u32 count)
         dest0[24] = (p2 << 16) | (p2 & RGB_WORD_LO_MASK);
         dest0[25] = (p3 << 16) | (p3 & RGB_WORD_LO_MASK);
 
-        p0 = mono32[RGB_WORD_BYTE3(yv1)];
-        p1 = mono32[RGB_WORD_BYTE2(yv1)];
-        p2 = mono32[RGB_WORD_BYTE1(yv1)];
-        p3 = mono32[RGB_WORD_BYTE0(yv1)];
+        p0 = RGB32_M(RGB_WORD_BYTE3(yv1));
+        p1 = RGB32_M(RGB_WORD_BYTE2(yv1));
+        p2 = RGB32_M(RGB_WORD_BYTE1(yv1));
+        p3 = RGB32_M(RGB_WORD_BYTE0(yv1));
         a_hi0 = av1 & RGB_ALPHA0_MASK;
         a_hi1 = RGB_WORD_BYTE2(av1) << 24;
         a_lo0 = RGB_WORD_BYTE3(av1) << 8;
