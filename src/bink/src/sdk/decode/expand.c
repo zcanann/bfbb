@@ -776,10 +776,10 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     u32 count;
     u32 remaining;
     u32 group_count;
-    u32 bit_count;
-    u32 current;
-    u32 value;
-    s32 delta;
+    u8 bit_count;
+    u16 current;
+    u16 value;
+    s16 delta;
     s16 PTR4* dest;
 
     if (bundle->cur_ptr != bundle->cur_dec) {
@@ -790,12 +790,12 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     if (count != 0) {
         dest = (s16 PTR4*)bundle->data;
         if (bundle->initial_value != BINK_BUNDLE_INITIAL_VALUE_NONE) {
-            current = exp_get_bits(bits, bundle->bit_size - 1) & EXP_U16_MASK;
+            current = exp_get_bits(bits, bundle->bit_size - 1);
             if (current != 0 && exp_get_bit(bits) != 0) {
-                current = -current & EXP_U16_MASK;
+                current = -current;
             }
         } else {
-            current = exp_get_bits(bits, bundle->bit_size) & EXP_U16_MASK;
+            current = exp_get_bits(bits, bundle->bit_size);
         }
 
         *dest++ = (s16)current;
@@ -817,12 +817,12 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
                 remaining -= group_count;
                 while (group_count != 0) {
                     group_count--;
-                    value = exp_get_bits(bits, bit_count) & EXP_U16_MASK;
-                    delta = (s32)(s16)value;
+                    value = exp_get_bits(bits, bit_count);
+                    delta = (s16)value;
                     if (delta != 0 && exp_get_bit(bits) != 0) {
-                        delta = (s32)(s16)-value;
+                        delta = (s16)-value;
                     }
-                    current = (current + delta) & EXP_U16_MASK;
+                    current = current + delta;
                     *dest++ = (s16)current;
                 }
             }
