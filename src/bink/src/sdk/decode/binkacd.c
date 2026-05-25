@@ -81,6 +81,14 @@ static u32 bink_bandtopfreq[TOTBANDS] = {
     2000, 2320, 2700, 3150, 3700, 4400, 5300, 6400, 7700, 9500, 12000, 15500
 };
 
+static const f32 BINKAC_SAMPLE_ZERO = 0.0f;
+static const f32 BINKAC_QUANT_INDEX_SCALE_CONST = BINKAC_QUANT_INDEX_SCALE;
+static const f32 BINKAC_QUANT_POWER_SCALE_CONST = BINKAC_QUANT_POWER_SCALE;
+static const f64 BINKAC_QUANT_POWER_BASE_CONST = BINKAC_QUANT_POWER_BASE;
+static const f32 BINKAC_RSQRT_ZERO = 0.0f;
+static const f64 BINKAC_RSQRT_NEWTON_HALF_CONST = BINKAC_RSQRT_NEWTON_HALF;
+static const f64 BINKAC_RSQRT_NEWTON_THREE_CONST = BINKAC_RSQRT_NEWTON_THREE;
+
 /* Reciprocals used by fxptof for the 29-bit packed fixed-point coefficients. */
 static f64 bink_invertbins[BINKAC_INVERT_BINS] = {
     1.0 / (1 << 23), 1.0 / (1 << 22), 1.0 / (1 << 21), 1.0 / (1 << 20),
@@ -224,7 +232,7 @@ static void read_rle_samples(f32 PTR4* samples, u32 transform_size, VARBITS PTR4
 {
     u32 i;
     u32 band = 0;
-    f32 scale = 0.0f;
+    f32 scale = BINKAC_SAMPLE_ZERO;
     f32 PTR4* out;
 
     while (BINKAC_BAND_SAMPLE_LIMIT(bands, band) < BINKAC_FIRST_COEFF) {
@@ -279,7 +287,7 @@ static void read_rle_samples(f32 PTR4* samples, u32 transform_size, VARBITS PTR4
                         value = (value ^ sign) - sign;
                         *out = value * scale;
                     } else {
-                        *out = 0.0f;
+                        *out = BINKAC_SAMPLE_ZERO;
                     }
                 }
 
@@ -294,7 +302,7 @@ f64 pow(f64 x, f64 y);
 
 static inline f32 Undecibel(f32 d)
 {
-    return (f32)pow(BINKAC_QUANT_POWER_BASE, d * BINKAC_QUANT_POWER_SCALE);
+    return (f32)pow(BINKAC_QUANT_POWER_BASE_CONST, d * BINKAC_QUANT_POWER_SCALE_CONST);
 }
 
 static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
@@ -333,7 +341,7 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
 
         for (i = 0; i < num_bands; ++i) {
             VarBitsGet(q, s32, vb, BINKAC_THRESHOLD_BITS);
-            thresholds[i] = Undecibel((f32)q * BINKAC_QUANT_INDEX_SCALE);
+            thresholds[i] = Undecibel((f32)q * BINKAC_QUANT_INDEX_SCALE_CONST);
         }
 
         read_rle_samples(channel, transform_size, &vb, thresholds, bands);
@@ -358,21 +366,21 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
 
 static inline f32 radfsqrt(f32 value)
 {
-    if (value > 0.0f) {
+    if (value > BINKAC_RSQRT_ZERO) {
         f64 guess;
         f64 square;
 
         __asm__ volatile("frsqrte %0,%1" : "=f"(square) : "f"(value));
         guess = square;
         square = guess * guess;
-        guess = BINKAC_RSQRT_NEWTON_HALF * guess *
-                (BINKAC_RSQRT_NEWTON_THREE - square * value);
+        guess = BINKAC_RSQRT_NEWTON_HALF_CONST * guess *
+                (BINKAC_RSQRT_NEWTON_THREE_CONST - square * value);
         square = guess * guess;
-        guess = BINKAC_RSQRT_NEWTON_HALF * guess *
-                (BINKAC_RSQRT_NEWTON_THREE - square * value);
+        guess = BINKAC_RSQRT_NEWTON_HALF_CONST * guess *
+                (BINKAC_RSQRT_NEWTON_THREE_CONST - square * value);
         square = guess * guess;
-        guess = BINKAC_RSQRT_NEWTON_HALF * guess *
-                (BINKAC_RSQRT_NEWTON_THREE - square * value);
+        guess = BINKAC_RSQRT_NEWTON_HALF_CONST * guess *
+                (BINKAC_RSQRT_NEWTON_THREE_CONST - square * value);
         return value * guess;
     }
 
