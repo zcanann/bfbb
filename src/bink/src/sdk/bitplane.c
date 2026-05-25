@@ -129,6 +129,8 @@ typedef union BPLOSSLESSCOEFFS
     u32 words[BP_LOSSY_OUTPUT_COEFFS];
 } BPLOSSLESSCOEFFS;
 
+#define BP_COEFF_PAIR_AT(values, index) (*(BPCOEFFPAIR PTR4*)((values) + (index)))
+
 typedef union BPLOSSYBLOCK
 {
     s8 bytes[BP_BLOCK_COEFFS];
@@ -1019,7 +1021,7 @@ after_lossless_final3:
     /* Scatter scan-order coefficients back into the 8x8 block. */
     out[1] = coeffs.values[1];
 #define COPY_BP_COEFF_PAIR(out_index, coeff_index)                                                                      \
-    (*(BPCOEFFPAIR PTR4*)(out + (out_index)) = coeffs.pairs[(coeff_index) / 2])
+    (BP_COEFF_PAIR_AT(out, out_index) = coeffs.pairs[(coeff_index) / 2])
     COPY_BP_COEFF_PAIR(2, 4);
     COPY_BP_COEFF_PAIR(4, 8);
     COPY_BP_COEFF_PAIR(6, 12);
