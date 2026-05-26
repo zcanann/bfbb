@@ -1456,10 +1456,7 @@ decode_node:
                     tree_end = tree_end + BP_TREE_ADDED_CHILD_COUNT;
                     goto node_done;
                 }
-                if (node_kind < BP_READ_TREE_BRANCH_NODE) {
-                    if ((node & BP_READ_TREE_KIND_MASK) != BP_READ_TREE_HIGH_NODE) {
-                        goto next_node;
-                    }
+                if (node_kind == BP_READ_TREE_HIGH_NODE) {
                     *node_ptr = BP_READ_TREE_GROUP_FROM_INDEX(BP_READ_TREE_INDEX(node));
                 } else {
                     if (node_kind != BP_READ_TREE_BRANCH_NODE) {
