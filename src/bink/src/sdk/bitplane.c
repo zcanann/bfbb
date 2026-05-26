@@ -515,9 +515,8 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
     i = BP_FIRST_LOSSLESS_TREE_GROUP_INDEX;
     count = BP_TREE_LAST_GROUP;
     group_ptr = lens + BP_FIRST_LOSSLESS_TREE_GROUP_END_INDEX;
-    len_ptr = lens;
+    len_ptr = lens + BP_FIRST_LOSSLESS_TREE_GROUP_INDEX;
     do {
-        len_ptr = BP_NEXT_TREE_GROUP(len_ptr);
         lenbits = *len_ptr;
         if (*len_ptr < len_ptr[1]) {
             lenbits = len_ptr[1];
@@ -530,6 +529,7 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
         }
         groups[BP_LOSSLESS_TREE_GROUP_INDEX(i)] = (u8)lenbits;
         group_ptr = BP_NEXT_TREE_GROUP(group_ptr);
+        len_ptr = BP_NEXT_TREE_GROUP(len_ptr);
         i += BP_TREE_CHILD_COUNT;
         count--;
     } while (count != 0);
