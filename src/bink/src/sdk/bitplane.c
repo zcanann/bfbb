@@ -1248,9 +1248,9 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
 next_lossy_node:
                     cur++;
                 } else {
-                    count = (node_entry & BP_BYTE_MASK) != maxbits;
-                    PUT_BP_BIT(bits, !count);
-                    if (count) {
+                    count = (node_entry & BP_BYTE_MASK) == maxbits;
+                    PUT_BP_BIT(bits, count);
+                    if (!count) {
                         goto next_lossy_node;
                     }
 
