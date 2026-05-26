@@ -1338,14 +1338,12 @@ static void cftexp1(s32 n, f32 PTR4* a, s32 nw, f32 PTR4* w)
     s32 j;
     s32 k;
     s32 m;
-    s32 next_m;
     s32 mh;
 
     m = n >> 2;
     while (m > 128) {
         k = m;
         mh = m >> 1;
-        next_m = m >> 2;
         if (k < n) {
             do {
                 for (j = k - m; j < n; j += k << 2) {
@@ -1357,7 +1355,7 @@ static void cftexp1(s32 n, f32 PTR4* a, s32 nw, f32 PTR4* w)
             } while (k < n);
         }
         cftmdl1(m, &a[n - m], &w[nw - mh]);
-        m = next_m;
+        m >>= 2;
     }
 
     k = m;
@@ -1384,7 +1382,6 @@ static void cftexp2(s32 n, f32 PTR4* a, s32 nw, f32 PTR4* w)
     s32 j;
     s32 k;
     s32 m;
-    s32 next_m;
     s32 mh;
     s32 h;
 
@@ -1392,7 +1389,6 @@ static void cftexp2(s32 n, f32 PTR4* a, s32 nw, f32 PTR4* w)
     m = n >> 2;
     while (m > 128) {
         k = m;
-        next_m = m >> 2;
         if (k < h) {
             mh = k >> 1;
             do {
@@ -1407,7 +1403,7 @@ static void cftexp2(s32 n, f32 PTR4* a, s32 nw, f32 PTR4* w)
                 k <<= 2;
             } while (k < h);
         }
-        m = next_m;
+        m >>= 2;
     }
 
     k = m;
