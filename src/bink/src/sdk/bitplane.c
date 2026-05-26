@@ -352,7 +352,7 @@ u32 LenBPLossless(s16 PTR4* vals)
                         end[1] = (u16)groups[bits + BP_TREE_CHILD2_INDEX] + (kind + BP_TREE_CHILD2_BASE) * BP_TREE_INDEX_STRIDE + BP_TREE_BRANCH_NODE;
                         end[2] = (u16)groups[bits + BP_TREE_CHILD3_INDEX] + (kind + BP_TREE_CHILD3_BASE) * BP_TREE_INDEX_STRIDE + BP_TREE_BRANCH_NODE;
                         end += BP_TREE_ADDED_CHILD_COUNT;
-                    } else if ((kind < BP_TREE_AFTER_GROUP_NODE) && ((entry & BP_TREE_KIND_MASK) == 0)) {
+                    } else if (kind == 0) {
                         *cur = (u16)hi_groups[entry >> BP_TREE_HIGH_GROUP_SHIFT] + ((entry >> BP_TREE_INDEX_SHIFT) + BP_TREE_CHILD1_BASE) * BP_TREE_INDEX_STRIDE + BP_TREE_GROUP_NODE;
 handle_children:
                         kind = entry >> BP_TREE_INDEX_SHIFT;
@@ -411,7 +411,7 @@ handle_children:
                     end[1] = (u16)groups[maxbits + BP_TREE_CHILD2_INDEX] + (kind + BP_TREE_CHILD2_BASE) * BP_TREE_INDEX_STRIDE + BP_TREE_BRANCH_NODE;
                     end[2] = (u16)groups[maxbits + BP_TREE_CHILD3_INDEX] + (kind + BP_TREE_CHILD3_BASE) * BP_TREE_INDEX_STRIDE + BP_TREE_BRANCH_NODE;
                     end += BP_TREE_ADDED_CHILD_COUNT;
-                } else if ((kind < BP_TREE_AFTER_GROUP_NODE) && ((entry & BP_TREE_KIND_MASK) == 0)) {
+                } else if (kind == 0) {
                     *cur = (u16)hi_groups[entry >> BP_TREE_HIGH_GROUP_SHIFT] + ((entry >> BP_TREE_INDEX_SHIFT) + BP_TREE_CHILD1_BASE) * BP_TREE_INDEX_STRIDE + BP_TREE_GROUP_NODE;
 handle_final_children:
                     kind = entry >> BP_TREE_INDEX_SHIFT;
@@ -646,45 +646,43 @@ next_lossless_node:
                         end[1] = (u16)groups[count + BP_TREE_CHILD2_INDEX] + (kind + BP_TREE_CHILD2_BASE) * BP_TREE_INDEX_STRIDE + BP_TREE_BRANCH_NODE;
                         end[2] = (u16)groups[count + BP_TREE_CHILD3_INDEX] + (kind + BP_TREE_CHILD3_BASE) * BP_TREE_INDEX_STRIDE + BP_TREE_BRANCH_NODE;
                         end += BP_TREE_ADDED_CHILD_COUNT;
-                    } else if (kind < BP_TREE_AFTER_GROUP_NODE) {
-                        if ((entry & BP_TREE_KIND_MASK) == 0) {
-                            *cur = (u16)hi_groups[entry >> BP_TREE_HIGH_GROUP_SHIFT] + ((entry >> BP_TREE_INDEX_SHIFT) + BP_TREE_CHILD1_BASE) * BP_TREE_INDEX_STRIDE + BP_TREE_GROUP_NODE;
+                    } else if (kind == 0) {
+                        *cur = (u16)hi_groups[entry >> BP_TREE_HIGH_GROUP_SHIFT] + ((entry >> BP_TREE_INDEX_SHIFT) + BP_TREE_CHILD1_BASE) * BP_TREE_INDEX_STRIDE + BP_TREE_GROUP_NODE;
 handle_lossless_children:
-                            kind = entry >> BP_TREE_INDEX_SHIFT;
-                            PUT_BP_BIT(bits, lens[kind] != maxbits);
-                            if (lens[kind] == maxbits) {
-                                PUT_BP_BITS(bits, absvals[kind], lenbits, VarBitsLens[lenbits]);
-                                PUT_BP_BIT(bits, ordered[kind] < 0);
-                            } else {
-                                *--restart = (u16)lens[kind] | (entry & BP_TREE_BASE_MASK) + BP_TREE_COEFF_NODE;
-                            }
+                        kind = entry >> BP_TREE_INDEX_SHIFT;
+                        PUT_BP_BIT(bits, lens[kind] != maxbits);
+                        if (lens[kind] == maxbits) {
+                            PUT_BP_BITS(bits, absvals[kind], lenbits, VarBitsLens[lenbits]);
+                            PUT_BP_BIT(bits, ordered[kind] < 0);
+                        } else {
+                            *--restart = (u16)lens[kind] | (entry & BP_TREE_BASE_MASK) + BP_TREE_COEFF_NODE;
+                        }
 
-                            i = kind + BP_TREE_CHILD1_INDEX;
-                            PUT_BP_BIT(bits, lens[i] != maxbits);
-                            if (lens[i] == maxbits) {
-                                PUT_BP_BITS(bits, absvals[i], lenbits, VarBitsLens[lenbits]);
-                                PUT_BP_BIT(bits, ordered[i] < 0);
-                            } else {
-                                *--restart = (u16)lens[i] | i * BP_TREE_INDEX_STRIDE + BP_TREE_COEFF_NODE;
-                            }
+                        i = kind + BP_TREE_CHILD1_INDEX;
+                        PUT_BP_BIT(bits, lens[i] != maxbits);
+                        if (lens[i] == maxbits) {
+                            PUT_BP_BITS(bits, absvals[i], lenbits, VarBitsLens[lenbits]);
+                            PUT_BP_BIT(bits, ordered[i] < 0);
+                        } else {
+                            *--restart = (u16)lens[i] | i * BP_TREE_INDEX_STRIDE + BP_TREE_COEFF_NODE;
+                        }
 
-                            i = kind + BP_TREE_CHILD2_INDEX;
-                            PUT_BP_BIT(bits, lens[i] != maxbits);
-                            if (lens[i] == maxbits) {
-                                PUT_BP_BITS(bits, absvals[i], lenbits, VarBitsLens[lenbits]);
-                                PUT_BP_BIT(bits, ordered[i] < 0);
-                            } else {
-                                *--restart = (u16)lens[i] | i * BP_TREE_INDEX_STRIDE + BP_TREE_COEFF_NODE;
-                            }
+                        i = kind + BP_TREE_CHILD2_INDEX;
+                        PUT_BP_BIT(bits, lens[i] != maxbits);
+                        if (lens[i] == maxbits) {
+                            PUT_BP_BITS(bits, absvals[i], lenbits, VarBitsLens[lenbits]);
+                            PUT_BP_BIT(bits, ordered[i] < 0);
+                        } else {
+                            *--restart = (u16)lens[i] | i * BP_TREE_INDEX_STRIDE + BP_TREE_COEFF_NODE;
+                        }
 
-                            i = kind + BP_TREE_CHILD3_INDEX;
-                            PUT_BP_BIT(bits, lens[i] != maxbits);
-                            if (lens[i] == maxbits) {
-                                PUT_BP_BITS(bits, absvals[i], lenbits, VarBitsLens[lenbits]);
-                                PUT_BP_BIT(bits, ordered[i] < 0);
-                            } else {
-                                *--restart = (u16)lens[i] | i * BP_TREE_INDEX_STRIDE + BP_TREE_COEFF_NODE;
-                            }
+                        i = kind + BP_TREE_CHILD3_INDEX;
+                        PUT_BP_BIT(bits, lens[i] != maxbits);
+                        if (lens[i] == maxbits) {
+                            PUT_BP_BITS(bits, absvals[i], lenbits, VarBitsLens[lenbits]);
+                            PUT_BP_BIT(bits, ordered[i] < 0);
+                        } else {
+                            *--restart = (u16)lens[i] | i * BP_TREE_INDEX_STRIDE + BP_TREE_COEFF_NODE;
                         }
                     } else {
                         if (kind == BP_TREE_BRANCH_NODE) {
@@ -1086,7 +1084,7 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     u16 PTR4* next_node;
     u16 PTR4* roots;
     u16 mask;
-    s16 node_entry;
+    u16 node_entry;
     BPLOSSYWRITETREE tree;
     u8 lens[BP_BLOCK_COEFFS];
     u8 groups[BP_TREE_GROUPS];
@@ -1265,55 +1263,51 @@ next_lossy_node:
                         next_node[1] = (u16)groups[count + BP_TREE_CHILD2_INDEX] + (lenbits + BP_TREE_CHILD2_BASE) * BP_TREE_INDEX_STRIDE + BP_TREE_BRANCH_NODE;
                         next_node[2] = (u16)groups[count + BP_TREE_CHILD3_INDEX] + (lenbits + BP_TREE_CHILD3_BASE) * BP_TREE_INDEX_STRIDE + BP_TREE_BRANCH_NODE;
                         next_node += BP_TREE_ADDED_CHILD_COUNT;
-                    } else if (lenbits < BP_TREE_AFTER_GROUP_NODE) {
-                        if ((node_entry & BP_TREE_KIND_MASK) == 0) {
-                            *cur = (u16)hi_groups[node_entry >> BP_TREE_HIGH_GROUP_SHIFT] + ((node_entry >> BP_TREE_INDEX_SHIFT) + BP_TREE_CHILD1_BASE) * BP_TREE_INDEX_STRIDE + BP_TREE_GROUP_NODE;
+                    } else if (lenbits == 0) {
+                        *cur = (u16)hi_groups[node_entry >> BP_TREE_HIGH_GROUP_SHIFT] + ((node_entry >> BP_TREE_INDEX_SHIFT) + BP_TREE_CHILD1_BASE) * BP_TREE_INDEX_STRIDE + BP_TREE_GROUP_NODE;
 handle_lossy_children:
-                            lenbits = node_entry >> BP_TREE_INDEX_SHIFT;
-                            PUT_BP_BIT(bits, lens[lenbits] != maxbits);
-                            if (lens[lenbits] == maxbits) {
-                                temp[i] = absvals[lenbits];
-                                i++;
-                                PUT_BP_BIT(bits, (ordered[lenbits] & BP_SIGN_BIT) != 0);
-                            } else {
-                                --insert;
-                                *insert = (u16)lens[lenbits] | (node_entry & BP_TREE_BASE_MASK) + BP_TREE_COEFF_NODE;
-                            }
-
-                            PUT_BP_BIT(bits, lens[lenbits + BP_TREE_CHILD1_INDEX] != maxbits);
-                            entry = lens[lenbits + BP_TREE_CHILD1_INDEX];
-                            if (entry == maxbits) {
-                                temp[i] = absvals[lenbits + BP_TREE_CHILD1_INDEX];
-                                i++;
-                                PUT_BP_BIT(bits, (ordered[lenbits + BP_TREE_CHILD1_INDEX] & BP_SIGN_BIT) != 0);
-                            } else {
-                                --insert;
-                                *insert = (u16)entry | (lenbits + BP_TREE_CHILD1_INDEX) * BP_TREE_INDEX_STRIDE + BP_TREE_COEFF_NODE;
-                            }
-
-                            PUT_BP_BIT(bits, lens[lenbits + BP_TREE_CHILD2_INDEX] != maxbits);
-                            entry = lens[lenbits + BP_TREE_CHILD2_INDEX];
-                            if (entry == maxbits) {
-                                temp[i] = absvals[lenbits + BP_TREE_CHILD2_INDEX];
-                                i++;
-                                PUT_BP_BIT(bits, (ordered[lenbits + BP_TREE_CHILD2_INDEX] & BP_SIGN_BIT) != 0);
-                            } else {
-                                --insert;
-                                *insert = (u16)entry | (lenbits + BP_TREE_CHILD2_INDEX) * BP_TREE_INDEX_STRIDE + BP_TREE_COEFF_NODE;
-                            }
-
-                            PUT_BP_BIT(bits, lens[lenbits + BP_TREE_CHILD3_INDEX] != maxbits);
-                            entry = lens[lenbits + BP_TREE_CHILD3_INDEX];
-                            if (entry == maxbits) {
-                                temp[i] = absvals[lenbits + BP_TREE_CHILD3_INDEX];
-                                i++;
-                                PUT_BP_BIT(bits, (ordered[lenbits + BP_TREE_CHILD3_INDEX] & BP_SIGN_BIT) != 0);
-                            } else {
-                                --insert;
-                                *insert = (u16)entry | (lenbits + BP_TREE_CHILD3_INDEX) * BP_TREE_INDEX_STRIDE + BP_TREE_COEFF_NODE;
-                            }
+                        lenbits = node_entry >> BP_TREE_INDEX_SHIFT;
+                        PUT_BP_BIT(bits, lens[lenbits] != maxbits);
+                        if (lens[lenbits] == maxbits) {
+                            temp[i] = absvals[lenbits];
+                            i++;
+                            PUT_BP_BIT(bits, (ordered[lenbits] & BP_SIGN_BIT) != 0);
                         } else {
-                            goto next_lossy_node;
+                            --insert;
+                            *insert = (u16)lens[lenbits] | (node_entry & BP_TREE_BASE_MASK) + BP_TREE_COEFF_NODE;
+                        }
+
+                        PUT_BP_BIT(bits, lens[lenbits + BP_TREE_CHILD1_INDEX] != maxbits);
+                        entry = lens[lenbits + BP_TREE_CHILD1_INDEX];
+                        if (entry == maxbits) {
+                            temp[i] = absvals[lenbits + BP_TREE_CHILD1_INDEX];
+                            i++;
+                            PUT_BP_BIT(bits, (ordered[lenbits + BP_TREE_CHILD1_INDEX] & BP_SIGN_BIT) != 0);
+                        } else {
+                            --insert;
+                            *insert = (u16)entry | (lenbits + BP_TREE_CHILD1_INDEX) * BP_TREE_INDEX_STRIDE + BP_TREE_COEFF_NODE;
+                        }
+
+                        PUT_BP_BIT(bits, lens[lenbits + BP_TREE_CHILD2_INDEX] != maxbits);
+                        entry = lens[lenbits + BP_TREE_CHILD2_INDEX];
+                        if (entry == maxbits) {
+                            temp[i] = absvals[lenbits + BP_TREE_CHILD2_INDEX];
+                            i++;
+                            PUT_BP_BIT(bits, (ordered[lenbits + BP_TREE_CHILD2_INDEX] & BP_SIGN_BIT) != 0);
+                        } else {
+                            --insert;
+                            *insert = (u16)entry | (lenbits + BP_TREE_CHILD2_INDEX) * BP_TREE_INDEX_STRIDE + BP_TREE_COEFF_NODE;
+                        }
+
+                        PUT_BP_BIT(bits, lens[lenbits + BP_TREE_CHILD3_INDEX] != maxbits);
+                        entry = lens[lenbits + BP_TREE_CHILD3_INDEX];
+                        if (entry == maxbits) {
+                            temp[i] = absvals[lenbits + BP_TREE_CHILD3_INDEX];
+                            i++;
+                            PUT_BP_BIT(bits, (ordered[lenbits + BP_TREE_CHILD3_INDEX] & BP_SIGN_BIT) != 0);
+                        } else {
+                            --insert;
+                            *insert = (u16)entry | (lenbits + BP_TREE_CHILD3_INDEX) * BP_TREE_INDEX_STRIDE + BP_TREE_COEFF_NODE;
                         }
                     } else {
                         if (lenbits == BP_TREE_BRANCH_NODE) {
