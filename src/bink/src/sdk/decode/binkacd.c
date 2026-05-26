@@ -366,15 +366,15 @@ static inline f32 radfsqrt(f32 value)
 
         __asm__ volatile("frsqrte %0,%1" : "=f"(square) : "f"(value));
         guess = square;
-        square = guess * guess;
+        square = guess * guess * value;
         guess = BINKAC_RSQRT_NEWTON_HALF * guess *
-                (BINKAC_RSQRT_NEWTON_THREE - square * value);
-        square = guess * guess;
+                (BINKAC_RSQRT_NEWTON_THREE - square);
+        square = guess * guess * value;
         guess = BINKAC_RSQRT_NEWTON_HALF * guess *
-                (BINKAC_RSQRT_NEWTON_THREE - square * value);
-        square = guess * guess;
+                (BINKAC_RSQRT_NEWTON_THREE - square);
+        square = guess * guess * value;
         guess = BINKAC_RSQRT_NEWTON_HALF * guess *
-                (BINKAC_RSQRT_NEWTON_THREE - square * value);
+                (BINKAC_RSQRT_NEWTON_THREE - square);
         return value * guess;
     }
 
