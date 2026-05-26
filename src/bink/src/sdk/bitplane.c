@@ -238,7 +238,7 @@ u32 LenBPLossless(s16 PTR4* vals)
         value = BP_ZIGZAG_COEFF(vals, i);
         sign = value >> BP_S32_SIGN_SHIFT;
         bits = getbitlevelvar(BP_ABS_COEFF(value, sign) & BP_U16_MASK) & BP_BYTE_MASK;
-        if (maxbits < bits) {
+        if (bits > maxbits) {
             maxbits = bits;
         }
         lens[i] = (u8)bits;
@@ -510,7 +510,7 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
     do {
         cur++;
         lenbits = getbitlevelvar((u32)*cur) & BP_BYTE_MASK;
-        if (maxbits < lenbits) {
+        if (lenbits > maxbits) {
             maxbits = lenbits;
         }
         lens[i] = (u8)lenbits;
@@ -1117,7 +1117,7 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     count = BP_BLOCK_COEFFS;
     do {
         lenbits = getbitlevelvar((u32)absvals[i]) & BP_BYTE_MASK;
-        if (maxbits < lenbits) {
+        if (lenbits > maxbits) {
             maxbits = lenbits;
         }
         lens[i] = (u8)lenbits;
