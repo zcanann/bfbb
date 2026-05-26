@@ -703,21 +703,21 @@ check_busy:
     if (NGC_TASK_BUSY(task)) {
         goto busy;
     }
-    start = state->play_cursor;
-    end = start + state->frame_size;
+    start = NGC_SOUND_STATE(snd)->play_cursor;
+    end = start + NGC_SOUND_STATE(snd)->frame_size;
     if (ngc_snd->chans == NGC_SOUND_STEREO_CHANNELS) {
-        out = state->stereo_buffer;
+        out = NGC_SOUND_STATE(snd)->stereo_buffer;
     } else {
-        out = state->decode_buffer +
-              ((side * state->channel_stride) >> NGC_SOUND_HALF_BUFFER_SHIFT);
+        out = NGC_SOUND_STATE(snd)->decode_buffer +
+              ((side * NGC_SOUND_STATE(snd)->channel_stride) >> NGC_SOUND_HALF_BUFFER_SHIFT);
     }
 
-    memset(out, 0, state->frame_size);
+    memset(out, 0, NGC_SOUND_STATE(snd)->frame_size);
     task = NGC_TASK(state, side);
     task->source = (u32)out;
     right_side = side + NGC_SOUND_RIGHT_TASK_OFFSET;
     NGC_TASK(state, right_side)->source = (u32)out;
-    NGC_SoundPlay(snd, side, state->frame_size);
+    NGC_SoundPlay(snd, side, NGC_SOUND_STATE(snd)->frame_size);
 
     /* Re-anchor playback to the silent frame if AX has already passed it. */
     voice = NGC_LEFT_VOICE(state);
