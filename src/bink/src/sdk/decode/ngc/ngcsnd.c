@@ -392,7 +392,7 @@ static s32 NGC_SoundInit(BINKSND PTR4* snd)
     NGC_SOUND_STATE(snd)->address_shift = (NGC_SND(snd)->bits == NGC_SOUND_BITS_16);
 
     for (i = 0; i < NGC_SOUND_ARQ_TASK_COUNT; ++i) {
-        state->tasks[i].owner = (u32)state; /* seed owner and clear the busy latch */
+        NGC_TASK_SET_OWNER(state->tasks + i, state); /* seed owner and clear the busy latch */
     }
 
     NGC_SOUND_STATE(snd)->play_cursor = (u32)NGC_SOUND_STATE(snd)->audio_buffer;
