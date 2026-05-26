@@ -321,15 +321,7 @@ static void ReadKickoff(BINKIO PTR4* io)
     s32 status = DVDGetCommandBlockStatus(&NGC_DVD(io)->cb);
     u32 remaining = NGC_BYTES_LEFT_TO_READ(io);
 
-    if (status <= DVD_STATE_IGNORED) {
-        if (status >= DVD_STATE_COVER_CLOSED) {
-            goto read_error;
-        }
-        if (status == DVD_STATE_FATAL_ERROR) {
-            goto read_error;
-        }
-    } else if (status == DVD_STATE_RETRY) {
-    read_error:
+    if (NGC_DVD_STATUS_FAILED(status)) {
         io->ReadError = 1;
         return;
     }
