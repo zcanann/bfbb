@@ -276,7 +276,8 @@ static void simpmergesort(EXPBITS PTR4* bits, u8 PTR4* out, u8 PTR4* left,
             left_count--;
         }
 
-        *out++ = value;
+        *out = value;
+        out++;
         if (left_count == 0) {
             break;
         }
@@ -722,9 +723,7 @@ static void CheckReadHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
             decode = bundle->decode;
             peek = bundle->bits_to_peek;
             while (count-- != 0) {
-                value = exp_read_huff4(bits, peek, decode, values);
-                *dest = (u8)value;
-                dest++;
+                *dest++ = (u8)exp_read_huff4(bits, peek, decode, values);
             }
         } else {
             value = exp_get_bits(bits, HUFF4_USED_SHIFT);
