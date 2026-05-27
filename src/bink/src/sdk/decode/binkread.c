@@ -2744,7 +2744,7 @@ u32 BinkGetTrackType(HBINK bnk, u32 trackindex)
     return 0;
 }
 
-u32 BinkGetTrackMaxSize(HBINK bnk, u32 trackindex)
+BINKTRACKSIZE BinkGetTrackMaxSize(HBINK bnk, u32 trackindex)
 {
     if (bnk != 0)
     {

@@ -185,6 +185,7 @@ typedef u32 BINKFRAMEOFFSET; // File offset with bit 0 carrying the key-frame fl
 typedef u32 BINKTRACKTYPE;   // Packed audio frequency, channel, bit-depth, and format flags.
 typedef u32 BINKTRACKID;     // Caller-visible audio track number.
 typedef s32 BINKTRACKINDEX;  // Index into the movie's track tables.
+typedef u32 BINKTRACKSIZE;   // Maximum compressed byte size for a single track frame.
 
 typedef struct BINK
 {
@@ -245,7 +246,7 @@ typedef struct BINK
     u32 decompheight; // height not include scaling
 
     BINKTRACKINDEX PTR4* trackindexes; // track indexes
-    u32 PTR4* tracksizes; // largest single frame of track
+    BINKTRACKSIZE PTR4* tracksizes; // largest single frame of track
     BINKTRACKTYPE PTR4* tracktypes; // type of each sound track
     BINKTRACKID PTR4* trackIDs; // external track numbers
 
@@ -490,7 +491,7 @@ typedef struct BINKTRACK
     u32 Frequency;
     u32 Bits;
     u32 Channels;
-    u32 MaxSize;
+    BINKTRACKSIZE MaxSize;
 
     HBINK bink;
     UINTa sndcomp;
@@ -502,7 +503,7 @@ RADEXPFUNC void RADEXPLINK BinkCloseTrack(HBINKTRACK bnkt);
 RADEXPFUNC u32 RADEXPLINK BinkGetTrackData(HBINKTRACK bnkt, void PTR4* dest);
 
 RADEXPFUNC u32 RADEXPLINK BinkGetTrackType(HBINK bnk, u32 trackindex);
-RADEXPFUNC u32 RADEXPLINK BinkGetTrackMaxSize(HBINK bnk, u32 trackindex);
+RADEXPFUNC BINKTRACKSIZE RADEXPLINK BinkGetTrackMaxSize(HBINK bnk, u32 trackindex);
 RADEXPFUNC BINKTRACKID RADEXPLINK BinkGetTrackID(HBINK bnk, u32 trackindex);
 
 RADEXPFUNC void RADEXPLINK BinkGetSummary(HBINK bnk, BINKSUMMARY PTR4* sum);
