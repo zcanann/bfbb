@@ -960,7 +960,6 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
     BINK bnk;
     BINKHDR hdr;
     BINKIOOPEN open;
-    u32 open_flags;
     u32 scale_flags;
     u32 bundle_sizes[BINK_BUNDLE_COUNT];
     u32 all_key;
@@ -1006,7 +1005,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
         goto close_and_fail;
     }
 
-    open_flags = flags & ~BINKCOPYNOSCALING;
+    bnk.OpenFlags = flags & ~BINKCOPYNOSCALING;
     bnk.UVWidth = (((hdr.Width + BINK_CHROMA_ROUND_MASK) >> BINK_CHROMA_SHIFT) +
                    BINK_CHROMA_ALIGN_MASK) &
                   ~BINK_CHROMA_ALIGN_MASK;
@@ -1022,17 +1021,17 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
     bnk.decompwidth = hdr.Width;
     bnk.decompheight = hdr.Height;
     bnk.BinkType = hdr.Flags;
+    bnk.OpenFlags |= hdr.Flags & BINKGRAYSCALE;
     if ((hdr.Flags & BINKALPHA) == 0) {
-        open_flags = flags & ~(BINKCOPYNOSCALING | BINKALPHA);
+        bnk.OpenFlags &= ~BINKALPHA;
     }
-    open_flags |= hdr.Flags & BINKGRAYSCALE;
 
     scale_flags = flags & BINKCOPYNOSCALING;
     if (scale_flags != BINKCOPYNOSCALING) {
         if (scale_flags == 0) {
             scale_flags = hdr.Flags & BINKCOPYNOSCALING;
         }
-        open_flags |= scale_flags;
+        bnk.OpenFlags |= scale_flags;
         if (scale_flags == BINKCOPY2XW) {
             bnk.Width = hdr.Width * BINK_COPY_SCALE;
         } else if (scale_flags == BINKCOPY2XH || scale_flags == BINKCOPY2XHI) {
@@ -1044,13 +1043,12 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
     }
 
     if (hdr.Marker == BINKMARKER1 || hdr.Marker == BINKMARKER2) {
-        open_flags |= BINKRBINVERT;
-        open_flags |= BINKOLDFRAMEFORMAT;
+        bnk.OpenFlags |= BINKRBINVERT;
+        bnk.OpenFlags |= BINKOLDFRAMEFORMAT;
     } else if (hdr.Marker == BINKMARKER3) {
-        open_flags |= BINKOLDFRAMEFORMAT;
+        bnk.OpenFlags |= BINKOLDFRAMEFORMAT;
     }
 
-    bnk.OpenFlags = open_flags;
     bnk.Frames = hdr.Frames;
     bnk.InternalFrames = hdr.InternalFrames;
     if ((flags & BINKFRAMERATE) != 0 && ForceRate != BINK_OPEN_OVERRIDE_UNSET) {
