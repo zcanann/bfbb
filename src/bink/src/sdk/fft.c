@@ -1338,42 +1338,39 @@ static void cftexp1(s32 n, f32 PTR4* a, s32 nw, f32 PTR4* w)
     s32 j;
     s32 k;
     s32 m;
-    s32 mh;
 
     m = n >> 2;
     while (m > 128) {
         k = m;
-        mh = m >> 1;
         if (k < n) {
             do {
                 for (j = k - m; j < n; j += k << 2) {
-                    cftmdl1(m, &a[j], &w[nw - mh]);
+                    cftmdl1(m, &a[j], &w[nw - (m >> 1)]);
                     cftmdl2(m, &a[j + k], &w[nw - m]);
-                    cftmdl1(m, &a[j + 2 * k], &w[nw - mh]);
+                    cftmdl1(m, &a[j + 2 * k], &w[nw - (m >> 1)]);
                 }
                 k <<= 2;
             } while (k < n);
         }
-        cftmdl1(m, &a[n - m], &w[nw - mh]);
+        cftmdl1(m, &a[n - m], &w[nw - (m >> 1)]);
         m >>= 2;
     }
 
     k = m;
-    mh = m >> 1;
     if (k < n) {
         do {
             for (j = k - m; j < n; j += k << 2) {
-                cftmdl1(m, &a[j], &w[nw - mh]);
+                cftmdl1(m, &a[j], &w[nw - (m >> 1)]);
                 cftfx41(m, &a[j], nw, w);
                 cftmdl2(m, &a[j + k], &w[nw - m]);
                 cftfx42(m, &a[j + k], nw, w);
-                cftmdl1(m, &a[j + 2 * k], &w[nw - mh]);
+                cftmdl1(m, &a[j + 2 * k], &w[nw - (m >> 1)]);
                 cftfx41(m, &a[j + 2 * k], nw, w);
             }
             k <<= 2;
         } while (k < n);
     }
-    cftmdl1(m, &a[n - m], &w[nw - mh]);
+    cftmdl1(m, &a[n - m], &w[nw - (m >> 1)]);
     cftfx41(m, &a[n - m], nw, w);
 }
 
