@@ -276,8 +276,7 @@ static void simpmergesort(EXPBITS PTR4* bits, u8 PTR4* out, u8 PTR4* left,
             left_count--;
         }
 
-        *out = value;
-        out++;
+        *out++ = value;
         if (left_count == 0) {
             break;
         }
