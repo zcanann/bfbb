@@ -182,6 +182,7 @@ typedef struct BUNDLEPOINTERS
 } BUNDLEPOINTERS;
 
 typedef u32 BINKFRAMEOFFSET; // File offset with bit 0 carrying the key-frame flag.
+typedef u32 BINKTRACKTYPE;   // Packed audio frequency, channel, bit-depth, and format flags.
 
 typedef struct BINK
 {
@@ -243,7 +244,7 @@ typedef struct BINK
 
     s32 PTR4* trackindexes; // track indexes
     u32 PTR4* tracksizes; // largest single frame of track
-    u32 PTR4* tracktypes; // type of each sound track
+    BINKTRACKTYPE PTR4* tracktypes; // type of each sound track
     s32 PTR4* trackIDs; // external track numbers
 
     u32 numrects; // number of rects from BinkGetRects
