@@ -871,7 +871,7 @@ void BinkSetSoundTrack(u32 total_tracks, u32 PTR4* tracks)
     }
 }
 
-static u32 high1secrate(s32 frames, const u32 PTR4* frameoffsets, s32 span,
+static u32 high1secrate(s32 frames, const BINKFRAMEOFFSET PTR4* frameoffsets, s32 span,
                         u32 PTR4* highframe, u32 PTR4* allkey)
 {
     u32 rate;
@@ -884,8 +884,8 @@ static u32 high1secrate(s32 frames, const u32 PTR4* frameoffsets, s32 span,
     key = 1;
     i = 0;
     if (i < frames - span) {
-        const u32 PTR4* start = frameoffsets;
-        const u32 PTR4* end = &frameoffsets[span];
+        const BINKFRAMEOFFSET PTR4* start = frameoffsets;
+        const BINKFRAMEOFFSET PTR4* end = &frameoffsets[span];
 
         do {
             u32 diff = *end++ - *start++;
@@ -1856,7 +1856,7 @@ u32 BinkGetKeyFrame(HBINK bnk, u32 frame, s32 flags)
     case BINKGETKEYPREVIOUS:
         prev = frame - 2;
         if (prev > 0) {
-            const u32 PTR4* ptr;
+            const BINKFRAMEOFFSET PTR4* ptr;
 
             ptr = bnk->frameoffsets;
             if (BINK_FRAME_KEY(ptr[prev]) == 0) {
@@ -1877,13 +1877,13 @@ found_previous:
         if (cur >= bnk->Frames) {
             break;
         } else {
-            const u32 PTR4* ptr;
+            const BINKFRAMEOFFSET PTR4* ptr;
             u32 limit;
 
             limit = bnk->Frames;
             ptr = bnk->frameoffsets + cur;
             do {
-                u32 value;
+                BINKFRAMEOFFSET value;
 
                 value = *ptr++;
                 ++cur;
@@ -1903,7 +1903,7 @@ found_previous:
                 }
 
                 if (cur < bnk->Frames) {
-                    u32 value = bnk->frameoffsets[cur];
+                    BINKFRAMEOFFSET value = bnk->frameoffsets[cur];
 
                     ++cur;
                     if (BINK_FRAME_KEY(value) != 0) {
@@ -1916,7 +1916,7 @@ found_previous:
                 }
 
                 {
-                    u32 value = bnk->frameoffsets[cur];
+                    BINKFRAMEOFFSET value = bnk->frameoffsets[cur];
 
                     ++cur;
                     if (BINK_FRAME_KEY(value) != 0) {
