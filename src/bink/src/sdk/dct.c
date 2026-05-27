@@ -1191,7 +1191,7 @@ void FastmIDCT8x8WithMotion(u8 PTR4* dest, s32 pitch, s16 PTR4* in, u32 quant, u
 void FastFDCT8x8(s32 PTR4* out, u8 PTR4* in)
 {
     s32 PTR4* out_cursor = out;
-    s32 PTR4* saveout = out_cursor;
+    s32 PTR4* saveout = out;
     s32 tmp0, tmp1, tmp2, tmp3, tmp4, tmp5, tmp6, tmp7;
     s32 tmp10, tmp11, tmp12, tmp13;
     s32 z1, z2, z3, z4, z5, z11, z13;
@@ -1282,7 +1282,7 @@ void FastFDCT8x8(s32 PTR4* out, u8 PTR4* in)
 void FastFDCTs8x8(s32 PTR4* out, s8 PTR4* in)
 {
     s32 PTR4* out_cursor = out;
-    s32 PTR4* saveout = out_cursor;
+    s32 PTR4* saveout = out;
     s32 tmp0, tmp1, tmp2, tmp3, tmp4, tmp5, tmp6, tmp7;
     s32 tmp10, tmp11, tmp12, tmp13;
     s32 z1, z2, z3, z4, z5, z11, z13;
