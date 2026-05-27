@@ -1155,12 +1155,10 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
             pushmalloc(&out->APlane[0], BINK_ALPHA_PLANE_BYTES(out));
             if (all_key == 0) {
                 pushmalloc(&out->APlane[1], BINK_ALPHA_PLANE_BYTES(out));
-                pushmalloc(&out->YPlane[1], BINK_VIDEO_PLANE_BYTES(out));
             }
-        } else {
-            if (all_key == 0) {
-                pushmalloc(&out->YPlane[1], BINK_VIDEO_PLANE_BYTES(out));
-            }
+        }
+        if (all_key == 0) {
+            pushmalloc(&out->YPlane[1], BINK_VIDEO_PLANE_BYTES(out));
         }
 
         out->YPlane[0] = bpopmalloc(out, BINK_VIDEO_PLANE_BYTES(out));
