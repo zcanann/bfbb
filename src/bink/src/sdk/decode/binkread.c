@@ -1254,7 +1254,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
 
                 while (playing < out->playingtracks) {
                     u32 track = out->trackindexes[playing];
-                    u32 tracktype = out->tracktypes[track];
+                    BINKTRACKTYPE tracktype = out->tracktypes[track];
                     BINKSND PTR4* snd = &out->bsnd[playing];
 
                     if (BINKTRACKISOPENABLE(tracktype)) {
@@ -2764,8 +2764,8 @@ u32 BinkGetTrackID(HBINK bnk, u32 trackindex)
 
 HBINKTRACK BinkOpenTrack(HBINK bnk, u32 trackindex)
 {
-    u32 tracktype;
-    u32 open_tracktype;
+    BINKTRACKTYPE tracktype;
+    BINKTRACKTYPE open_tracktype;
     HBINKAUDIODECOMP sndcomp;
     HBINKTRACK track;
 
