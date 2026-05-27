@@ -111,6 +111,9 @@ extern const char BINK_ERROR_OUT_OF_MEMORY[];
 #define BINK_RUNTIME_PREVIOUS_SLOT 1
 #define BINK_ARRAY_BYTES(count, ptr) ((count) * sizeof(*(ptr)))
 #define BINK_FRAME_OFFSETS_BYTES(frames, ptr) (((frames) + 1) * sizeof(*(ptr)))
+#define BINK_VIDEO_PLANE_BYTES(bink) \
+    ((bink)->YWidth * (bink)->YHeight + (bink)->UVWidth * (bink)->UVHeight * BINK_CHROMA_PLANE_COUNT)
+#define BINK_ALPHA_PLANE_BYTES(bink) ((bink)->YWidth * (bink)->YHeight)
 #define BINK_SOUND_BUFFER_BYTES(bytes) (((bytes) + BINK_SOUND_BUFFER_ALIGN_MASK) & ~BINK_SOUND_BUFFER_ALIGN_MASK)
 #define BINK_TRACK_BUFFER_BYTES(bytes) (((bytes) + BINK_SOUND_SAMPLE_ALIGN_MASK) & ~BINK_SOUND_SAMPLE_ALIGN_MASK)
 #define BINK_SOUND_PRIME_BYTES(freq, tracktype, dropped) \
@@ -963,7 +966,6 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
     u32 scale_flags;
     u32 bundle_sizes[BINK_BUNDLE_COUNT];
     u32 all_key;
-    u32 plane_size;
     u32 sound_bytes;
     u32 simulate;
     HBINK out;
@@ -1149,20 +1151,19 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
             high1secrate(out->Frames, out->frameoffsets, out->runtimeframes,
                          &out->Highest1SecFrame, &all_key);
 
-        plane_size = out->YWidth * out->YHeight + out->UVWidth * out->UVHeight * BINK_CHROMA_PLANE_COUNT;
-        if ((out->BinkType & BINKALPHA) == 0) {
+        if ((out->OpenFlags & BINKALPHA) == 0) {
             if (all_key == 0) {
-                pushmalloc(&out->YPlane[1], plane_size);
+                pushmalloc(&out->YPlane[1], BINK_VIDEO_PLANE_BYTES(out));
             }
         } else {
-            pushmalloc(&out->APlane[0], out->YWidth * out->YHeight);
+            pushmalloc(&out->APlane[0], BINK_ALPHA_PLANE_BYTES(out));
             if (all_key == 0) {
-                pushmalloc(&out->APlane[1], out->YWidth * out->YHeight);
-                pushmalloc(&out->YPlane[1], plane_size);
+                pushmalloc(&out->APlane[1], BINK_ALPHA_PLANE_BYTES(out));
+                pushmalloc(&out->YPlane[1], BINK_VIDEO_PLANE_BYTES(out));
             }
         }
 
-        out->YPlane[0] = bpopmalloc(out, plane_size);
+        out->YPlane[0] = bpopmalloc(out, BINK_VIDEO_PLANE_BYTES(out));
         if (out->YPlane[0] == 0) {
             radfree(out);
             goto open_failed;
