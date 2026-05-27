@@ -35,7 +35,6 @@
 #define BINKAC_QUANT_POWER_BASE 10.0
 #define BINKAC_QUANT_INDEX_SCALE 0.664f
 #define BINKAC_QUANT_POWER_SCALE 0.10f
-#define BINKAC_SAMPLE_ZERO 0.0f
 #define BINKAC_NYQUIST_ROUNDING 1
 #define BINKAC_FFT_WORK_EXTRA 2
 #define BINKAC_DCT_COEFF_BYTES_PER_SAMPLE 5
@@ -82,6 +81,8 @@ static u32 bink_bandtopfreq[TOTBANDS] = {
     0,   100,  200,  300,  400,  510,  630,  770,   920,   1080,  1270, 1480, 1720,
     2000, 2320, 2700, 3150, 3700, 4400, 5300, 6400, 7700, 9500, 12000, 15500
 };
+
+static const f32 BINKAC_SAMPLE_ZERO = 0.0f;
 
 /* Reciprocals used by fxptof for the 29-bit packed fixed-point coefficients. */
 static f64 bink_invertbins[BINKAC_INVERT_BINS] = {
