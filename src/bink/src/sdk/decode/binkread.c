@@ -128,7 +128,7 @@ typedef struct BINKTRACKFRAME
 
 static char binkerr[BINK_ERROR_BUFFER_SIZE];
 
-static BINKTRACKID TrackNums[BINK_MAX_TRACKS] = { BINK_DEFAULT_TRACK_ID };
+static u32 TrackNums[BINK_MAX_TRACKS] = { BINK_DEFAULT_TRACK_ID };
 u32 LogoData[BINK_LOGO_DWORDS] = {
     0x42494B69, 0xF8390000, 0x01000000, 0xCC390000, 0x01000000, 0xE0000000, 0xFC000000, 0x0A000000,
     0x01000000, 0x00000000, 0x00000000, 0x35000000, 0x003A0000, 0xEC2B0000, 0xBE6315EC, 0x38C6B0CE,
@@ -858,7 +858,7 @@ void BinkSetSimulate(u32 sim)
     Simulate = sim;
 }
 
-void BinkSetSoundTrack(u32 total_tracks, BINKTRACKID PTR4* tracks)
+void BinkSetSoundTrack(u32 total_tracks, u32 PTR4* tracks)
 {
     u32 i;
 
@@ -871,7 +871,7 @@ void BinkSetSoundTrack(u32 total_tracks, BINKTRACKID PTR4* tracks)
     }
 }
 
-static u32 high1secrate(s32 frames, const BINKFRAMEOFFSET PTR4* frameoffsets, s32 span,
+static u32 high1secrate(s32 frames, const u32 PTR4* frameoffsets, s32 span,
                         u32 PTR4* highframe, u32 PTR4* allkey)
 {
     u32 rate;
@@ -884,8 +884,8 @@ static u32 high1secrate(s32 frames, const BINKFRAMEOFFSET PTR4* frameoffsets, s3
     key = 1;
     i = 0;
     if (i < frames - span) {
-        const BINKFRAMEOFFSET PTR4* start = frameoffsets;
-        const BINKFRAMEOFFSET PTR4* end = &frameoffsets[span];
+        const u32 PTR4* start = frameoffsets;
+        const u32 PTR4* end = &frameoffsets[span];
 
         do {
             u32 diff = *end++ - *start++;
@@ -1254,7 +1254,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
 
                 while (playing < out->playingtracks) {
                     u32 track = out->trackindexes[playing];
-                    BINKTRACKTYPE tracktype = out->tracktypes[track];
+                    u32 tracktype = out->tracktypes[track];
                     BINKSND PTR4* snd = &out->bsnd[playing];
 
                     if (BINKTRACKISOPENABLE(tracktype)) {
@@ -1594,7 +1594,7 @@ s32 BinkDoFrame(HBINK bnk)
 
                     playing_index = 0;
                     if ((s32)bnk->playingtracks > 0) {
-                        BINKTRACKINDEX PTR4* indexes;
+                        s32 PTR4* indexes;
 
                         indexes = bnk->trackindexes;
                         do {
@@ -1856,7 +1856,7 @@ u32 BinkGetKeyFrame(HBINK bnk, u32 frame, s32 flags)
     case BINKGETKEYPREVIOUS:
         prev = frame - 2;
         if (prev > 0) {
-            const BINKFRAMEOFFSET PTR4* ptr;
+            const u32 PTR4* ptr;
 
             ptr = bnk->frameoffsets;
             if (BINK_FRAME_KEY(ptr[prev]) == 0) {
@@ -1877,13 +1877,13 @@ found_previous:
         if (cur >= bnk->Frames) {
             break;
         } else {
-            const BINKFRAMEOFFSET PTR4* ptr;
+            const u32 PTR4* ptr;
             u32 limit;
 
             limit = bnk->Frames;
             ptr = bnk->frameoffsets + cur;
             do {
-                BINKFRAMEOFFSET value;
+                u32 value;
 
                 value = *ptr++;
                 ++cur;
@@ -1903,7 +1903,7 @@ found_previous:
                 }
 
                 if (cur < bnk->Frames) {
-                    BINKFRAMEOFFSET value = bnk->frameoffsets[cur];
+                    u32 value = bnk->frameoffsets[cur];
 
                     ++cur;
                     if (BINK_FRAME_KEY(value) != 0) {
@@ -1916,7 +1916,7 @@ found_previous:
                 }
 
                 {
-                    BINKFRAMEOFFSET value = bnk->frameoffsets[cur];
+                    u32 value = bnk->frameoffsets[cur];
 
                     ++cur;
                     if (BINK_FRAME_KEY(value) != 0) {
@@ -2645,7 +2645,7 @@ void BinkService(HBINK bink)
     }
 }
 
-static BINKTRACKINDEX idtoindex(HBINK bnk, BINKTRACKID trackid)
+static s32 idtoindex(HBINK bnk, u32 trackid)
 {
     s32 i;
 
@@ -2658,7 +2658,7 @@ static BINKTRACKINDEX idtoindex(HBINK bnk, BINKTRACKID trackid)
     return BINK_TRACK_NOT_FOUND;
 }
 
-void BinkSetVolume(HBINK bnk, BINKTRACKID trackid, s32 volume)
+void BinkSetVolume(HBINK bnk, u32 trackid, s32 volume)
 {
     s32 index;
     BINKSND PTR4* snd;
@@ -2676,7 +2676,7 @@ void BinkSetVolume(HBINK bnk, BINKTRACKID trackid, s32 volume)
     }
 }
 
-void BinkSetMixBins(HBINK bnk, BINKTRACKID trackid, u32 PTR4* mix_bins, u32 total)
+void BinkSetMixBins(HBINK bnk, u32 trackid, u32 PTR4* mix_bins, u32 total)
 {
     s32 index;
     BINKSND PTR4* snd;
@@ -2694,7 +2694,7 @@ void BinkSetMixBins(HBINK bnk, BINKTRACKID trackid, u32 PTR4* mix_bins, u32 tota
     }
 }
 
-void BinkSetMixBinVolumes(HBINK bnk, BINKTRACKID trackid, u32 PTR4* vol_mix_bins, s32 PTR4* volumes, u32 total)
+void BinkSetMixBinVolumes(HBINK bnk, u32 trackid, u32 PTR4* vol_mix_bins, s32 PTR4* volumes, u32 total)
 {
     s32 index;
     BINKSND PTR4* snd;
@@ -2712,7 +2712,7 @@ void BinkSetMixBinVolumes(HBINK bnk, BINKTRACKID trackid, u32 PTR4* vol_mix_bins
     }
 }
 
-void BinkSetPan(HBINK bnk, BINKTRACKID trackid, s32 pan)
+void BinkSetPan(HBINK bnk, u32 trackid, s32 pan)
 {
     s32 index;
     BINKSND PTR4* snd;
@@ -2744,7 +2744,7 @@ u32 BinkGetTrackType(HBINK bnk, u32 trackindex)
     return 0;
 }
 
-BINKTRACKSIZE BinkGetTrackMaxSize(HBINK bnk, u32 trackindex)
+u32 BinkGetTrackMaxSize(HBINK bnk, u32 trackindex)
 {
     if (bnk != 0)
     {
@@ -2753,7 +2753,7 @@ BINKTRACKSIZE BinkGetTrackMaxSize(HBINK bnk, u32 trackindex)
     return 0;
 }
 
-BINKTRACKID BinkGetTrackID(HBINK bnk, u32 trackindex)
+u32 BinkGetTrackID(HBINK bnk, u32 trackindex)
 {
     if (bnk != 0)
     {
@@ -2764,8 +2764,8 @@ BINKTRACKID BinkGetTrackID(HBINK bnk, u32 trackindex)
 
 HBINKTRACK BinkOpenTrack(HBINK bnk, u32 trackindex)
 {
-    BINKTRACKTYPE tracktype;
-    BINKTRACKTYPE open_tracktype;
+    u32 tracktype;
+    u32 open_tracktype;
     HBINKAUDIODECOMP sndcomp;
     HBINKTRACK track;
 
