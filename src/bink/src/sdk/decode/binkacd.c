@@ -330,7 +330,6 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
     vb.cur = inptr;
     vb.bitlen = 0;
     vb.bits = 0;
-    output_scale = transform_size_root;
 
     if ((flags & BINKACNEWFORMAT) != 0) {
         /* New-format streams reserve two leading bits before the coefficient payload. */
@@ -362,6 +361,7 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
         channel += transform_size;
     }
 
+    output_scale = transform_size_root;
     if (chans == BINKAC_MONO_CHANNELS) {
         quanttos16s(samples, decoded, output_scale, transform_size);
     } else {
