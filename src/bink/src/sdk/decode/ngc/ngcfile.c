@@ -360,7 +360,7 @@ static u32 BinkFileIdle(BINKIO PTR4* io)
     }
 
     status = DVDGetCommandBlockStatus(&NGC_DVD(io)->cb);
-    if (status >= DVD_STATE_COVER_CLOSED) {
+    if (status > DVD_STATE_WAITING) {
         if (status == DVD_STATE_CANCELED) {
             return io->DoingARead;
         }
@@ -370,6 +370,10 @@ static u32 BinkFileIdle(BINKIO PTR4* io)
         if (status == DVD_STATE_RETRY) {
             goto read_error;
         }
+        return io->DoingARead;
+    }
+
+    if (status >= DVD_STATE_BUSY) {
         return io->DoingARead;
     }
 
