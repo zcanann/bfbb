@@ -721,7 +721,8 @@ static void CheckReadHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
             values = bundle->values;
             decode = bundle->decode;
             peek = bundle->bits_to_peek;
-            while (count-- != 0) {
+            while (count != 0) {
+                count--;
                 *dest++ = (u8)exp_read_huff4(bits, peek, decode, values);
             }
         } else {
