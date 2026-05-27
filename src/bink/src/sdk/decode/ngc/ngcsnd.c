@@ -132,6 +132,8 @@ typedef char NGCSoundStateFitsInBinkSndData
 #define NGC_SOUND_STATE(snd) ((NGCSoundState PTR4*)NGC_SND(snd)->snddata)
 #define NGC_TASK(state, index) (&NGC_STATE(state)->tasks[(index)])
 #define NGC_TASK_FOR_INDEX(state, index, side) NGC_TASK(state, (side) + ((index) << 1))
+#define NGC_TASK_SOURCE(task) ((u8 PTR4*)((task)->source))
+#define NGC_TASK_SOURCE_AT(task, offset) (NGC_TASK_SOURCE(task) + (offset))
 #define NGC_LEFT_VOICE(ptr) (NGC_STATE(ptr)->left_voice)
 #define NGC_RIGHT_VOICE(ptr) (NGC_STATE(ptr)->right_voice)
 #define NGC_CHANNEL_STRIDE(ptr) (NGC_STATE(ptr)->channel_stride)
@@ -598,8 +600,8 @@ static s32 Unlock(BINKSND PTR4* snd, u32 filled)
 
     if (NGC_SND(snd)->chans == NGC_SOUND_STEREO_CHANNELS) {
         /* Split the temporary interleaved stereo buffer into the two ARQ upload buffers. */
-        u8 PTR4* left = (u8 PTR4*)task->source;
-        u8 PTR4* right = (u8 PTR4*)NGC_TASK(state, state->lock_index + NGC_SOUND_RIGHT_TASK_OFFSET)->source;
+        u8 PTR4* left = NGC_TASK_SOURCE(task);
+        u8 PTR4* right = NGC_TASK_SOURCE(NGC_TASK(state, state->lock_index + NGC_SOUND_RIGHT_TASK_OFFSET));
         u8 PTR4* src = state->stereo_buffer;
 
         if (NGC_SND(snd)->bits == NGC_SOUND_BITS_16) {
@@ -662,7 +664,7 @@ static s32 Unlock(BINKSND PTR4* snd, u32 filled)
 
         padded = NGC_ALIGN_UP(filled, NGC_SOUND_FRAME_ALIGN_MASK);
         for (i = 0; i < NGC_SND(snd)->chans; ++i) {
-            memset((u8 PTR4*)NGC_TASK(state, state->lock_index + i + i)->source + filled, 0,
+            memset(NGC_TASK_SOURCE_AT(NGC_TASK(state, state->lock_index + i + i), filled), 0,
                    padded - filled);
         }
     }
