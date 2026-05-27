@@ -1594,7 +1594,7 @@ s32 BinkDoFrame(HBINK bnk)
 
                     playing_index = 0;
                     if ((s32)bnk->playingtracks > 0) {
-                        s32 PTR4* indexes;
+                        BINKTRACKINDEX PTR4* indexes;
 
                         indexes = bnk->trackindexes;
                         do {
@@ -2645,7 +2645,7 @@ void BinkService(HBINK bink)
     }
 }
 
-static s32 idtoindex(HBINK bnk, BINKTRACKID trackid)
+static BINKTRACKINDEX idtoindex(HBINK bnk, BINKTRACKID trackid)
 {
     s32 i;
 
