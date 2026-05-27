@@ -964,6 +964,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
     u32 bundle_sizes[BINK_BUNDLE_COUNT];
     u32 all_key;
     u32 plane_size;
+    u32 sound_bytes;
     u32 simulate;
     HBINK out;
 
@@ -1087,7 +1088,11 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
                BINK_ARRAY_BYTES(bnk.runtimeframes, bnk.rtidlereadtimes));
     pushmalloc((void PTR4* PTR4*)&bnk.rtthreadreadtimes,
                BINK_ARRAY_BYTES(bnk.runtimeframes, bnk.rtthreadreadtimes));
-    pushmalloc((void PTR4* PTR4*)&bnk.bsnd, BINK_ARRAY_BYTES(TotTracks, bnk.bsnd));
+    sound_bytes = sizeof(*bnk.bsnd);
+    if (TotTracks != 0) {
+        sound_bytes = BINK_ARRAY_BYTES(TotTracks, bnk.bsnd);
+    }
+    pushmalloc((void PTR4* PTR4*)&bnk.bsnd, sound_bytes);
     pushmalloc((void PTR4* PTR4*)&bnk.trackindexes,
                BINK_ARRAY_BYTES(TotTracks, bnk.trackindexes));
 
