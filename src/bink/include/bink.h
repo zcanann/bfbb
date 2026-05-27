@@ -181,6 +181,8 @@ typedef struct BUNDLEPOINTERS
     void PTR4* patptr;     // run lengths
 } BUNDLEPOINTERS;
 
+typedef u32 BINKFRAMEOFFSET; // File offset with bit 0 carrying the key-frame flag.
+
 typedef struct BINK
 {
     u32 Width; // Width (1 based, 640 for example)
@@ -231,7 +233,7 @@ typedef struct BINK
 
     void PTR4* compframe; // compressed frame data
     void PTR4* preloadptr; // preloaded compressed frame data
-    u32 PTR4* frameoffsets; // offsets of each of the frames
+    BINKFRAMEOFFSET PTR4* frameoffsets; // offsets of each of the frames
 
     BINKIO bio; // IO structure
     u8 PTR4* ioptr; // io buffer ptr
