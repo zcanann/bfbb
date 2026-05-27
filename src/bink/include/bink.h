@@ -181,12 +181,6 @@ typedef struct BUNDLEPOINTERS
     void PTR4* patptr;     // run lengths
 } BUNDLEPOINTERS;
 
-typedef u32 BINKFRAMEOFFSET; // File offset with bit 0 carrying the key-frame flag.
-typedef u32 BINKTRACKTYPE;   // Packed audio frequency, channel, bit-depth, and format flags.
-typedef u32 BINKTRACKID;     // Caller-visible audio track number.
-typedef s32 BINKTRACKINDEX;  // Index into the movie's track tables.
-typedef u32 BINKTRACKSIZE;   // Maximum compressed byte size for a single track frame.
-
 typedef struct BINK
 {
     u32 Width; // Width (1 based, 640 for example)
@@ -237,7 +231,7 @@ typedef struct BINK
 
     void PTR4* compframe; // compressed frame data
     void PTR4* preloadptr; // preloaded compressed frame data
-    BINKFRAMEOFFSET PTR4* frameoffsets; // offsets of each of the frames
+    u32 PTR4* frameoffsets; // offsets of each of the frames
 
     BINKIO bio; // IO structure
     u8 PTR4* ioptr; // io buffer ptr
@@ -245,10 +239,10 @@ typedef struct BINK
     u32 decompwidth; // width not include scaling
     u32 decompheight; // height not include scaling
 
-    BINKTRACKINDEX PTR4* trackindexes; // track indexes
-    BINKTRACKSIZE PTR4* tracksizes; // largest single frame of track
-    BINKTRACKTYPE PTR4* tracktypes; // type of each sound track
-    BINKTRACKID PTR4* trackIDs; // external track numbers
+    s32 PTR4* trackindexes; // track indexes
+    u32 PTR4* tracksizes; // largest single frame of track
+    u32 PTR4* tracktypes; // type of each sound track
+    s32 PTR4* trackIDs; // external track numbers
 
     u32 numrects; // number of rects from BinkGetRects
 
@@ -477,10 +471,10 @@ RADEXPFUNC u32 RADEXPLINK BinkGetKeyFrame(HBINK bnk, u32 frame, s32 flags);
 
 RADEXPFUNC s32 RADEXPLINK BinkSetVideoOnOff(HBINK bnk, s32 onoff);
 RADEXPFUNC s32 RADEXPLINK BinkSetSoundOnOff(HBINK bnk, s32 onoff);
-RADEXPFUNC void RADEXPLINK BinkSetVolume(HBINK bnk, BINKTRACKID trackid, s32 volume);
-RADEXPFUNC void RADEXPLINK BinkSetPan(HBINK bnk, BINKTRACKID trackid, s32 pan);
-RADEXPFUNC void RADEXPLINK BinkSetMixBins(HBINK bnk, BINKTRACKID trackid, u32 PTR4* mix_bins, u32 total);
-RADEXPFUNC void RADEXPLINK BinkSetMixBinVolumes(HBINK bnk, BINKTRACKID trackid, u32 PTR4* vol_mix_bins,
+RADEXPFUNC void RADEXPLINK BinkSetVolume(HBINK bnk, u32 trackid, s32 volume);
+RADEXPFUNC void RADEXPLINK BinkSetPan(HBINK bnk, u32 trackid, s32 pan);
+RADEXPFUNC void RADEXPLINK BinkSetMixBins(HBINK bnk, u32 trackid, u32 PTR4* mix_bins, u32 total);
+RADEXPFUNC void RADEXPLINK BinkSetMixBinVolumes(HBINK bnk, u32 trackid, u32 PTR4* vol_mix_bins,
                                                 s32 PTR4* volumes, u32 total);
 RADEXPFUNC void RADEXPLINK BinkService(HBINK bink);
 
@@ -491,11 +485,11 @@ typedef struct BINKTRACK
     u32 Frequency;
     u32 Bits;
     u32 Channels;
-    BINKTRACKSIZE MaxSize;
+    u32 MaxSize;
 
     HBINK bink;
     UINTa sndcomp;
-    BINKTRACKINDEX trackindex;
+    s32 trackindex;
 } BINKTRACK;
 
 RADEXPFUNC HBINKTRACK RADEXPLINK BinkOpenTrack(HBINK bnk, u32 trackindex);
@@ -503,15 +497,15 @@ RADEXPFUNC void RADEXPLINK BinkCloseTrack(HBINKTRACK bnkt);
 RADEXPFUNC u32 RADEXPLINK BinkGetTrackData(HBINKTRACK bnkt, void PTR4* dest);
 
 RADEXPFUNC u32 RADEXPLINK BinkGetTrackType(HBINK bnk, u32 trackindex);
-RADEXPFUNC BINKTRACKSIZE RADEXPLINK BinkGetTrackMaxSize(HBINK bnk, u32 trackindex);
-RADEXPFUNC BINKTRACKID RADEXPLINK BinkGetTrackID(HBINK bnk, u32 trackindex);
+RADEXPFUNC u32 RADEXPLINK BinkGetTrackMaxSize(HBINK bnk, u32 trackindex);
+RADEXPFUNC u32 RADEXPLINK BinkGetTrackID(HBINK bnk, u32 trackindex);
 
 RADEXPFUNC void RADEXPLINK BinkGetSummary(HBINK bnk, BINKSUMMARY PTR4* sum);
 RADEXPFUNC void RADEXPLINK BinkGetRealtime(HBINK bink, BINKREALTIME PTR4* run, u32 frames);
 
 #define BINKNOSOUND 0xffffffff
 
-RADEXPFUNC void RADEXPLINK BinkSetSoundTrack(u32 total_tracks, BINKTRACKID PTR4* tracks);
+RADEXPFUNC void RADEXPLINK BinkSetSoundTrack(u32 total_tracks, u32 PTR4* tracks);
 RADEXPFUNC void RADEXPLINK BinkSetIO(BINKIOOPEN io);
 RADEXPFUNC void RADEXPLINK BinkSetFrameRate(u32 forcerate, u32 forceratediv);
 RADEXPFUNC void RADEXPLINK BinkSetSimulate(u32 sim);
