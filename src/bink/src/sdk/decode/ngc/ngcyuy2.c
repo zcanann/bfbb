@@ -55,8 +55,8 @@
 // same packing logic for S.dest0 and S.dest1, then advance the shared context.
 static void YUY2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, const u32 PTR4* u,
                            const u32 PTR4* v);
-static void YUY2_x2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, const u16 PTR4* u,
-                              const u16 PTR4* v);
+static void YUY2_x2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, const u32 PTR4* u,
+                              const u32 PTR4* v);
 static void YUY2_m_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y);
 static void YUY2_mx2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y);
 
@@ -352,19 +352,19 @@ static void YUY2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, const u
     }
 }
 
-static void YUY2_x2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, const u16 PTR4* u,
-                              const u16 PTR4* v)
+static void YUY2_x2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, const u32 PTR4* u,
+                              const u32 PTR4* v)
 {
     s32 pairs;
 
     pairs = YUY2_BLOCK_PAIRS(count);
     while (pairs != 0) {
-        u32 u0 = *(const u32 PTR4*)u;
-        u32 v0 = *(const u32 PTR4*)v;
+        u32 u0 = *u;
+        u32 v0 = *v;
         u32 y0 = *y++;
         u32 chroma;
 
-        u += YUY2_PAIR_STRIDE;
+        u++;
         chroma = YUY2_CHROMA0(u0, v0);
         *dest++ = YUY2_PACK_X2Y0(y0, chroma);
         *dest++ = YUY2_PACK_X2Y1(y0, chroma);
@@ -373,7 +373,7 @@ static void YUY2_x2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, cons
         *dest++ = YUY2_PACK_X2Y3(y0, chroma);
 
         y0 = *y++;
-        v += YUY2_PAIR_STRIDE;
+        v++;
         chroma = YUY2_CHROMA2(u0, v0);
         *dest++ = YUY2_PACK_X2Y0(y0, chroma);
         *dest++ = YUY2_PACK_X2Y1(y0, chroma);
@@ -386,8 +386,8 @@ static void YUY2_x2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, cons
 
     if (YUY2_HAS_TAIL_BLOCK(count)) {
         u32 y0 = y[YUY2_PAIR_LUMA_WORD_0];
-        u16 u0 = *u;
-        u16 v0 = *v;
+        u16 u0 = *(const u16 PTR4*)u;
+        u16 v0 = *(const u16 PTR4*)v;
         u32 chroma;
 
         chroma = YUY2_TAIL_CHROMA0(u0, v0);
