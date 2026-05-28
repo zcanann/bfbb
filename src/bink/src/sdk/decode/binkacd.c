@@ -197,21 +197,24 @@ static inline u32 read_rle_bits(VARBITS PTR4* vb)
 static inline u32 read_bit(VARBITS PTR4* vb)
 {
     u32 bitcount = vb->bitlen;
+    u32 bit;
 
     if (bitcount != 0) {
         u32 bits = vb->bits;
 
         vb->bitlen = bitcount - 1;
         vb->bits = bits >> 1;
-        return bits & 1;
+        bit = bits & 1;
     } else {
         u32 word = BINKAC_LOAD32(vb->cur);
 
         VARBITS_ADVANCE_CUR(vb->cur);
         vb->bitlen = BITSTYPELEN - 1;
         vb->bits = word >> 1;
-        return word & 1;
+        bit = word & 1;
     }
+
+    return bit;
 }
 
 static void read_rle_samples(f32 PTR4* samples, u32 transform_size, VARBITS PTR4* vb,
@@ -233,10 +236,12 @@ static void read_rle_samples(f32 PTR4* samples, u32 transform_size, VARBITS PTR4
     while (i < transform_size) {
         u32 end;
         u32 bitlen;
+        u32 is_rle;
 
         /* Each sparse coefficient packet is either 5 bits (literal VQ run) or
            9 bits (RLE flag, 4-bit run index, 4-bit coefficient bit length). */
-        if (read_bit(vb)) {
+        is_rle = read_bit(vb);
+        if (is_rle != 0) {
             u32 run = read_rle_bits(vb);
 
             end = i + BINKAC_RLE_SAMPLE_RUN(run);
