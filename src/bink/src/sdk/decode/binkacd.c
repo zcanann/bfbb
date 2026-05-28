@@ -75,15 +75,6 @@ static u32 bink_bandtopfreq[TOTBANDS] = {
     2000, 2320, 2700, 3150, 3700, 4400, 5300, 6400, 7700, 9500, 12000, 15500
 };
 
-#define BINKAC_SAMPLE_ZERO 0.0f
-#define BINKAC_QUANT_INDEX_SCALE 0.664f
-#define BINKAC_QUANT_POWER_SCALE 0.10f
-#define BINKAC_QUANT_POWER_BASE 10.0
-#define BINKAC_RSQRT_ZERO 0.0f
-#define BINKAC_RSQRT_NEWTON_HALF 0.5
-#define BINKAC_RSQRT_NEWTON_THREE 3.0
-#define BINKAC_TRANSFORM_ROOT_SCALE 2.0f
-
 /* Reciprocals used by fxptof for the 29-bit packed fixed-point coefficients. */
 static f64 bink_invertbins[BINKAC_INVERT_BINS] = {
     1.0 / (1 << 23), 1.0 / (1 << 22), 1.0 / (1 << 21), 1.0 / (1 << 20),
@@ -228,7 +219,7 @@ static void read_rle_samples(f32 PTR4* samples, u32 transform_size, VARBITS PTR4
 {
     u32 i;
     u32 band = 0;
-    f32 scale = BINKAC_SAMPLE_ZERO;
+    f32 scale = 0.0f;
     f32 PTR4* out;
 
     while (BINKAC_BAND_SAMPLE_LIMIT(bands, band) < BINKAC_FIRST_COEFF) {
@@ -283,7 +274,7 @@ static void read_rle_samples(f32 PTR4* samples, u32 transform_size, VARBITS PTR4
                         value = (value ^ sign) - sign;
                         *out = value * scale;
                     } else {
-                        *out = BINKAC_SAMPLE_ZERO;
+                        *out = 0.0f;
                     }
                 }
 
@@ -298,7 +289,7 @@ f64 pow(f64 x, f64 y);
 
 static inline f32 Undecibel(f32 d)
 {
-    return (f32)pow(BINKAC_QUANT_POWER_BASE, d * BINKAC_QUANT_POWER_SCALE);
+    return (f32)pow(10.0, d * 0.10f);
 }
 
 static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
@@ -337,7 +328,7 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
 
         for (i = 0; i < num_bands; ++i) {
             VarBitsGet(q, s32, vb, BINKAC_THRESHOLD_BITS);
-            thresholds[i] = Undecibel((f32)q * BINKAC_QUANT_INDEX_SCALE);
+            thresholds[i] = Undecibel((f32)q * 0.664f);
         }
 
         read_rle_samples(channel, transform_size, &vb, thresholds, bands);
@@ -362,21 +353,18 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
 
 static inline f32 radfsqrt(f32 value)
 {
-    if (value > BINKAC_RSQRT_ZERO) {
+    if (value > 0.0f) {
         f64 guess;
         f64 error;
 
         __asm__ volatile("frsqrte %0,%1" : "=f"(error) : "f"(value));
         guess = error;
         error = guess * guess * value;
-        guess = BINKAC_RSQRT_NEWTON_HALF * guess *
-                (BINKAC_RSQRT_NEWTON_THREE - error);
+        guess = 0.5 * guess * (3.0 - error);
         error = guess * guess * value;
-        guess = BINKAC_RSQRT_NEWTON_HALF * guess *
-                (BINKAC_RSQRT_NEWTON_THREE - error);
+        guess = 0.5 * guess * (3.0 - error);
         error = guess * guess * value;
-        guess = BINKAC_RSQRT_NEWTON_HALF * guess *
-                (BINKAC_RSQRT_NEWTON_THREE - error);
+        guess = 0.5 * guess * (3.0 - error);
         return value * guess;
     }
 
@@ -453,7 +441,7 @@ HBINKAUDIODECOMP BinkAudioDecompressOpen(u32 rate, u32 chans, u32 flags)
     ba->transform_size = transform_size;
     ba->buffer_size = buffer_size;
     ba->window_size_in_bytes = BINKAC_WINDOW_BYTES(buffer_size);
-    transform_size_root = BINKAC_TRANSFORM_ROOT_SCALE / radfsqrt((f32)transform_size);
+    transform_size_root = 2.0f / radfsqrt((f32)transform_size);
     ba->transform_size_root = transform_size_root;
 
     for (i = 0; i < num_bands; ++i) {
