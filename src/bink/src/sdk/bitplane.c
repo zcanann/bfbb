@@ -224,6 +224,7 @@ u32 LenBPLossless(s16 PTR4* vals)
     u16 PTR4* restart;
     u16 PTR4* end;
     u16 PTR4* roots;
+    s32 have_bits;
     s32 total;
     BPLOSSLESSWRITETREE tree;
     u8 lens[BP_BLOCK_COEFFS];
@@ -245,6 +246,7 @@ u32 LenBPLossless(s16 PTR4* vals)
         i++;
         count--;
     } while (count != 0);
+    have_bits = maxbits != 0;
 
     /* Each four-coefficient subtree inherits the deepest child bit depth. */
     len = BP_FIRST_LOSSLESS_TREE_GROUP_INDEX;
@@ -395,7 +397,7 @@ handle_children:
         cur = restart;
     }
 
-    if (maxbits && (total = len, restart = cur, cur < end)) {
+    if (have_bits && (total = len, restart = cur, cur < end)) {
         do {
             entry = *cur;
             len = total;
