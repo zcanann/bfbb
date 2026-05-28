@@ -216,10 +216,14 @@ static void startVoices(u32 task)
 }
 static void NGC_SoundPlay(BINKSND PTR4* snd, u32 index, u32 size)
 {
-    NGCSoundState PTR4* state = NGC_SOUND_STATE(snd);
-    u32 end_pos = NGC_SOUND_STATE(snd)->play_cursor + size;
-    ARQRequest PTR4* task = NGC_TASK(state, index);
+    NGCSoundState PTR4* state;
+    u32 end_pos;
+    ARQRequest PTR4* task;
     ARQRequest PTR4* second_task;
+
+    state = NGC_SOUND_STATE(snd);
+    end_pos = NGC_SOUND_STATE(snd)->play_cursor + size;
+    task = NGC_TASK(state, index);
 
     if (NGC_SOUND_STATE(snd)->right_voice != 0) {
         second_task = &NGC_SOUND_STATE(snd)->tasks[NGC_SOUND_RIGHT_TASK_OFFSET];
@@ -258,13 +262,14 @@ static void NGC_SoundPlay(BINKSND PTR4* snd, u32 index, u32 size)
 
 static s32 NGC_SoundReinit(BINKSND PTR4* snd)
 {
-    NGCSoundState PTR4* state = NGC_SOUND_STATE(snd);
+    NGCSoundState PTR4* state;
     AXVPB PTR4* voice;
     u32 addr;
     u32 ax_addr;
     u32 end;
     u32 i;
 
+    state = NGC_SOUND_STATE(snd);
     voice = NGC_LEFT_VOICE(state);
     if (voice != 0) {
         AXSetVoiceState(voice, AX_PB_STATE_STOP);
@@ -764,6 +769,7 @@ static s32 Ready(BINKSND PTR4* snd)
     u32 play_pos;
     u32 end_pos;
     u32 shift;
+    u32 pending;
 
     index = NGC_SOUND_NO_LOCK_INDEX;
     if (NGC_SOUND_STATE(snd)->paused != 0 || NGC_SND(snd)->OnOff == NGC_SOUND_OFF ||
@@ -777,8 +783,6 @@ static s32 Ready(BINKSND PTR4* snd)
     voice = NGC_SOUND_STATE(snd)->left_voice;
     play_pos = NGC_AX_CURRENT_CURSOR(voice, shift);
     if (NGC_SOUND_STATE(snd)->play_state == NGC_PLAY_STATE_RUNNING) {
-        u32 pending;
-
         end_pos = NGC_AX_END_CURSOR(voice, shift);
         pending = 0;
         /* A pending wrapped end address becomes valid once playback crosses the wrap. */
