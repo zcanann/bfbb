@@ -1904,9 +1904,7 @@ found_previous:
                 }
 
                 if (cur < bnk->Frames) {
-                    u32 value = bnk->frameoffsets[cur];
-
-                    ++cur;
+                    u32 value = bnk->frameoffsets[cur++];
                     if (BINK_FRAME_KEY(value) != 0) {
                         return cur;
                     }
