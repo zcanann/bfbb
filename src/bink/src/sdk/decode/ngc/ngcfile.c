@@ -178,10 +178,10 @@ static u32 radreadngc(DVDFileInfo PTR4* file, u32 offset, void PTR4* dest, u32 s
                 }
                 return 0;
             } else if (status <= DVD_STATE_RETRY) {
-                if (status >= DVD_STATE_COVER_CLOSED) {
-                    return 0;
+                if (status <= DVD_STATE_WAITING) {
+                    continue;
                 }
-                continue;
+                return 0;
             }
 
         } while (1);
@@ -426,8 +426,7 @@ static u32 BinkFileReadFrame(BINKIO PTR4* io, u32 frame_num, s32 offset, void PT
     if (offset != BINK_FILE_CURRENT_OFFSET && NGC_CONSUME_CURSOR(io) != (u32)offset) {
         if ((u32)offset > NGC_CONSUME_CURSOR(io) && (u32)offset <= NGC_READ_CURSOR(io)) {
             BOOL enabled = OSDisableInterrupts();
-            u32 consume = NGC_CONSUME_CURSOR(io);
-            u32 skip = offset - consume;
+            u32 skip = offset - NGC_CONSUME_CURSOR(io);
             u8 PTR4* ptr;
 
             /* A forward seek already buffered by DVD can be consumed by advancing the ring pointer. */
