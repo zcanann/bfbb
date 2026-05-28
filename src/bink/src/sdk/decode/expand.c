@@ -267,7 +267,7 @@ static void simpmergesort(EXPBITS PTR4* bits, u8 PTR4* out, u8 PTR4* left,
     s32 left_count;
 
     left_count = count;
-    for (;;) {
+    do {
         if (exp_get_bit(bits)) {
             value = *right++;
             count--;
@@ -277,13 +277,7 @@ static void simpmergesort(EXPBITS PTR4* bits, u8 PTR4* out, u8 PTR4* left,
         }
 
         *out++ = value;
-        if (left_count == 0) {
-            break;
-        }
-        if (count == 0) {
-            break;
-        }
-    }
+    } while (left_count != 0 && count != 0);
 
     if (left_count != 0) {
         while (left_count != 0) {
@@ -842,9 +836,8 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
             VarBitsGet(current, u16, *bits, bundle->bit_size);
         }
 
-        remaining = count;
         *dest++ = (s16)current;
-        remaining--;
+        remaining = count - 1;
         bundle->cur_ptr = bundle->data;
         bundle->cur_dec = bundle->data + count * sizeof(*dest);
         while (remaining != 0) {
