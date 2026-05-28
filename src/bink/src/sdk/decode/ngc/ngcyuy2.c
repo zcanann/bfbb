@@ -53,8 +53,8 @@
 
 // Helpers operate on one destination row; the public 4x2 entry points call the
 // same packing logic for S.dest0 and S.dest1, then advance the shared context.
-static void YUY2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, const u16 PTR4* u,
-                           const u16 PTR4* v);
+static void YUY2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, const u32 PTR4* u,
+                           const u32 PTR4* v);
 static void YUY2_x2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, const u16 PTR4* u,
                               const u16 PTR4* v);
 static void YUY2_m_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y);
@@ -320,23 +320,23 @@ void YUY2_mx2_4x2(u32 count)
     S.y1 += count;
 }
 
-static void YUY2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, const u16 PTR4* u,
-                           const u16 PTR4* v)
+static void YUY2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, const u32 PTR4* u,
+                           const u32 PTR4* v)
 {
     s32 pairs;
 
     pairs = YUY2_BLOCK_PAIRS(count);
     while (pairs-- != 0) {
         u32 y0 = *y++;
-        u32 u0 = *(const u32 PTR4*)u;
-        u32 v0 = *(const u32 PTR4*)v;
+        u32 u0 = *u;
+        u32 v0 = *v;
 
         *dest++ = YUY2_PACK_4Y01(y0, YUY2_CHROMA0_U(u0), YUY2_CHROMA0_V(v0));
         *dest++ = YUY2_PACK_4Y23(y0, YUY2_CHROMA1_U(u0), YUY2_CHROMA1_V(v0));
 
         y0 = *y++;
-        u += YUY2_PAIR_STRIDE;
-        v += YUY2_PAIR_STRIDE;
+        u++;
+        v++;
         *dest++ = YUY2_PACK_4Y01(y0, YUY2_CHROMA2_U(u0), YUY2_CHROMA2_V(v0));
         *dest++ = YUY2_PACK_4Y23(y0, YUY2_CHROMA3_U(u0), YUY2_CHROMA3_V(v0));
 
@@ -344,8 +344,8 @@ static void YUY2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, const u
 
     if (YUY2_HAS_TAIL_BLOCK(count)) {
         u32 y0 = y[YUY2_PAIR_LUMA_WORD_0];
-        u16 u0 = *u;
-        u16 v0 = *v;
+        u16 u0 = *(const u16 PTR4*)u;
+        u16 v0 = *(const u16 PTR4*)v;
 
         *dest++ = YUY2_PACK_4Y01(y0, YUY2_TAIL_CHROMA0_U(u0), YUY2_TAIL_CHROMA0_V(v0));
         *dest++ = YUY2_PACK_4Y23(y0, YUY2_TAIL_CHROMA1_U(u0), YUY2_TAIL_CHROMA1_V(v0));
