@@ -13,8 +13,11 @@
 #define YUY2_X2_WORDS_PER_BLOCK 4
 #define YUY2_WORD_BYTES 4
 #define YUY2_PAIR_STRIDE 2
-#define YUY2_PAIR_LUMA_WORD_0 0
-#define YUY2_PAIR_LUMA_WORD_1 1
+typedef enum YUY2PairLumaWord
+{
+    YUY2_PAIR_LUMA_WORD_0,
+    YUY2_PAIR_LUMA_WORD_1
+} YUY2PairLumaWord;
 #define YUY2_BLOCK_PAIRS(count) ((s32)(count) >> 1)
 #define YUY2_HAS_TAIL_BLOCK(count) (((count) & 1) != 0)
 #define YUY2_ROW_BYTES(count) ((count) * YUY2_WORDS_PER_BLOCK * YUY2_WORD_BYTES)
