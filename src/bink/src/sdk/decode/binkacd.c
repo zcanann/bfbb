@@ -88,6 +88,7 @@ static f64 bink_invertbins[BINKAC_INVERT_BINS] = {
     1.0 / (1 << 3),  1.0 / (1 << 2),  1.0 / (1 << 1),  1.0 / (1 << 0)
 };
 
+static const f32 BINKAC_SAMPLE_ZERO = 0.0f;
 static const f32 BINKAC_RSQRT_ZERO = 0.0f;
 static const f64 BINKAC_RSQRT_NEWTON_HALF_CONST = 0.5;
 static const f64 BINKAC_RSQRT_NEWTON_THREE_CONST = 3.0;
@@ -227,7 +228,7 @@ static void read_rle_samples(f32 PTR4* samples, u32 transform_size, VARBITS PTR4
 {
     u32 i;
     u32 band = 0;
-    f32 scale = 0.0f;
+    f32 scale = BINKAC_SAMPLE_ZERO;
     f32 PTR4* out;
 
     while (BINKAC_BAND_SAMPLE_LIMIT(bands, band) < BINKAC_FIRST_COEFF) {
@@ -285,7 +286,7 @@ static void read_rle_samples(f32 PTR4* samples, u32 transform_size, VARBITS PTR4
                         value = (value ^ sign) - sign;
                         *out = value * scale;
                     } else {
-                        *out = 0.0f;
+                        *out = BINKAC_SAMPLE_ZERO;
                     }
                 }
 
