@@ -1566,6 +1566,7 @@ static u32 dounaligned32col2wh(u32 count, s32 phase)
 
 static void dounaligned32rowm(u32 phase, u32 count)
 {
+    u8 PTR4* yptr;
     u8 y;
 
     (void)phase;
@@ -1574,8 +1575,9 @@ static void dounaligned32rowm(u32 phase, u32 count)
     }
 
     do {
-        y = *(u8 PTR4*)S.y0;
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
+        yptr = (u8 PTR4*)S.y0;
+        y = *yptr++;
+        S.y0 = (u32 PTR4*)yptr;
         *(u32 PTR4*)S.dest0 = RGB32_M(y);
         S.dest0 += YUV_PACKED_WORD_BYTES;
     } while (count-- != 0);
