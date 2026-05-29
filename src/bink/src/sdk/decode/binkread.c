@@ -125,9 +125,9 @@ typedef enum BINKSoundBestSizeMask
 typedef enum BINKSoundBitDepth
 {
     BINK_SOUND_BITS_8 = 8,
-    BINK_SOUND_BITS_16 = 16
+    BINK_SOUND_BITS_16 = 16,
+    BINK_SOUND_BYTES_PER_16_BIT_SAMPLE = sizeof(s16)
 } BINKSoundBitDepth;
-#define BINK_SOUND_BYTES_PER_16_BIT_SAMPLE sizeof(s16)
 typedef enum BINKSoundTimingLayout
 {
     BINK_SOUND_BITS_TO_BYTES_SHIFT = 3,
