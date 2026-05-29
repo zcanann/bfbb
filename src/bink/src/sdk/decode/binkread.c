@@ -888,7 +888,7 @@ static u32 high1secrate(s32 frames, const u32 PTR4* frameoffsets, s32 span,
     i = 0;
     if (i < frames - span) {
         const u32 PTR4* start = frameoffsets;
-        const u32 PTR4* end = &frameoffsets[span];
+        const u32 PTR4* end = frameoffsets + span;
 
         do {
             u32 diff = *end++ - *start++;
@@ -2365,9 +2365,8 @@ static s32 smallestrect(BINKRECT PTR4* out, const u8 PTR4* mask, s32 pitch, cons
     s32 row;
     s32 col;
     s32 value;
-    const BINKRECT PTR4* src;
+    const BINKRECT PTR4* src = rect;
 
-    src = rect;
     rect_mask = mask + BINK_MASK_BLOCKS(src->Left) + BINK_MASK_BLOCKS(src->Top) * pitch;
     height_blocks = BINK_MASK_BLOCKS(src->Height);
     width_blocks = BINK_MASK_BLOCKS(src->Width);
