@@ -3835,6 +3835,7 @@ static void dounalignedYUY2row2w(u32 phase, u32 count)
 static u32 dounalignedYUY2col2w(u32 count, s32 phase)
 {
     s32 remaining;
+    s32 phase_base;
     u8 y0;
     u8 y1;
     u8 u;
@@ -3842,6 +3843,7 @@ static u32 dounalignedYUY2col2w(u32 count, s32 phase)
     u32 pixel;
     u32 chroma;
 
+    phase_base = phase;
     remaining = count;
     do {
         remaining -= 2;
@@ -3869,7 +3871,7 @@ static u32 dounalignedYUY2col2w(u32 count, s32 phase)
         S.dest1 += 8;
     } while (remaining > 0);
 
-    return phase + count;
+    return phase_base + count;
 }
 
 static void dounalignedYUY2row2h(u32 phase, u32 count)
