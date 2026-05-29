@@ -179,7 +179,7 @@ static inline u32 read_rle_bits(VARBITS PTR4* vb)
 {
     u32 bits = vb->bitlen;
 
-    if (bits > (RLEBITS - 1)) {
+    if (bits >= RLEBITS) {
         u32 value = vb->bits & GetBitsLen(RLEBITS);
 
         vb->bitlen = bits - RLEBITS;
