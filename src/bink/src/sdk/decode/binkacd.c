@@ -90,18 +90,13 @@ typedef enum BINKACSampleCountState
 #define BINKAC_OVERLAP_SOURCE(samples, buffer_size, window_size) \
     ((u8 PTR4*)(samples) + ((buffer_size) - (window_size)))
 #define BINKAC_INPUT_ADVANCE(ptr, bytes) ((u8 PTR4*)(ptr) + (bytes))
-#define BINKAC_FXP_TO_FLOAT_BIAS 4503599627370496.0
 #define BINKAC_SAMPLE_ZERO 0.0f
-#define BINKAC_VARBITS_U32_TO_F64_BIAS 4503601774854144.0
-#define BINKAC_QUANT_U32_TO_F64_BIAS 4503601774854144.0
 #define BINKAC_QUANT_INDEX_SCALE_CONST 0.664f
 #define BINKAC_QUANT_POWER_SCALE_CONST 0.10f
 #define BINKAC_QUANT_POWER_BASE_CONST 10.0
-#define BINKAC_OPEN_U32_TO_F64_BIAS 4503599627370496.0
 #define BINKAC_RSQRT_ZERO 0.0f
 #define BINKAC_RSQRT_NEWTON_HALF_CONST 0.5
 #define BINKAC_RSQRT_NEWTON_THREE_CONST 3.0
-#define BINKAC_U32_LIMIT_AS_F64 2147483648.0
 #define BINKAC_TRANSFORM_ROOT_SCALE_CONST 2.0f
 
 /* RLE code lengths, in VQLENGTH sample groups, for sparse audio coefficients. */
