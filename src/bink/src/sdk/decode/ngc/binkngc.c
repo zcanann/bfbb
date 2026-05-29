@@ -152,7 +152,7 @@ u32 RADTimerRead(void)
     /* Convert elapsed OS ticks to milliseconds without a full 64-bit divide. */
     elapsed_high = (u32)(now >> 32);
     whole_ms = elapsed_high * RAD_TIMER_HIGH_QUOTIENT;
-    now -= (u64)RAD_TIMER_TICKS_PER_MS * whole_ms;
+    now -= (u64)whole_ms * RAD_TIMER_TICKS_PER_MS;
     elapsed_high = (u32)(now >> 32);
     low_correction = (u32)(((u64)(u32)now * RAD_TIMER_RECIP_MAGIC) >> 32);
     high_correction = elapsed_high * RAD_TIMER_RECIP_MAGIC;
