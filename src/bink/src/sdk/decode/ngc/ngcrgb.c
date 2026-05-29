@@ -4,20 +4,24 @@
 // GameCube texture memory is tiled in four-row groups. These helpers convert
 // the linear Bink row pointers in S into the swizzled destination addresses
 // used by the RGB and alpha 4x2 core kernels.
-#define RGB_TILE_ROWS 4
-#define RGB_TILE_ROW_BITS 2
-#define RGB_TILE_ROW_MASK (RGB_TILE_ROWS - 1)
-#define RGB_TILE_ROW_SHIFT 3
-#define RGB_16BIT_TILE_ALIGN_MASK 0x1f
-#define RGB_32BIT_TILE_ALIGN_MASK 0x3f
-#define RGB_BYTES_PER_PIXEL32 4
-#define RGB_16_4X2_ROW_BYTES 8
-#define RGB_16_X2_4X2_ROW_BYTES 16
-#define RGB_32_4X2_ROW_BYTES 16
-#define RGB_32_X2_4X2_ROW_BYTES 32
-#define RGB_TILE_HALF_BLOCK_WORDS 8
-#define RGB_TILE_BLOCK_WORDS 16
-#define RGB_TILE_X2_BLOCK_WORDS 32
+typedef enum RGBTileLayout
+{
+    RGB_TILE_ROWS = 4,
+    RGB_TILE_ROW_BITS = 2,
+    RGB_TILE_ROW_MASK = RGB_TILE_ROWS - 1,
+    RGB_TILE_ROW_SHIFT = 3,
+    RGB_16BIT_TILE_ALIGN_MASK = 0x1f,
+    RGB_32BIT_TILE_ALIGN_MASK = 0x3f,
+    RGB_BYTES_PER_PIXEL32 = 4,
+    RGB_16_4X2_ROW_BYTES = 8,
+    RGB_16_X2_4X2_ROW_BYTES = 16,
+    RGB_32_4X2_ROW_BYTES = 16,
+    RGB_32_X2_4X2_ROW_BYTES = 32,
+    RGB_TILE_HALF_BLOCK_WORDS = 8,
+    RGB_TILE_BLOCK_WORDS = 16,
+    RGB_TILE_X2_BLOCK_WORDS = 32
+} RGBTileLayout;
+
 #define RGB_TILE_PITCH16(pitch) (((pitch) * RGB_BYTES_PER_PIXEL32 + RGB_16BIT_TILE_ALIGN_MASK) & ~RGB_16BIT_TILE_ALIGN_MASK)
 #define RGB_TILE_PITCH32(pitch) (((pitch) * RGB_BYTES_PER_PIXEL32 + RGB_32BIT_TILE_ALIGN_MASK) & ~RGB_32BIT_TILE_ALIGN_MASK)
 #define RGB_TILE_ROW(ptr, base, pitch) ((s32)((u8 PTR4*)(ptr) - (base)) / (s32)(pitch))
@@ -26,17 +30,25 @@
     ((base) + (tilePitch) * ((u32)(row) >> RGB_TILE_ROW_BITS) +                                                       \
      (((u32)(row) & RGB_TILE_ROW_MASK) << RGB_TILE_ROW_SHIFT) +                                                       \
      (((u8 PTR4*)(ptr) - RGB_TILE_ROW_START((base), (row), (pitch))) << RGB_TILE_ROW_BITS))
-#define RGB_BYTE_MASK 0xff
+typedef enum RGBWordMasks
+{
+    RGB_BYTE_MASK = 0xff,
+    RGB_WORD_LO_MASK = 0x0000ffff,
+    RGB_WORD_HI_MASK = 0xffff0000,
+    RGB_ALPHA0_MASK = 0xff000000,
+    RGB_ALPHA2_MASK = 0x0000ff00
+} RGBWordMasks;
+
 #define RGB_WORD_BYTE3(word) (((word) >> 24) & RGB_BYTE_MASK)
 #define RGB_WORD_BYTE2(word) (((word) >> 16) & RGB_BYTE_MASK)
 #define RGB_WORD_BYTE1(word) (((word) >> 8) & RGB_BYTE_MASK)
 #define RGB_WORD_BYTE0(word) ((word) & RGB_BYTE_MASK)
-#define RGB_WORD_LO_MASK 0x0000ffff
-#define RGB_WORD_HI_MASK 0xffff0000
-#define RGB_ALPHA0_MASK 0xff000000
-#define RGB_ALPHA2_MASK 0x0000ff00
 
-#define RGB_CLAMP_BIAS 0x100
+typedef enum RGBClampLayout
+{
+    RGB_CLAMP_BIAS = 0x100
+} RGBClampLayout;
+
 typedef enum YUVTableOffset
 {
     YUV_U_TO_B_OFFSET = 0x000,
