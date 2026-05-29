@@ -174,24 +174,24 @@ static inline u32 read_bits(VARBITS PTR4* vb, u32 count)
 
 static inline u32 read_rle_bits(VARBITS PTR4* vb)
 {
-    u32 value;
     u32 bits = vb->bitlen;
 
     if (bits > (RLEBITS - 1)) {
-        value = vb->bits & GetBitsLen(RLEBITS);
+        u32 value = vb->bits & GetBitsLen(RLEBITS);
+
         vb->bitlen = bits - RLEBITS;
         vb->bits >>= RLEBITS;
+        return value;
     } else {
         u32 word = BINKAC_LOAD32(vb->cur);
         u32 temp = vb->bits | (word << bits);
+        u32 value = temp & GetBitsLen(RLEBITS);
 
         VARBITS_ADVANCE_CUR(vb->cur);
-        value = temp & GetBitsLen(RLEBITS);
         vb->bitlen = bits + BITSTYPELEN - RLEBITS;
         vb->bits = word >> (RLEBITS - bits);
+        return value;
     }
-
-    return value;
 }
 
 static inline u32 read_bit(VARBITS PTR4* vb)
