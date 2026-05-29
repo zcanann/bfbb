@@ -14,14 +14,17 @@ extern const char BINK_ERROR_NOT_BINK[];
 extern const char BINK_ERROR_NO_COMPRESSED_FRAMES[];
 extern const char BINK_ERROR_OUT_OF_MEMORY[];
 
-#define BINKTRACKNEWFORMAT 0x10000000
 #define BINKTRACKFREQMASK 0xffff
 #define BINKTRACKBITDEPTHSHIFT 27
 #define BINKTRACKCHANNELSSHIFT 29
-#define BINKTRACKBITDEPTHFLAG 8
 #define BINKTRACKBASEBITS 8
-#define BINKTRACKSTEREOFLAG 1
 #define BINKTRACKBASECHANNELS 1
+typedef enum BINKTrackTypeFlags
+{
+    BINKTRACKSTEREOFLAG = 1,
+    BINKTRACKBITDEPTHFLAG = 8,
+    BINKTRACKNEWFORMAT = 0x10000000
+} BINKTrackTypeFlags;
 /* Track types pack frequency in bits 0..15, 8/16-bit audio in bit 27, stereo in bit 29. */
 #define BINKTRACKFREQ(tracktype) ((tracktype) & BINKTRACKFREQMASK)
 #define BINKTRACKBITS(tracktype) \
@@ -33,7 +36,10 @@ extern const char BINK_ERROR_OUT_OF_MEMORY[];
     (((s32)(tracktype) >= 0 && ((tracktype) & BINKTRACKNEWFORMAT) != 0) ? BINKACNEWFORMAT : 0)
 #define BINKTRACKISOPENABLE(tracktype) ((s32)(tracktype) < 0 || ((tracktype) & BINKTRACKNEWFORMAT) != 0)
 #define BINKFRAMEOFFSETMASK 0xfffffffe
-#define BINKFRAMEKEYFLAG 1
+typedef enum BINKFrameOffsetFlags
+{
+    BINKFRAMEKEYFLAG = 1
+} BINKFrameOffsetFlags;
 /* Frame-offset table entries use bit 0 as the key-frame marker. */
 #define BINK_FRAME_OFFSET(frameoffset) ((frameoffset) & BINKFRAMEOFFSETMASK)
 #define BINK_FRAME_KEY(frameoffset) ((frameoffset) & BINKFRAMEKEYFLAG)
