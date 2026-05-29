@@ -697,13 +697,11 @@ static void NGC_StarvedClear(BINKSND PTR4* snd)
     u32 right_side;
     u32 start;
     u32 end;
-    NGCBinkSound PTR4* ngc_snd;
     NGCSoundState PTR4* state;
     ARQRequest PTR4* task;
     u8 PTR4* out;
     AXVPB PTR4* voice;
 
-    ngc_snd = NGC_SND(snd);
     state = NGC_SOUND_STATE(snd);
     i = 0;
 check_busy:
@@ -715,7 +713,7 @@ check_busy:
     }
     start = NGC_SOUND_STATE(snd)->play_cursor;
     end = start + NGC_SOUND_STATE(snd)->frame_size;
-    if (ngc_snd->chans == NGC_SOUND_STEREO_CHANNELS) {
+    if (NGC_SND(snd)->chans == NGC_SOUND_STEREO_CHANNELS) {
         out = NGC_SOUND_STATE(snd)->stereo_buffer;
     } else {
         out = NGC_SOUND_STATE(snd)->decode_buffer +
