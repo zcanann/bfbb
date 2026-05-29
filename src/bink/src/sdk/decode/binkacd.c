@@ -253,12 +253,16 @@ static void read_rle_samples(f32 PTR4* samples, u32 transform_size, VARBITS PTR4
 
         /* Each sparse coefficient packet is either 5 bits (literal VQ run) or
            9 bits (RLE flag, 4-bit run index, 4-bit coefficient bit length). */
-        if (read_bit(vb)) {
-            u32 run = read_rle_bits(vb);
+        {
+            u32 rle_packet = read_bit(vb);
 
-            end = i + BINKAC_RLE_SAMPLE_RUN(run);
-        } else {
-            end = i + VQLENGTH;
+            if (rle_packet) {
+                u32 run = read_rle_bits(vb);
+
+                end = i + BINKAC_RLE_SAMPLE_RUN(run);
+            } else {
+                end = i + VQLENGTH;
+            }
         }
 
         if (end > transform_size) {
