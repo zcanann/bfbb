@@ -1631,7 +1631,7 @@ s32 BinkDoFrame(HBINK bnk)
                                 u32 out_bytes;
                                 u32 free_bytes;
 
-                                snd = &bnk->bsnd[playing_index];
+                                snd = bnk->bsnd + playing_index;
                                 free_bytes = snd->sndbufsize - snd->sndamt;
                                 BinkAudioDecompress((HBINKAUDIODECOMP)snd->sndcomp, &out,
                                                     &out_bytes, in, &in);
@@ -1782,7 +1782,7 @@ void BinkNextFrame(HBINK bnk)
             do {
                 BINKSND PTR4* snd;
 
-                snd = &bnk->bsnd[i];
+                snd = bnk->bsnd + i;
                 if (snd->SoundDroppedOut != 0) {
                     snd->SoundDroppedOut = zero;
                     if (bnk->FrameNum > BINK_FIRST_FRAME &&
@@ -2237,7 +2237,7 @@ s32 BinkPause(HBINK bnk, s32 pause)
         do {
             BINKSND PTR4* snd;
 
-            snd = &bnk->bsnd[i];
+            snd = bnk->bsnd + i;
             snd->Pause(snd, pause);
             ++i;
         } while (i < bnk->playingtracks);
