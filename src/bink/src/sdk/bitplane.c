@@ -1385,7 +1385,7 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 limit)
     tree.roots[0] = BP_READ_TREE_GROUP1_ROOT;
     tree.roots[1] = BP_READ_TREE_GROUP6_ROOT;
     tree.roots[2] = BP_READ_TREE_GROUP11_ROOT;
-    bit_value = (s32)(s8)(1 << (code & BP_LOSSY_LEVEL_MASK));
+    bit_value = (s32)(s8)(1 << (levels_remaining - 1));
     tree.roots[3] = BP_READ_TREE_BRANCH(0);
     tree_end = tree.nodes;
     active_count = 0;
