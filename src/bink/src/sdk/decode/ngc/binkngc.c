@@ -226,7 +226,7 @@ void PTR4* radmalloc(u32 size)
 {
     u32 request;
     void PTR4* rawBlock;
-    u8 fromUser;
+    RADAllocOwner owner;
     u32 addr;
     u32 offset;
     u8 PTR4* aligned;
@@ -237,7 +237,7 @@ void PTR4* radmalloc(u32 size)
     request   = size + RAD_ALLOC_HEADER_SIZE;
     if (usermalloc != 0 && (rawBlock = usermalloc(request))) {
         if (rawBlock != 0 && rawBlock != RAD_INVALID_USER_ALLOC) {
-            fromUser = RAD_ALLOC_USER_OWNED;
+            owner = RAD_ALLOC_USER_OWNED;
         } else {
             return 0;
         }
@@ -246,14 +246,14 @@ void PTR4* radmalloc(u32 size)
         if (rawBlock == 0) {
             return 0;
         }
-        fromUser= RAD_ALLOC_SYSTEM_OWNED;
+        owner = RAD_ALLOC_SYSTEM_OWNED;
     }
     addr    = (u32)rawBlock;
     offset  = (u32)(RAD_ALLOC_HEADER_SIZE - (addr & RAD_ALLOC_ALIGNMENT_MASK)) & RAD_ALLOC_OFFSET_MASK;
     aligned  = (u8 PTR4*)rawBlock + offset;
     RAD_ALLOC_PREFIX(aligned)->offset = (u8)offset;
-    RAD_ALLOC_PREFIX(aligned)->owner = fromUser;
-    if (fromUser == RAD_ALLOC_USER_OWNED)
+    RAD_ALLOC_PREFIX(aligned)->owner = (u8)owner;
+    if (owner == RAD_ALLOC_USER_OWNED)
         RAD_ALLOC_PREFIX(aligned)->custom_free = userfree;
     return aligned;
 }
