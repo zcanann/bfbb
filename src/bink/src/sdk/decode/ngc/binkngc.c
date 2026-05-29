@@ -4,13 +4,21 @@
 #include "dolphin/os/OSTime.h"
 
 /* OSGetTime runs at the GameCube timer clock: 40.5 MHz, or 40500 ticks/ms. */
-#define RAD_TIMER_TICKS_PER_MS 40500
-#define RAD_TIMER_HIGH_QUOTIENT 0x19e40
+typedef enum RADTimerConstants
+{
+    RAD_TIMER_TICKS_PER_MS = 40500,
+    RAD_TIMER_HIGH_QUOTIENT = 0x19e40
+} RADTimerConstants;
+
 /* Reciprocal multiply constants for the remaining 64-bit ticks-to-ms division. */
-#define RAD_TIMER_RECIP_MAGIC 0xCF2049A1
-#define RAD_TIMER_RECIP_SHIFT 15
-#define RAD_DIV_RECIP_NUMERATOR 0xFFFFFFFF
-#define RAD_DIV_ROUND_TO_HIGH_WORD 0xFFFF
+typedef enum RADDivConstants
+{
+    RAD_TIMER_RECIP_MAGIC = 0xCF2049A1,
+    RAD_TIMER_RECIP_SHIFT = 15,
+    RAD_DIV_RECIP_NUMERATOR = 0xFFFFFFFF,
+    RAD_DIV_ROUND_TO_HIGH_WORD = 0xFFFF
+} RADDivConstants;
+
 #define RAD_DIV_IS_POWER_OF_TWO(value) (((value) & ((value) - 1)) == 0)
 #define RAD_DIV_HIGH_WORD_CEIL(value) (((value) + RAD_DIV_ROUND_TO_HIGH_WORD) >> 16)
 
