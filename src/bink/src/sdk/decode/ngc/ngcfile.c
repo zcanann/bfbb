@@ -26,6 +26,21 @@ typedef enum NGCBinkFileOwnership
     NGC_FILE_BORROWS_DVD
 } NGCBinkFileOwnership;
 
+typedef enum NGCDVDPriority
+{
+    NGC_DVD_PRIORITY_LOW = 0
+} NGCDVDPriority;
+
+typedef enum NGCDVDEntry
+{
+    NGC_DVD_ENTRY_NOT_FOUND = -1
+} NGCDVDEntry;
+
+typedef enum BINKFileOffset
+{
+    BINK_FILE_CURRENT_OFFSET = -1
+} BINKFileOffset;
+
 typedef struct NGCBinkIOData
 {
     DVDFileInfo file;
@@ -108,10 +123,7 @@ u32 RGBshift[RGB_SHIFT_TABLE_SIZE] RAD_ATTRIBUTE_ALIGN(NGC_TABLE_ALIGNMENT) = { 
 #define NGC_READ_BLOCK_SIZE 0x1000
 #define NGC_READ_BLOCK_MASK (NGC_READ_BLOCK_SIZE - 1)
 #define NGC_ASYNC_WHOLE_BLOCK NGC_READ_BLOCK_SIZE
-#define NGC_DVD_PRIORITY_LOW 0
-#define NGC_DVD_ENTRY_NOT_FOUND -1
 #define NGC_MILLISECONDS_PER_SECOND 1000
-#define BINK_FILE_CURRENT_OFFSET -1
 #define NGC_DVD_STATUS_IDLE(status) \
     ((status) == DVD_STATE_END || (status) == DVD_STATE_CANCELED)
 #define NGC_DVD_STATUS_BUSY_OR_WAITING(status) \
