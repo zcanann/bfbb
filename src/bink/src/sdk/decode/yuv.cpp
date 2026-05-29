@@ -2,7 +2,7 @@
 #include "ngc/ngcrgb.h"
 #include "yuv.h"
 
-typedef void (*CoreBlitFn)(u32);
+typedef void (*CoreBlitFn)(s32);
 typedef void (*RowBlitFn)(u32, u32);
 typedef u32 (*ColBlitFn)(u32, s32);
 
@@ -132,7 +132,7 @@ static inline s32 yuv_round15(s32 value)
 #define YUY2_COLOR_PAIR(y0, u, y1, v) \
     ((u32)(y0) | ((u32)(u) << 8) | ((u32)(y1) << 16) | ((u32)(v) << 24))
 
-#define DECL_CORE(name) extern "C" void name(u32)
+#define DECL_CORE(name) extern "C" void name(s32)
 DECL_CORE(YUV_32_4x2_even);
 DECL_CORE(YUV_32_4x2_odd);
 DECL_CORE(YUV_32m_4x2);
@@ -252,10 +252,10 @@ static u32 z2hsize = 0;
 static void PTR4* z2hbuf1 = 0;
 static void PTR4* z2hbuf2 = 0;
 static u32 donetables = 0;
-static void (*EVEN)(u32);
-static void (*ODD)(u32);
-static void (*EVENx)(u32);
-static void (*ODDx)(u32);
+static CoreBlitFn EVEN;
+static CoreBlitFn ODD;
+static CoreBlitFn EVENx;
+static CoreBlitFn ODDx;
 static void (*dounalignedrow)(u32, u32);
 static u32 (*dounalignedcol)(u32, s32);
 static u32 align;
@@ -470,16 +470,16 @@ static void setup_scaling(u32 flags, u32 PTR4* pitch, u32 width, u32 srcpitch, B
             step = blits->masked_step;
             EVENx = blits->masked;
             ODDx = EVENx;
-            EVEN = (CoreBlitFn)zoom2heven;
-            ODD = (CoreBlitFn)zoom2hodd;
+            EVEN = zoom2heven;
+            ODD = zoom2hodd;
             dounalignedrow = blits->rowm2h;
             dounalignedcol = blits->colm2h;
         } else {
             step = blits->odd_step;
             EVENx = blits->even;
             ODDx = blits->odd;
-            EVEN = (CoreBlitFn)zoom2heven;
-            ODD = (CoreBlitFn)zoom2hodd;
+            EVEN = zoom2heven;
+            ODD = zoom2hodd;
             dounalignedrow = blits->row2h;
             dounalignedcol = blits->col2h;
             if (step < blits->even_step) {
@@ -512,16 +512,16 @@ static void setup_scaling(u32 flags, u32 PTR4* pitch, u32 width, u32 srcpitch, B
             step = blits->masked_x2_step;
             EVENx = blits->masked_x2;
             ODDx = EVENx;
-            EVEN = (CoreBlitFn)zoom2heven;
-            ODD = (CoreBlitFn)zoom2hodd;
+            EVEN = zoom2heven;
+            ODD = zoom2hodd;
             dounalignedrow = blits->rowm2wh;
             dounalignedcol = blits->colm2wh;
         } else {
             step = blits->odd_x2_step;
             EVENx = blits->even_x2;
             ODDx = blits->odd_x2;
-            EVEN = (CoreBlitFn)zoom2heven;
-            ODD = (CoreBlitFn)zoom2hodd;
+            EVEN = zoom2heven;
+            ODD = zoom2hodd;
             dounalignedrow = blits->row2wh;
             dounalignedcol = blits->col2wh;
             if (step < blits->even_x2_step) {
