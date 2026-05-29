@@ -6,59 +6,88 @@ typedef void (*CoreBlitFn)(s32);
 typedef void (*RowBlitFn)(u32, u32);
 typedef u32 (*ColBlitFn)(u32, s32);
 
-#define YUV_TABLE_PLANE_SIZE 0x100
-#define RGB_CLAMP_BIAS 0x100
-#define RGB_CLAMP_HIGH_OFFSET 0x200
+enum YUVTableLayout {
+    YUV_TABLE_PLANE_SIZE = 0x100,
+    RGB_CLAMP_BIAS = 0x100,
+    RGB_CLAMP_HIGH_OFFSET = 0x200
+};
+
 enum YUVTableOffset {
     YUV_U_TO_B_OFFSET = 0x000,
     YUV_V_TO_GB_OFFSET = 0x100,
     YUV_U_TO_GB_OFFSET = 0x200,
     YUV_V_TO_R_OFFSET = 0x300
 };
-#define YUY2_NEUTRAL_CHROMA 0x80008000U
-#define YUY2_CHROMA_MASK 0xff00ff00U
-#define YUV_MASK_BLOCK_PIXELS 0x10
-#define YUV_MASK_BLOCK_SHIFT 4
-#define YUV_MASK_BLOCK_PAIR_PIXELS 0x20
-#define YUV_MASK_BLOCK_MASK (YUV_MASK_BLOCK_PIXELS - 1)
-#define YUV_MASK_HALF_BLOCK_ROWS 8
-#define YUV_MASK_HALF_BLOCKS 4
-#define YUV_MASK_FULL_BLOCKS 8
-#define YUV_CHROMA_BLOCK_BYTES 8
-#define YUV_CHROMA_SHIFT 1
+
+enum YUY2PackedConstants {
+    YUY2_NEUTRAL_CHROMA = 0x80008000U,
+    YUY2_CHROMA_MASK = 0xff00ff00U
+};
+
+enum YUVMaskLayout {
+    YUV_MASK_BLOCK_PIXELS = 0x10,
+    YUV_MASK_BLOCK_SHIFT = 4,
+    YUV_MASK_BLOCK_PAIR_PIXELS = 0x20,
+    YUV_MASK_BLOCK_MASK = YUV_MASK_BLOCK_PIXELS - 1,
+    YUV_MASK_HALF_BLOCK_ROWS = 8,
+    YUV_MASK_HALF_BLOCKS = 4,
+    YUV_MASK_FULL_BLOCKS = 8
+};
+
+enum YUVChromaLayout {
+    YUV_CHROMA_BLOCK_BYTES = 8,
+    YUV_CHROMA_SHIFT = 1
+};
+
 enum BINKSurfaceLayoutState {
     BINKSURFACE_INVALID = 0xffffffffU
 };
 #define YUV_ROUND_SHIFT 15
 #define YUV_ROUND_BIAS ((1 << YUV_ROUND_SHIFT) - 1)
-#define YUV_LUMA_BLACK 0x10
-#define YUV_LUMA_BLACK_CUTOFF (YUV_LUMA_BLACK + 1)
-#define YUV_LUMA_WHITE_CUTOFF 0xeb
-#define YUV_LUMA_MAX 0xfe
-#define YUV_LUMA_RANGE 0xdb
-#define YUV_CHROMA_CENTER 0x80
-#define RGB_CHANNEL_MAX 0xff
-#define RGB_MONO_WHITE 0xffffffU
-#define YUV_COEFF_Y_TO_RGB 0x950a
-#define YUV_COEFF_V_TO_GB 0x680f
-#define YUV_COEFF_U_TO_GB 0x3225
-#define YUV_COEFF_V_TO_R 0xcc4b
-#define YUV_COEFF_U_TO_B 0x10235
-#define RGB_DUP16 0x10001
-#define RGB_HIGH16 0x10000
-#define RGB_A4_SOURCE_MASK 0x1ffffe0
-#define RGB_A4_SHIFT 7
-#define YUV_ZOOM_ALIGN 0x20
-#define YUV_ZOOM_ALIGN_MASK (YUV_ZOOM_ALIGN - 1)
+
+enum YUVColorRange {
+    YUV_LUMA_BLACK = 0x10,
+    YUV_LUMA_BLACK_CUTOFF = YUV_LUMA_BLACK + 1,
+    YUV_LUMA_WHITE_CUTOFF = 0xeb,
+    YUV_LUMA_MAX = 0xfe,
+    YUV_LUMA_RANGE = 0xdb,
+    YUV_CHROMA_CENTER = 0x80,
+    RGB_CHANNEL_MAX = 0xff,
+    RGB_MONO_WHITE = 0xffffffU
+};
+
+enum YUVRgbCoefficients {
+    YUV_COEFF_Y_TO_RGB = 0x950a,
+    YUV_COEFF_V_TO_GB = 0x680f,
+    YUV_COEFF_U_TO_GB = 0x3225,
+    YUV_COEFF_V_TO_R = 0xcc4b,
+    YUV_COEFF_U_TO_B = 0x10235
+};
+
+enum RGBPackConstants {
+    RGB_DUP16 = 0x10001,
+    RGB_HIGH16 = 0x10000,
+    RGB_A4_SOURCE_MASK = 0x1ffffe0,
+    RGB_A4_SHIFT = 7
+};
+
+enum YUVZoomLayout {
+    YUV_ZOOM_ALIGN = 0x20,
+    YUV_ZOOM_ALIGN_MASK = YUV_ZOOM_ALIGN - 1
+};
+
 #define YUV_ZOOM_ALIGN_SIZE(width) (((width) + YUV_ZOOM_ALIGN_MASK) & ~YUV_ZOOM_ALIGN_MASK)
-#define YUV_ZOOM_BUFFER_COUNT 2
-#define YUV_PACKED_WORD_BYTES 4
-#define YUV_TESTING_WORDS 2
-#define YUV_BLIT_PAD_WORDS 3
-#define YUV_BYTES_PER_PIXEL_32 4
-#define YUV_BYTES_PER_PIXEL_24 3
-#define YUV_BYTES_PER_PIXEL_16 2
-#define YUV_CORE_4X2_STEP 2
+enum YUVBlitLayout {
+    YUV_ZOOM_BUFFER_COUNT = 2,
+    YUV_PACKED_WORD_BYTES = 4,
+    YUV_TESTING_WORDS = 2,
+    YUV_BLIT_PAD_WORDS = 3,
+    YUV_BYTES_PER_PIXEL_32 = 4,
+    YUV_BYTES_PER_PIXEL_24 = 3,
+    YUV_BYTES_PER_PIXEL_16 = 2,
+    YUV_CORE_4X2_STEP = 2
+};
+
 #define YUV_BLIT_ROW_BYTES(width, blits) ((width) * (blits)->bytes_per_pixel)
 #define YUV_BLIT_ROW_BYTES_X2(width, blits) (YUV_BLIT_ROW_BYTES((width), (blits)) * 2)
 #define YUV_BLIT_SCALED_PIXEL_BYTES(blits, scale) ((blits)->bytes_per_pixel * (scale))
