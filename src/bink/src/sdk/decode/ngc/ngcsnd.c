@@ -539,7 +539,6 @@ static s32 Lock(BINKSND PTR4* snd, u8 PTR4* PTR4* addr, u32 PTR4* len)
     u32 play_pos;
     u32 half_size;
     u32 block_size;
-    u32 chans;
     ARQRequest PTR4* task;
     ARQRequest PTR4* right_task;
     u8 PTR4* out;
@@ -569,8 +568,7 @@ static s32 Lock(BINKSND PTR4* snd, u8 PTR4* PTR4* addr, u32 PTR4* len)
         task = NGC_TASK(state, state->lock_index);
         out = state->decode_buffer +
               ((state->lock_index * block_size) >> NGC_SOUND_HALF_BUFFER_SHIFT);
-        chans = snd->chans;
-        writable *= chans;
+        writable *= snd->chans;
         task->source = (u32)out;
         out_addr = out;
         out += state->channel_stride;
