@@ -731,7 +731,7 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
 #define words bitcopy.cur
 #define bitbuf bitcopy.bits
 #define bitcount bitcopy.bitlen
-    coeffs.values[1] = 0;
+    coeffs.values[BP_COEFF1_INDEX] = 0;
     memset(coeffs.values + BP_COEFF2_INDEX, 0, sizeof(coeffs) - BP_COEFF2_INDEX * sizeof(coeffs.values[0]));
 
     /* The stream starts with the maximum active lossless bitplane level. */
@@ -1031,7 +1031,7 @@ after_lossless_final3:
     (void)tree;
 
     /* Scatter scan-order coefficients back into the 8x8 block. */
-    out[1] = coeffs.values[1];
+    out[BP_COEFF1_INDEX] = coeffs.values[BP_COEFF1_INDEX];
 #define COPY_BP_COEFF_PAIR(out_index, coeff_index)                                                                      \
     (BP_COEFF_PAIR_AT(out, out_index) = coeffs.pairs[(coeff_index) / 2])
     COPY_BP_COEFF_PAIR(2, 4);
