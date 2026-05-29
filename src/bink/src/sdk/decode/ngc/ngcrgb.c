@@ -37,9 +37,13 @@
 #define RGB_ALPHA2_MASK 0x0000ff00
 
 #define RGB_CLAMP_BIAS 0x100
-#define YUV_V_TO_GB_OFFSET 0x100
-#define YUV_U_TO_GB_OFFSET 0x200
-#define YUV_V_TO_R_OFFSET 0x300
+typedef enum YUVTableOffset
+{
+    YUV_U_TO_B_OFFSET = 0x000,
+    YUV_V_TO_GB_OFFSET = 0x100,
+    YUV_U_TO_GB_OFFSET = 0x200,
+    YUV_V_TO_R_OFFSET = 0x300
+} YUVTableOffset;
 
 #define RGB565(y, r, g, b)                                                                                             \
     ((u16)clamp_b[RGB_CLAMP_BIAS + (y) + (b)] | (u16)clamp_r[RGB_CLAMP_BIAS + (y) + (r)] |                   \
@@ -95,7 +99,7 @@ void YUV_32_4x2_even(u32 count)
     y0 = S.y0;
     u = S.u;
     v = S.v;
-    u_to_b = YUVTables;
+    u_to_b = YUVTables + YUV_U_TO_B_OFFSET;
     v_to_gb = YUVTables + YUV_V_TO_GB_OFFSET;
     u_to_gb = YUVTables + YUV_U_TO_GB_OFFSET;
     v_to_r = YUVTables + YUV_V_TO_R_OFFSET;
@@ -197,7 +201,7 @@ void YUV_32x2_4x2_even(u32 count)
     y0 = S.y0;
     u = S.u;
     v = S.v;
-    u_to_b = YUVTables;
+    u_to_b = YUVTables + YUV_U_TO_B_OFFSET;
     v_to_gb = YUVTables + YUV_V_TO_GB_OFFSET;
     u_to_gb = YUVTables + YUV_U_TO_GB_OFFSET;
     v_to_r = YUVTables + YUV_V_TO_R_OFFSET;
@@ -432,7 +436,7 @@ void YUV_16_4x2_even(u32 count)
     pitch = S.pitch;
     base = S.base;
     tiledPitch = RGB_TILE_PITCH16(pitch);
-    u_to_b = YUVTables;
+    u_to_b = YUVTables + YUV_U_TO_B_OFFSET;
     v_to_gb = YUVTables + YUV_V_TO_GB_OFFSET;
     u_to_gb = YUVTables + YUV_U_TO_GB_OFFSET;
     v_to_r = YUVTables + YUV_V_TO_R_OFFSET;
@@ -538,7 +542,7 @@ void YUV_16x2_4x2_even(u32 count)
     pitch = S.pitch;
     base = S.base;
     tiledPitch = RGB_TILE_PITCH16(pitch);
-    u_to_b = YUVTables;
+    u_to_b = YUVTables + YUV_U_TO_B_OFFSET;
     v_to_gb = YUVTables + YUV_V_TO_GB_OFFSET;
     u_to_gb = YUVTables + YUV_U_TO_GB_OFFSET;
     v_to_r = YUVTables + YUV_V_TO_R_OFFSET;
@@ -774,7 +778,7 @@ void YUV_32a_4x2_even(u32 count)
     pitch = S.pitch;
     base = S.base;
     tiledPitch = RGB_TILE_PITCH32(pitch);
-    u_to_b = YUVTables;
+    u_to_b = YUVTables + YUV_U_TO_B_OFFSET;
     v_to_gb = YUVTables + YUV_V_TO_GB_OFFSET;
     u_to_gb = YUVTables + YUV_U_TO_GB_OFFSET;
     v_to_r = YUVTables + YUV_V_TO_R_OFFSET;
@@ -895,7 +899,7 @@ void YUV_32ax2_4x2_even(u32 count)
     v = S.v;
     a0 = S.a0;
     a1 = S.a1;
-    u_to_b = YUVTables;
+    u_to_b = YUVTables + YUV_U_TO_B_OFFSET;
     v_to_gb = YUVTables + YUV_V_TO_GB_OFFSET;
     u_to_gb = YUVTables + YUV_U_TO_GB_OFFSET;
     v_to_r = YUVTables + YUV_V_TO_R_OFFSET;
@@ -1174,7 +1178,7 @@ void YUV_16a4_4x2_even(u32 count)
     pitch = S.pitch;
     base = S.base;
     tiledPitch = RGB_TILE_PITCH16(pitch);
-    u_to_b = YUVTables;
+    u_to_b = YUVTables + YUV_U_TO_B_OFFSET;
     v_to_gb = YUVTables + YUV_V_TO_GB_OFFSET;
     u_to_gb = YUVTables + YUV_U_TO_GB_OFFSET;
     v_to_r = YUVTables + YUV_V_TO_R_OFFSET;
@@ -1288,7 +1292,7 @@ void YUV_16a4x2_4x2_even(u32 count)
     pitch = S.pitch;
     base = S.base;
     tiledPitch = RGB_TILE_PITCH16(pitch);
-    u_to_b = YUVTables;
+    u_to_b = YUVTables + YUV_U_TO_B_OFFSET;
     v_to_gb = YUVTables + YUV_V_TO_GB_OFFSET;
     u_to_gb = YUVTables + YUV_U_TO_GB_OFFSET;
     v_to_r = YUVTables + YUV_V_TO_R_OFFSET;
