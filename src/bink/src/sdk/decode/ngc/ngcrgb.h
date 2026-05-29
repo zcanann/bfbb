@@ -3,11 +3,15 @@
 
 #include "bink.h"
 
-#define RGB_CONTEXT_RESERVED_SIZE 0x18
-#define RGB_LUMA_TABLE_SIZE 0x104
-#define RGB_CLAMP_TABLE_SIZE 0x304
-#define RGB_MONO_TABLE_SIZE 0x100
-#define YUV_TABLE_SIZE 0x400
+typedef enum RGBTableLayout
+{
+    RGB_CONTEXT_RESERVED_SIZE = 0x18,
+    RGB_LUMA_TABLE_SIZE = 0x104,
+    RGB_CLAMP_TABLE_SIZE = 0x304,
+    RGB_MONO_TABLE_SIZE = 0x100,
+    YUV_TABLE_SIZE = 0x400
+} RGBTableLayout;
+
 #define NGC_TABLE_ALIGNMENT 32
 
 typedef enum RGBShiftSlot
