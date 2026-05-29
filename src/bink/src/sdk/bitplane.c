@@ -129,7 +129,7 @@ typedef union BPLOSSLESSCOEFFS
     u32 words[BP_LOSSY_OUTPUT_COEFFS];
 } BPLOSSLESSCOEFFS;
 
-#define BP_COEFF_PAIR_AT(values, index) (*(BPCOEFFPAIR PTR4*)((values) + (index)))
+#define BP_COEFF_PAIR_AT(values, index) (((BPCOEFFPAIR PTR4*)(values))[(index) / 2])
 
 typedef union BPLOSSYBLOCK
 {
