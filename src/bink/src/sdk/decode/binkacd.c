@@ -152,24 +152,24 @@ static void quanttos16chans2(s16 PTR4* dest, const f32 PTR4* src, f32 scale, u32
 
 static inline u32 read_bits(VARBITS PTR4* vb, u32 count)
 {
-    u32 value;
     u32 bits = vb->bitlen;
 
     if (bits >= count) {
-        value = vb->bits & GetBitsLen(count);
+        u32 value = vb->bits & GetBitsLen(count);
+
         vb->bitlen = bits - count;
         vb->bits >>= count;
+        return value;
     } else {
         u32 word = BINKAC_LOAD32(vb->cur);
         u32 temp = vb->bits | (word << bits);
+        u32 value = temp & GetBitsLen(count);
 
         VARBITS_ADVANCE_CUR(vb->cur);
-        value = temp & GetBitsLen(count);
         vb->bitlen = bits + BITSTYPELEN - count;
         vb->bits = word >> (count - bits);
+        return value;
     }
-
-    return value;
 }
 
 static inline u32 read_rle_bits(VARBITS PTR4* vb)
