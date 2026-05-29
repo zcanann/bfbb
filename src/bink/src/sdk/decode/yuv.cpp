@@ -1001,10 +1001,9 @@ extern "C" void YUV_init(u32 flags)
                 y = 0;
             }
 
-            ytable[i] = y;
-
             uv = i - YUV_CHROMA_CENTER;
             ytable_x4[i] = y << 2;
+            ytable[i] = y;
             yuv_tables[YUV_V_TO_GB_OFFSET + i] = -yuv_round15(uv * YUV_COEFF_V_TO_GB);
             yuv_tables[YUV_U_TO_GB_OFFSET + i] = -yuv_round15(uv * YUV_COEFF_U_TO_GB);
             yuv_tables[YUV_V_TO_R_OFFSET + i] = yuv_round15(uv * YUV_COEFF_V_TO_R);
