@@ -206,14 +206,14 @@ static inline u32 read_bit(VARBITS PTR4* vb)
 
         vb->bitlen = bitcount - 1;
         vb->bits = bits >> 1;
-        return (bits & 1) != 0;
+        return bits & 1;
     } else {
         u32 word = BINKAC_LOAD32(vb->cur);
 
         VARBITS_ADVANCE_CUR(vb->cur);
         vb->bitlen = BITSTYPELEN - 1;
         vb->bits = word >> 1;
-        return (word & 1) != 0;
+        return word & 1;
     }
 }
 
