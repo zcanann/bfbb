@@ -88,6 +88,11 @@ static f64 bink_invertbins[BINKAC_INVERT_BINS] = {
     1.0 / (1 << 3),  1.0 / (1 << 2),  1.0 / (1 << 1),  1.0 / (1 << 0)
 };
 
+static const f32 BINKAC_RSQRT_ZERO = 0.0f;
+static const f64 BINKAC_RSQRT_NEWTON_HALF_CONST = 0.5;
+static const f64 BINKAC_RSQRT_NEWTON_THREE_CONST = 3.0;
+static const f32 BINKAC_TRANSFORM_ROOT_SCALE_CONST = 2.0f;
+
 static f32 fxptof(u32 val)
 {
     f32 f;
@@ -366,18 +371,18 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
 
 static inline f32 radfsqrt(f32 value)
 {
-    if (value > 0.0f) {
+    if (value > BINKAC_RSQRT_ZERO) {
         f64 guess;
         f64 error;
 
         __asm__ volatile("frsqrte %0,%1" : "=f"(error) : "f"(value));
         guess = error;
         error = guess * guess * value;
-        guess = 0.5 * guess * (3.0 - error);
+        guess = BINKAC_RSQRT_NEWTON_HALF_CONST * guess * (BINKAC_RSQRT_NEWTON_THREE_CONST - error);
         error = guess * guess * value;
-        guess = 0.5 * guess * (3.0 - error);
+        guess = BINKAC_RSQRT_NEWTON_HALF_CONST * guess * (BINKAC_RSQRT_NEWTON_THREE_CONST - error);
         error = guess * guess * value;
-        guess = 0.5 * guess * (3.0 - error);
+        guess = BINKAC_RSQRT_NEWTON_HALF_CONST * guess * (BINKAC_RSQRT_NEWTON_THREE_CONST - error);
         return value * guess;
     }
 
@@ -454,7 +459,7 @@ HBINKAUDIODECOMP BinkAudioDecompressOpen(u32 rate, u32 chans, u32 flags)
     ba->transform_size = transform_size;
     ba->buffer_size = buffer_size;
     ba->window_size_in_bytes = BINKAC_WINDOW_BYTES(buffer_size);
-    transform_size_root = 2.0f / radfsqrt((f32)transform_size);
+    transform_size_root = BINKAC_TRANSFORM_ROOT_SCALE_CONST / radfsqrt((f32)transform_size);
     ba->transform_size_root = transform_size_root;
 
     for (i = 0; i < num_bands; ++i) {
