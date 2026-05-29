@@ -14,16 +14,28 @@
 #define RAD_DIV_IS_POWER_OF_TWO(value) (((value) & ((value) - 1)) == 0)
 #define RAD_DIV_HIGH_WORD_CEIL(value) (((value) + RAD_DIV_ROUND_TO_HIGH_WORD) >> 16)
 
-#define RAD_ALLOC_ALIGNMENT 0x20
-#define RAD_ALLOC_ALIGNMENT_MASK (RAD_ALLOC_ALIGNMENT - 1)
-#define RAD_ALLOC_HEADER_SIZE 0x40
-#define RAD_ALLOC_OFFSET_MASK 0xFF
-#define RAD_INVALID_ALLOC_SIZE 0xFFFFFFFF
 #define RAD_INVALID_USER_ALLOC ((void PTR4*)-1)
-#define RAD_MEMSET16_PER_WORD 2
-#define RAD_MEMSET16_WORD_SHIFT 16
 #define RAD_TIMEBASE_LOW_SPR "268"
 #define RAD_TIMEBASE_HIGH_SPR "269"
+typedef enum RADAllocLayout
+{
+    RAD_ALLOC_ALIGNMENT = 0x20,
+    RAD_ALLOC_ALIGNMENT_MASK = RAD_ALLOC_ALIGNMENT - 1,
+    RAD_ALLOC_HEADER_SIZE = 0x40,
+    RAD_ALLOC_OFFSET_MASK = 0xFF
+} RADAllocLayout;
+
+typedef enum RADAllocSentinel
+{
+    RAD_INVALID_ALLOC_SIZE = 0xFFFFFFFF
+} RADAllocSentinel;
+
+typedef enum RADMemset16Layout
+{
+    RAD_MEMSET16_PER_WORD = 2,
+    RAD_MEMSET16_WORD_SHIFT = 16
+} RADMemset16Layout;
+
 typedef enum RADAllocOwner
 {
     RAD_ALLOC_SYSTEM_OWNED = 0,
