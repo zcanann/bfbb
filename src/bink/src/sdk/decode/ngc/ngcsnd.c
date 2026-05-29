@@ -816,7 +816,7 @@ check_tasks:
         /* Only offer a lock when the writer is safely ahead of the AX cursor. */
         if (NGC_SOUND_STATE(snd)->play_cursor >= play_pos || play_pos - NGC_SOUND_STATE(snd)->play_cursor > NGC_SOUND_STATE(snd)->frame_size) {
             index = 0;
-            task = NGC_TASK(state, index);
+            task = state->tasks;
             for (;;) {
                 u32 owner = task->owner;
 
