@@ -42,6 +42,9 @@
 #define BINKAC_MONO_CHANNELS 1
 #define BINKAC_BAND_SENTINEL_COUNT 1
 #define BINKAC_THRESHOLD_COUNT (TOTBANDS + BINKAC_BAND_SENTINEL_COUNT)
+#define BINKAC_UNDECIBEL_BASE 10.0
+#define BINKAC_UNDECIBEL_DB_SCALE 0.10f
+#define BINKAC_THRESHOLD_QUANT_SCALE 0.664f
 #define BINKAC_BAND_LIMIT_COUNT(num_bands) ((num_bands) + BINKAC_BAND_SENTINEL_COUNT)
 #define BINKAC_SAMPLE_COUNT_UNDERFLOW ((u32)-1)
 #define BINKAC_LOAD32(ptr) (*(const u32 PTR4*)(ptr))
@@ -289,7 +292,7 @@ f64 pow(f64 x, f64 y);
 
 static inline f32 Undecibel(f32 d)
 {
-    return (f32)pow(10.0, d * 0.10f);
+    return (f32)pow(BINKAC_UNDECIBEL_BASE, d * BINKAC_UNDECIBEL_DB_SCALE);
 }
 
 static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
@@ -335,7 +338,7 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
 
         for (i = 0; i < num_bands; ++i) {
             VarBitsGet(q, s32, vb, BINKAC_THRESHOLD_BITS);
-            thresholds[i] = Undecibel((f32)q * 0.664f);
+            thresholds[i] = Undecibel((f32)q * BINKAC_THRESHOLD_QUANT_SCALE);
         }
 
         read_rle_samples(channel, transform_size, &vb, thresholds, bands);
