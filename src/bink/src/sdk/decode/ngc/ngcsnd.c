@@ -547,40 +547,40 @@ static s32 Lock(BINKSND PTR4* snd, u8 PTR4* PTR4* addr, u32 PTR4* len)
 
     if (NGC_SOUND_STATE(snd)->lock_index >= 0) {
         state = NGC_SOUND_STATE(snd);
-        tasks = state->tasks;
-        writable = NGC_SOUND_STATE(snd)->play_cursor;
+        tasks = NGC_TASK(state, 0);
+        writable = state->play_cursor;
         play_pos = NGC_AX_CURRENT_CURSOR(NGC_LEFT_VOICE(state), NGC_ADDRESS_SHIFT(state));
 
         if (writable >= play_pos) {
-            block_size = NGC_SOUND_STATE(snd)->channel_stride;
-            writable = ((u32)NGC_SOUND_STATE(snd)->audio_buffer + block_size) - writable;
+            block_size = state->channel_stride;
+            writable = ((u32)state->audio_buffer + block_size) - writable;
         } else {
-            block_size = NGC_SOUND_STATE(snd)->channel_stride;
+            block_size = state->channel_stride;
             writable = (play_pos - writable) - 1;
         }
 
         half_size = block_size >> NGC_SOUND_HALF_BUFFER_SHIFT;
         if (writable > half_size) {
             writable = half_size;
-        } else if (writable < NGC_SOUND_STATE(snd)->frame_size) {
-            writable = NGC_SOUND_STATE(snd)->frame_size;
+        } else if (writable < state->frame_size) {
+            writable = state->frame_size;
         }
 
         /* The lock index selects one half of the MRAM staging buffer. */
-        task = &tasks[NGC_SOUND_STATE(snd)->lock_index];
-        out = NGC_SOUND_STATE(snd)->decode_buffer +
-              ((NGC_SOUND_STATE(snd)->lock_index * block_size) >> NGC_SOUND_HALF_BUFFER_SHIFT);
+        task = &tasks[state->lock_index];
+        out = state->decode_buffer +
+              ((state->lock_index * block_size) >> NGC_SOUND_HALF_BUFFER_SHIFT);
         chans = snd->chans;
         writable *= chans;
         task->source = (u32)out;
         out_addr = out;
-        out += NGC_SOUND_STATE(snd)->channel_stride;
-        right_task = &tasks[NGC_SOUND_STATE(snd)->lock_index + NGC_SOUND_RIGHT_TASK_OFFSET];
+        out += state->channel_stride;
+        right_task = &tasks[state->lock_index + NGC_SOUND_RIGHT_TASK_OFFSET];
         right_task->source = (u32)out;
 
         if (snd->chans == NGC_SOUND_STEREO_CHANNELS) {
             /* Bink decodes interleaved stereo; AX/ARAM playback uses split left/right channels. */
-            out_addr = NGC_SOUND_STATE(snd)->stereo_buffer;
+            out_addr = state->stereo_buffer;
         }
 
         *addr = out_addr;
