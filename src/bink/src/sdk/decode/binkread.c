@@ -117,8 +117,11 @@ typedef enum BINKOnOffState
 #define BINK_FIRST_FRAME 1
 #define BINK_RECTS_UNCALCULATED -1
 #define BINK_MAX_CONSECUTIVE_SKIPS 4
-#define BINK_RUNTIME_CURRENT_SLOT 0
-#define BINK_RUNTIME_PREVIOUS_SLOT 1
+typedef enum BINKRuntimeSlot
+{
+    BINK_RUNTIME_CURRENT_SLOT,
+    BINK_RUNTIME_PREVIOUS_SLOT
+} BINKRuntimeSlot;
 #define BINK_ARRAY_BYTES(count, ptr) ((count) * sizeof(*(ptr)))
 #define BINK_FRAME_OFFSETS_BYTES(frames, ptr) (((frames) + 1) * sizeof(*(ptr)))
 #define BINK_VIDEO_PLANE_BYTES(bink) \
