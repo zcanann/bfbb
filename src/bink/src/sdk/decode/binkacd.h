@@ -11,7 +11,10 @@ typedef enum BINKAudioDecompressFlags
 } BINKAudioDecompressFlags;
 
 // extra padding after inpend, that, given random data, Bink might read past (very unlikely, but possible)
-#define BINKACD_EXTRA_INPUT_SPACE 72
+typedef enum BINKAudioDecompressLayout
+{
+    BINKACD_EXTRA_INPUT_SPACE = 72
+} BINKAudioDecompressLayout;
 
 typedef struct BINKAUDIODECOMP BINKAUDIODECOMP;
 typedef BINKAUDIODECOMP PTR4* HBINKAUDIODECOMP;
