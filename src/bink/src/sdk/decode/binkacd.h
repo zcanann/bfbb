@@ -3,9 +3,12 @@
 
 #include "bink.h"
 
-#define BINKACNEWFORMAT 1 // use the newer DCT transform path instead of the legacy RDFT path
-#define BINKACNODEINTERLACE 2 // keep stereo channels as separate output planes
-#define BINKAC20 4 // newer coefficient packet coding
+typedef enum BINKAudioDecompressFlags
+{
+    BINKACNEWFORMAT = 1,     // use the newer DCT transform path instead of the legacy RDFT path
+    BINKACNODEINTERLACE = 2, // keep stereo channels as separate output planes
+    BINKAC20 = 4             // newer coefficient packet coding
+} BINKAudioDecompressFlags;
 
 // extra padding after inpend, that, given random data, Bink might read past (very unlikely, but possible)
 #define BINKACD_EXTRA_INPUT_SPACE 72
