@@ -889,7 +889,7 @@ static u32 high1secrate(s32 frames, const u32 PTR4* frameoffsets, s32 span,
     i = 0;
     if (i < frames - span) {
         const u32 PTR4* start = frameoffsets;
-        const u32 PTR4* end = frameoffsets + span;
+        const u32 PTR4* end = &frameoffsets[span];
 
         do {
             u32 diff = *end++ - *start++;
@@ -1632,7 +1632,7 @@ s32 BinkDoFrame(HBINK bnk)
                                 u32 out_bytes;
                                 u32 free_bytes;
 
-                                snd = bnk->bsnd + playing_index;
+                                snd = &bnk->bsnd[playing_index];
                                 free_bytes = snd->sndbufsize - snd->sndamt;
                                 BinkAudioDecompress((HBINKAUDIODECOMP)snd->sndcomp, &out,
                                                     &out_bytes, in, &in);
@@ -1783,7 +1783,7 @@ void BinkNextFrame(HBINK bnk)
             do {
                 BINKSND PTR4* snd;
 
-                snd = bnk->bsnd + i;
+                snd = &bnk->bsnd[i];
                 if (snd->SoundDroppedOut != 0) {
                     snd->SoundDroppedOut = zero;
                     if (bnk->FrameNum > BINK_FIRST_FRAME &&
@@ -1884,7 +1884,7 @@ found_previous:
             u32 limit;
 
             limit = bnk->Frames;
-            ptr = bnk->frameoffsets + cur;
+            ptr = &bnk->frameoffsets[cur];
             do {
                 u32 value;
 
@@ -2238,7 +2238,7 @@ s32 BinkPause(HBINK bnk, s32 pause)
         do {
             BINKSND PTR4* snd;
 
-            snd = bnk->bsnd + i;
+            snd = &bnk->bsnd[i];
             snd->Pause(snd, pause);
             ++i;
         } while (i < bnk->playingtracks);
@@ -2669,7 +2669,7 @@ void BinkSetVolume(HBINK bnk, u32 trackid, s32 volume)
     if (bnk != 0 && bnk->playingtracks != 0) {
         index = idtoindex(bnk, trackid);
         if (index != BINK_TRACK_NOT_FOUND) {
-            snd = bnk->bsnd + index;
+            snd = &bnk->bsnd[index];
             volume_callback = snd->Volume;
             if (volume_callback != 0) {
                 volume_callback(snd, volume);
@@ -2687,7 +2687,7 @@ void BinkSetMixBins(HBINK bnk, u32 trackid, u32 PTR4* mix_bins, u32 total)
     if (bnk != 0 && bnk->playingtracks != 0) {
         index = idtoindex(bnk, trackid);
         if (index != BINK_TRACK_NOT_FOUND) {
-            snd = bnk->bsnd + index;
+            snd = &bnk->bsnd[index];
             mix_bins_callback = snd->MixBins;
             if (mix_bins_callback != 0) {
                 mix_bins_callback(snd, mix_bins, total);
@@ -2705,7 +2705,7 @@ void BinkSetMixBinVolumes(HBINK bnk, u32 trackid, u32 PTR4* vol_mix_bins, s32 PT
     if (bnk != 0 && bnk->playingtracks != 0) {
         index = idtoindex(bnk, trackid);
         if (index != BINK_TRACK_NOT_FOUND) {
-            snd = bnk->bsnd + index;
+            snd = &bnk->bsnd[index];
             mix_bin_vols_callback = snd->MixBinVols;
             if (mix_bin_vols_callback != 0) {
                 mix_bin_vols_callback(snd, vol_mix_bins, volumes, total);
@@ -2723,7 +2723,7 @@ void BinkSetPan(HBINK bnk, u32 trackid, s32 pan)
     if (bnk != 0 && bnk->playingtracks != 0) {
         index = idtoindex(bnk, trackid);
         if (index != BINK_TRACK_NOT_FOUND) {
-            snd = bnk->bsnd + index;
+            snd = &bnk->bsnd[index];
             pan_callback = snd->Pan;
             if (pan_callback != 0) {
                 pan_callback(snd, pan);
