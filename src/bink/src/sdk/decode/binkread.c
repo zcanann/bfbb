@@ -76,7 +76,10 @@ typedef enum BINKFrameOffsetFlags
 #define BINK_MASK_BLOCKS(value) ((value) / BINK_MASK_BLOCK_SIZE)
 #define BINK_DIRTY_SPLIT_MIN_SIZE (BINK_MASK_BLOCK_SIZE * 2)
 #define BINK_RECT_SORT_TOP_SENTINEL 0x7fffffff
-#define BINK_OPEN_OVERRIDE_UNSET 0xffffffffU
+typedef enum BINKOpenOverrideState
+{
+    BINK_OPEN_OVERRIDE_UNSET = 0xffffffffU
+} BINKOpenOverrideState;
 typedef enum BINKOnOffState
 {
     BINK_SOUND_OFF,
@@ -91,10 +94,16 @@ typedef enum BINKRectSplitScore
     BINK_RECT_NO_SPLIT_INDEX = -1,
     BINK_RECT_MIN_SPLIT_SCORE = 0
 } BINKRectSplitScore;
-#define BINK_TRACK_NOT_FOUND -1
+typedef enum BINKTrackSearchState
+{
+    BINK_TRACK_NOT_FOUND = -1
+} BINKTrackSearchState;
 #define BINK_SOUND_BUFFER_ALIGNMENT 0x100
 #define BINK_SOUND_SAMPLE_ALIGNMENT 4
-#define BINK_SOUND_BEST_SIZE_MASK_ALL -1
+typedef enum BINKSoundBestSizeMask
+{
+    BINK_SOUND_BEST_SIZE_MASK_ALL = -1
+} BINKSoundBestSizeMask;
 #define BINK_SOUND_BUFFER_ALIGN_MASK (BINK_SOUND_BUFFER_ALIGNMENT - 1)
 #define BINK_SOUND_SAMPLE_ALIGN_MASK (BINK_SOUND_SAMPLE_ALIGNMENT - 1)
 typedef enum BINKSoundBitDepth
@@ -119,7 +128,10 @@ typedef enum BINKSoundBitDepth
 #define BINK_FILE_HEADER_BYTES 8
 #define BINKGETKEYDIRECTIONMASK (BINKGETKEYNOTEQUAL - 1)
 #define BINKGETKEY_DIRECTION(flags) ((flags) & BINKGETKEYDIRECTIONMASK)
-#define BINK_FRAME_BEFORE_FIRST ((u32)-1)
+typedef enum BINKFrameNumberState
+{
+    BINK_FRAME_BEFORE_FIRST = 0xffffffffU
+} BINKFrameNumberState;
 #define BINK_FIRST_FRAME 1
 typedef enum BINKRectState
 {
