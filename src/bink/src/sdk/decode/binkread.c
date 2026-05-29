@@ -56,6 +56,7 @@ extern const char BINK_ERROR_OUT_OF_MEMORY[];
 #define BINK_RECT_SORT_KEY_SCALE 0x10000
 #define BINK_RECT_SORT_KEY_SENTINEL 0x7fff0000
 #define BINK_RECT_SORT_KEY(top, left) ((top) * BINK_RECT_SORT_KEY_SCALE + (left))
+#define BINK_RECT_AREA(rect) ((rect)->Width * (rect)->Height)
 #define BINK_CHROMA_SHIFT 1
 #define BINK_CHROMA_SCALE (1 << BINK_CHROMA_SHIFT)
 #define BINK_CHROMA_PLANE_COUNT 2
@@ -2473,8 +2474,7 @@ static s32 trysplit(BINKRECT PTR4* outa, BINKRECT PTR4* outb, const BINKRECT PTR
         split_rect.Width -= split;
         split_rect.Left += split;
         smallestrect(outb, mask, pitch, &split_rect);
-        best_score = (rect->Width * rect->Height - outa->Width * outa->Height) -
-                     outb->Width * outb->Height;
+        best_score = (BINK_RECT_AREA(rect) - BINK_RECT_AREA(outa)) - BINK_RECT_AREA(outb);
     } else {
         best_score = 0;
     }
@@ -2492,8 +2492,8 @@ static s32 trysplit(BINKRECT PTR4* outa, BINKRECT PTR4* outb, const BINKRECT PTR
         split_rect.Height -= split;
         split_rect.Top += split;
         smallestrect(&second_half, mask, pitch, &split_rect);
-        split_score = (rect->Width * rect->Height - first_half.Width * first_half.Height) -
-                      second_half.Width * second_half.Height;
+        split_score = (BINK_RECT_AREA(rect) - BINK_RECT_AREA(&first_half)) -
+                      BINK_RECT_AREA(&second_half);
         if (split_score > best_score) {
             *outa = first_half;
             *outb = second_half;
