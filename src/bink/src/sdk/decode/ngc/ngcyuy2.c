@@ -4,15 +4,23 @@
 // GameCube YUY2 stores four luma samples as a big-endian word and splices U/V
 // bytes between adjacent luma values. The x2 paths duplicate each luma sample
 // into two output pixels while reusing the same chroma byte.
-#define YUY2_LUMA16_DUP 0x10001
-#define YUY2_NEUTRAL_CHROMA 0x800080
-#define YUY2_CHROMA16_MASK 0x00ff0000
-#define YUY2_CHROMA8_MASK 0x000000ff
-#define YUY2_CHROMA_LOW16_MASK 0x0000ff00
-#define YUY2_WORDS_PER_BLOCK 2
-#define YUY2_X2_WORDS_PER_BLOCK 4
-#define YUY2_WORD_BYTES 4
-#define YUY2_PAIR_STRIDE 2
+typedef enum YUY2PackingConstants
+{
+    YUY2_LUMA16_DUP = 0x10001,
+    YUY2_NEUTRAL_CHROMA = 0x800080,
+    YUY2_CHROMA16_MASK = 0x00ff0000,
+    YUY2_CHROMA8_MASK = 0x000000ff,
+    YUY2_CHROMA_LOW16_MASK = 0x0000ff00
+} YUY2PackingConstants;
+
+typedef enum YUY2BlockLayout
+{
+    YUY2_WORDS_PER_BLOCK = 2,
+    YUY2_X2_WORDS_PER_BLOCK = 4,
+    YUY2_WORD_BYTES = 4,
+    YUY2_PAIR_STRIDE = 2
+} YUY2BlockLayout;
+
 typedef enum YUY2PairLumaWord
 {
     YUY2_PAIR_LUMA_WORD_0,
@@ -22,10 +30,14 @@ typedef enum YUY2PairLumaWord
 #define YUY2_HAS_TAIL_BLOCK(count) (((count) & 1) != 0)
 #define YUY2_ROW_BYTES(count) ((count) * YUY2_WORDS_PER_BLOCK * YUY2_WORD_BYTES)
 #define YUY2_X2_ROW_BYTES(count) ((count) * YUY2_X2_WORDS_PER_BLOCK * YUY2_WORD_BYTES)
-#define YUY2_Y0_MASK 0xff000000
-#define YUY2_Y1_MASK 0x00ff0000
-#define YUY2_Y2_MASK 0x0000ff00
-#define YUY2_Y3_MASK 0x000000ff
+typedef enum YUY2LumaByteMask
+{
+    YUY2_Y0_MASK = 0xff000000,
+    YUY2_Y1_MASK = 0x00ff0000,
+    YUY2_Y2_MASK = 0x0000ff00,
+    YUY2_Y3_MASK = 0x000000ff
+} YUY2LumaByteMask;
+
 #define YUY2_PACK_4Y01(y, chroma0, chroma1) ((y) & YUY2_Y0_MASK) + (chroma0) + (((y) >> 8) & YUY2_Y2_MASK) + (chroma1)
 #define YUY2_PACK_4Y23(y, chroma0, chroma1) (((y) & YUY2_Y2_MASK) << 16) + (chroma0) + (((y) & YUY2_Y3_MASK) << 8) + (chroma1)
 #define YUY2_PACK_M4Y01(y) ((y) & YUY2_Y0_MASK) + (((y) >> 8) & YUY2_Y2_MASK) + YUY2_NEUTRAL_CHROMA
@@ -52,7 +64,10 @@ typedef enum YUY2PairLumaWord
 #define YUY2_CHROMA3(u, v) (((u) & YUY2_CHROMA8_MASK) << 16) + ((v) & YUY2_CHROMA8_MASK)
 #define YUY2_TAIL_CHROMA0(u, v) (((u) & YUY2_CHROMA_LOW16_MASK) << 8) + ((v) >> 8)
 #define YUY2_TAIL_CHROMA1(u, v) (((u) & YUY2_CHROMA8_MASK) << 16) + ((v) & YUY2_CHROMA8_MASK)
-#define YUY2_NO_REMAINING ((u32)-1)
+typedef enum YUY2RemainingState
+{
+    YUY2_NO_REMAINING = 0xffffffffU
+} YUY2RemainingState;
 
 // Helpers operate on one destination row; the public 4x2 entry points call the
 // same packing logic for S.dest0 and S.dest1, then advance the shared context.
