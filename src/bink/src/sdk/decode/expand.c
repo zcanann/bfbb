@@ -104,11 +104,11 @@ typedef enum BINKBundleLayout
 #define BINK_BUNDLE_COUNT_BITS(width, count_base) \
     getbitlevelvar(((width) + (count_base)) & EXP_U16_MASK)
 #define BINK_BUNDLE_INITIAL_VALUE(shift) (1 << ((shift) - 1))
-#define BINK_BUNDLE_INITIAL_VALUE_NONE 0
 typedef enum BINKBUNDLEINITIALVALUE
 {
     BINK_BUNDLE_NO_INITIAL_VALUE,
-    BINK_BUNDLE_USE_INITIAL_VALUE
+    BINK_BUNDLE_USE_INITIAL_VALUE,
+    BINK_BUNDLE_INITIAL_VALUE_NONE = 0
 } BINKBUNDLEINITIALVALUE;
 #define BINK_BUNDLE_STORAGE_SIZE(width, rows, bits, pitch) \
     ((((width) * (bits)) >> BINK_BLOCK_SHIFT) + \
