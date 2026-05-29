@@ -19,7 +19,10 @@ struct RADCB_CALLBACK
     RADCB_RUN run;
 };
 
-#define RADCB_CALLBACK_STORAGE_WORDS 16
+typedef enum RADCBCallbackLayout
+{
+    RADCB_CALLBACK_STORAGE_WORDS = 16
+} RADCBCallbackLayout;
 
 typedef union RADCB_CALLBACK_STORAGE
 {
