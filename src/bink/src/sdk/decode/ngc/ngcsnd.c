@@ -539,7 +539,6 @@ static s32 Lock(BINKSND PTR4* snd, u8 PTR4* PTR4* addr, u32 PTR4* len)
     u32 half_size;
     u32 block_size;
     u32 chans;
-    ARQRequest PTR4* tasks;
     ARQRequest PTR4* task;
     ARQRequest PTR4* right_task;
     u8 PTR4* out;
@@ -547,7 +546,6 @@ static s32 Lock(BINKSND PTR4* snd, u8 PTR4* PTR4* addr, u32 PTR4* len)
 
     if (NGC_SOUND_STATE(snd)->lock_index >= 0) {
         state = NGC_SOUND_STATE(snd);
-        tasks = NGC_TASK(state, 0);
         writable = state->play_cursor;
         play_pos = NGC_AX_CURRENT_CURSOR(NGC_LEFT_VOICE(state), NGC_ADDRESS_SHIFT(state));
 
@@ -567,7 +565,7 @@ static s32 Lock(BINKSND PTR4* snd, u8 PTR4* PTR4* addr, u32 PTR4* len)
         }
 
         /* The lock index selects one half of the MRAM staging buffer. */
-        task = &tasks[state->lock_index];
+        task = NGC_TASK(state, state->lock_index);
         out = state->decode_buffer +
               ((state->lock_index * block_size) >> NGC_SOUND_HALF_BUFFER_SHIFT);
         chans = snd->chans;
@@ -575,7 +573,7 @@ static s32 Lock(BINKSND PTR4* snd, u8 PTR4* PTR4* addr, u32 PTR4* len)
         task->source = (u32)out;
         out_addr = out;
         out += state->channel_stride;
-        right_task = &tasks[state->lock_index + NGC_SOUND_RIGHT_TASK_OFFSET];
+        right_task = NGC_TASK(state, state->lock_index + NGC_SOUND_RIGHT_TASK_OFFSET);
         right_task->source = (u32)out;
 
         if (snd->chans == NGC_SOUND_STEREO_CHANNELS) {
