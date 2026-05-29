@@ -42,8 +42,11 @@ enum YUVChromaLayout {
 enum BINKSurfaceLayoutState {
     BINKSURFACE_INVALID = 0xffffffffU
 };
-#define YUV_ROUND_SHIFT 15
-#define YUV_ROUND_BIAS ((1 << YUV_ROUND_SHIFT) - 1)
+
+enum YUVRoundConstants {
+    YUV_ROUND_SHIFT = 15,
+    YUV_ROUND_BIAS = (1 << YUV_ROUND_SHIFT) - 1
+};
 
 enum YUVColorRange {
     YUV_LUMA_BLACK = 0x10,
