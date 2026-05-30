@@ -58,7 +58,9 @@ typedef enum BINKExpandBitLayout
 typedef enum BINKHuff4Layout
 {
     HUFF4_SYMBOLS = 16,
+    HUFF4_IDENTITY_CODEBOOK = 0,
     HUFF4_SYMBOL_MASK = 0xf,
+    HUFF4_SYMBOL_PRESENT_BIT = 1,
     HUFF4_ALL_SYMBOLS_MASK = 0xffff,
     HUFF4_USED_SHIFT = 4,
     HUFF4_SUBTYPE_BITS = 2,
@@ -432,7 +434,7 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
     VarBitsGet(table_index, u32, *vb, HUFF4_USED_SHIFT);
     *decode = huff4decodes[table_index];
     *bits_to_peek = (u8)BINK_HUFF4_BITS_TO_PEEK[table_index];
-    if (table_index == 0) {
+    if (table_index == HUFF4_IDENTITY_CODEBOOK) {
         for (j = 0; j < HUFF4_SYMBOLS; ++j) {
             values[j] = j;
         }
@@ -524,12 +526,12 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
         for (count = 0; count <= last_explicit; ++count) {
             VarBitsGet(symbol, u32, *vb, HUFF4_USED_SHIFT);
             values[count] = symbol;
-            unused_symbols &= ~(1 << symbol);
+            unused_symbols &= ~(HUFF4_SYMBOL_PRESENT_BIT << symbol);
         }
 
         i = 0;
         do {
-            if ((unused_symbols & 1) != 0) {
+            if ((unused_symbols & HUFF4_SYMBOL_PRESENT_BIT) != 0) {
                 last_explicit++;
                 values[last_explicit] = i;
             }
