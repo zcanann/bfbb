@@ -631,6 +631,7 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
     u32 state;
     u32 high;
     u32 low;
+    u32 packed;
     u32 value;
     s32 remaining;
 
@@ -657,7 +658,8 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
             high = exp_read_huff8(bits, state, huff8_table);
             state = high;
             low = exp_read_huff4_mask(bits, peek, decode, values, mask);
-            value = ((high & HUFF4_SYMBOL_MASK) << HUFF4_USED_SHIFT) | low;
+            packed = ((high & HUFF4_SYMBOL_MASK) << HUFF4_USED_SHIFT) | low;
+            value = packed;
             if ((value & BINK_SIGNED_BYTE_BIAS) != 0) {
                 value = -BINK_SIGNED_BYTE_BIAS - (value & BINK_SIGNED_BYTE_MASK);
             } else {
@@ -689,6 +691,7 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
     u32 mask;
     u32 state;
     u32 low;
+    u32 packed;
     s32 remaining;
 
     if (bundle->cur_ptr != bundle->cur_dec) {
@@ -713,7 +716,8 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
         do {
             state = exp_read_huff8(bits, state, huff8_table);
             low = exp_read_huff4_mask(bits, peek, decode, values, mask);
-            *dest++ = (u8)(low | (state << HUFF4_USED_SHIFT));
+            packed = low | (state << HUFF4_USED_SHIFT);
+            *dest++ = (u8)packed;
             remaining--;
         } while (remaining > 0);
 
@@ -775,8 +779,8 @@ static void CheckReadHuff4PairBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits
     const u8 PTR4* decode;
     u32 peek;
     u32 mask;
-    u32 first;
-    u32 second;
+    u32 low;
+    u32 high;
 
     if (bundle->cur_ptr != bundle->cur_dec) {
         return;
@@ -794,9 +798,9 @@ static void CheckReadHuff4PairBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits
         do {
             /* Pair bundles pack two Huff4 symbols into each output byte. */
             count--;
-            first = exp_read_huff4_mask(bits, peek, decode, values, mask);
-            second = exp_read_huff4_mask(bits, peek, decode, values, mask);
-            *dest++ = (u8)(first | (second << HUFF4_USED_SHIFT));
+            low = exp_read_huff4_mask(bits, peek, decode, values, mask);
+            high = exp_read_huff4_mask(bits, peek, decode, values, mask);
+            *dest++ = (u8)(low | (high << HUFF4_USED_SHIFT));
         } while (count != 0);
     } else {
         bundle->cur_dec = bundle->data;
