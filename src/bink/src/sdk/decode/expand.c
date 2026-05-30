@@ -76,6 +76,14 @@ typedef enum BINKHuff4Layout
     HUFF4_RLE_LITERAL_COUNT = 12
 } BINKHuff4Layout;
 
+typedef enum BINKHuff4SortMode
+{
+    HUFF4_SORT_PAIRS,
+    HUFF4_SORT_QUARTERS,
+    HUFF4_SORT_HALVES,
+    HUFF4_SORT_FULL
+} BINKHuff4SortMode;
+
 #define HUFF4_CODE_USED(code) ((code) >> HUFF4_USED_SHIFT)
 #define HUFF4_CODE_SYMBOL(code) ((code) & HUFF4_SYMBOL_MASK)
 #define HUFF4_CODE_VALUE(code, values) ((values)[HUFF4_CODE_SYMBOL(code)])
@@ -428,7 +436,7 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
     if (exp_get_bit(vb) == 0) {
         /* Compact symbol shuffling: merge adjacent pair, quarter, and half lists. */
         VarBitsGet(subtype, u32, *vb, HUFF4_SUBTYPE_BITS);
-        if (subtype == 0) {
+        if (subtype == HUFF4_SORT_PAIRS) {
             i = 0;
             count = HUFF4_PAIR_COUNT;
             do {
@@ -460,7 +468,7 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
                 right += HUFF4_PAIR_SYMBOLS;
             }
 
-            if (subtype == 1) {
+            if (subtype == HUFF4_SORT_QUARTERS) {
                 simpmergesort(vb, values, merges.order,
                               merges.order + HUFF4_PAIR_SYMBOLS, HUFF4_PAIR_SYMBOLS);
                 simpmergesort(vb, values + HUFF4_QUARTER_SYMBOLS,
@@ -488,7 +496,7 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
                 simpmergesort(vb, merges.merge67,
                               merges.order + HUFF4_LAST_QUARTER_SYMBOL,
                               merges.order + HUFF4_LAST_PAIR_SYMBOL, HUFF4_PAIR_SYMBOLS);
-                if (subtype == 2) {
+                if (subtype == HUFF4_SORT_HALVES) {
                     simpmergesort(vb, values, merges.merge01, merges.merge23,
                                   HUFF4_QUARTER_SYMBOLS);
                     simpmergesort(vb, values + HUFF4_HALF_SYMBOLS,
