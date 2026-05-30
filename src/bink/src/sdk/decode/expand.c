@@ -976,13 +976,13 @@ static inline void expand_pattern_block(u8 PTR4* dest,
     color1 = colors->cur_ptr[BINK_PATTERN_COLOR_1];
     colors->cur_ptr += BINK_PATTERN_COLOR_COUNT;
     for (i = 0; i < BINK_BLOCK_SIDE; ++i) {
-        u32 bits;
-        u32 j;
+        u32 row_bits;
+        u32 col;
 
-        bits = *patterns->cur_ptr++;
-        for (j = 0; j < BINK_BLOCK_SIDE; ++j) {
-            dest[i * pitch + j] = (bits & 1) != 0 ? color1 : color0;
-            bits >>= 1;
+        row_bits = *patterns->cur_ptr++;
+        for (col = 0; col < BINK_BLOCK_SIDE; ++col) {
+            dest[i * pitch + col] = (row_bits & 1) != 0 ? color1 : color0;
+            row_bits >>= 1;
         }
     }
 }
