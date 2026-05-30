@@ -228,12 +228,12 @@ static void makewt(s32 nw, s32 PTR4* ip, f32 PTR4* w)
 {
     s32 j;
     s32 nwh;
-    s32 offset;
-    s32 next;
+    s32 nw0;
+    s32 nw1;
     f32 delta;
     f32 three;
     f32 x;
-    f32 cos_nwh;
+    f32 wn4r;
     f32 half_recip;
     f64 half_secant;
 
@@ -244,7 +244,7 @@ static void makewt(s32 nw, s32 PTR4* ip, f32 PTR4* w)
         nwh = FFT_HALF_SIZE(nw);
         delta = atanf(FFT_TRIG_ONE) / (f32)nwh;
         x = cosf(delta * (f32)nwh);
-        cos_nwh = x;
+        wn4r = x;
         w[1] = x;
         w[0] = FFT_TRIG_ONE;
 
@@ -271,28 +271,28 @@ static void makewt(s32 nw, s32 PTR4* ip, f32 PTR4* w)
             } while (j < nwh);
         }
 
-        offset = 0;
+        nw0 = 0;
         while (nwh > 2) {
             half_recip = FFT_HALF_RECIP_SCALE;
-            next = offset + nwh;
+            nw1 = nw0 + nwh;
             nwh >>= 1;
-            w[next] = FFT_TRIG_ONE;
-            w[next + 1] = cos_nwh;
+            w[nw1] = FFT_TRIG_ONE;
+            w[nw1 + 1] = wn4r;
 
             if (nwh > 3) {
-                f32 x4;
-                f32 x6;
+                f32 wk1r;
+                f32 wk3r;
 
-                x4 = w[offset + 4];
-                x6 = w[offset + 6];
-                w[next + 2] = half_recip / x4;
-                w[next + 3] = half_recip / x6;
+                wk1r = w[nw0 + 4];
+                wk3r = w[nw0 + 6];
+                w[nw1 + 2] = half_recip / wk1r;
+                w[nw1 + 3] = half_recip / wk3r;
             }
 
             j = 4;
             if (j < nwh) {
-                f32 PTR4* src = w + offset + 8;
-                f32 PTR4* dst = w + next + 4;
+                f32 PTR4* src = w + nw0 + 8;
+                f32 PTR4* dst = w + nw1 + 4;
                 do {
                     f32 x0;
                     f32 x1;
@@ -313,7 +313,7 @@ static void makewt(s32 nw, s32 PTR4* ip, f32 PTR4* w)
                 } while (j < nwh);
             }
 
-            offset = next;
+            nw0 = nw1;
         }
     }
 }
