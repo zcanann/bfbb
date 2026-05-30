@@ -84,6 +84,8 @@ typedef enum BINKPlaneLayout
 } BINKPlaneLayout;
 
 #define BINK_MASK_BLOCKS(value) ((value) / BINK_MASK_BLOCK_SIZE)
+#define BINK_MASK_PLANE_BYTES(width, height) \
+    ((((width) >> BINK_MASK_BLOCK_SHIFT) * (height)) >> BINK_MASK_BLOCK_SHIFT)
 typedef enum BINKOpenOverrideState
 {
     BINK_OPEN_OVERRIDE_UNSET = 0xffffffffU
@@ -1126,8 +1128,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
     bnk.LargestFrameSize = hdr.LargestFrameSize;
     bnk.fileframerate = hdr.FrameRate;
     bnk.fileframeratediv = hdr.FrameRateDiv;
-    bnk.MaskLength = ((bnk.YWidth >> BINK_MASK_BLOCK_SHIFT) * bnk.YHeight) >>
-                     BINK_MASK_BLOCK_SHIFT;
+    bnk.MaskLength = BINK_MASK_PLANE_BYTES(bnk.YWidth, bnk.YHeight);
     if (bnk.runtimeframes == 0) {
         bnk.runtimeframes = 1;
     }
