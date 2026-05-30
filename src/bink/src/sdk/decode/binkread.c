@@ -948,7 +948,7 @@ static u32 high1secrate(s32 frames, const u32 PTR4* frameoffsets, s32 span,
     i = 0;
     if (i < frames - span) {
         const u32 PTR4* start = frameoffsets;
-        const u32 PTR4* end = &frameoffsets[span];
+        const u32 PTR4* end = frameoffsets + span;
 
         do {
             u32 diff = *end++ - *start++;
