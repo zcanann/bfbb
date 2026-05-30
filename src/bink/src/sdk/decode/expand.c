@@ -566,8 +566,9 @@ static void CheckReadRLEHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     u32 count;
     u8 PTR4* dest;
     u32 value;
-    u32 last;
-    u8 run;
+    u32 last_value;
+    u8 run_length;
+    u32 fill;
     u8 PTR4* values;
     const u8 PTR4* decode;
     u32 peek;
@@ -585,33 +586,31 @@ static void CheckReadRLEHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
             values = bundle->values;
             peek = (u8)bundle->bits_to_peek;
             dest = bundle->data;
-            last = 0;
+            last_value = 0;
             decode = bundle->decode;
             while (count != 0) {
                 value = exp_read_huff4(bits, peek, decode, values);
                 if (value > HUFF4_RLE_LITERAL_COUNT - 1) {
-                    u32 fill;
-
                     /* Packed word stores four copies of the last byte for the run fill. */
-                    fill = last | (last << BINK_BYTE_BITS);
+                    fill = last_value | (last_value << BINK_BYTE_BITS);
                     value -= HUFF4_RLE_LITERAL_COUNT;
-                    run = BINK_HUFF4_RLE_LENGTH(value);
-                    count -= run;
+                    run_length = BINK_HUFF4_RLE_LENGTH(value);
+                    count -= run_length;
                     fill |= fill << BINK_BUNDLE_MIN_WORD_BITS;
                     do {
                         *(u32 PTR4*)dest = fill;
                         dest += EXP_WORD_BYTES;
-                        run -= EXP_WORD_BYTES;
-                    } while (run != 0);
+                        run_length -= EXP_WORD_BYTES;
+                    } while (run_length != 0);
                 } else {
                     *dest++ = (u8)value;
                     count--;
-                    last = value;
+                    last_value = value;
                 }
             }
         } else {
-            value = exp_get_bits(bits, HUFF4_USED_SHIFT);
-            memset(bundle->data, value, count);
+            fill = exp_get_bits(bits, HUFF4_USED_SHIFT);
+            memset(bundle->data, fill, count);
         }
     } else {
         /* Empty bundles point cur_ptr past data so callers see no decoded elements. */
