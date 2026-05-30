@@ -123,6 +123,8 @@ typedef enum BINKBUNDLEINITIALVALUE
      ((BINK_BLOCK_ROWS(rows) * (pitch) * (bits)) >> BINK_BLOCK_SHIFT))
 #define BINK_BUNDLE_ALIGN_SIZE(size) (((size) + BINK_WORD_ALIGN_MASK) & ~BINK_WORD_ALIGN_MASK)
 #define BINK_BUNDLE_EMPTY_CUR(bundle) ((bundle)->data + EXP_WORD_BYTES)
+#define BINK_BUNDLE_S8(bundle) (*(s8 PTR4*)((bundle).cur_ptr))
+#define BINK_BUNDLE_S16(bundle) (*(s16 PTR4*)((bundle).cur_ptr))
 #define BINK_BUNDLE_CHUNK_NEXT(bundle) ((u32 PTR4*)((u8 PTR4*)(bundle) + *(bundle)))
 #define BINK_BUNDLE_PAYLOAD_NEXT(bundle) \
     ((u32 PTR4*)((u8 PTR4*)(bundle) + (bundle)[-1] - EXP_WORD_BYTES))
@@ -1126,8 +1128,8 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 break;
             }
             case BINK_BLOCK_MOTION: {
-                s32 motion_x = *(s8 PTR4*)xoff.cur_ptr;
-                s32 motion_y = *(s8 PTR4*)yoff.cur_ptr;
+                s32 motion_x = BINK_BUNDLE_S8(xoff);
+                s32 motion_y = BINK_BUNDLE_S8(yoff);
                 u8 PTR4* motion_source;
                 u32 i;
 
@@ -1144,8 +1146,8 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 break;
             }
             case BINK_BLOCK_RESIDUE: {
-                s32 motion_x = *(s8 PTR4*)xoff.cur_ptr;
-                s32 motion_y = *(s8 PTR4*)yoff.cur_ptr;
+                s32 motion_x = BINK_BUNDLE_S8(xoff);
+                s32 motion_y = BINK_BUNDLE_S8(yoff);
                 u8 PTR4* motion_source;
                 u32 residue_limit;
                 u32 i;
@@ -1170,7 +1172,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 u32 quant;
 
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
-                dct_block[0] = *(s16 PTR4*)intra_dc.cur_ptr;
+                dct_block[0] = BINK_BUNDLE_S16(intra_dc);
                 intra_dc.cur_ptr += BINK_DC_BYTES;
                 ReadBPLossless(dct_block, (BPBITSTREAM PTR4*)&bitstate);
                 quant = exp_get_bits(&bitstate, BINK_DCT_QUANT_BITS);
@@ -1178,14 +1180,14 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 break;
             }
             case BINK_BLOCK_INTER: {
-                s32 motion_x = *(s8 PTR4*)xoff.cur_ptr;
-                s32 motion_y = *(s8 PTR4*)yoff.cur_ptr;
+                s32 motion_x = BINK_BUNDLE_S8(xoff);
+                s32 motion_y = BINK_BUNDLE_S8(yoff);
                 u8 PTR4* motion_source;
                 u32 quant;
                 u32 i;
 
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
-                dct_block[0] = *(s16 PTR4*)inter_dc.cur_ptr;
+                dct_block[0] = BINK_BUNDLE_S16(inter_dc);
                 inter_dc.cur_ptr += BINK_DC_BYTES;
                 xoff.cur_ptr++;
                 yoff.cur_ptr++;
@@ -1248,7 +1250,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 } else if (subblock_type == BINK_BLOCK_INTRA) {
                     u32 quant;
 
-                    dct_block[0] = *(s16 PTR4*)intra_dc.cur_ptr;
+                    dct_block[0] = BINK_BUNDLE_S16(intra_dc);
                     intra_dc.cur_ptr += BINK_DC_BYTES;
                     ReadBPLossless(dct_block, (BPBITSTREAM PTR4*)&bitstate);
                     quant = exp_get_bits(&bitstate, BINK_DCT_QUANT_BITS);
