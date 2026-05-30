@@ -405,20 +405,20 @@ static inline u32 exp_read_huff8(EXPBITS PTR4* bits, u32 state, HUFF8TABLE PTR4*
 static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
                           u32 PTR4* bits_to_peek, u8 PTR4* values)
 {
-    u32 mode;
+    u32 table_index;
     u32 subtype;
     u32 count;
-    u32 remaining;
+    u32 unused_symbols;
     u32 symbol;
     u32 j;
     u32 i;
     HUFF4MERGES merges;
 
     /* Each table stores a 4-bit codebook index plus a 16-entry symbol remap. */
-    VarBitsGet(mode, u32, *vb, HUFF4_USED_SHIFT);
-    *decode = huff4decodes[mode];
-    *bits_to_peek = (u8)BINK_HUFF4_BITS_TO_PEEK[mode];
-    if (mode == 0) {
+    VarBitsGet(table_index, u32, *vb, HUFF4_USED_SHIFT);
+    *decode = huff4decodes[table_index];
+    *bits_to_peek = (u8)BINK_HUFF4_BITS_TO_PEEK[table_index];
+    if (table_index == 0) {
         for (j = 0; j < HUFF4_SYMBOLS; ++j) {
             values[j] = j;
         }
@@ -506,22 +506,22 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
         }
     } else {
         VarBitsGet(subtype, u32, *vb, HUFF4_EXPLICIT_SUBTYPE_BITS);
-        remaining = HUFF4_ALL_SYMBOLS_MASK;
+        unused_symbols = HUFF4_ALL_SYMBOLS_MASK;
         for (count = 0; count <= subtype; ++count) {
             VarBitsGet(symbol, u32, *vb, HUFF4_USED_SHIFT);
             values[count] = symbol;
-            remaining &= ~(1 << symbol);
+            unused_symbols &= ~(1 << symbol);
         }
 
         i = 0;
         do {
-            if ((remaining & 1) != 0) {
+            if ((unused_symbols & 1) != 0) {
                 subtype++;
                 values[subtype] = i;
             }
             i++;
-            remaining >>= 1;
-        } while (remaining != 0);
+            unused_symbols >>= 1;
+        } while (unused_symbols != 0);
     }
 }
 
