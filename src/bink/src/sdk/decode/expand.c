@@ -1043,7 +1043,6 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
     u32 work_pitch;
     enum BINKBLOCKTYPE block_type;
     enum BINKBLOCKTYPE subblock_type;
-    u32 quant;
     u8 PTR4* dest;
     u8 PTR4* old;
     u8 PTR4* work_row;
@@ -1148,6 +1147,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 s32 mx = *(s8 PTR4*)xoff.cur_ptr;
                 s32 my = *(s8 PTR4*)yoff.cur_ptr;
                 u8 PTR4* motion;
+                u32 residue_limit;
                 u32 i;
 
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
@@ -1160,12 +1160,15 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                     BINK_LINEAR_BLOCK_ROW_WORD(motion_block, i, BINK_BLOCK_ROW_WORD_1) =
                         BINK_BLOCK_ROW_WORD(motion, pitch, i, BINK_BLOCK_ROW_WORD_1);
                 }
-                ReadBPLossyWithMotion((char PTR4*)dest, (s32)pitch, (BPBITSTREAM PTR4*)&bitstate,
-                                      exp_get_bits(&bitstate, BINK_RESIDUE_LIMIT_BITS),
+                residue_limit = exp_get_bits(&bitstate, BINK_RESIDUE_LIMIT_BITS);
+                ReadBPLossyWithMotion((char PTR4*)dest, (s32)pitch,
+                                      (BPBITSTREAM PTR4*)&bitstate, residue_limit,
                                       (char PTR4*)motion_block);
                 break;
             }
-            case BINK_BLOCK_INTRA:
+            case BINK_BLOCK_INTRA: {
+                u32 quant;
+
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
                 dct_block[0] = *(s16 PTR4*)intra_dc.cur_ptr;
                 intra_dc.cur_ptr += BINK_DC_BYTES;
@@ -1173,10 +1176,12 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 quant = exp_get_bits(&bitstate, BINK_DCT_QUANT_BITS);
                 FastIDCT8x8(dest, pitch, dct_block, quant);
                 break;
+            }
             case BINK_BLOCK_INTER: {
                 s32 mx = *(s8 PTR4*)xoff.cur_ptr;
                 s32 my = *(s8 PTR4*)yoff.cur_ptr;
                 u8 PTR4* motion;
+                u32 quant;
                 u32 i;
 
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
@@ -1197,8 +1202,8 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 break;
             }
             case BINK_BLOCK_FILL: {
-                u8 value = *colors.cur_ptr;
-                u32 fill = BINK_FILL_WORD(value);
+                u8 color = *colors.cur_ptr;
+                u32 fill = BINK_FILL_WORD(color);
                 u32 i;
 
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
@@ -1241,6 +1246,8 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 } else if (subblock_type == BINK_BLOCK_RAW) {
                     colors.cur_ptr += BINK_COLOR_BLOCK_BYTES;
                 } else if (subblock_type == BINK_BLOCK_INTRA) {
+                    u32 quant;
+
                     dct_block[0] = *(s16 PTR4*)intra_dc.cur_ptr;
                     intra_dc.cur_ptr += BINK_DC_BYTES;
                     ReadBPLossless(dct_block, (BPBITSTREAM PTR4*)&bitstate);
