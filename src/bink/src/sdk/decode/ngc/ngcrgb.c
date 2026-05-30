@@ -19,7 +19,11 @@ typedef enum RGBTileLayout
     RGB_32_X2_4X2_ROW_BYTES = 32,
     RGB_TILE_HALF_BLOCK_WORDS = 8,
     RGB_TILE_BLOCK_WORDS = 16,
-    RGB_TILE_X2_BLOCK_WORDS = 32
+    RGB_TILE_X2_BLOCK_WORDS = 32,
+    RGB_TILE_WORD0 = 0,
+    RGB_TILE_WORD1 = 1,
+    RGB_TILE_NEXT_ROW_WORD0 = RGB_TILE_HALF_BLOCK_WORDS,
+    RGB_TILE_NEXT_ROW_WORD1 = RGB_TILE_HALF_BLOCK_WORDS + 1
 } RGBTileLayout;
 
 #define RGB_TILE_PITCH16(pitch) (((pitch) * RGB_BYTES_PER_PIXEL32 + RGB_16BIT_TILE_ALIGN_MASK) & ~RGB_16BIT_TILE_ALIGN_MASK)
@@ -323,19 +327,19 @@ void YUV_32m_4x2(u32 count)
         u32 c = RGB32_M(RGB_WORD_BYTE1(yv0));
         u32 d = RGB32_M(RGB_WORD_BYTE0(yv0));
 
-        dest0[0] = (a & RGB_WORD_HI_MASK) | (b >> 16);
-        dest0[1] = (c & RGB_WORD_HI_MASK) | (d >> 16);
-        dest0[8] = (a << 16) | (b & RGB_WORD_LO_MASK);
-        dest0[9] = (c << 16) | (d & RGB_WORD_LO_MASK);
+        dest0[RGB_TILE_WORD0] = (a & RGB_WORD_HI_MASK) | (b >> 16);
+        dest0[RGB_TILE_WORD1] = (c & RGB_WORD_HI_MASK) | (d >> 16);
+        dest0[RGB_TILE_NEXT_ROW_WORD0] = (a << 16) | (b & RGB_WORD_LO_MASK);
+        dest0[RGB_TILE_NEXT_ROW_WORD1] = (c << 16) | (d & RGB_WORD_LO_MASK);
 
         a = RGB32_M(RGB_WORD_BYTE3(yv1));
         b = RGB32_M(RGB_WORD_BYTE2(yv1));
         c = RGB32_M(RGB_WORD_BYTE1(yv1));
         d = RGB32_M(RGB_WORD_BYTE0(yv1));
-        dest1[0] = (a & RGB_WORD_HI_MASK) | (b >> 16);
-        dest1[1] = (c & RGB_WORD_HI_MASK) | (d >> 16);
-        dest1[8] = (a << 16) | (b & RGB_WORD_LO_MASK);
-        dest1[9] = (c << 16) | (d & RGB_WORD_LO_MASK);
+        dest1[RGB_TILE_WORD0] = (a & RGB_WORD_HI_MASK) | (b >> 16);
+        dest1[RGB_TILE_WORD1] = (c & RGB_WORD_HI_MASK) | (d >> 16);
+        dest1[RGB_TILE_NEXT_ROW_WORD0] = (a << 16) | (b & RGB_WORD_LO_MASK);
+        dest1[RGB_TILE_NEXT_ROW_WORD1] = (c << 16) | (d & RGB_WORD_LO_MASK);
 
         dest0 += RGB_TILE_BLOCK_WORDS;
         dest1 += RGB_TILE_BLOCK_WORDS;
