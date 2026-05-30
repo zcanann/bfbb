@@ -1126,14 +1126,14 @@ void YUV_32amx2_4x2(u32 count)
         u32 a_lo0 = RGB_WORD_BYTE3(av0) << 8;
         u32 a_lo1 = RGB_WORD_BYTE2(av0) << 8;
 
-        dest0[0] = a_hi0 | (p0 & RGB_WORD_HI_MASK) | (p0 >> 16) | a_lo0;
-        dest0[1] = a_hi1 | (p1 & RGB_WORD_HI_MASK) | (p1 >> 16) | a_lo1;
-        dest0[8] = (p0 << 16) | (p0 & RGB_WORD_LO_MASK);
-        dest0[9] = (p1 << 16) | (p1 & RGB_WORD_LO_MASK);
-        dest0[16] = a_hi0 | (p2 & RGB_WORD_HI_MASK) | (p2 >> 16) | a_lo0;
-        dest0[17] = a_hi1 | (p3 & RGB_WORD_HI_MASK) | (p3 >> 16) | a_lo1;
-        dest0[24] = (p2 << 16) | (p2 & RGB_WORD_LO_MASK);
-        dest0[25] = (p3 << 16) | (p3 & RGB_WORD_LO_MASK);
+        dest0[RGB_TILE_WORD0] = a_hi0 | (p0 & RGB_WORD_HI_MASK) | (p0 >> 16) | a_lo0;
+        dest0[RGB_TILE_WORD1] = a_hi1 | (p1 & RGB_WORD_HI_MASK) | (p1 >> 16) | a_lo1;
+        dest0[RGB_TILE_NEXT_ROW_WORD0] = (p0 << 16) | (p0 & RGB_WORD_LO_MASK);
+        dest0[RGB_TILE_NEXT_ROW_WORD1] = (p1 << 16) | (p1 & RGB_WORD_LO_MASK);
+        dest0[RGB_TILE_SECOND_BLOCK_WORD0] = a_hi0 | (p2 & RGB_WORD_HI_MASK) | (p2 >> 16) | a_lo0;
+        dest0[RGB_TILE_SECOND_BLOCK_WORD1] = a_hi1 | (p3 & RGB_WORD_HI_MASK) | (p3 >> 16) | a_lo1;
+        dest0[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD0] = (p2 << 16) | (p2 & RGB_WORD_LO_MASK);
+        dest0[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD1] = (p3 << 16) | (p3 & RGB_WORD_LO_MASK);
 
         p0 = RGB32_M(RGB_WORD_BYTE3(yv1));
         p1 = RGB32_M(RGB_WORD_BYTE2(yv1));
@@ -1143,14 +1143,14 @@ void YUV_32amx2_4x2(u32 count)
         a_hi1 = RGB_WORD_BYTE2(av1) << 24;
         a_lo0 = RGB_WORD_BYTE3(av1) << 8;
         a_lo1 = RGB_WORD_BYTE2(av1) << 8;
-        dest1[0] = a_hi0 | (p0 & RGB_WORD_HI_MASK) | (p0 >> 16) | a_lo0;
-        dest1[1] = a_hi1 | (p1 & RGB_WORD_HI_MASK) | (p1 >> 16) | a_lo1;
-        dest1[8] = (p0 << 16) | (p0 & RGB_WORD_LO_MASK);
-        dest1[9] = (p1 << 16) | (p1 & RGB_WORD_LO_MASK);
-        dest1[16] = a_hi0 | (p2 & RGB_WORD_HI_MASK) | (p2 >> 16) | a_lo0;
-        dest1[17] = a_hi1 | (p3 & RGB_WORD_HI_MASK) | (p3 >> 16) | a_lo1;
-        dest1[24] = (p2 << 16) | (p2 & RGB_WORD_LO_MASK);
-        dest1[25] = (p3 << 16) | (p3 & RGB_WORD_LO_MASK);
+        dest1[RGB_TILE_WORD0] = a_hi0 | (p0 & RGB_WORD_HI_MASK) | (p0 >> 16) | a_lo0;
+        dest1[RGB_TILE_WORD1] = a_hi1 | (p1 & RGB_WORD_HI_MASK) | (p1 >> 16) | a_lo1;
+        dest1[RGB_TILE_NEXT_ROW_WORD0] = (p0 << 16) | (p0 & RGB_WORD_LO_MASK);
+        dest1[RGB_TILE_NEXT_ROW_WORD1] = (p1 << 16) | (p1 & RGB_WORD_LO_MASK);
+        dest1[RGB_TILE_SECOND_BLOCK_WORD0] = a_hi0 | (p2 & RGB_WORD_HI_MASK) | (p2 >> 16) | a_lo0;
+        dest1[RGB_TILE_SECOND_BLOCK_WORD1] = a_hi1 | (p3 & RGB_WORD_HI_MASK) | (p3 >> 16) | a_lo1;
+        dest1[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD0] = (p2 << 16) | (p2 & RGB_WORD_LO_MASK);
+        dest1[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD1] = (p3 << 16) | (p3 & RGB_WORD_LO_MASK);
 
         dest0 += RGB_TILE_X2_BLOCK_WORDS;
         dest1 += RGB_TILE_X2_BLOCK_WORDS;
