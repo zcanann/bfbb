@@ -414,7 +414,8 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
                           u32 PTR4* bits_to_peek, u8 PTR4* values)
 {
     u32 table_index;
-    u32 subtype;
+    u32 sort_mode;
+    u32 last_explicit;
     u32 count;
     u32 unused_symbols;
     u32 symbol;
@@ -435,8 +436,8 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
 
     if (exp_get_bit(vb) == 0) {
         /* Compact symbol shuffling: merge adjacent pair, quarter, and half lists. */
-        VarBitsGet(subtype, u32, *vb, HUFF4_SUBTYPE_BITS);
-        if (subtype == HUFF4_SORT_PAIRS) {
+        VarBitsGet(sort_mode, u32, *vb, HUFF4_SUBTYPE_BITS);
+        if (sort_mode == HUFF4_SORT_PAIRS) {
             i = 0;
             count = HUFF4_PAIR_COUNT;
             do {
@@ -468,7 +469,7 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
                 right += HUFF4_PAIR_SYMBOLS;
             }
 
-            if (subtype == HUFF4_SORT_QUARTERS) {
+            if (sort_mode == HUFF4_SORT_QUARTERS) {
                 simpmergesort(vb, values, merges.order,
                               merges.order + HUFF4_PAIR_SYMBOLS, HUFF4_PAIR_SYMBOLS);
                 simpmergesort(vb, values + HUFF4_QUARTER_SYMBOLS,
@@ -496,7 +497,7 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
                 simpmergesort(vb, merges.merge67,
                               merges.order + HUFF4_LAST_QUARTER_SYMBOL,
                               merges.order + HUFF4_LAST_PAIR_SYMBOL, HUFF4_PAIR_SYMBOLS);
-                if (subtype == HUFF4_SORT_HALVES) {
+                if (sort_mode == HUFF4_SORT_HALVES) {
                     simpmergesort(vb, values, merges.merge01, merges.merge23,
                                   HUFF4_QUARTER_SYMBOLS);
                     simpmergesort(vb, values + HUFF4_HALF_SYMBOLS,
@@ -513,9 +514,9 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
             }
         }
     } else {
-        VarBitsGet(subtype, u32, *vb, HUFF4_EXPLICIT_SUBTYPE_BITS);
+        VarBitsGet(last_explicit, u32, *vb, HUFF4_EXPLICIT_SUBTYPE_BITS);
         unused_symbols = HUFF4_ALL_SYMBOLS_MASK;
-        for (count = 0; count <= subtype; ++count) {
+        for (count = 0; count <= last_explicit; ++count) {
             VarBitsGet(symbol, u32, *vb, HUFF4_USED_SHIFT);
             values[count] = symbol;
             unused_symbols &= ~(1 << symbol);
@@ -524,8 +525,8 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
         i = 0;
         do {
             if ((unused_symbols & 1) != 0) {
-                subtype++;
-                values[subtype] = i;
+                last_explicit++;
+                values[last_explicit] = i;
             }
             i++;
             unused_symbols >>= 1;
