@@ -3765,6 +3765,8 @@ static void dounalignedYUY2row2wh(u32 phase, u32 count)
     u8 v;
     u32 pixel0;
     u32 pixel1;
+    u8 PTR4* uptr;
+    u8 PTR4* vptr;
 
     (void)phase;
     remaining = count;
@@ -3774,11 +3776,13 @@ static void dounalignedYUY2row2wh(u32 phase, u32 count)
     }
 
     do {
-        u = *(u8 PTR4*)S.u;
-        S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
+        uptr = (u8 PTR4*)S.u;
+        u = *uptr++;
+        S.u = (u16 PTR4*)uptr;
         y0 = *(u8 PTR4*)S.y0;
-        v = *(u8 PTR4*)S.v;
-        S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+        vptr = (u8 PTR4*)S.v;
+        v = *vptr++;
+        S.v = (u16 PTR4*)vptr;
         pixel0 = YUY2_COLOR_PAIR(y0, u, y0, v);
         ((u32 PTR4*)S.dest0)[0] = pixel0;
         y1 = *((u8 PTR4*)S.y0 + 1);
