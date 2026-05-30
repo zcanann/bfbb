@@ -62,6 +62,7 @@ typedef enum BINKACSampleLayout
     BINKAC_MONO_CHANNELS = 1
 } BINKACSampleLayout;
 
+#define BINKAC_BIT_MASK 1
 #define BINKAC_UNDECIBEL_BASE BINKAC_QUANT_POWER_BASE_CONST
 #define BINKAC_UNDECIBEL_DB_SCALE BINKAC_QUANT_POWER_SCALE_CONST
 #define BINKAC_THRESHOLD_QUANT_SCALE BINKAC_QUANT_INDEX_SCALE_CONST
@@ -90,6 +91,7 @@ typedef enum BINKACSampleCountState
 #define BINKAC_OVERLAP_SOURCE(samples, buffer_size, window_size) \
     ((u8 PTR4*)(samples) + ((buffer_size) - (window_size)))
 #define BINKAC_INPUT_ADVANCE(ptr, bytes) ((u8 PTR4*)(ptr) + (bytes))
+#define BINKAC_ZERO_BYTE 0
 #define BINKAC_SAMPLE_ZERO 0.0f
 #define BINKAC_QUANT_INDEX_SCALE_CONST 0.664f
 #define BINKAC_QUANT_POWER_SCALE_CONST 0.10f
@@ -235,14 +237,14 @@ static inline u32 read_bit(VARBITS PTR4* vb)
 
     if (bitcount != 0) {
         u32 bits = vb->bits;
-        u32 value = bits & 1;
+        u32 value = bits & BINKAC_BIT_MASK;
 
         vb->bitlen = bitcount - 1;
         vb->bits = bits >> 1;
         return value;
     } else {
         u32 word = BINKAC_LOAD32(vb->cur);
-        u32 value = word & 1;
+        u32 value = word & BINKAC_BIT_MASK;
 
         VARBITS_ADVANCE_CUR(vb->cur);
         vb->bitlen = BITSTYPELEN - 1;
@@ -285,7 +287,7 @@ static void read_rle_samples(f32 PTR4* samples, u32 transform_size, VARBITS PTR4
 
         bitlen = read_rle_bits(vb);
         if (bitlen == 0) {
-            memset(out, 0, (end - i) * sizeof(*out));
+            memset(out, BINKAC_ZERO_BYTE, (end - i) * sizeof(*out));
             out += end - i;
             i = end;
 
