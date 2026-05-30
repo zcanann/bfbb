@@ -172,11 +172,13 @@ static void quanttos16chans2(s16 PTR4* dest, const f32 PTR4* src, f32 scale, u32
     if (remaining != BINKAC_SAMPLE_COUNT_UNDERFLOW) {
         stride = count;
         while (remaining != BINKAC_SAMPLE_COUNT_UNDERFLOW) {
-            s16 PTR4* out = dest++;
+            s16 PTR4* out = dest;
             s32 value = (s32)(src[0] * scale);
 
+            ++dest;
             *out = clamp_to_s16(value);
-            out = dest++;
+            out = dest;
+            ++dest;
             value = (s32)(src[stride] * scale);
             *out = clamp_to_s16(value);
             ++src;
@@ -336,8 +338,8 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
     f32 thresholds[BINKAC_THRESHOLD_COUNT];
     VARBITS vb;
     f32 decoded[MAX_TRANSFORM];
-    f32 PTR4* channel;
     u32 ch;
+    f32 PTR4* channel;
     u32 i;
     u32 coeff;
     s32 q;
@@ -409,13 +411,13 @@ static inline f32 radfsqrt(f32 value)
 
 HBINKAUDIODECOMP BinkAudioDecompressOpen(u32 rate, u32 chans, u32 flags)
 {
-    u32 transform_size;
-    u32 buffer_size;
-    u32 transform_size_half;
-    s32 nyq;
-    u32 num_bands;
     u32 i;
+    u32 transform_size;
+    u32 transform_size_half;
+    u32 buffer_size;
     f32 transform_size_root;
+    u32 num_bands;
+    s32 nyq;
     HBINKAUDIODECOMP ba;
     u32 PTR4* bands;
     s32 PTR4* fft_work;
