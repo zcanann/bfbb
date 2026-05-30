@@ -857,9 +857,9 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     u32 count;
     u32 remaining;
     u32 group_count;
-    u32 bit_count;
+    u32 delta_bits;
     u16 current;
-    u16 value;
+    u16 magnitude;
     s16 delta;
     s16 PTR4* dest;
 
@@ -889,15 +889,15 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
                 group_count = BINK_DELTA16_GROUP_MAX;
             }
 
-            VarBitsGet(bit_count, u32, *bits, HUFF4_USED_SHIFT);
-            if (bit_count != 0) {
+            VarBitsGet(delta_bits, u32, *bits, HUFF4_USED_SHIFT);
+            if (delta_bits != 0) {
                 remaining -= group_count;
                 while (group_count != 0) {
                     group_count--;
-                    VarBitsGet(value, u16, *bits, bit_count);
-                    delta = (s16)value;
+                    VarBitsGet(magnitude, u16, *bits, delta_bits);
+                    delta = (s16)magnitude;
                     if (delta != 0 && exp_get_bit(bits) != 0) {
-                        delta = (s16)-value;
+                        delta = (s16)-magnitude;
                     }
                     current = current + delta;
                     *dest++ = (s16)current;
