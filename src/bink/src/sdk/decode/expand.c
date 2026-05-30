@@ -1126,39 +1126,39 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 break;
             }
             case BINK_BLOCK_MOTION: {
-                s32 mx = *(s8 PTR4*)xoff.cur_ptr;
-                s32 my = *(s8 PTR4*)yoff.cur_ptr;
-                u8 PTR4* motion;
+                s32 motion_x = *(s8 PTR4*)xoff.cur_ptr;
+                s32 motion_y = *(s8 PTR4*)yoff.cur_ptr;
+                u8 PTR4* motion_source;
                 u32 i;
 
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
                 xoff.cur_ptr++;
                 yoff.cur_ptr++;
-                motion = BINK_MOTION_SOURCE(old, pitch, mx, my);
+                motion_source = BINK_MOTION_SOURCE(old, pitch, motion_x, motion_y);
                 for (i = 0; i < BINK_BLOCK_SIDE; ++i) {
                     BINK_BLOCK_ROW_WORD(dest, pitch, i, BINK_BLOCK_ROW_WORD_0) =
-                        BINK_BLOCK_ROW_WORD(motion, pitch, i, BINK_BLOCK_ROW_WORD_0);
+                        BINK_BLOCK_ROW_WORD(motion_source, pitch, i, BINK_BLOCK_ROW_WORD_0);
                     BINK_BLOCK_ROW_WORD(dest, pitch, i, BINK_BLOCK_ROW_WORD_1) =
-                        BINK_BLOCK_ROW_WORD(motion, pitch, i, BINK_BLOCK_ROW_WORD_1);
+                        BINK_BLOCK_ROW_WORD(motion_source, pitch, i, BINK_BLOCK_ROW_WORD_1);
                 }
                 break;
             }
             case BINK_BLOCK_RESIDUE: {
-                s32 mx = *(s8 PTR4*)xoff.cur_ptr;
-                s32 my = *(s8 PTR4*)yoff.cur_ptr;
-                u8 PTR4* motion;
+                s32 motion_x = *(s8 PTR4*)xoff.cur_ptr;
+                s32 motion_y = *(s8 PTR4*)yoff.cur_ptr;
+                u8 PTR4* motion_source;
                 u32 residue_limit;
                 u32 i;
 
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
                 xoff.cur_ptr++;
                 yoff.cur_ptr++;
-                motion = BINK_MOTION_SOURCE(old, pitch, mx, my);
+                motion_source = BINK_MOTION_SOURCE(old, pitch, motion_x, motion_y);
                 for (i = 0; i < BINK_BLOCK_SIDE; ++i) {
                     BINK_LINEAR_BLOCK_ROW_WORD(motion_block, i, BINK_BLOCK_ROW_WORD_0) =
-                        BINK_BLOCK_ROW_WORD(motion, pitch, i, BINK_BLOCK_ROW_WORD_0);
+                        BINK_BLOCK_ROW_WORD(motion_source, pitch, i, BINK_BLOCK_ROW_WORD_0);
                     BINK_LINEAR_BLOCK_ROW_WORD(motion_block, i, BINK_BLOCK_ROW_WORD_1) =
-                        BINK_BLOCK_ROW_WORD(motion, pitch, i, BINK_BLOCK_ROW_WORD_1);
+                        BINK_BLOCK_ROW_WORD(motion_source, pitch, i, BINK_BLOCK_ROW_WORD_1);
                 }
                 residue_limit = exp_get_bits(&bitstate, BINK_RESIDUE_LIMIT_BITS);
                 ReadBPLossyWithMotion((char PTR4*)dest, (s32)pitch,
@@ -1178,9 +1178,9 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 break;
             }
             case BINK_BLOCK_INTER: {
-                s32 mx = *(s8 PTR4*)xoff.cur_ptr;
-                s32 my = *(s8 PTR4*)yoff.cur_ptr;
-                u8 PTR4* motion;
+                s32 motion_x = *(s8 PTR4*)xoff.cur_ptr;
+                s32 motion_y = *(s8 PTR4*)yoff.cur_ptr;
+                u8 PTR4* motion_source;
                 u32 quant;
                 u32 i;
 
@@ -1189,12 +1189,12 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 inter_dc.cur_ptr += BINK_DC_BYTES;
                 xoff.cur_ptr++;
                 yoff.cur_ptr++;
-                motion = BINK_MOTION_SOURCE(old, pitch, mx, my);
+                motion_source = BINK_MOTION_SOURCE(old, pitch, motion_x, motion_y);
                 for (i = 0; i < BINK_BLOCK_SIDE; ++i) {
                     BINK_LINEAR_BLOCK_ROW_WORD(motion_block, i, BINK_BLOCK_ROW_WORD_0) =
-                        BINK_BLOCK_ROW_WORD(motion, pitch, i, BINK_BLOCK_ROW_WORD_0);
+                        BINK_BLOCK_ROW_WORD(motion_source, pitch, i, BINK_BLOCK_ROW_WORD_0);
                     BINK_LINEAR_BLOCK_ROW_WORD(motion_block, i, BINK_BLOCK_ROW_WORD_1) =
-                        BINK_BLOCK_ROW_WORD(motion, pitch, i, BINK_BLOCK_ROW_WORD_1);
+                        BINK_BLOCK_ROW_WORD(motion_source, pitch, i, BINK_BLOCK_ROW_WORD_1);
                 }
                 ReadBPLossless(dct_block, (BPBITSTREAM PTR4*)&bitstate);
                 quant = exp_get_bits(&bitstate, BINK_DCT_QUANT_BITS);
