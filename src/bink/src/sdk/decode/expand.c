@@ -78,7 +78,8 @@ typedef enum BINKHuff4Layout
     HUFF4_MASK_4BYTE_SIZE = HUFF4_SYMBOLS * 4,
     HUFF4_MASK_1BYTE_SIZE = HUFF4_SYMBOLS,
     HUFF4_MERGE_PAIR_SIZE = 4,
-    HUFF4_RLE_LITERAL_COUNT = 12
+    HUFF4_RLE_LITERAL_COUNT = 12,
+    HUFF4_RLE_FIRST_RUN_SYMBOL = HUFF4_RLE_LITERAL_COUNT
 } BINKHuff4Layout;
 
 typedef enum BINKHuff4SortMode
@@ -144,6 +145,8 @@ typedef enum BINKBUNDLEINITIALVALUE
     (*(u32 PTR4*)((ptr) + (row) * BINK_BLOCK_SIDE + (word) * BINK_PLANE_WORD_BYTES))
 #define BINK_HUFF4_RLE_LENGTH(value) \
     ((u8 PTR4*)&BINK_HUFF4_RLE_LENGTHS_PACKED)[(value)]
+#define BINK_BUNDLE_REPEAT_COUNT(count) (-(s32)(count) - BUNDLE_REPEAT_EXTRA)
+#define BINK_BUNDLE_REPEAT_FILL_COUNT(remaining) (-(remaining + BUNDLE_REPEAT_EXTRA + 1))
 
 enum BINKBLOCKTYPE
 {
@@ -597,7 +600,7 @@ static void CheckReadRLEHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
             decode = bundle->decode;
             while (count != 0) {
                 value = exp_read_huff4(bits, peek, decode, values);
-                if (value > HUFF4_RLE_LITERAL_COUNT - 1) {
+                if (value >= HUFF4_RLE_FIRST_RUN_SYMBOL) {
                     /* Packed word stores four copies of the last byte for the run fill. */
                     fill = last_value | (last_value << BINK_BYTE_BITS);
                     value -= HUFF4_RLE_LITERAL_COUNT;
@@ -657,7 +660,7 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
         state = huff8_table->state;
         if (exp_get_bit(bits) != 0) {
             /* Negative remaining marks the old-format repeat packet variant. */
-            count = -count - BUNDLE_REPEAT_EXTRA;
+            count = BINK_BUNDLE_REPEAT_COUNT(count);
         }
         mask = GetBitsLen(peek);
         remaining = (s32)count;
@@ -678,7 +681,7 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
 
         if (remaining < -BUNDLE_REPEAT_THRESHOLD) {
             /* Repeat packets back-fill the whole bundle with the first decoded byte. */
-            memset(bundle->data, *bundle->data, -(remaining + BUNDLE_REPEAT_EXTRA + 1));
+            memset(bundle->data, *bundle->data, BINK_BUNDLE_REPEAT_FILL_COUNT(remaining));
         }
         huff8_table->state = state;
     } else {
@@ -716,7 +719,7 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
         state = huff8_table->state;
         if (exp_get_bit(bits) != 0) {
             /* New-format Huff8 repeat packets keep the byte unsigned. */
-            count = -count - BUNDLE_REPEAT_EXTRA;
+            count = BINK_BUNDLE_REPEAT_COUNT(count);
         }
         mask = GetBitsLen(peek);
         remaining = (s32)count;
@@ -730,7 +733,7 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
 
         if (remaining < -BUNDLE_REPEAT_THRESHOLD) {
             /* Match old-format repeat handling after the one-byte payload is decoded. */
-            memset(bundle->data, *bundle->data, -(remaining + BUNDLE_REPEAT_EXTRA + 1));
+            memset(bundle->data, *bundle->data, BINK_BUNDLE_REPEAT_FILL_COUNT(remaining));
         }
         huff8_table->state = state;
     } else {
