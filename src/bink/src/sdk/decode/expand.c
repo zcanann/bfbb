@@ -409,6 +409,7 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
     u32 subtype;
     u32 count;
     u32 remaining;
+    u32 symbol;
     u32 j;
     u32 i;
     HUFF4MERGES merges;
@@ -507,9 +508,9 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
         VarBitsGet(subtype, u32, *vb, HUFF4_EXPLICIT_SUBTYPE_BITS);
         remaining = HUFF4_ALL_SYMBOLS_MASK;
         for (count = 0; count <= subtype; ++count) {
-            VarBitsGet(mode, u32, *vb, HUFF4_USED_SHIFT);
-            values[count] = mode;
-            remaining &= ~(1 << mode);
+            VarBitsGet(symbol, u32, *vb, HUFF4_USED_SHIFT);
+            values[count] = symbol;
+            remaining &= ~(1 << symbol);
         }
 
         i = 0;
