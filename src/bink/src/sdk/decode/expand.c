@@ -1042,6 +1042,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
     u32 work_col;
     u32 work_pitch;
     enum BINKBLOCKTYPE block_type;
+    enum BINKBLOCKTYPE subblock_type;
     u32 quant;
     u8 PTR4* dest;
     u8 PTR4* old;
@@ -1230,16 +1231,16 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 expand_run_block(dest, pitch, &colors, &runs, &bitstate);
                 break;
             case BINK_BLOCK_SCALED:
-                block_type = *subblock_types.cur_ptr;
+                subblock_type = *subblock_types.cur_ptr;
                 subblock_types.cur_ptr++;
-                if (block_type == BINK_BLOCK_FILL) {
+                if (subblock_type == BINK_BLOCK_FILL) {
                     colors.cur_ptr++;
-                } else if (block_type == BINK_BLOCK_PATTERN) {
+                } else if (subblock_type == BINK_BLOCK_PATTERN) {
                     colors.cur_ptr += 2;
                     patterns.cur_ptr += BINK_PATTERN_BLOCK_BYTES;
-                } else if (block_type == BINK_BLOCK_RAW) {
+                } else if (subblock_type == BINK_BLOCK_RAW) {
                     colors.cur_ptr += BINK_COLOR_BLOCK_BYTES;
-                } else if (block_type == BINK_BLOCK_INTRA) {
+                } else if (subblock_type == BINK_BLOCK_INTRA) {
                     dct_block[0] = *(s16 PTR4*)intra_dc.cur_ptr;
                     intra_dc.cur_ptr += BINK_DC_BYTES;
                     ReadBPLossless(dct_block, (BPBITSTREAM PTR4*)&bitstate);
