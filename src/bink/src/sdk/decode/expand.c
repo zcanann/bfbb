@@ -858,7 +858,7 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     u32 remaining;
     u32 group_count;
     u32 delta_bits;
-    u16 current;
+    u16 predictor;
     u16 magnitude;
     s16 delta;
     s16 PTR4* dest;
@@ -871,15 +871,15 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     if (count != 0) {
         dest = (s16 PTR4*)bundle->data;
         if (bundle->initial_value != BINK_BUNDLE_INITIAL_VALUE_NONE) {
-            VarBitsGet(current, u16, *bits, bundle->bit_size - 1);
-            if (current != 0 && exp_get_bit(bits) != 0) {
-                current = -current;
+            VarBitsGet(predictor, u16, *bits, bundle->bit_size - 1);
+            if (predictor != 0 && exp_get_bit(bits) != 0) {
+                predictor = -predictor;
             }
         } else {
-            VarBitsGet(current, u16, *bits, bundle->bit_size);
+            VarBitsGet(predictor, u16, *bits, bundle->bit_size);
         }
 
-        *dest++ = (s16)current;
+        *dest++ = (s16)predictor;
         remaining = count - 1;
         bundle->cur_ptr = bundle->data;
         bundle->cur_dec = bundle->data + count * sizeof(*dest);
@@ -899,11 +899,11 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
                     if (delta != 0 && exp_get_bit(bits) != 0) {
                         delta = (s16)-magnitude;
                     }
-                    current = current + delta;
-                    *dest++ = (s16)current;
+                    predictor = predictor + delta;
+                    *dest++ = (s16)predictor;
                 }
             } else {
-                radmemset16(dest, (u16)current, group_count * sizeof(*dest));
+                radmemset16(dest, (u16)predictor, group_count * sizeof(*dest));
                 dest += group_count;
                 remaining -= group_count;
             }
