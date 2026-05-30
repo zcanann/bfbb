@@ -19,7 +19,9 @@
 #define BP_TREE_HIGH_GROUPS 3
 #define BP_TREE_CHILD_COUNT 4
 #define BP_TREE_ADDED_CHILD_COUNT (BP_TREE_CHILD_COUNT - 1)
+#define BP_TREE_NODE_PRESENT_BITS 1
 #define BP_TREE_NODE_SIGNAL_BITS (BP_TREE_CHILD_COUNT + 1)
+#define BP_FINAL_COEFF_SIGNAL_BITS 2
 #define BP_TREE_CHILD1_INDEX 1
 #define BP_TREE_CHILD2_INDEX 2
 #define BP_TREE_CHILD3_INDEX 3
@@ -356,7 +358,8 @@ u32 LenBPLossless(s16 PTR4* vals)
             do {
                 entry = *cur;
                 len = total;
-                if ((entry == BP_TREE_EMPTY_ENTRY) || (len = total + 1, (entry & BP_BYTE_MASK) != maxbits)) {
+                if ((entry == BP_TREE_EMPTY_ENTRY) ||
+                    (len = total + BP_TREE_NODE_PRESENT_BITS, (entry & BP_BYTE_MASK) != maxbits)) {
                     cur++;
                 } else {
                     kind = entry & BP_TREE_KIND_MASK;
@@ -415,7 +418,8 @@ handle_children:
         do {
             entry = *cur;
             len = total;
-            if ((entry == BP_TREE_EMPTY_ENTRY) || (len = total + 1, (entry & BP_BYTE_MASK) != 1)) {
+            if ((entry == BP_TREE_EMPTY_ENTRY) ||
+                (len = total + BP_TREE_NODE_PRESENT_BITS, (entry & BP_BYTE_MASK) != 1)) {
                 cur++;
             } else {
                 kind = entry & BP_TREE_KIND_MASK;
@@ -459,7 +463,7 @@ handle_final_children:
                 } else {
                     if (kind == BP_TREE_COEFF_NODE) {
                         *cur = BP_TREE_EMPTY_ENTRY;
-                        len = total + 2;
+                        len = total + BP_FINAL_COEFF_SIGNAL_BITS;
                     }
                     cur++;
                 }
