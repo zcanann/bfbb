@@ -172,13 +172,11 @@ static void quanttos16chans2(s16 PTR4* dest, const f32 PTR4* src, f32 scale, u32
     if (remaining != BINKAC_SAMPLE_COUNT_UNDERFLOW) {
         stride = count;
         while (remaining != BINKAC_SAMPLE_COUNT_UNDERFLOW) {
-            s16 PTR4* out = dest;
+            s16 PTR4* out = dest++;
             s32 value = (s32)(src[0] * scale);
 
-            ++dest;
             *out = clamp_to_s16(value);
-            out = dest;
-            ++dest;
+            out = dest++;
             value = (s32)(src[stride] * scale);
             *out = clamp_to_s16(value);
             ++src;
