@@ -55,6 +55,7 @@
 #define BP_NEGATIVE_COEFF_SIGN 0xffff
 #define BP_POSITIVE_COEFF_SIGN 1
 #define BP_ABS_COEFF(value, sign) (((sign) ^ (value)) - (sign))
+#define BP_TREE_EMPTY_ENTRY 0
 #define BP_TREE_KIND_MASK 0x300
 /* Write-side tree nodes pack kind, coefficient/group index, and bit depth. */
 #define BP_TREE_INDEX_SHIFT 10
@@ -345,7 +346,7 @@ u32 LenBPLossless(s16 PTR4* vals)
             do {
                 entry = *cur;
                 len = total;
-                if ((entry == 0) || (len = total + 1, (entry & BP_BYTE_MASK) != maxbits)) {
+                if ((entry == BP_TREE_EMPTY_ENTRY) || (len = total + 1, (entry & BP_BYTE_MASK) != maxbits)) {
                     cur++;
                 } else {
                     kind = entry & BP_TREE_KIND_MASK;
@@ -383,12 +384,12 @@ handle_children:
                             *--restart = (u16)lens[kind + BP_TREE_CHILD3_INDEX] | (kind + BP_TREE_CHILD3_INDEX) * BP_TREE_INDEX_STRIDE + BP_TREE_COEFF_NODE;
                         }
                     } else if (kind == BP_TREE_BRANCH_NODE) {
-                        *cur = 0;
+                        *cur = BP_TREE_EMPTY_ENTRY;
                         cur++;
                         goto handle_children;
                     } else {
                         if (kind == BP_TREE_COEFF_NODE) {
-                            *cur = 0;
+                            *cur = BP_TREE_EMPTY_ENTRY;
                             len += maxbits;
                         }
                         cur++;
@@ -404,7 +405,7 @@ handle_children:
         do {
             entry = *cur;
             len = total;
-            if ((entry == 0) || (len = total + 1, (entry & BP_BYTE_MASK) != 1)) {
+            if ((entry == BP_TREE_EMPTY_ENTRY) || (len = total + 1, (entry & BP_BYTE_MASK) != 1)) {
                 cur++;
             } else {
                 kind = entry & BP_TREE_KIND_MASK;
@@ -442,12 +443,12 @@ handle_final_children:
                         *--restart = (u16)lens[kind + BP_TREE_CHILD3_INDEX] | (kind + BP_TREE_CHILD3_INDEX) * BP_TREE_INDEX_STRIDE + BP_TREE_COEFF_NODE;
                     }
                 } else if (kind == BP_TREE_BRANCH_NODE) {
-                    *cur = 0;
+                    *cur = BP_TREE_EMPTY_ENTRY;
                     cur++;
                     goto handle_final_children;
                 } else {
                     if (kind == BP_TREE_COEFF_NODE) {
-                        *cur = 0;
+                        *cur = BP_TREE_EMPTY_ENTRY;
                         len = total + 2;
                     }
                     cur++;
@@ -633,7 +634,7 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
         if (cur < end) {
             do {
                 entry = *cur;
-                if (entry == 0) {
+                if (entry == BP_TREE_EMPTY_ENTRY) {
 next_lossless_node:
                     cur++;
                 } else {
@@ -691,7 +692,7 @@ handle_lossless_children:
                         }
                     } else {
                         if (kind == BP_TREE_BRANCH_NODE) {
-                            *cur = 0;
+                            *cur = BP_TREE_EMPTY_ENTRY;
                             cur++;
                             goto handle_lossless_children;
                         }
@@ -699,7 +700,7 @@ handle_lossless_children:
                             kind = entry >> BP_TREE_INDEX_SHIFT;
                             PUT_BP_BITS(bits, absvals[kind], lenbits, VarBitsLens[lenbits]);
                             PUT_BP_BIT(bits, ordered[kind] < 0);
-                            *cur = 0;
+                            *cur = BP_TREE_EMPTY_ENTRY;
                         }
                         goto next_lossless_node;
                     }
@@ -1249,7 +1250,7 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
         if (cur < next_node) {
             do {
                 node_entry = *cur;
-                if (node_entry == 0) {
+                if (node_entry == BP_TREE_EMPTY_ENTRY) {
 next_lossy_node:
                     cur++;
                 } else {
@@ -1316,7 +1317,7 @@ handle_lossy_children:
                         }
                     } else {
                         if (lenbits == BP_TREE_BRANCH_NODE) {
-                            *cur = 0;
+                            *cur = BP_TREE_EMPTY_ENTRY;
                             cur++;
                             goto handle_lossy_children;
                         }
@@ -1324,7 +1325,7 @@ handle_lossy_children:
                             temp[i] = absvals[node_entry >> BP_TREE_INDEX_SHIFT];
                             i++;
                             PUT_BP_BIT(bits, (ordered[node_entry >> BP_TREE_INDEX_SHIFT] & BP_SIGN_BIT) != 0);
-                            *cur = 0;
+                            *cur = BP_TREE_EMPTY_ENTRY;
                         }
                         goto next_lossy_node;
                     }
