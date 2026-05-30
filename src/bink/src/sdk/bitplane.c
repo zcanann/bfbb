@@ -74,6 +74,7 @@
 #define BP_COEFF3_LEAF_BASE (15 << 8)
 #define BP_READ_TREE_KIND_MASK 3
 /* Read-side nodes pack the same logical tree into byte-sized entries. */
+#define BP_READ_TREE_EMPTY_ENTRY 0
 #define BP_READ_TREE_INDEX_SHIFT 2
 #define BP_READ_TREE_BASE_MASK 0xfc
 #define BP_READ_TREE_CHILD_COUNT BP_TREE_CHILD_COUNT
@@ -775,7 +776,7 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
             mask = VarBitsLens[level];
             do {
                 node = *cur;
-                if (node == 0) {
+                if (node == BP_READ_TREE_EMPTY_ENTRY) {
 next_lossless_read_node:
                     cur++;
                 } else {
@@ -838,11 +839,11 @@ next_lossless_read_node:
                                         value = -value;
                                     }
                                     coeffs.values[BP_READ_TREE_INDEX(node)] = (u16)value;
-                                    *cur = 0;
+                                    *cur = BP_READ_TREE_EMPTY_ENTRY;
                                 }
                                 goto next_lossless_read_node;
                             }
-                            *cur = 0;
+                            *cur = BP_READ_TREE_EMPTY_ENTRY;
                             cur++;
                         }
 
@@ -918,7 +919,7 @@ after_lossless_child3:
         next = cur;
         do {
             node = *cur;
-            if (node == 0) {
+            if (node == BP_READ_TREE_EMPTY_ENTRY) {
 next_lossless_final_node:
                 cur++;
             } else {
@@ -967,11 +968,11 @@ next_lossless_final_node:
                                 }
                                 coeffs.values[BP_READ_TREE_INDEX(node)] =
                                     (code & 1) ? BP_NEGATIVE_COEFF_SIGN : BP_POSITIVE_COEFF_SIGN;
-                                *cur = 0;
+                                *cur = BP_READ_TREE_EMPTY_ENTRY;
                             }
                             goto next_lossless_final_node;
                         }
-                        *cur = 0;
+                        *cur = BP_READ_TREE_EMPTY_ENTRY;
                         cur++;
                     }
 
@@ -1431,7 +1432,7 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 limit)
             scan = -bit_value;
 read_node:
             node = *node_ptr;
-            if (node == 0) {
+            if (node == BP_READ_TREE_EMPTY_ENTRY) {
 next_node:
                 node_ptr = node_ptr + 1;
             } else {
@@ -1490,10 +1491,10 @@ decode_node:
                         if (sample_count++ == limit) {
                             goto done;
                         }
-                        *node_ptr = 0;
+                        *node_ptr = BP_READ_TREE_EMPTY_ENTRY;
                         goto next_node;
                     }
-                    *node_ptr = 0;
+                    *node_ptr = BP_READ_TREE_EMPTY_ENTRY;
                     node_ptr = node_ptr + 1;
                 }
                 code = (u32)BP_READ_TREE_INDEX(node);
