@@ -3818,7 +3818,6 @@ static u32 dounalignedYUY2col2wh(u32 count, s32 phase)
         y0 = *(u8 PTR4*)S.y0;
         pixel0 = YUY2_COLOR_PAIR(y0, u, y0, v);
         y1 = *((u8 PTR4*)S.y0 + 1);
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 2);
         pixel1 = (pixel0 & YUY2_CHROMA_MASK) | y1 | ((u32)y1 << 16);
         ((u32 PTR4*)S.dest0)[0] = pixel0;
         ((u32 PTR4*)S.dest0)[1] = pixel1;
@@ -3829,12 +3828,13 @@ static u32 dounalignedYUY2col2wh(u32 count, s32 phase)
         y0 = *(u8 PTR4*)S.y1;
         pixel0 = uv0 | y0 | ((u32)y0 << 16);
         y1 = *((u8 PTR4*)S.y1 + 1);
-        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + 2);
         pixel1 = uv1 | y1 | ((u32)y1 << 16);
         ((u32 PTR4*)S.dest1)[0] = pixel0;
         ((u32 PTR4*)S.dest1)[1] = pixel1;
         *(u32 PTR4*)(S.dest1 + S.pitch) = pixel0;
         *(u32 PTR4*)(S.dest1 + S.pitch + YUV_PACKED_WORD_BYTES) = pixel1;
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 2);
+        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + 2);
         S.dest0 += YUV_PACKED_PAIR_BYTES;
         S.dest1 += YUV_PACKED_PAIR_BYTES;
     } while (remaining > 0);
