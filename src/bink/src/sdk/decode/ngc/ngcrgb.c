@@ -1050,21 +1050,23 @@ void YUV_32am_4x2(u32 count)
         u32 p2 = RGB32_M(RGB_WORD_BYTE1(yv0));
         u32 p3 = RGB32_M(RGB_WORD_BYTE0(yv0));
 
-        dest0[0] = (av0 & RGB_ALPHA0_MASK) | (p0 & RGB_WORD_HI_MASK) | (p1 >> 16) | ((av0 >> 8) & RGB_ALPHA2_MASK);
-        dest0[1] =
+        dest0[RGB_TILE_WORD0] = (av0 & RGB_ALPHA0_MASK) | (p0 & RGB_WORD_HI_MASK) | (p1 >> 16) |
+                                ((av0 >> 8) & RGB_ALPHA2_MASK);
+        dest0[RGB_TILE_WORD1] =
             ((av0 & RGB_ALPHA2_MASK) << 16) | (p2 & RGB_WORD_HI_MASK) | (p3 >> 16) | (RGB_WORD_BYTE0(av0) << 8);
-        dest0[8] = (p0 << 16) | (p1 & RGB_WORD_LO_MASK);
-        dest0[9] = (p2 << 16) | (p3 & RGB_WORD_LO_MASK);
+        dest0[RGB_TILE_NEXT_ROW_WORD0] = (p0 << 16) | (p1 & RGB_WORD_LO_MASK);
+        dest0[RGB_TILE_NEXT_ROW_WORD1] = (p2 << 16) | (p3 & RGB_WORD_LO_MASK);
 
         p0 = RGB32_M(RGB_WORD_BYTE3(yv1));
         p1 = RGB32_M(RGB_WORD_BYTE2(yv1));
         p2 = RGB32_M(RGB_WORD_BYTE1(yv1));
         p3 = RGB32_M(RGB_WORD_BYTE0(yv1));
-        dest1[0] = (av1 & RGB_ALPHA0_MASK) | (p0 & RGB_WORD_HI_MASK) | (p1 >> 16) | ((av1 >> 8) & RGB_ALPHA2_MASK);
-        dest1[1] =
+        dest1[RGB_TILE_WORD0] = (av1 & RGB_ALPHA0_MASK) | (p0 & RGB_WORD_HI_MASK) | (p1 >> 16) |
+                                ((av1 >> 8) & RGB_ALPHA2_MASK);
+        dest1[RGB_TILE_WORD1] =
             ((av1 & RGB_ALPHA2_MASK) << 16) | (p2 & RGB_WORD_HI_MASK) | (p3 >> 16) | (RGB_WORD_BYTE0(av1) << 8);
-        dest1[8] = (p0 << 16) | (p1 & RGB_WORD_LO_MASK);
-        dest1[9] = (p2 << 16) | (p3 & RGB_WORD_LO_MASK);
+        dest1[RGB_TILE_NEXT_ROW_WORD0] = (p0 << 16) | (p1 & RGB_WORD_LO_MASK);
+        dest1[RGB_TILE_NEXT_ROW_WORD1] = (p2 << 16) | (p3 & RGB_WORD_LO_MASK);
 
         dest0 += RGB_TILE_BLOCK_WORDS;
         dest1 += RGB_TILE_BLOCK_WORDS;
