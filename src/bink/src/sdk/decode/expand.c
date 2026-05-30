@@ -926,40 +926,40 @@ static inline void expand_run_block(u8 PTR4* dest,
                                     EXPBITS PTR4* bits)
 {
     const u8 PTR4* scan;
-    u32 filled;
+    u32 filled_pixels;
 
     scan = BINK_DCT_PATTERN_SCAN(exp_get_bits(bits, BINK_DCT_PATTERN_BITS));
-    filled = 0;
+    filled_pixels = 0;
     do {
-        u32 count;
+        u32 run_length;
 
-        count = *runs->cur_ptr++ + 1;
-        filled += count;
+        run_length = *runs->cur_ptr++ + 1;
+        filled_pixels += run_length;
         if (exp_get_bit(bits) != 0) {
-            u8 value;
+            u8 color;
 
-            value = *colors->cur_ptr++;
+            color = *colors->cur_ptr++;
             do {
-                u32 offset;
+                u32 scan_offset;
 
-                offset = *scan++;
-                dest[BINK_BLOCK_PATTERN_OFFSET(offset, pitch)] = value;
-            } while (--count != 0);
+                scan_offset = *scan++;
+                dest[BINK_BLOCK_PATTERN_OFFSET(scan_offset, pitch)] = color;
+            } while (--run_length != 0);
         } else {
             do {
-                u32 offset;
+                u32 scan_offset;
 
-                offset = *scan++;
-                dest[BINK_BLOCK_PATTERN_OFFSET(offset, pitch)] = *colors->cur_ptr++;
-            } while (--count != 0);
+                scan_offset = *scan++;
+                dest[BINK_BLOCK_PATTERN_OFFSET(scan_offset, pitch)] = *colors->cur_ptr++;
+            } while (--run_length != 0);
         }
-    } while (filled < BINK_RUN_BLOCK_LAST_PIXEL);
+    } while (filled_pixels < BINK_RUN_BLOCK_LAST_PIXEL);
 
-    if (filled == BINK_RUN_BLOCK_LAST_PIXEL) {
-        u32 offset;
+    if (filled_pixels == BINK_RUN_BLOCK_LAST_PIXEL) {
+        u32 scan_offset;
 
-        offset = *scan++;
-        dest[BINK_BLOCK_PATTERN_OFFSET(offset, pitch)] = *colors->cur_ptr++;
+        scan_offset = *scan++;
+        dest[BINK_BLOCK_PATTERN_OFFSET(scan_offset, pitch)] = *colors->cur_ptr++;
     }
 }
 
