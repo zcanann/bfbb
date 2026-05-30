@@ -192,7 +192,7 @@ static inline void radtimebase(RADTimebase PTR4* dest)
         "bne 0b\n\t"
         "stw %0, 0(%3)\n\t"
         "stw %1, 4(%3)"
-        : "=&r"(h1), "=&r"(l), "=r"(h2)
+        : "=&r"(h1), "=&r"(l), "=&r"(h2)
         : "r"(dest)
         : "memory"
     );
