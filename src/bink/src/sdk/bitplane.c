@@ -1268,7 +1268,7 @@ next_lossy_node:
                         next_node[1] = (u16)groups[count + BP_TREE_CHILD2_INDEX] + (lenbits + BP_TREE_CHILD2_BASE) * BP_TREE_INDEX_STRIDE + BP_TREE_BRANCH_NODE;
                         next_node[2] = (u16)groups[count + BP_TREE_CHILD3_INDEX] + (lenbits + BP_TREE_CHILD3_BASE) * BP_TREE_INDEX_STRIDE + BP_TREE_BRANCH_NODE;
                         next_node += BP_TREE_ADDED_CHILD_COUNT;
-                    } else if (lenbits == 0) {
+                    } else if (lenbits == BP_TREE_HIGH_NODE) {
                         *cur = (u16)hi_groups[node_entry >> BP_TREE_HIGH_GROUP_SHIFT] + ((node_entry >> BP_TREE_INDEX_SHIFT) + BP_TREE_CHILD1_BASE) * BP_TREE_INDEX_STRIDE + BP_TREE_GROUP_NODE;
 handle_lossy_children:
                         lenbits = node_entry >> BP_TREE_INDEX_SHIFT;
