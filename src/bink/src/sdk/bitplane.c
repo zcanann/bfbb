@@ -92,6 +92,7 @@
 #define BP_READ_TREE_GROUP11_ROOT BP_READ_TREE_GROUP(11)
 #define BP_READ_TREE_BRANCH(index) BP_READ_TREE_NODE(index, BP_READ_TREE_BRANCH_NODE)
 #define BP_READ_TREE_COEFF(index) BP_READ_TREE_NODE(index, BP_READ_TREE_COEFF_NODE)
+#define BP_READ_TREE_DC_ROOT BP_READ_TREE_BRANCH(BP_DC_COEFF)
 #define BP_READ_TREE_COEFF1_ROOT BP_READ_TREE_COEFF(BP_COEFF1_INDEX)
 #define BP_READ_TREE_COEFF2_ROOT BP_READ_TREE_COEFF(BP_COEFF2_INDEX)
 #define BP_READ_TREE_COEFF3_ROOT BP_READ_TREE_COEFF(BP_COEFF3_INDEX)
@@ -1232,7 +1233,7 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
         entry = groups[BP_TREE_GROUP11_INDEX] | BP_GROUP11_NODE_BASE;
     }
     roots[2] = entry;
-    roots[3] = groups[0] + BP_TREE_BRANCH_NODE;
+    roots[3] = groups[BP_TREE_GROUP_INDEX(BP_DC_COEFF)] + BP_TREE_BRANCH_NODE;
 
     cur = roots;
     next_node = tree.nodes;
@@ -1392,7 +1393,7 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 limit)
     tree.roots[1] = BP_READ_TREE_GROUP6_ROOT;
     tree.roots[2] = BP_READ_TREE_GROUP11_ROOT;
     bit_value = (s32)(s8)(1 << (levels_remaining - 1));
-    tree.roots[3] = BP_READ_TREE_BRANCH(0);
+    tree.roots[3] = BP_READ_TREE_DC_ROOT;
     tree_end = tree.nodes;
     active_count = 0;
     node_ptr = tree.roots;
