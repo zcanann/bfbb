@@ -288,23 +288,23 @@ static inline u32 exp_get_bit(EXPBITS PTR4* bits)
 }
 
 static void simpmergesort(EXPBITS PTR4* bits, u8 PTR4* out, u8 PTR4* left,
-                          u8 PTR4* right, s32 count)
+                          u8 PTR4* right, s32 right_count)
 {
     u8 value;
     s32 left_count;
 
-    left_count = count;
+    left_count = right_count;
     do {
         if (exp_get_bit(bits)) {
             value = *right++;
-            count--;
+            right_count--;
         } else {
             value = *left++;
             left_count--;
         }
 
         *out++ = value;
-    } while (left_count != 0 && count != 0);
+    } while (left_count != 0 && right_count != 0);
 
     if (left_count != 0) {
         while (left_count != 0) {
@@ -312,9 +312,9 @@ static void simpmergesort(EXPBITS PTR4* bits, u8 PTR4* out, u8 PTR4* left,
             left_count--;
         }
     } else {
-        while (count != 0) {
+        while (right_count != 0) {
             *out++ = *right++;
-            count--;
+            right_count--;
         }
     }
 }
