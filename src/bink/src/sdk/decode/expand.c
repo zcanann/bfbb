@@ -737,6 +737,7 @@ static void CheckReadHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     const u8 PTR4* decode;
     u32 peek;
     u32 value;
+    u32 fill;
 
     if (bundle->cur_ptr != bundle->cur_dec) {
         return;
@@ -758,8 +759,8 @@ static void CheckReadHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
                 *dest++ = (u8)value;
             }
         } else {
-            value = exp_get_bits(bits, HUFF4_USED_SHIFT);
-            memset(bundle->data, value, count);
+            fill = exp_get_bits(bits, HUFF4_USED_SHIFT);
+            memset(bundle->data, fill, count);
         }
     } else {
         bundle->cur_dec = bundle->data;
@@ -812,6 +813,7 @@ static void CheckReadHuff4SBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     const u8 PTR4* decode;
     u32 peek;
     s32 value;
+    s32 fill;
 
     if (bundle->cur_ptr != bundle->cur_dec) {
         return;
@@ -835,11 +837,11 @@ static void CheckReadHuff4SBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
                 *dest++ = (s8)value;
             }
         } else {
-            value = (s32)exp_get_bits(bits, HUFF4_USED_SHIFT);
-            if (value != 0 && exp_get_bit(bits) != 0) {
-                value = -value;
+            fill = (s32)exp_get_bits(bits, HUFF4_USED_SHIFT);
+            if (fill != 0 && exp_get_bit(bits) != 0) {
+                fill = -fill;
             }
-            memset(bundle->data, value, count);
+            memset(bundle->data, fill, count);
         }
     } else {
         bundle->cur_dec = bundle->data;
