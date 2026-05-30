@@ -1614,8 +1614,8 @@ static void dounaligned32rowm(u32 phase, u32 count)
     do {
         yptr = (u8 PTR4*)S.y0;
         y = *yptr++;
-        S.y0 = (u32 PTR4*)yptr;
         *(u32 PTR4*)S.dest0 = RGB32_M(y);
+        S.y0 = (u32 PTR4*)yptr;
         S.dest0 += YUV_PACKED_WORD_BYTES;
     } while (count-- != 0);
 }
