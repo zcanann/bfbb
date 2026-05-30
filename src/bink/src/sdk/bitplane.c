@@ -100,6 +100,13 @@
 #define BP_READ_TREE_GROUP_FROM_INDEX(index) BP_READ_TREE_NODE((index) + BP_READ_TREE_CHILD_COUNT, BP_READ_TREE_GROUP_NODE)
 #define BP_LOSSLESS_ROOT_NODES 6
 #define BP_LOSSY_ROOT_NODES 4
+#define BP_ROOT_GROUP1_SLOT 0
+#define BP_ROOT_GROUP6_SLOT 1
+#define BP_ROOT_GROUP11_SLOT 2
+#define BP_ROOT_LOSSLESS_COEFF1_SLOT 3
+#define BP_ROOT_LOSSLESS_COEFF2_SLOT 4
+#define BP_ROOT_LOSSLESS_COEFF3_SLOT 5
+#define BP_ROOT_LOSSY_DC_SLOT 3
 #define BP_LOSSLESS_LEVEL_BITS 4
 #define BP_LOSSLESS_LEVEL_MASK 0xf
 #define BP_LOSSY_LEVEL_BITS 3
@@ -320,24 +327,24 @@ u32 LenBPLossless(s16 PTR4* vals)
     } else {
         entry = groups[BP_LOSSLESS_TREE_GROUP1_INDEX] | BP_GROUP1_NODE_BASE;
     }
-    roots[0] = entry;
+    roots[BP_ROOT_GROUP1_SLOT] = entry;
     bits = hi_groups[1];
     if (bits > groups[BP_LOSSLESS_TREE_GROUP6_INDEX]) {
         entry = bits | BP_GROUP6_NODE_BASE;
     } else {
         entry = groups[BP_LOSSLESS_TREE_GROUP6_INDEX] | BP_GROUP6_NODE_BASE;
     }
-    roots[1] = entry;
+    roots[BP_ROOT_GROUP6_SLOT] = entry;
     bits = hi_groups[2];
     if (bits > groups[BP_LOSSLESS_TREE_GROUP11_INDEX]) {
         entry = bits | BP_GROUP11_NODE_BASE;
     } else {
         entry = groups[BP_LOSSLESS_TREE_GROUP11_INDEX] | BP_GROUP11_NODE_BASE;
     }
-    roots[2] = entry;
-    roots[3] = lens[BP_COEFF1_INDEX] + BP_COEFF1_LEAF_BASE;
-    roots[4] = lens[BP_COEFF2_INDEX] + BP_COEFF2_LEAF_BASE;
-    roots[5] = lens[BP_COEFF3_INDEX] + BP_COEFF3_LEAF_BASE;
+    roots[BP_ROOT_GROUP11_SLOT] = entry;
+    roots[BP_ROOT_LOSSLESS_COEFF1_SLOT] = lens[BP_COEFF1_INDEX] + BP_COEFF1_LEAF_BASE;
+    roots[BP_ROOT_LOSSLESS_COEFF2_SLOT] = lens[BP_COEFF2_INDEX] + BP_COEFF2_LEAF_BASE;
+    roots[BP_ROOT_LOSSLESS_COEFF3_SLOT] = lens[BP_COEFF3_INDEX] + BP_COEFF3_LEAF_BASE;
     cur = roots;
     end = tree.nodes;
 
@@ -606,24 +613,24 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
     } else {
         entry = groups[BP_LOSSLESS_TREE_GROUP1_INDEX] | BP_GROUP1_NODE_BASE;
     }
-    roots[0] = entry;
+    roots[BP_ROOT_GROUP1_SLOT] = entry;
     lenbits = hi_groups[1];
     if (lenbits > groups[BP_LOSSLESS_TREE_GROUP6_INDEX]) {
         entry = lenbits | BP_GROUP6_NODE_BASE;
     } else {
         entry = groups[BP_LOSSLESS_TREE_GROUP6_INDEX] | BP_GROUP6_NODE_BASE;
     }
-    roots[1] = entry;
+    roots[BP_ROOT_GROUP6_SLOT] = entry;
     lenbits = hi_groups[2];
     if (lenbits > groups[BP_LOSSLESS_TREE_GROUP11_INDEX]) {
         entry = lenbits | BP_GROUP11_NODE_BASE;
     } else {
         entry = groups[BP_LOSSLESS_TREE_GROUP11_INDEX] | BP_GROUP11_NODE_BASE;
     }
-    roots[2] = entry;
-    roots[3] = lens[BP_COEFF1_INDEX] + BP_COEFF1_LEAF_BASE;
-    roots[4] = lens[BP_COEFF2_INDEX] + BP_COEFF2_LEAF_BASE;
-    roots[5] = lens[BP_COEFF3_INDEX] + BP_COEFF3_LEAF_BASE;
+    roots[BP_ROOT_GROUP11_SLOT] = entry;
+    roots[BP_ROOT_LOSSLESS_COEFF1_SLOT] = lens[BP_COEFF1_INDEX] + BP_COEFF1_LEAF_BASE;
+    roots[BP_ROOT_LOSSLESS_COEFF2_SLOT] = lens[BP_COEFF2_INDEX] + BP_COEFF2_LEAF_BASE;
+    roots[BP_ROOT_LOSSLESS_COEFF3_SLOT] = lens[BP_COEFF3_INDEX] + BP_COEFF3_LEAF_BASE;
 
     cur = roots;
     end = tree.nodes;
@@ -758,12 +765,12 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
 
     maxlevel = code & BP_LOSSLESS_LEVEL_MASK;
     /* Root nodes mirror WriteBPLossless: three grouped roots plus coeffs 1..3. */
-    tree.roots[0] = BP_READ_TREE_GROUP1_ROOT;
-    tree.roots[1] = BP_READ_TREE_GROUP6_ROOT;
-    tree.roots[2] = BP_READ_TREE_GROUP11_ROOT;
-    tree.roots[3] = BP_READ_TREE_COEFF1_ROOT;
-    tree.roots[4] = BP_READ_TREE_COEFF2_ROOT;
-    tree.roots[5] = BP_READ_TREE_COEFF3_ROOT;
+    tree.roots[BP_ROOT_GROUP1_SLOT] = BP_READ_TREE_GROUP1_ROOT;
+    tree.roots[BP_ROOT_GROUP6_SLOT] = BP_READ_TREE_GROUP6_ROOT;
+    tree.roots[BP_ROOT_GROUP11_SLOT] = BP_READ_TREE_GROUP11_ROOT;
+    tree.roots[BP_ROOT_LOSSLESS_COEFF1_SLOT] = BP_READ_TREE_COEFF1_ROOT;
+    tree.roots[BP_ROOT_LOSSLESS_COEFF2_SLOT] = BP_READ_TREE_COEFF2_ROOT;
+    tree.roots[BP_ROOT_LOSSLESS_COEFF3_SLOT] = BP_READ_TREE_COEFF3_ROOT;
 
     cur = tree.roots;
     tree_end = tree.nodes;
@@ -1218,22 +1225,22 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     } else {
         entry = groups[BP_TREE_GROUP1_INDEX] | BP_GROUP1_NODE_BASE;
     }
-    roots[0] = entry;
+    roots[BP_ROOT_GROUP1_SLOT] = entry;
     lenbits = hi_groups[1];
     if (lenbits > groups[BP_TREE_GROUP6_INDEX]) {
         entry = lenbits | BP_GROUP6_NODE_BASE;
     } else {
         entry = groups[BP_TREE_GROUP6_INDEX] | BP_GROUP6_NODE_BASE;
     }
-    roots[1] = entry;
+    roots[BP_ROOT_GROUP6_SLOT] = entry;
     lenbits = hi_groups[2];
     if (lenbits > groups[BP_TREE_GROUP11_INDEX]) {
         entry = lenbits | BP_GROUP11_NODE_BASE;
     } else {
         entry = groups[BP_TREE_GROUP11_INDEX] | BP_GROUP11_NODE_BASE;
     }
-    roots[2] = entry;
-    roots[3] = groups[BP_TREE_GROUP_INDEX(BP_DC_COEFF)] + BP_TREE_BRANCH_NODE;
+    roots[BP_ROOT_GROUP11_SLOT] = entry;
+    roots[BP_ROOT_LOSSY_DC_SLOT] = groups[BP_TREE_GROUP_INDEX(BP_DC_COEFF)] + BP_TREE_BRANCH_NODE;
 
     cur = roots;
     next_node = tree.nodes;
@@ -1389,11 +1396,11 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 limit)
         code = code | word << old_bitcount;
     }
     levels_remaining = (code & BP_LOSSY_LEVEL_MASK) + 1;
-    tree.roots[0] = BP_READ_TREE_GROUP1_ROOT;
-    tree.roots[1] = BP_READ_TREE_GROUP6_ROOT;
-    tree.roots[2] = BP_READ_TREE_GROUP11_ROOT;
+    tree.roots[BP_ROOT_GROUP1_SLOT] = BP_READ_TREE_GROUP1_ROOT;
+    tree.roots[BP_ROOT_GROUP6_SLOT] = BP_READ_TREE_GROUP6_ROOT;
+    tree.roots[BP_ROOT_GROUP11_SLOT] = BP_READ_TREE_GROUP11_ROOT;
     bit_value = (s32)(s8)(1 << (levels_remaining - 1));
-    tree.roots[3] = BP_READ_TREE_DC_ROOT;
+    tree.roots[BP_ROOT_LOSSY_DC_SLOT] = BP_READ_TREE_DC_ROOT;
     tree_end = tree.nodes;
     active_count = 0;
     node_ptr = tree.roots;
