@@ -1836,7 +1836,7 @@ void BinkNextFrame(HBINK bnk)
             do {
                 BINKSND PTR4* snd;
 
-                snd = &bnk->bsnd[i];
+                snd = bnk->bsnd + i;
                 if (snd->SoundDroppedOut != 0) {
                     snd->SoundDroppedOut = zero;
                     if (bnk->FrameNum > BINK_FIRST_FRAME &&
@@ -1849,12 +1849,10 @@ void BinkNextFrame(HBINK bnk)
         }
 
         if (skipped != 0) {
-            RADCB_CALLBACK PTR4* sound_callback;
-            RADCB_CALLBACK PTR4* io_callback;
+            RADCB_CALLBACK PTR4* sound_callback = BINK_SOUND_CALLBACK(bnk);
+            RADCB_CALLBACK PTR4* io_callback = BINK_IO_CALLBACK(&bnk->bio);
 
             bnk->soundskips++;
-            sound_callback = BINK_SOUND_CALLBACK(bnk);
-            io_callback = BINK_IO_CALLBACK(&bnk->bio);
             RADCB_suspend_2_callbacks(cb_bink_sound, sound_callback, cb_bink_IO, io_callback);
             BinkSetSoundOnOff(bnk, BINK_SOUND_OFF);
 
