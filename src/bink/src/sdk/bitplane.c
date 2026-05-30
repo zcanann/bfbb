@@ -104,6 +104,7 @@
 
 typedef enum BPWriteTreeKind
 {
+    BP_TREE_HIGH_NODE = 0,
     BP_TREE_GROUP_NODE = 0x100,
     BP_TREE_AFTER_GROUP_NODE = BP_TREE_GROUP_NODE + 1,
     BP_TREE_BRANCH_NODE = 0x200,
@@ -356,7 +357,7 @@ u32 LenBPLossless(s16 PTR4* vals)
                         end[1] = (u16)groups[bits + BP_TREE_CHILD2_INDEX] + (kind + BP_TREE_CHILD2_BASE) * BP_TREE_INDEX_STRIDE + BP_TREE_BRANCH_NODE;
                         end[2] = (u16)groups[bits + BP_TREE_CHILD3_INDEX] + (kind + BP_TREE_CHILD3_BASE) * BP_TREE_INDEX_STRIDE + BP_TREE_BRANCH_NODE;
                         end += BP_TREE_ADDED_CHILD_COUNT;
-                    } else if (kind == 0) {
+                    } else if (kind == BP_TREE_HIGH_NODE) {
                         *cur = (u16)hi_groups[entry >> BP_TREE_HIGH_GROUP_SHIFT] + ((entry >> BP_TREE_INDEX_SHIFT) + BP_TREE_CHILD1_BASE) * BP_TREE_INDEX_STRIDE + BP_TREE_GROUP_NODE;
 handle_children:
                         kind = entry >> BP_TREE_INDEX_SHIFT;
@@ -415,7 +416,7 @@ handle_children:
                     end[1] = (u16)groups[maxbits + BP_TREE_CHILD2_INDEX] + (kind + BP_TREE_CHILD2_BASE) * BP_TREE_INDEX_STRIDE + BP_TREE_BRANCH_NODE;
                     end[2] = (u16)groups[maxbits + BP_TREE_CHILD3_INDEX] + (kind + BP_TREE_CHILD3_BASE) * BP_TREE_INDEX_STRIDE + BP_TREE_BRANCH_NODE;
                     end += BP_TREE_ADDED_CHILD_COUNT;
-                } else if (kind == 0) {
+                } else if (kind == BP_TREE_HIGH_NODE) {
                     *cur = (u16)hi_groups[entry >> BP_TREE_HIGH_GROUP_SHIFT] + ((entry >> BP_TREE_INDEX_SHIFT) + BP_TREE_CHILD1_BASE) * BP_TREE_INDEX_STRIDE + BP_TREE_GROUP_NODE;
 handle_final_children:
                     kind = entry >> BP_TREE_INDEX_SHIFT;
@@ -650,7 +651,7 @@ next_lossless_node:
                         end[1] = (u16)groups[count + BP_TREE_CHILD2_INDEX] + (kind + BP_TREE_CHILD2_BASE) * BP_TREE_INDEX_STRIDE + BP_TREE_BRANCH_NODE;
                         end[2] = (u16)groups[count + BP_TREE_CHILD3_INDEX] + (kind + BP_TREE_CHILD3_BASE) * BP_TREE_INDEX_STRIDE + BP_TREE_BRANCH_NODE;
                         end += BP_TREE_ADDED_CHILD_COUNT;
-                    } else if (kind == 0) {
+                    } else if (kind == BP_TREE_HIGH_NODE) {
                         *cur = (u16)hi_groups[entry >> BP_TREE_HIGH_GROUP_SHIFT] + ((entry >> BP_TREE_INDEX_SHIFT) + BP_TREE_CHILD1_BASE) * BP_TREE_INDEX_STRIDE + BP_TREE_GROUP_NODE;
 handle_lossless_children:
                         kind = entry >> BP_TREE_INDEX_SHIFT;
