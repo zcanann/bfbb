@@ -246,12 +246,14 @@ static void OpenReadBundle(u8 PTR4* bits, READBUNDLE PTR4* rb, s32 width, u32 ro
                            s32 shift, s32 pitch, BINKBUNDLEINITIALVALUE use_initial_value)
 {
     u32 count_base;
+    u32 count_bits;
 
     rb->bit_size = shift;
     rb->cur_ptr = 0;
     rb->cur_dec = 0;
     count_base = BINK_BUNDLE_COUNT_BASE(rows, pitch);
-    rb->count_bits = BINK_BUNDLE_COUNT_BITS(width, count_base);
+    count_bits = BINK_BUNDLE_COUNT_BITS(width, count_base);
+    rb->count_bits = count_bits;
     if (use_initial_value != BINK_BUNDLE_NO_INITIAL_VALUE) {
         rb->initial_value = BINK_BUNDLE_INITIAL_VALUE(shift);
     } else {
