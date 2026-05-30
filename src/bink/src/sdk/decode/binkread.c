@@ -772,8 +772,9 @@ static u32 dosilence(BINKSND PTR4* snd)
 static void checksound(HBINK bnk)
 {
     if (bnk->bsnd[bnk->playingtracks - 1].Ready != 0) {
-        RADCB_CALLBACK PTR4* callback = BINK_SOUND_CALLBACK(bnk);
+        RADCB_CALLBACK PTR4* callback;
 
+        callback = BINK_SOUND_CALLBACK(bnk);
         if (RADCB_try_to_suspend_callback(cb_bink_sound, callback) != 0) {
             u32 i;
 
