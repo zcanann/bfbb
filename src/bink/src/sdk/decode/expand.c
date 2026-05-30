@@ -28,6 +28,9 @@ typedef enum BINKPlaneLayout
     BINK_CHROMA_PLANE_SCALE = 2,
     BINK_COLOR_BLOCK_BYTES = BINK_BLOCK_PIXELS,
     BINK_PATTERN_BLOCK_BYTES = BINK_BLOCK_SIDE,
+    BINK_PATTERN_COLOR_0 = 0,
+    BINK_PATTERN_COLOR_1 = 1,
+    BINK_PATTERN_COLOR_COUNT = 2,
     BINK_RUN_BLOCK_BYTES = 0x30
 } BINKPlaneLayout;
 
@@ -969,9 +972,9 @@ static inline void expand_pattern_block(u8 PTR4* dest,
     u8 color1;
     u32 i;
 
-    color0 = colors->cur_ptr[0];
-    color1 = colors->cur_ptr[1];
-    colors->cur_ptr += 2;
+    color0 = colors->cur_ptr[BINK_PATTERN_COLOR_0];
+    color1 = colors->cur_ptr[BINK_PATTERN_COLOR_1];
+    colors->cur_ptr += BINK_PATTERN_COLOR_COUNT;
     for (i = 0; i < BINK_BLOCK_SIDE; ++i) {
         u32 bits;
         u32 j;
@@ -1243,7 +1246,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 if (subblock_type == BINK_BLOCK_FILL) {
                     colors.cur_ptr++;
                 } else if (subblock_type == BINK_BLOCK_PATTERN) {
-                    colors.cur_ptr += 2;
+                    colors.cur_ptr += BINK_PATTERN_COLOR_COUNT;
                     patterns.cur_ptr += BINK_PATTERN_BLOCK_BYTES;
                 } else if (subblock_type == BINK_BLOCK_RAW) {
                     colors.cur_ptr += BINK_COLOR_BLOCK_BYTES;
