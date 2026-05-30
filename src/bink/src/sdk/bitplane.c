@@ -9,7 +9,9 @@
 #define BP_S16_SIGN_SHIFT 15
 #define BP_S8_SIGN_SHIFT 7
 #define BP_BLOCK_COEFFS 64
-#define BP_AC_COEFFS (BP_BLOCK_COEFFS - 1)
+#define BP_DC_COEFF 0
+#define BP_FIRST_AC_COEFF (BP_DC_COEFF + 1)
+#define BP_AC_COEFFS (BP_BLOCK_COEFFS - BP_FIRST_AC_COEFF)
 #define BP_LOSSY_OUTPUT_COEFFS 32
 #define BP_TREE_NODES 68
 #define BP_TREE_GROUPS 16
@@ -234,7 +236,7 @@ u32 LenBPLossless(s16 PTR4* vals)
     /* Lossless bitplanes code AC coefficient magnitudes by zigzag bit depth. */
     count = BP_AC_COEFFS;
     maxbits = 0;
-    i = 1;
+    i = BP_FIRST_AC_COEFF;
     do {
         value = BP_ZIGZAG_COEFF(vals, i);
         sign = value >> BP_S32_SIGN_SHIFT;
@@ -507,7 +509,7 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
     /* The writer uses the same grouped bit-depth tree measured by LenBPLossless. */
     maxbits = 0;
     count = BP_AC_COEFFS;
-    i = 1;
+    i = BP_FIRST_AC_COEFF;
     cur = absvals;
     do {
         cur++;
