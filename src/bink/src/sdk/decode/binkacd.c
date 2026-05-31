@@ -63,9 +63,9 @@ typedef enum BINKACSampleLayout
 } BINKACSampleLayout;
 
 #define BINKAC_BIT_MASK 1
-#define BINKAC_UNDECIBEL_BASE BINKAC_QUANT_POWER_BASE_CONST
-#define BINKAC_UNDECIBEL_DB_SCALE BINKAC_QUANT_POWER_SCALE_CONST
-#define BINKAC_THRESHOLD_QUANT_SCALE BINKAC_QUANT_INDEX_SCALE_CONST
+#define BINKAC_UNDECIBEL_BASE 10.0
+#define BINKAC_UNDECIBEL_DB_SCALE 0.10f
+#define BINKAC_THRESHOLD_QUANT_SCALE 0.664f
 #define BINKAC_BAND_LIMIT_COUNT(num_bands) ((num_bands) + BINKAC_BAND_SENTINEL_COUNT)
 typedef enum BINKACSampleCountState
 {
@@ -93,10 +93,6 @@ typedef enum BINKACSampleCountState
 #define BINKAC_INPUT_ADVANCE(ptr, bytes) ((u8 PTR4*)(ptr) + (bytes))
 #define BINKAC_ZERO_BYTE 0
 
-#define BINKAC_SAMPLE_ZERO 0.0f
-static const f32 BINKAC_QUANT_INDEX_SCALE_CONST = 0.664f;
-static const f32 BINKAC_QUANT_POWER_SCALE_CONST = 0.10f;
-static const f64 BINKAC_QUANT_POWER_BASE_CONST = 10.0;
 static const f32 BINKAC_RSQRT_ZERO = 0.0f;
 static const f64 BINKAC_RSQRT_NEWTON_HALF_CONST = 0.5;
 static const f64 BINKAC_RSQRT_NEWTON_THREE_CONST = 3.0;
@@ -258,7 +254,7 @@ static void read_rle_samples(f32 PTR4* samples, u32 transform_size, VARBITS PTR4
 {
     u32 i;
     u32 band = 0;
-    f32 scale = BINKAC_SAMPLE_ZERO;
+    f32 scale = 0.0f;
     f32 PTR4* out;
 
     while (BINKAC_BAND_SAMPLE_LIMIT(bands, band) < BINKAC_FIRST_COEFF) {
@@ -312,7 +308,7 @@ static void read_rle_samples(f32 PTR4* samples, u32 transform_size, VARBITS PTR4
                         value = (value ^ sign) - sign;
                         *out = value * scale;
                     } else {
-                        *out = BINKAC_SAMPLE_ZERO;
+                        *out = 0.0f;
                     }
                 }
 
