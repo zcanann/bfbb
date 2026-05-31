@@ -93,7 +93,7 @@ typedef enum BINKACSampleCountState
 #define BINKAC_INPUT_ADVANCE(ptr, bytes) ((u8 PTR4*)(ptr) + (bytes))
 #define BINKAC_ZERO_BYTE 0
 
-static const f32 BINKAC_SAMPLE_ZERO = 0.0f;
+#define BINKAC_SAMPLE_ZERO 0.0f
 static const f32 BINKAC_QUANT_INDEX_SCALE_CONST = 0.664f;
 static const f32 BINKAC_QUANT_POWER_SCALE_CONST = 0.10f;
 static const f64 BINKAC_QUANT_POWER_BASE_CONST = 10.0;
