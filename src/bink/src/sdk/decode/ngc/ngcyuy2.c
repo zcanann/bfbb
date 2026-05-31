@@ -375,31 +375,28 @@ static void YUY2_x2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, cons
 {
     s32 pairs;
 
-    pairs = YUY2_BLOCK_PAIRS(count);
-    if (pairs != 0) {
-        do {
-            u32 u0 = *u;
-            u32 v0 = *v;
-            u32 y0 = *y++;
-            u32 chroma;
+    for (pairs = YUY2_BLOCK_PAIRS(count); pairs != 0; --pairs) {
+        u32 u0 = *u;
+        u32 v0 = *v;
+        u32 y0 = *y++;
+        u32 chroma;
 
-            u++;
-            chroma = YUY2_CHROMA0(u0, v0);
-            *dest++ = YUY2_PACK_X2Y0(y0, chroma);
-            *dest++ = YUY2_PACK_X2Y1(y0, chroma);
-            chroma = YUY2_CHROMA1(u0, v0);
-            *dest++ = YUY2_PACK_X2Y2(y0, chroma);
-            *dest++ = YUY2_PACK_X2Y3(y0, chroma);
+        u++;
+        chroma = YUY2_CHROMA0(u0, v0);
+        *dest++ = YUY2_PACK_X2Y0(y0, chroma);
+        *dest++ = YUY2_PACK_X2Y1(y0, chroma);
+        chroma = YUY2_CHROMA1(u0, v0);
+        *dest++ = YUY2_PACK_X2Y2(y0, chroma);
+        *dest++ = YUY2_PACK_X2Y3(y0, chroma);
 
-            y0 = *y++;
-            v++;
-            chroma = YUY2_CHROMA2(u0, v0);
-            *dest++ = YUY2_PACK_X2Y0(y0, chroma);
-            *dest++ = YUY2_PACK_X2Y1(y0, chroma);
-            chroma = YUY2_CHROMA3(u0, v0);
-            *dest++ = YUY2_PACK_X2Y2(y0, chroma);
-            *dest++ = YUY2_PACK_X2Y3(y0, chroma);
-        } while (--pairs != 0);
+        y0 = *y++;
+        v++;
+        chroma = YUY2_CHROMA2(u0, v0);
+        *dest++ = YUY2_PACK_X2Y0(y0, chroma);
+        *dest++ = YUY2_PACK_X2Y1(y0, chroma);
+        chroma = YUY2_CHROMA3(u0, v0);
+        *dest++ = YUY2_PACK_X2Y2(y0, chroma);
+        *dest++ = YUY2_PACK_X2Y3(y0, chroma);
     }
 
     if (YUY2_HAS_TAIL_BLOCK(count)) {
