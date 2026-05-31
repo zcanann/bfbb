@@ -2554,10 +2554,9 @@ static s32 trysplit(BINKRECT PTR4* outa, BINKRECT PTR4* outb, const BINKRECT PTR
         split_score = (BINK_RECT_AREA(rect) - BINK_RECT_AREA(&first_half)) -
                       BINK_RECT_AREA(&second_half);
         if (split_score > best_score) {
-            best_score = split_score;
             *outa = first_half;
             *outb = second_half;
-            return best_score;
+            return split_score;
         }
     }
 
