@@ -1508,7 +1508,12 @@ do_blit:
     }
 
     bnk->lastblitflags = blitflags;
-    if (!((s32)blitflags >= 0 && strlen((char PTR4*)bnk->MaskPlane) < bnk->MaskLength)) {
+    if ((s32)blitflags >= 0) {
+        goto try_mask_blit;
+    }
+
+unmasked_blit:
+    {
         flags = blitflags & BINKSURFACEMASK;
         switch (flags) {
         case BINKSURFACE32A:
@@ -1542,7 +1547,15 @@ do_blit:
                           srcw, srch, bnk->YWidth, bnk->YHeight, blitflags);
             break;
         }
-    } else {
+    }
+    goto blit_done;
+
+try_mask_blit:
+    if (strlen((char PTR4*)bnk->MaskPlane) >= bnk->MaskLength) {
+        goto unmasked_blit;
+    }
+
+    {
         flags = blitflags & BINKSURFACEMASK;
         switch (flags) {
         case BINKSURFACE32A:
