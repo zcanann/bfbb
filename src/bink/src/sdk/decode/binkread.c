@@ -1508,16 +1508,9 @@ do_blit:
     }
 
     bnk->lastblitflags = blitflags;
-    if ((s32)blitflags < 0 || strlen((char PTR4*)bnk->MaskPlane) >= bnk->MaskLength) {
+    if (!((s32)blitflags >= 0 && strlen((char PTR4*)bnk->MaskPlane) < bnk->MaskLength)) {
         flags = blitflags & BINKSURFACEMASK;
         switch (flags) {
-        case BINKSURFACE4444:
-            if (bnk->APlane[0] != 0) {
-                YUV_blit_16a4bpp(dest, destx, desty, destpitch, bnk->YPlane[bnk->PlaneNum], srcx,
-                                 srcy, srcw, srch, bnk->YWidth, bnk->YHeight,
-                                 bnk->APlane[bnk->PlaneNum], blitflags);
-            }
-            break;
         case BINKSURFACE32A:
             if (bnk->APlane[0] != 0) {
                 YUV_blit_32abpp(dest, destx, desty, destpitch, bnk->YPlane[bnk->PlaneNum], srcx,
@@ -1529,10 +1522,13 @@ do_blit:
             YUV_blit_32bpp(dest, destx, desty, destpitch, bnk->YPlane[bnk->PlaneNum], srcx, srcy,
                            srcw, srch, bnk->YWidth, bnk->YHeight, blitflags);
             break;
-        case BINKSURFACEYUY2:
-            YUV_blit_YUY2(dest, destx, desty, destpitch, bnk->YPlane[bnk->PlaneNum], srcx, srcy,
-                          srcw, srch, bnk->YWidth, bnk->YHeight, blitflags);
-            break;
+        case BINKSURFACE4444:
+            if (bnk->APlane[0] != 0) {
+                YUV_blit_16a4bpp(dest, destx, desty, destpitch, bnk->YPlane[bnk->PlaneNum], srcx,
+                                 srcy, srcw, srch, bnk->YWidth, bnk->YHeight,
+                                 bnk->APlane[bnk->PlaneNum], blitflags);
+                break;
+            }
         case BINKSURFACE5551:
         case BINKSURFACE555:
         case BINKSURFACE565:
@@ -1541,17 +1537,14 @@ do_blit:
             YUV_blit_16bpp(dest, destx, desty, destpitch, bnk->YPlane[bnk->PlaneNum], srcx, srcy,
                            srcw, srch, bnk->YWidth, bnk->YHeight, blitflags);
             break;
+        case BINKSURFACEYUY2:
+            YUV_blit_YUY2(dest, destx, desty, destpitch, bnk->YPlane[bnk->PlaneNum], srcx, srcy,
+                          srcw, srch, bnk->YWidth, bnk->YHeight, blitflags);
+            break;
         }
     } else {
         flags = blitflags & BINKSURFACEMASK;
         switch (flags) {
-        case BINKSURFACE4444:
-            if (bnk->APlane[0] != 0) {
-                YUV_blit_16a4bpp_mask(dest, destx, desty, destpitch, bnk->MaskPlane, bnk->MaskPitch,
-                                      bnk->YPlane[bnk->PlaneNum], srcx, srcy, srcw, srch, bnk->YWidth, bnk->YHeight,
-                                      bnk->APlane[bnk->PlaneNum], blitflags);
-            }
-            break;
         case BINKSURFACE32A:
             if (bnk->APlane[0] != 0) {
                 YUV_blit_32abpp_mask(dest, destx, desty, destpitch, bnk->MaskPlane, bnk->MaskPitch,
@@ -1563,10 +1556,13 @@ do_blit:
             YUV_blit_32bpp_mask(dest, destx, desty, destpitch, bnk->MaskPlane, bnk->MaskPitch,
                                 bnk->YPlane[bnk->PlaneNum], srcx, srcy, srcw, srch, bnk->YWidth, bnk->YHeight, blitflags);
             break;
-        case BINKSURFACEYUY2:
-            YUV_blit_YUY2_mask(dest, destx, desty, destpitch, bnk->MaskPlane, bnk->MaskPitch,
-                               bnk->YPlane[bnk->PlaneNum], srcx, srcy, srcw, srch, bnk->YWidth, bnk->YHeight, blitflags);
-            break;
+        case BINKSURFACE4444:
+            if (bnk->APlane[0] != 0) {
+                YUV_blit_16a4bpp_mask(dest, destx, desty, destpitch, bnk->MaskPlane, bnk->MaskPitch,
+                                      bnk->YPlane[bnk->PlaneNum], srcx, srcy, srcw, srch, bnk->YWidth, bnk->YHeight,
+                                      bnk->APlane[bnk->PlaneNum], blitflags);
+                break;
+            }
         case BINKSURFACE5551:
         case BINKSURFACE555:
         case BINKSURFACE565:
@@ -1574,6 +1570,10 @@ do_blit:
         case BINKSURFACE664:
             YUV_blit_16bpp_mask(dest, destx, desty, destpitch, bnk->MaskPlane, bnk->MaskPitch,
                                 bnk->YPlane[bnk->PlaneNum], srcx, srcy, srcw, srch, bnk->YWidth, bnk->YHeight, blitflags);
+            break;
+        case BINKSURFACEYUY2:
+            YUV_blit_YUY2_mask(dest, destx, desty, destpitch, bnk->MaskPlane, bnk->MaskPitch,
+                               bnk->YPlane[bnk->PlaneNum], srcx, srcy, srcw, srch, bnk->YWidth, bnk->YHeight, blitflags);
             break;
         }
     }
