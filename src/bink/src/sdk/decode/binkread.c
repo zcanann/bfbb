@@ -1460,16 +1460,15 @@ s32 BinkCopyToBufferRect(HBINK bnk, void PTR4* dest, s32 destpitch, u32 destheig
         u32 now;
         u32 wait;
         u32 adjusted;
-        u32 elapsed;
 
         inittimer(bnk);
         now = RADTimerRead();
         wait = mult64anddiv((bnk->playedframes - bnk->startsyncframe) * BINK_MILLISECONDS_PER_SECOND,
                             bnk->FrameRateDiv, bnk->FrameRate);
         adjusted = mult64andshift(wait, bnk->bsnd->Latency, BINK_FIXED_SHIFT);
-        elapsed = now - (bnk->startsynctime + bnk->big_sound_skip_adj);
-        if (elapsed >= adjusted) {
-            if (elapsed - adjusted > bnk->twoframestime) {
+        now -= bnk->startsynctime + bnk->big_sound_skip_adj;
+        if (now >= adjusted) {
+            if (now - adjusted > bnk->twoframestime) {
                 u32 count;
 
                 count = bnk->skipped_in_a_row;
