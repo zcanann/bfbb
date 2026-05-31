@@ -1452,9 +1452,8 @@ s32 BinkCopyToBufferRect(HBINK bnk, void PTR4* dest, s32 destpitch, u32 destheig
     YUV_init(blitflags & BINKSURFACEMASK);
 
     if (destpitch < 0) {
-        destheight -= desty;
+        dest = (u8 PTR4*)dest + -destpitch * (destheight - desty - 1);
         desty = 0;
-        dest = (u8 PTR4*)dest + -destpitch * (destheight - 1);
     }
 
     if (bnk->playingtracks != 0 && bnk->FrameRate != 0 && bnk->Paused == 0) {
