@@ -1076,7 +1076,7 @@ extern "C" void YUV_init(u32 flags)
             green_bits = 5;
             blue_bits = 5;
             blue_shift = 11;
-        } else if (flags < BINKSURFACE655) {
+        } else if (flags <= BINKSURFACE565) {
             red_bits = 5;
             green_bits = 6;
             blue_bits = 5;
@@ -1092,7 +1092,7 @@ extern "C" void YUV_init(u32 flags)
             blue_bits = 0;
             blue_shift = 0;
         }
-    } else if (flags >= BINKSURFACE5551) {
+    } else if (flags > BINKSURFACE4444) {
         red_bits = 5;
         green_bits = 5;
         blue_bits = 5;
