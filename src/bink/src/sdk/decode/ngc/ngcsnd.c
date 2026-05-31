@@ -436,10 +436,10 @@ static s32 NGC_SoundInit(BINKSND PTR4* snd)
     }
 
     NGC_SOUND_STATE(snd)->play_cursor = (u32)NGC_SOUND_STATE(snd)->audio_buffer;
-    voices = &state->left_voice;
     NGC_SOUND_STATE(snd)->pending_end = 0;
 
     for (i = 0; i < NGC_SND(snd)->chans; ++i) {
+        voices = &state->left_voice;
         voices[i] = AXAcquireVoice(AX_VOICE_PRIORITY_BINK, 0, 0);
         if (voices[i] == 0) {
             return 0;
