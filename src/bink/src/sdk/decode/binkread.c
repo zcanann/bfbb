@@ -772,8 +772,9 @@ static u32 dosilence(BINKSND PTR4* snd)
 static void checksound(HBINK bnk)
 {
     if (bnk->bsnd[bnk->playingtracks - 1].Ready != 0) {
-        RADCB_CALLBACK PTR4* callback = BINK_SOUND_CALLBACK(bnk);
+        RADCB_CALLBACK PTR4* callback;
 
+        callback = BINK_SOUND_CALLBACK(bnk);
         if (RADCB_try_to_suspend_callback(cb_bink_sound, callback) != 0) {
             u32 i;
 
@@ -1858,9 +1859,11 @@ void BinkNextFrame(HBINK bnk)
         }
 
         if (skipped != 0) {
-            RADCB_CALLBACK PTR4* sound_callback = BINK_SOUND_CALLBACK(bnk);
-            RADCB_CALLBACK PTR4* io_callback = BINK_IO_CALLBACK(&bnk->bio);
+            RADCB_CALLBACK PTR4* sound_callback;
+            RADCB_CALLBACK PTR4* io_callback;
 
+            sound_callback = BINK_SOUND_CALLBACK(bnk);
+            io_callback = BINK_IO_CALLBACK(&bnk->bio);
             bnk->soundskips++;
             RADCB_suspend_2_callbacks(cb_bink_sound, sound_callback, cb_bink_IO, io_callback);
             BinkSetSoundOnOff(bnk, BINK_SOUND_OFF);
