@@ -1534,7 +1534,6 @@ unmasked_blit:
                                  bnk->APlane[bnk->PlaneNum], blitflags);
                 break;
             }
-        case BINKSURFACE5551:
         case BINKSURFACE555:
         case BINKSURFACE565:
         case BINKSURFACE655:
@@ -1576,7 +1575,6 @@ try_mask_blit:
                                       bnk->APlane[bnk->PlaneNum], blitflags);
                 break;
             }
-        case BINKSURFACE5551:
         case BINKSURFACE555:
         case BINKSURFACE565:
         case BINKSURFACE655:
