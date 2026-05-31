@@ -92,14 +92,15 @@ typedef enum BINKACSampleCountState
     ((u8 PTR4*)(samples) + ((buffer_size) - (window_size)))
 #define BINKAC_INPUT_ADVANCE(ptr, bytes) ((u8 PTR4*)(ptr) + (bytes))
 #define BINKAC_ZERO_BYTE 0
-#define BINKAC_SAMPLE_ZERO 0.0f
-#define BINKAC_QUANT_INDEX_SCALE_CONST 0.664f
-#define BINKAC_QUANT_POWER_SCALE_CONST 0.10f
-#define BINKAC_QUANT_POWER_BASE_CONST 10.0
-#define BINKAC_RSQRT_ZERO 0.0f
-#define BINKAC_RSQRT_NEWTON_HALF_CONST 0.5
-#define BINKAC_RSQRT_NEWTON_THREE_CONST 3.0
-#define BINKAC_TRANSFORM_ROOT_SCALE_CONST 2.0f
+
+static const f32 BINKAC_SAMPLE_ZERO = 0.0f;
+static const f32 BINKAC_QUANT_INDEX_SCALE_CONST = 0.664f;
+static const f32 BINKAC_QUANT_POWER_SCALE_CONST = 0.10f;
+static const f64 BINKAC_QUANT_POWER_BASE_CONST = 10.0;
+static const f32 BINKAC_RSQRT_ZERO = 0.0f;
+static const f64 BINKAC_RSQRT_NEWTON_HALF_CONST = 0.5;
+static const f64 BINKAC_RSQRT_NEWTON_THREE_CONST = 3.0;
+static const f32 BINKAC_TRANSFORM_ROOT_SCALE_CONST = 2.0f;
 
 /* RLE code lengths, in VQLENGTH sample groups, for sparse audio coefficients. */
 static u8 bink_rlelens_snd[MAXRLE] = {
