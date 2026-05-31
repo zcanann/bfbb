@@ -237,17 +237,19 @@ static inline u32 read_bit(VARBITS PTR4* vb)
 
     if (bitcount != 0) {
         u32 bits = vb->bits;
+        u32 value = bits & BINKAC_BIT_MASK;
 
         vb->bitlen = bitcount - 1;
         vb->bits = bits >> 1;
-        return bits & BINKAC_BIT_MASK;
+        return value;
     } else {
         u32 word = BINKAC_LOAD32(vb->cur);
+        u32 value = word & BINKAC_BIT_MASK;
 
         VARBITS_ADVANCE_CUR(vb->cur);
         vb->bitlen = BITSTYPELEN - 1;
         vb->bits = word >> 1;
-        return word & BINKAC_BIT_MASK;
+        return value;
     }
 }
 
