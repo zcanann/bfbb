@@ -1181,6 +1181,10 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
     }
 
     out = bpopmalloc(&bnk, sizeof(*out));
+    if (out == 0) {
+        BinkSetError(BINK_ERROR_OUT_OF_MEMORY);
+        goto close_and_fail;
+    }
     if (out != 0) {
         memcpy(out, &bnk, sizeof(*out));
         out->bio.bink = out;
