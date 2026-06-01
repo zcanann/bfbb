@@ -1843,11 +1843,8 @@ void BinkNextFrame(HBINK bnk)
 
             zero = 0;
             do {
-                BINKSND PTR4* snd;
-
-                snd = bnk->bsnd + i;
-                if (snd->SoundDroppedOut != 0) {
-                    snd->SoundDroppedOut = zero;
+                if (bnk->bsnd[i].SoundDroppedOut != 0) {
+                    bnk->bsnd[i].SoundDroppedOut = zero;
                     if (bnk->FrameNum > BINK_FIRST_FRAME &&
                         (s32)bnk->FrameNum <= (s32)bnk->bsnd[i].sndendframe) {
                         skipped = 1;
