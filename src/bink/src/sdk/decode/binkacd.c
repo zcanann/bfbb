@@ -93,8 +93,6 @@ typedef enum BINKACSampleCountState
 #define BINKAC_INPUT_ADVANCE(ptr, bytes) ((u8 PTR4*)(ptr) + (bytes))
 #define BINKAC_ZERO_BYTE 0
 
-static const f32 BINKAC_SAMPLE_ZERO = 0.0f;
-
 #define BINKAC_RSQRT_ZERO 0.0f
 #define BINKAC_RSQRT_NEWTON_HALF_CONST 0.5
 #define BINKAC_RSQRT_NEWTON_THREE_CONST 3.0
@@ -254,7 +252,7 @@ static void read_rle_samples(f32 PTR4* samples, u32 transform_size, VARBITS PTR4
 {
     u32 i;
     u32 band = 0;
-    f32 scale = BINKAC_SAMPLE_ZERO;
+    f32 scale = 0.0f;
     f32 PTR4* out;
 
     while (BINKAC_BAND_SAMPLE_LIMIT(bands, band) < BINKAC_FIRST_COEFF) {
@@ -308,7 +306,7 @@ static void read_rle_samples(f32 PTR4* samples, u32 transform_size, VARBITS PTR4
                         value = (value ^ sign) - sign;
                         *out = value * scale;
                     } else {
-                        *out = BINKAC_SAMPLE_ZERO;
+                        *out = 0.0f;
                     }
                 }
 
