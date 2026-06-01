@@ -339,7 +339,6 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
     u32 ch;
     f32 PTR4* channel;
     u32 i;
-    u32 coeff;
     u32 q;
 
     vb.init = inptr;
@@ -356,11 +355,11 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
 
     channel = decoded;
     for (ch = 0; ch < chans; ++ch) {
-        VarBitsGet(coeff, u32, vb, FXPBITS);
-        channel[BINKAC_DC_COEFF_0] = fxptof(coeff);
+        VarBitsGet(i, u32, vb, FXPBITS);
+        channel[BINKAC_DC_COEFF_0] = fxptof(i);
 
-        VarBitsGet(coeff, u32, vb, FXPBITS);
-        channel[BINKAC_DC_COEFF_1] = fxptof(coeff);
+        VarBitsGet(i, u32, vb, FXPBITS);
+        channel[BINKAC_DC_COEFF_1] = fxptof(i);
 
         for (i = 0; i < num_bands; ++i) {
             VarBitsGet(q, u32, vb, BINKAC_THRESHOLD_BITS);
