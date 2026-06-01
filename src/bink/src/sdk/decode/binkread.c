@@ -2713,16 +2713,12 @@ static s32 idtoindex(HBINK bnk, u32 trackid)
 void BinkSetVolume(HBINK bnk, u32 trackid, s32 volume)
 {
     s32 index;
-    BINKSND PTR4* snd;
-    BINKSNDVOLUME volume_callback;
 
     if (bnk != 0 && bnk->playingtracks != 0) {
         index = idtoindex(bnk, trackid);
         if (index != BINK_TRACK_NOT_FOUND) {
-            snd = &bnk->bsnd[index];
-            volume_callback = snd->Volume;
-            if (volume_callback != 0) {
-                volume_callback(snd, volume);
+            if (bnk->bsnd[index].Volume != 0) {
+                bnk->bsnd[index].Volume(&bnk->bsnd[index], volume);
             }
         }
     }
@@ -2731,16 +2727,12 @@ void BinkSetVolume(HBINK bnk, u32 trackid, s32 volume)
 void BinkSetMixBins(HBINK bnk, u32 trackid, u32 PTR4* mix_bins, u32 total)
 {
     s32 index;
-    BINKSND PTR4* snd;
-    BINKSNDMIXBINS mix_bins_callback;
 
     if (bnk != 0 && bnk->playingtracks != 0) {
         index = idtoindex(bnk, trackid);
         if (index != BINK_TRACK_NOT_FOUND) {
-            snd = &bnk->bsnd[index];
-            mix_bins_callback = snd->MixBins;
-            if (mix_bins_callback != 0) {
-                mix_bins_callback(snd, mix_bins, total);
+            if (bnk->bsnd[index].MixBins != 0) {
+                bnk->bsnd[index].MixBins(&bnk->bsnd[index], mix_bins, total);
             }
         }
     }
@@ -2749,16 +2741,12 @@ void BinkSetMixBins(HBINK bnk, u32 trackid, u32 PTR4* mix_bins, u32 total)
 void BinkSetMixBinVolumes(HBINK bnk, u32 trackid, u32 PTR4* vol_mix_bins, s32 PTR4* volumes, u32 total)
 {
     s32 index;
-    BINKSND PTR4* snd;
-    BINKSNDMIXBINVOLS mix_bin_vols_callback;
 
     if (bnk != 0 && bnk->playingtracks != 0) {
         index = idtoindex(bnk, trackid);
         if (index != BINK_TRACK_NOT_FOUND) {
-            snd = &bnk->bsnd[index];
-            mix_bin_vols_callback = snd->MixBinVols;
-            if (mix_bin_vols_callback != 0) {
-                mix_bin_vols_callback(snd, vol_mix_bins, volumes, total);
+            if (bnk->bsnd[index].MixBinVols != 0) {
+                bnk->bsnd[index].MixBinVols(&bnk->bsnd[index], vol_mix_bins, volumes, total);
             }
         }
     }
@@ -2767,16 +2755,12 @@ void BinkSetMixBinVolumes(HBINK bnk, u32 trackid, u32 PTR4* vol_mix_bins, s32 PT
 void BinkSetPan(HBINK bnk, u32 trackid, s32 pan)
 {
     s32 index;
-    BINKSND PTR4* snd;
-    BINKSNDPAN pan_callback;
 
     if (bnk != 0 && bnk->playingtracks != 0) {
         index = idtoindex(bnk, trackid);
         if (index != BINK_TRACK_NOT_FOUND) {
-            snd = &bnk->bsnd[index];
-            pan_callback = snd->Pan;
-            if (pan_callback != 0) {
-                pan_callback(snd, pan);
+            if (bnk->bsnd[index].Pan != 0) {
+                bnk->bsnd[index].Pan(&bnk->bsnd[index], pan);
             }
         }
     }
