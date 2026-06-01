@@ -570,13 +570,17 @@ static s32 Lock(BINKSND PTR4* snd, u8 PTR4* PTR4* addr, u32 PTR4* len)
     u32 block_size;
     ARQRequest PTR4* task;
     ARQRequest PTR4* right_task;
+    AXVPB PTR4* voice;
+    u32 shift;
     u8 PTR4* out;
     u8 PTR4* out_addr;
 
     if (NGC_SOUND_STATE(snd)->lock_index >= 0) {
         state = NGC_SOUND_STATE(snd);
         writable = NGC_SOUND_STATE(snd)->play_cursor;
-        play_pos = NGC_AX_CURRENT_CURSOR(NGC_LEFT_VOICE(state), NGC_ADDRESS_SHIFT(state));
+        voice = NGC_LEFT_VOICE(state);
+        shift = NGC_ADDRESS_SHIFT(state);
+        play_pos = NGC_AX_CURRENT_CURSOR(voice, shift);
 
         if (writable >= play_pos) {
             block_size = NGC_SOUND_STATE(snd)->channel_stride;
