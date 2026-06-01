@@ -80,16 +80,17 @@ static inline u32 radcntlzw(u32 value)
 u32 mult64anddiv(u32 left, u32 right, u32 divisor)
 {
     u32 hi;
+    u32 lo = left;
     u32 quotient;
 
-    __asm__("mulhwu %0, %1, %2\n\tmullw %1, %1, %2" : "=&r"(hi), "+r"(left) : "r"(right));
+    __asm__("mulhwu %0, %1, %2\n\tmullw %1, %1, %2" : "=&r"(hi), "+r"(lo) : "r"(right));
 
     /* Fast path for exact power-of-two divisors after the 64-bit multiply. */
     if (RAD_DIV_IS_POWER_OF_TWO(divisor)) {
         u32 clz = radcntlzw(divisor);
-        left >>= (31 - clz);
+        lo >>= (31 - clz);
         hi <<= (clz + 1);
-        return left | hi;
+        return lo | hi;
     }
 
     {
@@ -111,7 +112,7 @@ u32 mult64anddiv(u32 left, u32 right, u32 divisor)
             {
                 u32 prod_hi, prod_lo;
                 __asm__("mulhwu %0, %2, %3\n\tmullw %1, %2, %3" : "=&r"(prod_hi), "=&r"(prod_lo) : "r"(est), "r"(divisor));
-                __asm__("subfc %0, %3, %0\n\tsubfe %1, %2, %1" : "+r"(left), "+r"(hi) : "r"(prod_hi), "r"(prod_lo));
+                __asm__("subfc %0, %3, %0\n\tsubfe %1, %2, %1" : "+r"(lo), "+r"(hi) : "r"(prod_hi), "r"(prod_lo));
             }
         }
 
@@ -119,11 +120,11 @@ u32 mult64anddiv(u32 left, u32 right, u32 divisor)
             u32 step = recip * hi;
             u32 prod_hi, prod_lo;
             __asm__("mulhwu %0, %2, %3\n\tmullw %1, %2, %3" : "=&r"(prod_hi), "=&r"(prod_lo) : "r"(step), "r"(divisor));
-            __asm__("subfc %0, %3, %0\n\tsubfe %1, %2, %1" : "+r"(left), "+r"(hi) : "r"(prod_hi), "r"(prod_lo));
+            __asm__("subfc %0, %3, %0\n\tsubfe %1, %2, %1" : "+r"(lo), "+r"(hi) : "r"(prod_hi), "r"(prod_lo));
             quotient += step;
         }
 
-        quotient += left / divisor;
+        quotient += lo / divisor;
     }
 
     return quotient;
@@ -157,10 +158,11 @@ u32 RADTimerRead(void)
 {
     static OSTime starttime = 0;
     OSTime now;
-    u32 elapsed_high;
-    u32 whole_ms;
-    u32 low_correction;
-    u32 high_correction;
+    u32 high_ticks;
+    u32 elapsed_ms;
+    u32 recip_low;
+    u32 recip_high;
+    u32 recip_sum;
 
     now = OSGetTime();
 
@@ -170,13 +172,15 @@ u32 RADTimerRead(void)
 
     now -= starttime;
     /* Convert elapsed OS ticks to milliseconds without a full 64-bit divide. */
-    elapsed_high = (u32)(now >> 32);
-    whole_ms = elapsed_high * RAD_TIMER_HIGH_QUOTIENT;
-    now -= (u64)whole_ms * RAD_TIMER_TICKS_PER_MS;
-    elapsed_high = (u32)(now >> 32);
-    low_correction = (u32)(((u64)(u32)now * RAD_TIMER_RECIP_MAGIC) >> 32);
-    high_correction = elapsed_high * RAD_TIMER_RECIP_MAGIC;
-    return whole_ms + ((low_correction + high_correction) >> RAD_TIMER_RECIP_SHIFT);
+    high_ticks = (u32)(now >> 32);
+    elapsed_ms = high_ticks * RAD_TIMER_HIGH_QUOTIENT;
+    now -= (u64)elapsed_ms * RAD_TIMER_TICKS_PER_MS;
+    high_ticks = (u32)(now >> 32);
+    recip_low = (u32)(((u64)(u32)now * RAD_TIMER_RECIP_MAGIC) >> 32);
+    recip_high = high_ticks * RAD_TIMER_RECIP_MAGIC;
+    recip_sum = recip_low + recip_high;
+    recip_sum >>= RAD_TIMER_RECIP_SHIFT;
+    return elapsed_ms + recip_sum;
 }
 
 static inline void radtimebase(RADTimebase PTR4* dest)
