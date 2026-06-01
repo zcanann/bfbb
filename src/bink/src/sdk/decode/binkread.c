@@ -1699,12 +1699,12 @@ s32 BinkDoFrame(HBINK bnk)
                                 BinkAudioDecompress(
                                     (HBINKAUDIODECOMP)bnk->bsnd[playing_index].sndcomp, &out,
                                     &out_bytes, in, &in);
-                                if (in_bytes < out_bytes) {
+                                if (out_bytes > in_bytes) {
                                     out_bytes = in_bytes;
                                 }
                                 in_bytes -= out_bytes;
 
-                                if (free_bytes < out_bytes) {
+                                if (out_bytes > free_bytes) {
                                     u32 over;
 
                                     over = out_bytes - free_bytes;
