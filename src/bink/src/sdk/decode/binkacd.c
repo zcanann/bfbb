@@ -207,48 +207,49 @@ static inline u32 read_bits(VARBITS PTR4* vb, u32 count)
 
 static inline u32 read_rle_bits(VARBITS PTR4* vb)
 {
+    u32 value;
     u32 bits = vb->bitlen;
 
-    if (bits >= RLEBITS) {
-        u32 value = vb->bits & GetBitsLen(RLEBITS);
-
+    if (bits > (RLEBITS - 1)) {
+        value = vb->bits & GetBitsLen(RLEBITS);
         vb->bitlen = bits - RLEBITS;
         vb->bits >>= RLEBITS;
-        return value;
     } else {
         u32 word = BINKAC_LOAD32(vb->cur);
         u32 temp = vb->bits | (word << bits);
-        u32 value = temp & GetBitsLen(RLEBITS);
 
         VARBITS_ADVANCE_CUR(vb->cur);
+        value = temp & GetBitsLen(RLEBITS);
         vb->bitlen = bits + BITSTYPELEN - RLEBITS;
         vb->bits = word >> (RLEBITS - bits);
-        return value;
     }
+
+    return value;
 }
 
 static inline u32 read_bit(VARBITS PTR4* vb)
 {
     u32 bitcount = vb->bitlen;
+    u32 value;
 
     if (bitcount != 0) {
-        u32 bits = vb->bits;
-
+        value = vb->bits & BINKAC_BIT_MASK;
         vb->bitlen = bitcount - 1;
-        vb->bits = bits >> 1;
-        return bits & BINKAC_BIT_MASK;
+        vb->bits >>= 1;
     } else {
         u32 word = BINKAC_LOAD32(vb->cur);
 
         VARBITS_ADVANCE_CUR(vb->cur);
+        value = word & BINKAC_BIT_MASK;
         vb->bitlen = BITSTYPELEN - 1;
         vb->bits = word >> 1;
-        return word & BINKAC_BIT_MASK;
     }
+
+    return value;
 }
 
 static void read_rle_samples(f32 PTR4* samples, u32 transform_size, VARBITS PTR4* vb,
-                             const f32 PTR4* threshold, const u32 PTR4* bands)
+                             const f32 PTR4* thresholds, const u32 PTR4* bands)
 {
     u32 i;
     u32 band = 0;
@@ -256,7 +257,7 @@ static void read_rle_samples(f32 PTR4* samples, u32 transform_size, VARBITS PTR4
     f32 PTR4* out;
 
     while (BINKAC_BAND_SAMPLE_LIMIT(bands, band) < BINKAC_FIRST_COEFF) {
-        scale = threshold[band];
+        scale = thresholds[band];
         ++band;
     }
 
@@ -264,39 +265,35 @@ static void read_rle_samples(f32 PTR4* samples, u32 transform_size, VARBITS PTR4
     out = samples + BINKAC_FIRST_COEFF;
 
     while (i < transform_size) {
-        u32 run_end;
+        u32 end;
         s32 bitlen;
 
         /* Each sparse coefficient packet is either 5 bits (literal VQ run) or
            9 bits (RLE flag, 4-bit run index, 4-bit coefficient bit length). */
-        {
-            u32 is_rle = read_bit(vb);
-
-            if (is_rle != 0) {
-                run_end = i + BINKAC_RLE_SAMPLE_RUN(read_rle_bits(vb));
-            } else {
-                run_end = i + VQLENGTH;
-            }
+        if (read_bit(vb) != 0) {
+            end = i + BINKAC_RLE_SAMPLE_RUN(read_rle_bits(vb));
+        } else {
+            end = i + VQLENGTH;
         }
 
-        if (run_end > transform_size) {
-            run_end = transform_size;
+        if (end > transform_size) {
+            end = transform_size;
         }
 
         bitlen = read_rle_bits(vb);
         if (bitlen == 0) {
-            memset(out, BINKAC_ZERO_BYTE, (run_end - i) * sizeof(*out));
-            out += run_end - i;
-            i = run_end;
+            memset(out, BINKAC_ZERO_BYTE, (end - i) * sizeof(*out));
+            out += end - i;
+            i = end;
 
             while (i > BINKAC_BAND_SAMPLE_LIMIT(bands, band)) {
-                scale = threshold[band];
+                scale = thresholds[band];
                 ++band;
             }
         } else {
-            while (i < run_end) {
+            while (i < end) {
                 if (i == BINKAC_BAND_SAMPLE_LIMIT(bands, band)) {
-                    scale = threshold[band];
+                    scale = thresholds[band];
                     ++band;
                 }
 
