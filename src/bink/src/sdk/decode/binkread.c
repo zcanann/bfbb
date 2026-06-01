@@ -49,6 +49,12 @@ typedef enum BINKFrameOffsetFlags
 #define BINK_IO_CALLBACK(io) ((RADCB_CALLBACK PTR4*)&(io)->callback_control.callback)
 #define BINK_SOUND_CALLBACK(bink) (&(bink)->snd_callback_buffer.callback)
 #define BINK_HEADER_TRACK_SIZES(header) ((u32 PTR4*)((BINKHDR PTR4*)(header) + 1))
+#define BINK_HEADER_TRACK_TYPES(header, tracks) \
+    ((u32 PTR4*)((u8 PTR4*)BINK_HEADER_TRACK_SIZES(header) + (tracks) * sizeof(u32)))
+#define BINK_HEADER_TRACK_IDS(header, tracks) \
+    ((s32 PTR4*)((u8 PTR4*)BINK_HEADER_TRACK_SIZES(header) + (tracks) * sizeof(u32) * 2))
+#define BINK_HEADER_FRAME_OFFSETS(header, tracks) \
+    ((u32 PTR4*)((u8 PTR4*)BINK_HEADER_TRACK_SIZES(header) + (tracks) * sizeof(u32) * 3))
 #define BINK_NEXT_TRACK_FRAME(frame) \
     ((BINKTRACKFRAME PTR4*)((u8 PTR4*)(frame) + (frame)->size + sizeof((frame)->size)))
 typedef enum BINKGlobalLayout
@@ -1197,9 +1203,9 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
 
         if ((flags & BINKFROMMEMORY) != 0) {
             out->tracksizes = BINK_HEADER_TRACK_SIZES(name);
-            out->tracktypes = out->tracksizes + out->NumTracks;
-            out->trackIDs = out->tracktypes + out->NumTracks;
-            out->frameoffsets = out->trackIDs + out->NumTracks;
+            out->tracktypes = BINK_HEADER_TRACK_TYPES(name, out->NumTracks);
+            out->trackIDs = BINK_HEADER_TRACK_IDS(name, out->NumTracks);
+            out->frameoffsets = BINK_HEADER_FRAME_OFFSETS(name, out->NumTracks);
         } else {
             out->bio.ReadHeader(&out->bio, -1, out->tracksizes,
                                 BINK_ARRAY_BYTES(out->NumTracks, out->tracksizes));
