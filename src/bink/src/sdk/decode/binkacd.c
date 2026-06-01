@@ -93,11 +93,6 @@ typedef enum BINKACSampleCountState
 #define BINKAC_INPUT_ADVANCE(ptr, bytes) ((u8 PTR4*)(ptr) + (bytes))
 #define BINKAC_ZERO_BYTE 0
 
-#define BINKAC_RSQRT_ZERO 0.0f
-#define BINKAC_RSQRT_NEWTON_HALF_CONST 0.5
-#define BINKAC_RSQRT_NEWTON_THREE_CONST 3.0
-#define BINKAC_TRANSFORM_ROOT_SCALE_CONST 2.0f
-
 /* RLE code lengths, in VQLENGTH sample groups, for sparse audio coefficients. */
 static u8 bink_rlelens_snd[MAXRLE] = {
     2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 32, 64
@@ -385,18 +380,18 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
 
 static inline f32 radfsqrt(f32 value)
 {
-    if (value > BINKAC_RSQRT_ZERO) {
+    if (value > 0.0f) {
         f64 guess;
         f64 error;
 
         __asm__ volatile("frsqrte %0,%1" : "=f"(error) : "f"(value));
         guess = error;
         error = guess * guess * value;
-        guess = BINKAC_RSQRT_NEWTON_HALF_CONST * guess * (BINKAC_RSQRT_NEWTON_THREE_CONST - error);
+        guess = 0.5 * guess * (3.0 - error);
         error = guess * guess * value;
-        guess = BINKAC_RSQRT_NEWTON_HALF_CONST * guess * (BINKAC_RSQRT_NEWTON_THREE_CONST - error);
+        guess = 0.5 * guess * (3.0 - error);
         error = guess * guess * value;
-        guess = BINKAC_RSQRT_NEWTON_HALF_CONST * guess * (BINKAC_RSQRT_NEWTON_THREE_CONST - error);
+        guess = 0.5 * guess * (3.0 - error);
         return value * guess;
     }
 
@@ -473,7 +468,7 @@ HBINKAUDIODECOMP BinkAudioDecompressOpen(u32 rate, u32 chans, u32 flags)
     ba->transform_size = transform_size;
     ba->buffer_size = buffer_size;
     ba->window_size_in_bytes = BINKAC_WINDOW_BYTES(buffer_size);
-    transform_size_root = BINKAC_TRANSFORM_ROOT_SCALE_CONST / radfsqrt((f32)transform_size);
+    transform_size_root = 2.0f / radfsqrt((f32)transform_size);
     ba->transform_size_root = transform_size_root;
 
     for (i = 0; i < num_bands; ++i) {
