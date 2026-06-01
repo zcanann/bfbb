@@ -138,7 +138,7 @@ typedef enum NGCReadLayout
     ((u32)((status) - DVD_STATE_BUSY) <= (DVD_STATE_WAITING - DVD_STATE_BUSY))
 #define NGC_DVD_STATUS_FAILED(status)                                                              \
     ((status) <= DVD_STATE_IGNORED ?                                                               \
-         ((status) >= DVD_STATE_COVER_CLOSED || (status) == DVD_STATE_FATAL_ERROR) :               \
+         ((status) > DVD_STATE_WAITING || (status) == DVD_STATE_FATAL_ERROR) :                     \
          (status) == DVD_STATE_RETRY)
 
 static void ReadKickoff(BINKIO PTR4* io);
@@ -199,7 +199,7 @@ static u32 radreadngc(DVDFileInfo PTR4* file, u32 offset, void PTR4* dest, u32 s
                 return 0;
             }
             if (status <= DVD_STATE_RETRY) {
-                if (status < DVD_STATE_COVER_CLOSED) {
+                if (status <= DVD_STATE_WAITING) {
                     continue;
                 }
                 return 0;
