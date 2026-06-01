@@ -120,9 +120,9 @@ void YUV_32_4x2_even(u32 count)
     u = S.u;
     v = S.v;
     u_to_b = YUVTables + YUV_U_TO_B_OFFSET;
-    v_to_gb = YUVTables + YUV_V_TO_GB_OFFSET;
-    u_to_gb = YUVTables + YUV_U_TO_GB_OFFSET;
     v_to_r = YUVTables + YUV_V_TO_R_OFFSET;
+    u_to_gb = YUVTables + YUV_U_TO_GB_OFFSET;
+    v_to_gb = YUVTables + YUV_V_TO_GB_OFFSET;
 
     do {
         u32 vhi;
@@ -222,9 +222,9 @@ void YUV_32x2_4x2_even(u32 count)
     u = S.u;
     v = S.v;
     u_to_b = YUVTables + YUV_U_TO_B_OFFSET;
-    v_to_gb = YUVTables + YUV_V_TO_GB_OFFSET;
-    u_to_gb = YUVTables + YUV_U_TO_GB_OFFSET;
     v_to_r = YUVTables + YUV_V_TO_R_OFFSET;
+    u_to_gb = YUVTables + YUV_U_TO_GB_OFFSET;
+    v_to_gb = YUVTables + YUV_V_TO_GB_OFFSET;
 
     do {
         u32 vhi;
