@@ -111,10 +111,10 @@ void YUV_32_4x2_even(u32 count)
     S.dest0 += count * RGB_32_4X2_ROW_BYTES;
     S.dest1 += count * RGB_32_4X2_ROW_BYTES;
 
-    row0 = RGB_TILE_ROW(dest0, base, pitch);
     row1 = RGB_TILE_ROW(dest1, base, pitch);
-    dest0 = (u32 PTR4*)RGB_TILE_LOC(base, dest0, pitch, tiledPitch, row0);
+    row0 = RGB_TILE_ROW(dest0, base, pitch);
     dest1 = (u32 PTR4*)RGB_TILE_LOC(base, dest1, pitch, tiledPitch, row1);
+    dest0 = (u32 PTR4*)RGB_TILE_LOC(base, dest0, pitch, tiledPitch, row0);
     y1 = S.y1;
     y0 = S.y0;
     u = S.u;
