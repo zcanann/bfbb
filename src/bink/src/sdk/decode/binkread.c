@@ -1469,7 +1469,8 @@ s32 BinkCopyToBufferRect(HBINK bnk, void PTR4* dest, s32 destpitch, u32 destheig
         adjusted = mult64andshift(wait, bnk->bsnd->Latency, BINK_FIXED_SHIFT);
         now -= bnk->startsynctime + bnk->big_sound_skip_adj;
         if (now >= adjusted) {
-            if (now - adjusted > bnk->twoframestime) {
+            now -= adjusted;
+            if (now > bnk->twoframestime) {
                 u32 count;
 
                 count = bnk->skipped_in_a_row;
@@ -1554,8 +1555,7 @@ try_mask_blit:
     }
 
     {
-        flags = blitflags & BINKSURFACEMASK;
-        switch (flags) {
+        switch (blitflags & BINKSURFACEMASK) {
         case BINKSURFACE32A:
             if (bnk->APlane[0] != 0) {
                 YUV_blit_32abpp_mask(dest, destx, desty, destpitch, bnk->MaskPlane, bnk->MaskPitch,
