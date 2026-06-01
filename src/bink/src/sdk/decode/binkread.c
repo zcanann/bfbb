@@ -1710,8 +1710,8 @@ s32 BinkDoFrame(HBINK bnk)
                                     over = out_bytes - free_bytes;
                                     bnk->bsnd[playing_index].sndreadpos += over;
                                     bnk->bsnd[playing_index].sndamt -= over;
-                                    if (bnk->bsnd[playing_index].sndend <
-                                        bnk->bsnd[playing_index].sndreadpos) {
+                                    if (bnk->bsnd[playing_index].sndreadpos >
+                                        bnk->bsnd[playing_index].sndend) {
                                         bnk->bsnd[playing_index].sndreadpos -=
                                             bnk->bsnd[playing_index].sndbufsize;
                                     }
