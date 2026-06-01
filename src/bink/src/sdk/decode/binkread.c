@@ -1719,23 +1719,23 @@ s32 BinkDoFrame(HBINK bnk)
 
                                 bnk->bsnd[playing_index].sndamt += out_bytes;
                                 {
-                                    u8 PTR4* write;
                                     u32 tail;
 
-                                    write = bnk->bsnd[playing_index].sndwritepos;
-                                    tail = (u32)bnk->bsnd[playing_index].sndend - (u32)write;
+                                    tail = (u32)bnk->bsnd[playing_index].sndend -
+                                           (u32)bnk->bsnd[playing_index].sndwritepos;
                                     if (tail < out_bytes) {
                                         if (tail != 0) {
-                                            memcpy(write, out, tail);
+                                            memcpy(bnk->bsnd[playing_index].sndwritepos, out, tail);
                                             out_bytes -= tail;
                                             out = (u8 PTR4*)out + tail;
                                         }
                                         memcpy(bnk->bsnd[playing_index].sndbuf, out, out_bytes);
-                                        write = bnk->bsnd[playing_index].sndbuf;
+                                        bnk->bsnd[playing_index].sndwritepos =
+                                            bnk->bsnd[playing_index].sndbuf + out_bytes;
                                     } else {
-                                        memcpy(write, out, out_bytes);
+                                        memcpy(bnk->bsnd[playing_index].sndwritepos, out, out_bytes);
+                                        bnk->bsnd[playing_index].sndwritepos += out_bytes;
                                     }
-                                    bnk->bsnd[playing_index].sndwritepos = write + out_bytes;
                                 }
                             } while (in_bytes != 0);
                         }
