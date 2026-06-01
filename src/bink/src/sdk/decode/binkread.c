@@ -1924,18 +1924,13 @@ u32 BinkGetKeyFrame(HBINK bnk, u32 frame, s32 flags)
     case BINKGETKEYPREVIOUS:
         prev = frame - 2;
         if (prev > 0) {
-            const u32 PTR4* ptr;
-
-            ptr = bnk->frameoffsets;
-            if (BINK_FRAME_KEY(ptr[prev]) == 0) {
-                ptr += prev;
+            if (BINK_FRAME_KEY(bnk->frameoffsets[prev]) == 0) {
                 do {
                     --prev;
                     if (prev <= 0) {
                         break;
                     }
-                    --ptr;
-                } while (BINK_FRAME_KEY(*ptr) == 0);
+                } while (BINK_FRAME_KEY(bnk->frameoffsets[prev]) == 0);
             }
         }
 found_previous:
