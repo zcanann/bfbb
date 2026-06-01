@@ -378,6 +378,43 @@ static inline u32 exp_read_huff4(EXPBITS PTR4* bits, u32 bits_to_peek,
     return value;
 }
 
+static inline void exp_read_huff4_store(EXPBITS PTR4* bits, u32 bits_to_peek,
+                                        const u8 PTR4* decode, u8 PTR4* values,
+                                        u8 PTR4* dest)
+{
+    u32 bitcount;
+    EXPBITSTYPE bitbuf;
+    EXPBITSTYPE word;
+    u32 mask;
+    u8 code;
+    u32 used;
+
+    bitcount = bits->bitlen;
+    mask = GetBitsLen(bits_to_peek);
+    if (bitcount >= bits_to_peek) {
+        bitbuf = bits->bits & mask;
+        code = decode[bitbuf];
+        used = HUFF4_CODE_USED(code);
+        *dest = (u8)HUFF4_CODE_VALUE(code, values);
+        bits->bits >>= used;
+        bits->bitlen = bitcount - used;
+    } else {
+        word = *bits->cur;
+        bitbuf = (bits->bits | (word << bitcount)) & mask;
+        code = decode[bitbuf];
+        used = HUFF4_CODE_USED(code);
+        *dest = (u8)HUFF4_CODE_VALUE(code, values);
+        if (bitcount >= used) {
+            bits->bits >>= used;
+            bits->bitlen = bitcount - used;
+        } else {
+            bits->bits = word >> (used - bitcount);
+            bits->bitlen = bitcount + EXP_BITS_PER_WORD - used;
+            bits->cur++;
+        }
+    }
+}
+
 static inline u32 exp_read_huff4_mask(EXPBITS PTR4* bits, u32 bits_to_peek,
                                       const u8 PTR4* decode, u8 PTR4* values,
                                       u32 mask)
@@ -751,7 +788,6 @@ static void CheckReadHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     u8 PTR4* values;
     const u8 PTR4* decode;
     u32 peek;
-    u32 value;
     u32 fill;
 
     if (bundle->cur_ptr != bundle->cur_dec) {
@@ -770,8 +806,8 @@ static void CheckReadHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
             peek = bundle->bits_to_peek;
             while (count != 0) {
                 count--;
-                value = exp_read_huff4(bits, peek, decode, values);
-                *dest++ = (u8)value;
+                exp_read_huff4_store(bits, peek, decode, values, dest);
+                ++dest;
             }
         } else {
             fill = exp_get_bits(bits, HUFF4_USED_SHIFT);
