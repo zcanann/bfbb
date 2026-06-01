@@ -1019,7 +1019,6 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
     BINKHDR hdr;
     BINKIOOPEN open;
     u32 scale_flags;
-    u32 bundle_sizes[BINK_BUNDLE_COUNT];
     u32 all_key;
     u32 sound_bytes;
     u32 simulate;
@@ -1152,16 +1151,16 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
     pushmalloc((void PTR4* PTR4*)&bnk.trackindexes,
                BINK_ARRAY_BYTES(TotTracks, bnk.trackindexes));
 
-    ExpandBundleSizes(bundle_sizes, bnk.YWidth);
-    pushmalloc(&bnk.bunp.typeptr, bundle_sizes[BINK_BUNDLE_BLOCK_TYPES]);
-    pushmalloc(&bnk.bunp.type16ptr, bundle_sizes[BINK_BUNDLE_SUBBLOCK_TYPES]);
-    pushmalloc(&bnk.bunp.colorptr, bundle_sizes[BINK_BUNDLE_COLORS]);
-    pushmalloc(&bnk.bunp.bits2ptr, bundle_sizes[BINK_BUNDLE_PATTERNS]);
-    pushmalloc(&bnk.bunp.motionXptr, bundle_sizes[BINK_BUNDLE_X_OFFSETS]);
-    pushmalloc(&bnk.bunp.motionYptr, bundle_sizes[BINK_BUNDLE_Y_OFFSETS]);
-    pushmalloc(&bnk.bunp.dctptr, bundle_sizes[BINK_BUNDLE_INTRA_DC]);
-    pushmalloc(&bnk.bunp.mdctptr, bundle_sizes[BINK_BUNDLE_INTER_DC]);
-    pushmalloc(&bnk.bunp.patptr, bundle_sizes[BINK_BUNDLE_RUNS]);
+    ExpandBundleSizes((u32 PTR4*)&bnk.bunp, bnk.YWidth);
+    pushmalloc(&bnk.bunp.typeptr, (u32)bnk.bunp.typeptr);
+    pushmalloc(&bnk.bunp.type16ptr, (u32)bnk.bunp.type16ptr);
+    pushmalloc(&bnk.bunp.colorptr, (u32)bnk.bunp.colorptr);
+    pushmalloc(&bnk.bunp.bits2ptr, (u32)bnk.bunp.bits2ptr);
+    pushmalloc(&bnk.bunp.motionXptr, (u32)bnk.bunp.motionXptr);
+    pushmalloc(&bnk.bunp.motionYptr, (u32)bnk.bunp.motionYptr);
+    pushmalloc(&bnk.bunp.dctptr, (u32)bnk.bunp.dctptr);
+    pushmalloc(&bnk.bunp.mdctptr, (u32)bnk.bunp.mdctptr);
+    pushmalloc(&bnk.bunp.patptr, (u32)bnk.bunp.patptr);
 
     if ((flags & BINKFROMMEMORY) == 0) {
         pushmalloc((void PTR4* PTR4*)&bnk.frameoffsets,
