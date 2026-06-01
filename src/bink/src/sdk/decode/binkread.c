@@ -1089,13 +1089,19 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
             scale_flags = hdr.Flags & BINKCOPYNOSCALING;
         }
         bnk.OpenFlags |= scale_flags;
-        if (scale_flags == BINKCOPY2XW) {
+        switch (scale_flags) {
+        case BINKCOPY2XW:
             bnk.Width = hdr.Width * BINK_COPY_SCALE;
-        } else if (scale_flags == BINKCOPY2XH || scale_flags == BINKCOPY2XHI) {
+            break;
+        case BINKCOPY2XH:
+        case BINKCOPY2XHI:
             bnk.Height = hdr.Height * BINK_COPY_SCALE;
-        } else if (scale_flags == BINKCOPY2XWH || scale_flags == BINKCOPY2XWHI) {
+            break;
+        case BINKCOPY2XWH:
+        case BINKCOPY2XWHI:
             bnk.Width = hdr.Width * BINK_COPY_SCALE;
             bnk.Height = hdr.Height * BINK_COPY_SCALE;
+            break;
         }
     }
 
