@@ -50,7 +50,7 @@ typedef enum BINKFrameOffsetFlags
 #define BINK_SOUND_CALLBACK(bink) (&(bink)->snd_callback_buffer.callback)
 #define BINK_HEADER_TRACK_SIZES(header) ((u32 PTR4*)((BINKHDR PTR4*)(header) + 1))
 #define BINK_NEXT_TRACK_FRAME(frame) \
-    ((BINKTRACKFRAME PTR4*)((u8 PTR4*)(frame) + sizeof((frame)->size) + (frame)->size))
+    ((BINKTRACKFRAME PTR4*)((u8 PTR4*)(frame) + (frame)->size + sizeof((frame)->size)))
 typedef enum BINKGlobalLayout
 {
     BINK_SOUND_CALLBACK_PRIORITY = 20,
