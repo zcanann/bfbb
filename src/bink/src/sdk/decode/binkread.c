@@ -2289,10 +2289,7 @@ s32 BinkPause(HBINK bnk, s32 pause)
     bnk->Paused = pause;
     if (i < bnk->playingtracks) {
         do {
-            BINKSND PTR4* snd;
-
-            snd = &bnk->bsnd[i];
-            snd->Pause(snd, pause);
+            bnk->bsnd[i].Pause(&bnk->bsnd[i], pause);
             ++i;
         } while (i < bnk->playingtracks);
     }
