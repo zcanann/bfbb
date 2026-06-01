@@ -1650,11 +1650,13 @@ s32 BinkDoFrame(HBINK bnk)
             if (track < (s32)bnk->NumTracks) {
                 do {
                     s32 playing_index;
+                    s32 playing_tracks;
                     BINKTRACKFRAME PTR4* next_frame_data;
                     u32 compressed_size;
 
                     playing_index = 0;
-                    if (playing_index < (s32)bnk->playingtracks) {
+                    playing_tracks = bnk->playingtracks;
+                    if (playing_index < playing_tracks) {
                         s32 PTR4* indexes;
 
                         indexes = bnk->trackindexes;
@@ -1663,9 +1665,9 @@ s32 BinkDoFrame(HBINK bnk)
                                 break;
                             }
                             ++playing_index;
-                        } while (playing_index < (s32)bnk->playingtracks);
+                        } while (playing_index < playing_tracks);
                     }
-                    if (playing_index >= (s32)bnk->playingtracks) {
+                    if (playing_index >= playing_tracks) {
                         playing_index = BINK_TRACK_NOT_FOUND;
                     }
 
