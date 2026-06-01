@@ -1185,7 +1185,12 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
         out->rtidlereadtimes[BINK_RUNTIME_CURRENT_SLOT] = 0;
         out->rtthreadreadtimes[BINK_RUNTIME_CURRENT_SLOT] = 0;
 
-        if ((flags & BINKFROMMEMORY) == 0) {
+        if ((flags & BINKFROMMEMORY) != 0) {
+            out->tracksizes = BINK_HEADER_TRACK_SIZES(name);
+            out->tracktypes = out->tracksizes + out->NumTracks;
+            out->trackIDs = out->tracktypes + out->NumTracks;
+            out->frameoffsets = out->trackIDs + out->NumTracks;
+        } else {
             out->bio.ReadHeader(&out->bio, -1, out->tracksizes,
                                 BINK_ARRAY_BYTES(out->NumTracks, out->tracksizes));
             out->bio.ReadHeader(&out->bio, -1, out->tracktypes,
@@ -1194,11 +1199,6 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
                                 BINK_ARRAY_BYTES(out->NumTracks, out->trackIDs));
             out->bio.ReadHeader(&out->bio, -1, out->frameoffsets,
                                 BINK_FRAME_OFFSETS_BYTES(out->InternalFrames, out->frameoffsets));
-        } else {
-            out->tracksizes = BINK_HEADER_TRACK_SIZES(name);
-            out->tracktypes = out->tracksizes + out->NumTracks;
-            out->trackIDs = out->tracktypes + out->NumTracks;
-            out->frameoffsets = out->trackIDs + out->NumTracks;
         }
 
         out->Highest1SecRate =
