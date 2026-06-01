@@ -1858,13 +1858,9 @@ void BinkNextFrame(HBINK bnk)
         }
 
         if (skipped != 0) {
-            RADCB_CALLBACK PTR4* sound_callback;
-            RADCB_CALLBACK PTR4* io_callback;
-
-            sound_callback = BINK_SOUND_CALLBACK(bnk);
-            io_callback = BINK_IO_CALLBACK(&bnk->bio);
             bnk->soundskips++;
-            RADCB_suspend_2_callbacks(cb_bink_sound, sound_callback, cb_bink_IO, io_callback);
+            RADCB_suspend_2_callbacks(cb_bink_sound, BINK_SOUND_CALLBACK(bnk), cb_bink_IO,
+                                      BINK_IO_CALLBACK(&bnk->bio));
             BinkSetSoundOnOff(bnk, BINK_SOUND_OFF);
 
             while (BINK_IO_BUFFER_USED_PERCENT(bnk) <= BINK_IO_BUFFER_RESUME_PERCENT) {
@@ -1876,8 +1872,8 @@ void BinkNextFrame(HBINK bnk)
             bnk->startsynctime = 0;
             bnk->big_sound_skip_adj = 0;
             BinkSetSoundOnOff(bnk, BINK_SOUND_ON);
-            RADCB_resume_callback(cb_bink_sound, sound_callback);
-            RADCB_resume_callback(cb_bink_IO, io_callback);
+            RADCB_resume_callback(cb_bink_sound, BINK_SOUND_CALLBACK(bnk));
+            RADCB_resume_callback(cb_bink_IO, BINK_IO_CALLBACK(&bnk->bio));
         }
 
         bnk->bio.Working = 1;
