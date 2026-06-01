@@ -248,7 +248,7 @@ static inline u32 read_bit(VARBITS PTR4* vb)
 }
 
 static void read_rle_samples(f32 PTR4* samples, u32 transform_size, VARBITS PTR4* vb,
-                             const f32 PTR4* thresholds, const u32 PTR4* bands)
+                             const f32 PTR4* threshold, const u32 PTR4* bands)
 {
     u32 i;
     u32 band = 0;
@@ -256,7 +256,7 @@ static void read_rle_samples(f32 PTR4* samples, u32 transform_size, VARBITS PTR4
     f32 PTR4* out;
 
     while (BINKAC_BAND_SAMPLE_LIMIT(bands, band) < BINKAC_FIRST_COEFF) {
-        scale = thresholds[band];
+        scale = threshold[band];
         ++band;
     }
 
@@ -286,13 +286,13 @@ static void read_rle_samples(f32 PTR4* samples, u32 transform_size, VARBITS PTR4
             i = end;
 
             while (i > BINKAC_BAND_SAMPLE_LIMIT(bands, band)) {
-                scale = thresholds[band];
+                scale = threshold[band];
                 ++band;
             }
         } else {
             while (i < end) {
                 if (i == BINKAC_BAND_SAMPLE_LIMIT(bands, band)) {
-                    scale = thresholds[band];
+                    scale = threshold[band];
                     ++band;
                 }
 
@@ -329,7 +329,7 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
                    u32 num_bands, const u32 PTR4* bands,
                    f32 transform_size_root)
 {
-    f32 thresholds[BINKAC_THRESHOLD_COUNT];
+    f32 threshold[BINKAC_THRESHOLD_COUNT];
     VARBITS vb;
     f32 decoded[MAX_TRANSFORM];
     u32 ch;
@@ -360,10 +360,10 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
 
         for (i = 0; i < num_bands; ++i) {
             VarBitsGet(q, s32, vb, BINKAC_THRESHOLD_BITS);
-            thresholds[i] = Undecibel((f32)q * BINKAC_THRESHOLD_QUANT_SCALE);
+            threshold[i] = Undecibel((f32)q * BINKAC_THRESHOLD_QUANT_SCALE);
         }
 
-        read_rle_samples(channel, transform_size, &vb, thresholds, bands);
+        read_rle_samples(channel, transform_size, &vb, threshold, bands);
         if (flags & BINKACNEWFORMAT) {
             ddct(transform_size, BINKAC_DCT_INVERSE, channel, fft_work, fft_coeffs);
         } else {
