@@ -1089,18 +1089,19 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
             scale_flags = hdr.Flags & BINKCOPYNOSCALING;
         }
         bnk.OpenFlags |= scale_flags;
+        scale_flags = bnk.OpenFlags & BINKCOPYNOSCALING;
         switch (scale_flags) {
         case BINKCOPY2XW:
-            bnk.Width = hdr.Width * BINK_COPY_SCALE;
+            bnk.Width *= BINK_COPY_SCALE;
             break;
         case BINKCOPY2XH:
         case BINKCOPY2XHI:
-            bnk.Height = hdr.Height * BINK_COPY_SCALE;
+            bnk.Height *= BINK_COPY_SCALE;
             break;
         case BINKCOPY2XWH:
         case BINKCOPY2XWHI:
-            bnk.Width = hdr.Width * BINK_COPY_SCALE;
-            bnk.Height = hdr.Height * BINK_COPY_SCALE;
+            bnk.Width *= BINK_COPY_SCALE;
+            bnk.Height *= BINK_COPY_SCALE;
             break;
         }
     }
