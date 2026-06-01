@@ -1690,15 +1690,15 @@ s32 BinkDoFrame(HBINK bnk)
 
                         if (in_bytes != 0) {
                             do {
-                                BINKSND PTR4* snd;
                                 void PTR4* out;
                                 u32 out_bytes;
                                 u32 free_bytes;
 
-                                snd = &bnk->bsnd[playing_index];
-                                free_bytes = snd->sndbufsize - snd->sndamt;
-                                BinkAudioDecompress((HBINKAUDIODECOMP)snd->sndcomp, &out,
-                                                    &out_bytes, in, &in);
+                                free_bytes = bnk->bsnd[playing_index].sndbufsize -
+                                             bnk->bsnd[playing_index].sndamt;
+                                BinkAudioDecompress(
+                                    (HBINKAUDIODECOMP)bnk->bsnd[playing_index].sndcomp, &out,
+                                    &out_bytes, in, &in);
                                 if (in_bytes < out_bytes) {
                                     out_bytes = in_bytes;
                                 }
@@ -1708,32 +1708,34 @@ s32 BinkDoFrame(HBINK bnk)
                                     u32 over;
 
                                     over = out_bytes - free_bytes;
-                                    snd->sndreadpos += over;
-                                    snd->sndamt -= over;
-                                    if (snd->sndend < snd->sndreadpos) {
-                                        snd->sndreadpos -= snd->sndbufsize;
+                                    bnk->bsnd[playing_index].sndreadpos += over;
+                                    bnk->bsnd[playing_index].sndamt -= over;
+                                    if (bnk->bsnd[playing_index].sndend <
+                                        bnk->bsnd[playing_index].sndreadpos) {
+                                        bnk->bsnd[playing_index].sndreadpos -=
+                                            bnk->bsnd[playing_index].sndbufsize;
                                     }
                                 }
 
-                                snd->sndamt += out_bytes;
+                                bnk->bsnd[playing_index].sndamt += out_bytes;
                                 {
                                     u8 PTR4* write;
                                     u32 tail;
 
-                                    write = snd->sndwritepos;
-                                    tail = (u32)snd->sndend - (u32)write;
+                                    write = bnk->bsnd[playing_index].sndwritepos;
+                                    tail = (u32)bnk->bsnd[playing_index].sndend - (u32)write;
                                     if (tail < out_bytes) {
                                         if (tail != 0) {
                                             memcpy(write, out, tail);
                                             out_bytes -= tail;
                                             out = (u8 PTR4*)out + tail;
                                         }
-                                        memcpy(snd->sndbuf, out, out_bytes);
-                                        write = snd->sndbuf;
+                                        memcpy(bnk->bsnd[playing_index].sndbuf, out, out_bytes);
+                                        write = bnk->bsnd[playing_index].sndbuf;
                                     } else {
                                         memcpy(write, out, out_bytes);
                                     }
-                                    snd->sndwritepos = write + out_bytes;
+                                    bnk->bsnd[playing_index].sndwritepos = write + out_bytes;
                                 }
                             } while (in_bytes != 0);
                         }
