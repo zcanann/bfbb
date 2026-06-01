@@ -1966,11 +1966,9 @@ found_previous:
                     goto found_previous;
                 }
 
-                if (cur < bnk->Frames) {
-                    u32 value = bnk->frameoffsets[cur++];
-                    if (BINK_FRAME_KEY(value) != 0) {
-                        return cur;
-                    }
+                if (cur < bnk->Frames &&
+                    BINK_FRAME_KEY(bnk->frameoffsets[cur++]) != 0) {
+                    return cur;
                 }
             } else {
                 if (cur >= bnk->Frames) {
