@@ -1276,7 +1276,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
                     out->bio.ReadFrame(&out->bio, 0, BINK_FRAME_OFFSET(out->frameoffsets[0]),
                                        out->preloadptr, preload_size);
                     out->bio.Close(&out->bio);
-                    out->BackgroundThread = 0;
+                    out->bio.ForegroundTime = 0;
                 } else {
                     pushmalloc(&out->compframe, out->LargestFrameSize);
                     out->ioptr = bpopmalloc(out, out->iosize);
