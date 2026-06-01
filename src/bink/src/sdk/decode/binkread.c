@@ -1653,14 +1653,14 @@ s32 BinkDoFrame(HBINK bnk)
             s32 track;
 
             track = 0;
-            if (bnk->NumTracks > 0) {
+            if (track < (s32)bnk->NumTracks) {
                 do {
                     s32 playing_index;
                     BINKTRACKFRAME PTR4* next_frame_data;
                     u32 compressed_size;
 
                     playing_index = 0;
-                    if ((s32)bnk->playingtracks > 0) {
+                    if (playing_index < (s32)bnk->playingtracks) {
                         s32 PTR4* indexes;
 
                         indexes = bnk->trackindexes;
