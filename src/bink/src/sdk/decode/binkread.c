@@ -2455,7 +2455,7 @@ found_top:
         s32 bottom_blocks = 0;
         const u8 PTR4* scan = rect_mask + (height_blocks - 1) * pitch;
 
-        do {
+        while (bottom_blocks < height_blocks) {
             for (col = 0; col < width_blocks; ++col) {
                 if (scan[col] != 0) {
                     goto found_bottom;
@@ -2464,7 +2464,7 @@ found_top:
 
             ++bottom_blocks;
             scan -= pitch;
-        } while (bottom_blocks < height_blocks);
+        }
 
 found_bottom:
         height_blocks -= bottom_blocks;
