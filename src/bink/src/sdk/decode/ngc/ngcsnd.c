@@ -660,10 +660,10 @@ static s32 Unlock(BINKSND PTR4* snd, u32 filled)
 
             groups = (filled - (groups << NGC_STEREO16_GROUP_SHIFT)) >> NGC_STEREO16_TAIL_SHIFT;
             for (i = 0; i < groups; ++i) {
-                u32 value = *src32++;
+                u32 stereo_pair = *src32++;
 
-                *(u16 PTR4*)left32 = (u16)NGC_SAMPLE_HIGH_HALF(value);
-                *(u16 PTR4*)right32 = (u16)value;
+                *(u16 PTR4*)left32 = (u16)NGC_SAMPLE_HIGH_HALF(stereo_pair);
+                *(u16 PTR4*)right32 = (u16)stereo_pair;
                 left32 = NGC_ADVANCE_U32_BYTES(left32, 2);
                 right32 = NGC_ADVANCE_U32_BYTES(right32, 2);
             }
@@ -675,19 +675,19 @@ static s32 Unlock(BINKSND PTR4* snd, u32 filled)
             u32 groups = filled >> NGC_STEREO8_GROUP_SHIFT;
 
             for (i = 0; i < groups; ++i) {
-                u32 value = *src32++;
+                u32 packed_samples = *src32++;
 
-                *left16++ = (u16)NGC_SAMPLE_LEFT_8_PAIR(value);
-                *right16++ = (u16)NGC_SAMPLE_RIGHT_8_PAIR(value);
+                *left16++ = (u16)NGC_SAMPLE_LEFT_8_PAIR(packed_samples);
+                *right16++ = (u16)NGC_SAMPLE_RIGHT_8_PAIR(packed_samples);
             }
 
             groups = (filled - (groups << NGC_STEREO8_GROUP_SHIFT)) >> NGC_STEREO8_TAIL_SHIFT;
             for (i = 0; i < groups; ++i) {
-                u16 value = *(u16 PTR4*)src32;
+                u16 stereo_pair = *(u16 PTR4*)src32;
 
                 src32 = NGC_ADVANCE_U32_BYTES(src32, 2);
-                *(u8 PTR4*)left16 = (u8)(value >> NGC_SAMPLE_BYTE_SHIFT);
-                *(u8 PTR4*)right16 = (u8)value;
+                *(u8 PTR4*)left16 = (u8)(stereo_pair >> NGC_SAMPLE_BYTE_SHIFT);
+                *(u8 PTR4*)right16 = (u8)stereo_pair;
                 left16 = NGC_ADVANCE_U16_BYTES(left16, 1);
                 right16 = NGC_ADVANCE_U16_BYTES(right16, 1);
             }
