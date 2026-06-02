@@ -248,7 +248,7 @@ void RADSetMemory(RADMEMALLOC malloc_fn, RADMEMFREE free_fn) {
 void PTR4* radmalloc(u32 size)
 {
     u32 request;
-    void PTR4* rawBlock;
+    void PTR4* raw_block;
     RADAllocOwner owner;
     u32 raw_addr;
     u32 align_offset;
@@ -258,23 +258,23 @@ void PTR4* radmalloc(u32 size)
         return 0;
     /* Reserve room for the prefix and enough slack to return a 32-byte aligned pointer. */
     request   = size + RAD_ALLOC_HEADER_SIZE;
-    if (usermalloc != 0 && (rawBlock = usermalloc(request))) {
-        if (rawBlock != 0 && rawBlock != RAD_INVALID_USER_ALLOC) {
+    if (usermalloc != 0 && (raw_block = usermalloc(request))) {
+        if (raw_block != 0 && raw_block != RAD_INVALID_USER_ALLOC) {
             owner = RAD_ALLOC_USER_OWNED;
         } else {
             return 0;
         }
     } else {
-        rawBlock = OSAllocFromHeap(__OSCurrHeap, request);
-        if (rawBlock == 0) {
+        raw_block = OSAllocFromHeap(__OSCurrHeap, request);
+        if (raw_block == 0) {
             return 0;
         }
         owner = RAD_ALLOC_SYSTEM_OWNED;
     }
-    raw_addr = (u32)rawBlock;
+    raw_addr = (u32)raw_block;
     align_offset =
         (u32)(RAD_ALLOC_HEADER_SIZE - (raw_addr & RAD_ALLOC_ALIGNMENT_MASK)) & RAD_ALLOC_OFFSET_MASK;
-    aligned = (u8 PTR4*)rawBlock + align_offset;
+    aligned = (u8 PTR4*)raw_block + align_offset;
     RAD_ALLOC_PREFIX(aligned)->offset = (u8)align_offset;
     RAD_ALLOC_PREFIX(aligned)->owner = (u8)owner;
     if (owner == RAD_ALLOC_USER_OWNED)
