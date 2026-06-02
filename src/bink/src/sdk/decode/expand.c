@@ -592,12 +592,12 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
     }
 }
 
-static void StartReadHuff4Bundle(READBUNDLE PTR4* rb, EXPBITS PTR4* bits)
+static void StartReadHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
 {
-    ReadHuffTable(bits, &rb->decode, &rb->bits_to_peek, rb->syms);
+    ReadHuffTable(bits, &bundle->decode, &bundle->bits_to_peek, bundle->syms);
 }
 
-static void StartReadHuff8Bundle(READBUNDLE PTR4* rb, EXPBITS PTR4* bits,
+static void StartReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
                                  HUFF8TABLE PTR4* huff8_table)
 {
     u32 PTR4* codes;
@@ -615,7 +615,7 @@ static void StartReadHuff8Bundle(READBUNDLE PTR4* rb, EXPBITS PTR4* bits,
         ++codes;
         ++huff_table;
     } while (cur <= end);
-    ReadHuffTable(bits, &rb->decode, &rb->bits_to_peek, rb->syms);
+    ReadHuffTable(bits, &bundle->decode, &bundle->bits_to_peek, bundle->syms);
     huff8_table->lastval = 0;
 }
 
