@@ -22,7 +22,7 @@ typedef BINKAUDIODECOMP PTR4* HBINKAUDIODECOMP;
 struct BINKAUDIODECOMP
 {
     u32 transform_size;
-    f32 root; // output scale applied after the inverse transform
+    f32 transform_size_root; // output scale applied after the inverse transform
     u32 buffer_size;
     u32 window_size_in_bytes; // overlap/crossfade tail length in bytes
     u32 chans;
