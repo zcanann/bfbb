@@ -845,12 +845,12 @@ const u8 patterns[DCT_PATTERN_BYTES] RAD_ATTRIBUTE_ALIGN(32) = {
 
 static void fastidct8x8(u8 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4* q)
 {
-    s32 temp[DCT_BLOCK_COEFFS];
+    s32 workspace[DCT_BLOCK_COEFFS];
     s32 PTR4* out;
     u8 PTR4* d;
     s32 i;
 
-    out = temp;
+    out = workspace;
     /* First pass dequantizes columns into a transposed workspace. */
     for (i = DCT_BLOCK_WIDTH; i != 0; --i) {
         if (DCT_AC_MASK(in) == 0) {
@@ -908,7 +908,7 @@ static void fastidct8x8(u8 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4* 
         ++out;
     }
 
-    out = temp;
+    out = workspace;
     d = dest;
     /* Second pass writes reconstructed rows to the output block. */
     for (i = DCT_BLOCK_WIDTH; i != 0; --i) {
@@ -954,13 +954,13 @@ static void fastidct8x8(u8 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4* 
 
 static void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4* q)
 {
-    s32 temp[DCT_BLOCK_COEFFS];
+    s32 workspace[DCT_BLOCK_COEFFS];
     s32 PTR4* out;
     u32 PTR4* d0;
     s32 doublepitch;
     s32 i;
 
-    out = temp;
+    out = workspace;
     /* First pass dequantizes columns into a transposed workspace. */
     for (i = DCT_BLOCK_WIDTH; i != 0; --i) {
         if (DCT_AC_MASK(in) == 0) {
@@ -1017,7 +1017,7 @@ static void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4
         ++out;
     }
 
-    out = temp;
+    out = workspace;
     d0 = dest;
     doublepitch = pitch + pitch;
     /* The doubled variant expands each row into two adjacent output rows. */
@@ -1080,12 +1080,12 @@ void FastIDCT8x8d(u8 PTR4* dest, s32 pitch, s16 PTR4* data, u32 quant)
 
 void FastmIDCT8x8WithMotion(u8 PTR4* dest, s32 pitch, s16 PTR4* in, u32 quant, u8 PTR4* motion)
 {
-    s32 temp[DCT_BLOCK_COEFFS];
+    s32 workspace[DCT_BLOCK_COEFFS];
     s32 PTR4* out;
     const s32 PTR4* q;
     s32 i;
 
-    out = temp;
+    out = workspace;
     q = ifimquantlevels8[quant];
     /* First pass dequantizes motion-compensated columns into a workspace. */
     for (i = DCT_BLOCK_WIDTH; i != 0; --i) {
@@ -1143,7 +1143,7 @@ void FastmIDCT8x8WithMotion(u8 PTR4* dest, s32 pitch, s16 PTR4* in, u32 quant, u
         ++out;
     }
 
-    out = temp;
+    out = workspace;
     /* Final pass adds the residual IDCT result to the prediction block. */
     for (i = DCT_BLOCK_WIDTH; i != 0; --i) {
         s32 row1 = out[DCT_COL1];
