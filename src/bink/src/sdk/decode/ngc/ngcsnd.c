@@ -27,6 +27,7 @@ typedef enum NGCSoundTaskFlag
 } NGCSoundTaskFlag;
 
 #define NGC_TASK_OWNER(task) ((NGCSoundState PTR4*)((task)->owner & NGC_TASK_OWNER_MASK))
+#define NGC_TASK_OWNER_BUSY(owner) (((owner) & NGC_TASK_BUSY_FLAG) != 0)
 #define NGC_TASK_BUSY(task) (((task)->owner & NGC_TASK_BUSY_FLAG) != 0)
 #define NGC_TASK_MARK_BUSY(task) ((task)->owner |= NGC_TASK_BUSY_FLAG)
 #define NGC_TASK_CLEAR_BUSY(task) ((task)->owner &= NGC_TASK_OWNER_MASK)
@@ -859,7 +860,7 @@ check_tasks:
                 u32 owner = task->owner;
 
                 ++task;
-                if ((owner & NGC_TASK_BUSY_FLAG) == 0) {
+                if (!NGC_TASK_OWNER_BUSY(owner)) {
                     break;
                 }
                 ++lock_index;
