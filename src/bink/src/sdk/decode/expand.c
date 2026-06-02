@@ -475,6 +475,7 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
     u32 last_explicit;
     u32 count;
     u32 unused_symbols;
+    u32 explicit_symbols;
     u32 symbol;
     u32 j;
     u32 i;
@@ -491,14 +492,17 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
         return;
     }
 
-    if (exp_get_bit(vb) == 0) {
+    explicit_symbols = exp_get_bit(vb);
+    if (explicit_symbols == 0) {
         /* Compact symbol shuffling: merge adjacent pair, quarter, and half lists. */
         VarBitsGet(sort_mode, u32, *vb, HUFF4_SUBTYPE_BITS);
         if (sort_mode == HUFF4_SORT_PAIRS) {
             i = 0;
             count = HUFF4_PAIR_COUNT;
             do {
-                if (exp_get_bit(vb) != 0) {
+                u32 swap_pair = exp_get_bit(vb);
+
+                if (swap_pair != 0) {
                     values[i + 1] = i;
                     values[i] = i + 1;
                 } else {
@@ -515,7 +519,9 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
             left = 0;
             right = 1;
             for (i = 0; i < HUFF4_PAIR_COUNT; ++i) {
-                if (exp_get_bit(vb) != 0) {
+                u32 swap_pair = exp_get_bit(vb);
+
+                if (swap_pair != 0) {
                     merges.order[left] = right;
                     merges.order[right] = left;
                 } else {
