@@ -521,11 +521,14 @@ void BinkAudioDecompress(HBINKAUDIODECOMP ba, void PTR4* PTR4* outptr, u32 PTR4*
     if (ba->start_frame != 0) {
         ba->start_frame = 0;
     } else {
-        u32 i;
-        u32 count = BINKAC_WINDOW_SAMPLES(ba->window_size_in_bytes);
+        u32 sample_index;
+        u32 window_samples = BINKAC_WINDOW_SAMPLES(ba->window_size_in_bytes);
 
-        for (i = 0; i < count; ++i) {
-            ba->samples[i] = (ba->samples[i] * i + ba->overlap[i] * (count - i)) / count;
+        for (sample_index = 0; sample_index < window_samples; ++sample_index) {
+            ba->samples[sample_index] =
+                (ba->samples[sample_index] * sample_index +
+                 ba->overlap[sample_index] * (window_samples - sample_index)) /
+                window_samples;
         }
     }
 
