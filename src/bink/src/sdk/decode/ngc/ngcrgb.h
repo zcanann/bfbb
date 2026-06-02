@@ -9,7 +9,8 @@ typedef enum RGBTableLayout
     RGB_LUMA_TABLE_SIZE = 0x104,
     RGB_CLAMP_TABLE_SIZE = 0x304,
     RGB_MONO_TABLE_SIZE = 0x100,
-    YUV_TABLE_SIZE = 0x400
+    YUV_TABLE_CHANNEL_SIZE = 0x100,
+    YUV_TABLE_SIZE = YUV_TABLE_CHANNEL_SIZE * 4
 } RGBTableLayout;
 
 #define NGC_TABLE_ALIGNMENT 32
@@ -51,6 +52,14 @@ typedef struct RGBContext
     u8 PTR4* base;
 } RGBContext;
 
+typedef struct RGBYUVTables
+{
+    s32 u_to_b[YUV_TABLE_CHANNEL_SIZE];
+    s32 v_to_gb[YUV_TABLE_CHANNEL_SIZE];
+    s32 u_to_gb[YUV_TABLE_CHANNEL_SIZE];
+    s32 v_to_r[YUV_TABLE_CHANNEL_SIZE];
+} RGBYUVTables;
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -73,7 +82,7 @@ extern u32 mono16[RGB_MONO_TABLE_SIZE];
 extern u32 mono16x2[RGB_MONO_TABLE_SIZE];
 extern u32 mono32[RGB_MONO_TABLE_SIZE];
 extern RGBContext S;
-extern s32 YUVTables[YUV_TABLE_SIZE];
+extern RGBYUVTables YUVTables;
 extern u32 RGBshift[RGB_SHIFT_TABLE_SIZE];
 
 #ifdef __cplusplus
