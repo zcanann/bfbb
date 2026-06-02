@@ -20,9 +20,9 @@ typedef enum BINKACBandLayout
 {
     TOTBANDS = 25,
     BINKAC_BAND_SENTINEL_COUNT = 1,
-    BINKAC_THRESHOLD_COUNT = TOTBANDS + BINKAC_BAND_SENTINEL_COUNT,
+    BINKAC_QUANT_COUNT = TOTBANDS + BINKAC_BAND_SENTINEL_COUNT,
     BINKAC_BAND_LIMIT_SCALE = 2,
-    BINKAC_THRESHOLD_BITS = 8
+    BINKAC_QUANT_BITS = 8
 } BINKACBandLayout;
 
 typedef enum BINKACRLELayout
@@ -65,7 +65,7 @@ typedef enum BINKACSampleLayout
 #define BINKAC_BIT_MASK 1
 #define BINKAC_UNDECIBEL_BASE 10.0
 #define BINKAC_UNDECIBEL_DB_SCALE 0.10f
-#define BINKAC_THRESHOLD_QUANT_SCALE 0.664f
+#define BINKAC_QUANT_DB_SCALE 0.664f
 #define BINKAC_BAND_LIMIT_COUNT(num_bands) ((num_bands) + BINKAC_BAND_SENTINEL_COUNT)
 typedef enum BINKACSampleCountState
 {
@@ -246,15 +246,15 @@ static inline u32 read_bit(BINKVARBITS PTR4* vb)
 }
 
 static void read_rle_samples(f32 PTR4* samples, u32 transform_size, BINKVARBITS PTR4* vb,
-                             const f32 PTR4* thresholds, const u32 PTR4* bands)
+                             const f32 PTR4* quant, const u32 PTR4* bands)
 {
     u32 sample_index;
     u32 band = 0;
-    f32 scale = 0.0f;
+    f32 dequant = 0.0f;
     f32 PTR4* out;
 
     while (BINKAC_BAND_SAMPLE_LIMIT(bands, band) < BINKAC_FIRST_COEFF) {
-        scale = thresholds[band];
+        dequant = quant[band];
         ++band;
     }
 
@@ -290,13 +290,13 @@ static void read_rle_samples(f32 PTR4* samples, u32 transform_size, BINKVARBITS 
             sample_index = packet_end;
 
             while (sample_index > BINKAC_BAND_SAMPLE_LIMIT(bands, band)) {
-                scale = thresholds[band];
+                dequant = quant[band];
                 ++band;
             }
         } else {
             while (sample_index < packet_end) {
                 if (sample_index == BINKAC_BAND_SAMPLE_LIMIT(bands, band)) {
-                    scale = thresholds[band];
+                    dequant = quant[band];
                     ++band;
                 }
 
@@ -308,7 +308,7 @@ static void read_rle_samples(f32 PTR4* samples, u32 transform_size, BINKVARBITS 
                         u32 sign_bit = read_bit(vb);
                         s32 sign = -(s32)sign_bit;
                         magnitude = (magnitude ^ sign) - sign;
-                        *out = magnitude * scale;
+                        *out = magnitude * dequant;
                     } else {
                         *out = 0.0f;
                     }
@@ -333,7 +333,7 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
                    u32 num_bands, const u32 PTR4* bands,
                    f32 transform_size_root)
 {
-    f32 threshold[BINKAC_THRESHOLD_COUNT];
+    f32 quant[BINKAC_QUANT_COUNT];
     BINKVARBITS vb;
     f32 decoded[MAX_TRANSFORM];
     u32 ch;
@@ -361,11 +361,11 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
         channel[BINKAC_DC_COEFF_1] = fxptof(i);
 
         for (i = 0; i < num_bands; ++i) {
-            VarBitsGet(q, u32, vb, BINKAC_THRESHOLD_BITS);
-            threshold[i] = Undecibel((f32)(s32)q * BINKAC_THRESHOLD_QUANT_SCALE);
+            VarBitsGet(q, u32, vb, BINKAC_QUANT_BITS);
+            quant[i] = Undecibel((f32)(s32)q * BINKAC_QUANT_DB_SCALE);
         }
 
-        read_rle_samples(channel, transform_size, &vb, threshold, bands);
+        read_rle_samples(channel, transform_size, &vb, quant, bands);
         if (flags & BINKACNEWFORMAT) {
             ddct(transform_size, BINKAC_DCT_INVERSE, channel, fft_work, fft_coeffs);
         } else {
