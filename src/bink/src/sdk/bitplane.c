@@ -1110,7 +1110,7 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     u8 groups[BP_TREE_GROUPS];
     u8 ordered[BP_BLOCK_COEFFS];
     u8 absvals[BP_BLOCK_COEFFS];
-    u8 temp[BP_BLOCK_COEFFS];
+    u8 active_absvals[BP_BLOCK_COEFFS];
     u8 hi_groups[BP_TREE_HIGH_GROUPS];
 
     /* Lossy bitplanes scan all 64 byte coefficients, including DC. */
@@ -1255,7 +1255,7 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
         /* Coefficients introduced on earlier planes emit one residual bit here. */
         if (0 < i) {
             do {
-                PUT_BP_BIT(bits, (temp[count] & mask) != 0);
+                PUT_BP_BIT(bits, (active_absvals[count] & mask) != 0);
                 count++;
             } while (count < i);
         }
@@ -1289,7 +1289,7 @@ handle_lossy_children:
                         lenbits = node_entry >> BP_TREE_INDEX_SHIFT;
                         PUT_BP_BIT(bits, lens[lenbits] != maxbits);
                         if (lens[lenbits] == maxbits) {
-                            temp[i] = absvals[lenbits];
+                            active_absvals[i] = absvals[lenbits];
                             i++;
                             PUT_BP_BIT(bits, (ordered[lenbits] & BP_SIGN_BIT) != 0);
                         } else {
@@ -1300,7 +1300,7 @@ handle_lossy_children:
                         PUT_BP_BIT(bits, lens[lenbits + BP_TREE_CHILD1_INDEX] != maxbits);
                         entry = lens[lenbits + BP_TREE_CHILD1_INDEX];
                         if (entry == maxbits) {
-                            temp[i] = absvals[lenbits + BP_TREE_CHILD1_INDEX];
+                            active_absvals[i] = absvals[lenbits + BP_TREE_CHILD1_INDEX];
                             i++;
                             PUT_BP_BIT(bits, (ordered[lenbits + BP_TREE_CHILD1_INDEX] & BP_SIGN_BIT) != 0);
                         } else {
@@ -1311,7 +1311,7 @@ handle_lossy_children:
                         PUT_BP_BIT(bits, lens[lenbits + BP_TREE_CHILD2_INDEX] != maxbits);
                         entry = lens[lenbits + BP_TREE_CHILD2_INDEX];
                         if (entry == maxbits) {
-                            temp[i] = absvals[lenbits + BP_TREE_CHILD2_INDEX];
+                            active_absvals[i] = absvals[lenbits + BP_TREE_CHILD2_INDEX];
                             i++;
                             PUT_BP_BIT(bits, (ordered[lenbits + BP_TREE_CHILD2_INDEX] & BP_SIGN_BIT) != 0);
                         } else {
@@ -1322,7 +1322,7 @@ handle_lossy_children:
                         PUT_BP_BIT(bits, lens[lenbits + BP_TREE_CHILD3_INDEX] != maxbits);
                         entry = lens[lenbits + BP_TREE_CHILD3_INDEX];
                         if (entry == maxbits) {
-                            temp[i] = absvals[lenbits + BP_TREE_CHILD3_INDEX];
+                            active_absvals[i] = absvals[lenbits + BP_TREE_CHILD3_INDEX];
                             i++;
                             PUT_BP_BIT(bits, (ordered[lenbits + BP_TREE_CHILD3_INDEX] & BP_SIGN_BIT) != 0);
                         } else {
@@ -1336,7 +1336,7 @@ handle_lossy_children:
                             goto handle_lossy_children;
                         }
                         if (lenbits == BP_TREE_COEFF_NODE) {
-                            temp[i] = absvals[node_entry >> BP_TREE_INDEX_SHIFT];
+                            active_absvals[i] = absvals[node_entry >> BP_TREE_INDEX_SHIFT];
                             i++;
                             PUT_BP_BIT(bits, (ordered[node_entry >> BP_TREE_INDEX_SHIFT] & BP_SIGN_BIT) != 0);
                             *cur = BP_TREE_EMPTY_ENTRY;
@@ -1734,80 +1734,80 @@ void ReadBPLossy(s16 PTR4* out, BPBITSTREAM PTR4* bits, s32 limit)
 void ReadBPLossyWithMotion(char PTR4* out, s32 pitch, BPBITSTREAM PTR4* bits, s32 limit,
                            char PTR4* prev)
 {
-    char temp[BP_BLOCK_COEFFS];
+    char residuals[BP_BLOCK_COEFFS];
     char PTR4* dst = out;
     char PTR4* src = prev;
 
-    readlossy(temp, bits, limit);
-    dst[0] = temp[0] + src[0];
-    dst[1] = temp[1] + src[1];
-    dst[2] = temp[4] + src[2];
-    dst[3] = temp[5] + src[3];
-    dst[4] = temp[8] + src[4];
-    dst[5] = temp[9] + src[5];
-    dst[6] = temp[12] + src[6];
-    dst[7] = temp[13] + src[7];
+    readlossy(residuals, bits, limit);
+    dst[0] = residuals[0] + src[0];
+    dst[1] = residuals[1] + src[1];
+    dst[2] = residuals[4] + src[2];
+    dst[3] = residuals[5] + src[3];
+    dst[4] = residuals[8] + src[4];
+    dst[5] = residuals[9] + src[5];
+    dst[6] = residuals[12] + src[6];
+    dst[7] = residuals[13] + src[7];
     dst += pitch;
-    dst[0] = temp[2] + src[8];
-    dst[1] = temp[3] + src[9];
-    dst[2] = temp[6] + src[10];
-    dst[3] = temp[7] + src[11];
-    dst[4] = temp[10] + src[12];
-    dst[5] = temp[11] + src[13];
-    dst[6] = temp[14] + src[14];
-    dst[7] = temp[15] + src[15];
+    dst[0] = residuals[2] + src[8];
+    dst[1] = residuals[3] + src[9];
+    dst[2] = residuals[6] + src[10];
+    dst[3] = residuals[7] + src[11];
+    dst[4] = residuals[10] + src[12];
+    dst[5] = residuals[11] + src[13];
+    dst[6] = residuals[14] + src[14];
+    dst[7] = residuals[15] + src[15];
     dst += pitch;
-    dst[0] = temp[24] + src[16];
-    dst[1] = temp[25] + src[17];
-    dst[2] = temp[44] + src[18];
-    dst[3] = temp[45] + src[19];
-    dst[4] = temp[16] + src[20];
-    dst[5] = temp[17] + src[21];
-    dst[6] = temp[20] + src[22];
-    dst[7] = temp[21] + src[23];
+    dst[0] = residuals[24] + src[16];
+    dst[1] = residuals[25] + src[17];
+    dst[2] = residuals[44] + src[18];
+    dst[3] = residuals[45] + src[19];
+    dst[4] = residuals[16] + src[20];
+    dst[5] = residuals[17] + src[21];
+    dst[6] = residuals[20] + src[22];
+    dst[7] = residuals[21] + src[23];
     dst = dst + pitch;
-    dst[0] = temp[26] + src[24];
-    dst[1] = temp[27] + src[25];
-    dst[2] = temp[46] + src[26];
-    dst[3] = temp[47] + src[27];
-    dst[4] = temp[18] + src[28];
-    dst[5] = temp[19] + src[29];
-    dst[6] = temp[22] + src[30];
-    dst[7] = temp[23] + src[31];
+    dst[0] = residuals[26] + src[24];
+    dst[1] = residuals[27] + src[25];
+    dst[2] = residuals[46] + src[26];
+    dst[3] = residuals[47] + src[27];
+    dst[4] = residuals[18] + src[28];
+    dst[5] = residuals[19] + src[29];
+    dst[6] = residuals[22] + src[30];
+    dst[7] = residuals[23] + src[31];
     dst = dst + pitch;
-    dst[0] = temp[28] + src[32];
-    dst[1] = temp[29] + src[33];
-    dst[2] = temp[32] + src[34];
-    dst[3] = temp[33] + src[35];
-    dst[4] = temp[48] + src[36];
-    dst[5] = temp[49] + src[37];
-    dst[6] = temp[52] + src[38];
-    dst[7] = temp[53] + src[39];
+    dst[0] = residuals[28] + src[32];
+    dst[1] = residuals[29] + src[33];
+    dst[2] = residuals[32] + src[34];
+    dst[3] = residuals[33] + src[35];
+    dst[4] = residuals[48] + src[36];
+    dst[5] = residuals[49] + src[37];
+    dst[6] = residuals[52] + src[38];
+    dst[7] = residuals[53] + src[39];
     dst = dst + pitch;
-    dst[0] = temp[30] + src[40];
-    dst[1] = temp[31] + src[41];
-    dst[2] = temp[34] + src[42];
-    dst[3] = temp[35] + src[43];
-    dst[4] = temp[50] + src[44];
-    dst[5] = temp[51] + src[45];
-    dst[6] = temp[54] + src[46];
-    dst[7] = temp[55] + src[47];
+    dst[0] = residuals[30] + src[40];
+    dst[1] = residuals[31] + src[41];
+    dst[2] = residuals[34] + src[42];
+    dst[3] = residuals[35] + src[43];
+    dst[4] = residuals[50] + src[44];
+    dst[5] = residuals[51] + src[45];
+    dst[6] = residuals[54] + src[46];
+    dst[7] = residuals[55] + src[47];
     dst = dst + pitch;
-    dst[0] = temp[36] + src[48];
-    dst[1] = temp[37] + src[49];
-    dst[2] = temp[40] + src[50];
-    dst[3] = temp[41] + src[51];
-    dst[4] = temp[56] + src[52];
-    dst[5] = temp[57] + src[53];
-    dst[6] = temp[60] + src[54];
-    dst[7] = temp[61] + src[55];
+    dst[0] = residuals[36] + src[48];
+    dst[1] = residuals[37] + src[49];
+    dst[2] = residuals[40] + src[50];
+    dst[3] = residuals[41] + src[51];
+    dst[4] = residuals[56] + src[52];
+    dst[5] = residuals[57] + src[53];
+    dst[6] = residuals[60] + src[54];
+    dst[7] = residuals[61] + src[55];
     dst = dst + pitch;
-    dst[0] = temp[38] + src[56];
-    dst[1] = temp[39] + src[57];
-    dst[2] = temp[42] + src[58];
-    dst[3] = temp[43] + src[59];
-    dst[4] = temp[58] + src[60];
-    dst[5] = temp[59] + src[61];
-    dst[6] = temp[62] + src[62];
-    dst[7] = temp[63] + src[63];
+    dst[0] = residuals[38] + src[56];
+    dst[1] = residuals[39] + src[57];
+    dst[2] = residuals[42] + src[58];
+    dst[3] = residuals[43] + src[59];
+    dst[4] = residuals[58] + src[60];
+    dst[5] = residuals[59] + src[61];
+    dst[6] = residuals[62] + src[62];
+    dst[7] = residuals[63] + src[63];
 }
