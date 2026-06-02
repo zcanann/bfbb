@@ -686,7 +686,7 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
     const u8 PTR4* decode;
     u32 peek;
     u32 mask;
-    u32 state;
+    u32 lastval;
     u32 high;
     u32 low;
     u32 packed;
@@ -705,7 +705,7 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
         values = bundle->values;
         decode = bundle->decode;
         peek = bundle->bits_to_peek;
-        state = huff8_table->lastval;
+        lastval = huff8_table->lastval;
         if (exp_get_bit(bits) != 0) {
             /* Negative remaining marks the old-format repeat packet variant. */
             count = BINK_BUNDLE_REPEAT_COUNT(count);
@@ -713,8 +713,8 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
         mask = GetBitsLen(peek);
         remaining = (s32)count;
         do {
-            high = exp_read_huff8(bits, state, huff8_table);
-            state = high;
+            high = exp_read_huff8(bits, lastval, huff8_table);
+            lastval = high;
             low = exp_read_huff4_mask(bits, peek, decode, values, mask);
             packed = ((high & HUFF4_SYMBOL_MASK) << HUFF4_USED_SHIFT) | low;
             signed_byte = packed;
@@ -731,7 +731,7 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
             /* Repeat packets back-fill the whole bundle with the first decoded byte. */
             memset(bundle->data, *bundle->data, BINK_BUNDLE_REPEAT_FILL_COUNT(remaining));
         }
-        huff8_table->lastval = state;
+        huff8_table->lastval = lastval;
     } else {
         bundle->cur_dec = bundle->data;
         bundle->cur_ptr = BINK_BUNDLE_EMPTY_CUR(bundle);
@@ -747,7 +747,7 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
     const u8 PTR4* decode;
     u32 peek;
     u32 mask;
-    u32 state;
+    u32 lastval;
     u32 low;
     u32 packed;
     s32 remaining;
@@ -764,7 +764,7 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
         values = bundle->values;
         decode = bundle->decode;
         peek = bundle->bits_to_peek;
-        state = huff8_table->lastval;
+        lastval = huff8_table->lastval;
         if (exp_get_bit(bits) != 0) {
             /* New-format Huff8 repeat packets keep the byte unsigned. */
             count = BINK_BUNDLE_REPEAT_COUNT(count);
@@ -772,9 +772,9 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
         mask = GetBitsLen(peek);
         remaining = (s32)count;
         do {
-            state = exp_read_huff8(bits, state, huff8_table);
+            lastval = exp_read_huff8(bits, lastval, huff8_table);
             low = exp_read_huff4_mask(bits, peek, decode, values, mask);
-            packed = low | (state << HUFF4_USED_SHIFT);
+            packed = low | (lastval << HUFF4_USED_SHIFT);
             *dest++ = (u8)packed;
             remaining--;
         } while (remaining > 0);
@@ -783,7 +783,7 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
             /* Match old-format repeat handling after the one-byte payload is decoded. */
             memset(bundle->data, *bundle->data, BINK_BUNDLE_REPEAT_FILL_COUNT(remaining));
         }
-        huff8_table->lastval = state;
+        huff8_table->lastval = lastval;
     } else {
         bundle->cur_dec = bundle->data;
         bundle->cur_ptr = BINK_BUNDLE_EMPTY_CUR(bundle);
