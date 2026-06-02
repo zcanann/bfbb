@@ -158,6 +158,14 @@ def side_symbols(data: Dict[str, Any], side: str) -> Dict[str, Dict[str, Any]]:
     return out
 
 
+def side_label(side: str) -> str:
+    labels = {
+        "left": "target(left)",
+        "right": "current(right)",
+    }
+    return labels.get(side, side)
+
+
 def symbols(data: Dict[str, Any]) -> Dict[str, Dict[str, Any]]:
     return side_symbols(data, "left")
 
@@ -1488,7 +1496,7 @@ def dump(args: argparse.Namespace) -> int:
                         break
 
             if sym is None:
-                print(f"{args.unit} {side}: missing symbol {requested_name}", file=sys.stderr)
+                print(f"{args.unit} {side_label(side)}: missing symbol {requested_name}", file=sys.stderr)
                 missing = True
                 continue
 
@@ -1496,7 +1504,7 @@ def dump(args: argparse.Namespace) -> int:
             sym_score = sym.get("match_percent")
             sym_size = sym.get("size")
             score_text = "<none>" if sym_score is None else f"{sym_score:.6g}"
-            print(f"## {args.unit} {side} {sym_name} score={score_text} size={sym_size}")
+            print(f"## {args.unit} {side_label(side)} {sym_name} score={score_text} size={sym_size}")
 
             instructions = sym.get("instructions", [])
             start = max(args.start, 0)
