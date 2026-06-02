@@ -1941,15 +1941,15 @@ found_previous:
         if (cur >= bnk->Frames) {
             break;
         } else {
-            const u32 PTR4* ptr;
+            const u32 PTR4* frame_offsets;
             u32 limit;
 
             limit = bnk->Frames;
-            ptr = &bnk->frameoffsets[cur];
+            frame_offsets = &bnk->frameoffsets[cur];
             do {
                 u32 frame_entry;
 
-                frame_entry = *ptr++;
+                frame_entry = *frame_offsets++;
                 ++cur;
                 if (BINK_FRAME_KEY(frame_entry) != 0) {
                     return cur;
@@ -2358,7 +2358,7 @@ void BinkGetSummary(HBINK bnk, BINKSUMMARY PTR4* sum)
 void BinkGetRealtime(HBINK bink, BINKREALTIME PTR4* run, u32 frames)
 {
     u32 now;
-    u32 diff;
+    u32 frame_time;
 
     now = RADTimerRead();
     timeframe(bink, now);
@@ -2386,9 +2386,9 @@ void BinkGetRealtime(HBINK bink, BINKREALTIME PTR4* run, u32 frames)
 
     run->Frames = frames;
 
-    diff = bink->rtframetimes[BINK_RUNTIME_CURRENT_SLOT] - bink->rtframetimes[frames];
-    run->FramesTime = diff;
-    if (diff == 0) {
+    frame_time = bink->rtframetimes[BINK_RUNTIME_CURRENT_SLOT] - bink->rtframetimes[frames];
+    run->FramesTime = frame_time;
+    if (frame_time == 0) {
         run->FramesTime = 1;
     }
 
