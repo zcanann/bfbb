@@ -913,7 +913,7 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
 {
     u32 count;
     u32 remaining;
-    u32 group_count;
+    u32 group_size;
     u32 delta_bits;
     u16 predictor;
     u16 magnitude;
@@ -941,16 +941,16 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
         bundle->cur_ptr = bundle->data;
         bundle->cur_dec = bundle->data + count * sizeof(*dest);
         while (remaining != 0) {
-            group_count = remaining;
-            if (group_count > BINK_DELTA16_GROUP_MAX) {
-                group_count = BINK_DELTA16_GROUP_MAX;
+            group_size = remaining;
+            if (group_size > BINK_DELTA16_GROUP_MAX) {
+                group_size = BINK_DELTA16_GROUP_MAX;
             }
 
             VarBitsGet(delta_bits, u32, *bits, HUFF4_USED_SHIFT);
             if (delta_bits != 0) {
-                remaining -= group_count;
-                while (group_count != 0) {
-                    group_count--;
+                remaining -= group_size;
+                while (group_size != 0) {
+                    group_size--;
                     VarBitsGet(magnitude, u16, *bits, delta_bits);
                     delta = (s16)magnitude;
                     if (delta != 0 && exp_get_bit(bits) != 0) {
@@ -960,9 +960,9 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
                     *dest++ = (s16)predictor;
                 }
             } else {
-                radmemset16(dest, (u16)predictor, group_count * sizeof(*dest));
-                dest += group_count;
-                remaining -= group_count;
+                radmemset16(dest, (u16)predictor, group_size * sizeof(*dest));
+                dest += group_size;
+                remaining -= group_size;
             }
         }
     } else {
