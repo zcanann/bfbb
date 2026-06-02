@@ -82,6 +82,7 @@
 #define BP_TREE_COEFF_LEAF_ENTRY(level, base) ((level) + (base))
 #define BP_TREE_BRANCH_ENTRY(level, index) ((u16)(level) + (index) * BP_TREE_INDEX_STRIDE + BP_TREE_BRANCH_NODE)
 #define BP_TREE_CHILD_BRANCH_ENTRY(level, base, child_base) BP_TREE_BRANCH_ENTRY((level), (base) + (child_base))
+#define BP_TREE_BASE_BRANCH_ENTRY(level, base) ((u16)(level) + (base) + BP_TREE_BRANCH_NODE)
 #define BP_TREE_COEFF_ENTRY(level, index) ((u16)(level) | (index) * BP_TREE_INDEX_STRIDE + BP_TREE_COEFF_NODE)
 #define BP_TREE_BASE_COEFF_ENTRY(level, base) ((u16)(level) | (base) + BP_TREE_COEFF_NODE)
 #define BP_READ_TREE_KIND_MASK 3
@@ -380,7 +381,7 @@ u32 LenBPLossless(s16 PTR4* vals)
                     if (kind == BP_TREE_GROUP_NODE) {
                         kind = entry >> BP_TREE_INDEX_SHIFT;
                         bits = (u32)(entry >> BP_TREE_GROUP_SHIFT);
-                        *cur = (u16)groups[bits] + (entry & BP_TREE_BASE_MASK) + BP_TREE_BRANCH_NODE;
+                        *cur = BP_TREE_BASE_BRANCH_ENTRY(groups[bits], entry & BP_TREE_BASE_MASK);
                         *end = BP_TREE_CHILD_BRANCH_ENTRY(groups[bits + BP_TREE_CHILD1_INDEX], kind, BP_TREE_CHILD1_BASE);
                         end[1] = BP_TREE_CHILD_BRANCH_ENTRY(groups[bits + BP_TREE_CHILD2_INDEX], kind, BP_TREE_CHILD2_BASE);
                         end[2] = BP_TREE_CHILD_BRANCH_ENTRY(groups[bits + BP_TREE_CHILD3_INDEX], kind, BP_TREE_CHILD3_BASE);
@@ -440,7 +441,7 @@ handle_children:
                 if (kind == BP_TREE_GROUP_NODE) {
                     kind = entry >> BP_TREE_INDEX_SHIFT;
                     maxbits = (u32)(entry >> BP_TREE_GROUP_SHIFT);
-                    *cur = (u16)groups[maxbits] + (entry & BP_TREE_BASE_MASK) + BP_TREE_BRANCH_NODE;
+                    *cur = BP_TREE_BASE_BRANCH_ENTRY(groups[maxbits], entry & BP_TREE_BASE_MASK);
                     *end = BP_TREE_CHILD_BRANCH_ENTRY(groups[maxbits + BP_TREE_CHILD1_INDEX], kind, BP_TREE_CHILD1_BASE);
                     end[1] = BP_TREE_CHILD_BRANCH_ENTRY(groups[maxbits + BP_TREE_CHILD2_INDEX], kind, BP_TREE_CHILD2_BASE);
                     end[2] = BP_TREE_CHILD_BRANCH_ENTRY(groups[maxbits + BP_TREE_CHILD3_INDEX], kind, BP_TREE_CHILD3_BASE);
@@ -675,7 +676,7 @@ next_lossless_node:
                     if (kind == BP_TREE_GROUP_NODE) {
                         kind = entry >> BP_TREE_INDEX_SHIFT;
                         count = (u32)(entry >> BP_TREE_GROUP_SHIFT);
-                        *cur = (u16)groups[count] + (entry & BP_TREE_BASE_MASK) + BP_TREE_BRANCH_NODE;
+                        *cur = BP_TREE_BASE_BRANCH_ENTRY(groups[count], entry & BP_TREE_BASE_MASK);
                         *end = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD1_INDEX], kind, BP_TREE_CHILD1_BASE);
                         end[1] = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD2_INDEX], kind, BP_TREE_CHILD2_BASE);
                         end[2] = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD3_INDEX], kind, BP_TREE_CHILD3_BASE);
@@ -1289,7 +1290,7 @@ next_lossy_node:
                     if (lenbits == BP_TREE_GROUP_NODE) {
                         lenbits = node_entry >> BP_TREE_INDEX_SHIFT;
                         count = (u32)(node_entry >> BP_TREE_GROUP_SHIFT);
-                        *cur = (u16)groups[count] + (node_entry & BP_TREE_BASE_MASK) + BP_TREE_BRANCH_NODE;
+                        *cur = BP_TREE_BASE_BRANCH_ENTRY(groups[count], node_entry & BP_TREE_BASE_MASK);
                         next_node[0] = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD1_INDEX], lenbits, BP_TREE_CHILD1_BASE);
                         next_node[1] = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD2_INDEX], lenbits, BP_TREE_CHILD2_BASE);
                         next_node[2] = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD3_INDEX], lenbits, BP_TREE_CHILD3_BASE);
