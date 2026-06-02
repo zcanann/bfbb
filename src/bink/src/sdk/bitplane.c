@@ -262,7 +262,7 @@ u32 LenBPLossless(s16 PTR4* vals)
         i++;
         count--;
     } while (count != 0);
-    have_bits = maxbits != 0;
+    have_bits = maxbits;
 
     /* Each four-coefficient subtree inherits the deepest child bit depth. */
     len = BP_FIRST_LOSSLESS_TREE_GROUP_INDEX;
