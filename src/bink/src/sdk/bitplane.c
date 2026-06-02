@@ -1361,7 +1361,7 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count)
     u32 levels_remaining;
     u8 node_kind;
     u8 PTR4* tree_end_ptr;
-    s32 bit_value;
+    s32 mask;
     s32 nz_coeff_count;
     u8 PTR4* node_ptr;
     u8 node;
@@ -1391,19 +1391,19 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count)
         bitbuf = bitbuf >> BP_LOSSY_LEVEL_BITS;
         code = word & BP_BYTE_MASK;
     } else {
-        bit_value = BP_LOSSY_LEVEL_BITS - bitcount;
+        mask = BP_LOSSY_LEVEL_BITS - bitcount;
         code = bitbuf & BP_BYTE_MASK;
         word = *words;
         bitcount = bitcount + BP_BITS_PER_WORD - BP_LOSSY_LEVEL_BITS;
         words = words + 1;
-        bitbuf = word >> bit_value;
+        bitbuf = word >> mask;
         code = code | word << old_bitcount;
     }
     levels_remaining = (code & BP_LOSSY_LEVEL_MASK) + 1;
     tree.roots[BP_ROOT_GROUP1_SLOT] = BP_READ_TREE_GROUP1_ROOT;
     tree.roots[BP_ROOT_GROUP6_SLOT] = BP_READ_TREE_GROUP6_ROOT;
     tree.roots[BP_ROOT_GROUP11_SLOT] = BP_READ_TREE_GROUP11_ROOT;
-    bit_value = (s32)(s8)(1 << (levels_remaining - 1));
+    mask = (s32)(s8)(1 << (levels_remaining - 1));
     tree.roots[BP_ROOT_LOSSY_DC_SLOT] = BP_READ_TREE_DC_ROOT;
     tree_end_ptr = tree.nodes;
     nz_coeff_count = 0;
@@ -1428,9 +1428,9 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count)
                 }
                 if ((word & 1) != 0) {
                     sample = dest[(u32)nz_coeff[scan]];
-                    delta = bit_value;
+                    delta = mask;
                     if (sample < 0) {
-                        delta = -bit_value;
+                        delta = -mask;
                     }
                     dest[(u32)nz_coeff[scan]] = sample + (s8)delta;
                     if (masks_read++ == masks_count) {
@@ -1442,7 +1442,7 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count)
         }
         next_node_ptr = node_ptr;
         if (node_ptr < tree_end_ptr) {
-            scan = -bit_value;
+            scan = -mask;
 read_node:
             node = *node_ptr;
             if (node == BP_READ_TREE_EMPTY_ENTRY) {
@@ -1498,7 +1498,7 @@ decode_node:
                         }
                         delta = scan;
                         if ((word & 1) == 0) {
-                            delta = bit_value;
+                            delta = mask;
                         }
                         dest[(u32)BP_READ_TREE_INDEX(node)] = (s8)delta;
                         if (masks_read++ == masks_count) {
@@ -1544,7 +1544,7 @@ push_0:
                 bitbuf = bitbuf >> 1;
                 delta = scan;
                 if (bit == 0) {
-                    delta = bit_value;
+                    delta = mask;
                 }
                 dest[code] = (s8)delta;
                 if (masks_read++ == masks_count) {
@@ -1585,7 +1585,7 @@ push_1:
                 bitbuf = bitbuf >> 1;
                 delta = scan;
                 if (bit == 0) {
-                    delta = bit_value;
+                    delta = mask;
                 }
                 dest[code + BP_TREE_CHILD1_INDEX] = (s8)delta;
                 if (masks_read++ == masks_count) {
@@ -1625,7 +1625,7 @@ push_2:
                 bitbuf = bitbuf >> 1;
                 delta = scan;
                 if (bit == 0) {
-                    delta = bit_value;
+                    delta = mask;
                 }
                 dest[code + BP_TREE_CHILD2_INDEX] = (s8)delta;
                 if (masks_read++ == masks_count) {
@@ -1659,7 +1659,7 @@ after_2:
                     }
                     delta = scan;
                     if ((word & 1) == 0) {
-                        delta = bit_value;
+                        delta = mask;
                     }
                     dest[code + BP_TREE_CHILD3_INDEX] = (s8)delta;
                     if (masks_read++ == masks_count) {
@@ -1676,7 +1676,7 @@ node_done:
             goto read_node;
         }
 level_done:
-        bit_value = bit_value >> 1;
+        mask = mask >> 1;
         levels_remaining = (levels_remaining - 1) & BP_BYTE_MASK;
         node_ptr = next_node_ptr;
     } while (1);
@@ -1694,41 +1694,41 @@ done:
 
 void ReadBPLossy(s16 PTR4* out, BPBITSTREAM PTR4* bits, s32 masks_count)
 {
-    BPLOSSYBLOCK coeffs;
+    BPLOSSYBLOCK residuals;
 
-    readlossy(coeffs.bytes, bits, masks_count);
-    out[0] = coeffs.words[0];
-    out[1] = coeffs.words[2];
-    out[2] = coeffs.words[4];
-    out[3] = coeffs.words[6];
-    out[4] = coeffs.words[1];
-    out[5] = coeffs.words[3];
-    out[6] = coeffs.words[5];
-    out[7] = coeffs.words[7];
-    out[8] = coeffs.words[12];
-    out[9] = coeffs.words[22];
-    out[10] = coeffs.words[8];
-    out[11] = coeffs.words[10];
-    out[12] = coeffs.words[13];
-    out[13] = coeffs.words[23];
-    out[14] = coeffs.words[9];
-    out[15] = coeffs.words[11];
-    out[16] = coeffs.words[14];
-    out[17] = coeffs.words[16];
-    out[18] = coeffs.words[24];
-    out[19] = coeffs.words[26];
-    out[20] = coeffs.words[15];
-    out[21] = coeffs.words[17];
-    out[22] = coeffs.words[25];
-    out[23] = coeffs.words[27];
-    out[24] = coeffs.words[18];
-    out[25] = coeffs.words[20];
-    out[26] = coeffs.words[28];
-    out[27] = coeffs.words[30];
-    out[28] = coeffs.words[19];
-    out[29] = coeffs.words[21];
-    out[30] = coeffs.words[29];
-    out[31] = coeffs.words[31];
+    readlossy(residuals.bytes, bits, masks_count);
+    out[0] = residuals.words[0];
+    out[1] = residuals.words[2];
+    out[2] = residuals.words[4];
+    out[3] = residuals.words[6];
+    out[4] = residuals.words[1];
+    out[5] = residuals.words[3];
+    out[6] = residuals.words[5];
+    out[7] = residuals.words[7];
+    out[8] = residuals.words[12];
+    out[9] = residuals.words[22];
+    out[10] = residuals.words[8];
+    out[11] = residuals.words[10];
+    out[12] = residuals.words[13];
+    out[13] = residuals.words[23];
+    out[14] = residuals.words[9];
+    out[15] = residuals.words[11];
+    out[16] = residuals.words[14];
+    out[17] = residuals.words[16];
+    out[18] = residuals.words[24];
+    out[19] = residuals.words[26];
+    out[20] = residuals.words[15];
+    out[21] = residuals.words[17];
+    out[22] = residuals.words[25];
+    out[23] = residuals.words[27];
+    out[24] = residuals.words[18];
+    out[25] = residuals.words[20];
+    out[26] = residuals.words[28];
+    out[27] = residuals.words[30];
+    out[28] = residuals.words[19];
+    out[29] = residuals.words[21];
+    out[30] = residuals.words[29];
+    out[31] = residuals.words[31];
 }
 
 void ReadBPLossyWithMotion(char PTR4* out, s32 pitch, BPBITSTREAM PTR4* bits, s32 masks_count,
