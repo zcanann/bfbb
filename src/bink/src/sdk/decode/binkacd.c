@@ -182,67 +182,67 @@ static void quanttos16chans2(s16 PTR4* dest, const f32 PTR4* src, f32 scale, u32
 
 static inline u32 read_bits(BINKVARBITS PTR4* vb, u32 count)
 {
-    u32 bits = vb->bitlen;
+    u32 bitcount = vb->bitlen;
 
-    if (bits >= count) {
-        u32 value = vb->bits & GetBitsLen(count);
+    if (bitcount >= count) {
+        u32 result = vb->bits & GetBitsLen(count);
 
-        vb->bitlen = bits - count;
+        vb->bitlen = bitcount - count;
         vb->bits >>= count;
-        return value;
+        return result;
     } else {
-        u32 word = BINKAC_LOAD32(vb->cur);
-        u32 temp = vb->bits | (word << bits);
-        u32 value = temp & GetBitsLen(count);
+        u32 refill = BINKAC_LOAD32(vb->cur);
+        u32 reservoir = vb->bits | (refill << bitcount);
+        u32 result = reservoir & GetBitsLen(count);
 
         VARBITS_ADVANCE_CUR(vb->cur);
-        vb->bitlen = bits + BITSTYPELEN - count;
-        vb->bits = word >> (count - bits);
-        return value;
+        vb->bitlen = bitcount + BITSTYPELEN - count;
+        vb->bits = refill >> (count - bitcount);
+        return result;
     }
 }
 
 static inline u32 read_rle_bits(BINKVARBITS PTR4* vb)
 {
-    u32 value;
-    u32 bits = vb->bitlen;
+    u32 result;
+    u32 bitcount = vb->bitlen;
 
-    if (bits > (RLEBITS - 1)) {
-        value = vb->bits & GetBitsLen(RLEBITS);
-        vb->bitlen = bits - RLEBITS;
+    if (bitcount > (RLEBITS - 1)) {
+        result = vb->bits & GetBitsLen(RLEBITS);
+        vb->bitlen = bitcount - RLEBITS;
         vb->bits >>= RLEBITS;
     } else {
-        u32 word = BINKAC_LOAD32(vb->cur);
-        u32 temp = vb->bits | (word << bits);
+        u32 refill = BINKAC_LOAD32(vb->cur);
+        u32 reservoir = vb->bits | (refill << bitcount);
 
         VARBITS_ADVANCE_CUR(vb->cur);
-        value = temp & GetBitsLen(RLEBITS);
-        vb->bitlen = bits + BITSTYPELEN - RLEBITS;
-        vb->bits = word >> (RLEBITS - bits);
+        result = reservoir & GetBitsLen(RLEBITS);
+        vb->bitlen = bitcount + BITSTYPELEN - RLEBITS;
+        vb->bits = refill >> (RLEBITS - bitcount);
     }
 
-    return value;
+    return result;
 }
 
 static inline u32 read_bit(BINKVARBITS PTR4* vb)
 {
     u32 bitcount = vb->bitlen;
-    u32 value;
+    u32 result;
 
     if (bitcount != 0) {
-        value = vb->bits & BINKAC_BIT_MASK;
+        result = vb->bits & BINKAC_BIT_MASK;
         vb->bitlen = bitcount - 1;
         vb->bits >>= 1;
     } else {
-        u32 word = BINKAC_LOAD32(vb->cur);
+        u32 refill = BINKAC_LOAD32(vb->cur);
 
         VARBITS_ADVANCE_CUR(vb->cur);
-        value = word & BINKAC_BIT_MASK;
+        result = refill & BINKAC_BIT_MASK;
         vb->bitlen = BITSTYPELEN - 1;
-        vb->bits = word >> 1;
+        vb->bits = refill >> 1;
     }
 
-    return value;
+    return result;
 }
 
 static void read_rle_samples(f32 PTR4* samples, u32 transform_size, BINKVARBITS PTR4* vb,
