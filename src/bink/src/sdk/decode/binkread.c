@@ -904,10 +904,10 @@ static void GotoFrame(HBINK bnk, u32 frame)
     bnk->FrameNum = frame + 1;
 }
 
-void BinkSetFrameRate(u32 FRate, u32 FRateDiv)
+void BinkSetFrameRate(u32 forcerate, u32 forceratediv)
 {
-    ForceRate = FRate;
-    ForceRateDiv = FRateDiv;
+    ForceRate = forcerate;
+    ForceRateDiv = forceratediv;
 }
 
 void BinkSetIOSize(u32 iosize)
