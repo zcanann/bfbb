@@ -2417,7 +2417,8 @@ static s32 smallestrect(BINKRECT PTR4* out, const u8 PTR4* mask, s32 pitch, cons
     s32 left_blocks;
     s32 row;
     s32 col;
-    s32 value;
+    s32 remaining_height;
+    s32 remaining_width;
 
     src_rect = rect;
     rect_mask = mask + BINK_MASK_BLOCKS(src_rect->Left) + BINK_MASK_BLOCKS(src_rect->Top) * pitch;
@@ -2442,10 +2443,10 @@ found_top:
     height_blocks -= top_blocks;
     out->Top = src_rect->Top + top_blocks * BINK_MASK_BLOCK_SIZE;
     rect_mask += top_blocks * pitch;
-    value = src_rect->Height - top_blocks * BINK_MASK_BLOCK_SIZE;
-    out->Height = value;
+    remaining_height = src_rect->Height - top_blocks * BINK_MASK_BLOCK_SIZE;
+    out->Height = remaining_height;
 
-    if (value > 1) {
+    if (remaining_height > 1) {
         s32 bottom_blocks = 0;
         const u8 PTR4* scan = rect_mask + (height_blocks - 1) * pitch;
 
@@ -2462,7 +2463,7 @@ found_top:
 
 found_bottom:
         height_blocks -= bottom_blocks;
-        out->Height = value - bottom_blocks * BINK_MASK_BLOCK_SIZE;
+        out->Height = remaining_height - bottom_blocks * BINK_MASK_BLOCK_SIZE;
     }
 
     for (left_blocks = 0; left_blocks < width_blocks; ++left_blocks) {
@@ -2481,10 +2482,10 @@ found_left:
     width_blocks -= left_blocks;
     rect_mask += left_blocks;
     out->Left = src_rect->Left + left_blocks * BINK_MASK_BLOCK_SIZE;
-    value = src_rect->Width - left_blocks * BINK_MASK_BLOCK_SIZE;
-    out->Width = value;
+    remaining_width = src_rect->Width - left_blocks * BINK_MASK_BLOCK_SIZE;
+    out->Width = remaining_width;
 
-    if (value > 1) {
+    if (remaining_width > 1) {
         s32 first_right = width_blocks - 1;
         s32 right_blocks;
 
@@ -2501,7 +2502,7 @@ found_left:
         }
 
 found_right:
-        out->Width = value - (first_right - right_blocks) * BINK_MASK_BLOCK_SIZE;
+        out->Width = remaining_width - (first_right - right_blocks) * BINK_MASK_BLOCK_SIZE;
     }
 
     return 1;
