@@ -146,6 +146,8 @@ typedef union BPLOSSLESSCOEFFS
 } BPLOSSLESSCOEFFS;
 
 #define BP_COEFF_PAIR_AT(values, index) (((BPCOEFFPAIR PTR4*)(values))[(index) / 2])
+#define BP_SCATTER_LOSSLESS_PAIR(out, out_index, coeffs, coeff_index) \
+    (BP_COEFF_PAIR_AT((out), (out_index)) = (coeffs).pairs[(coeff_index) / 2])
 
 typedef union BPLOSSYBLOCK
 {
@@ -1051,40 +1053,37 @@ after_lossless_final3:
 
     /* Scatter scan-order coefficients back into the 8x8 block. */
     out[BP_COEFF1_INDEX] = coeffs.values[BP_COEFF1_INDEX];
-#define COPY_BP_COEFF_PAIR(out_index, coeff_index)                                                                      \
-    (BP_COEFF_PAIR_AT(out, out_index) = coeffs.pairs[(coeff_index) / 2])
-    COPY_BP_COEFF_PAIR(2, 4);
-    COPY_BP_COEFF_PAIR(4, 8);
-    COPY_BP_COEFF_PAIR(6, 12);
-    COPY_BP_COEFF_PAIR(8, 2);
-    COPY_BP_COEFF_PAIR(10, 6);
-    COPY_BP_COEFF_PAIR(12, 10);
-    COPY_BP_COEFF_PAIR(14, 14);
-    COPY_BP_COEFF_PAIR(16, 24);
-    COPY_BP_COEFF_PAIR(18, 44);
-    COPY_BP_COEFF_PAIR(20, 16);
-    COPY_BP_COEFF_PAIR(22, 20);
-    COPY_BP_COEFF_PAIR(24, 26);
-    COPY_BP_COEFF_PAIR(26, 46);
-    COPY_BP_COEFF_PAIR(28, 18);
-    COPY_BP_COEFF_PAIR(30, 22);
-    COPY_BP_COEFF_PAIR(32, 28);
-    COPY_BP_COEFF_PAIR(34, 32);
-    COPY_BP_COEFF_PAIR(36, 48);
-    COPY_BP_COEFF_PAIR(38, 52);
-    COPY_BP_COEFF_PAIR(40, 30);
-    COPY_BP_COEFF_PAIR(42, 34);
-    COPY_BP_COEFF_PAIR(44, 50);
-    COPY_BP_COEFF_PAIR(46, 54);
-    COPY_BP_COEFF_PAIR(48, 36);
-    COPY_BP_COEFF_PAIR(50, 40);
-    COPY_BP_COEFF_PAIR(52, 56);
-    COPY_BP_COEFF_PAIR(54, 60);
-    COPY_BP_COEFF_PAIR(56, 38);
-    COPY_BP_COEFF_PAIR(58, 42);
-    COPY_BP_COEFF_PAIR(60, 58);
-    COPY_BP_COEFF_PAIR(62, 62);
-#undef COPY_BP_COEFF_PAIR
+    BP_SCATTER_LOSSLESS_PAIR(out, 2, coeffs, 4);
+    BP_SCATTER_LOSSLESS_PAIR(out, 4, coeffs, 8);
+    BP_SCATTER_LOSSLESS_PAIR(out, 6, coeffs, 12);
+    BP_SCATTER_LOSSLESS_PAIR(out, 8, coeffs, 2);
+    BP_SCATTER_LOSSLESS_PAIR(out, 10, coeffs, 6);
+    BP_SCATTER_LOSSLESS_PAIR(out, 12, coeffs, 10);
+    BP_SCATTER_LOSSLESS_PAIR(out, 14, coeffs, 14);
+    BP_SCATTER_LOSSLESS_PAIR(out, 16, coeffs, 24);
+    BP_SCATTER_LOSSLESS_PAIR(out, 18, coeffs, 44);
+    BP_SCATTER_LOSSLESS_PAIR(out, 20, coeffs, 16);
+    BP_SCATTER_LOSSLESS_PAIR(out, 22, coeffs, 20);
+    BP_SCATTER_LOSSLESS_PAIR(out, 24, coeffs, 26);
+    BP_SCATTER_LOSSLESS_PAIR(out, 26, coeffs, 46);
+    BP_SCATTER_LOSSLESS_PAIR(out, 28, coeffs, 18);
+    BP_SCATTER_LOSSLESS_PAIR(out, 30, coeffs, 22);
+    BP_SCATTER_LOSSLESS_PAIR(out, 32, coeffs, 28);
+    BP_SCATTER_LOSSLESS_PAIR(out, 34, coeffs, 32);
+    BP_SCATTER_LOSSLESS_PAIR(out, 36, coeffs, 48);
+    BP_SCATTER_LOSSLESS_PAIR(out, 38, coeffs, 52);
+    BP_SCATTER_LOSSLESS_PAIR(out, 40, coeffs, 30);
+    BP_SCATTER_LOSSLESS_PAIR(out, 42, coeffs, 34);
+    BP_SCATTER_LOSSLESS_PAIR(out, 44, coeffs, 50);
+    BP_SCATTER_LOSSLESS_PAIR(out, 46, coeffs, 54);
+    BP_SCATTER_LOSSLESS_PAIR(out, 48, coeffs, 36);
+    BP_SCATTER_LOSSLESS_PAIR(out, 50, coeffs, 40);
+    BP_SCATTER_LOSSLESS_PAIR(out, 52, coeffs, 56);
+    BP_SCATTER_LOSSLESS_PAIR(out, 54, coeffs, 60);
+    BP_SCATTER_LOSSLESS_PAIR(out, 56, coeffs, 38);
+    BP_SCATTER_LOSSLESS_PAIR(out, 58, coeffs, 42);
+    BP_SCATTER_LOSSLESS_PAIR(out, 60, coeffs, 58);
+    BP_SCATTER_LOSSLESS_PAIR(out, 62, coeffs, 62);
 }
 
 u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
