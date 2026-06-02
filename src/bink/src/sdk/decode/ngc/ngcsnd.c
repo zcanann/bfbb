@@ -244,49 +244,50 @@ static void startVoices(u32 task)
 
     NGC_TASK_CLEAR_BUSY(arq_task); /* clear the in-flight latch after the left upload */
 }
-static void NGC_SoundPlay(BINKSND PTR4* snd, u32 index, u32 size)
+static void NGC_SoundPlay(BINKSND PTR4* snd, u32 index, u32 upload_bytes)
 {
     NGCSoundState PTR4* state;
-    u32 end_pos;
+    u32 play_end;
     ARQRequest PTR4* task;
-    ARQRequest PTR4* second_task;
+    ARQRequest PTR4* right_task;
 
     state = NGC_SOUND_STATE(snd);
-    end_pos = NGC_SOUND_STATE(snd)->play_cursor + size;
+    play_end = NGC_SOUND_STATE(snd)->play_cursor + upload_bytes;
     task = NGC_TASK(state, index);
 
     if (NGC_SOUND_STATE(snd)->right_voice != 0) {
-        second_task = &NGC_SOUND_STATE(snd)->tasks[NGC_SOUND_RIGHT_TASK_OFFSET];
-        second_task += index;
+        right_task = &NGC_SOUND_STATE(snd)->tasks[NGC_SOUND_RIGHT_TASK_OFFSET];
+        right_task += index;
 
-        DCFlushRange((void PTR4*)second_task->source, size);
-        ARQPostRequest(second_task, 0, ARQ_TYPE_MRAM_TO_ARAM, ARQ_PRIORITY_HIGH, (u32)second_task->source,
-                       NGC_SOUND_RIGHT_CURSOR(NGC_SOUND_STATE(snd)), size, 0);
+        DCFlushRange((void PTR4*)right_task->source, upload_bytes);
+        ARQPostRequest(right_task, 0, ARQ_TYPE_MRAM_TO_ARAM, ARQ_PRIORITY_HIGH,
+                       (u32)right_task->source, NGC_SOUND_RIGHT_CURSOR(NGC_SOUND_STATE(snd)),
+                       upload_bytes, 0);
     }
 
-    DCFlushRange((void PTR4*)task->source, size);
+    DCFlushRange((void PTR4*)task->source, upload_bytes);
     ARQPostRequest(task, task->owner, ARQ_TYPE_MRAM_TO_ARAM, ARQ_PRIORITY_HIGH, (u32)task->source,
-                   NGC_SOUND_STATE(snd)->play_cursor, size, startVoices);
+                   NGC_SOUND_STATE(snd)->play_cursor, upload_bytes, startVoices);
 
-    if (end_pos > NGC_SOUND_PLAY_LIMIT(NGC_SOUND_STATE(snd))) {
+    if (play_end > NGC_SOUND_PLAY_LIMIT(NGC_SOUND_STATE(snd))) {
         AXVPB PTR4* voice = NGC_LEFT_VOICE(state);
         u32 shift = NGC_ADDRESS_SHIFT(state);
 
-        if (NGC_AX_CURRENT_CURSOR(voice, shift) > end_pos) {
-            NGC_SOUND_STATE(snd)->pending_end = end_pos;
+        if (NGC_AX_CURRENT_CURSOR(voice, shift) > play_end) {
+            NGC_SOUND_STATE(snd)->pending_end = play_end;
         } else {
-            AXSetVoiceEndAddr(voice, NGC_AX_END_ADDR(end_pos, shift));
+            AXSetVoiceEndAddr(voice, NGC_AX_END_ADDR(play_end, shift));
 
             voice = NGC_RIGHT_VOICE(state);
             if (voice != 0) {
-                AXSetVoiceEndAddr(voice, NGC_AX_RIGHT_END_ADDR(state, end_pos));
+                AXSetVoiceEndAddr(voice, NGC_AX_RIGHT_END_ADDR(state, play_end));
             }
 
-            end_pos = (u32)NGC_SOUND_STATE(snd)->audio_buffer;
+            play_end = (u32)NGC_SOUND_STATE(snd)->audio_buffer;
         }
     }
 
-    NGC_SOUND_STATE(snd)->play_cursor = end_pos;
+    NGC_SOUND_STATE(snd)->play_cursor = play_end;
     NGC_SOUND_STATE(snd)->last_ready_time = RADTimerRead();
 }
 
