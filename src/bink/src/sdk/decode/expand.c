@@ -118,10 +118,13 @@ typedef enum BINKBundleLayout
 #define BINK_BUNDLE_COUNT_BITS(width, count_base) \
     getbitlevelvar(((width) + (count_base)) & EXP_U16_MASK)
 #define BINK_BUNDLE_INITIAL_VALUE(shift) (1 << ((shift) - 1))
-typedef enum BINKBUNDLEINITIALVALUE
+typedef enum BINKBUNDLEINITIALVALUEFLAG
 {
     BINK_BUNDLE_NO_INITIAL_VALUE,
-    BINK_BUNDLE_USE_INITIAL_VALUE,
+    BINK_BUNDLE_USE_INITIAL_VALUE
+} BINKBUNDLEINITIALVALUEFLAG;
+typedef enum BINKBUNDLEINITIALVALUE
+{
     BINK_BUNDLE_INITIAL_VALUE_NONE = 0
 } BINKBUNDLEINITIALVALUE;
 #define BINK_BUNDLE_STORAGE_SIZE(width, rows, bits, pitch) \
@@ -243,7 +246,7 @@ static void ReadHuffTable(EXPBITS PTR4* bits, const u8 PTR4* PTR4* decode,
                           u32 PTR4* bits_to_peek, u8 PTR4* syms);
 
 static void OpenReadBundle(u8 PTR4* bits, READBUNDLE PTR4* bundle, s32 width, u32 rows,
-                           s32 shift, s32 pitch, BINKBUNDLEINITIALVALUE use_initial_value)
+                           s32 shift, s32 pitch, BINKBUNDLEINITIALVALUEFLAG use_initial_value)
 {
     u32 count_base;
     u32 len;
