@@ -2514,7 +2514,7 @@ static s32 trysplit(BINKRECT PTR4* outa, BINKRECT PTR4* outb, const BINKRECT PTR
     BINKRECT second_half;
     BINKRECT split_rect;
     s32 best_score;
-    u32 split;
+    s32 split;
 
     if (rect->Width >= BINK_DIRTY_SPLIT_MIN_SIZE) {
         split_rect = *rect;
