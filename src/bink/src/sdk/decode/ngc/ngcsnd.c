@@ -792,16 +792,16 @@ busy:
 
 static s32 Ready(BINKSND PTR4* snd)
 {
-    s32 index;
+    s32 lock_index;
     u32 now;
     NGCSoundState PTR4* state;
     AXVPB PTR4* voice;
     ARQRequest PTR4* task;
-    u32 play_pos;
-    u32 end_pos;
-    u32 shift;
+    u32 voice_cursor;
+    u32 end_cursor;
+    u32 address_shift;
 
-    index = NGC_SOUND_NO_LOCK_INDEX;
+    lock_index = NGC_SOUND_NO_LOCK_INDEX;
     if (NGC_SOUND_STATE(snd)->paused != 0 || NGC_SND(snd)->OnOff == NGC_SOUND_OFF ||
         NGC_SOUND_STATE(snd)->left_voice == 0) {
         return 0;
@@ -809,34 +809,36 @@ static s32 Ready(BINKSND PTR4* snd)
 
     state = NGC_SOUND_STATE(snd);
     now = RADTimerRead();
-    shift = NGC_ADDRESS_SHIFT(state);
+    address_shift = NGC_ADDRESS_SHIFT(state);
     voice = NGC_SOUND_STATE(snd)->left_voice;
-    play_pos = NGC_AX_CURRENT_CURSOR(voice, shift);
+    voice_cursor = NGC_AX_CURRENT_CURSOR(voice, address_shift);
     if (NGC_SOUND_STATE(snd)->play_state == NGC_PLAY_STATE_RUNNING) {
-        u32 pending;
+        u32 buffered_bytes;
 
-        end_pos = NGC_AX_END_CURSOR(voice, shift);
-        pending = 0;
+        end_cursor = NGC_AX_END_CURSOR(voice, address_shift);
+        buffered_bytes = 0;
         /* A pending wrapped end address becomes valid once playback crosses the wrap. */
-        if (play_pos < NGC_SOUND_STATE(snd)->pending_end) {
-            end_pos = NGC_SOUND_STATE(snd)->pending_end;
-            AXSetVoiceEndAddr(voice, NGC_AX_END_ADDR(end_pos, shift));
+        if (voice_cursor < NGC_SOUND_STATE(snd)->pending_end) {
+            end_cursor = NGC_SOUND_STATE(snd)->pending_end;
+            AXSetVoiceEndAddr(voice, NGC_AX_END_ADDR(end_cursor, address_shift));
             voice = NGC_RIGHT_VOICE(state);
             if (voice != 0) {
-                AXSetVoiceEndAddr(voice, NGC_AX_RIGHT_END_ADDR(state, end_pos));
+                AXSetVoiceEndAddr(voice, NGC_AX_RIGHT_END_ADDR(state, end_cursor));
             }
             NGC_SOUND_STATE(snd)->pending_end = 0;
             NGC_SOUND_STATE(snd)->play_cursor = (u32)NGC_SOUND_STATE(snd)->audio_buffer;
         }
 
         if ((now - NGC_SOUND_STATE(snd)->last_ready_time) < NGC_SOUND_STATE(snd)->starvation_time) {
-            pending = NGC_SOUND_STATE(snd)->play_cursor;
-            if (play_pos < pending) {
-                pending -= play_pos;
+            buffered_bytes = NGC_SOUND_STATE(snd)->play_cursor;
+            if (voice_cursor < buffered_bytes) {
+                buffered_bytes -= voice_cursor;
             } else {
-                pending = (end_pos - play_pos) + (pending - (u32)NGC_SOUND_STATE(snd)->audio_buffer);
+                buffered_bytes =
+                    (end_cursor - voice_cursor) +
+                    (buffered_bytes - (u32)NGC_SOUND_STATE(snd)->audio_buffer);
             }
-            if (pending >= NGC_SOUND_STATE(snd)->starvation_threshold) {
+            if (buffered_bytes >= NGC_SOUND_STATE(snd)->starvation_threshold) {
                 goto check_tasks;
             }
         }
@@ -849,8 +851,9 @@ static s32 Ready(BINKSND PTR4* snd)
 check_tasks:
     if (NGC_SOUND_STATE(snd)->pending_end == 0) {
         /* Only offer a lock when the writer is safely ahead of the AX cursor. */
-        if (NGC_SOUND_STATE(snd)->play_cursor >= play_pos || play_pos - NGC_SOUND_STATE(snd)->play_cursor > NGC_SOUND_STATE(snd)->frame_size) {
-            index = 0;
+        if (NGC_SOUND_STATE(snd)->play_cursor >= voice_cursor ||
+            voice_cursor - NGC_SOUND_STATE(snd)->play_cursor > NGC_SOUND_STATE(snd)->frame_size) {
+            lock_index = 0;
             task = state->tasks;
             for (;;) {
                 u32 owner = task->owner;
@@ -859,9 +862,9 @@ check_tasks:
                 if ((owner & NGC_TASK_BUSY_FLAG) == 0) {
                     break;
                 }
-                ++index;
-                if (index > NGC_SOUND_LAST_LOCK_INDEX) {
-                    index = NGC_SOUND_NO_LOCK_INDEX;
+                ++lock_index;
+                if (lock_index > NGC_SOUND_LAST_LOCK_INDEX) {
+                    lock_index = NGC_SOUND_NO_LOCK_INDEX;
                     break;
                 }
             }
@@ -869,8 +872,8 @@ check_tasks:
     }
 
     NGC_SOUND_STATE(snd)->last_ready_time = now;
-    NGC_SOUND_STATE(snd)->lock_index = index;
-    return index != NGC_SOUND_NO_LOCK_INDEX;
+    NGC_SOUND_STATE(snd)->lock_index = lock_index;
+    return lock_index != NGC_SOUND_NO_LOCK_INDEX;
 }
 
 static void Volume(BINKSND PTR4* snd, s32 volume)
