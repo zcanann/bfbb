@@ -466,7 +466,7 @@ static inline u32 exp_read_huff8(EXPBITS PTR4* bits, u32 state, HUFF8TABLE PTR4*
 static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
                           u32 PTR4* bits_to_peek, u8 PTR4* syms)
 {
-    u32 table_index;
+    u32 vlc_num;
     u32 sort_mode;
     u32 last_explicit;
     u32 count;
@@ -478,10 +478,10 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
     HUFF4MERGES merges;
 
     /* Each table stores a 4-bit codebook index plus a 16-entry symbol remap. */
-    VarBitsGet(table_index, u32, *vb, HUFF4_USED_SHIFT);
-    *decode = huff4decodes[table_index];
-    *bits_to_peek = (u8)BINK_HUFF4_BITS_TO_PEEK[table_index];
-    if (table_index == HUFF4_IDENTITY_CODEBOOK) {
+    VarBitsGet(vlc_num, u32, *vb, HUFF4_USED_SHIFT);
+    *decode = huff4decodes[vlc_num];
+    *bits_to_peek = (u8)BINK_HUFF4_BITS_TO_PEEK[vlc_num];
+    if (vlc_num == HUFF4_IDENTITY_CODEBOOK) {
         for (j = 0; j < HUFF4_SYMBOLS; ++j) {
             syms[j] = j;
         }
