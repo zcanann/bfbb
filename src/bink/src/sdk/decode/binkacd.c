@@ -248,7 +248,7 @@ static inline u32 read_bit(BINKVARBITS PTR4* vb)
 static void read_rle_samples(f32 PTR4* samples, u32 transform_size, BINKVARBITS PTR4* vb,
                              const f32 PTR4* thresholds, const u32 PTR4* bands)
 {
-    u32 i;
+    u32 sample_index;
     u32 band = 0;
     f32 scale = 0.0f;
     f32 PTR4* out;
@@ -258,12 +258,12 @@ static void read_rle_samples(f32 PTR4* samples, u32 transform_size, BINKVARBITS 
         ++band;
     }
 
-    i = BINKAC_FIRST_COEFF;
+    sample_index = BINKAC_FIRST_COEFF;
     out = samples + BINKAC_FIRST_COEFF;
 
-    while (i < transform_size) {
-        u32 end;
-        u32 bitlen;
+    while (sample_index < transform_size) {
+        u32 packet_end;
+        u32 coeff_bits;
 
         /* Each sparse coefficient packet is either 5 bits (literal VQ run) or
            9 bits (RLE flag, 4-bit run index, 4-bit coefficient bit length). */
@@ -271,37 +271,37 @@ static void read_rle_samples(f32 PTR4* samples, u32 transform_size, BINKVARBITS 
             u32 rle_flag = read_bit(vb);
 
             if (rle_flag != 0) {
-                end = i + BINKAC_RLE_SAMPLE_RUN(read_rle_bits(vb));
+                packet_end = sample_index + BINKAC_RLE_SAMPLE_RUN(read_rle_bits(vb));
             } else {
-                end = i + VQLENGTH;
+                packet_end = sample_index + VQLENGTH;
             }
         }
 
-        if (end > transform_size) {
-            end = transform_size;
+        if (packet_end > transform_size) {
+            packet_end = transform_size;
         }
 
-        bitlen = read_rle_bits(vb);
-        if (bitlen == 0) {
-            u32 count = end - i;
+        coeff_bits = read_rle_bits(vb);
+        if (coeff_bits == 0) {
+            u32 zero_count = packet_end - sample_index;
 
-            memset(out, BINKAC_ZERO_BYTE, count * sizeof(*out));
-            out += count;
-            i = end;
+            memset(out, BINKAC_ZERO_BYTE, zero_count * sizeof(*out));
+            out += zero_count;
+            sample_index = packet_end;
 
-            while (i > BINKAC_BAND_SAMPLE_LIMIT(bands, band)) {
+            while (sample_index > BINKAC_BAND_SAMPLE_LIMIT(bands, band)) {
                 scale = thresholds[band];
                 ++band;
             }
         } else {
-            while (i < end) {
-                if (i == BINKAC_BAND_SAMPLE_LIMIT(bands, band)) {
+            while (sample_index < packet_end) {
+                if (sample_index == BINKAC_BAND_SAMPLE_LIMIT(bands, band)) {
                     scale = thresholds[band];
                     ++band;
                 }
 
                 {
-                    s32 magnitude = read_bits(vb, bitlen);
+                    s32 magnitude = read_bits(vb, coeff_bits);
 
                     if (magnitude) {
                         /* Bink audio 1 stores the sign bit after each nonzero coefficient. */
@@ -314,7 +314,7 @@ static void read_rle_samples(f32 PTR4* samples, u32 transform_size, BINKVARBITS 
                     }
                 }
 
-                ++i;
+                ++sample_index;
                 ++out;
             }
         }
