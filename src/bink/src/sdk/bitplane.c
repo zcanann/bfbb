@@ -1373,7 +1373,7 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 limit)
     u8 PTR4* next_node_ptr;
     s32 sample_count;
     BPLOSSYREADTREE tree;
-    u8 order[BP_BLOCK_COEFFS];
+    u8 active_order[BP_BLOCK_COEFFS];
     BPBITSTREAM bitcopy;
 
     bitcopy = *bits;
@@ -1427,12 +1427,12 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 limit)
                     bitbuf = bitbuf >> 1;
                 }
                 if ((word & 1) != 0) {
-                    sample = dest[(u32)order[scan]];
+                    sample = dest[(u32)active_order[scan]];
                     delta = bit_value;
                     if (sample < 0) {
                         delta = -bit_value;
                     }
-                    dest[(u32)order[scan]] = sample + (s8)delta;
+                    dest[(u32)active_order[scan]] = sample + (s8)delta;
                     if (sample_count++ == limit) {
                         goto done;
                     }
@@ -1483,7 +1483,7 @@ decode_node:
                         if (node_kind != BP_READ_TREE_COEFF_NODE) {
                             goto next_node;
                         }
-                        order[active_count] = BP_READ_TREE_INDEX(node);
+                        active_order[active_count] = BP_READ_TREE_INDEX(node);
                         /* Deferred coeff nodes already carry their scan index. */
                         word = bitbuf;
                         active_count = active_count + 1;
@@ -1530,7 +1530,7 @@ push_0:
                         goto push_0;
                     }
                 }
-                order[active_count] = BP_READ_TREE_INDEX(node);
+                active_order[active_count] = BP_READ_TREE_INDEX(node);
                 /* A zero child-presence bit introduces the coefficient immediately. */
                 active_count = active_count + 1;
                 if (bitcount == 0) {
@@ -1571,7 +1571,7 @@ push_1:
                         goto push_1;
                     }
                 }
-                order[active_count] = node;
+                active_order[active_count] = node;
                 /* Nonzero children are pushed for later planes instead. */
                 active_count = active_count + 1;
                 if (bitcount == 0) {
@@ -1612,7 +1612,7 @@ push_2:
                         goto push_2;
                     }
                 }
-                order[active_count] = node;
+                active_order[active_count] = node;
                 active_count = active_count + 1;
                 if (bitcount == 0) {
                     bitbuf = *words;
@@ -1644,7 +1644,7 @@ after_2:
                     bitbuf = bitbuf >> 1;
                 }
                 if ((word & 1) == 0) {
-                    order[active_count] = node;
+                    active_order[active_count] = node;
                     word = bitbuf;
                     /* The sign bit follows the first nonzero magnitude bit. */
                     active_count = active_count + 1;
