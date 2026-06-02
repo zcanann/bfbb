@@ -476,6 +476,7 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
     u32 count;
     u32 unused_symbols;
     u32 explicit_symbols;
+    u32 fill_symbol;
     u32 symbol;
     u32 j;
     u32 i;
@@ -579,19 +580,19 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
     } else {
         VarBitsGet(last_explicit, u32, *vb, HUFF4_EXPLICIT_SUBTYPE_BITS);
         unused_symbols = HUFF4_ALL_SYMBOLS_MASK;
-        for (count = 0; count <= last_explicit; ++count) {
+        for (i = 0; i <= last_explicit; ++i) {
             VarBitsGet(symbol, u32, *vb, HUFF4_USED_SHIFT);
-            values[count] = symbol;
+            values[i] = symbol;
             unused_symbols &= ~(HUFF4_SYMBOL_PRESENT_BIT << symbol);
         }
 
-        i = 0;
+        fill_symbol = 0;
         do {
             if ((unused_symbols & HUFF4_SYMBOL_PRESENT_BIT) != 0) {
                 last_explicit++;
-                values[last_explicit] = i;
+                values[last_explicit] = fill_symbol;
             }
-            i++;
+            fill_symbol++;
             unused_symbols >>= 1;
         } while (unused_symbols != 0);
     }
