@@ -1360,7 +1360,7 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 limit)
     u32 old_bitcount;
     u32 levels_remaining;
     u8 node_kind;
-    u8 PTR4* tree_end;
+    u8 PTR4* tree_end_ptr;
     s32 bit_value;
     s32 active_count;
     u8 PTR4* node_ptr;
@@ -1405,7 +1405,7 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 limit)
     tree.roots[BP_ROOT_GROUP11_SLOT] = BP_READ_TREE_GROUP11_ROOT;
     bit_value = (s32)(s8)(1 << (levels_remaining - 1));
     tree.roots[BP_ROOT_LOSSY_DC_SLOT] = BP_READ_TREE_DC_ROOT;
-    tree_end = tree.nodes;
+    tree_end_ptr = tree.nodes;
     active_count = 0;
     node_ptr = tree.roots;
     do {
@@ -1441,7 +1441,7 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 limit)
             } while (scan < active_count);
         }
         next_node_ptr = node_ptr;
-        if (node_ptr < tree_end) {
+        if (node_ptr < tree_end_ptr) {
             scan = -bit_value;
 read_node:
             node = *node_ptr;
@@ -1470,10 +1470,10 @@ decode_node:
                 if (node_kind == BP_READ_TREE_GROUP_NODE) {
                     node_kind = BP_READ_TREE_INDEX(node);
                     *node_ptr = BP_READ_TREE_BRANCH_FROM_NODE(node);
-                    *tree_end = BP_READ_TREE_NODE(node_kind + BP_READ_TREE_CHILD1_BASE, BP_READ_TREE_BRANCH_NODE);
-                    tree_end[1] = BP_READ_TREE_NODE(node_kind + BP_READ_TREE_CHILD2_BASE, BP_READ_TREE_BRANCH_NODE);
-                    tree_end[2] = BP_READ_TREE_NODE(node_kind + BP_READ_TREE_CHILD3_BASE, BP_READ_TREE_BRANCH_NODE);
-                    tree_end = tree_end + BP_TREE_ADDED_CHILD_COUNT;
+                    *tree_end_ptr = BP_READ_TREE_NODE(node_kind + BP_READ_TREE_CHILD1_BASE, BP_READ_TREE_BRANCH_NODE);
+                    tree_end_ptr[1] = BP_READ_TREE_NODE(node_kind + BP_READ_TREE_CHILD2_BASE, BP_READ_TREE_BRANCH_NODE);
+                    tree_end_ptr[2] = BP_READ_TREE_NODE(node_kind + BP_READ_TREE_CHILD3_BASE, BP_READ_TREE_BRANCH_NODE);
+                    tree_end_ptr = tree_end_ptr + BP_TREE_ADDED_CHILD_COUNT;
                     goto node_done;
                 }
                 if (node_kind == BP_READ_TREE_HIGH_NODE) {
@@ -1670,7 +1670,7 @@ after_2:
                 }
             }
 node_done:
-            if (tree_end <= node_ptr) {
+            if (tree_end_ptr <= node_ptr) {
                 goto level_done;
             }
             goto read_node;
