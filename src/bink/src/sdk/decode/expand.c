@@ -268,7 +268,6 @@ static inline u32 exp_get_bits(EXPBITS PTR4* bits, u32 count)
     EXPBITSTYPE bitbuf;
     EXPBITSTYPE word;
     u32 mask;
-    u32 value;
 
     mask = GetBitsLen(count);
     bitcount = bits->bitlen;
@@ -284,15 +283,13 @@ static inline u32 exp_get_bits(EXPBITS PTR4* bits, u32 count)
         bitbuf |= word << bitcount;
     }
 
-    value = bitbuf & mask;
-    return value;
+    return bitbuf & mask;
 }
 
 static inline u32 exp_get_bit(EXPBITS PTR4* bits)
 {
     u32 bitcount;
     EXPBITSTYPE bitbuf;
-    u32 value;
 
     bitcount = bits->bitlen;
     if (bitcount != 0) {
@@ -305,8 +302,7 @@ static inline u32 exp_get_bit(EXPBITS PTR4* bits)
         bits->bits = bitbuf >> 1;
     }
 
-    value = bitbuf & 1;
-    return value;
+    return bitbuf & 1;
 }
 
 static void simpmergesort(EXPBITS PTR4* bits, u8 PTR4* out, u8 PTR4* left,
