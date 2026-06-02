@@ -741,7 +741,6 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
     u8 node;
     u8 kind;
     u8 base;
-    const u32 PTR4* lens;
     BPLOSSLESSREADTREE tree;
     BPLOSSLESSCOEFFS coeffs;
     BPBITSTREAM bitcopy;
@@ -769,7 +768,6 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
     }
 
     maxlevel = code & BP_LOSSLESS_LEVEL_MASK;
-    lens = VarBitsLens;
     highbit = (u16)(1 << (maxlevel - 1));
     /* Root nodes mirror WriteBPLossless: three grouped roots plus coeffs 1..3. */
     tree.roots[BP_ROOT_GROUP1_SLOT] = BP_READ_TREE_GROUP1_ROOT;
@@ -788,7 +786,7 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
         next = cur;
         highbit = (s16)highbit >> 1;
         if (cur < tree_end) {
-            mask = lens[level];
+            mask = (u16)(0xffffffff >> (BP_BITS_PER_WORD - level));
             do {
                 node = *cur;
                 if (node == BP_READ_TREE_EMPTY_ENTRY) {
