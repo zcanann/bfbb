@@ -1966,9 +1966,10 @@ found_previous:
                     goto found_previous;
                 }
 
-                if (cur < bnk->Frames &&
-                    BINK_FRAME_KEY(bnk->frameoffsets[cur++]) != 0) {
-                    return cur;
+                if (cur < bnk->Frames) {
+                    if (BINK_FRAME_KEY(bnk->frameoffsets[cur++]) != 0) {
+                        return cur;
+                    }
                 }
             } else {
                 if (cur >= bnk->Frames) {
