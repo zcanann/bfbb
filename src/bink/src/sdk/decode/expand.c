@@ -352,7 +352,7 @@ static inline u32 exp_read_huff4(EXPBITS PTR4* bits, u32 bits_to_peek,
     u32 mask;
     u8 code;
     u32 used;
-    u32 value;
+    u32 symbol;
 
     bitcount = bits->bitlen;
     mask = GetBitsLen(bits_to_peek);
@@ -360,7 +360,7 @@ static inline u32 exp_read_huff4(EXPBITS PTR4* bits, u32 bits_to_peek,
         bitbuf = bits->bits & mask;
         code = decode[bitbuf];
         used = HUFF4_CODE_USED(code);
-        value = HUFF4_CODE_VALUE(code, values);
+        symbol = HUFF4_CODE_VALUE(code, values);
         bits->bits >>= used;
         bits->bitlen = bitcount - used;
     } else {
@@ -368,7 +368,7 @@ static inline u32 exp_read_huff4(EXPBITS PTR4* bits, u32 bits_to_peek,
         bitbuf = (bits->bits | (word << bitcount)) & mask;
         code = decode[bitbuf];
         used = HUFF4_CODE_USED(code);
-        value = HUFF4_CODE_VALUE(code, values);
+        symbol = HUFF4_CODE_VALUE(code, values);
         if (bitcount >= used) {
             bits->bits >>= used;
             bits->bitlen = bitcount - used;
@@ -379,7 +379,7 @@ static inline u32 exp_read_huff4(EXPBITS PTR4* bits, u32 bits_to_peek,
         }
     }
 
-    return value;
+    return symbol;
 }
 
 static inline void exp_read_huff4_store(EXPBITS PTR4* bits, u32 bits_to_peek,
@@ -428,14 +428,14 @@ static inline u32 exp_read_huff4_mask(EXPBITS PTR4* bits, u32 bits_to_peek,
     EXPBITSTYPE word;
     u8 code;
     u32 used;
-    u32 value;
+    u32 symbol;
 
     bitcount = bits->bitlen;
     if (bitcount >= bits_to_peek) {
         bitbuf = bits->bits & mask;
         code = decode[bitbuf];
         used = HUFF4_CODE_USED(code);
-        value = HUFF4_CODE_VALUE(code, values);
+        symbol = HUFF4_CODE_VALUE(code, values);
         bits->bits >>= used;
         bits->bitlen = bitcount - used;
     } else {
@@ -443,7 +443,7 @@ static inline u32 exp_read_huff4_mask(EXPBITS PTR4* bits, u32 bits_to_peek,
         bitbuf = (bits->bits | (word << bitcount)) & mask;
         code = decode[bitbuf];
         used = HUFF4_CODE_USED(code);
-        value = HUFF4_CODE_VALUE(code, values);
+        symbol = HUFF4_CODE_VALUE(code, values);
         if (bitcount >= used) {
             bits->bits >>= used;
             bits->bitlen = bitcount - used;
@@ -454,7 +454,7 @@ static inline u32 exp_read_huff4_mask(EXPBITS PTR4* bits, u32 bits_to_peek,
         }
     }
 
-    return value;
+    return symbol;
 }
 
 static inline u32 exp_read_huff8(EXPBITS PTR4* bits, u32 state, HUFF8TABLE PTR4* table)
@@ -625,7 +625,7 @@ static void CheckReadRLEHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
 {
     u32 count;
     u8 PTR4* dest;
-    u32 value;
+    u32 symbol;
     u32 last_value;
     u8 run_length;
     u32 fill;
@@ -649,12 +649,12 @@ static void CheckReadRLEHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
             last_value = 0;
             decode = bundle->decode;
             while (count != 0) {
-                value = exp_read_huff4(bits, peek, decode, values);
-                if (value >= HUFF4_RLE_FIRST_RUN_SYMBOL) {
+                symbol = exp_read_huff4(bits, peek, decode, values);
+                if (symbol >= HUFF4_RLE_FIRST_RUN_SYMBOL) {
                     /* Packed word stores four copies of the last byte for the run fill. */
                     fill = last_value | (last_value << BINK_BYTE_BITS);
-                    value -= HUFF4_RLE_LITERAL_COUNT;
-                    run_length = BINK_HUFF4_RLE_LENGTH(value);
+                    symbol -= HUFF4_RLE_LITERAL_COUNT;
+                    run_length = BINK_HUFF4_RLE_LENGTH(symbol);
                     count -= run_length;
                     fill |= fill << BINK_BUNDLE_MIN_WORD_BITS;
                     do {
@@ -663,9 +663,9 @@ static void CheckReadRLEHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
                         run_length -= EXP_WORD_BYTES;
                     } while (run_length != 0);
                 } else {
-                    *dest++ = (u8)value;
+                    *dest++ = (u8)symbol;
                     count--;
-                    last_value = value;
+                    last_value = symbol;
                 }
             }
         } else {
