@@ -952,10 +952,10 @@ static u32 high1secrate(s32 frames, const u32 PTR4* frameoffsets, s32 span,
     i = 0;
     if (i < frames - span) {
         do {
-            u32 diff = frameoffsets[i + span] - frameoffsets[i];
+            u32 span_bytes = frameoffsets[i + span] - frameoffsets[i];
 
-            if (diff > rate) {
-                rate = diff;
+            if (span_bytes > rate) {
+                rate = span_bytes;
                 best = i;
             }
             ++i;
@@ -1947,11 +1947,11 @@ found_previous:
             limit = bnk->Frames;
             ptr = &bnk->frameoffsets[cur];
             do {
-                u32 value;
+                u32 frame_entry;
 
-                value = *ptr++;
+                frame_entry = *ptr++;
                 ++cur;
-                if (BINK_FRAME_KEY(value) != 0) {
+                if (BINK_FRAME_KEY(frame_entry) != 0) {
                     return cur;
                 }
             } while (cur < limit);
