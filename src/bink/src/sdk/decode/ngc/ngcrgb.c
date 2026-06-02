@@ -1031,10 +1031,10 @@ void YUV_32am_4x2(u32 count)
     dest0 = (u32 PTR4*)RGB_TILE_LOC(base, dest0, pitch, tiledPitch, row0);
     dest1 = (u32 PTR4*)RGB_TILE_LOC(base, dest1, pitch, tiledPitch, row1);
 
-    y0 = S.y0;
-    y1 = S.y1;
     a0 = S.a0;
     a1 = S.a1;
+    y0 = S.y0;
+    y1 = S.y1;
 
     do {
         u32 yv0 = *y0++;
@@ -1103,10 +1103,10 @@ void YUV_32amx2_4x2(u32 count)
     dest0 = (u32 PTR4*)RGB_TILE_LOC(base, dest0, pitch, tiledPitch, row0);
     dest1 = (u32 PTR4*)RGB_TILE_LOC(base, dest1, pitch, tiledPitch, row1);
 
-    y0 = S.y0;
-    y1 = S.y1;
     a0 = S.a0;
     a1 = S.a1;
+    y0 = S.y0;
+    y1 = S.y1;
 
     do {
         u32 yv0 = *y0++;
@@ -1413,10 +1413,10 @@ void YUV_16a4m_4x2(u32 count)
 
     dest0 = (u32 PTR4*)S.dest0;
     dest1 = (u32 PTR4*)S.dest1;
-    y0 = S.y0;
-    y1 = S.y1;
     a0 = S.a0;
     a1 = S.a1;
+    y0 = S.y0;
+    y1 = S.y1;
     pitch = S.pitch;
     base = S.base;
     tiledPitch = RGB_TILE_PITCH16(pitch);
@@ -1476,10 +1476,10 @@ void YUV_16a4mx2_4x2(u32 count)
 
     dest0 = (u32 PTR4*)S.dest0;
     dest1 = (u32 PTR4*)S.dest1;
-    y0 = S.y0;
-    y1 = S.y1;
     a0 = S.a0;
     a1 = S.a1;
+    y0 = S.y0;
+    y1 = S.y1;
     pitch = S.pitch;
     base = S.base;
     tiledPitch = RGB_TILE_PITCH16(pitch);
