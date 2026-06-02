@@ -73,6 +73,8 @@ enum YUVZoomLayout {
 };
 
 #define YUV_ZOOM_ALIGN_SIZE(width) (((width) + YUV_ZOOM_ALIGN_MASK) & ~YUV_ZOOM_ALIGN_MASK)
+#define YUY2_DUP_LUMA_WITH_CHROMA(chroma, y) ((chroma) | (y) | ((u32)(y) << 16))
+#define YUY2_DUP_LUMA_FROM_PIXEL(pixel, y) YUY2_DUP_LUMA_WITH_CHROMA((pixel) & YUY2_CHROMA_MASK, y)
 enum YUVBlitLayout {
     YUV_ZOOM_BUFFER_COUNT = 2,
     YUV_PACKED_WORD_BYTES = 4,
@@ -3773,7 +3775,7 @@ static void dounalignedYUY2row2wh(u32 phase, u32 count)
         pixel0 = YUY2_COLOR_PAIR(y0, u, y0, v);
         ((u32 PTR4*)S.dest0)[0] = pixel0;
         y1 = *((u8 PTR4*)S.y0 + 1);
-        pixel1 = (pixel0 & YUY2_CHROMA_MASK) | y1 | ((u32)y1 << 16);
+        pixel1 = YUY2_DUP_LUMA_FROM_PIXEL(pixel0, y1);
         ((u32 PTR4*)S.dest0)[1] = pixel1;
         *(u32 PTR4*)(S.dest0 + S.pitch) = pixel0;
         *(u32 PTR4*)(S.dest0 + S.pitch + YUV_PACKED_WORD_BYTES) = pixel1;
@@ -3805,7 +3807,7 @@ static u32 dounalignedYUY2col2wh(u32 count, s32 phase)
         y0 = *(u8 PTR4*)S.y0;
         pixel0 = YUY2_COLOR_PAIR(y0, u, y0, v);
         y1 = *((u8 PTR4*)S.y0 + 1);
-        pixel1 = (pixel0 & YUY2_CHROMA_MASK) | y1 | ((u32)y1 << 16);
+        pixel1 = YUY2_DUP_LUMA_FROM_PIXEL(pixel0, y1);
         ((u32 PTR4*)S.dest0)[0] = pixel0;
         ((u32 PTR4*)S.dest0)[1] = pixel1;
         uv0 = pixel0 & YUY2_CHROMA_MASK;
@@ -3813,9 +3815,9 @@ static u32 dounalignedYUY2col2wh(u32 count, s32 phase)
         *(u32 PTR4*)(S.dest0 + S.pitch) = pixel0;
         *(u32 PTR4*)(S.dest0 + S.pitch + YUV_PACKED_WORD_BYTES) = pixel1;
         y0 = *(u8 PTR4*)S.y1;
-        pixel0 = uv0 | y0 | ((u32)y0 << 16);
+        pixel0 = YUY2_DUP_LUMA_WITH_CHROMA(uv0, y0);
         y1 = *((u8 PTR4*)S.y1 + 1);
-        pixel1 = uv1 | y1 | ((u32)y1 << 16);
+        pixel1 = YUY2_DUP_LUMA_WITH_CHROMA(uv1, y1);
         ((u32 PTR4*)S.dest1)[0] = pixel0;
         ((u32 PTR4*)S.dest1)[1] = pixel1;
         *(u32 PTR4*)(S.dest1 + S.pitch) = pixel0;
@@ -3859,7 +3861,7 @@ static void dounalignedYUY2row2w(u32 phase, u32 count)
         ((u32 PTR4*)S.dest0)[0] = pixel;
         y1 = *((u8 PTR4*)S.y0 + 1);
         S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 2);
-        ((u32 PTR4*)S.dest0)[1] = (pixel & YUY2_CHROMA_MASK) | y1 | ((u32)y1 << 16);
+        ((u32 PTR4*)S.dest0)[1] = YUY2_DUP_LUMA_FROM_PIXEL(pixel, y1);
         S.dest0 += YUV_PACKED_PAIR_BYTES;
         remaining -= 2;
     } while (remaining >= 0);
@@ -3888,16 +3890,16 @@ static u32 dounalignedYUY2col2w(u32 count, s32 phase)
         chroma = pixel & YUY2_CHROMA_MASK;
         y1 = *((u8 PTR4*)S.y0 + 1);
         S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 2);
-        pixel = chroma | y1 | ((u32)y1 << 16);
+        pixel = YUY2_DUP_LUMA_WITH_CHROMA(chroma, y1);
         ((u32 PTR4*)S.dest0)[1] = pixel;
         chroma = pixel & YUY2_CHROMA_MASK;
         y0 = *(u8 PTR4*)S.y1;
-        pixel = chroma | y0 | ((u32)y0 << 16);
+        pixel = YUY2_DUP_LUMA_WITH_CHROMA(chroma, y0);
         ((u32 PTR4*)S.dest1)[0] = pixel;
         chroma = pixel & YUY2_CHROMA_MASK;
         y1 = *((u8 PTR4*)S.y1 + 1);
         S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + 2);
-        ((u32 PTR4*)S.dest1)[1] = chroma | y1 | ((u32)y1 << 16);
+        ((u32 PTR4*)S.dest1)[1] = YUY2_DUP_LUMA_WITH_CHROMA(chroma, y1);
         S.dest0 += YUV_PACKED_PAIR_BYTES;
         S.dest1 += YUV_PACKED_PAIR_BYTES;
     } while (remaining > 0);
