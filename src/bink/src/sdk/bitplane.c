@@ -235,7 +235,7 @@ u32 LenBPLossless(s16 PTR4* vals)
     s32 count;
     u8 PTR4* group_ptr;
     u8 PTR4* len_ptr;
-    s32 value;
+    s32 coeff;
     u16 PTR4* cur;
     u16 PTR4* restart;
     u16 PTR4* end;
@@ -252,9 +252,9 @@ u32 LenBPLossless(s16 PTR4* vals)
     maxbits = 0;
     i = BP_FIRST_AC_COEFF;
     do {
-        value = BP_ZIGZAG_COEFF(vals, i);
-        sign = value >> BP_S32_SIGN_SHIFT;
-        bits = getbitlevelvar(BP_ABS_COEFF(value, sign) & BP_U16_MASK) & BP_BYTE_MASK;
+        coeff = BP_ZIGZAG_COEFF(vals, i);
+        sign = coeff >> BP_S32_SIGN_SHIFT;
+        bits = getbitlevelvar(BP_ABS_COEFF(coeff, sign) & BP_U16_MASK) & BP_BYTE_MASK;
         if (bits > maxbits) {
             maxbits = bits;
         }
@@ -478,7 +478,7 @@ handle_final_children:
 void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
 {
     u16 entry;
-    s32 value;
+    s32 coeff;
     s32 sign;
     u16 kind;
     s32 i;
@@ -515,9 +515,9 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
     count = BP_BLOCK_COEFFS;
     i = 0;
     do {
-        value = ordered[i];
-        sign = value >> BP_S32_SIGN_SHIFT;
-        absvals[i] = BP_ABS_COEFF(value, sign);
+        coeff = ordered[i];
+        sign = coeff >> BP_S32_SIGN_SHIFT;
+        absvals[i] = BP_ABS_COEFF(coeff, sign);
         i++;
         count--;
     } while (count != 0);
@@ -733,7 +733,7 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
     u8 level;
     u8 maxlevel;
     s16 highbit;
-    s16 value;
+    s16 coeff_value;
     u16 mask;
     u8 PTR4* cur;
     u8 PTR4* next;
@@ -827,17 +827,17 @@ next_lossless_read_node:
                         } else {
                             if (kind != BP_READ_TREE_BRANCH_NODE) {
                                 if (kind == BP_READ_TREE_COEFF_NODE) {
-                                    value = bitbuf & mask;
+                                    coeff_value = bitbuf & mask;
                                     if (bitcount < level) {
                                         code = *words++;
-                                        value |= code << bitcount;
+                                        coeff_value |= code << bitcount;
                                         bitbuf = code >> (level - bitcount);
                                         bitcount = bitcount + BP_BITS_PER_WORD - level;
                                     } else {
                                         bitbuf >>= level;
                                         bitcount = bitcount - level;
                                     }
-                                    value = (value & mask) | highbit;
+                                    coeff_value = (coeff_value & mask) | highbit;
                                     if (bitcount == 0) {
                                         code = *words;
                                         bitcount = BP_WORD_TOP_BIT;
@@ -849,9 +849,9 @@ next_lossless_read_node:
                                         bitbuf >>= 1;
                                     }
                                     if ((code & 1) != 0) {
-                                        value = -value;
+                                        coeff_value = -coeff_value;
                                     }
-                                    coeffs.values[BP_READ_TREE_INDEX(node)] = (u16)value;
+                                    coeffs.values[BP_READ_TREE_INDEX(node)] = (u16)coeff_value;
                                     *cur = BP_READ_TREE_EMPTY_ENTRY;
                                 }
                                 goto next_lossless_read_node;
@@ -883,17 +883,17 @@ next_lossless_read_node:
                                     goto label;                                                                        \
                                 }                                                                                      \
                             }                                                                                          \
-                            value = bitbuf & mask;                                                                     \
+                            coeff_value = bitbuf & mask;                                                               \
                             if (bitcount < level) {                                                                    \
                                 code = *words++;                                                                       \
-                                value |= code << bitcount;                                                             \
+                                coeff_value |= code << bitcount;                                                       \
                                 bitbuf = code >> (level - bitcount);                                                   \
                                 bitcount = bitcount + BP_BITS_PER_WORD - level;                                        \
                             } else {                                                                                   \
                                 bitbuf >>= level;                                                                      \
                                 bitcount = bitcount - level;                                                           \
                             }                                                                                          \
-                            value = (value & mask) | highbit;                                                          \
+                            coeff_value = (coeff_value & mask) | highbit;                                              \
                             if (bitcount == 0) {                                                                       \
                                 code = *words;                                                                         \
                                 bitcount = BP_WORD_TOP_BIT;                                                            \
@@ -905,9 +905,9 @@ next_lossless_read_node:
                                 bitbuf >>= 1;                                                                          \
                             }                                                                                          \
                             if ((code & 1) != 0) {                                                                     \
-                                value = -value;                                                                        \
+                                coeff_value = -coeff_value;                                                            \
                             }                                                                                          \
-                            coeffs.values[slot] = (u16)value;                                                          \
+                            coeffs.values[slot] = (u16)coeff_value;                                                    \
                         } while (0)
                         READ_LOSSLESS_CHILD(base, after_lossless_child0);
 after_lossless_child0:
@@ -1089,7 +1089,7 @@ after_lossless_final3:
 u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
 {
     u16 entry;
-    s32 value;
+    s32 coeff;
     s32 sign;
     s32 i;
     s32 count;
@@ -1125,9 +1125,9 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     i = 0;
     count = BP_BLOCK_COEFFS;
     do {
-        value = (s8)ordered[i];
-        sign = value >> BP_S32_SIGN_SHIFT;
-        absvals[i] = (u8)BP_ABS_COEFF(value, sign);
+        coeff = (s8)ordered[i];
+        sign = coeff >> BP_S32_SIGN_SHIFT;
+        absvals[i] = (u8)BP_ABS_COEFF(coeff, sign);
         i++;
         count--;
     } while (count != 0);
