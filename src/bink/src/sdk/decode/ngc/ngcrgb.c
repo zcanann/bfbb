@@ -55,6 +55,12 @@ typedef enum RGBWordMasks
 #define RGB32_PAIR_LOW(pixel) (((pixel) << 16) | ((pixel) & RGB_WORD_LO_MASK))
 #define RGB32_PAIR_HIGH2(left, right) (((left) & RGB_WORD_HI_MASK) | ((right) >> 16))
 #define RGB32_PAIR_LOW2(left, right) (((left) << 16) | ((right) & RGB_WORD_LO_MASK))
+#define RGB32_COLOR_RED_PAIR(left, right, red) (((left)[red] << 16) | (right)[red])
+#define RGB32_COLOR_GB_PAIR(left, right, gb, blue) \
+    (((left)[gb] << 24) | ((left)[blue] << 16) | ((right)[gb] << 8) | (right)[blue])
+#define RGB32_COLOR_RED_DUP(row, red) (((row)[red] << 16) | (row)[red])
+#define RGB32_COLOR_GB_DUP(row, gb, blue) \
+    (((row)[gb] << 24) | ((row)[blue] << 16) | ((row)[gb] << 8) | (row)[blue])
 #define RGB32_ALPHA_PAIR_HIGH(alpha, left, right) \
     (((alpha) & RGB_ALPHA0_MASK) | ((left) & RGB_WORD_HI_MASK) | ((right) >> 16) | \
      (((alpha) >> 8) & RGB_ALPHA2_MASK))
@@ -161,13 +167,13 @@ void YUV_32_4x2_even(u32 count)
         r = v_to_r[vhi];
         b = u_to_b[uhi];
         yv1 = *y1++;
-        dest0[RGB_TILE_WORD0] = (y00[r] << 16) | y01[r];
-        dest0[RGB_TILE_NEXT_ROW_WORD0] = (y00[gb] << 24) | (y00[b] << 16) | (y01[gb] << 8) | y01[b];
+        dest0[RGB_TILE_WORD0] = RGB32_COLOR_RED_PAIR(y00, y01, r);
+        dest0[RGB_TILE_NEXT_ROW_WORD0] = RGB32_COLOR_GB_PAIR(y00, y01, gb, b);
 
         y10 = clamp_ytable[RGB_WORD_BYTE3(yv1)];
         y11 = clamp_ytable[RGB_WORD_BYTE2(yv1)];
-        dest1[RGB_TILE_WORD0] = (y10[r] << 16) | y11[r];
-        dest1[RGB_TILE_NEXT_ROW_WORD0] = (y10[gb] << 24) | (y10[b] << 16) | (y11[gb] << 8) | y11[b];
+        dest1[RGB_TILE_WORD0] = RGB32_COLOR_RED_PAIR(y10, y11, r);
+        dest1[RGB_TILE_NEXT_ROW_WORD0] = RGB32_COLOR_GB_PAIR(y10, y11, gb, b);
 
         vlo = RGB_WORD_BYTE0(vword);
         ulo = RGB_WORD_BYTE0(uword);
@@ -176,14 +182,14 @@ void YUV_32_4x2_even(u32 count)
         gb = v_to_gb[vlo] + u_to_gb[ulo];
         r = v_to_r[vlo];
         b = u_to_b[ulo];
-        dest0[RGB_TILE_WORD1] = (y00[r] << 16) | y01[r];
-        dest0[RGB_TILE_NEXT_ROW_WORD1] = (y00[gb] << 24) | (y00[b] << 16) | (y01[gb] << 8) | y01[b];
+        dest0[RGB_TILE_WORD1] = RGB32_COLOR_RED_PAIR(y00, y01, r);
+        dest0[RGB_TILE_NEXT_ROW_WORD1] = RGB32_COLOR_GB_PAIR(y00, y01, gb, b);
         dest0 += RGB_TILE_BLOCK_WORDS;
 
         y10 = clamp_ytable[RGB_WORD_BYTE1(yv1)];
         y11 = clamp_ytable[RGB_WORD_BYTE0(yv1)];
-        dest1[RGB_TILE_WORD1] = (y10[r] << 16) | y11[r];
-        dest1[RGB_TILE_NEXT_ROW_WORD1] = (y10[gb] << 24) | (y10[b] << 16) | (y11[gb] << 8) | y11[b];
+        dest1[RGB_TILE_WORD1] = RGB32_COLOR_RED_PAIR(y10, y11, r);
+        dest1[RGB_TILE_NEXT_ROW_WORD1] = RGB32_COLOR_GB_PAIR(y10, y11, gb, b);
         dest1 += RGB_TILE_BLOCK_WORDS;
 
         count--;
@@ -264,17 +270,17 @@ void YUV_32x2_4x2_even(u32 count)
         b = u_to_b[uhi];
         yv1 = *y1++;
 
-        dest0[RGB_TILE_WORD0] = (y00[r] << 16) | y00[r];
-        dest0[RGB_TILE_WORD1] = (y01[r] << 16) | y01[r];
-        dest0[RGB_TILE_NEXT_ROW_WORD0] = (y00[gb] << 24) | (y00[b] << 16) | (y00[gb] << 8) | y00[b];
-        dest0[RGB_TILE_NEXT_ROW_WORD1] = (y01[gb] << 24) | (y01[b] << 16) | (y01[gb] << 8) | y01[b];
+        dest0[RGB_TILE_WORD0] = RGB32_COLOR_RED_DUP(y00, r);
+        dest0[RGB_TILE_WORD1] = RGB32_COLOR_RED_DUP(y01, r);
+        dest0[RGB_TILE_NEXT_ROW_WORD0] = RGB32_COLOR_GB_DUP(y00, gb, b);
+        dest0[RGB_TILE_NEXT_ROW_WORD1] = RGB32_COLOR_GB_DUP(y01, gb, b);
 
         y10 = clamp_ytable[RGB_WORD_BYTE3(yv1)];
         y11 = clamp_ytable[RGB_WORD_BYTE2(yv1)];
-        dest1[RGB_TILE_WORD0] = (y10[r] << 16) | y10[r];
-        dest1[RGB_TILE_WORD1] = (y11[r] << 16) | y11[r];
-        dest1[RGB_TILE_NEXT_ROW_WORD0] = (y10[gb] << 24) | (y10[b] << 16) | (y10[gb] << 8) | y10[b];
-        dest1[RGB_TILE_NEXT_ROW_WORD1] = (y11[gb] << 24) | (y11[b] << 16) | (y11[gb] << 8) | y11[b];
+        dest1[RGB_TILE_WORD0] = RGB32_COLOR_RED_DUP(y10, r);
+        dest1[RGB_TILE_WORD1] = RGB32_COLOR_RED_DUP(y11, r);
+        dest1[RGB_TILE_NEXT_ROW_WORD0] = RGB32_COLOR_GB_DUP(y10, gb, b);
+        dest1[RGB_TILE_NEXT_ROW_WORD1] = RGB32_COLOR_GB_DUP(y11, gb, b);
 
         vlo = RGB_WORD_BYTE0(vword);
         ulo = RGB_WORD_BYTE0(uword);
@@ -283,18 +289,18 @@ void YUV_32x2_4x2_even(u32 count)
         r = v_to_r[vlo];
         gb = v_to_gb[vlo] + u_to_gb[ulo];
         b = u_to_b[ulo];
-        dest0[RGB_TILE_SECOND_BLOCK_WORD0] = (y00[r] << 16) | y00[r];
-        dest0[RGB_TILE_SECOND_BLOCK_WORD1] = (y01[r] << 16) | y01[r];
-        dest0[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD0] = (y00[gb] << 24) | (y00[b] << 16) | (y00[gb] << 8) | y00[b];
-        dest0[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD1] = (y01[gb] << 24) | (y01[b] << 16) | (y01[gb] << 8) | y01[b];
+        dest0[RGB_TILE_SECOND_BLOCK_WORD0] = RGB32_COLOR_RED_DUP(y00, r);
+        dest0[RGB_TILE_SECOND_BLOCK_WORD1] = RGB32_COLOR_RED_DUP(y01, r);
+        dest0[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD0] = RGB32_COLOR_GB_DUP(y00, gb, b);
+        dest0[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD1] = RGB32_COLOR_GB_DUP(y01, gb, b);
         dest0 += RGB_TILE_X2_BLOCK_WORDS;
 
         y10 = clamp_ytable[RGB_WORD_BYTE1(yv1)];
         y11 = clamp_ytable[RGB_WORD_BYTE0(yv1)];
-        dest1[RGB_TILE_SECOND_BLOCK_WORD0] = (y10[r] << 16) | y10[r];
-        dest1[RGB_TILE_SECOND_BLOCK_WORD1] = (y11[r] << 16) | y11[r];
-        dest1[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD0] = (y10[gb] << 24) | (y10[b] << 16) | (y10[gb] << 8) | y10[b];
-        dest1[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD1] = (y11[gb] << 24) | (y11[b] << 16) | (y11[gb] << 8) | y11[b];
+        dest1[RGB_TILE_SECOND_BLOCK_WORD0] = RGB32_COLOR_RED_DUP(y10, r);
+        dest1[RGB_TILE_SECOND_BLOCK_WORD1] = RGB32_COLOR_RED_DUP(y11, r);
+        dest1[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD0] = RGB32_COLOR_GB_DUP(y10, gb, b);
+        dest1[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD1] = RGB32_COLOR_GB_DUP(y11, gb, b);
         dest1 += RGB_TILE_X2_BLOCK_WORDS;
 
         count--;
