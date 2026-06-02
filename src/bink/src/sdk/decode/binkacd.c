@@ -301,14 +301,14 @@ static void read_rle_samples(f32 PTR4* samples, u32 transform_size, BINKVARBITS 
                 }
 
                 {
-                    s32 value = read_bits(vb, bitlen);
+                    s32 magnitude = read_bits(vb, bitlen);
 
-                    if (value) {
+                    if (magnitude) {
                         /* Bink audio 1 stores the sign bit after each nonzero coefficient. */
                         u32 sign_bit = read_bit(vb);
                         s32 sign = -(s32)sign_bit;
-                        value = (value ^ sign) - sign;
-                        *out = value * scale;
+                        magnitude = (magnitude ^ sign) - sign;
+                        *out = magnitude * scale;
                     } else {
                         *out = 0.0f;
                     }
