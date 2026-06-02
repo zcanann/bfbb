@@ -448,17 +448,17 @@ static u32 BinkFileReadFrame(BINKIO PTR4* io, u32 frame_num, s32 offset, void PT
         if ((u32)offset > NGC_CONSUME_CURSOR(io) && (u32)offset <= NGC_READ_CURSOR(io)) {
             BOOL enabled = OSDisableInterrupts();
             u32 skip = offset - NGC_CONSUME_CURSOR(io);
-            u8 PTR4* ptr;
+            u8 PTR4* read_ptr;
 
             /* A forward seek already buffered by DVD can be consumed by advancing the ring pointer. */
             NGC_VOLATILE_U32(NGC_FREE_SIZE(io)) =
                 NGC_VOLATILE_U32(NGC_FREE_SIZE(io)) + skip;
-            ptr = NGC_READ_PTR(io) + skip;
+            read_ptr = NGC_READ_PTR(io) + skip;
             NGC_CONSUME_CURSOR(io) = offset;
-            NGC_READ_PTR(io) = ptr;
+            NGC_READ_PTR(io) = read_ptr;
             io->CurBufUsed -= skip;
-            if ((u32)ptr > (u32)NGC_BUFFER_END(io)) {
-                NGC_READ_PTR(io) = ptr - io->BufSize;
+            if ((u32)read_ptr > (u32)NGC_BUFFER_END(io)) {
+                NGC_READ_PTR(io) = read_ptr - io->BufSize;
             }
 
             OSRestoreInterrupts(enabled);
