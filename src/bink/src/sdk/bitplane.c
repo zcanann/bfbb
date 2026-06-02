@@ -1696,38 +1696,41 @@ void ReadBPLossy(s16 PTR4* out, BPBITSTREAM PTR4* bits, s32 masks_count)
     BPLOSSYBLOCK residuals;
 
     readlossy(residuals.bytes, bits, masks_count);
-    out[0] = residuals.words[0];
-    out[1] = residuals.words[2];
-    out[2] = residuals.words[4];
-    out[3] = residuals.words[6];
-    out[4] = residuals.words[1];
-    out[5] = residuals.words[3];
-    out[6] = residuals.words[5];
-    out[7] = residuals.words[7];
-    out[8] = residuals.words[12];
-    out[9] = residuals.words[22];
-    out[10] = residuals.words[8];
-    out[11] = residuals.words[10];
-    out[12] = residuals.words[13];
-    out[13] = residuals.words[23];
-    out[14] = residuals.words[9];
-    out[15] = residuals.words[11];
-    out[16] = residuals.words[14];
-    out[17] = residuals.words[16];
-    out[18] = residuals.words[24];
-    out[19] = residuals.words[26];
-    out[20] = residuals.words[15];
-    out[21] = residuals.words[17];
-    out[22] = residuals.words[25];
-    out[23] = residuals.words[27];
-    out[24] = residuals.words[18];
-    out[25] = residuals.words[20];
-    out[26] = residuals.words[28];
-    out[27] = residuals.words[30];
-    out[28] = residuals.words[19];
-    out[29] = residuals.words[21];
-    out[30] = residuals.words[29];
-    out[31] = residuals.words[31];
+#define SCATTER_BP_LOSSY_WORD(out_index, residual_index)                                                              \
+    (out[(out_index)] = residuals.words[(residual_index)])
+    SCATTER_BP_LOSSY_WORD(0, 0);
+    SCATTER_BP_LOSSY_WORD(1, 2);
+    SCATTER_BP_LOSSY_WORD(2, 4);
+    SCATTER_BP_LOSSY_WORD(3, 6);
+    SCATTER_BP_LOSSY_WORD(4, 1);
+    SCATTER_BP_LOSSY_WORD(5, 3);
+    SCATTER_BP_LOSSY_WORD(6, 5);
+    SCATTER_BP_LOSSY_WORD(7, 7);
+    SCATTER_BP_LOSSY_WORD(8, 12);
+    SCATTER_BP_LOSSY_WORD(9, 22);
+    SCATTER_BP_LOSSY_WORD(10, 8);
+    SCATTER_BP_LOSSY_WORD(11, 10);
+    SCATTER_BP_LOSSY_WORD(12, 13);
+    SCATTER_BP_LOSSY_WORD(13, 23);
+    SCATTER_BP_LOSSY_WORD(14, 9);
+    SCATTER_BP_LOSSY_WORD(15, 11);
+    SCATTER_BP_LOSSY_WORD(16, 14);
+    SCATTER_BP_LOSSY_WORD(17, 16);
+    SCATTER_BP_LOSSY_WORD(18, 24);
+    SCATTER_BP_LOSSY_WORD(19, 26);
+    SCATTER_BP_LOSSY_WORD(20, 15);
+    SCATTER_BP_LOSSY_WORD(21, 17);
+    SCATTER_BP_LOSSY_WORD(22, 25);
+    SCATTER_BP_LOSSY_WORD(23, 27);
+    SCATTER_BP_LOSSY_WORD(24, 18);
+    SCATTER_BP_LOSSY_WORD(25, 20);
+    SCATTER_BP_LOSSY_WORD(26, 28);
+    SCATTER_BP_LOSSY_WORD(27, 30);
+    SCATTER_BP_LOSSY_WORD(28, 19);
+    SCATTER_BP_LOSSY_WORD(29, 21);
+    SCATTER_BP_LOSSY_WORD(30, 29);
+    SCATTER_BP_LOSSY_WORD(31, 31);
+#undef SCATTER_BP_LOSSY_WORD
 }
 
 void ReadBPLossyWithMotion(char PTR4* out, s32 pitch, BPBITSTREAM PTR4* bits, s32 masks_count,
