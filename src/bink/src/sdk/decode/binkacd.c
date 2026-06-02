@@ -331,7 +331,7 @@ static inline f32 Undecibel(f32 d)
 static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
                    f32 PTR4* fft_coeffs, s16 PTR4* samples, void PTR4* inptr,
                    u32 num_bands, const u32 PTR4* bands,
-                   f32 root)
+                   f32 transform_size_root)
 {
     f32 threshold[BINKAC_QUANT_COUNT];
     BINKVARBITS vb;
@@ -376,9 +376,9 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
     }
 
     if (chans == BINKAC_MONO_CHANNELS) {
-        quanttos16s(samples, decoded, root, transform_size);
+        quanttos16s(samples, decoded, transform_size_root, transform_size);
     } else {
-        quanttos16chans2(samples, decoded, root, transform_size);
+        quanttos16chans2(samples, decoded, transform_size_root, transform_size);
     }
 
     vb.bitlen = 0;
@@ -411,9 +411,9 @@ HBINKAUDIODECOMP BinkAudioDecompressOpen(u32 rate, u32 chans, u32 flags)
     u32 transform_size;
     u32 transform_size_half;
     u32 buffer_size;
-    f32 root;
+    f32 transform_size_root;
     u32 num_bands;
-    s32 sample_rate_half;
+    s32 nyq;
     HBINKAUDIODECOMP ba;
     u32 PTR4* bands;
     s32 PTR4* fft_work;
@@ -437,11 +437,11 @@ HBINKAUDIODECOMP BinkAudioDecompressOpen(u32 rate, u32 chans, u32 flags)
         chans = BINKAC_MONO_CHANNELS;
     }
 
-    sample_rate_half = (rate + BINKAC_NYQUIST_ROUNDING) / BINKAC_NYQUIST_DIVISOR;
+    nyq = (rate + BINKAC_NYQUIST_ROUNDING) / BINKAC_NYQUIST_DIVISOR;
     transform_size_half = transform_size / BINKAC_TRANSFORM_HALF_DIVISOR;
     /* Calculate the number of critical bands below Nyquist. */
     for (band_index = 0; band_index < TOTBANDS; ++band_index) {
-        if (bink_bandtopfreq[band_index] >= (u32)sample_rate_half) {
+        if (bink_bandtopfreq[band_index] >= (u32)nyq) {
             break;
         }
     }
@@ -475,11 +475,11 @@ HBINKAUDIODECOMP BinkAudioDecompressOpen(u32 rate, u32 chans, u32 flags)
     ba->transform_size = transform_size;
     ba->buffer_size = buffer_size;
     ba->window_size_in_bytes = BINKAC_WINDOW_BYTES(buffer_size);
-    root = 2.0f / radfsqrt((f32)transform_size);
-    ba->root = root;
+    transform_size_root = 2.0f / radfsqrt((f32)transform_size);
+    ba->transform_size_root = transform_size_root;
 
     for (band_index = 0; band_index < num_bands; ++band_index) {
-        ba->bands[band_index] = (bink_bandtopfreq[band_index] * transform_size_half) / sample_rate_half;
+        ba->bands[band_index] = (bink_bandtopfreq[band_index] * transform_size_half) / nyq;
         if (ba->bands[band_index] == 0) {
             ba->bands[band_index] = 1;
         }
@@ -495,7 +495,7 @@ void BinkAudioDecompress(HBINKAUDIODECOMP ba, void PTR4* PTR4* outptr, u32 PTR4*
                          void PTR4* inptr, void PTR4* PTR4* inoutptr)
 {
     u32 transform_size;
-    f32 root;
+    f32 transform_size_root;
     u32 chans;
     u32 flags;
     s32 PTR4* fft_work;
@@ -506,7 +506,7 @@ void BinkAudioDecompress(HBINKAUDIODECOMP ba, void PTR4* PTR4* outptr, u32 PTR4*
     u32 used_bytes;
 
     transform_size = ba->transform_size;
-    root = ba->root;
+    transform_size_root = ba->transform_size_root;
     chans = ba->chans;
     flags = ba->flags;
     fft_work = ba->fft_work;
@@ -515,7 +515,7 @@ void BinkAudioDecompress(HBINKAUDIODECOMP ba, void PTR4* PTR4* outptr, u32 PTR4*
     num_bands = ba->num_bands;
     bands = ba->bands;
     used_bytes = Unquant(transform_size, chans, flags, fft_work, fft_coeffs, samples, inptr,
-                         num_bands, bands, root);
+                         num_bands, bands, transform_size_root);
 
     /* Later frames overlap-add their leading window against the saved tail from the last frame. */
     if (ba->start_frame != 0) {
