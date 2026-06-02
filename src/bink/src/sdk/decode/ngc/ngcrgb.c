@@ -53,6 +53,8 @@ typedef enum RGBWordMasks
 #define RGB_WORD_BYTE0(word) ((word) & RGB_BYTE_MASK)
 #define RGB32_PAIR_HIGH(pixel) (((pixel) & RGB_WORD_HI_MASK) | ((pixel) >> 16))
 #define RGB32_PAIR_LOW(pixel) (((pixel) << 16) | ((pixel) & RGB_WORD_LO_MASK))
+#define RGB32_PAIR_HIGH2(left, right) (((left) & RGB_WORD_HI_MASK) | ((right) >> 16))
+#define RGB32_PAIR_LOW2(left, right) (((left) << 16) | ((right) & RGB_WORD_LO_MASK))
 
 typedef enum RGBClampLayout
 {
@@ -333,19 +335,19 @@ void YUV_32m_4x2(u32 count)
         u32 c = RGB32_M(RGB_WORD_BYTE1(yv0));
         u32 d = RGB32_M(RGB_WORD_BYTE0(yv0));
 
-        dest0[RGB_TILE_WORD0] = (a & RGB_WORD_HI_MASK) | (b >> 16);
-        dest0[RGB_TILE_WORD1] = (c & RGB_WORD_HI_MASK) | (d >> 16);
-        dest0[RGB_TILE_NEXT_ROW_WORD0] = (a << 16) | (b & RGB_WORD_LO_MASK);
-        dest0[RGB_TILE_NEXT_ROW_WORD1] = (c << 16) | (d & RGB_WORD_LO_MASK);
+        dest0[RGB_TILE_WORD0] = RGB32_PAIR_HIGH2(a, b);
+        dest0[RGB_TILE_WORD1] = RGB32_PAIR_HIGH2(c, d);
+        dest0[RGB_TILE_NEXT_ROW_WORD0] = RGB32_PAIR_LOW2(a, b);
+        dest0[RGB_TILE_NEXT_ROW_WORD1] = RGB32_PAIR_LOW2(c, d);
 
         a = RGB32_M(RGB_WORD_BYTE3(yv1));
         b = RGB32_M(RGB_WORD_BYTE2(yv1));
         c = RGB32_M(RGB_WORD_BYTE1(yv1));
         d = RGB32_M(RGB_WORD_BYTE0(yv1));
-        dest1[RGB_TILE_WORD0] = (a & RGB_WORD_HI_MASK) | (b >> 16);
-        dest1[RGB_TILE_WORD1] = (c & RGB_WORD_HI_MASK) | (d >> 16);
-        dest1[RGB_TILE_NEXT_ROW_WORD0] = (a << 16) | (b & RGB_WORD_LO_MASK);
-        dest1[RGB_TILE_NEXT_ROW_WORD1] = (c << 16) | (d & RGB_WORD_LO_MASK);
+        dest1[RGB_TILE_WORD0] = RGB32_PAIR_HIGH2(a, b);
+        dest1[RGB_TILE_WORD1] = RGB32_PAIR_HIGH2(c, d);
+        dest1[RGB_TILE_NEXT_ROW_WORD0] = RGB32_PAIR_LOW2(a, b);
+        dest1[RGB_TILE_NEXT_ROW_WORD1] = RGB32_PAIR_LOW2(c, d);
 
         dest0 += RGB_TILE_BLOCK_WORDS;
         dest1 += RGB_TILE_BLOCK_WORDS;
