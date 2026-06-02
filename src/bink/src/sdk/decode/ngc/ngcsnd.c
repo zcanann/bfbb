@@ -514,7 +514,7 @@ static void NGC_SoundResume(BINKSND PTR4* snd)
 static void NGC_SoundShutdown(BINKSND PTR4* snd)
 {
     u32 i;
-    void PTR4* ptr;
+    void PTR4* allocation;
     AXVPB PTR4* voice;
     AXVPB PTR4** voices;
     NGCSoundState PTR4* state;
@@ -542,21 +542,21 @@ static void NGC_SoundShutdown(BINKSND PTR4* snd)
         }
     }
 
-    ptr = NGC_SOUND_STATE(snd)->decode_buffer;
-    if (ptr != 0) {
-        radfree(ptr);
+    allocation = NGC_SOUND_STATE(snd)->decode_buffer;
+    if (allocation != 0) {
+        radfree(allocation);
         NGC_SOUND_STATE(snd)->decode_buffer = 0;
     }
 
-    ptr = NGC_SOUND_STATE(snd)->stereo_buffer;
-    if (ptr != 0) {
-        radfree(ptr);
+    allocation = NGC_SOUND_STATE(snd)->stereo_buffer;
+    if (allocation != 0) {
+        radfree(allocation);
         NGC_SOUND_STATE(snd)->stereo_buffer = 0;
     }
 
-    ptr = NGC_SOUND_STATE(snd)->audio_buffer;
-    if (ptr != 0) {
-        radaudiofree(ptr);
+    allocation = NGC_SOUND_STATE(snd)->audio_buffer;
+    if (allocation != 0) {
+        radaudiofree(allocation);
         NGC_SOUND_STATE(snd)->audio_buffer = 0;
     }
 }
@@ -1064,18 +1064,18 @@ void ConvDataToStereo8(u32 PTR4* src, u16 PTR4* left, u16 PTR4* right, u32 bytes
     count = total >> NGC_STEREO8_GROUP_SHIFT;
 
     for (i = 0; i < count; ++i) {
-        u32 value = *src++;
+        u32 packed_samples = *src++;
 
-        *left++ = (u16)NGC_SAMPLE_LEFT_8_PAIR(value);
-        *right++ = (u16)NGC_SAMPLE_RIGHT_8_PAIR(value);
+        *left++ = (u16)NGC_SAMPLE_LEFT_8_PAIR(packed_samples);
+        *right++ = (u16)NGC_SAMPLE_RIGHT_8_PAIR(packed_samples);
     }
 
     count = (total - (count << NGC_STEREO8_GROUP_SHIFT)) >> NGC_STEREO8_TAIL_SHIFT;
     for (i = 0; i < count; ++i) {
-        u16 value = *(u16 PTR4*)src;
+        u16 packed_samples = *(u16 PTR4*)src;
         src = NGC_ADVANCE_U32_BYTES(src, 2);
-        *(u8 PTR4*)left = (u8)(value >> NGC_SAMPLE_BYTE_SHIFT);
-        *(u8 PTR4*)right = (u8)value;
+        *(u8 PTR4*)left = (u8)(packed_samples >> NGC_SAMPLE_BYTE_SHIFT);
+        *(u8 PTR4*)right = (u8)packed_samples;
         left = NGC_ADVANCE_U16_BYTES(left, 1);
         right = NGC_ADVANCE_U16_BYTES(right, 1);
     }
@@ -1100,9 +1100,9 @@ void ConvDataToStereo16(u32 PTR4* src, u32 PTR4* left, u32 PTR4* right, u32 byte
 
     count = (total - (count << NGC_STEREO16_GROUP_SHIFT)) >> NGC_STEREO16_TAIL_SHIFT;
     for (i = 0; i < count; ++i) {
-        u32 value = *src++;
-        *(u16 PTR4*)left = (u16)NGC_SAMPLE_HIGH_HALF(value);
-        *(u16 PTR4*)right = (u16)value;
+        u32 packed_samples = *src++;
+        *(u16 PTR4*)left = (u16)NGC_SAMPLE_HIGH_HALF(packed_samples);
+        *(u16 PTR4*)right = (u16)packed_samples;
         left = NGC_ADVANCE_U32_BYTES(left, 2);
         right = NGC_ADVANCE_U32_BYTES(right, 2);
     }
