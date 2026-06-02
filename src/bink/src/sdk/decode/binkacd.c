@@ -336,7 +336,6 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
     f32 threshold[BINKAC_THRESHOLD_COUNT];
     BINKVARBITS vb;
     f32 decoded[MAX_TRANSFORM];
-    f32 output_scale;
     u32 ch;
     f32 PTR4* channel;
     u32 i;
@@ -346,8 +345,6 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
     vb.cur = inptr;
     vb.bitlen = 0;
     vb.bits = 0;
-    output_scale = transform_size_root;
-
     if (flags & BINKACNEWFORMAT) {
         /* New-format streams reserve two leading bits before the coefficient payload. */
         vb.bits = BINKAC_LOAD32(vb.cur) >> BINKACNEWFORMAT_SKIP_BITS;
@@ -379,9 +376,9 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
     }
 
     if (chans == BINKAC_MONO_CHANNELS) {
-        quanttos16s(samples, decoded, output_scale, transform_size);
+        quanttos16s(samples, decoded, transform_size_root, transform_size);
     } else {
-        quanttos16chans2(samples, decoded, output_scale, transform_size);
+        quanttos16chans2(samples, decoded, transform_size_root, transform_size);
     }
 
     vb.bitlen = 0;
