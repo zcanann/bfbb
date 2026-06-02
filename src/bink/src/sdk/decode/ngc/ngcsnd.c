@@ -804,8 +804,8 @@ static s32 Ready(BINKSND PTR4* snd)
         return 0;
     }
 
-    now = RADTimerRead();
     state = NGC_SOUND_STATE(snd);
+    now = RADTimerRead();
     shift = NGC_ADDRESS_SHIFT(state);
     voice = NGC_SOUND_STATE(snd)->left_voice;
     play_pos = NGC_AX_CURRENT_CURSOR(voice, shift);
