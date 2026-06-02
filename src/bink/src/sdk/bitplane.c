@@ -107,6 +107,7 @@
 #define BP_READ_TREE_COEFF2_ROOT BP_READ_TREE_COEFF(BP_COEFF2_INDEX)
 #define BP_READ_TREE_COEFF3_ROOT BP_READ_TREE_COEFF(BP_COEFF3_INDEX)
 #define BP_READ_TREE_BRANCH_FROM_NODE(node) (BP_READ_TREE_BASE(node) + BP_READ_TREE_BRANCH_NODE)
+#define BP_READ_TREE_COEFF_FROM_NODE(node) (BP_READ_TREE_BASE(node) + BP_READ_TREE_COEFF_NODE)
 #define BP_READ_TREE_GROUP_FROM_INDEX(index) BP_READ_TREE_NODE((index) + BP_READ_TREE_CHILD_COUNT, BP_READ_TREE_GROUP_NODE)
 #define BP_LOSSLESS_ROOT_NODES 6
 #define BP_LOSSY_ROOT_NODES 4
@@ -1524,7 +1525,7 @@ decode_node:
                     words = words + 1;
                     if ((word & 1) != 0) {
 push_0:
-                        *--next_node_ptr = BP_READ_TREE_BASE(node) + BP_READ_TREE_COEFF_NODE;
+                        *--next_node_ptr = BP_READ_TREE_COEFF_FROM_NODE(node);
                         goto after_0;
                     }
                 } else {
