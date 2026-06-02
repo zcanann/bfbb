@@ -64,6 +64,12 @@ typedef enum YUY2LumaByteMask
 #define YUY2_CHROMA3(u, v) (((u) & YUY2_CHROMA8_MASK) << 16) + ((v) & YUY2_CHROMA8_MASK)
 #define YUY2_TAIL_CHROMA0(u, v) (((u) & YUY2_CHROMA_LOW16_MASK) << 8) + ((v) >> 8)
 #define YUY2_TAIL_CHROMA1(u, v) (((u) & YUY2_CHROMA8_MASK) << 16) + ((v) & YUY2_CHROMA8_MASK)
+#define YUY2_PACK_4Y01_CHROMA0(y, u, v) YUY2_PACK_4Y01((y), YUY2_CHROMA0_U(u), YUY2_CHROMA0_V(v))
+#define YUY2_PACK_4Y23_CHROMA1(y, u, v) YUY2_PACK_4Y23((y), YUY2_CHROMA1_U(u), YUY2_CHROMA1_V(v))
+#define YUY2_PACK_4Y01_CHROMA2(y, u, v) YUY2_PACK_4Y01((y), YUY2_CHROMA2_U(u), YUY2_CHROMA2_V(v))
+#define YUY2_PACK_4Y23_CHROMA3(y, u, v) YUY2_PACK_4Y23((y), YUY2_CHROMA3_U(u), YUY2_CHROMA3_V(v))
+#define YUY2_PACK_TAIL_4Y01_CHROMA0(y, u, v) YUY2_PACK_4Y01((y), YUY2_TAIL_CHROMA0_U(u), YUY2_TAIL_CHROMA0_V(v))
+#define YUY2_PACK_TAIL_4Y23_CHROMA1(y, u, v) YUY2_PACK_4Y23((y), YUY2_TAIL_CHROMA1_U(u), YUY2_TAIL_CHROMA1_V(v))
 typedef enum YUY2RemainingState
 {
     YUY2_NO_REMAINING = 0xffffffffU
@@ -96,14 +102,14 @@ void YUY2_4x2(u32 count)
         u32 u0 = *u;
         u32 v0 = *v;
 
-        *dest++ = YUY2_PACK_4Y01(y0, YUY2_CHROMA0_U(u0), YUY2_CHROMA0_V(v0));
-        *dest++ = YUY2_PACK_4Y23(y0, YUY2_CHROMA1_U(u0), YUY2_CHROMA1_V(v0));
+        *dest++ = YUY2_PACK_4Y01_CHROMA0(y0, u0, v0);
+        *dest++ = YUY2_PACK_4Y23_CHROMA1(y0, u0, v0);
 
         y0 = *y++;
         u++;
         v++;
-        *dest++ = YUY2_PACK_4Y01(y0, YUY2_CHROMA2_U(u0), YUY2_CHROMA2_V(v0));
-        *dest++ = YUY2_PACK_4Y23(y0, YUY2_CHROMA3_U(u0), YUY2_CHROMA3_V(v0));
+        *dest++ = YUY2_PACK_4Y01_CHROMA2(y0, u0, v0);
+        *dest++ = YUY2_PACK_4Y23_CHROMA3(y0, u0, v0);
 
     }
 
@@ -112,8 +118,8 @@ void YUY2_4x2(u32 count)
         u16 u0 = *(const u16 PTR4*)u;
         u16 v0 = *(const u16 PTR4*)v;
 
-        *dest++ = YUY2_PACK_4Y01(y0, YUY2_TAIL_CHROMA0_U(u0), YUY2_TAIL_CHROMA0_V(v0));
-        *dest++ = YUY2_PACK_4Y23(y0, YUY2_TAIL_CHROMA1_U(u0), YUY2_TAIL_CHROMA1_V(v0));
+        *dest++ = YUY2_PACK_TAIL_4Y01_CHROMA0(y0, u0, v0);
+        *dest++ = YUY2_PACK_TAIL_4Y23_CHROMA1(y0, u0, v0);
     }
 
     pairs = YUY2_BLOCK_PAIRS(count);
@@ -126,14 +132,14 @@ void YUY2_4x2(u32 count)
         u32 u0 = *u;
         u32 v0 = *v;
 
-        *dest++ = YUY2_PACK_4Y01(y0, YUY2_CHROMA0_U(u0), YUY2_CHROMA0_V(v0));
-        *dest++ = YUY2_PACK_4Y23(y0, YUY2_CHROMA1_U(u0), YUY2_CHROMA1_V(v0));
+        *dest++ = YUY2_PACK_4Y01_CHROMA0(y0, u0, v0);
+        *dest++ = YUY2_PACK_4Y23_CHROMA1(y0, u0, v0);
 
         y0 = *y++;
         u++;
         v++;
-        *dest++ = YUY2_PACK_4Y01(y0, YUY2_CHROMA2_U(u0), YUY2_CHROMA2_V(v0));
-        *dest++ = YUY2_PACK_4Y23(y0, YUY2_CHROMA3_U(u0), YUY2_CHROMA3_V(v0));
+        *dest++ = YUY2_PACK_4Y01_CHROMA2(y0, u0, v0);
+        *dest++ = YUY2_PACK_4Y23_CHROMA3(y0, u0, v0);
 
     }
 
@@ -142,8 +148,8 @@ void YUY2_4x2(u32 count)
         u16 u0 = *(const u16 PTR4*)u;
         u16 v0 = *(const u16 PTR4*)v;
 
-        *dest++ = YUY2_PACK_4Y01(y0, YUY2_TAIL_CHROMA0_U(u0), YUY2_TAIL_CHROMA0_V(v0));
-        *dest++ = YUY2_PACK_4Y23(y0, YUY2_TAIL_CHROMA1_U(u0), YUY2_TAIL_CHROMA1_V(v0));
+        *dest++ = YUY2_PACK_TAIL_4Y01_CHROMA0(y0, u0, v0);
+        *dest++ = YUY2_PACK_TAIL_4Y23_CHROMA1(y0, u0, v0);
     }
 
     S.dest0 += YUY2_ROW_BYTES(count);
@@ -347,14 +353,14 @@ static void YUY2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, const u
         u32 u0 = *u;
         u32 v0 = *v;
 
-        *dest++ = YUY2_PACK_4Y01(y0, YUY2_CHROMA0_U(u0), YUY2_CHROMA0_V(v0));
-        *dest++ = YUY2_PACK_4Y23(y0, YUY2_CHROMA1_U(u0), YUY2_CHROMA1_V(v0));
+        *dest++ = YUY2_PACK_4Y01_CHROMA0(y0, u0, v0);
+        *dest++ = YUY2_PACK_4Y23_CHROMA1(y0, u0, v0);
 
         y0 = *y++;
         u++;
         v++;
-        *dest++ = YUY2_PACK_4Y01(y0, YUY2_CHROMA2_U(u0), YUY2_CHROMA2_V(v0));
-        *dest++ = YUY2_PACK_4Y23(y0, YUY2_CHROMA3_U(u0), YUY2_CHROMA3_V(v0));
+        *dest++ = YUY2_PACK_4Y01_CHROMA2(y0, u0, v0);
+        *dest++ = YUY2_PACK_4Y23_CHROMA3(y0, u0, v0);
 
     }
 
@@ -363,8 +369,8 @@ static void YUY2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, const u
         u16 u0 = *(const u16 PTR4*)u;
         u16 v0 = *(const u16 PTR4*)v;
 
-        *dest++ = YUY2_PACK_4Y01(y0, YUY2_TAIL_CHROMA0_U(u0), YUY2_TAIL_CHROMA0_V(v0));
-        *dest++ = YUY2_PACK_4Y23(y0, YUY2_TAIL_CHROMA1_U(u0), YUY2_TAIL_CHROMA1_V(v0));
+        *dest++ = YUY2_PACK_TAIL_4Y01_CHROMA0(y0, u0, v0);
+        *dest++ = YUY2_PACK_TAIL_4Y23_CHROMA1(y0, u0, v0);
     }
 }
 
