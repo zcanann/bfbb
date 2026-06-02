@@ -132,8 +132,10 @@ typedef enum BINKBUNDLEINITIALVALUE
      ((BINK_BLOCK_ROWS(rows) * (pitch) * (bits)) >> BINK_BLOCK_SHIFT))
 #define BINK_BUNDLE_ALIGN_SIZE(size) (((size) + BINK_WORD_ALIGN_MASK) & ~BINK_WORD_ALIGN_MASK)
 #define BINK_BUNDLE_EMPTY_CUR(bundle) ((bundle)->data + EXP_WORD_BYTES)
+#define BINK_BUNDLE_U8(bundle) (*(bundle).cur_ptr)
 #define BINK_BUNDLE_S8(bundle) (*(s8 PTR4*)((bundle).cur_ptr))
 #define BINK_BUNDLE_S16(bundle) (*(s16 PTR4*)((bundle).cur_ptr))
+#define BINK_BUNDLE_ADVANCE(bundle, bytes) ((bundle).cur_ptr += (bytes))
 #define BINK_BUNDLE_CHUNK_NEXT(bundle) ((u32 PTR4*)((u8 PTR4*)(bundle) + *(bundle)))
 #define BINK_BUNDLE_PAYLOAD_NEXT(bundle) \
     ((u32 PTR4*)((u8 PTR4*)(bundle) + (bundle)[-1] - EXP_WORD_BYTES))
@@ -1163,8 +1165,8 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
         col = 0;
         work_col = 0;
         while (col < width) {
-            block_type = *block_types.cur_ptr;
-            block_types.cur_ptr++;
+            block_type = BINK_BUNDLE_U8(block_types);
+            BINK_BUNDLE_ADVANCE(block_types, 1);
 
             if (BINK_BLOCK_ODD_ROW(row) && block_type == BINK_BLOCK_SCALED) {
                 col += BINK_BLOCK_SIDE;
@@ -1192,8 +1194,8 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 u32 block_row;
 
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
-                xoff.cur_ptr++;
-                yoff.cur_ptr++;
+                BINK_BUNDLE_ADVANCE(xoff, 1);
+                BINK_BUNDLE_ADVANCE(yoff, 1);
                 motion_source = BINK_MOTION_SOURCE(old, pitch, motion_x, motion_y);
                 for (block_row = 0; block_row < BINK_BLOCK_SIDE; ++block_row) {
                     BINK_BLOCK_ROW_WORD(dest, pitch, block_row, BINK_BLOCK_ROW_WORD_0) =
@@ -1211,8 +1213,8 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 u32 block_row;
 
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
-                xoff.cur_ptr++;
-                yoff.cur_ptr++;
+                BINK_BUNDLE_ADVANCE(xoff, 1);
+                BINK_BUNDLE_ADVANCE(yoff, 1);
                 motion_source = BINK_MOTION_SOURCE(old, pitch, motion_x, motion_y);
                 for (block_row = 0; block_row < BINK_BLOCK_SIDE; ++block_row) {
                     BINK_LINEAR_BLOCK_ROW_WORD(motion_block, block_row, BINK_BLOCK_ROW_WORD_0) =
@@ -1231,7 +1233,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
 
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
                 dct_block[0] = BINK_BUNDLE_S16(intra_dc);
-                intra_dc.cur_ptr += BINK_DC_BYTES;
+                BINK_BUNDLE_ADVANCE(intra_dc, BINK_DC_BYTES);
                 ReadBPLossless(dct_block, (BPBITSTREAM PTR4*)&bitstate);
                 quant = exp_get_bits(&bitstate, BINK_DCT_QUANT_BITS);
                 FastIDCT8x8(dest, pitch, dct_block, quant);
@@ -1246,9 +1248,9 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
 
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
                 dct_block[0] = BINK_BUNDLE_S16(inter_dc);
-                inter_dc.cur_ptr += BINK_DC_BYTES;
-                xoff.cur_ptr++;
-                yoff.cur_ptr++;
+                BINK_BUNDLE_ADVANCE(inter_dc, BINK_DC_BYTES);
+                BINK_BUNDLE_ADVANCE(xoff, 1);
+                BINK_BUNDLE_ADVANCE(yoff, 1);
                 motion_source = BINK_MOTION_SOURCE(old, pitch, motion_x, motion_y);
                 for (block_row = 0; block_row < BINK_BLOCK_SIDE; ++block_row) {
                     BINK_LINEAR_BLOCK_ROW_WORD(motion_block, block_row, BINK_BLOCK_ROW_WORD_0) =
@@ -1262,12 +1264,12 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 break;
             }
             case BINK_BLOCK_FILL: {
-                u8 color = *colors.cur_ptr;
+                u8 color = BINK_BUNDLE_U8(colors);
                 u32 fill = BINK_FILL_WORD(color);
                 u32 block_row;
 
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
-                colors.cur_ptr++;
+                BINK_BUNDLE_ADVANCE(colors, 1);
                 for (block_row = 0; block_row < BINK_BLOCK_SIDE; ++block_row) {
                     BINK_BLOCK_ROW_WORD(dest, pitch, block_row, BINK_BLOCK_ROW_WORD_0) = fill;
                     BINK_BLOCK_ROW_WORD(dest, pitch, block_row, BINK_BLOCK_ROW_WORD_1) = fill;
@@ -1288,7 +1290,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                     BINK_BLOCK_ROW_WORD(dest, pitch, block_row, BINK_BLOCK_ROW_WORD_1) =
                         BINK_LINEAR_BLOCK_ROW_WORD(colors.cur_ptr, block_row, BINK_BLOCK_ROW_WORD_1);
                 }
-                colors.cur_ptr += BINK_COLOR_BLOCK_BYTES;
+                BINK_BUNDLE_ADVANCE(colors, BINK_COLOR_BLOCK_BYTES);
                 break;
             }
             case BINK_BLOCK_RUN:
@@ -1296,20 +1298,20 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 expand_run_block(dest, pitch, &colors, &runs, &bitstate);
                 break;
             case BINK_BLOCK_SCALED:
-                subblock_type = *subblock_types.cur_ptr;
-                subblock_types.cur_ptr++;
+                subblock_type = BINK_BUNDLE_U8(subblock_types);
+                BINK_BUNDLE_ADVANCE(subblock_types, 1);
                 if (subblock_type == BINK_BLOCK_FILL) {
-                    colors.cur_ptr++;
+                    BINK_BUNDLE_ADVANCE(colors, 1);
                 } else if (subblock_type == BINK_BLOCK_PATTERN) {
-                    colors.cur_ptr += BINK_PATTERN_COLOR_COUNT;
-                    patterns.cur_ptr += BINK_PATTERN_BLOCK_BYTES;
+                    BINK_BUNDLE_ADVANCE(colors, BINK_PATTERN_COLOR_COUNT);
+                    BINK_BUNDLE_ADVANCE(patterns, BINK_PATTERN_BLOCK_BYTES);
                 } else if (subblock_type == BINK_BLOCK_RAW) {
-                    colors.cur_ptr += BINK_COLOR_BLOCK_BYTES;
+                    BINK_BUNDLE_ADVANCE(colors, BINK_COLOR_BLOCK_BYTES);
                 } else if (subblock_type == BINK_BLOCK_INTRA) {
                     u32 quant;
 
                     dct_block[0] = BINK_BUNDLE_S16(intra_dc);
-                    intra_dc.cur_ptr += BINK_DC_BYTES;
+                    BINK_BUNDLE_ADVANCE(intra_dc, BINK_DC_BYTES);
                     ReadBPLossless(dct_block, (BPBITSTREAM PTR4*)&bitstate);
                     quant = exp_get_bits(&bitstate, BINK_DCT_QUANT_BITS);
                     FastIDCT8x8d(dest, pitch, dct_block, quant);
