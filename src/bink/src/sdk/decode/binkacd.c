@@ -335,7 +335,7 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
 {
     f32 threshold[BINKAC_QUANT_COUNT];
     BINKVARBITS vb;
-    f32 decoded[MAX_TRANSFORM];
+    f32 decoded_coeffs[MAX_TRANSFORM];
     u32 ch;
     f32 PTR4* channel;
     u32 i;
@@ -352,7 +352,7 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
         vb.bitlen = BITSTYPELEN - BINKACNEWFORMAT_SKIP_BITS;
     }
 
-    channel = decoded;
+    channel = decoded_coeffs;
     for (ch = 0; ch < chans; ++ch) {
         VarBitsGet(i, u32, vb, FXPBITS);
         channel[BINKAC_DC_COEFF_0] = fxptof(i);
@@ -376,9 +376,9 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
     }
 
     if (chans == BINKAC_MONO_CHANNELS) {
-        quanttos16s(samples, decoded, transform_size_root, transform_size);
+        quanttos16s(samples, decoded_coeffs, transform_size_root, transform_size);
     } else {
-        quanttos16chans2(samples, decoded, transform_size_root, transform_size);
+        quanttos16chans2(samples, decoded_coeffs, transform_size_root, transform_size);
     }
 
     vb.bitlen = 0;
