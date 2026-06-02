@@ -735,9 +735,9 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
     s16 highbit;
     s16 coeff_value;
     u16 mask;
-    u8 PTR4* cur;
-    u8 PTR4* next;
-    u8 PTR4* tree_end;
+    u8 PTR4* node_ptr;
+    u8 PTR4* next_node_ptr;
+    u8 PTR4* tree_end_ptr;
     u8 node;
     u8 kind;
     u8 base;
@@ -777,21 +777,21 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
     tree.roots[BP_ROOT_LOSSLESS_COEFF2_SLOT] = BP_READ_TREE_COEFF2_ROOT;
     tree.roots[BP_ROOT_LOSSLESS_COEFF3_SLOT] = BP_READ_TREE_COEFF3_ROOT;
 
-    cur = tree.roots;
-    tree_end = tree.nodes;
+    node_ptr = tree.roots;
+    tree_end_ptr = tree.nodes;
 
     /* Non-final planes read lower magnitude bits plus a sign for new coeffs. */
     while (1 < maxlevel) {
         level = (maxlevel - 1) & BP_BYTE_MASK;
-        next = cur;
+        next_node_ptr = node_ptr;
         highbit = (s16)highbit >> 1;
-        if (cur < tree_end) {
+        if (node_ptr < tree_end_ptr) {
             mask = (u16)(0xffffffff >> (BP_BITS_PER_WORD - level));
             do {
-                node = *cur;
+                node = *node_ptr;
                 if (node == BP_READ_TREE_EMPTY_ENTRY) {
 next_lossless_read_node:
-                    cur++;
+                    node_ptr++;
                 } else {
                     if (bitcount == 0) {
                         code = *words;
@@ -813,17 +813,17 @@ next_lossless_read_node:
                     kind = node & BP_READ_TREE_KIND_MASK;
                     if (kind == BP_READ_TREE_GROUP_NODE) {
                         kind = BP_READ_TREE_INDEX(node);
-                        *cur = BP_READ_TREE_BRANCH_FROM_NODE(node);
-                        *tree_end = BP_READ_TREE_NODE(kind + BP_READ_TREE_CHILD1_BASE, BP_READ_TREE_BRANCH_NODE);
-                        tree_end[1] = BP_READ_TREE_NODE(kind + BP_READ_TREE_CHILD2_BASE, BP_READ_TREE_BRANCH_NODE);
-                        tree_end[2] = BP_READ_TREE_NODE(kind + BP_READ_TREE_CHILD3_BASE, BP_READ_TREE_BRANCH_NODE);
-                        tree_end += BP_TREE_ADDED_CHILD_COUNT;
+                        *node_ptr = BP_READ_TREE_BRANCH_FROM_NODE(node);
+                        *tree_end_ptr = BP_READ_TREE_NODE(kind + BP_READ_TREE_CHILD1_BASE, BP_READ_TREE_BRANCH_NODE);
+                        tree_end_ptr[1] = BP_READ_TREE_NODE(kind + BP_READ_TREE_CHILD2_BASE, BP_READ_TREE_BRANCH_NODE);
+                        tree_end_ptr[2] = BP_READ_TREE_NODE(kind + BP_READ_TREE_CHILD3_BASE, BP_READ_TREE_BRANCH_NODE);
+                        tree_end_ptr += BP_TREE_ADDED_CHILD_COUNT;
                     } else {
                         if (kind < BP_READ_TREE_BRANCH_NODE) {
                             if ((node & BP_READ_TREE_KIND_MASK) != BP_READ_TREE_HIGH_NODE) {
                                 goto next_lossless_read_node;
                             }
-                            *cur = BP_READ_TREE_GROUP_FROM_INDEX(BP_READ_TREE_INDEX(node));
+                            *node_ptr = BP_READ_TREE_GROUP_FROM_INDEX(BP_READ_TREE_INDEX(node));
                         } else {
                             if (kind != BP_READ_TREE_BRANCH_NODE) {
                                 if (kind == BP_READ_TREE_COEFF_NODE) {
@@ -852,12 +852,12 @@ next_lossless_read_node:
                                         coeff_value = -coeff_value;
                                     }
                                     coeffs.values[BP_READ_TREE_INDEX(node)] = (u16)coeff_value;
-                                    *cur = BP_READ_TREE_EMPTY_ENTRY;
+                                    *node_ptr = BP_READ_TREE_EMPTY_ENTRY;
                                 }
                                 goto next_lossless_read_node;
                             }
-                            *cur = BP_READ_TREE_EMPTY_ENTRY;
-                            cur++;
+                            *node_ptr = BP_READ_TREE_EMPTY_ENTRY;
+                            node_ptr++;
                         }
 
                         base = BP_READ_TREE_INDEX(node);
@@ -869,8 +869,8 @@ next_lossless_read_node:
                                 bitbuf = code >> 1;                                                                    \
                                 words++;                                                                               \
                                 if ((code & 1) != 0) {                                                                 \
-                                    next--;                                                                            \
-                                    *next = BP_READ_TREE_COEFF(slot);                                                  \
+                                    next_node_ptr--;                                                                   \
+                                    *next_node_ptr = BP_READ_TREE_COEFF(slot);                                          \
                                     goto label;                                                                        \
                                 }                                                                                      \
                             } else {                                                                                   \
@@ -878,8 +878,8 @@ next_lossless_read_node:
                                 code = bitbuf & 1;                                                                     \
                                 bitbuf >>= 1;                                                                          \
                                 if (code != 0) {                                                                       \
-                                    next--;                                                                            \
-                                    *next = BP_READ_TREE_COEFF(slot);                                                  \
+                                    next_node_ptr--;                                                                   \
+                                    *next_node_ptr = BP_READ_TREE_COEFF(slot);                                          \
                                     goto label;                                                                        \
                                 }                                                                                      \
                             }                                                                                          \
@@ -921,20 +921,20 @@ after_lossless_child3:
                         ;
                     }
                 }
-            } while (cur < tree_end);
+            } while (node_ptr < tree_end_ptr);
         }
         maxlevel = level;
-        cur = next;
+        node_ptr = next_node_ptr;
     }
 
     /* Level one coeffs need only a sign bit; their magnitude is implicit. */
-    if (maxlevel && cur < tree_end) {
-        next = cur;
+    if (maxlevel && node_ptr < tree_end_ptr) {
+        next_node_ptr = node_ptr;
         do {
-            node = *cur;
+            node = *node_ptr;
             if (node == BP_READ_TREE_EMPTY_ENTRY) {
 next_lossless_final_node:
-                cur++;
+                node_ptr++;
             } else {
                 if (bitcount == 0) {
                     code = *words;
@@ -955,17 +955,17 @@ next_lossless_final_node:
                 kind = node & BP_READ_TREE_KIND_MASK;
                 if (kind == BP_READ_TREE_GROUP_NODE) {
                     kind = BP_READ_TREE_INDEX(node);
-                    *cur = BP_READ_TREE_BRANCH_FROM_NODE(node);
-                    *tree_end = BP_READ_TREE_NODE(kind + BP_READ_TREE_CHILD1_BASE, BP_READ_TREE_BRANCH_NODE);
-                    tree_end[1] = BP_READ_TREE_NODE(kind + BP_READ_TREE_CHILD2_BASE, BP_READ_TREE_BRANCH_NODE);
-                    tree_end[2] = BP_READ_TREE_NODE(kind + BP_READ_TREE_CHILD3_BASE, BP_READ_TREE_BRANCH_NODE);
-                    tree_end += BP_TREE_ADDED_CHILD_COUNT;
+                    *node_ptr = BP_READ_TREE_BRANCH_FROM_NODE(node);
+                    *tree_end_ptr = BP_READ_TREE_NODE(kind + BP_READ_TREE_CHILD1_BASE, BP_READ_TREE_BRANCH_NODE);
+                    tree_end_ptr[1] = BP_READ_TREE_NODE(kind + BP_READ_TREE_CHILD2_BASE, BP_READ_TREE_BRANCH_NODE);
+                    tree_end_ptr[2] = BP_READ_TREE_NODE(kind + BP_READ_TREE_CHILD3_BASE, BP_READ_TREE_BRANCH_NODE);
+                    tree_end_ptr += BP_TREE_ADDED_CHILD_COUNT;
                 } else {
                     if (kind < BP_READ_TREE_BRANCH_NODE) {
                         if ((node & BP_READ_TREE_KIND_MASK) != BP_READ_TREE_HIGH_NODE) {
                             goto next_lossless_final_node;
                         }
-                        *cur = BP_READ_TREE_GROUP_FROM_INDEX(BP_READ_TREE_INDEX(node));
+                        *node_ptr = BP_READ_TREE_GROUP_FROM_INDEX(BP_READ_TREE_INDEX(node));
                     } else {
                         if (kind != BP_READ_TREE_BRANCH_NODE) {
                             if (kind == BP_READ_TREE_COEFF_NODE) {
@@ -981,12 +981,12 @@ next_lossless_final_node:
                                 }
                                 coeffs.values[BP_READ_TREE_INDEX(node)] =
                                     (code & 1) ? BP_NEGATIVE_COEFF_SIGN : BP_POSITIVE_COEFF_SIGN;
-                                *cur = BP_READ_TREE_EMPTY_ENTRY;
+                                *node_ptr = BP_READ_TREE_EMPTY_ENTRY;
                             }
                             goto next_lossless_final_node;
                         }
-                        *cur = BP_READ_TREE_EMPTY_ENTRY;
-                        cur++;
+                        *node_ptr = BP_READ_TREE_EMPTY_ENTRY;
+                        node_ptr++;
                     }
 
                     base = BP_READ_TREE_INDEX(node);
@@ -998,8 +998,8 @@ next_lossless_final_node:
                             bitbuf = code >> 1;                                                                         \
                             words++;                                                                                    \
                             if ((code & 1) != 0) {                                                                      \
-                                next--;                                                                                 \
-                                *next = BP_READ_TREE_COEFF(slot);                                                       \
+                                next_node_ptr--;                                                                        \
+                                *next_node_ptr = BP_READ_TREE_COEFF(slot);                                               \
                                 goto label;                                                                             \
                             }                                                                                           \
                         } else {                                                                                        \
@@ -1007,8 +1007,8 @@ next_lossless_final_node:
                             code = bitbuf & 1;                                                                          \
                             bitbuf >>= 1;                                                                               \
                             if (code != 0) {                                                                            \
-                                next--;                                                                                 \
-                                *next = BP_READ_TREE_COEFF(slot);                                                       \
+                                next_node_ptr--;                                                                        \
+                                *next_node_ptr = BP_READ_TREE_COEFF(slot);                                               \
                                 goto label;                                                                             \
                             }                                                                                           \
                         }                                                                                               \
@@ -1036,7 +1036,7 @@ after_lossless_final3:
                     ;
                 }
             }
-        } while (cur < tree_end);
+        } while (node_ptr < tree_end_ptr);
     }
 
     bitcopy.cur = words;
