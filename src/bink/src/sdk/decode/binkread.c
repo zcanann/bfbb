@@ -1975,13 +1975,8 @@ found_previous:
                     return 0;
                 }
 
-                {
-                    u32 value = bnk->frameoffsets[cur];
-
-                    ++cur;
-                    if (BINK_FRAME_KEY(value) != 0) {
-                        return cur;
-                    }
+                if (BINK_FRAME_KEY(bnk->frameoffsets[cur++]) != 0) {
+                    return cur;
                 }
             }
 
