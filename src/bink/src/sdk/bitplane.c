@@ -787,7 +787,7 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
         next_node_ptr = node_ptr;
         highbit = (s16)highbit >> 1;
         if (node_ptr < tree_end_ptr) {
-            bit_mask = (u16)(0xffffffff >> (BP_BITS_PER_WORD - level));
+            bit_mask = (u16)GetBitsLen(level);
             do {
                 node = *node_ptr;
                 if (node == BP_READ_TREE_EMPTY_ENTRY) {
