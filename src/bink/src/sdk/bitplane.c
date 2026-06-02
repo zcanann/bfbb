@@ -181,7 +181,7 @@ typedef struct BPLOSSYWRITETREE
     u16 nodes[BP_BLOCK_COEFFS - BP_LOSSY_ROOT_NODES];
 } BPLOSSYWRITETREE;
 
-static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 limit);
+static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count);
 
 #define BP_STREAM(bits) ((BPBITSTREAM*)(bits))
 #define BP_STREAM_CUR(bits) (BP_STREAM(bits)->cur)
@@ -1354,7 +1354,7 @@ handle_lossy_children:
 }
 
 #pragma dont_inline on
-static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 limit)
+static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count)
 {
     s8 sample;
     u32 old_bitcount;
@@ -1433,7 +1433,7 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 limit)
                         delta = -bit_value;
                     }
                     dest[(u32)active_order[scan]] = sample + (s8)delta;
-                    if (sample_count++ == limit) {
+                    if (sample_count++ == masks_count) {
                         goto done;
                     }
                 }
@@ -1501,7 +1501,7 @@ decode_node:
                             delta = bit_value;
                         }
                         dest[(u32)BP_READ_TREE_INDEX(node)] = (s8)delta;
-                        if (sample_count++ == limit) {
+                        if (sample_count++ == masks_count) {
                             goto done;
                         }
                         *node_ptr = BP_READ_TREE_EMPTY_ENTRY;
@@ -1547,7 +1547,7 @@ push_0:
                     delta = bit_value;
                 }
                 dest[code] = (s8)delta;
-                if (sample_count++ == limit) {
+                if (sample_count++ == masks_count) {
                     goto done;
                 }
 after_0:
@@ -1588,7 +1588,7 @@ push_1:
                     delta = bit_value;
                 }
                 dest[code + BP_TREE_CHILD1_INDEX] = (s8)delta;
-                if (sample_count++ == limit) {
+                if (sample_count++ == masks_count) {
                     goto done;
                 }
 after_1:
@@ -1628,7 +1628,7 @@ push_2:
                     delta = bit_value;
                 }
                 dest[code + BP_TREE_CHILD2_INDEX] = (s8)delta;
-                if (sample_count++ == limit) {
+                if (sample_count++ == masks_count) {
                     goto done;
                 }
 after_2:
@@ -1662,7 +1662,7 @@ after_2:
                         delta = bit_value;
                     }
                     dest[code + BP_TREE_CHILD3_INDEX] = (s8)delta;
-                    if (sample_count++ == limit) {
+                    if (sample_count++ == masks_count) {
                         goto done;
                     }
                 } else {
@@ -1692,11 +1692,11 @@ done:
 }
 #pragma dont_inline reset
 
-void ReadBPLossy(s16 PTR4* out, BPBITSTREAM PTR4* bits, s32 limit)
+void ReadBPLossy(s16 PTR4* out, BPBITSTREAM PTR4* bits, s32 masks_count)
 {
     BPLOSSYBLOCK coeffs;
 
-    readlossy(coeffs.bytes, bits, limit);
+    readlossy(coeffs.bytes, bits, masks_count);
     out[0] = coeffs.words[0];
     out[1] = coeffs.words[2];
     out[2] = coeffs.words[4];
@@ -1731,14 +1731,14 @@ void ReadBPLossy(s16 PTR4* out, BPBITSTREAM PTR4* bits, s32 limit)
     out[31] = coeffs.words[31];
 }
 
-void ReadBPLossyWithMotion(char PTR4* out, s32 pitch, BPBITSTREAM PTR4* bits, s32 limit,
+void ReadBPLossyWithMotion(char PTR4* out, s32 pitch, BPBITSTREAM PTR4* bits, s32 masks_count,
                            char PTR4* prev)
 {
     char residuals[BP_BLOCK_COEFFS];
     char PTR4* dst = out;
     char PTR4* src = prev;
 
-    readlossy(residuals, bits, limit);
+    readlossy(residuals, bits, masks_count);
     dst[0] = residuals[0] + src[0];
     dst[1] = residuals[1] + src[1];
     dst[2] = residuals[4] + src[2];
