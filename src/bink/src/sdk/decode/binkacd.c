@@ -94,6 +94,7 @@ typedef VARBITS BINKVARBITS;
     ((u8 PTR4*)(samples) + ((buffer_size) - (window_size)))
 #define BINKAC_INPUT_ADVANCE(ptr, bytes) ((u8 PTR4*)(ptr) + (bytes))
 #define BINKAC_ZERO_BYTE 0
+#define BINKAC_STEREO_LEFT_COEFF(coeffs) ((coeffs)[0])
 #define BINKAC_STEREO_RIGHT_COEFF(coeffs, stride) ((coeffs)[(stride)])
 
 static const f64 BINKAC_FXP_TO_FLOAT_BIAS = 4503599627370496.0;
@@ -184,7 +185,7 @@ static void quanttos16chans2(s16 PTR4* samples, const f32 PTR4* decoded_coeffs,
         stride = transform_size;
         while (remaining != BINKAC_SAMPLE_COUNT_UNDERFLOW) {
             s16 PTR4* out = samples;
-            s32 sample_value = (s32)(decoded_coeffs[0] * transform_size_root);
+            s32 sample_value = (s32)(BINKAC_STEREO_LEFT_COEFF(decoded_coeffs) * transform_size_root);
 
             samples = out + 1;
             *out = clamp_to_s16(sample_value);
