@@ -20,8 +20,8 @@ u32 LenBPLossless(s16 PTR4* vals);
 void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals);
 u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals);
 void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits);
-void ReadBPLossy(s16 PTR4* out, BPBITSTREAM PTR4* bits, s32 limit);
-void ReadBPLossyWithMotion(char PTR4* out, s32 pitch, BPBITSTREAM PTR4* bits, s32 limit,
+void ReadBPLossy(s16 PTR4* out, BPBITSTREAM PTR4* bits, s32 masks_count);
+void ReadBPLossyWithMotion(char PTR4* out, s32 pitch, BPBITSTREAM PTR4* bits, s32 masks_count,
                            char PTR4* prev);
 
 #endif
