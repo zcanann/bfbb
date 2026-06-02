@@ -734,7 +734,7 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
     u8 maxlevel;
     s16 highbit;
     s16 coeff_value;
-    u16 mask;
+    u16 bit_mask;
     u8 PTR4* node_ptr;
     u8 PTR4* next_node_ptr;
     u8 PTR4* tree_end_ptr;
@@ -786,7 +786,7 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
         next_node_ptr = node_ptr;
         highbit = (s16)highbit >> 1;
         if (node_ptr < tree_end_ptr) {
-            mask = (u16)(0xffffffff >> (BP_BITS_PER_WORD - level));
+            bit_mask = (u16)(0xffffffff >> (BP_BITS_PER_WORD - level));
             do {
                 node = *node_ptr;
                 if (node == BP_READ_TREE_EMPTY_ENTRY) {
@@ -827,7 +827,7 @@ next_lossless_read_node:
                         } else {
                             if (kind != BP_READ_TREE_BRANCH_NODE) {
                                 if (kind == BP_READ_TREE_COEFF_NODE) {
-                                    coeff_value = bitbuf & mask;
+                                    coeff_value = bitbuf & bit_mask;
                                     if (bitcount < level) {
                                         code = *words++;
                                         coeff_value |= code << bitcount;
@@ -837,7 +837,7 @@ next_lossless_read_node:
                                         bitbuf >>= level;
                                         bitcount = bitcount - level;
                                     }
-                                    coeff_value = (coeff_value & mask) | highbit;
+                                    coeff_value = (coeff_value & bit_mask) | highbit;
                                     if (bitcount == 0) {
                                         code = *words;
                                         bitcount = BP_WORD_TOP_BIT;
@@ -883,7 +883,7 @@ next_lossless_read_node:
                                     goto label;                                                                        \
                                 }                                                                                      \
                             }                                                                                          \
-                            coeff_value = bitbuf & mask;                                                               \
+                            coeff_value = bitbuf & bit_mask;                                                           \
                             if (bitcount < level) {                                                                    \
                                 code = *words++;                                                                       \
                                 coeff_value |= code << bitcount;                                                       \
@@ -893,7 +893,7 @@ next_lossless_read_node:
                                 bitbuf >>= level;                                                                      \
                                 bitcount = bitcount - level;                                                           \
                             }                                                                                          \
-                            coeff_value = (coeff_value & mask) | highbit;                                              \
+                            coeff_value = (coeff_value & bit_mask) | highbit;                                          \
                             if (bitcount == 0) {                                                                       \
                                 code = *words;                                                                         \
                                 bitcount = BP_WORD_TOP_BIT;                                                            \
@@ -1103,7 +1103,7 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     u16 PTR4* insert;
     u16 PTR4* next_node;
     u16 PTR4* roots;
-    u16 mask;
+    u16 bit_mask;
     u16 node_entry;
     BPLOSSYWRITETREE tree;
     u8 lens[BP_BLOCK_COEFFS];
@@ -1248,14 +1248,14 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
 
     cur = roots;
     next_node = tree.nodes;
-    mask = (u16)(1 << (maxbits - 1));
+    bit_mask = (u16)(1 << (maxbits - 1));
     i = 0;
     for (; maxbits != 0; maxbits = (maxbits - 1) & BP_BYTE_MASK) {
         count = 0;
         /* Coefficients introduced on earlier planes emit one residual bit here. */
         if (0 < i) {
             do {
-                PUT_BP_BIT(bits, (active_absvals[count] & mask) != 0);
+                PUT_BP_BIT(bits, (active_absvals[count] & bit_mask) != 0);
                 count++;
             } while (count < i);
         }
@@ -1347,7 +1347,7 @@ handle_lossy_children:
             } while (cur < next_node);
         }
         cur = insert;
-        mask = (s16)mask >> 1;
+        bit_mask = (s16)bit_mask >> 1;
     }
 
     return 1;
