@@ -308,20 +308,20 @@ static inline u32 exp_get_bit(EXPBITS PTR4* bits)
 static void simpmergesort(EXPBITS PTR4* bits, u8 PTR4* out, u8 PTR4* left,
                           u8 PTR4* right, s32 right_count)
 {
-    u8 value;
+    u8 selected;
     s32 left_count;
 
     left_count = right_count;
     for (;;) {
         if (exp_get_bit(bits)) {
-            value = *right++;
+            selected = *right++;
             right_count--;
         } else {
-            value = *left++;
+            selected = *left++;
             left_count--;
         }
 
-        *out++ = value;
+        *out++ = selected;
         if (left_count == 0) {
             break;
         }
@@ -692,7 +692,7 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
     u32 high;
     u32 low;
     u32 packed;
-    u32 value;
+    u32 signed_byte;
     s32 remaining;
 
     if (bundle->cur_ptr != bundle->cur_dec) {
@@ -719,13 +719,13 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
             state = high;
             low = exp_read_huff4_mask(bits, peek, decode, values, mask);
             packed = ((high & HUFF4_SYMBOL_MASK) << HUFF4_USED_SHIFT) | low;
-            value = packed;
-            if ((value & BINK_SIGNED_BYTE_BIAS) != 0) {
-                value = -BINK_SIGNED_BYTE_BIAS - (value & BINK_SIGNED_BYTE_MASK);
+            signed_byte = packed;
+            if ((signed_byte & BINK_SIGNED_BYTE_BIAS) != 0) {
+                signed_byte = -BINK_SIGNED_BYTE_BIAS - (signed_byte & BINK_SIGNED_BYTE_MASK);
             } else {
-                value |= BINK_SIGNED_BYTE_BIAS;
+                signed_byte |= BINK_SIGNED_BYTE_BIAS;
             }
-            *dest++ = (u8)value;
+            *dest++ = (u8)signed_byte;
             remaining--;
         } while (remaining > 0);
 
@@ -874,7 +874,7 @@ static void CheckReadHuff4SBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     u8 PTR4* values;
     const u8 PTR4* decode;
     u32 peek;
-    s32 value;
+    s32 symbol;
     s32 fill;
 
     if (bundle->cur_ptr != bundle->cur_dec) {
@@ -892,11 +892,11 @@ static void CheckReadHuff4SBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
             decode = bundle->decode;
             peek = bundle->bits_to_peek;
             while (count-- != 0) {
-                value = (s32)exp_read_huff4(bits, peek, decode, values);
-                if (value != 0 && exp_get_bit(bits) != 0) {
-                    value = -value;
+                symbol = (s32)exp_read_huff4(bits, peek, decode, values);
+                if (symbol != 0 && exp_get_bit(bits) != 0) {
+                    symbol = -symbol;
                 }
-                *dest++ = (s8)value;
+                *dest++ = (s8)symbol;
             }
         } else {
             fill = (s32)exp_get_bits(bits, HUFF4_USED_SHIFT);
