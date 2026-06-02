@@ -331,7 +331,7 @@ static inline f32 Undecibel(f32 d)
 static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
                    f32 PTR4* fft_coeffs, s16 PTR4* samples, void PTR4* inptr,
                    u32 num_bands, const u32 PTR4* bands,
-                   f32 transform_size_root)
+                   f32 root)
 {
     f32 quant[BINKAC_QUANT_COUNT];
     BINKVARBITS vb;
@@ -376,9 +376,9 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
     }
 
     if (chans == BINKAC_MONO_CHANNELS) {
-        quanttos16s(samples, decoded, transform_size_root, transform_size);
+        quanttos16s(samples, decoded, root, transform_size);
     } else {
-        quanttos16chans2(samples, decoded, transform_size_root, transform_size);
+        quanttos16chans2(samples, decoded, root, transform_size);
     }
 
     vb.bitlen = 0;
@@ -411,7 +411,7 @@ HBINKAUDIODECOMP BinkAudioDecompressOpen(u32 rate, u32 chans, u32 flags)
     u32 transform_size;
     u32 transform_size_half;
     u32 buffer_size;
-    f32 transform_size_root;
+    f32 root;
     u32 num_bands;
     s32 sample_rate_half;
     HBINKAUDIODECOMP ba;
@@ -475,8 +475,8 @@ HBINKAUDIODECOMP BinkAudioDecompressOpen(u32 rate, u32 chans, u32 flags)
     ba->transform_size = transform_size;
     ba->buffer_size = buffer_size;
     ba->window_size_in_bytes = BINKAC_WINDOW_BYTES(buffer_size);
-    transform_size_root = 2.0f / radfsqrt((f32)transform_size);
-    ba->transform_size_root = transform_size_root;
+    root = 2.0f / radfsqrt((f32)transform_size);
+    ba->root = root;
 
     for (i = 0; i < num_bands; ++i) {
         ba->bands[i] = (bink_bandtopfreq[i] * transform_size_half) / sample_rate_half;
@@ -495,7 +495,7 @@ void BinkAudioDecompress(HBINKAUDIODECOMP ba, void PTR4* PTR4* outptr, u32 PTR4*
                          void PTR4* inptr, void PTR4* PTR4* inoutptr)
 {
     u32 transform_size;
-    f32 transform_size_root;
+    f32 root;
     u32 chans;
     u32 flags;
     s32 PTR4* fft_work;
@@ -506,7 +506,7 @@ void BinkAudioDecompress(HBINKAUDIODECOMP ba, void PTR4* PTR4* outptr, u32 PTR4*
     u32 used;
 
     transform_size = ba->transform_size;
-    transform_size_root = ba->transform_size_root;
+    root = ba->root;
     chans = ba->chans;
     flags = ba->flags;
     fft_work = ba->fft_work;
@@ -515,7 +515,7 @@ void BinkAudioDecompress(HBINKAUDIODECOMP ba, void PTR4* PTR4* outptr, u32 PTR4*
     num_bands = ba->num_bands;
     bands = ba->bands;
     used = Unquant(transform_size, chans, flags, fft_work, fft_coeffs, samples, inptr,
-                   num_bands, bands, transform_size_root);
+                   num_bands, bands, root);
 
     /* Later frames overlap-add their leading window against the saved tail from the last frame. */
     if (ba->start_frame != 0) {
