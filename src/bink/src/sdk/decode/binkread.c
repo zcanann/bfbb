@@ -1945,7 +1945,7 @@ found_previous:
             u32 limit;
 
             limit = bnk->Frames;
-            ptr = bnk->frameoffsets + cur;
+            ptr = &bnk->frameoffsets[cur];
             do {
                 u32 value;
 
