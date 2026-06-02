@@ -1058,13 +1058,13 @@ void ExpandBundleSizes(u32 PTR4* sizes, u32 rows)
         getbunsize(BINK_BUNDLE_WIDTH, rows >> BINK_CHROMA_SHIFT, BINK_BLOCK_TYPE_BITS, 1);
     sizes[BINK_BUNDLE_COLORS] =
         getbunsize(BINK_BUNDLE_WIDTH, rows, BINK_COLOR_BITS, BINK_COLOR_BLOCK_BYTES);
-    sizes[BINK_BUNDLE_PATTERNS] =
+    sizes[BINK_BUNDLE_PATTERN] =
         getbunsize(BINK_BUNDLE_WIDTH, rows, BINK_PATTERN_BITS, BINK_PATTERN_BLOCK_BYTES);
-    sizes[BINK_BUNDLE_X_OFFSETS] = getbunsize(BINK_BUNDLE_WIDTH, rows, BINK_MOTION_BITS, 1);
-    sizes[BINK_BUNDLE_Y_OFFSETS] = getbunsize(BINK_BUNDLE_WIDTH, rows, BINK_MOTION_BITS, 1);
+    sizes[BINK_BUNDLE_X_OFF] = getbunsize(BINK_BUNDLE_WIDTH, rows, BINK_MOTION_BITS, 1);
+    sizes[BINK_BUNDLE_Y_OFF] = getbunsize(BINK_BUNDLE_WIDTH, rows, BINK_MOTION_BITS, 1);
     sizes[BINK_BUNDLE_INTRA_DC] = getbunsize(BINK_BUNDLE_WIDTH, rows, BINK_DC_START_BITS, 1);
     sizes[BINK_BUNDLE_INTER_DC] = getbunsize(BINK_BUNDLE_WIDTH, rows, BINK_DC_START_BITS, 1);
-    sizes[BINK_BUNDLE_RUNS] =
+    sizes[BINK_BUNDLE_RUN] =
         getbunsize(BINK_BUNDLE_WIDTH, rows, BINK_RUN_BITS, BINK_RUN_BLOCK_BYTES);
 }
 
