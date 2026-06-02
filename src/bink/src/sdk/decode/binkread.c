@@ -2377,7 +2377,7 @@ void BinkGetRealtime(HBINK bink, BINKREALTIME PTR4* run, u32 frames)
 
     run->FrameNum = bink->LastFrameNum;
     run->FrameRate = bink->FrameRate;
-    run->FrameRateDiv = bink->FrameRate;
+    run->FrameRateDiv = bink->FrameRateDiv;
     run->ReadBufferSize = bink->bio.CurBufSize;
     run->ReadBufferUsed = bink->bio.CurBufUsed;
     run->FramesDataRate = mult64anddiv(bink->frameoffsets[bink->FrameNum] - bink->frameoffsets[bink->FrameNum - frames],
