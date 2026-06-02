@@ -72,6 +72,8 @@ typedef enum BINKACSampleCountState
     BINKAC_SAMPLE_COUNT_UNDERFLOW = 0xffffffffU
 } BINKACSampleCountState;
 
+typedef VARBITS BINKVARBITS;
+
 #define BINKAC_LOAD32(ptr) (*(const u32 PTR4*)(ptr))
 #define BINKAC_BAND_SAMPLE_LIMIT(bands, band) ((bands)[band] * BINKAC_BAND_LIMIT_SCALE)
 #define BINKAC_RLE_SAMPLE_RUN(index) (bink_rlelens_snd[(index)] * VQLENGTH)
@@ -178,7 +180,7 @@ static void quanttos16chans2(s16 PTR4* dest, const f32 PTR4* src, f32 scale, u32
     }
 }
 
-static inline u32 read_bits(VARBITS PTR4* vb, u32 count)
+static inline u32 read_bits(BINKVARBITS PTR4* vb, u32 count)
 {
     u32 bits = vb->bitlen;
 
@@ -200,7 +202,7 @@ static inline u32 read_bits(VARBITS PTR4* vb, u32 count)
     }
 }
 
-static inline u32 read_rle_bits(VARBITS PTR4* vb)
+static inline u32 read_rle_bits(BINKVARBITS PTR4* vb)
 {
     u32 value;
     u32 bits = vb->bitlen;
@@ -222,7 +224,7 @@ static inline u32 read_rle_bits(VARBITS PTR4* vb)
     return value;
 }
 
-static inline u32 read_bit(VARBITS PTR4* vb)
+static inline u32 read_bit(BINKVARBITS PTR4* vb)
 {
     u32 bitcount = vb->bitlen;
     u32 value;
@@ -243,7 +245,7 @@ static inline u32 read_bit(VARBITS PTR4* vb)
     return value;
 }
 
-static void read_rle_samples(f32 PTR4* samples, u32 transform_size, VARBITS PTR4* vb,
+static void read_rle_samples(f32 PTR4* samples, u32 transform_size, BINKVARBITS PTR4* vb,
                              const f32 PTR4* thresholds, const u32 PTR4* bands)
 {
     u32 i;
@@ -279,8 +281,10 @@ static void read_rle_samples(f32 PTR4* samples, u32 transform_size, VARBITS PTR4
 
         bitlen = read_rle_bits(vb);
         if (bitlen == 0) {
-            memset(out, BINKAC_ZERO_BYTE, (end - i) * sizeof(*out));
-            out += end - i;
+            u32 count = end - i;
+
+            memset(out, BINKAC_ZERO_BYTE, count * sizeof(*out));
+            out += count;
             i = end;
 
             while (i > BINKAC_BAND_SAMPLE_LIMIT(bands, band)) {
@@ -327,13 +331,15 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
                    f32 transform_size_root)
 {
     f32 threshold[BINKAC_THRESHOLD_COUNT];
-    VARBITS vb;
+    BINKVARBITS vb;
     f32 decoded[MAX_TRANSFORM];
     u32 ch;
     f32 PTR4* channel;
     u32 i;
     u32 q;
+    f32 output_scale;
 
+    output_scale = transform_size_root;
     vb.init = inptr;
     vb.cur = inptr;
     vb.bitlen = 0;
@@ -370,9 +376,9 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
     }
 
     if (chans == BINKAC_MONO_CHANNELS) {
-        quanttos16s(samples, decoded, transform_size_root, transform_size);
+        quanttos16s(samples, decoded, output_scale, transform_size);
     } else {
-        quanttos16chans2(samples, decoded, transform_size_root, transform_size);
+        quanttos16chans2(samples, decoded, output_scale, transform_size);
     }
 
     vb.bitlen = 0;
