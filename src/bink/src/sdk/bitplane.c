@@ -95,6 +95,7 @@
 #define BP_READ_TREE_GROUP1_ROOT BP_READ_TREE_GROUP(BP_TREE_GROUP1_INDEX)
 #define BP_READ_TREE_GROUP6_ROOT BP_READ_TREE_GROUP(BP_TREE_GROUP6_INDEX)
 #define BP_READ_TREE_GROUP11_ROOT BP_READ_TREE_GROUP(BP_TREE_GROUP11_INDEX)
+#define BP_READ_TREE_CHILD_BRANCH(base, child_base) BP_READ_TREE_NODE((base) + (child_base), BP_READ_TREE_BRANCH_NODE)
 #define BP_READ_TREE_BRANCH(index) BP_READ_TREE_NODE(index, BP_READ_TREE_BRANCH_NODE)
 #define BP_READ_TREE_COEFF(index) BP_READ_TREE_NODE(index, BP_READ_TREE_COEFF_NODE)
 #define BP_READ_TREE_DC_ROOT BP_READ_TREE_BRANCH(BP_DC_COEFF)
@@ -820,9 +821,9 @@ next_lossless_read_node:
                     if (kind == BP_READ_TREE_GROUP_NODE) {
                         kind = BP_READ_TREE_INDEX(node);
                         *node_ptr = BP_READ_TREE_BRANCH_FROM_NODE(node);
-                        *tree_end_ptr = BP_READ_TREE_NODE(kind + BP_READ_TREE_CHILD1_BASE, BP_READ_TREE_BRANCH_NODE);
-                        tree_end_ptr[1] = BP_READ_TREE_NODE(kind + BP_READ_TREE_CHILD2_BASE, BP_READ_TREE_BRANCH_NODE);
-                        tree_end_ptr[2] = BP_READ_TREE_NODE(kind + BP_READ_TREE_CHILD3_BASE, BP_READ_TREE_BRANCH_NODE);
+                        *tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(kind, BP_READ_TREE_CHILD1_BASE);
+                        tree_end_ptr[1] = BP_READ_TREE_CHILD_BRANCH(kind, BP_READ_TREE_CHILD2_BASE);
+                        tree_end_ptr[2] = BP_READ_TREE_CHILD_BRANCH(kind, BP_READ_TREE_CHILD3_BASE);
                         tree_end_ptr += BP_TREE_ADDED_CHILD_COUNT;
                     } else {
                         if (kind < BP_READ_TREE_BRANCH_NODE) {
@@ -962,9 +963,9 @@ next_lossless_final_node:
                 if (kind == BP_READ_TREE_GROUP_NODE) {
                     kind = BP_READ_TREE_INDEX(node);
                     *node_ptr = BP_READ_TREE_BRANCH_FROM_NODE(node);
-                    *tree_end_ptr = BP_READ_TREE_NODE(kind + BP_READ_TREE_CHILD1_BASE, BP_READ_TREE_BRANCH_NODE);
-                    tree_end_ptr[1] = BP_READ_TREE_NODE(kind + BP_READ_TREE_CHILD2_BASE, BP_READ_TREE_BRANCH_NODE);
-                    tree_end_ptr[2] = BP_READ_TREE_NODE(kind + BP_READ_TREE_CHILD3_BASE, BP_READ_TREE_BRANCH_NODE);
+                    *tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(kind, BP_READ_TREE_CHILD1_BASE);
+                    tree_end_ptr[1] = BP_READ_TREE_CHILD_BRANCH(kind, BP_READ_TREE_CHILD2_BASE);
+                    tree_end_ptr[2] = BP_READ_TREE_CHILD_BRANCH(kind, BP_READ_TREE_CHILD3_BASE);
                     tree_end_ptr += BP_TREE_ADDED_CHILD_COUNT;
                 } else {
                     if (kind < BP_READ_TREE_BRANCH_NODE) {
@@ -1471,9 +1472,9 @@ decode_node:
                 if (node_kind == BP_READ_TREE_GROUP_NODE) {
                     node_kind = BP_READ_TREE_INDEX(node);
                     *node_ptr = BP_READ_TREE_BRANCH_FROM_NODE(node);
-                    *tree_end_ptr = BP_READ_TREE_NODE(node_kind + BP_READ_TREE_CHILD1_BASE, BP_READ_TREE_BRANCH_NODE);
-                    tree_end_ptr[1] = BP_READ_TREE_NODE(node_kind + BP_READ_TREE_CHILD2_BASE, BP_READ_TREE_BRANCH_NODE);
-                    tree_end_ptr[2] = BP_READ_TREE_NODE(node_kind + BP_READ_TREE_CHILD3_BASE, BP_READ_TREE_BRANCH_NODE);
+                    *tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(node_kind, BP_READ_TREE_CHILD1_BASE);
+                    tree_end_ptr[1] = BP_READ_TREE_CHILD_BRANCH(node_kind, BP_READ_TREE_CHILD2_BASE);
+                    tree_end_ptr[2] = BP_READ_TREE_CHILD_BRANCH(node_kind, BP_READ_TREE_CHILD3_BASE);
                     tree_end_ptr = tree_end_ptr + BP_TREE_ADDED_CHILD_COUNT;
                     goto node_done;
                 }
