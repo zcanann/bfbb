@@ -283,19 +283,19 @@ void PTR4* radmalloc(u32 size)
 
 void radfree(void PTR4* ptr)
 {
-    u8 PTR4* ptrU8 = (u8 PTR4*)ptr;
+    u8 PTR4* aligned = (u8 PTR4*)ptr;
     RADMEMFREE custom_free;
 
     if (ptr)
     {
-        if (RAD_ALLOC_PREFIX_OWNER(ptrU8) == RAD_ALLOC_USER_OWNED)
+        if (RAD_ALLOC_PREFIX_OWNER(aligned) == RAD_ALLOC_USER_OWNED)
         {
-            custom_free = RAD_ALLOC_PREFIX_CUSTOM_FREE(ptrU8);
-            custom_free(RAD_ALLOC_BASE(ptrU8));
+            custom_free = RAD_ALLOC_PREFIX_CUSTOM_FREE(aligned);
+            custom_free(RAD_ALLOC_BASE(aligned));
         }
         else
         {
-            OSFreeToHeap(__OSCurrHeap, RAD_ALLOC_BASE(ptrU8));
+            OSFreeToHeap(__OSCurrHeap, RAD_ALLOC_BASE(aligned));
         }
     }
 }
