@@ -1371,7 +1371,6 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count)
     s32 scan;
     BPBITSTYPE word;
     u8 PTR4* next_node_ptr;
-    s32 masks_read;
     BPLOSSYREADTREE tree;
     u8 nz_coeff[BP_BLOCK_COEFFS];
     BPBITSTREAM bitcopy;
@@ -1380,7 +1379,6 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count)
 #define words bitcopy.cur
 #define bitbuf bitcopy.bits
 #define bitcount bitcopy.bitlen
-    masks_read = 0;
     memset(dest, 0, BP_BLOCK_COEFFS);
 
     /* Lossy blocks store max level minus one in the stream header. */
@@ -1433,7 +1431,7 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count)
                         delta = -mask;
                     }
                     dest[(u32)nz_coeff[scan]] = sample + (s8)delta;
-                    if (masks_read++ == masks_count) {
+                    if (masks_count-- == 0) {
                         goto done;
                     }
                 }
@@ -1501,7 +1499,7 @@ decode_node:
                             delta = mask;
                         }
                         dest[(u32)BP_READ_TREE_INDEX(node)] = (s8)delta;
-                        if (masks_read++ == masks_count) {
+                        if (masks_count-- == 0) {
                             goto done;
                         }
                         *node_ptr = BP_READ_TREE_EMPTY_ENTRY;
@@ -1547,7 +1545,7 @@ push_0:
                     delta = mask;
                 }
                 dest[code] = (s8)delta;
-                if (masks_read++ == masks_count) {
+                if (masks_count-- == 0) {
                     goto done;
                 }
 after_0:
@@ -1588,7 +1586,7 @@ push_1:
                     delta = mask;
                 }
                 dest[code + BP_TREE_CHILD1_INDEX] = (s8)delta;
-                if (masks_read++ == masks_count) {
+                if (masks_count-- == 0) {
                     goto done;
                 }
 after_1:
@@ -1628,7 +1626,7 @@ push_2:
                     delta = mask;
                 }
                 dest[code + BP_TREE_CHILD2_INDEX] = (s8)delta;
-                if (masks_read++ == masks_count) {
+                if (masks_count-- == 0) {
                     goto done;
                 }
 after_2:
@@ -1662,7 +1660,7 @@ after_2:
                         delta = mask;
                     }
                     dest[code + BP_TREE_CHILD3_INDEX] = (s8)delta;
-                    if (masks_read++ == masks_count) {
+                    if (masks_count-- == 0) {
                         goto done;
                     }
                 } else {
