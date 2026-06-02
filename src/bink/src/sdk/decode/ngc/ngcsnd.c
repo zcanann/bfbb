@@ -14,7 +14,8 @@ typedef enum NGCSoundChannelLayout
     NGC_SOUND_LOCK_BUFFER_COUNT = 2,
     NGC_SOUND_ARQ_TASK_COUNT = NGC_SOUND_LOCK_BUFFER_COUNT * NGC_SOUND_STEREO_CHANNELS,
     NGC_SOUND_NO_LOCK_INDEX = -1,
-    NGC_SOUND_LAST_LOCK_INDEX = NGC_SOUND_LOCK_BUFFER_COUNT - 1,
+    NGC_SOUND_LOCK_INDEX_MASK = NGC_SOUND_LOCK_BUFFER_COUNT - 1,
+    NGC_SOUND_LAST_LOCK_INDEX = NGC_SOUND_LOCK_INDEX_MASK,
     NGC_SOUND_RIGHT_TASK_OFFSET = NGC_SOUND_STEREO_CHANNELS
 } NGCSoundChannelLayout;
 
@@ -740,7 +741,7 @@ static void NGC_StarvedClear(BINKSND PTR4* snd)
     poll_count = 0;
 check_busy:
     /* Wait for one staging half to be free before injecting silence. */
-    lock_side = poll_count & NGC_SOUND_LAST_LOCK_INDEX;
+    lock_side = poll_count & NGC_SOUND_LOCK_INDEX_MASK;
     task = NGC_TASK(state, lock_side);
     if (NGC_TASK_BUSY(task)) {
         goto busy;
