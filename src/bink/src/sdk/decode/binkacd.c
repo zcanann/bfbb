@@ -503,7 +503,7 @@ void BinkAudioDecompress(HBINKAUDIODECOMP ba, void PTR4* PTR4* outptr, u32 PTR4*
     s16 PTR4* samples;
     u32 num_bands;
     const u32 PTR4* bands;
-    u32 used;
+    u32 used_bytes;
 
     transform_size = ba->transform_size;
     root = ba->root;
@@ -514,8 +514,8 @@ void BinkAudioDecompress(HBINKAUDIODECOMP ba, void PTR4* PTR4* outptr, u32 PTR4*
     samples = ba->samples;
     num_bands = ba->num_bands;
     bands = ba->bands;
-    used = Unquant(transform_size, chans, flags, fft_work, fft_coeffs, samples, inptr,
-                   num_bands, bands, root);
+    used_bytes = Unquant(transform_size, chans, flags, fft_work, fft_coeffs, samples, inptr,
+                         num_bands, bands, root);
 
     /* Later frames overlap-add their leading window against the saved tail from the last frame. */
     if (ba->start_frame != 0) {
@@ -548,7 +548,7 @@ void BinkAudioDecompress(HBINKAUDIODECOMP ba, void PTR4* PTR4* outptr, u32 PTR4*
 
     if (inoutptr != 0) {
         /* Return the compressed stream cursor after the bits consumed by Unquant. */
-        *inoutptr = BINKAC_INPUT_ADVANCE(inptr, used);
+        *inoutptr = BINKAC_INPUT_ADVANCE(inptr, used_bytes);
     }
 }
 
