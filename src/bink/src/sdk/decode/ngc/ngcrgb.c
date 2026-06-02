@@ -740,19 +740,19 @@ void YUV_16mx2_4x2(u32 count)
         u16 c = (u16)table[RGB_WORD_BYTE1(yv0)];
         u16 d = (u16)table[RGB_WORD_BYTE0(yv0)];
 
-        dest0[RGB_TILE_WORD0] = (a << 16) | a;
-        dest0[RGB_TILE_WORD1] = (b << 16) | b;
-        dest0[RGB_TILE_NEXT_ROW_WORD0] = (c << 16) | c;
-        dest0[RGB_TILE_NEXT_ROW_WORD1] = (d << 16) | d;
+        dest0[RGB_TILE_WORD0] = RGB565_PAIR(a);
+        dest0[RGB_TILE_WORD1] = RGB565_PAIR(b);
+        dest0[RGB_TILE_NEXT_ROW_WORD0] = RGB565_PAIR(c);
+        dest0[RGB_TILE_NEXT_ROW_WORD1] = RGB565_PAIR(d);
 
         a = (u16)table[RGB_WORD_BYTE3(yv1)];
         b = (u16)table[RGB_WORD_BYTE2(yv1)];
         c = (u16)table[RGB_WORD_BYTE1(yv1)];
         d = (u16)table[RGB_WORD_BYTE0(yv1)];
-        dest1[RGB_TILE_WORD0] = (a << 16) | a;
-        dest1[RGB_TILE_WORD1] = (b << 16) | b;
-        dest1[RGB_TILE_NEXT_ROW_WORD0] = (c << 16) | c;
-        dest1[RGB_TILE_NEXT_ROW_WORD1] = (d << 16) | d;
+        dest1[RGB_TILE_WORD0] = RGB565_PAIR(a);
+        dest1[RGB_TILE_WORD1] = RGB565_PAIR(b);
+        dest1[RGB_TILE_NEXT_ROW_WORD0] = RGB565_PAIR(c);
+        dest1[RGB_TILE_NEXT_ROW_WORD1] = RGB565_PAIR(d);
 
         dest0 += RGB_TILE_BLOCK_WORDS;
         dest1 += RGB_TILE_BLOCK_WORDS;
