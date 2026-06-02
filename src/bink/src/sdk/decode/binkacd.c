@@ -142,39 +142,41 @@ static inline s16 clamp_to_s16(s32 value)
     return clamped;
 }
 
-static void quanttos16s(s16 PTR4* dest, const f32 PTR4* src, f32 scale, u32 count)
+static void quanttos16s(s16 PTR4* samples, const f32 PTR4* decoded_coeffs,
+                        f32 transform_size_root, u32 transform_size)
 {
-    if (count != 0) {
+    if (transform_size != 0) {
         do {
-            s16 PTR4* out = dest;
-            s32 sample_value = (s32)(*src * scale);
+            s16 PTR4* out = samples;
+            s32 sample_value = (s32)(*decoded_coeffs * transform_size_root);
 
-            dest = out + 1;
+            samples = out + 1;
             *out = clamp_to_s16(sample_value);
-            ++src;
-            --count;
-        } while (count != 0);
+            ++decoded_coeffs;
+            --transform_size;
+        } while (transform_size != 0);
     }
 }
 
-static void quanttos16chans2(s16 PTR4* dest, const f32 PTR4* src, f32 scale, u32 count)
+static void quanttos16chans2(s16 PTR4* samples, const f32 PTR4* decoded_coeffs,
+                             f32 transform_size_root, u32 transform_size)
 {
     u32 remaining;
     u32 stride;
 
-    remaining = count - 1;
+    remaining = transform_size - 1;
     if (remaining != BINKAC_SAMPLE_COUNT_UNDERFLOW) {
-        stride = count;
+        stride = transform_size;
         while (remaining != BINKAC_SAMPLE_COUNT_UNDERFLOW) {
-            s16 PTR4* out = dest;
-            s32 sample_value = (s32)(src[0] * scale);
+            s16 PTR4* out = samples;
+            s32 sample_value = (s32)(decoded_coeffs[0] * transform_size_root);
 
-            dest = out + 1;
+            samples = out + 1;
             *out = clamp_to_s16(sample_value);
-            out = dest++;
-            sample_value = (s32)(src[stride] * scale);
+            out = samples++;
+            sample_value = (s32)(decoded_coeffs[stride] * transform_size_root);
             *out = clamp_to_s16(sample_value);
-            ++src;
+            ++decoded_coeffs;
             --remaining;
         }
     }
