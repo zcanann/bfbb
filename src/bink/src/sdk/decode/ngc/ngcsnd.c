@@ -161,7 +161,7 @@ typedef char NGCSoundStateFitsInBinkSndData
 #define NGC_SOUND_STATE(snd) ((NGCSoundState PTR4*)NGC_SND(snd)->snddata)
 #define NGC_TASK(state, index) (&NGC_STATE(state)->tasks[(index)])
 #define NGC_TASK_FOR_INDEX(state, index, side) NGC_TASK(state, (side) + ((index) << 1))
-#define NGC_TASK_FOR_LOCK_CHANNEL(state, index, channel) NGC_TASK(state, (index) + (channel) + (channel))
+#define NGC_TASK_FOR_LOCK_CHANNEL(state, index, channel) NGC_TASK(state, ((index) + (channel)) + (channel))
 #define NGC_TASK_SOURCE(task) ((u8 PTR4*)((task)->source))
 #define NGC_TASK_SOURCE_AT(task, offset) (NGC_TASK_SOURCE(task) + (offset))
 #define NGC_LEFT_VOICE(ptr) (NGC_STATE(ptr)->left_voice)
