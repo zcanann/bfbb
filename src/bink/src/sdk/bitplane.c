@@ -80,6 +80,8 @@
 #define BP_COEFF3_LEAF_BASE (15 << 8)
 #define BP_TREE_BRANCH_ENTRY(level, index) ((u16)(level) + (index) * BP_TREE_INDEX_STRIDE + BP_TREE_BRANCH_NODE)
 #define BP_TREE_CHILD_BRANCH_ENTRY(level, base, child_base) BP_TREE_BRANCH_ENTRY((level), (base) + (child_base))
+#define BP_TREE_COEFF_ENTRY(level, index) ((u16)(level) | (index) * BP_TREE_INDEX_STRIDE + BP_TREE_COEFF_NODE)
+#define BP_TREE_BASE_COEFF_ENTRY(level, base) ((u16)(level) | (base) + BP_TREE_COEFF_NODE)
 #define BP_READ_TREE_KIND_MASK 3
 /* Read-side nodes pack the same logical tree into byte-sized entries. */
 #define BP_READ_TREE_EMPTY_ENTRY 0
@@ -388,22 +390,22 @@ handle_children:
                         if (lens[kind] == maxbits) {
                             len += maxbits;
                         } else {
-                            *--restart = (u16)lens[kind] | (entry & BP_TREE_BASE_MASK) + BP_TREE_COEFF_NODE;
+                            *--restart = BP_TREE_BASE_COEFF_ENTRY(lens[kind], entry & BP_TREE_BASE_MASK);
                         }
                         if (lens[kind + BP_TREE_CHILD1_INDEX] == maxbits) {
                             len += maxbits;
                         } else {
-                            *--restart = (u16)lens[kind + BP_TREE_CHILD1_INDEX] | (kind + BP_TREE_CHILD1_INDEX) * BP_TREE_INDEX_STRIDE + BP_TREE_COEFF_NODE;
+                            *--restart = BP_TREE_COEFF_ENTRY(lens[kind + BP_TREE_CHILD1_INDEX], kind + BP_TREE_CHILD1_INDEX);
                         }
                         if (lens[kind + BP_TREE_CHILD2_INDEX] == maxbits) {
                             len += maxbits;
                         } else {
-                            *--restart = (u16)lens[kind + BP_TREE_CHILD2_INDEX] | (kind + BP_TREE_CHILD2_INDEX) * BP_TREE_INDEX_STRIDE + BP_TREE_COEFF_NODE;
+                            *--restart = BP_TREE_COEFF_ENTRY(lens[kind + BP_TREE_CHILD2_INDEX], kind + BP_TREE_CHILD2_INDEX);
                         }
                         if (lens[kind + BP_TREE_CHILD3_INDEX] == maxbits) {
                             len += maxbits;
                         } else {
-                            *--restart = (u16)lens[kind + BP_TREE_CHILD3_INDEX] | (kind + BP_TREE_CHILD3_INDEX) * BP_TREE_INDEX_STRIDE + BP_TREE_COEFF_NODE;
+                            *--restart = BP_TREE_COEFF_ENTRY(lens[kind + BP_TREE_CHILD3_INDEX], kind + BP_TREE_CHILD3_INDEX);
                         }
                     } else if (kind == BP_TREE_BRANCH_NODE) {
                         *cur = BP_TREE_EMPTY_ENTRY;
@@ -448,22 +450,22 @@ handle_final_children:
                     if (lens[kind] == 1) {
                         len = total + BP_TREE_NODE_SIGNAL_BITS + 1;
                     } else {
-                        *--restart = (u16)lens[kind] | (entry & BP_TREE_BASE_MASK) + BP_TREE_COEFF_NODE;
+                        *--restart = BP_TREE_BASE_COEFF_ENTRY(lens[kind], entry & BP_TREE_BASE_MASK);
                     }
                     if (lens[kind + BP_TREE_CHILD1_INDEX] == 1) {
                         len++;
                     } else {
-                        *--restart = (u16)lens[kind + BP_TREE_CHILD1_INDEX] | (kind + BP_TREE_CHILD1_INDEX) * BP_TREE_INDEX_STRIDE + BP_TREE_COEFF_NODE;
+                        *--restart = BP_TREE_COEFF_ENTRY(lens[kind + BP_TREE_CHILD1_INDEX], kind + BP_TREE_CHILD1_INDEX);
                     }
                     if (lens[kind + BP_TREE_CHILD2_INDEX] == 1) {
                         len++;
                     } else {
-                        *--restart = (u16)lens[kind + BP_TREE_CHILD2_INDEX] | (kind + BP_TREE_CHILD2_INDEX) * BP_TREE_INDEX_STRIDE + BP_TREE_COEFF_NODE;
+                        *--restart = BP_TREE_COEFF_ENTRY(lens[kind + BP_TREE_CHILD2_INDEX], kind + BP_TREE_CHILD2_INDEX);
                     }
                     if (lens[kind + BP_TREE_CHILD3_INDEX] == 1) {
                         len++;
                     } else {
-                        *--restart = (u16)lens[kind + BP_TREE_CHILD3_INDEX] | (kind + BP_TREE_CHILD3_INDEX) * BP_TREE_INDEX_STRIDE + BP_TREE_COEFF_NODE;
+                        *--restart = BP_TREE_COEFF_ENTRY(lens[kind + BP_TREE_CHILD3_INDEX], kind + BP_TREE_CHILD3_INDEX);
                     }
                 } else if (kind == BP_TREE_BRANCH_NODE) {
                     *cur = BP_TREE_EMPTY_ENTRY;
@@ -684,7 +686,7 @@ handle_lossless_children:
                             PUT_BP_BITS(bits, absvals[kind], lenbits, VarBitsLens[lenbits]);
                             PUT_BP_BIT(bits, ordered[kind] < 0);
                         } else {
-                            *--restart = (u16)lens[kind] | (entry & BP_TREE_BASE_MASK) + BP_TREE_COEFF_NODE;
+                            *--restart = BP_TREE_BASE_COEFF_ENTRY(lens[kind], entry & BP_TREE_BASE_MASK);
                         }
 
                         i = kind + BP_TREE_CHILD1_INDEX;
@@ -693,7 +695,7 @@ handle_lossless_children:
                             PUT_BP_BITS(bits, absvals[i], lenbits, VarBitsLens[lenbits]);
                             PUT_BP_BIT(bits, ordered[i] < 0);
                         } else {
-                            *--restart = (u16)lens[i] | i * BP_TREE_INDEX_STRIDE + BP_TREE_COEFF_NODE;
+                            *--restart = BP_TREE_COEFF_ENTRY(lens[i], i);
                         }
 
                         i = kind + BP_TREE_CHILD2_INDEX;
@@ -702,7 +704,7 @@ handle_lossless_children:
                             PUT_BP_BITS(bits, absvals[i], lenbits, VarBitsLens[lenbits]);
                             PUT_BP_BIT(bits, ordered[i] < 0);
                         } else {
-                            *--restart = (u16)lens[i] | i * BP_TREE_INDEX_STRIDE + BP_TREE_COEFF_NODE;
+                            *--restart = BP_TREE_COEFF_ENTRY(lens[i], i);
                         }
 
                         i = kind + BP_TREE_CHILD3_INDEX;
@@ -711,7 +713,7 @@ handle_lossless_children:
                             PUT_BP_BITS(bits, absvals[i], lenbits, VarBitsLens[lenbits]);
                             PUT_BP_BIT(bits, ordered[i] < 0);
                         } else {
-                            *--restart = (u16)lens[i] | i * BP_TREE_INDEX_STRIDE + BP_TREE_COEFF_NODE;
+                            *--restart = BP_TREE_COEFF_ENTRY(lens[i], i);
                         }
                     } else {
                         if (kind == BP_TREE_BRANCH_NODE) {
@@ -1300,7 +1302,7 @@ handle_lossy_children:
                             PUT_BP_BIT(bits, (ordered[lenbits] & BP_SIGN_BIT) != 0);
                         } else {
                             --insert;
-                            *insert = (u16)lens[lenbits] | (node_entry & BP_TREE_BASE_MASK) + BP_TREE_COEFF_NODE;
+                            *insert = BP_TREE_BASE_COEFF_ENTRY(lens[lenbits], node_entry & BP_TREE_BASE_MASK);
                         }
 
                         PUT_BP_BIT(bits, lens[lenbits + BP_TREE_CHILD1_INDEX] != maxbits);
@@ -1311,7 +1313,7 @@ handle_lossy_children:
                             PUT_BP_BIT(bits, (ordered[lenbits + BP_TREE_CHILD1_INDEX] & BP_SIGN_BIT) != 0);
                         } else {
                             --insert;
-                            *insert = (u16)entry | (lenbits + BP_TREE_CHILD1_INDEX) * BP_TREE_INDEX_STRIDE + BP_TREE_COEFF_NODE;
+                            *insert = BP_TREE_COEFF_ENTRY(entry, lenbits + BP_TREE_CHILD1_INDEX);
                         }
 
                         PUT_BP_BIT(bits, lens[lenbits + BP_TREE_CHILD2_INDEX] != maxbits);
@@ -1322,7 +1324,7 @@ handle_lossy_children:
                             PUT_BP_BIT(bits, (ordered[lenbits + BP_TREE_CHILD2_INDEX] & BP_SIGN_BIT) != 0);
                         } else {
                             --insert;
-                            *insert = (u16)entry | (lenbits + BP_TREE_CHILD2_INDEX) * BP_TREE_INDEX_STRIDE + BP_TREE_COEFF_NODE;
+                            *insert = BP_TREE_COEFF_ENTRY(entry, lenbits + BP_TREE_CHILD2_INDEX);
                         }
 
                         PUT_BP_BIT(bits, lens[lenbits + BP_TREE_CHILD3_INDEX] != maxbits);
@@ -1333,7 +1335,7 @@ handle_lossy_children:
                             PUT_BP_BIT(bits, (ordered[lenbits + BP_TREE_CHILD3_INDEX] & BP_SIGN_BIT) != 0);
                         } else {
                             --insert;
-                            *insert = (u16)entry | (lenbits + BP_TREE_CHILD3_INDEX) * BP_TREE_INDEX_STRIDE + BP_TREE_COEFF_NODE;
+                            *insert = BP_TREE_COEFF_ENTRY(entry, lenbits + BP_TREE_CHILD3_INDEX);
                         }
                     } else {
                         if (lenbits == BP_TREE_BRANCH_NODE) {
