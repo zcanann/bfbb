@@ -233,8 +233,8 @@ u32 LenBPLossless(s16 PTR4* vals)
     s32 i;
     s32 len;
     s32 count;
-    u8 PTR4* group_ptr;
-    u8 PTR4* len_ptr;
+    u8 PTR4* group_end_ptr;
+    u8 PTR4* child_len_ptr;
     s32 coeff;
     u16 PTR4* cur;
     u16 PTR4* restart;
@@ -267,22 +267,22 @@ u32 LenBPLossless(s16 PTR4* vals)
     /* Each four-coefficient subtree inherits the deepest child bit depth. */
     len = BP_FIRST_LOSSLESS_TREE_GROUP_INDEX;
     count = BP_TREE_LAST_GROUP;
-    group_ptr = lens + BP_FIRST_LOSSLESS_TREE_GROUP_END_INDEX;
-    len_ptr = lens + BP_FIRST_LOSSLESS_TREE_GROUP_INDEX;
+    group_end_ptr = lens + BP_FIRST_LOSSLESS_TREE_GROUP_END_INDEX;
+    child_len_ptr = lens + BP_FIRST_LOSSLESS_TREE_GROUP_INDEX;
     do {
-        bits = *len_ptr;
-        if (*len_ptr < len_ptr[1]) {
-            bits = len_ptr[1];
+        bits = *child_len_ptr;
+        if (*child_len_ptr < child_len_ptr[1]) {
+            bits = child_len_ptr[1];
         }
-        if (bits < group_ptr[-1]) {
-            bits = group_ptr[-1];
+        if (bits < group_end_ptr[-1]) {
+            bits = group_end_ptr[-1];
         }
-        if (bits < *group_ptr) {
-            bits = *group_ptr;
+        if (bits < *group_end_ptr) {
+            bits = *group_end_ptr;
         }
         groups[BP_LOSSLESS_TREE_GROUP_INDEX(len)] = (u8)bits;
-        group_ptr = BP_NEXT_TREE_GROUP(group_ptr);
-        len_ptr = BP_NEXT_TREE_GROUP(len_ptr);
+        group_end_ptr = BP_NEXT_TREE_GROUP(group_end_ptr);
+        child_len_ptr = BP_NEXT_TREE_GROUP(child_len_ptr);
         len += BP_TREE_CHILD_COUNT;
         count--;
     } while (count != 0);
@@ -483,8 +483,8 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
     u16 kind;
     s32 i;
     s32 count;
-    u8 PTR4* group_ptr;
-    u8 PTR4* len_ptr;
+    u8 PTR4* group_end_ptr;
+    u8 PTR4* child_len_ptr;
     u32 maxbits;
     u32 lenbits;
     u32 bit_count;
@@ -540,22 +540,22 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
 
     i = BP_FIRST_LOSSLESS_TREE_GROUP_INDEX;
     count = BP_TREE_LAST_GROUP;
-    group_ptr = lens + BP_FIRST_LOSSLESS_TREE_GROUP_END_INDEX;
-    len_ptr = lens + BP_FIRST_LOSSLESS_TREE_GROUP_INDEX;
+    group_end_ptr = lens + BP_FIRST_LOSSLESS_TREE_GROUP_END_INDEX;
+    child_len_ptr = lens + BP_FIRST_LOSSLESS_TREE_GROUP_INDEX;
     do {
-        lenbits = *len_ptr;
-        if (*len_ptr < len_ptr[1]) {
-            lenbits = len_ptr[1];
+        lenbits = *child_len_ptr;
+        if (*child_len_ptr < child_len_ptr[1]) {
+            lenbits = child_len_ptr[1];
         }
-        if (lenbits < group_ptr[-1]) {
-            lenbits = group_ptr[-1];
+        if (lenbits < group_end_ptr[-1]) {
+            lenbits = group_end_ptr[-1];
         }
-        if (lenbits < *group_ptr) {
-            lenbits = *group_ptr;
+        if (lenbits < *group_end_ptr) {
+            lenbits = *group_end_ptr;
         }
         groups[BP_LOSSLESS_TREE_GROUP_INDEX(i)] = (u8)lenbits;
-        group_ptr = BP_NEXT_TREE_GROUP(group_ptr);
-        len_ptr = BP_NEXT_TREE_GROUP(len_ptr);
+        group_end_ptr = BP_NEXT_TREE_GROUP(group_end_ptr);
+        child_len_ptr = BP_NEXT_TREE_GROUP(child_len_ptr);
         i += BP_TREE_CHILD_COUNT;
         count--;
     } while (count != 0);
@@ -1093,8 +1093,8 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     s32 sign;
     s32 i;
     s32 count;
-    u8 PTR4* group_ptr;
-    u8 PTR4* len_ptr;
+    u8 PTR4* group_end_ptr;
+    u8 PTR4* child_len_ptr;
     u32 maxbits;
     u32 lenbits;
     u32 bit_count;
@@ -1152,22 +1152,22 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     /* Group tables use the deepest bit depth of each four-coefficient branch. */
     count = BP_TREE_GROUPS;
     i = 0;
-    group_ptr = lens + BP_FIRST_LOSSY_TREE_GROUP_END_INDEX;
-    len_ptr = lens;
+    group_end_ptr = lens + BP_FIRST_LOSSY_TREE_GROUP_END_INDEX;
+    child_len_ptr = lens;
     do {
-        lenbits = *len_ptr;
-        if (*len_ptr < len_ptr[1]) {
-            lenbits = len_ptr[1];
+        lenbits = *child_len_ptr;
+        if (*child_len_ptr < child_len_ptr[1]) {
+            lenbits = child_len_ptr[1];
         }
-        if (lenbits < group_ptr[-1]) {
-            lenbits = group_ptr[-1];
+        if (lenbits < group_end_ptr[-1]) {
+            lenbits = group_end_ptr[-1];
         }
-        if (lenbits < *group_ptr) {
-            lenbits = *group_ptr;
+        if (lenbits < *group_end_ptr) {
+            lenbits = *group_end_ptr;
         }
         groups[BP_TREE_GROUP_INDEX(i)] = (u8)lenbits;
-        group_ptr = BP_NEXT_TREE_GROUP(group_ptr);
-        len_ptr = BP_NEXT_TREE_GROUP(len_ptr);
+        group_end_ptr = BP_NEXT_TREE_GROUP(group_end_ptr);
+        child_len_ptr = BP_NEXT_TREE_GROUP(child_len_ptr);
         i += BP_TREE_CHILD_COUNT;
         count--;
     } while (count != 0);
