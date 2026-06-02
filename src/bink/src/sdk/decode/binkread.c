@@ -176,6 +176,8 @@ typedef enum BINKRuntimeSlot
     BINK_RUNTIME_PREVIOUS_SLOT
 } BINKRuntimeSlot;
 #define BINK_ARRAY_BYTES(count, ptr) ((count) * sizeof(*(ptr)))
+#define BINK_SHIFT_RUNTIME_HISTORY(bink, field) \
+    memmove((bink)->field + 1, (bink)->field, (bink)->runtimemoveamt)
 #define BINK_FRAME_OFFSETS_BYTES(frames, ptr) (((frames) + 1) * sizeof(*(ptr)))
 #define BINK_VIDEO_PLANE_BYTES(bink) \
     ((bink)->YWidth * (bink)->YHeight + (bink)->UVWidth * (bink)->UVHeight * BINK_CHROMA_PLANE_COUNT)
@@ -1612,13 +1614,13 @@ s32 BinkDoFrame(HBINK bnk)
     bnk->bio.Working = 1;
     bnk->startframetime = RADTimerRead();
 
-    memmove(bnk->rtframetimes + 1, bnk->rtframetimes, bnk->runtimemoveamt);
-    memmove(bnk->rtvdecomptimes + 1, bnk->rtvdecomptimes, bnk->runtimemoveamt);
-    memmove(bnk->rtadecomptimes + 1, bnk->rtadecomptimes, bnk->runtimemoveamt);
-    memmove(bnk->rtblittimes + 1, bnk->rtblittimes, bnk->runtimemoveamt);
-    memmove(bnk->rtreadtimes + 1, bnk->rtreadtimes, bnk->runtimemoveamt);
-    memmove(bnk->rtidlereadtimes + 1, bnk->rtidlereadtimes, bnk->runtimemoveamt);
-    memmove(bnk->rtthreadreadtimes + 1, bnk->rtthreadreadtimes, bnk->runtimemoveamt);
+    BINK_SHIFT_RUNTIME_HISTORY(bnk, rtframetimes);
+    BINK_SHIFT_RUNTIME_HISTORY(bnk, rtvdecomptimes);
+    BINK_SHIFT_RUNTIME_HISTORY(bnk, rtadecomptimes);
+    BINK_SHIFT_RUNTIME_HISTORY(bnk, rtblittimes);
+    BINK_SHIFT_RUNTIME_HISTORY(bnk, rtreadtimes);
+    BINK_SHIFT_RUNTIME_HISTORY(bnk, rtidlereadtimes);
+    BINK_SHIFT_RUNTIME_HISTORY(bnk, rtthreadreadtimes);
 
     bnk->rtframetimes[BINK_RUNTIME_CURRENT_SLOT] = bnk->startframetime;
     bnk->rtvdecomptimes[BINK_RUNTIME_CURRENT_SLOT] = bnk->timevdecomp;
