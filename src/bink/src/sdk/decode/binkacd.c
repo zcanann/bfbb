@@ -95,6 +95,20 @@ typedef VARBITS BINKVARBITS;
 #define BINKAC_INPUT_ADVANCE(ptr, bytes) ((u8 PTR4*)(ptr) + (bytes))
 #define BINKAC_ZERO_BYTE 0
 
+static const f64 BINKAC_FXP_TO_FLOAT_BIAS = 4503599627370496.0;
+static const f32 BINKAC_SAMPLE_ZERO = 0.0f;
+static const f64 BINKAC_VARBITS_U32_TO_F64_BIAS = 4503601774854144.0;
+static const f64 BINKAC_QUANT_U32_TO_F64_BIAS = 4503601774854144.0;
+static const f32 BINKAC_QUANT_INDEX_SCALE_CONST = 0.664f;
+static const f32 BINKAC_QUANT_POWER_SCALE_CONST = 0.10f;
+static const f64 BINKAC_QUANT_POWER_BASE_CONST = 10.0;
+static const f64 BINKAC_OPEN_U32_TO_F64_BIAS = 4503599627370496.0;
+static const f32 BINKAC_RSQRT_ZERO = 0.0f;
+static const f64 BINKAC_RSQRT_NEWTON_HALF_CONST = 0.5;
+static const f64 BINKAC_RSQRT_NEWTON_THREE_CONST = 3.0;
+static const f64 BINKAC_U32_LIMIT_AS_F64 = 2147483648.0;
+static const f32 BINKAC_TRANSFORM_ROOT_SCALE_CONST = 2.0f;
+
 /* RLE code lengths, in VQLENGTH sample groups, for sparse audio coefficients. */
 static u8 bink_rlelens_snd[MAXRLE] = {
     2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 32, 64
@@ -252,7 +266,7 @@ static void read_rle_samples(f32 PTR4* samps, u32 transform_size, BINKVARBITS PT
 {
     u32 i;
     u32 b = 0;
-    f32 dequant = 0.0f;
+    f32 dequant = BINKAC_SAMPLE_ZERO;
     f32 PTR4* out;
 
     while (BINKAC_BAND_SAMPLE_LIMIT(bands, b) < BINKAC_FIRST_COEFF) {
@@ -327,7 +341,7 @@ f64 pow(f64 x, f64 y);
 
 static inline f32 Undecibel(f32 d)
 {
-    return (f32)pow(BINKAC_UNDECIBEL_BASE, d * BINKAC_UNDECIBEL_DB_SCALE);
+    return (f32)pow(BINKAC_QUANT_POWER_BASE_CONST, d * BINKAC_QUANT_POWER_SCALE_CONST);
 }
 
 static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
@@ -364,7 +378,7 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
 
         for (i = 0; i < num_bands; ++i) {
             VarBitsGet(q, u32, vb, BINKAC_QUANT_BITS);
-            threshold[i] = Undecibel((f32)(s32)q * BINKAC_QUANT_DB_SCALE);
+            threshold[i] = Undecibel((f32)(s32)q * BINKAC_QUANT_INDEX_SCALE_CONST);
         }
 
         read_rle_samples(channel, transform_size, &vb, threshold, bands);
@@ -396,11 +410,11 @@ static inline f32 radfsqrt(f32 value)
         __asm__ volatile("frsqrte %0,%1" : "=f"(error) : "f"(value));
         guess = error;
         error = guess * guess * value;
-        guess = 0.5 * guess * (3.0 - error);
+        guess = BINKAC_RSQRT_NEWTON_HALF_CONST * guess * (BINKAC_RSQRT_NEWTON_THREE_CONST - error);
         error = guess * guess * value;
-        guess = 0.5 * guess * (3.0 - error);
+        guess = BINKAC_RSQRT_NEWTON_HALF_CONST * guess * (BINKAC_RSQRT_NEWTON_THREE_CONST - error);
         error = guess * guess * value;
-        guess = 0.5 * guess * (3.0 - error);
+        guess = BINKAC_RSQRT_NEWTON_HALF_CONST * guess * (BINKAC_RSQRT_NEWTON_THREE_CONST - error);
         return value * guess;
     }
 
@@ -477,7 +491,7 @@ HBINKAUDIODECOMP BinkAudioDecompressOpen(u32 rate, u32 chans, u32 flags)
     ba->transform_size = transform_size;
     ba->buffer_size = buffer_size;
     ba->window_size_in_bytes = BINKAC_WINDOW_BYTES(buffer_size);
-    transform_size_root = 2.0f / radfsqrt((f32)transform_size);
+    transform_size_root = BINKAC_TRANSFORM_ROOT_SCALE_CONST / radfsqrt((f32)transform_size);
     ba->transform_size_root = transform_size_root;
 
     for (band_index = 0; band_index < num_bands; ++band_index) {
