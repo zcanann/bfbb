@@ -92,7 +92,7 @@ typedef enum BINKHuff4SortMode
 
 #define HUFF4_CODE_USED(code) ((code) >> HUFF4_USED_SHIFT)
 #define HUFF4_CODE_SYMBOL(code) ((code) & HUFF4_SYMBOL_MASK)
-#define HUFF4_CODE_VALUE(code, values) ((values)[HUFF4_CODE_SYMBOL(code)])
+#define HUFF4_CODE_SYM(code, syms) ((syms)[HUFF4_CODE_SYMBOL(code)])
 typedef enum BINKBundleLayout
 {
     HUFF8_TABLE_STATES = 16,
@@ -212,7 +212,7 @@ typedef struct READBUNDLE
     u8 PTR4* cur_dec;    /* End of the currently decoded symbols. */
     u32 bit_size;      /* Bits per direct bundle element. */
     u32 initial_value;
-    u8 values[HUFF4_SYMBOLS]; /* Huffman symbol to Bink symbol translation list. */
+    u8 syms[HUFF4_SYMBOLS]; /* Huffman leaf-to-symbol translation list. */
     u32 bits_to_peek;
     const u8 PTR4* decode;
     u32 count_bits;   /* Bits used to read the next decoded-element count. */
@@ -221,7 +221,7 @@ typedef struct READBUNDLE
 
 typedef struct HUFF8TABLE
 {
-    u8 values[HUFF8_TABLE_STATES][HUFF4_SYMBOLS];
+    u8 syms[HUFF8_TABLE_STATES][HUFF4_SYMBOLS];
     u32 bits_to_peek[HUFF8_TABLE_STATES];
     const u8 PTR4* decode[HUFF8_TABLE_STATES];
     /* Last decoded high nibble selects the next color high-nibble codebook. */
@@ -240,7 +240,7 @@ typedef struct HUFF4MERGES
 typedef VARBITS EXPBITS;
 
 static void ReadHuffTable(EXPBITS PTR4* bits, const u8 PTR4* PTR4* decode,
-                          u32 PTR4* bits_to_peek, u8 PTR4* values);
+                          u32 PTR4* bits_to_peek, u8 PTR4* syms);
 
 static void OpenReadBundle(u8 PTR4* bits, READBUNDLE PTR4* rb, s32 width, u32 rows,
                            s32 shift, s32 pitch, BINKBUNDLEINITIALVALUE use_initial_value)
@@ -344,7 +344,7 @@ static void simpmergesort(EXPBITS PTR4* bits, u8 PTR4* out, u8 PTR4* left,
 }
 
 static inline u32 exp_read_huff4(EXPBITS PTR4* bits, u32 bits_to_peek,
-                                 const u8 PTR4* decode, u8 PTR4* values)
+                                 const u8 PTR4* decode, u8 PTR4* syms)
 {
     u32 bitcount;
     EXPBITSTYPE bitbuf;
@@ -360,7 +360,7 @@ static inline u32 exp_read_huff4(EXPBITS PTR4* bits, u32 bits_to_peek,
         bitbuf = bits->bits & mask;
         code = decode[bitbuf];
         used = HUFF4_CODE_USED(code);
-        symbol = HUFF4_CODE_VALUE(code, values);
+        symbol = HUFF4_CODE_SYM(code, syms);
         bits->bits >>= used;
         bits->bitlen = bitcount - used;
     } else {
@@ -368,7 +368,7 @@ static inline u32 exp_read_huff4(EXPBITS PTR4* bits, u32 bits_to_peek,
         bitbuf = (bits->bits | (word << bitcount)) & mask;
         code = decode[bitbuf];
         used = HUFF4_CODE_USED(code);
-        symbol = HUFF4_CODE_VALUE(code, values);
+        symbol = HUFF4_CODE_SYM(code, syms);
         if (bitcount >= used) {
             bits->bits >>= used;
             bits->bitlen = bitcount - used;
@@ -383,7 +383,7 @@ static inline u32 exp_read_huff4(EXPBITS PTR4* bits, u32 bits_to_peek,
 }
 
 static inline void exp_read_huff4_store(EXPBITS PTR4* bits, u32 bits_to_peek,
-                                        const u8 PTR4* decode, u8 PTR4* values,
+                                        const u8 PTR4* decode, u8 PTR4* syms,
                                         u8 PTR4* dest)
 {
     u32 bitcount;
@@ -399,7 +399,7 @@ static inline void exp_read_huff4_store(EXPBITS PTR4* bits, u32 bits_to_peek,
         bitbuf = bits->bits & mask;
         code = decode[bitbuf];
         used = HUFF4_CODE_USED(code);
-        *dest = (u8)HUFF4_CODE_VALUE(code, values);
+        *dest = (u8)HUFF4_CODE_SYM(code, syms);
         bits->bits >>= used;
         bits->bitlen = bitcount - used;
     } else {
@@ -407,7 +407,7 @@ static inline void exp_read_huff4_store(EXPBITS PTR4* bits, u32 bits_to_peek,
         bitbuf = (bits->bits | (word << bitcount)) & mask;
         code = decode[bitbuf];
         used = HUFF4_CODE_USED(code);
-        *dest = (u8)HUFF4_CODE_VALUE(code, values);
+        *dest = (u8)HUFF4_CODE_SYM(code, syms);
         if (bitcount >= used) {
             bits->bits >>= used;
             bits->bitlen = bitcount - used;
@@ -420,7 +420,7 @@ static inline void exp_read_huff4_store(EXPBITS PTR4* bits, u32 bits_to_peek,
 }
 
 static inline u32 exp_read_huff4_mask(EXPBITS PTR4* bits, u32 bits_to_peek,
-                                      const u8 PTR4* decode, u8 PTR4* values,
+                                      const u8 PTR4* decode, u8 PTR4* syms,
                                       u32 mask)
 {
     u32 bitcount;
@@ -435,7 +435,7 @@ static inline u32 exp_read_huff4_mask(EXPBITS PTR4* bits, u32 bits_to_peek,
         bitbuf = bits->bits & mask;
         code = decode[bitbuf];
         used = HUFF4_CODE_USED(code);
-        symbol = HUFF4_CODE_VALUE(code, values);
+        symbol = HUFF4_CODE_SYM(code, syms);
         bits->bits >>= used;
         bits->bitlen = bitcount - used;
     } else {
@@ -443,7 +443,7 @@ static inline u32 exp_read_huff4_mask(EXPBITS PTR4* bits, u32 bits_to_peek,
         bitbuf = (bits->bits | (word << bitcount)) & mask;
         code = decode[bitbuf];
         used = HUFF4_CODE_USED(code);
-        symbol = HUFF4_CODE_VALUE(code, values);
+        symbol = HUFF4_CODE_SYM(code, syms);
         if (bitcount >= used) {
             bits->bits >>= used;
             bits->bitlen = bitcount - used;
@@ -460,11 +460,11 @@ static inline u32 exp_read_huff4_mask(EXPBITS PTR4* bits, u32 bits_to_peek,
 static inline u32 exp_read_huff8(EXPBITS PTR4* bits, u32 state, HUFF8TABLE PTR4* table)
 {
     return exp_read_huff4(bits, table->bits_to_peek[state], table->decode[state],
-                          table->values[state]);
+                          table->syms[state]);
 }
 
 static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
-                          u32 PTR4* bits_to_peek, u8 PTR4* values)
+                          u32 PTR4* bits_to_peek, u8 PTR4* syms)
 {
     u32 table_index;
     u32 sort_mode;
@@ -483,7 +483,7 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
     *bits_to_peek = (u8)BINK_HUFF4_BITS_TO_PEEK[table_index];
     if (table_index == HUFF4_IDENTITY_CODEBOOK) {
         for (j = 0; j < HUFF4_SYMBOLS; ++j) {
-            values[j] = j;
+            syms[j] = j;
         }
         return;
     }
@@ -498,11 +498,11 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
                 u32 swap_pair = exp_get_bit(vb);
 
                 if (swap_pair != 0) {
-                    values[i + 1] = i;
-                    values[i] = i + 1;
+                    syms[i + 1] = i;
+                    syms[i] = i + 1;
                 } else {
-                    values[i] = i;
-                    values[i + 1] = i + 1;
+                    syms[i] = i;
+                    syms[i + 1] = i + 1;
                 }
                 i += HUFF4_PAIR_SYMBOLS;
                 count--;
@@ -528,17 +528,17 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
             }
 
             if (sort_mode == HUFF4_SORT_QUARTERS) {
-                simpmergesort(vb, values, merges.order,
+                simpmergesort(vb, syms, merges.order,
                               merges.order + HUFF4_PAIR_SYMBOLS, HUFF4_PAIR_SYMBOLS);
-                simpmergesort(vb, values + HUFF4_QUARTER_SYMBOLS,
+                simpmergesort(vb, syms + HUFF4_QUARTER_SYMBOLS,
                               merges.order + HUFF4_QUARTER_SYMBOLS,
                               merges.order + HUFF4_QUARTER_SYMBOLS + HUFF4_PAIR_SYMBOLS,
                               HUFF4_PAIR_SYMBOLS);
-                simpmergesort(vb, values + HUFF4_HALF_SYMBOLS,
+                simpmergesort(vb, syms + HUFF4_HALF_SYMBOLS,
                               merges.order + HUFF4_HALF_SYMBOLS,
                               merges.order + HUFF4_HALF_SYMBOLS + HUFF4_PAIR_SYMBOLS,
                               HUFF4_PAIR_SYMBOLS);
-                simpmergesort(vb, values + HUFF4_LAST_QUARTER_SYMBOL,
+                simpmergesort(vb, syms + HUFF4_LAST_QUARTER_SYMBOL,
                               merges.order + HUFF4_LAST_QUARTER_SYMBOL,
                               merges.order + HUFF4_LAST_PAIR_SYMBOL, HUFF4_PAIR_SYMBOLS);
             } else {
@@ -556,16 +556,16 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
                               merges.order + HUFF4_LAST_QUARTER_SYMBOL,
                               merges.order + HUFF4_LAST_PAIR_SYMBOL, HUFF4_PAIR_SYMBOLS);
                 if (sort_mode == HUFF4_SORT_HALVES) {
-                    simpmergesort(vb, values, merges.merge01, merges.merge23,
+                    simpmergesort(vb, syms, merges.merge01, merges.merge23,
                                   HUFF4_QUARTER_SYMBOLS);
-                    simpmergesort(vb, values + HUFF4_HALF_SYMBOLS,
+                    simpmergesort(vb, syms + HUFF4_HALF_SYMBOLS,
                                   merges.merge45, merges.merge67, HUFF4_QUARTER_SYMBOLS);
                 } else {
                     simpmergesort(vb, merges.order, merges.merge01, merges.merge23,
                                   HUFF4_QUARTER_SYMBOLS);
                     simpmergesort(vb, merges.order + HUFF4_HALF_SYMBOLS,
                                   merges.merge45, merges.merge67, HUFF4_QUARTER_SYMBOLS);
-                    simpmergesort(vb, values, merges.order,
+                    simpmergesort(vb, syms, merges.order,
                                   merges.order + HUFF4_HALF_SYMBOLS,
                                   HUFF4_HALF_SYMBOLS);
                 }
@@ -576,7 +576,7 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
         unused_symbols = HUFF4_ALL_SYMBOLS_MASK;
         for (i = 0; i <= last_explicit; ++i) {
             VarBitsGet(symbol, u32, *vb, HUFF4_USED_SHIFT);
-            values[i] = symbol;
+            syms[i] = symbol;
             unused_symbols &= ~(HUFF4_SYMBOL_PRESENT_BIT << symbol);
         }
 
@@ -584,7 +584,7 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
         do {
             if ((unused_symbols & HUFF4_SYMBOL_PRESENT_BIT) != 0) {
                 last_explicit++;
-                values[last_explicit] = fill_symbol;
+                syms[last_explicit] = fill_symbol;
             }
             fill_symbol++;
             unused_symbols >>= 1;
@@ -594,7 +594,7 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
 
 static void StartReadHuff4Bundle(READBUNDLE PTR4* rb, EXPBITS PTR4* bits)
 {
-    ReadHuffTable(bits, &rb->decode, &rb->bits_to_peek, rb->values);
+    ReadHuffTable(bits, &rb->decode, &rb->bits_to_peek, rb->syms);
 }
 
 static void StartReadHuff8Bundle(READBUNDLE PTR4* rb, EXPBITS PTR4* bits,
@@ -605,8 +605,8 @@ static void StartReadHuff8Bundle(READBUNDLE PTR4* rb, EXPBITS PTR4* bits,
     u8 PTR4* cur;
     u8 PTR4* end;
 
-    cur = huff8_table->values[0];
-    end = huff8_table->values[HUFF8_TABLE_STATES - 1];
+    cur = huff8_table->syms[0];
+    end = huff8_table->syms[HUFF8_TABLE_STATES - 1];
     codes = huff8_table->bits_to_peek;
     huff_table = huff8_table->decode;
     do {
@@ -615,7 +615,7 @@ static void StartReadHuff8Bundle(READBUNDLE PTR4* rb, EXPBITS PTR4* bits,
         ++codes;
         ++huff_table;
     } while (cur <= end);
-    ReadHuffTable(bits, &rb->decode, &rb->bits_to_peek, rb->values);
+    ReadHuffTable(bits, &rb->decode, &rb->bits_to_peek, rb->syms);
     huff8_table->lastval = 0;
 }
 
@@ -627,7 +627,7 @@ static void CheckReadRLEHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     u32 last_value;
     u8 run_length;
     u32 fill;
-    u8 PTR4* values;
+    u8 PTR4* syms;
     const u8 PTR4* decode;
     u32 peek;
 
@@ -640,14 +640,14 @@ static void CheckReadRLEHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
         bundle->cur_ptr = bundle->data;
         bundle->cur_dec = bundle->data + count;
         if (exp_get_bit(bits) == 0) {
-            /* Literal Huff4 values above 11 repeat the previous decoded symbol. */
-            values = bundle->values;
+            /* Literal Huff4 symbols above 11 repeat the previous decoded symbol. */
+            syms = bundle->syms;
             peek = (u8)bundle->bits_to_peek;
             dest = bundle->data;
             last_value = 0;
             decode = bundle->decode;
             while (count != 0) {
-                symbol = exp_read_huff4(bits, peek, decode, values);
+                symbol = exp_read_huff4(bits, peek, decode, syms);
                 if (symbol >= HUFF4_RLE_FIRST_RUN_SYMBOL) {
                     /* Packed word stores four copies of the last byte for the run fill. */
                     fill = last_value | (last_value << BINK_BYTE_BITS);
@@ -682,7 +682,7 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
 {
     u32 count;
     u8 PTR4* dest;
-    u8 PTR4* values;
+    u8 PTR4* syms;
     const u8 PTR4* decode;
     u32 peek;
     u32 mask;
@@ -702,7 +702,7 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
         bundle->cur_ptr = bundle->data;
         bundle->cur_dec = bundle->data + count;
         dest = bundle->data;
-        values = bundle->values;
+        syms = bundle->syms;
         decode = bundle->decode;
         peek = bundle->bits_to_peek;
         lastval = huff8_table->lastval;
@@ -715,7 +715,7 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
         do {
             high = exp_read_huff8(bits, lastval, huff8_table);
             lastval = high;
-            low = exp_read_huff4_mask(bits, peek, decode, values, mask);
+            low = exp_read_huff4_mask(bits, peek, decode, syms, mask);
             packed = ((high & HUFF4_SYMBOL_MASK) << HUFF4_USED_SHIFT) | low;
             signed_byte = packed;
             if ((signed_byte & BINK_SIGNED_BYTE_BIAS) != 0) {
@@ -743,7 +743,7 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
 {
     u32 count;
     u8 PTR4* dest;
-    u8 PTR4* values;
+    u8 PTR4* syms;
     const u8 PTR4* decode;
     u32 peek;
     u32 mask;
@@ -761,7 +761,7 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
         bundle->cur_ptr = bundle->data;
         bundle->cur_dec = bundle->data + count;
         dest = bundle->data;
-        values = bundle->values;
+        syms = bundle->syms;
         decode = bundle->decode;
         peek = bundle->bits_to_peek;
         lastval = huff8_table->lastval;
@@ -773,7 +773,7 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
         remaining = (s32)count;
         do {
             lastval = exp_read_huff8(bits, lastval, huff8_table);
-            low = exp_read_huff4_mask(bits, peek, decode, values, mask);
+            low = exp_read_huff4_mask(bits, peek, decode, syms, mask);
             packed = low | (lastval << HUFF4_USED_SHIFT);
             *dest++ = (u8)packed;
             remaining--;
@@ -794,7 +794,7 @@ static void CheckReadHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
 {
     u32 count;
     u8 PTR4* dest;
-    u8 PTR4* values;
+    u8 PTR4* syms;
     const u8 PTR4* decode;
     u32 peek;
     u32 fill;
@@ -810,12 +810,12 @@ static void CheckReadHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
         if (exp_get_bit(bits) == 0) {
             /* Direct Huff4 bundles decode one nibble-sized symbol per byte. */
             dest = bundle->data;
-            values = bundle->values;
+            syms = bundle->syms;
             decode = bundle->decode;
             peek = bundle->bits_to_peek;
             while (count != 0) {
                 count--;
-                exp_read_huff4_store(bits, peek, decode, values, dest);
+                exp_read_huff4_store(bits, peek, decode, syms, dest);
                 ++dest;
             }
         } else {
@@ -832,7 +832,7 @@ static void CheckReadHuff4PairBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits
 {
     u32 count;
     u8 PTR4* dest;
-    u8 PTR4* values;
+    u8 PTR4* syms;
     const u8 PTR4* decode;
     u32 peek;
     u32 mask;
@@ -848,15 +848,15 @@ static void CheckReadHuff4PairBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits
         dest = bundle->data;
         bundle->cur_ptr = dest;
         bundle->cur_dec = dest + count;
-        values = bundle->values;
+        syms = bundle->syms;
         decode = bundle->decode;
         peek = bundle->bits_to_peek;
         mask = GetBitsLen(peek);
         do {
             /* Pair bundles pack two Huff4 symbols into each output byte. */
             count--;
-            low = exp_read_huff4_mask(bits, peek, decode, values, mask);
-            high = exp_read_huff4_mask(bits, peek, decode, values, mask);
+            low = exp_read_huff4_mask(bits, peek, decode, syms, mask);
+            high = exp_read_huff4_mask(bits, peek, decode, syms, mask);
             *dest++ = (u8)(low | (high << HUFF4_USED_SHIFT));
         } while (count != 0);
     } else {
@@ -869,7 +869,7 @@ static void CheckReadHuff4SBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
 {
     u32 count;
     s8 PTR4* dest;
-    u8 PTR4* values;
+    u8 PTR4* syms;
     const u8 PTR4* decode;
     u32 peek;
     s32 symbol;
@@ -886,11 +886,11 @@ static void CheckReadHuff4SBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
         if (exp_get_bit(bits) == 0) {
             /* Signed Huff4 bundles store a sign bit only for nonzero symbols. */
             dest = bundle->data;
-            values = bundle->values;
+            syms = bundle->syms;
             decode = bundle->decode;
             peek = bundle->bits_to_peek;
             while (count-- != 0) {
-                symbol = (s32)exp_read_huff4(bits, peek, decode, values);
+                symbol = (s32)exp_read_huff4(bits, peek, decode, syms);
                 if (symbol != 0 && exp_get_bit(bits) != 0) {
                     symbol = -symbol;
                 }
