@@ -383,8 +383,8 @@ u32 LenBPLossless(s16 PTR4* vals)
                     (len = total + BP_TREE_NODE_PRESENT_BITS, (entry & BP_BYTE_MASK) != maxbits)) {
                     cur++;
                 } else {
-                    kind = BP_TREE_ENTRY_KIND(entry);
-                    if (kind == BP_TREE_GROUP_NODE) {
+                    switch (BP_TREE_ENTRY_KIND(entry)) {
+                    case BP_TREE_GROUP_NODE:
                         kind = BP_TREE_ENTRY_INDEX(entry);
                         bits = (u32)BP_TREE_ENTRY_GROUP(entry);
                         *cur = BP_TREE_BASE_BRANCH_ENTRY(groups[bits], BP_TREE_ENTRY_BASE(entry));
@@ -392,7 +392,8 @@ u32 LenBPLossless(s16 PTR4* vals)
                         end[1] = BP_TREE_CHILD_BRANCH_ENTRY(groups[bits + BP_TREE_CHILD2_INDEX], kind, BP_TREE_CHILD2_BASE);
                         end[2] = BP_TREE_CHILD_BRANCH_ENTRY(groups[bits + BP_TREE_CHILD3_INDEX], kind, BP_TREE_CHILD3_BASE);
                         end += BP_TREE_ADDED_CHILD_COUNT;
-                    } else if (kind == BP_TREE_HIGH_NODE) {
+                        break;
+                    case BP_TREE_HIGH_NODE:
                         *cur = BP_TREE_HIGH_GROUP_ENTRY(hi_groups[BP_TREE_ENTRY_HIGH_GROUP(entry)], BP_TREE_ENTRY_INDEX(entry));
 handle_children:
                         kind = BP_TREE_ENTRY_INDEX(entry);
@@ -417,16 +418,19 @@ handle_children:
                         } else {
                             *--restart = BP_TREE_COEFF_ENTRY(lens[kind + BP_TREE_CHILD3_INDEX], kind + BP_TREE_CHILD3_INDEX);
                         }
-                    } else if (kind == BP_TREE_BRANCH_NODE) {
+                        break;
+                    case BP_TREE_BRANCH_NODE:
                         *cur = BP_TREE_EMPTY_ENTRY;
                         cur++;
                         goto handle_children;
-                    } else {
-                        if (kind == BP_TREE_COEFF_NODE) {
-                            *cur = BP_TREE_EMPTY_ENTRY;
-                            len += maxbits;
-                        }
+                    case BP_TREE_COEFF_NODE:
+                        *cur = BP_TREE_EMPTY_ENTRY;
+                        len += maxbits;
                         cur++;
+                        break;
+                    default:
+                        cur++;
+                        break;
                     }
                 }
                 total = len;
@@ -443,8 +447,8 @@ handle_children:
                 (len = total + BP_TREE_NODE_PRESENT_BITS, (entry & BP_BYTE_MASK) != 1)) {
                 cur++;
             } else {
-                kind = BP_TREE_ENTRY_KIND(entry);
-                if (kind == BP_TREE_GROUP_NODE) {
+                switch (BP_TREE_ENTRY_KIND(entry)) {
+                case BP_TREE_GROUP_NODE:
                     kind = BP_TREE_ENTRY_INDEX(entry);
                     maxbits = (u32)BP_TREE_ENTRY_GROUP(entry);
                     *cur = BP_TREE_BASE_BRANCH_ENTRY(groups[maxbits], BP_TREE_ENTRY_BASE(entry));
@@ -452,7 +456,8 @@ handle_children:
                     end[1] = BP_TREE_CHILD_BRANCH_ENTRY(groups[maxbits + BP_TREE_CHILD2_INDEX], kind, BP_TREE_CHILD2_BASE);
                     end[2] = BP_TREE_CHILD_BRANCH_ENTRY(groups[maxbits + BP_TREE_CHILD3_INDEX], kind, BP_TREE_CHILD3_BASE);
                     end += BP_TREE_ADDED_CHILD_COUNT;
-                } else if (kind == BP_TREE_HIGH_NODE) {
+                    break;
+                case BP_TREE_HIGH_NODE:
                     *cur = BP_TREE_HIGH_GROUP_ENTRY(hi_groups[BP_TREE_ENTRY_HIGH_GROUP(entry)], BP_TREE_ENTRY_INDEX(entry));
 handle_final_children:
                     kind = BP_TREE_ENTRY_INDEX(entry);
@@ -477,16 +482,19 @@ handle_final_children:
                     } else {
                         *--restart = BP_TREE_COEFF_ENTRY(lens[kind + BP_TREE_CHILD3_INDEX], kind + BP_TREE_CHILD3_INDEX);
                     }
-                } else if (kind == BP_TREE_BRANCH_NODE) {
+                    break;
+                case BP_TREE_BRANCH_NODE:
                     *cur = BP_TREE_EMPTY_ENTRY;
                     cur++;
                     goto handle_final_children;
-                } else {
-                    if (kind == BP_TREE_COEFF_NODE) {
-                        *cur = BP_TREE_EMPTY_ENTRY;
-                        len = total + BP_FINAL_COEFF_SIGNAL_BITS;
-                    }
+                case BP_TREE_COEFF_NODE:
+                    *cur = BP_TREE_EMPTY_ENTRY;
+                    len = total + BP_FINAL_COEFF_SIGNAL_BITS;
                     cur++;
+                    break;
+                default:
+                    cur++;
+                    break;
                 }
             }
             total = len;
@@ -678,8 +686,8 @@ next_lossless_node:
                     if (sign) {
                         goto next_lossless_node;
                     }
-                    kind = BP_TREE_ENTRY_KIND(entry);
-                    if (kind == BP_TREE_GROUP_NODE) {
+                    switch (BP_TREE_ENTRY_KIND(entry)) {
+                    case BP_TREE_GROUP_NODE:
                         kind = BP_TREE_ENTRY_INDEX(entry);
                         count = (u32)BP_TREE_ENTRY_GROUP(entry);
                         *cur = BP_TREE_BASE_BRANCH_ENTRY(groups[count], BP_TREE_ENTRY_BASE(entry));
@@ -687,7 +695,8 @@ next_lossless_node:
                         end[1] = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD2_INDEX], kind, BP_TREE_CHILD2_BASE);
                         end[2] = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD3_INDEX], kind, BP_TREE_CHILD3_BASE);
                         end += BP_TREE_ADDED_CHILD_COUNT;
-                    } else if (kind == BP_TREE_HIGH_NODE) {
+                        break;
+                    case BP_TREE_HIGH_NODE:
                         *cur = BP_TREE_HIGH_GROUP_ENTRY(hi_groups[BP_TREE_ENTRY_HIGH_GROUP(entry)], BP_TREE_ENTRY_INDEX(entry));
 handle_lossless_children:
                         kind = BP_TREE_ENTRY_INDEX(entry);
@@ -725,18 +734,18 @@ handle_lossless_children:
                         } else {
                             *--restart = BP_TREE_COEFF_ENTRY(lens[i], i);
                         }
-                    } else {
-                        if (kind == BP_TREE_BRANCH_NODE) {
-                            *cur = BP_TREE_EMPTY_ENTRY;
-                            cur++;
-                            goto handle_lossless_children;
-                        }
-                        if (kind == BP_TREE_COEFF_NODE) {
-                            kind = BP_TREE_ENTRY_INDEX(entry);
-                            PUT_BP_BITS(bits, absvals[kind], lenbits, VarBitsLens[lenbits]);
-                            PUT_BP_BIT(bits, ordered[kind] < 0);
-                            *cur = BP_TREE_EMPTY_ENTRY;
-                        }
+                        break;
+                    case BP_TREE_BRANCH_NODE:
+                        *cur = BP_TREE_EMPTY_ENTRY;
+                        cur++;
+                        goto handle_lossless_children;
+                    case BP_TREE_COEFF_NODE:
+                        kind = BP_TREE_ENTRY_INDEX(entry);
+                        PUT_BP_BITS(bits, absvals[kind], lenbits, VarBitsLens[lenbits]);
+                        PUT_BP_BIT(bits, ordered[kind] < 0);
+                        *cur = BP_TREE_EMPTY_ENTRY;
+                        goto next_lossless_node;
+                    default:
                         goto next_lossless_node;
                     }
                 }
