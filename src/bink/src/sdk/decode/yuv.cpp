@@ -30,6 +30,8 @@ enum YUVMaskLayout {
 };
 
 enum YUVChromaLayout {
+    YUV_LUMA_SAMPLE_BYTES = 1,
+    YUV_ALPHA_SAMPLE_BYTES = 1,
     YUV_CHROMA_SAMPLE_BYTES = 1,
     YUV_CHROMA_BLOCK_BYTES = 8,
     YUV_CHROMA_SHIFT = 1
@@ -1200,7 +1202,7 @@ static void dounaligned32rowm2w(u32 phase, u32 count)
     table = mono32;
     do {
         y = *(u8 PTR4*)S.y0;
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
         pixel = table[y];
         ((u32 PTR4*)S.dest0)[0] = pixel;
         ((u32 PTR4*)S.dest0)[1] = pixel;
@@ -1219,12 +1221,12 @@ static u32 dounaligned32colm2w(u32 count, s32 phase)
     remaining = count;
     do {
         y = *(u8 PTR4*)S.y0;
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
         pixel = table[y];
         ((u32 PTR4*)S.dest0)[0] = pixel;
         ((u32 PTR4*)S.dest0)[1] = pixel;
         y = *(u8 PTR4*)S.y1;
-        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + 1);
+        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_LUMA_SAMPLE_BYTES);
         pixel = table[y];
         ((u32 PTR4*)S.dest1)[0] = pixel;
         ((u32 PTR4*)S.dest1)[1] = pixel;
@@ -1250,7 +1252,7 @@ static void dounaligned32rowm2h(u32 phase, u32 count)
     table = mono32;
     do {
         y = *(u8 PTR4*)S.y0;
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
         pixel = table[y];
         *(u32 PTR4*)S.dest0 = pixel;
         *(u32 PTR4*)(S.dest0 + S.pitch) = pixel;
@@ -1269,12 +1271,12 @@ static u32 dounaligned32colm2h(u32 count, s32 phase)
     remaining = count;
     do {
         y = *(u8 PTR4*)S.y0;
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
         pixel = table[y];
         *(u32 PTR4*)S.dest0 = pixel;
         *(u32 PTR4*)(S.dest0 + S.pitch) = pixel;
         y = *(u8 PTR4*)S.y1;
-        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + 1);
+        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_LUMA_SAMPLE_BYTES);
         pixel = table[y];
         *(u32 PTR4*)S.dest1 = pixel;
         *(u32 PTR4*)(S.dest1 + S.pitch) = pixel;
@@ -1300,7 +1302,7 @@ static void dounaligned32rowm2wh(u32 phase, u32 count)
     table = mono32;
     do {
         y = *(u8 PTR4*)S.y0;
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
         pixel = table[y];
         ((u32 PTR4*)S.dest0)[0] = pixel;
         ((u32 PTR4*)S.dest0)[1] = pixel;
@@ -1321,14 +1323,14 @@ static u32 dounaligned32colm2wh(u32 count, s32 phase)
     remaining = count;
     do {
         y = *(u8 PTR4*)S.y0;
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
         pixel = table[y];
         ((u32 PTR4*)S.dest0)[0] = pixel;
         ((u32 PTR4*)S.dest0)[1] = pixel;
         *(u32 PTR4*)(S.dest0 + S.pitch) = pixel;
         *(u32 PTR4*)(S.dest0 + S.pitch + YUV_PACKED_WORD_BYTES) = pixel;
         y = *(u8 PTR4*)S.y1;
-        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + 1);
+        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_LUMA_SAMPLE_BYTES);
         pixel = table[y];
         ((u32 PTR4*)S.dest1)[0] = pixel;
         ((u32 PTR4*)S.dest1)[1] = pixel;
@@ -1401,13 +1403,13 @@ static u32 dounaligned32col2w(u32 count, s32 phase)
         S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
         S.r = rtable[*(u8 PTR4*)S.v];
         y = *(u8 PTR4*)S.y0;
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
         ytable = clamp_ytable[y];
         pixel = RGB32_COLOR(ytable, S.r, S.gb, S.b);
         ((u32 PTR4*)S.dest0)[0] = pixel;
         ((u32 PTR4*)S.dest0)[1] = pixel;
         y = *(u8 PTR4*)S.y1;
-        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + 1);
+        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_LUMA_SAMPLE_BYTES);
         ytable = clamp_ytable[y];
         pixel = RGB32_COLOR(ytable, S.r, S.gb, S.b);
         ((u32 PTR4*)S.dest1)[0] = pixel;
@@ -1483,13 +1485,13 @@ static u32 dounaligned32col2h(u32 count, s32 phase)
         S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
         S.r = rtable[*(u8 PTR4*)S.v];
         y = *(u8 PTR4*)S.y0;
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
         ytable = clamp_ytable[y];
         pixel = RGB32_COLOR(ytable, S.r, S.gb, S.b);
         *(u32 PTR4*)S.dest0 = pixel;
         *(u32 PTR4*)(S.dest0 + S.pitch) = pixel;
         y = *(u8 PTR4*)S.y1;
-        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + 1);
+        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_LUMA_SAMPLE_BYTES);
         ytable = clamp_ytable[y];
         pixel = RGB32_COLOR(ytable, S.r, S.gb, S.b);
         *(u32 PTR4*)S.dest1 = pixel;
@@ -1569,7 +1571,7 @@ static u32 dounaligned32col2wh(u32 count, s32 phase)
         S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
         S.r = rtable[*(u8 PTR4*)S.v];
         y = *(u8 PTR4*)S.y0;
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
         ytable = clamp_ytable[y];
         pixel = RGB32_COLOR(ytable, S.r, S.gb, S.b);
         ((u32 PTR4*)S.dest0)[0] = pixel;
@@ -1577,7 +1579,7 @@ static u32 dounaligned32col2wh(u32 count, s32 phase)
         *(u32 PTR4*)(S.dest0 + S.pitch) = pixel;
         *(u32 PTR4*)(S.dest0 + S.pitch + YUV_PACKED_WORD_BYTES) = pixel;
         y = *(u8 PTR4*)S.y1;
-        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + 1);
+        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_LUMA_SAMPLE_BYTES);
         ytable = clamp_ytable[y];
         pixel = RGB32_COLOR(ytable, S.r, S.gb, S.b);
         ((u32 PTR4*)S.dest1)[0] = pixel;
@@ -1699,11 +1701,11 @@ static u32 dounaligned32col(u32 count, s32 phase)
         S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
         S.r = rtable[*(u8 PTR4*)S.v];
         y = *(u8 PTR4*)S.y0;
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
         ytable = clamp_ytable[y];
         *(u32 PTR4*)S.dest0 = RGB32_COLOR(ytable, S.r, S.gb, S.b);
         y = *(u8 PTR4*)S.y1;
-        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + 1);
+        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_LUMA_SAMPLE_BYTES);
         ytable = clamp_ytable[y];
         *(u32 PTR4*)S.dest1 = RGB32_COLOR(ytable, S.r, S.gb, S.b);
         S.dest0 += YUV_PACKED_WORD_BYTES;
@@ -1776,15 +1778,15 @@ static u32 dounaligned32acolm2w(u32 count, s32 phase)
     do {
         y = *(u8 PTR4*)S.y0;
         a = *(u8 PTR4*)S.a0;
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
-        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + 1);
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
+        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + YUV_ALPHA_SAMPLE_BYTES);
         pixel = table[y] | (a << 24);
         ((u32 PTR4*)S.dest0)[0] = pixel;
         ((u32 PTR4*)S.dest0)[1] = pixel;
         y = *(u8 PTR4*)S.y1;
         a = *(u8 PTR4*)S.a1;
-        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + 1);
-        S.a1 = (u32 PTR4*)((u8 PTR4*)S.a1 + 1);
+        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_LUMA_SAMPLE_BYTES);
+        S.a1 = (u32 PTR4*)((u8 PTR4*)S.a1 + YUV_ALPHA_SAMPLE_BYTES);
         pixel = table[y] | (a << 24);
         ((u32 PTR4*)S.dest1)[0] = pixel;
         ((u32 PTR4*)S.dest1)[1] = pixel;
@@ -1838,15 +1840,15 @@ static u32 dounaligned32acolm2h(u32 count, s32 phase)
     do {
         y = *(u8 PTR4*)S.y0;
         a = *(u8 PTR4*)S.a0;
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
-        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + 1);
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
+        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + YUV_ALPHA_SAMPLE_BYTES);
         pixel = table[y] | (a << 24);
         *(u32 PTR4*)S.dest0 = pixel;
         *(u32 PTR4*)(S.dest0 + S.pitch) = pixel;
         y = *(u8 PTR4*)S.y1;
         a = *(u8 PTR4*)S.a1;
-        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + 1);
-        S.a1 = (u32 PTR4*)((u8 PTR4*)S.a1 + 1);
+        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_LUMA_SAMPLE_BYTES);
+        S.a1 = (u32 PTR4*)((u8 PTR4*)S.a1 + YUV_ALPHA_SAMPLE_BYTES);
         pixel = table[y] | (a << 24);
         *(u32 PTR4*)S.dest1 = pixel;
         *(u32 PTR4*)(S.dest1 + S.pitch) = pixel;
@@ -1902,8 +1904,8 @@ static u32 dounaligned32acolm2wh(u32 count, s32 phase)
     do {
         y = *(u8 PTR4*)S.y0;
         a = *(u8 PTR4*)S.a0;
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
-        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + 1);
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
+        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + YUV_ALPHA_SAMPLE_BYTES);
         pixel = table[y] | (a << 24);
         ((u32 PTR4*)S.dest0)[0] = pixel;
         ((u32 PTR4*)S.dest0)[1] = pixel;
@@ -1911,8 +1913,8 @@ static u32 dounaligned32acolm2wh(u32 count, s32 phase)
         *(u32 PTR4*)(S.dest0 + S.pitch + YUV_PACKED_WORD_BYTES) = pixel;
         y = *(u8 PTR4*)S.y1;
         a = *(u8 PTR4*)S.a1;
-        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + 1);
-        S.a1 = (u32 PTR4*)((u8 PTR4*)S.a1 + 1);
+        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_LUMA_SAMPLE_BYTES);
+        S.a1 = (u32 PTR4*)((u8 PTR4*)S.a1 + YUV_ALPHA_SAMPLE_BYTES);
         pixel = table[y] | (a << 24);
         ((u32 PTR4*)S.dest1)[0] = pixel;
         ((u32 PTR4*)S.dest1)[1] = pixel;
@@ -1993,18 +1995,18 @@ static u32 dounaligned32acol2w(u32 count, s32 phase)
         S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
         S.r = rtable[*(u8 PTR4*)S.v];
         y = *(u8 PTR4*)S.y0;
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
         ytable = clamp_ytable[y];
         a = *(u8 PTR4*)S.a0;
         pixel = RGB32_COLOR_A(ytable, S.r, S.gb, S.b, a);
-        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + 1);
+        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + YUV_ALPHA_SAMPLE_BYTES);
         ((u32 PTR4*)S.dest0)[0] = pixel;
         ((u32 PTR4*)S.dest0)[1] = pixel;
         y = *(u8 PTR4*)S.y1;
-        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + 1);
+        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_LUMA_SAMPLE_BYTES);
         ytable = clamp_ytable[y];
         a = *(u8 PTR4*)S.a1;
-        S.a1 = (u32 PTR4*)((u8 PTR4*)S.a1 + 1);
+        S.a1 = (u32 PTR4*)((u8 PTR4*)S.a1 + YUV_ALPHA_SAMPLE_BYTES);
         pixel = RGB32_COLOR_A(ytable, S.r, S.gb, S.b, a);
         ((u32 PTR4*)S.dest1)[0] = pixel;
         ((u32 PTR4*)S.dest1)[1] = pixel;
@@ -2087,18 +2089,18 @@ static u32 dounaligned32acol2h(u32 count, s32 phase)
         S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
         S.r = rtable[*(u8 PTR4*)S.v];
         y = *(u8 PTR4*)S.y0;
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
         ytable = clamp_ytable[y];
         a = *(u8 PTR4*)S.a0;
         pixel = RGB32_COLOR_A(ytable, S.r, S.gb, S.b, a);
-        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + 1);
+        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + YUV_ALPHA_SAMPLE_BYTES);
         *(u32 PTR4*)S.dest0 = pixel;
         *(u32 PTR4*)(S.dest0 + S.pitch) = pixel;
         y = *(u8 PTR4*)S.y1;
-        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + 1);
+        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_LUMA_SAMPLE_BYTES);
         ytable = clamp_ytable[y];
         a = *(u8 PTR4*)S.a1;
-        S.a1 = (u32 PTR4*)((u8 PTR4*)S.a1 + 1);
+        S.a1 = (u32 PTR4*)((u8 PTR4*)S.a1 + YUV_ALPHA_SAMPLE_BYTES);
         pixel = RGB32_COLOR_A(ytable, S.r, S.gb, S.b, a);
         *(u32 PTR4*)S.dest1 = pixel;
         *(u32 PTR4*)(S.dest1 + S.pitch) = pixel;
@@ -2183,20 +2185,20 @@ static u32 dounaligned32acol2wh(u32 count, s32 phase)
         S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
         S.r = rtable[*(u8 PTR4*)S.v];
         y = *(u8 PTR4*)S.y0;
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
         ytable = clamp_ytable[y];
         a = *(u8 PTR4*)S.a0;
-        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + 1);
+        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + YUV_ALPHA_SAMPLE_BYTES);
         pixel = RGB32_COLOR_A(ytable, S.r, S.gb, S.b, a);
         ((u32 PTR4*)S.dest0)[0] = pixel;
         ((u32 PTR4*)S.dest0)[1] = pixel;
         *(u32 PTR4*)(S.dest0 + S.pitch) = pixel;
         *(u32 PTR4*)(S.dest0 + S.pitch + YUV_PACKED_WORD_BYTES) = pixel;
         y = *(u8 PTR4*)S.y1;
-        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + 1);
+        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_LUMA_SAMPLE_BYTES);
         ytable = clamp_ytable[y];
         a = *(u8 PTR4*)S.a1;
-        S.a1 = (u32 PTR4*)((u8 PTR4*)S.a1 + 1);
+        S.a1 = (u32 PTR4*)((u8 PTR4*)S.a1 + YUV_ALPHA_SAMPLE_BYTES);
         pixel = RGB32_COLOR_A(ytable, S.r, S.gb, S.b, a);
         ((u32 PTR4*)S.dest1)[0] = pixel;
         ((u32 PTR4*)S.dest1)[1] = pixel;
@@ -2338,16 +2340,16 @@ static u32 dounaligned32acol(u32 count, s32 phase)
         S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
         S.r = rtable[*(u8 PTR4*)S.v];
         y = *(u8 PTR4*)S.y0;
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
         ytable = clamp_ytable[y];
         a = *(u8 PTR4*)S.a0;
-        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + 1);
+        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + YUV_ALPHA_SAMPLE_BYTES);
         *(u32 PTR4*)S.dest0 = RGB32_COLOR_A(ytable, S.r, S.gb, S.b, a);
         y = *(u8 PTR4*)S.y1;
-        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + 1);
+        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_LUMA_SAMPLE_BYTES);
         ytable = clamp_ytable[y];
         a = *(u8 PTR4*)S.a1;
-        S.a1 = (u32 PTR4*)((u8 PTR4*)S.a1 + 1);
+        S.a1 = (u32 PTR4*)((u8 PTR4*)S.a1 + YUV_ALPHA_SAMPLE_BYTES);
         *(u32 PTR4*)S.dest1 = RGB32_COLOR_A(ytable, S.r, S.gb, S.b, a);
         S.dest0 += YUV_PACKED_WORD_BYTES;
         S.dest1 += YUV_PACKED_WORD_BYTES;
@@ -2392,7 +2394,7 @@ static void dounaligned16rowm2h(u32 phase, u32 count)
     table = mono16;
     do {
         y = *(u8 PTR4*)S.y0;
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
         pixel = (u16)table[y];
         *(u16 PTR4*)S.dest0 = pixel;
         *(u16 PTR4*)(S.dest0 + S.pitch) = pixel;
@@ -2411,12 +2413,12 @@ static u32 dounaligned16colm2h(u32 count, s32 phase)
     remaining = count;
     do {
         y = *(u8 PTR4*)S.y0;
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
         pixel = (u16)table[y];
         *(u16 PTR4*)S.dest0 = pixel;
         *(u16 PTR4*)(S.dest0 + S.pitch) = pixel;
         y = *(u8 PTR4*)S.y1;
-        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + 1);
+        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_LUMA_SAMPLE_BYTES);
         pixel = (u16)table[y];
         *(u16 PTR4*)S.dest1 = pixel;
         *(u16 PTR4*)(S.dest1 + S.pitch) = pixel;
@@ -2442,7 +2444,7 @@ static void dounaligned16rowm2w(u32 phase, u32 count)
     table = mono16;
     do {
         y = *(u8 PTR4*)S.y0;
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
         pixel = (u16)table[y];
         ((u16 PTR4*)S.dest0)[0] = pixel;
         ((u16 PTR4*)S.dest0)[1] = pixel;
@@ -2461,12 +2463,12 @@ static u32 dounaligned16colm2w(u32 count, s32 phase)
     remaining = count;
     do {
         y = *(u8 PTR4*)S.y0;
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
         pixel = (u16)table[y];
         ((u16 PTR4*)S.dest0)[0] = pixel;
         ((u16 PTR4*)S.dest0)[1] = pixel;
         y = *(u8 PTR4*)S.y1;
-        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + 1);
+        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_LUMA_SAMPLE_BYTES);
         pixel = (u16)table[y];
         ((u16 PTR4*)S.dest1)[0] = pixel;
         ((u16 PTR4*)S.dest1)[1] = pixel;
@@ -2492,7 +2494,7 @@ static void dounaligned16rowm2wh(u32 phase, u32 count)
     table = mono16;
     do {
         y = *(u8 PTR4*)S.y0;
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
         pixel = (u16)table[y];
         ((u16 PTR4*)S.dest0)[0] = pixel;
         ((u16 PTR4*)S.dest0)[1] = pixel;
@@ -2513,14 +2515,14 @@ static u32 dounaligned16colm2wh(u32 count, s32 phase)
     remaining = count;
     do {
         y = *(u8 PTR4*)S.y0;
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
         pixel = (u16)table[y];
         ((u16 PTR4*)S.dest0)[0] = pixel;
         ((u16 PTR4*)S.dest0)[1] = pixel;
         *(u16 PTR4*)(S.dest0 + S.pitch) = pixel;
         *(u16 PTR4*)(S.dest0 + S.pitch + YUV_BYTES_PER_PIXEL_16) = pixel;
         y = *(u8 PTR4*)S.y1;
-        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + 1);
+        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_LUMA_SAMPLE_BYTES);
         pixel = (u16)table[y];
         ((u16 PTR4*)S.dest1)[0] = pixel;
         ((u16 PTR4*)S.dest1)[1] = pixel;
@@ -2603,7 +2605,7 @@ static u32 dounaligned16col2h(u32 count, s32 phase)
         *(u16 PTR4*)S.dest0 = pixel;
         *(u16 PTR4*)(S.dest0 + S.pitch) = pixel;
         y = *(u8 PTR4*)S.y1;
-        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + 1);
+        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_LUMA_SAMPLE_BYTES);
         ybase = ytable[y];
         pixel = RGB565(ybase, S.r, S.gb, S.b);
         *(u16 PTR4*)S.dest1 = pixel;
@@ -2690,7 +2692,7 @@ static u32 dounaligned16col2w(u32 count, s32 phase)
         ((u16 PTR4*)S.dest0)[0] = pixel;
         ((u16 PTR4*)S.dest0)[1] = pixel;
         y = *(u8 PTR4*)S.y1;
-        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + 1);
+        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_LUMA_SAMPLE_BYTES);
         ybase = ytable[y];
         pixel = RGB565(ybase, S.r, S.gb, S.b);
         ((u16 PTR4*)S.dest1)[0] = pixel;
@@ -2780,7 +2782,7 @@ static u32 dounaligned16col2wh(u32 count, s32 phase)
         *(u16 PTR4*)(S.dest0 + S.pitch) = pixel;
         *(u16 PTR4*)(S.dest0 + S.pitch + YUV_BYTES_PER_PIXEL_16) = pixel;
         y = *(u8 PTR4*)S.y1;
-        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + 1);
+        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_LUMA_SAMPLE_BYTES);
         ybase = ytable[y];
         pixel = RGB565(ybase, S.r, S.gb, S.b);
         ((u16 PTR4*)S.dest1)[0] = pixel;
@@ -2812,7 +2814,7 @@ static void dounaligned16rowm(u32 phase, u32 count)
     table = mono16;
     do {
         y = *(u8 PTR4*)S.y0;
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
         *(u16 PTR4*)S.dest0 = (u16)table[y];
         S.dest0 += YUV_BYTES_PER_PIXEL_16;
     } while (count-- != 0);
@@ -2828,10 +2830,10 @@ static u32 dounaligned16colm(u32 count, s32 phase)
     remaining = count;
     do {
         y = *(u8 PTR4*)S.y0;
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
         *(u16 PTR4*)S.dest0 = (u16)table[y];
         y = *(u8 PTR4*)S.y1;
-        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + 1);
+        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_LUMA_SAMPLE_BYTES);
         *(u16 PTR4*)S.dest1 = (u16)table[y];
         S.dest0 += YUV_BYTES_PER_PIXEL_16;
         S.dest1 += YUV_BYTES_PER_PIXEL_16;
@@ -2904,7 +2906,7 @@ static u32 dounaligned16col(u32 count, s32 phase)
         ybase = ytable[y];
         *(u16 PTR4*)S.dest0 = RGB565(ybase, S.r, S.gb, S.b);
         y = *(u8 PTR4*)S.y1;
-        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + 1);
+        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_LUMA_SAMPLE_BYTES);
         ybase = ytable[y];
         *(u16 PTR4*)S.dest1 = RGB565(ybase, S.r, S.gb, S.b);
         S.dest0 += YUV_BYTES_PER_PIXEL_16;
@@ -2951,8 +2953,8 @@ static void dounaligned16a4rowm2h(u32 phase, u32 count)
     do {
         y = *(u8 PTR4*)S.y0;
         a = *(u8 PTR4*)S.a0;
-        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + 1);
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
+        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + YUV_ALPHA_SAMPLE_BYTES);
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
         pixel = (u16)clamp_a4[a] | (u16)ytable[y];
         *(u16 PTR4*)S.dest0 = pixel;
         *(u16 PTR4*)(S.dest0 + S.pitch) = pixel;
@@ -2973,15 +2975,15 @@ static u32 dounaligned16a4colm2h(u32 count, s32 phase)
     do {
         y = *(u8 PTR4*)S.y0;
         a = *(u8 PTR4*)S.a0;
-        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + 1);
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
+        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + YUV_ALPHA_SAMPLE_BYTES);
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
         pixel = (u16)ytable[y] | (u16)clamp_a4[a];
         *(u16 PTR4*)S.dest0 = pixel;
         *(u16 PTR4*)(S.dest0 + S.pitch) = pixel;
         y = *(u8 PTR4*)S.y1;
         a = *(u8 PTR4*)S.a1;
-        S.a1 = (u32 PTR4*)((u8 PTR4*)S.a1 + 1);
-        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + 1);
+        S.a1 = (u32 PTR4*)((u8 PTR4*)S.a1 + YUV_ALPHA_SAMPLE_BYTES);
+        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_LUMA_SAMPLE_BYTES);
         pixel = (u16)ytable[y] | (u16)clamp_a4[a];
         *(u16 PTR4*)S.dest1 = pixel;
         *(u16 PTR4*)(S.dest1 + S.pitch) = pixel;
@@ -3009,8 +3011,8 @@ static void dounaligned16a4rowm2w(u32 phase, u32 count)
     do {
         y = *(u8 PTR4*)S.y0;
         a = *(u8 PTR4*)S.a0;
-        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + 1);
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
+        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + YUV_ALPHA_SAMPLE_BYTES);
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
         pixel = (u16)ytable[y] | (u16)clamp_a4[a];
         ((u16 PTR4*)S.dest0)[0] = pixel;
         ((u16 PTR4*)S.dest0)[1] = pixel;
@@ -3031,15 +3033,15 @@ static u32 dounaligned16a4colm2w(u32 count, s32 phase)
     do {
         y = *(u8 PTR4*)S.y0;
         a = *(u8 PTR4*)S.a0;
-        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + 1);
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
+        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + YUV_ALPHA_SAMPLE_BYTES);
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
         pixel = (u16)ytable[y] | (u16)clamp_a4[a];
         ((u16 PTR4*)S.dest0)[0] = pixel;
         ((u16 PTR4*)S.dest0)[1] = pixel;
         y = *(u8 PTR4*)S.y1;
         a = *(u8 PTR4*)S.a1;
-        S.a1 = (u32 PTR4*)((u8 PTR4*)S.a1 + 1);
-        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + 1);
+        S.a1 = (u32 PTR4*)((u8 PTR4*)S.a1 + YUV_ALPHA_SAMPLE_BYTES);
+        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_LUMA_SAMPLE_BYTES);
         pixel = (u16)ytable[y] | (u16)clamp_a4[a];
         ((u16 PTR4*)S.dest1)[0] = pixel;
         ((u16 PTR4*)S.dest1)[1] = pixel;
@@ -3067,8 +3069,8 @@ static void dounaligned16a4rowm2wh(u32 phase, u32 count)
     do {
         y = *(u8 PTR4*)S.y0;
         a = *(u8 PTR4*)S.a0;
-        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + 1);
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
+        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + YUV_ALPHA_SAMPLE_BYTES);
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
         pixel = (u16)ytable[y] | (u16)clamp_a4[a];
         ((u16 PTR4*)S.dest0)[0] = pixel;
         ((u16 PTR4*)S.dest0)[1] = pixel;
@@ -3091,8 +3093,8 @@ static u32 dounaligned16a4colm2wh(u32 count, s32 phase)
     do {
         y = *(u8 PTR4*)S.y0;
         a = *(u8 PTR4*)S.a0;
-        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + 1);
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
+        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + YUV_ALPHA_SAMPLE_BYTES);
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
         pixel = (u16)ytable[y] | (u16)clamp_a4[a];
         ((u16 PTR4*)S.dest0)[0] = pixel;
         ((u16 PTR4*)S.dest0)[1] = pixel;
@@ -3100,8 +3102,8 @@ static u32 dounaligned16a4colm2wh(u32 count, s32 phase)
         *(u16 PTR4*)(S.dest0 + S.pitch + YUV_BYTES_PER_PIXEL_16) = pixel;
         y = *(u8 PTR4*)S.y1;
         a = *(u8 PTR4*)S.a1;
-        S.a1 = (u32 PTR4*)((u8 PTR4*)S.a1 + 1);
-        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + 1);
+        S.a1 = (u32 PTR4*)((u8 PTR4*)S.a1 + YUV_ALPHA_SAMPLE_BYTES);
+        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_LUMA_SAMPLE_BYTES);
         pixel = (u16)ytable[y] | (u16)clamp_a4[a];
         ((u16 PTR4*)S.dest1)[0] = pixel;
         ((u16 PTR4*)S.dest1)[1] = pixel;
@@ -3430,8 +3432,8 @@ static void dounaligned16a4rowm(u32 phase, u32 count)
     do {
         y = *(u8 PTR4*)S.y0;
         a = *(u8 PTR4*)S.a0;
-        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + 1);
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
+        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + YUV_ALPHA_SAMPLE_BYTES);
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
         *(u16 PTR4*)S.dest0 = (u16)ytable[y] | (u16)clamp_a4[a];
         S.dest0 += YUV_BYTES_PER_PIXEL_16;
     } while (count-- != 0);
@@ -3449,13 +3451,13 @@ static u32 dounaligned16a4colm(u32 count, s32 phase)
     do {
         y = *(u8 PTR4*)S.y0;
         a = *(u8 PTR4*)S.a0;
-        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + 1);
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + 1);
+        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + YUV_ALPHA_SAMPLE_BYTES);
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
         *(u16 PTR4*)S.dest0 = (u16)ytable[y] | (u16)clamp_a4[a];
         y = *(u8 PTR4*)S.y1;
         a = *(u8 PTR4*)S.a1;
-        S.a1 = (u32 PTR4*)((u8 PTR4*)S.a1 + 1);
-        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + 1);
+        S.a1 = (u32 PTR4*)((u8 PTR4*)S.a1 + YUV_ALPHA_SAMPLE_BYTES);
+        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_LUMA_SAMPLE_BYTES);
         *(u16 PTR4*)S.dest1 = (u16)ytable[y] | (u16)clamp_a4[a];
         S.dest0 += YUV_BYTES_PER_PIXEL_16;
         S.dest1 += YUV_BYTES_PER_PIXEL_16;
