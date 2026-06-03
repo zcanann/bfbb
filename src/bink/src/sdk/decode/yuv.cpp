@@ -3535,16 +3535,16 @@ static u32 dounaligned16a4col(u32 count, s32 phase)
         ybase = ytable[y];
         aptr = (u8 PTR4*)S.a0;
         a = *aptr++;
-        S.a0 = (u32 PTR4*)aptr;
         *(u16 PTR4*)S.dest0 = RGB565_A4(ybase, S.r, S.gb, S.b, a);
+        S.a0 = (u32 PTR4*)aptr;
         yptr = (u8 PTR4*)S.y1;
         y = *yptr++;
         S.y1 = (u32 PTR4*)yptr;
         ybase = ytable[y];
         aptr = (u8 PTR4*)S.a1;
         a = *aptr++;
-        S.a1 = (u32 PTR4*)aptr;
         *(u16 PTR4*)S.dest1 = RGB565_A4(ybase, S.r, S.gb, S.b, a);
+        S.a1 = (u32 PTR4*)aptr;
         S.dest0 += YUV_BYTES_PER_PIXEL_16;
         S.dest1 += YUV_BYTES_PER_PIXEL_16;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
