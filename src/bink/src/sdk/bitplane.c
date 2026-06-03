@@ -1492,8 +1492,8 @@ next_node:
                     goto next_node;
                 }
 decode_node:
-                node_kind = node & BP_READ_TREE_KIND_MASK;
-                if (node_kind == BP_READ_TREE_GROUP_NODE) {
+                switch (node & BP_READ_TREE_KIND_MASK) {
+                case BP_READ_TREE_GROUP_NODE:
                     node_kind = BP_READ_TREE_INDEX(node);
                     *node_ptr = BP_READ_TREE_BRANCH_FROM_NODE(node);
                     *tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(node_kind, BP_READ_TREE_CHILD1_BASE);
@@ -1501,40 +1501,39 @@ decode_node:
                     tree_end_ptr[2] = BP_READ_TREE_CHILD_BRANCH(node_kind, BP_READ_TREE_CHILD3_BASE);
                     tree_end_ptr = tree_end_ptr + BP_TREE_ADDED_CHILD_COUNT;
                     goto node_done;
-                }
-                if (node_kind == BP_READ_TREE_HIGH_NODE) {
+                case BP_READ_TREE_HIGH_NODE:
                     *node_ptr = BP_READ_TREE_GROUP_FROM_INDEX(BP_READ_TREE_INDEX(node));
-                } else {
-                    if (node_kind != BP_READ_TREE_BRANCH_NODE) {
-                        if (node_kind != BP_READ_TREE_COEFF_NODE) {
-                            goto next_node;
-                        }
-                        nz_coeff[nz_coeff_count] = BP_READ_TREE_INDEX(node);
-                        /* Deferred coeff nodes already carry their scan index. */
-                        word = bitbuf;
-                        nz_coeff_count = nz_coeff_count + 1;
-                        if (bitcount == 0) {
-                            word = *words;
-                            bitcount = BP_WORD_TOP_BIT;
-                            words = words + 1;
-                            bitbuf = word >> 1;
-                        } else {
-                            bitcount = bitcount - 1;
-                            bitbuf = bitbuf >> 1;
-                        }
-                        delta = scan;
-                        if ((word & 1) == 0) {
-                            delta = mask;
-                        }
-                        dest[(u32)BP_READ_TREE_INDEX(node)] = (s8)delta;
-                        if (masks_count-- == 0) {
-                            goto done;
-                        }
-                        *node_ptr = BP_READ_TREE_EMPTY_ENTRY;
-                        goto next_node;
-                    }
+                    break;
+                case BP_READ_TREE_BRANCH_NODE:
                     *node_ptr = BP_READ_TREE_EMPTY_ENTRY;
                     node_ptr = node_ptr + 1;
+                    break;
+                case BP_READ_TREE_COEFF_NODE:
+                    nz_coeff[nz_coeff_count] = BP_READ_TREE_INDEX(node);
+                    /* Deferred coeff nodes already carry their scan index. */
+                    word = bitbuf;
+                    nz_coeff_count = nz_coeff_count + 1;
+                    if (bitcount == 0) {
+                        word = *words;
+                        bitcount = BP_WORD_TOP_BIT;
+                        words = words + 1;
+                        bitbuf = word >> 1;
+                    } else {
+                        bitcount = bitcount - 1;
+                        bitbuf = bitbuf >> 1;
+                    }
+                    delta = scan;
+                    if ((word & 1) == 0) {
+                        delta = mask;
+                    }
+                    dest[(u32)BP_READ_TREE_INDEX(node)] = (s8)delta;
+                    if (masks_count-- == 0) {
+                        goto done;
+                    }
+                    *node_ptr = BP_READ_TREE_EMPTY_ENTRY;
+                    goto next_node;
+                default:
+                    goto next_node;
                 }
                 code = (u32)BP_READ_TREE_INDEX(node);
                 if (bitcount == 0) {
