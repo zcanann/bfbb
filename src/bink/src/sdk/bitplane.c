@@ -759,7 +759,6 @@ handle_lossless_children:
 void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
 {
     u32 code;
-    s32 shift;
     u8 level;
     u8 maxlevel;
     s16 highbit;
@@ -783,21 +782,7 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
     memset(coeffs.values + BP_COEFF2_INDEX, 0, sizeof(coeffs) - BP_COEFF2_INDEX * sizeof(coeffs.values[0]));
 
     /* The stream starts with the maximum active lossless bitplane level. */
-    if (bitcount >= BP_LOSSLESS_LEVEL_BITS) {
-        code = bitbuf & BP_BYTE_MASK;
-        bitbuf >>= BP_LOSSLESS_LEVEL_BITS;
-        bitcount -= BP_LOSSLESS_LEVEL_BITS;
-    } else {
-        shift = BP_LOSSLESS_LEVEL_BITS - bitcount;
-        code = bitbuf & BP_BYTE_MASK;
-        bitbuf = *words;
-        words++;
-        code |= bitbuf << bitcount;
-        bitbuf >>= shift;
-        bitcount = bitcount + BP_BITS_PER_WORD - BP_LOSSLESS_LEVEL_BITS;
-    }
-
-    maxlevel = code & BP_LOSSLESS_LEVEL_MASK;
+    VarBitsGet(maxlevel, u8, bitcopy, BP_LOSSLESS_LEVEL_BITS);
     highbit = (u16)(1 << (maxlevel - 1));
     /* Root nodes mirror WriteBPLossless: three grouped roots plus coeffs 1..3. */
     tree.roots[BP_ROOT_GROUP1_SLOT] = BP_READ_TREE_GROUP1_ROOT;
