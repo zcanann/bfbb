@@ -2421,6 +2421,7 @@ static s32 smallestrect(BINKRECT PTR4* out, const u8 PTR4* mask, s32 pitch, cons
     s32 col;
     s32 remaining_height;
     s32 remaining_width;
+    s32 result = 0;
 
     rect_mask = mask + BINK_MASK_BLOCKS(rect->Left) + BINK_MASK_BLOCKS(rect->Top) * pitch;
     height_blocks = BINK_MASK_BLOCKS(rect->Height);
@@ -2438,7 +2439,7 @@ static s32 smallestrect(BINKRECT PTR4* out, const u8 PTR4* mask, s32 pitch, cons
         top_scan += pitch;
     }
 
-    return 0;
+    goto done;
 
 found_top:
     height_blocks -= top_blocks;
@@ -2506,7 +2507,10 @@ found_right:
         out->Width = remaining_width - (first_right - right_blocks) * BINK_MASK_BLOCK_SIZE;
     }
 
-    return 1;
+    result = 1;
+
+done:
+    return result;
 }
 
 static s32 trysplit(BINKRECT PTR4* outa, BINKRECT PTR4* outb, const BINKRECT PTR4* rect,
