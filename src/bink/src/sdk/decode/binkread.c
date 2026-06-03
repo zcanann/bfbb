@@ -1976,7 +1976,9 @@ found_previous:
                     return 0;
                 }
 
-                if (BINK_FRAME_KEY(bnk->frameoffsets[cur++]) != 0) {
+                if (BINK_FRAME_KEY(bnk->frameoffsets[cur++]) == 0) {
+                    continue;
+                } else {
                     return cur;
                 }
             }
