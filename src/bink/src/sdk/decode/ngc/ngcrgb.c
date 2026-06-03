@@ -695,19 +695,25 @@ void YUV_16m_4x2(u32 count)
     do {
         u32 yv0 = *y0++;
         u32 yv1 = *y1++;
-        u16 a = (u16)table[RGB_WORD_BYTE3(yv0)];
-        u16 b = (u16)table[RGB_WORD_BYTE2(yv0)];
-        u16 c = (u16)table[RGB_WORD_BYTE1(yv0)];
-        u16 d = (u16)table[RGB_WORD_BYTE0(yv0)];
+        u32 y0hi = yv0 >> 16;
+        u32 y1hi = yv1 >> 16;
+        u32 y0lo = yv0 & RGB_WORD_LO_MASK;
+        u32 y1lo = yv1 & RGB_WORD_LO_MASK;
+        u16 a = (u16)table[RGB_WORD_BYTE1(y0hi)];
+        u16 b = (u16)table[RGB_WORD_BYTE0(y0hi)];
+        u16 c = (u16)table[RGB_WORD_BYTE1(y0lo)];
+        u16 d = (u16)table[RGB_WORD_BYTE0(y0lo)];
 
         dest0[RGB_TILE_WORD0] = RGB565_PAIR2(a, b);
+
+        a = (u16)table[RGB_WORD_BYTE1(y1hi)];
+        b = (u16)table[RGB_WORD_BYTE0(y1hi)];
+        dest1[RGB_TILE_WORD0] = RGB565_PAIR2(a, b);
+
         dest0[RGB_TILE_WORD1] = RGB565_PAIR2(c, d);
 
-        a = (u16)table[RGB_WORD_BYTE3(yv1)];
-        b = (u16)table[RGB_WORD_BYTE2(yv1)];
-        c = (u16)table[RGB_WORD_BYTE1(yv1)];
-        d = (u16)table[RGB_WORD_BYTE0(yv1)];
-        dest1[RGB_TILE_WORD0] = RGB565_PAIR2(a, b);
+        c = (u16)table[RGB_WORD_BYTE1(y1lo)];
+        d = (u16)table[RGB_WORD_BYTE0(y1lo)];
         dest1[RGB_TILE_WORD1] = RGB565_PAIR2(c, d);
 
         dest0 += RGB_TILE_HALF_BLOCK_WORDS;
@@ -752,22 +758,28 @@ void YUV_16mx2_4x2(u32 count)
     do {
         u32 yv0 = *y0++;
         u32 yv1 = *y1++;
-        u16 a = (u16)table[RGB_WORD_BYTE3(yv0)];
-        u16 b = (u16)table[RGB_WORD_BYTE2(yv0)];
-        u16 c = (u16)table[RGB_WORD_BYTE1(yv0)];
-        u16 d = (u16)table[RGB_WORD_BYTE0(yv0)];
+        u32 y0hi = yv0 >> 16;
+        u32 y1hi = yv1 >> 16;
+        u32 y0lo = yv0 & RGB_WORD_LO_MASK;
+        u32 y1lo = yv1 & RGB_WORD_LO_MASK;
+        u16 a = (u16)table[RGB_WORD_BYTE1(y0hi)];
+        u16 b = (u16)table[RGB_WORD_BYTE0(y0hi)];
+        u16 c = (u16)table[RGB_WORD_BYTE1(y0lo)];
+        u16 d = (u16)table[RGB_WORD_BYTE0(y0lo)];
 
         dest0[RGB_TILE_WORD0] = RGB565_PAIR(a);
         dest0[RGB_TILE_WORD1] = RGB565_PAIR(b);
+
+        a = (u16)table[RGB_WORD_BYTE1(y1hi)];
+        b = (u16)table[RGB_WORD_BYTE0(y1hi)];
+        dest1[RGB_TILE_WORD0] = RGB565_PAIR(a);
+        dest1[RGB_TILE_WORD1] = RGB565_PAIR(b);
+
         dest0[RGB_TILE_NEXT_ROW_WORD0] = RGB565_PAIR(c);
         dest0[RGB_TILE_NEXT_ROW_WORD1] = RGB565_PAIR(d);
 
-        a = (u16)table[RGB_WORD_BYTE3(yv1)];
-        b = (u16)table[RGB_WORD_BYTE2(yv1)];
-        c = (u16)table[RGB_WORD_BYTE1(yv1)];
-        d = (u16)table[RGB_WORD_BYTE0(yv1)];
-        dest1[RGB_TILE_WORD0] = RGB565_PAIR(a);
-        dest1[RGB_TILE_WORD1] = RGB565_PAIR(b);
+        c = (u16)table[RGB_WORD_BYTE1(y1lo)];
+        d = (u16)table[RGB_WORD_BYTE0(y1lo)];
         dest1[RGB_TILE_NEXT_ROW_WORD0] = RGB565_PAIR(c);
         dest1[RGB_TILE_NEXT_ROW_WORD1] = RGB565_PAIR(d);
 
