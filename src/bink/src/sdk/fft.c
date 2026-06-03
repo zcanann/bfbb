@@ -430,6 +430,7 @@ static void bitrv2(s32 n, s32 PTR4* ip, f32 PTR4* a)
     s32 m2;
     s32 j1;
     s32 k1;
+    f32 yi;
 
     ip[0] = 0;
     l = n;
@@ -450,45 +451,49 @@ static void bitrv2(s32 n, s32 PTR4* ip, f32 PTR4* a)
                 j = 0;
                 if (j < k) {
                     do {
-                        j1 = k * 2 + ip[j];
-                        k1 = j * 2 + ip[k];
-                        xr = a[k1];
-                        xi = a[k1 + 1];
-                        yr = a[j1 + 1];
-                        a[k1] = a[j1];
-                        a[k1 + 1] = yr;
-                        a[j1] = xr;
-                        a[j1 + 1] = xi;
+                        j1 = j * 2 + ip[k];
+                        k1 = k * 2 + ip[j];
+                        xr = a[j1];
+                        xi = a[j1 + 1];
+                        yr = a[k1];
+                        yi = a[k1 + 1];
+                        a[j1] = yr;
+                        a[j1 + 1] = yi;
+                        a[k1] = xr;
+                        a[k1 + 1] = xi;
 
-                        k1 += m2;
-                        j1 += m2 + m2;
-                        xr = a[k1];
-                        xi = a[k1 + 1];
-                        yr = a[j1 + 1];
-                        a[k1] = a[j1];
-                        a[k1 + 1] = yr;
-                        a[j1] = xr;
-                        a[j1 + 1] = xi;
+                        j1 += m2;
+                        k1 += m2 + m2;
+                        xr = a[j1];
+                        xi = a[j1 + 1];
+                        yr = a[k1];
+                        yi = a[k1 + 1];
+                        a[j1] = yr;
+                        a[j1 + 1] = yi;
+                        a[k1] = xr;
+                        a[k1 + 1] = xi;
 
-                        k1 += m2;
-                        j1 -= m2;
-                        xr = a[k1];
-                        xi = a[k1 + 1];
-                        yr = a[j1 + 1];
-                        a[k1] = a[j1];
-                        a[k1 + 1] = yr;
-                        a[j1] = xr;
-                        a[j1 + 1] = xi;
+                        j1 += m2;
+                        k1 -= m2;
+                        xr = a[j1];
+                        xi = a[j1 + 1];
+                        yr = a[k1];
+                        yi = a[k1 + 1];
+                        a[j1] = yr;
+                        a[j1 + 1] = yi;
+                        a[k1] = xr;
+                        a[k1 + 1] = xi;
 
-                        k1 += m2;
-                        j1 += m2 + m2;
-                        xr = a[k1];
-                        xi = a[k1 + 1];
-                        yr = a[j1 + 1];
-                        a[k1] = a[j1];
-                        a[k1 + 1] = yr;
-                        a[j1] = xr;
-                        a[j1 + 1] = xi;
+                        j1 += m2;
+                        k1 += m2 + m2;
+                        xr = a[j1];
+                        xi = a[j1 + 1];
+                        yr = a[k1];
+                        yi = a[k1 + 1];
+                        a[j1] = yr;
+                        a[j1 + 1] = yi;
+                        a[k1] = xr;
+                        a[k1 + 1] = xi;
 
                         ++j;
                     } while (j < k);
@@ -513,25 +518,27 @@ static void bitrv2(s32 n, s32 PTR4* ip, f32 PTR4* a)
                 j = 0;
                 if (j < k) {
                     do {
-                        j1 = k * 2 + ip[j];
-                        k1 = j * 2 + ip[k];
-                        xr = a[k1];
-                        xi = a[k1 + 1];
-                        yr = a[j1 + 1];
-                        a[k1] = a[j1];
-                        a[k1 + 1] = yr;
-                        a[j1] = xr;
-                        a[j1 + 1] = xi;
+                        j1 = j * 2 + ip[k];
+                        k1 = k * 2 + ip[j];
+                        xr = a[j1];
+                        xi = a[j1 + 1];
+                        yr = a[k1];
+                        yi = a[k1 + 1];
+                        a[j1] = yr;
+                        a[j1 + 1] = yi;
+                        a[k1] = xr;
+                        a[k1 + 1] = xi;
 
-                        k1 += m2;
                         j1 += m2;
-                        xr = a[k1];
-                        xi = a[k1 + 1];
-                        yr = a[j1 + 1];
-                        a[k1] = a[j1];
-                        a[k1 + 1] = yr;
-                        a[j1] = xr;
-                        a[j1 + 1] = xi;
+                        k1 += m2;
+                        xr = a[j1];
+                        xi = a[j1 + 1];
+                        yr = a[k1];
+                        yi = a[k1 + 1];
+                        a[j1] = yr;
+                        a[j1 + 1] = yi;
+                        a[k1] = xr;
+                        a[k1 + 1] = xi;
                         ++j;
                     } while (j < k);
                 }
@@ -552,6 +559,7 @@ static void bitrv2conj(s32 n, s32 PTR4* ip, f32 PTR4* a)
     s32 m2;
     s32 j1;
     s32 k1;
+    f32 yi;
 
     ip[0] = 0;
     l = n;
@@ -572,45 +580,49 @@ static void bitrv2conj(s32 n, s32 PTR4* ip, f32 PTR4* a)
                 j = 0;
                 if (j < k) {
                     do {
-                        j1 = k * 2 + ip[j];
-                        k1 = j * 2 + ip[k];
-                        xr = a[k1];
-                        xi = a[k1 + 1];
-                        yr = a[j1 + 1];
-                        a[k1] = a[j1];
-                        a[k1 + 1] = -yr;
-                        a[j1] = xr;
-                        a[j1 + 1] = -xi;
+                        j1 = j * 2 + ip[k];
+                        k1 = k * 2 + ip[j];
+                        xr = a[j1];
+                        xi = -a[j1 + 1];
+                        yr = a[k1];
+                        yi = -a[k1 + 1];
+                        a[j1] = yr;
+                        a[j1 + 1] = yi;
+                        a[k1] = xr;
+                        a[k1 + 1] = xi;
 
-                        k1 += m2;
-                        j1 += m2 + m2;
-                        xr = a[k1];
-                        xi = a[k1 + 1];
-                        yr = a[j1 + 1];
-                        a[k1] = a[j1];
-                        a[k1 + 1] = -yr;
-                        a[j1] = xr;
-                        a[j1 + 1] = -xi;
+                        j1 += m2;
+                        k1 += m2 + m2;
+                        xr = a[j1];
+                        xi = -a[j1 + 1];
+                        yr = a[k1];
+                        yi = -a[k1 + 1];
+                        a[j1] = yr;
+                        a[j1 + 1] = yi;
+                        a[k1] = xr;
+                        a[k1 + 1] = xi;
 
-                        k1 += m2;
-                        j1 -= m2;
-                        xr = a[k1];
-                        xi = a[k1 + 1];
-                        yr = a[j1 + 1];
-                        a[k1] = a[j1];
-                        a[k1 + 1] = -yr;
-                        a[j1] = xr;
-                        a[j1 + 1] = -xi;
+                        j1 += m2;
+                        k1 -= m2;
+                        xr = a[j1];
+                        xi = -a[j1 + 1];
+                        yr = a[k1];
+                        yi = -a[k1 + 1];
+                        a[j1] = yr;
+                        a[j1 + 1] = yi;
+                        a[k1] = xr;
+                        a[k1 + 1] = xi;
 
-                        k1 += m2;
-                        j1 += m2 + m2;
-                        xr = a[k1];
-                        xi = a[k1 + 1];
-                        yr = a[j1 + 1];
-                        a[k1] = a[j1];
-                        a[k1 + 1] = -yr;
-                        a[j1] = xr;
-                        a[j1 + 1] = -xi;
+                        j1 += m2;
+                        k1 += m2 + m2;
+                        xr = a[j1];
+                        xi = -a[j1 + 1];
+                        yr = a[k1];
+                        yi = -a[k1 + 1];
+                        a[j1] = yr;
+                        a[j1 + 1] = yi;
+                        a[k1] = xr;
+                        a[k1 + 1] = xi;
 
                         ++j;
                     } while (j < k);
@@ -618,17 +630,18 @@ static void bitrv2conj(s32 n, s32 PTR4* ip, f32 PTR4* a)
 
                 j1 = k * 2 + ip[k];
                 a[j1 + 1] = -a[j1 + 1];
-                k1 = j1 + m2;
-                j1 = k1 + m2;
-                xr = a[k1];
-                xi = a[k1 + 1];
-                yr = a[j1 + 1];
-                a[k1] = a[j1];
-                a[k1 + 1] = -yr;
-                a[j1] = xr;
-                a[j1 + 1] = -xi;
                 j1 += m2;
-                a[j1 + 1] = -a[j1 + 1];
+                k1 = j1 + m2;
+                xr = a[j1];
+                xi = -a[j1 + 1];
+                yr = a[k1];
+                yi = -a[k1 + 1];
+                a[j1] = yr;
+                a[j1 + 1] = yi;
+                a[k1] = xr;
+                a[k1 + 1] = xi;
+                k1 += m2;
+                a[k1 + 1] = -a[k1 + 1];
                 ++k;
             } while (k < m);
         }
@@ -641,25 +654,27 @@ static void bitrv2conj(s32 n, s32 PTR4* ip, f32 PTR4* a)
                 j = 0;
                 if (j < k) {
                     do {
-                        j1 = k * 2 + ip[j];
-                        k1 = j * 2 + ip[k];
-                        xr = a[k1];
-                        xi = a[k1 + 1];
-                        yr = a[j1 + 1];
-                        a[k1] = a[j1];
-                        a[k1 + 1] = -yr;
-                        a[j1] = xr;
-                        a[j1 + 1] = -xi;
+                        j1 = j * 2 + ip[k];
+                        k1 = k * 2 + ip[j];
+                        xr = a[j1];
+                        xi = -a[j1 + 1];
+                        yr = a[k1];
+                        yi = -a[k1 + 1];
+                        a[j1] = yr;
+                        a[j1 + 1] = yi;
+                        a[k1] = xr;
+                        a[k1 + 1] = xi;
 
-                        k1 += m2;
                         j1 += m2;
-                        xr = a[k1];
-                        xi = a[k1 + 1];
-                        yr = a[j1 + 1];
-                        a[k1] = a[j1];
-                        a[k1 + 1] = -yr;
-                        a[j1] = xr;
-                        a[j1 + 1] = -xi;
+                        k1 += m2;
+                        xr = a[j1];
+                        xi = -a[j1 + 1];
+                        yr = a[k1];
+                        yi = -a[k1 + 1];
+                        a[j1] = yr;
+                        a[j1 + 1] = yi;
+                        a[k1] = xr;
+                        a[k1 + 1] = xi;
                         ++j;
                     } while (j < k);
                 }
