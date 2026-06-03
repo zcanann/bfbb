@@ -1426,7 +1426,6 @@ s32 BinkCopyToBuffer(HBINK bnk, void PTR4* dest, s32 destpitch, u32 destheight, 
 s32 BinkCopyToBufferRect(HBINK bnk, void PTR4* dest, s32 destpitch, u32 destheight, u32 destx, u32 desty,
                          u32 srcx, u32 srcy, u32 srcw, u32 srch, u32 flags)
 {
-    u32 blitflags;
     s32 skipped;
 
     skipped = 0;
@@ -1457,8 +1456,8 @@ s32 BinkCopyToBufferRect(HBINK bnk, void PTR4* dest, s32 destpitch, u32 destheig
     }
 
     bnk->bio.Working = 1;
-    blitflags = flags | (bnk->OpenFlags & (BINKCOPYNOSCALING | BINKGRAYSCALE | BINKRBINVERT));
-    YUV_init(blitflags & BINKSURFACEMASK);
+    flags |= bnk->OpenFlags & (BINKCOPYNOSCALING | BINKGRAYSCALE | BINKRBINVERT);
+    YUV_init(flags & BINKSURFACEMASK);
 
     if (destpitch < 0) {
         dest = (u8 PTR4*)dest + -destpitch * (destheight - desty - 1);
@@ -1486,7 +1485,7 @@ s32 BinkCopyToBufferRect(HBINK bnk, void PTR4* dest, s32 destpitch, u32 destheig
                 if (count + 1 >= BINK_MAX_CONSECUTIVE_SKIPS) {
                     bnk->skipped_in_a_row = 0;
                 } else {
-                    if ((blitflags & BINKNOSKIP) != 0 || (bnk->OpenFlags & BINKNOSKIP) != 0) {
+                    if ((flags & BINKNOSKIP) != 0 || (bnk->OpenFlags & BINKNOSKIP) != 0) {
                         skipped = 1;
                     } else {
                         bnk->bio.Working = 0;
@@ -1515,31 +1514,30 @@ do_blit:
         }
     }
 
-    bnk->lastblitflags = blitflags;
-    if ((s32)blitflags >= 0) {
+    bnk->lastblitflags = flags;
+    if ((s32)flags >= 0) {
         goto try_mask_blit;
     }
 
 unmasked_blit:
     {
-        flags = blitflags & BINKSURFACEMASK;
-        switch (flags) {
+        switch (flags & BINKSURFACEMASK) {
         case BINKSURFACE32A:
             if (bnk->APlane[0] != 0) {
                 YUV_blit_32abpp(dest, destx, desty, destpitch, bnk->YPlane[bnk->PlaneNum], srcx,
                                 srcy, srcw, srch, bnk->YWidth, bnk->YHeight,
-                                bnk->APlane[bnk->PlaneNum], blitflags);
+                                bnk->APlane[bnk->PlaneNum], flags);
                 break;
             }
         case BINKSURFACE32:
             YUV_blit_32bpp(dest, destx, desty, destpitch, bnk->YPlane[bnk->PlaneNum], srcx, srcy,
-                           srcw, srch, bnk->YWidth, bnk->YHeight, blitflags);
+                           srcw, srch, bnk->YWidth, bnk->YHeight, flags);
             break;
         case BINKSURFACE4444:
             if (bnk->APlane[0] != 0) {
                 YUV_blit_16a4bpp(dest, destx, desty, destpitch, bnk->YPlane[bnk->PlaneNum], srcx,
                                  srcy, srcw, srch, bnk->YWidth, bnk->YHeight,
-                                 bnk->APlane[bnk->PlaneNum], blitflags);
+                                 bnk->APlane[bnk->PlaneNum], flags);
                 break;
             }
         case BINKSURFACE555:
@@ -1547,11 +1545,11 @@ unmasked_blit:
         case BINKSURFACE655:
         case BINKSURFACE664:
             YUV_blit_16bpp(dest, destx, desty, destpitch, bnk->YPlane[bnk->PlaneNum], srcx, srcy,
-                           srcw, srch, bnk->YWidth, bnk->YHeight, blitflags);
+                           srcw, srch, bnk->YWidth, bnk->YHeight, flags);
             break;
         case BINKSURFACEYUY2:
             YUV_blit_YUY2(dest, destx, desty, destpitch, bnk->YPlane[bnk->PlaneNum], srcx, srcy,
-                          srcw, srch, bnk->YWidth, bnk->YHeight, blitflags);
+                          srcw, srch, bnk->YWidth, bnk->YHeight, flags);
             break;
         }
     }
@@ -1563,23 +1561,23 @@ try_mask_blit:
     }
 
     {
-        switch (blitflags & BINKSURFACEMASK) {
+        switch (flags & BINKSURFACEMASK) {
         case BINKSURFACE32A:
             if (bnk->APlane[0] != 0) {
                 YUV_blit_32abpp_mask(dest, destx, desty, destpitch, bnk->MaskPlane, bnk->MaskPitch,
                                      bnk->YPlane[bnk->PlaneNum], srcx, srcy, srcw, srch, bnk->YWidth, bnk->YHeight,
-                                     bnk->APlane[bnk->PlaneNum], blitflags);
+                                     bnk->APlane[bnk->PlaneNum], flags);
                 break;
             }
         case BINKSURFACE32:
             YUV_blit_32bpp_mask(dest, destx, desty, destpitch, bnk->MaskPlane, bnk->MaskPitch,
-                                bnk->YPlane[bnk->PlaneNum], srcx, srcy, srcw, srch, bnk->YWidth, bnk->YHeight, blitflags);
+                                bnk->YPlane[bnk->PlaneNum], srcx, srcy, srcw, srch, bnk->YWidth, bnk->YHeight, flags);
             break;
         case BINKSURFACE4444:
             if (bnk->APlane[0] != 0) {
                 YUV_blit_16a4bpp_mask(dest, destx, desty, destpitch, bnk->MaskPlane, bnk->MaskPitch,
                                       bnk->YPlane[bnk->PlaneNum], srcx, srcy, srcw, srch, bnk->YWidth, bnk->YHeight,
-                                      bnk->APlane[bnk->PlaneNum], blitflags);
+                                      bnk->APlane[bnk->PlaneNum], flags);
                 break;
             }
         case BINKSURFACE555:
@@ -1587,11 +1585,11 @@ try_mask_blit:
         case BINKSURFACE655:
         case BINKSURFACE664:
             YUV_blit_16bpp_mask(dest, destx, desty, destpitch, bnk->MaskPlane, bnk->MaskPitch,
-                                bnk->YPlane[bnk->PlaneNum], srcx, srcy, srcw, srch, bnk->YWidth, bnk->YHeight, blitflags);
+                                bnk->YPlane[bnk->PlaneNum], srcx, srcy, srcw, srch, bnk->YWidth, bnk->YHeight, flags);
             break;
         case BINKSURFACEYUY2:
             YUV_blit_YUY2_mask(dest, destx, desty, destpitch, bnk->MaskPlane, bnk->MaskPitch,
-                               bnk->YPlane[bnk->PlaneNum], srcx, srcy, srcw, srch, bnk->YWidth, bnk->YHeight, blitflags);
+                               bnk->YPlane[bnk->PlaneNum], srcx, srcy, srcw, srch, bnk->YWidth, bnk->YHeight, flags);
             break;
         }
     }
