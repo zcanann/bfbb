@@ -1148,8 +1148,6 @@ void YUV_32amx2_4x2(u32 count)
         u32 av1 = *a1++;
         u32 p0 = RGB32_M(RGB_WORD_BYTE3(yv0));
         u32 p1 = RGB32_M(RGB_WORD_BYTE2(yv0));
-        u32 p2 = RGB32_M(RGB_WORD_BYTE1(yv0));
-        u32 p3 = RGB32_M(RGB_WORD_BYTE0(yv0));
         u32 a_hi0 = av0 & RGB_ALPHA0_MASK;
         u32 a_hi1 = RGB_WORD_BYTE2(av0) << 24;
         u32 a_lo0 = RGB_WORD_BYTE3(av0) << 8;
@@ -1159,15 +1157,16 @@ void YUV_32amx2_4x2(u32 count)
         dest0[RGB_TILE_WORD1] = RGB32_ALPHA_DUP_PAIR(a_hi1, a_lo1, p1);
         dest0[RGB_TILE_NEXT_ROW_WORD0] = RGB32_MONO_DUP_PAIR(p0);
         dest0[RGB_TILE_NEXT_ROW_WORD1] = RGB32_MONO_DUP_PAIR(p1);
-        dest0[RGB_TILE_SECOND_BLOCK_WORD0] = RGB32_ALPHA_DUP_PAIR(a_hi0, a_lo0, p2);
-        dest0[RGB_TILE_SECOND_BLOCK_WORD1] = RGB32_ALPHA_DUP_PAIR(a_hi1, a_lo1, p3);
-        dest0[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD0] = RGB32_MONO_DUP_PAIR(p2);
-        dest0[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD1] = RGB32_MONO_DUP_PAIR(p3);
+
+        p0 = RGB32_M(RGB_WORD_BYTE1(yv0));
+        p1 = RGB32_M(RGB_WORD_BYTE0(yv0));
+        dest0[RGB_TILE_SECOND_BLOCK_WORD0] = RGB32_ALPHA_DUP_PAIR(a_hi0, a_lo0, p0);
+        dest0[RGB_TILE_SECOND_BLOCK_WORD1] = RGB32_ALPHA_DUP_PAIR(a_hi1, a_lo1, p1);
+        dest0[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD0] = RGB32_MONO_DUP_PAIR(p0);
+        dest0[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD1] = RGB32_MONO_DUP_PAIR(p1);
 
         p0 = RGB32_M(RGB_WORD_BYTE3(yv1));
         p1 = RGB32_M(RGB_WORD_BYTE2(yv1));
-        p2 = RGB32_M(RGB_WORD_BYTE1(yv1));
-        p3 = RGB32_M(RGB_WORD_BYTE0(yv1));
         a_hi0 = av1 & RGB_ALPHA0_MASK;
         a_hi1 = RGB_WORD_BYTE2(av1) << 24;
         a_lo0 = RGB_WORD_BYTE3(av1) << 8;
@@ -1176,10 +1175,13 @@ void YUV_32amx2_4x2(u32 count)
         dest1[RGB_TILE_WORD1] = RGB32_ALPHA_DUP_PAIR(a_hi1, a_lo1, p1);
         dest1[RGB_TILE_NEXT_ROW_WORD0] = RGB32_MONO_DUP_PAIR(p0);
         dest1[RGB_TILE_NEXT_ROW_WORD1] = RGB32_MONO_DUP_PAIR(p1);
-        dest1[RGB_TILE_SECOND_BLOCK_WORD0] = RGB32_ALPHA_DUP_PAIR(a_hi0, a_lo0, p2);
-        dest1[RGB_TILE_SECOND_BLOCK_WORD1] = RGB32_ALPHA_DUP_PAIR(a_hi1, a_lo1, p3);
-        dest1[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD0] = RGB32_MONO_DUP_PAIR(p2);
-        dest1[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD1] = RGB32_MONO_DUP_PAIR(p3);
+
+        p0 = RGB32_M(RGB_WORD_BYTE1(yv1));
+        p1 = RGB32_M(RGB_WORD_BYTE0(yv1));
+        dest1[RGB_TILE_SECOND_BLOCK_WORD0] = RGB32_ALPHA_DUP_PAIR(a_hi0, a_lo0, p0);
+        dest1[RGB_TILE_SECOND_BLOCK_WORD1] = RGB32_ALPHA_DUP_PAIR(a_hi1, a_lo1, p1);
+        dest1[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD0] = RGB32_MONO_DUP_PAIR(p0);
+        dest1[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD1] = RGB32_MONO_DUP_PAIR(p1);
 
         dest0 += RGB_TILE_X2_BLOCK_WORDS;
         dest1 += RGB_TILE_X2_BLOCK_WORDS;
