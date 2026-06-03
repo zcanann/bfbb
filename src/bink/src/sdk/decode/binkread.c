@@ -43,7 +43,7 @@ typedef enum BINKFrameOffsetFlags
 /* Frame-offset table entries use bit 0 as the key-frame marker. */
 #define BINK_FRAME_OFFSET(frameoffset) ((frameoffset) & BINKFRAMEOFFSETMASK)
 #define BINK_FRAME_KEY(frameoffset) ((frameoffset) & BINKFRAMEKEYFLAG)
-#define BINK_MEMBER_OFFSET(type, member) ((u32)&((type*)0)->member)
+#define BINK_MEMBER_OFFSET(type, member) ((u32)((u8 PTR4*)&((type PTR4*)0)->member - (u8 PTR4*)((type PTR4*)0)))
 #define BINK_CONTAINER_OF(ptr, type, member) ((type PTR4*)((u8 PTR4*)(ptr) - BINK_MEMBER_OFFSET(type, member)))
 #define BINK_FROM_SOUND_CALLBACK(callback) BINK_CONTAINER_OF(callback, BINK, snd_callback_buffer.callback)
 #define BINK_IO_CALLBACK(io) ((RADCB_CALLBACK PTR4*)&(io)->callback_control.callback)
