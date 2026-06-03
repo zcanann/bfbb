@@ -2419,11 +2419,12 @@ static s32 smallestrect(BINKRECT PTR4* out, const u8 PTR4* mask, s32 pitch, cons
     s32 col;
     s32 remaining_height;
     s32 remaining_width;
-    s32 result = 0;
+    s32 result;
 
     rect_mask = mask + BINK_MASK_BLOCKS(rect->Left) + BINK_MASK_BLOCKS(rect->Top) * pitch;
     height_blocks = BINK_MASK_BLOCKS(rect->Height);
     width_blocks = BINK_MASK_BLOCKS(rect->Width);
+    result = 0;
 
     top_scan = rect_mask;
 
