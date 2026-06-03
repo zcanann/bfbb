@@ -1393,6 +1393,7 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count)
 #define words bitcopy.cur
 #define bitbuf bitcopy.bits
 #define bitcount bitcopy.bitlen
+    masks_used = 0;
     memset(dest, 0, BP_BLOCK_COEFFS);
 
     /* Lossy blocks store max level minus one in the stream header. */
@@ -1418,7 +1419,6 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count)
     mask = (s32)(s8)(1 << (levels_remaining - 1));
     tree.roots[BP_ROOT_LOSSY_DC_SLOT] = BP_READ_TREE_DC_ROOT;
     tree_end_ptr = tree.nodes;
-    masks_used = 0;
     nz_coeff_count = 0;
     node_ptr = tree.roots;
     do {
