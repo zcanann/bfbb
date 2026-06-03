@@ -30,6 +30,7 @@ enum YUVMaskLayout {
 };
 
 enum YUVChromaLayout {
+    YUV_CHROMA_SAMPLE_BYTES = 1,
     YUV_CHROMA_BLOCK_BYTES = 8,
     YUV_CHROMA_SHIFT = 1
 };
@@ -1374,8 +1375,8 @@ static void dounaligned32row2w(u32 phase, u32 count)
         ((u32 PTR4*)S.dest0)[1] = pixel;
         S.dest0 += YUV_PACKED_PAIR_BYTES;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
-            S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
-            S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+            S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
+            S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
     } while (count-- != 0);
 }
@@ -1414,8 +1415,8 @@ static u32 dounaligned32col2w(u32 count, s32 phase)
         S.dest0 += YUV_PACKED_PAIR_BYTES;
         S.dest1 += YUV_PACKED_PAIR_BYTES;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
-            S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
-            S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+            S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
+            S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
         count--;
     } while (count != 0);
@@ -1456,8 +1457,8 @@ static void dounaligned32row2h(u32 phase, u32 count)
         *(u32 PTR4*)(S.dest0 + S.pitch) = pixel;
         S.dest0 += YUV_PACKED_WORD_BYTES;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
-            S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
-            S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+            S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
+            S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
     } while (count-- != 0);
 }
@@ -1496,8 +1497,8 @@ static u32 dounaligned32col2h(u32 count, s32 phase)
         S.dest0 += YUV_PACKED_WORD_BYTES;
         S.dest1 += YUV_PACKED_WORD_BYTES;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
-            S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
-            S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+            S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
+            S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
         count--;
     } while (count != 0);
@@ -1542,8 +1543,8 @@ static void dounaligned32row2wh(u32 phase, u32 count)
         *(u32 PTR4*)(S.dest0 + S.pitch + YUV_PACKED_WORD_BYTES) = pixel;
         S.dest0 += YUV_PACKED_PAIR_BYTES;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
-            S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
-            S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+            S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
+            S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
     } while (remaining-- != 0);
 }
@@ -1586,8 +1587,8 @@ static u32 dounaligned32col2wh(u32 count, s32 phase)
         S.dest0 += YUV_PACKED_PAIR_BYTES;
         S.dest1 += YUV_PACKED_PAIR_BYTES;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
-            S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
-            S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+            S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
+            S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
         count--;
     } while (count != 0);
@@ -1673,8 +1674,8 @@ static void dounaligned32row(u32 phase, u32 count)
         *(u32 PTR4*)S.dest0 = RGB32_COLOR(ytable, S.r, S.gb, S.b);
         S.dest0 += YUV_PACKED_WORD_BYTES;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
-            S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
-            S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+            S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
+            S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
     } while (remaining-- != 0);
 }
@@ -1708,8 +1709,8 @@ static u32 dounaligned32col(u32 count, s32 phase)
         S.dest0 += YUV_PACKED_WORD_BYTES;
         S.dest1 += YUV_PACKED_WORD_BYTES;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
-            S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
-            S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+            S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
+            S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
         count--;
     } while (count != 0);
@@ -1965,8 +1966,8 @@ static void dounaligned32arow2w(u32 phase, u32 count)
         ((u32 PTR4*)S.dest0)[1] = pixel;
         S.dest0 += YUV_PACKED_PAIR_BYTES;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
-            S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
-            S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+            S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
+            S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
     } while (remaining-- != 0);
 }
@@ -2010,8 +2011,8 @@ static u32 dounaligned32acol2w(u32 count, s32 phase)
         S.dest0 += YUV_PACKED_PAIR_BYTES;
         S.dest1 += YUV_PACKED_PAIR_BYTES;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
-            S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
-            S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+            S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
+            S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
         count--;
     } while (count != 0);
@@ -2059,8 +2060,8 @@ static void dounaligned32arow2h(u32 phase, u32 count)
         *(u32 PTR4*)(S.dest0 + S.pitch) = pixel;
         S.dest0 += YUV_PACKED_WORD_BYTES;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
-            S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
-            S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+            S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
+            S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
     } while (remaining-- != 0);
 }
@@ -2104,8 +2105,8 @@ static u32 dounaligned32acol2h(u32 count, s32 phase)
         S.dest0 += YUV_PACKED_WORD_BYTES;
         S.dest1 += YUV_PACKED_WORD_BYTES;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
-            S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
-            S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+            S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
+            S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
         count--;
     } while (count != 0);
@@ -2155,8 +2156,8 @@ static void dounaligned32arow2wh(u32 phase, u32 count)
         *(u32 PTR4*)(S.dest0 + S.pitch + YUV_PACKED_WORD_BYTES) = pixel;
         S.dest0 += YUV_PACKED_PAIR_BYTES;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
-            S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
-            S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+            S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
+            S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
     } while (remaining-- != 0);
 }
@@ -2204,8 +2205,8 @@ static u32 dounaligned32acol2wh(u32 count, s32 phase)
         S.dest0 += YUV_PACKED_PAIR_BYTES;
         S.dest1 += YUV_PACKED_PAIR_BYTES;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
-            S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
-            S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+            S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
+            S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
         count--;
     } while (count != 0);
@@ -2311,8 +2312,8 @@ static void dounaligned32arow(u32 phase, u32 count)
         S.a0 = (u32 PTR4*)aptr;
         S.dest0 += YUV_PACKED_WORD_BYTES;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
-            S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
-            S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+            S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
+            S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
     } while (remaining-- != 0);
 }
@@ -2351,8 +2352,8 @@ static u32 dounaligned32acol(u32 count, s32 phase)
         S.dest0 += YUV_PACKED_WORD_BYTES;
         S.dest1 += YUV_PACKED_WORD_BYTES;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
-            S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
-            S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+            S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
+            S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
         count--;
     } while (count != 0);
@@ -2566,8 +2567,8 @@ static void dounaligned16row2h(u32 phase, u32 count)
         *(u16 PTR4*)(S.dest0 + S.pitch) = pixel;
         S.dest0 += YUV_BYTES_PER_PIXEL_16;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
-            S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
-            S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+            S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
+            S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
     } while (count-- != 0);
 }
@@ -2610,8 +2611,8 @@ static u32 dounaligned16col2h(u32 count, s32 phase)
         S.dest0 += YUV_BYTES_PER_PIXEL_16;
         S.dest1 += YUV_BYTES_PER_PIXEL_16;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
-            S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
-            S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+            S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
+            S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
         remaining--;
     } while (remaining != 0);
@@ -2653,8 +2654,8 @@ static void dounaligned16row2w(u32 phase, u32 count)
         ((u16 PTR4*)S.dest0)[1] = pixel;
         S.dest0 += YUV_PACKED_WORD_BYTES;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
-            S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
-            S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+            S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
+            S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
     } while (count-- != 0);
 }
@@ -2697,8 +2698,8 @@ static u32 dounaligned16col2w(u32 count, s32 phase)
         S.dest0 += YUV_PACKED_WORD_BYTES;
         S.dest1 += YUV_PACKED_WORD_BYTES;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
-            S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
-            S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+            S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
+            S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
         remaining--;
     } while (remaining != 0);
@@ -2741,8 +2742,8 @@ static void dounaligned16row2wh(u32 phase, u32 count)
         *(u16 PTR4*)(S.dest0 + S.pitch + YUV_BYTES_PER_PIXEL_16) = pixel;
         S.dest0 += YUV_PACKED_WORD_BYTES;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
-            S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
-            S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+            S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
+            S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
     } while (count-- != 0);
 }
@@ -2789,8 +2790,8 @@ static u32 dounaligned16col2wh(u32 count, s32 phase)
         S.dest0 += YUV_PACKED_WORD_BYTES;
         S.dest1 += YUV_PACKED_WORD_BYTES;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
-            S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
-            S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+            S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
+            S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
         remaining--;
     } while (remaining != 0);
@@ -2870,8 +2871,8 @@ static void dounaligned16row(u32 phase, u32 count)
         *(u16 PTR4*)S.dest0 = RGB565(ybase, S.r, S.gb, S.b);
         S.dest0 += YUV_BYTES_PER_PIXEL_16;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
-            S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
-            S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+            S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
+            S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
     } while (count-- != 0);
 }
@@ -2909,8 +2910,8 @@ static u32 dounaligned16col(u32 count, s32 phase)
         S.dest0 += YUV_BYTES_PER_PIXEL_16;
         S.dest1 += YUV_BYTES_PER_PIXEL_16;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
-            S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
-            S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+            S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
+            S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
         remaining--;
     } while (remaining != 0);
@@ -3152,8 +3153,8 @@ static void dounaligned16a4row2h(u32 phase, u32 count)
         *(u16 PTR4*)(S.dest0 + S.pitch) = pixel;
         S.dest0 += YUV_BYTES_PER_PIXEL_16;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
-            S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
-            S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+            S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
+            S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
     } while (count-- != 0);
 }
@@ -3203,8 +3204,8 @@ static u32 dounaligned16a4col2h(u32 count, s32 phase)
         S.dest0 += YUV_BYTES_PER_PIXEL_16;
         S.dest1 += YUV_BYTES_PER_PIXEL_16;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
-            S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
-            S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+            S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
+            S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
         count--;
     } while (count != 0);
@@ -3250,8 +3251,8 @@ static void dounaligned16a4row2w(u32 phase, u32 count)
         ((u16 PTR4*)S.dest0)[1] = pixel;
         S.dest0 += YUV_PACKED_WORD_BYTES;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
-            S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
-            S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+            S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
+            S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
     } while (count-- != 0);
 }
@@ -3301,8 +3302,8 @@ static u32 dounaligned16a4col2w(u32 count, s32 phase)
         S.dest0 += YUV_PACKED_WORD_BYTES;
         S.dest1 += YUV_PACKED_WORD_BYTES;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
-            S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
-            S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+            S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
+            S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
         count--;
     } while (count != 0);
@@ -3350,8 +3351,8 @@ static void dounaligned16a4row2wh(u32 phase, u32 count)
         *(u16 PTR4*)(S.dest0 + S.pitch + YUV_BYTES_PER_PIXEL_16) = pixel;
         S.dest0 += YUV_PACKED_WORD_BYTES;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
-            S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
-            S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+            S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
+            S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
     } while (count-- != 0);
 }
@@ -3405,8 +3406,8 @@ static u32 dounaligned16a4col2wh(u32 count, s32 phase)
         S.dest0 += YUV_PACKED_WORD_BYTES;
         S.dest1 += YUV_PACKED_WORD_BYTES;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
-            S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
-            S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+            S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
+            S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
         count--;
     } while (count != 0);
@@ -3499,8 +3500,8 @@ static void dounaligned16a4row(u32 phase, u32 count)
         *(u16 PTR4*)S.dest0 = RGB565_A4(ybase, S.r, S.gb, S.b, a);
         S.dest0 += YUV_BYTES_PER_PIXEL_16;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
-            S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
-            S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+            S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
+            S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
     } while (count-- != 0);
 }
@@ -3545,8 +3546,8 @@ static u32 dounaligned16a4col(u32 count, s32 phase)
         S.dest0 += YUV_BYTES_PER_PIXEL_16;
         S.dest1 += YUV_BYTES_PER_PIXEL_16;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
-            S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
-            S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+            S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
+            S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
         count--;
     } while (count != 0);
@@ -3806,9 +3807,9 @@ static u32 dounalignedYUY2col2wh(u32 count, s32 phase)
     do {
         remaining -= YUY2_LUMA_PAIR_PIXELS;
         u = *(u8 PTR4*)S.u;
-        S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
+        S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
         v = *(u8 PTR4*)S.v;
-        S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
+        S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         y0 = *(u8 PTR4*)S.y0;
         pixel0 = YUY2_COLOR_PAIR(y0, u, y0, v);
         y1 = *((u8 PTR4*)S.y0 + 1);
@@ -3888,8 +3889,8 @@ static u32 dounalignedYUY2col2w(u32 count, s32 phase)
         u = *(u8 PTR4*)S.u;
         y0 = *(u8 PTR4*)S.y0;
         v = *(u8 PTR4*)S.v;
-        S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
-        S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
+        S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
+        S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
         pixel = YUY2_COLOR_PAIR(y0, u, y0, v);
         ((u32 PTR4*)S.dest0)[0] = pixel;
         chroma = pixel & YUY2_CHROMA_MASK;
@@ -3967,8 +3968,8 @@ static u32 dounalignedYUY2col2h(u32 count, s32 phase)
         y0 = *(u8 PTR4*)S.y0;
         y1 = *((u8 PTR4*)S.y0 + 1);
         v = *(u8 PTR4*)S.v;
-        S.v = (u16 PTR4*)((u8 PTR4*)S.v + 1);
-        S.u = (u16 PTR4*)((u8 PTR4*)S.u + 1);
+        S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
+        S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
         S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUY2_LUMA_PAIR_BYTES);
         pixel = YUY2_COLOR_PAIR(y0, u, y1, v);
         *(u32 PTR4*)S.dest0 = pixel;
