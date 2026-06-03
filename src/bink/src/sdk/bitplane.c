@@ -1301,8 +1301,8 @@ next_lossy_node:
                         goto next_lossy_node;
                     }
 
-                    lenbits = BP_TREE_ENTRY_KIND(node_entry);
-                    if (lenbits == BP_TREE_GROUP_NODE) {
+                    switch (BP_TREE_ENTRY_KIND(node_entry)) {
+                    case BP_TREE_GROUP_NODE:
                         lenbits = BP_TREE_ENTRY_INDEX(node_entry);
                         count = (u32)BP_TREE_ENTRY_GROUP(node_entry);
                         *cur = BP_TREE_BASE_BRANCH_ENTRY(groups[count], BP_TREE_ENTRY_BASE(node_entry));
@@ -1310,7 +1310,8 @@ next_lossy_node:
                         next_node[1] = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD2_INDEX], lenbits, BP_TREE_CHILD2_BASE);
                         next_node[2] = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD3_INDEX], lenbits, BP_TREE_CHILD3_BASE);
                         next_node += BP_TREE_ADDED_CHILD_COUNT;
-                    } else if (lenbits == BP_TREE_HIGH_NODE) {
+                        break;
+                    case BP_TREE_HIGH_NODE:
                         *cur = BP_TREE_HIGH_GROUP_ENTRY(hi_groups[BP_TREE_ENTRY_HIGH_GROUP(node_entry)], BP_TREE_ENTRY_INDEX(node_entry));
 handle_lossy_children:
                         lenbits = BP_TREE_ENTRY_INDEX(node_entry);
@@ -1356,18 +1357,18 @@ handle_lossy_children:
                             --insert;
                             *insert = BP_TREE_COEFF_ENTRY(entry, lenbits + BP_TREE_CHILD3_INDEX);
                         }
-                    } else {
-                        if (lenbits == BP_TREE_BRANCH_NODE) {
-                            *cur = BP_TREE_EMPTY_ENTRY;
-                            cur++;
-                            goto handle_lossy_children;
-                        }
-                        if (lenbits == BP_TREE_COEFF_NODE) {
-                            active_absvals[i] = absvals[BP_TREE_ENTRY_INDEX(node_entry)];
-                            i++;
-                            PUT_BP_BIT(bits, (ordered[BP_TREE_ENTRY_INDEX(node_entry)] & BP_SIGN_BIT) != 0);
-                            *cur = BP_TREE_EMPTY_ENTRY;
-                        }
+                        break;
+                    case BP_TREE_BRANCH_NODE:
+                        *cur = BP_TREE_EMPTY_ENTRY;
+                        cur++;
+                        goto handle_lossy_children;
+                    case BP_TREE_COEFF_NODE:
+                        active_absvals[i] = absvals[BP_TREE_ENTRY_INDEX(node_entry)];
+                        i++;
+                        PUT_BP_BIT(bits, (ordered[BP_TREE_ENTRY_INDEX(node_entry)] & BP_SIGN_BIT) != 0);
+                        *cur = BP_TREE_EMPTY_ENTRY;
+                        goto next_lossy_node;
+                    default:
                         goto next_lossy_node;
                     }
                 }
