@@ -350,7 +350,7 @@ static void ReadKickoff(BINKIO PTR4* io)
     }
 
     if (NGC_CANCEL_READ(io) == 0 && NGC_DVD_STATUS_IDLE(status)) {
-        if (NGC_FREE_SIZE(io) < NGC_READ_BLOCK_SIZE) {
+        if (NGC_FREE_SIZE(io) <= NGC_READ_BLOCK_MASK) {
             io->CurBufSize = io->CurBufUsed;
         } else if (remaining != 0) {
             NGC_CALLBACK_WORKING(io) = io->Working;
