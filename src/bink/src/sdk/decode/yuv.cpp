@@ -1015,17 +1015,16 @@ extern "C" void YUV_init(u32 flags)
             if (i > YUV_LUMA_BLACK) {
                 if (i < YUV_LUMA_WHITE_CUTOFF) {
                     y = i - YUV_LUMA_BLACK;
-                    y = yuv_round15(y * YUV_COEFF_Y_TO_RGB);
+                    ytable[i] = yuv_round15(y * YUV_COEFF_Y_TO_RGB);
                 } else {
-                    y = YUV_LUMA_MAX;
+                    ytable[i] = YUV_LUMA_MAX;
                 }
             } else {
-                y = 0;
+                ytable[i] = 0;
             }
 
             uv = i - YUV_CHROMA_CENTER;
-            ytable_x4[i] = y << 2;
-            ytable[i] = y;
+            ytable_x4[i] = ytable[i] << 2;
             YUVTables.v_to_gb[i] = -yuv_round15(uv * YUV_COEFF_V_TO_GB);
             YUVTables.u_to_gb[i] = -yuv_round15(uv * YUV_COEFF_U_TO_GB);
             YUVTables.v_to_r[i] = yuv_round15(uv * YUV_COEFF_V_TO_R);
