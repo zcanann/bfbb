@@ -1773,13 +1773,13 @@ s32 BinkDoFrame(HBINK bnk)
                 if (bnk->preloadptr == 0 && bnk->bio.DoingARead == 0 &&
                     BINK_IO_BUFFER_USED_PERCENT(bnk) < BINK_IO_BUFFER_LOW_PERCENT) {
                     if (RADCB_try_to_suspend_callback(cb_bink_IO,
-                                                      BINK_IO_CALLBACK(&bnk->bio)) == 0) {
+                                                      BINK_IO_CALLBACK(&bnk->bio)) != 0) {
+                        bnk->bio.Idle(&bnk->bio);
+                        RADCB_resume_callback(cb_bink_IO, BINK_IO_CALLBACK(&bnk->bio));
+                    } else {
                         if ((bnk->OpenFlags & BINKNOTHREADEDIO) == 0) {
                             RADCB_idle_on_callbacks();
                         }
-                    } else {
-                        bnk->bio.Idle(&bnk->bio);
-                        RADCB_resume_callback(cb_bink_IO, BINK_IO_CALLBACK(&bnk->bio));
                     }
                 }
 
