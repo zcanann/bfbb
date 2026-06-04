@@ -1189,222 +1189,220 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
         BinkSetError(BINK_ERROR_OUT_OF_MEMORY);
         goto close_and_fail;
     }
-    if (out != 0) {
-        memcpy(out, &bnk, sizeof(*out));
-        out->bio.bink = out;
-        out->rtadecomptimes[BINK_RUNTIME_CURRENT_SLOT] = 0;
-        out->rtvdecomptimes[BINK_RUNTIME_CURRENT_SLOT] = 0;
-        out->rtblittimes[BINK_RUNTIME_CURRENT_SLOT] = 0;
-        out->rtreadtimes[BINK_RUNTIME_CURRENT_SLOT] = 0;
-        out->rtidlereadtimes[BINK_RUNTIME_CURRENT_SLOT] = 0;
-        out->rtthreadreadtimes[BINK_RUNTIME_CURRENT_SLOT] = 0;
+    memcpy(out, &bnk, sizeof(*out));
+    out->bio.bink = out;
+    out->rtadecomptimes[BINK_RUNTIME_CURRENT_SLOT] = 0;
+    out->rtvdecomptimes[BINK_RUNTIME_CURRENT_SLOT] = 0;
+    out->rtblittimes[BINK_RUNTIME_CURRENT_SLOT] = 0;
+    out->rtreadtimes[BINK_RUNTIME_CURRENT_SLOT] = 0;
+    out->rtidlereadtimes[BINK_RUNTIME_CURRENT_SLOT] = 0;
+    out->rtthreadreadtimes[BINK_RUNTIME_CURRENT_SLOT] = 0;
+
+    if ((flags & BINKFROMMEMORY) != 0) {
+        out->tracksizes = BINK_HEADER_TRACK_SIZES(name);
+        out->tracktypes = BINK_HEADER_TRACK_TYPES(name, out->NumTracks);
+        out->trackIDs = BINK_HEADER_TRACK_IDS(name, out->NumTracks);
+        out->frameoffsets = BINK_HEADER_FRAME_OFFSETS(name, out->NumTracks);
+    } else {
+        out->bio.ReadHeader(&out->bio, -1, out->tracksizes,
+                            BINK_ARRAY_BYTES(out->NumTracks, out->tracksizes));
+        out->bio.ReadHeader(&out->bio, -1, out->tracktypes,
+                            BINK_ARRAY_BYTES(out->NumTracks, out->tracktypes));
+        out->bio.ReadHeader(&out->bio, -1, out->trackIDs,
+                            BINK_ARRAY_BYTES(out->NumTracks, out->trackIDs));
+        out->bio.ReadHeader(&out->bio, -1, out->frameoffsets,
+                            BINK_FRAME_OFFSETS_BYTES(out->InternalFrames, out->frameoffsets));
+    }
+
+    out->Highest1SecRate =
+        high1secrate(out->Frames, out->frameoffsets, out->runtimeframes,
+                     &out->Highest1SecFrame, &all_key);
+
+    if ((out->OpenFlags & BINKALPHA) != 0) {
+        pushmalloc(&out->APlane[0], BINK_ALPHA_PLANE_BYTES(out));
+        if (all_key == 0) {
+            pushmalloc(&out->APlane[1], BINK_ALPHA_PLANE_BYTES(out));
+        }
+    }
+    if (all_key == 0) {
+        pushmalloc(&out->YPlane[1], BINK_VIDEO_PLANE_BYTES(out));
+    }
+
+    out->YPlane[0] = bpopmalloc(out, BINK_VIDEO_PLANE_BYTES(out));
+    if (out->YPlane[0] == 0) {
+        radfree(out);
+        goto open_failed;
+    } else {
+        if (all_key != 0) {
+            out->YPlane[1] = out->YPlane[0];
+            out->APlane[1] = out->APlane[0];
+        }
+
+        if ((flags & BINKIOSIZE) != 0 && IOBufferSize != BINK_OPEN_OVERRIDE_UNSET) {
+            out->iosize = IOBufferSize;
+            IOBufferSize = BINK_OPEN_OVERRIDE_UNSET;
+        } else {
+            out->iosize = out->Highest1SecRate;
+        }
+
+        if ((flags & BINKSIMULATE) != 0 && Simulate != BINK_OPEN_OVERRIDE_UNSET) {
+            simulate = Simulate;
+            Simulate = BINK_OPEN_OVERRIDE_UNSET;
+        } else {
+            simulate = 0;
+        }
 
         if ((flags & BINKFROMMEMORY) != 0) {
-            out->tracksizes = BINK_HEADER_TRACK_SIZES(name);
-            out->tracktypes = BINK_HEADER_TRACK_TYPES(name, out->NumTracks);
-            out->trackIDs = BINK_HEADER_TRACK_IDS(name, out->NumTracks);
-            out->frameoffsets = BINK_HEADER_FRAME_OFFSETS(name, out->NumTracks);
+            out->preloadptr = (u8 PTR4*)name + BINK_FRAME_OFFSET(out->frameoffsets[0]);
         } else {
-            out->bio.ReadHeader(&out->bio, -1, out->tracksizes,
-                                BINK_ARRAY_BYTES(out->NumTracks, out->tracksizes));
-            out->bio.ReadHeader(&out->bio, -1, out->tracktypes,
-                                BINK_ARRAY_BYTES(out->NumTracks, out->tracktypes));
-            out->bio.ReadHeader(&out->bio, -1, out->trackIDs,
-                                BINK_ARRAY_BYTES(out->NumTracks, out->trackIDs));
-            out->bio.ReadHeader(&out->bio, -1, out->frameoffsets,
-                                BINK_FRAME_OFFSETS_BYTES(out->InternalFrames, out->frameoffsets));
-        }
+            out->iosize = out->bio.GetBufferSize(&out->bio, out->iosize);
+            if (out->iosize >=
+                (out->Size * BINK_PRELOAD_THRESHOLD_NUMERATOR) /
+                    BINK_PRELOAD_THRESHOLD_DENOMINATOR) {
+                flags |= BINKPRELOADALL;
+                out->OpenFlags |= BINKPRELOADALL;
+            }
 
-        out->Highest1SecRate =
-            high1secrate(out->Frames, out->frameoffsets, out->runtimeframes,
-                         &out->Highest1SecFrame, &all_key);
+            if ((flags & BINKPRELOADALL) != 0) {
+                u32 preload_size =
+                    out->Size + BINK_FILE_HEADER_BYTES -
+                    BINK_FRAME_OFFSET(out->frameoffsets[0]);
 
-        if ((out->OpenFlags & BINKALPHA) != 0) {
-            pushmalloc(&out->APlane[0], BINK_ALPHA_PLANE_BYTES(out));
-            if (all_key == 0) {
-                pushmalloc(&out->APlane[1], BINK_ALPHA_PLANE_BYTES(out));
+                out->preloadptr = bpopmalloc(out, preload_size);
+                if (out->preloadptr == 0) {
+                    radfree(bnk.YPlane[0]);
+                    goto open_failed;
+                }
+                out->bio.SetInfo(&out->bio, 0, 0, out->Size + BINK_FILE_HEADER_BYTES, simulate);
+                out->bio.ReadFrame(&out->bio, 0, BINK_FRAME_OFFSET(out->frameoffsets[0]),
+                                   out->preloadptr, preload_size);
+                out->bio.Close(&out->bio);
+                out->bio.ForegroundTime = 0;
+            } else {
+                pushmalloc(&out->compframe, out->LargestFrameSize);
+                out->ioptr = bpopmalloc(out, out->iosize);
+                if (out->ioptr == 0) {
+                    out->iosize = 0;
+                }
+                out->bio.SetInfo(&out->bio, out->ioptr, out->iosize,
+                                 out->Size + BINK_FILE_HEADER_BYTES, simulate);
             }
         }
-        if (all_key == 0) {
-            pushmalloc(&out->YPlane[1], BINK_VIDEO_PLANE_BYTES(out));
-        }
 
-        out->YPlane[0] = bpopmalloc(out, BINK_VIDEO_PLANE_BYTES(out));
-        if (out->YPlane[0] == 0) {
-            radfree(out);
-            goto open_failed;
+        ((u8 PTR4*)out->MaskPlane)[out->MaskLength] = 0;
+        out->FrameNum = BINK_FRAME_BEFORE_FIRST;
+        if (out->FrameRate != 0) {
+            out->twoframestime = mult64anddiv(BINK_TWO_FRAME_MILLISECONDS, out->FrameRateDiv, out->FrameRate);
         } else {
-            if (all_key != 0) {
-                out->YPlane[1] = out->YPlane[0];
-                out->APlane[1] = out->APlane[0];
-            }
+            out->twoframestime = BINK_TWO_FRAME_MILLISECONDS;
+        }
+        out->videoon = BINK_VIDEO_ON;
+        GotoFrame(out, BINK_FIRST_FRAME);
+        out->timeopen = RADTimerRead() - out->timeopen;
+        out->bsnd[0].Latency = BINK_FIXED_1;
+        out->playingtracks = 0;
+        if (out->NumTracks != 0 && TotTracks != 0) {
+            u32 wanted;
 
-            if ((flags & BINKIOSIZE) != 0 && IOBufferSize != BINK_OPEN_OVERRIDE_UNSET) {
-                out->iosize = IOBufferSize;
-                IOBufferSize = BINK_OPEN_OVERRIDE_UNSET;
-            } else {
-                out->iosize = out->Highest1SecRate;
-            }
+            for (wanted = 0; wanted < TotTracks; ++wanted) {
+                s32 track;
 
-            if ((flags & BINKSIMULATE) != 0 && Simulate != BINK_OPEN_OVERRIDE_UNSET) {
-                simulate = Simulate;
-                Simulate = BINK_OPEN_OVERRIDE_UNSET;
-            } else {
-                simulate = 0;
+                for (track = 0; track < out->NumTracks; ++track) {
+                    if (out->trackIDs[track] == TrackNums[wanted]) {
+                        out->trackindexes[out->playingtracks] = track;
+                        ++out->playingtracks;
+                        break;
+                    }
+                }
             }
+        }
+        TrackNums[0] = BINK_DEFAULT_TRACK_ID;
+        TotTracks = 1;
+        if (out->playingtracks != 0) {
+            u32 playing = 0;
 
-            if ((flags & BINKFROMMEMORY) != 0) {
-                out->preloadptr = (u8 PTR4*)name + BINK_FRAME_OFFSET(out->frameoffsets[0]);
-            } else {
-                out->iosize = out->bio.GetBufferSize(&out->bio, out->iosize);
-                if (out->iosize >=
-                    (out->Size * BINK_PRELOAD_THRESHOLD_NUMERATOR) /
-                        BINK_PRELOAD_THRESHOLD_DENOMINATOR) {
-                    flags |= BINKPRELOADALL;
-                    out->OpenFlags |= BINKPRELOADALL;
+            while (playing < out->playingtracks) {
+                u32 track = out->trackindexes[playing];
+                u32 tracktype = out->tracktypes[track];
+                BINKSND PTR4* snd = &out->bsnd[playing];
+
+                if (BINKTRACKISOPENABLE(tracktype)) {
+                    if (sndopen == 0) {
+                        BinkSetSoundSystem(BinkOpenNGCSound, 0);
+                    }
+                    snd->sndbuf = 0;
+                    if (sndopen != 0) {
+                        u32 freq = BINKTRACKFREQ(tracktype);
+                        s32 bits = BINKTRACKBITS(tracktype);
+                        s32 chans = BINKTRACKCHANNELS(tracktype);
+
+                        if (out->FrameRate != 0 && out->FrameRateDiv != 0) {
+                            freq = ((f64)freq * (f64)out->FrameRate *
+                                    (f64)out->fileframeratediv) /
+                                   ((f64)out->FrameRateDiv * (f64)out->fileframerate);
+                        }
+
+                        if (sndopen(snd, freq, bits, chans, out->OpenFlags, out) != 0) {
+                            if (snd->BestSizeMask == 0) {
+                                snd->BestSizeMask = BINK_SOUND_BEST_SIZE_MASK_ALL;
+                            }
+                            snd->sndbufsize = BINK_SOUND_BUFFER_BYTES(out->tracksizes[track]);
+                            snd->sndbuf = bpopmalloc(out, snd->sndbufsize);
+                            if (snd->sndbuf == 0) {
+                                snd->Close(snd);
+                            } else {
+                                ++numopensounds;
+                                snd->sndconvert8 =
+                                    BINKTRACKBITS(tracktype) == BINK_SOUND_BITS_8;
+                                snd->sndend = snd->sndbuf + snd->sndbufsize;
+                                snd->sndwritepos = snd->sndbuf;
+                                snd->sndreadpos = snd->sndbuf;
+                                snd->sndprime =
+                                    BINK_SOUND_PRIME_BYTES(freq, tracktype, snd->SoundDroppedOut);
+                                if (snd->sndbufsize < snd->sndprime) {
+                                    snd->sndprime = snd->sndbufsize;
+                                }
+                                snd->sndcomp = (UINTa)BinkAudioDecompressOpen(
+                                    freq, chans, BINKTRACKDECOMPFLAGS(tracktype));
+                                snd->sndendframe =
+                                    out->Frames -
+                                    BINK_SOUND_END_PREROLL_FRAMES(out->fileframerate, out->fileframeratediv);
+                                snd->sndamt = 0;
+                            }
+                        }
+                    }
                 }
 
-                if ((flags & BINKPRELOADALL) != 0) {
-                    u32 preload_size =
-                        out->Size + BINK_FILE_HEADER_BYTES -
-                        BINK_FRAME_OFFSET(out->frameoffsets[0]);
-
-                    out->preloadptr = bpopmalloc(out, preload_size);
-                    if (out->preloadptr == 0) {
-                        radfree(bnk.YPlane[0]);
-                        goto open_failed;
-                    }
-                    out->bio.SetInfo(&out->bio, 0, 0, out->Size + BINK_FILE_HEADER_BYTES, simulate);
-                    out->bio.ReadFrame(&out->bio, 0, BINK_FRAME_OFFSET(out->frameoffsets[0]),
-                                       out->preloadptr, preload_size);
-                    out->bio.Close(&out->bio);
-                    out->bio.ForegroundTime = 0;
+                if (snd->Latency == 0) {
+                    snd->Latency = BINK_FIXED_1;
+                }
+                if (snd->sndbuf == 0) {
+                    --out->playingtracks;
+                    memcpy(&out->trackindexes[playing], &out->trackindexes[playing + 1],
+                            (out->playingtracks - playing) * sizeof(out->trackindexes[0]));
                 } else {
-                    pushmalloc(&out->compframe, out->LargestFrameSize);
-                    out->ioptr = bpopmalloc(out, out->iosize);
-                    if (out->ioptr == 0) {
-                        out->iosize = 0;
-                    }
-                    out->bio.SetInfo(&out->bio, out->ioptr, out->iosize,
-                                     out->Size + BINK_FILE_HEADER_BYTES, simulate);
+                    ++playing;
                 }
             }
-
-            ((u8 PTR4*)out->MaskPlane)[out->MaskLength] = 0;
-            out->FrameNum = BINK_FRAME_BEFORE_FIRST;
-            if (out->FrameRate != 0) {
-                out->twoframestime = mult64anddiv(BINK_TWO_FRAME_MILLISECONDS, out->FrameRateDiv, out->FrameRate);
-            } else {
-                out->twoframestime = BINK_TWO_FRAME_MILLISECONDS;
-            }
-            out->videoon = BINK_VIDEO_ON;
-            GotoFrame(out, BINK_FIRST_FRAME);
-            out->timeopen = RADTimerRead() - out->timeopen;
-            out->bsnd[0].Latency = BINK_FIXED_1;
-            out->playingtracks = 0;
-            if (out->NumTracks != 0 && TotTracks != 0) {
-                u32 wanted;
-
-                for (wanted = 0; wanted < TotTracks; ++wanted) {
-                    s32 track;
-
-                    for (track = 0; track < out->NumTracks; ++track) {
-                        if (out->trackIDs[track] == TrackNums[wanted]) {
-                            out->trackindexes[out->playingtracks] = track;
-                            ++out->playingtracks;
-                            break;
-                        }
-                    }
-                }
-            }
-            TrackNums[0] = BINK_DEFAULT_TRACK_ID;
-            TotTracks = 1;
-            if (out->playingtracks != 0) {
-                u32 playing = 0;
-
-                while (playing < out->playingtracks) {
-                    u32 track = out->trackindexes[playing];
-                    u32 tracktype = out->tracktypes[track];
-                    BINKSND PTR4* snd = &out->bsnd[playing];
-
-                    if (BINKTRACKISOPENABLE(tracktype)) {
-                        if (sndopen == 0) {
-                            BinkSetSoundSystem(BinkOpenNGCSound, 0);
-                        }
-                        snd->sndbuf = 0;
-                        if (sndopen != 0) {
-                            u32 freq = BINKTRACKFREQ(tracktype);
-                            s32 bits = BINKTRACKBITS(tracktype);
-                            s32 chans = BINKTRACKCHANNELS(tracktype);
-
-                            if (out->FrameRate != 0 && out->FrameRateDiv != 0) {
-                                freq = ((f64)freq * (f64)out->FrameRate *
-                                        (f64)out->fileframeratediv) /
-                                       ((f64)out->FrameRateDiv * (f64)out->fileframerate);
-                            }
-
-                            if (sndopen(snd, freq, bits, chans, out->OpenFlags, out) != 0) {
-                                if (snd->BestSizeMask == 0) {
-                                    snd->BestSizeMask = BINK_SOUND_BEST_SIZE_MASK_ALL;
-                                }
-                                snd->sndbufsize = BINK_SOUND_BUFFER_BYTES(out->tracksizes[track]);
-                                snd->sndbuf = bpopmalloc(out, snd->sndbufsize);
-                                if (snd->sndbuf == 0) {
-                                    snd->Close(snd);
-                                } else {
-                                    ++numopensounds;
-                                    snd->sndconvert8 =
-                                        BINKTRACKBITS(tracktype) == BINK_SOUND_BITS_8;
-                                    snd->sndend = snd->sndbuf + snd->sndbufsize;
-                                    snd->sndwritepos = snd->sndbuf;
-                                    snd->sndreadpos = snd->sndbuf;
-                                    snd->sndprime =
-                                        BINK_SOUND_PRIME_BYTES(freq, tracktype, snd->SoundDroppedOut);
-                                    if (snd->sndbufsize < snd->sndprime) {
-                                        snd->sndprime = snd->sndbufsize;
-                                    }
-                                    snd->sndcomp = (UINTa)BinkAudioDecompressOpen(
-                                        freq, chans, BINKTRACKDECOMPFLAGS(tracktype));
-                                    snd->sndendframe =
-                                        out->Frames -
-                                        BINK_SOUND_END_PREROLL_FRAMES(out->fileframerate, out->fileframeratediv);
-                                    snd->sndamt = 0;
-                                }
-                            }
-                        }
-                    }
-
-                    if (snd->Latency == 0) {
-                        snd->Latency = BINK_FIXED_1;
-                    }
-                    if (snd->sndbuf == 0) {
-                        --out->playingtracks;
-                        memcpy(&out->trackindexes[playing], &out->trackindexes[playing + 1],
-                                (out->playingtracks - playing) * sizeof(out->trackindexes[0]));
-                    } else {
-                        ++playing;
-                    }
-                }
-            }
-            if (out->playingtracks != 0) {
-                out->soundon = BINK_SOUND_ON;
-                if (cb_bink_sound == 0) {
-                    cb_bink_sound = RADCB_allocate_handler(BINK_SOUND_CALLBACK_PRIORITY);
-                    RADCB_resume_handler(cb_bink_sound);
-                }
-                RADCB_register_callback(cb_bink_sound, BINK_SOUND_CALLBACK(out),
-                                        bink_get_priority_sound, bink_sound_callback);
-            }
-            out->bio.resume_callback = bink_resume_io;
-            out->bio.suspend_callback = bink_suspend_io;
-            out->bio.try_suspend_callback = bink_try_suspend_io;
-            out->bio.idle_on_callback = bink_idle_on_io;
-            if (out->preloadptr == 0 && (flags & BINKNOFILLIOBUF) == 0) {
-                while (out->bio.Idle(&out->bio) != 0) {
-                }
-            }
-            return out;
         }
+        if (out->playingtracks != 0) {
+            out->soundon = BINK_SOUND_ON;
+            if (cb_bink_sound == 0) {
+                cb_bink_sound = RADCB_allocate_handler(BINK_SOUND_CALLBACK_PRIORITY);
+                RADCB_resume_handler(cb_bink_sound);
+            }
+            RADCB_register_callback(cb_bink_sound, BINK_SOUND_CALLBACK(out),
+                                    bink_get_priority_sound, bink_sound_callback);
+        }
+        out->bio.resume_callback = bink_resume_io;
+        out->bio.suspend_callback = bink_suspend_io;
+        out->bio.try_suspend_callback = bink_try_suspend_io;
+        out->bio.idle_on_callback = bink_idle_on_io;
+        if (out->preloadptr == 0 && (flags & BINKNOFILLIOBUF) == 0) {
+            while (out->bio.Idle(&out->bio) != 0) {
+            }
+        }
+        return out;
     }
 
 open_failed:
