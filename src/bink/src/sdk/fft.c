@@ -1926,7 +1926,7 @@ static void cftf162(f32 PTR4* a, f32 PTR4* w)
     wk1r = w[4];
     wk1i = w[5];
     wk3r = w[6];
-    wk3i = -w[7];
+    wk3i = w[7];
     wk2r = w[8];
     wk2i = w[9];
     x1r = a[0] - a[17];
