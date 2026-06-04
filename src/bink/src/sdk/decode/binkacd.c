@@ -245,14 +245,14 @@ static inline u32 read_bit(BINKVARBITS PTR4* vb)
     u32 result;
 
     if (bitcount != 0) {
-        result = vb->bits & BINKAC_BIT_MASK;
+        result = (vb->bits & BINKAC_BIT_MASK) != 0;
         vb->bitlen = bitcount - 1;
         vb->bits >>= 1;
     } else {
         u32 refill = BINKAC_LOAD32(vb->cur);
 
         VARBITS_ADVANCE_CUR(vb->cur);
-        result = refill & BINKAC_BIT_MASK;
+        result = (refill & BINKAC_BIT_MASK) != 0;
         vb->bitlen = BITSTYPELEN - 1;
         vb->bits = refill >> 1;
     }
