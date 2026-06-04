@@ -505,15 +505,15 @@ void YUV_16_4x2_even(u32 count)
     dest1 = (u32 PTR4*)RGB_TILE_LOC(base, linear1, pitch, tiledPitch, row1);
 
     do {
-        u32 uhi;
-        u32 vhi;
-        u32 ulo;
-        u32 vlo;
+        u8 uhi;
+        u8 vhi;
+        u8 ulo;
+        u8 vlo;
         s32 rb;
         s32 gb;
         s32 bb;
-        s32 ya;
-        s32 yb;
+        u32 ya;
+        u32 yb;
 
         uword = *u++;
         vword = *v++;
@@ -613,16 +613,16 @@ void YUV_16x2_4x2_even(u32 count)
     dest1 = (u32 PTR4*)RGB_TILE_LOC(base, linear1, pitch, tiledPitch, row1);
 
     do {
-        u32 uhi;
-        u32 vhi;
-        u32 ulo;
-        u32 vlo;
+        u8 uhi;
+        u8 vhi;
+        u8 ulo;
+        u8 vlo;
         u32 pix;
         s32 rb;
         s32 gb;
         s32 bb;
-        s32 ya;
-        s32 yb;
+        u32 ya;
+        u32 yb;
 
         uword = *u++;
         vword = *v++;
@@ -1173,8 +1173,8 @@ void YUV_32amx2_4x2(u32 count)
         u32 av1 = *a1++;
         u32 p0 = RGB32_M(RGB_WORD_BYTE3(yv0));
         u32 p1 = RGB32_M(RGB_WORD_BYTE2(yv0));
-        u32 alpha0 = RGB_WORD_BYTE3(av0);
-        u32 alpha1 = RGB_WORD_BYTE2(av0);
+        u8 alpha0 = RGB_WORD_BYTE3(av0);
+        u8 alpha1 = RGB_WORD_BYTE2(av0);
 
         dest0[RGB_TILE_WORD0] = RGB32_ALPHA_DUP_PAIR(alpha0 << 24, alpha0 << 8, p0);
         dest0[RGB_TILE_WORD1] = RGB32_ALPHA_DUP_PAIR(alpha1 << 24, alpha1 << 8, p1);
