@@ -136,9 +136,12 @@ typedef enum BINKBUNDLEINITIALVALUE
 #define BINK_BUNDLE_S8(bundle) (*(s8 PTR4*)((bundle).cur_ptr))
 #define BINK_BUNDLE_S16(bundle) (*(s16 PTR4*)((bundle).cur_ptr))
 #define BINK_BUNDLE_ADVANCE(bundle, bytes) ((bundle).cur_ptr += (bytes))
-#define BINK_BUNDLE_CHUNK_NEXT(bundle) ((u32 PTR4*)((u8 PTR4*)(bundle) + *(bundle)))
-#define BINK_BUNDLE_PAYLOAD_NEXT(bundle) \
-    ((u32 PTR4*)((u8 PTR4*)(bundle) + (bundle)[-1] - EXP_WORD_BYTES))
+#define BINK_BUNDLE_CHUNK_BYTE_SIZE(header) (*(header))
+#define BINK_BUNDLE_PAYLOAD_CHUNK_BYTE_SIZE(payload) ((payload)[-1])
+#define BINK_BUNDLE_CHUNK_NEXT(header) \
+    ((u32 PTR4*)((u8 PTR4*)(header) + BINK_BUNDLE_CHUNK_BYTE_SIZE(header)))
+#define BINK_BUNDLE_PAYLOAD_NEXT(payload) \
+    ((u32 PTR4*)((u8 PTR4*)(payload) + BINK_BUNDLE_PAYLOAD_CHUNK_BYTE_SIZE(payload) - EXP_WORD_BYTES))
 #define BINK_MARK_WORK_BLOCK(work_row, work_col) ((work_row)[(work_col) >> BINK_CHROMA_SHIFT] = 1)
 #define BINK_MOTION_SOURCE(old, pitch, mx, my) ((old) + (my) * (s32)(pitch) + (mx))
 #define BINK_DCT_PATTERN_SCAN(pattern) (patterns + (pattern) * BINK_BLOCK_PIXELS)
