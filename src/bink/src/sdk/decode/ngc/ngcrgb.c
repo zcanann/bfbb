@@ -147,10 +147,10 @@ void YUV_32_4x2_even(u32 count)
     v_to_gb = YUVTables.v_to_gb;
 
     do {
-        u32 vhi;
-        u32 uhi;
-        u32 vlo;
-        u32 ulo;
+        u8 vhi;
+        u8 uhi;
+        u8 vlo;
+        u8 ulo;
         u32 PTR4* y00;
         u32 PTR4* y01;
         u32 PTR4* y10;
@@ -251,10 +251,10 @@ void YUV_32x2_4x2_even(u32 count)
     v_to_gb = YUVTables.v_to_gb;
 
     do {
-        u32 vhi;
-        u32 uhi;
-        u32 vlo;
-        u32 ulo;
+        u8 vhi;
+        u8 uhi;
+        u8 vlo;
+        u8 ulo;
         u32 PTR4* y00;
         u32 PTR4* y01;
         u32 PTR4* y10;
@@ -864,10 +864,10 @@ void YUV_32a_4x2_even(u32 count)
     dest1 = (u32 PTR4*)RGB_TILE_LOC(base, linear1, pitch, tiledPitch, row1);
 
     do {
-        u32 vhi;
-        u32 uhi;
-        u32 vlo;
-        u32 ulo;
+        u8 vhi;
+        u8 uhi;
+        u8 vlo;
+        u8 ulo;
         u32 PTR4* y00;
         u32 PTR4* y01;
         u32 PTR4* y10;
@@ -979,10 +979,10 @@ void YUV_32ax2_4x2_even(u32 count)
     v_to_r = YUVTables.v_to_r;
 
     do {
-        u32 vhi;
-        u32 uhi;
-        u32 vlo;
-        u32 ulo;
+        u8 vhi;
+        u8 uhi;
+        u8 vlo;
+        u8 ulo;
         u32 PTR4* y00;
         u32 PTR4* y01;
         u32 PTR4* y10;
