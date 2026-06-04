@@ -711,10 +711,10 @@ void YUV_16m_4x2(u32 count)
     do {
         u32 yv0 = *y0++;
         u32 yv1 = *y1++;
-        u32 y0hi = yv0 >> 16;
-        u32 y1hi = yv1 >> 16;
-        u32 y0lo = yv0 & RGB_WORD_LO_MASK;
-        u32 y1lo = yv1 & RGB_WORD_LO_MASK;
+        u16 y0hi = yv0 >> 16;
+        u16 y1hi = yv1 >> 16;
+        u16 y0lo = yv0;
+        u16 y1lo = yv1;
         u16 a = (u16)table[RGB_WORD_BYTE1(y0hi)];
         u16 b = (u16)table[RGB_WORD_BYTE0(y0hi)];
 
@@ -776,10 +776,10 @@ void YUV_16mx2_4x2(u32 count)
     do {
         u32 yv0 = *y0++;
         u32 yv1 = *y1++;
-        u32 y0hi = yv0 >> 16;
-        u32 y1hi = yv1 >> 16;
-        u32 y0lo = yv0 & RGB_WORD_LO_MASK;
-        u32 y1lo = yv1 & RGB_WORD_LO_MASK;
+        u16 y0hi = yv0 >> 16;
+        u16 y1hi = yv1 >> 16;
+        u16 y0lo = yv0;
+        u16 y1lo = yv1;
         u16 a = (u16)table[RGB_WORD_BYTE1(y0hi)];
         u16 b = (u16)table[RGB_WORD_BYTE0(y0hi)];
 
@@ -1499,14 +1499,14 @@ void YUV_16a4m_4x2(u32 count)
         u32 yv0 = *y0++;
         u32 av1 = *a1++;
         u32 yv1 = *y1++;
-        u32 av0hi = av0 >> 16;
-        u32 yv0hi = yv0 >> 16;
-        u32 av1hi = av1 >> 16;
-        u32 yv1hi = yv1 >> 16;
-        u32 av0lo = av0 & RGB_WORD_LO_MASK;
-        u32 yv0lo = yv0 & RGB_WORD_LO_MASK;
-        u32 av1lo = av1 & RGB_WORD_LO_MASK;
-        u32 yv1lo = yv1 & RGB_WORD_LO_MASK;
+        u16 av0hi = av0 >> 16;
+        u16 yv0hi = yv0 >> 16;
+        u16 av1hi = av1 >> 16;
+        u16 yv1hi = yv1 >> 16;
+        u16 av0lo = av0;
+        u16 yv0lo = yv0;
+        u16 av1lo = av1;
+        u16 yv1lo = yv1;
         u32 p0 = RGB565_A4_MONO(RGB_WORD_BYTE1(yv0hi), RGB_WORD_BYTE1(av0hi));
         u32 p1 = RGB565_A4_MONO(RGB_WORD_BYTE0(yv0hi), RGB_WORD_BYTE0(av0hi));
 
@@ -1574,14 +1574,14 @@ void YUV_16a4mx2_4x2(u32 count)
         u32 yv0 = *y0++;
         u32 av1 = *a1++;
         u32 yv1 = *y1++;
-        u32 av0hi = av0 >> 16;
-        u32 yv0hi = yv0 >> 16;
-        u32 av1hi = av1 >> 16;
-        u32 yv1hi = yv1 >> 16;
-        u32 av0lo = av0 & RGB_WORD_LO_MASK;
-        u32 yv0lo = yv0 & RGB_WORD_LO_MASK;
-        u32 av1lo = av1 & RGB_WORD_LO_MASK;
-        u32 yv1lo = yv1 & RGB_WORD_LO_MASK;
+        u16 av0hi = av0 >> 16;
+        u16 yv0hi = yv0 >> 16;
+        u16 av1hi = av1 >> 16;
+        u16 yv1hi = yv1 >> 16;
+        u16 av0lo = av0;
+        u16 yv0lo = yv0;
+        u16 av1lo = av1;
+        u16 yv1lo = yv1;
         u32 p0 = RGB565_A4_MONO(RGB_WORD_BYTE1(yv0hi), RGB_WORD_BYTE1(av0hi));
         u32 p1 = RGB565_A4_MONO(RGB_WORD_BYTE0(yv0hi), RGB_WORD_BYTE0(av0hi));
 
