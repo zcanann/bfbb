@@ -1323,17 +1323,16 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
 
             while (playing < out->playingtracks) {
                 u32 track = out->trackindexes[playing];
-                u32 tracktype = out->tracktypes[track];
 
-                if (BINKTRACKISOPENABLE(tracktype)) {
+                if (BINKTRACKISOPENABLE(out->tracktypes[track])) {
                     if (sndopen == 0) {
                         BinkSetSoundSystem(BinkOpenNGCSound, 0);
                     }
                     out->bsnd[playing].sndbuf = 0;
                     if (sndopen != 0) {
-                        u32 freq = BINKTRACKFREQ(tracktype);
-                        s32 bits = BINKTRACKBITS(tracktype);
-                        s32 chans = BINKTRACKCHANNELS(tracktype);
+                        u32 freq = BINKTRACKFREQ(out->tracktypes[track]);
+                        s32 bits = BINKTRACKBITS(out->tracktypes[track]);
+                        s32 chans = BINKTRACKCHANNELS(out->tracktypes[track]);
 
                         if (out->FrameRate != 0 && out->FrameRateDiv != 0) {
                             freq = ((f64)freq * (f64)out->FrameRate *
@@ -1352,18 +1351,19 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
                             } else {
                                 ++numopensounds;
                                 out->bsnd[playing].sndconvert8 =
-                                    BINKTRACKBITS(tracktype) == BINK_SOUND_BITS_8;
+                                    BINKTRACKBITS(out->tracktypes[track]) == BINK_SOUND_BITS_8;
                                 out->bsnd[playing].sndend =
                                     out->bsnd[playing].sndbuf + out->bsnd[playing].sndbufsize;
                                 out->bsnd[playing].sndwritepos = out->bsnd[playing].sndbuf;
                                 out->bsnd[playing].sndreadpos = out->bsnd[playing].sndbuf;
                                 out->bsnd[playing].sndprime =
-                                    BINK_SOUND_PRIME_BYTES(freq, tracktype, out->bsnd[playing].SoundDroppedOut);
+                                    BINK_SOUND_PRIME_BYTES(freq, out->tracktypes[track],
+                                                           out->bsnd[playing].SoundDroppedOut);
                                 if (out->bsnd[playing].sndbufsize < out->bsnd[playing].sndprime) {
                                     out->bsnd[playing].sndprime = out->bsnd[playing].sndbufsize;
                                 }
                                 out->bsnd[playing].sndcomp = (UINTa)BinkAudioDecompressOpen(
-                                    freq, chans, BINKTRACKDECOMPFLAGS(tracktype));
+                                    freq, chans, BINKTRACKDECOMPFLAGS(out->tracktypes[track]));
                                 out->bsnd[playing].sndendframe =
                                     out->Frames -
                                     BINK_SOUND_END_PREROLL_FRAMES(out->fileframerate, out->fileframeratediv);
