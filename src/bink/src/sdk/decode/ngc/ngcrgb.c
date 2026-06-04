@@ -107,6 +107,8 @@ void YUV_32_4x2_even(u32 count)
     u32 yv1;
     u32 PTR4* dest0;
     u32 PTR4* dest1;
+    u8 PTR4* linear0;
+    u8 PTR4* linear1;
     u32 PTR4* y1;
     u32 PTR4* y0;
     u16 PTR4* u;
@@ -121,19 +123,19 @@ void YUV_32_4x2_even(u32 count)
     s32 PTR4* u_to_gb;
     s32 PTR4* v_to_r;
 
-    dest0 = (u32 PTR4*)S.dest0;
+    linear0 = S.dest0;
     base = S.base;
-    dest1 = (u32 PTR4*)S.dest1;
+    linear1 = S.dest1;
     pitch = S.pitch;
     tiledPitch = RGB_TILE_PITCH32(pitch);
 
     S.dest0 += count * RGB_32_4X2_ROW_BYTES;
     S.dest1 += count * RGB_32_4X2_ROW_BYTES;
 
-    row1 = RGB_TILE_ROW(dest1, base, pitch);
-    row0 = RGB_TILE_ROW(dest0, base, pitch);
-    dest1 = (u32 PTR4*)RGB_TILE_LOC(base, dest1, pitch, tiledPitch, row1);
-    dest0 = (u32 PTR4*)RGB_TILE_LOC(base, dest0, pitch, tiledPitch, row0);
+    row1 = RGB_TILE_ROW(linear1, base, pitch);
+    row0 = RGB_TILE_ROW(linear0, base, pitch);
+    dest1 = (u32 PTR4*)RGB_TILE_LOC(base, linear1, pitch, tiledPitch, row1);
+    dest0 = (u32 PTR4*)RGB_TILE_LOC(base, linear0, pitch, tiledPitch, row0);
     y1 = S.y1;
     y0 = S.y0;
     u = S.u;
@@ -209,6 +211,8 @@ void YUV_32x2_4x2_even(u32 count)
     u32 yv1;
     u32 PTR4* dest0;
     u32 PTR4* dest1;
+    u8 PTR4* linear0;
+    u8 PTR4* linear1;
     u32 PTR4* y1;
     u32 PTR4* y0;
     u16 PTR4* u;
@@ -223,19 +227,19 @@ void YUV_32x2_4x2_even(u32 count)
     s32 PTR4* u_to_gb;
     s32 PTR4* v_to_r;
 
-    dest0 = (u32 PTR4*)S.dest0;
+    linear0 = S.dest0;
     base = S.base;
-    dest1 = (u32 PTR4*)S.dest1;
+    linear1 = S.dest1;
     pitch = S.pitch;
     tiledPitch = RGB_TILE_PITCH32(pitch);
 
     S.dest0 += count * RGB_32_X2_4X2_ROW_BYTES;
     S.dest1 += count * RGB_32_X2_4X2_ROW_BYTES;
 
-    row1 = RGB_TILE_ROW(dest1, base, pitch);
-    row0 = RGB_TILE_ROW(dest0, base, pitch);
-    dest1 = (u32 PTR4*)RGB_TILE_LOC(base, dest1, pitch, tiledPitch, row1);
-    dest0 = (u32 PTR4*)RGB_TILE_LOC(base, dest0, pitch, tiledPitch, row0);
+    row1 = RGB_TILE_ROW(linear1, base, pitch);
+    row0 = RGB_TILE_ROW(linear0, base, pitch);
+    dest1 = (u32 PTR4*)RGB_TILE_LOC(base, linear1, pitch, tiledPitch, row1);
+    dest0 = (u32 PTR4*)RGB_TILE_LOC(base, linear0, pitch, tiledPitch, row0);
     y1 = S.y1;
     y0 = S.y0;
     u = S.u;
