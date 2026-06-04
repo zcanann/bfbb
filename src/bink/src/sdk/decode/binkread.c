@@ -1318,7 +1318,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
         }
         TrackNums[0] = BINK_DEFAULT_TRACK_ID;
         TotTracks = 1;
-        if (out->playingtracks != 0) {
+        {
             u32 playing = 0;
 
             while (playing < out->playingtracks) {
