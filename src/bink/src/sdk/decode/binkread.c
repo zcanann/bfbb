@@ -43,18 +43,28 @@ typedef enum BINKFrameOffsetFlags
 /* Frame-offset table entries use bit 0 as the key-frame marker. */
 #define BINK_FRAME_OFFSET(frameoffset) ((frameoffset) & BINKFRAMEOFFSETMASK)
 #define BINK_FRAME_KEY(frameoffset) ((frameoffset) & BINKFRAMEKEYFLAG)
+typedef enum BINKHeaderTrackTable
+{
+    BINK_HEADER_TRACK_SIZES_TABLE,
+    BINK_HEADER_TRACK_TYPES_TABLE,
+    BINK_HEADER_TRACK_IDS_TABLE,
+    BINK_HEADER_FRAME_OFFSETS_TABLE
+} BINKHeaderTrackTable;
 #define BINK_MEMBER_OFFSET(type, member) ((u32)((u8 PTR4*)&((type PTR4*)0)->member - (u8 PTR4*)((type PTR4*)0)))
 #define BINK_CONTAINER_OF(ptr, type, member) ((type PTR4*)((u8 PTR4*)(ptr) - BINK_MEMBER_OFFSET(type, member)))
 #define BINK_FROM_SOUND_CALLBACK(callback) BINK_CONTAINER_OF(callback, BINK, snd_callback_buffer.callback)
 #define BINK_IO_CALLBACK(io) ((RADCB_CALLBACK PTR4*)&(io)->callback_control.callback)
 #define BINK_SOUND_CALLBACK(bink) (&(bink)->snd_callback_buffer.callback)
 #define BINK_HEADER_TRACK_SIZES(header) ((u32 PTR4*)((BINKHDR PTR4*)(header) + 1))
+#define BINK_HEADER_TRACK_TABLE(header, tracks, table) \
+    ((u32 PTR4*)((u8 PTR4*)BINK_HEADER_TRACK_SIZES(header) + \
+                 (tracks) * sizeof(u32) * (table)))
 #define BINK_HEADER_TRACK_TYPES(header, tracks) \
-    ((u32 PTR4*)((u8 PTR4*)BINK_HEADER_TRACK_SIZES(header) + (tracks) * sizeof(u32)))
+    BINK_HEADER_TRACK_TABLE((header), (tracks), BINK_HEADER_TRACK_TYPES_TABLE)
 #define BINK_HEADER_TRACK_IDS(header, tracks) \
-    ((s32 PTR4*)((u8 PTR4*)BINK_HEADER_TRACK_SIZES(header) + (tracks) * sizeof(u32) * 2))
+    ((s32 PTR4*)BINK_HEADER_TRACK_TABLE((header), (tracks), BINK_HEADER_TRACK_IDS_TABLE))
 #define BINK_HEADER_FRAME_OFFSETS(header, tracks) \
-    ((u32 PTR4*)((u8 PTR4*)BINK_HEADER_TRACK_SIZES(header) + (tracks) * sizeof(u32) * 3))
+    BINK_HEADER_TRACK_TABLE((header), (tracks), BINK_HEADER_FRAME_OFFSETS_TABLE)
 #define BINK_NEXT_TRACK_FRAME(frame) \
     ((BINKTRACKFRAME PTR4*)((u8 PTR4*)(frame) + (frame)->size + sizeof((frame)->size)))
 typedef enum BINKGlobalLayout
