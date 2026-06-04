@@ -96,6 +96,7 @@ typedef enum BINKHuff4SortMode
 typedef enum BINKBundleLayout
 {
     HUFF8_TABLE_STATES = 16,
+    HUFF8_LAST_TABLE_STATE = HUFF8_TABLE_STATES - 1,
     BUNDLE_REPEAT_EXTRA = 0x14,
     BUNDLE_REPEAT_THRESHOLD = BUNDLE_REPEAT_EXTRA + 2,
     BINK_SIGNED_BYTE_BIAS = 0x80,
@@ -614,7 +615,7 @@ static void StartReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
     u8 PTR4* end;
 
     cur = huff8_table->syms[0];
-    end = huff8_table->syms[HUFF8_TABLE_STATES - 1];
+    end = huff8_table->syms[HUFF8_LAST_TABLE_STATE];
     codes = huff8_table->bits_to_peek;
     huff_table = huff8_table->decode;
     do {
