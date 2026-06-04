@@ -132,6 +132,9 @@
 #define BP_LOSSY_LEVEL_BITS 3
 #define BP_LOSSY_LEVEL_MASK 7
 #define BP_ZIGZAG_COEFF(vals, index) ((vals)[zigzag[index]])
+#define BP_COEFF_BIT_LEVEL(value) (getbitlevelvar(value) & BP_BYTE_MASK)
+#define BP_LOSSLESS_LEVEL_CODE(level) ((level) & VarBitsLens[BP_LOSSLESS_LEVEL_BITS])
+#define BP_LOSSY_LEVEL_CODE(level) (((level) - 1) & VarBitsLens[BP_LOSSY_LEVEL_BITS])
 
 typedef enum BPWriteTreeKind
 {
@@ -272,7 +275,7 @@ u32 LenBPLossless(s16 PTR4* vals)
     do {
         coeff = BP_ZIGZAG_COEFF(vals, i);
         sign = coeff >> BP_S32_SIGN_SHIFT;
-        bits = getbitlevelvar(BP_ABS_COEFF(coeff, sign) & BP_U16_MASK) & BP_BYTE_MASK;
+        bits = BP_COEFF_BIT_LEVEL(BP_ABS_COEFF(coeff, sign) & BP_U16_MASK);
         if (bits > maxbits) {
             maxbits = bits;
         }
@@ -556,7 +559,7 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
     cur = absvals;
     do {
         cur++;
-        lenbits = getbitlevelvar((u32)*cur) & BP_BYTE_MASK;
+        lenbits = BP_COEFF_BIT_LEVEL((u32)*cur);
         if (lenbits > maxbits) {
             maxbits = lenbits;
         }
@@ -627,7 +630,7 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
     hi_groups[BP_TREE_HIGH_GROUP2_SLOT] = (u8)lenbits;
 
     bit_count = BP_STREAM_BITLEN(bits) + BP_LOSSLESS_LEVEL_BITS;
-    lenbits = maxbits & VarBitsLens[BP_LOSSLESS_LEVEL_BITS];
+    lenbits = BP_LOSSLESS_LEVEL_CODE(maxbits);
     bit_buf = BP_STREAM_BITS(bits) | (lenbits << BP_STREAM_BITLEN(bits));
     BP_STREAM_BITLEN(bits) = bit_count;
     BP_STREAM_BITS(bits) = bit_buf;
@@ -1149,7 +1152,7 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     i = 0;
     count = BP_BLOCK_COEFFS;
     do {
-        lenbits = getbitlevelvar((u32)absvals[i]) & BP_BYTE_MASK;
+        lenbits = BP_COEFF_BIT_LEVEL((u32)absvals[i]);
         if (lenbits > maxbits) {
             maxbits = lenbits;
         }
@@ -1225,7 +1228,7 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     hi_groups[BP_TREE_HIGH_GROUP2_SLOT] = (u8)lenbits;
 
     bit_count = BP_STREAM_BITLEN(bits) + BP_LOSSY_LEVEL_BITS;
-    lenbits = (maxbits - 1) & VarBitsLens[BP_LOSSY_LEVEL_BITS];
+    lenbits = BP_LOSSY_LEVEL_CODE(maxbits);
     bit_buf = BP_STREAM_BITS(bits) | (lenbits << BP_STREAM_BITLEN(bits));
     BP_STREAM_BITLEN(bits) = bit_count;
     BP_STREAM_BITS(bits) = bit_buf;
