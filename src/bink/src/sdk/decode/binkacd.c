@@ -184,7 +184,7 @@ static void quanttos16chans2(s16 PTR4* samples, const f32 PTR4* decoded_coeffs,
             s16 PTR4* out = samples;
             s32 sample_value = (s32)(BINKAC_STEREO_LEFT_COEFF(decoded_coeffs) * transform_size_root);
 
-            samples = out + 1;
+            samples++;
             *out = clamp_to_s16(sample_value);
             out = samples++;
             sample_value = (s32)(BINKAC_STEREO_RIGHT_COEFF(decoded_coeffs, stride) * transform_size_root);
@@ -355,7 +355,9 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
     f32 PTR4* channel;
     u32 i;
     u32 q;
+    f32 root;
 
+    root = transform_size_root;
     vb.init = inptr;
     vb.cur = inptr;
     vb.bitlen = 0;
@@ -391,9 +393,9 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
     }
 
     if (chans == BINKAC_MONO_CHANNELS) {
-        quanttos16s(samples, decoded_coeffs, transform_size_root, transform_size);
+        quanttos16s(samples, decoded_coeffs, root, transform_size);
     } else {
-        quanttos16chans2(samples, decoded_coeffs, transform_size_root, transform_size);
+        quanttos16chans2(samples, decoded_coeffs, root, transform_size);
     }
 
     vb.bitlen = 0;
