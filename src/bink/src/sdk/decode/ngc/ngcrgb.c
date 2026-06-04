@@ -1508,8 +1508,8 @@ void YUV_16a4m_4x2(u32 count)
         u16 yv0lo = yv0;
         u16 av1lo = av1;
         u16 yv1lo = yv1;
-        u32 p0 = RGB565_A4_MONO_BIASED(ytable_base, atable_base, RGB_WORD_BYTE1(yv0hi), RGB_WORD_BYTE1(av0hi));
-        u32 p1 = RGB565_A4_MONO_BIASED(ytable_base, atable_base, RGB_WORD_BYTE0(yv0hi), RGB_WORD_BYTE0(av0hi));
+        u16 p0 = RGB565_A4_MONO_BIASED(ytable_base, atable_base, RGB_WORD_BYTE1(yv0hi), RGB_WORD_BYTE1(av0hi));
+        u16 p1 = RGB565_A4_MONO_BIASED(ytable_base, atable_base, RGB_WORD_BYTE0(yv0hi), RGB_WORD_BYTE0(av0hi));
 
         dest0[RGB_TILE_WORD0] = RGB565_PAIR2(p0, p1);
 
@@ -1587,8 +1587,8 @@ void YUV_16a4mx2_4x2(u32 count)
         u16 yv0lo = yv0;
         u16 av1lo = av1;
         u16 yv1lo = yv1;
-        u32 p0 = RGB565_A4_MONO_BIASED(ytable_base, atable_base, RGB_WORD_BYTE1(yv0hi), RGB_WORD_BYTE1(av0hi));
-        u32 p1 = RGB565_A4_MONO_BIASED(ytable_base, atable_base, RGB_WORD_BYTE0(yv0hi), RGB_WORD_BYTE0(av0hi));
+        u16 p0 = RGB565_A4_MONO_BIASED(ytable_base, atable_base, RGB_WORD_BYTE1(yv0hi), RGB_WORD_BYTE1(av0hi));
+        u16 p1 = RGB565_A4_MONO_BIASED(ytable_base, atable_base, RGB_WORD_BYTE0(yv0hi), RGB_WORD_BYTE0(av0hi));
 
         dest0[RGB_TILE_WORD0] = RGB565_PAIR(p0);
         dest0[RGB_TILE_WORD1] = RGB565_PAIR(p1);
