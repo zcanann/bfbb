@@ -2628,11 +2628,9 @@ s32 BinkGetRects(HBINK bnk, u32 flags)
 
         {
             s32 i;
-            s32 count;
 
             i = 0;
-            count = bnk->NumRects;
-            if (i < count) {
+            if (i < bnk->NumRects) {
                 do {
                     s32 best_index;
                     u32 best_key;
@@ -2688,8 +2686,7 @@ s32 BinkGetRects(HBINK bnk, u32 flags)
                     rects[best_index].Left = 0;
                     rects[best_index].Top = BINK_RECT_SORT_TOP_SENTINEL;
                     i = next_i;
-                    count = bnk->NumRects;
-                } while (i < count);
+                } while (i < bnk->NumRects);
             }
         }
     }
