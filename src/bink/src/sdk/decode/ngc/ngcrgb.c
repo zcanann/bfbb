@@ -75,6 +75,7 @@ typedef enum RGBWordMasks
     ((alpha_hi) | ((value) << 16) | (alpha_lo) | (value))
 #define RGB32_ALPHA_DUP_PAIR(alpha_hi, alpha_lo, pixel) \
     ((alpha_hi) | ((pixel) & RGB_WORD_HI_MASK) | ((pixel) >> 16) | (alpha_lo))
+#define RGB32_ALPHA_SAMPLE_DUP_PAIR(alpha, pixel) RGB32_ALPHA_DUP_PAIR((alpha) << 24, (alpha) << 8, (pixel))
 #define RGB32_MONO_DUP_PAIR(pixel) (((pixel) << 16) | ((pixel) & RGB_WORD_LO_MASK))
 
 typedef enum RGBClampLayout
@@ -1176,15 +1177,15 @@ void YUV_32amx2_4x2(u32 count)
         u8 alpha0 = RGB_WORD_BYTE3(av0);
         u8 alpha1 = RGB_WORD_BYTE2(av0);
 
-        dest0[RGB_TILE_WORD0] = RGB32_ALPHA_DUP_PAIR(alpha0 << 24, alpha0 << 8, p0);
-        dest0[RGB_TILE_WORD1] = RGB32_ALPHA_DUP_PAIR(alpha1 << 24, alpha1 << 8, p1);
+        dest0[RGB_TILE_WORD0] = RGB32_ALPHA_SAMPLE_DUP_PAIR(alpha0, p0);
+        dest0[RGB_TILE_WORD1] = RGB32_ALPHA_SAMPLE_DUP_PAIR(alpha1, p1);
         dest0[RGB_TILE_NEXT_ROW_WORD0] = RGB32_MONO_DUP_PAIR(p0);
         dest0[RGB_TILE_NEXT_ROW_WORD1] = RGB32_MONO_DUP_PAIR(p1);
 
         p0 = RGB32_M(RGB_WORD_BYTE1(yv0));
         p1 = RGB32_M(RGB_WORD_BYTE0(yv0));
-        dest0[RGB_TILE_SECOND_BLOCK_WORD0] = RGB32_ALPHA_DUP_PAIR(alpha0 << 24, alpha0 << 8, p0);
-        dest0[RGB_TILE_SECOND_BLOCK_WORD1] = RGB32_ALPHA_DUP_PAIR(alpha1 << 24, alpha1 << 8, p1);
+        dest0[RGB_TILE_SECOND_BLOCK_WORD0] = RGB32_ALPHA_SAMPLE_DUP_PAIR(alpha0, p0);
+        dest0[RGB_TILE_SECOND_BLOCK_WORD1] = RGB32_ALPHA_SAMPLE_DUP_PAIR(alpha1, p1);
         dest0[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD0] = RGB32_MONO_DUP_PAIR(p0);
         dest0[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD1] = RGB32_MONO_DUP_PAIR(p1);
 
@@ -1192,15 +1193,15 @@ void YUV_32amx2_4x2(u32 count)
         p1 = RGB32_M(RGB_WORD_BYTE2(yv1));
         alpha0 = RGB_WORD_BYTE3(av1);
         alpha1 = RGB_WORD_BYTE2(av1);
-        dest1[RGB_TILE_WORD0] = RGB32_ALPHA_DUP_PAIR(alpha0 << 24, alpha0 << 8, p0);
-        dest1[RGB_TILE_WORD1] = RGB32_ALPHA_DUP_PAIR(alpha1 << 24, alpha1 << 8, p1);
+        dest1[RGB_TILE_WORD0] = RGB32_ALPHA_SAMPLE_DUP_PAIR(alpha0, p0);
+        dest1[RGB_TILE_WORD1] = RGB32_ALPHA_SAMPLE_DUP_PAIR(alpha1, p1);
         dest1[RGB_TILE_NEXT_ROW_WORD0] = RGB32_MONO_DUP_PAIR(p0);
         dest1[RGB_TILE_NEXT_ROW_WORD1] = RGB32_MONO_DUP_PAIR(p1);
 
         p0 = RGB32_M(RGB_WORD_BYTE1(yv1));
         p1 = RGB32_M(RGB_WORD_BYTE0(yv1));
-        dest1[RGB_TILE_SECOND_BLOCK_WORD0] = RGB32_ALPHA_DUP_PAIR(alpha0 << 24, alpha0 << 8, p0);
-        dest1[RGB_TILE_SECOND_BLOCK_WORD1] = RGB32_ALPHA_DUP_PAIR(alpha1 << 24, alpha1 << 8, p1);
+        dest1[RGB_TILE_SECOND_BLOCK_WORD0] = RGB32_ALPHA_SAMPLE_DUP_PAIR(alpha0, p0);
+        dest1[RGB_TILE_SECOND_BLOCK_WORD1] = RGB32_ALPHA_SAMPLE_DUP_PAIR(alpha1, p1);
         dest1[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD0] = RGB32_MONO_DUP_PAIR(p0);
         dest1[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD1] = RGB32_MONO_DUP_PAIR(p1);
 
