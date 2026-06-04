@@ -1329,8 +1329,6 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
                     out->bsnd[playing].sndbuf = 0;
                     if (sndopen != 0) {
                         u32 freq = BINKTRACKFREQ(out->tracktypes[out->trackindexes[playing]]);
-                        s32 bits = BINKTRACKBITS(out->tracktypes[out->trackindexes[playing]]);
-                        s32 chans = BINKTRACKCHANNELS(out->tracktypes[out->trackindexes[playing]]);
 
                         if (out->FrameRate != 0 && out->FrameRateDiv != 0) {
                             freq = ((f64)freq * (f64)out->FrameRate *
@@ -1338,7 +1336,10 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
                                    ((f64)out->FrameRateDiv * (f64)out->fileframerate);
                         }
 
-                        if (sndopen(&out->bsnd[playing], freq, bits, chans, out->OpenFlags, out) != 0) {
+                        if (sndopen(&out->bsnd[playing], freq,
+                                    BINKTRACKBITS(out->tracktypes[out->trackindexes[playing]]),
+                                    BINKTRACKCHANNELS(out->tracktypes[out->trackindexes[playing]]),
+                                    out->OpenFlags, out) != 0) {
                             if (out->bsnd[playing].BestSizeMask == 0) {
                                 out->bsnd[playing].BestSizeMask = BINK_SOUND_BEST_SIZE_MASK_ALL;
                             }
@@ -1362,7 +1363,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
                                     out->bsnd[playing].sndprime = out->bsnd[playing].sndbufsize;
                                 }
                                 out->bsnd[playing].sndcomp = (UINTa)BinkAudioDecompressOpen(
-                                    freq, chans,
+                                    freq, BINKTRACKCHANNELS(out->tracktypes[out->trackindexes[playing]]),
                                     BINKTRACKDECOMPFLAGS(out->tracktypes[out->trackindexes[playing]]));
                                 out->bsnd[playing].sndendframe =
                                     out->Frames -
