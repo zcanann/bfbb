@@ -617,7 +617,7 @@ void YUV_16x2_4x2_even(u32 count)
         u8 vhi;
         u8 ulo;
         u8 vlo;
-        u32 pix;
+        u16 pix;
         s32 rb;
         s32 gb;
         s32 bb;
@@ -1268,15 +1268,15 @@ void YUV_16a4_4x2_even(u32 count)
     dest1 = (u32 PTR4*)RGB_TILE_LOC(base, linear1, pitch, tiledPitch, row1);
 
     do {
-        u32 uhi;
-        u32 vhi;
-        u32 ulo;
-        u32 vlo;
+        u8 uhi;
+        u8 vhi;
+        u8 ulo;
+        u8 vlo;
         s32 rb;
         s32 gb;
         s32 bb;
-        s32 ya;
-        s32 yb;
+        u32 ya;
+        u32 yb;
 
         uword = *u++;
         vword = *v++;
@@ -1388,16 +1388,16 @@ void YUV_16a4x2_4x2_even(u32 count)
     dest1 = (u32 PTR4*)RGB_TILE_LOC(base, linear1, pitch, tiledPitch, row1);
 
     do {
-        u32 uhi;
-        u32 vhi;
-        u32 ulo;
-        u32 vlo;
-        u32 pix;
+        u8 uhi;
+        u8 vhi;
+        u8 ulo;
+        u8 vlo;
+        u16 pix;
         s32 rb;
         s32 gb;
         s32 bb;
-        s32 ya;
-        s32 yb;
+        u32 ya;
+        u32 yb;
 
         uword = *u++;
         vword = *v++;
