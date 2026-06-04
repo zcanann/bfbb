@@ -21,6 +21,8 @@ typedef enum RADDivConstants
 
 #define RAD_DIV_IS_POWER_OF_TWO(value) (((value) & ((value) - 1)) == 0)
 #define RAD_DIV_HIGH_WORD_CEIL(value) (((value) + RAD_DIV_ROUND_TO_HIGH_WORD) >> 16)
+#define RAD_TIMER_RECIP_LOW_HIGH_PRODUCT(ticks) \
+    ((u32)(((u64)(ticks) * RAD_TIMER_RECIP_MAGIC) >> 32))
 
 #define RAD_INVALID_USER_ALLOC ((void PTR4*)-1)
 #define RAD_TIMEBASE_LOW_SPR "268"
@@ -177,7 +179,7 @@ u32 RADTimerRead(void)
     high_ticks = (u32)(now >> 32);
     low_ticks = (u32)now;
     high_recip = high_ticks * RAD_TIMER_RECIP_MAGIC;
-    recip_sum = high_recip + (u32)(((u64)low_ticks * RAD_TIMER_RECIP_MAGIC) >> 32);
+    recip_sum = high_recip + RAD_TIMER_RECIP_LOW_HIGH_PRODUCT(low_ticks);
     recip_sum >>= RAD_TIMER_RECIP_SHIFT;
     return elapsed_ms + recip_sum;
 }
