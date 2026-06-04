@@ -503,9 +503,10 @@ static void bitrv2(s32 n, s32 PTR4* ip, f32 PTR4* a)
                 k1 = j1 + m2;
                 xr = a[j1];
                 xi = a[j1 + 1];
-                yr = a[k1 + 1];
-                a[j1] = a[k1];
-                a[j1 + 1] = yr;
+                yr = a[k1];
+                yi = a[k1 + 1];
+                a[j1] = yr;
+                a[j1 + 1] = yi;
                 a[k1] = xr;
                 a[k1 + 1] = xi;
                 ++k;
