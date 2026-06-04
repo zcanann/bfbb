@@ -53,6 +53,8 @@ typedef enum RGBWordMasks
 #define RGB_WORD_BYTE0(word) ((word) & RGB_BYTE_MASK)
 #define RGB32_PAIR_HIGH(pixel) (((pixel) & RGB_WORD_HI_MASK) | ((pixel) >> 16))
 #define RGB32_PAIR_LOW(pixel) (((pixel) << 16) | ((pixel) & RGB_WORD_LO_MASK))
+#define RGB32_MONO_X2_HIGH(pixel) RGB32_PAIR_HIGH(pixel)
+#define RGB32_MONO_X2_LOW(pixel) RGB32_PAIR_LOW(pixel)
 #define RGB32_PAIR_HIGH2(left, right) (((left) & RGB_WORD_HI_MASK) | ((right) >> 16))
 #define RGB32_PAIR_LOW2(left, right) (((left) << 16) | ((right) & RGB_WORD_LO_MASK))
 #define RGB32_COLOR_RED_PAIR(left, right, red) (((left)[red] << 16) | (right)[red])
@@ -418,31 +420,31 @@ void YUV_32mx2_4x2(u32 count)
         u32 a = RGB32_M(RGB_WORD_BYTE3(yv0));
         u32 b = RGB32_M(RGB_WORD_BYTE2(yv0));
 
-        dest0[RGB_TILE_WORD0] = RGB32_PAIR_HIGH(a);
-        dest0[RGB_TILE_WORD1] = RGB32_PAIR_HIGH(b);
-        dest0[RGB_TILE_NEXT_ROW_WORD0] = RGB32_PAIR_LOW(a);
-        dest0[RGB_TILE_NEXT_ROW_WORD1] = RGB32_PAIR_LOW(b);
+        dest0[RGB_TILE_WORD0] = RGB32_MONO_X2_HIGH(a);
+        dest0[RGB_TILE_WORD1] = RGB32_MONO_X2_HIGH(b);
+        dest0[RGB_TILE_NEXT_ROW_WORD0] = RGB32_MONO_X2_LOW(a);
+        dest0[RGB_TILE_NEXT_ROW_WORD1] = RGB32_MONO_X2_LOW(b);
 
         a = RGB32_M(RGB_WORD_BYTE1(yv0));
         b = RGB32_M(RGB_WORD_BYTE0(yv0));
-        dest0[RGB_TILE_SECOND_BLOCK_WORD0] = RGB32_PAIR_HIGH(a);
-        dest0[RGB_TILE_SECOND_BLOCK_WORD1] = RGB32_PAIR_HIGH(b);
-        dest0[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD0] = RGB32_PAIR_LOW(a);
-        dest0[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD1] = RGB32_PAIR_LOW(b);
+        dest0[RGB_TILE_SECOND_BLOCK_WORD0] = RGB32_MONO_X2_HIGH(a);
+        dest0[RGB_TILE_SECOND_BLOCK_WORD1] = RGB32_MONO_X2_HIGH(b);
+        dest0[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD0] = RGB32_MONO_X2_LOW(a);
+        dest0[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD1] = RGB32_MONO_X2_LOW(b);
 
         a = RGB32_M(RGB_WORD_BYTE3(yv1));
         b = RGB32_M(RGB_WORD_BYTE2(yv1));
-        dest1[RGB_TILE_WORD0] = RGB32_PAIR_HIGH(a);
-        dest1[RGB_TILE_WORD1] = RGB32_PAIR_HIGH(b);
-        dest1[RGB_TILE_NEXT_ROW_WORD0] = RGB32_PAIR_LOW(a);
-        dest1[RGB_TILE_NEXT_ROW_WORD1] = RGB32_PAIR_LOW(b);
+        dest1[RGB_TILE_WORD0] = RGB32_MONO_X2_HIGH(a);
+        dest1[RGB_TILE_WORD1] = RGB32_MONO_X2_HIGH(b);
+        dest1[RGB_TILE_NEXT_ROW_WORD0] = RGB32_MONO_X2_LOW(a);
+        dest1[RGB_TILE_NEXT_ROW_WORD1] = RGB32_MONO_X2_LOW(b);
 
         a = RGB32_M(RGB_WORD_BYTE1(yv1));
         b = RGB32_M(RGB_WORD_BYTE0(yv1));
-        dest1[RGB_TILE_SECOND_BLOCK_WORD0] = RGB32_PAIR_HIGH(a);
-        dest1[RGB_TILE_SECOND_BLOCK_WORD1] = RGB32_PAIR_HIGH(b);
-        dest1[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD0] = RGB32_PAIR_LOW(a);
-        dest1[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD1] = RGB32_PAIR_LOW(b);
+        dest1[RGB_TILE_SECOND_BLOCK_WORD0] = RGB32_MONO_X2_HIGH(a);
+        dest1[RGB_TILE_SECOND_BLOCK_WORD1] = RGB32_MONO_X2_HIGH(b);
+        dest1[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD0] = RGB32_MONO_X2_LOW(a);
+        dest1[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD1] = RGB32_MONO_X2_LOW(b);
 
         dest0 += RGB_TILE_X2_BLOCK_WORDS;
         dest1 += RGB_TILE_X2_BLOCK_WORDS;
