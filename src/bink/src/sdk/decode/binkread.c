@@ -1358,7 +1358,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
                                 out->bsnd[playing].sndreadpos = out->bsnd[playing].sndbuf;
                                 out->bsnd[playing].sndprime =
                                     BINK_SOUND_PRIME_BYTES(freq, out->tracktypes[out->trackindexes[playing]],
-                                                           out->bsnd[playing].SoundDroppedOut);
+                                                           out->bsnd[playing].NoThreadService);
                                 if (out->bsnd[playing].sndprime > out->bsnd[playing].sndbufsize) {
                                     out->bsnd[playing].sndprime = out->bsnd[playing].sndbufsize;
                                 }
