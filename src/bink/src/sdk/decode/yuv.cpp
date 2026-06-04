@@ -774,10 +774,8 @@ static inline void blit_mask_block(u32 count, s32 y_delta, s32 c_delta, s32 pitc
         S.y1 = (u32 PTR4*)((u8 PTR4*)S.y0 + srcpitch);
         S.u = (u16 PTR4*)((u8 PTR4*)S.u + c_delta);
         S.v = (u16 PTR4*)((u8 PTR4*)S.v + c_delta);
-        if (S.a0 != 0) {
-            S.a0 = (u32 PTR4*)((u8 PTR4*)S.a1 + y_delta);
-            S.a1 = (u32 PTR4*)((u8 PTR4*)S.a0 + srcpitch);
-        }
+        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a1 + y_delta);
+        S.a1 = (u32 PTR4*)((u8 PTR4*)S.a0 + srcpitch);
     } while (i != 0);
     S = saved;
 }
@@ -871,14 +869,9 @@ static void YUV_blit_mask(void PTR4* dest,
     ybase = (u8 PTR4*)src + srcx + srcy * srcpitch;
     S.y0 = (u32 PTR4*)ybase;
     S.y1 = (u32 PTR4*)(ybase + srcpitch);
-    if (alpha != 0) {
-        abase = (u8 PTR4*)alpha + srcx + srcy * srcpitch;
-        S.a0 = (u32 PTR4*)abase;
-        S.a1 = (u32 PTR4*)(abase + srcpitch);
-    } else {
-        S.a0 = 0;
-        S.a1 = 0;
-    }
+    abase = (u8 PTR4*)alpha + srcx + srcy * srcpitch;
+    S.a0 = (u32 PTR4*)abase;
+    S.a1 = (u32 PTR4*)(abase + srcpitch);
 
     cbase = (u8 PTR4*)src + srcpitch * srcheight;
     if ((flags & BINKRBINVERT) == 0) {
