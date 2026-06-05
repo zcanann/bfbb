@@ -437,8 +437,8 @@ void YUV_32mx2_4x2(u32 count)
         dest0[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD0] = RGB32_MONO_X2_LOW(a);
         dest0[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD1] = RGB32_MONO_X2_LOW(b);
 
-        a = RGB32_M(RGB_WORD_BYTE3(yv1));
-        b = RGB32_M(RGB_WORD_BYTE2(yv1));
+        a = RGB32_M(RGB_WORD_BYTE2(yv1));
+        b = RGB32_M(RGB_WORD_BYTE1(yv1));
         dest1[RGB_TILE_WORD0] = RGB32_MONO_X2_HIGH(a);
         dest1[RGB_TILE_WORD1] = RGB32_MONO_X2_HIGH(b);
         dest1[RGB_TILE_NEXT_ROW_WORD0] = RGB32_MONO_X2_LOW(a);
@@ -1176,9 +1176,9 @@ void YUV_32amx2_4x2(u32 count)
 
     do {
         u32 yv0 = *y0++;
-        u32 av0 = *a0++;
-        u32 yv1 = *y1++;
-        u32 av1 = *a1++;
+        u32 av0 = *a0;
+        u32 yv1 = *y1;
+        u32 av1 = *a1;
         u32 p0 = RGB32_M(RGB_WORD_BYTE3(yv0));
         u32 p1 = RGB32_M(RGB_WORD_BYTE2(yv0));
         u8 alpha0 = RGB_WORD_BYTE3(av0);
@@ -1196,8 +1196,11 @@ void YUV_32amx2_4x2(u32 count)
         dest0[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD0] = RGB32_MONO_DUP_PAIR(p0);
         dest0[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD1] = RGB32_MONO_DUP_PAIR(p1);
 
-        p0 = RGB32_M(RGB_WORD_BYTE3(yv1));
-        p1 = RGB32_M(RGB_WORD_BYTE2(yv1));
+        ++y1;
+        ++a0;
+        ++a1;
+        p0 = RGB32_M(RGB_WORD_BYTE2(yv1));
+        p1 = RGB32_M(RGB_WORD_BYTE1(yv1));
         alpha0 = RGB_WORD_BYTE3(av1);
         alpha1 = RGB_WORD_BYTE2(av1);
         dest1[RGB_TILE_WORD0] = RGB32_ALPHA_SAMPLE_DUP_PAIR(alpha0, p0);
