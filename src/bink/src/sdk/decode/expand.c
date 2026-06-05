@@ -1123,6 +1123,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
     u8 motion_block[BINK_BLOCK_PIXELS];
     EXPBITS bitstate;
     void (*read_huff8)(READBUNDLE PTR4*, EXPBITS PTR4*, HUFF8TABLE PTR4*);
+    u32 row_advance;
     u32 row;
     u32 col;
     u32 work_col;
@@ -1135,9 +1136,11 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
 
     (void)key_frame;
 
+    row_advance = pitch * BINK_BLOCK_SIDE - width;
+    work_pitch = pitch / (BINK_WORK_BLOCK_SPAN / plane);
+    VarBitsOpen(bitstate, bundles);
     read_huff8 =
         BINK_EXPAND_USES_OLD_FRAME_FORMAT(flags) ? CheckReadHuff8Bundle : NewCheckReadHuff8Bundle;
-    VarBitsOpen(bitstate, bundles);
 
     OpenReadBundle(table->typeptr, &block_types,
                    BINK_BUNDLE_WIDTH, width, BINK_BLOCK_TYPE_BITS, BINK_BUNDLE_BYTE_PITCH,
@@ -1172,7 +1175,6 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
     dest = out;
     old = prev;
     work_row = work;
-    work_pitch = pitch / (BINK_WORK_BLOCK_SPAN / plane);
     row = 0;
     if (height != 0) {
     do {
@@ -1363,8 +1365,8 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
             work_row += work_pitch;
         }
         row += BINK_BLOCK_SIDE;
-        dest = out + row * pitch;
-        old = prev + row * pitch;
+        dest += row_advance;
+        old += row_advance;
     } while (row < height);
     }
 
