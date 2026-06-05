@@ -55,6 +55,19 @@
 #define BP_TREE_HIGH_GROUP0_SLOT 0
 #define BP_TREE_HIGH_GROUP1_SLOT 1
 #define BP_TREE_HIGH_GROUP2_SLOT 2
+#define BP_TREE_HIGH_GROUP_MAX(groups, max_level, group_index, child0_index)                                             \
+    do {                                                                                                                \
+        (max_level) = (groups)[group_index];                                                                            \
+        if ((max_level) < (groups)[child0_index]) {                                                                     \
+            (max_level) = (groups)[child0_index];                                                                       \
+        }                                                                                                               \
+        if ((max_level) < (groups)[(child0_index) + BP_TREE_CHILD1_INDEX]) {                                            \
+            (max_level) = (groups)[(child0_index) + BP_TREE_CHILD1_INDEX];                                              \
+        }                                                                                                               \
+        if ((max_level) < (groups)[(child0_index) + BP_TREE_CHILD2_INDEX]) {                                            \
+            (max_level) = (groups)[(child0_index) + BP_TREE_CHILD2_INDEX];                                              \
+        }                                                                                                               \
+    } while (0)
 #define BP_BYTE_MASK 0xff
 #define BP_U16_MASK 0xffff
 #define BP_SIGN_BIT 0x80
@@ -311,38 +324,14 @@ u32 LenBPLossless(s16 PTR4* vals)
         } while (count != 0);
     }
 
-    bits = groups[BP_LOSSLESS_TREE_HIGH_GROUP0_INDEX];
-    if (bits < groups[BP_LOSSLESS_TREE_HIGH_GROUP0_CHILD0_INDEX]) {
-        bits = groups[BP_LOSSLESS_TREE_HIGH_GROUP0_CHILD0_INDEX];
-    }
-    if (bits < groups[BP_LOSSLESS_TREE_HIGH_GROUP0_CHILD0_INDEX + BP_TREE_CHILD1_INDEX]) {
-        bits = groups[BP_LOSSLESS_TREE_HIGH_GROUP0_CHILD0_INDEX + BP_TREE_CHILD1_INDEX];
-    }
-    if (bits < groups[BP_LOSSLESS_TREE_HIGH_GROUP0_CHILD0_INDEX + BP_TREE_CHILD2_INDEX]) {
-        bits = groups[BP_LOSSLESS_TREE_HIGH_GROUP0_CHILD0_INDEX + BP_TREE_CHILD2_INDEX];
-    }
+    BP_TREE_HIGH_GROUP_MAX(groups, bits, BP_LOSSLESS_TREE_HIGH_GROUP0_INDEX,
+                           BP_LOSSLESS_TREE_HIGH_GROUP0_CHILD0_INDEX);
     hi_groups[BP_TREE_HIGH_GROUP0_SLOT] = (u8)bits;
-    bits = groups[BP_LOSSLESS_TREE_HIGH_GROUP1_INDEX];
-    if (bits < groups[BP_LOSSLESS_TREE_HIGH_GROUP1_CHILD0_INDEX]) {
-        bits = groups[BP_LOSSLESS_TREE_HIGH_GROUP1_CHILD0_INDEX];
-    }
-    if (bits < groups[BP_LOSSLESS_TREE_HIGH_GROUP1_CHILD0_INDEX + BP_TREE_CHILD1_INDEX]) {
-        bits = groups[BP_LOSSLESS_TREE_HIGH_GROUP1_CHILD0_INDEX + BP_TREE_CHILD1_INDEX];
-    }
-    if (bits < groups[BP_LOSSLESS_TREE_HIGH_GROUP1_CHILD0_INDEX + BP_TREE_CHILD2_INDEX]) {
-        bits = groups[BP_LOSSLESS_TREE_HIGH_GROUP1_CHILD0_INDEX + BP_TREE_CHILD2_INDEX];
-    }
+    BP_TREE_HIGH_GROUP_MAX(groups, bits, BP_LOSSLESS_TREE_HIGH_GROUP1_INDEX,
+                           BP_LOSSLESS_TREE_HIGH_GROUP1_CHILD0_INDEX);
     hi_groups[BP_TREE_HIGH_GROUP1_SLOT] = (u8)bits;
-    bits = groups[BP_LOSSLESS_TREE_HIGH_GROUP2_INDEX];
-    if (bits < groups[BP_LOSSLESS_TREE_HIGH_GROUP2_CHILD0_INDEX]) {
-        bits = groups[BP_LOSSLESS_TREE_HIGH_GROUP2_CHILD0_INDEX];
-    }
-    if (bits < groups[BP_LOSSLESS_TREE_HIGH_GROUP2_CHILD0_INDEX + BP_TREE_CHILD1_INDEX]) {
-        bits = groups[BP_LOSSLESS_TREE_HIGH_GROUP2_CHILD0_INDEX + BP_TREE_CHILD1_INDEX];
-    }
-    if (bits < groups[BP_LOSSLESS_TREE_HIGH_GROUP2_CHILD0_INDEX + BP_TREE_CHILD2_INDEX]) {
-        bits = groups[BP_LOSSLESS_TREE_HIGH_GROUP2_CHILD0_INDEX + BP_TREE_CHILD2_INDEX];
-    }
+    BP_TREE_HIGH_GROUP_MAX(groups, bits, BP_LOSSLESS_TREE_HIGH_GROUP2_INDEX,
+                           BP_LOSSLESS_TREE_HIGH_GROUP2_CHILD0_INDEX);
     hi_groups[BP_TREE_HIGH_GROUP2_SLOT] = (u8)bits;
 
     len = BP_LOSSLESS_LEVEL_BITS;
@@ -595,38 +584,14 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
         } while (count != 0);
     }
 
-    lenbits = groups[BP_LOSSLESS_TREE_HIGH_GROUP0_INDEX];
-    if (lenbits < groups[BP_LOSSLESS_TREE_HIGH_GROUP0_CHILD0_INDEX]) {
-        lenbits = groups[BP_LOSSLESS_TREE_HIGH_GROUP0_CHILD0_INDEX];
-    }
-    if (lenbits < groups[BP_LOSSLESS_TREE_HIGH_GROUP0_CHILD0_INDEX + BP_TREE_CHILD1_INDEX]) {
-        lenbits = groups[BP_LOSSLESS_TREE_HIGH_GROUP0_CHILD0_INDEX + BP_TREE_CHILD1_INDEX];
-    }
-    if (lenbits < groups[BP_LOSSLESS_TREE_HIGH_GROUP0_CHILD0_INDEX + BP_TREE_CHILD2_INDEX]) {
-        lenbits = groups[BP_LOSSLESS_TREE_HIGH_GROUP0_CHILD0_INDEX + BP_TREE_CHILD2_INDEX];
-    }
+    BP_TREE_HIGH_GROUP_MAX(groups, lenbits, BP_LOSSLESS_TREE_HIGH_GROUP0_INDEX,
+                           BP_LOSSLESS_TREE_HIGH_GROUP0_CHILD0_INDEX);
     hi_groups[BP_TREE_HIGH_GROUP0_SLOT] = (u8)lenbits;
-    lenbits = groups[BP_LOSSLESS_TREE_HIGH_GROUP1_INDEX];
-    if (lenbits < groups[BP_LOSSLESS_TREE_HIGH_GROUP1_CHILD0_INDEX]) {
-        lenbits = groups[BP_LOSSLESS_TREE_HIGH_GROUP1_CHILD0_INDEX];
-    }
-    if (lenbits < groups[BP_LOSSLESS_TREE_HIGH_GROUP1_CHILD0_INDEX + BP_TREE_CHILD1_INDEX]) {
-        lenbits = groups[BP_LOSSLESS_TREE_HIGH_GROUP1_CHILD0_INDEX + BP_TREE_CHILD1_INDEX];
-    }
-    if (lenbits < groups[BP_LOSSLESS_TREE_HIGH_GROUP1_CHILD0_INDEX + BP_TREE_CHILD2_INDEX]) {
-        lenbits = groups[BP_LOSSLESS_TREE_HIGH_GROUP1_CHILD0_INDEX + BP_TREE_CHILD2_INDEX];
-    }
+    BP_TREE_HIGH_GROUP_MAX(groups, lenbits, BP_LOSSLESS_TREE_HIGH_GROUP1_INDEX,
+                           BP_LOSSLESS_TREE_HIGH_GROUP1_CHILD0_INDEX);
     hi_groups[BP_TREE_HIGH_GROUP1_SLOT] = (u8)lenbits;
-    lenbits = groups[BP_LOSSLESS_TREE_HIGH_GROUP2_INDEX];
-    if (lenbits < groups[BP_LOSSLESS_TREE_HIGH_GROUP2_CHILD0_INDEX]) {
-        lenbits = groups[BP_LOSSLESS_TREE_HIGH_GROUP2_CHILD0_INDEX];
-    }
-    if (lenbits < groups[BP_LOSSLESS_TREE_HIGH_GROUP2_CHILD0_INDEX + BP_TREE_CHILD1_INDEX]) {
-        lenbits = groups[BP_LOSSLESS_TREE_HIGH_GROUP2_CHILD0_INDEX + BP_TREE_CHILD1_INDEX];
-    }
-    if (lenbits < groups[BP_LOSSLESS_TREE_HIGH_GROUP2_CHILD0_INDEX + BP_TREE_CHILD2_INDEX]) {
-        lenbits = groups[BP_LOSSLESS_TREE_HIGH_GROUP2_CHILD0_INDEX + BP_TREE_CHILD2_INDEX];
-    }
+    BP_TREE_HIGH_GROUP_MAX(groups, lenbits, BP_LOSSLESS_TREE_HIGH_GROUP2_INDEX,
+                           BP_LOSSLESS_TREE_HIGH_GROUP2_CHILD0_INDEX);
     hi_groups[BP_TREE_HIGH_GROUP2_SLOT] = (u8)lenbits;
 
     bit_count = BP_STREAM_BITLEN(bits) + BP_LOSSLESS_LEVEL_BITS;
@@ -1193,38 +1158,11 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
         } while (count != 0);
     }
 
-    lenbits = groups[BP_TREE_HIGH_GROUP0_INDEX];
-    if (lenbits < groups[BP_TREE_HIGH_GROUP0_CHILD0_INDEX]) {
-        lenbits = groups[BP_TREE_HIGH_GROUP0_CHILD0_INDEX];
-    }
-    if (lenbits < groups[BP_TREE_HIGH_GROUP0_CHILD0_INDEX + BP_TREE_CHILD1_INDEX]) {
-        lenbits = groups[BP_TREE_HIGH_GROUP0_CHILD0_INDEX + BP_TREE_CHILD1_INDEX];
-    }
-    if (lenbits < groups[BP_TREE_HIGH_GROUP0_CHILD0_INDEX + BP_TREE_CHILD2_INDEX]) {
-        lenbits = groups[BP_TREE_HIGH_GROUP0_CHILD0_INDEX + BP_TREE_CHILD2_INDEX];
-    }
+    BP_TREE_HIGH_GROUP_MAX(groups, lenbits, BP_TREE_HIGH_GROUP0_INDEX, BP_TREE_HIGH_GROUP0_CHILD0_INDEX);
     hi_groups[BP_TREE_HIGH_GROUP0_SLOT] = (u8)lenbits;
-    lenbits = groups[BP_TREE_HIGH_GROUP1_INDEX];
-    if (lenbits < groups[BP_TREE_HIGH_GROUP1_CHILD0_INDEX]) {
-        lenbits = groups[BP_TREE_HIGH_GROUP1_CHILD0_INDEX];
-    }
-    if (lenbits < groups[BP_TREE_HIGH_GROUP1_CHILD0_INDEX + BP_TREE_CHILD1_INDEX]) {
-        lenbits = groups[BP_TREE_HIGH_GROUP1_CHILD0_INDEX + BP_TREE_CHILD1_INDEX];
-    }
-    if (lenbits < groups[BP_TREE_HIGH_GROUP1_CHILD0_INDEX + BP_TREE_CHILD2_INDEX]) {
-        lenbits = groups[BP_TREE_HIGH_GROUP1_CHILD0_INDEX + BP_TREE_CHILD2_INDEX];
-    }
+    BP_TREE_HIGH_GROUP_MAX(groups, lenbits, BP_TREE_HIGH_GROUP1_INDEX, BP_TREE_HIGH_GROUP1_CHILD0_INDEX);
     hi_groups[BP_TREE_HIGH_GROUP1_SLOT] = (u8)lenbits;
-    lenbits = groups[BP_TREE_HIGH_GROUP2_INDEX];
-    if (lenbits < groups[BP_TREE_HIGH_GROUP2_CHILD0_INDEX]) {
-        lenbits = groups[BP_TREE_HIGH_GROUP2_CHILD0_INDEX];
-    }
-    if (lenbits < groups[BP_TREE_HIGH_GROUP2_CHILD0_INDEX + BP_TREE_CHILD1_INDEX]) {
-        lenbits = groups[BP_TREE_HIGH_GROUP2_CHILD0_INDEX + BP_TREE_CHILD1_INDEX];
-    }
-    if (lenbits < groups[BP_TREE_HIGH_GROUP2_CHILD0_INDEX + BP_TREE_CHILD2_INDEX]) {
-        lenbits = groups[BP_TREE_HIGH_GROUP2_CHILD0_INDEX + BP_TREE_CHILD2_INDEX];
-    }
+    BP_TREE_HIGH_GROUP_MAX(groups, lenbits, BP_TREE_HIGH_GROUP2_INDEX, BP_TREE_HIGH_GROUP2_CHILD0_INDEX);
     hi_groups[BP_TREE_HIGH_GROUP2_SLOT] = (u8)lenbits;
 
     bit_count = BP_STREAM_BITLEN(bits) + BP_LOSSY_LEVEL_BITS;
