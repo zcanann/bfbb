@@ -25,6 +25,7 @@
 #define DCT_FIXED_SHIFT 11
 #define DCT_OUTPUT_SHIFT 8
 #define DCT_BYTE_ROUND 0x7f
+#define DCT_PACKED_BYTE_SHIFT 8
 #define DCT_INPUT_SCALE 0x100
 #define DCT_BYTE_MASK 0xff
 #define DCT_BYTE_PAIR_MASK 0xff0000
@@ -1040,15 +1041,15 @@ static void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4
         s32 b4 = (DCT_FIXED_MUL(a8, DCT_FIX_NEG_2_613125930) + b3) - b2;
         s32 b5 = DCT_FIXED_MUL(b1 - a9, DCT_FIX_1_414213562) - b4;
         s32 b6 = (DCT_FIXED_MUL(b0, DCT_FIX_1_082392200) - b3) + b5;
-        u32 packed0 = (((u32)(a4 + b2 + DCT_BYTE_ROUND) << 8) & DCT_BYTE_PAIR_MASK) | (((u32)(a7 + b4 + DCT_BYTE_ROUND) >> DCT_OUTPUT_SHIFT) & DCT_BYTE_MASK);
-        u32 packed1 = (((u32)(a6 + b5 + DCT_BYTE_ROUND) << 8) & DCT_BYTE_PAIR_MASK) | (((u32)(a2 - b6 + DCT_BYTE_ROUND) >> DCT_OUTPUT_SHIFT) & DCT_BYTE_MASK);
-        u32 packed2 = (((u32)(a6 - b5 + DCT_BYTE_ROUND) >> DCT_OUTPUT_SHIFT) & DCT_BYTE_MASK) | (((u32)(a2 + b6 + DCT_BYTE_ROUND) << 8) & DCT_BYTE_PAIR_MASK);
-        u32 packed3 = (((u32)(a4 - b2 + DCT_BYTE_ROUND) >> DCT_OUTPUT_SHIFT) & DCT_BYTE_MASK) | (((u32)(a7 - b4 + DCT_BYTE_ROUND) << 8) & DCT_BYTE_PAIR_MASK);
+        u32 packed0 = (((u32)(a4 + b2 + DCT_BYTE_ROUND) << DCT_PACKED_BYTE_SHIFT) & DCT_BYTE_PAIR_MASK) | (((u32)(a7 + b4 + DCT_BYTE_ROUND) >> DCT_OUTPUT_SHIFT) & DCT_BYTE_MASK);
+        u32 packed1 = (((u32)(a6 + b5 + DCT_BYTE_ROUND) << DCT_PACKED_BYTE_SHIFT) & DCT_BYTE_PAIR_MASK) | (((u32)(a2 - b6 + DCT_BYTE_ROUND) >> DCT_OUTPUT_SHIFT) & DCT_BYTE_MASK);
+        u32 packed2 = (((u32)(a6 - b5 + DCT_BYTE_ROUND) >> DCT_OUTPUT_SHIFT) & DCT_BYTE_MASK) | (((u32)(a2 + b6 + DCT_BYTE_ROUND) << DCT_PACKED_BYTE_SHIFT) & DCT_BYTE_PAIR_MASK);
+        u32 packed3 = (((u32)(a4 - b2 + DCT_BYTE_ROUND) >> DCT_OUTPUT_SHIFT) & DCT_BYTE_MASK) | (((u32)(a7 - b4 + DCT_BYTE_ROUND) << DCT_PACKED_BYTE_SHIFT) & DCT_BYTE_PAIR_MASK);
 
-        packed0 |= packed0 << 8;
-        packed1 |= packed1 << 8;
-        packed2 |= packed2 << 8;
-        packed3 |= packed3 << 8;
+        packed0 |= packed0 << DCT_PACKED_BYTE_SHIFT;
+        packed1 |= packed1 << DCT_PACKED_BYTE_SHIFT;
+        packed2 |= packed2 << DCT_PACKED_BYTE_SHIFT;
+        packed3 |= packed3 << DCT_PACKED_BYTE_SHIFT;
         d0[DCT_COL0] = packed0;
         d0[DCT_COL1] = packed1;
         d0[DCT_COL2] = packed2;
