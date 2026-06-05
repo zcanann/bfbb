@@ -1335,8 +1335,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
 
                 for (track = 0; track < out->NumTracks; ++track) {
                     if (out->trackIDs[track] == TrackNums[wanted]) {
-                        out->trackindexes[out->playingtracks] = track;
-                        ++out->playingtracks;
+                        out->trackindexes[out->playingtracks++] = track;
                         break;
                     }
                 }
