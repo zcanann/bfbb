@@ -66,7 +66,7 @@ typedef enum BINKHuff4Layout
     HUFF4_SYMBOL_PRESENT_BIT = 1,
     HUFF4_ALL_SYMBOLS_MASK = 0xffff,
     HUFF4_NIBBLE_BITS = 4,
-    HUFF4_SUBTYPE_BITS = 2,
+    HUFF4_SORT_MODE_BITS = 2,
     HUFF4_EXPLICIT_INDEX_BITS = 3,
     HUFF4_PAIR_COUNT = 8,
     HUFF4_PAIR_SYMBOLS = 2,
@@ -507,7 +507,7 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
 
     if (exp_get_bit(vb) == 0) {
         /* Compact symbol shuffling: merge adjacent pair, quarter, and half lists. */
-        VarBitsGet(sort_mode, u32, *vb, HUFF4_SUBTYPE_BITS);
+        VarBitsGet(sort_mode, u32, *vb, HUFF4_SORT_MODE_BITS);
         if (sort_mode == HUFF4_SORT_PAIRS) {
             i = 0;
             count = HUFF4_PAIR_COUNT;
