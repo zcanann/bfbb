@@ -98,7 +98,7 @@ typedef enum RGBClampLayout
 #define RGB565_PAIR(pixel) (((pixel) << RGB_HALFWORD_SHIFT) | (pixel))
 #define RGB565_A4(y, blue, green, red, a) (RGB565((y), (blue), (green), (red)) | (u16)clamp_a4[(a)])
 #define RGB565_A4_MONO(y, a) ((u16)mono16[(y)] | (u16)clamp_a4[(a)])
-#define RGB565_A4_MONO_BIASED(ytable, atable, y, a) ((u16)(ytable)[(y)] | (u16)(atable)[(a)])
+#define RGB565_A4_MONO_BIASED(ytable, atable, y, a) ((u16)(atable)[(a)] | (u16)(ytable)[(y)])
 #define RGB565_A4_BIASED(red_table, green_table, blue_table, alpha_table, y, blue, green, red, alpha)              \
     ((u16)(blue_table)[(y) + (blue)] | (u16)(red_table)[(y) + (red)] | (u16)(green_table)[(y) + (green)] |          \
      (u16)(alpha_table)[(alpha)])
