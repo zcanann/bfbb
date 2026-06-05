@@ -7,7 +7,7 @@
 typedef enum RADTimerConstants
 {
     RAD_TIMER_TICKS_PER_MS = 40500,
-    RAD_TIMER_HIGH_QUOTIENT = 0x19e40
+    RAD_TIMER_MS_PER_HIGH_WORD = 0x19e40
 } RADTimerConstants;
 
 /* Reciprocal multiply constants for the remaining 64-bit ticks-to-ms division. */
@@ -176,7 +176,7 @@ u32 RADTimerRead(void)
 
     now -= starttime;
     /* Convert elapsed OS ticks to milliseconds without a full 64-bit divide. */
-    elapsed_ms = (u32)(now >> 32) * RAD_TIMER_HIGH_QUOTIENT;
+    elapsed_ms = (u32)(now >> 32) * RAD_TIMER_MS_PER_HIGH_WORD;
     now -= (u64)elapsed_ms * RAD_TIMER_TICKS_PER_MS;
     high_product = (u32)(now >> 32) * RAD_TIMER_RECIP_MAGIC;
     low_product = RAD_TIMER_RECIP_LOW_HIGH_PRODUCT((u32)now);
