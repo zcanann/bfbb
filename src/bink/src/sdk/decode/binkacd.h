@@ -37,8 +37,8 @@ struct BINKAUDIODECOMP
 };
 
 HBINKAUDIODECOMP BinkAudioDecompressOpen(u32 rate, u32 chans, u32 flags);
-void BinkAudioDecompress(HBINKAUDIODECOMP handle, void PTR4* PTR4* outptr, u32 PTR4* outbytes,
+void BinkAudioDecompress(HBINKAUDIODECOMP ba, void PTR4* PTR4* outptr, u32 PTR4* outbytes,
                          void PTR4* inptr, void PTR4* PTR4* inoutptr);
-void BinkAudioDecompressClose(HBINKAUDIODECOMP handle);
+void BinkAudioDecompressClose(HBINKAUDIODECOMP ba);
 
 #endif

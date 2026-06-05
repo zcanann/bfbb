@@ -576,7 +576,7 @@ void BinkAudioDecompress(HBINKAUDIODECOMP ba, void PTR4* PTR4* outptr, u32 PTR4*
 
 void radfree(void PTR4* ptr);
 
-void BinkAudioDecompressClose(HBINKAUDIODECOMP handle)
+void BinkAudioDecompressClose(HBINKAUDIODECOMP ba)
 {
-    radfree(handle);
+    radfree(ba);
 }
