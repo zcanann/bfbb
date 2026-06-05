@@ -31,6 +31,7 @@ typedef enum BINKPlaneLayout
     BINK_PATTERN_COLOR_0 = 0,
     BINK_PATTERN_COLOR_1 = 1,
     BINK_PATTERN_COLOR_BIT = 1,
+    BINK_PATTERN_COLOR_SHIFT = 1,
     BINK_PATTERN_COLOR_COUNT = 2,
     BINK_RUN_BLOCK_BYTES = 0x30
 } BINKPlaneLayout;
@@ -1048,7 +1049,7 @@ static inline void expand_pattern_block(u8 PTR4* dest,
         row_bits = *patterns->cur_ptr++;
         for (col = 0; col < BINK_BLOCK_SIDE; ++col) {
             dest[i * pitch + col] = (row_bits & BINK_PATTERN_COLOR_BIT) != 0 ? color1 : color0;
-            row_bits >>= 1;
+            row_bits >>= BINK_PATTERN_COLOR_SHIFT;
         }
     }
 }
