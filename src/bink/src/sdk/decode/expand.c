@@ -156,6 +156,8 @@ typedef enum BINKBUNDLEINITIALVALUE
     ((u8 PTR4*)&BINK_HUFF4_RLE_LENGTHS_PACKED)[(value)]
 #define BINK_BUNDLE_REPEAT_COUNT(count) (-(s32)(count) - BUNDLE_REPEAT_EXTRA)
 #define BINK_BUNDLE_REPEAT_FILL_COUNT(remaining) (-(remaining + BUNDLE_REPEAT_EXTRA + 1))
+#define BINK_SIGNED_BYTE_NEGATIVE(value) (-BINK_SIGNED_BYTE_BIAS - ((value) & BINK_SIGNED_BYTE_MASK))
+#define BINK_SIGNED_BYTE_POSITIVE(value) ((value) | BINK_SIGNED_BYTE_BIAS)
 
 enum BINKBLOCKTYPE
 {
@@ -728,9 +730,9 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
             packed = ((high & HUFF4_SYMBOL_MASK) << HUFF4_USED_SHIFT) | low;
             signed_byte = packed;
             if ((signed_byte & BINK_SIGNED_BYTE_BIAS) != 0) {
-                signed_byte = -BINK_SIGNED_BYTE_BIAS - (signed_byte & BINK_SIGNED_BYTE_MASK);
+                signed_byte = BINK_SIGNED_BYTE_NEGATIVE(signed_byte);
             } else {
-                signed_byte |= BINK_SIGNED_BYTE_BIAS;
+                signed_byte = BINK_SIGNED_BYTE_POSITIVE(signed_byte);
             }
             *dest++ = (u8)signed_byte;
             remaining--;
