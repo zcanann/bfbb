@@ -244,22 +244,22 @@ static inline u32 read_rle_bits(BINKVARBITS PTR4* vb)
 static inline u32 read_bit(BINKVARBITS PTR4* vb)
 {
     u32 bitcount = vb->bitlen;
-    u32 result;
 
     if (bitcount != 0) {
-        result = (vb->bits & BINKAC_BIT_MASK) != 0;
+        u32 result = vb->bits & BINKAC_BIT_MASK;
+
         vb->bitlen = bitcount - 1;
         vb->bits >>= 1;
+        return result;
     } else {
         u32 refill = BINKAC_LOAD32(vb->cur);
+        u32 result = refill & BINKAC_BIT_MASK;
 
         VARBITS_ADVANCE_CUR(vb->cur);
-        result = (refill & BINKAC_BIT_MASK) != 0;
         vb->bitlen = BITSTYPELEN - 1;
         vb->bits = refill >> 1;
+        return result;
     }
-
-    return result;
 }
 
 static void read_rle_samples(f32 PTR4* samps, u32 transform_size, BINKVARBITS PTR4* vbp,
