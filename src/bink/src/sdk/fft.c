@@ -915,6 +915,13 @@ static void cftf1st(s32 n, f32 PTR4* a, f32 PTR4* w)
 
     mh = FFT_EIGHTH_SIZE(n);
     m = 2 * mh;
+    wn4r = w[1];
+    csc1 = w[2];
+    csc3 = w[3];
+    wd1r = CFT_ROT_ONE;
+    wd1i = CFT_ROT_ZERO;
+    wd3r = CFT_ROT_ONE;
+    wd3i = CFT_ROT_ZERO;
     j1 = m;
     j2 = j1 + m;
     j3 = j2 + m;
@@ -934,13 +941,6 @@ static void cftf1st(s32 n, f32 PTR4* a, f32 PTR4* w)
     a[j2 + 1] = x1i + x3r;
     a[j3] = x1r + x3i;
     a[j3 + 1] = x1i - x3r;
-    wn4r = w[1];
-    csc1 = w[2];
-    csc3 = w[3];
-    wd1r = CFT_ROT_ONE;
-    wd1i = CFT_ROT_ZERO;
-    wd3r = CFT_ROT_ONE;
-    wd3i = CFT_ROT_ZERO;
     k = 0;
     for (j = 2; j < mh - 2; j += 4)
     {
