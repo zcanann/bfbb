@@ -1508,17 +1508,17 @@ void YUV_16a4m_4x2(u32 count)
 
     do {
         u32 av0 = *a0++;
-        u32 yv0 = *y0++;
-        u32 av1 = *a1++;
-        u32 yv1 = *y1++;
+        u32 yv0 = *y0;
+        u32 av1 = *a1;
+        u32 yv1 = *y1;
         u16 av0hi = av0 >> 16;
         u16 yv0hi = yv0 >> 16;
         u16 av1hi = av1 >> 16;
         u16 yv1hi = yv1 >> 16;
-        u16 av0lo = av0;
         u16 yv0lo = yv0;
-        u16 av1lo = av1;
+        u16 av0lo = av0;
         u16 yv1lo = yv1;
+        u16 av1lo = av1;
         u16 p0 = RGB565_A4_MONO_BIASED(ytable_base, atable_base, RGB_WORD_BYTE1(yv0hi), RGB_WORD_BYTE1(av0hi));
         u16 p1 = RGB565_A4_MONO_BIASED(ytable_base, atable_base, RGB_WORD_BYTE0(yv0hi), RGB_WORD_BYTE0(av0hi));
 
@@ -1536,6 +1536,9 @@ void YUV_16a4m_4x2(u32 count)
         p1 = RGB565_A4_MONO_BIASED(ytable_base, atable_base, RGB_WORD_BYTE0(yv1lo), RGB_WORD_BYTE0(av1lo));
         dest1[RGB_TILE_WORD1] = RGB565_PAIR2(p0, p1);
 
+        ++y0;
+        ++y1;
+        ++a1;
         dest0 += RGB_TILE_HALF_BLOCK_WORDS;
         dest1 += RGB_TILE_HALF_BLOCK_WORDS;
         --count;
@@ -1587,17 +1590,17 @@ void YUV_16a4mx2_4x2(u32 count)
 
     do {
         u32 av0 = *a0++;
-        u32 yv0 = *y0++;
-        u32 av1 = *a1++;
-        u32 yv1 = *y1++;
+        u32 yv0 = *y0;
+        u32 av1 = *a1;
+        u32 yv1 = *y1;
         u16 av0hi = av0 >> 16;
         u16 yv0hi = yv0 >> 16;
         u16 av1hi = av1 >> 16;
         u16 yv1hi = yv1 >> 16;
-        u16 av0lo = av0;
         u16 yv0lo = yv0;
-        u16 av1lo = av1;
+        u16 av0lo = av0;
         u16 yv1lo = yv1;
+        u16 av1lo = av1;
         u16 p0 = RGB565_A4_MONO_BIASED(ytable_base, atable_base, RGB_WORD_BYTE1(yv0hi), RGB_WORD_BYTE1(av0hi));
         u16 p1 = RGB565_A4_MONO_BIASED(ytable_base, atable_base, RGB_WORD_BYTE0(yv0hi), RGB_WORD_BYTE0(av0hi));
 
@@ -1619,6 +1622,9 @@ void YUV_16a4mx2_4x2(u32 count)
         dest1[RGB_TILE_NEXT_ROW_WORD0] = RGB565_PAIR(p0);
         dest1[RGB_TILE_NEXT_ROW_WORD1] = RGB565_PAIR(p1);
 
+        ++y0;
+        ++y1;
+        ++a1;
         dest0 += RGB_TILE_BLOCK_WORDS;
         dest1 += RGB_TILE_BLOCK_WORDS;
         --count;
