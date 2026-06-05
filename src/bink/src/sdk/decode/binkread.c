@@ -47,6 +47,7 @@ typedef enum BINKFrameOffsetFlags
     ((marker) == BINKMARKER1 || (marker) == BINKMARKER2 || \
      (marker) == BINKMARKER3 || (marker) == BINKMARKER4)
 #define BINK_OPEN_FROM_MEMORY(flags) (((flags) & BINKFROMMEMORY) != 0)
+#define BINK_OPEN_USES_IO_PROCESSOR(flags) (((flags) & BINKIOPROCESSOR) != 0)
 typedef enum BINKHeaderTrackTable
 {
     BINK_HEADER_TRACK_SIZES_TABLE,
@@ -1072,7 +1073,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
     if (BINK_OPEN_FROM_MEMORY(flags)) {
         hdr = *(const BINKHDR*)name;
     } else {
-        if ((flags & BINKIOPROCESSOR) != 0 && UserOpen != 0) {
+        if (BINK_OPEN_USES_IO_PROCESSOR(flags) && UserOpen != 0) {
             open = UserOpen;
         }
         UserOpen = 0;
