@@ -142,12 +142,14 @@ typedef enum BINKBUNDLEINITIALVALUE
 #define BINK_BUNDLE_S8(bundle) (*(s8 PTR4*)((bundle).cur_ptr))
 #define BINK_BUNDLE_S16(bundle) (*(s16 PTR4*)((bundle).cur_ptr))
 #define BINK_BUNDLE_ADVANCE(bundle, bytes) ((bundle).cur_ptr += (bytes))
-#define BINK_BUNDLE_CHUNK_BYTE_SIZE(header) (*(header))
-#define BINK_BUNDLE_PAYLOAD_CHUNK_BYTE_SIZE(payload) ((payload)[-1])
+#define BINK_BUNDLE_CHUNK(header) ((BINKBUNDLECHUNK PTR4*)(header))
+#define BINK_BUNDLE_CHUNK_BYTE_SIZE(header) (BINK_BUNDLE_CHUNK(header)->byte_size)
+#define BINK_BUNDLE_CHUNK_PAYLOAD(header) (BINK_BUNDLE_CHUNK(header)->payload)
+#define BINK_BUNDLE_PAYLOAD_CHUNK(payload) ((BINKBUNDLECHUNK PTR4*)((u8 PTR4*)(payload) - sizeof(u32)))
+#define BINK_BUNDLE_PAYLOAD_CHUNK_BYTE_SIZE(payload) (BINK_BUNDLE_PAYLOAD_CHUNK(payload)->byte_size)
 #define BINK_BUNDLE_CHUNK_NEXT(header) \
     ((u32 PTR4*)((u8 PTR4*)(header) + BINK_BUNDLE_CHUNK_BYTE_SIZE(header)))
-#define BINK_BUNDLE_PAYLOAD_NEXT(payload) \
-    ((u32 PTR4*)((u8 PTR4*)(payload) + BINK_BUNDLE_PAYLOAD_CHUNK_BYTE_SIZE(payload) - EXP_WORD_BYTES))
+#define BINK_BUNDLE_PAYLOAD_NEXT(payload) BINK_BUNDLE_CHUNK_NEXT(BINK_BUNDLE_PAYLOAD_CHUNK(payload))
 #define BINK_MARK_WORK_BLOCK(work_row, work_col) ((work_row)[(work_col) >> BINK_CHROMA_SHIFT] = BINK_WORK_BLOCK_MARKED)
 #define BINK_MOTION_SOURCE(old, pitch, mx, my) ((old) + (my) * (s32)(pitch) + (mx))
 #define BINK_DCT_PATTERN_SCAN(pattern) (patterns + (pattern) * BINK_BLOCK_PIXELS)
@@ -252,6 +254,12 @@ typedef struct HUFF4MERGES
     u8 merge67[HUFF4_MERGE_PAIR_SIZE];
     u8 order[HUFF4_SYMBOLS];
 } HUFF4MERGES;
+
+typedef struct BINKBUNDLECHUNK
+{
+    u32 byte_size;
+    u32 payload[1];
+} BINKBUNDLECHUNK;
 
 typedef VARBITS EXPBITS;
 
@@ -1383,7 +1391,7 @@ void ExpandBink(u8 PTR4* yout,
     if ((aflags & BINKALPHA) != 0) {
         if ((yflags & BINKALPHA) != 0) {
             ExpandPlane(aout, aprev, BINK_BLOCK_ROUND(width), BINK_BLOCK_ROUND(height),
-                        pitch, bundles + 1, key_frame, work, BINK_LUMA_PLANE_SCALE, table,
+                        pitch, BINK_BUNDLE_CHUNK_PAYLOAD(bundles), key_frame, work, BINK_LUMA_PLANE_SCALE, table,
                         yflags);
         }
         bundles = BINK_BUNDLE_CHUNK_NEXT(bundles);
