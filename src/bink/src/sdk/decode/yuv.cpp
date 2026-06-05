@@ -105,6 +105,9 @@ enum YUVBlitLayout {
 #define YUV_BLIT_SCALED_ROW_BYTES(width, blits, scale) \
     ((width) * YUV_BLIT_SCALED_PIXEL_BYTES((blits), (scale)))
 #define YUV_PHASE_ADVANCES_CHROMA(phase) ((((phase) ^ 1) & 1) != 0)
+#define YUV_SURFACE_MODE(flags) ((flags) & BINKCOPYNOSCALING)
+#define YUV_UV_TABLES_INVERTED(flags) (((flags) & BINKRBINVERT) != 0)
+#define YUV_BLIT_GRAYSCALE(flags) (((flags) & BINKGRAYSCALE) != 0)
 
 enum YUVTableOrder {
     YUV_TABLE_ORDER_NORMAL,
@@ -491,7 +494,7 @@ static void setup_scaling(u32 flags, u32 PTR4* pitch, u32 width, u32 srcpitch, B
 
     // BINKRBINVERT swaps the U/V contribution tables so the packed RGB helpers
     // can use the same per-pixel math for both channel orders.
-    if ((flags & BINKRBINVERT) != 0) {
+    if (YUV_UV_TABLES_INVERTED(flags)) {
         if (whichyuv != YUV_TABLE_ORDER_RB_INVERTED) {
             whichyuv = YUV_TABLE_ORDER_RB_INVERTED;
             memcpy(YUVTables.v_to_r, origYUVTables.u_to_b, YUV_TABLE_PLANE_SIZE * sizeof(s32));
@@ -504,13 +507,13 @@ static void setup_scaling(u32 flags, u32 PTR4* pitch, u32 width, u32 srcpitch, B
         memcpy(&YUVTables, &origYUVTables, sizeof(origYUVTables));
     }
 
-    mode = flags & BINKCOPYNOSCALING;
+    mode = YUV_SURFACE_MODE(flags);
 
     if (mode == BINKCOPY2XH) {
         checkzoombufs(YUV_BLIT_ROW_BYTES(width, blits));
         *pitch *= 2;
         *pitch_delta = *pitch - YUV_BLIT_ROW_BYTES(width, blits);
-        if ((flags & BINKGRAYSCALE) != 0) {
+        if (YUV_BLIT_GRAYSCALE(flags)) {
             alignshift = blits->masked_step;
             EVENx = blits->masked;
             ODDx = EVENx;
@@ -533,7 +536,7 @@ static void setup_scaling(u32 flags, u32 PTR4* pitch, u32 width, u32 srcpitch, B
         }
     } else if (mode == BINKCOPY2XW || mode == BINKCOPY2XWHI) {
         *pitch_delta = *pitch - YUV_BLIT_ROW_BYTES_X2(width, blits);
-        if ((flags & BINKGRAYSCALE) != 0) {
+        if (YUV_BLIT_GRAYSCALE(flags)) {
             alignshift = blits->masked_x2_step;
             EVEN = blits->masked_x2;
             ODD = EVEN;
@@ -554,7 +557,7 @@ static void setup_scaling(u32 flags, u32 PTR4* pitch, u32 width, u32 srcpitch, B
         checkzoombufs(YUV_BLIT_ROW_BYTES_X2(width, blits));
         *pitch *= 2;
         *pitch_delta = *pitch - YUV_BLIT_ROW_BYTES_X2(width, blits);
-        if ((flags & BINKGRAYSCALE) != 0) {
+        if (YUV_BLIT_GRAYSCALE(flags)) {
             alignshift = blits->masked_x2_step;
             EVENx = blits->masked_x2;
             ODDx = EVENx;
@@ -577,7 +580,7 @@ static void setup_scaling(u32 flags, u32 PTR4* pitch, u32 width, u32 srcpitch, B
         }
     } else {
         *pitch_delta = *pitch - YUV_BLIT_ROW_BYTES(width, blits);
-        if ((flags & BINKGRAYSCALE) != 0) {
+        if (YUV_BLIT_GRAYSCALE(flags)) {
             alignshift = blits->masked_step;
             EVEN = blits->masked;
             ODD = EVEN;
@@ -632,7 +635,7 @@ static void YUV_blit(void PTR4* dest,
     u8 PTR4* cbase;
 
     pitch = destpitch;
-    mode = flags & BINKCOPYNOSCALING;
+    mode = YUV_SURFACE_MODE(flags);
 
     if (mode == BINKCOPY1XI) {
         pitch *= 2;
