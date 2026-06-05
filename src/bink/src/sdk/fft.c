@@ -1404,7 +1404,7 @@ static void cftexp2(s32 n, f32 PTR4* a, s32 nw, f32 PTR4* w)
         if (k < h) {
             mh = FFT_HALF_SIZE(k);
             do {
-                s32 step = k << 1;
+                s32 step = FFT_TABLE_DOUBLE_SIZE(k);
 
                 for (j = k - m; j < h; j += step) {
                     cftmdl1(m, &a[j], &w[nw - mh]);
@@ -1424,7 +1424,7 @@ static void cftexp2(s32 n, f32 PTR4* a, s32 nw, f32 PTR4* w)
     if (k < h) {
         mh = FFT_HALF_SIZE(k);
         do {
-            s32 step = k << 1;
+            s32 step = FFT_TABLE_DOUBLE_SIZE(k);
 
             for (j = k - m; j < h; j += step) {
                 cftmdl1(m, &a[j], &w[nw - mh]);
