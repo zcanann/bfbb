@@ -141,6 +141,8 @@ typedef enum NGCReadLayout
     ((status) <= DVD_STATE_IGNORED ?                                                               \
          ((status) >= DVD_STATE_COVER_CLOSED || (status) == DVD_STATE_FATAL_ERROR) :               \
          (status) == DVD_STATE_RETRY)
+#define NGC_FILE_OPEN_FROM_HANDLE(flags) (((flags) & BINKFILEHANDLE) != 0)
+#define NGC_FILE_DIRECT_READ(io) (NGC_BUFFER(io) == 0)
 #define NGC_PPC_BEQLR_INSTRUCTION ".long 0x4D820020"
 
 static void ReadKickoff(BINKIO PTR4* io);
@@ -482,7 +484,7 @@ static u32 BinkFileReadFrame(BINKIO PTR4* io, u32 frame_num, s32 offset, void PT
         }
     }
 
-    if (NGC_BUFFER(io) == 0) {
+    if (NGC_FILE_DIRECT_READ(io)) {
         u32 direct_start = RADTimerRead();
         u32 read;
 
@@ -614,7 +616,7 @@ s32 BinkFileOpen(BINKIO PTR4* io, const char PTR4* name, u32 flags)
 {
     memset(io, 0, sizeof(*io));
 
-    if ((flags & BINKFILEHANDLE) != 0) {
+    if (NGC_FILE_OPEN_FROM_HANDLE(flags)) {
         *NGC_DVD(io) = *(DVDFileInfo PTR4*)name;
         NGC_BORROWED_FILE(io) = NGC_FILE_BORROWS_DVD;
         NGC_FILE_OFFSET(io) = (u32)NGC_DVD(io)->cb.userData;
