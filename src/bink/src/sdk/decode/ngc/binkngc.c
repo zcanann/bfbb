@@ -187,8 +187,8 @@ u32 RADTimerRead(void)
     now -= (u64)elapsed_ms * RAD_TIMER_TICKS_PER_MS;
     remainder_high = (u32)(now >> 32);
     remainder_low = (u32)now;
-    recip_term = remainder_high * RAD_TIMER_RECIP_MAGIC;
-    recip_term += RAD_TIMER_RECIP_LOW_HIGH_PRODUCT(remainder_low);
+    recip_term = remainder_high * RAD_TIMER_RECIP_MAGIC +
+                 RAD_TIMER_RECIP_LOW_HIGH_PRODUCT(remainder_low);
     return elapsed_ms + (recip_term >> RAD_TIMER_RECIP_SHIFT);
 }
 
