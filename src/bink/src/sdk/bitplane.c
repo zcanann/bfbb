@@ -75,8 +75,9 @@
 #define BP_POSITIVE_COEFF_SIGN 1
 #define BP_ABS_COEFF(value, sign) (((sign) ^ (value)) - (sign))
 #define BP_TREE_EMPTY_ENTRY 0
-#define BP_TREE_KIND_MASK 0x300
 /* Write-side tree nodes pack kind, coefficient/group index, and bit depth. */
+#define BP_TREE_KIND_SHIFT 8
+#define BP_TREE_KIND_MASK (3 << BP_TREE_KIND_SHIFT)
 #define BP_TREE_INDEX_SHIFT 10
 #define BP_TREE_GROUP_SHIFT 12
 #define BP_TREE_HIGH_GROUP_SHIFT 14
@@ -93,9 +94,9 @@
 #define BP_GROUP1_NODE_BASE (1 << BP_TREE_GROUP_SHIFT)
 #define BP_GROUP6_NODE_BASE (6 << BP_TREE_GROUP_SHIFT)
 #define BP_GROUP11_NODE_BASE (11 << BP_TREE_GROUP_SHIFT)
-#define BP_COEFF1_LEAF_BASE (7 << 8)
-#define BP_COEFF2_LEAF_BASE (11 << 8)
-#define BP_COEFF3_LEAF_BASE (15 << 8)
+#define BP_COEFF1_LEAF_BASE (7 << BP_TREE_KIND_SHIFT)
+#define BP_COEFF2_LEAF_BASE (11 << BP_TREE_KIND_SHIFT)
+#define BP_COEFF3_LEAF_BASE (15 << BP_TREE_KIND_SHIFT)
 #define BP_TREE_GROUP_ENTRY(level, base) ((level) | (base))
 #define BP_TREE_COEFF_LEAF_ENTRY(level, base) ((level) + (base))
 #define BP_TREE_HIGH_GROUP_ENTRY(level, index) ((u16)(level) + ((index) + BP_TREE_CHILD1_BASE) * BP_TREE_INDEX_STRIDE + BP_TREE_GROUP_NODE)
@@ -152,10 +153,10 @@
 typedef enum BPWriteTreeKind
 {
     BP_TREE_HIGH_NODE = 0,
-    BP_TREE_GROUP_NODE = 0x100,
+    BP_TREE_GROUP_NODE = 1 << BP_TREE_KIND_SHIFT,
     BP_TREE_AFTER_GROUP_NODE = BP_TREE_GROUP_NODE + 1,
-    BP_TREE_BRANCH_NODE = 0x200,
-    BP_TREE_COEFF_NODE = 0x300
+    BP_TREE_BRANCH_NODE = 2 << BP_TREE_KIND_SHIFT,
+    BP_TREE_COEFF_NODE = 3 << BP_TREE_KIND_SHIFT
 } BPWriteTreeKind;
 
 typedef enum BPReadTreeKind
