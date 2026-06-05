@@ -105,6 +105,7 @@ typedef VARBITS BINKVARBITS;
 #define BINKAC_SIGN_MASK(sign_bit) (-(s32)(sign_bit))
 #define BINKAC_APPLY_SIGN(value, sign) (((value) ^ (sign)) - (sign))
 #define BINKAC_INVERT_BIN(shift) (1.0 / (1 << (shift)))
+#define BINKAC_IS_NEW_FORMAT(flags) (((flags) & BINKACNEWFORMAT) != 0)
 
 static const f64 BINKAC_FXP_TO_FLOAT_BIAS[] = {
     4503599627370496.0,
@@ -402,7 +403,7 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
     vb.cur = inptr;
     vb.bitlen = 0;
     vb.bits = 0;
-    if (flags & BINKACNEWFORMAT) {
+    if (BINKAC_IS_NEW_FORMAT(flags)) {
         /* New-format streams reserve two leading bits before the coefficient payload. */
         vb.bits = BINKAC_LOAD32(vb.cur) >> BINKACNEWFORMAT_SKIP_BITS;
         VARBITS_ADVANCE_CUR(vb.cur);
@@ -428,7 +429,7 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
         }
 
         read_rle_samples(channel, transform_size, &vb, threshold, bands);
-        if (flags & BINKACNEWFORMAT) {
+        if (BINKAC_IS_NEW_FORMAT(flags)) {
             ddct(transform_size, BINKAC_DCT_INVERSE, channel, fft_work, fft_coeffs);
         } else {
             rdft(transform_size, BINKAC_RDFT_INVERSE, channel, fft_work, fft_coeffs);
@@ -495,7 +496,7 @@ HBINKAUDIODECOMP BinkAudioDecompressOpen(u32 rate, u32 chans, u32 flags)
     }
 
     buffer_size = BINKAC_SAMPLE_BYTES(transform_size * chans);
-    if (!(flags & BINKACNEWFORMAT)) {
+    if (!BINKAC_IS_NEW_FORMAT(flags)) {
         /* Legacy RDFT streams interleave stereo by decoding one larger mono transform. */
         rate *= chans;
         transform_size *= chans;
@@ -514,7 +515,7 @@ HBINKAUDIODECOMP BinkAudioDecompressOpen(u32 rate, u32 chans, u32 flags)
     num_bands = band_index;
     pushmalloc((void PTR4* PTR4*)&bands, BINKAC_BAND_LIMIT_COUNT(num_bands) * sizeof(*bands));
     pushmalloc((void PTR4* PTR4*)&fft_work, BINKAC_FFT_WORK_BYTES(transform_size_half, fft_work));
-    if (flags & BINKACNEWFORMAT) {
+    if (BINKAC_IS_NEW_FORMAT(flags)) {
         pushmalloc((void PTR4* PTR4*)&fft_coeffs, BINKAC_DCT_COEFF_BYTES(transform_size));
     } else {
         pushmalloc((void PTR4* PTR4*)&fft_coeffs,
