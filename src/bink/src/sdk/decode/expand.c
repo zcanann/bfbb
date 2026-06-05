@@ -1178,7 +1178,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
         work_col = 0;
         while (col < width) {
             block_type = BINK_BUNDLE_U8(block_types);
-            BINK_BUNDLE_ADVANCE(block_types, 1);
+            BINK_BUNDLE_ADVANCE(block_types, BINK_BUNDLE_BYTE_PITCH);
 
             if (BINK_BLOCK_ODD_ROW(row) && block_type == BINK_BLOCK_SCALED) {
                 col += BINK_BLOCK_SIDE;
@@ -1206,8 +1206,8 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 u32 block_row;
 
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
-                BINK_BUNDLE_ADVANCE(xoff, 1);
-                BINK_BUNDLE_ADVANCE(yoff, 1);
+                BINK_BUNDLE_ADVANCE(xoff, BINK_BUNDLE_BYTE_PITCH);
+                BINK_BUNDLE_ADVANCE(yoff, BINK_BUNDLE_BYTE_PITCH);
                 motion_source = BINK_MOTION_SOURCE(old, pitch, motion_x, motion_y);
                 for (block_row = 0; block_row < BINK_BLOCK_SIDE; ++block_row) {
                     BINK_BLOCK_ROW_WORD(dest, pitch, block_row, BINK_BLOCK_ROW_WORD_0) =
@@ -1225,8 +1225,8 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 u32 block_row;
 
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
-                BINK_BUNDLE_ADVANCE(xoff, 1);
-                BINK_BUNDLE_ADVANCE(yoff, 1);
+                BINK_BUNDLE_ADVANCE(xoff, BINK_BUNDLE_BYTE_PITCH);
+                BINK_BUNDLE_ADVANCE(yoff, BINK_BUNDLE_BYTE_PITCH);
                 motion_source = BINK_MOTION_SOURCE(old, pitch, motion_x, motion_y);
                 for (block_row = 0; block_row < BINK_BLOCK_SIDE; ++block_row) {
                     BINK_LINEAR_BLOCK_ROW_WORD(motion_block, block_row, BINK_BLOCK_ROW_WORD_0) =
@@ -1261,8 +1261,8 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
                 dct_block[0] = BINK_BUNDLE_S16(inter_dc);
                 BINK_BUNDLE_ADVANCE(inter_dc, BINK_DC_BYTES);
-                BINK_BUNDLE_ADVANCE(xoff, 1);
-                BINK_BUNDLE_ADVANCE(yoff, 1);
+                BINK_BUNDLE_ADVANCE(xoff, BINK_BUNDLE_BYTE_PITCH);
+                BINK_BUNDLE_ADVANCE(yoff, BINK_BUNDLE_BYTE_PITCH);
                 motion_source = BINK_MOTION_SOURCE(old, pitch, motion_x, motion_y);
                 for (block_row = 0; block_row < BINK_BLOCK_SIDE; ++block_row) {
                     BINK_LINEAR_BLOCK_ROW_WORD(motion_block, block_row, BINK_BLOCK_ROW_WORD_0) =
@@ -1281,7 +1281,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 u32 block_row;
 
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
-                BINK_BUNDLE_ADVANCE(colors, 1);
+                BINK_BUNDLE_ADVANCE(colors, BINK_BUNDLE_BYTE_PITCH);
                 for (block_row = 0; block_row < BINK_BLOCK_SIDE; ++block_row) {
                     BINK_BLOCK_ROW_WORD(dest, pitch, block_row, BINK_BLOCK_ROW_WORD_0) = fill;
                     BINK_BLOCK_ROW_WORD(dest, pitch, block_row, BINK_BLOCK_ROW_WORD_1) = fill;
@@ -1311,9 +1311,9 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 break;
             case BINK_BLOCK_SCALED:
                 subblock_type = BINK_BUNDLE_U8(subblock_types);
-                BINK_BUNDLE_ADVANCE(subblock_types, 1);
+                BINK_BUNDLE_ADVANCE(subblock_types, BINK_BUNDLE_BYTE_PITCH);
                 if (subblock_type == BINK_BLOCK_FILL) {
-                    BINK_BUNDLE_ADVANCE(colors, 1);
+                    BINK_BUNDLE_ADVANCE(colors, BINK_BUNDLE_BYTE_PITCH);
                 } else if (subblock_type == BINK_BLOCK_PATTERN) {
                     BINK_BUNDLE_ADVANCE(colors, BINK_PATTERN_COLOR_COUNT);
                     BINK_BUNDLE_ADVANCE(patterns, BINK_PATTERN_BLOCK_BYTES);
