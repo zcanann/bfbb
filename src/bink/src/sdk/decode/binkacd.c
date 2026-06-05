@@ -191,10 +191,9 @@ static void quanttos16chans2(s16 PTR4* samples, const f32 PTR4* decoded_coeffs,
     if (remaining != BINKAC_SAMPLE_COUNT_UNDERFLOW) {
         stride = transform_size;
         while (remaining != BINKAC_SAMPLE_COUNT_UNDERFLOW) {
-            s16 PTR4* out = samples;
+            s16 PTR4* out = samples++;
             s32 sample_value = (s32)(BINKAC_STEREO_LEFT_COEFF(decoded_coeffs) * transform_size_root);
 
-            samples++;
             *out = clamp_to_s16(sample_value);
             out = samples++;
             sample_value = (s32)(BINKAC_STEREO_RIGHT_COEFF(decoded_coeffs, stride) * transform_size_root);
