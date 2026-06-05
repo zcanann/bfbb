@@ -37,6 +37,10 @@
 #define DCT_FIX_1_414213562 0xb50
 #define DCT_FIX_1_847759065 0xec8
 #define DCT_FIX_NEG_2_613125930 (-0x14e8)
+#define DCT_IDCT_A1 DCT_FIX_1_414213562
+#define DCT_IDCT_A2 DCT_FIX_1_082392200
+#define DCT_IDCT_A3 DCT_FIX_1_847759065
+#define DCT_IDCT_A4 DCT_FIX_NEG_2_613125930
 #define DCT_ADVANCE_U32_BYTES(ptr, bytes) ((u32 PTR4*)((u8 PTR4*)(ptr) + (bytes)))
 #define DCT_FIXED_MUL(value, scale) ((value) * (scale) >> DCT_FIXED_SHIFT)
 #define DCT_BYTE_SAMPLE(value) ((u8)(((value) + DCT_BYTE_ROUND) >> DCT_OUTPUT_SHIFT))
@@ -879,11 +883,11 @@ static void fastidct8x8(u8 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4* 
             s32 odd1 = row1 - row7;
             s32 odd_pair0 = row1 + row7;
             s32 odd_pair1 = row5 + row3;
-            s32 even_diff = DCT_FIXED_MUL(row2 - row6, DCT_FIX_1_414213562) - (row2 + row6);
-            s32 odd_rot = DCT_FIXED_MUL(odd0 + odd1, DCT_FIX_1_847759065);
-            s32 odd_mid = (DCT_FIXED_MUL(odd0, DCT_FIX_NEG_2_613125930) + odd_rot) - (odd_pair0 + odd_pair1);
-            s32 odd_cross = DCT_FIXED_MUL(odd_pair0 - odd_pair1, DCT_FIX_1_414213562) - odd_mid;
-            s32 odd_tail = (DCT_FIXED_MUL(odd1, DCT_FIX_1_082392200) - odd_rot) + odd_cross;
+            s32 even_diff = DCT_FIXED_MUL(row2 - row6, DCT_IDCT_A1) - (row2 + row6);
+            s32 odd_rot = DCT_FIXED_MUL(odd0 + odd1, DCT_IDCT_A3);
+            s32 odd_mid = (DCT_FIXED_MUL(odd0, DCT_IDCT_A4) + odd_rot) - (odd_pair0 + odd_pair1);
+            s32 odd_cross = DCT_FIXED_MUL(odd_pair0 - odd_pair1, DCT_IDCT_A1) - odd_mid;
+            s32 odd_tail = (DCT_FIXED_MUL(odd1, DCT_IDCT_A2) - odd_rot) + odd_cross;
             s32 row4 = DCT_DEQUANT(in, q, DCT_ROW4);
             s32 row0 = DCT_DEQUANT(in, q, DCT_ROW0);
             s32 even0 = row0 + row4;
@@ -923,13 +927,13 @@ static void fastidct8x8(u8 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4* 
         s32 odd_pair1 = row5 + row3;
         s32 row2 = out[DCT_COL2];
         s32 row6 = out[DCT_COL6];
-        s32 odd_rot = DCT_FIXED_MUL(odd0 + odd1, DCT_FIX_1_847759065);
-        s32 even_diff = DCT_FIXED_MUL(row2 - row6, DCT_FIX_1_414213562) - (row2 + row6);
+        s32 odd_rot = DCT_FIXED_MUL(odd0 + odd1, DCT_IDCT_A3);
+        s32 even_diff = DCT_FIXED_MUL(row2 - row6, DCT_IDCT_A1) - (row2 + row6);
         s32 even_sum = row2 + row6;
         s32 odd_out0 = odd_pair0 + odd_pair1;
-        s32 odd_mid = (DCT_FIXED_MUL(odd0, DCT_FIX_NEG_2_613125930) + odd_rot) - odd_out0;
-        s32 odd_cross = DCT_FIXED_MUL(odd_pair0 - odd_pair1, DCT_FIX_1_414213562) - odd_mid;
-        s32 odd_tail = (DCT_FIXED_MUL(odd1, DCT_FIX_1_082392200) - odd_rot) + odd_cross;
+        s32 odd_mid = (DCT_FIXED_MUL(odd0, DCT_IDCT_A4) + odd_rot) - odd_out0;
+        s32 odd_cross = DCT_FIXED_MUL(odd_pair0 - odd_pair1, DCT_IDCT_A1) - odd_mid;
+        s32 odd_tail = (DCT_FIXED_MUL(odd1, DCT_IDCT_A2) - odd_rot) + odd_cross;
         s32 row0 = out[DCT_COL0];
         s32 row4 = out[DCT_COL4];
         s32 even0 = row0 + row4;
@@ -987,12 +991,12 @@ static void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4
             s32 odd_pair1 = row5 + row3;
             s32 row2 = DCT_DEQUANT(in, q, DCT_ROW2);
             s32 row6 = DCT_DEQUANT(in, q, DCT_ROW6);
-            s32 even_diff = DCT_FIXED_MUL(row2 - row6, DCT_FIX_1_414213562) - (row2 + row6);
+            s32 even_diff = DCT_FIXED_MUL(row2 - row6, DCT_IDCT_A1) - (row2 + row6);
             s32 even_sum = row2 + row6;
-            s32 odd_rot = DCT_FIXED_MUL(odd_sum, DCT_FIX_1_847759065);
-            s32 odd_mid = (DCT_FIXED_MUL(odd0, DCT_FIX_NEG_2_613125930) + odd_rot) - (odd_pair0 + odd_pair1);
-            s32 odd_cross = DCT_FIXED_MUL(odd_pair0 - odd_pair1, DCT_FIX_1_414213562) - odd_mid;
-            s32 odd_tail = (DCT_FIXED_MUL(odd1, DCT_FIX_1_082392200) - odd_rot) + odd_cross;
+            s32 odd_rot = DCT_FIXED_MUL(odd_sum, DCT_IDCT_A3);
+            s32 odd_mid = (DCT_FIXED_MUL(odd0, DCT_IDCT_A4) + odd_rot) - (odd_pair0 + odd_pair1);
+            s32 odd_cross = DCT_FIXED_MUL(odd_pair0 - odd_pair1, DCT_IDCT_A1) - odd_mid;
+            s32 odd_tail = (DCT_FIXED_MUL(odd1, DCT_IDCT_A2) - odd_rot) + odd_cross;
             s32 row4 = DCT_DEQUANT(in, q, DCT_ROW4);
             s32 row0 = DCT_DEQUANT(in, q, DCT_ROW0);
             s32 even0 = row0 + row4;
@@ -1029,7 +1033,7 @@ static void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4
         s32 a2 = a1 - a0;
         s32 a3 = out[DCT_COL0] - out[DCT_COL4];
         s32 a4 = a1 + a0;
-        s32 a5 = DCT_FIXED_MUL(out[DCT_COL2] - out[DCT_COL6], DCT_FIX_1_414213562) - a0;
+        s32 a5 = DCT_FIXED_MUL(out[DCT_COL2] - out[DCT_COL6], DCT_IDCT_A1) - a0;
         s32 a6 = a3 - a5;
         s32 a7 = a3 + a5;
         s32 a8 = out[DCT_COL5] - out[DCT_COL3];
@@ -1037,10 +1041,10 @@ static void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4
         s32 b0 = out[DCT_COL1] - out[DCT_COL7];
         s32 b1 = out[DCT_COL1] + out[DCT_COL7];
         s32 b2 = b1 + a9;
-        s32 b3 = DCT_FIXED_MUL(a8 + b0, DCT_FIX_1_847759065);
-        s32 b4 = (DCT_FIXED_MUL(a8, DCT_FIX_NEG_2_613125930) + b3) - b2;
-        s32 b5 = DCT_FIXED_MUL(b1 - a9, DCT_FIX_1_414213562) - b4;
-        s32 b6 = (DCT_FIXED_MUL(b0, DCT_FIX_1_082392200) - b3) + b5;
+        s32 b3 = DCT_FIXED_MUL(a8 + b0, DCT_IDCT_A3);
+        s32 b4 = (DCT_FIXED_MUL(a8, DCT_IDCT_A4) + b3) - b2;
+        s32 b5 = DCT_FIXED_MUL(b1 - a9, DCT_IDCT_A1) - b4;
+        s32 b6 = (DCT_FIXED_MUL(b0, DCT_IDCT_A2) - b3) + b5;
         u32 packed0 = (((u32)(a4 + b2 + DCT_BYTE_ROUND) << DCT_PACKED_BYTE_SHIFT) & DCT_BYTE_PAIR_MASK) | (((u32)(a7 + b4 + DCT_BYTE_ROUND) >> DCT_OUTPUT_SHIFT) & DCT_BYTE_MASK);
         u32 packed1 = (((u32)(a6 + b5 + DCT_BYTE_ROUND) << DCT_PACKED_BYTE_SHIFT) & DCT_BYTE_PAIR_MASK) | (((u32)(a2 - b6 + DCT_BYTE_ROUND) >> DCT_OUTPUT_SHIFT) & DCT_BYTE_MASK);
         u32 packed2 = (((u32)(a6 - b5 + DCT_BYTE_ROUND) >> DCT_OUTPUT_SHIFT) & DCT_BYTE_MASK) | (((u32)(a2 + b6 + DCT_BYTE_ROUND) << DCT_PACKED_BYTE_SHIFT) & DCT_BYTE_PAIR_MASK);
@@ -1113,12 +1117,12 @@ void FastmIDCT8x8WithMotion(u8 PTR4* dest, s32 pitch, s16 PTR4* in, u32 quant, u
             s32 odd_pair1 = row5 + row3;
             s32 row2 = DCT_DEQUANT(in, q, DCT_ROW2);
             s32 row6 = DCT_DEQUANT(in, q, DCT_ROW6);
-            s32 even_diff = DCT_FIXED_MUL(row2 - row6, DCT_FIX_1_414213562) - (row2 + row6);
+            s32 even_diff = DCT_FIXED_MUL(row2 - row6, DCT_IDCT_A1) - (row2 + row6);
             s32 even_sum = row2 + row6;
-            s32 odd_rot = DCT_FIXED_MUL(odd_sum, DCT_FIX_1_847759065);
-            s32 odd_mid = (DCT_FIXED_MUL(odd0, DCT_FIX_NEG_2_613125930) + odd_rot) - (odd_pair0 + odd_pair1);
-            s32 odd_cross = DCT_FIXED_MUL(odd_pair0 - odd_pair1, DCT_FIX_1_414213562) - odd_mid;
-            s32 odd_tail = (DCT_FIXED_MUL(odd1, DCT_FIX_1_082392200) - odd_rot) + odd_cross;
+            s32 odd_rot = DCT_FIXED_MUL(odd_sum, DCT_IDCT_A3);
+            s32 odd_mid = (DCT_FIXED_MUL(odd0, DCT_IDCT_A4) + odd_rot) - (odd_pair0 + odd_pair1);
+            s32 odd_cross = DCT_FIXED_MUL(odd_pair0 - odd_pair1, DCT_IDCT_A1) - odd_mid;
+            s32 odd_tail = (DCT_FIXED_MUL(odd1, DCT_IDCT_A2) - odd_rot) + odd_cross;
             s32 row4 = DCT_DEQUANT(in, q, DCT_ROW4);
             s32 row0 = DCT_DEQUANT(in, q, DCT_ROW0);
             s32 even0 = row0 + row4;
@@ -1157,13 +1161,13 @@ void FastmIDCT8x8WithMotion(u8 PTR4* dest, s32 pitch, s16 PTR4* in, u32 quant, u
         s32 odd_pair1 = row5 + row3;
         s32 row2 = out[DCT_COL2];
         s32 row6 = out[DCT_COL6];
-        s32 odd_rot = DCT_FIXED_MUL(odd0 + odd1, DCT_FIX_1_847759065);
-        s32 even_diff = DCT_FIXED_MUL(row2 - row6, DCT_FIX_1_414213562) - (row2 + row6);
+        s32 odd_rot = DCT_FIXED_MUL(odd0 + odd1, DCT_IDCT_A3);
+        s32 even_diff = DCT_FIXED_MUL(row2 - row6, DCT_IDCT_A1) - (row2 + row6);
         s32 even_sum = row2 + row6;
         s32 odd_out0 = odd_pair0 + odd_pair1;
-        s32 odd_mid = (DCT_FIXED_MUL(odd0, DCT_FIX_NEG_2_613125930) + odd_rot) - odd_out0;
-        s32 odd_cross = DCT_FIXED_MUL(odd_pair0 - odd_pair1, DCT_FIX_1_414213562) - odd_mid;
-        s32 odd_tail = (DCT_FIXED_MUL(odd1, DCT_FIX_1_082392200) - odd_rot) + odd_cross;
+        s32 odd_mid = (DCT_FIXED_MUL(odd0, DCT_IDCT_A4) + odd_rot) - odd_out0;
+        s32 odd_cross = DCT_FIXED_MUL(odd_pair0 - odd_pair1, DCT_IDCT_A1) - odd_mid;
+        s32 odd_tail = (DCT_FIXED_MUL(odd1, DCT_IDCT_A2) - odd_rot) + odd_cross;
         s32 row0 = out[DCT_COL0];
         s32 row4 = out[DCT_COL4];
         s32 even0 = row0 + row4;
