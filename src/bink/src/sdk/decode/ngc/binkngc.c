@@ -247,7 +247,7 @@ void RADSetMemory(RADMEMALLOC malloc_fn, RADMEMFREE free_fn) {
     userfree = free_fn;
 }
 
-void PTR4* radmalloc(u32 size)
+void PTR4* radmalloc(u32 numbytes)
 {
     u32 request;
     void PTR4* raw_block;
@@ -256,10 +256,10 @@ void PTR4* radmalloc(u32 size)
     u32 align_offset;
     u8 PTR4* aligned;
 
-    if (size == 0 || size == RAD_INVALID_ALLOC_SIZE)
+    if (numbytes == 0 || numbytes == RAD_INVALID_ALLOC_SIZE)
         return 0;
     /* Reserve room for the prefix and enough slack to return a 32-byte aligned pointer. */
-    request   = size + RAD_ALLOC_HEADER_SIZE;
+    request   = numbytes + RAD_ALLOC_HEADER_SIZE;
     if (usermalloc != 0 && (raw_block = usermalloc(request))) {
         if (raw_block != 0 && raw_block != RAD_INVALID_USER_ALLOC) {
             owner = RAD_ALLOC_USER_OWNED;
