@@ -122,6 +122,7 @@ typedef enum NGCDVDAlignment
 #define NGC_ALIGN_DOWN(value, mask) ((value) & ~(mask))
 #define NGC_BYTES_LEFT_TO_READ(io) (NGC_FILE_SIZE(io) - NGC_READ_CURSOR(io))
 #define NGC_BYTES_LEFT_TO_CONSUME(io) (NGC_FILE_SIZE(io) - NGC_CONSUME_CURSOR(io))
+#define NGC_RING_BYTES_TO_END(io) (NGC_BUFFER_END(io) - NGC_READ_PTR(io))
 typedef enum NGCReadLayout
 {
     NGC_STACK_READ_PAYLOAD_SIZE = 0x400,
@@ -516,7 +517,7 @@ static u32 BinkFileReadFrame(BINKIO PTR4* io, u32 frame_num, s32 offset, void PT
                 size -= amount;
                 total += amount;
                 NGC_CONSUME_CURSOR(io) += amount;
-                first = NGC_BUFFER_END(io) - NGC_READ_PTR(io);
+                first = NGC_RING_BYTES_TO_END(io);
 
                 /* Copy to the end of the ring first, then wrap to the buffer base. */
                 if (first <= amount) {
