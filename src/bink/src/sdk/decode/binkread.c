@@ -48,6 +48,9 @@ typedef enum BINKFrameOffsetFlags
      (marker) == BINKMARKER3 || (marker) == BINKMARKER4)
 #define BINK_OPEN_FROM_MEMORY(flags) (((flags) & BINKFROMMEMORY) != 0)
 #define BINK_OPEN_USES_IO_PROCESSOR(flags) (((flags) & BINKIOPROCESSOR) != 0)
+#define BINK_OPEN_USES_FRAME_RATE_OVERRIDE(flags) (((flags) & BINKFRAMERATE) != 0)
+#define BINK_OPEN_USES_IO_BUFFER_OVERRIDE(flags) (((flags) & BINKIOSIZE) != 0)
+#define BINK_OPEN_USES_SIMULATION_OVERRIDE(flags) (((flags) & BINKSIMULATE) != 0)
 typedef enum BINKHeaderTrackTable
 {
     BINK_HEADER_TRACK_SIZES_TABLE,
@@ -1156,7 +1159,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
 
     bnk.Frames = hdr.Frames;
     bnk.InternalFrames = hdr.InternalFrames;
-    if ((flags & BINKFRAMERATE) != 0 && ForceRate != BINK_OPEN_OVERRIDE_UNSET) {
+    if (BINK_OPEN_USES_FRAME_RATE_OVERRIDE(flags) && ForceRate != BINK_OPEN_OVERRIDE_UNSET) {
         bnk.FrameRate = ForceRate;
         bnk.FrameRateDiv = ForceRateDiv;
         ForceRate = BINK_OPEN_OVERRIDE_UNSET;
@@ -1272,14 +1275,14 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
             out->APlane[1] = out->APlane[0];
         }
 
-        if ((flags & BINKIOSIZE) != 0 && IOBufferSize != BINK_OPEN_OVERRIDE_UNSET) {
+        if (BINK_OPEN_USES_IO_BUFFER_OVERRIDE(flags) && IOBufferSize != BINK_OPEN_OVERRIDE_UNSET) {
             out->iosize = IOBufferSize;
             IOBufferSize = BINK_OPEN_OVERRIDE_UNSET;
         } else {
             out->iosize = out->Highest1SecRate;
         }
 
-        if ((flags & BINKSIMULATE) != 0 && Simulate != BINK_OPEN_OVERRIDE_UNSET) {
+        if (BINK_OPEN_USES_SIMULATION_OVERRIDE(flags) && Simulate != BINK_OPEN_OVERRIDE_UNSET) {
             simulate = Simulate;
             Simulate = BINK_OPEN_OVERRIDE_UNSET;
         } else {
