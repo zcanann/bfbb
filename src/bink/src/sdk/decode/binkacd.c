@@ -38,9 +38,10 @@ typedef enum BINKACFixedPointLayout
     FXPBITS = 29,
     FXP_SIGN_MASK = 0x10000000,
     FXP_VALUE_MASK = (1 << FXPBITS) - 1,
-    FXP_BIN_MASK = 31,
     FXP_VALUE_SHIFT = 5,
-    BINKAC_INVERT_BINS = 24
+    FXP_BIN_MASK = (1 << FXP_VALUE_SHIFT) - 1,
+    BINKAC_INVERT_BINS = 24,
+    FXP_INVERT_MAX_SHIFT = BINKAC_INVERT_BINS - 1
 } BINKACFixedPointLayout;
 
 typedef enum BINKACBitstreamLayout
@@ -103,6 +104,7 @@ typedef VARBITS BINKVARBITS;
 #define BINKAC_STEREO_RIGHT_COEFF(coeffs, stride) ((coeffs)[(stride)])
 #define BINKAC_SIGN_MASK(sign_bit) (-(s32)(sign_bit))
 #define BINKAC_APPLY_SIGN(value, sign) (((value) ^ (sign)) - (sign))
+#define BINKAC_INVERT_BIN(shift) (1.0 / (1 << (shift)))
 
 static const f64 BINKAC_FXP_TO_FLOAT_BIAS = 4503599627370496.0;
 static const f32 BINKAC_SAMPLE_ZERO = 0.0f;
@@ -131,12 +133,14 @@ static u32 bink_bandtopfreq[TOTBANDS] = {
 
 /* Reciprocals used by fxptof for the 29-bit packed fixed-point coefficients. */
 static f64 bink_invertbins[BINKAC_INVERT_BINS] = {
-    1.0 / (1 << 23), 1.0 / (1 << 22), 1.0 / (1 << 21), 1.0 / (1 << 20),
-    1.0 / (1 << 19), 1.0 / (1 << 18), 1.0 / (1 << 17), 1.0 / (1 << 16),
-    1.0 / (1 << 15), 1.0 / (1 << 14), 1.0 / (1 << 13), 1.0 / (1 << 12),
-    1.0 / (1 << 11), 1.0 / (1 << 10), 1.0 / (1 << 9),  1.0 / (1 << 8),
-    1.0 / (1 << 7),  1.0 / (1 << 6),  1.0 / (1 << 5),  1.0 / (1 << 4),
-    1.0 / (1 << 3),  1.0 / (1 << 2),  1.0 / (1 << 1),  1.0 / (1 << 0)
+    BINKAC_INVERT_BIN(FXP_INVERT_MAX_SHIFT), BINKAC_INVERT_BIN(22), BINKAC_INVERT_BIN(21),
+    BINKAC_INVERT_BIN(20), BINKAC_INVERT_BIN(19), BINKAC_INVERT_BIN(18),
+    BINKAC_INVERT_BIN(17), BINKAC_INVERT_BIN(16), BINKAC_INVERT_BIN(15),
+    BINKAC_INVERT_BIN(14), BINKAC_INVERT_BIN(13), BINKAC_INVERT_BIN(12),
+    BINKAC_INVERT_BIN(11), BINKAC_INVERT_BIN(10), BINKAC_INVERT_BIN(9),
+    BINKAC_INVERT_BIN(8),  BINKAC_INVERT_BIN(7),  BINKAC_INVERT_BIN(6),
+    BINKAC_INVERT_BIN(5),  BINKAC_INVERT_BIN(4),  BINKAC_INVERT_BIN(3),
+    BINKAC_INVERT_BIN(2),  BINKAC_INVERT_BIN(1),  BINKAC_INVERT_BIN(0)
 };
 
 static f32 fxptof(u32 packed)
