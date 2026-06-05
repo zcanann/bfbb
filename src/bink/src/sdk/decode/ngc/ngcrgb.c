@@ -145,10 +145,10 @@ void YUV_32_4x2_even(u32 count)
     row1 = RGB_TILE_ROW(linear1, base, pitch);
     dest0 = (u32 PTR4*)RGB_TILE_LOC(base, linear0, pitch, tiledPitch, row0);
     dest1 = (u32 PTR4*)RGB_TILE_LOC(base, linear1, pitch, tiledPitch, row1);
-    y1 = S.y1;
-    y0 = S.y0;
     u = S.u;
     v = S.v;
+    y0 = S.y0;
+    y1 = S.y1;
     u_to_b = YUVTables.u_to_b;
     v_to_r = YUVTables.v_to_r;
     u_to_gb = YUVTables.u_to_gb;
@@ -249,10 +249,10 @@ void YUV_32x2_4x2_even(u32 count)
     row1 = RGB_TILE_ROW(linear1, base, pitch);
     dest0 = (u32 PTR4*)RGB_TILE_LOC(base, linear0, pitch, tiledPitch, row0);
     dest1 = (u32 PTR4*)RGB_TILE_LOC(base, linear1, pitch, tiledPitch, row1);
-    y1 = S.y1;
-    y0 = S.y0;
     u = S.u;
     v = S.v;
+    y0 = S.y0;
+    y1 = S.y1;
     u_to_b = YUVTables.u_to_b;
     v_to_r = YUVTables.v_to_r;
     u_to_gb = YUVTables.u_to_gb;
