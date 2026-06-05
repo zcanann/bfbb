@@ -65,7 +65,7 @@ typedef enum BINKHuff4Layout
     HUFF4_SYMBOL_MASK = 0xf,
     HUFF4_SYMBOL_PRESENT_BIT = 1,
     HUFF4_ALL_SYMBOLS_MASK = 0xffff,
-    HUFF4_USED_SHIFT = 4,
+    HUFF4_NIBBLE_BITS = 4,
     HUFF4_SUBTYPE_BITS = 2,
     HUFF4_EXPLICIT_SUBTYPE_BITS = 3,
     HUFF4_PAIR_COUNT = 8,
@@ -93,7 +93,7 @@ typedef enum BINKHuff4SortMode
     HUFF4_SORT_FULL
 } BINKHuff4SortMode;
 
-#define HUFF4_CODE_USED(code) ((code) >> HUFF4_USED_SHIFT)
+#define HUFF4_CODE_USED(code) ((code) >> HUFF4_NIBBLE_BITS)
 #define HUFF4_CODE_SYMBOL(code) ((code) & HUFF4_SYMBOL_MASK)
 #define HUFF4_CODE_SYM(code, syms) ((syms)[HUFF4_CODE_SYMBOL(code)])
 typedef enum BINKBundleLayout
@@ -495,7 +495,7 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
     HUFF4MERGES merges;
 
     /* Each table stores a 4-bit codebook index plus a 16-entry symbol remap. */
-    VarBitsGet(vlc_num, u32, *vb, HUFF4_USED_SHIFT);
+    VarBitsGet(vlc_num, u32, *vb, HUFF4_NIBBLE_BITS);
     *decode = huff4decodes[vlc_num];
     *bits_to_peek = (u8)BINK_HUFF4_BITS_TO_PEEK[vlc_num];
     if (vlc_num == HUFF4_IDENTITY_CODEBOOK) {
@@ -592,7 +592,7 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
         VarBitsGet(last_explicit, u32, *vb, HUFF4_EXPLICIT_SUBTYPE_BITS);
         unused_symbols = HUFF4_ALL_SYMBOLS_MASK;
         for (i = 0; i <= last_explicit; ++i) {
-            VarBitsGet(symbol, u32, *vb, HUFF4_USED_SHIFT);
+            VarBitsGet(symbol, u32, *vb, HUFF4_NIBBLE_BITS);
             syms[i] = symbol;
             unused_symbols &= ~(HUFF4_SYMBOL_PRESENT_BIT << symbol);
         }
@@ -684,7 +684,7 @@ static void CheckReadRLEHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
                 }
             }
         } else {
-            fill = exp_get_bits(bits, HUFF4_USED_SHIFT);
+            fill = exp_get_bits(bits, HUFF4_NIBBLE_BITS);
             memset(bundle->data, fill, count);
         }
     } else {
@@ -733,7 +733,7 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
             high = exp_read_huff8(bits, lastval, huff8_table);
             lastval = high;
             low = exp_read_huff4_mask(bits, peek, decode, syms, mask);
-            packed = ((high & HUFF4_SYMBOL_MASK) << HUFF4_USED_SHIFT) | low;
+            packed = ((high & HUFF4_SYMBOL_MASK) << HUFF4_NIBBLE_BITS) | low;
             signed_byte = packed;
             if ((signed_byte & BINK_SIGNED_BYTE_BIAS) != 0) {
                 signed_byte = BINK_SIGNED_BYTE_NEGATIVE(signed_byte);
@@ -791,7 +791,7 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
         do {
             lastval = exp_read_huff8(bits, lastval, huff8_table);
             low = exp_read_huff4_mask(bits, peek, decode, syms, mask);
-            packed = low | (lastval << HUFF4_USED_SHIFT);
+            packed = low | (lastval << HUFF4_NIBBLE_BITS);
             *dest++ = (u8)packed;
             remaining--;
         } while (remaining > 0);
@@ -836,7 +836,7 @@ static void CheckReadHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
                 ++dest;
             }
         } else {
-            fill = exp_get_bits(bits, HUFF4_USED_SHIFT);
+            fill = exp_get_bits(bits, HUFF4_NIBBLE_BITS);
             memset(bundle->data, fill, count);
         }
     } else {
@@ -874,7 +874,7 @@ static void CheckReadHuff4PairBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits
             count--;
             low = exp_read_huff4_mask(bits, peek, decode, syms, mask);
             high = exp_read_huff4_mask(bits, peek, decode, syms, mask);
-            *dest++ = (u8)(low | (high << HUFF4_USED_SHIFT));
+            *dest++ = (u8)(low | (high << HUFF4_NIBBLE_BITS));
         } while (count != 0);
     } else {
         bundle->cur_dec = bundle->data;
@@ -914,7 +914,7 @@ static void CheckReadHuff4SBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
                 *dest++ = (s8)symbol;
             }
         } else {
-            fill = (s32)exp_get_bits(bits, HUFF4_USED_SHIFT);
+            fill = (s32)exp_get_bits(bits, HUFF4_NIBBLE_BITS);
             if (fill != 0 && exp_get_bit(bits) != 0) {
                 fill = -fill;
             }
@@ -963,7 +963,7 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
                 group_size = BINK_DELTA16_GROUP_MAX;
             }
 
-            VarBitsGet(delta_bits, u32, *bits, HUFF4_USED_SHIFT);
+            VarBitsGet(delta_bits, u32, *bits, HUFF4_NIBBLE_BITS);
             if (delta_bits != 0) {
                 remaining -= group_size;
                 while (group_size != 0) {
