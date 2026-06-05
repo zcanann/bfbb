@@ -55,6 +55,7 @@ typedef enum BINKFrameOffsetFlags
 #define BINK_OPEN_HAS_ALPHA(flags) (((flags) & BINKALPHA) != 0)
 #define BINK_OPEN_PRELOADS_ALL(flags) (((flags) & BINKPRELOADALL) != 0)
 #define BINK_OPEN_FILLS_IO_BUFFER(flags) (((flags) & BINKNOFILLIOBUF) == 0)
+#define BINK_VOLATILE_U32(field) (*(volatile u32 PTR4*)&(field))
 typedef enum BINKHeaderTrackTable
 {
     BINK_HEADER_TRACK_SIZES_TABLE,
@@ -3014,9 +3015,9 @@ s32 BinkSetSoundOnOff(HBINK bnk, s32 onoff)
                         } else {
                             ret = 1;
                             if (bnk->soundon == 0) {
-                                *(volatile u32 PTR4*)&bnk->big_sound_skip_adj = 0;
-                                *(volatile u32 PTR4*)&bnk->soundon = one;
-                                *(volatile u32 PTR4*)&bnk->startsynctime = 0;
+                                BINK_VOLATILE_U32(bnk->big_sound_skip_adj) = 0;
+                                BINK_VOLATILE_U32(bnk->soundon) = one;
+                                BINK_VOLATILE_U32(bnk->startsynctime) = 0;
                             }
                         }
                     }
