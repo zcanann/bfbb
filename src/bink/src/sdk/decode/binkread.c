@@ -104,6 +104,8 @@ typedef enum BINKPlaneLayout
 #define BINK_MASK_BLOCKS(value) ((value) / BINK_MASK_BLOCK_SIZE)
 #define BINK_MASK_PLANE_BYTES(width, height) \
     ((((width) >> BINK_MASK_BLOCK_SHIFT) * (height)) >> BINK_MASK_BLOCK_SHIFT)
+#define BINK_DIRTY_SPLIT_SIZE(size) \
+    ((((size) / BINK_COPY_SCALE) + BINK_MASK_BLOCK_ROUND_MASK) & ~BINK_MASK_BLOCK_ROUND_MASK)
 typedef enum BINKOpenOverrideState
 {
     BINK_OPEN_OVERRIDE_UNSET = 0xffffffffU
@@ -2537,8 +2539,7 @@ static s32 trysplit(BINKRECT PTR4* outa, BINKRECT PTR4* outb, const BINKRECT PTR
 
     if (rect->Width >= BINK_DIRTY_SPLIT_MIN_SIZE) {
         split_rect = *rect;
-        split = (split_rect.Width / BINK_COPY_SCALE + BINK_MASK_BLOCK_ROUND_MASK) &
-                ~BINK_MASK_BLOCK_ROUND_MASK;
+        split = BINK_DIRTY_SPLIT_SIZE(split_rect.Width);
         split_rect.Width = split;
         smallestrect(outa, mask, pitch, &split_rect);
 
@@ -2555,8 +2556,7 @@ static s32 trysplit(BINKRECT PTR4* outa, BINKRECT PTR4* outb, const BINKRECT PTR
         s32 split_score;
 
         split_rect = *rect;
-        split = (split_rect.Height / BINK_COPY_SCALE + BINK_MASK_BLOCK_ROUND_MASK) &
-                ~BINK_MASK_BLOCK_ROUND_MASK;
+        split = BINK_DIRTY_SPLIT_SIZE(split_rect.Height);
         split_rect.Height = split;
         smallestrect(&first_half, mask, pitch, &split_rect);
 
