@@ -1404,13 +1404,11 @@ static void cftexp2(s32 n, f32 PTR4* a, s32 nw, f32 PTR4* w)
         if (k < h) {
             mh = FFT_HALF_SIZE(k);
             do {
-                s32 step = FFT_TABLE_DOUBLE_SIZE(k);
-
-                for (j = k - m; j < h; j += step) {
+                for (j = k - m; j < h; j += FFT_TABLE_DOUBLE_SIZE(k)) {
                     cftmdl1(m, &a[j], &w[nw - mh]);
                     cftmdl1(m, &a[j + h], &w[nw - mh]);
                 }
-                for (j = step - m; j < h; j += step << 1) {
+                for (j = FFT_TABLE_DOUBLE_SIZE(k) - m; j < h; j += FFT_TABLE_FULL_SIZE(k)) {
                     cftmdl2(m, &a[j], &w[nw - m]);
                     cftmdl2(m, &a[j + h], &w[nw - m]);
                 }
@@ -1424,15 +1422,13 @@ static void cftexp2(s32 n, f32 PTR4* a, s32 nw, f32 PTR4* w)
     if (k < h) {
         mh = FFT_HALF_SIZE(k);
         do {
-            s32 step = FFT_TABLE_DOUBLE_SIZE(k);
-
-            for (j = k - m; j < h; j += step) {
+            for (j = k - m; j < h; j += FFT_TABLE_DOUBLE_SIZE(k)) {
                 cftmdl1(m, &a[j], &w[nw - mh]);
                 cftfx41(m, &a[j], nw, w);
                 cftmdl1(m, &a[j + h], &w[nw - mh]);
                 cftfx41(m, &a[j + h], nw, w);
             }
-            for (j = step - m; j < h; j += step << 1) {
+            for (j = FFT_TABLE_DOUBLE_SIZE(k) - m; j < h; j += FFT_TABLE_FULL_SIZE(k)) {
                 cftmdl2(m, &a[j], &w[nw - m]);
                 cftfx42(m, &a[j], nw, w);
                 cftmdl2(m, &a[j + h], &w[nw - m]);
