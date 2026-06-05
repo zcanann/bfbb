@@ -87,6 +87,7 @@ static const u32 BINK_RFT_INV_HALF_SCALE_BITS[] = {
 #define FFT_CFT_4_REAL_SIZE 8
 #define FFT_CFT_2_REAL_SIZE 4
 #define FFT_CFT_RECURSION_LIMIT 0x200
+#define FFT_CFT_EXPANSION_LIMIT FFT_QUARTER_SIZE(FFT_CFT_RECURSION_LIMIT)
 
 /* Bink audio uses Ooura-style RDFT/DCT work arrays: ip stores table sizes,
    followed by bit-reversal work indices, while w holds trig tables. */
@@ -1320,7 +1321,7 @@ void cftrec1(s32 n, f32 PTR4* a, s32 nw, f32 PTR4* w)
 {
     int quarter;
 
-    quarter = n >> 2;
+    quarter = FFT_QUARTER_SIZE(n);
     cftmdl1(n, a, &w[nw - (quarter + quarter)]);
     if (n > FFT_CFT_RECURSION_LIMIT) {
         cftrec1(quarter, a, nw, w);
@@ -1336,7 +1337,7 @@ void cftrec2(s32 n, f32 PTR4* a, s32 nw, f32 PTR4* w)
 {
     int quarter;
 
-    quarter = n >> 2;
+    quarter = FFT_QUARTER_SIZE(n);
     cftmdl2(n, a, &w[nw - n]);
     if (n > FFT_CFT_RECURSION_LIMIT) {
         cftrec1(quarter, a, nw, w);
@@ -1353,8 +1354,8 @@ static void cftexp1(s32 n, f32 PTR4* a, s32 nw, f32 PTR4* w)
     s32 k;
     s32 m;
 
-    m = n >> 2;
-    while (m > 128) {
+    m = FFT_QUARTER_SIZE(n);
+    while (m > FFT_CFT_EXPANSION_LIMIT) {
         k = m;
         if (k < n) {
             do {
@@ -1367,7 +1368,7 @@ static void cftexp1(s32 n, f32 PTR4* a, s32 nw, f32 PTR4* w)
             } while (k < n);
         }
         cftmdl1(m, &a[n - m], &w[nw - (m >> 1)]);
-        m >>= 2;
+        m = FFT_QUARTER_SIZE(m);
     }
 
     k = m;
@@ -1396,12 +1397,12 @@ static void cftexp2(s32 n, f32 PTR4* a, s32 nw, f32 PTR4* w)
     s32 mh;
     s32 h;
 
-    h = n >> 1;
-    m = n >> 2;
-    while (m > 128) {
+    h = FFT_HALF_SIZE(n);
+    m = FFT_QUARTER_SIZE(n);
+    while (m > FFT_CFT_EXPANSION_LIMIT) {
         k = m;
         if (k < h) {
-            mh = k >> 1;
+            mh = FFT_HALF_SIZE(k);
             do {
                 s32 step = k << 1;
 
@@ -1416,12 +1417,12 @@ static void cftexp2(s32 n, f32 PTR4* a, s32 nw, f32 PTR4* w)
                 k <<= 2;
             } while (k < h);
         }
-        m >>= 2;
+        m = FFT_QUARTER_SIZE(m);
     }
 
     k = m;
     if (k < h) {
-        mh = k >> 1;
+        mh = FFT_HALF_SIZE(k);
         do {
             s32 step = k << 1;
 
