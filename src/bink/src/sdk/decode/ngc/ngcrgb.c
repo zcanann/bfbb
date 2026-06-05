@@ -119,9 +119,9 @@ void YUV_32_4x2_even(u32 count)
     u8 PTR4* linear0;
     u8 PTR4* linear1;
     u32 PTR4* y1;
-    u32 PTR4* y0;
     u16 PTR4* u;
     u16 PTR4* v;
+    u32 PTR4* y0;
     u32 pitch;
     u8 PTR4* base;
     s32 row0;
@@ -223,9 +223,9 @@ void YUV_32x2_4x2_even(u32 count)
     u8 PTR4* linear0;
     u8 PTR4* linear1;
     u32 PTR4* y1;
-    u32 PTR4* y0;
     u16 PTR4* u;
     u16 PTR4* v;
+    u32 PTR4* y0;
     u32 pitch;
     u8 PTR4* base;
     s32 row0;
