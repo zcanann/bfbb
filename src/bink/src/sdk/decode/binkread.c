@@ -176,6 +176,7 @@ typedef enum BINKPreloadLayout
 
 #define BINKGETKEYDIRECTIONMASK (BINKGETKEYNOTEQUAL - 1)
 #define BINKGETKEY_DIRECTION(flags) ((flags) & BINKGETKEYDIRECTIONMASK)
+#define BINK_FRAME_OFFSET_INDEX(frame) ((frame) - BINK_FIRST_FRAME)
 typedef enum BINKFrameNumberState
 {
     BINK_FRAME_BEFORE_FIRST = 0xffffffffU
@@ -883,7 +884,7 @@ static void GotoFrame(HBINK bnk, u32 frame)
 
     if (frame != 0)
     {
-        frame = frame - 1;
+        frame = BINK_FRAME_OFFSET_INDEX(frame);
     }
     bnk->skipped_this_frame = 0;
     if (bnk->playingtracks != 0)
@@ -1808,7 +1809,7 @@ s32 BinkDoFrame(HBINK bnk)
                                bnk->MaskPlane, bnk->decompwidth,
                                bnk->decompheight, bnk->YWidth,
                                bnk->YHeight, (u32 PTR4*)frame_data,
-                               BINK_FRAME_KEY(bnk->frameoffsets[bnk->FrameNum - 1]),
+                               BINK_FRAME_KEY(bnk->frameoffsets[BINK_FRAME_OFFSET_INDEX(bnk->FrameNum)]),
                                &bnk->bunp, bnk->OpenFlags,
                                bnk->BinkType);
                     bnk->PlaneNum ^= 1;
@@ -1929,7 +1930,7 @@ u32 BinkGetKeyFrame(HBINK bnk, u32 frame, s32 flags)
     }
 
     if ((flags & BINKGETKEYNOTEQUAL) == 0) {
-        if (BINK_FRAME_KEY(bnk->frameoffsets[frame - 1]) != 0) {
+        if (BINK_FRAME_KEY(bnk->frameoffsets[BINK_FRAME_OFFSET_INDEX(frame)]) != 0) {
             return frame;
         }
     }
