@@ -159,11 +159,8 @@ u32 RADTimerRead(void)
 {
     static OSTime starttime = 0;
     OSTime now;
-    u32 high_ticks;
-    u32 low_ticks;
     u32 elapsed_ms;
-    u32 high_recip;
-    u32 recip_sum;
+    u32 remainder_ms;
 
     now = OSGetTime();
 
@@ -173,15 +170,12 @@ u32 RADTimerRead(void)
 
     now -= starttime;
     /* Convert elapsed OS ticks to milliseconds without a full 64-bit divide. */
-    high_ticks = (u32)(now >> 32);
-    elapsed_ms = high_ticks * RAD_TIMER_HIGH_QUOTIENT;
+    elapsed_ms = (u32)(now >> 32) * RAD_TIMER_HIGH_QUOTIENT;
     now -= (u64)elapsed_ms * RAD_TIMER_TICKS_PER_MS;
-    high_ticks = (u32)(now >> 32);
-    low_ticks = (u32)now;
-    high_recip = high_ticks * RAD_TIMER_RECIP_MAGIC;
-    recip_sum = high_recip + RAD_TIMER_RECIP_LOW_HIGH_PRODUCT(low_ticks);
-    recip_sum >>= RAD_TIMER_RECIP_SHIFT;
-    return elapsed_ms + recip_sum;
+    remainder_ms = ((u32)(now >> 32) * RAD_TIMER_RECIP_MAGIC +
+                    RAD_TIMER_RECIP_LOW_HIGH_PRODUCT((u32)now)) >>
+                   RAD_TIMER_RECIP_SHIFT;
+    return elapsed_ms + remainder_ms;
 }
 
 static inline void radtimebase(RADTimebase PTR4* dest)
