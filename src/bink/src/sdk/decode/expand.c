@@ -111,6 +111,7 @@ typedef enum BINKBundleLayout
     BINK_WORD_ALIGN_MASK = 3,
     BINK_PLANE_WORD_BYTES = sizeof(u32),
     BINK_WORK_BLOCK_SPAN = BINK_BLOCK_SIDE * BINK_CHROMA_PLANE_SCALE,
+    BINK_WORK_BLOCK_MARKED = 1,
     BINK_DC_BYTES = sizeof(s16),
     BINK_RESIDUE_LIMIT_BITS = 7,
     BINK_DCT_QUANT_BITS = 4,
@@ -146,7 +147,7 @@ typedef enum BINKBUNDLEINITIALVALUE
     ((u32 PTR4*)((u8 PTR4*)(header) + BINK_BUNDLE_CHUNK_BYTE_SIZE(header)))
 #define BINK_BUNDLE_PAYLOAD_NEXT(payload) \
     ((u32 PTR4*)((u8 PTR4*)(payload) + BINK_BUNDLE_PAYLOAD_CHUNK_BYTE_SIZE(payload) - EXP_WORD_BYTES))
-#define BINK_MARK_WORK_BLOCK(work_row, work_col) ((work_row)[(work_col) >> BINK_CHROMA_SHIFT] = 1)
+#define BINK_MARK_WORK_BLOCK(work_row, work_col) ((work_row)[(work_col) >> BINK_CHROMA_SHIFT] = BINK_WORK_BLOCK_MARKED)
 #define BINK_MOTION_SOURCE(old, pitch, mx, my) ((old) + (my) * (s32)(pitch) + (mx))
 #define BINK_DCT_PATTERN_SCAN(pattern) (patterns + (pattern) * BINK_BLOCK_PIXELS)
 #define BINK_FILL_WORD(value) \
