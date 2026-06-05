@@ -164,6 +164,10 @@ typedef char NGCSoundStateFitsInBinkSndData
 #define NGC_TASK(state, index) (&NGC_STATE(state)->tasks[(index)])
 #define NGC_TASK_FOR_INDEX(state, index, side) NGC_TASK(state, (side) + ((index) << 1))
 #define NGC_TASK_FOR_LOCK_CHANNEL(state, index, channel) NGC_TASK(state, ((index) + (channel)) + (channel))
+#define NGC_RIGHT_LOCK_TASK_INDEX(index) ((index) + NGC_SOUND_RIGHT_TASK_OFFSET)
+#define NGC_LEFT_LOCK_TASK(state, index) NGC_TASK(state, index)
+#define NGC_RIGHT_LOCK_TASK_BASE(state) NGC_TASK(state, NGC_SOUND_RIGHT_TASK_OFFSET)
+#define NGC_RIGHT_LOCK_TASK(state, index) NGC_TASK(state, NGC_RIGHT_LOCK_TASK_INDEX(index))
 #define NGC_TASK_SOURCE(task) ((u8 PTR4*)((task)->source))
 #define NGC_TASK_SOURCE_AT(task, offset) (NGC_TASK_SOURCE(task) + (offset))
 #define NGC_LEFT_VOICE(ptr) (NGC_STATE(ptr)->left_voice)
@@ -252,10 +256,10 @@ static void NGC_SoundPlay(BINKSND PTR4* snd, u32 index, u32 upload_bytes)
 
     state = NGC_SOUND_STATE(snd);
     play_end = NGC_SOUND_STATE(snd)->play_cursor + upload_bytes;
-    task = NGC_TASK(state, index);
+    task = NGC_LEFT_LOCK_TASK(state, index);
 
     if (NGC_SOUND_STATE(snd)->right_voice != 0) {
-        right_task = &NGC_SOUND_STATE(snd)->tasks[NGC_SOUND_RIGHT_TASK_OFFSET];
+        right_task = NGC_RIGHT_LOCK_TASK_BASE(state);
         right_task += index;
 
         DCFlushRange((void PTR4*)right_task->source, upload_bytes);
@@ -598,7 +602,7 @@ static s32 Lock(BINKSND PTR4* snd, u8 PTR4* PTR4* addr, u32 PTR4* len)
         }
 
         /* The lock index selects one half of the MRAM staging buffer. */
-        task = NGC_TASK(state, NGC_SOUND_STATE(snd)->lock_index);
+        task = NGC_LEFT_LOCK_TASK(state, NGC_SOUND_STATE(snd)->lock_index);
         left_buffer = NGC_SOUND_STATE(snd)->decode_buffer +
                       ((NGC_SOUND_STATE(snd)->lock_index * channel_stride) >>
                        NGC_SOUND_HALF_BUFFER_SHIFT);
@@ -606,7 +610,7 @@ static s32 Lock(BINKSND PTR4* snd, u8 PTR4* PTR4* addr, u32 PTR4* len)
         task->source = (u32)left_buffer;
         decode_buffer = left_buffer;
         left_buffer += NGC_SOUND_STATE(snd)->channel_stride;
-        right_task = NGC_TASK(state, NGC_SOUND_STATE(snd)->lock_index + NGC_SOUND_RIGHT_TASK_OFFSET);
+        right_task = NGC_RIGHT_LOCK_TASK(state, NGC_SOUND_STATE(snd)->lock_index);
         right_task->source = (u32)left_buffer;
 
         if (snd->chans == NGC_SOUND_STEREO_CHANNELS) {
@@ -641,7 +645,7 @@ static s32 Unlock(BINKSND PTR4* snd, u32 filled_bytes)
         /* Split the temporary interleaved stereo buffer into the two ARQ upload buffers. */
         u8 PTR4* left_buffer = NGC_TASK_SOURCE(task);
         u8 PTR4* right_buffer =
-            NGC_TASK_SOURCE(NGC_TASK(state, state->lock_index + NGC_SOUND_RIGHT_TASK_OFFSET));
+            NGC_TASK_SOURCE(NGC_RIGHT_LOCK_TASK(state, state->lock_index));
         u8 PTR4* stereo_src = state->stereo_buffer;
 
         if (NGC_SND(snd)->bits == NGC_SOUND_BITS_16) {
@@ -740,7 +744,7 @@ static void NGC_StarvedClear(BINKSND PTR4* snd)
 check_busy:
     /* Wait for one staging half to be free before injecting silence. */
     lock_side = poll_count & NGC_SOUND_LOCK_INDEX_MASK;
-    task = NGC_TASK(state, lock_side);
+    task = NGC_LEFT_LOCK_TASK(state, lock_side);
     if (NGC_TASK_BUSY(task)) {
         goto busy;
     }
@@ -755,9 +759,9 @@ check_busy:
     }
 
     memset(silence_buffer, 0, NGC_SOUND_STATE(snd)->frame_size);
-    task = NGC_TASK(state, lock_side);
+    task = NGC_LEFT_LOCK_TASK(state, lock_side);
     task->source = (u32)silence_buffer;
-    right_task_index = lock_side + NGC_SOUND_RIGHT_TASK_OFFSET;
+    right_task_index = NGC_RIGHT_LOCK_TASK_INDEX(lock_side);
     NGC_TASK(state, right_task_index)->source = (u32)silence_buffer;
     NGC_SoundPlay(snd, lock_side, NGC_SOUND_STATE(snd)->frame_size);
 
