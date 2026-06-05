@@ -18,12 +18,12 @@ typedef enum RADDivConstants
     RAD_DIV_POWER_SHIFT_BASE = 31,
     RAD_DIV_WORD_BITS = 32,
     RAD_DIV_HIGH_WORD_BITS = 16,
-    RAD_DIV_RECIP_NUMERATOR = 0xFFFFFFFF,
-    RAD_DIV_ROUND_TO_HIGH_WORD = 0xFFFF
+    RAD_DIV_U32_MAX = 0xFFFFFFFF,
+    RAD_DIV_HIGH_WORD_ROUND_MASK = (1 << RAD_DIV_HIGH_WORD_BITS) - 1
 } RADDivConstants;
 
 #define RAD_DIV_IS_POWER_OF_TWO(value) (((value) & ((value) - 1)) == 0)
-#define RAD_DIV_HIGH_WORD_CEIL(value) (((value) + RAD_DIV_ROUND_TO_HIGH_WORD) >> RAD_DIV_HIGH_WORD_BITS)
+#define RAD_DIV_HIGH_WORD_CEIL(value) (((value) + RAD_DIV_HIGH_WORD_ROUND_MASK) >> RAD_DIV_HIGH_WORD_BITS)
 #define RAD_TIMER_RECIP_LOW_HIGH_PRODUCT(ticks) \
     ((u32)(((u64)(ticks) * RAD_TIMER_RECIP_MAGIC) >> 32))
 
@@ -99,7 +99,7 @@ u32 mult64anddiv(u32 m1, u32 m2, u32 d)
     }
 
     {
-        u32 recip = RAD_DIV_RECIP_NUMERATOR / d;
+        u32 recip = RAD_DIV_U32_MAX / d;
         u32 upper = RAD_DIV_HIGH_WORD_CEIL(d);
 
         quotient = 0;
@@ -334,7 +334,7 @@ u32 div64(u32 high, u32 low, u32 divisor)
     }
 
     {
-        u32 recip = RAD_DIV_RECIP_NUMERATOR / divisor;
+        u32 recip = RAD_DIV_U32_MAX / divisor;
         u32 upper = RAD_DIV_HIGH_WORD_CEIL(divisor);
 
         quotient = 0;
