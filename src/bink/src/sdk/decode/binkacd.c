@@ -43,6 +43,11 @@ typedef enum BINKACFixedPointLayout
     BINKAC_INVERT_BINS = 24
 } BINKACFixedPointLayout;
 
+typedef enum BINKACBitstreamLayout
+{
+    BINKAC_USED_BYTE_COUNT_MASK = FXP_VALUE_MASK
+} BINKACBitstreamLayout;
+
 typedef enum BINKACSampleLayout
 {
     BINKACNEWFORMAT_SKIP_BITS = 2,
@@ -89,7 +94,7 @@ typedef VARBITS BINKVARBITS;
     ((transform_size_half) * sizeof(*(coeffs)) - BINKAC_RDFT_COEFF_TAIL_ADJUST)
 #define BINKAC_OVERLAP_BYTES(buffer_size) ((buffer_size) / BINKAC_TRANSFORM_HALF_DIVISOR)
 #define BINKAC_VARBITS_USED_BYTES(bits) \
-    (((u32)((u8 PTR4*)(bits).cur - (u8 PTR4*)(bits).init)) & FXP_VALUE_MASK)
+    (((u32)((u8 PTR4*)(bits).cur - (u8 PTR4*)(bits).init)) & BINKAC_USED_BYTE_COUNT_MASK)
 #define BINKAC_OVERLAP_SOURCE(samples, buffer_size, window_size) \
     ((u8 PTR4*)(samples) + ((buffer_size) - (window_size)))
 #define BINKAC_INPUT_ADVANCE(ptr, bytes) ((u8 PTR4*)(ptr) + (bytes))
