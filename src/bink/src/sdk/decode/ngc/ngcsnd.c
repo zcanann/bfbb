@@ -702,7 +702,6 @@ static s32 Unlock(BINKSND PTR4* snd, u32 filled_bytes)
         filled_bytes >>= NGC_SOUND_HALF_BUFFER_SHIFT;
     }
 
-    padded_bytes = filled_bytes;
     if ((filled_bytes & NGC_SOUND_FRAME_ALIGN_MASK) != 0) {
         u32 i;
 
@@ -712,16 +711,17 @@ static s32 Unlock(BINKSND PTR4* snd, u32 filled_bytes)
                                       filled_bytes),
                    0, padded_bytes - filled_bytes);
         }
+        filled_bytes = padded_bytes;
     }
 
     if (state->play_state == NGC_PLAY_STATE_STOPPED) {
-        NGC_TASK(state, state->lock_index)->length = padded_bytes;
+        NGC_TASK(state, state->lock_index)->length = filled_bytes;
         if (state->lock_index == NGC_SOUND_LAST_LOCK_INDEX) {
             NGC_SoundPlay(snd, 0, NGC_TASK(state, 0)->length);
             NGC_SoundPlay(snd, 1, NGC_TASK(state, 1)->length);
         }
     } else {
-        NGC_SoundPlay(snd, state->lock_index, padded_bytes);
+        NGC_SoundPlay(snd, state->lock_index, filled_bytes);
     }
 
     return 1;
