@@ -141,11 +141,11 @@ static f64 bink_invertbins[BINKAC_INVERT_BINS] = {
 
 static f32 fxptof(u32 packed)
 {
-    f32 f;
+    f32 value;
 
-    f = (f32)((f64)((packed & ~FXP_SIGN_MASK) >> FXP_VALUE_SHIFT) *
-              bink_invertbins[packed & FXP_BIN_MASK]);
-    return (packed & FXP_SIGN_MASK) ? -f : f;
+    value = (f32)((f64)((packed & ~FXP_SIGN_MASK) >> FXP_VALUE_SHIFT) *
+                  bink_invertbins[packed & FXP_BIN_MASK]);
+    return (packed & FXP_SIGN_MASK) ? -value : value;
 }
 
 static inline s16 clamp_to_s16(s32 value)
@@ -345,9 +345,10 @@ static void read_rle_samples(f32 PTR4* samps, u32 transform_size, BINKVARBITS PT
 
 f64 pow(f64 x, f64 y);
 
-static inline f32 Undecibel(f32 d)
+static inline f32 Undecibel(f32 decibels)
 {
-    return (f32)pow(BINKAC_QUANT_POWER_BASE_CONST, d * BINKAC_QUANT_POWER_SCALE_CONST);
+    return (f32)pow(BINKAC_QUANT_POWER_BASE_CONST,
+                    decibels * BINKAC_QUANT_POWER_SCALE_CONST);
 }
 
 static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
