@@ -939,8 +939,8 @@ static void cftf1st(s32 n, f32 PTR4* a, f32 PTR4* w)
     csc3 = w[3];
     wd1r = CFT_ROT_ONE;
     wd1i = CFT_ROT_ZERO;
-    wd3r = wd1r;
-    wd3i = wd1i;
+    wd3r = CFT_ROT_ONE;
+    wd3i = CFT_ROT_ZERO;
     k = 0;
     for (j = 2; j < mh - 2; j += 4)
     {
