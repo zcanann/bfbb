@@ -325,7 +325,7 @@ static void read_rle_samples(f32 PTR4* samps, u32 transform_size, BINKVARBITS PT
                         magnitude = BINKAC_APPLY_SIGN(magnitude, sign);
                         *out = magnitude * dequant;
                     } else {
-                        *out = 0.0f;
+                        *out = BINKAC_SAMPLE_ZERO;
                     }
                 }
 
@@ -402,7 +402,7 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
 
 static inline f32 radfsqrt(f32 value)
 {
-    if (value > 0.0f) {
+    if (value > BINKAC_RSQRT_ZERO) {
         f64 guess;
         f64 error;
 
