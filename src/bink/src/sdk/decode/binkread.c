@@ -2910,7 +2910,7 @@ u32 BinkGetTrackData(HBINKTRACK bnkt, void PTR4* dest)
             if ((s32)i == bnkt->trackindex && size != 0) {
                 u32 left = payload->decoded_size;
                 u32 wrote = 0;
-                src += sizeof(payload->decoded_size);
+                src = payload->data;
 
                 while (left != 0) {
                     void PTR4* out;
