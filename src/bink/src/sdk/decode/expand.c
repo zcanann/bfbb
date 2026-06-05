@@ -67,7 +67,7 @@ typedef enum BINKHuff4Layout
     HUFF4_ALL_SYMBOLS_MASK = 0xffff,
     HUFF4_NIBBLE_BITS = 4,
     HUFF4_SUBTYPE_BITS = 2,
-    HUFF4_EXPLICIT_SUBTYPE_BITS = 3,
+    HUFF4_EXPLICIT_INDEX_BITS = 3,
     HUFF4_PAIR_COUNT = 8,
     HUFF4_PAIR_SYMBOLS = 2,
     HUFF4_QUARTER_SYMBOLS = 4,
@@ -589,7 +589,7 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
             }
         }
     } else {
-        VarBitsGet(last_explicit, u32, *vb, HUFF4_EXPLICIT_SUBTYPE_BITS);
+        VarBitsGet(last_explicit, u32, *vb, HUFF4_EXPLICIT_INDEX_BITS);
         unused_symbols = HUFF4_ALL_SYMBOLS_MASK;
         for (i = 0; i <= last_explicit; ++i) {
             VarBitsGet(symbol, u32, *vb, HUFF4_NIBBLE_BITS);
