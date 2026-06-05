@@ -253,20 +253,21 @@ typedef VARBITS EXPBITS;
 static void ReadHuffTable(EXPBITS PTR4* bits, const u8 PTR4* PTR4* decode,
                           u32 PTR4* bits_to_peek, u8 PTR4* syms);
 
-static void OpenReadBundle(u8 PTR4* bits, READBUNDLE PTR4* bundle, s32 width, u32 rows,
-                           s32 shift, s32 pitch, BINKBUNDLEINITIALVALUEFLAG use_initial_value)
+static void OpenReadBundle(u8 PTR4* bits, READBUNDLE PTR4* bundle, s32 bundle_width,
+                           u32 rows, s32 bit_size, s32 element_pitch,
+                           BINKBUNDLEINITIALVALUEFLAG use_initial_value)
 {
     u32 count_base;
     u32 len;
 
-    bundle->bit_size = shift;
+    bundle->bit_size = bit_size;
     bundle->cur_ptr = 0;
     bundle->cur_dec = 0;
-    count_base = BINK_BUNDLE_COUNT_BASE(rows, pitch);
-    len = BINK_BUNDLE_COUNT_BITS(width, count_base);
+    count_base = BINK_BUNDLE_COUNT_BASE(rows, element_pitch);
+    len = BINK_BUNDLE_COUNT_BITS(bundle_width, count_base);
     bundle->len = len;
     if (use_initial_value) {
-        bundle->initial_value = BINK_BUNDLE_INITIAL_VALUE(shift);
+        bundle->initial_value = BINK_BUNDLE_INITIAL_VALUE(bit_size);
     } else {
         bundle->initial_value = BINK_BUNDLE_INITIAL_VALUE_NONE;
     }
