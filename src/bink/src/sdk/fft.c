@@ -1768,7 +1768,7 @@ static void cftf161(f32 PTR4* a, f32 PTR4* w)
     wn4r = w[1];
     wk1r = w[2];
     wk1i = wn4r * wk1r;
-    wk1r = wk1i + wk1r;
+    wk1r += wk1i;
     x0r = a[0] + a[16];
     x0i = a[1] + a[17];
     x1r = a[0] - a[16];
