@@ -51,6 +51,10 @@ typedef enum BINKFrameOffsetFlags
 #define BINK_OPEN_USES_FRAME_RATE_OVERRIDE(flags) (((flags) & BINKFRAMERATE) != 0)
 #define BINK_OPEN_USES_IO_BUFFER_OVERRIDE(flags) (((flags) & BINKIOSIZE) != 0)
 #define BINK_OPEN_USES_SIMULATION_OVERRIDE(flags) (((flags) & BINKSIMULATE) != 0)
+#define BINK_OPEN_USES_TRACK_SELECTION(flags) (((flags) & BINKSNDTRACK) != 0)
+#define BINK_OPEN_HAS_ALPHA(flags) (((flags) & BINKALPHA) != 0)
+#define BINK_OPEN_PRELOADS_ALL(flags) (((flags) & BINKPRELOADALL) != 0)
+#define BINK_OPEN_FILLS_IO_BUFFER(flags) (((flags) & BINKNOFILLIOBUF) == 0)
 typedef enum BINKHeaderTrackTable
 {
     BINK_HEADER_TRACK_SIZES_TABLE,
@@ -1064,7 +1068,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
     HBINK out;
 
     open = (BINKIOOPEN)BinkFileOpen;
-    if ((flags & BINKSNDTRACK) == 0) {
+    if (!BINK_OPEN_USES_TRACK_SELECTION(flags)) {
         TotTracks = 1;
         TrackNums[0] = BINK_DEFAULT_TRACK_ID;
     }
@@ -1123,7 +1127,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
     bnk.decompheight = hdr.Height;
     bnk.BinkType = hdr.Flags;
     bnk.OpenFlags |= hdr.Flags & BINKGRAYSCALE;
-    if ((hdr.Flags & BINKALPHA) == 0) {
+    if (!BINK_OPEN_HAS_ALPHA(hdr.Flags)) {
         bnk.OpenFlags &= ~BINKALPHA;
     }
 
@@ -1255,7 +1259,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
         high1secrate(out->Frames, out->frameoffsets, out->runtimeframes,
                      &out->Highest1SecFrame, &all_key);
 
-    if ((out->OpenFlags & BINKALPHA) != 0) {
+    if (BINK_OPEN_HAS_ALPHA(out->OpenFlags)) {
         pushmalloc(&out->APlane[0], BINK_ALPHA_PLANE_BYTES(out));
         if (all_key == 0) {
             pushmalloc(&out->APlane[1], BINK_ALPHA_PLANE_BYTES(out));
@@ -1300,7 +1304,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
                 out->OpenFlags |= BINKPRELOADALL;
             }
 
-            if ((flags & BINKPRELOADALL) != 0) {
+            if (BINK_OPEN_PRELOADS_ALL(flags)) {
                 u32 preload_size =
                     out->Size + BINK_FILE_HEADER_BYTES -
                     BINK_FRAME_OFFSET(out->frameoffsets[0]);
@@ -1436,7 +1440,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
         out->bio.suspend_callback = bink_suspend_io;
         out->bio.try_suspend_callback = bink_try_suspend_io;
         out->bio.idle_on_callback = bink_idle_on_io;
-        if (out->preloadptr == 0 && (flags & BINKNOFILLIOBUF) == 0) {
+        if (out->preloadptr == 0 && BINK_OPEN_FILLS_IO_BUFFER(flags)) {
             while (out->bio.Idle(&out->bio) != 0) {
             }
         }
