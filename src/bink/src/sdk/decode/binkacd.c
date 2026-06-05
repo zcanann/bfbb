@@ -386,6 +386,7 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
                    u32 num_bands, const u32 PTR4* bands,
                    f32 transform_size_root)
 {
+    f32 output_scale = transform_size_root;
     f32 threshold[BINKAC_QUANT_COUNT];
     BINKVARBITS vb;
     f32 decoded_coeffs[MAX_TRANSFORM];
@@ -437,9 +438,9 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
     }
 
     if (chans == BINKAC_MONO_CHANNELS) {
-        quanttos16s(samples, decoded_coeffs, transform_size_root, transform_size);
+        quanttos16s(samples, decoded_coeffs, output_scale, transform_size);
     } else {
-        quanttos16chans2(samples, decoded_coeffs, transform_size_root, transform_size);
+        quanttos16chans2(samples, decoded_coeffs, output_scale, transform_size);
     }
 
     vb.bitlen = 0;
