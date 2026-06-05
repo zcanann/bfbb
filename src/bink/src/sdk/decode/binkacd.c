@@ -93,6 +93,8 @@ typedef VARBITS BINKVARBITS;
 #define BINKAC_ZERO_BYTE 0
 #define BINKAC_STEREO_LEFT_COEFF(coeffs) ((coeffs)[0])
 #define BINKAC_STEREO_RIGHT_COEFF(coeffs, stride) ((coeffs)[(stride)])
+#define BINKAC_SIGN_MASK(sign_bit) (-(s32)(sign_bit))
+#define BINKAC_APPLY_SIGN(value, sign) (((value) ^ (sign)) - (sign))
 
 #define BINKAC_FXP_TO_FLOAT_BIAS 4503599627370496.0
 #define BINKAC_SAMPLE_ZERO 0.0f
@@ -319,8 +321,8 @@ static void read_rle_samples(f32 PTR4* samps, u32 transform_size, BINKVARBITS PT
                     if (magnitude) {
                         /* Bink audio 1 stores the sign bit after each nonzero coefficient. */
                         u32 sign_bit = read_bit(vbp);
-                        s32 sign = -(s32)sign_bit;
-                        magnitude = (magnitude ^ sign) - sign;
+                        s32 sign = BINKAC_SIGN_MASK(sign_bit);
+                        magnitude = BINKAC_APPLY_SIGN(magnitude, sign);
                         *out = magnitude * dequant;
                     } else {
                         *out = 0.0f;
