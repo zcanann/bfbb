@@ -15,12 +15,15 @@ typedef enum RADDivConstants
 {
     RAD_TIMER_RECIP_MAGIC = 0xCF2049A1,
     RAD_TIMER_RECIP_SHIFT = 15,
+    RAD_DIV_POWER_SHIFT_BASE = 31,
+    RAD_DIV_WORD_BITS = 32,
+    RAD_DIV_HIGH_WORD_BITS = 16,
     RAD_DIV_RECIP_NUMERATOR = 0xFFFFFFFF,
     RAD_DIV_ROUND_TO_HIGH_WORD = 0xFFFF
 } RADDivConstants;
 
 #define RAD_DIV_IS_POWER_OF_TWO(value) (((value) & ((value) - 1)) == 0)
-#define RAD_DIV_HIGH_WORD_CEIL(value) (((value) + RAD_DIV_ROUND_TO_HIGH_WORD) >> 16)
+#define RAD_DIV_HIGH_WORD_CEIL(value) (((value) + RAD_DIV_ROUND_TO_HIGH_WORD) >> RAD_DIV_HIGH_WORD_BITS)
 #define RAD_TIMER_RECIP_LOW_HIGH_PRODUCT(ticks) \
     ((u32)(((u64)(ticks) * RAD_TIMER_RECIP_MAGIC) >> 32))
 
@@ -89,7 +92,7 @@ u32 mult64anddiv(u32 m1, u32 m2, u32 d)
     /* Fast path for exact power-of-two divisors after the 64-bit multiply. */
     if (RAD_DIV_IS_POWER_OF_TWO(d)) {
         u32 clz = radcntlzw(d);
-        m1 >>= (31 - clz);
+        m1 >>= (RAD_DIV_POWER_SHIFT_BASE - clz);
         hi <<= (clz + 1);
         return m1 | hi;
     }
@@ -104,7 +107,7 @@ u32 mult64anddiv(u32 m1, u32 m2, u32 d)
         if (upper != 0) {
             u32 clz = radcntlzw(hi);
             u32 est = (hi << clz) / upper;
-            s32 adj = 16 - (s32)clz;
+            s32 adj = RAD_DIV_HIGH_WORD_BITS - (s32)clz;
             s32 sign = adj >> 31;
             u32 rshift = (u32)(-(s32)adj) & (u32)sign;
             u32 lshift = (u32)adj & ~(u32)sign;
@@ -136,7 +139,7 @@ u32 mult64andshift(u32 left, u32 right, u32 shift)
     u32 hi, lo;
     __asm__("mulhwu %1, %2, %3\n\tmullw %0, %2, %3" : "=&r"(lo), "=&r"(hi) : "r"(left), "r"(right));
     lo >>= shift;
-    hi <<= (32 - shift);
+    hi <<= (RAD_DIV_WORD_BITS - shift);
     return lo | hi;
 }
 
@@ -326,7 +329,7 @@ u32 div64(u32 high, u32 low, u32 divisor)
     /* 64-bit numerator, 32-bit divisor helper used by the Bink platform layer. */
     if (RAD_DIV_IS_POWER_OF_TWO(divisor)) {
         u32 clz = radcntlzw(divisor);
-        return (low >> (31 - clz)) | (hi << (clz + 1));
+        return (low >> (RAD_DIV_POWER_SHIFT_BASE - clz)) | (hi << (clz + 1));
     }
 
     {
@@ -338,7 +341,7 @@ u32 div64(u32 high, u32 low, u32 divisor)
         if (upper != 0) {
             u32 clz = radcntlzw(hi);
             u32 est = (hi << clz) / upper;
-            s32 adj = 16 - (s32)clz;
+            s32 adj = RAD_DIV_HIGH_WORD_BITS - (s32)clz;
             s32 sign = adj >> 31;
             u32 rshift = (u32)(-(s32)adj) & (u32)sign;
             u32 lshift = (u32)adj & ~(u32)sign;
