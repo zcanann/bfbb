@@ -1076,12 +1076,18 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
     if (hdr.Marker != BINKMARKER1 && hdr.Marker != BINKMARKER2 &&
         hdr.Marker != BINKMARKER3 && hdr.Marker != BINKMARKER4) {
         BinkSetError(BINK_ERROR_NOT_BINK);
-        goto close_and_fail;
+        if ((flags & BINKFROMMEMORY) == 0) {
+            bnk.bio.Close(&bnk.bio);
+        }
+        return 0;
     }
 
     if (hdr.Frames == 0) {
         BinkSetError(BINK_ERROR_NO_COMPRESSED_FRAMES);
-        goto close_and_fail;
+        if ((flags & BINKFROMMEMORY) == 0) {
+            bnk.bio.Close(&bnk.bio);
+        }
+        return 0;
     }
 
     bnk.OpenFlags = flags & ~BINKCOPYNOSCALING;
