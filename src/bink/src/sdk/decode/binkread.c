@@ -1355,10 +1355,10 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
                     if (sndopen != 0) {
                         u32 freq = BINKTRACKFREQ(out->tracktypes[out->trackindexes[playing]]);
 
-                        if (out->FrameRate != 0 && out->FrameRateDiv != 0) {
-                            freq = ((f64)freq * (f64)out->FrameRate *
-                                    (f64)out->fileframeratediv) /
-                                   ((f64)out->FrameRateDiv * (f64)out->fileframerate);
+                        if (bnk.FrameRate != 0 && bnk.FrameRateDiv != 0) {
+                            freq = ((f64)freq * (f64)bnk.FrameRate *
+                                    (f64)bnk.fileframeratediv) /
+                                   ((f64)bnk.FrameRateDiv * (f64)bnk.fileframerate);
                         }
 
                         if (sndopen(&out->bsnd[playing], freq,
