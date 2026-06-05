@@ -22,6 +22,7 @@ typedef enum BINKACBandLayout
     BINKAC_BAND_SENTINEL_COUNT = 1,
     BINKAC_QUANT_COUNT = TOTBANDS + BINKAC_BAND_SENTINEL_COUNT,
     BINKAC_BAND_LIMIT_SCALE = 2,
+    BINKAC_MIN_BAND_LIMIT = 1,
     BINKAC_QUANT_BITS = 8
 } BINKACBandLayout;
 
@@ -496,7 +497,7 @@ HBINKAUDIODECOMP BinkAudioDecompressOpen(u32 rate, u32 chans, u32 flags)
     for (band_index = 0; band_index < num_bands; ++band_index) {
         ba->bands[band_index] = (bink_bandtopfreq[band_index] * transform_size_half) / nyq;
         if (ba->bands[band_index] == 0) {
-            ba->bands[band_index] = 1;
+            ba->bands[band_index] = BINKAC_MIN_BAND_LIMIT;
         }
     }
     ba->bands[band_index] = transform_size_half;
