@@ -161,6 +161,8 @@ typedef enum BINKBUNDLEINITIALVALUE
     (*(u32 PTR4*)((ptr) + (pitch) * (row) + (word) * BINK_PLANE_WORD_BYTES))
 #define BINK_BLOCK_ROW_DOUBLE(ptr, pitch, row) \
     (*(double PTR4*)((ptr) + (pitch) * (row)))
+#define BINK_LINEAR_BLOCK_ROW_DOUBLE(ptr, row) \
+    (*(double PTR4*)((ptr) + (row) * BINK_BLOCK_SIDE))
 #define BINK_LINEAR_BLOCK_ROW_WORD(ptr, row, word) \
     (*(u32 PTR4*)((ptr) + (row) * BINK_BLOCK_SIDE + (word) * BINK_PLANE_WORD_BYTES))
 #define BINK_COPY_BLOCK_WORD_ROW(dest, src, pitch, row)                                      \
@@ -172,6 +174,15 @@ typedef enum BINKBUNDLEINITIALVALUE
     } while (0)
 #define BINK_COPY_BLOCK_DOUBLE_ROW(dest, src, pitch, row)                                    \
     (BINK_BLOCK_ROW_DOUBLE(dest, pitch, row) = BINK_BLOCK_ROW_DOUBLE(src, pitch, row))
+#define BINK_COPY_LINEAR_TO_BLOCK_WORD_ROW(dest, src, pitch, row)                            \
+    do {                                                                                     \
+        BINK_BLOCK_ROW_WORD(dest, pitch, row, BINK_BLOCK_ROW_WORD_0) =                       \
+            BINK_LINEAR_BLOCK_ROW_WORD(src, row, BINK_BLOCK_ROW_WORD_0);                     \
+        BINK_BLOCK_ROW_WORD(dest, pitch, row, BINK_BLOCK_ROW_WORD_1) =                       \
+            BINK_LINEAR_BLOCK_ROW_WORD(src, row, BINK_BLOCK_ROW_WORD_1);                     \
+    } while (0)
+#define BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, src, pitch, row)                          \
+    (BINK_BLOCK_ROW_DOUBLE(dest, pitch, row) = BINK_LINEAR_BLOCK_ROW_DOUBLE(src, row))
 #define BINK_FILL_BLOCK_WORD_ROW(dest, pitch, row, fill)                                     \
     do {                                                                                     \
         BINK_BLOCK_ROW_WORD(dest, pitch, row, BINK_BLOCK_ROW_WORD_0) = (fill);               \
@@ -1339,14 +1350,25 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 expand_pattern_block(dest, pitch, &colors, &patterns);
                 break;
             case BINK_BLOCK_RAW: {
-                u32 block_row;
-
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
-                for (block_row = 0; block_row < BINK_BLOCK_SIDE; ++block_row) {
-                    BINK_BLOCK_ROW_WORD(dest, pitch, block_row, BINK_BLOCK_ROW_WORD_0) =
-                        BINK_LINEAR_BLOCK_ROW_WORD(colors.cur_ptr, block_row, BINK_BLOCK_ROW_WORD_0);
-                    BINK_BLOCK_ROW_WORD(dest, pitch, block_row, BINK_BLOCK_ROW_WORD_1) =
-                        BINK_LINEAR_BLOCK_ROW_WORD(colors.cur_ptr, block_row, BINK_BLOCK_ROW_WORD_1);
+                if ((((u32)dest | (u32)colors.cur_ptr) & BINK_BLOCK_DOUBLE_ALIGN_MASK) == 0) {
+                    BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, 0);
+                    BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, 1);
+                    BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, 2);
+                    BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, 3);
+                    BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, 4);
+                    BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, 5);
+                    BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, 6);
+                    BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, 7);
+                } else {
+                    BINK_COPY_LINEAR_TO_BLOCK_WORD_ROW(dest, colors.cur_ptr, pitch, 0);
+                    BINK_COPY_LINEAR_TO_BLOCK_WORD_ROW(dest, colors.cur_ptr, pitch, 1);
+                    BINK_COPY_LINEAR_TO_BLOCK_WORD_ROW(dest, colors.cur_ptr, pitch, 2);
+                    BINK_COPY_LINEAR_TO_BLOCK_WORD_ROW(dest, colors.cur_ptr, pitch, 3);
+                    BINK_COPY_LINEAR_TO_BLOCK_WORD_ROW(dest, colors.cur_ptr, pitch, 4);
+                    BINK_COPY_LINEAR_TO_BLOCK_WORD_ROW(dest, colors.cur_ptr, pitch, 5);
+                    BINK_COPY_LINEAR_TO_BLOCK_WORD_ROW(dest, colors.cur_ptr, pitch, 6);
+                    BINK_COPY_LINEAR_TO_BLOCK_WORD_ROW(dest, colors.cur_ptr, pitch, 7);
                 }
                 BINK_BUNDLE_ADVANCE(colors, BINK_COLOR_BLOCK_BYTES);
                 break;
