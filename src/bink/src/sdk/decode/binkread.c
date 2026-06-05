@@ -1048,8 +1048,8 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
 
     open = (BINKIOOPEN)BinkFileOpen;
     if ((flags & BINKSNDTRACK) == 0) {
-        TrackNums[0] = BINK_DEFAULT_TRACK_ID;
         TotTracks = 1;
+        TrackNums[0] = BINK_DEFAULT_TRACK_ID;
     }
 
     memset(&bnk, 0, sizeof(bnk));
