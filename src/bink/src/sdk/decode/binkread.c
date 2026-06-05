@@ -2906,7 +2906,7 @@ u32 BinkGetTrackData(HBINKTRACK bnkt, void PTR4* dest)
             BINKTRACKPAYLOAD PTR4* payload;
             u32 size = frame->size;
             src += sizeof(frame->size);
-            payload = (BINKTRACKPAYLOAD PTR4*)src;
+            payload = BINK_TRACK_FRAME_PAYLOAD(frame);
             if ((s32)i == bnkt->trackindex && size != 0) {
                 u32 left = payload->decoded_size;
                 u32 wrote = 0;
