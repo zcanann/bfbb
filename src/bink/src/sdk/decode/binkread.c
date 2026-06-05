@@ -83,6 +83,8 @@ typedef enum BINKGlobalLayout
 
 #define BINK_RECT_SORT_KEY(top, left) ((top) * BINK_RECT_SORT_KEY_SCALE + (left))
 #define BINK_RECT_AREA(rect) ((rect)->Width * (rect)->Height)
+#define BINK_RECT_SPLIT_SCORE(rect, first, second) \
+    ((BINK_RECT_AREA(rect) - BINK_RECT_AREA(first)) - BINK_RECT_AREA(second))
 typedef enum BINKPlaneLayout
 {
     BINK_CHROMA_SHIFT = 1,
@@ -2544,7 +2546,7 @@ static s32 trysplit(BINKRECT PTR4* outa, BINKRECT PTR4* outb, const BINKRECT PTR
         split_rect.Width -= split;
         split_rect.Left += split;
         smallestrect(outb, mask, pitch, &split_rect);
-        best_score = (BINK_RECT_AREA(rect) - BINK_RECT_AREA(outa)) - BINK_RECT_AREA(outb);
+        best_score = BINK_RECT_SPLIT_SCORE(rect, outa, outb);
     } else {
         best_score = 0;
     }
@@ -2562,8 +2564,7 @@ static s32 trysplit(BINKRECT PTR4* outa, BINKRECT PTR4* outb, const BINKRECT PTR
         split_rect.Height -= split;
         split_rect.Top += split;
         smallestrect(&second_half, mask, pitch, &split_rect);
-        split_score = (BINK_RECT_AREA(rect) - BINK_RECT_AREA(&first_half)) -
-                      BINK_RECT_AREA(&second_half);
+        split_score = BINK_RECT_SPLIT_SCORE(rect, &first_half, &second_half);
         if (split_score > best_score) {
             *outa = first_half;
             *outb = second_half;
