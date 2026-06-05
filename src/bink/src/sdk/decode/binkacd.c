@@ -59,7 +59,9 @@ typedef enum BINKACSampleLayout
     BINKAC_RDFT_COEFF_TAIL_ADJUST = 1,
     BINKAC_DCT_INVERSE = 1,
     BINKAC_RDFT_INVERSE = -1,
+    BINKAC_CONTINUE_FRAME = 0,
     BINKAC_START_FRAME = 1,
+    BINKAC_FFT_WORK_SENTINEL = 0,
     BINKAC_MONO_CHANNELS = 1
 } BINKACSampleLayout;
 
@@ -501,7 +503,7 @@ HBINKAUDIODECOMP BinkAudioDecompressOpen(u32 rate, u32 chans, u32 flags)
         }
     }
     ba->bands[band_index] = transform_size_half;
-    ba->fft_work[0] = 0;
+    ba->fft_work[0] = BINKAC_FFT_WORK_SENTINEL;
     ba->start_frame = BINKAC_START_FRAME;
 
     return ba;
@@ -535,7 +537,7 @@ void BinkAudioDecompress(HBINKAUDIODECOMP ba, void PTR4* PTR4* outptr, u32 PTR4*
 
     /* Later frames overlap-add their leading window against the saved tail from the last frame. */
     if (ba->start_frame != 0) {
-        ba->start_frame = 0;
+        ba->start_frame = BINKAC_CONTINUE_FRAME;
     } else {
         u32 sample_index;
         u32 window_samples = BINKAC_WINDOW_SAMPLES(ba->window_size_in_bytes);
