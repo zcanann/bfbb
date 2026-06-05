@@ -144,8 +144,8 @@ u32 mult64andshift(u32 left, u32 right, u32 shift)
     return lo | hi;
 }
 
-void radmemset16(void PTR4* dest, u16 value, u32 halfword_count) {
-    int word_count = halfword_count >> (RAD_MEMSET16_HALFWORDS_PER_WORD - 1);
+void radmemset16(void PTR4* dest, u16 value, u32 size) {
+    int word_count = size >> (RAD_MEMSET16_HALFWORDS_PER_WORD - 1);
     int fill_word = (value << RAD_MEMSET16_WORD_SHIFT) | value;
     u16 PTR4* d16 = dest;
     u32 PTR4* d32 = dest;
@@ -155,7 +155,7 @@ void radmemset16(void PTR4* dest, u16 value, u32 halfword_count) {
     }
 
     d16 = (u16 PTR4*)d32;
-    if ((halfword_count & RAD_MEMSET16_TRAILING_HALFWORD_MASK))
+    if ((size & RAD_MEMSET16_TRAILING_HALFWORD_MASK))
         *d16 = value;
 }
 
