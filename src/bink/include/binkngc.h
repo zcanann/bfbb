@@ -3,7 +3,7 @@
 
 #include "bink.h"
 
-u32 mult64anddiv(u32 left, u32 right, u32 divisor);
+u32 mult64anddiv(u32 m1, u32 m2, u32 d);
 u32 mult64andshift(u32 left, u32 right, u32 shift);
 void radmemset16(void PTR4* dest, u16 value, u32 size);
 /* Milliseconds since the first call, derived from the GameCube OS timebase. */
