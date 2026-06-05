@@ -18,7 +18,8 @@ typedef enum YUY2BlockLayout
     YUY2_WORDS_PER_BLOCK = 2,
     YUY2_X2_WORDS_PER_BLOCK = 4,
     YUY2_WORD_BYTES = 4,
-    YUY2_PAIR_STRIDE = 2
+    YUY2_PAIR_STRIDE = 2,
+    YUY2_TAIL_BLOCK_MASK = 1
 } YUY2BlockLayout;
 
 typedef enum YUY2PairLumaWord
@@ -27,7 +28,7 @@ typedef enum YUY2PairLumaWord
     YUY2_PAIR_LUMA_WORD_1
 } YUY2PairLumaWord;
 #define YUY2_BLOCK_PAIRS(count) ((s32)(count) >> 1)
-#define YUY2_HAS_TAIL_BLOCK(count) (((count) & 1) != 0)
+#define YUY2_HAS_TAIL_BLOCK(count) (((count) & YUY2_TAIL_BLOCK_MASK) != 0)
 #define YUY2_ROW_BYTES(count) ((count) * YUY2_WORDS_PER_BLOCK * YUY2_WORD_BYTES)
 #define YUY2_X2_ROW_BYTES(count) ((count) * YUY2_X2_WORDS_PER_BLOCK * YUY2_WORD_BYTES)
 typedef enum YUY2LumaByteMask
