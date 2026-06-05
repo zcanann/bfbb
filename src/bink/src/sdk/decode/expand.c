@@ -52,7 +52,8 @@ typedef enum BINKExpandBitLayout
     EXP_BITS_PER_WORD = BITSTYPELEN,
     EXP_LAST_BIT_INDEX = EXP_BITS_PER_WORD - 1,
     EXP_WORD_BYTES = BITSTYPEBYTES,
-    EXP_U16_MASK = 0xffff
+    EXP_U16_MASK = 0xffff,
+    EXP_BIT_MASK = 1
 } BINKExpandBitLayout;
 
 typedef enum BINKHuff4Layout
@@ -314,7 +315,7 @@ static inline u32 exp_get_bit(EXPBITS PTR4* bits)
         bits->bits = bitbuf >> 1;
     }
 
-    return bitbuf & 1;
+    return bitbuf & EXP_BIT_MASK;
 }
 
 static void simpmergesort(EXPBITS PTR4* bits, u8 PTR4* out, u8 PTR4* left,
