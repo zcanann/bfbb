@@ -46,6 +46,7 @@ typedef enum BINKFrameOffsetFlags
 #define BINK_IS_MARKER(marker) \
     ((marker) == BINKMARKER1 || (marker) == BINKMARKER2 || \
      (marker) == BINKMARKER3 || (marker) == BINKMARKER4)
+#define BINK_OPEN_FROM_MEMORY(flags) (((flags) & BINKFROMMEMORY) != 0)
 typedef enum BINKHeaderTrackTable
 {
     BINK_HEADER_TRACK_SIZES_TABLE,
@@ -1068,7 +1069,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
     bnk.timeopen = RADTimerRead();
     binkerr[0] = 0;
 
-    if ((flags & BINKFROMMEMORY) != 0) {
+    if (BINK_OPEN_FROM_MEMORY(flags)) {
         hdr = *(const BINKHDR*)name;
     } else {
         if ((flags & BINKIOPROCESSOR) != 0 && UserOpen != 0) {
@@ -1087,7 +1088,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
 
     if (!BINK_IS_MARKER(hdr.Marker)) {
         BinkSetError(BINK_ERROR_NOT_BINK);
-        if ((flags & BINKFROMMEMORY) == 0) {
+        if (!BINK_OPEN_FROM_MEMORY(flags)) {
             bnk.bio.Close(&bnk.bio);
         }
         return 0;
@@ -1095,7 +1096,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
 
     if (hdr.Frames == 0) {
         BinkSetError(BINK_ERROR_NO_COMPRESSED_FRAMES);
-        if ((flags & BINKFROMMEMORY) == 0) {
+        if (!BINK_OPEN_FROM_MEMORY(flags)) {
             bnk.bio.Close(&bnk.bio);
         }
         return 0;
@@ -1205,7 +1206,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
     pushmalloc(&bnk.bunp.mdctptr, (u32)bnk.bunp.mdctptr);
     pushmalloc(&bnk.bunp.patptr, (u32)bnk.bunp.patptr);
 
-    if ((flags & BINKFROMMEMORY) == 0) {
+    if (!BINK_OPEN_FROM_MEMORY(flags)) {
         pushmalloc((void PTR4* PTR4*)&bnk.frameoffsets,
                    BINK_FRAME_OFFSETS_BYTES(bnk.InternalFrames, bnk.frameoffsets));
         pushmalloc((void PTR4* PTR4*)&bnk.tracksizes,
@@ -1230,7 +1231,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
     out->rtidlereadtimes[BINK_RUNTIME_CURRENT_SLOT] = 0;
     out->rtthreadreadtimes[BINK_RUNTIME_CURRENT_SLOT] = 0;
 
-    if ((flags & BINKFROMMEMORY) != 0) {
+    if (BINK_OPEN_FROM_MEMORY(flags)) {
         out->tracksizes = BINK_HEADER_TRACK_SIZES(name);
         out->tracktypes = BINK_HEADER_TRACK_TYPES(name, out->NumTracks);
         out->trackIDs = BINK_HEADER_TRACK_IDS(name, out->NumTracks);
@@ -1284,7 +1285,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
             simulate = 0;
         }
 
-        if ((flags & BINKFROMMEMORY) != 0) {
+        if (BINK_OPEN_FROM_MEMORY(flags)) {
             out->preloadptr = (u8 PTR4*)name + BINK_FRAME_OFFSET(out->frameoffsets[0]);
         } else {
             out->iosize = out->bio.GetBufferSize(&out->bio, out->iosize);
@@ -1441,7 +1442,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
 open_failed:
     BinkSetError(BINK_ERROR_OUT_OF_MEMORY);
 close_and_fail:
-    if ((flags & BINKFROMMEMORY) == 0) {
+    if (!BINK_OPEN_FROM_MEMORY(flags)) {
         bnk.bio.Close(&bnk.bio);
     }
     return 0;
