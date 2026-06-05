@@ -70,6 +70,12 @@ typedef struct RADTimebase
     u32 low;
 } RADTimebase;
 
+typedef union RADTimebase64
+{
+    RADTimebase words;
+    u64 ticks;
+} RADTimebase64;
+
 #define RAD_ALLOC_PREFIX(ptr) (((RADAllocPrefix PTR4*)(ptr)) - 1)
 #define RAD_ALLOC_PREFIX_CUSTOM_FREE(ptr) (RAD_ALLOC_PREFIX(ptr)->custom_free)
 #define RAD_ALLOC_PREFIX_OWNER(ptr) (RAD_ALLOC_PREFIX(ptr)->owner)
@@ -164,9 +170,6 @@ u32 RADTimerRead(void)
     static OSTime starttime = 0;
     OSTime now;
     u32 elapsed_ms;
-    u32 high_product;
-    u32 low_product;
-    u32 remainder_ms;
 
     now = OSGetTime();
 
@@ -178,10 +181,9 @@ u32 RADTimerRead(void)
     /* Convert elapsed OS ticks to milliseconds without a full 64-bit divide. */
     elapsed_ms = (u32)(now >> 32) * RAD_TIMER_MS_PER_HIGH_WORD;
     now -= (u64)elapsed_ms * RAD_TIMER_TICKS_PER_MS;
-    high_product = (u32)(now >> 32) * RAD_TIMER_RECIP_MAGIC;
-    low_product = RAD_TIMER_RECIP_LOW_HIGH_PRODUCT((u32)now);
-    remainder_ms = (high_product + low_product) >> RAD_TIMER_RECIP_SHIFT;
-    return elapsed_ms + remainder_ms;
+    return elapsed_ms + ((((u32)(now >> 32) * RAD_TIMER_RECIP_MAGIC) +
+                          RAD_TIMER_RECIP_LOW_HIGH_PRODUCT((u32)now)) >>
+                         RAD_TIMER_RECIP_SHIFT);
 }
 
 static inline void radtimebase(RADTimebase PTR4* dest)
@@ -227,9 +229,9 @@ void RADCycleTimerStartAddr64(u64 PTR4* dest)
 
 void RADCycleTimerDeltaAddr64(u64 PTR4* dest)
 {
-    u64 now;
-    radtimebase((RADTimebase PTR4*)&now);
-    *dest = now - *dest;
+    RADTimebase64 now;
+    radtimebase(&now.words);
+    *dest = now.ticks - *dest;
 }
 
 void ReadTimeBase(u32 PTR4* dest)
