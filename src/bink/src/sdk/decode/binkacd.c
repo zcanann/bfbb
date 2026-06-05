@@ -393,6 +393,8 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
     f32 PTR4* channel;
     u32 i;
     u32 q;
+    f32 quant_index_scale;
+    f32 quant_power_scale;
 
     vb.init = inptr;
     vb.cur = inptr;
@@ -413,9 +415,12 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
         VarBitsGet(i, u32, vb, FXPBITS);
         channel[BINKAC_DC_COEFF_1] = fxptof(i);
 
+        quant_index_scale = BINKAC_QUANT_INDEX_SCALE_CONST[0];
+        quant_power_scale = BINKAC_QUANT_POWER_SCALE_CONST[0];
         for (i = 0; i < num_bands; ++i) {
             VarBitsGet(q, u32, vb, BINKAC_QUANT_BITS);
-            threshold[i] = Undecibel((f32)(s32)q * BINKAC_QUANT_INDEX_SCALE_CONST[0]);
+            threshold[i] = (f32)pow(BINKAC_QUANT_POWER_BASE_CONST[0],
+                                    (f32)(s32)q * quant_index_scale * quant_power_scale);
         }
 
         read_rle_samples(channel, transform_size, &vb, threshold, bands);
