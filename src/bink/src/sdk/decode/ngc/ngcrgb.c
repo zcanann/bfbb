@@ -41,44 +41,48 @@ typedef enum RGBTileLayout
 typedef enum RGBWordMasks
 {
     RGB_BYTE_MASK = 0xff,
+    RGB_BYTE1_SHIFT = 8,
+    RGB_BYTE2_SHIFT = 16,
+    RGB_BYTE3_SHIFT = 24,
+    RGB_HALFWORD_SHIFT = 16,
     RGB_WORD_LO_MASK = 0x0000ffff,
     RGB_WORD_HI_MASK = 0xffff0000,
     RGB_ALPHA0_MASK = 0xff000000,
     RGB_ALPHA2_MASK = 0x0000ff00
 } RGBWordMasks;
 
-#define RGB_WORD_BYTE3(word) (((word) >> 24) & RGB_BYTE_MASK)
-#define RGB_WORD_BYTE2(word) (((word) >> 16) & RGB_BYTE_MASK)
-#define RGB_WORD_BYTE1(word) (((word) >> 8) & RGB_BYTE_MASK)
+#define RGB_WORD_BYTE3(word) (((word) >> RGB_BYTE3_SHIFT) & RGB_BYTE_MASK)
+#define RGB_WORD_BYTE2(word) (((word) >> RGB_BYTE2_SHIFT) & RGB_BYTE_MASK)
+#define RGB_WORD_BYTE1(word) (((word) >> RGB_BYTE1_SHIFT) & RGB_BYTE_MASK)
 #define RGB_WORD_BYTE0(word) ((word) & RGB_BYTE_MASK)
-#define RGB32_PAIR_HIGH(pixel) (((pixel) & RGB_WORD_HI_MASK) | ((pixel) >> 16))
-#define RGB32_PAIR_LOW(pixel) (((pixel) << 16) | ((pixel) & RGB_WORD_LO_MASK))
+#define RGB32_PAIR_HIGH(pixel) (((pixel) & RGB_WORD_HI_MASK) | ((pixel) >> RGB_HALFWORD_SHIFT))
+#define RGB32_PAIR_LOW(pixel) (((pixel) << RGB_HALFWORD_SHIFT) | ((pixel) & RGB_WORD_LO_MASK))
 #define RGB32_MONO_X2_HIGH(pixel) RGB32_PAIR_HIGH(pixel)
 #define RGB32_MONO_X2_LOW(pixel) RGB32_PAIR_LOW(pixel)
-#define RGB32_PAIR_HIGH2(left, right) (((left) & RGB_WORD_HI_MASK) | ((right) >> 16))
-#define RGB32_PAIR_LOW2(left, right) (((left) << 16) | ((right) & RGB_WORD_LO_MASK))
-#define RGB32_COLOR_RED_PAIR(left, right, red) (((left)[red] << 16) | (right)[red])
+#define RGB32_PAIR_HIGH2(left, right) (((left) & RGB_WORD_HI_MASK) | ((right) >> RGB_HALFWORD_SHIFT))
+#define RGB32_PAIR_LOW2(left, right) (((left) << RGB_HALFWORD_SHIFT) | ((right) & RGB_WORD_LO_MASK))
+#define RGB32_COLOR_RED_PAIR(left, right, red) (((left)[red] << RGB_HALFWORD_SHIFT) | (right)[red])
 #define RGB32_COLOR_GB_PAIR(left, right, gb, blue) \
-    (((left)[gb] << 24) | ((left)[blue] << 16) | ((right)[gb] << 8) | (right)[blue])
-#define RGB32_COLOR_RED_DUP(row, red) (((row)[red] << 16) | (row)[red])
+    (((left)[gb] << RGB_BYTE3_SHIFT) | ((left)[blue] << RGB_BYTE2_SHIFT) | ((right)[gb] << RGB_BYTE1_SHIFT) | (right)[blue])
+#define RGB32_COLOR_RED_DUP(row, red) (((row)[red] << RGB_HALFWORD_SHIFT) | (row)[red])
 #define RGB32_COLOR_GB_DUP(row, gb, blue) \
-    (((row)[gb] << 24) | ((row)[blue] << 16) | ((row)[gb] << 8) | (row)[blue])
+    (((row)[gb] << RGB_BYTE3_SHIFT) | ((row)[blue] << RGB_BYTE2_SHIFT) | ((row)[gb] << RGB_BYTE1_SHIFT) | (row)[blue])
 #define RGB32_ALPHA_PAIR_HIGH(alpha, left, right) \
-    (((alpha) & RGB_ALPHA0_MASK) | ((left) & RGB_WORD_HI_MASK) | ((right) >> 16) | \
-     (((alpha) >> 8) & RGB_ALPHA2_MASK))
+    (((alpha) & RGB_ALPHA0_MASK) | ((left) & RGB_WORD_HI_MASK) | ((right) >> RGB_HALFWORD_SHIFT) | \
+     (((alpha) >> RGB_BYTE1_SHIFT) & RGB_ALPHA2_MASK))
 #define RGB32_ALPHA_PAIR_LOW(alpha, left, right) \
-    ((((alpha) & RGB_ALPHA2_MASK) << 16) | ((left) & RGB_WORD_HI_MASK) | ((right) >> 16) | \
-     (RGB_WORD_BYTE0(alpha) << 8))
+    ((((alpha) & RGB_ALPHA2_MASK) << RGB_HALFWORD_SHIFT) | ((left) & RGB_WORD_HI_MASK) | ((right) >> RGB_HALFWORD_SHIFT) | \
+     (RGB_WORD_BYTE0(alpha) << RGB_BYTE1_SHIFT))
 #define RGB32_ALPHA_COLOR_PAIR_HIGH(alpha, left, right) \
-    (((alpha) & RGB_ALPHA0_MASK) | ((left) << 16) | (((alpha) >> 8) & RGB_ALPHA2_MASK) | (right))
+    (((alpha) & RGB_ALPHA0_MASK) | ((left) << RGB_HALFWORD_SHIFT) | (((alpha) >> RGB_BYTE1_SHIFT) & RGB_ALPHA2_MASK) | (right))
 #define RGB32_ALPHA_COLOR_PAIR_LOW(alpha, left, right) \
-    ((((alpha) & RGB_ALPHA2_MASK) | (left)) << 16 | (RGB_WORD_BYTE0(alpha) << 8) | (right))
+    ((((alpha) & RGB_ALPHA2_MASK) | (left)) << RGB_HALFWORD_SHIFT | (RGB_WORD_BYTE0(alpha) << RGB_BYTE1_SHIFT) | (right))
 #define RGB32_ALPHA_COLOR_DUP_PAIR(alpha_hi, alpha_lo, value) \
-    ((alpha_hi) | ((value) << 16) | (alpha_lo) | (value))
+    ((alpha_hi) | ((value) << RGB_HALFWORD_SHIFT) | (alpha_lo) | (value))
 #define RGB32_ALPHA_DUP_PAIR(alpha_hi, alpha_lo, pixel) \
-    ((alpha_hi) | ((pixel) & RGB_WORD_HI_MASK) | ((pixel) >> 16) | (alpha_lo))
-#define RGB32_ALPHA_SAMPLE_DUP_PAIR(alpha, pixel) RGB32_ALPHA_DUP_PAIR((alpha) << 24, (alpha) << 8, (pixel))
-#define RGB32_MONO_DUP_PAIR(pixel) (((pixel) << 16) | ((pixel) & RGB_WORD_LO_MASK))
+    ((alpha_hi) | ((pixel) & RGB_WORD_HI_MASK) | ((pixel) >> RGB_HALFWORD_SHIFT) | (alpha_lo))
+#define RGB32_ALPHA_SAMPLE_DUP_PAIR(alpha, pixel) RGB32_ALPHA_DUP_PAIR((alpha) << RGB_BYTE3_SHIFT, (alpha) << RGB_BYTE1_SHIFT, (pixel))
+#define RGB32_MONO_DUP_PAIR(pixel) (((pixel) << RGB_HALFWORD_SHIFT) | ((pixel) & RGB_WORD_LO_MASK))
 
 typedef enum RGBClampLayout
 {
@@ -91,14 +95,14 @@ typedef enum RGBClampLayout
 
 #define RGB565_BIASED(cr, cg, cb, y, r, g, b)                                                                          \
     ((u16)(cb)[(y) + (r)] | (u16)(cr)[(y) + (b)] | (u16)(cg)[(y) + (g)])
-#define RGB565_PAIR(pixel) (((pixel) << 16) | (pixel))
+#define RGB565_PAIR(pixel) (((pixel) << RGB_HALFWORD_SHIFT) | (pixel))
 #define RGB565_A4(y, r, g, b, a) (RGB565((y), (r), (g), (b)) | (u16)clamp_a4[(a)])
 #define RGB565_A4_MONO(y, a) ((u16)mono16[(y)] | (u16)clamp_a4[(a)])
 #define RGB565_A4_MONO_BIASED(ytable, atable, y, a) ((u16)(ytable)[(y)] | (u16)(atable)[(a)])
 #define RGB565_A4_BIASED(cr, cg, cb, ca, y, r, g, b, a)                                                               \
     ((u16)(cb)[(y) + (r)] | (u16)(cr)[(y) + (b)] | (u16)(cg)[(y) + (g)] | (u16)(ca)[(a)])
 #define RGB32_M(y) (mono32[(y)])
-#define RGB565_PAIR2(left, right) (((left) << 16) | (right))
+#define RGB565_PAIR2(left, right) (((left) << RGB_HALFWORD_SHIFT) | (right))
 
 // Core kernels consume two luma rows and one chroma row, producing a 4x2 tile
 // chunk. The monochrome paths use mono16/mono32 directly, while color paths
