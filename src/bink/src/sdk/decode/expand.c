@@ -172,6 +172,11 @@ typedef enum BINKBUNDLEINITIALVALUE
     } while (0)
 #define BINK_COPY_BLOCK_DOUBLE_ROW(dest, src, pitch, row)                                    \
     (BINK_BLOCK_ROW_DOUBLE(dest, pitch, row) = BINK_BLOCK_ROW_DOUBLE(src, pitch, row))
+#define BINK_FILL_BLOCK_WORD_ROW(dest, pitch, row, fill)                                     \
+    do {                                                                                     \
+        BINK_BLOCK_ROW_WORD(dest, pitch, row, BINK_BLOCK_ROW_WORD_0) = (fill);               \
+        BINK_BLOCK_ROW_WORD(dest, pitch, row, BINK_BLOCK_ROW_WORD_1) = (fill);               \
+    } while (0)
 #define BINK_HUFF4_RLE_LENGTH(value) \
     ((u8 PTR4*)&BINK_HUFF4_RLE_LENGTHS_PACKED)[(value)]
 #define BINK_BUNDLE_REPEAT_COUNT(count) (-(s32)(count) - BINK_BUNDLE_REPEAT_BIAS)
@@ -1316,14 +1321,17 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
             case BINK_BLOCK_FILL: {
                 u8 color = BINK_BUNDLE_U8(colors);
                 u32 fill = BINK_FILL_WORD(color);
-                u32 block_row;
 
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
                 BINK_BUNDLE_ADVANCE(colors, BINK_BUNDLE_BYTE_PITCH);
-                for (block_row = 0; block_row < BINK_BLOCK_SIDE; ++block_row) {
-                    BINK_BLOCK_ROW_WORD(dest, pitch, block_row, BINK_BLOCK_ROW_WORD_0) = fill;
-                    BINK_BLOCK_ROW_WORD(dest, pitch, block_row, BINK_BLOCK_ROW_WORD_1) = fill;
-                }
+                BINK_FILL_BLOCK_WORD_ROW(dest, pitch, 0, fill);
+                BINK_FILL_BLOCK_WORD_ROW(dest, pitch, 1, fill);
+                BINK_FILL_BLOCK_WORD_ROW(dest, pitch, 2, fill);
+                BINK_FILL_BLOCK_WORD_ROW(dest, pitch, 3, fill);
+                BINK_FILL_BLOCK_WORD_ROW(dest, pitch, 4, fill);
+                BINK_FILL_BLOCK_WORD_ROW(dest, pitch, 5, fill);
+                BINK_FILL_BLOCK_WORD_ROW(dest, pitch, 6, fill);
+                BINK_FILL_BLOCK_WORD_ROW(dest, pitch, 7, fill);
                 break;
             }
             case BINK_BLOCK_PATTERN:
