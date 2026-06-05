@@ -50,12 +50,17 @@ typedef enum BINKHeaderTrackTable
     BINK_HEADER_TRACK_IDS_TABLE,
     BINK_HEADER_FRAME_OFFSETS_TABLE
 } BINKHeaderTrackTable;
+typedef struct BINKHEADERTRACKTABLE
+{
+    u32 entries[1];
+} BINKHEADERTRACKTABLE;
 #define BINK_MEMBER_OFFSET(type, member) ((u32)((u8 PTR4*)&((type PTR4*)0)->member - (u8 PTR4*)((type PTR4*)0)))
 #define BINK_CONTAINER_OF(ptr, type, member) ((type PTR4*)((u8 PTR4*)(ptr) - BINK_MEMBER_OFFSET(type, member)))
 #define BINK_FROM_SOUND_CALLBACK(callback) BINK_CONTAINER_OF(callback, BINK, snd_callback_buffer.callback)
 #define BINK_IO_CALLBACK(io) ((RADCB_CALLBACK PTR4*)&(io)->callback_control.callback)
 #define BINK_SOUND_CALLBACK(bink) (&(bink)->snd_callback_buffer.callback)
-#define BINK_HEADER_TRACK_SIZES(header) ((u32 PTR4*)((BINKHDR PTR4*)(header) + 1))
+#define BINK_HEADER_TRACK_SIZES(header) \
+    (((BINKHEADERTRACKTABLE PTR4*)((BINKHDR PTR4*)(header) + 1))->entries)
 #define BINK_HEADER_TRACK_TABLE(header, tracks, table) \
     ((u32 PTR4*)((u8 PTR4*)BINK_HEADER_TRACK_SIZES(header) + \
                  (tracks) * sizeof(u32) * (table)))
