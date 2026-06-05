@@ -102,6 +102,7 @@ typedef enum BINKBundleLayout
     HUFF8_LAST_TABLE_STATE = HUFF8_TABLE_STATES - 1,
     BUNDLE_REPEAT_EXTRA = 0x14,
     BUNDLE_REPEAT_THRESHOLD = BUNDLE_REPEAT_EXTRA + 2,
+    BINK_BUNDLE_BYTE_PITCH = 1,
     BINK_SIGNED_BYTE_BIAS = 0x80,
     BINK_SIGNED_BYTE_MASK = 0x7f,
     BINK_DELTA16_GROUP_MAX = 8,
@@ -1069,17 +1070,17 @@ void ExpandBundleSizes(u32 PTR4* sizes, u32 rows)
 {
     /* Order matches the Bink value sources: block/subblock types, colors, patterns,
        motion X/Y, intra/inter DC, then run lengths. */
-    sizes[BINK_BUNDLE_BLOCK_TYPES] = getbunsize(BINK_BUNDLE_WIDTH, rows, BINK_BLOCK_TYPE_BITS, 1);
+    sizes[BINK_BUNDLE_BLOCK_TYPES] = getbunsize(BINK_BUNDLE_WIDTH, rows, BINK_BLOCK_TYPE_BITS, BINK_BUNDLE_BYTE_PITCH);
     sizes[BINK_BUNDLE_SUBBLOCK_TYPES] =
-        getbunsize(BINK_BUNDLE_WIDTH, rows >> BINK_CHROMA_SHIFT, BINK_BLOCK_TYPE_BITS, 1);
+        getbunsize(BINK_BUNDLE_WIDTH, rows >> BINK_CHROMA_SHIFT, BINK_BLOCK_TYPE_BITS, BINK_BUNDLE_BYTE_PITCH);
     sizes[BINK_BUNDLE_COLORS] =
         getbunsize(BINK_BUNDLE_WIDTH, rows, BINK_COLOR_BITS, BINK_COLOR_BLOCK_BYTES);
     sizes[BINK_BUNDLE_PATTERN] =
         getbunsize(BINK_BUNDLE_WIDTH, rows, BINK_PATTERN_BITS, BINK_PATTERN_BLOCK_BYTES);
-    sizes[BINK_BUNDLE_X_OFF] = getbunsize(BINK_BUNDLE_WIDTH, rows, BINK_MOTION_BITS, 1);
-    sizes[BINK_BUNDLE_Y_OFF] = getbunsize(BINK_BUNDLE_WIDTH, rows, BINK_MOTION_BITS, 1);
-    sizes[BINK_BUNDLE_INTRA_DC] = getbunsize(BINK_BUNDLE_WIDTH, rows, BINK_DC_START_BITS, 1);
-    sizes[BINK_BUNDLE_INTER_DC] = getbunsize(BINK_BUNDLE_WIDTH, rows, BINK_DC_START_BITS, 1);
+    sizes[BINK_BUNDLE_X_OFF] = getbunsize(BINK_BUNDLE_WIDTH, rows, BINK_MOTION_BITS, BINK_BUNDLE_BYTE_PITCH);
+    sizes[BINK_BUNDLE_Y_OFF] = getbunsize(BINK_BUNDLE_WIDTH, rows, BINK_MOTION_BITS, BINK_BUNDLE_BYTE_PITCH);
+    sizes[BINK_BUNDLE_INTRA_DC] = getbunsize(BINK_BUNDLE_WIDTH, rows, BINK_DC_START_BITS, BINK_BUNDLE_BYTE_PITCH);
+    sizes[BINK_BUNDLE_INTER_DC] = getbunsize(BINK_BUNDLE_WIDTH, rows, BINK_DC_START_BITS, BINK_BUNDLE_BYTE_PITCH);
     sizes[BINK_BUNDLE_RUN] =
         getbunsize(BINK_BUNDLE_WIDTH, rows, BINK_RUN_BITS, BINK_RUN_BLOCK_BYTES);
 }
@@ -1127,10 +1128,10 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
     VarBitsOpen(bitstate, bundles);
 
     OpenReadBundle(table->typeptr, &block_types,
-                   BINK_BUNDLE_WIDTH, width, BINK_BLOCK_TYPE_BITS, 1,
+                   BINK_BUNDLE_WIDTH, width, BINK_BLOCK_TYPE_BITS, BINK_BUNDLE_BYTE_PITCH,
                    BINK_BUNDLE_NO_INITIAL_VALUE);
     OpenReadBundle(table->type16ptr, &subblock_types,
-                   BINK_BUNDLE_WIDTH, width >> BINK_CHROMA_SHIFT, BINK_BLOCK_TYPE_BITS, 1,
+                   BINK_BUNDLE_WIDTH, width >> BINK_CHROMA_SHIFT, BINK_BLOCK_TYPE_BITS, BINK_BUNDLE_BYTE_PITCH,
                    BINK_BUNDLE_NO_INITIAL_VALUE);
     OpenReadBundle(table->colorptr, &colors, BINK_BUNDLE_WIDTH, width,
                    BINK_COLOR_BITS, BINK_COLOR_BLOCK_BYTES, BINK_BUNDLE_NO_INITIAL_VALUE);
@@ -1138,13 +1139,13 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                    BINK_BUNDLE_WIDTH, width, BINK_PATTERN_BITS, BINK_PATTERN_BLOCK_BYTES,
                    BINK_BUNDLE_NO_INITIAL_VALUE);
     OpenReadBundle(table->motionXptr, &xoff, BINK_BUNDLE_WIDTH, width,
-                   BINK_MOTION_BITS, 1, BINK_BUNDLE_USE_INITIAL_VALUE);
+                   BINK_MOTION_BITS, BINK_BUNDLE_BYTE_PITCH, BINK_BUNDLE_USE_INITIAL_VALUE);
     OpenReadBundle(table->motionYptr, &yoff, BINK_BUNDLE_WIDTH, width,
-                   BINK_MOTION_BITS, 1, BINK_BUNDLE_USE_INITIAL_VALUE);
+                   BINK_MOTION_BITS, BINK_BUNDLE_BYTE_PITCH, BINK_BUNDLE_USE_INITIAL_VALUE);
     OpenReadBundle(table->dctptr, &intra_dc, BINK_BUNDLE_WIDTH,
-                   width, BINK_DC_START_BITS, 1, BINK_BUNDLE_NO_INITIAL_VALUE);
+                   width, BINK_DC_START_BITS, BINK_BUNDLE_BYTE_PITCH, BINK_BUNDLE_NO_INITIAL_VALUE);
     OpenReadBundle(table->mdctptr, &inter_dc, BINK_BUNDLE_WIDTH,
-                   width, BINK_DC_START_BITS, 1, BINK_BUNDLE_USE_INITIAL_VALUE);
+                   width, BINK_DC_START_BITS, BINK_BUNDLE_BYTE_PITCH, BINK_BUNDLE_USE_INITIAL_VALUE);
     OpenReadBundle(table->patptr, &runs, BINK_BUNDLE_WIDTH, width,
                    BINK_RUN_BITS, BINK_RUN_BLOCK_BYTES, BINK_BUNDLE_NO_INITIAL_VALUE);
 
