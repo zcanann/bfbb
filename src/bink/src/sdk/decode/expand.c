@@ -100,8 +100,8 @@ typedef enum BINKBundleLayout
 {
     HUFF8_TABLE_STATES = 16,
     HUFF8_LAST_TABLE_STATE = HUFF8_TABLE_STATES - 1,
-    BUNDLE_REPEAT_EXTRA = 0x14,
-    BUNDLE_REPEAT_THRESHOLD = BUNDLE_REPEAT_EXTRA + 2,
+    BINK_BUNDLE_REPEAT_BIAS = 0x14,
+    BINK_BUNDLE_REPEAT_THRESHOLD = BINK_BUNDLE_REPEAT_BIAS + 2,
     BINK_BUNDLE_BYTE_PITCH = 1,
     BINK_SIGNED_BYTE_BIAS = 0x80,
     BINK_SIGNED_BYTE_MASK = 0x7f,
@@ -159,8 +159,8 @@ typedef enum BINKBUNDLEINITIALVALUE
     (*(u32 PTR4*)((ptr) + (row) * BINK_BLOCK_SIDE + (word) * BINK_PLANE_WORD_BYTES))
 #define BINK_HUFF4_RLE_LENGTH(value) \
     ((u8 PTR4*)&BINK_HUFF4_RLE_LENGTHS_PACKED)[(value)]
-#define BINK_BUNDLE_REPEAT_COUNT(count) (-(s32)(count) - BUNDLE_REPEAT_EXTRA)
-#define BINK_BUNDLE_REPEAT_FILL_COUNT(remaining) (-(remaining + BUNDLE_REPEAT_EXTRA + 1))
+#define BINK_BUNDLE_REPEAT_COUNT(count) (-(s32)(count) - BINK_BUNDLE_REPEAT_BIAS)
+#define BINK_BUNDLE_REPEAT_FILL_COUNT(remaining) (-(remaining + BINK_BUNDLE_REPEAT_BIAS + 1))
 #define BINK_SIGNED_BYTE_NEGATIVE(value) (-BINK_SIGNED_BYTE_BIAS - ((value) & BINK_SIGNED_BYTE_MASK))
 #define BINK_SIGNED_BYTE_POSITIVE(value) ((value) | BINK_SIGNED_BYTE_BIAS)
 
@@ -744,7 +744,7 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
             remaining--;
         } while (remaining > 0);
 
-        if (remaining < -BUNDLE_REPEAT_THRESHOLD) {
+        if (remaining < -BINK_BUNDLE_REPEAT_THRESHOLD) {
             /* Repeat packets back-fill the whole bundle with the first decoded byte. */
             memset(bundle->data, *bundle->data, BINK_BUNDLE_REPEAT_FILL_COUNT(remaining));
         }
@@ -796,7 +796,7 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
             remaining--;
         } while (remaining > 0);
 
-        if (remaining < -BUNDLE_REPEAT_THRESHOLD) {
+        if (remaining < -BINK_BUNDLE_REPEAT_THRESHOLD) {
             /* Match old-format repeat handling after the one-byte payload is decoded. */
             memset(bundle->data, *bundle->data, BINK_BUNDLE_REPEAT_FILL_COUNT(remaining));
         }
