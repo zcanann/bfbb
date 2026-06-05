@@ -70,8 +70,9 @@ typedef struct BINKHEADERTRACKTABLE
     ((s32 PTR4*)BINK_HEADER_TRACK_TABLE((header), (tracks), BINK_HEADER_TRACK_IDS_TABLE))
 #define BINK_HEADER_FRAME_OFFSETS(header, tracks) \
     BINK_HEADER_TRACK_TABLE((header), (tracks), BINK_HEADER_FRAME_OFFSETS_TABLE)
+#define BINK_TRACK_FRAME_PAYLOAD(frame) ((BINKTRACKPAYLOAD PTR4*)((frame) + 1))
 #define BINK_NEXT_TRACK_FRAME(frame) \
-    ((BINKTRACKFRAME PTR4*)((u8 PTR4*)(frame) + (frame)->size + sizeof((frame)->size)))
+    ((BINKTRACKFRAME PTR4*)((u8 PTR4*)BINK_TRACK_FRAME_PAYLOAD(frame) + (frame)->size))
 typedef enum BINKGlobalLayout
 {
     BINK_SOUND_CALLBACK_PRIORITY = 20,
@@ -213,9 +214,12 @@ typedef enum BINKRuntimeSlot
 typedef struct BINKTRACKFRAME
 {
     u32 size;
+} BINKTRACKFRAME;
+typedef struct BINKTRACKPAYLOAD
+{
     u32 decoded_size;
     u8 data[1];
-} BINKTRACKFRAME;
+} BINKTRACKPAYLOAD;
 
 static char binkerr[BINK_ERROR_BUFFER_SIZE];
 
@@ -1689,6 +1693,7 @@ s32 BinkDoFrame(HBINK bnk)
                     s32 playing_index;
                     s32 playing_tracks;
                     BINKTRACKFRAME PTR4* next_frame_data;
+                    BINKTRACKPAYLOAD PTR4* frame_payload;
                     u32 compressed_size;
 
                     playing_index = 0;
@@ -1714,8 +1719,9 @@ s32 BinkDoFrame(HBINK bnk)
                         void PTR4* in;
                         u32 in_bytes;
 
-                        in = frame_data->data;
-                        in_bytes = frame_data->decoded_size;
+                        frame_payload = BINK_TRACK_FRAME_PAYLOAD(frame_data);
+                        in = frame_payload->data;
+                        in_bytes = frame_payload->decoded_size;
                         if (sound_callback_suspended == 0) {
                             sound_callback_suspended = 1;
                             RADCB_suspend_callback(cb_bink_sound, BINK_SOUND_CALLBACK(bnk));
@@ -2897,12 +2903,14 @@ u32 BinkGetTrackData(HBINKTRACK bnkt, void PTR4* dest)
 
         while (i < bnkt->bink->NumTracks) {
             BINKTRACKFRAME PTR4* frame = (BINKTRACKFRAME PTR4*)src;
+            BINKTRACKPAYLOAD PTR4* payload;
             u32 size = frame->size;
             src += sizeof(frame->size);
+            payload = (BINKTRACKPAYLOAD PTR4*)src;
             if ((s32)i == bnkt->trackindex && size != 0) {
-                u32 left = frame->decoded_size;
+                u32 left = payload->decoded_size;
                 u32 wrote = 0;
-                src += sizeof(frame->decoded_size);
+                src += sizeof(payload->decoded_size);
 
                 while (left != 0) {
                     void PTR4* out;
