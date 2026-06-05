@@ -166,6 +166,9 @@ typedef enum BINKBUNDLEINITIALVALUE
 #define BINK_BUNDLE_REPEAT_FILL_COUNT(remaining) (-(remaining + BINK_BUNDLE_REPEAT_BIAS + 1))
 #define BINK_SIGNED_BYTE_NEGATIVE(value) (-BINK_SIGNED_BYTE_BIAS - ((value) & BINK_SIGNED_BYTE_MASK))
 #define BINK_SIGNED_BYTE_POSITIVE(value) ((value) | BINK_SIGNED_BYTE_BIAS)
+#define BINK_EXPAND_USES_OLD_FRAME_FORMAT(flags) (((flags) & BINKOLDFRAMEFORMAT) != 0)
+#define BINK_EXPAND_HAS_ALPHA(flags) (((flags) & BINKALPHA) != 0)
+#define BINK_EXPAND_HAS_COLOR(flags) (((flags) & BINKGRAYSCALE) == 0)
 
 enum BINKBLOCKTYPE
 {
@@ -1133,7 +1136,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
     (void)key_frame;
 
     read_huff8 =
-        (flags & BINKOLDFRAMEFORMAT) != 0 ? CheckReadHuff8Bundle : NewCheckReadHuff8Bundle;
+        BINK_EXPAND_USES_OLD_FRAME_FORMAT(flags) ? CheckReadHuff8Bundle : NewCheckReadHuff8Bundle;
     VarBitsOpen(bitstate, bundles);
 
     OpenReadBundle(table->typeptr, &block_types,
@@ -1389,8 +1392,8 @@ void ExpandBink(u8 PTR4* yout,
     u32 PTR4* next;
     u32 uv_size;
 
-    if ((aflags & BINKALPHA) != 0) {
-        if ((yflags & BINKALPHA) != 0) {
+    if (BINK_EXPAND_HAS_ALPHA(aflags)) {
+        if (BINK_EXPAND_HAS_ALPHA(yflags)) {
             ExpandPlane(aout, aprev, BINK_BLOCK_ROUND(width), BINK_BLOCK_ROUND(height),
                         pitch, BINK_BUNDLE_CHUNK_PAYLOAD(bundles), key_frame, work, BINK_LUMA_PLANE_SCALE, table,
                         yflags);
@@ -1398,17 +1401,17 @@ void ExpandBink(u8 PTR4* yout,
         bundles = BINK_BUNDLE_CHUNK_NEXT(bundles);
     }
 
-    if ((yflags & BINKOLDFRAMEFORMAT) == 0) {
+    if (!BINK_EXPAND_USES_OLD_FRAME_FORMAT(yflags)) {
         bundles++;
     }
 
     next = ExpandPlane(yout, yprev, BINK_BLOCK_ROUND(width), BINK_BLOCK_ROUND(height),
                        pitch, bundles, key_frame, work, BINK_LUMA_PLANE_SCALE, table, yflags);
-    if ((yflags & BINKOLDFRAMEFORMAT) == 0) {
+    if (!BINK_EXPAND_USES_OLD_FRAME_FORMAT(yflags)) {
         next = BINK_BUNDLE_PAYLOAD_NEXT(bundles);
     }
 
-    if ((yflags & BINKGRAYSCALE) == 0) {
+    if (BINK_EXPAND_HAS_COLOR(yflags)) {
         yout = yout + pitch * uvpitch;
         yprev = yprev + pitch * uvpitch;
         uvpitch >>= BINK_CHROMA_SHIFT;
