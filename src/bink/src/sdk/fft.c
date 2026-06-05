@@ -1754,7 +1754,7 @@ static void cftfx42(s32 n, f32 PTR4* a, s32 nw, f32 PTR4* w)
 }
 static void cftf161(f32 PTR4* a, f32 PTR4* w)
 {
-    f32 wn4r, wk1r, wk1i;
+    f32 wn4r, csc1, wk1r, wk1i;
     f32 x0r, x0i, x1r, x1i, x2r, x2i, x3r, x3i;
     f32 y0r, y0i, y1r, y1i, y2r, y2i, y3r, y3i;
     f32 y4r, y4i, y5r, y5i, y6r, y6i, y7r, y7i;
@@ -1762,9 +1762,9 @@ static void cftf161(f32 PTR4* a, f32 PTR4* w)
     f32 y12r, y12i, y13r, y13i, y14r, y14i, y15r, y15i;
 
     wn4r = w[1];
-    wk1r = w[2];
-    wk1i = wn4r * wk1r;
-    wk1r += wk1i;
+    csc1 = w[2];
+    wk1i = wn4r * csc1;
+    wk1r = wk1i + csc1;
     x0r = a[0] + a[16];
     x0i = a[1] + a[17];
     x1r = a[0] - a[16];
