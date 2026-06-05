@@ -43,6 +43,9 @@ typedef enum BINKFrameOffsetFlags
 /* Frame-offset table entries use bit 0 as the key-frame marker. */
 #define BINK_FRAME_OFFSET(frameoffset) ((frameoffset) & BINKFRAMEOFFSETMASK)
 #define BINK_FRAME_KEY(frameoffset) ((frameoffset) & BINKFRAMEKEYFLAG)
+#define BINK_IS_MARKER(marker) \
+    ((marker) == BINKMARKER1 || (marker) == BINKMARKER2 || \
+     (marker) == BINKMARKER3 || (marker) == BINKMARKER4)
 typedef enum BINKHeaderTrackTable
 {
     BINK_HEADER_TRACK_SIZES_TABLE,
@@ -1082,8 +1085,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
         bnk.bio.ReadHeader(&bnk.bio, 0, &hdr, sizeof(hdr));
     }
 
-    if (hdr.Marker != BINKMARKER1 && hdr.Marker != BINKMARKER2 &&
-        hdr.Marker != BINKMARKER3 && hdr.Marker != BINKMARKER4) {
+    if (!BINK_IS_MARKER(hdr.Marker)) {
         BinkSetError(BINK_ERROR_NOT_BINK);
         if ((flags & BINKFROMMEMORY) == 0) {
             bnk.bio.Close(&bnk.bio);
