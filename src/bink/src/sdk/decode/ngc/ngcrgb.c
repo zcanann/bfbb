@@ -608,9 +608,9 @@ void YUV_16x2_4x2_even(u32 count)
     v_to_gb = YUVTables.v_to_gb;
     u_to_gb = YUVTables.u_to_gb;
     v_to_r = YUVTables.v_to_r;
+    clamp_b_base = clamp_b + RGB_CLAMP_BIAS;
     clamp_r_base = clamp_r + RGB_CLAMP_BIAS;
     clamp_g_base = clamp_g + RGB_CLAMP_BIAS;
-    clamp_b_base = clamp_b + RGB_CLAMP_BIAS;
 
     S.dest0 += count * RGB_16_X2_4X2_ROW_BYTES;
     S.dest1 += count * RGB_16_X2_4X2_ROW_BYTES;
