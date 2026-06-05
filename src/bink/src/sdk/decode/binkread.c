@@ -1097,9 +1097,10 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
 
     if (!BINK_IS_MARKER(hdr.Marker)) {
         BinkSetError(BINK_ERROR_NOT_BINK);
-        if (!BINK_OPEN_FROM_MEMORY(flags)) {
-            bnk.bio.Close(&bnk.bio);
+        if (BINK_OPEN_FROM_MEMORY(flags)) {
+            return 0;
         }
+        bnk.bio.Close(&bnk.bio);
         return 0;
     }
 
