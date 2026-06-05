@@ -83,24 +83,24 @@ static inline u32 radcntlzw(u32 value)
     return result;
 }
 
-u32 mult64anddiv(u32 m1, u32 m2, u32 d)
+u32 mult64anddiv(u32 multiplicand, u32 multiplier, u32 divisor)
 {
     u32 hi;
     u32 quotient;
 
-    __asm__("mulhwu %0, %1, %2\n\tmullw %1, %1, %2" : "=&r"(hi), "+r"(m1) : "r"(m2));
+    __asm__("mulhwu %0, %1, %2\n\tmullw %1, %1, %2" : "=&r"(hi), "+r"(multiplicand) : "r"(multiplier));
 
     /* Fast path for exact power-of-two divisors after the 64-bit multiply. */
-    if (RAD_DIV_IS_POWER_OF_TWO(d)) {
-        u32 clz = radcntlzw(d);
-        m1 >>= (RAD_DIV_POWER_SHIFT_BASE - clz);
+    if (RAD_DIV_IS_POWER_OF_TWO(divisor)) {
+        u32 clz = radcntlzw(divisor);
+        multiplicand >>= (RAD_DIV_POWER_SHIFT_BASE - clz);
         hi <<= (clz + 1);
-        return m1 | hi;
+        return multiplicand | hi;
     }
 
     {
-        u32 recip = RAD_DIV_U32_MAX / d;
-        u32 upper = RAD_DIV_HIGH_WORD_CEIL(d);
+        u32 recip = RAD_DIV_U32_MAX / divisor;
+        u32 upper = RAD_DIV_HIGH_WORD_CEIL(divisor);
 
         quotient = 0;
 
@@ -116,20 +116,20 @@ u32 mult64anddiv(u32 m1, u32 m2, u32 d)
             quotient = est;
             {
                 u32 prod_hi, prod_lo;
-                __asm__("mulhwu %0, %2, %3\n\tmullw %1, %2, %3" : "=&r"(prod_hi), "=&r"(prod_lo) : "r"(est), "r"(d));
-                __asm__("subfc %0, %3, %0\n\tsubfe %1, %2, %1" : "+r"(m1), "+r"(hi) : "r"(prod_hi), "r"(prod_lo));
+                __asm__("mulhwu %0, %2, %3\n\tmullw %1, %2, %3" : "=&r"(prod_hi), "=&r"(prod_lo) : "r"(est), "r"(divisor));
+                __asm__("subfc %0, %3, %0\n\tsubfe %1, %2, %1" : "+r"(multiplicand), "+r"(hi) : "r"(prod_hi), "r"(prod_lo));
             }
         }
 
         while (hi != 0) {
             u32 step = recip * hi;
             u32 prod_hi, prod_lo;
-            __asm__("mulhwu %0, %2, %3\n\tmullw %1, %2, %3" : "=&r"(prod_hi), "=&r"(prod_lo) : "r"(step), "r"(d));
-            __asm__("subfc %0, %3, %0\n\tsubfe %1, %2, %1" : "+r"(m1), "+r"(hi) : "r"(prod_hi), "r"(prod_lo));
+            __asm__("mulhwu %0, %2, %3\n\tmullw %1, %2, %3" : "=&r"(prod_hi), "=&r"(prod_lo) : "r"(step), "r"(divisor));
+            __asm__("subfc %0, %3, %0\n\tsubfe %1, %2, %1" : "+r"(multiplicand), "+r"(hi) : "r"(prod_hi), "r"(prod_lo));
             quotient += step;
         }
 
-        quotient += m1 / d;
+        quotient += multiplicand / divisor;
     }
 
     return quotient;
