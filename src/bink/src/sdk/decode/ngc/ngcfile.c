@@ -141,6 +141,7 @@ typedef enum NGCReadLayout
     ((status) <= DVD_STATE_IGNORED ?                                                               \
          ((status) >= DVD_STATE_COVER_CLOSED || (status) == DVD_STATE_FATAL_ERROR) :               \
          (status) == DVD_STATE_RETRY)
+#define NGC_PPC_BEQLR_INSTRUCTION ".long 0x4D820020"
 
 static void ReadKickoff(BINKIO PTR4* io);
 
@@ -154,7 +155,7 @@ static void intelendian(void PTR4* ptr, u32 size)
         "srwi 4,4,2\n\t"
         "cmpwi 4,0\n\t"
         "subi 4,4,1\n\t"
-        ".long 0x4D820020\n\t"
+        NGC_PPC_BEQLR_INSTRUCTION "\n\t"
         "li 9,0\n\t"
         "0:\n\t"
         "lwbrx 0,9,3\n\t"
