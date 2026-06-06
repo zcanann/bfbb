@@ -502,7 +502,6 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
     u32 bit_count;
     BPBITSTYPE bit_buf;
     u16 PTR4* cur;
-    s16 PTR4* ordered_cur;
     u16 PTR4* restart;
     u16 PTR4* end;
     u16 PTR4* roots;
@@ -516,11 +515,9 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
     /* Put coefficients in scan order before building bit-depth tables. */
     count = BP_BLOCK_COEFFS;
     i = 0;
-    ordered_cur = ordered;
     do {
-        *ordered_cur = BP_ZIGZAG_COEFF(vals, i);
+        ordered[i] = BP_ZIGZAG_COEFF(vals, i);
         i++;
-        ordered_cur++;
         count--;
     } while (count != 0);
 
