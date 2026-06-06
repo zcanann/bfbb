@@ -368,8 +368,6 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
     f32 PTR4* channel;
     u32 i;
     u32 q;
-    f32 quant_index_scale;
-    f32 quant_power_scale;
     f32 PTR4* threshold_out;
 
     vb.init = inptr;
@@ -393,11 +391,8 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
 
         threshold_out = threshold;
         for (i = 0; i < num_bands; ++i) {
-            quant_index_scale = BINKAC_QUANT_INDEX_SCALE_CONST;
-            quant_power_scale = BINKAC_QUANT_POWER_SCALE_CONST;
             VarBitsGet(q, u32, vb, BINKAC_QUANT_BITS);
-            *threshold_out = (f32)pow(BINKAC_QUANT_POWER_BASE_CONST,
-                                      (f32)(s32)q * quant_index_scale * quant_power_scale);
+            *threshold_out = Undecibel((f32)(s32)q * BINKAC_QUANT_INDEX_SCALE_CONST);
             ++threshold_out;
         }
 
