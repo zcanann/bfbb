@@ -622,7 +622,7 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
     roots[BP_ROOT_LOSSLESS_COEFF3_SLOT] = BP_TREE_COEFF_LEAF_ENTRY(lens[BP_COEFF3_INDEX], BP_COEFF3_LEAF_BASE);
 
     cur = roots;
-    end = tree.nodes;
+    end = roots + BP_LOSSLESS_ROOT_NODES;
     do {
         if (maxbits == 0) {
             return;
