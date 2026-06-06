@@ -312,7 +312,7 @@ static void OpenReadBundle(u8 PTR4* bits, READBUNDLE PTR4* bundle, s32 bundle_wi
     count_base = BINK_BUNDLE_COUNT_BASE(rows, element_pitch);
     len = BINK_BUNDLE_COUNT_BITS(bundle_width, count_base);
     bundle->len = len;
-    if (use_initial_value != BINK_BUNDLE_NO_INITIAL_VALUE) {
+    if (use_initial_value) {
         bundle->initial_value = BINK_BUNDLE_INITIAL_VALUE(bit_size);
     } else {
         bundle->initial_value = BINK_BUNDLE_INITIAL_VALUE_NONE;
