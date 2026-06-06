@@ -1328,10 +1328,7 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count)
     tree_end_ptr = tree.nodes;
     nz_coeff_count = 0;
     node_ptr = tree.roots;
-    do {
-        if (levels_remaining == 0) {
-            goto done;
-        }
+    while (levels_remaining != 0) {
         scan = 0;
         /* Active coefficients receive one refinement bit at each lower plane. */
         if (scan < nz_coeff_count) {
@@ -1598,7 +1595,7 @@ level_done:
         mask = mask >> 1;
         levels_remaining = (levels_remaining - 1) & BP_BYTE_MASK;
         node_ptr = next_node_ptr;
-    } while (1);
+    }
 
 done:
     bitcopy.bitlen = bitcount;
