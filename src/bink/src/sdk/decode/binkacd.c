@@ -107,45 +107,19 @@ typedef VARBITS BINKVARBITS;
 #define BINKAC_INVERT_BIN(shift) (1.0 / (1 << (shift)))
 #define BINKAC_IS_NEW_FORMAT(flags) (((flags) & BINKACNEWFORMAT) != 0)
 
-static const f64 BINKAC_FXP_TO_FLOAT_BIAS[] = {
-    4503599627370496.0,
-};
-static const f32 BINKAC_SAMPLE_ZERO[] = {
-    0.0f,
-};
-static const f64 BINKAC_VARBITS_U32_TO_F64_BIAS[] = {
-    4503601774854144.0,
-};
-static const f64 BINKAC_QUANT_U32_TO_F64_BIAS[] = {
-    4503601774854144.0,
-};
-static const f32 BINKAC_QUANT_INDEX_SCALE_CONST[] = {
-    0.664f,
-};
-static const f32 BINKAC_QUANT_POWER_SCALE_CONST[] = {
-    0.10f,
-};
-static const f64 BINKAC_QUANT_POWER_BASE_CONST[] = {
-    10.0,
-};
-static const f64 BINKAC_OPEN_U32_TO_F64_BIAS[] = {
-    4503599627370496.0,
-};
-static const f32 BINKAC_RSQRT_ZERO[] = {
-    0.0f,
-};
-static const f64 BINKAC_RSQRT_NEWTON_HALF_CONST[] = {
-    0.5,
-};
-static const f64 BINKAC_RSQRT_NEWTON_THREE_CONST[] = {
-    3.0,
-};
-static const f64 BINKAC_U32_LIMIT_AS_F64[] = {
-    2147483648.0,
-};
-static const f32 BINKAC_TRANSFORM_ROOT_SCALE_CONST[] = {
-    2.0f,
-};
+static const f64 BINKAC_FXP_TO_FLOAT_BIAS = 4503599627370496.0;
+static const f32 BINKAC_SAMPLE_ZERO = 0.0f;
+static const f64 BINKAC_VARBITS_U32_TO_F64_BIAS = 4503601774854144.0;
+static const f64 BINKAC_QUANT_U32_TO_F64_BIAS = 4503601774854144.0;
+static const f32 BINKAC_QUANT_INDEX_SCALE_CONST = 0.664f;
+static const f32 BINKAC_QUANT_POWER_SCALE_CONST = 0.10f;
+static const f64 BINKAC_QUANT_POWER_BASE_CONST = 10.0;
+static const f64 BINKAC_OPEN_U32_TO_F64_BIAS = 4503599627370496.0;
+static const f32 BINKAC_RSQRT_ZERO = 0.0f;
+static const f64 BINKAC_RSQRT_NEWTON_HALF_CONST = 0.5;
+static const f64 BINKAC_RSQRT_NEWTON_THREE_CONST = 3.0;
+static const f64 BINKAC_U32_LIMIT_AS_F64 = 2147483648.0;
+static const f32 BINKAC_TRANSFORM_ROOT_SCALE_CONST = 2.0f;
 
 /* RLE code lengths, in VQLENGTH sample groups, for sparse audio coefficients. */
 static u8 bink_rlelens_snd[MAXRLE] = {
@@ -305,7 +279,7 @@ static void read_rle_samples(f32 PTR4* samps, u32 transform_size, BINKVARBITS PT
 {
     u32 i;
     u32 b = 0;
-    f32 dequant = BINKAC_SAMPLE_ZERO[0];
+    f32 dequant = BINKAC_SAMPLE_ZERO;
     f32 PTR4* out;
 
     while (BINKAC_BAND_SAMPLE_LIMIT(bands, b) < BINKAC_FIRST_COEFF) {
@@ -363,7 +337,7 @@ static void read_rle_samples(f32 PTR4* samps, u32 transform_size, BINKVARBITS PT
                         magnitude = BINKAC_APPLY_SIGN(magnitude, sign);
                         *out = magnitude * dequant;
                     } else {
-                        *out = BINKAC_SAMPLE_ZERO[0];
+                        *out = BINKAC_SAMPLE_ZERO;
                     }
                 }
 
@@ -378,8 +352,7 @@ f64 pow(f64 x, f64 y);
 
 static inline f32 Undecibel(f32 decibels)
 {
-    return (f32)pow(BINKAC_QUANT_POWER_BASE_CONST[0],
-                    decibels * BINKAC_QUANT_POWER_SCALE_CONST[0]);
+    return (f32)pow(BINKAC_QUANT_POWER_BASE_CONST, decibels * BINKAC_QUANT_POWER_SCALE_CONST);
 }
 
 static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
@@ -420,10 +393,10 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
 
         threshold_out = threshold;
         for (i = 0; i < num_bands; ++i) {
-            quant_index_scale = BINKAC_QUANT_INDEX_SCALE_CONST[0];
-            quant_power_scale = BINKAC_QUANT_POWER_SCALE_CONST[0];
+            quant_index_scale = BINKAC_QUANT_INDEX_SCALE_CONST;
+            quant_power_scale = BINKAC_QUANT_POWER_SCALE_CONST;
             VarBitsGet(q, u32, vb, BINKAC_QUANT_BITS);
-            *threshold_out = (f32)pow(BINKAC_QUANT_POWER_BASE_CONST[0],
+            *threshold_out = (f32)pow(BINKAC_QUANT_POWER_BASE_CONST,
                                       (f32)(s32)q * quant_index_scale * quant_power_scale);
             ++threshold_out;
         }
@@ -450,21 +423,21 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
 
 static inline f32 radfsqrt(f32 value)
 {
-    if (value > BINKAC_RSQRT_ZERO[0]) {
+    if (value > BINKAC_RSQRT_ZERO) {
         f64 guess;
         f64 error;
 
         __asm__ volatile("frsqrte %0,%1" : "=f"(error) : "f"(value));
         guess = error;
         error = guess * guess * value;
-        guess = BINKAC_RSQRT_NEWTON_HALF_CONST[0] * guess *
-                (BINKAC_RSQRT_NEWTON_THREE_CONST[0] - error);
+        guess = BINKAC_RSQRT_NEWTON_HALF_CONST * guess *
+                (BINKAC_RSQRT_NEWTON_THREE_CONST - error);
         error = guess * guess * value;
-        guess = BINKAC_RSQRT_NEWTON_HALF_CONST[0] * guess *
-                (BINKAC_RSQRT_NEWTON_THREE_CONST[0] - error);
+        guess = BINKAC_RSQRT_NEWTON_HALF_CONST * guess *
+                (BINKAC_RSQRT_NEWTON_THREE_CONST - error);
         error = guess * guess * value;
-        guess = BINKAC_RSQRT_NEWTON_HALF_CONST[0] * guess *
-                (BINKAC_RSQRT_NEWTON_THREE_CONST[0] - error);
+        guess = BINKAC_RSQRT_NEWTON_HALF_CONST * guess *
+                (BINKAC_RSQRT_NEWTON_THREE_CONST - error);
         return value * guess;
     }
 
@@ -541,7 +514,7 @@ HBINKAUDIODECOMP BinkAudioDecompressOpen(u32 rate, u32 chans, u32 flags)
     ba->transform_size = transform_size;
     ba->buffer_size = buffer_size;
     ba->window_size_in_bytes = BINKAC_WINDOW_BYTES(buffer_size);
-    transform_size_root = BINKAC_TRANSFORM_ROOT_SCALE_CONST[0] / radfsqrt((f32)transform_size);
+    transform_size_root = BINKAC_TRANSFORM_ROOT_SCALE_CONST / radfsqrt((f32)transform_size);
     ba->transform_size_root = transform_size_root;
 
     for (band_index = 0; band_index < num_bands; ++band_index) {
