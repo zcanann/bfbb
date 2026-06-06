@@ -1334,7 +1334,7 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count)
         }
         scan = 0;
         /* Active coefficients receive one refinement bit at each lower plane. */
-        if (0 < nz_coeff_count) {
+        if (scan < nz_coeff_count) {
             do {
                 word = bitbuf;
                 if (bitcount == 0) {
