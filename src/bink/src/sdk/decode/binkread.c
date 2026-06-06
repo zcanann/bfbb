@@ -1727,12 +1727,12 @@ s32 BinkDoFrame(HBINK bnk)
                     }
 
                     compressed_size = frame_data->size;
-                    next_frame_data = BINK_NEXT_TRACK_FRAME(frame_data);
+                    frame_payload = BINK_TRACK_FRAME_PAYLOAD(frame_data);
+                    next_frame_data = (BINKTRACKFRAME PTR4*)((u8 PTR4*)frame_payload + compressed_size);
                     if (playing_index != BINK_TRACK_NOT_FOUND && compressed_size != 0) {
                         void PTR4* in;
                         u32 in_bytes;
 
-                        frame_payload = BINK_TRACK_FRAME_PAYLOAD(frame_data);
                         in = frame_payload->data;
                         in_bytes = frame_payload->decoded_size;
                         if (sound_callback_suspended == 0) {
