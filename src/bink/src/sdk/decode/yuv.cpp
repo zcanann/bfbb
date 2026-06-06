@@ -529,9 +529,9 @@ static void setup_scaling(u32 flags, u32 PTR4* pitch, u32 width, u32 srcpitch, B
             ODD = zoom2hodd;
             dounalignedrow = blits->rowm2h;
             dounalignedcol = blits->colm2h;
-            ODDx = blits->masked;
+            EVENx = blits->masked;
+            ODDx = EVENx;
             alignshift = blits->masked_step;
-            EVENx = ODDx;
         } else {
             step = blits->odd_step;
             EVEN = zoom2heven;
@@ -550,9 +550,9 @@ static void setup_scaling(u32 flags, u32 PTR4* pitch, u32 width, u32 srcpitch, B
         if (YUV_BLIT_GRAYSCALE(flags)) {
             dounalignedrow = blits->rowm2w;
             dounalignedcol = blits->colm2w;
-            ODD = blits->masked_x2;
+            EVEN = blits->masked_x2;
+            ODD = EVEN;
             alignshift = blits->masked_x2_step;
-            EVEN = ODD;
         } else {
             step = blits->odd_x2_step;
             dounalignedrow = blits->row2w;
@@ -573,9 +573,9 @@ static void setup_scaling(u32 flags, u32 PTR4* pitch, u32 width, u32 srcpitch, B
             ODD = zoom2hodd;
             dounalignedrow = blits->rowm2wh;
             dounalignedcol = blits->colm2wh;
-            ODDx = blits->masked_x2;
+            EVENx = blits->masked_x2;
+            ODDx = EVENx;
             alignshift = blits->masked_x2_step;
-            EVENx = ODDx;
         } else {
             step = blits->odd_x2_step;
             EVEN = zoom2heven;
@@ -594,9 +594,9 @@ static void setup_scaling(u32 flags, u32 PTR4* pitch, u32 width, u32 srcpitch, B
         if (YUV_BLIT_GRAYSCALE(flags)) {
             dounalignedrow = blits->rowm;
             dounalignedcol = blits->colm;
-            ODD = blits->masked;
+            EVEN = blits->masked;
+            ODD = EVEN;
             alignshift = blits->masked_step;
-            EVEN = ODD;
         } else {
             step = blits->odd_step;
             dounalignedrow = blits->row;
