@@ -1211,10 +1211,10 @@ next_lossy_node:
                         lenbits = BP_TREE_ENTRY_INDEX(node_entry);
                         count = (u32)BP_TREE_ENTRY_GROUP(node_entry);
                         *cur = BP_TREE_BASE_BRANCH_ENTRY(groups[count], BP_TREE_ENTRY_BASE(node_entry));
-                        next_node[0] = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD1_INDEX], lenbits, BP_TREE_CHILD1_BASE);
-                        next_node[1] = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD2_INDEX], lenbits, BP_TREE_CHILD2_BASE);
-                        next_node[2] = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD3_INDEX], lenbits, BP_TREE_CHILD3_BASE);
-                        next_node += BP_TREE_ADDED_CHILD_COUNT;
+                        *next_node = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD1_INDEX], lenbits, BP_TREE_CHILD1_BASE);
+                        *++next_node = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD2_INDEX], lenbits, BP_TREE_CHILD2_BASE);
+                        *++next_node = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD3_INDEX], lenbits, BP_TREE_CHILD3_BASE);
+                        ++next_node;
                         break;
                     case BP_TREE_HIGH_NODE:
                         *cur = BP_TREE_HIGH_GROUP_ENTRY(hi_groups[BP_TREE_ENTRY_HIGH_GROUP(node_entry)], BP_TREE_ENTRY_INDEX(node_entry));
