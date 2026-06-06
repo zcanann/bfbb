@@ -376,9 +376,9 @@ u32 LenBPLossless(s16 PTR4* vals)
                         bits = (u32)BP_TREE_ENTRY_GROUP(entry);
                         *cur = BP_TREE_BASE_BRANCH_ENTRY(groups[bits], BP_TREE_ENTRY_BASE(entry));
                         *end = BP_TREE_CHILD_BRANCH_ENTRY(groups[bits + BP_TREE_CHILD1_INDEX], kind, BP_TREE_CHILD1_BASE);
-                        end[1] = BP_TREE_CHILD_BRANCH_ENTRY(groups[bits + BP_TREE_CHILD2_INDEX], kind, BP_TREE_CHILD2_BASE);
-                        end[2] = BP_TREE_CHILD_BRANCH_ENTRY(groups[bits + BP_TREE_CHILD3_INDEX], kind, BP_TREE_CHILD3_BASE);
-                        end += BP_TREE_ADDED_CHILD_COUNT;
+                        *++end = BP_TREE_CHILD_BRANCH_ENTRY(groups[bits + BP_TREE_CHILD2_INDEX], kind, BP_TREE_CHILD2_BASE);
+                        *++end = BP_TREE_CHILD_BRANCH_ENTRY(groups[bits + BP_TREE_CHILD3_INDEX], kind, BP_TREE_CHILD3_BASE);
+                        ++end;
                         break;
                     case BP_TREE_HIGH_NODE:
                         *cur = BP_TREE_HIGH_GROUP_ENTRY(hi_groups[BP_TREE_ENTRY_HIGH_GROUP(entry)], BP_TREE_ENTRY_INDEX(entry));
@@ -440,9 +440,9 @@ handle_children:
                     maxbits = (u32)BP_TREE_ENTRY_GROUP(entry);
                     *cur = BP_TREE_BASE_BRANCH_ENTRY(groups[maxbits], BP_TREE_ENTRY_BASE(entry));
                     *end = BP_TREE_CHILD_BRANCH_ENTRY(groups[maxbits + BP_TREE_CHILD1_INDEX], kind, BP_TREE_CHILD1_BASE);
-                    end[1] = BP_TREE_CHILD_BRANCH_ENTRY(groups[maxbits + BP_TREE_CHILD2_INDEX], kind, BP_TREE_CHILD2_BASE);
-                    end[2] = BP_TREE_CHILD_BRANCH_ENTRY(groups[maxbits + BP_TREE_CHILD3_INDEX], kind, BP_TREE_CHILD3_BASE);
-                    end += BP_TREE_ADDED_CHILD_COUNT;
+                    *++end = BP_TREE_CHILD_BRANCH_ENTRY(groups[maxbits + BP_TREE_CHILD2_INDEX], kind, BP_TREE_CHILD2_BASE);
+                    *++end = BP_TREE_CHILD_BRANCH_ENTRY(groups[maxbits + BP_TREE_CHILD3_INDEX], kind, BP_TREE_CHILD3_BASE);
+                    ++end;
                     break;
                 case BP_TREE_HIGH_NODE:
                     *cur = BP_TREE_HIGH_GROUP_ENTRY(hi_groups[BP_TREE_ENTRY_HIGH_GROUP(entry)], BP_TREE_ENTRY_INDEX(entry));
