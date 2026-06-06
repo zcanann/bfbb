@@ -144,13 +144,13 @@ static f64 bink_invertbins[BINKAC_INVERT_BINS] = {
     BINKAC_INVERT_BIN(2),  BINKAC_INVERT_BIN(1),  BINKAC_INVERT_BIN(0)
 };
 
-static f32 fxptof(u32 packed)
+static f32 fxptof(u32 val)
 {
-    f32 value;
+    f32 f;
 
-    value = (f32)((f64)((packed & ~FXP_SIGN_MASK) >> FXP_VALUE_SHIFT) *
-                  bink_invertbins[packed & FXP_BIN_MASK]);
-    return (packed & FXP_SIGN_MASK) ? -value : value;
+    f = (f32)((f64)((val & ~FXP_SIGN_MASK) >> FXP_VALUE_SHIFT) *
+              bink_invertbins[val & FXP_BIN_MASK]);
+    return (val & FXP_SIGN_MASK) ? -f : f;
 }
 
 static inline s16 clamp_to_s16(s32 value)
