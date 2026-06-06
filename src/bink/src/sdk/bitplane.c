@@ -620,10 +620,7 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
 
     cur = roots;
     end = roots + BP_LOSSLESS_ROOT_NODES;
-    do {
-        if (maxbits == 0) {
-            return;
-        }
+    while (maxbits != 0) {
         lenbits = maxbits - 1;
         restart = cur;
         /* Active children at lower bit depths are pushed before the current cursor. */
@@ -706,7 +703,7 @@ handle_lossless_children:
         }
         maxbits = lenbits & BP_BYTE_MASK;
         cur = restart;
-    } while (1);
+    }
 }
 
 void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
