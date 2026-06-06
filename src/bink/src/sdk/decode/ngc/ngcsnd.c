@@ -205,7 +205,7 @@ typedef char NGCSoundStateFitsInBinkSndData
 #define NGC_SOUND_AX_SAMPLE_RATE BINK_NGC_AX_SAMPLE_RATE
 #define NGC_SOUND_S32_TO_F64_BIAS BINK_NGC_S32_TO_F64_BIAS[0]
 #define NGC_SOUND_PAN_TO_FLOAT BINK_NGC_PAN_TO_FLOAT[0]
-#define NGC_SOUND_PAN_CENTER BINK_NGC_PAN_CENTER
+#define NGC_SOUND_PAN_CENTER BINK_NGC_PAN_CENTER[0]
 
 const f32 BINK_NGC_PAN_ONE = 1.0f;
 const f32 BINK_NGC_PAN_EXPONENT = 0.3f;
@@ -218,7 +218,9 @@ const f64 BINK_NGC_S32_TO_F64_BIAS[] = {
 const f32 BINK_NGC_PAN_TO_FLOAT[] = {
     0.0000152587890625f,
 };
-const f32 BINK_NGC_PAN_CENTER = 0.5f;
+const f32 BINK_NGC_PAN_CENTER[] = {
+    0.5f,
+};
 
 static void NGC_SoundPlay(BINKSND PTR4* snd, u32 index, u32 upload_bytes);
 static void NGC_StarvedClear(BINKSND PTR4* snd);
