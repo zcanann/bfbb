@@ -1070,29 +1070,6 @@ static inline void expand_run_block(u8 PTR4* dest,
     }
 }
 
-static inline void expand_pattern_block(u8 PTR4* dest,
-                                        u32 pitch,
-                                        READBUNDLE PTR4* colors,
-                                        READBUNDLE PTR4* patterns)
-{
-    u8 color0;
-    u8 color1;
-    u32 i;
-
-    color0 = colors->cur_ptr[BINK_PATTERN_COLOR_0];
-    color1 = colors->cur_ptr[BINK_PATTERN_COLOR_1];
-    colors->cur_ptr += BINK_PATTERN_COLOR_COUNT;
-    for (i = 0; i < BINK_BLOCK_SIDE; ++i) {
-        u32 row_bits;
-        u32 col;
-
-        row_bits = *patterns->cur_ptr++;
-        for (col = 0; col < BINK_BLOCK_SIDE; ++col) {
-            dest[i * pitch + col] = (row_bits & BINK_PATTERN_COLOR_BIT) != 0 ? color1 : color0;
-            row_bits >>= BINK_PATTERN_COLOR_SHIFT;
-        }
-    }
-}
 
 static u32 getbunsize(s32 width, u32 rows, u32 bits, s32 pitch)
 {
@@ -1376,10 +1353,26 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 BINK_FILL_BLOCK_WORD_ROW(dest, pitch, 7, fill);
                 break;
             }
-            case BINK_BLOCK_PATTERN:
+            case BINK_BLOCK_PATTERN: {
+                /* Two-color 8x8 pattern: each nibble selects four pixels through
+                   the mask1/mask2 row-select tables. */
+                u32 color0 = BINK_FILL_WORD((u32)colors.cur_ptr[BINK_PATTERN_COLOR_0]);
+                u32 color1 = BINK_FILL_WORD((u32)colors.cur_ptr[BINK_PATTERN_COLOR_1]);
+                const u32 PTR4* color0_mask = (const u32 PTR4*)mask1;
+                const u32 PTR4* color1_mask = (const u32 PTR4*)mask2;
+                u32 pattern_row;
+
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
-                expand_pattern_block(dest, pitch, &colors, &patterns);
+                colors.cur_ptr += BINK_PATTERN_COLOR_COUNT;
+                for (pattern_row = 0; pattern_row < BINK_BLOCK_SIDE; ++pattern_row) {
+                    u32 bits = *patterns.cur_ptr++;
+                    u32 PTR4* row = (u32 PTR4*)(dest + pattern_row * pitch);
+
+                    row[0] = (color0 & color0_mask[bits & 0xf]) | (color1 & color1_mask[bits & 0xf]);
+                    row[1] = (color0 & color0_mask[(bits >> 4) & 0xf]) | (color1 & color1_mask[(bits >> 4) & 0xf]);
+                }
                 break;
+            }
             case BINK_BLOCK_RAW: {
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
                 if ((((u32)dest | (u32)colors.cur_ptr) & BINK_BLOCK_DOUBLE_ALIGN_MASK) == 0) {
