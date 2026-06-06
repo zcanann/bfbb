@@ -32,9 +32,11 @@ typedef enum BINKPlaneLayout
     BINK_PATTERN_BLOCK_BYTES = BINK_BLOCK_SIDE,
     BINK_PATTERN_COLOR_0 = 0,
     BINK_PATTERN_COLOR_1 = 1,
-    BINK_PATTERN_COLOR_BIT = 1,
-    BINK_PATTERN_COLOR_SHIFT = 1,
     BINK_PATTERN_COLOR_COUNT = 2,
+    BINK_PATTERN_NIBBLE_BITS = 4,        /* 8x8 pattern: a nibble selects 4 pixels */
+    BINK_PATTERN_NIBBLE_MASK = (1 << BINK_PATTERN_NIBBLE_BITS) - 1,
+    BINK_PATTERN_PAIR_BITS = 2,          /* scaled 16x16 pattern: a pair selects 2 doubled pixels */
+    BINK_PATTERN_PAIR_MASK = (1 << BINK_PATTERN_PAIR_BITS) - 1,
     BINK_RUN_BLOCK_BYTES = 0x30
 } BINKPlaneLayout;
 
@@ -1368,8 +1370,10 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                     u32 bits = *patterns.cur_ptr++;
                     u32 PTR4* row = (u32 PTR4*)(dest + pattern_row * pitch);
 
-                    row[0] = (color0 & color0_mask[bits & 0xf]) | (color1 & color1_mask[bits & 0xf]);
-                    row[1] = (color0 & color0_mask[(bits >> 4) & 0xf]) | (color1 & color1_mask[(bits >> 4) & 0xf]);
+                    row[0] = (color0 & color0_mask[bits & BINK_PATTERN_NIBBLE_MASK]) |
+                             (color1 & color1_mask[bits & BINK_PATTERN_NIBBLE_MASK]);
+                    row[1] = (color0 & color0_mask[(bits >> BINK_PATTERN_NIBBLE_BITS) & BINK_PATTERN_NIBBLE_MASK]) |
+                             (color1 & color1_mask[(bits >> BINK_PATTERN_NIBBLE_BITS) & BINK_PATTERN_NIBBLE_MASK]);
                 }
                 break;
             }
@@ -1445,10 +1449,14 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                         u32 PTR4* even = (u32 PTR4*)pattern_dest;
                         u32 PTR4* odd = (u32 PTR4*)(pattern_dest + pitch);
 
-                        even[0] = odd[0] = (color0 & color0_mask[bits & 3]) | (color1 & color1_mask[bits & 3]);
-                        even[1] = odd[1] = (color0 & color0_mask[(bits >> 2) & 3]) | (color1 & color1_mask[(bits >> 2) & 3]);
-                        even[2] = odd[2] = (color0 & color0_mask[(bits >> 4) & 3]) | (color1 & color1_mask[(bits >> 4) & 3]);
-                        even[3] = odd[3] = (color0 & color0_mask[(bits >> 6) & 3]) | (color1 & color1_mask[(bits >> 6) & 3]);
+                        even[0] = odd[0] = (color0 & color0_mask[bits & BINK_PATTERN_PAIR_MASK]) |
+                                           (color1 & color1_mask[bits & BINK_PATTERN_PAIR_MASK]);
+                        even[1] = odd[1] = (color0 & color0_mask[(bits >> BINK_PATTERN_PAIR_BITS) & BINK_PATTERN_PAIR_MASK]) |
+                                           (color1 & color1_mask[(bits >> BINK_PATTERN_PAIR_BITS) & BINK_PATTERN_PAIR_MASK]);
+                        even[2] = odd[2] = (color0 & color0_mask[(bits >> (BINK_PATTERN_PAIR_BITS * 2)) & BINK_PATTERN_PAIR_MASK]) |
+                                           (color1 & color1_mask[(bits >> (BINK_PATTERN_PAIR_BITS * 2)) & BINK_PATTERN_PAIR_MASK]);
+                        even[3] = odd[3] = (color0 & color0_mask[(bits >> (BINK_PATTERN_PAIR_BITS * 3)) & BINK_PATTERN_PAIR_MASK]) |
+                                           (color1 & color1_mask[(bits >> (BINK_PATTERN_PAIR_BITS * 3)) & BINK_PATTERN_PAIR_MASK]);
                         pattern_dest += pitch * 2;
                     }
                 } else if (subblock_type == BINK_BLOCK_RAW) {
