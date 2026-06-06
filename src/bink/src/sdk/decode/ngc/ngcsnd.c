@@ -207,18 +207,18 @@ typedef char NGCSoundStateFitsInBinkSndData
 #define NGC_SOUND_PAN_TO_FLOAT BINK_NGC_PAN_TO_FLOAT[0]
 #define NGC_SOUND_PAN_CENTER BINK_NGC_PAN_CENTER
 
-static const f32 BINK_NGC_PAN_ONE = 1.0f;
-static const f32 BINK_NGC_PAN_EXPONENT = 0.3f;
-static const f32 BINK_NGC_MIX_SCALE = 65535.0f;
-static const f64 BINK_NGC_U32_TO_F64_BIAS = 4503599627370496.0;
-static const f32 BINK_NGC_AX_SAMPLE_RATE = 32000.0f;
-static const f64 BINK_NGC_S32_TO_F64_BIAS[] = {
+const f32 BINK_NGC_PAN_ONE = 1.0f;
+const f32 BINK_NGC_PAN_EXPONENT = 0.3f;
+const f32 BINK_NGC_MIX_SCALE = 65535.0f;
+const f64 BINK_NGC_U32_TO_F64_BIAS = 4503599627370496.0;
+const f32 BINK_NGC_AX_SAMPLE_RATE = 32000.0f;
+const f64 BINK_NGC_S32_TO_F64_BIAS[] = {
     4503601774854144.0,
 };
-static const f32 BINK_NGC_PAN_TO_FLOAT[] = {
+const f32 BINK_NGC_PAN_TO_FLOAT[] = {
     0.0000152587890625f,
 };
-static const f32 BINK_NGC_PAN_CENTER = 0.5f;
+const f32 BINK_NGC_PAN_CENTER = 0.5f;
 
 static void NGC_SoundPlay(BINKSND PTR4* snd, u32 index, u32 upload_bytes);
 static void NGC_StarvedClear(BINKSND PTR4* snd);
@@ -228,6 +228,8 @@ const char BINK_ERROR_OPENING_FILE[] = "Error opening file.";
 const char BINK_ERROR_NOT_BINK[20] = "Not a Bink file.";
 const char BINK_ERROR_NO_COMPRESSED_FRAMES[] = "The file doesn't contain any compressed frames yet.";
 const char BINK_ERROR_OUT_OF_MEMORY[20] = "Out of memory.";
+const f64 BINK_NGC_SOUND_U32_TO_F64_BIAS = 4503599627370496.0;
+const f64 BINK_NGC_SOUND_SIGN_BIAS = 2147483648.0;
 
 static void startVoices(u32 task)
 {
