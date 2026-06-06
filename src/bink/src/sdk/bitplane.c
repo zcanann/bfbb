@@ -1386,9 +1386,9 @@ decode_node:
                     node_kind = BP_READ_TREE_INDEX(node);
                     *node_ptr = BP_READ_TREE_BRANCH_FROM_NODE(node);
                     *tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(node_kind, BP_READ_TREE_CHILD1_BASE);
-                    tree_end_ptr[1] = BP_READ_TREE_CHILD_BRANCH(node_kind, BP_READ_TREE_CHILD2_BASE);
-                    tree_end_ptr[2] = BP_READ_TREE_CHILD_BRANCH(node_kind, BP_READ_TREE_CHILD3_BASE);
-                    tree_end_ptr = tree_end_ptr + BP_TREE_ADDED_CHILD_COUNT;
+                    *++tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(node_kind, BP_READ_TREE_CHILD2_BASE);
+                    *++tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(node_kind, BP_READ_TREE_CHILD3_BASE);
+                    ++tree_end_ptr;
                     goto node_done;
                 case BP_READ_TREE_HIGH_NODE:
                     *node_ptr = BP_READ_TREE_GROUP_FROM_INDEX(BP_READ_TREE_INDEX(node));
