@@ -107,57 +107,43 @@ typedef VARBITS BINKVARBITS;
 #define BINKAC_INVERT_BIN(shift) (1.0 / (1 << (shift)))
 #define BINKAC_IS_NEW_FORMAT(flags) (((flags) & BINKACNEWFORMAT) != 0)
 
-extern const f64 BINKAC_FXP_TO_FLOAT_BIAS[];
-extern const f32 BINKAC_SAMPLE_ZERO[];
-extern const f64 BINKAC_VARBITS_U32_TO_F64_BIAS[];
-extern const f64 BINKAC_QUANT_U32_TO_F64_BIAS[];
-extern const f32 BINKAC_QUANT_INDEX_SCALE_CONST[];
-extern const f32 BINKAC_QUANT_POWER_SCALE_CONST[];
-extern const f64 BINKAC_QUANT_POWER_BASE_CONST[];
-extern const f64 BINKAC_OPEN_U32_TO_F64_BIAS[];
-extern const f32 BINKAC_RSQRT_ZERO[];
-extern const f64 BINKAC_RSQRT_NEWTON_HALF_CONST[];
-extern const f64 BINKAC_RSQRT_NEWTON_THREE_CONST[];
-extern const f64 BINKAC_U32_LIMIT_AS_F64[];
-extern const f32 BINKAC_TRANSFORM_ROOT_SCALE_CONST[];
-
-const f64 BINKAC_FXP_TO_FLOAT_BIAS[] = {
+static const f64 BINKAC_FXP_TO_FLOAT_BIAS[] = {
     4503599627370496.0,
 };
-const f32 BINKAC_SAMPLE_ZERO[] = {
+static const f32 BINKAC_SAMPLE_ZERO[] = {
     0.0f,
 };
-const f64 BINKAC_VARBITS_U32_TO_F64_BIAS[] = {
+static const f64 BINKAC_VARBITS_U32_TO_F64_BIAS[] = {
     4503601774854144.0,
 };
-const f64 BINKAC_QUANT_U32_TO_F64_BIAS[] = {
+static const f64 BINKAC_QUANT_U32_TO_F64_BIAS[] = {
     4503601774854144.0,
 };
-const f32 BINKAC_QUANT_INDEX_SCALE_CONST[] = {
+static const f32 BINKAC_QUANT_INDEX_SCALE_CONST[] = {
     0.664f,
 };
-const f32 BINKAC_QUANT_POWER_SCALE_CONST[] = {
+static const f32 BINKAC_QUANT_POWER_SCALE_CONST[] = {
     0.10f,
 };
-const f64 BINKAC_QUANT_POWER_BASE_CONST[] = {
+static const f64 BINKAC_QUANT_POWER_BASE_CONST[] = {
     10.0,
 };
-const f64 BINKAC_OPEN_U32_TO_F64_BIAS[] = {
+static const f64 BINKAC_OPEN_U32_TO_F64_BIAS[] = {
     4503599627370496.0,
 };
-const f32 BINKAC_RSQRT_ZERO[] = {
+static const f32 BINKAC_RSQRT_ZERO[] = {
     0.0f,
 };
-const f64 BINKAC_RSQRT_NEWTON_HALF_CONST[] = {
+static const f64 BINKAC_RSQRT_NEWTON_HALF_CONST[] = {
     0.5,
 };
-const f64 BINKAC_RSQRT_NEWTON_THREE_CONST[] = {
+static const f64 BINKAC_RSQRT_NEWTON_THREE_CONST[] = {
     3.0,
 };
-const f64 BINKAC_U32_LIMIT_AS_F64[] = {
+static const f64 BINKAC_U32_LIMIT_AS_F64[] = {
     2147483648.0,
 };
-const f32 BINKAC_TRANSFORM_ROOT_SCALE_CONST[] = {
+static const f32 BINKAC_TRANSFORM_ROOT_SCALE_CONST[] = {
     2.0f,
 };
 
