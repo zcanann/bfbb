@@ -734,7 +734,7 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
 
     /* The stream starts with the maximum active lossless bitplane level. */
     VarBitsGet(maxlevel, u8, bitcopy, BP_LOSSLESS_LEVEL_BITS);
-    had_level = maxlevel;
+    had_level = maxlevel != 0;
     highbit = (u16)(1 << (maxlevel - 1));
     /* Root nodes mirror WriteBPLossless: three grouped roots plus coeffs 1..3. */
     tree.roots[BP_ROOT_GROUP1_SLOT] = BP_READ_TREE_GROUP1_ROOT;
