@@ -78,6 +78,15 @@ class Statement:
         self.barrier = False          # unparseable -> pinned in place
 
 
+def read_source(path: Path) -> str:
+    # Binary round-trip so we never translate CRLF<->LF (repo files are LF).
+    return path.read_bytes().decode("utf-8", "surrogateescape")
+
+
+def write_source(path: Path, text: str) -> None:
+    path.write_bytes(text.encode("utf-8", "surrogateescape"))
+
+
 def split_keep_ends(text: str) -> List[str]:
     return text.splitlines(keepends=True)
 
@@ -300,7 +309,7 @@ def main() -> int:
             return 2
         src = cands[0]
 
-    original_text = src.read_text(encoding="utf-8", errors="surrogateescape")
+    original_text = read_source(src)
     all_lines = split_keep_ends(original_text)
     if args.start < 1 or args.end > len(all_lines) or args.start > args.end:
         print(f"bad range: file has {len(all_lines)} lines", file=sys.stderr)
@@ -335,8 +344,7 @@ def main() -> int:
 
     def write_order(order: Sequence[int]) -> None:
         new_block = render(stmts, order)
-        src.write_text("".join(head) + new_block + "".join(tail),
-                       encoding="utf-8", errors="surrogateescape")
+        write_source(src, "".join(head) + new_block + "".join(tail))
 
     try:
         for n, order in enumerate(ordered):
@@ -371,7 +379,7 @@ def main() -> int:
             print("REMINDER: confirm this order is faithful to the original source, "
                   "not just a higher score.")
         else:
-            src.write_text(original_text, encoding="utf-8", errors="surrogateescape")
+            write_source(src, original_text)
             if args.apply and best is not None and best[2] != identity:
                 print(f"\nbest gain was +{gain:.4f}% (< --min-gain {args.min_gain}); "
                       "left file unchanged -- treat small gains as coaxing, not a fix")
