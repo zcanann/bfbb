@@ -996,6 +996,8 @@ static void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4
         if (DCT_AC_MASK(in) == 0) {
             s32 dc = DCT_DEQUANT(in, q, DCT_ROW0);
 
+            ++in;
+            ++q;
             out[DCT_ROW0] = dc;
             out[DCT_ROW7] = dc;
             out[DCT_ROW6] = dc;
@@ -1032,6 +1034,8 @@ static void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4
             s32 even5 = even1 - even_diff;
             s32 odd_out0 = odd_pair0 + odd_pair1;
 
+            ++in;
+            ++q;
             row[DCT_COL0] = even2;
             row[DCT_COL7] = odd_out0;
             row[DCT_COL1] = even4;
@@ -1051,8 +1055,6 @@ static void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4
             out[DCT_ROW3] = row[DCT_COL4] - row[DCT_COL3];
         }
 
-        ++in;
-        ++q;
         ++out;
     }
 
@@ -1130,6 +1132,8 @@ void FastmIDCT8x8WithMotion(u8 PTR4* dest, s32 pitch, s16 PTR4* in, u32 quant, u
         if (DCT_AC_MASK(in) == 0) {
             s32 dc = DCT_DEQUANT(in, q, DCT_ROW0);
 
+            ++in;
+            ++q;
             out[DCT_ROW0] = dc;
             out[DCT_ROW7] = dc;
             out[DCT_ROW6] = dc;
@@ -1166,6 +1170,8 @@ void FastmIDCT8x8WithMotion(u8 PTR4* dest, s32 pitch, s16 PTR4* in, u32 quant, u
             s32 even5 = even1 - even_diff;
             s32 odd_out0 = odd_pair0 + odd_pair1;
 
+            ++in;
+            ++q;
             row[DCT_COL0] = even2;
             row[DCT_COL7] = odd_out0;
             row[DCT_COL1] = even4;
@@ -1185,8 +1191,6 @@ void FastmIDCT8x8WithMotion(u8 PTR4* dest, s32 pitch, s16 PTR4* in, u32 quant, u
             out[DCT_ROW3] = row[DCT_COL4] - row[DCT_COL3];
         }
 
-        ++in;
-        ++q;
         ++out;
     }
 
