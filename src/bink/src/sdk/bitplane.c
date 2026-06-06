@@ -782,9 +782,9 @@ next_lossless_read_node:
                         kind = BP_READ_TREE_INDEX(node);
                         *node_ptr = BP_READ_TREE_BRANCH_FROM_NODE(node);
                         *tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(kind, BP_READ_TREE_CHILD1_BASE);
-                        tree_end_ptr[1] = BP_READ_TREE_CHILD_BRANCH(kind, BP_READ_TREE_CHILD2_BASE);
-                        tree_end_ptr[2] = BP_READ_TREE_CHILD_BRANCH(kind, BP_READ_TREE_CHILD3_BASE);
-                        tree_end_ptr += BP_TREE_ADDED_CHILD_COUNT;
+                        *++tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(kind, BP_READ_TREE_CHILD2_BASE);
+                        *++tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(kind, BP_READ_TREE_CHILD3_BASE);
+                        ++tree_end_ptr;
                         goto after_lossless_read_children;
                     case BP_READ_TREE_HIGH_NODE:
                         *node_ptr = BP_READ_TREE_GROUP_FROM_INDEX(BP_READ_TREE_INDEX(node));
@@ -924,9 +924,9 @@ next_lossless_final_node:
                     kind = BP_READ_TREE_INDEX(node);
                     *node_ptr = BP_READ_TREE_BRANCH_FROM_NODE(node);
                     *tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(kind, BP_READ_TREE_CHILD1_BASE);
-                    tree_end_ptr[1] = BP_READ_TREE_CHILD_BRANCH(kind, BP_READ_TREE_CHILD2_BASE);
-                    tree_end_ptr[2] = BP_READ_TREE_CHILD_BRANCH(kind, BP_READ_TREE_CHILD3_BASE);
-                    tree_end_ptr += BP_TREE_ADDED_CHILD_COUNT;
+                    *++tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(kind, BP_READ_TREE_CHILD2_BASE);
+                    *++tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(kind, BP_READ_TREE_CHILD3_BASE);
+                    ++tree_end_ptr;
                     goto after_lossless_final_children;
                 case BP_READ_TREE_HIGH_NODE:
                     *node_ptr = BP_READ_TREE_GROUP_FROM_INDEX(BP_READ_TREE_INDEX(node));
