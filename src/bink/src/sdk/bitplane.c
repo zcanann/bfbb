@@ -1069,7 +1069,7 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     u16 PTR4* insert;
     u16 PTR4* next_node;
     u16 PTR4* roots;
-    u16 bit_mask;
+    s16 bit_mask;
     u16 node_entry;
     BPLOSSYWRITETREE tree;
     u8 lens[BP_BLOCK_COEFFS];
