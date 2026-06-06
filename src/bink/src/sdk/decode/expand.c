@@ -747,7 +747,6 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
     u32 high;
     u32 low;
     u32 packed;
-    u32 signed_byte;
     s32 remaining;
 
     if (bundle->cur_ptr != bundle->cur_dec) {
@@ -774,13 +773,12 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
             lastval = high;
             low = exp_read_huff4_mask(bits, peek, decode, syms, mask);
             packed = ((high & HUFF4_SYMBOL_MASK) << HUFF4_NIBBLE_BITS) | low;
-            signed_byte = packed;
-            if ((signed_byte & BINK_SIGNED_BYTE_BIAS) != 0) {
-                signed_byte = BINK_SIGNED_BYTE_NEGATIVE(signed_byte);
+            if ((packed & BINK_SIGNED_BYTE_BIAS) != 0) {
+                packed = BINK_SIGNED_BYTE_NEGATIVE(packed);
             } else {
-                signed_byte = BINK_SIGNED_BYTE_POSITIVE(signed_byte);
+                packed = BINK_SIGNED_BYTE_POSITIVE(packed);
             }
-            *dest++ = (u8)signed_byte;
+            *dest++ = (u8)packed;
             remaining--;
         } while (remaining > 0);
 
