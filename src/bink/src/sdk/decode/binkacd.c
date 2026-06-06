@@ -368,7 +368,7 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
     u32 ch;
     f32 PTR4* channel;
     u32 i;
-    u32 q;
+    u32 j;
     f32 PTR4* threshold_out;
 
     vb.init = inptr;
@@ -392,8 +392,8 @@ static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
 
         threshold_out = threshold;
         for (i = 0; i < num_bands; ++i) {
-            VarBitsGet(q, u32, vb, BINKAC_QUANT_BITS);
-            *threshold_out = Undecibel((f32)(s32)q * BINKAC_QUANT_INDEX_SCALE_CONST);
+            VarBitsGet(j, u32, vb, BINKAC_QUANT_BITS);
+            *threshold_out = Undecibel((f32)(s32)j * BINKAC_QUANT_INDEX_SCALE_CONST);
             ++threshold_out;
         }
 
@@ -442,7 +442,7 @@ static inline f32 radfsqrt(f32 value)
 
 HBINKAUDIODECOMP BinkAudioDecompressOpen(u32 rate, u32 chans, u32 flags)
 {
-    u32 band_index;
+    u32 i;
     u32 transform_size;
     u32 transform_size_half;
     u32 buffer_size;
@@ -475,13 +475,13 @@ HBINKAUDIODECOMP BinkAudioDecompressOpen(u32 rate, u32 chans, u32 flags)
     nyq = (rate + BINKAC_NYQUIST_ROUNDING) / BINKAC_NYQUIST_DIVISOR;
     transform_size_half = transform_size / BINKAC_TRANSFORM_HALF_DIVISOR;
     /* Calculate the number of critical bands below Nyquist. */
-    for (band_index = 0; band_index < TOTBANDS; ++band_index) {
-        if (bink_bandtopfreq[band_index] >= (u32)nyq) {
+    for (i = 0; i < TOTBANDS; ++i) {
+        if (bink_bandtopfreq[i] >= (u32)nyq) {
             break;
         }
     }
 
-    num_bands = band_index;
+    num_bands = i;
     pushmalloc((void PTR4* PTR4*)&bands, BINKAC_BAND_LIMIT_COUNT(num_bands) * sizeof(*bands));
     pushmalloc((void PTR4* PTR4*)&fft_work, BINKAC_FFT_WORK_BYTES(transform_size_half, fft_work));
     if (BINKAC_IS_NEW_FORMAT(flags)) {
@@ -513,13 +513,13 @@ HBINKAUDIODECOMP BinkAudioDecompressOpen(u32 rate, u32 chans, u32 flags)
     transform_size_root = BINKAC_TRANSFORM_ROOT_SCALE_CONST / radfsqrt((f32)transform_size);
     ba->transform_size_root = transform_size_root;
 
-    for (band_index = 0; band_index < num_bands; ++band_index) {
-        ba->bands[band_index] = (bink_bandtopfreq[band_index] * transform_size_half) / nyq;
-        if (ba->bands[band_index] == 0) {
-            ba->bands[band_index] = BINKAC_MIN_BAND_LIMIT;
+    for (i = 0; i < num_bands; ++i) {
+        ba->bands[i] = (bink_bandtopfreq[i] * transform_size_half) / nyq;
+        if (ba->bands[i] == 0) {
+            ba->bands[i] = BINKAC_MIN_BAND_LIMIT;
         }
     }
-    ba->bands[band_index] = transform_size_half;
+    ba->bands[i] = transform_size_half;
     ba->fft_work[0] = BINKAC_FFT_WORK_SENTINEL;
     ba->start_frame = BINKAC_START_FRAME;
 
