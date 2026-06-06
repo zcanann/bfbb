@@ -173,6 +173,9 @@ u32 RADTimerRead(void)
     u32 remainder_high;
     u32 remainder_low;
     u32 recip_term;
+    u32 ms_per_high_word;
+    u32 ticks_per_ms;
+    u32 recip_magic;
 
     now = OSGetTime();
 
@@ -181,13 +184,16 @@ u32 RADTimerRead(void)
     }
 
     now -= starttime;
+    ms_per_high_word = RAD_TIMER_MS_PER_HIGH_WORD;
+    ticks_per_ms = RAD_TIMER_TICKS_PER_MS;
+    recip_magic = RAD_TIMER_RECIP_MAGIC;
     /* Convert elapsed OS ticks to milliseconds without a full 64-bit divide. */
     elapsed_ms = (u32)(now >> 32);
-    elapsed_ms *= RAD_TIMER_MS_PER_HIGH_WORD;
-    now -= (u64)elapsed_ms * RAD_TIMER_TICKS_PER_MS;
+    elapsed_ms *= ms_per_high_word;
+    now -= (u64)elapsed_ms * ticks_per_ms;
     remainder_high = (u32)(now >> 32);
     remainder_low = (u32)now;
-    recip_term = remainder_high * RAD_TIMER_RECIP_MAGIC +
+    recip_term = remainder_high * recip_magic +
                  RAD_TIMER_RECIP_LOW_HIGH_PRODUCT(remainder_low);
     return elapsed_ms + (recip_term >> RAD_TIMER_RECIP_SHIFT);
 }
