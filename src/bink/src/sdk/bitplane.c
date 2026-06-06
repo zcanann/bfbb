@@ -535,10 +535,8 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
     maxbits = 0;
     count = BP_AC_COEFFS;
     i = BP_FIRST_AC_COEFF;
-    cur = absvals;
     do {
-        cur++;
-        lenbits = BP_COEFF_BIT_LEVEL((u32)*cur);
+        lenbits = BP_COEFF_BIT_LEVEL((u32)absvals[i]);
         if (lenbits > maxbits) {
             maxbits = lenbits;
         }
