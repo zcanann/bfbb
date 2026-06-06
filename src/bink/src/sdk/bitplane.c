@@ -1187,7 +1187,7 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     for (; maxbits != 0; maxbits = (maxbits - 1) & BP_BYTE_MASK) {
         count = 0;
         /* Coefficients introduced on earlier planes emit one residual bit here. */
-        if (0 < i) {
+        if (count < i) {
             do {
                 PUT_BP_BIT(bits, (active_absvals[count] & bit_mask) != 0);
                 count++;
