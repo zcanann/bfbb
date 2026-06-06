@@ -983,10 +983,14 @@ static void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4
     s32 workspace[DCT_BLOCK_COEFFS];
     s32 PTR4* out;
     u32 PTR4* d0;
+    u32 PTR4* d1;
     s32 doublepitch;
     s32 i;
 
     out = workspace;
+    d0 = dest;
+    d1 = DCT_ADVANCE_U32_BYTES(dest, pitch);
+    doublepitch = pitch + pitch;
     /* First pass dequantizes columns into a transposed workspace. */
     for (i = DCT_BLOCK_WIDTH; i != 0; --i) {
         if (DCT_AC_MASK(in) == 0) {
@@ -1053,11 +1057,8 @@ static void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4
     }
 
     out = workspace;
-    d0 = dest;
-    doublepitch = pitch + pitch;
     /* The doubled variant expands each row into two adjacent output rows. */
     for (i = DCT_BLOCK_WIDTH; i != 0; --i) {
-        u32 PTR4* d1 = DCT_ADVANCE_U32_BYTES(d0, pitch);
         s32 a0 = out[DCT_COL2] + out[DCT_COL6];
         s32 a1 = out[DCT_COL0] + out[DCT_COL4];
         s32 a2 = a1 - a0;
@@ -1095,6 +1096,7 @@ static void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4
 
         out += DCT_BLOCK_WIDTH;
         d0 = DCT_ADVANCE_U32_BYTES(d0, doublepitch);
+        d1 = DCT_ADVANCE_U32_BYTES(d1, doublepitch);
     }
 }
 
