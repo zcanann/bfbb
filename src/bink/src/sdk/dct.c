@@ -1205,16 +1205,16 @@ void FastFDCT8x8(s32 PTR4* out, u8 PTR4* in)
     for (i = DCT_BLOCK_WIDTH; i != 0; --i) {
         tmp0 = (in[DCT_COL0] + in[DCT_COL7]) * DCT_INPUT_SCALE;
         tmp1 = (in[DCT_COL1] + in[DCT_COL6]) * DCT_INPUT_SCALE;
-        tmp2 = in[DCT_COL2] + in[DCT_COL5];
-        tmp3 = in[DCT_COL3] + in[DCT_COL4];
+        tmp2 = (in[DCT_COL2] + in[DCT_COL5]) * DCT_INPUT_SCALE;
+        tmp3 = (in[DCT_COL3] + in[DCT_COL4]) * DCT_INPUT_SCALE;
         tmp7 = (in[DCT_COL0] - in[DCT_COL7]) * DCT_INPUT_SCALE;
         tmp6 = (in[DCT_COL1] - in[DCT_COL6]) * DCT_INPUT_SCALE;
         tmp5 = (in[DCT_COL2] - in[DCT_COL5]) * DCT_INPUT_SCALE;
         tmp4 = (in[DCT_COL3] - in[DCT_COL4]) * DCT_INPUT_SCALE;
-        tmp10 = tmp0 + tmp3 * DCT_INPUT_SCALE;
-        tmp13 = tmp0 - tmp3 * DCT_INPUT_SCALE;
-        tmp11 = tmp1 + tmp2 * DCT_INPUT_SCALE;
-        tmp12 = tmp1 - tmp2 * DCT_INPUT_SCALE;
+        tmp10 = tmp0 + tmp3;
+        tmp13 = tmp0 - tmp3;
+        tmp11 = tmp1 + tmp2;
+        tmp12 = tmp1 - tmp2;
 
         out[DCT_COL0] = tmp10 + tmp11;
         out[DCT_COL4] = tmp10 - tmp11;
@@ -1295,16 +1295,16 @@ void FastFDCTs8x8(s32 PTR4* out, s8 PTR4* in)
     for (i = DCT_BLOCK_WIDTH; i != 0; --i) {
         tmp0 = (in[DCT_COL0] + in[DCT_COL7]) * DCT_INPUT_SCALE;
         tmp1 = (in[DCT_COL1] + in[DCT_COL6]) * DCT_INPUT_SCALE;
-        tmp2 = in[DCT_COL2] + in[DCT_COL5];
-        tmp3 = in[DCT_COL3] + in[DCT_COL4];
+        tmp2 = (in[DCT_COL2] + in[DCT_COL5]) * DCT_INPUT_SCALE;
+        tmp3 = (in[DCT_COL3] + in[DCT_COL4]) * DCT_INPUT_SCALE;
         tmp7 = (in[DCT_COL0] - in[DCT_COL7]) * DCT_INPUT_SCALE;
         tmp6 = (in[DCT_COL1] - in[DCT_COL6]) * DCT_INPUT_SCALE;
         tmp5 = (in[DCT_COL2] - in[DCT_COL5]) * DCT_INPUT_SCALE;
         tmp4 = (in[DCT_COL3] - in[DCT_COL4]) * DCT_INPUT_SCALE;
-        tmp10 = tmp0 + tmp3 * DCT_INPUT_SCALE;
-        tmp13 = tmp0 - tmp3 * DCT_INPUT_SCALE;
-        tmp11 = tmp1 + tmp2 * DCT_INPUT_SCALE;
-        tmp12 = tmp1 - tmp2 * DCT_INPUT_SCALE;
+        tmp10 = tmp0 + tmp3;
+        tmp13 = tmp0 - tmp3;
+        tmp11 = tmp1 + tmp2;
+        tmp12 = tmp1 - tmp2;
 
         out[DCT_COL0] = tmp10 + tmp11;
         out[DCT_COL4] = tmp10 - tmp11;
