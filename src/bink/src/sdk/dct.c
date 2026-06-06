@@ -850,6 +850,7 @@ const u8 patterns[DCT_PATTERN_BYTES] RAD_ATTRIBUTE_ALIGN(32) = {
 
 static void fastidct8x8(u8 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4* q)
 {
+    s32 row[DCT_BLOCK_WIDTH];
     s32 workspace[DCT_BLOCK_COEFFS];
     s32 PTR4* out;
     u8 PTR4* d;
@@ -901,14 +902,23 @@ static void fastidct8x8(u8 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4* 
 
             ++in;
             ++q;
-            out[DCT_ROW0] = even2 + odd_out0;
-            out[DCT_ROW7] = even2 - odd_out0;
-            out[DCT_ROW1] = even4 + odd_mid;
-            out[DCT_ROW6] = even4 - odd_mid;
-            out[DCT_ROW2] = even5 + odd_cross;
-            out[DCT_ROW5] = even5 - odd_cross;
-            out[DCT_ROW4] = even3 + odd_tail;
-            out[DCT_ROW3] = even3 - odd_tail;
+            row[DCT_COL0] = even2;
+            row[DCT_COL7] = odd_out0;
+            row[DCT_COL1] = even4;
+            row[DCT_COL6] = odd_mid;
+            row[DCT_COL2] = even5;
+            row[DCT_COL5] = odd_cross;
+            row[DCT_COL4] = even3;
+            row[DCT_COL3] = odd_tail;
+
+            out[DCT_ROW0] = row[DCT_COL0] + row[DCT_COL7];
+            out[DCT_ROW7] = row[DCT_COL0] - row[DCT_COL7];
+            out[DCT_ROW1] = row[DCT_COL1] + row[DCT_COL6];
+            out[DCT_ROW6] = row[DCT_COL1] - row[DCT_COL6];
+            out[DCT_ROW2] = row[DCT_COL2] + row[DCT_COL5];
+            out[DCT_ROW5] = row[DCT_COL2] - row[DCT_COL5];
+            out[DCT_ROW4] = row[DCT_COL4] + row[DCT_COL3];
+            out[DCT_ROW3] = row[DCT_COL4] - row[DCT_COL3];
         }
 
         ++out;
@@ -944,14 +954,23 @@ static void fastidct8x8(u8 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4* 
         s32 even4 = even1 + even_diff;
         s32 even5 = even1 - even_diff;
 
-        d[DCT_COL0] = DCT_BYTE_SAMPLE(even2 + odd_out0);
-        d[DCT_COL7] = DCT_BYTE_SAMPLE(even2 - odd_out0);
-        d[DCT_COL1] = DCT_BYTE_SAMPLE(even4 + odd_mid);
-        d[DCT_COL6] = DCT_BYTE_SAMPLE(even4 - odd_mid);
-        d[DCT_COL2] = DCT_BYTE_SAMPLE(even5 + odd_cross);
-        d[DCT_COL5] = DCT_BYTE_SAMPLE(even5 - odd_cross);
-        d[DCT_COL4] = DCT_BYTE_SAMPLE(even3 + odd_tail);
-        d[DCT_COL3] = DCT_BYTE_SAMPLE(even3 - odd_tail);
+        row[DCT_COL0] = even2;
+        row[DCT_COL7] = odd_out0;
+        row[DCT_COL1] = even4;
+        row[DCT_COL6] = odd_mid;
+        row[DCT_COL2] = even5;
+        row[DCT_COL5] = odd_cross;
+        row[DCT_COL4] = even3;
+        row[DCT_COL3] = odd_tail;
+
+        d[DCT_COL0] = DCT_BYTE_SAMPLE(row[DCT_COL0] + row[DCT_COL7]);
+        d[DCT_COL7] = DCT_BYTE_SAMPLE(row[DCT_COL0] - row[DCT_COL7]);
+        d[DCT_COL1] = DCT_BYTE_SAMPLE(row[DCT_COL1] + row[DCT_COL6]);
+        d[DCT_COL6] = DCT_BYTE_SAMPLE(row[DCT_COL1] - row[DCT_COL6]);
+        d[DCT_COL2] = DCT_BYTE_SAMPLE(row[DCT_COL2] + row[DCT_COL5]);
+        d[DCT_COL5] = DCT_BYTE_SAMPLE(row[DCT_COL2] - row[DCT_COL5]);
+        d[DCT_COL4] = DCT_BYTE_SAMPLE(row[DCT_COL4] + row[DCT_COL3]);
+        d[DCT_COL3] = DCT_BYTE_SAMPLE(row[DCT_COL4] - row[DCT_COL3]);
 
         out += DCT_BLOCK_WIDTH;
         d += pitch;
@@ -960,6 +979,7 @@ static void fastidct8x8(u8 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4* 
 
 static void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4* q)
 {
+    s32 row[DCT_BLOCK_WIDTH];
     s32 workspace[DCT_BLOCK_COEFFS];
     s32 PTR4* out;
     u32 PTR4* d0;
@@ -1008,14 +1028,23 @@ static void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4
             s32 even5 = even1 - even_diff;
             s32 odd_out0 = odd_pair0 + odd_pair1;
 
-            out[DCT_ROW0] = even2 + odd_out0;
-            out[DCT_ROW7] = even2 - odd_out0;
-            out[DCT_ROW1] = even4 + odd_mid;
-            out[DCT_ROW6] = even4 - odd_mid;
-            out[DCT_ROW2] = even5 + odd_cross;
-            out[DCT_ROW5] = even5 - odd_cross;
-            out[DCT_ROW4] = even3 + odd_tail;
-            out[DCT_ROW3] = even3 - odd_tail;
+            row[DCT_COL0] = even2;
+            row[DCT_COL7] = odd_out0;
+            row[DCT_COL1] = even4;
+            row[DCT_COL6] = odd_mid;
+            row[DCT_COL2] = even5;
+            row[DCT_COL5] = odd_cross;
+            row[DCT_COL4] = even3;
+            row[DCT_COL3] = odd_tail;
+
+            out[DCT_ROW0] = row[DCT_COL0] + row[DCT_COL7];
+            out[DCT_ROW7] = row[DCT_COL0] - row[DCT_COL7];
+            out[DCT_ROW1] = row[DCT_COL1] + row[DCT_COL6];
+            out[DCT_ROW6] = row[DCT_COL1] - row[DCT_COL6];
+            out[DCT_ROW2] = row[DCT_COL2] + row[DCT_COL5];
+            out[DCT_ROW5] = row[DCT_COL2] - row[DCT_COL5];
+            out[DCT_ROW4] = row[DCT_COL4] + row[DCT_COL3];
+            out[DCT_ROW3] = row[DCT_COL4] - row[DCT_COL3];
         }
 
         ++in;
@@ -1086,6 +1115,7 @@ void FastIDCT8x8d(u8 PTR4* dest, s32 pitch, s16 PTR4* data, u32 quant)
 
 void FastmIDCT8x8WithMotion(u8 PTR4* dest, s32 pitch, s16 PTR4* in, u32 quant, u8 PTR4* motion)
 {
+    s32 row[DCT_BLOCK_WIDTH];
     s32 workspace[DCT_BLOCK_COEFFS];
     s32 PTR4* out;
     const s32 PTR4* q;
@@ -1134,14 +1164,23 @@ void FastmIDCT8x8WithMotion(u8 PTR4* dest, s32 pitch, s16 PTR4* in, u32 quant, u
             s32 even5 = even1 - even_diff;
             s32 odd_out0 = odd_pair0 + odd_pair1;
 
-            out[DCT_ROW0] = even2 + odd_out0;
-            out[DCT_ROW7] = even2 - odd_out0;
-            out[DCT_ROW1] = even4 + odd_mid;
-            out[DCT_ROW6] = even4 - odd_mid;
-            out[DCT_ROW2] = even5 + odd_cross;
-            out[DCT_ROW5] = even5 - odd_cross;
-            out[DCT_ROW4] = even3 + odd_tail;
-            out[DCT_ROW3] = even3 - odd_tail;
+            row[DCT_COL0] = even2;
+            row[DCT_COL7] = odd_out0;
+            row[DCT_COL1] = even4;
+            row[DCT_COL6] = odd_mid;
+            row[DCT_COL2] = even5;
+            row[DCT_COL5] = odd_cross;
+            row[DCT_COL4] = even3;
+            row[DCT_COL3] = odd_tail;
+
+            out[DCT_ROW0] = row[DCT_COL0] + row[DCT_COL7];
+            out[DCT_ROW7] = row[DCT_COL0] - row[DCT_COL7];
+            out[DCT_ROW1] = row[DCT_COL1] + row[DCT_COL6];
+            out[DCT_ROW6] = row[DCT_COL1] - row[DCT_COL6];
+            out[DCT_ROW2] = row[DCT_COL2] + row[DCT_COL5];
+            out[DCT_ROW5] = row[DCT_COL2] - row[DCT_COL5];
+            out[DCT_ROW4] = row[DCT_COL4] + row[DCT_COL3];
+            out[DCT_ROW3] = row[DCT_COL4] - row[DCT_COL3];
         }
 
         ++in;
@@ -1178,14 +1217,23 @@ void FastmIDCT8x8WithMotion(u8 PTR4* dest, s32 pitch, s16 PTR4* in, u32 quant, u
         s32 even4 = even1 + even_diff;
         s32 even5 = even1 - even_diff;
 
-        dest[DCT_COL0] = motion[DCT_COL0] + DCT_BYTE_SAMPLE(even2 + odd_out0);
-        dest[DCT_COL7] = motion[DCT_COL7] + DCT_BYTE_SAMPLE(even2 - odd_out0);
-        dest[DCT_COL1] = motion[DCT_COL1] + DCT_BYTE_SAMPLE(even4 + odd_mid);
-        dest[DCT_COL6] = motion[DCT_COL6] + DCT_BYTE_SAMPLE(even4 - odd_mid);
-        dest[DCT_COL2] = motion[DCT_COL2] + DCT_BYTE_SAMPLE(even5 + odd_cross);
-        dest[DCT_COL5] = motion[DCT_COL5] + DCT_BYTE_SAMPLE(even5 - odd_cross);
-        dest[DCT_COL4] = motion[DCT_COL4] + DCT_BYTE_SAMPLE(even3 + odd_tail);
-        dest[DCT_COL3] = motion[DCT_COL3] + DCT_BYTE_SAMPLE(even3 - odd_tail);
+        row[DCT_COL0] = even2;
+        row[DCT_COL7] = odd_out0;
+        row[DCT_COL1] = even4;
+        row[DCT_COL6] = odd_mid;
+        row[DCT_COL2] = even5;
+        row[DCT_COL5] = odd_cross;
+        row[DCT_COL4] = even3;
+        row[DCT_COL3] = odd_tail;
+
+        dest[DCT_COL0] = motion[DCT_COL0] + DCT_BYTE_SAMPLE(row[DCT_COL0] + row[DCT_COL7]);
+        dest[DCT_COL7] = motion[DCT_COL7] + DCT_BYTE_SAMPLE(row[DCT_COL0] - row[DCT_COL7]);
+        dest[DCT_COL1] = motion[DCT_COL1] + DCT_BYTE_SAMPLE(row[DCT_COL1] + row[DCT_COL6]);
+        dest[DCT_COL6] = motion[DCT_COL6] + DCT_BYTE_SAMPLE(row[DCT_COL1] - row[DCT_COL6]);
+        dest[DCT_COL2] = motion[DCT_COL2] + DCT_BYTE_SAMPLE(row[DCT_COL2] + row[DCT_COL5]);
+        dest[DCT_COL5] = motion[DCT_COL5] + DCT_BYTE_SAMPLE(row[DCT_COL2] - row[DCT_COL5]);
+        dest[DCT_COL4] = motion[DCT_COL4] + DCT_BYTE_SAMPLE(row[DCT_COL4] + row[DCT_COL3]);
+        dest[DCT_COL3] = motion[DCT_COL3] + DCT_BYTE_SAMPLE(row[DCT_COL4] - row[DCT_COL3]);
 
         out += DCT_BLOCK_WIDTH;
         motion += DCT_BLOCK_WIDTH;
