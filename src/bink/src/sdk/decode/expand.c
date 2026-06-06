@@ -32,11 +32,9 @@ typedef enum BINKPlaneLayout
     BINK_PATTERN_BLOCK_BYTES = BINK_BLOCK_SIDE,
     BINK_PATTERN_COLOR_0 = 0,
     BINK_PATTERN_COLOR_1 = 1,
+    BINK_PATTERN_COLOR_BIT = 1,
+    BINK_PATTERN_COLOR_SHIFT = 1,
     BINK_PATTERN_COLOR_COUNT = 2,
-    BINK_PATTERN_NIBBLE_BITS = 4,        /* 8x8 pattern: a nibble selects 4 pixels */
-    BINK_PATTERN_NIBBLE_MASK = (1 << BINK_PATTERN_NIBBLE_BITS) - 1,
-    BINK_PATTERN_PAIR_BITS = 2,          /* scaled 16x16 pattern: a pair selects 2 doubled pixels */
-    BINK_PATTERN_PAIR_MASK = (1 << BINK_PATTERN_PAIR_BITS) - 1,
     BINK_RUN_BLOCK_BYTES = 0x30
 } BINKPlaneLayout;
 
@@ -1072,6 +1070,29 @@ static inline void expand_run_block(u8 PTR4* dest,
     }
 }
 
+static inline void expand_pattern_block(u8 PTR4* dest,
+                                        u32 pitch,
+                                        READBUNDLE PTR4* colors,
+                                        READBUNDLE PTR4* patterns)
+{
+    u8 color0;
+    u8 color1;
+    u32 i;
+
+    color0 = colors->cur_ptr[BINK_PATTERN_COLOR_0];
+    color1 = colors->cur_ptr[BINK_PATTERN_COLOR_1];
+    colors->cur_ptr += BINK_PATTERN_COLOR_COUNT;
+    for (i = 0; i < BINK_BLOCK_SIDE; ++i) {
+        u32 row_bits;
+        u32 col;
+
+        row_bits = *patterns->cur_ptr++;
+        for (col = 0; col < BINK_BLOCK_SIDE; ++col) {
+            dest[i * pitch + col] = (row_bits & BINK_PATTERN_COLOR_BIT) != 0 ? color1 : color0;
+            row_bits >>= BINK_PATTERN_COLOR_SHIFT;
+        }
+    }
+}
 
 static u32 getbunsize(s32 width, u32 rows, u32 bits, s32 pitch)
 {
@@ -1355,28 +1376,10 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 BINK_FILL_BLOCK_WORD_ROW(dest, pitch, 7, fill);
                 break;
             }
-            case BINK_BLOCK_PATTERN: {
-                /* Two-color 8x8 pattern: each nibble selects four pixels through
-                   the mask1/mask2 row-select tables. */
-                u32 color0 = BINK_FILL_WORD((u32)colors.cur_ptr[BINK_PATTERN_COLOR_0]);
-                u32 color1 = BINK_FILL_WORD((u32)colors.cur_ptr[BINK_PATTERN_COLOR_1]);
-                const u32 PTR4* color0_mask = (const u32 PTR4*)mask1;
-                const u32 PTR4* color1_mask = (const u32 PTR4*)mask2;
-                u32 pattern_row;
-
+            case BINK_BLOCK_PATTERN:
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
-                colors.cur_ptr += BINK_PATTERN_COLOR_COUNT;
-                for (pattern_row = 0; pattern_row < BINK_BLOCK_SIDE; ++pattern_row) {
-                    u32 bits = *patterns.cur_ptr++;
-                    u32 PTR4* row = (u32 PTR4*)(dest + pattern_row * pitch);
-
-                    row[0] = (color0 & color0_mask[bits & BINK_PATTERN_NIBBLE_MASK]) |
-                             (color1 & color1_mask[bits & BINK_PATTERN_NIBBLE_MASK]);
-                    row[1] = (color0 & color0_mask[(bits >> BINK_PATTERN_NIBBLE_BITS) & BINK_PATTERN_NIBBLE_MASK]) |
-                             (color1 & color1_mask[(bits >> BINK_PATTERN_NIBBLE_BITS) & BINK_PATTERN_NIBBLE_MASK]);
-                }
+                expand_pattern_block(dest, pitch, &colors, &patterns);
                 break;
-            }
             case BINK_BLOCK_RAW: {
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
                 if ((((u32)dest | (u32)colors.cur_ptr) & BINK_BLOCK_DOUBLE_ALIGN_MASK) == 0) {
@@ -1434,31 +1437,8 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                     quant = exp_get_bits(&bitstate, BINK_DCT_QUANT_BITS);
                     FastIDCT8x8d(dest, pitch, dct_block, quant);
                 } else if (subblock_type == BINK_BLOCK_PATTERN) {
-                    /* Doubled 16x16 two-color pattern: each 2-bit group selects a
-                       color via the same row masks used by the Huff4 readers. */
-                    u32 color0 = BINK_FILL_WORD((u32)colors.cur_ptr[BINK_PATTERN_COLOR_0]);
-                    u32 color1 = BINK_FILL_WORD((u32)colors.cur_ptr[BINK_PATTERN_COLOR_1]);
-                    const u32 PTR4* color0_mask = (const u32 PTR4*)mask3;
-                    const u32 PTR4* color1_mask = (const u32 PTR4*)mask4;
-                    u8 PTR4* pattern_dest = dest;
-                    u32 pattern_row;
-
-                    colors.cur_ptr += BINK_PATTERN_COLOR_COUNT;
-                    for (pattern_row = 0; pattern_row < BINK_BLOCK_SIDE; ++pattern_row) {
-                        u32 bits = *patterns.cur_ptr++;
-                        u32 PTR4* even = (u32 PTR4*)pattern_dest;
-                        u32 PTR4* odd = (u32 PTR4*)(pattern_dest + pitch);
-
-                        even[0] = odd[0] = (color0 & color0_mask[bits & BINK_PATTERN_PAIR_MASK]) |
-                                           (color1 & color1_mask[bits & BINK_PATTERN_PAIR_MASK]);
-                        even[1] = odd[1] = (color0 & color0_mask[(bits >> BINK_PATTERN_PAIR_BITS) & BINK_PATTERN_PAIR_MASK]) |
-                                           (color1 & color1_mask[(bits >> BINK_PATTERN_PAIR_BITS) & BINK_PATTERN_PAIR_MASK]);
-                        even[2] = odd[2] = (color0 & color0_mask[(bits >> (BINK_PATTERN_PAIR_BITS * 2)) & BINK_PATTERN_PAIR_MASK]) |
-                                           (color1 & color1_mask[(bits >> (BINK_PATTERN_PAIR_BITS * 2)) & BINK_PATTERN_PAIR_MASK]);
-                        even[3] = odd[3] = (color0 & color0_mask[(bits >> (BINK_PATTERN_PAIR_BITS * 3)) & BINK_PATTERN_PAIR_MASK]) |
-                                           (color1 & color1_mask[(bits >> (BINK_PATTERN_PAIR_BITS * 3)) & BINK_PATTERN_PAIR_MASK]);
-                        pattern_dest += pitch * 2;
-                    }
+                    expand_pattern_block(scaled_source, BINK_BLOCK_SIDE, &colors, &patterns);
+                    scale_block(scaled_source, dest, pitch);
                 } else if (subblock_type == BINK_BLOCK_RAW) {
                     scale_block(colors.cur_ptr, dest, pitch);
                     BINK_BUNDLE_ADVANCE(colors, BINK_COLOR_BLOCK_BYTES);
