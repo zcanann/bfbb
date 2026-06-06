@@ -46,6 +46,8 @@ typedef enum BINKFrameOffsetFlags
 #define BINK_IS_MARKER(marker) \
     ((marker) == BINKMARKER1 || (marker) == BINKMARKER2 || \
      (marker) == BINKMARKER3 || (marker) == BINKMARKER4)
+#define BINK_MARKER_HAS_REVERSED_RB(marker) \
+    ((marker) == BINKMARKER1 || (marker) == BINKMARKER2)
 #define BINK_OPEN_FROM_MEMORY(flags) (((flags) & BINKFROMMEMORY) != 0)
 #define BINK_OPEN_USES_IO_PROCESSOR(flags) (((flags) & BINKIOPROCESSOR) != 0)
 #define BINK_OPEN_USES_FRAME_RATE_OVERRIDE(flags) (((flags) & BINKFRAMERATE) != 0)
@@ -1156,7 +1158,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
         }
     }
 
-    if (hdr.Marker == BINKMARKER1 || hdr.Marker == BINKMARKER2) {
+    if (BINK_MARKER_HAS_REVERSED_RB(hdr.Marker)) {
         bnk.OpenFlags |= BINKRBINVERT;
         bnk.OpenFlags |= BINKOLDFRAMEFORMAT;
     } else if (hdr.Marker == BINKMARKER3) {
