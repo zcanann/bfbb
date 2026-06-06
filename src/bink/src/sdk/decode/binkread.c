@@ -1711,6 +1711,10 @@ s32 BinkDoFrame(HBINK bnk)
 
                     playing_index = 0;
                     playing_tracks = bnk->playingtracks;
+                    compressed_size = frame_data->size;
+                    frame_payload = BINK_TRACK_FRAME_PAYLOAD(frame_data);
+                    frame_data = (BINKTRACKFRAME PTR4*)frame_payload;
+                    next_frame_data = (BINKTRACKFRAME PTR4*)((u8 PTR4*)frame_data + compressed_size);
                     if (playing_index < playing_tracks) {
                         s32 PTR4* indexes;
 
@@ -1726,10 +1730,6 @@ s32 BinkDoFrame(HBINK bnk)
                         playing_index = BINK_TRACK_NOT_FOUND;
                     }
 
-                    compressed_size = frame_data->size;
-                    frame_payload = BINK_TRACK_FRAME_PAYLOAD(frame_data);
-                    frame_data = (BINKTRACKFRAME PTR4*)frame_payload;
-                    next_frame_data = (BINKTRACKFRAME PTR4*)((u8 PTR4*)frame_data + compressed_size);
                     if (playing_index != BINK_TRACK_NOT_FOUND && compressed_size != 0) {
                         void PTR4* in;
                         u32 in_bytes;
