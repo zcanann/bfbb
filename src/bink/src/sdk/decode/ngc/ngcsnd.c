@@ -305,6 +305,7 @@ static s32 NGC_SoundReinit(BINKSND PTR4* snd)
     u32 ring_start;
     u32 ax_addr;
     u32 ring_end;
+    u32 owner;
     u32 i;
 
     state = NGC_SOUND_STATE(snd);
@@ -346,12 +347,13 @@ static s32 NGC_SoundReinit(BINKSND PTR4* snd)
     }
 
     state->pending_end = 0;
+    owner = (u32)state;
     for (i = 0; i < NGC_SOUND_ARQ_TASK_COUNT; ++i) {
         if ((state->tasks[i].owner & NGC_TASK_BUSY_FLAG) != 0) {
             ARQRemoveRequest(&state->tasks[i]);
         }
 
-        state->tasks[i].owner = (u32)state; /* reset owner and clear the busy latch */
+        state->tasks[i].owner = owner; /* reset owner and clear the busy latch */
     }
 
     return 1;
