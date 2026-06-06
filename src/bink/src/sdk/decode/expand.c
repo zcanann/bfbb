@@ -1437,8 +1437,27 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                     quant = exp_get_bits(&bitstate, BINK_DCT_QUANT_BITS);
                     FastIDCT8x8d(dest, pitch, dct_block, quant);
                 } else if (subblock_type == BINK_BLOCK_PATTERN) {
-                    expand_pattern_block(scaled_source, BINK_BLOCK_SIDE, &colors, &patterns);
-                    scale_block(scaled_source, dest, pitch);
+                    /* Doubled 16x16 two-color pattern: each 2-bit group selects a
+                       color via the same row masks used by the Huff4 readers. */
+                    u32 color0 = BINK_FILL_WORD((u32)colors.cur_ptr[BINK_PATTERN_COLOR_0]);
+                    u32 color1 = BINK_FILL_WORD((u32)colors.cur_ptr[BINK_PATTERN_COLOR_1]);
+                    const u32 PTR4* color0_mask = (const u32 PTR4*)mask3;
+                    const u32 PTR4* color1_mask = (const u32 PTR4*)mask4;
+                    u8 PTR4* pattern_dest = dest;
+                    u32 pattern_row;
+
+                    colors.cur_ptr += BINK_PATTERN_COLOR_COUNT;
+                    for (pattern_row = 0; pattern_row < BINK_BLOCK_SIDE; ++pattern_row) {
+                        u32 bits = *patterns.cur_ptr++;
+                        u32 PTR4* even = (u32 PTR4*)pattern_dest;
+                        u32 PTR4* odd = (u32 PTR4*)(pattern_dest + pitch);
+
+                        even[0] = odd[0] = (color0 & color0_mask[bits & 3]) | (color1 & color1_mask[bits & 3]);
+                        even[1] = odd[1] = (color0 & color0_mask[(bits >> 2) & 3]) | (color1 & color1_mask[(bits >> 2) & 3]);
+                        even[2] = odd[2] = (color0 & color0_mask[(bits >> 4) & 3]) | (color1 & color1_mask[(bits >> 4) & 3]);
+                        even[3] = odd[3] = (color0 & color0_mask[(bits >> 6) & 3]) | (color1 & color1_mask[(bits >> 6) & 3]);
+                        pattern_dest += pitch * 2;
+                    }
                 } else if (subblock_type == BINK_BLOCK_RAW) {
                     scale_block(colors.cur_ptr, dest, pitch);
                     BINK_BUNDLE_ADVANCE(colors, BINK_COLOR_BLOCK_BYTES);
