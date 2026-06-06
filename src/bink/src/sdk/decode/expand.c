@@ -971,7 +971,6 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     u32 group_size;
     u32 delta_bits;
     u16 predictor;
-    u16 magnitude;
     s16 delta;
     s16 PTR4* dest;
 
@@ -1006,10 +1005,9 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
                 remaining -= group_size;
                 while (group_size != 0) {
                     group_size--;
-                    VarBitsGet(magnitude, u16, *bits, delta_bits);
-                    delta = (s16)magnitude;
+                    VarBitsGet(delta, s16, *bits, delta_bits);
                     if (delta != 0 && exp_get_bit(bits) != 0) {
-                        delta = (s16)-magnitude;
+                        delta = -delta;
                     }
                     predictor = predictor + delta;
                     *dest++ = (s16)predictor;
