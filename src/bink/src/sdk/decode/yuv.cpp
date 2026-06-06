@@ -74,6 +74,17 @@ enum RGBPackConstants {
     RGB_A4_SHIFT = 7
 };
 
+enum RGBSurfaceLayout {
+    RGB_BITS_NONE = 0,
+    RGB_BITS_4 = 4,
+    RGB_BITS_5 = 5,
+    RGB_BITS_6 = 6,
+    RGB_444_BLUE_SHIFT = 8,
+    RGB_555_BLUE_SHIFT = 10,
+    RGB_565_BLUE_SHIFT = 11,
+    RGB_664_BLUE_SHIFT = 12
+};
+
 enum YUVZoomLayout {
     YUV_ZOOM_ALIGN = 0x20,
     YUV_ZOOM_ALIGN_MASK = YUV_ZOOM_ALIGN - 1
@@ -1065,41 +1076,41 @@ extern "C" void YUV_init(u32 flags)
 
     if (flags > BINKSURFACE555) {
         if (flags == BINKSURFACE655) {
-            red_bits = 6;
-            green_bits = 5;
-            blue_bits = 5;
-            blue_shift = 11;
+            red_bits = RGB_BITS_6;
+            green_bits = RGB_BITS_5;
+            blue_bits = RGB_BITS_5;
+            blue_shift = RGB_565_BLUE_SHIFT;
         } else if (flags <= BINKSURFACE565) {
-            red_bits = 5;
-            green_bits = 6;
-            blue_bits = 5;
-            blue_shift = 11;
+            red_bits = RGB_BITS_5;
+            green_bits = RGB_BITS_6;
+            blue_bits = RGB_BITS_5;
+            blue_shift = RGB_565_BLUE_SHIFT;
         } else if (flags == BINKSURFACE664) {
-            red_bits = 6;
-            green_bits = 6;
-            blue_bits = 4;
-            blue_shift = 12;
+            red_bits = RGB_BITS_6;
+            green_bits = RGB_BITS_6;
+            blue_bits = RGB_BITS_4;
+            blue_shift = RGB_664_BLUE_SHIFT;
         } else {
-            red_bits = 0;
-            green_bits = 0;
-            blue_bits = 0;
-            blue_shift = 0;
+            red_bits = RGB_BITS_NONE;
+            green_bits = RGB_BITS_NONE;
+            blue_bits = RGB_BITS_NONE;
+            blue_shift = RGB_BITS_NONE;
         }
     } else if (flags >= BINKSURFACE5551) {
-        red_bits = 5;
-        green_bits = 5;
-        blue_bits = 5;
-        blue_shift = 10;
+        red_bits = RGB_BITS_5;
+        green_bits = RGB_BITS_5;
+        blue_bits = RGB_BITS_5;
+        blue_shift = RGB_555_BLUE_SHIFT;
     } else if (flags == BINKSURFACE4444) {
-        red_bits = 4;
-        green_bits = 4;
-        blue_bits = 4;
-        blue_shift = 8;
+        red_bits = RGB_BITS_4;
+        green_bits = RGB_BITS_4;
+        blue_bits = RGB_BITS_4;
+        blue_shift = RGB_444_BLUE_SHIFT;
     } else {
-        red_bits = 0;
-        green_bits = 0;
-        blue_bits = 0;
-        blue_shift = 0;
+        red_bits = RGB_BITS_NONE;
+        green_bits = RGB_BITS_NONE;
+        blue_bits = RGB_BITS_NONE;
+        blue_shift = RGB_BITS_NONE;
     }
 
     red_down = 8 - red_bits;
