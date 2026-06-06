@@ -111,6 +111,7 @@ typedef enum BINKBundleLayout
     BINK_BUNDLE_MIN_WORD_BITS = 16,
     BINK_BYTE_BITS = 8,
     BINK_WORD_ALIGN_MASK = 3,
+    BINK_BUNDLE_CHUNK_HEADER_BYTES = sizeof(u32),
     BINK_PLANE_WORD_BYTES = sizeof(u32),
     BINK_WORK_BLOCK_SPAN = BINK_BLOCK_SIDE * BINK_CHROMA_PLANE_SCALE,
     BINK_WORK_BLOCK_MARKED = 1,
@@ -146,12 +147,12 @@ typedef enum BINKBUNDLEINITIALVALUE
 #define BINK_BUNDLE_CHUNK(header) ((BINKBUNDLECHUNK PTR4*)(header))
 #define BINK_BUNDLE_CHUNK_BYTE_SIZE(header) (BINK_BUNDLE_CHUNK(header)->byte_size)
 #define BINK_BUNDLE_CHUNK_PAYLOAD(header) (BINK_BUNDLE_CHUNK(header)->payload)
-#define BINK_BUNDLE_PAYLOAD_CHUNK(payload) ((BINKBUNDLECHUNK PTR4*)((u8 PTR4*)(payload) - sizeof(u32)))
+#define BINK_BUNDLE_PAYLOAD_CHUNK(payload) ((BINKBUNDLECHUNK PTR4*)((u8 PTR4*)(payload) - BINK_BUNDLE_CHUNK_HEADER_BYTES))
 #define BINK_BUNDLE_PAYLOAD_CHUNK_BYTE_SIZE(payload) (BINK_BUNDLE_PAYLOAD_CHUNK(payload)->byte_size)
 #define BINK_BUNDLE_CHUNK_NEXT(header) \
     ((u32 PTR4*)((u8 PTR4*)(header) + BINK_BUNDLE_CHUNK_BYTE_SIZE(header)))
 #define BINK_BUNDLE_PAYLOAD_NEXT(payload) \
-    ((u32 PTR4*)((u8 PTR4*)(payload) + BINK_BUNDLE_PAYLOAD_CHUNK_BYTE_SIZE(payload) - sizeof(u32)))
+    ((u32 PTR4*)((u8 PTR4*)(payload) + BINK_BUNDLE_PAYLOAD_CHUNK_BYTE_SIZE(payload) - BINK_BUNDLE_CHUNK_HEADER_BYTES))
 #define BINK_MARK_WORK_BLOCK(work_row, work_col) ((work_row)[(work_col) >> BINK_CHROMA_SHIFT] = BINK_WORK_BLOCK_MARKED)
 #define BINK_MOTION_SOURCE(old, pitch, mx, my) ((old) + (my) * (s32)(pitch) + (mx))
 #define BINK_DCT_PATTERN_SCAN(pattern) (patterns + (pattern) * BINK_BLOCK_PIXELS)
