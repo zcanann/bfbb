@@ -1183,7 +1183,7 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     roots[BP_ROOT_LOSSY_DC_SLOT] = groups[BP_TREE_GROUP_INDEX(BP_DC_COEFF)] + BP_TREE_BRANCH_NODE;
 
     cur = roots;
-    next_node = tree.nodes;
+    next_node = roots + BP_LOSSY_ROOT_NODES;
     bit_mask = (u16)(1 << (maxbits - 1));
     i = 0;
     for (; maxbits != 0; maxbits = (maxbits - 1) & BP_BYTE_MASK) {
