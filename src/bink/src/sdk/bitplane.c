@@ -1293,7 +1293,7 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count)
     u32 levels_remaining;
     u8 node_kind;
     u8 PTR4* tree_end_ptr;
-    s32 mask;
+    s8 mask;
     s32 masks_used;
     s32 nz_coeff_count;
     u8 PTR4* node_ptr;
