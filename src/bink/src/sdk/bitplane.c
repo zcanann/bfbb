@@ -1115,32 +1115,23 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     }
 
     /* Group tables use the deepest bit depth of each four-coefficient branch. */
-    {
-        u8 PTR4* group_end_ptr;
-        u8 PTR4* child_len_ptr;
-
-        count = BP_TREE_GROUPS;
-        i = 0;
-        group_end_ptr = lens + BP_FIRST_LOSSY_TREE_GROUP_END_INDEX;
-        child_len_ptr = lens;
-        do {
-            lenbits = *child_len_ptr;
-            if (*child_len_ptr < child_len_ptr[1]) {
-                lenbits = child_len_ptr[1];
-            }
-            if (lenbits < group_end_ptr[-1]) {
-                lenbits = group_end_ptr[-1];
-            }
-            if (lenbits < *group_end_ptr) {
-                lenbits = *group_end_ptr;
-            }
-            groups[BP_TREE_GROUP_INDEX(i)] = (u8)lenbits;
-            group_end_ptr = BP_NEXT_TREE_GROUP(group_end_ptr);
-            child_len_ptr = BP_NEXT_TREE_GROUP(child_len_ptr);
-            i += BP_TREE_CHILD_COUNT;
-            count--;
-        } while (count != 0);
-    }
+    count = BP_TREE_GROUPS;
+    i = 0;
+    do {
+        lenbits = lens[i];
+        if (lenbits < lens[i + BP_TREE_CHILD1_INDEX]) {
+            lenbits = lens[i + BP_TREE_CHILD1_INDEX];
+        }
+        if (lenbits < lens[i + BP_TREE_CHILD2_INDEX]) {
+            lenbits = lens[i + BP_TREE_CHILD2_INDEX];
+        }
+        if (lenbits < lens[i + BP_TREE_CHILD3_INDEX]) {
+            lenbits = lens[i + BP_TREE_CHILD3_INDEX];
+        }
+        groups[BP_TREE_GROUP_INDEX(i)] = (u8)lenbits;
+        i += BP_TREE_CHILD_COUNT;
+        count--;
+    } while (count != 0);
 
     BP_TREE_HIGH_GROUP_MAX(groups, lenbits, BP_TREE_HIGH_GROUP0_INDEX, BP_TREE_HIGH_GROUP0_CHILD0_INDEX);
     hi_groups[BP_TREE_HIGH_GROUP0_SLOT] = (u8)lenbits;
