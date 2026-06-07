@@ -299,21 +299,16 @@ static void makect(s32 nc, s32 PTR4* ip, f32 PTR4* c)
         nch = FFT_HALF_SIZE(nc);
         j = 1;
         delta = atanf(DCT_TRIG_ONE) / (f32)nch;
-        x = cosf(delta * (f32)nch);
-        c[0] = x;
-        c[nch] = x * DCT_CENTER_SCALE;
+        c[0] = cosf(delta * (f32)nch);
+        c[nch] = c[0] * DCT_CENTER_SCALE;
 
         if (j < nch) {
-            f32 PTR4* fwd = c + 1;
-            f32 PTR4* rev = c + nc - 1;
             half = DCT_HALF_SCALE;
             do {
                 x = delta * (f32)j;
+                c[j] = cosf(x) * half;
+                c[nc - j] = sinf(x) * half;
                 ++j;
-                *fwd = cosf(x) * half;
-                ++fwd;
-                *rev = sinf(x) * half;
-                --rev;
             } while (j < nch);
         }
     }
