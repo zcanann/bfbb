@@ -1418,13 +1418,13 @@ void YUV_16a4x2_4x2_even(u32 count)
         av0 = *a0++;
         uhi = RGB_WORD_BYTE1(uword);
         vhi = RGB_WORD_BYTE1(vword);
-        b = u_to_b[uhi];
-        gb = u_to_gb[uhi] + v_to_gb[vhi];
         r = v_to_r[vhi];
+        gb = u_to_gb[uhi] + v_to_gb[vhi];
+        b = u_to_b[uhi];
         ya = ytable[RGB_WORD_BYTE3(yv0)];
         yb = ytable[RGB_WORD_BYTE2(yv0)];
-        yv1 = *y1++;
         av1 = *a1++;
+        yv1 = *y1++;
 
         pix = RGB565_A4_BIASED(clamp_r_base, clamp_g_base, clamp_b_base, clamp_a4_base, ya, b, gb, r, RGB_WORD_BYTE3(av0));
         dest0[RGB_TILE_WORD0] = RGB565_PAIR(pix);
