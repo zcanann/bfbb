@@ -778,7 +778,7 @@ next_lossless_read_node:
                     switch (node & BP_READ_TREE_KIND_MASK) {
                     case BP_READ_TREE_GROUP_NODE:
                         kind = BP_READ_TREE_INDEX(node);
-                        *node_ptr = BP_READ_TREE_BRANCH_FROM_NODE(node);
+                        *node_ptr = BP_READ_TREE_BRANCH(kind);
                         *tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(kind, BP_READ_TREE_CHILD1_BASE);
                         *++tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(kind, BP_READ_TREE_CHILD2_BASE);
                         *++tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(kind, BP_READ_TREE_CHILD3_BASE);
@@ -920,7 +920,7 @@ next_lossless_final_node:
                 switch (node & BP_READ_TREE_KIND_MASK) {
                 case BP_READ_TREE_GROUP_NODE:
                     kind = BP_READ_TREE_INDEX(node);
-                    *node_ptr = BP_READ_TREE_BRANCH_FROM_NODE(node);
+                    *node_ptr = BP_READ_TREE_BRANCH(kind);
                     *tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(kind, BP_READ_TREE_CHILD1_BASE);
                     *++tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(kind, BP_READ_TREE_CHILD2_BASE);
                     *++tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(kind, BP_READ_TREE_CHILD3_BASE);
@@ -1430,7 +1430,7 @@ decode_node:
                     words = words + 1;
                     if ((word & BP_BIT_MASK) != 0) {
 push_0:
-                        *--next_node_ptr = BP_READ_TREE_COEFF_FROM_NODE(node);
+                        *--next_node_ptr = BP_READ_TREE_COEFF(code);
                         goto after_0;
                     }
                 } else {
