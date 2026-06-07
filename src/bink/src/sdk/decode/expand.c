@@ -1178,7 +1178,6 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
     HUFF8TABLE huff8_table;
     s16 dct_block[BINK_BLOCK_PIXELS];
     u8 motion_block[BINK_BLOCK_PIXELS];
-    u8 scaled_source[BINK_BLOCK_PIXELS];
     EXPBITS bitstate;
     void (*read_huff8)(READBUNDLE PTR4*, EXPBITS PTR4*, HUFF8TABLE PTR4*);
     u32 row_advance;
@@ -1425,8 +1424,8 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                         fill_dest[3] = fill;
                     }
                 } else if (subblock_type == BINK_BLOCK_RUN) {
-                    expand_run_block(scaled_source, BINK_BLOCK_SIDE, &colors, &runs, &bitstate);
-                    scale_block(scaled_source, dest, pitch);
+                    expand_run_block(motion_block, BINK_BLOCK_SIDE, &colors, &runs, &bitstate);
+                    scale_block(motion_block, dest, pitch);
                 } else if (subblock_type == BINK_BLOCK_INTRA) {
                     u32 quant;
 
@@ -1436,8 +1435,8 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                     quant = exp_get_bits(&bitstate, BINK_DCT_QUANT_BITS);
                     FastIDCT8x8d(dest, pitch, dct_block, quant);
                 } else if (subblock_type == BINK_BLOCK_PATTERN) {
-                    expand_pattern_block(scaled_source, BINK_BLOCK_SIDE, &colors, &patterns);
-                    scale_block(scaled_source, dest, pitch);
+                    expand_pattern_block(motion_block, BINK_BLOCK_SIDE, &colors, &patterns);
+                    scale_block(motion_block, dest, pitch);
                 } else if (subblock_type == BINK_BLOCK_RAW) {
                     scale_block(colors.cur_ptr, dest, pitch);
                     BINK_BUNDLE_ADVANCE(colors, BINK_COLOR_BLOCK_BYTES);
