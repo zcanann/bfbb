@@ -1291,8 +1291,8 @@ void YUV_16a4_4x2_even(u32 count)
         u32 ya;
         u32 yb;
 
-        uword = *u++;
         vword = *v++;
+        uword = *u++;
         yv0 = *y0++;
         av0 = *a0++;
         uhi = RGB_WORD_BYTE1(uword);
