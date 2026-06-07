@@ -969,7 +969,6 @@ static void CheckReadHuff4SBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
 static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
 {
     u32 count;
-    u32 remaining;
     u32 group_size;
     u32 delta_bits;
     u16 predictor;
@@ -993,18 +992,18 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
         }
 
         *dest++ = (s16)predictor;
-        remaining = count - 1;
         bundle->cur_ptr = bundle->data;
         bundle->cur_dec = bundle->data + count * sizeof(*dest);
-        while (remaining != 0) {
-            group_size = remaining;
+        count--;
+        while (count != 0) {
+            group_size = count;
             if (group_size > BINK_DELTA16_GROUP_MAX) {
                 group_size = BINK_DELTA16_GROUP_MAX;
             }
 
             VarBitsGet(delta_bits, u32, *bits, HUFF4_NIBBLE_BITS);
             if (delta_bits != 0) {
-                remaining -= group_size;
+                count -= group_size;
                 while (group_size != 0) {
                     group_size--;
                     VarBitsGet(delta, s16, *bits, delta_bits);
@@ -1017,7 +1016,7 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
             } else {
                 radmemset16(dest, (u16)predictor, group_size * sizeof(*dest));
                 dest += group_size;
-                remaining -= group_size;
+                count -= group_size;
             }
         }
     } else {
