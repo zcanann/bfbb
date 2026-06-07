@@ -865,13 +865,13 @@ static void fastidct8x8(u8 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4* 
             ++in;
             ++q;
             out[DCT_ROW0] = dc;
-            out[DCT_ROW7] = dc;
-            out[DCT_ROW6] = dc;
-            out[DCT_ROW5] = dc;
-            out[DCT_ROW4] = dc;
-            out[DCT_ROW3] = dc;
-            out[DCT_ROW2] = dc;
             out[DCT_ROW1] = dc;
+            out[DCT_ROW2] = dc;
+            out[DCT_ROW3] = dc;
+            out[DCT_ROW4] = dc;
+            out[DCT_ROW5] = dc;
+            out[DCT_ROW6] = dc;
+            out[DCT_ROW7] = dc;
         } else {
             s32 row1 = DCT_DEQUANT(in, q, DCT_ROW1);
             s32 row3 = DCT_DEQUANT(in, q, DCT_ROW3);
@@ -982,13 +982,13 @@ static void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4
             ++in;
             ++q;
             out[DCT_ROW0] = dc;
-            out[DCT_ROW7] = dc;
-            out[DCT_ROW6] = dc;
-            out[DCT_ROW5] = dc;
-            out[DCT_ROW4] = dc;
-            out[DCT_ROW3] = dc;
-            out[DCT_ROW2] = dc;
             out[DCT_ROW1] = dc;
+            out[DCT_ROW2] = dc;
+            out[DCT_ROW3] = dc;
+            out[DCT_ROW4] = dc;
+            out[DCT_ROW5] = dc;
+            out[DCT_ROW6] = dc;
+            out[DCT_ROW7] = dc;
         } else {
             s32 row1 = DCT_DEQUANT(in, q, DCT_ROW1);
             s32 row3 = DCT_DEQUANT(in, q, DCT_ROW3);
@@ -1118,13 +1118,13 @@ void FastmIDCT8x8WithMotion(u8 PTR4* dest, s32 pitch, s16 PTR4* in, u32 quant, u
             ++in;
             ++q;
             out[DCT_ROW0] = dc;
-            out[DCT_ROW7] = dc;
-            out[DCT_ROW6] = dc;
-            out[DCT_ROW5] = dc;
-            out[DCT_ROW4] = dc;
-            out[DCT_ROW3] = dc;
-            out[DCT_ROW2] = dc;
             out[DCT_ROW1] = dc;
+            out[DCT_ROW2] = dc;
+            out[DCT_ROW3] = dc;
+            out[DCT_ROW4] = dc;
+            out[DCT_ROW5] = dc;
+            out[DCT_ROW6] = dc;
+            out[DCT_ROW7] = dc;
         } else {
             s32 row1 = DCT_DEQUANT(in, q, DCT_ROW1);
             s32 row3 = DCT_DEQUANT(in, q, DCT_ROW3);
