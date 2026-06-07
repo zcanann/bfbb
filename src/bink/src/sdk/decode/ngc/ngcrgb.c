@@ -1283,16 +1283,20 @@ void YUV_16a4_4x2_even(u32 count)
     u32 PTR4* clamp_a4_base;
 
     linear0 = S.dest0;
+    base = S.base;
     linear1 = S.dest1;
+    pitch = S.pitch;
+    tiledPitch = RGB_TILE_PITCH16(pitch);
+
+    S.dest0 += count * RGB_16_4X2_ROW_BYTES;
+    S.dest1 += count * RGB_16_4X2_ROW_BYTES;
+
+    a0 = S.a0;
+    a1 = S.a1;
     u = S.u;
     v = S.v;
     y0 = S.y0;
     y1 = S.y1;
-    a0 = S.a0;
-    a1 = S.a1;
-    pitch = S.pitch;
-    base = S.base;
-    tiledPitch = RGB_TILE_PITCH16(pitch);
     u_to_b = YUVTables.u_to_b;
     v_to_gb = YUVTables.v_to_gb;
     u_to_gb = YUVTables.u_to_gb;
@@ -1301,9 +1305,6 @@ void YUV_16a4_4x2_even(u32 count)
     clamp_r_base = clamp_r + RGB_CLAMP_BIAS;
     clamp_g_base = clamp_g + RGB_CLAMP_BIAS;
     clamp_a4_base = clamp_a4;
-
-    S.dest0 += count * RGB_16_4X2_ROW_BYTES;
-    S.dest1 += count * RGB_16_4X2_ROW_BYTES;
 
     row0 = RGB_TILE_ROW(linear0, base, pitch);
     row1 = RGB_TILE_ROW(linear1, base, pitch);
