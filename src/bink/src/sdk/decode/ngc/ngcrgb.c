@@ -634,13 +634,13 @@ void YUV_16x2_4x2_even(u32 count)
         u32 ya;
         u32 yb;
 
-        uword = *u++;
         vword = *v++;
         yv0 = *y0++;
+        uword = *u++;
         uhi = RGB_WORD_BYTE1(uword);
         vhi = RGB_WORD_BYTE1(vword);
-        b = u_to_b[uhi];
         gb = u_to_gb[uhi] + v_to_gb[vhi];
+        b = u_to_b[uhi];
         r = v_to_r[vhi];
         ya = ytable[RGB_WORD_BYTE3(yv0)];
         yb = ytable[RGB_WORD_BYTE2(yv0)];
