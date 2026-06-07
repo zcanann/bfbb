@@ -590,9 +590,9 @@ static void bitrv2conj(s32 n, s32 PTR4* ip, f32 PTR4* a)
                     } while (j < k);
                 }
 
-                j1 = k * 2 + ip[k];
-                a[j1 + 1] = -a[j1 + 1];
-                j1 += m2;
+                k1 = k * 2 + ip[k];
+                a[k1 + 1] = -a[k1 + 1];
+                j1 = k1 + m2;
                 k1 = j1 + m2;
                 xr = a[j1];
                 xi = -a[j1 + 1];
@@ -641,10 +641,9 @@ static void bitrv2conj(s32 n, s32 PTR4* ip, f32 PTR4* a)
                     } while (j < k);
                 }
 
-                j1 = k * 2 + ip[k];
-                a[j1 + 1] = -a[j1 + 1];
-                j1 += m2;
-                a[j1 + 1] = -a[j1 + 1];
+                k1 = k * 2 + ip[k];
+                a[k1 + 1] = -a[k1 + 1];
+                a[k1 + m2 + 1] = -a[k1 + m2 + 1];
                 ++k;
             } while (k < m);
         }
