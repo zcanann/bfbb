@@ -168,9 +168,9 @@ void YUV_32_4x2_even(u32 count)
         s32 gb;
 
         vword = *v++;
+        uword = *u++;
         yv0 = *y0++;
         vhi = RGB_WORD_BYTE1(vword);
-        uword = *u++;
         uhi = RGB_WORD_BYTE1(uword);
 
         y00 = clamp_ytable[RGB_WORD_BYTE3(yv0)];
