@@ -508,9 +508,9 @@ void YUV_16_4x2_even(u32 count)
     v_to_r = YUVTables.v_to_r;
     u_to_gb = YUVTables.u_to_gb;
     v_to_gb = YUVTables.v_to_gb;
-    clamp_b_base = clamp_b + RGB_CLAMP_BIAS;
     clamp_r_base = clamp_r + RGB_CLAMP_BIAS;
     clamp_g_base = clamp_g + RGB_CLAMP_BIAS;
+    clamp_b_base = clamp_b + RGB_CLAMP_BIAS;
 
     row0 = RGB_TILE_ROW(linear0, base, pitch);
     row1 = RGB_TILE_ROW(linear1, base, pitch);
@@ -626,9 +626,9 @@ void YUV_16x2_4x2_even(u32 count)
     u_to_gb = YUVTables.u_to_gb;
     v_to_gb = YUVTables.v_to_gb;
     v_to_r = YUVTables.v_to_r;
-    clamp_b_base = clamp_b + RGB_CLAMP_BIAS;
     clamp_r_base = clamp_r + RGB_CLAMP_BIAS;
     clamp_g_base = clamp_g + RGB_CLAMP_BIAS;
+    clamp_b_base = clamp_b + RGB_CLAMP_BIAS;
 
     row0 = RGB_TILE_ROW(linear0, base, pitch);
     row1 = RGB_TILE_ROW(linear1, base, pitch);
@@ -1301,9 +1301,9 @@ void YUV_16a4_4x2_even(u32 count)
     v_to_gb = YUVTables.v_to_gb;
     u_to_gb = YUVTables.u_to_gb;
     v_to_r = YUVTables.v_to_r;
-    clamp_b_base = clamp_b + RGB_CLAMP_BIAS;
     clamp_r_base = clamp_r + RGB_CLAMP_BIAS;
     clamp_g_base = clamp_g + RGB_CLAMP_BIAS;
+    clamp_b_base = clamp_b + RGB_CLAMP_BIAS;
     clamp_a4_base = clamp_a4;
 
     row0 = RGB_TILE_ROW(linear0, base, pitch);
@@ -1431,9 +1431,9 @@ void YUV_16a4x2_4x2_even(u32 count)
     v_to_gb = YUVTables.v_to_gb;
     u_to_gb = YUVTables.u_to_gb;
     v_to_r = YUVTables.v_to_r;
-    clamp_b_base = clamp_b + RGB_CLAMP_BIAS;
     clamp_r_base = clamp_r + RGB_CLAMP_BIAS;
     clamp_g_base = clamp_g + RGB_CLAMP_BIAS;
+    clamp_b_base = clamp_b + RGB_CLAMP_BIAS;
     clamp_a4_base = clamp_a4;
 
     S.dest0 += count * RGB_16_X2_4X2_ROW_BYTES;
