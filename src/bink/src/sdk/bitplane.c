@@ -1315,7 +1315,7 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count)
 
     /* Lossy blocks store max level minus one in the stream header. */
     VarBitsGet(levels_remaining, u8, bitcopy, BP_LOSSY_LEVEL_BITS);
-    levels_remaining = (levels_remaining & BP_LOSSY_LEVEL_MASK) + 1;
+    levels_remaining = (u8)(levels_remaining + 1);
     tree.roots[BP_ROOT_GROUP1_SLOT] = BP_READ_TREE_GROUP1_ROOT;
     tree.roots[BP_ROOT_GROUP6_SLOT] = BP_READ_TREE_GROUP6_ROOT;
     tree.roots[BP_ROOT_GROUP11_SLOT] = BP_READ_TREE_GROUP11_ROOT;
