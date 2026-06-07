@@ -970,10 +970,10 @@ static void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4
     s32 doublepitch;
     s32 i;
 
-    out = workspace;
     d0 = dest;
-    d1 = DCT_ADVANCE_U32_BYTES(dest, pitch);
     doublepitch = pitch + pitch;
+    out = workspace;
+    d1 = DCT_ADVANCE_U32_BYTES(dest, pitch);
     /* First pass dequantizes columns into a transposed workspace. */
     for (i = DCT_BLOCK_WIDTH; i != 0; --i) {
         if (DCT_AC_MASK(in) == 0) {
@@ -1108,8 +1108,8 @@ void FastmIDCT8x8WithMotion(u8 PTR4* dest, s32 pitch, s16 PTR4* in, u32 quant, u
     const s32 PTR4* q;
     s32 i;
 
-    out = workspace;
     q = ifimquantlevels8[quant];
+    out = workspace;
     /* First pass dequantizes motion-compensated columns into a workspace. */
     for (i = DCT_BLOCK_WIDTH; i != 0; --i) {
         if (DCT_AC_MASK(in) == 0) {
