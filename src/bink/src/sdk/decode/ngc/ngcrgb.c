@@ -272,8 +272,8 @@ void YUV_32x2_4x2_even(u32 count)
         s32 gb;
 
         vword = *v++;
-        yv0 = *y0++;
         uword = *u++;
+        yv0 = *y0++;
         vhi = RGB_WORD_BYTE1(vword);
         uhi = RGB_WORD_BYTE1(uword);
 
@@ -635,8 +635,8 @@ void YUV_16x2_4x2_even(u32 count)
         u32 yb;
 
         vword = *v++;
-        yv0 = *y0++;
         uword = *u++;
+        yv0 = *y0++;
         uhi = RGB_WORD_BYTE1(uword);
         vhi = RGB_WORD_BYTE1(vword);
         gb = u_to_gb[uhi] + v_to_gb[vhi];
