@@ -1382,7 +1382,7 @@ decode_node:
                 switch (node & BP_READ_TREE_KIND_MASK) {
                 case BP_READ_TREE_GROUP_NODE:
                     node_kind = BP_READ_TREE_INDEX(node);
-                    *node_ptr = BP_READ_TREE_BRANCH_FROM_NODE(node);
+                    *node_ptr = BP_READ_TREE_BRANCH(node_kind);
                     *tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(node_kind, BP_READ_TREE_CHILD1_BASE);
                     *++tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(node_kind, BP_READ_TREE_CHILD2_BASE);
                     *++tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(node_kind, BP_READ_TREE_CHILD3_BASE);
