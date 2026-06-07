@@ -659,9 +659,9 @@ void YUV_16x2_4x2_even(u32 count)
 
         ulo = RGB_WORD_BYTE0(uword);
         vlo = RGB_WORD_BYTE0(vword);
+        r = v_to_r[vlo];
         b = u_to_b[ulo];
         gb = u_to_gb[ulo] + v_to_gb[vlo];
-        r = v_to_r[vlo];
         ya = ytable[RGB_WORD_BYTE1(yv0)];
         yb = ytable[RGB_WORD_BYTE0(yv0)];
         pix = RGB565_BIASED(clamp_r_base, clamp_g_base, clamp_b_base, ya, b, gb, r);
