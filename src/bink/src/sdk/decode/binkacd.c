@@ -352,10 +352,9 @@ static inline f32 Undecibel(f32 decibels)
     return (f32)pow(BINKAC_QUANT_POWER_BASE_CONST, decibels * BINKAC_QUANT_POWER_SCALE_CONST);
 }
 
-static u32 Unquant(u32 transform_size, u32 chans, u32 flags, s32 PTR4* fft_work,
+static u32 Unquant(u32 transform_size, f32 transform_size_root, u32 chans, u32 flags, s32 PTR4* fft_work,
                    f32 PTR4* fft_coeffs, s16 PTR4* samples, void PTR4* inptr,
-                   u32 num_bands, const u32 PTR4* bands,
-                   f32 transform_size_root)
+                   u32 num_bands, const u32 PTR4* bands)
 {
     f32 threshold[BINKAC_QUANT_COUNT];
     BINKVARBITS vb;
@@ -538,8 +537,8 @@ void BinkAudioDecompress(HBINKAUDIODECOMP ba, void PTR4* PTR4* outptr, u32 PTR4*
     samples = ba->samples;
     num_bands = ba->num_bands;
     bands = ba->bands;
-    used_bytes = Unquant(transform_size, chans, flags, fft_work, fft_coeffs, samples, inptr,
-                         num_bands, bands, transform_size_root);
+    used_bytes = Unquant(transform_size, transform_size_root, chans, flags, fft_work, fft_coeffs,
+                         samples, inptr, num_bands, bands);
 
     /* Later frames overlap-add their leading window against the saved tail from the last frame. */
     if (ba->start_frame != 0) {
