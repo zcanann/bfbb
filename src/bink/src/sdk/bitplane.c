@@ -372,7 +372,7 @@ u32 LenBPLossless(s16 PTR4* vals)
                     case BP_TREE_GROUP_NODE:
                         kind = BP_TREE_ENTRY_INDEX(entry);
                         bits = (u32)BP_TREE_ENTRY_GROUP(entry);
-                        *cur = BP_TREE_BASE_BRANCH_ENTRY(groups[bits], BP_TREE_ENTRY_BASE(entry));
+                        *cur = BP_TREE_BRANCH_ENTRY(groups[bits], kind);
                         *end = BP_TREE_CHILD_BRANCH_ENTRY(groups[bits + BP_TREE_CHILD1_INDEX], kind, BP_TREE_CHILD1_BASE);
                         *++end = BP_TREE_CHILD_BRANCH_ENTRY(groups[bits + BP_TREE_CHILD2_INDEX], kind, BP_TREE_CHILD2_BASE);
                         *++end = BP_TREE_CHILD_BRANCH_ENTRY(groups[bits + BP_TREE_CHILD3_INDEX], kind, BP_TREE_CHILD3_BASE);
@@ -386,7 +386,7 @@ handle_children:
                         if (lens[kind] == maxbits) {
                             len += maxbits;
                         } else {
-                            *--restart = BP_TREE_BASE_COEFF_ENTRY(lens[kind], BP_TREE_ENTRY_BASE(entry));
+                            *--restart = BP_TREE_COEFF_ENTRY(lens[kind], kind);
                         }
                         if (lens[kind + BP_TREE_CHILD1_INDEX] == maxbits) {
                             len += maxbits;
@@ -436,7 +436,7 @@ handle_children:
                 case BP_TREE_GROUP_NODE:
                     kind = BP_TREE_ENTRY_INDEX(entry);
                     maxbits = (u32)BP_TREE_ENTRY_GROUP(entry);
-                    *cur = BP_TREE_BASE_BRANCH_ENTRY(groups[maxbits], BP_TREE_ENTRY_BASE(entry));
+                    *cur = BP_TREE_BRANCH_ENTRY(groups[maxbits], kind);
                     *end = BP_TREE_CHILD_BRANCH_ENTRY(groups[maxbits + BP_TREE_CHILD1_INDEX], kind, BP_TREE_CHILD1_BASE);
                     *++end = BP_TREE_CHILD_BRANCH_ENTRY(groups[maxbits + BP_TREE_CHILD2_INDEX], kind, BP_TREE_CHILD2_BASE);
                     *++end = BP_TREE_CHILD_BRANCH_ENTRY(groups[maxbits + BP_TREE_CHILD3_INDEX], kind, BP_TREE_CHILD3_BASE);
@@ -450,7 +450,7 @@ handle_final_children:
                     if (lens[kind] == 1) {
                         len = total + BP_TREE_NODE_SIGNAL_BITS + 1;
                     } else {
-                        *--restart = BP_TREE_BASE_COEFF_ENTRY(lens[kind], BP_TREE_ENTRY_BASE(entry));
+                        *--restart = BP_TREE_COEFF_ENTRY(lens[kind], kind);
                     }
                     if (lens[kind + BP_TREE_CHILD1_INDEX] == 1) {
                         len++;
@@ -1208,7 +1208,7 @@ next_lossy_node:
                     case BP_TREE_GROUP_NODE:
                         lenbits = BP_TREE_ENTRY_INDEX(node_entry);
                         count = (u32)BP_TREE_ENTRY_GROUP(node_entry);
-                        *cur = BP_TREE_BASE_BRANCH_ENTRY(groups[count], BP_TREE_ENTRY_BASE(node_entry));
+                        *cur = BP_TREE_BRANCH_ENTRY(groups[count], lenbits);
                         *next_node = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD1_INDEX], lenbits, BP_TREE_CHILD1_BASE);
                         *++next_node = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD2_INDEX], lenbits, BP_TREE_CHILD2_BASE);
                         *++next_node = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD3_INDEX], lenbits, BP_TREE_CHILD3_BASE);
@@ -1225,7 +1225,7 @@ handle_lossy_children:
                             PUT_BP_BIT(bits, (ordered[lenbits] & BP_SIGN_BIT) != 0);
                         } else {
                             --insert;
-                            *insert = BP_TREE_BASE_COEFF_ENTRY(lens[lenbits], BP_TREE_ENTRY_BASE(node_entry));
+                            *insert = BP_TREE_COEFF_ENTRY(lens[lenbits], lenbits);
                         }
 
                         PUT_BP_BIT(bits, lens[lenbits + BP_TREE_CHILD1_INDEX] != maxbits);
