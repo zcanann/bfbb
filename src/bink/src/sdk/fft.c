@@ -219,7 +219,6 @@ static void makewt(s32 nw, s32 PTR4* ip, f32 PTR4* w)
 
         nw0 = 0;
         while (nwh > 2) {
-            half_recip = FFT_HALF_RECIP_SCALE;
             nw1 = nw0 + nwh;
             nwh >>= 1;
             w[nw1] = FFT_TRIG_ONE;
@@ -229,6 +228,7 @@ static void makewt(s32 nw, s32 PTR4* ip, f32 PTR4* w)
                 f32 wk1r;
                 f32 wk3r;
 
+                half_recip = FFT_HALF_RECIP_SCALE;
                 wk1r = w[nw0 + 4];
                 wk3r = w[nw0 + 6];
                 w[nw1 + 2] = half_recip / wk1r;
