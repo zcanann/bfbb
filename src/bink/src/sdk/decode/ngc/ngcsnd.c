@@ -646,7 +646,7 @@ static s32 Unlock(BINKSND PTR4* snd, u32 filled_bytes)
     }
 
     state = NGC_SOUND_STATE(snd);
-    task = NGC_TASK(state, state->lock_index);
+    task = NGC_LEFT_LOCK_TASK(state, state->lock_index);
     NGC_TASK_MARK_BUSY(task);
 
     if (NGC_SND(snd)->chans == NGC_SOUND_STEREO_CHANNELS) {
