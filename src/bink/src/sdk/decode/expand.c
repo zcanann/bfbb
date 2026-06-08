@@ -345,7 +345,7 @@ static inline u32 exp_get_bits(EXPBITS PTR4* bits, u32 count)
     return bitbuf & mask;
 }
 
-static inline u32 exp_get_bit(EXPBITS PTR4* bits)
+static inline BOOL exp_get_bit(EXPBITS PTR4* bits)
 {
     u32 bitcount;
     EXPBITSTYPE bitbuf;
