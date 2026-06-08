@@ -1138,10 +1138,11 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
 
     scale_flags = flags & BINKCOPYNOSCALING;
     if (scale_flags != BINKCOPYNOSCALING) {
-        if (scale_flags == 0) {
-            scale_flags = hdr.Flags & BINKCOPYNOSCALING;
+        if (scale_flags != 0) {
+            bnk.OpenFlags |= scale_flags;
+        } else {
+            bnk.OpenFlags |= hdr.Flags & BINKCOPYNOSCALING;
         }
-        bnk.OpenFlags |= scale_flags;
         scale_flags = bnk.OpenFlags & BINKCOPYNOSCALING;
         switch (scale_flags) {
         case BINKCOPY2XW:
