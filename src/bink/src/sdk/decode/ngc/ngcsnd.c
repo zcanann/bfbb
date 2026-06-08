@@ -817,6 +817,7 @@ static s32 Ready(BINKSND PTR4* snd)
     u32 voice_cursor;
     u32 end_cursor;
     u32 address_shift;
+    u32 buffered_bytes;
 
     lock_index = NGC_SOUND_NO_LOCK_INDEX;
     if (NGC_SOUND_STATE(snd)->paused != 0 || NGC_SND(snd)->OnOff == NGC_SOUND_OFF ||
@@ -830,8 +831,6 @@ static s32 Ready(BINKSND PTR4* snd)
     voice = NGC_SOUND_STATE(snd)->left_voice;
     voice_cursor = NGC_AX_CURRENT_CURSOR(voice, address_shift);
     if (NGC_SOUND_STATE(snd)->play_state == NGC_PLAY_STATE_RUNNING) {
-        u32 buffered_bytes;
-
         end_cursor = NGC_AX_END_CURSOR(voice, address_shift);
         buffered_bytes = 0;
         /* A pending wrapped end address becomes valid once playback crosses the wrap. */
