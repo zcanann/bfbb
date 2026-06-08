@@ -1647,7 +1647,7 @@ blit_done:
 
 s32 BinkDoFrame(HBINK bnk)
 {
-    s32 sound_callback_suspended;
+    BOOL sound_callback_suspended;
 
     sound_callback_suspended = 0;
     if (bnk == 0 || bnk->lastdecompframe == bnk->FrameNum) {
@@ -2988,7 +2988,7 @@ s32 BinkSetSoundOnOff(HBINK bnk, s32 onoff)
 
     ret = 0;
     if (bnk != 0) {
-        u32 sound_callback_suspended;
+        BOOL sound_callback_suspended;
         u32 i;
 
         sound_callback_suspended = 0;
