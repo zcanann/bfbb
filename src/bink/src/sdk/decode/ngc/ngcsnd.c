@@ -723,10 +723,10 @@ static s32 Unlock(BINKSND PTR4* snd, u32 filled_bytes)
     }
 
     if (state->play_state == NGC_PLAY_STATE_STOPPED) {
-        NGC_TASK(state, state->lock_index)->length = filled_bytes;
+        NGC_LEFT_LOCK_TASK(state, state->lock_index)->length = filled_bytes;
         if (state->lock_index == NGC_SOUND_LAST_LOCK_INDEX) {
-            NGC_SoundPlay(snd, 0, NGC_TASK(state, 0)->length);
-            NGC_SoundPlay(snd, 1, NGC_TASK(state, 1)->length);
+            NGC_SoundPlay(snd, 0, NGC_LEFT_LOCK_TASK(state, 0)->length);
+            NGC_SoundPlay(snd, 1, NGC_LEFT_LOCK_TASK(state, 1)->length);
         }
     } else {
         NGC_SoundPlay(snd, state->lock_index, filled_bytes);
