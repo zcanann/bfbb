@@ -1115,6 +1115,12 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
     }
 
     bnk.OpenFlags = flags & ~BINKCOPYNOSCALING;
+    bnk.Width = hdr.Width;
+    bnk.Height = hdr.Height;
+    bnk.decompwidth = hdr.Width;
+    bnk.decompheight = hdr.Height;
+    bnk.BinkType = hdr.Flags;
+
     bnk.UVWidth = (((hdr.Width + BINK_CHROMA_ROUND_MASK) >> BINK_CHROMA_SHIFT) +
                    BINK_CHROMA_ALIGN_MASK) &
                   ~BINK_CHROMA_ALIGN_MASK;
@@ -1125,11 +1131,6 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
     bnk.YHeight = bnk.UVHeight * BINK_CHROMA_SCALE;
     bnk.MaskPitch = bnk.YWidth >> BINK_MASK_BLOCK_SHIFT;
 
-    bnk.Width = hdr.Width;
-    bnk.Height = hdr.Height;
-    bnk.decompwidth = hdr.Width;
-    bnk.decompheight = hdr.Height;
-    bnk.BinkType = hdr.Flags;
     bnk.OpenFlags |= hdr.Flags & BINKGRAYSCALE;
     if (!BINK_OPEN_HAS_ALPHA(hdr.Flags)) {
         bnk.OpenFlags &= ~BINKALPHA;
