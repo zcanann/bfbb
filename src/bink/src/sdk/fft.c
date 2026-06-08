@@ -179,7 +179,6 @@ static void makewt(s32 nw, s32 PTR4* ip, f32 PTR4* w)
     f32 delta;
     f32 x;
     f32 wn4r;
-    f32 half_recip;
 
     ip[1] = 1;
     ip[0] = nw;
@@ -223,11 +222,10 @@ static void makewt(s32 nw, s32 PTR4* ip, f32 PTR4* w)
                 f32 wk1r;
                 f32 wk3r;
 
-                half_recip = FFT_HALF_RECIP_SCALE;
                 wk1r = w[nw0 + 4];
                 wk3r = w[nw0 + 6];
-                w[nw1 + 2] = half_recip / wk1r;
-                w[nw1 + 3] = half_recip / wk3r;
+                w[nw1 + 2] = FFT_HALF_RECIP_SCALE / wk1r;
+                w[nw1 + 3] = FFT_HALF_RECIP_SCALE / wk3r;
             }
 
             j = 4;
