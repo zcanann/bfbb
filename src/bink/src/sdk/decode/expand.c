@@ -554,7 +554,7 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
             i = 0;
             count = HUFF4_PAIR_COUNT;
             do {
-                u32 swap_pair = exp_get_bit(vb);
+                BOOL swap_pair = exp_get_bit(vb);
 
                 if (swap_pair != 0) {
                     syms[i + 1] = i;
@@ -573,7 +573,7 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
             left = 0;
             right = 1;
             for (i = 0; i < HUFF4_PAIR_COUNT; ++i) {
-                u32 swap_pair = exp_get_bit(vb);
+                BOOL swap_pair = exp_get_bit(vb);
 
                 if (swap_pair != 0) {
                     merges.order[left] = right;
