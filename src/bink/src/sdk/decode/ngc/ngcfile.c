@@ -208,10 +208,10 @@ static u32 radreadngc(DVDFileInfo PTR4* file, u32 offset, void PTR4* dest, u32 s
             if (status > DVD_STATE_RETRY) {
                 continue;
             }
-            if (status < NGC_DVD_FIRST_ERROR_STATE) {
-                continue;
+            if (status >= NGC_DVD_FIRST_ERROR_STATE) {
+                goto read_failed;
             }
-            goto read_failed;
+            continue;
 
         read_failed:
             return 0;
