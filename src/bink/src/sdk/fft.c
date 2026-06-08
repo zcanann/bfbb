@@ -230,25 +230,21 @@ static void makewt(s32 nw, s32 PTR4* ip, f32 PTR4* w)
 
             j = 4;
             if (j < nwh) {
-                f32 PTR4* src = w + nw0 + 8;
-                f32 PTR4* dst = w + nw1 + 4;
                 do {
-                    f32 x0;
-                    f32 x1;
-                    f32 x2;
-                    f32 x3;
+                    f32 wk1r;
+                    f32 wk1i;
+                    f32 wk3r;
+                    f32 wk3i;
 
+                    wk1r = w[nw0 + j * 2];
+                    wk1i = w[nw0 + j * 2 + 1];
+                    wk3r = w[nw0 + j * 2 + 2];
+                    wk3i = w[nw0 + j * 2 + 3];
+                    w[nw1 + j] = wk1r;
+                    w[nw1 + j + 1] = wk1i;
+                    w[nw1 + j + 2] = wk3r;
+                    w[nw1 + j + 3] = wk3i;
                     j += 4;
-                    x0 = src[0];
-                    x1 = src[1];
-                    x2 = src[2];
-                    x3 = src[3];
-                    dst[0] = x0;
-                    dst[1] = x1;
-                    dst[2] = x2;
-                    dst[3] = x3;
-                    src += 8;
-                    dst += 4;
                 } while (j < nwh);
             }
 
