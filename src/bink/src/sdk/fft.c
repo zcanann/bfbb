@@ -203,17 +203,16 @@ static void makewt(s32 nw, s32 PTR4* ip, f32 PTR4* w)
 
         j = 4;
         if (j < nwh) {
-            f32 PTR4* p = w + 4;
             three = FFT_THREE;
             do {
                 x = delta * (f32)j;
-                p[0] = cosf(x);
-                p[1] = sinf(x);
-                x = (delta * three) * (f32)j;
-                p[2] = cosf(x);
-                p[3] = sinf(x);
+                w[j] = cosf(x);
+                w[j + 1] = sinf(x);
+                x = delta * three;
+                x *= (f32)j;
+                w[j + 2] = cosf(x);
+                w[j + 3] = sinf(x);
                 j += 4;
-                p += 4;
             } while (j < nwh);
         }
 
