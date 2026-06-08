@@ -2683,8 +2683,8 @@ s32 BinkGetRects(HBINK bnk, u32 flags)
 
                     best_index = 0;
                     best_key = BINK_RECT_SORT_KEY_SENTINEL;
-                    next_i = i + 1;
                     j = 0;
+                    next_i = i + 1;
                     if (j < bnk->NumRects) {
                         do {
                             u32 key;
