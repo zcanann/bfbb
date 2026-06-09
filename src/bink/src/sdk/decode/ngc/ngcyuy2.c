@@ -39,32 +39,39 @@ typedef enum YUY2LumaByteMask
     YUY2_Y3_MASK = 0x000000ff
 } YUY2LumaByteMask;
 
-#define YUY2_PACK_4Y01(y, chroma0, chroma1) ((y) & YUY2_Y0_MASK) + (chroma0) + (((y) >> 8) & YUY2_Y2_MASK) + (chroma1)
-#define YUY2_PACK_4Y23(y, chroma0, chroma1) (((y) & YUY2_Y2_MASK) << 16) + (chroma0) + (((y) & YUY2_Y3_MASK) << 8) + (chroma1)
-#define YUY2_PACK_M4Y01(y) ((y) & YUY2_Y0_MASK) + (((y) >> 8) & YUY2_Y2_MASK) + YUY2_NEUTRAL_CHROMA
-#define YUY2_PACK_M4Y23(y) (((y) & YUY2_Y2_MASK) << 16) + (((y) & YUY2_Y3_MASK) << 8) + YUY2_NEUTRAL_CHROMA
-#define YUY2_PACK_X2Y0(y, chroma) ((y) & YUY2_Y0_MASK) + (((y) & YUY2_Y0_MASK) >> 16) + (chroma)
-#define YUY2_PACK_X2Y1(y, chroma) (((y) & YUY2_Y1_MASK) << 8) + (((y) & YUY2_Y1_MASK) >> 8) + (chroma)
+typedef enum YUY2ByteShift
+{
+    YUY2_BYTE1_SHIFT = 8,
+    YUY2_HALFWORD_SHIFT = 16,
+    YUY2_BYTE3_SHIFT = 24
+} YUY2ByteShift;
+
+#define YUY2_PACK_4Y01(y, chroma0, chroma1) ((y) & YUY2_Y0_MASK) + (chroma0) + (((y) >> YUY2_BYTE1_SHIFT) & YUY2_Y2_MASK) + (chroma1)
+#define YUY2_PACK_4Y23(y, chroma0, chroma1) (((y) & YUY2_Y2_MASK) << YUY2_HALFWORD_SHIFT) + (chroma0) + (((y) & YUY2_Y3_MASK) << YUY2_BYTE1_SHIFT) + (chroma1)
+#define YUY2_PACK_M4Y01(y) ((y) & YUY2_Y0_MASK) + (((y) >> YUY2_BYTE1_SHIFT) & YUY2_Y2_MASK) + YUY2_NEUTRAL_CHROMA
+#define YUY2_PACK_M4Y23(y) (((y) & YUY2_Y2_MASK) << YUY2_HALFWORD_SHIFT) + (((y) & YUY2_Y3_MASK) << YUY2_BYTE1_SHIFT) + YUY2_NEUTRAL_CHROMA
+#define YUY2_PACK_X2Y0(y, chroma) ((y) & YUY2_Y0_MASK) + (((y) & YUY2_Y0_MASK) >> YUY2_HALFWORD_SHIFT) + (chroma)
+#define YUY2_PACK_X2Y1(y, chroma) (((y) & YUY2_Y1_MASK) << YUY2_BYTE1_SHIFT) + (((y) & YUY2_Y1_MASK) >> YUY2_BYTE1_SHIFT) + (chroma)
 #define YUY2_PACK_X2Y2(y, chroma) (((y) & YUY2_Y2_MASK) * YUY2_LUMA16_DUP) + (chroma)
-#define YUY2_PACK_X2Y3(y, chroma) (((y) & YUY2_Y3_MASK) << 24) + (((y) & YUY2_Y3_MASK) << 8) + (chroma)
-#define YUY2_CHROMA0_U(u) (((u) >> 8) & YUY2_CHROMA16_MASK)
-#define YUY2_CHROMA0_V(v) ((v) >> 24)
+#define YUY2_PACK_X2Y3(y, chroma) (((y) & YUY2_Y3_MASK) << YUY2_BYTE3_SHIFT) + (((y) & YUY2_Y3_MASK) << YUY2_BYTE1_SHIFT) + (chroma)
+#define YUY2_CHROMA0_U(u) (((u) >> YUY2_BYTE1_SHIFT) & YUY2_CHROMA16_MASK)
+#define YUY2_CHROMA0_V(v) ((v) >> YUY2_BYTE3_SHIFT)
 #define YUY2_CHROMA1_U(u) ((u) & YUY2_CHROMA16_MASK)
-#define YUY2_CHROMA1_V(v) (((v) >> 16) & YUY2_CHROMA8_MASK)
-#define YUY2_CHROMA2_U(u) (((u) & YUY2_CHROMA_LOW16_MASK) << 8)
-#define YUY2_CHROMA2_V(v) (((v) >> 8) & YUY2_CHROMA8_MASK)
-#define YUY2_CHROMA3_U(u) (((u) & YUY2_CHROMA8_MASK) << 16)
+#define YUY2_CHROMA1_V(v) (((v) >> YUY2_HALFWORD_SHIFT) & YUY2_CHROMA8_MASK)
+#define YUY2_CHROMA2_U(u) (((u) & YUY2_CHROMA_LOW16_MASK) << YUY2_BYTE1_SHIFT)
+#define YUY2_CHROMA2_V(v) (((v) >> YUY2_BYTE1_SHIFT) & YUY2_CHROMA8_MASK)
+#define YUY2_CHROMA3_U(u) (((u) & YUY2_CHROMA8_MASK) << YUY2_HALFWORD_SHIFT)
 #define YUY2_CHROMA3_V(v) ((v) & YUY2_CHROMA8_MASK)
-#define YUY2_TAIL_CHROMA0_U(u) (((u) & YUY2_CHROMA_LOW16_MASK) << 8)
-#define YUY2_TAIL_CHROMA0_V(v) ((v) >> 8)
-#define YUY2_TAIL_CHROMA1_U(u) (((u) & YUY2_CHROMA8_MASK) << 16)
+#define YUY2_TAIL_CHROMA0_U(u) (((u) & YUY2_CHROMA_LOW16_MASK) << YUY2_BYTE1_SHIFT)
+#define YUY2_TAIL_CHROMA0_V(v) ((v) >> YUY2_BYTE1_SHIFT)
+#define YUY2_TAIL_CHROMA1_U(u) (((u) & YUY2_CHROMA8_MASK) << YUY2_HALFWORD_SHIFT)
 #define YUY2_TAIL_CHROMA1_V(v) ((v) & YUY2_CHROMA8_MASK)
-#define YUY2_CHROMA0(u, v) (((u) >> 8) & YUY2_CHROMA16_MASK) + ((v) >> 24)
-#define YUY2_CHROMA1(u, v) ((u) & YUY2_CHROMA16_MASK) + (((v) >> 16) & YUY2_CHROMA8_MASK)
-#define YUY2_CHROMA2(u, v) (((u) & YUY2_CHROMA_LOW16_MASK) << 8) + (((v) >> 8) & YUY2_CHROMA8_MASK)
-#define YUY2_CHROMA3(u, v) (((u) & YUY2_CHROMA8_MASK) << 16) + ((v) & YUY2_CHROMA8_MASK)
-#define YUY2_TAIL_CHROMA0(u, v) (((u) & YUY2_CHROMA_LOW16_MASK) << 8) + ((v) >> 8)
-#define YUY2_TAIL_CHROMA1(u, v) (((u) & YUY2_CHROMA8_MASK) << 16) + ((v) & YUY2_CHROMA8_MASK)
+#define YUY2_CHROMA0(u, v) (((u) >> YUY2_BYTE1_SHIFT) & YUY2_CHROMA16_MASK) + ((v) >> YUY2_BYTE3_SHIFT)
+#define YUY2_CHROMA1(u, v) ((u) & YUY2_CHROMA16_MASK) + (((v) >> YUY2_HALFWORD_SHIFT) & YUY2_CHROMA8_MASK)
+#define YUY2_CHROMA2(u, v) (((u) & YUY2_CHROMA_LOW16_MASK) << YUY2_BYTE1_SHIFT) + (((v) >> YUY2_BYTE1_SHIFT) & YUY2_CHROMA8_MASK)
+#define YUY2_CHROMA3(u, v) (((u) & YUY2_CHROMA8_MASK) << YUY2_HALFWORD_SHIFT) + ((v) & YUY2_CHROMA8_MASK)
+#define YUY2_TAIL_CHROMA0(u, v) (((u) & YUY2_CHROMA_LOW16_MASK) << YUY2_BYTE1_SHIFT) + ((v) >> YUY2_BYTE1_SHIFT)
+#define YUY2_TAIL_CHROMA1(u, v) (((u) & YUY2_CHROMA8_MASK) << YUY2_HALFWORD_SHIFT) + ((v) & YUY2_CHROMA8_MASK)
 #define YUY2_PACK_4Y01_CHROMA0(y, u, v) YUY2_PACK_4Y01((y), YUY2_CHROMA0_U(u), YUY2_CHROMA0_V(v))
 #define YUY2_PACK_4Y23_CHROMA1(y, u, v) YUY2_PACK_4Y23((y), YUY2_CHROMA1_U(u), YUY2_CHROMA1_V(v))
 #define YUY2_PACK_4Y01_CHROMA2(y, u, v) YUY2_PACK_4Y01((y), YUY2_CHROMA2_U(u), YUY2_CHROMA2_V(v))
