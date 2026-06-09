@@ -744,8 +744,8 @@ void YUV_16m_4x2(u32 count)
     do {
         u32 yv0 = *y0++;
         u32 yv1 = *y1++;
-        u16 y0hi = yv0 >> 16;
-        u16 y1hi = yv1 >> 16;
+        u16 y0hi = yv0 >> RGB_HALFWORD_SHIFT;
+        u16 y1hi = yv1 >> RGB_HALFWORD_SHIFT;
         u16 y0lo = yv0;
         u16 y1lo = yv1;
         u16 a = (u16)table[RGB_WORD_BYTE1(y0hi)];
@@ -809,8 +809,8 @@ void YUV_16mx2_4x2(u32 count)
     do {
         u32 yv0 = *y0++;
         u32 yv1 = *y1++;
-        u16 y0hi = yv0 >> 16;
-        u16 y1hi = yv1 >> 16;
+        u16 y0hi = yv0 >> RGB_HALFWORD_SHIFT;
+        u16 y1hi = yv1 >> RGB_HALFWORD_SHIFT;
         u16 y0lo = yv0;
         u16 y1lo = yv1;
         u16 a = (u16)table[RGB_WORD_BYTE1(y0hi)];
@@ -1042,8 +1042,8 @@ void YUV_32ax2_4x2_even(u32 count)
         gb = v_to_gb[vhi] + u_to_gb[uhi];
         b = u_to_b[uhi];
 
-        dest0[RGB_TILE_WORD0] = RGB32_ALPHA_COLOR_DUP_PAIR(alpha0, RGB_WORD_BYTE3(av0) << 8, y00[r]);
-        dest0[RGB_TILE_WORD1] = RGB32_ALPHA_COLOR_DUP_PAIR(alpha1 << 24, alpha1 << 8, y01[r]);
+        dest0[RGB_TILE_WORD0] = RGB32_ALPHA_COLOR_DUP_PAIR(alpha0, RGB_WORD_BYTE3(av0) << RGB_BYTE1_SHIFT, y00[r]);
+        dest0[RGB_TILE_WORD1] = RGB32_ALPHA_COLOR_DUP_PAIR(alpha1 << RGB_BYTE3_SHIFT, alpha1 << RGB_BYTE1_SHIFT, y01[r]);
         dest0[RGB_TILE_NEXT_ROW_WORD0] = RGB32_COLOR_GB_DUP(y00, gb, b);
         dest0[RGB_TILE_NEXT_ROW_WORD1] = RGB32_COLOR_GB_DUP(y01, gb, b);
 
@@ -1051,8 +1051,8 @@ void YUV_32ax2_4x2_even(u32 count)
         alpha1 = RGB_WORD_BYTE2(av1);
         y10 = clamp_ytable[RGB_WORD_BYTE3(yv1)];
         y11 = clamp_ytable[RGB_WORD_BYTE2(yv1)];
-        dest1[RGB_TILE_WORD0] = RGB32_ALPHA_COLOR_DUP_PAIR(alpha0, RGB_WORD_BYTE3(av1) << 8, y10[r]);
-        dest1[RGB_TILE_WORD1] = RGB32_ALPHA_COLOR_DUP_PAIR(alpha1 << 24, alpha1 << 8, y11[r]);
+        dest1[RGB_TILE_WORD0] = RGB32_ALPHA_COLOR_DUP_PAIR(alpha0, RGB_WORD_BYTE3(av1) << RGB_BYTE1_SHIFT, y10[r]);
+        dest1[RGB_TILE_WORD1] = RGB32_ALPHA_COLOR_DUP_PAIR(alpha1 << RGB_BYTE3_SHIFT, alpha1 << RGB_BYTE1_SHIFT, y11[r]);
         dest1[RGB_TILE_NEXT_ROW_WORD0] = RGB32_COLOR_GB_DUP(y10, gb, b);
         dest1[RGB_TILE_NEXT_ROW_WORD1] = RGB32_COLOR_GB_DUP(y11, gb, b);
 
@@ -1066,8 +1066,8 @@ void YUV_32ax2_4x2_even(u32 count)
 
         alpha0 = RGB_WORD_BYTE1(av0);
         alpha1 = RGB_WORD_BYTE0(av0);
-        dest0[RGB_TILE_SECOND_BLOCK_WORD0] = RGB32_ALPHA_COLOR_DUP_PAIR(alpha0 << 24, alpha0 << 8, y00[r]);
-        dest0[RGB_TILE_SECOND_BLOCK_WORD1] = RGB32_ALPHA_COLOR_DUP_PAIR(alpha1 << 24, alpha1 << 8, y01[r]);
+        dest0[RGB_TILE_SECOND_BLOCK_WORD0] = RGB32_ALPHA_COLOR_DUP_PAIR(alpha0 << RGB_BYTE3_SHIFT, alpha0 << RGB_BYTE1_SHIFT, y00[r]);
+        dest0[RGB_TILE_SECOND_BLOCK_WORD1] = RGB32_ALPHA_COLOR_DUP_PAIR(alpha1 << RGB_BYTE3_SHIFT, alpha1 << RGB_BYTE1_SHIFT, y01[r]);
         dest0[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD0] = RGB32_COLOR_GB_DUP(y00, gb, b);
         dest0[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD1] = RGB32_COLOR_GB_DUP(y01, gb, b);
         dest0 += RGB_TILE_X2_BLOCK_WORDS;
@@ -1076,8 +1076,8 @@ void YUV_32ax2_4x2_even(u32 count)
         alpha1 = RGB_WORD_BYTE0(av1);
         y10 = clamp_ytable[RGB_WORD_BYTE1(yv1)];
         y11 = clamp_ytable[RGB_WORD_BYTE0(yv1)];
-        dest1[RGB_TILE_SECOND_BLOCK_WORD0] = RGB32_ALPHA_COLOR_DUP_PAIR(alpha0 << 24, alpha0 << 8, y10[r]);
-        dest1[RGB_TILE_SECOND_BLOCK_WORD1] = RGB32_ALPHA_COLOR_DUP_PAIR(alpha1 << 24, alpha1 << 8, y11[r]);
+        dest1[RGB_TILE_SECOND_BLOCK_WORD0] = RGB32_ALPHA_COLOR_DUP_PAIR(alpha0 << RGB_BYTE3_SHIFT, alpha0 << RGB_BYTE1_SHIFT, y10[r]);
+        dest1[RGB_TILE_SECOND_BLOCK_WORD1] = RGB32_ALPHA_COLOR_DUP_PAIR(alpha1 << RGB_BYTE3_SHIFT, alpha1 << RGB_BYTE1_SHIFT, y11[r]);
         dest1[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD0] = RGB32_COLOR_GB_DUP(y10, gb, b);
         dest1[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD1] = RGB32_COLOR_GB_DUP(y11, gb, b);
         dest1 += RGB_TILE_X2_BLOCK_WORDS;
@@ -1566,10 +1566,10 @@ void YUV_16a4m_4x2(u32 count)
         u32 yv0 = *y0;
         u32 av1 = *a1;
         u32 yv1 = *y1;
-        u16 av0hi = av0 >> 16;
-        u16 yv0hi = yv0 >> 16;
-        u16 av1hi = av1 >> 16;
-        u16 yv1hi = yv1 >> 16;
+        u16 av0hi = av0 >> RGB_HALFWORD_SHIFT;
+        u16 yv0hi = yv0 >> RGB_HALFWORD_SHIFT;
+        u16 av1hi = av1 >> RGB_HALFWORD_SHIFT;
+        u16 yv1hi = yv1 >> RGB_HALFWORD_SHIFT;
         u16 yv0lo = yv0;
         u16 av0lo = av0;
         u16 yv1lo = yv1;
@@ -1648,10 +1648,10 @@ void YUV_16a4mx2_4x2(u32 count)
         u32 yv0 = *y0;
         u32 av1 = *a1;
         u32 yv1 = *y1;
-        u16 av0hi = av0 >> 16;
-        u16 yv0hi = yv0 >> 16;
-        u16 av1hi = av1 >> 16;
-        u16 yv1hi = yv1 >> 16;
+        u16 av0hi = av0 >> RGB_HALFWORD_SHIFT;
+        u16 yv0hi = yv0 >> RGB_HALFWORD_SHIFT;
+        u16 av1hi = av1 >> RGB_HALFWORD_SHIFT;
+        u16 yv1hi = yv1 >> RGB_HALFWORD_SHIFT;
         u16 yv0lo = yv0;
         u16 av0lo = av0;
         u16 yv1lo = yv1;
