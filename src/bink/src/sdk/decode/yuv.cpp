@@ -4028,19 +4028,21 @@ static u32 dounalignedYUY2col2h(u32 count, s32 phase)
     u8 u;
     u8 v;
     u32 pixel;
+    u8 PTR4* yptr;
 
     remaining = count;
     do {
         remaining -= YUY2_LUMA_PAIR_PIXELS;
         uptr = (u8 PTR4*)S.u;
+        yptr = (u8 PTR4*)S.y0;
         u = *uptr++;
-        y0 = *(u8 PTR4*)S.y0;
-        y1 = *((u8 PTR4*)S.y0 + 1);
+        y0 = yptr[0];
+        y1 = yptr[1];
         vptr = (u8 PTR4*)S.v;
         v = *vptr++;
         S.u = (u16 PTR4*)uptr;
         S.v = (u16 PTR4*)vptr;
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUY2_LUMA_PAIR_BYTES);
+        S.y0 = (u32 PTR4*)(yptr + YUY2_LUMA_PAIR_BYTES);
         pixel = YUY2_COLOR_PAIR(y0, u, y1, v);
         *(u32 PTR4*)S.dest0 = pixel;
         *(u32 PTR4*)(S.dest0 + S.pitch) = pixel;
