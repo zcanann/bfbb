@@ -66,6 +66,7 @@ enum YUVRgbCoefficients {
 };
 
 enum RGBPackConstants {
+    RGB_GREEN_SHIFT = 8,
     RGB_HIGH_WORD_SHIFT = 16,
     RGB_ALPHA_SHIFT = 24,
     RGB_DUP16 = 0x10001,
@@ -188,11 +189,11 @@ static inline s32 yuv_round15(s32 value)
 #define RGB565_M_A4(y, a) (RGB565_M((y)) | (u16)clamp_a4[(a)])
 #define RGB32_M(y) (mono32[(y)])
 #define RGB32_M_A(y, a) (RGB32_M((y)) | ((u32)(a) << RGB_ALPHA_SHIFT))
-#define RGB32_COLOR(ytable, r, gb, b) ((ytable)[b] | ((ytable)[gb] << 8) | ((ytable)[r] << 16))
+#define RGB32_COLOR(ytable, r, gb, b) ((ytable)[b] | ((ytable)[gb] << RGB_GREEN_SHIFT) | ((ytable)[r] << RGB_HIGH_WORD_SHIFT))
 #define RGB32_COLOR_A(ytable, r, gb, b, a) (RGB32_COLOR((ytable), (r), (gb), (b)) | ((u32)(a) << RGB_ALPHA_SHIFT))
 #define YUY2_M(y0, y1) ((u32)(y0) | YUY2_NEUTRAL_CHROMA | ((u32)(y1) << RGB_HIGH_WORD_SHIFT))
 #define YUY2_COLOR_PAIR(y0, u, y1, v) \
-    ((u32)(y0) | ((u32)(u) << 8) | ((u32)(y1) << RGB_HIGH_WORD_SHIFT) | ((u32)(v) << RGB_ALPHA_SHIFT))
+    ((u32)(y0) | ((u32)(u) << RGB_GREEN_SHIFT) | ((u32)(y1) << RGB_HIGH_WORD_SHIFT) | ((u32)(v) << RGB_ALPHA_SHIFT))
 
 #define DECL_CORE(name) extern "C" void name(s32)
 DECL_CORE(YUV_32_4x2_even);
@@ -1156,12 +1157,12 @@ extern "C" void YUV_init(u32 flags)
         } else if (i < YUV_LUMA_WHITE_CUTOFF) {
             mono = ((i - YUV_LUMA_BLACK) * RGB_CHANNEL_MAX) / YUV_LUMA_RANGE;
             y = (mono >> red_down) | ((mono >> green_down) << red_bits) | ((mono >> blue_down) << blue_shift);
-            mono16x2[i] = y | (y << 16);
-            mono32[i] = (mono << 16) | (mono << 8) | mono;
+            mono16x2[i] = y | (y << RGB_HIGH_WORD_SHIFT);
+            mono32[i] = (mono << RGB_HIGH_WORD_SHIFT) | (mono << RGB_GREEN_SHIFT) | mono;
             mono16[i] = y;
         } else {
             mono16[i] = white;
-            mono16x2[i] = white | (white << 16);
+            mono16x2[i] = white | (white << RGB_HIGH_WORD_SHIFT);
             mono32[i] = RGB_MONO_WHITE;
         }
 
@@ -1180,9 +1181,9 @@ extern "C" void YUV_init(u32 flags)
         clamp_g[RGB_CLAMP_HIGH_OFFSET + i] = green_mask;
         clamp_b[RGB_CLAMP_HIGH_OFFSET + i] = blue_mask;
 
-        clamp_rh[i] = clamp_r[i] << 16;
-        clamp_gh[i] = clamp_g[i] << 16;
-        clamp_bh[i] = clamp_b[i] << 16;
+        clamp_rh[i] = clamp_r[i] << RGB_HIGH_WORD_SHIFT;
+        clamp_gh[i] = clamp_g[i] << RGB_HIGH_WORD_SHIFT;
+        clamp_bh[i] = clamp_b[i] << RGB_HIGH_WORD_SHIFT;
         clamp_a4[i] = (i & RGB_A4_SOURCE_MASK) << RGB_A4_SHIFT;
 
         clamp_rr[i] = 0;
@@ -1191,9 +1192,9 @@ extern "C" void YUV_init(u32 flags)
         clamp_rr[RGB_CLAMP_BIAS + i] = red * RGB_DUP16;
         clamp_gg[RGB_CLAMP_BIAS + i] = green * RGB_DUP16;
         clamp_bb[RGB_CLAMP_BIAS + i] = blue * RGB_DUP16;
-        clamp_rh[RGB_CLAMP_BIAS + i] = clamp_r[RGB_CLAMP_BIAS + i] << 16;
-        clamp_gh[RGB_CLAMP_BIAS + i] = clamp_g[RGB_CLAMP_BIAS + i] << 16;
-        clamp_bh[RGB_CLAMP_BIAS + i] = clamp_b[RGB_CLAMP_BIAS + i] << 16;
+        clamp_rh[RGB_CLAMP_BIAS + i] = clamp_r[RGB_CLAMP_BIAS + i] << RGB_HIGH_WORD_SHIFT;
+        clamp_gh[RGB_CLAMP_BIAS + i] = clamp_g[RGB_CLAMP_BIAS + i] << RGB_HIGH_WORD_SHIFT;
+        clamp_bh[RGB_CLAMP_BIAS + i] = clamp_b[RGB_CLAMP_BIAS + i] << RGB_HIGH_WORD_SHIFT;
 
         clamp_rr[RGB_CLAMP_HIGH_OFFSET + i] = red_mask * RGB_DUP16;
         clamp_gg[RGB_CLAMP_HIGH_OFFSET + i] = green_mask * RGB_DUP16;
