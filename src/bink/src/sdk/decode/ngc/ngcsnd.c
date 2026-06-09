@@ -740,7 +740,6 @@ static void NGC_StarvedClear(BINKSND PTR4* snd)
 {
     u32 poll_count;
     u32 lock_side;
-    u32 buffer_side;
     u32 right_task_index;
     u32 silent_start;
     u32 silent_end;
@@ -758,14 +757,13 @@ check_busy:
     if (NGC_TASK_BUSY(task)) {
         goto busy;
     }
-    buffer_side = lock_side;
     silent_start = NGC_SOUND_STATE(snd)->play_cursor;
     silent_end = silent_start + NGC_SOUND_STATE(snd)->frame_size;
     if (NGC_SND(snd)->chans == NGC_SOUND_STEREO_CHANNELS) {
         silence_buffer = NGC_SOUND_STATE(snd)->stereo_buffer;
     } else {
         silence_buffer = NGC_SOUND_STATE(snd)->decode_buffer +
-                         ((buffer_side * NGC_SOUND_STATE(snd)->channel_stride) >>
+                         ((lock_side * NGC_SOUND_STATE(snd)->channel_stride) >>
                           NGC_SOUND_HALF_BUFFER_SHIFT);
     }
 
