@@ -327,7 +327,7 @@ static s32 NGC_SoundReinit(BINKSND PTR4* snd)
     NGC_SOUND_STATE(snd)->lock_index = NGC_SOUND_NO_LOCK_INDEX;
     NGC_SOUND_STATE(snd)->play_state = NGC_PLAY_STATE_STOPPED;
     NGC_SOUND_STATE(snd)->play_cursor = ring_start;
-    voice = NGC_LEFT_VOICE(state);
+    voice = NGC_SOUND_STATE(snd)->left_voice;
     ax_addr = NGC_AX_ADDR(ring_start, state->address_shift);
 
     AXSetVoiceCurrentAddr(voice, ax_addr);
