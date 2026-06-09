@@ -350,7 +350,7 @@ static s32 NGC_SoundReinit(BINKSND PTR4* snd)
         AXSetVoiceEndAddr(voice, NGC_AX_RIGHT_END_ADDR(state, ring_end));
     }
 
-    state->pending_end = 0;
+    NGC_SOUND_STATE(snd)->pending_end = 0;
     for (i = 0; i < NGC_SOUND_ARQ_TASK_COUNT; ++i) {
         if ((state->tasks[i].owner & NGC_TASK_BUSY_FLAG) != 0) {
             ARQRemoveRequest(&state->tasks[i]);
