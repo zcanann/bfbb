@@ -107,14 +107,14 @@ typedef VARBITS BINKVARBITS;
 #define BINKAC_INVERT_BIN(shift) (1.0 / (1 << (shift)))
 #define BINKAC_IS_NEW_FORMAT(flags) (((flags) & BINKACNEWFORMAT) != 0)
 
-static const f32 BINKAC_SAMPLE_ZERO = 0.0f;
-static const f32 BINKAC_QUANT_INDEX_SCALE_CONST = 0.664f;
-static const f32 BINKAC_QUANT_POWER_SCALE_CONST = 0.10f;
-static const f64 BINKAC_QUANT_POWER_BASE_CONST = 10.0;
-static const f32 BINKAC_RSQRT_ZERO = 0.0f;
-static const f64 BINKAC_RSQRT_NEWTON_HALF_CONST = 0.5;
-static const f64 BINKAC_RSQRT_NEWTON_THREE_CONST = 3.0;
-static const f32 BINKAC_TRANSFORM_ROOT_SCALE_CONST = 2.0f;
+#define BINKAC_SAMPLE_ZERO 0.0f
+#define BINKAC_QUANT_INDEX_SCALE_CONST 0.664f
+#define BINKAC_QUANT_POWER_SCALE_CONST 0.10f
+#define BINKAC_QUANT_POWER_BASE_CONST 10.0
+#define BINKAC_RSQRT_ZERO 0.0f
+#define BINKAC_RSQRT_NEWTON_HALF_CONST 0.5
+#define BINKAC_RSQRT_NEWTON_THREE_CONST 3.0
+#define BINKAC_TRANSFORM_ROOT_SCALE_CONST 2.0f
 
 /* RLE code lengths, in VQLENGTH sample groups, for sparse audio coefficients. */
 static u8 bink_rlelens_snd[MAXRLE] = {
@@ -250,19 +250,19 @@ static inline u32 read_rle_bits(BINKVARBITS PTR4* vb)
     return result;
 }
 
-static inline BOOL read_bit(BINKVARBITS PTR4* vb)
+static inline u32 read_bit(BINKVARBITS PTR4* vb)
 {
     u32 bitcount = vb->bitlen;
 
     if (bitcount != 0) {
-        BOOL result = (vb->bits & BINKAC_BIT_MASK) != 0;
+        u32 result = vb->bits & BINKAC_BIT_MASK;
 
         vb->bitlen = bitcount - 1;
         vb->bits >>= 1;
         return result;
     } else {
         u32 refill = BINKAC_LOAD32(vb->cur);
-        BOOL result = (refill & BINKAC_BIT_MASK) != 0;
+        u32 result = refill & BINKAC_BIT_MASK;
 
         VARBITS_ADVANCE_CUR(vb->cur);
         vb->bitlen = BITSTYPELEN - 1;
