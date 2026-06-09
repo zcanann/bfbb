@@ -250,7 +250,7 @@ static inline u32 read_rle_bits(BINKVARBITS PTR4* vb)
     return result;
 }
 
-static inline u32 read_bit(BINKVARBITS PTR4* vb)
+static inline BOOL read_bit(BINKVARBITS PTR4* vb)
 {
     u32 bitcount = vb->bitlen;
 
