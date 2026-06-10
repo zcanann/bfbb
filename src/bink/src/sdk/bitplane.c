@@ -188,7 +188,7 @@ typedef union BPLOSSLESSCOEFFS
 typedef union BPLOSSYBLOCK
 {
     s8 bytes[BP_BLOCK_COEFFS];
-    s16 words[BP_LOSSY_OUTPUT_COEFFS];
+    s16 pairs[BP_LOSSY_OUTPUT_COEFFS];
 } BPLOSSYBLOCK;
 
 typedef struct BPLOSSYREADTREE
@@ -1610,7 +1610,7 @@ void ReadBPLossy(s16 PTR4* out, BPBITSTREAM PTR4* bits, s32 masks_count)
 
     readlossy(residuals.bytes, bits, masks_count);
 #define SCATTER_BP_LOSSY_WORD(out_index, residual_index)                                                              \
-    (out[(out_index)] = residuals.words[(residual_index)])
+    (out[(out_index)] = residuals.pairs[(residual_index)])
     SCATTER_BP_LOSSY_WORD(0, 0);
     SCATTER_BP_LOSSY_WORD(1, 2);
     SCATTER_BP_LOSSY_WORD(2, 4);
