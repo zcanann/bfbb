@@ -222,9 +222,6 @@ static const f32 BINK_NGC_PAN_CENTER[] = {
     0.5f,
 };
 
-static const f64 BINK_NGC_SOUND_U32_TO_F64_BIAS = 4503599627370496.0;
-static const f64 BINK_NGC_SOUND_SIGN_BIAS = 2147483648.0;
-
 static void NGC_SoundPlay(BINKSND PTR4* snd, u32 index, u32 upload_bytes);
 static void NGC_StarvedClear(BINKSND PTR4* snd);
 static void NGC_SoundVolume(BINKSND PTR4* snd);
