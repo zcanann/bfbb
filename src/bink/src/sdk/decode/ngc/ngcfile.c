@@ -36,11 +36,6 @@ typedef enum NGCDVDEntry
     NGC_DVD_ENTRY_NOT_FOUND = -1
 } NGCDVDEntry;
 
-typedef enum NGCDVDStatusBoundary
-{
-    NGC_DVD_FIRST_ERROR_STATE = DVD_STATE_COVER_CLOSED
-} NGCDVDStatusBoundary;
-
 typedef enum BINKFileOffset
 {
     BINK_FILE_CURRENT_OFFSET = -1
@@ -141,7 +136,7 @@ typedef enum NGCReadLayout
     ((u32)((status) - DVD_STATE_BUSY) <= (DVD_STATE_WAITING - DVD_STATE_BUSY))
 #define NGC_DVD_STATUS_FAILED(status)                                                              \
     ((status) <= DVD_STATE_IGNORED ?                                                               \
-         ((status) >= NGC_DVD_FIRST_ERROR_STATE ? TRUE : (status) == DVD_STATE_FATAL_ERROR) :      \
+         ((status) >= DVD_STATE_COVER_CLOSED ? TRUE : (status) == DVD_STATE_FATAL_ERROR) :        \
          (status) == DVD_STATE_RETRY)
 #define NGC_FILE_OPEN_FROM_HANDLE(flags) (((flags) & BINKFILEHANDLE) != 0)
 #define NGC_FILE_DIRECT_READ(io) (NGC_BUFFER(io) == 0)
@@ -208,10 +203,10 @@ static u32 radreadngc(DVDFileInfo PTR4* file, u32 offset, void PTR4* dest, u32 s
             if (status > DVD_STATE_RETRY) {
                 continue;
             }
-            if (status < NGC_DVD_FIRST_ERROR_STATE) {
-                continue;
+            if (status >= DVD_STATE_COVER_CLOSED) {
+                goto read_failed;
             }
-            goto read_failed;
+            continue;
 
         read_failed:
             return 0;
