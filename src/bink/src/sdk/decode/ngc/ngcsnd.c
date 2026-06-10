@@ -54,7 +54,8 @@ typedef enum NGCSoundTiming
 typedef enum BINKNGCSoundLimits
 {
     BINK_NGC_VOLUME_MAX = 0x7fff,
-    BINK_NGC_PAN_MAX = 0x10000
+    BINK_NGC_PAN_MAX = 0x10000,
+    BINK_NGC_MIX_MAX = 0xffff
 } BINKNGCSoundLimits;
 
 typedef enum NGCAXVoiceConstants
@@ -209,14 +210,14 @@ typedef char NGCSoundStateFitsInBinkSndData
 
 static const f32 BINK_NGC_PAN_ONE = 1.0f;
 static const f32 BINK_NGC_PAN_EXPONENT = 0.3f;
-static const f32 BINK_NGC_MIX_SCALE = 65535.0f;
+static const f32 BINK_NGC_MIX_SCALE = (f32)BINK_NGC_MIX_MAX;
 static const f64 BINK_NGC_U32_TO_F64_BIAS = 4503599627370496.0;
-static const f32 BINK_NGC_AX_SAMPLE_RATE = 32000.0f;
+static const f32 BINK_NGC_AX_SAMPLE_RATE = (f32)AX_SAMPLE_RATE;
 static const f64 BINK_NGC_S32_TO_F64_BIAS[] = {
     4503601774854144.0,
 };
 static const f32 BINK_NGC_PAN_TO_FLOAT[] = {
-    0.0000152587890625f,
+    1.0f / BINK_NGC_PAN_MAX,
 };
 static const f32 BINK_NGC_PAN_CENTER[] = {
     0.5f,
