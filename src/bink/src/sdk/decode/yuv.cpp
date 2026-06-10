@@ -1993,7 +1993,6 @@ static void dounaligned32arow2w(u32 phase, u32 count)
 
 static u32 dounaligned32acol2w(u32 count, s32 phase)
 {
-    s32 next_phase;
     const s32 PTR4* btable;
     const s32 PTR4* gb_utable;
     const s32 PTR4* gb_vtable;
@@ -2009,9 +2008,8 @@ static u32 dounaligned32acol2w(u32 count, s32 phase)
     gb_utable = YUVTables.u_to_gb;
     gb_vtable = YUVTables.v_to_gb;
     rtable = YUVTables.v_to_r;
-    next_phase = phase;
     do {
-        next_phase++;
+        phase++;
         S.b = btable[*(u8 PTR4*)S.u];
         S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
         S.r = rtable[*(u8 PTR4*)S.v];
@@ -2037,14 +2035,14 @@ static u32 dounaligned32acol2w(u32 count, s32 phase)
         ((u32 PTR4*)S.dest1)[1] = pixel;
         S.dest0 += YUV_PACKED_PAIR_BYTES;
         S.dest1 += YUV_PACKED_PAIR_BYTES;
-        if (YUV_PHASE_ADVANCES_CHROMA(next_phase)) {
+        if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
             S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
             S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
         count--;
     } while (count != 0);
 
-    return next_phase;
+    return phase;
 }
 
 static void dounaligned32arow2h(u32 phase, u32 count)
@@ -2095,7 +2093,6 @@ static void dounaligned32arow2h(u32 phase, u32 count)
 
 static u32 dounaligned32acol2h(u32 count, s32 phase)
 {
-    s32 next_phase;
     const s32 PTR4* btable;
     const s32 PTR4* gb_utable;
     const s32 PTR4* gb_vtable;
@@ -2111,9 +2108,8 @@ static u32 dounaligned32acol2h(u32 count, s32 phase)
     gb_utable = YUVTables.u_to_gb;
     gb_vtable = YUVTables.v_to_gb;
     rtable = YUVTables.v_to_r;
-    next_phase = phase;
     do {
-        next_phase++;
+        phase++;
         S.b = btable[*(u8 PTR4*)S.u];
         S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
         S.r = rtable[*(u8 PTR4*)S.v];
@@ -2139,14 +2135,14 @@ static u32 dounaligned32acol2h(u32 count, s32 phase)
         *(u32 PTR4*)(S.dest1 + S.pitch) = pixel;
         S.dest0 += YUV_PACKED_WORD_BYTES;
         S.dest1 += YUV_PACKED_WORD_BYTES;
-        if (YUV_PHASE_ADVANCES_CHROMA(next_phase)) {
+        if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
             S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
             S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
         count--;
     } while (count != 0);
 
-    return next_phase;
+    return phase;
 }
 
 static void dounaligned32arow2wh(u32 phase, u32 count)
@@ -2199,7 +2195,6 @@ static void dounaligned32arow2wh(u32 phase, u32 count)
 
 static u32 dounaligned32acol2wh(u32 count, s32 phase)
 {
-    s32 next_phase;
     const s32 PTR4* btable;
     const s32 PTR4* gb_utable;
     const s32 PTR4* gb_vtable;
@@ -2215,9 +2210,8 @@ static u32 dounaligned32acol2wh(u32 count, s32 phase)
     gb_utable = YUVTables.u_to_gb;
     gb_vtable = YUVTables.v_to_gb;
     rtable = YUVTables.v_to_r;
-    next_phase = phase;
     do {
-        next_phase++;
+        phase++;
         S.b = btable[*(u8 PTR4*)S.u];
         S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
         S.r = rtable[*(u8 PTR4*)S.v];
@@ -2247,14 +2241,14 @@ static u32 dounaligned32acol2wh(u32 count, s32 phase)
         *(u32 PTR4*)(S.dest1 + S.pitch + YUV_PACKED_WORD_BYTES) = pixel;
         S.dest0 += YUV_PACKED_PAIR_BYTES;
         S.dest1 += YUV_PACKED_PAIR_BYTES;
-        if (YUV_PHASE_ADVANCES_CHROMA(next_phase)) {
+        if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
             S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
             S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
         count--;
     } while (count != 0);
 
-    return next_phase;
+    return phase;
 }
 
 static void dounaligned32arowm(u32 phase, u32 count)
@@ -2363,7 +2357,6 @@ static void dounaligned32arow(u32 phase, u32 count)
 
 static u32 dounaligned32acol(u32 count, s32 phase)
 {
-    s32 next_phase;
     const s32 PTR4* btable;
     const s32 PTR4* gb_utable;
     const s32 PTR4* gb_vtable;
@@ -2378,9 +2371,8 @@ static u32 dounaligned32acol(u32 count, s32 phase)
     gb_utable = YUVTables.u_to_gb;
     gb_vtable = YUVTables.v_to_gb;
     rtable = YUVTables.v_to_r;
-    next_phase = phase;
     do {
-        next_phase++;
+        phase++;
         S.b = btable[*(u8 PTR4*)S.u];
         S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
         S.r = rtable[*(u8 PTR4*)S.v];
@@ -2402,14 +2394,14 @@ static u32 dounaligned32acol(u32 count, s32 phase)
         S.a1 = (u32 PTR4*)aptr;
         S.dest0 += YUV_PACKED_WORD_BYTES;
         S.dest1 += YUV_PACKED_WORD_BYTES;
-        if (YUV_PHASE_ADVANCES_CHROMA(next_phase)) {
+        if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
             S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
             S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
         count--;
     } while (count != 0);
 
-    return next_phase;
+    return phase;
 }
 
 extern "C" void YUV_blit_32abpp(void PTR4* dest,
@@ -3212,7 +3204,6 @@ static void dounaligned16a4row2h(u32 phase, u32 count)
 
 static u32 dounaligned16a4col2h(u32 count, s32 phase)
 {
-    s32 next_phase;
     const s32 PTR4* btable;
     const s32 PTR4* gb_utable;
     const s32 PTR4* gb_vtable;
@@ -3228,9 +3219,8 @@ static u32 dounaligned16a4col2h(u32 count, s32 phase)
     gb_utable = YUVTables.u_to_gb;
     gb_vtable = YUVTables.v_to_gb;
     rtable = YUVTables.v_to_r;
-    next_phase = phase;
     do {
-        next_phase++;
+        phase++;
         S.b = btable[*(u8 PTR4*)S.u];
         S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
         S.r = rtable[*(u8 PTR4*)S.v];
@@ -3256,14 +3246,14 @@ static u32 dounaligned16a4col2h(u32 count, s32 phase)
         *(u16 PTR4*)(S.dest1 + S.pitch) = pixel;
         S.dest0 += YUV_BYTES_PER_PIXEL_16;
         S.dest1 += YUV_BYTES_PER_PIXEL_16;
-        if (YUV_PHASE_ADVANCES_CHROMA(next_phase)) {
+        if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
             S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
             S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
         count--;
     } while (count != 0);
 
-    return next_phase;
+    return phase;
 }
 
 static void dounaligned16a4row2w(u32 phase, u32 count)
@@ -3312,7 +3302,6 @@ static void dounaligned16a4row2w(u32 phase, u32 count)
 
 static u32 dounaligned16a4col2w(u32 count, s32 phase)
 {
-    s32 next_phase;
     const s32 PTR4* btable;
     const s32 PTR4* gb_utable;
     const s32 PTR4* gb_vtable;
@@ -3328,9 +3317,8 @@ static u32 dounaligned16a4col2w(u32 count, s32 phase)
     gb_utable = YUVTables.u_to_gb;
     gb_vtable = YUVTables.v_to_gb;
     rtable = YUVTables.v_to_r;
-    next_phase = phase;
     do {
-        next_phase++;
+        phase++;
         S.b = btable[*(u8 PTR4*)S.u];
         S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
         S.r = rtable[*(u8 PTR4*)S.v];
@@ -3356,14 +3344,14 @@ static u32 dounaligned16a4col2w(u32 count, s32 phase)
         ((u16 PTR4*)S.dest1)[1] = pixel;
         S.dest0 += YUV_PACKED_WORD_BYTES;
         S.dest1 += YUV_PACKED_WORD_BYTES;
-        if (YUV_PHASE_ADVANCES_CHROMA(next_phase)) {
+        if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
             S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
             S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
         count--;
     } while (count != 0);
 
-    return next_phase;
+    return phase;
 }
 
 static void dounaligned16a4row2wh(u32 phase, u32 count)
@@ -3414,7 +3402,6 @@ static void dounaligned16a4row2wh(u32 phase, u32 count)
 
 static u32 dounaligned16a4col2wh(u32 count, s32 phase)
 {
-    s32 next_phase;
     const s32 PTR4* btable;
     const s32 PTR4* gb_utable;
     const s32 PTR4* gb_vtable;
@@ -3430,9 +3417,8 @@ static u32 dounaligned16a4col2wh(u32 count, s32 phase)
     gb_utable = YUVTables.u_to_gb;
     gb_vtable = YUVTables.v_to_gb;
     rtable = YUVTables.v_to_r;
-    next_phase = phase;
     do {
-        next_phase++;
+        phase++;
         S.b = btable[*(u8 PTR4*)S.u];
         S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
         S.r = rtable[*(u8 PTR4*)S.v];
@@ -3462,14 +3448,14 @@ static u32 dounaligned16a4col2wh(u32 count, s32 phase)
         *(u16 PTR4*)(S.dest1 + S.pitch + YUV_BYTES_PER_PIXEL_16) = pixel;
         S.dest0 += YUV_PACKED_WORD_BYTES;
         S.dest1 += YUV_PACKED_WORD_BYTES;
-        if (YUV_PHASE_ADVANCES_CHROMA(next_phase)) {
+        if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
             S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
             S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
         count--;
     } while (count != 0);
 
-    return next_phase;
+    return phase;
 }
 
 static void dounaligned16a4rowm(u32 phase, u32 count)
@@ -3565,7 +3551,6 @@ static void dounaligned16a4row(u32 phase, u32 count)
 
 static u32 dounaligned16a4col(u32 count, s32 phase)
 {
-    s32 next_phase;
     const s32 PTR4* btable;
     const s32 PTR4* gb_utable;
     const s32 PTR4* gb_vtable;
@@ -3580,9 +3565,8 @@ static u32 dounaligned16a4col(u32 count, s32 phase)
     gb_utable = YUVTables.u_to_gb;
     gb_vtable = YUVTables.v_to_gb;
     rtable = YUVTables.v_to_r;
-    next_phase = phase;
     do {
-        next_phase++;
+        phase++;
         S.b = btable[*(u8 PTR4*)S.u];
         S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
         S.r = rtable[*(u8 PTR4*)S.v];
@@ -3604,14 +3588,14 @@ static u32 dounaligned16a4col(u32 count, s32 phase)
         S.a1 = (u32 PTR4*)aptr;
         S.dest0 += YUV_BYTES_PER_PIXEL_16;
         S.dest1 += YUV_BYTES_PER_PIXEL_16;
-        if (YUV_PHASE_ADVANCES_CHROMA(next_phase)) {
+        if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
             S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
             S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
         count--;
     } while (count != 0);
 
-    return next_phase;
+    return phase;
 }
 
 extern "C" void YUV_blit_16a4bpp(void PTR4* dest,
