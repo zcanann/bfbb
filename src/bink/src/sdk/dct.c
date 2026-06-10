@@ -47,7 +47,8 @@
 #define DCT_AC_MASK(coeffs) \
     ((u16)((coeffs)[DCT_ROW1] | (coeffs)[DCT_ROW2] | (coeffs)[DCT_ROW3] | (coeffs)[DCT_ROW4] | \
            (coeffs)[DCT_ROW5] | (coeffs)[DCT_ROW6] | (coeffs)[DCT_ROW7]))
-#define DCT_DEQUANT(coeffs, quant, index) ((coeffs)[index] * (quant)[index] >> DCT_FIXED_SHIFT)
+#define DCT_COEFF(coeffs, index) ((s32)(s16)(coeffs)[index])
+#define DCT_DEQUANT(coeffs, quant, index) (DCT_COEFF((coeffs), (index)) * (quant)[index] >> DCT_FIXED_SHIFT)
 
 /* 8x8 inverse DCT dequant tables for the four Bink block/format variants. */
 static const s32 ifiquantlevels8[DCT_QUANT_LEVELS][DCT_BLOCK_COEFFS] = {
