@@ -1055,11 +1055,12 @@ extern "C" void YUV_init(u32 flags)
             }
 
             uv = i - YUV_CHROMA_CENTER;
+            RGBYUVTables PTR4* tables = &YUVTables;
             ytable_x4[i] = ytable[i] << 2;
-            YUVTables.v_to_gb[i] = -yuv_round15(uv * YUV_COEFF_V_TO_GB);
-            YUVTables.u_to_gb[i] = -yuv_round15(uv * YUV_COEFF_U_TO_GB);
-            YUVTables.v_to_r[i] = yuv_round15(uv * YUV_COEFF_V_TO_R);
-            YUVTables.u_to_b[i] = yuv_round15(uv * YUV_COEFF_U_TO_B);
+            tables->v_to_gb[i] = -yuv_round15(uv * YUV_COEFF_V_TO_GB);
+            tables->u_to_gb[i] = -yuv_round15(uv * YUV_COEFF_U_TO_GB);
+            tables->v_to_r[i] = yuv_round15(uv * YUV_COEFF_V_TO_R);
+            tables->u_to_b[i] = yuv_round15(uv * YUV_COEFF_U_TO_B);
         }
 
         for (i = 0; i < YUV_TABLE_PLANE_SIZE; i++) {
