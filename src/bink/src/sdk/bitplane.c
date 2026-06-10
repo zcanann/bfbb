@@ -267,7 +267,7 @@ u32 LenBPLossless(s16 PTR4* vals)
     u16 kind;
     s32 sign;
     u32 bits;
-    u32 maxbits;
+    s32 maxbits;
     s32 i;
     s32 group;
     s32 len;
