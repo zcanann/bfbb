@@ -105,20 +105,22 @@ void YUY2_4x2(u32 count)
     y = S.y0;
     u = (const u32 PTR4*)S.u;
     v = (const u32 PTR4*)S.v;
-    while (pairs-- != 0) {
-        u32 y0 = *y++;
-        u32 u0 = *u;
-        u32 v0 = *v;
+    if (pairs != 0) {
+        --pairs;
+        do {
+            u32 y0 = *y++;
+            u32 u0 = *u;
+            u32 v0 = *v;
 
-        *dest++ = YUY2_PACK_4Y01_CHROMA0(y0, u0, v0);
-        *dest++ = YUY2_PACK_4Y23_CHROMA1(y0, u0, v0);
+            *dest++ = YUY2_PACK_4Y01_CHROMA0(y0, u0, v0);
+            *dest++ = YUY2_PACK_4Y23_CHROMA1(y0, u0, v0);
 
-        y0 = *y++;
-        u++;
-        v++;
-        *dest++ = YUY2_PACK_4Y01_CHROMA2(y0, u0, v0);
-        *dest++ = YUY2_PACK_4Y23_CHROMA3(y0, u0, v0);
-
+            y0 = *y++;
+            u++;
+            v++;
+            *dest++ = YUY2_PACK_4Y01_CHROMA2(y0, u0, v0);
+            *dest++ = YUY2_PACK_4Y23_CHROMA3(y0, u0, v0);
+        } while (pairs-- != 0);
     }
 
     if (YUY2_HAS_TAIL_BLOCK(count)) {
