@@ -7,13 +7,11 @@ f32 sinf(f32 x);
 
 static const f32 BINK_RDFT_INVERSE_SCALE_BITS = 0.5f;
 static const f32 BINK_FFT_TRIG_ONE_BITS = 1.0f;
-static const f64 BINK_FFT_INT_TO_FLOAT_BIAS = 4503601774854144.0;
 static const f64 BINK_FFT_HALF_SECANT_SCALE_BITS = 0.5;
 static const f32 BINK_FFT_SIX_BITS = 6.0f;
 static const f32 BINK_FFT_THREE_BITS = 3.0f;
 static const f32 BINK_FFT_HALF_RECIP_SCALE_BITS = 0.5f;
 static const f32 BINK_DCT_TRIG_ONE_BITS = 1.0f;
-static const f64 BINK_DCT_INT_TO_FLOAT_BIAS = 4503601774854144.0;
 static const f32 BINK_DCT_CENTER_SCALE_BITS = 0.5f;
 static const f64 BINK_DCT_HALF_SCALE_BITS = 0.5;
 static const f32 BINK_CFT_ROT_ONE_BITS = 1.0f;
