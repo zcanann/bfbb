@@ -135,6 +135,7 @@ void YUV_32_4x2_even(u32 count)
     s32 PTR4* v_to_gb;
     s32 PTR4* u_to_gb;
     s32 PTR4* v_to_r;
+    RGBYUVTables PTR4* tables;
 
     linear0 = S.dest0;
     base = S.base;
@@ -153,10 +154,11 @@ void YUV_32_4x2_even(u32 count)
     v = S.v;
     y0 = S.y0;
     y1 = S.y1;
-    u_to_b = YUVTables.u_to_b;
-    v_to_r = YUVTables.v_to_r;
-    u_to_gb = YUVTables.u_to_gb;
-    v_to_gb = YUVTables.v_to_gb;
+    tables = &YUVTables;
+    u_to_b = tables->u_to_b;
+    v_to_r = tables->v_to_r;
+    u_to_gb = tables->u_to_gb;
+    v_to_gb = tables->v_to_gb;
 
     do {
         u8 vhi;
@@ -239,6 +241,7 @@ void YUV_32x2_4x2_even(u32 count)
     s32 PTR4* v_to_gb;
     s32 PTR4* u_to_gb;
     s32 PTR4* v_to_r;
+    RGBYUVTables PTR4* tables;
 
     linear0 = S.dest0;
     base = S.base;
@@ -257,10 +260,11 @@ void YUV_32x2_4x2_even(u32 count)
     v = S.v;
     y0 = S.y0;
     y1 = S.y1;
-    u_to_b = YUVTables.u_to_b;
-    v_to_r = YUVTables.v_to_r;
-    u_to_gb = YUVTables.u_to_gb;
-    v_to_gb = YUVTables.v_to_gb;
+    tables = &YUVTables;
+    u_to_b = tables->u_to_b;
+    v_to_r = tables->v_to_r;
+    u_to_gb = tables->u_to_gb;
+    v_to_gb = tables->v_to_gb;
 
     do {
         u8 vhi;
