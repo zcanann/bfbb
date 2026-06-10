@@ -1250,14 +1250,6 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
             block_type = BINK_BUNDLE_U8(block_types);
             BINK_BUNDLE_ADVANCE(block_types, BINK_BUNDLE_BYTE_PITCH);
 
-            if (BINK_BLOCK_ODD_ROW(row) && block_type == BINK_BLOCK_SCALED) {
-                col += BINK_BLOCK_SIDE;
-                dest += BINK_BLOCK_SIDE;
-                old += BINK_BLOCK_SIDE;
-                work_col += plane;
-                continue;
-            }
-
             switch (block_type) {
             case BINK_BLOCK_SKIP: {
                 if ((((u32)dest | (u32)old) & BINK_BLOCK_DOUBLE_ALIGN_MASK) == 0) {
@@ -1406,6 +1398,9 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 expand_run_block(dest, pitch, &colors, &runs, &bitstate);
                 break;
             case BINK_BLOCK_SCALED:
+                if (BINK_BLOCK_ODD_ROW(row)) {
+                    break;
+                }
                 subblock_type = BINK_BUNDLE_U8(subblock_types);
                 BINK_BUNDLE_ADVANCE(subblock_types, BINK_BUNDLE_BYTE_PITCH);
                 if (subblock_type == BINK_BLOCK_FILL) {
