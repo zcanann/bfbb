@@ -728,7 +728,8 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
 #define bitbuf bitcopy.bits
 #define bitcount bitcopy.bitlen
     coeffs.values[BP_COEFF1_INDEX] = 0;
-    memset(coeffs.values + BP_COEFF2_INDEX, 0, sizeof(coeffs) - BP_COEFF2_INDEX * sizeof(coeffs.values[0]));
+    memset(coeffs.values + BP_COEFF2_INDEX, 0,
+           sizeof(coeffs.values) - BP_COEFF2_INDEX * sizeof(coeffs.values[0]));
 
     /* The stream starts with the maximum active lossless bitplane level. */
     VarBitsGet(maxlevel, u8, bitcopy, BP_LOSSLESS_LEVEL_BITS);
