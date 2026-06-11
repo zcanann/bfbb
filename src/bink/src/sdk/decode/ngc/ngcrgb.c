@@ -515,8 +515,8 @@ void YUV_16_4x2_even(u32 count)
     u_to_gb = tables->u_to_gb;
     v_to_gb = tables->v_to_gb;
     clamp_r_base = clamp_r + RGB_CLAMP_BIAS;
-    clamp_g_base = clamp_g + RGB_CLAMP_BIAS;
     clamp_b_base = clamp_b + RGB_CLAMP_BIAS;
+    clamp_g_base = clamp_g + RGB_CLAMP_BIAS;
 
     row0 = RGB_TILE_ROW(linear0, base, pitch);
     row1 = RGB_TILE_ROW(linear1, base, pitch);
