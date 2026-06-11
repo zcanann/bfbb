@@ -1022,7 +1022,7 @@ static void YUV_blit_mask(void PTR4* dest,
 }
 }
 
-extern "C" void YUV_init(u32 flags)
+extern "C" void YUV_init(s32 flags)
 {
     s32 i;
     s32 y;
