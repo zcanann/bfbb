@@ -878,10 +878,10 @@ static void CheckReadHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
         bundle->cur_dec = bundle->data + count;
         if (EXPBITS_GET1(*bits, bit) == 0) {
             /* Direct Huff4 bundles decode one nibble-sized symbol per byte. */
-            dest = bundle->data;
             syms = bundle->syms;
             decode = bundle->decode;
             peek = bundle->bits_to_peek;
+            dest = bundle->data;
             while (count-- != 0) {
                 exp_read_huff4_store(bits, peek, decode, syms, dest);
                 ++dest;
