@@ -154,6 +154,12 @@ typedef enum BINKBUNDLEINITIALVALUE
     ((u32 PTR4*)((u8 PTR4*)(header) + BINK_BUNDLE_CHUNK_BYTE_SIZE(header)))
 #define BINK_BUNDLE_PAYLOAD_NEXT(payload) \
     ((u32 PTR4*)((u8 PTR4*)(payload) + BINK_BUNDLE_PAYLOAD_CHUNK_BYTE_SIZE(payload) - BINK_BUNDLE_CHUNK_HEADER_BYTES))
+#define EXPBITS_GET1(vb, temp)                                                                     \
+    (((vb).bitlen != 0)                                                                            \
+         ? ((temp) = (vb).bits, (vb).bitlen--, (vb).bits = ((EXPBITSTYPE)(temp)) >> 1)             \
+         : ((temp) = *((vb).cur), VARBITS_ADVANCE_CUR((vb).cur),                                   \
+            (vb).bitlen = EXP_LAST_BIT_INDEX, (vb).bits = ((EXPBITSTYPE)(temp)) >> 1),             \
+     ((temp) & EXP_BIT_MASK))
 #define BINK_MARK_WORK_BLOCK(work_row, work_col) ((work_row)[(work_col) >> BINK_CHROMA_SHIFT] = BINK_WORK_BLOCK_MARKED)
 #define BINK_MOTION_SOURCE(old, pitch, mx, my) ((old) + (my) * (s32)(pitch) + (mx))
 #define BINK_DCT_PATTERN_SCAN(pattern) (patterns + (pattern) * BINK_BLOCK_PIXELS)
@@ -369,10 +375,11 @@ static void simpmergesort(EXPBITS PTR4* bits, u8 PTR4* out, u8 PTR4* left,
 {
     u8 selected;
     s32 left_count;
+    u32 bit;
 
     left_count = right_count;
     for (;;) {
-        if (exp_get_bit(bits)) {
+        if (EXPBITS_GET1(*bits, bit)) {
             selected = *right++;
             right_count--;
         } else {
@@ -534,6 +541,7 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
     u32 symbol;
     u32 j;
     u32 i;
+    u32 bit;
     HUFF4MERGES merges;
 
     /* Each table stores a 4-bit codebook index plus a 16-entry symbol remap. */
@@ -547,14 +555,14 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
         return;
     }
 
-    if (exp_get_bit(vb) == 0) {
+    if (EXPBITS_GET1(*vb, bit) == 0) {
         /* Compact symbol shuffling: merge adjacent pair, quarter, and half lists. */
         VarBitsGet(sort_mode, u32, *vb, HUFF4_SORT_MODE_BITS);
         if (sort_mode == HUFF4_SORT_PAIRS) {
             i = 0;
             count = HUFF4_PAIR_COUNT;
             do {
-                u32 swap_pair = exp_get_bit(vb);
+                u32 swap_pair = EXPBITS_GET1(*vb, bit);
 
                 if (swap_pair != 0) {
                     syms[i + 1] = i;
@@ -573,7 +581,7 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
             left = 0;
             right = 1;
             for (i = 0; i < HUFF4_PAIR_COUNT; ++i) {
-                u32 swap_pair = exp_get_bit(vb);
+                u32 swap_pair = EXPBITS_GET1(*vb, bit);
 
                 if (swap_pair != 0) {
                     merges.order[left] = right;
@@ -689,6 +697,7 @@ static void CheckReadRLEHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     u8 PTR4* syms;
     const u8 PTR4* decode;
     u32 peek;
+    u32 bit;
 
     if (bundle->cur_ptr != bundle->cur_dec) {
         return;
@@ -698,7 +707,7 @@ static void CheckReadRLEHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     if (count != 0) {
         bundle->cur_ptr = bundle->data;
         bundle->cur_dec = bundle->data + count;
-        if (exp_get_bit(bits) == 0) {
+        if (EXPBITS_GET1(*bits, bit) == 0) {
             /* Literal Huff4 symbols above 11 repeat the previous decoded symbol. */
             syms = bundle->syms;
             peek = (u8)bundle->bits_to_peek;
@@ -750,6 +759,7 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
     u32 low;
     u32 packed;
     s32 remaining;
+    u32 bit;
 
     if (bundle->cur_ptr != bundle->cur_dec) {
         return;
@@ -764,7 +774,7 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
         decode = bundle->decode;
         peek = bundle->bits_to_peek;
         lastval = huff8_table->lastval;
-        if (exp_get_bit(bits) != 0) {
+        if (EXPBITS_GET1(*bits, bit) != 0) {
             /* Negative remaining marks the old-format repeat packet variant. */
             count = BINK_BUNDLE_REPEAT_COUNT(count);
         }
@@ -808,6 +818,7 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
     u32 low;
     u32 packed;
     s32 remaining;
+    u32 bit;
 
     if (bundle->cur_ptr != bundle->cur_dec) {
         return;
@@ -822,7 +833,7 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
         decode = bundle->decode;
         peek = bundle->bits_to_peek;
         lastval = huff8_table->lastval;
-        if (exp_get_bit(bits) != 0) {
+        if (EXPBITS_GET1(*bits, bit) != 0) {
             /* New-format Huff8 repeat packets keep the byte unsigned. */
             count = BINK_BUNDLE_REPEAT_COUNT(count);
         }
@@ -855,6 +866,7 @@ static void CheckReadHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     const u8 PTR4* decode;
     u32 peek;
     u32 fill;
+    u32 bit;
 
     if (bundle->cur_ptr != bundle->cur_dec) {
         return;
@@ -864,7 +876,7 @@ static void CheckReadHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     if (count != 0) {
         bundle->cur_ptr = bundle->data;
         bundle->cur_dec = bundle->data + count;
-        if (exp_get_bit(bits) == 0) {
+        if (EXPBITS_GET1(*bits, bit) == 0) {
             /* Direct Huff4 bundles decode one nibble-sized symbol per byte. */
             dest = bundle->data;
             syms = bundle->syms;
@@ -973,6 +985,7 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     u16 predictor;
     s16 delta;
     s16 PTR4* dest;
+    u32 sign_bit;
 
     if (bundle->cur_ptr != bundle->cur_dec) {
         return;
@@ -983,8 +996,10 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
         dest = (s16 PTR4*)bundle->data;
         if (bundle->initial_value != BINK_BUNDLE_INITIAL_VALUE_NONE) {
             VarBitsGet(predictor, u16, *bits, bundle->bit_size - 1);
-            if (predictor != 0 && exp_get_bit(bits) != 0) {
-                predictor = -predictor;
+            if (predictor != 0) {
+                if (EXPBITS_GET1(*bits, sign_bit) != 0) {
+                    predictor = -predictor;
+                }
             }
         } else {
             VarBitsGet(predictor, u16, *bits, bundle->bit_size);
@@ -1006,8 +1021,10 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
                 while (group_size != 0) {
                     group_size--;
                     VarBitsGet(delta, s16, *bits, delta_bits);
-                    if (delta != 0 && exp_get_bit(bits) != 0) {
-                        delta = -delta;
+                    if (delta != 0) {
+                        if (EXPBITS_GET1(*bits, sign_bit) != 0) {
+                            delta = -delta;
+                        }
                     }
                     predictor = predictor + delta;
                     *dest++ = (s16)predictor;
@@ -1032,6 +1049,7 @@ static inline void expand_run_block(u8 PTR4* dest,
 {
     const u8 PTR4* scan;
     u32 filled_pixels;
+    u32 bit;
 
     scan = BINK_DCT_PATTERN_SCAN(exp_get_bits(bits, BINK_DCT_PATTERN_BITS));
     filled_pixels = 0;
@@ -1040,7 +1058,7 @@ static inline void expand_run_block(u8 PTR4* dest,
 
         run_length = *runs->cur_ptr++ + 1;
         filled_pixels += run_length;
-        if (exp_get_bit(bits) != 0) {
+        if (EXPBITS_GET1(*bits, bit) != 0) {
             u8 color;
 
             color = *colors->cur_ptr++;
