@@ -133,10 +133,10 @@ void YUY2_4x2(u32 count)
     }
 
     pairs = YUY2_BLOCK_PAIRS(count);
+    v = (const u32 PTR4*)S.v;
     dest = (u32 PTR4*)S.dest1;
     y = S.y1;
     u = (const u32 PTR4*)S.u;
-    v = (const u32 PTR4*)S.v;
     while (pairs-- != 0) {
         u32 y0 = *y++;
         u32 u0 = *u;
@@ -224,10 +224,10 @@ void YUY2_x2_4x2(u32 count)
         *dest++ = YUY2_PACK_X2Y3(y0, chroma);
     }
 
+    v = (const u32 PTR4*)S.v;
     dest = (u32 PTR4*)S.dest1;
     y = S.y1;
     u = (const u32 PTR4*)S.u;
-    v = (const u32 PTR4*)S.v;
     pairs = YUY2_BLOCK_PAIRS(count);
     while (pairs-- != 0) {
         u32 y0 = *y++;
