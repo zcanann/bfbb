@@ -625,9 +625,9 @@ void YUV_16x2_4x2_even(u32 count)
     S.dest0 += count * RGB_16_X2_4X2_ROW_BYTES;
     S.dest1 += count * RGB_16_X2_4X2_ROW_BYTES;
 
+    y0 = S.y0;
     u = S.u;
     v = S.v;
-    y0 = S.y0;
     y1 = S.y1;
     tables = &YUVTables;
     u_to_b = tables->u_to_b;
