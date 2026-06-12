@@ -12,11 +12,12 @@ typedef enum NGCSoundChannelLayout
     NGC_SOUND_MONO_CHANNELS = 1,
     NGC_SOUND_STEREO_CHANNELS = 2,
     NGC_SOUND_LOCK_BUFFER_COUNT = 2,
+    NGC_SOUND_TASKS_PER_LOCK = NGC_SOUND_STEREO_CHANNELS,
     NGC_SOUND_ARQ_TASK_COUNT = NGC_SOUND_LOCK_BUFFER_COUNT * NGC_SOUND_STEREO_CHANNELS,
     NGC_SOUND_NO_LOCK_INDEX = -1,
     NGC_SOUND_LOCK_INDEX_MASK = NGC_SOUND_LOCK_BUFFER_COUNT - 1,
     NGC_SOUND_LAST_LOCK_INDEX = NGC_SOUND_LOCK_INDEX_MASK,
-    NGC_SOUND_RIGHT_TASK_OFFSET = NGC_SOUND_STEREO_CHANNELS
+    NGC_SOUND_RIGHT_TASK_OFFSET = NGC_SOUND_LOCK_BUFFER_COUNT
 } NGCSoundChannelLayout;
 
 /* ARQRequest.owner keeps the NGCSoundState pointer with bit 0 as an in-flight latch. */
@@ -168,7 +169,8 @@ typedef char NGCSoundStateFitsInBinkSndData
 #define NGC_SND(snd) ((NGCBinkSound PTR4*)(snd))
 #define NGC_SOUND_STATE(snd) ((NGCSoundState PTR4*)NGC_SND(snd)->snddata)
 #define NGC_TASK(state, index) (&NGC_STATE(state)->tasks[(index)])
-#define NGC_TASK_FOR_INDEX(state, index, side) NGC_TASK(state, (side) + ((index) << 1))
+#define NGC_TASK_FOR_INDEX(state, index, side) \
+    NGC_TASK(state, (side) + ((index) * NGC_SOUND_TASKS_PER_LOCK))
 #define NGC_TASK_FOR_LOCK_CHANNEL(state, index, channel) \
     NGC_TASK(state, (index) + (channel) * NGC_SOUND_LOCK_BUFFER_COUNT)
 #define NGC_RIGHT_LOCK_TASK_INDEX(index) ((index) + NGC_SOUND_RIGHT_TASK_OFFSET)
