@@ -108,20 +108,13 @@ typedef VARBITS BINKVARBITS;
 #define BINKAC_APPLY_SIGN(value, sign) (((value) ^ (sign)) - (sign))
 #define BINKAC_INVERT_BIN(shift) (1.0 / (1 << (shift)))
 #define BINKAC_IS_NEW_FORMAT(flags) (((flags) & BINKACNEWFORMAT) != 0)
-
-static const f64 BINKAC_FXP_UNSIGNED_BIAS = 4503599627370496.0;
-static const f32 BINKAC_SAMPLE_ZERO = 0.0f;
-static const f64 BINKAC_COEFF_S32_TO_F64_BIAS = 4503601774854144.0;
-static const f64 BINKAC_QUANT_S32_TO_F64_BIAS = 4503601774854144.0;
-static const f32 BINKAC_QUANT_INDEX_SCALE_CONST = 0.664f;
-static const f32 BINKAC_QUANT_POWER_SCALE_CONST = 0.10f;
-static const f64 BINKAC_QUANT_POWER_BASE_CONST = 10.0;
-static const f64 BINKAC_OPEN_U32_TO_F64_BIAS = 4503599627370496.0;
-static const f32 BINKAC_RSQRT_ZERO = 0.0f;
-static const f64 BINKAC_RSQRT_NEWTON_HALF_CONST = 0.5;
-static const f64 BINKAC_RSQRT_NEWTON_THREE_CONST = 3.0;
-static const f64 BINKAC_U32_LIMIT_AS_F64 = 4294967296.0;
-static const f32 BINKAC_TRANSFORM_ROOT_SCALE_CONST = 2.0f;
+#define BINKAC_QUANT_INDEX_SCALE_CONST 0.664f
+#define BINKAC_QUANT_POWER_SCALE_CONST 0.10f
+#define BINKAC_QUANT_POWER_BASE_CONST 10.0
+#define BINKAC_RSQRT_ZERO 0.0f
+#define BINKAC_RSQRT_NEWTON_HALF_CONST 0.5
+#define BINKAC_RSQRT_NEWTON_THREE_CONST 3.0
+#define BINKAC_TRANSFORM_ROOT_SCALE_CONST 2.0f
 
 /* RLE code lengths, in VQLENGTH sample groups, for sparse audio coefficients. */
 static u8 bink_rlelens_snd[MAXRLE] = {
@@ -283,7 +276,7 @@ static void read_rle_samples(f32 PTR4* samps, u32 transform_size, BINKVARBITS PT
 {
     u32 i;
     u32 b = 0;
-    f32 dequant = BINKAC_SAMPLE_ZERO;
+    f32 dequant = 0.0f;
     f32 PTR4* out;
 
     while (BINKAC_BAND_SAMPLE_LIMIT(bands, b) < BINKAC_FIRST_COEFF) {
@@ -341,7 +334,7 @@ static void read_rle_samples(f32 PTR4* samps, u32 transform_size, BINKVARBITS PT
                         magnitude = BINKAC_APPLY_SIGN(magnitude, sign);
                         *out = magnitude * dequant;
                     } else {
-                        *out = BINKAC_SAMPLE_ZERO;
+                        *out = 0.0f;
                     }
                 }
 
