@@ -16,8 +16,8 @@ typedef enum YUY2PackingConstants
 typedef enum YUY2BlockLayout
 {
     YUY2_WORDS_PER_BLOCK = 2,
-    YUY2_X2_WORDS_PER_BLOCK = 4,
-    YUY2_WORD_BYTES = 4,
+    YUY2_X2_WORDS_PER_BLOCK = YUY2_WORDS_PER_BLOCK * 2,
+    YUY2_WORD_BYTES = sizeof(u32),
     YUY2_BLOCK_PAIR_SHIFT = 1,
     YUY2_PAIR_STRIDE = 2,
     YUY2_TAIL_BLOCK_MASK = 1
