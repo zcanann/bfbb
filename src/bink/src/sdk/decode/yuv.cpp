@@ -118,6 +118,7 @@ enum YUVBlitLayout {
 #define YUV_BLIT_SCALED_PIXEL_BYTES(blits, scale) ((blits)->bytes_per_pixel * (scale))
 #define YUV_BLIT_SCALED_ROW_BYTES(width, blits, scale) \
     ((width) * YUV_BLIT_SCALED_PIXEL_BYTES((blits), (scale)))
+#define YUV_REMAINING_PIXELS_AFTER_FIRST(count) ((count) - 1)
 #define YUV_PHASE_ADVANCES_CHROMA(phase) ((((phase) ^ 1) & 1) != 0)
 #define YUV_SURFACE_MODE(flags) ((flags) & BINKCOPYNOSCALING)
 #define YUV_UV_TABLES_INVERTED(flags) (((flags) & BINKRBINVERT) != 0)
@@ -1540,7 +1541,7 @@ static void dounaligned32row2wh(u32 phase, u32 count)
     const u32 PTR4* ytable;
     u32 pixel;
 
-    remaining = count - 1;
+    remaining = YUV_REMAINING_PIXELS_AFTER_FIRST(count);
     if (count == 0) {
         return;
     }
@@ -1675,7 +1676,7 @@ static void dounaligned32row(u32 phase, u32 count)
     u8 y;
     const u32 PTR4* ytable;
 
-    remaining = count - 1;
+    remaining = YUV_REMAINING_PIXELS_AFTER_FIRST(count);
     if (count == 0) {
         return;
     }
