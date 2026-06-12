@@ -2,6 +2,7 @@
 #include "binkngc.h"
 
 #define PUSHMALLOC_STATIC_SLOTS 32
+#define PUSHMALLOC_GROWTH_FACTOR 2
 #define PUSHMALLOC_GROW_RECORD_BYTES 16
 #define PUSHMALLOC_PTR_TABLE_BYTES 8
 #define PUSHMALLOC_ALIGN_BITS 5
@@ -31,7 +32,7 @@ void pushmalloc(void PTR4* PTR4* ptr, u32 amount)
         memcpy(newamt, pushamt, cursize * sizeof(*pushamt));
 
         cursize += cursize;
-        if (cursize != PUSHMALLOC_STATIC_SLOTS * 2) {
+        if (cursize != PUSHMALLOC_STATIC_SLOTS * PUSHMALLOC_GROWTH_FACTOR) {
             radfree(pushptr);
         }
 
