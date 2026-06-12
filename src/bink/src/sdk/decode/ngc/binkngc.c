@@ -169,6 +169,7 @@ u32 RADTimerRead(void)
 {
     static OSTime starttime = 0;
     OSTime now;
+    u32 high;
     u32 elapsed_ms;
     u32 remainder_high;
     u32 remainder_low;
@@ -181,7 +182,8 @@ u32 RADTimerRead(void)
 
     now -= starttime;
     /* Convert elapsed OS ticks to milliseconds without a full 64-bit divide. */
-    elapsed_ms = RAD_TIMER_MS_PER_HIGH_WORD * (u32)(now >> 32);
+    high = (u32)(now >> 32);
+    elapsed_ms = RAD_TIMER_MS_PER_HIGH_WORD * high;
     now -= (u64)RAD_TIMER_TICKS_PER_MS * elapsed_ms;
     remainder_high = (u32)(now >> 32);
     remainder_low = (u32)now;
