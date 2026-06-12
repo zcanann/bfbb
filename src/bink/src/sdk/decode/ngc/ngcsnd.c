@@ -69,6 +69,7 @@ typedef enum NGCAXVoiceConstants
     AX_PB_FORMAT_PCM8 = 25,
     AX_MIX_MODE_DEFAULT = 3,
     AX_ADDR_LOOP_ON = 1,
+    AX_ADDR_INCLUSIVE_END_ADJUST = 1,
     AX_ADDR_HIGH_SHIFT = 16
 } NGCAXVoiceConstants;
 
@@ -192,10 +193,10 @@ typedef char NGCSoundStateFitsInBinkSndData
     (((u32)(state)->audio_buffer + (state)->channel_stride) - (state)->frame_size)
 #define NGC_SOUND_RIGHT_CURSOR(state) ((state)->play_cursor + (state)->channel_stride)
 #define NGC_AX_ADDR(addr, shift) ((addr) >> (shift))
-#define NGC_AX_END_ADDR(addr, shift) (NGC_AX_ADDR(addr, shift) - 1)
+#define NGC_AX_END_ADDR(addr, shift) (NGC_AX_ADDR(addr, shift) - AX_ADDR_INCLUSIVE_END_ADJUST)
 #define NGC_AX_RIGHT_ADDR(state, addr) \
     (((addr) + NGC_CHANNEL_STRIDE(state)) >> NGC_ADDRESS_SHIFT(state))
-#define NGC_AX_RIGHT_END_ADDR(state, addr) (NGC_AX_RIGHT_ADDR(state, addr) - 1)
+#define NGC_AX_RIGHT_END_ADDR(state, addr) (NGC_AX_RIGHT_ADDR(state, addr) - AX_ADDR_INCLUSIVE_END_ADJUST)
 #define NGC_AX_CURRENT_CURSOR(voice, shift) (AX_VOICE_CURRENT_ADDR(voice) << (shift))
 #define NGC_AX_END_CURSOR(voice, shift) (AX_VOICE_END_ADDR(voice) << (shift))
 
