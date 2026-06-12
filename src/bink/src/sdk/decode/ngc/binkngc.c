@@ -45,6 +45,7 @@ typedef enum RADAllocSentinel
 typedef enum RADMemset16Layout
 {
     RAD_MEMSET16_HALFWORDS_PER_WORD = 2,
+    RAD_MEMSET16_WORD_COUNT_SHIFT = 1,
     RAD_MEMSET16_WORD_SHIFT = 16,
     RAD_MEMSET16_TRAILING_HALFWORD_MASK = 1
 } RADMemset16Layout;
@@ -150,7 +151,7 @@ u32 mult64andshift(u32 left, u32 right, u32 shift)
 }
 
 void radmemset16(void PTR4* dest, u16 value, u32 size) {
-    int word_count = size >> (RAD_MEMSET16_HALFWORDS_PER_WORD - 1);
+    int word_count = size >> RAD_MEMSET16_WORD_COUNT_SHIFT;
     int fill_word = (value << RAD_MEMSET16_WORD_SHIFT) | value;
     u16 PTR4* d16 = dest;
     u32 PTR4* d32 = dest;
