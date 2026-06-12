@@ -9,6 +9,7 @@ typedef enum BINKBlockLayout
 {
     BINK_BLOCK_SHIFT = 3,
     BINK_BLOCK_SIDE = 8,
+    BINK_BLOCK_HALF_SIDE = BINK_BLOCK_SIDE / 2,
     BINK_BLOCK_SCALE = 2,
     BINK_SCALED_BLOCK_SIDE = BINK_BLOCK_SIDE * BINK_BLOCK_SCALE,
     BINK_BLOCK_PIXELS = BINK_BLOCK_SIDE * BINK_BLOCK_SIDE,
@@ -1315,7 +1316,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                     BINK_COPY_BLOCK_DOUBLE_ROW(dest, old, pitch, 1);
                     BINK_COPY_BLOCK_DOUBLE_ROW(dest, old, pitch, 2);
                     BINK_COPY_BLOCK_DOUBLE_ROW(dest, old, pitch, 3);
-                    BINK_COPY_BLOCK_DOUBLE_ROW(dest, old, pitch, 4);
+                    BINK_COPY_BLOCK_DOUBLE_ROW(dest, old, pitch, BINK_BLOCK_HALF_SIDE);
                     BINK_COPY_BLOCK_DOUBLE_ROW(dest, old, pitch, 5);
                     BINK_COPY_BLOCK_DOUBLE_ROW(dest, old, pitch, 6);
                     BINK_COPY_BLOCK_DOUBLE_ROW(dest, old, pitch, 7);
@@ -1324,7 +1325,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                     BINK_COPY_BLOCK_WORD_ROW(dest, old, pitch, 1);
                     BINK_COPY_BLOCK_WORD_ROW(dest, old, pitch, 2);
                     BINK_COPY_BLOCK_WORD_ROW(dest, old, pitch, 3);
-                    BINK_COPY_BLOCK_WORD_ROW(dest, old, pitch, 4);
+                    BINK_COPY_BLOCK_WORD_ROW(dest, old, pitch, BINK_BLOCK_HALF_SIDE);
                     BINK_COPY_BLOCK_WORD_ROW(dest, old, pitch, 5);
                     BINK_COPY_BLOCK_WORD_ROW(dest, old, pitch, 6);
                     BINK_COPY_BLOCK_WORD_ROW(dest, old, pitch, 7);
@@ -1417,7 +1418,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 BINK_FILL_BLOCK_WORD_ROW(dest, pitch, 1, fill);
                 BINK_FILL_BLOCK_WORD_ROW(dest, pitch, 2, fill);
                 BINK_FILL_BLOCK_WORD_ROW(dest, pitch, 3, fill);
-                BINK_FILL_BLOCK_WORD_ROW(dest, pitch, 4, fill);
+                BINK_FILL_BLOCK_WORD_ROW(dest, pitch, BINK_BLOCK_HALF_SIDE, fill);
                 BINK_FILL_BLOCK_WORD_ROW(dest, pitch, 5, fill);
                 BINK_FILL_BLOCK_WORD_ROW(dest, pitch, 6, fill);
                 BINK_FILL_BLOCK_WORD_ROW(dest, pitch, 7, fill);
@@ -1434,7 +1435,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                     BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, 1);
                     BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, 2);
                     BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, 3);
-                    BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, 4);
+                    BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, BINK_BLOCK_HALF_SIDE);
                     BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, 5);
                     BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, 6);
                     BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, 7);
@@ -1443,7 +1444,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                     BINK_COPY_LINEAR_TO_BLOCK_WORD_ROW(dest, colors.cur_ptr, pitch, 1);
                     BINK_COPY_LINEAR_TO_BLOCK_WORD_ROW(dest, colors.cur_ptr, pitch, 2);
                     BINK_COPY_LINEAR_TO_BLOCK_WORD_ROW(dest, colors.cur_ptr, pitch, 3);
-                    BINK_COPY_LINEAR_TO_BLOCK_WORD_ROW(dest, colors.cur_ptr, pitch, 4);
+                    BINK_COPY_LINEAR_TO_BLOCK_WORD_ROW(dest, colors.cur_ptr, pitch, BINK_BLOCK_HALF_SIDE);
                     BINK_COPY_LINEAR_TO_BLOCK_WORD_ROW(dest, colors.cur_ptr, pitch, 5);
                     BINK_COPY_LINEAR_TO_BLOCK_WORD_ROW(dest, colors.cur_ptr, pitch, 6);
                     BINK_COPY_LINEAR_TO_BLOCK_WORD_ROW(dest, colors.cur_ptr, pitch, 7);
