@@ -96,6 +96,7 @@ typedef enum BINKGlobalLayout
     BINK_LOGO_DWORDS = 0xE80,
     BINK_MILLISECONDS_PER_SECOND = 1000,
     BINK_TWO_FRAME_MILLISECONDS = BINK_MILLISECONDS_PER_SECOND * 2,
+    BINK_FRAME_RATE_ROUNDING_SHIFT = 1,
     BINK_FIXED_SHIFT = 16,
     BINK_FIXED_1 = 1 << BINK_FIXED_SHIFT,
     BINK_RECT_SORT_KEY_SCALE = BINK_FIXED_1,
@@ -103,6 +104,7 @@ typedef enum BINKGlobalLayout
 } BINKGlobalLayout;
 
 #define BINK_RECT_SORT_KEY(top, left) ((top) * BINK_RECT_SORT_KEY_SCALE + (left))
+#define BINK_FRAME_RATE_ROUNDING(divisor) ((divisor) >> BINK_FRAME_RATE_ROUNDING_SHIFT)
 #define BINK_RECT_AREA(rect) ((rect)->Width * (rect)->Height)
 #define BINK_RECT_SPLIT_SCORE(rect, first, second) \
     ((BINK_RECT_AREA(rect) - BINK_RECT_AREA(first)) - BINK_RECT_AREA(second))
@@ -1177,7 +1179,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
         bnk.FrameRate = hdr.FrameRate;
         bnk.FrameRateDiv = hdr.FrameRateDiv;
     }
-    bnk.runtimeframes = (hdr.FrameRate + (hdr.FrameRateDiv >> 1)) / hdr.FrameRateDiv;
+    bnk.runtimeframes = (hdr.FrameRate + BINK_FRAME_RATE_ROUNDING(hdr.FrameRateDiv)) / hdr.FrameRateDiv;
     bnk.Size = hdr.Size;
     bnk.NumTracks = hdr.NumTracks;
     bnk.LargestFrameSize = hdr.LargestFrameSize;
