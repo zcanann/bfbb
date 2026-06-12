@@ -1087,14 +1087,14 @@ void ConvDataToStereo8(u32 PTR4* src, u16 PTR4* left, u16 PTR4* right, u32 bytes
         *right++ = (u16)NGC_SAMPLE_RIGHT_8_PAIR(packed_samples);
     }
 
-    count = (total - (count << NGC_STEREO8_GROUP_SHIFT)) >> NGC_STEREO8_TAIL_SHIFT;
+    count = (total - (count * NGC_STEREO8_GROUP_BYTES)) >> NGC_STEREO8_TAIL_SHIFT;
     for (i = 0; i < count; ++i) {
         u16 packed_samples = *(u16 PTR4*)src;
-        src = NGC_ADVANCE_U32_BYTES(src, 2);
+        src = NGC_ADVANCE_U32_BYTES(src, NGC_STEREO8_TAIL_BYTES);
         *(u8 PTR4*)left = (u8)(packed_samples >> NGC_SAMPLE_BYTE_SHIFT);
         *(u8 PTR4*)right = (u8)packed_samples;
-        left = NGC_ADVANCE_U16_BYTES(left, 1);
-        right = NGC_ADVANCE_U16_BYTES(right, 1);
+        left = NGC_ADVANCE_U16_BYTES(left, sizeof(u8));
+        right = NGC_ADVANCE_U16_BYTES(right, sizeof(u8));
     }
 }
 
@@ -1109,18 +1109,18 @@ void ConvDataToStereo16(u32 PTR4* src, u32 PTR4* left, u32 PTR4* right, u32 byte
     for (i = 0; i < count; ++i) {
         u32 first = src[0];
         u32 second = src[1];
-        src += 2;
+        src += NGC_STEREO16_GROUP_WORDS;
 
         *left++ = NGC_SAMPLE_LEFT_16_PAIR(first, second);
         *right++ = NGC_SAMPLE_RIGHT_16_PAIR(first, second);
     }
 
-    count = (total - (count << NGC_STEREO16_GROUP_SHIFT)) >> NGC_STEREO16_TAIL_SHIFT;
+    count = (total - (count * NGC_STEREO16_GROUP_BYTES)) >> NGC_STEREO16_TAIL_SHIFT;
     for (i = 0; i < count; ++i) {
         u32 packed_samples = *src++;
         *(u16 PTR4*)left = (u16)NGC_SAMPLE_HIGH_HALF(packed_samples);
         *(u16 PTR4*)right = (u16)packed_samples;
-        left = NGC_ADVANCE_U32_BYTES(left, 2);
-        right = NGC_ADVANCE_U32_BYTES(right, 2);
+        left = NGC_ADVANCE_U32_BYTES(left, sizeof(s16));
+        right = NGC_ADVANCE_U32_BYTES(right, sizeof(s16));
     }
 }
