@@ -182,12 +182,14 @@ typedef enum BINKSoundTimingLayout
     BINK_16_TO_8_SAMPLE_SHIFT = 8,
     BINK_UNSIGNED_8_SAMPLE_BIAS = 0x80,
     BINK_PERCENT_SCALE = 100,
+    BINK_IO_BUFFER_PERCENT_BIAS = 1,
     BINK_IO_BUFFER_LOW_PERCENT = 75,
     BINK_IO_BUFFER_RESUME_PERCENT = 89
 } BINKSoundTimingLayout;
 
 #define BINK_IO_BUFFER_USED_PERCENT(bink) \
-    ((((bink)->bio.CurBufUsed + 1) * BINK_PERCENT_SCALE) / ((bink)->bio.CurBufSize + 1))
+    ((((bink)->bio.CurBufUsed + BINK_IO_BUFFER_PERCENT_BIAS) * BINK_PERCENT_SCALE) / \
+     ((bink)->bio.CurBufSize + BINK_IO_BUFFER_PERCENT_BIAS))
 typedef enum BINKPreloadLayout
 {
     BINK_PRELOAD_THRESHOLD_NUMERATOR = 9,
