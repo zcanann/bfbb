@@ -124,6 +124,7 @@ typedef enum NGCReadLayout
 {
     NGC_STACK_READ_PAYLOAD_SIZE = 0x400,
     NGC_STACK_READ_BUFFER_SIZE = NGC_STACK_READ_PAYLOAD_SIZE + NGC_DVD_ALIGNMENT,
+    NGC_STACK_READ_LAST_BYTE_OFFSET = NGC_STACK_READ_BUFFER_SIZE - 1,
     NGC_READ_BLOCK_SIZE = 0x1000,
     NGC_READ_BLOCK_MASK = NGC_READ_BLOCK_SIZE - 1,
     NGC_ASYNC_WHOLE_BLOCK = NGC_READ_BLOCK_SIZE,
@@ -172,7 +173,7 @@ static u32 radreadngc(DVDFileInfo PTR4* file, u32 offset, void PTR4* dest, u32 s
 {
     u8 buffer[NGC_STACK_READ_BUFFER_SIZE];
     u8 PTR4* aligned = (u8 PTR4*)NGC_ALIGN_UP((u32)buffer, NGC_DVD_ALIGN_MASK);
-    u32 max_size = NGC_ALIGN_DOWN(buffer + sizeof(buffer) - 1 - aligned, NGC_DVD_ALIGN_MASK);
+    u32 max_size = NGC_ALIGN_DOWN(buffer + NGC_STACK_READ_LAST_BYTE_OFFSET - aligned, NGC_DVD_ALIGN_MASK);
     u8 PTR4* out = dest;
     u32 total = 0;
 
