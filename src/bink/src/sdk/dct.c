@@ -1328,7 +1328,6 @@ void FastFDCT8x8(s32 PTR4* out, u8 PTR4* in)
 void FastFDCTs8x8(s32 PTR4* out, s8 PTR4* in)
 {
     s32 PTR4* saveout = out;
-    s32 PTR4* work = saveout;
     s32 tmp0, tmp1, tmp2, tmp3, tmp4, tmp5, tmp6, tmp7;
     s32 tmp10, tmp11, tmp12, tmp13;
     s32 z1, z2, z3, z4, z5, z11, z13;
@@ -1349,12 +1348,12 @@ void FastFDCTs8x8(s32 PTR4* out, s8 PTR4* in)
         tmp11 = tmp1 + tmp2;
         tmp12 = tmp1 - tmp2;
 
-        work[DCT_COL0] = tmp10 + tmp11;
-        work[DCT_COL4] = tmp10 - tmp11;
+        out[DCT_COL0] = tmp10 + tmp11;
+        out[DCT_COL4] = tmp10 - tmp11;
         in += DCT_BLOCK_WIDTH;
         z1 = DCT_FIXED_MUL(tmp12 + tmp13, DCT_FIX_0_707106781);
-        work[DCT_COL2] = tmp13 + z1;
-        work[DCT_COL6] = tmp13 - z1;
+        out[DCT_COL2] = tmp13 + z1;
+        out[DCT_COL6] = tmp13 - z1;
 
         tmp10 = tmp4 + tmp5;
         tmp11 = tmp5 + tmp6;
@@ -1366,36 +1365,36 @@ void FastFDCTs8x8(s32 PTR4* out, s8 PTR4* in)
         z11 = tmp7 + z3;
         z13 = tmp7 - z3;
 
-        work[DCT_COL5] = z13 + z2;
-        work[DCT_COL3] = z13 - z2;
-        work[DCT_COL1] = z11 + z4;
-        work[DCT_COL7] = z11 - z4;
+        out[DCT_COL5] = z13 + z2;
+        out[DCT_COL3] = z13 - z2;
+        out[DCT_COL1] = z11 + z4;
+        out[DCT_COL7] = z11 - z4;
 
-        work += DCT_BLOCK_WIDTH;
+        out += DCT_BLOCK_WIDTH;
     }
 
-    work = saveout;
+    out = saveout;
 
     /* Column pass completes the transform coefficients. */
     for (i = DCT_BLOCK_WIDTH; i != 0; --i) {
-        tmp0 = work[DCT_ROW0] + work[DCT_ROW7];
-        tmp7 = work[DCT_ROW0] - work[DCT_ROW7];
-        tmp1 = work[DCT_ROW1] + work[DCT_ROW6];
-        tmp6 = work[DCT_ROW1] - work[DCT_ROW6];
-        tmp2 = work[DCT_ROW2] + work[DCT_ROW5];
-        tmp5 = work[DCT_ROW2] - work[DCT_ROW5];
-        tmp3 = work[DCT_ROW3] + work[DCT_ROW4];
-        tmp4 = work[DCT_ROW3] - work[DCT_ROW4];
+        tmp0 = out[DCT_ROW0] + out[DCT_ROW7];
+        tmp7 = out[DCT_ROW0] - out[DCT_ROW7];
+        tmp1 = out[DCT_ROW1] + out[DCT_ROW6];
+        tmp6 = out[DCT_ROW1] - out[DCT_ROW6];
+        tmp2 = out[DCT_ROW2] + out[DCT_ROW5];
+        tmp5 = out[DCT_ROW2] - out[DCT_ROW5];
+        tmp3 = out[DCT_ROW3] + out[DCT_ROW4];
+        tmp4 = out[DCT_ROW3] - out[DCT_ROW4];
         tmp10 = tmp0 + tmp3;
         tmp13 = tmp0 - tmp3;
         tmp11 = tmp1 + tmp2;
         tmp12 = tmp1 - tmp2;
 
-        work[DCT_ROW0] = tmp10 + tmp11;
-        work[DCT_ROW4] = tmp10 - tmp11;
+        out[DCT_ROW0] = tmp10 + tmp11;
+        out[DCT_ROW4] = tmp10 - tmp11;
         z1 = DCT_FIXED_MUL(tmp12 + tmp13, DCT_FIX_0_707106781);
-        work[DCT_ROW2] = tmp13 + z1;
-        work[DCT_ROW6] = tmp13 - z1;
+        out[DCT_ROW2] = tmp13 + z1;
+        out[DCT_ROW6] = tmp13 - z1;
 
         tmp10 = tmp4 + tmp5;
         tmp11 = tmp5 + tmp6;
@@ -1407,11 +1406,11 @@ void FastFDCTs8x8(s32 PTR4* out, s8 PTR4* in)
         z11 = tmp7 + z3;
         z13 = tmp7 - z3;
 
-        work[DCT_ROW5] = z13 + z2;
-        work[DCT_ROW3] = z13 - z2;
-        work[DCT_ROW1] = z11 + z4;
-        work[DCT_ROW7] = z11 - z4;
+        out[DCT_ROW5] = z13 + z2;
+        out[DCT_ROW3] = z13 - z2;
+        out[DCT_ROW1] = z11 + z4;
+        out[DCT_ROW7] = z11 - z4;
 
-        ++work;
+        ++out;
     }
 }
