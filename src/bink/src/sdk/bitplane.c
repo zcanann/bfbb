@@ -713,6 +713,7 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
     s16 highbit;
     s16 coeff_value;
     u32 bit_mask;
+    u8 PTR4* roots;
     u8 PTR4* node_ptr;
     u8 PTR4* next_node_ptr;
     u8 PTR4* tree_end_ptr;
@@ -736,14 +737,15 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
     had_level = maxlevel != 0;
     highbit = (u16)(1 << (maxlevel - 1));
     /* Root nodes mirror WriteBPLossless: three grouped roots plus coeffs 1..3. */
-    tree.roots[BP_ROOT_GROUP1_SLOT] = BP_READ_TREE_GROUP1_ROOT;
-    tree.roots[BP_ROOT_GROUP6_SLOT] = BP_READ_TREE_GROUP6_ROOT;
-    tree.roots[BP_ROOT_GROUP11_SLOT] = BP_READ_TREE_GROUP11_ROOT;
-    tree.roots[BP_ROOT_LOSSLESS_COEFF1_SLOT] = BP_READ_TREE_COEFF1_ROOT;
-    tree.roots[BP_ROOT_LOSSLESS_COEFF2_SLOT] = BP_READ_TREE_COEFF2_ROOT;
-    tree.roots[BP_ROOT_LOSSLESS_COEFF3_SLOT] = BP_READ_TREE_COEFF3_ROOT;
+    roots = tree.roots;
+    roots[BP_ROOT_GROUP1_SLOT] = BP_READ_TREE_GROUP1_ROOT;
+    roots[BP_ROOT_GROUP6_SLOT] = BP_READ_TREE_GROUP6_ROOT;
+    roots[BP_ROOT_GROUP11_SLOT] = BP_READ_TREE_GROUP11_ROOT;
+    roots[BP_ROOT_LOSSLESS_COEFF1_SLOT] = BP_READ_TREE_COEFF1_ROOT;
+    roots[BP_ROOT_LOSSLESS_COEFF2_SLOT] = BP_READ_TREE_COEFF2_ROOT;
+    roots[BP_ROOT_LOSSLESS_COEFF3_SLOT] = BP_READ_TREE_COEFF3_ROOT;
 
-    node_ptr = tree.roots;
+    node_ptr = roots;
     tree_end_ptr = tree.nodes;
 
     /* Non-final planes read lower magnitude bits plus a sign for new coeffs. */
