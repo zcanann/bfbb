@@ -155,10 +155,10 @@ typedef enum BINKBUNDLEINITIALVALUE
 #define BINK_BUNDLE_PAYLOAD_NEXT(payload) \
     ((u32 PTR4*)((u8 PTR4*)(payload) + BINK_BUNDLE_PAYLOAD_CHUNK_BYTE_SIZE(payload) - BINK_BUNDLE_CHUNK_HEADER_BYTES))
 #define EXPBITS_GET1(vb, temp)                                                                     \
-    (((vb).bitlen != 0)                                                                            \
+    ((((vb).bitlen != 0)                                                                           \
          ? ((temp) = (vb).bits, (vb).bitlen--, (vb).bits = ((EXPBITSTYPE)(temp)) >> 1)             \
          : ((temp) = *((vb).cur), VARBITS_ADVANCE_CUR((vb).cur),                                   \
-            (vb).bitlen = EXP_LAST_BIT_INDEX, (vb).bits = ((EXPBITSTYPE)(temp)) >> 1),             \
+            (vb).bitlen = EXP_LAST_BIT_INDEX, (vb).bits = ((EXPBITSTYPE)(temp)) >> 1)),            \
      ((temp) & EXP_BIT_MASK))
 #define BINK_MARK_WORK_BLOCK(work_row, work_col) ((work_row)[(work_col) >> BINK_CHROMA_SHIFT] = BINK_WORK_BLOCK_MARKED)
 #define BINK_MOTION_SOURCE(old, pitch, mx, my) ((old) + (my) * (s32)(pitch) + (mx))
