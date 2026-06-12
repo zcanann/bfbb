@@ -13,7 +13,8 @@ typedef struct BINKVARBITS
 typedef enum BINKBitsLayout
 {
     BINK_BITS_WORD_BITS = 32,
-    BINK_BITS_WORD_BYTES = sizeof(u32)
+    BINK_BITS_WORD_BYTES = sizeof(u32),
+    BINK_BITS_WORD_ALIGN_MASK = BINK_BITS_WORD_BYTES - 1
 } BINKBitsLayout;
 
 #define BINKBITSLOCALS(name)                                                                      \
@@ -114,9 +115,13 @@ typedef enum BINKBitsLayout
 
 /* Return the consumed byte count rounded up to a 32-bit word boundary. */
 #define BinkBitsSizeBytesRoundedToU32(local, base)                                                \
-    ((((((u8 PTR4*)local##cur) - ((u8 PTR4*)(base))) - (local##bitlen / 8)) + 3) & ~3)
+    ((((((u8 PTR4*)local##cur) - ((u8 PTR4*)(base))) - (local##bitlen / 8)) +                     \
+      BINK_BITS_WORD_ALIGN_MASK) &                                                                \
+     ~BINK_BITS_WORD_ALIGN_MASK)
 
 #define BinkVarBitsSizeBytesRoundedToU32(vb, base)                                                \
-    ((((((u8 PTR4*)(vb).cur) - ((u8 PTR4*)(base))) - ((vb).bitlen / 8)) + 3) & ~3)
+    ((((((u8 PTR4*)(vb).cur) - ((u8 PTR4*)(base))) - ((vb).bitlen / 8)) +                         \
+      BINK_BITS_WORD_ALIGN_MASK) &                                                                \
+     ~BINK_BITS_WORD_ALIGN_MASK)
 
 #endif
