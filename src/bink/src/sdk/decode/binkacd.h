@@ -27,7 +27,7 @@ struct BINKAUDIODECOMP
     u32 window_size_in_bytes; // overlap/crossfade tail length in bytes
     u32 chans;
     s16 PTR4* samples; // decoded PCM frame plus overlap tail
-    s32 start_frame; // suppress overlap blending for the first decoded frame
+    u32 start_frame; // suppress overlap blending for the first decoded frame
     u32 num_bands; // number of critical bands below Nyquist
     u32 PTR4* bands; // critical band sample ranges
     s32 PTR4* fft_work; // FFT/DCT work area
