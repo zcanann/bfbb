@@ -111,6 +111,8 @@ typedef enum BINKBundleLayout
     BINK_BUNDLE_MIN_BYTE_BITS = 8,
     BINK_BUNDLE_MIN_WORD_BITS = 16,
     BINK_BYTE_BITS = 8,
+    BINK_BYTE_MASK = 0xff,
+    BINK_BYTE_PAIR_HIGH_MASK = BINK_BYTE_MASK << BINK_BYTE_BITS,
     BINK_WORD_ALIGN_MASK = 3,
     BINK_BUNDLE_CHUNK_HEADER_BYTES = sizeof(u32),
     BINK_PLANE_WORD_BYTES = sizeof(u32),
@@ -1173,7 +1175,8 @@ void ExpandBundleSizes(u32 PTR4* sizes, u32 rows)
 
 /* Doubles a byte pair [b0,b1] into the word [b0,b0,b1,b1] for 2x horizontal scaling. */
 #define BINK_SCALE_PIXELS(pair) \
-    (((u32)(pair) << BINK_BYTE_BITS) | ((pair) & 0xff) | (((u32)(pair) & 0xff00) << (BINK_BYTE_BITS * 2)))
+    (((u32)(pair) << BINK_BYTE_BITS) | ((pair) & BINK_BYTE_MASK) | \
+     (((u32)(pair) & BINK_BYTE_PAIR_HIGH_MASK) << (BINK_BYTE_BITS * 2)))
 
 /* Scale an 8x8 source block up to a 16x16 destination, doubling each pixel. */
 static void scale_block(const u8 PTR4* src, u8 PTR4* dest, u32 pitch)
