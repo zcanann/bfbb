@@ -12,6 +12,7 @@
 #define BP_DC_COEFF 0
 #define BP_FIRST_AC_COEFF (BP_DC_COEFF + 1)
 #define BP_AC_COEFFS (BP_BLOCK_COEFFS - BP_FIRST_AC_COEFF)
+#define BP_COEFFS_PER_PAIR 2
 #define BP_LOSSY_OUTPUT_COEFFS 32
 #define BP_TREE_NODES 68
 #define BP_TREE_GROUPS 16
@@ -181,9 +182,9 @@ typedef union BPLOSSLESSCOEFFS
     u32 words[BP_LOSSY_OUTPUT_COEFFS];
 } BPLOSSLESSCOEFFS;
 
-#define BP_COEFF_PAIR_AT(values, index) (((BPCOEFFPAIR PTR4*)(values))[(index) / 2])
+#define BP_COEFF_PAIR_AT(values, index) (((BPCOEFFPAIR PTR4*)(values))[(index) / BP_COEFFS_PER_PAIR])
 #define BP_SCATTER_LOSSLESS_PAIR(out, out_index, coeffs, coeff_index) \
-    (BP_COEFF_PAIR_AT((out), (out_index)) = (coeffs).pairs[(coeff_index) / 2])
+    (BP_COEFF_PAIR_AT((out), (out_index)) = (coeffs).pairs[(coeff_index) / BP_COEFFS_PER_PAIR])
 
 typedef union BPLOSSYBLOCK
 {
