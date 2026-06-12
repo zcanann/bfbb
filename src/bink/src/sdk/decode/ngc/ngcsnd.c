@@ -48,6 +48,7 @@ typedef enum NGCSoundTiming
     NGC_SOUND_STARVATION_PERCENT = 90,
     NGC_DEFAULT_STARVATION_MILLISECONDS = 720,
     NGC_SOUND_MAX_BUSY_POLLS = 99999,
+    NGC_SOUND_CURSOR_GUARD_BYTES = 1,
     NGC_SOUND_BITS_TO_BYTES_SHIFT = 3,
     NGC_SOUND_BEST_SIZE_SHIFT = 5
 } NGCSoundTiming;
@@ -601,7 +602,7 @@ static s32 Lock(BINKSND PTR4* snd, u8 PTR4* PTR4* addr, u32 PTR4* len)
             writable_bytes = ((u32)NGC_SOUND_STATE(snd)->audio_buffer + channel_stride) - writable_bytes;
         } else {
             channel_stride = NGC_SOUND_STATE(snd)->channel_stride;
-            writable_bytes = (voice_cursor - writable_bytes) - 1;
+            writable_bytes = (voice_cursor - writable_bytes) - NGC_SOUND_CURSOR_GUARD_BYTES;
         }
 
         half_size = channel_stride >> NGC_SOUND_HALF_BUFFER_SHIFT;
