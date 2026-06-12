@@ -546,7 +546,6 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
     u32 symbol;
     u32 j;
     u32 i;
-    u32 bit;
     HUFF4MERGES merges;
 
     /* Each table stores a 4-bit codebook index plus a 16-entry symbol remap. */
@@ -560,14 +559,14 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
         return;
     }
 
-    if (EXPBITS_GET1(*vb, bit) == 0) {
+    if (exp_get_bit(vb) == 0) {
         /* Compact symbol shuffling: merge adjacent pair, quarter, and half lists. */
         VarBitsGet(sort_mode, u32, *vb, HUFF4_SORT_MODE_BITS);
         if (sort_mode == HUFF4_SORT_PAIRS) {
             i = 0;
             count = HUFF4_PAIR_COUNT;
             do {
-                u32 swap_pair = EXPBITS_GET1(*vb, bit);
+                u32 swap_pair = exp_get_bit(vb);
 
                 if (swap_pair != 0) {
                     syms[i + 1] = i;
@@ -586,7 +585,7 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
             left = 0;
             right = 1;
             for (i = 0; i < HUFF4_PAIR_COUNT; ++i) {
-                u32 swap_pair = EXPBITS_GET1(*vb, bit);
+                u32 swap_pair = exp_get_bit(vb);
 
                 if (swap_pair != 0) {
                     merges.order[left] = right;
