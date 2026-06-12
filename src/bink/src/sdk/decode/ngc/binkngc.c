@@ -24,8 +24,7 @@ typedef enum RADDivConstants
 
 #define RAD_DIV_IS_POWER_OF_TWO(value) (((value) & ((value) - 1)) == 0)
 #define RAD_DIV_HIGH_WORD_CEIL(value) (((value) + RAD_DIV_HIGH_WORD_ROUND_MASK) >> RAD_DIV_HIGH_WORD_BITS)
-#define RAD_TIMER_RECIP_LOW_HIGH_PRODUCT(ticks) \
-    ((u32)(((u64)(ticks) * RAD_TIMER_RECIP_MAGIC) >> 32))
+#define RAD_TIMER_RECIP_SHIFT64 (RAD_DIV_WORD_BITS + RAD_TIMER_RECIP_SHIFT)
 
 #define RAD_INVALID_USER_ALLOC ((void PTR4*)-1)
 #define RAD_TIMEBASE_LOW_SPR "268"
@@ -169,10 +168,9 @@ u32 RADTimerRead(void)
 {
     static OSTime starttime = 0;
     OSTime now;
+    u64 scaled;
     u32 high;
     u32 elapsed_ms;
-    u32 remainder_high;
-    u32 remainder_low;
 
     now = OSGetTime();
 
@@ -185,11 +183,8 @@ u32 RADTimerRead(void)
     high = (u32)(now >> 32);
     elapsed_ms = RAD_TIMER_MS_PER_HIGH_WORD * high;
     now -= (u64)RAD_TIMER_TICKS_PER_MS * elapsed_ms;
-    remainder_high = (u32)(now >> 32);
-    remainder_low = (u32)now;
-    return elapsed_ms +
-           ((RAD_TIMER_RECIP_LOW_HIGH_PRODUCT(remainder_low) +
-             remainder_high * RAD_TIMER_RECIP_MAGIC) >> RAD_TIMER_RECIP_SHIFT);
+    scaled = (u64)now * RAD_TIMER_RECIP_MAGIC;
+    return elapsed_ms + (u32)(scaled >> RAD_TIMER_RECIP_SHIFT64);
 }
 
 static inline void radtimebase(RADTimebase PTR4* dest)
