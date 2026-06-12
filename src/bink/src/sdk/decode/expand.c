@@ -132,6 +132,7 @@ typedef enum BINKBundleLayout
 #define BINK_BUNDLE_COUNT_BITS(width, count_base) \
     getbitlevelvar(((width) + (count_base)) & EXP_U16_MASK)
 #define BINK_BUNDLE_INITIAL_VALUE(shift) (1 << ((shift) - 1))
+#define BINK_BUNDLE_SIGNED_MAGNITUDE_BITS(bits) ((bits) - 1)
 typedef enum BINKBUNDLEINITIALVALUEFLAG
 {
     BINK_BUNDLE_NO_INITIAL_VALUE,
@@ -999,7 +1000,7 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     if (count != 0) {
         dest = (s16 PTR4*)bundle->data;
         if (bundle->initial_value != BINK_BUNDLE_INITIAL_VALUE_NONE) {
-            VarBitsGet(predictor, u16, *bits, bundle->bit_size - 1);
+            VarBitsGet(predictor, u16, *bits, BINK_BUNDLE_SIGNED_MAGNITUDE_BITS(bundle->bit_size));
             if (predictor != 0) {
                 if (EXPBITS_GET1(*bits, sign_bit) != 0) {
                     predictor = -predictor;
