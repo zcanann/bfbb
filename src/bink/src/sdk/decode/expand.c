@@ -9,7 +9,8 @@ typedef enum BINKBlockLayout
 {
     BINK_BLOCK_SHIFT = 3,
     BINK_BLOCK_SIDE = 8,
-    BINK_SCALED_BLOCK_SIDE = BINK_BLOCK_SIDE * 2,
+    BINK_BLOCK_SCALE = 2,
+    BINK_SCALED_BLOCK_SIDE = BINK_BLOCK_SIDE * BINK_BLOCK_SCALE,
     BINK_BLOCK_PIXELS = BINK_BLOCK_SIDE * BINK_BLOCK_SIDE,
     BINK_BLOCK_DOUBLE_ALIGN_MASK = 7,
     BINK_BLOCK_ROW_WORD_0 = 0,
@@ -1202,7 +1203,7 @@ static void scale_block(const u8 PTR4* src, u8 PTR4* dest, u32 pitch)
         even[3] = word;
         odd[3] = word;
         in += BINK_BLOCK_SIDE / sizeof(u16);
-        dest += pitch * 2;
+        dest += pitch * BINK_BLOCK_SCALE;
     }
 }
 
