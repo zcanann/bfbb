@@ -10,6 +10,12 @@ typedef struct BINKVARBITS
     u32 bitlen;     /* Valid bits currently in the reservoir. */
 } BINKVARBITS;
 
+typedef enum BINKBitsLayout
+{
+    BINK_BITS_WORD_BITS = 32,
+    BINK_BITS_WORD_BYTES = sizeof(u32)
+} BINKBitsLayout;
+
 #define BINKBITSLOCALS(name)                                                                      \
     void PTR4* name##cur;                                                                         \
     u32 name##bits;                                                                               \
@@ -21,8 +27,8 @@ typedef struct BINKVARBITS
 #define BinkVarBitsOpen(vb, pointer)                                                              \
     do {                                                                                          \
         (vb).bits = BINK_LOAD32(pointer);                                                         \
-        (vb).cur = ((u8 PTR4*)(pointer)) + 4;                                                      \
-        (vb).bitlen = 32;                                                                         \
+        (vb).cur = ((u8 PTR4*)(pointer)) + BINK_BITS_WORD_BYTES;                                  \
+        (vb).bitlen = BINK_BITS_WORD_BITS;                                                        \
     } while (0)
 
 #define BinkBitsGet(v, type, vb, len, mask)                                                       \
@@ -31,8 +37,8 @@ typedef struct BINKVARBITS
             register u32 nb = BINK_LOAD32((u32 PTR4*)vb##cur);                                    \
             (v) = (type)((vb##bits | (nb << vb##bitlen)) & (mask));                               \
             vb##bits = nb >> ((len)-vb##bitlen);                                                  \
-            vb##bitlen = vb##bitlen + 32 - (len);                                                 \
-            vb##cur = ((u8 PTR4*)vb##cur) + 4;                                                    \
+            vb##bitlen = vb##bitlen + BINK_BITS_WORD_BITS - (len);                                \
+            vb##cur = ((u8 PTR4*)vb##cur) + BINK_BITS_WORD_BYTES;                                 \
         } else {                                                                                  \
             (v) = (type)(vb##bits & (mask));                                                      \
             vb##bits >>= (len);                                                                   \
@@ -40,7 +46,7 @@ typedef struct BINKVARBITS
         }                                                                                         \
     } while (0)
 
-#define MAX_AT_LEAST_BITS 32
+#define MAX_AT_LEAST_BITS BINK_BITS_WORD_BITS
 
 #define BinkBitsAtLeastStart(vb, len)                                                             \
     do {                                                                                          \
@@ -54,8 +60,8 @@ typedef struct BINKVARBITS
     do {                                                                                          \
         if ((s32)vb##bitlen <= 0) {                                                               \
             vb##bits = BINK_LOAD32((u32 PTR4*)vb##cur) >> (-(s32)vb##bitlen);                     \
-            vb##cur = ((u8 PTR4*)vb##cur) + 4;                                                    \
-            vb##bitlen += 32;                                                                     \
+            vb##cur = ((u8 PTR4*)vb##cur) + BINK_BITS_WORD_BYTES;                                 \
+            vb##bitlen += BINK_BITS_WORD_BITS;                                                    \
         }                                                                                         \
     } while (0)
 
