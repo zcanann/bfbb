@@ -202,8 +202,7 @@ typedef enum BINKBUNDLEINITIALVALUE
         BINK_BLOCK_ROW_WORD(dest, pitch, row, BINK_BLOCK_ROW_WORD_0) = (fill);               \
         BINK_BLOCK_ROW_WORD(dest, pitch, row, BINK_BLOCK_ROW_WORD_1) = (fill);               \
     } while (0)
-#define BINK_HUFF4_RLE_LENGTH(value) \
-    ((u8 PTR4*)&BINK_HUFF4_RLE_LENGTHS_PACKED)[(value)]
+#define BINK_HUFF4_RLE_LENGTH(value) (BINK_HUFF4_RLE_LENGTHS[(value)])
 #define BINK_BUNDLE_REPEAT_COUNT(count) (-(s32)(count) - BINK_BUNDLE_REPEAT_BIAS)
 #define BINK_BUNDLE_REPEAT_FILL_COUNT(remaining) (-(remaining + BINK_BUNDLE_REPEAT_BIAS + 1))
 #define BINK_SIGNED_BYTE_NEGATIVE(value) (-BINK_SIGNED_BYTE_BIAS - ((value) & BINK_SIGNED_BYTE_MASK))
@@ -268,7 +267,9 @@ static const u8 mask1[HUFF4_MASK_4BYTE_SIZE] =
 static const u8 mask4[HUFF4_MASK_1BYTE_SIZE] = "\0\0\0\0\377\377\0\0\0\0\377\377\377\377\377\377";
 static const u8 mask3[HUFF4_MASK_1BYTE_SIZE] = "\377\377\377\377\0\0\377\377\377\377\0\0\0\0\0\0";
 /* Huff4 symbols 12..15 expand to repeated block-type runs of 4, 8, 12, and 32. */
-const u32 BINK_HUFF4_RLE_LENGTHS_PACKED = 0x04080c20;
+static const u8 BINK_HUFF4_RLE_LENGTHS[HUFF4_SYMBOLS - HUFF4_RLE_LITERAL_COUNT] = {
+    4, 8, 12, 32
+};
 
 typedef struct READBUNDLE
 {
