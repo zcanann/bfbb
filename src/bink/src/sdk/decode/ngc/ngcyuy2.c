@@ -18,6 +18,7 @@ typedef enum YUY2BlockLayout
     YUY2_WORDS_PER_BLOCK = 2,
     YUY2_X2_WORDS_PER_BLOCK = 4,
     YUY2_WORD_BYTES = 4,
+    YUY2_BLOCK_PAIR_SHIFT = 1,
     YUY2_PAIR_STRIDE = 2,
     YUY2_TAIL_BLOCK_MASK = 1
 } YUY2BlockLayout;
@@ -27,8 +28,9 @@ typedef enum YUY2PairLumaWord
     YUY2_PAIR_LUMA_WORD_0,
     YUY2_PAIR_LUMA_WORD_1
 } YUY2PairLumaWord;
-#define YUY2_BLOCK_PAIRS(count) ((s32)(count) >> 1)
+#define YUY2_BLOCK_PAIRS(count) ((s32)(count) >> YUY2_BLOCK_PAIR_SHIFT)
 #define YUY2_HAS_TAIL_BLOCK(count) (((count) & YUY2_TAIL_BLOCK_MASK) != 0)
+#define YUY2_REMAINING_BLOCKS(count) ((count) - 1)
 #define YUY2_ROW_BYTES(count) ((count) * YUY2_WORDS_PER_BLOCK * YUY2_WORD_BYTES)
 #define YUY2_X2_ROW_BYTES(count) ((count) * YUY2_X2_WORDS_PER_BLOCK * YUY2_WORD_BYTES)
 typedef enum YUY2LumaByteMask
@@ -281,7 +283,7 @@ void YUY2_m_4x2(u32 count)
     u32 PTR4* dest;
     const u32 PTR4* y;
 
-    remaining = count - 1;
+    remaining = YUY2_REMAINING_BLOCKS(count);
     dest = (u32 PTR4*)S.dest0;
     y = S.y0;
     if (remaining != YUY2_NO_REMAINING) {
@@ -294,7 +296,7 @@ void YUY2_m_4x2(u32 count)
         } while (remaining != YUY2_NO_REMAINING);
     }
 
-    remaining = count - 1;
+    remaining = YUY2_REMAINING_BLOCKS(count);
     dest = (u32 PTR4*)S.dest1;
     y = S.y1;
     if (remaining != YUY2_NO_REMAINING) {
@@ -319,7 +321,7 @@ void YUY2_mx2_4x2(u32 count)
     u32 PTR4* dest;
     const u32 PTR4* y;
 
-    remaining = count - 1;
+    remaining = YUY2_REMAINING_BLOCKS(count);
     dest = (u32 PTR4*)S.dest0;
     y = S.y0;
     if (remaining != YUY2_NO_REMAINING) {
@@ -334,7 +336,7 @@ void YUY2_mx2_4x2(u32 count)
         } while (remaining != YUY2_NO_REMAINING);
     }
 
-    remaining = count - 1;
+    remaining = YUY2_REMAINING_BLOCKS(count);
     dest = (u32 PTR4*)S.dest1;
     y = S.y1;
     if (remaining != YUY2_NO_REMAINING) {
@@ -433,7 +435,7 @@ static void YUY2_x2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, cons
 
 static void YUY2_m_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y)
 {
-    u32 remaining = count - 1;
+    u32 remaining = YUY2_REMAINING_BLOCKS(count);
 
     if (remaining != YUY2_NO_REMAINING) {
         do {
@@ -448,7 +450,7 @@ static void YUY2_m_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y)
 
 static void YUY2_mx2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y)
 {
-    u32 remaining = count - 1;
+    u32 remaining = YUY2_REMAINING_BLOCKS(count);
 
     if (remaining != YUY2_NO_REMAINING) {
         do {
