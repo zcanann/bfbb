@@ -92,6 +92,8 @@ enum YUVZoomLayout {
 };
 
 #define YUV_ZOOM_ALIGN_SIZE(width) (((width) + YUV_ZOOM_ALIGN_MASK) & ~YUV_ZOOM_ALIGN_MASK)
+#define YUY2_LUMA_PAIR_WITH_CHROMA(chroma, y0, y1) ((chroma) | (y0) | ((u32)(y1) << RGB_HIGH_WORD_SHIFT))
+#define YUY2_LUMA_PAIR_FROM_PIXEL(pixel, y0, y1) YUY2_LUMA_PAIR_WITH_CHROMA((pixel) & YUY2_CHROMA_MASK, y0, y1)
 #define YUY2_DUP_LUMA_WITH_CHROMA(chroma, y) ((chroma) | (y) | ((u32)(y) << RGB_HIGH_WORD_SHIFT))
 #define YUY2_DUP_LUMA_FROM_PIXEL(pixel, y) YUY2_DUP_LUMA_WITH_CHROMA((pixel) & YUY2_CHROMA_MASK, y)
 enum YUVBlitLayout {
@@ -4034,7 +4036,7 @@ static u32 dounalignedYUY2col2h(u32 count, s32 phase)
         y0 = *(u8 PTR4*)S.y1;
         y1 = *((u8 PTR4*)S.y1 + 1);
         S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUY2_LUMA_PAIR_BYTES);
-        pixel = (pixel & YUY2_CHROMA_MASK) | y0 | ((u32)y1 << RGB_HIGH_WORD_SHIFT);
+        pixel = YUY2_LUMA_PAIR_FROM_PIXEL(pixel, y0, y1);
         *(u32 PTR4*)S.dest1 = pixel;
         *(u32 PTR4*)(S.dest1 + S.pitch) = pixel;
         S.dest0 += YUV_PACKED_WORD_BYTES;
@@ -4164,7 +4166,7 @@ static u32 dounalignedYUY2col(u32 count, s32 phase)
         y0 = yptr[0];
         y1 = yptr[1];
         S.y1 = (u32 PTR4*)(yptr + YUY2_LUMA_PAIR_BYTES);
-        *(u32 PTR4*)S.dest1 = (pixel & YUY2_CHROMA_MASK) | y0 | ((u32)y1 << RGB_HIGH_WORD_SHIFT);
+        *(u32 PTR4*)S.dest1 = YUY2_LUMA_PAIR_FROM_PIXEL(pixel, y0, y1);
         S.dest0 += YUV_PACKED_WORD_BYTES;
         S.dest1 += YUV_PACKED_WORD_BYTES;
     } while (remaining > 0);
