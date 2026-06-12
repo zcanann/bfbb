@@ -5,6 +5,7 @@
 #define DCT_BLOCK_COEFFS (DCT_BLOCK_WIDTH * DCT_BLOCK_WIDTH)
 #define DCT_PATTERN_COUNT 16
 #define DCT_PATTERN_BYTES (DCT_PATTERN_COUNT * DCT_BLOCK_COEFFS)
+#define DCT_TABLE_ALIGNMENT 32
 #define DCT_ROW0 (DCT_BLOCK_WIDTH * 0)
 #define DCT_ROW1 (DCT_BLOCK_WIDTH * 1)
 #define DCT_ROW2 (DCT_BLOCK_WIDTH * 2)
@@ -707,7 +708,7 @@ static const s32 ifmquantlevels8[DCT_QUANT_LEVELS][DCT_BLOCK_COEFFS] = {
 static const double ifmquantlevels8align = 0.0;
 static const double zigzagalign = 0.0;
 /* Bink DCT and residue 8x8 block scan order. */
-const u8 zigzag[DCT_BLOCK_COEFFS] RAD_ATTRIBUTE_ALIGN(32) = {
+const u8 zigzag[DCT_BLOCK_COEFFS] RAD_ATTRIBUTE_ALIGN(DCT_TABLE_ALIGNMENT) = {
     0x00, 0x01, 0x08, 0x09, 0x02, 0x03, 0x0a, 0x0b,
     0x04, 0x05, 0x0c, 0x0d, 0x06, 0x07, 0x0e, 0x0f,
     0x14, 0x15, 0x1c, 0x1d, 0x16, 0x17, 0x1e, 0x1f,
@@ -720,7 +721,7 @@ const u8 zigzag[DCT_BLOCK_COEFFS] RAD_ATTRIBUTE_ALIGN(32) = {
 
 static const double patternsalign = 0.0;
 /* Sixteen custom scan orders used by run and pattern-coded blocks. */
-const u8 patterns[DCT_PATTERN_BYTES] RAD_ATTRIBUTE_ALIGN(32) = {
+const u8 patterns[DCT_PATTERN_BYTES] RAD_ATTRIBUTE_ALIGN(DCT_TABLE_ALIGNMENT) = {
     0x00, 0x08, 0x10, 0x18, 0x20, 0x28, 0x30, 0x38,
     0x39, 0x31, 0x29, 0x21, 0x19, 0x11, 0x09, 0x01,
     0x02, 0x0a, 0x12, 0x1a, 0x22, 0x2a, 0x32, 0x3a,
