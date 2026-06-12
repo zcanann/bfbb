@@ -46,6 +46,7 @@ typedef enum BINKACFixedPointLayout
 
 typedef enum BINKACBitstreamLayout
 {
+    BINKAC_LAST_BIT_INDEX = BITSTYPELEN - 1,
     BINKAC_USED_BYTE_COUNT_MASK = FXP_VALUE_MASK
 } BINKACBitstreamLayout;
 
@@ -99,6 +100,7 @@ typedef VARBITS BINKVARBITS;
 #define BINKAC_OVERLAP_SOURCE(samples, buffer_size, window_size) \
     ((u8 PTR4*)(samples) + ((buffer_size) - (window_size)))
 #define BINKAC_INPUT_ADVANCE(ptr, bytes) ((u8 PTR4*)(ptr) + (bytes))
+#define BINKAC_REMAINING_SAMPLES_AFTER_FIRST(count) ((count) - 1)
 #define BINKAC_ZERO_BYTE 0
 #define BINKAC_STEREO_LEFT_COEFF(coeffs) ((coeffs)[0])
 #define BINKAC_STEREO_RIGHT_COEFF(coeffs, stride) ((coeffs)[(stride)])
@@ -192,7 +194,7 @@ static void quanttos16chans2(s16 PTR4* samples, const f32 PTR4* decoded_coeffs,
     u32 remaining;
     u32 stride;
 
-    remaining = transform_size - 1;
+    remaining = BINKAC_REMAINING_SAMPLES_AFTER_FIRST(transform_size);
     if (remaining != BINKAC_SAMPLE_COUNT_UNDERFLOW) {
         stride = transform_size;
         while (remaining != BINKAC_SAMPLE_COUNT_UNDERFLOW) {
@@ -270,7 +272,7 @@ static inline u32 read_bit(BINKVARBITS PTR4* vb)
         u32 result = refill & BINKAC_BIT_MASK;
 
         VARBITS_ADVANCE_CUR(vb->cur);
-        vb->bitlen = BITSTYPELEN - 1;
+        vb->bitlen = BINKAC_LAST_BIT_INDEX;
         vb->bits = refill >> 1;
         return result;
     }
