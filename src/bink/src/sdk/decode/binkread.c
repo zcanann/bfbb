@@ -218,7 +218,8 @@ typedef enum BINKRuntimeSlot
 typedef enum BINKPlaneSlot
 {
     BINK_PLANE_CURRENT_SLOT,
-    BINK_PLANE_PREVIOUS_SLOT
+    BINK_PLANE_PREVIOUS_SLOT,
+    BINK_PLANE_TOGGLE_MASK = 1
 } BINKPlaneSlot;
 #define BINK_ARRAY_BYTES(count, ptr) ((count) * sizeof(*(ptr)))
 #define BINK_SHIFT_RUNTIME_HISTORY(bink, field) \
@@ -1847,7 +1848,7 @@ s32 BinkDoFrame(HBINK bnk)
                     u32 next;
 
                     cur = bnk->PlaneNum;
-                    next = cur ^ 1;
+                    next = cur ^ BINK_PLANE_TOGGLE_MASK;
                     ExpandBink(bnk->YPlane[next], bnk->YPlane[cur],
                                bnk->APlane[next], bnk->APlane[cur],
                                bnk->MaskPlane, bnk->decompwidth,
@@ -1856,7 +1857,7 @@ s32 BinkDoFrame(HBINK bnk)
                                BINK_FRAME_KEY(bnk->frameoffsets[BINK_FRAME_OFFSET_INDEX(bnk->FrameNum)]),
                                &bnk->bunp, bnk->OpenFlags,
                                bnk->BinkType);
-                    bnk->PlaneNum ^= 1;
+                    bnk->PlaneNum ^= BINK_PLANE_TOGGLE_MASK;
                 }
             }
 
