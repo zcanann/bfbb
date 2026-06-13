@@ -209,6 +209,7 @@ typedef char NGCSoundStateFitsInBinkSndData
 #define NGC_ADVANCE_U16_BYTES(ptr, bytes) ((u16 PTR4*)((u8 PTR4*)(ptr) + (bytes)))
 #define NGC_ADVANCE_U32_16BIT_SAMPLE(ptr) NGC_ADVANCE_U32_BYTES(ptr, sizeof(s16))
 #define NGC_ADVANCE_U16_8BIT_SAMPLE(ptr) NGC_ADVANCE_U16_BYTES(ptr, sizeof(u8))
+#define NGC_ADVANCE_U32_STEREO8_TAIL(ptr) NGC_ADVANCE_U32_BYTES(ptr, NGC_STEREO8_TAIL_BYTES)
 #define NGC_ALIGN_UP(value, mask) (((value) + (mask)) & ~(mask))
 #define NGC_SOUND_RATE_BYTES(sound) (((sound)->freq * (sound)->bits) >> NGC_SOUND_BITS_TO_BYTES_SHIFT)
 #define NGC_SOUND_BEST_SIZE_MASK(chans) (-((chans) << NGC_SOUND_BEST_SIZE_SHIFT))
@@ -725,7 +726,7 @@ static s32 Unlock(BINKSND PTR4* snd, u32 filled_bytes)
             for (i = 0; i < groups; ++i) {
                 u16 stereo_pair = *(u16 PTR4*)src32;
 
-                src32 = NGC_ADVANCE_U32_BYTES(src32, NGC_STEREO8_TAIL_BYTES);
+                src32 = NGC_ADVANCE_U32_STEREO8_TAIL(src32);
                 *(u8 PTR4*)left16 = (u8)(stereo_pair >> NGC_SAMPLE_BYTE_SHIFT);
                 *(u8 PTR4*)right16 = (u8)stereo_pair;
                 left16 = NGC_ADVANCE_U16_8BIT_SAMPLE(left16);
@@ -1116,7 +1117,7 @@ void ConvDataToStereo8(u32 PTR4* src, u16 PTR4* left, u16 PTR4* right, u32 bytes
     count = (total - (count * NGC_STEREO8_GROUP_BYTES)) >> NGC_STEREO8_TAIL_SHIFT;
     for (i = 0; i < count; ++i) {
         u16 packed_samples = *(u16 PTR4*)src;
-        src = NGC_ADVANCE_U32_BYTES(src, NGC_STEREO8_TAIL_BYTES);
+        src = NGC_ADVANCE_U32_STEREO8_TAIL(src);
         *(u8 PTR4*)left = (u8)(packed_samples >> NGC_SAMPLE_BYTE_SHIFT);
         *(u8 PTR4*)right = (u8)packed_samples;
         left = NGC_ADVANCE_U16_8BIT_SAMPLE(left);
