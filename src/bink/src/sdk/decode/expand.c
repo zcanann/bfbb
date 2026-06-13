@@ -570,11 +570,11 @@ static inline u32 exp_read_huff8(EXPBITS PTR4* bits, u32 state, HUFF8TABLE PTR4*
 static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
                           u32 PTR4* bits_to_peek, u8 PTR4* syms)
 {
-    u32 vlc_num;
+    u32 codebook;
     u32 sort_mode;
     u32 last_explicit;
     u32 count;
-    u32 unused_symbols;
+    u32 missing_symbols;
     u32 fill_symbol;
     u32 symbol;
     u32 j;
@@ -582,10 +582,10 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
     HUFF4MERGES merges;
 
     /* Each table stores a 4-bit codebook index plus a 16-entry symbol remap. */
-    VarBitsGet(vlc_num, u32, *vb, HUFF4_NIBBLE_BITS);
-    *decode = huff4decodes[vlc_num];
-    *bits_to_peek = (u8)BINK_HUFF4_BITS_TO_PEEK[vlc_num];
-    if (vlc_num == HUFF4_IDENTITY_CODEBOOK) {
+    VarBitsGet(codebook, u32, *vb, HUFF4_NIBBLE_BITS);
+    *decode = huff4decodes[codebook];
+    *bits_to_peek = (u8)BINK_HUFF4_BITS_TO_PEEK[codebook];
+    if (codebook == HUFF4_IDENTITY_CODEBOOK) {
         for (j = 0; j < HUFF4_SYMBOLS; ++j) {
             syms[j] = j;
         }
@@ -677,22 +677,22 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
         }
     } else {
         VarBitsGet(last_explicit, u32, *vb, HUFF4_EXPLICIT_INDEX_BITS);
-        unused_symbols = HUFF4_ALL_SYMBOLS_MASK;
+        missing_symbols = HUFF4_ALL_SYMBOLS_MASK;
         for (i = 0; i <= last_explicit; ++i) {
             VarBitsGet(symbol, u32, *vb, HUFF4_NIBBLE_BITS);
             syms[i] = symbol;
-            unused_symbols &= ~(HUFF4_SYMBOL_PRESENT_BIT << symbol);
+            missing_symbols &= ~(HUFF4_SYMBOL_PRESENT_BIT << symbol);
         }
 
         fill_symbol = 0;
         do {
-            if ((unused_symbols & HUFF4_SYMBOL_PRESENT_BIT) != 0) {
+            if ((missing_symbols & HUFF4_SYMBOL_PRESENT_BIT) != 0) {
                 last_explicit++;
                 syms[last_explicit] = fill_symbol;
             }
             fill_symbol++;
-            unused_symbols >>= 1;
-        } while (unused_symbols != 0);
+            missing_symbols >>= 1;
+        } while (missing_symbols != 0);
     }
 }
 
