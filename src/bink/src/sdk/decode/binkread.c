@@ -209,8 +209,10 @@ typedef enum BINKPreloadLayout
 } BINKPreloadLayout;
 
 #define BINKGETKEY_DIRECTION_MASK (BINKGETKEYNOTEQUAL - 1)
+#define BINKGETKEY_CAN_RETURN_REQUESTED(flags) (((flags) & BINKGETKEYNOTEQUAL) == 0)
 #define BINKGETKEY_DIRECTION(flags) ((flags) & BINKGETKEY_DIRECTION_MASK)
 #define BINK_FRAME_OFFSET_INDEX(frame) ((frame) - BINK_FIRST_FRAME)
+#define BINK_FRAME_IS_KEY(frameoffset) (BINK_FRAME_KEY(frameoffset) != 0)
 typedef enum BINKFrameNumberState
 {
     BINK_FRAME_BEFORE_FIRST = 0xffffffffU
@@ -1988,8 +1990,8 @@ u32 BinkGetKeyFrame(HBINK bnk, u32 frame, s32 flags)
         return 0;
     }
 
-    if ((flags & BINKGETKEYNOTEQUAL) == 0) {
-        if (BINK_FRAME_KEY(bnk->frameoffsets[BINK_FRAME_OFFSET_INDEX(frame)]) != 0) {
+    if (BINKGETKEY_CAN_RETURN_REQUESTED(flags)) {
+        if (BINK_FRAME_IS_KEY(bnk->frameoffsets[BINK_FRAME_OFFSET_INDEX(frame)])) {
             return frame;
         }
     }
@@ -1999,13 +2001,13 @@ u32 BinkGetKeyFrame(HBINK bnk, u32 frame, s32 flags)
     case BINKGETKEYPREVIOUS:
         prev = frame - 2;
         if (prev > 0) {
-            if (BINK_FRAME_KEY(bnk->frameoffsets[prev]) == 0) {
+            if (!BINK_FRAME_IS_KEY(bnk->frameoffsets[prev])) {
                 do {
                     --prev;
                     if (prev <= 0) {
                         break;
                     }
-                } while (BINK_FRAME_KEY(bnk->frameoffsets[prev]) == 0);
+                } while (!BINK_FRAME_IS_KEY(bnk->frameoffsets[prev]));
             }
         }
 found_previous:
@@ -2025,7 +2027,7 @@ found_previous:
 
                 frame_entry = *frame_offsets++;
                 ++cur;
-                if (BINK_FRAME_KEY(frame_entry) != 0) {
+                if (BINK_FRAME_IS_KEY(frame_entry)) {
                     return cur;
                 }
             } while (cur < limit);
@@ -2036,12 +2038,12 @@ found_previous:
         cur = frame;
         do {
             if (prev >= 0) {
-                if (BINK_FRAME_KEY(bnk->frameoffsets[prev]) != 0) {
+                if (BINK_FRAME_IS_KEY(bnk->frameoffsets[prev])) {
                     goto found_previous;
                 }
 
                 if (cur < bnk->Frames) {
-                    if (BINK_FRAME_KEY(bnk->frameoffsets[cur++]) != 0) {
+                    if (BINK_FRAME_IS_KEY(bnk->frameoffsets[cur++])) {
                         return cur;
                     }
                 }
@@ -2050,7 +2052,7 @@ found_previous:
                     return 0;
                 }
 
-                if (BINK_FRAME_KEY(bnk->frameoffsets[cur++]) == 0) {
+                if (!BINK_FRAME_IS_KEY(bnk->frameoffsets[cur++])) {
                     continue;
                 } else {
                     return cur;
