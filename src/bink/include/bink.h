@@ -100,7 +100,7 @@ typedef struct BINKIO
     BINKCBTRYSUSPEND try_suspend_callback;
     BINKCBRESUME resume_callback;
     BINKCBIDLE idle_on_callback;
-    volatile RADCB_CALLBACK_STORAGE callback_control; // RADCB_CALLBACK storage for background IO
+    volatile RADCB_CALLBACK_STORAGE callback_control; // buffer for background IO callback
 } BINKIO;
 
 struct BINKSND;
@@ -299,7 +299,7 @@ typedef struct BINK
     u32 last_read_count; // counter to keep track of the last bink IO
     u32 last_sound_count; // counter to keep track of the last bink sound
     u32 last_time_almost_empty; // time of last almost empty IO buffer
-    RADCB_CALLBACK_STORAGE snd_callback_buffer; // RADCB_CALLBACK storage for background sound
+    RADCB_CALLBACK_STORAGE snd_callback_buffer; // buffer for background sound callback
 } BINK;
 
 typedef struct BINKSUMMARY
