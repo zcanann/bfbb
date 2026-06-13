@@ -99,6 +99,8 @@ typedef VARBITS BINKVARBITS;
 #define BINKAC_RDFT_COEFF_BYTES(transform_size_half, coeffs) \
     ((transform_size_half) * sizeof(*(coeffs)) - BINKAC_RDFT_COEFF_TAIL_ADJUST)
 #define BINKAC_OVERLAP_BYTES(buffer_size) ((buffer_size) / BINKAC_TRANSFORM_HALF_DIVISOR)
+#define BINKAC_NYQUIST_RATE(rate) (((rate) + BINKAC_NYQUIST_ROUNDING) / BINKAC_NYQUIST_DIVISOR)
+#define BINKAC_TRANSFORM_HALF(transform_size) ((transform_size) / BINKAC_TRANSFORM_HALF_DIVISOR)
 #define BINKAC_VARBITS_USED_BYTES(bits) \
     (((u32)((u8 PTR4*)(bits).cur - (u8 PTR4*)(bits).init)) & BINKAC_USED_BYTE_COUNT_MASK)
 #define BINKAC_OVERLAP_SOURCE(samples, buffer_size, window_size) \
@@ -466,8 +468,8 @@ HBINKAUDIODECOMP BinkAudioDecompressOpen(u32 rate, u32 chans, u32 flags)
         chans = BINKAC_MONO_CHANNELS;
     }
 
-    nyq = (rate + BINKAC_NYQUIST_ROUNDING) / BINKAC_NYQUIST_DIVISOR;
-    transform_size_half = transform_size / BINKAC_TRANSFORM_HALF_DIVISOR;
+    nyq = BINKAC_NYQUIST_RATE(rate);
+    transform_size_half = BINKAC_TRANSFORM_HALF(transform_size);
     /* Calculate the number of critical bands below Nyquist. */
     for (i = 0; i < TOTBANDS; ++i) {
         if (bink_bandtopfreq[i] >= (u32)nyq) {
