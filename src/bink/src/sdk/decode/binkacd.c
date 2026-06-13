@@ -111,6 +111,7 @@ typedef VARBITS BINKVARBITS;
 #define BINKAC_QUANT_INDEX_SCALE_CONST 0.664f
 #define BINKAC_QUANT_POWER_SCALE_CONST 0.10f
 #define BINKAC_QUANT_POWER_BASE_CONST 10.0
+#define BINKAC_SAMPLE_ZERO 0.0f
 #define BINKAC_RSQRT_ZERO 0.0f
 #define BINKAC_RSQRT_NEWTON_HALF_CONST 0.5
 #define BINKAC_RSQRT_NEWTON_THREE_CONST 3.0
@@ -276,7 +277,7 @@ static void read_rle_samples(f32 PTR4* samps, u32 transform_size, BINKVARBITS PT
 {
     u32 i;
     u32 b = 0;
-    f32 dequant = 0.0f;
+    f32 dequant = BINKAC_SAMPLE_ZERO;
     f32 PTR4* out;
 
     while (BINKAC_BAND_SAMPLE_LIMIT(bands, b) < BINKAC_FIRST_COEFF) {
@@ -334,7 +335,7 @@ static void read_rle_samples(f32 PTR4* samps, u32 transform_size, BINKVARBITS PT
                         magnitude = BINKAC_APPLY_SIGN(magnitude, sign);
                         *out = magnitude * dequant;
                     } else {
-                        *out = 0.0f;
+                        *out = BINKAC_SAMPLE_ZERO;
                     }
                 }
 
