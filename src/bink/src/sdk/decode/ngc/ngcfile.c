@@ -138,6 +138,7 @@ typedef enum NGCDVDAlignment
 #define NGC_BYTES_LEFT_TO_READ(io) (NGC_FILE_SIZE(io) - NGC_READ_CURSOR(io))
 #define NGC_BYTES_LEFT_TO_CONSUME(io) (NGC_FILE_SIZE(io) - NGC_CONSUME_CURSOR(io))
 #define NGC_DVD_FILE_OFFSET(io, cursor) ((cursor) + NGC_FILE_OFFSET(io))
+#define NGC_RING_START(io) NGC_BUFFER(io)
 #define NGC_RING_BYTES_TO_END(io) (NGC_BUFFER_END(io) - NGC_READ_PTR(io))
 #define NGC_RING_WRITE_REACHED_END(io, ptr) ((u32)(ptr) >= (u32)NGC_BUFFER_END(io))
 #define NGC_RING_READ_PAST_END(io, ptr) ((u32)(ptr) > (u32)NGC_BUFFER_END(io))
@@ -334,7 +335,7 @@ static void DVDReadCallback(s32 result, DVDFileInfo PTR4* fileInfo)
                 NGC_WRITE_PTR(io) = write;
 
                 if (NGC_RING_WRITE_REACHED_END(io, write)) {
-                    NGC_WRITE_PTR(io) = NGC_BUFFER(io);
+                    NGC_WRITE_PTR(io) = NGC_RING_START(io);
                 }
             }
 
@@ -502,8 +503,8 @@ static u32 BinkFileReadFrame(BINKIO PTR4* io, u32 frame_num, s32 offset, void PT
             NGC_CONSUME_CURSOR(io) = offset;
             NGC_VOLATILE_U32(NGC_FREE_SIZE(io)) = io->BufSize;
             io->CurBufUsed = 0;
-            NGC_READ_PTR(io) = NGC_BUFFER(io);
-            NGC_WRITE_PTR(io) = NGC_BUFFER(io);
+            NGC_READ_PTR(io) = NGC_RING_START(io);
+            NGC_WRITE_PTR(io) = NGC_RING_START(io);
             OSRestoreInterrupts(enabled);
         }
     }
@@ -554,7 +555,7 @@ static u32 BinkFileReadFrame(BINKIO PTR4* io, u32 frame_num, s32 offset, void PT
                     memcpy(dest, NGC_READ_PTR(io), first);
                     dest = (u8 PTR4*)dest + first;
                     amount -= first;
-                    NGC_READ_PTR(io) = NGC_BUFFER(io);
+                    NGC_READ_PTR(io) = NGC_RING_START(io);
 
                     enabled = OSDisableInterrupts();
                     io->CurBufUsed -= first;
@@ -619,8 +620,8 @@ static void BinkFileSetInfo(BINKIO PTR4* io, void PTR4* buf, u32 size, u32 file_
     NGC_SIMULATE_RATE(io) = simulate;
     NGC_OWNER(io) = io;
     NGC_BUFFER(io) = (u8 PTR4*)buf;
-    NGC_READ_PTR(io) = (u8 PTR4*)buf;
-    NGC_WRITE_PTR(io) = (u8 PTR4*)buf;
+    NGC_READ_PTR(io) = NGC_RING_START(io);
+    NGC_WRITE_PTR(io) = NGC_RING_START(io);
     io->CurBufUsed = 0;
     NGC_BUFFER_END(io) = (u8 PTR4*)buf + aligned_size;
 
