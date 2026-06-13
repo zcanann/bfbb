@@ -139,6 +139,8 @@ typedef enum NGCDVDAlignment
 #define NGC_BYTES_LEFT_TO_CONSUME(io) (NGC_FILE_SIZE(io) - NGC_CONSUME_CURSOR(io))
 #define NGC_DVD_FILE_OFFSET(io, cursor) ((cursor) + NGC_FILE_OFFSET(io))
 #define NGC_RING_BYTES_TO_END(io) (NGC_BUFFER_END(io) - NGC_READ_PTR(io))
+#define NGC_RING_WRITE_REACHED_END(io, ptr) ((u32)(ptr) >= (u32)NGC_BUFFER_END(io))
+#define NGC_RING_READ_PAST_END(io, ptr) ((u32)(ptr) > (u32)NGC_BUFFER_END(io))
 typedef enum NGCReadLayout
 {
     NGC_STACK_READ_PAYLOAD_SIZE = 0x400,
@@ -331,7 +333,7 @@ static void DVDReadCallback(s32 result, DVDFileInfo PTR4* fileInfo)
                 NGC_VOLATILE_U32(NGC_READ_CURSOR(io)) = cursor;
                 NGC_WRITE_PTR(io) = write;
 
-                if ((u32)write >= (u32)NGC_BUFFER_END(io)) {
+                if (NGC_RING_WRITE_REACHED_END(io, write)) {
                     NGC_WRITE_PTR(io) = NGC_BUFFER(io);
                 }
             }
@@ -485,7 +487,7 @@ static u32 BinkFileReadFrame(BINKIO PTR4* io, u32 frame_num, s32 offset, void PT
             NGC_CONSUME_CURSOR(io) = offset;
             NGC_READ_PTR(io) = read_ptr;
             io->CurBufUsed -= skip;
-            if ((u32)read_ptr > (u32)NGC_BUFFER_END(io)) {
+            if (NGC_RING_READ_PAST_END(io, read_ptr)) {
                 NGC_READ_PTR(io) = read_ptr - io->BufSize;
             }
 
