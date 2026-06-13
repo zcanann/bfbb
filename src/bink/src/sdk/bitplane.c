@@ -119,6 +119,7 @@
 #define BP_READ_TREE_CHILD2_BASE (BP_READ_TREE_CHILD_COUNT * 2)
 #define BP_READ_TREE_CHILD3_BASE (BP_READ_TREE_CHILD_COUNT * 3)
 #define BP_READ_TREE_NODE(index, kind) (((index) << BP_READ_TREE_INDEX_SHIFT) + (kind))
+#define BP_READ_TREE_KIND(node) ((node) & BP_READ_TREE_KIND_MASK)
 #define BP_READ_TREE_INDEX(node) ((node) >> BP_READ_TREE_INDEX_SHIFT)
 #define BP_READ_TREE_BASE(node) ((node) & BP_READ_TREE_BASE_MASK)
 #define BP_READ_TREE_GROUP_BASE(group) ((group) * BP_READ_TREE_CHILD_COUNT)
@@ -790,7 +791,7 @@ next_lossless_read_node:
                         }
                     }
 
-                    switch (node & BP_READ_TREE_KIND_MASK) {
+                    switch (BP_READ_TREE_KIND(node)) {
                     case BP_READ_TREE_GROUP_NODE:
                         kind = BP_READ_TREE_INDEX(node);
                         *node_ptr = BP_READ_TREE_BRANCH(kind);
@@ -932,7 +933,7 @@ next_lossless_final_node:
                         goto next_lossless_final_node;
                     }
                 }
-                switch (node & BP_READ_TREE_KIND_MASK) {
+                switch (BP_READ_TREE_KIND(node)) {
                 case BP_READ_TREE_GROUP_NODE:
                     kind = BP_READ_TREE_INDEX(node);
                     *node_ptr = BP_READ_TREE_BRANCH(kind);
@@ -1394,7 +1395,7 @@ next_node:
                     goto next_node;
                 }
 decode_node:
-                switch (node & BP_READ_TREE_KIND_MASK) {
+                switch (BP_READ_TREE_KIND(node)) {
                 case BP_READ_TREE_GROUP_NODE:
                     node_kind = BP_READ_TREE_INDEX(node);
                     *node_ptr = BP_READ_TREE_BRANCH(node_kind);
