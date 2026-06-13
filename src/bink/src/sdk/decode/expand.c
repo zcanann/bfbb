@@ -24,6 +24,10 @@ typedef enum BINKBlockLayout
     BINK_BLOCK_ROW_7 = 7,
     BINK_BLOCK_ROW_WORD_0 = 0,
     BINK_BLOCK_ROW_WORD_1 = 1,
+    BINK_SCALED_BLOCK_ROW_WORD_0 = 0,
+    BINK_SCALED_BLOCK_ROW_WORD_1 = 1,
+    BINK_SCALED_BLOCK_ROW_WORD_2 = 2,
+    BINK_SCALED_BLOCK_ROW_WORD_3 = 3,
     BINK_RUN_BLOCK_LAST_PIXEL = BINK_BLOCK_PIXELS - 1,
     BINK_BLOCK_ROUND_MASK = BINK_BLOCK_SIDE - 1
 } BINKBlockLayout;
@@ -1473,10 +1477,10 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                     for (scaled_row = 0; scaled_row < BINK_SCALED_BLOCK_SIDE; ++scaled_row) {
                         u32 PTR4* fill_dest = (u32 PTR4*)(dest + scaled_row * pitch);
 
-                        fill_dest[0] = fill;
-                        fill_dest[1] = fill;
-                        fill_dest[2] = fill;
-                        fill_dest[3] = fill;
+                        fill_dest[BINK_SCALED_BLOCK_ROW_WORD_0] = fill;
+                        fill_dest[BINK_SCALED_BLOCK_ROW_WORD_1] = fill;
+                        fill_dest[BINK_SCALED_BLOCK_ROW_WORD_2] = fill;
+                        fill_dest[BINK_SCALED_BLOCK_ROW_WORD_3] = fill;
                     }
                 } else if (subblock_type == BINK_BLOCK_RUN) {
                     expand_run_block(motion_block, BINK_BLOCK_SIDE, &colors, &runs, &bitstate);
