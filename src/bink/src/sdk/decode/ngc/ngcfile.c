@@ -41,6 +41,24 @@ typedef enum BINKFileOffset
     BINK_FILE_CURRENT_OFFSET = -1
 } BINKFileOffset;
 
+typedef enum NGCReadErrorState
+{
+    NGC_READ_OK,
+    NGC_READ_ERROR
+} NGCReadErrorState;
+
+typedef enum NGCAsyncReadState
+{
+    NGC_ASYNC_READ_IDLE,
+    NGC_ASYNC_READ_ACTIVE
+} NGCAsyncReadState;
+
+typedef enum NGCCancelReadState
+{
+    NGC_CANCEL_READ_CLEAR,
+    NGC_CANCEL_READ_SET
+} NGCCancelReadState;
+
 typedef struct NGCBinkIOData
 {
     DVDFileInfo file;
@@ -283,13 +301,13 @@ static void DVDReadCallback(s32 result, DVDFileInfo PTR4* fileInfo)
     /* DVDFileInfo is the first field of NGCBinkIOData, so the callback can recover owner. */
     BINKIO PTR4* io = NGC_DATA_FROM_DVD(fileInfo)->owner;
 
-    if (NGC_CANCEL_READ(io) == 0) {
+    if (NGC_CANCEL_READ(io) == NGC_CANCEL_READ_CLEAR) {
         u32 extra;
 
         if (result != NGC_ASYNC_WHOLE_BLOCK) {
             if (NGC_BYTES_LEFT_TO_READ(io) + NGC_ALIGN_EXTRA(io) != (u32)result) {
-                io->DoingARead = 0;
-                io->ReadError = 1;
+                io->DoingARead = NGC_ASYNC_READ_IDLE;
+                io->ReadError = NGC_READ_ERROR;
                 return;
             }
         }
@@ -340,7 +358,7 @@ static void DVDReadCallback(s32 result, DVDFileInfo PTR4* fileInfo)
                 }
             }
 
-            io->DoingARead = 0;
+            io->DoingARead = NGC_ASYNC_READ_IDLE;
             ReadKickoff(io);
     }
 }
@@ -351,17 +369,17 @@ static void ReadKickoff(BINKIO PTR4* io)
     u32 remaining = NGC_BYTES_LEFT_TO_READ(io);
 
     if (NGC_DVD_STATUS_FAILED(status)) {
-        io->ReadError = 1;
+        io->ReadError = NGC_READ_ERROR;
         return;
     }
 
-    if (NGC_CANCEL_READ(io) == 0 && NGC_DVD_STATUS_IDLE(status)) {
+    if (NGC_CANCEL_READ(io) == NGC_CANCEL_READ_CLEAR && NGC_DVD_STATUS_IDLE(status)) {
         if (NGC_FREE_SIZE(io) <= NGC_READ_BLOCK_MASK) {
             io->CurBufSize = io->CurBufUsed;
         } else if (remaining != 0) {
             NGC_CALLBACK_WORKING(io) = io->Working;
             NGC_READ_START_TIME(io) = RADTimerRead();
-            io->DoingARead = 1;
+            io->DoingARead = NGC_ASYNC_READ_ACTIVE;
 
             if (remaining > NGC_READ_BLOCK_SIZE) {
                 remaining = NGC_READ_BLOCK_SIZE;
@@ -384,7 +402,7 @@ static u32 BinkFileIdle(BINKIO PTR4* io)
 {
     s32 status;
 
-    if (io->ReadError != 0) {
+    if (io->ReadError != NGC_READ_OK) {
         return 0;
     }
 
@@ -418,7 +436,7 @@ static u32 BinkFileIdle(BINKIO PTR4* io)
     return io->DoingARead;
 
 read_error:
-    io->ReadError = 1;
+    io->ReadError = NGC_READ_ERROR;
     return io->DoingARead;
 }
 
@@ -426,15 +444,15 @@ static void CancelReadRequests(BINKIO PTR4* io)
 {
     s32 status;
 
-    NGC_CANCEL_READ(io) = 1;
+    NGC_CANCEL_READ(io) = NGC_CANCEL_READ_SET;
     DVDCancel(&NGC_DVD(io)->cb);
 
     do {
         status = DVDGetCommandBlockStatus(&NGC_DVD(io)->cb);
     } while (NGC_DVD_STATUS_BUSY_OR_WAITING(status));
 
-    NGC_VOLATILE_U32(NGC_CANCEL_READ(io)) = 0;
-    io->DoingARead = 0;
+    NGC_VOLATILE_U32(NGC_CANCEL_READ(io)) = NGC_CANCEL_READ_CLEAR;
+    io->DoingARead = NGC_ASYNC_READ_IDLE;
 }
 
 static u32 BinkFileReadFrame(BINKIO PTR4* io, u32 frame_num, s32 offset, void PTR4* dest, u32 size)
@@ -445,7 +463,7 @@ static u32 BinkFileReadFrame(BINKIO PTR4* io, u32 frame_num, s32 offset, void PT
     u32 total = 0;
     void PTR4* start_dest = dest;
 
-    if (io->ReadError != 0) {
+    if (io->ReadError != NGC_READ_OK) {
         return 0;
     }
 
@@ -493,7 +511,7 @@ static u32 BinkFileReadFrame(BINKIO PTR4* io, u32 frame_num, s32 offset, void PT
 
         read = radreadngc(NGC_DVD(io), NGC_READ_CURSOR(io), dest, size);
         if (read < size) {
-            io->ReadError = 1;
+            io->ReadError = NGC_READ_ERROR;
         }
 
         NGC_VOLATILE_U32(NGC_READ_CURSOR(io)) = NGC_VOLATILE_U32(NGC_READ_CURSOR(io)) + read;
@@ -509,7 +527,7 @@ static u32 BinkFileReadFrame(BINKIO PTR4* io, u32 frame_num, s32 offset, void PT
         io->TotalTime += read_time - direct_start;
         foreground_time = io->ForegroundTime + (read_time - start_time);
     } else {
-        while (size != 0 && io->ReadError == 0) {
+        while (size != 0 && io->ReadError == NGC_READ_OK) {
             u32 amount;
 
             ReadKickoff(io);
