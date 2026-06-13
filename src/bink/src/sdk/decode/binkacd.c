@@ -295,7 +295,7 @@ static void read_rle_samples(f32 PTR4* samps, u32 transform_size, BINKVARBITS PT
         /* Each sparse coefficient packet is either 5 bits (literal VQ run) or
            9 bits (RLE flag, 4-bit run index, 4-bit coefficient bit length). */
         {
-            if (read_bit(vbp)) {
+            if (read_bit(vbp) != 0) {
                 end = i + BINKAC_RLE_SAMPLE_RUN(read_rle_bits(vbp));
             } else {
                 end = i + VQLENGTH;
@@ -328,7 +328,7 @@ static void read_rle_samples(f32 PTR4* samps, u32 transform_size, BINKVARBITS PT
                 {
                     s32 magnitude = read_bits(vbp, bitlen);
 
-                    if (magnitude) {
+                    if (magnitude != 0) {
                         /* Bink audio 1 stores the sign bit after each nonzero coefficient. */
                         u32 sign_bit = read_bit(vbp);
                         s32 sign = BINKAC_SIGN_MASK(sign_bit);
