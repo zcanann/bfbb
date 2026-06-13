@@ -204,8 +204,8 @@ typedef struct BINK
     s32 NumRects;
 
     u32 PlaneNum; // which set of planes is current
-    void PTR4* YPlane[BINKMAXFRAMEBUFFERS]; // pointer to the uncompressed Y (Cr and Cr follow)
-    void PTR4* APlane[BINKMAXFRAMEBUFFERS]; // decompressed alpha plane (if present)
+    void PTR4* YPlane[2]; // pointer to the uncompressed Y (Cr and Cr follow)
+    void PTR4* APlane[2]; // decompressed alpha plane (if present)
     u32 YWidth; // widths and heights of the video planes
     u32 YHeight;
     u32 UVWidth;
