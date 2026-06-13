@@ -108,9 +108,9 @@ typedef VARBITS BINKVARBITS;
 #define BINKAC_APPLY_SIGN(value, sign) (((value) ^ (sign)) - (sign))
 #define BINKAC_INVERT_BIN(shift) (1.0 / (1 << (shift)))
 #define BINKAC_IS_NEW_FORMAT(flags) (((flags) & BINKACNEWFORMAT) != 0)
-#define BINKAC_QUANT_INDEX_SCALE_CONST 0.664f
-#define BINKAC_QUANT_POWER_SCALE_CONST 0.10f
-#define BINKAC_QUANT_POWER_BASE_CONST 10.0
+#define BINKAC_UNDECIBEL_DB_PER_STEP 0.664f
+#define BINKAC_UNDECIBEL_POWER_SCALE 0.10f
+#define BINKAC_UNDECIBEL_BASE 10.0
 #define BINKAC_SAMPLE_ZERO 0.0f
 #define BINKAC_RSQRT_ZERO 0.0f
 #define BINKAC_RSQRT_NEWTON_HALF_CONST 0.5
@@ -352,7 +352,7 @@ f64 pow(f64 x, f64 y);
 
 static inline f32 Undecibel(f32 decibels)
 {
-    return (f32)pow(BINKAC_QUANT_POWER_BASE_CONST, decibels * BINKAC_QUANT_POWER_SCALE_CONST);
+    return (f32)pow(BINKAC_UNDECIBEL_BASE, decibels * BINKAC_UNDECIBEL_POWER_SCALE);
 }
 
 static u32 Unquant(u32 transform_size, f32 transform_size_root, u32 chans, u32 flags, s32 PTR4* fft_work,
@@ -388,7 +388,7 @@ static u32 Unquant(u32 transform_size, f32 transform_size_root, u32 chans, u32 f
 
         for (i = 0; i < num_bands; ++i) {
             VarBitsGet(j, u32, vb, BINKAC_QUANT_BITS);
-            threshold[i] = Undecibel((f32)(s32)j * BINKAC_QUANT_INDEX_SCALE_CONST);
+            threshold[i] = Undecibel((f32)(s32)j * BINKAC_UNDECIBEL_DB_PER_STEP);
         }
 
         read_rle_samples(channel, transform_size, &vb, threshold, bands);
