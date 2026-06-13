@@ -10,6 +10,7 @@
 #define BP_S8_SIGN_SHIFT 7
 #define BP_BLOCK_SIDE 8
 #define BP_BLOCK_COEFFS (BP_BLOCK_SIDE * BP_BLOCK_SIDE)
+#define BP_LOSSY_BLOCK_BYTES BP_BLOCK_COEFFS
 #define BP_DC_COEFF 0
 #define BP_FIRST_AC_COEFF (BP_DC_COEFF + 1)
 #define BP_AC_COEFFS (BP_BLOCK_COEFFS - BP_FIRST_AC_COEFF)
@@ -1335,7 +1336,7 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count)
 #define bitbuf bitcopy.bits
 #define bitcount bitcopy.bitlen
     masks_used = 0;
-    memset(dest, 0, BP_BLOCK_COEFFS);
+    memset(dest, 0, BP_LOSSY_BLOCK_BYTES);
 
     /* Lossy blocks store max level minus one in the stream header. */
     VarBitsGet(levels_remaining, u8, bitcopy, BP_LOSSY_LEVEL_BITS);
