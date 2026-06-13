@@ -40,6 +40,10 @@ typedef enum BINKFrameOffsetFlags
     BINKFRAMEOFFSETMASK = 0xfffffffe,
     BINKFRAMEKEYFLAG = 1
 } BINKFrameOffsetFlags;
+typedef enum BINKIOOffset
+{
+    BINK_IO_CURRENT_OFFSET = -1
+} BINKIOOffset;
 /* Frame-offset table entries use bit 0 as the key-frame marker. */
 #define BINK_FRAME_OFFSET(frameoffset) ((frameoffset) & BINKFRAMEOFFSETMASK)
 #define BINK_FRAME_KEY(frameoffset) ((frameoffset) & BINKFRAMEKEYFLAG)
@@ -1279,13 +1283,13 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
         out->trackIDs = BINK_HEADER_TRACK_IDS(name, out->NumTracks);
         out->frameoffsets = BINK_HEADER_FRAME_OFFSETS(name, out->NumTracks);
     } else {
-        out->bio.ReadHeader(&out->bio, -1, out->tracksizes,
+        out->bio.ReadHeader(&out->bio, BINK_IO_CURRENT_OFFSET, out->tracksizes,
                             BINK_ARRAY_BYTES(out->NumTracks, out->tracksizes));
-        out->bio.ReadHeader(&out->bio, -1, out->tracktypes,
+        out->bio.ReadHeader(&out->bio, BINK_IO_CURRENT_OFFSET, out->tracktypes,
                             BINK_ARRAY_BYTES(out->NumTracks, out->tracktypes));
-        out->bio.ReadHeader(&out->bio, -1, out->trackIDs,
+        out->bio.ReadHeader(&out->bio, BINK_IO_CURRENT_OFFSET, out->trackIDs,
                             BINK_ARRAY_BYTES(out->NumTracks, out->trackIDs));
-        out->bio.ReadHeader(&out->bio, -1, out->frameoffsets,
+        out->bio.ReadHeader(&out->bio, BINK_IO_CURRENT_OFFSET, out->frameoffsets,
                             BINK_FRAME_OFFSETS_BYTES(out->InternalFrames, out->frameoffsets));
     }
 
