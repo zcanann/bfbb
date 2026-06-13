@@ -203,6 +203,7 @@ typedef enum BINKBUNDLEINITIALVALUE
     (*(u32 PTR4*)((ptr) + (pitch) * (row) + (word) * BINK_PLANE_WORD_BYTES))
 #define BINK_BLOCK_ROW_DOUBLE(ptr, pitch, row) \
     (*(double PTR4*)((ptr) + (pitch) * (row)))
+#define BINK_SCALED_BLOCK_ROW_PTR(ptr, pitch, row) ((u32 PTR4*)((ptr) + (row) * (pitch)))
 #define BINK_LINEAR_BLOCK_ROW_DOUBLE(ptr, row) \
     (*(double PTR4*)((ptr) + (row) * BINK_BLOCK_SIDE))
 #define BINK_LINEAR_BLOCK_ROW_WORD(ptr, row, word) \
@@ -1489,7 +1490,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
 
                     BINK_BUNDLE_ADVANCE(colors, BINK_BUNDLE_BYTE_PITCH);
                     for (scaled_row = 0; scaled_row < BINK_SCALED_BLOCK_SIDE; ++scaled_row) {
-                        u32 PTR4* fill_dest = (u32 PTR4*)(dest + scaled_row * pitch);
+                        u32 PTR4* fill_dest = BINK_SCALED_BLOCK_ROW_PTR(dest, pitch, scaled_row);
 
                         fill_dest[BINK_SCALED_BLOCK_ROW_WORD_0] = fill;
                         fill_dest[BINK_SCALED_BLOCK_ROW_WORD_1] = fill;
