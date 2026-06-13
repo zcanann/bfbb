@@ -37,4 +37,11 @@ typedef struct BINKTEXTURESET {
     s32 drawing[BINKMAXFRAMEBUFFERS];
 } BINKTEXTURESET;
 
+RADDEFFUNC s32 Create_Bink_textures(BINKTEXTURESET* set_textures);
+RADDEFFUNC void Free_Bink_textures(BINKTEXTURESET* set_textures);
+RADDEFFUNC void Draw_Bink_textures(BINKTEXTURESET* set_textures, u32 width, u32 height, f32 x_offset,
+                                   f32 y_offset, f32 x_scale, f32 y_scale, f32 alpha_level);
+RADDEFFUNC void Wait_for_Bink_textures(BINKTEXTURESET* set_textures);
+RADDEFFUNC void Sync_Bink_textures(BINKTEXTURESET* set_textures);
+
 #endif
