@@ -154,6 +154,7 @@
 #define BP_ZIGZAG_COEFF(vals, index) ((vals)[zigzag[index]])
 #define BP_COEFF_BIT_LEVEL(value) (getbitlevelvar(value) & BP_BYTE_MASK)
 #define BP_NEXT_LEVEL(level) (((level) - 1) & BP_BYTE_MASK)
+#define BP_LEVEL_MASK(level) (1 << ((level) - 1))
 #define BP_LOSSLESS_LEVEL_CODE(level) ((level) & VarBitsLens[BP_LOSSLESS_LEVEL_BITS])
 #define BP_LOSSY_LEVEL_CODE(level) (((level) - 1) & VarBitsLens[BP_LOSSY_LEVEL_BITS])
 #define BP_LOSSY_LEVEL_COUNT(encoded) ((u8)((encoded) + 1))
@@ -753,7 +754,7 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
     /* The stream starts with the maximum active lossless bitplane level. */
     VarBitsGet(maxlevel, u8, bitcopy, BP_LOSSLESS_LEVEL_BITS);
     had_level = maxlevel != 0;
-    highbit = (u16)(1 << (maxlevel - 1));
+    highbit = (u16)BP_LEVEL_MASK(maxlevel);
     /* Root nodes mirror WriteBPLossless: three grouped roots plus coeffs 1..3. */
     roots = tree.roots;
     roots[BP_ROOT_GROUP1_SLOT] = BP_READ_TREE_GROUP1_ROOT;
@@ -1200,7 +1201,7 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
 
     cur = roots;
     next_node = roots + BP_LOSSY_ROOT_NODES;
-    bit_mask = (u16)(1 << (maxbits - 1));
+    bit_mask = (u16)BP_LEVEL_MASK(maxbits);
     i = 0;
     level = maxbits;
     for (; level != 0; level = BP_NEXT_LEVEL(level)) {
@@ -1342,7 +1343,7 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count)
     tree.roots[BP_ROOT_GROUP1_SLOT] = BP_READ_TREE_GROUP1_ROOT;
     tree.roots[BP_ROOT_GROUP6_SLOT] = BP_READ_TREE_GROUP6_ROOT;
     tree.roots[BP_ROOT_GROUP11_SLOT] = BP_READ_TREE_GROUP11_ROOT;
-    mask = (s32)(s8)(1 << (levels_remaining - 1));
+    mask = (s32)(s8)BP_LEVEL_MASK(levels_remaining);
     tree.roots[BP_ROOT_LOSSY_DC_SLOT] = BP_READ_TREE_DC_ROOT;
     tree_end_ptr = tree.nodes;
     nz_coeff_count = 0;
