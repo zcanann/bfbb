@@ -1999,7 +1999,7 @@ found_previous:
             u32 limit;
 
             limit = bnk->Frames;
-            frame_offsets = &bnk->frameoffsets[cur];
+            frame_offsets = bnk->frameoffsets + cur;
             do {
                 u32 frame_entry;
 
