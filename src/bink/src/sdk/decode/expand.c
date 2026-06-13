@@ -1201,7 +1201,7 @@ static void scale_block(const u8 PTR4* src, u8 PTR4* dest, u32 pitch)
         word = BINK_SCALE_PIXELS(in[3]);
         even[3] = word;
         odd[3] = word;
-        in += BINK_BLOCK_SIDE / sizeof(u16);
+        in += BINK_BLOCK_HALF_SIDE;
         dest += pitch * BINK_BLOCK_SCALE;
     }
 }
