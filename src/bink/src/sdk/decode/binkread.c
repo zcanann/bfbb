@@ -127,6 +127,7 @@ typedef enum BINKPlaneLayout
 } BINKPlaneLayout;
 
 #define BINK_MASK_BLOCK_INDEX(value) ((value) / BINK_MASK_BLOCK_SIZE)
+#define BINK_MASK_BLOCK_PIXELS(blocks) ((blocks) * BINK_MASK_BLOCK_SIZE)
 #define BINK_MASK_PLANE_BYTES(width, height) \
     ((((width) >> BINK_MASK_BLOCK_SHIFT) * (height)) >> BINK_MASK_BLOCK_SHIFT)
 #define BINK_DIRTY_SPLIT_SIZE(size) \
@@ -2509,9 +2510,9 @@ static s32 smallestrect(BINKRECT PTR4* out, const u8 PTR4* mask, s32 pitch, cons
 
 found_top:
     height_blocks -= top_blocks;
-    out->Top = rect->Top + top_blocks * BINK_MASK_BLOCK_SIZE;
+    out->Top = rect->Top + BINK_MASK_BLOCK_PIXELS(top_blocks);
     rect_mask += top_blocks * pitch;
-    remaining_height = rect->Height - top_blocks * BINK_MASK_BLOCK_SIZE;
+    remaining_height = rect->Height - BINK_MASK_BLOCK_PIXELS(top_blocks);
     out->Height = remaining_height;
 
     if (remaining_height > 1) {
@@ -2531,7 +2532,7 @@ found_top:
 
 found_bottom:
         height_blocks -= bottom_blocks;
-        out->Height = remaining_height - bottom_blocks * BINK_MASK_BLOCK_SIZE;
+        out->Height = remaining_height - BINK_MASK_BLOCK_PIXELS(bottom_blocks);
     }
 
     for (left_blocks = 0; left_blocks < width_blocks; ++left_blocks) {
@@ -2549,8 +2550,8 @@ found_bottom:
 found_left:
     width_blocks -= left_blocks;
     rect_mask += left_blocks;
-    out->Left = rect->Left + left_blocks * BINK_MASK_BLOCK_SIZE;
-    remaining_width = rect->Width - left_blocks * BINK_MASK_BLOCK_SIZE;
+    out->Left = rect->Left + BINK_MASK_BLOCK_PIXELS(left_blocks);
+    remaining_width = rect->Width - BINK_MASK_BLOCK_PIXELS(left_blocks);
     out->Width = remaining_width;
 
     if (remaining_width > 1) {
@@ -2570,7 +2571,7 @@ found_left:
         }
 
 found_right:
-        out->Width = remaining_width - (first_right - right_blocks) * BINK_MASK_BLOCK_SIZE;
+        out->Width = remaining_width - BINK_MASK_BLOCK_PIXELS(first_right - right_blocks);
     }
 
     result = 1;
