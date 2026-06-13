@@ -210,8 +210,12 @@ typedef char NGCSoundStateFitsInBinkSndData
 #define NGC_ALIGN_UP(value, mask) (((value) + (mask)) & ~(mask))
 #define NGC_SOUND_RATE_BYTES(sound) (((sound)->freq * (sound)->bits) >> NGC_SOUND_BITS_TO_BYTES_SHIFT)
 #define NGC_SOUND_BEST_SIZE_MASK(chans) (-((chans) << NGC_SOUND_BEST_SIZE_SHIFT))
+#define NGC_SOUND_RING_START(state) ((u32)(state)->audio_buffer)
+#define NGC_SOUND_CHANNEL_START(state, channel) \
+    (NGC_SOUND_RING_START(state) + ((channel) * (state)->channel_stride))
+#define NGC_SOUND_RING_END(state) (NGC_SOUND_RING_START(state) + (state)->channel_stride)
 #define NGC_SOUND_PLAY_LIMIT(state) \
-    (((u32)(state)->audio_buffer + (state)->channel_stride) - (state)->frame_size)
+    (NGC_SOUND_RING_END(state) - (state)->frame_size)
 #define NGC_SOUND_RIGHT_CURSOR(state) ((state)->play_cursor + (state)->channel_stride)
 #define NGC_SOUND_LOCK_BUFFER_OFFSET(index, stride) (((index) * (stride)) >> NGC_SOUND_HALF_BUFFER_SHIFT)
 #define NGC_AX_ADDR(addr, shift) ((addr) >> (shift))
@@ -313,7 +317,7 @@ static void NGC_SoundPlay(BINKSND PTR4* snd, u32 index, u32 upload_bytes)
                 AXSetVoiceEndAddr(voice, NGC_AX_RIGHT_END_ADDR(state, play_end));
             }
 
-            play_end = (u32)NGC_SOUND_STATE(snd)->audio_buffer;
+            play_end = NGC_SOUND_RING_START(NGC_SOUND_STATE(snd));
         }
     }
 
@@ -341,7 +345,7 @@ static s32 NGC_SoundReinit(BINKSND PTR4* snd)
         AXSetVoiceState(voice, AX_PB_STATE_STOP);
     }
 
-    ring_start = (u32)NGC_SOUND_STATE(snd)->audio_buffer;
+    ring_start = NGC_SOUND_RING_START(NGC_SOUND_STATE(snd));
     NGC_SOUND_STATE(snd)->lock_index = NGC_SOUND_NO_LOCK_INDEX;
     NGC_SOUND_STATE(snd)->play_state = NGC_PLAY_STATE_STOPPED;
     NGC_SOUND_STATE(snd)->play_cursor = ring_start;
@@ -476,9 +480,9 @@ static s32 NGC_SoundInit(BINKSND PTR4* snd)
             return 0;
         }
 
-        start = ((u32)NGC_SOUND_STATE(snd)->audio_buffer + (i * NGC_SOUND_STATE(snd)->channel_stride)) >>
+        start = NGC_SOUND_CHANNEL_START(NGC_SOUND_STATE(snd), i) >>
                 NGC_SOUND_STATE(snd)->address_shift;
-        end = (((u32)NGC_SOUND_STATE(snd)->audio_buffer + ((i + 1) * NGC_SOUND_STATE(snd)->channel_stride)) >>
+        end = (NGC_SOUND_CHANNEL_START(NGC_SOUND_STATE(snd), i + 1) >>
                NGC_SOUND_STATE(snd)->address_shift) -
               1;
 
@@ -615,7 +619,7 @@ static s32 Lock(BINKSND PTR4* snd, u8 PTR4* PTR4* addr, u32 PTR4* len)
 
         if (writable_bytes >= voice_cursor) {
             channel_stride = NGC_SOUND_STATE(snd)->channel_stride;
-            writable_bytes = ((u32)NGC_SOUND_STATE(snd)->audio_buffer + channel_stride) - writable_bytes;
+            writable_bytes = NGC_SOUND_RING_END(NGC_SOUND_STATE(snd)) - writable_bytes;
         } else {
             channel_stride = NGC_SOUND_STATE(snd)->channel_stride;
             writable_bytes = (voice_cursor - writable_bytes) - NGC_SOUND_CURSOR_GUARD_BYTES;
@@ -865,7 +869,7 @@ static s32 Ready(BINKSND PTR4* snd)
             } else {
                 buffered_bytes =
                     (end_cursor - voice_cursor) +
-                    (buffered_bytes - (u32)NGC_SOUND_STATE(snd)->audio_buffer);
+                    (buffered_bytes - NGC_SOUND_RING_START(NGC_SOUND_STATE(snd)));
             }
             if (buffered_bytes >= NGC_SOUND_STATE(snd)->starvation_threshold) {
                 goto check_tasks;
