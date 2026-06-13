@@ -22,7 +22,21 @@ f32 sinf(f32 x);
 #define RFT_HALF_SCALE 0.5f
 #define RFT_INV_HALF_SCALE 0.5f
 
-#define FFT_WORK_INDEX_OFFSET 2
+typedef enum FFTWorkArraySlot
+{
+    FFT_WORK_TWIDDLE_SIZE_SLOT,
+    FFT_WORK_COSINE_SIZE_SLOT,
+    FFT_WORK_INDEX_OFFSET
+} FFTWorkArraySlot;
+
+typedef enum FFTTwiddleSlot
+{
+    FFT_TWIDDLE_ONE_SLOT,
+    FFT_TWIDDLE_QUARTER_COS_SLOT,
+    FFT_TWIDDLE_SECANT1_SLOT,
+    FFT_TWIDDLE_SECANT3_SLOT
+} FFTTwiddleSlot;
+
 #define FFT_EIGHTH_SIZE(n) ((n) >> 3)
 #define FFT_QUARTER_SIZE(n) ((s32)(n) >> 2)
 #define FFT_HALF_SIZE(n) ((n) >> 1)
@@ -75,13 +89,13 @@ void rdft(u32 n, s32 isgn, f32 PTR4* a, s32 PTR4* ip, f32 PTR4* w)
     s32 nw;
     s32 nc;
 
-    nw = ip[0];
+    nw = ip[FFT_WORK_TWIDDLE_SIZE_SLOT];
     if ((s32)n > FFT_TABLE_FULL_SIZE(nw)) {
         nw = FFT_QUARTER_SIZE(n);
         makewt(nw, ip, w);
     }
 
-    nc = ip[1];
+    nc = ip[FFT_WORK_COSINE_SIZE_SLOT];
     if ((s32)n > FFT_TABLE_FULL_SIZE(nc)) {
         nc = FFT_QUARTER_SIZE(n);
         makect(nc, ip, w + nw);
@@ -119,13 +133,13 @@ void ddct(u32 n, s32 isgn, f32 PTR4* a, s32 PTR4* ip, f32 PTR4* w)
     s32 nw;
     s32 nc;
 
-    nw = ip[0];
+    nw = ip[FFT_WORK_TWIDDLE_SIZE_SLOT];
     if ((s32)n > FFT_TABLE_FULL_SIZE(nw)) {
         nw = FFT_QUARTER_SIZE(n);
         makewt(nw, ip, w);
     }
 
-    nc = ip[1];
+    nc = ip[FFT_WORK_COSINE_SIZE_SLOT];
     if ((s32)n > nc) {
         nc = n;
         makect(nc, ip, w + nw);
@@ -181,21 +195,21 @@ static void makewt(s32 nw, s32 PTR4* ip, f32 PTR4* w)
     f32 x;
     f32 wn4r;
 
-    ip[1] = 1;
-    ip[0] = nw;
+    ip[FFT_WORK_COSINE_SIZE_SLOT] = 1;
+    ip[FFT_WORK_TWIDDLE_SIZE_SLOT] = nw;
 
     if (nw > 2) {
         nwh = FFT_HALF_SIZE(nw);
         delta = atanf(FFT_TRIG_ONE) / (f32)nwh;
         x = cosf(delta * (f32)nwh);
         wn4r = x;
-        w[1] = x;
-        w[0] = FFT_TRIG_ONE;
+        w[FFT_TWIDDLE_QUARTER_COS_SLOT] = x;
+        w[FFT_TWIDDLE_ONE_SLOT] = FFT_TRIG_ONE;
 
         if (nwh > 3) {
             x = cosf(delta + delta);
-            w[2] = FFT_HALF_SECANT_SCALE / x;
-            w[3] = FFT_HALF_SECANT_SCALE / cosf(delta * FFT_SIX);
+            w[FFT_TWIDDLE_SECANT1_SLOT] = FFT_HALF_SECANT_SCALE / x;
+            w[FFT_TWIDDLE_SECANT3_SLOT] = FFT_HALF_SECANT_SCALE / cosf(delta * FFT_SIX);
         }
 
         j = 4;
@@ -263,7 +277,7 @@ static void makect(s32 nc, s32 PTR4* ip, f32 PTR4* c)
     f32 x;
     f64 half;
 
-    ip[1] = nc;
+    ip[FFT_WORK_COSINE_SIZE_SLOT] = nc;
 
     if (nc > 1) {
         nch = FFT_HALF_SIZE(nc);
@@ -363,7 +377,7 @@ static void bitrv2(s32 n, s32 PTR4* ip, f32 PTR4* a)
     s32 k1;
     f32 yi;
 
-    ip[0] = 0;
+    ip[FFT_WORK_TWIDDLE_SIZE_SLOT] = 0;
     l = n;
     m = 1;
     while ((m << 3) < l) {
@@ -493,7 +507,7 @@ static void bitrv2conj(s32 n, s32 PTR4* ip, f32 PTR4* a)
     s32 k1;
     f32 yi;
 
-    ip[0] = 0;
+    ip[FFT_WORK_TWIDDLE_SIZE_SLOT] = 0;
     l = n;
     m = 1;
     while ((m << 3) < l) {
@@ -863,9 +877,9 @@ static void cftf1st(s32 n, f32 PTR4* a, f32 PTR4* w)
     a[j2 + 1] = x1i + x3r;
     a[j3] = x1r + x3i;
     a[j3 + 1] = x1i - x3r;
-    wn4r = w[1];
-    csc1 = w[2];
-    csc3 = w[3];
+    wn4r = w[FFT_TWIDDLE_QUARTER_COS_SLOT];
+    csc1 = w[FFT_TWIDDLE_SECANT1_SLOT];
+    csc3 = w[FFT_TWIDDLE_SECANT3_SLOT];
     wd1r = CFT_ROT_ONE;
     wd1i = CFT_ROT_ZERO;
     wd3r = CFT_ROT_ONE;
@@ -1069,9 +1083,9 @@ static void cftb1st(s32 n, f32 PTR4* a, f32 PTR4* w)
     a[j2 + 1] = x1i + x3r;
     a[j3] = x1r - x3i;
     a[j3 + 1] = x1i - x3r;
-    wn4r = w[1];
-    csc1 = w[2];
-    csc3 = w[3];
+    wn4r = w[FFT_TWIDDLE_QUARTER_COS_SLOT];
+    csc1 = w[FFT_TWIDDLE_SECANT1_SLOT];
+    csc3 = w[FFT_TWIDDLE_SECANT3_SLOT];
     wd1r = CFT_INV_ROT_ONE;
     wd1i = CFT_INV_ROT_ZERO;
     wd3r = CFT_INV_ROT_ONE;
@@ -1412,7 +1426,7 @@ static void cftmdl1(s32 n, f32 PTR4* a, f32 PTR4* w)
     a[j2 + 1] = x1i + x3r;
     a[j3] = x1r + x3i;
     a[j3 + 1] = x1i - x3r;
-    wn4r = w[1];
+    wn4r = w[FFT_TWIDDLE_QUARTER_COS_SLOT];
     k = 0;
     for (j = 2; j < mh; j += 2) {
         k += 4;
@@ -1528,7 +1542,7 @@ static void cftmdl2(s32 n, f32 PTR4* a, f32 PTR4* w)
 
     mh = FFT_EIGHTH_SIZE(n);
     m = 2 * mh;
-    wn4r = w[1];
+    wn4r = w[FFT_TWIDDLE_QUARTER_COS_SLOT];
     j1 = m;
     j2 = j1 + m;
     j3 = j2 + m;
@@ -1690,8 +1704,8 @@ static void cftf161(f32 PTR4* a, f32 PTR4* w)
     f32 y8r, y8i, y9r, y9i, y10r, y10i, y11r, y11i;
     f32 y12r, y12i, y13r, y13i, y14r, y14i, y15r, y15i;
 
-    wn4r = w[1];
-    csc1 = w[2];
+    wn4r = w[FFT_TWIDDLE_QUARTER_COS_SLOT];
+    csc1 = w[FFT_TWIDDLE_SECANT1_SLOT];
     wk1i = wn4r * csc1;
     wk1r = wk1i + csc1;
     x0r = a[0] + a[16];
@@ -1848,7 +1862,7 @@ static void cftf162(f32 PTR4* a, f32 PTR4* w)
            y8r, y8i, y9r, y9i, y10r, y10i, y11r, y11i,
            y12r, y12i, y13r, y13i, y14r, y14i, y15r, y15i;
 
-    wn4r = w[1];
+    wn4r = w[FFT_TWIDDLE_QUARTER_COS_SLOT];
     wk1r = w[4];
     wk1i = w[5];
     wk3r = w[6];
@@ -2027,7 +2041,7 @@ static void cftf081(f32 PTR4* a, f32 PTR4* w)
     f32 y0r, y0i, y1r, y1i, y2r, y2i, y3r, y3i;
     f32 y4r, y4i, y5r, y5i, y6r, y6i, y7r, y7i;
 
-    wn4r = w[1];
+    wn4r = w[FFT_TWIDDLE_QUARTER_COS_SLOT];
     x0r = a[0] + a[8];
     x0i = a[1] + a[9];
     x1r = a[0] - a[8];
@@ -2088,7 +2102,7 @@ static void cftf082(f32 PTR4* a, f32 PTR4* w)
     f32 y0r, y0i, y1r, y1i, y2r, y2i, y3r, y3i;
     f32 y4r, y4i, y5r, y5i, y6r, y6i, y7r, y7i;
 
-    wn4r = w[1];
+    wn4r = w[FFT_TWIDDLE_QUARTER_COS_SLOT];
     wk1r = w[4];
     wk1i = w[5];
     y0r = a[0] - a[9];
