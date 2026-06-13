@@ -138,6 +138,8 @@ typedef enum NGCDVDAlignment
 #define NGC_BYTES_LEFT_TO_READ(io) (NGC_FILE_SIZE(io) - NGC_READ_CURSOR(io))
 #define NGC_BYTES_LEFT_TO_CONSUME(io) (NGC_FILE_SIZE(io) - NGC_CONSUME_CURSOR(io))
 #define NGC_DVD_FILE_OFFSET(io, cursor) ((cursor) + NGC_FILE_OFFSET(io))
+#define NGC_BUFFERED_FORWARD_SEEK(io, offset) \
+    ((u32)(offset) > NGC_CONSUME_CURSOR(io) && (u32)(offset) <= NGC_READ_CURSOR(io))
 #define NGC_RING_START(io) NGC_BUFFER(io)
 #define NGC_RING_BYTES_TO_END(io) (NGC_BUFFER_END(io) - NGC_READ_PTR(io))
 #define NGC_RING_WRITE_REACHED_END(io, ptr) ((u32)(ptr) >= (u32)NGC_BUFFER_END(io))
@@ -474,7 +476,7 @@ static u32 BinkFileReadFrame(BINKIO PTR4* io, u32 frame_num, s32 offset, void PT
     start_time = RADTimerRead();
 
     if (offset != BINK_FILE_CURRENT_OFFSET && NGC_CONSUME_CURSOR(io) != (u32)offset) {
-        if ((u32)offset > NGC_CONSUME_CURSOR(io) && (u32)offset <= NGC_READ_CURSOR(io)) {
+        if (NGC_BUFFERED_FORWARD_SEEK(io, offset)) {
             BOOL enabled;
             u32 skip;
             u8 PTR4* read_ptr;
