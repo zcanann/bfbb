@@ -227,6 +227,9 @@ typedef enum BINKPlaneSlot
 #define BINK_SHIFT_RUNTIME_HISTORY(bink, field) \
     memmove((bink)->field + 1, (bink)->field, (bink)->runtimemoveamt)
 #define BINK_FRAME_OFFSETS_BYTES(frames, ptr) (((frames) + 1) * sizeof(*(ptr)))
+#define BINK_PRELOADED_FRAME_PTR(bink, frame) \
+    ((bink)->preloadptr + (BINK_FRAME_OFFSET((bink)->frameoffsets[(frame)]) - \
+                           BINK_FRAME_OFFSET(*(bink)->frameoffsets)))
 #define BINK_VIDEO_PLANE_BYTES(bink) \
     ((bink)->YWidth * (bink)->YHeight + (bink)->UVWidth * (bink)->UVHeight * BINK_CHROMA_PLANE_COUNT)
 #define BINK_ALPHA_PLANE_BYTES(bink) ((bink)->YWidth * (bink)->YHeight)
@@ -941,8 +944,7 @@ static void GotoFrame(HBINK bnk, u32 frame)
     }
     if (bnk->preloadptr != 0)
     {
-        bnk->compframe = bnk->preloadptr + (BINK_FRAME_OFFSET(bnk->frameoffsets[frame]) -
-                                            BINK_FRAME_OFFSET(*bnk->frameoffsets));
+        bnk->compframe = BINK_PRELOADED_FRAME_PTR(bnk, frame);
     }
     else
     {
