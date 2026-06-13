@@ -167,7 +167,10 @@ typedef enum BINKBUNDLEINITIALVALUE
     ((((width) * (bits)) >> BINK_BLOCK_SHIFT) + \
      ((BINK_BLOCK_ROWS(rows) * (pitch) * (bits)) >> BINK_BLOCK_SHIFT))
 #define BINK_BUNDLE_ALIGN_SIZE(size) (((size) + BINK_WORD_ALIGN_MASK) & ~BINK_WORD_ALIGN_MASK)
+#define BINK_BUNDLE_DATA_BEGIN(bundle) ((bundle)->data)
 #define BINK_BUNDLE_EMPTY_CUR(bundle) ((bundle)->data + EXP_WORD_BYTES)
+#define BINK_BUNDLE_DATA_END(bundle, count) ((bundle)->data + (count))
+#define BINK_BUNDLE_DATA_WORD_END(bundle, count, type) ((bundle)->data + (count) * sizeof(type))
 #define BINK_BUNDLE_HAS_UNREAD_DATA(bundle) ((bundle)->cur_ptr != (bundle)->cur_dec)
 #define BINK_BUNDLE_U8(bundle) (*(bundle).cur_ptr)
 #define BINK_BUNDLE_S8(bundle) (*(s8 PTR4*)((bundle).cur_ptr))
@@ -731,8 +734,8 @@ static void CheckReadRLEHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
 
     VarBitsGet(count, u32, *bits, bundle->count_length);
     if (count != 0) {
-        bundle->cur_ptr = bundle->data;
-        bundle->cur_dec = bundle->data + count;
+        bundle->cur_ptr = BINK_BUNDLE_DATA_BEGIN(bundle);
+        bundle->cur_dec = BINK_BUNDLE_DATA_END(bundle, count);
         if (exp_get_bit(bits) == 0) {
             /* Literal Huff4 symbols above 11 repeat the previous decoded symbol. */
             syms = bundle->syms;
@@ -792,9 +795,9 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
 
     VarBitsGet(count, u32, *bits, bundle->count_length);
     if (count != 0) {
-        bundle->cur_ptr = bundle->data;
-        bundle->cur_dec = bundle->data + count;
-        dest = bundle->data;
+        bundle->cur_ptr = BINK_BUNDLE_DATA_BEGIN(bundle);
+        bundle->cur_dec = BINK_BUNDLE_DATA_END(bundle, count);
+        dest = BINK_BUNDLE_DATA_BEGIN(bundle);
         syms = bundle->syms;
         decode = bundle->decode;
         peek = bundle->bits_to_peek;
@@ -850,9 +853,9 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
 
     VarBitsGet(count, u32, *bits, bundle->count_length);
     if (count != 0) {
-        bundle->cur_ptr = bundle->data;
-        bundle->cur_dec = bundle->data + count;
-        dest = bundle->data;
+        bundle->cur_ptr = BINK_BUNDLE_DATA_BEGIN(bundle);
+        bundle->cur_dec = BINK_BUNDLE_DATA_END(bundle, count);
+        dest = BINK_BUNDLE_DATA_BEGIN(bundle);
         syms = bundle->syms;
         decode = bundle->decode;
         peek = bundle->bits_to_peek;
@@ -897,14 +900,14 @@ static void CheckReadHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
 
     VarBitsGet(count, u32, *bits, bundle->count_length);
     if (count != 0) {
-        bundle->cur_ptr = bundle->data;
-        bundle->cur_dec = bundle->data + count;
+        bundle->cur_ptr = BINK_BUNDLE_DATA_BEGIN(bundle);
+        bundle->cur_dec = BINK_BUNDLE_DATA_END(bundle, count);
         if (exp_get_bit(bits) == 0) {
             /* Direct Huff4 bundles decode one nibble-sized symbol per byte. */
             syms = bundle->syms;
             decode = bundle->decode;
             peek = bundle->bits_to_peek;
-            dest = bundle->data;
+            dest = BINK_BUNDLE_DATA_BEGIN(bundle);
             while (count-- != 0) {
                 exp_read_huff4_store(bits, peek, decode, syms, dest);
                 ++dest;
@@ -936,9 +939,9 @@ static void CheckReadHuff4PairBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits
 
     VarBitsGet(count, u32, *bits, bundle->count_length);
     if (count != 0) {
-        dest = bundle->data;
+        dest = BINK_BUNDLE_DATA_BEGIN(bundle);
         bundle->cur_ptr = dest;
-        bundle->cur_dec = dest + count;
+        bundle->cur_dec = BINK_BUNDLE_DATA_END(bundle, count);
         syms = bundle->syms;
         decode = bundle->decode;
         peek = bundle->bits_to_peek;
@@ -972,14 +975,14 @@ static void CheckReadHuff4SBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
 
     VarBitsGet(count, u32, *bits, bundle->count_length);
     if (count != 0) {
-        bundle->cur_ptr = bundle->data;
-        bundle->cur_dec = bundle->data + count;
+        bundle->cur_ptr = BINK_BUNDLE_DATA_BEGIN(bundle);
+        bundle->cur_dec = BINK_BUNDLE_DATA_END(bundle, count);
         if (exp_get_bit(bits) == 0) {
             /* Signed Huff4 bundles store a sign bit only for nonzero symbols. */
             syms = bundle->syms;
             peek = bundle->bits_to_peek;
             decode = bundle->decode;
-            dest = bundle->data;
+            dest = BINK_BUNDLE_DATA_BEGIN(bundle);
             while (count-- != 0) {
                 symbol = (s32)exp_read_huff4(bits, peek, decode, syms);
                 if (symbol != 0 && exp_get_bit(bits) != 0) {
@@ -1015,7 +1018,7 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
 
     VarBitsGet(count, u32, *bits, bundle->count_length);
     if (count != 0) {
-        dest = (s16 PTR4*)bundle->data;
+        dest = (s16 PTR4*)BINK_BUNDLE_DATA_BEGIN(bundle);
         if (bundle->initial_value != BINK_BUNDLE_INITIAL_VALUE_NONE) {
             VarBitsGet(predictor, u16, *bits, BINK_BUNDLE_SIGNED_MAGNITUDE_BITS(bundle->bit_size));
             if (predictor != 0) {
@@ -1028,8 +1031,8 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
         }
 
         *dest++ = (s16)predictor;
-        bundle->cur_ptr = bundle->data;
-        bundle->cur_dec = bundle->data + count * sizeof(*dest);
+        bundle->cur_ptr = BINK_BUNDLE_DATA_BEGIN(bundle);
+        bundle->cur_dec = BINK_BUNDLE_DATA_WORD_END(bundle, count, *dest);
         count--;
         while (count != 0) {
             group_size = count;
