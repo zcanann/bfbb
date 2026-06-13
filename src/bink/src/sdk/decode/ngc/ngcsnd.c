@@ -223,6 +223,8 @@ typedef char NGCSoundStateFitsInBinkSndData
 #define NGC_SOUND_LOCK_BUFFER_OFFSET(index, stride) (((index) * (stride)) >> NGC_SOUND_HALF_BUFFER_SHIFT)
 #define NGC_SOUND_LOCK_BUFFER(base, index, stride) \
     ((base) + NGC_SOUND_LOCK_BUFFER_OFFSET((index), (stride)))
+#define NGC_SOUND_RIGHT_LOCK_BUFFER(left, stride) ((left) + (stride))
+#define NGC_SOUND_DECODE_BYTES(channel_bytes, chans) ((channel_bytes) * (chans))
 #define NGC_AX_ADDR(addr, shift) ((addr) >> (shift))
 #define NGC_AX_END_ADDR(addr, shift) (NGC_AX_ADDR(addr, shift) - AX_ADDR_INCLUSIVE_END_ADJUST)
 #define NGC_AX_RIGHT_ADDR(state, addr) \
@@ -641,10 +643,10 @@ static s32 Lock(BINKSND PTR4* snd, u8 PTR4* PTR4* addr, u32 PTR4* len)
         task = NGC_LEFT_LOCK_TASK(state, NGC_SOUND_STATE(snd)->lock_index);
         left_buffer = NGC_SOUND_LOCK_BUFFER(NGC_SOUND_STATE(snd)->decode_buffer,
                                             NGC_SOUND_STATE(snd)->lock_index, channel_stride);
-        writable_bytes *= snd->chans;
+        writable_bytes = NGC_SOUND_DECODE_BYTES(writable_bytes, snd->chans);
         task->source = (u32)left_buffer;
         decode_buffer = left_buffer;
-        left_buffer += NGC_SOUND_STATE(snd)->channel_stride;
+        left_buffer = NGC_SOUND_RIGHT_LOCK_BUFFER(left_buffer, NGC_SOUND_STATE(snd)->channel_stride);
         right_task = NGC_RIGHT_LOCK_TASK(state, NGC_SOUND_STATE(snd)->lock_index);
         right_task->source = (u32)left_buffer;
 
