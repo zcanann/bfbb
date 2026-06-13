@@ -149,6 +149,7 @@ typedef enum BINKBundleLayout
 #define BINK_BLOCK_ROW_ADVANCE(pitch, width) ((pitch) * BINK_BLOCK_SIDE - (width))
 #define BINK_WORK_PITCH(pitch, plane) ((pitch) / (BINK_WORK_BLOCK_SPAN / (plane)))
 #define BINK_SUBBLOCK_BUNDLE_WIDTH(width) ((width) >> BINK_CHROMA_SHIFT)
+#define BINK_SUBBLOCK_BUNDLE_ROWS(rows) ((rows) >> BINK_CHROMA_SHIFT)
 #define BINK_BUNDLE_COUNT_BASE(rows, pitch) (BINK_BLOCK_ROWS(rows) * (pitch) - 1)
 #define BINK_BUNDLE_COUNT_BITS(width, count_base) \
     getbitlevelvar(((width) + (count_base)) & EXP_U16_MASK)
@@ -1183,7 +1184,7 @@ void ExpandBundleSizes(u32 PTR4* sizes, u32 rows)
        motion X/Y, intra/inter DC, then run lengths. */
     sizes[BINK_BUNDLE_BLOCK_TYPES] = getbunsize(BINK_BUNDLE_WIDTH, rows, BINK_BLOCK_TYPE_BITS, BINK_BUNDLE_BYTE_PITCH);
     sizes[BINK_BUNDLE_SUBBLOCK_TYPES] =
-        getbunsize(BINK_BUNDLE_WIDTH, rows >> BINK_CHROMA_SHIFT, BINK_BLOCK_TYPE_BITS, BINK_BUNDLE_BYTE_PITCH);
+        getbunsize(BINK_BUNDLE_WIDTH, BINK_SUBBLOCK_BUNDLE_ROWS(rows), BINK_BLOCK_TYPE_BITS, BINK_BUNDLE_BYTE_PITCH);
     sizes[BINK_BUNDLE_COLORS] =
         getbunsize(BINK_BUNDLE_WIDTH, rows, BINK_COLOR_BITS, BINK_COLOR_BLOCK_BYTES);
     sizes[BINK_BUNDLE_PATTERN] =
