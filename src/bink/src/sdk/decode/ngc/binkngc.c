@@ -82,6 +82,8 @@ typedef union RADTimebase64
 #define RAD_ALLOC_PREFIX_OWNER(ptr) (RAD_ALLOC_PREFIX(ptr)->owner)
 #define RAD_ALLOC_PREFIX_OFFSET(ptr) (RAD_ALLOC_PREFIX(ptr)->offset)
 #define RAD_ALLOC_BASE(ptr) ((u8 PTR4*)(ptr) - RAD_ALLOC_PREFIX_OFFSET(ptr))
+#define RAD_ALLOC_ALIGN_OFFSET(addr) \
+    ((u32)(RAD_ALLOC_HEADER_SIZE - ((addr) & RAD_ALLOC_ALIGNMENT_MASK)) & RAD_ALLOC_OFFSET_MASK)
 
 static inline u32 radcntlzw(u32 value)
 {
@@ -279,8 +281,7 @@ void PTR4* radmalloc(u32 numbytes)
         owner = RAD_ALLOC_SYSTEM_OWNED;
     }
     raw_addr = (u32)raw_block;
-    align_offset =
-        (u32)(RAD_ALLOC_HEADER_SIZE - (raw_addr & RAD_ALLOC_ALIGNMENT_MASK)) & RAD_ALLOC_OFFSET_MASK;
+    align_offset = RAD_ALLOC_ALIGN_OFFSET(raw_addr);
     aligned = (u8 PTR4*)raw_block + align_offset;
     RAD_ALLOC_PREFIX(aligned)->offset = (u8)align_offset;
     RAD_ALLOC_PREFIX(aligned)->owner = (u8)owner;
