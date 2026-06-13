@@ -40,10 +40,6 @@ typedef enum BINKFrameOffsetFlags
     BINKFRAMEOFFSETMASK = 0xfffffffe,
     BINKFRAMEKEYFLAG = 1
 } BINKFrameOffsetFlags;
-typedef enum BINKIOOffset
-{
-    BINK_IO_CURRENT_OFFSET = -1
-} BINKIOOffset;
 /* Frame-offset table entries use bit 0 as the key-frame marker. */
 #define BINK_FRAME_OFFSET(frameoffset) ((frameoffset) & BINKFRAMEOFFSETMASK)
 #define BINK_FRAME_KEY(frameoffset) ((frameoffset) & BINKFRAMEKEYFLAG)

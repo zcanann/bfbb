@@ -50,6 +50,10 @@ typedef u32(RADLINK PTR4* BINKIOREADHEADER)(struct BINKIO PTR4* Bnkio, s32 Offse
                                             u32 Size);
 typedef u32(RADLINK PTR4* BINKIOREADFRAME)(struct BINKIO PTR4* Bnkio, u32 Framenum, s32 origofs,
                                            void PTR4* dest, u32 size);
+typedef enum BINKIOOffset
+{
+    BINK_IO_CURRENT_OFFSET = -1
+} BINKIOOffset;
 typedef u32(RADLINK PTR4* BINKIOGETBUFFERSIZE)(struct BINKIO PTR4* Bnkio, u32 Size);
 typedef void(RADLINK PTR4* BINKIOSETINFO)(struct BINKIO PTR4* Bnkio, void PTR4* Buf, u32 Size,
                                           u32 FileSize, u32 simulate);

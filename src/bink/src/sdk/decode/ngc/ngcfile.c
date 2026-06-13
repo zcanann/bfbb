@@ -36,11 +36,6 @@ typedef enum NGCDVDEntry
     NGC_DVD_ENTRY_NOT_FOUND = -1
 } NGCDVDEntry;
 
-typedef enum BINKFileOffset
-{
-    BINK_FILE_CURRENT_OFFSET = -1
-} BINKFileOffset;
-
 typedef enum NGCReadErrorState
 {
     NGC_READ_OK,
@@ -259,7 +254,7 @@ static u32 BinkFileReadHeader(BINKIO PTR4* io, s32 offset, void PTR4* dest, u32 
     u32 remaining;
     u32 limit;
 
-    if (offset != BINK_FILE_CURRENT_OFFSET && NGC_READ_CURSOR(io) != (u32)offset) {
+    if (offset != BINK_IO_CURRENT_OFFSET && NGC_READ_CURSOR(io) != (u32)offset) {
         NGC_READ_CURSOR(io) = offset;
     }
 
@@ -475,7 +470,7 @@ static u32 BinkFileReadFrame(BINKIO PTR4* io, u32 frame_num, s32 offset, void PT
 
     start_time = RADTimerRead();
 
-    if (offset != BINK_FILE_CURRENT_OFFSET && NGC_CONSUME_CURSOR(io) != (u32)offset) {
+    if (offset != BINK_IO_CURRENT_OFFSET && NGC_CONSUME_CURSOR(io) != (u32)offset) {
         if (NGC_BUFFERED_FORWARD_SEEK(io, offset)) {
             BOOL enabled;
             u32 skip;
