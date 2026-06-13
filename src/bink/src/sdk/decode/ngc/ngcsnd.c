@@ -225,6 +225,8 @@ typedef char NGCSoundStateFitsInBinkSndData
     ((base) + NGC_SOUND_LOCK_BUFFER_OFFSET((index), (stride)))
 #define NGC_SOUND_RIGHT_LOCK_BUFFER(left, stride) ((left) + (stride))
 #define NGC_SOUND_DECODE_BYTES(channel_bytes, chans) ((channel_bytes) * (chans))
+#define NGC_SOUND_HAS_PENDING_END(state) ((state)->pending_end != 0)
+#define NGC_SOUND_IN_STARVATION_WINDOW(state, now) (((now) - (state)->last_ready_time) < (state)->starvation_time)
 #define NGC_AX_ADDR(addr, shift) ((addr) >> (shift))
 #define NGC_AX_END_ADDR(addr, shift) (NGC_AX_ADDR(addr, shift) - AX_ADDR_INCLUSIVE_END_ADJUST)
 #define NGC_AX_RIGHT_ADDR(state, addr) \
@@ -869,7 +871,7 @@ static s32 Ready(BINKSND PTR4* snd)
             NGC_SOUND_STATE(snd)->play_cursor = (u32)NGC_SOUND_STATE(snd)->audio_buffer;
         }
 
-        if ((now - NGC_SOUND_STATE(snd)->last_ready_time) < NGC_SOUND_STATE(snd)->starvation_time) {
+        if (NGC_SOUND_IN_STARVATION_WINDOW(NGC_SOUND_STATE(snd), now)) {
             buffered_bytes = NGC_SOUND_STATE(snd)->play_cursor;
             if (voice_cursor < buffered_bytes) {
                 buffered_bytes -= voice_cursor;
@@ -889,7 +891,7 @@ static s32 Ready(BINKSND PTR4* snd)
     }
 
 check_tasks:
-    if (NGC_SOUND_STATE(snd)->pending_end == 0) {
+    if (!NGC_SOUND_HAS_PENDING_END(NGC_SOUND_STATE(snd))) {
         /* Only offer a lock when the writer is safely ahead of the AX cursor. */
         if (NGC_SOUND_STATE(snd)->play_cursor >= voice_cursor ||
             voice_cursor - NGC_SOUND_STATE(snd)->play_cursor > NGC_SOUND_STATE(snd)->frame_size) {
