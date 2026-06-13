@@ -791,9 +791,9 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
     const u8 PTR4* decode;
     u32 peek;
     u32 mask;
-    u32 lastval;
-    u32 high;
-    u32 low;
+    u32 last_high_nibble;
+    u32 high_nibble;
+    u32 low_nibble;
     u32 packed;
     s32 remaining;
 
@@ -809,7 +809,7 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
         syms = bundle->syms;
         decode = bundle->decode;
         peek = bundle->bits_to_peek;
-        lastval = huff8_table->last_high_nibble;
+        last_high_nibble = huff8_table->last_high_nibble;
         if (exp_get_bit(bits)) {
             /* Negative remaining marks the old-format repeat packet variant. */
             count = BINK_BUNDLE_REPEAT_COUNT(count);
@@ -817,10 +817,10 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
         mask = GetBitsLen(peek);
         remaining = (s32)count;
         do {
-            high = exp_read_huff8(bits, lastval, huff8_table);
-            lastval = high;
-            low = exp_read_huff4_mask(bits, peek, decode, syms, mask);
-            packed = HUFF4_PACK_MASKED_NIBBLES(low, high);
+            high_nibble = exp_read_huff8(bits, last_high_nibble, huff8_table);
+            last_high_nibble = high_nibble;
+            low_nibble = exp_read_huff4_mask(bits, peek, decode, syms, mask);
+            packed = HUFF4_PACK_MASKED_NIBBLES(low_nibble, high_nibble);
             if ((packed & BINK_SIGNED_BYTE_BIAS) != 0) {
                 packed = BINK_SIGNED_BYTE_NEGATIVE(packed);
             } else {
@@ -834,7 +834,7 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
             /* Repeat packets back-fill the whole bundle with the first decoded byte. */
             memset(bundle->data, *bundle->data, BINK_BUNDLE_REPEAT_FILL_COUNT(remaining));
         }
-        huff8_table->last_high_nibble = lastval;
+        huff8_table->last_high_nibble = last_high_nibble;
     } else {
         bundle->cur_dec = bundle->data;
         bundle->cur_ptr = BINK_BUNDLE_EMPTY_CUR(bundle);
@@ -850,8 +850,8 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
     const u8 PTR4* decode;
     u32 peek;
     u32 mask;
-    u32 lastval;
-    u32 low;
+    u32 last_high_nibble;
+    u32 low_nibble;
     u32 packed;
     s32 remaining;
 
@@ -867,7 +867,7 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
         syms = bundle->syms;
         decode = bundle->decode;
         peek = bundle->bits_to_peek;
-        lastval = huff8_table->last_high_nibble;
+        last_high_nibble = huff8_table->last_high_nibble;
         if (exp_get_bit(bits)) {
             /* New-format Huff8 repeat packets keep the byte unsigned. */
             count = BINK_BUNDLE_REPEAT_COUNT(count);
@@ -875,9 +875,9 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
         mask = GetBitsLen(peek);
         remaining = (s32)count;
         do {
-            lastval = exp_read_huff8(bits, lastval, huff8_table);
-            low = exp_read_huff4_mask(bits, peek, decode, syms, mask);
-            packed = HUFF4_PACK_NIBBLES(low, lastval);
+            last_high_nibble = exp_read_huff8(bits, last_high_nibble, huff8_table);
+            low_nibble = exp_read_huff4_mask(bits, peek, decode, syms, mask);
+            packed = HUFF4_PACK_NIBBLES(low_nibble, last_high_nibble);
             *dest++ = (u8)packed;
             remaining--;
         } while (remaining > 0);
@@ -886,7 +886,7 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
             /* Match old-format repeat handling after the one-byte payload is decoded. */
             memset(bundle->data, *bundle->data, BINK_BUNDLE_REPEAT_FILL_COUNT(remaining));
         }
-        huff8_table->last_high_nibble = lastval;
+        huff8_table->last_high_nibble = last_high_nibble;
     } else {
         bundle->cur_dec = bundle->data;
         bundle->cur_ptr = BINK_BUNDLE_EMPTY_CUR(bundle);
@@ -938,8 +938,8 @@ static void CheckReadHuff4PairBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits
     const u8 PTR4* decode;
     u32 peek;
     u32 mask;
-    u32 low;
-    u32 high;
+    u32 low_nibble;
+    u32 high_nibble;
 
     if (BINK_BUNDLE_HAS_UNREAD_DATA(bundle)) {
         return;
@@ -957,9 +957,9 @@ static void CheckReadHuff4PairBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits
         do {
             /* Pair bundles pack two Huff4 symbols into each output byte. */
             count--;
-            low = exp_read_huff4_mask(bits, peek, decode, syms, mask);
-            high = exp_read_huff4_mask(bits, peek, decode, syms, mask);
-            *dest++ = (u8)HUFF4_PACK_NIBBLES(low, high);
+            low_nibble = exp_read_huff4_mask(bits, peek, decode, syms, mask);
+            high_nibble = exp_read_huff4_mask(bits, peek, decode, syms, mask);
+            *dest++ = (u8)HUFF4_PACK_NIBBLES(low_nibble, high_nibble);
         } while (count != 0);
     } else {
         bundle->cur_dec = bundle->data;
