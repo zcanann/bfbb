@@ -388,7 +388,7 @@ typedef struct BINKHDR
 #define BINKNOMMX 0x00040000L // Don't use MMX
 #define BINKNOSKIP 0x00080000L // Don't skip frames if falling behind
 #define BINKALPHA 0x00100000L // Decompress alpha plane (if present)
-#define BINKNOFILLIOBUF 0x00200000L // Don't fill the IO buffer
+#define BINKNOFILLIOBUF 0x00200000L // Don't fill the IO buffer (in BinkOpen and BinkCopyTo)
 #define BINKSIMULATE 0x00400000L // Simulate the speed (call BinkSim first)
 #define BINKFILEHANDLE 0x00800000L // Use when passing in a file handle
 #define BINKIOSIZE 0x01000000L // Set an io size (call BinkIOSize first)
