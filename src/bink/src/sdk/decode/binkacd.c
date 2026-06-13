@@ -86,6 +86,12 @@ typedef VARBITS BINKVARBITS;
 
 #define BINKAC_LOAD32(ptr) (*(const u32 PTR4*)(ptr))
 #define BINKAC_BAND_SAMPLE_LIMIT(bands, band) ((bands)[band] * BINKAC_BAND_LIMIT_SCALE)
+#define BINKAC_BAND_BEFORE_FIRST_COEFF(bands, band) \
+    (BINKAC_BAND_SAMPLE_LIMIT((bands), (band)) < BINKAC_FIRST_COEFF)
+#define BINKAC_COEFF_PAST_BAND(coeff, bands, band) \
+    ((coeff) > BINKAC_BAND_SAMPLE_LIMIT((bands), (band)))
+#define BINKAC_COEFF_AT_BAND(coeff, bands, band) \
+    ((coeff) == BINKAC_BAND_SAMPLE_LIMIT((bands), (band)))
 #define BINKAC_LITERAL_SAMPLE_RUN VQLENGTH
 #define BINKAC_RLE_SAMPLE_RUN(index) (bink_rlelens_snd[(index)] * VQLENGTH)
 #define BINKAC_ZERO_SAMPLE_RUN(start, end) ((end) - (start))
@@ -294,7 +300,7 @@ static void read_rle_samples(f32 PTR4* samps, u32 transform_size, BINKVARBITS PT
     f32 dequant = BINKAC_SAMPLE_ZERO;
     f32 PTR4* out;
 
-    while (BINKAC_BAND_SAMPLE_LIMIT(bands, band) < BINKAC_FIRST_COEFF) {
+    while (BINKAC_BAND_BEFORE_FIRST_COEFF(bands, band)) {
         dequant = threshold[band];
         ++band;
     }
@@ -329,13 +335,13 @@ static void read_rle_samples(f32 PTR4* samps, u32 transform_size, BINKVARBITS PT
             out += zero_count;
             coeff = run_end;
 
-            while (coeff > BINKAC_BAND_SAMPLE_LIMIT(bands, band)) {
+            while (BINKAC_COEFF_PAST_BAND(coeff, bands, band)) {
                 dequant = threshold[band];
                 ++band;
             }
         } else {
             while (coeff < run_end) {
-                if (coeff == BINKAC_BAND_SAMPLE_LIMIT(bands, band)) {
+                if (BINKAC_COEFF_AT_BAND(coeff, bands, band)) {
                     dequant = threshold[band];
                     ++band;
                 }
