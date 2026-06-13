@@ -140,6 +140,17 @@ typedef enum NGCSoundPauseState
     NGC_SOUND_PAUSED
 } NGCSoundPauseState;
 
+typedef enum NGCSoundDropoutState
+{
+    NGC_SOUND_NO_DROPOUT,
+    NGC_SOUND_DROPPED_OUT
+} NGCSoundDropoutState;
+
+typedef enum NGCSoundThreadService
+{
+    NGC_SOUND_THREAD_SERVICE_ENABLED = 0
+} NGCSoundThreadService;
+
 struct NGCSoundState
 {
     s32 volume;
@@ -858,7 +869,7 @@ static s32 Ready(BINKSND PTR4* snd)
         }
 
         NGC_StarvedClear(snd);
-        snd->SoundDroppedOut = 1;
+        snd->SoundDroppedOut = NGC_SOUND_DROPPED_OUT;
         NGC_SOUND_STATE(snd)->play_state = NGC_PLAY_STATE_STARVED;
     }
 
@@ -970,7 +981,7 @@ static s32 Open(BINKSND PTR4* snd, u32 freq, s32 bits, s32 chans, u32 flags, HBI
     NGC_SND(snd)->freq = freq;
     NGC_SND(snd)->bits = bits;
     NGC_SND(snd)->chans = chans;
-    NGC_SND(snd)->SoundDroppedOut = 0;
+    NGC_SND(snd)->SoundDroppedOut = NGC_SOUND_NO_DROPOUT;
     NGC_SOUND_STATE(snd)->paused = NGC_SOUND_UNPAUSED;
     NGC_SOUND_STATE(snd)->volume = BINK_NGC_VOLUME_MAX;
     NGC_SOUND_STATE(snd)->pan = NGC_SOUND_PAN_CENTER;
@@ -986,7 +997,7 @@ static s32 Open(BINKSND PTR4* snd, u32 freq, s32 bits, s32 chans, u32 flags, HBI
     snd->Close = Close;
 
     if (NGC_SoundInit(snd) != 0) {
-        NGC_SND(snd)->NoThreadService = 0;
+        NGC_SND(snd)->NoThreadService = NGC_SOUND_THREAD_SERVICE_ENABLED;
         result = 1;
     } else {
         result = 0;
