@@ -137,6 +137,7 @@ typedef enum NGCDVDAlignment
 #define NGC_ALIGN_DOWN(value, mask) ((value) & ~(mask))
 #define NGC_BYTES_LEFT_TO_READ(io) (NGC_FILE_SIZE(io) - NGC_READ_CURSOR(io))
 #define NGC_BYTES_LEFT_TO_CONSUME(io) (NGC_FILE_SIZE(io) - NGC_CONSUME_CURSOR(io))
+#define NGC_DVD_FILE_OFFSET(io, cursor) ((cursor) + NGC_FILE_OFFSET(io))
 #define NGC_RING_BYTES_TO_END(io) (NGC_BUFFER_END(io) - NGC_READ_PTR(io))
 typedef enum NGCReadLayout
 {
@@ -257,7 +258,7 @@ static u32 BinkFileReadHeader(BINKIO PTR4* io, s32 offset, void PTR4* dest, u32 
         NGC_READ_CURSOR(io) = offset;
     }
 
-    amount = radreadngc(NGC_DVD(io), NGC_READ_CURSOR(io) + NGC_FILE_OFFSET(io), dest, size);
+    amount = radreadngc(NGC_DVD(io), NGC_DVD_FILE_OFFSET(io, NGC_READ_CURSOR(io)), dest, size);
     cursor = NGC_READ_CURSOR(io) + amount;
     NGC_VOLATILE_U32(NGC_READ_CURSOR(io)) = cursor;
     cursor = NGC_VOLATILE_U32(NGC_READ_CURSOR(io));
@@ -390,7 +391,7 @@ static void ReadKickoff(BINKIO PTR4* io)
             }
 
             DVDReadAsyncPrio(NGC_DVD(io), NGC_WRITE_PTR(io), remaining,
-                             (NGC_READ_CURSOR(io) - NGC_ALIGN_EXTRA(io)) + NGC_FILE_OFFSET(io),
+                             NGC_DVD_FILE_OFFSET(io, NGC_READ_CURSOR(io) - NGC_ALIGN_EXTRA(io)),
                              DVDReadCallback, NGC_DVD_PRIORITY_LOW);
         } else {
             io->CurBufSize = io->CurBufUsed;
