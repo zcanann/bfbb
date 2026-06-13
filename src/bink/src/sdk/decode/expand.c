@@ -146,6 +146,9 @@ typedef enum BINKBundleLayout
 } BINKBundleLayout;
 
 #define BINK_BLOCK_ROWS(rows) ((rows) >> BINK_BLOCK_SHIFT)
+#define BINK_BLOCK_ROW_ADVANCE(pitch, width) ((pitch) * BINK_BLOCK_SIDE - (width))
+#define BINK_WORK_PITCH(pitch, plane) ((pitch) / (BINK_WORK_BLOCK_SPAN / (plane)))
+#define BINK_SUBBLOCK_BUNDLE_WIDTH(width) ((width) >> BINK_CHROMA_SHIFT)
 #define BINK_BUNDLE_COUNT_BASE(rows, pitch) (BINK_BLOCK_ROWS(rows) * (pitch) - 1)
 #define BINK_BUNDLE_COUNT_BITS(width, count_base) \
     getbitlevelvar(((width) + (count_base)) & EXP_U16_MASK)
@@ -1261,8 +1264,8 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
 
     (void)key_frame;
 
-    row_advance = pitch * BINK_BLOCK_SIDE - width;
-    work_pitch = pitch / (BINK_WORK_BLOCK_SPAN / plane);
+    row_advance = BINK_BLOCK_ROW_ADVANCE(pitch, width);
+    work_pitch = BINK_WORK_PITCH(pitch, plane);
     VarBitsOpen(bitstate, bundles);
     read_huff8 =
         BINK_EXPAND_USES_OLD_FRAME_FORMAT(flags) ? CheckReadHuff8Bundle : NewCheckReadHuff8Bundle;
@@ -1271,7 +1274,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                    BINK_BUNDLE_WIDTH, width, BINK_BLOCK_TYPE_BITS, BINK_BUNDLE_BYTE_PITCH,
                    BINK_BUNDLE_NO_INITIAL_VALUE);
     OpenReadBundle(table->type16ptr, &subblock_types,
-                   BINK_BUNDLE_WIDTH, width >> BINK_CHROMA_SHIFT, BINK_BLOCK_TYPE_BITS, BINK_BUNDLE_BYTE_PITCH,
+                   BINK_BUNDLE_WIDTH, BINK_SUBBLOCK_BUNDLE_WIDTH(width), BINK_BLOCK_TYPE_BITS, BINK_BUNDLE_BYTE_PITCH,
                    BINK_BUNDLE_NO_INITIAL_VALUE);
     OpenReadBundle(table->colorptr, &colors, BINK_BUNDLE_WIDTH, width,
                    BINK_COLOR_BITS, BINK_COLOR_BLOCK_BYTES, BINK_BUNDLE_NO_INITIAL_VALUE);
