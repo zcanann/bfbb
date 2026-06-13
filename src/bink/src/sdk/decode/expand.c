@@ -282,7 +282,7 @@ typedef struct READBUNDLE
     u8 syms[HUFF4_SYMBOLS]; /* Huffman leaf-to-symbol translation list. */
     u32 bits_to_peek;
     const u8 PTR4* decode;
-    u32 len;         /* Bits used to read the next decoded-element count. */
+    u32 count_length; /* Bits used to read the next decoded-element count. */
     u8 PTR4* data;
 } READBUNDLE;
 
@@ -320,14 +320,14 @@ static void OpenReadBundle(u8 PTR4* bits, READBUNDLE PTR4* bundle, s32 bundle_wi
                            BINKBUNDLEINITIALVALUEFLAG use_initial_value)
 {
     u32 count_base;
-    u32 len;
+    u32 count_length;
 
     bundle->bit_size = bit_size;
     bundle->cur_ptr = 0;
     bundle->cur_dec = 0;
     count_base = BINK_BUNDLE_COUNT_BASE(rows, element_pitch);
-    len = BINK_BUNDLE_COUNT_BITS(bundle_width, count_base);
-    bundle->len = len;
+    count_length = BINK_BUNDLE_COUNT_BITS(bundle_width, count_base);
+    bundle->count_length = count_length;
     if (use_initial_value != BINK_BUNDLE_NO_INITIAL_VALUE) {
         bundle->initial_value = BINK_BUNDLE_INITIAL_VALUE(bit_size);
     } else {
@@ -709,7 +709,7 @@ static void CheckReadRLEHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
         return;
     }
 
-    VarBitsGet(count, u32, *bits, bundle->len);
+    VarBitsGet(count, u32, *bits, bundle->count_length);
     if (count != 0) {
         bundle->cur_ptr = bundle->data;
         bundle->cur_dec = bundle->data + count;
@@ -770,7 +770,7 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
         return;
     }
 
-    VarBitsGet(count, u32, *bits, bundle->len);
+    VarBitsGet(count, u32, *bits, bundle->count_length);
     if (count != 0) {
         bundle->cur_ptr = bundle->data;
         bundle->cur_dec = bundle->data + count;
@@ -828,7 +828,7 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
         return;
     }
 
-    VarBitsGet(count, u32, *bits, bundle->len);
+    VarBitsGet(count, u32, *bits, bundle->count_length);
     if (count != 0) {
         bundle->cur_ptr = bundle->data;
         bundle->cur_dec = bundle->data + count;
@@ -875,7 +875,7 @@ static void CheckReadHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
         return;
     }
 
-    VarBitsGet(count, u32, *bits, bundle->len);
+    VarBitsGet(count, u32, *bits, bundle->count_length);
     if (count != 0) {
         bundle->cur_ptr = bundle->data;
         bundle->cur_dec = bundle->data + count;
@@ -914,7 +914,7 @@ static void CheckReadHuff4PairBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits
         return;
     }
 
-    VarBitsGet(count, u32, *bits, bundle->len);
+    VarBitsGet(count, u32, *bits, bundle->count_length);
     if (count != 0) {
         dest = bundle->data;
         bundle->cur_ptr = dest;
@@ -950,7 +950,7 @@ static void CheckReadHuff4SBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
         return;
     }
 
-    VarBitsGet(count, u32, *bits, bundle->len);
+    VarBitsGet(count, u32, *bits, bundle->count_length);
     if (count != 0) {
         bundle->cur_ptr = bundle->data;
         bundle->cur_dec = bundle->data + count;
@@ -993,7 +993,7 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
         return;
     }
 
-    VarBitsGet(count, u32, *bits, bundle->len);
+    VarBitsGet(count, u32, *bits, bundle->count_length);
     if (count != 0) {
         dest = (s16 PTR4*)bundle->data;
         if (bundle->initial_value != BINK_BUNDLE_INITIAL_VALUE_NONE) {
