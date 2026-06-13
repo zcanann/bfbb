@@ -215,6 +215,11 @@ typedef enum BINKRuntimeSlot
     BINK_RUNTIME_CURRENT_SLOT,
     BINK_RUNTIME_PREVIOUS_SLOT
 } BINKRuntimeSlot;
+typedef enum BINKPlaneSlot
+{
+    BINK_PLANE_CURRENT_SLOT,
+    BINK_PLANE_PREVIOUS_SLOT
+} BINKPlaneSlot;
 #define BINK_ARRAY_BYTES(count, ptr) ((count) * sizeof(*(ptr)))
 #define BINK_SHIFT_RUNTIME_HISTORY(bink, field) \
     memmove((bink)->field + 1, (bink)->field, (bink)->runtimemoveamt)
@@ -1271,23 +1276,23 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
                      &out->Highest1SecFrame, &all_key);
 
     if (BINK_OPEN_HAS_ALPHA(out->OpenFlags)) {
-        pushmalloc(&out->APlane[0], BINK_ALPHA_PLANE_BYTES(out));
+        pushmalloc(&out->APlane[BINK_PLANE_CURRENT_SLOT], BINK_ALPHA_PLANE_BYTES(out));
         if (all_key == 0) {
-            pushmalloc(&out->APlane[1], BINK_ALPHA_PLANE_BYTES(out));
+            pushmalloc(&out->APlane[BINK_PLANE_PREVIOUS_SLOT], BINK_ALPHA_PLANE_BYTES(out));
         }
     }
     if (all_key == 0) {
-        pushmalloc(&out->YPlane[1], BINK_VIDEO_PLANE_BYTES(out));
+        pushmalloc(&out->YPlane[BINK_PLANE_PREVIOUS_SLOT], BINK_VIDEO_PLANE_BYTES(out));
     }
 
-    out->YPlane[0] = bpopmalloc(out, BINK_VIDEO_PLANE_BYTES(out));
-    if (out->YPlane[0] == 0) {
+    out->YPlane[BINK_PLANE_CURRENT_SLOT] = bpopmalloc(out, BINK_VIDEO_PLANE_BYTES(out));
+    if (out->YPlane[BINK_PLANE_CURRENT_SLOT] == 0) {
         radfree(out);
         goto open_failed;
     } else {
         if (all_key != 0) {
-            out->YPlane[1] = out->YPlane[0];
-            out->APlane[1] = out->APlane[0];
+            out->YPlane[BINK_PLANE_PREVIOUS_SLOT] = out->YPlane[BINK_PLANE_CURRENT_SLOT];
+            out->APlane[BINK_PLANE_PREVIOUS_SLOT] = out->APlane[BINK_PLANE_CURRENT_SLOT];
         }
 
         if (BINK_OPEN_USES_IO_BUFFER_OVERRIDE(flags) && IOBufferSize != BINK_OPEN_OVERRIDE_UNSET) {
@@ -1322,7 +1327,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
 
                 out->preloadptr = bpopmalloc(out, preload_size);
                 if (out->preloadptr == 0) {
-                    radfree(bnk.YPlane[0]);
+                    radfree(bnk.YPlane[BINK_PLANE_CURRENT_SLOT]);
                     goto open_failed;
                 }
                 out->bio.SetInfo(&out->bio, 0, 0, BINK_FILE_BYTES_WITH_HEADER(out), simulate);
@@ -1574,7 +1579,7 @@ unmasked_blit:
     {
         switch (flags & BINKSURFACEMASK) {
         case BINKSURFACE32A:
-            if (bnk->APlane[0] != 0) {
+            if (bnk->APlane[BINK_PLANE_CURRENT_SLOT] != 0) {
                 YUV_blit_32abpp(dest, destx, desty, destpitch, bnk->YPlane[bnk->PlaneNum], srcx,
                                 srcy, srcw, srch, bnk->YWidth, bnk->YHeight,
                                 bnk->APlane[bnk->PlaneNum], flags);
@@ -1585,7 +1590,7 @@ unmasked_blit:
                            srcw, srch, bnk->YWidth, bnk->YHeight, flags);
             break;
         case BINKSURFACE4444:
-            if (bnk->APlane[0] != 0) {
+            if (bnk->APlane[BINK_PLANE_CURRENT_SLOT] != 0) {
                 YUV_blit_16a4bpp(dest, destx, desty, destpitch, bnk->YPlane[bnk->PlaneNum], srcx,
                                  srcy, srcw, srch, bnk->YWidth, bnk->YHeight,
                                  bnk->APlane[bnk->PlaneNum], flags);
@@ -1614,7 +1619,7 @@ try_mask_blit:
     {
         switch (flags & BINKSURFACEMASK) {
         case BINKSURFACE32A:
-            if (bnk->APlane[0] != 0) {
+            if (bnk->APlane[BINK_PLANE_CURRENT_SLOT] != 0) {
                 YUV_blit_32abpp_mask(dest, destx, desty, destpitch, bnk->MaskPlane, bnk->MaskPitch,
                                      bnk->YPlane[bnk->PlaneNum], srcx, srcy, srcw, srch, bnk->YWidth, bnk->YHeight,
                                      bnk->APlane[bnk->PlaneNum], flags);
@@ -1625,7 +1630,7 @@ try_mask_blit:
                                 bnk->YPlane[bnk->PlaneNum], srcx, srcy, srcw, srch, bnk->YWidth, bnk->YHeight, flags);
             break;
         case BINKSURFACE4444:
-            if (bnk->APlane[0] != 0) {
+            if (bnk->APlane[BINK_PLANE_CURRENT_SLOT] != 0) {
                 YUV_blit_16a4bpp_mask(dest, destx, desty, destpitch, bnk->MaskPlane, bnk->MaskPitch,
                                       bnk->YPlane[bnk->PlaneNum], srcx, srcy, srcw, srch, bnk->YWidth, bnk->YHeight,
                                       bnk->APlane[bnk->PlaneNum], flags);
@@ -2206,8 +2211,8 @@ void BinkClose(HBINK bnk)
             radfree(bnk->ioptr);
         }
 
-        if (bnk->YPlane[0] != 0) {
-            radfree(bnk->YPlane[0]);
+        if (bnk->YPlane[BINK_PLANE_CURRENT_SLOT] != 0) {
+            radfree(bnk->YPlane[BINK_PLANE_CURRENT_SLOT]);
         }
 
         memset(bnk, 0, sizeof(*bnk));
