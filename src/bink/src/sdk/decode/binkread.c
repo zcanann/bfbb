@@ -88,6 +88,8 @@ typedef struct BINKHEADERTRACKTABLE
 #define BINK_TRACK_FRAME_PAYLOAD(frame) ((BINKTRACKPAYLOAD PTR4*)((frame) + 1))
 #define BINK_NEXT_TRACK_FRAME(frame) \
     ((BINKTRACKFRAME PTR4*)((u8 PTR4*)BINK_TRACK_FRAME_PAYLOAD(frame) + (frame)->size))
+#define BINK_TRACK_FRAME_AFTER_PAYLOAD(payload, size) \
+    ((BINKTRACKFRAME PTR4*)((u8 PTR4*)(payload) + (size)))
 typedef enum BINKGlobalLayout
 {
     BINK_SOUND_CALLBACK_PRIORITY = 20,
@@ -1729,7 +1731,7 @@ s32 BinkDoFrame(HBINK bnk)
                     compressed_size = frame_data->size;
                     frame_payload = BINK_TRACK_FRAME_PAYLOAD(frame_data);
                     frame_data = (BINKTRACKFRAME PTR4*)frame_payload;
-                    next_frame_data = (BINKTRACKFRAME PTR4*)((u8 PTR4*)frame_data + compressed_size);
+                    next_frame_data = BINK_TRACK_FRAME_AFTER_PAYLOAD(frame_data, compressed_size);
                     if (playing_index < playing_tracks) {
                         s32 PTR4* indexes;
 
