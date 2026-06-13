@@ -229,6 +229,8 @@ typedef enum BINKPlaneSlot
 #define BINK_SHIFT_RUNTIME_HISTORY(bink, field) \
     memmove((bink)->field + 1, (bink)->field, (bink)->runtimemoveamt)
 #define BINK_FRAME_OFFSETS_BYTES(frames, ptr) (((frames) + 1) * sizeof(*(ptr)))
+#define BINK_SOUND_TRACK_BYTES(tracks, ptr) \
+    ((tracks) == 0 ? sizeof(*(ptr)) : BINK_ARRAY_BYTES((tracks), (ptr)))
 #define BINK_PRELOADED_FRAME_PTR(bink, frame) \
     ((bink)->preloadptr + (BINK_FRAME_OFFSET((bink)->frameoffsets[(frame)]) - \
                            BINK_FRAME_OFFSET(*(bink)->frameoffsets)))
@@ -1226,7 +1228,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
     pushmalloc((void PTR4* PTR4*)&bnk.rtthreadreadtimes,
                BINK_ARRAY_BYTES(bnk.runtimeframes, bnk.rtthreadreadtimes));
     pushmalloc((void PTR4* PTR4*)&bnk.bsnd,
-               TotTracks == 0 ? sizeof(*bnk.bsnd) : BINK_ARRAY_BYTES(TotTracks, bnk.bsnd));
+               BINK_SOUND_TRACK_BYTES(TotTracks, bnk.bsnd));
     pushmalloc((void PTR4* PTR4*)&bnk.trackindexes,
                BINK_ARRAY_BYTES(TotTracks, bnk.trackindexes));
 
