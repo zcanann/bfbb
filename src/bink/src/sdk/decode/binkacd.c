@@ -30,7 +30,10 @@ typedef enum BINKACRLELayout
 {
     RLEBITS = 4,
     MAXRLE = 1 << RLEBITS,
-    VQLENGTH = 8
+    VQLENGTH = 8,
+    BINKAC_RLE_PACKET_FLAG_BITS = 1,
+    BINKAC_LITERAL_PACKET_BITS = BINKAC_RLE_PACKET_FLAG_BITS + RLEBITS,
+    BINKAC_RLE_PACKET_BITS = BINKAC_RLE_PACKET_FLAG_BITS + RLEBITS + RLEBITS
 } BINKACRLELayout;
 
 typedef enum BINKACFixedPointLayout
@@ -293,8 +296,9 @@ static void read_rle_samples(f32 PTR4* samps, u32 transform_size, BINKVARBITS PT
         u32 end;
         u32 bitlen;
 
-        /* Each sparse coefficient packet is either 5 bits (literal VQ run) or
-           9 bits (RLE flag, 4-bit run index, 4-bit coefficient bit length). */
+        /* Each sparse coefficient packet is either BINKAC_LITERAL_PACKET_BITS
+           bits (literal VQ run) or BINKAC_RLE_PACKET_BITS bits (RLE flag,
+           run index, and coefficient bit length). */
         {
             if (read_bit(vbp)) {
                 end = i + BINKAC_RLE_SAMPLE_RUN(read_rle_bits(vbp));
