@@ -7,7 +7,7 @@ typedef enum BINKAudioDecompressFlags
 {
     BINKACNEWFORMAT = 1,     // use the newer DCT transform path instead of the legacy RDFT path
     BINKACNODEINTERLACE = 2, // keep stereo channels as separate output planes
-    BINKAC20 = 4             // newer coefficient packet coding
+    BINKAC20 = 4             // Bink Audio 2 packets; BINKACNEWFORMAT is assumed
 } BINKAudioDecompressFlags;
 
 // extra padding after inpend, that, given random data, Bink might read past (very unlikely, but possible)
