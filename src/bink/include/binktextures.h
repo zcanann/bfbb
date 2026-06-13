@@ -34,7 +34,7 @@ typedef struct BINKTEXTURESET {
     u32 cRcBdeswizzle_height;
     GXTexObj YAdeswizzle;
     GXTexObj cRcBdeswizzle;
-    s32 drawing[BINKMAXFRAMEBUFFERS];
+    s32 drawing[2];
 } BINKTEXTURESET;
 
 RADDEFFUNC s32 Create_Bink_textures(BINKTEXTURESET* set_textures);
