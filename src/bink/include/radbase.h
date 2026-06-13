@@ -3,6 +3,13 @@
 
 #define RADCOPYRIGHT "Copyright (C) 1994-2003, RAD Game Tools, Inc."
 
+#if defined(GEKKO)
+#define __RADNGC__
+#define __RAD32__
+#define __RADPPC__
+#define __RADBIGENDIAN__
+#endif
+
 #define RADINLINE inline
 
 #define RADLINK
