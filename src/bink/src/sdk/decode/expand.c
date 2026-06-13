@@ -245,6 +245,7 @@ typedef enum BINKBUNDLEINITIALVALUE
 #define BINK_BUNDLE_REPEAT_FILL_COUNT(remaining) (-(remaining + BINK_BUNDLE_REPEAT_BIAS + 1))
 #define BINK_SIGNED_BYTE_NEGATIVE(value) (-BINK_SIGNED_BYTE_BIAS - ((value) & BINK_SIGNED_BYTE_MASK))
 #define BINK_SIGNED_BYTE_POSITIVE(value) ((value) | BINK_SIGNED_BYTE_BIAS)
+#define BINK_APPLY_SIGN_BIT(value) (-(value))
 #define BINK_EXPAND_USES_OLD_FRAME_FORMAT(flags) (((flags) & BINKOLDFRAMEFORMAT) != 0)
 #define BINK_EXPAND_HAS_ALPHA(flags) (((flags) & BINKALPHA) != 0)
 #define BINK_EXPAND_HAS_COLOR(flags) (((flags) & BINKGRAYSCALE) == 0)
@@ -1018,7 +1019,7 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
             VarBitsGet(predictor, u16, *bits, BINK_BUNDLE_SIGNED_MAGNITUDE_BITS(bundle->bit_size));
             if (predictor != 0) {
                 if (exp_get_bit(bits)) {
-                    predictor = -predictor;
+                    predictor = BINK_APPLY_SIGN_BIT(predictor);
                 }
             }
         } else {
@@ -1043,7 +1044,7 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
                     VarBitsGet(delta, s16, *bits, delta_bit_count);
                     if (delta != 0) {
                         if (exp_get_bit(bits)) {
-                            delta = -delta;
+                            delta = BINK_APPLY_SIGN_BIT(delta);
                         }
                     }
                     predictor = predictor + delta;
