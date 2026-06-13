@@ -92,6 +92,7 @@
 #define BP_TREE_ENTRY_GROUP(entry) ((entry) >> BP_TREE_GROUP_SHIFT)
 #define BP_TREE_ENTRY_HIGH_GROUP(entry) ((entry) >> BP_TREE_HIGH_GROUP_SHIFT)
 #define BP_TREE_ENTRY_BASE(entry) ((entry) & BP_TREE_BASE_MASK)
+#define BP_TREE_ENTRY_LEVEL(entry) ((entry) & BP_BYTE_MASK)
 #define BP_COEFF1_INDEX 1
 #define BP_COEFF2_INDEX 2
 #define BP_COEFF3_INDEX 3
@@ -379,7 +380,7 @@ u32 LenBPLossless(s16 PTR4* vals)
                 entry = *cur;
                 len = total;
                 if ((entry == BP_TREE_EMPTY_ENTRY) ||
-                    (len = total + BP_TREE_NODE_PRESENT_BITS, (entry & BP_BYTE_MASK) != maxbits)) {
+                    (len = total + BP_TREE_NODE_PRESENT_BITS, BP_TREE_ENTRY_LEVEL(entry) != maxbits)) {
                     cur++;
                 } else {
                     switch (BP_TREE_ENTRY_KIND(entry)) {
@@ -443,7 +444,7 @@ handle_children:
             entry = *cur;
             len = total;
             if ((entry == BP_TREE_EMPTY_ENTRY) ||
-                (len = total + BP_TREE_NODE_PRESENT_BITS, (entry & BP_BYTE_MASK) != 1)) {
+                (len = total + BP_TREE_NODE_PRESENT_BITS, BP_TREE_ENTRY_LEVEL(entry) != 1)) {
                 cur++;
             } else {
                 switch (BP_TREE_ENTRY_KIND(entry)) {
@@ -643,7 +644,7 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
 next_lossless_node:
                     cur++;
                 } else {
-                    sign = (entry & BP_BYTE_MASK) != maxbits;
+                    sign = BP_TREE_ENTRY_LEVEL(entry) != maxbits;
                     PUT_BP_BIT(bits, !sign);
                     if (sign) {
                         goto next_lossless_node;
@@ -1214,7 +1215,7 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
 next_lossy_node:
                     cur++;
                 } else {
-                    count = (node_entry & BP_BYTE_MASK) == maxbits;
+                    count = BP_TREE_ENTRY_LEVEL(node_entry) == maxbits;
                     PUT_BP_BIT(bits, count);
                     if (!count) {
                         goto next_lossy_node;
