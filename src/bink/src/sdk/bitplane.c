@@ -187,6 +187,9 @@ typedef union BPLOSSLESSCOEFFS
 #define BP_COEFF_PAIR_AT(values, index) (((BPCOEFFPAIR PTR4*)(values))[(index) / BP_COEFFS_PER_PAIR])
 #define BP_LOSSLESS_OUT_PAIR(pair) ((pair) * BP_COEFFS_PER_PAIR)
 #define BP_LOSSLESS_SCAN_PAIR(pair) ((pair) * BP_COEFFS_PER_PAIR)
+#define BP_LOSSLESS_CLEAR_START BP_COEFF2_INDEX
+#define BP_LOSSLESS_CLEAR_BYTES(coeffs) \
+    (sizeof((coeffs).values) - BP_LOSSLESS_CLEAR_START * sizeof((coeffs).values[0]))
 #define BP_LOSSY_OUT_PAIR(pair) (pair)
 #define BP_LOSSY_SCAN_PAIR(pair) (pair)
 #define BP_LOSSY_SCAN_SAMPLE(sample) (sample)
@@ -739,8 +742,7 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
 #define bitbuf bitcopy.bits
 #define bitcount bitcopy.bitlen
     coeffs.values[BP_COEFF1_INDEX] = 0;
-    memset(coeffs.values + BP_COEFF2_INDEX, 0,
-           sizeof(coeffs.values) - BP_COEFF2_INDEX * sizeof(coeffs.values[0]));
+    memset(coeffs.values + BP_LOSSLESS_CLEAR_START, 0, BP_LOSSLESS_CLEAR_BYTES(coeffs));
 
     /* The stream starts with the maximum active lossless bitplane level. */
     VarBitsGet(maxlevel, u8, bitcopy, BP_LOSSLESS_LEVEL_BITS);
