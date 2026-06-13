@@ -92,6 +92,7 @@ typedef VARBITS BINKVARBITS;
 #define BINKAC_WINDOW_SAMPLES(window_size) ((window_size) / sizeof(s16))
 #define BINKAC_OUTPUT_BYTES(buffer_size, window_size) ((buffer_size) - (window_size))
 #define BINKAC_SAMPLE_BYTES(samples) ((samples) * sizeof(s16))
+#define BINKAC_TRANSFORM_BYTES(transform_size, chans) BINKAC_SAMPLE_BYTES((transform_size) * (chans))
 #define BINKAC_FFT_WORK_BYTES(transform_size_half, work) \
     (((u32)radfsqrt((f32)(transform_size_half)) + BINKAC_FFT_WORK_EXTRA) * sizeof(*(work)))
 #define BINKAC_DCT_COEFF_BYTES(transform_size) \
@@ -460,7 +461,7 @@ HBINKAUDIODECOMP BinkAudioDecompressOpen(u32 rate, u32 chans, u32 flags)
         transform_size = BINKAC_TRANSFORM_11K;
     }
 
-    buffer_size = BINKAC_SAMPLE_BYTES(transform_size * chans);
+    buffer_size = BINKAC_TRANSFORM_BYTES(transform_size, chans);
     if (!BINKAC_IS_NEW_FORMAT(flags)) {
         /* Legacy RDFT streams interleave stereo by decoding one larger mono transform. */
         rate *= chans;
