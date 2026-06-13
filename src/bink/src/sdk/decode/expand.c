@@ -55,6 +55,8 @@ typedef enum BINKPlaneLayout
 } BINKPlaneLayout;
 
 #define BINK_CHROMA_ROUND(value) (((value) + BINK_CHROMA_ROUND_BIAS) >> BINK_CHROMA_SHIFT)
+#define BINK_CHROMA_BLOCK_ROUND(value) BINK_BLOCK_ROUND(BINK_CHROMA_ROUND(value))
+#define BINK_CHROMA_PITCH(pitch) ((pitch) >> BINK_CHROMA_SHIFT)
 typedef enum BINKBundleBitWidths
 {
     BINK_BLOCK_TYPE_BITS = 4,
@@ -1586,10 +1588,10 @@ void ExpandBink(u8 PTR4* yout,
     if (BINK_EXPAND_HAS_COLOR(yflags)) {
         yout = yout + pitch * uvpitch;
         yprev = yprev + pitch * uvpitch;
-        uvpitch >>= BINK_CHROMA_SHIFT;
-        width = BINK_BLOCK_ROUND(BINK_CHROMA_ROUND(width));
-        height = BINK_BLOCK_ROUND(BINK_CHROMA_ROUND(height));
-        pitch >>= BINK_CHROMA_SHIFT;
+        uvpitch = BINK_CHROMA_PITCH(uvpitch);
+        width = BINK_CHROMA_BLOCK_ROUND(width);
+        height = BINK_CHROMA_BLOCK_ROUND(height);
+        pitch = BINK_CHROMA_PITCH(pitch);
         next = ExpandPlane(yout, yprev, width, height, pitch, next, key_frame, work,
                            BINK_CHROMA_PLANE_SCALE, table, yflags);
         uv_size = pitch * uvpitch;
