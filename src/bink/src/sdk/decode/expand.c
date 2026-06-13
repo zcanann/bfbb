@@ -179,6 +179,11 @@ typedef enum BINKBUNDLEINITIALVALUE
 #define BINK_BUNDLE_DATA_END(bundle, count) ((bundle)->data + (count))
 #define BINK_BUNDLE_DATA_WORD_END(bundle, count, type) ((bundle)->data + (count) * sizeof(type))
 #define BINK_BUNDLE_HAS_UNREAD_DATA(bundle) ((bundle)->cur_ptr != (bundle)->cur_dec)
+#define BINK_BUNDLE_MARK_EMPTY(bundle)                     \
+    do {                                                   \
+        (bundle)->cur_dec = (bundle)->data;                \
+        (bundle)->cur_ptr = BINK_BUNDLE_EMPTY_CUR(bundle); \
+    } while (0)
 #define BINK_BUNDLE_U8(bundle) (*(bundle).cur_ptr)
 #define BINK_BUNDLE_S8(bundle) (*(s8 PTR4*)((bundle).cur_ptr))
 #define BINK_BUNDLE_S16(bundle) (*(s16 PTR4*)((bundle).cur_ptr))
@@ -765,8 +770,7 @@ static void CheckReadRLEHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
         }
     } else {
         /* Empty bundles point cur_ptr past data so callers see no decoded elements. */
-        bundle->cur_dec = bundle->data;
-        bundle->cur_ptr = BINK_BUNDLE_EMPTY_CUR(bundle);
+        BINK_BUNDLE_MARK_EMPTY(bundle);
     }
 }
 
@@ -824,8 +828,7 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
         }
         huff8_table->last_high_nibble = last_high_nibble;
     } else {
-        bundle->cur_dec = bundle->data;
-        bundle->cur_ptr = BINK_BUNDLE_EMPTY_CUR(bundle);
+        BINK_BUNDLE_MARK_EMPTY(bundle);
     }
 }
 
@@ -876,8 +879,7 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
         }
         huff8_table->last_high_nibble = last_high_nibble;
     } else {
-        bundle->cur_dec = bundle->data;
-        bundle->cur_ptr = BINK_BUNDLE_EMPTY_CUR(bundle);
+        BINK_BUNDLE_MARK_EMPTY(bundle);
     }
 }
 
@@ -913,8 +915,7 @@ static void CheckReadHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
             memset(bundle->data, fill_symbol, count);
         }
     } else {
-        bundle->cur_dec = bundle->data;
-        bundle->cur_ptr = BINK_BUNDLE_EMPTY_CUR(bundle);
+        BINK_BUNDLE_MARK_EMPTY(bundle);
     }
 }
 
@@ -950,8 +951,7 @@ static void CheckReadHuff4PairBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits
             *dest++ = (u8)HUFF4_PACK_NIBBLES(low_nibble, high_nibble);
         } while (count != 0);
     } else {
-        bundle->cur_dec = bundle->data;
-        bundle->cur_ptr = BINK_BUNDLE_EMPTY_CUR(bundle);
+        BINK_BUNDLE_MARK_EMPTY(bundle);
     }
 }
 
@@ -994,8 +994,7 @@ static void CheckReadHuff4SBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
             memset(bundle->data, fill_symbol, count);
         }
     } else {
-        bundle->cur_dec = bundle->data;
-        bundle->cur_ptr = BINK_BUNDLE_EMPTY_CUR(bundle);
+        BINK_BUNDLE_MARK_EMPTY(bundle);
     }
 }
 
@@ -1057,8 +1056,7 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
             }
         }
     } else {
-        bundle->cur_dec = bundle->data;
-        bundle->cur_ptr = BINK_BUNDLE_EMPTY_CUR(bundle);
+        BINK_BUNDLE_MARK_EMPTY(bundle);
     }
 }
 
