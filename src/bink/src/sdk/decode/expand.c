@@ -131,6 +131,7 @@ typedef enum BINKBundleLayout
     BINK_BUNDLE_REPEAT_THRESHOLD = BINK_BUNDLE_REPEAT_BIAS + 2,
     BINK_BUNDLE_BYTE_PITCH = 1,
     BINK_DELTA16_GROUP_MAX = 8,
+    BINK_DELTA16_REPEAT_BITS = 0,
     BINK_BYTE_BITS = 8,
     BINK_BUNDLE_MIN_BYTE_BITS = BINK_BYTE_BITS,
     BINK_BUNDLE_MIN_WORD_BITS = BINK_BYTE_BITS * 2,
@@ -1013,8 +1014,8 @@ static void CheckReadHuff4SBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
 static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
 {
     u32 count;
-    u32 group_size;
-    u32 delta_bits;
+    u32 group_count;
+    u32 delta_bit_count;
     u16 predictor;
     s16 delta;
     s16 PTR4* dest;
@@ -1042,17 +1043,17 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
         bundle->cur_dec = BINK_BUNDLE_DATA_WORD_END(bundle, count, *dest);
         count--;
         while (count != 0) {
-            group_size = count;
-            if (group_size > BINK_DELTA16_GROUP_MAX) {
-                group_size = BINK_DELTA16_GROUP_MAX;
+            group_count = count;
+            if (group_count > BINK_DELTA16_GROUP_MAX) {
+                group_count = BINK_DELTA16_GROUP_MAX;
             }
 
-            VarBitsGet(delta_bits, u32, *bits, HUFF4_NIBBLE_BITS);
-            if (delta_bits != 0) {
-                count -= group_size;
-                while (group_size != 0) {
-                    group_size--;
-                    VarBitsGet(delta, s16, *bits, delta_bits);
+            VarBitsGet(delta_bit_count, u32, *bits, HUFF4_NIBBLE_BITS);
+            if (delta_bit_count != BINK_DELTA16_REPEAT_BITS) {
+                count -= group_count;
+                while (group_count != 0) {
+                    group_count--;
+                    VarBitsGet(delta, s16, *bits, delta_bit_count);
                     if (delta != 0) {
                         if (exp_get_bit(bits)) {
                             delta = -delta;
@@ -1062,9 +1063,9 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
                     *dest++ = (s16)predictor;
                 }
             } else {
-                radmemset16(dest, (u16)predictor, BINK_DELTA16_GROUP_BYTES(group_size));
-                dest += group_size;
-                count -= group_size;
+                radmemset16(dest, (u16)predictor, BINK_DELTA16_GROUP_BYTES(group_count));
+                dest += group_count;
+                count -= group_count;
             }
         }
     } else {
