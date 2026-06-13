@@ -129,6 +129,8 @@ typedef enum BINKPlaneLayout
 #define BINK_MASK_BLOCK_INDEX(value) ((value) / BINK_MASK_BLOCK_SIZE)
 #define BINK_MASK_BLOCK_PIXELS(blocks) ((blocks) * BINK_MASK_BLOCK_SIZE)
 #define BINK_MASK_PLANE_PITCH(width) ((width) >> BINK_MASK_BLOCK_SHIFT)
+#define BINK_MASK_RECT_START(mask, pitch, rect) \
+    ((mask) + BINK_MASK_BLOCK_INDEX((rect)->Left) + BINK_MASK_BLOCK_INDEX((rect)->Top) * (pitch))
 #define BINK_MASK_PLANE_BYTES(width, height) \
     ((((width) >> BINK_MASK_BLOCK_SHIFT) * (height)) >> BINK_MASK_BLOCK_SHIFT)
 #define BINK_DIRTY_SPLIT_SIZE(size) \
@@ -2492,7 +2494,7 @@ static s32 smallestrect(BINKRECT PTR4* out, const u8 PTR4* mask, s32 pitch, cons
     s32 remaining_width;
     s32 result;
 
-    rect_mask = mask + BINK_MASK_BLOCK_INDEX(rect->Left) + BINK_MASK_BLOCK_INDEX(rect->Top) * pitch;
+    rect_mask = BINK_MASK_RECT_START(mask, pitch, rect);
     height_blocks = BINK_MASK_BLOCK_INDEX(rect->Height);
     width_blocks = BINK_MASK_BLOCK_INDEX(rect->Width);
     result = 0;
