@@ -110,11 +110,12 @@ enum YUVBlitLayout {
     YUV_RGB24_ALIGN_STEP3 = YUV_RGB24_ALIGN_STEP1 * 3,
     YUV_CORE_BLOCK_PIXELS = 4,
     YUV_PACKED_PAIR_BYTES = YUV_PACKED_WORD_BYTES * 2,
-    YUV_CORE_4X2_STEP = 2
+    YUV_CORE_4X2_STEP = 2,
+    YUV_2X_SCALE = 2
 };
 
 #define YUV_BLIT_ROW_BYTES(width, blits) ((width) * (blits)->bytes_per_pixel)
-#define YUV_BLIT_ROW_BYTES_X2(width, blits) (YUV_BLIT_ROW_BYTES((width), (blits)) * 2)
+#define YUV_BLIT_ROW_BYTES_X2(width, blits) (YUV_BLIT_ROW_BYTES((width), (blits)) * YUV_2X_SCALE)
 #define YUV_BLIT_SCALED_PIXEL_BYTES(blits, scale) ((blits)->bytes_per_pixel * (scale))
 #define YUV_BLIT_SCALED_ROW_BYTES(width, blits, scale) \
     ((width) * YUV_BLIT_SCALED_PIXEL_BYTES((blits), (scale)))
@@ -526,7 +527,7 @@ static void setup_scaling(u32 flags, u32 PTR4* pitch, u32 width, u32 srcpitch, B
 
     if (mode == BINKCOPY2XH) {
         checkzoombufs(YUV_BLIT_ROW_BYTES(width, blits));
-        *pitch *= 2;
+        *pitch *= YUV_2X_SCALE;
         *pitch_delta = *pitch - YUV_BLIT_ROW_BYTES(width, blits);
         if (YUV_BLIT_GRAYSCALE(flags)) {
             EVEN = zoom2heven;
@@ -570,7 +571,7 @@ static void setup_scaling(u32 flags, u32 PTR4* pitch, u32 width, u32 srcpitch, B
         }
     } else if (mode == BINKCOPY2XWH) {
         checkzoombufs(YUV_BLIT_ROW_BYTES_X2(width, blits));
-        *pitch *= 2;
+        *pitch *= YUV_2X_SCALE;
         *pitch_delta = *pitch - YUV_BLIT_ROW_BYTES_X2(width, blits);
         if (YUV_BLIT_GRAYSCALE(flags)) {
             EVEN = zoom2heven;
@@ -653,11 +654,11 @@ static void YUV_blit(void PTR4* dest,
     mode = YUV_SURFACE_MODE(flags);
 
     if (mode == BINKCOPY1XI) {
-        pitch *= 2;
+        pitch *= YUV_2X_SCALE;
         srcy >>= 1;
         srch >>= 1;
         srcheight >>= 1;
-        srcpitch *= 2;
+        srcpitch *= YUV_2X_SCALE;
     }
 
     S.base = (u8 PTR4*)dest;
@@ -681,7 +682,7 @@ static void YUV_blit(void PTR4* dest,
 
     S.dest0 = (u8 PTR4*)dest + desty * destpitch + YUV_BLIT_ROW_BYTES(destx, blits);
     if (mode == BINKCOPY2XHI || mode == BINKCOPY2XWHI) {
-        pitch *= 2;
+        pitch *= YUV_2X_SCALE;
     }
 
     setup_scaling(flags, &pitch, srcw, srch, blits, &pitch_delta);
@@ -865,12 +866,12 @@ static void YUV_blit_mask(void PTR4* dest,
     pitch16 = destpitch;
     mode = flags & BINKCOPYNOSCALING;
     if (mode == BINKCOPY1XI) {
-        pitch16 *= 2;
+        pitch16 *= YUV_2X_SCALE;
         srch >>= 1;
         srcy >>= 1;
         srcheight >>= 1;
-        srcpitch *= 2;
-        maskpitch *= 2;
+        srcpitch *= YUV_2X_SCALE;
+        maskpitch *= YUV_2X_SCALE;
         mask_step = maskpitch >> YUV_CHROMA_SHIFT;
     } else {
         mask_step = 0;
@@ -879,7 +880,7 @@ static void YUV_blit_mask(void PTR4* dest,
     S.base = (u8 PTR4*)dest;
     S.dest0 = (u8 PTR4*)dest + desty * destpitch + YUV_BLIT_ROW_BYTES(destx, blits);
     if (mode == BINKCOPY2XHI || mode == BINKCOPY2XWHI) {
-        pitch16 *= 2;
+        pitch16 *= YUV_2X_SCALE;
     }
 
     setup_scaling(flags, &pitch16, YUV_MASK_BLOCK_PIXELS, srch, blits, &pitch_delta16);
@@ -887,7 +888,7 @@ static void YUV_blit_mask(void PTR4* dest,
     setup_scaling(flags, &pitch32, YUV_MASK_BLOCK_PAIR_PIXELS, srch, blits, &pitch_delta32);
 
     if (mode == BINKCOPY2XW || mode == BINKCOPY2XWHI || mode == BINKCOPY2XWH) {
-        xscale = 2;
+        xscale = YUV_2X_SCALE;
     } else {
         xscale = 1;
     }
