@@ -844,7 +844,7 @@ static s32 Ready(BINKSND PTR4* snd)
     u32 now;
     NGCSoundState PTR4* state;
     AXVPB PTR4* voice;
-    ARQRequest PTR4* task;
+    u32 PTR4* task_owner;
     u32 voice_cursor;
     u32 end_cursor;
     u32 address_shift;
@@ -901,11 +901,11 @@ check_tasks:
         if (NGC_SOUND_STATE(snd)->play_cursor >= voice_cursor ||
             voice_cursor - NGC_SOUND_STATE(snd)->play_cursor > NGC_SOUND_STATE(snd)->frame_size) {
             lock_index = 0;
-            task = state->tasks;
+            task_owner = &state->tasks[0].owner;
             for (;;) {
-                u32 owner = task->owner;
+                u32 owner = *task_owner;
 
-                ++task;
+                task_owner += sizeof(*state->tasks) / sizeof(*task_owner);
                 if (!NGC_TASK_OWNER_BUSY(owner)) {
                     break;
                 }
