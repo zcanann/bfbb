@@ -514,6 +514,7 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
     s32 i;
     s32 count;
     u32 maxbits;
+    u32 level;
     u32 lenbits;
     u32 bit_count;
     BPBITSTYPE bit_buf;
@@ -634,8 +635,9 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
 
     cur = roots;
     end = roots + BP_LOSSLESS_ROOT_NODES;
-    while (maxbits != 0) {
-        lenbits = maxbits - 1;
+    level = maxbits;
+    while (level != 0) {
+        lenbits = level - 1;
         restart = cur;
         /* Active children at lower bit depths are pushed before the current cursor. */
         if (cur < end) {
@@ -645,7 +647,7 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
 next_lossless_node:
                     cur++;
                 } else {
-                    sign = BP_TREE_ENTRY_LEVEL(entry) != maxbits;
+                    sign = BP_TREE_ENTRY_LEVEL(entry) != level;
                     PUT_BP_BIT(bits, !sign);
                     if (sign) {
                         goto next_lossless_node;
@@ -664,8 +666,8 @@ next_lossless_node:
                         *cur = BP_TREE_HIGH_GROUP_ENTRY(hi_groups[BP_TREE_ENTRY_HIGH_GROUP(entry)], BP_TREE_ENTRY_INDEX(entry));
 handle_lossless_children:
                         kind = BP_TREE_ENTRY_INDEX(entry);
-                        PUT_BP_BIT(bits, lens[kind] != maxbits);
-                        if (lens[kind] == maxbits) {
+                        PUT_BP_BIT(bits, lens[kind] != level);
+                        if (lens[kind] == level) {
                             PUT_BP_BITS(bits, absvals[kind], lenbits, VarBitsLens[lenbits]);
                             PUT_BP_BIT(bits, ordered[kind] < 0);
                         } else {
@@ -673,8 +675,8 @@ handle_lossless_children:
                         }
 
                         i = kind + BP_TREE_CHILD1_INDEX;
-                        PUT_BP_BIT(bits, lens[i] != maxbits);
-                        if (lens[i] == maxbits) {
+                        PUT_BP_BIT(bits, lens[i] != level);
+                        if (lens[i] == level) {
                             PUT_BP_BITS(bits, absvals[i], lenbits, VarBitsLens[lenbits]);
                             PUT_BP_BIT(bits, ordered[i] < 0);
                         } else {
@@ -682,8 +684,8 @@ handle_lossless_children:
                         }
 
                         i = kind + BP_TREE_CHILD2_INDEX;
-                        PUT_BP_BIT(bits, lens[i] != maxbits);
-                        if (lens[i] == maxbits) {
+                        PUT_BP_BIT(bits, lens[i] != level);
+                        if (lens[i] == level) {
                             PUT_BP_BITS(bits, absvals[i], lenbits, VarBitsLens[lenbits]);
                             PUT_BP_BIT(bits, ordered[i] < 0);
                         } else {
@@ -691,8 +693,8 @@ handle_lossless_children:
                         }
 
                         i = kind + BP_TREE_CHILD3_INDEX;
-                        PUT_BP_BIT(bits, lens[i] != maxbits);
-                        if (lens[i] == maxbits) {
+                        PUT_BP_BIT(bits, lens[i] != level);
+                        if (lens[i] == level) {
                             PUT_BP_BITS(bits, absvals[i], lenbits, VarBitsLens[lenbits]);
                             PUT_BP_BIT(bits, ordered[i] < 0);
                         } else {
@@ -715,7 +717,7 @@ handle_lossless_children:
                 }
             } while (cur < end);
         }
-        maxbits = lenbits & BP_BYTE_MASK;
+        level = lenbits & BP_BYTE_MASK;
         cur = restart;
     }
 }
@@ -1074,6 +1076,7 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     s32 i;
     s32 count;
     u32 maxbits;
+    u32 level;
     u32 lenbits;
     u32 bit_count;
     BPBITSTYPE bit_buf;
@@ -1198,7 +1201,8 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     next_node = roots + BP_LOSSY_ROOT_NODES;
     bit_mask = (u16)(1 << (maxbits - 1));
     i = 0;
-    for (; maxbits != 0; maxbits = BP_NEXT_LEVEL(maxbits)) {
+    level = maxbits;
+    for (; level != 0; level = BP_NEXT_LEVEL(level)) {
         count = 0;
         /* Coefficients introduced on earlier planes emit one residual bit here. */
         if (count < i) {
@@ -1216,7 +1220,7 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
 next_lossy_node:
                     cur++;
                 } else {
-                    count = BP_TREE_ENTRY_LEVEL(node_entry) == maxbits;
+                    count = BP_TREE_ENTRY_LEVEL(node_entry) == level;
                     PUT_BP_BIT(bits, count);
                     if (!count) {
                         goto next_lossy_node;
@@ -1236,8 +1240,8 @@ next_lossy_node:
                         *cur = BP_TREE_HIGH_GROUP_ENTRY(hi_groups[BP_TREE_ENTRY_HIGH_GROUP(node_entry)], BP_TREE_ENTRY_INDEX(node_entry));
 handle_lossy_children:
                         lenbits = BP_TREE_ENTRY_INDEX(node_entry);
-                        PUT_BP_BIT(bits, lens[lenbits] != maxbits);
-                        if (lens[lenbits] == maxbits) {
+                        PUT_BP_BIT(bits, lens[lenbits] != level);
+                        if (lens[lenbits] == level) {
                             active_absvals[i] = absvals[lenbits];
                             i++;
                             PUT_BP_BIT(bits, (ordered[lenbits] & BP_SIGN_BIT) != 0);
@@ -1246,9 +1250,9 @@ handle_lossy_children:
                             *insert = BP_TREE_COEFF_ENTRY(lens[lenbits], lenbits);
                         }
 
-                        PUT_BP_BIT(bits, lens[lenbits + BP_TREE_CHILD1_INDEX] != maxbits);
+                        PUT_BP_BIT(bits, lens[lenbits + BP_TREE_CHILD1_INDEX] != level);
                         entry = lens[lenbits + BP_TREE_CHILD1_INDEX];
-                        if (entry == maxbits) {
+                        if (entry == level) {
                             active_absvals[i] = absvals[lenbits + BP_TREE_CHILD1_INDEX];
                             i++;
                             PUT_BP_BIT(bits, (ordered[lenbits + BP_TREE_CHILD1_INDEX] & BP_SIGN_BIT) != 0);
@@ -1257,9 +1261,9 @@ handle_lossy_children:
                             *insert = BP_TREE_COEFF_ENTRY(entry, lenbits + BP_TREE_CHILD1_INDEX);
                         }
 
-                        PUT_BP_BIT(bits, lens[lenbits + BP_TREE_CHILD2_INDEX] != maxbits);
+                        PUT_BP_BIT(bits, lens[lenbits + BP_TREE_CHILD2_INDEX] != level);
                         entry = lens[lenbits + BP_TREE_CHILD2_INDEX];
-                        if (entry == maxbits) {
+                        if (entry == level) {
                             active_absvals[i] = absvals[lenbits + BP_TREE_CHILD2_INDEX];
                             i++;
                             PUT_BP_BIT(bits, (ordered[lenbits + BP_TREE_CHILD2_INDEX] & BP_SIGN_BIT) != 0);
@@ -1268,9 +1272,9 @@ handle_lossy_children:
                             *insert = BP_TREE_COEFF_ENTRY(entry, lenbits + BP_TREE_CHILD2_INDEX);
                         }
 
-                        PUT_BP_BIT(bits, lens[lenbits + BP_TREE_CHILD3_INDEX] != maxbits);
+                        PUT_BP_BIT(bits, lens[lenbits + BP_TREE_CHILD3_INDEX] != level);
                         entry = lens[lenbits + BP_TREE_CHILD3_INDEX];
-                        if (entry == maxbits) {
+                        if (entry == level) {
                             active_absvals[i] = absvals[lenbits + BP_TREE_CHILD3_INDEX];
                             i++;
                             PUT_BP_BIT(bits, (ordered[lenbits + BP_TREE_CHILD3_INDEX] & BP_SIGN_BIT) != 0);
