@@ -83,6 +83,13 @@ typedef enum NGCAXSRCLastSamples
     AX_SRC_LAST_SAMPLE_3 = 3
 } NGCAXSRCLastSamples;
 
+typedef enum NGCAXSRCDefaults
+{
+    AX_SRC_RATIO_1_0_HI = 1,
+    AX_SRC_RATIO_1_0_LO = 0,
+    AX_SRC_CURRENT_FRAC_START = 0
+} NGCAXSRCDefaults;
+
 typedef enum NGCSamplePacking
 {
     NGC_SAMPLE_HALF_SHIFT = 16,
@@ -490,9 +497,9 @@ static s32 NGC_SoundInit(BINKSND PTR4* snd)
             AXSetVoiceSrcType(voices[i], AX_SRC_TYPE_NONE);
         } else {
             AXSetVoiceSrcType(voices[i], AX_SRC_TYPE_LINEAR);
-            src.ratioHi = 1;
-            src.ratioLo = 0;
-            src.currentAddressFrac = 0;
+            src.ratioHi = AX_SRC_RATIO_1_0_HI;
+            src.ratioLo = AX_SRC_RATIO_1_0_LO;
+            src.currentAddressFrac = AX_SRC_CURRENT_FRAC_START;
             src.last_samples[AX_SRC_LAST_SAMPLE_0] = 0;
             src.last_samples[AX_SRC_LAST_SAMPLE_1] = 0;
             src.last_samples[AX_SRC_LAST_SAMPLE_2] = 0;
