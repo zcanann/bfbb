@@ -118,6 +118,8 @@ typedef enum NGCSoundCopyLayout
     NGC_STEREO16_GROUP_SHIFT = 3,
     NGC_STEREO16_GROUP_BYTES = 1 << NGC_STEREO16_GROUP_SHIFT,
     NGC_STEREO16_GROUP_WORDS = 2,
+    NGC_STEREO16_GROUP_WORD_0 = 0,
+    NGC_STEREO16_GROUP_WORD_1 = 1,
     NGC_STEREO16_TAIL_SHIFT = 2,
     NGC_STEREO16_TAIL_BYTES = 1 << NGC_STEREO16_TAIL_SHIFT,
     NGC_STEREO8_GROUP_SHIFT = 2,
@@ -680,8 +682,8 @@ static s32 Unlock(BINKSND PTR4* snd, u32 filled_bytes)
             u32 groups = filled_bytes >> NGC_STEREO16_GROUP_SHIFT;
 
             for (i = 0; i < groups; ++i) {
-                u32 first = src32[0];
-                u32 second = src32[1];
+                u32 first = src32[NGC_STEREO16_GROUP_WORD_0];
+                u32 second = src32[NGC_STEREO16_GROUP_WORD_1];
                 src32 += NGC_STEREO16_GROUP_WORDS;
 
                 *left32++ = NGC_SAMPLE_LEFT_16_PAIR(first, second);
@@ -1124,8 +1126,8 @@ void ConvDataToStereo16(u32 PTR4* src, u32 PTR4* left, u32 PTR4* right, u32 byte
     count = total >> NGC_STEREO16_GROUP_SHIFT;
 
     for (i = 0; i < count; ++i) {
-        u32 first = src[0];
-        u32 second = src[1];
+        u32 first = src[NGC_STEREO16_GROUP_WORD_0];
+        u32 second = src[NGC_STEREO16_GROUP_WORD_1];
         src += NGC_STEREO16_GROUP_WORDS;
 
         *left++ = NGC_SAMPLE_LEFT_16_PAIR(first, second);
