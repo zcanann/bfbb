@@ -228,6 +228,8 @@ typedef char NGCSoundStateFitsInBinkSndData
     ((base) + NGC_SOUND_LOCK_BUFFER_OFFSET((index), (stride)))
 #define NGC_SOUND_RIGHT_LOCK_BUFFER(left, stride) ((left) + (stride))
 #define NGC_SOUND_DECODE_BYTES(channel_bytes, chans) ((channel_bytes) * (chans))
+#define NGC_SOUND_HAS_LOCK(state) ((state)->lock_index >= 0)
+#define NGC_SOUND_LOCK_GRANTED(index) ((index) != NGC_SOUND_NO_LOCK_INDEX)
 #define NGC_SOUND_HAS_PENDING_END(state) ((state)->pending_end != 0)
 #define NGC_SOUND_IN_STARVATION_WINDOW(state, now) (((now) - (state)->last_ready_time) < (state)->starvation_time)
 #define NGC_AX_ADDR(addr, shift) ((addr) >> (shift))
@@ -622,7 +624,7 @@ static s32 Lock(BINKSND PTR4* snd, u8 PTR4* PTR4* addr, u32 PTR4* len)
     u8 PTR4* left_buffer;
     u8 PTR4* decode_buffer;
 
-    if (NGC_SOUND_STATE(snd)->lock_index >= 0) {
+    if (NGC_SOUND_HAS_LOCK(NGC_SOUND_STATE(snd))) {
         state = NGC_SOUND_STATE(snd);
         writable_bytes = NGC_SOUND_STATE(snd)->play_cursor;
         voice = NGC_LEFT_VOICE(state);
@@ -918,7 +920,7 @@ check_tasks:
 
     NGC_SOUND_STATE(snd)->last_ready_time = now;
     NGC_SOUND_STATE(snd)->lock_index = lock_index;
-    return lock_index != NGC_SOUND_NO_LOCK_INDEX;
+    return NGC_SOUND_LOCK_GRANTED(lock_index);
 }
 
 static void Volume(BINKSND PTR4* snd, s32 volume)
