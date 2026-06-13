@@ -36,6 +36,8 @@ typedef enum BINKBlockLayout
 #define BINK_BLOCK_PATTERN_OFFSET(offset, pitch) \
     (((offset) >> BINK_BLOCK_SHIFT) * (pitch) + ((offset) & BINK_BLOCK_ROUND_MASK))
 #define BINK_BLOCK_ODD_ROW(row) (((row) & BINK_BLOCK_SIDE) != 0)
+#define BINK_BLOCK_DOUBLE_ALIGNED(left, right) \
+    ((((u32)(left) | (u32)(right)) & BINK_BLOCK_DOUBLE_ALIGN_MASK) == 0)
 typedef enum BINKPlaneLayout
 {
     BINK_BUNDLE_WIDTH = 0x200,
@@ -1333,7 +1335,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
 
             switch (block_type) {
             case BINK_BLOCK_SKIP: {
-                if ((((u32)dest | (u32)old) & BINK_BLOCK_DOUBLE_ALIGN_MASK) == 0) {
+                if (BINK_BLOCK_DOUBLE_ALIGNED(dest, old)) {
                     BINK_COPY_BLOCK_DOUBLE_ROW(dest, old, pitch, BINK_BLOCK_ROW_0);
                     BINK_COPY_BLOCK_DOUBLE_ROW(dest, old, pitch, BINK_BLOCK_ROW_1);
                     BINK_COPY_BLOCK_DOUBLE_ROW(dest, old, pitch, BINK_BLOCK_ROW_2);
@@ -1452,7 +1454,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 break;
             case BINK_BLOCK_RAW: {
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
-                if ((((u32)dest | (u32)colors.cur_ptr) & BINK_BLOCK_DOUBLE_ALIGN_MASK) == 0) {
+                if (BINK_BLOCK_DOUBLE_ALIGNED(dest, colors.cur_ptr)) {
                     BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, BINK_BLOCK_ROW_0);
                     BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, BINK_BLOCK_ROW_1);
                     BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, BINK_BLOCK_ROW_2);
