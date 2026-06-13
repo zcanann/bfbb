@@ -395,6 +395,7 @@ typedef struct BINKHDR
 #define BINKIOPROCESSOR 0x02000000L // Set an io processor (call BinkIO first)
 #define BINKFROMMEMORY 0x04000000L // Use when passing in a pointer to the file
 #define BINKNOTHREADEDIO 0x08000000L // Don't use a background thread for IO
+#define BINKNOFRAMEBUFFERS 0x00000400L // App supplies frame buffers with BinkRegisterFrameBuffers
 
 #define BINKBGIOSUSPEND 1
 #define BINKBGIORESUME 2
