@@ -26,7 +26,10 @@ enum YUVMaskLayout {
     YUV_MASK_BLOCK_MASK = YUV_MASK_BLOCK_PIXELS - 1,
     YUV_MASK_HALF_BLOCK_ROWS = 8,
     YUV_MASK_HALF_BLOCKS = 4,
-    YUV_MASK_FULL_BLOCKS = 8
+    YUV_MASK_FULL_BLOCKS = 8,
+    YUV_MASK_LEFT_HALF_BIT = 1,
+    YUV_MASK_RIGHT_HALF_BIT = 2,
+    YUV_MASK_BOTH_HALVES = YUV_MASK_LEFT_HALF_BIT | YUV_MASK_RIGHT_HALF_BIT
 };
 
 enum YUVChromaLayout {
@@ -940,26 +943,26 @@ static void YUV_blit_mask(void PTR4* dest,
         while ((s32)(x + (YUV_MASK_BLOCK_PAIR_PIXELS - 1)) <= (s32)end_x) {
             u8 bits;
 
-            bits = (maskp[0] != 0) ? 1 : 0;
+            bits = (maskp[0] != 0) ? YUV_MASK_LEFT_HALF_BIT : 0;
             if (maskp[1] != 0) {
-                bits += 2;
+                bits += YUV_MASK_RIGHT_HALF_BIT;
             }
             if (mask_step != 0) {
                 u8 lower;
                 lower = 0;
                 if (maskp[mask_step] != 0) {
-                    lower += 1;
+                    lower += YUV_MASK_LEFT_HALF_BIT;
                 }
                 if (maskp[mask_step + 1] != 0) {
-                    lower += 2;
+                    lower += YUV_MASK_RIGHT_HALF_BIT;
                 }
                 bits |= lower;
             }
 
-            if (bits == 1) {
+            if (bits == YUV_MASK_LEFT_HALF_BIT) {
                 blit_mask_block(YUV_MASK_HALF_BLOCKS, y_delta16, a_delta16, c_delta16, pitch_delta16,
                                 srcpitch);
-            } else if (bits == 2) {
+            } else if (bits == YUV_MASK_RIGHT_HALF_BIT) {
                 RGBContext saved = S;
                 S.dest0 += YUV_MASK_BLOCK_PIXELS;
                 S.dest1 += YUV_MASK_BLOCK_PIXELS;
@@ -970,7 +973,7 @@ static void YUV_blit_mask(void PTR4* dest,
                 blit_mask_block(YUV_MASK_HALF_BLOCKS, y_delta16, a_delta16, c_delta16, pitch_delta16,
                                 srcpitch);
                 S = saved;
-            } else if (bits == 3) {
+            } else if (bits == YUV_MASK_BOTH_HALVES) {
                 blit_mask_block(YUV_MASK_FULL_BLOCKS, y_delta32, a_delta32, c_delta32, pitch_delta32,
                                 srcpitch);
             }
