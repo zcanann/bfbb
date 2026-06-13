@@ -5,6 +5,7 @@
 
 typedef struct RAD_LOW_MEM RAD_LOW_MEM;
 
+#define RAD_LOW_MEM_CACHED_BASE 0x80000000
 #define RAD_LOW_MEM_BUS_CLOCK_OFFSET 0xf8
 #define RADCB_MILLISECONDS_PER_SECOND 1000
 #define RADCB_BUS_CLOCK_DIVISOR 4000
@@ -115,7 +116,7 @@ RADCB_HANDLER PTR4* RADCB_allocate_handler(u32 rate)
         init->callbacks = 0;
 
         now = OSGetTime();
-        low_mem = (volatile RAD_LOW_MEM PTR4*)0x80000000;
+        low_mem = (volatile RAD_LOW_MEM PTR4*)RAD_LOW_MEM_CACHED_BASE;
         period = (RADCB_MILLISECONDS_PER_SECOND / rate) *
                  (low_mem->bus_clock / RADCB_BUS_CLOCK_DIVISOR);
         OSSetPeriodicAlarm(alarm, now, period, RAD_callback_timer);
