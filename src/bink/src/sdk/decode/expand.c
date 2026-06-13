@@ -14,6 +14,14 @@ typedef enum BINKBlockLayout
     BINK_SCALED_BLOCK_SIDE = BINK_BLOCK_SIDE * BINK_BLOCK_SCALE,
     BINK_BLOCK_PIXELS = BINK_BLOCK_SIDE * BINK_BLOCK_SIDE,
     BINK_BLOCK_DOUBLE_ALIGN_MASK = 7,
+    BINK_BLOCK_ROW_0 = 0,
+    BINK_BLOCK_ROW_1 = 1,
+    BINK_BLOCK_ROW_2 = 2,
+    BINK_BLOCK_ROW_3 = 3,
+    BINK_BLOCK_ROW_4 = BINK_BLOCK_HALF_SIDE,
+    BINK_BLOCK_ROW_5 = 5,
+    BINK_BLOCK_ROW_6 = 6,
+    BINK_BLOCK_ROW_7 = 7,
     BINK_BLOCK_ROW_WORD_0 = 0,
     BINK_BLOCK_ROW_WORD_1 = 1,
     BINK_RUN_BLOCK_LAST_PIXEL = BINK_BLOCK_PIXELS - 1,
@@ -1306,23 +1314,23 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
             switch (block_type) {
             case BINK_BLOCK_SKIP: {
                 if ((((u32)dest | (u32)old) & BINK_BLOCK_DOUBLE_ALIGN_MASK) == 0) {
-                    BINK_COPY_BLOCK_DOUBLE_ROW(dest, old, pitch, 0);
-                    BINK_COPY_BLOCK_DOUBLE_ROW(dest, old, pitch, 1);
-                    BINK_COPY_BLOCK_DOUBLE_ROW(dest, old, pitch, 2);
-                    BINK_COPY_BLOCK_DOUBLE_ROW(dest, old, pitch, 3);
-                    BINK_COPY_BLOCK_DOUBLE_ROW(dest, old, pitch, BINK_BLOCK_HALF_SIDE);
-                    BINK_COPY_BLOCK_DOUBLE_ROW(dest, old, pitch, 5);
-                    BINK_COPY_BLOCK_DOUBLE_ROW(dest, old, pitch, 6);
-                    BINK_COPY_BLOCK_DOUBLE_ROW(dest, old, pitch, 7);
+                    BINK_COPY_BLOCK_DOUBLE_ROW(dest, old, pitch, BINK_BLOCK_ROW_0);
+                    BINK_COPY_BLOCK_DOUBLE_ROW(dest, old, pitch, BINK_BLOCK_ROW_1);
+                    BINK_COPY_BLOCK_DOUBLE_ROW(dest, old, pitch, BINK_BLOCK_ROW_2);
+                    BINK_COPY_BLOCK_DOUBLE_ROW(dest, old, pitch, BINK_BLOCK_ROW_3);
+                    BINK_COPY_BLOCK_DOUBLE_ROW(dest, old, pitch, BINK_BLOCK_ROW_4);
+                    BINK_COPY_BLOCK_DOUBLE_ROW(dest, old, pitch, BINK_BLOCK_ROW_5);
+                    BINK_COPY_BLOCK_DOUBLE_ROW(dest, old, pitch, BINK_BLOCK_ROW_6);
+                    BINK_COPY_BLOCK_DOUBLE_ROW(dest, old, pitch, BINK_BLOCK_ROW_7);
                 } else {
-                    BINK_COPY_BLOCK_WORD_ROW(dest, old, pitch, 0);
-                    BINK_COPY_BLOCK_WORD_ROW(dest, old, pitch, 1);
-                    BINK_COPY_BLOCK_WORD_ROW(dest, old, pitch, 2);
-                    BINK_COPY_BLOCK_WORD_ROW(dest, old, pitch, 3);
-                    BINK_COPY_BLOCK_WORD_ROW(dest, old, pitch, BINK_BLOCK_HALF_SIDE);
-                    BINK_COPY_BLOCK_WORD_ROW(dest, old, pitch, 5);
-                    BINK_COPY_BLOCK_WORD_ROW(dest, old, pitch, 6);
-                    BINK_COPY_BLOCK_WORD_ROW(dest, old, pitch, 7);
+                    BINK_COPY_BLOCK_WORD_ROW(dest, old, pitch, BINK_BLOCK_ROW_0);
+                    BINK_COPY_BLOCK_WORD_ROW(dest, old, pitch, BINK_BLOCK_ROW_1);
+                    BINK_COPY_BLOCK_WORD_ROW(dest, old, pitch, BINK_BLOCK_ROW_2);
+                    BINK_COPY_BLOCK_WORD_ROW(dest, old, pitch, BINK_BLOCK_ROW_3);
+                    BINK_COPY_BLOCK_WORD_ROW(dest, old, pitch, BINK_BLOCK_ROW_4);
+                    BINK_COPY_BLOCK_WORD_ROW(dest, old, pitch, BINK_BLOCK_ROW_5);
+                    BINK_COPY_BLOCK_WORD_ROW(dest, old, pitch, BINK_BLOCK_ROW_6);
+                    BINK_COPY_BLOCK_WORD_ROW(dest, old, pitch, BINK_BLOCK_ROW_7);
                 }
                 break;
             }
@@ -1408,14 +1416,14 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
 
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
                 BINK_BUNDLE_ADVANCE(colors, BINK_BUNDLE_BYTE_PITCH);
-                BINK_FILL_BLOCK_WORD_ROW(dest, pitch, 0, fill);
-                BINK_FILL_BLOCK_WORD_ROW(dest, pitch, 1, fill);
-                BINK_FILL_BLOCK_WORD_ROW(dest, pitch, 2, fill);
-                BINK_FILL_BLOCK_WORD_ROW(dest, pitch, 3, fill);
-                BINK_FILL_BLOCK_WORD_ROW(dest, pitch, BINK_BLOCK_HALF_SIDE, fill);
-                BINK_FILL_BLOCK_WORD_ROW(dest, pitch, 5, fill);
-                BINK_FILL_BLOCK_WORD_ROW(dest, pitch, 6, fill);
-                BINK_FILL_BLOCK_WORD_ROW(dest, pitch, 7, fill);
+                BINK_FILL_BLOCK_WORD_ROW(dest, pitch, BINK_BLOCK_ROW_0, fill);
+                BINK_FILL_BLOCK_WORD_ROW(dest, pitch, BINK_BLOCK_ROW_1, fill);
+                BINK_FILL_BLOCK_WORD_ROW(dest, pitch, BINK_BLOCK_ROW_2, fill);
+                BINK_FILL_BLOCK_WORD_ROW(dest, pitch, BINK_BLOCK_ROW_3, fill);
+                BINK_FILL_BLOCK_WORD_ROW(dest, pitch, BINK_BLOCK_ROW_4, fill);
+                BINK_FILL_BLOCK_WORD_ROW(dest, pitch, BINK_BLOCK_ROW_5, fill);
+                BINK_FILL_BLOCK_WORD_ROW(dest, pitch, BINK_BLOCK_ROW_6, fill);
+                BINK_FILL_BLOCK_WORD_ROW(dest, pitch, BINK_BLOCK_ROW_7, fill);
                 break;
             }
             case BINK_BLOCK_PATTERN:
@@ -1425,23 +1433,23 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
             case BINK_BLOCK_RAW: {
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
                 if ((((u32)dest | (u32)colors.cur_ptr) & BINK_BLOCK_DOUBLE_ALIGN_MASK) == 0) {
-                    BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, 0);
-                    BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, 1);
-                    BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, 2);
-                    BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, 3);
-                    BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, BINK_BLOCK_HALF_SIDE);
-                    BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, 5);
-                    BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, 6);
-                    BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, 7);
+                    BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, BINK_BLOCK_ROW_0);
+                    BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, BINK_BLOCK_ROW_1);
+                    BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, BINK_BLOCK_ROW_2);
+                    BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, BINK_BLOCK_ROW_3);
+                    BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, BINK_BLOCK_ROW_4);
+                    BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, BINK_BLOCK_ROW_5);
+                    BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, BINK_BLOCK_ROW_6);
+                    BINK_COPY_LINEAR_TO_BLOCK_DOUBLE_ROW(dest, colors.cur_ptr, pitch, BINK_BLOCK_ROW_7);
                 } else {
-                    BINK_COPY_LINEAR_TO_BLOCK_WORD_ROW(dest, colors.cur_ptr, pitch, 0);
-                    BINK_COPY_LINEAR_TO_BLOCK_WORD_ROW(dest, colors.cur_ptr, pitch, 1);
-                    BINK_COPY_LINEAR_TO_BLOCK_WORD_ROW(dest, colors.cur_ptr, pitch, 2);
-                    BINK_COPY_LINEAR_TO_BLOCK_WORD_ROW(dest, colors.cur_ptr, pitch, 3);
-                    BINK_COPY_LINEAR_TO_BLOCK_WORD_ROW(dest, colors.cur_ptr, pitch, BINK_BLOCK_HALF_SIDE);
-                    BINK_COPY_LINEAR_TO_BLOCK_WORD_ROW(dest, colors.cur_ptr, pitch, 5);
-                    BINK_COPY_LINEAR_TO_BLOCK_WORD_ROW(dest, colors.cur_ptr, pitch, 6);
-                    BINK_COPY_LINEAR_TO_BLOCK_WORD_ROW(dest, colors.cur_ptr, pitch, 7);
+                    BINK_COPY_LINEAR_TO_BLOCK_WORD_ROW(dest, colors.cur_ptr, pitch, BINK_BLOCK_ROW_0);
+                    BINK_COPY_LINEAR_TO_BLOCK_WORD_ROW(dest, colors.cur_ptr, pitch, BINK_BLOCK_ROW_1);
+                    BINK_COPY_LINEAR_TO_BLOCK_WORD_ROW(dest, colors.cur_ptr, pitch, BINK_BLOCK_ROW_2);
+                    BINK_COPY_LINEAR_TO_BLOCK_WORD_ROW(dest, colors.cur_ptr, pitch, BINK_BLOCK_ROW_3);
+                    BINK_COPY_LINEAR_TO_BLOCK_WORD_ROW(dest, colors.cur_ptr, pitch, BINK_BLOCK_ROW_4);
+                    BINK_COPY_LINEAR_TO_BLOCK_WORD_ROW(dest, colors.cur_ptr, pitch, BINK_BLOCK_ROW_5);
+                    BINK_COPY_LINEAR_TO_BLOCK_WORD_ROW(dest, colors.cur_ptr, pitch, BINK_BLOCK_ROW_6);
+                    BINK_COPY_LINEAR_TO_BLOCK_WORD_ROW(dest, colors.cur_ptr, pitch, BINK_BLOCK_ROW_7);
                 }
                 BINK_BUNDLE_ADVANCE(colors, BINK_COLOR_BLOCK_BYTES);
                 break;
