@@ -242,6 +242,8 @@ typedef enum BINKPlaneSlot
      ~BINK_SOUND_SAMPLE_ALIGN_MASK)
 #define BINK_SOUND_END_PREROLL_FRAMES(rate, div) \
     (((rate) * BINK_SOUND_END_PREROLL_NUMERATOR) / ((div) << BINK_SOUND_END_PREROLL_DENOM_SHIFT))
+#define BINK_SOUND_READ_TAIL(sound) ((sound)->sndend - (sound)->sndreadpos)
+#define BINK_SOUND_WRITE_TAIL(sound) ((u32)(sound)->sndend - (u32)(sound)->sndwritepos)
 typedef struct BINKTRACKFRAME
 {
     u32 size;
@@ -865,7 +867,7 @@ static void checksound(HBINK bnk)
                             }
 
                             bnk->bsnd[i].sndamt -= len;
-                            tail = bnk->bsnd[i].sndend - bnk->bsnd[i].sndreadpos;
+                            tail = BINK_SOUND_READ_TAIL(&bnk->bsnd[i]);
                             if (tail < len) {
                                 if (tail != 0) {
                                     if (bnk->bsnd[i].sndconvert8 != 0) {
@@ -1793,8 +1795,7 @@ s32 BinkDoFrame(HBINK bnk)
                                 {
                                     u32 tail;
 
-                                    tail = (u32)bnk->bsnd[playing_index].sndend -
-                                           (u32)bnk->bsnd[playing_index].sndwritepos;
+                                    tail = BINK_SOUND_WRITE_TAIL(&bnk->bsnd[playing_index]);
                                     if (tail < out_bytes) {
                                         if (tail != 0) {
                                             memcpy(bnk->bsnd[playing_index].sndwritepos, out, tail);
