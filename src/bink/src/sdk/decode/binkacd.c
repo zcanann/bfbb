@@ -316,7 +316,7 @@ static void read_rle_samples(f32 PTR4* samps, u32 transform_size, BINKVARBITS PT
            bits (literal VQ run) or BINKAC_RLE_PACKET_BITS bits (RLE flag,
            run index, and coefficient bit length). */
         {
-            if (read_bit(vbp)) {
+            if ((read_bit(vbp) & BINKAC_BIT_MASK) != 0) {
                 run_end = coeff + BINKAC_RLE_SAMPLE_RUN(read_rle_bits(vbp));
             } else {
                 run_end = coeff + BINKAC_LITERAL_SAMPLE_RUN;
