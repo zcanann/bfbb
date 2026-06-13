@@ -6,6 +6,7 @@
 /* OSGetTime runs at the GameCube timer clock: 40.5 MHz, or 40500 ticks/ms. */
 typedef enum RADTimerConstants
 {
+    RAD_TIMER_START_UNSET = 0,
     RAD_TIMER_TICKS_PER_MS = 40500,
     RAD_TIMER_MS_PER_HIGH_WORD = 0x19e40
 } RADTimerConstants;
@@ -167,7 +168,7 @@ void radmemset16(void PTR4* dest, u16 value, u32 size) {
 
 u32 RADTimerRead(void)
 {
-    static OSTime starttime = 0;
+    static OSTime starttime = RAD_TIMER_START_UNSET;
     OSTime now;
     u64 scaled;
     u32 high;
@@ -175,13 +176,13 @@ u32 RADTimerRead(void)
 
     now = OSGetTime();
 
-    if (starttime == 0) {
+    if (starttime == RAD_TIMER_START_UNSET) {
         starttime = now;
     }
 
     now -= starttime;
     /* Convert elapsed OS ticks to milliseconds without a full 64-bit divide. */
-    high = (u32)(now >> 32);
+    high = (u32)(now >> RAD_DIV_WORD_BITS);
     elapsed_ms = RAD_TIMER_MS_PER_HIGH_WORD * high;
     now -= (u64)RAD_TIMER_TICKS_PER_MS * elapsed_ms;
     scaled = (u64)now * RAD_TIMER_RECIP_MAGIC;
