@@ -80,6 +80,7 @@ typedef enum YUY2ByteShift
 #define YUY2_PACK_4Y23_CHROMA3(y, u, v) YUY2_PACK_4Y23((y), YUY2_CHROMA3_U(u), YUY2_CHROMA3_V(v))
 #define YUY2_PACK_TAIL_4Y01_CHROMA0(y, u, v) YUY2_PACK_4Y01((y), YUY2_TAIL_CHROMA0_U(u), YUY2_TAIL_CHROMA0_V(v))
 #define YUY2_PACK_TAIL_4Y23_CHROMA1(y, u, v) YUY2_PACK_4Y23((y), YUY2_TAIL_CHROMA1_U(u), YUY2_TAIL_CHROMA1_V(v))
+#define YUY2_LOAD_TAIL_CHROMA(chroma) (*(const u16 PTR4*)(chroma))
 typedef enum YUY2RemainingState
 {
     YUY2_NO_REMAINING = 0xffffffffU
@@ -127,8 +128,8 @@ void YUY2_4x2(u32 count)
 
     if (YUY2_HAS_TAIL_BLOCK(count)) {
         u32 y0 = y[YUY2_PAIR_LUMA_WORD_0];
-        u16 u0 = *(const u16 PTR4*)u;
-        u16 v0 = *(const u16 PTR4*)v;
+        u16 u0 = YUY2_LOAD_TAIL_CHROMA(u);
+        u16 v0 = YUY2_LOAD_TAIL_CHROMA(v);
 
         *dest++ = YUY2_PACK_TAIL_4Y01_CHROMA0(y0, u0, v0);
         *dest++ = YUY2_PACK_TAIL_4Y23_CHROMA1(y0, u0, v0);
@@ -157,8 +158,8 @@ void YUY2_4x2(u32 count)
 
     if (YUY2_HAS_TAIL_BLOCK(count)) {
         u32 y0 = y[YUY2_PAIR_LUMA_WORD_0];
-        u16 u0 = *(const u16 PTR4*)u;
-        u16 v0 = *(const u16 PTR4*)v;
+        u16 u0 = YUY2_LOAD_TAIL_CHROMA(u);
+        u16 v0 = YUY2_LOAD_TAIL_CHROMA(v);
 
         *dest++ = YUY2_PACK_TAIL_4Y01_CHROMA0(y0, u0, v0);
         *dest++ = YUY2_PACK_TAIL_4Y23_CHROMA1(y0, u0, v0);
@@ -214,8 +215,8 @@ void YUY2_x2_4x2(u32 count)
 
     if (YUY2_HAS_TAIL_BLOCK(count)) {
         u32 y0 = y[YUY2_PAIR_LUMA_WORD_0];
-        u16 u0 = *(const u16 PTR4*)u;
-        u16 v0 = *(const u16 PTR4*)v;
+        u16 u0 = YUY2_LOAD_TAIL_CHROMA(u);
+        u16 v0 = YUY2_LOAD_TAIL_CHROMA(v);
         u32 chroma;
 
         chroma = YUY2_TAIL_CHROMA0(u0, v0);
@@ -257,8 +258,8 @@ void YUY2_x2_4x2(u32 count)
 
     if (YUY2_HAS_TAIL_BLOCK(count)) {
         u32 y0 = y[YUY2_PAIR_LUMA_WORD_0];
-        u16 u0 = *(const u16 PTR4*)u;
-        u16 v0 = *(const u16 PTR4*)v;
+        u16 u0 = YUY2_LOAD_TAIL_CHROMA(u);
+        u16 v0 = YUY2_LOAD_TAIL_CHROMA(v);
         u32 chroma;
 
         chroma = YUY2_TAIL_CHROMA0(u0, v0);
@@ -381,8 +382,8 @@ static void YUY2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, const u
 
     if (YUY2_HAS_TAIL_BLOCK(count)) {
         u32 y0 = y[YUY2_PAIR_LUMA_WORD_0];
-        u16 u0 = *(const u16 PTR4*)u;
-        u16 v0 = *(const u16 PTR4*)v;
+        u16 u0 = YUY2_LOAD_TAIL_CHROMA(u);
+        u16 v0 = YUY2_LOAD_TAIL_CHROMA(v);
 
         *dest++ = YUY2_PACK_TAIL_4Y01_CHROMA0(y0, u0, v0);
         *dest++ = YUY2_PACK_TAIL_4Y23_CHROMA1(y0, u0, v0);
@@ -420,8 +421,8 @@ static void YUY2_x2_4x2Helper(u32 count, u32 PTR4* dest, const u32 PTR4* y, cons
 
     if (YUY2_HAS_TAIL_BLOCK(count)) {
         u32 y0 = y[YUY2_PAIR_LUMA_WORD_0];
-        u16 u0 = *(const u16 PTR4*)u;
-        u16 v0 = *(const u16 PTR4*)v;
+        u16 u0 = YUY2_LOAD_TAIL_CHROMA(u);
+        u16 v0 = YUY2_LOAD_TAIL_CHROMA(v);
         u32 chroma;
 
         chroma = YUY2_TAIL_CHROMA0(u0, v0);
