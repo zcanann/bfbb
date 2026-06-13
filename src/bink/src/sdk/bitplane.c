@@ -156,6 +156,7 @@
 #define BP_NEXT_LEVEL(level) (((level) - 1) & BP_BYTE_MASK)
 #define BP_LOSSLESS_LEVEL_CODE(level) ((level) & VarBitsLens[BP_LOSSLESS_LEVEL_BITS])
 #define BP_LOSSY_LEVEL_CODE(level) (((level) - 1) & VarBitsLens[BP_LOSSY_LEVEL_BITS])
+#define BP_LOSSY_LEVEL_COUNT(encoded) ((u8)((encoded) + 1))
 
 typedef enum BPWriteTreeKind
 {
@@ -1337,7 +1338,7 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count)
 
     /* Lossy blocks store max level minus one in the stream header. */
     VarBitsGet(levels_remaining, u8, bitcopy, BP_LOSSY_LEVEL_BITS);
-    levels_remaining = (u8)(levels_remaining + 1);
+    levels_remaining = BP_LOSSY_LEVEL_COUNT(levels_remaining);
     tree.roots[BP_ROOT_GROUP1_SLOT] = BP_READ_TREE_GROUP1_ROOT;
     tree.roots[BP_ROOT_GROUP6_SLOT] = BP_READ_TREE_GROUP6_ROOT;
     tree.roots[BP_ROOT_GROUP11_SLOT] = BP_READ_TREE_GROUP11_ROOT;
