@@ -168,6 +168,7 @@ typedef enum BINKBUNDLEINITIALVALUE
      ((BINK_BLOCK_ROWS(rows) * (pitch) * (bits)) >> BINK_BLOCK_SHIFT))
 #define BINK_BUNDLE_ALIGN_SIZE(size) (((size) + BINK_WORD_ALIGN_MASK) & ~BINK_WORD_ALIGN_MASK)
 #define BINK_BUNDLE_EMPTY_CUR(bundle) ((bundle)->data + EXP_WORD_BYTES)
+#define BINK_BUNDLE_HAS_UNREAD_DATA(bundle) ((bundle)->cur_ptr != (bundle)->cur_dec)
 #define BINK_BUNDLE_U8(bundle) (*(bundle).cur_ptr)
 #define BINK_BUNDLE_S8(bundle) (*(s8 PTR4*)((bundle).cur_ptr))
 #define BINK_BUNDLE_S16(bundle) (*(s16 PTR4*)((bundle).cur_ptr))
@@ -724,7 +725,7 @@ static void CheckReadRLEHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     const u8 PTR4* decode;
     u32 peek;
 
-    if (bundle->cur_ptr != bundle->cur_dec) {
+    if (BINK_BUNDLE_HAS_UNREAD_DATA(bundle)) {
         return;
     }
 
@@ -785,7 +786,7 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
     u32 packed;
     s32 remaining;
 
-    if (bundle->cur_ptr != bundle->cur_dec) {
+    if (BINK_BUNDLE_HAS_UNREAD_DATA(bundle)) {
         return;
     }
 
@@ -843,7 +844,7 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
     u32 packed;
     s32 remaining;
 
-    if (bundle->cur_ptr != bundle->cur_dec) {
+    if (BINK_BUNDLE_HAS_UNREAD_DATA(bundle)) {
         return;
     }
 
@@ -890,7 +891,7 @@ static void CheckReadHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     u32 peek;
     u32 fill;
 
-    if (bundle->cur_ptr != bundle->cur_dec) {
+    if (BINK_BUNDLE_HAS_UNREAD_DATA(bundle)) {
         return;
     }
 
@@ -929,7 +930,7 @@ static void CheckReadHuff4PairBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits
     u32 low;
     u32 high;
 
-    if (bundle->cur_ptr != bundle->cur_dec) {
+    if (BINK_BUNDLE_HAS_UNREAD_DATA(bundle)) {
         return;
     }
 
@@ -965,7 +966,7 @@ static void CheckReadHuff4SBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     s32 symbol;
     s32 fill;
 
-    if (bundle->cur_ptr != bundle->cur_dec) {
+    if (BINK_BUNDLE_HAS_UNREAD_DATA(bundle)) {
         return;
     }
 
@@ -1008,7 +1009,7 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     s16 delta;
     s16 PTR4* dest;
 
-    if (bundle->cur_ptr != bundle->cur_dec) {
+    if (BINK_BUNDLE_HAS_UNREAD_DATA(bundle)) {
         return;
     }
 
