@@ -112,6 +112,9 @@ typedef enum NGCSamplePacking
     (NGC_SAMPLE_HIGH_HALF(first) | ((second) & NGC_SAMPLE_HIGH_HALF_MASK))
 #define NGC_SAMPLE_RIGHT_16_PAIR(first, second) \
     (NGC_SAMPLE_LOW_HALF(first) | ((second) << NGC_SAMPLE_HALF_SHIFT))
+#define NGC_SAMPLE_LOAD_STEREO8_TAIL(ptr) (*(u16 PTR4*)(ptr))
+#define NGC_SAMPLE_STORE_8_TAIL(ptr, value) (*(u8 PTR4*)(ptr) = (u8)(value))
+#define NGC_SAMPLE_STORE_16_TAIL(ptr, value) (*(u16 PTR4*)(ptr) = (u16)(value))
 typedef enum NGCSoundCopyLayout
 {
     NGC_SOUND_HALF_BUFFER_SHIFT = 1,
@@ -707,8 +710,8 @@ static s32 Unlock(BINKSND PTR4* snd, u32 filled_bytes)
             for (i = 0; i < groups; ++i) {
                 u32 stereo_pair = *src32++;
 
-                *(u16 PTR4*)left32 = (u16)NGC_SAMPLE_HIGH_HALF(stereo_pair);
-                *(u16 PTR4*)right32 = (u16)stereo_pair;
+                NGC_SAMPLE_STORE_16_TAIL(left32, NGC_SAMPLE_HIGH_HALF(stereo_pair));
+                NGC_SAMPLE_STORE_16_TAIL(right32, stereo_pair);
                 left32 = NGC_ADVANCE_U32_16BIT_SAMPLE(left32);
                 right32 = NGC_ADVANCE_U32_16BIT_SAMPLE(right32);
             }
@@ -728,11 +731,11 @@ static s32 Unlock(BINKSND PTR4* snd, u32 filled_bytes)
 
             groups = (filled_bytes - (groups * NGC_STEREO8_GROUP_BYTES)) >> NGC_STEREO8_TAIL_SHIFT;
             for (i = 0; i < groups; ++i) {
-                u16 stereo_pair = *(u16 PTR4*)src32;
+                u16 stereo_pair = NGC_SAMPLE_LOAD_STEREO8_TAIL(src32);
 
                 src32 = NGC_ADVANCE_U32_STEREO8_TAIL(src32);
-                *(u8 PTR4*)left16 = (u8)(stereo_pair >> NGC_SAMPLE_BYTE_SHIFT);
-                *(u8 PTR4*)right16 = (u8)stereo_pair;
+                NGC_SAMPLE_STORE_8_TAIL(left16, stereo_pair >> NGC_SAMPLE_BYTE_SHIFT);
+                NGC_SAMPLE_STORE_8_TAIL(right16, stereo_pair);
                 left16 = NGC_ADVANCE_U16_8BIT_SAMPLE(left16);
                 right16 = NGC_ADVANCE_U16_8BIT_SAMPLE(right16);
             }
@@ -1120,10 +1123,10 @@ void ConvDataToStereo8(u32 PTR4* src, u16 PTR4* left, u16 PTR4* right, u32 bytes
 
     count = (total - (count * NGC_STEREO8_GROUP_BYTES)) >> NGC_STEREO8_TAIL_SHIFT;
     for (i = 0; i < count; ++i) {
-        u16 packed_samples = *(u16 PTR4*)src;
+        u16 packed_samples = NGC_SAMPLE_LOAD_STEREO8_TAIL(src);
         src = NGC_ADVANCE_U32_STEREO8_TAIL(src);
-        *(u8 PTR4*)left = (u8)(packed_samples >> NGC_SAMPLE_BYTE_SHIFT);
-        *(u8 PTR4*)right = (u8)packed_samples;
+        NGC_SAMPLE_STORE_8_TAIL(left, packed_samples >> NGC_SAMPLE_BYTE_SHIFT);
+        NGC_SAMPLE_STORE_8_TAIL(right, packed_samples);
         left = NGC_ADVANCE_U16_8BIT_SAMPLE(left);
         right = NGC_ADVANCE_U16_8BIT_SAMPLE(right);
     }
@@ -1149,8 +1152,8 @@ void ConvDataToStereo16(u32 PTR4* src, u32 PTR4* left, u32 PTR4* right, u32 byte
     count = (total - (count * NGC_STEREO16_GROUP_BYTES)) >> NGC_STEREO16_TAIL_SHIFT;
     for (i = 0; i < count; ++i) {
         u32 packed_samples = *src++;
-        *(u16 PTR4*)left = (u16)NGC_SAMPLE_HIGH_HALF(packed_samples);
-        *(u16 PTR4*)right = (u16)packed_samples;
+        NGC_SAMPLE_STORE_16_TAIL(left, NGC_SAMPLE_HIGH_HALF(packed_samples));
+        NGC_SAMPLE_STORE_16_TAIL(right, packed_samples);
         left = NGC_ADVANCE_U32_16BIT_SAMPLE(left);
         right = NGC_ADVANCE_U32_16BIT_SAMPLE(right);
     }
