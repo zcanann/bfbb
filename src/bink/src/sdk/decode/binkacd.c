@@ -88,6 +88,7 @@ typedef VARBITS BINKVARBITS;
 #define BINKAC_BAND_SAMPLE_LIMIT(bands, band) ((bands)[band] * BINKAC_BAND_LIMIT_SCALE)
 #define BINKAC_LITERAL_SAMPLE_RUN VQLENGTH
 #define BINKAC_RLE_SAMPLE_RUN(index) (bink_rlelens_snd[(index)] * VQLENGTH)
+#define BINKAC_ZERO_SAMPLE_RUN(start, end) ((end) - (start))
 #define BINKAC_WINDOW_BYTES(buffer_size) ((buffer_size) / WINDOWRATIO)
 #define BINKAC_WINDOW_SAMPLES(window_size) ((window_size) / sizeof(s16))
 #define BINKAC_OUTPUT_BYTES(buffer_size, window_size) ((buffer_size) - (window_size))
@@ -317,7 +318,7 @@ static void read_rle_samples(f32 PTR4* samps, u32 transform_size, BINKVARBITS PT
 
         bitlen = read_rle_bits(vbp);
         if (bitlen == 0) {
-            u32 zero_count = end - i;
+            u32 zero_count = BINKAC_ZERO_SAMPLE_RUN(i, end);
 
             memset(out, BINKAC_ZERO_BYTE, BINKAC_COEFF_BYTES(zero_count, out));
             out += zero_count;
