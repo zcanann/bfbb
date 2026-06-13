@@ -117,6 +117,8 @@ typedef VARBITS BINKVARBITS;
 #define BINKAC_APPLY_SIGN(value, sign) (((value) ^ (sign)) - (sign))
 #define BINKAC_INVERT_BIN(shift) (1.0 / (1 << (shift)))
 #define BINKAC_IS_NEW_FORMAT(flags) (((flags) & BINKACNEWFORMAT) != 0)
+#define BINKAC_QUANT_THRESHOLD(index) \
+    Undecibel((f32)(s32)(index) * BINKAC_UNDECIBEL_DB_PER_STEP)
 #define BINKAC_UNDECIBEL_DB_PER_STEP 0.664f
 #define BINKAC_UNDECIBEL_POWER_SCALE 0.10f
 #define BINKAC_UNDECIBEL_BASE 10.0
@@ -396,7 +398,7 @@ static u32 Unquant(u32 transform_size, f32 transform_size_root, u32 chans, u32 f
 
         for (i = 0; i < num_bands; ++i) {
             VarBitsGet(quant_index, u32, vb, BINKAC_QUANT_BITS);
-            threshold[i] = Undecibel((f32)(s32)quant_index * BINKAC_UNDECIBEL_DB_PER_STEP);
+            threshold[i] = BINKAC_QUANT_THRESHOLD(quant_index);
         }
 
         read_rle_samples(channel, transform_size, &vb, threshold, bands);
