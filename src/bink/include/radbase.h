@@ -8,6 +8,7 @@
 #define __RAD32__
 #define __RADPPC__
 #define __RADBIGENDIAN__
+#define RADRESTRICT __restrict
 #endif
 
 #define RADINLINE inline
