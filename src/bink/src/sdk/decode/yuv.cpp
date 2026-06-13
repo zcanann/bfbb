@@ -127,6 +127,9 @@ enum YUVBlitLayout {
 #define YUV_SURFACE_MODE(flags) ((flags) & BINKCOPYNOSCALING)
 #define YUV_UV_TABLES_INVERTED(flags) (((flags) & BINKRBINVERT) != 0)
 #define YUV_BLIT_GRAYSCALE(flags) (((flags) & BINKGRAYSCALE) != 0)
+#define YUV_LOAD_SAMPLE8(ptr) (*(u8 PTR4*)(ptr))
+#define YUV_ADVANCE_LUMA_SAMPLE(ptr) ((u32 PTR4*)((u8 PTR4*)(ptr) + YUV_LUMA_SAMPLE_BYTES))
+#define YUV_STORE_WORD(ptr, value) (*(u32 PTR4*)(ptr) = (value))
 
 enum YUVTableOrder {
     YUV_TABLE_ORDER_NORMAL,
@@ -1276,11 +1279,11 @@ static void dounaligned32rowm2h(u32 phase, u32 count)
 
     table = mono32;
     do {
-        y = *(u8 PTR4*)S.y0;
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
+        y = YUV_LOAD_SAMPLE8(S.y0);
+        S.y0 = YUV_ADVANCE_LUMA_SAMPLE(S.y0);
         pixel = table[y];
-        *(u32 PTR4*)S.dest0 = pixel;
-        *(u32 PTR4*)(S.dest0 + S.pitch) = pixel;
+        YUV_STORE_WORD(S.dest0, pixel);
+        YUV_STORE_WORD(S.dest0 + S.pitch, pixel);
         S.dest0 += YUV_PACKED_WORD_BYTES;
     } while (count-- != 0);
 }
@@ -1295,16 +1298,16 @@ static u32 dounaligned32colm2h(u32 count, s32 phase)
     table = mono32;
     remaining = count;
     do {
-        y = *(u8 PTR4*)S.y0;
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
+        y = YUV_LOAD_SAMPLE8(S.y0);
+        S.y0 = YUV_ADVANCE_LUMA_SAMPLE(S.y0);
         pixel = table[y];
-        *(u32 PTR4*)S.dest0 = pixel;
-        *(u32 PTR4*)(S.dest0 + S.pitch) = pixel;
-        y = *(u8 PTR4*)S.y1;
-        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_LUMA_SAMPLE_BYTES);
+        YUV_STORE_WORD(S.dest0, pixel);
+        YUV_STORE_WORD(S.dest0 + S.pitch, pixel);
+        y = YUV_LOAD_SAMPLE8(S.y1);
+        S.y1 = YUV_ADVANCE_LUMA_SAMPLE(S.y1);
         pixel = table[y];
-        *(u32 PTR4*)S.dest1 = pixel;
-        *(u32 PTR4*)(S.dest1 + S.pitch) = pixel;
+        YUV_STORE_WORD(S.dest1, pixel);
+        YUV_STORE_WORD(S.dest1 + S.pitch, pixel);
         S.dest0 += YUV_PACKED_WORD_BYTES;
         S.dest1 += YUV_PACKED_WORD_BYTES;
         remaining--;
