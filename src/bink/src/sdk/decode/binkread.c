@@ -128,6 +128,7 @@ typedef enum BINKPlaneLayout
 
 #define BINK_MASK_BLOCK_INDEX(value) ((value) / BINK_MASK_BLOCK_SIZE)
 #define BINK_MASK_BLOCK_PIXELS(blocks) ((blocks) * BINK_MASK_BLOCK_SIZE)
+#define BINK_MASK_PLANE_PITCH(width) ((width) >> BINK_MASK_BLOCK_SHIFT)
 #define BINK_MASK_PLANE_BYTES(width, height) \
     ((((width) >> BINK_MASK_BLOCK_SHIFT) * (height)) >> BINK_MASK_BLOCK_SHIFT)
 #define BINK_DIRTY_SPLIT_SIZE(size) \
@@ -1149,7 +1150,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
                    ~BINK_CHROMA_ALIGN_MASK;
     bnk.YWidth = bnk.UVWidth * BINK_CHROMA_SCALE;
     bnk.YHeight = bnk.UVHeight * BINK_CHROMA_SCALE;
-    bnk.MaskPitch = bnk.YWidth >> BINK_MASK_BLOCK_SHIFT;
+    bnk.MaskPitch = BINK_MASK_PLANE_PITCH(bnk.YWidth);
 
     bnk.OpenFlags |= hdr.Flags & BINKGRAYSCALE;
     if (!BINK_OPEN_HAS_ALPHA(hdr.Flags)) {
