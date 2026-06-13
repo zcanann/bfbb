@@ -93,6 +93,7 @@ typedef VARBITS BINKVARBITS;
 #define BINKAC_OUTPUT_BYTES(buffer_size, window_size) ((buffer_size) - (window_size))
 #define BINKAC_SAMPLE_BYTES(samples) ((samples) * sizeof(s16))
 #define BINKAC_TRANSFORM_BYTES(transform_size, chans) BINKAC_SAMPLE_BYTES((transform_size) * (chans))
+#define BINKAC_COEFF_BYTES(count, ptr) ((count) * sizeof(*(ptr)))
 #define BINKAC_FFT_WORK_BYTES(transform_size_half, work) \
     (((u32)radfsqrt((f32)(transform_size_half)) + BINKAC_FFT_WORK_EXTRA) * sizeof(*(work)))
 #define BINKAC_DCT_COEFF_BYTES(transform_size) \
@@ -318,7 +319,7 @@ static void read_rle_samples(f32 PTR4* samps, u32 transform_size, BINKVARBITS PT
         if (bitlen == 0) {
             u32 zero_count = end - i;
 
-            memset(out, BINKAC_ZERO_BYTE, zero_count * sizeof(*out));
+            memset(out, BINKAC_ZERO_BYTE, BINKAC_COEFF_BYTES(zero_count, out));
             out += zero_count;
             i = end;
 
