@@ -729,9 +729,9 @@ static void CheckReadRLEHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     u32 count;
     u8 PTR4* dest;
     u32 symbol;
-    u32 last_value;
+    u32 last_symbol;
     u8 run_length;
-    u32 fill;
+    u32 repeat_word;
     u8 PTR4* syms;
     const u8 PTR4* decode;
     u32 peek;
@@ -749,31 +749,31 @@ static void CheckReadRLEHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
             syms = bundle->syms;
             peek = (u8)bundle->bits_to_peek;
             dest = bundle->data;
-            last_value = 0;
+            last_symbol = 0;
             decode = bundle->decode;
             while (count != 0) {
                 symbol = exp_read_huff4(bits, peek, decode, syms);
                 if (symbol >= HUFF4_RLE_FIRST_RUN_SYMBOL) {
                     /* Packed word stores four copies of the last byte for the run fill. */
-                    fill = last_value | (last_value << BINK_BYTE_BITS);
+                    repeat_word = last_symbol | (last_symbol << BINK_BYTE_BITS);
                     symbol -= HUFF4_RLE_LITERAL_COUNT;
                     run_length = BINK_HUFF4_RLE_LENGTH(symbol);
                     count -= run_length;
-                    fill |= fill << BINK_BUNDLE_MIN_WORD_BITS;
+                    repeat_word |= repeat_word << BINK_BUNDLE_MIN_WORD_BITS;
                     do {
-                        *(u32 PTR4*)dest = fill;
+                        *(u32 PTR4*)dest = repeat_word;
                         dest += EXP_WORD_BYTES;
                         run_length -= EXP_WORD_BYTES;
                     } while (run_length != 0);
                 } else {
                     *dest++ = (u8)symbol;
                     count--;
-                    last_value = symbol;
+                    last_symbol = symbol;
                 }
             }
         } else {
-            fill = exp_get_bits(bits, HUFF4_NIBBLE_BITS);
-            memset(bundle->data, fill, count);
+            repeat_word = exp_get_bits(bits, HUFF4_NIBBLE_BITS);
+            memset(bundle->data, repeat_word, count);
         }
     } else {
         /* Empty bundles point cur_ptr past data so callers see no decoded elements. */
@@ -900,7 +900,7 @@ static void CheckReadHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     u8 PTR4* syms;
     const u8 PTR4* decode;
     u32 peek;
-    u32 fill;
+    u32 fill_symbol;
 
     if (BINK_BUNDLE_HAS_UNREAD_DATA(bundle)) {
         return;
@@ -921,8 +921,8 @@ static void CheckReadHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
                 ++dest;
             }
         } else {
-            fill = exp_get_bits(bits, HUFF4_NIBBLE_BITS);
-            memset(bundle->data, fill, count);
+            fill_symbol = exp_get_bits(bits, HUFF4_NIBBLE_BITS);
+            memset(bundle->data, fill_symbol, count);
         }
     } else {
         bundle->cur_dec = bundle->data;
@@ -975,7 +975,7 @@ static void CheckReadHuff4SBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     const u8 PTR4* decode;
     u32 peek;
     s32 symbol;
-    s32 fill;
+    s32 fill_symbol;
 
     if (BINK_BUNDLE_HAS_UNREAD_DATA(bundle)) {
         return;
@@ -999,11 +999,11 @@ static void CheckReadHuff4SBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
                 *dest++ = (s8)symbol;
             }
         } else {
-            fill = (s32)exp_get_bits(bits, HUFF4_NIBBLE_BITS);
-            if (fill != 0 && exp_get_bit(bits)) {
-                fill = -fill;
+            fill_symbol = (s32)exp_get_bits(bits, HUFF4_NIBBLE_BITS);
+            if (fill_symbol != 0 && exp_get_bit(bits)) {
+                fill_symbol = -fill_symbol;
             }
-            memset(bundle->data, fill, count);
+            memset(bundle->data, fill_symbol, count);
         }
     } else {
         bundle->cur_dec = bundle->data;
