@@ -115,6 +115,10 @@ typedef enum BINKHuff4SortMode
 #define HUFF4_CODE_USED(code) ((code) >> HUFF4_NIBBLE_BITS)
 #define HUFF4_CODE_SYMBOL(code) ((code) & HUFF4_SYMBOL_MASK)
 #define HUFF4_CODE_SYM(code, syms) ((syms)[HUFF4_CODE_SYMBOL(code)])
+#define HUFF4_MASKED_NIBBLE(value) ((value) & HUFF4_SYMBOL_MASK)
+#define HUFF4_HIGH_NIBBLE(value) ((value) << HUFF4_NIBBLE_BITS)
+#define HUFF4_PACK_NIBBLES(low, high) ((low) | HUFF4_HIGH_NIBBLE(high))
+#define HUFF4_PACK_MASKED_NIBBLES(low, high) (HUFF4_HIGH_NIBBLE(HUFF4_MASKED_NIBBLE(high)) | (low))
 typedef enum BINKBundleLayout
 {
     HUFF8_TABLE_STATES = HUFF4_SYMBOLS,
@@ -801,7 +805,7 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
             high = exp_read_huff8(bits, lastval, huff8_table);
             lastval = high;
             low = exp_read_huff4_mask(bits, peek, decode, syms, mask);
-            packed = ((high & HUFF4_SYMBOL_MASK) << HUFF4_NIBBLE_BITS) | low;
+            packed = HUFF4_PACK_MASKED_NIBBLES(low, high);
             if ((packed & BINK_SIGNED_BYTE_BIAS) != 0) {
                 packed = BINK_SIGNED_BYTE_NEGATIVE(packed);
             } else {
@@ -858,7 +862,7 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
         do {
             lastval = exp_read_huff8(bits, lastval, huff8_table);
             low = exp_read_huff4_mask(bits, peek, decode, syms, mask);
-            packed = low | (lastval << HUFF4_NIBBLE_BITS);
+            packed = HUFF4_PACK_NIBBLES(low, lastval);
             *dest++ = (u8)packed;
             remaining--;
         } while (remaining > 0);
@@ -940,7 +944,7 @@ static void CheckReadHuff4PairBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits
             count--;
             low = exp_read_huff4_mask(bits, peek, decode, syms, mask);
             high = exp_read_huff4_mask(bits, peek, decode, syms, mask);
-            *dest++ = (u8)(low | (high << HUFF4_NIBBLE_BITS));
+            *dest++ = (u8)HUFF4_PACK_NIBBLES(low, high);
         } while (count != 0);
     } else {
         bundle->cur_dec = bundle->data;
