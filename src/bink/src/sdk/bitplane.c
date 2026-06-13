@@ -153,6 +153,7 @@
 #define BP_LOSSY_LEVEL_MASK 7
 #define BP_ZIGZAG_COEFF(vals, index) ((vals)[zigzag[index]])
 #define BP_COEFF_BIT_LEVEL(value) (getbitlevelvar(value) & BP_BYTE_MASK)
+#define BP_NEXT_LEVEL(level) (((level) - 1) & BP_BYTE_MASK)
 #define BP_LOSSLESS_LEVEL_CODE(level) ((level) & VarBitsLens[BP_LOSSLESS_LEVEL_BITS])
 #define BP_LOSSY_LEVEL_CODE(level) (((level) - 1) & VarBitsLens[BP_LOSSY_LEVEL_BITS])
 
@@ -372,7 +373,7 @@ u32 LenBPLossless(s16 PTR4* vals)
     end = tree.nodes;
 
     /* Expand pending group/branch/coeff nodes one bitplane level at a time. */
-    for (; 1 < maxbits; maxbits = (maxbits - 1) & BP_BYTE_MASK) {
+    for (; 1 < maxbits; maxbits = BP_NEXT_LEVEL(maxbits)) {
         total = len;
         restart = cur;
         if (cur < end) {
@@ -764,7 +765,7 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
 
     /* Non-final planes read lower magnitude bits plus a sign for new coeffs. */
     while (1 < maxlevel) {
-        level = (maxlevel - 1) & BP_BYTE_MASK;
+        level = BP_NEXT_LEVEL(maxlevel);
         next_node_ptr = node_ptr;
         highbit = (s16)highbit >> 1;
         if (node_ptr < tree_end_ptr) {
@@ -1197,7 +1198,7 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     next_node = roots + BP_LOSSY_ROOT_NODES;
     bit_mask = (u16)(1 << (maxbits - 1));
     i = 0;
-    for (; maxbits != 0; maxbits = (maxbits - 1) & BP_BYTE_MASK) {
+    for (; maxbits != 0; maxbits = BP_NEXT_LEVEL(maxbits)) {
         count = 0;
         /* Coefficients introduced on earlier planes emit one residual bit here. */
         if (count < i) {
@@ -1606,7 +1607,7 @@ node_done:
         }
 level_done:
         mask = mask >> 1;
-        levels_remaining = (levels_remaining - 1) & BP_BYTE_MASK;
+        levels_remaining = BP_NEXT_LEVEL(levels_remaining);
         node_ptr = next_node_ptr;
     }
 
