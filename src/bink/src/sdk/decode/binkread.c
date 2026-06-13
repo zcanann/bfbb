@@ -234,6 +234,8 @@ typedef enum BINKPlaneSlot
     ((bink)->YWidth * (bink)->YHeight + (bink)->UVWidth * (bink)->UVHeight * BINK_CHROMA_PLANE_COUNT)
 #define BINK_ALPHA_PLANE_BYTES(bink) ((bink)->YWidth * (bink)->YHeight)
 #define BINK_FILE_BYTES_WITH_HEADER(bink) ((bink)->Size + BINK_FILE_HEADER_BYTES)
+#define BINK_PRELOAD_BYTES(bink) \
+    (BINK_FILE_BYTES_WITH_HEADER(bink) - BINK_FRAME_OFFSET((bink)->frameoffsets[0]))
 #define BINK_SOUND_BUFFER_BYTES(bytes) (((bytes) + BINK_SOUND_BUFFER_ALIGN_MASK) & ~BINK_SOUND_BUFFER_ALIGN_MASK)
 #define BINK_TRACK_BUFFER_BYTES(bytes) (((bytes) + BINK_SOUND_SAMPLE_ALIGN_MASK) & ~BINK_SOUND_SAMPLE_ALIGN_MASK)
 #define BINK_SOUND_PRIME_BYTES(freq, tracktype, dropped) \
@@ -1328,9 +1330,7 @@ HBINK BinkOpen(const char PTR4* name, u32 flags)
             }
 
             if (BINK_OPEN_PRELOADS_ALL(flags)) {
-                u32 preload_size =
-                    BINK_FILE_BYTES_WITH_HEADER(out) -
-                    BINK_FRAME_OFFSET(out->frameoffsets[0]);
+                u32 preload_size = BINK_PRELOAD_BYTES(out);
 
                 out->preloadptr = bpopmalloc(out, preload_size);
                 if (out->preloadptr == 0) {
