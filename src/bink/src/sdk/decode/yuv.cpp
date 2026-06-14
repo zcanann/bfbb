@@ -1101,7 +1101,7 @@ extern "C" void YUV_init(s32 flags)
             green_bits = RGB_BITS_5;
             blue_bits = RGB_BITS_5;
             blue_shift = RGB_565_BLUE_SHIFT;
-        } else if (flags <= BINKSURFACE565) {
+        } else if (flags < BINKSURFACE655) {
             red_bits = RGB_BITS_5;
             green_bits = RGB_BITS_6;
             blue_bits = RGB_BITS_5;
