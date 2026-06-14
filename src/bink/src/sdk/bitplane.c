@@ -1609,10 +1609,9 @@ after_2:
                 }
             }
 node_done:
-            if (tree_end_ptr <= node_ptr) {
-                goto level_done;
+            if (node_ptr < tree_end_ptr) {
+                goto read_node;
             }
-            goto read_node;
         }
 level_done:
         mask = mask >> 1;
