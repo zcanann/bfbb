@@ -1117,21 +1117,23 @@ extern "C" void YUV_init(s32 flags)
             blue_bits = RGB_BITS_NONE;
             blue_shift = RGB_BITS_NONE;
         }
-    } else if (flags >= BINKSURFACE5551) {
+    } else if (flags < BINKSURFACE5551) {
+        if (flags == BINKSURFACE4444) {
+            red_bits = RGB_BITS_4;
+            green_bits = RGB_BITS_4;
+            blue_bits = RGB_BITS_4;
+            blue_shift = RGB_444_BLUE_SHIFT;
+        } else {
+            red_bits = RGB_BITS_NONE;
+            green_bits = RGB_BITS_NONE;
+            blue_bits = RGB_BITS_NONE;
+            blue_shift = RGB_BITS_NONE;
+        }
+    } else {
         red_bits = RGB_BITS_5;
         green_bits = RGB_BITS_5;
         blue_bits = RGB_BITS_5;
         blue_shift = RGB_555_BLUE_SHIFT;
-    } else if (flags == BINKSURFACE4444) {
-        red_bits = RGB_BITS_4;
-        green_bits = RGB_BITS_4;
-        blue_bits = RGB_BITS_4;
-        blue_shift = RGB_444_BLUE_SHIFT;
-    } else {
-        red_bits = RGB_BITS_NONE;
-        green_bits = RGB_BITS_NONE;
-        blue_bits = RGB_BITS_NONE;
-        blue_shift = RGB_BITS_NONE;
     }
 
     red_down = 8 - red_bits;
