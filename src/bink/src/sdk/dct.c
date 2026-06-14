@@ -973,22 +973,26 @@ static void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4
     s32 row[DCT_BLOCK_WIDTH];
     s32 workspace[DCT_BLOCK_COEFFS];
     s32 PTR4* out;
+    const s32 PTR4* qptr;
+    s16 PTR4* inptr;
     u32 PTR4* d0;
     u32 PTR4* d1;
     s32 doublepitch;
     s32 i;
 
+    qptr = q;
+    inptr = in;
     d0 = dest;
     doublepitch = pitch + pitch;
     out = workspace;
     d1 = DCT_ADVANCE_U32_BYTES(dest, pitch);
     /* First pass dequantizes columns into a transposed workspace. */
     for (i = DCT_BLOCK_WIDTH; i != 0; --i) {
-        if (DCT_AC_MASK(in) == 0) {
-            s32 dc = DCT_DEQUANT(in, q, DCT_ROW0);
+        if (DCT_AC_MASK(inptr) == 0) {
+            s32 dc = DCT_DEQUANT(inptr, qptr, DCT_ROW0);
 
-            ++in;
-            ++q;
+            ++inptr;
+            ++qptr;
             out[DCT_ROW0] = dc;
             out[DCT_ROW1] = dc;
             out[DCT_ROW2] = dc;
@@ -998,14 +1002,14 @@ static void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4
             out[DCT_ROW6] = dc;
             out[DCT_ROW7] = dc;
         } else {
-            s32 row2 = DCT_DEQUANT(in, q, DCT_ROW2);
-            s32 row6 = DCT_DEQUANT(in, q, DCT_ROW6);
+            s32 row2 = DCT_DEQUANT(inptr, qptr, DCT_ROW2);
+            s32 row6 = DCT_DEQUANT(inptr, qptr, DCT_ROW6);
             s32 even_sum = row2 + row6;
             s32 even_diff = DCT_FIXED_MUL(row2 - row6, DCT_IDCT_A1) - even_sum;
-            s32 row1 = DCT_DEQUANT(in, q, DCT_ROW1);
-            s32 row3 = DCT_DEQUANT(in, q, DCT_ROW3);
-            s32 row5 = DCT_DEQUANT(in, q, DCT_ROW5);
-            s32 row7 = DCT_DEQUANT(in, q, DCT_ROW7);
+            s32 row1 = DCT_DEQUANT(inptr, qptr, DCT_ROW1);
+            s32 row3 = DCT_DEQUANT(inptr, qptr, DCT_ROW3);
+            s32 row5 = DCT_DEQUANT(inptr, qptr, DCT_ROW5);
+            s32 row7 = DCT_DEQUANT(inptr, qptr, DCT_ROW7);
             s32 odd0 = row5 - row3;
             s32 odd1 = row1 - row7;
             s32 odd_sum = odd0 + odd1;
@@ -1015,8 +1019,8 @@ static void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4
             s32 odd_mid = (DCT_FIXED_MUL(odd0, DCT_IDCT_A4) + odd_rot) - (odd_pair0 + odd_pair1);
             s32 odd_cross = DCT_FIXED_MUL(odd_pair0 - odd_pair1, DCT_IDCT_A1) - odd_mid;
             s32 odd_tail = (DCT_FIXED_MUL(odd1, DCT_IDCT_A2) - odd_rot) + odd_cross;
-            s32 row0 = DCT_DEQUANT(in, q, DCT_ROW0);
-            s32 row4 = DCT_DEQUANT(in, q, DCT_ROW4);
+            s32 row0 = DCT_DEQUANT(inptr, qptr, DCT_ROW0);
+            s32 row4 = DCT_DEQUANT(inptr, qptr, DCT_ROW4);
             s32 even0 = row0 + row4;
             s32 even1 = row0 - row4;
             s32 even2 = even0 + even_sum;
@@ -1025,8 +1029,8 @@ static void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4
             s32 even5 = even1 - even_diff;
             s32 odd_out0 = odd_pair0 + odd_pair1;
 
-            ++in;
-            ++q;
+            ++inptr;
+            ++qptr;
             row[DCT_COL0] = even2;
             row[DCT_COL7] = odd_out0;
             row[DCT_COL1] = even4;
