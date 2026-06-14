@@ -617,7 +617,6 @@ static s32 Lock(BINKSND PTR4* snd, u8 PTR4* PTR4* addr, u32 PTR4* len)
     u32 voice_cursor;
     u32 half_size;
     u32 channel_stride;
-    ARQRequest PTR4* task_base;
     ARQRequest PTR4* task;
     ARQRequest PTR4* right_task;
     AXVPB PTR4* voice;
@@ -627,7 +626,6 @@ static s32 Lock(BINKSND PTR4* snd, u8 PTR4* PTR4* addr, u32 PTR4* len)
 
     if (NGC_SOUND_HAS_LOCK(NGC_SOUND_STATE(snd))) {
         state = NGC_SOUND_STATE(snd);
-        task_base = NGC_LEFT_LOCK_TASK(state, 0);
         writable_bytes = NGC_SOUND_STATE(snd)->play_cursor;
         voice = NGC_LEFT_VOICE(state);
         shift = NGC_ADDRESS_SHIFT(state);
@@ -649,7 +647,7 @@ static s32 Lock(BINKSND PTR4* snd, u8 PTR4* PTR4* addr, u32 PTR4* len)
         }
 
         /* The lock index selects one half of the MRAM staging buffer. */
-        task = &task_base[NGC_SOUND_STATE(snd)->lock_index];
+        task = NGC_LEFT_LOCK_TASK(state, NGC_SOUND_STATE(snd)->lock_index);
         left_buffer = NGC_SOUND_LOCK_BUFFER(NGC_SOUND_STATE(snd)->decode_buffer,
                                             NGC_SOUND_STATE(snd)->lock_index, channel_stride);
         writable_bytes = NGC_SOUND_DECODE_BYTES(writable_bytes, snd->chans);
