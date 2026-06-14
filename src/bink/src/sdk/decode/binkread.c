@@ -1740,10 +1740,12 @@ s32 BinkDoFrame(HBINK bnk)
                     BINKTRACKFRAME PTR4* next_frame_data;
                     BINKTRACKPAYLOAD PTR4* frame_payload;
                     u32 compressed_size;
+                    s32 next_track;
 
                     playing_index = 0;
                     playing_tracks = bnk->playingtracks;
                     compressed_size = frame_data->size;
+                    next_track = track + 1;
                     frame_payload = BINK_TRACK_FRAME_PAYLOAD(frame_data);
                     frame_data = (BINKTRACKFRAME PTR4*)frame_payload;
                     next_frame_data = BINK_TRACK_FRAME_AFTER_PAYLOAD(frame_data, compressed_size);
@@ -1825,7 +1827,7 @@ s32 BinkDoFrame(HBINK bnk)
                         }
                     }
 
-                    ++track;
+                    track = next_track;
                     frame_data = next_frame_data;
                 } while (track < (s32)bnk->NumTracks);
             }
