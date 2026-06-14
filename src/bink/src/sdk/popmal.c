@@ -40,12 +40,16 @@ void pushmalloc(void PTR4* PTR4* ptr, u32 amount)
         pushamt = newamt;
     }
 
-    amount = Round32(amount);
-    amount += ((((pushtot >> PUSHMALLOC_ALIGN_BITS) & PUSHMALLOC_ALIGN_MASK) -
-                ((amount >> PUSHMALLOC_ALIGN_BITS) & PUSHMALLOC_ALIGN_MASK) +
-                PUSHMALLOC_ALIGN_BIAS) &
-               PUSHMALLOC_ALIGN_MASK)
-              << PUSHMALLOC_ALIGN_BITS;
+    {
+        u32 last;
+        u32 next;
+
+        amount = Round32(amount);
+        last = ((pushtot >> PUSHMALLOC_ALIGN_BITS) & PUSHMALLOC_ALIGN_MASK) + 1;
+        next = (amount >> PUSHMALLOC_ALIGN_BITS) & PUSHMALLOC_ALIGN_MASK;
+        amount += ((PUSHMALLOC_ALIGNMENT + last - next) & PUSHMALLOC_ALIGN_MASK)
+                  << PUSHMALLOC_ALIGN_BITS;
+    }
 
     pushtot += amount;
     pushamt[pushcur] = amount;
