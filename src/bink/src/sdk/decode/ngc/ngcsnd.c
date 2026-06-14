@@ -656,7 +656,7 @@ static s32 Lock(BINKSND PTR4* snd, u8 PTR4* PTR4* addr, u32 PTR4* len)
         task->source = (u32)left_buffer;
         decode_buffer = left_buffer;
         left_buffer = NGC_SOUND_RIGHT_LOCK_BUFFER(left_buffer, NGC_SOUND_STATE(snd)->channel_stride);
-        right_task = &task_base[NGC_RIGHT_LOCK_TASK_INDEX(NGC_SOUND_STATE(snd)->lock_index)];
+        right_task = NGC_RIGHT_LOCK_TASK(state, NGC_SOUND_STATE(snd)->lock_index);
         right_task->source = (u32)left_buffer;
 
         if (snd->chans == NGC_SOUND_STEREO_CHANNELS) {
