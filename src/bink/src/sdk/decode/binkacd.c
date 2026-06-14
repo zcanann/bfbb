@@ -124,15 +124,7 @@ typedef VARBITS BINKVARBITS;
 #define BINKAC_INVERT_BIN(shift) (1.0 / (1 << (shift)))
 #define BINKAC_IS_NEW_FORMAT(flags) (((flags) & BINKACNEWFORMAT) != 0)
 #define BINKAC_QUANT_THRESHOLD(index) \
-    Undecibel((f32)(s32)(index) * BINKAC_UNDECIBEL_DB_PER_STEP)
-#define BINKAC_SAMPLE_ZERO 0.0f
-#define BINKAC_UNDECIBEL_DB_PER_STEP 0.664f
-#define BINKAC_UNDECIBEL_POWER_SCALE 0.10f
-#define BINKAC_UNDECIBEL_BASE 10.0
-#define BINKAC_RSQRT_ZERO 0.0f
-#define BINKAC_RSQRT_NEWTON_HALF_CONST 0.5
-#define BINKAC_RSQRT_NEWTON_THREE_CONST 3.0
-#define BINKAC_TRANSFORM_ROOT_SCALE_CONST 2.0f
+    Undecibel((f32)(s32)(index) * BINKAC_QUANT_INDEX_SCALE_CONST)
 
 /* RLE code lengths, in VQLENGTH sample groups, for sparse audio coefficients. */
 static u8 bink_rlelens_snd[MAXRLE] = {
@@ -156,6 +148,15 @@ static f64 bink_invertbins[BINKAC_INVERT_BINS] = {
     BINKAC_INVERT_BIN(5),  BINKAC_INVERT_BIN(4),  BINKAC_INVERT_BIN(3),
     BINKAC_INVERT_BIN(2),  BINKAC_INVERT_BIN(1),  BINKAC_INVERT_BIN(0)
 };
+
+static const f32 BINKAC_SAMPLE_ZERO = 0.0f;
+static const f32 BINKAC_QUANT_INDEX_SCALE_CONST = 0.664f;
+static const f32 BINKAC_QUANT_POWER_SCALE_CONST = 0.10f;
+static const f64 BINKAC_QUANT_POWER_BASE_CONST = 10.0;
+static const f32 BINKAC_RSQRT_ZERO = 0.0f;
+static const f64 BINKAC_RSQRT_NEWTON_HALF_CONST = 0.5;
+static const f64 BINKAC_RSQRT_NEWTON_THREE_CONST = 3.0;
+static const f32 BINKAC_TRANSFORM_ROOT_SCALE_CONST = 2.0f;
 
 static f32 fxptof(u32 val)
 {
@@ -367,7 +368,7 @@ f64 pow(f64 x, f64 y);
 
 static inline f32 Undecibel(f32 decibels)
 {
-    return (f32)pow(BINKAC_UNDECIBEL_BASE, decibels * BINKAC_UNDECIBEL_POWER_SCALE);
+    return (f32)pow(BINKAC_QUANT_POWER_BASE_CONST, decibels * BINKAC_QUANT_POWER_SCALE_CONST);
 }
 
 static u32 Unquant(u32 transform_size, f32 transform_size_root, u32 chans, u32 flags, s32 PTR4* fft_work,
