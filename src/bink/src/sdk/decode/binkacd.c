@@ -350,13 +350,12 @@ static void read_rle_samples(f32 PTR4* samps, u32 transform_size, BINKVARBITS PT
                         /* Bink audio 1 stores the sign bit after each nonzero coefficient. */
                         s32 sign = BINKAC_SIGN_MASK(read_bit(vbp));
                         magnitude = BINKAC_APPLY_SIGN(magnitude, sign);
-                        *out = magnitude * dequant;
+                        *out++ = magnitude * dequant;
                     } else {
-                        *out = BINKAC_SAMPLE_ZERO;
+                        *out++ = BINKAC_SAMPLE_ZERO;
                     }
                 }
 
-                ++out;
                 ++coeff;
             }
         }
