@@ -203,6 +203,13 @@ typedef enum BINKBUNDLEINITIALVALUE
          : ((temp) = *((vb).cur), VARBITS_ADVANCE_CUR((vb).cur),                                   \
             (vb).bitlen = EXP_LAST_BIT_INDEX, (vb).bits = ((EXPBITSTYPE)(temp)) >> 1)),            \
      ((temp) & EXP_BIT_MASK))
+#define EXPBITS_GET1_BRANCH(vb, temp)                                                              \
+    (((vb).bitlen != 0)                                                                            \
+         ? ((temp) = (vb).bits, (vb).bitlen--, (vb).bits = ((EXPBITSTYPE)(temp)) >> 1,             \
+            ((temp) & EXP_BIT_MASK))                                                               \
+         : ((temp) = *((vb).cur), VARBITS_ADVANCE_CUR((vb).cur),                                   \
+            (vb).bitlen = EXP_LAST_BIT_INDEX, (vb).bits = ((EXPBITSTYPE)(temp)) >> 1,              \
+            ((temp) & EXP_BIT_MASK)))
 #define BINK_MARK_WORK_BLOCK(work_row, work_col) ((work_row)[(work_col) >> BINK_CHROMA_SHIFT] = BINK_WORK_BLOCK_MARKED)
 #define BINK_MOTION_SOURCE(old, pitch, mx, my) ((old) + (my) * (s32)(pitch) + (mx))
 #define BINK_DCT_PATTERN_SCAN(pattern) (patterns + (pattern) * BINK_BLOCK_PIXELS)
@@ -413,7 +420,7 @@ static void simpmergesort(EXPBITS PTR4* bits, u8 PTR4* out, u8 PTR4* left,
 
     left_count = right_count;
     for (;;) {
-        if (EXPBITS_GET1(*bits, bit)) {
+        if (EXPBITS_GET1_BRANCH(*bits, bit)) {
             selected = *right++;
             right_count--;
         } else {
