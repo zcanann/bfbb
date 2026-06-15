@@ -978,6 +978,7 @@ static void CheckReadHuff4SBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     u32 peek;
     s32 symbol;
     s32 fill_symbol;
+    EXPBITSTYPE bit;
 
     if (BINK_BUNDLE_HAS_UNREAD_DATA(bundle)) {
         return;
@@ -987,7 +988,7 @@ static void CheckReadHuff4SBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     if (count != 0) {
         bundle->cur_ptr = BINK_BUNDLE_DATA_BEGIN(bundle);
         bundle->cur_dec = BINK_BUNDLE_DATA_END(bundle, count);
-        if (!exp_get_bit(bits)) {
+        if (!EXPBITS_GET1_BRANCH(*bits, bit)) {
             /* Signed Huff4 bundles store a sign bit only for nonzero symbols. */
             syms = bundle->syms;
             peek = bundle->bits_to_peek;
