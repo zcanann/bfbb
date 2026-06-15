@@ -566,8 +566,42 @@ static inline u32 exp_read_huff4_mask(EXPBITS PTR4* bits, u32 bits_to_peek,
 
 static inline u32 exp_read_huff8(EXPBITS PTR4* bits, u32 state, HUFF8TABLE PTR4* table)
 {
-    return exp_read_huff4(bits, table->bits_to_peek[state], table->decode[state],
-                          table->syms[state]);
+    u32 bitcount;
+    u32 bits_to_peek;
+    EXPBITSTYPE bitbuf;
+    EXPBITSTYPE word;
+    u32 mask;
+    u8 code;
+    u32 used;
+    u32 symbol;
+
+    bits_to_peek = table->bits_to_peek[state];
+    bitcount = bits->bitlen;
+    mask = GetBitsLen(bits_to_peek);
+    if (bitcount >= bits_to_peek) {
+        bitbuf = bits->bits & mask;
+        code = table->decode[state][bitbuf];
+        used = HUFF4_CODE_USED(code);
+        symbol = table->syms[state][HUFF4_CODE_SYMBOL(code)];
+        bits->bits >>= used;
+        bits->bitlen = bitcount - used;
+    } else {
+        word = *bits->cur;
+        bitbuf = (bits->bits | (word << bitcount)) & mask;
+        code = table->decode[state][bitbuf];
+        used = HUFF4_CODE_USED(code);
+        symbol = table->syms[state][HUFF4_CODE_SYMBOL(code)];
+        if (bitcount >= used) {
+            bits->bits >>= used;
+            bits->bitlen = bitcount - used;
+        } else {
+            bits->bits = word >> (used - bitcount);
+            bits->bitlen = bitcount + EXP_BITS_PER_WORD - used;
+            bits->cur++;
+        }
+    }
+
+    return symbol;
 }
 
 static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
