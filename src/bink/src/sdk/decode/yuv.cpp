@@ -3229,6 +3229,7 @@ static u32 dounaligned16a4col2h(u32 count, s32 phase)
     const s32 PTR4* gb_utable;
     const s32 PTR4* gb_vtable;
     const s32 PTR4* rtable;
+    u32 remaining;
     u8 PTR4* yptr;
     u8 PTR4* aptr;
     u8 y;
@@ -3240,6 +3241,7 @@ static u32 dounaligned16a4col2h(u32 count, s32 phase)
     gb_utable = YUVTables.u_to_gb;
     gb_vtable = YUVTables.v_to_gb;
     rtable = YUVTables.v_to_r;
+    remaining = count;
     do {
         phase++;
         S.b = btable[*(u8 PTR4*)S.u];
@@ -3271,8 +3273,8 @@ static u32 dounaligned16a4col2h(u32 count, s32 phase)
             S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
             S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
-        count--;
-    } while (count != 0);
+        remaining--;
+    } while (remaining != 0);
 
     return phase;
 }
@@ -3327,6 +3329,7 @@ static u32 dounaligned16a4col2w(u32 count, s32 phase)
     const s32 PTR4* gb_utable;
     const s32 PTR4* gb_vtable;
     const s32 PTR4* rtable;
+    u32 remaining;
     u8 PTR4* yptr;
     u8 PTR4* aptr;
     u8 y;
@@ -3338,6 +3341,7 @@ static u32 dounaligned16a4col2w(u32 count, s32 phase)
     gb_utable = YUVTables.u_to_gb;
     gb_vtable = YUVTables.v_to_gb;
     rtable = YUVTables.v_to_r;
+    remaining = count;
     do {
         phase++;
         S.b = btable[*(u8 PTR4*)S.u];
@@ -3369,8 +3373,8 @@ static u32 dounaligned16a4col2w(u32 count, s32 phase)
             S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
             S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
-        count--;
-    } while (count != 0);
+        remaining--;
+    } while (remaining != 0);
 
     return phase;
 }
@@ -3427,6 +3431,7 @@ static u32 dounaligned16a4col2wh(u32 count, s32 phase)
     const s32 PTR4* gb_utable;
     const s32 PTR4* gb_vtable;
     const s32 PTR4* rtable;
+    u32 remaining;
     u8 PTR4* yptr;
     u8 PTR4* aptr;
     u8 y;
@@ -3438,6 +3443,7 @@ static u32 dounaligned16a4col2wh(u32 count, s32 phase)
     gb_utable = YUVTables.u_to_gb;
     gb_vtable = YUVTables.v_to_gb;
     rtable = YUVTables.v_to_r;
+    remaining = count;
     do {
         phase++;
         S.b = btable[*(u8 PTR4*)S.u];
@@ -3473,8 +3479,8 @@ static u32 dounaligned16a4col2wh(u32 count, s32 phase)
             S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
             S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
-        count--;
-    } while (count != 0);
+        remaining--;
+    } while (remaining != 0);
 
     return phase;
 }
@@ -3576,6 +3582,7 @@ static u32 dounaligned16a4col(u32 count, s32 phase)
     const s32 PTR4* gb_utable;
     const s32 PTR4* gb_vtable;
     const s32 PTR4* rtable;
+    u32 remaining;
     u8 PTR4* yptr;
     u8 PTR4* aptr;
     u8 y;
@@ -3586,6 +3593,7 @@ static u32 dounaligned16a4col(u32 count, s32 phase)
     gb_utable = YUVTables.u_to_gb;
     gb_vtable = YUVTables.v_to_gb;
     rtable = YUVTables.v_to_r;
+    remaining = count;
     do {
         phase++;
         S.b = btable[*(u8 PTR4*)S.u];
@@ -3613,8 +3621,8 @@ static u32 dounaligned16a4col(u32 count, s32 phase)
             S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
             S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
-        count--;
-    } while (count != 0);
+        remaining--;
+    } while (remaining != 0);
 
     return phase;
 }
