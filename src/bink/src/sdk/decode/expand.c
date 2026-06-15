@@ -731,6 +731,7 @@ static void CheckReadRLEHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     u8 PTR4* syms;
     const u8 PTR4* decode;
     u32 peek;
+    EXPBITSTYPE bit;
 
     if (BINK_BUNDLE_HAS_UNREAD_DATA(bundle)) {
         return;
@@ -740,7 +741,7 @@ static void CheckReadRLEHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     if (count != 0) {
         bundle->cur_ptr = BINK_BUNDLE_DATA_BEGIN(bundle);
         bundle->cur_dec = BINK_BUNDLE_DATA_END(bundle, count);
-        if (!exp_get_bit(bits)) {
+        if (!EXPBITS_GET1(*bits, bit)) {
             /* Literal Huff4 symbols above 11 repeat the previous decoded symbol. */
             syms = bundle->syms;
             peek = (u8)bundle->bits_to_peek;
@@ -791,6 +792,7 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
     u32 low_nibble;
     u32 packed;
     s32 remaining;
+    EXPBITSTYPE bit;
 
     if (BINK_BUNDLE_HAS_UNREAD_DATA(bundle)) {
         return;
@@ -805,7 +807,7 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
         decode = bundle->decode;
         peek = bundle->bits_to_peek;
         last_high_nibble = huff8_table->last_high_nibble;
-        if (exp_get_bit(bits)) {
+        if (EXPBITS_GET1(*bits, bit)) {
             /* Negative remaining marks the old-format repeat packet variant. */
             count = BINK_BUNDLE_REPEAT_COUNT(count);
         }
@@ -848,6 +850,7 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
     u32 low_nibble;
     u32 packed;
     s32 remaining;
+    EXPBITSTYPE bit;
 
     if (BINK_BUNDLE_HAS_UNREAD_DATA(bundle)) {
         return;
@@ -862,7 +865,7 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
         decode = bundle->decode;
         peek = bundle->bits_to_peek;
         last_high_nibble = huff8_table->last_high_nibble;
-        if (exp_get_bit(bits)) {
+        if (EXPBITS_GET1(*bits, bit)) {
             /* New-format Huff8 repeat packets keep the byte unsigned. */
             count = BINK_BUNDLE_REPEAT_COUNT(count);
         }
@@ -894,6 +897,7 @@ static void CheckReadHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     const u8 PTR4* decode;
     u32 peek;
     u32 fill_symbol;
+    EXPBITSTYPE bit;
 
     if (BINK_BUNDLE_HAS_UNREAD_DATA(bundle)) {
         return;
@@ -903,7 +907,7 @@ static void CheckReadHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     if (count != 0) {
         bundle->cur_ptr = BINK_BUNDLE_DATA_BEGIN(bundle);
         bundle->cur_dec = BINK_BUNDLE_DATA_END(bundle, count);
-        if (!exp_get_bit(bits)) {
+        if (!EXPBITS_GET1(*bits, bit)) {
             /* Direct Huff4 bundles decode one nibble-sized symbol per byte. */
             syms = bundle->syms;
             decode = bundle->decode;
@@ -1009,6 +1013,7 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     u16 predictor;
     s16 delta;
     s16 PTR4* dest;
+    EXPBITSTYPE bit;
 
     if (BINK_BUNDLE_HAS_UNREAD_DATA(bundle)) {
         return;
@@ -1020,7 +1025,7 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
         if (bundle->initial_value != BINK_BUNDLE_INITIAL_VALUE_NONE) {
             VarBitsGet(predictor, u16, *bits, BINK_BUNDLE_SIGNED_MAGNITUDE_BITS(bundle->bit_size));
             if (predictor != 0) {
-                if (exp_get_bit(bits)) {
+                if (EXPBITS_GET1(*bits, bit)) {
                     predictor = BINK_APPLY_SIGN_BIT(predictor);
                 }
             }
@@ -1045,7 +1050,7 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
                     group_count--;
                     VarBitsGet(delta, s16, *bits, delta_bit_count);
                     if (delta != 0) {
-                        if (exp_get_bit(bits)) {
+                        if (EXPBITS_GET1(*bits, bit)) {
                             delta = BINK_APPLY_SIGN_BIT(delta);
                         }
                     }
@@ -1071,6 +1076,7 @@ static inline void expand_run_block(u8 PTR4* dest,
 {
     const u8 PTR4* scan;
     u32 filled_pixels;
+    EXPBITSTYPE bit;
 
     scan = BINK_DCT_PATTERN_SCAN(exp_get_bits(bits, BINK_DCT_PATTERN_BITS));
     filled_pixels = 0;
@@ -1079,7 +1085,7 @@ static inline void expand_run_block(u8 PTR4* dest,
 
         run_length = *runs->cur_ptr++ + 1;
         filled_pixels += run_length;
-        if (exp_get_bit(bits)) {
+        if (EXPBITS_GET1(*bits, bit)) {
             u8 color;
 
             color = *colors->cur_ptr++;
