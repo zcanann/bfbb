@@ -211,9 +211,10 @@ static void quanttos16chans2(s16 PTR4* samples, const f32 PTR4* decoded_coeffs,
     if (remaining != BINKAC_SAMPLE_COUNT_UNDERFLOW) {
         stride = transform_size;
         while (remaining != BINKAC_SAMPLE_COUNT_UNDERFLOW) {
-            s16 PTR4* out = samples++;
+            s16 PTR4* out = samples;
             s32 sample_value = (s32)(BINKAC_STEREO_LEFT_COEFF(decoded_coeffs) * transform_size_root);
 
+            ++samples;
             *out = clamp_to_s16(sample_value);
             out = samples;
             sample_value = (s32)(BINKAC_STEREO_RIGHT_COEFF(decoded_coeffs, stride) * transform_size_root);
@@ -274,19 +275,18 @@ static inline u32 read_bit(BINKVARBITS PTR4* vb)
     u32 bitcount = vb->bitlen;
 
     if (bitcount != 0) {
-        u32 result = vb->bits & BINKAC_BIT_MASK;
+        u32 bits = vb->bits;
 
         vb->bitlen = bitcount - 1;
-        vb->bits >>= 1;
-        return result;
+        vb->bits = bits >> 1;
+        return bits & BINKAC_BIT_MASK;
     } else {
         u32 refill = BINKAC_LOAD32(vb->cur);
-        u32 result = refill & BINKAC_BIT_MASK;
 
         VARBITS_ADVANCE_CUR(vb->cur);
         vb->bitlen = BINKAC_LAST_BIT_INDEX;
         vb->bits = refill >> 1;
-        return result;
+        return refill & BINKAC_BIT_MASK;
     }
 }
 
