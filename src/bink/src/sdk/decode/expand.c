@@ -596,7 +596,7 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
         return;
     }
 
-    if (!EXPBITS_GET1(*vb, bit)) {
+    if (!EXPBITS_GET1_BRANCH(*vb, bit)) {
         /* Compact symbol shuffling: merge adjacent pair, quarter, and half lists. */
         VarBitsGet(sort_mode, u32, *vb, HUFF4_SORT_MODE_BITS);
         if (sort_mode == HUFF4_SORT_PAIRS) {
@@ -748,7 +748,7 @@ static void CheckReadRLEHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     if (count != 0) {
         bundle->cur_ptr = BINK_BUNDLE_DATA_BEGIN(bundle);
         bundle->cur_dec = BINK_BUNDLE_DATA_END(bundle, count);
-        if (!EXPBITS_GET1(*bits, bit)) {
+        if (!EXPBITS_GET1_BRANCH(*bits, bit)) {
             /* Literal Huff4 symbols above 11 repeat the previous decoded symbol. */
             syms = bundle->syms;
             peek = (u8)bundle->bits_to_peek;
@@ -872,7 +872,7 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
         decode = bundle->decode;
         peek = bundle->bits_to_peek;
         last_high_nibble = huff8_table->last_high_nibble;
-        if (EXPBITS_GET1(*bits, bit)) {
+        if (EXPBITS_GET1_BRANCH(*bits, bit)) {
             /* New-format Huff8 repeat packets keep the byte unsigned. */
             count = BINK_BUNDLE_REPEAT_COUNT(count);
         }
@@ -1032,7 +1032,7 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
         if (bundle->initial_value != BINK_BUNDLE_INITIAL_VALUE_NONE) {
             VarBitsGet(predictor, u16, *bits, BINK_BUNDLE_SIGNED_MAGNITUDE_BITS(bundle->bit_size));
             if (predictor != 0) {
-                if (EXPBITS_GET1(*bits, bit)) {
+                if (EXPBITS_GET1_BRANCH(*bits, bit)) {
                     predictor = BINK_APPLY_SIGN_BIT(predictor);
                 }
             }
@@ -1057,7 +1057,7 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
                     group_count--;
                     VarBitsGet(delta, s16, *bits, delta_bit_count);
                     if (delta != 0) {
-                        if (EXPBITS_GET1(*bits, bit)) {
+                        if (EXPBITS_GET1_BRANCH(*bits, bit)) {
                             delta = BINK_APPLY_SIGN_BIT(delta);
                         }
                     }
