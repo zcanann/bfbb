@@ -1481,12 +1481,12 @@ void YUV_16a4x2_4x2_even(u32 count)
         av0 = *a0++;
         uhi = RGB_WORD_BYTE1(uword);
         vhi = RGB_WORD_BYTE1(vword);
-        r = v_to_r[vhi];
         gb = u_to_gb[uhi] + v_to_gb[vhi];
+        r = v_to_r[vhi];
         b = u_to_b[uhi];
-        b_table = clamp_b_base + b;
         gb_table = clamp_g_base + gb;
         r_table = clamp_r_base + r;
+        b_table = clamp_b_base + b;
         ya = ytable[RGB_WORD_BYTE3(yv0)];
         yb = ytable[RGB_WORD_BYTE2(yv0)];
         av1 = *a1++;
@@ -1507,8 +1507,8 @@ void YUV_16a4x2_4x2_even(u32 count)
         ulo = RGB_WORD_BYTE0(uword);
         vlo = RGB_WORD_BYTE0(vword);
         r = v_to_r[vlo];
-        gb = u_to_gb[ulo] + v_to_gb[vlo];
         b = u_to_b[ulo];
+        gb = u_to_gb[ulo] + v_to_gb[vlo];
         b_table = clamp_b_base + b;
         gb_table = clamp_g_base + gb;
         r_table = clamp_r_base + r;
