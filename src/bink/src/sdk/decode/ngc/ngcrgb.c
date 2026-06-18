@@ -1489,8 +1489,8 @@ void YUV_16a4x2_4x2_even(u32 count)
         b_table = clamp_b_base + b;
         ya = ytable[RGB_WORD_BYTE3(yv0)];
         yb = ytable[RGB_WORD_BYTE2(yv0)];
-        av1 = *a1++;
         yv1 = *y1++;
+        av1 = *a1++;
 
         pix = RGB565_A4_PREBIASED(r_table, gb_table, b_table, clamp_a4_base, ya, RGB_WORD_BYTE3(av0));
         dest0[RGB_TILE_WORD0] = RGB565_PAIR(pix);
