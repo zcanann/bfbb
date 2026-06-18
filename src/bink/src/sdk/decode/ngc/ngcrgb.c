@@ -545,9 +545,9 @@ void YUV_16_4x2_even(u32 count)
         b = u_to_b[uhi];
         gb = u_to_gb[uhi] + v_to_gb[vhi];
         r = v_to_r[vhi];
-        b_table = clamp_b_base + b;
-        gb_table = clamp_g_base + gb;
         r_table = clamp_r_base + r;
+        gb_table = clamp_g_base + gb;
+        b_table = clamp_b_base + b;
         ya = ytable[RGB_WORD_BYTE3(yv0)];
         yb = ytable[RGB_WORD_BYTE2(yv0)];
         yv1 = *y1++;
