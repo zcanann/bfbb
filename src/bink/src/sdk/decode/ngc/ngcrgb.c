@@ -920,10 +920,10 @@ void YUV_32a_4x2_even(u32 count)
 
         yv0 = *y0++;
         vword = *v++;
-        av0 = *a0++;
-        uword = *u++;
-        av1 = *a1++;
         yv1 = *y1++;
+        av0 = *a0++;
+        av1 = *a1++;
+        uword = *u++;
         vhi = RGB_WORD_BYTE1(vword);
         uhi = RGB_WORD_BYTE1(uword);
 
@@ -1038,9 +1038,9 @@ void YUV_32ax2_4x2_even(u32 count)
         s32 gb;
 
         vword = *v++;
-        yv0 = *y0++;
         uword = *u++;
         av0 = *a0++;
+        yv0 = *y0++;
         av1 = *a1++;
         yv1 = *y1++;
         vhi = RGB_WORD_BYTE1(vword);
