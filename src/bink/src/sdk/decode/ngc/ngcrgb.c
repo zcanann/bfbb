@@ -1367,12 +1367,12 @@ void YUV_16a4_4x2_even(u32 count)
 
         ulo = RGB_WORD_BYTE0(uword);
         vlo = RGB_WORD_BYTE0(vword);
-        b = u_to_b[ulo];
         gb = u_to_gb[ulo] + v_to_gb[vlo];
+        b = u_to_b[ulo];
         r = v_to_r[vlo];
-        b_table = clamp_b_base + b;
         gb_table = clamp_g_base + gb;
         r_table = clamp_r_base + r;
+        b_table = clamp_b_base + b;
         ya = ytable[RGB_WORD_BYTE1(yv0)];
         yb = ytable[RGB_WORD_BYTE0(yv0)];
         dest0[RGB_TILE_WORD1] = RGB565_PAIR2(
