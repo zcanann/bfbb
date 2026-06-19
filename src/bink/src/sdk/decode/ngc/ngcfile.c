@@ -221,9 +221,10 @@ static u32 radreadngc(DVDFileInfo PTR4* file, u32 offset, void PTR4* dest, u32 s
             }
 
             if (status <= DVD_STATE_RETRY) {
-                if (status >= DVD_STATE_COVER_CLOSED) {
-                    goto read_failed;
+                if (status < DVD_STATE_COVER_CLOSED) {
+                    continue;
                 }
+                goto read_failed;
             }
             continue;
 
