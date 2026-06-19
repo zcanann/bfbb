@@ -88,6 +88,9 @@
 #define BP_TREE_HIGH_GROUP_SHIFT 14
 #define BP_TREE_BASE_MASK 0xfc00
 #define BP_TREE_INDEX_STRIDE 0x400
+#define BP_TREE_PACKED_KIND(kind) ((kind) << BP_TREE_KIND_SHIFT)
+#define BP_TREE_PACKED_INDEX(index) ((index) * BP_TREE_INDEX_STRIDE)
+#define BP_TREE_PACKED_GROUP(group) ((group) << BP_TREE_GROUP_SHIFT)
 #define BP_TREE_ENTRY_KIND(entry) ((entry) & BP_TREE_KIND_MASK)
 #define BP_TREE_ENTRY_INDEX(entry) ((entry) >> BP_TREE_INDEX_SHIFT)
 #define BP_TREE_ENTRY_GROUP(entry) ((entry) >> BP_TREE_GROUP_SHIFT)
@@ -97,19 +100,21 @@
 #define BP_COEFF1_INDEX 1
 #define BP_COEFF2_INDEX 2
 #define BP_COEFF3_INDEX 3
-#define BP_GROUP1_NODE_BASE (1 << BP_TREE_GROUP_SHIFT)
-#define BP_GROUP6_NODE_BASE (6 << BP_TREE_GROUP_SHIFT)
-#define BP_GROUP11_NODE_BASE (11 << BP_TREE_GROUP_SHIFT)
-#define BP_COEFF1_LEAF_BASE (7 << BP_TREE_KIND_SHIFT)
-#define BP_COEFF2_LEAF_BASE (11 << BP_TREE_KIND_SHIFT)
-#define BP_COEFF3_LEAF_BASE (15 << BP_TREE_KIND_SHIFT)
+#define BP_GROUP1_NODE_BASE BP_TREE_PACKED_GROUP(1)
+#define BP_GROUP6_NODE_BASE BP_TREE_PACKED_GROUP(6)
+#define BP_GROUP11_NODE_BASE BP_TREE_PACKED_GROUP(11)
+#define BP_COEFF1_LEAF_BASE BP_TREE_PACKED_KIND(7)
+#define BP_COEFF2_LEAF_BASE BP_TREE_PACKED_KIND(11)
+#define BP_COEFF3_LEAF_BASE BP_TREE_PACKED_KIND(15)
 #define BP_TREE_GROUP_ENTRY(level, base) ((level) | (base))
 #define BP_TREE_COEFF_LEAF_ENTRY(level, base) ((level) + (base))
-#define BP_TREE_HIGH_GROUP_ENTRY(level, index) ((u16)(level) + ((index) + BP_TREE_CHILD1_BASE) * BP_TREE_INDEX_STRIDE + BP_TREE_GROUP_NODE)
-#define BP_TREE_BRANCH_ENTRY(level, index) ((u16)(level) + (index) * BP_TREE_INDEX_STRIDE + BP_TREE_BRANCH_NODE)
+#define BP_TREE_HIGH_GROUP_ENTRY(level, index) \
+    ((u16)(level) + BP_TREE_PACKED_INDEX((index) + BP_TREE_CHILD1_BASE) + BP_TREE_GROUP_NODE)
+#define BP_TREE_BRANCH_ENTRY(level, index) \
+    ((u16)(level) + BP_TREE_PACKED_INDEX(index) + BP_TREE_BRANCH_NODE)
 #define BP_TREE_CHILD_BRANCH_ENTRY(level, base, child_base) BP_TREE_BRANCH_ENTRY((level), (base) + (child_base))
 #define BP_TREE_BASE_BRANCH_ENTRY(level, base) ((u16)(level) + (base) + BP_TREE_BRANCH_NODE)
-#define BP_TREE_COEFF_ENTRY(level, index) ((u16)(level) | (index) * BP_TREE_INDEX_STRIDE + BP_TREE_COEFF_NODE)
+#define BP_TREE_COEFF_ENTRY(level, index) ((u16)(level) | BP_TREE_PACKED_INDEX(index) + BP_TREE_COEFF_NODE)
 #define BP_TREE_BASE_COEFF_ENTRY(level, base) ((u16)(level) | (base) + BP_TREE_COEFF_NODE)
 #define BP_READ_TREE_KIND_MASK 3
 /* Read-side nodes pack the same logical tree into byte-sized entries. */
