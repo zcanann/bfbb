@@ -33,6 +33,7 @@ typedef enum NGCSoundTaskFlag
 #define NGC_TASK_MARK_BUSY(task) ((task)->owner |= NGC_TASK_BUSY_FLAG)
 #define NGC_TASK_CLEAR_BUSY(task) ((task)->owner &= NGC_TASK_OWNER_MASK)
 #define NGC_TASK_SET_OWNER(task, state) ((task)->owner = (u32)(state))
+#define NGC_TASK_OWNER_WORD_STRIDE (sizeof(ARQRequest) / sizeof(u32))
 
 typedef enum NGCSoundTiming
 {
@@ -905,7 +906,7 @@ check_tasks:
             for (;;) {
                 u32 owner = *task_owner;
 
-                task_owner += sizeof(*state->tasks) / sizeof(*task_owner);
+                task_owner += NGC_TASK_OWNER_WORD_STRIDE;
                 if (!NGC_TASK_OWNER_BUSY(owner)) {
                     break;
                 }
