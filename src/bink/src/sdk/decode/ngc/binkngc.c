@@ -18,6 +18,7 @@ typedef enum RADDivConstants
     RAD_TIMER_RECIP_SHIFT = 15,
     RAD_DIV_WORD_BITS = 32,
     RAD_DIV_POWER_SHIFT_BASE = RAD_DIV_WORD_BITS - 1,
+    RAD_DIV_SIGN_SHIFT = RAD_DIV_WORD_BITS - 1,
     RAD_DIV_HIGH_WORD_BITS = 16,
     RAD_DIV_U32_MAX = 0xFFFFFFFF,
     RAD_DIV_HIGH_WORD_ROUND_MASK = (1 << RAD_DIV_HIGH_WORD_BITS) - 1
@@ -118,7 +119,7 @@ u32 mult64anddiv(u32 multiplicand, u32 multiplier, u32 divisor)
             u32 clz = radcntlzw(hi);
             u32 est = (hi << clz) / upper;
             s32 adj = RAD_DIV_HIGH_WORD_BITS - (s32)clz;
-            s32 sign = adj >> 31;
+            s32 sign = adj >> RAD_DIV_SIGN_SHIFT;
             u32 rshift = (u32)(-(s32)adj) & (u32)sign;
             u32 lshift = (u32)adj & ~(u32)sign;
             est = (est >> rshift) << lshift;
@@ -348,7 +349,7 @@ u32 div64(u32 high, u32 low, u32 divisor)
             u32 clz = radcntlzw(high);
             u32 est = (high << clz) / upper;
             s32 adj = RAD_DIV_HIGH_WORD_BITS - (s32)clz;
-            s32 sign = adj >> 31;
+            s32 sign = adj >> RAD_DIV_SIGN_SHIFT;
             u32 rshift = (u32)(-(s32)adj) & (u32)sign;
             u32 lshift = (u32)adj & ~(u32)sign;
             est = (est >> rshift) << lshift;
