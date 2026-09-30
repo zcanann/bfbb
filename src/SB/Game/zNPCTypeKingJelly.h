@@ -82,6 +82,7 @@ struct lightning_ring
     void destroy();
     static void destroy(S32);
     void refresh();
+    void update(F32 dt);
 };
 
 struct zNPCKingJelly : zNPCSubBoss
@@ -187,7 +188,18 @@ struct zNPCKingJelly : zNPCSubBoss
     void init_child(zNPCKingJelly::child_data&, zNPCCommon&, int);
     void disable_child(zNPCKingJelly::child_data&);
     void enable_child(zNPCKingJelly::child_data& child);
+    void ParseLinks();
+    void add_child(xBase& child, S32 wave);
+    void taunt();
+    bool bored() const;
+    void start_charge();
+    void generate_thump_particles();
+    void check_player_damage();
+    U8 apply_ambient_damage();
+    U8 apply_wave_damage();
+    U8 apply_tentacle_damage();
     void start_fight();
+    S32 count_children(S32 wave);
     void spawn_children(int, int);
     S32 max_strikes();
     void update_camera(F32 dt);
@@ -201,21 +213,28 @@ struct zNPCKingJelly : zNPCSubBoss
     void post_decompose();
     void vanish();
     void reappear();
-    xVec3* get_bottom();
-    void on_change_ambient_ring(const tweak_info&);
-    void on_change_fade_obstructions(const tweak_info&);
+    const xVec3& get_bottom() const;
+    xVec3 get_center() const;
+    void show_attack_model();
+    F32 get_variance() const;
+    void fade_curtain();
+    static void on_change_ambient_ring(const tweak_info&)
+    {
+    }
+    static void on_change_fade_obstructions(const tweak_info&)
+    {
+    }
     void render_debug();
     void create_tentacle_lightning();
     void destroy_tentacle_lightning();
     void refresh_tentacle_points();
     void refresh_tentacle_points(S32);
     void destroy_ambient_rings();
+    void destroy_wave_rings();
     void generate_spawn_particles();
     void update_round();
     void end_charge();
     void create_ambient_rings();
-    NPCSndTrax g_sndTrax_KingJelly;
-    xBinaryCamera bossCam;
 };
 
 struct zNPCGoalKJIdle : zNPCGoalCommon
@@ -226,6 +245,7 @@ struct zNPCGoalKJIdle : zNPCGoalCommon
     {
     }
 
+    S32 Enter(F32 dt, void* updCtxt);
     S32 Exit(float, void*);
 };
 
@@ -253,7 +273,6 @@ struct zNPCGoalKJSpawnKids : zNPCGoalCommon
     }
     S32 Enter(float, void*);
     S32 Exit(float, void*);
-    S32 count_children(int);
 };
 
 struct zNPCGoalKJTaunt : zNPCGoalCommon

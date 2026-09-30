@@ -20,7 +20,7 @@
 
 #define MAX_FIREWORK 32
 
-NPCWidget g_npc_widgets[1] = {};
+static NPCWidget g_npc_widgets[1];
 static U32 g_hash_uiwidgets[1] = { 0 };
 static char* g_strz_uiwidgets[1] = { "MNU4 NPCTALK" };
 
@@ -127,7 +127,7 @@ void NPCWidget::Reset()
 
 S32 NPCWidget::On(const zNPCCommon* npc, S32 theman)
 {
-    if ((!theman && !NPCIsTheLocker(npc)) && (((S32)IsLocked()) || (!Lock(npc))))
+    if ((!theman && !NPCIsTheLocker(npc)) && (IsLocked() || !Lock(npc)))
     {
         return 0;
     }
@@ -178,7 +178,7 @@ S32 NPCWidget::Unlock(const zNPCCommon* npc)
 
 S32 NPCWidget::NPCIsTheLocker(const zNPCCommon* npc)
 {
-    if ((S32)IsLocked() == 0)
+    if (IsLocked() == 0)
     {
         return 0;
     }
@@ -263,7 +263,7 @@ S32 NPCTarget::FindNearest(S32 flg_consider, xBase* skipme, xVec3* from, F32 dst
     S32 i, ntyp;
 
     npc_best = NULL;
-    ds2_best = (dst_max < 0.0f) ? HUGE : SQ(dst_max);
+    ds2_best = (dst_max < 0.0f) ? 1e38f : SQ(dst_max);
 
     if (flg_consider & 0x1)
     {

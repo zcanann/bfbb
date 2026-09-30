@@ -13,8 +13,6 @@
 static SMDepot g_smdepot = {};
 static S32 g_drawSpawnBounds;
 
-extern F32 _805_Spawner; // 5.0f
-
 void zNPCSpawner_Startup()
 {
 }
@@ -73,7 +71,7 @@ zNPCSpawner* zNPCSpawner_GetInstance()
 void zNPCSpawner::Subscribe(zNPCCommon* owner)
 {
     this->npc_owner = owner;
-    this->tym_delay = _805_Spawner;
+    this->tym_delay = 5.0f;
     this->max_spawn = -1;
     this->wavestat = SM_STAT_BEGIN;
     XOrdInit(&this->pendlist, 0x10, 0);

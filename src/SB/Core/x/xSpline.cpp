@@ -7,9 +7,21 @@
 #include <mem.h>
 #include <xVec3.h>
 
+#include <PowerPC_EABI_Support\MSL_C\MSL_Common\cmath>
+
 static F32 sBasisUniformBspline[4][4];
-static F32 sBasisBezier[4][4];
-static F32 sBasisHermite[4][4];
+static F32 sBasisBezier[4][4] = {
+    { -1.0f, 3.0f, -3.0f, 1.0f },
+    { 3.0f, -6.0f, 3.0f, 0.0f },
+    { -3.0f, 3.0f, 0.0f, 0.0f },
+    { 1.0f, 0.0f, 0.0f, 0.0f },
+};
+static F32 sBasisHermite[4][4] = {
+    { 2.0f, -3.0f, 0.0f, 1.0f },
+    { 1.0f, -2.0f, 1.0f, 0.0f },
+    { 1.0f, -1.0f, 0.0f, 0.0f },
+    { -2.0f, 3.0f, 0.0f, 0.0f },
+};
 
 void Tridiag_Solve(F32* a, F32* b, F32* c, xVec3* d, xVec3* x, S32 n)
 {
@@ -97,172 +109,163 @@ void Tridiag_Solve(F32* a, F32* b, F32* c, xVec3* d, xVec3* x, S32 n)
 
 void Interpolate_Bspline(xVec3* data, xVec3* control, F32* knots, U32 nodata)
 {
-    F32* alpha;
-    F32* beta;
-    F32* gamma;
+    F32* alpha = (F32*)RwMalloc(nodata * sizeof(F32));
+    F32* beta = (F32*)RwMalloc(nodata * sizeof(F32));
+    F32* gamma = (F32*)RwMalloc(nodata * sizeof(F32));
 
-    U32 i;
+    alpha[0] = alpha[nodata - 1] = 0.0f;
+    beta[0] = beta[nodata - 1] = 1.0f;
+    gamma[0] = gamma[nodata - 1] = 0.0f;
 
-    F32 t1;
-    F32 t2;
-    F32 t3;
-    F32 t4;
-    F32 t5;
-
-    F32 diff_43;
-    F32 diff_41;
-    F32 diff_32;
-    F32 diff_52;
-
-    alpha = (F32*)RwMalloc(nodata * 4);
-    beta = (F32*)RwMalloc(nodata * 4);
-    gamma = (F32*)RwMalloc(nodata * 4);
-
-    if (nodata > 2)
+    for (U32 i = 1; i < nodata - 1; i++)
     {
-        knots = knots + 1;
+        F32 t1 = knots[i + 1];
+        F32 t2 = knots[i + 2];
+        F32 t3 = knots[i + 3];
+        F32 t4 = knots[i + 4];
+        F32 t5 = knots[i + 5];
 
-        for (i = 1; i < nodata - 1; i += 1)
-        {
-            alpha = alpha + 1;
-            beta = beta + 1;
-            gamma = gamma + 1;
+        alpha[i] = (t4 - t3) * (t4 - t3) / (t4 - t1);
+        beta[i] = (t3 - t1) * (t4 - t3) / (t4 - t1) + (t5 - t3) * (t3 - t2) / (t5 - t2);
+        gamma[i] = (t3 - t2) * (t3 - t2) / (t5 - t2);
 
-            t1 = knots[1];
-            t2 = knots[2];
-            t3 = knots[3];
-            t4 = knots[4];
-            t5 = knots[5];
-
-            diff_41 = t4 - t1;
-            diff_43 = t4 - t3;
-            diff_32 = t3 - t2;
-            diff_52 = t5 - t2;
-
-            *alpha = (diff_43 * diff_43) / diff_41;
-            *beta = ((t3 - t1) * diff_43) / diff_41 + ((t5 - t3) * diff_32) / diff_52;
-            *gamma = (diff_32 * diff_32) / diff_52;
-
-            t4 = t4 - t2;
-            *alpha = *alpha / t4;
-            *beta = *beta / t4;
-            *gamma = *gamma / t4;
-        }
+        alpha[i] /= t4 - t2;
+        beta[i] /= t4 - t2;
+        gamma[i] /= t4 - t2;
     }
+
     Tridiag_Solve(alpha, beta, gamma, data, control + 1, nodata);
+
+    control[0] = control[1];
+    control[nodata + 1] = control[nodata];
 
     RwFree(alpha);
     RwFree(beta);
     RwFree(gamma);
-    return;
 }
 
 // Implementation of Composite Simpson's 1/3 Rule to calculate arc length
 F32 ArcLength3(xCoef3* coef, F64 ustart, F64 uend)
 {
     U32 i;
-    F64 u;
+    F64 E;
+    F64 D;
+    F64 C;
+    F64 B;
+    F64 A;
     F64 h;
     F64 sum;
+    F64 u;
 
-    F64 A;
-    F64 B;
-    F64 C;
-    F64 D;
-    F64 E;
+    F64 y0 = coef->y.a[0];
+    F64 x0 = coef->x.a[0];
+    F64 z0 = coef->z.a[0];
+    F64 y1 = coef->y.a[1];
+    F64 x1 = coef->x.a[1];
+    F64 z1 = coef->z.a[1];
+    F64 y2 = coef->y.a[2];
+    F64 x2 = coef->x.a[2];
+    F64 z2 = coef->z.a[2];
 
-    F64 u_eval;
-    F64 temp_y1;
-    F64 temp_z1;
+    F64 x0sq = x0 * x0;
+    F64 y0sq = y0 * y0;
+    F64 z0sq = z0 * z0;
+    E = 9.0 * (x0sq + y0sq + z0sq);
+    D = 12.0 * (x0 * x1 + y0 * y1 + z0 * z1);
+    C = 6.0 * (x0 * x2 + y0 * y2 + z0 * z2) + 4.0 * (x1 * x1 + y1 * y1 + z1 * z1);
+    B = 4.0 * (x1 * x2 + y1 * y2 + z1 * z2);
+    A = x2 * x2 + y2 * y2 + z2 * z2;
 
-    A = (coef->x).a[0];
-    C = (coef->y).a[0];
-    h = (coef->z).a[0];
-
-    B = (coef->x).a[1];
-    temp_y1 = (coef->y).a[1];
-    temp_z1 = (coef->z).a[1];
-
-    sum = (coef->x).a[2];
-    u = (coef->y).a[2];
-    u_eval = (coef->z).a[2];
-
-    E = (h * h + A * A + C * C) * 9.0;
-    D = (h * temp_z1 + A * B + C * temp_y1) * 12.0;
-
-    C = (temp_z1 * temp_z1 + B * B + temp_y1 * temp_y1) * 4.0 +
-        (h * u_eval + A * sum + C * u) * 6.0;
-    A = u_eval * u_eval + sum * sum + u * u;
     h = (uend - ustart) / 50.0;
-    B = (temp_z1 * u_eval + B * sum + temp_y1 * u) * 4.0;
-    u = ustart + h;
     sum = 0.0;
+    u = ustart + h;
 
-    for (i = 2; i <= 51; i += 1)
+    for (i = 2; i <= 50; i++)
     {
-        if ((i & 1) == 0)
+        if (i & 1)
         {
-            u_eval = xsqrt(A + u * (B + u * (C + u * (D + E * u)))) * 4.0;
+            sum += 2.0 * sqrt(A + u * (B + u * (C + u * (D + E * u))));
         }
         else
         {
-            u_eval = xsqrt(A + u * (B + u * (C + u * (D + E * u)))) * 2.0;
+            sum += 4.0 * sqrt(A + u * (B + u * (C + u * (D + E * u))));
         }
-        sum = sum + u_eval;
-        u = u + h;
+        u += h;
     }
 
-    return (h * (sum + xsqrt(A + ustart * (B + ustart * (C + ustart * (D + E * ustart)))) +
-                 xsqrt(A + uend * (B + uend * (C + uend * (D + E * uend)))))) /
+    return h *
+           (sum + sqrt(A + ustart * (B + ustart * (C + ustart * (D + E * ustart)))) +
+            sqrt(A + uend * (B + uend * (C + uend * (D + E * uend))))) /
            3.0;
+}
+
+void EvalCoef3(xCoef3* coef, F32 u, U32 deriv, xVec3* o)
+{
+    switch ((S32)deriv)
+    {
+    case 0:
+        o->x =
+            (u * ((u * (((coef->x).a[0] * u) + (coef->x).a[1])) + (coef->x).a[2])) + (coef->x).a[3];
+        o->y =
+            (u * ((u * (((coef->y).a[0] * u) + (coef->y).a[1])) + (coef->y).a[2])) + (coef->y).a[3];
+        o->z =
+            (u * ((u * (((coef->z).a[0] * u) + (coef->z).a[1])) + (coef->z).a[2])) + (coef->z).a[3];
+        return;
+    case 1:
+        o->x = (u * ((2.0f * (coef->x).a[1]) + (3.0f * (coef->x).a[0] * u))) + (coef->x).a[2];
+        o->y = (u * ((2.0f * (coef->y).a[1]) + (3.0f * (coef->y).a[0] * u))) + (coef->y).a[2];
+        o->z = (u * ((2.0f * (coef->z).a[1]) + (3.0f * (coef->z).a[0] * u))) + (coef->z).a[2];
+        return;
+    case 2:
+        o->x = (2.0f * (coef->x).a[1]) + (6.0f * (coef->x).a[0] * u);
+        o->y = (2.0f * (coef->y).a[1]) + (6.0f * (coef->y).a[0] * u);
+        o->z = (2.0f * (coef->z).a[1]) + (6.0f * (coef->z).a[0] * u);
+        return;
+    case 3:
+        o->x = 6.0f * (coef->x).a[0];
+        o->y = 6.0f * (coef->y).a[0];
+        o->z = 6.0f * (coef->z).a[0];
+        return;
+    default:
+        o->x = 0.0f;
+        o->y = 0.0f;
+        o->z = 0.0f;
+        return;
+    }
 }
 
 void BasisToCoef3(xCoef3* coef, F32 (*N)[4], xVec3* v1, xVec3* v2, xVec3* v3, xVec3* v4)
 {
-    S32 i;
-
-    for (i = 4; i != 0; i -= 1)
+    for (S32 i = 0; i < 4; i++)
     {
-        coef->x.a[0] =
-            (N[3][0] * v4->x) + ((N[2][0] * v3->x) + ((v1->x * N[0][0]) + (N[1][0] * v2->x)));
-        coef->y.a[0] =
-            (N[3][0] * v4->y) + ((N[2][0] * v3->y) + ((v1->y * N[0][0]) + (N[1][0] * v2->y)));
-        N += 4;
-        coef->z.a[0] =
-            (N[3][0] * v4->z) + ((N[2][0] * v3->z) + (v1->z * N[0][0]) + (N[1][0] * v2->z));
-        coef += 4;
+        coef->x.a[i] = v1->x * N[0][i] + N[1][i] * v2->x + N[2][i] * v3->x + N[3][i] * v4->x;
+        coef->y.a[i] = v1->y * N[0][i] + N[1][i] * v2->y + N[2][i] * v3->y + N[3][i] * v4->y;
+        coef->z.a[i] = v1->z * N[0][i] + N[1][i] * v2->z + N[2][i] * v3->z + N[3][i] * v4->z;
     }
 }
 
 void CoefToUnity3(xCoef3* coef1, xCoef3* coef2, F32 f1, F32 f2)
 {
-    F32 fdiff;
-    F32 coef2_0;
-    F32 coef2_1;
-    F32 coef2_2;
-    F32 coef2_3;
+    F32 fdiff = f2 - f1;
+    xCoef* c1 = &coef1->x;
+    xCoef* c2 = &coef2->x;
 
-    F32 factor;
-    S32 i;
-
-    fdiff = f2 - f1;
-    for (i = 3; i == 1; i -= 1)
+    for (S32 i = 0; i < 3; i++)
     {
-        coef2_0 = coef2->x.a[0];
-        coef2_1 = coef2->x.a[1];
-        coef2_2 = coef2->x.a[2];
-        coef2_3 = coef2->x.a[3];
+        F32 a0 = c2->a[0];
+        F32 a1 = c2->a[1];
+        F32 a2 = c2->a[2];
+        F32 a3 = c2->a[3];
 
-        factor = 3.0f * coef2_0 * fdiff;
+        F32 factor = 3.0f * a0 * fdiff;
 
-        coef1->x.a[0] = fdiff * (fdiff * coef2_0 * fdiff);
-        coef1->x.a[1] = (f1 * (fdiff * factor)) + (fdiff * (coef2_1 * fdiff));
-        coef1->x.a[2] = (coef2_2 * fdiff) + ((f1 * (f1 * factor)) + (f1 * 2.0f * coef2_1 * fdiff));
-        coef1->x.a[3] =
-            coef2_3 + ((coef2_2 * f1) + ((f1 * (f1 * coef2_0 * f1)) + (f1 * coef2_1 * f1)));
+        c1->a[0] = fdiff * (fdiff * a0 * fdiff);
+        c1->a[1] = (f1 * (fdiff * factor)) + (fdiff * (a1 * fdiff));
+        c1->a[2] = (a2 * fdiff) + ((f1 * (f1 * factor)) + (f1 * 2.0f * a1 * fdiff));
+        c1->a[3] = a3 + ((a2 * f1) + ((f1 * (f1 * a0 * f1)) + (f1 * a1 * f1)));
 
-        coef1 += 0x10;
-        coef2 += 0x10;
+        c1++;
+        c2++;
     }
 }
 
@@ -322,69 +325,28 @@ void BasisBspline(F32 (*N)[4], F32* t)
     return;
 }
 
-void EvalCoef3(xCoef3* coef, F32 u, U32 deriv, xVec3* o)
-{
-    switch ((S32)deriv)
-    {
-    case 0:
-        o->x =
-            (u * ((u * (((coef->x).a[0] * u) + (coef->x).a[1])) + (coef->x).a[2])) + (coef->x).a[3];
-        o->y =
-            (u * ((u * (((coef->y).a[0] * u) + (coef->y).a[1])) + (coef->y).a[2])) + (coef->y).a[3];
-        o->z =
-            (u * ((u * (((coef->z).a[0] * u) + (coef->z).a[1])) + (coef->z).a[2])) + (coef->z).a[3];
-        return;
-    case 1:
-        o->x = (u * ((2.0f * (coef->x).a[1]) + (3.0f * (coef->x).a[0] * u))) + (coef->x).a[2];
-        o->y = (u * ((2.0f * (coef->y).a[1]) + (3.0f * (coef->y).a[0] * u))) + (coef->y).a[2];
-        o->z = (u * ((2.0f * (coef->z).a[1]) + (3.0f * (coef->z).a[0] * u))) + (coef->z).a[2];
-        return;
-    case 2:
-        o->x = (2.0f * (coef->x).a[1]) + (6.0f * (coef->x).a[0] * u);
-        o->y = (2.0f * (coef->y).a[1]) + (6.0f * (coef->y).a[0] * u);
-        o->z = (2.0f * (coef->z).a[1]) + (6.0f * (coef->z).a[0] * u);
-        return;
-    case 3:
-        o->x = 6.0f * (coef->x).a[0];
-        o->y = 6.0f * (coef->y).a[0];
-        o->z = 6.0f * (coef->z).a[0];
-        return;
-    default:
-        o->x = 0.0f;
-        o->y = 0.0f;
-        o->z = 0.0f;
-        return;
-    }
-}
-
 F32 ClampBspline(xSpline3* spl, F32 u)
 {
     if (u < 0.0f)
     {
         u = 0.0f;
     }
-    if (u > spl->knot[spl->N])
+    if (u > spl->knot[spl->N + 3])
     {
-        return spl->knot[spl->N];
+        u = spl->knot[spl->N + 3];
     }
     return u;
 }
 
 S32 SegBspline(xSpline3* spl, F32 u)
 {
-    U32 seg_total;
-    U32 seg_guess;
-    U32 seg_min;
-    U32 seg_max;
+    U32 seg_min = 3;
+    U32 seg_max = spl->N + 3;
 
-    seg_min = 3;
-    seg_max = spl->N + 3;
-
-    while ((U32)(seg_min + 1) != seg_max)
+    while (seg_min + 1 != seg_max)
     {
-        seg_total = seg_max + seg_min;
-        seg_guess = seg_total >> 1;
-        if (*(spl->knot + ((seg_total * 2) & 0xFFFFFFFC)) >= u)
+        U32 seg_guess = (seg_max + seg_min) >> 1;
+        if (spl->knot[seg_guess] >= u)
         {
             seg_max = seg_guess;
         }
@@ -401,95 +363,86 @@ void EvalBspline3(xSpline3* spl, F32 u, U32 deriv, xVec3* o)
 {
     F32 N[7][4];
     xCoef3 coef;
-    F32 clamp_result;
-    S32 seg_result;
-    xVec3* temp_vec;
 
-    clamp_result = ClampBspline(spl, u);
-    seg_result = SegBspline(spl, clamp_result);
-    BasisBspline(N, &spl->knot[seg_result]);
-    temp_vec = spl->bctrl + (seg_result * 0xC);
-    BasisToCoef3(&coef, N, temp_vec, temp_vec + 0xC, temp_vec + 0x18, temp_vec + 0x24);
-    EvalCoef3(&coef, clamp_result, deriv, o);
+    u = ClampBspline(spl, u);
+    S32 seg = SegBspline(spl, u);
+    BasisBspline(N, &spl->knot[seg]);
+    BasisToCoef3(&coef, N, spl->bctrl + seg, spl->bctrl + seg + 1, spl->bctrl + seg + 2,
+                 spl->bctrl + seg + 3);
+    EvalCoef3(&coef, u, deriv, o);
 }
 
 xCoef3* CoefSeg3(xSpline3* spl, U32 seg, xCoef3* tempCoef)
 {
-    F32 N[4];
-
-    F32* temp_knotseg;
-    xVec3* temp_bctrl;
+    F32 N[7][4];
 
     switch (spl->type)
     {
     case 1:
-        return spl->coef + (seg * 0x30);
+        return &spl->coef[seg];
     case 2:
-        BasisToCoef3(tempCoef, sBasisHermite, spl->points + (seg * 0xC), spl->p12 + (seg * 0x18),
-                     spl->p12 + (seg * 0x18) + 0xC, spl->points + (seg * 0xC) + 0xC);
-        return tempCoef;
+        BasisToCoef3(tempCoef, sBasisHermite, spl->points + seg, spl->p12 + seg * 2,
+                     spl->p12 + seg * 2 + 1, spl->points + seg + 1);
+        break;
     case 3:
-        BasisToCoef3(tempCoef, sBasisBezier, spl->points + (seg * 0xC), spl->p12 + (seg * 0x18),
-                     spl->p12 + (seg * 0x18) + 0xC, spl->points + (seg * 0xC) + 0xC);
-        return tempCoef;
+        BasisToCoef3(tempCoef, sBasisBezier, spl->points + seg, spl->p12 + seg * 2,
+                     spl->p12 + seg * 2 + 1, spl->points + seg + 1);
+        break;
     case 4:
-        BasisBspline(&N, &spl->knot[seg]);
-        temp_bctrl = spl->bctrl + (seg * 0xC);
-        BasisToCoef3(tempCoef, &N, temp_bctrl, temp_bctrl + 0xC, temp_bctrl + 0x18,
-                     temp_bctrl + 0x24);
-        temp_knotseg = &spl->knot[seg];
-        CoefToUnity3(tempCoef, tempCoef, temp_knotseg[4], temp_knotseg[5]);
-        return tempCoef;
-    default:
-        return tempCoef;
+        BasisBspline(N, &spl->knot[seg]);
+        BasisToCoef3(tempCoef, N, spl->bctrl + seg, spl->bctrl + seg + 1,
+                     spl->bctrl + seg + 2, spl->bctrl + seg + 3);
+        CoefToUnity3(tempCoef, tempCoef, spl->knot[seg + 3], spl->knot[seg + 4]);
+        break;
     }
+
+    return tempCoef;
 }
 
 void xSpline3_EvalSeg(xSpline3* spl, F32 u, U32 deriv, xVec3* o)
 {
     xCoef3 tempCoef;
     F32 temp_u;
-    F32 new_u;
     U32 seg;
 
-    if ((U16)spl->type == 4)
+    if (spl->type == 4)
     {
         EvalBspline3(spl, u, deriv, o);
         return;
     }
+
     if (u < 0.0f)
     {
         u = 0.0f;
     }
-    temp_u = floorf(u);
-    seg = (U32)temp_u;
+
+    temp_u = std::floorf(u);
+    seg = temp_u;
     if (seg >= spl->N)
     {
-        new_u = 1.0f;
+        u = 1.0f;
         seg = spl->N - 1;
     }
     else
     {
-        new_u = u - temp_u;
+        u -= temp_u;
     }
 
     switch (spl->type)
     {
     case 1:
-        EvalCoef3(spl->coef + (seg * 0x30), new_u, deriv, o);
-        return;
+        EvalCoef3(spl->coef + seg, u, deriv, o);
+        break;
     case 2:
-        BasisToCoef3(&tempCoef, (f32(*)[4])sBasisHermite, spl->points + (seg * 0xC),
-                     spl->p12 + (seg * 0x18), spl->p12 + (seg * 0x18) + 0xC,
-                     spl->points + (seg * 0xC) + 0xC);
-        EvalCoef3(&tempCoef, new_u, deriv, o);
-        return;
+        BasisToCoef3(&tempCoef, sBasisHermite, spl->points + seg, spl->p12 + seg * 2,
+                     spl->p12 + seg * 2 + 1, spl->points + seg + 1);
+        EvalCoef3(&tempCoef, u, deriv, o);
+        break;
     case 3:
-        BasisToCoef3(&tempCoef, (F32(*)[4])sBasisBezier, spl->points + (seg * 0xC),
-                     spl->p12 + (seg * 0x18), spl->p12 + (seg * 0x18) + 0xC,
-                     spl->points + (seg * 0xC) + 0xC);
-        EvalCoef3(&tempCoef, new_u, deriv, o);
-        return;
+        BasisToCoef3(&tempCoef, sBasisBezier, spl->points + seg, spl->p12 + seg * 2,
+                     spl->p12 + seg * 2 + 1, spl->points + seg + 1);
+        EvalCoef3(&tempCoef, u, deriv, o);
+        break;
     }
 }
 
@@ -620,56 +573,45 @@ F32 xSpline3_EvalArcApprox(xSpline3* spl, F32 s, U32 deriv, xVec3* o)
 
 void xSpline3_ArcInit(xSpline3* spl, U32 sample)
 {
-    xCoef3* coef;
     xCoef3 tempCoef;
-
-    F32 len;
+    F32 len = 0.0f;
     F32 arcsum;
-    U32 i;
+    U32 allocSample;
+    U32 idx;
+    U32 k;
     U32 seg;
+    xCoef3* coef;
+    U32 i;
 
-    S32 sample_sum;
-
-    if (sample == 0)
+    if (sample < 1)
     {
         sample = 1;
     }
 
     spl->arcSample = sample;
-    if (spl->arcLength != (F32*)0x0)
+
+    allocSample = spl->arcLength != NULL ? spl->allocN * spl->arcSample : 0;
+    if (allocSample < spl->N * sample)
     {
-        i = spl->allocN * spl->arcSample;
-    }
-    else
-    {
-        i = 0;
+        spl->arcLength = (F32*)xMemAlloc(gActiveHeap, spl->arcSample * spl->allocN * sizeof(F32), 0);
     }
 
-    if (i < spl->N * sample)
+    arcsum = 0.0f;
+    k = 0;
+    for (i = 0; i < spl->N; i++)
     {
-        spl->arcLength = (F32*)xMemAlloc(gActiveHeap, spl->arcSample * spl->allocN * 4, 0);
-    }
+        coef = CoefSeg3(spl, i, &tempCoef);
+        idx = k;
 
-    arcsum = 0.0;
-    if (spl->N != 0)
-    {
-        sample_sum = 0;
-        for (i = 0; i < spl->N; i += 1)
+        for (seg = 0; seg < sample; seg++)
         {
-            coef = CoefSeg3(spl, i, &tempCoef);
-            if (sample != 0)
-            {
-                for (seg = 0; seg < sample; seg += 1)
-                {
-                    len = ArcLength3(coef, 0.0, (F32)(seg + 1) / (F32)sample);
-                    spl->arcLength[seg + sample_sum] = arcsum + len;
-                }
-            }
-            sample_sum = sample_sum + sample;
-            arcsum = arcsum + len;
+            len = ArcLength3(coef, 0.0, (F32)(seg + 1) / (F32)sample);
+            spl->arcLength[idx++] = arcsum + len;
         }
+
+        arcsum += len;
+        k += sample;
     }
-    return;
 }
 
 xSpline3* AllocSpline3(xVec3* points, F32* time, U32 numpoints, U32 numalloc, U32 flags, U32 type)
@@ -710,36 +652,22 @@ xSpline3* AllocSpline3(xVec3* points, F32* time, U32 numpoints, U32 numalloc, U3
 xSpline3* xSpline3_Bezier(xVec3* points, F32* time, U32 numpoints, U32 numalloc, xVec3* p1,
                           xVec3* p2)
 {
-    U32 i;
-    xSpline3* spl;
-    xVec3* p1_temp;
-    xVec3* p2_temp;
-    S32 p1_inc;
-    S32 p2_inc;
+    xSpline3* spl = AllocSpline3(points, time, numpoints, numalloc, 0, 3);
+    spl->p12 = (xVec3*)xMemAlloc(gActiveHeap, spl->allocN * 2 * sizeof(xVec3), 0);
 
-    spl = AllocSpline3(points, time, numpoints, numalloc, 0U, 3U);
-    spl->p12 = (xVec3*)xMemAlloc(gActiveHeap, spl->allocN * 2 * 0xC, 0);
-    if ((p1 == NULL) || (p2 == NULL))
+    if (p1 == NULL || p2 == NULL)
     {
         xSpline3_Catmullize(spl);
     }
     else
     {
-        p1_temp = p1;
-        p2_temp = p2;
-        p1_inc = 0;
-        p2_inc = 0xC;
-
-        for (i = 0; i < spl->N; i += 1)
+        for (U32 i = 0; i < spl->N; i++)
         {
-            spl->p12 = p1_temp + p1_inc;
-            spl->p12 = p2_temp + p2_inc;
-            p1_temp += 0xC;
-            p2_temp += 0xC;
-            p1_inc += 0x18;
-            p2_inc += 0x18;
+            spl->p12[i * 2] = p1[i];
+            spl->p12[i * 2 + 1] = p2[i];
         }
     }
+
     return spl;
 }
 

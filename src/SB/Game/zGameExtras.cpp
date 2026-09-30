@@ -632,18 +632,8 @@ void GEC_cb_NoPantsMode()
 
 void GEC_cb_CruiseControl()
 {
-    static U32 choices[3] = {};
-    static signed char init;
-
-    if (!init)
-    {
-        choices[0] = xStrHash("SBG01060_c");
-        choices[1] = xStrHash("SBG01058_b");
-        choices[2] = xStrHash("SBG01054_b");
-
-        // scheduling memes preventing match
-        init = true;
-    }
+    static U32 choices[3] = { xStrHash("SBG01060_c"), xStrHash("SBG01058_b"),
+                              xStrHash("SBG01054_b") };
 
     U32 snd = xUtil_choose<U32>(choices, 3, NULL);
 

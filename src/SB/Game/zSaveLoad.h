@@ -11,7 +11,7 @@ struct zSaveLoadGame
     char date[32];
     S32 progress;
     U32 size;
-    S8 thumbIconIndex;
+    char thumbIconIndex;
 };
 
 struct zSaveLoadUI

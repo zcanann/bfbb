@@ -159,24 +159,23 @@ void zUIMgr::Update(zScene* s, F32 dt)
 
 void zUIMgr::Setup(zScene* s)
 {
-    const U32 count = s->baseCount[eBaseTypeUI];
-    const U32 arraySize = count * sizeof(_zUI*);
+    U32 i;
+    _zUI* ui;
+    U32 count = s->baseCount[eBaseTypeUI];
 
     m_preUpdateStart = 0;
     m_preUpdateEnd = count - 1;
     m_preUpdateMax = count;
-    m_preUpdate = (_zUI**)xMemAllocSize(arraySize);
+    m_preUpdate = (_zUI**)xMemAllocSize(count * sizeof(_zUI*));
 
     m_updateStart = 0;
     m_updateEnd = count - 1;
     m_updateMax = count;
-    m_update = (_zUI**)xMemAllocSize(arraySize);
+    m_update = (_zUI**)xMemAllocSize(count * sizeof(_zUI*));
 
-    // non-matching: incorrect registers
+    ui = (_zUI*)s->baseList[eBaseTypeUI];
 
-    _zUI* ui = (_zUI*)s->baseList[eBaseTypeUI];
-
-    for (U32 i = 0; i < s->baseCount[eBaseTypeUI]; i++)
+    for (i = 0; i < s->baseCount[eBaseTypeUI]; i++)
     {
         Add(ui);
         ui++;

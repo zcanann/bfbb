@@ -269,6 +269,9 @@ struct zNPCPrawn : zNPCSubBoss
     void update_round();
     void decompose();
     void set_floor_state(zNPCPrawn::floor_state_enum, bool, bool);
+    void get_floor_info(floor_state_enum state, range_type& pattern, F32& transition_delay,
+                        F32& state_delay);
+
     void set_life(S32);
     void hide_model();
     zNPCSpawner* make_spawner(S32);

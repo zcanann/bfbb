@@ -2,6 +2,7 @@
 
 #include "xMemMgr.h"
 #include "xCollideFast.h"
+#include "xGridCheckBound.h"
 #include "xMath.h"
 #include "xMathInlines.h"
 

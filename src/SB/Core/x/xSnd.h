@@ -103,11 +103,11 @@ template <S32 N> struct sound_queue
     }
     S32 size() const
     {
-        if (tail >= head)
+        if (tail < head)
         {
-            return tail - head;
+            return tail + (N + 1) - head;
         }
-        return tail + (N + 1) - head;
+        return tail - head;
     }
     void clear()
     {
@@ -205,6 +205,9 @@ U32 xSndPlay3D(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, xEnt* parent
                F32 outerRadius, sound_category category, F32 delay);
 U32 xSndPlay3D(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, const xVec3* pos,
                F32 innerRadius, F32 outerRadius, sound_category category, F32 delay);
+U32 xSndPlay3DFade(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, const xVec3* pos,
+                   F32 innerRadius, F32 outerRadius, sound_category category, F32 delay,
+                   F32 fade_time);
 U32 xSndPlayInternal(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, U32 parentID,
                      xEnt* parentEnt, const xVec3* pos, F32 innerRadius, F32 outerRadius,
                      sound_category category, F32 delay);

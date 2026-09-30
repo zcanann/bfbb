@@ -119,7 +119,7 @@ static const xVec3 bubblewall_velscale = { 1.0f, 0.5f, 0.5f };
 zFXGooInstance zFXGooInstances[24];
 U32 gFXSurfaceFlags = 0;
 
-void xDrawSphere2(const xVec3*, F32, U32)
+inline void xDrawSphere2(const xVec3*, F32, U32)
 {
 }
 
@@ -402,13 +402,14 @@ void zFXGooUpdateInstance(zFXGooInstance* goo, F32 dt)
 
     if (goo->alpha < 1.0f && goo->atomic != NULL)
     {
+        S32 s;
         RpGeometry* geom = RpAtomicGetGeometry(goo->atomic);
         if (geom != NULL && RpGeometryLock(geom, 2))
         {
             F32 warb_time = goo->warb_time;
             xVec3* verts = goo->orig_verts;
             RwV3d* morphVerts = geom->morphTarget->verts;
-            for (S32 s = 0; s < geom->numVertices; s++, verts++, morphVerts++)
+            for (s = 0; s < geom->numVertices; s++, verts++, morphVerts++)
             {
                 F32 a = xfmod(goo->warbc[1] * (verts->x + warb_time), 2 * PI);
                 F32 b = xfmod(goo->warbc[3] * (verts->z + warb_time), 2 * PI);
@@ -464,6 +465,20 @@ void zFXGooUpdate(F32 dt)
     }
 }
 
+// Debug-only draw helper; unreferenced, so the linker strips it. It is kept because
+// it is where the 0.25f pool constant and the weak xDrawSphere2 copy come from.
+static void zFXGooDebugRender()
+{
+    zFXGooInstance* goo = zFXGooInstances;
+    for (S32 i = 0; i < 24; i++, goo++)
+    {
+        if (goo->state != zFXGooStateInactive)
+        {
+            xDrawSphere2(&goo->center, 0.25f, 12);
+        }
+    }
+}
+
 RpAtomic* zFXGooRenderAtomic(class RpAtomic* atomic)
 {
     if (g_txtr_gooFrozen == NULL)
@@ -497,6 +512,7 @@ RpAtomic* zFXGooRenderAtomic(class RpAtomic* atomic)
     {
         refPos = g_O3;
     }
+
 
     if (i != 24 && goo->state != zFXGooStateInactive && goo->state != zFXGooStateNormal)
     {
@@ -853,7 +869,7 @@ void zFX_SpawnBubbleHit(const xVec3* pos, U32 num, const xVec3* pos_rnd, const x
 
     xVec3* pp = posbuf;
     xVec3* vp = velbuf;
-    for (S32 j = 0; j < num; j++, pp++, vp++)
+    for (S32 j = 0; j < (S32)num; j++, pp++, vp++)
     {
         *pp = *pos;
         pp->x += pos_rnd->x * (xurand() - 0.5f);
@@ -903,7 +919,7 @@ void zFX_SpawnBubbleTrail(const xVec3* pos, U32 num, const xVec3* pos_rnd, const
 
     xVec3* pp = posbuf;
     xVec3* vp = velbuf;
-    for (S32 j = 0; j < num; j++, pp++, vp++)
+    for (S32 j = 0; j < (S32)num; j++, pp++, vp++)
     {
         *pp = *pos;
         pp->x += pos_rnd->x * (xurand() - 0.5f);
@@ -939,7 +955,7 @@ void zFX_SpawnBubbleTrailNoNegRandVel(const xVec3* pos, U32 num, const xVec3* po
 
     xVec3* pp = posbuf;
     xVec3* vp = velbuf;
-    for (S32 j = 0; j < num; j++, pp++, vp++)
+    for (S32 j = 0; j < (S32)num; j++, pp++, vp++)
     {
         *pp = *pos;
         pp->x += pos_rnd->x * (xurand() - 0.5f);
@@ -976,7 +992,7 @@ void zFX_SpawnBubbleTrail(const xVec3* p1, const xVec3* p2, U32 num, const xVec3
     xVec3 offset = *p2 - *p1;
     xVec3* pp = posbuf;
     xVec3* vp = velbuf;
-    for (S32 j = 0; j < num; j++, pp++, vp++)
+    for (S32 j = 0; j < (S32)num; j++, pp++, vp++)
     {
         *pp = *p1 + (offset * xurand());
 
@@ -1015,7 +1031,7 @@ void zFX_SpawnBubbleTrail(const xVec3* p1, const xVec3* p2, const xVec3* vel1, c
     xVec3 vel_offset = *vel2 - *vel1;
     xVec3* pp = posbuf;
     xVec3* vp = velbuf;
-    for (S32 j = 0; j < num; j++, pp++, vp++)
+    for (S32 j = 0; j < (S32)num; j++, pp++, vp++)
     {
         F32 t = xurand();
         *pp = *p1 + (offset * t);
@@ -1053,7 +1069,7 @@ void zFX_SpawnBubbleMenuTrail(const xVec3* pos, U32 num, const xVec3* pos_rnd, c
 
     xVec3* pp = posbuf;
     xVec3* vp = velbuf;
-    for (S32 j = 0; j < num; j++, pp++, vp++)
+    for (S32 j = 0; j < (S32)num; j++, pp++, vp++)
     {
         *pp = *pos;
         pp->x += pos_rnd->x * (xurand() - 0.5f);
@@ -1105,6 +1121,38 @@ void zFX_SpawnBubbleWall()
         vp->z = velscale_z * (xurand() - 0.5f);
     }
     zParPTankSpawnBubbles(pos, vel, 50, 1.0f);
+}
+
+void zFX_SpawnBubbleSlam(const xVec3* pos, U32 num, F32 rang, F32 bvel, F32 rvel)
+{
+    xVec3* posbuf = (xVec3*)xMemPushTemp(num * 2 * sizeof(xVec3));
+    xVec3* velbuf = posbuf + num;
+    if (posbuf == NULL)
+    {
+        return;
+    }
+
+    F32 yvel = 0.25f * rvel;
+    xVec3* pp = posbuf;
+    xVec3* vp = velbuf;
+    for (U32 j = 0; j < num; j++, pp++, vp++)
+    {
+        *pp = *pos;
+        pp->y += 0.2f;
+
+        F32 ang = 2.0f * PI * j / num;
+        ang += rang * (xurand() - 0.5f);
+        vp->x = bvel * icos(ang);
+        vp->y = 0.0f;
+        vp->z = bvel * isin(ang);
+
+        vp->x += rvel * (xurand() - 0.5f);
+        vp->y += yvel * (xurand() - 0.5f);
+        vp->z += rvel * (xurand() - 0.5f);
+    }
+
+    zParPTankSpawnBubbles(posbuf, velbuf, num, 1.0f);
+    xMemPopTemp(posbuf);
 }
 
 namespace

@@ -323,9 +323,17 @@ namespace
 
     void television::move(const xVec3& v1, const xVec3& v2)
     {
-        RwFrameTranslate((RwFrame*)this->cam->object.object.parent, (const RwV3d*)&v1,
-                         rwCOMBINEREPLACE);
-        xMat3x3LookAt((xMat3x3*)this->cam->object.object.parent, &v2, &v1);
+        RwFrame* frame = (RwFrame*)cam->object.object.parent;
+        RwFrameTranslate(frame, (const RwV3d*)&v1, rwCOMBINEREPLACE);
+
+        xMat3x3 mat;
+        xMat3x3LookAt(&mat, &v2, &v1);
+
+        RwMatrix& m = frame->modelling;
+        m.right = (const RwV3d&)mat.right;
+        m.at = (const RwV3d&)mat.at;
+        m.up = (const RwV3d&)mat.up;
+
     }
 
     static television closeup;
@@ -898,40 +906,35 @@ void zNPCPrawn::apply_pending()
     disco->set_state_delay(pending.state_delay);
 }
 
-// void zNPCPrawn::set_floor_state(zNPCPrawn::floor_state_enum, bool, bool)
-// {
-// }
-/* zNPCPrawn::set_floor_state (zNPCPrawn::floor_state_enum, bool, bool) */
-void zNPCPrawn::set_floor_state(zNPCPrawn::floor_state_enum arg0, bool arg1, bool arg2)
+void zNPCPrawn::set_floor_state(zNPCPrawn::floor_state_enum state, bool apply, bool force)
 {
-    U32 offset;
-    U32 temp_r0;
-    U32 temp_r3;
-    z_disco_floor* temp_r4;
-
-    if (((S32)arg0 != (S32)this->floor_state) || (arg2 != 0))
+    if (state == floor_state && !force)
     {
-        this->floor_state = (floor_state_enum)arg0;
-        //get_floor_info(this, arg0, (zNPCPrawn::range_type *) &this->unk304, &this->unk30C, &this->unk310);
-        if (arg1 != 0)
-        {
-            apply_pending();
-            return;
-        }
-        temp_r4 = this->disco;
-        temp_r3 = temp_r4->state;
-        if ((temp_r3 < (U32)temp_r4->min_state ||
-             (temp_r0 = temp_r4->max_state, ((temp_r3 > temp_r0) != 0))))
-        {
-            offset = 1;
-        }
-        else
-        {
-            offset = (temp_r0 - temp_r3) + 1;
-        }
-        this->pending.counter = temp_r4->state_counter + offset;
-        this->pending.change = 1;
+        return;
     }
+
+    pending.floor_state = state;
+    get_floor_info(state, pending.pattern, pending.transition_delay, pending.state_delay);
+
+    if (apply)
+    {
+        apply_pending();
+        return;
+    }
+
+    U32 offset;
+    if (disco->state < disco->min_state || disco->state > disco->max_state)
+
+    {
+        offset = 1;
+    }
+    else
+    {
+        offset = disco->max_state - disco->state + 1;
+    }
+
+    pending.counter = disco->state_counter + offset;
+    pending.change = 1;
 }
 
 // void zNPCPrawn::vanish() //Didn't figure out how to finish it

@@ -233,26 +233,25 @@ S32 PKR_SetActive(st_PACKER_READ_DATA* pr, en_LAYER_TYPE layer)
         for (j = 0; j < laynode->assref.cnt; j++)
         {
             assnode = (st_PACKER_ATOC_NODE*)laynode->assref.list[j];
-            if (assnode->loadflag & 0x10000 || (assnode->loadflag & 0x80000) == 0)
+            result = assnode->loadflag & 0x80000;
+            if (!(assnode->loadflag & 0x10000) && result)
             {
-                continue;
-            }
-
-            if (assnode->typeref == NULL)
-            {
-                assnode->Name();
-                xUtil_idtag2string(assnode->asstype, 0);
-            }
-            else if (assnode->typeref->assetLoaded != NULL)
-            {
-                if (!(assnode->typeref->assetLoaded(pr->userdata, assnode->aid, assnode->memloc,
-                                                    assnode->d_size)))
+                if (assnode->typeref == NULL)
                 {
-                    rc = 0;
+                    assnode->Name();
+                    xUtil_idtag2string(assnode->asstype, 0);
                 }
-                else
+                else if (assnode->typeref->assetLoaded != NULL)
                 {
-                    assnode->loadflag |= 0x10000;
+                    if (!(assnode->typeref->assetLoaded(pr->userdata, assnode->aid,
+                                                        assnode->memloc, assnode->d_size)))
+                    {
+                        rc = 0;
+                    }
+                    else
+                    {
+                        assnode->loadflag |= 0x10000;
+                    }
                 }
             }
         }
@@ -521,14 +520,16 @@ S32 PKR_findNextLayerToLoad(st_PACKER_READ_DATA** work_on_pkg, st_PACKER_LTOC_NO
 {
     st_PACKER_READ_DATA* tmppr;
     st_PACKER_LTOC_NODE* tmplay;
+    S32 i;
+    S32 j;
 
     *next_layer = NULL;
     if (*work_on_pkg != NULL)
     {
         tmppr = *work_on_pkg;
-        for (S32 i = 0; i < tmppr->laytoc.cnt; i++)
+        for (j = 0; j < tmppr->laytoc.cnt; j++)
         {
-            tmplay = (st_PACKER_LTOC_NODE*)tmppr->laytoc.list[i];
+            tmplay = (st_PACKER_LTOC_NODE*)tmppr->laytoc.list[j];
             if (!(tmplay->flg_ldstat & 0x2000000))
             {
                 *next_layer = tmplay;
@@ -541,14 +542,14 @@ S32 PKR_findNextLayerToLoad(st_PACKER_READ_DATA** work_on_pkg, st_PACKER_LTOC_NO
     if (*next_layer == NULL)
     {
         tmppr = g_readdatainst;
-        for (S32 i = 0; i < 16; i++, tmppr++)
+        for (i = 0; i < 16; i++, tmppr++)
         {
             if ((g_loadlock & 1 << i) == 0 || tmppr == *work_on_pkg)
             {
                 continue;
             }
 
-            for (S32 j = 0; j < tmppr->laytoc.cnt; j++)
+            for (j = 0; j < tmppr->laytoc.cnt; j++)
             {
                 tmplay = (st_PACKER_LTOC_NODE*)tmppr->laytoc.list[j];
                 if (!(tmplay->flg_ldstat & 0x2000000))
@@ -571,8 +572,11 @@ S32 PKR_findNextLayerToLoad(st_PACKER_READ_DATA** work_on_pkg, st_PACKER_LTOC_NO
 
 void PKR_updateLayerAssets(st_PACKER_LTOC_NODE* laynode)
 {
+    S32 i;
     st_PACKER_ATOC_NODE* tmpass = NULL;
-    for (S32 i = 0; i < laynode->assref.cnt; i++)
+    S32 lay_hip_pos;
+
+    for (i = 0; i < laynode->assref.cnt; i++)
     {
         tmpass = (st_PACKER_ATOC_NODE*)laynode->assref.list[i];
         if (tmpass->d_off > 0 && tmpass->d_size > 0)
@@ -584,8 +588,8 @@ void PKR_updateLayerAssets(st_PACKER_LTOC_NODE* laynode)
 
     if (tmpass != NULL)
     {
-        S32 lay_hip_pos = tmpass->d_off;
-        for (S32 i = 0; i < laynode->assref.cnt; i++)
+        lay_hip_pos = tmpass->d_off;
+        for (i = 0; i < laynode->assref.cnt; i++)
         {
             st_PACKER_ATOC_NODE* tmpass = (st_PACKER_ATOC_NODE*)laynode->assref.list[i];
             if (!(tmpass->loadflag & 0x100000))
@@ -1564,6 +1568,7 @@ void PKR_bld_typecnt(st_PACKER_READ_DATA* pr)
     st_PACKER_ATOC_NODE* assnode;
     S32 j;
     S32 i;
+    S32 idx;
     S32 typcnt[129] = {};
     st_XORDEREDARRAY* tmplist;
     U32 lasttype = 0;
@@ -1577,7 +1582,6 @@ void PKR_bld_typecnt(st_PACKER_READ_DATA* pr)
             assnode = (st_PACKER_ATOC_NODE*)laynode->assref.list[j];
             if (!(assnode->loadflag & 0x100000) && !(assnode->loadflag & 0x200000))
             {
-                S32 idx;
                 if (lasttype != 0 && assnode->asstype == lasttype)
                 {
                     idx = lastidx;
@@ -1603,23 +1607,22 @@ void PKR_bld_typecnt(st_PACKER_READ_DATA* pr)
         }
     }
 
-    for (i = 0; i < 129; i++)
+    for (idx = 0; idx < 129; idx++)
     {
-        if (typcnt[i] >= 1)
+        if (typcnt[idx] >= 1)
         {
-            XOrdInit(&pr->typelist[i], typcnt[i] > 1 ? typcnt[i] : 2, false);
+            XOrdInit(&pr->typelist[idx], typcnt[idx] > 1 ? typcnt[idx] : 2, false);
         }
     }
 
     for (i = 0; i < pr->laytoc.cnt; i++)
     {
-        st_PACKER_LTOC_NODE* laynode = (st_PACKER_LTOC_NODE*)pr->laytoc.list[i];
+        laynode = (st_PACKER_LTOC_NODE*)pr->laytoc.list[i];
         for (j = 0; j < laynode->assref.cnt; j++)
         {
-            st_PACKER_ATOC_NODE* assnode = (st_PACKER_ATOC_NODE*)laynode->assref.list[j];
+            assnode = (st_PACKER_ATOC_NODE*)laynode->assref.list[j];
             if (!(assnode->loadflag & 0x100000) && !(assnode->loadflag & 0x200000))
             {
-                S32 idx;
                 if (lasttype != 0 && assnode->asstype == lasttype)
                 {
                     idx = lastidx;
@@ -1631,7 +1634,6 @@ void PKR_bld_typecnt(st_PACKER_READ_DATA* pr)
                     lasttype = assnode->asstype;
                 }
 
-                st_XORDEREDARRAY* tmplist;
                 if (idx < 0)
                 {
                     tmplist = &pr->typelist[128];

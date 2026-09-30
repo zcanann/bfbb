@@ -23,6 +23,8 @@
 #include "zRenderState.h"
 #include "zLightning.h"
 #include "zNPCTypeRobot.h"
+#include "zSurface.h"
+#include "zNPCTypeVillager.h"
 #include <xMathInlines.h>
 
 #define ANIM_Unknown 0 //0x0
@@ -64,7 +66,7 @@
 #define SOUND_HIT_SLAP 8
 #define SOUND_HIT_FLAIL 9
 
-zNPCB_SB2* _singleton;
+zNPCB_SB2* zNPCB_SB2::_singleton;
 
 namespace
 {
@@ -86,22 +88,70 @@ namespace
 
     struct curve_node
     {
-        F32 time;
-        iColor_tag color;
-        F32 scale;
+        F32 t;
+        F32 value;
     };
 
     struct platform_hook
     {
-        char* name;
+        const char* name;
     };
 
     static U32 sound_asset_ids[10][4];
     static sound_data_type sound_data[10];
 
-    static response_curve rc_scale;
+    struct node
+    {
+        F32 t;
+    };
 
-    static xBinaryCamera boss_cam;
+    struct inode : node
+    {
+        F32 value[1];
+    };
+
+    struct response_curve
+    {
+        unsigned long values;
+        inode* curve;
+        unsigned long nodes;
+        unsigned long active_node;
+
+        void init(unsigned long values, const void* curve, unsigned long nodes, const char*,
+                  const char**, const tweak_callback*, void*);
+        void eval_linear(F32 t, F32* out);
+        void eval_smooth(F32 t, F32* out);
+        void find_active_node(F32 t);
+        F32 clamp_t(F32 t) const;
+        F32 start_t() const;
+        F32 end_t() const;
+        const inode& get_node(unsigned long index) const;
+    };
+
+    void response_curve::init(unsigned long values, const void* curve, unsigned long nodes,
+                              const char*, const char**, const tweak_callback*, void*)
+    {
+        this->values = values;
+        this->curve = (inode*)curve;
+        this->nodes = nodes;
+        this->active_node = 0;
+    }
+
+    response_curve rc_scale;
+
+    xBinaryCamera boss_cam = {
+        {
+            { 6.0f, 3.0f, 2.0f },
+            { 0.2f, 2.2f, -1.0f },
+            { 1.0f, 0.2f, 1.5f },
+            10.0f,
+            10.0f,
+            10.0f,
+            10.0f,
+            50.0f,
+            -3.1415927f,
+        },
+    };
 
     static const sound_asset sound_assets[12] = {
         { 0, "RSB_laugh", 0, 0 },      { 1, "RSB_kah", 0, 0 },      { 2, "RSB_chop_windup", 0, 0 },
@@ -110,9 +160,31 @@ namespace
         { 7, "RSB_armhit2", 0, 0 },    { 8, "RSB_armsmash", 0, 0 }, { 9, "RSB_foor_impact", 0, 0 },
     };
 
-    static platform_hook platform_hooks[16];
+    const platform_hook platform_hooks[16] = {
+        { "PLAT_SB_FLIPPER_01" },
+        { "PLAT_SB_FLIPPER_02" },
+        { "PLAT_SB_FLIPPER_03" },
+        { "PLAT_SB_FLIPPER_04" },
+        { "PLAT_SB_FLIPPER_05" },
+        { "PLAT_SB_FLIPPER_06" },
+        { "PLAT_SB_FLIPPER_07" },
+        { "PLAT_SB_FLIPPER_08" },
+        { "PLAT_SB_FLIPPER_09" },
+        { "PLAT_SB_FLIPPER_10" },
+        { "PLAT_SB_FLIPPER_11" },
+        { "PLAT_SB_FLIPPER_12" },
+        { "PLAT_SB_FLIPPER_13" },
+        { "PLAT_SB_FLIPPER_14" },
+        { "PLAT_SB_FLIPPER_15" },
+        { "PLAT_SB_FLIPPER_16" },
+    };
 
-    static curve_node scale_curve[4];
+    const curve_node scale_curve[4] = {
+        { 0.0f, 0.0f },
+        { 0.1f, 0.4f },
+        { 1.0f, 1.25f },
+        { 1.5f, 1.0f },
+    };
 
     void set_alpha_blend(xModelInstance* model)
     {
@@ -1005,99 +1077,234 @@ namespace
         }
     }
 
-    void response_curve::end_t() const
+    void response_curve::eval_linear(F32 t, F32* out)
     {
+        F32* end = out + values;
+        find_active_node(t);
+
+        const inode& n0 = curve[active_node];
+        const inode& n1 = curve[active_node + 1];
+        F32 dt = n1.t - n0.t;
+
+        if (dt >= -0.00001f && dt <= 0.00001f)
+        {
+            const F32* v = n0.value;
+            for (; out != end; ++out, ++v)
+            {
+                *out = *v;
+            }
+        }
+        else
+        {
+            F32 frac = (t - n0.t) / dt;
+            const F32* v0 = n0.value;
+            const F32* v1 = n1.value;
+            for (; out != end; ++out, ++v0, ++v1)
+            {
+                *out = frac * (*v1 - *v0) + *v0;
+            }
+        }
+    }
+
+    void response_curve::eval_smooth(F32 t, F32* out)
+    {
+        if (nodes == 2)
+        {
+            eval_linear(t, out);
+            return;
+        }
+
+        F32* end = out + values;
+        find_active_node(t);
+
+        const inode& n0 = curve[active_node];
+        const inode& n1 = curve[active_node + 1];
+        F32 dt = n1.t - n0.t;
+
+        if (dt >= -0.00001f && dt <= 0.00001f)
+        {
+            const F32* v = n0.value;
+            for (; out != end; ++out, ++v)
+            {
+                *out = *v;
+            }
+            return;
+        }
+
+        F32 u = (t - n0.t) / dt;
+        F32 u2 = u * u;
+        F32 u3 = u2 * u;
+
+        F32 c0 = -0.5f * u3 + u2 + -0.5f * u;
+        F32 c1 = 1.5f * u3 + -2.5f * u2 + 1.0f;
+        F32 c2 = -1.5f * u3 + 2.0f * u2 + 0.5f * u;
+        F32 c3 = 0.5f * u3 + -0.5f * u2;
+
+        if (active_node != 0 && active_node < nodes - 2)
+        {
+            const F32* v0 = curve[active_node - 1].value;
+            const F32* v1 = n0.value;
+            const F32* v2 = n1.value;
+            const F32* v3 = curve[active_node + 2].value;
+            for (; out != end; ++out, ++v0, ++v1, ++v2, ++v3)
+            {
+                *out = c0 * *v0 + c1 * *v1 + c2 * *v2 + c3 * *v3;
+            }
+        }
+        else if (active_node != 0)
+        {
+            F32 c23 = c2 + c3;
+            const F32* v0 = curve[active_node - 1].value;
+            const F32* v1 = n0.value;
+            const F32* v2 = n1.value;
+            for (; out != end; ++out, ++v0, ++v1, ++v2)
+            {
+                *out = c0 * *v0 + c1 * *v1 + c23 * *v2;
+            }
+        }
+        else
+        {
+            F32 c01 = c0 + c1;
+            const F32* v1 = n0.value;
+            const F32* v2 = n1.value;
+            const F32* v3 = curve[active_node + 2].value;
+            for (; out != end; ++out, ++v1, ++v2, ++v3)
+            {
+                *out = c01 * *v1 + c2 * *v2 + c3 * *v3;
+            }
+        }
+    }
+
+    void response_curve::find_active_node(F32 t)
+    {
+        unsigned long size = values * sizeof(F32) + sizeof(node);
+        const U8* it = (const U8*)curve + size * active_node;
+
+        while (true)
+        {
+            if (t < ((const inode*)it)->t)
+            {
+                it -= size;
+                --active_node;
+            }
+            else if (t > ((const inode*)(it + size))->t)
+            {
+                it += size;
+                ++active_node;
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+
+    F32 response_curve::clamp_t(F32 t) const
+    {
+        return range_limit(t, start_t(), end_t());
+    }
+
+    F32 response_curve::end_t() const
+    {
+        return get_node(nodes - 1).t;
+    }
+
+    const inode& response_curve::get_node(unsigned long index) const
+    {
+        return *(const inode*)((const U8*)curve + index * (values * sizeof(F32) + sizeof(node)));
+    }
+
+    F32 response_curve::start_t() const
+    {
+        return curve->t;
     }
 
 } // namespace
 
 xAnimTable* ZNPC_AnimTable_BossSB2()
 {
-    // clang-format off
-    S32 anim_list[27] = {
-
-    ANIM_Idle01,
-    ANIM_Idle02,
-    ANIM_Taunt01,
-    ANIM_Hit01,
-    ANIM_Hit02,
-    ANIM_SmashHitLeft,
-    ANIM_SmashHitRight,
-    ANIM_SmackLeft01,
-    ANIM_SmackRight01,
-    ANIM_ChopLeftBegin,
-    ANIM_ChopLeftLoop,
-    ANIM_ChopLeftEnd,
-    ANIM_ChopRightBegin,            
-    ANIM_ChopRightLoop,             
-    ANIM_ChopRightEnd,               
-    ANIM_SwipeLeftBegin,
-    ANIM_SwipeLeftLoop,
-    ANIM_SwipeLeftEnd,
-    ANIM_SwipeRightBegin,
-    ANIM_SwipeRightLoop,
-    ANIM_SwipeRightEnd,
-    ANIM_ReturnIdle01,
-    ANIM_KarateStart,
-    ANIM_KarateLoop,
-    ANIM_KarateEnd,
-    ANIM_Dizzy01,  
-    };
-    
-
+    S32 anim_list[32];
     xAnimTable* table = xAnimTableNew("zNPCB_SB2_Karate", NULL, 0);
+    S32 anim_count = 0;
+
     //24 new state
     //15  new transition
+    anim_list[anim_count++] = ANIM_Idle01;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_Idle01], 0x10, 0, 1, NULL, NULL, 0, NULL, NULL,
                        xAnimDefaultBeforeEnter, NULL, NULL);
+    anim_list[anim_count++] = ANIM_Idle02;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_Idle02], 0, 0, 1, NULL, NULL, 0, NULL, NULL,
                        xAnimDefaultBeforeEnter, NULL, NULL);
+    anim_list[anim_count++] = ANIM_Taunt01;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_Taunt01], 0, 0, 1, NULL, NULL, 0, NULL, NULL,
                        xAnimDefaultBeforeEnter, NULL, NULL);
+    anim_list[anim_count++] = ANIM_SmackLeft01;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_SmackLeft01], 0x20, 0, 1, NULL, NULL, 0, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    anim_list[anim_count++] = ANIM_SmackRight01;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_SmackRight01], 0x20, 0, 1, NULL, NULL, 0, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    anim_list[anim_count++] = ANIM_ChopLeftBegin;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_ChopLeftBegin], 0x20, 0, 1, NULL, NULL, 0, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    anim_list[anim_count++] = ANIM_ChopLeftLoop;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_ChopLeftLoop], 0, 0, 1, NULL, NULL, 0, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    anim_list[anim_count++] = ANIM_ChopLeftEnd;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_ChopLeftEnd], 0x20, 0, 1, NULL, NULL, 0, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    anim_list[anim_count++] = ANIM_ChopRightBegin;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_ChopRightBegin], 0x20, 0, 1, NULL, NULL, 0, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    anim_list[anim_count++] = ANIM_ChopRightLoop;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_ChopRightLoop], 0, 0, 1, NULL, NULL, 0, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    anim_list[anim_count++] = ANIM_ChopRightEnd;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_ChopRightEnd], 0x20, 0, 1, NULL, NULL, 0, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    anim_list[anim_count++] = ANIM_SwipeLeftBegin;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_SwipeLeftBegin], 0x20, 0, 1, NULL, NULL, 0, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    anim_list[anim_count++] = ANIM_SwipeLeftLoop;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_SwipeLeftLoop], 0x10, 0, 1, NULL, NULL, 0, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    anim_list[anim_count++] = ANIM_SwipeLeftEnd;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_SwipeLeftEnd], 0x20, 0, 1, NULL, NULL, 0, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    anim_list[anim_count++] = ANIM_SwipeRightBegin;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_SwipeRightBegin], 0x20, 0, 1, NULL, NULL, 0,
                        NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    anim_list[anim_count++] = ANIM_SwipeRightLoop;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_SwipeRightLoop], 0x10, 0, 1, NULL, NULL, 0, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    anim_list[anim_count++] = ANIM_SwipeRightEnd;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_SwipeRightEnd], 0x20, 0, 1, NULL, NULL, 0, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    anim_list[anim_count++] = ANIM_Dizzy01;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_Dizzy01], 0x10, 0, 1, NULL, NULL, 0, NULL, NULL,
                        xAnimDefaultBeforeEnter, NULL, NULL);
+    anim_list[anim_count++] = ANIM_Hit01;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_Hit01], 0, 0, 1, NULL, NULL, 0, NULL, NULL,
                        xAnimDefaultBeforeEnter, NULL, NULL);
+    anim_list[anim_count++] = ANIM_Hit02;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_Hit02], 0, 0, 1, NULL, NULL, 0, NULL, NULL,
                        xAnimDefaultBeforeEnter, NULL, NULL);
+    anim_list[anim_count++] = ANIM_ReturnIdle01;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_ReturnIdle01], 0x20, 0, 1, NULL, NULL, 0, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    anim_list[anim_count++] = ANIM_KarateStart;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_KarateStart], 0x20, 0, 1, NULL, NULL, 0, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    anim_list[anim_count++] = ANIM_KarateLoop;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_KarateLoop], 0x10, 0, 1, NULL, NULL, 0, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    anim_list[anim_count++] = ANIM_KarateEnd;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_KarateEnd], 0x20, 0, 1, NULL, NULL, 0, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
 
-    NPCC_BuildStandardAnimTran(table, g_strz_bossanim, 0, 1, 0.2);
+    anim_list[anim_count++] = ANIM_Unknown;
+
+    NPCC_BuildStandardAnimTran(table, g_strz_bossanim, anim_list, 1, 0.2f);
 
     xAnimTableNewTransition(table, g_strz_bossanim[ANIM_SmackLeft01], g_strz_bossanim[ANIM_Dizzy01],
                             0, 0, 0x10, 0, 0, 0, 0, 0, 0.1, 0);
@@ -1136,22 +1343,22 @@ xAnimTable* ZNPC_AnimTable_BossSB2()
 
 void zNPCB_SB2::Init(xEntAsset* asset)
 {
-    xModelInstance * m;
-
     _singleton = this;
     boss_cam.init();
     init_sound();
     zNPCCommon::Init(asset);
     this->cfg_npc->dst_castShadow = 30.0f;
-    memset((void*)this->flag.face_player, 0, 0x10);
+    memset(&this->flag, 0, sizeof(this->flag));
     this->said_intro = 0;
 
-    m = this->model;
-    this->models[0] = this->model;
-    
-    this->models[1] = m->Next;
-    this->models[2] = m->Next;
-    this->models[3] = m->Next;
+    xModelInstance* m = this->model;
+    this->models[0] = m;
+    m = m->Next;
+    this->models[1] = m;
+    m = m->Next;
+    this->models[2] = m;
+    m = m->Next;
+    this->models[3] = m;
 
     this->models[0]->Data->boundingSphere.radius = 100.0f;
     this->models[1]->Data->boundingSphere.radius = 100.0f;
@@ -1169,24 +1376,32 @@ void zNPCB_SB2::Init(xEntAsset* asset)
     this->bound.sph.center.y = 1e38f;
     this->bound.sph.r = 0.0f;
 
-    response_curve::init((U32)&rc_scale, 0, 0, 0, 0, 0, 0);
+    rc_scale.init(1, scale_curve, 4, NULL, NULL, NULL, NULL);
 
     this->init_slugs();
 }
 
 void zNPCB_SB2::Setup()
 {
-    xEnt* ent; 
-    xSphere o;
-
     this->create_glow_light();
     this->init_nodes();
     zNPCBoss::Setup();
 
     for (S32 i = 0; i < 16; i++)
     {
-        this->platforms[i].ent = 0;
-        zSceneFindObject(xStrHash(platform_hooks[i].name));
+        platform_data& platform = this->platforms[i];
+        platform.ent = NULL;
+
+        xEnt* ent = (xEnt*)zSceneFindObject(xStrHash(platform_hooks[i].name));
+        if (ent != NULL && xEntValidType(ent->baseType))
+        {
+            platform.ent = ent;
+            platform.mat = *(xMat3x3*)ent->model->Mat;
+
+            xSphere o;
+            xBoundGetSphere(o, ent->bound);
+            platform.radius = o.r;
+        }
     }
 
     if (this->models[3]->Surf == NULL)
@@ -1199,13 +1414,13 @@ void zNPCB_SB2::Setup()
         this->models[0]->Surf = &create_surface();
     }
 
-    // models[3]->Surf->moprops = 0;
-    // models[0]->Surf->moprops = 7;
+    ((zSurfaceProps*)this->models[3]->Surf->moprops)->asset->game_damage_type = 0;
+    ((zSurfaceProps*)this->models[0]->Surf->moprops)->asset->game_damage_type = 7;
 
     this->scan_cronies();
-    (xBase*)&this->newsfish->id = zSceneFindObject(xStrHash("NPC_NEWSCASTER"));
-    
-    if (this->newsfish->id != NULL)
+
+    this->newsfish = (zNPCNewsFish*)zSceneFindObject(xStrHash("NPC_NEWSCASTER"));
+    if (this->newsfish != NULL)
     {
         this->newsfish->TalkOnScreen(1);
     }
@@ -1351,17 +1566,15 @@ void zNPCB_SB2::decompose()
 {
 }
 
-void zNPCB_SB2::show_nodes() 
+void zNPCB_SB2::show_nodes()
 {
-    // Haven't found 0x74
-    S32 i;
-    for (i = 0; i < 9; i++)
+    for (S32 i = 0; i < 9; i++)
     {
-        if (nodes->ent != 0){
-        xEntShow(nodes->ent);
+        if (nodes[i].ent != NULL)
+        {
+            xEntShow(nodes[i].ent);
         }
     }
-
 }
 
 void zNPCB_SB2::ouchie()
@@ -1407,34 +1620,62 @@ void zNPCB_SB2::reset_speed()
     turn.max_vel = tweak.turn_max_vel;
 }
 
-S32 zNPCB_SB2::player_platform()
+zNPCB_SB2::platform_data* zNPCB_SB2::player_platform()
 {
-    if (((globals.player.ent.collis->colls->flags & 1) != 0))
+    xCollis& coll = globals.player.ent.collis->colls[0];
+
+    if (!(coll.flags & 1) || coll.optr == NULL ||
+        ((xBase*)coll.optr)->baseType != eBaseTypePlatform)
     {
-        return 1;
+        return NULL;
+    }
+
+    platform_data* it = platforms;
+    platform_data* end = it + 16;
+    for (; it != end; ++it)
+    {
+        if (it->ent == coll.optr)
+        {
+            return it;
+        }
     }
 
     return NULL;
 }
 
-void zNPCB_SB2::activate_hand(zNPCB_SB2::hand_enum hand, bool)
+void zNPCB_SB2::activate_hand(zNPCB_SB2::hand_enum hand, bool hit_platforms)
 {
-   hands[0].hurt_player = 1;
-   hands[0].hit_platforms = 0x10;
-   hands[0].ent->penby = 0x10;
+    hands[hand].hurt_player = TRUE;
+    hands[hand].hit_platforms = hit_platforms;
+    hands[hand].ent->penby = XENT_COLLTYPE_PLYR;
 }
 
 void zNPCB_SB2::deactivate_hand(zNPCB_SB2::hand_enum hand)
 {
-   hands[0].hit_platforms = 0;
-   hands[0].hurt_player = 0x10;
-   hands[0].ent->penby = 0;
+    hands[hand].hit_platforms = FALSE;
+    hands[hand].hurt_player = FALSE;
+    hands[hand].ent->penby = XENT_COLLTYPE_PLYR;
 }
 
-S32 zNPCB_SB2::player_on_ground() const
+bool zNPCB_SB2::player_on_ground() const
 {
-    return 0;
-    // TODO
+    const xVec3& player_loc = *(xVec3*)&globals.player.ent.model->Mat->pos;
+
+    if (globals.player.Health == 0)
+    {
+        return false;
+    }
+
+    if (player_loc.y >= tweak.ground_y + tweak.ground_zone_height)
+    {
+        return false;
+    }
+
+    const xVec3& home = get_home();
+    F32 dx = player_loc.x - home.x;
+    F32 dz = player_loc.z - home.z;
+    xVec2 offset = { dx, dz };
+    return offset.length2() < tweak.ground_radius * tweak.ground_radius;
 }
 
 void zNPCB_SB2::emit_slug(zNPCB_SB2::slug_enum which)
@@ -1565,7 +1806,7 @@ S32 zNPCGoalBossSB2Dizzy::Exit(F32 dt, void* updCtxt)
 {
     S32 tempDizzy;
     owner.set_vulnerable(true);
-    if (sicked != false && owner.player_on_ground() == 0)  //Not compared correctly
+    if (sicked && !owner.player_on_ground())
     {
         owner.plankton->here_boy();
     }
@@ -1585,36 +1826,29 @@ xFactoryInst* zNPCGoalBossSB2Hit::create(S32 who, RyzMemGrow* grow, void* info)
     return new (who, grow) zNPCGoalBossSB2Hit(who, (zNPCB_SB2&)*info);
 }
 
-S32 zNPCGoalBossSB2Hit::Enter(F32 dt, void* updCtxt) 
+S32 zNPCGoalBossSB2Hit::Enter(F32 dt, void* updCtxt)
 {
-    // Function needs set up differently
-    // im just dumb
-
-    S32 tempHitVar;
-
-    owner.flag.face_player = 1;
+    owner.flag.face_player = true;
     owner.set_vulnerable(false);
 
-    if (owner.flag.dizzy == false) {
-    if (owner.life < 4){
-        if (owner.life < 2){
-            if (owner.life > 0){
-                owner.say(9);
-            }
-        }
-        else {
-            owner.say(2);
-        }
+    if (owner.flag.dizzy)
+    {
+        owner.say(9);
     }
-    else {
+    else if (owner.life > 4)
+    {
+        owner.say(2);
+    }
+    else if (owner.life > 2)
+    {
         owner.say(3);
     }
-    }
-    else {
-    owner.say(4);
+    else if (owner.life > 0)
+    {
+        owner.say(4);
     }
 
-return zNPCGoalCommon::Enter(dt, updCtxt);
+    return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
 S32 zNPCGoalBossSB2Hit::Exit(F32 dt, void* updCtxt)
@@ -1667,9 +1901,7 @@ S32 zNPCGoalBossSB2Swipe::Exit(F32 dt, void* updCtxt)
 
 S32 zNPCGoalBossSB2Swipe::can_start() const
 {
-    S32 tempStart;
-    tempStart = owner.player_platform();
-    return tempStart != 0;
+    return owner.player_platform() != NULL;
 }
 
 xFactoryInst* zNPCGoalBossSB2Chop::create(S32 who, RyzMemGrow* grow, void* info)
@@ -1715,6 +1947,16 @@ xFactoryInst* zNPCGoalBossSB2Karate::create(S32 who, RyzMemGrow* grow, void* inf
 
 S32 zNPCGoalBossSB2Karate::Enter(F32 dt, void* updCtxt)
 {
+    started = FALSE;
+    owner.flag.face_player = true;
+
+    U8* it = emitted;
+    U8* end = it + 3;
+    for (; it != end; ++it)
+    {
+        *it = FALSE;
+    }
+
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
@@ -1726,9 +1968,7 @@ S32 zNPCGoalBossSB2Karate::Exit(F32 dt, void* updCtxt)
 
 S32 zNPCGoalBossSB2Karate::can_start() const
 {
-    S32 tempStart;
-    tempStart = owner.player_platform();
-    return tempStart != 0;
+    return owner.player_platform() != NULL;
 }
 
 xFactoryInst* zNPCGoalBossSB2Death::create(S32 who, RyzMemGrow* grow, void* info)

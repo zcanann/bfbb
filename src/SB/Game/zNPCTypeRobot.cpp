@@ -964,7 +964,7 @@ S32 zNPCTubeSlave::IsDying()
 
 S32 zNPCTubelet::IsDying()
 {
-    return tubestat == TUBE_STAT_DEAD;
+    return tubestat == TUBE_STAT_DEAD ? 1 : 0;
 }
 
 zNPCSlick* zNPCSlick::YouOwnSlipFX()
@@ -1466,7 +1466,7 @@ void zNPCTubelet::Reset()
     zNPCRobot::Reset();
     NPCConfig* cfg = cfg_npc;
     hitpoints = cfg->pts_damage;
-    ModelAtomicHide(0, NULL);
+    ModelAtomicShow(0, NULL);
     ModelAtomicHide(1, NULL);
     ModelAtomicHide(4, NULL);
 }

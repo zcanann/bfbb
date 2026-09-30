@@ -214,12 +214,6 @@ static zSceneObjectInstanceDesc sInitTable[] =
 };
 // clang-format on
 
-extern char byte_803D0884;
-
-extern U32 _1250;
-extern U32 _1251;
-extern U32 _2013;
-extern U32 _2014;
 
 static void zSceneObjHashtableInit(S32 count);
 static void zSceneObjHashtableExit();
@@ -717,8 +711,6 @@ static void PipeAddStuffCB(RpAtomic* data, U32 pipeFlags, U32)
 
 static void PipeForAllSceneModels(void (*pipeCB)(RpAtomic* data, U32 pipeFlags, U32 subObjects))
 {
-    // non-matching: wrong registers
-
     S32 i, j, k;
     S32 numModels = xSTAssetCountByType('MODL');
 
@@ -836,15 +828,12 @@ void zSceneInit(U32 theSceneID, S32 reloadInProgress)
     zScene* s;
     U32 i;
 
-    U8 rgba_bkgrd[4];
-    *(U32*)rgba_bkgrd = _1250;
+    U8 rgba_bkgrd[4] = { 0x0f, 0x0f, 0x0f, 0 };
 
     gTransitionSceneID = theSceneID;
     gOccludeCount = 0;
 
-    char b[5];
-    *(U32*)b = _1251;
-    b[4] = byte_803D0884;
+    char b[5] = { 0 };
 
     sprintf(b, xUtil_idtag2string(theSceneID, 0));
     xStrupr(b);
@@ -1260,9 +1249,7 @@ void zSceneUpdateSFXWidgets()
 
 static void HackSwapIt(char* buf, S32 size)
 {
-    // non-matching: r3 and r4 swapped
-    char* end = size + buf;
-    end--;
+    char* end = &buf[size - 1];
 
     for (S32 i = 0; i < size / 2; i++)
     {
@@ -1343,8 +1330,6 @@ void zSceneSwitch(_zPortal* p, S32 forceSameScene)
 
             zCameraReset(&globals.camera);
         }
-
-        // non-matching: instruction order
 
         oob_player_teleported = true;
         globals.sceneCur->pendingPortal = NULL;
@@ -2037,36 +2022,6 @@ static void DeactivateCB(xBase* base)
     base->baseFlags |= 0x40;
 }
 
-// clang-format off
-// jumptable for zSceneSetup
-static U32 _2098_0[] =
-{
-0x800B3418, 0x800B3418, 0x800B3418,
-0x800B3418, 0x800B33B0, 0x800B32E0,
-0x800B3318, 0x800B3418, 0x800B3418,
-0x800B3418, 0x800B3418, 0x800B3378,
-0x800B3418, 0x800B3334, 0x800B3418,
-0x800B3418, 0x800B3418, 0x800B33DC,
-0x800B3340, 0x800B3418, 0x800B3418,
-0x800B3418, 0x800B3418, 0x800B3418,
-0x800B335C, 0x800B3418, 0x800B33CC,
-0x800B340C, 0x800B3418, 0x800B3418,
-0x800B3388, 0x800B3418, 0x800B3418,
-0x800B3418, 0x800B3418, 0x800B3418,
-0x800B3418, 0x800B3418, 0x800B33D4,
-0x800B33C4, 0x800B3418, 0x800B3394,
-0x800B3418, 0x800B3304, 0x800B3418,
-0x800B3418, 0x800B3418, 0x800B3414,
-0x800B3418, 0x800B33E4, 0x800B33EC,
-0x800B3418, 0x800B3418, 0x800B3418,
-0x800B3418, 0x800B3418, 0x800B33F4,
-0x800B33FC, 0x800B3418, 0x800B3418,
-0x800B3418, 0x800B3418, 0x800B3404,
-0x800B3380, 0x800B3418, 0x800B3418,
-0x800B3418, 0x800B3418, 0x800B3418,
-0x800B3418, 0x800B3418, 0x800B3418
-};
-// clang-format on
 
 void zSceneSetup()
 {
@@ -2668,11 +2623,8 @@ void zSceneSetup()
     z_disco_floor::post_setup();
     zEntPickup_RewardPostSetup();
 
-    iColor_tag black;
-    *(U32*)&black = _2013;
-
-    iColor_tag clear;
-    *(U32*)&clear = _2014;
+    iColor_tag black = { 0, 0, 0, 255 };
+    iColor_tag clear = { 0, 0, 0, 0 };
 
     xScrFxFade(&black, &clear, 1.0f, NULL, 0);
 }
@@ -3190,7 +3142,7 @@ static void zSceneObjHashtableInit(S32 count)
 {
     scobj_idbps = (IDBasePair*)xMemAllocSize(count * sizeof(IDBasePair));
 
-    memset(scobj_idbps, 0, count * sizeof(IDBasePair));
+    memset(scobj_idbps, 0, count * 8);
 
     scobj_size = count;
     nidbps = 0;
@@ -3370,8 +3322,6 @@ void zSceneMemLvlChkCB()
 
 U32 zSceneLeavingLevel()
 {
-    // non-matching: instruction order
-
     char curScene[4] = "";
     char nextScene[4] = "";
 

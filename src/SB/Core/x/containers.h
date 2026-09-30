@@ -82,16 +82,17 @@ template <class T> struct static_queue
 
     void init(u32 size)
     {
-        U32 unk_r3 = 0;
-        while (size > 1)
+        U32 n = size + 1;
+        S32 bits = 0;
+        while (n > 1)
         {
-            size /= 2;
-            unk_r3++;
+            n >>= 1;
+            bits++;
         }
 
-        _max_size = unk_r3;
-        _max_size_mask = 1 << _max_size;
-        _buffer = (T*)xMemAlloc(gActiveHeap, sizeof(T) * (size), 0);
+        _max_size = 1 << bits;
+        _max_size_mask = _max_size - 1;
+        _buffer = (T*)xMemAlloc(gActiveHeap, _max_size * sizeof(T), 0);
         clear();
     }
 

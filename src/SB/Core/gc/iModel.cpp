@@ -20,12 +20,12 @@
 #define IMODEL_MAX_MATERIALS 16
 
 RpWorld* instance_world;
-RwCamera* instance_camera;
+RwCamera* volatile instance_camera;
 
 static U32 gLastAtomicCount;
 static RpAtomic* gLastAtomicList[IMODEL_MAX_ATOMICS];
 static RpLight* sEmptyDirectionalLight[IMODEL_MAX_DIRECTIONAL_LIGHTS];
-static RpLight* sEmptyAmbientLight;
+static RpLight* volatile sEmptyAmbientLight;
 static RwRGBA sMaterialColor[IMODEL_MAX_MATERIALS];
 static RwTexture* sMaterialTexture[IMODEL_MAX_MATERIALS];
 static U8 sMaterialAlpha[IMODEL_MAX_MATERIALS];
@@ -67,7 +67,7 @@ void iModelInit()
             _rwObjectHasFrameSetFrame(sEmptyDirectionalLight[i], frame);
         }
         sEmptyAmbientLight = RpLightCreate(rpLIGHTAMBIENT);
-        RpLightSetColor(sEmptyAmbientLight, &black); // Redundant sEmptyAmbientLight load here.
+        RpLightSetColor(sEmptyAmbientLight, &black);
     }
 }
 
@@ -189,9 +189,9 @@ static RpAtomic* iModelStreamRead(RwStream* stream)
         {
             if (i != maxIndex)
             {
-                testRadius = xVec3Dist((xVec3*)&gLastAtomicList[i]->boundingSphere.center,
+                testRadius = gLastAtomicList[i]->boundingSphere.radius +
+                             xVec3Dist((xVec3*)&gLastAtomicList[i]->boundingSphere.center,
                                        (xVec3*)&gLastAtomicList[maxIndex]->boundingSphere.center);
-                testRadius += gLastAtomicList[i]->boundingSphere.radius; // FPR swap???
                 if (testRadius > maxRadius)
                 {
                     maxRadius = testRadius;
@@ -604,8 +604,8 @@ U32 iModelVertEval(RpAtomic* model, U32 index, U32 count, RwMatrix* mat, xVec3* 
             return 0;
         }
         count = (count < numVerts - index) ? count : (numVerts - index);
-        RpMorphTarget* mt = geom->morphTarget;
-        vert = (xVec3*)((RwV3d*)mt->verts + index);
+        vert = (xVec3*)geom->morphTarget->verts;
+        vert += index;
     }
 
     RpSkin* skin = RpSkinGeometryGetSkin(geom);

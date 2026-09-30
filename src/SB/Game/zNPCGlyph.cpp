@@ -23,19 +23,16 @@ char* g_strz_glyphmodel[10] = {
 };
 S32 g_cnt_activeGlyphs[10] = {};
 
-// FIXME: The first element of each of these needs to be constructed with `NPCGlyph(NPC_GLYPH_UNKNOWN)`,
-// rather than the default constructor. Get that working, and you should be good on sinit.
-// This is technically equivalent, since everything is initialized to zero anyway, and NPC_GLYPH_UNKNOWN
-// equals zero.
-static NPCGlyph g_glyphs_talk[8] = {};
-static NPCGlyph g_glyphs_talkOther[8] = {};
-static NPCGlyph g_glyphs_friend[1] = {};
-static NPCGlyph g_glyphs_dazed[8] = {};
-static NPCGlyph g_glyphs_shinyOne[16] = {};
-static NPCGlyph g_glyphs_shinyFive[16] = {};
-static NPCGlyph g_glyphs_shinyTen[16] = {};
-static NPCGlyph g_glyphs_shinyFifty[16] = {};
-static NPCGlyph g_glyphs_shinyHundred[16] = {};
+static
+ NPCGlyph g_glyphs_talk[8] = { NPC_GLYPH_UNKNOWN };
+static NPCGlyph g_glyphs_talkOther[8] = { NPC_GLYPH_UNKNOWN };
+static NPCGlyph g_glyphs_friend[1] = { NPC_GLYPH_UNKNOWN };
+static NPCGlyph g_glyphs_dazed[8] = { NPC_GLYPH_UNKNOWN };
+static NPCGlyph g_glyphs_shinyOne[16] = { NPC_GLYPH_UNKNOWN };
+static NPCGlyph g_glyphs_shinyFive[16] = { NPC_GLYPH_UNKNOWN };
+static NPCGlyph g_glyphs_shinyTen[16] = { NPC_GLYPH_UNKNOWN };
+static NPCGlyph g_glyphs_shinyFifty[16] = { NPC_GLYPH_UNKNOWN };
+static NPCGlyph g_glyphs_shinyHundred[16] = { NPC_GLYPH_UNKNOWN };
 
 // This function is put here to force the string to be linked in, since it isn't used anywhere.
 char* __deadstripped_zNPCGlyph()
@@ -51,43 +48,45 @@ void zNPCGlyph_Shutdown()
 {
 }
 
-// Nonmatching
+// Nonmatching: regalloc
 void zNPCGlyph_ScenePrepare()
+
 {
     S32 i;
-    NPCGlyph* glist = NULL;
+    S32 k;
+    NPCGlyph* list = NULL;
 
-    for (i = 0; i < 10; i++)
+    for (i = 0; i < NPC_GLYPH_NOMORE; i++)
     {
         g_cnt_activeGlyphs[i] = 0;
     }
 
     char** strs = &g_strz_glyphmodel[NPC_GLYPH_SHINYONE];
 
-    for (en_npcglyph gtyp = NPC_GLYPH_SHINYONE; gtyp < NPC_GLYPH_NOMORE;
-         gtyp = (en_npcglyph)(gtyp + 1), strs++)
+    for (i = NPC_GLYPH_SHINYONE; i < NPC_GLYPH_NOMORE; i++, strs++)
     {
-        S32 cnt = zNPCGlyph_TypeToList(gtyp, &glist);
+        en_npcglyph gtyp = (en_npcglyph)i;
+        S32 cnt = zNPCGlyph_TypeToList(gtyp, &list);
 
-        if (glist == NULL || cnt < 1)
+        if (list == NULL || cnt < 1)
         {
             continue;
         }
 
-        RpAtomic* model_data = NULL;
+        RpAtomic* mdl_raw = NULL;
         if (*strs != NULL)
         {
             U32 aid = xStrHash(*strs);
             if (aid != 0)
             {
-                model_data = (RpAtomic*)xSTFindAsset(aid, NULL);
+                mdl_raw = (RpAtomic*)xSTFindAsset(aid, NULL);
             }
         }
 
-        for (i = 0; i < cnt; i++)
+        for (k = 0; k < cnt; k++)
         {
-            NPCGlyph* glyph = &glist[i];
-            glyph->Init(gtyp, model_data);
+            NPCGlyph* glyph = &list[k];
+            glyph->Init(gtyp, mdl_raw);
         }
     }
 }

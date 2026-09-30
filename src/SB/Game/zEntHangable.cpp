@@ -112,9 +112,9 @@ static void zEntHangable_UpdateFX(zEntHangable* ent)
     {
         local_offset = &offset_rlii0006[0];
 
-        // Missing unreachable branches here.
-        if (ent->candle_state == 2)
+        switch (ent->candle_state)
         {
+        case 2:
             return;
         }
 

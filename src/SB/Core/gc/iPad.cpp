@@ -152,7 +152,8 @@ void iPadRumbleFx(_tagxPad* p, _tagxRumble* r, F32 time_passed)
 
 void iPadStopRumble()
 {
-    PADControlMotor(mPad[globals.currentActivePad].port, 0); // Scheduling memes.
+    _tagxPad* pad = &mPad[globals.currentActivePad];
+    PADControlMotor(pad->port, 0);
 }
 
 void iPadStopRumble(_tagxPad* pad)

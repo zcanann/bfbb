@@ -776,8 +776,8 @@ static void zPlatFM_Update(zPlatform* plat, xScene*, F32 dt)
                 pmat->at.y *= ats;
                 pmat->at.z *= ats;
     
-                fmrt->flags &= ~(1 << i);
                 fmrt->tmrs[i] = 0.0f;
+                fmrt->flags &= ~(1 << i);
                 fmrt->ttms[i] = 0.0f;
                 fmrt->atms[i] = 0.0f;
                 fmrt->dtms[i] = 0.0f;
@@ -1395,7 +1395,7 @@ S32 zPlatformEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xB
         }
         // fallthrough
     case eEventCollisionOn:
-        plat->chkby = (XENT_COLLTYPE_TRIG | XENT_COLLTYPE_STAT);
+        plat->chkby = (XENT_COLLTYPE_PLYR | XENT_COLLTYPE_NPC);
         plat->bupdate(plat, (xVec3*)&plat->model->Mat->pos);
         break;
     case eEventCollision_Visible_Off:

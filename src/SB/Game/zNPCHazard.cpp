@@ -12,38 +12,76 @@
 #include "xMathInlines.h"
 #include "xUtil.h"
 
-extern U32 g_hash_hazanim[3];
-extern char* g_strz_hazanim[3];
-extern UVAModelInfo g_haz_uvAnimInfo[30];
-extern NPCHazard* g_haz_uvAnimQue[27];
-extern RpAtomic* g_hazard_rawModel[30];
-extern xAnimTable* g_haz_animTable[30];
 extern const xVec3 g_O3;
-extern F32 _958_Hazard; // 0.0f
-extern F32 _959_Hazard; // 1.0f
-extern F32 _1041_Hazard; // -1.0f
 
 static S32 g_cnt_activehaz;
-static xParEmitterCustomSettings g_parf_default;
-static xParEmitterCustomSettings g_parf_zapwarn;
-static xParEmitterCustomSettings g_parf_zapwave;
-static xParEmitterCustomSettings g_parf_zaprain;
-static RwRaster* g_rast_hazshad[30];
-static zParEmitter* g_pemit_default;
-static zParEmitter* g_pemit_zapwarn;
-static zParEmitter* g_pemit_zapwave;
-static zParEmitter* g_pemit_zaprain;
-
+static NPCHazard g_hazards[64];
+static RpAtomic* g_hazard_rawModel[30] = {};
+static char* g_strz_hazModel[30] = {
+    "fx_boomball_bubble",
+    "fx_boomball_smoke",
+    "fx_fodbomb.dff",
+    "fx_tubelet_blast.dff",
+    "fx_duplotron_blast.dff",
+    "fx_cattleprod.dff",
+    "fx_proj_tartar.dff",
+    "fx_tartar_splat.dff",
+    "fx_steam.dff",
+    "fx_proj_missile.dff",
+    "fx_chuck_splish.dff",
+    "fx_chuck_splash.dff",
+    "fx_proj_bone.dff",
+    "fx_proj_slick_bubble.dff",
+    "fx_oil_puddle.dff",
+    "fx_oil_burst.dff",
+    "fx_oil_glob.dff",
+    "fx_proj_cloud.dff",
+    "frag_generic_wrench",
+    "frag_generic_joystick.dff",
+    "frag_generic_sink.dff",
+    "frag_generic_duck.dff",
+    "frag_generic_bra.dff",
+    "frag_generic_headphones.dff",
+    "frag_generic_cellphone.dff",
+    "frag_generic_shoe.dff",
+    "fx_duplotron_blast.dff",
+    "fx_robobits.dff",
+    "fx_vissplash_wave.dff",
+    "fx_arfdog_nukem.dff",
+};
+static xAnimTable* g_haz_animTable[30];
+static U32 g_hash_hazanim[3] = {};
+static char* g_strz_hazanim[3] = { "Unknown", "Idle01", "Active01" };
+static UVAModelInfo g_haz_uvAnimInfo[30];
+static NPCHazard* g_haz_uvAnimQue[27] = {};
+static S32 g_haz_uvModelTypes[15] = {
+    NPC_HAZMDL_CATTLEPROD,  NPC_HAZMDL_TARTARSTEAM, NPC_HAZMDL_SLICKPROJ,
+    NPC_HAZMDL_SLICKPUDDLE, NPC_HAZMDL_SLICKBURST,  NPC_HAZMDL_SLICKGLOB,
+    NPC_HAZMDL_TUBEBLAST,   NPC_HAZMDL_CHUCKSPLISH, NPC_HAZMDL_CHUCKSPLASH,
+    NPC_HAZMDL_VISSPLASH,   NPC_HAZMDL_PUPPYNUKE,   NPC_HAZMDL_FODBOMB,
+    NPC_HAZMDL_BOOMBALL_BUBBLE, NPC_HAZMDL_BOOMBALL_SMOKE, NPC_HAZMDL_FORCE,
+};
 static en_hazmodel g_funfrag_choices[8] = {
     NPC_HAZMDL_FUNFRAG_WRENCH,    NPC_HAZMDL_FUNFRAG_JOYSTICK, NPC_HAZMDL_FUNFRAG_SINK,
     NPC_HAZMDL_FUNFRAG_DUCK,      NPC_HAZMDL_FUNFRAG_BRA,      NPC_HAZMDL_FUNFRAG_HEADPHONES,
     NPC_HAZMDL_FUNFRAG_CELLPHONE, NPC_HAZMDL_FUNFRAG_SHOE,
 };
-
 static zShrapnelAsset* g_data_hazshrap[5] = { NULL, NULL, NULL, NULL, NULL };
-
-static char* g_strz_hazModel[30];
-static NPCHazard g_hazards[64];
+char* g_strz_hazshrap[5] = { "", "tartar_gunshot", "tartar_splatter", "slick_oilspill",
+                             "shrapnel_splash_water" };
+static RwRaster* g_rast_hazshad[30] = {};
+char* g_strz_hazshad[30] = {
+    "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+    "", "", "shadow_monsoon_cloud", "", "", "", "", "", "", "", "", "", "", "", "",
+};
+static zParEmitter* g_pemit_default;
+static xParEmitterCustomSettings g_parf_default;
+static zParEmitter* g_pemit_zapwarn;
+static zParEmitter* g_pemit_zapwave;
+static zParEmitter* g_pemit_zaprain;
+static xParEmitterCustomSettings g_parf_zapwarn;
+static xParEmitterCustomSettings g_parf_zapwave;
+static xParEmitterCustomSettings g_parf_zaprain;
 
 void zNPCHazard_Startup()
 {
@@ -70,7 +108,7 @@ void zNPCHazard_ScenePrepare()
     {
         g_haz_uvAnimInfo[i].Clear();
     }
-    for (S32 i = 0; i < 30; i++)
+    for (S32 i = 0; i < 27; i++)
     {
         g_haz_animTable[i] = NULL;
     }
@@ -105,8 +143,66 @@ void zNPCHazard_InitEffects()
     g_pemit_zaprain = zParEmitterFind("PAREMIT_DUPLO_STEAM");
 
     g_parf_default.custom_flags = 0x100;
+    xVec3Copy(&g_parf_default.pos, &g_O3);
+    g_parf_zapwarn.custom_flags = 0x100;
+    xVec3Copy(&g_parf_zapwarn.pos, &g_O3);
+    g_parf_zapwave.custom_flags = 0x100;
+    xVec3Copy(&g_parf_zapwave.pos, &g_O3);
+    g_parf_zaprain.custom_flags = 0x100;
+    xVec3Copy(&g_parf_zaprain.pos, &g_O3);
 
-    // TODO...
+    for (S32 i = 0; i < 30; i++)
+    {
+        char* name = g_strz_hazModel[i];
+        if (name != NULL && name[0] != '\0')
+        {
+            U32 aid = xStrHash(name);
+            if (aid != 0)
+            {
+                g_hazard_rawModel[i] = (RpAtomic*)xSTFindAsset(aid, NULL);
+            }
+        }
+    }
+
+    for (S32 i = 0; g_haz_uvModelTypes[i] != NPC_HAZMDL_FORCE; i++)
+    {
+        S32 mdltyp = g_haz_uvModelTypes[i];
+        if (g_hazard_rawModel[mdltyp] != NULL)
+        {
+            UVAModelInfo* uva = &g_haz_uvAnimInfo[mdltyp];
+            uva->Init(g_hazard_rawModel[mdltyp], 0);
+            uva->UVVelSet(0.0f, 1.0f);
+        }
+    }
+
+    for (S32 i = 0; i < 5; i++)
+    {
+        char* name = g_strz_hazshrap[i];
+        g_data_hazshrap[i] = NULL;
+        if (name != NULL && name[0] != '\0')
+        {
+            U32 aid = xStrHash(name);
+            if (aid != 0)
+            {
+                U32 size = 0;
+                void* data = xSTFindAsset(aid, &size);
+                if (data != NULL && size != 0)
+                {
+                    g_data_hazshrap[i] = (zShrapnelAsset*)data;
+                }
+            }
+        }
+    }
+
+    for (S32 i = 0; i < 30; i++)
+    {
+        const char* name = g_strz_hazshad[i];
+        g_rast_hazshad[i] = NULL;
+        if (name != NULL && name[0] != '\0')
+        {
+            g_rast_hazshad[i] = NPCC_FindRWRaster(name);
+        }
+    }
 }
 
 void zNPCHazard_KillEffects()
@@ -132,6 +228,78 @@ S32 HAZ_ord_sorttest(void* vkey, void* vitem)
     else
     {
         return 1;
+    }
+}
+
+void zNPCHazard_Timestep(F32 dt)
+{
+    if (g_cnt_activehaz > 0)
+    {
+        st_XORDEREDARRAY haz_list;
+        XOrdInit(&haz_list, 64, 1);
+
+        NPCHazard* haz = g_hazards;
+        for (S32 i = 0; i < 64; i++, haz++)
+        {
+            if (haz->flg_hazard & 1)
+            {
+                XOrdAppend(&haz_list, haz);
+            }
+        }
+
+        XOrdSort(&haz_list, HAZ_ord_sorttest);
+
+        for (S32 i = 0; i < haz_list.cnt; i++)
+        {
+            haz = (NPCHazard*)haz_list.list[i];
+            if (haz->flg_hazard & 4)
+            {
+                haz->Discard();
+            }
+            else if (haz->flg_hazard & 2)
+            {
+                if (haz->flg_hazard & 0x80)
+                {
+                    haz->Timestep(dt);
+                }
+
+                if (!(haz->flg_hazard & 0x20))
+                {
+                    haz->flg_hazard &= ~0x8;
+                }
+                haz->flg_hazard &= ~0x60;
+
+                haz->tmr_remain = MAX(-1.0f, haz->tmr_remain - dt);
+                if ((haz->flg_hazard & 0x1000) && haz->tmr_remain < 0.0f)
+                {
+                    haz->MarkForRecycle();
+                }
+
+                if (haz->flg_hazard & 4)
+                {
+                    haz->Discard();
+                }
+                else if (haz->flg_hazard & 0x80000)
+                {
+                    g_haz_uvAnimQue[haz->typ_hazard] = haz;
+                }
+            }
+        }
+
+        XOrdDone(&haz_list, 1);
+
+        for (S32 i = 0; i < 27; i++)
+        {
+            if (g_haz_uvAnimQue[i] != NULL)
+            {
+                UVAModelInfo* uva = g_haz_uvAnimQue[i]->uva_uvanim;
+                g_haz_uvAnimQue[i] = NULL;
+                if (uva != NULL)
+                {
+                    uva->Update(dt, NULL);
+                }
+            }
+        }
     }
 }
 
@@ -163,9 +331,9 @@ void NPCHazard::WipeIt()
     this->typ_hazard = NPC_HAZ_UNKNOWN;
     this->flg_hazard = 0;
     xVec3Copy(&this->pos_hazard, &g_O3);
-    this->tym_lifespan = _959_Hazard;
-    this->tmr_remain = _1041_Hazard;
-    this->pam_interp = _958_Hazard;
+    this->tym_lifespan = 1.0f;
+    this->tmr_remain = -1.0f;
+    this->pam_interp = 0.0f;
     this->cb_notify = NULL;
     this->npc_owner = NULL;
     memset(&this->custdata, 0, sizeof(this->custdata));
@@ -234,7 +402,7 @@ void NPCHazard::Discard()
 
         Cleanup();
 
-        g_cnt_activehaz &= ~((g_cnt_activehaz - 1) >> 31);
+        g_cnt_activehaz = MAX(g_cnt_activehaz - 1, 0);
     }
 }
 
@@ -304,7 +472,7 @@ void NPCHazard::HurtThePlayer()
     }
     else if (zEntPlayer_DamageNPCKnockBack((xBase*)this->npc_owner, 1, &this->pos_hazard))
     {
-        this->npc_owner->Vibrate(NPC_VIBE_NORM, _1041_Hazard);
+        this->npc_owner->Vibrate(NPC_VIBE_NORM, -1.0f);
     }
 }
 

@@ -264,16 +264,14 @@ static void xCam_worldtocyl(F32& d, F32& h, F32& p, const xMat4x3* tgt_mat, cons
 
 static void xCam_CorrectD(xCamera* r3, F32 f1, F32 f2, F32 f3)
 {
-    // non-matching: incorrect float register
-
     F32 tmp1, tmp2, tmp3;
 
     tmp1 = 1.4285715f * (2.0f * f1 - f2 * f3);
-    tmp1 -= f2;
-    tmp1 *= f3;
+    f2 = tmp1 - f2;
+    f2 *= f3;
 
-    tmp2 = r3->mbasis.at.x * tmp1;
-    tmp3 = r3->mbasis.at.z * tmp1;
+    tmp2 = r3->mbasis.at.x * f2;
+    tmp3 = r3->mbasis.at.z * f2;
 
     r3->mat.pos.x += tmp2;
     r3->mat.pos.z += tmp3;
@@ -324,49 +322,43 @@ static void xCam_DampP(xCamera* r3, F32 f1, F32 f2)
 }
 static void xCam_CorrectYaw(xCamera* r3, F32 f1, F32 f2, F32 f3)
 {
-    // non-matching: incorrect float registers, slightly out-of-order fmsubs instruction
-
     F32 tmp1, tmp2;
 
     tmp1 = 1.0f / r3->yaw_ct;
 
     tmp2 = 2.0f * r3->yaw_cd * f1 - f2 * f3;
-    tmp2 = tmp1 * tmp2;
-    tmp2 -= f2;
-    tmp2 *= r3->yaw_csv * f3;
+    f1 = tmp1 * tmp2;
+    f1 -= f2;
+    f1 *= r3->yaw_csv * f3;
 
-    r3->yaw_cur += tmp2;
+    r3->yaw_cur += f1;
 }
 static void xCam_CorrectPitch(xCamera* r3, F32 f1, F32 f2, F32 f3)
 {
-    // non-matching: same reasons as xCam_CorrectYaw
-
     F32 tmp1, tmp2;
 
     tmp1 = 1.0f / r3->pitch_ct;
 
     tmp2 = 2.0f * r3->pitch_cd * f1 - f2 * f3;
-    tmp2 = tmp1 * tmp2;
-    tmp2 -= f2;
-    tmp2 *= r3->pitch_csv * f3;
+    f1 = tmp1 * tmp2;
+    f1 -= f2;
+    f1 *= r3->pitch_csv * f3;
 
-    r3->pitch_cur += tmp2;
+    r3->pitch_cur += f1;
 }
 
 static void xCam_CorrectRoll(xCamera* r3, F32 f1, F32 f2, F32 f3)
 {
-    // non-matching: same reasons as xCam_CorrectYaw
-
     F32 tmp1, tmp2;
 
     tmp1 = 1.0f / r3->roll_ct;
 
     tmp2 = 2.0f * r3->roll_cd * f1 - f2 * f3;
-    tmp2 = tmp1 * tmp2;
-    tmp2 -= f2;
-    tmp2 *= r3->roll_csv * f3;
+    f1 = tmp1 * tmp2;
+    f1 -= f2;
+    f1 *= r3->roll_csv * f3;
 
-    r3->roll_cur += tmp2;
+    r3->roll_cur += f1;
 }
 
 void SweptSphereHitsCameraEnt(xScene*, xRay3* ray, xQCData* qcd, xEnt* ent, void* data)
@@ -1264,7 +1256,7 @@ void xCameraFOV(xCamera* cam, F32 fov, F32 maxSpeed, F32 dt)
 
     if (currentFOV != fov)
     {
-        if (speed != 0.0f)
+        if (speed)
         {
             F32 len = fov - currentFOV;
 
@@ -1282,6 +1274,22 @@ void xCameraFOV(xCamera* cam, F32 fov, F32 maxSpeed, F32 dt)
         {
             xCameraSetFOV(cam, fov);
         }
+    }
+}
+
+inline F32 xQuatGetAngle(const xQuat* q)
+{
+    if (q->s > 0.99998999f)
+    {
+        return 0.0f;
+    }
+    else if (q->s < -0.99998999f)
+    {
+        return 6.2831855f;
+    }
+    else
+    {
+        return 2.0f * xacos(q->s);
     }
 }
 
@@ -1701,21 +1709,6 @@ void xMat3x3LookAt(xMat3x3* m, const xVec3* pos, const xVec3* at)
     xMat3x3LookVec(m, &v);
 }
 
-F32 xQuatGetAngle(const xQuat* q)
-{
-    if (q->s > 0.99998999f)
-    {
-        return 0.0f;
-    }
-    else if (q->s < -0.99998999f)
-    {
-        return 6.2831855f;
-    }
-    else
-    {
-        return 2.0f * xacos(q->s);
-    }
-}
 
 U32 xEntIsVisible(const xEnt* ent)
 {

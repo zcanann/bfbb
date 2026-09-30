@@ -83,30 +83,35 @@ void lightningTweakChangeType(const tweak_info& t)
 
 void zLightningInit()
 {
-    for (S32 i = 0; i < NUM_LIGHTNING; i++)
+    S32 i;
+    RwTexture* tex;
+    S32 j;
+    F32 prevEnd;
+
+    for (i = 0; i < NUM_LIGHTNING; i++)
     {
         sLightning[i] = NULL;
     }
 
     zSceneFindObject(xStrHash("PAREMIT_EG_SPARK"));
-    RwTexture* tex = (RwTexture*)xSTFindAsset(xStrHash("LIGHTNING"), NULL);
+    tex = (RwTexture*)xSTFindAsset(xStrHash("LIGHTNING"), NULL);
     if (tex != NULL)
     {
         sLightningRaster = tex->raster;
     }
 
-    for (S32 i = 0; i < 9; i++)
+    for (i = 0; i < 9; i++)
     {
         sLFuncX[i].next = &sLFuncX[i + 1];
-        sLFuncY[i].next = &sLFuncY[i + 2];
-        sLFuncZ[i].next = &sLFuncZ[i + 3];
+        sLFuncY[i].next = &sLFuncY[i + 1];
+        sLFuncZ[i].next = &sLFuncZ[i + 1];
     }
 
     sLFuncX[9].next = NULL;
     sLFuncY[9].next = NULL;
     sLFuncZ[9].next = NULL;
 
-    for (S32 i = 0; i < 10; i++) {
+    for (i = 0; i < 10; i++) {
         xVec3Init(&sLFuncVal[i], 2.0f * (xurand() - 0.5f), 2.0f * (xurand() - 0.5f), 2.0f * (xurand() - 0.5f));
         xVec3Init(&sLFuncSlope[i][0], sLFuncSlopeRange * (2.0f * (xurand() - 0.5f)), sLFuncSlopeRange * (2.0f * (xurand() - 0.5f)), sLFuncSlopeRange * (2.0f * (xurand() - 0.5f)));
         xVec3Init(&sLFuncSlope[i][1], sLFuncSlopeRange * (2.0f * (xurand() - 0.5f)), sLFuncSlopeRange * (2.0f * (xurand() - 0.5f)), sLFuncSlopeRange * (2.0f * (xurand() - 0.5f)));
@@ -116,10 +121,8 @@ void zLightningInit()
 
     sLFuncEnd[9] = 10.0f;
 
-    for (S32 i = 0; i < 10; i++)
+    for (i = 0; i < 10; i++)
     {
-        S32 j;
-        F32 prevEnd;
         if (i == 0)
         {
             prevEnd = 0.0f;
@@ -131,9 +134,9 @@ void zLightningInit()
             prevEnd = sLFuncEnd[j];
         }
 
-        xFuncPiece_EndPoints(&sLFuncX[i], prevEnd, sLFuncEnd[i], sLFuncVal[i].x, sLFuncVal[j].x);
-        xFuncPiece_EndPoints(&sLFuncY[i], prevEnd, sLFuncEnd[i], sLFuncVal[i].y, sLFuncVal[j].y);
-        xFuncPiece_EndPoints(&sLFuncZ[i], prevEnd, sLFuncEnd[i], sLFuncVal[i].z, sLFuncVal[j].z);
+        xFuncPiece_EndPoints(&sLFuncX[i], prevEnd, sLFuncEnd[i], sLFuncVal[j].x, sLFuncVal[i].x);
+        xFuncPiece_EndPoints(&sLFuncY[i], prevEnd, sLFuncEnd[i], sLFuncVal[j].y, sLFuncVal[i].y);
+        xFuncPiece_EndPoints(&sLFuncZ[i], prevEnd, sLFuncEnd[i], sLFuncVal[j].z, sLFuncVal[i].z);
     }
 
     sLFuncJerkTime = 0.0f;
@@ -145,7 +148,7 @@ void zLightningInit()
     xVec3Init(&sTweakEnd, -5.0f, 2.0f, 0.0f);
     gLightningTweakAddInfo.color.r = 0xC8;
     gLightningTweakAddInfo.color.g = 0xC8;
-    gLightningTweakAddInfo.color.b = 0xC8;
+    gLightningTweakAddInfo.color.b = 0xFF;
     gLightningTweakAddInfo.color.a = 0xC8;
     gLightningTweakAddInfo.arc_height = 0.5f;
     gLightningTweakAddInfo.rot_radius = 0.15f;
@@ -159,7 +162,7 @@ void zLightningInit()
     gLightningTweakAddInfo.zeus_side_offset = 0.0f;
 
     sLightningStartCB.on_change = (void (*)(tweak_info&))&lightningTweakStart;
-    sLightningChangeCB.on_change = &lightningTweakChangeType;
+    sLightningChangeCB.on_change = (void (*)(tweak_info&))&lightningTweakChangeType;
 
     xDebugAddTweak("Lightning|\01\01Go", "Start Lightning", &sLightningStartCB, NULL, 0x2);
     xDebugAddTweak("Lightning|\01Globals|\01\01JerkFrequency", &sLFuncJerkFreq, 0.0f, 1000000000.0f, NULL, NULL, 0x2);
@@ -263,6 +266,7 @@ zLightning* zLightningAdd(_tagLightningAdd* add)
             break;
         }
 
+        xVec3 straightPoint;
         xVec3 dir;
         if (add->flags & 0x80)
         {
@@ -301,41 +305,40 @@ zLightning* zLightningAdd(_tagLightningAdd* add)
         F32 inc = 1.0f / (new_lightning->legacy.total_points - 1.0f);
 
         S32 i;
-        S32 j = 0;
         for (i = 0; i < new_lightning->legacy.total_points; i++)
         {
 
-            new_lightning[i].legacy.thickness[0] = add->thickness * 0.5f;
+            new_lightning->legacy.thickness[i] = add->thickness * 0.5f;
 
             if (add->flags & 0x400)
             {
-                new_lightning[i].legacy.thickness[0] *= 1.0f - pos;
+                new_lightning->legacy.thickness[i] *= 1.0f - pos;
             }
             
             if (add->flags & 0x800)
             {
-                new_lightning[i].legacy.thickness[0] *= pos;
+                new_lightning->legacy.thickness[i] *= pos;
             }
             
             if ((add->flags & 0x400) && (add->flags & 0x800))
             {
-                new_lightning[i].legacy.thickness[0] *= 4.0f;
+                new_lightning->legacy.thickness[i] *= 4.0f;
             }
 
             if (add->flags & 0x80)
             {
                 if (i - (add->total_points - add->end_points) < 0)
                 {
-                    new_lightning[i].legacy.point[0] = add->start[j];
+                    new_lightning->legacy.point[i] = add->start[i];
                 }
                 else
                 {
-                    new_lightning[i].legacy.point[0] = add->end[i - (add->total_points - add->end_points)];
+                    new_lightning->legacy.point[i] = add->end[i - (add->total_points - add->end_points)];
                 }
             }
             else
             {
-                xVec3Lerp(&new_lightning[i].legacy.point[0], add->start, add->end, pos);
+                xVec3Lerp(&new_lightning->legacy.point[i], add->start, add->end, pos);
             }
 
             switch (new_lightning->type)
@@ -343,38 +346,37 @@ zLightning* zLightningAdd(_tagLightningAdd* add)
             case LYT_TYPE_LINE:
                 break;
             case LYT_TYPE_ROTATING:
-                new_lightning[i].legacy.rot.deg[0] = currot;
+                new_lightning->legacy.rot.deg[i] = currot;
 
-                while (new_lightning[i].legacy.rot.deg[0] > 180.0f)
+                while (new_lightning->legacy.rot.deg[i] > 180.0f)
                 {
-                    new_lightning[i].legacy.rot.deg[0] -= 360.0f;
+                    new_lightning->legacy.rot.deg[i] -= 360.0f;
                 }
 
-                while (new_lightning[i].legacy.rot.deg[0] < -180.0f)
+                while (new_lightning->legacy.rot.deg[i] < -180.0f)
                 {
-                    new_lightning[i].legacy.rot.deg[0] += 360.0f;
+                    new_lightning->legacy.rot.deg[i] += 360.0f;
                 }
 
                 currot += add->setup_degrees;
                 break;
             case LYT_TYPE_ZEUS:
-                if (i != 0 && i == new_lightning[i].legacy.total_points - 1)
+                if (i == 0 || i == new_lightning->legacy.total_points - 1)
                 {
                     break;
                 }
 
-                xVec3 unk_r1_20;
                 if (zeusOnStraightPoint)
                 {
-                    xVec3Copy(&unk_r1_20, new_lightning[i].legacy.point);
+                    xVec3Copy(&straightPoint, &new_lightning->legacy.point[i]);
                     zeusOnStraightPoint = FALSE;
                 }
                 else
                 {
-                    xVec3Copy(new_lightning[i].legacy.point, &unk_r1_20);
-                    xVec3AddScaled(new_lightning->legacy.point, &new_lightning->legacy.arc_normal, new_lightning->legacy.zeus.normal_offset);
-                    xVec3AddScaled(new_lightning->legacy.point, &arc_orthogonal, -new_lightning->legacy.zeus.back_offset);
-                    xVec3AddScaled(new_lightning->legacy.point, &dir, -new_lightning->legacy.zeus.side_offset);
+                    xVec3Copy(&new_lightning->legacy.point[i], &straightPoint);
+                    xVec3AddScaled(&new_lightning->legacy.point[i], &new_lightning->legacy.arc_normal, new_lightning->legacy.zeus.normal_offset);
+                    xVec3AddScaled(&new_lightning->legacy.point[i], &dir, -new_lightning->legacy.zeus.back_offset);
+                    xVec3AddScaled(&new_lightning->legacy.point[i], &arc_orthogonal, -new_lightning->legacy.zeus.side_offset);
 
                     zeusOnStraightPoint = TRUE;
                 }
@@ -387,14 +389,13 @@ zLightning* zLightningAdd(_tagLightningAdd* add)
                 F32 scalar = 4.0f * pos + pos * pos * -4.0f;
                 if (scalar > 0.0f)
                 {
-                    xVec3AddScaled(&new_lightning[j].legacy.base_point[0], &new_lightning->legacy.arc_normal, scalar * new_lightning->legacy.arc_height);
+                    xVec3AddScaled(&new_lightning->legacy.base_point[i], &new_lightning->legacy.arc_normal, scalar * new_lightning->legacy.arc_height);
                 }
             }
 
-            new_lightning->legacy.base_point[0] = new_lightning->legacy.point[0];
+            new_lightning->legacy.base_point[i] = new_lightning->legacy.point[i];
 
             pos += inc;
-            j++;
         }
     }
     else
@@ -450,56 +451,83 @@ static void UpdateLightning(zLightning* l, F32 dt)
             S32 i;
             F32 full = l->legacy.rand_radius * dt;
             F32 half = 0.5f * full;
-            
+
             for (i = 1; i < l->legacy.total_points - 1; i++)
             {
                 l->legacy.point[i].x = (full * xurand() + -half) + l->legacy.base_point[i].x;
                 l->legacy.point[i].y = (full * xurand() + -half) + l->legacy.base_point[i].y;
                 l->legacy.point[i].z = (full * xurand() + -half) + l->legacy.base_point[i].z;
-                
+
                 if (l->flags & 0x20)
                 {
-                    // TODO: Fix float op order and grouping
-                    F32 sc1 = ((F32)i / (F32)l->legacy.total_points);
-                    sc1 = (4.0f * sc1 + -4.0f * sc1 * sc1) * l->legacy.arc_height;
-
-                    xVec3AddScaled(&l->legacy.point[i], &l->legacy.arc_normal, sc1);
+                    F32 sc1 = (F32)i / l->legacy.total_points;
+                    sc1 = 4.0f * sc1 + -4.0f * (sc1 * sc1);
+                    xVec3AddScaled(&l->legacy.point[i], &l->legacy.arc_normal,
+                                   sc1 * l->legacy.arc_height);
                 }
             }
         }
         else if (l->type == LYT_TYPE_ROTATING)
         {
             xVec3 dir;
-            xVec3Sub(&dir, &l->legacy.base_point[l->legacy.total_points - 1], &l->legacy.base_point[0]);
+            xVec3Sub(&dir, &l->legacy.base_point[l->legacy.total_points - 1],
+                     &l->legacy.base_point[0]);
             xVec3Normalize(&dir, &dir);
 
             F32 full = l->legacy.rand_radius * dt;
             F32 half = 0.5f * full;
-            
+
             for (S32 i = 1; i < l->legacy.total_points - 1; i++)
             {
                 xMat3x3 mat3;
-                xMat3x3Rot(&mat3, &dir, PI * l->legacy.rot.deg[i] * 180.0f);
+                xMat3x3Rot(&mat3, &dir, PI * l->legacy.rot.deg[i] / 180.0f);
 
                 xVec3 vec;
                 xVec3Copy(&vec, &l->legacy.arc_normal);
 
-                F32 sc2;
+                F32 sc1 = 1.0f;
+                if (l->flags & 0x28)
+                {
+                    F32 sc2 = (F32)i / l->legacy.total_points;
+                    sc1 = 4.0f * sc2 + -4.0f * (sc2 * sc2);
+                    if (l->flags & 0x8)
+                    {
+                        xVec3SMulBy(&vec, l->legacy.rot.height * sc1);
+                    }
+                }
+                xMat3x3LMulVec(&vec, &mat3, &vec);
+
+                l->legacy.rot.deg[i] += l->legacy.rot.degrees * dt;
+                if (l->legacy.rot.deg[i] > 180.0f)
+                {
+                    l->legacy.rot.deg[i] -= 360.0f;
+                }
+                else if (l->legacy.rot.deg[i] < -180.0f)
+                {
+                    l->legacy.rot.deg[i] += 360.0f;
+                }
+
+                l->legacy.point[i].x = (full * xurand() + -half) + l->legacy.base_point[i].x;
+                l->legacy.point[i].y = (full * xurand() + -half) + l->legacy.base_point[i].y;
+                l->legacy.point[i].z = (full * xurand() + -half) + l->legacy.base_point[i].z;
+                xVec3AddTo(&l->legacy.point[i], &vec);
+
+                if (l->flags & 0x20)
+                {
+                    xVec3AddScaled(&l->legacy.point[i], &l->legacy.arc_normal,
+                                   sc1 * l->legacy.arc_height);
+                }
             }
-            
-            F32 sc1;
-            // S32 i;
         }
 
         if ((l->flags & 0x2) && sSparkEmitter != NULL && (xrand() & 0x3))
         {
             xParEmitterCustomSettings info;
             info.custom_flags = 0xD00;
-
-            U32 rand = xrand();
-            info.pos = l->legacy.point[(rand / l->legacy.total_points) * l->legacy.total_points - rand];
+            S32 i = xrand() % l->legacy.total_points;
+            info.pos = l->legacy.point[i];
             xrand();
-            
+
             xParEmitterEmitCustom(sSparkEmitter, dt, &info);
         }
     }
@@ -542,6 +570,10 @@ static void lightningTweakStart(const tweak_info& t)
 void zLightningUpdate(F32 dt)
 {
     S32 i;
+    S32 picker;
+    S32 j;
+    F32 prevEnd;
+
     for (i = 0; i < NUM_LIGHTNING; i++)
     {
         if (sLightning[i] != NULL && sLightning[i]->flags & 0x1)
@@ -550,19 +582,19 @@ void zLightningUpdate(F32 dt)
         }
     }
 
-    sLFuncUVOffset = 1.0f * dt + sLFuncUVOffset;
+    sLFuncUVOffset += sLFuncUVSpeed * dt;
     if (sLFuncUVOffset > 1.0f)
     {
         sLFuncUVOffset -= 1.0f;
     }
 
-    sLFuncJerkTime += 20.0f * dt;
+    sLFuncJerkTime += sLFuncJerkFreq * dt;
     if (!(sLFuncJerkTime > 1.0f))
     {
         return;
     }
 
-    S32 picker = 9.0f * xurand();
+    picker = 9.0f * xurand();
     if (picker >= 9)
     {
         picker = 8;
@@ -576,25 +608,24 @@ void zLightningUpdate(F32 dt)
     xVec3Init(&sLFuncSlope[picker][0], 2.0f * (xurand() - 0.5f), 2.0f * (xurand() - 0.5f), 2.0f * (xurand() - 0.5f));
     xVec3Init(&sLFuncSlope[picker][1], 2.0f * (xurand() - 0.5f), 2.0f * (xurand() - 0.5f), 2.0f * (xurand() - 0.5f));
 
-    sLFuncEnd[picker] = 0.25f * (xurand() * 0.5f) + (picker + 1);
+    sLFuncEnd[picker] = 0.25f * (xurand() - 0.5f) + (picker + 1);
 
-    for (S32 j = 0; j <= picker + 1; j++)
+    for (i = picker; i <= picker + 1; i++)
     {
-        F32 prevEnd;
-        if (picker == 0)
+        if (i == 0)
         {
-            i = 9;
+            j = 9;
             prevEnd = 0.0f;
         }
         else
         {
-            i = picker - 1;
-            prevEnd = sLFuncEnd[i];
+            j = i - 1;
+            prevEnd = sLFuncEnd[j];
         }
 
-        xFuncPiece_EndPoints(&sLFuncX[j], prevEnd, sLFuncEnd[j], sLFuncVal[j].x, sLFuncVal[i].x);
-        xFuncPiece_EndPoints(&sLFuncY[j], prevEnd, sLFuncEnd[j], sLFuncVal[j].y, sLFuncVal[i].y);
-        xFuncPiece_EndPoints(&sLFuncZ[j], prevEnd, sLFuncEnd[j], sLFuncVal[j].z, sLFuncVal[i].z);
+        xFuncPiece_EndPoints(&sLFuncX[i], prevEnd, sLFuncEnd[i], sLFuncVal[j].x, sLFuncVal[i].x);
+        xFuncPiece_EndPoints(&sLFuncY[i], prevEnd, sLFuncEnd[i], sLFuncVal[j].y, sLFuncVal[i].y);
+        xFuncPiece_EndPoints(&sLFuncZ[i], prevEnd, sLFuncEnd[i], sLFuncVal[j].z, sLFuncVal[i].z);
     }
 
     sLFuncJerkTime = 0.0f;

@@ -260,61 +260,48 @@ namespace xhud
         }
     }
 
-    // Nonmatching: not finished
     void widget::hide()
     {
         activity = ACT_HIDE;
 
-        F32 fVar1 = start_rc.size.x;
-        F32 fVar3 = start_rc.size.y;
-        F32 fVar7 = (start_rc.loc.x - 0.5f) + 0.5f * fVar1;
-        F32 fVar8 = (start_rc.loc.y - 0.5f) + 0.5f * fVar3;
-        if (iabs(iabs(fVar7) + iabs(fVar8)) <= 0.0001f)
+        F32 x = start_rc.loc.x;
+        F32 y = start_rc.loc.y;
+        F32 sx = start_rc.size.x;
+        F32 sy = start_rc.size.y;
+        F32 cx = x - 0.5f + 0.5f * sx;
+        F32 cy = y - 0.5f + 0.5f * sy;
+        F32 acx = iabs(cx);
+        F32 acy = iabs(cy);
+
+        if (iabs(acx + acy) <= 0.0001f)
         {
             rc.a = 0.0f;
+            return;
+        }
+
+        F32 tx, ty;
+        if (acx > acy)
+        {
+            tx = (cx >= 0.0f) ? 0.5f + sx : -0.5f - sx;
+            ty = tx * cy / cx;
         }
         else
         {
-            F32 fVar5;
-            F32 fVar6;
-            if (iabs(fVar7) > iabs(fVar8))
-            {
-                if (fVar8 >= 0.0f)
-                {
-                    fVar6 = 0.5f + fVar3;
-                }
-                else
-                {
-                    fVar6 = -0.5f - fVar3;
-                }
-                fVar5 = (fVar6 * fVar7) / fVar8;
-            }
-            else
-            {
-                if (fVar7 >= 0.5f)
-                {
-                    fVar5 = 0.5f + fVar1;
-                }
-                else
-                {
-                    fVar5 = -0.5f - fVar1;
-                }
-                fVar6 = (fVar5 * fVar8) / fVar7;
-            }
-
-            F32 dVar11 = 255.0f + (fVar6 - 0.5f * fVar3) - rc.loc.y;
-            F32 dVar12 = 255.0f + (fVar5 - 0.5f * fVar1) - rc.loc.x;
-            F32 dVar10 = xsqrt(dVar12 * dVar12 + dVar11 * dVar11);
-
-            add_motive(
-                motive(&rc.loc.x, 0.0f, dVar12, dVar12 * dVar10, accelerate_motive_update, NULL));
-
-            add_motive(
-                motive(&rc.loc.y, 0.0f, dVar11, dVar11 * dVar10, accelerate_motive_update, NULL));
-
-            fVar1 = -rc.a;
-            add_motive(motive(&rc.a, 0.4f * fVar1, dVar11, 0.0f, linear_motive_update, NULL));
+            ty = (cy >= 0.0f) ? 0.5f + sy : -0.5f - sy;
+            tx = ty * cx / cy;
         }
+
+        F32 tcx = tx - 0.5f * sx;
+        F32 tcy = ty - 0.5f * sy;
+        F32 ex = 0.5f + tcx;
+        F32 ey = 0.5f + tcy;
+        F32 vx = ex - rc.loc.x;
+        F32 vy = ey - rc.loc.y;
+        F32 dist = xsqrt(vx * vx + vy * vy);
+
+        add_motive(motive(&rc.loc.x, 0.0f, vx, vx * dist, accelerate_motive_update, NULL));
+        add_motive(motive(&rc.loc.y, 0.0f, vy, vy * dist, accelerate_motive_update, NULL));
+        add_motive(motive(&rc.a, 0.4f * -rc.a, -rc.a, 0.0f, linear_motive_update, NULL));
     }
 
     namespace
@@ -383,10 +370,13 @@ namespace xhud
         template <class F> void for_each(U8 widget_type, U32 type_size, F f)
         {
             U32 count = globals.sceneCur->baseCount[widget_type];
-            U8* list = (U8*)globals.sceneCur->baseList[widget_type];
-            for (int i = 0; i < count; ++i)
+            U8* it = (U8*)globals.sceneCur->baseList[widget_type];
+            U8* end = it + count * type_size;
+
+            while (it != end)
             {
-                f(*(widget*)(list + i * type_size));
+                f(*(widget*)((xBase*)it + 1));
+                it += type_size;
             }
         }
 
@@ -412,10 +402,12 @@ namespace xhud
         }
     }
 
-    S32 widget::cb_dispatch(xBase*, xBase* target, U32, const F32*, xBase*)
+    S32 widget::cb_dispatch(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
+                            xBase* toParamWidget)
     {
-        // Target gets cast to some type we probably don't have decomped yet.
-        return 0;
+        widget* w = (widget*)(to + 1);
+        w->dispatch(from, toEvent, toParam, toParamWidget);
+        return 1;
     }
 
     void widget::render_all()
@@ -581,9 +573,10 @@ namespace xhud
     bool delay_motive_update(widget& w, motive& m, F32 dt)
     {
         m.offset += dt;
-        if (m.max_offset - m.offset < 0.0f)
+        F32 remaining = m.max_offset - m.offset;
+        if (remaining < 0.0f)
         {
-            ((motive_proc*)m.context)(w, m, dt);
+            ((motive_proc*)m.context)(w, m, remaining);
             return false;
         }
         return true;

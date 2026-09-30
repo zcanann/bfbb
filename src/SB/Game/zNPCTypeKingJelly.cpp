@@ -5,6 +5,11 @@
 #include "xColor.h"
 #include "zNPCGoalCommon.h"
 #include "zCamera.h"
+#include "zMusic.h"
+#include "zGlobals.h"
+#include "zScene.h"
+#include "xDebug.h"
+#include "zNPCSndLists.h"
 #include "string.h"
 
 #define f1868 1.0f
@@ -247,8 +252,19 @@ namespace
     static const U8 sound_flags[11] = { 0x1, 0x0, 0x0, 0x0, 0x0,
                                         0x0, 0x1, 0x1, 0x0, 0x0, 0x0};
 
-    // TODO: Match the data
-    static xBinaryCamera boss_cam = {};
+    static xBinaryCamera boss_cam = {
+        {
+            { 8.0f, 4.0f, 3.0f },
+            { 0.2f, 2.2f, -1.0f },
+            { 1.0f, 0.2f, 1.5f },
+            10.0f,
+            10.0f,
+            10.0f,
+            10.0f,
+            50.0f,
+            0.0f,
+        },
+    };
 }
 
 namespace
@@ -292,7 +308,7 @@ namespace
         }
 
         sound.handle = xSndPlay3D(
-            sound.playing,
+            sound.id[sound.playing],
             tweak.sound[sound_index].volume,
             1.0f,
             tweak.sound[sound_index].priority,
@@ -310,17 +326,16 @@ namespace
         if (tweak.sound[sound_index].delay <= 0.0f)
         {
             play_sound_immediate(sound_index, pos);
-            return;
         }
-
-        sound_data_type& sound = sound_data[sound_index];
-        if (sound.handle != 0 && sound_flags[sound_index] & 0x1)
+        else
         {
-            return;
+            sound_data_type& sound = sound_data[sound_index];
+            if (sound.handle == 0 || !(sound_flags[sound_index] & 0x1))
+            {
+                sound.delayed = TRUE;
+                sound.time = 0.0f;
+            }
         }
-     
-        sound.delayed = TRUE;
-        sound.time = 0.0f;
     }
 
     void sound_update(F32 dt)
@@ -422,9 +437,16 @@ namespace
         }
     }
     
-    S32 kill_sound(int)
+    void kill_sound(S32 which)
     {
-        return 0; //to do
+        sound_data_type& sound = sound_data[which];
+        if (sound.handle != 0)
+        {
+            xSndStop(sound.handle);
+            sound.handle = 0;
+            sound.playing = -1;
+            sound.delayed = FALSE;
+        }
     }
 
     void kill_sounds()
@@ -435,11 +457,49 @@ namespace
         }
     }
 
-    void reset_model_color(xModelInstance* submodel) //25% matching. will need rewritten
+    F32 lerp(F32 t, F32 a, F32 b)
     {
-        while (submodel != NULL)
+        return t * (b - a) + a;
+    }
+
+    U8 lerp(F32 t, U8 a, U8 b)
+    {
+        return 0.5f + (t * ((F32)b - (F32)a) + (F32)a);
+    }
+
+    iColor_tag lerp(F32 t, iColor_tag a, iColor_tag b)
+    {
+        iColor_tag c;
+        c.r = lerp(t, a.r, b.r);
+        c.g = lerp(t, a.g, b.g);
+        c.b = lerp(t, a.b, b.b);
+        c.a = lerp(t, a.a, b.a);
+        return c;
+    }
+
+    void set_model_color(xModelInstance* model, F32 r, F32 g, F32 b, F32 a)
+    {
+        while (model != NULL)
         {
-            submodel = submodel->Next;
+            model->Flags |= 0x4000;
+            model->RedMultiplier = r;
+            model->GreenMultiplier = g;
+            model->BlueMultiplier = b;
+            model->Alpha = a;
+            model = model->Next;
+        }
+    }
+
+    void reset_model_color(xModelInstance* model)
+    {
+        while (model != NULL)
+        {
+            model->Flags &= 0xBFFF;
+            model->RedMultiplier = 1.0f;
+            model->GreenMultiplier = 1.0f;
+            model->BlueMultiplier = 1.0f;
+            model->Alpha = 1.0f;
+            model = model->Next;
         }
     }
 
@@ -1414,7 +1474,37 @@ namespace
                                              apsize, "sound[SOUND_WAVE_RING].priority");
         }
     }
+
+    S32 sphere_hits_sphere_xz(const xSphere& a, const xSphere& b)
+    {
+        F32 dx = b.center.x - a.center.x;
+        F32 dz = b.center.z - a.center.z;
+        F32 outer = b.r + a.r;
+        F32 inner = b.r - a.r;
+        F32 dist2 = dx * dx + dz * dz;
+
+        if (dist2 > outer * outer)
+        {
+            return 4;
+        }
+
+        if (dist2 < inner * inner)
+        {
+            return 2;
+        }
+
+        return 1;
+    }
 } // namespace
+
+void lightning_ring::update(F32 dt)
+{
+    if (update_callback != NULL)
+    {
+        update_callback(*this, dt);
+    }
+    refresh();
+}
 
 void lightning_ring::create()
 {
@@ -1533,13 +1623,24 @@ zNPCKingJelly::zNPCKingJelly(S32 myType) : zNPCSubBoss(myType)
 void zNPCKingJelly::Init(xEntAsset* asset)
 {
     zNPCCommon::Init(asset);
-    memset(&flag.fighting, 0, 5);
-    this->bossCam.init();
+    flags1.flg_basenpc |= 0x10;
+    memset(&flag, 0, sizeof(flag));
+    boss_cam.init();
 }
 
-xVec3* zNPCKingJelly::get_bottom()
+const xVec3& zNPCKingJelly::get_bottom() const
 {
-    return (xVec3*)&this->model->Mat->pos;
+    return *(const xVec3*)&this->model->Mat->pos;
+}
+
+xVec3 zNPCKingJelly::get_center() const
+{
+    return *(xVec3*)&model->Mat->pos + *(xVec3*)&model->Mat[2].pos + cfg_npc->off_bound;
+}
+
+F32 zNPCKingJelly::get_variance() const
+{
+    return tweak.interval.variance * (2.0f * xurand() - 1.0f);
 }
 
 void zNPCKingJelly::Setup()
@@ -1564,46 +1665,30 @@ void zNPCKingJelly::Destroy()
 
 void zNPCKingJelly::BUpdate(xVec3* pos)
 {
-    // Original stack variables:
-    //xVec3& subloc;
-    //xVec3 loc;
-
-    // Something like this...
-    // Some vec is being added to another on the stack (probably)
-    // (xVec3&)this->model->Mat->pos = (xVec3&)this->model->Mat->pos + *pos;
-
-    zNPCCommon::BUpdate(pos);
+    xVec3& subloc = *(xVec3*)&model->Mat[2].pos;
+    xVec3 loc = *pos + subloc;
+    zNPCCommon::BUpdate(&loc);
 }
 
 S32 zNPCKingJelly::SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
                             xBase* toParamWidget, S32* handled)
 {
-    U32 ret;
+    switch (toEvent)
+    {
+    case 0x1b5:
+        start_fight();
+        break;
+    case 0x1b9:
+        break;
+    case 0x1d9:
+        psy_instinct->GoalSet(NPC_GOAL_KJDEATH, 1);
+        break;
+    default:
+        *handled = 0;
+        return zNPCCommon::SysEvent(from, to, toEvent, toParam, toParamWidget, handled);
+    }
 
-    if (toEvent == 0x1b9)
-    {
-        ret = 1;
-    }
-    else
-    {
-        if (toEvent < 0x1b9)
-        {
-            if (toEvent == 0x1b5)
-            {
-                start_fight();
-                return 1;
-            }
-        }
-        else if (toEvent == 0x1d9)
-        {
-            xPsyche* psy = this->psy_instinct;
-            psy->GoalSet(0x4e474d37, 1);
-            return 1;
-        }
-        handled = 0;
-        ret = zNPCCommon::SysEvent(from, to, toEvent, toParam, toParamWidget, handled);
-    }
-    return ret;
+    return 1;
 }
 
 void zNPCKingJelly::RenderExtra()
@@ -1614,10 +1699,20 @@ void zNPCKingJelly::RenderExtra()
 void zNPCKingJelly::ParseINI()
 {
     zNPCCommon::ParseINI();
-    cfg_npc->snd_traxShare = &g_sndTrax_KingJelly;
-    NPCS_SndTablePrepare((NPCSndTrax*)&g_sndTrax_KingJelly);
-    cfg_npc->snd_trax = &g_sndTrax_KingJelly;
-    NPCS_SndTablePrepare((NPCSndTrax*)&g_sndTrax_KingJelly);
+    cfg_npc->snd_traxShare = g_sndTrax_KingJelly;
+    NPCS_SndTablePrepare(g_sndTrax_KingJelly);
+    cfg_npc->snd_trax = g_sndTrax_KingJelly;
+    NPCS_SndTablePrepare(g_sndTrax_KingJelly);
+
+    static tweak_callback cb_fade_obstructions = {
+        (void (*)(tweak_info&))on_change_fade_obstructions
+    };
+    static tweak_callback cb_ambient_ring = { (void (*)(tweak_info&))on_change_ambient_ring };
+
+    tweak.context = this;
+    tweak.cb_fade_obstructions = &cb_fade_obstructions;
+    tweak.cb_ambient_ring = &cb_ambient_ring;
+    tweak.load(parmdata, pdatsize);
 }
 
 void zNPCKingJelly::SelfSetup()
@@ -1744,17 +1839,79 @@ void zNPCKingJelly::enable_child(zNPCKingJelly::child_data& child)
     }
 }
 
+void zNPCKingJelly::ParseLinks()
+{
+    zNPCCommon::ParseLinks();
+
+    xLinkAsset* it = link;
+    xLinkAsset* end = it + linkCount;
+    for (; it != end; ++it)
+    {
+        if (it->dstEvent == 0x133)
+        {
+            add_child(*zSceneFindObject(it->dstAssetID), (S32)it->param[0]);
+        }
+    }
+}
+
+bool zNPCKingJelly::bored() const
+{
+    switch (round)
+    {
+    case 0:
+        return (attack + 1) % 2 == 0;
+    case 1:
+        return (attack + 1) % 3 == 0;
+    case 2:
+        return (attack + 1) % 4 == 0;
+    }
+
+    return false;
+}
+
+void zNPCKingJelly::taunt()
+{
+    switch (psy_instinct->GIDOfActive())
+    {
+    case NPC_GOAL_KJTAUNT:
+    case NPC_GOAL_KJDAMAGE:
+    case NPC_GOAL_KJDEATH:
+        break;
+    default:
+        psy_instinct->GoalSet(NPC_GOAL_KJTAUNT, 1);
+        break;
+    }
+}
+
+void zNPCKingJelly::check_player_damage()
+{
+    if (globals.player.cheat_mode != 0)
+    {
+        return;
+    }
+
+    if (apply_wave_damage() || apply_tentacle_damage() || apply_ambient_damage())
+    {
+        return;
+    }
+}
+
+S32 zNPCKingJelly::count_children(S32 wave)
+{
+    S32 count = 0;
+    for (U32 i = 0; i < children_size; ++i)
+    {
+        if (children[i].wave == wave)
+        {
+            ++count;
+        }
+    }
+    return count;
+}
+
 S32 zNPCKingJelly::max_strikes()
 {
     return round + 1;
-}
-
-void zNPCKingJelly::on_change_ambient_ring(const tweak_info&)
-{
-}
-
-void zNPCKingJelly::on_change_fade_obstructions(const tweak_info&)
-{
 }
 
 void zNPCKingJelly::render_debug()
@@ -1763,10 +1920,31 @@ void zNPCKingJelly::render_debug()
 
 void zNPCKingJelly::decompose()
 {
+    if (flag.died || !flag.fighting)
+    {
+        return;
+    }
+
+    flag.died = true;
+    kill_sounds();
+    destroy_ambient_rings();
+    destroy_wave_rings();
+    destroy_tentacle_lightning();
+
+    for (U32 i = 0; i < children_size; ++i)
+    {
+        disable_child(children[i]);
+    }
+
+    zMusicSetVolume(1.0f, tweak.music_fade_delay);
+    reset_curtain();
 }
 
 void zNPCKingJelly::post_decompose()
 {
+    vanish();
+    zCameraEnableTracking(CO_BOSS);
+    boss_cam.stop();
 }
 
 void zNPCKingJelly::vanish()
@@ -1822,24 +2000,109 @@ void zNPCKingJelly::destroy_ambient_rings()
     }
 }
 
+void zNPCKingJelly::destroy_wave_rings()
+{
+    for (S32 i = 0; i < 4; i++)
+    {
+        wave_rings[i].destroy();
+    }
+}
+
 void zNPCKingJelly::generate_spawn_particles()
 {
+    spawn_particle_vel = tweak.spawn.spew.speed;
 }
 
 void zNPCKingJelly::load_model()
 {
+    U32 i = 0;
+    xModelInstance* m = model;
+    while (m != NULL && i < 4)
+    {
+        submodel[i] = m;
+        ++i;
+        m = m->Next;
+    }
+
+    submodel[0]->Data->boundingSphere.radius += 10.0f;
+    submodel[1]->Data->boundingSphere.radius += 10.0f;
+    submodel[3]->Data->boundingSphere.radius += 10.0f;
+    submodel[2]->Data->boundingSphere.radius += 10.0f;
+
+    submodel[3]->Flags |= 0x2;
+    submodel[3]->Flags |= 0x1;
 }
 
 void zNPCKingJelly::load_curtain_model()
 {
+    char name[20] = "SHOWER CURTAIN SIMP";
+    curtain_ent = (zEnt*)zSceneFindObject(xStrHash(name));
+
+    xModelInstance* m = curtain_ent->model;
+    for (U32 i = 0; m != NULL && i < 5; ++i)
+    {
+        curtain_model[i] = m;
+        m = m->Next;
+    }
+}
+
+void zNPCKingJelly::show_attack_model()
+{
+    submodel[0]->Flags |= 0x2;
+    submodel[0]->Flags &= ~0x1;
+    submodel[1]->Flags &= 0xFFFD;
+    submodel[1]->Flags &= ~0x1;
+    submodel[2]->Flags |= 0x2;
+    submodel[2]->Flags |= 0x1;
+}
+
+void zNPCKingJelly::end_charge()
+{
+    if (!flag.charging)
+    {
+        return;
+    }
+
+    flag.charging = false;
+
+    for (S32 i = 0; i < 7; i++)
+    {
+        if (tentacle_lightning[i] != NULL)
+        {
+            tentacle_lightning[i]->flags &= ~0x10;
+            tentacle_lightning[i]->time_left = tentacle_lightning[i]->time_total =
+                tweak.interval.release;
+        }
+    }
 }
 
 void zNPCKingJelly::show_shower_model()
 {
+    submodel[0]->Flags |= 0x2;
+    submodel[0]->Flags |= 0x1;
+    submodel[1]->Flags |= 0x2;
+    submodel[1]->Flags |= 0x1;
+    submodel[2]->Flags &= 0xFFFD;
+    submodel[2]->Flags &= ~0x1;
 }
 
 void zNPCKingJelly::reset_curtain()
 {
+    curtain_model[2]->Alpha = curtain_model[4]->Alpha = 1.0f;
+}
+
+void zNPCKingJelly::fade_curtain()
+{
+    curtain_model[2]->Alpha = curtain_model[4]->Alpha = tweak.fade_obstructions;
+}
+
+S32 zNPCGoalKJIdle::Enter(F32 dt, void* updCtxt)
+{
+    zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
+    attack_delay = tweak.interval.attack[kj.round] + kj.get_variance();
+    kj.flag.stop_moving = false;
+    play_sound(6, (xVec3*)&kj.model->Mat->pos);
+    return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
 S32 zNPCGoalKJIdle::Exit(float dt, void* updCtxt)
@@ -1853,9 +2116,8 @@ S32 zNPCGoalKJIdle::Exit(float dt, void* updCtxt)
 S32 zNPCGoalKJBored::Enter(float dt, void* updCtxt)
 {
     zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
-    //play_sound(int, const xVec3*);
-    play_sound(3, kj.model->anim_coll.verts); // kj.model is correct? dont know the xVec3*
-    play_sound(3, kj.model->anim_coll.verts); // same as above
+    play_sound(3, (xVec3*)&kj.model->Mat->pos);
+    play_sound(3, (xVec3*)&kj.model->Mat->pos);
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
@@ -1867,7 +2129,12 @@ S32 zNPCGoalKJBored::Exit(float dt, void* updCtxt)
 S32 zNPCGoalKJSpawnKids::Enter(float dt, void* updCtxt)
 {
     zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
-    count_children(kj.round);
+    cycle = 0;
+    delay = 0.0f;
+    spewed = FALSE;
+    spawned = FALSE;
+    spawn_count = 0;
+    child_count = kj.count_children(kj.round);
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
@@ -1885,9 +2152,8 @@ S32 zNPCGoalKJSpawnKids::Exit(float dt, void* updCtxt)
 S32 zNPCGoalKJTaunt::Enter(float dt, void* updCtxt)
 {
     zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
-    //play_sound(int, const xVec3*);
-    play_sound(9, kj.model->anim_coll.verts); // kj.model is correct? dont know the xVec3*
-    play_sound(9, kj.model->anim_coll.verts); // same as above
+    play_sound(9, (xVec3*)&kj.model->Mat->pos);
+    play_sound(9, (xVec3*)&kj.model->Mat->pos);
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
@@ -1896,19 +2162,65 @@ S32 zNPCGoalKJTaunt::Exit(float dt, void* updCtxt)
     return xGoal::Exit(dt, updCtxt);
 }
 
-// void zNPCKingJelly::start_blink()
-// {
-//     blink.active = 1;
-//     blink.delay = 0;
-//     blink.count = 0;
-//     // 0x24 model
-//     // 0x44 render
-// }
+void zNPCKingJelly::start_blink()
+{
+    blink.active = TRUE;
+    blink.delay = 0.0f;
+    blink.count = 0;
+    model->Flags |= 0x4000;
+}
 
 S32 zNPCGoalKJDamage::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
 {
     zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
     return 0;
+}
+
+S32 zNPCGoalKJShockGround::Enter(F32 dt, void* updCtxt)
+{
+    zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
+    kj.attack++;
+    strikes = 0;
+    kj.shockstate = zNPCKingJelly::SS_START;
+    delay = tweak.thump.delay;
+    play_sound(5, (xVec3*)&kj.model->Mat->pos);
+    kj.disable_tentacle_damage = TRUE;
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalKJShockGround::update_start(F32 dt)
+{
+    zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
+
+    if (delay <= 0.0f)
+    {
+        kj.generate_thump_particles();
+        delay = 1e9f;
+    }
+
+    xAnimState* anim = kj.AnimCurState();
+    if (anim->ID == g_hash_subbanim[ANIM_Attack01])
+    {
+        delay = tweak.interval.warm_up;
+        kj.start_charge();
+        return zNPCKingJelly::SS_WARM_UP;
+    }
+
+    return zNPCKingJelly::SS_START;
+}
+
+S32 zNPCGoalKJShockGround::update_stop(F32 dt)
+{
+    zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
+
+    xAnimState* anim = kj.AnimCurState();
+    if (anim->ID != g_hash_subbanim[ANIM_AttackEnd01] ||
+        dt > kj.AnimTimeRemain(NULL))
+    {
+        return zNPCKingJelly::MAX_SS;
+    }
+
+    return zNPCKingJelly::SS_STOP;
 }
 
 S32 zNPCGoalKJShockGround::Exit(F32 dt, void* updCtxt)
@@ -1926,9 +2238,8 @@ S32 zNPCGoalKJShockGround::Exit(F32 dt, void* updCtxt)
 S32 zNPCGoalKJDamage::Enter(F32 dt, void* updCtxt)
 {
     zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
-    //play_sound(int, const xVec3*);
-    play_sound(4, kj.model->anim_coll.verts); // kj.model is correct? dont know the xVec3*
-    play_sound(4, kj.model->anim_coll.verts); // same as above
+    play_sound(4, (xVec3*)&kj.model->Mat->pos);
+    play_sound(4, (xVec3*)&kj.model->Mat->pos);
     kj.disable_tentacle_damage = 1;
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
@@ -1947,6 +2258,14 @@ S32 zNPCGoalKJDamage::Exit(F32 dt, void* updCtxt)
 
 void zNPCKingJelly::update_round()
 {
+    if (life == 0)
+    {
+        round = 0;
+    }
+    else
+    {
+        round = 2 - (life - 1) * 3 / tweak.max_life;
+    }
 }
 
 S32 zNPCGoalKJDeath::Enter(float dt, void* updCtxt)

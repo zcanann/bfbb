@@ -95,7 +95,10 @@ struct NPCWidget
     zNPCCommon* npc_ownerlock;
 
     S32 NPCIsTheLocker(const zNPCCommon* npc_lock);
-    U32 IsLocked();
+    S32 IsLocked()
+    {
+        return npc_ownerlock != NULL;
+    }
     S32 IsVisible();
     S32 Off(const zNPCCommon* npc, S32 theman);
     S32 On(const zNPCCommon* npc, S32 theman);
@@ -158,6 +161,8 @@ S32 NPCC_LampStatus();
 F32 NPCC_TmrCycle(F32* tmr, F32 dt, F32 interval);
 xVec3* NPCC_rightDir(xEnt* ent);
 xVec3* NPCC_faceDir(xEnt* ent);
+void NPCC_GenSmooth(xVec3** pos_base, xVec3** pos_mid);
+
 void NPCC_ang_toXZDir(F32 angle, xVec3* dir);
 F32 NPCC_dir_toXZAng(const xVec3* dir);
 F32 NPCC_aimVary(xVec3* dir_aim, xVec3* pos_src, xVec3* pos_tgt, F32 dst_vary, S32 flg_vary,

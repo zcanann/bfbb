@@ -25,6 +25,7 @@
 #include "xDecal.h"
 #include "xFX.h"
 #include "xGrid.h"
+#include "xGridCheckBound.h"
 #include "xMath.h"
 #include "xMath3.h"
 #include "xMathInlines.h"

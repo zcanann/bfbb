@@ -71,7 +71,7 @@ S32 PointWithinTriangle(xVec3* _pt, xVec3** _tri, xVec3* _normal)
     switch (dimension)
     {
     case XDIM:
-        for (i = 0, j = 2; i < 3; j = i, i++)
+        for (i = 0, j = 2; i < 3; j = i++)
         {
             if (((tri[i]->y <= pt->y && pt->y < tri[j]->y) ||
                  (tri[j]->y <= pt->y && pt->y < tri[i]->y)) &&
@@ -83,7 +83,7 @@ S32 PointWithinTriangle(xVec3* _pt, xVec3** _tri, xVec3* _normal)
         }
         break;
     case YDIM:
-        for (i = 0, j = 2; i < 3; j = i, i++)
+        for (i = 0, j = 2; i < 3; j = i++)
         {
             if (((tri[i]->z <= pt->z && pt->z < tri[j]->z) ||
                  (tri[j]->z <= pt->z && pt->z < tri[i]->z)) &&
@@ -95,7 +95,7 @@ S32 PointWithinTriangle(xVec3* _pt, xVec3** _tri, xVec3* _normal)
         }
         break;
     case ZDIM:
-        for (i = 0, j = 2; i < 3; j = i, i++)
+        for (i = 0, j = 2; i < 3; j = i++)
         {
             if (((tri[i]->y <= pt->y && pt->y < tri[j]->y) ||
                  (tri[j]->y <= pt->y && pt->y < tri[i]->y)) &&

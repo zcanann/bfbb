@@ -2000,15 +2000,12 @@ static S32 SweptSphereModelCB(S32 numTriangles, S32 triOffset, void* data)
 
     while (numTriangles--)
     {
-        triSlot = *triIndex++;
+        triSlot = *triIndex;
+        triIndex++;
         RpTriangle* tri = &triangles[triSlot];
-        S32 vertIndex0 = tri->vertIndex[0];
-        S32 vertIndex1 = tri->vertIndex[1];
-        S32 vertIndex2 = tri->vertIndex[2];
-        RwV3d* v0 = &vertices[vertIndex0];
-        RwV3d* v1 = &vertices[vertIndex1];
-        RwV3d* v2 = &vertices[vertIndex2];
-        if (xSweptSphereToTriangle(sws, (xVec3*)v0, (xVec3*)v1, (xVec3*)v2))
+        if (xSweptSphereToTriangle(sws, (xVec3*)&vertices[tri->vertIndex[0]],
+                                   (xVec3*)&vertices[tri->vertIndex[1]],
+                                   (xVec3*)&vertices[tri->vertIndex[2]]))
         {
             sSweptSphereHitFound = 1;
         }

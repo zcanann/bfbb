@@ -1136,7 +1136,7 @@ S32 zNPCGoalAlertFodBzzt::Enter(F32 dt, void* updCtxt)
 {
     zNPCFodBzzt::cnt_alerthokey++;
     this->flg_alert = 0;
-    this->flg_alert |= 2 - (xrand() >> 0x17 & 1);
+    this->flg_alert |= (xrand() & 0x800000) ? 1 : 2;
     this->alertbzzt = FODBZZT_ALERT_NOTICE;
     this->tmr_warmup = 1.25f;
     this->len_laser = 50.0f;
@@ -5002,14 +5002,23 @@ S32 RoboToCntrIdx(S32 robotId)
 {
     S32 res = ROBOCOP_CNTR_FORCE;
 
-    for (RoboCopMap* cur = g_map_policeCounter; cur->ntyp_robotype != 0; cur++)
+    S32 i = 0;
+    RoboCopMap* map = g_map_policeCounter;
+    while (map->ntyp_robotype != 0)
     {
+        RoboCopMap* cur = map;
+
+        // Post-increment means the first entry gets checked twice
+        map = &g_map_policeCounter[i++];
+
         if (cur->ntyp_robotype == robotId)
         {
             res = cur->idx_copCounter;
             break;
         }
     }
+
+
 
     return res;
 }

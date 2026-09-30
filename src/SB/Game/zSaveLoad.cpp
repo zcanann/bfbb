@@ -21,26 +21,26 @@
 
 zSaveLoadGame zSaveLoadGameTable[3];
 
-U32 saveSuccess;
-F32 time_last;
-F32 time_current;
-F32 time_elapsed = 0.01f;
-iTime t0;
-iTime t1;
-S32 promptSel;
-S32 badCard;
-S32 sAvailable;
-S32 sNeeded;
-S32 sAccessType;
-U8 preAutoSaving;
+static U32 saveSuccess;
+static F32 time_last;
+static F32 time_current;
+static F32 time_elapsed = 0.01f;
+static iTime t0;
+static iTime t1;
+static S32 promptSel;
+static S32 badCard;
+static S32 sAvailable;
+static S32 sNeeded;
+static S32 sAccessType;
+static U8 preAutoSaving;
 
-S32 currentCard = -1;
-S32 currentGame = -1;
-F32 dontPoll = 1.0f;
-S32 autoSaveCard = -1;
+static S32 currentCard = -1;
+static S32 currentGame = -1;
+static F32 dontPoll = 1.0f;
+static S32 autoSaveCard = -1;
 
-char currSceneStr[32] = "TEMP";
-char sceneRead[32] = "0000";
+static char currSceneStr[32] = "TEMP";
+static char sceneRead[32] = "0000";
 zSaveLoadUI zSaveLoadUITable[62] = { { 0, 0, "ld gameslot group" },
                                      { 1, 0, "ld memcards group" },
                                      { 2, 0, "ld format prompt group" },

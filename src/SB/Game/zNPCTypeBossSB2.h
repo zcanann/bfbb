@@ -14,30 +14,6 @@ namespace auto_tweak
     void load_param(T1&, T2, T2, T2, xModelAssetParam*, U32, const char*);
 };
 
-struct inode;
-
-struct response_curve
-{
-    U32 values; // offset 0x0,
-    inode* curve; // offset 0x4,
-    U32 nodes; // offset 0x8,
-    U32 active_node; // offset 0xC,
-
-    static void init(U32, const void*, U32, const char*, const char**, const tweak_callback*,
-                     void*);
-    void end_t() const;
-};
-
-struct node
-{
-    F32 t;
-};
-
-struct inode : node
-{
-    F32 value[1];
-};
-
 struct zNPCB_SB2 : zNPCBoss
 {
     enum move_enum
@@ -225,6 +201,8 @@ struct zNPCB_SB2 : zNPCBoss
         xLightKitLight light[8];
     } glow_light;
 
+    static zNPCB_SB2* _singleton;
+
     zNPCB_SB2(S32 myType);
     void Init(xEntAsset* asset);
     void Setup();
@@ -263,10 +241,10 @@ struct zNPCB_SB2 : zNPCBoss
     void HoldUpDude();
     void ThanksImDone();
     void reset_speed();
-    S32 player_platform();
+    platform_data* player_platform();
     void activate_hand(zNPCB_SB2::hand_enum, bool);
     void deactivate_hand(zNPCB_SB2::hand_enum);
-    S32 player_on_ground() const;
+    bool player_on_ground() const;
     void emit_slug(zNPCB_SB2::slug_enum which);
     S32 slugs_ready() const;
     void reset_stage();

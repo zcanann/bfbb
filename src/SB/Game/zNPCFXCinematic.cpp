@@ -496,8 +496,8 @@ void NCIN_BubSlam(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
     }
 }
 
-void NCIN_BubTrailBone_AR(const zCutsceneMgr*, NCINEntry* fxrec, RpAtomic*, RwMatrixTag*, U32 num_1,
-                          U32 num_2)
+void NCIN_BubTrailBone_AR(const zCutsceneMgr*, NCINEntry* fxrec, RpAtomic*, RwMatrixTag* animMat,
+                          U32 num_1, U32 num_2)
 {
     S32 ifx = fxrec->pos_A[1].x;
     S32 ify = fxrec->pos_A[1].y;
@@ -507,13 +507,13 @@ void NCIN_BubTrailBone_AR(const zCutsceneMgr*, NCINEntry* fxrec, RpAtomic*, RwMa
         return;
     }
 
-    xVec3 pos = fxrec->pos_A[2];
+    xVec3 pos = *(xVec3*)&animMat[0].pos;
 
     if (ify > 0)
     {
-        xVec3& offset = fxrec->pos_B[ify];
-        pos += offset;
+        pos += *(xVec3*)&animMat[ify].pos;
     }
+
 
     zFX_SpawnBubbleTrail(&pos, 1);
 }

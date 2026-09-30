@@ -11,8 +11,8 @@ struct PreCalcOcclude
     xVec4 FrustVec[4];
 };
 
-zVolume* vols;
-U16 nvols;
+static zVolume* vols;
+static U16 nvols;
 
 S32 gOccludeCount;
 zVolume* gOccludeList[10];
@@ -99,8 +99,8 @@ void zVolume_OccludePrecalc(xVec3* camPos)
         corner[0].y = a->bound.box.box.lower.y;
         corner[0].z = s * (a->bound.box.box.lower.x - a->xpivot) + a->bound.box.box.lower.z;
 
-        corner[1].y = a->bound.box.box.lower.y;
         corner[1].x = c * (a->bound.box.box.upper.x - a->xpivot) + a->xpivot;
+        corner[1].y = a->bound.box.box.lower.y;
         corner[1].z = s * (a->bound.box.box.upper.x - a->xpivot) + a->bound.box.box.lower.z;
 
         corner[2].x = c * (a->bound.box.box.upper.x - a->xpivot) + a->xpivot;
@@ -130,56 +130,58 @@ void zVolume_OccludePrecalc(xVec3* camPos)
             depthdot = -depthdot;
         }
 
-        if (iabs(camdot - depthdot) >= 1.0f)
+        if (iabs(camdot - depthdot) < 1.0f)
         {
-            calc->DepthVec.w = depthdot;
-
-            for (j = 0; j < 4; j++)
-            {
-                xVec3Sub(&d1, &corner[j], camPos);
-                xVec3Sub(&d2, &corner[j + 1], camPos);
-                xVec3Cross((xVec3*)&locFrustVec[j], &d1, &d2);
-                xVec3Normalize((xVec3*)&locFrustVec[j], (xVec3*)&locFrustVec[j]);
-            }
-
-            testdot1 = xVec3Dot((xVec3*)&locFrustVec[0], &corner[0]);
-            testdot2 = xVec3Dot((xVec3*)&locFrustVec[0], &corner[2]);
-
-            if (testdot1 > testdot2)
-            {
-                for (j = 0; j < 4; j++)
-                {
-                    xVec3Inv((xVec3*)&locFrustVec[j], (xVec3*)&locFrustVec[j]);
-                }
-            }
-
-            for (j = 0; j < 4; j++)
-            {
-                locFrustVec[j].w = xVec3Dot((xVec3*)&locFrustVec[j], &corner[j]);
-            }
-
-            calc->FrustVec[0].x = locFrustVec[0].w;
-            calc->FrustVec[0].y = locFrustVec[1].w;
-            calc->FrustVec[0].z = locFrustVec[2].w;
-            calc->FrustVec[0].w = locFrustVec[3].w;
-
-            calc->FrustVec[1].x = locFrustVec[0].x;
-            calc->FrustVec[1].y = locFrustVec[1].x;
-            calc->FrustVec[1].z = locFrustVec[2].x;
-            calc->FrustVec[1].w = locFrustVec[3].x;
-
-            calc->FrustVec[2].x = locFrustVec[0].y;
-            calc->FrustVec[2].y = locFrustVec[1].y;
-            calc->FrustVec[2].z = locFrustVec[2].y;
-            calc->FrustVec[2].w = locFrustVec[3].y;
-
-            calc->FrustVec[3].x = locFrustVec[0].z;
-            calc->FrustVec[3].y = locFrustVec[1].z;
-            calc->FrustVec[3].z = locFrustVec[2].z;
-            calc->FrustVec[3].w = locFrustVec[3].z;
-
-            gOccludeCalcCount++;
+            continue;
         }
+
+        calc->DepthVec.w = depthdot;
+
+        for (j = 0; j < 4; j++)
+        {
+            xVec3Sub(&d1, &corner[j], camPos);
+            xVec3Sub(&d2, &corner[j + 1], camPos);
+            xVec3Cross((xVec3*)&locFrustVec[j], &d1, &d2);
+            xVec3Normalize((xVec3*)&locFrustVec[j], (xVec3*)&locFrustVec[j]);
+        }
+
+        testdot1 = xVec3Dot((xVec3*)&locFrustVec[0], &corner[0]);
+        testdot2 = xVec3Dot((xVec3*)&locFrustVec[0], &corner[2]);
+
+        if (testdot1 > testdot2)
+        {
+            for (j = 0; j < 4; j++)
+            {
+                xVec3Inv((xVec3*)&locFrustVec[j], (xVec3*)&locFrustVec[j]);
+            }
+        }
+
+        for (j = 0; j < 4; j++)
+        {
+            locFrustVec[j].w = xVec3Dot((xVec3*)&locFrustVec[j], &corner[j]);
+        }
+
+        calc->FrustVec[0].x = locFrustVec[0].w;
+        calc->FrustVec[0].y = locFrustVec[1].w;
+        calc->FrustVec[0].z = locFrustVec[2].w;
+        calc->FrustVec[0].w = locFrustVec[3].w;
+
+        calc->FrustVec[1].x = locFrustVec[0].x;
+        calc->FrustVec[1].y = locFrustVec[1].x;
+        calc->FrustVec[1].z = locFrustVec[2].x;
+        calc->FrustVec[1].w = locFrustVec[3].x;
+
+        calc->FrustVec[2].x = locFrustVec[0].y;
+        calc->FrustVec[2].y = locFrustVec[1].y;
+        calc->FrustVec[2].z = locFrustVec[2].y;
+        calc->FrustVec[2].w = locFrustVec[3].y;
+
+        calc->FrustVec[3].x = locFrustVec[0].z;
+        calc->FrustVec[3].y = locFrustVec[1].z;
+        calc->FrustVec[3].z = locFrustVec[2].z;
+        calc->FrustVec[3].w = locFrustVec[3].z;
+
+        gOccludeCalcCount++;
     }
 }
 

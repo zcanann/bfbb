@@ -127,7 +127,7 @@ void xEntBoulder_Init(xEntBoulder* ent, xEntAsset* asset)
 
     if (ent->linkCount != 0)
     {
-        ent->link = (xLinkAsset*)(&ent->asset[1]);
+        ent->link = (xLinkAsset*)((U8*)ent->asset + sizeof(xEntAsset) + sizeof(xEntBoulderAsset));
     }
     else
     {
@@ -539,7 +539,7 @@ void xEntBoulder_Update(xEntBoulder* ent, xScene* sc, F32 dt)
     if (!(ent->basset->flags & 1) && (numDepens != 0))
     {
         F32 bounce = ent->basset->bounce;
-        if ((bounce != 0.0f) && ((f31 / dVar18) < bounce + -1.0f))
+        if ((bounce) && ((f31 / dVar18) < bounce + -1.0f))
         {
             dVar18 = xVec3Dot(&sphDist, &depenNorm1);
             if (-f31 > ent->basset->bounceDamp)
@@ -547,7 +547,7 @@ void xEntBoulder_Update(xEntBoulder* ent, xScene* sc, F32 dt)
                 xVec3AddScaled(&sphDist, &depenNorm1, (-ent->basset->bounce * f31) - dVar18);
             }
         }
-        if (ent->basset->friction != 0.0f)
+        if (ent->basset->friction)
         {
             xVec3Copy(&scaleVel, &ent->vel);
             xVec3AddScaled(&scaleVel, &depenNorm1, -f31);

@@ -865,7 +865,6 @@ void sndloadcb(tag_xFile* tag)
 {
     SoundFlags = 0;
 }
-/* Matching
 void iSndDIEDIEDIE()
 {
     if (!soundInited)
@@ -903,7 +902,7 @@ void iSndDIEDIEDIE()
 
     AXQuit();
 }
-*/
+
 void iSndSetExternalCallback(iSndExternalCallback callback)
 {
 }

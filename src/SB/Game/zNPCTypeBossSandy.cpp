@@ -103,10 +103,10 @@ static xVec3 sBoneOffset[13] = { {},
                                  {},
                                  { 0.0f, -0.6f, 0.3f } };
 static char* sNFSoundLabel[30] = {
-    "FAB1006", "FAB1007", "FAB1008", "FAB1009", "FAB1010", "FAB1011", "FAB1012", "FAB1013",
-    "FAB1014", "FAB1015", "FAB1016", "FAB1017", "FAB1018", "FAB1018", "FAB1018", "FAB1018",
-    "FAB1018", "FAB1018", "FAB1019", "FAB1020", "FAB1021", "FAB1022", "FAB1023", "FAB1024",
-    "FAB1025", "FAB1026", "FAB1027", "FAB1028", "FAB1029", "FAB1030"
+    "FAB1006", "FAB1007", "FAB1008", "FAB1009", "FAB1010",   "FAB1011",   "FAB1012", "FAB1013",
+    "FAB1014", "FAB1015", "FAB1016", "FAB1017", "FAB1018",   "FAB1019",   "FAB1020", "FAB1021",
+    "FAB1022", "FAB1023", "FAB1024", "FAB1025", "FAB1026",   "FAB1027",   "FAB1028", "FAB1029",
+    "FAB1030", "FAB1031", "FAB1032", "FAB1041_a", "FAB1041_b", "FAB1065"
 };
 
 static const tweak_callback newsfish_cb = {};
@@ -295,7 +295,7 @@ xAnimTable* ZNPC_AnimTable_BossSandyScoreboard()
 
     xAnimTableNewTransition(table, "Idle01", "Shocked01", HeadIsShocked, NULL, 0x0, 0x0, 0.0f, 0.0f,
                             0, 0, 0.25f, NULL);
-    xAnimTableNewTransition(table, "Shocked01", "Idle01", HeadIsShocked, NULL, 0x0, 0x0, 0.0f, 0.0f,
+    xAnimTableNewTransition(table, "Shocked01", "Idle01", HeadNotShocked, NULL, 0x0, 0x0, 0.0f, 0.0f,
                             0, 0, 0.25f, NULL);
 
     return table;
@@ -894,7 +894,7 @@ static void UpdateSandyBossCam(zNPCBSandy* sandy, F32 dt)
         tempTarget.x = globals.player.ent.model->Mat->pos.x;
         tempTarget.y = 0.0f;
         tempTarget.z = globals.player.ent.model->Mat->pos.z;
-        sandy->specialBossCam.set_targets(tempTarget, (xVec3&)sCamSubTarget, 2.0f);
+        sandy->specialBossCam.set_targets(tempTarget, *sCamSubTarget, 2.0f);
 
         if ((sandy->bossFlags & 0x4000))
         {
@@ -913,8 +913,8 @@ static void UpdateSandyBossCam(zNPCBSandy* sandy, F32 dt)
             sandy->bossCam.start(globals.camera);
         }
 
-        sandy->bossCam.set_targets(*((xVec3*)&globals.player.ent.model->Mat->pos),
-                                   (xVec3&)sCamSubTarget, 10.0f);
+        sandy->bossCam.set_targets(*((xVec3*)&globals.player.ent.model->Mat->pos), *sCamSubTarget,
+                                   2.0f);
 
         if (sandy->bossFlags & 0x4000)
         {
@@ -1459,10 +1459,7 @@ S32 zNPCGoalBossSandyIdle::Process(en_trantype* trantype, F32 dt, void* updCtxt,
     xVec3Cross(&sandy->frame->mat.right, &sandy->frame->mat.up, &sandy->frame->mat.at);
 
     sandy->frame->mat.pos.y = 0.0f;
-    xVec3Dot(&newAt, (xVec3*)&sandy->model->Mat->right);
-
-    F32 lerp = 1.0f;
-    lerp -= 0.02f;
+    F32 lerp = 1.0f - xVec3Dot(&newAt, (xVec3*)&sandy->model->Mat->right);
     sandy->model->Anim->Single->BilinearLerp[0] = lerp;
     sandy->model->Anim->Single->Blend->BilinearLerp[0] = lerp;
 

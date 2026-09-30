@@ -137,6 +137,7 @@ struct zNPCRobot : zNPCCommon
     void ParseProps();
     void SelfSetup();
     void SelfDestroy();
+    U32 AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal);
     S32 IsHealthy();
     S32 IsAlive();
     void Damage(en_NPC_DAMAGE_TYPE damtype, xBase* who, xVec3* vec_hit);

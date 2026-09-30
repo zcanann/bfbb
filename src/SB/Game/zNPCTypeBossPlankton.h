@@ -124,9 +124,15 @@ struct zNPCBPlankton : zNPCBoss
     void Render();
     void RenderExtraPostParticles();
     void ParseINI();
+    void ParseLinks();
     void SelfSetup();
+    void Damage(en_NPC_DAMAGE_TYPE damtype, xBase* who, const xVec3* vec_hit);
     U32 AnimPick(int, en_NPC_GOAL_SPOT, xGoal*);
     S32 next_goal();
+    void scan_cronies();
+    void load_territory(S32 index, xBase& child);
+    void impart_velocity(const xVec3& vel);
+    void stun();
     void update_turn(F32);
     void update_move(F32);
     void check_player_damage();

@@ -291,17 +291,21 @@ static void CinFragCB(zFrag* frag, zFragAsset* asset)
 void zShrapnel_CinematicInit(zShrapnelAsset* shrap, RpAtomic* cinModel, RwMatrixTag* animMat,
                              xVec3* initVel, void (*cb)(zFrag*, zFragAsset*))
 {
+    S32 i;
+    zFrag* frag;
+    xModelInstance* model;
+
     if (cinModel == NULL || shrap == NULL || animMat == NULL)
         return;
 
-    zFrag* frag = zFrag_Alloc(eFragProjectile);
+    frag = zFrag_Alloc(eFragProjectile);
     frag->parent[0] = NULL;
     frag->parent[1] = NULL;
     sCinProj.modelFile = cinModel;
 
     zFrag_DefaultInit(frag, &sCinProj);
 
-    xModelInstance* model = frag->info.projectile.model;
+    model = frag->info.projectile.model;
     if (model == NULL)
     {
         zFrag_Free(frag);
@@ -312,7 +316,7 @@ void zShrapnel_CinematicInit(zShrapnelAsset* shrap, RpAtomic* cinModel, RwMatrix
         xMat3x3Copy((xMat4x3*)model->Mat, &g_I3);
         xVec3Copy((xVec3*)&model->Mat->pos, (xVec3*)&animMat->pos);
 
-        for (S32 i = 1; i < model->BoneCount; i++)
+        for (i = 1; i < model->BoneCount; i++)
         {
             xMat4x3Copy((xMat4x3*)model->Mat + i, (xMat4x3*)animMat + i);
         }
@@ -538,7 +542,7 @@ void zFrag_ProjectileCollData(zFrag* frag)
 
     if ((colls.flags & 1) != 0)
     {
-        frag->info.projectile.tColl = frag->info.projectile.path.initVel.x;
+        frag->info.projectile.tColl = colls.dist;
         xVec3Copy(&frag->info.projectile.N, &colls.norm);
     }
     else
@@ -773,9 +777,13 @@ void zFrag_LightningManager(F32 dt)
 
     while (frag != NULL)
     {
-        zFrag* next = frag->next;
-        zLightning* inst = frag->info.lightning.lightning;
-        zFragLightningAsset* lasset = frag->info.lightning.fasset;
+        zFragLightningAsset* lasset;
+        zLightning* inst;
+        zFrag* next;
+
+        next = frag->next;
+        inst = frag->info.lightning.lightning;
+        lasset = frag->info.lightning.fasset;
 
         frag->lifetime -= dt;
         frag->alivetime += dt;

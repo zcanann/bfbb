@@ -110,7 +110,7 @@ static U8 _xCheckAnimNameInner(const char* name, const char* pattern, S32 patter
                     U8 first = 1;
                     S32 parenCount = 0;
 
-                    while (pattern[check] != NULL && parenCount > -1)
+                    while (pattern[check] != NULL && parenCount >= 0)
                     {
                         if (pattern[check] == '(')
                         {
@@ -385,10 +385,10 @@ float CalcRecipBlendMax(U16* arg0)
         }
         else
         {
-            f3 = 1.0f / (0.0009765625f * arg0[1]);
+            f3 = 1.0f / (arg0[1] / 1024.0f);
         }
 
-        f3 = 0.001f * arg0[0] + f3;
+        f3 = arg0[0] / 1024.0f + f3;
         if (f3 > max)
         {
             max = f3;
@@ -466,9 +466,10 @@ static void TransitionTimeInit(xAnimSingle* single, xAnimTransition* tran)
 {
     if (tran->Flags & 0x20)
     {
-        if ((tran->Dest->Data->FileFlags ^ single->State->Data->FileFlags) & 0x1000)
+        xAnimFile* destData = tran->Dest->Data;
+        if ((single->State->Data->FileFlags ^ destData->FileFlags) & 0x1000)
         {
-            single->Time = tran->Dest->Data->Duration - single->Time;
+            single->Time = destData->Duration - single->Time;
         }
     }
     else

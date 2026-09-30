@@ -90,7 +90,7 @@ struct zLightning
 
 extern _tagLightningAdd gLightningTweakAddInfo;
 
-void lightningTweakChangeType(tweak_info& t);
+void lightningTweakChangeType(const tweak_info& t);
 void zLightningInit();
 zLightning* zLightningAdd(_tagLightningAdd* add);
 void zLightningUpdate(F32 dt);

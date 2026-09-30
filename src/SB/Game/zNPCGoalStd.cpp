@@ -1,3 +1,4 @@
+#include "xDraw.h"
 #include "xMath.h"
 #include "xMathInlines.h"
 #include "zGlobals.h"
@@ -612,8 +613,174 @@ void zNPCGoalPatrol::PickTransition(S32* goal, en_trantype* trantype)
     }
 }
 
+void zNPCGoalPatrol::MoveNormal(F32 dt)
+{
+    zNPCCommon* npc = (zNPCCommon*)psyche->clt_owner;
+    xVec3 vec_dest;
+    xVec3 dir_dest;
+
+    npc->DBG_IsNormLog(eNPCDCAT_Eleven, -1);
+
+    xVec3Copy(&vec_dest, npc->nav_dest->PosGet());
+    xVec3Sub(&dir_dest, &vec_dest, xEntGetPos(npc));
+    if (npc->flg_move & (1 << 1))
+    {
+        dir_dest.y = 0.0f;
+    }
+
+    npc->ThrottleAccel(dt, 1, 0.75f);
+
+    F32 dist = dir_dest.length();
+    if (dist < 0.001f)
+    {
+        if (npc->flg_move & (1 << 1))
+        {
+            vec_dest.y = npc->frame->mat.pos.y;
+        }
+        xVec3Copy(&npc->frame->mat.pos, &vec_dest);
+        npc->frame->mode |= 1;
+        npc->frame->dpos = g_O3;
+        npc->frame->mode |= 2;
+        DoOnArriveStuff();
+        return;
+    }
+
+    xVec3 dir = dir_dest;
+    xVec3SMulBy(&dir_dest, 1.0f / dist);
+    F32 velmag = npc->spd_throttle;
+
+    if (dist > 3.0f)
+    {
+        xVec3 dir_move;
+        F32 rot = npc->TurnToFace(dt, &dir_dest, -1.0f);
+        NPCC_ang_toXZDir(npc->frame->rot.angle + rot, &dir_move);
+        npc->ThrottleApply(dt, &dir_move, 0);
+        if (npc->flg_move & (1 << 2))
+        {
+            F32 rat = npc->spd_throttle * dt / dist;
+            npc->frame->dpos.y += rat * dir.y;
+            npc->frame->mode |= 2;
+        }
+    }
+    else
+    {
+        npc->TurnToFace(dt, &dir_dest, 4.0f * PI);
+        if (dt * velmag > dist)
+        {
+            if (npc->flg_move & (1 << 1))
+            {
+                vec_dest.y = npc->frame->mat.pos.y;
+            }
+            xVec3Copy(&npc->frame->mat.pos, &vec_dest);
+            npc->frame->mode |= 1;
+            npc->frame->dpos = g_O3;
+            npc->frame->mode |= 2;
+            DoOnArriveStuff();
+        }
+        else
+        {
+            npc->frame->dpos = dir_dest * velmag * dt;
+            npc->frame->mode |= 2;
+        }
+    }
+}
+
+void zNPCGoalPatrol::MoveSpline(F32 dt)
+{
+    zNPCCommon* npc = (zNPCCommon*)psyche->clt_owner;
+    xSpline3* spl = npc->spl_mvptspline;
+
+    if (spl == NULL)
+    {
+        MoveNormal(dt);
+        return;
+    }
+
+    npc->DBG_IsNormLog(eNPCDCAT_Eleven, -1);
+    xVec3Copy(&npc->frame->vel, &g_O3);
+
+    F32 newdist = npc->spd_throttle * dt + npc->dst_curspline;
+    if (newdist >= npc->len_mvptspline)
+    {
+        xVec3 pos;
+        xVec3Copy(&pos, npc->nav_dest->PosGet());
+        npc->frame->mat.pos.x = pos.x;
+        npc->frame->mat.pos.z = pos.z;
+        if (!(npc->flg_move & (1 << 1)))
+        {
+            npc->frame->mat.pos.x = pos.y;
+        }
+        npc->frame->mode |= 1;
+        DoOnArriveStuff();
+        return;
+    }
+
+    xVec3 tgt;
+    xVec3 dir;
+    xQuat quat;
+    xQuat qold;
+    xMat3x3 tmpmat;
+
+    F32 u = xSpline3_EvalArcApprox(spl, newdist, 0, &tgt);
+    xSpline3_EvalSeg(spl, u, 1, &dir);
+    if (xVec3Length2(&dir) < 1e-6f)
+    {
+        if (u < 0.1f)
+        {
+            u += 0.01f;
+        }
+        else
+        {
+            u -= 0.01f;
+        }
+        xSpline3_EvalSeg(spl, u, 1, &dir);
+    }
+
+    xVec3Inv(&dir, &dir);
+    xMat3x3LookVec(&tmpmat, &dir);
+    xQuatFromMat(&quat, &tmpmat);
+    xQuatFromMat(&qold, &npc->frame->mat);
+
+    F32 qdot = xQuatDot(&quat, &qold);
+    if (qdot < 0.0f)
+    {
+        xQuatFlip(&quat, &quat);
+        qdot = -qdot;
+    }
+    if (qdot > 1.0f)
+    {
+        qdot = 1.0f;
+    }
+
+    F32 rotang = xacos(qdot);
+    if (2.0f * rotang <= PI * dt)
+    {
+        npc->frame->mode |= 0x10;
+        *(xMat3x3*)&npc->frame->mat = tmpmat;
+    }
+    else
+    {
+        xQuatSlerp(&quat, &qold, &quat, (PI * dt) / (2.0f * rotang));
+        xQuatNormalize(&quat, &quat);
+        xQuatToMat(&quat, &npc->frame->mat);
+    }
+
+    if (qdot > 0.86f)
+    {
+        npc->frame->dpos.x = tgt.x - npc->frame->mat.pos.x;
+        npc->frame->dpos.z = tgt.z - npc->frame->mat.pos.z;
+        if (!(npc->flg_move & (1 << 1)))
+        {
+            npc->frame->dpos.y = tgt.y - npc->frame->mat.pos.y;
+        }
+        npc->frame->mode |= 2;
+        npc->dst_curspline = newdist;
+    }
+}
+
 // Equivalent: scheduling
 void zNPCGoalPatrol::Chk_AutoSmooth()
+
 {
     zNPCCommon* npc = (zNPCCommon*)psyche->clt_owner;
 
@@ -662,6 +829,147 @@ void zNPCGoalPatrol::Chk_AutoSmooth()
     if (npc->XZDstSqToPos(npc->nav_dest->PosGet(), NULL, NULL) > ds2_min)
     {
         flg_patrol |= (1 << 4) | (1 << 3);
+    }
+}
+
+// Equivalent: scheduling of the -1.0f loads for TurnToFace
+void zNPCGoalPatrol::MoveAutoSmooth(F32 dt)
+
+{
+    zNPCCommon* npc = (zNPCCommon*)psyche->clt_owner;
+
+    if (npc->nav_curr == NULL || npc->nav_dest == NULL || npc->nav_lead == NULL)
+    {
+        flg_patrol &= ~(1 << 3);
+        MoveNormal(dt);
+        return;
+    }
+
+    if (npc->DBG_IsNormLog(eNPCDCAT_Eleven, -1))
+    {
+        xDrawSetColor(g_ORANGE);
+        for (S32 i = 0; i < 4; i++)
+        {
+            xDrawSphere(&pos_midpnt[i], 0.1f, 0xC0006);
+        }
+    }
+
+    if (flg_patrol & (1 << 4))
+    {
+        xVec3* refbase[4];
+        xVec3* refmid[4];
+
+        refbase[0] = npc->nav_past->PosGet();
+        refbase[1] = npc->nav_curr->PosGet();
+        refbase[2] = npc->nav_dest->PosGet();
+        refbase[3] = npc->nav_lead->PosGet();
+
+        F32 ds2_NtoD = npc->XZDstSqToPos(npc->nav_dest->PosGet(), NULL, NULL);
+        F32 ds2_CtoD = NPCC_DstSq(npc->nav_curr->PosGet(), npc->nav_dest->PosGet(), NULL);
+        if (ds2_NtoD < ds2_CtoD)
+        {
+            refbase[1] = npc->Pos();
+        }
+
+        for (S32 i = 0; i < 4; i++)
+        {
+            refmid[i] = &pos_midpnt[i];
+        }
+
+        NPCC_GenSmooth(refbase, refmid);
+        flg_patrol &= ~(1 << 4);
+        idx_midpnt = 0;
+    }
+
+    xVec3 pos_dest;
+    xVec3 vec_dest;
+
+    xVec3Copy(&pos_dest, &pos_midpnt[idx_midpnt]);
+    xVec3Sub(&vec_dest, &pos_dest, xEntGetPos(npc));
+    if (npc->flg_move & (1 << 1))
+    {
+        vec_dest.y = 0.0f;
+    }
+
+    F32 dst_trav = dt * npc->spd_throttle;
+    npc->frame->mode = 0;
+
+    F32 dist = xVec3Length(&vec_dest);
+    if (dist < 0.001f || dist < dst_trav)
+    {
+        npc->frame->dpos.x = pos_dest.x - npc->frame->mat.pos.x;
+        npc->frame->dpos.z = pos_dest.z - npc->frame->mat.pos.z;
+        if (!(npc->flg_move & (1 << 1)))
+        {
+            npc->frame->dpos.y = pos_dest.y - npc->frame->mat.pos.y;
+        }
+        npc->frame->mode |= 2;
+
+        if (idx_midpnt == 3)
+        {
+            DoOnArriveStuff();
+            flg_patrol |= (1 << 4);
+        }
+        else
+        {
+            idx_midpnt++;
+        }
+    }
+    else if (idx_midpnt != 3 && dist > 2.0f)
+    {
+        xVec3 dir_dest = vec_dest / dist;
+        F32 rot = npc->TurnToFace(dt, &dir_dest, -1.0f);
+
+        xVec3 dir_travel;
+        NPCC_ang_toXZDir(npc->frame->rot.angle + rot, &dir_travel);
+
+        F32 rat = xVec3Dot(&dir_travel, NPCC_faceDir(npc));
+        if (rat > 0.86f)
+        {
+            npc->ThrottleAccel(dt, 1, 0.75f);
+        }
+        else if (xabs(dir_dest.y) > 0.1f)
+        {
+            npc->ThrottleAccel(dt, 1, 0.75f);
+        }
+        else
+        {
+            npc->ThrottleAccel(dt, 1, 0.25f);
+        }
+
+        npc->ThrottleApply(dt, &dir_travel, 0);
+        if (npc->flg_move & (1 << 2))
+        {
+            F32 rat = npc->spd_throttle * dt / dist;
+            npc->frame->dpos.y = rat * vec_dest.y;
+            npc->frame->mode |= 2;
+        }
+    }
+    else
+    {
+        xVec3 dir_dest = vec_dest / dist;
+        npc->TurnToFace(dt, &dir_dest, -1.0f);
+
+        F32 dot = xVec3Dot(&dir_dest, NPCC_faceDir(npc));
+        if (dot > 0.5f)
+        {
+            npc->ThrottleAccel(dt, 1, 0.75f);
+        }
+        else
+        {
+            npc->ThrottleAccel(dt, 1, 0.25f);
+        }
+
+        if (npc->flg_move & (1 << 1))
+        {
+            npc->frame->dpos.x = dt * (dir_dest.x * npc->spd_throttle);
+            npc->frame->dpos.z = dt * (dir_dest.z * npc->spd_throttle);
+        }
+        else
+        {
+            npc->frame->dpos = dir_dest * npc->spd_throttle * dt;
+        }
+        npc->frame->mode |= 2;
     }
 }
 
@@ -750,7 +1058,6 @@ S32 zNPCGoalWander::Resume(F32 dt, void* updCtxt)
     return zNPCGoalCommon::Resume(dt, updCtxt);
 }
 
-// Equivalent: stack offsets, fmuls register order
 S32 zNPCGoalWander::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene)
 {
     S32 nextgoal = 0;
@@ -761,6 +1068,7 @@ S32 zNPCGoalWander::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene
     tmr_minwalk = MAX(-1.0f, tmr_minwalk - dt);
 
     xVec3 delta;
+    xVec3 dir;
     xVec3 vec_dest;
 
     if (tmr_minwalk < 0.0f)
@@ -819,21 +1127,25 @@ S32 zNPCGoalWander::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene
     }
 
     npc->ThrottleAccel(dt, 1, 0.75f);
-    NPCC_ang_toXZDir(npc->frame->rot.angle + npc->TurnToFace(dt, &dir_cur, -1.0f), &vec_dest);
-    npc->ThrottleApply(dt, &vec_dest, 0);
+    F32 drot = npc->TurnToFace(dt, &dir_cur, -1.0f);
+    NPCC_ang_toXZDir(npc->frame->rot.angle + drot, &dir);
+    npc->ThrottleApply(dt, &dir, 0);
     flg_wand &= ~(1 << 1);
 
     if (npc->flg_move & (1 << 2))
     {
-        F32 dVar7 = npc->XYZDstSqToPos(&pos_home, &vec_dest);
-        F32 spd_dt = npc->spd_throttle * dt;
+        F32 dist = npc->XYZDstSqToPos(&pos_home, &vec_dest);
+        F32 rate = npc->spd_throttle * dt;
         if (flg_wand & (1 << 1))
         {
-            VerticalWander(spd_dt, &vec_dest);
+            VerticalWander(rate, &vec_dest);
         }
         else if (iabs(vec_dest.y) > 0.1f)
         {
-            npc->frame->dpos.y = vec_dest.y * (spd_dt / dVar7);
+            F32 rat = rate / dist;
+            npc->frame->dpos.y = rat * vec_dest.y;
+
+
             npc->frame->mode |= 2;
         }
     }
@@ -843,13 +1155,64 @@ S32 zNPCGoalWander::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene
     return xGoal::Process(trantype, dt, updCtxt, NULL);
 }
 
-// Equivalent: regalloc
+void zNPCGoalWander::VerticalWander(F32 spd_dt, const xVec3* vec_dest)
+{
+    zNPCCommon* npc = (zNPCCommon*)psyche->clt_owner;
+
+    if (!(flg_wand & (1 << 2) | (1 << 3)))
+    {
+        flg_wand |= (1 << 2);
+    }
+
+    if (vec_dest->y > 0.0f)
+    {
+        npc->frame->dpos.y = spd_dt * vec_dest->y;
+        npc->frame->mode |= 2;
+        flg_wand &= ~((1 << 2) | (1 << 3));
+        flg_wand |= (1 << 2);
+    }
+    else if (vec_dest->y + 2.25f < 0.0f)
+    {
+        npc->frame->dpos.y = spd_dt * vec_dest->y;
+        npc->frame->mode |= 2;
+        flg_wand &= ~((1 << 2) | (1 << 3));
+        flg_wand |= (1 << 3);
+    }
+    else
+    {
+        F32 rat_hyt = vec_dest->y / 2.25f;
+        if (flg_wand & (1 << 2))
+        {
+            F32 ang = PI * (0.5f * rat_hyt);
+
+            F32 rat = CLAMP(xabs(isin(ang)), 0.0f, 1.0f);
+            npc->frame->mat.pos.y = 2.25f * rat + pos_home.y;
+            if (rat > 0.9f)
+            {
+                flg_wand &= ~((1 << 2) | (1 << 3));
+                flg_wand |= (1 << 3);
+            }
+        }
+        else if (flg_wand & (1 << 3))
+        {
+            F32 ang = PI * (0.5f * rat_hyt + 0.5f);
+            F32 rat = CLAMP(xabs(isin(ang)), 0.0f, 1.0f);
+            npc->frame->mat.pos.y = 2.25f * rat + pos_home.y;
+            if (rat < 0.1f)
+            {
+                flg_wand &= ~((1 << 2) | (1 << 3));
+                flg_wand |= (1 << 3);
+            }
+        }
+    }
+}
+
 void zNPCGoalWander::CalcNewDir()
+
+
 {
     zNPCCommon* npc = (zNPCCommon*)psyche->clt_owner;
     xVec3 direction;
-    xVec3* player_pos;
-    xVec3* npc_pos;
 
     F32 dVar4 = NPCC_aimVary(&dir_cur, xEntGetPos(npc), &pos_home, rad_wand, 0, NULL);
     if (npc->flg_move & (1 << 1))
@@ -858,9 +1221,8 @@ void zNPCGoalWander::CalcNewDir()
     }
     if (dVar4 < rad_wand)
     {
-        npc_pos = xEntGetPos(npc);
-        player_pos = xEntGetPos(&globals.player.ent);
-        xVec3Sub(&direction, player_pos, npc_pos);
+        xVec3Sub(&direction, xEntGetPos(&globals.player.ent), xEntGetPos(npc));
+
 
         F32 length = xVec3Length(&direction);
         if (length < 1.0f)

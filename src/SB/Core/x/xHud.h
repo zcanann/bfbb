@@ -88,7 +88,10 @@ namespace xhud
         virtual void setup() { presetup(); }
         virtual void update(F32 dt) { updater(dt); }
         virtual void render() {}
-        virtual void dispatch(xBase* b1, U32 event, const F32* toParam, xBase* b2);
+        virtual void dispatch(xBase* b1, U32 event, const F32* toParam, xBase* b2)
+        {
+            dispatcher(b1, event, toParam, b2);
+        }
 
         motive_node* _motive_top;
         motive_node* _motive_temp;

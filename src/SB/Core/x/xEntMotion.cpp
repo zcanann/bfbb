@@ -30,7 +30,6 @@ static void xEntMechMove(xEntMotion* motion, xScene* sc, F32 dt, xEntFrame* fram
 static void xEntPenMove(xEntMotion* motion, xScene* sc, F32 dt, xEntFrame* frame);
 static U32 xEntSldMove(xEntMotion* motion, xScene* sc, F32 dt, xEntFrame* frame);
 static U32 xEntRotMove(xEntMotion* motion, xScene* sc, F32 dt, xEntFrame* frame);
-void xMat4x3Rot(xMat4x3* m, xVec3* a, F32 t, xVec3* p);
 char* xbtoa(U32 param);
 
 void xEntMotionInit(xEntMotion* motion, xEnt* owner, xEntMotionAsset* asset)
@@ -1004,8 +1003,7 @@ void xEntMotionDebugAdd(xEntMotion* motion)
 {
     if (dbg_num < dbg_num_allocd)
     {
-        dbg_num++;
-        dbg_xems[dbg_num] = motion;
+        dbg_xems[dbg_num++] = motion;
     }
 }
 

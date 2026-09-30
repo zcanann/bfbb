@@ -24,9 +24,9 @@ struct UVAModelInfo
     void UVVelSet(float, float);
     S32 GetUV(RwTexCoords*& coords, S32& numVertices, RpAtomic* model) const;
     void SetColor(iColor_tag);
-    void Update(F32, xVec2*);
-    S32 Valid();
-    S32 Init(RpAtomic*, S32);
+    void Update(F32, const xVec2*);
+    S32 Valid() const;
+    S32 Init(RpAtomic*, U32);
 };
 
 struct NPCHazard;
@@ -315,6 +315,7 @@ struct NPCHazard
     void ColResp_Default(xSweptSphere* swdata, F32 tym_inFuture);
     void CollideResponse(xSweptSphere* swdata, F32 tym_inFuture);
     void Discard();
+    void Timestep(F32 dt);
 
     RwV3d* At() const
     {

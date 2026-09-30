@@ -1286,10 +1286,10 @@ static void InvReset()
     // FIXME: Use some macro for the world count. WORLD_COUNT is local to zUI and hard to move
     for (U32 i = 0; i < 15; i++)
     {
+        U32& maxsocks = globals.player.Inv_PatsSock_Max[i];
         globals.player.Inv_PatsSock[i] = 0;
         globals.player.Inv_LevelPickups[i] = 0;
-        globals.player.Inv_PatsSock_Max[i] = 0;
-        U32& maxsocks = globals.player.Inv_PatsSock_Max[i];
+        maxsocks = 0;
         const char* level_prefix = zSceneGetLevelPrefix(i);
         if (level_prefix == NULL)
         {
@@ -1297,12 +1297,14 @@ static void InvReset()
         }
 
         U32 level_mask = level_prefix[0] << 0x18 | level_prefix[1] << 0x10;
-        for (const sock* s = patsock_totals; s != NULL; s++)
+        const sock* s = patsock_totals;
+        while (s->level != 0)
         {
             if (level_mask == s->level)
             {
                 maxsocks = s->total;
             }
+            s++;
         }
     }
 
@@ -1745,8 +1747,8 @@ static U32 BbowlCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
     zEntPlayer_SNDStop(ePlayerSnd_SlipLoop);
 
     xEntFrame* frame = globals.player.ent.frame;
-    F32 x = (frame->mat.pos.x - frame->oldmat.pos.x) * last_update_dt;
-    F32 z = (frame->mat.pos.z - frame->oldmat.pos.z) * last_update_dt;
+    F32 x = (frame->mat.pos.x - frame->oldmat.pos.x) / last_update_dt;
+    F32 z = (frame->mat.pos.z - frame->oldmat.pos.z) / last_update_dt;
     F32 speed2 = x * x + z * z;
 
     if (speed2 < globals.player.g.BubbleBowlMinSpeed * globals.player.g.BubbleBowlMinSpeed)
@@ -2375,18 +2377,14 @@ static U32 DblJumpCB(xAnimTransition*, xAnimSingle*, void*)
 
     if (tslide_inair_tmr)
     {
-        // load order swap
-        F32 dirx = update_motion.x;
-        F32 dirz = update_motion.z;
-        F32 dbldirx = SQR(dirx);
-        F32 dbldirz = SQR(dirz);
-
+        F32 dirx;
+        F32 dirz;
         F32 speed;
-        F32 dblspeed;
-        F32 len2 = dbldirx + dbldirz;
+        F32 len2 = SQR(update_motion.x) + SQR(update_motion.z);
         if (xabs(len2 - 1.0f) <= 0.00001f)
         {
             dirx = update_motion.x;
+            dirz = update_motion.z;
             speed = 1.0f;
         }
         else if (xabs(len2) <= 0.00001f)
@@ -2397,18 +2395,19 @@ static U32 DblJumpCB(xAnimTransition*, xAnimSingle*, void*)
         }
         else
         {
-            speed = xsqrt(dbldirx + dbldirz);
-            dirx = update_motion.x * (1.0f / speed);
-            dirz = update_motion.z * (1.0f / speed);
+            speed = xsqrt(len2);
+            F32 inv = 1.0f / speed;
+            dirx = update_motion.x * inv;
+            dirz = update_motion.z * inv;
         }
 
-        F32 len_inv = speed / update_dt;
+        speed /= update_dt;
         if (globals.player.g.SlideVelDblBoost *
                 (dirx * globals.player.SlideTrackDir.x + dirz * globals.player.SlideTrackDir.z) >
-            len_inv)
+            speed)
         {
-            globals.player.ent.frame->vel.x += dirx * len_inv;
-            globals.player.ent.frame->vel.z += dirz * len_inv;
+            globals.player.ent.frame->vel.x += dirx * speed;
+            globals.player.ent.frame->vel.z += dirz * speed;
             tslide_dbl_tmr = update_dt;
         }
     }
@@ -3273,7 +3272,7 @@ static U32 LassoThrowCB(xAnimTransition*, xAnimSingle*, void* object)
 
     xVec3SMul(&sLasso->tgNormal, (xVec3*)&ent->model->Mat->at, -sLassoInfo->dist);
     // Result is being subtracted from original instead of negated and added
-    sLasso->tgNormal.y += -(4.0f * sLassoInfo->dist - 5.0f);
+    sLasso->tgNormal.y += 5.0f - 4.0f * sLassoInfo->dist;
     xVec3Normalize(&sLasso->tgNormal, &sLasso->tgNormal);
     xVec3Copy(&sLasso->tgCenter, &sLasso->stCenter);
     xVec3AddScaled(&sLasso->tgCenter, (xVec3*)&ent->model->Mat->at, 0.5f * -sLassoInfo->dist);
@@ -3303,7 +3302,7 @@ static U32 LassoFlyCB(xAnimTransition*, xAnimSingle*, void* object)
 
         xVec3SMul(&sLasso->tgNormal, (xVec3*)&ent->model->Mat->at, 1.0f);
         // Result is being subtracted from original instead of negated and added
-        sLasso->tgNormal.y += -(4.0f * sLassoInfo->dist - 5.0f);
+        sLasso->tgNormal.y += 5.0f - 4.0f * sLassoInfo->dist;
         xVec3Normalize(&sLasso->tgNormal, &sLasso->tgNormal);
     }
     else
@@ -4795,35 +4794,33 @@ static void zEntPlayerJumpLand(xEnt* ent)
 {
     F32 diff;
     F32 vol;
-    F32 tempFloat;
 
     globals.player.JumpState = 0;
     globals.player.SlideNotGroundedSinceSlide = 0;
     zEntPlayerControlOn(CONTROL_OWNER_SPRINGBOARD);
 
-    tempFloat = 0.0f;
-    diff = -ent->frame->vel.y;
-    vol = diff - 0.5f;
+    diff = -ent->frame->vel.y - 5.0f;
 
-    if (tempFloat <= vol)
+    if (diff <= 0.0f)
     {
-        if (vol >= 10.0f)
-        {
-            tempFloat = vol / 10.0f;
-        }
-        else
-        {
-            tempFloat = 1.0f;
-        }
+        vol = 0.0f;
+    }
+    else if (diff >= 10.0f)
+    {
+        vol = 1.0f;
+    }
+    else
+    {
+        vol = diff / 10.0f;
     }
 
-    if ((0.0f > tempFloat) && (globals.sceneCur->sceneID != 'MNU3'))
+    if (vol > 0.0f && globals.sceneCur->sceneID != 'MNU3')
     {
         zEntPlayer_SNDPlay(ePlayerSnd_Land, 0.0f);
-        zEntPlayer_SNDSetVol(ePlayerSnd_Land, tempFloat);
-        if (12.0f > vol)
+        zEntPlayer_SNDSetVol(ePlayerSnd_Land, vol);
+        if (diff > 12.0f)
         {
-            zPadAddRumble(eRumble_VeryLight, vol * 0.008f, 0, 0);
+            zPadAddRumble(eRumble_VeryLight, 0.008f * diff, 0, 0);
         }
     }
 }
