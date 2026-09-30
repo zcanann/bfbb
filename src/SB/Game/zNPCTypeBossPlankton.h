@@ -135,7 +135,7 @@ struct zNPCBPlankton : zNPCBoss
     void stun();
     void update_turn(F32);
     void update_move(F32);
-    void check_player_damage();
+    bool check_player_damage();
     void reset_territories();
     void update_animation(F32);
     void update_follow(F32);
@@ -148,18 +148,25 @@ struct zNPCBPlankton : zNPCBoss
     void reset_beam();
     void vanish();
     void reappear();
-    U32 crony_attacking() const;
+    bool crony_attacking() const;
     void next_territory();
-    S32 have_cronies() const;
-    S32 player_left_territory();
+    bool have_cronies() const;
+    bool move_to_player_territory();
+    bool player_left_territory() const;
+    bool cronies_dead() const;
     void say(int, int, bool);
     void sickum();
-    void aim_gun(xAnimPlay*, xQuat*, xVec3*, int);
+    static void aim_gun(xAnimPlay* play, xQuat* quat, xVec3* tran, int tranCount);
     void here_boy();
     void follow_player();
     void follow_camera();
     void reset_speed();
     void refresh_orbit();
+    F32 orbit_yaw_offset(const xVec3& p0, const xVec3& p1) const;
+    xVec3 random_orbit(const xVec3& loc, F32 min_ang, F32 max_ang) const;
+    xVec3 player_orbit() const;
+    void halt(F32 accel);
+    void fall(F32 accel, F32 max_vel);
 
     xVec3& location() const;
     void face_player();

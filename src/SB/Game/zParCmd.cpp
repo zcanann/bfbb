@@ -101,14 +101,13 @@ void xParCmdPlayerCollision_Update(xParCmd* c, xParGroup* ps, F32 dt)
 
 void xParCmdAnimalMagentism_Update(xParCmd* c, xParGroup* ps, float dt)
 {
-    xPar* p = ps->m_root;
     xParCmdAnimalMagnetism* cmd = (xParCmdAnimalMagnetism*)c->tasset;
-
+    xPar* p;
     xVec3 pos = *xEntGetPos(&globals.player.ent);
     pos.y += 1.0f;
 
     F32 mul = dt * -cmd->unknown;
-    for (; p != NULL; p = p->m_next)
+    for (p = ps->m_root; p != NULL; p = p->m_next)
     {
         xVec3 vec;
         vec.x = p->m_pos.x - pos.x;
@@ -327,11 +326,11 @@ void xParCmdCustom_Update(xParCmd* c, xParGroup* ps, float dt)
                 continue;
             }
 
-            F32 oorSqr = xsqrt(rSqr + 0.001f);
+            F32 oorSqr = mdt / xsqrt(rSqr + 0.001f);
             r.x = r.x < 0.0f ? 1.0f : -1.0f;
             r.z = r.z < 0.0f ? 1.0f : -1.0f;
 
-            p->m_size = 1.0f / (10.0f * (mdt / oorSqr) * (r.x + r.z));
+            p->m_size = 1.0f / (10.0f * oorSqr * (r.x + r.z));
         }
         break;
     case 2:

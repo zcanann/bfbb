@@ -210,70 +210,65 @@ void zGridUpdateEnt(xEnt* ent)
     S32 oversize = 0;
     xGrid* grid = NULL;
 
-    // case 2 and 3 need to use `cntlzw` but are `mr` currently
     switch (ent->gridb.ingrid)
     {
     case 1:
         grid = &colls_grid;
         break;
     case 2:
-        oversize = (2 - ent->gridb.oversize) >> 5 & 0xFF;
         grid = &colls_oso_grid;
+        oversize = (ent->gridb.oversize == 2);
         break;
     case 3:
-        oversize = (1 - ent->gridb.oversize) >> 5 & 0xFF;
         grid = &npcs_grid;
+        oversize = (ent->gridb.oversize == 1);
         break;
     default:
         break;
     }
 
-    if ((ent->chkby & 0x98) == 0)
+    if ((ent->chkby & 0x98) || ent->baseType == eBaseTypePickup)
     {
-        if ((ent->baseType == eBaseTypePickup) && (grid != NULL))
+        if (grid != NULL)
         {
             if (oversize == 0)
             {
                 xGridUpdate(grid, ent);
             }
-            else if (ent->collType == XENT_COLLTYPE_NPC)
+        }
+        else if (ent->collType == XENT_COLLTYPE_NPC)
+        {
+            if (xGridEntIsTooBig(&npcs_grid, ent))
             {
-                oversize = xGridEntIsTooBig(&npcs_grid, ent);
-                if (oversize)
-                {
-                    ent->gridb.oversize = 1;
-                }
-                else
-                {
-                    ent->gridb.oversize = 0;
-                }
-                xGridAdd(&npcs_grid, ent);
+                ent->gridb.oversize = 1;
             }
             else
             {
-                oversize = xGridEntIsTooBig(&colls_grid, ent);
-                if (oversize)
+                ent->gridb.oversize = 0;
+            }
+            xGridAdd(&npcs_grid, ent);
+        }
+        else
+        {
+            if (xGridEntIsTooBig(&colls_grid, ent))
+            {
+                if (xGridEntIsTooBig(&colls_oso_grid, ent))
                 {
-                    oversize = xGridEntIsTooBig(&colls_oso_grid, ent);
-                    if (oversize)
-                    {
-                        ent->gridb.oversize = 2;
-                    }
-                    else
-                    {
-                        ent->gridb.oversize = 1;
-                    }
-                    xGridAdd(&colls_oso_grid, ent);
+                    ent->gridb.oversize = 2;
                 }
                 else
                 {
-                    xGridAdd(&colls_grid, ent);
-                    ent->gridb.oversize = 0;
+                    ent->gridb.oversize = 1;
                 }
+                xGridAdd(&colls_oso_grid, ent);
+            }
+            else
+            {
+                xGridAdd(&colls_grid, ent);
+                ent->gridb.oversize = 0;
             }
         }
     }
-
     else if (grid != NULL)
     {
         xGridRemove(&ent->gridb);

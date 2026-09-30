@@ -1297,14 +1297,12 @@ static void InvReset()
         }
 
         U32 level_mask = level_prefix[0] << 0x18 | level_prefix[1] << 0x10;
-        const sock* s = patsock_totals;
-        while (s->level != 0)
+        for (const sock* s = patsock_totals; s->level != 0; s++)
         {
             if (level_mask == s->level)
             {
                 maxsocks = s->total;
             }
-            s++;
         }
     }
 
@@ -2886,9 +2884,8 @@ void zEntPlayerSpeakStart(U32 sndid, U32, S32 anim)
         player_talk.time = 0.0f;
         if (anim < 0 || anim >= globals.player.s->talk_anims)
         {
-            // wtf is happening here
             U8 filter_size = globals.player.s->talk_filter_size;
-            U32 which = (xrand() >> 13); // / filter_size;
+            U32 which = xrand() >> 13;
             player_talk.anim = globals.player.s->talk_filter[which % filter_size];
         }
         else
@@ -4439,14 +4436,30 @@ static void zEntPlayerCheckShoePop()
 {
     xEnt& ent = globals.player.ent;
     xModelInstance** mlist;
-    S32 bone_index[2];
-    xModelInstance* model_index[2];
     S32 i;
     S32 bone;
     xModelInstance* m;
 
     if (globals.player.IsBubbleBouncing != 0)
     {
+        mlist = globals.player.sb_models;
+        S32 bone_index[2] = { 38, 42 };
+        xModelInstance* model_index[2] = { mlist[8], mlist[9] };
+
+        for (i = 0; i < 2; i++)
+        {
+            m = model_index[i];
+            bone = bone_index[i];
+
+            if (!(m->Flags & 1))
+            {
+                xMat4x3Mul((xMat4x3*)m->Mat, (xMat4x3*)&ent.model->Mat[bone],
+                           (xMat4x3*)ent.model->Mat);
+                zFX_SpawnBubbleHit((xVec3*)&m->Mat->pos, 10);
+            }
+
+            globals.player.IsBubbleBouncing = 0;
+        }
     }
 }
 

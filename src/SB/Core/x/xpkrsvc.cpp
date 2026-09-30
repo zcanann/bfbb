@@ -516,6 +516,39 @@ S32 PKR_layerTypeNeedsXForm(en_LAYER_TYPE layer)
     }
 }
 
+// Debug helper; unreferenced in the final game (stripped at link time), but its
+// strings still lead the pooled string table.
+char* PKR_LayerTypeName(en_LAYER_TYPE layer)
+{
+    switch (layer)
+    {
+    case PKR_LTYPE_DEFAULT:
+        return "DEFAULT";
+    case PKR_LTYPE_TEXTURE:
+        return "TEXTURE";
+    case PKR_LTYPE_BSP:
+        return "BSP";
+    case PKR_LTYPE_MODEL:
+        return "MODEL";
+    case PKR_LTYPE_ANIMATION:
+        return "ANIMATION";
+    case PKR_LTYPE_VRAM:
+        return "VRAM";
+    case PKR_LTYPE_SRAM:
+        return "SRAM";
+    case PKR_LTYPE_SNDTOC:
+        return "SNDTOC";
+    case PKR_LTYPE_CUTSCENE:
+        return "CUTSCENE";
+    case PKR_LTYPE_CUTSCENETOC:
+        return "CUTSCENETOC";
+    case PKR_LTYPE_JSPINFO:
+        return "JSPINFO";
+    default:
+        return "<unknown>";
+    }
+}
+
 S32 PKR_findNextLayerToLoad(st_PACKER_READ_DATA** work_on_pkg, st_PACKER_LTOC_NODE** next_layer)
 {
     st_PACKER_READ_DATA* tmppr;
@@ -1764,5 +1797,5 @@ void PKR_pop_memmark()
 
 char* st_PACKER_ATOC_NODE::Name() const
 {
-    return "<Unknown>";
+    return "<unknown>";
 }

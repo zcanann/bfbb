@@ -8,6 +8,8 @@
 #include "zMusic.h"
 #include "zGlobals.h"
 #include "zScene.h"
+#include "xutil.h"
+#include "xGroup.h"
 #include "xDebug.h"
 #include "zNPCSndLists.h"
 #include "string.h"
@@ -248,6 +250,8 @@ namespace
             NULL
         },
     };
+
+    static const S32 bored_anims[2] = { ANIM_Idle02, ANIM_Idle03 };
 
     static const U8 sound_flags[11] = { 0x1, 0x0, 0x0, 0x0, 0x0,
                                         0x0, 0x1, 0x1, 0x0, 0x0, 0x0};
@@ -1809,6 +1813,69 @@ void zNPCKingJelly::set_life(S32 life)
 
 }
 
+U32 zNPCKingJelly::AnimPick(S32 rawgoal, en_NPC_GOAL_SPOT gspot, xGoal* goal)
+{
+    U32 anim = 0;
+    S32 index;
+
+    switch (rawgoal)
+    {
+    case NPC_GOAL_KJIDLE:
+        index = ANIM_Idle01;
+        break;
+    case NPC_GOAL_KJBORED:
+        index = xUtil_choose<S32>(bored_anims, 2, NULL);
+        break;
+    case NPC_GOAL_KJSPAWNKIDS:
+        index = ANIM_SpawnKids01;
+        break;
+    case NPC_GOAL_KJTAUNT:
+        index = ANIM_Taunt01;
+        break;
+    case NPC_GOAL_KJSHOCKGROUND:
+        index = ANIM_AttackWindup01;
+        break;
+    case NPC_GOAL_KJDAMAGE:
+        index = ANIM_Damage01;
+        break;
+    case NPC_GOAL_KJDEATH:
+        index = -1;
+        break;
+    default:
+        index = ANIM_Idle01;
+        break;
+    }
+
+    if (index > -1)
+    {
+        anim = g_hash_subbanim[index];
+    }
+
+    return anim;
+}
+
+void zNPCKingJelly::add_child(xBase& child, S32 wave)
+{
+    switch (child.baseType)
+    {
+    case eBaseTypeNPC:
+        init_child(children[children_size], (zNPCCommon&)child, wave);
+        children_size++;
+        break;
+    case eBaseTypeGroup:
+    {
+        U32 i = 0;
+        U32 size = xGroupGetCount((xGroup*)&child);
+        for (; i < size; ++i)
+        {
+            xBase* item = xGroupGetItemPtr((xGroup*)&child, i);
+            add_child(*item, wave);
+        }
+        break;
+    }
+    }
+}
+
 void zNPCKingJelly::init_child(zNPCKingJelly::child_data& child, zNPCCommon& npc, int wave)
 {
     child.npc = &npc;
@@ -1852,6 +1919,25 @@ void zNPCKingJelly::ParseLinks()
             add_child(*zSceneFindObject(it->dstAssetID), (S32)it->param[0]);
         }
     }
+}
+
+void zNPCKingJelly::start_fight()
+{
+    if (flag.fighting)
+    {
+        return;
+    }
+
+    flag.fighting = true;
+    show_attack_model();
+    fade_curtain();
+    play_sound(0, (xVec3*)&model->Mat->pos);
+    play_sound(7, (xVec3*)&model->Mat->pos);
+    zMusicSetVolume(tweak.music_fade, tweak.music_fade_delay);
+    zCameraDisableTracking(CO_BOSS);
+    boss_cam.start(globals.camera);
+    boss_cam.set_targets(*(xVec3*)&globals.player.ent.model->Mat->pos, bound.sph.center,
+                         bound.sph.r);
 }
 
 bool zNPCKingJelly::bored() const
@@ -2121,6 +2207,30 @@ S32 zNPCGoalKJBored::Enter(float dt, void* updCtxt)
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
+S32 zNPCGoalKJBored::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
+    xAnimState* anim = kj.AnimCurState();
+
+    bool found = false;
+    for (S32 i = 0; i < 2; i++)
+    {
+        if (anim->ID == g_hash_subbanim[bored_anims[i]])
+        {
+            found = true;
+            break;
+        }
+    }
+
+    if (found && dt > kj.AnimTimeRemain(NULL))
+    {
+        *trantype = GOAL_TRAN_SET;
+        return NPC_GOAL_KJSHOCKGROUND;
+    }
+
+    return xGoal::Process(trantype, dt, updCtxt, xscn);
+}
+
 S32 zNPCGoalKJBored::Exit(float dt, void* updCtxt)
 {
     return xGoal::Exit(dt, updCtxt);
@@ -2155,6 +2265,20 @@ S32 zNPCGoalKJTaunt::Enter(float dt, void* updCtxt)
     play_sound(9, (xVec3*)&kj.model->Mat->pos);
     play_sound(9, (xVec3*)&kj.model->Mat->pos);
     return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalKJTaunt::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
+    xAnimState* anim = kj.AnimCurState();
+
+    if (anim->ID == g_hash_subbanim[ANIM_Taunt01] && dt > kj.AnimTimeRemain(NULL))
+    {
+        *trantype = GOAL_TRAN_SET;
+        return NPC_GOAL_KJIDLE;
+    }
+
+    return xGoal::Process(trantype, dt, updCtxt, xscn);
 }
 
 S32 zNPCGoalKJTaunt::Exit(float dt, void* updCtxt)

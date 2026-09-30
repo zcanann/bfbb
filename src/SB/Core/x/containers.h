@@ -152,10 +152,9 @@ template <class T> struct static_queue
     {
         if (it._it == _first)
         {
-            U32 orig_size = _size;
-            U32 orig_first = _first;
+            U32 end = _first + _size;
             _first = other._it;
-            _size = mod_max_size((orig_first + orig_size) - _first);
+            _size = mod_max_size(end - _first);
         }
         else
         {

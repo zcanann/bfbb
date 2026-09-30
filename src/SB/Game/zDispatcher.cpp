@@ -75,7 +75,7 @@ st_ZDISPATCH_DATA* zDispatcher_memPool(S32 cnt)
     else
     {
         pool = (st_ZDISPATCH_DATA*)xMemAlloc(gActiveHeap, cnt * sizeof(st_ZDISPATCH_DATA), 0);
-        memset(pool, 0, cnt * sizeof(st_ZDISPATCH_DATA));
+        memset(pool, 0, sizeof(st_ZDISPATCH_DATA) * cnt);
         depot->raw_pool = pool;
         depot->raw_cnt = cnt;
         return pool;

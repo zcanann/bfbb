@@ -91,8 +91,8 @@ struct zNPCSpawner : RyzMemData
     void ClearActive();
     void ClearPending();
     SMNPCStatus* NextPendingNPC(S32 arg0);
-    st_XORDEREDARRAY* FillPending();
-    st_XORDEREDARRAY* ReFillPending();
+    S32 FillPending();
+    S32 ReFillPending();
 
     void SetNPCStatus(zNPCCommon* npc, en_SM_NPC_STATUS status);
 

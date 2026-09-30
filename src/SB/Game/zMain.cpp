@@ -2,7 +2,7 @@
 #include "zGlobals.h"
 #include "zMain.h"
 
-#include <PowerPC_EABI_Support/MSL_C/MSL_Common/printf.h>
+#include <stdio.h>
 #include <types.h>
 
 #include "iSystem.h"
@@ -37,8 +37,10 @@ S32 percentageDone;
 _tagxPad* gDebugPad;
 static S32 sShowMenuOnBoot;
 S32 gGameSfxReport;
-static st_SERIAL_PERCID_SIZE* g_xser_sizeinfo;
+static st_SERIAL_PERCID_SIZE g_xser_sizeinfo[3] = { { 'PLYR', 0x148 }, { 'CNTR', 0x1e0 }, { 0, 0 } };
 U32 gSoak;
+
+static const basic_rect<F32> screen_bounds = { 0.0f, 0.0f, 1.0f, 1.0f };
 
 static void zLedgeAdjust(zLedgeGrabParams* params);
 void zMainMemCardRenderText(const char*, bool);
@@ -66,7 +68,7 @@ void main(S32 argc, char** argv)
     zMainReadINI();
     iFuncProfileParse(tmpStr = "scooby.elf", globals.profile);
     xUtilStartup();
-    xSerialStartup(0x80, (st_SERIAL_PERCID_SIZE*)&g_xser_sizeinfo);
+    xSerialStartup(0x80, g_xser_sizeinfo);
     zDispatcher_Startup();
     xScrFxInit();
     xFXStartup();
@@ -78,8 +80,8 @@ void main(S32 argc, char** argv)
     zCameraTweakGlobal_Init();
     globals.option_vibration = 1; // 0x6c0
     globals.pad0 = xPadEnable(globals.currentActivePad); // 0x6d1
-    globals.pad1 = 0;
-    gDebugPad = 0;
+    globals.pad1 = NULL;
+    gDebugPad = NULL;
     xPadRumbleEnable(globals.currentActivePad, globals.option_vibration); //  0x6d1, 0x6c0
     xSGStartup();
     xDebugTimestampScreen();
@@ -793,6 +795,54 @@ void zMainReadINI()
 
 void zMainFirstScreen(S32 mode)
 {
+    RwCamera* cam = iCameraCreate(640, 480, 0);
+    RwRGBA colour = {};
+
+    for (S32 i = 0; i < 2; i++)
+    {
+        RwCameraClear(cam, &colour, 3);
+        RwCameraBeginUpdate(cam);
+
+        if (mode)
+        {
+            char legal[] = "Game and Software \xa9 2003 THQ Inc. \xa9 2003 Viacom International Inc. "
+                           "All rights reserved.\n\n"
+                           "Nickelodeon, SpongeBob SquarePants and all related titles, logos, and "
+                           "characters are trademarks of Viacom International Inc. Created by "
+                           "Stephen Hillenburg.\n\n"
+                           "Exclusively published by THQ Inc. Developed by Heavy Iron. Portions of "
+                           "this software are Copyright 1998 - 2003 Criterion Software Ltd. and its "
+                           "Licensors. THQ, Heavy Iron and the THQ logo are trademarks and/or "
+                           "registered trademarks of THQ Inc. All rights reserved.\n\n"
+                           "All other trademarks, logos and copyrights are property of their "
+                           "respective owners.\n\n"
+                           "Licensed by Nintendo";
+
+            iColor_tag color = { 0xFF, 0xE6, 0x00, 0xC8 };
+            xtextbox tb = xtextbox::create(
+                xfont::create(1, NSCREENX(19.0f), NSCREENY(22.0f), 0.0f, color, screen_bounds),
+                screen_bounds, 0x2, 0.0f, 0.0f, 0.0f, 0.0f);
+
+            tb.set_text(legal);
+            tb.bounds = screen_bounds;
+            tb.bounds.contract(0.1f);
+            tb.bounds.h = tb.yextent(true);
+            tb.bounds.y = -(0.5f * tb.bounds.h - 0.5f);
+            tb.render(true);
+        }
+
+        RwCameraEndUpdate(cam);
+        RwCameraShowRaster(cam, NULL, 1);
+    }
+
+    S32 frames = 180;
+    while (--frames)
+    {
+        iTRCDisk::CheckDVDAndResetState();
+        iVSync();
+    }
+
+    iCameraDestroy(cam);
 }
 
 void zMainMemCardSpaceQuery()
@@ -817,7 +867,7 @@ static void zMainMemCardQueryPost(S32 needed, S32 available, S32 neededFiles, S3
     cam = iCameraCreate(640, 480, 0);
     RwCameraClear(cam, &colour, clearMode);
     RwCameraBeginUpdate(cam);
-    render_mem_card_no_space(needed, available, neededFiles, unk0);
+    render_mem_card_no_space(needed, available, neededFiles, unk0 != 0);
     RwCameraEndUpdate(cam);
     RwCameraShowRaster(cam, NULL, 1);
     iCameraDestroy(cam);

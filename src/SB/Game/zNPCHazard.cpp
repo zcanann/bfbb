@@ -137,6 +137,14 @@ void zNPCHazard_ScenePostInit()
 
 void zNPCHazard_InitEffects()
 {
+    S32 i;
+    U32 aid;
+    RpAtomic* mdl_raw;
+    S32 idx;
+    UVAModelInfo* info;
+    U32 size;
+    void* asset;
+
     g_pemit_default = zParEmitterFind("PAREMIT_CLOUD");
     g_pemit_zapwarn = zParEmitterFind("PAREMIT_ROMON_ZAPWARN");
     g_pemit_zapwave = zParEmitterFind("PAREMIT_ROMON_ZAPWAVE");
@@ -151,12 +159,11 @@ void zNPCHazard_InitEffects()
     g_parf_zaprain.custom_flags = 0x100;
     xVec3Copy(&g_parf_zaprain.pos, &g_O3);
 
-    for (S32 i = 0; i < 30; i++)
+    for (i = 0; i < 30; i++)
     {
-        char* name = g_strz_hazModel[i];
-        if (name != NULL && name[0] != '\0')
+        if (g_strz_hazModel[i] != NULL && g_strz_hazModel[i][0] != '\0')
         {
-            U32 aid = xStrHash(name);
+            aid = xStrHash(g_strz_hazModel[i]);
             if (aid != 0)
             {
                 g_hazard_rawModel[i] = (RpAtomic*)xSTFindAsset(aid, NULL);
@@ -164,43 +171,43 @@ void zNPCHazard_InitEffects()
         }
     }
 
-    for (S32 i = 0; g_haz_uvModelTypes[i] != NPC_HAZMDL_FORCE; i++)
+    i = 0;
+    while (g_haz_uvModelTypes[i] != NPC_HAZMDL_FORCE)
     {
-        S32 mdltyp = g_haz_uvModelTypes[i];
-        if (g_hazard_rawModel[mdltyp] != NULL)
+        idx = g_haz_uvModelTypes[i++];
+        mdl_raw = g_hazard_rawModel[idx];
+        if (mdl_raw != NULL)
         {
-            UVAModelInfo* uva = &g_haz_uvAnimInfo[mdltyp];
-            uva->Init(g_hazard_rawModel[mdltyp], 0);
-            uva->UVVelSet(0.0f, 1.0f);
+            info = &g_haz_uvAnimInfo[idx];
+            info->Init(mdl_raw, 0);
+            info->UVVelSet(0.0f, 1.0f);
         }
     }
 
-    for (S32 i = 0; i < 5; i++)
+    for (i = 0; i < 5; i++)
     {
-        char* name = g_strz_hazshrap[i];
         g_data_hazshrap[i] = NULL;
-        if (name != NULL && name[0] != '\0')
+        if (g_strz_hazshrap[i] != NULL && g_strz_hazshrap[i][0] != '\0')
         {
-            U32 aid = xStrHash(name);
+            aid = xStrHash(g_strz_hazshrap[i]);
             if (aid != 0)
             {
-                U32 size = 0;
-                void* data = xSTFindAsset(aid, &size);
-                if (data != NULL && size != 0)
+                size = 0;
+                asset = xSTFindAsset(aid, &size);
+                if (asset != NULL && size != 0)
                 {
-                    g_data_hazshrap[i] = (zShrapnelAsset*)data;
+                    g_data_hazshrap[i] = (zShrapnelAsset*)asset;
                 }
             }
         }
     }
 
-    for (S32 i = 0; i < 30; i++)
+    for (i = 0; i < 30; i++)
     {
-        const char* name = g_strz_hazshad[i];
         g_rast_hazshad[i] = NULL;
-        if (name != NULL && name[0] != '\0')
+        if (g_strz_hazshad[i] != NULL && g_strz_hazshad[i][0] != '\0')
         {
-            g_rast_hazshad[i] = NPCC_FindRWRaster(name);
+            g_rast_hazshad[i] = NPCC_FindRWRaster((const char*)g_strz_hazshad[i]);
         }
     }
 }
@@ -233,71 +240,77 @@ S32 HAZ_ord_sorttest(void* vkey, void* vitem)
 
 void zNPCHazard_Timestep(F32 dt)
 {
-    if (g_cnt_activehaz > 0)
+    S32 i;
+    st_XORDEREDARRAY hazlist;
+    NPCHazard* haz;
+    UVAModelInfo* info;
+
+    if (g_cnt_activehaz < 1)
     {
-        st_XORDEREDARRAY haz_list;
-        XOrdInit(&haz_list, 64, 1);
+        return;
+    }
 
-        NPCHazard* haz = g_hazards;
-        for (S32 i = 0; i < 64; i++, haz++)
+    XOrdInit(&hazlist, 64, 1);
+
+    for (i = 0; i < 64; i++)
+    {
+        haz = &g_hazards[i];
+        if (haz->flg_hazard & 1)
         {
-            if (haz->flg_hazard & 1)
-            {
-                XOrdAppend(&haz_list, haz);
-            }
+            XOrdAppend(&hazlist, haz);
         }
+    }
 
-        XOrdSort(&haz_list, HAZ_ord_sorttest);
+    XOrdSort(&hazlist, HAZ_ord_sorttest);
 
-        for (S32 i = 0; i < haz_list.cnt; i++)
+    for (i = 0; i < hazlist.cnt; i++)
+    {
+        haz = (NPCHazard*)hazlist.list[i];
+        if (haz->flg_hazard & 4)
         {
-            haz = (NPCHazard*)haz_list.list[i];
+            haz->Discard();
+        }
+        else if (haz->flg_hazard & 2)
+        {
+            if (haz->flg_hazard & 0x80)
+            {
+                haz->Timestep(dt);
+            }
+
+            if (!(haz->flg_hazard & 0x20))
+            {
+                haz->flg_hazard &= ~0x8;
+            }
+            haz->flg_hazard &= ~0x60;
+
+            haz->tmr_remain = MAX(-1.0f, haz->tmr_remain - dt);
+            if ((haz->flg_hazard & 0x1000) && haz->tmr_remain < 0.0f)
+            {
+                haz->MarkForRecycle();
+            }
+
             if (haz->flg_hazard & 4)
             {
                 haz->Discard();
             }
-            else if (haz->flg_hazard & 2)
+            else if (haz->flg_hazard & 0x80000)
             {
-                if (haz->flg_hazard & 0x80)
-                {
-                    haz->Timestep(dt);
-                }
-
-                if (!(haz->flg_hazard & 0x20))
-                {
-                    haz->flg_hazard &= ~0x8;
-                }
-                haz->flg_hazard &= ~0x60;
-
-                haz->tmr_remain = MAX(-1.0f, haz->tmr_remain - dt);
-                if ((haz->flg_hazard & 0x1000) && haz->tmr_remain < 0.0f)
-                {
-                    haz->MarkForRecycle();
-                }
-
-                if (haz->flg_hazard & 4)
-                {
-                    haz->Discard();
-                }
-                else if (haz->flg_hazard & 0x80000)
-                {
-                    g_haz_uvAnimQue[haz->typ_hazard] = haz;
-                }
+                g_haz_uvAnimQue[haz->typ_hazard] = haz;
             }
         }
+    }
 
-        XOrdDone(&haz_list, 1);
+    XOrdDone(&hazlist, 1);
 
-        for (S32 i = 0; i < 27; i++)
+    for (i = 0; i < 27; i++)
+    {
+        if (g_haz_uvAnimQue[i] != NULL)
         {
-            if (g_haz_uvAnimQue[i] != NULL)
+            info = g_haz_uvAnimQue[i]->uva_uvanim;
+            g_haz_uvAnimQue[i] = NULL;
+            if (info != NULL)
             {
-                UVAModelInfo* uva = g_haz_uvAnimQue[i]->uva_uvanim;
-                g_haz_uvAnimQue[i] = NULL;
-                if (uva != NULL)
-                {
-                    uva->Update(dt, NULL);
-                }
+                info->Update(dt, NULL);
             }
         }
     }

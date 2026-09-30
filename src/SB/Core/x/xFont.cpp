@@ -776,7 +776,7 @@ void xfont::irender(const char* text, size_t text_size, F32 x, F32 y) const
 
 namespace
 {
-    substr text_delims = { " \t\n{}=*+:;,", 11 };
+    const substr text_delims = { " \t\n{}=*+:;,", 11 };
 
     size_t parse_split_tag(xtextbox::split_tag& ti)
     {
@@ -786,10 +786,7 @@ namespace
 
         // non-matching: scheduling
 
-        substr s;
-
-        s.text = ti.tag.text;
-        s.size = ti.tag.size;
+        substr s = ti.tag;
 
         s.text++;
         s.size--;
@@ -811,7 +808,7 @@ namespace
             return 0;
         }
 
-        char c = s.text[0];
+        U8 c = s.text[0];
 
         if (c == '\0' || c == '{')
         {

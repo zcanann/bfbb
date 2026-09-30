@@ -6,6 +6,11 @@
 
 #include <types.h>
 
+namespace std
+{
+    float fabsf(float);
+}
+
 #define f1585 1.0f
 #define f1586 0.0f
 #define f1657 0.2f
@@ -111,7 +116,72 @@ namespace
         { 5, "Laser_med_pwrup1", 0, 0 }
     };
 
-    const size_t beam_ring_curve = 2;
+    static const xDecalEmitter::curve_node beam_ring_curve[2] = {
+        { 0.0f, { 255, 255, 255, 255 }, 0.0f },
+        { 1.0f, { 255, 255, 255, 0 }, 1.0f },
+    };
+
+    static const xDecalEmitter::curve_node beam_glow_curve[3] = {
+        { 0.0f, { 255, 255, 255, 255 }, 0.0f },
+        { 0.5f, { 255, 0, 255, 255 }, 4.0f },
+        { 1.0f, { 255, 0, 0, 0 }, 6.0f },
+    };
+
+    static const zNPCNewsFish::say_enum say_intro[2] = {
+        zNPCNewsFish::SAY_B303_INTRO_1,
+        zNPCNewsFish::SAY_B303_INTRO_2,
+    };
+
+    static const zNPCNewsFish::say_enum say_fuse_near[4] = {
+        zNPCNewsFish::SAY_B303_FUSE_NEAR,
+        zNPCNewsFish::SAY_ROBOT_VULN_2,
+        zNPCNewsFish::SAY_SB_VULN_3,
+        zNPCNewsFish::SAY_SB_VULN_4,
+    };
+
+    static const zNPCNewsFish::say_enum say_fuse_hit[3] = {
+        zNPCNewsFish::SAY_B303_FUSE_HIT,
+        zNPCNewsFish::SAY_HIT_BOSS_1,
+        zNPCNewsFish::SAY_SB_HIT_BOSS_1,
+    };
+
+    static const zNPCNewsFish::say_enum say_hit_boss_1[6] = {
+        zNPCNewsFish::SAY_HIT_BOSS_1,    zNPCNewsFish::SAY_HIT_BOSS_2,
+        zNPCNewsFish::SAY_SB_HIT_BOSS_2, zNPCNewsFish::SAY_SB_HIT_BOSS_3,
+        zNPCNewsFish::SAY_ROBOT_HIT,     zNPCNewsFish::SAY_ROBOT_STUN_1,
+    };
+
+    static const zNPCNewsFish::say_enum say_hit_boss_2[3] = {
+        zNPCNewsFish::SAY_B303_BRAIN_HELP_1,
+        zNPCNewsFish::SAY_B303_BRAIN_HELP_2,
+        zNPCNewsFish::SAY_B303_BRAIN_HELP_3,
+    };
+
+    static const zNPCNewsFish::say_enum say_hit_boss_3[6] = {
+        zNPCNewsFish::SAY_B303_BRAIN_HELP_1, zNPCNewsFish::SAY_B303_BRAIN_HELP_2,
+        zNPCNewsFish::SAY_B303_BRAIN_HELP_3, zNPCNewsFish::SAY_SB_VULN_1,
+        zNPCNewsFish::SAY_SB_VULN_2,         zNPCNewsFish::SAY_SB_VULN_5,
+    };
+
+    static const zNPCNewsFish::say_enum say_hit_boss_4[1] = {
+        zNPCNewsFish::SAY_HIT_LAST,
+    };
+
+    static const zNPCNewsFish::say_enum say_hit_player[6] = {
+        zNPCNewsFish::SAY_HIT_PLAYER_1, zNPCNewsFish::SAY_HIT_PLAYER_2,
+        zNPCNewsFish::SAY_HIT_PLAYER_3, zNPCNewsFish::SAY_HIT_PLAYER_4,
+        zNPCNewsFish::SAY_HIT_PLAYER_5, zNPCNewsFish::SAY_HIT_PLAYER_6,
+    };
+
+    static const struct
+    {
+        const zNPCNewsFish::say_enum* say;
+        U32 size;
+    } say_set[8] = {
+        { say_intro, 2 },      { say_fuse_near, 4 },  { say_fuse_hit, 3 },
+        { say_hit_boss_1, 6 }, { say_hit_boss_2, 3 }, { say_hit_boss_3, 6 },
+        { say_hit_boss_4, 1 }, { say_hit_player, 6 },
+    };
 
     xVec3* get_player_loc()
     {
@@ -173,22 +243,6 @@ namespace
         play_sound(SOUND_BOLT_HIT, &bolt.loc, 1.0f);
     }
 
-    struct config
-    {
-        F32 radius;
-        F32 length;
-        F32 vel;
-        F32 fade_dist;
-        F32 kill_dist;
-        F32 safe_dist;
-        F32 hit_radius;
-        F32 rand_ang;
-        F32 scar_life;
-        xVec2 bolt_uv[2];
-        S32 hit_interval;
-        F32 damage;
-    };
-
     struct tweak_group
     {
         xVec3 accel;
@@ -243,7 +297,7 @@ namespace
             F32 gun_tilt_max;
             F32 max_dist;
             F32 emit_dist;
-            config fx;
+            xLaserBoltEmitter::config fx;
         } beam;
         struct
         {
@@ -302,18 +356,6 @@ namespace
     };
 
     static tweak_group tweak;
-
-    static void update_move_accel(xVec3& loc, zNPCBPlankton::move_info& move, F32 dt)
-    {
-        // Ghidra output, will come back to this later
-
-        // xAccelMove((double)*(float*)(param_3 + 0x18), param_1_00, (double)*(float*)(param_3 + 0x24),
-        //            (float*)this, (float*)(param_3 + 0xc));
-        // xAccelMove((double)*(float*)(param_3 + 0x1c), param_1_00, (double)*(float*)(param_3 + 0x28),
-        //            (float*)(this + 4), (float*)(param_3 + 0x10));
-        // xAccelMove((double)*(float*)(param_3 + 0x20), param_1_00, (double)*(float*)(param_3 + 0x2c),
-        //            (float*)(this + 8), (float*)(param_3 + 0x14));
-    }
 
 } // namespace
 
@@ -443,48 +485,83 @@ zNPCBPlankton::zNPCBPlankton(S32 myType) : zNPCBoss(myType)
     memset(&flag, 0, sizeof(flag));
 }
 
-void zNPCBPlankton::Init(xEntAsset* asset) //66%
+void zNPCBPlankton::Init(xEntAsset* asset)
 {
-    ::init_sound();
+    init_sound();
     zNPCCommon::Init(asset);
     flg_move = 1;
     flg_vuln = 1;
-    xNPCBasic::RestoreColFlags();
+    RestoreColFlags();
     territory_size = 0;
-    played_intro = 0;
-    zNPCBPlankton::init_beam();
-    xAnimPlay* play = 0;
-
-    // Is being called incorrectly.
-    // play is a temp fix to get it to build
-    zNPCBPlankton::aim_gun(play, &gun_tilt, &move.dest, 0);
+    played_intro = false;
+    init_beam();
+    model->Anim->BeforeAnimMatrices = aim_gun;
 }
 
 void zNPCBPlankton::Setup()
 {
-    U32 tmpVar;
-
     zNPCBoss::Setup();
-    zNPCBPlankton::setup_beam();
-    tmpVar = xStrHash("NPC_NEWSCASTER");
-    newsfish = (zNPCNewsFish*)zSceneFindObject(tmpVar);
+    setup_beam();
+    newsfish = (zNPCNewsFish*)zSceneFindObject(xStrHash("NPC_NEWSCASTER"));
 }
 
 void zNPCBPlankton::PostSetup()
 {
-    xUpdateCull_SetCB(xglobals->updateMgr, NULL, xUpdateCull_AlwaysTrueCB, NULL);
+    xUpdateCull_SetCB(globals.updateMgr, this, xUpdateCull_AlwaysTrueCB, NULL);
 }
 
 void zNPCBPlankton::Reset()
 {
-    if (newsfish != 0)
+    if (newsfish != NULL)
     {
+        newsfish->Reset();
     }
 
+    reset_sound();
     zNPCCommon::Reset();
-    zNPCBPlankton::reset_beam();
-    memset((void*)flag.updated, 0, 0x10);
-    zNPCBPlankton::face_player();
+    reset_beam();
+    memset(&flag, 0, sizeof(flag));
+    face_player();
+    turn.vel = 0.0f;
+    move.vel = 0.0f;
+    move.dest = location();
+    flag.move = MOVE_ORBIT;
+    ambush_delay = 0.0f;
+    old_player_health = 0;
+    scan_cronies();
+
+    if (crony != NULL)
+    {
+        mode = MODE_BUDDY;
+        stun_duration = tweak.mode_buddy.stun_duration;
+        newsfish = NULL;
+    }
+    else
+    {
+        mode = MODE_HARASS;
+        active_territory = 0;
+        stun_duration = tweak.mode_harass.stun_duration;
+
+        if (newsfish != NULL)
+        {
+            newsfish->TalkOnScreen(1);
+        }
+    }
+
+    reset_speed();
+    refresh_orbit();
+    follow_player();
+    reset_territories();
+
+    if (mode == MODE_BUDDY)
+    {
+        psy_instinct->GoalSet(NPC_GOAL_BPLANKTONIDLE, 1);
+    }
+    else
+    {
+        vanish();
+        psy_instinct->GoalSet(NPC_GOAL_BPLANKTONAMBUSH, 1);
+    }
 }
 
 void zNPCBPlankton::Destroy()
@@ -494,59 +571,58 @@ void zNPCBPlankton::Destroy()
 
 void zNPCBPlankton::Process(xScene* xscn, F32 dt)
 {
-    // This function needs a lot of work, writing most of these comments
-    // so that i can resume where i left off when i return to it
-
-    // territory_data& t ;
-    //xCollis& coll;
-    xEnt* platform;
-    S32 i;
-
-    //xVec3& player_loc;
-    xPsyche* psy = psy_instinct;
-
-    if ((flag.updated == false) && (flag.updated = 1, played_intro == false))
+    if (!flag.updated)
     {
-        zNPCBPlankton::say(0, 0, true);
-        played_intro = true;
+        flag.updated = true;
+
+        if (!played_intro)
+        {
+            say(0, 0, true);
+            played_intro = true;
+        }
     }
+
     beam.update(dt);
-    delay = delay + dt;
-    if ((mode == 1) && (territory->fuse_detected = player_left_territory(), psy_instinct != 0))
+    delay += dt;
+
+    if (mode == MODE_HARASS && player_left_territory())
     {
-        stun_duration = 0.0f;
+        ambush_delay = 0.0f;
         psy_instinct->GoalSet(NPC_GOAL_BPLANKTONAMBUSH, 1);
     }
-    // uvar1 = zNPCCommon::SomethingWonderful();
-    //if ((uVar1 & 0x23) == 0)
-    // {
-    //     psy_instinct->xPsyche::Timestep(dt, 0)
-    // }
-    if (flag.face_player = false)
+
+    if (!(SomethingWonderful() & 0x23))
     {
-        // iVar4 = *(int *)(DAT_803c0c5c + 0x4c);
-        // pfVar2 = (float *)location__13zNPCBPlanktonCFv(param_9);
-        // param_3 = (double)*(float *)(iVar4 + 0x30);
-        // param_2 = (double)(*(float *)(iVar4 + 0x38) - pfVar2[2]);
-        // assign__5xVec2Fff((double)(float)(param_3 - (double)*pfVar2),param_2,(float *)(param_9 + 0x460));
-        // normalize__5xVec2Fv((float *)(param_9 + 0x460));
+        psy_instinct->Timestep(dt, NULL);
     }
+
+    if (flag.face_player)
+    {
+        xVec3& player_loc = *(xVec3*)&globals.player.ent.model->Mat->pos;
+        const xVec3& loc = location();
+        turn.dir.assign(player_loc.x - loc.x, player_loc.z - loc.z);
+        turn.dir.normalize();
+    }
+
     update_follow(dt);
     update_turn(dt);
     update_move(dt);
-    update_animation(dt); //uvar5 = update anim
-    check_player_damage(); //uvar1 = check_player_damage
-    if (psy_instinct != 0) //psy_instinct isnt right, needs (uvar1 & 0xff)
+    update_animation(dt);
+
+    if (check_player_damage())
     {
-        zEntPlayer_Damage(0, 1); //needs xBase* instead of 0
+        zEntPlayer_Damage(this, 1);
     }
+
     update_aim_gun(dt);
     update_dialog(dt);
-    //bVar3 = visible__17xLaserBoltEmitterCFv(param_9 + 0x3b8);
-    //if (bVar3) {
-    //  *(uint *)(param_9 + 0x234) = *(uint *)(param_9 + 0x234) | 2;
-    //}
-    //Process__10zNPCCommonFP6xScenef(param_1,param_9,param_10);
+
+    if (beam.visible())
+    {
+        flg_xtrarend |= 2;
+    }
+
+    zNPCCommon::Process(xscn, dt);
 }
 
 S32 zNPCBPlankton::SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
@@ -554,8 +630,6 @@ S32 zNPCBPlankton::SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toPa
 {
     *handled = 0;
     return zNPCCommon::SysEvent(from, to, toEvent, toParam, toParamWidget, handled);
-
-    // ((zNPCCommon*) 0x1b8???
 }
 
 void zNPCBPlankton::Render()
@@ -566,7 +640,7 @@ void zNPCBPlankton::Render()
 
 void zNPCBPlankton::RenderExtraPostParticles()
 {
-    if ((beam.visible() & 0xff) != 0)
+    if (beam.visible())
     {
         RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)5);
         RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)2);
@@ -1446,8 +1520,53 @@ void zNPCBPlankton::scan_cronies()
     }
 }
 
+namespace
+{
+    void update_move_accel(xVec3& loc, zNPCBPlankton::move_info& move, F32 dt)
+    {
+        xAccelMove(loc.x, move.vel.x, move.accel.x, dt, move.max_vel.x);
+        xAccelMove(loc.y, move.vel.y, move.accel.y, dt, move.max_vel.y);
+        xAccelMove(loc.z, move.vel.z, move.accel.z, dt, move.max_vel.z);
+    }
+
+    void update_move_stop(xVec3& loc, zNPCBPlankton::move_info& move, F32 dt)
+    {
+        xAccelStop(loc.x, move.vel.x, move.accel.x, dt);
+        xAccelStop(loc.y, move.vel.y, move.accel.y, dt);
+        xAccelStop(loc.z, move.vel.z, move.accel.z, dt);
+    }
+
+    void update_move_orbit(xVec3& loc, zNPCBPlankton::move_info& move, const xVec3& center, F32 dt,
+                           bool xfree);
+} // namespace
+
+void zNPCBPlankton::update_move(F32 dt)
+{
+    switch (flag.move)
+    {
+    case MOVE_ACCEL:
+        update_move_accel(frame->mat.pos, move, dt);
+        break;
+    case MOVE_STOP:
+        update_move_stop(frame->mat.pos, move, dt);
+        break;
+    case MOVE_ORBIT:
+        update_move_orbit(frame->mat.pos, move, orbit.center, dt, false);
+        break;
+    }
+}
+
 void zNPCBPlankton::reset_territories()
 {
+    territory_data* it = territory;
+    territory_data* end = it + territory_size;
+
+    for (; it != end; ++it)
+    {
+        it->fuse_detected = false;
+        it->fuse_destroyed = false;
+        it->fuse_detect_time = 0.0f;
+    }
 }
 
 void zNPCBPlankton::update_animation(F32)
@@ -1456,19 +1575,60 @@ void zNPCBPlankton::update_animation(F32)
 
 void zNPCBPlankton::update_follow(F32 dt)
 {
-    if (flag.follow != 2)
+    switch (flag.follow)
     {
+    case FOLLOW_PLAYER:
         update_follow_player(dt);
-    }
-    else if ((flag.follow < 2) && (1 > flag.follow))
-    {
+        break;
+    case FOLLOW_CAMERA:
         update_follow_camera(dt);
+        break;
     }
 }
 
-void zNPCBPlankton::check_player_damage()
+void zNPCBPlankton::update_follow_player(F32 dt)
 {
-    // TODO
+    follow.delay += dt;
+
+    if (follow.delay >= follow.max_delay ||
+        fabs(orbit_yaw_offset(move.dest, *get_player_loc())) > tweak.follow.max_ang)
+    {
+        move.dest = player_orbit();
+        move.dest = random_orbit(move.dest, 0.0f, tweak.follow.min_ang);
+        follow.delay = 0.0f;
+
+        F32 min = tweak.follow.min_delay;
+        F32 max = tweak.follow.max_delay;
+        follow.max_delay = (max - min) * xurand() + min;
+    }
+}
+
+void zNPCBPlankton::update_follow_camera(F32 dt)
+{
+    xVec3 target = orbit.center + globals.camera.mat.at * orbit.radius;
+
+    follow.delay += dt;
+
+    if (follow.delay >= follow.max_delay ||
+        std::fabsf(orbit_yaw_offset(move.dest, target)) > tweak.follow.max_ang)
+    {
+        move.dest = random_orbit(target, 0.0f, tweak.follow.min_ang);
+        follow.delay = 0.0f;
+
+        F32 min = tweak.follow.min_delay;
+        F32 max = tweak.follow.max_delay;
+        follow.max_delay = (max - min) * xurand() + min;
+    }
+}
+
+bool zNPCBPlankton::check_player_damage()
+{
+    if (globals.player.cheat_mode)
+    {
+        return false;
+    }
+
+    return false;
 }
 
 void zNPCBPlankton::load_territory(S32 index, xBase& child)
@@ -1514,28 +1674,27 @@ void zNPCBPlankton::load_territory(S32 index, xBase& child)
 
 void zNPCBPlankton::init_beam()
 {
-    beam.init((U32)&beam, "Plankton\'s Beam");
+    beam.init(31, "Plankton's Beam");
     beam.set_texture("plankton_laser_bolt");
-
+    beam.cfg = tweak.beam.fx;
     beam.refresh_config();
-    //
-    beam_ring.init(0, "Plankton\'s Beam Rings");
-    beam_ring.set_curve((xDecalEmitter::curve_node*)&beam_ring.curve, beam_ring_curve);
+
+    beam_ring.init(127, "Plankton's Beam Rings");
+    beam_ring.set_curve(beam_ring_curve, 2);
     beam_ring.set_texture("bubble");
     beam_ring.set_default_config();
     beam_ring.cfg.flags = 0;
-    beam_ring.cfg.life_time = 0.0f;
+    beam_ring.cfg.life_time = 0.25f;
     beam_ring.cfg.blend_src = 5;
     beam_ring.cfg.blend_dst = 2;
     beam_ring.refresh_config();
 
-    //
-    beam_glow.init(0, "Plankton\'s Beam Glow");
-    beam_glow.set_curve((xDecalEmitter::curve_node*)&beam_glow.curve, 0);
+    beam_glow.init(7, "Plankton's Beam Glow");
+    beam_glow.set_curve(beam_glow_curve, 3);
     beam_glow.set_texture("fx_firework");
     beam_glow.set_default_config();
     beam_glow.cfg.flags = 0;
-    beam_glow.cfg.life_time = 0.0f;
+    beam_glow.cfg.life_time = 0.25f;
     beam_glow.cfg.blend_src = 5;
     beam_glow.cfg.blend_dst = 2;
     beam_glow.refresh_config();
@@ -1576,26 +1735,130 @@ void zNPCBPlankton::reappear()
     play_sound(0, (xVec3*)&bound.pad[3], 1.0f);
 }
 
+bool zNPCBPlankton::crony_attacking() const
+{
+    if (crony == NULL)
+    {
+        return false;
+    }
+
+    return crony->AttackTimeLeft() > 0.0f;
+}
+
+bool zNPCBPlankton::cronies_dead() const
+{
+    const territory_data& t = territory[active_territory];
+    zNPCCommon* const* it = t.crony;
+    zNPCCommon* const* end = it + t.crony_size;
+
+    for (; it != end; ++it)
+    {
+        if ((*it)->IsAlive())
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 void zNPCBPlankton::next_territory()
 {
-    if ((have_cronies() & 0xff) != 0)
+    if (have_cronies())
     {
-        active_territory = active_territory + 1;
+        ++active_territory;
+
         if (active_territory >= territory_size)
         {
-            active_territory = territory_size + -1;
+            active_territory = territory_size - 1;
         }
     }
 }
 
-S32 zNPCBPlankton::have_cronies() const
+bool zNPCBPlankton::have_cronies() const
 {
-    // FIXME: dunno how to fix this yet
-    return (active_territory) & (active_territory * 0x3c + 0x4e4) >> 0x1f;
+    return territory[active_territory].crony_size > 0;
+}
+
+bool zNPCBPlankton::move_to_player_territory()
+{
+    xCollis& coll = globals.player.ent.collis->colls[0];
+
+    if (!(coll.flags & 0x1))
+    {
+        return false;
+    }
+
+    xEnt* platform = (xEnt*)coll.optr;
+
+    if (platform == NULL)
+    {
+        return false;
+    }
+
+    for (S32 i = 0; i < territory_size; ++i)
+    {
+        territory_data& t = territory[i];
+
+        if (t.crony_size <= 0 && t.platform == platform)
+        {
+            active_territory = i;
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool zNPCBPlankton::player_left_territory() const
+{
+    const territory_data& t = territory[active_territory];
+    xCollis& coll = globals.player.ent.collis->colls[0];
+    xEnt* platform = (xEnt*)coll.optr;
+
+    if (t.crony_size > 0 || t.platform == platform || !(coll.flags & 0x1) || platform == NULL)
+    {
+        return false;
+    }
+
+    for (S32 i = 0; i < territory_size; ++i)
+    {
+        const territory_data& t = territory[i];
+
+        if (t.crony_size <= 0 && platform == t.platform && i != active_territory)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+void zNPCBPlankton::say(S32 which, S32 flags, bool random)
+{
+    if (newsfish == NULL)
+    {
+        return;
+    }
+
+    if (random)
+    {
+        newsfish->say(say_set[which].say[0], 1);
+        newsfish->say(say_set[which].say[1], 2);
+    }
+    else
+    {
+        newsfish->say(say_set[which].say, say_set[which].size, flags, -1);
+    }
 }
 
 void zNPCBPlankton::sickum()
 {
+    if (psy_instinct->GIDOfActive() != NPC_GOAL_BPLANKTONHUNT)
+    {
+        flag.hunt = true;
+        psy_instinct->GoalSet(NPC_GOAL_BPLANKTONHUNT, 1);
+    }
 }
 
 void zNPCBPlankton::here_boy()
@@ -1615,6 +1878,33 @@ void zNPCBPlankton::follow_camera()
     flag.follow = FOLLOW_CAMERA;
     follow.delay = follow.max_delay = 0.0f;
     flag.move = MOVE_ORBIT;
+}
+
+void zNPCBPlankton::reset_speed()
+{
+    turn.accel = tweak.turn_accel;
+    turn.max_vel = tweak.turn_max_vel;
+
+    if (mode == MODE_BUDDY)
+    {
+        move.accel = tweak.mode_buddy.accel;
+        move.max_vel = tweak.mode_buddy.max_vel;
+    }
+    else
+    {
+        move.accel = tweak.mode_harass.accel;
+        move.max_vel = tweak.mode_harass.max_vel;
+    }
+}
+
+void zNPCBPlankton::aim_gun(xAnimPlay* play, xQuat* quat, xVec3* tran, int tranCount)
+{
+    zNPCBPlankton& owner = *(zNPCBPlankton*)play->Object;
+
+    if (owner.flag.aim_gun)
+    {
+        quat[21] = owner.gun_tilt;
+    }
 }
 
 xFactoryInst* zNPCGoalBPlanktonIdle::create(S32 who, RyzMemGrow* grow, void* info)

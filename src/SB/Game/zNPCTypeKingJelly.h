@@ -256,7 +256,7 @@ struct zNPCGoalKJBored : zNPCGoalCommon
     }
 
     S32 Enter(float, void*);
-    S32 Exit(float, void*);
+    S32 Exit(float, void*);    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
 };
 
 struct zNPCGoalKJSpawnKids : zNPCGoalCommon
@@ -282,7 +282,7 @@ struct zNPCGoalKJTaunt : zNPCGoalCommon
     }
 
     S32 Enter(float, void*);
-    S32 Exit(float, void*);
+    S32 Exit(float, void*);    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
 };
 
 struct zNPCGoalKJShockGround : zNPCGoalCommon

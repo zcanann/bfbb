@@ -1,5 +1,6 @@
 #include "xVec3.h"
 #include "xMath3.h"
+#include "xMathInlines.h"
 #include "xDebug.h"
 #include "zGlobals.h"
 #include "zNPCTypeDutchman.h"
@@ -278,8 +279,8 @@ namespace
     U32 play_sound(S32 which, const xVec3* loc, F32 volume)
     {
         const sound_asset& asset = sound_assets[which];
-        const sound_property& prop = tweak.sound[which];
         sound_data_type& data = sound_data[which];
+        const sound_property& prop = tweak.sound[which];
 
         if (asset.flags & 0x1)
         {
@@ -1719,15 +1720,17 @@ void zNPCDutchman::add_splash(const xVec3&, float)
 
 void zNPCDutchman::start_fight()
 {
-    if (flag.fighting == 0 && life <= 0)
+    if (flag.fighting || life <= 0)
     {
-        flag.fighting = 1;
-        psy_instinct->GoalSet(0, 0);
-        zCameraDisableTracking(CO_BOSS);
-        boss_cam.start(globals.camera);
-        boss_cam.set_targets((xVec3&)globals.player.ent.model->Mat->pos, (xVec3&)model->Mat->pos,
-                             2.0f);
+        return;
     }
+
+    flag.fighting = true;
+    psy_instinct->GoalSet(NPC_GOAL_DUTCHMANINITIATE, 1);
+    zCameraDisableTracking(CO_BOSS);
+    boss_cam.start(globals.camera);
+    boss_cam.set_targets(*(xVec3*)&globals.player.ent.model->Mat->pos, bound.sph.center,
+                         bound.sph.r);
 }
 
 void zNPCDutchman::set_life(S32 life)
@@ -1812,6 +1815,10 @@ void zNPCDutchman::reappear()
 
 void zNPCDutchman::reset_speed()
 {
+    turn.accel = tweak.turn_accel;
+    turn.max_vel = tweak.turn_max_vel;
+    move.accel = tweak.accel * tweak.speed_mult[round];
+    move.max_vel = tweak.max_vel * tweak.speed_mult[round];
 }
 
 xFactoryInst* zNPCGoalDutchmanInitiate::create(S32 who, RyzMemGrow* grow, void* info)
@@ -1821,8 +1828,36 @@ xFactoryInst* zNPCGoalDutchmanInitiate::create(S32 who, RyzMemGrow* grow, void* 
 
 S32 zNPCGoalDutchmanInitiate::Enter(F32 dt, void* updCtxt)
 {
-    owner.get_orbit();
-    owner.nav_curr->PosGet();
+    const xVec3& orbit = owner.get_orbit();
+    const xVec3& loc = *owner.nav_curr->PosGet();
+    zNPCDutchman& npc = owner;
+    xVec3& model_loc = *(xVec3*)&npc.model->Mat->pos;
+    model_loc = npc.frame->mat.pos = loc;
+
+    F32 dz = loc.z - orbit.z;
+    xVec2 offset = { loc.x - orbit.x, dz };
+    F32 dist2 = offset.length2();
+
+    if (dist2 < 0.001f)
+    {
+        npc.move.dest.x = orbit.x;
+        npc.move.dest.z = orbit.z + tweak.orbit_radius;
+    }
+    else
+    {
+        F32 scale = tweak.orbit_radius / xsqrt(dist2);
+        npc.move.dest.x = offset.x * scale + orbit.x;
+        npc.move.dest.z = offset.y * scale + orbit.z;
+    }
+
+    npc.move.dest.y = orbit.y;
+
+    owner.dissolve(0.0f);
+    owner.face_player();
+    owner.flag.move = zNPCDutchman::MOVE_FOLLOW;
+    owner.turn.vel = tweak.initiate.turn_vel;
+    owner.turn.accel = tweak.initiate.turn_accel;
+    owner.move.vel.assign(0.0f, tweak.initiate.up_vel, 0.0f);
 
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
@@ -1955,7 +1990,9 @@ xFactoryInst* zNPCGoalDutchmanCaught::create(S32 who, RyzMemGrow* grow, void* in
 
 S32 zNPCGoalDutchmanCaught::Enter(float dt, void* updCtxt)
 {
-    // TODO
+    owner.delay = 0.0f;
+    owner.halt(tweak.lasso.decel);
+    play_sound(4, &owner.bound.sph.center, 1.0f);
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 

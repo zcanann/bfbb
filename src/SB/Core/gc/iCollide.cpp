@@ -136,11 +136,11 @@ void FindNearestPointOnLine(xVec3* _result, xVec3* _point, xVec3* _start, xVec3*
         if (mu < lineLength2)
         {
             mu /= lineLength2;
-            localResult.x = mu * (end->x - start->x);
+            localResult.x = (end->x - start->x) * mu;
             localResult.x += start->x;
-            localResult.y = mu * (end->y - start->y);
+            localResult.y = (end->y - start->y) * mu;
             localResult.y += start->y;
-            localResult.z = mu * (end->z - start->z);
+            localResult.z = (end->z - start->z) * mu;
             localResult.z += start->z;
         }
         else

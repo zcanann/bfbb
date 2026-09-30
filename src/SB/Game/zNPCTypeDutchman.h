@@ -194,6 +194,7 @@ struct zNPCDutchman : zNPCSubBoss
     void reappear();
     void turn_to_face(const xVec3&);
     void face_player();
+    void halt(F32 decel);
     void update_flames(F32);
     void start_fight();
     void set_life(S32);
