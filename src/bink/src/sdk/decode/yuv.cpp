@@ -3042,7 +3042,9 @@ static u32 dounaligned16a4col2h(u32 count, s32 phase)
 {
     u32 remaining;
     u8 PTR4* yptr;
+    u8 PTR4* yptr1;
     u8 PTR4* aptr;
+    u8 PTR4* aptr1;
     u8 y;
     u8 a;
     u32 ybase;
@@ -3064,14 +3066,14 @@ static u32 dounaligned16a4col2h(u32 count, s32 phase)
         pixel = RGB565_A4(ybase, S.r, S.gb, S.b, a);
         *(u16 PTR4*)S.dest0 = pixel;
         *(u16 PTR4*)(S.dest0 + S.pitch) = pixel;
-        yptr = (u8 PTR4*)S.y1;
-        y = *yptr++;
-        S.y1 = (u32 PTR4*)yptr;
+        yptr1 = (u8 PTR4*)S.y1;
+        y = *yptr1++;
+        S.y1 = (u32 PTR4*)yptr1;
         ybase = ytable[y];
-        aptr = (u8 PTR4*)S.a1;
-        a = *aptr++;
-        S.a1 = (u32 PTR4*)aptr;
+        aptr1 = (u8 PTR4*)S.a1;
+        a = *aptr1++;
         pixel = RGB565_A4(ybase, S.r, S.gb, S.b, a);
+        S.a1 = (u32 PTR4*)aptr1;
         *(u16 PTR4*)S.dest1 = pixel;
         *(u16 PTR4*)(S.dest1 + S.pitch) = pixel;
         S.dest0 += YUV_BYTES_PER_PIXEL_16;
@@ -3126,7 +3128,9 @@ static u32 dounaligned16a4col2w(u32 count, s32 phase)
 {
     u32 remaining;
     u8 PTR4* yptr;
+    u8 PTR4* yptr1;
     u8 PTR4* aptr;
+    u8 PTR4* aptr1;
     u8 y;
     u8 a;
     u32 ybase;
@@ -3148,14 +3152,14 @@ static u32 dounaligned16a4col2w(u32 count, s32 phase)
         pixel = RGB565_A4(ybase, S.r, S.gb, S.b, a);
         ((u16 PTR4*)S.dest0)[0] = pixel;
         ((u16 PTR4*)S.dest0)[1] = pixel;
-        yptr = (u8 PTR4*)S.y1;
-        y = *yptr++;
-        S.y1 = (u32 PTR4*)yptr;
+        yptr1 = (u8 PTR4*)S.y1;
+        y = *yptr1++;
+        S.y1 = (u32 PTR4*)yptr1;
         ybase = ytable[y];
-        aptr = (u8 PTR4*)S.a1;
-        a = *aptr++;
-        S.a1 = (u32 PTR4*)aptr;
+        aptr1 = (u8 PTR4*)S.a1;
+        a = *aptr1++;
         pixel = RGB565_A4(ybase, S.r, S.gb, S.b, a);
+        S.a1 = (u32 PTR4*)aptr1;
         ((u16 PTR4*)S.dest1)[0] = pixel;
         ((u16 PTR4*)S.dest1)[1] = pixel;
         S.dest0 += YUV_PACKED_WORD_BYTES;
@@ -3212,7 +3216,9 @@ static u32 dounaligned16a4col2wh(u32 count, s32 phase)
 {
     u32 remaining;
     u8 PTR4* yptr;
+    u8 PTR4* yptr1;
     u8 PTR4* aptr;
+    u8 PTR4* aptr1;
     u8 y;
     u8 a;
     u32 ybase;
@@ -3236,13 +3242,13 @@ static u32 dounaligned16a4col2wh(u32 count, s32 phase)
         ((u16 PTR4*)S.dest0)[1] = pixel;
         *(u16 PTR4*)(S.dest0 + S.pitch) = pixel;
         *(u16 PTR4*)(S.dest0 + S.pitch + YUV_BYTES_PER_PIXEL_16) = pixel;
-        yptr = (u8 PTR4*)S.y1;
-        aptr = (u8 PTR4*)S.a1;
-        y = *yptr++;
-        S.y1 = (u32 PTR4*)yptr;
+        yptr1 = (u8 PTR4*)S.y1;
+        aptr1 = (u8 PTR4*)S.a1;
+        y = *yptr1++;
+        S.y1 = (u32 PTR4*)yptr1;
         ybase = ytable[y];
-        a = *aptr++;
-        S.a1 = (u32 PTR4*)aptr;
+        a = *aptr1++;
+        S.a1 = (u32 PTR4*)aptr1;
         pixel = RGB565_A4(ybase, S.r, S.gb, S.b, a);
         ((u16 PTR4*)S.dest1)[0] = pixel;
         ((u16 PTR4*)S.dest1)[1] = pixel;
@@ -3333,8 +3339,8 @@ static void dounaligned16a4row(u32 phase, u32 count)
         S.y0 = (u32 PTR4*)yptr;
         ybase = ytable[y];
         a = *aptr++;
-        S.a0 = (u32 PTR4*)aptr;
         *(u16 PTR4*)S.dest0 = RGB565_A4(ybase, S.r, S.gb, S.b, a);
+        S.a0 = (u32 PTR4*)aptr;
         S.dest0 += YUV_BYTES_PER_PIXEL_16;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
             S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
@@ -3347,7 +3353,9 @@ static u32 dounaligned16a4col(u32 count, s32 phase)
 {
     u32 remaining;
     u8 PTR4* yptr;
+    u8 PTR4* yptr1;
     u8 PTR4* aptr;
+    u8 PTR4* aptr1;
     u8 y;
     u8 a;
     u32 ybase;
@@ -3366,14 +3374,14 @@ static u32 dounaligned16a4col(u32 count, s32 phase)
         a = *aptr++;
         *(u16 PTR4*)S.dest0 = RGB565_A4(ybase, S.r, S.gb, S.b, a);
         S.a0 = (u32 PTR4*)aptr;
-        yptr = (u8 PTR4*)S.y1;
-        y = *yptr++;
-        S.y1 = (u32 PTR4*)yptr;
+        yptr1 = (u8 PTR4*)S.y1;
+        y = *yptr1++;
+        S.y1 = (u32 PTR4*)yptr1;
         ybase = ytable[y];
-        aptr = (u8 PTR4*)S.a1;
-        a = *aptr++;
+        aptr1 = (u8 PTR4*)S.a1;
+        a = *aptr1++;
         *(u16 PTR4*)S.dest1 = RGB565_A4(ybase, S.r, S.gb, S.b, a);
-        S.a1 = (u32 PTR4*)aptr;
+        S.a1 = (u32 PTR4*)aptr1;
         S.dest0 += YUV_BYTES_PER_PIXEL_16;
         S.dest1 += YUV_BYTES_PER_PIXEL_16;
         if (YUV_PHASE_ADVANCES_CHROMA(phase)) {
