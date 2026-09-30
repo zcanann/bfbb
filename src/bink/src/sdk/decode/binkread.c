@@ -2023,11 +2023,11 @@ found_previous:
             u32 limit;
 
             limit = bnk->Frames;
-            frame_offsets = bnk->frameoffsets + cur;
+            frame_offsets = bnk->frameoffsets;
             do {
                 u32 frame_entry;
 
-                frame_entry = *frame_offsets++;
+                frame_entry = frame_offsets[cur];
                 ++cur;
                 if (BINK_FRAME_IS_KEY(frame_entry)) {
                     return cur;
