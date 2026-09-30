@@ -1995,11 +1995,6 @@ S32 zNPCKingJelly::count_children(S32 wave)
     return count;
 }
 
-S32 zNPCKingJelly::max_strikes()
-{
-    return round + 1;
-}
-
 void zNPCKingJelly::render_debug()
 {
 }
@@ -2191,6 +2186,31 @@ S32 zNPCGoalKJIdle::Enter(F32 dt, void* updCtxt)
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
+S32 zNPCGoalKJIdle::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
+
+    rotate(dt);
+    move(dt);
+
+    attack_delay -= dt;
+    if (attack_delay <= 0.0f)
+    {
+        xAnimState* anim = kj.AnimCurState();
+        if (anim->ID != g_hash_subbanim[ANIM_Idle01] || dt > kj.AnimTimeRemain(NULL))
+        {
+            *trantype = GOAL_TRAN_SET;
+            if (kj.bored())
+            {
+                return NPC_GOAL_KJBORED;
+            }
+            return NPC_GOAL_KJSHOCKGROUND;
+        }
+    }
+
+    return xGoal::Process(trantype, dt, updCtxt, xscn);
+}
+
 S32 zNPCGoalKJIdle::Exit(float dt, void* updCtxt)
 {
     zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
@@ -2222,7 +2242,7 @@ S32 zNPCGoalKJBored::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScen
         }
     }
 
-    if (found && dt > kj.AnimTimeRemain(NULL))
+    if (!found || dt > kj.AnimTimeRemain(NULL))
     {
         *trantype = GOAL_TRAN_SET;
         return NPC_GOAL_KJSHOCKGROUND;
@@ -2272,7 +2292,7 @@ S32 zNPCGoalKJTaunt::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScen
     zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
     xAnimState* anim = kj.AnimCurState();
 
-    if (anim->ID == g_hash_subbanim[ANIM_Taunt01] && dt > kj.AnimTimeRemain(NULL))
+    if (anim->ID != g_hash_subbanim[ANIM_Taunt01] || dt > kj.AnimTimeRemain(NULL))
     {
         *trantype = GOAL_TRAN_SET;
         return NPC_GOAL_KJIDLE;
@@ -2297,7 +2317,22 @@ void zNPCKingJelly::start_blink()
 S32 zNPCGoalKJDamage::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
 {
     zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
-    return 0;
+    xAnimState* anim = kj.AnimCurState();
+
+    if (anim->ID != g_hash_subbanim[ANIM_Damage01] || dt > kj.AnimTimeRemain(NULL))
+    {
+        *trantype = GOAL_TRAN_SET;
+        if (kj.life <= 0)
+        {
+            return NPC_GOAL_KJDEATH;
+        }
+        else
+        {
+            return NPC_GOAL_KJSPAWNKIDS;
+        }
+    }
+
+    return xGoal::Process(trantype, dt, updCtxt, xscn);
 }
 
 S32 zNPCGoalKJShockGround::Enter(F32 dt, void* updCtxt)
@@ -2312,7 +2347,40 @@ S32 zNPCGoalKJShockGround::Enter(F32 dt, void* updCtxt)
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
-S32 zNPCGoalKJShockGround::update_start(F32 dt)
+S32 zNPCGoalKJShockGround::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
+    delay -= dt;
+
+    switch (kj.shockstate)
+    {
+    case zNPCKingJelly::SS_START:
+        kj.shockstate = update_start(dt);
+        break;
+    case zNPCKingJelly::SS_WARM_UP:
+        kj.shockstate = update_warm_up(dt);
+        break;
+    case zNPCKingJelly::SS_RELEASE:
+        kj.shockstate = update_release(dt);
+        break;
+    case zNPCKingJelly::SS_COOL_DOWN:
+        kj.shockstate = update_cool_down(dt);
+        break;
+    case zNPCKingJelly::SS_STOP:
+        kj.shockstate = update_stop(dt);
+        break;
+    }
+
+    if (kj.shockstate >= zNPCKingJelly::MAX_SS)
+    {
+        *trantype = GOAL_TRAN_SET;
+        return NPC_GOAL_KJIDLE;
+    }
+
+    return xGoal::Process(trantype, dt, updCtxt, xscn);
+}
+
+zNPCKingJelly::shockstate_enum zNPCGoalKJShockGround::update_start(F32 dt)
 {
     zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
 
@@ -2333,7 +2401,84 @@ S32 zNPCGoalKJShockGround::update_start(F32 dt)
     return zNPCKingJelly::SS_START;
 }
 
-S32 zNPCGoalKJShockGround::update_stop(F32 dt)
+zNPCKingJelly::shockstate_enum zNPCGoalKJShockGround::update_warm_up(F32 dt)
+{
+    zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
+
+    kj.update_charge(tweak.interval.warm_up <= delay ? 1.0f
+                                                     : 1.0f - delay / tweak.interval.warm_up);
+
+    if (delay > 0.0f)
+    {
+        return zNPCKingJelly::SS_WARM_UP;
+    }
+
+    xAnimState* anim = kj.AnimCurState();
+    if (anim->ID != g_hash_subbanim[ANIM_AttackLoop01] || dt > kj.AnimTimeRemain(NULL))
+    {
+        play_sound(10, (xVec3*)&kj.model->Mat->pos);
+        delay = tweak.interval.release;
+        kj.end_charge();
+        kj.destroy_ambient_rings();
+        kj.create_wave_rings();
+        return zNPCKingJelly::SS_RELEASE;
+    }
+
+    return zNPCKingJelly::SS_WARM_UP;
+}
+
+zNPCKingJelly::shockstate_enum zNPCGoalKJShockGround::update_release(F32 dt)
+{
+    zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
+
+    if (delay > 0.0f)
+    {
+        return zNPCKingJelly::SS_RELEASE;
+    }
+
+    xAnimState* anim = kj.AnimCurState();
+    if (anim->ID != g_hash_subbanim[ANIM_Attack01] || dt > kj.AnimTimeRemain(NULL))
+    {
+        kj.AnimStart(g_hash_subbanim[ANIM_AttackLoop01], 0);
+        delay = tweak.interval.cool_down;
+        return zNPCKingJelly::SS_COOL_DOWN;
+    }
+
+    return zNPCKingJelly::SS_RELEASE;
+}
+
+zNPCKingJelly::shockstate_enum zNPCGoalKJShockGround::update_cool_down(F32 dt)
+{
+    zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
+
+    if (delay > 0.0f)
+    {
+        return zNPCKingJelly::SS_COOL_DOWN;
+    }
+
+    xAnimState* anim = kj.AnimCurState();
+    if (anim->ID != g_hash_subbanim[ANIM_AttackLoop01] || dt > kj.AnimTimeRemain(NULL))
+    {
+        strikes++;
+        kj.create_ambient_rings();
+
+        if (strikes >= kj.max_strikes())
+        {
+            play_sound(8, (xVec3*)&kj.model->Mat->pos);
+            kj.AnimStart(g_hash_subbanim[ANIM_AttackEnd01], 0);
+            return zNPCKingJelly::SS_STOP;
+        }
+
+        delay = tweak.interval.warm_up;
+        kj.AnimStart(g_hash_subbanim[ANIM_Attack01], 0);
+        kj.start_charge();
+        return zNPCKingJelly::SS_WARM_UP;
+    }
+
+    return zNPCKingJelly::SS_COOL_DOWN;
+}
+
+zNPCKingJelly::shockstate_enum zNPCGoalKJShockGround::update_stop(F32 dt)
 {
     zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
 

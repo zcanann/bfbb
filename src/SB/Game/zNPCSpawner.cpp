@@ -603,14 +603,15 @@ S32 zNPCSpawner::ReFillPending()
 S32 zNPCSpawner::IsSPLZClear(zMovePoint* sp)
 {
     xVec3 pos_sp = { 0.0f, 0.0f, 0.0f };
+    S32 rc;
     xBound bnd;
 
     memset(&bnd, 0, sizeof(xBound));
     bnd.type = XBOUND_TYPE_NA;
     xVec3Copy(&pos_sp, zMovePointGetPos(sp));
 
-    bnd.type = XBOUND_TYPE_SPHERE;
     bnd.sph.r = 3.5f;
+    bnd.type = XBOUND_TYPE_SPHERE;
     xVec3Copy(&bnd.sph.center, &pos_sp);
     xQuickCullForBound(&bnd.qcd, &bnd);
 
@@ -628,12 +629,13 @@ S32 zNPCSpawner::IsSPLZClear(zMovePoint* sp)
     xVec3 delt = { 0.0f, 0.0f, 0.0f };
     xVec3Sub(&delt, xEntGetPos(&globals.player.ent), &pos_sp);
 
-    if (SQ(3.5f) > SQ(delt.x) + SQ(delt.z))
+    if (SQ(delt.x) + SQ(delt.z) < SQ(3.5f))
     {
         return FALSE;
     }
 
-    return !IsNearbyMover(&bnd, TRUE, NULL);
+    rc = IsNearbyMover(&bnd, TRUE, NULL) ? FALSE : TRUE;
+    return rc;
 }
 
 S32 zNPCSpawner::IsNearbyMover(xBound* bnd, S32 usecyl, xCollis* caller_colrec)
@@ -641,16 +643,14 @@ S32 zNPCSpawner::IsNearbyMover(xBound* bnd, S32 usecyl, xCollis* caller_colrec)
     S32 hitthing = 0;
     zNPCCommon* npc;
     S32 i;
-    xCollis local_colrec;
-    xCollis* colrec = caller_colrec;
-    xVec3 delt = { 0.0f, 0.0f, 0.0f };
+    xCollis local_colrec = { 0 };
+    xCollis* colrec;
 
-    for (i = 10; i > 0; i--)
+    if (caller_colrec != NULL)
     {
-        // ???
+        colrec = caller_colrec;
     }
-
-    if (caller_colrec == NULL)
+    else
     {
         colrec = &local_colrec;
     }
@@ -658,26 +658,42 @@ S32 zNPCSpawner::IsNearbyMover(xBound* bnd, S32 usecyl, xCollis* caller_colrec)
     for (i = 0; i < globals.sceneCur->num_npcs; i++)
     {
         npc = (zNPCCommon*)globals.sceneCur->npcs[i];
-        if (npc->chkby & 0x8 && npc->SelfType() != 'NTD0' && (npc->SelfType() & ~0xFF) != 'NTT\0')
+        if (!(npc->chkby & 0x8))
         {
-            xBoundHitsBound(bnd, &npc->bound, colrec);
+            continue;
+        }
 
-            if (!(colrec->flags & 0x1) && !usecyl)
+        if (npc->SelfType() == 'NTD0')
+        {
+            continue;
+        }
+
+        if ((npc->SelfType() & ~0xFF) == 'NTT\0')
+        {
+            continue;
+        }
+
+        xBoundHitsBound(bnd, &npc->bound, colrec);
+
+        if (colrec->flags & 0x1)
+        {
+            hitthing++;
+        }
+        else if (usecyl)
+        {
+            xVec3 delt = { 0.0f, 0.0f, 0.0f };
+            NPCC_pos_ofBase(npc, &delt);
+            xVec3SubFrom(&delt, &bnd->sph.center);
+
+            if (SQ(delt.x) + SQ(delt.z) < SQ(bnd->cyl.r))
             {
-                NPCC_pos_ofBase(npc, &delt);
-
-                xVec3SubFrom(&delt, &bnd->sph.center);
-
-                if (SQ(delt.x) + SQ(delt.z) < SQ(bnd->cyl.r))
-                {
-                    hitthing++;
-                }
+                hitthing++;
             }
+        }
 
-            if (hitthing)
-            {
-                break;
-            }
+        if (hitthing)
+        {
+            break;
         }
     }
 

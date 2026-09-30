@@ -97,7 +97,9 @@ namespace
         const char* name;
     };
 
+    static const char* sound_asset_names[10][4];
     static U32 sound_asset_ids[10][4];
+    static U32 sound_asset_names_size[10];
     static sound_data_type sound_data[10];
 
     struct node
@@ -201,21 +203,12 @@ namespace
         return f1;
     }
 
-    static void init_sound()
-    {
-    }
-
     void reset_sound()
     {
         for (S32 i = 0; i < 10; ++i)
         {
             sound_data[i].handle = 0;
         }
-    }
-
-    S32 play_sound(int, const xVec3*, F32)
-    {
-        return 0; // to-do
     }
 
     struct sound_property
@@ -319,6 +312,78 @@ namespace
     };
 
     static tweak_group tweak;
+
+    static void init_sound()
+    {
+        memset(sound_asset_names_size, 0, sizeof(sound_asset_names_size));
+
+        for (S32 i = 0; i < 12; i++)
+        {
+            const sound_asset& asset = sound_assets[i];
+            if (asset.name != NULL)
+            {
+                U32& size = sound_asset_names_size[asset.group];
+                sound_asset_names[asset.group][size] = asset.name;
+                sound_asset_ids[asset.group][size] = i;
+                size++;
+            }
+        }
+
+        memset(sound_data, 0, sizeof(sound_data));
+
+        for (S32 i = 0; i < 10; i++)
+        {
+            sound_data[i].id = 0;
+            sound_data[i].handle = 0;
+        }
+    }
+
+    U32 play_sound(S32 which, const xVec3* loc, F32 volume)
+    {
+        sound_data_type& data = sound_data[which];
+        const sound_property& prop = tweak.sound[which];
+        const sound_asset& asset = sound_assets[prop.asset];
+
+        if ((asset.flags & 0x2) && data.handle != 0)
+        {
+            return data.handle;
+        }
+
+        if (asset.flags & 0x1)
+        {
+            data.handle = xSndPlay3DFade(data.id, volume * prop.volume, 1.0f, asset.priority,
+                                         0x800, loc, prop.range_inner, prop.range_outer,
+                                         SND_CAT_GAME, 0.0f, prop.delay);
+        }
+        else
+        {
+            data.handle = xSndPlay3D(data.id, volume * prop.volume, 1.0f, asset.priority, 0x800,
+                                     loc, prop.range_inner, prop.range_outer, SND_CAT_GAME,
+                                     prop.delay);
+        }
+
+        data.loc = (xVec3*)loc;
+        data.volume = volume;
+        return data.handle;
+    }
+
+    void kill_sound(S32 which, U32 handle)
+    {
+        sound_data_type& data = sound_data[which];
+        const sound_property& prop = tweak.sound[which];
+        const sound_asset& asset = sound_assets[prop.asset];
+
+        if (asset.flags & 0x1)
+        {
+            xSndStopFade(handle, prop.fade_time);
+        }
+        else
+        {
+            xSndStop(handle);
+        }
+
+        data.handle = 0;
+    }
 
     void tweak_group::load(xModelAssetParam* params, U32 size)
     {

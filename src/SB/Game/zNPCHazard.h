@@ -303,6 +303,7 @@ struct NPCHazard
     void StreakUpdate(U32 streakID, F32 rad);
     void Upd_RoboBits(F32 dt);
     void HurtThePlayer();
+    void TypData_RotMatStore(xVec3* ang);
     void TypData_RotMatSet(xMat3x3* mat);
     void TypData_RotMatApply(xMat3x3* mat);
     en_hazmodel PickFunFrag();
@@ -316,6 +317,8 @@ struct NPCHazard
     void CollideResponse(xSweptSphere* swdata, F32 tym_inFuture);
     void Discard();
     void Timestep(F32 dt);
+    UVAModelInfo* GetUVAInfo(en_hazmodel mdltyp, F32 uspd, F32 vspd);
+    S32 GrabModel(en_hazmodel mdltyp);
 
     RwV3d* At() const
     {

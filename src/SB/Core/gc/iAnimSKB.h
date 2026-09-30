@@ -22,5 +22,7 @@ struct iAnimSKBKey
 
 void iAnimEvalSKB(iAnimSKBHeader* data, F32 time, U32 flags, xVec3* tran, xQuat* quat);
 F32 iAnimDurationSKB(iAnimSKBHeader* data);
+void _iAnimSKBAdjustTranslate(iAnimSKBHeader* data, U32 bone, F32* starttran, F32* endtran);
+S32 _iAnimSKBExtractTranslate(iAnimSKBHeader* data, U32 bone, xVec3* tranArray, S32 tranCount);
 
 #endif

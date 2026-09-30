@@ -74,8 +74,8 @@ st_ZDISPATCH_DATA* zDispatcher_memPool(S32 cnt)
     }
     else
     {
-        pool = (st_ZDISPATCH_DATA*)xMemAlloc(gActiveHeap, cnt * sizeof(st_ZDISPATCH_DATA), 0);
-        memset(pool, 0, sizeof(st_ZDISPATCH_DATA) * cnt);
+        pool = (st_ZDISPATCH_DATA*)xMemAlloc(gActiveHeap, cnt * (S32)sizeof(st_ZDISPATCH_DATA), 0);
+        memset(pool, 0, cnt * sizeof(st_ZDISPATCH_DATA));
         depot->raw_pool = pool;
         depot->raw_cnt = cnt;
         return pool;
@@ -413,13 +413,53 @@ static S32 ZDSP_elcb_event(xBase*, xBase* xb, U32 toEvent, const F32* toParam, x
     case eEventDispatcher_SoundSFXDecrease:
         ZDSP_injectCmd(dspdata, ZDSP_CMD_SFXVOL_DECR);
         break;
-    case eEventDispatcher_GameState_SceneSwitch:
+    case eEventDispatcher_SetIntroState_Sony:
+    case eEventDispatcher_SetIntroState_Publisher:
+    case eEventDispatcher_SetIntroState_Developer:
+    case eEventDispatcher_SetIntroState_License:
+    case eEventDispatcher_SetIntroState_Count:
+    case eEventDispatcher_SetTitleState_Start:
+    case eEventDispatcher_SetTitleState_Attract:
+    case eEventDispatcher_SetTitleState_Count:
+    case eEventDispatcher_SetLoadState_SelectMemCard:
+    case eEventDispatcher_SetLoadState_SelectSlot:
+    case eEventDispatcher_SetLoadState_Loading:
+    case eEventDispatcher_SetLoadState_Count:
+    case eEventDispatcher_SetOptionsState_Options:
+    case eEventDispatcher_SetOptionsState_Count:
+    case eEventDispatcher_SetSaveState_SelectMemCard:
+    case eEventDispatcher_SetSaveState_SelectSlot:
+    case eEventDispatcher_SetSaveState_Saving:
+    case eEventDispatcher_SetSaveState_Count:
+    case eEventDispatcher_SetPauseState_Pause:
+    case eEventDispatcher_SetPauseState_Options:
+    case eEventDispatcher_SetPauseState_Count:
+    case eEventDispatcher_SetGameState_Play:
+    case eEventDispatcher_SetGameState_LoseChance:
+    case eEventDispatcher_SetGameState_GameOver:
+    case eEventDispatcher_SetGameState_SceneSwitch:
+    case eEventDispatcher_SetGameState_Dead:
+    case eEventDispatcher_GameState_Exit:
+    case eEventDispatcher_SetGameState_Exit:
         zGameStateSwitchEvent(toEvent);
         break;
     case eEventDispatcher_SetGameState_FirstTime:
         globals.autoSaveFeature = FALSE;
         zGameStateSwitchEvent(toEvent);
         break;
+    case eEventVisible:
+    case eEventInvisible:
+    case eEventEnterPlayer:
+    case eEventExitPlayer:
+    case eEventTouchPlayer:
+    case eEventControlOff:
+    case eEventControlOn:
+    case eEventLobMasterShoot:
+    case eEventLobMasterReset:
+    case eEventFallToDeath:
+    case eEventUIFocusOn_Select:
+    case eEventUIFocusOff_Unselect:
+    case eEventDigup:
     case eEventLobMasterShootFromWidget:
         break;
     case eEventDispatcher_SLBack:

@@ -1301,8 +1301,6 @@ xtextbox::callback xtextbox::text_cb = { xtextbox::text_render, NULL, NULL };
         }                                                                                          \
     }
 
-const xtextbox::tag_entry_list _1642 = {};
-
 xtextbox::tag_entry_list xtextbox::read_tag(const substr& s)
 {
     static substr arg_buffer[32];
@@ -1328,7 +1326,7 @@ xtextbox::tag_entry_list xtextbox::read_tag(const substr& s)
 
         const char* d = find_char(it, delims);
 
-        entry.name.size = (d) ? it.size : d - it.text;
+        entry.name.size = (!d) ? it.size : d - it.text;
 
         trim_ws(entry.name);
 
@@ -1346,13 +1344,13 @@ xtextbox::tag_entry_list xtextbox::read_tag(const substr& s)
 
         if (*d != ';')
         {
-            substr& arg = arg_buffer[args_used];
-
             entry.op = *d;
-            entry.args = &arg;
+            entry.args = &arg_buffer[args_used];
 
             while (it.size)
             {
+                substr& arg = arg_buffer[args_used];
+
                 arg.text = it.text;
 
                 const char* d = find_char(it, sub_delims);
@@ -1373,7 +1371,6 @@ xtextbox::tag_entry_list xtextbox::read_tag(const substr& s)
 
                 if (arg.size)
                 {
-                    // non-matching: missing addi instruction
                     args_used++;
                     entry.args_size++;
                 }
@@ -1391,9 +1388,7 @@ xtextbox::tag_entry_list xtextbox::read_tag(const substr& s)
         }
     }
 
-    tag_entry_list ret = _1642;
-    ret.size = entries_used;
-
+    tag_entry_list ret = { entry_buffer, entries_used };
     return ret;
 }
 
@@ -1423,11 +1418,11 @@ size_t xtextbox::read_list(const tag_entry& e, F32* v, size_t vsize)
         total = vsize;
     }
 
-    // non-matching: e.args is not stored in r31
+    const substr* args = e.args;
 
     for (size_t i = 0; i < total; i++)
     {
-        v[i] = xatof(e.args[i].text);
+        v[i] = xatof(args[i].text);
     }
 
     return total;
@@ -1442,11 +1437,11 @@ size_t xtextbox::read_list(const tag_entry& e, S32* v, size_t vsize)
         total = vsize;
     }
 
-    // non-matching: e.args is not stored in r31
+    const substr* args = e.args;
 
     for (size_t i = 0; i < total; i++)
     {
-        v[i] = atoi(e.args[i].text);
+        v[i] = atoi(args[i].text);
     }
 
     return total;
@@ -1491,9 +1486,7 @@ void xtextbox::layout::clear()
 
 void xtextbox::layout::trim_line(jot_line& line)
 {
-    // non-matching: mtctr and bdnz not generated
-
-    for (S32 i = line.last - 1; i >= line.first; i--)
+    for (S32 i = line.last - 1; i >= (S32)line.first; i--)
     {
         jot& a = _jots[i];
 
@@ -1509,7 +1502,7 @@ void xtextbox::layout::trim_line(jot_line& line)
         }
     }
 
-    for (S32 i = line.first; i < line.last; i++)
+    for (size_t i = line.first; i < line.last; i++)
     {
         jot& a = _jots[i];
 

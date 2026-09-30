@@ -1431,31 +1431,17 @@ U32 zNPCBPlankton::AnimPick(S32 rawgoal, en_NPC_GOAL_SPOT gspot, xGoal* goal)
 
 S32 zNPCBPlankton::next_goal()
 {
-    // Not in the correct order?
-    S32 tempR;
-    U32 cronyAttack;
+    if (mode == MODE_BUDDY)
+    {
+        if (flag.hunt)
+        {
+            return NPC_GOAL_BPLANKTONHUNT;
+        }
 
-    if (mode == 0)
-    {
-        if (flag.hunt == false)
-        {
-            cronyAttack = crony_attacking();
-            tempR =
-                ((0 - (cronyAttack & 0xff) | cronyAttack & 0xff) >> 0x1f) + NPC_GOAL_BPLANKTONHUNT;
-            //NPC_GOAL_BPLANKTONATTACK
-        }
-        else
-        {
-            tempR = NPC_GOAL_BPLANKTONATTACK;
-            //NPC_GOAL_BPLANKTONHUNT
-        }
+        return crony_attacking() ? NPC_GOAL_BPLANKTONIDLE : NPC_GOAL_BPLANKTONATTACK;
     }
-    else
-    {
-        tempR = NPC_GOAL_BPLANKTONEVADE;
-        //NPC_GOAL_BPLANKTONHUNT
-    }
-    return tempR;
+
+    return NPC_GOAL_BPLANKTONEVADE;
 }
 
 void zNPCBPlankton::refresh_orbit()
@@ -1485,7 +1471,8 @@ void zNPCBPlankton::refresh_orbit()
     }
     else
     {
-        xMovePointAsset& mp = *territory[active_territory].origin->asset;
+        territory_data& t = territory[active_territory];
+        xMovePointAsset& mp = *t.origin->asset;
         orbit.center = mp.pos;
         orbit.radius = mp.zoneRadius;
 
@@ -1591,7 +1578,7 @@ void zNPCBPlankton::update_follow_player(F32 dt)
     follow.delay += dt;
 
     if (follow.delay >= follow.max_delay ||
-        fabs(orbit_yaw_offset(move.dest, *get_player_loc())) > tweak.follow.max_ang)
+        xabs(orbit_yaw_offset(move.dest, *get_player_loc())) > tweak.follow.max_ang)
     {
         move.dest = player_orbit();
         move.dest = random_orbit(move.dest, 0.0f, tweak.follow.min_ang);
@@ -1777,21 +1764,16 @@ void zNPCBPlankton::next_territory()
 
 bool zNPCBPlankton::have_cronies() const
 {
-    return territory[active_territory].crony_size > 0;
+    const territory_data& t = territory[active_territory];
+    return t.crony_size > 0;
 }
 
 bool zNPCBPlankton::move_to_player_territory()
 {
     xCollis& coll = globals.player.ent.collis->colls[0];
-
-    if (!(coll.flags & 0x1))
-    {
-        return false;
-    }
-
     xEnt* platform = (xEnt*)coll.optr;
 
-    if (platform == NULL)
+    if (!(coll.flags & 0x1) || platform == NULL)
     {
         return false;
     }
@@ -1800,7 +1782,7 @@ bool zNPCBPlankton::move_to_player_territory()
     {
         territory_data& t = territory[i];
 
-        if (t.crony_size <= 0 && t.platform == platform)
+        if (t.crony_size <= 0 && platform == t.platform)
         {
             active_territory = i;
             return true;

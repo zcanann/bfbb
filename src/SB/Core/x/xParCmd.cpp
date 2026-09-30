@@ -740,8 +740,8 @@ void xParCmd_SizeInOut_Update(xParCmd* c, xParGroup* ps, F32 dt)
 
         while (p)
         {
-            // non-matching: there is definitely a clamp happening here, but it isn't using the CLAMP macro.
-            F32 frac = CLAMP(1.0f - p->m_lifetime / p->totalLifespan, 0.0f, 1.0f);
+            F32 frac = 1.0f - p->m_lifetime / p->totalLifespan;
+            frac = CLAMP(frac, 0.0f, 1.0f);
 
             if (frac < 0.33333334f)
             {
@@ -756,9 +756,8 @@ void xParCmd_SizeInOut_Update(xParCmd* c, xParGroup* ps, F32 dt)
                 seg = 2;
             }
 
-            for (S32 i = seg; i > 0; i--)
+            for (i = seg; i > 0; i--)
             {
-                // non-matching: 0.33333334f is cached before loop
                 frac -= 0.33333334f;
             }
 
@@ -771,12 +770,134 @@ void xParCmd_SizeInOut_Update(xParCmd* c, xParGroup* ps, F32 dt)
 
 void xParCmd_AlphaInOut_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
-    // todo: this is very similar to xParCmd_SizeInOut_Update
+    xPar* p;
+    xParCmdAlphaInOutData* cmd = (xParCmdAlphaInOutData*)c->tasset;
+
+    if (cmd->enabled)
+    {
+        p = ps->m_root;
+
+        S32 i, seg;
+        F32 slope_alfa[3];
+
+        slope_alfa[0] = 3.0f * (cmd->custAlpha[1] - cmd->custAlpha[0]);
+        slope_alfa[1] = 3.0f * (cmd->custAlpha[2] - cmd->custAlpha[1]);
+        slope_alfa[2] = 3.0f * (cmd->custAlpha[3] - cmd->custAlpha[2]);
+
+        while (p)
+        {
+            F32 frac = 1.0f - p->m_lifetime / p->totalLifespan;
+            frac = CLAMP(frac, 0.0f, 1.0f);
+
+            if (frac < 0.33333334f)
+            {
+                seg = 0;
+            }
+            else if (frac < 0.6666667f)
+            {
+                seg = 1;
+            }
+            else
+            {
+                seg = 2;
+            }
+
+            for (i = seg; i > 0; i--)
+            {
+                frac -= 0.33333334f;
+            }
+
+            F32 alfa = frac * slope_alfa[seg] + cmd->custAlpha[seg];
+            p->m_cfl[3] = CLAMP(alfa, 0.0f, 255.0f);
+            p->m_c[3] = p->m_cfl[3];
+
+            p = p->m_next;
+        }
+    }
 }
 
 void xParCmd_Shaper_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
-    // todo: part of this is very similar to xParCmd_SizeInOut_Update
+    xPar* p;
+    xParCmdShaperData* cmd = (xParCmdShaperData*)c->tasset;
+
+    if (cmd->enabled)
+    {
+        F32 damp = dt * cmd->dampSpeed;
+        F32 grav = dt * cmd->gravity;
+        S32 doalpha = TRUE;
+        S32 dosize = TRUE;
+        S32 i, seg;
+        F32 slope_alfa[3];
+        F32 slope_size[3];
+
+        if (cmd->custAlpha[0] < 0.0f)
+        {
+            doalpha = FALSE;
+        }
+
+        if (cmd->custSize[0] < 0.0f)
+        {
+            dosize = FALSE;
+        }
+
+        slope_size[0] = 3.0f * (cmd->custSize[1] - cmd->custSize[0]);
+        slope_size[1] = 3.0f * (cmd->custSize[2] - cmd->custSize[1]);
+        slope_size[2] = 3.0f * (cmd->custSize[3] - cmd->custSize[2]);
+
+        slope_alfa[0] = 3.0f * (cmd->custAlpha[1] - cmd->custAlpha[0]);
+        slope_alfa[1] = 3.0f * (cmd->custAlpha[2] - cmd->custAlpha[1]);
+        slope_alfa[2] = 3.0f * (cmd->custAlpha[3] - cmd->custAlpha[2]);
+
+        p = ps->m_root;
+
+        while (p)
+        {
+            xVec3AddScaled(&p->m_vel, &p->m_vel, damp);
+            p->m_vel.y -= grav;
+
+            if (p->totalLifespan < 0.00001f || (!dosize && !doalpha))
+            {
+                p = p->m_next;
+                continue;
+            }
+
+            F32 frac = 1.0f - p->m_lifetime / p->totalLifespan;
+            frac = CLAMP(frac, 0.0f, 1.0f);
+
+            if (frac < 0.33333334f)
+            {
+                seg = 0;
+            }
+            else if (frac < 0.6666667f)
+            {
+                seg = 1;
+            }
+            else
+            {
+                seg = 2;
+            }
+
+            for (i = seg; i > 0; i--)
+            {
+                frac -= 0.33333334f;
+            }
+
+            if (dosize)
+            {
+                p->m_size = frac * slope_size[seg] + cmd->custSize[seg];
+            }
+
+            if (doalpha)
+            {
+                F32 alfa = frac * slope_alfa[seg] + cmd->custAlpha[seg];
+                p->m_cfl[3] = CLAMP(alfa, 0.0f, 255.0f);
+                p->m_c[3] = p->m_cfl[3];
+            }
+
+            p = p->m_next;
+        }
+    }
 }
 
 WEAK F32 xVec3LengthFast(F32 x, F32 y, F32 z)

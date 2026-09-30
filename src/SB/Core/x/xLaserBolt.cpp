@@ -497,8 +497,9 @@ void xLaserBoltEmitter::emit_decal(effect_data& effect, bolt& b, F32 from_dist, 
 
 void xLaserBoltEmitter::emit_decal_dist(effect_data& effect, bolt& b, F32 from_dist, F32 to_dist, F32 dt)
 {
-    F32 start_dist = from_dist + (1.0f - b.emitted) * effect.irate;
+    F32 start_dist = (1.0f - b.emitted) * effect.irate;
     b.emitted += effect.rate * (to_dist - from_dist);
+    start_dist = from_dist + start_dist;
 
     S32 total = b.emitted;
     b.emitted -= total;
@@ -525,14 +526,16 @@ void xLaserBoltEmitter::emit_decal_dist(effect_data& effect, bolt& b, F32 from_d
 
     xVec3 dloc = b.dir * effect.irate;
     mat.pos = b.origin + b.dir * start_dist;
-    for (S32 i = 0; i < total; i++)
+    S32 i = 0;
+    while (i < total)
     {
-        if (((xDecalEmitter*)effect.par)->full())
+        if (effect.decal->full())
         {
             break;
         }
 
-        ((xDecalEmitter*)effect.par)->emit(mat, -1);
+        effect.decal->emit(mat, -1);
+        i++;
         mat.pos += dloc;
     }
 }

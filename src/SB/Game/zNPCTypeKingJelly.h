@@ -193,6 +193,8 @@ struct zNPCKingJelly : zNPCSubBoss
     void taunt();
     bool bored() const;
     void start_charge();
+    void update_charge(F32 frac);
+    void create_wave_rings();
     void generate_thump_particles();
     void check_player_damage();
     U8 apply_ambient_damage();
@@ -201,7 +203,6 @@ struct zNPCKingJelly : zNPCSubBoss
     void start_fight();
     S32 count_children(S32 wave);
     void spawn_children(int, int);
-    S32 max_strikes();
     void update_camera(F32 dt);
     void set_life(S32 life);
     void load_model();
@@ -247,6 +248,9 @@ struct zNPCGoalKJIdle : zNPCGoalCommon
 
     S32 Enter(F32 dt, void* updCtxt);
     S32 Exit(float, void*);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
+    void rotate(F32 dt);
+    void move(F32 dt);
 };
 
 struct zNPCGoalKJBored : zNPCGoalCommon
@@ -297,11 +301,11 @@ struct zNPCGoalKJShockGround : zNPCGoalCommon
     S32 Enter(F32 dt, void* updCtxt);
     S32 Exit(F32 dt, void* updCtxt);
     S32 Process(en_trantype*, float, void*, xScene*);
-    S32 update_start(float);
-    S32 update_warm_up(float);
-    S32 update_release(float);
-    S32 update_cool_down(float);
-    S32 update_stop(float);
+    zNPCKingJelly::shockstate_enum update_start(F32 dt);
+    zNPCKingJelly::shockstate_enum update_warm_up(F32 dt);
+    zNPCKingJelly::shockstate_enum update_release(F32 dt);
+    zNPCKingJelly::shockstate_enum update_cool_down(F32 dt);
+    zNPCKingJelly::shockstate_enum update_stop(F32 dt);
 };
 
 struct zNPCGoalKJDamage : zNPCGoalCommon

@@ -4448,8 +4448,8 @@ static void zEntPlayerCheckShoePop()
 
         for (i = 0; i < 2; i++)
         {
-            m = model_index[i];
             bone = bone_index[i];
+            m = model_index[i];
 
             if (!(m->Flags & 1))
             {
@@ -5922,15 +5922,55 @@ void zEntPlayer_SNDNotifyPlaying(U32 id)
 
 static void PlayerHackFixBbashMiss(xModelInstance* model)
 {
+    static const char* bbstate[4] = { "BbashStart01", "BbashAttack01", "BbashStrike01",
+                                      "BbashMiss01" };
+    static F32 bbadjust[4][2] = {
+        { 0.0f, -0.55f }, { -0.55f, -0.55f }, { -0.55f, -0.55f }, { -0.55f, -0.55f }
+    };
+    static F32 bbspeed[4] = { 1.0f, 0.96f, 0.96f, 0.92f };
+
     S32 i;
     xAnimState* astate;
     xVec3 tran[2];
     iAnimSKBHeader* skb;
     xVec3 tranList[128];
     S32 tranCount;
-    F32 bbspeed[4];
-    F32 bbadjust[4][2];
-    char* bbstate[4];
+
+    for (i = 0; i < 4; i++)
+    {
+        astate = xAnimTableGetState(model->Anim->Table, bbstate[i]);
+        if (astate == NULL)
+        {
+            continue;
+        }
+
+        skb = (iAnimSKBHeader*)astate->Data->RawData[0];
+        if (!(skb->Flags & 0x80000000))
+        {
+            if (i == 3)
+            {
+                tranCount = _iAnimSKBExtractTranslate(skb, 1, tranList, 128);
+                tranList[0].y += bbadjust[i][0];
+                tranList[tranCount - 1].y += bbadjust[i][1];
+                _iAnimSKBAdjustTranslate(skb, 1, (F32*)&tranList[0],
+                                         (F32*)&tranList[tranCount - 1]);
+            }
+            else
+            {
+                tran[0].x = 0.0f;
+                tran[0].y = bbadjust[i][0];
+                tran[0].z = 0.0f;
+                tran[1].x = 0.0f;
+                tran[1].y = bbadjust[i][1];
+                tran[1].z = 0.0f;
+                _iAnimSKBAdjustTranslate(skb, 1, (F32*)&tran[0], (F32*)&tran[1]);
+            }
+
+            skb->Flags |= 0x80000000;
+        }
+
+        astate->Speed = bbspeed[i];
+    }
 }
 
 xAnimTable* zSandy_AnimTable()

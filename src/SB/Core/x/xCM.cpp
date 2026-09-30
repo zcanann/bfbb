@@ -102,13 +102,13 @@ static void xCMprep(xCreditsData* data)
 
 static iColor_tag xCMcolor_scale(iColor_tag color, F32 t)
 {
-    F64 r = (F64)color.r;
-    F64 g = (F64)color.g;
-    F64 b = (F64)color.b;
-    F64 a = (F64)color.a * (F64)t;
-
-    iColor_tag ret;
-    xColorInit(&ret, (U8)r, (U8)g, (U8)b, (U8)a);
+    iColor_tag ret = color;
+    iColor_tag src = color;
+    F32 a = src.a * t;
+    F32 r = src.r;
+    F32 g = src.g;
+    F32 b = src.b;
+    xColorInit(&ret, r, g, b, a);
     return ret;
 }
 
@@ -289,7 +289,7 @@ void xCMupdate(F32 time)
     if (credits_data != 0)
     {
         credits_time += (time * dtscale);
-        if (credits_time >= *(F32*)((S32)&credits_data->dummy + 0x10))
+        if (credits_time >= ((xCMheader*)credits_data)->total_time)
         {
             xCMstop();
         }

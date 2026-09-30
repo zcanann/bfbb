@@ -352,27 +352,353 @@ void NPCHazard::WipeIt()
     memset(&this->custdata, 0, sizeof(this->custdata));
 }
 
-// WIP.
 S32 NPCHazard::ConfigHelper(en_npchaz haztype)
 {
     S32 result = 1;
+    HAZTypical* typical = &this->custdata.typical;
+
     this->typ_hazard = haztype;
+
     switch (haztype)
     {
     case NPC_HAZ_UNKNOWN:
         result = 0;
         break;
     case NPC_HAZ_EXPLODE:
-        // TODO!!!
+    {
+        static const xVec2 uv_scroll_eo = { 0.0f, -5.0f };
+        this->flg_hazard |= 0x89180;
+        result = this->GrabModel(NPC_HAZMDL_BOOMBALL_SMOKE) != 0;
+        this->uva_uvanim =
+            this->GetUVAInfo(NPC_HAZMDL_BOOMBALL_SMOKE, uv_scroll_eo.x, uv_scroll_eo.y);
+        this->tmr_remain = 2.5f;
+        typical->rad_min = 0.1f;
+        typical->rad_max = 2.0f;
+        typical->rad_cur = typical->rad_min;
         break;
+    }
+    case NPC_HAZ_EXPLODE_INNER:
+    {
+        static const xVec2 uv_scroll_ei = { 0.0f, -5.0f };
+        this->flg_hazard |= 0x89180;
+        result = this->GrabModel(NPC_HAZMDL_BOOMBALL_BUBBLE) != 0;
+        this->uva_uvanim =
+            this->GetUVAInfo(NPC_HAZMDL_BOOMBALL_BUBBLE, uv_scroll_ei.x, uv_scroll_ei.y);
+        this->tmr_remain = 2.0f;
+        typical->rad_min = 0.0f;
+        typical->rad_max = 1.5f;
+        typical->rad_cur = typical->rad_min;
+        break;
+    }
+    case NPC_HAZ_FODBOMB:
+    {
+        static const xVec2 uv_scroll_fb = { 0.0f, -5.0f };
+        this->flg_hazard |= 0x8b180;
+        result = this->GrabModel(NPC_HAZMDL_FODBOMB) != 0;
+        this->uva_uvanim = this->GetUVAInfo(NPC_HAZMDL_FODBOMB, uv_scroll_fb.x, uv_scroll_fb.y);
+        this->tmr_remain = 0.4f;
+        typical->rad_min = 0.3f;
+        typical->rad_max = 2.75f;
+        typical->rad_cur = typical->rad_min;
+        break;
+    }
+    case NPC_HAZ_CATTLEPROD:
+    {
+        static const xVec2 uv_scroll_cp = { 5.0f, -5.0f };
+        this->flg_hazard |= 0x8b180;
+        result = this->GrabModel(NPC_HAZMDL_CATTLEPROD) != 0;
+        this->uva_uvanim =
+            this->GetUVAInfo(NPC_HAZMDL_CATTLEPROD, uv_scroll_cp.x, uv_scroll_cp.y);
+        this->tmr_remain = 0.2f;
+        typical->rad_min = 0.15f;
+        typical->rad_max = 0.5f;
+        typical->rad_cur = typical->rad_min;
+        break;
+    }
+    case NPC_HAZ_TUBELETBLAST:
+    {
+        static const xVec2 uv_scroll_tb = { 0.0f, -5.0f };
+        this->flg_hazard |= 0x8b180;
+        result = this->GrabModel(NPC_HAZMDL_TUBEBLAST) != 0;
+        this->uva_uvanim = this->GetUVAInfo(NPC_HAZMDL_TUBEBLAST, uv_scroll_tb.x, uv_scroll_tb.y);
+        this->tmr_remain = 1.0f;
+        typical->rad_min = 0.25f;
+        typical->rad_max = 7.0f;
+        typical->rad_cur = typical->rad_min;
+        break;
+    }
+    case NPC_HAZ_PUPPYNUKE:
+    {
+        static const xVec2 uv_scroll_pn = { 5.0f, -5.0f };
+        this->flg_hazard |= 0x8b180;
+        result = this->GrabModel(NPC_HAZMDL_PUPPYNUKE) != 0;
+        this->uva_uvanim = this->GetUVAInfo(NPC_HAZMDL_PUPPYNUKE, uv_scroll_pn.x, uv_scroll_pn.y);
+        this->tmr_remain = 0.3f;
+        typical->rad_min = 0.5f;
+        typical->rad_max = 2.5f;
+        typical->rad_cur = typical->rad_min;
+        break;
+    }
+    case NPC_HAZ_DUPLOBOOM:
+    {
+        this->flg_hazard |= 0xb180;
+        result = this->GrabModel(NPC_HAZMDL_DUPLOBOOM) != 0;
+        this->tmr_remain = 0.75f;
+        typical->rad_min = 1.0f;
+        typical->rad_max = 5.0f;
+        typical->rad_cur = typical->rad_min;
+
+        xVec3 ang_spin;
+        ang_spin.x = ((xrand() & 0x800000) ? PI : -0.25f * PI) * (1.0f / 60.0f);
+        ang_spin.y = 0.0f;
+        ang_spin.z = 0.0f;
+        this->TypData_RotMatStore(&ang_spin);
+        break;
+    }
+    case NPC_HAZ_THUNDER:
+    {
+        this->flg_hazard |= 0xb180;
+        result = this->GrabModel(NPC_HAZMDL_THUNDER) != 0;
+        this->tmr_remain = 0.25f;
+        typical->rad_min = 0.1f;
+        typical->rad_max = 5.0f;
+        typical->rad_cur = typical->rad_min;
+
+        xVec3 ang_spin;
+        ang_spin.x = ((xrand() & 0x800000) ? PI : -0.25f * PI) * (1.0f / 60.0f);
+        ang_spin.y = 0.0f;
+        ang_spin.z = 0.0f;
+        this->TypData_RotMatStore(&ang_spin);
+        break;
+    }
+    case NPC_HAZ_DUPLO_SHROOM:
+        this->flg_hazard |= 0x9180;
+        this->tmr_remain = 5.0f;
+        xVec3Copy(&this->custdata.shroom.vel_rise, &g_Y3);
+        xVec3Copy(&this->custdata.shroom.acc_rise, &g_Y3);
+        this->TypData_RotMatStore(NULL);
+        break;
+    case NPC_HAZ_PATRIOT:
+        this->flg_hazard |= 0x201180;
+        this->tmr_remain = 5.0f;
+        xVec3Copy(&this->custdata.patriot.pos_began, &g_O3);
+        this->custdata.patriot.spd_peak = 10.0f;
+        this->custdata.patriot.spd_curr = 0.0f;
+        this->custdata.patriot.acc_rate = 5.0f;
+        break;
+    case NPC_HAZ_TARTARPROJ:
+        this->flg_hazard |= 0x21a380;
+        result = this->GrabModel(NPC_HAZMDL_TARTARPROJ) != 0;
+        this->tmr_remain = 0.25f;
+        typical->rad_min = 0.2f;
+        typical->rad_max = 0.25f;
+        typical->rad_cur = typical->rad_min;
+        this->custdata.collide.flg_collide |= 7;
+        break;
+    case NPC_HAZ_TARTARSPILL:
+        this->flg_hazard |= 0xb380;
+        result = this->GrabModel(NPC_HAZMDL_TARTARSPLAT) != 0;
+        this->tmr_remain = 4.0f;
+        typical->rad_min = 0.2f;
+        typical->rad_max = 1.0f;
+        typical->rad_cur = typical->rad_max;
+        break;
+    case NPC_HAZ_TARTARSTINK:
+    {
+        static const xVec2 uv_scroll_ts = { 0.0f, 1.0f };
+        this->flg_hazard |= 0x89180;
+        result = this->GrabModel(NPC_HAZMDL_TARTARSTEAM) != 0;
+        this->uva_uvanim =
+            this->GetUVAInfo(NPC_HAZMDL_TARTARSTEAM, uv_scroll_ts.x, uv_scroll_ts.y);
+        this->tmr_remain = 3.75f;
+        typical->rad_min = 0.2f;
+        typical->rad_max = 1.0f;
+        typical->rad_cur = typical->rad_max;
+        break;
+    }
+    case NPC_HAZ_CHUCKBOMB:
+        this->flg_hazard |= 0x21a380;
+        this->custdata.collide.flg_collide |= 7;
+        result = this->GrabModel(NPC_HAZMDL_CHUCKBOMB) != 0;
+        this->tmr_remain = 0.25f;
+        typical->rad_min = 1.0f;
+        typical->rad_max = 1.0f;
+        typical->rad_cur = typical->rad_min;
+        break;
+    case NPC_HAZ_CHUCKBLAST:
+    {
+        static const xVec2 uv_scroll_cb = { 0.0f, -1.0f };
+        this->flg_hazard |= 0x8b980;
+        result = this->GrabModel(NPC_HAZMDL_CHUCKSPLASH) != 0;
+        this->uva_uvanim =
+            this->GetUVAInfo(NPC_HAZMDL_CHUCKSPLASH, uv_scroll_cb.x, uv_scroll_cb.y);
+        this->tmr_remain = 1.0f;
+        typical->rad_min = 0.0f;
+        typical->rad_max = 3.0f;
+        typical->rad_cur = typical->rad_min;
+        break;
+    }
+    case NPC_HAZ_CHUCKBLOOSH:
+    {
+        static const xVec2 uv_scroll_cl = { 0.0f, -1.0f };
+        this->flg_hazard |= 0x99180;
+        result = this->GrabModel(NPC_HAZMDL_CHUCKSPLISH) != 0;
+        this->uva_uvanim =
+            this->GetUVAInfo(NPC_HAZMDL_CHUCKSPLISH, uv_scroll_cl.x, uv_scroll_cl.y);
+        this->tmr_remain = 1.6f + 0.25f * 1.6f * (xurand() - 0.5f);
+        typical->rad_min = 0.2f;
+        typical->rad_max = 1.0f;
+        typical->rad_cur = typical->rad_min;
+        this->custdata.tartar.vel = g_Y3;
+        break;
+    }
+    case NPC_HAZ_ARFBONE:
+    {
+        this->flg_hazard |= 0x21a380;
+        result = this->GrabModel(NPC_HAZMDL_ARFBONE) != 0;
+        this->tmr_remain = 0.25f;
+        typical->rad_min = 0.0f;
+        typical->rad_max = 1.0f;
+        typical->rad_cur = typical->rad_min;
+
+        xVec3 ang_spin;
+        ang_spin.x = ((xrand() & 0x800000) ? 4.0f * PI : -4.0f * PI) * (1.0f / 60.0f);
+        ang_spin.y = 0.0f;
+        ang_spin.z = 0.0f;
+        this->TypData_RotMatStore(&ang_spin);
+        this->custdata.collide.flg_collide |= 7;
+        break;
+    }
+    case NPC_HAZ_ARFBONEBLAST:
+        this->flg_hazard |= 0xb180;
+        this->tmr_remain = 1.0f;
+        typical->rad_min = 0.5f;
+        typical->rad_max = 0.5f;
+        typical->rad_cur = typical->rad_min;
+        break;
+    case NPC_HAZ_OILBUBBLE:
+    {
+        static const xVec2 uv_scroll_ob = { 0.0f, -2.0f };
+        this->flg_hazard |= 0x29a180;
+        result = this->GrabModel(NPC_HAZMDL_SLICKPROJ) != 0;
+        this->uva_uvanim = this->GetUVAInfo(NPC_HAZMDL_SLICKPROJ, uv_scroll_ob.x, uv_scroll_ob.y);
+        this->tmr_remain = 0.25f;
+        typical->rad_min = 0.0f;
+        typical->rad_max = 1.0f;
+        typical->rad_cur = typical->rad_min;
+        this->custdata.collide.flg_collide |= 7;
+        break;
+    }
+    case NPC_HAZ_OILSLICK:
+    {
+        static const xVec2 uv_scroll_os = { 0.0f, -0.25f };
+        this->flg_hazard |= 0x8b180;
+        result = this->GrabModel(NPC_HAZMDL_SLICKPUDDLE) != 0;
+        this->uva_uvanim =
+            this->GetUVAInfo(NPC_HAZMDL_SLICKPUDDLE, uv_scroll_os.x, uv_scroll_os.y);
+        this->tmr_remain = 10.0f;
+        typical->rad_min = 0.2f;
+        typical->rad_max = 1.5f;
+        typical->rad_cur = typical->rad_min;
+        break;
+    }
+    case NPC_HAZ_OILBURST:
+    {
+        static const xVec2 uv_scroll_or = { 0.0f, -0.25f };
+        this->flg_hazard |= 0x8b180;
+        result = this->GrabModel(NPC_HAZMDL_SLICKBURST) != 0;
+        this->uva_uvanim =
+            this->GetUVAInfo(NPC_HAZMDL_SLICKBURST, uv_scroll_or.x, uv_scroll_or.y);
+        this->tmr_remain = 0.75f;
+        typical->rad_min = 0.0f;
+        typical->rad_max = 1.75f;
+        typical->rad_cur = typical->rad_min;
+        break;
+    }
+    case NPC_HAZ_OILGLOB:
+    {
+        static const xVec2 uv_scroll_og = { -1.0f, -2.0f };
+        this->flg_hazard |= 0x8b180;
+        result = this->GrabModel(NPC_HAZMDL_SLICKGLOB) != 0;
+        this->uva_uvanim = this->GetUVAInfo(NPC_HAZMDL_SLICKGLOB, uv_scroll_og.x, uv_scroll_og.y);
+        this->tmr_remain = 1.2f + 0.25f * 1.2f * (xurand() - 0.5f);
+        typical->rad_min = 0.1f;
+        typical->rad_max = 0.55f;
+        typical->rad_cur = typical->rad_min;
+        xVec3Copy(&this->custdata.shroom.vel_rise, &g_O3);
+        xVec3SMul(&this->custdata.shroom.acc_rise, &g_Y3, 1.2f);
+        break;
+    }
+    case NPC_HAZ_MONCLOUD:
+    {
+        this->flg_hazard |= 0x9180;
+        result = this->GrabModel(NPC_HAZMDL_MONCLOUD) != 0;
+        this->shadowCache = NPCC_ShadowCacheReserve();
+        this->tmr_remain = 7.5f;
+        this->custdata.cloud.spd_cloud = 3.0f;
+        this->custdata.cloud.rad_maxRange = 10.0f;
+        typical->rad_min = 0.0f;
+        typical->rad_max = 1.0f;
+        typical->rad_cur = typical->rad_min;
+        xVec3Copy(&this->custdata.cloud.pos_home, &g_O3);
+
+        xVec3 ang_spin;
+        ang_spin.x = ((xrand() & 0x800000) ? 0.25f * PI : -0.25f * PI) * (1.0f / 60.0f);
+        ang_spin.y = 0.0f;
+        ang_spin.z = 0.0f;
+        this->TypData_RotMatStore(&ang_spin);
+        break;
+    }
+    case NPC_HAZ_FUNFRAG:
+        this->flg_hazard |= 0x19380;
+        result = this->GrabModel(this->PickFunFrag()) != 0;
+        this->tmr_remain = 2.5f;
+        typical->rad_min = 1.0f;
+        typical->rad_max = 1.0f;
+        typical->rad_cur = typical->rad_min;
+        this->TypData_RotMatStore(NULL);
+        break;
+    case NPC_HAZ_ROBOBITS:
+    {
+        static const xVec3 vec_tumble = { 2.0f * PI, 0.25f * PI, 0.25f * PI };
+        this->flg_hazard |= 0x19380;
+        result = this->GrabModel(NPC_HAZMDL_ROBOBITS) != 0;
+        this->tmr_remain = 0.25f;
+
+        xVec3 ang_spin = vec_tumble;
+        typical->rad_min = 1e-5f;
+        typical->rad_max = 1.0f;
+        typical->rad_cur = typical->rad_min;
+        ang_spin.x *= 2.0f * (xurand() - 0.5f);
+        ang_spin.y *= 2.0f * (xurand() - 0.5f);
+        ang_spin.z *= 2.0f * (xurand() - 0.5f);
+        ang_spin *= 1.0f / 60.0f;
+        this->TypData_RotMatStore(&ang_spin);
+        break;
+    }
+    case NPC_HAZ_VISSPLASH:
+    {
+        static const xVec2 uv_scroll_vs = { 0.0f, -1.0f };
+        this->flg_hazard |= 0x89980;
+        result = this->GrabModel(NPC_HAZMDL_VISSPLASH) != 0;
+        this->uva_uvanim =
+            this->GetUVAInfo(NPC_HAZMDL_CHUCKSPLASH, uv_scroll_vs.x, uv_scroll_vs.y);
+        this->tmr_remain = 0.25f;
+        typical->rad_min = 0.0f;
+        typical->rad_max = 1.0f;
+        typical->rad_cur = typical->rad_min;
+        break;
+    }
     default:
         result = 0;
         break;
     }
+
     if (!result)
     {
         this->MarkForRecycle();
     }
+
     return result;
 }
 
