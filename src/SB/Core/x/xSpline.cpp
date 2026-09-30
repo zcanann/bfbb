@@ -70,53 +70,29 @@ void Interpolate_Bspline(xVec3* data, xVec3* control, F32* knots, U32 nodata)
     F32* beta;
     F32* gamma;
 
-    U32 i;
-
-    F32 diff_31;
-    F32 diff_43;
-    F32 diff_53;
-    F32 diff_41;
-    F32 diff_32;
-    F32 diff_52;
-    F32 diff_42;
-
-    F32 t1;
-    F32 t2;
-    F32 t3;
-    F32 t4;
-    F32 t5;
-
-    alpha = (F32*)RwMalloc(nodata * 4);
-    beta = (F32*)RwMalloc(nodata * 4);
-    gamma = (F32*)RwMalloc(nodata * 4);
+    alpha = (F32*)RwMalloc(nodata * sizeof(F32));
+    beta = (F32*)RwMalloc(nodata * sizeof(F32));
+    gamma = (F32*)RwMalloc(nodata * sizeof(F32));
 
     beta[0] = beta[nodata - 1] = 1.0f;
     alpha[0] = alpha[nodata - 1] = 0.0f;
     gamma[0] = gamma[nodata - 1] = 0.0f;
 
-    for (i = 1; i < nodata - 1; i += 1)
+    for (U32 i = 1; i < nodata - 1; i++)
     {
-        t1 = knots[i + 1];
-        t2 = knots[i + 2];
-        t3 = knots[i + 3];
-        t4 = knots[i + 4];
-        t5 = knots[i + 5];
+        F32 t1 = knots[i + 1];
+        F32 t2 = knots[i + 2];
+        F32 t3 = knots[i + 3];
+        F32 t4 = knots[i + 4];
+        F32 t5 = knots[i + 5];
 
-        diff_31 = t3 - t1;
-        diff_43 = t4 - t3;
-        diff_32 = t3 - t2;
-        diff_53 = t5 - t3;
-        diff_41 = t4 - t1;
-        diff_52 = t5 - t2;
+        alpha[i] = (t4 - t3) * (t4 - t3) / (t4 - t1);
+        beta[i] = (t3 - t1) * (t4 - t3) / (t4 - t1) + (t5 - t3) * (t3 - t2) / (t5 - t2);
+        gamma[i] = (t3 - t2) * (t3 - t2) / (t5 - t2);
 
-        alpha[i] = (diff_43 * diff_43) / diff_41;
-        beta[i] = (diff_31 * diff_43) / diff_41 + (diff_53 * diff_32) / diff_52;
-        gamma[i] = (diff_32 * diff_32) / diff_52;
-
-        diff_42 = t4 - t2;
-        alpha[i] = alpha[i] / diff_42;
-        beta[i] = beta[i] / diff_42;
-        gamma[i] = gamma[i] / diff_42;
+        alpha[i] /= t4 - t2;
+        beta[i] /= t4 - t2;
+        gamma[i] /= t4 - t2;
     }
 
     Tridiag_Solve(alpha, beta, gamma, data, control + 1, nodata);

@@ -619,88 +619,72 @@ void zNPCGoalPatrol::PickTransition(S32* goal, en_trantype* trantype)
 void zNPCGoalPatrol::MoveNormal(F32 dt)
 {
     zNPCCommon* npc = (zNPCCommon*)psyche->clt_owner;
-
-    // NOTE: faithful. The debug log test is retained but its body was stripped.
-    if (npc->DBG_IsNormLog(eNPCDCAT_Eleven, -1))
-    {
-    }
-
-    xVec3 dir_dest;
     xVec3 vec_dest;
+    xVec3 dir_dest;
 
-    xVec3Copy(&dir_dest, npc->nav_dest->PosGet());
-    xVec3Sub(&vec_dest, &dir_dest, xEntGetPos(npc));
+    npc->DBG_IsNormLog(eNPCDCAT_Eleven, -1);
 
+    xVec3Copy(&vec_dest, npc->nav_dest->PosGet());
+    xVec3Sub(&dir_dest, &vec_dest, xEntGetPos(npc));
     if (npc->flg_move & (1 << 1))
     {
-        vec_dest.y = 0.0f;
+        dir_dest.y = 0.0f;
     }
 
     npc->ThrottleAccel(dt, 1, 0.75f);
 
-    F32 velmag = vec_dest.length();
-
-    if (velmag < 0.001f)
+    F32 dist = dir_dest.length();
+    if (dist < 0.001f)
     {
         if (npc->flg_move & (1 << 1))
         {
-            dir_dest.y = npc->frame->mat.pos.y;
+            vec_dest.y = npc->frame->mat.pos.y;
         }
-
-        xVec3Copy(&npc->frame->mat.pos, &dir_dest);
+        xVec3Copy(&npc->frame->mat.pos, &vec_dest);
         npc->frame->mode |= 1;
         npc->frame->dpos = g_O3;
         npc->frame->mode |= 2;
-
         DoOnArriveStuff();
+        return;
+    }
+
+    F32 inv = 1.0f / dist;
+    xVec3 dir = dir_dest;
+    xVec3SMulBy(&dir_dest, inv);
+    F32 velmag = npc->spd_throttle;
+
+    if (dist > 3.0f)
+    {
+        xVec3 dir_move;
+        F32 rot = npc->TurnToFace(dt, &dir_dest, -1.0f);
+        NPCC_ang_toXZDir(npc->frame->rot.angle + rot, &dir_move);
+        npc->ThrottleApply(dt, &dir_move, 0);
+        if (npc->flg_move & (1 << 2))
+        {
+            F32 rat = npc->spd_throttle * dt / dist;
+            npc->frame->dpos.y += rat * dir.y;
+            npc->frame->mode |= 2;
+        }
     }
     else
     {
-        xVec3 dir = vec_dest;
-
-        xVec3SMulBy(&vec_dest, 1.0f / velmag);
-
-        F32 spd = npc->spd_throttle;
-
-        if (velmag > 3.0f)
+        npc->TurnToFace(dt, &dir_dest, 4.0f * PI);
+        if (dt * velmag > dist)
         {
-            F32 rot = npc->frame->rot.angle + npc->TurnToFace(dt, &vec_dest, -1.0f);
-            xVec3 xzdir;
-            NPCC_ang_toXZDir(rot, &xzdir);
-            npc->ThrottleApply(dt, &xzdir, 0);
-
-            if (npc->flg_move & (1 << 2))
+            if (npc->flg_move & (1 << 1))
             {
-                F32 rat = npc->spd_throttle * dt / velmag;
-
-                npc->frame->dpos.y += rat * dir.y;
-                npc->frame->mode |= 2;
+                vec_dest.y = npc->frame->mat.pos.y;
             }
+            xVec3Copy(&npc->frame->mat.pos, &vec_dest);
+            npc->frame->mode |= 1;
+            npc->frame->dpos = g_O3;
+            npc->frame->mode |= 2;
+            DoOnArriveStuff();
         }
         else
         {
-            // NOTE: faithful. The returned angle is deliberately discarded here.
-            npc->TurnToFace(dt, &vec_dest, 12.566371f);
-
-            if (dt * spd > velmag)
-            {
-                if (npc->flg_move & (1 << 1))
-                {
-                    dir_dest.y = npc->frame->mat.pos.y;
-                }
-
-                xVec3Copy(&npc->frame->mat.pos, &dir_dest);
-                npc->frame->mode |= 1;
-                npc->frame->dpos = g_O3;
-                npc->frame->mode |= 2;
-
-                DoOnArriveStuff();
-            }
-            else
-            {
-                npc->frame->dpos = vec_dest * spd * dt;
-                npc->frame->mode |= 2;
-            }
+            npc->frame->dpos = dir_dest * velmag * dt;
+            npc->frame->mode |= 2;
         }
     }
 }
