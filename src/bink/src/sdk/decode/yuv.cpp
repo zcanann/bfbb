@@ -1376,10 +1376,6 @@ static u32 dounaligned32colm2wh(u32 count, s32 phase)
 
 static void dounaligned32row2w(u32 phase, u32 count)
 {
-    const s32 PTR4* btable;
-    const s32 PTR4* gb_utable;
-    const s32 PTR4* gb_vtable;
-    const s32 PTR4* rtable;
     u8 PTR4* yptr;
     u8 y;
     const u32 PTR4* ytable;
@@ -1389,15 +1385,11 @@ static void dounaligned32row2w(u32 phase, u32 count)
         return;
     }
 
-    btable = YUVTables.u_to_b;
-    gb_utable = YUVTables.u_to_gb;
-    gb_vtable = YUVTables.v_to_gb;
-    rtable = YUVTables.v_to_r;
     do {
         phase++;
-        S.b = btable[*(u8 PTR4*)S.u];
-        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
-        S.r = rtable[*(u8 PTR4*)S.v];
+        S.b = YUVTables.u_to_b[*(u8 PTR4*)S.u];
+        S.gb = YUVTables.u_to_gb[*(u8 PTR4*)S.u] + YUVTables.v_to_gb[*(u8 PTR4*)S.v];
+        S.r = YUVTables.v_to_r[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         y = *yptr++;
         S.y0 = (u32 PTR4*)yptr;
@@ -1415,25 +1407,17 @@ static void dounaligned32row2w(u32 phase, u32 count)
 
 static u32 dounaligned32col2w(u32 count, s32 phase)
 {
-    const s32 PTR4* btable;
-    const s32 PTR4* gb_utable;
-    const s32 PTR4* gb_vtable;
-    const s32 PTR4* rtable;
     u32 remaining;
     u8 y;
     const u32 PTR4* ytable;
     u32 pixel;
 
-    btable = YUVTables.u_to_b;
-    gb_utable = YUVTables.u_to_gb;
-    gb_vtable = YUVTables.v_to_gb;
-    rtable = YUVTables.v_to_r;
     remaining = count;
     do {
         phase++;
-        S.b = btable[*(u8 PTR4*)S.u];
-        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
-        S.r = rtable[*(u8 PTR4*)S.v];
+        S.b = YUVTables.u_to_b[*(u8 PTR4*)S.u];
+        S.gb = YUVTables.u_to_gb[*(u8 PTR4*)S.u] + YUVTables.v_to_gb[*(u8 PTR4*)S.v];
+        S.r = YUVTables.v_to_r[*(u8 PTR4*)S.v];
         y = *(u8 PTR4*)S.y0;
         S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
         ytable = clamp_ytable[y];
@@ -1460,10 +1444,6 @@ static u32 dounaligned32col2w(u32 count, s32 phase)
 
 static void dounaligned32row2h(u32 phase, u32 count)
 {
-    const s32 PTR4* btable;
-    const s32 PTR4* gb_utable;
-    const s32 PTR4* gb_vtable;
-    const s32 PTR4* rtable;
     u8 PTR4* yptr;
     u8 y;
     const u32 PTR4* ytable;
@@ -1473,15 +1453,11 @@ static void dounaligned32row2h(u32 phase, u32 count)
         return;
     }
 
-    btable = YUVTables.u_to_b;
-    gb_utable = YUVTables.u_to_gb;
-    gb_vtable = YUVTables.v_to_gb;
-    rtable = YUVTables.v_to_r;
     do {
         phase++;
-        S.b = btable[*(u8 PTR4*)S.u];
-        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
-        S.r = rtable[*(u8 PTR4*)S.v];
+        S.b = YUVTables.u_to_b[*(u8 PTR4*)S.u];
+        S.gb = YUVTables.u_to_gb[*(u8 PTR4*)S.u] + YUVTables.v_to_gb[*(u8 PTR4*)S.v];
+        S.r = YUVTables.v_to_r[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         y = *yptr++;
         S.y0 = (u32 PTR4*)yptr;
@@ -1499,25 +1475,17 @@ static void dounaligned32row2h(u32 phase, u32 count)
 
 static u32 dounaligned32col2h(u32 count, s32 phase)
 {
-    const s32 PTR4* btable;
-    const s32 PTR4* gb_utable;
-    const s32 PTR4* gb_vtable;
-    const s32 PTR4* rtable;
     u32 remaining;
     u8 y;
     const u32 PTR4* ytable;
     u32 pixel;
 
-    btable = YUVTables.u_to_b;
-    gb_utable = YUVTables.u_to_gb;
-    gb_vtable = YUVTables.v_to_gb;
-    rtable = YUVTables.v_to_r;
     remaining = count;
     do {
         phase++;
-        S.b = btable[*(u8 PTR4*)S.u];
-        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
-        S.r = rtable[*(u8 PTR4*)S.v];
+        S.b = YUVTables.u_to_b[*(u8 PTR4*)S.u];
+        S.gb = YUVTables.u_to_gb[*(u8 PTR4*)S.u] + YUVTables.v_to_gb[*(u8 PTR4*)S.v];
+        S.r = YUVTables.v_to_r[*(u8 PTR4*)S.v];
         y = *(u8 PTR4*)S.y0;
         S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
         ytable = clamp_ytable[y];
@@ -1544,10 +1512,6 @@ static u32 dounaligned32col2h(u32 count, s32 phase)
 
 static void dounaligned32row2wh(u32 phase, u32 count)
 {
-    const s32 PTR4* btable;
-    const s32 PTR4* gb_utable;
-    const s32 PTR4* gb_vtable;
-    const s32 PTR4* rtable;
     u32 remaining;
     u8 PTR4* yptr;
     u8 y;
@@ -1559,15 +1523,11 @@ static void dounaligned32row2wh(u32 phase, u32 count)
         return;
     }
 
-    btable = YUVTables.u_to_b;
-    gb_utable = YUVTables.u_to_gb;
-    gb_vtable = YUVTables.v_to_gb;
-    rtable = YUVTables.v_to_r;
     do {
         phase++;
-        S.b = btable[*(u8 PTR4*)S.u];
-        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
-        S.r = rtable[*(u8 PTR4*)S.v];
+        S.b = YUVTables.u_to_b[*(u8 PTR4*)S.u];
+        S.gb = YUVTables.u_to_gb[*(u8 PTR4*)S.u] + YUVTables.v_to_gb[*(u8 PTR4*)S.v];
+        S.r = YUVTables.v_to_r[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         y = *yptr++;
         S.y0 = (u32 PTR4*)yptr;
@@ -1587,25 +1547,17 @@ static void dounaligned32row2wh(u32 phase, u32 count)
 
 static u32 dounaligned32col2wh(u32 count, s32 phase)
 {
-    const s32 PTR4* btable;
-    const s32 PTR4* gb_utable;
-    const s32 PTR4* gb_vtable;
-    const s32 PTR4* rtable;
     u32 remaining;
     u8 y;
     const u32 PTR4* ytable;
     u32 pixel;
 
-    btable = YUVTables.u_to_b;
-    gb_utable = YUVTables.u_to_gb;
-    gb_vtable = YUVTables.v_to_gb;
-    rtable = YUVTables.v_to_r;
     remaining = count;
     do {
         phase++;
-        S.b = btable[*(u8 PTR4*)S.u];
-        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
-        S.r = rtable[*(u8 PTR4*)S.v];
+        S.b = YUVTables.u_to_b[*(u8 PTR4*)S.u];
+        S.gb = YUVTables.u_to_gb[*(u8 PTR4*)S.u] + YUVTables.v_to_gb[*(u8 PTR4*)S.v];
+        S.r = YUVTables.v_to_r[*(u8 PTR4*)S.v];
         y = *(u8 PTR4*)S.y0;
         S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
         ytable = clamp_ytable[y];
@@ -1682,10 +1634,6 @@ static u32 dounaligned32colm(u32 count, s32 phase)
 
 static void dounaligned32row(u32 phase, u32 count)
 {
-    const s32 PTR4* btable;
-    const s32 PTR4* gb_utable;
-    const s32 PTR4* gb_vtable;
-    const s32 PTR4* rtable;
     u32 remaining;
     u8 PTR4* yptr;
     u8 y;
@@ -1696,15 +1644,11 @@ static void dounaligned32row(u32 phase, u32 count)
         return;
     }
 
-    btable = YUVTables.u_to_b;
-    gb_utable = YUVTables.u_to_gb;
-    gb_vtable = YUVTables.v_to_gb;
-    rtable = YUVTables.v_to_r;
     do {
         phase++;
-        S.b = btable[*(u8 PTR4*)S.u];
-        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
-        S.r = rtable[*(u8 PTR4*)S.v];
+        S.b = YUVTables.u_to_b[*(u8 PTR4*)S.u];
+        S.gb = YUVTables.u_to_gb[*(u8 PTR4*)S.u] + YUVTables.v_to_gb[*(u8 PTR4*)S.v];
+        S.r = YUVTables.v_to_r[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         y = *yptr++;
         S.y0 = (u32 PTR4*)yptr;
@@ -1720,24 +1664,16 @@ static void dounaligned32row(u32 phase, u32 count)
 
 static u32 dounaligned32col(u32 count, s32 phase)
 {
-    const s32 PTR4* btable;
-    const s32 PTR4* gb_utable;
-    const s32 PTR4* gb_vtable;
-    const s32 PTR4* rtable;
     u32 remaining;
     u8 y;
     const u32 PTR4* ytable;
 
-    btable = YUVTables.u_to_b;
-    gb_utable = YUVTables.u_to_gb;
-    gb_vtable = YUVTables.v_to_gb;
-    rtable = YUVTables.v_to_r;
     remaining = count;
     do {
         phase++;
-        S.b = btable[*(u8 PTR4*)S.u];
-        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
-        S.r = rtable[*(u8 PTR4*)S.v];
+        S.b = YUVTables.u_to_b[*(u8 PTR4*)S.u];
+        S.gb = YUVTables.u_to_gb[*(u8 PTR4*)S.u] + YUVTables.v_to_gb[*(u8 PTR4*)S.v];
+        S.r = YUVTables.v_to_r[*(u8 PTR4*)S.v];
         y = *(u8 PTR4*)S.y0;
         S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_LUMA_SAMPLE_BYTES);
         ytable = clamp_ytable[y];
@@ -1968,10 +1904,6 @@ static u32 dounaligned32acolm2wh(u32 count, s32 phase)
 
 static void dounaligned32arow2w(u32 phase, u32 count)
 {
-    const s32 PTR4* btable;
-    const s32 PTR4* gb_utable;
-    const s32 PTR4* gb_vtable;
-    const s32 PTR4* rtable;
     u32 remaining;
     u8 PTR4* yptr;
     u8 PTR4* aptr;
@@ -1985,15 +1917,11 @@ static void dounaligned32arow2w(u32 phase, u32 count)
         return;
     }
 
-    btable = YUVTables.u_to_b;
-    gb_utable = YUVTables.u_to_gb;
-    gb_vtable = YUVTables.v_to_gb;
-    rtable = YUVTables.v_to_r;
     do {
         phase++;
-        S.b = btable[*(u8 PTR4*)S.u];
-        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
-        S.r = rtable[*(u8 PTR4*)S.v];
+        S.b = YUVTables.u_to_b[*(u8 PTR4*)S.u];
+        S.gb = YUVTables.u_to_gb[*(u8 PTR4*)S.u] + YUVTables.v_to_gb[*(u8 PTR4*)S.v];
+        S.r = YUVTables.v_to_r[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         aptr = (u8 PTR4*)S.a0;
         y = *yptr++;
@@ -2014,10 +1942,6 @@ static void dounaligned32arow2w(u32 phase, u32 count)
 
 static u32 dounaligned32acol2w(u32 count, s32 phase)
 {
-    const s32 PTR4* btable;
-    const s32 PTR4* gb_utable;
-    const s32 PTR4* gb_vtable;
-    const s32 PTR4* rtable;
     u32 remaining;
     u8 PTR4* yptr;
     u8 PTR4* aptr;
@@ -2026,16 +1950,12 @@ static u32 dounaligned32acol2w(u32 count, s32 phase)
     const u32 PTR4* ytable;
     u32 pixel;
 
-    btable = YUVTables.u_to_b;
-    gb_utable = YUVTables.u_to_gb;
-    gb_vtable = YUVTables.v_to_gb;
-    rtable = YUVTables.v_to_r;
     remaining = count;
     do {
         phase++;
-        S.b = btable[*(u8 PTR4*)S.u];
-        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
-        S.r = rtable[*(u8 PTR4*)S.v];
+        S.b = YUVTables.u_to_b[*(u8 PTR4*)S.u];
+        S.gb = YUVTables.u_to_gb[*(u8 PTR4*)S.u] + YUVTables.v_to_gb[*(u8 PTR4*)S.v];
+        S.r = YUVTables.v_to_r[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         y = *yptr++;
         S.y0 = (u32 PTR4*)yptr;
@@ -2070,10 +1990,6 @@ static u32 dounaligned32acol2w(u32 count, s32 phase)
 
 static void dounaligned32arow2h(u32 phase, u32 count)
 {
-    const s32 PTR4* btable;
-    const s32 PTR4* gb_utable;
-    const s32 PTR4* gb_vtable;
-    const s32 PTR4* rtable;
     u32 remaining;
     u8 PTR4* yptr;
     u8 PTR4* aptr;
@@ -2087,15 +2003,11 @@ static void dounaligned32arow2h(u32 phase, u32 count)
         return;
     }
 
-    btable = YUVTables.u_to_b;
-    gb_utable = YUVTables.u_to_gb;
-    gb_vtable = YUVTables.v_to_gb;
-    rtable = YUVTables.v_to_r;
     do {
         phase++;
-        S.b = btable[*(u8 PTR4*)S.u];
-        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
-        S.r = rtable[*(u8 PTR4*)S.v];
+        S.b = YUVTables.u_to_b[*(u8 PTR4*)S.u];
+        S.gb = YUVTables.u_to_gb[*(u8 PTR4*)S.u] + YUVTables.v_to_gb[*(u8 PTR4*)S.v];
+        S.r = YUVTables.v_to_r[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         aptr = (u8 PTR4*)S.a0;
         y = *yptr++;
@@ -2116,10 +2028,6 @@ static void dounaligned32arow2h(u32 phase, u32 count)
 
 static u32 dounaligned32acol2h(u32 count, s32 phase)
 {
-    const s32 PTR4* btable;
-    const s32 PTR4* gb_utable;
-    const s32 PTR4* gb_vtable;
-    const s32 PTR4* rtable;
     u32 remaining;
     u8 PTR4* yptr;
     u8 PTR4* aptr;
@@ -2128,16 +2036,12 @@ static u32 dounaligned32acol2h(u32 count, s32 phase)
     const u32 PTR4* ytable;
     u32 pixel;
 
-    btable = YUVTables.u_to_b;
-    gb_utable = YUVTables.u_to_gb;
-    gb_vtable = YUVTables.v_to_gb;
-    rtable = YUVTables.v_to_r;
     remaining = count;
     do {
         phase++;
-        S.b = btable[*(u8 PTR4*)S.u];
-        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
-        S.r = rtable[*(u8 PTR4*)S.v];
+        S.b = YUVTables.u_to_b[*(u8 PTR4*)S.u];
+        S.gb = YUVTables.u_to_gb[*(u8 PTR4*)S.u] + YUVTables.v_to_gb[*(u8 PTR4*)S.v];
+        S.r = YUVTables.v_to_r[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         y = *yptr++;
         S.y0 = (u32 PTR4*)yptr;
@@ -2172,10 +2076,6 @@ static u32 dounaligned32acol2h(u32 count, s32 phase)
 
 static void dounaligned32arow2wh(u32 phase, u32 count)
 {
-    const s32 PTR4* btable;
-    const s32 PTR4* gb_utable;
-    const s32 PTR4* gb_vtable;
-    const s32 PTR4* rtable;
     u32 remaining;
     u8 PTR4* yptr;
     u8 PTR4* aptr;
@@ -2189,15 +2089,11 @@ static void dounaligned32arow2wh(u32 phase, u32 count)
         return;
     }
 
-    btable = YUVTables.u_to_b;
-    gb_utable = YUVTables.u_to_gb;
-    gb_vtable = YUVTables.v_to_gb;
-    rtable = YUVTables.v_to_r;
     do {
         phase++;
-        S.b = btable[*(u8 PTR4*)S.u];
-        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
-        S.r = rtable[*(u8 PTR4*)S.v];
+        S.b = YUVTables.u_to_b[*(u8 PTR4*)S.u];
+        S.gb = YUVTables.u_to_gb[*(u8 PTR4*)S.u] + YUVTables.v_to_gb[*(u8 PTR4*)S.v];
+        S.r = YUVTables.v_to_r[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         aptr = (u8 PTR4*)S.a0;
         y = *yptr++;
@@ -2220,10 +2116,6 @@ static void dounaligned32arow2wh(u32 phase, u32 count)
 
 static u32 dounaligned32acol2wh(u32 count, s32 phase)
 {
-    const s32 PTR4* btable;
-    const s32 PTR4* gb_utable;
-    const s32 PTR4* gb_vtable;
-    const s32 PTR4* rtable;
     u32 remaining;
     u8 PTR4* yptr;
     u8 PTR4* aptr;
@@ -2232,16 +2124,12 @@ static u32 dounaligned32acol2wh(u32 count, s32 phase)
     const u32 PTR4* ytable;
     u32 pixel;
 
-    btable = YUVTables.u_to_b;
-    gb_utable = YUVTables.u_to_gb;
-    gb_vtable = YUVTables.v_to_gb;
-    rtable = YUVTables.v_to_r;
     remaining = count;
     do {
         phase++;
-        S.b = btable[*(u8 PTR4*)S.u];
-        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
-        S.r = rtable[*(u8 PTR4*)S.v];
+        S.b = YUVTables.u_to_b[*(u8 PTR4*)S.u];
+        S.gb = YUVTables.u_to_gb[*(u8 PTR4*)S.u] + YUVTables.v_to_gb[*(u8 PTR4*)S.v];
+        S.r = YUVTables.v_to_r[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         y = *yptr++;
         S.y0 = (u32 PTR4*)yptr;
@@ -2341,10 +2229,6 @@ static u32 dounaligned32acolm(u32 count, s32 phase)
 
 static void dounaligned32arow(u32 phase, u32 count)
 {
-    const s32 PTR4* btable;
-    const s32 PTR4* gb_utable;
-    const s32 PTR4* gb_vtable;
-    const s32 PTR4* rtable;
     u32 remaining;
     u8 PTR4* yptr;
     u8 PTR4* aptr;
@@ -2357,15 +2241,11 @@ static void dounaligned32arow(u32 phase, u32 count)
         return;
     }
 
-    btable = YUVTables.u_to_b;
-    gb_utable = YUVTables.u_to_gb;
-    gb_vtable = YUVTables.v_to_gb;
-    rtable = YUVTables.v_to_r;
     do {
         phase++;
-        S.b = btable[*(u8 PTR4*)S.u];
-        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
-        S.r = rtable[*(u8 PTR4*)S.v];
+        S.b = YUVTables.u_to_b[*(u8 PTR4*)S.u];
+        S.gb = YUVTables.u_to_gb[*(u8 PTR4*)S.u] + YUVTables.v_to_gb[*(u8 PTR4*)S.v];
+        S.r = YUVTables.v_to_r[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         aptr = (u8 PTR4*)S.a0;
         y = *yptr++;
@@ -2384,10 +2264,6 @@ static void dounaligned32arow(u32 phase, u32 count)
 
 static u32 dounaligned32acol(u32 count, s32 phase)
 {
-    const s32 PTR4* btable;
-    const s32 PTR4* gb_utable;
-    const s32 PTR4* gb_vtable;
-    const s32 PTR4* rtable;
     u32 remaining;
     u8 PTR4* yptr;
     u8 PTR4* aptr;
@@ -2395,16 +2271,12 @@ static u32 dounaligned32acol(u32 count, s32 phase)
     u8 a;
     const u32 PTR4* ytable;
 
-    btable = YUVTables.u_to_b;
-    gb_utable = YUVTables.u_to_gb;
-    gb_vtable = YUVTables.v_to_gb;
-    rtable = YUVTables.v_to_r;
     remaining = count;
     do {
         phase++;
-        S.b = btable[*(u8 PTR4*)S.u];
-        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
-        S.r = rtable[*(u8 PTR4*)S.v];
+        S.b = YUVTables.u_to_b[*(u8 PTR4*)S.u];
+        S.gb = YUVTables.u_to_gb[*(u8 PTR4*)S.u] + YUVTables.v_to_gb[*(u8 PTR4*)S.v];
+        S.r = YUVTables.v_to_r[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         y = *yptr++;
         S.y0 = (u32 PTR4*)yptr;
@@ -2608,10 +2480,6 @@ static u32 dounaligned16colm2wh(u32 count, s32 phase)
 
 static void dounaligned16row2h(u32 phase, u32 count)
 {
-    const s32 PTR4* btable;
-    const s32 PTR4* gb_utable;
-    const s32 PTR4* gb_vtable;
-    const s32 PTR4* rtable;
     u8 PTR4* yptr;
     u8 y;
     u32 ybase;
@@ -2621,15 +2489,11 @@ static void dounaligned16row2h(u32 phase, u32 count)
         return;
     }
 
-    btable = YUVTables.u_to_b;
-    gb_utable = YUVTables.u_to_gb;
-    gb_vtable = YUVTables.v_to_gb;
-    rtable = YUVTables.v_to_r;
     do {
         phase++;
-        S.b = btable[*(u8 PTR4*)S.u];
-        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
-        S.r = rtable[*(u8 PTR4*)S.v];
+        S.b = YUVTables.u_to_b[*(u8 PTR4*)S.u];
+        S.gb = YUVTables.u_to_gb[*(u8 PTR4*)S.u] + YUVTables.v_to_gb[*(u8 PTR4*)S.v];
+        S.r = YUVTables.v_to_r[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         y = *yptr++;
         S.y0 = (u32 PTR4*)yptr;
@@ -2647,10 +2511,6 @@ static void dounaligned16row2h(u32 phase, u32 count)
 
 static u32 dounaligned16col2h(u32 count, s32 phase)
 {
-    const s32 PTR4* btable;
-    const s32 PTR4* gb_utable;
-    const s32 PTR4* gb_vtable;
-    const s32 PTR4* rtable;
     u32 remaining;
     u8 PTR4* yptr;
     u8 y;
@@ -2658,15 +2518,11 @@ static u32 dounaligned16col2h(u32 count, s32 phase)
     u16 pixel;
 
     remaining = count;
-    btable = YUVTables.u_to_b;
-    gb_utable = YUVTables.u_to_gb;
-    gb_vtable = YUVTables.v_to_gb;
-    rtable = YUVTables.v_to_r;
     do {
         phase++;
-        S.b = btable[*(u8 PTR4*)S.u];
-        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
-        S.r = rtable[*(u8 PTR4*)S.v];
+        S.b = YUVTables.u_to_b[*(u8 PTR4*)S.u];
+        S.gb = YUVTables.u_to_gb[*(u8 PTR4*)S.u] + YUVTables.v_to_gb[*(u8 PTR4*)S.v];
+        S.r = YUVTables.v_to_r[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         y = *yptr++;
         S.y0 = (u32 PTR4*)yptr;
@@ -2694,10 +2550,6 @@ static u32 dounaligned16col2h(u32 count, s32 phase)
 
 static void dounaligned16row2w(u32 phase, u32 count)
 {
-    const s32 PTR4* btable;
-    const s32 PTR4* gb_utable;
-    const s32 PTR4* gb_vtable;
-    const s32 PTR4* rtable;
     u32 remaining;
     u8 PTR4* yptr;
     u8 y;
@@ -2708,15 +2560,11 @@ static void dounaligned16row2w(u32 phase, u32 count)
         return;
     }
 
-    btable = YUVTables.u_to_b;
-    gb_utable = YUVTables.u_to_gb;
-    gb_vtable = YUVTables.v_to_gb;
-    rtable = YUVTables.v_to_r;
     do {
         phase++;
-        S.b = btable[*(u8 PTR4*)S.u];
-        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
-        S.r = rtable[*(u8 PTR4*)S.v];
+        S.b = YUVTables.u_to_b[*(u8 PTR4*)S.u];
+        S.gb = YUVTables.u_to_gb[*(u8 PTR4*)S.u] + YUVTables.v_to_gb[*(u8 PTR4*)S.v];
+        S.r = YUVTables.v_to_r[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         y = *yptr++;
         S.y0 = (u32 PTR4*)yptr;
@@ -2734,10 +2582,6 @@ static void dounaligned16row2w(u32 phase, u32 count)
 
 static u32 dounaligned16col2w(u32 count, s32 phase)
 {
-    const s32 PTR4* btable;
-    const s32 PTR4* gb_utable;
-    const s32 PTR4* gb_vtable;
-    const s32 PTR4* rtable;
     u32 remaining;
     u8 PTR4* yptr;
     u8 y;
@@ -2745,15 +2589,11 @@ static u32 dounaligned16col2w(u32 count, s32 phase)
     u16 pixel;
 
     remaining = count;
-    btable = YUVTables.u_to_b;
-    gb_utable = YUVTables.u_to_gb;
-    gb_vtable = YUVTables.v_to_gb;
-    rtable = YUVTables.v_to_r;
     do {
         phase++;
-        S.b = btable[*(u8 PTR4*)S.u];
-        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
-        S.r = rtable[*(u8 PTR4*)S.v];
+        S.b = YUVTables.u_to_b[*(u8 PTR4*)S.u];
+        S.gb = YUVTables.u_to_gb[*(u8 PTR4*)S.u] + YUVTables.v_to_gb[*(u8 PTR4*)S.v];
+        S.r = YUVTables.v_to_r[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         y = *yptr++;
         S.y0 = (u32 PTR4*)yptr;
@@ -2781,10 +2621,6 @@ static u32 dounaligned16col2w(u32 count, s32 phase)
 
 static void dounaligned16row2wh(u32 phase, u32 count)
 {
-    const s32 PTR4* btable;
-    const s32 PTR4* gb_utable;
-    const s32 PTR4* gb_vtable;
-    const s32 PTR4* rtable;
     u8 PTR4* yptr;
     u8 y;
     u32 ybase;
@@ -2794,15 +2630,11 @@ static void dounaligned16row2wh(u32 phase, u32 count)
         return;
     }
 
-    btable = YUVTables.u_to_b;
-    gb_utable = YUVTables.u_to_gb;
-    gb_vtable = YUVTables.v_to_gb;
-    rtable = YUVTables.v_to_r;
     do {
         phase++;
-        S.b = btable[*(u8 PTR4*)S.u];
-        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
-        S.r = rtable[*(u8 PTR4*)S.v];
+        S.b = YUVTables.u_to_b[*(u8 PTR4*)S.u];
+        S.gb = YUVTables.u_to_gb[*(u8 PTR4*)S.u] + YUVTables.v_to_gb[*(u8 PTR4*)S.v];
+        S.r = YUVTables.v_to_r[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         y = *yptr++;
         S.y0 = (u32 PTR4*)yptr;
@@ -2822,10 +2654,6 @@ static void dounaligned16row2wh(u32 phase, u32 count)
 
 static u32 dounaligned16col2wh(u32 count, s32 phase)
 {
-    const s32 PTR4* btable;
-    const s32 PTR4* gb_utable;
-    const s32 PTR4* gb_vtable;
-    const s32 PTR4* rtable;
     u32 remaining;
     u8 PTR4* yptr;
     u8 y;
@@ -2833,15 +2661,11 @@ static u32 dounaligned16col2wh(u32 count, s32 phase)
     u16 pixel;
 
     remaining = count;
-    btable = YUVTables.u_to_b;
-    gb_utable = YUVTables.u_to_gb;
-    gb_vtable = YUVTables.v_to_gb;
-    rtable = YUVTables.v_to_r;
     do {
         phase++;
-        S.b = btable[*(u8 PTR4*)S.u];
-        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
-        S.r = rtable[*(u8 PTR4*)S.v];
+        S.b = YUVTables.u_to_b[*(u8 PTR4*)S.u];
+        S.gb = YUVTables.u_to_gb[*(u8 PTR4*)S.u] + YUVTables.v_to_gb[*(u8 PTR4*)S.v];
+        S.r = YUVTables.v_to_r[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         y = *yptr++;
         S.y0 = (u32 PTR4*)yptr;
@@ -2915,10 +2739,6 @@ static u32 dounaligned16colm(u32 count, s32 phase)
 
 static void dounaligned16row(u32 phase, u32 count)
 {
-    const s32 PTR4* btable;
-    const s32 PTR4* gb_utable;
-    const s32 PTR4* gb_vtable;
-    const s32 PTR4* rtable;
     u8 PTR4* yptr;
     u8 y;
     u32 ybase;
@@ -2927,15 +2747,11 @@ static void dounaligned16row(u32 phase, u32 count)
         return;
     }
 
-    btable = YUVTables.u_to_b;
-    gb_utable = YUVTables.u_to_gb;
-    gb_vtable = YUVTables.v_to_gb;
-    rtable = YUVTables.v_to_r;
     do {
         phase++;
-        S.b = btable[*(u8 PTR4*)S.u];
-        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
-        S.r = rtable[*(u8 PTR4*)S.v];
+        S.b = YUVTables.u_to_b[*(u8 PTR4*)S.u];
+        S.gb = YUVTables.u_to_gb[*(u8 PTR4*)S.u] + YUVTables.v_to_gb[*(u8 PTR4*)S.v];
+        S.r = YUVTables.v_to_r[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         y = *yptr++;
         S.y0 = (u32 PTR4*)yptr;
@@ -2951,25 +2767,17 @@ static void dounaligned16row(u32 phase, u32 count)
 
 static u32 dounaligned16col(u32 count, s32 phase)
 {
-    const s32 PTR4* btable;
-    const s32 PTR4* gb_utable;
-    const s32 PTR4* gb_vtable;
-    const s32 PTR4* rtable;
     u32 remaining;
     u8 PTR4* yptr;
     u8 y;
     u32 ybase;
 
     remaining = count;
-    btable = YUVTables.u_to_b;
-    gb_utable = YUVTables.u_to_gb;
-    gb_vtable = YUVTables.v_to_gb;
-    rtable = YUVTables.v_to_r;
     do {
         phase++;
-        S.b = btable[*(u8 PTR4*)S.u];
-        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
-        S.r = rtable[*(u8 PTR4*)S.v];
+        S.b = YUVTables.u_to_b[*(u8 PTR4*)S.u];
+        S.gb = YUVTables.u_to_gb[*(u8 PTR4*)S.u] + YUVTables.v_to_gb[*(u8 PTR4*)S.v];
+        S.r = YUVTables.v_to_r[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         y = *yptr++;
         S.y0 = (u32 PTR4*)yptr;
@@ -3189,10 +2997,6 @@ static u32 dounaligned16a4colm2wh(u32 count, s32 phase)
 
 static void dounaligned16a4row2h(u32 phase, u32 count)
 {
-    const s32 PTR4* btable;
-    const s32 PTR4* gb_utable;
-    const s32 PTR4* gb_vtable;
-    const s32 PTR4* rtable;
     u8 PTR4* yptr;
     u8 PTR4* aptr;
     u8 y;
@@ -3204,15 +3008,11 @@ static void dounaligned16a4row2h(u32 phase, u32 count)
         return;
     }
 
-    btable = YUVTables.u_to_b;
-    gb_utable = YUVTables.u_to_gb;
-    gb_vtable = YUVTables.v_to_gb;
-    rtable = YUVTables.v_to_r;
     do {
         phase++;
-        S.b = btable[*(u8 PTR4*)S.u];
-        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
-        S.r = rtable[*(u8 PTR4*)S.v];
+        S.b = YUVTables.u_to_b[*(u8 PTR4*)S.u];
+        S.gb = YUVTables.u_to_gb[*(u8 PTR4*)S.u] + YUVTables.v_to_gb[*(u8 PTR4*)S.v];
+        S.r = YUVTables.v_to_r[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         aptr = (u8 PTR4*)S.a0;
         y = *yptr++;
@@ -3233,10 +3033,6 @@ static void dounaligned16a4row2h(u32 phase, u32 count)
 
 static u32 dounaligned16a4col2h(u32 count, s32 phase)
 {
-    const s32 PTR4* btable;
-    const s32 PTR4* gb_utable;
-    const s32 PTR4* gb_vtable;
-    const s32 PTR4* rtable;
     u32 remaining;
     u8 PTR4* yptr;
     u8 PTR4* aptr;
@@ -3245,16 +3041,12 @@ static u32 dounaligned16a4col2h(u32 count, s32 phase)
     u32 ybase;
     u16 pixel;
 
-    btable = YUVTables.u_to_b;
-    gb_utable = YUVTables.u_to_gb;
-    gb_vtable = YUVTables.v_to_gb;
-    rtable = YUVTables.v_to_r;
     remaining = count;
     do {
         phase++;
-        S.b = btable[*(u8 PTR4*)S.u];
-        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
-        S.r = rtable[*(u8 PTR4*)S.v];
+        S.b = YUVTables.u_to_b[*(u8 PTR4*)S.u];
+        S.gb = YUVTables.u_to_gb[*(u8 PTR4*)S.u] + YUVTables.v_to_gb[*(u8 PTR4*)S.v];
+        S.r = YUVTables.v_to_r[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         y = *yptr++;
         S.y0 = (u32 PTR4*)yptr;
@@ -3289,10 +3081,6 @@ static u32 dounaligned16a4col2h(u32 count, s32 phase)
 
 static void dounaligned16a4row2w(u32 phase, u32 count)
 {
-    const s32 PTR4* btable;
-    const s32 PTR4* gb_utable;
-    const s32 PTR4* gb_vtable;
-    const s32 PTR4* rtable;
     u8 PTR4* yptr;
     u8 PTR4* aptr;
     u8 y;
@@ -3304,15 +3092,11 @@ static void dounaligned16a4row2w(u32 phase, u32 count)
         return;
     }
 
-    btable = YUVTables.u_to_b;
-    gb_utable = YUVTables.u_to_gb;
-    gb_vtable = YUVTables.v_to_gb;
-    rtable = YUVTables.v_to_r;
     do {
         phase++;
-        S.b = btable[*(u8 PTR4*)S.u];
-        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
-        S.r = rtable[*(u8 PTR4*)S.v];
+        S.b = YUVTables.u_to_b[*(u8 PTR4*)S.u];
+        S.gb = YUVTables.u_to_gb[*(u8 PTR4*)S.u] + YUVTables.v_to_gb[*(u8 PTR4*)S.v];
+        S.r = YUVTables.v_to_r[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         aptr = (u8 PTR4*)S.a0;
         y = *yptr++;
@@ -3333,10 +3117,6 @@ static void dounaligned16a4row2w(u32 phase, u32 count)
 
 static u32 dounaligned16a4col2w(u32 count, s32 phase)
 {
-    const s32 PTR4* btable;
-    const s32 PTR4* gb_utable;
-    const s32 PTR4* gb_vtable;
-    const s32 PTR4* rtable;
     u32 remaining;
     u8 PTR4* yptr;
     u8 PTR4* aptr;
@@ -3345,16 +3125,12 @@ static u32 dounaligned16a4col2w(u32 count, s32 phase)
     u32 ybase;
     u16 pixel;
 
-    btable = YUVTables.u_to_b;
-    gb_utable = YUVTables.u_to_gb;
-    gb_vtable = YUVTables.v_to_gb;
-    rtable = YUVTables.v_to_r;
     remaining = count;
     do {
         phase++;
-        S.b = btable[*(u8 PTR4*)S.u];
-        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
-        S.r = rtable[*(u8 PTR4*)S.v];
+        S.b = YUVTables.u_to_b[*(u8 PTR4*)S.u];
+        S.gb = YUVTables.u_to_gb[*(u8 PTR4*)S.u] + YUVTables.v_to_gb[*(u8 PTR4*)S.v];
+        S.r = YUVTables.v_to_r[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         y = *yptr++;
         S.y0 = (u32 PTR4*)yptr;
@@ -3389,10 +3165,6 @@ static u32 dounaligned16a4col2w(u32 count, s32 phase)
 
 static void dounaligned16a4row2wh(u32 phase, u32 count)
 {
-    const s32 PTR4* btable;
-    const s32 PTR4* gb_utable;
-    const s32 PTR4* gb_vtable;
-    const s32 PTR4* rtable;
     u8 PTR4* yptr;
     u8 PTR4* aptr;
     u8 y;
@@ -3404,15 +3176,11 @@ static void dounaligned16a4row2wh(u32 phase, u32 count)
         return;
     }
 
-    btable = YUVTables.u_to_b;
-    gb_utable = YUVTables.u_to_gb;
-    gb_vtable = YUVTables.v_to_gb;
-    rtable = YUVTables.v_to_r;
     do {
         phase++;
-        S.b = btable[*(u8 PTR4*)S.u];
-        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
-        S.r = rtable[*(u8 PTR4*)S.v];
+        S.b = YUVTables.u_to_b[*(u8 PTR4*)S.u];
+        S.gb = YUVTables.u_to_gb[*(u8 PTR4*)S.u] + YUVTables.v_to_gb[*(u8 PTR4*)S.v];
+        S.r = YUVTables.v_to_r[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         aptr = (u8 PTR4*)S.a0;
         y = *yptr++;
@@ -3435,10 +3203,6 @@ static void dounaligned16a4row2wh(u32 phase, u32 count)
 
 static u32 dounaligned16a4col2wh(u32 count, s32 phase)
 {
-    const s32 PTR4* btable;
-    const s32 PTR4* gb_utable;
-    const s32 PTR4* gb_vtable;
-    const s32 PTR4* rtable;
     u32 remaining;
     u8 PTR4* yptr;
     u8 PTR4* aptr;
@@ -3447,16 +3211,12 @@ static u32 dounaligned16a4col2wh(u32 count, s32 phase)
     u32 ybase;
     u16 pixel;
 
-    btable = YUVTables.u_to_b;
-    gb_utable = YUVTables.u_to_gb;
-    gb_vtable = YUVTables.v_to_gb;
-    rtable = YUVTables.v_to_r;
     remaining = count;
     do {
         phase++;
-        S.b = btable[*(u8 PTR4*)S.u];
-        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
-        S.r = rtable[*(u8 PTR4*)S.v];
+        S.b = YUVTables.u_to_b[*(u8 PTR4*)S.u];
+        S.gb = YUVTables.u_to_gb[*(u8 PTR4*)S.u] + YUVTables.v_to_gb[*(u8 PTR4*)S.v];
+        S.r = YUVTables.v_to_r[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         aptr = (u8 PTR4*)S.a0;
         y = *yptr++;
@@ -3545,10 +3305,6 @@ static u32 dounaligned16a4colm(u32 count, s32 phase)
 
 static void dounaligned16a4row(u32 phase, u32 count)
 {
-    const s32 PTR4* btable;
-    const s32 PTR4* gb_utable;
-    const s32 PTR4* gb_vtable;
-    const s32 PTR4* rtable;
     u8 PTR4* yptr;
     u8 PTR4* aptr;
     u8 y;
@@ -3559,15 +3315,11 @@ static void dounaligned16a4row(u32 phase, u32 count)
         return;
     }
 
-    btable = YUVTables.u_to_b;
-    gb_utable = YUVTables.u_to_gb;
-    gb_vtable = YUVTables.v_to_gb;
-    rtable = YUVTables.v_to_r;
     do {
         phase++;
-        S.b = btable[*(u8 PTR4*)S.u];
-        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
-        S.r = rtable[*(u8 PTR4*)S.v];
+        S.b = YUVTables.u_to_b[*(u8 PTR4*)S.u];
+        S.gb = YUVTables.u_to_gb[*(u8 PTR4*)S.u] + YUVTables.v_to_gb[*(u8 PTR4*)S.v];
+        S.r = YUVTables.v_to_r[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         aptr = (u8 PTR4*)S.a0;
         y = *yptr++;
@@ -3586,10 +3338,6 @@ static void dounaligned16a4row(u32 phase, u32 count)
 
 static u32 dounaligned16a4col(u32 count, s32 phase)
 {
-    const s32 PTR4* btable;
-    const s32 PTR4* gb_utable;
-    const s32 PTR4* gb_vtable;
-    const s32 PTR4* rtable;
     u32 remaining;
     u8 PTR4* yptr;
     u8 PTR4* aptr;
@@ -3597,16 +3345,12 @@ static u32 dounaligned16a4col(u32 count, s32 phase)
     u8 a;
     u32 ybase;
 
-    btable = YUVTables.u_to_b;
-    gb_utable = YUVTables.u_to_gb;
-    gb_vtable = YUVTables.v_to_gb;
-    rtable = YUVTables.v_to_r;
     remaining = count;
     do {
         phase++;
-        S.b = btable[*(u8 PTR4*)S.u];
-        S.gb = gb_utable[*(u8 PTR4*)S.u] + gb_vtable[*(u8 PTR4*)S.v];
-        S.r = rtable[*(u8 PTR4*)S.v];
+        S.b = YUVTables.u_to_b[*(u8 PTR4*)S.u];
+        S.gb = YUVTables.u_to_gb[*(u8 PTR4*)S.u] + YUVTables.v_to_gb[*(u8 PTR4*)S.v];
+        S.r = YUVTables.v_to_r[*(u8 PTR4*)S.v];
         yptr = (u8 PTR4*)S.y0;
         y = *yptr++;
         S.y0 = (u32 PTR4*)yptr;
