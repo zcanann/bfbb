@@ -181,8 +181,7 @@ struct NGCSoundState
     u32 last_ready_time;
     u32 starvation_time;
     ARQRequest tasks[NGC_SOUND_ARQ_TASK_COUNT]; /* two lock buffers by left/right ARQ uploads */
-    AXVPB PTR4* left_voice;
-    AXVPB PTR4* right_voice;
+    AXVPB PTR4* voices[NGC_SOUND_STEREO_CHANNELS];
     u8 PTR4* audio_buffer; /* ARAM ring buffer base */
     u32 address_shift; /* AX addresses are samples for 16-bit, bytes for 8-bit */
 };
@@ -205,8 +204,8 @@ typedef char NGCSoundStateFitsInBinkSndData
 #define NGC_RIGHT_LOCK_TASK(state, index) NGC_TASK(state, NGC_RIGHT_LOCK_TASK_INDEX(index))
 #define NGC_TASK_SOURCE(task) ((u8 PTR4*)((task)->source))
 #define NGC_TASK_SOURCE_AT(task, offset) (NGC_TASK_SOURCE(task) + (offset))
-#define NGC_LEFT_VOICE(ptr) (NGC_STATE(ptr)->left_voice)
-#define NGC_RIGHT_VOICE(ptr) (NGC_STATE(ptr)->right_voice)
+#define NGC_LEFT_VOICE(ptr) (NGC_STATE(ptr)->voices[0])
+#define NGC_RIGHT_VOICE(ptr) (NGC_STATE(ptr)->voices[1])
 #define NGC_CHANNEL_STRIDE(ptr) (NGC_STATE(ptr)->channel_stride)
 #define NGC_ADDRESS_SHIFT(ptr) (NGC_STATE(ptr)->address_shift)
 #define NGC_ADVANCE_U32_BYTES(ptr, bytes) ((u32 PTR4*)((u8 PTR4*)(ptr) + (bytes)))
@@ -304,7 +303,7 @@ static void NGC_SoundPlay(BINKSND PTR4* snd, u32 index, u32 upload_bytes)
     play_end = NGC_SOUND_STATE(snd)->play_cursor + upload_bytes;
     task = NGC_LEFT_LOCK_TASK(state, index);
 
-    if (NGC_SOUND_STATE(snd)->right_voice != 0) {
+    if (NGC_SOUND_STATE(snd)->voices[1] != 0) {
         right_task = NGC_RIGHT_LOCK_TASK_BASE(state);
         right_task += index;
 
@@ -416,14 +415,14 @@ static void NGC_SoundVolume(BINKSND PTR4* snd)
 {
     s32 left = (s32)(powf(NGC_SOUND_PAN_ONE - NGC_SOUND_STATE(snd)->pan, NGC_SOUND_PAN_EXPONENT) * NGC_SOUND_MIX_SCALE);
     s32 right = (s32)(powf(NGC_SOUND_STATE(snd)->pan, NGC_SOUND_PAN_EXPONENT) * NGC_SOUND_MIX_SCALE);
-    AXVPB PTR4* voice = NGC_SOUND_STATE(snd)->left_voice;
+    AXVPB PTR4* voice = NGC_SOUND_STATE(snd)->voices[0];
 
     if (voice != 0) {
         SetStreamVolumePan(voice, NGC_SOUND_STATE(snd)->volume, left,
                            NGC_SND(snd)->chans == NGC_SOUND_MONO_CHANNELS ? right : 0);
     }
 
-    voice = NGC_SOUND_STATE(snd)->right_voice;
+    voice = NGC_SOUND_STATE(snd)->voices[1];
     if (voice != 0) {
         SetStreamVolumePan(voice, NGC_SOUND_STATE(snd)->volume, 0, right);
     }
@@ -439,7 +438,6 @@ static s32 NGC_SoundInit(BINKSND PTR4* snd)
     u32 end;
     AXPBADDR addr;
     AXPBSRC src;
-    AXVPB PTR4** voices;
     NGCSoundState PTR4* state;
 
     NGC_SOUND_STATE(snd)->starvation_time = NGC_DEFAULT_STARVATION_MILLISECONDS;
@@ -489,15 +487,15 @@ static s32 NGC_SoundInit(BINKSND PTR4* snd)
     NGC_SOUND_STATE(snd)->pending_end = 0;
 
     for (i = 0; i < NGC_SND(snd)->chans; ++i) {
-        voices = &NGC_SOUND_STATE(snd)->left_voice;
-        voices[i] = AXAcquireVoice(AX_VOICE_PRIORITY_BINK, 0, 0);
-        if (voices[i] == 0) {
+        NGC_SOUND_STATE(snd)->voices[i] = AXAcquireVoice(AX_VOICE_PRIORITY_BINK, 0, 0);
+        if (NGC_SOUND_STATE(snd)->voices[i] == 0) {
             return 0;
         }
 
         start = NGC_SOUND_CHANNEL_START(NGC_SOUND_STATE(snd), i) >>
                 NGC_SOUND_STATE(snd)->address_shift;
-        end = (NGC_SOUND_CHANNEL_START(NGC_SOUND_STATE(snd), i + 1) >>
+        end = ((NGC_SOUND_RING_START(NGC_SOUND_STATE(snd)) +
+                NGC_SOUND_STATE(snd)->channel_stride * (i + 1)) >>
                NGC_SOUND_STATE(snd)->address_shift) -
               1;
 
@@ -509,12 +507,12 @@ static s32 NGC_SoundInit(BINKSND PTR4* snd)
         addr.endAddressLo = end;
         addr.currentAddressHi = addr.loopAddressHi;
         addr.currentAddressLo = addr.loopAddressLo;
-        AXSetVoiceAddr(voices[i], &addr);
+        AXSetVoiceAddr(NGC_SOUND_STATE(snd)->voices[i], &addr);
 
         if (NGC_SND(snd)->freq == AX_SAMPLE_RATE) {
-            AXSetVoiceSrcType(voices[i], AX_SRC_TYPE_NONE);
+            AXSetVoiceSrcType(NGC_SOUND_STATE(snd)->voices[i], AX_SRC_TYPE_NONE);
         } else {
-            AXSetVoiceSrcType(voices[i], AX_SRC_TYPE_LINEAR);
+            AXSetVoiceSrcType(NGC_SOUND_STATE(snd)->voices[i], AX_SRC_TYPE_LINEAR);
             src.ratioHi = AX_SRC_RATIO_1_0_HI;
             src.ratioLo = AX_SRC_RATIO_1_0_LO;
             src.currentAddressFrac = AX_SRC_CURRENT_FRAC_START;
@@ -522,8 +520,8 @@ static s32 NGC_SoundInit(BINKSND PTR4* snd)
             src.last_samples[AX_SRC_LAST_SAMPLE_1] = 0;
             src.last_samples[AX_SRC_LAST_SAMPLE_2] = 0;
             src.last_samples[AX_SRC_LAST_SAMPLE_3] = 0;
-            AXSetVoiceSrc(voices[i], &src);
-            AXSetVoiceSrcRatio(voices[i], (f32)NGC_SND(snd)->freq / NGC_SOUND_AX_SAMPLE_RATE);
+            AXSetVoiceSrc(NGC_SOUND_STATE(snd)->voices[i], &src);
+            AXSetVoiceSrcRatio(NGC_SOUND_STATE(snd)->voices[i], (f32)NGC_SND(snd)->freq / NGC_SOUND_AX_SAMPLE_RATE);
         }
     }
 
@@ -566,7 +564,6 @@ static void NGC_SoundShutdown(BINKSND PTR4* snd)
     u32 i;
     void PTR4* allocation;
     AXVPB PTR4* voice;
-    AXVPB PTR4** voices;
     NGCSoundState PTR4* state;
 
     NGC_SOUND_STATE(snd)->paused = NGC_SOUND_PAUSED;
@@ -583,12 +580,11 @@ static void NGC_SoundShutdown(BINKSND PTR4* snd)
     }
 
     i = 0;
-    voices = &state->left_voice;
     for (; i < NGC_SOUND_STEREO_CHANNELS; ++i) {
-        voice = voices[i];
+        voice = state->voices[i];
         if (voice != 0) {
             AXFreeVoice(voice);
-            voices[i] = 0;
+            state->voices[i] = 0;
         }
     }
 
@@ -853,14 +849,14 @@ static s32 Ready(BINKSND PTR4* snd)
 
     lock_index = NGC_SOUND_NO_LOCK_INDEX;
     if (NGC_SOUND_STATE(snd)->paused != 0 || NGC_SND(snd)->OnOff == NGC_SOUND_OFF ||
-        NGC_SOUND_STATE(snd)->left_voice == 0) {
+        NGC_SOUND_STATE(snd)->voices[0] == 0) {
         return 0;
     }
 
     state = NGC_SOUND_STATE(snd);
     now = RADTimerRead();
     address_shift = NGC_ADDRESS_SHIFT(state);
-    voice = NGC_SOUND_STATE(snd)->left_voice;
+    voice = NGC_SOUND_STATE(snd)->voices[0];
     voice_cursor = NGC_AX_CURRENT_CURSOR(voice, address_shift);
     if (NGC_SOUND_STATE(snd)->play_state == NGC_PLAY_STATE_RUNNING) {
         end_cursor = NGC_AX_END_CURSOR(voice, address_shift);
