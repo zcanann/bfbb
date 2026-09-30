@@ -2681,8 +2681,8 @@ static u32 dounaligned16col2wh(u32 count, s32 phase)
         *(u16 PTR4*)(S.dest0 + S.pitch) = pixel;
         *(u16 PTR4*)(S.dest0 + S.pitch + YUV_BYTES_PER_PIXEL_16) = pixel;
         y = *(u8 PTR4*)S.y1;
-        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_LUMA_SAMPLE_BYTES);
         ybase = ytable[y];
+        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_LUMA_SAMPLE_BYTES);
         pixel = RGB565(ybase, S.r, S.gb, S.b);
         ((u16 PTR4*)S.dest1)[0] = pixel;
         ((u16 PTR4*)S.dest1)[1] = pixel;
