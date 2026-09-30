@@ -54,8 +54,14 @@ jobs:
         with:
           name: GQPE78_report
           if-no-files-found: error
+          path: build/GQPE78/report.json
+
+      - name: Upload progress metadata
+        uses: actions/upload-artifact@v4
+        with:
+          name: GQPE78_metadata
+          if-no-files-found: error
           path: |
-            build/GQPE78/report.json
             build/GQPE78/progress.json
             build/GQPE78/progress-commit.json
 
