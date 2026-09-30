@@ -191,8 +191,9 @@ static inline s32 yuv_round15(s32 value)
     return value >> YUV_ROUND_SHIFT;
 }
 
+// The 16-bit path uses the U-derived contribution for clamp_r and V-derived for clamp_b.
 #define RGB565(y, r, g, b)                                                                                             \
-    ((u16)clamp_r[(r) + (y) + RGB_CLAMP_BIAS] | (u16)clamp_g[(g) + (y) + RGB_CLAMP_BIAS] | (u16)clamp_b[(b) + (y) + RGB_CLAMP_BIAS])
+    ((u16)clamp_r[(y) + (b) + RGB_CLAMP_BIAS] | (u16)clamp_g[(y) + (g) + RGB_CLAMP_BIAS] | (u16)clamp_b[(y) + (r) + RGB_CLAMP_BIAS])
 
 #define RGB565_A4(y, r, g, b, a) (RGB565((y), (r), (g), (b)) | (u16)clamp_a4[(a)])
 #define RGB565_M(y) ((u16)mono16[(y)])
