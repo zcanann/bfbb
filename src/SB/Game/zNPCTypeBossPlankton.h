@@ -126,13 +126,10 @@ struct zNPCBPlankton : zNPCBoss
     void ParseINI();
     void ParseLinks();
     void SelfSetup();
-    void Damage(en_NPC_DAMAGE_TYPE damtype, xBase* who, const xVec3* vec_hit);
+    void Damage(en_NPC_DAMAGE_TYPE, xBase*, const xVec3*);
     U32 AnimPick(int, en_NPC_GOAL_SPOT, xGoal*);
     S32 next_goal();
     void scan_cronies();
-    void load_territory(S32 index, xBase& child);
-    void impart_velocity(const xVec3& vel);
-    void stun();
     void update_turn(F32);
     void update_move(F32);
     bool check_player_damage();
@@ -148,29 +145,36 @@ struct zNPCBPlankton : zNPCBoss
     void reset_beam();
     void vanish();
     void reappear();
-    bool crony_attacking() const;
+    U8 crony_attacking() const;
+    void stun();
+    U8 cronies_dead() const;
+    void impart_velocity(const xVec3&);
     void next_territory();
-    bool have_cronies() const;
-    bool move_to_player_territory();
-    bool player_left_territory() const;
-    bool cronies_dead() const;
+    U8 have_cronies() const;
+    U8 move_to_player_territory();
+    U8 player_left_territory() const;
     void say(int, int, bool);
     void sickum();
-    static void aim_gun(xAnimPlay* play, xQuat* quat, xVec3* tran, int tranCount);
+    static void aim_gun(xAnimPlay*, xQuat*, xVec3*, int);
     void here_boy();
     void follow_player();
     void follow_camera();
     void reset_speed();
+    void halt(F32);
+    void fall(F32, F32);
     void refresh_orbit();
-    F32 orbit_yaw_offset(const xVec3& p0, const xVec3& p1) const;
-    xVec3 random_orbit(const xVec3& loc, F32 min_ang, F32 max_ang) const;
+    F32 orbit_yaw_offset(const xVec3&, const xVec3&) const;
+    xVec3 random_orbit(const xVec3&, F32, F32) const;
     xVec3 player_orbit() const;
-    void halt(F32 accel);
-    void fall(F32 accel, F32 max_vel);
+    void load_territory(S32, xBase&);
 
     xVec3& location() const;
     void face_player();
     void render_debug();
+    bool turning() const;
+    void take_control();
+    F32 get_orbit_yaw(const xVec3&) const;
+    void set_location(const xVec3&);
     void give_control();
     void enable_emitter(xParEmitter&) const;
     void disable_emitter(xParEmitter&) const;
@@ -195,8 +199,8 @@ struct zNPCGoalBPlanktonIdle : zNPCGoalCommon
     S32 Exit(F32, void*);
     S32 Process(en_trantype*, F32, void*, xScene*);
 
-    S32 get_yaw(F32&, F32&) const;
-    S32 apply_yaw(F32);
+    void get_yaw(F32&, F32&) const;
+    void apply_yaw(F32);
 };
 
 struct zNPCGoalBPlanktonAttack : zNPCGoalCommon
@@ -364,9 +368,9 @@ struct zNPCGoalBPlanktonBeam : zNPCGoalCommon
     S32 Enter(F32, void*);
     S32 Exit(F32, void*);
     S32 Process(en_trantype*, F32, void*, xScene*);
-    S32 update_cool_down(F32);
-    S32 update_warm_up(F32);
-    S32 update_fire(F32);
+    void update_cool_down(F32);
+    void update_warm_up(F32);
+    void update_fire(F32);
 };
 
 struct zNPCGoalBPlanktonWall : zNPCGoalCommon

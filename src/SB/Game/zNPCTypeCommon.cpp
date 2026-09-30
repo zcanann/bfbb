@@ -4,25 +4,22 @@
 #include <types.h>
 #include <string.h>
 
-#include "iCollide.h"
 #include "xDebug.h"
 #include "xDraw.h"
+#include "zGameExtras.h"
 #include "xMathInlines.h"
 #include "xString.h"
-#include "xUtil.h"
 
+#include "zAssetTypes.h"
 #include "zCombo.h"
 #include "zEntButton.h"
-#include "zEntCruiseBubble.h"
 #include "zEntTeleportBox.h"
-#include "zGame.h"
-#include "zGameExtras.h"
-#include "zGlobals.h"
 #include "zGrid.h"
 #include "zNPCFXCinematic.h"
-#include "zNPCGoals.h"
-#include "zNPCSupport.h"
-#include "zRumble.h"
+
+// Specialized at the bottom of this file, below its first use.
+template <> NPCConfig* xListItem<NPCConfig>::Next();
+template <> void xListItem<NPCConfig>::Insert(NPCConfig* list);
 
 #define Unknown 0
 #define LassoGuide_Grab01 1
@@ -843,7 +840,7 @@ F32 zNPCCommon::BoundAsRadius(S32 useCfg) const
 
         if (cfg->useBoxBound)
         {
-            xVec3 dim = cfg->dim_bound;
+            const xVec3 dim = cfg->dim_bound;
             rad = (dim.x + dim.y + dim.z) * (1 / 6.f);
         }
         else
@@ -1982,8 +1979,14 @@ void zNPCCommon::ISeePlayer()
     {
         g_tmr_talkless = 3.0f + (xurand() - 0.5f) * 0.25f * 3.0f;
 
-        // case NPC_TYPE_FISH jumps to the `if (ven != eEventUnknown)` at the end
-        // instead of `>= NPC_TYPE_FISH` jumping to the NPC_TYPE_BARNACLEBOY case
+        // The one remaining difference is an extra `beq` on our side for
+        // NPC_TYPE_FISH ('NTF0'): retail uses that value only as a binary-search
+        // pivot, we also emit an equality test for it.
+        //
+        // The obvious reading -- that retail does not have NPC_TYPE_FISH in the
+        // fallthrough group below and lets it reach the `if (ven != eEventUnknown)`
+        // at the end -- was TESTED on 2026-08-26 and is WRONG: commenting the case
+        // out drops this function from 99.39% to 96.83%. Do not retry it.
         switch (this->SelfType())
         {
         //case NPC_TYPE_UNKNOWN:
@@ -2457,6 +2460,11 @@ S32 zNPCCommon::GetParmDefault(en_npcparm pid, void* val)
         break;
     }
     return result;
+}
+
+F32 zNPCCommon::GenShadCacheRad()
+{
+    return 2.4f;
 }
 
 S32 zNPCCommon::CanDoSplines()
@@ -3261,7 +3269,7 @@ S32 zNPCCommon::LassoInit()
     lassdata = PRIV_GetLassoData();
     if (lassdata != NULL)
     {
-        memset(lassdata, 0, 0x18);
+        memset(lassdata, 0, sizeof(zNPCLassoInfo));
         lassdata->stage = LASS_STAT_PENDING;
         lassdata->lassoee = this;
     }
@@ -3425,27 +3433,27 @@ void zNPCCommon::LassoNotify(en_LASSO_EVENT event)
 
     switch (event)
     {
-    case LASS_STAT_DONE:
+    case LASS_EVNT_BEGIN:
     {
         lass->stage = LASS_STAT_PENDING;
         break;
     }
-    case LASS_STAT_PENDING:
+    case LASS_EVNT_ENDED:
     {
         lass->stage = LASS_STAT_DONE;
         break;
     }
-    case LASS_STAT_GRABBING:
+    case LASS_EVNT_GRABSTART:
     {
         lass->stage = LASS_STAT_GRABBING;
         break;
     }
-    case LASS_STAT_NOMORE:
+    case LASS_EVNT_YANK:
     {
         lass->stage = LASS_STAT_TOSSING;
         return;
     }
-    case LASS_STAT_UNK_5:
+    case LASS_EVNT_ABORT:
     {
         lass->stage = LASS_STAT_DONE;
         break;
@@ -3599,4 +3607,26 @@ void zNPCCommon_EjectPhlemOnPawz()
 F32 __deadstripped_zNPCTypeCommon_int2flt(S32 i)
 {
     return i;
+}
+
+template <>
+NPCConfig* xListItem<NPCConfig>::Next()
+{
+    return this->next;
+}
+
+template <>
+void xListItem<NPCConfig>::Insert(NPCConfig* list)
+{
+    NPCConfig* node = (NPCConfig*)this;
+
+    node->prev = list;
+    node->next = list->next;
+
+    if (list->next)
+    {
+        list->next->prev = node;
+    }
+
+    list->next = node;
 }

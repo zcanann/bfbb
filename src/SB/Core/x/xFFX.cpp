@@ -126,14 +126,11 @@ void xFFXApply(xEnt* ent, xScene* sc, F32 dt)
     }
 }
 
-// regswap
 void xFFXShakeUpdateEnt(xEnt* ent, xScene* sc, F32 dt, void* fdata)
 {
     xFFXShakeState* ss = (xFFXShakeState*)fdata;
     F32 tnext = ss->tmr + dt;
-    F32 mag = xexp(ss->alpha * tnext);
-
-    mag *= isin(ss->freq * tnext);
+    F32 mag = isin(ss->freq * tnext) * xexp(ss->alpha * tnext);
 
     if (ss->tmr == 0.0f)
     {

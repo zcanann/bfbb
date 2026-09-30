@@ -561,16 +561,18 @@ void iBoxIsectRay(const xBox* b, const xRay3* r, xIsect* isx)
 void iBoxIsectSphere(const xBox* box, const xSphere* p, xIsect* isx)
 {
     U32 xcode, ycode, zcode;
+    F32 lo, hi;
 
-    // non-matching: (p->center.x + p->r) computed inside if statement
+    lo = p->center.x - p->r;
+    hi = p->center.x + p->r;
 
-    if (p->center.x - p->r < box->lower.x)
+    if (lo < box->lower.x)
     {
-        if (p->center.x + p->r < box->lower.x)
+        if (hi < box->lower.x)
         {
             xcode = 2;
         }
-        else if (p->center.x + p->r > box->upper.x)
+        else if (hi > box->upper.x)
         {
             xcode = 0;
         }
@@ -581,11 +583,11 @@ void iBoxIsectSphere(const xBox* box, const xSphere* p, xIsect* isx)
     }
     else
     {
-        if (p->center.x - p->r > box->upper.x)
+        if (lo > box->upper.x)
         {
             xcode = 5;
         }
-        else if (p->center.x + p->r > box->upper.x)
+        else if (hi > box->upper.x)
         {
             xcode = 4;
         }
@@ -595,23 +597,22 @@ void iBoxIsectSphere(const xBox* box, const xSphere* p, xIsect* isx)
         }
     }
 
-    // non-matching: missing division instructions
-
-    if (xcode / 3 == 2)
+    if (xcode % 3 == 2)
     {
         isx->penned = 1.0f;
         return;
     }
 
-    // non-matching: (p->center.y + p->r) computed inside if statement
+    lo = p->center.y - p->r;
+    hi = p->center.y + p->r;
 
-    if (p->center.y - p->r < box->lower.y)
+    if (lo < box->lower.y)
     {
-        if (p->center.y + p->r < box->lower.y)
+        if (hi < box->lower.y)
         {
             ycode = 2;
         }
-        else if (p->center.y + p->r > box->upper.y)
+        else if (hi > box->upper.y)
         {
             ycode = 0;
         }
@@ -622,11 +623,11 @@ void iBoxIsectSphere(const xBox* box, const xSphere* p, xIsect* isx)
     }
     else
     {
-        if (p->center.y - p->r > box->upper.y)
+        if (lo > box->upper.y)
         {
             ycode = 5;
         }
-        else if (p->center.y + p->r > box->upper.y)
+        else if (hi > box->upper.y)
         {
             ycode = 4;
         }
@@ -636,23 +637,22 @@ void iBoxIsectSphere(const xBox* box, const xSphere* p, xIsect* isx)
         }
     }
 
-    // non-matching: missing division instructions
-
-    if (ycode / 3 == 2)
+    if (ycode % 3 == 2)
     {
         isx->penned = 1.0f;
         return;
     }
 
-    // non-matching: (p->center.z + p->r) computed inside if statement
+    lo = p->center.z - p->r;
+    hi = p->center.z + p->r;
 
-    if (p->center.z - p->r < box->lower.z)
+    if (lo < box->lower.z)
     {
-        if (p->center.z + p->r < box->lower.z)
+        if (hi < box->lower.z)
         {
             zcode = 2;
         }
-        else if (p->center.z + p->r > box->upper.z)
+        else if (hi > box->upper.z)
         {
             zcode = 0;
         }
@@ -663,11 +663,11 @@ void iBoxIsectSphere(const xBox* box, const xSphere* p, xIsect* isx)
     }
     else
     {
-        if (p->center.z - p->r > box->upper.z)
+        if (lo > box->upper.z)
         {
             zcode = 5;
         }
-        else if (p->center.z + p->r > box->upper.z)
+        else if (hi > box->upper.z)
         {
             zcode = 4;
         }
@@ -677,9 +677,7 @@ void iBoxIsectSphere(const xBox* box, const xSphere* p, xIsect* isx)
         }
     }
 
-    // non-matching: missing division instructions
-
-    if (zcode / 3 == 2)
+    if (zcode % 3 == 2)
     {
         isx->penned = 1.0f;
         return;

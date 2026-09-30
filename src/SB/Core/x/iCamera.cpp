@@ -4,6 +4,7 @@
 
 #include "iScrFX.h"
 #include "iMath.h"
+#include "iSystem.h"
 
 #include "zGlobals.h"
 
@@ -222,10 +223,7 @@ void iCameraSetFOV(RwCamera* cam, F32 fov)
 {
     RwV2d vw;
 
-    vw.x = itan(PI * (0.5f * fov) / 180.0f);
-
-    // non-matching: frsp instruction is here for some reason
-    vw.y = 0.75f * vw.x;
+    vw.y = 0.75f * (vw.x = itan(PI * (0.5f * fov) / 180.0f));
 
     RwCameraSetViewWindow(cam, &vw);
 }
@@ -296,7 +294,60 @@ void iCameraSetFogParams(iFogParams* fp, F32 time)
         xglobals->fogB = *fp;
 
         xglobals->fog_t0 = iTimeGet();
-        xglobals->fog_t1 = xglobals->fog_t0 + (iTime)(time * 1000.0f);
+        xglobals->fog_t1 = xglobals->fog_t0 + (iTime)(time * (GET_BUS_FREQUENCY() / 4));
+    }
+}
+
+void iCameraUpdateFog(RwCamera* cam, iTime t)
+{
+    RwRGBA a;
+    RwRGBA b;
+    RwRGBA c;
+    F32 dt;
+    xGlobals* g = xglobals;
+
+    if (g->fog.type == rwFOGTYPENAFOGTYPE)
+    {
+        return;
+    }
+
+    if (g->fog_t0 == 0)
+    {
+        return;
+    }
+
+    iTime now = iTimeGet();
+
+    dt = iTimeDiffSec(xglobals->fog_t0, now) / iTimeDiffSec(xglobals->fog_t0, xglobals->fog_t1);
+    dt = CLAMP(dt, 0.0f, 1.0f);
+
+    g->fog.type = xglobals->fogB.type;
+    g->fog.table = xglobals->fogB.table;
+
+    g->fog.start = g->fogA.start + dt * (g->fogB.start - g->fogA.start);
+    g->fog.stop = g->fogA.stop + dt * (g->fogB.stop - g->fogA.stop);
+    g->fog.density = g->fogA.density + dt * (g->fogB.density - g->fogA.density);
+
+    a = g->fogA.fogcolor;
+    b = g->fogB.fogcolor;
+    c.red = a.red + dt * (b.red - a.red);
+    c.green = a.green + dt * (b.green - a.green);
+    c.blue = a.blue + dt * (b.blue - a.blue);
+    c.alpha = a.alpha + dt * (b.alpha - a.alpha);
+    g->fog.fogcolor = c;
+
+    a = g->fogA.bgcolor;
+    b = g->fogB.bgcolor;
+    c.red = a.red + dt * (b.red - a.red);
+    c.green = a.green + dt * (b.green - a.green);
+    c.blue = a.blue + dt * (b.blue - a.blue);
+    c.alpha = a.alpha + dt * (b.alpha - a.alpha);
+    g->fog.bgcolor = c;
+
+    if (1.0f == dt)
+    {
+        xglobals->fog_t0 = 0;
+        xglobals->fogA = xglobals->fogB;
     }
 }
 

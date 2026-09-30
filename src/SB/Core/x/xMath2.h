@@ -36,8 +36,8 @@ template <class T> struct basic_rect
     void set_bounds(T x1, T y1, T x2, T y2);
     void get_bounds(T& x1, T& y1, T& x2, T& y2) const;
     bool empty() const;
-    void set_size(T w, T h);
-    void set_size(T s);
+    basic_rect& set_size(T w, T h);
+    basic_rect& set_size(T s);
     void center(T x, T y);
 
     basic_rect& operator|=(const basic_rect& other);
@@ -72,11 +72,71 @@ struct xVec2
         return (x * b.x) + (y * b.y);
     }
 
+    static xVec2 create(F32 x, F32 y)
+    {
+        xVec2 v;
+
+        v.x = x;
+        v.y = y;
+
+        return v;
+    }
+
     xVec2& operator=(F32);
-    xVec2 operator*(F32) const;
-    xVec2 operator/=(F32);
-    xVec2& operator+=(const xVec2&);
-    xVec2& operator*=(F32);
+
+    xVec2 operator*(F32 f) const
+    {
+        xVec2 tmp = *this;
+
+        tmp *= f;
+
+        return tmp;
+    }
+
+    xVec2 operator/(F32 f) const
+    {
+        xVec2 tmp = *this;
+
+        tmp /= f;
+
+        return tmp;
+    }
+
+    xVec2& operator/=(F32 f)
+    {
+        F32 inv = 1.0f / f;
+
+        x *= inv;
+        y *= inv;
+
+        return *this;
+    }
+
+    xVec2 operator+(const xVec2& v) const
+    {
+        xVec2 tmp = *this;
+
+        tmp += v;
+
+        return tmp;
+    }
+
+    xVec2& operator+=(const xVec2& v)
+    {
+        x += v.x;
+        y += v.y;
+
+        return *this;
+    }
+
+    xVec2& operator*=(F32 f)
+    {
+        x *= f;
+        y *= f;
+
+        return *this;
+    }
+
     xVec2& operator-=(const xVec2&);
     xVec2 operator-(const xVec2&) const;
 };

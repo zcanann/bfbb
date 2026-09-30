@@ -27,8 +27,7 @@ S32 xSGStartup()
 
 S32 xSGShutdown()
 {
-    g_xsginit--;
-    if (g_xsginit == 0)
+    if (--g_xsginit == 0)
     {
         iSGShutdown();
         xUtilShutdown();

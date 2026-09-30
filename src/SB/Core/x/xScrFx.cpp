@@ -508,19 +508,24 @@ void xScrFXGlareRender(xCamera* cam)
             RwIm3DVertex* vert = &sStripVert[0];
             RwIm3DVertexSetPos(vert, g->pos.x - w.x - h.x, g->pos.y - w.y - h.y, g->pos.z - w.z - h.z);
             RwIm3DVertexSetUV(vert, 0.0f, 0.0f);
-            RwIm3DVertexSetRGBA(vert, 255.0f * g->col.red, 255.0f * g->col.green, 255.0f * g->col.blue, 255.0f * g->col.alpha * val);
+            F32 cr = 255.0f * g->col.red;
+            F32 cg = 255.0f * g->col.green;
+            F32 cb = 255.0f * g->col.blue;
+            F32 ca = 255.0f * g->col.alpha * val;
+
+            RwIm3DVertexSetRGBA(vert, cr, cg, cb, ca);
             vert++;
             RwIm3DVertexSetPos(vert, g->pos.x - w.x + h.x, g->pos.y - w.y + h.y, g->pos.z - w.z + h.z);
             RwIm3DVertexSetUV(vert, 0.0f, 1.0f);
-            RwIm3DVertexSetRGBA(vert, 255.0f * g->col.red, 255.0f * g->col.green, 255.0f * g->col.blue, 255.0f * g->col.alpha * val);
+            RwIm3DVertexSetRGBA(vert, cr, cg, cb, ca);
             vert++;
             RwIm3DVertexSetPos(vert, g->pos.x + w.x - h.x, g->pos.y + w.y - h.y, g->pos.z + w.z - h.z);
             RwIm3DVertexSetUV(vert, 1.0f, 0.0f);
-            RwIm3DVertexSetRGBA(vert, 255.0f * g->col.red, 255.0f * g->col.green, 255.0f * g->col.blue, 255.0f * g->col.alpha * val);
+            RwIm3DVertexSetRGBA(vert, cr, cg, cb, ca);
             vert++;
             RwIm3DVertexSetPos(vert, g->pos.x + w.x + h.x, g->pos.y + w.y + h.y, g->pos.z + w.z + h.z);
             RwIm3DVertexSetUV(vert, 1.0f, 1.0f);
-            RwIm3DVertexSetRGBA(vert, 255.0f * g->col.red, 255.0f * g->col.green, 255.0f * g->col.blue, 255.0f * g->col.alpha * val);
+            RwIm3DVertexSetRGBA(vert, cr, cg, cb, ca);
 
             RwRenderStateSet(rwRENDERSTATETEXTURERASTER, (void*)g->raster);
             

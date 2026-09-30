@@ -28,7 +28,6 @@ struct xBound
 #define XBOUND_TYPE_OBB 4 // Oriented bounding box - xBound::box and xBound::mat
 
 void xBoundGetBox(xBox& box, const xBound& bound);
-void xBoundGetSphere(xSphere& o, const xBound& bound);
 void xBoundDraw(const xBound* bound);
 void xQuickCullForBound(xQCData* qc, const xBound* bound);
 xVec3* xBoundCenter(xBound* bound);

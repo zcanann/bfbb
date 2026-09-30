@@ -12,6 +12,30 @@
 #include "xDebug.h"
 #include "xUtil.h"
 
+// These structs were used in deadstripped functions.
+// This function is here to force the symbols to be linked.
+//
+// The target opens .rodata with the same twelve unreferenced all-zero
+// templates other units carry -- four of 0x0C, seven of 0x28 and one of 0x10 --
+// which offsets every later .rodata relocation.
+void __deadstripped_zNPCTypeVillager_head()
+{
+    const char _405[0x0C] = {};
+    const char _406[0x0C] = {};
+    const char _410[0x0C] = {};
+    const char _441[0x0C] = {};
+
+    const char _607[0x28] = {};
+    const char _608[0x28] = {};
+    const char _609[0x28] = {};
+    const char _610[0x28] = {};
+    const char _611[0x28] = {};
+    const char _612[0x28] = {};
+    const char _613[0x28] = {};
+
+    const char _817[0x10] = {};
+}
+
 #define Unknown 0
 #define Idle01 1
 #define Move01 2
@@ -733,8 +757,6 @@ S32 zNPCVillager::FolkHandleMail(NPCMsg* mail)
     xPsyche* psy = this->psy_instinct; // not in dwarf
 
     switch (mail->msgid)
-
-
     {
     case 3:
     {
@@ -1259,14 +1281,14 @@ void zNPCFish::MonitorCowering(xScene* xscn, F32 dt)
     {
         this->tmr_robonear = cfg->tym_alert * (0.25f * (xurand() - 0.5f)) + cfg->tym_alert;
         this->tmr_checkagain = cfg->tym_alert * (0.25f * (xurand() - 0.5f)) + cfg->tym_alert;
-        zNPCMsg_SendMsg(NPC_MID_BECOMESCARED, *(U32*)this);
+        zNPCMsg_SendMsg(NPC_MID_BECOMESCARED, this->id);
     }
     else
     {
         this->tmr_robonear = -1.0f;
         this->tmr_checkagain =
             cfg->tym_alert * PI * (0.25f * (xurand() - 0.5f)) + cfg->tym_alert * PI;
-        zNPCMsg_SendMsg(NPC_MID_NOLONGERSCARED, *(U32*)this);
+        zNPCMsg_SendMsg(NPC_MID_NOLONGERSCARED, this->id);
     }
 }
 
@@ -1451,6 +1473,13 @@ void zNPCNewsFish::Init(xEntAsset* asset)
 void zNPCNewsFish::PostSetup()
 {
     xUpdateCull_SetCB(globals.updateMgr, this, xUpdateCull_AlwaysTrueCB, NULL);
+}
+
+// One more unreferenced all-zero xVec3 template, ahead of the one
+// zNPCNewsFish::Process creates.
+void __deadstripped_zNPCTypeVillager_newsfish()
+{
+    const char _1683[0x0C] = {};
 }
 
 void zNPCNewsFish::Process(xScene*, F32 dt)
@@ -1827,8 +1856,6 @@ void zNPCSandyBikini::VFXLeakyFaucet(F32 dt)
     xVec3 dir_emit;
     F32 dist;
     pos_emit += vec_boneOffset;
-
-
     xMat3x3RMulVec(&pos_emit, (const xMat3x3*)this->BoneMat(0), &pos_emit);
     pos_emit *= this->cfg_npc->scl_model.x;
     pos_emit += *(xVec3*)this->BonePos(0);
@@ -1908,8 +1935,7 @@ void zNPCBalloonBoy::PlatShadRend()
 
         static S32 takeThePain = 0;
         needit = 0;
-        takeThePain--;
-        if (takeThePain < 0)
+        if (--takeThePain < 0)
         {
             takeThePain = 8;
 
@@ -2093,8 +2119,6 @@ void zNPCBalloonBoy::PlatAnimSet(en_BBOY_PLATANIM platanim)
 {
     F32 fvals[4] = { (F32)(platanim + 1), 0.0f, 0.0f, 0.0f };
     if (this->plat_balloons != NULL)
-
-
     {
         zEntAnimEvent(this->plat_balloons, 0xC3, fvals);
     }
@@ -2122,6 +2146,13 @@ S32 zNPCBalloonBoy::IAmBallooning()
     }
 
     return result;
+}
+
+// The last unreferenced all-zero xVec3 template, after the one
+// zNPCBalloonBoy::IAmBallooning creates.
+void __deadstripped_zNPCTypeVillager_tail()
+{
+    const char _2321[0x0C] = {};
 }
 
 U32 zNPCBubbleBuddy::aid_fresnelTxtr = 0;
@@ -2173,7 +2204,7 @@ void zNPCBubbleBuddy::Setup()
 void zNPCBubbleBuddy::Reset()
 {
     zNPCFish::Reset();
-    flags |= 0x40;
+    flags |= XENT_0x40;
 }
 
 void zNPCBubbleBuddy::RenderExtra()

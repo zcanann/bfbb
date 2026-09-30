@@ -13,11 +13,10 @@ U32 read_sizzze = 0;
 
 void iCSSoundSetup(xCutscene* csn)
 {
-    xCutsceneData* data;
     U32 dataIndex;
     U32 numData;
 
-    data = (xCutsceneData*)(csn->Play + 1);
+    xCutsceneData* data = (xCutsceneData*)(csn->Play + 1);
     numData = csn->Play->NumData;
 
     for (dataIndex = 0; dataIndex < numData; dataIndex++)
@@ -133,7 +132,6 @@ void* iCSSoundGetData(xSndVoiceInfo* vp, U32* size)
 static void iCSAsyncReadCB(tag_xFile* file)
 {
     S32 bytes;
-    xCutscene* csn;
 
     if (file)
     {
@@ -142,7 +140,7 @@ static void iCSAsyncReadCB(tag_xFile* file)
             iFileSeek(file, bytes, IFILE_SEEK_CUR);
         }
 
-        csn = xCutscene_CurrentCutscene();
+        xCutscene* csn = xCutscene_CurrentCutscene();
         csn->Waiting = 0;
     }
 }
@@ -151,7 +149,6 @@ U32 iCSFileOpen(xCutscene* csn)
 {
     U32 headerskip;
     st_PKR_ASSET_TOCINFO ainfo;
-    const char* filename;
 
     headerskip = ALIGN(csn->Info->HeaderSize, 2048);
 
@@ -160,7 +157,7 @@ U32 iCSFileOpen(xCutscene* csn)
         return 0;
     }
 
-    filename = xST_xAssetID_HIPFullPath(csn->Info->AssetID);
+    const char* filename = xST_xAssetID_HIPFullPath(csn->Info->AssetID);
 
     if (iFileOpen(filename, 0x1, &csn->File) == 0)
     {

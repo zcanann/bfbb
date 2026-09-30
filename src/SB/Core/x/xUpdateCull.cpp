@@ -2,12 +2,12 @@
 #include "xUpdateCull.h"
 #include "xGroup.h"
 
-static void xUpdateCull_Swap(xUpdateCullMgr* mgr, U32 a, U32 b)
+static void xUpdateCull_Swap(xUpdateCullMgr* m, U32 a, U32 b)
 {
     xUpdateCullEnt* pMgrAIndex;
 
-    xUpdateCullEnt* pMgrBIndex = mgr->mgr[b];
-    xUpdateCullEnt* pMgrIndex = pMgrAIndex = mgr->mgr[a];
+    xUpdateCullEnt* pMgrBIndex = m->mgr[b];
+    xUpdateCullEnt* pMgrIndex = pMgrAIndex = m->mgr[a];
 
     do
     {
@@ -26,14 +26,13 @@ static void xUpdateCull_Swap(xUpdateCullMgr* mgr, U32 a, U32 b)
             break;
     } while (pMgrIndex != pMgrBIndex);
 
-    // Set index and groupIndex together.
-    S32 uVar6 = *(S32*)(&mgr->ent[a]);
-    *(S32*)(&mgr->ent[a]) = *(S32*)(&mgr->ent[b]);
-    *(S32*)(&mgr->ent[b]) = uVar6;
+    void* tmpEnt = m->ent[a];
+    m->ent[a] = m->ent[b];
+    m->ent[b] = tmpEnt;
 
-    uVar6 = *(S32*)(&mgr->mgr[a]);
-    *(S32*)(&mgr->mgr[a]) = *(S32*)(&mgr->mgr[b]);
-    *(S32*)(&mgr->mgr[b]) = uVar6;
+    xUpdateCullEnt* tmpMgr = m->mgr[a];
+    m->mgr[a] = m->mgr[b];
+    m->mgr[b] = tmpMgr;
 }
 
 static void xUpdateCull_MakeActive(xUpdateCullMgr* m, xUpdateCullEnt* e)

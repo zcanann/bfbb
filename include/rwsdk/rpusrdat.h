@@ -1,8 +1,12 @@
 #ifndef RPUSRDAT_H
 #define RPUSRDAT_H
 
-#include "rwcore.h"
-#include "rpworld.h"
+#include <rwsdk/rwcore.h>
+#include <rwsdk/rpworld.h>
+
+/* C compatibility: these headers use bare tag names as types. */
+typedef struct RpUserDataArray RpUserDataArray;
+
 
 enum RpUserDataFormat
 {
@@ -12,6 +16,7 @@ enum RpUserDataFormat
     rpSTRINGUSERDATA,
     rpUSERDATAFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RpUserDataFormat RpUserDataFormat;
 
 struct RpUserDataArray
 {

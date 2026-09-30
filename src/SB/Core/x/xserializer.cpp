@@ -43,26 +43,23 @@ S32 xSerialStartup(S32 count, st_SERIAL_PERCID_SIZE* sizeinfo)
 
 S32 xSerialShutdown()
 {
-    return --g_serinit;
+    g_serinit--;
+
+    return g_serinit;
 }
 
 void xSerialTraverse(S32 (*func)(U32, xSerial*))
 {
-    S32 i;
     st_XSERIAL_DATA_PRIV* xsd = &g_xserdata;
-    st_SERIAL_CLIENTINFO* clt;
     xSerial xser;
-    S32 rc;
 
-    for (i = 0; i < xsd->cltlist.cnt; i++)
+    for (S32 i = 0; i < xsd->cltlist.cnt; i++)
     {
-        clt = (st_SERIAL_CLIENTINFO*)xsd->cltlist.list[i];
+        st_SERIAL_CLIENTINFO* clt = (st_SERIAL_CLIENTINFO*)xsd->cltlist.list[i];
         xser.setClient(clt->idtag);
-        rc = func(clt->idtag, &xser);
+        S32 rc = func(clt->idtag, &xser);
         if (rc == 0)
-        {
             break;
-        }
     }
 }
 
@@ -87,32 +84,23 @@ void xSerial::setClient(U32 idtag)
     prepare(idtag);
 }
 
+// non-matching: register allocation
 S32 xSerial::Write(char* data, S32 elesize, S32 n)
 {
     S32 nbit;
-    char* cptr;
-    S32* iptr;
-    S32 bidx;
-    S32 i;
 
     if (n == 0)
     {
         return 0;
     }
 
-    if (n > 0)
-    {
-        nbit = n * elesize * 8;
-    }
-    else
-    {
-        nbit = -n;
-    }
+    nbit = n > 0 ? n * elesize * 8 : -n;
 
     if (n < 0)
     {
-        iptr = (S32*)data;
-        bidx = 0;
+        S32 bidx = 0;
+        S32 i;
+        S32* iptr = (S32*)data;
         for (i = 0; i < nbit; i++)
         {
             wrbit(*iptr & g_tbl_onbit[bidx]);
@@ -125,8 +113,9 @@ S32 xSerial::Write(char* data, S32 elesize, S32 n)
     }
     else
     {
-        cptr = data;
-        bidx = 0;
+        S32 bidx = 0;
+        S32 i;
+        char* cptr = data;
         for (i = 0; i < nbit; i++)
         {
             wrbit(*cptr & g_tbl_onbit[bidx]);
@@ -176,67 +165,50 @@ S32 xSerial::Write(F32 data)
     return Write((char*)&data, 4, 1);
 }
 
+// non-matching: register allocation
 S32 xSerial::Read(char* buf, S32 elesize, S32 n)
 {
-    S32 nbit;
-    char* cptr;
-    S32* iptr;
-    S32 bitval;
-    S32 bidx;
-    S32 i;
-
-    if (n > 0)
-    {
-        nbit = n * elesize * 8;
-    }
-    else
-    {
-        nbit = -n;
-    }
+    S32 nbit = n > 0 ? n * elesize * 8 : -n;
 
     if (n < 0)
     {
-        iptr = (S32*)buf;
-        bidx = 0;
-        for (i = 0; i < nbit; i++)
+        S32 bidx = 0;
+        for (S32 i = 0; i < nbit; i++)
         {
-            bitval = rdbit();
-            if (bitval != 0)
+            if (rdbit() != 0)
             {
-                *iptr |= g_tbl_onbit[bidx];
+                *(U32*)buf |= g_tbl_onbit[bidx];
             }
             else
             {
-                *iptr &= g_tbl_clear[bidx];
+                *(U32*)buf &= g_tbl_clear[bidx];
             }
 
             if (++bidx == 32)
             {
                 bidx = 0;
-                iptr++;
+                buf = (char*)((U32*)buf + 1);
             }
         }
     }
     else
     {
-        cptr = buf;
-        bidx = 0;
-        for (i = 0; i < nbit; i++)
+        S32 bidx = 0;
+        for (S32 i = 0; i < nbit; i++)
         {
-            bitval = rdbit();
-            if (bitval != 0)
+            if (rdbit() != 0)
             {
-                *cptr |= (char)g_tbl_onbit[bidx];
+                *buf |= (char)g_tbl_onbit[bidx];
             }
             else
             {
-                *cptr &= (char)g_tbl_clear[bidx];
+                *buf &= (char)g_tbl_clear[bidx];
             }
 
             if (++bidx == 8)
             {
                 bidx = 0;
-                cptr++;
+                buf++;
             }
         }
     }
@@ -362,12 +334,12 @@ static void xSER_init_buffers(S32 count, st_SERIAL_PERCID_SIZE* sizeinfo)
     st_SERIAL_PERCID_SIZE* sitmp = NULL;
     st_SERIAL_CLIENTINFO* tmp_clt = NULL;
 
-    XOrdInit(&xsd->cltlist, count, 0);
+    XOrdInit(&g_xserdata.cltlist, count, 0);
 
-    g_xserdata.cltbuf =
+    xsd->cltbuf =
         (st_SERIAL_CLIENTINFO*)xMemAlloc(gActiveHeap, count * sizeof(st_SERIAL_CLIENTINFO), 0);
-    memset(g_xserdata.cltbuf, 0, count * sizeof(st_SERIAL_CLIENTINFO));
-    g_xserdata.cltnext = g_xserdata.cltbuf;
+    memset(xsd->cltbuf, 0, count * sizeof(st_SERIAL_CLIENTINFO));
+    xsd->cltnext = xsd->cltbuf;
 
     sitmp = sizeinfo;
     while (sitmp->idtag != 0)
@@ -413,38 +385,36 @@ static void xSER_init_buffers(S32 count, st_SERIAL_PERCID_SIZE* sizeinfo)
 
 static S32 xSER_ord_compare(void* e1, void* e2)
 {
-    S32 rc;
+    S32 greater;
+
     if (*(U32*)e1 < *(U32*)e2)
     {
-        rc = -1;
+        return -1;
     }
-    else if (*(U32*)e1 > *(U32*)e2)
+
+    greater = (*(U32*)e1 > *(U32*)e2) ? 1 : 0;
+    if (greater)
     {
-        rc = 1;
+        return 1;
     }
-    else
-    {
-        rc = 0;
-    }
-    return rc;
+    return 0;
 }
 
 static S32 xSER_ord_test(const void* key, void* elt)
 {
-    S32 rc;
+    S32 greater;
+
     if ((U32)key < *(U32*)elt)
     {
-        rc = -1;
+        return -1;
     }
-    else if ((U32)key > *(U32*)elt)
+
+    greater = ((U32)key > *(U32*)elt) ? 1 : 0;
+    if (greater)
     {
-        rc = 1;
+        return 1;
     }
-    else
-    {
-        rc = 0;
-    }
-    return rc;
+    return 0;
 }
 
 static st_SERIAL_CLIENTINFO* XSER_get_client(U32 idtag)
@@ -471,22 +441,18 @@ static st_SERIAL_CLIENTINFO* XSER_get_client(U32 idtag)
 S32 xSerial_svgame_register(st_XSAVEGAME_DATA* sgctxt, en_SAVEGAME_MODE mode)
 {
     st_XSERIAL_DATA_PRIV* xsd = &g_xserdata;
-    st_SERIAL_CLIENTINFO* clt;
-    S32 i;
-
-    xsd->flg_info &= ~1;
+    xsd->flg_info &= 0xfffffffe;
 
     if (mode == XSG_MODE_SAVE)
     {
         xSGAddSaveClient(sgctxt, 'SVID', xsd, xSER_xsgclt_svinfo_ver, xSER_xsgclt_svproc_ver);
 
-        for (i = 0; i < xsd->cltlist.cnt; i++)
+        for (S32 i = 0; i < xsd->cltlist.cnt; i++)
         {
-            clt = (st_SERIAL_CLIENTINFO*)xsd->cltlist.list[i];
-            xSGAddSaveClient(sgctxt, clt->idtag, clt, xSER_xsgclt_svinfo_clt,
+            xSGAddSaveClient(sgctxt, ((st_SERIAL_CLIENTINFO*)xsd->cltlist.list[i])->idtag,
+                             xsd->cltlist.list[i], xSER_xsgclt_svinfo_clt,
                              xSER_xsgclt_svproc_clt);
         }
-
         xSGAddSaveClient(sgctxt, 'SFIL', &g_xserdata, xSER_xsgclt_svinfo_fill,
                          xSER_xsgclt_svproc_fill);
     }
@@ -530,15 +496,15 @@ static S32 xSER_xsgclt_ldproc_ver(void*, st_XSAVEGAME_DATA* xsg, st_XSAVEGAME_RE
 static S32 xSER_xsgclt_svinfo_clt(void* cltdata, st_XSAVEGAME_DATA*, S32* cur_space,
                                   S32* max_fullgame)
 {
-    *cur_space = *(S32*)((S32)cltdata + 12);
-    *max_fullgame = *(S32*)((S32)cltdata + 12);
+    *cur_space = ((st_SERIAL_CLIENTINFO*)cltdata)->actsize;
+    *max_fullgame = ((st_SERIAL_CLIENTINFO*)cltdata)->actsize;
     return 1;
 }
 
 static S32 xSER_xsgclt_svproc_clt(void* cltdata, st_XSAVEGAME_DATA* xsg,
                                   st_XSAVEGAME_WRITECONTEXT* wctxt)
 {
-    st_SERIAL_CLIENTINFO* clt = XSER_get_client(*(U32*)cltdata);
+    st_SERIAL_CLIENTINFO* clt = XSER_get_client(((st_SERIAL_CLIENTINFO*)cltdata)->idtag);
     xSGWriteData(xsg, wctxt, (char*)clt->membuf, clt->actsize);
     return 1;
 }
@@ -553,6 +519,7 @@ static S32 xSER_xsgclt_ldproc_clt(void*, st_XSAVEGAME_DATA* xsg, st_XSAVEGAME_RE
 
     st_SERIAL_CLIENTINFO* clt = XSER_get_client(idtag);
     xSGReadData(xsg, rctxt, (char*)clt->membuf, clt->actsize);
+
     return 1;
 }
 
@@ -571,6 +538,7 @@ static S32 xSER_xsgclt_svinfo_fill(void*, st_XSAVEGAME_DATA*, S32* cur_space, S3
     size = xsd->buf_bytcnt - tally + 8;
     *cur_space = size;
     *max_fullgame = size;
+
     return 1;
 }
 
@@ -591,5 +559,6 @@ static S32 xSER_xsgclt_ldproc_fill(void*, st_XSAVEGAME_DATA* xsg, st_XSAVEGAME_R
     }
 
     xSGReadData(xsg, rctxt, (char*)&filbuf, 8);
+
     return 1;
 }

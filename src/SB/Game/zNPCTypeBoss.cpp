@@ -95,23 +95,13 @@ char* g_strz_bossanim[ANIM_COUNT] =
     "attack_wall_loop",
     "attack_wall_end",
     "attack_missle",
-#if 1
-    "attack_bomb\0zNPCBBobbyArm\0PAREMIT_CLOUD"
-#else
     "attack_bomb"
-#endif
 };
 // clang-format on
 
 static S32 g_boss_is_in_the_house = 0;
 static zParEmitter* g_pemit_holder = NULL;
 static xParEmitterCustomSettings g_parf_holder;
-
-extern S32 _917_0[2];
-extern F32 _920_2;
-extern F32 _921_2;
-extern F32 _922_0;
-extern F32 _947_3;
 
 void ZNPC_Boss_Startup()
 {
@@ -185,15 +175,19 @@ xAnimTable* ZNPC_AnimTable_BossSBobbyArm()
 {
     xAnimTable* table;
 
-    S32 ourAnims[2] = { 0, 1 };
+    S32 ourAnims[2] = { 1, 0 };
 
-    // Nearly identical, save for a redundant r5 load being skipped.
-    table = xAnimTableNew("zNPCBBobbyArm", NULL, ourAnims[0]);
+    // REGS: the 8-byte copy of ourAnims takes r5 in the target and r4 here, so the
+    // two `li 0` argument constants come out in the opposite order. Instruction for
+    // instruction identical otherwise. The same permutation appears in
+    // ZNPC_AnimTable_NightLight and ZNPC_AnimTable_Tubelet, which are written in a
+    // different source shape, so it is not reachable from here.
+    table = xAnimTableNew("zNPCBBobbyArm", NULL, 0);
 
-    xAnimTableNewState(table, g_strz_bossanim[1], 0x10, 0, _920_2, NULL, NULL, _921_2, NULL, NULL,
+    xAnimTableNewState(table, g_strz_bossanim[1], 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
                        xAnimDefaultBeforeEnter, NULL, NULL);
 
-    NPCC_BuildStandardAnimTran(table, (char**)g_strz_bossanim, &ourAnims[0], 1, _922_0);
+    NPCC_BuildStandardAnimTran(table, (char**)g_strz_bossanim, &ourAnims[0], 1, 0.2f);
 
     return table;
 }
@@ -261,7 +255,7 @@ U8 zNPCBoss::PhysicsFlags() const
 
 F32 zNPCBoss::AttackTimeLeft()
 {
-    return _947_3;
+    return 1e38f;
 }
 
 void zNPCBoss::HoldUpDude()

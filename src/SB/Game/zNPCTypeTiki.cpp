@@ -96,7 +96,6 @@ void zNPCTiki_InitStacking(zScene* zsc)
     orphanList = NULL;
 }
 
-// float scheduling issue
 void zNPCTiki_InitFX(zScene* scene)
 {
     cloudEmitter = zParEmitterFind("PAREMIT_THUNDER_CLOUD");
@@ -153,7 +152,6 @@ void zNPCTiki_ExplodeFX(zNPCTiki* tiki)
 {
     xVec3 shockwavePos;
     xVec3 delta; // not in dwarf
-    NPCHazard* haz;
     zScene* zsc;
     U32 i;
 
@@ -165,7 +163,7 @@ void zNPCTiki_ExplodeFX(zNPCTiki* tiki)
         xVec3Copy(&shockwavePos, (xVec3*)&tiki->model->Mat->pos);
         shockwavePos.y += 0.35f;
 
-        haz = HAZ_Acquire();
+        NPCHazard* haz = HAZ_Acquire();
         if (!haz)
             return;
 
@@ -223,7 +221,7 @@ static void zNPCTiki_PickTikisToAnimate()
     {
         if ((coll->flags & 1) != 0 && coll->optr != NULL)
         {
-            npc = (xNPCBasic*)coll->optr;
+            npc = (xNPCBasic*)(xEnt*)(coll->optr);
             if (npc->baseType == '+' && (npc->SelfType() & ~0xFF) == 'NTT\0')
             {
                 ((zNPCTiki*)npc)->tikiFlag &= ~0xC0;
@@ -340,9 +338,7 @@ void ZNPC_Destroy_Tiki(xFactoryInst* inst)
 
 xAnimTable* ZNPC_AnimTable_Tiki()
 {
-    xAnimTable* table;
-
-    table = xAnimTableNew("zNPCTiki", NULL, 0);
+    xAnimTable* table = xAnimTableNew("zNPCTiki", NULL, 0);
     xAnimTableNewState(table, g_strz_tikianim[1], 0x110, 1, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
                        xAnimDefaultBeforeEnter, NULL, NULL);
     return table;
@@ -370,14 +366,14 @@ void zNPCTiki::Reset()
 
     timeToLive = 0.0f;
     tikiFlag = 0;
-    for (S32 i = 0; i < sizeof(parents[0]); i++)
+    for (S32 i = 0; i < ARRAY_SIZE(parents); i++)
     {
         parents[i] = NULL;
     }
     numParents = 0;
     contactParent = ~0x0;
 
-    for (S32 i = 0; i < sizeof(children[0]); i++)
+    for (S32 i = 0; i < ARRAY_SIZE(children); i++)
     {
         children[i] = NULL;
     }
@@ -513,8 +509,9 @@ S32 zNPCTiki::SetCarryState(en_NPC_CARRY_STATE cs)
     case zNPCCARRY_ATTEMPTPICKUP:
         if (this->numChildren != 0)
         {
-            // non-matching: lfs for 0.2f only happens once, should be
-            // showing up multiple times as this gets unrolled
+            // non-matching: mwcc unrolls this exactly as retail does, but keeps
+            // the 0.2f in f1 across all four unrolled blocks; retail reloads it
+            // in each one. Statement/loop-form rewrites all measured inert.
             for (S32 i = 0; i < 4; i++)
             {
                 if (this->children[i] != NULL)
@@ -575,17 +572,13 @@ S32 zNPCTiki::SetCarryState(en_NPC_CARRY_STATE cs)
 
 void zNPCTiki::SelfSetup()
 {
-    xBehaveMgr* bmgr;
-    xPsyche* psy;
-    xGoal* goal;
-
-    bmgr = xBehaveMgr_GetSelf();
-    psy = bmgr->Subscribe(this, 0);
+    xBehaveMgr* bmgr = xBehaveMgr_GetSelf();
+    xPsyche* psy = bmgr->Subscribe(this, 0);
     this->psy_instinct = psy;
     psy = this->psy_instinct;
     psy->BrainBegin();
 
-    goal = psy->AddGoal(NPC_GOAL_TIKIIDLE, NULL);
+    xGoal* goal = psy->AddGoal(NPC_GOAL_TIKIIDLE, NULL);
     ((zNPCGoalCommon*)goal)->flg_npcgauto = 0;
 
     switch (this->myNPCType)
@@ -636,9 +629,7 @@ void zNPCTiki::ParseINI()
 
 void zNPCTiki::Process(xScene* xscn, F32 dt)
 {
-    xVec3* t0;
     U32 i;
-    xQuat* q0;
 
     if (!(this->numChildren == NULL || ((this->tikiFlag & 8) != 0)))
     {
@@ -672,8 +663,8 @@ void zNPCTiki::Process(xScene* xscn, F32 dt)
             }
         }
 
-        q0 = (xQuat*)giAnimScratch;
-        t0 = (xVec3*)(q0 + 0x41);
+        xQuat* q0 = (xQuat*)giAnimScratch;
+        xVec3* t0 = (xVec3*)(q0 + IANIM_MAXBONES);
         iAnimEval(this->tikiAnim, this->tikiAnimTime, 0, t0, q0);
         iModelAnimMatrices(this->model->Data, q0, t0, this->model->Mat + 1);
     }
@@ -903,8 +894,8 @@ void zNPCTiki::Process(xScene* xscn, F32 dt)
         xVec3Add(&this->bound.box.box.lower, (xVec3*)&this->model->Mat->pos, &scaledLower);
         xVec3Add(&this->bound.box.center, (xVec3*)&this->model->Mat->pos, &scaledCenter);
 
-        scaledUpper.y += 0.00005f;
-        scaledCenter.y += 0.0001f;
+        scaledUpper.y += 0.0001f;
+        scaledCenter.y += 0.00005f;
     }
     else
     {
@@ -940,10 +931,9 @@ void zNPCTiki::Process(xScene* xscn, F32 dt)
 S32 zNPCTiki::SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
                        xBase* toParamWidget, S32* handled)
 {
-    // TODO: Figure out event enum
     switch (toEvent)
     {
-    case 0x32:
+    case eEventNPCRespawn:
         if ((this->tikiFlag & 0x300) != 0x200 && this->explosion && this->explosion->initCB)
         {
             this->explosion->initCB(this->explosion, this->model, 0, 0);
@@ -962,8 +952,8 @@ S32 zNPCTiki::SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
         *handled = TRUE;
         break;
 
-    case 3:
-    case 0x1F7:
+    case eEventVisible:
+    case eEventFastVisible:
         if ((this->tikiFlag & 0x300) != 0x200)
         {
             xEntShow(this);
@@ -980,8 +970,8 @@ S32 zNPCTiki::SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
         *handled = TRUE;
         break;
 
-    case 4:
-    case 0x1F8:
+    case eEventInvisible:
+    case eEventFastInvisible:
         if (xEntIsVisible(this) && toParam)
         {
             S32 code = (S32)(0.5f + toParam[0]);
@@ -993,18 +983,18 @@ S32 zNPCTiki::SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
         xEntHide(this);
         *handled = TRUE;
         break;
-    case 0x53:
+    case eEventCollisionOn:
         if ((this->tikiFlag & 0x300) != 0x200)
         {
             this->RestoreColFlags();
         }
         *handled = TRUE;
         break;
-    case 0x54:
+    case eEventCollisionOff:
         this->chkby = 0;
         *handled = TRUE;
         break;
-    case 0x55:
+    case eEventCollision_Visible_On:
         if ((this->tikiFlag & 0x300) != 0x200)
         {
             this->RestoreColFlags();
@@ -1022,7 +1012,7 @@ S32 zNPCTiki::SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
         *handled = TRUE;
         break;
 
-    case 0x56:
+    case eEventCollision_Visible_Off:
         this->chkby = 0;
 
         if (xEntIsVisible(this) && toParam)
@@ -1072,7 +1062,7 @@ void zNPCTiki::RemoveChild(zNPCTiki* child)
     if (this->numChildren == 0)
         return;
 
-    while (this->children[i] != child && i < sizeof(this->children[0]))
+    while (this->children[i] != child && i < ARRAY_SIZE(this->children))
     {
         i++;
     }
@@ -1091,7 +1081,7 @@ void zNPCTiki::RemoveParent(zNPCTiki* parent)
     if (this->numParents == 0)
         return;
 
-    while (this->parents[i] != parent && i < sizeof(this->parents[0]))
+    while (this->parents[i] != parent && i < ARRAY_SIZE(this->parents))
     {
         i++;
     }
@@ -1266,7 +1256,7 @@ void zNPCTiki::FindParents(zScene* zsc)
                 }
                 else
                 {
-                    // else condition – swapped 0.75/0.25 coefficients
+                    // else condition -- swapped 0.75/0.25 coefficients
                     if (tiki->bound.box.box.upper.y * 0.75f + tiki->bound.box.box.lower.y * 0.25f <
                             p->bound.box.box.lower.y + 0.00001f &&
                         tiki->bound.box.box.upper.y < 0.75f * p->bound.box.box.lower.y +
@@ -1576,12 +1566,7 @@ static S32 thunderCountCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, 
 
     nextgoal = 0;
 
-    factor = goal->tmr_count - dt;
-    if (factor < -1.0f)
-    {
-        factor = -1.0f;
-    }
-    goal->tmr_count = factor;
+    goal->tmr_count = MAX(-1.0f, goal->tmr_count - dt);
 
     if (goal->tmr_count < 0.0f)
     {
@@ -1599,12 +1584,15 @@ static S32 thunderCountCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, 
     factor = (-1.0f / gfactor) + 1.0f;
     hght = 8.0f * factor;
 
-    gfactor = factor - (F32)(S32)factor;
-    factor = hght - (F32)(S32)hght;
+    factor = factor - (F32)(S32)factor;
+    hght = hght - (F32)(S32)hght;
 
-    tiki->model->RedMultiplier = factor * 0.75f + 0.25f;
-    tiki->model->BlueMultiplier = 1.0f - tiki->model->RedMultiplier;
-    tiki->model->GreenMultiplier = gfactor * 0.75f + 0.25f;
+    factor = factor * 0.75f + 0.25f;
+    hght = hght * 0.75f + 0.25f;
+
+    tiki->model->RedMultiplier = hght;
+    tiki->model->BlueMultiplier = 1.0f - hght;
+    tiki->model->GreenMultiplier = factor;
 
     tiki->tikiFlag &= ~0xC0;
 
@@ -1630,8 +1618,8 @@ static S32 thunderCountCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, 
         gfactor = xurand();
         ePos.y += gfactor;
 
-        factor = xurand();
-        ePos.x += (factor - 0.5f) * (1.0f - gfactor);
+        factor = xurand() - 0.5f;
+        ePos.x += (1.0f - gfactor) * factor;
 
         hght = xurand();
         ePos.z += (1.0f - gfactor) * (hght - 0.5f);
@@ -1790,8 +1778,7 @@ static void loveyTikiRender(xEnt* ent)
                 model->Alpha = 1.0f;
         }
 
-        xModelInstance* curr;
-        for (curr = model->Next; curr != NULL; curr = curr->Next)
+        for (xModelInstance* curr = model->Next; curr != NULL; curr = curr->Next)
             curr->Alpha = model->Alpha;
 
         if (alphaTooLow)

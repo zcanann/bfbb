@@ -56,5 +56,7 @@ void zLasso_ResetTimer(zLasso* lasso, F32 interpTime);
 void zLasso_AddGuide(xEnt* ent, xAnimState* lassoAnim, xModelInstance* modelInst);
 void zLasso_SetGuide(xEnt* ent, xAnimState* lassoAnim);
 void zLasso_InterpToGuide(zLasso* lasso);
+void zLasso_Update(zLasso* lasso, xEnt* ent, F32 dt);
+void zLasso_Render(zLasso* lasso);
 
 #endif

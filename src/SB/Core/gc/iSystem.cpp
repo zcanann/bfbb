@@ -159,8 +159,6 @@ static S32 RenderWareExit();
 S32 DolphinInitMemorySystem(RwMemoryFunctions*);
 static S32 RenderWareInit();
 
-//FIXME: This should be a dolphin header somewhere
-extern "C" GXDrawSyncCallback GXSetDrawSyncCallback(GXDrawSyncCallback cb);
 void iSystemInit(U32 options)
 {
     deviceConfig.renderMode = &GXNtsc480IntDf;

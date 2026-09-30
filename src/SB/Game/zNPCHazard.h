@@ -23,9 +23,17 @@ struct UVAModelInfo
     void Clear();
     void UVVelSet(float, float);
     S32 GetUV(RwTexCoords*& coords, S32& numVertices, RpAtomic* model) const;
+    S32 CloneUV(RwTexCoords*& coords, S32& numVertices, RpAtomic* model) const;
     void SetColor(iColor_tag);
     void Update(F32, const xVec2*);
-    S32 Valid() const;
+    void Refresh();
+    // Defined here rather than in the .cpp: the target emits this as a weak
+    // per-TU copy (Valid__12UVAModelInfoCFv, scope:weak), so it lived in a
+    // header originally.
+    S32 Valid() const
+    {
+        return model && uv;
+    }
     S32 Init(RpAtomic*, U32);
 };
 
@@ -244,6 +252,9 @@ struct NPCHazard
 
     S32 ConfigHelper(en_npchaz haztype);
     void Reconfigure(en_npchaz haztype);
+    UVAModelInfo* GetUVAInfo(en_hazmodel which, F32 uvel, F32 vvel);
+    S32 GrabModel(en_hazmodel which);
+    void TypData_RotMatStore(xVec3* euler);
     void FreeModel();
     void SetNPCOwner(zNPCCommon* owner);
     void Start(const xVec3* pos, F32 tym);
@@ -252,6 +263,8 @@ struct NPCHazard
     void Cleanup();
     void WipeIt();
     void PosSet(const xVec3* pos);
+    void Timestep(F32 dt);
+    void Render();
     void NotifyCBSet(HAZNotify* noter);
     void SetAlpha(F32 alpha);
     void OrientToDir(const xVec3* vec_path, S32 doTheTwist);
@@ -303,12 +316,13 @@ struct NPCHazard
     void StreakUpdate(U32 streakID, F32 rad);
     void Upd_RoboBits(F32 dt);
     void HurtThePlayer();
-    void TypData_RotMatStore(xVec3* ang);
     void TypData_RotMatSet(xMat3x3* mat);
     void TypData_RotMatApply(xMat3x3* mat);
     en_hazmodel PickFunFrag();
+    void Upd_Explode(F32 dt);
+    void DeathStar();
     void PreCollide();
-    void StaggeredCollide();
+    S32 StaggeredCollide();
     void StagColGeneral(S32 who);
     void StagColStat();
     void StagColNPC();
@@ -316,9 +330,6 @@ struct NPCHazard
     void ColResp_Default(xSweptSphere* swdata, F32 tym_inFuture);
     void CollideResponse(xSweptSphere* swdata, F32 tym_inFuture);
     void Discard();
-    void Timestep(F32 dt);
-    UVAModelInfo* GetUVAInfo(en_hazmodel mdltyp, F32 uspd, F32 vspd);
-    S32 GrabModel(en_hazmodel mdltyp);
 
     RwV3d* At() const
     {

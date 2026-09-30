@@ -4,40 +4,48 @@
 
 #define PAR_POOL_SIZE 2000
 
-xPar gParPool[PAR_POOL_SIZE];
-xPar* gParDead;
+// volatile is a matching device: the original re-reads gParDead at the top of
+// every pool iteration instead of forwarding the value it just stored, and it
+// keeps the two NULL stores ahead of that read.
+volatile xPar gParPool[PAR_POOL_SIZE];
+xPar* volatile gParDead;
 
-// For some reason, it does not recompare gParDead and assumes the first comparison is valid for all.
 void xParMemInit()
 {
-    for (S32 i = 0; i < PAR_POOL_SIZE; i++)
+    volatile xPar* curr;
+    xPar* dead;
+    S32 i;
+
+    for (i = 0; i < PAR_POOL_SIZE; i++)
     {
-        xPar* curr = &gParPool[i];
+        curr = &gParPool[i];
         curr->m_next = NULL;
         curr->m_prev = NULL;
-        if (gParDead != NULL)
+
+        dead = gParDead;
+        if (dead != NULL)
         {
-            gParDead->m_prev = curr;
+            dead->m_prev = (xPar*)curr;
             curr->m_next = gParDead;
         }
-        gParDead = curr;
+        gParDead = (xPar*)curr;
     }
 }
 
 xPar* xParAlloc()
 {
     xPar* dead = gParDead;
-    if (gParDead == NULL)
+
+    if (dead == NULL)
     {
         return NULL;
     }
-    if (gParDead->m_next != NULL)
+    if (dead->m_next != NULL)
     {
-        gParDead->m_next->m_prev = NULL;
+        dead->m_next->m_prev = NULL;
     }
-    xPar** next = &dead->m_next;
-    gParDead = *next;
-    *next = NULL;
+    gParDead = dead->m_next;
+    dead->m_next = NULL;
     dead->m_prev = NULL;
     return dead;
 }
@@ -52,9 +60,10 @@ void xParFree(xPar* par)
     {
         par->m_prev->m_next = par->m_next;
     }
-    if (gParDead != NULL)
+    xPar* dead = gParDead;
+    if (dead != NULL)
     {
-        gParDead->m_prev = par;
+        dead->m_prev = par;
     }
     par->m_next = gParDead;
     par->m_prev = NULL;

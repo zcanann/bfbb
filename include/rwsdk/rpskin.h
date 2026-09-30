@@ -1,12 +1,15 @@
 #ifndef RPSKIN_H
 #define RPSKIN_H
 
-#include "rwcore.h"
-#include "rpworld.h"
-#include "rphanim.h"
+#include <rwsdk/rwcore.h>
+#include <rwsdk/rpworld.h>
+#include <rwsdk/rphanim.h>
 
-typedef struct RpSkin;
+/* C compatibility: these headers use bare tag names as types. */
+typedef struct RwMatrixWeights RwMatrixWeights;
 
+
+typedef struct RpSkin RpSkin;
 struct RwMatrixWeights
 {
     RwReal w0;
@@ -23,6 +26,7 @@ enum RpSkinType
     rpSKINTYPETOON = 3,
     rpSKINTYPEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RpSkinType RpSkinType;
 
 #ifdef __cplusplus
 extern "C" {

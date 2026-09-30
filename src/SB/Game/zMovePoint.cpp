@@ -22,8 +22,10 @@ void zMovePointInit(zMovePoint* m, xMovePointAsset* asset)
     m->eventFunc = zMovePointEventCB;
     if (m->linkCount)
     {
-        m->link =
-            (xLinkAsset*)(((U32*)asset + sizeof(xMovePointAsset) / 4) + (U32)asset->numPoints);
+        // Seek past the xMovePointAsset header, then past the array of point IDs
+        // that follows it.
+        m->link = (xLinkAsset*)((U8*)asset + sizeof(xMovePointAsset) +
+                                asset->numPoints * sizeof(U32));
     }
     else
     {

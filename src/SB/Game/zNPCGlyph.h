@@ -63,6 +63,6 @@ void zNPCGlyph_ScenePostInit();
 void zNPCGlyph_Timestep(F32 dt);
 S32 zNPCGlyph_TypeToList(en_npcglyph gtyp, NPCGlyph** glist);
 void zNPCCommon_Glyphs_RenderAll(S32 doOpaqueStuff);
-NPCGlyph* GLYF_Acquire(en_npcglyph gtyp);
+NPCGlyph* GLYF_Acquire(en_npcglyph type);
 
 #endif

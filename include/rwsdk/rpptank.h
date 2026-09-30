@@ -1,8 +1,14 @@
 #ifndef RPPTANK_H
 #define RPPTANK_H
 
-#include "rwcore.h"
-#include "rpworld.h"
+#include <rwsdk/rwcore.h>
+#include <rwsdk/rpworld.h>
+
+/* C compatibility: these headers use bare tag names as types. */
+typedef struct RpPTankLockStruct RpPTankLockStruct;
+typedef struct RpPTankFormatDescriptor RpPTankFormatDescriptor;
+typedef struct RpPTankData RpPTankData;
+
 
 struct RpPTankLockStruct
 {
@@ -183,6 +189,7 @@ enum RpPTankLockFlags
     rpPTANKLOCKWRITE = ((int)0x40000000),
     rpPTANKLOCKREAD = ((int)0x80000000)
 };
+typedef enum RpPTankLockFlags RpPTankLockFlags;
 
 enum RpPTankInstanceFlags
 {
@@ -219,6 +226,7 @@ enum RpPTankInstanceFlags
 
     RPPTANKINSTANCEFLAGSFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RpPTankInstanceFlags RpPTankInstanceFlags;
 
 enum RpPTankDataFlags
 {
@@ -255,6 +263,7 @@ enum RpPTankDataFlags
 
     RPPTANKDATAFLAGSFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RpPTankDataFlags RpPTankDataFlags;
 
 enum RpPTankDataLockFlags
 {
@@ -271,6 +280,7 @@ enum RpPTankDataLockFlags
 
     RPPTANKLOCKFLAGSFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RpPTankDataLockFlags RpPTankDataLockFlags;
 
 #ifdef __cplusplus
 extern "C" {

@@ -31,16 +31,14 @@ void NPCS_Shutdown()
 
 void NPCS_SndTimersUpdate(F32 dt)
 {
-    // non-matching: only producing one lfs instruction for -1.0f
     for (S32 i = 0; i < SND_COUNT; i++)
     {
-        g_tmrz_sndplay[i] = MAX(g_tmrz_sndplay[i] - dt, -1.0f);
+        g_tmrz_sndplay[i] = MAX(-1.0f, g_tmrz_sndplay[i] - dt);
     }
 }
 
 void NPCS_SndTimersReset()
 {
-    // non-matching: missing lfs for -1.0f
     for (S32 i = 0; i < SND_COUNT; i++)
     {
         g_tmrz_sndplay[i] = -1.0f;
@@ -159,17 +157,14 @@ en_NPC_SOUND NPCS_SndTypeFromHash(U32 aid_snd, NPCSndTrax* cust, NPCSndTrax* sha
 
 U32 NPCS_SndPickSimilar(en_NPC_SOUND sndtype, NPCSndTrax* cust, NPCSndTrax* share)
 {
-    U32 aid_choice;
+    U32 aid_choice = 0;
     NPCSndTrax* trax;
     S32 i;
     S32 ingroup;
     S32 list[32] = {};
     F32 wts[32] = { 1.0f };
-    S32 cnt;
+    S32 cnt = 0;
     F32 use_wt;
-
-    aid_choice = 0;
-    cnt = 0;
 
     for (i = 0; i < 3; i++)
     {
@@ -185,17 +180,19 @@ U32 NPCS_SndPickSimilar(en_NPC_SOUND sndtype, NPCSndTrax* cust, NPCSndTrax* shar
         }
         else if (i == 2)
         {
-            use_wt = 1.0f;
-            trax = NULL;
             if (cnt < 5)
                 trax = g_sndTrax_General;
+            else
+                trax = NULL;
+            use_wt = 1.0f;
         }
         else
         {
-            use_wt = 1.0f;
-            trax = NULL;
             if (cnt < 5)
                 trax = g_sndTrax_Universal;
+            else
+                trax = NULL;
+            use_wt = 1.0f;
         }
 
         if (trax == NULL)
@@ -212,8 +209,7 @@ U32 NPCS_SndPickSimilar(en_NPC_SOUND sndtype, NPCSndTrax* cust, NPCSndTrax* shar
                 if (trax->aid_sound != 0)
                 {
                     wts[cnt] = use_wt;
-                    list[cnt] = trax->aid_sound;
-                    cnt++;
+                    list[cnt++] = trax->aid_sound;
                 }
             }
             else if (ingroup)

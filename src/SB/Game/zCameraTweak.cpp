@@ -99,11 +99,20 @@ void zCameraTweakGlobal_Remove(U32 owner)
                                        sCamTweakDistMult[0] * (1.0f - sCamTweakLerp);
                 sCamTweakLerp = 1.0f;
                 sCamTweakTime = sCamTweakList[0].time;
-                sCamTweakPitch[0] = sCamTweakCount < 2 ? 0.0f : sCamTweakList[1].pitch;
-                sCamTweakDistMult[0] = sCamTweakCount < 2 ? 1.0f : sCamTweakList[1].distMult;
+
+                if (sCamTweakCount > 1)
+                {
+                    sCamTweakPitch[0] = sCamTweakList[1].pitch;
+                    sCamTweakDistMult[0] = sCamTweakList[1].distMult;
+                }
+                else
+                {
+                    sCamTweakPitch[0] = 0.0f;
+                    sCamTweakDistMult[0] = 1.0f;
+                }
             }
 
-            for (j = i; j < sCamTweakCount; j--)
+            for (j = i; j < sCamTweakCount - 1; j++)
             {
                 sCamTweakList[j] = sCamTweakList[j + 1];
             }

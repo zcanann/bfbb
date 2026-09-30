@@ -35,6 +35,9 @@ struct NPCArena
     S32 IncludesPlayer(F32 rad_thresh, xVec3* vec);
     S32 IsReady();
     void DBG_Draw(zNPCCommon*);
+    void AdjustHome(zNPCCommon* npc, xVec3* pos, F32 rad);
+    void SyncHomeFromNav();
+    zMovePoint* NextBestNav(zNPCCommon* npc, zMovePoint* nav);
 };
 
 struct NPCLaser
@@ -46,7 +49,10 @@ struct NPCLaser
     F32 uv_base[2];
 
     void ColorSet(const RwRGBA*, const RwRGBA*);
-    U32 TextureGet();
+    void TextureSet(RwRaster* rast);
+    RwRaster* TextureGet();
+    void RadiusSet(F32 rad_start, F32 rad_end);
+    void UVScrollSet(F32 u, F32 v);
     void Render(xVec3*, xVec3*);
     void UVScrollUpdate(F32);
     void Prepare();
@@ -109,10 +115,13 @@ struct zNPCRobot : zNPCCommon
     void AddMiscTypical(xPsyche*, int (*)(xGoal*, void*, en_trantype*, float, void*),
                         int (*)(xGoal*, void*, en_trantype*, float, void*),
                         int (*)(xGoal*, void*, en_trantype*, float, void*));
-    void CheckFalling();
+    void CheckFalling(F32 dt);
     void DoAliveStuff(F32 dt);
     S32 IsWounded();
     S32 IsDead();
+    void BunnyHopSet(xVec3* vel);
+    void DoFX_Motorboat(F32 dt);
+    void VFXStarTrek(F32 dt, xVec3* pos, xVec3* vel);
 
     // vTable (xNPCBasic)
 
@@ -120,7 +129,7 @@ struct zNPCRobot : zNPCCommon
     void Reset();
     void Process(xScene* xscn, F32 dt);
     void NewTime(xScene* xscn, F32 dt);
-    S32 SysEvent(xBase* from, xBase* to, U32 toEvent, F32* toParam, xBase* toParamWidget,
+    S32 SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* toParamWidget,
                  S32* handled);
     void CollideReview();
     U8 PhysicsFlags() const;
@@ -130,17 +139,10 @@ struct zNPCRobot : zNPCCommon
     // vTable (zNPCCommon)
 
     S32 NPCMessage(NPCMsg* mail);
-    void RenderExtra();
-    void RenderExtraPostParticles();
     void ParseINI();
-    void ParseLinks();
-    void ParseProps();
     void SelfSetup();
-    void SelfDestroy();
-    U32 AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal);
     S32 IsHealthy();
     S32 IsAlive();
-    void Damage(en_NPC_DAMAGE_TYPE damtype, xBase* who, xVec3* vec_hit);
     S32 Respawn(xVec3* pos, zMovePoint* mvptFirst, zMovePoint* mvptSpawnRef);
     void DuploOwner(zNPCCommon* duper);
     S32 SetCarryState(en_NPC_CARRY_STATE stat);
@@ -153,6 +155,7 @@ struct zNPCRobot : zNPCCommon
     S32 LassoSetup();
     F32 GetParm(en_npcparm, zMovePoint**);
     F32 FacePlayer(F32 dt, F32 spd_turn);
+    U32 AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal);
 
     // vTable (zNPCRobot)
     virtual S32 RoboHandleMail(NPCMsg* mail);
@@ -173,7 +176,6 @@ struct zNPCFodder : zNPCRobot
     void Init(xEntAsset* asset);
     zNPCLassoInfo* PRIV_GetLassoData();
     void LassoModelIndex(S32* idxgrab, S32* idxhold);
-    void Reset();
 };
 
 struct zNPCFodBomb : zNPCRobot
@@ -187,19 +189,26 @@ struct zNPCFodBomb : zNPCRobot
     }
 
     zNPCLassoInfo* PRIV_GetLassoData();
-    void Reset();
     void Init(xEntAsset*);
     void ParseINI();
     void Setup();
     void BlinkerReset();
     void BlinkerUpdate(F32 dt, F32 pct_timeRemain);
-
+    void BlinkerRender();
+    void RenderExtra();
+    void LassoModelIndex(S32* idxgrab, S32* idxhold);
+    U32 AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal);
+    void SelfSetup();
+    void Stun(F32 stuntime);
 };
 
 struct zNPCFodBzzt : zNPCRobot
 {
     volatile static S32 cnt_alerthokey;
     static F32 tmr_hokeypokey;
+    static F32 tmr_nexthokey;
+    static RwRaster* rast_discoLight;
+    static F32 uv_slice_discoLight[2];
     static NPCLaser laser;
 
     RwRGBA rgba_discoLight;
@@ -216,6 +225,16 @@ struct zNPCFodBzzt : zNPCRobot
     void DiscoReset();
     void ParseINI();
     void Process(xScene* sc, F32 dt);
+    void Init(xEntAsset* asset);
+    void DiscoRender();
+    void RenderExtra();
+    void LassoModelIndex(S32* idxgrab, S32* idxhold);
+    U32 AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal);
+    void SelfSetup();
+    void Stun(F32 stuntime);
+
+    void Setup();
+    void DiscoUpdate(F32 dt);
 };
 
 struct zNPCChomper : zNPCRobot
@@ -228,9 +247,14 @@ struct zNPCChomper : zNPCRobot
     }
 
     zNPCLassoInfo* PRIV_GetLassoData();
-    void Reset();
     void ParseINI();
     void Init(xEntAsset*);
+    void BreathTrail();
+    void Process(xScene* xscn, F32 dt);
+    void LassoModelIndex(S32* idxgrab, S32* idxhold);
+    U32 AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal);
+    void SelfSetup();
+    void Stun(F32 stuntime);
 };
 
 struct zNPCCritter : zNPCRobot
@@ -240,9 +264,9 @@ struct zNPCCritter : zNPCRobot
     }
 
     zNPCLassoInfo* PRIV_GetLassoData();
-    void Reset();
     void Init(xEntAsset*);
     void SelfSetup();
+    void LassoModelIndex(S32* idxgrab, S32* idxhold);
 };
 
 struct zNPCHammer : zNPCRobot
@@ -252,8 +276,10 @@ struct zNPCHammer : zNPCRobot
     }
 
     void Init(xEntAsset*);
-    void Reset();
     void ParseINI();
+    void LassoModelIndex(S32* idxgrab, S32* idxhold);
+    U32 AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal);
+    void SelfSetup();
 };
 
 struct zNPCTarTar : zNPCRobot
@@ -262,9 +288,11 @@ struct zNPCTarTar : zNPCRobot
     {
     }
 
-    void Reset();
     void Init(xEntAsset*);
     void ParseINI();
+    void LassoModelIndex(S32* idxgrab, S32* idxhold);
+    U32 AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal);
+    void SelfSetup();
 };
 
 struct zNPCGlove : zNPCRobot
@@ -275,6 +303,9 @@ struct zNPCGlove : zNPCRobot
 
     void Init(xEntAsset*);
     void ParseINI();
+    void LassoModelIndex(S32* idxgrab, S32* idxhold);
+    U32 AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal);
+    void SelfSetup();
 };
 
 struct zNPCMonsoon : zNPCRobot
@@ -288,6 +319,10 @@ struct zNPCMonsoon : zNPCRobot
     void ParseINI();
     void Init(xEntAsset* asset);
     void NewTime(xScene*, F32);
+    void Process(xScene* xscn, F32 dt);
+    void LassoModelIndex(S32* idxgrab, S32* idxhold);
+    U32 AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal);
+    void SelfSetup();
 };
 
 struct zNPCSleepy : zNPCRobot
@@ -296,6 +331,10 @@ struct zNPCSleepy : zNPCRobot
     static RwRaster* rast_detectcone;
     static RwRaster* rast_killcone;
     volatile static F32 hyt_NightLightCurrent;
+    static F32 uv_deathcone[2];
+    static F32 uv_nightlight[2];
+    static F32 uv_slice_nightlight[2];
+    static F32 uv_slice_deathcone[2];
 
     S32 flg_sleepy;
     NPCHazard* haz_patriot;
@@ -316,6 +355,17 @@ struct zNPCSleepy : zNPCRobot
     void NightLightPos(xVec3*);
     void NewTime(xScene* sc, F32 dt);
     void Init(xEntAsset* asset);
+    void RendConeOfDeath(S32 tgt_isBowlingBall);
+    void RendConeRange();
+    void RenderExtra();
+    void LassoModelIndex(S32* idxgrab, S32* idxhold);
+    void SelfSetup();
+
+    void Process(xScene* xscn, F32 dt);
+    void NightLightUVStep(F32 dt);
+    void SnoreNZeez(F32 dt);
+    void ConeOfRange(F32 dt, S32 which);
+    S32 RepelBowlBall(F32 dt);
 };
 
 struct zNPCArfDog : zNPCRobot
@@ -335,6 +385,15 @@ struct zNPCArfDog : zNPCRobot
     void Init(xEntAsset*);
     void ParseINI();
     void Setup();
+    void BlinkUpdate(F32 dt, F32 ratio);
+    void BlinkRender();
+    void RenderExtra();
+    void LassoModelIndex(S32* idxgrab, S32* idxhold);
+    U32 AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal);
+    void SelfSetup();
+    void Stun(F32 stuntime);
+
+    void Process(xScene* xscn, F32 dt);
 };
 
 struct zNPCArfArf : zNPCRobot
@@ -351,6 +410,13 @@ struct zNPCArfArf : zNPCRobot
     void Init(xEntAsset* asset);
     void ParseINI();
     zNPCArfDog* AdoptADoggie();
+    void DuploNotice(en_SM_NOTICES notice, void* data);
+    void LassoModelIndex(S32* idxgrab, S32* idxhold);
+    void ParseLinks();
+    void ParseChild(xBase* child);
+    void SelfSetup();
+
+    U32 AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal);
 };
 
 struct zNPCChuck : zNPCRobot
@@ -420,6 +486,9 @@ struct zNPCChuck : zNPCRobot
     void Reset();
     void Init(xEntAsset*);
     void ParseINI();
+    void LassoModelIndex(S32* idxgrab, S32* idxhold);
+    U32 AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal);
+    void SelfSetup();
 };
 
 enum en_tubestat
@@ -468,6 +537,18 @@ struct zNPCTubelet : zNPCRobot
     S32 Respawn(const xVec3*, zMovePoint*, zMovePoint*);
     void Init(xEntAsset* asset);
     void Unbonk();
+    U32 AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal);
+    void Chk_NonAlertBonk(F32 dt);
+    void LassoModelIndex(S32* idxgrab, S32* idxhold);
+    void ParseLinks();
+    void ParseChild(xBase* child);
+    void LassoNotify(en_LASSO_EVENT event);
+    void Bonk();
+    S32 Chk_IsBonked();
+    void SelfSetup();
+
+    void Process(xScene* xscn, F32 dt);
+    S32 RoboHandleMail(NPCMsg* mail);
 };
 
 enum en_tubespot
@@ -505,6 +586,14 @@ struct zNPCTubeSlave : zNPCRobot
     void Process(xScene* xscn, F32 dt);
     void Init(xEntAsset* asset);
     void PosStacked(xVec3* pos_stacked);
+    void RenderExtra();
+    S32 RoboHandleMail(NPCMsg* mail);
+    void LassoModelIndex(S32* idxgrab, S32* idxhold);
+    U32 AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal);
+    void SelfSetup();
+    void SetMaster(zNPCTubelet* pete, en_tubespot spot);
+
+    void Setup();
 };
 
 typedef struct zNPCSlick;
@@ -525,7 +614,7 @@ struct zNPCSlick : zNPCRobot
     void BUpdate(xVec3* pos);
     void RopePopsShield();
     void ShieldUpdate(F32 dt);
-    void Damage(en_NPC_DAMAGE_TYPE dmg_type, xBase* who, xVec3* vec_hit);
+    void Damage(en_NPC_DAMAGE_TYPE dmg_type, xBase* who, const xVec3* vec_hit);
     void Process(xScene* xscn, F32 dt);
     U32 AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal);
     void SelfSetup();
@@ -536,8 +625,12 @@ struct zNPCSlick : zNPCRobot
     void ShieldHide();
     void ShieldShow();
     void ShieldGeneratorDamaged();
-    bool IsShield() const;
+    S32 IsShield() const;
     void ShieldFX(F32 dt);
+    void ShieldCollide(F32 dt);
+    void StuffToDoIfAlive(F32 dt);
+
+    void SlipSlidenAway(F32 dt);
 };
 
 void PlayTheFiddle();
@@ -570,6 +663,26 @@ xAnimTable* ZNPC_AnimTable_TTSauce();
 xAnimTable* ZNPC_AnimTable_Tubelet();
 xAnimTable* ZNPC_AnimTable_FloatDevice();
 S32 DUMY_grul_returnToIdle(xGoal*, void*, en_trantype*, F32, void*);
+S32 ROBO_grul_goAlertMelee(xGoal*, void*, en_trantype*, F32, void*);
+S32 ROBO_grul_goAlertLobber(xGoal*, void*, en_trantype*, F32, void*);
+S32 SLEP_grul_goAlert(xGoal*, void*, en_trantype*, F32, void*);
+S32 FODR_grul_alert(xGoal*, void*, en_trantype*, F32, void*);
+S32 BOMB_grul_alert(xGoal*, void*, en_trantype*, F32, void*);
+S32 BZZT_grul_alert(xGoal*, void*, en_trantype*, F32, void*);
+S32 CHMP_grul_alert(xGoal*, void*, en_trantype*, F32, void*);
+S32 HAMR_grul_alert(xGoal*, void*, en_trantype*, F32, void*);
+S32 TART_grul_alert(xGoal*, void*, en_trantype*, F32, void*);
+S32 GLOV_grul_alert(xGoal*, void*, en_trantype*, F32, void*);
+S32 MOON_grul_alert(xGoal*, void*, en_trantype*, F32, void*);
+S32 SLEP_grul_alert(xGoal*, void*, en_trantype*, F32, void*);
+S32 ARFY_grul_alert(xGoal*, void*, en_trantype*, F32, void*);
+S32 PUPY_grul_alert(xGoal*, void*, en_trantype*, F32, void*);
+S32 CHUK_grul_alert(xGoal*, void*, en_trantype*, F32, void*);
+S32 TUBE_grul_alert(xGoal*, void*, en_trantype*, F32, void*);
+S32 SLCK_grul_alert(xGoal*, void*, en_trantype*, F32, void*);
+
+void zNPCRobot_TubeConfetti(const xVec3* pos);
+F32 RANGEWRAP(F32* val, F32 lo, F32 hi);
 S32 xEntIsEnabled(xEnt* ent);
 
 #endif

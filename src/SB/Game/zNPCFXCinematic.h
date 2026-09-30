@@ -11,6 +11,20 @@
 #include "zShrapnel.h"
 #include "rwcore.h"
 
+enum en_npcburst
+{
+    NPC_BURST_SHIELD,
+    NPC_BURST_NOMORE,
+    NPC_BURST_FORCE = 0x7fffffff
+};
+
+void NPCC_BurstBubble(en_npcburst typ_burst, xVec3* pos);
+void xFXAuraAdd(void* owner, xVec3* pos, iColor_tag* color, F32 size);
+NPARMgmt* NPAR_FindParty(en_nparptyp typ_npar);
+void zNPCRobot_TubeConfetti(const xVec3* pos);
+void StartFreezeBreath();
+void StopFreezeBreath();
+
 void zNPCFXStartup();
 void zNPCFXShutdown();
 S32 zNPCFXCutscenePrep(const xScene*, F32, const zCutsceneMgr* csnmgr);
@@ -196,6 +210,7 @@ struct NPCCone
     void UVBaseSet(F32 u, F32 v);
     void ColorSet(RwRGBA top, RwRGBA bot);
     void RadiusSet(F32);
+    void RenderCone(xVec3* pos_tiptop, xVec3* pos_botcenter);
 };
 
 struct NCINBeNosey : XCSNNosey
@@ -203,10 +218,11 @@ struct NCINBeNosey : XCSNNosey
     const zCutsceneMgr* use_csnmgr;
     NCINEntry* use_fxtab;
 
-    void CanRenderNow();
+    virtual void CanRenderNow();
+    virtual void UpdatedAnimated(RpAtomic* model, RwMatrixTag* animMat, U32 animIndex,
+                                 U32 dataIndex);
     void Init(const zCutsceneMgr* csnmgr, NCINEntry* fxtab, S32 x);
     void Done();
-    void UpdatedAnimated(RpAtomic* model, RwMatrixTag* animMat, U32 animIndex, U32 dataIndex);
 };
 
 #endif

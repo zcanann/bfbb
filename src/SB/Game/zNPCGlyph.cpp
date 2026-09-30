@@ -23,8 +23,7 @@ char* g_strz_glyphmodel[10] = {
 };
 S32 g_cnt_activeGlyphs[10] = {};
 
-static
- NPCGlyph g_glyphs_talk[8] = { NPC_GLYPH_UNKNOWN };
+static NPCGlyph g_glyphs_talk[8] = { NPC_GLYPH_UNKNOWN };
 static NPCGlyph g_glyphs_talkOther[8] = { NPC_GLYPH_UNKNOWN };
 static NPCGlyph g_glyphs_friend[1] = { NPC_GLYPH_UNKNOWN };
 static NPCGlyph g_glyphs_dazed[8] = { NPC_GLYPH_UNKNOWN };
@@ -48,35 +47,35 @@ void zNPCGlyph_Shutdown()
 {
 }
 
-// Nonmatching: regalloc
+// Nonmatching
 void zNPCGlyph_ScenePrepare()
-
 {
+    RpAtomic* mdl_raw;
+    NPCGlyph* glyph;
+    U32 aid;
     S32 i;
     S32 k;
+    S32 cnt;
     NPCGlyph* list = NULL;
 
-    for (i = 0; i < NPC_GLYPH_NOMORE; i++)
+    for (i = 0; i < 10; i++)
     {
         g_cnt_activeGlyphs[i] = 0;
     }
 
-    char** strs = &g_strz_glyphmodel[NPC_GLYPH_SHINYONE];
-
-    for (i = NPC_GLYPH_SHINYONE; i < NPC_GLYPH_NOMORE; i++, strs++)
+    for (i = NPC_GLYPH_SHINYONE; i < NPC_GLYPH_NOMORE; i++)
     {
-        en_npcglyph gtyp = (en_npcglyph)i;
-        S32 cnt = zNPCGlyph_TypeToList(gtyp, &list);
+        cnt = zNPCGlyph_TypeToList((en_npcglyph)i, &list);
 
         if (list == NULL || cnt < 1)
         {
             continue;
         }
 
-        RpAtomic* mdl_raw = NULL;
-        if (*strs != NULL)
+        mdl_raw = NULL;
+        if (g_strz_glyphmodel[i] != NULL)
         {
-            U32 aid = xStrHash(*strs);
+            aid = xStrHash(g_strz_glyphmodel[i]);
             if (aid != 0)
             {
                 mdl_raw = (RpAtomic*)xSTFindAsset(aid, NULL);
@@ -85,8 +84,8 @@ void zNPCGlyph_ScenePrepare()
 
         for (k = 0; k < cnt; k++)
         {
-            NPCGlyph* glyph = &list[k];
-            glyph->Init(gtyp, mdl_raw);
+            glyph = &list[k];
+            glyph->Init((en_npcglyph)i, mdl_raw);
         }
     }
 }
@@ -254,8 +253,13 @@ S32 zNPCGlyph_TypeNeedsLightKit(en_npcglyph gtyp)
 // Nonmatching
 void zNPCCommon_Glyphs_RenderAll(S32 doOpaqueStuff)
 {
-    NPCGlyph* glist = NULL;
-    _SDRenderState old_render_state = zRenderStateCurrent();
+    S32 k;
+    S32 i;
+    NPCGlyph* glyph;
+    S32 cnt;
+    NPCGlyph* list = NULL;
+    _SDRenderState old_rendstat = zRenderStateCurrent();
+
     if (doOpaqueStuff)
     {
         zRenderState(SDRS_OpaqueModels);
@@ -265,15 +269,12 @@ void zNPCCommon_Glyphs_RenderAll(S32 doOpaqueStuff)
         zRenderState(SDRS_NPCVisual);
     }
 
-    S32* counts = &g_cnt_activeGlyphs[NPC_GLYPH_SHINYONE];
-    S32 i;
-    for (en_npcglyph gtyp = NPC_GLYPH_SHINYONE; gtyp < NPC_GLYPH_NOMORE;
-         gtyp = (en_npcglyph)(gtyp + 1), counts++)
+    for (i = NPC_GLYPH_SHINYONE; i < NPC_GLYPH_NOMORE; i++)
     {
-        if ((!doOpaqueStuff || zNPCGlyph_TypeIsOpaque(gtyp)) &&
-            (doOpaqueStuff || !zNPCGlyph_TypeIsOpaque(gtyp)))
+        if ((!doOpaqueStuff || zNPCGlyph_TypeIsOpaque((en_npcglyph)i)) &&
+            (doOpaqueStuff || !zNPCGlyph_TypeIsOpaque((en_npcglyph)i)))
         {
-            if (zNPCGlyph_TypeNeedsLightKit(gtyp))
+            if (zNPCGlyph_TypeNeedsLightKit((en_npcglyph)i))
             {
                 xLightKit_Enable(globals.player.ent.lightKit, globals.currWorld);
             }
@@ -282,16 +283,16 @@ void zNPCCommon_Glyphs_RenderAll(S32 doOpaqueStuff)
                 xLightKit_Enable(NULL, globals.currWorld);
             }
 
-            S32 cnt = zNPCGlyph_TypeToList(gtyp, &glist);
+            cnt = zNPCGlyph_TypeToList((en_npcglyph)i, &list);
 
-            if (glist == NULL || cnt < 1 || *counts < 1)
+            if (list == NULL || cnt < 1 || g_cnt_activeGlyphs[i] < 1)
             {
                 continue;
             }
 
-            for (i = 0; i < cnt; i++)
+            for (k = 0; k < cnt; k++)
             {
-                NPCGlyph* glyph = &glist[i];
+                glyph = &list[k];
                 if (glyph->flg_glyph & (1 << 0) && glyph->flg_glyph & (1 << 1))
                 {
                     glyph->Render();
@@ -301,14 +302,14 @@ void zNPCCommon_Glyphs_RenderAll(S32 doOpaqueStuff)
     }
 
     xLightKit_Enable(NULL, globals.currWorld);
-    zRenderState(old_render_state);
+    zRenderState(old_rendstat);
 }
 
-NPCGlyph* GLYF_Acquire(en_npcglyph gtyp)
+NPCGlyph* GLYF_Acquire(en_npcglyph type)
 {
     NPCGlyph* glist = NULL;
     NPCGlyph* ret = NULL;
-    S32 cnt = zNPCGlyph_TypeToList(gtyp, &glist);
+    S32 cnt = zNPCGlyph_TypeToList(type, &glist);
 
     if (glist == NULL || cnt < 1)
     {
@@ -326,7 +327,7 @@ NPCGlyph* GLYF_Acquire(en_npcglyph gtyp)
 
         glyph->Reset();
         glyph->flg_glyph = (1 << 0);
-        g_cnt_activeGlyphs[gtyp]++;
+        g_cnt_activeGlyphs[type]++;
         ret = glyph;
         break;
     }
@@ -574,6 +575,7 @@ void NPCGlyph::Timestep(F32 dt)
     }
     case NPC_GLYPH_TALK:
     case NPC_GLYPH_TALKOTHER:
+    {
         if (mdl_glyph == NULL)
         {
             break;
@@ -599,6 +601,7 @@ void NPCGlyph::Timestep(F32 dt)
         xVec3Cross(&frame->at, &frame->right, &g_Y3);
         xModelSetFrame(mdl_glyph, frame);
         break;
+    }
     case NPC_GLYPH_FRIEND:
     case NPC_GLYPH_DAZED:
         if (flg_glyph & (1 << 2))

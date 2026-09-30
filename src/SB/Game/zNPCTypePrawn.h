@@ -13,13 +13,10 @@
 
 struct sound_data_type
 {
-    union
-    {
-        U32 id;
-        U32 handle;
-        xVec3* loc;
-        F32 volume;
-    };
+    U32 id;
+    U32 handle;
+    const xVec3* loc;
+    F32 volume;
 };
 
 struct range_type
@@ -102,18 +99,15 @@ struct _class_14
     _class_18 pattern;
 };
 
-struct fire_type : config_0
-{
-    S32 emit_bone;
-    xVec3 offset;
-    F32 yaw;
-    F32 pitch;
-};
-
 namespace auto_tweak
 {
     template <class T1, class T2>
     void load_param(T1&, T2, T2, T2, xModelAssetParam*, U32, const char*);
+
+    // Specialized at the bottom of the matching .cpp, below every use; declared here so
+    // a use sees the specialization.
+    template <> void load_param<F32, F32>(F32&, F32, F32, F32, xModelAssetParam*, U32, const char*);
+    template <> void load_param<S32, S32>(S32&, S32, S32, S32, xModelAssetParam*, U32, const char*);
 };
 
 struct aqua_beam
@@ -185,11 +179,23 @@ struct aqua_beam
     void start();
     void stop();
     void update(F32);
+    bool hits_sphere(const xSphere&) const;
     void update_rings(F32);
+    void update_ring(fixed_queue<ring_segment, 31>::iterator, F32);
     void kill_ring();
     void render();
     void render_ring(aqua_beam::ring_segment&);
     void emit_ring();
+    bool active() const;
+    void move(const xVec3&, const xVec3&);
+};
+
+struct fire_type : aqua_beam::config
+{
+    S32 emit_bone;
+    xVec3 offset;
+    F32 yaw;
+    F32 pitch;
 };
 
 struct zNPCPrawn : zNPCSubBoss
@@ -248,7 +254,7 @@ struct zNPCPrawn : zNPCSubBoss
         F32 max_vel;
     } turn;
     aqua_beam beam;
-    xVec3 closeup_loc[4][8];
+    xVec3 closeup_loc[8][4];
     xModelInstance* closeup_model[8];
     U32 closeups_used;
 
@@ -257,10 +263,25 @@ struct zNPCPrawn : zNPCSubBoss
     void Render();
     void update_particles(float);
     void Init(xEntAsset*);
+    void Setup();
+    void Reset();
     void Destroy();
+    void Process(xScene*, F32);
     void NewTime(xScene*, float);
+    S32 SysEvent(xBase*, xBase*, U32, const F32*, xBase*, S32*);
     void ParseINI();
+    void ParseLinks();
     void SelfSetup();
+    void DuploNotice(en_SM_NOTICES, void*);
+    U32 AnimPick(S32, en_NPC_GOAL_SPOT, xGoal*);
+    void add_child(xBase&, S32);
+    void update_turn(F32);
+    void update_animation(F32);
+    void update_floor(F32);
+    void update_beam(F32);
+    void update_camera(F32);
+    void start_fight();
+    void get_floor_info(zNPCPrawn::floor_state_enum, zNPCPrawn::range_type&, F32&, F32&);
     void apply_pending();
     void vanish();
     void reappear();
@@ -269,10 +290,11 @@ struct zNPCPrawn : zNPCSubBoss
     void update_round();
     void decompose();
     void set_floor_state(zNPCPrawn::floor_state_enum, bool, bool);
-    void get_floor_info(floor_state_enum state, range_type& pattern, F32& transition_delay,
-                        F32& state_delay);
-
     void set_life(S32);
+    bool check_player_damage();
+    xVec3 get_away() const;
+    void repel_player() const;
+    void show_model();
     void hide_model();
     zNPCSpawner* make_spawner(S32);
     void Damage(en_NPC_DAMAGE_TYPE, xBase*, const xVec3*);
@@ -295,6 +317,7 @@ struct zNPCGoalPrawnIdle : zNPCGoalCommon
 
     S32 Enter(float, void*);
     S32 Exit(float, void*);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
 };
 
 struct zNPCGoalPrawnBeam : zNPCGoalCommon
@@ -314,8 +337,15 @@ struct zNPCGoalPrawnBeam : zNPCGoalCommon
     F32 sweep_dir;
     F32 delay;
 
-    bool update_aim(F32);
+    S32 Enter(float, void*);
+    S32 Exit(float, void*);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
+    S32 update_aim(F32);
     S32 update_fire(F32);
+    S32 update_hold(F32);
+    S32 update_sweep(F32);
+    S32 update_stop(F32);
+    void init_look_dir();
     zNPCGoalPrawnBeam(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
@@ -326,6 +356,7 @@ struct zNPCGoalPrawnBowl : zNPCGoalCommon
     U8 aiming;
     S32 Enter(float, void*);
     S32 Exit(float, void*);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
 
     zNPCGoalPrawnBowl(S32 goalID) : zNPCGoalCommon(goalID)
     {

@@ -106,7 +106,13 @@ void zGooCollsBegin()
 
         if (gooey->transl)
         {
-            // non-matching: instruction order
+            // Non-matching by four rotated instructions, and nothing else:
+            // the target emits `addi r4 / li r5 / stfs f1,0xc(r1) / lwz r6`
+            // where we emit `lwz r6 / addi r4 / stfs f1,0xc(r1) / li r5`.
+            // Instruction multiset is identical down to the register numbers,
+            // so this is pure scheduling; the six statement permutations, a
+            // cached `zGooParams*`, a hoisted depth temp and the unpatched
+            // GC/2.0p1 were all measured and none beats 90.698%.
             change.x = 0.0f;
             change.y = -zgoo_gps[i].depth;
             change.z = 0.0f;

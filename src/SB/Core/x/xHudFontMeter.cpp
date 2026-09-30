@@ -2,39 +2,28 @@
 
 #include <types.h>
 #include <xMath2.h>
-#include <PowerPC_EABI_Support\MSL_C\MSL_Common\printf.h>
+#include <stdio.h>
 #include <PowerPC_EABI_Support\MSL_C++\MSL_Common\Include\new.h>
 
-void xhud::font_meter_widget::load(xBase& data, xDynAsset& asset, u32 size_t)
+void xhud::font_meter_widget::load(xBase& data, xDynAsset& asset, size_t)
 {
-    // Stubbed out for now for causing build failure. 100% match locally though if method redefined to be nonstatic.
-    // widget::init_base((xBase&)*this, *(xBaseAsset*)&data, sizeof(xhud::font_meter_widget) + 0x10);
-    // new (&this->rc.size)
-    //     xhud::font_meter_widget(*(xhud::font_meter_asset*)&data); // TODO: proper size value
+    init_base(data, asset, sizeof(xBase) + sizeof(font_meter_widget));
+    font_meter_widget* widget = (font_meter_widget*)(&data + 1);
+    new (widget) font_meter_widget((font_meter_asset&)asset);
 }
 
-xhud::font_meter_widget::font_meter_widget(const xhud::font_meter_asset& init) : meter_widget(init)
+static const basic_rect<F32> screen_bounds = { 0.0f, 0.0f, 1.0f, 1.0f };
+
+xhud::font_meter_widget::font_meter_widget(const xhud::font_meter_asset& init)
+    : meter_widget(init), font(init.font), start_font(init.font)
 {
-    basic_rect<F32> screen_bounds;
-
-    this->font.id = init.font.id;
-    this->font.justify = init.font.justify;
-    this->start_font.id = init.font.id;
-    this->start_font.justify = init.font.justify;
-
-    // No assembly for this operator but bytewise is too many instructions
-    this->font.c = init.font.c;
-    this->start_font.c = init.font.c;
-    this->font.drop_c = init.font.drop_c;
-    this->start_font.drop_c = init.font.drop_c;
-
     this->last_value = ((S32)(this->value)) - 20;
     this->xf.id = 0;
     this->xf.width = this->font.w;
     this->xf.height = this->font.h;
     this->xf.space = this->font.space;
 
-    this->xf.color = this->font.c;
+    this->xf.color = *(iColor_tag*)&this->font.c;
     this->xf.clip = screen_bounds;
 }
 
@@ -48,10 +37,10 @@ void xhud::font_meter_widget::destroy()
     this->destruct();
 }
 
-U32 xhud::font_meter_widget::type()
+U32 xhud::font_meter_widget::type() const
 {
-    static S8 init;
     static U32 myid;
+    static S8 init;
 
     if (init == 0)
     {
@@ -61,29 +50,41 @@ U32 xhud::font_meter_widget::type()
     return myid;
 }
 
-U8 xhud::font_meter_widget::is(U32 id)
+bool xhud::font_meter_widget::is(U32 id) const
 {
-    U8 val = 0;
+    bool val = false;
 
-    if ((id == this->type()) || (((xhud::meter_widget*)this->is(id)) != 0))
+    if (id == xhud::font_meter_widget::type() || xhud::meter_widget::is(id))
     {
-        val = 1;
+        val = true;
     }
     return val;
 }
 
+// NOTE: this belongs in xHudFontMeter.h, defined inline in the class body --
+// the target emits it weak, in its own section, and its string literal opens
+// @stringBase0 ahead of update()'s format strings. Defined here it is strong
+// and lands in .text between is() and update(); it has to sit above update()
+// for the string pool to come out in the target's order.
+char* xhud::font_meter_asset::type_name()
+{
+    return "hud:meter:font";
+}
+
+// Non-matching by six instructions, all register allocation: the target leaves
+// r3 free until after format_text[mode] is loaded, so the `this->a` load and
+// the format_text base both get r3, and `this->buffer` is materialised into r3
+// only just before the call. Ours hoists `addi r3, r31, 0x118` to the top of
+// the block and pushes the other two into r4. Identical instruction multiset
+// modulo register numbering; ~20 source shapes measured, none below the r3/r4
+// split, and the unpatched GC/2.0p1 emits the same code.
 void xhud::font_meter_widget::update(F32 dt)
 
 {
-    char* format_text[3];
-    format_text[0] = 0;
+    static char* format_text[3] = { "%d", "%d/%d", "%d of %d" };
 
     F32 a;
     S32 new_value;
-    basic_rect<F32> bounds;
-
-    U8 flag_1;
-    U8 flag_2;
 
     this->updater(dt);
     this->xf.id = this->font.id;
@@ -95,59 +96,30 @@ void xhud::font_meter_widget::update(F32 dt)
     this->font.h = a;
     this->xf.height = a;
 
-    a = this->rc.a * (F32)this->start_font.c.a + 0.5;
-    if (a <= 0.0)
-    {
-        flag_1 = 0;
-    }
-    else if (a >= 255.0)
-    {
-        flag_1 = 255;
-    }
-    else if (a < 2.1474836e+09)
-    {
-        flag_1 = (U8)(S32)a;
-    }
-    else
-    {
-        flag_1 = (U8)(S32)(a - 2.1474836e+09);
-    }
-    this->font.c.a = flag_1;
+    a = this->rc.a * (F32)this->start_font.c.a + 0.5f;
+    this->font.c.a = (a <= 0.0f) ? 0 : ((a >= 255.0f) ? 255 : (U8)(S32)a);
 
-    a = this->rc.a * (F32)this->start_font.drop_c.a + 0.5;
-    if (a <= 0.0)
-    {
-        flag_1 = 0;
-    }
-    else if (a >= 255.0)
-    {
-        flag_1 = 255;
-    }
-    else if (a < 2.1474836e+09)
-    {
-        flag_1 = (U8)(S32)a;
-    }
-    else
-    {
-        flag_1 = (U8)(S32)(a - 2.1474836e+09);
-    }
-    this->font.drop_c.a = flag_1;
+    a = this->rc.a * (F32)this->start_font.drop_c.a + 0.5f;
+    this->font.drop_c.a = (a <= 0.0f) ? 0 : ((a >= 255.0f) ? 255 : (U8)(S32)a);
 
-    new_value = (S32)(this->value + 0.5);
+    new_value = (S32)(this->value + 0.5f);
     if (this->last_value != new_value)
     {
         this->last_value = new_value;
+        font_meter_asset& fma = *(font_meter_asset*)this->a;
+        U8 mode;
+
         a = this->max_value;
         if (a < this->min_value)
         {
-            flag_2 = 0;
+            mode = 0;
         }
         else
         {
-            flag_2 = ((font_meter_asset*)(this->a))->counter_mode;
+            mode = fma.counter_mode;
         }
-        sprintf(this->buffer, format_text[flag_2], new_value, (S32)(a + 0.5));
-        bounds = this->xf.bounds(this->buffer);
+        sprintf(this->buffer, format_text[mode], new_value, (S32)(a + 0.5f));
+        basic_rect<F32> bounds = this->xf.bounds(this->buffer);
         this->offset.x = -bounds.x;
         this->offset.y = -bounds.y;
     }
@@ -177,7 +149,11 @@ void xhud::font_meter_widget::render()
     return;
 }
 
-char* xhud::font_meter_asset::type_name()
+// NOTE: this belongs in xFont.h. It is inline, so the compiler emits a weak
+// out-of-line copy into every translation unit that calls it.
+inline void xfont::render(const char* text, F32 x, F32 y) const
 {
-    return "hud:meter:font";
+    start_render();
+    irender(text, x, y);
+    stop_render();
 }

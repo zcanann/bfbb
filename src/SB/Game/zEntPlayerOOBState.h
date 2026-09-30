@@ -88,11 +88,6 @@ namespace oob_state
 
                 tutorial_callback(grab_state_type& owner);
 
-                virtual void on_signal(U32)
-                {
-
-                }
-
                 virtual void on_stop()
                 {
                     owner.finished_tutorial = true;

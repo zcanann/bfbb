@@ -116,25 +116,26 @@ static void zEntHangable_UpdateFX(zEntHangable* ent)
         {
         case 2:
             return;
-        }
+        default:
+            info.custom_flags = 0x100;
 
-        info.custom_flags = 0x100;
+            if (ent->candle_state == 0)
+            {
+                emitter = sCandleEmitter;
+            }
+            else
+            {
+                emitter = sCandleSmokeEmitter;
+            }
 
-        if (ent->candle_state == 0)
-        {
-            emitter = sCandleEmitter;
-        }
-        else
-        {
-            emitter = sCandleSmokeEmitter;
-        }
-
-        for (S32 i = 0; i < (S32)(sizeof(offset_rlii0006) / sizeof(xVec3)); i++)
-        {
-            xVec3 mul;
-            xMat3x3RMulVec(&mul, xEntGetFrame(ent), &local_offset[i]);
-            xVec3Add(&info.pos, &mul, xEntGetPos(ent));
-            xParEmitterEmitCustom(emitter, (1.0f / 30.0f), &info);
+            for (S32 i = 0; i < (S32)(sizeof(offset_rlii0006) / sizeof(xVec3)); i++)
+            {
+                xVec3 mul;
+                xMat3x3RMulVec(&mul, xEntGetFrame(ent), &local_offset[i]);
+                xVec3Add(&info.pos, &mul, xEntGetPos(ent));
+                xParEmitterEmitCustom(emitter, (1.0f / 30.0f), &info);
+            }
+            break;
         }
     }
 }
@@ -224,7 +225,7 @@ static void zEntHangableMountFX(zEntHangable* ent)
         {
             info.pos = ent->pivot;
             info.vel.x = 0.0f;
-            info.vel.y = -(xurand() * 2.0f - -2.0f);
+            info.vel.y = -2.0f - xurand() * 2.0f;
             info.vel.z = 0.0f;
             xParEmitterEmitCustom(sMountEmitter, (1.0f / 30.0f), &info);
         }

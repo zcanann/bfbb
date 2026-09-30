@@ -178,9 +178,14 @@ static void async_cb(s32 result, DVDFileInfo* fileInfo)
         xTRCDisk(TRC_DiskFatal);
         return;
     }
-    case DVD_RESULT_GOOD:
-    case DVD_RESULT_IGNORED:
+    case DVD_RESULT_CANCELED:
     {
+        break;
+    }
+    default:
+    {
+        // result is the byte count on success, so every non-negative value
+        // lands here -- not just DVD_RESULT_GOOD.
         if (result >= DVD_RESULT_GOOD)
         {
             r7 = result;
@@ -238,7 +243,7 @@ static void async_cb(s32 result, DVDFileInfo* fileInfo)
             length = length & ~(32 - 1);
         }
 
-        void* addr = (void*)((U32)entry->buf + entry->offset);
+        void* addr = (U8*)entry->buf + entry->offset;
         DVDReadAsync(&entry->file->ps.fileInfo, addr, length,
                      entry->file->ps.offset + entry->offset, async_cb);
     }
@@ -255,8 +260,10 @@ S32 iFileReadAsync(tag_xFile* file, void* buf, U32 aSize, void (*callback)(tag_x
     {
         if (file_queue[i].stat != IFILE_RDSTAT_QUEUED && file_queue[i].stat != IFILE_RDSTAT_INPROG)
         {
+            S32 asynckey;
             S32 id = fopcount++ << 2;
-            S32 asynckey = id + i;
+
+            asynckey = id + i;
 
             file_queue[i].file = file;
             file_queue[i].buf = buf;
@@ -274,7 +281,7 @@ S32 iFileReadAsync(tag_xFile* file, void* buf, U32 aSize, void (*callback)(tag_x
 
             ps->asynckey = asynckey;
 
-            return id + i;
+            return i + id;
         }
     }
 

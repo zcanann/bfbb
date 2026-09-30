@@ -13,9 +13,18 @@ namespace xhud
 {
     struct block_allocator
     {
+        // The free list is threaded through the free blocks themselves: each
+        // one begins with a pointer to the next free block, and alloc() hands
+        // back the memory just past that pointer. This is why _block_size is
+        // the caller's size rounded up to a pointer, PLUS one pointer.
+        struct holder
+        {
+            holder* _next;
+        };
+
         U32 _block_size;
         U32 _alloc_size;
-        void* _top; // FIXME: This is a holder*
+        holder* _top;
         block_allocator* _next_alloc;
 
         static block_allocator* _head_alloc;
@@ -144,12 +153,12 @@ namespace xhud
             return flag.enabled;
         }
 
-        U32 showing() const
+        bool showing() const
         {
             return activity == ACT_SHOW;
         }
 
-        U32 hiding() const
+        bool hiding() const
         {
             return activity == ACT_HIDE;
         }

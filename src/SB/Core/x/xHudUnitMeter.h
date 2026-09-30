@@ -28,7 +28,7 @@ namespace xhud
     struct unit_meter_widget : meter_widget
     {
         unit_meter_asset res;
-        xModelInstance* model[2][6];
+        xModelInstance* model[6][2];
         F32 anim_time;
 
         unit_meter_widget(const unit_meter_asset& other_widget);

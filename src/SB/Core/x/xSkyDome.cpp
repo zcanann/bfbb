@@ -47,15 +47,14 @@ void xSkyDome_AddEntity(xEnt* ent, S32 sortorder, S32 lockY)
         sSkyList[j + 1] = sSkyList[j];
     }
 
-    // non-matching: instruction order
-
     sSkyList[i].ent = ent;
     sSkyList[i].sortorder = sortorder;
     sSkyList[i].lockY = lockY;
 
+    ent->render = xSkyDome_EmptyRender;
+
     sSkyCount++;
 
-    ent->render = xSkyDome_EmptyRender;
     ent->model->Flags &= (U16)~0x1;
     ent->baseFlags &= (U16)~0x10;
 

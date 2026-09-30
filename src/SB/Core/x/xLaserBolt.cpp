@@ -1,4 +1,5 @@
 #include "xLaserBolt.h"
+#include "xMathInlines.h"
 #include "xString.h"
 #include "xstransvc.h"
 #include "iParMgr.h"
@@ -7,7 +8,6 @@
 #include "zNPCTypeCommon.h"
 #include "zEntDestructObj.h"
 #include "containers.h"
-#include "xMathInlines.h"
 
 #include <types.h>
 
@@ -129,23 +129,24 @@ void xLaserBoltEmitter::update(F32 dt)
 {
     debug_update(dt);
 
-    S32 ci = this->cfg.hit_interval > 0 ? this->start_collide % this->cfg.hit_interval
-                                        : -1000000000;
+    S32 ci = this->cfg.hit_interval > 0 ? start_collide % this->cfg.hit_interval : -1000000000;
 
     static_queue<bolt>::iterator it = this->bolts.begin();
     while (it != this->bolts.end())
     {
         bolt& b = *it;
+
+        U8 collided = b.dist >= b.hit_dist;
         F32 prev_dist = b.dist;
-        U8 collided = prev_dist >= b.hit_dist;
 
         update(b, dt);
+
         b.loc = b.origin + b.dir * (b.dist >= b.hit_dist ? b.hit_dist : b.dist);
 
         if (b.dist >= this->cfg.kill_dist)
         {
-            effect_data* itfx = this->fx[FX_WHEN_KILL];
-            effect_data* endfx = itfx + this->fxsize[FX_WHEN_KILL];
+            effect_data* itfx = this->fx[6];
+            effect_data* endfx = itfx + this->fxsize[6];
             while (itfx != endfx)
             {
                 emit_fx(*itfx, b, b.hit_dist, b.hit_dist, dt);
@@ -158,7 +159,7 @@ void xLaserBoltEmitter::update(F32 dt)
 
         update_fx(b, prev_dist, dt);
 
-        if (b.dist >= b.hit_dist && b.hit_ent != NULL)
+        if ((b.dist >= b.hit_dist) && (b.hit_ent != NULL))
         {
             apply_damage(b);
             b.hit_ent = NULL;
@@ -168,16 +169,17 @@ void xLaserBoltEmitter::update(F32 dt)
         if (ci >= this->cfg.hit_interval)
         {
             ci -= this->cfg.hit_interval;
-            if (b.dist < b.hit_dist && b.dist >= this->cfg.safe_dist)
+
+            if ((b.dist < b.hit_dist) && (b.dist >= this->cfg.safe_dist))
             {
                 collide_update(b);
             }
         }
 
-        if (!collided && b.dist >= b.hit_dist)
+        if (!collided && (b.dist >= b.hit_dist))
         {
-            effect_data* itfx = this->fx[FX_WHEN_IMPACT];
-            effect_data* endfx = itfx + this->fxsize[FX_WHEN_IMPACT];
+            effect_data* itfx = this->fx[1];
+            effect_data* endfx = itfx + this->fxsize[1];
             while (itfx != endfx)
             {
                 emit_fx(*itfx, b, b.hit_dist, b.hit_dist, dt);
@@ -188,23 +190,24 @@ void xLaserBoltEmitter::update(F32 dt)
         ++it;
     }
 
-    this->start_collide++;
+    start_collide++;
 }
 
 void xLaserBoltEmitter::render()
 {
     debug_render();
 
-    S32 max_verts;
-    RxObjSpace3DVertex* verts = get_vert_buffer(max_verts);
+    S32 size;
+    RxObjSpace3DVertex* verts = get_vert_buffer(size);
     RxObjSpace3DVertex* v = verts;
-    RwRenderStateSet(rwRENDERSTATETEXTURERASTER, this->bolt_raster);
 
-    static_queue<bolt>::iterator it = this->bolts.begin();
-    while (it != this->bolts.end())
+    RwRenderStateSet(rwRENDERSTATETEXTURERASTER, bolt_raster);
+
+    static_queue<bolt>::iterator it = bolts.begin();
+    while (it != bolts.end())
     {
         S32 used = v - verts;
-        if (max_verts - used < 6)
+        if (size - used < 6)
         {
             flush_verts(verts, used);
             v = verts;
@@ -263,12 +266,12 @@ void xLaserBoltEmitter::collide_update(bolt& b)
     ray.min_t = b.prev_check_dist - this->cfg.length;
     ray.max_t = b.dist;
     ray.flags = 0xC00;
-    
+
     if (ray.min_t < this->cfg.safe_dist)
     {
         ray.min_t = this->cfg.safe_dist;
     }
-    
+
     xCollis player_coll;
     player_coll.flags = 0x300;
     xRayHitsBound(&ray, &globals.player.ent.bound, &player_coll);
@@ -300,15 +303,25 @@ void xLaserBoltEmitter::collide_update(bolt& b)
     log_collide_dynamics(scene_coll.flags & 0x1 || player_coll.flags & 0x1);
 }
 
-RxObjSpace3DVertex* xLaserBoltEmitter::render(bolt& b, RxObjSpace3DVertex* vert)
-{
-    F32 dist0 = b.prev_dist - this->cfg.length;
+RxObjSpace3DVertex* xLaserBoltEmitter::render(bolt& b, RxObjSpace3DVertex *vert) 
+{       
+    F32 dist0 = b.prev_dist - this->cfg.length; 
     if (dist0 < 0.0f)
     {
         dist0 = 0.0f;
     }
 
-    F32 dist1 = b.dist <= b.hit_dist ? b.dist : b.hit_dist;
+    // Both arms assigning is deliberate: the retail codegen has an empty
+    // "then" block here (bne/b pair), which only this shape reproduces.
+    F32 dist1 = b.dist;
+    if (dist1 <= b.hit_dist)
+    {
+        dist1 = b.dist;
+    }
+    else
+    {
+        dist1 = b.hit_dist;
+    }
 
     if (dist0 >= dist1)
     {
@@ -321,14 +334,14 @@ RxObjSpace3DVertex* xLaserBoltEmitter::render(bolt& b, RxObjSpace3DVertex* vert)
     xVec3 dir = (loc1 - loc0).normal();
     xVec3 right = dir.cross(cam_mat.at);
 
-    F32 len = right.length2();
-    if (len >= -0.00001f && len <= 0.00001f)
+    F32 len2 = right.length2();
+    if (xfeq0(len2))
     {
         right.assign(1.0f, 0.0f, 0.0f);
     }
     else
     {
-        right *= 1.0f / xsqrt(len);
+        right *= 1.0f / xsqrt(len2);
     }
 
     xVec3 half_right = right * (0.5f * this->cfg.radius);
@@ -336,7 +349,7 @@ RxObjSpace3DVertex* xLaserBoltEmitter::render(bolt& b, RxObjSpace3DVertex* vert)
     U8 alpha;
     if (b.dist <= this->cfg.fade_dist)
     {
-        alpha = 0xFF;
+        alpha = 255;
     }
     else
     {
@@ -498,8 +511,8 @@ void xLaserBoltEmitter::emit_decal(effect_data& effect, bolt& b, F32 from_dist, 
 void xLaserBoltEmitter::emit_decal_dist(effect_data& effect, bolt& b, F32 from_dist, F32 to_dist, F32 dt)
 {
     F32 start_dist = (1.0f - b.emitted) * effect.irate;
-    b.emitted += effect.rate * (to_dist - from_dist);
     start_dist = from_dist + start_dist;
+    b.emitted += effect.rate * (to_dist - from_dist);
 
     S32 total = b.emitted;
     b.emitted -= total;
@@ -526,16 +539,13 @@ void xLaserBoltEmitter::emit_decal_dist(effect_data& effect, bolt& b, F32 from_d
 
     xVec3 dloc = b.dir * effect.irate;
     mat.pos = b.origin + b.dir * start_dist;
-    S32 i = 0;
-    while (i < total)
+    for (S32 i = 0; i < total; i++, mat.pos += dloc)
     {
-        if (effect.decal->full())
+        if (((xDecalEmitter*)effect.par)->full())
         {
             break;
         }
 
-        effect.decal->emit(mat, -1);
-        i++;
-        mat.pos += dloc;
+        ((xDecalEmitter*)effect.par)->emit(mat, -1);
     }
 }

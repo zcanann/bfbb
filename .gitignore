@@ -33,3 +33,15 @@ compile_commands.json
 # Miscellaneous
 /*.txt
 *.exe
+
+# ProDG scratch: ngccc writes <basename><pid>.i / .s into the cwd for every
+# bink translation unit and does not clean them up. Root only - real .s
+# sources live under src/.
+/*.i
+/*.s
+
+# Analysis output
+classify.json
+
+# Coordinator scratch space for analysis output; never part of a build.
+scratch/

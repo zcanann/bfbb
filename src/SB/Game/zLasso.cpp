@@ -1,8 +1,13 @@
+// Expanding xSndPlay3D here adds a 0.25f .sdata2 literal that retail does not
+// have; it shifts this unit's pool and costs fizzicalSlack. See zEnt.h.
+#define XSNDPLAY3D_OUT_OF_LINE
+
 #include "zLasso.h"
 
 #include "xMath3.h"
 #include "xMathInlines.h"
 #include "iAnim.h"
+#include "iMath.h"
 #include "iModel.h"
 #include "xstransvc.h"
 #include "iParMgr.h"
@@ -26,6 +31,9 @@ static void nonfizzicalHonda(zLasso* lasso, f32 arg1, xVec3* arg2);
 static void fizzicalSlack(zLasso* lasso, f32 arg1, xVec3* arg2);
 static void initVertMap(zLassoGuide* guide);
 static void bakeMorphAnim(RpGeometry* geom, void* anim);
+static void vec2vecMat(xMat4x3* m, xVec3* v1, xVec3* v2);
+
+void xMat4x3Rot(xMat4x3* m, const xVec3* v, F32 f);
 
 void zLasso_Init(zLasso* lasso, xModelInstance* model, F32 x, F32 y, F32 z)
 {
@@ -50,15 +58,37 @@ void zLasso_Init(zLasso* lasso, xModelInstance* model, F32 x, F32 y, F32 z)
 
 void zLasso_AddGuide(xEnt* ent, xAnimState* lassoAnim, xModelInstance* lassoModel)
 {
+    U32 i;
     S32 givenSlot = -1;
-    for (U32 i = 0; i < sNumGuideLists; i++)
+
+    for (i = 0; i < sNumGuideLists; i++)
     {
+        if (sGuideList[i].target == ent)
+        {
+            givenSlot = i;
+            break;
+        }
     }
 
-    sGuideList[0].numGuides = sGuideList[0].numGuides + 1;
-    // sGuideList[0].guide[0].poly = lassoModel;
-    // sGuideList[0].guide[0].lassoAnim = lassoAnim;
-    initVertMap(sGuideList[0].guide);
+    if (givenSlot == -1)
+    {
+        givenSlot = sNumGuideLists++;
+        sGuideList[givenSlot].target = ent;
+        sGuideList[givenSlot].numGuides = 0;
+    }
+
+    for (i = 0; i < sGuideList[givenSlot].numGuides; i++)
+    {
+        if (sGuideList[givenSlot].guide[i].lassoAnim == lassoAnim)
+        {
+            return;
+        }
+    }
+
+    i = sGuideList[givenSlot].numGuides++;
+    sGuideList[givenSlot].guide[i].lassoAnim = lassoAnim;
+    sGuideList[givenSlot].guide[i].poly = lassoModel;
+    initVertMap(&sGuideList[givenSlot].guide[i]);
 
     bakeMorphAnim(lassoModel->Data->geometry, *lassoAnim->Data->RawData);
 }
@@ -142,11 +172,584 @@ void zLasso_InterpToGuide(zLasso* lasso)
     }
 }
 
-void zLasso_Render(zLasso* l)
+void zLasso_Render(zLasso* lasso)
 {
-    if ((((l->flags & 0x800) != 0) && ((l->flags & 0x4000) != 0)) ||
-        (((l->flags & 0x800) == 0 && ((l->flags & 0x2000) != 0))))
+    xVec3 pts[16];
+    xVec3 vtx[6];
+    xVec3 strand[3];
+    xMat4x3 coilMat;
+    xMat4x3 tailMat;
+    xVec3 delta;
+    xVec3 seg;
+    xVec3 closest;
+    xVec3 best;
+    xVec3 target;
+    xVec3 perp;
+    xVec3 dir;
+    xVec3 side;
+    xVec3 hondaPos;
+    xVec3 step;
+    xVec3 cur;
+    xVec3 pos;
+    xVec3 center;
+    xVec3 axis;
+    xVec3 tan1;
+    xVec3 tan0;
+
+    RxObjSpace3DVertex* vp;
+    RpGeometry* geom;
+    RwV3d* v0;
+    RwV3d* v1;
+    S32 i;
+    S32 j;
+    S32 k;
+    S32 strandIdx;
+    S32 fi;
+    S32 numPts;
+    S32 numPrims;
+    S32 curRing;
+    S32 prevRing;
+    S32 pending;
+    U32 numVerts;
+    F32 frame;
+    F32 fr;
+    F32 ifr;
+    F32 bestDist;
+    F32 segLen;
+    F32 t;
+    F32 d;
+    F32 ropeLen;
+    F32 ropeDist;
+    F32 travelled;
+    F32 stepLen;
+    F32 lenSq;
+    F32 ang;
+    F32 c0;
+    F32 c1;
+    F32 c2;
+    F32 s0;
+    F32 s1;
+    F32 s2;
+    F32 u;
+    F32 v;
+    F32 du;
+    S32 jc;
+    S32 j1;
+    S32 jm;
+    S32 i0;
+    S32 i1;
+    F32 px;
+    F32 py;
+    F32 pz;
+    U8 useGuide;
+
+    useGuide = ((((lasso->flags & 0x800) != 0) && ((lasso->flags & 0x4000) != 0)) ||
+                (((lasso->flags & 0x800) == 0) && ((lasso->flags & 0x2000) != 0)));
+
+    if (useGuide)
     {
+        strandIdx = 0;
+        geom = sCurrentGuide->poly->Data->geometry;
+        frame = 30.0f * sCurrentGuide->poly->Anim->Single->Time;
+        fi = (S32)frame;
+        fr = frame - fi;
+        ifr = 1.0f - fr;
+        numPts = geom->numTriangles;
+        ropeLen = 0.0f;
+        fi = fi % geom->numMorphTargets;
+        v0 = geom->morphTarget[fi].verts;
+        v1 = geom->morphTarget[(fi + 1) % geom->numMorphTargets].verts;
+
+        for (i = 0; i < numPts; i++)
+        {
+            xVec3SMul(&pts[i], (xVec3*)(v0 + sCurrentGuide->vertMap[i]), ifr);
+            xVec3AddScaled(&pts[i], (xVec3*)(v1 + sCurrentGuide->vertMap[i]), fr);
+            xMat4x3Toworld(&pts[i], (xMat4x3*)sCurrentGuide->poly->Mat, &pts[i]);
+        }
+
+        xVec3Add(&target, &lasso->lastRefs[lasso->reindex[0]], &lasso->anchor);
+        xVec3Sub(&delta, &target, &pts[0]);
+        xVec3Copy(&best, &pts[0]);
+        bestDist = xVec3Dot(&delta, &delta);
+
+        for (i = 0; i < numPts; i++)
+        {
+            xVec3Sub(&seg, &pts[(i + 1) % numPts], &pts[i]);
+            xVec3Sub(&delta, &target, &pts[i]);
+            segLen = xVec3Normalize(&seg, &seg);
+            t = xVec3Dot(&delta, &seg);
+
+            if (t < 0.0f)
+            {
+                xVec3Copy(&closest, &pts[i]);
+            }
+            else if (t > segLen)
+            {
+                xVec3Copy(&closest, &pts[(i + 1) % numPts]);
+            }
+            else
+            {
+                xVec3SMul(&closest, &seg, t);
+                xVec3AddTo(&closest, &pts[i]);
+            }
+
+            xVec3Sub(&delta, &target, &closest);
+            d = xVec3Dot(&delta, &delta);
+            if (d < bestDist)
+            {
+                xVec3Copy(&best, &closest);
+                bestDist = d;
+            }
+
+            ropeLen += xVec3Dist(&pts[i], &pts[(i + 1) % numPts]);
+        }
+
+        xVec3Sub(&lasso->honda, &best, &lasso->anchor);
+    }
+    else
+    {
+        strandIdx = 0;
+        ropeLen = 2.0f * PI * lasso->crRadius;
+    }
+
+    RwRenderStateSet(rwRENDERSTATETEXTURERASTER, NULL);
+    RwRenderStateSet(rwRENDERSTATETEXTURERASTER, sLassoRaster);
+
+    curRing = 3;
+    prevRing = 0;
+    numPrims = 0;
+
+    xVec3Sub(&dir, &lasso->lastRefs[lasso->reindex[0]], &lasso->honda);
+    ropeDist = xVec3Normalize(&dir, &dir);
+    lasso->lastDist = lasso->currDist;
+    lasso->currDist = ropeDist;
+
+    perp.x = dir.y - dir.z;
+    perp.y = dir.z - dir.x;
+    perp.z = dir.x - dir.y;
+    xVec3Normalize(&perp, &perp);
+    xVec3Cross(&side, &perp, &dir);
+
+    ang = 2.0f * (PI * strandIdx) / 3.0f;
+    c0 = icos(ang);
+    c1 = icos(ang + 2.0f * PI / 3.0f);
+    c2 = icos(ang + 4.0f * PI / 3.0f);
+    s0 = isin(ang);
+    s1 = isin(ang + 2.0f * PI / 3.0f);
+    s2 = isin(ang + 4.0f * PI / 3.0f);
+
+    xVec3SMul(&strand[0], &perp, 0.025f * s0);
+    xVec3AddScaled(&strand[0], &side, 0.025f * c0);
+    strandIdx++;
+    xVec3SMul(&strand[strandIdx], &perp, 0.025f * s1);
+    xVec3AddScaled(&strand[strandIdx], &side, 0.025f * c1);
+    strandIdx++;
+    xVec3SMul(&strand[strandIdx], &perp, 0.025f * s2);
+    xVec3AddScaled(&strand[strandIdx], &side, 0.025f * c2);
+
+    travelled = 0.0f;
+
+    xVec3Add(&hondaPos, &lasso->honda, &lasso->anchor);
+    xVec3Copy(&cur, &hondaPos);
+
+    for (i = 0; i < 3; i++)
+    {
+        xVec3Add(&vtx[i], &strand[i], &hondaPos);
+    }
+
+    stepLen = ropeDist / 43.0f;
+    if (stepLen < 0.2f)
+    {
+        stepLen = 0.2f;
+    }
+    xVec3SMul(&step, &dir, stepLen);
+
+    u = ropeLen;
+    vp = lnverts;
+    du = stepLen;
+    v = 0.0f;
+    lenSq = ropeDist * ropeDist;
+    numVerts = 0;
+
+    while (travelled < ropeDist && numVerts + 10 <= 480)
+    {
+        if (u > 1.0f)
+        {
+            u -= 1.0f;
+        }
+
+        travelled += stepLen;
+
+        if (travelled < ropeDist)
+        {
+            xVec3AddTo(&cur, &step);
+            xVec3Copy(&pos, &cur);
+            ang = PI * (0.75f * travelled);
+            t = (ropeDist - travelled) * (travelled * (lasso->crSlack * isin(ang))) / lenSq;
+            segLen = (ropeDist - travelled) * (travelled * (lasso->crSlack * icos(ang))) / lenSq;
+            xVec3AddScaled(&pos, &perp, t);
+            xVec3AddScaled(&pos, &side, segLen);
+        }
+        else
+        {
+            xVec3Add(&pos, &lasso->anchor, &lasso->lastRefs[lasso->reindex[0]]);
+            du = ropeDist + (stepLen - travelled);
+        }
+
+        for (i = 0; i < 3; i++)
+        {
+            xVec3Add(&vtx[curRing + i], &strand[i], &pos);
+        }
+
+        i0 = prevRing + 2;
+        py = vtx[i0].y;
+        pz = vtx[i0].z;
+        px = vtx[i0].x;
+        vp[0].x = px;
+        vp[0].y = py;
+        vp[0].z = pz;
+        vp[0].r = 255;
+        vp[0].g = 255;
+        vp[0].b = 255;
+        vp[0].a = 255;
+        vp[0].u = u;
+        vp[0].v = 2.0f / 3.0f;
+        i1 = curRing + 2;
+        py = vtx[i1].y;
+        pz = vtx[i1].z;
+        px = vtx[i1].x;
+        vp[1].x = px;
+        vp[1].y = py;
+        vp[1].z = pz;
+        vp[1].r = 255;
+        vp[1].g = 255;
+        vp[1].b = 255;
+        vp[1].a = 255;
+        vp[1].u = u + du;
+        vp[1].v = 2.0f / 3.0f;
+        numVerts += 2;
+        vp += 2;
+
+        for (k = 0; k < 3; k++)
+        {
+            v = k * (1.0f / 3.0f);
+            py = vtx[prevRing + k].y;
+            pz = vtx[prevRing + k].z;
+            px = vtx[prevRing + k].x;
+            vp[0].x = px;
+            vp[0].y = py;
+            vp[0].z = pz;
+            vp[0].r = 255;
+            vp[0].g = 255;
+            vp[0].b = 255;
+            vp[0].a = 255;
+            vp[0].u = u;
+            vp[0].v = v;
+            py = vtx[curRing + k].y;
+            pz = vtx[curRing + k].z;
+            px = vtx[curRing + k].x;
+            vp[1].x = px;
+            vp[1].y = py;
+            vp[1].z = pz;
+            vp[1].r = 255;
+            vp[1].g = 255;
+            vp[1].b = 255;
+            vp[1].a = 255;
+            vp[1].u = u + du;
+            vp[1].v = v;
+            numVerts += 2;
+            vp += 2;
+        }
+
+        prevRing = curRing;
+        curRing = curRing ? 0 : 3;
+        u += du;
+        numPrims++;
+    }
+
+    py = vtx[prevRing + 2].y;
+    pz = vtx[prevRing + 2].z;
+    px = vtx[prevRing + 2].x;
+    vp[0].x = px;
+    vp[0].y = py;
+    vp[0].z = pz;
+    vp[0].r = 255;
+    vp[0].g = 255;
+    vp[0].b = 255;
+    vp[0].a = 255;
+    vp[0].u = u;
+    vp[0].v = v;
+    numVerts += 1;
+    vp += 1;
+    pending = 1;
+
+    if (!useGuide)
+    {
+        xVec3Sub(&perp, &lasso->honda, &lasso->crCenter);
+        xVec3Cross(&side, &perp, &lasso->crNormal);
+        xVec3Normalize(&axis, &side);
+        vec2vecMat(&coilMat, &dir, &axis);
+
+        for (i = 0; i < 3; i++)
+        {
+            xMat4x3Toworld(&strand[i], &coilMat, &strand[i]);
+        }
+
+        xMat4x3Rot(&coilMat, &lasso->crNormal, 2.0f * PI / 15.0f);
+
+        prevRing = 0;
+        curRing = 3;
+        for (i = 0; i < 3; i++)
+        {
+            xVec3Add(&vtx[i], &strand[i], &hondaPos);
+        }
+
+        xVec3Sub(&cur, &lasso->honda, &lasso->crCenter);
+        xVec3Add(&center, &lasso->crCenter, &lasso->anchor);
+
+        du = 2.0f * (PI * lasso->crRadius) / 15.0f;
+        u = 0.0f;
+
+        for (j = 0; j < 15 && numVerts + pending + 8 <= 480; j++)
+        {
+            if (u > 1.0f)
+            {
+                u -= 1.0f;
+            }
+
+            xMat4x3Toworld(&cur, &coilMat, &cur);
+
+            for (i = 0; i < 3; i++)
+            {
+                xMat4x3Toworld(&strand[i], &coilMat, &strand[i]);
+                xVec3Add(&vtx[i + curRing], &strand[i], &cur);
+                xVec3AddTo(&vtx[i + curRing], &center);
+            }
+
+            if (pending)
+            {
+                i0 = prevRing + 2;
+                py = vtx[i0].y;
+                pz = vtx[i0].z;
+                px = vtx[i0].x;
+                vp[0].x = px;
+                vp[0].y = py;
+                vp[0].z = pz;
+                vp[0].r = 255;
+                vp[0].g = 255;
+                vp[0].b = 255;
+                vp[0].a = 255;
+                vp[0].u = u;
+                vp[0].v = 2.0f / 3.0f;
+                pending = 0;
+                numVerts += 1;
+                vp += 1;
+            }
+
+            i0 = prevRing + 2;
+            py = vtx[i0].y;
+            pz = vtx[i0].z;
+            px = vtx[i0].x;
+            vp[0].x = px;
+            vp[0].y = py;
+            vp[0].z = pz;
+            vp[0].r = 255;
+            vp[0].g = 255;
+            vp[0].b = 255;
+            vp[0].a = 255;
+            vp[0].u = u;
+            vp[0].v = 2.0f / 3.0f;
+            i1 = curRing + 2;
+            py = vtx[i1].y;
+            pz = vtx[i1].z;
+            px = vtx[i1].x;
+            vp[1].x = px;
+            vp[1].y = py;
+            vp[1].z = pz;
+            vp[1].r = 255;
+            vp[1].g = 255;
+            vp[1].b = 255;
+            vp[1].a = 255;
+            vp[1].u = u + du;
+            vp[1].v = 2.0f / 3.0f;
+            numVerts += 2;
+            vp += 2;
+
+            for (k = 0; k < 3; k++)
+            {
+                v = k * (1.0f / 3.0f);
+                py = vtx[prevRing + k].y;
+                pz = vtx[prevRing + k].z;
+                px = vtx[prevRing + k].x;
+                vp[0].x = px;
+                vp[0].y = py;
+                vp[0].z = pz;
+                vp[0].r = 255;
+                vp[0].g = 255;
+                vp[0].b = 255;
+                vp[0].a = 255;
+                vp[0].u = u;
+                vp[0].v = v;
+                py = vtx[curRing + k].y;
+                pz = vtx[curRing + k].z;
+                px = vtx[curRing + k].x;
+                vp[1].x = px;
+                vp[1].y = py;
+                vp[1].z = pz;
+                vp[1].r = 255;
+                vp[1].g = 255;
+                vp[1].b = 255;
+                vp[1].a = 255;
+                vp[1].u = u + du;
+                vp[1].v = v;
+                numVerts += 2;
+                vp += 2;
+            }
+
+            prevRing = curRing;
+            curRing = curRing ? 0 : 3;
+            u += du;
+            numPrims++;
+        }
+    }
+    else
+    {
+        xVec3Copy(&tan0, &dir);
+        xVec3Sub(&tan1, &pts[1], &pts[numPts - 1]);
+        xVec3Normalize(&tan1, &tan1);
+        vec2vecMat(&tailMat, &tan0, &tan1);
+        xVec3Copy(&tan1, &tan0);
+
+        for (i = 0; i < 3; i++)
+        {
+            xMat4x3Toworld(&strand[i], &tailMat, &strand[i]);
+        }
+
+        prevRing = 0;
+        curRing = 3;
+        for (i = 0; i < 3; i++)
+        {
+            xVec3Add(&vtx[i], &strand[i], &pts[0]);
+        }
+
+        u = 0.0f;
+
+        for (j = 1; j <= numPts && numVerts + pending + 8 <= 480; j++)
+        {
+            jc = j % numPts;
+            j1 = (j + 1) % numPts;
+            jm = (j - 1) % numPts;
+
+            if (u > 1.0f)
+            {
+                u -= 1.0f;
+            }
+
+            xVec3Sub(&tan1, &pts[j1], &pts[jm]);
+            xVec3Normalize(&tan1, &tan1);
+            vec2vecMat(&tailMat, &tan0, &tan1);
+            xVec3Copy(&tan0, &tan1);
+
+            for (i = 0; i < 3; i++)
+            {
+                xMat4x3Toworld(&strand[i], &tailMat, &strand[i]);
+                xVec3Add(&vtx[i + curRing], &strand[i], &pts[jc]);
+            }
+
+            du = xVec3Dist(&pts[jc], &pts[j1]);
+
+            if (pending)
+            {
+                i0 = prevRing + 2;
+                py = vtx[i0].y;
+                pz = vtx[i0].z;
+                px = vtx[i0].x;
+                vp[0].x = px;
+                vp[0].y = py;
+                vp[0].z = pz;
+                vp[0].r = 255;
+                vp[0].g = 255;
+                vp[0].b = 255;
+                vp[0].a = 255;
+                vp[0].u = u;
+                vp[0].v = 2.0f / 3.0f;
+                pending = 0;
+                numVerts += 1;
+                vp += 1;
+            }
+
+            i0 = prevRing + 2;
+            py = vtx[i0].y;
+            pz = vtx[i0].z;
+            px = vtx[i0].x;
+            vp[0].x = px;
+            vp[0].y = py;
+            vp[0].z = pz;
+            vp[0].r = 255;
+            vp[0].g = 255;
+            vp[0].b = 255;
+            vp[0].a = 255;
+            vp[0].u = u;
+            vp[0].v = 2.0f / 3.0f;
+            i1 = curRing + 2;
+            py = vtx[i1].y;
+            pz = vtx[i1].z;
+            px = vtx[i1].x;
+            vp[1].x = px;
+            vp[1].y = py;
+            vp[1].z = pz;
+            vp[1].r = 255;
+            vp[1].g = 255;
+            vp[1].b = 255;
+            vp[1].a = 255;
+            vp[1].u = u + du;
+            vp[1].v = 2.0f / 3.0f;
+            numVerts += 2;
+            vp += 2;
+
+            for (k = 0; k < 3; k++)
+            {
+                v = k * (1.0f / 3.0f);
+                py = vtx[prevRing + k].y;
+                pz = vtx[prevRing + k].z;
+                px = vtx[prevRing + k].x;
+                vp[0].x = px;
+                vp[0].y = py;
+                vp[0].z = pz;
+                vp[0].r = 255;
+                vp[0].g = 255;
+                vp[0].b = 255;
+                vp[0].a = 255;
+                vp[0].u = u;
+                vp[0].v = v;
+                py = vtx[curRing + k].y;
+                pz = vtx[curRing + k].z;
+                px = vtx[curRing + k].x;
+                vp[1].x = px;
+                vp[1].y = py;
+                vp[1].z = pz;
+                vp[1].r = 255;
+                vp[1].g = 255;
+                vp[1].b = 255;
+                vp[1].a = 255;
+                vp[1].u = u + du;
+                vp[1].v = v;
+                numVerts += 2;
+                vp += 2;
+            }
+
+            prevRing = curRing;
+            curRing = curRing ? 0 : 3;
+            u += du;
+            numPrims++;
+        }
+    }
+
+    if (numPrims > 0)
+    {
+        RwIm3DTransform(lnverts, numVerts, (RwMatrix*)&g_I3, 0x1b);
+        RwIm3DRenderPrimitive(rwPRIMTYPETRISTRIP);
+        RwIm3DEnd();
     }
 }
 
@@ -442,61 +1045,71 @@ void xMat4x3Rot(xMat4x3* m, const xVec3* v, F32 f)
 
 static void initVertMap(zLassoGuide* guide)
 {
-    RpGeometry* geom = guide->poly->Data->geometry;
-    RpTriangle* tris = geom->triangles;
-    S32 numTri = geom->numTriangles;
-
-    S32 center = tris->vertIndex[0];
-    S32 init = tris->vertIndex[0];
-    
-    if (((init != tris->vertIndex[4] && init != tris->vertIndex[5] && init != tris->vertIndex[6]) ||
-         (init != tris->vertIndex[8] && init != tris->vertIndex[9] && init != tris->vertIndex[10])) &&
-        ((init = tris->vertIndex[1], init != tris->vertIndex[4] && init != tris->vertIndex[5] && init != tris->vertIndex[6]) ||
-         (init != tris->vertIndex[8] && init != tris->vertIndex[9] && init != tris->vertIndex[10])))
-    {
-        init = tris->vertIndex[2];
-    }
-    
-    if (init == tris->vertIndex[0]) {
-        init = tris->vertIndex[1];
-    }
-    
-    S32 vertIdx = 0;
-    S32 curr = init;
+    S32 center;
+    S32 init;
+    S32 curr;
     S32 currTri;
-    ushort* puVar5;
-    
-    do {
-        vertIdx = vertIdx + 1;
-        guide->vertMap[vertIdx - 1] = curr;
-        
-        if (vertIdx == numTri) {
-            vertIdx = 0;
+    S32 i;
+    RpGeometry* geom = guide->poly->Data->geometry;
+    S32 numTri = geom->numTriangles;
+    RpTriangle* tris = geom->triangles;
+
+    // The hub vertex of the fan: the vertex of tris[0] that tris[1] and
+    // tris[2] both share.
+    for (i = 0; i < 3; i++)
+    {
+        center = tris[0].vertIndex[i];
+        if ((center == tris[1].vertIndex[0] || center == tris[1].vertIndex[1] ||
+             center == tris[1].vertIndex[2]) &&
+            (center == tris[2].vertIndex[0] || center == tris[2].vertIndex[1] ||
+             center == tris[2].vertIndex[2]))
+        {
+            break;
         }
-        
-        while (true) {
-            puVar5 = &tris->vertIndex[vertIdx];
-            currTri = puVar5[0];
-            
-            if (curr == currTri || curr == puVar5[1] || curr == puVar5[2]) {
-                break;
-            }
-            
-            vertIdx = vertIdx + 1;
-            if (vertIdx == numTri) {
-                vertIdx = 0;
+    }
+
+    if (center == tris[0].vertIndex[0])
+    {
+        init = tris[0].vertIndex[1];
+    }
+    else
+    {
+        init = tris[0].vertIndex[0];
+    }
+
+    // Walk the rim: from the current rim vertex find the next triangle of
+    // the fan that contains it, and step to that triangle's other rim vertex,
+    // until we are back at the start.
+    curr = init;
+    currTri = 0;
+    i = 0;
+    do
+    {
+        guide->vertMap[i] = curr;
+
+        currTri++;
+        if (currTri == numTri)
+        {
+            currTri = 0;
+        }
+
+        while (!(curr == tris[currTri].vertIndex[0] || curr == tris[currTri].vertIndex[1] ||
+                 curr == tris[currTri].vertIndex[2]))
+        {
+            currTri++;
+            if (currTri == numTri)
+            {
+                currTri = 0;
             }
         }
-        
-        if ((curr != currTri && center != currTri)) {
-            currTri = puVar5[1];            
-            if ((curr != currTri && center != currTri)) {
-                currTri = puVar5[2];
-            }
-        }
-        
-        curr = currTri;
-    } while (currTri != init);
+
+        curr = (curr != tris[currTri].vertIndex[0] && center != tris[currTri].vertIndex[0]) ?
+                   tris[currTri].vertIndex[0] :
+               (curr != tris[currTri].vertIndex[1] && center != tris[currTri].vertIndex[1]) ?
+                   tris[currTri].vertIndex[1] :
+                   tris[currTri].vertIndex[2];
+        i++;
+    } while (curr != init);
 }
 
 static void vec2vecMat(xMat4x3* m, xVec3* v1, xVec3* v2)

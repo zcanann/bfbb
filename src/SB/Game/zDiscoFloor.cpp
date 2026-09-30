@@ -224,6 +224,55 @@ namespace
             }
         }
     }
+
+    // non-matching: scheduling. The target interleaves all nine `lbzx` of the
+    // flag tables into the first block; we emit each one at its use site
+    // because our scheduler will not move a load across a store.
+    void set_object_state(const z_disco_floor& df, size_t index, S32 state)
+    {
+        xEnt* off = df.tiles[0][index].ent;
+        xEnt* transition = df.tiles[1][index].ent;
+        xEnt* on = df.tiles[2][index].ent;
+
+        {
+            static const U8 off_flag[3] = { XENT_IS_VISIBLE, 0, 0 };
+            static const U8 transition_flag[3] = { 0, XENT_IS_VISIBLE, 0 };
+            static const U8 on_flag[3] = { 0, 0, XENT_IS_VISIBLE };
+
+            off->flags = off_flag[state] | (off->flags & ~XENT_IS_VISIBLE);
+            transition->flags = transition_flag[state] | (transition->flags & ~XENT_IS_VISIBLE);
+            on->flags = on_flag[state] | (on->flags & ~XENT_IS_VISIBLE);
+        }
+
+        {
+            // xEnt::moreFlags bit 2 has no name anywhere in the tree; it is set
+            // on the two tiles of the group that are *not* showing.
+            static const U8 off_flag[3] = { 0, 0x4, 0x4 };
+            static const U8 transition_flag[3] = { 0x4, 0, 0x4 };
+            static const U8 on_flag[3] = { 0x4, 0x4, 0 };
+
+            off->moreFlags = off_flag[state] | (off->moreFlags & ~0x4);
+            transition->moreFlags = transition_flag[state] | (transition->moreFlags & ~0x4);
+            on->moreFlags = on_flag[state] | (on->moreFlags & ~0x4);
+        }
+
+        {
+            static const U8 off_flag[3] = { XENT_COLLTYPE_NPC | XENT_COLLTYPE_PLYR, 0, 0 };
+            static const U8 transition_flag[3] = { 0, XENT_COLLTYPE_NPC | XENT_COLLTYPE_PLYR, 0 };
+            static const U8 on_flag[3] = { 0, 0, XENT_COLLTYPE_NPC | XENT_COLLTYPE_PLYR };
+
+            off->chkby = off_flag[state] |
+                (off->chkby & ~(XENT_COLLTYPE_NPC | XENT_COLLTYPE_PLYR));
+            transition->chkby = transition_flag[state] |
+                (transition->chkby & ~(XENT_COLLTYPE_NPC | XENT_COLLTYPE_PLYR));
+            on->chkby = on_flag[state] |
+                (on->chkby & ~(XENT_COLLTYPE_NPC | XENT_COLLTYPE_PLYR));
+        }
+
+        zGridUpdateEnt(off);
+        zGridUpdateEnt(transition);
+        zGridUpdateEnt(on);
+    }
 } // namespace
 
 namespace
@@ -234,7 +283,7 @@ namespace
 
         xVec3Sub(&var_48, &df.bound.center, (xVec3*)&globals.player.ent.model->Mat->pos);
 
-        if (xVec3Length2(&var_48) < SQR(df.bound.r) * SQR(1.5f) * SQR(1.5f))
+        if (xVec3Length2(&var_48) < SQR(df.bound.r) * 1.5f * 1.5f)
         {
             df.curr_note++;
 
@@ -640,7 +689,7 @@ void z_disco_floor::load(z_disco_floor_asset& asset)
 
     state_masks = (U8**)xMemAllocSize(asset.states_size * sizeof(U8*));
 
-    size_t* state_offsets = (size_t*)(data + asset.states_offset);
+    U32* state_offsets = (U32*)(data + asset.states_offset);
 
     for (size_t i = 0; i < asset.states_size; i++)
     {
@@ -923,8 +972,95 @@ void z_disco_floor::update_pulse(F32 dt)
     pulse_glow[1] = 0.2f * f2 + 0.2f;
     pulse_glow[1] *= glow_fade;
 
-    pulse_glow[2] = 0.3f * f2 + 0.2f;
+    pulse_glow[2] = 0.3f * f2 + 0.7f;
     pulse_glow[2] *= glow_fade;
+}
+
+void z_disco_floor::refresh_bound()
+{
+    xVec3 avg_center = { 0.0f, 0.0f, 0.0f };
+
+    xBox box;
+
+    box.upper = -1e38f;
+    box.lower = 1e38f;
+
+    F32 itotal = 1.0f / (3 * tiles_size);
+
+    for (S32 group = 0; group < 3; group++)
+    {
+        tile_data* it = tiles[group];
+        tile_data* end = it + tiles_size;
+
+        while (it != end)
+        {
+            avg_center += it->sphere.center * itotal;
+
+            xBox ent_box;
+
+            xBoxFromSphere(ent_box, it->sphere);
+            xBoxUnion(box, ent_box, box);
+
+            it++;
+        }
+    }
+
+    xVec3 box_center = (box.upper + box.lower) * 0.5f;
+    xVec3 mid_center = (avg_center + box_center) * 0.5f;
+
+    // non-matching: scheduling. The target hoists the three `lfs`/`fmr` that
+    // zero these across the stores that copy `mid_center` into place.
+    F32 avg_radius = 0.0f;
+    F32 box_radius = 0.0f;
+    F32 mid_radius = 0.0f;
+
+    for (S32 group = 0; group < 3; group++)
+    {
+        tile_data* it = tiles[group];
+        tile_data* end = it + tiles_size;
+
+        while (it != end)
+        {
+            F32 avg_r = it->sphere.r + (it->sphere.center - avg_center).length();
+
+            if (avg_radius < avg_r)
+            {
+                avg_radius = avg_r;
+            }
+
+            F32 box_r = it->sphere.r + (it->sphere.center - box_center).length();
+
+            if (box_radius < box_r)
+            {
+                box_radius = box_r;
+            }
+
+            F32 mid_r = it->sphere.r + (it->sphere.center - mid_center).length();
+
+            if (mid_radius < mid_r)
+            {
+                mid_radius = mid_r;
+            }
+
+            it++;
+        }
+    }
+
+    if (avg_radius <= box_radius && avg_radius <= mid_radius)
+    {
+        bound.center = avg_center;
+        bound.r = avg_radius;
+    }
+    else if (box_radius <= mid_radius)
+    {
+        bound.center = box_center;
+        bound.r = box_radius;
+    }
+    else
+    {
+        bound.center = mid_center;
+        bound.r = mid_radius;
+    }
 }
 
 void z_disco_floor::refresh_cull_dist()

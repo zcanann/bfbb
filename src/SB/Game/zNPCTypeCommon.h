@@ -17,15 +17,7 @@
 #define XRAY3_USE_MIN (1 << 10)
 #define XRAY3_USE_MAX (1 << 11)
 
-struct zAnimFxSound
-{
-    U32 ID;
-    F32 vol;
-    F32 pitch;
-    U32 priority;
-    U32 flags;
-    F32 radius;
-};
+class zAnimFxSound;
 
 enum en_lassanim
 {
@@ -166,13 +158,13 @@ enum en_dupowavmod
 struct zNPCSettings : xDynAsset
 {
     en_npcbtyp basisType;
-    S8 allowDetect;
+    U8 allowDetect;
     U8 allowPatrol;
     U8 allowWander;
     U8 reduceCollide;
     U8 useNavSplines;
     S8 pad[3];
-    S8 allowChase;
+    U8 allowChase;
     S8 allowAttack;
     S8 assumeLOS;
     S8 assumeFOV;
@@ -230,7 +222,6 @@ enum en_LASSO_STATUS
     LASS_STAT_GRABBING,
     LASS_STAT_TOSSING,
     LASS_STAT_NOMORE,
-    LASS_STAT_UNK_5, // needed to match switch in zNPCCommon::LassoNotify, checks value of 5
     LASS_STAT_FORCEINT = 0x7fffffff
 };
 
@@ -557,10 +548,7 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
 
     virtual void GetParm(en_npcparm pid, void* val);
     virtual S32 GetParmDefault(en_npcparm pid, void* val);
-    virtual F32 GenShadCacheRad()
-    {
-        return 2.4f;
-    }
+    virtual F32 GenShadCacheRad();
     virtual xEntDrive* PRIV_GetDriverData()
     {
         return NULL;
@@ -570,10 +558,6 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
         return NULL;
     }
     virtual S32 LassoSetup();
-
-protected:
-    // This prevents implicit destructors from being generated in subclasses of zNPCCommon
-    ~zNPCCommon();
 };
 
 xFactoryInst* ZNPC_Create_Common(S32 who, RyzMemGrow* grow, void*);
@@ -589,6 +573,22 @@ void zNPCSettings_MakeDummy();
 void ZNPC_Common_Startup();
 void zNPCCommon_WonderReset();
 void ZNPC_Common_Shutdown();
+// NPCC_BuildStandardAnimTran walks ourAnims until it reads a 0. Several of
+// retail's lists have no 0 in them -- ZNPC_AnimTable_Dutchman passes 13 non-zero
+// entries, ZNPC_AnimTable_Prawn 10 -- so the scan always reads one element past
+// the end of a stack array. Retail gets away with it because the word after the
+// array happens to hold 0 in its frames; ours does not, and the resulting index
+// into the name table produces a wild pointer that xStrTokBuffer dereferences.
+//
+// Terminating the lists is a deviation from retail, so it is confined to builds
+// that have to actually run. Both anim table functions are 100% matching and
+// must stay that way. See "Latent retail bugs" in docs/PCPORT.md.
+#ifdef NON_MATCHING
+#define NPCC_ANIM_LIST_END , 0
+#else
+#define NPCC_ANIM_LIST_END
+#endif
+
 void NPCC_BuildStandardAnimTran(xAnimTable* table, char** namelist, S32* ourAnims, S32 idx_dflt,
                                 F32 blend);
 void zNPCCommon_Timestep(xScene* xscn, F32 dt);

@@ -17,6 +17,9 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, List
 
+sys.path.append(str(Path(__file__).parent / "tools"))
+import aliaspatch_link  # noqa: E402  -- for the AliasPatch.c dependency path
+
 from tools.project import (
     Object,
     ProgressCategory,
@@ -320,7 +323,7 @@ cflags_renderware = [
     *cflags_base,
     "-lang=c",
     "-fp fmadd",
-    "-fp_contract off",
+    "-fp_contract on",
     "-char signed",
     "-str reuse",
     "-common off",
@@ -354,7 +357,21 @@ cflags_bfbb = [
     "-DGAMECUBE",
 ]
 
+# Guards source that must NOT be in a matching build but must be in a runnable
+# one. Retail contains reads of uninitialised stack that are harmless with its
+# exact frame contents, are not harmless with ours, and will not be harmless in
+# a PC port either -- see "Latent retail bugs" in docs/PCPORT.md. The fix has to be
+# absent from the matching build, because adding it changes codegen, and
+# present everywhere else.
+if config.non_matching:
+    cflags_bfbb.append("-DNON_MATCHING")
+
 config.linker_version = "GC/2.0p1"
+
+# The SB library is built with a patched CodeWarrior that narrows an
+# over-aggressive may-alias inference in the instruction scheduler; see
+# tools/patch_compiler.py. Derived from the stock compiler during the build.
+PATCHED_COMPILER = "GC/2.0p1a"
 
 
 # Helper function for Dolphin libraries
@@ -397,7 +414,11 @@ def RenderWareLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
     return {
         "lib": lib_name,
         "src_dir": "src",
-        "mw_version": "GC/1.3.2",
+        # Not GC/1.3.2. Sweeping every available compiler over the seven rwsdk
+        # units that have real source, 2.0p1 wins or ties every one of them and
+        # beats 1.3.2 by ten functions overall - bacamera 9 -> 14, baworobj
+        # 35 -> 37, baframe/baclump/bageomet +1 each.
+        "mw_version": PATCHED_COMPILER,
         "cflags": cflags_renderware,
         "progress_category": "RW",
         "objects": objects,
@@ -430,7 +451,7 @@ config.warn_missing_source = False
 config.libs = [
     {
         "lib": "SB",
-        "mw_version": config.linker_version,
+        "mw_version": PATCHED_COMPILER,
         "cflags": cflags_bfbb,
         "progress_category": "game",
         "objects": [
@@ -451,7 +472,7 @@ config.libs = [
             Object(NonMatching, "SB/Core/x/xEntMotion.cpp"),
             Object(Matching, "SB/Core/x/xEnv.cpp"),
             Object(Matching, "SB/Core/x/xEvent.cpp"),
-            Object(Equivalent, "SB/Core/x/xFFX.cpp"),
+            Object(Matching, "SB/Core/x/xFFX.cpp"),
             Object(Matching, "SB/Core/x/xFog.cpp"),
             Object(NonMatching, "SB/Core/x/xFont.cpp"),
             Object(NonMatching, "SB/Core/x/xFX.cpp"),
@@ -460,7 +481,7 @@ config.libs = [
             Object(NonMatching, "SB/Core/x/xHud.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Core/x/xHudFontMeter.cpp"),
             Object(NonMatching, "SB/Core/x/xHudMeter.cpp"),
-            Object(Equivalent, "SB/Core/x/xHudModel.cpp", extra_cflags=["-sym on"]),
+            Object(Matching, "SB/Core/x/xHudModel.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Core/x/xHudUnitMeter.cpp", extra_cflags=["-sym on   "]),
             Object(Matching, "SB/Core/x/xIni.cpp"),
             Object(NonMatching, "SB/Core/x/xMath.cpp"),
@@ -472,7 +493,7 @@ config.libs = [
             Object(Equivalent, "SB/Core/x/xMovePoint.cpp"),
             Object(Matching, "SB/Core/x/xordarray.cpp"),
             Object(NonMatching, "SB/Core/x/xPad.cpp"),
-            Object(NonMatching, "SB/Core/x/xPar.cpp"),
+            Object(Matching, "SB/Core/x/xPar.cpp"),
             Object(NonMatching, "SB/Core/x/xParCmd.cpp"),
             Object(Matching, "SB/Core/x/xParGroup.cpp"),
             Object(Matching, "SB/Core/x/xParMgr.cpp"),
@@ -485,7 +506,7 @@ config.libs = [
             Object(NonMatching, "SB/Core/x/xserializer.cpp"),
             Object(NonMatching, "SB/Core/x/xSFX.cpp"),
             Object(NonMatching, "SB/Core/x/xShadow.cpp"),
-            Object(NonMatching, "SB/Core/x/xSnd.cpp"),
+            Object(Matching, "SB/Core/x/xSnd.cpp"),
             Object(NonMatching, "SB/Core/x/xSpline.cpp"),
             Object(Equivalent, "SB/Core/x/xstransvc.cpp"),
             Object(NonMatching, "SB/Core/x/xString.cpp"),
@@ -494,15 +515,15 @@ config.libs = [
             Object(NonMatching, "SB/Core/x/xTRC.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Core/x/xutil.cpp"),
             Object(Matching, "SB/Core/x/xVec3.cpp"),
-            Object(NonMatching, "SB/Game/zActionLine.cpp"),
-            Object(Equivalent, "SB/Game/zAnimList.cpp"),
+            Object(Matching, "SB/Game/zActionLine.cpp"),
+            Object(Matching, "SB/Game/zAnimList.cpp"),
             Object(Equivalent, "SB/Game/zAssetTypes.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zCamera.cpp"),
             Object(Matching, "SB/Game/zConditional.cpp"),
             Object(NonMatching, "SB/Game/zCutsceneMgr.cpp"),
-            Object(NonMatching, "SB/Game/zDispatcher.cpp"),
+            Object(Matching, "SB/Game/zDispatcher.cpp"),
             Object(NonMatching, "SB/Game/zEGenerator.cpp"),
-            Object(Equivalent, "SB/Game/zEnt.cpp"),
+            Object(Matching, "SB/Game/zEnt.cpp"),
             Object(Equivalent, "SB/Game/zEntButton.cpp"),
             Object(NonMatching, "SB/Game/zEntCruiseBubble.cpp"),
             Object(Matching, "SB/Game/zEntDestructObj.cpp"),
@@ -517,17 +538,17 @@ config.libs = [
             Object(Matching, "SB/Game/zFMV.cpp"),
             Object(NonMatching, "SB/Game/zFX.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zGame.cpp"),
-            Object(Equivalent, "SB/Game/zGameExtras.cpp"),
+            Object(Matching, "SB/Game/zGameExtras.cpp"),
             Object(Equivalent, "SB/Game/zGameState.cpp"),
             Object(NonMatching, "SB/Game/zGust.cpp"),
             Object(NonMatching, "SB/Game/zHud.cpp"),
             Object(NonMatching, "SB/Game/zLasso.cpp"),
-            Object(NonMatching, "SB/Game/zLight.cpp"),
+            Object(Matching, "SB/Game/zLight.cpp"),
             Object(Matching, "SB/Game/zLightEffect.cpp"),
             Object(NonMatching, "SB/Game/zLightning.cpp", extra_cflags=["-sym on"]),
-            Object(NonMatching, "SB/Game/zLOD.cpp"),
+            Object(Matching, "SB/Game/zLOD.cpp"),
             Object(NonMatching, "SB/Game/zMain.cpp"),
-            Object(Equivalent, "SB/Game/zMenu.cpp"),
+            Object(Matching, "SB/Game/zMenu.cpp"),
             Object(Matching, "SB/Game/zMovePoint.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zMusic.cpp"),
             Object(Equivalent, "SB/Game/zParCmd.cpp"),
@@ -553,14 +574,14 @@ config.libs = [
             Object(NonMatching, "SB/Core/gc/iCollide.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Core/gc/iCollideFast.cpp"),
             Object(Matching, "SB/Core/gc/iDraw.cpp"),
-            Object(Equivalent, "SB/Core/gc/iEnv.cpp"),
+            Object(Matching, "SB/Core/gc/iEnv.cpp"),
             Object(NonMatching, "SB/Core/gc/iFile.cpp"),
-            Object(Equivalent, "SB/Core/gc/iFMV.cpp"),
+            Object(Equivalent, "SB/Core/gc/iFMV.cpp", extra_cflags=["-DGEKKO"]),
             Object(NonMatching, "SB/Core/gc/iFX.cpp"),
             Object(Matching, "SB/Core/gc/iLight.cpp"),
             Object(Matching, "SB/Core/gc/iMath.cpp"),
             Object(NonMatching, "SB/Core/gc/iMath3.cpp"),
-            Object(NonMatching, "SB/Core/gc/iMemMgr.cpp"),
+            Object(Matching, "SB/Core/gc/iMemMgr.cpp"),
             Object(Matching, "SB/Core/gc/iMix.c"),
             Object(NonMatching, "SB/Core/gc/iModel.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Core/gc/iMorph.cpp"),
@@ -571,13 +592,13 @@ config.libs = [
             Object(NonMatching, "SB/Core/gc/iSnd.cpp"),
             Object(NonMatching, "SB/Core/gc/iSystem.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Core/gc/iTime.cpp"),
-            Object(NonMatching, "SB/Core/gc/ngcrad3d.c"),
+            Object(NonMatching, "SB/Core/gc/ngcrad3d.c", extra_cflags=["-DGEKKO"]),
             Object(Matching, "SB/Game/zNPCGoals.cpp"),
             Object(Matching, "SB/Game/zNPCGoalCommon.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zNPCGoalStd.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zNPCGoalRobo.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zNPCGoalTiki.cpp", extra_cflags=["-sym on"]),
-            Object(NonMatching, "SB/Game/zNPCMessenger.cpp", extra_cflags=["-sym on"]),
+            Object(Matching, "SB/Game/zNPCMessenger.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zNPCMgr.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zNPCTypes.cpp"),
             Object(NonMatching, "SB/Game/zNPCTypeCommon.cpp", extra_cflags=["-sym on"]),
@@ -594,7 +615,7 @@ config.libs = [
             Object(NonMatching, "SB/Core/x/xNPCBasic.cpp"),
             Object(NonMatching, "SB/Game/zEntPlayerBungeeState.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zCollGeom.cpp"),
-            Object(NonMatching, "SB/Core/x/xParSys.cpp", extra_cflags=["-sym on"]),
+            Object(Matching, "SB/Core/x/xParSys.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Core/x/xParEmitter.cpp"),
             Object(Matching, "SB/Core/x/xVolume.cpp"),
             Object(NonMatching, "SB/Core/x/xParEmitterType.cpp"),
@@ -602,14 +623,14 @@ config.libs = [
             Object(NonMatching, "SB/Game/zEntPlayerOOBState.cpp", extra_cflags=["-sym on"]),
             Object(Equivalent, "SB/Core/x/xClumpColl.cpp"),
             Object(NonMatching, "SB/Core/x/xEntBoulder.cpp"),
-            Object(NonMatching, "SB/Core/x/xGrid.cpp"),
-            Object(Equivalent, "SB/Core/x/xJSP.cpp"),
+            Object(Matching, "SB/Core/x/xGrid.cpp"),
+            Object(Matching, "SB/Core/x/xJSP.cpp"),
             Object(Matching, "SB/Core/x/xLightKit.cpp"),
             Object(Matching, "SB/Game/zCamMarker.cpp"),
-            Object(NonMatching, "SB/Game/zGoo.cpp"),
+            Object(Matching, "SB/Game/zGoo.cpp"),
             Object(NonMatching, "SB/Game/zGrid.cpp"),
             Object(Matching, "SB/Game/zNPCGoalScript.cpp", extra_cflags=["-sym on"]),
-            Object(NonMatching, "SB/Game/zNPCSndTable.cpp", extra_cflags=["-sym on"]),
+            Object(Matching, "SB/Game/zNPCSndTable.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zNPCSndLists.cpp"),
             Object(NonMatching, "SB/Game/zNPCTypeDuplotron.cpp"),
             Object(Equivalent, "SB/Core/x/xModelBucket.cpp"),
@@ -621,10 +642,10 @@ config.libs = [
             Object(NonMatching, "SB/Game/zNPCSupport.cpp"),
             Object(NonMatching, "SB/Game/zTalkBox.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zTextBox.cpp"),
-            Object(Equivalent, "SB/Game/zTaskBox.cpp"),
+            Object(Matching, "SB/Game/zTaskBox.cpp"),
             Object(Matching, "SB/Core/gc/iCutscene.cpp"),
             Object(Matching, "SB/Game/zNPCTypeTest.cpp"),
-            Object(NonMatching, "SB/Game/zNPCTypeSubBoss.cpp"),
+            Object(Matching, "SB/Game/zNPCTypeSubBoss.cpp"),
             Object(NonMatching, "SB/Game/zNPCTypeBoss.cpp"),
             Object(NonMatching, "SB/Game/zNPCGoalVillager.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zNPCGoalSubBoss.cpp", extra_cflags=["-sym on"]),
@@ -635,17 +656,17 @@ config.libs = [
             Object(NonMatching, "SB/Game/zNPCTypeKingJelly.cpp"),
             Object(Matching, "SB/Game/zNPCGoalBoss.cpp"),
             Object(NonMatching, "SB/Game/zNPCTypePrawn.cpp"),
-            Object(Equivalent, "SB/Game/zNPCTypeBossSB1.cpp"),
+            Object(Matching, "SB/Game/zNPCTypeBossSB1.cpp"),
             Object(NonMatching, "SB/Game/zNPCTypeBossSB2.cpp"),
             Object(Matching, "SB/Core/x/xJaw.cpp"),
             Object(NonMatching, "SB/Game/zNPCTypeBossPatrick.cpp"),
             Object(NonMatching, "SB/Game/zNPCTypeBossPlankton.cpp"),
             Object(NonMatching, "SB/Game/zParPTank.cpp"),
-            Object(Equivalent, "SB/Game/zTaxi.cpp"),
+            Object(Matching, "SB/Game/zTaxi.cpp"),
             Object(NonMatching, "SB/Game/zNPCTypeDutchman.cpp"),
             Object(Matching, "SB/Game/zCameraFly.cpp"),
             Object(Matching, "SB/Core/x/xCurveAsset.cpp"),
-            Object(NonMatching, "SB/Core/x/xDecal.cpp", extra_cflags=["-sym on"]),
+            Object(Matching, "SB/Core/x/xDecal.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Core/x/xLaserBolt.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zCameraTweak.cpp"),
             Object(Matching, "SB/Core/x/xPtankPool.cpp"),
@@ -655,7 +676,7 @@ config.libs = [
             Object(NonMatching, "SB/Game/zNPCHazard.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zNPCGoalAmbient.cpp"),
             Object(NonMatching, "SB/Game/zNPCFXCinematic.cpp"),
-            Object(Equivalent, "SB/Core/x/xHudText.cpp", extra_cflags=["-sym on"]),
+            Object(Matching, "SB/Core/x/xHudText.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zCombo.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Core/x/xCM.cpp"),
         ],
@@ -1240,6 +1261,52 @@ config.progress_each_module = args.verbose
 config.progress_report_args = [
     "--deduplicate",
 ]
+
+# Compilers are fetched by a ninja rule, so the patched variant has to be
+# derived as a build step rather than at configure time. Objects already carry
+# order_only="pre-compile".
+compilers_dir = (
+    Path(config.compilers_path)
+    if config.compilers_path
+    else config.build_dir / "compilers"
+)
+# AliasPatch.c lives in the (local, unpublished) compiler decomp, so it is an
+# absolute path outside this tree and is absent on any machine that has only
+# the bfbb repo -- CI included. Treat it as a dependency when it is there; when
+# it is not, patch_compiler.py must derive from the checked-in blob instead.
+ALIASPATCH_SRC = aliaspatch_link.SRC
+
+config.custom_build_rules = [
+    {
+        "name": "patch_compiler",
+        "command": "$python tools/patch_compiler.py $out",
+        "description": "PATCH $out",
+    }
+]
+config.custom_build_steps = {
+    "pre-compile": [
+        {
+            "outputs": [compilers_dir / PATCHED_COMPILER / "mwcceppc.exe"],
+            "rule": "patch_compiler",
+            # The script is a real input: editing the payload must re-derive the
+            # compiler, which in turn rebuilds every object (see project.py).
+            # When the compilers are downloaded that directory is a ninja
+            # target; wait for it. With --compilers it already exists on disk.
+            # The compiler is now derived from C (AliasPatch.c in the
+            # mwcc-gc repo) rather than from hand-assembled cave bytes, so all
+            # four of these are real inputs. Listing only patch_compiler.py
+            # meant editing the payload left a stale compiler behind and every
+            # object silently kept its old bytes.
+            "implicit": [
+                Path("tools") / "patch_compiler.py",
+                Path("tools") / "aliaspatch_link.py",
+                Path("tools") / "aliaspatch_asm.py",
+            ]
+            + ([Path(ALIASPATCH_SRC)] if Path(ALIASPATCH_SRC).exists() else [])
+            + ([compilers_dir] if config.compilers_path is None else []),
+        }
+    ]
+}
 
 if args.mode == "configure":
     # Write build.ninja and objdiff.json

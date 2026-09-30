@@ -32,7 +32,7 @@ void xGroupInit(xBase* b, xGroupAsset* asset)
     xBase** item;
     if (numItems != 0)
     {
-        item = (xBase**)xMemAllocSize(numItems << 2);
+        item = (xBase**)xMemAllocSize(numItems * sizeof(xBase*));
     }
     else
     {

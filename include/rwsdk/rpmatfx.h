@@ -1,8 +1,8 @@
 #ifndef RPMATFX_H
 #define RPMATFX_H
 
-#include "rwcore.h"
-#include "rpworld.h"
+#include <rwsdk/rwcore.h>
+#include <rwsdk/rpworld.h>
 
 enum RpMatFXGameCubePipeline
 {
@@ -12,6 +12,7 @@ enum RpMatFXGameCubePipeline
     rpMATFXGAMECUBEPIPELINEMAX,
     rpMATFXGAMECUBEPIPELINEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RpMatFXGameCubePipeline RpMatFXGameCubePipeline;
 
 enum RpMatFXMaterialFlags
 {
@@ -26,6 +27,7 @@ enum RpMatFXMaterialFlags
     rpMATFXNUMEFFECTS = rpMATFXEFFECTMAX - 1,
     rpMATFXFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RpMatFXMaterialFlags RpMatFXMaterialFlags;
 
 #ifdef __cplusplus
 extern "C" {

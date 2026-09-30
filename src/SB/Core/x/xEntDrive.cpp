@@ -2,6 +2,7 @@
 
 #include "xMath.h"
 #include "xMathInlines.h"
+#include "xVec3Inlines.h"
 
 #include <types.h>
 
@@ -73,79 +74,12 @@ void xEntDriveMount(xEntDrive* drv, xEnt* driver, F32 mt, const xCollis* coll)
 
     xVec3 euler;
     xMat3x3 a_descaled;
+    F32 dummy;
     if (drv->flags & 1)
     {
-        {
-            F32 len2 = SQR(drv->driver->frame->mat.right.x) + SQR(drv->driver->frame->mat.right.y) +
-                       SQR(drv->driver->frame->mat.right.z);
-            if (xabs(len2 - 1) <= 0.00001f)
-            {
-                a_descaled.right.x = drv->driver->frame->mat.right.x;
-                a_descaled.right.y = drv->driver->frame->mat.right.y;
-                a_descaled.right.z = drv->driver->frame->mat.right.z;
-            }
-            else if (xabs(len2) <= 0.00001f)
-            {
-                a_descaled.right.x = 0.0f;
-                a_descaled.right.y = 1.0f;
-                a_descaled.right.z = 0.0f;
-            }
-            else
-            {
-                F32 len_inv = 1.0f / xsqrt(len2);
-                a_descaled.right.x = drv->driver->frame->mat.right.x * len_inv;
-                a_descaled.right.y = drv->driver->frame->mat.right.y * len_inv;
-                a_descaled.right.z = drv->driver->frame->mat.right.z * len_inv;
-            }
-        }
-
-        {
-            F32 len2 = SQR(drv->driver->frame->mat.up.x) + SQR(drv->driver->frame->mat.up.y) +
-                       SQR(drv->driver->frame->mat.up.z);
-            if (xabs(len2 - 1.0f) <= 0.00001f)
-            {
-                a_descaled.up.x = drv->driver->frame->mat.up.x;
-                a_descaled.up.y = drv->driver->frame->mat.up.y;
-                a_descaled.up.z = drv->driver->frame->mat.up.z;
-            }
-            else if (xabs(len2) <= 0.00001f)
-            {
-                a_descaled.up.x = 0.0f;
-                a_descaled.up.y = 1.0f;
-                a_descaled.up.z = 0.0f;
-            }
-            else
-            {
-                F32 len_inv = 1.0f / xsqrt(len2);
-                a_descaled.up.x = drv->driver->frame->mat.up.x * len_inv;
-                a_descaled.up.y = drv->driver->frame->mat.up.y * len_inv;
-                a_descaled.up.z = drv->driver->frame->mat.up.z * len_inv;
-            }
-        }
-
-        {
-            F32 len2 = SQR(drv->driver->frame->mat.at.x) + SQR(drv->driver->frame->mat.at.y) +
-                       SQR(drv->driver->frame->mat.at.z);
-            if (xabs(len2 - 1.0f) <= 0.00001f)
-            {
-                a_descaled.at.x = drv->driver->frame->mat.at.x;
-                a_descaled.at.y = drv->driver->frame->mat.at.y;
-                a_descaled.at.z = drv->driver->frame->mat.at.z;
-            }
-            else if (xabs(len2) <= 0.00001f)
-            {
-                a_descaled.at.x = 0.0f;
-                a_descaled.at.y = 1.0f;
-                a_descaled.at.z = 0.0f;
-            }
-            else
-            {
-                F32 len_inv = 1.0f / xsqrt(len2);
-                a_descaled.at.x = drv->driver->frame->mat.at.x * len_inv;
-                a_descaled.at.y = drv->driver->frame->mat.at.y * len_inv;
-                a_descaled.at.z = drv->driver->frame->mat.at.z * len_inv;
-            }
-        }
+        xVec3NormalizeMacro(&a_descaled.right, &drv->driver->frame->mat.right, &dummy);
+        xVec3NormalizeMacro(&a_descaled.up, &drv->driver->frame->mat.up, &dummy);
+        xVec3NormalizeMacro(&a_descaled.at, &drv->driver->frame->mat.at, &dummy);
         xMat3x3GetEuler(&a_descaled, &euler);
         drv->yaw = euler.x;
     }
@@ -246,6 +180,7 @@ void xEntDriveUpdate(xEntDrive* drv, xScene* s, F32 dt, const xCollis* coll)
         xVec3 euler;
         xMat3x3 rot;
         xMat3x3 a_descaled;
+        F32 dummy;
         if (drv->s && drv->flags & 1)
         {
             if (drv->driver == NULL || drv->driver->frame == NULL)
@@ -254,78 +189,9 @@ void xEntDriveUpdate(xEntDrive* drv, xScene* s, F32 dt, const xCollis* coll)
                 return;
             }
 
-            {
-                F32 len2 = SQR(drv->driver->frame->mat.right.x) +
-                           SQR(drv->driver->frame->mat.right.y) +
-                           SQR(drv->driver->frame->mat.right.z);
-                if (xabs(len2 - 1) <= 0.00001f)
-                {
-                    a_descaled.right.x = drv->driver->frame->mat.right.x;
-                    a_descaled.right.y = drv->driver->frame->mat.right.y;
-                    a_descaled.right.z = drv->driver->frame->mat.right.z;
-                }
-                else if (xabs(len2) <= 0.00001f)
-                {
-                    a_descaled.right.x = 0.0f;
-                    a_descaled.right.y = 1.0f;
-                    a_descaled.right.z = 0.0f;
-                }
-                else
-                {
-                    F32 len_inv = 1.0f / xsqrt(len2);
-                    a_descaled.right.x = drv->driver->frame->mat.right.x * len_inv;
-                    a_descaled.right.y = drv->driver->frame->mat.right.y * len_inv;
-                    a_descaled.right.z = drv->driver->frame->mat.right.z * len_inv;
-                }
-            }
-
-            {
-                F32 len2 = SQR(drv->driver->frame->mat.up.x) + SQR(drv->driver->frame->mat.up.y) +
-                           SQR(drv->driver->frame->mat.up.z);
-                if (xabs(len2 - 1.0f) <= 0.00001f)
-                {
-                    a_descaled.up.x = drv->driver->frame->mat.up.x;
-                    a_descaled.up.y = drv->driver->frame->mat.up.y;
-                    a_descaled.up.z = drv->driver->frame->mat.up.z;
-                }
-                else if (xabs(len2) <= 0.00001f)
-                {
-                    a_descaled.up.x = 0.0f;
-                    a_descaled.up.y = 1.0f;
-                    a_descaled.up.z = 0.0f;
-                }
-                else
-                {
-                    F32 len_inv = 1.0f / xsqrt(len2);
-                    a_descaled.up.x = drv->driver->frame->mat.up.x * len_inv;
-                    a_descaled.up.y = drv->driver->frame->mat.up.y * len_inv;
-                    a_descaled.up.z = drv->driver->frame->mat.up.z * len_inv;
-                }
-            }
-
-            {
-                F32 len2 = SQR(drv->driver->frame->mat.at.x) + SQR(drv->driver->frame->mat.at.y) +
-                           SQR(drv->driver->frame->mat.at.z);
-                if (xabs(len2 - 1.0f) <= 0.00001f)
-                {
-                    a_descaled.at.x = drv->driver->frame->mat.at.x;
-                    a_descaled.at.y = drv->driver->frame->mat.at.y;
-                    a_descaled.at.z = drv->driver->frame->mat.at.z;
-                }
-                else if (xabs(len2) <= 0.00001f)
-                {
-                    a_descaled.at.x = 0.0f;
-                    a_descaled.at.y = 1.0f;
-                    a_descaled.at.z = 0.0f;
-                }
-                else
-                {
-                    F32 len_inv = 1.0f / xsqrt(len2);
-                    a_descaled.at.x = drv->driver->frame->mat.at.x * len_inv;
-                    a_descaled.at.y = drv->driver->frame->mat.at.y * len_inv;
-                    a_descaled.at.z = drv->driver->frame->mat.at.z * len_inv;
-                }
-            }
+            xVec3NormalizeMacro(&a_descaled.right, &drv->driver->frame->mat.right, &dummy);
+            xVec3NormalizeMacro(&a_descaled.up, &drv->driver->frame->mat.up, &dummy);
+            xVec3NormalizeMacro(&a_descaled.at, &drv->driver->frame->mat.at, &dummy);
             xMat3x3GetEuler(&a_descaled, &euler);
             xMat3x3RotY(&rot, drv->s * (euler.x - drv->yaw));
             xMat3x3Mul(&drv->driven->frame->mat, &drv->driven->frame->mat, &rot);

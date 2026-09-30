@@ -379,8 +379,7 @@ void zNPCMgr_Startup()
 
 void zNPCMgr_Shutdown()
 {
-    g_modinit--;
-    if (g_modinit == 0)
+    if (--g_modinit == 0)
     {
         zNPCMgr* mgr = zNPCMgrSelf();
         if (mgr != NULL)
@@ -596,8 +595,10 @@ xEnt* zNPCMgr::CreateNPC(xEntAsset* asset)
     U32 size;
     xModelAssetInfo* modelAsset = (xModelAssetInfo*)xSTFindAsset(asset->modelInfoID, &size);
 
-    // FIXME: Replace with actually getting the right model hash from the packed data
-    nt = this->NPCTypeForModel(modelAsset->BrainID, *(&asset->modelInfoID + 3));
+    // The NPC's model-name hash is the second word of the NPC-specific block that
+    // follows the xEntAsset header in the packed data. No struct describes that
+    // block yet, so index it plainly rather than run off the end of modelInfoID.
+    nt = this->NPCTypeForModel(modelAsset->BrainID, ((U32*)(asset + 1))[1]);
     npc = (zNPCCommon*)npcFactory->CreateItem(nt, NULL, NULL);
 
     npc->Init(asset);

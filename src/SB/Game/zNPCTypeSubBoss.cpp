@@ -32,11 +32,7 @@ char* g_strz_subbanim[ANIM_COUNT] =
     "LassoGrab01",
     "LassoHoldLeft01",
     "LassoHoldRight01",
-#if 1 // needed until SUBB_InitEffects is matching
-    "LassoFree01\0PAREMIT_CLOUD"
-#else
     "LassoFree01"
-#endif
 };
 // clang-format on
 
@@ -117,7 +113,6 @@ void zNPCSubBoss::Setup()
 
 void SUBB_InitEffects()
 {
-    // non-matching: scheduling
     g_pemit_holder = zParEmitterFind("PAREMIT_CLOUD");
     g_parf_holder.custom_flags = 0x100;
 }

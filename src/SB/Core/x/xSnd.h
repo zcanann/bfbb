@@ -80,6 +80,10 @@ struct _xSndDelayed
     U32 pad0;
 };
 
+// sound_queue calls these; two-phase lookup needs them declared first.
+void xSndStop(U32 snd);
+U8 xSndIsPlayingByHandle(U32 sndID);
+
 template <S32 N> struct sound_queue
 {
     U32 _playing[N + 1];
@@ -196,8 +200,8 @@ void xSndDelayedUpdate();
 void update_faders(F32 timeElapsed);
 void xSndProcessSoundPos(const xVec3* pActual, xVec3* pProcessed);
 void xSndInternalUpdateVoicePos(xSndVoiceInfo* voiceInfo);
-void xSndSetListenerData(sound_listener_type listenerType, const xMat4x3* matrix);
-void xSndSelectListenerMode(sound_listener_game_mode listenerGameMode);
+void xSndSetListenerData(sound_listener_type listenerType, const xMat4x3* pMat);
+void xSndSelectListenerMode(sound_listener_game_mode listenerMode);
 void xSndExit();
 U32 xSndPlay(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, U32 parentID,
              sound_category category, F32 delay);
@@ -205,9 +209,6 @@ U32 xSndPlay3D(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, xEnt* parent
                F32 outerRadius, sound_category category, F32 delay);
 U32 xSndPlay3D(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, const xVec3* pos,
                F32 innerRadius, F32 outerRadius, sound_category category, F32 delay);
-U32 xSndPlay3DFade(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, const xVec3* pos,
-                   F32 innerRadius, F32 outerRadius, sound_category category, F32 delay,
-                   F32 fade_time);
 U32 xSndPlayInternal(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, U32 parentID,
                      xEnt* parentEnt, const xVec3* pos, F32 innerRadius, F32 outerRadius,
                      sound_category category, F32 delay);

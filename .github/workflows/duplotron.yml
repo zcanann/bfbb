@@ -1,0 +1,263 @@
+name: Duplotron
+
+# CI for the duplotron branch.
+#
+# The Build workflow is upstream's and is the wrong shape here. It exists to
+# prove main still links byte-identically, so it treats anything less as a
+# failure, and it feeds bfbbdecomp's progress website from artifacts this fork
+# has no business writing. On a branch whose whole point is that most units are
+# deliberately NonMatching, a red X carries no information.
+#
+# This one reports instead. It fails only on a real regression, which
+# tools/gcgate.py defines as either of two things: the DOL sha1 moving, or the
+# matched-function count going DOWN. The second is the one that matters here --
+# NonMatching units link from the extracted object, so their source can regress
+# to 0% with the DOL still green, and that is exactly where all the work is.
+#
+# NO PRIVATE CONTAINER, AND NO PERSONAL ACCESS TOKEN.
+#
+# Upstream's workflow runs inside ghcr.io/bfbbdecomp/bfbb-build, which is
+# private to another organisation. A fork's GITHUB_TOKEN has scope over its own
+# repository only, so pulling it here fails with a bare "denied" -- which is why
+# upstream's Build has never run on this fork. It fails before it compiles
+# anything, and no rewrite of the build steps would have fixed that.
+#
+# Almost nothing in that image had to be private, though. configure.py
+# downloads binutils, the CodeWarrior compilers, dtk, objdiff-cli and wibo from
+# public URLs by itself. The single thing CI cannot fetch is the retail DOL --
+# 2.8 MB in orig/GQPE78/sys/main.dol. So this workflow runs on a plain runner
+# and pulls only that, from a private one-file image in THIS account's
+# namespace, which a repository-scoped grant makes readable by the automatic
+# GITHUB_TOKEN. See .github/orig.Dockerfile for the one-time setup.
+#
+# Until that image exists, leave the variable unset and the build jobs skip
+# themselves: `checks` still runs and the workflow is green rather than
+# red-for-no-reason.
+
+on:
+  push:
+    branches: [duplotron]
+  pull_request:
+    branches: [duplotron]
+  workflow_dispatch:
+
+# One run per ref. A push while a build is in flight cancels the stale one,
+# which also stops two runs racing to write the badge commit.
+concurrency:
+  group: duplotron-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Everything that needs neither retail data nor compilers. This job is why the
+  # workflow is worth having before the image exists: it always runs, and it
+  # catches the two things that actually get broken by hand.
+  checks:
+    name: Source checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # Need history to diff against a base commit. The default depth of 1
+          # has none, and a format check that cannot find its base is a check
+          # that always passes.
+          fetch-depth: 0
+
+      # Resolve the base commit ONCE, for both content checks below. Take it
+      # from the EVENT, never from a branch name: under actions/checkout there
+      # is no origin/main to merge-base against, and a check that cannot find
+      # its base is a check that always passes.
+      - name: Resolve base commit
+        id: base
+        env:
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PUSH_BEFORE: ${{ github.event.before }}
+        run: |
+          ZERO=0000000000000000000000000000000000000000
+          if [ -n "$PR_BASE" ]; then
+            base="$PR_BASE"
+          elif [ -n "$PUSH_BEFORE" ] && [ "$PUSH_BEFORE" != "$ZERO" ]; then
+            base="$PUSH_BEFORE"
+          else
+            base=$(git rev-parse HEAD~1)
+          fi
+          if ! git cat-file -e "$base^{commit}" 2>/dev/null; then
+            echo "::error::cannot resolve a base commit ($base) to diff against"
+            exit 1
+          fi
+          echo "comparing against $base"
+          echo "sha=$base" >> "$GITHUB_OUTPUT"
+          git diff --name-only --diff-filter=ACM "$base" HEAD > changed.txt || true
+          echo "changed:"; cat changed.txt
+
+      # Only what this push or PR touched. Two files inherited from upstream
+      # main -- include/inline/fastmath.h and src/bink/.../expand.c -- have
+      # been CRLF since long before this branch existed, and normalising other
+      # people's files to make a checkmark green is not this workflow's job.
+      # What the rule protects is that WE do not introduce CRLF, so that is
+      # what it checks.
+      - name: Line endings
+        run: |
+          files=$(grep -E '\.(cpp|cp|c|h|py)$' changed.txt || true)
+          bad=""
+          for f in $files; do
+            [ -f "$f" ] || continue
+            if grep -qIP '\r$' "$f"; then bad="$bad $f"; fi
+          done
+          if [ -n "$bad" ]; then
+            echo "::error::CRLF line endings introduced"
+            for f in $bad; do echo "::error file=$f::CRLF line endings"; done
+            exit 1
+          fi
+          echo "no CRLF in the files this change touches"
+
+      - name: clang-format
+        env:
+          BASE: ${{ steps.base.outputs.sha }}
+        run: |
+          # Only what this change touched, and only NEW violations. The tree is
+          # not globally clang-format clean -- zEntPlayer.cpp alone carries 237
+          # pre-existing violations -- and making it so would bury every real
+          # change.
+          files=$(grep -E '^(src|include)/.*\.(cpp|cp|h)$' changed.txt || true)
+          if [ -z "$files" ]; then echo "no C++ files changed"; exit 0; fi
+          echo "checking:"; echo "$files"
+          fail=0
+          for f in $files; do
+            [ -f "$f" ] || continue
+            now=$(clang-format -n --Werror "$f" 2>&1 | grep -c error || true)
+            was=$(git show "$BASE:$f" 2>/dev/null | clang-format -n --Werror --assume-filename="$f" 2>&1 | grep -c error || true)
+            if [ "$now" -gt "$was" ]; then
+              echo "::error file=$f::$((now - was)) new formatting violation(s)"
+              fail=1
+            fi
+          done
+          exit $fail
+
+      - name: Tools compile
+        run: python -m compileall -q tools/
+
+  metrics:
+    name: Build and report
+    needs: checks
+    # Skips itself until the one-file orig image exists; see the note above and
+    # .github/orig.Dockerfile. A repository VARIABLE rather than a test on the
+    # secret, because the `secrets` context is not available in a job-level if.
+    if: ${{ vars.HAVE_ORIG_IMAGE == 'true' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # to push the badge commit
+      packages: read    # to pull the orig image
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          # Needed so the badge commit can be pushed back to the branch.
+          ref: ${{ github.event_name == 'pull_request'
+                   && github.event.pull_request.head.sha
+                   || github.ref }}
+
+      - name: Retail data
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" \
+            | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+          img="ghcr.io/${{ github.repository_owner }}/bfbb-orig:main"
+          docker create --name orig "$img"
+          docker cp orig:/orig/. ./orig/
+          docker rm orig
+          test -f orig/GQPE78/sys/main.dol \
+            || { echo "::error::orig/GQPE78/sys/main.dol missing from $img"; exit 1; }
+          sha1sum orig/GQPE78/sys/main.dol
+
+      - name: Toolchain
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ninja-build
+
+      # No --binutils / --compilers: configure.py downloads binutils, the
+      # CodeWarrior compilers, dtk, objdiff-cli and wibo itself. That also means
+      # build/compilers is ours and writable, which patch_compiler.py needs --
+      # it writes GC/2.0p1a next to the stock GC/2.0p1.
+      - name: Build
+        run: |
+          python configure.py --map --version GQPE78
+          ninja
+          ninja build/GQPE78/report.json
+
+      # The gate. Exits non-zero only if the DOL moved or functions regressed;
+      # "not everything matches yet" is the normal state and is not a failure.
+      - name: Regression gate
+        run: python tools/gcgate.py
+
+      - name: Report
+        run: |
+          {
+            echo "## duplotron"
+            echo
+            python tools/badges.py --summary --report build/GQPE78/report.json
+            echo
+            echo '```'
+            python tools/metrics.py build/GQPE78/report.json
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      # On a pull request the badges are informational only -- the branch is
+      # what publishes them, and a PR cannot push to it.
+      - name: Check badges are current
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        run: python tools/badges.py --check
+
+      - name: Update badges and gate baseline
+        if: github.event_name == 'push'
+        run: |
+          python tools/badges.py --write
+          python tools/gcgate.py --update
+          if git diff --quiet README.md tools/gcgate.json; then
+            echo "nothing to update"
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md tools/gcgate.json
+          git commit -m "chore(ci): Update the progress badges [skip ci]"
+          git push origin HEAD:${{ github.ref_name }}
+
+  # Advisory only. --non-matching links every src/SB unit from OUR object, which
+  # is what the PC port and the playtest disc need, and it can break on a unit
+  # the matching build never links. Worth knowing about; not worth failing the
+  # branch over, because it says nothing about whether the decomp regressed.
+  link-non-matching:
+    name: Link check (advisory)
+    needs: checks
+    if: ${{ vars.HAVE_ORIG_IMAGE == 'true' }}
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    permissions:
+      packages: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Retail data
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" \
+            | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+          docker create --name orig "ghcr.io/${{ github.repository_owner }}/bfbb-orig:main"
+          docker cp orig:/orig/. ./orig/
+          docker rm orig
+
+      - name: Toolchain
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ninja-build
+
+      - name: Build non-matching
+        run: |
+          python configure.py --non-matching --version GQPE78
+          ninja

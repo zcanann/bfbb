@@ -197,5 +197,7 @@ void zPlatform_Shake(zPlatform* plat, F32 _unused, F32 ampl, F32 freq);
 U32 zPlatform_PaddleCollide(xCollis* coll, const xVec3* hitsource, const xVec3* hitvel,
                             U32 worldSpaceNorm);
 S32 zPlatformEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* base3);
+void zPlatform_Mount(zPlatform* plat);
+void zPlatform_Dismount(zPlatform* plat);
 
 #endif

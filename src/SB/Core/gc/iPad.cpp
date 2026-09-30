@@ -9,7 +9,7 @@
 extern xGlobals* xglobals;
 extern zGlobals globals;
 
-PADStatus sPadData[PAD_MAX_CONTROLLERS];
+static PADStatus sPadData[PAD_MAX_CONTROLLERS] = {};
 
 S32 iPadInit()
 {
@@ -139,25 +139,25 @@ S32 iPadUpdate(_tagxPad* pad, U32* on)
     return 1;
 }
 
-S32 iPadConvFromGCN(U32 a, U32 b, U32 c)
+// Maps one GameCube pad button onto one xPad button: gcnMask selects the bit in
+// the PADStatus button word, xpadButton is the bit to report when it is held.
+S32 iPadConvFromGCN(U32 gcnButtons, U32 gcnMask, U32 xpadButton)
 {
-    // TODO: this can probably be simplified,
-    // basically a copy of ghidra's output
-    return c & (S32)(-(a & b) | a & b) >> 0x1f;
+    return (gcnButtons & gcnMask) ? xpadButton : 0;
 }
 
 void iPadRumbleFx(_tagxPad* p, _tagxRumble* r, F32 time_passed)
 {
 }
 
-void iPadStopRumble()
+void iPadStopRumble(_tagxPad* pad)
 {
-    _tagxPad* pad = &mPad[globals.currentActivePad];
     PADControlMotor(pad->port, 0);
 }
 
-void iPadStopRumble(_tagxPad* pad)
+void iPadStopRumble()
 {
+    _tagxPad* pad = &mPad[globals.currentActivePad];
     PADControlMotor(pad->port, 0);
 }
 

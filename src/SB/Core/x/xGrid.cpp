@@ -8,38 +8,33 @@
 
 volatile S32 gGridIterActive = 0;
 
-void xGridBoundInit(xGridBound* bound, void* data)
+void xGridBoundInit(xGridBound* gridb, void* data)
 {
-    bound->data = data;
-    bound->gx = -1;
-    bound->gz = -1;
-    bound->ingrid = 0;
-    bound->oversize = 0;
-    bound->head = 0;
-    bound->next = 0;
-    bound->gpad = 0xea;
+    gridb->data = data;
+    gridb->gx = -1;
+    gridb->gz = -1;
+    gridb->ingrid = 0;
+    gridb->oversize = 0;
+    gridb->head = 0;
+    gridb->next = 0;
+    gridb->gpad = 0xea;
 }
 
-// FIXME: Usual floating point problems, floating point loads get pulled to the start.
-// Also, there's something funny going on with the malloc + memset at the end,
-// I think they may not have used the obvious pattern for it, since changing
-// the multiplication order for the second one generates closer machine code
-// than the same for both lines.
 void xGridInit(xGrid* grid, const xBox* bounds, U16 nx, U16 nz, U8 ingrid_id)
 {
     grid->ingrid_id = ingrid_id;
     grid->nx = nx;
     grid->nz = nz;
-    grid->minx = bounds->upper.x;
-    grid->minz = bounds->upper.z;
-    grid->maxx = bounds->lower.x;
-    grid->maxz = bounds->lower.z;
+    grid->minx = bounds->lower.x;
+    grid->minz = bounds->lower.z;
+    grid->maxx = bounds->upper.x;
+    grid->maxz = bounds->upper.z;
     F32 gsizex = grid->maxx - grid->minx;
     F32 gsizez = grid->maxz - grid->minz;
     grid->csizex = gsizex / nx;
-    grid->csizez = gsizex / nz;
+    grid->csizez = gsizez / nz;
 
-    if (__fabs(gsizex) <= 0.001f)
+    if (xabs(gsizex) <= 0.001f)
     {
         grid->inv_csizex = 1.0f;
     }
@@ -48,7 +43,7 @@ void xGridInit(xGrid* grid, const xBox* bounds, U16 nx, U16 nz, U8 ingrid_id)
         grid->inv_csizex = nx / gsizex;
     }
 
-    if (__fabs(gsizez) <= 0.001f)
+    if (xabs(gsizez) <= 0.001f)
     {
         grid->inv_csizez = 1.0f;
     }
@@ -57,9 +52,11 @@ void xGridInit(xGrid* grid, const xBox* bounds, U16 nx, U16 nz, U8 ingrid_id)
         grid->inv_csizez = nz / gsizez;
     }
 
-    grid->maxr = 0.25f * MAX(grid->csizex, grid->csizez);
+    grid->maxr = 0.25f * MIN(grid->csizex, grid->csizez);
     grid->cells = (xGridBound**)xMemAllocSize(nx * nz * sizeof(xGridBound*));
-    memset(grid->cells, 0, sizeof(xGridBound*) * (nz * nx));
+    // The retail object recomputes nx*nz here instead of reusing the alloc size;
+    // an unsigned nx keeps the compiler from CSEing the two products.
+    memset(grid->cells, 0, (U32)nx * nz * sizeof(xGridBound*));
 }
 
 void xGridKill(xGrid* grid)
@@ -96,7 +93,7 @@ void xGridEmpty(xGrid* grid)
     grid->other = NULL;
 }
 
-bool xGridAddToCell(xGridBound** boundList, xGridBound* bound)
+S32 xGridAddToCell(xGridBound** boundList, xGridBound* bound)
 {
     if (bound->head)
     {
@@ -104,24 +101,24 @@ bool xGridAddToCell(xGridBound** boundList, xGridBound* bound)
         {
             if (!xGridRemove(bound))
             {
-                return false;
+                return 0;
             }
         }
         else
         {
-            return false;
+            return 0;
         }
     }
 
     bound->head = boundList;
     bound->next = boundList[0];
     boundList[0] = bound;
-    return true;
+    return 1;
 }
 
-void xGridAdd(xGrid* grid, xGridBound* bound, S32 x, S32 z)
+S32 xGridAdd(xGrid* grid, xGridBound* bound, S32 x, S32 z)
 {
-    xGridAddToCell(&grid->cells[z * grid->nx] + x, bound);
+    return xGridAddToCell(&grid->cells[z * grid->nx] + x, bound);
 }
 
 S32 xGridAdd(xGrid* grid, xEnt* ent)
@@ -137,7 +134,7 @@ S32 xGridAdd(xGrid* grid, xEnt* ent)
     {
         xSphere* sph = &bound->sph;
         center = &sph->center;
-        if (bound->sph.r >= maxr)
+        if (sph->r >= maxr)
         {
             S32 r = xGridAddToCell(&grid->other, &ent->gridb);
             if (r)
@@ -173,8 +170,8 @@ S32 xGridAdd(xGrid* grid, xEnt* ent)
     {
         xBBox* bbox = &bound->box;
         center = &bbox->center;
-        F32 rx = bound->box.box.upper.x - bound->box.box.lower.x;
-        F32 rz = bound->box.box.upper.z - bound->box.box.lower.z;
+        F32 rx = bbox->box.upper.x - bbox->box.lower.x;
+        F32 rz = bbox->box.upper.z - bbox->box.lower.z;
         F32 len2 = SQR(rx) + SQR(rz);
         if (len2 >= 4.0f * maxr * maxr)
         {
@@ -192,15 +189,14 @@ S32 xGridAdd(xGrid* grid, xEnt* ent)
     }
 
     F32 cgridx = center->x - grid->minx;
-    cgridx *= grid->inv_csizex;
-
     F32 cgridz = center->z - grid->minz;
+    cgridx *= grid->inv_csizex;
     cgridz *= grid->inv_csizez;
 
     S32 x = (S32)MIN(grid->nx - 1, MAX(0.0f, cgridx));
     S32 z = (S32)MIN(grid->nz - 1, MAX(0.0f, cgridz));
 
-    if (1)
+    if (xGridAdd(grid, &ent->gridb, x, z))
     {
         ent->gridb.gx = x;
         ent->gridb.gz = z;
@@ -211,20 +207,20 @@ S32 xGridAdd(xGrid* grid, xEnt* ent)
     return 0;
 }
 
-S32 xGridRemove(xGridBound* bound)
+S32 xGridRemove(xGridBound* gridb)
 {
-    if (bound->head)
+    if (gridb->head)
     {
         if (gGridIterActive)
         {
-            bound->deleted = 1;
+            gridb->deleted = 1;
             return 0;
         }
         else
         {
-            xGridBound* curr = bound->head[0];
-            xGridBound** prev = bound->head;
-            while (curr && curr != bound)
+            xGridBound* curr = gridb->head[0];
+            xGridBound** prev = gridb->head;
+            while (curr && curr != gridb)
             {
                 prev = &curr->next;
                 curr = curr->next;
@@ -284,11 +280,13 @@ xGridBound** xGridGetCell(xGrid* grid, const xEnt* ent, S32& grx, S32& grz)
 
 void xGridGetCell(xGrid* grid, F32 x, F32 y, F32 z, S32& grx, S32& grz)
 {
-    F32 pgridx = (x - grid->minx) * grid->inv_csizex;
-    F32 pgridz = (z - grid->minz) * grid->inv_csizez;
+    F32 pgridx = x - grid->minx;
+    F32 pgridz = z - grid->minz;
+    pgridx *= grid->inv_csizex;
+    pgridz *= grid->inv_csizez;
 
-    grx = MIN(F32((grid->nx - 1) ^ 0x8000), MAX(0, pgridx));
-    grz = MIN(F32((grid->nz - 1) ^ 0x8000), MAX(0, pgridx));
+    grx = (S32)MIN(grid->nx - 1, MAX(0.0f, pgridx));
+    grz = (S32)MIN(grid->nz - 1, MAX(0.0f, pgridz));
 }
 
 xGridBound* xGridIterFirstCell(xGrid* grid, F32 posx, F32 posy, F32 posz, S32& grx, S32& grz,

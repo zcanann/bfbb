@@ -1,3 +1,7 @@
+// Expanding xSndPlay3D here adds a 0.25f .sdata2 literal that retail does not
+// have; it shifts this unit's pool. See zEnt.h.
+#define XSNDPLAY3D_OUT_OF_LINE
+
 #include "zPlatform.h"
 #include "zEnt.h"
 #include "zEntPlayer.h"
@@ -25,7 +29,7 @@ zParEmitter* sEmitTremble;
 zParEmitter* sEmitBreakaway;
 
 static void zPlatformTranslate(xEnt* xent, xVec3* dpos, xMat4x3* dmat);
-void zPlatform_Move(xEnt* entPlat, xScene* s, F32 dt, xEntFrame* frame);
+void zPlatform_Move(xEnt* entplat, xScene* s, F32 dt, xEntFrame* frame);
 static void zPlatform_Tremble(zPlatform* plat, F32 ampl, F32 freq, F32 dur);
 static void zPlatform_BreakawayFallFX(zPlatform* plat, F32);
 static S32 zMechIsStartingForth(zPlatform* plat, U16 state);
@@ -472,9 +476,9 @@ U32 zPlatform_PaddleCollide(xCollis* coll, const xVec3* hitsource, const xVec3* 
     hitsrcray.origin.x = hitsrcbot.x;
     hitsrcray.origin.y = hitsrcbot.y;
     hitsrcray.origin.z = hitsrcbot.z;
-    hitsrcray.dir.x = hitsrctop.x - hitsrcbot.x;
-    hitsrcray.dir.y = hitsrctop.y - hitsrcbot.y;
-    hitsrcray.dir.z = hitsrctop.z - hitsrcbot.z;
+    hitsrcray.dir.x = hitsrctop.x - hitsrcray.origin.x;
+    hitsrcray.dir.y = hitsrctop.y - hitsrcray.origin.y;
+    hitsrcray.dir.z = hitsrctop.z - hitsrcray.origin.z;
     hitsrcray.min_t = 0.0f;
     hitsrcray.max_t = xVec3Normalize(&hitsrcray.dir, &hitsrcray.dir);
     hitsrcray.flags = XRAY3_USE_MIN | XRAY3_USE_MAX;
@@ -1015,9 +1019,9 @@ void zPlatform_Update(xEnt* entplat, xScene* sc, F32 dt)
     plat->moving = moving;
 }
 
-void zPlatform_Move(xEnt* entPlat, xScene* s, F32 dt, xEntFrame* frame)
+void zPlatform_Move(xEnt* entplat, xScene* s, F32 dt, xEntFrame* frame)
 {
-    zPlatform* plat = (zPlatform*)entPlat;
+    zPlatform* plat = (zPlatform*)entplat;
     xEntMotionMove(&plat->motion, s, dt, frame);
     xEntDriveUpdate(&plat->drv, s, dt, NULL);
 }
@@ -1120,11 +1124,11 @@ void zPlatform_Mount(zPlatform* plat)
     }
 }
 
-void zPlatform_Dismount(zPlatform* ent)
+void zPlatform_Dismount(zPlatform* plat)
 {
-    if ((ent->subType == ePlatformTypeBreakaway) && (ent->state == 1))
+    if ((plat->subType == ePlatformTypeBreakaway) && (plat->state == 1))
     {
-        ent->state = 0;
+        plat->state = 0;
     }
 }
 

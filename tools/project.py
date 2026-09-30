@@ -626,7 +626,22 @@ def generate_build_ninja(
     # MWCC
     mwcc = compiler_path / "mwcceppc.exe"
     mwcc_cmd = f"{wrapper_cmd}{mwcc} $cflags -MMD -c $in -o $basedir"
-    mwcc_implicit: List[Optional[Path]] = [compilers_implicit or mwcc, wrapper_implicit]
+    # Anything a pre-compile step produces (e.g. a derived compiler) is a real
+    # input to compilation: without this, editing it leaves stale objects.
+    pre_compile_outputs: List[Path] = []
+    if config.custom_build_steps:
+        for custom_step in config.custom_build_steps.get("pre-compile", []):
+            step_outputs = custom_step.get("outputs")
+            if isinstance(step_outputs, list):
+                pre_compile_outputs.extend(step_outputs)
+            elif step_outputs is not None:
+                pre_compile_outputs.append(step_outputs)
+
+    mwcc_implicit: List[Optional[Path]] = [
+        compilers_implicit or mwcc,
+        wrapper_implicit,
+        *pre_compile_outputs,
+    ]
 
     # MWCC with UTF-8 to Shift JIS wrapper
     mwcc_sjis_cmd = f"{wrapper_cmd}{sjiswrap} {mwcc} $cflags -MMD -c $in -o $basedir"
@@ -1074,6 +1089,21 @@ def generate_build_ninja(
                 link_built_obj = True
                 built_obj_path = asm_build(obj, obj.asm_path, obj.asm_obj_path)
 
+            # TEMP (playtest build): add every game translation unit to whatever
+            # the normal build already links. Revert to: link_built_obj =
+            # obj.completed (line above).
+            #
+            # Keep `obj.completed` in the test. Dropping it and taking the
+            # libraries from the retail objects instead looks equivalent -- a
+            # Matching object is byte-identical -- but it is not, because the
+            # extracted objects have lost some relocations. The retail
+            # __start.o sets r1 from a baked immediate where our source has
+            # `lis r1, _stack_addr@h`, so linking the extracted one boots the
+            # game on retail's stack address, which in this layout sits inside
+            # our .sdata2 and quietly overwrites MSL's constant tables.
+            if config.non_matching:
+                link_built_obj = obj.completed or obj_name.startswith(("SB/Core", "SB/Game"))
+
             if link_built_obj and built_obj_path is not None:
                 # Use the source-built object
                 link_step.add(built_obj_path)
@@ -1455,6 +1485,9 @@ def generate_objdiff_config(
         "GC/1.3.2r": "mwcc_242_81r",
         "GC/2.0": "mwcc_247_92",
         "GC/2.0p1": "mwcc_247_92p1",
+        # Locally patched 2.0p1 (tools/patch_compiler.py); decomp.me only has
+        # the stock build, so scratches fall back to it.
+        "GC/2.0p1a": "mwcc_247_92p1",
         "GC/2.5": "mwcc_247_105",
         "GC/2.6": "mwcc_247_107",
         "GC/2.7": "mwcc_247_108",

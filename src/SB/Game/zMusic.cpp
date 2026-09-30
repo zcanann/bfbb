@@ -36,8 +36,6 @@ static F32 sMusicTimer[TRACK_COUNT] = { 0.0f, 0.0f };
 extern eGameMode gGameMode;
 extern zGlobals globals;
 
-static const F32 minDelay = 0.001f;
-
 static void volume_update(F32 vol);
 
 static void volume_reset()
@@ -196,6 +194,7 @@ static S32 getCurrLevelMusicEnum()
 
 static S32 zMusicDo(S32 track)
 {
+
     S32 snd_enum;
     F32 vol;
     F32 pitch;
@@ -240,26 +239,24 @@ static S32 zMusicDo(S32 track)
     sMusicTrack[track].loop = sMusicSoundID[snd_enum][1];
 
     pitch = 0.0f;
-    if (snd_enum == 9 && globals.scenePreload->sceneID == 'KF04')
+    if (snd_enum == 9 && globals.sceneCur->sceneID == 'KF04')
     {
         pitch = -12.0f;
         vol *= 0.7f;
     }
 
-    // FIXME: loop operator
-    U32 snd_id = sMusicSoundID[snd_enum][track];
     sMusicTrack[track].snd_id =
-        xSndPlay(snd_id, vol, pitch, 0xFF, sMusicTrack[track].loop, 0, SND_CAT_MUSIC, 0.0f);
+        xSndPlay(sMusicSoundID[snd_enum][0], vol, pitch, 0xFF,
+                 (sMusicTrack[track].loop ? 0x8000 : 0) | 0x10000 | (track << 11) | 0x20000, 0,
+                 SND_CAT_MUSIC, 0.0f);
 
-    // FIXME: This isn't quite right
     if (sMusicTrack[track].snd_id != 0)
     {
-        sMusicTrack[track].snd_id = snd_id;
-        sMusicTrack[track].assetID = sMusicSoundID[snd_enum][track];
+        sMusicTrack[track].assetID = sMusicSoundID[snd_enum][0];
         sMusicTrack[track].lastVol = vol;
         if (sMusicQueueData[track] != NULL)
         {
-            sMusicQueueData[track]->sndid = snd_id;
+            sMusicQueueData[track]->sndid = sMusicTrack[track].snd_id;
             sMusicQueueData[track]->elapsedTime = 0.0f;
             sMusicQueueData[track]->count += 1;
             sMusicQueueData[track] = NULL;
@@ -274,7 +271,6 @@ static S32 zMusicDo(S32 track)
 void zMusicNotify(S32 situation)
 {
     zMusicSituation* s;
-    S32 track;
 
     if (sMusicPaused)
     {
@@ -293,10 +289,9 @@ void zMusicNotify(S32 situation)
         return;
     }
 
-    track = s->track;
-    sMusicQueueData[track] = &sMusicInfo[situation];
-    sMusicTimer[track] = s->punchDelay;
-    sMusicQueueData[track]->game_state = (gGameMode == eGameMode_Game);
+    sMusicQueueData[s->track] = s;
+    sMusicTimer[s->track] = s->punchDelay;
+    sMusicQueueData[s->track]->game_state = (gGameMode == eGameMode_Game);
 }
 
 void zMusicNotifyEvent(const F32* toParam, xBase* base)
@@ -323,14 +318,13 @@ void zMusicNotifyEvent(const F32* toParam, xBase* base)
     s = &sMusicInfo[musicInfoIdx];
     track = s->track;
 
-    // FIXME: Body (and maybe conditions) aren't quite right
     if (musicEnum != sMusicLastEnum[track] && sMusicQueueData[track] == NULL &&
         (s->countMax == 0 || s->count < s->countMax) && !(s->delay > s->elapsedTime))
     {
-        sMusicTimer[track] = s->punchDelay;
-        sMusicQueueData[track] = s;
-        sMusicQueueData[track]->game_state = (gGameMode == eGameMode_Game);
-        sMusicQueueData[track]->music_enum = musicEnum;
+        sMusicQueueData[s->track] = s;
+        sMusicTimer[s->track] = s->punchDelay;
+        sMusicQueueData[s->track]->game_state = (gGameMode == eGameMode_Game);
+        sMusicQueueData[s->track]->music_enum = musicEnum;
     }
 }
 
@@ -346,23 +340,21 @@ void zMusicUpdate(F32 dt)
 
         for (i = 0; i < TRACK_COUNT; i++)
         {
-            if (sMusicTimer[i] != 0.0f || sMusicQueueData[i] != NULL)
+            if ((sMusicTimer[i] != 0.0f || sMusicQueueData[i] != NULL) &&
+                (gGameMode == eGameMode_Game) == sMusicQueueData[i]->game_state)
             {
-                if ((gGameMode == eGameMode_Game) == sMusicQueueData[i]->game_state)
+                if (sMusicTimer[i] > 0.0f)
                 {
-                    if (sMusicTimer[i] > 0.0f)
+                    sMusicTimer[i] -= dt;
+                    if (sMusicTimer[i] < 0.0f)
                     {
-                        sMusicTimer[i] -= dt;
-                        if (sMusicTimer[i] < 0.0f)
-                        {
-                            sMusicTimer[i] = 0.0f;
-                        }
+                        sMusicTimer[i] = 0.0f;
                     }
+                }
 
-                    if (!sMusicTimer[i] && sMusicQueueData[i] != NULL)
-                    {
-                        zMusicDo(i);
-                    }
+                if (sMusicTimer[i] == 0.0f && sMusicQueueData[i] != NULL)
+                {
+                    zMusicDo(i);
                 }
             }
         }
@@ -374,7 +366,7 @@ void zMusicUpdate(F32 dt)
 static void volume_update(F32 vol)
 {
     F32 oldVol = volume.cur;
-    if (volume.inc >= 1e-5f && volume.inc <= -1e-5f)
+    if (volume.inc >= -1e-5f && volume.inc <= 1e-5f)
     {
         volume.cur = volume.end;
     }
@@ -383,10 +375,11 @@ static void volume_update(F32 vol)
         volume.cur = volume.inc * vol + volume.cur;
     }
 
-    if ((volume.inc < 0.0f && volume.cur <= volume.end) ||
+    S32 fadeDown = (volume.inc < 0.0f) ? 1 : 0;
+    if ((fadeDown && volume.cur <= volume.end) ||
         (!(volume.inc < 0.0f) && volume.cur >= volume.end))
     {
-        volume.end = volume.cur;
+        volume.cur = volume.end;
         volume.inc = 0.0f;
     }
 
@@ -475,13 +468,12 @@ void zMusicUnpause(S32 kill)
 // This version of it matches 33%. It's also functionally incorrect.
 void zMusicSetVolume(float vol, float delay)
 {
-    volume.cur = vol; // This makes it introduce the "frsp" instruction.
-    volume.inc = vol - volume.cur;
+    volume.end = vol;
+    volume.inc = volume.end - volume.cur;
 
-    if (delay >
-        minDelay) // Doing the if statement likes this makes it generate the "blelr" instruction
+    if (delay > 0.001f)
     {
-        volume.inc = vol / delay;
+        volume.inc = volume.inc / delay;
     }
 }
 

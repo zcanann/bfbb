@@ -3,7 +3,11 @@
 
 #include <rwsdk/rwcore.h>
 #include <rwsdk/rtquat.h>
-#include "rtslerp.h"
+#include <rwsdk/rtslerp.h>
+
+/* C compatibility: these headers use bare tag names as types. */
+typedef struct RtQuatSlerpCache RtQuatSlerpCache;
+
 
 struct RtQuatSlerpCache
 {

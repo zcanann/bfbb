@@ -4,7 +4,24 @@
 #include "xDebug.h"
 
 #include <PowerPC_EABI_Support/MSL_C++/MSL_Common/Include/new.h>
+#include <math.h>
 #include <types.h>
+
+// NOTE: these two belong in headers (std::fmodf in <math.h>, xfmod in
+// xMathInlines.h). They are inline, so the compiler emits a weak out-of-line
+// copy into every translation unit that calls them.
+namespace std
+{
+    extern inline float fmodf(float x, float y)
+    {
+        return ::fmod(x, y);
+    }
+}
+
+inline F32 xfmod(F32 a, F32 b)
+{
+    return std::fmodf(a, b);
+}
 
 namespace xhud
 {
@@ -20,14 +37,10 @@ void xhud::unit_meter_widget::load(xBase& data, xDynAsset& asset, size_t arg2)
     new (widget) unit_meter_widget((unit_meter_asset&)asset);
 }
 
-xhud::unit_meter_widget::unit_meter_widget(const xhud::unit_meter_asset& a) : meter_widget(a)
+xhud::unit_meter_widget::unit_meter_widget(const xhud::unit_meter_asset& a)
+    : meter_widget(a), res(a)
 {
     S32 i, j;
-    // for (i = 0; i < 18; i++)
-    // {
-        res.id = a.id;
-        res.baseType = a.baseType;
-    // }
 
     anim_time = 0.0f;
 
@@ -35,7 +48,7 @@ xhud::unit_meter_widget::unit_meter_widget(const xhud::unit_meter_asset& a) : me
     {
         for (j = 0; j < 6; j++)
         {
-            xModelInstance* m = load_model(res.model[i].id);
+            model[j][i] = load_model(res.model[i].id);
         }
     }
 
@@ -83,7 +96,7 @@ void xhud::unit_meter_widget::update(F32 dt)
 {
     meter_widget::updater(dt);
 
-    if (!widget::visible() || this->rc.a <= (5.0f / 255.0f))
+    if (!widget::visible() || this->rc.a <= (0.5f / 255.0f))
     {
         return;
     }
@@ -106,8 +119,7 @@ void xhud::unit_meter_widget::update(F32 dt)
         xModelInstance* m = model[i][which];
         if (m != NULL && m->Anim != NULL && !(m->Anim->Single->State->Data->Duration <= 0.0f))
         {
-            // TODO: Float ops aren't quite right
-            F32 duration = i * 0.1f + anim_time;
+            F32 duration = i * tweak_anim_time_delta + anim_time;
             if (duration > m->Anim->Single->State->Data->Duration) {
                 duration = xfmod(duration, m->Anim->Single->State->Data->Duration);
             }
@@ -141,9 +153,9 @@ void xhud::unit_meter_widget::render()
             continue;
         }
 
-        unitrc.loc.x = res.offset.x * i + rc.loc.x + res.model[which].loc.x;
-        unitrc.loc.y = res.offset.y * i + rc.loc.y + res.model[which].loc.y;
-        unitrc.loc.z = res.offset.z * i + rc.loc.z + res.model[which].loc.z;
+        unitrc.loc.x = rc.loc.x + res.model[which].loc.x + res.offset.x * i;
+        unitrc.loc.y = rc.loc.y + res.model[which].loc.y + res.offset.y * i;
+        unitrc.loc.z = rc.loc.z + res.model[which].loc.z + res.offset.z * i;
         unitrc.size.x = rc.size.x * res.model[which].size.x;
         unitrc.size.y = rc.size.y * res.model[which].size.y;
         unitrc.size.z = rc.size.z * res.model[which].size.z;

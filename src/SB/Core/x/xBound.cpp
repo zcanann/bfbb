@@ -170,8 +170,6 @@ static void xBoundOBBIsectRay(const xBox* b, const xMat4x3* m, const xRay3* r, x
 
         if ((F32)iabs(len2 - 1.0f) <= 0.00001f)
         {
-            // non-matching: loads of m are not reused
-
             scale.x = 1.0f;
 
             mnormal.right.x = m->right.x;
@@ -205,8 +203,6 @@ static void xBoundOBBIsectRay(const xBox* b, const xMat4x3* m, const xRay3* r, x
 
         if ((F32)iabs(len2 - 1.0f) <= 0.00001f)
         {
-            // non-matching: loads of m are not reused
-
             scale.y = 1.0f;
 
             mnormal.up.x = m->up.x;
@@ -240,8 +236,6 @@ static void xBoundOBBIsectRay(const xBox* b, const xMat4x3* m, const xRay3* r, x
 
         if ((F32)iabs(len2 - 1.0f) <= 0.00001f)
         {
-            // non-matching: loads of m are not reused
-
             scale.z = 1.0f;
 
             mnormal.at.x = m->at.x;
@@ -471,15 +465,6 @@ xVec3& xVec3::operator-=(const xVec3& v)
     this->x -= v.x;
     this->y -= v.y;
     this->z -= v.z;
-
-    return *this;
-}
-
-xVec3& xVec3::operator=(const xVec3& v)
-{
-    this->x = v.x;
-    this->y = v.y;
-    this->z = v.z;
 
     return *this;
 }

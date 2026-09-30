@@ -76,7 +76,7 @@ void iSndPause(U32 snd, U32 pause);
 void iSndStop(U32 snd);
 void iSndUpdate();
 
-void iSndFindFreeVoice(U32 priority, U32 flags, U32 owner);
+S32 iSndFindFreeVoice(U32 priority, U32 flags, U32 owner);
 
 S32 iSndPlay(xSndVoiceInfo* vp);
 S32 iSndPrepStream(xSndVoiceInfo *);
@@ -102,9 +102,4 @@ void iSndResume();
 
 F32 iSndGetVol(U32 snd);
 
-// FIXME: delete these
-struct vinfo;
-U32 SampleToNybbleAddress(U32 sample);
-void iSndCalcVol(xSndVoiceInfo* xSndVoiceInfo, vinfo* vinfo);
-void iSndCalcVol3d(xSndVoiceInfo* xSndVoiceInfo, vinfo* vinfo);
 #endif

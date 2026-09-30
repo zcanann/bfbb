@@ -5,7 +5,7 @@
 #include <string.h>
 
 static RwV3d* sCurrVert;
-static S32 sAtomicStartCount;
+static volatile S32 sAtomicStartCount;
 static RwV3d** sAtomicStartVert;
 
 

@@ -35,6 +35,8 @@ RpAtomic* iModelFileNew(void* buffer, U32 size);
 void iModelRender(RpAtomic* model, RwMatrix* mat);
 void iModelUnload(RpAtomic* userdata);
 void iModelAnimMatrices(RpAtomic* model, xQuat* quat, xVec3* tran, RwMatrixTag* mat);
+U32 iModelNormalEval(xVec3* out, const RpAtomic& m, const RwMatrixTag* mat, size_t index,
+                     S32 size, const xVec3* in);
 static RpMaterial* iModelSetMaterialTextureCB(RpMaterial* material, void* data);
 
 #endif

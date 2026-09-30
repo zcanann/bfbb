@@ -30,7 +30,8 @@ struct zNPCGoalHurt : zNPCGoalPushAnim
     virtual S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene);
 };
 
-// FIXME: Put this in somewhere.
+// Defined in zNPCSupport.h; forward-declared here because only a pointer is
+// needed and that header is not otherwise required by this one.
 struct NPCWidget;
 
 struct zNPCGoalPlayerNear : zNPCGoalCommon
@@ -47,7 +48,7 @@ struct zNPCGoalPlayerNear : zNPCGoalCommon
 
     void ChkCheatMedic();
     void DoCheatPanHandle();
-    void ChkCheatDogTrix(S32* goal, en_trantype* trantype);
+    void ChkCheatDogTrix(S32* nextgoal, en_trantype* trantype);
 
     virtual S32 Enter(F32 dt, void* updCtxt);
     virtual S32 Exit(F32 dt, void* updCtxt);

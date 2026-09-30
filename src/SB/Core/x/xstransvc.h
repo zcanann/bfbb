@@ -33,6 +33,7 @@ char* xSTAssetName(U32 aid);
 char* xSTAssetName(void* raw_HIP_asset);
 S32 xSTGetAssetInfo(U32 aid, st_PKR_ASSET_TOCINFO* tocainfo);
 S32 xSTGetAssetInfoByType(U32 type, S32 idx, st_PKR_ASSET_TOCINFO* ainfo);
+S32 xSTGetAssetInfoInHxP(U32 aid, st_PKR_ASSET_TOCINFO* ainfo, U32 hipHash);
 char* xST_xAssetID_HIPFullPath(U32 aid);
 S32 PKRShutdown();
 char* xST_xAssetID_HIPFullPath(U32 aid, U32* sceneID);

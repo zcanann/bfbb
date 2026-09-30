@@ -73,4 +73,11 @@ F32 xrmod(F32 ang);
 
 template <class T> T range_limit(T v, T minv, T maxv);
 
+// The primary has no definition; each of these is defined in the unit that uses it.
+// Declared here so a use sees the specialization.
+template <> F32 range_limit<F32>(F32 v, F32 minv, F32 maxv);
+template <> U16 range_limit<U16>(U16 v, U16 minv, U16 maxv);
+template <> S32 range_limit<S32>(S32 v, S32 minv, S32 maxv);
+template <> size_t range_limit<size_t>(size_t v, size_t minv, size_t maxv);
+
 #endif

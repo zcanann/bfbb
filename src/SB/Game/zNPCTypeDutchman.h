@@ -15,6 +15,12 @@ namespace auto_tweak
 {
     template <class T1, class T2>
     void load_param(T1&, T2, T2, T2, xModelAssetParam*, U32, const char*);
+
+    // Specialized at the bottom of the matching .cpp, below every use; declared here so
+    // a use sees the specialization.
+    template <> void load_param<S32, S32>(S32&, S32, S32, S32, xModelAssetParam*, U32, const char*);
+    template <> void load_param<xVec3, S32>(xVec3&, S32, S32, S32, xModelAssetParam*, U32, const char*);
+    template <> void load_param<F32, F32>(F32&, F32, F32, F32, xModelAssetParam*, U32, const char*);
 };
 
 struct beam_config
@@ -188,13 +194,20 @@ struct zNPCDutchman : zNPCSubBoss
     void update_move(F32);
     void update_animation(F32);
     void update_camera(F32);
+    void update_wave(zNPCDutchman::wave_data&, F32);
+    void init_wave(zNPCDutchman::wave_data&, const xVec3&, const xVec3&);
     void kill_wave(zNPCDutchman::wave_data&);
+    void add_slime(const xVec3&, F32);
+    void add_spray(const xVec3&, F32);
     void add_splash(const xVec3&, F32);
+    xVec3 get_splash_loc() const;
+    xVec3 random_orbit(const xVec3&, F32, F32) const;
+
+    U8 turning() const;
     void vanish();
     void reappear();
     void turn_to_face(const xVec3&);
     void face_player();
-    void halt(F32 decel);
     void update_flames(F32);
     void start_fight();
     void set_life(S32);
@@ -209,6 +222,8 @@ struct zNPCDutchman : zNPCSubBoss
     void start_hand_trail();
     void stop_hand_trail();
     void refresh_reticle();
+    void halt(F32);
+    U8 turning(F32) const;
     void update_hand_trail(F32);
     void dissolve(F32);
     void coalesce(F32);
@@ -227,14 +242,15 @@ struct zNPCDutchman : zNPCSubBoss
     void start_eye_glow();
     void stop_eye_glow();
     void update_eye_glow(F32);
-    const xVec3& get_orbit() const
-    {
-        return asset->pos;
-    }
-    const xVec3& get_center() const
-    {
-        return *(const xVec3*)&model->Mat->pos;
-    }
+    const xVec3& get_orbit() const; //Weak
+    const xVec3& get_center() const; //Weak
+    const xVec3& get_facing() const;
+    xVec3 get_nose_loc() const;
+    xVec3 get_chest_loc() const;
+    void emit_particles(zParEmitter&, F32) const;
+    void emit_particles(zParEmitter&, F32, xParEmitterCustomSettings&) const;
+    zNPCLassoInfo* PRIV_GetLassoData();
+    S32 IsAlive();
     void reset_blob_mat();
     void render_beam();
     void render_halo();
@@ -250,6 +266,8 @@ struct zNPCDutchman : zNPCSubBoss
 
 struct zNPCGoalDutchmanNil : zNPCGoalCommon
 {
+    zNPCGoalDutchmanNil(S32 goalID, zNPCDutchman& npc);
+
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
 
@@ -263,6 +281,7 @@ struct zNPCGoalDutchmanInitiate : zNPCGoalCommon
 
     S32 Enter(F32, void*);
     S32 Exit(F32, void*);
+    S32 Process(en_trantype*, F32, void*, xScene*);
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
@@ -290,7 +309,10 @@ struct zNPCGoalDutchmanDisappear : zNPCGoalCommon
     {
     }
 
+    S32 Enter(F32, void*);
     S32 Exit(float, void*);
+    S32 Process(en_trantype*, F32, void*, xScene*);
+
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
 
@@ -302,7 +324,9 @@ struct zNPCGoalDutchmanTeleport : zNPCGoalCommon
     {
     }
 
+    S32 Enter(F32, void*);
     S32 Exit(float, void*);
+    S32 Process(en_trantype*, F32, void*, xScene*);
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
@@ -315,7 +339,9 @@ struct zNPCGoalDutchmanReappear : zNPCGoalCommon
     {
     }
 
+    S32 Enter(F32, void*);
     S32 Exit(float, void*);
+    S32 Process(en_trantype*, F32, void*, xScene*);
     void reset_speed();
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
@@ -354,7 +380,23 @@ struct zNPCGoalDutchmanBeam : zNPCGoalCommon
     {
     }
 
+    S32 Enter(F32, void*);
     S32 Exit(float, void*);
+    S32 Process(en_trantype*, F32, void*, xScene*);
+    void update_stop(F32);
+    void update_focus(F32);
+    void update_fire(F32);
+    void update_unfocus(F32);
+    void aim_beam(beam_data&, const xVec3&, F32) const;
+    void calc_beam_loc(xVec2&, F32, const beam_data&) const;
+    void update_beam(F32, beam_data&, S32);
+    void refresh_beam(S32);
+    void start_effects(S32, F32);
+    void add_miss_effects(S32, F32);
+    void add_blast_effects(S32, F32);
+    void add_effects(S32, F32);
+    void predict_target(xVec3&) const;
+
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
 
@@ -379,6 +421,11 @@ struct zNPCGoalDutchmanFlame : zNPCGoalCommon
 
     S32 Enter(float, void*);
     S32 Exit(float, void*);
+    S32 Process(en_trantype*, F32, void*, xScene*);
+    void update_wait(F32);
+    void update_move(F32);
+    void update_stop(F32);
+    void refresh_vulnerability();
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
@@ -392,7 +439,9 @@ struct zNPCGoalDutchmanPostFlame : zNPCGoalCommon
     }
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
+    S32 Enter(F32 dt, void* updCtxt);
     S32 Exit(F32 dt, void* updCtxt);
+    S32 Process(en_trantype*, F32, void*, xScene*);
 };
 
 struct zNPCGoalDutchmanCaught : zNPCGoalCommon
@@ -406,6 +455,7 @@ struct zNPCGoalDutchmanCaught : zNPCGoalCommon
 
     S32 Enter(float, void*);
     S32 Exit(float, void*);
+    S32 Process(en_trantype*, F32, void*, xScene*);
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
@@ -420,7 +470,9 @@ struct zNPCGoalDutchmanDamage : zNPCGoalCommon
     }
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
+    S32 Enter(F32 dt, void* updCtxt);
     S32 Exit(F32 dt, void* updCtxt);
+    S32 Process(en_trantype*, F32, void*, xScene*);
 };
 
 struct delay_goal

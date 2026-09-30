@@ -33,7 +33,7 @@ struct zNPCBSandy : zNPCBoss
     xVec3 ringEdgeCenter[8];
     xVec3 ropeNormal[8];
     xVec3 bouncePoint[8];
-    xEnt* ropeObject[4][8];
+    xEnt* ropeObject[8][4];
     xEnt* ropeObjectLo[8]; // 0x4DC
     xEnt* ropeSb; // 0x4FC
     xEnt* ropeSbDamaged; // 0x500
@@ -72,7 +72,7 @@ struct zNPCBSandy : zNPCBoss
     F32 csnTimer;
     _tagLightningAdd sparks[6]; // 0x7F8
     zLightning* wireLight[2]; // 0x978
-    xVec3 endPoints[2][4];
+    xVec3 endPoints[4][2];
     xMat4x3 sparkTransform[2][2];
     F32 timeToNextBolt[2];
     F32 maxLightningWait[2];
@@ -107,6 +107,7 @@ struct zNPCBSandy : zNPCBoss
     void hiddenByCutscene();
     void CalcMagnetizeInfo();
     void InitFX();
+    void UpdateFX(F32 dt);
 
     /*
     Sandy Full V-Table data:

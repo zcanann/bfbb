@@ -28,7 +28,6 @@ void NPC_entwrap_bupdate(xEnt*, xVec3*);
 void NPC_entwrap_move(xEnt*, xScene*, F32, xEntFrame*);
 void NPC_entwrap_render(xEnt*);
 
-// The order of the function pointer assignment instructions at the end of the
 void xNPCBasic::Init(xEntAsset* asset)
 {
     if (0.0f == asset->scale.x)
@@ -86,7 +85,7 @@ void xNPCBasic::Init(xEntAsset* asset)
     move = &NPC_entwrap_move;
     render = &NPC_entwrap_render;
 
-    baseFlags &= 0xffef;
+    baseFlags &= (U16)0xffef;
 }
 
 void xNPCBasic::Reset()

@@ -20,12 +20,12 @@
 #define IMODEL_MAX_MATERIALS 16
 
 RpWorld* instance_world;
-RwCamera* volatile instance_camera;
+RwCamera* instance_camera;
 
 static U32 gLastAtomicCount;
 static RpAtomic* gLastAtomicList[IMODEL_MAX_ATOMICS];
 static RpLight* sEmptyDirectionalLight[IMODEL_MAX_DIRECTIONAL_LIGHTS];
-static RpLight* volatile sEmptyAmbientLight;
+static RpLight* sEmptyAmbientLight;
 static RwRGBA sMaterialColor[IMODEL_MAX_MATERIALS];
 static RwTexture* sMaterialTexture[IMODEL_MAX_MATERIALS];
 static U8 sMaterialAlpha[IMODEL_MAX_MATERIALS];
@@ -93,9 +93,7 @@ RpAtomic* FindAndInstanceAtomicCallback(RpAtomic* model, void* data)
     }
     if (gLastAtomicCount < 0x100)
     {
-        // sda scheduling
-        gLastAtomicList[gLastAtomicCount] = model;
-        gLastAtomicCount++;
+        gLastAtomicList[gLastAtomicCount++] = model;
     }
 
     RwFrame* root = RwFrameGetRoot((RwFrame*)(model->object).object.parent);
@@ -121,9 +119,7 @@ RpAtomic* FindAndInstanceAtomicCallback(RpAtomic* model, void* data)
 
     if (gLastAtomicCount < 0x100)
     {
-        // sda scheduling
-        gLastAtomicList[gLastAtomicCount] = model;
-        gLastAtomicCount++;
+        gLastAtomicList[gLastAtomicCount++] = model;
     }
 
     return model;
@@ -189,9 +185,9 @@ static RpAtomic* iModelStreamRead(RwStream* stream)
         {
             if (i != maxIndex)
             {
-                testRadius = gLastAtomicList[i]->boundingSphere.radius +
-                             xVec3Dist((xVec3*)&gLastAtomicList[i]->boundingSphere.center,
-                                       (xVec3*)&gLastAtomicList[maxIndex]->boundingSphere.center);
+                testRadius = xVec3Dist((xVec3*)&gLastAtomicList[i]->boundingSphere.center,
+                                       (xVec3*)&gLastAtomicList[maxIndex]->boundingSphere.center) +
+                             gLastAtomicList[i]->boundingSphere.radius;
                 if (testRadius > maxRadius)
                 {
                     maxRadius = testRadius;
@@ -294,12 +290,6 @@ void iModelQuatToMat(xQuat* q, xVec3* a, RwMatrixTag* t)
     t->pos.x = a->x;
     t->pos.y = a->y;
     t->pos.z = a->z;
-}
-
-F32 __deadstripped_sdata2_hack()
-{
-    F32 a = 0.0f;
-    return a;
 }
 
 void iModelAnimMatrices(RpAtomic* model, xQuat* quat, xVec3* tran, RwMatrixTag* mat)
@@ -416,18 +406,22 @@ void iModelRender(RpAtomic* model, RwMatrixTag* mat)
 
 S32 iModelCull(RpAtomic* model, RwMatrix* mat)
 {
-    RwCamera* cam = RwCameraGetCurrentCamera();
+    F32 xScale2, yScale2, zScale2;
+    RwV3d *right, *up, *at;
+    RwCamera* cam;
     RwSphere sph;
+
+    cam = RwCameraGetCurrentCamera();
 
     RwV3dTransformPoints(&sph.center, &model->boundingSphere.center, 1, mat);
 
-    // FPR hell
-    RwReal f3 = RwV3dDotProductMacro(&mat->up, &mat->up);
-    RwReal f4 = RwV3dDotProductMacro(&mat->at, &mat->at);
-    RwReal f1 = RwV3dDotProductMacro(&mat->right, &mat->right);
-
-    // cror???
-    sph.radius = model->boundingSphere.radius * xsqrt(MAX(f1, MAX(f3, f4)));
+    right = &mat->right;
+    up = &mat->up;
+    at = &mat->at;
+    xScale2 = SQR(right->x) + SQR(right->y) + SQR(right->z);
+    yScale2 = SQR(up->x) + SQR(up->y) + SQR(up->z);
+    zScale2 = SQR(at->x) + SQR(at->y) + SQR(at->z);
+    sph.radius = model->boundingSphere.radius * xsqrt(MAX3(xScale2, yScale2, zScale2));
 
     model->worldBoundingSphere = sph;
 
@@ -454,6 +448,8 @@ S32 iModelCullPlusShadow(RpAtomic* model, RwMatrix* mat, xVec3* shadowVec, S32* 
     RwSphere worldsph;
     const RwFrustumPlane* frustumPlane;
     S32 numPlanes;
+    F32 nDot;
+    F32 sDot;
 
     cam = RwCameraGetCurrentCamera();
 
@@ -472,50 +468,14 @@ S32 iModelCullPlusShadow(RpAtomic* model, RwMatrix* mat, xVec3* shadowVec, S32* 
     frustumPlane = cam->frustumPlanes;
     while (numPlanes--)
     {
-        F32 nDot = worldsph.center.x * frustumPlane->plane.normal.x +
-                   worldsph.center.y * frustumPlane->plane.normal.y +
-                   worldsph.center.z * frustumPlane->plane.normal.z;
+        nDot = worldsph.center.x * frustumPlane->plane.normal.x +
+               worldsph.center.y * frustumPlane->plane.normal.y +
+               worldsph.center.z * frustumPlane->plane.normal.z;
         nDot -= frustumPlane->plane.distance;
 
         if (nDot > worldsph.radius)
         {
-            F32 nDot;
-
-            F32 sDot = shadowVec->x * frustumPlane->plane.normal.x +
-                       shadowVec->y * frustumPlane->plane.normal.y +
-                       shadowVec->z * frustumPlane->plane.normal.z;
-            sDot -= frustumPlane->plane.distance;
-
-            if (sDot > worldsph.radius)
-            {
-                *shadowOutside = 1;
-                return 1;
-            }
-
-            frustumPlane++;
-            while (numPlanes--)
-            {
-                nDot = worldsph.center.x * frustumPlane->plane.normal.x +
-                       worldsph.center.y * frustumPlane->plane.normal.y +
-                       worldsph.center.z * frustumPlane->plane.normal.z;
-                nDot -= frustumPlane->plane.distance;
-
-                sDot = shadowVec->x * frustumPlane->plane.normal.x +
-                       shadowVec->y * frustumPlane->plane.normal.y +
-                       shadowVec->z * frustumPlane->plane.normal.z;
-                sDot -= frustumPlane->plane.distance;
-
-                if (nDot > worldsph.radius && sDot > worldsph.radius)
-                {
-                    *shadowOutside = 1;
-                    return 1;
-                }
-
-                frustumPlane++;
-            }
-
-            *shadowOutside = 0;
-            return 1;
+            goto shadow_test;
         }
 
         frustumPlane++;
@@ -523,6 +483,43 @@ S32 iModelCullPlusShadow(RpAtomic* model, RwMatrix* mat, xVec3* shadowVec, S32* 
 
     *shadowOutside = 0;
     return 0;
+
+shadow_test:
+    sDot = shadowVec->x * frustumPlane->plane.normal.x +
+           shadowVec->y * frustumPlane->plane.normal.y +
+           shadowVec->z * frustumPlane->plane.normal.z;
+    sDot -= frustumPlane->plane.distance;
+
+    if (sDot > worldsph.radius)
+    {
+        *shadowOutside = 1;
+        return 1;
+    }
+
+    frustumPlane++;
+    while (numPlanes--)
+    {
+        nDot = worldsph.center.x * frustumPlane->plane.normal.x +
+               worldsph.center.y * frustumPlane->plane.normal.y +
+               worldsph.center.z * frustumPlane->plane.normal.z;
+        nDot -= frustumPlane->plane.distance;
+
+        sDot = shadowVec->x * frustumPlane->plane.normal.x +
+               shadowVec->y * frustumPlane->plane.normal.y +
+               shadowVec->z * frustumPlane->plane.normal.z;
+        sDot -= frustumPlane->plane.distance;
+
+        if (nDot > worldsph.radius && sDot > worldsph.radius)
+        {
+            *shadowOutside = 1;
+            return 1;
+        }
+
+        frustumPlane++;
+    }
+
+    *shadowOutside = 0;
+    return 1;
 }
 
 U32 iModelVertCount(RpAtomic* model)
@@ -950,8 +947,8 @@ void iModelSetMaterialAlpha(RpAtomic* model, U8 alpha)
 
     RpGeometryForAllMaterials(geom, iModelSetMaterialAlphaCB, &alpha);
 
-    sLastMaterial = model;
     sMaterialFlags |= 0x1;
+    sLastMaterial = model;
 }
 
 // sda scheduling

@@ -591,7 +591,7 @@ void xModelAnimCollRefresh(const xModelInstance& cm)
     m.Flags |= 0x1000;
 }
 
-xVec3 xModelGetBoneLocation(const xModelInstance& model, size_t index)
+xVec3 xModelGetBoneLocation(const xModelInstance& model, u32 index)
 {
     xMat4x3& root_mat = *(xMat4x3*)model.Mat;
     xMat4x3& anim_mat = *(xMat4x3*)(model.Mat + index);

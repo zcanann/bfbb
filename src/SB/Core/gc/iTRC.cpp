@@ -189,8 +189,8 @@ void ROMFont::SwapBuffers()
 
 void ROMFont::DrawCell(S32 x, S32 y, S32 u, S32 v)
 {
-    u16 cellWidth;
-    u16 cellHeight;
+    S32 cellWidth;
+    S32 cellHeight;
 
     s16 tex_bottom;
     s16 tex_right;

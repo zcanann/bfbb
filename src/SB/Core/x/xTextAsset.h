@@ -1,5 +1,5 @@
 #ifndef XTEXTASSET_H
-#define XTESTASSET_H
+#define XTEXTASSET_H
 
 #include <types.h>
 

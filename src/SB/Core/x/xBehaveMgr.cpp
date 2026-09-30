@@ -16,8 +16,7 @@ void xBehaveMgr_Startup()
 
 void xBehaveMgr_Shutdown()
 {
-    g_modinit--;
-    if (g_modinit == 0)
+    if (--g_modinit == 0)
     {
         if (g_behavmgr != NULL)
         {
@@ -215,9 +214,10 @@ void xPsyche::Amnesia(S32 i)
 // Non-matching: Loop/alloc issue
 S32 xPsyche::IndexInStack(S32 gid) const
 {
+    S32 top = this->staktop;
     S32 da_idx = -1;
 
-    for (S32 i = 0; i <= this->staktop; i++)
+    for (S32 i = 0; i <= top; i++)
     {
         xGoal* tmpgoal = this->goalstak[i];
 
@@ -245,11 +245,14 @@ xGoal* xPsyche::GetCurGoal() const
 // Non-matching: Loop/alloc issue
 xGoal* xPsyche::GIDInStack(S32 gid) const
 {
+    S32 top = this->staktop;
     xGoal* da_goal = NULL;
+    xGoal* tmpgoal;
+    S32 i;
 
-    for (S32 i = 0; i <= this->staktop; i++)
+    for (i = 0; i <= top; i++)
     {
-        xGoal* tmpgoal = this->goalstak[i];
+        tmpgoal = this->goalstak[i];
 
         if (gid == tmpgoal->GetID())
         {
@@ -1042,4 +1045,80 @@ void xPsyche::TimerUpdate(F32 dt)
 
     p = &this->tmr_stack[0][this->staktop];
     *p += dt;
+}
+
+// NOTE: these belong in xListItem.h. They are template members, so the
+// compiler emits a weak out-of-line copy into every translation unit that
+// instantiates them.
+template <class T> T* xListItem<T>::Next()
+{
+    return next;
+}
+
+template <class T> void xListItem<T>::Insert(T* list)
+{
+    prev = list;
+    next = list->next;
+
+    if (list->next != NULL)
+    {
+        list->next->prev = (T*)this;
+    }
+
+    list->next = (T*)this;
+}
+
+template <class T> T* xListItem<T>::RemHead(T** listhead)
+{
+    if (*listhead == NULL)
+    {
+        return NULL;
+    }
+
+    T* head = (*listhead)->Head();
+
+    if (head == NULL)
+    {
+        *listhead = NULL;
+    }
+    else
+    {
+        *listhead = head->Next();
+        head->Remove();
+    }
+
+    return head;
+}
+
+template <class T> T* xListItem<T>::Head()
+{
+    T* item = (T*)this;
+
+    if (item == NULL)
+    {
+        return item;
+    }
+
+    while (item->prev != NULL)
+    {
+        item = item->prev;
+    }
+
+    return item;
+}
+
+template <class T> void xListItem<T>::Remove()
+{
+    if (next != NULL)
+    {
+        next->prev = prev;
+    }
+
+    if (prev != NULL)
+    {
+        prev->next = next;
+    }
+
+    next = NULL;
+    prev = NULL;
 }

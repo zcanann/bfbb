@@ -31,7 +31,8 @@ static xVec3 sUnderCamPos;
 static ztextbox* sHideText[5];
 
 /* .sbss */
-widget_chunk* comboHUD; // TODO: should be externed in the header, but that doesn't show up in objdiff
+// TODO: comboHUD should be externed in the header, but that does not show up in objdiff
+widget_chunk* comboHUD;
 static zUIFont* sHideUIF;
 static S32 comboPending;
 static S32 comboLastCounter;
@@ -61,41 +62,41 @@ static zComboReward comboReward[16] = {
     { 100, "COMBO_13_TXT", {}, 0, NULL },
 };
 
-static void fillCombo(zComboReward* reward)
+static void fillCombo(zComboReward* r)
 {
-    S32 rewardLeft = reward->reward;
+    S32 rewardLeft = r->reward;
     S32 j = 0;
 
     while (rewardLeft > 0)
     {
         if (rewardLeft >= globals.player.g.ShinyValuePurple)
         {
-            reward->rewardList[j++] = 0;
+            r->rewardList[j++] = 0;
             rewardLeft -= globals.player.g.ShinyValuePurple;
         }
         else if (rewardLeft >= globals.player.g.ShinyValueBlue)
         {
-            reward->rewardList[j++] = 1;
+            r->rewardList[j++] = 1;
             rewardLeft -= globals.player.g.ShinyValueBlue;
         }
         else if (rewardLeft >= globals.player.g.ShinyValueGreen)
         {
-            reward->rewardList[j++] = 2;
+            r->rewardList[j++] = 2;
             rewardLeft -= globals.player.g.ShinyValueGreen;
         }
         else if (rewardLeft >= globals.player.g.ShinyValueYellow)
         {
-            reward->rewardList[j++] = 3;
+            r->rewardList[j++] = 3;
             rewardLeft -= globals.player.g.ShinyValueYellow;
         }
         else
         {
-            reward->rewardList[j++] = 4;
+            r->rewardList[j++] = 4;
             rewardLeft -= globals.player.g.ShinyValueRed;
         }
     }
 
-    reward->rewardNum = j;
+    r->rewardNum = j;
 }
 
 void zCombo_Setup()
@@ -107,9 +108,11 @@ void zCombo_Setup()
 
     comboHUD = (widget_chunk*)zSceneFindObject(xStrHash("HUD_TEXT_COMBOMESSAGE"));
 
-    if (comboHUD != NULL)
+    widget_chunk* hud = comboHUD;
+
+    if (hud != NULL)
     {
-        comboHUD->w.enable();
+        hud->w.enable();
         comboHUD->w.hide();
     }
 
@@ -161,9 +164,12 @@ void zCombo_Add(S32 points)
     {
         comboTimer = comboMaxTime;
         comboCounter += points;
-        if (comboPending != 0)
+
+        S32 pending = comboPending;
+
+        if (pending != 0)
         {
-            comboCounter += comboPending;
+            comboCounter += pending;
             comboPending = 0;
         }
     }
@@ -176,9 +182,11 @@ void zComboHideMessage(xhud::widget& w, xhud::motive& motive)
 
 void zCombo_HideImmediately()
 {
-    if (comboHUD != NULL)
+    widget_chunk* hud = comboHUD;
+
+    if (hud != NULL)
     {
-        comboHUD->w.text[0] = '\0';
+        hud->w.text[0] = '\0';
     }
 }
 
@@ -187,19 +195,22 @@ void zCombo_Update(F32 dt)
     xVec3Copy(&sUnderCamPos, &globals.camera.mat.pos);
     xVec3AddScaled(&sUnderCamPos, &globals.camera.mat.up, -3.0f);
 
-    S32 toShow = comboCounter;
-    if (comboCounter >= 16)
+    S32 counter = comboCounter;
+    S32 toShow = counter;
+    if (counter >= 16)
     {
         toShow = 15;
     }
 
     zComboReward* c = &comboReward[toShow];
 
-    if (comboLastCounter != comboCounter && c->reward != 0)
+    if (comboLastCounter != counter && c->reward != 0)
     {
-        if (comboHUD != NULL)
+        widget_chunk* hud = comboHUD;
+
+        if (hud != NULL)
         {
-            strcpy(comboHUD->w.text, xTextAssetGetText(c->textAsset));
+            strcpy(hud->w.text, xTextAssetGetText(c->textAsset));
             comboHUD->w.show();
         }
         comboLastCounter = comboCounter;
@@ -219,9 +230,11 @@ void zCombo_Update(F32 dt)
         comboHUD->w.text[0] = '\0';
     }
 
-    if (comboTimer >= 0.0f)
+    F32 timer = comboTimer;
+
+    if (timer >= 0.0f)
     {
-        comboTimer -= dt;
+        comboTimer = timer - dt;
 
         if (comboTimer < 0.0f)
         {

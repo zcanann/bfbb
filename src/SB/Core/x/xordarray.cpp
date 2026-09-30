@@ -12,11 +12,11 @@ void XOrdInit(st_XORDEREDARRAY* array, S32 size, S32 tempAlloc)
     }
     if (tempAlloc)
     {
-        array->list = (void**)xMemPushTemp(cnt << 2);
+        array->list = (void**)xMemPushTemp(cnt * sizeof(void*));
     }
     else
     {
-        array->list = (void**)xMemAlloc(gActiveHeap, cnt << 2, 0);
+        array->list = (void**)xMemAlloc(gActiveHeap, cnt * sizeof(void*), 0);
     }
     array->cnt = 0;
     array->max = cnt;

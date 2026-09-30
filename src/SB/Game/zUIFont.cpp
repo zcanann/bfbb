@@ -11,8 +11,6 @@
 #include "xEvent.h"
 #include "xColor.h"
 
-static const basic_rect<F32> _855_0 = { 0, 0, 0, 0 }; // remove when decomping zUIFont_Render
-
 extern F32 _930;
 extern F64 _932_0;
 

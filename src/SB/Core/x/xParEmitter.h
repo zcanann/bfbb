@@ -37,8 +37,19 @@ struct xParInterp
 
     void set(F32, F32, F32, U32);
     void set(F32); // Used in zNPCDutchman
-    void order();
-    void operator=(const xParInterp& p);
+
+    void order()
+    {
+        F32 f1;
+        F32 f2;
+        f1 = this->val[1];
+        f2 = this->val[0];
+        if (f1 < f2)
+        {
+            this->val[1] = f2;
+            this->val[0] = f1;
+        }
+    }
 };
 
 // Size 0x138
@@ -60,6 +71,35 @@ struct xParEmitterPropsAsset : xBaseAsset
     xVec3 vel; // 0x124
     U32 emit_limit; // 0x130
     F32 emit_limit_reset_time; // 0x134
+};
+
+// Which fields of an xParEmitterCustomSettings override the emitter's own asset
+// for the duration of one xParEmitterEmitCustom() call. Every bit below gates
+// exactly one assignment in that function, and the mapping is read straight off
+// it -- so the VALUES are certain.
+//
+// The NAMES are not. No debug symbol in dwarf/ names this enum, so these
+// identifiers are ours, chosen to mirror the field each bit gates. Bits 0x20
+// and 0x80 are never tested and so have no name here.
+enum en_xParEmitterCustomFlags
+{
+    // Copy the emitter and prop assets aside before applying the overrides and
+    // copy them back after emitting, so the overrides last one particle only.
+    eParEmitterCustomSaveRestore = 0x1,
+    eParEmitterCustomLife = 0x2,
+    eParEmitterCustomSizeBirth = 0x4,
+    eParEmitterCustomSizeDeath = 0x8,
+    // value[0], which unions with `rate`.
+    eParEmitterCustomRate = 0x10,
+    eParEmitterCustomVelAngleVariation = 0x40,
+    eParEmitterCustomPos = 0x100,
+    eParEmitterCustomVel = 0x200,
+    eParEmitterCustomColorBirth = 0x400,
+    eParEmitterCustomColorDeath = 0x800,
+    // Overwrites e_entbound as an F32, and only for the circle and sphere
+    // emitter types.
+    eParEmitterCustomRadius = 0x1000,
+    eParEmitterCustomEmitVolume = 0x2000
 };
 
 // Size 0x16c
@@ -127,22 +167,20 @@ struct xParEmitter : xBase
 
 struct xScene;
 
-void add_tweaks(xParEmitter& pe);
 S32 xParInterpConvertInterpMode(xParInterp* p);
 void xParEmitterInit(void* b, void* tasset);
 void xParEmitterInit(xBase* b, xParEmitterAsset* pea);
 void xParEmitterSetup(xParEmitter* t);
 void xParEmitterReset(xParEmitter* t);
-S32 xParEmitterEventCB(xBase* to, xBase* from, U32 toEvent, F32* toParam, xBase* toParamWidget);
+S32 xParEmitterEventCB(xBase* to, xBase* from, U32 toEvent, const F32* toParam,
+                       xBase* toParamWidget);
 xPar* xParEmitterEmitCustom(xParEmitter* p, F32 dt, xParEmitterCustomSettings* info);
 U32 xParEmitterCull(xParEmitter* t, xPar* p);
 F32 xParInterpCompute(S32 interp_mode, xParInterp* r, F32 time, S32 time_has_elapsed, F32 lastVal);
-xPar* xParEmitterEmitSetTexIdxs(xPar* p, xParSys* ps);
+xPar* xParEmitterEmitSetTexIdxs(xPar* p, const xParSys* ps);
 xPar* xParEmitterEmit(xParEmitter* pe, F32 emit_dt, F32 par_dt);
 void xParEmitterUpdate(xBase* to, xScene*, F32 dt);
 void xParEmitterDestroy();
-void xParEmitterEmit(xParEmitter* pe, F32 dt);
+xPar* xParEmitterEmit(xParEmitter* pe, F32 dt);
 
-void sSaveEmmiterSettings(xParEmitterAsset* a, xParEmitterAsset* b, F32 c);
-void sSaveEmmiterPropSettings(xParEmitterPropsAsset* a, xParEmitterPropsAsset* b, F32 c);
 #endif

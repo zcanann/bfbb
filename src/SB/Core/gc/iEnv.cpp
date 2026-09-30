@@ -6,8 +6,8 @@
 #include "xMemMgr.h"
 
 static S32 sBeginDrawFX;
-static RpWorld* sPipeWorld;
-static RwCamera* sPipeCamera;
+static RpWorld* volatile sPipeWorld;
+static RwCamera* volatile sPipeCamera;
 static iEnv* lastEnv;
 
 static RpAtomic* SetPipelineCB(RpAtomic* atomic, void* data)
@@ -62,8 +62,6 @@ void iEnvLoad(iEnv* env, const void* data, U32, S32 dataType)
 
             sPipeCamera = iCameraCreate(640, 480, 0);
             sPipeWorld = env->world;
-
-            // non-matching: sPipeCamera and sPipeWorld loads are skipped
 
             RpWorldAddCamera(sPipeWorld, sPipeCamera);
 

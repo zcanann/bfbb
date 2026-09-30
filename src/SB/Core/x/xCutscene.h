@@ -64,16 +64,16 @@ struct xCutsceneTime
 
 struct XCSNNosey
 {
+    virtual void CanRenderNow()
+    {
+    }
+
+    virtual void UpdatedAnimated(RpAtomic*, RwMatrixTag*, U32, U32)
+    {
+    }
+
     void* userdata;
     S32 flg_nosey;
-
-    void CanRenderNow()
-    {
-    }
-
-    void UpdatedAnimated(RpAtomic*, RwMatrixTag*, U32, U32)
-    {
-    }
 };
 
 struct xCutscene

@@ -379,12 +379,16 @@ void zGameCheats(float dt)
     else if ((globals.pad0->pressed & (X | Y)) == 0)
     {
         sCheatTimer -= dt;
-        if (!(sCheatTimer <= 0.0f))
+        // The original reloads sCheatTimer here instead of reusing the value it
+        // just stored; the volatile read is what keeps that load.
+        if (*(volatile F32*)&sCheatTimer <= 0.0f)
+        {
+            startover = true;
+        }
+        else
         {
             return;
         }
-        startover = true;
-        // For some reason there's a double branch here where the first just jumps past the second one.
     }
 
     if (!startover)
@@ -460,8 +464,21 @@ void GEC_dfltSound()
 
     if (!init)
     {
-        // Fun hack.
-        // FIXME: See if we can figure out why HB01 is in the string table here.
+        // Answering the old "why is HB01 in the string table" question: it is
+        // there because retail's .rodata for this TU literally BEGINS with
+        //     "HB01 SBG01030 "
+        // -- checked with objdump -s -j .rodata on the target object, offset 0.
+        // CodeWarrior pools string literals in order of first use, so retail's
+        // source referenced "HB01" in this file before it referenced
+        // "SBG01030". Nothing we have decompiled references it any more, so
+        // that use is either in a function still missing or in a debug path
+        // that did not survive.
+        //
+        // Writing the two as one adjacent-literal pair and indexing five bytes
+        // past the start is how we reproduce that pool layout: the hash is
+        // taken over "SBG01030", while "HB01" is forced into the pool ahead of
+        // it. (The unrelated "HB01_FREE_MOVIE_PASS" further down is a genuine
+        // separate string and lands later in the pool.)
         aid_sndList[0] = xStrHash("HB01\0"
                                   "SBG01030" +
                                   5);
@@ -632,8 +649,18 @@ void GEC_cb_NoPantsMode()
 
 void GEC_cb_CruiseControl()
 {
-    static U32 choices[3] = { xStrHash("SBG01060_c"), xStrHash("SBG01058_b"),
-                              xStrHash("SBG01054_b") };
+    static U32 choices[3] = {};
+    static signed char init;
+
+    if (!init)
+    {
+        choices[0] = xStrHash("SBG01060_c");
+        choices[1] = xStrHash("SBG01058_b");
+        choices[2] = xStrHash("SBG01054_b");
+
+        // scheduling memes preventing match
+        init = true;
+    }
 
     U32 snd = xUtil_choose<U32>(choices, 3, NULL);
 

@@ -13,6 +13,8 @@
 #include "xMathInlines.h"
 #include "zNPCGoals.h"
 #include "zGrid.h"
+#include "zLightning.h"
+#include "zNPCSupplement.h"
 
 U32 g_hash_ambianim[12] = { 0 };
 char* g_strz_ambianim[12] = {
@@ -20,10 +22,22 @@ char* g_strz_ambianim[12] = {
     "Fidget03", "Move01", "Bumped01", "Dance01", "Pray01",   "Attack01",
 };
 extern zGlobals globals;
-extern F32 zNPCTypeAmbientx40600000;
-extern F32 zNPCTypeAmbientx405f66f3;
-extern F32 zNPCTypeAmbientx3f400000;
-extern F32 zNPCTypeAmbientx3edf66f3;
+
+zNPCAmbient::zNPCAmbient(S32 myType) : zNPCCommon(myType)
+{
+}
+
+zNPCJelly::zNPCJelly(S32 myType) : zNPCAmbient(myType)
+{
+}
+
+zNPCNeptune::zNPCNeptune(S32 myType) : zNPCAmbient(myType)
+{
+}
+
+zNPCMimeFish::zNPCMimeFish(S32 myType) : zNPCAmbient(myType)
+{
+}
 
 void ZNPC_Ambient_Startup()
 {
@@ -94,59 +108,54 @@ xAnimTable* ZNPC_AnimTable_Jelly()
 {
     xAnimTable* table = (xAnimTable*)xAnimTableNew("zNPCJelly", NULL, 0);
 
-    S32 local_887[] = {
+    S32 ourAnims[] = {
         1, 7, 4, 8, 11, 0,
     };
 
-#define f882 1.0f
-#define f883 0.0f
-
-    xAnimTableNewState(table, g_strz_ambianim[1], 0x110, 1, f882, 0, 0, f883, 0, 0,
+    xAnimTableNewState(table, g_strz_ambianim[1], 0x110, 1, 1.0f, 0, 0, 0.0f, 0, 0,
                        xAnimDefaultBeforeEnter, 0x0, 0x0);
-    xAnimTableNewState(table, g_strz_ambianim[7], 0x110, 1, f882, 0, 0, f883, 0, 0,
+    xAnimTableNewState(table, g_strz_ambianim[7], 0x110, 1, 1.0f, 0, 0, 0.0f, 0, 0,
                        xAnimDefaultBeforeEnter, 0x0, 0x0);
-    xAnimTableNewState(table, g_strz_ambianim[4], 0x20, 1, f882, 0, 0, f883, 0, 0,
+    xAnimTableNewState(table, g_strz_ambianim[4], 0x20, 1, 1.0f, 0, 0, 0.0f, 0, 0,
                        xAnimDefaultBeforeEnter, 0x0, 0x0);
-    xAnimTableNewState(table, g_strz_ambianim[8], 0x10, 1, f882, 0, 0, f883, 0, 0,
+    xAnimTableNewState(table, g_strz_ambianim[8], 0x10, 1, 1.0f, 0, 0, 0.0f, 0, 0,
                        xAnimDefaultBeforeEnter, 0x0, 0x0);
-    xAnimTableNewState(table, g_strz_ambianim[11], 0x10, 1, f882, 0, 0, f883, 0, 0,
+    xAnimTableNewState(table, g_strz_ambianim[11], 0x10, 1, 1.0f, 0, 0, 0.0f, 0, 0,
                        xAnimDefaultBeforeEnter, 0x0, 0x0);
 
-    NPCC_BuildStandardAnimTran(table, g_strz_ambianim, local_887, 1, 0.2f);
+    NPCC_BuildStandardAnimTran(table, g_strz_ambianim, ourAnims, 1, 0.2f);
 
     return table;
 }
 
 xAnimTable* ZNPC_AnimTable_Neptune()
 {
-    S32 local_48[] = {
+    S32 ourAnims[] = {
         1, 2, 3, 4, 5, 6, 0,
     };
 
     xAnimTable* table = (xAnimTable*)xAnimTableNew("zNPCNeptune", NULL, 0);
 
-#define f903 0.5f
+    xAnimTableNewState(table, g_strz_ambianim[1], 0x10, 0, 1.0f, 0, 0, 0.0f, 0, 0,
+                       xAnimDefaultBeforeEnter, 0x0, 0x0);
+    xAnimTableNewState(table, g_strz_ambianim[2], 0x10, 0, 1.0f, 0, 0, 0.0f, 0, 0,
+                       xAnimDefaultBeforeEnter, 0x0, 0x0);
+    xAnimTableNewState(table, g_strz_ambianim[3], 0x10, 0, 1.0f, 0x0, 0x0, 0.0f, 0x0, 0x0,
+                       xAnimDefaultBeforeEnter, 0x0, 0x0);
+    xAnimTableNewState(table, g_strz_ambianim[4], 0x20, 0, 1.0f, 0x0, 0x0, 0.0f, 0x0, 0x0,
+                       xAnimDefaultBeforeEnter, 0x0, 0x0);
+    xAnimTableNewState(table, g_strz_ambianim[5], 0x20, 0, 1.0f, 0, 0, 0.0f, 0, 0,
+                       xAnimDefaultBeforeEnter, 0x0, 0x0);
+    xAnimTableNewState(table, g_strz_ambianim[6], 0x20, 0, 1.0f, 0, 0, 0.0f, 0, 0,
+                       xAnimDefaultBeforeEnter, 0x0, 0x0);
+    NPCC_BuildStandardAnimTran(table, g_strz_ambianim, ourAnims, 1, 0.5f);
 
-    xAnimTableNewState(table, g_strz_ambianim[1], 0x10, 0, f882, 0, 0, f883, 0, 0,
-                       xAnimDefaultBeforeEnter, 0x0, 0x0);
-    xAnimTableNewState(table, g_strz_ambianim[2], 0x10, 0, f882, 0, 0, f883, 0, 0,
-                       xAnimDefaultBeforeEnter, 0x0, 0x0);
-    xAnimTableNewState(table, g_strz_ambianim[3], 0x10, 0, f882, 0x0, 0x0, f883, 0x0, 0x0,
-                       xAnimDefaultBeforeEnter, 0x0, 0x0);
-    xAnimTableNewState(table, g_strz_ambianim[4], 0x20, 0, f882, 0x0, 0x0, f883, 0x0, 0x0,
-                       xAnimDefaultBeforeEnter, 0x0, 0x0);
-    xAnimTableNewState(table, g_strz_ambianim[5], 0x20, 0, f882, 0, 0, f883, 0, 0,
-                       xAnimDefaultBeforeEnter, 0x0, 0x0);
-    xAnimTableNewState(table, g_strz_ambianim[6], 0x20, 0, f882, 0, 0, f883, 0, 0,
-                       xAnimDefaultBeforeEnter, 0x0, 0x0);
-    NPCC_BuildStandardAnimTran(table, g_strz_ambianim, local_48, 1, f903);
-
-    xAnimTableNewTransition(table, g_strz_ambianim[4], g_strz_ambianim[1], 0x0, 0x0, 0x10, 0, f883,
-                            f883, 0, 0, f903, 0x0);
-    xAnimTableNewTransition(table, g_strz_ambianim[5], g_strz_ambianim[2], 0x0, 0x0, 0x10, 0, f883,
-                            f883, 0, 0, f903, 0x0);
-    xAnimTableNewTransition(table, g_strz_ambianim[6], g_strz_ambianim[3], 0x0, 0x0, 0x10, 0, f883,
-                            f883, 0, 0, f903, 0x0);
+    xAnimTableNewTransition(table, g_strz_ambianim[4], g_strz_ambianim[1], 0x0, 0x0, 0x10, 0, 0.0f,
+                            0.0f, 0, 0, 0.5f, 0x0);
+    xAnimTableNewTransition(table, g_strz_ambianim[5], g_strz_ambianim[2], 0x0, 0x0, 0x10, 0, 0.0f,
+                            0.0f, 0, 0, 0.5f, 0x0);
+    xAnimTableNewTransition(table, g_strz_ambianim[6], g_strz_ambianim[3], 0x0, 0x0, 0x10, 0, 0.0f,
+                            0.0f, 0, 0, 0.5f, 0x0);
 
     return table;
 }
@@ -195,7 +204,7 @@ void zNPCAmbient::SelfSetup()
 U32 zNPCAmbient::AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal)
 {
     S32 idx;
-    U32 anim = 0;
+    U32 da_anim = 0;
 
     switch (gid)
     {
@@ -211,22 +220,56 @@ U32 zNPCAmbient::AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal)
 
     if (idx >= 0)
     {
-        anim = g_hash_ambianim[idx];
+        da_anim = g_hash_ambianim[idx];
     }
 
-    return anim;
+    return da_anim;
 }
 
 S32 zNPCAmbient::NPCMessage(NPCMsg* mail)
 {
+    zNPCGoalCommon* curgoal;
+    zNPCGoalCommon* recgoal;
     xPsyche* psy = psy_instinct;
-    if (psy != NULL)
+    S32 handled;
+
+    if (psy)
     {
-        if (psy->GetCurGoal() != NULL)
+        curgoal = (zNPCGoalCommon*)psy->GetCurGoal();
+        if (curgoal)
         {
+            handled = curgoal->NPCMessage(mail);
+            if (handled)
+            {
+                return handled;
+            }
+        }
+
+        recgoal = (zNPCGoalCommon*)psy->GetPrevRecovery(0);
+        while (recgoal)
+        {
+            if (recgoal != curgoal)
+            {
+                handled = recgoal->NPCMessage(mail);
+                if (handled)
+                {
+                    return handled;
+                }
+            }
+
+            recgoal = (zNPCGoalCommon*)psy->GetPrevRecovery(recgoal->GetID());
         }
     }
-    return 0;
+
+    // Retail dispatches this through the vtable (slot 0xCC): AmbiHandleMail is
+    // virtual in zNPCAmbient so zNPCJelly's override handles NPC_MID_DAMAGE.
+    handled = AmbiHandleMail(mail);
+    if (!handled)
+    {
+        handled = zNPCCommon::NPCMessage(mail);
+    }
+
+    return handled;
 }
 
 void zNPCJelly::Init(xEntAsset* asset)
@@ -247,20 +290,20 @@ void zNPCJelly::ParseINI()
     selfType = xNPCBasic::SelfType();
     if (selfType == NPC_TYPE_JELLYBLUE)
     {
-        cfg_npc->spd_moveMax = 3.5f; //zNPCTypeAmbientx40600000;
-        cfg_npc->spd_turnMax = 3.4906585f; //zNPCTypeAmbientx405f66f3;
+        cfg_npc->spd_moveMax = 3.5f;
+        cfg_npc->spd_turnMax = 3.4906585f;
     }
     else if (selfType == NPC_TYPE_JELLYPINK)
     {
         if (globals.sceneCur->sceneID == 'JF04') //DAT_803c2518 is globals.sceneCur->sceneID
         {
-            cfg_npc->spd_moveMax = 3.5f; //zNPCTypeAmbientx40600000;
-            cfg_npc->spd_turnMax = 3.4906585f; //zNPCTypeAmbientx405f66f3;
+            cfg_npc->spd_moveMax = 3.5f;
+            cfg_npc->spd_turnMax = 3.4906585f;
         }
         else
         {
-            cfg_npc->spd_moveMax = 0.75f; //zNPCTypeAmbientx3f400000;
-            cfg_npc->spd_turnMax = 0.43633232f; //zNPCTypeAmbientx3edf66f3;
+            cfg_npc->spd_moveMax = 0.75f;
+            cfg_npc->spd_turnMax = 0.43633232f;
         }
     }
 }
@@ -317,118 +360,100 @@ void zNPCJelly::JellyKill()
     }
 }
 
-U32 zNPCJelly::AnimPick(S32 animID, en_NPC_GOAL_SPOT gspot, xGoal* goal)
+U32 zNPCJelly::AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* goal)
 {
-    U32 r8 = 0;
-    S32 r31 = -1;
+    U32 da_anim = 0;
+    S32 idx = -1;
 
-    switch (animID)
+    switch (gid)
     {
     case 'NGN0': // 8c
     {
-        r31 = 1;
+        idx = 1;
         break;
     }
     case 'NGN3': // 94
     {
-        r31 = 4;
+        idx = 4;
         break;
     }
     case 'NGN1': // 9c
     case 'NGN2': // 9c
     {
-        r31 = 7;
+        idx = 7;
         break;
     }
     case 'NGN5': // a4
     {
-        r31 = 1;
+        idx = 1;
         break;
     }
     case 'NGJ2': // ac
     {
-        r31 = 1;
+        idx = 1;
         break;
     }
     case 'NGJ1': // b4
     {
-        r31 = 8;
+        idx = 8;
         break;
     }
     case 'NGJ0': // bc
     {
-        r31 = 11;
+        idx = 11;
         break;
     }
     default: // c4
     {
-        r8 = this->zNPCAmbient::AnimPick(animID, gspot, goal);
+        da_anim = this->zNPCAmbient::AnimPick(gid, gspot, goal);
         break;
     }
     }
 
-    if (r31 >= 0)
+    if (idx >= 0)
     {
-        r8 = g_hash_ambianim[r31];
+        da_anim = g_hash_ambianim[idx];
     }
 
-    return r8;
+    return da_anim;
 }
 
-// Non-match
 void zNPCJelly::BUpdate(xVec3*)
 {
-    xVec3 pos_bnd;
     static const xVec3 vec_offset = { 0.0f, 0.0f, 0.0f };
 
-    xVec3* pos = (xVec3*)this->zNPCCommon::BonePos(2);
-
-    // Not sure about this.
-    // zNPCCommon::BonePos is not in DWARF.
-    // The decompiled code looks like it returns a vec3
-    // So I assumed that was its return type
-    // and this code looks like it's using the x,y,z of that
-    // but for some reason the compiler generated lwz instead of lfs
-    // and stw instead of stfs
-    pos_bnd.x = pos->x;
-    pos_bnd.y = pos->y;
-    pos_bnd.z = pos->z;
-
+    xVec3 pos_bnd = *(const xVec3*)BonePos(2);
     pos_bnd += vec_offset;
+    xMat3x3RMulVec(&pos_bnd, (const xMat3x3*)BoneMat(0), &pos_bnd);
+    pos_bnd += *(const xVec3*)BonePos(0);
 
-    xMat3x3RMulVec(&pos_bnd, (xMat3x3*)this->zNPCCommon::BoneMat(0), pos);
-
-    pos_bnd += *((xVec3*)this->zNPCCommon::BonePos(0));
-    this->bound.sph.center = pos_bnd;
-
-    this->bound.sph.r = 0.5f; // @903 // Could be sph or cyl
-    xQuickCullForBound(&this->bound.qcd, &this->bound);
+    bound.sph.center = pos_bnd;
+    bound.sph.r = 0.5f;
+    xQuickCullForBound(&bound.qcd, &bound);
 
     zGridUpdateEnt(this);
 }
 
 void zNPCJelly::ActLikeOctopus()
 {
-    if ((int)this->model->Data->geometry->numVertices >= 1)
+    S32 num_vert;
+    S32 i;
+    S32 stride;
+    xVec3 pos_emit;
+
+    num_vert = model->Data->geometry->numVertices;
+    if (num_vert < 1)
     {
-        S32 supertemp = (this->model->Data->geometry->numVertices >> 4);
-        int tempvar;
-        if (supertemp >= 0)
-        {
-            tempvar = supertemp;
-        }
-
-        for (U32 i = 0; this->model->Data->geometry->numVertices > i; i = i + tempvar)
-        {
-            iModelVertEval(model->Data, i, 1, model->Mat, NULL, NULL);
-            zFX_SpawnBubbleTrail(&this->bound.sph.center, 4);
-        }
+        return;
     }
-}
 
-U32 zNPCNeptune::AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal)
-{
-    return 0;
+    stride = MAX(1, num_vert / 16);
+
+    for (i = 0; i < num_vert; i += stride)
+    {
+        iModelVertEval(model->Data, i, 1, model->Mat, NULL, &pos_emit);
+        zFX_SpawnBubbleTrail(&pos_emit, 4);
+    }
 }
 
 void zNPCNeptune::ParseINI()
@@ -442,7 +467,7 @@ void zNPCNeptune::ParseINI()
 void zNPCNeptune::Reset()
 {
     zNPCAmbient::Reset();
-    flags |= 0x40;
+    flags |= XENT_0x40;
 }
 
 void zNPCMimeFish::Reset()
@@ -474,18 +499,18 @@ void zNPCJelly::Process(xScene* xscn, F32 dt)
     }
 }
 
-S32 zNPCJelly::AmbiHandleMail(NPCMsg* msg)
+S32 zNPCJelly::AmbiHandleMail(NPCMsg* mail)
 {
     S32 handled = 1;
     xPsyche* psy = this->psy_instinct;
 
-    switch (msg->msgid)
+    switch (mail->msgid)
     {
     case NPC_MID_DAMAGE:
     {
         if (psy && hitpoints >= 1)
         {
-            if (msg->dmgdata.dmg_type == DMGTYP_CRUISEBUBBLE)
+            if (mail->dmgdata.dmg_type == DMGTYP_CRUISEBUBBLE)
             {
                 this->hitpoints = this->hitpoints < 1 ? this->hitpoints : 1;
             }
@@ -524,16 +549,20 @@ S32 zNPCJelly::AmbiHandleMail(NPCMsg* msg)
 
 void zNPCJelly::PlayWithAlpha(F32 dt)
 {
+    F32 t = NPCC_TmrCycle(&this->tmr_pulseAlpha, dt, 0.5f);
+    F32 x = PI * t;
+
+    this->SetAlpha(LERP(MAX(0.0f, MIN((F32)__fabs(isin(x)), 1.0f)), 0.7f, 0.95f));
 }
 
-void zNPCJelly::SetAlpha(F32 alpha)
+void zNPCJelly::SetAlpha(F32 alf)
 {
-    xModelInstance* model = this->model;
+    xModelInstance* minst = this->model;
 
-    for (model; model != NULL; model = model->Next)
+    for (minst; minst != NULL; minst = minst->Next)
     {
-        model->Flags |= 0x4000;
-        model->Alpha = alpha;
+        minst->Flags |= 0x4000;
+        minst->Alpha = alf;
     }
 }
 
@@ -559,36 +588,240 @@ void zNPCJelly::PlayWithAnimSpd()
 
 void zNPCJelly::PumpFaster()
 {
-    F32 spd = 4.0f;
+    F32 spd_max = 4.0f;
+    F32 pct_spd = spd_throttle;
+    F32 spd_move = cfg_npc->spd_moveMax;
 
-    F32 temp3;
-    F32 temp4;
-
-    if (cfg_npc->spd_moveMax > spd)
+    if (spd_move > spd_max)
     {
-        spd = cfg_npc->spd_moveMax;
+        spd_max = spd_move;
     }
-    temp3 = this->spd_throttle / spd;
-    temp4 = CLAMP(temp3, 0.0f, 1.0f);
-    temp4 = SMOOTH(temp4, 1.0f, 2.5f);
 
-    AnimCurSingle();
+    pct_spd /= spd_max;
+    pct_spd = CLAMP(pct_spd, 0.0f, 1.0f);
+    pct_spd = SMOOTH(pct_spd, 1.0f, 2.5f);
+
+    AnimCurSingle()->CurrentSpeed = pct_spd;
 }
 
 void zNPCJelly::JellyBoneWorldPos(xVec3* pos, S32 idx_request) const
 {
     S32 idx;
-    xVec3 pos_place;
+
+    if (idx_request < 1)
+    {
+        idx = (S32)(xurand() * this->model->BoneCount);
+        if (idx < 2)
+        {
+            idx += 2;
+        }
+    }
+    else
+    {
+        idx = idx_request;
+        if (idx > this->model->BoneCount)
+        {
+            idx = 0;
+        }
+    }
+
+    xVec3 pos_place = *(const xVec3*)this->BonePos(idx);
+    xMat3x3RMulVec(&pos_place, (const xMat3x3*)this->BoneMat(0), &pos_place);
+    pos_place += *(const xVec3*)this->BonePos(0);
+
+    *pos = pos_place;
 }
 
 void zNPCJelly::PlayWithLightnin()
 {
+    _tagLightningAdd info;
+    xVec3 pos_bone;
+
+    this->JellyBoneWorldPos(&pos_bone, -1);
+
+    xVec3 pos_place = pos_bone;
+
+    memset(&info, 0, sizeof(info));
+
+    if (this->SelfType() == NPC_TYPE_JELLYBLUE)
+    {
+        NPCC_MakeLightningInfo(NPC_LYT_JELLYFISHBLUE, &info);
+    }
+    else
+    {
+        NPCC_MakeLightningInfo(NPC_LYT_JELLYFISH, &info);
+    }
+
+    info.time = 0.1f;
+    info.start = &pos_bone;
+    info.end = &pos_place;
+
+    for (S32 i = 0; i < 2; i++)
+    {
+        zLightningAdd(&info);
+    }
+}
+
+S32 JELY_grul_getAngry(xGoal* rawgoal, void* p1, en_trantype* trantype, F32 f, void* p2)
+{
+    S32 nextgoal = 0;
+    zNPCJelly* npc = (zNPCJelly*)rawgoal->psyche->clt_owner;
+    S32 skipit = 0;
+    S32 angerThresh;
+    S32 selftype;
+    F32 dst_sq;
+
+    if (!npc->npcset.allowDetect)
+    {
+        skipit = 1;
+    }
+    else if (globals.player.Health < 1)
+    {
+        skipit = 1;
+    }
+    else if (globals.player.DamageTimer > 0.0f)
+    {
+        skipit = 1;
+    }
+    else if (npc->SomethingWonderful())
+    {
+        skipit = 1;
+    }
+
+    if (skipit)
+    {
+        npc->cnt_angerLevel = 0;
+        return 0;
+    }
+
+    selftype = npc->SelfType();
+
+    if (globals.sceneCur->sceneID == 'JF04')
+    {
+        angerThresh = 100;
+    }
+    else if (selftype == NPC_TYPE_JELLYPINK)
+    {
+        angerThresh = 300;
+    }
+    else if (selftype == NPC_TYPE_JELLYBLUE)
+    {
+        angerThresh = 150;
+    }
+    else
+    {
+        angerThresh = 300;
+    }
+
+    dst_sq = npc->XYZDstSqToPlayer(NULL);
+
+    if (dst_sq < SQ(5.0f))
+    {
+        npc->cnt_angerLevel++;
+    }
+    else
+    {
+        npc->cnt_angerLevel--;
+    }
+
+    if (npc->cnt_angerLevel < 0)
+    {
+        npc->cnt_angerLevel = 0;
+    }
+
+    // Retail bug: this clamps the anger level to *above* the threshold, so the
+    // test right below always succeeds once it has fired.
+    if (npc->cnt_angerLevel > angerThresh)
+    {
+        npc->cnt_angerLevel = angerThresh + 10;
+    }
+
+    if (npc->cnt_angerLevel > angerThresh && dst_sq < SQ(3.0f))
+    {
+        npc->cnt_angerLevel = 0;
+        *trantype = GOAL_TRAN_PUSH;
+        nextgoal = NPC_GOAL_JELLYATTACK;
+    }
+
+    return nextgoal;
+}
+
+U32 zNPCNeptune::AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal)
+{
+    S32 idx;
+    U32 da_anim = 0;
+
+    switch (gid)
+    {
+    case 'NGN0':
+    {
+        const S32 choices[3] = { 1, 2, 3 };
+        idx = xUtil_choose<S32>(choices, 3, NULL);
+        break;
+    }
+    case 'NGN3':
+    {
+        const S32 choices[3] = { 4, 5, 6 };
+        idx = xUtil_choose<S32>(choices, 3, NULL);
+        break;
+    }
+    default:
+        idx = 1;
+        break;
+    }
+
+    if (idx >= 0)
+    {
+        da_anim = g_hash_ambianim[idx];
+    }
+
+    return da_anim;
+}
+
+void zNPCNeptune::Process(xScene* xscn, F32 dt)
+{
+    U32 anid;
+    xVec3 vec = { 0.0f, 0.0f, 0.0f };
+    S32 flg_fidget = (tmr_fidget < 0.0f) ? 1 : 0;
+
+    if (flg_fidget)
+    {
+        tmr_fidget =
+            cfg_npc->tym_fidget + cfg_npc->tym_fidget * (0.25f * (xurand() - 0.5f));
+
+        if (xrand() & 0x800000)
+        {
+            anid = AnimPick('NGN0', NPC_GSPOT_START, NULL);
+        }
+        else
+        {
+            anid = AnimPick('NGN3', NPC_GSPOT_START, NULL);
+        }
+
+        if (anid != 0)
+        {
+            AnimStart(anid, 0);
+        }
+    }
+    else
+    {
+        tmr_fidget = MAX(-1.0f, tmr_fidget - dt);
+    }
+
+    xVec3Sub(&vec, xEntGetPos(&globals.player.ent), xEntGetPos(this));
+    vec.y = 0.0f;
+    xVec3Normalize(&vec, &vec);
+
+    TurnToFace(dt, &vec, -1.0f);
+    VelStop();
+
+    zNPCAmbient::Process(xscn, dt);
 }
 
 U32 zNPCMimeFish::AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal)
 {
     S32 idx;
-    U32 anim = 0;
+    U32 da_anim = 0;
 
     switch (gid)
     {
@@ -605,19 +838,14 @@ U32 zNPCMimeFish::AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal)
 
     if (idx >= 0)
     {
-        anim = g_hash_ambianim[idx];
+        da_anim = g_hash_ambianim[idx];
     }
 
-    return anim;
+    return da_anim;
 }
 
 void zNPCMimeFish::Process(xScene* xscn, F32 dt)
 {
-}
-
-S32 zNPCAmbient::AmbiHandleMail(NPCMsg msg)
-{
-    return 0;
 }
 
 S32 zNPCJelly::IsAlive()
@@ -682,9 +910,4 @@ U8 zNPCNeptune::ColPenByFlags() const
 
 void zNPCNeptune::SelfSetup()
 {
-}
-
-S32 zNPCAmbient::AmbiHandleMail(NPCMsg*)
-{
-    return 0;
 }

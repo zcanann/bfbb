@@ -79,10 +79,14 @@ namespace bungee_state
     };
 
     void load(xBase& data, xDynAsset& asset, size_t);
+    void init();
+    void reset();
     bool active();
     bool landed();
     void destroy();
     void insert_animations(xAnimTable& table);
+    bool update(xScene* sc, F32 dt);
+    bool render();
     void stop();
     void load_settings(xIniFile& ini);
 } // namespace bungee_state

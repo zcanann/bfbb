@@ -197,8 +197,7 @@ void zParPTankSpawnSparkles(xVec3* pos, U32 count)
     RwCamera* camera = RwCameraGetCurrentCamera();
     if (gGameState == eGameState_Play && camera)
     {
-        // TODO: This was probably some Renderware macro
-        ref_pos = (xVec3*)((U8*)camera->object.object.parent + 0x40);
+        ref_pos = (xVec3*)&RwFrameGetMatrix(RwCameraGetFrame(camera))->pos;
     }
 
     xVec3* posit = pos;
@@ -447,8 +446,7 @@ static void zParPTankSpawnBubbles(xVec3* pos, xVec3* vel, U32 count, float scale
     RwCamera* camera = RwCameraGetCurrentCamera();
     if (gGameState == eGameState_Play && camera)
     {
-        // TODO: This was probably some Renderware macro
-        ref_pos = (xVec3*)((U8*)camera->object.object.parent + 0x40);
+        ref_pos = (xVec3*)&RwFrameGetMatrix(RwCameraGetFrame(camera))->pos;
     }
 
     xVec3* posit = pos;

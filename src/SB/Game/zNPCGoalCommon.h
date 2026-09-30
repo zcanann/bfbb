@@ -48,9 +48,6 @@ struct zNPCGoalCommon : xGoal
     {
         return 0;
     }
-
-protected:
-    ~zNPCGoalCommon();
 };
 
 #endif

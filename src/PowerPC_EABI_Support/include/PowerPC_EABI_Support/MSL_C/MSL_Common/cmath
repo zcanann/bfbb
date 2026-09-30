@@ -20,6 +20,7 @@ namespace std
     float floorf(float x);
     float logf(float x);
     float sqrtf(float x);
+    float powf(float x, float y);
 #else
     inline float atan2f(float y, float x)
     {

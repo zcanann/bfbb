@@ -40,7 +40,7 @@ struct RAD3DIMAGE
 {
     u32 width;
     u32 height;
-    u32 alpha_pixels;
+    s32 alpha_pixels;
     u32 bytes_per_pixel;
     u32 surface_format;
     void* pixels;
@@ -129,81 +129,96 @@ void Unlock_RAD_3D_image(HRAD3DIMAGE rad_image)
     }
 }
 
-static void Submit_vertices(f32 dest_x, f32 dest_y, f32 scale_x, f32 scale_y, long width,
-                            long height, f32 alpha_level)
+static void Submit_vertices(F32 x_offset, F32 y_offset, F32 x_scale, F32 y_scale, long width,
+                            long height, F32 alpha_level)
 {
-    s16 x0;
-    s16 y0;
-    s16 x1;
-    s16 y1;
+    s16 left;
+    s16 top;
+    s16 right;
     u8 alpha;
+    s16 bottom;
 
-    GXSetNumChans(0);
-    GXSetNumTexGens(1);
+    GXSetCullMode(GX_CULL_NONE);
     GXSetZMode(GX_TRUE, GX_ALWAYS, GX_TRUE);
+    GXSetColorUpdate(GX_TRUE);
     GXBegin(GX_QUADS, GX_VTXFMT0, 4);
 
-    x0 = (s16)dest_x;
-    y0 = (s16)(dest_y + (scale_y * (f32)height));
-    alpha = (u8)((s32)(alpha_level * 255.0f) & 0xff);
-    GXPosition3s16((int)x0, (int)y0, 0);
-    GXColor4u8(0xff, 0xff, 0xff, (int)alpha);
+    left = (long)x_offset;
+    bottom = (long)(height * y_scale + y_offset);
+    GXPosition3s16(left, bottom, 0);
+    alpha = (long)(255.0f * alpha_level);
+    GXColor4u8(255, 255, 255, alpha);
     GXTexCoord2f32(0.0f, 1.0f);
 
-    GXPosition3s16((int)x0, (int)(s16)dest_y, 0);
-    GXColor4u8(0xff, 0xff, 0xff, (int)alpha);
+    top = (long)y_offset;
+    GXPosition3s16(left, top, 0);
+    GXColor4u8(255, 255, 255, alpha);
     GXTexCoord2f32(0.0f, 0.0f);
 
-    x1 = (s16)(dest_x + (scale_x * (f32)width));
-    GXPosition3s16((int)x1, (int)(s16)dest_y, 0);
-    GXColor4u8(0xff, 0xff, 0xff, (int)alpha);
+    right = (long)(width * x_scale + x_offset);
+    GXPosition3s16(right, top, 0);
+    GXColor4u8(255, 255, 255, alpha);
     GXTexCoord2f32(1.0f, 0.0f);
 
-    GXPosition3s16((int)x1, (int)y0, 0);
-    GXColor4u8(0xff, 0xff, 0xff, (int)alpha);
+    GXPosition3s16(right, bottom, 0);
+    GXColor4u8(255, 255, 255, alpha);
     GXTexCoord2f32(1.0f, 1.0f);
+
     GXEnd();
 }
 
-void Blit_RAD_3D_image(HRAD3DIMAGE rad_image, f32 x_offset, f32 y_offset, f32 x_scale,
-                       f32 y_scale, f32 alpha_level)
+void Blit_RAD_3D_image(HRAD3DIMAGE rad_image, F32 x_offset, F32 y_offset, F32 x_scale, F32 y_scale,
+                       F32 alpha_level)
 {
     Mtx tex_mtx;
+    F32 screen_width;
+    F32 screen_height;
 
-    if (rad_image != 0)
+    if (rad_image == 0)
     {
-        if (alpha_level >= 1.0f)
+        return;
+    }
+
+    if (alpha_level >= 0.998f)
+    {
+        if (rad_image->alpha_pixels == 0)
         {
-            if (rad_image->alpha_pixels == 0)
-            {
-                GXSetBlendMode(GX_BM_NONE, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_CLEAR);
-            }
-            else
-            {
-                GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_CLEAR);
-                GXSetTevAlphaIn(GX_TEVSTAGE0, GX_CA_ZERO, GX_CA_TEXA, GX_CA_KONST, GX_CA_ZERO);
-            }
+            GXSetBlendMode(GX_BM_NONE, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_CLEAR);
         }
         else
         {
             GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_CLEAR);
-            if (rad_image->alpha_pixels == 0)
-            {
-                GXSetTevAlphaIn(GX_TEVSTAGE0, GX_CA_ZERO, GX_CA_RASA, GX_CA_KONST, GX_CA_ZERO);
-            }
-            else
-            {
-                GXSetTevAlphaIn(GX_TEVSTAGE0, GX_CA_ZERO, GX_CA_TEXA, GX_CA_RASA, GX_CA_ZERO);
-            }
+            GXSetTevAlphaIn(GX_TEVSTAGE0, GX_CA_ZERO, GX_CA_TEXA, GX_CA_KONST, GX_CA_ZERO);
         }
-
-        GXLoadTexObj(&rad_image->texobj, GX_TEXMAP0);
-        PSMTXScale(tex_mtx, 1.0f / (f32)rad_image->width, 1.0f / (f32)rad_image->height, 1.0f);
-        PSMTXScale(tex_mtx, 1.0f, 1.0f, 1.0f);
-        GXLoadTexMtxImm(tex_mtx, GX_TEXMTX0, GX_MTX2x4);
-        GXSetNumTexGens(1);
-        GXSetTexCoordGen(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_TEX0, GX_TEXMTX0);
-        Submit_vertices(0.0f, 0.0f, 1.0f, 1.0f, (long)640.0f, (long)480.0f, alpha_level);
-        GXSetBlendMode(GX_BM_NONE, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_CLEAR);
     }
+    else
+    {
+        GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_CLEAR);
+
+        if (rad_image->alpha_pixels == 0)
+        {
+            GXSetTevAlphaIn(GX_TEVSTAGE0, GX_CA_ZERO, GX_CA_RASA, GX_CA_KONST, GX_CA_ZERO);
+        }
+        else
+        {
+            GXSetTevAlphaIn(GX_TEVSTAGE0, GX_CA_ZERO, GX_CA_TEXA, GX_CA_RASA, GX_CA_ZERO);
+        }
+    }
+
+    GXLoadTexObj(&rad_image->texobj, GX_TEXMAP0);
+
+    PSMTXScale(tex_mtx, 1.0f / rad_image->width, 1.0f / rad_image->height, 1.0f);
+    PSMTXScale(tex_mtx, 1.0f, 1.0f, 1.0f);
+    GXLoadTexMtxImm(tex_mtx, GX_TEXMTX0, GX_MTX2x4);
+
+    GXSetNumTexGens(1);
+    GXSetTexCoordGen(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_TEX0, GX_TEXMTX0);
+
+    // Retail ignores the caller's offsets and scales and always covers the
+    // whole 640x480 screen.
+    screen_width = 640.0f;
+    screen_height = 480.0f;
+    Submit_vertices(0.0f, 0.0f, 1.0f, 1.0f, screen_width, screen_height, alpha_level);
+
+    GXSetBlendMode(GX_BM_NONE, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_CLEAR);
 }

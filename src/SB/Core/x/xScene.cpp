@@ -2,7 +2,6 @@
 
 #include "xMemMgr.h"
 #include "xCollideFast.h"
-#include "xGridCheckBound.h"
 #include "xMath.h"
 #include "xMathInlines.h"
 
@@ -590,7 +589,7 @@ void xRayHitsEnt(xScene* sc, xRay3* r, xQCData* qcr, xEnt* ent, void* colldata)
 
 void xRayHitsTikiLandableScene(xScene* sc, xRay3* r, xCollis* coll)
 {
-    coll->dist = HUGE;
+    coll->dist = FLOAT_MAX;
 
     xQCData q;
     xQuickCullForRay(&q, r);
@@ -610,7 +609,7 @@ void xRayHitsTikiLandableScene(xScene* sc, xRay3* r, xCollis* coll)
         coll->mptr = NULL;
     }
 
-    if (coll->dist < HUGE)
+    if (coll->dist < FLOAT_MAX)
     {
         coll->flags |= k_HIT_IT;
     }
@@ -622,7 +621,7 @@ void xRayHitsTikiLandableScene(xScene* sc, xRay3* r, xCollis* coll)
 
 void xRayHitsScene(xScene* sc, xRay3* r, xCollis* coll)
 {
-    coll->dist = HUGE;
+    coll->dist = FLOAT_MAX;
 
     xQCData q;
     xQuickCullForRay(&q, r);
@@ -642,7 +641,7 @@ void xRayHitsScene(xScene* sc, xRay3* r, xCollis* coll)
         coll->mptr = NULL;
     }
 
-    if (coll->dist < HUGE)
+    if (coll->dist < FLOAT_MAX)
     {
         coll->flags |= k_HIT_IT;
     }
@@ -659,7 +658,7 @@ cb_ray_hits_ent::cb_ray_hits_ent(const xRay3& ray, xCollis& coll, U8 chkby, U8 c
 
 void xRayHitsSceneFlags(xScene* sc, xRay3* r, xCollis* coll, U8 collType, U8 chk)
 {
-    coll->dist = HUGE;
+    coll->dist = FLOAT_MAX;
     coll->flags = (coll->flags & ~k_HIT_IT) | k_HIT_0x100;
 
     cb_ray_hits_ent cb(*r, *coll, collType, chk);
@@ -687,7 +686,7 @@ void xRayHitsSceneFlags(xScene* sc, xRay3* r, xCollis* coll, U8 collType, U8 chk
     {
         xCollis temp_coll;
         temp_coll.flags = coll->flags;
-        temp_coll.dist = HUGE;
+        temp_coll.dist = FLOAT_MAX;
 
         iRayHitsEnv(r, sc->env, &temp_coll);
 
@@ -884,18 +883,26 @@ static RpCollisionTriangle* nearestFloorCB(RpIntersection*, RpCollisionTriangle*
         return collTriangle;
     }
 
-    pdx[0] = nfpoly->center.x - xformVert[0].x;
-    pdx[1] = nfpoly->center.x - xformVert[1].x;
-    pdx[2] = nfpoly->center.x - xformVert[2].x;
-    pdz[0] = nfpoly->center.z - xformVert[0].z;
-    pdz[1] = nfpoly->center.z - xformVert[1].z;
-    pdz[2] = nfpoly->center.z - xformVert[2].z;
+    // Keep this as a loop. CW unrolls it into the target's straight line but
+    // still allocates pdx/pdz; writing the six fills out by hand lets it
+    // scalarise both arrays away, costing 0x10 of frame and the dead stores.
+    for (i = 0; i < 3; i++)
+    {
+        pdx[i] = nfpoly->center.x - xformVert[i].x;
+        pdz[i] = nfpoly->center.z - xformVert[i].z;
+    }
 
+    // `zero` is a matching device, not recovered source. Same shape as
+    // nearestTrackCB in zEntPlayer.cpp: pdx/pdz are written in a loop and so
+    // cannot be const, and binding the literal to a local is the only way left
+    // to stop the scheduler treating those stores as aliasing this load, which
+    // retail issues ahead of them.
+    const F32 zero = 0.0f;
     F32 f3 = pdx[0] * pdz[1] - pdz[0] * pdx[1];
     F32 f2 = pdx[1] * pdz[2] - pdz[1] * pdx[2];
     F32 f1 = pdx[2] * pdz[0] - pdz[2] * pdx[0];
 
-    if ((f3 >= 0.0f && f2 >= 0.0f && f1 >= 0.0f) || (f3 <= 0.0f && f2 <= 0.0f && f1 <= 0.0f))
+    if ((f3 >= zero && f2 >= zero && f1 >= zero) || (f3 <= zero && f2 <= zero && f1 <= zero))
     {
         nfpoly->neardist = 0.0f;
         nfpoly->vert[0] = xformVert[0];
@@ -908,7 +915,7 @@ static RpCollisionTriangle* nearestFloorCB(RpIntersection*, RpCollisionTriangle*
         return NULL;
     }
 
-    xformVert[1] = xformVert[0];
+    xformVert[3] = xformVert[0];
 
     for (i = 0; i < 3; i++)
     {
@@ -1081,7 +1088,7 @@ U32 xSceneNearestFloorPoly(xScene* sc, xNearFloorPoly* nfpoly, U8 collType, U8 c
               0.25f);
     sSphereIsx.t.sphere.center = *(RwV3d*)&sNearestBound.box.center;
 
-    nfpoly->neardist = HUGE;
+    nfpoly->neardist = FLOAT_MAX;
     nfpoly->center = sNearestBound.box.center;
     nfpoly->oid = NULL;
     nfpoly->optr = NULL;
@@ -1117,7 +1124,7 @@ U32 xSceneNearestFloorPoly(xScene* sc, xNearFloorPoly* nfpoly, U8 collType, U8 c
         }
     }
 
-    if (nfpoly->neardist != HUGE)
+    if (nfpoly->neardist != FLOAT_MAX)
     {
         nfpoly->neardist = xsqrt(nfpoly->neardist);
         return 1;

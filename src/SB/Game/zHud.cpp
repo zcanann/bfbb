@@ -24,9 +24,9 @@ namespace zhud
     {
         static U8 hiding[5];
 
-        static U32 value[5];
+        static U32* value[5];
         static U32 old_value[5];
-        static U32 max_value[5];
+        static U32* max_value[5];
         static U32 old_max_value[5];
         static xhud::widget* widgets[9];
 
@@ -102,13 +102,13 @@ namespace zhud
         }
     } // namespace
 
-    void zhud::init()
+    void init()
     {
         inited = true;
         xhud::init();
     }
 
-    void zhud::setup()
+    void setup()
     {
         S32 i;
         U32 id;
@@ -132,27 +132,27 @@ namespace zhud
         }
         else
         {
-            xhud::font_meter_widget* meter = (xhud::font_meter_widget*)zSceneFindObject(xStrHash(widget_resources[7]));
+            wc = (widget_chunk*)zSceneFindObject(xStrHash(widget_resources[7]));
+            xhud::font_meter_widget* meter = (xhud::font_meter_widget*)&wc->w;
             meter->max_value = (F32)special.max_value;
             meter->get_asset()->counter_mode = 1;
             widgets[7] = meter;
             meter->enable();
 
-            // TODO: the return of zSceneFindObject isn't a model_widget, but an object that contains a model_widget at 0x10
-            //       what is it???
-            xhud::model_widget* model = (xhud::model_widget*)zSceneFindObject(xStrHash(special.hud_model));
+            wc = (widget_chunk*)zSceneFindObject(xStrHash(special.hud_model));
+            xhud::model_widget* model = (xhud::model_widget*)&wc->w;
             widgets[8] = model;
             model->enable();
         }
         
         memset(max_value, 0x0, sizeof(max_value));
         
-        value[0] = globals.player.Health;
-        max_value[0] = globals.player.MaxHealth;
-        value[1] = globals.player.Inv_Shiny;
-        value[2] = globals.player.Inv_Spatula;
-        value[3] = globals.player.Inv_PatsSock_Total;
-        value[4] = globals.player.Inv_LevelPickups_CurrentLevel;
+        value[0] = &globals.player.Health;
+        max_value[0] = &globals.player.MaxHealth;
+        value[1] = &globals.player.Inv_Shiny;
+        value[2] = &globals.player.Inv_Spatula;
+        value[3] = &globals.player.Inv_PatsSock_Total;
+        value[4] = &globals.player.Inv_LevelPickups_CurrentLevel;
 
         for (i = 0; i < 5; i++) 
         {
@@ -161,26 +161,26 @@ namespace zhud
                 xhud::meter_widget* meter = (xhud::meter_widget*)get_meter_widget(meter_widget_index[i]);
                 if (max_value[i] != 0)
                 {
-                    old_max_value[i] = max_value[i];
-                    meter->max_value = (F32)max_value[i];
+                    old_max_value[i] = *max_value[i];
+                    meter->max_value = (F32)old_max_value[i];
                 }
 
-                old_value[i] = value[i];
-                meter->set_value_immediate((F32)value[i]);
+                old_value[i] = *value[i];
+                meter->set_value_immediate((F32)old_value[i]);
                 hiding[i] = 0;
             }
         }
     }
 
-    void zhud::destroy()
+    void destroy()
     {
         inited = false;
-        memset(widgets, 0x0, 0x24);
+        memset(widgets, 0x0, sizeof(widgets));
         xhud::destroy();
         last_paused = true;
     }
 
-    void zhud::update(F32 dt)
+    void update(F32 dt)
     {
         S32 i = 0;
 
@@ -213,19 +213,16 @@ namespace zhud
 
         for (i = 0; i < 5; i++)
         {
-            U32 updated_value = 1;
-            if (value[i] == old_value[i])
+            bool updated_value = true;
+            if (old_value[i] == *value[i])
             {
-                updated_value = 0;
+                updated_value = false;
             }
-            
-            U32 another_updated_value = 0;
-            if (updated_value & 0xFF || (max_value[i] != 0 && old_max_value[i] != max_value[i]))
-            {
-                another_updated_value = 1;
-            }
-            
-            if (another_updated_value & 0xFF)
+
+            bool another_updated_value =
+                updated_value || (max_value[i] != NULL && old_max_value[i] != *max_value[i]);
+
+            if (another_updated_value)
             {
                 S32 meter_idx = meter_widget_index[i];
                 if (widgets[meter_idx] != NULL) 
@@ -233,12 +230,12 @@ namespace zhud
                     xhud::meter_widget* meter = (xhud::meter_widget*)get_meter_widget(meter_idx);
                     if (max_value[i] != 0)
                     {
-                        old_max_value[i] = max_value[i];
-                        meter->max_value = (F32)max_value[i];
+                        old_max_value[i] = *max_value[i];
+                        meter->max_value = (F32)old_max_value[i];
                     }     
                     
-                    old_value[i] = value[i];
-                    meter->set_value((F32)value[i]);
+                    old_value[i] = *value[i];
+                    meter->set_value((F32)old_value[i]);
 
                     hiding[i] = 0;
                     ping_widget(*meter);
@@ -276,42 +273,50 @@ namespace zhud
         xhud::update(dt);
     }
 
-    void zhud::render()
+    void render()
     {
         xhud::render();
     }
 
-    void zhud::show()
+    void show()
     {
-        U32 i = 0;
-        while (&widgets[i] < &widgets[6])
+        xhud::widget** it = widgets;
+        xhud::widget** end = widgets + 9;
+
+        while (it < end)
         {
-            if (widgets[i] != NULL)
+            xhud::widget* widget = *it;
+            if (widget != NULL)
             {
-                xhud::widget* widget = widgets[i];
                 widget->clear_motives(xhud::delay_motive_update, (void*)zhud::hide_widget);
-                if (!(widget->showing() & 0xFF)) 
+                if (!(widget->showing() & 0xFF))
                 {
                     widget->show();
                 }
             }
 
-            i++;
+            it++;
         }
 
-        for (i = 0; i < 5; i++)
         {
-            hiding[i] = FALSE;
+            U8* it = hiding;
+            U8* end = hiding + 5;
+            while (it != end)
+            {
+                *it = 0;
+                it++;
+            }
         }
     }
 
-    void zhud::hide()
+    void hide()
     {
-        U32 i = 0;
+        xhud::widget** it = widgets;
+        xhud::widget** end = widgets + 9;
 
-        while (&widgets[i] < &widgets[6])
+        while (it < end)
         {
-            xhud::widget* widget = widgets[i];
+            xhud::widget* widget = *it;
             if (widget != NULL)
             {
                 if (!(widget->hiding() & 0xFF))
@@ -319,12 +324,18 @@ namespace zhud
                     widget->hide();
                 }
             }
-            i++;
+
+            it++;
         }
 
-        for (i = 0; i < 5; i++)
         {
-            hiding[i] = FALSE;
+            U8* it = hiding;
+            U8* end = hiding + 5;
+            while (it != end)
+            {
+                *it = 1;
+                it++;
+            }
         }
     }
 } // namespace zhud

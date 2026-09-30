@@ -22,8 +22,10 @@ U32 AlwaysConditional(xAnimTransition*, xAnimSingle*, void*)
     return 1;
 }
 
-// Equivalent
-// Mostly an issue of scheduling.
+// The target's `stw r3, nals; lwz r0, nals` reload-after-store is clause F of
+// the patched compiler (a store to a static never publishes its value for
+// forwarding), so the plain spelling now matches byte-exactly. The volatile
+// read that used to fake the reload (99.488% at its best) is gone.
 void zAnimListInit()
 {
     // ALST = Animation list https://battlepedia.org/ALST
@@ -33,10 +35,8 @@ void zAnimListInit()
         return;
     }
 
-    // << 2 is the same as multiplying by 4
-    // so it's just allocating size in bytes
-    aids = (U32*)xMemAllocSize(nals * sizeof(S32));
-    atbls = (xAnimTable**)xMemAllocSize(nals * sizeof(S32));
+    aids = (U32*)xMemAllocSize(nals * sizeof(U32));
+    atbls = (xAnimTable**)xMemAllocSize(nals * sizeof(xAnimTable*));
     anused = (S32*)xMemAllocSize(nals * sizeof(S32));
 
     for (S32 i = 0; i < nals; i++)

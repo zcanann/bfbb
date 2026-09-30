@@ -21,7 +21,18 @@ struct zMovePoint : xMovePoint
     {
         return pos;
     }
-    U32 NumNodes();
+    U32 NumNodes()
+    {
+        return asset->numPoints;
+    }
+    F32 RadiusArena()
+    {
+        return asset->arenaRadius;
+    }
+    zMovePoint* NodeByIndex(S32 i)
+    {
+        return (zMovePoint*)nodes[i];
+    }
     S32 IsOn();
 
     S32 HasSpline()

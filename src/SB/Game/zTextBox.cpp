@@ -8,14 +8,6 @@
 
 #include <string.h>
 
-extern F32 _720_1;
-extern F32 _721_1;
-extern F32 _722_0;
-extern F32 _723_0;
-extern F32 _761_1;
-
-static RwIm2DVertex vert_701[6]; // todo: move to render_bk_tex_scale
-
 iColor_tag convert(const ztextbox::asset_type::color_type& color);
 
 namespace
@@ -50,26 +42,28 @@ namespace
     {
         // non-matching: float instruction order
 
+        static RwIm2DVertex vert[6];
+
         iColor_tag c = convert(e.asset->backdrop.color);
 
-        F32 rcz = _720_1 / RwCameraGetNearClipPlane(RwCameraGetCurrentCamera());
+        F32 rcz = 1.0f / RwCameraGetNearClipPlane(RwCameraGetCurrentCamera());
         F32 nsz = RwIm2DGetNearScreenZ();
 
         xfont::set_render_state(e.bgtex);
 
         basic_rect<F32> r = e.tb.font.clip;
-        r.scale(_721_1, _722_0);
+        r.scale(640.0f, 480.0f);
 
-        set_vert(vert_701[0], r.x, r.y, _723_0, _720_1, c, nsz, rcz);
-        set_vert(vert_701[1], r.x, r.y + r.h, _723_0, _720_1, c, nsz, rcz);
-        set_vert(vert_701[2], r.x + r.w, r.y, _720_1, _723_0, c, nsz, rcz);
+        set_vert(vert[0], r.x, r.y, 0.0f, 0.0f, c, nsz, rcz);
+        set_vert(vert[1], r.x, r.y + r.h, 0.0f, 1.0f, c, nsz, rcz);
+        set_vert(vert[2], r.x + r.w, r.y, 1.0f, 0.0f, c, nsz, rcz);
 
-        vert_701[3] = vert_701[2];
-        vert_701[4] = vert_701[1];
+        vert[3] = vert[2];
+        vert[4] = vert[1];
 
-        set_vert(vert_701[5], r.x + r.w, r.y + r.h, _720_1, _720_1, c, nsz, rcz);
+        set_vert(vert[5], r.x + r.w, r.y + r.h, 1.0f, 1.0f, c, nsz, rcz);
 
-        RwIm2DRenderPrimitive(rwPRIMTYPETRILIST, vert_701, 6);
+        RwIm2DRenderPrimitive(rwPRIMTYPETRILIST, vert, 6);
 
         xfont::restore_render_state();
     }
@@ -123,7 +117,7 @@ namespace
 
                 if (a.expand == ztextbox::asset_type::EX_CENTER)
                 {
-                    e.tb.bounds.y -= _761_1 * hmore;
+                    e.tb.bounds.y -= 0.5f * hmore;
                 }
                 else if (a.expand == ztextbox::asset_type::EX_UP)
                 {

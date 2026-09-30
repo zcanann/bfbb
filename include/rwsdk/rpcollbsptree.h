@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include <rpcollis.h>
+#include <rwsdk/rpcollis.h>
 
 typedef struct RpV3dGradient RpV3dGradient;
 struct RpV3dGradient

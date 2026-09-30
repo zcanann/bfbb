@@ -44,14 +44,15 @@ static void zGustSetup(zGust* g)
     g->fx_volume = (zVolume*)zSceneFindObject(g->asset->effectID);
 }
 
-// NOTE(jelly): equivalent, reloading global variable meme
 void zGustInit()
 {
     ngusts = xSTAssetCountByType('GUST');
 
-    if (ngusts)
+    U32 n = *(volatile U16*)&ngusts;
+
+    if (n)
     {
-        gusts = (zGust*)xMemAllocSize(sizeof(zGust) * ngusts);
+        gusts = (zGust*)xMemAllocSize(sizeof(zGust) * n);
         for (U16 i = 0; i < ngusts; i++)
         {
             U32 size;
@@ -109,10 +110,10 @@ zGust* zGustGetGust(U16 n)
 // NOTE(jelly): non-matching
 void zGustUpdateEnt(xEnt* ent, xScene* sc, float dt, void* gdata)
 {
-    zGustData* data = (zGustData*)gdata;
-
     if (!gusts)
         return;
+
+    zGustData* data = (zGustData*)gdata;
 
     xCollis coll;
     coll.flags = 0;
@@ -147,7 +148,7 @@ void zGustUpdateEnt(xEnt* ent, xScene* sc, float dt, void* gdata)
             {
                 for (U32 j = 0; j < 4; j++)
                 {
-                    if (data->g[0] == &gusts[i] && data->lerp[0] == 1.0f)
+                    if (data->g[j] == &gusts[i] && data->lerp[j] == 1.0f)
                     {
                         data->lerp[j] = -1.0f;
                         break;
@@ -167,7 +168,7 @@ void zGustUpdateEnt(xEnt* ent, xScene* sc, float dt, void* gdata)
                 float lerpinc = g->asset->fade;
                 if (dt >= lerpinc)
                 {
-                    if (!(data->lerp[i] < 1.0f))
+                    if (!(data->lerp[i] < 0.0f))
                     {
                         data->lerp[i] = 1.0f;
                         continue;
@@ -215,14 +216,14 @@ void zGustUpdateEnt(xEnt* ent, xScene* sc, float dt, void* gdata)
     }
 }
 
-void zGustSave(zGust* g, xSerial* s)
+void zGustSave(zGust* ent, xSerial* s)
 {
-    xBaseSave(g, s);
+    xBaseSave(ent, s);
 }
 
-void zGustLoad(zGust* g, xSerial* s)
+void zGustLoad(zGust* ent, xSerial* s)
 {
-    xBaseLoad(g, s);
+    xBaseLoad(ent, s);
 }
 
 void zGustReset(zGust* g)
@@ -294,7 +295,8 @@ static void UpdateGustFX(zGust* g, float seconds)
         return;
 
     xParEmitterCustomSettings info;
-    info.custom_flags = 0x302; // TODO(jelly): i'm guessing this is constants or'd together
+    info.custom_flags =
+        eParEmitterCustomVel | eParEmitterCustomPos | eParEmitterCustomLife;
 
     for (i = 0; i < total_debris; i++)
     {
@@ -309,7 +311,8 @@ static void UpdateGustFX(zGust* g, float seconds)
             info.vel.x = 0.0f;
             info.vel.y = 5.0f;
             info.vel.z = 0.0f;
-            info.life.val[0] = (box->box.upper.y - box->box.lower.y) / 5.0f * 2.0f;
+            info.life.val[0] = (box->box.upper.y - box->box.lower.y) / 5.0f;
+            info.life.val[0] *= 2.0f;
         }
         else
         {

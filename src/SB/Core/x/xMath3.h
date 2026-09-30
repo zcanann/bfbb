@@ -29,16 +29,6 @@ struct xSphere
 {
     xVec3 center;
     F32 r;
-
-    xSphere& operator=(const xSphere& rhs)
-    {
-        *(S32*)(&this->center.x) = *(S32*)(&rhs.center.x);
-        *(S32*)(&this->center.y) = *(S32*)(&rhs.center.y);
-        *(S32*)(&this->center.z) = *(S32*)(&rhs.center.z);
-        this->r = rhs.r;
-
-        return *this;
-    }
 };
 
 // Size: 0x18
@@ -46,19 +36,6 @@ struct xBox
 {
     xVec3 upper;
     xVec3 lower;
-
-    xBox& operator=(const xBox& rhs)
-    {
-        *(S32*)(&this->upper.x) = *(S32*)(&rhs.upper.x);
-        *(S32*)(&this->upper.y) = *(S32*)(&rhs.upper.y);
-        *(S32*)(&this->upper.z) = *(S32*)(&rhs.upper.z);
-
-        *(S32*)(&this->lower.x) = *(S32*)(&rhs.lower.x);
-        *(S32*)(&this->lower.y) = *(S32*)(&rhs.lower.y);
-        *(S32*)(&this->lower.z) = *(S32*)(&rhs.lower.z);
-
-        return *this;
-    }
 };
 
 struct xBBox
@@ -85,16 +62,6 @@ struct xQuat
 {
     xVec3 v;
     F32 s;
-
-    xQuat& operator=(const xQuat& rhs)
-    {
-        *(S32*)(&this->v.x) = *(S32*)(&rhs.v.x);
-        *(S32*)(&this->v.y) = *(S32*)(&rhs.v.y);
-        *(S32*)(&this->v.z) = *(S32*)(&rhs.v.z);
-        this->s = rhs.s;
-
-        return *this;
-    }
 };
 
 struct xVec4
@@ -161,7 +128,7 @@ void xQuatFromAxisAngle(xQuat* q, const xVec3* a, F32 t);
 void xQuatToMat(const xQuat* q, xMat3x3* m);
 void xQuatToAxisAngle(const xQuat* q, xVec3* a, F32* t);
 F32 xQuatNormalize(xQuat* o, const xQuat* q);
-void xQuatSlerp(xQuat* q, const xQuat* a, const xQuat* b, F32 t);
+void xQuatSlerp(xQuat* o, const xQuat* a, const xQuat* b, F32 t);
 void xQuatMul(xQuat* o, const xQuat* a, const xQuat* b);
 void xQuatDiff(xQuat* o, const xQuat* a, const xQuat* b);
 
@@ -175,7 +142,7 @@ void xQuatAdd(xQuat* q, const xQuat* a, const xQuat* b);
 void xQuatCopy(xQuat*, const xQuat*);
 void xQuatFlip(xQuat* o1, const xQuat* o2);
 F32 xQuatDot(const xQuat* a, const xQuat* b);
-void xMat3x3Copy(xMat3x3* o, const xMat3x3* m); // TODO: These functions should be inline
+void xMat3x3Copy(xMat3x3* o, const xMat3x3* m);
 void xMat4x3Copy(xMat4x3* o, const xMat4x3* m);
 void xMat4x3Toworld(xVec3* o, const xMat4x3* m, const xVec3* v);
 void xMat3x3MulRotC(xMat3x3* o, xMat3x3* m, F32 _x, F32 _y, F32 _z, F32 t);
@@ -189,7 +156,11 @@ F32 xMat3x3LookVec3(xMat3x3& m, const xVec3& at);
 void xMat3x3Scale(xMat3x3* m, const xVec3* s);
 void xBoxFromLine(xBox& box, const xLine3& line);
 void xBoxFromRay(xBox& box, const xRay3& ray);
-void xMat3x3Identity(xMat3x3* matrix); // TODO: These functions should be inline
+// The only definition is the inline in zEntPlayerBungeeState.cpp: retail emits
+// the weak copy there and calls it out of line from zDiscoFloor.o, so this stays
+// a declaration.
+void xBoxFromSphere(xBox& box, const xSphere& o);
+void xMat3x3Identity(xMat3x3* matrix);
 void xMat3x3SMul(xMat3x3*, const xMat3x3*, F32);
 
 inline void xRotCopy(xRot* o, const xRot* r)

@@ -1,10 +1,15 @@
 #ifndef RTANIM_H
 #define RTANIM_H
 
-#include "rwcore.h"
+#include <rwsdk/rwcore.h>
 
-typedef struct RtAnimAnimation;
+/* C compatibility: these headers use bare tag names as types. */
+typedef struct RtAnimInterpolatorInfo RtAnimInterpolatorInfo;
+typedef struct RtAnimAnimation RtAnimAnimation;
+typedef struct RtAnimInterpolator RtAnimInterpolator;
 
+
+/* RtAnimAnimation is typedef'd above */
 typedef void (*RtAnimKeyFrameApplyCallBack)(void* result, void* voidIFrame);
 typedef void (*RtAnimKeyFrameBlendCallBack)(void* voidOut, void* voidIn1, void* voidIn2,
                                             RwReal alpha);
@@ -43,8 +48,7 @@ struct RtAnimAnimation
     void* customData;
 };
 
-typedef struct RtAnimInterpolator;
-
+/* RtAnimInterpolator is typedef'd above */
 typedef RtAnimInterpolator* (*RtAnimCallBack)(RtAnimInterpolator* animInstance, void* data);
 
 struct RtAnimInterpolator

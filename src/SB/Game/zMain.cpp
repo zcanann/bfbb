@@ -2,13 +2,43 @@
 #include "zGlobals.h"
 #include "zMain.h"
 
-#include <stdio.h>
+// NOTE: MSL_Common/printf.h declares sprintf() without an `extern "C"` guard, so
+// including it here would emit a call to the C++-mangled sprintf__FPcPCce. Retail
+// calls the C-linkage symbol.
+extern "C" int sprintf(char*, const char*, ...);
+
 #include <types.h>
 
 #include "iSystem.h"
 #include "xMemMgr.h"
 #include "zVar.h"
-#include "zAssetTypes.h"
+// NOTE: zAssetTypes.h is deliberately NOT included, and its two declarations are
+// repeated below instead. It drags in zNPCTypeBossPlankton.h and zNPCTypeDutchman.h,
+// whose inline bodies contain brace-initialised aggregates; CodeWarrior materialises
+// those templates at *parse* time, so merely including them emits a 12-byte .rodata
+// and an 8-byte .sbss2 anonymous object into this TU. Retail's zMain.o has neither,
+// and their presence displaces screen_bounds/@1170 and the three RwRGBA .sbss2 zeros.
+#include "xUtil.h"
+#include "zEntPickup.h"
+#include "xDebug.h"
+#include "xsavegame.h"
+#include "xBehaveMgr.h"
+#include "xModel.h"
+#include "xShadowSimple.h"
+#include "iMath.h"
+#include "xString.h"
+#include "xFont.h"
+#include "iCamera.h"
+#include "zUI.h"
+#include "iFile.h"
+#include "zScene.h"
+#include "zGameState.h"
+#include <dolphin/card.h>
+#include <dolphin/os.h>
+// from zAssetTypes.h - see the note above
+void zAssetStartup();
+void zAssetShutdown();
+
 #include "xTRC.h"
 #include "iTime.h"
 #include "zDispatcher.h"
@@ -25,26 +55,47 @@
 #include "zCutsceneMgr.h"
 #include "zEntPlayerBungeeState.h"
 #include "zEntPlayerOOBState.h"
-#include "zMenu.h"
 #include "iTime.h"
 #include "xstransvc.h"
-#include "zUI.h"
-
-zGlobals globals;
-xGlobals* xglobals;
-
-S32 percentageDone;
-_tagxPad* gDebugPad;
-static S32 sShowMenuOnBoot;
-S32 gGameSfxReport;
-static st_SERIAL_PERCID_SIZE g_xser_sizeinfo[3] = { { 'PLYR', 0x148 }, { 'CNTR', 0x1e0 }, { 0, 0 } };
-U32 gSoak;
 
 static const basic_rect<F32> screen_bounds = { 0.0f, 0.0f, 1.0f, 1.0f };
 
+zGlobals globals;
+xGlobals* xglobals = &globals;
+
+S32 percentageDone;
+extern _tagxPad* gDebugPad;
+static S32 sShowMenuOnBoot = 1;
+F32 gSkipTimeCutscene = 1.0f;
+F32 gSkipTimeFlythrough = 1.0f;
+extern S32 gGameSfxReport;
+static st_SERIAL_PERCID_SIZE g_xser_sizeinfo[] = { { 'PLYR', 0x148 }, { 'CNTR', 0x1e0 }, { 0, 0 } };
+
 static void zLedgeAdjust(zLedgeGrabParams* params);
+static void zMainMemCardQueryPost(S32 needed, S32 available, S32 neededFiles, S32 unk0);
 void zMainMemCardRenderText(const char*, bool);
 void RenderText(const char*, bool);
+void zMainMemCardSpaceQuery();
+extern U32 gSoak;
+
+// These are all defined in other translation units but declared in no header.
+void zPickupTableInit();
+void zMenuInit(U32 theSceneID);
+void zMenuSetup();
+U32 zMenuLoop();
+void zMenuExit();
+// zMenu.cpp defines this returning bool; zMain sees it as S32. The mangled name
+// carries no return type, so the two declarations name the same symbol - and the
+// retail zMain.o assigns the result with a plain `mr`, which only an int-typed
+// declaration produces.
+S32 zMenuCardCheckStartup(S32* bytesNeeded, S32* availOnDisk, S32* neededFiles);
+S32 zMenuGetBadCard();
+U32 zMenuGetCorruptFiles(char name[][64]);
+S32 zMenuIsFirstBoot();
+void zGameInit(U32 theSceneID);
+void zGameSetup();
+void zGameLoop();
+void zGameExit();
 
 void main(S32 argc, char** argv)
 {
@@ -52,7 +103,7 @@ void main(S32 argc, char** argv)
     S32 i;
     char* tmpStr;
 
-    memset(&globals, 0, 0x1fc8);
+    memset(&globals, 0, sizeof(globals));
     globals.firstStartPressed = TRUE;
     iSystemInit(FALSE); // 0x6d2
     zMainOutputMgrSetup();
@@ -80,8 +131,8 @@ void main(S32 argc, char** argv)
     zCameraTweakGlobal_Init();
     globals.option_vibration = 1; // 0x6c0
     globals.pad0 = xPadEnable(globals.currentActivePad); // 0x6d1
-    globals.pad1 = NULL;
-    gDebugPad = NULL;
+    globals.pad1 = 0;
+    gDebugPad = 0;
     xPadRumbleEnable(globals.currentActivePad, globals.option_vibration); //  0x6d1, 0x6c0
     xSGStartup();
     xDebugTimestampScreen();
@@ -104,6 +155,8 @@ void main(S32 argc, char** argv)
 void zMainOutputMgrSetup()
 {
     iTime tim = iTimeGet();
+    __FUNCTION__; // stands in for the (NDEBUG'd) load-timing report; retail's object
+                  // carries the __FUNCTION__ string object this evaluation emits
     iTimeDiffSec(tim);
     iTimeGet();
 }
@@ -113,6 +166,8 @@ void zMainInitGlobals()
     memset(&globals, 0, sizeof(zGlobals));
     globals.sceneFirst = 1;
     iTime tim = iTimeGet();
+    __FUNCTION__; // stands in for the (NDEBUG'd) load-timing report; retail's object
+                  // carries the __FUNCTION__ string object this evaluation emits
     iTimeDiffSec(tim);
     iTimeGet();
 }
@@ -129,9 +184,7 @@ void zLedgeAdjust(zLedgeGrabParams* params)
 
 void zMainParseINIGlobals(xIniFile* ini)
 {
-    F32 fVar1;
     U32 use_degrees;
-    double dVar7;
 
     globals.player.g.AnalogMin = xIniGetInt(ini, "g.AnalogMin", 0x20);
     globals.player.g.AnalogMax = xIniGetInt(ini, "g.AnalogMax", 0x6e);
@@ -257,7 +310,6 @@ void zMainParseINIGlobals(xIniFile* ini)
     zcam_pad_pitch_scale = xIniGetFloat(ini, "zcam_pad_pitch_scale", zcam_pad_pitch_scale);
     zcam_near_d = xIniGetFloat(ini, "zcam_near_d", zcam_near_d);
     zcam_near_h = xIniGetFloat(ini, "zcam_near_h", zcam_near_h);
-    zcam_pad_pyaw_scale = xIniGetFloat(ini, "zcam_pad_pyaw_scale", zcam_pad_pyaw_scale);
     zcam_near_pitch = xIniGetFloat(ini, "zcam_near_pitch",
                                    use_degrees ? RAD2DEG(zcam_near_pitch) : zcam_near_pitch);
 
@@ -287,9 +339,9 @@ void zMainParseINIGlobals(xIniFile* ini)
     zcam_wall_pitch = xIniGetFloat(ini, "zcam_wall_pitch",
                                    use_degrees ? RAD2DEG(zcam_wall_pitch) : zcam_wall_pitch);
 
-    zcam_overrot_min = xIniGetFloat(ini, "zcam_overrot_min", DEG2RAD(zcam_overrot_min));
-    zcam_overrot_mid = xIniGetFloat(ini, "zcam_overrot_mid", DEG2RAD(zcam_overrot_mid));
-    zcam_overrot_max = xIniGetFloat(ini, "zcam_overrot_max", DEG2RAD(zcam_overrot_max));
+    zcam_overrot_min = xIniGetFloat(ini, "zcam_overrot_min", RAD2DEG(zcam_overrot_min));
+    zcam_overrot_mid = xIniGetFloat(ini, "zcam_overrot_mid", RAD2DEG(zcam_overrot_mid));
+    zcam_overrot_max = xIniGetFloat(ini, "zcam_overrot_max", RAD2DEG(zcam_overrot_max));
 
     zcam_overrot_rate = xIniGetFloat(ini, "zcam_overrot_rate", zcam_overrot_rate);
     zcam_overrot_tstart = xIniGetFloat(ini, "zcam_overrot_tstart", zcam_overrot_tstart);
@@ -298,6 +350,24 @@ void zMainParseINIGlobals(xIniFile* ini)
     zcam_overrot_velmax = xIniGetFloat(ini, "zcam_overrot_velmax", zcam_overrot_velmax);
     zcam_overrot_tmanual = xIniGetFloat(ini, "zcam_overrot_tmanual", zcam_overrot_tmanual);
 
+    // non-matching, and the only residue in this function (41 rows of 2245; our
+    // object is exactly 14 instructions short).  Retail re-loads BOTH DEG2RAD
+    // literals (@1022 = PI, @1023 = 180.0f) for every one of these nine
+    // statements; our compiler value-numbers them once per basic block and keeps
+    // them live.  That is the known "reload after an aliasing store" defect: in
+    // retail a `stfs` to a small-data global kills a cached `.sdata2` literal
+    // load, and this branch's mwcc only has that rule in the instruction
+    // scheduler (patch clause C), not in the redundancy pass.  Reduced repro:
+    //     extern F32 a1, a2, a3;
+    //     void f() { a1 = DEG2RAD(a1); a2 = DEG2RAD(a2); a3 = DEG2RAD(a3); }
+    // The same three statements against members of a *large* global (see the
+    // DEG2RAD block above, on globals.player.g.*) are CSE'd by retail too, which
+    // is what pins the rule to small-data objects.  Measured and rejected as
+    // source shapes, all bit-identical to the plain form: `*(volatile F32*)&x =`,
+    // `extern volatile F32`, a volatile read, a `F32*` local, `*(F32*)&x`,
+    // `*&x`, a char* cast, a union member, file-scope statics, and a struct or
+    // array of the three.  Only a store through an address the compiler cannot
+    // fold defeats it, which this source does not have.
     if (use_degrees)
     {
         zcam_near_pitch = DEG2RAD(zcam_near_pitch);
@@ -312,20 +382,10 @@ void zMainParseINIGlobals(xIniFile* ini)
     zcam_overrot_mid = DEG2RAD(zcam_overrot_mid);
     zcam_overrot_max = DEG2RAD(zcam_overrot_max);
 
-    // tgsm: this seems fucky
     gSkipTimeCutscene = xIniGetFloat(ini, "gSkipTimeCutscene", gSkipTimeCutscene);
-    dVar7 = xIniGetFloat(ini, "gSkipTimeFlythrough", gSkipTimeFlythrough);
-    fVar1 = 1.0f; // @ 1002
-    if (1.0f < gSkipTimeCutscene)
-    {
-        fVar1 = gSkipTimeCutscene;
-    }
-    gSkipTimeFlythrough = 0.0f;
-    if (0.0f < dVar7)
-    {
-        gSkipTimeFlythrough = dVar7;
-    }
-    gSkipTimeCutscene = fVar1;
+    gSkipTimeFlythrough = xIniGetFloat(ini, "gSkipTimeFlythrough", gSkipTimeFlythrough);
+    gSkipTimeCutscene = (gSkipTimeCutscene > 1.0f) ? gSkipTimeCutscene : 1.0f; // @ 1002
+    gSkipTimeFlythrough = (gSkipTimeFlythrough > 0.0f) ? gSkipTimeFlythrough : 0.0f; // @ 1001
 
     globals.player.carry.minDist = xIniGetFloat(ini, "carry.minDist", 0.675f); // @1024;
     globals.player.carry.maxDist = xIniGetFloat(ini, "carry.maxDist", 1.9f); // @1025;
@@ -633,20 +693,12 @@ void zMainShowProgressBar()
 void zMainLoop()
 {
     iTime time;
-    S64 t;
     U32* preinit;
     RpAtomic* modl;
-    //RpAtomic* modl;
-    //RpAtomic* modl;
     U32 newGameSceneID;
-    U32 iconDataSize;
-    void* iconData;
-    U32 gameSceneID;
-    U32 menuModeID;
-    //int8 @5697;
-    U32 preinit_bubble_matfx[6];
-    U32 preinit_shiny_models[8];
-    U32 preinit_ADC_models[10];
+
+    static U32 preinit_bubble_matfx[] = { 0xdbd033bc, 0x452279a2, 0xc17f4bcc,
+                                          0x0cf9267a, 0x5c009d14, 0x00000000 };
 
     zMainShowProgressBar();
     xMemPushBase();
@@ -683,8 +735,7 @@ void zMainLoop()
     iTimeGet();
     xShadowSimple_Init();
     globals.pickupTable = (zAssetPickupTable*)xSTFindAssetByType('PICK', 0, 0);
-    // globals.pickupTable = zPickupTableInit();
-    // zPickupTableInit hasnt been implemented yet
+    zPickupTableInit();
     xMemPushBase();
     time = iTimeGet();
     xUtil_idtag2string('MNU4', 0);
@@ -729,6 +780,73 @@ void zMainLoop()
     xModelPoolInit(0x20, 0x40);
     xModelPoolInit(0x28, 8);
     xModelPoolInit(0x38, 1);
+
+    for (preinit = preinit_bubble_matfx; *preinit != 0; preinit++)
+    {
+        modl = (RpAtomic*)xSTFindAsset(*preinit, NULL);
+        if (modl)
+        {
+            xFXPreAllocMatFX(modl->clump);
+        }
+    }
+
+    {
+        static U32 menuModeID = 'MNU3';
+        static U32 gameSceneID = (globals.sceneStart[0] << 24) |
+                                 (globals.sceneStart[1] << 16) |
+                                 (globals.sceneStart[2] << 8) | globals.sceneStart[3];
+
+        newGameSceneID = gameSceneID;
+        xUtil_idtag2string(gameSceneID, 0);
+        xMemPushBase();
+        zMainShowProgressBar();
+        zMainMemCardSpaceQuery();
+
+        while (1)
+        {
+            zMainShowProgressBar();
+            xSerialWipeMainBuffer();
+            zCutSceneNamesTable_clearAll();
+            zMainShowProgressBar();
+
+            if (sShowMenuOnBoot)
+            {
+                zMenuInit(menuModeID);
+                zMainShowProgressBar();
+                zMainShowProgressBar();
+                zMenuSetup();
+                xFX_SceneEnter(globals.sceneCur->env->geom->world);
+                newGameSceneID = zMenuLoop();
+                zMenuExit();
+            }
+            else
+            {
+                sShowMenuOnBoot = 1;
+                globals.firstStartPressed = 1;
+                zGameModeSwitch(eGameMode_Game);
+                zGameStateSwitch(0);
+            }
+
+            if (newGameSceneID == 0)
+            {
+                zVarNewGame();
+                iTimeSetGame(0.0f);
+                gameSceneID = (globals.sceneStart[0] << 24) | (globals.sceneStart[1] << 16) |
+                              (globals.sceneStart[2] << 8) | globals.sceneStart[3];
+            }
+            else
+            {
+                gameSceneID = newGameSceneID;
+                iTimeSetGame(0.0f);
+            }
+
+            zGameInit(gameSceneID);
+            zGameSetup();
+            iProfileClear(gameSceneID);
+            zGameLoop();
+            zGameExit();
+        }
+    }
 }
 
 void zMainReadINI()
@@ -738,19 +856,18 @@ void zMainReadINI()
     U32 size;
     xIniFile* ini;
 
-    buf = iFileLoad("SB.INI", 0, &size);
-
+    buf = iFileLoad("SB.INI", NULL, &size);
     if (buf)
     {
         ini = xIniParse((char*)buf, size);
 
-        str = xIniGetString(ini, "PATH", 0);
+        str = xIniGetString(ini, "PATH", NULL);
         if (str)
         {
             iFileSetPath(str);
         }
 
-        str = xIniGetString(ini, "BOOT", 0);
+        str = xIniGetString(ini, "BOOT", NULL);
         if (str)
         {
             strcpy(globals.sceneStart, "BOOT");
@@ -768,75 +885,86 @@ void zMainReadINI()
         }
 
         globals.profile = xIniGetInt(ini, "Profile", 0);
-        strncpy(&globals.profFunc[0][0], xIniGetString(ini, "ProfFuncTriangle", ""), 0x80);
-        globals.profFunc[0][127] = 0;
-        strncpy(&globals.profFunc[1][0], xIniGetString(ini, "ProfFuncSquare", ""), 0x80);
-        globals.profFunc[1][127] = 0;
-        strncpy(&globals.profFunc[2][0], xIniGetString(ini, "ProfFuncLeft", ""), 0x80);
-        globals.profFunc[2][127] = 0;
-        strncpy(&globals.profFunc[3][0], xIniGetString(ini, "ProfFuncRight", ""), 0x80);
-        globals.profFunc[3][127] = 0;
-        strncpy(&globals.profFunc[4][0], xIniGetString(ini, "ProfFuncUp", ""), 0x80);
-        globals.profFunc[4][127] = 0;
-        strncpy(&globals.profFunc[5][0], xIniGetString(ini, "ProfFuncDown", ""), 0x80);
-        globals.profFunc[5][127] = 0;
+
+        strncpy(globals.profFunc[0], xIniGetString(ini, "ProfFuncTriangle", ""), 128);
+        globals.profFunc[0][127] = '\0';
+        strncpy(globals.profFunc[1], xIniGetString(ini, "ProfFuncSquare", ""), 128);
+        globals.profFunc[1][127] = '\0';
+        strncpy(globals.profFunc[2], xIniGetString(ini, "ProfFuncLeft", ""), 128);
+        globals.profFunc[2][127] = '\0';
+        strncpy(globals.profFunc[3], xIniGetString(ini, "ProfFuncRight", ""), 128);
+        globals.profFunc[3][127] = '\0';
+        strncpy(globals.profFunc[4], xIniGetString(ini, "ProfFuncUp", ""), 128);
+        globals.profFunc[4][127] = '\0';
+        strncpy(globals.profFunc[5], xIniGetString(ini, "ProfFuncDown", ""), 128);
+        globals.profFunc[5][127] = '\0';
 
         globals.useHIPHOP = xIniGetInt(ini, "EnableHipHopLoading", 0);
-        globals.NoMusic = (xIniGetInt(ini, "NoMusic", 0) != 0);
+        globals.NoMusic = xIniGetInt(ini, "NoMusic", 0) != 0;
+
         zMainParseINIGlobals(ini);
         zUI_ParseINI(ini);
         xIniDestroy(ini);
     }
 
-    iTimeDiffSec(iTimeGet());
+    iTime tim = iTimeGet();
+    __FUNCTION__; // stands in for the (NDEBUG'd) load-timing report; retail's object
+                  // carries the __FUNCTION__ string object this evaluation emits
+    iTimeDiffSec(tim);
     iTimeGet();
+
     RwFree(buf);
 }
 
 void zMainFirstScreen(S32 mode)
 {
     RwCamera* cam = iCameraCreate(640, 480, 0);
-    RwRGBA colour = {};
+    RwRGBA bg = {};
+    S32 i;
+    S32 vbl;
 
-    for (S32 i = 0; i < 2; i++)
+    for (i = 0; i < 2; i++)
     {
-        RwCameraClear(cam, &colour, 3);
+        RwCameraClear(cam, &bg, 3);
         RwCameraBeginUpdate(cam);
 
         if (mode)
         {
-            char legal[] = "Game and Software \xa9 2003 THQ Inc. \xa9 2003 Viacom International Inc. "
-                           "All rights reserved.\n\n"
-                           "Nickelodeon, SpongeBob SquarePants and all related titles, logos, and "
-                           "characters are trademarks of Viacom International Inc. Created by "
-                           "Stephen Hillenburg.\n\n"
-                           "Exclusively published by THQ Inc. Developed by Heavy Iron. Portions of "
-                           "this software are Copyright 1998 - 2003 Criterion Software Ltd. and its "
-                           "Licensors. THQ, Heavy Iron and the THQ logo are trademarks and/or "
-                           "registered trademarks of THQ Inc. All rights reserved.\n\n"
-                           "All other trademarks, logos and copyrights are property of their "
-                           "respective owners.\n\n"
-                           "Licensed by Nintendo";
-
-            iColor_tag color = { 0xFF, 0xE6, 0x00, 0xC8 };
+            char text[617] =
+                "Game and Software \xa9 2003 THQ Inc. \xa9 2003 Viacom International Inc. All "
+                "rights reserved.\n"
+                "\n"
+                "Nickelodeon, SpongeBob SquarePants and all related titles, logos, and characters "
+                "are trademarks of Viacom International Inc. Created by Stephen Hillenburg.\n"
+                "\n"
+                "Exclusively published by THQ Inc. Developed by Heavy Iron. Portions of this "
+                "software are Copyright 1998 - 2003 Criterion Software Ltd. and its Licensors. "
+                "THQ, Heavy Iron and the THQ logo are trademarks and/or registered trademarks of "
+                "THQ Inc. All rights reserved.\n"
+                "\n"
+                "All other trademarks, logos and copyrights are property of their respective "
+                "owners.\n"
+                "\n"
+                "Licensed by Nintendo";
+            iColor_tag color = { 255, 230, 0, 200 };
             xtextbox tb = xtextbox::create(
                 xfont::create(1, NSCREENX(19.0f), NSCREENY(22.0f), 0.0f, color, screen_bounds),
-                screen_bounds, 0x2, 0.0f, 0.0f, 0.0f, 0.0f);
+                screen_bounds, 2, 0.0f, 0.0f, 0.0f, 0.0f);
 
-            tb.set_text(legal);
+            tb.set_text(text);
             tb.bounds = screen_bounds;
             tb.bounds.contract(0.1f);
-            tb.bounds.h = tb.yextent(true);
-            tb.bounds.y = -(0.5f * tb.bounds.h - 0.5f);
-            tb.render(true);
+            tb.bounds.h = tb.yextent(1);
+            tb.bounds.y = 0.5f - 0.5f * tb.bounds.h;
+            tb.render(1);
         }
 
         RwCameraEndUpdate(cam);
         RwCameraShowRaster(cam, NULL, 1);
     }
 
-    S32 frames = 180;
-    while (--frames)
+    vbl = 180;
+    while (--vbl)
     {
         iTRCDisk::CheckDVDAndResetState();
         iVSync();
@@ -845,17 +973,269 @@ void zMainFirstScreen(S32 mode)
     iCameraDestroy(cam);
 }
 
+// non-matching at 97.051% (121 differing rows of 416; our object carries three
+// extra `mr` copies).  Pure REGS: the callee-saved set is r20-r31 in both, the
+// instruction structure matches, and only the colouring differs.  Splitting the
+// declarations from the initialisations and reordering them permutes the
+// colours - the best of ~120 orders measured, `startBytes, formatFailed,
+// formatInProgress, do_chk, fullCard, workArea, status, startupError`, reaches
+// 97.888% / 53 rows with five of the nine registers exactly right - but it can
+// never close, because our allocator pins the function's two anonymous temps
+// (the hoisted `globals` base and the `result` of CARDGetResultCode) to r30 and
+// r31 in every one of the 15 declaration orders sampled, while retail puts them
+// in r28/r29 and gives r30/r31 to startBytes and workArea.  Reverted to the
+// readable form; hoisting `result` to function scope (9 positions) and binding
+// `zGlobals& g = globals;` (9 positions) were also measured - the first changes
+// nothing at all, the second costs 1.4 points.
 void zMainMemCardSpaceQuery()
 {
-    S32 bytesNeeded;
-    S32 availOnDisk;
-    S32 neededFiles;
-    S32 do_chk;
-    S32 fullCard;
-    U8 formatInProgress;
-    U8 formatFailed;
-    eStartupErrors startupError;
-    S32 status;
+    S32 bytesNeeded = 0;
+    S32 availOnDisk = 0;
+    S32 neededFiles = 0;
+    S32 do_chk = 1;
+    S32 status = 1;
+    U8 formatInProgress = 0;
+    U8 formatFailed = 0;
+    eStartupErrors startupError = eNoError;
+    S32 fullCard = -1;
+    S32 startBytes = 0;
+    void* workArea = RwMalloc(CARD_WORKAREA_SIZE);
+
+    while (1)
+    {
+        iTRCDisk::CheckDVDAndResetState();
+
+        if (do_chk)
+        {
+            status = zMenuCardCheckStartup(&bytesNeeded, &availOnDisk, &neededFiles);
+        }
+
+        if (bytesNeeded == -1 && availOnDisk == -1 && neededFiles == -1)
+        {
+            startupError = eNoFormat;
+            fullCard = zMenuGetBadCard() - 1;
+        }
+
+        if (bytesNeeded == -5 && availOnDisk == -5 && neededFiles == -5)
+        {
+            startupError = eDamagedCard;
+            fullCard = zMenuGetBadCard() - 1;
+        }
+
+        if (bytesNeeded == -2 && availOnDisk == -2 && neededFiles == -2)
+        {
+            startupError = eWrongDevice;
+            fullCard = zMenuGetBadCard() - 1;
+        }
+
+        if (bytesNeeded == -3 && availOnDisk == -3 && neededFiles == -3)
+        {
+            startupError = eNoCards;
+            fullCard = -1;
+        }
+
+        if (bytesNeeded == -4 && availOnDisk == -4 && neededFiles == -4)
+        {
+            startupError = eCorruptFile;
+            fullCard = zMenuGetBadCard() - 1;
+        }
+
+        if (fullCard >= 0 && formatInProgress)
+        {
+            char bar[16];
+            char msg[256];
+            S32 result = CARDGetResultCode(fullCard);
+            F32 pct;
+
+            memset(bar, 0, sizeof(bar));
+            strcpy(bar, "oooooooo");
+            pct = (F32)(CARDGetXferredBytes(fullCard) - startBytes) / CARD_WORKAREA_SIZE;
+            bar[(S32)(pct * strlen(bar))] = 'O';
+            sprintf(msg, "{i:text_mem_card_formatting}{n}[%s]", bar);
+            zMainMemCardRenderText(msg, 1);
+
+            switch (result)
+            {
+            case CARD_RESULT_BUSY:
+                break;
+            case CARD_RESULT_READY:
+                CARDUnmount(fullCard);
+                do_chk = 1;
+                formatInProgress = 0;
+                formatFailed = 0;
+                startupError = eNoError;
+                fullCard = -1;
+                continue;
+            case CARD_RESULT_NOCARD:
+                CARDUnmount(fullCard);
+                formatInProgress = 0;
+                formatFailed = 1;
+                fullCard = -1;
+                zMainMemCardRenderText("{i:text_mem_card_format_failed_yanked}", 1);
+                break;
+            default:
+                CARDUnmount(fullCard);
+                formatInProgress = 0;
+                formatFailed = 1;
+                fullCard = -1;
+                zMainMemCardRenderText("{i:text_mem_card_format_failed}", 1);
+                break;
+            }
+        }
+
+        if (status == 0 && startupError == eNoError)
+        {
+            break;
+        }
+
+        do_chk = 0;
+
+        if (!formatInProgress && !formatFailed && startupError == eNoError)
+        {
+            zSceneCardCheckStartup_set(bytesNeeded, availOnDisk, neededFiles);
+            zMainMemCardQueryPost(bytesNeeded, availOnDisk, neededFiles, 1);
+        }
+        else if (!formatInProgress)
+        {
+            switch (startupError)
+            {
+            case eNoFormat:
+                if (!formatFailed)
+                {
+                    zMainMemCardRenderText("{i:text_mem_card_no_format}", 1);
+                }
+                break;
+            case eDamagedCard:
+                zMainMemCardRenderText("{i:text_mem_card_damaged_card}", 1);
+                break;
+            case eWrongDevice:
+                zMainMemCardRenderText("{i:text_mem_card_wrong_device}", 1);
+                break;
+            case eNoCards:
+                zMainMemCardRenderText("{i:text_mem_card_no_card}", 1);
+                break;
+            case eCorruptFile:
+                zMainMemCardRenderText("{i:text_mem_card_corrupt_file}", 1);
+                break;
+            case eNoController:
+                break;
+            }
+        }
+
+        if (globals.pad0)
+        {
+            xPadUpdate(globals.currentActivePad, 1.0f / 60);
+        }
+
+        if (globals.pad0 && (globals.pad0->pressed & XPAD_BUTTON_TRIANGLE))
+        {
+            do_chk = 1;
+            startupError = eNoError;
+            formatInProgress = 0;
+            formatFailed = 0;
+            fullCard = -1;
+            zMainMemCardRenderText("{i:text_retry}", 1);
+        }
+        else if (globals.pad0 && (globals.pad0->pressed & XPAD_BUTTON_X))
+        {
+            if (startupError != eNoController)
+            {
+                break;
+            }
+
+            do_chk = 1;
+            startupError = eNoError;
+        }
+        else if (globals.pad0 && (globals.pad0->pressed & XPAD_BUTTON_O))
+        {
+            switch (startupError)
+            {
+            case eNoFormat:
+                if (!formatInProgress)
+                {
+                    if (fullCard >= 0)
+                    {
+                        CARDMount(fullCard, workArea, NULL);
+                        CARDCheck(fullCard);
+                        CARDFormatAsync(fullCard, NULL);
+                        startBytes = CARDGetXferredBytes(fullCard);
+                        formatInProgress = 1;
+                    }
+                }
+                else if (formatFailed)
+                {
+                    do_chk = 1;
+                    startupError = eNoError;
+                    formatInProgress = 0;
+                    formatFailed = 0;
+                    fullCard = -1;
+                }
+                break;
+            case eDamagedCard:
+            case eWrongDevice:
+            case eNoCards:
+                break;
+            case eCorruptFile:
+            {
+                char files[3][64];
+                S32 fileCount;
+                S32 i;
+
+                CARDMount(fullCard, workArea, NULL);
+                CARDCheck(fullCard);
+                fileCount = zMenuGetCorruptFiles(files);
+
+                for (i = 0; i < fileCount; i++)
+                {
+                    S32 result;
+
+                    zMainMemCardRenderText("{i:text_mem_card_deleting_file}", 1);
+                    result = CARDDelete(fullCard, files[i]);
+
+                    if (result != CARD_RESULT_READY)
+                    {
+                        zMainMemCardRenderText("{i:text_mem_card_delete_failed}", 1);
+                    }
+
+                    while (result == CARD_RESULT_BUSY)
+                    {
+                        result = CARDGetResultCode(fullCard);
+                        zMainMemCardRenderText("{i:text_mem_card_deleting_file}", 1);
+                    }
+
+                    if (result != CARD_RESULT_READY)
+                    {
+                        zMainMemCardRenderText("{i:text_mem_card_delete_failed}", 1);
+                    }
+                }
+
+                CARDUnmount(fullCard);
+                do_chk = 1;
+                startupError = eNoError;
+                formatInProgress = 0;
+                formatFailed = 0;
+                fullCard = -1;
+                break;
+            }
+            default:
+                if (startupError != eWrongDevice && status == 0 && workArea)
+                {
+                    RwFree(workArea);
+                    workArea = NULL;
+                }
+
+                OSResetSystem(1, 0, 1);
+                break;
+            }
+        }
+    }
+
+    zMainMemCardQueryPost(0, 0, 0, 0);
+
+    if (workArea)
+    {
+        RwFree(workArea);
+    }
 }
 
 static void zMainMemCardQueryPost(S32 needed, S32 available, S32 neededFiles, S32 unk0)

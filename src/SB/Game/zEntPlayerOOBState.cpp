@@ -16,6 +16,37 @@
 
 bool oob_player_teleported;
 
+// These structs were used in deadstripped functions.
+// This function is here to force the symbols to be linked.
+void __deadstripped_zEntPlayerOOBState()
+{
+    const char _405[0x0C] = {};
+    const char _406[0x0C] = {};
+    const char _410[0x0C] = {};
+    const char _441[0x0C] = {};
+
+    const char _612[0x28] = {};
+    const char _613[0x28] = {};
+    const char _614[0x28] = {};
+    const char _615[0x28] = {};
+    const char _616[0x28] = {};
+    const char _617[0x28] = {};
+    const char _618[0x28] = {};
+}
+
+// Retail carries these two file-scope statics in .rodata, both 16 bytes of
+// { 0.0f, 0.0f, 1.0f, 1.0f }, and nothing in this unit references them --
+// their only consumers were deadstripped. Same pair as xHud.cpp and
+// zEntPlayerBungeeState.cpp.
+const basic_rect<F32> screen_bounds = { 0.0f, 0.0f, 1.0f, 1.0f };
+const basic_rect<F32> default_adjust = { 0.0f, 0.0f, 1.0f, 1.0f };
+
+void __deadstripped_zEntPlayerOOBState2()
+{
+    const char _792[0x10] = {};
+}
+
+
 namespace oob_state
 {
     namespace
@@ -56,12 +87,11 @@ namespace oob_state
         static void set_camera(bool instant)
         {
             xCamera& cam = globals.camera;
-            xVec3 target_offset;
             F32 tm;
             F32 tm_acc;
 
             shared_target = g_I3;
-            shared_target.pos = globals.player.ent.model->Scale;
+            shared_target.pos = *(xVec3*)&globals.player.ent.model->Mat->pos;
 
             globals.camera.tgt_omat = &shared_target;
             globals.camera.tgt_mat = globals.camera.tgt_omat;
@@ -91,21 +121,20 @@ namespace oob_state
                 tm_acc = 0.1f;
             }
 
-            xCameraMove(&cam, 40, (xatan2(cam.mat.at.x, cam.mat.at.z) + PI), fixed.cam_dist,
-                        cam.pcur, tm, tm_acc, fixed.cam_height);
+            cam.pcur = xatan2(cam.mat.at.x, cam.mat.at.z) + PI;
+            xCameraMove(&cam, 40, fixed.cam_dist, fixed.cam_height, cam.pcur, tm, tm_acc, tm_acc);
 
-            cam.tgt_mat->pos - cam.mat.pos;
-            cam.tgt_mat->pos.normal();
+            xVec3 target_offset = (cam.tgt_mat->pos - cam.mat.pos).normal();
 
-            xCameraLookYPR(&cam, NULL, xatan2(cam.mat.up.x, cam.mat.up.z), 0.0f, 0.0f, 0.0f, 0.0f,
-                           0.0f);
+            xCameraLookYPR(&cam, NULL, xatan2(target_offset.x, target_offset.z), fixed.cam_pitch,
+                           0.0f, tm, tm_acc, tm_acc);
 
             zCameraTweakGlobal_Init();
         }
 
         static void reset_camera()
         {
-            globals.camera.tgt_omat = xEntGetFrame(&(xEnt)globals.player.ent);
+            globals.camera.tgt_omat = xEntGetFrame(&(xEnt&)globals.player.ent);
             globals.camera.tgt_mat = globals.camera.tgt_omat;
 
             zCameraEnableInput();
@@ -151,14 +180,14 @@ namespace oob_state
             vec += camMat.up * scale * localCoords.z;
         }
 
-        static void move_right(xVec3& vec, F32 scale)
+        static void move_right(xVec3& loc, F32 x)
         {
             xMat4x3& camMat = globals.camera.mat;
 
             xVec3 localCoords;
-            xMat4x3Tolocal(&localCoords, &camMat, &vec);
+            xMat4x3Tolocal(&localCoords, &camMat, &loc);
 
-            vec += camMat.right * scale * localCoords.z * (4.0f / 3.0f);
+            loc += camMat.right * x * localCoords.z * (4.0f / 3.0f);
         }
 
         static void update_max_out_time(const xSurface& surface)
@@ -202,9 +231,10 @@ namespace oob_state
 
         static void move_hand(F32 dt)
         {
-            F32 dd = 0.5f * shared.accel * dt * dt + shared.vel * dt;
-            shared.vel += shared.accel * dt;
-            shared.loc += shared.dir * dd;
+            F32 old_vel = shared.vel;
+
+            shared.vel = shared.accel * dt + old_vel;
+            shared.loc += shared.dir * (0.5f * shared.accel * dt * dt + old_vel * dt);
         }
 
         static void set_rect_verts(rwGameCube2DVertex*, F32, F32, F32, F32, iColor_tag c, F32 nsz,
@@ -253,7 +283,8 @@ namespace oob_state
             iDrawSetFBMSK(-1);
             zRenderState(SDRS_OOBPlayerZ);
 
-            for (xModelInstance* xm = ent.model; xm != NULL; xm = xm->Next)
+            xModelInstance* xm = ent.model;
+            while (xm != NULL)
             {
                 RpAtomic& model = *xm->Data;
 
@@ -261,6 +292,8 @@ namespace oob_state
                 {
                     iModelRender(&model, xm->Mat);
                 }
+
+                xm = xm->Next;
             }
 
             iDrawSetFBMSK(0);
@@ -270,7 +303,8 @@ namespace oob_state
             U8 alpha = 255.0f * (1.0f - shared.fade_alpha) + 0.5f;
             alpha &= 0xFF;
 
-            for (xModelInstance* xm = ent.model; xm != NULL; xm = xm->Next)
+            xm = ent.model;
+            while (xm != NULL)
             {
                 RpAtomic& model = *xm->Data;
 
@@ -280,6 +314,8 @@ namespace oob_state
                     iModelRender(&model, xm->Mat);
                     iModelResetMaterial(&model);
                 }
+
+                xm = xm->Next;
             }
 
             xLightKit_Enable(NULL, globals.currWorld);
@@ -376,6 +412,8 @@ void oob_state::init()
     
     static drop_state_type drop_state;
     shared.states[3] = &drop_state;
+
+    shared.state = shared.states[0];
 
     shared.max_out_time = fixed.out_time;
     shared.fade_alpha = 1.0f;
@@ -550,7 +588,8 @@ namespace oob_state
         {
             move_hand(dt);
 
-            xVec2 norm = (fixed.in_loc - fixed.out_loc).normal();
+            xVec2 in_out_path = fixed.in_loc - fixed.out_loc;
+            xVec2 norm = in_out_path.normal();
 
             F32 projection = norm.dot(fixed.in_loc - shared.loc);
             if (projection > fixed.grab.in_stop_dist)
@@ -739,7 +778,7 @@ namespace oob_state
 
             if (assume_player_is_stupid())
             {
-                shared.tutorial->start_talk(xStrHash("TODO"), (ztalkbox::callback*)&cb, NULL);
+                shared.tutorial->start_talk(xStrHash("out_of_bounds_txt"), (ztalkbox::callback*)&cb, NULL);
                 return SS_TUTORIAL;
             }
 
@@ -756,7 +795,8 @@ namespace oob_state
         {
             move_hand(dt);
 
-            xVec2 norm = (fixed.in_loc - fixed.out_loc).normal();
+            xVec2 in_out_path = fixed.in_loc - fixed.out_loc;
+            xVec2 norm = in_out_path.normal();
 
             F32 projection = norm.dot(fixed.in_loc - shared.loc);
             if (projection > fixed.grab.in_stop_dist)
@@ -1159,8 +1199,8 @@ namespace oob_state
             
             shared.vel = fixed.drop.in_vel;
             shared.accel = 0.0f;
-            shared.loc.x = fixed.in_loc.x;
-            shared.loc.y = fixed.in_loc.y;
+            shared.loc.x = fixed.out_loc.x;
+            shared.loc.y = fixed.out_loc.y;
             
             this->fade_substate = SS_START_FADE_IN;
             this->fade_start_time = fixed.drop.fade_start_time;
@@ -1185,11 +1225,11 @@ namespace oob_state
             f.mat.pos = globals.player.cp.pos;
             *(xMat4x3*)m.Mat = f.mat;
 
-            shared_target.pos = *(xVec3*)&m.Mat->pos;
-            
+            shared_target.pos = f.mat.pos;
+
             set_camera(true);
-            globals.camera.tgt_mat = &shared_target;
             globals.camera.tgt_omat = &shared_target;
+            globals.camera.tgt_mat = &shared_target;
             xCameraMove(&globals.camera, 0x20, fixed.cam_dist, fixed.cam_height, PI + globals.player.cp.rot, 0.0f, 0.0f, 0.0f);
             xCameraLookYPR(&globals.camera, 0x0, globals.player.cp.rot, fixed.cam_pitch, 0.0f, 0.0f, 0.0f, 0.0f);
         }

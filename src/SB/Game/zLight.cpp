@@ -14,23 +14,64 @@ static _zLight* sLight[32];
 S32 sLightTotal;
 static _tagPartition sLightPart;
 zVolume* sPartitionVolume;
-S32 gNumTemporaryLights;
-static _zLight* gTemporaryLights[32];
-void (*sEffectFuncs[18])(_zLight*, F32) = {};
-lightInitFunc sEffectInitFuncs[18] = {};
-static xVec3 sDefaultShadowVec = { 0, 1.0f, 0 };
+static volatile S32 gNumTemporaryLights;
+static _zLight* volatile gTemporaryLights[32];
+// NOTE: these belong in zLightEffect.h next to the Flicker/Cauldron
+// declarations, but that header currently omits them.
+void zLightEffectStrobeSlow(_zLight* zlight, F32 seconds);
+void zLightEffectStrobe(_zLight* zlight, F32 seconds);
+void zLightEffectStrobeFast(_zLight* zlight, F32 seconds);
+void zLightEffectDimSlow(_zLight* zlight, F32 seconds);
+void zLightEffectDim(_zLight* zlight, F32 seconds);
+void zLightEffectDimFast(_zLight* zlight, F32 seconds);
+void zLightEffectHalfDimSlow(_zLight* zlight, F32 seconds);
+void zLightEffectHalfDim(_zLight* zlight, F32 seconds);
+void zLightEffectHalfDimFast(_zLight* zlight, F32 seconds);
+void zLightEffectRandomColSlow(_zLight* zlight, F32 seconds);
+void zLightEffectRandomCol(_zLight* zlight, F32 seconds);
+void zLightEffectRandomColFast(_zLight* zlight, F32 seconds);
 
-void zLightEffectSet(_zLight* zlight, S32 idx)
-{
-    if (zlight->reg)
-    {
-        zlight->effect_idx = idx;
-        if (sEffectInitFuncs[zlight->effect_idx] != NULL)
-        {
-            sEffectInitFuncs[zlight->effect_idx](zlight);
-        }
-    }
-}
+void (*sEffectFuncs[18])(_zLight*, F32) = {
+    NULL,
+    NULL,
+    zLightEffectFlickerSlow,
+    zLightEffectFlicker,
+    zLightEffectFlickerErratic,
+    zLightEffectStrobeSlow,
+    zLightEffectStrobe,
+    zLightEffectStrobeFast,
+    zLightEffectDimSlow,
+    zLightEffectDim,
+    zLightEffectDimFast,
+    zLightEffectHalfDimSlow,
+    zLightEffectHalfDim,
+    zLightEffectHalfDimFast,
+    zLightEffectRandomColSlow,
+    zLightEffectRandomCol,
+    zLightEffectRandomColFast,
+    zLightEffectCauldron,
+};
+lightInitFunc sEffectInitFuncs[18] = {
+    NULL,
+    NULL,
+    zLightEffectInitFlicker,
+    zLightEffectInitFlicker,
+    zLightEffectInitFlicker,
+    zLightEffectInitStrobe,
+    zLightEffectInitStrobe,
+    zLightEffectInitStrobe,
+    zLightEffectInitDim,
+    zLightEffectInitDim,
+    zLightEffectInitDim,
+    zLightEffectInitHalfDim,
+    zLightEffectInitHalfDim,
+    zLightEffectInitHalfDim,
+    zLightEffectInitRandomCol,
+    zLightEffectInitRandomCol,
+    zLightEffectInitRandomCol,
+    zLightEffectInitCauldron,
+};
+static xVec3 sDefaultShadowVec = { 0, 1.0f, 0 };
 
 void zLightResetAll(xEnv* env)
 {
@@ -228,7 +269,7 @@ void zLightAddLocalEnv()
     for (int i = 0; i < sLightTotal; i++)
     {
         _zLight* zlight = sLight[i];
-        if ((zlight->flags & 1 != 0) && (zlight->tasset->lightFlags & 8))
+        if ((zlight->flags & 1) && (zlight->tasset->lightFlags & 8))
         {
             iLight* light = &zlight->light;
             iLightEnv(light, 1);
@@ -250,7 +291,7 @@ void zLightAddLocal(xEnt* ent)
     default_light_pos.y += 1.0f;
     if (!ent->entShadow)
     {
-        ent->entShadow = (xEntShadow*)xMemAlloc(gActiveHeap, 40, 0);
+        ent->entShadow = (xEntShadow*)xMemAlloc(gActiveHeap, sizeof(xEntShadow), 0);
         xEntInitShadow(*ent, *ent->entShadow);
         ent->entShadow->pos = default_light_pos;
         ent->entShadow->vec = sDefaultShadowVec;
@@ -284,6 +325,18 @@ void zLightSetVolume(zVolume* vol)
         if (vol->id == lp_id)
         {
             sPartitionVolume = vol;
+        }
+    }
+}
+
+void zLightEffectSet(_zLight* zlight, S32 idx)
+{
+    if (zlight->reg)
+    {
+        zlight->effect_idx = idx;
+        if (sEffectInitFuncs[zlight->effect_idx] != NULL)
+        {
+            sEffectInitFuncs[zlight->effect_idx](zlight);
         }
     }
 }

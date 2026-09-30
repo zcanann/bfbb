@@ -2,6 +2,7 @@
 #include "zCombo.h"
 #include "zCutsceneMgr.h"
 #include "zEntPlayer.h"
+#include "zEntPlayerOOBState.h"
 #include "zFX.h"
 #include "zGame.h"
 #include "zGameExtras.h"
@@ -13,6 +14,7 @@
 #include "zMusic.h"
 #include "zParPTank.h"
 #include "zSaveLoad.h"
+#include "zVolume.h"
 
 #include "iDraw.h"
 #include "iSystem.h"
@@ -38,6 +40,9 @@ const static basic_rect<F32> screen_bounds =
     0.0f, 0.0f, 1.0f, 1.0f
 };
 
+// Retail puts this at the head of zGame.cpp's .sbss (0x803CB7A0), not in
+// zMain.o, which is where our source had it.
+S32 gGameSfxReport;
 static U32 sPlayerMarkerStartID;
 static U32 sPlayerMarkerStartCamID;
 static F32 sPlayerStartAngle;
@@ -47,12 +52,17 @@ static F32 sGameOverTimer;
 F32 sTimeElapsed;
 iTime sTimeLast;
 iTime sTimeCurrent;
-extern RpLight* DirectionalLight;
-extern RpWorld* World;
-extern RwCamera* sGameScreenTransCam;
+// gLevelChanged, g_hiphopReloadHIP and g_hiphopForcePortal live in zGame.o's
+// .sbss in the target (offsets 0x30/0x34/0x38, straight after sTimeCurrent);
+// they were declared extern here and defined nowhere in the tree.
+U32 gLevelChanged;
+S32 g_hiphopReloadHIP;
+S32 g_hiphopForcePortal;
 extern _tagTRCPadInfo gTrcPad[4];
-extern S32 g_hiphopReloadHIP;
-extern S32 g_hiphopForcePortal;
+// Defined below, after bgv1: gGameWhereAmI is the last object in the target's
+// .sbss, so its definition sits near the bottom of the original file even
+// though the first function already writes it.
+extern eGameWhereAmI gGameWhereAmI;
 xPortalAsset dummyPortalAsset;
 _zPortal dummyPortal;
 U32 gSoak;
@@ -60,6 +70,25 @@ static U32 loadMeter;
 
 void xMemDebug_SoakLog(const char*);
 void zCutsceneMgrFinishExit(xBase* to);
+void zGameCheats(F32 dt);
+void xCameraFXBegin(xCamera* cam);
+void xCameraFXUpdate(xCamera* cam, F32 dt);
+void xCameraFXEnd(xCamera* cam);
+
+extern "C"
+{
+    void RwGameCubeSetMinRetraceCount(RwUInt8 count);
+}
+
+// The target's .sdata opens gPendingPlayer, startPressed, black, clear,
+// soaklevels, soaktime - so all four of these are declared ahead of
+// soaklevels, and black ahead of clear. gPendingPlayer and startPressed had
+// no definition anywhere in the tree; their initialisers are the target's
+// .sdata bytes (3 == eCurrentPlayerCount, and -1).
+_CurrentPlayer gPendingPlayer = eCurrentPlayerCount;
+U32 startPressed = -1;
+iColor_tag black = { 0x00, 0x00, 0x00, 0xFF };
+iColor_tag clear = { 0x00, 0x00, 0x00, 0x00 };
 
 char* soaklevels_gameorder[] =
 {
@@ -265,7 +294,6 @@ static U32 PickNextSoak()
     switch (soakdir)
     {
         case SOAK_FOR:
-            // Phantom branch here.
             name = soaklevels[soakidx];
             soakidx++;
             if (*(volatile S32*)(&soakidx) < soakcnt)
@@ -299,6 +327,12 @@ static U32 PickNextSoak()
                 soakdir = SOAK_RAND;
             }
             break;
+        // SOAK_RAND shares the default block.  That is what produces the target's
+        // duplicated `b default` in the dispatch: CW builds the {0,1,2} search
+        // tree, finds the >=2 subtree is just `b default`, retargets the `bge`
+        // straight at default and leaves the orphaned `b` behind.  Without this
+        // label the phantom branch cannot be reproduced (99.363% -> 100%).
+        case SOAK_RAND:
         default:
             if (globals.sceneCur != NULL)
             {
@@ -333,8 +367,6 @@ static U32 PickNextSoak()
 
     return nextsoak;
 }
-
-eGameWhereAmI gGameWhereAmI;
 
 // Scheduling, I guess
 void zGameInit(U32 theSceneID)
@@ -437,6 +469,275 @@ void zGameSetup()
     gGameWhereAmI = eGameWhere_SetupEnd;
 }
 
+static iTime t0;
+static iTime t1;
+static iTime w0;
+static iTime w1;
+static iTime gloop_time;
+static iTime gwait_time;
+static S32 gloop_ct;
+static F32 gloop_time_secs;
+static F32 gwait_time_secs;
+static F32 gloop_net_time_secs;
+U8 sHackSmoothedUpdate;
+
+static S32 zGameLoopContinue();
+static void zGameUpdateMode();
+
+// 92.994%.  Two independent blockers, neither source-reachable: (1) the
+// reload-after-aliasing-store defect at four sites - sTimeCurrent/sTimeLast,
+// t0/t1/gloop_time, w0/w1/gwait_time - where the target reloads each 64-bit
+// static straight after storing it and we forward the register; (2) a whole-
+// function callee-saved GPR permutation (target r19-r21 hold globals+0x44,
+// +0x14, +0x6e0 and r31 holds ostrich_delay; ours has those three highest and
+// ostrich_delay at r28).  Same instruction multiset throughout.
+void zGameLoop()
+{
+    S32 ostrich_delay = 10;
+    S32 cheats;
+
+    gGameWhereAmI = eGameWhere_LoopStart;
+    zGameStateSwitch(eGameState_Play);
+
+    iTime bus = (iTime)((GET_BUS_FREQUENCY() / 4) / 60.0f);
+    sTimeLast = iTimeGet() - bus;
+
+    gGameWhereAmI = eGameWhere_CutsceneFinish;
+    if (globals.cmgr != NULL)
+    {
+        zCutsceneMgrFinishLoad(globals.cmgr);
+    }
+
+    // Retail never stores eGameWhere_LoopDo; the loop body opens straight on
+    // eGameWhere_LoopCalcTime. If the original set it here it was a dead store
+    // and the compiler dropped it, so it is left out rather than guessed at.
+    do
+    {
+        gGameWhereAmI = eGameWhere_LoopCalcTime;
+
+        sTimeCurrent = iTimeGet();
+        sTimeElapsed = iTimeDiffSec(sTimeLast, sTimeCurrent);
+
+        if (sHackSmoothedUpdate)
+        {
+            if (sTimeElapsed > 0.1f)
+            {
+                sTimeElapsed = 1.0f / 60.0f;
+            }
+
+            static F32 sPreviousFrames[2] = { 1.0f / 60.0f };
+            static U32 sCurrentFrame = 0;
+
+            sPreviousFrames[sCurrentFrame] = sTimeElapsed;
+            sCurrentFrame = (sCurrentFrame + 1) % 2;
+
+            static U32 sAverageRange = 2;
+
+            F32 total = 0.0f;
+
+            S32 i = sCurrentFrame - sAverageRange + 1;
+            if (i < 0)
+            {
+                i += 2;
+            }
+
+            while (i != sCurrentFrame)
+            {
+                total += sPreviousFrames[i];
+                i = (i + 1) % 2;
+            }
+            total += sPreviousFrames[i];
+
+            sTimeElapsed = total / sAverageRange;
+        }
+
+        if (globals.QuarterSpeed)
+        {
+            sTimeElapsed *= 0.35f;
+        }
+
+        if (sTimeElapsed < 1e-5f)
+        {
+            sTimeElapsed = 1.0f / 60.0f;
+        }
+        else if (sTimeElapsed > 0.1f)
+        {
+            sTimeElapsed = 0.1f;
+        }
+
+        sTimeLast = sTimeCurrent;
+
+        t0 = t1;
+        t1 = iTimeGet();
+        gloop_time += t1 - t0;
+        gloop_ct++;
+        gloop_time_secs = iTimeDiffSec(gloop_time) / gloop_ct;
+        gloop_net_time_secs = iTimeDiffSec(gloop_time - gwait_time) / gloop_ct;
+
+        gGameWhereAmI = eGameWhere_LoopPadUpdate;
+        xPadUpdate(globals.currentActivePad, sTimeElapsed);
+
+        cheats = zGameExtras_CheatFlags();
+
+        // 0x1000 is sCheatSwapCCLR and 0x2000 is sCheatSwapCCUD; see the cheat
+        // table in zGameExtras.cpp. There is no enum for these anywhere.
+        if (cheats & 0x1000)
+        {
+            if (globals.pad0->analog2.x <= -globals.player.g.AnalogMax)
+            {
+                globals.pad0->analog2.x = globals.player.g.AnalogMax;
+            }
+            else
+            {
+                globals.pad0->analog2.x = -globals.pad0->analog2.x;
+            }
+        }
+
+        if (cheats & 0x2000)
+        {
+            if (globals.pad0->analog2.y <= -globals.player.g.AnalogMax)
+            {
+                globals.pad0->analog2.y = globals.player.g.AnalogMax;
+            }
+            else
+            {
+                globals.pad0->analog2.y = -globals.pad0->analog2.y;
+            }
+        }
+
+        if (!globals.player.g.CheatPlayerSwitch)
+        {
+            if (globals.pad0->on & XPAD_BUTTON_LEFT)
+            {
+                globals.pad0->analog1.x = -globals.player.g.AnalogMax;
+            }
+            else if (globals.pad0->on & XPAD_BUTTON_RIGHT)
+            {
+                globals.pad0->analog1.x = globals.player.g.AnalogMax;
+            }
+
+            if (globals.pad0->on & XPAD_BUTTON_UP)
+            {
+                globals.pad0->analog1.y = -globals.player.g.AnalogMax;
+            }
+            else if (globals.pad0->on & XPAD_BUTTON_DOWN)
+            {
+                globals.pad0->analog1.y = globals.player.g.AnalogMax;
+            }
+        }
+
+        xPadNormalizeAnalog(*globals.pad0, globals.player.g.AnalogMin, globals.player.g.AnalogMax);
+
+        gGameWhereAmI = eGameWhere_LoopTRCCheck;
+        if (iTRCDisk::CheckDVDAndResetState())
+        {
+            zMusicNotify(7);
+        }
+
+        globals.update_dt = sTimeElapsed;
+
+        gGameWhereAmI = eGameWhere_LoopCheats;
+        zGameCheats(sTimeElapsed);
+        zGameExtras_SceneUpdate(sTimeElapsed);
+        iFileAsyncService();
+
+        S32 paused = zGameIsPaused();
+
+        gGameWhereAmI = eGameWhere_LoopSceneUpdate;
+        zSceneUpdate(sTimeElapsed);
+
+        gGameWhereAmI = eGameWhere_LoopPlayerUpdate;
+        if (!paused)
+        {
+            globals.player.ent.update(&globals.player.ent, globals.sceneCur, sTimeElapsed);
+        }
+
+        gGameWhereAmI = eGameWhere_LoopSoundUpdate;
+        xMat4x3 playerMat = *xEntGetFrame(&globals.player.ent);
+        playerMat.pos.y += 0.6f;
+        xSndSetListenerData(SND_LISTENER_CAMERA, &globals.camera.mat);
+        xSndSetListenerData(SND_LISTENER_PLAYER, &playerMat);
+        xSndUpdate();
+
+        gGameWhereAmI = eGameWhere_LoopSFXWidgets;
+        zSceneUpdateSFXWidgets();
+
+        gGameWhereAmI = eGameWhere_LoopHUDUpdate;
+        zhud::update(sTimeElapsed);
+
+        gGameWhereAmI = eGameWhere_LoopCameraUpdate;
+        if (!paused)
+        {
+            zCameraUpdate(&globals.camera, sTimeElapsed);
+        }
+
+        gGameWhereAmI = eGameWhere_LoopCameraFXUpdate;
+        xCameraFXBegin(&globals.camera);
+        xCameraFXUpdate(&globals.camera, sTimeElapsed);
+
+        gGameWhereAmI = eGameWhere_LoopFlyToInterface;
+        zScene_UpdateFlyToInterface(sTimeElapsed);
+
+        gGameWhereAmI = eGameWhere_LoopCameraBegin;
+        w0 = iTimeGet();
+        xCameraBegin(&globals.camera, 1);
+        w1 = iTimeGet();
+        gwait_time += w1 - w0;
+        gwait_time_secs = iTimeDiffSec(gwait_time) / gloop_ct;
+
+        zVolume_OccludePrecalc(&globals.camera.mat.pos);
+
+        gGameWhereAmI = eGameWhere_LoopSceneRender;
+        zSceneRender();
+        xDebugUpdate();
+
+        gGameWhereAmI = eGameWhere_LoopCameraEnd;
+        xCameraEnd(&globals.camera, sTimeElapsed, 1);
+        iEnvEndRenderFX(NULL);
+        RwGameCubeSetMinRetraceCount(globals.minVSyncCnt);
+
+        gGameWhereAmI = eGameWhere_LoopCameraShowRaster;
+        xCameraShowRaster(&globals.camera);
+
+        gGameWhereAmI = eGameWhere_LoopCameraFXEnd;
+        xCameraFXEnd(&globals.camera);
+
+        gGameWhereAmI = eGameWhere_LoopMusicUpdate;
+        zMusicUpdate(sTimeElapsed);
+
+        gGameWhereAmI = eGameWhere_LoopUpdateMode;
+        zGameUpdateMode();
+
+        gFrameCount++;
+
+        if (ostrich_delay > 0)
+        {
+            ostrich_delay--;
+        }
+        else
+        {
+            zGameSetOstrich(eGameOstrich_InScene);
+
+            if ((gTrcPad[0].state != TRC_PadInserted) && (gBusStopIsRunning == 0) &&
+                (oob_state::IsPlayerInControl() ||
+                 (globals.player.ControlOff &
+                  (CONTROL_OWNER_OOB | CONTROL_OWNER_TALK_BOX | CONTROL_OWNER_TAXI |
+                   CONTROL_OWNER_TELEPORT_BOX))) &&
+                (globals.dontShowPadMessageDuringLoadingOrCutScene == 0))
+            {
+                globals.dontShowPadMessageDuringLoadingOrCutScene = 1;
+                xTRCPad(gTrcPad[0].id, TRC_PadMissing);
+            }
+
+            zSaveLoadAutoSaveUpdate();
+        }
+
+        gGameWhereAmI = eGameWhere_LoopContinue;
+    } while (zGameLoopContinue());
+
+    gGameWhereAmI = eGameWhere_LoopEndGameLoop;
+}
+
 S32 zGameIsPaused()
 {
     if (gGameMode == 8)
@@ -453,8 +754,6 @@ S32 zGameIsPaused()
     }
     return 0;
 }
-
-static iTime t1;
 
 static S32 zGameLoopContinue()
 {
@@ -538,7 +837,64 @@ void zGameStall()
     }
 }
 
-static void zGame_HackDrawCard(F32 x, F32 y, F32 w, F32 h, RwRaster* rast);
+// 95.165%, pure scheduling: the target writes the quad's fields in strictly
+// ascending offset order, our compiler fills the load-use gap after each
+// `lfs` of a pool literal with the next vertex's `.x` store.  Same instruction
+// multiset.  Writing the u/v pairs as a chained assignment was measured and is
+// worse (95.154%) - it reverses the u/v store order.
+static void zGame_HackDrawCard(F32 x, F32 y, F32 w, F32 h, RwRaster* rast)
+{
+    RwIm2DVertex quad[4];
+    F32 screenZ = RwIm2DGetNearScreenZ();
+
+    quad[0].x = x;
+    quad[0].y = y;
+    quad[0].z = screenZ;
+    quad[0].emissiveColor.red = 255;
+    quad[0].emissiveColor.green = 255;
+    quad[0].emissiveColor.blue = 255;
+    quad[0].emissiveColor.alpha = 255;
+    quad[0].u = 0.0f;
+    quad[0].v = 0.0f;
+
+    quad[1].x = x;
+    quad[1].y = y + h;
+    quad[1].z = screenZ;
+    quad[1].emissiveColor.red = 255;
+    quad[1].emissiveColor.green = 255;
+    quad[1].emissiveColor.blue = 255;
+    quad[1].emissiveColor.alpha = 255;
+    quad[1].u = 0.0f;
+    quad[1].v = 1.0f;
+
+    quad[2].x = x + w;
+    quad[2].y = y;
+    quad[2].z = screenZ;
+    quad[2].emissiveColor.red = 255;
+    quad[2].emissiveColor.green = 255;
+    quad[2].emissiveColor.blue = 255;
+    quad[2].emissiveColor.alpha = 255;
+    quad[2].u = 1.0f;
+    quad[2].v = 0.0f;
+
+    quad[3].x = x + w;
+    quad[3].y = y + h;
+    quad[3].z = screenZ;
+    quad[3].emissiveColor.red = 255;
+    quad[3].emissiveColor.green = 255;
+    quad[3].emissiveColor.blue = 255;
+    quad[3].emissiveColor.alpha = 255;
+    quad[3].u = 1.0f;
+    quad[3].v = 1.0f;
+
+    RwRenderStateSet(rwRENDERSTATESHADEMODE, (void*)rwSHADEMODEFLAT);
+    RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)rwBLENDSRCALPHA);
+    RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDINVSRCALPHA);
+    RwRenderStateSet(rwRENDERSTATETEXTURERASTER, rast);
+    RwRenderStateSet(rwRENDERSTATEZTESTENABLE, (void*)FALSE);
+
+    RwIm2DRenderPrimitive(rwPRIMTYPETRISTRIP, quad, 4);
+}
 
 // Equivalent; scheduling.
 static void zGame_HackPostPortalAutoSaveDraw()
@@ -635,11 +991,13 @@ static void zGame_HackPostPortalAutoSaveDraw()
     }
 }
 
-iColor_tag clear = { 0x00, 0x00, 0x00, 0x00 };
-iColor_tag black = { 0x00, 0x00, 0x00, 0xFF };
-
 static void zGameUpdateMode()
 {
+    U32 b;
+    U32 d;
+    U32 a;
+    U32 c;
+    zScene* scene;
     xPortalAsset* passet;
     char* id;
     U32 nextSceneID;
@@ -702,20 +1060,26 @@ static void zGameUpdateMode()
     {
         gGameWhereAmI = eGameWhere_ModeSceneSwitch;
 
-        passet = globals.sceneCur->pendingPortal->passet;
+        scene = globals.sceneCur;
+        passet = scene->pendingPortal->passet;
 
-        U32 d = *(char *)((int)&passet->sceneID + 3);
-        U32 c = *(char *)((int)&passet->sceneID + 0);
-        U32 b = *(char *)((int)&passet->sceneID + 2);
-        U32 a = *(char *)((int)&passet->sceneID + 1);
+        // c/d used to be crossed over in the two expressions below, which made
+        // nextSceneID come out as [+3][+1][+2][+0] - neither the sceneID nor its
+        // byteswap.  The target's `or r31, r5, r3` / `or r3, r7, r0` pin it:
+        // nextSceneID is the plain big-endian sceneID ([+0][+1][+2][+3]) and the
+        // value compared against globals.sceneCur->sceneID is the full byteswap.
+        d = *(char *)((int)&passet->sceneID + 3);
+        c = *(char *)((int)&passet->sceneID + 0);
+        b = *(char *)((int)&passet->sceneID + 2);
+        a = *(char *)((int)&passet->sceneID + 1);
 
-        U32 x = (((b << 8) & 0xff00) | (((d << 24) & 0xff000000) | ((a << 16) & 0x00ffffff)) & 0xffff00ff);
-        U32 y = (((a << 8) & 0xff00) | (((c << 24) & 0xff000000) | ((b << 16) & 0x00ffffff)) & 0xffff00ff);
+        U32 x = (((b << 8) & 0xff00) | (((c << 24) & 0xff000000) | ((a << 16) & 0x00ffffff)) & 0xffff00ff);
+        U32 y = (((a << 8) & 0xff00) | (((d << 24) & 0xff000000) | ((b << 16) & 0x00ffffff)) & 0xffff00ff);
 
-        nextSceneID = x | c;
-        x = d | y;
+        nextSceneID = d | x;
+        x = c | y;
 
-        if ((g_hiphopReloadHIP != 0) || ((g_hiphopForcePortal != 0) || (x != globals.sceneCur->sceneID)))
+        if ((g_hiphopReloadHIP != 0) || ((g_hiphopForcePortal != 0) || (x != scene->sceneID)))
         {
             sPlayerMarkerStartID = passet->assetMarkerID;
             sPlayerMarkerStartCamID = passet->assetCameraID;
@@ -827,8 +1191,11 @@ static void zGameUpdateMode()
     {
         if (sGameOverTimer == 0.0f)
         {
-            xScrFxFade(&clear, &black, 4.5f, NULL, 1);
+            // The store comes first: retail's .sdata2 interns the 5.0f (@1393)
+            // before the 4.5f (@1394), and the target stores sGameOverTimer
+            // ahead of the call rather than after it.
             sGameOverTimer = 5.0f;
+            xScrFxFade(&clear, &black, 4.5f, NULL, 1);
         }
         else
         {
@@ -851,25 +1218,45 @@ void zGameTakeSnapShot(RwCamera*)
 {
 }
 
-// Float memes
+// The arms used to be the other way round, which fed 0.5s to the particle
+// tank on every normal frame and the real dt only when the frame took longer
+// than half a second.  The target settles it: after `fcmpo f0(sTimeElapsed),
+// f1(0.5f) / ble`, the fall-through arm calls zParPTankUpdate with f1 still
+// holding the 0.5f literal and only the `ble` arm does `fmr f1, f0`.  It is a
+// clamp.  Swapping them costs fuzzy points (76.4% -> 73.5%) purely because the
+// wrong order happened to line the FPRs up with the reload the target does and
+// our compiler forwards; the whole compare/branch/call tail is now exact and
+// the residue is the known reload-after-aliasing-store defect.
 void zGameUpdateTransitionBubbles()
 {
     gGameWhereAmI = eGameWhere_TransitionBubbles;
     sTimeCurrent = iTimeGet();
-	F32 diff = iTimeDiffSec(sTimeLast, sTimeCurrent);
-    sTimeElapsed = diff;
+    sTimeElapsed = iTimeDiffSec(sTimeLast, sTimeCurrent);
     sTimeLast = sTimeCurrent;
-	if (sTimeElapsed > 0.5f)
-	{
-		zParPTankUpdate(sTimeElapsed);
-	}
-	else
-	{
-		zParPTankUpdate(0.5f);
-	}
+    if (sTimeElapsed > 0.5f)
+    {
+        zParPTankUpdate(0.5f);
+    }
+    else
+    {
+        zParPTankUpdate(sTimeElapsed);
+    }
     zParPTankRender();
 }
 
+// Target .sbss order is sGameScreenTransCam, World, DirectionalLight, and it
+// places all three after zGameLoop's function-scope statics, so this is where
+// the original declared them. They too were extern-with-no-definition here.
+RwCamera* sGameScreenTransCam;
+RpWorld* World;
+RpLight* DirectionalLight;
+
+// 88.333%, and every one of the seven differing rows is the known
+// reload-after-aliasing-store defect: the target stores sGameScreenTransCam /
+// DirectionalLight / World and then loads each straight back before testing or
+// passing it, where our compiler forwards the stored register.  `volatile` on
+// the three reaches 98.167% here but knocks zGameScreenTransitionEnd off 100%
+// (the target loads each of them exactly once there), so it is not the source.
 void zGameScreenTransitionBegin()
 {
     gGameWhereAmI = eGameWhere_TransitionBegin;
@@ -915,7 +1302,13 @@ U8 bgb = 0x60;
 U8 bga = 0x80;
 F32 bgu1;
 F32 bgv1;
+eGameWhereAmI gGameWhereAmI;
 
+// 93.654%.  Everything outside the background-quad fill matches; inside it the
+// target stores vx[0..3] in strictly ascending offset order and never fills a
+// load-use gap, while our compiler interleaves the next vertex's stores between
+// each `lbz`/`stb` and `lfs`/`stfs` pair.  Same instruction multiset - SCHED,
+// same family as zGame_HackDrawCard.
 void zGameScreenTransitionUpdate(F32 percentComplete, char* msg, U8* rgba)
 {
     RwTexture* tex;
@@ -929,7 +1322,10 @@ void zGameScreenTransitionUpdate(F32 percentComplete, char* msg, U8* rgba)
         return;
     }
 
-    RwRGBA back_col = { 0xFF, 0x00, 0x00, 0x00 };
+    // Target .sdata2 template for this local is 00 00 00 FF (opaque black), not
+    // FF 00 00 00. objdiff compares relocation offsets, not values, so the wrong
+    // order sat here unnoticed.
+    RwRGBA back_col = { 0x00, 0x00, 0x00, 0xFF };
     if (rgba != NULL)
     {
         back_col.red   = rgba[0];

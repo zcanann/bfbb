@@ -50,6 +50,7 @@ S32 xFogEventCB(xBase* to, xBase* from, U32 toEvent, const F32* toParam, xBase* 
     switch (toEvent)
     {
     case eEventOn:
+    {
         iFogParams fog;
         fog.type = rwFOGTYPELINEAR;
         xFogAsset* fromFog = ((_xFog*)from)->tasset;
@@ -67,6 +68,7 @@ S32 xFogEventCB(xBase* to, xBase* from, U32 toEvent, const F32* toParam, xBase* 
         fog.table = NULL;
         iCameraSetFogParams(&fog, fromFog->transitionTime);
         break;
+    }
     case eEventOff:
         iCameraSetFogParams(NULL, 0.0f);
         break;

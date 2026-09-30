@@ -201,33 +201,27 @@ struct xLaserBoltEmitter
     {
     }
 
-    void set_bolt_verts(RxObjSpace3DVertex* vert, const xVec3& loc0, const xVec3& loc1,
-                        U8 alpha, const xVec3& offset_dir)
+    void set_vert(RxObjSpace3DVertex& vert, const xVec3& loc, F32 u, F32 v, U8 alpha)
+    {
+        RwIm3DVertexSetPos(&vert, loc.x, loc.y, loc.z);
+        RwIm3DVertexSetUV(&vert, u, v);
+        RwIm3DVertexSetRGBA(&vert, 255, 255, 255, alpha);
+    }
+
+    void set_bolt_verts(RxObjSpace3DVertex* vert, const xVec3& pointA, const xVec3& pointB,
+                        U8 alpha, const xVec3& half_right)
     {
         F32 u0 = cfg.bolt_uv[0].x;
         F32 v0 = cfg.bolt_uv[0].y;
         F32 u1 = cfg.bolt_uv[1].x;
         F32 v1 = cfg.bolt_uv[1].y;
 
-        set_vert(vert[0], loc0 - offset_dir, u0, v0, alpha);
-        set_vert(vert[1], loc1 - offset_dir, u1, v0, alpha);
-        set_vert(vert[2], loc0 + offset_dir, u0, v1, alpha);
+        set_vert(vert[0], pointA - half_right, u0, v0, alpha);
+        set_vert(vert[1], pointB - half_right, u1, v0, alpha);
+        set_vert(vert[2], pointA + half_right, u0, v1, alpha);
         vert[3] = vert[2];
         vert[4] = vert[1];
-        set_vert(vert[5], loc1 + offset_dir, u1, v1, alpha);
-    }
-
-    void set_vert(RxObjSpace3DVertex& vert, const xVec3& loc, F32 u, F32 v, U8 alpha)
-    {
-        vert.x = loc.x;
-        vert.y = loc.y;
-        vert.z = loc.z;
-        vert.u = u;
-        vert.v = v;
-        vert.r = 0xFF;
-        vert.g = 0xFF;
-        vert.b = 0xFF;
-        vert.a = alpha;
+        set_vert(vert[5], pointB + half_right, u1, v1, alpha);
     }
 };
 

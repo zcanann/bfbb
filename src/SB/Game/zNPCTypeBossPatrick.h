@@ -288,7 +288,7 @@ struct zNPCGoalBossPatFudge : zNPCGoalCommon
     }
 
     S32 Enter(F32 dt, void* updCtxt);
-    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
+    S32 Process(en_trantype* trantype, F32 dt, void* ctxt, xScene* scene);
 };
 
 void zNPCBPatrick_AddBoundEntsToGrid(zScene*);

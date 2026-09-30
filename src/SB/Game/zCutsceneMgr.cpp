@@ -1,6 +1,7 @@
 #include "zCutsceneMgr.h"
 
 #include <types.h>
+#include <stdio.h>
 
 #include "zGlobals.h"
 #include "zEnt.h"
@@ -17,6 +18,10 @@
 #include "iTRC.h"
 #include "iCutscene.h"
 #include "iSystem.h"
+
+// Local in the target, not global -- and defined after its caller, so the
+// forward declaration is what keeps CodeWarrior emitting a real bl.
+static void check_hide_entities();
 
 static zCutsceneHack cutsceneHackTable[58] = {
     {"cin_hammer", "spongebob.dff", 0.0f, 1, 0, 0, NULL},
@@ -216,10 +221,10 @@ void zCutsceneMgrPlayStart(zCutsceneMgr* t)
                 continue;
             }
 
-            if (cutsceneHackTable[i].radius != 0.0f)
+            if (cutsceneHackTable[i].radius)
             {
-                RpClumpForAllAtomics((RpClump*)*((int*)(t->csn->Data[j].DataPtr) + 0xf),
-                                     HackBoundCB, &cutsceneHackTable[i].radius);
+                RpClumpForAllAtomics(((RpAtomic*)t->csn->Data[j].DataPtr)->clump, HackBoundCB,
+                                     &cutsceneHackTable[i].radius);
                 t->csn->Data[j].DataType = t->csn->Data[j].DataType | 0x40000000;
             }
             if (cutsceneHackTable[i].tworoot != 0)
@@ -233,7 +238,7 @@ void zCutsceneMgrPlayStart(zCutsceneMgr* t)
             if (cutsceneHackTable[i].alphaBits != 0)
             {
                 s_atomicNumber = 0;
-                RpClumpForAllAtomics((RpClump*)*((int*)(t->csn->Data[j].DataPtr) + 15), HackAlphaCB,
+                RpClumpForAllAtomics(((RpAtomic*)t->csn->Data[j].DataPtr)->clump, HackAlphaCB,
                                      (void*)cutsceneHackTable[i].alphaBits);
             }
             if (cutsceneHackTable[i].renderCB != NULL)
@@ -300,15 +305,14 @@ void zCutsceneMgrFinishLoad(xBase* to)
         iTRCDisk::CheckDVDAndResetState();
         if (t->csn->Ready)
         {
-            break;
+            zCutsceneMgrPlayStart(t);
+            zEntEvent(to, to, 0x18);
+            zEntEvent(&globals.player.ent, 8);
+            zEntEvent(&globals.player.ent, 4);
+            return;
         }
         iVSync();
     }
-    zCutsceneMgrPlayStart(t);
-    zEntEvent(to, to, 0x18);
-    zEntEvent(&globals.player.ent, 8);
-    zEntEvent(&globals.player.ent, 4);
-    return;
 }
 
 void zCutsceneMgrFinishExit(xBase* to)
@@ -320,24 +324,26 @@ void zCutsceneMgrFinishExit(xBase* to)
         iFileAsyncService();
         xSndUpdate();
         if (t->csn->Waiting == 0)
-            break;
+        {
+            if (donpcfx != 0)
+            {
+                zNPCFXCutsceneDone(globals.sceneCur, 0.0f, t);
+            }
+            donpcfx = 0;
+            if (xCutscene_Destroy(t->csn) == 0)
+            {
+                return;
+            }
+
+            zEntEvent(&globals.player.ent, 9);
+            zEntEvent(&globals.player.ent, 3);
+            zCutsceneMgrKillFX(t);
+            t->csn = NULL;
+            globals.cmgr = NULL;
+            return;
+        }
         iVSync();
     }
-    if (donpcfx != 0)
-    {
-        zNPCFXCutsceneDone(globals.sceneCur, 0.0f, t);
-    }
-    donpcfx = 0;
-    if (xCutscene_Destroy(t->csn) == 0)
-    {
-        return;
-    }
-
-    zEntEvent(&globals.player.ent, 9);
-    zEntEvent(&globals.player.ent, 3);
-    zCutsceneMgrKillFX(t);
-    t->csn = NULL;
-    globals.cmgr = NULL;
 }
 
 void zCutsceneMgrKillFX(zCutsceneMgr* t)
@@ -482,7 +488,7 @@ void zCutsceneMgrUpdate(xBase* to, xScene* sc, F32 dt)
     check_hide_entities();
 }
 
-void check_hide_entities()
+static void check_hide_entities()
 {
     bool mgrNotNull = globals.cmgr;
     if (mgrNotNull == ents_hidden)
@@ -517,4 +523,12 @@ void check_hide_entities()
         }
         it++;
     }
+}
+
+// The target's @stringBase0 ends with "FINISH EXIT...\n", seventeen bytes our
+// .rodata was short. Nothing in the surviving code references it, so it is the
+// residue of a debug printf in a function the linker dead-stripped.
+void __deadstripped_zCutsceneMgr()
+{
+    printf("FINISH EXIT...\n");
 }

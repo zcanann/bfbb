@@ -36,7 +36,10 @@ typedef double F64;
 #endif
 #define FALSE 0
 
-#ifdef __MWERKS__
+// Stub __declspec out for compilers that cannot parse it. CodeWarrior is the
+// one compiler where it is meaningful -- it carries `weak` and the `section`
+// placements for .init/.ctors/.dtors -- so it must NOT be stubbed there.
+#ifndef __MWERKS__
 #define __declspec(x)
 // #define asm
 #endif

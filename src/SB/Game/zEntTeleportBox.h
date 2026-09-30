@@ -42,8 +42,8 @@ void zEntTeleportBox_Save(_zEntTeleportBox* ent, xSerial* s);
 void zEntTeleportBox_Load(_zEntTeleportBox* ent, xSerial* s);
 void zEntTeleportBox_Open(_zEntTeleportBox* ent);
 void zEntTeleportBox_Close(_zEntTeleportBox* ent);
-S32 zEntTeleportBox_isOpen(_zEntTeleportBox* ent);
-S32 zEntTeleportBox_isClosed(_zEntTeleportBox* ent);
+U32 zEntTeleportBox_isOpen(_zEntTeleportBox* ent);
+U32 zEntTeleportBox_isClosed(_zEntTeleportBox* ent);
 S32 zEntTeleportBox_playerIn();
 S32 zEntTeleportBoxEventCB(xBase*, xBase* to, U32 toEvent, const F32*, xBase*);
 

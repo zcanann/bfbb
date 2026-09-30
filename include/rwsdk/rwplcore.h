@@ -4,6 +4,58 @@
 #include <stdarg.h>
 #include <stddef.h>
 
+/* C compatibility: these headers use bare tag names as types. */
+typedef struct RwUInt64 RwUInt64;
+typedef struct RwInt64 RwInt64;
+typedef struct RwUInt128 RwUInt128;
+typedef struct RwInt128 RwInt128;
+typedef union RwSplitBits RwSplitBits;
+typedef struct RwSplitFixed RwSplitFixed;
+typedef union RwUnionReal RwUnionReal;
+typedef struct RwV2d RwV2d;
+typedef struct RwV3d RwV3d;
+typedef struct RwV4dTag RwV4dTag;
+typedef struct RwRect RwRect;
+typedef struct RwSphere RwSphere;
+typedef struct RwLine RwLine;
+typedef struct RwTexCoords RwTexCoords;
+typedef struct RwSLLink RwSLLink;
+typedef struct RwSingleList RwSingleList;
+typedef struct RwLLLink RwLLLink;
+typedef struct RwLinkList RwLinkList;
+typedef struct RwSurfaceProperties RwSurfaceProperties;
+typedef struct RwPlane RwPlane;
+typedef struct RwObject RwObject;
+typedef struct RwStringFunctions RwStringFunctions;
+typedef struct RwMemoryFunctions RwMemoryFunctions;
+typedef struct RwFreeList RwFreeList;
+typedef struct RwMemory RwMemory;
+typedef struct RwStreamMemory RwStreamMemory;
+typedef union RwStreamFile RwStreamFile;
+typedef struct RwStreamCustom RwStreamCustom;
+typedef union RwStreamUnion RwStreamUnion;
+typedef struct RwStream RwStream;
+typedef struct RwPluginRegistry RwPluginRegistry;
+typedef struct RwPluginRegEntry RwPluginRegEntry;
+typedef struct RwMatrixTag RwMatrixTag;
+typedef struct RwFileFunctions RwFileFunctions;
+typedef struct RwError RwError;
+typedef struct RwRGBAReal RwRGBAReal;
+typedef struct RwRGBA RwRGBA;
+typedef struct rwGameCube2DVertex rwGameCube2DVertex;
+typedef struct RwEngineOpenParams RwEngineOpenParams;
+typedef struct RwGameCubeDeviceConfig RwGameCubeDeviceConfig;
+typedef struct RwDevice RwDevice;
+typedef struct RwMetrics RwMetrics;
+typedef struct RwVideoMode RwVideoMode;
+typedef struct RwGlobals RwGlobals;
+typedef struct RwResEntry RwResEntry;
+typedef struct RwChunkHeaderInfo RwChunkHeaderInfo;
+typedef struct RwSky2DVertexFields RwSky2DVertexFields;
+typedef struct RwSky2DVertexAlignmentOverlay RwSky2DVertexAlignmentOverlay;
+typedef struct RwSky2DVertex RwSky2DVertex;
+
+
 #define rwBIGENDIAN
 
 typedef long RwFixed;
@@ -212,6 +264,7 @@ enum RwTextureCoordinateIndex
     rwTEXTURECOORDINATEINDEX7,
     rwTEXTURECOORDINATEINDEXFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RwTextureCoordinateIndex RwTextureCoordinateIndex;
 
 struct RwTexCoords
 {
@@ -313,6 +366,7 @@ enum RwPluginVendor
     rwVENDORID_CRITERIONRWA = 0x000008L,
     rwPLUGINVENDORFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RwPluginVendor RwPluginVendor;
 
 enum RwCorePluginID
 {
@@ -358,6 +412,7 @@ enum RwCorePluginID
     rwID_COREPLUGINIDMAX = 0x29,
     rwCOREPLUGINIDFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RwCorePluginID RwCorePluginID;
 
 enum RwCriterionPluginID
 {
@@ -367,6 +422,7 @@ enum RwCriterionPluginID
     rwID_TOOL2PLUGIN = 0x04,
     rwCRITERIONPLUGINIDFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RwCriterionPluginID RwCriterionPluginID;
 
 enum RwPlatformID
 {
@@ -380,6 +436,7 @@ enum RwPlatformID
     rwID_PCD3D8,
     rwPLATFROMIDFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RwPlatformID RwPlatformID;
 
 struct RwObject
 {
@@ -522,6 +579,7 @@ enum RwStreamType
     rwSTREAMCUSTOM,
     rwSTREAMTYPEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RwStreamType RwStreamType;
 
 enum RwStreamAccessType
 {
@@ -531,6 +589,7 @@ enum RwStreamAccessType
     rwSTREAMAPPEND,
     rwSTREAMACCESSTYPEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RwStreamAccessType RwStreamAccessType;
 
 struct RwMemory
 {
@@ -600,8 +659,7 @@ typedef RwBool (*RwPluginDataChunkAlwaysCallBack)(void* object, RwInt32 offsetIn
 typedef RwBool (*RwPluginDataChunkRightsCallBack)(void* object, RwInt32 offsetInObject,
                                                   RwInt32 sizeInObject, RwUInt32 extraData);
 
-typedef struct RwPluginRegEntry;
-
+/* RwPluginRegEntry is typedef'd above */
 struct RwPluginRegistry
 {
     RwInt32 sizeOfStruct;
@@ -642,6 +700,7 @@ enum RwOpCombineType
     rwCOMBINEPOSTCONCAT,
     rwOPCOMBINETYPEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RwOpCombineType RwOpCombineType;
 
 enum RwMatrixType
 {
@@ -651,18 +710,21 @@ enum RwMatrixType
     rwMATRIXTYPEMASK = 0x00000003,
     rwMATRIXTYPEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RwMatrixType RwMatrixType;
 
 enum RwMatrixFlag
 {
     rwMATRIXINTERNALIDENTITY = 0x00020000,
     rwMATRIXFLAGFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RwMatrixFlag RwMatrixFlag;
 
 enum RwMatrixOptimizations
 {
     rwMATRIXOPTIMIZE_IDENTITY = 0x00020000,
     rwMATRIXOPTIMIZATIONSFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RwMatrixOptimizations RwMatrixOptimizations;
 
 struct RwMatrixTag
 {
@@ -797,6 +859,7 @@ struct rwGameCube2DVertex
     RwReal u;
     RwReal v;
 
+#ifdef __cplusplus
     rwGameCube2DVertex& operator=(const rwGameCube2DVertex& rhs)
     {
         this->x = rhs.x;
@@ -813,9 +876,10 @@ struct rwGameCube2DVertex
 
         return *this;
     }
+#endif
 };
 
-typedef rwGameCube2DVertex RwIm2DVertex;
+typedef struct rwGameCube2DVertex RwIm2DVertex;
 typedef RwUInt16 RxVertexIndex;
 typedef RxVertexIndex RwImVertexIndex;
 
@@ -986,6 +1050,7 @@ enum RwRenderState
     rwRENDERSTATESTENCILFUNCTIONWRITEMASK,
     rwRENDERSTATEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RwRenderState RwRenderState;
 
 enum RwShadeMode
 {
@@ -994,6 +1059,7 @@ enum RwShadeMode
     rwSHADEMODEGOURAUD,
     rwSHADEMODEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RwShadeMode RwShadeMode;
 
 enum RwTextureFilterMode
 {
@@ -1006,6 +1072,7 @@ enum RwTextureFilterMode
     rwFILTERLINEARMIPLINEAR,
     rwTEXTUREFILTERMODEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RwTextureFilterMode RwTextureFilterMode;
 
 #define rwTEXTUREFILTERMODEMASK 0x000000FF
 #define rwTEXTUREADDRESSINGUMASK 0x00000F00
@@ -1020,6 +1087,7 @@ enum RwFogType
     rwFOGTYPEEXPONENTIAL2,
     rwFOGTYPEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RwFogType RwFogType;
 
 enum RwBlendFunction
 {
@@ -1037,6 +1105,7 @@ enum RwBlendFunction
     rwBLENDSRCALPHASAT,
     rwBLENDFUNCTIONFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RwBlendFunction RwBlendFunction;
 
 enum RwTextureAddressMode
 {
@@ -1047,6 +1116,7 @@ enum RwTextureAddressMode
     rwTEXTUREADDRESSBORDER,
     rwTEXTUREADDRESSMODEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RwTextureAddressMode RwTextureAddressMode;
 
 enum RwStencilOperation
 {
@@ -1061,6 +1131,7 @@ enum RwStencilOperation
     rwSTENCILOPERATIONDECR,
     rwSTENCILOPERATIONFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RwStencilOperation RwStencilOperation;
 
 enum RwStencilFunction
 {
@@ -1075,6 +1146,7 @@ enum RwStencilFunction
     rwSTENCILFUNCTIONALWAYS,
     rwSTENCILFUNCTIONFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RwStencilFunction RwStencilFunction;
 
 enum RwCullMode
 {
@@ -1084,6 +1156,7 @@ enum RwCullMode
     rwCULLMODECULLFRONT,
     rwCULLMODEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RwCullMode RwCullMode;
 
 enum RwPrimitiveType
 {
@@ -1096,6 +1169,7 @@ enum RwPrimitiveType
     rwPRIMTYPEPOINTLIST = 6,
     rwPRIMITIVETYPEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RwPrimitiveType RwPrimitiveType;
 
 typedef RwBool (*RwStandardFunc)(void* pOut, void* pInOut, RwInt32 nI);
 
@@ -1107,6 +1181,9 @@ struct RwEngineOpenParams
 struct RwGameCubeDeviceConfig
 {
     /* unknown */
+#ifndef __cplusplus
+    RwUInt8 pad; /* C has no empty struct */
+#endif
 };
 
 typedef RwBool (*RwSystemFunc)(RwInt32 nOption, void* pOut, void* pInOut, RwInt32 nIn);
@@ -1171,6 +1248,7 @@ enum RwVideoModeFlag
     rwVIDEOMODE_XBOX_10X11PIXELASPECT = 0x0800,
     rwVIDEOMODEFLAGFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RwVideoModeFlag RwVideoModeFlag;
 
 struct RwVideoMode
 {
@@ -1188,6 +1266,7 @@ enum RwEngineInitFlag
     rwENGINEINITNOFREELISTS = 0x1,
     rwENGINEINITFLAGFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RwEngineInitFlag RwEngineInitFlag;
 
 #define RWSRCGLOBAL(variable) (((RwGlobals*)RwEngineInstance)->variable)
 
@@ -1199,6 +1278,7 @@ enum RwEngineStatus
     rwENGINESTATUSSTARTED = 3,
     rwENGINESTATUSFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RwEngineStatus RwEngineStatus;
 
 struct RwGlobals
 {
@@ -1220,8 +1300,7 @@ struct RwGlobals
     RwUInt32 resArenaInitSize; // 0x154
 };
 
-typedef struct RwResEntry;
-
+/* RwResEntry is typedef'd above */
 typedef void (*RwResEntryDestroyNotify)(RwResEntry* resEntry);
 
 struct RwResEntry

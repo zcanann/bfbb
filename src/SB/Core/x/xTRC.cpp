@@ -28,7 +28,7 @@ static const char* __deadstripped_xTRC()
 static const char* message_text;
 
 static const basic_rect<F32> screen_bounds = { 0.0f, 0.0f, 1.0f, 1.0f };
-static S32 yellow = 0xFFE600FF;
+static const S32 yellow = 0xFFE600FF;
 
 void xTRCInit()
 {
@@ -51,7 +51,7 @@ static void render_message(const char* s)
     tb.bounds.contract(0.1f);
 
     tb.bounds.h = tb.yextent(true);
-    tb.bounds.y = -(0.5f * tb.bounds.h + 0.5f);
+    tb.bounds.y = -(0.5f * tb.bounds.h - 0.5f);
 
     render_fill_rect(tb.font.clip, xColorFromRGBA(0, 0, 0, 0xC8));
 
@@ -81,7 +81,7 @@ void xTRCReset()
     }
 }
 
-void xTRCPad(S32, _tagTRCState)
+void xTRCPad(S32 pad_id, _tagTRCState state)
 {   
 }
 
@@ -138,6 +138,19 @@ void RenderText(const char* text, bool enabled)
 
     if (!enabled)
     {
-        render_fill_rect(tb.font.clip, xColorFromRGBA(0, 0, 0, 0xC8));
+        render_fill_rect(tb.font.clip, xColorFromRGBA(0, 0, 0, 0x96));
     }
+}
+
+// NOTE: these belong in xMath2.h. They are template members, so the compiler
+// emits a weak out-of-line copy into every translation unit that instantiates
+// them.
+template <class T> basic_rect<T>& basic_rect<T>::contract(T s)
+{
+    return expand(-s);
+}
+
+template <class T> basic_rect<T>& basic_rect<T>::expand(T s)
+{
+    return expand(s, s, s, s);
 }

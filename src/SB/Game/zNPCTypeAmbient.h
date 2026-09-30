@@ -7,8 +7,6 @@ struct zNPCAmbient : zNPCCommon
 {
     zNPCAmbient(S32 myType);
 
-    S32 AmbiHandleMail(NPCMsg msg);
-
     void Init(xEntAsset* asset);
     void Reset();
     void Process(xScene* xscn, F32 dt);
@@ -21,7 +19,10 @@ struct zNPCAmbient : zNPCCommon
     virtual U8 ColChkByFlags() const;
     virtual U8 ColPenByFlags() const;
     virtual U8 PhysicsFlags() const;
-    S32 AmbiHandleMail(NPCMsg*);
+    virtual S32 AmbiHandleMail(NPCMsg* mail)
+    {
+        return 0;
+    }
 };
 
 struct zNPCJelly : zNPCAmbient
@@ -45,6 +46,11 @@ struct zNPCJelly : zNPCAmbient
     void SelfSetup();
     S32 IsAlive();
 
+    void MeetTheKing(zNPCCommon* king)
+    {
+        npc_daddyJelly = king;
+    }
+
     void PlayWithAlpha(F32 unk);
     void PlayWithAnimSpd();
     void PumpFaster();
@@ -63,6 +69,7 @@ struct zNPCNeptune : zNPCAmbient
     void ParseINI();
     void SelfSetup();
     void Reset();
+    void Process(xScene* xscn, F32 dt);
     U32 AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal);
 
     U8 ColChkFlags() const;

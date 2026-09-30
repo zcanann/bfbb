@@ -9,6 +9,27 @@
 #include "xMath.h"
 #include "xMemMgr.h"
 
+// The target's @stringBase0 opens with twelve strings ours lacks entirely --
+// the en_LAYER_TYPE names, plus a "<unknown>" fallback. Nothing left in the
+// unit references them, so they are the residue of a layer-type-to-name
+// lookup the linker dead-stripped. They intern first, so this sits ahead of
+// every other string literal in the file.
+void __deadstripped_xpkrsvc()
+{
+    printf("DEFAULT");
+    printf("TEXTURE");
+    printf("BSP");
+    printf("MODEL");
+    printf("ANIMATION");
+    printf("VRAM");
+    printf("SRAM");
+    printf("SNDTOC");
+    printf("CUTSCENE");
+    printf("CUTSCENETOC");
+    printf("JSPINFO");
+    printf("<unknown>");
+}
+
 // Square and JESway: Function relocation issues will resolve themselves when all the functions
 //                    here 100% match, as it is apparently related to the instruction size of each function
 static st_PACKER_READ_FUNCS g_pkr_read_funcmap_original = { 1,
@@ -234,24 +255,26 @@ S32 PKR_SetActive(st_PACKER_READ_DATA* pr, en_LAYER_TYPE layer)
         {
             assnode = (st_PACKER_ATOC_NODE*)laynode->assref.list[j];
             result = assnode->loadflag & 0x80000;
-            if (!(assnode->loadflag & 0x10000) && result)
+            if (assnode->loadflag & 0x10000 || result == 0)
             {
-                if (assnode->typeref == NULL)
+                continue;
+            }
+
+            if (assnode->typeref == NULL)
+            {
+                assnode->Name();
+                xUtil_idtag2string(assnode->asstype, 0);
+            }
+            else if (assnode->typeref->assetLoaded != NULL)
+            {
+                if (!(assnode->typeref->assetLoaded(pr->userdata, assnode->aid, assnode->memloc,
+                                                    assnode->d_size)))
                 {
-                    assnode->Name();
-                    xUtil_idtag2string(assnode->asstype, 0);
+                    rc = 0;
                 }
-                else if (assnode->typeref->assetLoaded != NULL)
+                else
                 {
-                    if (!(assnode->typeref->assetLoaded(pr->userdata, assnode->aid,
-                                                        assnode->memloc, assnode->d_size)))
-                    {
-                        rc = 0;
-                    }
-                    else
-                    {
-                        assnode->loadflag |= 0x10000;
-                    }
+                    assnode->loadflag |= 0x10000;
                 }
             }
         }
@@ -516,53 +539,18 @@ S32 PKR_layerTypeNeedsXForm(en_LAYER_TYPE layer)
     }
 }
 
-// Debug helper; unreferenced in the final game (stripped at link time), but its
-// strings still lead the pooled string table.
-char* PKR_LayerTypeName(en_LAYER_TYPE layer)
-{
-    switch (layer)
-    {
-    case PKR_LTYPE_DEFAULT:
-        return "DEFAULT";
-    case PKR_LTYPE_TEXTURE:
-        return "TEXTURE";
-    case PKR_LTYPE_BSP:
-        return "BSP";
-    case PKR_LTYPE_MODEL:
-        return "MODEL";
-    case PKR_LTYPE_ANIMATION:
-        return "ANIMATION";
-    case PKR_LTYPE_VRAM:
-        return "VRAM";
-    case PKR_LTYPE_SRAM:
-        return "SRAM";
-    case PKR_LTYPE_SNDTOC:
-        return "SNDTOC";
-    case PKR_LTYPE_CUTSCENE:
-        return "CUTSCENE";
-    case PKR_LTYPE_CUTSCENETOC:
-        return "CUTSCENETOC";
-    case PKR_LTYPE_JSPINFO:
-        return "JSPINFO";
-    default:
-        return "<unknown>";
-    }
-}
-
 S32 PKR_findNextLayerToLoad(st_PACKER_READ_DATA** work_on_pkg, st_PACKER_LTOC_NODE** next_layer)
 {
     st_PACKER_READ_DATA* tmppr;
     st_PACKER_LTOC_NODE* tmplay;
-    S32 i;
-    S32 j;
 
     *next_layer = NULL;
     if (*work_on_pkg != NULL)
     {
         tmppr = *work_on_pkg;
-        for (j = 0; j < tmppr->laytoc.cnt; j++)
+        for (S32 i = 0; i < tmppr->laytoc.cnt; i++)
         {
-            tmplay = (st_PACKER_LTOC_NODE*)tmppr->laytoc.list[j];
+            tmplay = (st_PACKER_LTOC_NODE*)tmppr->laytoc.list[i];
             if (!(tmplay->flg_ldstat & 0x2000000))
             {
                 *next_layer = tmplay;
@@ -575,14 +563,14 @@ S32 PKR_findNextLayerToLoad(st_PACKER_READ_DATA** work_on_pkg, st_PACKER_LTOC_NO
     if (*next_layer == NULL)
     {
         tmppr = g_readdatainst;
-        for (i = 0; i < 16; i++, tmppr++)
+        for (S32 i = 0; i < 16; i++, tmppr++)
         {
             if ((g_loadlock & 1 << i) == 0 || tmppr == *work_on_pkg)
             {
                 continue;
             }
 
-            for (j = 0; j < tmppr->laytoc.cnt; j++)
+            for (S32 j = 0; j < tmppr->laytoc.cnt; j++)
             {
                 tmplay = (st_PACKER_LTOC_NODE*)tmppr->laytoc.list[j];
                 if (!(tmplay->flg_ldstat & 0x2000000))
@@ -606,9 +594,10 @@ S32 PKR_findNextLayerToLoad(st_PACKER_READ_DATA** work_on_pkg, st_PACKER_LTOC_NO
 void PKR_updateLayerAssets(st_PACKER_LTOC_NODE* laynode)
 {
     S32 i;
-    st_PACKER_ATOC_NODE* tmpass = NULL;
+    st_PACKER_ATOC_NODE* tmpass;
     S32 lay_hip_pos;
 
+    tmpass = NULL;
     for (i = 0; i < laynode->assref.cnt; i++)
     {
         tmpass = (st_PACKER_ATOC_NODE*)laynode->assref.list[i];
@@ -624,7 +613,7 @@ void PKR_updateLayerAssets(st_PACKER_LTOC_NODE* laynode)
         lay_hip_pos = tmpass->d_off;
         for (i = 0; i < laynode->assref.cnt; i++)
         {
-            st_PACKER_ATOC_NODE* tmpass = (st_PACKER_ATOC_NODE*)laynode->assref.list[i];
+            tmpass = (st_PACKER_ATOC_NODE*)laynode->assref.list[i];
             if (!(tmpass->loadflag & 0x100000))
             {
                 if (tmpass->loadflag & 0x200000)
@@ -865,9 +854,9 @@ void PKR_Disconnect(st_PACKER_READ_DATA* pr)
     }
 }
 
-U32 PKRAssetIDFromInst(void* inst)
+U32 PKRAssetIDFromInst(void* asset_inst)
 {
-    return ((st_PACKER_ATOC_NODE*)inst)->aid;
+    return ((st_PACKER_ATOC_NODE*)asset_inst)->aid;
 }
 
 char* PKR_AssetName(st_PACKER_READ_DATA* pr, U32 aid)
@@ -895,27 +884,27 @@ U32 PKR_GetBaseSector(st_PACKER_READ_DATA* pr)
     return pr->base_sector;
 }
 
-S32 PKR_GetAssetInfo(st_PACKER_READ_DATA* pr, U32 aid, st_PKR_ASSET_TOCINFO* tocainfo)
+S32 PKR_GetAssetInfo(st_PACKER_READ_DATA* pr, U32 aid, st_PKR_ASSET_TOCINFO* tocinfo)
 {
-    memset(tocainfo, 0, sizeof(st_PKR_ASSET_TOCINFO));
+    memset(tocinfo, 0, sizeof(st_PKR_ASSET_TOCINFO));
     S32 idx = XOrdLookup(&pr->asstoc, (void*)aid, OrdTest_R_AssetID);
     if (idx >= 0)
     {
         st_PACKER_ATOC_NODE* assnode = (st_PACKER_ATOC_NODE*)pr->asstoc.list[idx];
-        tocainfo->aid = aid;
-        tocainfo->typeref = assnode->typeref;
-        tocainfo->sector = pr->base_sector + assnode->d_off / pkr_sector_size;
-        tocainfo->plus_offset = assnode->d_off % pkr_sector_size;
-        tocainfo->size = assnode->d_size;
-        tocainfo->mempos = assnode->memloc;
+        tocinfo->aid = aid;
+        tocinfo->typeref = assnode->typeref;
+        tocinfo->sector = pr->base_sector + assnode->d_off / pkr_sector_size;
+        tocinfo->plus_offset = assnode->d_off % pkr_sector_size;
+        tocinfo->size = assnode->d_size;
+        tocinfo->mempos = assnode->memloc;
     }
     return idx >= 0 ? 1 : 0;
 }
 
 S32 PKR_GetAssetInfoByType(st_PACKER_READ_DATA* pr, U32 type, S32 idx,
-                           st_PKR_ASSET_TOCINFO* tocainfo)
+                           st_PKR_ASSET_TOCINFO* tocinfo)
 {
-    memset(tocainfo, 0, sizeof(st_PKR_ASSET_TOCINFO));
+    memset(tocinfo, 0, sizeof(st_PKR_ASSET_TOCINFO));
     if (idx < 0)
     {
         idx = 0;
@@ -934,12 +923,12 @@ S32 PKR_GetAssetInfoByType(st_PACKER_READ_DATA* pr, U32 type, S32 idx,
     }
 
     st_PACKER_ATOC_NODE* assnode = (st_PACKER_ATOC_NODE*)tmplist->list[idx];
-    tocainfo->aid = assnode->aid;
-    tocainfo->typeref = assnode->typeref;
-    tocainfo->sector = pr->base_sector + assnode->d_off / pkr_sector_size;
-    tocainfo->plus_offset = assnode->d_off % pkr_sector_size;
-    tocainfo->size = assnode->d_size;
-    tocainfo->mempos = assnode->memloc;
+    tocinfo->aid = assnode->aid;
+    tocinfo->typeref = assnode->typeref;
+    tocinfo->sector = pr->base_sector + assnode->d_off / pkr_sector_size;
+    tocinfo->plus_offset = assnode->d_off % pkr_sector_size;
+    tocinfo->size = assnode->d_size;
+    tocinfo->mempos = assnode->memloc;
 
     return 1;
 }
@@ -1574,14 +1563,14 @@ void PKR_spew_verhist()
 {
 }
 
-st_PACKER_ASSETTYPE* PKR_type2typeref(U32 asstype, st_PACKER_ASSETTYPE* types)
+st_PACKER_ASSETTYPE* PKR_type2typeref(U32 type, st_PACKER_ASSETTYPE* typelist)
 {
     st_PACKER_ASSETTYPE* da_type = NULL;
-    if (types != NULL)
+    if (typelist != NULL)
     {
-        for (st_PACKER_ASSETTYPE* tmptype = types; tmptype->typetag != 0; tmptype++)
+        for (st_PACKER_ASSETTYPE* tmptype = typelist; tmptype->typetag != 0; tmptype++)
         {
-            if (tmptype->typetag == asstype)
+            if (tmptype->typetag == type)
             {
                 da_type = tmptype;
                 break;
@@ -1590,7 +1579,7 @@ st_PACKER_ASSETTYPE* PKR_type2typeref(U32 asstype, st_PACKER_ASSETTYPE* types)
     }
     if (da_type == NULL)
     {
-        xUtil_idtag2string(asstype, 0);
+        xUtil_idtag2string(type, 0);
     }
     return da_type;
 }
@@ -1601,7 +1590,6 @@ void PKR_bld_typecnt(st_PACKER_READ_DATA* pr)
     st_PACKER_ATOC_NODE* assnode;
     S32 j;
     S32 i;
-    S32 idx;
     S32 typcnt[129] = {};
     st_XORDEREDARRAY* tmplist;
     U32 lasttype = 0;
@@ -1615,6 +1603,7 @@ void PKR_bld_typecnt(st_PACKER_READ_DATA* pr)
             assnode = (st_PACKER_ATOC_NODE*)laynode->assref.list[j];
             if (!(assnode->loadflag & 0x100000) && !(assnode->loadflag & 0x200000))
             {
+                S32 idx;
                 if (lasttype != 0 && assnode->asstype == lasttype)
                 {
                     idx = lastidx;
@@ -1640,11 +1629,11 @@ void PKR_bld_typecnt(st_PACKER_READ_DATA* pr)
         }
     }
 
-    for (idx = 0; idx < 129; idx++)
+    for (i = 0; i < 129; i++)
     {
-        if (typcnt[idx] >= 1)
+        if (typcnt[i] >= 1)
         {
-            XOrdInit(&pr->typelist[idx], typcnt[idx] > 1 ? typcnt[idx] : 2, false);
+            XOrdInit(&pr->typelist[i], typcnt[i] > 1 ? typcnt[i] : 2, false);
         }
     }
 
@@ -1656,6 +1645,7 @@ void PKR_bld_typecnt(st_PACKER_READ_DATA* pr)
             assnode = (st_PACKER_ATOC_NODE*)laynode->assref.list[j];
             if (!(assnode->loadflag & 0x100000) && !(assnode->loadflag & 0x200000))
             {
+                S32 idx;
                 if (lasttype != 0 && assnode->asstype == lasttype)
                 {
                     idx = lastidx;
@@ -1667,6 +1657,7 @@ void PKR_bld_typecnt(st_PACKER_READ_DATA* pr)
                     lasttype = assnode->asstype;
                 }
 
+                st_XORDEREDARRAY* tmplist;
                 if (idx < 0)
                 {
                     tmplist = &pr->typelist[128];

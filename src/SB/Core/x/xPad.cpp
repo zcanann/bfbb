@@ -12,6 +12,16 @@
 #include <string.h>
 
 _tagxPad mPad[4];
+// The retail object carries mRumbleList as a file-local .bss symbol and this
+// is the only translation unit that touches it, so it is static here.
+static _tagxRumble mRumbleList[32];
+_tagxPad* gDebugPad;
+_tagxPad* gPlayerPad;
+
+// NOTE: xPad.h declares this as xPadAnalogIsDigital(F32, F32), which does not
+// match the definition below and resolves the calls in xPadUpdate to a symbol
+// that does not exist. Declare the real signature here.
+void xPadAnalogIsDigital(S32 idx, S32 enable);
 
 S32 xPadInit()
 {
@@ -26,21 +36,26 @@ S32 xPadInit()
     return 1;
 }
 
-// WIP.
 _tagxPad* xPadEnable(S32 idx)
 {
     _tagxPad* p = mPad + idx;
-    if (p->state == ePad_Disabled && idx == 0)
+    if (p->state != ePad_Disabled)
     {
-        p = iPadEnable(mPad + idx, 0);
+        return p;
     }
+    if (idx != 0)
+    {
+        return p;
+    }
+    p = iPadEnable(p, idx);
+    xPadRumbleEnable(idx, 1);
     return p;
 }
 
 void xPadRumbleEnable(S32 idx, S32 enable)
 {
     _tagxPad* p = mPad + idx;
-    if (p->state != 2)
+    if (p->state != ePad_Enabled)
     {
         enable = 0;
     }
@@ -63,60 +78,131 @@ void xPadRumbleEnable(S32 idx, S32 enable)
 
 S32 xPadUpdate(S32 idx, F32 time_passed)
 {
-    U32 new_on = 0;
+    if (idx != 0)
+    {
+        return 0;
+    }
+
+    // Not initialized: iPadUpdate() below fills it in before any read.
+    U32 new_on;
 
     if (zScene_ScreenAdjustMode())
     {
-        xPadAnalogIsDigital(0, 0);
+        xPadAnalogIsDigital(idx, 0);
     }
     else if (zMenuRunning() || zGameIsPaused() || zGame_HackIsGallery())
     {
-        xPadAnalogIsDigital(0, 0);
+        xPadAnalogIsDigital(idx, 1);
     }
     else
     {
-        xPadAnalogIsDigital(0, 0);
+        xPadAnalogIsDigital(idx, 0);
     }
 
     _tagxPad* p = &mPad[idx];
 
-    if (!iPadUpdate(p, &new_on))
+    if ((p->flags & 4) && (p->flags & 8))
     {
-        p->pressed = 0;
-        p->released = 0;
+        _tagxRumble* r = p->rumble_head.next;
+        while (r != NULL)
+        {
+            r->seconds -= time_passed;
+            if (r->seconds <= 0.0f)
+            {
+                r->active = 0;
+                if (r->next == NULL)
+                {
+                    p->rumble_head.next = NULL;
+                    r = NULL;
+                    iPadStopRumble(p);
+                }
+                else
+                {
+                    p->rumble_head.next = r->next;
+                    r = p->rumble_head.next;
+                    iPadStartRumble(p, r);
+                }
+            }
+            else
+            {
+                iPadRumbleFx(p, r, time_passed);
+                break;
+            }
+        }
+    }
+
+    S32 ret = iPadUpdate(p, &new_on);
+    if (!ret)
+    {
         return 1;
     }
 
-    if ((p->flags & 0x10) && (p->flags & 0x1))
+    if (p->flags & 0x10)
     {
-        U32 fake_dpad = 0;
-        if (p->analog1.x >= 50)
+        if (p->flags & 0x1)
         {
-            fake_dpad |= 0x20;
-        }
-        else if (p->analog1.x <= -50)
-        {
-            fake_dpad |= 0x80;
-        }
-        if (p->analog1.y >= 50)
-        {
-            fake_dpad |= 0x40;
-        }
-        else if (p->analog1.y <= -50)
-        {
-            fake_dpad |= 0x10;
-        }
-        if (fake_dpad == 0)
-        {
-            p->al2d_timer = 0.0f;
-        }
-        else
-        {
-            p->al2d_timer -= time_passed;
-            if (p->al2d_timer <= 0.0f)
+            U32 fake_dpad = 0;
+            if (p->analog1.x >= 50)
             {
-                new_on |= fake_dpad;
-                p->al2d_timer = 0.35f;
+                fake_dpad |= 0x20;
+            }
+            else if (p->analog1.x <= -50)
+            {
+                fake_dpad |= 0x80;
+            }
+            if (p->analog1.y >= 50)
+            {
+                fake_dpad |= 0x40;
+            }
+            else if (p->analog1.y <= -50)
+            {
+                fake_dpad |= 0x10;
+            }
+            if (fake_dpad == 0)
+            {
+                p->al2d_timer = 0.0f;
+            }
+            else
+            {
+                p->al2d_timer -= time_passed;
+                if (p->al2d_timer <= 0.0f)
+                {
+                    new_on |= fake_dpad;
+                    p->al2d_timer = 0.35f;
+                }
+            }
+        }
+
+        if (p->flags & 0x2)
+        {
+            if (p->analog2.x > -50 && p->analog2.x < 50 && p->analog2.y > -50 &&
+                p->analog2.y < 50)
+            {
+                p->ar2d_timer = 0.0f;
+            }
+            else
+            {
+                p->ar2d_timer -= time_passed;
+                if (p->ar2d_timer <= 0.0f)
+                {
+                    p->ar2d_timer = 0.35f;
+                    if (p->analog2.x >= 50)
+                    {
+                        new_on |= 0x20;
+                    }
+                    else if (p->analog2.x <= -50)
+                    {
+                        new_on |= 0x80;
+                    }
+                    if (p->analog2.y >= 50)
+                    {
+                        new_on |= 0x40;
+                    }
+                    else if (p->analog2.y <= -50)
+                    {
+                        new_on |= 0x10;
+                    }
+                }
             }
         }
     }
@@ -212,55 +298,20 @@ void xPadNormalizeAnalog(_tagxPad& pad, S32 inner_zone, S32 outer_zone)
     }
 }
 
-void xPadAnalogIsDigital(S32 idx, S32 enable)
-{
-    if (idx != 0)
-        return;
-
-    _tagxPad* pad = &mPad[idx];
-
-    if (enable)
-    {
-        pad->flags |= 0x10;
-    }
-    else
-    {
-        pad->flags &= ~0x10;
-    }
-
-    if (pad->al2d_timer >= 0.35f)
-    {
-        pad->al2d_timer = 0.35f;
-    }
-
-    if (pad->ar2d_timer >= 0.35f)
-    {
-        pad->ar2d_timer = 0.35f;
-    }
-
-    if (pad->d_timer >= 0.35f)
-    {
-        pad->d_timer = 0.35f;
-    }
-}
-
 void xPadKill()
 {
     iPadKill();
 }
 
-// WIP.
 _tagxRumble* xPadGetRumbleSlot()
 {
-    _tagxRumble* rum = mRumbleList;
-    for (S32 i = 0x20; i > 0; i--)
+    for (S32 i = 0; i < 32; i++)
     {
-        if (rum->active == 0)
+        if (mRumbleList[i].active == 0)
         {
-            memset(rum, 0, sizeof(_tagxRumble));
-            return rum;
+            memset(&mRumbleList[i], 0, sizeof(_tagxRumble));
+            return &mRumbleList[i];
         }
-        rum++;
     }
     return NULL;
 }
@@ -271,6 +322,9 @@ void xPadDestroyRumbleChain(_tagxPad* pad)
     _tagxRumble* curr = pad->rumble_head.next;
     while (curr != NULL)
     {
+        // Retail bug: memset() clears curr->next before it is read, so the
+        // chain walk always stops after the first node and the rest of the
+        // chain is leaked. Reproduced faithfully.
         memset(curr, 0, sizeof(_tagxRumble));
         curr = curr->next;
     }
@@ -285,11 +339,11 @@ void xPadDestroyRumbleChain(S32 idx)
 S32 xPadAddRumble(S32 idx, _tagRumbleType type, F32 time, S32 replace, U32 fxflags)
 {
     S32 appended;
+    _tagxPad* pad;
     _tagxRumble* r;
     _tagxRumble* last_r;
-    _tagxPad* pad;
 
-    pad = mPad + (idx * 0x148);
+    pad = mPad + idx;
     if (!(pad->flags & 4))
     {
         return 0;
@@ -299,13 +353,11 @@ S32 xPadAddRumble(S32 idx, _tagRumbleType type, F32 time, S32 replace, U32 fxfla
         return 0;
     }
 
+    appended = 1;
     if (replace != 0)
     {
         xPadDestroyRumbleChain(pad);
-    }
-    else
-    {
-        appended = 1;
+        appended = 0;
     }
 
     r = &pad->rumble_head;
@@ -338,4 +390,70 @@ S32 xPadAddRumble(S32 idx, _tagRumbleType type, F32 time, S32 replace, U32 fxfla
         iPadStartRumble(pad, r);
     }
     return 1;
+}
+
+void xPadAnalogIsDigital(S32 idx, S32 enable)
+{
+    if (idx != 0)
+        return;
+
+    _tagxPad* pad = &mPad[idx];
+
+    if (enable)
+    {
+        pad->flags |= 0x10;
+    }
+    else
+    {
+        pad->flags &= ~0x10;
+    }
+
+    if (pad->al2d_timer >= 0.35f)
+    {
+        pad->al2d_timer = 0.35f;
+    }
+
+    if (pad->ar2d_timer >= 0.35f)
+    {
+        pad->ar2d_timer = 0.35f;
+    }
+
+    if (pad->d_timer >= 0.35f)
+    {
+        pad->d_timer = 0.35f;
+    }
+}
+
+inline F32 xVec2::length() const
+{
+    return xsqrt(length2());
+}
+
+inline F32 normalize_analog(S32 v, S32 v_min, S32 v_max, S32 dead_center, S32 dead_min,
+                            S32 dead_max)
+{
+    if (v <= dead_center)
+    {
+        if (v >= dead_min)
+        {
+            return 0.0f;
+        }
+        if (v <= v_min)
+        {
+            return -1.0f;
+        }
+        return (F32)(v - dead_min) / (F32)(dead_min - v_min);
+    }
+    else
+    {
+        if (v <= dead_max)
+        {
+            return 0.0f;
+        }
+        if (v >= v_max)
+        {
+            return 1.0f;
+        }
+        return (F32)(v - dead_max) / (F32)(v_max - dead_max);
+    }
 }

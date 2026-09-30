@@ -29,14 +29,6 @@ struct xCollis
         U32 index;
         F32 r;
         F32 d;
-
-        tri_data& operator=(const tri_data& o)
-        {
-            index = o.index;
-            r = o.r;
-            d = o.d;
-            return *this;
-        };
     };
 
     U32 flags;
@@ -129,6 +121,10 @@ S32 xSweptSphereToBox(xSweptSphere* sws, xBox* box, xMat4x3* mat);
 S32 xSweptSphereToEnv(xSweptSphere* sws, xEnv* env);
 S32 xSweptSphereToModel(xSweptSphere* sws, RpAtomic* model, RwMatrix* mat);
 S32 xSweptSphereToScene(xSweptSphere* sws, xScene* sc, xEnt* mover, U8 collType);
+S32 xSweptSphereToStatDyn(xSweptSphere* sws, xScene* sc, xEnt* mover, U8 collType);
+S32 xSweptSphereToNPC(xSweptSphere* sws, xScene* sc, xEnt* mover, U8 collType);
+S32 xSweptSphereToNonMoving(xSweptSphere* sws, xScene* sc, xEnt* mover, U8 collType);
+S32 xSweptSphereToTriangle(xSweptSphere* sws, xVec3* v0, xVec3* v1, xVec3* v2);
 void xSweptSpherePrepare(xSweptSphere* sws, xVec3* start, xVec3* end, F32 radius);
 void xSweptSphereGetResults(xSweptSphere* sws);
 U32 xSphereHitsOBB_nu(const xSphere* s, const xBox* b, const xMat4x3* m, xCollis* coll);

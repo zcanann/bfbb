@@ -280,6 +280,7 @@ struct NPARMgmt
     void UpdateAndRender(F32 param_1);
     void XtraDataSet(NPARXtraData* param_1);
     void UserDataSet(void** user_data);
+    void PromoteTail(S32 idx);
     NPARData* NextAvail();
 };
 
@@ -293,6 +294,8 @@ struct NPARInfo
 
 struct StreakInfo
 {
+    void Defaults();
+
     F32 freq;
     F32 alf_fade;
     F32 alf_start;
@@ -326,6 +329,12 @@ void NPAR_EmitOilSplash(const xVec3* pos, const xVec3* vel);
 void NPAR_EmitOilTrailz(const xVec3* pos);
 void NPAR_EmitOilVapors(const xVec3* pos);
 void NPAR_EmitTubeSparklies(const xVec3* pos, const xVec3* vel);
+void NPAR_EmitGloveDust(const xVec3* pos, const xVec3* vel);
+void NPAR_EmitSleepyZeez(const xVec3* pos, const xVec3* vel);
+void NPAR_EmitDoggyWisps(const xVec3* pos, const xVec3* vel);
+void NPAR_EmitDoggyAttack(const xVec3* pos, const xVec3* vel);
+void NPAR_EmitTubeConfetti(const xVec3* pos, const xVec3* vel);
+void NPAR_EmitFWExhaust(const xVec3* pos, const xVec3* vel);
 void NPAR_EmitVSSpray(const xVec3* pos, const xVec3* vel);
 void NPAR_Upd_OilBubble(NPARMgmt* mgmt, F32 dt);
 void NPAR_Upd_TubeSpiral(NPARMgmt* mgmt, F32 dt);
@@ -354,8 +363,11 @@ void NPCC_Slick_MakePlayerSlip(zNPCCommon* npc);
 void NPCC_RenderProjTextureFaceCamera(RwRaster* rast, F32 factor, xVec3* pos, F32 radius,
                                       F32 height, xShadowCache* cache, S32 fillCache, xEnt* ent);
 void UpdateAndRender(NPARMgmt param_1, F32 dt);
+F32 ARCH3(F32 param_1);
 F32 BOWL3(F32 param_1);
 F32 QUB(F32 param_1);
+F32 ARCH(F32 param_1);
 F32 BOWL(F32 param_1);
+void NPAR_EmitOilShieldPop(const xVec3* pos);
 
 #endif

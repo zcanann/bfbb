@@ -8,6 +8,20 @@
 #include "xMath.h" // icos and isin
 #include "xClimate.h" // xMat3x3Identity
 #include "xMathInlines.h" // xasin, xatan2
+
+// These structs were used in deadstripped functions.
+// This function is here to force the symbols to be linked.
+//
+// The target opens .rodata with 4 unreferenced all-zero
+// templates (0x30 total) that offset every later .rodata
+// relocation. Same idiom as zVar.cpp.
+void __deadstripped_xMath3()
+{
+    const char _405[0x0C] = {};
+    const char _406[0x0C] = {};
+    const char _410[0x0C] = {};
+    const char _441[0x0C] = {};
+}
 //#include "xVec3Inlines.h" // xVec3Init, imported, realized xClimate has a declaration as well though.
 
 const xVec3 g_O3 = { 0, 0, 0 };
@@ -61,7 +75,7 @@ void xLine3VecDist2(const xVec3* p1, const xVec3* p2, const xVec3* v, xIsect* is
     }
 
     F32 lvlen2 = xVec3Length2(&isx->norm);
-    isx->dist = lvlen2 - SQ(ldirdotlv) / ldirlen2;
+    isx->dist = lvlen2 - (ldirdotlv * ldirdotlv) / ldirlen2;
 }
 
 S32 xPointInBox(const xBox* b, const xVec3* p)
@@ -449,7 +463,7 @@ void xMat3x3Mul(xMat3x3* o, const xMat3x3* a, const xMat3x3* b)
 {
     xMat3x3 temp;
     xMat3x3* tp;
-    U32 usetemp;
+    U32 usetemp = 0;
 
     if (o == a || o == b)
     {
@@ -679,18 +693,19 @@ F32 xQuatNormalize(xQuat* o, const xQuat* q)
     return len;
 }
 
-void xQuatSlerp(xQuat* q, const xQuat* a, const xQuat* b, F32 t)
+void xQuatSlerp(xQuat* o, const xQuat* a, const xQuat* b, F32 t)
 {
-    F32 one_sintheta;
+    F32 temp_s;
     F32 temp_t;
+    F32 one_sintheta;
     F32 abdot;
+
+    xQuat qp1;
+    xQuat qp2;
     xQuat b2;
 
-    xQuat* qp1 = 0;
-    xQuat* qp2 = 0;
-
     abdot = xQuatDot(a, b);
-    if (abdot < 0.0)
+    if (abdot < 0.0f)
     {
         abdot = -abdot;
         b2.v.x = -b->v.x;
@@ -699,34 +714,33 @@ void xQuatSlerp(xQuat* q, const xQuat* a, const xQuat* b, F32 t)
         b2.s = -b->s;
         b = &b2;
     }
-    if (0.999 <= abdot)
+    if (abdot >= 0.999f)
     {
-        temp_t = 1.0 - t;
+        temp_t = 1.0f - t;
+        temp_s = t;
     }
     else
     {
         abdot = xacos(abdot);
-        one_sintheta = 1.0 / isin(abdot);
-        temp_t = isin(t);
-        temp_t = one_sintheta * temp_t;
-        abdot = isin(t * abdot);
-        t = one_sintheta * abdot;
+        one_sintheta = 1.0f / isin(abdot);
+        temp_t = one_sintheta * isin((1.0f - t) * abdot);
+        temp_s = one_sintheta * isin(t * abdot);
     }
 
-    xQuatSMul(qp1, a, temp_t);
-    xQuatSMul(qp2, b, t);
-    xQuatAdd(q, qp1, qp2);
-    xQuatNormalize(q, q);
+    xQuatSMul(&qp1, a, temp_t);
+    xQuatSMul(&qp2, b, temp_s);
+    xQuatAdd(o, &qp1, &qp2);
+    xQuatNormalize(o, o);
     return;
 }
 
 void xQuatMul(xQuat* o, const xQuat* a, const xQuat* b)
 
 {
-    o->v.z = (a->v.x * b->v.y + a->v.z * b->s + a->s * b->v.z) - a->v.y * b->v.x;
-    o->v.y = (a->v.z * b->v.x + a->v.y * b->s + a->s * b->v.y) - a->v.x * b->v.z;
-    o->v.x = (a->v.y * b->v.z + a->v.x * b->s + a->s * b->v.x) - a->v.z * b->v.y;
-    o->s = ((a->s * b->s - a->v.x * b->v.x) - a->v.y * b->v.y) - a->v.z * b->v.z;
+    o->v.x = a->s * b->v.x + a->v.x * b->s + a->v.y * b->v.z - a->v.z * b->v.y;
+    o->v.y = a->s * b->v.y + a->v.y * b->s + a->v.z * b->v.x - a->v.x * b->v.z;
+    o->v.z = a->s * b->v.z + a->v.z * b->s + a->v.x * b->v.y - a->v.y * b->v.x;
+    o->s = a->s * b->s - a->v.x * b->v.x - a->v.y * b->v.y - a->v.z * b->v.z;
     xQuatNormalize(o, o);
     return;
 }
@@ -754,19 +768,14 @@ void xBoxUnion(xBox& a, const xBox& b, const xBox& c)
 
 void xBoxFromCircle(xBox& box, const xVec3& center, const xVec3& dir, F32 r)
 {
-    xVec3 temp_vec1;
-    xVec3 temp_vec2;
+    xVec3 ext = { 0.0f, 0.0f, 0.0f };
 
-    static xVec3 stat_vec;
-    static F32 stat_f;
+    ext.x = r * xsqrt(1.0f - (dir.x * dir.x));
+    ext.y = r * xsqrt(1.0f - (dir.y * dir.y));
+    ext.z = r * xsqrt(1.0f - (dir.z * dir.z));
 
-    stat_vec.x = r * xsqrt(stat_f - (dir.x * dir.x));
-    stat_vec.y = r * xsqrt(stat_f - (dir.y * dir.y));
-    stat_vec.z = r * xsqrt(stat_f - (dir.z * dir.z));
-    temp_vec1 += center;
-    box.upper = temp_vec1;
-    temp_vec2 -= center;
-    box.lower = temp_vec2;
+    box.upper = center + ext;
+    box.lower = center - ext;
 }
 
 void xQuatSMul(xQuat* q, const xQuat* a, F32 t)

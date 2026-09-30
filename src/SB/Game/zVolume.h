@@ -7,7 +7,7 @@ struct zVolume : xVolume
 {
 };
 
-extern S32 gOccludeCount;
+extern volatile S32 gOccludeCount;
 
 void zVolumeInit();
 void zVolumeSetup();

@@ -19,7 +19,7 @@ namespace
 
 void ztaskbox::load(const ztaskbox::asset_type& a)
 {
-    xBaseInit((xBase*)this, &(xBaseAsset)a);
+    xBaseInit((xBase*)this, &(xBaseAsset&)a);
     this->baseType = eBaseTypeTaskBox;
     this->asset = &a;
     this->eventFunc = cb_dispatch;
@@ -58,7 +58,6 @@ void ztaskbox::write(xSerial& s)
     s.Write((U8)this->state);
 }
 
-// Equivalent: branching weirdness
 void ztaskbox::start_talk(zNPCCommon* npc)
 {
     ztaskbox* curr = this->current;
@@ -71,22 +70,24 @@ void ztaskbox::start_talk(zNPCCommon* npc)
         }
         else
         {
-            if (this->flag.enabled && this->state != STATE_INVALID)
+            if (!this->flag.enabled || this->state == STATE_INVALID)
             {
-                if (shared != NULL && shared != this)
+                return;
+            }
+
+            if (shared != NULL && shared != this)
+            {
+                shared->stop_talk();
+            }
+            ztalkbox* talkbox = (ztalkbox*)zSceneFindObject(asset->talk_box);
+            if (talkbox != NULL)
+            {
+                const char* text = current->get_text(asset->stages[state]);
+                if (text != NULL)
                 {
-                    shared->stop_talk();
-                }
-                ztalkbox* talkbox = (ztalkbox*)zSceneFindObject(asset->talk_box);
-                if (talkbox != NULL)
-                {
-                    U32 text = current->get_text(asset->stages[state]);
-                    if (text != 0)
-                    {
-                        shared = this;
-                        tcb->reset(*this);
-                        talkbox->start_talk(text, tcb, npc);
-                    }
+                    shared = this;
+                    tcb->reset(*this);
+                    talkbox->start_talk(text, tcb, npc);
                 }
             }
         }
@@ -221,21 +222,21 @@ bool ztaskbox::exists(state_enum stage)
     return state != STATE_BEGIN && xSTFindAsset(state, NULL) != NULL;
 }
 
-void ztaskbox::set_state(state_enum stage)
+void ztaskbox::set_state(state_enum state)
 {
-    this->state = stage;
+    this->state = state;
     this->current = this;
 
-    switch (stage)
+    switch (state)
     {
         case STATE_BEGIN:
-            if (!exists(stage))
+            if (!exists(state))
             {
                 set_state(STATE_DESCRIPTION);
             }
             break;
         case STATE_DESCRIPTION:
-            if (!exists(stage))
+            if (!exists(state))
             {
                 set_state(STATE_REMINDER);
             }
@@ -243,13 +244,13 @@ void ztaskbox::set_state(state_enum stage)
         case STATE_REMINDER:
         case STATE_SUCCESS:
         case STATE_FAILURE:
-            if (!exists(stage))
+            if (!exists(state))
             {
                 set_state(STATE_END);
             }
             break;
         case STATE_END:
-            if (!exists(stage))
+            if (!exists(state))
             {
                 set_state(STATE_INVALID);
             }
@@ -272,13 +273,13 @@ void ztaskbox::on_talk_stop(ztalkbox::answer_enum answer)
 {
     switch (state)
     {
-    case ztalkbox::ANSWER_YES:
+    case STATE_DESCRIPTION:
         set_state(STATE_REMINDER);
         break;
-    case ztalkbox::ANSWER_3:
+    case STATE_SUCCESS:
         set_state(STATE_END);
         break;
-    case ztalkbox::ANSWER_4:
+    case STATE_FAILURE:
         if (asset->retry != 0)
         {
             set_state(STATE_DESCRIPTION);
@@ -294,9 +295,9 @@ void ztaskbox::on_talk_stop(ztalkbox::answer_enum answer)
             set_state(STATE_BEGIN);
         }
         break;
-    case ztalkbox::ANSWER_CONTINUE:
-    case ztalkbox::ANSWER_NO:
-    case ztalkbox::ANSWER_5:
+    case STATE_BEGIN:
+    case STATE_REMINDER:
+    case STATE_END:
         break;
     }
 
@@ -306,7 +307,7 @@ void ztaskbox::on_talk_stop(ztalkbox::answer_enum answer)
     }
 }
 
-U32 ztaskbox::get_text(U32 textID)
+const char* ztaskbox::get_text(U32 textID)
 {
     U32 id = textID;
     xGroup* group = (xGroup*)zSceneFindObject(textID);
@@ -325,7 +326,8 @@ U32 ztaskbox::get_text(U32 textID)
         return 0;
     }
 
-    // What type is this?
+    // A TEXT asset: an xTextAsset header, which is just a length, followed by
+    // the string itself.
     void* asset = xSTFindAsset(id, NULL);
     if (asset == NULL)
     {
@@ -333,8 +335,7 @@ U32 ztaskbox::get_text(U32 textID)
     }
     else
     {
-        // HACK
-        return (U32)asset + 4;
+        return (const char*)((xTextAsset*)asset + 1);
     }
 }
 

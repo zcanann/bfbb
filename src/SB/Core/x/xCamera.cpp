@@ -19,7 +19,12 @@
 #define CAMERAFX_ZOOM_MODE_2 2
 #define CAMERAFX_ZOOM_MODE_3 3
 
+#define CAMERAFX_TYPE_NONE 0
+#define CAMERAFX_TYPE_ZOOM 1
 #define CAMERAFX_TYPE_SHAKE 2
+
+void xCameraFXZoomUpdate(cameraFX* f, F32 dt, const xMat4x3*, xMat4x3* m);
+void xCameraFXShakeUpdate(cameraFX* f, F32 dt, const xMat4x3*, xMat4x3* m);
 
 S32 sCamCollis;
 volatile S32 xcam_collis_owner_disable;
@@ -27,11 +32,34 @@ S32 xcam_do_collis = 1;
 F32 xcam_collis_radius = 0.4f;
 F32 xcam_collis_stiffness = 0.3f;
 RpAtomic* sInvisWallHack;
+F32 gCameraLastFov;
 static xMat4x3 sCameraFXMatOld;
 cameraFX sCameraFX[10];
-cameraFXTableEntry sCameraFXTable[3] = {};
+cameraFXTableEntry sCameraFXTable[3] = { { CAMERAFX_TYPE_NONE, NULL, NULL },
+                                         { CAMERAFX_TYPE_ZOOM, xCameraFXZoomUpdate, NULL },
+                                         { CAMERAFX_TYPE_SHAKE, xCameraFXShakeUpdate, NULL } };
 
 zGlobals globals;
+
+// These structs were used in deadstripped functions.
+// This function is here to force the symbols to be linked.
+void __deadstripped_xCamera()
+{
+    const char _405[0x0C] = {};
+    const char _406[0x0C] = {};
+    const char _410[0x0C] = {};
+    const char _441[0x0C] = {};
+
+    const char _555[0x28] = {};
+    const char _556[0x28] = {};
+    const char _557[0x28] = {};
+    const char _558[0x28] = {};
+    const char _559[0x28] = {};
+    const char _560[0x28] = {};
+    const char _561[0x28] = {};
+
+    const char _711[0x10] = {};
+}
 
 static void xCameraFXInit();
 void add_camera_tweaks();
@@ -164,11 +192,8 @@ static void xCam_buildbasis(xCamera* cam)
 
             if (dist2 > 0.001f)
             {
-                // non-matching: wrong registers
-                dist_inv = 1.0f / dist2;
-
-                cam->mbasis.at.x *= dist_inv;
-                cam->mbasis.at.z *= dist_inv;
+                cam->mbasis.at.x *= 1.0f / dist2;
+                cam->mbasis.at.z *= 1.0f / dist2;
             }
             else
             {
@@ -322,43 +347,34 @@ static void xCam_DampP(xCamera* r3, F32 f1, F32 f2)
 }
 static void xCam_CorrectYaw(xCamera* r3, F32 f1, F32 f2, F32 f3)
 {
-    F32 tmp1, tmp2;
+    F32 tmp2;
 
-    tmp1 = 1.0f / r3->yaw_ct;
+    tmp2 = (1.0f / r3->yaw_ct) * (2.0f * r3->yaw_cd * f1 - f2 * f3);
+    tmp2 -= f2;
+    tmp2 *= r3->yaw_csv * f3;
 
-    tmp2 = 2.0f * r3->yaw_cd * f1 - f2 * f3;
-    f1 = tmp1 * tmp2;
-    f1 -= f2;
-    f1 *= r3->yaw_csv * f3;
-
-    r3->yaw_cur += f1;
+    r3->yaw_cur += tmp2;
 }
 static void xCam_CorrectPitch(xCamera* r3, F32 f1, F32 f2, F32 f3)
 {
-    F32 tmp1, tmp2;
+    F32 tmp2;
 
-    tmp1 = 1.0f / r3->pitch_ct;
+    tmp2 = (1.0f / r3->pitch_ct) * (2.0f * r3->pitch_cd * f1 - f2 * f3);
+    tmp2 -= f2;
+    tmp2 *= r3->pitch_csv * f3;
 
-    tmp2 = 2.0f * r3->pitch_cd * f1 - f2 * f3;
-    f1 = tmp1 * tmp2;
-    f1 -= f2;
-    f1 *= r3->pitch_csv * f3;
-
-    r3->pitch_cur += f1;
+    r3->pitch_cur += tmp2;
 }
 
 static void xCam_CorrectRoll(xCamera* r3, F32 f1, F32 f2, F32 f3)
 {
-    F32 tmp1, tmp2;
+    F32 tmp2;
 
-    tmp1 = 1.0f / r3->roll_ct;
+    tmp2 = (1.0f / r3->roll_ct) * (2.0f * r3->roll_cd * f1 - f2 * f3);
+    tmp2 -= f2;
+    tmp2 *= r3->roll_csv * f3;
 
-    tmp2 = 2.0f * r3->roll_cd * f1 - f2 * f3;
-    f1 = tmp1 * tmp2;
-    f1 -= f2;
-    f1 *= r3->roll_csv * f3;
-
-    r3->roll_cur += f1;
+    r3->roll_cur += tmp2;
 }
 
 void SweptSphereHitsCameraEnt(xScene*, xRay3* ray, xQCData* qcd, xEnt* ent, void* data)
@@ -462,7 +478,6 @@ void SweptSphereHitsCameraEnt(xScene*, xRay3* ray, xQCData* qcd, xEnt* ent, void
 }
 
 static void _xCameraUpdate(xCamera* cam, F32 dt)
-// NONMATCH("https://decomp.me/scratch/2q6zO")
 {
     if (!cam->tgt_mat)
         return;
@@ -532,12 +547,16 @@ static void _xCameraUpdate(xCamera* cam, F32 dt)
                 hsv = (2.0f * htg - (htg * ot + cam->hepv) * 0.5f * it - hcv * dt) * T_inv;
                 psv = (2.0f * ptg - (ptg * ot + cam->pepv) * 0.5f * it - pcv * dt) * T_inv;
             }
-            F32 dpv = dsv - dcv;
             F32 hpv = hsv - hcv;
             F32 ppv = psv - pcv;
-            F32 vax = cam->mbasis.right.x * ppv + cam->mbasis.at.x * dpv;
-            F32 vay = cam->mbasis.right.y * ppv + hpv;
-            F32 vaz = cam->mbasis.right.z * ppv + cam->mbasis.at.z * dpv;
+            F32 vax, vay;
+            F32 dpv = dsv - dcv;
+            vax = cam->mbasis.at.x * dpv;
+            vay = hpv;
+            F32 vaz = cam->mbasis.at.z * dpv;
+            vax += cam->mbasis.right.x * ppv;
+            vay += cam->mbasis.right.y * ppv;
+            vaz += cam->mbasis.right.z * ppv;
             vax *= dt;
             vay *= dt;
             vaz *= dt;
@@ -649,7 +668,7 @@ static void _xCameraUpdate(xCamera* cam, F32 dt)
         pcv *= cam->pitch_ccv;
         rcv *= cam->roll_ccv;
 
-        cam->omat = cam->mat;
+        *(xMat3x3*)&cam->omat = *(xMat3x3*)&cam->mat;
         cam->yaw_cur += ycv * dt;
         cam->pitch_cur += pcv * dt;
         cam->roll_cur += rcv * dt;
@@ -750,7 +769,7 @@ static void _xCameraUpdate(xCamera* cam, F32 dt)
         rot_cv.angle *= m;
         rot_cv.angle = 0.0f; // lol
 
-        cam->omat = cam->mat;
+        *(xMat3x3*)&cam->omat = *(xMat3x3*)&cam->mat;
 
         xVec3 f;
         xMat3x3RMulVec(&f, cam->tgt_mat, &cam->focus);
@@ -1277,22 +1296,6 @@ void xCameraFOV(xCamera* cam, F32 fov, F32 maxSpeed, F32 dt)
     }
 }
 
-inline F32 xQuatGetAngle(const xQuat* q)
-{
-    if (q->s > 0.99998999f)
-    {
-        return 0.0f;
-    }
-    else if (q->s < -0.99998999f)
-    {
-        return 6.2831855f;
-    }
-    else
-    {
-        return 2.0f * xacos(q->s);
-    }
-}
-
 void xCameraLook(xCamera* cam, U32 flags, const xQuat* orn_goal, F32 tm, F32 tm_acc, F32 tm_dec)
 {
     F32 s; // unused
@@ -1446,6 +1449,22 @@ float std::asinf(float x)
 }
 #endif
 
+F32 xQuatGetAngle(const xQuat* q)
+{
+    if (q->s > 0.99998999f)
+    {
+        return 0.0f;
+    }
+    else if (q->s < -0.99998999f)
+    {
+        return 6.2831855f;
+    }
+    else
+    {
+        return 2.0f * xacos(q->s);
+    }
+}
+
 // xBound& xBound::operator=(const xBound& b)
 // {
 //     qcd.xmin = b.qcd.xmin;
@@ -1479,13 +1498,12 @@ float std::asinf(float x)
 
 static void bound_sphere_xz(xVec3& r3, xVec3& r4, const xVec3& r5, F32 f1, const xVec3& r6, F32 f2)
 {
-    // non-matching: incorrect registers and out-of-order instructions
     F32 _f31 = f1 / f2;
-    F32 _f3 = _f31 / xsqrt(SQR(f2) - SQR(f1));
+    F32 _f3 = _f31 * xsqrt(SQR(f2) - SQR(f1));
     F32 _f5 = f1 * _f31;
+    F32 _f6 = _f3 * r6.x;
     F32 _f7 = _f3 * r6.z;
     F32 _f8 = _f5 * r6.x;
-    F32 _f6 = _f3 * r6.x;
     F32 _f5_2 = _f5 * r6.z;
 
     r3.x = r5.x + _f7 + _f8;
@@ -1709,7 +1727,6 @@ void xMat3x3LookAt(xMat3x3* m, const xVec3* pos, const xVec3* at)
     xMat3x3LookVec(m, &v);
 }
 
-
 U32 xEntIsVisible(const xEnt* ent)
 {
     return (ent->flags & 0x81) == 0x1;
@@ -1820,7 +1837,8 @@ xVec3& xVec3::safe_normalize(const xVec3& val)
     }
 }
 
-template <> F32 range_limit<F32>(F32 v, F32 minv, F32 maxv)
+template <>
+inline F32 range_limit<F32>(F32 v, F32 minv, F32 maxv)
 {
     if (v <= minv)
     {

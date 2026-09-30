@@ -3,6 +3,38 @@
 
 #include <rwsdk/rwplcore.h>
 
+/* C compatibility: these headers use bare tag names as types. */
+typedef struct rxHeapFreeBlock rxHeapFreeBlock;
+typedef struct rxHeapSuperBlockDescriptor rxHeapSuperBlockDescriptor;
+typedef struct RxHeap RxHeap;
+typedef struct rxHeapBlockHeader rxHeapBlockHeader;
+typedef struct RxClusterDefinition RxClusterDefinition;
+typedef struct RxOutputSpec RxOutputSpec;
+typedef struct RxClusterRef RxClusterRef;
+typedef struct RxIoSpec RxIoSpec;
+typedef struct RxNodeMethods RxNodeMethods;
+typedef struct RxNodeDefinition RxNodeDefinition;
+typedef struct RxPipelineCluster RxPipelineCluster;
+typedef struct RxCluster RxCluster;
+typedef struct RxPacket RxPacket;
+typedef struct RxPipelineNode RxPipelineNode;
+typedef struct RxPipelineNodeTopSortData RxPipelineNodeTopSortData;
+typedef struct RxPipelineNodeParam RxPipelineNodeParam;
+typedef struct RxPipelineRequiresCluster RxPipelineRequiresCluster;
+typedef struct RxPipeline RxPipeline;
+typedef struct RwRaster RwRaster;
+typedef struct RxRenderStateVector RxRenderStateVector;
+typedef struct RwImage RwImage;
+typedef struct RwTexDictionary RwTexDictionary;
+typedef struct RwTexture RwTexture;
+typedef struct RwFrame RwFrame;
+typedef struct RwObjectHasFrame RwObjectHasFrame;
+typedef struct rwFrameList rwFrameList;
+typedef struct RwBBox RwBBox;
+typedef struct RwFrustumPlane RwFrustumPlane;
+typedef struct RwCamera RwCamera;
+
+
 typedef struct RxObjSpace3DVertex RxObjSpace3DVertex;
 struct RxObjSpace3DVertex
 {
@@ -70,11 +102,10 @@ enum RwIm3DTransformFlags
 };
 typedef enum RwIm3DTransformFlags RwIm3DTransformFlags;
 
-typedef struct rxHeapFreeBlock;
-typedef struct rxHeapSuperBlockDescriptor;
-typedef struct RxHeap;
-typedef struct rxHeapBlockHeader;
-
+/* rxHeapFreeBlock is typedef'd above */
+/* rxHeapSuperBlockDescriptor is typedef'd above */
+/* RxHeap is typedef'd above */
+/* rxHeapBlockHeader is typedef'd above */
 struct rxHeapFreeBlock
 {
     RwUInt32 size;
@@ -114,6 +145,7 @@ enum RxClusterValidityReq
     rxCLREQ_OPTIONAL = 2,
     rxCLUSTERVALIDITYREQFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RxClusterValidityReq RxClusterValidityReq;
 
 enum RxClusterValid
 {
@@ -122,13 +154,13 @@ enum RxClusterValid
     rxCLVALID_INVALID = 2,
     rxCLUSTERVALIDFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RxClusterValid RxClusterValid;
 
-typedef struct RxPipelineNode;
-typedef struct RxNodeDefinition;
-typedef struct RxPipeline;
-typedef struct RxPipelineNodeParam;
-typedef struct RxPipelineNodeTopSortData;
-
+/* RxPipelineNode is typedef'd above */
+/* RxNodeDefinition is typedef'd above */
+/* RxPipeline is typedef'd above */
+/* RxPipelineNodeParam is typedef'd above */
+/* RxPipelineNodeTopSortData is typedef'd above */
 struct RxClusterDefinition
 {
     RwChar* name;
@@ -150,6 +182,7 @@ enum RxClusterForcePresent
     rxCLFORCEPRESENT = TRUE,
     rxCLUSTERFORCEPRESENTFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RxClusterForcePresent RxClusterForcePresent;
 
 struct RxClusterRef
 {
@@ -193,6 +226,7 @@ enum RxNodeDefEditable
     rxNODEDEFEDITABLE = TRUE,
     rxNODEDEFEDITABLEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RxNodeDefEditable RxNodeDefEditable;
 
 struct RxNodeDefinition
 {
@@ -247,8 +281,7 @@ struct RxPipelineNode
     RwUInt32 initializationDataSize;
 };
 
-typedef struct rxReq;
-
+typedef struct rxReq rxReq;
 struct RxPipelineNodeTopSortData
 {
     RwUInt32 numIns;
@@ -270,6 +303,7 @@ enum rxEmbeddedPacketState
     rxPKST_PENDING = 3,
     rxEMBEDDEDPACKETSTATEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum rxEmbeddedPacketState rxEmbeddedPacketState;
 
 struct RxPipelineRequiresCluster
 {
@@ -307,6 +341,7 @@ enum RwRasterLockMode
     rwRASTERLOCKRAW = 0x08,
     rwRASTERLOCKMODEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RwRasterLockMode RwRasterLockMode;
 
 #define rwRASTERLOCKREADWRITE (rwRASTERLOCKREAD | rwRASTERLOCKWRITE)
 
@@ -316,6 +351,7 @@ enum RwRasterFlipMode
     rwRASTERFLIPWAITVSYNC = 1,
     rwRASTERFLIPMODEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RwRasterFlipMode RwRasterFlipMode;
 
 enum RwRasterType
 {
@@ -328,6 +364,7 @@ enum RwRasterType
     rwRASTERDONTALLOCATE = 0x80,
     rwRASTERTYPEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RwRasterType RwRasterType;
 
 enum RwRasterFormat
 {
@@ -350,6 +387,7 @@ enum RwRasterFormat
     rwRASTERFORMATMASK = 0xff00,
     rwRASTERFORMATFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RwRasterFormat RwRasterFormat;
 
 enum RwRasterPrivateFlag
 {
@@ -361,6 +399,7 @@ enum RwRasterPrivateFlag
     rwRASTERPIXELLOCKEDRAW = 0x20,
     rwRASTERPRIVATEFLAGFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RwRasterPrivateFlag RwRasterPrivateFlag;
 
 #define rwRASTERPIXELLOCKED (rwRASTERPIXELLOCKEDREAD | rwRASTERPIXELLOCKEDWRITE)
 #define rwRASTERPALETTELOCKED (rwRASTERPALETTELOCKEDREAD | rwRASTERPALETTELOCKEDWRITE)
@@ -579,7 +618,7 @@ typedef RwFrame* (*RwFrameCallBack)(RwFrame* frame, void* data);
 
 #define RwFrameGetMatrix(_f) (&(_f)->modelling)
 
-typedef struct RwObjectHasFrame;
+/* RwObjectHasFrame is typedef'd above */
 typedef RwObjectHasFrame* (*RwObjectHasFrameSyncFunction)(RwObjectHasFrame* object);
 
 struct RwObjectHasFrame
@@ -611,6 +650,7 @@ enum RwCameraClearMode
     rwCAMERACLEARSTENCIL = 0x4,
     rwCAMERACLEARMODEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RwCameraClearMode RwCameraClearMode;
 
 enum RwCameraProjection
 {
@@ -619,6 +659,7 @@ enum RwCameraProjection
     rwPARALLEL = 2,
     rwCAMERAPROJECTIONFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RwCameraProjection RwCameraProjection;
 
 enum RwFrustumTestResult
 {
@@ -627,6 +668,7 @@ enum RwFrustumTestResult
     rwSPHEREINSIDE = 2,
     rwFRUSTUMTESTRESULTFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RwFrustumTestResult RwFrustumTestResult;
 
 struct RwFrustumPlane
 {
@@ -637,8 +679,7 @@ struct RwFrustumPlane
     RwUInt8 pad;
 };
 
-typedef struct RwCamera;
-
+/* RwCamera is typedef'd above */
 typedef RwCamera* (*RwCameraBeginUpdateFunc)(RwCamera* camera);
 typedef RwCamera* (*RwCameraEndUpdateFunc)(RwCamera* camera);
 

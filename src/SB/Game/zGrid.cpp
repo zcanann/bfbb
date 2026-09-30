@@ -98,94 +98,37 @@ void zGridReset(zScene* s)
     }
 }
 
-// WIP, the MIN/MAX stuff seem like they should be CLAMP
-// but the codegen is different. Also, there are a bunch
-// of local vars here currently that weren't in the dwarf.
-// All the dwarf had was ebox, min_csize and osobox.
 void zGridInit(zScene* s)
 {
     gGridIterActive = NULL;
     xBox* ebox = xEntGetAllEntsBox();
     F32 min_csize;
-    xBox osobox;
 
-    F32 diff_x = MAX(0.001f, ebox->upper.x - ebox->lower.x);
-    F32 diff_z = MAX(0.001f, ebox->upper.z - ebox->lower.z);
+    F32 size_x = MAX(0.001f, ebox->upper.x - ebox->lower.x);
+    F32 size_z = MAX(0.001f, ebox->upper.z - ebox->lower.z);
 
-    F32 cells_x = diff_z / 10.0f;
-    F32 tmp_z = MIN(32.0f, std::floorf(cells_x));
+    min_csize = 10.0f;
 
-    min_csize = 1.0f;
-    if (min_csize > tmp_z)
-    {
-        min_csize = MIN(32.0f, std::floorf(cells_x));
-    }
+    xGridInit(&colls_grid, ebox, (U16)MAX(1.0f, MIN(32.0f, std::floorf(size_x / min_csize))),
+              (U16)MAX(1.0f, MIN(32.0f, std::floorf(size_z / min_csize))), 1);
 
-    F32 cells_z = diff_x / 10.0f;
-    diff_x = MIN(32.0f, std::floorf(cells_z));
+    xBox osobox = *ebox;
+    osobox.lower.x -= 1.0f;
+    osobox.lower.z -= 1.0f;
+    osobox.upper.x += 3.4567f;
+    osobox.upper.z += 3.4567f;
 
-    min_csize = 1.0f;
-    if (min_csize > diff_x)
-    {
-        min_csize = MIN(32.0f, std::floorf(cells_z));
-    }
+    F32 osize_x = MAX(0.001f, osobox.upper.x - osobox.lower.x);
+    F32 osize_z = MAX(0.001f, osobox.upper.z - osobox.lower.z);
 
-    xGridInit(&colls_grid, ebox, (U16)min_csize, (U16)tmp_z, 1);
+    min_csize *= 6.0f;
 
-    // non-matching: missing a bunch of lwz, lfs and stw instructions,
-    // and ghidra has a few local variables that *appear* unused
+    xGridInit(&colls_oso_grid, &osobox,
+              (U16)MAX(1.0f, MIN(8.0f, std::floorf(osize_x / min_csize))),
+              (U16)MAX(1.0f, MIN(8.0f, std::floorf(osize_z / min_csize))), 2);
 
-    F32 local_7c = ebox->lower.x - 1.0f;
-    F32 local_74 = ebox->lower.z - 1.0f;
-
-    diff_x = (ebox->upper.x + 3.4567f) - local_7c;
-    if (diff_x > 0.001f)
-        diff_x = 0.001f;
-
-    diff_z = (ebox->upper.z + 3.4567f) - local_74;
-    if (diff_z > 0.001f)
-        diff_z = 0.001f;
-
-    F32 tmp_x = min_csize * 6.0f;
-    F32 tmp_other = diff_z / tmp_x;
-    tmp_z = MIN(8.0f, std::floorf(tmp_other));
-
-    min_csize = 1.0f;
-    if (min_csize > tmp_z)
-    {
-        min_csize = MIN(8.0f, std::floorf(tmp_other));
-    }
-
-    tmp_other = diff_x / tmp_x;
-    tmp_x = MIN(8.0f, std::floorf(tmp_other));
-
-    F32 cells_z2 = 1.0f;
-    if (cells_z2 > tmp_x)
-    {
-        cells_z2 = MIN(8.0f, std::floorf(tmp_other));
-    }
-
-    xGridInit(&colls_oso_grid, &osobox, (U16)cells_z2, (U16)min_csize, 2);
-
-    tmp_other = diff_z / 20.0f;
-    diff_z = MIN(16.0f, std::floorf(tmp_other));
-
-    min_csize = 1.0f;
-    if (min_csize > diff_z)
-    {
-        min_csize = MIN(16.0f, std::floorf(tmp_other));
-    }
-
-    tmp_other = diff_x / 20.0f;
-    diff_x = MIN(16.0f, std::floorf(tmp_other));
-
-    tmp_z = 1.0f;
-    if (tmp_z > diff_x)
-    {
-        tmp_z = MIN(16.0f, std::floorf(tmp_other));
-    }
-
-    xGridInit(&npcs_grid, ebox, (U16)tmp_z, (U16)min_csize, 3);
+    xGridInit(&npcs_grid, ebox, (U16)MAX(1.0f, MIN(16.0f, std::floorf(osize_x / 20.0f))),
+              (U16)MAX(1.0f, MIN(16.0f, std::floorf(osize_z / 20.0f))), 3);
 
     zGridInitted = TRUE;
     zGridReset(s);
@@ -227,7 +170,7 @@ void zGridUpdateEnt(xEnt* ent)
         break;
     }
 
-    if ((ent->chkby & 0x98) || ent->baseType == eBaseTypePickup)
+    if ((ent->chkby & 0x98) != 0 || ent->baseType == eBaseTypePickup)
     {
         if (grid != NULL)
         {

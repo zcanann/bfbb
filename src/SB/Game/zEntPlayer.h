@@ -228,7 +228,12 @@ struct zPlayerSndTimer
     F32 time;
 };
 
-// TODO: Why are there two of these enums with the same effect, should there be?
+// Yes, retail really did carry two parallel enums for the playable characters,
+// and both are live: _CurrentPlayer is the one the game uses everywhere (some
+// 290 references to eCurrentPlayerSpongeBob alone, and it is what
+// globals.player.Character holds), while _zPlayerType is used by a handful of
+// per-character table lookups. Neither is dead, so neither can be folded into
+// the other without changing what retail compiled.
 enum _zPlayerType
 {
     ePlayer_SB,
@@ -396,6 +401,9 @@ extern _CurrentPlayer gCurrentPlayer;
 extern S32 gWaitingToAutoSave;
 extern S32 gSpongeBall;
 
+// Defined in zEntPlayer.cpp (.sdata:0x803CAAD8).
+extern F32 default_player_radius;
+
 void SetPlayerKillsVillainTimer(F32 time);
 
 void zEntPlayer_Load(xEnt*, xSerial*);
@@ -420,6 +428,7 @@ void zEntPlayer_ShadowModelDisable();
 
 void zEntPlayerJumpStart(class xEnt* ent, class zJumpParam* jump);
 S32 zEntPlayer_IsSneaking();
+S32 zEntPlayer_InBossBattle();
 
 void zEntPlayer_setBoulderMode(U32 mode);
 void zEntPlayer_GiveHealth(S32);

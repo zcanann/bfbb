@@ -46,6 +46,5 @@ void zCutsceneMgrFinishLoad(xBase* to);
 void zCutsceneMgrKillFX(zCutsceneMgr* t);
 void zCutsceneMgrUpdateFX(zCutsceneMgr* t);
 void zCutsceneMgrUpdate(xBase* to, xScene* sc, F32 dt);
-void check_hide_entities();
 
 #endif

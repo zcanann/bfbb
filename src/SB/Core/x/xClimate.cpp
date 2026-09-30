@@ -12,7 +12,7 @@
 
 _tagClimate* sClimate;
 
-const float snow_life = 3.0f;
+float snow_life = 3.0f;
 const xVec3 snow_vel = { 0.0f, -2.0f, 0.0f };
 const xVec3 snow_dvel = { 0.1f, 0.1f, 0.1f };
 
@@ -39,29 +39,29 @@ void xClimateInit(_tagClimate* climate)
 
 // Equivalent
 // float ops are being optimized more aggressively
-void xClimateInitAsset(_tagClimate* climate, xEnvAsset* asset)
+void xClimateInitAsset(_tagClimate* climate, xEnvAsset* easset)
 {
     sClimate = climate;
     climate->wind.strength = 0.0f;
     xClimateVecFromAngle(climate->wind.angle, &climate->wind.dir);
 
-    if (asset->climateFlags == 0)
+    if (easset->climateFlags == 0)
     {
         climate->wind.strength = 0.0f;
         climate->rain.strength = 0.0f;
         return;
     }
-    if (asset->climateFlags & 1)
+    if (easset->climateFlags & 1)
     {
         climate->rain.rain = 1.0f;
-        climate->rain.strength = 0.5f * (asset->climateStrengthMax - asset->climateStrengthMin);
-        climate->rain.strength += asset->climateStrengthMin;
+        climate->rain.strength = 0.5f * (easset->climateStrengthMax - easset->climateStrengthMin);
+        climate->rain.strength += easset->climateStrengthMin;
     }
-    else if (asset->climateFlags & 2)
+    else if (easset->climateFlags & 2)
     {
         climate->rain.rain = 0.0f;
-        climate->rain.strength = 0.5f * (asset->climateStrengthMax - asset->climateStrengthMin);
-        climate->rain.strength += asset->climateStrengthMin;
+        climate->rain.strength = 0.5f * (easset->climateStrengthMax - easset->climateStrengthMin);
+        climate->rain.strength += easset->climateStrengthMin;
     }
 }
 
@@ -79,7 +79,7 @@ void xClimateSetRain(F32 stre)
 
 // Equivalent
 // Float literal is being loaded three separate times in the original code.
-void GetPosBigDogWhattupFool(xVec3* vec)
+static void GetPosBigDogWhattupFool(xVec3* vec)
 {
     xCamera* camera = &xglobals->camera;
     vec->x = 10.0f * camera->mat.at.x + camera->mat.pos.x;
@@ -89,12 +89,12 @@ void GetPosBigDogWhattupFool(xVec3* vec)
 
 // NOTE (Square): I think it's equivalent but it's very hard to tell. Our compiler is optimizing the float ops
 // much more aggresively and it's throwing the regalloc off.
-void UpdateRain(_tagClimate* climate, float seconds)
+static void UpdateRain(_tagClimate* climate, float seconds)
 {
     _tagRain* r = &climate->rain;
     xParEmitterCustomSettings info;
     memset(&info, 0, sizeof(xParEmitterCustomSettings));
-    info.custom_flags = 0x100;
+    info.custom_flags = eParEmitterCustomPos;
 
     if (r->rain != 0)
     {
@@ -112,25 +112,32 @@ void UpdateRain(_tagClimate* climate, float seconds)
 
     xVec3 fool;
     S32 total_snow_flakes = 25.0f * r->strength;
-    info.custom_flags |= 0x202;
+    info.custom_flags |= eParEmitterCustomVel | eParEmitterCustomLife;
     GetPosBigDogWhattupFool(&fool);
     if (gPTankDisable)
     {
+        F32 dvx = snow_dvel.x;
+        F32 vx = snow_vel.x;
+        F32 dvy = snow_dvel.y;
+        F32 vy = snow_vel.y;
+        F32 dvz = snow_dvel.z;
+        F32 vz = snow_vel.z;
+
         for (S32 i = 0; i < total_snow_flakes; i++)
         {
             info.pos = fool;
             info.pos.x += 45.0f * xurand() - 22.5f;
-            info.pos.z += 25.0f * xurand() - 22.5f;
+            info.pos.z += 45.0f * xurand() - 22.5f;
 
             F32 xx = info.pos.x - fool.x;
             F32 zz = info.pos.z - fool.z;
             F32 perc = 1.0f - xx * zz / 506.25f;
+
+            info.vel.x = dvx * xurand() + vx;
+            info.vel.y = dvy * xurand() + vy;
+            info.vel.z = dvz * xurand() + vz;
+
             info.pos.y += 4.0f * perc + 4.0f;
-
-            info.vel.x = snow_dvel.x * xurand() + snow_vel.x;
-            info.vel.y = snow_dvel.y * xurand() + snow_vel.y;
-            info.vel.z = snow_dvel.z * xurand() + snow_vel.z;
-
             info.life.val[0] = snow_life * perc + snow_life;
             xParEmitterEmitCustom(r->snow_emitter, seconds, &info);
         }
@@ -144,24 +151,33 @@ void UpdateRain(_tagClimate* climate, float seconds)
         xVec3* vel = pos + num;
         if (pos != NULL)
         {
+            F32 dvx = snow_dvel.x;
+            F32 vx = snow_vel.x;
+            F32 dvy = snow_dvel.y;
+            F32 vy = snow_vel.y;
+            F32 dvz = snow_dvel.z;
+            F32 vz = snow_vel.z;
+            xVec3* p = pos;
+            xVec3* v = vel;
+
             for (S32 i = 0; i < num; i++)
             {
-                *pos = fool;
-                pos->x += 45.0f * xurand() - 22.5f;
-                pos->z += 45.0f * xurand() - 22.5f;
+                *p = fool;
+                p->x += 45.0f * xurand() - 22.5f;
+                p->z += 45.0f * xurand() - 22.5f;
 
-                F32 zz = pos->z - fool.z;
-                F32 xx = pos->x - fool.x;
+                F32 zz = p->z - fool.z;
+                F32 xx = p->x - fool.x;
                 float perc = (1.0f - (xx * xx + zz * zz) / 506.25f);
 
-                pos->y += 4.0f * perc + 4.0f;
+                p->y += 4.0f * perc + 4.0f;
 
-                vel->x = snow_dvel.x * xurand() + snow_vel.x;
-                vel->y = snow_dvel.y * xurand() + snow_vel.y;
-                vel->z = snow_dvel.z * xurand() + snow_vel.z;
+                v->x = dvx * xurand() + vx;
+                v->y = dvy * xurand() + vy;
+                v->z = dvz * xurand() + vz;
 
-                pos++;
-                vel++;
+                p++;
+                v++;
             }
 
             zParPTankSpawnSnow(pos, vel, num);
@@ -170,7 +186,7 @@ void UpdateRain(_tagClimate* climate, float seconds)
     }
 }
 
-void UpdateWind(_tagClimate* climate, F32 seconds)
+static void UpdateWind(_tagClimate* climate, F32 seconds)
 {
     return;
 }

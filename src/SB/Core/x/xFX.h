@@ -59,6 +59,8 @@ struct xFXRibbon
         F32 scale;
     };
 
+    static tier_queue_allocator joint_alloc;
+
     config cfg;
     bool activated;
     RwRaster* raster;
@@ -70,12 +72,32 @@ struct xFXRibbon
     U32 mtime;
     U32 mlife;
 
+    bool visible() const;
+
+    bool need_update() const;
+
+    S32 render_compare(const xFXRibbon& other) const;
+
+    F32 get_age(const joint_data& joint) const;
+
+    void update(F32 dt);
+
+    bool debug_need_update() const;
+
+    void clear();
+
     void init(const char*, const char*);
     void init(S32, const char*);
     void set_texture(const char* name);
     void set_texture(U32);
     void set_texture(RwTexture* texture);
     void set_curve(const curve_node* curve, size_t size);
+    // Used by the target but declared nowhere; signatures decoded from the
+    // mangled names. The bodies are still to be written in xFX.cpp.
+    void get_normal(xVec3&, const xVec3&, F32);
+    void refresh_joint(joint_data&, const tier_queue<joint_data>::iterator&);
+    void eval_joint(const joint_data&, iColor_tag&, F32&);
+    void render_strip(RxObjSpace3DVertex*, tier_queue<joint_data>::iterator, u32);
     void refresh_config();
     void set_default_config();
     void update_curve_tweaks();
@@ -87,8 +109,18 @@ struct xFXRibbon
     void activate();
     void deactivate();
     void start_render();
+    void render();
     void set_raster(RwRaster*);
 };
+
+// Specialized in xFX.cpp. The declaration has to precede the first
+// instantiation, which is xFXRibbon::clear() below.
+template <> void tier_queue<xFXRibbon::joint_data>::clear();
+
+inline void xFXRibbon::clear()
+{
+    joints.clear();
+}
 
 struct xFXStreakElem
 {
@@ -113,7 +145,7 @@ struct xFXStreak
     xFXStreakElem elem[50];
 };
 
-class xFXShineElem
+struct xFXShineElem
 {
     U32 flag;
     xVec3 p;
@@ -124,7 +156,7 @@ class xFXShineElem
     iColor_tag colb;
 };
 
-class xFXShine
+struct xFXShine
 {
     U32 flags;
     xVec3* ppos;
@@ -215,6 +247,7 @@ RpAtomic* xFXAtomicEnvMapSetup(RpAtomic* atomic, U32 envmapID, F32 shininess);
 void xFXRibbonSceneEnter();
 void xFXRibbonUpdate(F32 dt);
 void xFXRibbonRender();
+void xFXAuraSetup();
 void xFXAuraInit();
 void xFXAuraUpdate(F32 dt);
 void xFXAuraRender();

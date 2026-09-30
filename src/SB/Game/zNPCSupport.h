@@ -86,6 +86,7 @@ struct NPCBlinker
     void Reset();
     void IndexToUVCoord(int param_1, float* param_2, float* param_3);
     void Update(F32 dt, F32 ratio, F32 tym_slow, F32 tym_fast);
+    void Render(const xVec3* pos_blink, F32 rad_blink, const RwRaster* rast_blink);
 };
 
 struct NPCWidget
@@ -95,10 +96,7 @@ struct NPCWidget
     zNPCCommon* npc_ownerlock;
 
     S32 NPCIsTheLocker(const zNPCCommon* npc_lock);
-    S32 IsLocked()
-    {
-        return npc_ownerlock != NULL;
-    }
+    U32 IsLocked();
     S32 IsVisible();
     S32 Off(const zNPCCommon* npc, S32 theman);
     S32 On(const zNPCCommon* npc, S32 theman);
@@ -161,15 +159,15 @@ S32 NPCC_LampStatus();
 F32 NPCC_TmrCycle(F32* tmr, F32 dt, F32 interval);
 xVec3* NPCC_rightDir(xEnt* ent);
 xVec3* NPCC_faceDir(xEnt* ent);
-void NPCC_GenSmooth(xVec3** pos_base, xVec3** pos_mid);
-
 void NPCC_ang_toXZDir(F32 angle, xVec3* dir);
 F32 NPCC_dir_toXZAng(const xVec3* dir);
 F32 NPCC_aimVary(xVec3* dir_aim, xVec3* pos_src, xVec3* pos_tgt, F32 dst_vary, S32 flg_vary,
                  xVec3* pos_aimPoint);
-void NPCC_aimMiss(xVec3*, xVec3*, xVec3*, float, xVec3*);
+F32 NPCC_aimMiss(xVec3*, xVec3*, xVec3*, float, xVec3*);
 S32 NPCC_chk_hitPlyr(xBound* bnd, xCollis* collide);
 S32 NPCC_pos_ofBase(xBase* tgt, xVec3* pos);
+S32 NPCC_HaveLOSToPos(xVec3* pos_src, xVec3* pos_tgt, F32 dst_max, xBase* tgt,
+                      xCollis* colCallers);
 F32 NPCC_ds2_toCam(const xVec3* pos_from, xVec3* delta);
 void zNPC_SNDStop(_tageNPCSnd snd);
 void zNPC_SNDPlay3D(_tageNPCSnd snd, xEnt*);

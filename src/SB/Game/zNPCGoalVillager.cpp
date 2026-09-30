@@ -175,6 +175,7 @@ S32 zNPCGoalPlayerNear::Resume(F32 dt, void* updCtxt)
     return zNPCGoalCommon::Resume(dt, updCtxt);
 }
 
+// Equivalent: regalloc
 S32 zNPCGoalPlayerNear::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene)
 {
     S32 nextgoal = 0;
@@ -297,7 +298,10 @@ S32 zNPCGoalPlayerNear::Process(en_trantype* trantype, F32 dt, void* updCtxt, xS
 
     npc->VelStop();
 
-    xVec3Sub(&dir_plyr, xEntGetPos(&globals.player.ent), xEntGetPos(npc));
+    xVec3* npc_pos = xEntGetPos(npc);
+    xVec3* plyr_pos = xEntGetPos(&globals.player.ent);
+
+    xVec3Sub(&dir_plyr, plyr_pos, npc_pos);
 
     if (xVec3Length2(&dir_plyr) > 1.0f)
     {
@@ -333,8 +337,7 @@ S32 zNPCGoalPlayerNear::NPCMessage(NPCMsg* mail)
 void zNPCGoalPlayerNear::ChkCheatMedic()
 {
     static S32 cnt_nextMedic = 0;
-    cnt_nextMedic--;
-    if (cnt_nextMedic <= 0)
+    if (--cnt_nextMedic <= 0)
     {
         cnt_nextMedic = (S32)(5.0f * xurand()) + 5;
         zEntPlayer_GiveHealth(1);
@@ -349,7 +352,7 @@ void zNPCGoalPlayerNear::DoCheatPanHandle()
     }
 }
 
-void zNPCGoalPlayerNear::ChkCheatDogTrix(S32* goal, en_trantype* trantype)
+void zNPCGoalPlayerNear::ChkCheatDogTrix(S32* nextgoal, en_trantype* trantype)
 {
     // clang-format off
     static U32 hashes_sc[] = {
@@ -422,7 +425,7 @@ void zNPCGoalPlayerNear::ChkCheatDogTrix(S32* goal, en_trantype* trantype)
 
         zNPCVillager* npc = (zNPCVillager*)psyche->clt_owner;
         zEntPickup_SpawnNRewards((U32*)shinies, 5, npc->Center());
-        *goal = NPC_GOAL_CHEER;
+        *nextgoal = NPC_GOAL_CHEER;
         *trantype = GOAL_TRAN_PUSH;
     }
 }
@@ -485,9 +488,8 @@ S32 zNPCGoalTalk::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* 
             return 1;
         }
         npc->TossMyConverse();
-        S32 nextgoal = psy->GIDOfSafety();
         *trantype = GOAL_TRAN_SET;
-        return nextgoal;
+        return psy->GIDOfSafety();
     }
 
     ds2_plyr = npc->XYZDstSqToPlayer(&dir_plyr);
@@ -541,8 +543,7 @@ S32 zNPCGoalTalk::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* 
 
         F32 fa = (xrand() & 0x800000) ? 3.0f : 6.0f;
         F32 fb = (xrand() & 0x800000) ? 3.0f : 6.0f;
-        F32 rat = 0.25f * (xurand() - 0.5f);
-        tmr_cycleAnim = rat * fa + fb;
+        tmr_cycleAnim = 0.25f * (xurand() - 0.5f) * fa + fb;
     }
 
     tmr_minTalk = MAX(-1.0f, tmr_minTalk - dt);
@@ -616,6 +617,7 @@ S32 zNPCGoalSpeak::Exit(F32 dt, void* updCtxt)
     return xGoal::Exit(dt, updCtxt);
 }
 
+// Equivalent: fmadds register order
 S32 zNPCGoalSpeak::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene)
 {
     F32 dist_plyr;
@@ -654,8 +656,7 @@ S32 zNPCGoalSpeak::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene*
             fb = 3.0f;
         }
 
-        F32 rat = 0.25f * (xurand() - 0.5f);
-        tmr_cycleAnim = rat * fa + fb;
+        tmr_cycleAnim = fa * (0.25f * (xurand() - 0.5f)) + fb;
     }
 
     tmr_cycleAnim = MAX(-1.0f, tmr_cycleAnim - dt);
@@ -701,12 +702,16 @@ S32 zNPCGoalCheer::Enter(F32 dt, void* updCtxt)
     return zNPCGoalLoopAnim::Enter(dt, updCtxt);
 }
 
-S32 zNPCGoalCheer::Process(
-en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene)
+// Equivalent: regalloc
+S32 zNPCGoalCheer::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene)
 {
+    xVec3 *npc_pos, *player_pos;
+
     zNPCVillager* npc = (zNPCVillager*)psyche->clt_owner;
     xVec3 dir_plyr = {};
-    xVec3Sub(&dir_plyr, xEntGetPos(&globals.player.ent), xEntGetPos(npc));
+    npc_pos = xEntGetPos(npc);
+    player_pos = xEntGetPos(&globals.player.ent);
+    xVec3Sub(&dir_plyr, player_pos, npc_pos);
     F32 distance = xVec3Length(&dir_plyr);
 
     if (distance > 0.25f)
@@ -947,6 +952,7 @@ S32 zNPCGoalBoyRide::NPCMessage(NPCMsg* mail)
     return handled;
 }
 
+// Equivalent: fnmsubs register order
 S32 zNPCGoalBoyFall::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene)
 {
     S32 nextgoal = 0;
@@ -972,8 +978,7 @@ S32 zNPCGoalBoyFall::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScen
         return nextgoal;
     }
 
-    F32 grav = 10.0f;
-    npc->frame->vel.y = MAX(npc->frame->vel.y - dt * grav, -4.0f);
+    npc->frame->vel.y = MAX(npc->frame->vel.y - dt * 10.0f, -4.0f);
     npc->colFreq = MIN(npc->colFreq, 0);
 
     return xGoal::Process(trantype, dt, updCtxt, NULL);
@@ -1073,4 +1078,9 @@ S32 zNPCGoalBoyWeep::NPCMessage(NPCMsg* mail)
     }
 
     return 0;
+}
+
+inline S32 xPsyche::IndexInStack(const xGoal* gid) const
+{
+    return IndexInStack(gid->GetID());
 }

@@ -129,7 +129,7 @@ struct st_PACKER_READ_FUNCS
     void (*Done)(st_PACKER_READ_DATA*);
     S32 (*LoadLayer)(st_PACKER_READ_DATA*, en_LAYER_TYPE);
     U32 (*GetAssetSize)(st_PACKER_READ_DATA*, U32);
-    void* (*LoadAsset)(st_PACKER_READ_DATA*, U32, char*, void*);
+    void* (*LoadAsset)(st_PACKER_READ_DATA*, U32, const char*, void*);
     void* (*AssetByType)(st_PACKER_READ_DATA*, U32, S32, U32*);
     S32 (*AssetCount)(st_PACKER_READ_DATA*, U32);
     S32 (*IsAssetReady)(st_PACKER_READ_DATA*, U32);
@@ -165,7 +165,7 @@ void PKR_xformLayerAssets(st_PACKER_LTOC_NODE* laynode);
 void PKR_xform_asset(st_PACKER_ATOC_NODE* assnode, S32 dumpable_layer);
 void* PKR_FindAsset(st_PACKER_READ_DATA* pr, U32 aid);
 S32 PKR_LoadLayer(st_PACKER_READ_DATA* pr, en_LAYER_TYPE layer);
-void* PKR_LoadAsset(st_PACKER_READ_DATA* pr, U32 aid, char*, void*);
+void* PKR_LoadAsset(st_PACKER_READ_DATA* pr, U32 aid, const char*, void*);
 U32 PKR_GetAssetSize(st_PACKER_READ_DATA* pr, U32 aid);
 S32 PKR_AssetCount(st_PACKER_READ_DATA* pr, U32 type);
 void* PKR_AssetByType(st_PACKER_READ_DATA* pr, U32 type, S32 idx, U32* size);
@@ -175,9 +175,9 @@ void PKR_Disconnect(st_PACKER_READ_DATA* pr);
 U32 PKRAssetIDFromInst(void* asset_inst);
 char* PKR_AssetName(st_PACKER_READ_DATA* pr, U32 aid);
 U32 PKR_GetBaseSector(st_PACKER_READ_DATA* pr);
-S32 PKR_GetAssetInfo(st_PACKER_READ_DATA* pr, U32 aid, st_PKR_ASSET_TOCINFO* tocainfo);
+S32 PKR_GetAssetInfo(st_PACKER_READ_DATA* pr, U32 aid, st_PKR_ASSET_TOCINFO* tocinfo);
 S32 PKR_GetAssetInfoByType(st_PACKER_READ_DATA* pr, U32 type, S32 idx,
-                           st_PKR_ASSET_TOCINFO* tocainfo);
+                           st_PKR_ASSET_TOCINFO* tocinfo);
 S32 PKR_PkgHasAsset(st_PACKER_READ_DATA* pr, U32 aid);
 S32 PKR_FRIEND_assetIsGameDup(U32 aid, const st_PACKER_READ_DATA* skippr, S32 oursize, U32 ourtype,
                               U32 chksum, char*);
@@ -212,7 +212,7 @@ S32 LOD_r_STRM(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
 S32 LOD_r_DHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
 S32 LOD_r_DPAK(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
 void PKR_spew_verhist();
-st_PACKER_ASSETTYPE* PKR_type2typeref(U32 asstype, st_PACKER_ASSETTYPE* types);
+st_PACKER_ASSETTYPE* PKR_type2typeref(U32 type, st_PACKER_ASSETTYPE* typelist);
 void PKR_bld_typecnt(st_PACKER_READ_DATA* pr);
 S32 PKR_typeHdlr_idx(st_PACKER_READ_DATA* pr, U32 type);
 void PKR_alloc_chkidx();

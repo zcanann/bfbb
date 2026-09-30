@@ -13,8 +13,8 @@
 static F32 sRedMultiplier = 1.0f;
 static F32 sGreenMultiplier = 1.0f;
 static F32 sBlueMultiplier = 1.0f;
-static F32 sColorMultiplier = 1.0f;
-static S32 sColorMultiplierSign = 1;
+static volatile F32 sColorMultiplier = 1.0f;
+static volatile S32 sColorMultiplierSign = 1;
 
 static S32 zEntButtonEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* b3);
 
@@ -56,7 +56,7 @@ void zEntButton_Init(_zEntButton* ent, xEntAsset* asset)
         ent->topHeight = 0.0f;
     }
 
-    ent->pflags |= (1 << 0);
+    ent->pflags |= XENT_PFLAGS_IS_MOVING;
     ent->penby |= XENT_COLLTYPE_PLYR;
     ent->chkby |= XENT_COLLTYPE_PLYR;
 
@@ -88,7 +88,7 @@ void zEntButton_Init(_zEntButton* ent, xEntAsset* asset)
     ent->oldMotState = ent->motion.mech.state;
 }
 
-void zEntButton_Move(_zEntButton* ent, xScene* sc, F32 dt, xEntFrame* frame)
+void zEntButton_Move(_zEntButton* ent, xScene* s, F32 dt, xEntFrame* frame)
 {
     if (ent->driver != NULL)
     {
@@ -102,7 +102,7 @@ void zEntButton_Move(_zEntButton* ent, xScene* sc, F32 dt, xEntFrame* frame)
         }
     }
 
-    xEntMotionMove(&ent->motion, sc, dt, frame);
+    xEntMotionMove(&ent->motion, s, dt, frame);
 }
 
 void zEntButton_Setup(_zEntButton* ent, xScene*)
@@ -158,7 +158,7 @@ void zEntButton_Reset(_zEntButton* ent, xScene* sc)
     xEntMotionInit(&ent->motion, (xEnt*)ent, (xEntMotionAsset*)(ent->basset + 1));
     xEntMotionReset(&ent->motion, sc);
 
-    ent->pflags |= (1 << 0);
+    ent->pflags |= XENT_PFLAGS_IS_MOVING;
     ent->penby |= XENT_COLLTYPE_PLYR;
     if (ent->asset->flags & (1 << 0))
     {

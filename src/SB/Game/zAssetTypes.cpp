@@ -1,6 +1,7 @@
 #include "zAssetTypes.h"
 
 #include "xAnim.h"
+#include "xCurveAsset.h"
 #include "xstransvc.h"
 #include "xDebug.h"
 #include "xEnv.h"
@@ -28,7 +29,10 @@ static void TextureRW3_Unload(void*, U32);
 static void LightKit_Unload(void*, U32);
 static void MovePoint_Unload(void*, U32);
 
-static xJSPHeader sDummyEmptyJSP;
+// The GameCube build's dummy is a xJSPHeaderGC: the retail object reserves 32
+// bytes for it and JSP_Read below reports its size as 32. Declaring it as the
+// 24-byte base left stripVecCount/stripVecList off the end of the object.
+static xJSPHeaderGC sDummyEmptyJSP;
 static xJSPHeader* sTempJSP;
 
 static u32 s_sbFootSoundA;
@@ -168,7 +172,9 @@ static void* Curve_Read(void* param_1, U32 param_2, void* indata, U32 insize, U3
     void* __dest = RWSRCGLOBAL(memoryFuncs.rwmalloc(insize));
     memcpy(__dest, indata, insize);
 
-    *(int*)((int)__dest + 0x10) = (int)__dest + 0x14;
+    // The baked point array is packed directly after the header, so points
+    // has to be fixed up to point just past the struct we copied in.
+    ((xCurveAsset*)__dest)->points = (F32*)((xCurveAsset*)__dest + 1);
 
     return __dest;
 }
@@ -341,7 +347,7 @@ static void jsp_shadow_hack(xJSPHeader* header)
         return;
     }
 
-    jsp_shadow_hack_atomic_context context = { NULL, 0, -1 };
+    jsp_shadow_hack_atomic_context context = { header, 0, -1 };
     RpClumpForAllAtomics(header->clump, jsp_shadow_hack_atomic_cb, &context);
 }
 

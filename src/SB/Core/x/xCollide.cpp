@@ -22,19 +22,44 @@ static U32 sSweptSphereIgnoreMovers;
 
 extern U8 xClumpColl_FilterFlags;
 
-// TODO: figure out where this needs to go since ive only seen seil use it here
-#define RwV3dSubMacro(o, a, b)                                                                     \
-    MACRO_START                                                                                    \
-    {                                                                                              \
-        (o)->x = (((a)->x) - ((b)->x));                                                            \
-        (o)->y = (((a)->y) - ((b)->y));                                                            \
-        (o)->z = (((a)->z) - ((b)->z));                                                            \
-    }                                                                                              \
-    MACRO_STOP
-
 #define rwInvSqrtMacro(_recip, _input) (*(_recip) = _rwInvSqrt(_input))
 
 #include <world/bageomet.h>
+
+// Same computation as xVec3NormalizeMacro in xVec3Inlines.h, but written the way the retail
+// object was built: the length is stored before the components are copied, and the squares are
+// held in named temporaries. Reproducing that here (rather than editing the shared header) takes
+// xSphereHitsOBB_nu from 94.075% to 99.661%.
+#define xVec3NormalizeTmpMacro(o, v, len)                                                          \
+    MACRO_START                                                                                    \
+    {                                                                                              \
+        F32 x2__ = SQR((v)->x), y2__ = SQR((v)->y), z2__ = SQR((v)->z);                            \
+        F32 len2 = x2__ + y2__ + z2__;                                                             \
+        F32 vx__ = (v)->x, vy__ = (v)->y, vz__ = (v)->z;                                           \
+        if (xeq(len2, 1.0f, 1e-5f))                                                                \
+        {                                                                                          \
+            *(len) = 1.0f;                                                                         \
+            (o)->x = vx__;                                                                         \
+            (o)->y = vy__;                                                                         \
+            (o)->z = vz__;                                                                         \
+        }                                                                                          \
+        else if (xeq(len2, 0.0f, 1e-5f))                                                           \
+        {                                                                                          \
+            *(len) = 0.0f;                                                                         \
+            (o)->x = 0.0f;                                                                         \
+            (o)->y = 1.0f;                                                                         \
+            (o)->z = 0.0f;                                                                         \
+        }                                                                                          \
+        else                                                                                       \
+        {                                                                                          \
+            *(len) = xsqrt(len2);                                                                  \
+            F32 len_inv = 1.0f / *(len);                                                           \
+            (o)->x = (v)->x * len_inv;                                                             \
+            (o)->y = (v)->y * len_inv;                                                             \
+            (o)->z = (v)->z * len_inv;                                                             \
+        }                                                                                          \
+    }                                                                                              \
+    MACRO_STOP
 
 _xCollsIdx xCollideGetCollsIdx(const xCollis* coll, const xVec3* tohit, const xMat3x3* mat)
 {
@@ -227,9 +252,9 @@ U32 xSphereHitsOBB_nu(const xSphere* s, const xBox* b, const xMat4x3* m, xCollis
     xVec3 scale;
     xMat4x3 mnormal;
 
-    xVec3NormalizeMacro(&mnormal.right, &m->right, &scale.x);
-    xVec3NormalizeMacro(&mnormal.up, &m->up, &scale.y);
-    xVec3NormalizeMacro(&mnormal.at, &m->at, &scale.z);
+    xVec3NormalizeTmpMacro(&mnormal.right, &m->right, &scale.x);
+    xVec3NormalizeTmpMacro(&mnormal.up, &m->up, &scale.y);
+    xVec3NormalizeTmpMacro(&mnormal.at, &m->at, &scale.z);
     mnormal.pos = m->pos;
 
     xBox sbox = *b;
@@ -306,7 +331,7 @@ U32 xSphereHitsModel(const xSphere* b, const xModelInstance* m, xCollis* coll)
     context.localx.t.sphere.radius = b->r / mscale;
 
     coll->flags &= ~k_HIT_IT;
-    coll->dist = HUGE;
+    coll->dist = 1e38f;
 
     if (coll->flags & k_HIT_CALC_TRI)
     {
@@ -521,7 +546,7 @@ S32 xParabolaHitsEnv(xParabola* p, const xEnv* env, xCollis* colls)
         return 0;
 
     colls->flags = 0;
-    colls->dist = HUGE;
+    colls->dist = 1e38f;
 
     xb.inf.x = p->initPos.x + p->initVel.x * p->minTime;
     xb.sup.x = p->initPos.x + p->initVel.x * p->maxTime;
@@ -572,8 +597,8 @@ S32 xParabolaHitsEnv(xParabola* p, const xEnv* env, xCollis* colls)
 
     ParabolaCBData data;
     data.p = p;
-    data.N.y = 0.0f;
     data.N.x = -p->initVel.z;
+    data.N.y = 0.0f;
     data.N.z = p->initVel.x;
     if (data.N.x < 1e-5f && data.N.x > -1e-5f && data.N.z < 1e-5f && data.N.z > -1e-5f)
     {
@@ -1350,6 +1375,7 @@ void xSweptSphereGetResults(xSweptSphere* sws)
 S32 xSweptSphereToTriangle(xSweptSphere* sws, xVec3* v0, xVec3* v1, xVec3* v2)
 {
     S32 i;
+    F32 rad, raddist, radsqr, startdot, enddot, testdist, invZ;
 
     if (!sws->dist)
         return 0;
@@ -1359,158 +1385,161 @@ S32 xSweptSphereToTriangle(xSweptSphere* sws, xVec3* v0, xVec3* v1, xVec3* v2)
     xMat4x3Toworld(&xform[1], &sws->invbasis.xm, v1);
     xMat4x3Toworld(&xform[2], &sws->invbasis.xm, v2);
 
-    F32 rad = sws->radius;
+    rad = sws->radius;
+    raddist = sws->curdist + rad;
 
     if ((xform[0].x <= -rad && xform[1].x <= -rad && xform[2].x <= -rad) ||
         (xform[0].x >= rad && xform[1].x >= rad && xform[2].x >= rad) ||
         (xform[0].y <= -rad && xform[1].y <= -rad && xform[2].y <= -rad) ||
         (xform[0].y >= rad && xform[1].y >= rad && xform[2].y >= rad) ||
         (xform[0].z <= 0.0f && xform[1].z <= 0.0f && xform[2].z <= 0.0f) ||
-        (xform[0].z >= sws->curdist + rad && xform[1].z >= sws->curdist + rad &&
-         xform[2].z >= sws->curdist + rad))
+        (xform[0].z >= raddist && xform[1].z >= raddist && xform[2].z >= raddist))
     {
         return 0;
     }
 
-    xVec3 var_10C;
-    F32 f1;
-    var_10C.x = (xform[1].y - xform[0].y) * (xform[2].z - xform[0].z) -
-                (xform[1].z - xform[0].z) * (xform[2].y - xform[0].y);
-    var_10C.y = (xform[1].z - xform[0].z) * (xform[2].x - xform[0].x) -
-                (xform[1].x - xform[0].x) * (xform[2].z - xform[0].z);
-    var_10C.z = (xform[1].x - xform[0].x) * (xform[2].y - xform[0].y) -
-                (xform[1].y - xform[0].y) * (xform[2].x - xform[0].x);
-    _rwV3dNormalizeMacro(f1, (RwV3d*)&var_10C, (RwV3d*)&var_10C);
-    if (isnan(var_10C.x))
+    xVec3 xnorm;
+    xVec3 contact;
+    RwV3d vTmp, vTmp2;
+    F32 recipLength, lengthSq;
+    RwV3dSubMacro(&vTmp, (RwV3d*)&xform[1], (RwV3d*)&xform[0]);
+    RwV3dSubMacro(&vTmp2, (RwV3d*)&xform[2], (RwV3d*)&xform[0]);
+    RwV3dCrossProductMacro((RwV3d*)&xnorm, &vTmp, &vTmp2);
+    lengthSq = RwV3dDotProductMacro((RwV3d*)&xnorm, (RwV3d*)&xnorm);
+    recipLength = _rwInvSqrt(lengthSq);
+    RwV3dScaleMacro((RwV3d*)&xnorm, (RwV3d*)&xnorm, recipLength);
+    if (isnan(xnorm.x))
     {
         return 0;
     }
 
-    F32 f1_0 = xform[0].x * var_10C.x + xform[0].y * var_10C.y + xform[0].z * var_10C.z;
-    F32 f0 = f1_0 - var_10C.z * sws->curdist;
-    if ((f1_0 >= rad && f0 >= rad) || (f1_0 <= -rad && f0 <= -rad))
+    startdot = xform[0].x * xnorm.x + xform[0].y * xnorm.y + xform[0].z * xnorm.z;
+    enddot = startdot - xnorm.z * sws->curdist;
+    if ((startdot >= rad && enddot >= rad) || (startdot <= -rad && enddot <= -rad))
     {
         return 0;
     }
 
-    if (xabs(var_10C.z) > 0.001f)
+    if (xabs(xnorm.z) > 0.001f)
     {
-        F32 f8_0 = 1.0f / var_10C.z;
-        F32 f2_0 = var_10C.x * xform[0].x + var_10C.y * xform[0].y + var_10C.z * xform[0].z;
-        F32 f0 = f8_0 * f2_0 - xabs(rad * f8_0);
-        if (f0 >= sws->curdist)
+        invZ = 1.0f / xnorm.z;
+        testdist = invZ * (xnorm.x * xform[0].x + xnorm.y * xform[0].y + xnorm.z * xform[0].z) -
+                   xabs(rad * invZ);
+        if (testdist >= sws->curdist)
         {
             return 0;
         }
-        if (f0 <= -rad)
+        if (testdist <= -rad)
         {
             return 0;
         }
-        xVec3 var_118;
-        if (var_10C.z < 0.0f)
+        if (xnorm.z < 0.0f)
         {
-            var_118.x = -rad * var_10C.x;
-            var_118.y = -rad * var_10C.y;
-            var_118.z = f0 - rad * var_10C.z;
+            contact.x = -rad * xnorm.x;
+            contact.y = -rad * xnorm.y;
+            contact.z = testdist - rad * xnorm.z;
         }
         else
         {
-            var_118.x = rad * var_10C.x;
-            var_118.y = rad * var_10C.y;
-            var_118.z = rad * var_10C.z + f0;
+            contact.x = rad * xnorm.x;
+            contact.y = rad * xnorm.y;
+            contact.z = rad * xnorm.z + testdist;
         }
-        F32 f10, f11, f12, f13, f21, f22, f9, f8;
-        if (xabs(var_10C.x) > xabs(var_10C.y) && xabs(var_10C.x) > xabs(var_10C.z))
+        F32 contx, conty, p0x, p0y, p1x, p1y, p2x, p2y;
+        if (xabs(xnorm.x) > xabs(xnorm.y) && xabs(xnorm.x) > xabs(xnorm.z))
         {
-            f10 = xform[0].y;
-            f11 = xform[0].z;
-            f12 = xform[1].y;
-            f13 = xform[1].z;
-            f21 = xform[2].y;
-            f22 = xform[2].z;
-            f9 = var_118.y;
-            f8 = var_118.z;
+            p0x = xform[0].y;
+            p0y = xform[0].z;
+            p1x = xform[1].y;
+            p1y = xform[1].z;
+            p2x = xform[2].y;
+            p2y = xform[2].z;
+            contx = contact.y;
+            conty = contact.z;
         }
-        else if (xabs(var_10C.y) > xabs(var_10C.z))
+        else if (xabs(xnorm.y) > xabs(xnorm.z))
         {
-            f10 = xform[0].x;
-            f11 = xform[0].z;
-            f12 = xform[1].x;
-            f13 = xform[1].z;
-            f21 = xform[2].x;
-            f22 = xform[2].z;
-            f9 = var_118.x;
-            f8 = var_118.z;
+            p0x = xform[0].x;
+            p0y = xform[0].z;
+            p1x = xform[1].x;
+            p1y = xform[1].z;
+            p2x = xform[2].x;
+            p2y = xform[2].z;
+            contx = contact.x;
+            conty = contact.z;
         }
         else
         {
-            f10 = xform[0].x;
-            f11 = xform[0].y;
-            f12 = xform[1].x;
-            f13 = xform[1].y;
-            f21 = xform[2].x;
-            f22 = xform[2].y;
-            f9 = var_118.x;
-            f8 = var_118.y;
+            p0x = xform[0].x;
+            p0y = xform[0].y;
+            p1x = xform[1].x;
+            p1y = xform[1].y;
+            p2x = xform[2].x;
+            p2y = xform[2].y;
+            contx = contact.x;
+            conty = contact.y;
         }
-        F32 f23 = (f13 - f11) * (f9 - f10) - (f12 - f10) * (f8 - f11);
-        F32 f3 = (f22 - f13) * (f9 - f12) - (f21 - f12) * (f8 - f13);
-        F32 f2 = (f11 - f22) * (f9 - f21) - (f10 - f21) * (f8 - f22);
-        if ((f23 >= -1e-5f && f3 >= -1e-5f && f2 >= -1e-5f) ||
-            (f23 <= -1e-5f && f3 <= -1e-5f && f2 <= -1e-5f))
+        F32 dot0 = (p1y - p0y) * (contx - p0x) - (p1x - p0x) * (conty - p0y);
+        F32 dot1 = (p2y - p1y) * (contx - p1x) - (p2x - p1x) * (conty - p1y);
+        F32 dot2 = (p0y - p2y) * (contx - p2x) - (p0x - p2x) * (conty - p2y);
+        if ((dot0 >= -1e-5f && dot1 >= -1e-5f && dot2 >= -1e-5f) ||
+            (dot0 <= 1e-5f && dot1 <= 1e-5f && dot2 <= 1e-5f))
         {
-            sws->curdist = f0;
-            sws->contact = var_118;
-            sws->polynorm = var_10C;
+            sws->curdist = testdist;
+            sws->contact = contact;
+            sws->polynorm = xnorm;
             return 1;
         }
     }
 
-    F32 f25 = SQR(rad);
+    radsqr = SQR(rad);
     S32 edge_contact_found = -1;
     S32 vert_contact_found = -1;
 
     xform[3] = xform[0];
 
-    F32 f24;
+    F32 edge_contact_lerp;
     for (i = 0; i < 3; i++)
     {
-        xVec3 var_124;
-        var_124 = xform[i];
-        F32 f31 = xform[i + 1].x - xform[i].x;
-        F32 f30 = xform[i + 1].y - xform[i].y;
-        F32 f29 = xform[i + 1].z - xform[i].z;
-        F32 f23 = SQR(f31) + SQR(f30);
-        if (!(f23 < 0.001f))
+        xVec3 pt;
+        xVec3 cyl;
+        xVec3 uu;
+        pt = xform[i];
+        cyl.x = xform[i + 1].x - xform[i].x;
+        cyl.y = xform[i + 1].y - xform[i].y;
+        cyl.z = xform[i + 1].z - xform[i].z;
+        F32 magNsqr = SQR(cyl.x) + SQR(cyl.y);
+        if (!(magNsqr < 0.001f))
         {
-            F32 f22 = SQR(var_124.y * f31 - var_124.x * f30) / f23;
-            if (f22 >= f25)
+            F32 dsqr = SQR(pt.y * cyl.x - pt.x * cyl.y) / magNsqr;
+            if (dsqr >= radsqr)
                 continue;
-            F32 f27 = -f30 * f29;
-            F32 f28 = -f31 * f29;
-            F32 var_128;
-            xsqrtfast(var_128, SQR(f28) + SQR(f27) + SQR(f23));
-            if (!(var_128 < 0.000001f))
+            uu.x = -cyl.x * cyl.z;
+            uu.y = -cyl.y * cyl.z;
+            uu.z = magNsqr;
+            F32 ulen;
+            xsqrtfast(ulen, SQR(uu.x) + SQR(uu.y) + SQR(uu.z));
+            if (!(ulen < 0.000001f))
             {
-                var_128 = 1.0f / var_128;
-                F32 f28_0 = f28 * var_128;
-                F32 f27_0 = f27 * var_128;
-                F32 f21 = f23 * var_128;
-                if (!(f21 < 0.000001f))
+                ulen = 1.0f / ulen;
+                uu.x *= ulen;
+                uu.y *= ulen;
+                uu.z *= ulen;
+                if (!(uu.z < 0.000001f))
                 {
-                    F32 f7 = 1.0f / f21 *
-                             (f28_0 * var_124.x + f27_0 * var_124.y + f21 * var_124.z -
-                              xsqrt(f25 - f22));
-                    if (f7 >= sws->curdist)
+                    testdist = 1.0f / uu.z *
+                               (uu.x * pt.x + uu.y * pt.y + uu.z * pt.z -
+                                xsqrt(radsqr - dsqr));
+                    if (testdist >= sws->curdist)
                         continue;
-                    if (!(f7 <= -rad))
+                    if (!(testdist <= -rad))
                     {
-                        F32 f4 = SQR(f29) + f23;
-                        F32 f1 = -var_124.x * f31 - var_124.y * f30 + (f7 - var_124.z) * f29;
-                        if (!(f1 <= 0.0f) && !(f1 >= f4))
+                        F32 magCsqr = SQR(cyl.z) + magNsqr;
+                        F32 edgedot = -pt.x * cyl.x - pt.y * cyl.y + (testdist - pt.z) * cyl.z;
+                        if (!(edgedot <= 0.0f) && !(edgedot >= magCsqr))
                         {
-                            f24 = f1 / f4;
-                            sws->curdist = f7;
+                            edge_contact_lerp = edgedot / magCsqr;
+                            sws->curdist = testdist;
                             edge_contact_found = i;
                             vert_contact_found = -1;
                         }
@@ -1518,13 +1547,13 @@ S32 xSweptSphereToTriangle(xSweptSphere* sws, xVec3* v0, xVec3* v1, xVec3* v2)
                 }
             }
         }
-        F32 f1 = f25 - SQR(xform[i].x) - SQR(xform[i].y);
-        if (!(f1 <= 0.0f))
+        testdist = radsqr - SQR(xform[i].x) - SQR(xform[i].y);
+        if (!(testdist <= 0.0f))
         {
-            F32 f1_0 = var_124.z - xsqrt(f1);
-            if (!(f1_0 >= sws->curdist) && !(f1_0 <= -rad))
+            F32 distzsqr = pt.z - xsqrt(testdist);
+            if (!(distzsqr >= sws->curdist) && !(distzsqr <= -rad))
             {
-                sws->curdist = f1_0;
+                sws->curdist = distzsqr;
                 vert_contact_found = i;
                 edge_contact_found = -1;
             }
@@ -1534,17 +1563,20 @@ S32 xSweptSphereToTriangle(xSweptSphere* sws, xVec3* v0, xVec3* v1, xVec3* v2)
     if (vert_contact_found >= 0)
     {
         sws->contact = xform[vert_contact_found];
-        sws->polynorm = var_10C;
+        sws->polynorm = xnorm;
         return 1;
     }
 
     if (edge_contact_found >= 0)
     {
-        F32 f2 = 1.0f - f24;
-        sws->contact.x = f2 * xform[edge_contact_found].x + f24 * xform[edge_contact_found + 1].x;
-        sws->contact.y = f2 * xform[edge_contact_found].y + f24 * xform[edge_contact_found + 1].y;
-        sws->contact.z = f2 * xform[edge_contact_found].z + f24 * xform[edge_contact_found + 1].z;
-        sws->polynorm = var_10C;
+        F32 invlerp = 1.0f - edge_contact_lerp;
+        sws->contact.x =
+            invlerp * xform[edge_contact_found].x + edge_contact_lerp * xform[edge_contact_found + 1].x;
+        sws->contact.y =
+            invlerp * xform[edge_contact_found].y + edge_contact_lerp * xform[edge_contact_found + 1].y;
+        sws->contact.z =
+            invlerp * xform[edge_contact_found].z + edge_contact_lerp * xform[edge_contact_found + 1].z;
+        sws->polynorm = xnorm;
         return 1;
     }
 
@@ -1559,13 +1591,16 @@ void xsqrtfast(F32& out, F32 in)
 // We don't have the implementation provided
 F32 std::sqrtf(F32 x)
 {
+    volatile F32 y;
+
     if (x > 0.0f)
     {
         F64 guess = __frsqrte(x);
         guess = 0.5 * guess * -(guess * guess * x - 3);
         guess = 0.5 * guess * -(guess * guess * x - 3);
         guess = 0.5 * guess * -(guess * guess * x - 3);
-        return x * guess;
+        y = x * guess;
+        return y;
     }
     else
     {
@@ -1628,18 +1663,28 @@ S32 xSweptSphereToBox(xSweptSphere* sws, xBox* box, xMat4x3* mat)
         boxinvbasis = &sws->invbasis.xm;
     }
 
-    F32 rad, radsqr;
+    F32 rad, radsqr, testdist, invZ;
     xVec3 boxPos, boxaX, boxaY, boxaZ;
 
-    boxaX.x = dx * boxinvbasis->right.x;
-    boxaX.y = dx * boxinvbasis->right.y;
-    boxaX.z = dx * boxinvbasis->right.z;
-    boxaY.x = dy * boxinvbasis->up.x;
-    boxaY.y = dy * boxinvbasis->up.y;
-    boxaY.z = dy * boxinvbasis->up.z;
-    boxaZ.x = dz * boxinvbasis->at.x;
-    boxaZ.y = dz * boxinvbasis->at.y;
-    boxaZ.z = dz * boxinvbasis->at.z;
+    F32 aZz, aZy, aZx, aYz, aYy, aYx, aXz, aXy, aXx;
+    aXx = dx * boxinvbasis->right.x;
+    aXy = dx * boxinvbasis->right.y;
+    aXz = dx * boxinvbasis->right.z;
+    aYx = dy * boxinvbasis->up.x;
+    aYy = dy * boxinvbasis->up.y;
+    aYz = dy * boxinvbasis->up.z;
+    aZx = dz * boxinvbasis->at.x;
+    aZy = dz * boxinvbasis->at.y;
+    aZz = dz * boxinvbasis->at.z;
+    boxaX.x = aXx;
+    boxaX.y = aXy;
+    boxaX.z = aXz;
+    boxaY.x = aYx;
+    boxaY.y = aYy;
+    boxaY.z = aYz;
+    boxaZ.x = aZx;
+    boxaZ.y = aZy;
+    boxaZ.z = aZz;
 
     xMat4x3Toworld(&boxPos, boxinvbasis, &box->lower);
 
@@ -1673,24 +1718,26 @@ S32 xSweptSphereToBox(xSweptSphere* sws, xBox* box, xMat4x3* mat)
 
     xVec3 boxNorm, boxA1, boxA2;
     S32 quadfound = 0;
+    F32 boxPlaneDepth, daX, daY, daZ, d1, d2, distzsqr;
 
     rad = sws->radius;
     radsqr = rad * rad;
 
-    F32 f5 = boxaX.x * boxPos.x + boxaX.y * boxPos.y + boxaX.z * boxPos.z;
-    F32 f23 = boxaY.x * boxPos.x + boxaY.y * boxPos.y + boxaY.z * boxPos.z;
-    F32 f8 = boxaZ.x * boxPos.x + boxaZ.y * boxPos.y + boxaZ.z * boxPos.z;
+    daX = boxaX.x * boxPos.x + boxaX.y * boxPos.y + boxaX.z * boxPos.z;
+    daY = boxaY.x * boxPos.x + boxaY.y * boxPos.y + boxaY.z * boxPos.z;
+    daZ = boxaZ.x * boxPos.x + boxaZ.y * boxPos.y + boxaZ.z * boxPos.z;
 
     if (boxaX.z > 0.00001f)
     {
-        F32 f3 = f5 / boxaX.z * boxaY.z - f23;
-        F32 f4 = f5 / boxaX.z * boxaZ.z - f8;
-        if (f3 >= 0.0f && f4 >= 0.0f)
+        invZ = daX / boxaX.z;
+        d1 = invZ * boxaY.z - daY;
+        d2 = invZ * boxaZ.z - daZ;
+        if (d1 >= 0.0f && d2 >= 0.0f)
         {
             quadfound = 1;
         }
     }
-    else if (f5 > 0.0f)
+    else if (daX > 0.0f)
     {
         quadfound = 1;
     }
@@ -1706,14 +1753,15 @@ S32 xSweptSphereToBox(xSweptSphere* sws, xBox* box, xMat4x3* mat)
     {
         if (boxaY.z > 0.00001f)
         {
-            F32 f3 = f23 / boxaY.z * boxaX.z - f5;
-            F32 f4 = f23 / boxaY.z * boxaZ.z - f8;
-            if (f3 >= 0.0f && f4 >= 0.0f)
+            invZ = daY / boxaY.z;
+            d1 = invZ * boxaX.z - daX;
+            d2 = invZ * boxaZ.z - daZ;
+            if (d1 >= 0.0f && d2 >= 0.0f)
             {
                 quadfound = 1;
             }
         }
-        else if (f23 > 0.0f)
+        else if (daY > 0.0f)
         {
             quadfound = 1;
         }
@@ -1729,14 +1777,15 @@ S32 xSweptSphereToBox(xSweptSphere* sws, xBox* box, xMat4x3* mat)
         {
             if (boxaZ.z > 0.00001f)
             {
-                F32 f3 = f8 / boxaZ.z * boxaX.z - f5;
-                F32 f4 = f8 / boxaZ.z * boxaY.z - f23;
-                if (f3 >= 0.0f && f4 >= 0.0f)
+                invZ = daZ / boxaZ.z;
+                d1 = invZ * boxaX.z - daX;
+                d2 = invZ * boxaY.z - daY;
+                if (d1 >= 0.0f && d2 >= 0.0f)
                 {
                     quadfound = 1;
                 }
             }
-            else if (f8 > 0.0f)
+            else if (daZ > 0.0f)
             {
                 quadfound = 1;
             }
@@ -1750,15 +1799,15 @@ S32 xSweptSphereToBox(xSweptSphere* sws, xBox* box, xMat4x3* mat)
             }
             else
             {
-                F32 f1 = radsqr - SQR(boxPos.x) - SQR(boxPos.y);
-                if (f1 <= 0.0f)
+                testdist = radsqr - SQR(boxPos.x) - SQR(boxPos.y);
+                if (testdist <= 0.0f)
                     return 0;
-                F32 f1_0 = boxPos.z - xsqrt(f1);
-                if (f1_0 >= sws->curdist)
+                distzsqr = boxPos.z - xsqrt(testdist);
+                if (distzsqr >= sws->curdist)
                     return 0;
-                if (f1_0 <= -rad)
+                if (distzsqr <= -rad)
                     return 0;
-                sws->curdist = f1_0;
+                sws->curdist = distzsqr;
                 sws->contact = boxPos;
                 sws->polynorm.x = -boxaX.x;
                 sws->polynorm.y = -boxaX.y;
@@ -1772,22 +1821,24 @@ S32 xSweptSphereToBox(xSweptSphere* sws, xBox* box, xMat4x3* mat)
 
     if (xabs(boxNorm.z) > 0.001f)
     {
-        F32 f8 = 1.0f / boxNorm.z;
-        F32 f2 = boxNorm.x * boxPos.x + boxNorm.y * boxPos.y + boxNorm.z * boxPos.z;
-        F32 f0 = f8 * f2 - xabs(rad * f8);
-        if (f0 >= sws->curdist)
+        invZ = 1.0f / boxNorm.z;
+        boxPlaneDepth = invZ * (boxNorm.x * boxPos.x + boxNorm.y * boxPos.y + boxNorm.z * boxPos.z) -
+                        xabs(rad * invZ);
+        if (boxPlaneDepth >= sws->curdist)
             return 0;
-        if (f0 <= -rad)
+        if (boxPlaneDepth <= -rad)
             return 0;
-        F32 f3 = f0 * boxA1.z - (boxA1.x * boxPos.x + boxA1.y * boxPos.y + boxA1.z * boxPos.z);
-        F32 f2_0 = f0 * boxA2.z - (boxA2.x * boxPos.x + boxA2.y * boxPos.y + boxA2.z * boxPos.z);
-        if (f3 >= 0.0f && f2_0 >= 0.0f && f3 <= (SQR(boxA1.x) + SQR(boxA1.y) + SQR(boxA1.z)) &&
-            f2_0 <= (SQR(boxA2.x) + SQR(boxA2.y) + SQR(boxA2.z)))
+        d1 = boxPlaneDepth * boxA1.z -
+             (boxA1.x * boxPos.x + boxA1.y * boxPos.y + boxA1.z * boxPos.z);
+        d2 = boxPlaneDepth * boxA2.z -
+             (boxA2.x * boxPos.x + boxA2.y * boxPos.y + boxA2.z * boxPos.z);
+        if (d1 >= 0.0f && d2 >= 0.0f && d1 <= (SQR(boxA1.x) + SQR(boxA1.y) + SQR(boxA1.z)) &&
+            d2 <= (SQR(boxA2.x) + SQR(boxA2.y) + SQR(boxA2.z)))
         {
-            sws->curdist = f0;
+            sws->curdist = boxPlaneDepth;
             sws->contact.x = -rad * boxNorm.x;
             sws->contact.y = -rad * boxNorm.y;
-            sws->contact.z = f0 - rad * boxNorm.z;
+            sws->contact.z = boxPlaneDepth - rad * boxNorm.z;
             sws->polynorm = boxNorm;
             return 1;
         }
@@ -1815,41 +1866,44 @@ S32 xSweptSphereToBox(xSweptSphere* sws, xBox* box, xMat4x3* mat)
     for (i = 0; i < 4; i++)
     {
         xVec3 pt;
+        xVec3 cyl;
+        xVec3 uu;
         pt = xform[i];
-        F32 f31 = xform[i + 1].x - xform[i].x;
-        F32 f30 = xform[i + 1].y - xform[i].y;
-        F32 f29 = xform[i + 1].z - xform[i].z;
-        F32 f23 = SQR(f31) + SQR(f30);
-        if (!(f23 < 0.001f))
+        cyl.x = xform[i + 1].x - xform[i].x;
+        cyl.y = xform[i + 1].y - xform[i].y;
+        cyl.z = xform[i + 1].z - xform[i].z;
+        F32 magNsqr = SQR(cyl.x) + SQR(cyl.y);
+        if (!(magNsqr < 0.001f))
         {
-            F32 f22 = SQR(pt.y * f31 - pt.x * f30) / f23;
-            if (f22 >= radsqr)
+            F32 dsqr = SQR(pt.y * cyl.x - pt.x * cyl.y) / magNsqr;
+            if (dsqr >= radsqr)
                 continue;
-            F32 f28 = -f31 * f29;
-            F32 f27 = -f30 * f29;
-            F32 var_1B8;
-            xsqrtfast(var_1B8, SQR(f28) + SQR(f27) + SQR(f23));
-            if (!(var_1B8 < 0.000001f))
+            uu.x = -cyl.x * cyl.z;
+            uu.y = -cyl.y * cyl.z;
+            uu.z = magNsqr;
+            F32 ulen;
+            xsqrtfast(ulen, SQR(uu.x) + SQR(uu.y) + SQR(uu.z));
+            if (!(ulen < 0.000001f))
             {
-                var_1B8 = 1.0f / var_1B8;
-                F32 f21 = f23 * var_1B8;
-                F32 f28_0 = f28 * var_1B8;
-                F32 f27_0 = f27 * var_1B8;
-                if (!(f21 < 0.000001f))
+                ulen = 1.0f / ulen;
+                uu.x *= ulen;
+                uu.y *= ulen;
+                uu.z *= ulen;
+                if (!(uu.z < 0.000001f))
                 {
-                    F32 f1 = xsqrt(radsqr - f22);
-                    F32 f3 = f28_0 * pt.x + f27_0 * pt.y + f21 * pt.z;
-                    F32 f7 = 1.0f / f21 * (f3 - f1);
-                    if (f7 >= sws->curdist)
+                    testdist = 1.0f / uu.z *
+                               (uu.x * pt.x + uu.y * pt.y + uu.z * pt.z -
+                                xsqrt(radsqr - dsqr));
+                    if (testdist >= sws->curdist)
                         continue;
-                    if (!(f7 <= -rad))
+                    if (!(testdist <= -rad))
                     {
-                        F32 f1 = -pt.x * f31 - pt.y * f30 + f29 * (f7 - pt.z);
-                        F32 f4 = SQR(f29) + f23;
-                        if (!(f1 <= 0.0f) && !(f1 >= f4))
+                        F32 edgedot = -pt.x * cyl.x - pt.y * cyl.y + cyl.z * (testdist - pt.z);
+                        F32 magCsqr = SQR(cyl.z) + magNsqr;
+                        if (!(edgedot <= 0.0f) && !(edgedot >= magCsqr))
                         {
-                            sws->curdist = f7;
-                            edge_contact_lerp = f1 / f4;
+                            sws->curdist = testdist;
+                            edge_contact_lerp = edgedot / magCsqr;
                             edge_contact_found = i;
                             vert_contact_found = -1;
                         }
@@ -1857,15 +1911,15 @@ S32 xSweptSphereToBox(xSweptSphere* sws, xBox* box, xMat4x3* mat)
                 }
             }
         }
-        F32 f1 = radsqr - SQR(xform[i].x) - SQR(xform[i].y);
-        if (!(f1 <= 0.0f))
+        testdist = radsqr - SQR(xform[i].x) - SQR(xform[i].y);
+        if (!(testdist <= 0.0f))
         {
-            F32 f1_0 = pt.z - xsqrt(f1);
-            if (f1_0 >= sws->curdist)
+            F32 distzsqr = pt.z - xsqrt(testdist);
+            if (distzsqr >= sws->curdist)
                 continue;
-            if (!(f1_0 <= -rad))
+            if (!(distzsqr <= -rad))
             {
-                sws->curdist = f1_0;
+                sws->curdist = distzsqr;
                 vert_contact_found = i;
                 edge_contact_found = -1;
             }
@@ -1881,13 +1935,13 @@ S32 xSweptSphereToBox(xSweptSphere* sws, xBox* box, xMat4x3* mat)
 
     if (edge_contact_found >= 0)
     {
-        F32 f2 = 1.0f - edge_contact_lerp;
-        sws->contact.x =
-            edge_contact_lerp * xform[edge_contact_found + 1].x + f2 * xform[edge_contact_found].x;
-        sws->contact.y =
-            edge_contact_lerp * xform[edge_contact_found + 1].y + f2 * xform[edge_contact_found].y;
-        sws->contact.z =
-            edge_contact_lerp * xform[edge_contact_found + 1].z + f2 * xform[edge_contact_found].z;
+        F32 invlerp = 1.0f - edge_contact_lerp;
+        sws->contact.x = invlerp * xform[edge_contact_found].x +
+                         edge_contact_lerp * xform[edge_contact_found + 1].x;
+        sws->contact.y = invlerp * xform[edge_contact_found].y +
+                         edge_contact_lerp * xform[edge_contact_found + 1].y;
+        sws->contact.z = invlerp * xform[edge_contact_found].z +
+                         edge_contact_lerp * xform[edge_contact_found + 1].z;
         sws->polynorm = boxNorm;
         return 1;
     }
@@ -1997,12 +2051,13 @@ static S32 SweptSphereModelCB(S32 numTriangles, S32 triOffset, void* data)
     RpTriangle* triangles = geometry->triangles;
     S32 triSlot = triOffset;
     U16* triIndex = RpCollisionGeometryGetData(geometry)->triangleMap + triOffset;
+    RpTriangle* tri;
 
     while (numTriangles--)
     {
         triSlot = *triIndex;
         triIndex++;
-        RpTriangle* tri = &triangles[triSlot];
+        tri = &triangles[triSlot];
         if (xSweptSphereToTriangle(sws, (xVec3*)&vertices[tri->vertIndex[0]],
                                    (xVec3*)&vertices[tri->vertIndex[1]],
                                    (xVec3*)&vertices[tri->vertIndex[2]]))
@@ -2356,6 +2411,8 @@ bool xSphereHitsBound(const xSphere& o, const xBound& b)
 
 U8 xOBBHitsOBB(const xBox& a, const xMat4x3& amat, const xBox& b, const xMat4x3& bmat)
 {
+    const xVec3& asize = a.upper;
+    const xVec3& bsize = b.upper;
     xVec3 offset = bmat.pos - amat.pos;
 
     xVec3 aoffset = {};
@@ -2381,37 +2438,40 @@ U8 xOBBHitsOBB(const xBox& a, const xMat4x3& amat, const xBox& b, const xMat4x3&
 
     F32 ar, br, r;
 
-    br = b.upper.x * axmat.right.x + b.upper.y * axmat.right.y + b.upper.z * axmat.right.z;
-    ar = a.upper.x + br;
-    if (xabs(aoffset.x) > ar)
+    r = xabs(aoffset.x);
+    br = bsize.x * axmat.right.x + bsize.y * axmat.right.y + bsize.z * axmat.right.z;
+    ar = asize.x + br;
+    if (r > ar)
         return false;
 
-    br = b.upper.x * axmat.up.x + b.upper.y * axmat.up.y + b.upper.z * axmat.up.z;
-    ar = a.upper.y + br;
-    if (xabs(aoffset.y) > ar)
+    r = xabs(aoffset.y);
+    br = bsize.x * axmat.up.x + bsize.y * axmat.up.y + bsize.z * axmat.up.z;
+    ar = asize.y + br;
+    if (r > ar)
         return false;
 
-    br = b.upper.x * axmat.at.x + b.upper.y * axmat.at.y + b.upper.z * axmat.at.z;
-    ar = a.upper.z + br;
-    if (xabs(aoffset.z) > ar)
+    r = xabs(aoffset.z);
+    br = bsize.x * axmat.at.x + bsize.y * axmat.at.y + bsize.z * axmat.at.z;
+    ar = asize.z + br;
+    if (r > ar)
         return false;
 
-    r = bmat.right.dot(offset);
-    ar = a.upper.x * axmat.right.x + a.upper.y * axmat.up.x + a.upper.z * axmat.at.x;
-    br = ar + b.upper.x;
-    if (xabs(r) > br)
+    r = xabs(bmat.right.dot(offset));
+    ar = asize.x * axmat.right.x + asize.y * axmat.up.x + asize.z * axmat.at.x;
+    br = ar + bsize.x;
+    if (r > br)
         return false;
 
-    r = bmat.up.dot(offset);
-    ar = a.upper.x * axmat.right.y + a.upper.y * axmat.up.y + a.upper.z * axmat.at.y;
-    br = ar + b.upper.y;
-    if (xabs(r) > br)
+    r = xabs(bmat.up.dot(offset));
+    ar = asize.x * axmat.right.y + asize.y * axmat.up.y + asize.z * axmat.at.y;
+    br = ar + bsize.y;
+    if (r > br)
         return false;
 
-    r = bmat.at.dot(offset);
-    ar = a.upper.x * axmat.right.z + a.upper.y * axmat.up.z + a.upper.z * axmat.at.z;
-    br = ar + b.upper.z;
-    if (xabs(r) > br)
+    r = xabs(bmat.at.dot(offset));
+    ar = asize.x * axmat.right.z + asize.y * axmat.up.z + asize.z * axmat.at.z;
+    br = ar + bsize.z;
+    if (r > br)
         return false;
 
     if (axmat.right.x > 0.999f || axmat.right.y > 0.999f || axmat.right.z > 0.999f ||
@@ -2419,58 +2479,58 @@ U8 xOBBHitsOBB(const xBox& a, const xMat4x3& amat, const xBox& b, const xMat4x3&
         axmat.at.y > 0.999f || axmat.at.z > 0.999f)
         return true;
 
-    r = aoffset.z * xmat.up.x - aoffset.y * xmat.at.x;
-    ar = a.upper.y * axmat.at.x + a.upper.z * axmat.up.x;
-    br = b.upper.y * axmat.right.z + b.upper.z * axmat.right.y + ar;
-    if (xabs(r) > br)
+    r = xabs(aoffset.z * xmat.up.x - aoffset.y * xmat.at.x);
+    ar = asize.y * axmat.at.x + asize.z * axmat.up.x;
+    br = bsize.y * axmat.right.z + bsize.z * axmat.right.y + ar;
+    if (r > br)
         return false;
 
-    r = aoffset.z * xmat.up.y - aoffset.y * xmat.at.y;
-    ar = a.upper.y * axmat.at.y + a.upper.z * axmat.up.y;
-    br = b.upper.x * axmat.right.z + b.upper.z * axmat.right.x + ar;
-    if (xabs(r) > br)
+    r = xabs(aoffset.z * xmat.up.y - aoffset.y * xmat.at.y);
+    ar = asize.y * axmat.at.y + asize.z * axmat.up.y;
+    br = bsize.x * axmat.right.z + bsize.z * axmat.right.x + ar;
+    if (r > br)
         return false;
 
-    r = aoffset.z * xmat.up.z - aoffset.y * xmat.at.z;
-    ar = a.upper.y * axmat.at.z + a.upper.z * axmat.up.z;
-    br = b.upper.x * axmat.right.y + b.upper.y * axmat.right.x + ar;
-    if (xabs(r) > br)
+    r = xabs(aoffset.z * xmat.up.z - aoffset.y * xmat.at.z);
+    ar = asize.y * axmat.at.z + asize.z * axmat.up.z;
+    br = bsize.x * axmat.right.y + bsize.y * axmat.right.x + ar;
+    if (r > br)
         return false;
 
-    r = aoffset.x * xmat.at.x - aoffset.z * xmat.right.x;
-    ar = a.upper.x * axmat.at.x + a.upper.z * axmat.right.x;
-    br = b.upper.y * axmat.up.z + b.upper.z * axmat.up.y + ar;
-    if (xabs(r) > br)
+    r = xabs(aoffset.x * xmat.at.x - aoffset.z * xmat.right.x);
+    ar = asize.x * axmat.at.x + asize.z * axmat.right.x;
+    br = bsize.y * axmat.up.z + bsize.z * axmat.up.y + ar;
+    if (r > br)
         return false;
 
-    r = aoffset.x * xmat.at.y - aoffset.z * xmat.right.y;
-    ar = a.upper.x * axmat.at.y + a.upper.z * axmat.right.y;
-    br = b.upper.x * axmat.up.z + b.upper.z * axmat.up.x + ar;
-    if (xabs(r) > br)
+    r = xabs(aoffset.x * xmat.at.y - aoffset.z * xmat.right.y);
+    ar = asize.x * axmat.at.y + asize.z * axmat.right.y;
+    br = bsize.x * axmat.up.z + bsize.z * axmat.up.x + ar;
+    if (r > br)
         return false;
 
-    r = aoffset.x * xmat.at.z - aoffset.z * xmat.right.z;
-    ar = a.upper.x * axmat.at.z + a.upper.z * axmat.right.z;
-    br = b.upper.x * axmat.up.y + b.upper.y * axmat.up.x + ar;
-    if (xabs(r) > br)
+    r = xabs(aoffset.x * xmat.at.z - aoffset.z * xmat.right.z);
+    ar = asize.x * axmat.at.z + asize.z * axmat.right.z;
+    br = bsize.x * axmat.up.y + bsize.y * axmat.up.x + ar;
+    if (r > br)
         return false;
 
-    r = aoffset.y * xmat.right.x - aoffset.x * xmat.up.x;
-    ar = a.upper.x * axmat.up.x + a.upper.y * axmat.right.x;
-    br = b.upper.y * axmat.at.z + b.upper.z * axmat.at.y + ar;
-    if (xabs(r) > br)
+    r = xabs(aoffset.y * xmat.right.x - aoffset.x * xmat.up.x);
+    ar = asize.x * axmat.up.x + asize.y * axmat.right.x;
+    br = bsize.y * axmat.at.z + bsize.z * axmat.at.y + ar;
+    if (r > br)
         return false;
 
-    r = aoffset.y * xmat.right.y - aoffset.x * xmat.up.y;
-    ar = a.upper.x * axmat.up.y + a.upper.y * axmat.right.y;
-    br = b.upper.x * axmat.at.z + b.upper.z * axmat.at.x + ar;
-    if (xabs(r) > br)
+    r = xabs(aoffset.y * xmat.right.y - aoffset.x * xmat.up.y);
+    ar = asize.x * axmat.up.y + asize.y * axmat.right.y;
+    br = bsize.x * axmat.at.z + bsize.z * axmat.at.x + ar;
+    if (r > br)
         return false;
 
-    r = aoffset.y * xmat.right.z - aoffset.x * xmat.up.z;
-    ar = a.upper.x * axmat.up.z + a.upper.y * axmat.right.z;
-    br = b.upper.x * axmat.at.y + b.upper.y * axmat.at.x + ar;
-    if (xabs(r) > br)
+    r = xabs(aoffset.y * xmat.right.z - aoffset.x * xmat.up.z);
+    ar = asize.x * axmat.up.z + asize.y * axmat.right.z;
+    br = bsize.x * axmat.at.y + bsize.y * axmat.at.x + ar;
+    if (r > br)
         return false;
 
     return true;
@@ -2556,7 +2616,7 @@ F32 xMat3x3LookVec3(xMat3x3& mat, const xVec3& at)
     if (len >= -0.0000099999997f && len <= 0.0000099999997f)
     {
         mat = g_I3;
-        len = 0.0f;
+        return 0.0f;
     }
     else
     {
@@ -2567,7 +2627,7 @@ F32 xMat3x3LookVec3(xMat3x3& mat, const xVec3& at)
         F32 absz = xabs(mat.at.z);
         if (absx < absy && absx < absz)
         {
-            mat.right.assign(0.0f, absz, -absy);
+            mat.right.assign(0.0f, mat.at.z, -mat.at.y);
         }
         else
         {
@@ -2581,22 +2641,34 @@ F32 xMat3x3LookVec3(xMat3x3& mat, const xVec3& at)
             }
         }
         mat.right.normalize();
-        mat.up = mat.at.cross(mat.right);
+        mat.up = mat.right.cross(mat.at);
     }
     return len;
 }
 
-void xModelAnimCollRestore(const xModelInstance&)
+static RpMorphTarget anim_coll_old_mt;
+
+void xModelAnimCollRestore(const xModelInstance& cm)
 {
+    cm.Data->geometry->morphTarget->verts = anim_coll_old_mt.verts;
 }
 
-void xModelAnimCollApply(const xModelInstance&)
+void xModelAnimCollApply(const xModelInstance& cm)
 {
+    if (xModelAnimCollDirty(cm))
+    {
+        xModelAnimCollRefresh(cm);
+    }
+
+    RpMorphTarget* mt = cm.Data->geometry->morphTarget;
+
+    anim_coll_old_mt.verts = mt->verts;
+    mt->verts = (RwV3d*)cm.anim_coll.verts;
 }
 
-bool xModelAnimCollDirty(const xModelInstance&)
+bool xModelAnimCollDirty(const xModelInstance& cm)
 {
-    return false;
+    return (cm.Flags & 0x1800) == 0x800;
 }
 
 // Make these into inline definitions somewhere appropriate later
@@ -2647,12 +2719,14 @@ xVec3 xVec3::operator/(F32 f) const
     return vec;
 }
 
-void xQuickCullForRay(xQCData*, const xRay3*)
+void xQuickCullForRay(xQCData* q, const xRay3* r)
 {
+    xQuickCullForRay(&xqc_def_ctrl, q, r);
 }
 
-void xQuickCullForBox(xQCData*, const xBox*)
+void xQuickCullForBox(xQCData* q, const xBox* box)
 {
+    xQuickCullForBox(&xqc_def_ctrl, q, box);
 }
 
 bool xSphereHitsCapsule(const xVec3& center, F32 radius, const xVec3& v1, const xVec3& v2,

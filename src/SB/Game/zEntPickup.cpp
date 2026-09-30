@@ -2,6 +2,8 @@
 
 #include "zLOD.h"
 #include "zGame.h"
+#include "zParPTank.h"
+#include "zNPCFXCinematic.h"
 #include "zGlobals.h"
 #include "zEntPlayerBungeeState.h"
 #include "zEntSimpleObj.h"
@@ -85,6 +87,13 @@ struct RewardList
     U32 currRequest;
     U32 pickups[REWARD_COUNT];
 };
+
+// These live in zParPTank.cpp / at the bottom of this file, but are not declared
+// in any header the original TU could have seen from here.
+void zParPTankSpawnSparkles(xVec3* pos, U32 count);
+S32 zParPTankConvertEmitRate(xParEmitter* pe, F32 dt);
+WEAK F32 xVec3DistFast(const xVec3* a, const xVec3* b);
+S32 zEntPlayer_InBossBattle();
 
 zParEmitter* gEmitShinySparkles = NULL;
 
@@ -1084,6 +1093,310 @@ void zEntPickup_GiveAllRewardsNow()
     memset(sRewards, 0, sizeof(sRewards));
 }
 
+static void zEntPickup_UpdateFX(zEntPickup* ent, xScene*, F32 dt);
+
+void zEntPickup_Update(zEntPickup* ent, xScene* sc, F32 dt)
+{
+    xEntFrame frame;
+
+    if (ent->timer > 0.0f)
+    {
+        ent->timer -= dt;
+
+        if (ent->timer <= 0.0f)
+        {
+            ent->timer = 0.0f;
+        }
+    }
+
+    if (ent->state & 0x8)
+    {
+        if ((ent->pickupFlags & 0x1) && ent->timer <= 0.0f)
+        {
+            ent->timer = 0.3f;
+            ent->state = (ent->state & ~0x3f) | 0x1;
+
+            xEntShow(ent);
+
+            ent->baseFlags |= 0x80;
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    if (ent->drv.odriver || ent->drv.driver)
+    {
+        frame.mat = *(xMat4x3*)ent->model->Mat;
+
+        ent->frame = &frame;
+
+        xEntDriveUpdate(&ent->drv, sc, dt, NULL);
+
+        ent->frame = NULL;
+
+        *(xMat4x3*)ent->model->Mat = frame.mat;
+
+        xVec3Add(&ent->bound.sph.center, (xVec3*)&ent->model->Mat->pos,
+                 (xVec3*)&ent->model->Data->boundingSphere.center);
+        xQuickCullForBound(&ent->bound.qcd, &ent->bound);
+        zGridUpdateEnt(ent);
+    }
+
+    if (!xEntIsVisible(ent) || (ent->model->Flags & 0x400))
+    {
+        return;
+    }
+
+    if (ent->anim)
+    {
+        F32 duration = iAnimDuration(ent->anim);
+
+        ent->animTime += dt;
+
+        if (ent->animTime >= duration)
+        {
+            ent->animTime -= duration;
+        }
+
+        xQuat* q0 = (xQuat*)giAnimScratch;
+        xVec3* t0 = (xVec3*)(q0 + IANIM_MAXBONES);
+
+        iAnimEval(ent->anim, ent->animTime, 0, t0, q0);
+        iModelAnimMatrices(ent->model->Data, q0, t0, ent->model->Mat + 1);
+    }
+
+    if (ent->shake_timer)
+    {
+        ent->shake_timer -= dt;
+
+        if (ent->shake_timer < 0.0f)
+        {
+            xVec3Copy((xVec3*)&ent->model->Mat->pos, &ent->shake_pos);
+
+            ent->shake_timer = 0.0f;
+        }
+        else
+        {
+            xMat3x3RMulRotY((xMat3x3*)ent->model->Mat, (xMat3x3*)ent->model->Mat,
+                            6.0f * PI * dt * (ent->shake_timer / 3.0f));
+        }
+    }
+
+    switch (ent->state & 0x3f)
+    {
+    case 0x1:
+    {
+        if (ent->followTarget)
+        {
+            xVec3* p = xEntGetPos((xEnt*)ent->followTarget);
+
+            if (p)
+            {
+                ent->model->Mat->pos = *(RwV3d*)p;
+
+                xVec3Add((xVec3*)&ent->model->Mat->pos, (xVec3*)&ent->model->Mat->pos,
+                         &ent->followOffset);
+            }
+        }
+
+        if (gSpongeBall && ent->p->pickupType == PICKUP_TYPE_1 &&
+            ent->p->pickupIndex == PICKUP_SPONGEBALL)
+        {
+            ent->timer = 0.25f;
+        }
+
+        ent->fx_scale = 1.0f;
+
+        zEntPickup_UpdateFX(ent, sc, dt);
+
+        break;
+    }
+    case 0x2:
+    {
+        PickupFallPhysics(ent, sc, dt);
+        break;
+    }
+    case 0x20:
+    {
+        if (!globals.player.ControlOff)
+        {
+            ent->timer -= dt;
+        }
+
+        if (ent->timer <= 0.0f)
+        {
+            ent->state = (ent->state & ~0x3f) | 0x1;
+        }
+
+        zEntPickup_UpdateFX(ent, sc, dt);
+
+        break;
+    }
+    case 0x4:
+    {
+        if (ent->p->pickupType == PICKUP_TYPE_1 && ent->p->pickupIndex == PICKUP_SPATULA)
+        {
+            if (bungee_state::active())
+            {
+                sSpatulaBungeeDeferred = ent;
+
+                collectPickup(ent);
+            }
+            else if (zEntPlayer_InBossBattle())
+            {
+                collectPickup(ent);
+            }
+            else
+            {
+                if (sSpatulaGrabbedLife > 0.0f)
+                {
+                    sSpatulaGrabbedLife -= dt;
+
+                    if (sSpatulaGrabbedLife < 0.0f)
+                    {
+                        sSpatulaGrabbedLife = 3.5f;
+                        sSpatulaGrabbedSpinMult = 0.0f;
+
+                        collectPickup(ent);
+                    }
+                }
+
+                sSpatulaGrabbedSpinMult += 0.1f * dt;
+
+                xMat3x3MulRotC((xMat3x3*)ent->model->Mat, (xMat3x3*)ent->model->Mat, 0.0f, 1.0f,
+                               0.0f, PI * dt + sSpatulaGrabbedSpinMult);
+
+                if (ent->model->Mat->pos.y - xEntGetPos(&globals.player.ent)->y < 2.0f)
+                {
+                    ent->model->Mat->pos.y += dt;
+                }
+            }
+        }
+        else if (ent->p->pickupType == PICKUP_TYPE_1 &&
+                 ent->p->pickupIndex == PICKUP_SPONGEBALL)
+        {
+            xEntHide(ent);
+            zEntPickup_GivePickup(ent);
+
+            ent->state = (ent->state & ~0x3f) | 0x8;
+            ent->timer = 1.0f;
+        }
+        else
+        {
+            xVec3* player = xEntGetPos(&globals.player.ent);
+            zEnt* plent = &globals.player.ent;
+            F32 dx__ = plent->bound.sph.center.x - ent->model->Mat->pos.x;
+            F32 dy__ = plent->bound.sph.center.y - ent->model->Mat->pos.y;
+            F32 dz__ = plent->bound.sph.center.z - ent->model->Mat->pos.z;
+            F32 distsqr = SQR(dx__) + SQR(dy__) + SQR(dz__);
+            F32 chkdist = plent->bound.sph.r;
+
+            if (distsqr <= SQR(chkdist))
+            {
+                collectPickup(ent);
+            }
+            else
+            {
+                xVec3 vec;
+
+                player = xEntGetPos(ent);
+
+                vec.x = plent->bound.sph.center.x - player->x;
+                vec.y = (0.1f + plent->bound.sph.center.y) - player->y;
+                vec.z = plent->bound.sph.center.z - player->z;
+
+                xVec3Normalize(&vec, &vec);
+                xVec3Copy(&ent->vel, &vec);
+
+                F32 mult = 1.0f;
+
+                if (isRewardPickup(ent))
+                {
+                    distsqr = 0.1f * distsqr;
+
+                    if (distsqr > 100.0f)
+                    {
+                        distsqr = 100.0f;
+                    }
+
+                    mult *= 10.0f;
+                    mult += globals.player.PredictCurrVel;
+                    mult += 0.3f * distsqr;
+
+                    if (mult < 5.0f)
+                    {
+                        mult = 5.0f;
+                    }
+
+                    F32 yvel = globals.player.ent.frame->vel.y;
+
+                    if (yvel > 12.0f)
+                    {
+                        yvel = yvel - 12.0f;
+                    }
+                    else if (yvel < -12.0f)
+                    {
+                        yvel = yvel + 12.0f;
+                    }
+                    else
+                    {
+                        yvel = 0.0f;
+                    }
+
+                    mult += xabs(yvel);
+
+                    F32 ydiff = 3.0f + (plent->bound.sph.center.y - player->y);
+
+                    if (ydiff > 0.0f)
+                    {
+                        ent->vel.y += 0.08f * ydiff;
+                    }
+
+                    xVec3 dp;
+
+                    dp.x = mult * (ent->vel.x * dt);
+                    dp.y = mult * (ent->vel.y * dt);
+                    dp.z = mult * (ent->vel.z * dt);
+
+                    F32 vel2 = SQR(dp.x) + SQR(dp.y) + SQR(dp.z);
+
+                    if (vel2 > 2.0f)
+                    {
+                        collectPickup(ent);
+                    }
+
+                    ent->model->Mat->pos.x += dp.x;
+                    ent->model->Mat->pos.y += dp.y;
+                    ent->model->Mat->pos.z += dp.z;
+                }
+                else
+                {
+                    F32 dx__ = plent->bound.sph.center.x - ent->grab_pos.x;
+                    F32 dy__ = plent->bound.sph.center.y - ent->grab_pos.y;
+                    F32 dz__ = plent->bound.sph.center.z - ent->grab_pos.z;
+                    F32 distMult = SQR(dx__) + SQR(dy__) + SQR(dz__);
+
+                    if (distMult < 1.2f)
+                    {
+                        distMult = 1.2f;
+                    }
+
+                    distMult *= 2.0f;
+
+                    ent->model->Mat->pos.x += distMult * (ent->vel.x * dt);
+                    ent->model->Mat->pos.y += distMult * (ent->vel.y * dt);
+                    ent->model->Mat->pos.z += distMult * (ent->vel.z * dt);
+                }
+            }
+        }
+
+        break;
+    }
+    }
+}
+
 void zEntPickup_Reset(zEntPickup* ent)
 {
     zEntReset(ent);
@@ -1267,7 +1580,7 @@ void zEntPickup_Drop(zEntPickup* ent)
     ent->timer = 1.2f;
 }
 
-static U32 ShowPickupFx(zEntPickup* ent)
+static S32 ShowPickupFx(zEntPickup* ent)
 {
     if (!globals.cmgr)
     {
@@ -1303,8 +1616,146 @@ zPickupAuraInfo zPickupAuraTable[] =
 };
 // clang-format on
 
-static void zEntPickup_UpdateFX(zEntPickup* ent, xScene*, F32 dt);
-// Uses int-to-float conversion
+static void zEntPickup_UpdateFX(zEntPickup* ent, xScene*, F32 dt)
+{
+    if (!ShowPickupFx(ent) && ent->fx_par)
+    {
+        if (!(ent->flyflags & 0x2))
+        {
+            ent->flyflags |= 0x2;
+
+            ent->fx_par->m_pos = *xEntGetPos(ent);
+            ent->fx_par->m_pos.y += 10000.0f;
+
+            return;
+        }
+    }
+    else
+    {
+        ent->flyflags &= ~0x2;
+    }
+
+    if (999.0f == ent->fx_timer)
+    {
+        if (ent->fx_par)
+        {
+            ent->fx_par->m_pos = *xEntGetPos(ent);
+        }
+
+        return;
+    }
+
+    ent->fx_timer -= dt;
+
+    if (ent->fx_timer > 0.0f)
+    {
+        return;
+    }
+
+    if (ent->p->pickupType == PICKUP_TYPE_1)
+    {
+        zPickupAuraInfo* ai = &zPickupAuraTable[ent->p->pickupIndex];
+
+        if (ai->size)
+        {
+            xVec3 pos = *xEntGetPos(ent);
+
+            pos.y += ai->yoffset;
+
+            xFXAuraAdd(ent, &pos, &ai->color, ai->size);
+        }
+    }
+
+    if (!(xVec3Dist2(xEntGetPos(ent), &globals.camera.mat.pos) < 900.0f))
+    {
+        return;
+    }
+
+    if (gPTankDisable)
+    {
+        xParEmitterCustomSettings info;
+
+        info.custom_flags = 0xD00;
+        info.pos = *xEntGetPos(ent);
+
+        ShinySparkly* sp = ShinySparklyTable;
+
+        for (S32 i = 0; i < sizeof(ShinySparklyTable) / sizeof(ShinySparkly); i++, sp++)
+        {
+            if (ent->p->pickupType == sp->pickupType && ent->p->pickupIndex == sp->pickupIndex)
+            {
+                info.custom_flags = 0x1D10;
+                info.radius = sp->radius;
+
+                F32 rate = xVec3DistFast(&info.pos, &globals.camera.mat.pos);
+
+                rate = sp->std_rate / rate;
+                rate = MIN(rate, SPARKLE_MAX_RATE);
+
+                info.rate.set(rate, rate, 1.0f, 0);
+                info.color_birth[0].set(sp->br, sp->br, 1.0f, 0);
+                info.color_birth[1].set(sp->bg, sp->bg, 1.0f, 0);
+                // retail passes bg for the low end of the blue channel
+                info.color_birth[2].set(sp->bg, sp->bb, 1.0f, 0);
+                info.color_birth[3].set(sp->ba, sp->ba, 1.0f, 0);
+                info.color_death[0].set(sp->dr, sp->dr, 1.0f, 0);
+                info.color_death[1].set(sp->dg, sp->dg, 1.0f, 0);
+                info.color_death[2].set(sp->db, sp->db, 1.0f, 0);
+                info.color_death[3].set(sp->da, sp->da, 1.0f, 0);
+
+                xParEmitterEmitCustom(gEmitShinySparkles, dt, &info);
+
+                break;
+            }
+        }
+    }
+    else
+    {
+        S32 i;
+        ShinySparkly* sp = ShinySparklyTable;
+
+        for (i = 0; i < sizeof(ShinySparklyTable) / sizeof(ShinySparkly); i++, sp++)
+        {
+            if (ent->p->pickupType == sp->pickupType && ent->p->pickupIndex == sp->pickupIndex)
+            {
+                break;
+            }
+        }
+
+        if (i < sizeof(ShinySparklyTable) / sizeof(ShinySparkly))
+        {
+            xVec3 pos = *xEntGetPos(ent);
+
+            F32 rate = xVec3DistFast(&pos, &globals.camera.mat.pos);
+
+            rate = sp->std_rate / rate;
+            rate = MIN(rate, SPARKLE_MAX_RATE);
+
+            gEmitShinySparkles->prop->rate.set(rate, rate, 1.0f, 0);
+
+            S32 count = zParPTankConvertEmitRate(gEmitShinySparkles, 1.0f / 60.0f);
+
+            count = MAX(0, MIN(count, 64));
+
+            xVec3 plist[64];
+            xVec3* pp = plist;
+            RpGeometry* geom = ent->model->Data->geometry;
+            xVec3* verts = (xVec3*)geom->morphTarget->verts;
+            S32 num_verts = geom->numVertices;
+
+            for (S32 j = 0; j < count; j++, pp++)
+            {
+                S32 n = (S32)(num_verts * xurand());
+
+                *pp = verts[n];
+
+                RwV3dTransformPoints((RwV3d*)pp, (RwV3d*)pp, 1, ent->model->Mat);
+            }
+
+            zParPTankSpawnSparkles(plist, count);
+        }
+    }
+}
 
 static void set_alpha_blend(xModelInstance* model)
 {
@@ -1395,7 +1846,241 @@ void zEntPickup_RenderOne(xEnt* ent)
     RpAtomicRender(imodel);
 }
 
-// Uses int-to-float conversion
+void zEntPickup_RenderList(zEntPickup* plist, U32 pcount)
+{
+    for (U32 i = 0; i < pcount; plist++, i++)
+    {
+        if (!xEntIsVisible(plist))
+        {
+            continue;
+        }
+
+        if (plist->model->Flags & 0x400)
+        {
+            continue;
+        }
+
+        if (plist->p->pickupType == PICKUP_TYPE_1 && plist->p->pickupIndex == PICKUP_UNDERWEAR &&
+            globals.player.Health >= globals.player.MaxHealth)
+        {
+            continue;
+        }
+
+        RpAtomic* imodel = plist->model->Data;
+        RwMatrix* mat = plist->model->Mat;
+        S32 shadowResult;
+        xVec3 shadVec;
+
+        shadVec.x = plist->model->Mat->pos.x;
+        shadVec.y = plist->model->Mat->pos.y - 10.0f;
+        shadVec.z = plist->model->Mat->pos.z;
+
+        if (!iModelCullPlusShadow(imodel, mat, &shadVec, &shadowResult))
+        {
+            RwFrame* frame = RpAtomicGetFrame(imodel);
+
+            if (!plist->anim && (plist->p->pickupType != PICKUP_TYPE_1 || !(plist->state & 0x4)))
+            {
+                *(xMat3x3*)mat = *(xMat3x3*)&sPickupOrientation;
+            }
+
+            frame->ltm = *mat;
+
+            if (1.0f != plist->fx_scale)
+            {
+                RwV3d vec_scale;
+
+                vec_scale.x = plist->fx_scale;
+                vec_scale.y = plist->fx_scale;
+                vec_scale.z = plist->fx_scale;
+
+                RwMatrixScale(&frame->ltm, &vec_scale, rwCOMBINEPRECONCAT);
+            }
+
+            RpAtomicRender(imodel);
+        }
+
+        if ((shadowResult == 0 && (plist->state & 0x23)) ||
+            (plist->p->pickupType == PICKUP_TYPE_1 && (plist->state & 0x4)))
+        {
+            S32 alpha;
+            F32 dist2;
+            F32 dx__ = globals.camera.mat.pos.x - plist->model->Mat->pos.x;
+            F32 dy__ = globals.camera.mat.pos.y - plist->model->Mat->pos.y;
+            F32 dz__ = globals.camera.mat.pos.z - plist->model->Mat->pos.z;
+
+            dist2 = SQR(dx__) + SQR(dy__) + SQR(dz__);
+
+            if (dist2 < 144.0f)
+            {
+                if (dist2 > 100.0f)
+                {
+                    dist2 = xsqrt(dist2);
+
+                    alpha = (S32)(0.5f * (80.0f * (12.0f - dist2)));
+
+                    if (alpha > 80)
+                    {
+                        alpha = 80;
+                    }
+
+                    if (alpha < 0)
+                    {
+                        alpha = 1;
+                    }
+                }
+                else
+                {
+                    alpha = 80;
+                }
+
+                plist->simpShadow->alpha = alpha;
+
+                xShadowSimple_Add(plist->simpShadow, plist, 0.667f, 1.0f);
+            }
+        }
+    }
+}
+
+void zEntPickup_UpdateFlyToInterface(zEntPickup* ent, U32 pcount, F32 dt)
+{
+    U32 i;
+
+    for (i = 0; i < pcount; ent++, i++)
+    {
+        if (!(ent->state & 0x4))
+        {
+            continue;
+        }
+
+        if (!(ent->flyflags & 0x1))
+        {
+            continue;
+        }
+
+        zEntPickup_FlyToInterface(ent, dt);
+
+        if (ent->p->pickupType == PICKUP_TYPE_1)
+        {
+            zPickupAuraInfo* ai = &zPickupAuraTable[ent->p->pickupIndex];
+
+            if (ai->size)
+            {
+                xVec3 pos = *xEntGetPos(ent);
+
+                pos.y += ai->yoffset;
+
+                xFXAuraAdd(ent, &pos, &ai->color, ai->size);
+            }
+        }
+
+        if (gPTankDisable)
+        {
+            ShinySparkly* sp = ShinySparklyTable;
+
+            for (S32 j = 0; j < sizeof(ShinySparklyTable) / sizeof(ShinySparkly); j++, sp++)
+            {
+                if (ent->p->pickupType == sp->pickupType || ent->p->pickupIndex == sp->pickupIndex)
+                {
+                    xParEmitterCustomSettings info;
+
+                    info.pos = *xEntGetPos(ent);
+                    info.custom_flags = 0x1D10;
+                    info.radius = sp->radius;
+
+                    info.rate.set(sp->fly_rate, sp->fly_rate, 1.0f, 0);
+                    info.color_birth[0].set(sp->br, sp->br, 1.0f, 0);
+                    info.color_birth[1].set(sp->bg, sp->bg, 1.0f, 0);
+                    // retail passes bg for the low end of the blue channel
+                    info.color_birth[2].set(sp->bg, sp->bb, 1.0f, 0);
+                    info.color_birth[3].set(sp->ba, sp->ba, 1.0f, 0);
+                    info.color_death[0].set(sp->dr, sp->dr, 1.0f, 0);
+                    info.color_death[1].set(sp->dg, sp->dg, 1.0f, 0);
+                    info.color_death[2].set(sp->db, sp->db, 1.0f, 0);
+                    info.color_death[3].set(sp->da, sp->da, 1.0f, 0);
+
+                    xParEmitterEmitCustom(gEmitShinySparkles, 1.0f / 60.0f, &info);
+
+                    break;
+                }
+            }
+        }
+        else
+        {
+            S32 i;
+            ShinySparkly* sp = ShinySparklyTable;
+
+            for (i = 0; i < sizeof(ShinySparklyTable) / sizeof(ShinySparkly); i++, sp++)
+            {
+                if (ent->p->pickupType == sp->pickupType && ent->p->pickupIndex == sp->pickupIndex)
+                {
+                    break;
+                }
+            }
+
+            if (i < sizeof(ShinySparklyTable) / sizeof(ShinySparkly))
+            {
+                xVec3 pos = *xEntGetPos(ent);
+
+                xVec3DistFast(&pos, &globals.camera.mat.pos);
+
+                gEmitShinySparkles->prop->rate.set(sp->fly_rate, sp->fly_rate, 1.0f, 0);
+
+                S32 count = zParPTankConvertEmitRate(gEmitShinySparkles, 1.0f / 60.0f);
+
+                count = MAX(0, MIN(count, 64));
+
+                xVec3 plist[64];
+                xVec3* pp = plist;
+                RpGeometry* geom = ent->model->Data->geometry;
+                xVec3* verts = (xVec3*)geom->morphTarget->verts;
+                S32 num_verts = geom->numVertices;
+
+                for (S32 j = 0; j < count; j++, pp++)
+                {
+                    S32 n = (S32)(num_verts * xurand());
+
+                    *pp = verts[n];
+
+                    RwV3dTransformPoints((RwV3d*)pp, (RwV3d*)pp, 1, ent->model->Mat);
+                }
+
+                zParPTankSpawnSparkles(plist, count);
+            }
+        }
+    }
+
+    for (i = 0; i < 4; i++)
+    {
+        if (sKeyShake[i].shake_timer > 0.0f)
+        {
+            sKeyShake[i].shake_timer -= dt;
+
+            if (sKeyShake[i].shake_timer <= 0.0f)
+            {
+                sKeyShake[i].shake_timer = 0.0f;
+            }
+
+            if (sKeyShake[i].ui)
+            {
+                xVec3* ent_pos = &sKeyShake[i].ui->sasset->pos;
+
+                sKeyShake[i].shake_it = -0.85f * sKeyShake[i].shake_it;
+
+                F32 xdist = sKeyShake[i].shake_it;
+                F32 ydist = xdist;
+
+                if (xrand() & 0x1)
+                {
+                    ydist = -xdist;
+                }
+
+                ent_pos->x = xdist + sKeyShake[i].orig_pos.x;
+                ent_pos->y = ydist + sKeyShake[i].orig_pos.y;
+            }
+        }
+    }
+}
 
 static U32 rewardRequest(U32 shinyType, xVec3* ppos, xVec3 pos)
 {
@@ -1486,14 +2171,15 @@ void zEntPickup_SceneUpdate(F32 dt)
     {
         if (sRewards[i].active && (!sRewards[i].currRequest || 0.0f == sRewards[i].timer))
         {
+            U32 req = sRewards[i].currRequest;
+
             sRewards[i].timer = 0.2f;
 
-            U32 ret = rewardRequest(sRewards[i].pickups[sRewards[i].currRequest], sRewards[i].ppos,
-                                    sRewards[i].pos);
+            U32 ret = rewardRequest(sRewards[i].pickups[req], sRewards[i].ppos, sRewards[i].pos);
 
             if (!ret)
             {
-                switch (sRewards[i].pickups[sRewards[i].currRequest])
+                switch (sRewards[i].pickups[req])
                 {
                 case SHINY_PURPLE:
                 {
@@ -1523,9 +2209,7 @@ void zEntPickup_SceneUpdate(F32 dt)
                 }
             }
 
-            sRewards[i].currRequest++;
-
-            if (sRewards[i].currRequest >= sRewards[i].num)
+            if (++sRewards[i].currRequest >= sRewards[i].num)
             {
                 memset(&sRewards[i], 0, sizeof(RewardList));
             }

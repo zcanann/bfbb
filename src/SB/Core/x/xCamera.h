@@ -53,7 +53,7 @@ struct cameraFX
 struct cameraFXTableEntry
 {
     S32 type;
-    void (*func)(cameraFX*, F32, xMat4x3*, xMat4x3*);
+    void (*func)(cameraFX*, F32, const xMat4x3*, xMat4x3*);
     void (*funcKill)(cameraFX*);
 };
 
@@ -63,7 +63,6 @@ extern S32 xcam_do_collis;
 extern F32 xcam_collis_radius;
 extern F32 xcam_collis_stiffness;
 extern RpAtomic* sInvisWallHack;
-extern xMat4x3 sCameraFXMatOld;
 extern cameraFX sCameraFX[10];
 extern cameraFXTableEntry sCameraFXTable[3];
 extern F32 gCameraLastFov;
@@ -296,5 +295,6 @@ void xCameraSetTargetMatrix(xCamera* cam, xMat4x3* mat);
 void xCameraSetTargetOMatrix(xCamera* cam, xMat4x3* mat);
 void xCameraFXShake(F32 maxTime, F32 magnitude, F32 cycleMax, F32 rotate_magnitude, F32 radius,
                     xVec3* epicenter, xVec3* player);
+void SweptSphereHitsCameraEnt(xScene*, xRay3* ray, xQCData* qcd, xEnt* ent, void* data);
 
 #endif

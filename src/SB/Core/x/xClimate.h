@@ -7,7 +7,7 @@
 
 struct xEnvAsset;
 
-extern const float snow_life;
+extern float snow_life;
 
 struct _tagRain
 {
@@ -31,8 +31,6 @@ struct _tagClimate
 };
 
 void xClimateUpdate(_tagClimate* climate, F32 seconds);
-void UpdateRain(_tagClimate* climate, F32 seconds);
-void UpdateWind(_tagClimate* climate, F32 seconds);
 void xClimateSetRain(F32 stre);
 void xClimateSetSnow(F32 stre);
 void xClimateInitAsset(_tagClimate* climate, xEnvAsset* easset);

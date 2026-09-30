@@ -7,7 +7,7 @@
 
 S32 xmath_inited;
 S32 xmath_exited;
-volatile U32 rndseed; // made this volatile so xrand() matches
+U32 rndseed;
 
 void xMathInit()
 {
@@ -253,17 +253,42 @@ void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 endx, F32 maxv)
     S32 var_r0_4;
     S32 var_r3_2;
     S32 var_r3_3;
+    S32 var_r0;
     S32 var_r0_2;
     S32 var_r0_3;
     S32 var_r3;
     S32 var_r3_4;
+    S32 var_r4;
     F32 var_f0;
     F32 var_f2;
     F32 temp_f29;
     F32 temp_f28;
 
     temp_f29 = endx - x;
-    var_r3 = (F32)__fabs(v) < 0.001f || (temp_f29 < 0.0f ? 1 : 0) != (v < 0.0f ? 1 : 0);
+    var_r3 = 1; // Possible missing debug subroutine
+    if (!((F32)__fabs(v) < 0.001f))
+    {
+        if (v < 0.0f)
+        {
+            var_r4 = var_r3;
+        }
+        else
+        {
+            var_r4 = 0;
+        }
+        if (temp_f29 < 0.0f)
+        {
+            var_r0 = 1;
+        }
+        else
+        {
+            var_r0 = 0;
+        }
+        if (var_r0 == var_r4)
+        {
+            var_r3 = 0;
+        }
+    }
     if (var_r3 & 0xff)
     {
         var_f31 = 1e38f;

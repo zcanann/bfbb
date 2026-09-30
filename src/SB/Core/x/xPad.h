@@ -94,7 +94,7 @@ struct _tagxPad
 #define XPAD_BUTTON_Z 0x100000
 
 extern _tagxPad mPad[4];
-extern _tagxRumble mRumbleList[32];
+extern _tagxPad* gDebugPad;
 extern _tagxPad* gPlayerPad;
 
 S32 xPadInit();

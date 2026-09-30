@@ -3,8 +3,28 @@
 
 #include <rwsdk/rwcore.h>
 
-typedef struct RpLight;
+/* C compatibility: these headers use bare tag names as types. */
+typedef struct RpMaterial RpMaterial;
+typedef struct RpMaterialList RpMaterialList;
+typedef struct RpTriangle RpTriangle;
+typedef struct RpBuildMeshTriangle RpBuildMeshTriangle;
+typedef struct RpBuildMesh RpBuildMesh;
+typedef struct RpMesh RpMesh;
+typedef struct RpMeshHeader RpMeshHeader;
+typedef struct RpMorphTarget RpMorphTarget;
+typedef struct RpGeometry RpGeometry;
+typedef struct RpClump RpClump;
+typedef struct RpInterpolator RpInterpolator;
+typedef struct RpAtomic RpAtomic;
+typedef struct RpVertexNormal RpVertexNormal;
+typedef struct RpPolygon RpPolygon;
+typedef struct RpWorldSector RpWorldSector;
+typedef struct RpSector RpSector;
+typedef struct RpWorld RpWorld;
+typedef struct RpLight RpLight;
 
+
+/* RpLight is typedef'd above */
 struct RpMaterial
 {
     RwTexture* texture;
@@ -106,8 +126,7 @@ struct RpMeshHeader
 
 typedef RpMesh* (*RpMeshCallBack)(RpMesh* mesh, RpMeshHeader* meshHeader, void* pData);
 
-typedef struct RpGeometry;
-
+/* RpGeometry is typedef'd above */
 struct RpMorphTarget
 {
     RpGeometry* parentGeom;
@@ -151,6 +170,7 @@ enum RpGeometryFlag
     rpGEOMETRYNATIVEFLAGSMASK = 0x0f000000,
     rpGEOMETRYFLAGFORCEENUMSIZEINT = RWFORCEENUMSIZEINT,
 };
+typedef enum RpGeometryFlag RpGeometryFlag;
 
 enum RpInterpolatorFlag
 {
@@ -159,6 +179,7 @@ enum RpInterpolatorFlag
     rpINTERPOLATORNOFRAMEDIRTY = 0x04,
     rpINTERPOLATORFLAGFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RpInterpolatorFlag RpInterpolatorFlag;
 
 enum RpAtomicFlag
 {
@@ -166,9 +187,9 @@ enum RpAtomicFlag
     rpATOMICRENDER = 0x04,
     rpATOMICFLAGFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RpAtomicFlag RpAtomicFlag;
 
-typedef struct RpClump;
-
+/* RpClump is typedef'd above */
 typedef RpClump* (*RpClumpCallBack)(RpClump* clump, void* data);
 
 struct RpClump
@@ -191,8 +212,7 @@ struct RpInterpolator
     RwReal position;
 };
 
-typedef struct RpAtomic;
-
+/* RpAtomic is typedef'd above */
 typedef RpAtomic* (*RpAtomicCallBackRender)(RpAtomic* atomic);
 
 #define RpAtomicRenderMacro(_atomic) ((_atomic)->renderCallBack(_atomic))
@@ -404,6 +424,7 @@ enum RpWorldPrivateFlag
     rpWORLDSINGLEMALLOC = 0x01,
     rpWORLDPRIVATEFLAGFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RpWorldPrivateFlag RpWorldPrivateFlag;
 
 enum RpWorldFlag
 {
@@ -422,6 +443,7 @@ enum RpWorldFlag
     rpWORLDSECTORSOVERLAP = 0x40000000,
     rpWORLDFLAGFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RpWorldFlag RpWorldFlag;
 
 #define RpWorldGetBBoxMacro(_world) (&((_world)->boundingBox))
 
@@ -467,6 +489,7 @@ enum RpWorldRenderOrder
     rpWORLDRENDERBACK2FRONT,
     rpWORLDRENDERORDERFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RpWorldRenderOrder RpWorldRenderOrder;
 
 typedef RpWorldSector* (*RpWorldSectorCallBackRender)(RpWorldSector* worldSector);
 
@@ -501,6 +524,7 @@ enum RpLightType
     rpLIGHTSPOTSOFT,
     rpLIGHTTYPEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RpLightType RpLightType;
 
 #define rpLIGHTMINCONEANGLE ((RwReal)0.0f)
 #define rpLIGHTMAXCONEANGLE (rwPIOVER2)
@@ -511,6 +535,7 @@ enum RpLightFlag
     rpLIGHTLIGHTWORLD = 0x02,
     rpLIGHTFLAGFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RpLightFlag RpLightFlag;
 
 struct RpLight
 {

@@ -222,7 +222,13 @@ struct xGoal : xListItem<xGoal>, xFactoryInst
     void AddFlags(S32 flags);
     xPsyche* GetPsyche() const;
     void SetCallbacks(xGoalProcessCallback process, xGoalChkRuleCallback chkRule,
-                      xGoalPreCalcCallback precalc, void* cbdata);
+                      xGoalPreCalcCallback precalc, void* cbdata)
+    {
+        this->fun_process = process;
+        this->fun_chkRule = chkRule;
+        this->fun_precalc = precalc;
+        this->cbdata = cbdata;
+    }
     S32 GetFlags() const
     {
         return flg_able;
@@ -278,9 +284,6 @@ struct xGoal : xListItem<xGoal>, xFactoryInst
     {
         return 1;
     }
-
-protected:
-    ~xGoal(); // prevents implicit destructors from being generated in subclasses of xGoal
 };
 
 /* TODO: get these to weakly link into other files without causing redefinitions in xBehaviour

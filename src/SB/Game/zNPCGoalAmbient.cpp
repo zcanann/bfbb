@@ -4,10 +4,41 @@
 #include "xMath3.h"
 #include "xVec3.h"
 #include "zNPCGoalAmbient.h"
+#include "zNPCGoals.h"
 #include "zNPCSndTable.h"
-#include "xMathInlines.h"
 #include "zNPCSupplement.h"
 #include "zGlobals.h"
+
+xFactoryInst* GOALCreate_Ambient(S32 who, RyzMemGrow* grow, void*)
+{
+    xGoal* goal = NULL;
+
+    switch (who)
+    {
+    case NPC_GOAL_JELLYBUMPED:
+    {
+        goal = new (who, grow) zNPCGoalJellyBumped(who);
+        break;
+    }
+    case NPC_GOAL_JELLYATTACK:
+    {
+        goal = new (who, grow) zNPCGoalJellyAttack(who);
+        break;
+    }
+    case NPC_GOAL_JELLYBIRTH:
+    {
+        goal = new (who, grow) zNPCGoalJellyBirth(who);
+        break;
+    }
+    }
+
+    return goal;
+}
+
+zNPCGoalJellyBumped::zNPCGoalJellyBumped(S32 who) : zNPCGoalPushAnim(who)
+{
+    SetFlags(1 << 1);
+}
 
 S32 zNPCGoalJellyBumped::Enter(F32 dt, void* updCtxt)
 {
@@ -70,7 +101,7 @@ S32 zNPCGoalJellyBumped::Process(en_trantype* trantyp, F32 dt, void* updCxt, xSc
         npc->SetAlpha(pam);
     }
 
-    if (npc->hitpoints < 1 && pam < 0.01f)
+    if (npc->hitpoints < 1 && pam < 0.1f)
     {
         *trantyp = GOAL_TRAN_SET;
         nextgoal = 'NGN5';
@@ -84,6 +115,9 @@ S32 zNPCGoalJellyBumped::Process(en_trantype* trantyp, F32 dt, void* updCxt, xSc
     return zNPCGoalPushAnim::Process(trantyp, dt, updCxt, xscn);
 }
 
+xVec3* NPCC_upDir(xEnt* ent);
+
+F32 SQ(F32 x);
 void LERP(float dt, xVec3* pos_update, const xVec3*, const xVec3*);
 F32 SMOOTH(float, float, float);
 
@@ -95,7 +129,7 @@ void zNPCGoalJellyBumped::MoveSwoosh(F32 dt)
 
     pos_factor = SQ(npc->AnimTimeRemain(NULL)) / SQ(npc->AnimDuration(NULL));
     pos_factor = 1.0f - pos_factor;
-    pos_factor = CLAMP(pos_factor, 0.01f, 1.0f);
+    pos_factor = CLAMP(pos_factor, 0.0f, 1.0f);
 
     LERP(pos_factor, &pos_update, &pos_bumpin, &pos_grindin);
     npc->frame->mat.pos = pos_update;
@@ -108,7 +142,7 @@ void zNPCGoalJellyBumped::PlayWithAnimSpd()
     zNPCJelly* npc = (zNPCJelly*)psyche->clt_owner;
 
     F32 pos_factor = npc->AnimTimeRemain(NULL) / npc->AnimDuration(NULL);
-    pos_factor = CLAMP(pos_factor, 0.01f, 1.0f);
+    pos_factor = CLAMP(pos_factor, 0.0f, 1.0f);
     pos_factor = SMOOTH(pos_factor, 1.0f, 3.0f);
 
     npc->AnimCurSingle()->CurrentSpeed = pos_factor;
@@ -204,6 +238,11 @@ F32 zNPCGoalJellyBumped::CalcEndPoint(xVec3* pos_end, const xVec3* dir_aim)
     return dst_toEndPnt;
 }
 
+zNPCGoalJellyAttack::zNPCGoalJellyAttack(S32 who) : zNPCGoalPushAnim(who)
+{
+    SetFlags(1 << 1);
+}
+
 S32 zNPCGoalJellyAttack::Enter(F32 arg0, void* arg1)
 {
     zNPCJelly* npc = (zNPCJelly*)psyche->clt_owner;
@@ -227,6 +266,36 @@ S32 zNPCGoalJellyAttack::Process(en_trantype* arg0, F32 arg1, void* arg2, xScene
     return zNPCGoalPushAnim::Process(arg0, arg1, arg2, arg3);
 }
 
+void zNPCGoalJellyAttack::ZapperStart()
+{
+    zNPCJelly* npc = (zNPCJelly*)psyche->clt_owner;
+    _tagLightningAdd info;
+
+    memset(&info, 0, sizeof(info));
+
+    if (npc->SelfType() == NPC_TYPE_JELLYBLUE)
+    {
+        NPCC_MakeLightningInfo(NPC_LYT_JELLYFISHBLUE, &info);
+    }
+    else
+    {
+        NPCC_MakeLightningInfo(NPC_LYT_JELLYFISH, &info);
+    }
+
+    xVec3 pos_bone = *(const xVec3*)npc->BonePos(2);
+    xMat3x3RMulVec(&pos_bone, (const xMat3x3*)npc->BoneMat(0), &pos_bone);
+    pos_bone += *(const xVec3*)npc->BonePos(0);
+
+    info.time = 1000000.0f;
+    info.start = &pos_bone;
+    info.end = xEntGetPos(&globals.player.ent);
+
+    for (S32 i = 0; i < 3; i++)
+    {
+        zap_lytnin[i] = zLightningAdd(&info);
+    }
+}
+
 void zNPCGoalJellyAttack::ZapperStop()
 {
     zNPC_SNDStop(eNPCSnd_JellyfishAttack);
@@ -238,4 +307,155 @@ void zNPCGoalJellyAttack::ZapperStop()
         }
         zap_lytnin[i] = NULL;
     }
+}
+
+void zNPCGoalJellyAttack::ZapperUpdate()
+{
+    zNPCJelly* npc = (zNPCJelly*)psyche->clt_owner;
+    F32 tym_ancur;
+
+    static const xVec3 wt_tgt = { 0.25f, 0.75f, 0.25f };
+    static const F32 tym_attackOn[2] = { 0.5f, 0.9f };
+    static S32 idx_fromBone;
+    static S8 init;
+
+    tym_ancur = npc->AnimTimeCurrent();
+    npc->AnimDuration(NULL);
+
+    if (!init)
+    {
+        idx_fromBone = 2;
+        init = 1;
+    }
+
+    idx_fromBone++;
+    if (idx_fromBone > npc->model->BoneCount)
+    {
+        idx_fromBone = 2;
+    }
+    if (idx_fromBone < 2)
+    {
+        idx_fromBone += 2;
+    }
+
+    xVec3 pos_bone = *(const xVec3*)npc->BonePos(idx_fromBone);
+    xMat3x3RMulVec(&pos_bone, (const xMat3x3*)npc->BoneMat(0), &pos_bone);
+    pos_bone += *(const xVec3*)npc->BonePos(0);
+
+    if (tym_ancur < tym_attackOn[0])
+    {
+        for (S32 i = 0; i < 3; i++)
+        {
+            if (zap_lytnin[i] != NULL)
+            {
+                S32 idx_tgtBone = (S32)(xurand() * npc->model->BoneCount);
+                if (idx_tgtBone < 2)
+                {
+                    idx_tgtBone += 2;
+                }
+
+                xVec3 pos_tgt = *(const xVec3*)npc->BonePos(idx_tgtBone);
+                xMat3x3RMulVec(&pos_tgt, (const xMat3x3*)npc->BoneMat(0), &pos_tgt);
+                pos_tgt += *(const xVec3*)npc->BonePos(0);
+
+                zLightningModifyEndpoints(zap_lytnin[i], &pos_bone, &pos_tgt);
+            }
+        }
+    }
+    else
+    {
+        zEntPlayer_DamageNPCKnockBack(npc, 1, npc->Pos());
+
+        xVec3 pos_plyr = *xEntGetCenter(&globals.player.ent);
+
+        zNPC_SNDPlay3D(eNPCSnd_JellyfishAttack, npc);
+
+        for (S32 i = 0; i < 3; i++)
+        {
+            if (zap_lytnin[i] != NULL)
+            {
+                xVec3 pos_tgt = pos_plyr;
+
+                pos_tgt += *NPCC_faceDir(&globals.player.ent) * (wt_tgt.z * xurand());
+                pos_tgt += *NPCC_upDir(&globals.player.ent) * (wt_tgt.y * xurand());
+                pos_tgt += *NPCC_rightDir(&globals.player.ent) * (wt_tgt.x * xurand());
+
+                zLightningModifyEndpoints(zap_lytnin[i], &pos_bone, &pos_tgt);
+            }
+        }
+    }
+}
+
+zNPCGoalJellyBirth::zNPCGoalJellyBirth(S32 who) : zNPCGoalCommon(who)
+{
+    SetFlags(1 << 1);
+}
+
+S32 zNPCGoalJellyBirth::Enter(F32 dt, void* updCtxt)
+{
+    zNPCJelly* npc = (zNPCJelly*)psyche->clt_owner;
+
+    if (flg_info & 0x10)
+    {
+        npc->MatPosSet(&pos_spawn);
+    }
+
+    flg_info = 0;
+
+    npc->hitpoints = npc->cfg_npc->pts_damage;
+
+    if (tmr_fall <= 0.0f)
+    {
+        tmr_fall = 1.0f;
+    }
+
+    npc->MvptReset(NULL);
+    npc->MvptCycle();
+    npc->nav_dest->PosGet();
+
+    npc->VelStop();
+
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalJellyBirth::Process(en_trantype* trantyp, F32 dt, void* ctxt, xScene* xscn)
+{
+    S32 nextgoal = 0;
+    zNPCJelly* npc = (zNPCJelly*)psyche->clt_owner;
+
+    xVec3 vec_dest = *npc->nav_dest->PosGet() - *npc->Pos();
+
+    if (vec_dest.y > 0.0f)
+    {
+        *trantyp = GOAL_TRAN_SET;
+        nextgoal = 'NGN0';
+    }
+
+    if (*trantyp != GOAL_TRAN_NONE)
+    {
+        return nextgoal;
+    }
+
+    if (xabs(vec_dest.y) > 5.0f)
+    {
+        npc->spd_throttle = 5.0f;
+        npc->ThrottleApply(dt, &g_NY3, 0);
+    }
+    else
+    {
+        npc->ThrottleAdjust(dt, 1.5f, 1.0f);
+        npc->ThrottleApply(dt, &g_NY3, 0);
+    }
+
+    tmr_fall = MAX(-1.0f, tmr_fall - dt);
+
+    return xGoal::Process(trantyp, dt, ctxt, xscn);
+}
+
+void zNPCGoalJellyBirth::BirthInfoSet(const xVec3* pos_birth, F32 tym_fall)
+{
+    flg_info |= 0x10;
+
+    pos_spawn = *pos_birth;
+    tmr_fall = tym_fall;
 }

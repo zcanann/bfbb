@@ -54,10 +54,26 @@ void zEntSave(zEnt* ent, xSerial* s);
 void zEntSetup(zEnt* ent);
 void zEntInit(zEnt* ent, xEntAsset* asset, U32 type);
 
-// TODO: Misplaced Inlines/Weak functions
+// Weak functions retail emitted into zEnt.o. The name says x-layer, but the
+// body is in zEnt.cpp, so this header is where the declaration belongs.
+// (xEntGetFrame used to be re-declared here as well; xEnt.h already had it.)
 WEAK void xModelAnimCollStop(xModelInstance& m);
-WEAK xMat4x3* xEntGetFrame(const xEnt* ent);
-WEAK void xSndPlay3D(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, const xVec3* pos,
-                     F32 radius, sound_category category, F32 delay);
+// Retail inlined this into some callers and not others, so neither choice is
+// right for every TU. Callers that expand it (zFX, zEntTeleportBox) gain 12
+// exact functions between them. Two TUs must NOT expand it and define
+// XSNDPLAY3D_OUT_OF_LINE before including: zEnt.cpp, which defines the body
+// below at a position its object layout depends on, and zEntDestructObj.cpp,
+// where expanding it adds a .sdata2 literal that shifts the unit's pool and
+// costs four functions. Both are Matching units, so both must stay exact.
+#ifdef XSNDPLAY3D_OUT_OF_LINE
+void xSndPlay3D(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, const xVec3* pos, F32 radius,
+                sound_category category, F32 delay);
+#else
+inline void xSndPlay3D(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, const xVec3* pos,
+                       F32 radius, sound_category category, F32 delay)
+{
+    xSndPlay3D(id, vol, pitch, priority, flags, pos, radius / 4.0f, radius, category, delay);
+}
+#endif
 
 #endif

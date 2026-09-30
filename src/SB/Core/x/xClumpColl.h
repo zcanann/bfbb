@@ -90,6 +90,8 @@ xClumpCollBSPTree*
 xClumpColl_ForAllCapsuleLeafNodeIntersections(xClumpCollBSPTree* tree, RwLine* line, F32 radius,
                                               xClumpCollV3dGradient* grad,
                                               xClumpCollIntersectionCallback callBack, void* data);
+extern U8 xClumpColl_FilterFlags;
+
 xClumpCollBSPTree* xClumpColl_ForAllIntersections(xClumpCollBSPTree* tree,
                                                   RpIntersection* intersection,
                                                   RpIntersectionCallBackWorldTriangle callBack,

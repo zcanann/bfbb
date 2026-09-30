@@ -1,11 +1,16 @@
 #ifndef RPCOLLIS_H
 #define RPCOLLIS_H
 
-#include "rwcore.h"
-#include "rpworld.h"
+#include <rwsdk/rwcore.h>
+#include <rwsdk/rpworld.h>
 
-typedef struct RpCollisionTriangle;
+/* C compatibility: these headers use bare tag names as types. */
+typedef union RpIntersectData RpIntersectData;
+typedef struct RpIntersection RpIntersection;
+typedef struct RpCollisionTriangle RpCollisionTriangle;
 
+
+/* RpCollisionTriangle is typedef'd above */
 union RpIntersectData
 {
     RwLine line;
@@ -25,6 +30,7 @@ enum RpIntersectType
     rpINTERSECTATOMIC,
     rpINTERSECTTYPEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RpIntersectType RpIntersectType;
 
 struct RpIntersection
 {

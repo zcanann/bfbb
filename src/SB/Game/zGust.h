@@ -40,5 +40,6 @@ zGust* zGustGetGust(U16 n);
 void zGustSave(zGust* ent, xSerial* s);
 void zGustLoad(zGust* ent, xSerial* s);
 void zGustUpdateFX(F32 seconds);
+void zGustUpdateEnt(xEnt* ent, xScene* sc, F32 dt, void* data);
 
 #endif

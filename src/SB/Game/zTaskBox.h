@@ -109,7 +109,7 @@ struct ztaskbox : xBase
     void complete();
     static void init();
     bool exists(state_enum stage);
-    static U32 get_text(U32);
+    static const char* get_text(U32);
     U32 StatusGet() const
     {
         return this->state;

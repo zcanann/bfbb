@@ -1,8 +1,13 @@
 #ifndef RPHANIM_H
 #define RPHANIM_H
 
-#include "rwcore.h"
-#include "rtanim.h"
+#include <rwsdk/rwcore.h>
+#include <rwsdk/rtanim.h>
+
+/* C compatibility: these headers use bare tag names as types. */
+typedef struct RpHAnimNodeInfo RpHAnimNodeInfo;
+typedef struct RpHAnimHierarchy RpHAnimHierarchy;
+
 
 struct RpHAnimNodeInfo
 {
@@ -34,6 +39,7 @@ enum RpHAnimHierarchyFlag
     rpHANIMHIERARCHYLOCALSPACEMATRICES = 0x4000,
     rpHANIMHIERARCHYFLAGFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
+typedef enum RpHAnimHierarchyFlag RpHAnimHierarchyFlag;
 
 #ifdef __cplusplus
 extern "C" {

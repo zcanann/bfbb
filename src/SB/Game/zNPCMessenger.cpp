@@ -147,7 +147,7 @@ void zNPCMsg_SendMsg(NPCMsg* inmsg, F32 delay, zNPCCommon* npc_sendto)
 
 static void NPCPS_copyMsgInfo(NPCMsg* msgA, NPCMsg* msgB, F32 delay)
 {
-    memcpy(msgA, msgB, 0x44);
+    memcpy(msgA, msgB, sizeof(NPCMsg));
     msgA->next = NULL;
     msgA->tmr_delay = delay;
 }
@@ -190,8 +190,8 @@ static void NPCPS_MsgPoolReset(NPCPSData* npc)
 static void NPCPS_CltPoolInit(NPCPSData* npc, S32 unk)
 {
     XOrdInit(&npc->cltlist, unk, 0);
-    npc->cltblob = (NPCPSClt*)xMemAlloc(gActiveHeap, unk * 16, 0);
-    memset(npc->cltblob, 0, unk * 16);
+    npc->cltblob = (NPCPSClt*)xMemAlloc(gActiveHeap, unk * sizeof(NPCPSClt), 0);
+    memset(npc->cltblob, 0, unk * sizeof(NPCPSClt));
     NPCPS_CltPoolReset(npc);
 }
 

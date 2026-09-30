@@ -70,7 +70,6 @@ static en_BIO_ASYNC_ERRCODES BFD_AsyncReadStatus(st_FILELOADINFO* fli);
 st_FILELOADINFO* xBinioLoadCreate(const char* filename)
 {
     st_FILELOADINFO* fli = NULL;
-    tag_xFile* tmp_fp;
     S32 i;
     S32 uselock = -1;
 
@@ -117,7 +116,7 @@ st_FILELOADINFO* xBinioLoadCreate(const char* filename)
         fli->position = 0;
         fli->basesector = 0;
 
-        tmp_fp = BFD_open(filename, "rb", uselock, 0, fli->xtradata);
+        tag_xFile* tmp_fp = BFD_open(filename, "rb", uselock, 0, fli->xtradata);
 
         if (tmp_fp)
         {

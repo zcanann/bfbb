@@ -7,6 +7,7 @@
 
 #include "iTime.h"
 
+#include "xCounter.h"
 #include "xFont.h"
 #include "xString.h"
 #include "xsavegame.h"
@@ -759,14 +760,7 @@ U32 zVarEntryCB_Minute(void*)
 
 U32 zVarEntryCB_CounterValue(void* arg)
 {
-    // Given the void argument type, no idea what type this actually is.
-    // What we do know that at an offset 5 words in there's a signed S16.
-    struct something
-    {
-        U32 stuff[5];
-        S16 theValue;
-    };
-    return ((something*)arg)->theValue;
+    return ((_xCounter*)arg)->count;
 }
 
 U32 zVarEntryCB_IsEnabled(void* arg)

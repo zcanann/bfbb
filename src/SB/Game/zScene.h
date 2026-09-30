@@ -46,7 +46,7 @@ void zSceneSave(zScene* ent, xSerial* s);
 void zSceneLoad(zScene* ent, xSerial* s);
 void zSceneReset();
 void zSceneSetup();
-void zSceneUpdate(F32 dt);
+void zSceneUpdate(F32 elapsedSec);
 void zSceneRender();
 xBase* zSceneFindObject(U32 gameID);
 xBase* zSceneGetObject(S32 type, S32 idx);
