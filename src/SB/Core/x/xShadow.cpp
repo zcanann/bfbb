@@ -104,7 +104,7 @@ void xShadowSetLight(xVec3* target_pos, xVec3* in_vec, F32 param3) {
 
     xVec3Normalize(&zvec, in_vec);
     xMat3x3LookVec(&matrix, &zvec);
-    zvec += *target_pos;
+    matrix.pos = *target_pos;
     camFrame = (RwFrame*)ShadowCamera->object.object.parent;
     camMatrix = &camFrame->modelling;
     xMat4x3Copy( (xMat4x3*) camMatrix,&matrix);
