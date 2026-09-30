@@ -4755,7 +4755,49 @@ void zEntPlayer_GiveLevelPickupCurrentLevel(S32 quantity)
 
 static F32 CalcJumpImpulse_Smooth(F32 g, F32 j, F32 h, F32 Tgc, F32 Tgs)
 {
-    return 0;
+    U32 i;
+    U32 solcnt;
+    F32 A = (j - g) / (6.0f * Tgs);
+    F32 B = (g * Tgc - j * Tgc - j * Tgs) / (2.0f * Tgs);
+    F32 T = Tgc + Tgs;
+    F32 Kc = -j * 0.5f;
+    F32 Dc = 0.0f;
+    F32 C = -(3.0f * A * (Tgc * Tgc) + j * Tgc + 2.0f * B * Tgc);
+    F32 D = Kc * (Tgc * Tgc) - A * (Tgc * (Tgc * Tgc)) - B * (Tgc * Tgc) - C * Tgc;
+    F32 AF = -g * 0.5f;
+    F32 Kbf = 3.0f * A * (T * T) + 2.0f * B * T + g * T;
+    F32 Tm[3];
+    F32 Tmfound;
+
+    F32 t1 = xsqrt((Dc - h) / Kc);
+    F32 t2 = xsqrt((D + (A * (T * (T * T)) + B * (T * T)) - AF * (T * T) - Kbf * T - h) / AF);
+    solcnt = xMathSolveCubic(-2.0f * A, -B, 0.0f, D - h, &Tm[0], &Tm[1], &Tm[2]);
+
+    if (t1 <= Tgc && t1 >= 0.0f)
+    {
+        return -Dc - 2.0f * Kc * t1;
+    }
+
+    if (t2 >= T)
+    {
+        return -(Kbf + C) - 2.0f * AF * t2;
+    }
+
+    Tmfound = -1.0f;
+    for (i = 0; i < solcnt; i++)
+    {
+        if (Tm[i] >= Tgc && Tm[i] <= T && (Tmfound < 0.0f || Tm[i] < Tmfound))
+        {
+            Tmfound = Tm[i];
+        }
+    }
+
+    if (Tmfound != -1.0f)
+    {
+        return -C - 2.0f * B * Tmfound - 3.0f * A * (Tmfound * Tmfound);
+    }
+
+    return 1.0f;
 }
 
 void CalcJumpImpulse(zJumpParam* param, const zPlayerSettings* settings)

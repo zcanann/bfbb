@@ -343,14 +343,17 @@ void xParCmdApplyWind_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
     xPar* p = ps->m_root;
 
-    // non-matching: f2 and f3 are combined into one register
-    F32 f2 = 1.0f * (((xParCmdApplyWind*)c->tasset)->unknown * dt);
-    F32 f3 = 1.0f * (((xParCmdApplyWind*)c->tasset)->unknown * dt);
+    F32 windx = 1.0f;
+    F32 windz = windx;
+    F32 strength = ((xParCmdApplyWind*)c->tasset)->unknown * dt;
+
+    windx *= strength;
+    windz *= strength;
 
     while (p)
     {
-        p->m_vel.x += f2;
-        p->m_vel.z += f3;
+        p->m_vel.x += windx;
+        p->m_vel.z += windz;
 
         p = p->m_next;
     }
@@ -841,13 +844,11 @@ void xParCmd_Shaper_Update(xParCmd* c, xParGroup* ps, F32 dt)
             dosize = FALSE;
         }
 
-        slope_size[0] = 3.0f * (cmd->custSize[1] - cmd->custSize[0]);
-        slope_size[1] = 3.0f * (cmd->custSize[2] - cmd->custSize[1]);
-        slope_size[2] = 3.0f * (cmd->custSize[3] - cmd->custSize[2]);
-
-        slope_alfa[0] = 3.0f * (cmd->custAlpha[1] - cmd->custAlpha[0]);
-        slope_alfa[1] = 3.0f * (cmd->custAlpha[2] - cmd->custAlpha[1]);
-        slope_alfa[2] = 3.0f * (cmd->custAlpha[3] - cmd->custAlpha[2]);
+        for (i = 0; i < 3; i++)
+        {
+            slope_size[i] = 3.0f * (cmd->custSize[i + 1] - cmd->custSize[i]);
+            slope_alfa[i] = 3.0f * (cmd->custAlpha[i + 1] - cmd->custAlpha[i]);
+        }
 
         p = ps->m_root;
 

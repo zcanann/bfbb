@@ -246,7 +246,11 @@ struct zNPCB_SB2 : zNPCBoss
     void deactivate_hand(zNPCB_SB2::hand_enum);
     bool player_on_ground() const;
     void emit_slug(zNPCB_SB2::slug_enum which);
-    S32 slugs_ready() const;
+    bool slugs_ready() const;
+    bool slugs_inactive() const;
+    S32 platform_index(const platform_data& platform) const;
+    bool player_damaged() const;
+    void set_glow_light_intensity(F32 intensity);
     void reset_stage();
     void fire_slug(zNPCB_SB2::slug_enum which, zNPCB_SB2::platform_data& target);
     void abandon_slugs();

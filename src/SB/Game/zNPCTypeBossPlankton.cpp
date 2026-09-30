@@ -1438,7 +1438,7 @@ S32 zNPCBPlankton::next_goal()
             return NPC_GOAL_BPLANKTONHUNT;
         }
 
-        return crony_attacking() ? NPC_GOAL_BPLANKTONIDLE : NPC_GOAL_BPLANKTONATTACK;
+        return crony_attacking() ? (S32)NPC_GOAL_BPLANKTONIDLE : (S32)NPC_GOAL_BPLANKTONATTACK;
     }
 
     return NPC_GOAL_BPLANKTONEVADE;
@@ -1771,12 +1771,13 @@ bool zNPCBPlankton::have_cronies() const
 bool zNPCBPlankton::move_to_player_territory()
 {
     xCollis& coll = globals.player.ent.collis->colls[0];
-    xEnt* platform = (xEnt*)coll.optr;
 
-    if (!(coll.flags & 0x1) || platform == NULL)
+    if (!(coll.flags & 0x1) || coll.optr == NULL)
     {
         return false;
     }
+
+    xEnt* platform = (xEnt*)coll.optr;
 
     for (S32 i = 0; i < territory_size; ++i)
     {

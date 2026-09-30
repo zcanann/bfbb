@@ -887,7 +887,7 @@ namespace
     const char* parse_next_text_jot(xtextbox::jot& a, const xtextbox& tb, const xtextbox& ctb,
                                     const char* text, size_t text_size)
     {
-        char c = text[0];
+        U8 c = text[0];
 
         a.s.text = text;
         a.s.size = 1;

@@ -446,38 +446,41 @@ void zNPCDuplotron::VFXSmokeStack(F32 dt)
 {
     static const xVec3 vec_emitOffset = {};
 
-    NPCC_TmrCycle(&dt, 1.0f, this->tmr_smokeCycle);
+    NPCC_TmrCycle(&this->tmr_smokeCycle, dt, 1.0f);
 
     if (this->IsAttackFrame(-1.0f, 0) != 0)
     {
-        F32 ds2_cam = NPCC_ds2_toCam(this->Pos(), 0x0);
-        if (!(ds2_cam > SQ(25.0f)))
+        F32 ds2_cam = NPCC_ds2_toCam(this->Pos(), NULL);
+        if (ds2_cam > SQ(25.0f))
         {
-            // temp var needed for .sdata2 match
-            F32 s = isin(this->tmr_smokeCycle * 2.0f * PI);
-            S32 npar = 5.0f * s;
-            if (0 < npar)
-            {
-                xVec3* pos_emit = NULL;
-                *pos_emit = vec_emitOffset;
-                xMat3x3RMulVec(pos_emit, (xMat3x3*)this->BoneMat(0xb), pos_emit);
-                *pos_emit += *(xVec3*)this->BonePos(0xb);
-                xMat3x3RMulVec(pos_emit, (xMat3x3*)this->BoneMat(0), pos_emit);
-                *pos_emit += *(xVec3*)this->BonePos(0);
-                for (S32 i = 0; i < npar; i++)
-                {
-                    xVec3Copy(&g_parf_smoky.pos, pos_emit);
-                    F32 rand = xurand();
-                    g_parf_smoky.pos.y += 0.1f;
-                    g_parf_smoky.pos.x += 0.1f * (2.0f * (rand - 0.5f));
-                    rand = xurand();
-                    g_parf_smoky.pos.z += 0.1f * (2.0f * (rand - 0.5f));
-                    xParEmitterEmitCustom(g_pemit_smoky, dt, &g_parf_smoky);
-                }
-            }
+            return;
+        }
+
+        F32 s = isin(PI * (this->tmr_smokeCycle * 2.0f));
+        S32 npar = 5.0f * s;
+        if (npar < 1)
+        {
+            return;
+        }
+
+        xVec3 pos_emit;
+        pos_emit = vec_emitOffset;
+        xMat3x3RMulVec(&pos_emit, (xMat3x3*)this->BoneMat(0xb), &pos_emit);
+        pos_emit += *(xVec3*)this->BonePos(0xb);
+        xMat3x3RMulVec(&pos_emit, (xMat3x3*)this->BoneMat(0), &pos_emit);
+        pos_emit += *(xVec3*)this->BonePos(0);
+
+        for (S32 i = 0; i < npar; i++)
+        {
+            xVec3Copy(&g_parf_smoky.pos, &pos_emit);
+            F32 rand = xurand();
+            g_parf_smoky.pos.y += 0.1f;
+            g_parf_smoky.pos.x += 0.1f * (2.0f * (rand - 0.5f));
+            rand = xurand();
+            g_parf_smoky.pos.z += 0.1f * (2.0f * (rand - 0.5f));
+            xParEmitterEmitCustom(g_pemit_smoky, dt, &g_parf_smoky);
         }
     }
-    return;
 }
 
 void zNPCDuplotron::VFXOverheat(F32 dt, F32)

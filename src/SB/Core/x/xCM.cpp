@@ -103,12 +103,8 @@ static void xCMprep(xCreditsData* data)
 static iColor_tag xCMcolor_scale(iColor_tag color, F32 t)
 {
     iColor_tag ret = color;
-    iColor_tag src = color;
-    F32 a = src.a * t;
-    F32 r = src.r;
-    F32 g = src.g;
-    F32 b = src.b;
-    xColorInit(&ret, r, g, b, a);
+    F32 a = color.a * t;
+    xColorInit(&ret, (F32)color.r, (F32)color.g, (F32)color.b, a);
     return ret;
 }
 
@@ -168,6 +164,7 @@ static U32 xCMrender(F32 time, xCreditsData* data)
                 else
                     a = 1.0f;
 
+                F32 x0, y0, x1, y1;
                 switch (preset->align)
                 {
                 case 4:
@@ -178,31 +175,30 @@ static U32 xCMrender(F32 time, xCreditsData* data)
                     if (tex->texture != NULL)
                         RwRenderStateSet(rwRENDERSTATETEXTURERASTER, tex->texture->raster);
 
-                    F32 x0 = 640.0f * tex->x;
-                    F32 y0 = 480.0f * tex->y;
-                    F32 x1 = 640.0f * (tex->x + tex->w);
-                    F32 y1 = 480.0f * (tex->y + tex->h);
+                    x0 = 640.0f * tex->x;
+                    y0 = 480.0f * tex->y;
+                    x1 = 640.0f * (tex->x + tex->w);
+                    y1 = 480.0f * (tex->y + tex->h);
                     Im2DRenderQuad(x0, y0, x1, y1, 0.0f, 1000000.0f, 0.5f);
                     xprintf("tex %6.2f,%6.2f - %6.2f,%6.2f\n", x0, y0, x1, y1);
                     break;
                 }
                 case 0:
                 {
-                    xCMtextbox* box = &preset->box[0];
+                    x0 = 0.5f * (1.0f - preset->box[0].box.x);
+                    iColor_tag scaled = xCMcolor_scale(preset->box[0].color, a);
 
                     basic_rect<F32> bounds = { 0.0f, 0.0f, 0.0f, 0.0f };
-                    bounds.x = 0.5f * (1.0f - box->box.x);
+                    bounds.x = x0;
                     bounds.y = yScroll;
-                    bounds.w = box->box.x;
-                    bounds.h = box->box.y;
+                    bounds.w = preset->box[0].box.x;
+                    bounds.h = preset->box[0].box.y;
 
-                    iColor_tag scaled = xCMcolor_scale(box->color, a);
-
-                    xtextbox tb =
-                        xtextbox::create(xfont::create(box->font, NSCREENX(box->char_size.x),
-                                                       NSCREENY(box->char_size.y),
-                                                       box->char_spacing.x, scaled, screen_bounds),
-                                         bounds, 2, 0.0f, 0.0f, 0.0f, 0.0f);
+                    xtextbox tb = xtextbox::create(
+                        xfont::create(preset->box[0].font, NSCREENX(preset->box[0].char_size.x),
+                                      NSCREENY(preset->box[0].char_size.y), 0.0f, scaled,
+                                      screen_bounds),
+                        bounds, 2, 0.0f, 0.0f, 0.0f, 0.0f);
                     tb.set_text(hp->text1);
                     tb.render(true);
                     break;
@@ -211,21 +207,19 @@ static U32 xCMrender(F32 time, xCreditsData* data)
                 case 2:
                 case 3:
                 {
-                    xCMtextbox* box0 = &preset->box[0];
-                    xCMtextbox* box1 = &preset->box[1];
-
-                    F32 x0 = 0.5f * (1.0f - box0->box.x - preset->innerspace - box1->box.x);
+                    x0 = 0.5f * (1.0f - preset->box[0].box.x - preset->box[1].box.x -
+                                 preset->innerspace);
 
                     U32 alignL, alignR;
                     if (preset->align == 1)
                     {
-                        alignL = 0;
                         alignR = 0;
+                        alignL = 0;
                     }
                     else if (preset->align == 2)
                     {
-                        alignL = 1;
                         alignR = 1;
+                        alignL = 1;
                     }
                     else
                     {
@@ -233,38 +227,40 @@ static U32 xCMrender(F32 time, xCreditsData* data)
                         alignR = 0;
                     }
 
-                    // Scoped because of multiple bounds in dwarf
                     {
-                        iColor_tag scaled0 = xCMcolor_scale(box0->color, a);
+                        iColor_tag scaled = xCMcolor_scale(preset->box[0].color, a);
                         basic_rect<F32> bounds = { 0.0f, 0.0f, 0.0f, 0.0f };
                         bounds.x = x0;
                         bounds.y = yScroll;
-                        bounds.w = box0->box.x;
-                        bounds.h = box0->box.y;
+                        bounds.w = preset->box[0].box.x;
+                        bounds.h = preset->box[0].box.y;
 
                         xtextbox tb = xtextbox::create(
-                            xfont::create(box0->font, NSCREENX(box0->char_size.x),
-                                          NSCREENY(box0->char_size.y), box0->char_spacing.x,
-                                          scaled0, screen_bounds),
+                            xfont::create(preset->box[0].font,
+                                          NSCREENX(preset->box[0].char_size.x),
+                                          NSCREENY(preset->box[0].char_size.y), 0.0f, scaled,
+                                          screen_bounds),
                             bounds, alignL, 0.0f, 0.0f, 0.0f, 0.0f);
                         tb.set_text(hp->text1);
                         tb.render(true);
                     }
 
-                    F32 x1 = x0 + box0->box.x + preset->innerspace;
+                    x1 = x0 + (preset->box[0].box.x + preset->innerspace);
 
                     {
-                        iColor_tag scaled1 = xCMcolor_scale(box1->color, a);
+                        iColor_tag scaled = xCMcolor_scale(preset->box[1].color, a);
                         basic_rect<F32> bounds = { 0.0f, 0.0f, 0.0f, 0.0f };
                         bounds.x = x1;
                         bounds.y = yScroll;
-                        bounds.w = box1->box.x;
-                        bounds.h = box1->box.y;
+                        bounds.w = preset->box[1].box.x;
+                        bounds.h = preset->box[1].box.y;
 
+                        // The original uses the first box's font for both text boxes
                         xtextbox tb = xtextbox::create(
-                            xfont::create(box1->font, NSCREENX(box1->char_size.x),
-                                          NSCREENY(box1->char_size.y), box1->char_spacing.x,
-                                          scaled1, screen_bounds),
+                            xfont::create(preset->box[0].font,
+                                          NSCREENX(preset->box[1].char_size.x),
+                                          NSCREENY(preset->box[1].char_size.y), 0.0f, scaled,
+                                          screen_bounds),
                             bounds, alignR, 0.0f, 0.0f, 0.0f, 0.0f);
                         tb.set_text(hp->text2);
                         tb.render(true);
@@ -279,9 +275,7 @@ static U32 xCMrender(F32 time, xCreditsData* data)
         cp = (xCMcredits*)hp;
     }
 
-    if (time >= 0.0f && time <= hdr->total_time)
-        return 1;
-    return 0;
+    return time >= 0.0f && time <= hdr->total_time;
 }
 
 void xCMupdate(F32 time)

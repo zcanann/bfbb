@@ -1685,6 +1685,73 @@ void zNPCB_SB2::reset_speed()
     turn.max_vel = tweak.turn_max_vel;
 }
 
+bool zNPCB_SB2::slugs_ready() const
+{
+    const slug_data* it = slugs;
+    const slug_data* end = it + MAX_SLUG;
+    for (; it != end; ++it)
+    {
+        if (it->stage != SLUG_AIM || it->stage_delay > 0.0f)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool zNPCB_SB2::slugs_inactive() const
+{
+    const slug_data* it = slugs;
+    const slug_data* end = it + MAX_SLUG;
+    for (; it != end; ++it)
+    {
+        if (it->stage != SLUG_INACTIVE)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+void zNPCB_SB2::set_vulnerable(bool vulnerable)
+{
+    if (vulnerable == flag.vulnerable)
+    {
+        return;
+    }
+
+    flag.vulnerable = vulnerable;
+
+    U32 dflags = vulnerable ? 0x1f000 : 0;
+    node_data* it = nodes;
+    node_data* end = it + 9;
+    for (; it != end; ++it)
+    {
+        it->ent->dasset->dflags = dflags;
+    }
+}
+
+S32 zNPCB_SB2::platform_index(const platform_data& platform) const
+{
+    return &platform - platforms;
+}
+
+bool zNPCB_SB2::player_damaged() const
+{
+    return player_damage_timer > 0.0f;
+}
+
+void zNPCB_SB2::set_glow_light_intensity(F32 intensity)
+{
+    xLightKitLight& light = glow_light.light[0];
+    light.color.red = intensity;
+    light.color.green = intensity;
+    light.color.blue = intensity;
+    RpLightSetColor(light.platLight, &light.color);
+}
+
 zNPCB_SB2::platform_data* zNPCB_SB2::player_platform()
 {
     xCollis& coll = globals.player.ent.collis->colls[0];

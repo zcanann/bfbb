@@ -346,22 +346,23 @@ void zMusicUpdate(F32 dt)
 
         for (i = 0; i < TRACK_COUNT; i++)
         {
-            // FIXME: This conditional isn't quite right
-            if ((sMusicTimer[i] != 0.0f || sMusicQueueData[i] != NULL) &&
-                gGameMode & 0xC == sMusicQueueData[i]->game_state)
+            if (sMusicTimer[i] != 0.0f || sMusicQueueData[i] != NULL)
             {
-                if (sMusicTimer[i] < 0.0f)
+                if ((gGameMode == eGameMode_Game) == sMusicQueueData[i]->game_state)
                 {
-                    sMusicTimer[i] -= dt;
-                    if (sMusicTimer[i] < 0.0f)
+                    if (sMusicTimer[i] > 0.0f)
                     {
-                        sMusicTimer[i] = 0.0f;
+                        sMusicTimer[i] -= dt;
+                        if (sMusicTimer[i] < 0.0f)
+                        {
+                            sMusicTimer[i] = 0.0f;
+                        }
                     }
-                }
 
-                if (sMusicTimer[i] == 0.0f && sMusicQueueData[i] != NULL)
-                {
-                    zMusicDo(i);
+                    if (!sMusicTimer[i] && sMusicQueueData[i] != NULL)
+                    {
+                        zMusicDo(i);
+                    }
                 }
             }
         }
