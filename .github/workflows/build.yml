@@ -42,6 +42,9 @@ jobs:
 
       - name: Build and verify executable
         run: |
+          # The SB library uses GC/2.0p1a, derived from the image's stock
+          # GC/2.0p1. configure.py checks compilers exist up front, so derive it first.
+          python tools/patch_compiler.py /compilers
           python configure.py --map --version GQPE78 --binutils /binutils --compilers /compilers
           ninja all_source build/GQPE78/progress.json build/GQPE78/report.json
 
