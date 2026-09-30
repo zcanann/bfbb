@@ -5,37 +5,21 @@ f32 atanf(f32 x);
 f32 cosf(f32 x);
 f32 sinf(f32 x);
 
-static const f32 BINK_RDFT_INVERSE_SCALE_BITS = 0.5f;
-static const f32 BINK_FFT_TRIG_ONE_BITS = 1.0f;
-static const f64 BINK_FFT_HALF_SECANT_SCALE_BITS = 0.5;
-static const f32 BINK_FFT_SIX_BITS = 6.0f;
-static const f32 BINK_FFT_THREE_BITS = 3.0f;
-static const f32 BINK_FFT_HALF_RECIP_SCALE_BITS = 0.5f;
-static const f32 BINK_DCT_TRIG_ONE_BITS = 1.0f;
-static const f32 BINK_DCT_CENTER_SCALE_BITS = 0.5f;
-static const f64 BINK_DCT_HALF_SCALE_BITS = 0.5;
-static const f32 BINK_CFT_ROT_ONE_BITS = 1.0f;
-static const f32 BINK_CFT_ROT_ZERO_BITS = 0.0f;
-static const f32 BINK_CFT_INV_ROT_ONE_BITS = 1.0f;
-static const f32 BINK_CFT_INV_ROT_ZERO_BITS = 0.0f;
-static const f32 BINK_RFT_HALF_SCALE_BITS = 0.5f;
-static const f32 BINK_RFT_INV_HALF_SCALE_BITS = 0.5f;
-
-#define RDFT_INVERSE_SCALE BINK_RDFT_INVERSE_SCALE_BITS
-#define FFT_TRIG_ONE BINK_FFT_TRIG_ONE_BITS
-#define FFT_HALF_SECANT_SCALE BINK_FFT_HALF_SECANT_SCALE_BITS
-#define FFT_SIX BINK_FFT_SIX_BITS
-#define FFT_THREE BINK_FFT_THREE_BITS
-#define FFT_HALF_RECIP_SCALE BINK_FFT_HALF_RECIP_SCALE_BITS
-#define DCT_TRIG_ONE BINK_DCT_TRIG_ONE_BITS
-#define DCT_CENTER_SCALE BINK_DCT_CENTER_SCALE_BITS
-#define DCT_HALF_SCALE BINK_DCT_HALF_SCALE_BITS
-#define CFT_ROT_ONE BINK_CFT_ROT_ONE_BITS
-#define CFT_ROT_ZERO BINK_CFT_ROT_ZERO_BITS
-#define CFT_INV_ROT_ONE BINK_CFT_INV_ROT_ONE_BITS
-#define CFT_INV_ROT_ZERO BINK_CFT_INV_ROT_ZERO_BITS
-#define RFT_HALF_SCALE BINK_RFT_HALF_SCALE_BITS
-#define RFT_INV_HALF_SCALE BINK_RFT_INV_HALF_SCALE_BITS
+#define RDFT_INVERSE_SCALE 0.5f
+#define FFT_TRIG_ONE 1.0f
+#define FFT_HALF_SECANT_SCALE 0.5
+#define FFT_SIX 6.0f
+#define FFT_THREE 3.0f
+#define FFT_HALF_RECIP_SCALE 0.5f
+#define DCT_TRIG_ONE 1.0f
+#define DCT_CENTER_SCALE 0.5f
+#define DCT_HALF_SCALE 0.5
+#define CFT_ROT_ONE 1.0f
+#define CFT_ROT_ZERO 0.0f
+#define CFT_INV_ROT_ONE 1.0f
+#define CFT_INV_ROT_ZERO 0.0f
+#define RFT_HALF_SCALE 0.5f
+#define RFT_INV_HALF_SCALE 0.5f
 
 typedef enum FFTWorkArraySlot
 {
@@ -209,6 +193,10 @@ static void makewt(s32 nw, s32 PTR4* ip, f32 PTR4* w)
     f32 delta;
     f32 x;
     f32 wn4r;
+    f32 wk1r;
+    f32 wk1i;
+    f32 wk3r;
+    f32 wk3i;
 
     ip[FFT_WORK_COSINE_SIZE_SLOT] = 1;
     ip[FFT_WORK_TWIDDLE_SIZE_SLOT] = nw;
@@ -249,9 +237,6 @@ static void makewt(s32 nw, s32 PTR4* ip, f32 PTR4* w)
             w[nw1 + 1] = wn4r;
 
             if (nwh > 3) {
-                f32 wk1r;
-                f32 wk3r;
-
                 wk1r = w[nw0 + 4];
                 wk3r = w[nw0 + 6];
                 w[nw1 + 2] = FFT_HALF_RECIP_SCALE / wk1r;
@@ -261,11 +246,6 @@ static void makewt(s32 nw, s32 PTR4* ip, f32 PTR4* w)
             j = 4;
             if (j < nwh) {
                 do {
-                    f32 wk1r;
-                    f32 wk1i;
-                    f32 wk3r;
-                    f32 wk3i;
-
                     wk1r = w[nw0 + j * 2];
                     wk1i = w[nw0 + j * 2 + 1];
                     wk3r = w[nw0 + j * 2 + 2];
@@ -1352,7 +1332,6 @@ static void cftexp2(s32 n, f32 PTR4* a, s32 nw, f32 PTR4* w)
     s32 j;
     s32 k;
     s32 m;
-    s32 mh;
     s32 h;
 
     h = FFT_HALF_SIZE(n);
@@ -1360,11 +1339,10 @@ static void cftexp2(s32 n, f32 PTR4* a, s32 nw, f32 PTR4* w)
     while (m > FFT_CFT_EXPANSION_LIMIT) {
         k = m;
         if (k < h) {
-            mh = FFT_HALF_SIZE(k);
             do {
                 for (j = k - m; j < h; j += FFT_TABLE_DOUBLE_SIZE(k)) {
-                    cftmdl1(m, &a[j], &w[nw - mh]);
-                    cftmdl1(m, &a[j + h], &w[nw - mh]);
+                    cftmdl1(m, &a[j], &w[nw - FFT_HALF_SIZE(m)]);
+                    cftmdl1(m, &a[j + h], &w[nw - FFT_HALF_SIZE(m)]);
                 }
                 for (j = FFT_TABLE_DOUBLE_SIZE(k) - m; j < h; j += FFT_TABLE_FULL_SIZE(k)) {
                     cftmdl2(m, &a[j], &w[nw - m]);
@@ -1378,12 +1356,11 @@ static void cftexp2(s32 n, f32 PTR4* a, s32 nw, f32 PTR4* w)
 
     k = m;
     if (k < h) {
-        mh = FFT_HALF_SIZE(k);
         do {
             for (j = k - m; j < h; j += FFT_TABLE_DOUBLE_SIZE(k)) {
-                cftmdl1(m, &a[j], &w[nw - mh]);
+                cftmdl1(m, &a[j], &w[nw - FFT_HALF_SIZE(m)]);
                 cftfx41(m, &a[j], nw, w);
-                cftmdl1(m, &a[j + h], &w[nw - mh]);
+                cftmdl1(m, &a[j + h], &w[nw - FFT_HALF_SIZE(m)]);
                 cftfx41(m, &a[j + h], nw, w);
             }
             for (j = FFT_TABLE_DOUBLE_SIZE(k) - m; j < h; j += FFT_TABLE_FULL_SIZE(k)) {

@@ -2458,7 +2458,7 @@ bink/src/sdk/fft.c:
 bink/src/sdk/dct.c:
 	.text       start:0x801B0E50 end:0x801B1F24
 	.text       start:0x801B1F24 end:0x801B1F24
-	.rodata     start:0x802754E0 end:0x80279920
+	.rodata     start:0x802754E0 end:0x80279920 align:32
 	.sdata2     start:0x803CFC40 end:0x803CFC70
 
 bink/src/sdk/bitplane.c:
