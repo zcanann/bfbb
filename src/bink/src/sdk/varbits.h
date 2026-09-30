@@ -55,7 +55,7 @@ static RADINLINE u32 getbitlevelvar(register u32 value)
 {
     u32 leading;
 
-    __asm__ volatile("cntlzw %0,%1" : "=r"(leading) : "r"(value));
+    __asm__("cntlzw %0,%1" : "=r"(leading) : "r"(value));
     return BITSTYPELEN - leading;
 }
 
