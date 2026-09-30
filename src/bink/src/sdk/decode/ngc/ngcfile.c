@@ -154,10 +154,6 @@ typedef enum NGCReadLayout
     ((status) == DVD_STATE_END || (status) == DVD_STATE_CANCELED)
 #define NGC_DVD_STATUS_BUSY_OR_WAITING(status) \
     ((status) >= DVD_STATE_BUSY && (status) <= DVD_STATE_WAITING)
-#define NGC_DVD_STATUS_FAILED(status)                                                              \
-    ((status) <= DVD_STATE_IGNORED ?                                                               \
-         ((status) >= DVD_STATE_COVER_CLOSED || (status) == DVD_STATE_FATAL_ERROR) :               \
-         (status) == DVD_STATE_RETRY)
 #define NGC_FILE_OPEN_FROM_HANDLE(flags) (((flags) & BINKFILEHANDLE) != 0)
 #define NGC_FILE_DIRECT_READ(io) (NGC_BUFFER(io) == 0)
 #define NGC_PPC_BEQLR_INSTRUCTION ".long 0x4D820020"
@@ -208,31 +204,28 @@ static u32 radreadngc(DVDFileInfo PTR4* file, u32 offset, void PTR4* dest, u32 s
 
         DVDReadAsyncPrio(file, aligned, read_size, offset, 0, NGC_DVD_PRIORITY_LOW);
 
-        do {
+        for (;;) {
             status = DVDGetCommandBlockStatus(&file->cb);
-            if (status == DVD_STATE_END) {
+            switch (status) {
+            case DVD_STATE_END:
+                goto read_complete;
+            case DVD_STATE_FATAL_ERROR:
+            case DVD_STATE_COVER_CLOSED:
+            case DVD_STATE_NO_DISK:
+            case DVD_STATE_COVER_OPEN:
+            case DVD_STATE_WRONG_DISK:
+            case DVD_STATE_MOTOR_STOPPED:
+            case DVD_STATE_PAUSING:
+            case DVD_STATE_IGNORED:
+            case DVD_STATE_CANCELED:
+            case DVD_STATE_RETRY:
+                return 0;
+            default:
                 break;
             }
-            if (status <= DVD_STATE_END) {
-                if (status == DVD_STATE_FATAL_ERROR) {
-                    goto read_failed;
-                }
-                continue;
-            }
+        }
 
-            if (status <= DVD_STATE_RETRY) {
-                if (status < DVD_STATE_COVER_CLOSED) {
-                    continue;
-                }
-                goto read_failed;
-            }
-            continue;
-
-        read_failed:
-            return 0;
-
-        } while (1);
-
+    read_complete:
         if (read_size > size) {
             read_size = size;
         }
@@ -369,9 +362,20 @@ static void ReadKickoff(BINKIO PTR4* io)
     s32 status = DVDGetCommandBlockStatus(&NGC_DVD(io)->cb);
     u32 remaining = NGC_BYTES_LEFT_TO_READ(io);
 
-    if (NGC_DVD_STATUS_FAILED(status)) {
+    switch (status) {
+    case DVD_STATE_FATAL_ERROR:
+    case DVD_STATE_COVER_CLOSED:
+    case DVD_STATE_NO_DISK:
+    case DVD_STATE_COVER_OPEN:
+    case DVD_STATE_WRONG_DISK:
+    case DVD_STATE_MOTOR_STOPPED:
+    case DVD_STATE_PAUSING:
+    case DVD_STATE_IGNORED:
+    case DVD_STATE_RETRY:
         io->ReadError = NGC_READ_ERROR;
         return;
+    default:
+        break;
     }
 
     if (NGC_CANCEL_READ(io) == NGC_CANCEL_READ_CLEAR && NGC_DVD_STATUS_IDLE(status)) {
@@ -408,36 +412,27 @@ static u32 BinkFileIdle(BINKIO PTR4* io)
     }
 
     status = DVDGetCommandBlockStatus(&NGC_DVD(io)->cb);
-    if (status > DVD_STATE_WAITING) {
-        if (status == DVD_STATE_CANCELED) {
-            return io->DoingARead;
-        }
-        if (status < DVD_STATE_CANCELED) {
-            goto read_error;
-        }
-        if (status == DVD_STATE_RETRY) {
-            goto read_error;
-        }
-        return io->DoingARead;
+    switch (status) {
+    case DVD_STATE_END:
+        ReadKickoff(io);
+        break;
+    case DVD_STATE_FATAL_ERROR:
+    case DVD_STATE_COVER_CLOSED:
+    case DVD_STATE_NO_DISK:
+    case DVD_STATE_COVER_OPEN:
+    case DVD_STATE_WRONG_DISK:
+    case DVD_STATE_MOTOR_STOPPED:
+    case DVD_STATE_PAUSING:
+    case DVD_STATE_IGNORED:
+    case DVD_STATE_RETRY:
+        io->ReadError = NGC_READ_ERROR;
+        break;
+    case DVD_STATE_BUSY:
+    case DVD_STATE_WAITING:
+    case DVD_STATE_CANCELED:
+    default:
+        break;
     }
-
-    if (status >= DVD_STATE_BUSY) {
-        return io->DoingARead;
-    }
-
-    if (status != DVD_STATE_END) {
-        if (status == DVD_STATE_FATAL_ERROR) {
-            goto read_error;
-        }
-        return io->DoingARead;
-    }
-
-    ReadKickoff(io);
-
-    return io->DoingARead;
-
-read_error:
-    io->ReadError = NGC_READ_ERROR;
     return io->DoingARead;
 }
 
