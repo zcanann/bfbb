@@ -3,294 +3,85 @@ name: Build
 on:
   push:
   pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
-    # This is a *private* build container.
-    # See docs/github_actions.md for more information.
-    container: ghcr.io/bfbbdecomp/bfbb-build:main
-
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        # Add game versions here
-        version: [GQPE78]
-
+    # The private image contains the original executable. Only run trusted code.
+    if: >-
+      github.repository == 'zcanann/bfbb' &&
+      (github.event_name != 'pull_request' ||
+       github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      packages: read
+    container:
+      image: ghcr.io/zcanann/bfbb-build:main
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      # Checkout the repository (Push)
       - name: Checkout
-        if: ${{ github.event_name == 'push' }}
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
-          submodules: recursive
-          ref: ${{ github.event.push.head.sha }}
+          persist-credentials: false
 
-      # Checkout the repository (PR from forked repo)
-      - name: Checkout
-        if: ${{ github.event_name == 'pull_request'}}
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
-          ref: ${{ github.event.pull_request.head.sha }}
-          repository: ${{github.event.pull_request.head.repo.full_name}}
-
-      # Set Git config
-      - name: Git config
-        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
-
-      # Copy the original files to the workspace
       - name: Prepare
-        run: cp -R /orig .
-
-      # Build the project
-      - name: Build
         run: |
-          python configure.py --map --version ${{ matrix.version }} \
-              --binutils /binutils --compilers /compilers
-          ninja all_source build/${{ matrix.version }}/progress.json \
-              build/${{ matrix.version }}/report.json
-          git log -1 --pretty='{"id": "%H", "email": "%ae", "time": "%ad", "message": "%s"}' \
-              --date=format:"%Y-%m-%dT%H:%M:%S" > build/${{ matrix.version }}/progress-commit.json
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          cp -a /orig .
 
-      # Upload map files
+      - name: Build and verify executable
+        run: |
+          python configure.py --map --version GQPE78 --binutils /binutils --compilers /compilers
+          ninja all_source build/GQPE78/progress.json build/GQPE78/report.json
+
+      - name: Generate progress page
+        run: python tools/ci_progress.py build/GQPE78 --output build/progress-site
+
+      - name: Upload progress report
+        uses: actions/upload-artifact@v4
+        with:
+          name: GQPE78_report
+          if-no-files-found: error
+          path: |
+            build/GQPE78/report.json
+            build/GQPE78/progress.json
+            build/GQPE78/progress-commit.json
+
       - name: Upload map
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.version }}_maps
-          path: build/${{ matrix.version }}/**/*.MAP
+          name: GQPE78_maps
+          if-no-files-found: error
+          path: build/GQPE78/**/*.MAP
 
-      # Upload progress report
-      - name: Upload report
-        uses: actions/upload-artifact@v4
+      - name: Upload progress site
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v4
         with:
-          name: ${{ matrix.version }}_report
-          path: |
-            build/${{ matrix.version }}/report.json
-            build/${{ matrix.version }}/progress-commit.json
+          path: build/progress-site
 
-  build-non-matching:
-    # This is a *private* build container.
-    # See docs/github_actions.md for more information.
-    container: ghcr.io/bfbbdecomp/bfbb-build:main
-
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        # Add game versions here
-        version: [GQPE78]
-
-    steps:
-      # Checkout the repository (Push)
-      - name: Checkout
-        if: ${{ github.event_name == 'push' }}
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
-          ref: ${{ github.event.push.head.sha }}
-
-      # Checkout the repository (PR from forked repo)
-      - name: Checkout
-        if: ${{ github.event_name == 'pull_request'}}
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
-          ref: ${{ github.event.pull_request.head.sha }}
-          repository: ${{github.event.pull_request.head.repo.full_name}}
-
-      # Set Git config
-      - name: Git config
-        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
-
-      # Copy the original files to the workspace
-      - name: Prepare
-        run: cp -R /orig .
-
-      # Build and link non-matching files to verify lack of errors
-      - name: Build non-matching
-        run: |
-          python configure.py --non-matching \
-              --version ${{ matrix.version }} \
-              --binutils /binutils --compilers /compilers
-          ninja
-
-  build-previous:
-    # This is a *private* build container.
-    # See docs/github_actions.md for more information.
-    container: ghcr.io/bfbbdecomp/bfbb-build:main
-
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        # Add game versions here
-        version: [GQPE78]
-
-    steps:
-      # Checkout the repository
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
-          submodules: recursive
-          ref: main
-
-      # Set Git config
-      - name: Git config
-        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
-
-      # Copy the original files to the workspace
-      - name: Prepare
-        run: cp -R /orig .
-
-      # If we pushed to main, we need to go back one commit
-      # to generate OK bot report used for website build
-      - name: Checkout previous report repo state
-        if: ${{ github.event_name == 'push' }}
-        run: |
-          git checkout HEAD^
-
-      # Generate report for previous repo state
-      - name: Generate previous report
-        run: |
-          python configure.py --version ${{ matrix.version }} \
-                --binutils /binutils --compilers /compilers
-          ninja build/${{ matrix.version }}/report.json
-
-      # Upload previous report
-      - name: Upload previous report
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ matrix.version }}_previous
-          path: build/${{ matrix.version }}/report.json
-
-  website:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    needs:
-      - build
-      - build-previous
+  deploy:
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-    steps:
-      - name: Checkout website code
-        uses: actions/checkout@v4
-        with:
-          repository: bfbbdecomp/website
-
-      - name: Download Progress Artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: ./artifacts
-
-      - name: Rename Artifacts
-        run: |
-          mv artifacts/GQPE78_report/report.json artifacts/progress.json
-          mv artifacts/GQPE78_report/progress-commit.json artifacts/progress-commit.json
-          mv artifacts/GQPE78_previous/report.json artifacts/previous.json
-
-      - uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: "8.x.x"
-
-      - name: Build Website
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: |
-          python build.py
-
-      - name: Deploy Website
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          branch: gh-pages
-          folder: dist # The folder the action should deploy.
-          clean: true
-          single-commit: true
-
-      - name: Commit Changes
-        continue-on-error: true
-        run: |
-          git status
-          git pull origin main
-          git config --global user.name "BFBB Actions Bot"
-          git config --global user.email "actions@github.com"
-          git add .
-          git commit -m "automated commit cache update"
-
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.WEBSITE_TOKEN }}
-          repository: bfbbdecomp/website
-          branch: ${{ github.ref }}
-  pr-comment:
-    runs-on: ubuntu-latest
-    needs:
-      - build
-      - build-previous
-    if: github.event_name == 'pull_request'
+    needs: build
+    runs-on: ubuntu-24.04
     permissions:
-      pull-requests: write
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Download Progress Artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: ./artifacts
-
-      - name: Rename Artifacts
-        run: |
-          mv artifacts/GQPE78_report/report.json artifacts/progress.json
-          mv artifacts/GQPE78_report/progress-commit.json artifacts/progress-commit.json
-          mv artifacts/GQPE78_previous/report.json artifacts/previous.json
-
-      - name: Download OK bot
-        id: download-ok
-        run: |
-          python ./tools/download_tool.py objdiff-cli objdiff --tag v3.3.1
-          python ./tools/download_tool.py OK ok --tag v0.2.0
-
-      - name: Run OK command
-        id: ok-command
-        run: |
-          ./objdiff report changes artifacts/previous.json artifacts/progress.json -o artifacts/changes.json
-          ./ok --changes artifacts/changes.json pr > pr_comment.txt
-          cat pr_comment.txt
-
-      - name: Verify OK Bot Comment is Not Empty
-        id: comment_file_check
-        run: |
-          FILE_PATH="pr_comment.txt"
-          echo "===== pr_comment.txt contents (debug) ====="
-          sed -n '1,200p' "$FILE_PATH" || true
-          echo "===== end debug ====="
-          # Consider the file empty if it has zero bytes OR only whitespace/newlines.
-          if [ -s "$FILE_PATH" ] && grep -q '[^[:space:]]' "$FILE_PATH"; then
-            echo "file_empty=false" >> $GITHUB_OUTPUT
-          else
-            echo "file_empty=true" >> $GITHUB_OUTPUT
-          fi
-
-      # This workflow doesn't have permissions to post a comment.
-      # Upload the comment and it will be picked up by the pr-comment.yml workflow
-      - name: Upload comment
-        uses: actions/upload-artifact@v4
-        with:
-          name: pr_comment.txt
-          path: pr_comment.txt
-
-      - name: Save PR number
-        env:
-          PR_NUM: ${{ github.event.number }}
-        run: |
-          echo $PR_NUM > pr_number.txt
-
-      - name: Upload PR number
-        uses: actions/upload-artifact@v4
-        with:
-          name: pr_number.txt
-          path: pr_number.txt
+      - name: Deploy progress page
+        id: deployment
+        uses: actions/deploy-pages@v4

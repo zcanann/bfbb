@@ -7,12 +7,12 @@
 [![Fuzzy Match]][progress]
 [![Functions]][progress]
 
-[progress]: https://bfbbdecomp.github.io/bfbb/
-[Fuzzy Match]: https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fbfbbdecomp.github.io%2Fbfbb%2Fapi.json&query=fuzzy_match&label=Close%20Match&color=yellowgreen
-[Perfect Match]: https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fbfbbdecomp.github.io%2Fbfbb%2Fapi.json&query=perfect_match&label=Matching&color=limegreen
-[Functions]: https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fbfbbdecomp.github.io%2Fbfbb%2Fapi.json&query=functions_matched&label=Functions&color=lavender
-[Build Status]: https://github.com/bfbbdecomp/bfbb/actions/workflows/build.yml/badge.svg
-[actions]: https://github.com/bfbbdecomp/bfbb/actions/workflows/build.yml
+[progress]: https://zcanann.github.io/bfbb/
+[Fuzzy Match]: https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fzcanann.github.io%2Fbfbb%2Fapi.json&query=fuzzy_match&label=Close%20Match&color=yellowgreen
+[Perfect Match]: https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fzcanann.github.io%2Fbfbb%2Fapi.json&query=perfect_match&label=Matching&color=limegreen
+[Functions]: https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fzcanann.github.io%2Fbfbb%2Fapi.json&query=functions_matched&label=Functions&color=lavender
+[Build Status]: https://github.com/zcanann/bfbb/actions/workflows/build.yml/badge.svg
+[actions]: https://github.com/zcanann/bfbb/actions/workflows/build.yml
 [Discord Badge]: https://img.shields.io/discord/829152115322257436?color=%237289DA&logo=discord&logoColor=%23FFFFFF
 [discord]: https://discord.gg/dVbGFdYU6A
 
