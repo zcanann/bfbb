@@ -2514,6 +2514,7 @@ static u32 dounaligned16col2h(u32 count, s32 phase)
 {
     u32 remaining;
     u8 PTR4* yptr;
+    u8 PTR4* yptr1;
     u8 y;
     u32 ybase;
     u16 pixel;
@@ -2531,8 +2532,9 @@ static u32 dounaligned16col2h(u32 count, s32 phase)
         pixel = RGB565(ybase, S.r, S.gb, S.b);
         *(u16 PTR4*)S.dest0 = pixel;
         *(u16 PTR4*)(S.dest0 + S.pitch) = pixel;
-        y = *(u8 PTR4*)S.y1;
-        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_LUMA_SAMPLE_BYTES);
+        yptr1 = (u8 PTR4*)S.y1;
+        y = *yptr1++;
+        S.y1 = (u32 PTR4*)yptr1;
         ybase = ytable[y];
         pixel = RGB565(ybase, S.r, S.gb, S.b);
         *(u16 PTR4*)S.dest1 = pixel;
@@ -2585,6 +2587,7 @@ static u32 dounaligned16col2w(u32 count, s32 phase)
 {
     u32 remaining;
     u8 PTR4* yptr;
+    u8 PTR4* yptr1;
     u8 y;
     u32 ybase;
     u16 pixel;
@@ -2602,8 +2605,9 @@ static u32 dounaligned16col2w(u32 count, s32 phase)
         pixel = RGB565(ybase, S.r, S.gb, S.b);
         ((u16 PTR4*)S.dest0)[0] = pixel;
         ((u16 PTR4*)S.dest0)[1] = pixel;
-        y = *(u8 PTR4*)S.y1;
-        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_LUMA_SAMPLE_BYTES);
+        yptr1 = (u8 PTR4*)S.y1;
+        y = *yptr1++;
+        S.y1 = (u32 PTR4*)yptr1;
         ybase = ytable[y];
         pixel = RGB565(ybase, S.r, S.gb, S.b);
         ((u16 PTR4*)S.dest1)[0] = pixel;
@@ -2770,6 +2774,7 @@ static u32 dounaligned16col(u32 count, s32 phase)
 {
     u32 remaining;
     u8 PTR4* yptr;
+    u8 PTR4* yptr1;
     u8 y;
     u32 ybase;
 
@@ -2784,8 +2789,9 @@ static u32 dounaligned16col(u32 count, s32 phase)
         S.y0 = (u32 PTR4*)yptr;
         ybase = ytable[y];
         *(u16 PTR4*)S.dest0 = RGB565(ybase, S.r, S.gb, S.b);
-        y = *(u8 PTR4*)S.y1;
-        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_LUMA_SAMPLE_BYTES);
+        yptr1 = (u8 PTR4*)S.y1;
+        y = *yptr1++;
+        S.y1 = (u32 PTR4*)yptr1;
         ybase = ytable[y];
         *(u16 PTR4*)S.dest1 = RGB565(ybase, S.r, S.gb, S.b);
         S.dest0 += YUV_BYTES_PER_PIXEL_16;
