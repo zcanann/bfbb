@@ -1580,8 +1580,8 @@ static u32 dounaligned32col2wh(u32 count, s32 phase)
         *(u32 PTR4*)(S.dest0 + S.pitch + YUV_PACKED_WORD_BYTES) = pixel;
         yptr1 = (u8 PTR4*)S.y1;
         y = *yptr1++;
-        S.y1 = (u32 PTR4*)yptr1;
         ytable = clamp_ytable[y];
+        S.y1 = (u32 PTR4*)yptr1;
         pixel = RGB32_COLOR(ytable, S.r, S.gb, S.b);
         ((u32 PTR4*)S.dest1)[0] = pixel;
         ((u32 PTR4*)S.dest1)[1] = pixel;
