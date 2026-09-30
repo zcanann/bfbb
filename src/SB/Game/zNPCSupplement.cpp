@@ -950,11 +950,11 @@ NPARMgmt* NPAR_FindParty(en_nparptyp parType)
 
 void NPARMgmt::Init(en_nparptyp parType, void** userData, NPARXtraData* xtraData)
 {
-    U32 amt = g_npar_info[parType].num_maxParticles;
     NPARInfo* info = &g_npar_info[parType];
+    U32 amt = info->num_maxParticles * sizeof(NPARData);
 
-    void* mem = xMemAlloc(gActiveHeap, amt * sizeof(NPARData), 0x10);
-    memset(mem, 0, amt * sizeof(NPARData));
+    void* mem = xMemAlloc(gActiveHeap, amt, 0x10);
+    memset(mem, 0, amt);
 
     typ_npar = parType;
     flg_npar = info->flg_npar;

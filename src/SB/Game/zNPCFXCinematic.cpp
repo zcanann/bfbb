@@ -2966,8 +2966,6 @@ static void NCIN_MidFish_AR(const zCutsceneMgr*, NCINEntry* fxrec, RpAtomic*, Rw
 {
     static S32 g_idx_handbone[] = { 11, 16, 27, 36, 41, -1 };
 
-    S32* idx;
-
     if (animIndex == 0)
     {
         for (S32 i = 0; i < 24; i += 2)
@@ -2978,9 +2976,13 @@ static void NCIN_MidFish_AR(const zCutsceneMgr*, NCINEntry* fxrec, RpAtomic*, Rw
     }
     else if (animIndex == 2 || animIndex == 3)
     {
-        for (idx = g_idx_handbone; *idx >= 0; idx++)
+        S32 idx_bone;
+        S32 i = 0;
+
+        while ((idx_bone = g_idx_handbone[i]) >= 0)
         {
-            xVec3 pos_emit = *(const xVec3*)&animMat[*idx].pos + *(const xVec3*)&animMat->pos;
+            i++;
+            xVec3 pos_emit = *(const xVec3*)&animMat[idx_bone].pos + *(const xVec3*)&animMat->pos;
             zFX_SpawnBubbleTrail(&pos_emit, 1);
         }
     }
@@ -3837,9 +3839,8 @@ static void NCIN_SBBNode_AR(const zCutsceneMgr*, NCINEntry* fxrec, RpAtomic* mod
     if (fxrec->flg_stat & 8)
     {
         data.mat = (RwMatrixTag*)xMemPushTemp((bones + 1) * sizeof(RwMatrixTag));
+        sb2->rebind_nodes(model, data.mat);
     }
-
-    sb2->rebind_nodes(model, data.mat);
 
     xMat3x3Transpose(&imat, (const xMat3x3*)animMat);
 

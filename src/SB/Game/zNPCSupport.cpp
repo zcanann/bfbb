@@ -1276,8 +1276,8 @@ S32 NPCC_HaveLOSToPos(xVec3* pos_src, xVec3* pos_tgt, F32 dst_max, xBase* tgt, x
         colrec = &localCollis;
     }
 
-    ray.max_t = dst_max;
     ray.min_t = 0.0f;
+    ray.max_t = dst_max;
 
     xVec3Sub(&ray.dir, pos_tgt, pos_src);
     xVec3Normalize(&ray.dir, &ray.dir);

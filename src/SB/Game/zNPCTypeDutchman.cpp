@@ -2478,14 +2478,12 @@ U8 zNPCDutchman::check_player_damage()
         F32 frac = wave.dist * flames.imax_dist;
         xBox box;
 
-        F32 hx = 0.5f * tweak.damage.flame_size.x;
-        F32 hy = tweak.damage.flame_size.y * (1.0f - frac * tweak.flame.decay);
-
-        box.upper.x = hx;
-        box.upper.y = hy;
-        box.upper.z = 0.0f;
-        box.lower.x = -hx;
+        frac = 1.0f - frac * tweak.flame.decay;
+        box.upper.x = 0.5f * tweak.damage.flame_size.x;
+        box.lower.x = -box.upper.x;
+        box.upper.y = tweak.damage.flame_size.y * frac;
         box.lower.y = 0.0f;
+        box.upper.z = 0.0f;
         box.lower.z = -tweak.damage.flame_size.z;
 
         xMat4x3 mat;

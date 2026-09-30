@@ -180,11 +180,16 @@ static U32 xCMrender(F32 time, xCreditsData* data)
                     F32 y1;
                     F32 x1;
                     F32 y0;
+                    F32 ty;
+                    F32 tx;
 
-                    x0 = 640.0f * tex->x;
-                    y0 = 480.0f * tex->y;
-                    x1 = 640.0f * (tex->x + tex->w);
-                    y1 = 480.0f * (tex->y + tex->h);
+                    tx = tex->x;
+                    ty = tex->y;
+
+                    x0 = 640.0f * tx;
+                    y0 = 480.0f * ty;
+                    x1 = 640.0f * (tx + tex->w);
+                    y1 = 480.0f * (ty + tex->h);
                     Im2DRenderQuad(x0, y0, x1, y1, 0.0f, 1000000.0f, 0.5f);
                     xprintf("tex %6.2f,%6.2f - %6.2f,%6.2f\n", x0, y0, x1, y1);
                     break;

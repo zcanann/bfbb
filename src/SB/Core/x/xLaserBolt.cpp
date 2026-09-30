@@ -136,7 +136,7 @@ void xLaserBoltEmitter::update(F32 dt)
     {
         bolt& b = *it;
 
-        U8 collided = b.dist >= b.hit_dist;
+        bool collided = b.dist >= b.hit_dist;
         F32 prev_dist = b.dist;
 
         update(b, dt);
@@ -344,7 +344,7 @@ RxObjSpace3DVertex* xLaserBoltEmitter::render(bolt& b, RxObjSpace3DVertex *vert)
         right *= 1.0f / xsqrt(len2);
     }
 
-    xVec3 half_right = right * (0.5f * this->cfg.radius);
+    const xVec3 half_right = right * (0.5f * this->cfg.radius);
 
     U8 alpha;
     if (b.dist <= this->cfg.fade_dist)
@@ -476,7 +476,7 @@ void xLaserBoltEmitter::emit_particle(effect_data& effect, bolt& b, F32 from_dis
     }
     else
     {
-        xVec3 oldloc = pea.pos;
+        const xVec3 oldloc = pea.pos;
         pea.pos += b.origin + b.dir * to_dist;
 
         xParEmitterEmit(&pe, dt);

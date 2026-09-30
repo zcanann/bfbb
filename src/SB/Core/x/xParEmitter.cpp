@@ -471,7 +471,7 @@ xPar* xParEmitterEmit(xParEmitter* pe, F32 emit_dt, F32 par_dt)
 
     while (pe->rate_time > prop->rate.freq)
     {
-        pe->rate_time = pe->rate_time - prop->rate.freq;
+        pe->rate_time -= prop->rate.freq;
     }
 
     rate = xParInterpCompute(pe->rate_mode, &prop->rate, pe->rate_time, rate_has_elapsed, pe->rate);
@@ -529,55 +529,58 @@ xPar* xParEmitterEmit(xParEmitter* pe, F32 emit_dt, F32 par_dt)
         xBase* attachObject = NULL;
         marker = 0;
 
-        if ((emitObj != NULL) && (emitObj->baseType == eBaseTypeGroup))
+        if (emitObj != NULL)
         {
-            xGroup* g = (xGroup*)emitObj;
-
-            if (count == -1)
+            if (emitObj->baseType == eBaseTypeGroup)
             {
-                attachGroupTotal = xGroupGetCount(g);
-                count = 0;
-            }
+                xGroup* g = (xGroup*)emitObj;
 
-            if (g->asset->groupFlags & 1)
-            {
-                get_rnd_group_idx = xrand() % attachGroupTotal;
-                attachObject = xGroupGetItemPtr(g, get_rnd_group_idx);
-                emitAgain = 0;
-
-                if (attachObject == NULL)
+                if (count == -1)
                 {
-                    attachGroupIndex = xGroupGetItem(g, get_rnd_group_idx);
-                    attachObject = (xBase*)xSTFindAsset(attachGroupIndex, NULL);
+                    attachGroupTotal = xGroupGetCount(g);
+                    count = 0;
+                }
 
-                    if (attachObject != NULL)
+                if (g->asset->groupFlags & 1)
+                {
+                    get_rnd_group_idx = xrand() % attachGroupTotal;
+                    attachObject = xGroupGetItemPtr(g, get_rnd_group_idx);
+                    emitAgain = 0;
+
+                    if (attachObject == NULL)
                     {
-                        marker = 1;
+                        attachGroupIndex = xGroupGetItem(g, get_rnd_group_idx);
+                        attachObject = (xBase*)xSTFindAsset(attachGroupIndex, NULL);
+
+                        if (attachObject != NULL)
+                        {
+                            marker = 1;
+                        }
                     }
+                }
+                else
+                {
+                    attachObject = xGroupGetItemPtr(g, count);
+
+                    if (attachObject == NULL)
+                    {
+                        attachGroupIndex = xGroupGetItem(g, count);
+                        attachObject = (xBase*)xSTFindAsset(attachGroupIndex, NULL);
+
+                        if (attachObject != NULL)
+                        {
+                            marker = 1;
+                        }
+                    }
+
+                    count++;
+                    emitAgain = count < attachGroupTotal;
                 }
             }
             else
             {
-                attachObject = xGroupGetItemPtr(g, count);
-
-                if (attachObject == NULL)
-                {
-                    attachGroupIndex = xGroupGetItem(g, count);
-                    attachObject = (xBase*)xSTFindAsset(attachGroupIndex, NULL);
-
-                    if (attachObject != NULL)
-                    {
-                        marker = 1;
-                    }
-                }
-
-                count++;
-                emitAgain = count < attachGroupTotal;
+                attachObject = emitObj;
             }
-        }
-        else
-        {
-            attachObject = emitObj;
         }
 
         attach_ent = (xEnt*)attachObject;
@@ -601,8 +604,8 @@ xPar* xParEmitterEmit(xParEmitter* pe, F32 emit_dt, F32 par_dt)
                     if (!xEntValidType(attachObject->baseType) ||
                         (((xEnt*)attachObject)->model == NULL))
                     {
-                        emitPosition = 0.0f;
                         attach_ent = NULL;
+                        emitPosition = 0.0f;
                     }
                     else
                     {

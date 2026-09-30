@@ -196,6 +196,7 @@ void zLasso_Render(zLasso* lasso)
     xVec3 tan1;
     xVec3 tan0;
 
+    U8 useGuide;
     RxObjSpace3DVertex* vp;
     RpGeometry* geom;
     RwV3d* v0;
@@ -241,7 +242,6 @@ void zLasso_Render(zLasso* lasso)
     F32 px;
     F32 py;
     F32 pz;
-    U8 useGuide;
 
     useGuide = ((((lasso->flags & 0x800) != 0) && ((lasso->flags & 0x4000) != 0)) ||
                 (((lasso->flags & 0x800) == 0) && ((lasso->flags & 0x2000) != 0)));

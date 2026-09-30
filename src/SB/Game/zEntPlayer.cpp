@@ -605,8 +605,9 @@ static void PlayerAbsControl(xEnt* ent, F32 x, F32 z, F32 dt)
     U32 animUserFlag;
     U32 blendUserFlag;
     F32 mag = 1.0f;
-    F32 rot = 0.0f;
-    F32 angle = 0.0f;
+    F32 rot;
+    F32 angle;
+    rot = angle = 0.0f;
     maxVelmag = 0.0f;
 
     if (gTrcPad[0].state != TRC_PadInserted)
@@ -6763,8 +6764,8 @@ static xEnt* zEntPlayer_FindGrabEnt(xEnt* ent, zScene* zsc, S32* failed)
         {
             xEntBoulder* boul = (xEntBoulder*)e;
 
-            dx = boul->bound.sph.center.x - ent->model->Mat->pos.x;
             dy = (boul->bound.sph.center.y - boul->bound.sph.r) - ent->model->Mat->pos.y;
+            dx = boul->bound.sph.center.x - ent->model->Mat->pos.x;
             dz = boul->bound.sph.center.z - ent->model->Mat->pos.z;
         }
 
@@ -9504,7 +9505,7 @@ inline void get_reticle_bound(xVec3& center, F32& radius)
             xBox* box = &npc->bound.box.box;
 
             center = npc->bound.box.center;
-            radius = box[0].upper.y - box[0].lower.y;
+            radius = box->upper.y - box->lower.y;
             radius *= 0.5f;
         }
         else if (type == NPC_TYPE_CHUCK)
@@ -14266,7 +14267,7 @@ static void PlayerRotMatchUpdateEnt(xEnt* ent, xScene* sc, F32 dt, void* fdata)
     xCollis* coll = ent->collis->colls;
     S32 hit_it = coll->flags & 0x1;
     xSurface* surf = zSurfaceGetSurface(coll);
-    S32 grounded = 0;
+    U8 grounded = 0;
 
     if (hit_it && surf && !surf->state && zSurfaceGetMatchOrient(surf))
     {

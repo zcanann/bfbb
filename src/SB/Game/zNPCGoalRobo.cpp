@@ -755,7 +755,7 @@ void zNPCGoalAlertFodder::FlankPlayer(F32 dt)
         xVec3SMulBy(&dir_arena, 1.0f / length);
     }
 
-    xVec3Dot(&dir_arena, &dir_plyr);
+    F32 rot = xVec3Dot(&dir_arena, &dir_plyr) * 3.0f + 1e-05f;
     xVec3Copy(&dir_dest, &dir_plyr);
 
     npc->ThrottleAdjust(dt, 6.0f, -1.0f);

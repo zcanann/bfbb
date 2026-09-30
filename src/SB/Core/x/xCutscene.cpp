@@ -859,11 +859,8 @@ void xCutscene_Render(xCutscene* csn, xEnt**, S32*, F32*)
                                         skipsize *= 2;
                                     }
 
-                                    v_array[0] =
-                                        (S16*)((U8*)mphFile +
-                                               skipsize * (frameIndex - 1) * 2 + 0x20);
-                                    v_array[1] =
-                                        (S16*)((U8*)mphFile + skipsize * frameIndex * 2 + 0x20);
+                                    v_array[0] = (S16*)(mphFile + 1) + skipsize * (frameIndex - 1);
+                                    v_array[1] = (S16*)(mphFile + 1) + skipsize * frameIndex;
 
                                     weight[1] =
                                         (S16)(16384.0f *

@@ -3644,9 +3644,7 @@ void zNPCSleepy::ConeOfRange(F32 dt, S32 which)
 
     F32 rad2 = SQ(cfg_npc->rad_detect);
     F32 dst2 = XZDstSqToPlayer(NULL, NULL);
-    F32 pct = 0.2f + (1.0f - dst2 / rad2);
-
-    pct = MAX(0.0f, MIN(pct, 1.0f));
+    F32 pct = MAX(0.0f, MIN(0.2f + (1.0f - dst2 / rad2), 1.0f));
 
     for (i = 0; i < 3; i++)
     {

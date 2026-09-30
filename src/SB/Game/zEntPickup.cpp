@@ -1338,7 +1338,7 @@ void zEntPickup_Update(zEntPickup* ent, xScene* sc, F32 dt)
                     }
                     else if (yvel < -12.0f)
                     {
-                        yvel = yvel + 12.0f;
+                        yvel += 12.0f;
                     }
                     else
                     {
@@ -1383,7 +1383,7 @@ void zEntPickup_Update(zEntPickup* ent, xScene* sc, F32 dt)
                         distMult = 1.2f;
                     }
 
-                    distMult *= 2.0f;
+                    distMult = distMult * 2.0f;
 
                     ent->model->Mat->pos.x += distMult * (ent->vel.x * dt);
                     ent->model->Mat->pos.y += distMult * (ent->vel.y * dt);

@@ -441,8 +441,7 @@ void __deadstripped_zNPCTypeCommon_str()
 void zNPCCommon::Reset()
 {
     // non-matching: lis r4, globals@ha scheduled too early, needs to be r3
-    xScene* sc = globals.sceneCur;
-    xSceneID2Name(sc, this->id);
+    xSceneID2Name(globals.sceneCur, this->id);
 
     xNPCBasic::Reset();
 

@@ -17,13 +17,13 @@ static void MorphCommon(RpAtomic* model, RwMatrixTag* mat, S16** v_array, S16* w
 {
     U32 i;
     U32 a;
-    RwV3d* vold;
-    S32 lockMode;
-    U8 useNormals;
-    RwV3d* nold;
     S16 wa[4];
     S16* va[4];
     S32 wsum;
+    RwV3d* vold;
+    RwV3d* nold;
+    S32 lockMode;
+    U8 useNormals;
 
     s_geom = model->geometry;
     nold = NULL;
