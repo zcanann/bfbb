@@ -39,6 +39,7 @@ jobs:
         run: |
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
           cp -a /orig .
+          python tools/patch_compiler.py /compilers
 
       - name: Build and verify executable
         run: |
