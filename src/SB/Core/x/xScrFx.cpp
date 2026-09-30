@@ -143,7 +143,7 @@ void xScrFxUpdateFade(RwCamera*, F32 seconds)
     }
     else
     {
-        if (!mFade.time_passed)
+        if (mFade.time_passed == 0.0f)
         {
             t = 0.0f;
         }
@@ -247,10 +247,9 @@ void xScrFxUpdateLetterBox(RwCamera*, F32 seconds)
         }
     }
 
-    F32 o = mLetterboxO;
-
-    if (o > 0.0f)
+    if (mLetterboxO > 0.0f)
     {
+        F32 o = mLetterboxO;
         RwVideoMode video_mode;
         RwEngineGetVideoModeInfo(&video_mode, RwEngineGetCurrentVideoMode());
         iScrFxDrawBox(0.0f, 0.0f, video_mode.width, o, 0, 0, 0, sLetterBoxAlpha);

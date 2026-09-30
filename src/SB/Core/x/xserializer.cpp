@@ -84,7 +84,6 @@ void xSerial::setClient(U32 idtag)
     prepare(idtag);
 }
 
-// non-matching: register allocation
 S32 xSerial::Write(char* data, S32 elesize, S32 n)
 {
     S32 nbit;
@@ -174,50 +173,67 @@ S32 xSerial::Write(F32 data)
     return Write((char*)&data, 4, 1);
 }
 
-// non-matching: register allocation
 S32 xSerial::Read(char* buf, S32 elesize, S32 n)
 {
-    S32 nbit = n > 0 ? n * elesize * 8 : -n;
+    S32 nbit;
+    char* cptr;
+    S32* iptr;
+    S32 bitval;
+    S32 bidx;
+    S32 i;
+
+    if (n > 0)
+    {
+        nbit = n * elesize * 8;
+    }
+    else
+    {
+        nbit = -n;
+    }
 
     if (n < 0)
     {
-        S32 bidx = 0;
-        for (S32 i = 0; i < nbit; i++)
+        iptr = (S32*)buf;
+        bidx = 0;
+        for (i = 0; i < nbit; i++)
         {
-            if (rdbit() != 0)
+            bitval = rdbit();
+            if (bitval != 0)
             {
-                *(U32*)buf |= g_tbl_onbit[bidx];
+                *iptr |= g_tbl_onbit[bidx];
             }
             else
             {
-                *(U32*)buf &= g_tbl_clear[bidx];
+                *iptr &= g_tbl_clear[bidx];
             }
 
             if (++bidx == 32)
             {
                 bidx = 0;
-                buf = (char*)((U32*)buf + 1);
+                iptr++;
             }
         }
     }
     else
     {
-        S32 bidx = 0;
-        for (S32 i = 0; i < nbit; i++)
+        cptr = buf;
+        bidx = 0;
+        for (i = 0; i < nbit; i++)
         {
-            if (rdbit() != 0)
+            bitval = rdbit();
+            if (bitval != 0)
             {
-                *buf |= (char)g_tbl_onbit[bidx];
+                *cptr |= (char)g_tbl_onbit[bidx];
             }
             else
             {
-                *buf &= (char)g_tbl_clear[bidx];
+                *cptr &= (char)g_tbl_clear[bidx];
             }
 
             if (++bidx == 8)
             {
                 bidx = 0;
-                buf++;
+                cptr++;
             }
         }
     }

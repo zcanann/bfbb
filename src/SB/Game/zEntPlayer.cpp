@@ -2959,8 +2959,7 @@ void zEntPlayerSpeakStart(U32 sndid, U32, S32 anim)
             U8 filter_size;
             U8* filter = globals.player.s->talk_filter;
             filter_size = globals.player.s->talk_filter_size;
-            U32 which = xrand() >> 13;
-            player_talk.anim = filter[which % filter_size];
+            player_talk.anim = filter[(xrand() >> 13) % filter_size];
         }
         else
         {
@@ -9505,7 +9504,7 @@ inline void get_reticle_bound(xVec3& center, F32& radius)
             xBox* box = &npc->bound.box.box;
 
             center = npc->bound.box.center;
-            radius = box->upper.y - box->lower.y;
+            radius = box[0].upper.y - box[0].lower.y;
             radius *= 0.5f;
         }
         else if (type == NPC_TYPE_CHUCK)

@@ -486,7 +486,6 @@ void zNPCDuplotron::VFXOverheat(F32 dt, F32)
     static S32 idx_steam[2] = { 12, -1 };
     static S32 idx_smoke[4] = { 7, 8, 9, -1 };
 
-    S32* rc;
     xVec3 pos_emit;
     xVec3 dir_emit;
 
@@ -496,38 +495,39 @@ void zNPCDuplotron::VFXOverheat(F32 dt, F32)
         {
             static S32 skip = 5;
 
-            if (--skip <= 0)
+            if (--skip > 0)
             {
-                skip = 5;
+                return;
+            }
 
-                for (rc = idx_smoke; *rc >= 0; rc++)
+            skip = 5;
+
+            for (S32 i = 0; idx_smoke[i] >= 0; i++)
+            {
+                if (this->GetVertPos((en_mdlvert)idx_smoke[i], &pos_emit))
                 {
-                    if (this->GetVertPos((en_mdlvert)*rc, &pos_emit))
-                    {
-                        xVec3Copy(&g_parf_overheat.pos, &pos_emit);
-                        xVec3Sub(&dir_emit, &pos_emit, xEntGetCenter(this));
-                        xVec3Normalize(&dir_emit, &dir_emit);
-                        xVec3SMul(&g_parf_overheat.vel, &dir_emit,
-                                  xVec3Length(&(g_pemit_overheat->tasset)->vel));
-                    }
+                    xVec3Copy(&g_parf_overheat.pos, &pos_emit);
+                    xVec3Sub(&dir_emit, &pos_emit, xEntGetCenter(this));
+                    xVec3Normalize(&dir_emit, &dir_emit);
+                    xVec3SMul(&g_parf_overheat.vel, &dir_emit,
+                              xVec3Length(&(g_pemit_overheat->tasset)->vel));
                 }
+            }
 
-                for (rc = idx_steam; *rc >= 0; rc++)
+            for (S32 i = 0; idx_steam[i] >= 0; i++)
+            {
+                if (this->GetVertPos((en_mdlvert)idx_steam[i], &pos_emit))
                 {
-                    if (this->GetVertPos((en_mdlvert)*rc, &pos_emit))
-                    {
-                        xVec3Copy(&g_parf_steam.pos, &pos_emit);
-                        xVec3Sub(&dir_emit, &pos_emit, xEntGetCenter(this));
-                        xVec3Normalize(&dir_emit, &dir_emit);
-                        xVec3SMul(&g_parf_steam.vel, &dir_emit,
-                                  xVec3Length(&(g_pemit_steam->tasset)->vel));
-                        xParEmitterEmitCustom(g_pemit_steam, dt, &g_parf_steam);
-                    }
+                    xVec3Copy(&g_parf_steam.pos, &pos_emit);
+                    xVec3Sub(&dir_emit, &pos_emit, xEntGetCenter(this));
+                    xVec3Normalize(&dir_emit, &dir_emit);
+                    xVec3SMul(&g_parf_steam.vel, &dir_emit,
+                              xVec3Length(&(g_pemit_steam->tasset)->vel));
+                    xParEmitterEmitCustom(g_pemit_steam, dt, &g_parf_steam);
                 }
             }
         }
     }
-    return;
 }
 
 void zNPCDuplotron::VFXCycleLights(F32 dt, S32 fastpace)

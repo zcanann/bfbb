@@ -570,89 +570,91 @@ namespace
 
         switch (c.action)
         {
-        case sound_context::ACTION_PUSH:
-            break;
         case sound_context::ACTION_POP:
             if (shared.sounds.size() > 0)
             {
                 shared.sounds.pop();
             }
-            return true;
+            break;
         case sound_context::ACTION_SET:
             shared.sounds.clear();
             speak_stop();
-            break;
-        }
-
-        if (c.id == 0)
-        {
-            return true;
-        }
-
-        F32 vol = MAX(c.volume.left, c.volume.right);
-
-        shared.sounds.play(c.id, shared.volume * vol, 0.0f, 0x80, 0,
-                           (U32)&shared.stream_locked[shared.next_stream], SND_CAT_DIALOG);
-
-        shared.next_stream ^= 1;
-
-        zNPCCommon* npc = NULL;
-        xEnt* player = NULL;
-        ztalkbox& talk = *shared.active;
-
-        switch (c.speaker)
-        {
-        case 0:
-            break;
-        case 1:
-            player = (xEnt*)&globals.player.ent;
-            break;
-        case 2:
-            npc = talk.npc;
-            break;
+            // fallthrough
         default:
         {
-            xBase* obj = zSceneFindObject(c.speaker);
-            if (obj)
+            if (c.id == 0)
             {
-                if (obj->baseType == 0x2B)
+                return true;
+            }
+
+            F32 vol = MAX(c.volume.left, c.volume.right);
+
+            shared.sounds.play(c.id, shared.volume * vol, 0.0f, 0x80, 0,
+                               (U32)&shared.stream_locked[shared.next_stream], SND_CAT_DIALOG);
+
+            shared.next_stream ^= 1;
+
+            zNPCCommon* npc = NULL;
+            xEnt* player = NULL;
+            ztalkbox& talk = *shared.active;
+
+            switch (c.speaker)
+            {
+            case 0:
+                break;
+            case 1:
+                player = (xEnt*)&globals.player.ent;
+                break;
+            case 2:
+                npc = talk.npc;
+                break;
+            default:
+            {
+                xBase* obj = zSceneFindObject(c.speaker);
+                if (obj)
                 {
-                    npc = (zNPCCommon*)obj;
-                }
-                else if (obj->baseType == 0x03)
-                {
-                    player = (xEnt*)&globals.player.ent;
-                }
-                else if (obj->baseType == 0x11)
-                {
-                    U32 size = xGroupGetCount((xGroup*)&obj);
-                    for (U32 i = 0; i < size; i++)
+                    if (obj->baseType == 0x2B)
                     {
-                        xBase* entry = xGroupGetItemPtr((xGroup*)&obj, i);
-                        if (entry && entry->baseType == 0x2B)
+                        npc = (zNPCCommon*)obj;
+                    }
+                    else if (obj->baseType == 0x03)
+                    {
+                        player = (xEnt*)&globals.player.ent;
+                    }
+                    else if (obj->baseType == 0x11)
+                    {
+                        U32 i = 0;
+                        U32 size = xGroupGetCount((xGroup*)&obj);
+                        for (; i < size; i++)
                         {
-                            npc = (zNPCCommon*)entry;
-                            if (xEntIsVisible((const xEnt*)entry))
+                            xBase* entry = xGroupGetItemPtr((xGroup*)&obj, i);
+                            if (entry && entry->baseType == 0x2B)
                             {
-                                break;
+                                npc = (zNPCCommon*)entry;
+                                if (xEntIsVisible((const xEnt*)entry))
+                                {
+                                    break;
+                                }
                             }
                         }
                     }
                 }
+                break;
+            }
+            }
+
+            if (npc)
+            {
+                npc->SpeakStart(c.id, 0, c.anim - 1);
+                shared.speak_npc = npc;
+            }
+            else if (player)
+            {
+                zEntPlayerSpeakStart(c.id, 0, c.anim - 1);
+                shared.speak_player = 1;
             }
             break;
         }
-        }
-
-        if (npc)
-        {
-            npc->SpeakStart(c.id, 0, c.anim - 1);
-            shared.speak_npc = npc;
-        }
-        else if (player)
-        {
-            zEntPlayerSpeakStart(c.id, 0, c.anim - 1);
-            shared.speak_player = 1;
         }
 
         return true;
@@ -1795,12 +1797,7 @@ namespace
         {
             if (shared.cb)
             {
-                ztalkbox::answer_enum answer = (ztalkbox::answer_enum)2;
-                if (this->answer_yes)
-                {
-                    answer = (ztalkbox::answer_enum)1;
-                }
-                shared.cb->on_answer(answer);
+                shared.cb->on_answer(this->answer_yes ? ztalkbox::ANSWER_YES : ztalkbox::ANSWER_NO);
             }
 
             U32 event = 0x1C6;

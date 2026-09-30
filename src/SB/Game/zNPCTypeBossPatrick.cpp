@@ -3380,6 +3380,12 @@ S32 zNPCGoalBossPatSpin::Enter(F32 dt, void* updCtxt)
     xVec3 center;
     xVec3 cone;
     xVec3 unk;
+    F32 param1;
+    F32 param2;
+    F32 det;
+    S32 i;
+    F32 a;
+    F32 b;
 
     zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
 
@@ -3417,38 +3423,41 @@ S32 zNPCGoalBossPatSpin::Enter(F32 dt, void* updCtxt)
     back.y = 0.0f;
     xVec3Normalize(&back, &back);
 
-    F32 dVar9 = back.x * back.x + back.z * back.z;
-    F32 dVar8 = 2.0f * (cone.x * back.x + cone.z * back.z);
-    F32 dVar5 = 0.0f;
-    F32 fVar1 = (dVar8 * dVar8 - ((4.0f * dVar9) * ((cone.x * cone.x + cone.z * cone.z) - 300.0f)));
+    a = back.x * back.x + back.z * back.z;
+    b = 2.0f * (cone.x * back.x + cone.z * back.z);
+    det = b * b - 4.0f * a * ((cone.x * cone.x + cone.z * cone.z) - 300.0f);
 
-    if (fVar1 >= 0.0f)
+    if (det >= 0.0f)
     {
-        F32 root = xsqrt(fVar1);
+        det = xsqrt(det);
 
-        dVar7 = (-dVar8 + root) / (2.0f * dVar9);
-        dVar5 = (-dVar8 - root) / (2.0f * dVar9);
+        param1 = (-b + det) / (2.0f * a);
+        param2 = (-b - det) / (2.0f * a);
     }
     else
     {
-        dVar7 = dVar5;
+        param1 = 0.0f;
+        param2 = 0.0f;
     }
 
-    if (dVar5 > dVar7)
+    if (param2 > param1)
     {
-        dVar7 = dVar5;
+        param1 = param2;
     }
 
     xVec3Copy(&this->pole[0], &cone);
-    xVec3AddScaled(&this->pole[0], &back, dVar7);
+    xVec3AddScaled(&this->pole[0], &back, param1);
 
     this->pole[0].y = 0.0f;
+
     xVec3Init(&unk, this->pole[0].z, 0.0f, -this->pole[0].x);
 
-    for (S32 i = 1; i < 4; i++)
+    for (i = 1; i < 4; i++)
     {
-        xVec3SMul(&this->pole[i], &this->pole[0], icos(6.2831855f * i / 4.0f));
-        xVec3AddScaled(&this->pole[i], &unk, isin(6.2831855f * i / 4.0f));
+        det = (6.2831855f * i) / 4.0f;
+
+        xVec3SMul(&this->pole[i], &this->pole[0], icos(det));
+        xVec3AddScaled(&this->pole[i], &unk, isin(det));
     }
 
     this->currPole = 0;

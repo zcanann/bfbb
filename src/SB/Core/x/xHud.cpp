@@ -640,9 +640,10 @@ namespace xhud
     bool delay_motive_update(widget& w, motive& m, F32 dt)
     {
         m.offset += dt;
-        if (m.max_offset - m.offset < 0.0f)
+        F32 remaining = m.max_offset - m.offset;
+        if (remaining < 0.0f)
         {
-            ((motive_proc*)m.context)(w, m, dt);
+            ((motive_proc*)m.context)(w, m, remaining);
             return false;
         }
         return true;

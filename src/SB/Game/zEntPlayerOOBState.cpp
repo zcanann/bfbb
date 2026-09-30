@@ -231,10 +231,9 @@ namespace oob_state
 
         static void move_hand(F32 dt)
         {
-            F32 old_vel = shared.vel;
-
-            shared.vel = shared.accel * dt + old_vel;
-            shared.loc += shared.dir * (0.5f * shared.accel * dt * dt + old_vel * dt);
+            F32 dd = 0.5f * shared.accel * dt * dt + shared.vel * dt;
+            shared.vel += shared.accel * dt;
+            shared.loc += shared.dir * dd;
         }
 
         static void set_rect_verts(rwGameCube2DVertex*, F32, F32, F32, F32, iColor_tag c, F32 nsz,
@@ -283,8 +282,7 @@ namespace oob_state
             iDrawSetFBMSK(-1);
             zRenderState(SDRS_OOBPlayerZ);
 
-            xModelInstance* xm = ent.model;
-            while (xm != NULL)
+            for (xModelInstance* xm = ent.model; xm != NULL; xm = xm->Next)
             {
                 RpAtomic& model = *xm->Data;
 
@@ -292,8 +290,6 @@ namespace oob_state
                 {
                     iModelRender(&model, xm->Mat);
                 }
-
-                xm = xm->Next;
             }
 
             iDrawSetFBMSK(0);
@@ -303,8 +299,7 @@ namespace oob_state
             U8 alpha = 255.0f * (1.0f - shared.fade_alpha) + 0.5f;
             alpha &= 0xFF;
 
-            xm = ent.model;
-            while (xm != NULL)
+            for (xModelInstance* xm = ent.model; xm != NULL; xm = xm->Next)
             {
                 RpAtomic& model = *xm->Data;
 
@@ -314,8 +309,6 @@ namespace oob_state
                     iModelRender(&model, xm->Mat);
                     iModelResetMaterial(&model);
                 }
-
-                xm = xm->Next;
             }
 
             xLightKit_Enable(NULL, globals.currWorld);
@@ -588,8 +581,7 @@ namespace oob_state
         {
             move_hand(dt);
 
-            xVec2 in_out_path = fixed.in_loc - fixed.out_loc;
-            xVec2 norm = in_out_path.normal();
+            xVec2 norm = (fixed.in_loc - fixed.out_loc).normal();
 
             F32 projection = norm.dot(fixed.in_loc - shared.loc);
             if (projection > fixed.grab.in_stop_dist)
@@ -795,8 +787,7 @@ namespace oob_state
         {
             move_hand(dt);
 
-            xVec2 in_out_path = fixed.in_loc - fixed.out_loc;
-            xVec2 norm = in_out_path.normal();
+            xVec2 norm = (fixed.in_loc - fixed.out_loc).normal();
 
             F32 projection = norm.dot(fixed.in_loc - shared.loc);
             if (projection > fixed.grab.in_stop_dist)

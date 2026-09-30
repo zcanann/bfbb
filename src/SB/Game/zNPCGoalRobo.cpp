@@ -1057,7 +1057,7 @@ S32 zNPCGoalAlertFodBzzt::Enter(F32 dt, void* updCtxt)
 {
     zNPCFodBzzt::cnt_alerthokey++;
     this->flg_alert = 0;
-    this->flg_alert |= -(S32)(xrand() >> 0x17 & 1) + 2;
+    this->flg_alert |= (xrand() & 0x800000) ? 1 : 2;
     this->alertbzzt = FODBZZT_ALERT_NOTICE;
     this->tmr_warmup = 1.25f;
     this->len_laser = 50.0f;
@@ -1089,7 +1089,7 @@ S32 zNPCGoalAlertFodBzzt::Resume(F32 dt, void* updCtxt)
 {
     zNPCFodBzzt* npc = (zNPCFodBzzt*)(psyche->clt_owner);
     flg_alert &= 0xFFFFFFFC;
-    flg_alert = (-((xrand() >> 0x17) & 1) + 2) | flg_alert;
+    flg_alert |= (xrand() & 0x800000) ? 1 : 2;
     tmr_warmup = 1.25;
     len_laser = 50.0;
     cnt_nextlos = 0;

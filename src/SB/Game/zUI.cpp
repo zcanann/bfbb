@@ -159,20 +159,25 @@ void zUIMgr::Update(zScene* s, F32 dt)
 
 void zUIMgr::Setup(zScene* s)
 {
-    const U32 count = s->baseCount[eBaseTypeUI];
+    _zUI* ui;
+    U32 arraySize;
+    U32 count;
+    U32 i;
+
+    count = s->baseCount[eBaseTypeUI];
+    arraySize = count * sizeof(_zUI*);
 
     m_preUpdateStart = 0;
     m_preUpdateEnd = count - 1;
     m_preUpdateMax = count;
-    m_preUpdate = (_zUI**)xMemAllocSize(count * sizeof(_zUI*));
+    m_preUpdate = (_zUI**)xMemAllocSize(arraySize);
 
     m_updateStart = 0;
     m_updateEnd = count - 1;
     m_updateMax = count;
-    m_update = (_zUI**)xMemAllocSize(count * sizeof(_zUI*));
+    m_update = (_zUI**)xMemAllocSize(arraySize);
 
-    U32 i;
-    _zUI* ui = (_zUI*)s->baseList[eBaseTypeUI];
+    ui = (_zUI*)s->baseList[eBaseTypeUI];
 
     for (i = 0; i < s->baseCount[eBaseTypeUI]; i++)
     {
@@ -1539,7 +1544,7 @@ void zUI_ScenePortalInit(zScene* zsc)
 
     c = '1';
 
-    for (j = 0; j < TASK_COUNT; j++)
+    for (i = 0; i < TASK_COUNT; i++)
     {
         if (c > '9')
         {
@@ -1554,9 +1559,9 @@ void zUI_ScenePortalInit(zScene* zsc)
 
         ui = findUI(zsc, id);
 
-        for (i = 0; i < WORLD_COUNT; i++)
+        for (j = 0; j < WORLD_COUNT; j++)
         {
-            sWorld[i].task[j].uiSpatOutline = ui;
+            sWorld[j].task[i].uiSpatOutline = ui;
         }
     }
 
@@ -1564,7 +1569,7 @@ void zUI_ScenePortalInit(zScene* zsc)
 
     c = '1';
 
-    for (j = 0; j < TASK_COUNT; j++)
+    for (i = 0; i < TASK_COUNT; i++)
     {
         if (c > '9')
         {
@@ -1579,9 +1584,9 @@ void zUI_ScenePortalInit(zScene* zsc)
 
         ui = findUI(zsc, id);
 
-        for (i = 0; i < WORLD_COUNT; i++)
+        for (j = 0; j < WORLD_COUNT; j++)
         {
-            sWorld[i].task[j].uiSpatGray = ui;
+            sWorld[j].task[i].uiSpatGray = ui;
         }
     }
 
@@ -1589,7 +1594,7 @@ void zUI_ScenePortalInit(zScene* zsc)
 
     c = '1';
 
-    for (j = 0; j < TASK_COUNT; j++)
+    for (i = 0; i < TASK_COUNT; i++)
     {
         if (c > '9')
         {
@@ -1604,9 +1609,9 @@ void zUI_ScenePortalInit(zScene* zsc)
 
         ui = findUI(zsc, id);
 
-        for (i = 0; i < WORLD_COUNT; i++)
+        for (j = 0; j < WORLD_COUNT; j++)
         {
-            sWorld[i].task[j].uiSpatGold = ui;
+            sWorld[j].task[i].uiSpatGold = ui;
         }
     }
 
@@ -1614,7 +1619,7 @@ void zUI_ScenePortalInit(zScene* zsc)
 
     c = '1';
 
-    for (j = 0; j < TASK_COUNT; j++)
+    for (i = 0; i < TASK_COUNT; i++)
     {
         if (c > '9')
         {
@@ -1629,11 +1634,11 @@ void zUI_ScenePortalInit(zScene* zsc)
 
         ui = findUI(zsc, id);
 
-        for (i = 0; i < WORLD_COUNT; i++)
+        for (j = 0; j < WORLD_COUNT; j++)
         {
-            if (sWorld[i].numTasks == TASK_COUNT)
+            if (sWorld[j].numTasks == TASK_COUNT)
             {
-                sWorld[i].task[j].uiSelected = ui;
+                sWorld[j].task[i].uiSelected = ui;
             }
         }
     }
@@ -1642,7 +1647,7 @@ void zUI_ScenePortalInit(zScene* zsc)
 
     c = '1';
 
-    for (j = 0; j < TASK_COUNT_BOSS; j++)
+    for (i = 0; i < TASK_COUNT_BOSS; i++)
     {
         if (c > '9')
         {
@@ -1657,11 +1662,11 @@ void zUI_ScenePortalInit(zScene* zsc)
 
         ui = findUI(zsc, id);
 
-        for (i = 0; i < WORLD_COUNT; i++)
+        for (j = 0; j < WORLD_COUNT; j++)
         {
-            if (sWorld[i].numTasks == TASK_COUNT_BOSS)
+            if (sWorld[j].numTasks == TASK_COUNT_BOSS)
             {
-                sWorld[i].task[j].uiSelected = ui;
+                sWorld[j].task[i].uiSelected = ui;
             }
         }
     }
@@ -1670,7 +1675,7 @@ void zUI_ScenePortalInit(zScene* zsc)
 
     c = '1';
 
-    for (j = 0; j < TASK_COUNT_SMALLBOSS; j++)
+    for (i = 0; i < TASK_COUNT_SMALLBOSS; i++)
     {
         if (c > '9')
         {
@@ -1685,11 +1690,11 @@ void zUI_ScenePortalInit(zScene* zsc)
 
         ui = findUI(zsc, id);
 
-        for (i = 0; i < WORLD_COUNT; i++)
+        for (j = 0; j < WORLD_COUNT; j++)
         {
-            if (sWorld[i].numTasks == TASK_COUNT_SMALLBOSS)
+            if (sWorld[j].numTasks == TASK_COUNT_SMALLBOSS)
             {
-                sWorld[i].task[j].uiSelected = ui;
+                sWorld[j].task[i].uiSelected = ui;
             }
         }
     }

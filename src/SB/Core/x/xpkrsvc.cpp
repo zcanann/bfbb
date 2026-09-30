@@ -543,14 +543,16 @@ S32 PKR_findNextLayerToLoad(st_PACKER_READ_DATA** work_on_pkg, st_PACKER_LTOC_NO
 {
     st_PACKER_READ_DATA* tmppr;
     st_PACKER_LTOC_NODE* tmplay;
+    S32 i;
+    S32 j;
 
     *next_layer = NULL;
     if (*work_on_pkg != NULL)
     {
         tmppr = *work_on_pkg;
-        for (S32 i = 0; i < tmppr->laytoc.cnt; i++)
+        for (j = 0; j < tmppr->laytoc.cnt; j++)
         {
-            tmplay = (st_PACKER_LTOC_NODE*)tmppr->laytoc.list[i];
+            tmplay = (st_PACKER_LTOC_NODE*)tmppr->laytoc.list[j];
             if (!(tmplay->flg_ldstat & 0x2000000))
             {
                 *next_layer = tmplay;
@@ -563,14 +565,14 @@ S32 PKR_findNextLayerToLoad(st_PACKER_READ_DATA** work_on_pkg, st_PACKER_LTOC_NO
     if (*next_layer == NULL)
     {
         tmppr = g_readdatainst;
-        for (S32 i = 0; i < 16; i++, tmppr++)
+        for (i = 0; i < 16; i++, tmppr++)
         {
             if ((g_loadlock & 1 << i) == 0 || tmppr == *work_on_pkg)
             {
                 continue;
             }
 
-            for (S32 j = 0; j < tmppr->laytoc.cnt; j++)
+            for (j = 0; j < tmppr->laytoc.cnt; j++)
             {
                 tmplay = (st_PACKER_LTOC_NODE*)tmppr->laytoc.list[j];
                 if (!(tmplay->flg_ldstat & 0x2000000))

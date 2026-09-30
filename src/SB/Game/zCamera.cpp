@@ -596,12 +596,10 @@ void zCameraFreeLookSetGoals(xCamera* cam, F32 pitch_s, F32& dgoal, F32& hgoal, 
 
             if (lenValid)
             {
-                newPitchGoal =
-                    (cam->mat.at.x * zcam_playervel->x + cam->mat.at.y * zcam_playervel->y +
-                     cam->mat.at.z * zcam_playervel->z) /
-                    len;
-                newPitchGoal = 0.0f < newPitchGoal ? 0.0f : newPitchGoal;
-                newPitchGoal = -newPitchGoal;
+                newPitchGoal = -MIN(0.0f, (cam->mat.at.x * zcam_playervel->x +
+                                           cam->mat.at.y * zcam_playervel->y +
+                                           cam->mat.at.z * zcam_playervel->z) /
+                                              len);
             }
             else
             {
