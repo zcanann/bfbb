@@ -88,19 +88,29 @@ void xSerial::setClient(U32 idtag)
 S32 xSerial::Write(char* data, S32 elesize, S32 n)
 {
     S32 nbit;
+    char* cptr;
+    S32* iptr;
+    S32 bidx;
+    S32 i;
 
     if (n == 0)
     {
         return 0;
     }
 
-    nbit = n > 0 ? n * elesize * 8 : -n;
+    if (n > 0)
+    {
+        nbit = n * elesize * 8;
+    }
+    else
+    {
+        nbit = -n;
+    }
 
     if (n < 0)
     {
-        S32 bidx = 0;
-        S32 i;
-        S32* iptr = (S32*)data;
+        iptr = (S32*)data;
+        bidx = 0;
         for (i = 0; i < nbit; i++)
         {
             wrbit(*iptr & g_tbl_onbit[bidx]);
@@ -113,9 +123,8 @@ S32 xSerial::Write(char* data, S32 elesize, S32 n)
     }
     else
     {
-        S32 bidx = 0;
-        S32 i;
-        char* cptr = data;
+        cptr = data;
+        bidx = 0;
         for (i = 0; i < nbit; i++)
         {
             wrbit(*cptr & g_tbl_onbit[bidx]);
