@@ -195,7 +195,8 @@ u32 RADTimerRead(void)
 static inline void radtimebase(RADTimebase PTR4* dest)
 {
     u32 h1, l, h2;
-    /* Read TBU/TBL/TBU until the high word is stable across the low-word read. */
+    /* Read TBU/TBL/TBU until the high word is stable across the low-word read.
+     * The store base must exclude r0, which denotes a zero base address. */
     __asm__ volatile(
         "0:\n\t"
         "mftb %0, " RAD_TIMEBASE_HIGH_SPR "\n\t"
@@ -206,7 +207,7 @@ static inline void radtimebase(RADTimebase PTR4* dest)
         "stw %0, 0(%3)\n\t"
         "stw %1, 4(%3)"
         : "=&r"(h1), "=&r"(l), "=&r"(h2)
-        : "r"(dest)
+        : "b"(dest)
         : "memory"
     );
 }
