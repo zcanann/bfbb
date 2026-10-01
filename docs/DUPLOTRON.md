@@ -8204,3 +8204,21 @@ bit lengths, guards and DC preservation. All 6,911 nonempty lossy round trips
 and 27,644 early-cutoff checks also pass. Full all_source build passes, with
 no function-score regressions. Report: build/bitplane-length-report.json.
 The unit remains NonMatching; this is not a source-linked playback claim.
+
+
+## Bink lossless estimator dispatch and running total (2026-10-01)
+
+`LenBPLossless` improves from 71.37789% to 80.14396%. Moving the high-group
+case before the group case and letting branch nodes fall into the shared
+child path reaches 76.04113% for non-final planes and 79.14653% for both
+loops. Reusing the decoded entry as its child index reaches 79.32648%.
+A single running length counter, with each node-presence bit counted before
+its child or coefficient bits, reaches 80.14396% and removes the redundant
+per-node total copy.
+
+All 16,384 lossless round trips pass, including exact estimator-versus-writer
+bit lengths, guards, and DC preservation. The 6,911 nonempty lossy round
+trips and 27,644 early-cutoff checks pass as well. The full all_source build
+passes with no function-score regressions. Report:
+build/bitplane-length-dispatch-report.json. The unit remains NonMatching;
+normal DOL identity does not establish source-linked movie playback.
