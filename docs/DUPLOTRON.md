@@ -7670,3 +7670,19 @@ The IDCT checker now verifies both byte and doubled output on each of its
 word-aligned pitches; output padding is checked too. Full source build and
 normal retail DOL verification pass. The deduplicated report changes only
 this function; no score regressions.
+
+## Bink motion IDCT scratch rows (2026-10-01)
+
+`FastmIDCT8x8WithMotion` improves from 50.873135% to 55.77239%. Its final
+pass now computes even terms before odd terms and stages them through the
+same scratch-row layout as the byte-output routine. The first-pass scratch
+slots 3/4 follow that layout too. Rounding and prediction-byte addition are
+unchanged. The compiled routine is 1,028 bytes versus retail's 1,072 and
+remains NonMatching.
+
+The scalar-reference checker adds 16,384 motion blocks with generated
+prediction bytes, checking byte wrapping and row padding alongside the
+32,768 byte/doubled-output cases. All checks pass, as do full source build
+and normal retail DOL verification. The deduplicated report changes only
+this routine; no score regressions. The preceding doubled-output commit's
+CI run 36916110711 passed.

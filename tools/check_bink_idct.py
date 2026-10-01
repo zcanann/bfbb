@@ -68,9 +68,18 @@ int main(void){
   }
   fastidct8x8d(doubled+4,doublepitch,input,quant);
   if(memcmp(doubled,expected_doubled,sizeof(doubled))){printf("FAIL doubled kind=%u level=%u pitch=%u trial=%u\n",kind,level,pitch,trial);return 2;}
+  if(kind==1){
+   u8 motion[64];
+   for(u32 i=0;i<64;i++)motion[i]=(u8)(rnd()>>16);
+   for(u32 row=0;row<8;row++)for(u32 col=0;col<8;col++)
+    expected[16+row*pitch+col]=(u8)(expected[16+row*pitch+col]+motion[row*8+col]);
+   memset(actual,0xa5,sizeof(actual));
+   FastmIDCT8x8WithMotion(actual+16,pitch,input,level,motion);
+   if(memcmp(actual,expected,sizeof(actual))){printf("FAIL motion level=%u pitch=%u trial=%u\n",level,pitch,trial);return 3;}
+  }
   ++cases;
  }
- printf("PASS %u IDCT cases: byte and doubled output, scalar reference and padding\n",cases);return 0;
+ printf("PASS %u IDCT cases: byte/doubled output plus 16384 motion blocks, scalar reference and padding\n",cases);return 0;
 }
 """
 
@@ -80,7 +89,7 @@ def main():
     args = parser.parse_args()
     source = (ROOT / "src/bink/src/sdk/dct.c").read_text()
     start = source.index("#define DCT_BLOCK_WIDTH")
-    end = source.index("\nvoid FastmIDCT8x8(")
+    end = source.index("\nvoid FastFDCT8x8(")
     with tempfile.TemporaryDirectory(prefix="bink_idct_") as directory:
         path = Path(directory)
         cfile, exe = path / "check.c", path / "check.exe"
