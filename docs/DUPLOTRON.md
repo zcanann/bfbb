@@ -8166,3 +8166,24 @@ existing guard and bit-consumption checks. The full source build and normal
 retail DOL hash pass. The deduplicated report changes only ReadBPLossless;
 bitplane remains NonMatching, so the normal hash is not source-linked Bink
 playback validation. Report: build/bitplane-local-bitword-report.json.
+
+
+## Bink lossless writer depth temporaries (2026-10-01)
+
+`WriteBPLossless` improves from 78.211075% to 78.95659% by using separate
+local bit-depth temporaries for coefficient, group, and high-group scans.
+These calculations previously reused the later bitstream/plane variable.
+The coefficient-only form reached 78.23952%, adding the group scan reached
+78.24701%, and separating the high-group calculation reached 78.95659%.
+Separating root initialization regressed to 78.007484% and was rejected;
+changing header pointer/count update order also regressed and was restored.
+
+Production-source checks pass all 16,384 lossless round trips, 6,911
+nonempty lossy round trips, and 27,644 early-cutoff checks, with the existing
+bit-length, guard, and DC-preservation checks. This remains a NonMatching
+Bink unit; normal executable identity does not establish source-linked
+movie playback. Report: build/bitplane-write-depth-report.json.
+
+Full all_source build passed; normal DOL SHA-1 remains
+306526d90b48e99894c3138f5fc8f2716d9fecf6. The project-wide deduplicated
+report changes only WriteBPLossless, with no function-score regressions.
