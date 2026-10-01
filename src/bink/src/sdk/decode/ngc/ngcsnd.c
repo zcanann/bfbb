@@ -684,10 +684,11 @@ static s32 Unlock(BINKSND PTR4* snd, u32 filled_bytes)
 
     if (NGC_SND(snd)->chans == NGC_SOUND_STEREO_CHANNELS) {
         /* Split the temporary interleaved stereo buffer into the two ARQ upload buffers. */
-        u8 PTR4* left_buffer = NGC_TASK_SOURCE(task);
+        u8 PTR4* left_buffer =
+            NGC_TASK_SOURCE(NGC_LEFT_LOCK_TASK(state, state->lock_index));
         u8 PTR4* right_buffer =
-            NGC_TASK_SOURCE(NGC_RIGHT_LOCK_TASK(state, state->lock_index));
-        u8 PTR4* stereo_src = state->stereo_buffer;
+            NGC_TASK_SOURCE(NGC_RIGHT_LOCK_TASK(state, NGC_SOUND_STATE(snd)->lock_index));
+        u8 PTR4* stereo_src = NGC_SOUND_STATE(snd)->stereo_buffer;
 
         if (NGC_SND(snd)->bits == NGC_SOUND_BITS_16) {
             u32 i;
@@ -748,21 +749,22 @@ static s32 Unlock(BINKSND PTR4* snd, u32 filled_bytes)
 
         padded_bytes = NGC_ALIGN_UP(filled_bytes, NGC_SOUND_FRAME_ALIGN_MASK);
         for (i = 0; i < NGC_SND(snd)->chans; ++i) {
-            memset(NGC_TASK_SOURCE_AT(NGC_TASK_FOR_LOCK_CHANNEL(state, state->lock_index, i),
+            memset(NGC_TASK_SOURCE_AT(NGC_TASK_FOR_LOCK_CHANNEL(
+                                          state, NGC_SOUND_STATE(snd)->lock_index, i),
                                       filled_bytes),
                    0, padded_bytes - filled_bytes);
         }
         filled_bytes = padded_bytes;
     }
 
-    if (state->play_state == NGC_PLAY_STATE_STOPPED) {
-        NGC_LEFT_LOCK_TASK(state, state->lock_index)->length = filled_bytes;
-        if (state->lock_index == NGC_SOUND_LAST_LOCK_INDEX) {
-            NGC_SoundPlay(snd, 0, NGC_LEFT_LOCK_TASK(state, 0)->length);
-            NGC_SoundPlay(snd, 1, NGC_LEFT_LOCK_TASK(state, 1)->length);
+    if (NGC_SOUND_STATE(snd)->play_state == NGC_PLAY_STATE_STOPPED) {
+        NGC_LEFT_LOCK_TASK(state, NGC_SOUND_STATE(snd)->lock_index)->length = filled_bytes;
+        if (NGC_SOUND_STATE(snd)->lock_index == NGC_SOUND_LAST_LOCK_INDEX) {
+            NGC_SoundPlay(snd, 0, NGC_LEFT_LOCK_TASK(NGC_SOUND_STATE(snd), 0)->length);
+            NGC_SoundPlay(snd, 1, NGC_LEFT_LOCK_TASK(NGC_SOUND_STATE(snd), 1)->length);
         }
     } else {
-        NGC_SoundPlay(snd, state->lock_index, filled_bytes);
+        NGC_SoundPlay(snd, NGC_SOUND_STATE(snd)->lock_index, filled_bytes);
     }
 
     return 1;
