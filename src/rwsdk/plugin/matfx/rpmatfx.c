@@ -1160,19 +1160,19 @@ RpMaterial* RpMatFXMaterialSetEffects(RpMaterial* material, RpMatFXMaterialFlags
 RpMaterial* RpMatFXMaterialSetupBumpMap(RpMaterial* material, RwTexture* texture, RwFrame* frame,
                                         RwReal coef)
 {
-    if (!RpMatFXMaterialSetBumpMapTexture(material, texture))
+    if (RpMatFXMaterialSetBumpMapTexture(material, texture) == NULL)
     {
         return NULL;
     }
 
-    if (!RpMatFXMaterialSetBumpMapFrame(material, frame))
+    if (RpMatFXMaterialSetBumpMapFrame(material, frame) == NULL)
     {
         return NULL;
     }
 
-    if (!RpMatFXMaterialSetBumpMapCoefficient(material, coef))
+    if (RpMatFXMaterialSetBumpMapCoefficient(material, coef) == NULL)
     {
-        material = NULL;
+        return NULL;
     }
 
     return material;
@@ -1181,24 +1181,24 @@ RpMaterial* RpMatFXMaterialSetupBumpMap(RpMaterial* material, RwTexture* texture
 RpMaterial* RpMatFXMaterialSetupEnvMap(RpMaterial* material, RwTexture* texture, RwFrame* frame,
                                        RwBool useFrameBufferAlpha, RwReal coef)
 {
-    if (!RpMatFXMaterialSetEnvMapTexture(material, texture))
+    if (RpMatFXMaterialSetEnvMapTexture(material, texture) == NULL)
     {
         return NULL;
     }
 
-    if (!RpMatFXMaterialSetEnvMapFrame(material, frame))
+    if (RpMatFXMaterialSetEnvMapFrame(material, frame) == NULL)
     {
         return NULL;
     }
 
-    if (!RpMatFXMaterialSetEnvMapFrameBufferAlpha(material, useFrameBufferAlpha))
+    if (RpMatFXMaterialSetEnvMapFrameBufferAlpha(material, useFrameBufferAlpha) == NULL)
     {
         return NULL;
     }
 
-    if (!RpMatFXMaterialSetEnvMapCoefficient(material, coef))
+    if (RpMatFXMaterialSetEnvMapCoefficient(material, coef) == NULL)
     {
-        material = NULL;
+        return NULL;
     }
 
     return material;
@@ -1251,12 +1251,9 @@ RpMaterial* RpMatFXMaterialSetBumpMapTexture(RpMaterial* material, RwTexture* bu
         if (!dummyTextures && baseTexture != NULL)
         {
             dummyTextures = (RwRasterGetWidth(RwTextureGetRaster(baseTexture)) == 0);
-            if (dummyTextures)
-            {
-                return material;
-            }
         }
 
+        if (!dummyTextures)
         {
             RwChar bumpedName[rwTEXTUREBASENAMELENGTH] = { 0 };
             RwTexDictionary* dict;

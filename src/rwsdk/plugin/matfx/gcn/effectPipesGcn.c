@@ -859,15 +859,12 @@ void* _rpGCMatFXRenderCallback(void* object, RxGameCubePipeData* pipeData)
     return object;
 }
 
-RwBool _rpMatFXPipelinesCreate(void)
+static RxPipeline* MatFXAtomicPipelineCreate(void)
 {
     RxPipeline* pipe;
     RxPipeline* lpipe;
     RxNodeDefinition* nodeDef;
     RxPipelineNode* node;
-
-    _rpGCMatFXVtxFmtNBT = RpGameCubeVtxFmtCreate();
-    RpGameCubeVtxFmtSetNormal(_rpGCMatFXVtxFmtNBT, rpF32, TRUE);
 
     pipe = RxPipelineCreate();
     if (pipe != NULL)
@@ -888,15 +885,22 @@ RwBool _rpMatFXPipelinesCreate(void)
             _rxGameCubeAllInOneSetInstanceCallBack(node, _rpGCMatFXAtomicInstanceCallBack);
             _rxGameCubeAllInOneSetReinstanceCallBack(node, _rpGCMatFXAtomicReinstanceCallBack);
             RxGameCubeAllInOneSetRenderCallBack(node, _rpGCMatFXRenderCallback);
+
+            return pipe;
         }
-        else
-        {
-            _rxPipelineDestroy(pipe);
-            pipe = NULL;
-        }
+
+        _rxPipelineDestroy(pipe);
     }
 
-    _RpMatFXAtomicPipe = pipe;
+    return NULL;
+}
+
+static RxPipeline* MatFXWorldSectorPipelineCreate(void)
+{
+    RxPipeline* pipe;
+    RxPipeline* lpipe;
+    RxNodeDefinition* nodeDef;
+    RxPipelineNode* node;
 
     pipe = RxPipelineCreate();
     if (pipe != NULL)
@@ -915,15 +919,23 @@ RwBool _rpMatFXPipelinesCreate(void)
 
             _rxGameCubeAllInOneSetInstanceCallBack(node, _rpGCMatFXSectorInstanceCallBack);
             RxGameCubeAllInOneSetRenderCallBack(node, _rpGCMatFXRenderCallback);
+
+            return pipe;
         }
-        else
-        {
-            _rxPipelineDestroy(pipe);
-            pipe = NULL;
-        }
+
+        _rxPipelineDestroy(pipe);
     }
 
-    _RpMatFXWorldSectorPipe = pipe;
+    return NULL;
+}
+
+RwBool _rpMatFXPipelinesCreate(void)
+{
+    _rpGCMatFXVtxFmtNBT = RpGameCubeVtxFmtCreate();
+    RpGameCubeVtxFmtSetNormal(_rpGCMatFXVtxFmtNBT, rpF32, TRUE);
+
+    _RpMatFXAtomicPipe = MatFXAtomicPipelineCreate();
+    _RpMatFXWorldSectorPipe = MatFXWorldSectorPipelineCreate();
 
     return TRUE;
 }
