@@ -1430,29 +1430,7 @@ decode_node:
                 node_ptr = node_ptr + 1;
                 break;
             case BP_READ_TREE_COEFF_NODE:
-                nz_coeff[nz_coeff_count] = BP_READ_TREE_INDEX(node);
-                /* Deferred coeff nodes already carry their scan index. */
-                word = bitbuf;
-                nz_coeff_count = nz_coeff_count + 1;
-                if (bitcount != 0) {
-                    bitcount = bitcount - 1;
-                    bitbuf = bitbuf >> 1;
-                } else {
-                    word = *words;
-                    bitcount = BP_WORD_TOP_BIT;
-                    words = words + 1;
-                    bitbuf = word >> 1;
-                }
-                delta = scan;
-                if ((word & BP_BIT_MASK) == 0) {
-                    delta = mask;
-                }
-                dest[(u32)BP_READ_TREE_INDEX(node)] = (s8)delta;
-                if (masks_used++ == masks_count) {
-                    goto done;
-                }
-                *node_ptr = BP_READ_TREE_EMPTY_ENTRY;
-                goto next_node;
+                goto deferred_coeff;
             default:
                 goto next_node;
             }
@@ -1615,6 +1593,30 @@ after_2:
                 *--next_node_ptr = BP_READ_TREE_COEFF(node);
             }
             goto node_done;
+deferred_coeff:
+            nz_coeff[nz_coeff_count] = BP_READ_TREE_INDEX(node);
+            /* Deferred coeff nodes already carry their scan index. */
+            word = bitbuf;
+            nz_coeff_count = nz_coeff_count + 1;
+            if (bitcount != 0) {
+                bitcount = bitcount - 1;
+                bitbuf = bitbuf >> 1;
+            } else {
+                word = *words;
+                bitcount = BP_WORD_TOP_BIT;
+                words = words + 1;
+                bitbuf = word >> 1;
+            }
+            delta = scan;
+            if ((word & BP_BIT_MASK) == 0) {
+                delta = mask;
+            }
+            dest[(u32)BP_READ_TREE_INDEX(node)] = (s8)delta;
+            if (masks_used++ == masks_count) {
+                goto done;
+            }
+            *node_ptr = BP_READ_TREE_EMPTY_ENTRY;
+            goto next_node;
 next_node:
             node_ptr = node_ptr + 1;
 node_done:

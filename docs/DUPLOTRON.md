@@ -7793,3 +7793,17 @@ Bitplane remains NonMatching and is not source-linked into the normal DOL.
 Rejected experiments: spelling refinement as explicit sample-minus-mask or
 sample-plus-mask lowered readlossy to 65.57428%; moving the high-node case
 before the group-node case left it unchanged at 65.71619%. Neither is retained.
+
+
+## Bink deferred-coefficient layout (2026-10-01)
+
+Moving readlossy's deferred-coefficient path after the child paths, with the
+switch dispatching to its label, follows retail's block order and improves
+its deduplicated match from 67.3592% to 73.266075%. No decoding operations
+change. The full report comparison changes only this function.
+
+All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
+early-cutoff invariant checks pass. Full all-source compilation and the normal
+retail DOL SHA-1 check pass, including after integrating staging's 92251cd16
+RenderWare compiler/linking update. Bink bitplane remains NonMatching; these
+checks do not establish source-linked Bink playback.
