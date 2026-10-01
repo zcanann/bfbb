@@ -59,13 +59,13 @@ struct rpMatFXStateCache
     RwBool tevDefault;
 };
 
-RpGameCubeVtxFmt* _rpGCMatFXVtxFmtNBT;
-static RxPipeline* _RpMatFXAtomicPipe;
-static RxPipeline* _RpMatFXWorldSectorPipe;
-
-static RxGameCubeAllInOneCallBack DefaultSectorInstanceCallBack;
-static RxGameCubeAllInOneCallBack DefaultAtomicReinstanceCallBack;
 static RxGameCubeAllInOneCallBack DefaultAtomicInstanceCallBack;
+static RxGameCubeAllInOneCallBack DefaultAtomicReinstanceCallBack;
+static RxGameCubeAllInOneCallBack DefaultSectorInstanceCallBack;
+
+static RxPipeline* _RpMatFXWorldSectorPipe;
+static RxPipeline* _RpMatFXAtomicPipe;
+RpGameCubeVtxFmt* _rpGCMatFXVtxFmtNBT;
 
 static rpMatFXStateCache FXStateCache;
 

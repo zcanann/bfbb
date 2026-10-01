@@ -1071,7 +1071,7 @@ config.libs = [
             Object(NonMatching, "rwsdk/plugin/collis/ctgeom.c"),
             Object(Matching, "rwsdk/plugin/collis/ctworld.c"),
             Object(Matching, "rwsdk/plugin/collis/ctbsp.c"),
-            Object(NonMatching, "rwsdk/plugin/collis/rpcollis.c"),
+            Object(Matching, "rwsdk/plugin/collis/rpcollis.c"),
         ],
     ),
     RenderWareLib(
@@ -1084,7 +1084,7 @@ config.libs = [
     RenderWareLib(
         "rpmatfx",
         [
-            Object(NonMatching, "rwsdk/plugin/matfx/gcn/effectPipesGcn.c"),
+            Object(Matching, "rwsdk/plugin/matfx/gcn/effectPipesGcn.c"),
             Object(Matching, "rwsdk/plugin/matfx/gcn/multiTexGcnData.c"),
             Object(NonMatching, "rwsdk/plugin/matfx/gcn/multiTexGcnPipe.c"),
             Object(Matching, "rwsdk/plugin/matfx/gcn/multiTexGcn.c"),

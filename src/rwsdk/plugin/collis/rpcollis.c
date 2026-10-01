@@ -33,11 +33,11 @@ extern RwInt32 _rpCollBSPTreeStreamGetSize(RpCollBSPTree* tree);
 extern RpCollBSPTree* _rpCollBSPTreeStreamWrite(const RpCollBSPTree* tree, RwStream* stream);
 extern RpCollBSPTree* _rpCollBSPTreeStreamRead(RpCollBSPTree* tree, RwStream* stream);
 
-RwInt32 _rpCollisionNumInstances;
-RwInt32 _rpCollisionGlobalsOffset;
-RwInt32 _rpCollisionAtomicDataOffset;
-RwInt32 _rpCollisionGeometryDataOffset;
 RwInt32 _rpCollisionWorldSectorDataOffset;
+RwInt32 _rpCollisionGeometryDataOffset;
+RwInt32 _rpCollisionAtomicDataOffset;
+RwInt32 _rpCollisionGlobalsOffset;
+RwInt32 _rpCollisionNumInstances;
 
 #define RPCOLLISIONDATA(_object, _offset) (*RWPLUGINOFFSET(RpCollisionData*, _object, _offset))
 
