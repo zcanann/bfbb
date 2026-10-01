@@ -1057,7 +1057,7 @@ config.libs = [
         "rpcollis",
         [
             Object(NonMatching, "rwsdk/plugin/collis/ctgeom.c"),
-            Object(NonMatching, "rwsdk/plugin/collis/ctworld.c"),
+            Object(Matching, "rwsdk/plugin/collis/ctworld.c"),
             Object(Matching, "rwsdk/plugin/collis/ctbsp.c"),
             Object(NonMatching, "rwsdk/plugin/collis/rpcollis.c"),
         ],
@@ -1210,7 +1210,7 @@ config.libs = [
             Object(Matching, "rwsdk/driver/gcn/dlconvrt.c"),
             Object(NonMatching, "rwsdk/driver/gcn/dldevice.c"),
             Object(NonMatching, "rwsdk/driver/gcn/dlraster.c"),
-            Object(NonMatching, "rwsdk/driver/gcn/dlrendst.c"),
+            Object(Matching, "rwsdk/driver/gcn/dlrendst.c"),
             Object(Matching, "rwsdk/driver/gcn/dlsprite.c"),
             Object(NonMatching, "rwsdk/driver/gcn/dltexdic.c"),
             Object(Matching, "rwsdk/driver/gcn/dltextur.c"),

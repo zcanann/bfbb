@@ -345,6 +345,138 @@ static RpWorld* WorldForAllLineWorldSectorIntersections(RpWorld* world, RwLine* 
     return world;
 }
 
+/* Walk the world BSP, calling back for each world sector the box overlaps */
+static RpWorld* WorldForAllBoxWorldSectorIntersections(RpWorld* world, RwBBox* box,
+                                                       RpWorldSectorCallBack callBack, void* data)
+{
+    RpSector* sectorStack[rpCOLLISWORLDMAXBSPDEPTH];
+    RpSector* sector = world->rootSector;
+    RwInt32 nStack = 0;
+
+    while (nStack >= 0)
+    {
+        if (sector->type < 0)
+        {
+            if (!callBack((RpWorldSector*)sector, data))
+            {
+                return world;
+            }
+
+            sector = sectorStack[nStack--];
+        }
+        else
+        {
+            RpPlaneSector* plane = (RpPlaneSector*)sector;
+
+            if (*(RwReal*)((RwUInt8*)&box->inf + plane->type) < plane->leftValue)
+            {
+                sector = plane->leftSubTree;
+
+                if (*(RwReal*)((RwUInt8*)&box->sup + plane->type) >= plane->rightValue)
+                {
+                    sectorStack[++nStack] = plane->rightSubTree;
+                }
+            }
+            else
+            {
+                sector = plane->rightSubTree;
+            }
+        }
+    }
+
+    return world;
+}
+
+/* Walk the world BSP, calling back for each world sector the sphere overlaps.
+ * Unreferenced in this game, so the linker strips it from the DOL; its
+ * existence and position are evidenced by the .sdata2 constant numbering
+ * (retail's 0.0 literal is created here) and by the RenderWare symbol
+ * layout of other GameCube titles. The body is a reconstruction. */
+static RpWorld* WorldForAllSphereWorldSectorIntersections(RpWorld* world, RwSphere* sphere,
+                                                          RpWorldSectorCallBack callBack,
+                                                          void* data)
+{
+    RpSector* sectorStack[rpCOLLISWORLDMAXBSPDEPTH];
+    RpSector* sector = world->rootSector;
+    RwInt32 nStack = 0;
+
+    while (nStack >= 0)
+    {
+        if (sector->type < 0)
+        {
+            RpWorldSector* worldSector = (RpWorldSector*)sector;
+            RwBBox* bbox = &worldSector->boundingBox;
+            RwReal dist2 = (RwReal)0;
+            RwReal d;
+
+            /* Squared distance from the sphere centre to the sector's bounding box */
+            if (sphere->center.x < bbox->inf.x)
+            {
+                d = sphere->center.x - bbox->inf.x;
+                dist2 += d * d;
+            }
+            else if (sphere->center.x > bbox->sup.x)
+            {
+                d = sphere->center.x - bbox->sup.x;
+                dist2 += d * d;
+            }
+
+            if (sphere->center.y < bbox->inf.y)
+            {
+                d = sphere->center.y - bbox->inf.y;
+                dist2 += d * d;
+            }
+            else if (sphere->center.y > bbox->sup.y)
+            {
+                d = sphere->center.y - bbox->sup.y;
+                dist2 += d * d;
+            }
+
+            if (sphere->center.z < bbox->inf.z)
+            {
+                d = sphere->center.z - bbox->inf.z;
+                dist2 += d * d;
+            }
+            else if (sphere->center.z > bbox->sup.z)
+            {
+                d = sphere->center.z - bbox->sup.z;
+                dist2 += d * d;
+            }
+
+            if (dist2 <= sphere->radius * sphere->radius)
+            {
+                if (!callBack(worldSector, data))
+                {
+                    return world;
+                }
+            }
+
+            sector = sectorStack[nStack--];
+        }
+        else
+        {
+            RpPlaneSector* plane = (RpPlaneSector*)sector;
+            RwReal centre = *(RwReal*)((RwUInt8*)&sphere->center + plane->type);
+
+            if (centre - sphere->radius < plane->leftValue)
+            {
+                sector = plane->leftSubTree;
+
+                if (centre + sphere->radius >= plane->rightValue)
+                {
+                    sectorStack[++nStack] = plane->rightSubTree;
+                }
+            }
+            else
+            {
+                sector = plane->rightSubTree;
+            }
+        }
+    }
+
+    return world;
+}
+
 static RwInt32 LeafNodeForAllLinePolyIntersections(RwInt32 numPolygons, RwInt32 firstPolygon,
                                                    void* data)
 {
@@ -541,48 +673,6 @@ static RpWorldSector* WorldSectorForAllBoxedPrimitivePolyIntersections(RpWorldSe
 
     return sector;
 }
-/* Walk the world BSP, calling the leaf callback for the world sectors the box overlaps */
-static void WorldForAllBoxSectors(RpWorld* world, RpCollisWorldBoxData* isData)
-{
-    RpSector* stack[rpCOLLISWORLDMAXBSPDEPTH];
-    RpSector* sector = world->rootSector;
-    RwInt32 nStack = 0;
-
-    while (nStack >= 0)
-    {
-        if (sector->type < 0)
-        {
-            sector = (RpSector*)WorldSectorForAllBoxedPrimitivePolyIntersections(
-                (RpWorldSector*)sector, isData);
-
-            if (!sector)
-            {
-                break;
-            }
-
-            sector = stack[nStack--];
-        }
-        else
-        {
-            RpPlaneSector* plane = (RpPlaneSector*)sector;
-
-            if (*(RwReal*)((RwUInt8*)&isData->box.inf + plane->type) < plane->leftValue)
-            {
-                sector = plane->leftSubTree;
-
-                if (*(RwReal*)((RwUInt8*)&isData->box.sup + plane->type) >= plane->rightValue)
-                {
-                    stack[++nStack] = plane->rightSubTree;
-                }
-            }
-            else
-            {
-                sector = plane->rightSubTree;
-            }
-        }
-    }
-}
-
 RpWorld* RpCollisionWorldForAllIntersections(RpWorld* world, RpIntersection* intersection,
                                              RpIntersectionCallBackWorldTriangle callBack,
                                              void* data)
@@ -646,7 +736,9 @@ RpWorld* RpCollisionWorldForAllIntersections(RpWorld* world, RpIntersection* int
         isData.primitiveData = &sphereData;
         isData.cbData = &cbData;
 
-        WorldForAllBoxSectors(world, &isData);
+        WorldForAllBoxWorldSectorIntersections(world, &isData.box,
+                                               WorldSectorForAllBoxedPrimitivePolyIntersections,
+                                               &isData);
 
         return world;
     }
@@ -659,7 +751,9 @@ RpWorld* RpCollisionWorldForAllIntersections(RpWorld* world, RpIntersection* int
         isData.leafCallBack = LeafNodeForAllBoxPolyIntersections;
         isData.cbData = &cbData;
 
-        WorldForAllBoxSectors(world, &isData);
+        WorldForAllBoxWorldSectorIntersections(world, &isData.box,
+                                               WorldSectorForAllBoxedPrimitivePolyIntersections,
+                                               &isData);
 
         return world;
     }

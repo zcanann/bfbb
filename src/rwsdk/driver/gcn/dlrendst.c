@@ -28,8 +28,8 @@ static GXBlendFactor _RwDlBlendConvTable[12] = {
 
 _rwDlStateCache _RwDlStateCache;
 
-RwRaster* _RwDlRasterWhite;
 RwTexture* _RwDlTexture;
+RwRaster* _RwDlRasterWhite;
 
 void _rwDlRenderStateOpen(void)
 {
