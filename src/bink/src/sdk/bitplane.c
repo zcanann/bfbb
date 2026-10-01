@@ -1166,6 +1166,7 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     s32 coeff;
     s32 sign;
     s32 i;
+    s32 active_count;
     s32 count;
     u32 maxbits;
     u32 level;
@@ -1259,8 +1260,8 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     BP_STREAM_BITS(bits) = bit_buf;
     if (bit_count >= BP_BITS_PER_WORD) {
         *BP_STREAM_CUR(bits) = bit_buf;
-        bit_buf = BP_STREAM_BITLEN(bits) - BP_BITS_PER_WORD;
         BP_STREAM_CUR(bits) = BP_STREAM_CUR(bits) + 1;
+        bit_buf = BP_STREAM_BITLEN(bits) - BP_BITS_PER_WORD;
         BP_STREAM_BITLEN(bits) = bit_buf;
         if (bit_buf != 0) {
             BP_STREAM_BITS(bits) = lenbits >> (BP_LOSSY_LEVEL_BITS - bit_buf);
@@ -1299,16 +1300,16 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     cur = roots;
     next_node = roots + BP_LOSSY_ROOT_NODES;
     bit_mask = (u16)BP_LEVEL_MASK(maxbits);
-    i = 0;
+    active_count = 0;
     level = maxbits;
     for (; level != 0; level = BP_NEXT_LEVEL(level)) {
         count = 0;
         /* Coefficients introduced on earlier planes emit one residual bit here. */
-        if (count < i) {
+        if (count < active_count) {
             do {
                 PUT_BP_BIT(bits, (active_absvals[count] & bit_mask) != 0);
                 count++;
-            } while (count < i);
+            } while (count < active_count);
         }
 
         insert = cur;
@@ -1327,72 +1328,72 @@ next_lossy_node:
 
                     switch (BP_TREE_ENTRY_KIND(node_entry)) {
                     case BP_TREE_HIGH_NODE:
-                        lenbits = BP_TREE_ENTRY_INDEX(node_entry);
-                        *cur = BP_TREE_HIGH_GROUP_ENTRY(hi_groups[lenbits >> (BP_TREE_HIGH_GROUP_SHIFT - BP_TREE_INDEX_SHIFT)], lenbits);
+                        node_entry = BP_TREE_ENTRY_INDEX(node_entry);
+                        *cur = BP_TREE_HIGH_GROUP_ENTRY(hi_groups[node_entry >> (BP_TREE_HIGH_GROUP_SHIFT - BP_TREE_INDEX_SHIFT)], node_entry);
                         goto decoded_lossy_write_children;
                     case BP_TREE_GROUP_NODE:
-                        lenbits = BP_TREE_ENTRY_INDEX(node_entry);
                         count = (u32)BP_TREE_ENTRY_GROUP(node_entry);
-                        *cur = BP_TREE_BRANCH_ENTRY(groups[count], lenbits);
-                        *next_node = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD1_INDEX], lenbits, BP_TREE_CHILD1_BASE);
-                        *++next_node = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD2_INDEX], lenbits, BP_TREE_CHILD2_BASE);
-                        *++next_node = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD3_INDEX], lenbits, BP_TREE_CHILD3_BASE);
+                        node_entry = BP_TREE_ENTRY_INDEX(node_entry);
+                        *cur = BP_TREE_BRANCH_ENTRY(groups[count], node_entry);
+                        *next_node = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD1_INDEX], node_entry, BP_TREE_CHILD1_BASE);
+                        *++next_node = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD2_INDEX], node_entry, BP_TREE_CHILD2_BASE);
+                        *++next_node = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD3_INDEX], node_entry, BP_TREE_CHILD3_BASE);
                         ++next_node;
                         break;
                     case BP_TREE_BRANCH_NODE:
                         *cur = BP_TREE_EMPTY_ENTRY;
                         cur++;
-                        lenbits = BP_TREE_ENTRY_INDEX(node_entry);
+                        node_entry = BP_TREE_ENTRY_INDEX(node_entry);
 decoded_lossy_write_children:
-                        PUT_BP_BIT(bits, lens[lenbits] != level);
-                        if (lens[lenbits] != level) {
+                        PUT_BP_BIT(bits, lens[node_entry] != level);
+                        if (lens[node_entry] != level) {
                             --insert;
-                            *insert = BP_TREE_COEFF_ENTRY(lens[lenbits], lenbits);
+                            *insert = BP_TREE_COEFF_ENTRY(lens[node_entry], node_entry);
                         } else {
-                            active_absvals[i] = absvals[lenbits];
-                            i++;
-                            PUT_BP_BIT(bits, (ordered[lenbits] & BP_SIGN_BIT) != 0);
+                            active_absvals[active_count] = absvals[node_entry];
+                            active_count++;
+                            PUT_BP_BIT(bits, (ordered[node_entry] & BP_SIGN_BIT) != 0);
                         }
 
-                        lenbits++;
-                        PUT_BP_BIT(bits, lens[lenbits] != level);
-                        entry = lens[lenbits];
+                        node_entry++;
+                        PUT_BP_BIT(bits, lens[node_entry] != level);
+                        entry = lens[node_entry];
                         if (entry != level) {
                             --insert;
-                            *insert = BP_TREE_COEFF_ENTRY(entry, lenbits);
+                            *insert = BP_TREE_COEFF_ENTRY(entry, node_entry);
                         } else {
-                            active_absvals[i] = absvals[lenbits];
-                            i++;
-                            PUT_BP_BIT(bits, (ordered[lenbits] & BP_SIGN_BIT) != 0);
+                            active_absvals[active_count] = absvals[node_entry];
+                            active_count++;
+                            PUT_BP_BIT(bits, (ordered[node_entry] & BP_SIGN_BIT) != 0);
                         }
 
-                        lenbits++;
-                        PUT_BP_BIT(bits, lens[lenbits] != level);
-                        entry = lens[lenbits];
+                        node_entry++;
+                        PUT_BP_BIT(bits, lens[node_entry] != level);
+                        entry = lens[node_entry];
                         if (entry != level) {
                             --insert;
-                            *insert = BP_TREE_COEFF_ENTRY(entry, lenbits);
+                            *insert = BP_TREE_COEFF_ENTRY(entry, node_entry);
                         } else {
-                            active_absvals[i] = absvals[lenbits];
-                            i++;
-                            PUT_BP_BIT(bits, (ordered[lenbits] & BP_SIGN_BIT) != 0);
+                            active_absvals[active_count] = absvals[node_entry];
+                            active_count++;
+                            PUT_BP_BIT(bits, (ordered[node_entry] & BP_SIGN_BIT) != 0);
                         }
 
-                        lenbits++;
-                        PUT_BP_BIT(bits, lens[lenbits] != level);
-                        entry = lens[lenbits];
+                        node_entry++;
+                        PUT_BP_BIT(bits, lens[node_entry] != level);
+                        entry = lens[node_entry];
                         if (entry != level) {
                             --insert;
-                            *insert = BP_TREE_COEFF_ENTRY(entry, lenbits);
+                            *insert = BP_TREE_COEFF_ENTRY(entry, node_entry);
                         } else {
-                            active_absvals[i] = absvals[lenbits];
-                            i++;
-                            PUT_BP_BIT(bits, (ordered[lenbits] & BP_SIGN_BIT) != 0);
+                            active_absvals[active_count] = absvals[node_entry];
+                            active_count++;
+                            PUT_BP_BIT(bits, (ordered[node_entry] & BP_SIGN_BIT) != 0);
                         }
                         break;
                     case BP_TREE_COEFF_NODE:
-                        active_absvals[i] = absvals[BP_TREE_ENTRY_INDEX(node_entry)];
-                        i++;
+                        active_absvals[active_count] = absvals[BP_TREE_ENTRY_INDEX(node_entry)];
+                        active_count++;
                         PUT_BP_BIT(bits, (ordered[BP_TREE_ENTRY_INDEX(node_entry)] & BP_SIGN_BIT) != 0);
                         *cur = BP_TREE_EMPTY_ENTRY;
                         goto next_lossy_node;

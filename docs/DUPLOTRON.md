@@ -8319,3 +8319,24 @@ No other local function scores change; the integration adds only the
 expected UserDataListCopy improvement from 98.519554% to 100%. Report:
 build/bitplane-lossy-depth-integrated-report.json. Bitplane remains
 NonMatching, so normal DOL identity is not source-linked playback evidence.
+
+
+## Bink lossy writer decoded-node reuse (2026-10-01)
+
+WriteBPLossy improves from 88.521965% to 92.63972%. Separating the
+initial scan index from the active-coefficient count reaches 88.724075%;
+advancing the stream cursor before the header's bit-count update reaches
+88.7522%. Reusing node_entry after decoding its packed index gives the
+remaining gain. The group-node path extracts its group index before
+overwriting the packed entry. This preserves all child traversal and
+coefficient emission order without introducing assembly.
+
+All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and
+27,644 early-cutoff checks pass. The full all_source build and retail DOL
+SHA-1 pass. Final report build/bitplane-lossy-node-final-report.json shows
+only WriteBPLossy changing against the previous integrated report.
+An intermediate build reported check_hide_entities at 91.04651%; rebuilding
+its unchanged source returned 100%. A diagnostic explicit-null-comparison
+edit was discarded; no cutscene source change is retained. The cause of
+that transient build discrepancy is not established. Bitplane remains
+NonMatching; normal DOL identity is not source-linked playback evidence.
