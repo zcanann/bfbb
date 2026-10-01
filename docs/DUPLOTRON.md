@@ -7912,3 +7912,17 @@ All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
 early-cutoff invariant checks pass. Full all-source compilation and normal
 retail DOL SHA-1 validation pass. Bitplane remains NonMatching, with Bink
 source linking and playback still outstanding.
+
+
+## Bink negative-mask lifetime (2026-10-01)
+
+Giving the negative mask its own variable instead of reusing the coefficient
+scan counter improves readlossy from 95.50776% to 95.585365%. The full
+deduplicated report changes only this function. Rejected trials: explicit
+outer-loop gotos 91.649666%; shared refinement-result temporary 95.34146%;
+signed level count and widened mask both unchanged at 95.50776%.
+
+All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
+early-cutoff invariant checks pass. Full all-source compilation and normal
+retail DOL SHA-1 validation pass. Bitplane remains NonMatching; these checks
+do not establish source-linked Bink playback.

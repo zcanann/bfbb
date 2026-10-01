@@ -1329,6 +1329,7 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count)
     u8 node;
     s32 delta;
     s32 scan;
+    s32 negative_mask;
     BPBITSTYPE word;
     u8 PTR4* next_node_ptr;
     u8 PTR4* roots;
@@ -1393,7 +1394,7 @@ next_refinement:
         }
         node_ptr = next_node_ptr;
         if (node_ptr < tree_end_ptr) {
-            scan = -mask;
+            negative_mask = -mask;
 read_node:
             node = *node_ptr;
             if (node == BP_READ_TREE_EMPTY_ENTRY) {
@@ -1480,7 +1481,7 @@ push_0:
                 }
             }
 negative_0:
-            delta = scan;
+            delta = negative_mask;
             goto store_0;
 positive_0:
             delta = mask;
@@ -1530,7 +1531,7 @@ push_1:
                 }
             }
 negative_1:
-            delta = scan;
+            delta = negative_mask;
             goto store_1;
 positive_1:
             delta = mask;
@@ -1579,7 +1580,7 @@ push_2:
                 }
             }
 negative_2:
-            delta = scan;
+            delta = negative_mask;
             goto store_2;
 positive_2:
             delta = mask;
@@ -1628,7 +1629,7 @@ push_3:
                 }
             }
 negative_3:
-            delta = scan;
+            delta = negative_mask;
             goto store_3;
 positive_3:
             delta = mask;
@@ -1661,7 +1662,7 @@ deferred_coeff:
                 }
             }
 negative_4:
-            delta = scan;
+            delta = negative_mask;
             goto store_4;
 positive_4:
             delta = mask;
