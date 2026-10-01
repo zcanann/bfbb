@@ -373,11 +373,13 @@ config.linker_version = "GC/2.0p1"
 # tools/patch_compiler.py. Derived from the stock compiler during the build.
 PATCHED_COMPILER = "GC/2.0p1a"
 
-# The RenderWare SDK's compiler: GC/2.0p1a plus one change -- clause V's
-# literal-kill walk does not fire on stores to compiler temporaries. See
-# tools/patch_compiler_rw.py and docs/RW_RESIDUE.md ("What would close the
-# rest", item 1). Derived from GC/2.0p1a during the build.
-RW_COMPILER = "GC/2.0p1b"
+# The RenderWare SDK's compiler, modelling the unarchived compiler retail RW
+# was built with (see docs/RW_RESIDUE.md): GC/2.0p1a plus (1) clause V's
+# literal-kill walk does not fire on stores to compiler temporaries (2.0p1b),
+# and (2) GC/2.5's loop-invariant hoisting of loads through pointer-to-const
+# and its large-loop FP-load veto (2.0p1c). Derived from GC/2.0p1a during the
+# build by tools/patch_compiler_rw.py.
+RW_COMPILER = "GC/2.0p1c"
 
 
 # Helper function for Dolphin libraries
@@ -1081,7 +1083,7 @@ config.libs = [
         "rpmatfx",
         [
             Object(NonMatching, "rwsdk/plugin/matfx/gcn/effectPipesGcn.c"),
-            Object(Matching, "rwsdk/plugin/matfx/gcn/multiTexGcnData.c", mw_version="GC/2.5"),
+            Object(Matching, "rwsdk/plugin/matfx/gcn/multiTexGcnData.c"),
             Object(NonMatching, "rwsdk/plugin/matfx/gcn/multiTexGcnPipe.c"),
             Object(Matching, "rwsdk/plugin/matfx/gcn/multiTexGcn.c"),
             Object(NonMatching, "rwsdk/plugin/matfx/multiTex.c"),
@@ -1201,7 +1203,7 @@ config.libs = [
             Object(Matching, "rwsdk/os/gcn/osintf.c"),
             Object(Matching, "rwsdk/src/babbox.c"),
             Object(Matching, "rwsdk/src/babincam.c"),
-            Object(NonMatching, "rwsdk/src/babinfrm.c"),
+            Object(Matching, "rwsdk/src/babinfrm.c"),
             Object(NonMatching, "rwsdk/src/babintex.c"),
             Object(NonMatching, "rwsdk/src/bacamera.c"),
             Object(Matching, "rwsdk/src/badevice.c"),

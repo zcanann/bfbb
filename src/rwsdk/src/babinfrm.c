@@ -49,11 +49,10 @@ RwInt32 RwFrameRegisterPluginStream(RwUInt32 pluginID, RwPluginDataChunkReadCall
 RwBool _rwFrameListFindFrame(const rwFrameList* frameList, const RwFrame* frame, RwInt32* npIndex)
 {
     RwInt32 i;
-    RwFrame** frames = frameList->frames;
 
     for (i = 0; i < frameList->numFrames; i++)
     {
-        if (frames[i] == frame)
+        if (frameList->frames[i] == frame)
         {
             *npIndex = i;
             return TRUE;

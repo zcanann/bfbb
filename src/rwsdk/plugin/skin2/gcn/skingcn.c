@@ -236,12 +236,9 @@ void _rpSkinMatrixBlendUpdate(RwMatrix* matDst, const RpSkin* skin, const RwMatr
     {
         if (hierarchy->flags & rpHANIMHIERARCHYNOMATRICES)
         {
+            RwUInt32 i;
             RwMatrix invLTM;
             const RwMatrix* pInvLTM;
-            const RwUInt8* usedBoneList;
-            const RwMatrix* invBoneToSkinMat;
-            RwUInt32 numUsedBones;
-            RwUInt32 i;
 
             if (skin->vertexMaps.maxWeights > 1)
             {
@@ -254,37 +251,28 @@ void _rpSkinMatrixBlendUpdate(RwMatrix* matDst, const RpSkin* skin, const RwMatr
                 pInvLTM = &_RwDlInvCamLTM;
             }
 
-            usedBoneList = skin->boneData.usedBoneList;
-            invBoneToSkinMat = skin->boneData.invBoneToSkinMat;
-            numUsedBones = skin->boneData.numUsedBones;
-
-            for (i = 0; i < numUsedBones; i++)
+            for (i = 0; i < skin->boneData.numUsedBones; i++)
             {
                 RwMatrix tmpMatrix;
 
                 rwMatrixInitialize(&tmpMatrix, 0);
 
-                RwMatrixMultiply(&tmpMatrix, &invBoneToSkinMat[usedBoneList[i]],
-                                 RwFrameGetLTM(hierarchy->pNodeInfo[usedBoneList[i]].pFrame));
+                RwMatrixMultiply(&tmpMatrix, &skin->boneData.invBoneToSkinMat[skin->boneData.usedBoneList[i]],
+                                 RwFrameGetLTM(hierarchy->pNodeInfo[skin->boneData.usedBoneList[i]].pFrame));
 
-                RwMatrixMultiply(&matDst[usedBoneList[i]], &tmpMatrix, pInvLTM);
+                RwMatrixMultiply(&matDst[skin->boneData.usedBoneList[i]], &tmpMatrix, pInvLTM);
             }
         }
         else if (hierarchy->flags & rpHANIMHIERARCHYLOCALSPACEMATRICES)
         {
             if (skin->vertexMaps.maxWeights > 1)
             {
-                const RwUInt8* usedBoneList = skin->boneData.usedBoneList;
-                const RwMatrix* invBoneToSkinMat = skin->boneData.invBoneToSkinMat;
-                RwUInt32 numUsedBones = skin->boneData.numUsedBones;
                 RwUInt32 i;
 
-                for (i = 0; i < numUsedBones; i++)
+                for (i = 0; i < skin->boneData.numUsedBones; i++)
                 {
-                    RwUInt32 bone = usedBoneList[i];
-
-                    RwMatrixMultiply(&matDst[bone], &invBoneToSkinMat[bone],
-                                     &hierarchy->pMatrixArray[bone]);
+                    RwMatrixMultiply(&matDst[skin->boneData.usedBoneList[i]], &skin->boneData.invBoneToSkinMat[skin->boneData.usedBoneList[i]],
+                                     &hierarchy->pMatrixArray[skin->boneData.usedBoneList[i]]);
                 }
             }
             else
