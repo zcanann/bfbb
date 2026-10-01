@@ -78,14 +78,6 @@ extern void _rwPalQuantTerm(void* pQuant);
 static RwModuleInfo textureModule;
 static RwTexDictionary* dummyTexDict;
 
-static RwFreeList _rwTextureFreeList;
-static RwFreeList _rwTexDictionaryFreeList;
-
-static RwInt32 _rwTextureFreeListBlockSize = 128;
-static RwInt32 _rwTextureFreeListPreallocBlocks = 1;
-static RwInt32 _rwTexDictionaryFreeListBlockSize = 5;
-static RwInt32 _rwTexDictionaryFreeListPreallocBlocks = 1;
-
 RwPluginRegistry textureTKList = { sizeof(RwTexture),       sizeof(RwTexture),      0, 0,
                                    (RwPluginRegEntry*)NULL, (RwPluginRegEntry*)NULL };
 
@@ -1205,6 +1197,14 @@ void* _rwTextureClose(void* instance, RwInt32 offset, RwInt32 size)
 
     return instance;
 }
+
+static RwInt32 _rwTextureFreeListBlockSize = 128;
+static RwInt32 _rwTextureFreeListPreallocBlocks = 1;
+static RwInt32 _rwTexDictionaryFreeListBlockSize = 5;
+static RwInt32 _rwTexDictionaryFreeListPreallocBlocks = 1;
+
+static RwFreeList _rwTextureFreeList;
+static RwFreeList _rwTexDictionaryFreeList;
 
 void* _rwTextureOpen(void* instance, RwInt32 offset, RwInt32 size)
 {

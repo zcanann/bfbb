@@ -1058,7 +1058,7 @@ config.libs = [
         [
             Object(NonMatching, "rwsdk/plugin/collis/ctgeom.c"),
             Object(NonMatching, "rwsdk/plugin/collis/ctworld.c"),
-            Object(NonMatching, "rwsdk/plugin/collis/ctbsp.c"),
+            Object(Matching, "rwsdk/plugin/collis/ctbsp.c"),
             Object(NonMatching, "rwsdk/plugin/collis/rpcollis.c"),
         ],
     ),
@@ -1066,7 +1066,7 @@ config.libs = [
         "rphanim",
         [
             Object(NonMatching, "rwsdk/plugin/hanim/stdkey.c"),
-            Object(NonMatching, "rwsdk/plugin/hanim/rphanim.c"),
+            Object(Matching, "rwsdk/plugin/hanim/rphanim.c"),
         ],
     ),
     RenderWareLib(
@@ -1203,7 +1203,7 @@ config.libs = [
             Object(Matching, "rwsdk/src/baraster.c"),
             Object(NonMatching, "rwsdk/src/baresamp.c"),
             Object(Matching, "rwsdk/src/basync.c"),
-            Object(NonMatching, "rwsdk/src/batextur.c"),
+            Object(Matching, "rwsdk/src/batextur.c"),
             Object(Matching, "rwsdk/src/batypehf.c"),
             Object(NonMatching, "rwsdk/driver/common/palquant.c"),
             Object(Matching, "rwsdk/driver/gcn/dl2drend.c"),
@@ -1211,7 +1211,7 @@ config.libs = [
             Object(NonMatching, "rwsdk/driver/gcn/dldevice.c"),
             Object(NonMatching, "rwsdk/driver/gcn/dlraster.c"),
             Object(NonMatching, "rwsdk/driver/gcn/dlrendst.c"),
-            Object(NonMatching, "rwsdk/driver/gcn/dlsprite.c"),
+            Object(Matching, "rwsdk/driver/gcn/dlsprite.c"),
             Object(NonMatching, "rwsdk/driver/gcn/dltexdic.c"),
             Object(Matching, "rwsdk/driver/gcn/dltextur.c"),
             Object(Matching, "rwsdk/driver/gcn/dltoken.c"),
