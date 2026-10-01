@@ -13,14 +13,20 @@
 #define RwRGBAFromRwRGBARealMacro(_o, _i)                                                          \
     MACRO_START                                                                                    \
     {                                                                                              \
-        (_o)->red = (RwUInt8)(((RwReal)255.0) * (_i)->red + ((RwReal)0.5));                        \
-        (_o)->green = (RwUInt8)(((RwReal)255.0) * (_i)->green + ((RwReal)0.5));                    \
-        (_o)->blue = (RwUInt8)(((RwReal)255.0) * (_i)->blue + ((RwReal)0.5));                      \
-        (_o)->alpha = (RwUInt8)(((RwReal)255.0) * (_i)->alpha + ((RwReal)0.5));                    \
+        RwInt32 quantize;                                                                          \
+                                                                                                   \
+        quantize = (RwInt32)(((_i)->red * (RwReal)255.0) + (RwReal)0.5);                           \
+        (_o)->red = (RwUInt8)quantize;                                                             \
+        quantize = (RwInt32)(((_i)->green * (RwReal)255.0) + (RwReal)0.5);                         \
+        (_o)->green = (RwUInt8)quantize;                                                           \
+        quantize = (RwInt32)(((_i)->blue * (RwReal)255.0) + (RwReal)0.5);                          \
+        (_o)->blue = (RwUInt8)quantize;                                                            \
+        quantize = (RwInt32)(((_i)->alpha * (RwReal)255.0) + (RwReal)0.5);                         \
+        (_o)->alpha = (RwUInt8)quantize;                                                           \
     }                                                                                              \
     MACRO_STOP
 
-typedef void (*PTankGameCubeVtxRenderFunc)(RwInt32 numPrims, RwUInt32 flags, RpPTankData* data);
+typedef void (*PTankGameCubeVtxRenderFunc)(RwUInt16 numPrims, RwUInt32 flags, RpPTankData* data);
 
 static const GXColor OpaqueWhite = { 255, 255, 255, 255 };
 static const GXColor OpaqueBlack = { 0, 0, 0, 255 };
@@ -82,7 +88,7 @@ static void PTankGameCubeVtxRender(RpAtomic* atomic, RxGameCubePipeData* pipeDat
         RwUInt8 vtxFmtTypeConvTable[5] = { 4, 6, 5, 7, 0 };
         RwUInt8 vtxFmtNormConvTable[5] = { 0, 6, 0, 14, 0 };
 
-        posGQR = vtxFmtTypeConvTable[vtxFmt->pos] | (vtxFmt->posFrac << 8);
+        posGQR = (vtxFmt->posFrac << 8) | vtxFmtTypeConvTable[vtxFmt->pos];
         posGQR |= posGQR << 16;
 
         normGQR = vtxFmtTypeConvTable[vtxFmt->norm] | (vtxFmtNormConvTable[vtxFmt->norm] << 8);

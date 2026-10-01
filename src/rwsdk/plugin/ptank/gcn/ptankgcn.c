@@ -2,12 +2,13 @@
 #include <rwsdk/rpworld.h>
 #include <rwsdk/rpptank.h>
 
+#include "rwsdk/world/pipe/p2/gcn/gcpipe.h"
+
 #define rwID_PTANKPLUGIN 0x12F
 
 typedef void* (*RxGameCubeAllInOneInstanceCallBack)(void* object, void* pipeData);
 typedef void* (*RxGameCubeAllInOneReinstanceCallBack)(void* object, void* pipeData);
-typedef void (*RxGameCubeAllInOneRenderCallBack)(RwResEntry* repEntry, void* object,
-                                                 RwUInt8 type, RwUInt32 flags);
+typedef void* (*RxGameCubeAllInOneRenderCallBack)(void* object, RxGameCubePipeData* pipeData);
 
 extern RxPipelineNode* RxGameCubeAllInOneSetRenderCallBack(RxPipelineNode* node,
                                                            RxGameCubeAllInOneRenderCallBack cb);
@@ -17,8 +18,7 @@ extern RxPipelineNode*
 _rxGameCubeAllInOneSetReinstanceCallBack(RxPipelineNode* node,
                                          RxGameCubeAllInOneReinstanceCallBack cb);
 
-extern void _rxPTankGameCubeRenderCallBack(RwResEntry* repEntry, void* object, RwUInt8 type,
-                                           RwUInt32 flags);
+extern void* _rxPTankGameCubeRenderCallBack(void* object, RxGameCubePipeData* pipeData);
 
 RxPipeline* _rxPTankGameCubeRenderPipeline;
 

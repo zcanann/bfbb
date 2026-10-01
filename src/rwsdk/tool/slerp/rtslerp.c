@@ -129,11 +129,12 @@ void RtQuatSetupSlerpCache(RtQuat* qpFrom, RtQuat* qpTo, RtQuatSlerpCache* sCach
 
     if (!sCache->nearlyZeroOm)
     {
-        RwReal sinOm;
+        RwReal omega;
         RwReal cosecOm;
 
-        RwSinMinusPiToPiMacro(sinOm, sCache->omega);
-        cosecOm = (RwReal)1 / sinOm;
+        omega = sCache->omega;
+        RwSinMinusPiToPiMacro(cosecOm, omega);
+        cosecOm = (RwReal)1 / cosecOm;
 
         RtQuatScale(&sCache->raFrom, &sCache->raFrom, cosecOm);
         RtQuatScale(&sCache->raTo, &sCache->raTo, cosecOm);
