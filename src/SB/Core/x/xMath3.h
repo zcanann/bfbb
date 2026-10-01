@@ -195,4 +195,28 @@ inline void xMat3x3Rot(xMat3x3* m, const xVec3* a, F32 t)
     xMat3x3RotC(m, a->x, a->y, a->z, t);
 }
 
+inline void xQuatCopy(xQuat* a, const xQuat* b)
+{
+    a->s = b->s;
+    a->v.x = b->v.x;
+    a->v.y = b->v.y;
+    a->v.z = b->v.z;
+}
+
+inline U32 xQuatEquals(const xQuat* a, const xQuat* b)
+{
+    return (a->s == b->s) && xVec3Equals(&a->v, &b->v);
+}
+
+inline void xQuatFlip(xQuat* a, const xQuat* b)
+{
+    a->s = -b->s;
+    xVec3Inv(&a->v, &b->v);
+}
+
+inline F32 xQuatDot(const xQuat* a, const xQuat* b)
+{
+    return xVec3Dot(&a->v, &b->v) + a->s * b->s;
+}
+
 #endif

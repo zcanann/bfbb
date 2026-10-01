@@ -1231,6 +1231,15 @@ static void xEntMotionDebugWrite(const xEntMotion* xem)
     }
 }
 
+inline char* xbtoa(U32 param)
+{
+    if (param != 0)
+    {
+        return "true ";
+    }
+    return "false";
+}
+
 static void xEntMotionDebugDraw(const xEntMotion* xem)
 {
     if (xem->owner && xem->target)
@@ -1295,51 +1304,6 @@ static void xEntMotionDebugDraw(const xEntMotion* xem)
     }
 }
 
-void xEntMotionDebugDraw(const xEntMotion*);
-
-void xQuatCopy(xQuat* a, const xQuat* b)
-{
-    a->s = b->s;
-    a->v.x = b->v.x;
-    a->v.y = b->v.y;
-    a->v.z = b->v.z;
-}
-
-U32 xVec3Equals(const xVec3* a, const xVec3* b)
-{
-    // Epsilon test with epsilon of... 0.0f lol.
-    return xabs(a->x - b->x) <= 0.0f && xabs(a->y - b->y) <= 0.0f && xabs(a->z - b->z) <= 0.0f;
-}
-
-U32 xQuatEquals(const xQuat* a, const xQuat* b)
-{
-    return (a->s == b->s) && xVec3Equals(&a->v, &b->v);
-}
-
-void xQuatFlip(xQuat* a, const xQuat* b)
-{
-    a->s = -b->s;
-    xVec3Inv(&a->v, &b->v);
-}
-
-F32 xQuatDot(const xQuat* a, const xQuat* b)
-{
-    return xVec3Dot(&a->v, &b->v) + a->s * b->s;
-}
-
-void xDrawSetColor(iColor_tag color)
-{
-}
-
-char* xbtoa(U32 param)
-{
-    if (param != 0)
-    {
-        return "true ";
-    }
-    return "false";
-}
-
 static void xEntMotionDebugIPad(xEntMotion* xem)
 {
     if (gDebugPad->pressed & 0x20)
@@ -1377,4 +1341,10 @@ static void xEntMotionDebugIPad(xEntMotion* xem)
             xEntMotionStop(xem);
         }
     }
+}
+
+inline U32 xVec3Equals(const xVec3* a, const xVec3* b)
+{
+    // Epsilon test with epsilon of... 0.0f lol.
+    return xabs(a->x - b->x) <= 0.0f && xabs(a->y - b->y) <= 0.0f && xabs(a->z - b->z) <= 0.0f;
 }

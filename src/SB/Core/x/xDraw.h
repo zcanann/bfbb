@@ -16,4 +16,8 @@ void xDrawSphere2(const xVec3* pos, F32 r, U32 lod);
 void xDrawOBB(const xBox* b, const xMat4x3* m);
 void xDrawBox(const xBox* b);
 
+inline void xDrawSetColor(iColor_tag color)
+{
+}
+
 #endif

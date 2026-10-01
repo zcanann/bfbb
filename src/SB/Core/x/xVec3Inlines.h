@@ -106,4 +106,6 @@ inline void xVec3SubFrom(xVec3* o, const xVec3* v)
     o->z -= v->z;
 }
 
+U32 xVec3Equals(const xVec3* a, const xVec3* b);
+
 #endif
