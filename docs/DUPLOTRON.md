@@ -7656,3 +7656,17 @@ can leave experiment objects current in Ninja. Touch restored sources;
 this validation explicitly rebuilt the reverted Bink sources and compared
 a rebuilt pre-change DCT baseline. The local trial harness now touches its
 restored source automatically.
+
+## Bink doubled IDCT scratch rows (2026-10-01)
+
+`fastidct8x8d` improves from 63.101215% to 67.41296% with the same staged
+scratch-row structure as the byte-output routine. First-pass slots 3/4 now
+use the corresponding retail layout. Quantization, rounding, and pixel
+packing remain unchanged. Compiled size is 1,000 bytes versus retail's
+988, so this remains NonMatching.
+
+The IDCT checker now verifies both byte and doubled output on each of its
+32,768 cases. Doubled pixels are compared as big-endian packed words using
+word-aligned pitches; output padding is checked too. Full source build and
+normal retail DOL verification pass. The deduplicated report changes only
+this function; no score regressions.

@@ -42,7 +42,8 @@ int main(void){
  for(u32 kind=0;kind<2;kind++)for(u32 level=0;level<16;level++)
  for(u32 p=0;p<4;p++)for(u32 trial=0;trial<256;trial++){
   s16 input[64];s32 work[64],x[8],y[8];
-  u8 actual[544],expected[544];u32 pitch=pitches[p];
+  u8 actual[544],expected[544];u32 pitch=pitches[p],doublepitch=(pitch*2+3)&~3u;
+  u32 doubled[520],expected_doubled[520];
   const s32* quant=kind?ifimquantlevels8[level]:ifiquantlevels8[level];
   for(u32 i=0;i<64;i++)input[i]=(s16)((rnd()>>16)%65-32);
   if(trial%4==0)for(u32 i=8;i<64;i++)input[i]=0;
@@ -58,9 +59,18 @@ int main(void){
   }
   fastidct8x8(actual+16,pitch,input,quant);
   if(memcmp(actual,expected,sizeof(actual))){printf("FAIL kind=%u level=%u pitch=%u trial=%u\n",kind,level,pitch,trial);return 1;}
+  memset(doubled,0xa5,sizeof(doubled));memset(expected_doubled,0xa5,sizeof(expected_doubled));
+  for(u32 row=0;row<8;row++)for(u32 pair=0;pair<4;pair++){
+   u32 left=expected[16+row*pitch+pair*2],right=expected[16+row*pitch+pair*2+1];
+   u32 word=(left<<24)|(left<<16)|(right<<8)|right;
+   expected_doubled[4+(row*2)*(doublepitch/4)+pair]=word;
+   expected_doubled[4+(row*2+1)*(doublepitch/4)+pair]=word;
+  }
+  fastidct8x8d(doubled+4,doublepitch,input,quant);
+  if(memcmp(doubled,expected_doubled,sizeof(doubled))){printf("FAIL doubled kind=%u level=%u pitch=%u trial=%u\n",kind,level,pitch,trial);return 2;}
   ++cases;
  }
- printf("PASS %u IDCT cases: scalar reference and output padding\n",cases);return 0;
+ printf("PASS %u IDCT cases: byte and doubled output, scalar reference and padding\n",cases);return 0;
 }
 """
 
@@ -70,7 +80,7 @@ def main():
     args = parser.parse_args()
     source = (ROOT / "src/bink/src/sdk/dct.c").read_text()
     start = source.index("#define DCT_BLOCK_WIDTH")
-    end = source.index("\nstatic void fastidct8x8d(")
+    end = source.index("\nvoid FastmIDCT8x8(")
     with tempfile.TemporaryDirectory(prefix="bink_idct_") as directory:
         path = Path(directory)
         cfile, exe = path / "check.c", path / "check.exe"
