@@ -7,6 +7,15 @@
 
 #include <rwcore.h>
 
+inline iColor_tag& iColor_tag::operator=(const iColor_tag& rhs)
+{
+    this->r = rhs.r;
+    this->g = rhs.g;
+    this->b = rhs.b;
+    this->a = rhs.a;
+    return *this;
+}
+
 struct xfont
 {
     U32 id;

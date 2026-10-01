@@ -46,6 +46,21 @@ static zShrapnelInitTable sShrapnelTable[6] = {
     { NULL, NULL, 0 }
 };
 
+// Layout-only references reproduce the literal order left by stripped code.
+// The original stripped routines are unknown; these stubs do not enter the DOL.
+void __deadstripped_zShrapnel_constants(F32* values)
+{
+    values[0] = 0.5f;
+    values[1] = 0.1f;
+    values[2] = 1.0f;
+    values[3] = 0.0f;
+    values[4] = -1.0f;
+    values[5] = 1e-5f;
+    values[6] = 4.0f;
+    values[7] = 2.0f;
+    values[8] = 3.0f;
+}
+
 zFrag* zFrag_Alloc(zFragType type)
 {
     if (sNumActiveFrags == 150)
@@ -1204,6 +1219,11 @@ void zFrag_LightningManager(F32 dt)
         }
         frag = next;
     }
+}
+
+F64 __deadstripped_zShrapnel_double()
+{
+    return 3.0;
 }
 
 void zFrag_DefaultSoundUpdate(zFrag* frag, F32 param_2)

@@ -7436,3 +7436,24 @@ reference precedes the model-extension strings. No split changes are needed.
 
 All 67 functions are in retail order, the full source tree compiles, and the
 linked DOL reproduces SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6.
+
+## Debug and shrapnel source linking (2026-10-01)
+
+`xDebug` now links from source with 16/16 functions, 808 code bytes and
+16 data bytes. The explicit iColor_tag copy-assignment definition moves to
+xFont.h, retaining its declaration in iColor.h, so the emitted helper joins
+the font group before NSCREENY/NSCREENX. Removing the explicit assignment
+also fixes that order, but changes aggregate-copy compilation in xFont and
+Robo; that trial was rejected. The retained change preserves the exact
+assignment body and its user-defined-copy behavior.
+
+`zShrapnel` now links from source with 37/37 functions, 11,424 code bytes and
+21,208 data bytes. `-sym on` separates its weak helpers from the main code.
+The remaining 200 linked bytes came from shared literal order. Two labelled
+dead-stripped stubs establish the early float constants and the double 3.0
+reference before sound-update constants. These are layout scaffolding, not
+claimed recovered routines.
+
+Both promotions reproduce the retail DOL SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6; no split or compiler-patch changes
+are needed.
