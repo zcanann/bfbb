@@ -166,45 +166,36 @@ static RwV3d* VectorMultPoint(RwV3d* pointsOut, const RwV3d* pointsIn, RwInt32 n
                               const RwMatrix* matrix)
 {
     RwV3d* result = pointsOut;
-    const RwReal rightX = matrix->right.x;
-    const RwReal rightY = matrix->right.y;
-    const RwReal rightZ = matrix->right.z;
-    const RwReal upX = matrix->up.x;
-    const RwReal upY = matrix->up.y;
-    const RwReal upZ = matrix->up.z;
-    const RwReal atX = matrix->at.x;
-    const RwReal atY = matrix->at.y;
-    const RwReal atZ = matrix->at.z;
-    const RwReal posX = matrix->pos.x;
-    const RwReal posY = matrix->pos.y;
-    const RwReal posZ = matrix->pos.z;
+    RwReal z;
+    RwReal y;
+    RwReal x;
     RwReal outX;
     RwReal outY;
     RwReal outZ;
 
     while (--numPoints >= 0)
     {
-        RwReal x = pointsIn->x;
-        RwReal y = pointsIn->y;
-        RwReal z = pointsIn->z;
+        x = pointsIn->x;
+        y = pointsIn->y;
+        z = pointsIn->z;
 
         pointsIn++;
 
-        outX = x * rightX;
-        outY = x * rightY;
-        outZ = x * rightZ;
+        outX = x * matrix->right.x;
+        outY = x * matrix->right.y;
+        outZ = x * matrix->right.z;
 
-        outX += y * upX;
-        outY += y * upY;
-        outZ += y * upZ;
+        outX += y * matrix->up.x;
+        outY += y * matrix->up.y;
+        outZ += y * matrix->up.z;
 
-        outX += z * atX;
-        outY += z * atY;
-        outZ += z * atZ;
+        outX += z * matrix->at.x;
+        outY += z * matrix->at.y;
+        outZ += z * matrix->at.z;
 
-        pointsOut->x = outX + posX;
-        pointsOut->y = outY + posY;
-        pointsOut->z = outZ + posZ;
+        pointsOut->x = outX + matrix->pos.x;
+        pointsOut->y = outY + matrix->pos.y;
+        pointsOut->z = outZ + matrix->pos.z;
 
         pointsOut++;
     }
@@ -216,38 +207,32 @@ static RwV3d* VectorMultVector(RwV3d* pointsOut, const RwV3d* pointsIn, RwInt32 
                                const RwMatrix* matrix)
 {
     RwV3d* result = pointsOut;
-    const RwReal rightX = matrix->right.x;
-    const RwReal rightY = matrix->right.y;
-    const RwReal rightZ = matrix->right.z;
-    const RwReal upX = matrix->up.x;
-    const RwReal upY = matrix->up.y;
-    const RwReal upZ = matrix->up.z;
-    const RwReal atX = matrix->at.x;
-    const RwReal atY = matrix->at.y;
-    const RwReal atZ = matrix->at.z;
+    RwReal z;
+    RwReal y;
+    RwReal x;
     RwReal outX;
     RwReal outY;
     RwReal outZ;
 
     while (--numPoints >= 0)
     {
-        RwReal x = pointsIn->x;
-        RwReal y = pointsIn->y;
-        RwReal z = pointsIn->z;
+        x = pointsIn->x;
+        y = pointsIn->y;
+        z = pointsIn->z;
 
         pointsIn++;
 
-        outX = x * rightX;
-        outY = x * rightY;
-        outZ = x * rightZ;
+        outX = x * matrix->right.x;
+        outY = x * matrix->right.y;
+        outZ = x * matrix->right.z;
 
-        outX += y * upX;
-        outY += y * upY;
-        outZ += y * upZ;
+        outX += y * matrix->up.x;
+        outY += y * matrix->up.y;
+        outZ += y * matrix->up.z;
 
-        pointsOut->x = outX + z * atX;
-        pointsOut->y = outY + z * atY;
-        pointsOut->z = outZ + z * atZ;
+        pointsOut->x = outX + z * matrix->at.x;
+        pointsOut->y = outY + z * matrix->at.y;
+        pointsOut->z = outZ + z * matrix->at.z;
 
         pointsOut++;
     }

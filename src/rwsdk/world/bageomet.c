@@ -728,8 +728,8 @@ RwUInt32 RpGeometryStreamGetSize(const RpGeometry* geometry)
 const RpGeometry* RpGeometryStreamWrite(const RpGeometry* geometry, RwStream* stream)
 {
     RpGeometryChunkInfo geom;
+    RwUInt32 sizeTC;
     RwInt32 i;
-    RwUInt32 flags;
 
     if (!RwStreamWriteChunkHeader(stream, rwID_GEOMETRY, RpGeometryStreamGetSize(geometry)))
     {
@@ -755,8 +755,6 @@ const RpGeometry* RpGeometryStreamWrite(const RpGeometry* geometry, RwStream* st
 
     if (!(geometry->flags & rpGEOMETRYNATIVE) && geometry->numVertices)
     {
-        RwUInt32 sizeTC;
-
         if (geometry->flags & rpGEOMETRYPRELIT)
         {
             if (!RwStreamWrite(stream, geometry->preLitLum, geometry->numVertices * sizeof(RwRGBA)))
@@ -802,15 +800,13 @@ const RpGeometry* RpGeometryStreamWrite(const RpGeometry* geometry, RwStream* st
         }
     }
 
-    flags = geometry->flags & rpGEOMETRYNATIVE;
-
     for (i = 0; i < geometry->numMorphTargets; i++)
     {
         _rpMorphTarget kf;
 
         kf.boundingSphere = geometry->morphTarget[i].boundingSphere;
 
-        if (flags)
+        if (geometry->flags & rpGEOMETRYNATIVE)
         {
             kf.pointsPresent = FALSE;
             kf.normalsPresent = FALSE;
