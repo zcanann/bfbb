@@ -8129,3 +8129,24 @@ All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
 early-cutoff invariant checks pass. Full all-source compilation and normal
 retail DOL SHA-1 validation pass. Bitplane remains NonMatching; source-linked
 Bink playback remains unverified.
+
+
+## Supplement streak interval data match (2026-10-01)
+
+`zNPCSupplement` now matches all 95 functions (21,784 code bytes) and all
+200,680 data bytes, up from 99.84852% data. The two tossed-jelly streak
+intervals used the decimal literal `0.025f` (0x3ccccccd), while retail uses
+0x3cccccce. Expressing the interval as `1.5f * (1.0f / 60.0f)` reproduces
+that rounding; the same routine already uses a 60 Hz interval for another
+streak. This is a plausible frame-based expression, not proven original
+source. A direct `1.0f / 40.0f` still produces the wrong bit pattern.
+
+The unit remains NonMatching for linking. A trial source promotion failed
+at 0x801815F4: retail expects NPCC_StreakCreate, but source places
+StreakInfo::Defaults there. The object has additional definition-order
+differences to resolve before promotion. No split or compiler edits were
+retained. The deduplicated report is build/supplement-frequency-report.json.
+
+Validation: full all_source build passed and the normal link reproduces retail
+DOL SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6. The deduplicated
+report has no function-score changes across the project.

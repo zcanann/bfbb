@@ -575,7 +575,7 @@ void NPCC_MakeStreakInfo(en_npcstreak styp, StreakInfo* info)
         info->rgba_left.g = 0x40;
         info->rgba_left.b = 0xf0;
         info->rgba_left.a = 0xf0;
-        info->freq = 0.025f;
+        info->freq = 1.5f * (1.0f / 60.0f);
         break;
     case NPC_STRK_TOSSEDJELLYBLUE:
         info->rgba_right.r = 0x40;
@@ -586,7 +586,7 @@ void NPCC_MakeStreakInfo(en_npcstreak styp, StreakInfo* info)
         info->rgba_left.g = 0x40;
         info->rgba_left.b = 0xf0;
         info->rgba_left.a = 0xf0;
-        info->freq = 0.025f;
+        info->freq = 1.5f * (1.0f / 60.0f);
         break;
     }
 }
