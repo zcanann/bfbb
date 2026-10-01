@@ -2492,63 +2492,60 @@ static s32 smallestrect(BINKRECT PTR4* out, const u8 PTR4* mask, s32 pitch, cons
     s32 width_blocks;
     s32 height_blocks;
     const u8 PTR4* rect_mask;
-    const u8 PTR4* top_scan;
-    s32 top_blocks;
-    s32 left_blocks;
+    const u8 PTR4* scan;
     s32 row;
     s32 col;
     s32 remaining_height;
     s32 remaining_width;
-    s32 result;
 
     rect_mask = BINK_MASK_RECT_START(mask, pitch, rect);
     height_blocks = BINK_MASK_RECT_BLOCK_HEIGHT(rect);
     width_blocks = BINK_MASK_RECT_BLOCK_WIDTH(rect);
-    result = 0;
 
-    top_scan = rect_mask;
+    scan = rect_mask;
 
-    for (top_blocks = 0; top_blocks < height_blocks; ++top_blocks) {
+    for (row = 0; row < height_blocks; ++row) {
         for (col = 0; col < width_blocks; ++col) {
-            if (top_scan[col] != 0) {
+            if (scan[col] != 0) {
                 goto found_top;
             }
         }
 
-        top_scan += pitch;
+        scan += pitch;
     }
 
-    goto done;
+    return 0;
 
 found_top:
-    height_blocks -= top_blocks;
-    out->Top = rect->Top + BINK_MASK_BLOCK_PIXELS(top_blocks);
-    rect_mask += top_blocks * pitch;
-    remaining_height = BINK_MASK_TRIMMED_PIXELS(rect->Height, top_blocks);
+    height_blocks -= row;
+    rect_mask += pitch * row;
+    row = BINK_MASK_BLOCK_PIXELS(row);
+    out->Top = row + rect->Top;
+    remaining_height = rect->Height - row;
     out->Height = remaining_height;
 
     if (remaining_height > 1) {
-        s32 bottom_blocks = 0;
-        const u8 PTR4* scan = rect_mask + (height_blocks - 1) * pitch;
+        scan = rect_mask + (height_blocks - 1) * pitch;
+        row = 0;
 
-        while (bottom_blocks < height_blocks) {
+        while (row < height_blocks) {
             for (col = 0; col < width_blocks; ++col) {
                 if (scan[col] != 0) {
                     goto found_bottom;
                 }
             }
 
-            ++bottom_blocks;
+            ++row;
             scan -= pitch;
         }
 
 found_bottom:
-        height_blocks -= bottom_blocks;
-        out->Height = BINK_MASK_TRIMMED_PIXELS(remaining_height, bottom_blocks);
+        height_blocks -= row;
+        out->Height = BINK_MASK_TRIMMED_PIXELS(remaining_height, row);
     }
 
-    for (left_blocks = 0; left_blocks < width_blocks; ++left_blocks) {
-        const u8 PTR4* scan = rect_mask + left_blocks;
+    for (col = 0; col < width_blocks; ++col) {
+        scan = rect_mask + col;
 
         for (row = 0; row < height_blocks; ++row) {
             if (*scan != 0) {
@@ -2560,18 +2557,18 @@ found_bottom:
     }
 
 found_left:
-    width_blocks -= left_blocks;
-    rect_mask += left_blocks;
-    out->Left = rect->Left + BINK_MASK_BLOCK_PIXELS(left_blocks);
-    remaining_width = BINK_MASK_TRIMMED_PIXELS(rect->Width, left_blocks);
+    width_blocks -= col;
+    rect_mask += col;
+    col = BINK_MASK_BLOCK_PIXELS(col);
+    out->Left = col + rect->Left;
+    remaining_width = rect->Width - col;
     out->Width = remaining_width;
 
     if (remaining_width > 1) {
-        s32 first_right = width_blocks - 1;
-        s32 right_blocks;
+        --width_blocks;
 
-        for (right_blocks = first_right; right_blocks >= 0; --right_blocks) {
-            const u8 PTR4* scan = rect_mask + right_blocks;
+        for (col = width_blocks; col >= 0; --col) {
+            scan = rect_mask + col;
 
             for (row = 0; row < height_blocks; ++row) {
                 if (*scan != 0) {
@@ -2583,13 +2580,10 @@ found_left:
         }
 
 found_right:
-        out->Width = BINK_MASK_TRIMMED_PIXELS(remaining_width, first_right - right_blocks);
+        out->Width = BINK_MASK_TRIMMED_PIXELS(remaining_width, width_blocks - col);
     }
 
-    result = 1;
-
-done:
-    return result;
+    return 1;
 }
 
 static s32 trysplit(BINKRECT PTR4* outa, BINKRECT PTR4* outb, const BINKRECT PTR4* rect,
