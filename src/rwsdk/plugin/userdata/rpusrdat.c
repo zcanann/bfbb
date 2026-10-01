@@ -21,17 +21,17 @@ struct RpUserDataList
 
 #define RPUSERDATALISTGETDATA(_object, _offset) (RWPLUGINOFFSET(RpUserDataList, _object, _offset))
 
-/* Duplicate a string with RwMalloc */
+/* Duplicate a string with RwMalloc (RenderWare's rwstrdup) */
 #define UserDataStringDuplicate(_dst, _src)                                                        \
     MACRO_START                                                                                    \
     {                                                                                              \
         (_dst) = (RwChar*)NULL;                                                                    \
                                                                                                    \
-        if (_src)                                                                                  \
+        if (((RwChar*)NULL) != (_src))                                                             \
         {                                                                                          \
             (_dst) = (RwChar*)RwMalloc(rwstrlen(_src) + 1);                                        \
                                                                                                    \
-            if (_dst)                                                                              \
+            if (((RwChar*)NULL) != (_dst))                                                         \
             {                                                                                      \
                 rwstrcpy(_dst, _src);                                                              \
             }                                                                                      \
@@ -39,22 +39,22 @@ struct RpUserDataList
     }                                                                                              \
     MACRO_STOP
 
-static RwInt32 userDataGeometryOffset;
-static RwInt32 userDataGeometryStreamOffset;
-static RwInt32 userDataWorldSectorOffset;
-static RwInt32 userDataWorldSectorStreamOffset;
-static RwInt32 userDataFrameOffset;
-static RwInt32 userDataFrameStreamOffset;
-static RwInt32 userDataCameraOffset;
-static RwInt32 userDataCameraStreamOffset;
-static RwInt32 userDataLightOffset;
-static RwInt32 userDataLightStreamOffset;
-static RwInt32 userDataMaterialOffset;
-static RwInt32 userDataMaterialStreamOffset;
-static RwInt32 userDataTextureOffset;
-static RwInt32 userDataTextureStreamOffset;
-
 RwModuleInfo userDataModule;
+
+static RwInt32 userDataTextureStreamOffset;
+static RwInt32 userDataTextureOffset;
+static RwInt32 userDataMaterialStreamOffset;
+static RwInt32 userDataMaterialOffset;
+static RwInt32 userDataLightStreamOffset;
+static RwInt32 userDataLightOffset;
+static RwInt32 userDataCameraStreamOffset;
+static RwInt32 userDataCameraOffset;
+static RwInt32 userDataFrameStreamOffset;
+static RwInt32 userDataFrameOffset;
+static RwInt32 userDataWorldSectorStreamOffset;
+static RwInt32 userDataWorldSectorOffset;
+static RwInt32 userDataGeometryStreamOffset;
+static RwInt32 userDataGeometryOffset;
 
 static void* UserDataOpen(void* instance, RwInt32 offset, RwInt32 size)
 {
@@ -311,7 +311,7 @@ static void UserDataDestruct(RpUserDataArray* userData)
     RwInt32 i;
     RwChar** charData;
 
-    if (userData->name)
+    if (NULL != userData->name)
     {
         RwFree(userData->name);
     }
@@ -322,24 +322,24 @@ static void UserDataDestruct(RpUserDataArray* userData)
 
         for (i = 0; i < userData->numElements; i++)
         {
-            if (charData[i])
+            if (NULL != charData[i])
             {
                 RwFree(charData[i]);
             }
         }
     }
 
-    if (userData->data)
+    if (NULL != userData->data)
     {
         RwFree(userData->data);
     }
 }
 
-static void UserDataListDestroy(RpUserDataList* list)
+static void UserDataListDestruct(RpUserDataList* list)
 {
     RwInt32 i;
 
-    if (list->userData)
+    if (NULL != list->userData)
     {
         for (i = 0; i < list->numElements; i++)
         {
@@ -353,12 +353,56 @@ static void UserDataListDestroy(RpUserDataList* list)
     list->numElements = 0;
 }
 
+static void UserDataCopy(RpUserDataArray* dstUserData, RpUserDataArray* srcUserData)
+{
+    RwInt32 dataSize;
+    RwInt32 i;
+    RwChar** srcCharData;
+    RwChar** dstCharData;
+
+    dstUserData->format = srcUserData->format;
+    dstUserData->numElements = srcUserData->numElements;
+
+    if (NULL != srcUserData->name)
+    {
+        UserDataStringDuplicate(dstUserData->name, srcUserData->name);
+    }
+
+    if (NULL != srcUserData->data)
+    {
+        dataSize = dstUserData->numElements * RpUserDataGetFormatSize(dstUserData->format);
+
+        dstUserData->data = RwMalloc(dataSize);
+
+        if (dstUserData->format == rpSTRINGUSERDATA)
+        {
+            srcCharData = (RwChar**)srcUserData->data;
+            dstCharData = (RwChar**)dstUserData->data;
+
+            for (i = 0; i < dstUserData->numElements; i++)
+            {
+                if (NULL == srcCharData[i])
+                {
+                    dstCharData[i] = (RwChar*)NULL;
+                }
+                else
+                {
+                    UserDataStringDuplicate(dstCharData[i], srcCharData[i]);
+                }
+            }
+        }
+        else
+        {
+            memcpy(dstUserData->data, srcUserData->data, dataSize);
+        }
+    }
+}
+
 static void UserDataListCopy(RpUserDataList* dstList, const RpUserDataList* srcList)
 {
     RwInt32 i;
-    RwInt32 j;
 
-    UserDataListDestroy(dstList);
+    UserDataListDestruct(dstList);
 
     dstList->numElements = srcList->numElements;
 
@@ -369,48 +413,7 @@ static void UserDataListCopy(RpUserDataList* dstList, const RpUserDataList* srcL
 
         for (i = 0; i < dstList->numElements; i++)
         {
-            const RpUserDataArray* srcData = &srcList->userData[i];
-            RpUserDataArray* dstData = &dstList->userData[i];
-
-            dstData->format = srcData->format;
-            dstData->numElements = srcData->numElements;
-
-            if (srcData->name)
-            {
-                UserDataStringDuplicate(dstData->name, srcData->name);
-            }
-
-            if (srcData->data)
-            {
-                RwInt32 size = dstData->numElements * RpUserDataGetFormatSize(dstData->format);
-
-                dstData->data = RwMalloc(size);
-
-                if (dstData->format == rpSTRINGUSERDATA)
-                {
-                    RwChar** srcString = (RwChar**)srcData->data;
-                    RwChar** dstString = (RwChar**)dstData->data;
-
-                    for (j = 0; j < dstData->numElements; j++)
-                    {
-                        if (!*srcString)
-                        {
-                            *dstString = (RwChar*)NULL;
-                        }
-                        else
-                        {
-                            UserDataStringDuplicate(*dstString, *srcString);
-                        }
-
-                        srcString++;
-                        dstString++;
-                    }
-                }
-                else
-                {
-                    memcpy(dstData->data, srcData->data, size);
-                }
-            }
+            UserDataCopy(&dstList->userData[i], &srcList->userData[i]);
         }
     }
 }
@@ -488,7 +491,7 @@ static void* UserDataObjectConstruct(void* object, RwInt32 offset, RwInt32 size)
 
 static void* UserDataObjectDestruct(void* object, RwInt32 offset, RwInt32 size)
 {
-    UserDataListDestroy(RPUSERDATALISTGETDATA(object, offset));
+    UserDataListDestruct(RPUSERDATALISTGETDATA(object, offset));
 
     return object;
 }

@@ -1132,7 +1132,7 @@ config.libs = [
     RenderWareLib(
         "rpusrdat",
         [
-            Object(NonMatching, "rwsdk/plugin/userdata/rpusrdat.c"),
+            Object(Matching, "rwsdk/plugin/userdata/rpusrdat.c"),
         ],
     ),
     RenderWareLib(

@@ -1,4 +1,4 @@
-# RenderWare residue: why the last 24 RW functions do not match
+# RenderWare residue: why the last 23 RW functions do not match
 
 This document lists, for every RenderWare SDK function in the bfbb GameCube
 decomp that is below 100%, what exactly differs from retail and what causes
@@ -22,7 +22,7 @@ it. The aim is to separate the kinds of residue:
    - **OPS**: the same count but different opcodes.
 
    The "matches under" column lists the alternative compilers that give 100%
-   from the unchanged source. Today it is empty for all 24 functions.
+   from the unchanged source. Today it is empty for all 23 functions.
 2. **Per-function experiments.** Each function was reduced to a small C repro
    and compiled with `tools/regalloc/cc.py` under the GC/2.0p1a–e variants,
    2.0p1, 2.5, 2.6 and 2.7, and sometimes 1.1–1.3.2, 2.0 and 3.0a. Suspected
@@ -49,13 +49,13 @@ Measured from `build/GQPE78/report.json` and a fresh
 | measure | value |
 |---|---|
 | RW compiler | **GC/2.0p1e** (all units except `stdkey`) |
-| RW functions matched | **1015 / 1039** (97.69%) |
-| RW units complete (linked) | **100 / 120** |
-| RW code matched | 336,412 / 371,428 bytes (90.57%); the 24 residue functions are the whole 35,016-byte gap |
+| RW functions matched | **1016 / 1039** (97.79%) |
+| RW units complete (linked) | **101 / 120** |
+| RW code matched | 337,128 / 371,428 bytes (90.77%); the 23 residue functions are the whole 34,300-byte gap |
 | RW data matched | 11,764 / 11,764 bytes (100%) |
 | non-matching functions | 24, in 19 units |
 | residue shapes | REG 13, SCHED 9, COUNT 2 |
-| match 100% under GC/2.0p1 or GC/2.5 from the same source | 0 / 24 |
+| match 100% under GC/2.0p1 or GC/2.5 from the same source | 0 / 23 |
 
 The 20th incomplete unit is `rtslerp`. All its functions match, but it cannot
 link: its `.sdata2` constant order depends on `RtSlerp*` functions that were
@@ -94,6 +94,7 @@ kept because it is reusable.
 
 | function(s) | lever |
 |---|---|
+| `UserDataListCopy` | DWARF-shaped static `UserDataCopy` helper (indexed string loop); RenderWare's explicit `NULL !=` comparisons keep `UserDataListCopy`'s post-inline complexity above 512 so it stays out of line (see 3.6) |
 | `_rwGCLightsGlobalEnable`, `_rwGCLightsLocalEnable`, `RwImageCreateResample` | compiler 2.0p1b (R1t) |
 | `_rpMaterialListFindMaterialIndex`, `_rpMaterialListStreamGetSize`, `_rpMaterialListStreamWrite`, `RwImageCopy`, `RpGeometryStreamGetSize` | compiler 2.0p1c/e (R3) |
 | `_rwFrameListFindFrame`, `_rpSkinMatrixBlendUpdate` | R3 compiler plus the debug-DWARF direct field reads (no hand-hoisted locals) |
@@ -293,7 +294,6 @@ Columns:
 | d | `_rpGameCubeMTEffectSend` | plugin/matfx/gcn/multiTexGcnPipe | 1804 | 95.85 | SCHED | 96.15 / 96.15 |
 | e | `CalcMeshNBTs` | plugin/matfx/gcn/multiTexGcnPipe | 4340 | 98.72 | SCHED | 98.72 / 95.73 |
 | e | `_rwGCNVtxFmtInstClr` | world/pipe/p2/gcn/instance/geominst | 2176 | 97.13 | COUNT | 97.13 / 97.13 |
-| f | `UserDataListCopy` | plugin/userdata/rpusrdat | 716 | 98.52 | REG | 96.51 / 98.52 |
 
 ### 3.1 (a) Allocator: the needed rank is unreachable by the numbering rules
 
@@ -588,14 +588,16 @@ corresponding experimental part, which was rejected for lack of provenance.
 
 ### 3.6 (f) Inliner decision
 
-#### `UserDataListCopy`
-
-- **Unit:** plugin/userdata/rpusrdat. **Size / %:** 716 b, 98.52, REG.
-- **Exact difference:** register residue only.
-- **Evidence:** a DWARF-shaped static `UserDataCopy` helper with an indexed
-  string loop gives **100% in isolation**. With it, our compiler auto-inlines
-  `UserDataListCopy` into `UserDataObjectCopy`, while retail keeps the `bl`.
-- **Status:** open question: the inliner's size accounting for the new helper.
+Empty. `UserDataListCopy` was here and is now solved (see the solved table):
+the unit compiles with `-inline auto`, and a callee is inlined when its
+complexity *after its own inlines* is at most 512 (measured with
+`#pragma inline_max_size(N)` sweeps; every compiler 1.3.2-2.7 agrees). The
+DWARF-shaped `UserDataCopy` helper put `UserDataListCopy` at 494, so it was
+inlined into `UserDataObjectCopy`. RenderWare's explicit `NULL != x`
+comparisons (as in its `rwstrdup` macro) add complexity without changing the
+code; with them it is 520 and stays a `bl`, as in retail. Lever: an
+unexpected auto-inline can be a size-accounting difference in code-neutral
+style, not a compiler difference.
 
 ### 3.7 (g) Link-only
 
@@ -616,17 +618,16 @@ residue.
 | (c) | needs a retail-only scheduler edge (`dss`/`volb`/`e3n4`, candidate behaviours of compiler B) | 5: `StalacTiteAlloc`, `_rwDlCameraBeginUpdate`, `RxLockedPipeUnlock` (`dss`); `_rwDlRasterShowRaster` (`volb`); `RpMaterialStreamRead` (`e3n4`) | 6,408 | compiler, if the edges gain provenance or more witnesses |
 | (d) | alias precision no compiler has (R9a/R9b/R9c) | 4: `AtomicForAllLineIntersections`, `AtomicForAllSphereIntersections`, `_rpGameCubeMTEffectSend`, `_rwDlNativeTextureWrite` | 4,904 | none known |
 | (e) | source shape unknown, compiler-invariant | 2: `CalcMeshNBTs`, `_rwGCNVtxFmtInstClr` (plus `RxLockedPipeUnlock`'s sum) | 6,516 | source |
-| (f) | inliner decision | 1: `UserDataListCopy` | 716 | understand the inliner size accounting |
+| (f) | inliner decision | 0 (`UserDataListCopy` solved) | 0 | - |
 | (g) | link-only | unit `rtslerp` (0 functions) | 0 | `.sdata2` ordering without the stripped functions |
-| **total** | | **24** | **35,016** | |
+| **total** | | **23** | **34,300** | |
 
 Roughly:
 - 9 functions (11,312 bytes) are blocked by retail behaviour that no archived
   compiler has: the three rejected edges (c) and alias precision (d).
 - 12 functions (16,472 bytes) are register-allocator residue (a, b). All have
   exact replays; none has a source lever consistent with DWARF.
-- 3 functions are source questions: two unknown shapes (e) and one inliner
-  decision (f).
+- 2 functions are source questions with unknown shapes (e).
 
 **Where the evidence is thin:**
 - `dss` rests on three functions but its direct-symbol condition is fitted to
