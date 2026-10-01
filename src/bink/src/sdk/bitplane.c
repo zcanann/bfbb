@@ -1650,7 +1650,8 @@ store_3:
             }
             goto node_done;
 deferred_coeff:
-            nz_coeff[nz_coeff_count] = BP_READ_TREE_INDEX(node);
+            node = BP_READ_TREE_INDEX(node);
+            nz_coeff[nz_coeff_count] = node;
             /* Deferred coeff nodes already carry their scan index. */
             nz_coeff_count = nz_coeff_count + 1;
             if (bitcount != 0) {
@@ -1677,7 +1678,7 @@ negative_4:
 positive_4:
             delta = mask;
 store_4:
-            dest[(u32)BP_READ_TREE_INDEX(node)] = (s8)delta;
+            dest[(u32)node] = (s8)delta;
             if (masks_used++ == masks_count) {
                 goto done;
             }

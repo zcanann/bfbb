@@ -7867,3 +7867,17 @@ All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
 early-cutoff invariant checks pass, as do full all-source compilation and
 the normal retail DOL SHA-1 check. Bitplane remains NonMatching; source-linked
 Bink playback is not established by these checks.
+
+
+## Bink deferred index reuse (2026-10-01)
+
+Decoding the deferred coefficient index once into `node`, then reusing it for
+the active list and destination store, improves readlossy from 89.59424% to
+90.50555%. The full deduplicated report changes only readlossy. Separate
+header-index lifetime (89.28381%) and byte loop-counter (89.49445%) trials
+were reverted.
+
+All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
+early-cutoff invariant checks pass. Full all-source compilation and normal
+retail DOL SHA-1 validation pass. Bitplane remains NonMatching, so Bink
+source linking and playback remain outstanding.
