@@ -7999,3 +7999,17 @@ All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
 early-cutoff invariant checks pass. Full all-source compilation and normal
 retail DOL SHA-1 validation pass. Bitplane remains NonMatching; source-linked
 Bink playback remains unverified.
+
+
+## Bink lossless final-plane block layout (2026-10-01)
+
+Sharing the final-plane child push path raises ReadBPLossless from 77.28806%
+to 78.6046%. Moving final-plane deferred-coefficient decoding after the child
+paths, with node advancement at the loop tail, brings it to 80.50164%.
+The full deduplicated report changes only ReadBPLossless.
+
+All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
+early-cutoff invariant checks pass. Full all-source compilation and normal
+retail DOL SHA-1 validation pass, including after integrating staging's
+d10c877fa bavector source-link promotion. Bitplane remains NonMatching;
+source-linked Bink playback remains unverified.
