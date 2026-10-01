@@ -8101,3 +8101,17 @@ All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
 early-cutoff invariant checks pass. Full all-source compilation and normal
 retail DOL SHA-1 validation pass. Bitplane remains NonMatching; source-linked
 Bink playback remains unverified.
+
+
+## Bink lossless deferred coefficient destination lifetime (2026-10-01)
+
+Decoding the non-final deferred coefficient's node index before magnitude
+reading and computing its destination before sign reading follows retail's
+address lifetime and improves ReadBPLossless from 88.45783% to 89.03834%.
+Applying the same change to final-plane deferred coefficients scored
+88.95509% and was reverted. The full report changes only ReadBPLossless.
+
+All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
+early-cutoff invariant checks pass. Full all-source compilation and normal
+retail DOL SHA-1 validation pass. Bitplane remains NonMatching; source-linked
+Bink playback remains unverified.

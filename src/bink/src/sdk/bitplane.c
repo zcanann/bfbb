@@ -746,6 +746,7 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
     u8 PTR4* tree_end_ptr;
     u8 node;
     u8 base;
+    u16* deferred_dest;
     struct
     {
         BPLOSSLESSREADTREE tree;
@@ -910,6 +911,7 @@ after_lossless_read_children:
                 }
                 goto lossless_node_done;
 deferred_lossless_coeff:
+                node = BP_READ_TREE_INDEX(node);
                 if (bitcount >= level) {
                     coeff_value = bitbuf & bit_mask;
                     bitbuf >>= level;
@@ -921,6 +923,7 @@ deferred_lossless_coeff:
                     bitcount = bitcount + BP_BITS_PER_WORD - level;
                 }
                 coeff_value = coeff_value | highbit;
+                deferred_dest = &workspace.coeffs.values[node];
                 if (bitcount != 0) {
                     bitcount = bitcount - 1;
                     code = bitbuf & BP_BIT_MASK;
@@ -944,7 +947,7 @@ lossless_deferred_negative:
 lossless_deferred_positive:
                 code = coeff_value;
 lossless_deferred_store:
-                workspace.coeffs.values[BP_READ_TREE_INDEX(node)] = (u16)code;
+                *deferred_dest = (u16)code;
                 *node_ptr = BP_READ_TREE_EMPTY_ENTRY;
                 goto next_lossless_read_node;
 next_lossless_read_node:
