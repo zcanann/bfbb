@@ -203,12 +203,12 @@ typedef enum BINKBUNDLEINITIALVALUE
          : ((temp) = *((vb).cur), VARBITS_ADVANCE_CUR((vb).cur),                                   \
             (vb).bitlen = EXP_LAST_BIT_INDEX, (vb).bits = ((EXPBITSTYPE)(temp)) >> 1)),            \
      ((temp) & EXP_BIT_MASK))
-#define EXPBITS_GET1_BRANCH(vb, temp)                                                              \
-    (((vb).bitlen != 0)                                                                            \
-         ? ((temp) = (vb).bits, (vb).bitlen--, (vb).bits = ((EXPBITSTYPE)(temp)) >> 1,             \
-            ((temp) & EXP_BIT_MASK))                                                               \
-         : ((temp) = *((vb).cur), VARBITS_ADVANCE_CUR((vb).cur),                                   \
-            (vb).bitlen = EXP_LAST_BIT_INDEX, (vb).bits = ((EXPBITSTYPE)(temp)) >> 1,              \
+#define EXPBITS_GET1_BRANCH(vb, temp) \
+    (((vb).bitlen != 0) \
+         ? ((temp) = (vb).bits & EXP_BIT_MASK, (vb).bitlen--, (vb).bits >>= 1, \
+            (temp)) \
+         : ((temp) = *((vb).cur), VARBITS_ADVANCE_CUR((vb).cur), \
+            (vb).bitlen = EXP_LAST_BIT_INDEX, (vb).bits = ((EXPBITSTYPE)(temp)) >> 1, \
             ((temp) & EXP_BIT_MASK)))
 #define BINK_MARK_WORK_BLOCK(work_row, work_col) ((work_row)[(work_col) >> BINK_CHROMA_SHIFT] = BINK_WORK_BLOCK_MARKED)
 #define BINK_MOTION_SOURCE(old, pitch, mx, my) ((old) + (my) * (s32)(pitch) + (mx))
@@ -1053,7 +1053,6 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     u16 predictor;
     s16 delta;
     s16 PTR4* dest;
-    EXPBITSTYPE bit;
 
     if (BINK_BUNDLE_HAS_UNREAD_DATA(bundle)) {
         return;
@@ -1065,6 +1064,7 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
         if (bundle->initial_value != BINK_BUNDLE_INITIAL_VALUE_NONE) {
             VarBitsGet(predictor, u16, *bits, BINK_BUNDLE_SIGNED_MAGNITUDE_BITS(bundle->bit_size));
             if (predictor != 0) {
+                EXPBITSTYPE bit;
                 if (EXPBITS_GET1_BRANCH(*bits, bit)) {
                     predictor = BINK_APPLY_SIGN_BIT(predictor);
                 }
@@ -1090,6 +1090,7 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
                     group_count--;
                     VarBitsGet(delta, s16, *bits, delta_bit_count);
                     if (delta != 0) {
+                        EXPBITSTYPE bit;
                         if (EXPBITS_GET1_BRANCH(*bits, bit)) {
                             delta = BINK_APPLY_SIGN_BIT(delta);
                         }
