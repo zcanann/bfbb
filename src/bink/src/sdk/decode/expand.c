@@ -1000,8 +1000,7 @@ static void CheckReadHuff4SBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     u8 PTR4* syms;
     const u8 PTR4* decode;
     u32 peek;
-    s32 symbol;
-    s32 fill_symbol;
+    s8 symbol;
     EXPBITSTYPE bit;
 
     if (BINK_BUNDLE_HAS_UNREAD_DATA(bundle)) {
@@ -1019,18 +1018,18 @@ static void CheckReadHuff4SBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
             decode = bundle->decode;
             dest = BINK_BUNDLE_DATA_BEGIN(bundle);
             while (count-- != 0) {
-                symbol = (s32)exp_read_huff4(bits, peek, decode, syms);
-                if (symbol != 0 && exp_get_bit(bits)) {
+                symbol = (s8)exp_read_huff4(bits, peek, decode, syms);
+                if (symbol != 0 && EXPBITS_GET1_BRANCH(*bits, bit)) {
                     symbol = -symbol;
                 }
                 *dest++ = (s8)symbol;
             }
         } else {
-            fill_symbol = (s32)exp_get_bits(bits, HUFF4_NIBBLE_BITS);
-            if (fill_symbol != 0 && exp_get_bit(bits)) {
-                fill_symbol = -fill_symbol;
+            VarBitsGet(symbol, s8, *bits, HUFF4_NIBBLE_BITS);
+            if (symbol != 0 && EXPBITS_GET1_BRANCH(*bits, bit)) {
+                symbol = -symbol;
             }
-            memset(bundle->data, fill_symbol, count);
+            memset(bundle->data, symbol, count);
         }
     } else {
         BINK_BUNDLE_MARK_EMPTY(bundle);
