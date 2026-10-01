@@ -730,14 +730,17 @@ static void YUV_blit(void PTR4* dest,
     if ((srcy & 1) != 0 && (s32)srcy <= (s32)endy) {
         srcy++;
         dounalignedrow(srcx, srcw);
-        S.dest0 += pitch_delta;
-        S.dest1 = S.dest0 + pitch;
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + y_delta);
-        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y0 + srcpitch);
+        dest = S.dest0 + pitch_delta;
+        ybase = (u8 PTR4*)S.y0 + y_delta;
+        abase = (u8 PTR4*)S.a0 + a_delta;
+        S.dest1 = (u8 PTR4*)dest + pitch;
+        S.y1 = (u32 PTR4*)(ybase + srcpitch);
+        S.a1 = (u32 PTR4*)(abase + srcpitch);
         S.u = (u16 PTR4*)((u8 PTR4*)S.u + c_delta);
         S.v = (u16 PTR4*)((u8 PTR4*)S.v + c_delta);
-        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + a_delta);
-        S.a1 = (u32 PTR4*)((u8 PTR4*)S.a0 + srcpitch);
+        S.dest0 = (u8 PTR4*)dest;
+        S.y0 = (u32 PTR4*)ybase;
+        S.a0 = (u32 PTR4*)abase;
     }
 
     align_count = (YUV_PACKED_WORD_BYTES - (destx & YUV_DEST_ALIGN_MASK)) & YUV_DEST_ALIGN_MASK;
@@ -750,8 +753,8 @@ static void YUV_blit(void PTR4* dest,
         u32 count;
         u32 tail;
 
-        phase = srcx;
         count = srcw;
+        phase = srcx;
         if (align_count != 0) {
             count -= align_count;
             phase = dounalignedcol(align_count, phase);
