@@ -503,6 +503,8 @@ static RwBool _rwDlRenderStateDstBlend(RwBlendFunction dstBlend)
             _RwDlStateCache.gxDstBlend = gxDstBlend;
             break;
         }
+        case rwBLENDDESTCOLOR:
+        case rwBLENDINVDESTCOLOR:
         default:
         {
             return FALSE;

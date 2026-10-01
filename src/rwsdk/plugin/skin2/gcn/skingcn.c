@@ -346,15 +346,17 @@ void _rpSkinBlendBody(RpSkin* skin, RwMatrix* matrixCache, void* vertices, void*
         RwUInt8 vtxFmtSizeConvTable[5] = { 1, 1, 2, 2, 4 };
         RwUInt8 vtxFmtNormConvTable[5] = { 0, 6, 0, 14, 0 };
 
-        normalSize = vtxFmtSizeConvTable[vtxFmt->norm];
-        normalPad = vtxFmt->nbt ? normalSize * 6 : 0;
         vertexSize = vtxFmtSizeConvTable[vtxFmt->pos];
 
         posGQR = vtxFmtTypeConvTable[vtxFmt->pos] | (vtxFmt->posFrac << 8);
         posGQR |= posGQR << 16;
 
+        normalSize = vtxFmtSizeConvTable[vtxFmt->norm];
+
         normGQR = vtxFmtTypeConvTable[vtxFmt->norm] | (vtxFmtNormConvTable[vtxFmt->norm] << 8);
         normGQR |= normGQR << 16;
+
+        normalPad = vtxFmt->nbt ? normalSize * 6 : 0;
     }
     else
     {
@@ -771,6 +773,9 @@ static RpSkin* _rpSkinCreate(RpSkin* skin, RwUInt32 numVertices)
     RwUInt32 i;
     RwUInt32 j;
     RwUInt32 k;
+    RwReal tmp;
+    RwUInt32 index1;
+    RwUInt32 index2;
 
     skin->platformData.vertices = NULL;
     skin->platformData.normals = NULL;
@@ -787,28 +792,22 @@ static RpSkin* _rpSkinCreate(RpSkin* skin, RwUInt32 numVertices)
         {
             for (j = 0; j < rpSKINMAXWEIGHTS - 1; j++)
             {
-                RwUInt32 jShift = j * 8;
-                RwUInt32 jMask = ~(0xFF << jShift);
-
                 for (k = 1; k < rpSKINMAXWEIGHTS - j; k++)
                 {
-                    RwReal* vertexWeights = &skin->vertexMaps.matrixWeights[i].w0;
-
-                    if (vertexWeights[j + k] > vertexWeights[j])
+                    if ((&skin->vertexMaps.matrixWeights[i].w0 + j)[k] >
+                        (&skin->vertexMaps.matrixWeights[i].w0)[j])
                     {
-                        RwReal temp = vertexWeights[j];
-                        RwUInt32 kShift = (j + k) * 8;
-                        RwUInt32 kMask = ~(0xFF << kShift);
-                        RwUInt32 index;
+                        tmp = (&skin->vertexMaps.matrixWeights[i].w0)[j];
+                        (&skin->vertexMaps.matrixWeights[i].w0)[j] =
+                            (&skin->vertexMaps.matrixWeights[i].w0 + j)[k];
+                        (&skin->vertexMaps.matrixWeights[i].w0 + j)[k] = tmp;
 
-                        vertexWeights[j] = vertexWeights[j + k];
-                        (&skin->vertexMaps.matrixWeights[i].w0)[j + k] = temp;
-
-                        index = skin->vertexMaps.matrixIndices[i];
-                        skin->vertexMaps.matrixIndices[i] = index & jMask;
-                        skin->vertexMaps.matrixIndices[i] |= ((index >> kShift) & 0xFF) << jShift;
-                        skin->vertexMaps.matrixIndices[i] &= kMask;
-                        skin->vertexMaps.matrixIndices[i] |= ((index >> jShift) & 0xFF) << kShift;
+                        index1 = (skin->vertexMaps.matrixIndices[i] >> (j * 8)) & 0xFF;
+                        index2 = (skin->vertexMaps.matrixIndices[i] >> ((j + k) * 8)) & 0xFF;
+                        skin->vertexMaps.matrixIndices[i] &= ~(0xFF << (j * 8));
+                        skin->vertexMaps.matrixIndices[i] |= index2 << (j * 8);
+                        skin->vertexMaps.matrixIndices[i] &= ~(0xFF << ((j + k) * 8));
+                        skin->vertexMaps.matrixIndices[i] |= index1 << ((j + k) * 8);
                     }
                 }
             }
@@ -822,6 +821,7 @@ static RpSkin* _rpSkinCreate(RpSkin* skin, RwUInt32 numVertices)
 
         for (i = 0; i < numVertices; i++)
         {
+            RwUInt32 j;
             RwUInt8 total = 0;
 
             for (j = 0; j < skin->vertexMaps.maxWeights; j++)
@@ -836,7 +836,7 @@ static RpSkin* _rpSkinCreate(RpSkin* skin, RwUInt32 numVertices)
             {
                 for (j = 0; j < skin->vertexMaps.maxWeights; j++)
                 {
-                    weights[j - skin->vertexMaps.maxWeights]++;
+                    *(weights - (skin->vertexMaps.maxWeights - j)) += 1;
                     total++;
 
                     if (total == 128)
@@ -855,6 +855,8 @@ static RpSkin* _rpSkinCreate(RpSkin* skin, RwUInt32 numVertices)
 
         for (i = 0; i < numVertices; i++)
         {
+            RwUInt32 j;
+
             for (j = 0; j < skin->vertexMaps.maxWeights; j++)
             {
                 *indices++ = (RwUInt8)(skin->vertexMaps.matrixIndices[i] >> (j * 8));

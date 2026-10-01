@@ -242,14 +242,16 @@ static RpWorld* WorldForAllLineWorldSectorIntersections(RpWorld* world, RwLine* 
                 {
                     nStack++;
                     sectorStack[nStack] = plane->rightSubTree;
-                    lineStack[nStack] = currLine;
+                    lineStack[nStack].start = currLine.start;
+                    lineStack[nStack].end = currLine.end;
                     sector = plane->leftSubTree;
                 }
                 else
                 {
                     nStack++;
                     sectorStack[nStack] = plane->leftSubTree;
-                    lineStack[nStack] = currLine;
+                    lineStack[nStack].start = currLine.start;
+                    lineStack[nStack].end = currLine.end;
                     sector = plane->rightSubTree;
                 }
             }
@@ -266,7 +268,8 @@ static RpWorld* WorldForAllLineWorldSectorIntersections(RpWorld* world, RwLine* 
                 {
                     nStack++;
                     sectorStack[nStack] = plane->rightSubTree;
-                    lineStack[nStack] = currLine;
+                    lineStack[nStack].start = currLine.start;
+                    lineStack[nStack].end = currLine.end;
                     sector = plane->leftSubTree;
                     currLine.end = leftPoint;
                 }
@@ -300,7 +303,8 @@ static RpWorld* WorldForAllLineWorldSectorIntersections(RpWorld* world, RwLine* 
                 {
                     nStack++;
                     sectorStack[nStack] = plane->leftSubTree;
-                    lineStack[nStack] = currLine;
+                    lineStack[nStack].start = currLine.start;
+                    lineStack[nStack].end = currLine.end;
                     sector = plane->rightSubTree;
                     currLine.end = rightPoint;
                 }
@@ -311,10 +315,10 @@ static RpWorld* WorldForAllLineWorldSectorIntersections(RpWorld* world, RwLine* 
                 RwV3d leftPoint;
                 RwV3d rightPoint;
 
-                rpCOLLISLINEPLANEINTERSECT(leftPoint, currLine, grad, plane->type,
-                                           plane->leftValue);
                 rpCOLLISLINEPLANEINTERSECT(rightPoint, currLine, grad, plane->type,
                                            plane->rightValue);
+                rpCOLLISLINEPLANEINTERSECT(leftPoint, currLine, grad, plane->type,
+                                           plane->leftValue);
 
                 if (startLeft.nInt < 0)
                 {
@@ -340,62 +344,6 @@ static RpWorld* WorldForAllLineWorldSectorIntersections(RpWorld* world, RwLine* 
 
     return world;
 }
-
-/* Walk the world BSP, calling the leaf callback for the world sectors the box overlaps */
-#define RpCollisWorldForAllBoxSectorsMacro(_world, _isData)                                        \
-    MACRO_START                                                                                    \
-    {                                                                                              \
-        RpSector* _stack[rpCOLLISWORLDMAXBSPDEPTH];                                                \
-        RpSector* _sector = (_world)->rootSector;                                                  \
-        RwInt32 _nStack = 0;                                                                       \
-                                                                                                   \
-        while (_nStack >= 0)                                                                       \
-        {                                                                                          \
-            if (_sector->type < 0)                                                                 \
-            {                                                                                      \
-                RpCollisionData* _collData = *RWPLUGINOFFSET(                                      \
-                    RpCollisionData*, _sector, _rpCollisionWorldSectorDataOffset);                 \
-                                                                                                   \
-                if (_collData)                                                                     \
-                {                                                                                  \
-                    (_isData)->sector = (RpWorldSector*)_sector;                                   \
-                                                                                                   \
-                    if (!_rpCollBSPTreeForAllBoxLeafNodeIntersections(                             \
-                            _collData->tree, &(_isData)->box, (_isData)->leafCallBack, (_isData))) \
-                    {                                                                              \
-                        _sector = (RpSector*)NULL;                                                 \
-                    }                                                                              \
-                }                                                                                  \
-                                                                                                   \
-                if (!_sector)                                                                      \
-                {                                                                                  \
-                    break;                                                                         \
-                }                                                                                  \
-                                                                                                   \
-                _sector = _stack[_nStack--];                                                       \
-            }                                                                                      \
-            else                                                                                   \
-            {                                                                                      \
-                RpPlaneSector* _plane = (RpPlaneSector*)_sector;                                   \
-                                                                                                   \
-                if (*(RwReal*)((RwUInt8*)&(_isData)->box.inf + _plane->type) < _plane->leftValue)  \
-                {                                                                                  \
-                    _sector = _plane->leftSubTree;                                                 \
-                                                                                                   \
-                    if (*(RwReal*)((RwUInt8*)&(_isData)->box.sup + _plane->type) >=                \
-                        _plane->rightValue)                                                        \
-                    {                                                                              \
-                        _stack[++_nStack] = _plane->rightSubTree;                                  \
-                    }                                                                              \
-                }                                                                                  \
-                else                                                                               \
-                {                                                                                  \
-                    _sector = _plane->rightSubTree;                                                \
-                }                                                                                  \
-            }                                                                                      \
-        }                                                                                          \
-    }                                                                                              \
-    MACRO_STOP
 
 static RwInt32 LeafNodeForAllLinePolyIntersections(RwInt32 numPolygons, RwInt32 firstPolygon,
                                                    void* data)
@@ -593,6 +541,47 @@ static RpWorldSector* WorldSectorForAllBoxedPrimitivePolyIntersections(RpWorldSe
 
     return sector;
 }
+/* Walk the world BSP, calling the leaf callback for the world sectors the box overlaps */
+static void WorldForAllBoxSectors(RpWorld* world, RpCollisWorldBoxData* isData)
+{
+    RpSector* stack[rpCOLLISWORLDMAXBSPDEPTH];
+    RpSector* sector = world->rootSector;
+    RwInt32 nStack = 0;
+
+    while (nStack >= 0)
+    {
+        if (sector->type < 0)
+        {
+            sector = (RpSector*)WorldSectorForAllBoxedPrimitivePolyIntersections(
+                (RpWorldSector*)sector, isData);
+
+            if (!sector)
+            {
+                break;
+            }
+
+            sector = stack[nStack--];
+        }
+        else
+        {
+            RpPlaneSector* plane = (RpPlaneSector*)sector;
+
+            if (*(RwReal*)((RwUInt8*)&isData->box.inf + plane->type) < plane->leftValue)
+            {
+                sector = plane->leftSubTree;
+
+                if (*(RwReal*)((RwUInt8*)&isData->box.sup + plane->type) >= plane->rightValue)
+                {
+                    stack[++nStack] = plane->rightSubTree;
+                }
+            }
+            else
+            {
+                sector = plane->rightSubTree;
+            }
+        }
+    }
+}
 
 RpWorld* RpCollisionWorldForAllIntersections(RpWorld* world, RpIntersection* intersection,
                                              RpIntersectionCallBackWorldTriangle callBack,
@@ -642,10 +631,7 @@ RpWorld* RpCollisionWorldForAllIntersections(RpWorld* world, RpIntersection* int
         RpCollisSphereData sphereData;
         RpCollisWorldBoxData isData;
 
-        sphereData.sphere = &intersection->t.sphere;
-
-        isData.box.sup = intersection->t.sphere.center;
-        isData.box.inf = intersection->t.sphere.center;
+        isData.box.inf = isData.box.sup = intersection->t.sphere.center;
         isData.box.inf.x -= intersection->t.sphere.radius;
         isData.box.inf.y -= intersection->t.sphere.radius;
         isData.box.inf.z -= intersection->t.sphere.radius;
@@ -653,13 +639,14 @@ RpWorld* RpCollisionWorldForAllIntersections(RpWorld* world, RpIntersection* int
         isData.box.sup.y += intersection->t.sphere.radius;
         isData.box.sup.z += intersection->t.sphere.radius;
 
+        sphereData.sphere = &intersection->t.sphere;
         sphereData.recipRadius = (RwReal)1 / intersection->t.sphere.radius;
 
         isData.leafCallBack = LeafNodeForAllSpherePolyIntersections;
         isData.primitiveData = &sphereData;
         isData.cbData = &cbData;
 
-        RpCollisWorldForAllBoxSectorsMacro(world, &isData);
+        WorldForAllBoxSectors(world, &isData);
 
         return world;
     }
@@ -672,7 +659,7 @@ RpWorld* RpCollisionWorldForAllIntersections(RpWorld* world, RpIntersection* int
         isData.leafCallBack = LeafNodeForAllBoxPolyIntersections;
         isData.cbData = &cbData;
 
-        RpCollisWorldForAllBoxSectorsMacro(world, &isData);
+        WorldForAllBoxSectors(world, &isData);
 
         return world;
     }
@@ -687,8 +674,7 @@ RpWorld* RpCollisionWorldForAllIntersections(RpWorld* world, RpIntersection* int
         sphereData.sphere = &sphere;
         sphereData.recipRadius = (RwReal)1 / sphere.radius;
 
-        isData.box.sup = sphere.center;
-        isData.box.inf = sphere.center;
+        isData.box.inf = isData.box.sup = sphere.center;
         isData.box.inf.x -= sphere.radius;
         isData.box.inf.y -= sphere.radius;
         isData.box.inf.z -= sphere.radius;

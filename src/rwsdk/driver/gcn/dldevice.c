@@ -229,8 +229,9 @@ static void _rwDlVIPostRetraceCallback(u32 retraceCount)
         _rwDlBreakNext();
 
         _RwDlFrameWait = FALSE;
-        _RwDlFrameGo = FALSE;
     }
+
+    _RwDlFrameGo = FALSE;
 }
 
 static RwBool _rwDlNullStandard(void* out, void* inOut, RwInt32 in)

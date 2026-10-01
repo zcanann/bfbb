@@ -30,7 +30,7 @@ extern void _rpCollBSPTreeInit(RpCollBSPTree* tree, RwInt32 numLeafNodes);
 extern RwInt32 _rpCollBSPTreeMemGetSize(RwInt32 numLeafNodes);
 extern void _rpCollBSPTreeDestroy(RpCollBSPTree* tree);
 extern RwInt32 _rpCollBSPTreeStreamGetSize(RpCollBSPTree* tree);
-extern RpCollBSPTree* _rpCollBSPTreeStreamWrite(RpCollBSPTree* tree, RwStream* stream);
+extern RpCollBSPTree* _rpCollBSPTreeStreamWrite(const RpCollBSPTree* tree, RwStream* stream);
 extern RpCollBSPTree* _rpCollBSPTreeStreamRead(RpCollBSPTree* tree, RwStream* stream);
 
 RwInt32 _rpCollisionNumInstances;

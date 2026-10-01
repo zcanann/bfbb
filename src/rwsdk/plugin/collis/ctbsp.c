@@ -51,7 +51,7 @@ void _rpCollBSPTreeDestroy(RpCollBSPTree* tree)
     }
 }
 
-RpCollBSPTree* _rpCollBSPTreeStreamWrite(RpCollBSPTree* tree, RwStream* stream)
+RpCollBSPTree* _rpCollBSPTreeStreamWrite(const RpCollBSPTree* tree, RwStream* stream)
 {
     RwUInt32 i;
     RpCollBSPBranchNode* branchNode;
@@ -96,7 +96,7 @@ RpCollBSPTree* _rpCollBSPTreeStreamWrite(RpCollBSPTree* tree, RwStream* stream)
         leafNode++;
     }
 
-    return tree;
+    return (RpCollBSPTree*)tree;
 }
 
 RpCollBSPTree* _rpCollBSPTreeStreamRead(RpCollBSPTree* tree, RwStream* stream)
@@ -266,7 +266,8 @@ RpCollBSPTree* _rpCollBSPTreeForAllLineLeafNodeIntersections(RpCollBSPTree* tree
                     nStack++;
                     nodeStack[nStack].type = rightType;
                     nodeStack[nStack].index = rightNode;
-                    lineStack[nStack] = currLine;
+                    lineStack[nStack].start = currLine.start;
+                    lineStack[nStack].end = currLine.end;
                     node.type = leftType;
                     node.index = leftNode;
                 }
@@ -275,7 +276,8 @@ RpCollBSPTree* _rpCollBSPTreeForAllLineLeafNodeIntersections(RpCollBSPTree* tree
                     nStack++;
                     nodeStack[nStack].type = leftType;
                     nodeStack[nStack].index = leftNode;
-                    lineStack[nStack] = currLine;
+                    lineStack[nStack].start = currLine.start;
+                    lineStack[nStack].end = currLine.end;
                     node.type = rightType;
                     node.index = rightNode;
                 }
@@ -294,7 +296,8 @@ RpCollBSPTree* _rpCollBSPTreeForAllLineLeafNodeIntersections(RpCollBSPTree* tree
                     nStack++;
                     nodeStack[nStack].type = rightType;
                     nodeStack[nStack].index = rightNode;
-                    lineStack[nStack] = currLine;
+                    lineStack[nStack].start = currLine.start;
+                    lineStack[nStack].end = currLine.end;
                     node.type = leftType;
                     node.index = leftNode;
                     currLine.end = leftPoint;
@@ -334,7 +337,8 @@ RpCollBSPTree* _rpCollBSPTreeForAllLineLeafNodeIntersections(RpCollBSPTree* tree
                     nStack++;
                     nodeStack[nStack].type = leftType;
                     nodeStack[nStack].index = leftNode;
-                    lineStack[nStack] = currLine;
+                    lineStack[nStack].start = currLine.start;
+                    lineStack[nStack].end = currLine.end;
                     node.type = rightType;
                     node.index = rightNode;
                     currLine.end = rightPoint;

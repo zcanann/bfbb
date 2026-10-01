@@ -508,15 +508,21 @@ static RwInt32 ExtractNodes(_rwPalQuantOctNode* root, RwRGBA* palette, RwInt32 n
         }
         else
         {
+            RwReal recip;
+
             if (root->Leaf.weight > 0.0f)
             {
-                RwReal recip = 255.9999f / root->Leaf.weight;
-
-                palette[nodeIndex].red = (RwUInt8)(RwInt32)(root->Leaf.ac.red * recip);
-                palette[nodeIndex].green = (RwUInt8)(RwInt32)(root->Leaf.ac.green * recip);
-                palette[nodeIndex].blue = (RwUInt8)(RwInt32)(root->Leaf.ac.blue * recip);
-                palette[nodeIndex].alpha = (RwUInt8)(RwInt32)(root->Leaf.ac.alpha * recip);
+                recip = 255.9999f / root->Leaf.weight;
             }
+            else
+            {
+                recip = 0.0f;
+            }
+
+            palette[nodeIndex].red = (RwUInt8)(RwInt32)(root->Leaf.ac.red * recip);
+            palette[nodeIndex].green = (RwUInt8)(RwInt32)(root->Leaf.ac.green * recip);
+            palette[nodeIndex].blue = (RwUInt8)(RwInt32)(root->Leaf.ac.blue * recip);
+            palette[nodeIndex].alpha = (RwUInt8)(RwInt32)(root->Leaf.ac.alpha * recip);
 
             root->Leaf.palIndex = (RwUInt8)nodeIndex;
             nodeIndex++;
@@ -616,19 +622,27 @@ RwInt32 _rwPalQuantResolvePalette(RwRGBA* palette, RwInt32 maxcols, RwPalQuant* 
         /* Build the palette from the boxes */
         for (i = 0; i < maxcols; i++)
         {
-            RwRGBA origin;
-
-            origin.red = 0;
-            origin.green = 0;
-            origin.blue = 0;
-            origin.alpha = 0;
-            assignindex(pq->root, &origin, MaxDepth, &pq->Mcube[i], i);
-
-            BoxStats(&boxvol, pq->root, &pq->Mcube[i]);
-
-            if (boxvol.weight > 0.0f)
+            if (i < numcols)
             {
-                RwReal recip = 255.9999f / boxvol.weight;
+                RwRGBA origin;
+                RwReal recip;
+
+                origin.red = 0;
+                origin.green = 0;
+                origin.blue = 0;
+                origin.alpha = 0;
+                assignindex(pq->root, &origin, MaxDepth, &pq->Mcube[i], i);
+
+                BoxStats(&boxvol, pq->root, &pq->Mcube[i]);
+
+                if (boxvol.weight > 0.0f)
+                {
+                    recip = 255.9999f / boxvol.weight;
+                }
+                else
+                {
+                    recip = 0.0f;
+                }
 
                 palette[i].red = (RwUInt8)(RwInt32)(boxvol.ac.red * recip);
                 palette[i].green = (RwUInt8)(RwInt32)(boxvol.ac.green * recip);

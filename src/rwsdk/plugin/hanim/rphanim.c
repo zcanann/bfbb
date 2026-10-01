@@ -402,7 +402,8 @@ RpHAnimHierarchy* RpHAnimHierarchyCreate(RwInt32 numNodes, RwUInt32* nodeFlags, 
     RpHAnimHierarchy* pHierarchy;
     RwInt32 node;
 
-    pHierarchy = (RpHAnimHierarchy*)RwFreeListAlloc(RpHAnimAtomicGlobals.HAnimFreeList);
+    ptr = RwFreeListAlloc(RpHAnimAtomicGlobals.HAnimFreeList);
+    pHierarchy = (RpHAnimHierarchy*)ptr;
 
     pHierarchy->currentAnim = RtAnimInterpolatorCreate(numNodes, maxInterpKeyFrameSize);
     pHierarchy->flags = flags;

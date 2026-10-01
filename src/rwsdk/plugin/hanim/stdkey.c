@@ -168,7 +168,6 @@ void RpHAnimKeyFrameInterpolate(void* voidOut, void* voidIn1, void* voidIn2, RwR
     if (!(fDot >= (RwReal)0.999))
     {
         RwReal theta;
-        RwReal sinTheta;
         RwReal recipSinTheta;
 
         RwACosMacro(theta, fDot);
@@ -176,8 +175,8 @@ void RpHAnimKeyFrameInterpolate(void* voidOut, void* voidIn1, void* voidIn2, RwR
         fScale *= theta;
         fRecipTime *= theta;
 
-        RwSinMinusPiToPiMacro(sinTheta, theta);
-        recipSinTheta = (RwReal)1.0 / sinTheta;
+        RwSinMinusPiToPiMacro(recipSinTheta, theta);
+        recipSinTheta = (RwReal)1.0 / recipSinTheta;
 
         RwSinMinusPiToPiMacro(fScale, fScale);
         RwSinMinusPiToPiMacro(fRecipTime, fRecipTime);
@@ -222,7 +221,6 @@ void RpHAnimKeyFrameBlend(void* voidOut, void* voidIn1, void* voidIn2, RwReal al
     if (!(fDot >= (RwReal)0.999))
     {
         RwReal theta;
-        RwReal sinTheta;
         RwReal recipSinTheta;
 
         RwACosMacro(theta, fDot);
@@ -230,8 +228,8 @@ void RpHAnimKeyFrameBlend(void* voidOut, void* voidIn1, void* voidIn2, RwReal al
         fScale *= theta;
         alpha *= theta;
 
-        RwSinMinusPiToPiMacro(sinTheta, theta);
-        recipSinTheta = (RwReal)1.0 / sinTheta;
+        RwSinMinusPiToPiMacro(recipSinTheta, theta);
+        recipSinTheta = (RwReal)1.0 / recipSinTheta;
 
         RwSinMinusPiToPiMacro(fScale, fScale);
         RwSinMinusPiToPiMacro(alpha, alpha);

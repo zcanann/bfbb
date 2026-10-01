@@ -108,8 +108,6 @@ static void _rwDlRasterRenderQuad(RwRaster* raster, RwRect* rect, RwBool scaled,
     RwTextureAddressMode addressModeV;
     RwRaster* curRaster;
     RwRaster* parentRaster = raster->parent;
-    RwReal recipWidth;
-    RwReal recipHeight;
 
     /* Save the render states we are about to change */
     _rwDlGetRenderState(rwRENDERSTATEFOGENABLE, &fogEnable);
@@ -143,6 +141,9 @@ static void _rwDlRasterRenderQuad(RwRaster* raster, RwRect* rect, RwBool scaled,
 
     if (scaled)
     {
+        RwReal recipWidth;
+        RwReal recipHeight;
+
         recipWidth = 1.0f / (RwReal)parentRaster->width;
         recipHeight = 1.0f / (RwReal)parentRaster->height;
 
@@ -151,22 +152,25 @@ static void _rwDlRasterRenderQuad(RwRaster* raster, RwRect* rect, RwBool scaled,
                        (RwReal)raster->nOffsetY * recipHeight);
 
         GXPosition2s16(_RwDlRasterTarget->nOffsetX + rect->x,
-                       (rect->y + rect->h) + _RwDlRasterTarget->nOffsetY);
+                       _RwDlRasterTarget->nOffsetY + rect->y + rect->h);
         GXTexCoord2f32((RwReal)raster->nOffsetX * recipWidth,
                        recipHeight * (RwReal)(raster->nOffsetY + raster->height));
 
-        GXPosition2s16((rect->x + rect->w) + _RwDlRasterTarget->nOffsetX,
-                       (rect->y + rect->h) + _RwDlRasterTarget->nOffsetY);
+        GXPosition2s16(_RwDlRasterTarget->nOffsetX + rect->x + rect->w,
+                       _RwDlRasterTarget->nOffsetY + rect->y + rect->h);
         GXTexCoord2f32(recipWidth * (RwReal)(raster->nOffsetX + raster->width),
                        recipHeight * (RwReal)(raster->nOffsetY + raster->height));
 
-        GXPosition2s16((rect->x + rect->w) + _RwDlRasterTarget->nOffsetX,
+        GXPosition2s16(_RwDlRasterTarget->nOffsetX + rect->x + rect->w,
                        _RwDlRasterTarget->nOffsetY + rect->y);
         GXTexCoord2f32(recipWidth * (RwReal)(raster->nOffsetX + raster->width),
                        (RwReal)raster->nOffsetY * recipHeight);
     }
     else
     {
+        RwReal recipWidth;
+        RwReal recipHeight;
+
         recipWidth = 1.0f / (RwReal)parentRaster->width;
         recipHeight = 1.0f / (RwReal)parentRaster->height;
 
@@ -175,16 +179,16 @@ static void _rwDlRasterRenderQuad(RwRaster* raster, RwRect* rect, RwBool scaled,
                        (RwReal)raster->nOffsetY * recipHeight);
 
         GXPosition2s16(_RwDlRasterTarget->nOffsetX + rect->x,
-                       (rect->y + raster->height) + _RwDlRasterTarget->nOffsetY);
+                       _RwDlRasterTarget->nOffsetY + rect->y + raster->height);
         GXTexCoord2f32((RwReal)raster->nOffsetX * recipWidth,
                        recipHeight * (RwReal)(raster->nOffsetY + raster->height));
 
-        GXPosition2s16((rect->x + raster->width) + _RwDlRasterTarget->nOffsetX,
-                       (rect->y + raster->height) + _RwDlRasterTarget->nOffsetY);
+        GXPosition2s16(_RwDlRasterTarget->nOffsetX + rect->x + raster->width,
+                       _RwDlRasterTarget->nOffsetY + rect->y + raster->height);
         GXTexCoord2f32(recipWidth * (RwReal)(raster->nOffsetX + raster->width),
                        recipHeight * (RwReal)(raster->nOffsetY + raster->height));
 
-        GXPosition2s16((rect->x + raster->width) + _RwDlRasterTarget->nOffsetX,
+        GXPosition2s16(_RwDlRasterTarget->nOffsetX + rect->x + raster->width,
                        _RwDlRasterTarget->nOffsetY + rect->y);
         GXTexCoord2f32(recipWidth * (RwReal)(raster->nOffsetX + raster->width),
                        (RwReal)raster->nOffsetY * recipHeight);
@@ -238,6 +242,7 @@ static RwBool _rwDlRasterRenderGeneric(RwRaster* raster, RwRect* rect, RwBool sc
         {
             RWERROR((E_RW_DEVICEERROR, "SRC, DST Raster render combination not supported"));
             return FALSE;
+            break;
         }
         }
         break;
@@ -258,6 +263,7 @@ static RwBool _rwDlRasterRenderGeneric(RwRaster* raster, RwRect* rect, RwBool sc
         {
             RWERROR((E_RW_DEVICEERROR, "SRC, DST Raster render combination not supported"));
             return FALSE;
+            break;
         }
         }
         break;
@@ -267,6 +273,7 @@ static RwBool _rwDlRasterRenderGeneric(RwRaster* raster, RwRect* rect, RwBool sc
     {
         RWERROR((E_RW_DEVICEERROR, "SRC, DST Raster render combination not supported"));
         return FALSE;
+        break;
     }
     }
 
