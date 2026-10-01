@@ -7970,3 +7970,17 @@ All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
 early-cutoff invariant checks pass. Full all-source compilation and normal
 retail DOL SHA-1 validation pass. Bitplane remains NonMatching; source-linked
 Bink playback remains unverified.
+
+
+## Bink lossless child sign result (2026-10-01)
+
+Matching READ_LOSSLESS_CHILD's buffered/refill sign branches gives 74.17087%
+from 74.16758%. Keeping the signed result in the existing wide temporary
+until the final halfword store then raises ReadBPLossless to 75.0011%,
+avoiding an intermediate narrow signed assignment. The full deduplicated
+report changes only ReadBPLossless.
+
+All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
+early-cutoff invariant checks pass. Full all-source compilation and normal
+retail DOL SHA-1 validation pass. Bitplane remains NonMatching; source-linked
+Bink playback remains unverified.
