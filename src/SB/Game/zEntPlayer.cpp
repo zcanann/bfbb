@@ -9538,22 +9538,25 @@ inline void get_reticle_bound(xVec3& center, F32& radius)
 
 static void zEntPlayerUpdateModelSB()
 {
-    xAnimSingle* single = globals.player.ent.model->Anim->Single;
+    xEnt& ent = globals.player.ent;
+    xModelInstance** mlist = globals.player.sb_models;
+    xModelInstance* m;
+    xAnimSingle* asingle = ent.model->Anim->Single;
     S32 i;
 
-    xModelInstance* m = globals.player.sb_models[0];
+    m = mlist[0];
     m->Flags |= 3;
-    *m->Mat = *globals.player.ent.model->Mat;
+    *m->Mat = *ent.model->Mat;
 
-    m = globals.player.sb_models[1];
+    m = mlist[1];
     m->Flags |= 3;
-    *m->Mat = *globals.player.ent.model->Mat;
+    *m->Mat = *ent.model->Mat;
 
-    m = globals.player.sb_models[2];
+    m = mlist[2];
     m->Flags |= 3;
-    *m->Mat = *globals.player.ent.model->Mat;
+    *m->Mat = *ent.model->Mat;
 
-    m = globals.player.sb_models[3];
+    m = mlist[3];
 
     if (zGameExtras_CheatFlags() & 0x10000000)
     {
@@ -9564,15 +9567,15 @@ static void zEntPlayerUpdateModelSB()
         m->Flags &= 0xfffc;
     }
 
-    m = globals.player.sb_models[4];
+    m = mlist[4];
     m->Flags &= 0xfffc;
 
-    m = globals.player.sb_models[5];
+    m = mlist[5];
 
-    if (globals.player.IsBubbleSpinning || strcmp(single->State->Name, "BbashStart01") == 0 ||
-        strcmp(single->State->Name, "BbounceStrike01") == 0 ||
-        strcmp(single->State->Name, "BbounceStart01") == 0 ||
-        strcmp(single->State->Name, "BbounceAttack01") == 0)
+    if (globals.player.IsBubbleSpinning || strcmp(asingle->State->Name, "BbashStart01") == 0 ||
+        strcmp(asingle->State->Name, "BbounceStrike01") == 0 ||
+        strcmp(asingle->State->Name, "BbounceStart01") == 0 ||
+        strcmp(asingle->State->Name, "BbounceAttack01") == 0)
     {
         m->Flags |= 1;
     }
@@ -9581,15 +9584,15 @@ static void zEntPlayerUpdateModelSB()
         m->Flags &= 0xfffe;
     }
 
-    m = globals.player.sb_models[6];
+    m = mlist[6];
 
-    xAnimState* state = xAnimTableGetState(m->Anim->Table, single->State->Name);
+    xAnimState* tonguestate = xAnimTableGetState(m->Anim->Table, asingle->State->Name);
 
-    if (state)
+    if (tonguestate)
     {
         m->Flags = 1;
-        m->Anim->Single->State = state;
-        m->Anim->Single->Time = single->Time;
+        m->Anim->Single->State = tonguestate;
+        m->Anim->Single->Time = asingle->Time;
 
         if (m->Anim->Single->State->Data->NumAnims[0] == 3)
         {
@@ -9599,21 +9602,21 @@ static void zEntPlayerUpdateModelSB()
         xAnimPlayUpdate(m->Anim, 0.0f);
         xAnimPlayEval(m->Anim);
 
-        xMat4x3Mul((xMat4x3*)m->Mat, (xMat4x3*)&globals.player.ent.model->Mat[3],
-                   (xMat4x3*)globals.player.ent.model->Mat);
+        xMat4x3Mul((xMat4x3*)m->Mat, (xMat4x3*)&ent.model->Mat[3],
+                   (xMat4x3*)ent.model->Mat);
     }
     else
     {
         m->Flags = 0;
     }
 
-    m = globals.player.sb_models[7];
+    m = mlist[7];
 
-    if ((strcmp(single->State->Name, "BbashStart01") == 0 && single->Time >= 0.1f) ||
-        strcmp(single->State->Name, "BbashAttack01") == 0)
+    if ((strcmp(asingle->State->Name, "BbashStart01") == 0 && asingle->Time >= 0.1f) ||
+        strcmp(asingle->State->Name, "BbashAttack01") == 0)
     {
-        xMat4x3Mul((xMat4x3*)m->Mat, (xMat4x3*)&globals.player.ent.model->Mat[5],
-                   (xMat4x3*)globals.player.ent.model->Mat);
+        xMat4x3Mul((xMat4x3*)m->Mat, (xMat4x3*)&ent.model->Mat[5],
+                   (xMat4x3*)ent.model->Mat);
 
         RpAtomicSetRenderCallBack(m->Data, xFXBubbleRender);
 
@@ -9633,24 +9636,24 @@ static void zEntPlayerUpdateModelSB()
     }
 
     S32 bone_index[2] = { 38, 42 };
-    xModelInstance* model_index[2] = { globals.player.sb_models[8], globals.player.sb_models[9] };
+    xModelInstance* model_index[2] = { mlist[8], mlist[9] };
 
     for (i = 0; i < 2; i++)
     {
-        F32 startTime = 0.075f * i + 0.4f;
-        F32 strikeTime = 0.04f * i + 0.4f;
+        F32 on_time = 0.075f * i + 0.4f;
+        F32 off_time = 0.04f * i + 0.4f;
         S32 bone = bone_index[i];
 
         m = model_index[i];
 
-        if ((strcmp(single->State->Name, "BbounceStart01") == 0 &&
-             single->Time >= startTime) ||
-            strcmp(single->State->Name, "BbounceAttack01") == 0 ||
-            (strcmp(single->State->Name, "BbounceStrike01") == 0 &&
-             single->Time <= strikeTime))
+        if ((strcmp(asingle->State->Name, "BbounceStart01") == 0 &&
+             asingle->Time >= on_time) ||
+            strcmp(asingle->State->Name, "BbounceAttack01") == 0 ||
+            (strcmp(asingle->State->Name, "BbounceStrike01") == 0 &&
+             asingle->Time <= off_time))
         {
-            xMat4x3Mul((xMat4x3*)m->Mat, (xMat4x3*)&globals.player.ent.model->Mat[bone],
-                       (xMat4x3*)globals.player.ent.model->Mat);
+            xMat4x3Mul((xMat4x3*)m->Mat, (xMat4x3*)&ent.model->Mat[bone],
+                       (xMat4x3*)ent.model->Mat);
 
             RpAtomicSetRenderCallBack(m->Data, xFXBubbleRender);
 
@@ -11319,8 +11322,8 @@ static void SlideTrackUpdate(xEnt* p)
 
 static void zEntPlayerTSlideUpdate(xEnt* ent, xScene* sc, F32 dt)
 {
-    globals.player.SlideTrackSliding = (globals.player.SlideTrackSliding & 1) << 1;
     globals.player.SlideTrackLand = 0.0f;
+    globals.player.SlideTrackSliding = (globals.player.SlideTrackSliding & 1) << 1;
 
     if (globals.player.SlideTrackCount)
     {
@@ -13156,8 +13159,8 @@ static void CalcCombinedDepen(F32& dx, F32& dz, F32 ax, F32 az, F32 bx, F32 bz, 
     }
     else
     {
-        F32 normX = ax / la;
         F32 normZ = -az / la;
+        F32 normX = ax / la;
         F32 ubx = bx / lb;
         F32 nddot = normZ * ubx + normX * (bz / lb);
         F32 say = normX;
@@ -13181,26 +13184,28 @@ static void CalcCombinedDepen(F32& dx, F32& dz, F32 ax, F32 az, F32 bx, F32 bz, 
             dz = (lb * say) / d;
 
             F32 nby = -bz / lb;
-            F32 dot2 = nby * normX + ubx * (az / la);
+            nddot = nby * normX + ubx * (az / la);
 
-            if (dot2 < 0.0f)
+            if (nddot < 0.0f)
             {
-                dot2 = -dot2;
+                nddot = -nddot;
                 nby = -nby;
                 ubx = -ubx;
             }
 
-            if (dot2 < 0.0001f)
+            if (nddot < 0.0001f)
             {
                 dx = 0.5f * (ax + bx);
                 dz = 0.5f * (az + bz);
             }
 
-            dot2 = MAX(0.25f, dot2);
-            dx = dx + (la * nby) / dot2;
-            dz = dz + (la * ubx) / dot2;
-            dx = dx * fudge + 0.5f * (ax + bx) * (1.0f - fudge);
-            dz = dz * fudge + 0.5f * (az + bz) * (1.0f - fudge);
+            nddot = MAX(0.25f, nddot);
+            dx = dx + (la * nby) / nddot;
+            dz = dz + (la * ubx) / nddot;
+            F32 hx = 0.5f * (ax + bx);
+            F32 hz = 0.5f * (az + bz);
+            dx = dx * fudge + hx * (1.0f - fudge);
+            dz = dz * fudge + hz * (1.0f - fudge);
         }
     }
 }
@@ -14267,12 +14272,7 @@ static void PlayerRotMatchUpdateEnt(xEnt* ent, xScene* sc, F32 dt, void* fdata)
     xCollis* coll = ent->collis->colls;
     S32 hit_it = coll->flags & 0x1;
     xSurface* surf = zSurfaceGetSurface(coll);
-    U8 grounded = 0;
-
-    if (hit_it && surf && !surf->state && zSurfaceGetMatchOrient(surf))
-    {
-        grounded = 1;
-    }
+    S32 grounded = hit_it && surf && !surf->state && zSurfaceGetMatchOrient(surf);
 
     if (grounded)
     {
@@ -14309,11 +14309,13 @@ static void PlayerRotMatchUpdateEnt(xEnt* ent, xScene* sc, F32 dt, void* fdata)
 
             if (rang)
             {
-                F32 s = MIN(1.0f, dt / rms->tmatch);
+                F32 dang = dt / rms->tmatch;
+                F32 s = MIN(1.0f, dang);
 
                 if (fdecl >= rms->max_decl)
                 {
-                    s = MIN(s, (rms->max_decl - edecl) / (fdecl - edecl));
+                    dang = (rms->max_decl - edecl) / (fdecl - edecl);
+                    s = MIN(s, dang);
                 }
 
                 if (s)
@@ -15722,9 +15724,9 @@ static void PlayerLedgeUpdate(xEnt* ent, xScene* sc, F32 dt)
                 ray.max_t = ray.origin.y - (-1.25f + nfp.nearpt.y);
                 ray.flags = 0xc00;
                 coll.flags = 0;
+                coll.dist = 1e38f;
                 coll.optr = NULL;
                 coll.mptr = NULL;
-                coll.dist = 1e38f;
                 xRayHitsSceneFlags(sc, &ray, &coll, 0x10, 0x26);
 
                 if (coll.dist < 1e38f)

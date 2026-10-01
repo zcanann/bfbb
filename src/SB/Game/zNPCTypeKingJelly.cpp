@@ -3307,8 +3307,8 @@ void zNPCKingJelly::update_blink(F32 dt)
         blink.intensity = 0.0f;
     }
 
+    F32 i = 1.0f - blink.intensity;
     F32 ii = blink.intensity;
-    F32 i = 1.0f - ii;
 
     set_model_color(model, ii * tweak.blink.color.r + i, ii * tweak.blink.color.g + i,
                     ii * tweak.blink.color.b + i, ii * tweak.blink.color.a + i);

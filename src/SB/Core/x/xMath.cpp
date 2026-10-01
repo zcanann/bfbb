@@ -467,7 +467,8 @@ void xAccelStop(F32& x, F32& v, F32 a, F32 dt)
             a = -a;
         }
 
-        v += -a * dt;
+        a = -a;
+        v += a * dt;
 
         if (v < 0.0f)
         {
@@ -489,13 +490,13 @@ void xAccelStop(F32& x, F32& v, F32 a, F32 dt)
 
         if (var_r0 == var_r5)
         {
-            x += (-a * (0.5f * dt * dt)) + (oldv * dt);
+            x += (a * (0.5f * dt * dt)) + (oldv * dt);
             return;
         }
 
-        if (!(-a >= -0.00001f) || !(-a <= 0.00001f))
+        if (!(a >= -0.00001f) || !(a <= 0.00001f))
         {
-            x -= (0.5f * oldv * oldv) / -a;
+            x -= (0.5f * oldv * oldv) / a;
         }
         v = 0.0f;
     }

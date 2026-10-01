@@ -223,7 +223,9 @@ void iCameraSetFOV(RwCamera* cam, F32 fov)
 {
     RwV2d vw;
 
-    vw.y = 0.75f * (vw.x = itan(PI * (0.5f * fov) / 180.0f));
+    F32 x = itan(PI * (0.5f * fov) / 180.0f);
+    vw.x = x;
+    vw.y = 0.75f * x;
 
     RwCameraSetViewWindow(cam, &vw);
 }

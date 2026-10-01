@@ -160,7 +160,7 @@ static void UpdateRain(_tagClimate* climate, float seconds)
             xVec3* p = pos;
             xVec3* v = vel;
 
-            for (S32 i = 0; i < num; i++)
+            for (S32 i = 0; i < num; i++, p++, v++)
             {
                 *p = fool;
                 p->x += 45.0f * xurand() - 22.5f;
@@ -175,9 +175,6 @@ static void UpdateRain(_tagClimate* climate, float seconds)
                 v->x = dvx * xurand() + vx;
                 v->y = dvy * xurand() + vy;
                 v->z = dvz * xurand() + vz;
-
-                p++;
-                v++;
             }
 
             zParPTankSpawnSnow(pos, vel, num);

@@ -97,8 +97,8 @@ void zVolume_OccludePrecalc(xVec3* camPos)
         corner[0].y = a->bound.box.box.lower.y;
         corner[0].z = s * (a->bound.box.box.lower.x - a->xpivot) + a->bound.box.box.lower.z;
 
-        corner[1].y = a->bound.box.box.lower.y;
         corner[1].x = c * (a->bound.box.box.upper.x - a->xpivot) + a->xpivot;
+        corner[1].y = a->bound.box.box.lower.y;
         corner[1].z = s * (a->bound.box.box.upper.x - a->xpivot) + a->bound.box.box.lower.z;
 
         corner[2].x = c * (a->bound.box.box.upper.x - a->xpivot) + a->xpivot;

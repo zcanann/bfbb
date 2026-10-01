@@ -22,7 +22,6 @@ static xEnt** sSimpleCustomList;
 
 void zEntSimpleObj_MgrInit(zEntSimpleObj** entList, U32 entCount)
 {
-    zEntSimpleObj** tempEntPtr;
     u32 i;
     zEntSimpleObj** tempEntList;
     u32 tempEntCount;
@@ -46,7 +45,6 @@ void zEntSimpleObj_MgrInit(zEntSimpleObj** entList, U32 entCount)
         tempEntCount = 0;
         custEntCount = 0;
         trailerHash = xStrHash("trailer_hitch\0xEntAutoEventSimple");
-        tempEntPtr = tempEntList;
         i = 0U;
         while (i < entCount)
         {
@@ -79,10 +77,9 @@ void zEntSimpleObj_MgrInit(zEntSimpleObj** entList, U32 entCount)
                 }
                 else
                 {
-                    tempEntCount += 1;
                     ent->baseFlags |= 0x80;
-                    *tempEntPtr = entList[i];
-                    tempEntPtr += 1;
+                    tempEntList[tempEntCount] = entList[i];
+                    tempEntCount += 1;
                 }
             }
             i += 1;
@@ -110,16 +107,15 @@ void zEntSimpleObj_MgrInit(zEntSimpleObj** entList, U32 entCount)
         }
         sMgrCount = tempEntCount;
         sMgrList = (zSimpleMgr*)xMemAlloc(gActiveHeap, tempEntCount * sizeof(zSimpleMgr), 0x40);
-        tempEntPtr = tempEntList;
         i = 0U;
         smgr = sMgrList;
         while (i < tempEntCount)
         {
-            RpAtomic* model = (*tempEntPtr)->model->Data;
+            RpAtomic* model = tempEntList[i]->model->Data;
             RwSphere oldbound = model->boundingSphere;
 
             model->boundingSphere.radius *= 1.1f;
-            iModelCull(model, (*tempEntPtr)->model->Mat);
+            iModelCull(model, tempEntList[i]->model->Mat);
             model->boundingSphere = oldbound;
 
             smgr->worldBound.center.x = model->worldBoundingSphere.center.x;
@@ -127,10 +123,10 @@ void zEntSimpleObj_MgrInit(zEntSimpleObj** entList, U32 entCount)
             smgr->worldBound.center.z = model->worldBoundingSphere.center.z;
             smgr->worldBound.r = model->worldBoundingSphere.radius;
 
-            zLODTable* lod = zLOD_Get(*tempEntPtr);
+            zLODTable* lod = zLOD_Get(tempEntList[i]);
             if (lod != NULL)
             {
-                RwMatrixTag* m = (*tempEntPtr)->model->Mat;
+                RwMatrixTag* m = tempEntList[i]->model->Mat;
                 F32 distscale = SQR(m->right.x) + SQR(m->right.y) + SQR(m->right.z);
 
                 if (distscale < 0.0001f)
@@ -171,21 +167,20 @@ void zEntSimpleObj_MgrInit(zEntSimpleObj** entList, U32 entCount)
                 smgr->lodDist[2] = 1e38f;
                 smgr->lodDist[3] = 1e38f;
 
-                smgr->lodBucket[0] = (*tempEntPtr)->model->Bucket;
+                smgr->lodBucket[0] = tempEntList[i]->model->Bucket;
                 smgr->lodBucket[1] = NULL;
                 smgr->lodBucket[2] = NULL;
                 smgr->lodBucket[3] = NULL;
             }
 
-            smgr->entFlags = (*tempEntPtr)->flags;
-            smgr->mat = (*tempEntPtr)->model->Mat;
-            smgr->ent = *tempEntPtr;
+            smgr->entFlags = tempEntList[i]->flags;
+            smgr->mat = tempEntList[i]->model->Mat;
+            smgr->ent = tempEntList[i];
             smgr->lastlod = 0xFF;
 
-            xEntUpdate(*tempEntPtr, globals.sceneCur, 0.0f);
+            xEntUpdate(tempEntList[i], globals.sceneCur, 0.0f);
 
             smgr++;
-            tempEntPtr += 1;
             i += 1;
         }
         RwFree(tempEntList);

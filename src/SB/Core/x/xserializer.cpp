@@ -363,7 +363,8 @@ static void xSER_init_buffers(S32 count, st_SERIAL_PERCID_SIZE* sizeinfo)
 
     xsd->cltbuf =
         (st_SERIAL_CLIENTINFO*)xMemAlloc(gActiveHeap, count * sizeof(st_SERIAL_CLIENTINFO), 0);
-    memset(xsd->cltbuf, 0, count * sizeof(st_SERIAL_CLIENTINFO));
+    // Signed size here: retail recomputes count * 16 rather than reusing the alloc size.
+    memset(xsd->cltbuf, 0, count * (S32)sizeof(st_SERIAL_CLIENTINFO));
     xsd->cltnext = xsd->cltbuf;
 
     sitmp = sizeinfo;

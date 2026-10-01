@@ -1255,10 +1255,11 @@ static void xEntMotionDebugDraw(const xEntMotion* xem)
     case k_XENTMOTIONTYPE_MP:
     {
         xDrawSetColor(g_PIMP_GOLD);
+        xMovePoint* src;
         xMovePoint* xmp = xem->mp.dest;
         if (xmp)
         {
-            xMovePoint* src = xem->mp.src;
+            src = xem->mp.src;
             for (U16 idx = 0; idx < xMovePointGetNumPoints(xmp); idx++)
             {
                 xMovePoint* omp = xMovePointGetPoint(xmp, idx);

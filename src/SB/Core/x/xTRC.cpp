@@ -25,8 +25,6 @@ static const char* __deadstripped_xTRC()
            "An error has occurred. Turn the power off and refer to the Nintendo GameCube\x99 Instruction Booklet for further instructions.";
 }
 
-static const char* message_text;
-
 static const basic_rect<F32> screen_bounds = { 0.0f, 0.0f, 1.0f, 1.0f };
 static const S32 yellow = 0xFFE600FF;
 
@@ -57,6 +55,8 @@ static void render_message(const char* s)
 
     tb.render(true);
 }
+
+static const char* message_text;
 
 void xTRCRender()
 {
@@ -144,7 +144,10 @@ void RenderText(const char* text, bool enabled)
 
 // NOTE: these belong in xMath2.h. They are template members, so the compiler
 // emits a weak out-of-line copy into every translation unit that instantiates
-// them.
+// them. With -sym on, CodeWarrior emits header-defined inlines in a trailing
+// group after the TU's own functions; the #line puts these back in that group
+// (after the xtextbox inlines), which is where the retail object has them.
+#line 1 "xMath2.h"
 template <class T> basic_rect<T>& basic_rect<T>::contract(T s)
 {
     return expand(-s);

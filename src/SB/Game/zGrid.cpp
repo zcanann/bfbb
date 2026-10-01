@@ -41,19 +41,18 @@ static void hack_flag_shadows(zScene* s)
         xStrHash("db03_path_m"),
         xStrHash("db03_path_o"),
         xStrHash("db03_path_p"),
-    }; // non-matching: stb happens too early?
+    };
 
+    U32* end_special_models = special_models + 25;
     zEnt** it = s->ents;
-    zEnt** end = s->ents + s->num_ents;
+    zEnt** end = it + s->num_ents;
 
     while (it != end)
     {
-        // non-matching: extra `mr` instruction?
         xEnt* ent = *it;
         if (ent && (ent->baseFlags & 0x20) && ent->asset)
         {
             U32* id = special_models;
-            U32* end_special_models = id + 25;
 
             while (id != end_special_models)
             {

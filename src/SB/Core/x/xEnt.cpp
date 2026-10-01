@@ -1368,16 +1368,15 @@ static void xEntCollCheckOneGrid(xEnt* p, xScene* sc, xEnt* (*hitIt)(xEnt*, xSce
         cell = xGridIterNextCell(it);
     }
 
-    F32 clcenterz = (grid->csizez * 0.5f);
-    F32 clcenterx = (grid->csizex * 0.5f);
-
     F32 cellx = grid->csizex * px;
     F32 cellz = grid->csizez * pz;
-
     cellx += grid->minx;
     cellz += grid->minz;
 
+    F32 clcenterx = 0.5f * grid->csizex;
     clcenterx += cellx;
+
+    F32 clcenterz = 0.5f * grid->csizez;
     clcenterz += cellz;
 
     static S32 k;
