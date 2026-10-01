@@ -93,14 +93,16 @@ static RwBool SqrtTableCreate(void)
     for (i = 0; i < rwSQRTTABLEHALF; i++)
     {
         spOut.nReal = VectorSqrt(spIn.nReal);
-        SqrtTab1to2[i].nInt = spOut.nInt - 0x1FC00000;
+        spOut.nUInt = spOut.nInt - 0x1FC00000;
+        SqrtTab1to2[i].nUInt = spOut.nUInt;
         spIn.nInt += 0x1000;
     }
 
     for (i = 0; i < rwSQRTTABLEHALF; i++)
     {
         spOut.nReal = VectorSqrt(spIn.nReal);
-        SqrtTab2to4[i].nInt = spOut.nInt - 0x20000000;
+        spOut.nUInt = spOut.nInt - 0x20000000;
+        SqrtTab2to4[i].nUInt = spOut.nUInt;
         spIn.nInt += 0x1000;
     }
 
@@ -142,14 +144,16 @@ static RwBool InvSqrtTableCreate(void)
     for (i = 0; i < rwSQRTTABLEHALF; i++)
     {
         spOut.nReal = 1.0f / VectorSqrt(spIn.nReal);
-        InvSqrtTab1to2[i].nInt = spOut.nInt - 0x20000000;
+        spOut.nUInt = spOut.nInt - 0x20000000;
+        InvSqrtTab1to2[i].nUInt = spOut.nUInt;
         spIn.nInt += 0x1000;
     }
 
     for (i = 0; i < rwSQRTTABLEHALF; i++)
     {
         spOut.nReal = 1.0f / VectorSqrt(spIn.nReal);
-        InvSqrtTab2to4[i].nInt = spOut.nInt - 0x1FC00000;
+        spOut.nUInt = spOut.nInt - 0x1FC00000;
+        InvSqrtTab2to4[i].nUInt = spOut.nUInt;
         spIn.nInt += 0x1000;
     }
 

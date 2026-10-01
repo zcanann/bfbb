@@ -12,7 +12,7 @@ extern void* realloc(void* mem, size_t newSize);
 #define RwFreeListAlloc(_fl) ((RWSRCGLOBAL(memoryAlloc))((_fl)))
 #define RwFreeListFree(_fl, _p) ((RWSRCGLOBAL(memoryFree))((_fl), (_p)))
 
-#define rwFREELISTALIGN(ptr, align)                                                                    ((RwUInt8*)(((RwUInt32)(ptr) + ((align) - 1)) & ~((align) - 1)))
+#define rwFREELISTALIGN(ptr, align) ((RwUInt8*)((RwUInt32)((ptr) + (align) - 1) & ~((align) - 1)))
 
 static RwBool FreeListsEnabled = TRUE;
 
@@ -69,16 +69,13 @@ static RwFreeList* FreeListCreate(RwUInt32 entrySize, RwUInt32 entriesPerBlock,
         freeList->flags = rwFREELISTFLAG_STATIC | rwFREELISTFLAG_FREEBLOCKS;
     }
 
-    entrySize = (entrySize + alignment - 1) & ~(alignment - 1);
-    heapSize = (entriesPerBlock + 7) >> 3;
-
-    freeList->entrySize = entrySize;
+    entrySize = freeList->entrySize = (entrySize + (alignment - 1)) & ~(alignment - 1);
     freeList->entriesPerBlock = entriesPerBlock;
-    freeList->heapSize = heapSize;
     freeList->alignment = alignment;
+    heapSize = freeList->heapSize = (entriesPerBlock + 7) >> 3;
     rwLinkListInitialize(&freeList->blockList);
 
-    alignedBlockSize = heapSize + entriesPerBlock * entrySize + alignment + sizeof(RwLLLink) - 1;
+    alignedBlockSize = heapSize + entriesPerBlock * entrySize + (alignment - 1) + sizeof(RwLLLink);
 
     while (blocks)
     {
@@ -119,14 +116,17 @@ RwFreeList* RwFreeListCreateAndPreallocateSpace(RwInt32 entrySize, RwInt32 entri
 static void _RwFreeListFree(RwFreeList* freeList)
 {
     RwLLLink* link;
+    RwLLLink* lastLink;
 
     link = rwLinkListGetFirstLLLink(&freeList->blockList);
-    while (link != rwLinkListGetTerminator(&freeList->blockList))
+    lastLink = rwLinkListGetTerminator(&freeList->blockList);
+    while (link != lastLink)
     {
         rwLinkListRemoveLLLink(link);
         RwFree(link);
 
         link = rwLinkListGetFirstLLLink(&freeList->blockList);
+        lastLink = rwLinkListGetTerminator(&freeList->blockList);
     }
 
     if (!(freeList->flags & rwFREELISTFLAG_STATIC))
@@ -152,39 +152,47 @@ RwBool RwFreeListDestroy(RwFreeList* freeList)
 
 void* _rwFreeListAllocReal(RwFreeList* freeList)
 {
-    RwUInt32 heapEntries = freeList->heapSize;
-    void* freeEntry = NULL;
+    RwUInt8 heapElement;
+    RwUInt8 mask;
+    void* freeEntry;
+    RwUInt32 i;
+    RwUInt32 j;
+    RwUInt32 heapEntries;
+    RwUInt8* heap;
     RwLLLink* link;
     RwLLLink* lastLink;
+    RwUInt32 checkEntries;
+    RwUInt8* aligned;
+
+    heapEntries = freeList->heapSize;
+    freeEntry = NULL;
 
     link = rwLinkListGetFirstLLLink(&freeList->blockList);
     lastLink = rwLinkListGetTerminator(&freeList->blockList);
     while (link != lastLink && !freeEntry)
     {
-        RwUInt8* heap = (RwUInt8*)(link + 1);
-        RwUInt32 checkEntries = freeList->entriesPerBlock;
-        RwUInt32 i;
+        heap = (RwUInt8*)(link + 1);
+        checkEntries = freeList->entriesPerBlock;
 
         for (i = 0; i < heapEntries; i++)
         {
-            RwUInt8 heapElement = heap[i];
+            heapElement = heap[i];
 
             if (heapElement != 0xFF)
             {
-                RwUInt32 j = 0;
+                j = 0;
 
                 while (j < 8 && checkEntries)
                 {
-                    RwUInt8 mask = (RwUInt8)(0x80 >> j);
+                    mask = (RwUInt8)(0x80 >> j);
 
                     if (!(heapElement & mask))
                     {
-                        RwUInt8* aligned;
-
                         heap[i] = mask | heapElement;
 
-                        aligned = rwFREELISTALIGN(heap + heapEntries, freeList->alignment);
-                        freeEntry = aligned + freeList->entrySize * (i * 8 + j);
+                        aligned = rwFREELISTALIGN((RwUInt8*)link + sizeof(RwLLLink) + heapEntries,
+                                                  freeList->alignment);
+                        freeEntry = aligned + freeList->entrySize * ((i << 3) + j);
                         break;
                     }
 
@@ -209,22 +217,25 @@ void* _rwFreeListAllocReal(RwFreeList* freeList)
     if (!freeEntry)
     {
         /* Every block is full, so add another one */
-        RwUInt8* heap;
+        void* dataBlock;
 
-        link = (RwLLLink*)RwMalloc(sizeof(RwLLLink) + heapEntries +
-                                   freeList->entriesPerBlock * freeList->entrySize +
-                                   freeList->alignment - 1);
-        if (!link)
+        dataBlock = RwMalloc(sizeof(RwLLLink) + heapEntries +
+                             freeList->entriesPerBlock * freeList->entrySize +
+                             freeList->alignment - 1);
+        if (!dataBlock)
         {
             return NULL;
         }
 
+        link = (RwLLLink*)dataBlock;
         heap = (RwUInt8*)(link + 1);
         memset(heap, 0, heapEntries);
         rwLinkListAddLLLink(&freeList->blockList, link);
 
         heap[0] = 0x80;
-        freeEntry = rwFREELISTALIGN(heap + heapEntries, freeList->alignment);
+        aligned = rwFREELISTALIGN((RwUInt8*)link + sizeof(RwLLLink) + heapEntries,
+                                  freeList->alignment);
+        freeEntry = aligned;
     }
 
     return freeEntry;
@@ -247,11 +258,13 @@ RwFreeList* _rwFreeListFreeReal(RwFreeList* freeList, void* entry)
 {
     RwUInt32 heapEntries = freeList->heapSize;
     RwLLLink* link;
+    RwLLLink* lastLink;
 
     link = rwLinkListGetFirstLLLink(&freeList->blockList);
-    while (link != rwLinkListGetTerminator(&freeList->blockList))
+    lastLink = rwLinkListGetTerminator(&freeList->blockList);
+    while (link != lastLink)
     {
-        RwUInt8* dataBlock = (RwUInt8*)link + (sizeof(RwLLLink) + heapEntries);
+        RwUInt8* dataBlock = (RwUInt8*)link + sizeof(RwLLLink) + heapEntries;
 
         if ((RwUInt8*)entry >= dataBlock &&
             (RwUInt8*)entry <= dataBlock + freeList->entriesPerBlock * freeList->entrySize)
@@ -268,7 +281,7 @@ RwFreeList* _rwFreeListFreeReal(RwFreeList* freeList, void* entry)
                 /* Release the block once it is empty, unless it is the only one */
                 if (FreeListBlockIsEmpty(heap, heapEntries) &&
                     (link != rwLinkListGetFirstLLLink(&freeList->blockList) ||
-                     rwLLLinkGetNext(link) != rwLinkListGetTerminator(&freeList->blockList)))
+                     rwLLLinkGetNext(link) != lastLink))
                 {
                     rwLinkListRemoveLLLink(link);
                     RwFree(link);
@@ -287,15 +300,26 @@ RwFreeList* _rwFreeListFreeReal(RwFreeList* freeList, void* entry)
 RwFreeList* RwFreeListForAllUsed(RwFreeList* freeList, RwFreeListCallBack fpCallBack,
                                  void* pData)
 {
-    RwUInt32 heapEntries = freeList->heapSize;
+    RwUInt32 heapEntries;
     RwLLLink* link;
+    RwLLLink* lastLink;
     RwLLLink* nextLink;
+    RwUInt8* heap;
+    RwUInt8* heapCopy;
+    RwUInt32 heapElement;
+    RwUInt8 mask;
+    RwUInt32 i;
+    RwUInt32 j;
+    RwUInt8* aligned;
+    RwUInt8* entry;
+
+    heapEntries = freeList->heapSize;
 
     link = rwLinkListGetFirstLLLink(&freeList->blockList);
-    while (link != rwLinkListGetTerminator(&freeList->blockList))
+    lastLink = rwLinkListGetTerminator(&freeList->blockList);
+    while (link != lastLink)
     {
-        RwUInt8* heapCopy;
-        RwUInt32 i;
+        heap = (RwUInt8*)(link + 1);
 
         /* Work from a copy so the callback may free entries */
         heapCopy = (RwUInt8*)RwMalloc(heapEntries);
@@ -304,25 +328,26 @@ RwFreeList* RwFreeListForAllUsed(RwFreeList* freeList, RwFreeListCallBack fpCall
             return NULL;
         }
 
-        memcpy(heapCopy, link + 1, heapEntries);
+        memcpy(heapCopy, heap, heapEntries);
         nextLink = rwLLLinkGetNext(link);
 
         for (i = 0; i < heapEntries; i++)
         {
-            RwUInt8 heapElement = heapCopy[i];
+            heapElement = heapCopy[i];
 
             if (heapElement)
             {
-                RwUInt32 j;
-
                 for (j = 0; j < 8; j++)
                 {
-                    if (heapElement & (RwUInt8)(0x80 >> j))
-                    {
-                        RwUInt8* aligned = rwFREELISTALIGN((RwUInt8*)(link + 1) + heapEntries,
-                                                           freeList->alignment);
+                    mask = (RwUInt8)(0x80 >> j);
 
-                        fpCallBack(aligned + freeList->entrySize * (i * 8 + j), pData);
+                    if (heapElement & mask)
+                    {
+                        aligned = rwFREELISTALIGN((RwUInt8*)link + sizeof(RwLLLink) + heapEntries,
+                                                  freeList->alignment);
+                        entry = aligned + freeList->entrySize * ((i << 3) + j);
+
+                        fpCallBack(entry, pData);
                     }
                 }
             }
@@ -369,14 +394,19 @@ static RwBool _rwFreeListModuleOpen(void)
 
 static void _rwFreeListModuleClose(void)
 {
+    RwFreeList* freeList;
     RwLLLink* link;
+    RwLLLink* lastLink;
 
     link = rwLinkListGetFirstLLLink(&_freeListList);
-    while (link != rwLinkListGetTerminator(&_freeListList))
+    lastLink = rwLinkListGetTerminator(&_freeListList);
+    while (link != lastLink)
     {
-        RwFreeListDestroy(rwLLLinkGetData(link, RwFreeList, link));
+        freeList = rwLLLinkGetData(link, RwFreeList, link);
+        RwFreeListDestroy(freeList);
 
         link = rwLinkListGetFirstLLLink(&_freeListList);
+        lastLink = rwLinkListGetTerminator(&_freeListList);
     }
 
     RwFreeListDestroy(_masterFreeListPtr);
