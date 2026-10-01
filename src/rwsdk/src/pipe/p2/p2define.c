@@ -666,13 +666,13 @@ RxPipeline* RxLockedPipeUnlock(RxLockedPipe* pipeline)
                 return NULL;
             }
 
-            newTopSortData = (RxPipelineNodeTopSortData*)((RwUInt8*)pipeline->superBlock +
-                                                          unlockStartBlockSize) -
-                             1;
             outputs = (RwUInt32*)(pipeline->nodes + RXPIPELINEGLOBAL(maxNodesPerPipe));
             topSortData = (RxPipelineNodeTopSortData*)(outputs + RXPIPELINEGLOBAL(maxNodesPerPipe) *
-                                                                     RXNODEMAXOUTPUTS) +
-                          (pipeline->numNodes - 1);
+                                                                     RXNODEMAXOUTPUTS);
+            topSortData += pipeline->numNodes - 1;
+            newTopSortData =
+                (RxPipelineNodeTopSortData*)((RwUInt8*)pipeline->superBlock + unlockStartBlockSize);
+            newTopSortData--;
 
             for (i = pipeline->numNodes - 1; i >= 0; i--)
             {

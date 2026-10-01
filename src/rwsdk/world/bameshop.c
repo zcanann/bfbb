@@ -692,25 +692,30 @@ static RwUInt32 TriStripFollow(TriStripListEntry* strip, Edge* nextEdge, TriBinL
 static RwBool TriStripStripTris(RpBuildMeshTriangle* triList, RwUInt32 numTris,
                                 TriStripList* stripList, RwBool preprocess)
 {
+    RwUInt32 offset;
     Edge* edgelist = (Edge*)NULL;
     TriStripListEntry* newStrip;
     TriStripListEntry* buildStrip;
     TriStripListEntry* revBuildStrip;
     RwUInt32 i;
     RwUInt32 trisUsed = 0;
+    RwUInt32 trisUsedTemp;
     TriBinList binListArray[4];
     TriBinEntry** binEntryArray;
     Edge* nextEdge = (Edge*)NULL;
     Edge* firstEdge = (Edge*)NULL;
     MeshOpFreeLists meshOpFreeLists;
-
-    meshOpFreeLists.binEntryFreeList = (RwFreeList*)NULL;
-    meshOpFreeLists.edgeFreeList = (RwFreeList*)NULL;
+    RwUInt32 bestOffset;
+    RwInt32 currentAttempt;
+    RwUInt32 bestSize;
 
     binListArray[0].head = (TriBinEntry*)NULL;
     binListArray[1].head = (TriBinEntry*)NULL;
     binListArray[2].head = (TriBinEntry*)NULL;
     binListArray[3].head = (TriBinEntry*)NULL;
+
+    meshOpFreeLists.binEntryFreeList = (RwFreeList*)NULL;
+    meshOpFreeLists.edgeFreeList = (RwFreeList*)NULL;
 
     binEntryArray = TriStripBinEntryArrayCreate(numTris, &meshOpFreeLists, &edgelist, triList);
 
@@ -739,12 +744,11 @@ static RwBool TriStripStripTris(RpBuildMeshTriangle* triList, RwUInt32 numTris,
 
     while (trisUsed < numTris)
     {
-        RwUInt32 bestSize = 0;
-        RwInt32 currentAttempt = preprocess ? 0 : 3;
         RwUInt32 startEdge;
-        RwUInt32 bestOffset;
-        RwUInt32 trisUsedTemp;
         RwUInt32 bin;
+
+        bestSize = 0;
+        currentAttempt = preprocess ? 0 : 3;
 
         if (binListArray[0].head)
         {
@@ -827,9 +831,8 @@ static RwBool TriStripStripTris(RpBuildMeshTriangle* triList, RwUInt32 numTris,
         bestOffset = startEdge;
 
         /* Try each rotation of the first triangle, then build the best one for real */
-        do
+        for (;;)
         {
-            RwUInt32 offset;
             RwUInt32 tri;
             RwBool firstEdgeIsAvailable;
 
@@ -879,7 +882,8 @@ static RwBool TriStripStripTris(RpBuildMeshTriangle* triList, RwUInt32 numTris,
 
             TriStripMarkTriUsed(binListArray[bin].head, binListArray, currentAttempt);
 
-            trisUsed = trisUsedTemp + 1;
+            trisUsed = trisUsedTemp;
+            trisUsed++;
             trisUsed += TriStripFollow(buildStrip, nextEdge, binListArray, triList, currentAttempt);
 
             firstEdgeIsAvailable = (currentAttempt < 4) ? (TriStripEdgeFreeTris2(firstEdge) > 0) :
@@ -932,6 +936,7 @@ static RwBool TriStripStripTris(RpBuildMeshTriangle* triList, RwUInt32 numTris,
                            buildStrip->stripLen * sizeof(RwUInt32));
 
                     newStrip->stripLen = newStrip->stripSize;
+                    break;
                 }
             }
             else
@@ -956,9 +961,10 @@ static RwBool TriStripStripTris(RpBuildMeshTriangle* triList, RwUInt32 numTris,
 
                     memcpy(newStrip->strip, buildStrip->strip,
                            buildStrip->stripLen * sizeof(RwUInt32));
+                    break;
                 }
             }
-        } while (currentAttempt < 4);
+        }
     }
 
     RwFree(revBuildStrip->strip);
@@ -980,6 +986,7 @@ static RwBool TriStripJoin(TriStripList* stripList, RwBool maintainWinding)
     RwUInt32 j;
     TriStripListEntry* newStrip;
     TriStripListEntry* stripPtr;
+    TriStripListEntry* next;
     TriStripListEntry* tempStrip;
     TriStripListEntry* tempStrip2;
 
@@ -993,9 +1000,9 @@ static RwBool TriStripJoin(TriStripList* stripList, RwBool maintainWinding)
     newStrip->stripSize = 0;
 
     /* Leave room for the degenerate triangles that stitch the strips together */
-    for (stripPtr = stripList->head; stripPtr; stripPtr = stripPtr->next)
+    for (tempStrip = stripList->head; tempStrip; tempStrip = tempStrip->next)
     {
-        newStrip->stripSize += stripPtr->stripLen + 6;
+        newStrip->stripSize += tempStrip->stripLen + 6;
     }
 
     newStrip->strip = (RxVertexIndex*)RwMalloc(newStrip->stripSize * sizeof(RwUInt32));
@@ -1010,8 +1017,9 @@ static RwBool TriStripJoin(TriStripList* stripList, RwBool maintainWinding)
     RwFree(stripPtr->strip);
     stripPtr->strip = (RxVertexIndex*)NULL;
 
-    tempStrip = stripPtr->next;
+    next = stripPtr->next;
     RwFreeListFree(RWMESHGLOBAL(triStripListEntryFreeList), stripPtr);
+    tempStrip = next;
 
     while (tempStrip)
     {
