@@ -75,9 +75,9 @@ static void IndicesRemap(RwUInt16* dstIndexList, RwUInt16* srcIndexList, RwInt32
         numHoles = 0;
 
         /* Redirect duplicates to the vertex they were merged with */
-        if (map[index] != -1)
+        if (map[srcIndexList[i]] != -1)
         {
-            index = (RwUInt16)map[index];
+            index = (RwUInt16)map[srcIndexList[i]];
         }
 
         /* Then close up the holes left by the removed vertices */
@@ -97,15 +97,16 @@ rwGCNIndexDataRemapped* IndexDataCreateRemapped(rwGCNVtxDataMap* vtxDataMap,
                                                 rwGCNIndexData* indexData, RwUInt32 numEntries,
                                                 RwUInt32 numIndices)
 {
+    RwUInt32 headerSize;
     RwUInt32 size;
     rwGCNIndexDataRemapped* indexDataRemapped;
     RwUInt32 offset;
     RwUInt32 i;
 
+    headerSize = numEntries * sizeof(rwGCNIndexDataRemapped);
     size = numIndices * sizeof(RwUInt16);
 
-    indexDataRemapped = (rwGCNIndexDataRemapped*)RwMalloc(
-        numEntries * sizeof(rwGCNIndexDataRemapped) + numEntries * size);
+    indexDataRemapped = (rwGCNIndexDataRemapped*)RwMalloc(headerSize + numEntries * size);
     if (indexDataRemapped == NULL)
     {
         return NULL;

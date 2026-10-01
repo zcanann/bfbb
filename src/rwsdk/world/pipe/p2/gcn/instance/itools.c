@@ -16,7 +16,7 @@ void _rwGCNTriStripGetStats(RwUInt16* indices, RwUInt32 numIndices, RwUInt32* nu
 
     for (i = 0; i < numIndices - 2; i++)
     {
-        if (indices[0] != indices[1] && indices[0] != indices[2] && indices[1] != indices[2])
+        if (indices[i] != indices[i + 1] && indices[i] != indices[i + 2] && indices[i + 1] != indices[i + 2])
         {
             /* A real triangle - extend the current strip */
             if (length == 0 && (i & 1) && preserveWindingOrder)
@@ -33,7 +33,7 @@ void _rwGCNTriStripGetStats(RwUInt16* indices, RwUInt32 numIndices, RwUInt32* nu
             /* A degenerate triangle - the current strip may end here */
             if (preserveWindingOrder && i < numIndices - 3)
             {
-                if (indices[1] != indices[2] && indices[1] != indices[3] && indices[2] != indices[3])
+                if (indices[i + 1] != indices[i + 2] && indices[i + 1] != indices[i + 3] && indices[i + 2] != indices[i + 3])
                 {
                     if (((i + 1) & 1) == 0)
                     {
@@ -61,7 +61,6 @@ void _rwGCNTriStripGetStats(RwUInt16* indices, RwUInt32 numIndices, RwUInt32* nu
             }
         }
 
-        indices++;
     }
 
     if (length != 0)
@@ -216,8 +215,8 @@ static void WriteHeaders(RwUInt16* posIndices, RwUInt32 numIndices, RwUInt32 num
     {
         for (i = 0; i < numIndices - 2; i++)
         {
-            if (posIndices[0] != posIndices[1] && posIndices[0] != posIndices[2] &&
-                posIndices[1] != posIndices[2])
+            if (posIndices[i] != posIndices[i + 1] && posIndices[i] != posIndices[i + 2] &&
+                posIndices[i + 1] != posIndices[i + 2])
             {
                 if (length == 0 && (i & 1) && preserveWindingOrder)
                 {
@@ -232,8 +231,8 @@ static void WriteHeaders(RwUInt16* posIndices, RwUInt32 numIndices, RwUInt32 num
             {
                 if (preserveWindingOrder && i < numIndices - 3)
                 {
-                    if (posIndices[1] != posIndices[2] && posIndices[1] != posIndices[3] &&
-                        posIndices[2] != posIndices[3])
+                    if (posIndices[i + 1] != posIndices[i + 2] && posIndices[i + 1] != posIndices[i + 3] &&
+                        posIndices[i + 2] != posIndices[i + 3])
                     {
                         if (((i + 1) & 1) == 0)
                         {
@@ -264,7 +263,6 @@ static void WriteHeaders(RwUInt16* posIndices, RwUInt32 numIndices, RwUInt32 num
                 }
             }
 
-            posIndices++;
         }
 
         if (length != 0)

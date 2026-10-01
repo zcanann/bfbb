@@ -1084,7 +1084,7 @@ config.libs = [
     RenderWareLib(
         "rpptank",
         [
-            Object(NonMatching, "rwsdk/plugin/ptank/rpptank.c"),
+            Object(Matching, "rwsdk/plugin/ptank/rpptank.c"),
             Object(Matching, "rwsdk/plugin/ptank/gcn/ptankgcn.c"),
             Object(Matching, "rwsdk/plugin/ptank/gcn/ptankgcncallbacks.c", mw_version="GC/2.0p1"),
             Object(Matching, "rwsdk/plugin/ptank/gcn/ptankgcnrender.c", mw_version="GC/2.0p1"),
@@ -1144,12 +1144,12 @@ config.libs = [
             Object(Matching, "rwsdk/world/pipe/p2/gcn/gcmorph.c"),
             Object(Matching, "rwsdk/world/pipe/p2/gcn/native.c"),
             Object(Matching, "rwsdk/world/pipe/p2/gcn/setup.c", mw_version="GC/2.0p1"),
-            Object(NonMatching, "rwsdk/world/pipe/p2/gcn/instance/geomcond.c"),
+            Object(Matching, "rwsdk/world/pipe/p2/gcn/instance/geomcond.c"),
             Object(NonMatching, "rwsdk/world/pipe/p2/gcn/instance/geominst.c"),
             Object(NonMatching, "rwsdk/world/pipe/p2/gcn/instance/ibuffer.c"),
             Object(Matching, "rwsdk/world/pipe/p2/gcn/instance/instancegeom.c"),
             Object(Matching, "rwsdk/world/pipe/p2/gcn/instance/instanceworld.c"),
-            Object(NonMatching, "rwsdk/world/pipe/p2/gcn/instance/itools.c"),
+            Object(Matching, "rwsdk/world/pipe/p2/gcn/instance/itools.c"),
             Object(Matching, "rwsdk/world/pipe/p2/gcn/instance/vbuffer.c"),
             Object(Matching, "rwsdk/world/pipe/p2/gcn/instance/vtools.c"),
             Object(Matching, "rwsdk/world/pipe/p2/gcn/instance/vtxdesc.c"),

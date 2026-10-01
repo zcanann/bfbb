@@ -529,6 +529,18 @@ static RwInt32 ExtractNodes(_rwPalQuantOctNode* root, RwRGBA* palette, RwInt32 n
     return nodeIndex;
 }
 
+static void Mark(_rwPalQuantOctNode* root, _rwPalQuantRGBABox* cube, RwInt32 palIndex)
+{
+    RwRGBA origin;
+
+    origin.red = 0;
+    origin.green = 0;
+    origin.blue = 0;
+    origin.alpha = 0;
+
+    assignindex(root, &origin, MaxDepth, cube, palIndex);
+}
+
 static RwReal Var(_rwPalQuantLeafNode* Vol)
 {
     RwReal sqr;
@@ -537,6 +549,11 @@ static RwReal Var(_rwPalQuantLeafNode* Vol)
           Vol->ac.blue * Vol->ac.blue + Vol->ac.alpha * Vol->ac.alpha;
 
     return Vol->var - sqr / Vol->weight;
+}
+
+static RwReal BoxVar(_rwPalQuantLeafNode* Vol, _rwPalQuantOctNode* root, _rwPalQuantRGBABox* cube)
+{
+    return Var(BoxStats(Vol, root, cube));
 }
 
 RwInt32 _rwPalQuantResolvePalette(RwRGBA* palette, RwInt32 maxcols, RwPalQuant* pq)
@@ -580,7 +597,7 @@ RwInt32 _rwPalQuantResolvePalette(RwRGBA* palette, RwInt32 maxcols, RwPalQuant* 
         pq->Mcube[0].col1.blue = 1 << MaxDepth;
         pq->Mcube[0].col1.alpha = 1 << MaxDepth;
 
-        pq->Mvv[0] = Var(BoxStats(&vol, pq->root, &pq->Mcube[0]));
+        pq->Mvv[0] = BoxVar(&vol, pq->root, &pq->Mcube[0]);
 
         /* Repeatedly split the box with the largest variance */
         for (i = 1; i < maxcols; i++)
@@ -605,8 +622,8 @@ RwInt32 _rwPalQuantResolvePalette(RwRGBA* palette, RwInt32 maxcols, RwPalQuant* 
 
             if (nCut(pq->root, &pq->Mcube[nextsplit], &pq->Mcube[i]))
             {
-                pq->Mvv[nextsplit] = Var(BoxStats(&vol1, pq->root, &pq->Mcube[nextsplit]));
-                pq->Mvv[i] = Var(BoxStats(&vol2, pq->root, &pq->Mcube[i]));
+                pq->Mvv[nextsplit] = BoxVar(&vol1, pq->root, &pq->Mcube[nextsplit]);
+                pq->Mvv[i] = BoxVar(&vol2, pq->root, &pq->Mcube[i]);
             }
             else
             {
@@ -621,14 +638,9 @@ RwInt32 _rwPalQuantResolvePalette(RwRGBA* palette, RwInt32 maxcols, RwPalQuant* 
         {
             if (i < numcols)
             {
-                RwRGBA origin;
                 RwReal recip;
 
-                origin.red = 0;
-                origin.green = 0;
-                origin.blue = 0;
-                origin.alpha = 0;
-                assignindex(pq->root, &origin, MaxDepth, &pq->Mcube[i], i);
+                Mark(pq->root, &pq->Mcube[i], i);
 
                 BoxStats(&boxvol, pq->root, &pq->Mcube[i]);
 

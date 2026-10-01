@@ -14,8 +14,8 @@ extern void* PTankClose(void* instance, RwInt32 offset, RwInt32 size);
 
 extern RpPTankCallBacks defaultCB;
 
-RwInt32 _rpPTankAtomicDataOffset;
 RwInt32 _rpPTankGlobalsOffset;
+RwInt32 _rpPTankAtomicDataOffset;
 
 const RwInt32 datasize[] = {
     sizeof(RwV3d),            /* position */
@@ -560,9 +560,9 @@ RpAtomic* _rpPTankAtomicCreateCustom(RwInt32 maxParticleNum, RwUInt32 dataFlags,
                                                     ptankPrv->maxPCount, dataFlags,
                                                     platFlags) == TRUE)
                 {
+                    const RwV2d center = { 0.0f, 0.0f };
+                    const RwV2d size = { 1.0f, 1.0f };
                     RwRGBA color = { 0, 0, 0, 255 };
-                    RwV2d size = { 1.0f, 1.0f };
-                    RwV2d center = { 0.0f, 0.0f };
                     RwTexCoords uv[4] = { { 0.0f, 0.0f }, { 0.0f, 1.0f }, { 1.0f, 1.0f }, { 1.0f, 0.0f } };
 
                     RpMaterialSetTexture(atomic->geometry->matList.materials[0], (RwTexture*)NULL);

@@ -145,6 +145,7 @@ RpGeometry* RpGeometryCreateSpace(RwReal radius)
 const RpMorphTarget* RpMorphTargetCalcBoundingSphere(const RpMorphTarget* morphTarget,
                                                      RwSphere* boundingSphere)
 {
+    const RwReal half = (RwReal)0.5;
     RpGeometry* geometry = morphTarget->parentGeom;
     RwV3d* vert;
     RwInt32 numVerts = geometry->numVertices;
@@ -155,7 +156,7 @@ const RpMorphTarget* RpMorphTargetCalcBoundingSphere(const RpMorphTarget* morphT
     RwBBoxCalculate(&boundBox, morphTarget->verts, numVerts);
 
     RwV3dAddMacro(&sphere.center, &boundBox.inf, &boundBox.sup);
-    RwV3dScaleMacro(&sphere.center, &sphere.center, (RwReal)0.5);
+    RwV3dScaleMacro(&sphere.center, &sphere.center, half);
 
     vert = morphTarget->verts;
     while (numVerts--)
