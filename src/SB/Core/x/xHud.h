@@ -3,7 +3,7 @@
 
 #include "xBase.h"
 #include "xVec3.h"
-#include "xDynAsset.h"
+#include "xHudAsset.h"
 #include "xModel.h"
 
 typedef struct asset;
@@ -58,16 +58,6 @@ namespace xhud
         F32 a;
     };
 
-    struct asset : xDynAsset
-    {
-        xVec3 loc;
-        xVec3 size;
-
-        static const char* type_name()
-        {
-            return "hud";
-        }
-    };
 
     struct motive;
     struct motive_node;
@@ -110,7 +100,7 @@ namespace xhud
         static void setup_all();
         static void update_all(F32 dt);
         static void render_all();
-        static void debug_render();
+        static void debug_render() {}
 
         static void init_base(xBase&, const xBaseAsset&, unsigned long);
         static S32 cb_dispatch(xBase*, xBase*, U32, const F32*, xBase*);

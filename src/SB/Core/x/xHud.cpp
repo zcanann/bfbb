@@ -445,18 +445,15 @@ namespace xhud
             }
         }
 
-        void render_one_model(xModelInstance& model, F32 alpha, const basic_rect<F32>& rect,
-                              const xVec3& from, const xVec3& to, const xMat4x3& frame)
-        {
-            xModelSetMaterialAlpha(&model, 255.0f * alpha + 0.5f);
-            xModelSetFrame(&model, &frame);
-            xModelRender2D(model, rect, from, to);
-        }
-
     } // namespace
 
-    void widget::debug_render()
+    void widget::disable_all(bool st)
     {
+        functor_disable func(st);
+        for (U32 i = 0; i < lengthof(known_types); ++i)
+        {
+            for_each(known_types[i].widget_type, known_types[i].widget_size, func);
+        }
     }
 
     void widget::setup_all()
@@ -464,25 +461,6 @@ namespace xhud
         for (U32 i = 0; i < lengthof(known_types); ++i)
         {
             for_each(known_types[i].widget_type, known_types[i].widget_size, fp_setup);
-        }
-    }
-
-    S32 widget::cb_dispatch(xBase* from, xBase* to, U32 event, const F32* argf,
-                            xBase* argw)
-    {
-        widget* w = (widget*)(to + 1);
-
-        w->dispatch(from, event, argf, argw);
-
-        return 1;
-    }
-
-    void widget::render_all()
-    {
-        debug_render();
-        for (U32 i = 0; i < lengthof(known_types); ++i)
-        {
-            for_each(known_types[i].widget_type, known_types[i].widget_size, fp_render);
         }
     }
 
@@ -495,12 +473,12 @@ namespace xhud
         }
     }
 
-    void widget::disable_all(bool st)
+    void widget::render_all()
     {
-        functor_disable func(st);
+        debug_render();
         for (U32 i = 0; i < lengthof(known_types); ++i)
         {
-            for_each(known_types[i].widget_type, known_types[i].widget_size, func);
+            for_each(known_types[i].widget_type, known_types[i].widget_size, fp_render);
         }
     }
 
@@ -560,6 +538,55 @@ namespace xhud
         if (_motive_top == NULL)
         {
             activity = ACT_NONE;
+        }
+    }
+
+    S32 widget::cb_dispatch(xBase* from, xBase* to, U32 event, const F32* argf,
+                            xBase* argw)
+    {
+        widget* w = (widget*)(to + 1);
+
+        w->dispatch(from, event, argf, argw);
+
+        return 1;
+    }
+
+    void __deadstripped_xHud()
+    {
+        // "%d" was used in a deadstripped function. This function forces it to be used.
+        xStrHash("%d");
+    }
+
+    xModelInstance* load_model(U32 id)
+    {
+        U32 bufsize;
+        void* info = xSTFindAsset(xStrHashCat(id, ".minf"), &bufsize); // xModelAssetInfo*
+        if (info != NULL)
+        {
+            return zEntRecurseModelInfo(info, NULL);
+        }
+
+        info = xSTFindAsset(id, &bufsize); // RpAtomic*
+        if (info == NULL)
+        {
+            info = xSTFindAsset(xStrHashCat(id, ".dff"), &bufsize); // RpAtomic*
+        }
+        if (info == NULL)
+        {
+            return NULL;
+        }
+
+        return xModelInstanceAlloc((RpAtomic*)info, NULL, 0, 0, NULL);
+    }
+
+    namespace
+    {
+        void render_one_model(xModelInstance& model, F32 alpha, const basic_rect<F32>& rect,
+                              const xVec3& from, const xVec3& to, const xMat4x3& frame)
+        {
+            xModelSetMaterialAlpha(&model, 255.0f * alpha + 0.5f);
+            xModelSetFrame(&model, &frame);
+            xModelRender2D(model, rect, from, to);
         }
     }
 
@@ -668,54 +695,10 @@ namespace xhud
         return true;
     }
 
-    void __deadstripped_xHud()
-    {
-        // "%d" was used in a deadstripped function. This function forces it to be used.
-        xStrHash("%d");
-    }
-
-    xModelInstance* load_model(U32 id)
-    {
-        U32 bufsize;
-        void* info = xSTFindAsset(xStrHashCat(id, ".minf"), &bufsize); // xModelAssetInfo*
-        if (info != NULL)
-        {
-            return zEntRecurseModelInfo(info, NULL);
-        }
-
-        info = xSTFindAsset(id, &bufsize); // RpAtomic*
-        if (info == NULL)
-        {
-            info = xSTFindAsset(xStrHashCat(id, ".dff"), &bufsize); // RpAtomic*
-        }
-        if (info == NULL)
-        {
-            return NULL;
-        }
-
-        return xModelInstanceAlloc((RpAtomic*)info, NULL, 0, 0, NULL);
-    }
-
 } // namespace xhud
 
-// NOTE: this belongs in <new.h>. It is inline, so the compiler emits a weak
-// out-of-line copy into every translation unit that placement-news.
-inline void* operator new(size_t, void* ptr) throw()
+// Layout-only reference keeps the unused weak color helper in this unit.
+iColor_tag __deadstripped_xHud_color(U8 r, U8 g, U8 b, U8 a)
 {
-    return ptr;
-}
-
-// NOTE: the original is a weak symbol, i.e. an inline in xColor.h, but it is
-// emitted only here and nothing in this object references it. Defining it here
-// reproduces the code exactly; it just makes the symbol strong.
-iColor_tag xColorFromRGBA(U8 r, U8 g, U8 b, U8 a)
-{
-    iColor_tag color;
-
-    color.r = r;
-    color.g = g;
-    color.b = b;
-    color.a = a;
-
-    return color;
+    return xColorFromRGBA(r, g, b, a);
 }

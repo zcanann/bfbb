@@ -7419,3 +7419,20 @@ without modifying a shared header or any live function body.
 The added stubs are explicit layout scaffolding, not recovered original
 stripped routines. Both promotions reproduce retail DOL SHA-1
 306526d90b48e99894c3138f5fc8f2716d9fecf6.
+
+## HUD source linking (2026-10-01)
+
+`xHud` now links from source. Main functions follow retail order: disable,
+setup, update and render dispatch precede motive management, callback dispatch,
+model loading and rendering. Existing template instantiations then fall into
+the correct order without changing their implementations.
+
+The empty debug renderer is inline in xHud.h. The asset type moves to
+xHudAsset.h so its type-name helper has its own emission group. Placement-new
+and xColorFromRGBA move from xHud.cpp to new.h and xColor.h, respectively,
+restoring their weak inline linkage. A labelled dead-stripped reference keeps
+the otherwise-unused color helper owned by xHud; the existing stripped %d
+reference precedes the model-extension strings. No split changes are needed.
+
+All 67 functions are in retail order, the full source tree compiles, and the
+linked DOL reproduces SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6.
