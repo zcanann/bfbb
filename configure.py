@@ -1065,7 +1065,7 @@ config.libs = [
     RenderWareLib(
         "rphanim",
         [
-            Object(NonMatching, "rwsdk/plugin/hanim/stdkey.c"),
+            Object(Matching, "rwsdk/plugin/hanim/stdkey.c", mw_version="GC/2.0p1"),
             Object(Matching, "rwsdk/plugin/hanim/rphanim.c"),
         ],
     ),
@@ -1073,7 +1073,7 @@ config.libs = [
         "rpmatfx",
         [
             Object(NonMatching, "rwsdk/plugin/matfx/gcn/effectPipesGcn.c"),
-            Object(NonMatching, "rwsdk/plugin/matfx/gcn/multiTexGcnData.c"),
+            Object(Matching, "rwsdk/plugin/matfx/gcn/multiTexGcnData.c", mw_version="GC/2.5"),
             Object(NonMatching, "rwsdk/plugin/matfx/gcn/multiTexGcnPipe.c"),
             Object(Matching, "rwsdk/plugin/matfx/gcn/multiTexGcn.c"),
             Object(NonMatching, "rwsdk/plugin/matfx/multiTex.c"),
@@ -1086,8 +1086,8 @@ config.libs = [
         [
             Object(NonMatching, "rwsdk/plugin/ptank/rpptank.c"),
             Object(Matching, "rwsdk/plugin/ptank/gcn/ptankgcn.c"),
-            Object(NonMatching, "rwsdk/plugin/ptank/gcn/ptankgcncallbacks.c"),
-            Object(NonMatching, "rwsdk/plugin/ptank/gcn/ptankgcnrender.c"),
+            Object(Matching, "rwsdk/plugin/ptank/gcn/ptankgcncallbacks.c", mw_version="GC/2.0p1"),
+            Object(Matching, "rwsdk/plugin/ptank/gcn/ptankgcnrender.c", mw_version="GC/2.0p1"),
             Object(Matching, "rwsdk/plugin/ptank/gcn/ptankgcntransforms.c"),
             Object(Matching, "rwsdk/plugin/ptank/gcn/ptankgcn_nc_ppm.c"),
             Object(Matching, "rwsdk/plugin/ptank/gcn/ptankgcn_cc_ppm.c"),
@@ -1143,7 +1143,7 @@ config.libs = [
             Object(NonMatching, "rwsdk/world/pipe/p2/gcn/gclights.c"),
             Object(Matching, "rwsdk/world/pipe/p2/gcn/gcmorph.c"),
             Object(Matching, "rwsdk/world/pipe/p2/gcn/native.c"),
-            Object(NonMatching, "rwsdk/world/pipe/p2/gcn/setup.c"),
+            Object(Matching, "rwsdk/world/pipe/p2/gcn/setup.c", mw_version="GC/2.0p1"),
             Object(NonMatching, "rwsdk/world/pipe/p2/gcn/instance/geomcond.c"),
             Object(NonMatching, "rwsdk/world/pipe/p2/gcn/instance/geominst.c"),
             Object(NonMatching, "rwsdk/world/pipe/p2/gcn/instance/ibuffer.c"),
@@ -1170,7 +1170,7 @@ config.libs = [
     RenderWareLib(
         "rtslerp",
         [
-            Object(NonMatching, "rwsdk/tool/slerp/rtslerp.c"),
+            Object(NonMatching, "rwsdk/tool/slerp/rtslerp.c", mw_version="GC/2.0p1"),
         ],
     ),
     RenderWareLib(
