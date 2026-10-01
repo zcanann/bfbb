@@ -1041,6 +1041,7 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
 {
     u32 count;
     u32 group_count;
+    u32 next_count;
     u32 delta_bit_count;
     u16 predictor;
     s16 delta;
@@ -1077,9 +1078,10 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
 
             VarBitsGet(delta_bit_count, u32, *bits, HUFF4_NIBBLE_BITS);
             if (delta_bit_count != BINK_DELTA16_REPEAT_BITS) {
-                count -= group_count;
-                while (group_count != 0) {
-                    group_count--;
+                u32 remaining;
+                next_count = count - group_count;
+                remaining = group_count;
+                while (remaining-- != 0) {
                     VarBitsGet(delta, s16, *bits, delta_bit_count);
                     if (delta != 0) {
                         EXPBITSTYPE bit;
@@ -1093,8 +1095,9 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
             } else {
                 radmemset16(dest, (u16)predictor, BINK_DELTA16_GROUP_BYTES(group_count));
                 dest += group_count;
-                count -= group_count;
+                next_count = count - group_count;
             }
+            count = next_count;
         }
     } else {
         BINK_BUNDLE_MARK_EMPTY(bundle);
