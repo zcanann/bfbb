@@ -8261,3 +8261,26 @@ normal DOL identity is not a source-linked playback claim.
 Full all_source build and retail DOL SHA-1
 306526d90b48e99894c3138f5fc8f2716d9fecf6 pass. No function-score regressions;
 the other report changes are the integrated babinwor/bameshop matches.
+
+
+## Bink packed-node arithmetic and writer high-node traversal (2026-10-01)
+
+Grouping the packed index and node kind before adding the level in the
+branch/high-group entry macros reproduces retail's arithmetic order. Along
+with decoding the writer's high-node index once and advancing its tree-end
+cursor between child stores, the deduplicated scores improve as follows:
+
+- LenBPLossless: 81.87918% -> 89.83034%.
+- WriteBPLossless: 87.199104% -> 89.79641%.
+- WriteBPLossy: 77.53779% -> 77.710014%.
+
+The writer-only high-node change reached 87.52395%, and its cursor-update
+change reached 87.86527%. The shared branch-entry grouping then improved
+all three functions, and the high-group grouping added further lossless
+gains. No other function scores change.
+
+All 16,384 lossless round trips pass, including exact estimator/writer bit
+lengths, guards, and DC preservation. All 6,911 nonempty lossy round trips
+and 27,644 early-cutoff checks pass. Full all_source build passes. Report:
+build/bitplane-packed-report.json. Bitplane remains NonMatching; the normal
+retail DOL hash does not establish source-linked movie playback.

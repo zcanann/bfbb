@@ -109,9 +109,9 @@
 #define BP_TREE_GROUP_ENTRY(level, base) ((level) | (base))
 #define BP_TREE_COEFF_LEAF_ENTRY(level, base) ((level) + (base))
 #define BP_TREE_HIGH_GROUP_ENTRY(level, index) \
-    ((u16)(level) + BP_TREE_PACKED_INDEX((index) + BP_TREE_CHILD1_BASE) + BP_TREE_GROUP_NODE)
+    ((u16)(level) + (BP_TREE_PACKED_INDEX((index) + BP_TREE_CHILD1_BASE) + BP_TREE_GROUP_NODE))
 #define BP_TREE_BRANCH_ENTRY(level, index) \
-    ((u16)(level) + BP_TREE_PACKED_INDEX(index) + BP_TREE_BRANCH_NODE)
+    ((u16)(level) + (BP_TREE_PACKED_INDEX(index) + BP_TREE_BRANCH_NODE))
 #define BP_TREE_CHILD_BRANCH_ENTRY(level, base, child_base) BP_TREE_BRANCH_ENTRY((level), (base) + (child_base))
 #define BP_TREE_BASE_BRANCH_ENTRY(level, base) ((u16)(level) + (base) + BP_TREE_BRANCH_NODE)
 #define BP_TREE_COEFF_ENTRY(level, index) ((u16)(level) | BP_TREE_PACKED_INDEX(index) + BP_TREE_COEFF_NODE)
@@ -666,22 +666,23 @@ next_lossless_node:
                     }
                     switch (BP_TREE_ENTRY_KIND(entry)) {
                     case BP_TREE_HIGH_NODE:
-                        *cur = BP_TREE_HIGH_GROUP_ENTRY(hi_groups[BP_TREE_ENTRY_HIGH_GROUP(entry)], BP_TREE_ENTRY_INDEX(entry));
-                        goto handle_lossless_children;
+                        entry = BP_TREE_ENTRY_INDEX(entry);
+                        *cur = BP_TREE_HIGH_GROUP_ENTRY(hi_groups[entry >> (BP_TREE_HIGH_GROUP_SHIFT - BP_TREE_INDEX_SHIFT)], entry);
+                        goto decoded_write_children;
                     case BP_TREE_GROUP_NODE:
                         entry = BP_TREE_ENTRY_INDEX(entry);
                         count = BP_TREE_GROUP_INDEX(entry);
                         *cur = BP_TREE_BRANCH_ENTRY(groups[count - 1], entry);
                         *end = BP_TREE_CHILD_BRANCH_ENTRY(groups[count], entry, BP_TREE_CHILD1_BASE);
-                        end[1] = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD1_INDEX], entry, BP_TREE_CHILD2_BASE);
-                        end[2] = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD2_INDEX], entry, BP_TREE_CHILD3_BASE);
-                        end += BP_TREE_ADDED_CHILD_COUNT;
+                        *++end = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD1_INDEX], entry, BP_TREE_CHILD2_BASE);
+                        *++end = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD2_INDEX], entry, BP_TREE_CHILD3_BASE);
+                        ++end;
                         break;
                     case BP_TREE_BRANCH_NODE:
                         *cur = BP_TREE_EMPTY_ENTRY;
                         cur++;
-handle_lossless_children:
                         entry = BP_TREE_ENTRY_INDEX(entry);
+decoded_write_children:
                         PUT_BP_BIT(bits, lens[entry] != level);
                         if (lens[entry] != level) {
                             *--restart = BP_TREE_COEFF_ENTRY(lens[entry], entry);
