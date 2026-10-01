@@ -415,20 +415,19 @@ static void simpmergesort(EXPBITS PTR4* bits, u8 PTR4* out, u8 PTR4* left,
                           u8 PTR4* right, s32 right_count)
 {
     EXPBITSTYPE bit;
-    u8 selected;
     s32 left_count;
 
     left_count = right_count;
     for (;;) {
         if (EXPBITS_GET1_BRANCH(*bits, bit)) {
-            selected = *right++;
+            *out = *right++;
             right_count--;
         } else {
-            selected = *left++;
+            *out = *left++;
             left_count--;
         }
 
-        *out++ = selected;
+        out++;
         if (left_count == 0) {
             break;
         }
