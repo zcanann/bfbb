@@ -929,6 +929,7 @@ static RwBool TriStripStripTris(RpBuildMeshTriangle* triList, RwUInt32 numTris,
 static RwBool TriStripJoin(TriStripList* stripList, RwBool maintainWinding)
 {
     RwUInt32 i;
+    RwUInt32 j;
     TriStripListEntry* newStrip;
     TriStripListEntry* stripPtr;
     TriStripListEntry* tempStrip;
@@ -1025,9 +1026,9 @@ static RwBool TriStripJoin(TriStripList* stripList, RwBool maintainWinding)
             }
         }
 
-        for (i = 0; i < stripPtr->stripLen; i++)
+        for (j = 0; j < stripPtr->stripLen; j++)
         {
-            newStrip->strip[newStrip->stripLen] = stripPtr->strip[i];
+            newStrip->strip[newStrip->stripLen] = stripPtr->strip[j];
             newStrip->stripLen++;
         }
 
@@ -1062,21 +1063,23 @@ static RpMeshHeader* TriStripMeshGenerate(RpBuildMesh* mesh, RwBool preprocess,
 {
     RpMeshHeader* result;
     RpBuildMeshTriangle** triPointers;
+    RpMesh* meshEl;
     RwUInt32 i;
     RwUInt32 j;
     RwUInt32 numMats;
     RwUInt32 numMatMeshes;
     RwUInt32 meshSize;
     RpBuildMeshTriangle** tempTriPtr;
+    RpBuildMeshTriangle* triList;
     TriStripList stripList;
+    TriStripListEntry* stripPtr;
     RwUInt16 numOutMeshes;
     RxVertexIndex* stripMeshInds;
     RpMesh** outMeshes;
     RpMesh* matMeshes;
-    RpMesh* meshEl;
-    RpBuildMeshTriangle* triList;
+    RpMesh* outMeshInfo;
     RwUInt32 totalIndices;
-    TriStripListEntry* stripPtr;
+    RpMaterial* lastMat;
 
     numOutMeshes = 0;
 
@@ -1097,7 +1100,7 @@ static RpMeshHeader* TriStripMeshGenerate(RpBuildMesh* mesh, RwBool preprocess,
     numMats = 1;
     if (mesh->numTriangles >= 2)
     {
-        RpMaterial* lastMat = triPointers[0]->material;
+        lastMat = triPointers[0]->material;
 
         for (i = 1; i < mesh->numTriangles; i++)
         {
@@ -1161,7 +1164,7 @@ static RpMeshHeader* TriStripMeshGenerate(RpBuildMesh* mesh, RwBool preprocess,
 
         for (stripPtr = stripList.head; stripPtr; stripPtr = stripPtr->next)
         {
-            RpMesh* outMeshInfo =
+            outMeshInfo =
                 (RpMesh*)RwMalloc(sizeof(RpMesh) + stripPtr->stripLen * sizeof(RxVertexIndex));
 
             outMeshInfo->material = matMeshes[i].material;

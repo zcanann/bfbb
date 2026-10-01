@@ -107,10 +107,15 @@ static void LeafAddPixel(_rwPalQuantLeafNode* leaf, RwRGBA* color, RwReal weight
 {
     RwRGBAReal rColor;
 
-    rColor.red = ((RwReal)color->red * (1.0f / 255.0f)) * weight;
-    rColor.green = ((RwReal)color->green * (1.0f / 255.0f)) * weight;
-    rColor.blue = ((RwReal)color->blue * (1.0f / 255.0f)) * weight;
-    rColor.alpha = ((RwReal)color->alpha * (1.0f / 255.0f)) * weight;
+    rColor.red = ((RwReal)(1.0 / 255.0)) * (RwReal)color->red;
+    rColor.green = ((RwReal)(1.0 / 255.0)) * (RwReal)color->green;
+    rColor.blue = ((RwReal)(1.0 / 255.0)) * (RwReal)color->blue;
+    rColor.alpha = ((RwReal)(1.0 / 255.0)) * (RwReal)color->alpha;
+
+    rColor.red = rColor.red * weight;
+    rColor.green = rColor.green * weight;
+    rColor.blue = rColor.blue * weight;
+    rColor.alpha = rColor.alpha * weight;
 
     leaf->weight += weight;
     leaf->ac.red += rColor.red;
@@ -123,10 +128,17 @@ static void LeafAddPixel(_rwPalQuantLeafNode* leaf, RwRGBA* color, RwReal weight
 
 void _rwPalQuantAddImage(RwPalQuant* pq, RwImage* img, RwReal weight)
 {
-    RwInt32 height = img->height;
-    RwInt32 stride = img->stride;
-    RwUInt8* pixels = img->cpPixels;
-    RwRGBA* palette = img->palette;
+    RwInt32 width;
+    RwInt32 height;
+    RwInt32 stride;
+    RwUInt8* pixels;
+    RwRGBA* palette;
+    RwUInt8* linePixels;
+
+    stride = img->stride;
+    pixels = img->cpPixels;
+    palette = img->palette;
+    height = img->height;
 
     switch (img->depth)
     {
@@ -135,8 +147,8 @@ void _rwPalQuantAddImage(RwPalQuant* pq, RwImage* img, RwReal weight)
     {
         while (height--)
         {
-            RwInt32 width = img->width;
-            RwUInt8* linePixels = pixels;
+            width = img->width;
+            linePixels = pixels;
 
             while (width--)
             {
@@ -157,8 +169,9 @@ void _rwPalQuantAddImage(RwPalQuant* pq, RwImage* img, RwReal weight)
     {
         while (height--)
         {
-            RwInt32 width = img->width;
             RwRGBA* color = (RwRGBA*)pixels;
+
+            width = img->width;
 
             while (width--)
             {
@@ -187,37 +200,46 @@ static void assignindex(_rwPalQuantOctNode* root, RwRGBA* origin, RwInt32 depth,
         RwInt32 dG = origin->green - region->col1.green;
         RwInt32 dB = origin->blue - region->col1.blue;
         RwInt32 dA = origin->alpha - region->col1.alpha;
+        RwInt32 uR;
+        RwInt32 uG;
+        RwInt32 uB;
+        RwInt32 uA;
 
         /* Does this node overlap the region at all? */
-        if ((dR < 0) && (dG < 0) && (dB < 0) && (dA < 0) &&
-            ((region->col0.red - origin->red) < width) &&
-            ((region->col0.green - origin->green) < width) &&
-            ((region->col0.blue - origin->blue) < width) &&
-            ((region->col0.alpha - origin->alpha) < width))
+        if ((dR >= 0) || (dG >= 0) || (dB >= 0) || (dA >= 0))
         {
-            if ((dR <= -width) && (dG <= -width) && (dB <= -width) && (dA <= -width) &&
-                ((region->col0.red - origin->red) <= 0) &&
-                ((region->col0.green - origin->green) <= 0) &&
-                ((region->col0.blue - origin->blue) <= 0) &&
-                ((region->col0.alpha - origin->alpha) <= 0) && (depth == 0))
-            {
-                /* Leaf fully inside the region */
-                root->Leaf.palIndex = (RwUInt8)palIndex;
-            }
-            else
-            {
-                RwInt32 i;
-                RwRGBA suborigin;
+            return;
+        }
 
-                for (i = 0; i < 16; i++)
-                {
-                    suborigin.red = origin->red + (((i >> 3) & 1) << (depth - 1));
-                    suborigin.green = origin->green + (((i >> 2) & 1) << (depth - 1));
-                    suborigin.blue = origin->blue + (((i >> 1) & 1) << (depth - 1));
-                    suborigin.alpha = origin->alpha + ((i & 1) << (depth - 1));
+        uR = region->col0.red - origin->red;
+        uG = region->col0.green - origin->green;
+        uB = region->col0.blue - origin->blue;
+        uA = region->col0.alpha - origin->alpha;
 
-                    assignindex(root->Branch.dir[i], &suborigin, depth - 1, region, palIndex);
-                }
+        if ((uR >= width) || (uG >= width) || (uB >= width) || (uA >= width))
+        {
+            return;
+        }
+
+        if ((dR <= -width) && (dG <= -width) && (dB <= -width) && (dA <= -width) && (uR <= 0) &&
+            (uG <= 0) && (uB <= 0) && (uA <= 0) && (depth == 0))
+        {
+            /* Leaf fully inside the region */
+            root->Leaf.palIndex = (RwUInt8)palIndex;
+        }
+        else
+        {
+            RwInt32 i;
+            RwRGBA suborigin;
+
+            for (i = 0; i < 16; i++)
+            {
+                suborigin.red = origin->red + (((i >> 3) & 1) << (depth - 1));
+                suborigin.green = origin->green + (((i >> 2) & 1) << (depth - 1));
+                suborigin.blue = origin->blue + (((i >> 1) & 1) << (depth - 1));
+                suborigin.alpha = origin->alpha + ((i & 1) << (depth - 1));
+
+                assignindex(root->Branch.dir[i], &suborigin, depth - 1, region, palIndex);
             }
         }
     }
@@ -233,42 +255,51 @@ static void addvolume(_rwPalQuantOctNode* root, RwRGBA* origin, RwInt32 depth,
         RwInt32 dG = origin->green - region->col1.green;
         RwInt32 dB = origin->blue - region->col1.blue;
         RwInt32 dA = origin->alpha - region->col1.alpha;
+        RwInt32 uR;
+        RwInt32 uG;
+        RwInt32 uB;
+        RwInt32 uA;
 
         /* Does this node overlap the region at all? */
-        if ((dR < 0) && (dG < 0) && (dB < 0) && (dA < 0) &&
-            ((region->col0.red - origin->red) < width) &&
-            ((region->col0.green - origin->green) < width) &&
-            ((region->col0.blue - origin->blue) < width) &&
-            ((region->col0.alpha - origin->alpha) < width))
+        if ((dR >= 0) || (dG >= 0) || (dB >= 0) || (dA >= 0))
         {
-            if ((dR <= -width) && (dG <= -width) && (dB <= -width) && (dA <= -width) &&
-                ((region->col0.red - origin->red) <= 0) &&
-                ((region->col0.green - origin->green) <= 0) &&
-                ((region->col0.blue - origin->blue) <= 0) &&
-                ((region->col0.alpha - origin->alpha) <= 0) && (depth == 0))
-            {
-                /* Leaf fully inside the region */
-                volume->weight += root->Leaf.weight;
-                volume->ac.red += root->Leaf.ac.red;
-                volume->ac.green += root->Leaf.ac.green;
-                volume->ac.blue += root->Leaf.ac.blue;
-                volume->ac.alpha += root->Leaf.ac.alpha;
-                volume->var += root->Leaf.var;
-            }
-            else
-            {
-                RwInt32 i;
-                RwRGBA suborigin;
+            return;
+        }
 
-                for (i = 0; i < 16; i++)
-                {
-                    suborigin.red = origin->red + (((i >> 3) & 1) << (depth - 1));
-                    suborigin.green = origin->green + (((i >> 2) & 1) << (depth - 1));
-                    suborigin.blue = origin->blue + (((i >> 1) & 1) << (depth - 1));
-                    suborigin.alpha = origin->alpha + ((i & 1) << (depth - 1));
+        uR = region->col0.red - origin->red;
+        uG = region->col0.green - origin->green;
+        uB = region->col0.blue - origin->blue;
+        uA = region->col0.alpha - origin->alpha;
 
-                    addvolume(root->Branch.dir[i], &suborigin, depth - 1, region, volume);
-                }
+        if ((uR >= width) || (uG >= width) || (uB >= width) || (uA >= width))
+        {
+            return;
+        }
+
+        if ((dR <= -width) && (dG <= -width) && (dB <= -width) && (dA <= -width) && (uR <= 0) &&
+            (uG <= 0) && (uB <= 0) && (uA <= 0) && (depth == 0))
+        {
+            /* Leaf fully inside the region */
+            volume->weight += root->Leaf.weight;
+            volume->ac.red += root->Leaf.ac.red;
+            volume->ac.green += root->Leaf.ac.green;
+            volume->ac.blue += root->Leaf.ac.blue;
+            volume->ac.alpha += root->Leaf.ac.alpha;
+            volume->var += root->Leaf.var;
+        }
+        else
+        {
+            RwInt32 i;
+            RwRGBA suborigin;
+
+            for (i = 0; i < 16; i++)
+            {
+                suborigin.red = origin->red + (((i >> 3) & 1) << (depth - 1));
+                suborigin.green = origin->green + (((i >> 2) & 1) << (depth - 1));
+                suborigin.blue = origin->blue + (((i >> 1) & 1) << (depth - 1));
+                suborigin.alpha = origin->alpha + ((i & 1) << (depth - 1));
+
+                addvolume(root->Branch.dir[i], &suborigin, depth - 1, region, volume);
             }
         }
     }
@@ -295,27 +326,23 @@ static _rwPalQuantLeafNode* BoxStats(_rwPalQuantLeafNode* Vol, _rwPalQuantOctNod
     {                                                                                              \
         for (i = cube->col0._chn; i < cube->col1._chn; i++)                                        \
         {                                                                                          \
-            _rwPalQuantLeafNode left;                                                              \
-            RwReal rightWeight;                                                                    \
-            RwRGBAReal right;                                                                      \
-                                                                                                   \
             leftcube.col1._chn = (RwUInt8)i;                                                       \
             BoxStats(&left, root, &leftcube);                                                      \
                                                                                                    \
-            right.red = whole->ac.red - left.ac.red;                                               \
-            right.green = whole->ac.green - left.ac.green;                                         \
-            right.blue = whole->ac.blue - left.ac.blue;                                            \
-            right.alpha = whole->ac.alpha - left.ac.alpha;                                         \
-            rightWeight = whole->weight - left.weight;                                             \
+            right.ac.red = whole->ac.red - left.ac.red;                                            \
+            right.ac.green = whole->ac.green - left.ac.green;                                      \
+            right.ac.blue = whole->ac.blue - left.ac.blue;                                         \
+            right.ac.alpha = whole->ac.alpha - left.ac.alpha;                                      \
+            right.weight = whole->weight - left.weight;                                            \
                                                                                                    \
-            if ((left.weight > 0.0f) && (rightWeight > 0.0f))                                      \
+            if ((left.weight > 0.0f) && (right.weight > 0.0f))                                     \
             {                                                                                      \
-                RwReal sum = (left.ac.red * left.ac.red + left.ac.green * left.ac.green +          \
-                              left.ac.blue * left.ac.blue + left.ac.alpha * left.ac.alpha) /       \
-                                 left.weight +                                                     \
-                             (right.red * right.red + right.green * right.green +                  \
-                              right.blue * right.blue + right.alpha * right.alpha) /               \
-                                 rightWeight;                                                      \
+                sum = (left.ac.red * left.ac.red + left.ac.green * left.ac.green +                 \
+                       left.ac.blue * left.ac.blue + left.ac.alpha * left.ac.alpha) /              \
+                      left.weight;                                                                 \
+                sum += (right.ac.red * right.ac.red + right.ac.green * right.ac.green +            \
+                        right.ac.blue * right.ac.blue + right.ac.alpha * right.ac.alpha) /         \
+                       right.weight;                                                               \
                                                                                                    \
                 if (sum > maxsum)                                                                  \
                 {                                                                                  \
@@ -325,12 +352,10 @@ static _rwPalQuantLeafNode* BoxStats(_rwPalQuantLeafNode* Vol, _rwPalQuantOctNod
                 else if (sum < lastsum)                                                            \
                 {                                                                                  \
                     /* The variance is falling again so stop looking */                           \
-                    return maxsum;                                                                 \
+                    break;                                                                         \
                 }                                                                                  \
-                else                                                                               \
-                {                                                                                  \
-                    lastsum = sum;                                                                 \
-                }                                                                                  \
+                                                                                                   \
+                lastsum = sum;                                                                     \
             }                                                                                      \
         }                                                                                          \
     }                                                                                              \
@@ -342,6 +367,9 @@ static RwReal nMaximize(_rwPalQuantOctNode* root, _rwPalQuantRGBABox* cube, RwIn
     RwReal maxsum = 0.0f;
     RwReal lastsum = maxsum;
     _rwPalQuantRGBABox leftcube;
+    _rwPalQuantLeafNode left;
+    _rwPalQuantLeafNode right;
+    RwReal sum;
     RwInt32 i;
 
     *cut = -1;
@@ -502,10 +530,8 @@ static RwReal Var(_rwPalQuantLeafNode* Vol)
 {
     RwReal sqr;
 
-    sqr = Vol->ac.red * Vol->ac.red;
-    sqr += Vol->ac.green * Vol->ac.green;
-    sqr += Vol->ac.blue * Vol->ac.blue;
-    sqr += Vol->ac.alpha * Vol->ac.alpha;
+    sqr = Vol->ac.red * Vol->ac.red + Vol->ac.green * Vol->ac.green +
+          Vol->ac.blue * Vol->ac.blue + Vol->ac.alpha * Vol->ac.alpha;
 
     return Vol->var - sqr / Vol->weight;
 }
@@ -536,7 +562,10 @@ RwInt32 _rwPalQuantResolvePalette(RwRGBA* palette, RwInt32 maxcols, RwPalQuant* 
     }
     else
     {
+        _rwPalQuantLeafNode boxvol;
         _rwPalQuantLeafNode vol;
+        _rwPalQuantLeafNode vol1;
+        _rwPalQuantLeafNode vol2;
 
         /* Start with one box containing everything */
         pq->Mcube[0].col0.red = 0;
@@ -573,9 +602,6 @@ RwInt32 _rwPalQuantResolvePalette(RwRGBA* palette, RwInt32 maxcols, RwPalQuant* 
 
             if (nCut(pq->root, &pq->Mcube[nextsplit], &pq->Mcube[i]))
             {
-                _rwPalQuantLeafNode vol1;
-                _rwPalQuantLeafNode vol2;
-
                 pq->Mvv[nextsplit] = Var(BoxStats(&vol1, pq->root, &pq->Mcube[nextsplit]));
                 pq->Mvv[i] = Var(BoxStats(&vol2, pq->root, &pq->Mcube[i]));
             }
@@ -591,7 +617,6 @@ RwInt32 _rwPalQuantResolvePalette(RwRGBA* palette, RwInt32 maxcols, RwPalQuant* 
         for (i = 0; i < maxcols; i++)
         {
             RwRGBA origin;
-            _rwPalQuantLeafNode boxvol;
 
             origin.red = 0;
             origin.green = 0;
@@ -636,8 +661,16 @@ static RwUInt8 GetIndex(_rwPalQuantOctNode* root, RwUInt32 Octs, RwInt32 depth)
 void _rwPalQuantMatchImage(RwUInt8* dstpixels, RwInt32 dststride, RwInt32 dstdepth, RwBool dstPacked,
                            RwPalQuant* pq, RwImage* img)
 {
-    RwUInt32 stride = img->stride;
-    RwUInt8* pixels = img->cpPixels;
+    RwUInt32 width;
+    RwUInt32 x;
+    RwUInt32 height;
+    RwUInt32 stride;
+    RwUInt8* pixels;
+    RwUInt8* dstLinePixels;
+    RwUInt8 nodeIndex;
+
+    stride = img->stride;
+    pixels = img->cpPixels;
 
     if ((dstdepth == 4) && dstPacked)
     {
@@ -648,19 +681,20 @@ void _rwPalQuantMatchImage(RwUInt8* dstpixels, RwInt32 dststride, RwInt32 dstdep
         case 8:
         {
             RwRGBA* palette = img->palette;
-            RwUInt32 height = img->height;
+            height = img->height;
 
             while (height--)
             {
-                RwUInt32 width = img->width;
                 RwUInt8* srcLinePixels = pixels;
-                RwUInt8* dstLinePixels = dstpixels;
-                RwUInt32 x;
+
+                dstLinePixels = dstpixels;
+                width = img->width;
 
                 for (x = 0; x < width; x++)
                 {
                     RwRGBA* color = &palette[*srcLinePixels++];
-                    RwUInt8 nodeIndex = GetIndex(pq->root, GetOctAdr(color), MaxDepth);
+
+                    nodeIndex = GetIndex(pq->root, GetOctAdr(color), MaxDepth);
 
                     if (x & 1)
                     {
@@ -682,19 +716,20 @@ void _rwPalQuantMatchImage(RwUInt8* dstpixels, RwInt32 dststride, RwInt32 dstdep
         }
         case 32:
         {
-            RwUInt32 height = img->height;
+            height = img->height;
 
             while (height--)
             {
-                RwUInt32 width = img->width;
                 RwRGBA* srcLinePixels = (RwRGBA*)pixels;
-                RwUInt8* dstLinePixels = dstpixels;
-                RwUInt32 x;
+
+                dstLinePixels = dstpixels;
+                width = img->width;
 
                 for (x = 0; x < width; x++)
                 {
                     RwRGBA* color = srcLinePixels++;
-                    RwUInt8 nodeIndex = GetIndex(pq->root, GetOctAdr(color), MaxDepth);
+
+                    nodeIndex = GetIndex(pq->root, GetOctAdr(color), MaxDepth);
 
                     if (x & 1)
                     {
@@ -725,13 +760,15 @@ void _rwPalQuantMatchImage(RwUInt8* dstpixels, RwInt32 dststride, RwInt32 dstdep
         case 8:
         {
             RwRGBA* palette = img->palette;
-            RwUInt32 height = img->height;
+            height = img->height;
 
             while (height--)
             {
-                RwUInt32 width = img->width;
                 RwUInt8* srcLinePixels = pixels;
-                RwUInt8* dstLinePixels = dstpixels;
+
+                dstLinePixels = dstpixels;
+                width = img->width;
+
 
                 while (width--)
                 {
@@ -747,13 +784,15 @@ void _rwPalQuantMatchImage(RwUInt8* dstpixels, RwInt32 dststride, RwInt32 dstdep
         }
         case 32:
         {
-            RwUInt32 height = img->height;
+            height = img->height;
 
             while (height--)
             {
-                RwUInt32 width = img->width;
                 RwRGBA* srcLinePixels = (RwRGBA*)pixels;
-                RwUInt8* dstLinePixels = dstpixels;
+
+                dstLinePixels = dstpixels;
+                width = img->width;
+
 
                 while (width--)
                 {
