@@ -457,7 +457,6 @@ static inline u32 exp_read_huff4(EXPBITS PTR4* bits, u32 bits_to_peek,
     EXPBITSTYPE word;
     u32 mask;
     u8 code;
-    u32 used;
     u32 symbol;
 
     bitcount = bits->bitlen;
@@ -465,22 +464,22 @@ static inline u32 exp_read_huff4(EXPBITS PTR4* bits, u32 bits_to_peek,
     if (bitcount >= bits_to_peek) {
         bitbuf = bits->bits & mask;
         code = decode[bitbuf];
-        used = HUFF4_CODE_USED(code);
         symbol = HUFF4_CODE_SYM(code, syms);
-        bits->bits >>= used;
-        bits->bitlen = bitcount - used;
+        code = HUFF4_CODE_USED(code);
+        bits->bits >>= code;
+        bits->bitlen = bitcount - code;
     } else {
         word = *bits->cur;
         bitbuf = (bits->bits | (word << bitcount)) & mask;
         code = decode[bitbuf];
-        used = HUFF4_CODE_USED(code);
         symbol = HUFF4_CODE_SYM(code, syms);
-        if (bitcount >= used) {
-            bits->bits >>= used;
-            bits->bitlen = bitcount - used;
+        code = HUFF4_CODE_USED(code);
+        if (bitcount >= code) {
+            bits->bits >>= code;
+            bits->bitlen = bitcount - code;
         } else {
-            bits->bits = word >> (used - bitcount);
-            bits->bitlen = bitcount + EXP_BITS_PER_WORD - used;
+            bits->bits = word >> (code - bitcount);
+            bits->bitlen = bitcount + EXP_BITS_PER_WORD - code;
             bits->cur++;
         }
     }
@@ -497,29 +496,28 @@ static inline void exp_read_huff4_store(EXPBITS PTR4* bits, u32 bits_to_peek,
     EXPBITSTYPE word;
     u32 mask;
     u8 code;
-    u32 used;
 
     bitcount = bits->bitlen;
     mask = GetBitsLen(bits_to_peek);
     if (bitcount >= bits_to_peek) {
         bitbuf = bits->bits & mask;
         code = decode[bitbuf];
-        used = HUFF4_CODE_USED(code);
         *dest = (u8)HUFF4_CODE_SYM(code, syms);
-        bits->bits >>= used;
-        bits->bitlen = bitcount - used;
+        code = HUFF4_CODE_USED(code);
+        bits->bits >>= code;
+        bits->bitlen = bitcount - code;
     } else {
         word = *bits->cur;
         bitbuf = (bits->bits | (word << bitcount)) & mask;
         code = decode[bitbuf];
-        used = HUFF4_CODE_USED(code);
         *dest = (u8)HUFF4_CODE_SYM(code, syms);
-        if (bitcount >= used) {
-            bits->bits >>= used;
-            bits->bitlen = bitcount - used;
+        code = HUFF4_CODE_USED(code);
+        if (bitcount >= code) {
+            bits->bits >>= code;
+            bits->bitlen = bitcount - code;
         } else {
-            bits->bits = word >> (used - bitcount);
-            bits->bitlen = bitcount + EXP_BITS_PER_WORD - used;
+            bits->bits = word >> (code - bitcount);
+            bits->bitlen = bitcount + EXP_BITS_PER_WORD - code;
             bits->cur++;
         }
     }
@@ -533,29 +531,28 @@ static inline u32 exp_read_huff4_mask(EXPBITS PTR4* bits, u32 bits_to_peek,
     EXPBITSTYPE bitbuf;
     EXPBITSTYPE word;
     u8 code;
-    u32 used;
     u32 symbol;
 
     bitcount = bits->bitlen;
     if (bitcount >= bits_to_peek) {
         bitbuf = bits->bits & mask;
         code = decode[bitbuf];
-        used = HUFF4_CODE_USED(code);
         symbol = HUFF4_CODE_SYM(code, syms);
-        bits->bits >>= used;
-        bits->bitlen = bitcount - used;
+        code = HUFF4_CODE_USED(code);
+        bits->bits >>= code;
+        bits->bitlen = bitcount - code;
     } else {
         word = *bits->cur;
         bitbuf = (bits->bits | (word << bitcount)) & mask;
         code = decode[bitbuf];
-        used = HUFF4_CODE_USED(code);
         symbol = HUFF4_CODE_SYM(code, syms);
-        if (bitcount >= used) {
-            bits->bits >>= used;
-            bits->bitlen = bitcount - used;
+        code = HUFF4_CODE_USED(code);
+        if (bitcount >= code) {
+            bits->bits >>= code;
+            bits->bitlen = bitcount - code;
         } else {
-            bits->bits = word >> (used - bitcount);
-            bits->bitlen = bitcount + EXP_BITS_PER_WORD - used;
+            bits->bits = word >> (code - bitcount);
+            bits->bitlen = bitcount + EXP_BITS_PER_WORD - code;
             bits->cur++;
         }
     }
@@ -816,7 +813,7 @@ static void CheckReadRLEHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
 static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
                                  HUFF8TABLE PTR4* huff8_table)
 {
-    u32 count;
+    s32 count;
     u8 PTR4* dest;
     u8 PTR4* syms;
     const u8 PTR4* decode;
@@ -825,14 +822,13 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
     u32 last_high_nibble;
     u32 low_nibble;
     u32 packed;
-    s32 remaining;
     EXPBITSTYPE bit;
 
     if (BINK_BUNDLE_HAS_UNREAD_DATA(bundle)) {
         return;
     }
 
-    VarBitsGet(count, u32, *bits, bundle->count_length);
+    VarBitsGet(count, s32, *bits, bundle->count_length);
     if (count != 0) {
         bundle->cur_ptr = BINK_BUNDLE_DATA_BEGIN(bundle);
         bundle->cur_dec = BINK_BUNDLE_DATA_END(bundle, count);
@@ -842,11 +838,10 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
         decode = bundle->decode;
         last_high_nibble = huff8_table->last_high_nibble;
         if (EXPBITS_GET1_BRANCH(*bits, bit)) {
-            /* Negative remaining marks the old-format repeat packet variant. */
+            /* Negative count marks the old-format repeat packet variant. */
             count = BINK_BUNDLE_REPEAT_COUNT(count);
         }
         mask = GetBitsLen(peek);
-        remaining = (s32)count;
         do {
             last_high_nibble = exp_read_huff8(bits, last_high_nibble, huff8_table);
             low_nibble = exp_read_huff4_mask(bits, peek, decode, syms, mask);
@@ -854,12 +849,12 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
             *dest++ = (u8)((packed & BINK_SIGNED_BYTE_BIAS) != 0
                                ? BINK_SIGNED_BYTE_NEGATIVE(packed)
                                : BINK_SIGNED_BYTE_POSITIVE(packed));
-            remaining--;
-        } while (remaining > 0);
+            count--;
+        } while (count > 0);
 
-        if (remaining < -BINK_BUNDLE_REPEAT_THRESHOLD) {
+        if (count < -BINK_BUNDLE_REPEAT_THRESHOLD) {
             /* Repeat packets back-fill the whole bundle with the first decoded byte. */
-            memset(bundle->data, *bundle->data, BINK_BUNDLE_REPEAT_FILL_COUNT(remaining));
+            memset(bundle->data, *bundle->data, BINK_BUNDLE_REPEAT_FILL_COUNT(count));
         }
         huff8_table->last_high_nibble = last_high_nibble;
     } else {
@@ -870,7 +865,7 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
 static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
                                     HUFF8TABLE PTR4* huff8_table)
 {
-    u32 count;
+    s32 count;
     u8 PTR4* dest;
     u8 PTR4* syms;
     const u8 PTR4* decode;
@@ -879,14 +874,13 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
     u32 last_high_nibble;
     u32 low_nibble;
     u32 packed;
-    s32 remaining;
     EXPBITSTYPE bit;
 
     if (BINK_BUNDLE_HAS_UNREAD_DATA(bundle)) {
         return;
     }
 
-    VarBitsGet(count, u32, *bits, bundle->count_length);
+    VarBitsGet(count, s32, *bits, bundle->count_length);
     if (count != 0) {
         bundle->cur_ptr = BINK_BUNDLE_DATA_BEGIN(bundle);
         bundle->cur_dec = BINK_BUNDLE_DATA_END(bundle, count);
@@ -900,18 +894,17 @@ static void NewCheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
             count = BINK_BUNDLE_REPEAT_COUNT(count);
         }
         mask = GetBitsLen(peek);
-        remaining = (s32)count;
         do {
             last_high_nibble = exp_read_huff8(bits, last_high_nibble, huff8_table);
             low_nibble = exp_read_huff4_mask(bits, peek, decode, syms, mask);
             packed = HUFF4_PACK_NIBBLES(low_nibble, last_high_nibble);
             *dest++ = (u8)packed;
-            remaining--;
-        } while (remaining > 0);
+            count--;
+        } while (count > 0);
 
-        if (remaining < -BINK_BUNDLE_REPEAT_THRESHOLD) {
+        if (count < -BINK_BUNDLE_REPEAT_THRESHOLD) {
             /* Match old-format repeat handling after the one-byte payload is decoded. */
-            memset(bundle->data, *bundle->data, BINK_BUNDLE_REPEAT_FILL_COUNT(remaining));
+            memset(bundle->data, *bundle->data, BINK_BUNDLE_REPEAT_FILL_COUNT(count));
         }
         huff8_table->last_high_nibble = last_high_nibble;
     } else {
