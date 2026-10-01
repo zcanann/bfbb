@@ -168,22 +168,80 @@ struct zNPCBPlankton : zNPCBoss
     xVec3 player_orbit() const;
     void load_territory(S32, xBase&);
 
-    xVec3& location() const;
-    void face_player();
-    void render_debug();
-    bool turning() const;
-    void take_control();
-    F32 get_orbit_yaw(const xVec3&) const;
-    void set_location(const xVec3&);
-    void give_control();
-    void enable_emitter(xParEmitter&) const;
-    void disable_emitter(xParEmitter&) const;
-    U8 ColChkFlags() const;
-    U8 ColPenFlags() const;
-    U8 ColChkByFlags() const;
-    U8 ColPenByFlags() const;
-    U8 PhysicsFlags() const;
-    S32 IsAlive();
+    xVec3& location() const
+    {
+        return reinterpret_cast<xVec3&>(this->model->Mat->pos);
+    }
+    void face_player()
+    {
+        flag.face_player = true;
+    }
+    void render_debug()
+    {
+    }
+    bool turning() const
+    {
+        const xVec2 at = { model->Mat->at.x, model->Mat->at.z };
+
+        return !xfeq0(turn.vel) ||
+               (!xfeq0(turn.accel) &&
+                !(turn.dir.x > turn.dir.y && xabs(turn.dir.x - at.x) < 0.001f) &&
+                !(turn.dir.x < turn.dir.y && xabs(turn.dir.y - at.y) < 0.001f));
+    }
+    void take_control()
+    {
+        if (crony != NULL)
+        {
+            crony->HoldUpDude();
+        }
+    }
+    F32 get_orbit_yaw(const xVec3& loc) const
+    {
+        return xatan2(loc.x - orbit.center.x, loc.z - orbit.center.z);
+    }
+    void set_location(const xVec3& loc)
+    {
+        reinterpret_cast<xVec3&>(model->Mat->pos) = frame->mat.pos = loc;
+    }
+    void give_control()
+    {
+        if (crony != NULL)
+        {
+            crony->ThanksImDone();
+        }
+    }
+    void enable_emitter(xParEmitter& p1) const
+    {
+        p1.emit_flags |= 1;
+    }
+    void disable_emitter(xParEmitter& p1) const
+    {
+        p1.emit_flags &= 0xFE;
+    }
+    U8 ColChkFlags() const
+    {
+        return 0;
+    }
+    U8 ColPenFlags() const
+    {
+        return 0;
+    }
+    U8 ColChkByFlags() const
+    {
+        return 16;
+    }
+    U8 ColPenByFlags() const
+    {
+        return 16;
+    }
+    U8 PhysicsFlags() const
+    {
+        return 3;
+    }
+    S32 IsAlive()
+    {
+        return 1;
+    }
 };
 
 struct zNPCGoalBPlanktonIdle : zNPCGoalCommon

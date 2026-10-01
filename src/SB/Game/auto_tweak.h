@@ -40,6 +40,14 @@ namespace auto_tweak
         result *= scale;
         value = result;
     }
+
+    template <>
+    inline void load_param<xVec3, S32>(xVec3& value, S32, S32, S32, xModelAssetParam* ap, U32 apsize,
+                                   const char* name)
+    {
+        xVec3 def = value;
+        zParamGetVector(ap, apsize, name, def, &value);
+    }
 } // namespace auto_tweak
 
 #endif
