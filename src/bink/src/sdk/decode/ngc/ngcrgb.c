@@ -167,8 +167,6 @@ void YUV_32_4x2_even(u32 count)
         u8 ulo;
         u32 PTR4* y00;
         u32 PTR4* y01;
-        u32 PTR4* y10;
-        u32 PTR4* y11;
         s32 r;
         s32 b;
         s32 gb;
@@ -183,15 +181,15 @@ void YUV_32_4x2_even(u32 count)
         y01 = clamp_ytable[RGB_WORD_BYTE2(yv0)];
         r = v_to_r[vhi];
         b = u_to_b[uhi];
-        gb = v_to_gb[vhi] + u_to_gb[uhi];
+        gb = u_to_gb[uhi] + v_to_gb[vhi];
         yv1 = *y1++;
         dest0[RGB_TILE_WORD0] = RGB32_COLOR_RED_PAIR(y00, y01, r);
         dest0[RGB_TILE_NEXT_ROW_WORD0] = RGB32_COLOR_GB_PAIR(y00, y01, gb, b);
 
-        y10 = clamp_ytable[RGB_WORD_BYTE3(yv1)];
-        y11 = clamp_ytable[RGB_WORD_BYTE2(yv1)];
-        dest1[RGB_TILE_WORD0] = RGB32_COLOR_RED_PAIR(y10, y11, r);
-        dest1[RGB_TILE_NEXT_ROW_WORD0] = RGB32_COLOR_GB_PAIR(y10, y11, gb, b);
+        y00 = clamp_ytable[RGB_WORD_BYTE3(yv1)];
+        y01 = clamp_ytable[RGB_WORD_BYTE2(yv1)];
+        dest1[RGB_TILE_WORD0] = RGB32_COLOR_RED_PAIR(y00, y01, r);
+        dest1[RGB_TILE_NEXT_ROW_WORD0] = RGB32_COLOR_GB_PAIR(y00, y01, gb, b);
 
         vlo = RGB_WORD_BYTE0(vword);
         ulo = RGB_WORD_BYTE0(uword);
@@ -199,15 +197,15 @@ void YUV_32_4x2_even(u32 count)
         y01 = clamp_ytable[RGB_WORD_BYTE0(yv0)];
         r = v_to_r[vlo];
         b = u_to_b[ulo];
-        gb = v_to_gb[vlo] + u_to_gb[ulo];
+        gb = u_to_gb[ulo] + v_to_gb[vlo];
         dest0[RGB_TILE_WORD1] = RGB32_COLOR_RED_PAIR(y00, y01, r);
         dest0[RGB_TILE_NEXT_ROW_WORD1] = RGB32_COLOR_GB_PAIR(y00, y01, gb, b);
         dest0 += RGB_TILE_BLOCK_WORDS;
 
-        y10 = clamp_ytable[RGB_WORD_BYTE1(yv1)];
-        y11 = clamp_ytable[RGB_WORD_BYTE0(yv1)];
-        dest1[RGB_TILE_WORD1] = RGB32_COLOR_RED_PAIR(y10, y11, r);
-        dest1[RGB_TILE_NEXT_ROW_WORD1] = RGB32_COLOR_GB_PAIR(y10, y11, gb, b);
+        y00 = clamp_ytable[RGB_WORD_BYTE1(yv1)];
+        y01 = clamp_ytable[RGB_WORD_BYTE0(yv1)];
+        dest1[RGB_TILE_WORD1] = RGB32_COLOR_RED_PAIR(y00, y01, r);
+        dest1[RGB_TILE_NEXT_ROW_WORD1] = RGB32_COLOR_GB_PAIR(y00, y01, gb, b);
         dest1 += RGB_TILE_BLOCK_WORDS;
 
         count--;
@@ -273,8 +271,6 @@ void YUV_32x2_4x2_even(u32 count)
         u8 ulo;
         u32 PTR4* y00;
         u32 PTR4* y01;
-        u32 PTR4* y10;
-        u32 PTR4* y11;
         s32 r;
         s32 b;
         s32 gb;
@@ -297,12 +293,12 @@ void YUV_32x2_4x2_even(u32 count)
         dest0[RGB_TILE_NEXT_ROW_WORD0] = RGB32_COLOR_GB_DUP(y00, gb, b);
         dest0[RGB_TILE_NEXT_ROW_WORD1] = RGB32_COLOR_GB_DUP(y01, gb, b);
 
-        y10 = clamp_ytable[RGB_WORD_BYTE3(yv1)];
-        y11 = clamp_ytable[RGB_WORD_BYTE2(yv1)];
-        dest1[RGB_TILE_WORD0] = RGB32_COLOR_RED_DUP(y10, r);
-        dest1[RGB_TILE_WORD1] = RGB32_COLOR_RED_DUP(y11, r);
-        dest1[RGB_TILE_NEXT_ROW_WORD0] = RGB32_COLOR_GB_DUP(y10, gb, b);
-        dest1[RGB_TILE_NEXT_ROW_WORD1] = RGB32_COLOR_GB_DUP(y11, gb, b);
+        y00 = clamp_ytable[RGB_WORD_BYTE3(yv1)];
+        y01 = clamp_ytable[RGB_WORD_BYTE2(yv1)];
+        dest1[RGB_TILE_WORD0] = RGB32_COLOR_RED_DUP(y00, r);
+        dest1[RGB_TILE_WORD1] = RGB32_COLOR_RED_DUP(y01, r);
+        dest1[RGB_TILE_NEXT_ROW_WORD0] = RGB32_COLOR_GB_DUP(y00, gb, b);
+        dest1[RGB_TILE_NEXT_ROW_WORD1] = RGB32_COLOR_GB_DUP(y01, gb, b);
 
         vlo = RGB_WORD_BYTE0(vword);
         ulo = RGB_WORD_BYTE0(uword);
@@ -317,12 +313,12 @@ void YUV_32x2_4x2_even(u32 count)
         dest0[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD1] = RGB32_COLOR_GB_DUP(y01, gb, b);
         dest0 += RGB_TILE_X2_BLOCK_WORDS;
 
-        y10 = clamp_ytable[RGB_WORD_BYTE1(yv1)];
-        y11 = clamp_ytable[RGB_WORD_BYTE0(yv1)];
-        dest1[RGB_TILE_SECOND_BLOCK_WORD0] = RGB32_COLOR_RED_DUP(y10, r);
-        dest1[RGB_TILE_SECOND_BLOCK_WORD1] = RGB32_COLOR_RED_DUP(y11, r);
-        dest1[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD0] = RGB32_COLOR_GB_DUP(y10, gb, b);
-        dest1[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD1] = RGB32_COLOR_GB_DUP(y11, gb, b);
+        y00 = clamp_ytable[RGB_WORD_BYTE1(yv1)];
+        y01 = clamp_ytable[RGB_WORD_BYTE0(yv1)];
+        dest1[RGB_TILE_SECOND_BLOCK_WORD0] = RGB32_COLOR_RED_DUP(y00, r);
+        dest1[RGB_TILE_SECOND_BLOCK_WORD1] = RGB32_COLOR_RED_DUP(y01, r);
+        dest1[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD0] = RGB32_COLOR_GB_DUP(y00, gb, b);
+        dest1[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD1] = RGB32_COLOR_GB_DUP(y01, gb, b);
         dest1 += RGB_TILE_X2_BLOCK_WORDS;
 
         count--;
