@@ -761,6 +761,7 @@ static void CheckReadRLEHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     u32 last_symbol;
     u8 run_length;
     u32 repeat_word;
+    u8 fill_symbol;
     u8 PTR4* syms;
     const u8 PTR4* decode;
     u32 peek;
@@ -802,8 +803,8 @@ static void CheckReadRLEHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
                 }
             }
         } else {
-            repeat_word = exp_get_bits(bits, HUFF4_NIBBLE_BITS);
-            memset(bundle->data, repeat_word, count);
+            VarBitsGet(fill_symbol, u8, *bits, HUFF4_NIBBLE_BITS);
+            memset(bundle->data, fill_symbol, count);
         }
     } else {
         /* Empty bundles point cur_ptr past data so callers see no decoded elements. */
