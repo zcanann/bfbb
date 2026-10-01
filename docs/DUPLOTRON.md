@@ -8187,3 +8187,20 @@ movie playback. Report: build/bitplane-write-depth-report.json.
 Full all_source build passed; normal DOL SHA-1 remains
 306526d90b48e99894c3138f5fc8f2716d9fecf6. The project-wide deduplicated
 report changes only WriteBPLossless, with no function-score regressions.
+
+
+## Bink lossless length-estimator child traversal (2026-10-01)
+
+`LenBPLossless` improves from 64.1054% to 71.37789%. A local coefficient
+bit-depth temporary reaches 64.156815%; putting deferred-node pushes before
+length increments reaches 67.197945% on non-final planes. Sequential child
+indices reach 68.634964%. Applying the same branch ordering to the final
+plane reaches 70.72494%, and sequential final-plane indices reach 71.37789%.
+These forms follow the target's branch direction and increment/load sequence.
+Separate group/high-group temporary trials regressed and were restored.
+
+All 16,384 lossless round trips pass, including exact predicted-versus-written
+bit lengths, guards and DC preservation. All 6,911 nonempty lossy round trips
+and 27,644 early-cutoff checks also pass. Full all_source build passes, with
+no function-score regressions. Report: build/bitplane-length-report.json.
+The unit remains NonMatching; this is not a source-linked playback claim.

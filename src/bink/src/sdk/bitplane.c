@@ -312,13 +312,14 @@ u32 LenBPLossless(s16 PTR4* vals)
     maxbits = 0;
     i = BP_FIRST_AC_COEFF;
     do {
+        u32 coeff_bits;
         coeff = BP_ZIGZAG_COEFF(vals, i);
         sign = coeff >> BP_S32_SIGN_SHIFT;
-        bits = BP_COEFF_BIT_LEVEL(BP_ABS_COEFF(coeff, sign) & BP_U16_MASK);
-        if (bits > maxbits) {
-            maxbits = bits;
+        coeff_bits = BP_COEFF_BIT_LEVEL(BP_ABS_COEFF(coeff, sign) & BP_U16_MASK);
+        if (coeff_bits > maxbits) {
+            maxbits = coeff_bits;
         }
-        lens[i] = (u8)bits;
+        lens[i] = (u8)coeff_bits;
         i++;
         count--;
     } while (count != 0);
@@ -407,25 +408,28 @@ u32 LenBPLossless(s16 PTR4* vals)
 handle_children:
                         kind = BP_TREE_ENTRY_INDEX(entry);
                         len = total + BP_TREE_NODE_SIGNAL_BITS;
-                        if (lens[kind] == maxbits) {
-                            len += maxbits;
-                        } else {
+                        if (lens[kind] != maxbits) {
                             *--restart = BP_TREE_COEFF_ENTRY(lens[kind], kind);
-                        }
-                        if (lens[kind + BP_TREE_CHILD1_INDEX] == maxbits) {
-                            len += maxbits;
                         } else {
-                            *--restart = BP_TREE_COEFF_ENTRY(lens[kind + BP_TREE_CHILD1_INDEX], kind + BP_TREE_CHILD1_INDEX);
-                        }
-                        if (lens[kind + BP_TREE_CHILD2_INDEX] == maxbits) {
                             len += maxbits;
-                        } else {
-                            *--restart = BP_TREE_COEFF_ENTRY(lens[kind + BP_TREE_CHILD2_INDEX], kind + BP_TREE_CHILD2_INDEX);
                         }
-                        if (lens[kind + BP_TREE_CHILD3_INDEX] == maxbits) {
-                            len += maxbits;
+                        kind++;
+                        if (lens[kind] != maxbits) {
+                            *--restart = BP_TREE_COEFF_ENTRY(lens[kind], kind);
                         } else {
-                            *--restart = BP_TREE_COEFF_ENTRY(lens[kind + BP_TREE_CHILD3_INDEX], kind + BP_TREE_CHILD3_INDEX);
+                            len += maxbits;
+                        }
+                        kind++;
+                        if (lens[kind] != maxbits) {
+                            *--restart = BP_TREE_COEFF_ENTRY(lens[kind], kind);
+                        } else {
+                            len += maxbits;
+                        }
+                        kind++;
+                        if (lens[kind] != maxbits) {
+                            *--restart = BP_TREE_COEFF_ENTRY(lens[kind], kind);
+                        } else {
+                            len += maxbits;
                         }
                         break;
                     case BP_TREE_BRANCH_NODE:
@@ -471,25 +475,28 @@ handle_children:
 handle_final_children:
                     kind = BP_TREE_ENTRY_INDEX(entry);
                     len = total + BP_TREE_NODE_SIGNAL_BITS;
-                    if (lens[kind] == 1) {
-                        len = total + BP_TREE_NODE_SIGNAL_BITS + 1;
-                    } else {
+                    if (lens[kind] != 1) {
                         *--restart = BP_TREE_COEFF_ENTRY(lens[kind], kind);
-                    }
-                    if (lens[kind + BP_TREE_CHILD1_INDEX] == 1) {
-                        len++;
                     } else {
-                        *--restart = BP_TREE_COEFF_ENTRY(lens[kind + BP_TREE_CHILD1_INDEX], kind + BP_TREE_CHILD1_INDEX);
+                        len = total + BP_TREE_NODE_SIGNAL_BITS + 1;
                     }
-                    if (lens[kind + BP_TREE_CHILD2_INDEX] == 1) {
-                        len++;
+                    kind++;
+                    if (lens[kind] != 1) {
+                        *--restart = BP_TREE_COEFF_ENTRY(lens[kind], kind);
                     } else {
-                        *--restart = BP_TREE_COEFF_ENTRY(lens[kind + BP_TREE_CHILD2_INDEX], kind + BP_TREE_CHILD2_INDEX);
+                        len++;
                     }
-                    if (lens[kind + BP_TREE_CHILD3_INDEX] == 1) {
-                        len++;
+                    kind++;
+                    if (lens[kind] != 1) {
+                        *--restart = BP_TREE_COEFF_ENTRY(lens[kind], kind);
                     } else {
-                        *--restart = BP_TREE_COEFF_ENTRY(lens[kind + BP_TREE_CHILD3_INDEX], kind + BP_TREE_CHILD3_INDEX);
+                        len++;
+                    }
+                    kind++;
+                    if (lens[kind] != 1) {
+                        *--restart = BP_TREE_COEFF_ENTRY(lens[kind], kind);
+                    } else {
+                        len++;
                     }
                     break;
                 case BP_TREE_BRANCH_NODE:
