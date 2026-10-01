@@ -2,8 +2,8 @@
 #define XMATHINLINES_H
 
 #include <types.h>
+#include <math.h>
 
-F32 xsqrt(F32 x);
 F32 xfmod(F32 a, F32 b);
 F32 xatan2(F32 y, F32 x);
 F32 xasin(F32 x);
@@ -34,5 +34,28 @@ inline F32 SMOOTH(F32 x, F32 y, F32 z)
 }
 
 void xsqrtfast(F32& out, F32 x);
+
+// Inline in retail: every caller's TU emits its own weak copy (and its pool
+// literals); xBound.o owns the copy that survives linking.
+inline F32 xsqrt(F32 x)
+{
+    const F32 half = 0.5f;
+    const F32 three = 3.0f;
+
+    if (x <= 0.0f || isinf(x))
+    {
+        return x;
+    }
+
+    F32 guess = __frsqrte(x);
+    guess = half * guess * (three - guess * guess * x);
+
+    if (guess > 0.0000099999997f)
+    {
+        return 1.0f / guess;
+    }
+
+    return 100000.0f;
+}
 
 #endif

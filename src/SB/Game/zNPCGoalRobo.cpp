@@ -7549,8 +7549,9 @@ void zNPCGoalTubeDuckling::MoveFrolic(F32 dt)
 
     if (!((tmr_outward < 0.0f) ? 1 : 0))
     {
-        rat_inv = 1.0f - MAX(0.0f, MIN(tmr_outward, 1.0f));
-        dst_horz = dst_preOrbit + SMOOTH(rat_inv, 0.0f, dst_horz - dst_preOrbit);
+        factor = 1.0f - MAX(0.0f, MIN(tmr_outward, 1.0f));
+        rat_inv = factor;
+        dst_horz = dst_preOrbit + SMOOTH(factor, 0.0f, dst_horz - dst_preOrbit);
     }
 
     tmr_outward = MAX(-1.0f, tmr_outward - dt);

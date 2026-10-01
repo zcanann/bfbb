@@ -92,7 +92,7 @@ void zEntSimpleObj_MgrInit(zEntSimpleObj** entList, U32 entCount)
                 (xEnt**)xMemAlloc(gActiveHeap, custEntCount * sizeof(xEnt*), 0);
             for (i = 0; i < custEntCount; i++)
             {
-                sSimpleCustomList[i] = (xEnt*)tempEntList[(entCount - 1) - i];
+                sSimpleCustomList[i] = (xEnt*)tempEntList[(entCount - 1) - (S32)i];
             }
         }
         else

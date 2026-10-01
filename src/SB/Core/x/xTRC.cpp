@@ -141,19 +141,3 @@ void RenderText(const char* text, bool enabled)
         render_fill_rect(tb.font.clip, xColorFromRGBA(0, 0, 0, 0x96));
     }
 }
-
-// NOTE: these belong in xMath2.h. They are template members, so the compiler
-// emits a weak out-of-line copy into every translation unit that instantiates
-// them. With -sym on, CodeWarrior emits header-defined inlines in a trailing
-// group after the TU's own functions; the #line puts these back in that group
-// (after the xtextbox inlines), which is where the retail object has them.
-#line 1 "xMath2.h"
-template <class T> basic_rect<T>& basic_rect<T>::contract(T s)
-{
-    return expand(-s);
-}
-
-template <class T> basic_rect<T>& basic_rect<T>::expand(T s)
-{
-    return expand(s, s, s, s);
-}

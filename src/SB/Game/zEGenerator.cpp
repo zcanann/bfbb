@@ -233,7 +233,7 @@ found:
     _tagLightningAdd add;
     memset(&add, 0, sizeof(_tagLightningAdd));
     add.type = 3;
-    add.total_points = (xrand() << 1) & 6;
+    add.total_points = (xrand() % 4) * 2;
     add.total_points += 8;
     add.start = &egen->src_pos;
     add.end = &egen->dst_pos;

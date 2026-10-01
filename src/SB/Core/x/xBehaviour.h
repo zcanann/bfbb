@@ -347,4 +347,9 @@ xGoal* xListItem<xGoal>::Head()
 }
  */
 
+inline S32 xPsyche::IndexInStack(const xGoal* gid) const
+{
+    return IndexInStack(gid->GetID());
+}
+
 #endif

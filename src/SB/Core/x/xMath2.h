@@ -145,4 +145,14 @@ F32 xVec2Dist(F32 x1, F32 y1, F32 x2, F32 y2);
 F32 xVec2Dot(const xVec2* a, const xVec2* b);
 void xVec2Init(xVec2* v, F32 _x, F32 _y);
 
+template <class T> basic_rect<T>& basic_rect<T>::contract(T s)
+{
+    return expand(-s);
+}
+
+template <class T> basic_rect<T>& basic_rect<T>::expand(T s)
+{
+    return expand(s, s, s, s);
+}
+
 #endif

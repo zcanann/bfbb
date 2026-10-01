@@ -85,29 +85,6 @@ void xBoundGetSphere(xSphere& o, const xBound& bound)
     }
 }
 
-F32 xsqrt(F32 x)
-{
-    const F32 half = 0.5f;
-    const F32 three = 3.0f;
-
-    if (x <= 0.0f || isinf(x))
-    {
-        return x;
-    }
-
-    // non-matching: frsp instruction
-
-    F32 guess = __frsqrte(x);
-    guess = half * guess * (three - guess * guess * x);
-
-    if (guess > 0.0000099999997f)
-    {
-        return 1.0f / guess;
-    }
-
-    return 100000.0f;
-}
-
 U32 xBoundSphereHitsOBB(const xSphere* s, const xBox* b, const xMat4x3* m, xCollis* coll)
 {
     return xSphereHitsOBB_nu(s, b, m, coll);

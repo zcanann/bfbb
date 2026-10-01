@@ -563,6 +563,33 @@ namespace xhud
         }
     }
 
+    void render_model(xModelInstance& m, const xhud::render_context& rc)
+    {
+        basic_rect<F32> r = { 0 };
+        r.x = rc.loc.x;
+        r.y = rc.loc.y;
+        r.w = rc.size.x;
+        r.h = rc.size.y;
+
+        xVec3 from = { 0, 0, 1 };
+        xVec3 to = { 0, 0, -rc.loc.z };
+
+        xMat4x3 frame;
+        xMat3x3Euler(&frame, rc.rot.x, rc.rot.y, rc.rot.z);
+        frame.right *= (1.0f + rc.loc.z);
+        frame.up *= (1.0f + rc.loc.z);
+        frame.at *= 0.0099999998f;
+        frame.pos.z = 0.0f;
+        frame.pos.y = 0.0f;
+        frame.pos.x = 0.0f;
+        frame.flags = 0;
+
+        for (xModelInstance* model = &m; model; model = model->Next)
+        {
+            render_one_model(*model, rc.a, r, from, to, frame);
+        }
+    }
+
     bool linear_motive_update(widget& w, motive& m, F32 dt)
     {
         F32 diff = dt * m.delta;
@@ -584,18 +611,10 @@ namespace xhud
     // Equivalent: regalloc
     bool accelerate_motive_update(widget& w, motive& m, F32 dt)
     {
-        F32 remaining;
-        F32 diff;
-        F32 delta;
+        F32 diff = dt * (0.5f * m.accel * dt) + m.delta * dt;
+        m.delta += dt * m.accel;
 
-        diff = 0.5f * m.accel;
-        delta = m.delta;
-        m.delta = dt * m.accel + delta;
-        delta *= dt;
-        diff *= dt;
-        diff = dt * diff + delta;
-
-        remaining = m.max_offset - m.offset;
+        F32 remaining = m.max_offset - m.offset;
 
         if ((diff >= 0.0f && diff >= remaining) || (diff < 0.0f && diff <= remaining))
         {
@@ -647,33 +666,6 @@ namespace xhud
             return false;
         }
         return true;
-    }
-
-    void render_model(xModelInstance& m, const xhud::render_context& rc)
-    {
-        basic_rect<F32> r = { 0 };
-        r.x = rc.loc.x;
-        r.y = rc.loc.y;
-        r.w = rc.size.x;
-        r.h = rc.size.y;
-
-        xVec3 from = { 0, 0, 1 };
-        xVec3 to = { 0, 0, -rc.loc.z };
-
-        xMat4x3 frame;
-        xMat3x3Euler(&frame, rc.rot.x, rc.rot.y, rc.rot.z);
-        frame.right *= (1.0f + rc.loc.z);
-        frame.up *= (1.0f + rc.loc.z);
-        frame.at *= 0.0099999998f;
-        frame.pos.z = 0.0f;
-        frame.pos.y = 0.0f;
-        frame.pos.x = 0.0f;
-        frame.flags = 0;
-
-        for (xModelInstance* model = &m; model; model = model->Next)
-        {
-            render_one_model(*model, rc.a, r, from, to, frame);
-        }
     }
 
     void __deadstripped_xHud()

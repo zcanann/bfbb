@@ -548,7 +548,8 @@ void zGameLoop()
             }
             total += sPreviousFrames[i];
 
-            sTimeElapsed = total / sAverageRange;
+            total /= sAverageRange;
+            sTimeElapsed = total;
         }
 
         if (globals.QuarterSpeed)

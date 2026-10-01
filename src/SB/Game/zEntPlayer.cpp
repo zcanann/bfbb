@@ -13183,13 +13183,13 @@ static void CalcCombinedDepen(F32& dx, F32& dz, F32 ax, F32 az, F32 bx, F32 bz, 
             dx = (lb * normZ) / d;
             dz = (lb * say) / d;
 
-            F32 nby = -bz / lb;
-            nddot = nby * normX + ubx * (az / la);
+            normZ = -bz / lb;
+            nddot = normZ * normX + ubx * (az / la);
 
             if (nddot < 0.0f)
             {
                 nddot = -nddot;
-                nby = -nby;
+                normZ = -normZ;
                 ubx = -ubx;
             }
 
@@ -13199,8 +13199,8 @@ static void CalcCombinedDepen(F32& dx, F32& dz, F32 ax, F32 az, F32 bx, F32 bz, 
                 dz = 0.5f * (az + bz);
             }
 
-            nddot = MAX(0.25f, nddot);
-            dx = dx + (la * nby) / nddot;
+            nddot = MAX(nddot, 0.25f);
+            dx = dx + (la * normZ) / nddot;
             dz = dz + (la * ubx) / nddot;
             F32 hx = 0.5f * (ax + bx);
             F32 hz = 0.5f * (az + bz);
@@ -15581,8 +15581,8 @@ static void PlayerLedgeUpdate(xEnt* ent, xScene* sc, F32 dt)
                 frame = ent->model->Anim->Single->Time;
             }
 
-            dz = ledge->epos.z - ledge->spos.z;
             dx = ledge->epos.x - ledge->spos.x;
+            dz = ledge->epos.z - ledge->spos.z;
             F32 len = xsqrt(dx * dx + dz * dz);
 
             dx /= len;
@@ -15734,9 +15734,11 @@ static void PlayerLedgeUpdate(xEnt* ent, xScene* sc, F32 dt)
                     return;
                 }
 
-                ledge->tpos.x = (dx / dist) * ledge->zdist + nfp.nearpt.x;
+                F32 nx = dx / dist;
+                F32 nz = dz / dist;
+                ledge->tpos.x = nx * ledge->zdist + nfp.nearpt.x;
                 ledge->tpos.y = 0.2f + nfp.nearpt.y;
-                ledge->tpos.z = (dz / dist) * ledge->zdist + nfp.nearpt.z;
+                ledge->tpos.z = nz * ledge->zdist + nfp.nearpt.z;
 
                 xVec3 oldcenter = ent->bound.sph.center;
 
@@ -15776,10 +15778,10 @@ static void PlayerLedgeUpdate(xEnt* ent, xScene* sc, F32 dt)
             if (pass == 0)
             {
                 nfp.box.upper.x += 0.2f * ent->frame->mat.at.x - 0.2f;
-                nfp.box.lower.x += 0.2f * ent->frame->mat.at.x + 0.2f;
-                nfp.center.x += 0.2f * ent->frame->mat.at.x;
                 nfp.box.upper.z += 0.2f * ent->frame->mat.at.z - 0.2f;
+                nfp.box.lower.x += 0.2f * ent->frame->mat.at.x + 0.2f;
                 nfp.box.lower.z += 0.2f * ent->frame->mat.at.z + 0.2f;
+                nfp.center.x += 0.2f * ent->frame->mat.at.x;
                 nfp.center.z += 0.2f * ent->frame->mat.at.z;
             }
         }

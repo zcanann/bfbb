@@ -1075,13 +1075,3 @@ S32 zNPCGoalBoyWeep::NPCMessage(NPCMsg* mail)
 
     return 0;
 }
-
-// Retail defined this inline in xBehaviour.h. With -sym on, CodeWarrior emits
-// header-defined inlines in a trailing group after every function in the TU,
-// but emits a main-file inline straight after its definition. The #line puts
-// it back in the header group, where the retail object has it.
-#line 1 "xBehaviour.h"
-inline S32 xPsyche::IndexInStack(const xGoal* gid) const
-{
-    return IndexInStack(gid->GetID());
-}

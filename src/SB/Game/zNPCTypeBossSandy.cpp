@@ -75,7 +75,7 @@ static F32 sElbowDropTimer;
 static F32 sChaseTimer;
 static S32 sNumAttacks;
 static S32 sDidClothesline;
-static volatile F32 sElbowDropThreshold;
+static F32 sElbowDropThreshold;
 static zNPCBSandy* sSandyPtr;
 static xVec3* sCamSubTarget;
 static F32 sCurrYaw;

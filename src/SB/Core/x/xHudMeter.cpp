@@ -32,14 +32,6 @@ namespace xhud
         {
         }
     } // namespace
-
-    meter_widget::meter_widget(const meter_asset& asset)
-        : widget((xhud::asset&)asset), res((xhud::meter_asset&)asset), value(asset.start_value),
-          min_value(asset.min_value), max_value(asset.max_value), end_value(asset.start_value),
-          value_vel(0.0f), ping_delay(10.0f)
-    {
-        add_global_tweaks();
-    }
 } // namespace xhud
 
 void xhud::meter_widget::set_value(F32 v)
@@ -106,6 +98,14 @@ void xhud::meter_widget::set_value_immediate(F32 v)
     value = v;
     end_value = v;
     value_vel = 0.0f;
+}
+
+xhud::meter_widget::meter_widget(const meter_asset& asset)
+    : widget((xhud::asset&)asset), res((xhud::meter_asset&)asset), value(asset.start_value),
+      min_value(asset.min_value), max_value(asset.max_value), end_value(asset.start_value),
+      value_vel(0.0f), ping_delay(10.0f)
+{
+    add_global_tweaks();
 }
 
 void xhud::meter_widget::destruct()
