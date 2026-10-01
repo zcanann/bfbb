@@ -552,7 +552,6 @@ static RwUInt32 TriStripFollow(TriStripListEntry* strip, Edge* nextEdge, TriBinL
     Edge* prevEdge;
     Edge* otherEdge;
     RwBool nextIsLast;
-    RwBool otherIsAvailable;
     TriBinEntry* bestTri;
     RxVertexIndex v3;
     RwInt32 nextEdgeIndex;
@@ -651,10 +650,16 @@ static RwUInt32 TriStripFollow(TriStripListEntry* strip, Edge* nextEdge, TriBinL
                 otherEdge = bestTri->edge[2];
             }
 
-            otherIsAvailable = (currentAttempt < 4) ? TriStripEdgeIsAvailable2(otherEdge) :
-                                                      TriStripEdgeIsAvailable(otherEdge);
+            if (currentAttempt < 4)
+            {
+                nextIsLast = TriStripEdgeIsAvailable2(otherEdge);
+            }
+            else
+            {
+                nextIsLast = TriStripEdgeIsAvailable(otherEdge);
+            }
 
-            if (otherIsAvailable)
+            if (nextIsLast)
             {
                 if (strip->stripLen & 1)
                 {

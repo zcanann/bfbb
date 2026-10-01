@@ -227,6 +227,35 @@ static void* BinaryWorldMalloc(RwUInt8** binaryWorldMallocAddr, RwInt32 size)
     return pMemory;
 }
 
+/* Expand polygons stored in the old four-byte format in place */
+static void WorldSectorConvertOldPolygons(RpWorldSector* worldSector)
+{
+    RwInt32 numPolygons;
+    RwUInt32 bytes;
+    RpPolygon* polygons;
+    RwUInt8* oldPolygons;
+    RwUInt8* src;
+    RwInt32 i;
+
+    numPolygons = worldSector->numPolygons;
+    bytes = numPolygons * sizeof(RwUInt32);
+    polygons = worldSector->polygons;
+    oldPolygons = (RwUInt8*)RwMalloc(bytes);
+    src = oldPolygons;
+
+    memcpy(oldPolygons, polygons, bytes);
+
+    for (i = 0; i < numPolygons; i++)
+    {
+        polygons[i].matIndex = *src++;
+        polygons[i].vertIndex[0] = *src++;
+        polygons[i].vertIndex[1] = *src++;
+        polygons[i].vertIndex[2] = *src++;
+    }
+
+    RwFree(oldPolygons);
+}
+
 static RpWorldSector* WorldSectorStreamRead(RwStream* stream, RwUInt8** binaryWorldMallocAddr,
                                             RpWorld* world, RwUInt32 flags)
 {
@@ -238,12 +267,7 @@ static RpWorldSector* WorldSectorStreamRead(RwStream* stream, RwUInt8** binaryWo
     RwInt32 preLitLumSize;
     RwInt32 texCoordSize;
     RwInt32 triangleSize;
-    RwUInt8* src;
-    RwUInt8* oldPolygons;
     RpWorldSector* worldSector;
-    RpPolygon* polygons;
-    RwUInt32 bytes;
-    RwInt32 numPolygons;
     RwInt32 readSize;
 
     if (!RwStreamFindChunk(stream, rwID_STRUCT, (RwUInt32*)NULL, &version))
@@ -396,24 +420,7 @@ static RpWorldSector* WorldSectorStreamRead(RwStream* stream, RwUInt8** binaryWo
 
             if (version < rpWORLDOLDPOLYGONVERSION)
             {
-
-                numPolygons = worldSector->numPolygons;
-                bytes = numPolygons * sizeof(RwUInt32);
-                polygons = worldSector->polygons;
-                oldPolygons = (RwUInt8*)RwMalloc(bytes);
-                src = oldPolygons;
-
-                memcpy(oldPolygons, polygons, bytes);
-
-                for (i = 0; i < numPolygons; i++)
-                {
-                    polygons[i].matIndex = *src++;
-                    polygons[i].vertIndex[0] = *src++;
-                    polygons[i].vertIndex[1] = *src++;
-                    polygons[i].vertIndex[2] = *src++;
-                }
-
-                RwFree(oldPolygons);
+                WorldSectorConvertOldPolygons(worldSector);
             }
             else
             {

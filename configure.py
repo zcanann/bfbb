@@ -1138,14 +1138,14 @@ config.libs = [
     RenderWareLib(
         "rpworld",
         [
-            Object(NonMatching, "rwsdk/world/babinwor.c"),
+            Object(Matching, "rwsdk/world/babinwor.c"),
             Object(Matching, "rwsdk/world/baclump.c"),
             Object(NonMatching, "rwsdk/world/bageomet.c"),
             Object(Matching, "rwsdk/world/balight.c"),
             Object(NonMatching, "rwsdk/world/bamateri.c"),
             Object(NonMatching, "rwsdk/world/bamatlst.c"),
             Object(Matching, "rwsdk/world/bamesh.c"),
-            Object(NonMatching, "rwsdk/world/bameshop.c"),
+            Object(Matching, "rwsdk/world/bameshop.c"),
             Object(Matching, "rwsdk/world/basector.c"),
             Object(Matching, "rwsdk/world/baworld.c"),
             Object(Matching, "rwsdk/world/baworobj.c"),
