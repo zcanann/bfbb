@@ -1,4 +1,5 @@
 #include "zNPCTypeBossPlankton.h"
+#include "xLaserBolt.inl"
 #include "xDebug.h"
 #include "xGroup.h"
 #include "xMathInlines.h"

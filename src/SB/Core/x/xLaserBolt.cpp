@@ -1,4 +1,4 @@
-#include "xLaserBolt.h"
+#include "xLaserBolt.inl"
 #include "xMathInlines.h"
 #include "xString.h"
 #include "xstransvc.h"

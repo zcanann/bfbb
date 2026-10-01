@@ -474,4 +474,58 @@ struct zNPCGoalBossSB2Death : zNPCGoalCommon
 
 xAnimTable* ZNPC_AnimTable_BossSB2();
 
+inline void zNPCB_SB2::choose_hand()
+{
+    S32 r = xrand();
+    S32 b = (r >> 13) & 1;
+    this->active_hand = (b == 0 ? LEFT_HAND : RIGHT_HAND);
+}
+
+inline xVec3& zNPCB_SB2::location() const
+{
+    return reinterpret_cast<xVec3&>(this->model->Mat->pos);
+}
+
+inline void zNPCB_SB2::render_debug()
+{
+}
+
+inline xVec3& zNPCB_SB2::get_home() const
+{
+    return reinterpret_cast<xVec3&>(this->asset->pos);
+}
+
+inline void zNPCB_SB2::set_location(const xVec2& loc)
+{
+    // Retail really does splat the scalar through xVec3::operator=(F32) here, and
+    // really does aim the second one at &pos.z rather than at &pos.
+    (xVec3&)model->Mat->pos.x = frame->mat.pos.x = loc.x;
+    (xVec3&)model->Mat->pos.z = frame->mat.pos.z = loc.y;
+}
+
+inline bool zNPCB_SB2::player_damaged() const
+{
+    return player_damage_timer > 0.0f;
+}
+
+inline void zNPCB_SB2::set_location(const xVec3& loc)
+{
+    (xVec3&)model->Mat->pos = frame->mat.pos = loc;
+}
+
+inline xVec3& zNPCB_SB2::start_location() const
+{
+    return reinterpret_cast<xVec3&>(this->asset->pos);
+}
+
+inline xVec3& zNPCB_SB2::facing() const
+{
+    return reinterpret_cast<xVec3&>(this->model->Mat->at);
+}
+
+inline S32 zNPCB_SB2::platform_index(const zNPCB_SB2::platform_data& p) const
+{
+    return &p - platforms;
+}
+
 #endif

@@ -6,6 +6,7 @@
 #include "zNPCFXCinematic.h"
 #include "zParPTank.h"
 #include "zNPCTypeBossSB2.h"
+#include "xLaserBolt.inl"
 #include "zNPCSupport.h"
 #include "xString.h"
 #include "xDebug.h"
