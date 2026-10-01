@@ -463,7 +463,9 @@ config.warn_missing_source = False
 config.libs = [
     {
         "lib": "SB",
-        "mw_version": PATCHED_COMPILER,
+        # Game code also builds with the retail-compiler model; see
+        # docs/COMPILER_VARIANTS.md (2.0p1a -> 2.0p1d: +9 functions, -0).
+        "mw_version": RW_COMPILER,
         "cflags": cflags_bfbb,
         "progress_category": "game",
         "objects": [
