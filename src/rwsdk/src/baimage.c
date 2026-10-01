@@ -874,11 +874,11 @@ RwBool RwImageSetGamma(RwReal gammaValue)
         RwReal nT = (RwReal)i / (RwReal)255.0;
         RwReal scaled;
 
-        scaled = (RwReal)255.0 * (RwReal)pow(nT, nGammaInv);
-        RWIMAGEGLOBAL(gammaTable)[i] = (RwUInt8)((RwReal)0.5 + scaled);
+        scaled = (RwReal)pow(nT, nGammaInv);
+        RWIMAGEGLOBAL(gammaTable)[i] = (RwUInt8)((RwReal)(scaled * (RwReal)255.0) + (RwReal)0.5);
 
-        scaled = (RwReal)255.0 * (RwReal)pow(nT, gammaValue);
-        RWIMAGEGLOBAL(invGammaTable)[i] = (RwUInt8)((RwReal)0.5 + scaled);
+        scaled = (RwReal)pow(nT, gammaValue);
+        RWIMAGEGLOBAL(invGammaTable)[i] = (RwUInt8)((RwReal)(scaled * (RwReal)255.0) + (RwReal)0.5);
     }
 
     return TRUE;

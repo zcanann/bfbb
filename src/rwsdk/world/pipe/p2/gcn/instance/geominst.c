@@ -747,7 +747,7 @@ RwUInt32 _rwGCNVtxFmtInstClr(RwUInt8* mem, RwRGBA* srcColor, RwUInt32 fmt, RwInt
             dstColor[2] = srcColor->blue;
 
             srcColor++;
-            dstColor += stride;
+            dstColor = (RwUInt8*)((RwUInt8*)dstColor + stride);
         }
 
         bytesWritten = numVerts * (3 * sizeof(RwUInt8));

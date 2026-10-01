@@ -281,6 +281,7 @@ static void CameraBuildParallelClipPlanes(RwCamera* camera)
     RwReal farPlane;
     RwReal offsetx;
     RwReal offsety;
+    RwReal offset;
     RwV3d vTmp;
     RwV3d vTmp2;
     RwReal recip;
@@ -301,14 +302,18 @@ static void CameraBuildParallelClipPlanes(RwCamera* camera)
     frustumVerts[0].z = frustumVerts[1].z = frustumVerts[2].z = frustumVerts[3].z = nearPlane;
     frustumVerts[4].z = frustumVerts[5].z = frustumVerts[6].z = frustumVerts[7].z = farPlane;
 
-    frustumVerts[0].x = frustumVerts[3].x = width + (((RwReal)1) - nearPlane) * offsetx;
-    frustumVerts[1].x = frustumVerts[2].x = -width + (((RwReal)1) - nearPlane) * offsetx;
-    frustumVerts[4].x = frustumVerts[7].x = width + (((RwReal)1) - farPlane) * offsetx;
-    frustumVerts[5].x = frustumVerts[6].x = -width + (((RwReal)1) - farPlane) * offsetx;
-    frustumVerts[0].y = frustumVerts[1].y = height + (((RwReal)1) - nearPlane) * offsety;
-    frustumVerts[2].y = frustumVerts[3].y = -height + (((RwReal)1) - nearPlane) * offsety;
-    frustumVerts[4].y = frustumVerts[5].y = height + (((RwReal)1) - farPlane) * offsety;
-    frustumVerts[6].y = frustumVerts[7].y = -height + (((RwReal)1) - farPlane) * offsety;
+    offset = (((RwReal)1) - nearPlane) * offsetx;
+    frustumVerts[0].x = frustumVerts[3].x = width + offset;
+    frustumVerts[1].x = frustumVerts[2].x = -width + offset;
+    offset = (((RwReal)1) - farPlane) * offsetx;
+    frustumVerts[4].x = frustumVerts[7].x = width + offset;
+    frustumVerts[5].x = frustumVerts[6].x = -width + offset;
+    offset = (((RwReal)1) - nearPlane) * offsety;
+    frustumVerts[0].y = frustumVerts[1].y = height + offset;
+    frustumVerts[2].y = frustumVerts[3].y = -height + offset;
+    offset = (((RwReal)1) - farPlane) * offsety;
+    frustumVerts[4].y = frustumVerts[5].y = height + offset;
+    frustumVerts[6].y = frustumVerts[7].y = -height + offset;
 
     RwV3dTransformPoints(frustumVerts, frustumVerts, 8, cameraLTM);
 
