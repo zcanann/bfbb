@@ -2633,6 +2633,7 @@ static s32 trysplit(BINKRECT PTR4* outa, BINKRECT PTR4* outb, const BINKRECT PTR
 
 s32 BinkGetRects(HBINK bnk, u32 flags)
 {
+    s32 i;
     BINKRECT rects[BINKMAXDIRTYRECTS];
     BINKRECT split_a[BINKMAXDIRTYRECTS];
     BINKRECT split_b[BINKMAXDIRTYRECTS];
@@ -2654,7 +2655,6 @@ s32 BinkGetRects(HBINK bnk, u32 flags)
             rects[0] = bnk->FrameRects[0];
             scores[0] = trysplit(split_a, split_b, rects, bnk->MaskPlane, bnk->MaskPitch);
             while (1) {
-                s32 i;
                 s32 best_index;
                 s32 best_score;
 
@@ -2694,66 +2694,54 @@ s32 BinkGetRects(HBINK bnk, u32 flags)
         }
 
         {
-            s32 i;
+            for (i = 0; i < bnk->NumRects; ++i) {
+                s32 best_index;
+                u32 best_key;
+                s32 j;
 
-            i = 0;
-            if (i < bnk->NumRects) {
-                do {
-                    s32 best_index;
-                    u32 best_key;
-                    s32 j;
-                    s32 next_i;
+                best_index = 0;
+                best_key = BINK_RECT_SORT_KEY_SENTINEL;
+                for (j = 0; j < bnk->NumRects; ++j) {
+                    u32 key;
 
-                    best_index = 0;
-                    best_key = BINK_RECT_SORT_KEY_SENTINEL;
-                    j = 0;
-                    next_i = i + 1;
-                    if (j < bnk->NumRects) {
-                        do {
-                            u32 key;
-
-                            key = BINK_RECT_SORT_KEY(rects[j].Top, rects[j].Left);
-                            if (key < best_key) {
-                                best_key = key;
-                                best_index = j;
-                            }
-                            ++j;
-                        } while (j < bnk->NumRects);
+                    key = BINK_RECT_SORT_KEY(rects[j].Top, rects[j].Left);
+                    if (key < best_key) {
+                        best_key = key;
+                        best_index = j;
                     }
+                }
 
-                    switch (bnk->lastblitflags & BINKCOPYNOSCALING) {
-                    case BINKCOPY2XH:
-                    case BINKCOPY2XHI:
-                        rects[best_index].Top *= BINK_COPY_SCALE;
-                        rects[best_index].Height *= BINK_COPY_SCALE;
-                        break;
-                    case BINKCOPY2XW:
-                        rects[best_index].Left *= BINK_COPY_SCALE;
-                        rects[best_index].Width *= BINK_COPY_SCALE;
-                        break;
-                    case BINKCOPY2XWH:
-                    case BINKCOPY2XWHI:
-                        rects[best_index].Left *= BINK_COPY_SCALE;
-                        rects[best_index].Width *= BINK_COPY_SCALE;
-                        rects[best_index].Top *= BINK_COPY_SCALE;
-                        rects[best_index].Height *= BINK_COPY_SCALE;
-                        break;
-                    }
+                switch (bnk->lastblitflags & BINKCOPYNOSCALING) {
+                case BINKCOPY2XH:
+                case BINKCOPY2XHI:
+                    rects[best_index].Top *= BINK_COPY_SCALE;
+                    rects[best_index].Height *= BINK_COPY_SCALE;
+                    break;
+                case BINKCOPY2XW:
+                    rects[best_index].Left *= BINK_COPY_SCALE;
+                    rects[best_index].Width *= BINK_COPY_SCALE;
+                    break;
+                case BINKCOPY2XWH:
+                case BINKCOPY2XWHI:
+                    rects[best_index].Left *= BINK_COPY_SCALE;
+                    rects[best_index].Width *= BINK_COPY_SCALE;
+                    rects[best_index].Top *= BINK_COPY_SCALE;
+                    rects[best_index].Height *= BINK_COPY_SCALE;
+                    break;
+                }
 
-                    if ((u32)(rects[best_index].Left + rects[best_index].Width) > bnk->Width) {
-                        rects[best_index].Width -=
-                            rects[best_index].Left + rects[best_index].Width - bnk->Width;
-                    }
-                    if ((u32)(rects[best_index].Top + rects[best_index].Height) > bnk->Height) {
-                        rects[best_index].Height -=
-                            rects[best_index].Top + rects[best_index].Height - bnk->Height;
-                    }
+                if ((u32)(rects[best_index].Left + rects[best_index].Width) > bnk->Width) {
+                    rects[best_index].Width -=
+                        rects[best_index].Left + rects[best_index].Width - bnk->Width;
+                }
+                if ((u32)(rects[best_index].Top + rects[best_index].Height) > bnk->Height) {
+                    rects[best_index].Height -=
+                        rects[best_index].Top + rects[best_index].Height - bnk->Height;
+                }
 
-                    bnk->FrameRects[i] = rects[best_index];
-                    rects[best_index].Left = 0;
-                    rects[best_index].Top = BINK_RECT_SORT_TOP_SENTINEL;
-                    i = next_i;
-                } while (i < bnk->NumRects);
+                bnk->FrameRects[i] = rects[best_index];
+                rects[best_index].Left = 0;
+                rects[best_index].Top = BINK_RECT_SORT_TOP_SENTINEL;
             }
         }
     }
