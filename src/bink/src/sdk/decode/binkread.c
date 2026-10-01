@@ -2589,13 +2589,13 @@ static s32 trysplit(BINKRECT PTR4* outa, BINKRECT PTR4* outb, const BINKRECT PTR
 
     if (rect->Width >= BINK_DIRTY_SPLIT_MIN_SIZE) {
         split_rect = *rect;
-        split = BINK_DIRTY_SPLIT_SIZE(split_rect.Width);
-        split_rect.Width = split;
+        best_score = BINK_DIRTY_SPLIT_SIZE(split_rect.Width);
+        split_rect.Width = best_score;
         smallestrect(outa, mask, pitch, &split_rect);
 
         split_rect = *rect;
-        split_rect.Width -= split;
-        split_rect.Left += split;
+        split_rect.Width -= best_score;
+        split_rect.Left += best_score;
         smallestrect(outb, mask, pitch, &split_rect);
         best_score = BINK_RECT_SPLIT_SCORE(rect, outa, outb);
     } else {
