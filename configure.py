@@ -1077,7 +1077,7 @@ config.libs = [
             Object(NonMatching, "rwsdk/plugin/matfx/gcn/multiTexGcnPipe.c"),
             Object(Matching, "rwsdk/plugin/matfx/gcn/multiTexGcn.c"),
             Object(NonMatching, "rwsdk/plugin/matfx/multiTex.c"),
-            Object(NonMatching, "rwsdk/plugin/matfx/multiTexEffect.c"),
+            Object(Matching, "rwsdk/plugin/matfx/multiTexEffect.c"),
             Object(Matching, "rwsdk/plugin/matfx/rpmatfx.c"),
         ],
     ),
