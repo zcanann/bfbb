@@ -7293,3 +7293,32 @@ diff, registers abstracted):
 | large differences | 20 | source |
 | frame layout | 1 | source |
 | missing | 8 | not written |
+
+
+## Plankton final two functions (2026-10-01)
+
+`player_left_territory` improves from 96.524 to 97.357 with an explicit
+cached `active_territory` index and the `platform` local declared before it.
+This fixes the r6/r7 allocation throughout the function. The remaining
+difference is retail's `addi r5,r3,1204` inside the loop followed by
+`lwz r0,4(r5)`; GC/2.0p1a folds this to `lwz r0,1208(r3)`, making the
+function four bytes short.
+
+The same source produces an exact `player_left_territory` under stock
+GC/2.5. This is diagnostic only: that compiler regresses other functions
+in the unit. Stock GC/1.3.2r, GC/2.0 and GC/2.0p1 retain the folded
+address. Equivalent pointer/member accesses, manual pointer induction,
+loop control-flow rewrites and local optimizer pragmas did not recover
+the missing instruction under the configured compiler.
+
+`impart_velocity` remains at 91.127. Return-value qualifiers, aggregate
+wrappers, local qualifiers, initializer forms and optimizer-pass switches
+did not resolve the return-copy/template-load scheduling difference.
+All unsuccessful experiments were reverted; no compiler changes or
+assembly workarounds were retained.
+
+The unit remains NonMatching at 178/180 functions, 30,756/31,208 exact
+code bytes and 6,728/6,728 data bytes. The normal full build still
+reproduces the retail DOL SHA-1, with no other SB matching regressions.
+This does not validate source-linking Plankton: its unmatched object is
+still supplied by the original binary.

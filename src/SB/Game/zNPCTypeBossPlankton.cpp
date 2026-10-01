@@ -2331,9 +2331,11 @@ U8 zNPCBPlankton::move_to_player_territory()
 
 U8 zNPCBPlankton::player_left_territory() const
 {
-    const territory_data& t = territory[active_territory];
+    xEnt* platform;
+    const S32 active = active_territory;
+    const territory_data& t = territory[active];
     const xCollis& coll = globals.player.ent.collis->colls[0];
-    xEnt* platform = (xEnt*)coll.optr;
+    platform = (xEnt*)coll.optr;
 
     if (t.crony_size > 0 || t.platform == platform || !(coll.flags & 1) || platform == NULL)
     {
@@ -2344,7 +2346,7 @@ U8 zNPCBPlankton::player_left_territory() const
     {
         const territory_data& t = territory[i];
 
-        if (!(t.crony_size > 0) && platform == t.platform && i != active_territory)
+        if (!(t.crony_size > 0) && platform == t.platform && i != active)
         {
             return 1;
         }
