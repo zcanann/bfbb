@@ -462,20 +462,20 @@ static inline u32 exp_read_huff4(EXPBITS PTR4* bits, u32 bits_to_peek,
     bitcount = bits->bitlen;
     mask = GetBitsLen(bits_to_peek);
     if (bitcount >= bits_to_peek) {
-        bitbuf = bits->bits & mask;
-        code = decode[bitbuf];
+        bitbuf = bits->bits;
+        code = decode[bitbuf & mask];
         symbol = HUFF4_CODE_SYM(code, syms);
         code = HUFF4_CODE_USED(code);
-        bits->bits >>= code;
+        bits->bits = bitbuf >> code;
         bits->bitlen = bitcount - code;
     } else {
         word = *bits->cur;
-        bitbuf = (bits->bits | (word << bitcount)) & mask;
-        code = decode[bitbuf];
+        bitbuf = bits->bits;
+        code = decode[(bitbuf | (word << bitcount)) & mask];
         symbol = HUFF4_CODE_SYM(code, syms);
         code = HUFF4_CODE_USED(code);
         if (bitcount >= code) {
-            bits->bits >>= code;
+            bits->bits = bitbuf >> code;
             bits->bitlen = bitcount - code;
         } else {
             bits->bits = word >> (code - bitcount);
@@ -535,20 +535,20 @@ static inline u32 exp_read_huff4_mask(EXPBITS PTR4* bits, u32 bits_to_peek,
 
     bitcount = bits->bitlen;
     if (bitcount >= bits_to_peek) {
-        bitbuf = bits->bits & mask;
-        code = decode[bitbuf];
+        bitbuf = bits->bits;
+        code = decode[bitbuf & mask];
         symbol = HUFF4_CODE_SYM(code, syms);
         code = HUFF4_CODE_USED(code);
-        bits->bits >>= code;
+        bits->bits = bitbuf >> code;
         bits->bitlen = bitcount - code;
     } else {
         word = *bits->cur;
-        bitbuf = (bits->bits | (word << bitcount)) & mask;
-        code = decode[bitbuf];
+        bitbuf = bits->bits;
+        code = decode[(bitbuf | (word << bitcount)) & mask];
         symbol = HUFF4_CODE_SYM(code, syms);
         code = HUFF4_CODE_USED(code);
         if (bitcount >= code) {
-            bits->bits >>= code;
+            bits->bits = bitbuf >> code;
             bits->bitlen = bitcount - code;
         } else {
             bits->bits = word >> (code - bitcount);
