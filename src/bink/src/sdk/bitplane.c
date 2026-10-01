@@ -1209,11 +1209,11 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     i = 0;
     count = BP_BLOCK_COEFFS;
     do {
-        lenbits = BP_COEFF_BIT_LEVEL((u32)absvals[i]);
-        if (lenbits > maxbits) {
-            maxbits = lenbits;
+        u32 coeff_bits = BP_COEFF_BIT_LEVEL((u32)absvals[i]);
+        if (coeff_bits > maxbits) {
+            maxbits = coeff_bits;
         }
-        lens[i] = (u8)lenbits;
+        lens[i] = (u8)coeff_bits;
         i++;
         count--;
     } while (count != 0);
@@ -1241,12 +1241,16 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
         count--;
     } while (count != 0);
 
-    BP_TREE_HIGH_GROUP_MAX(groups, lenbits, BP_TREE_HIGH_GROUP0_INDEX, BP_TREE_HIGH_GROUP0_CHILD0_INDEX);
-    hi_groups[BP_TREE_HIGH_GROUP0_SLOT] = (u8)lenbits;
-    BP_TREE_HIGH_GROUP_MAX(groups, lenbits, BP_TREE_HIGH_GROUP1_INDEX, BP_TREE_HIGH_GROUP1_CHILD0_INDEX);
-    hi_groups[BP_TREE_HIGH_GROUP1_SLOT] = (u8)lenbits;
-    BP_TREE_HIGH_GROUP_MAX(groups, lenbits, BP_TREE_HIGH_GROUP2_INDEX, BP_TREE_HIGH_GROUP2_CHILD0_INDEX);
-    hi_groups[BP_TREE_HIGH_GROUP2_SLOT] = (u8)lenbits;
+    {
+        u32 group_bits;
+        BP_TREE_HIGH_GROUP_MAX(groups, group_bits, BP_TREE_HIGH_GROUP0_INDEX, BP_TREE_HIGH_GROUP0_CHILD0_INDEX);
+        hi_groups[BP_TREE_HIGH_GROUP0_SLOT] = (u8)group_bits;
+        BP_TREE_HIGH_GROUP_MAX(groups, group_bits, BP_TREE_HIGH_GROUP1_INDEX, BP_TREE_HIGH_GROUP1_CHILD0_INDEX);
+        hi_groups[BP_TREE_HIGH_GROUP1_SLOT] = (u8)group_bits;
+        BP_TREE_HIGH_GROUP_MAX(groups, group_bits, BP_TREE_HIGH_GROUP2_INDEX, BP_TREE_HIGH_GROUP2_CHILD0_INDEX);
+        hi_groups[BP_TREE_HIGH_GROUP2_SLOT] = (u8)group_bits;
+
+    }
 
     bit_count = BP_STREAM_BITLEN(bits) + BP_LOSSY_LEVEL_BITS;
     lenbits = BP_LOSSY_LEVEL_CODE(maxbits);
@@ -1266,27 +1270,30 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     }
 
     roots = tree.roots;
-    lenbits = hi_groups[BP_TREE_HIGH_GROUP0_SLOT];
-    if (lenbits > groups[BP_TREE_GROUP1_INDEX]) {
-        entry = BP_TREE_GROUP_ENTRY(lenbits, BP_GROUP1_NODE_BASE);
-    } else {
-        entry = BP_TREE_GROUP_ENTRY(groups[BP_TREE_GROUP1_INDEX], BP_GROUP1_NODE_BASE);
+    {
+        u32 group_bits;
+        group_bits = hi_groups[BP_TREE_HIGH_GROUP0_SLOT];
+        if (group_bits > groups[BP_TREE_GROUP1_INDEX]) {
+            entry = BP_TREE_GROUP_ENTRY(group_bits, BP_GROUP1_NODE_BASE);
+        } else {
+            entry = BP_TREE_GROUP_ENTRY(groups[BP_TREE_GROUP1_INDEX], BP_GROUP1_NODE_BASE);
+        }
+        roots[BP_ROOT_GROUP1_SLOT] = entry;
+        group_bits = hi_groups[BP_TREE_HIGH_GROUP1_SLOT];
+        if (group_bits > groups[BP_TREE_GROUP6_INDEX]) {
+            entry = BP_TREE_GROUP_ENTRY(group_bits, BP_GROUP6_NODE_BASE);
+        } else {
+            entry = BP_TREE_GROUP_ENTRY(groups[BP_TREE_GROUP6_INDEX], BP_GROUP6_NODE_BASE);
+        }
+        roots[BP_ROOT_GROUP6_SLOT] = entry;
+        group_bits = hi_groups[BP_TREE_HIGH_GROUP2_SLOT];
+        if (group_bits > groups[BP_TREE_GROUP11_INDEX]) {
+            entry = BP_TREE_GROUP_ENTRY(group_bits, BP_GROUP11_NODE_BASE);
+        } else {
+            entry = BP_TREE_GROUP_ENTRY(groups[BP_TREE_GROUP11_INDEX], BP_GROUP11_NODE_BASE);
+        }
+        roots[BP_ROOT_GROUP11_SLOT] = entry;
     }
-    roots[BP_ROOT_GROUP1_SLOT] = entry;
-    lenbits = hi_groups[BP_TREE_HIGH_GROUP1_SLOT];
-    if (lenbits > groups[BP_TREE_GROUP6_INDEX]) {
-        entry = BP_TREE_GROUP_ENTRY(lenbits, BP_GROUP6_NODE_BASE);
-    } else {
-        entry = BP_TREE_GROUP_ENTRY(groups[BP_TREE_GROUP6_INDEX], BP_GROUP6_NODE_BASE);
-    }
-    roots[BP_ROOT_GROUP6_SLOT] = entry;
-    lenbits = hi_groups[BP_TREE_HIGH_GROUP2_SLOT];
-    if (lenbits > groups[BP_TREE_GROUP11_INDEX]) {
-        entry = BP_TREE_GROUP_ENTRY(lenbits, BP_GROUP11_NODE_BASE);
-    } else {
-        entry = BP_TREE_GROUP_ENTRY(groups[BP_TREE_GROUP11_INDEX], BP_GROUP11_NODE_BASE);
-    }
-    roots[BP_ROOT_GROUP11_SLOT] = entry;
     roots[BP_ROOT_LOSSY_DC_SLOT] = groups[BP_TREE_GROUP_INDEX(BP_DC_COEFF)] + BP_TREE_BRANCH_NODE;
 
     cur = roots;

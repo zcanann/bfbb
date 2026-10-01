@@ -8301,3 +8301,21 @@ DOL SHA-1 pass. No other function scores change against
 build/bitplane-packed-report.json. New report:
 build/bitplane-lossy-writer-report.json. Bitplane remains NonMatching;
 normal DOL identity does not establish source-linked movie playback.
+
+
+## Bink lossy writer depth temporary lifetimes (2026-10-01)
+
+WriteBPLossy improves from 87.27416% to 88.521965%. The coefficient-depth
+scan uses a loop-local coeff_bits temporary, and high-group construction
+and root setup each use their own block-local group_bits. This separates
+those lifetimes from the later lenbits index and stream-header value.
+The analogous ordinary-group-loop trial and first-child entry reuse both
+regressed and were restored. No arithmetic or stream format changes.
+
+All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and
+27,644 early-cutoff checks pass. Full all_source build and retail DOL
+SHA-1 pass, including the integrated rpusrdat match/link commit c8e48b916.
+No other local function scores change; the integration adds only the
+expected UserDataListCopy improvement from 98.519554% to 100%. Report:
+build/bitplane-lossy-depth-integrated-report.json. Bitplane remains
+NonMatching, so normal DOL identity is not source-linked playback evidence.
