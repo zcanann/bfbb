@@ -740,15 +740,13 @@ static void YUV_blit(void PTR4* dest,
     }
 
     align_count = (YUV_PACKED_WORD_BYTES - (destx & YUV_DEST_ALIGN_MASK)) & YUV_DEST_ALIGN_MASK;
-    if (srcw < align_count) {
+    if (align_count > srcw) {
         align_count = srcw;
     }
 
     while ((s32)srcy < (s32)endy) {
         u32 phase;
         u32 count;
-        u32 aligned;
-        u32 blocks;
         u32 tail;
 
         phase = srcx;
@@ -758,20 +756,21 @@ static void YUV_blit(void PTR4* dest,
             phase = dounalignedcol(align_count, phase);
         }
 
-        aligned = count & ~alignm1;
-        blocks = aligned >> 2;
-        tail = count - blocks * YUV_CORE_BLOCK_PIXELS;
+        tail = count;
+        count = (count & ~alignm1) >> 2;
+        tail -= count * YUV_CORE_BLOCK_PIXELS;
 
-        if (blocks != 0) {
-            if ((phase & 1) == 0) {
-                EVEN(blocks);
+        if (count != 0) {
+            if ((phase & 1) != 0) {
+                ODD(count);
             } else {
-                ODD(blocks);
+                EVEN(count);
             }
         }
 
+        phase += count * YUV_CORE_BLOCK_PIXELS;
         if (tail != 0) {
-            dounalignedcol(tail, phase + (aligned & ~YUV_DEST_ALIGN_MASK));
+            dounalignedcol(tail, phase);
         }
 
         srcy += 2;
