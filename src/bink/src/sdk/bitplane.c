@@ -1016,13 +1016,26 @@ label##_push:                                                                   
                             bitcount = bitcount - 1;                                                                \
                             code = bitbuf & BP_BIT_MASK;                                                            \
                             bitbuf >>= 1;                                                                           \
+                            if (code != 0) {                                                                        \
+                                goto label##_negative;                                                              \
+                            }                                                                                       \
+                            goto label##_positive;                                                                  \
                         } else {                                                                                    \
                             code = *words;                                                                          \
                             bitcount = BP_WORD_TOP_BIT;                                                             \
                             words++;                                                                                \
                             bitbuf = code >> 1;                                                                     \
+                            if ((code & BP_BIT_MASK) == 0) {                                                        \
+                                goto label##_positive;                                                              \
+                            }                                                                                       \
                         }                                                                                           \
-                        coeffs.values[slot] = (code & BP_BIT_MASK) ? BP_NEGATIVE_COEFF_SIGN : BP_POSITIVE_COEFF_SIGN; \
+label##_negative:                                                                                                   \
+                        code = BP_NEGATIVE_COEFF_SIGN;                                                              \
+                        goto label##_store;                                                                         \
+label##_positive:                                                                                                   \
+                        code = BP_POSITIVE_COEFF_SIGN;                                                              \
+label##_store:                                                                                                      \
+                        coeffs.values[slot] = (u16)code;                                                            \
                     } while (0)
                     READ_LOSSLESS_FINAL_CHILD(base, after_lossless_final0);
 after_lossless_final0:

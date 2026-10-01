@@ -8026,3 +8026,19 @@ All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
 early-cutoff invariant checks pass. Full all-source compilation and normal
 retail DOL SHA-1 validation pass. Bitplane remains NonMatching; source-linked
 Bink playback remains unverified.
+
+
+## Bink lossless final-plane child sign branches (2026-10-01)
+
+Matching the final-plane child sign branches and assigning the sign value
+before the common store raises ReadBPLossless from 82.90581% to 86.59036%.
+The full deduplicated comparison before the concurrent compiler update
+changes only ReadBPLossless.
+
+All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
+early-cutoff invariant checks pass. Full all-source compilation and normal
+retail DOL SHA-1 validation pass, including after integrating a12d41401's
+game-code switch to GC/2.0p1d. Bink continues to use ProDG. An initial ProDG
+temporary assembly-file open failure cleared when using a worktree-local
+TEMP/TMP directory; validation used that directory too. Bitplane remains
+NonMatching; source-linked Bink playback remains unverified.
