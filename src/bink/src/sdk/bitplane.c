@@ -789,9 +789,10 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
                         bitcount = bitcount - 1;
                         code = bitbuf & BP_BIT_MASK;
                         bitbuf >>= 1;
-                        if (code == 0) {
-                            goto next_lossless_read_node;
+                        if (code != 0) {
+                            goto decode_lossless_node;
                         }
+                        goto next_lossless_read_node;
                     } else {
                         code = *words;
                         bitcount = BP_WORD_TOP_BIT;
@@ -802,6 +803,7 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
                         }
                     }
 
+decode_lossless_node:
                     switch (BP_READ_TREE_KIND(node)) {
                     case BP_READ_TREE_HIGH_NODE:
                         base = BP_READ_TREE_INDEX(node);
@@ -830,6 +832,7 @@ handle_lossless_read_children:
 decoded_lossless_children:
 #define READ_LOSSLESS_CHILD(slot, label)                                                                            \
                         do {                                                                                        \
+                            u16* coeff_dest;                                                                        \
                             if (bitcount != 0) {                                                                    \
                                 bitcount = bitcount - 1;                                                            \
                                 code = bitbuf & BP_BIT_MASK;                                                        \
@@ -860,6 +863,7 @@ label##_push:                                                                   
                                 bitcount = bitcount + BP_BITS_PER_WORD - level;                                     \
                             }                                                                                       \
                             coeff_value = coeff_value | highbit;                                                    \
+                            coeff_dest = &coeffs.values[slot];                                                      \
                             if (bitcount != 0) {                                                                    \
                                 bitcount = bitcount - 1;                                                            \
                                 code = bitbuf & BP_BIT_MASK;                                                        \
@@ -883,7 +887,7 @@ label##_negative:                                                               
 label##_positive:                                                                                                   \
                             code = coeff_value;                                                                     \
 label##_store:                                                                                                      \
-                            coeffs.values[slot] = (u16)code;                                                        \
+                            *coeff_dest = (u16)code;                                                                \
                         } while (0)
                         READ_LOSSLESS_CHILD(base, after_lossless_child0);
 after_lossless_child0:
@@ -963,9 +967,10 @@ lossless_node_done:
                     bitcount = bitcount - 1;
                     code = bitbuf & BP_BIT_MASK;
                     bitbuf >>= 1;
-                    if (code == 0) {
-                        goto next_lossless_final_node;
+                    if (code != 0) {
+                        goto decode_lossless_final_node;
                     }
+                    goto next_lossless_final_node;
                 } else {
                     code = *words;
                     bitcount = BP_WORD_TOP_BIT;
@@ -975,6 +980,7 @@ lossless_node_done:
                         goto next_lossless_final_node;
                     }
                 }
+decode_lossless_final_node:
                 switch (BP_READ_TREE_KIND(node)) {
                 case BP_READ_TREE_HIGH_NODE:
                     base = BP_READ_TREE_INDEX(node);

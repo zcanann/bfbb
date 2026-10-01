@@ -8056,3 +8056,19 @@ All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
 early-cutoff invariant checks pass. Full all-source compilation and normal
 retail DOL SHA-1 validation pass. Bitplane remains NonMatching; source-linked
 Bink playback remains unverified.
+
+
+## Bink lossless node-presence order and child destination (2026-10-01)
+
+Matching buffered node-presence branch order in both lossless loops raises
+ReadBPLossless from 87.150055% to 87.36911%. Computing each non-final child
+destination before its sign read brings it to 87.50055%. The destination
+pointer uses u16, matching the coefficient array. The full report comparison
+changes only ReadBPLossless; correcting the pointer signedness preserves the
+score and removes host compiler warnings.
+
+All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
+early-cutoff invariant checks pass. Full all-source compilation passed, and
+the final pointer correction was rebuilt with normal retail DOL SHA-1
+validation passing again. Bitplane remains NonMatching; source-linked Bink
+playback remains unverified.
