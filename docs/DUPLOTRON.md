@@ -7457,3 +7457,21 @@ claimed recovered routines.
 Both promotions reproduce the retail DOL SHA-1
 306526d90b48e99894c3138f5fc8f2716d9fecf6; no split or compiler-patch changes
 are needed.
+
+## Shadow source linking (2026-10-01)
+
+`xShadow` now links all 41 functions (14,648 code bytes) and 74,656 data
+bytes from source. Main definitions follow retail order, including setup and
+light configuration, raster/camera helpers, manager removal and the two
+shadow-picking helpers. Their existing function bodies are retained.
+
+`-sym on` separates weak helpers from main code. The empty draw helpers move
+to xDraw.h and SQ moves to xMathInlines.h as inline definitions. Explicitly
+named dead-stripped references retain those otherwise-unused helpers and
+restore the first-use order of fraction, epsilon and conversion constants.
+The original stripped routines are unknown; these references are layout
+scaffolding and contribute no linked code.
+
+The full source build reproduces retail DOL SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. No split or compiler-patch changes
+are needed.

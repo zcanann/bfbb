@@ -505,7 +505,7 @@ config.libs = [
             Object(Equivalent, "SB/Core/x/xScrFx.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Core/x/xserializer.cpp"),
             Object(NonMatching, "SB/Core/x/xSFX.cpp"),
-            Object(NonMatching, "SB/Core/x/xShadow.cpp"),
+            Object(Matching, "SB/Core/x/xShadow.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Core/x/xSnd.cpp"),
             Object(NonMatching, "SB/Core/x/xSpline.cpp"),
             Object(Equivalent, "SB/Core/x/xstransvc.cpp"),

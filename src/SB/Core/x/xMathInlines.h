@@ -10,7 +10,10 @@ F32 xasin(F32 x);
 F32 xacos(F32 x);
 F32 xexp(F32 x);
 
-F32 SQ(F32 x);
+inline F32 SQ(F32 x)
+{
+    return x * x;
+}
 
 inline F32 xpow(F32 x, F32 y)
 {

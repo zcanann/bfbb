@@ -4,6 +4,8 @@
 #include "rpcollbsptree.h"
 
 #include "xMath.h"
+#include "xMathInlines.h"
+#include "xDraw.h"
 #include "xRay3.h"
 #include "xQuickCull.h"
 #include "xScene.h"
@@ -80,6 +82,16 @@ static RwCamera* ShadowCameraUpdate(RwCamera* shadowCamera, void* model, void (*
 static void InvertRaster(RwCamera* shadowCamera);
 static void GCRestoreFrameBuffer();
 
+static void xShadow_PickByRayCast(xShadowMgr* mgr);
+static void xShadow_PickEntForNPC(xShadowMgr* mgr);
+
+// Layout-only references retain the weak helpers left by stripped debug code.
+void __deadstripped_xShadow_draw(const xVec3* center, F32 radius, U32 flags)
+{
+    xDrawSetColor(0, 0, 0, 0);
+    xDrawSphere(center, radius, flags);
+}
+
 void xShadowInit()
 {
     xShadowCameraCreate();
@@ -94,24 +106,6 @@ void xShadowInit()
 void xShadowRender(xVec3* center, F32 radius, F32 max_dist)
 {
     xShadowRenderWorld(center, radius, max_dist);
-}
-
-void xShadowSetLight(xVec3* target_pos, xVec3* in_vec, F32 dst_cast)
-{
-    xVec3 zvec;
-    xMat4x3 matrix;
-
-    xVec3Normalize(&zvec, in_vec);
-    xMat3x3LookVec(&matrix, &zvec);
-    matrix.pos = *target_pos;
-
-    RwFrame* camFrame = (RwFrame*)ShadowCamera->object.object.parent;
-    RwMatrixTag* camMatrix = &camFrame->modelling;
-
-    xMat4x3Copy((xMat4x3*)camMatrix, &matrix);
-    RwFrameOrthoNormalize(camFrame);
-    RwMatrixUpdate(camMatrix);
-    RwFrameUpdateObjects(camFrame);
 }
 
 static S32 SetupShadow()
@@ -145,6 +139,24 @@ void xShadowSetWorld(RpWorld* world)
 {
     RpWorldAddCamera(world, ShadowCamera);
     SHADOW_BOTH = 2.0f;
+}
+
+void xShadowSetLight(xVec3* target_pos, xVec3* in_vec, F32 dst_cast)
+{
+    xVec3 zvec;
+    xMat4x3 matrix;
+
+    xVec3Normalize(&zvec, in_vec);
+    xMat3x3LookVec(&matrix, &zvec);
+    matrix.pos = *target_pos;
+
+    RwFrame* camFrame = (RwFrame*)ShadowCamera->object.object.parent;
+    RwMatrixTag* camMatrix = &camFrame->modelling;
+
+    xMat4x3Copy((xMat4x3*)camMatrix, &matrix);
+    RwFrameOrthoNormalize(camFrame);
+    RwMatrixUpdate(camMatrix);
+    RwFrameUpdateObjects(camFrame);
 }
 
 U32 xShadowCameraCreate()
@@ -304,6 +316,14 @@ U32 xShadowReceiveShadowSetup(xEnt* ent)
         return 1;
     }
     return 0;
+}
+
+// Layout-only references reproduce the shared literal order from stripped code.
+void __deadstripped_xShadow_fractions(F32* values)
+{
+    values[0] = 0.5f;
+    values[1] = 1.0f;
+    values[2] = 1e-5f;
 }
 
 void xShadowReceiveShadow(xEnt* ent, F32 shadowFactor, S32 shadowMode, RwMatrixTag* shadowMat,
@@ -600,11 +620,6 @@ void xShadowReceiveShadow(xEnt* ent, F32 shadowFactor, S32 shadowMode, RwMatrixT
     }
 }
 
-void xShadow_ListAdd(xEnt* ent)
-{
-    xShadowManager_Add(ent);
-}
-
 void xShadowRender(xEnt* ent, F32 max_dist)
 {
     xVec3 center;
@@ -615,98 +630,55 @@ void xShadowRender(xEnt* ent, F32 max_dist)
     xShadowRender(&center, radius, max_dist);
 }
 
-static void xShadow_PickByRayCast(xShadowMgr* mgr)
+void xShadow_ListAdd(xEnt* ent)
 {
-    xEnt* ent_best = NULL;
-    S32 idx_best = -1;
-    xCollis colrec;
-    xRay3 ray;
-
-    memset(&colrec, 0, sizeof(colrec));
-
-    ray.dir = g_NY3;
-    ray.min_t = 0.0f;
-    ray.max_t = 10.5f;
-    ray.flags = 0xc00;
-
-    S32 num = mgr->cache->entCount;
-    for (S32 i = 0; i < num; i++)
-    {
-        xEnt* ep = mgr->cache->ent[i];
-
-        colrec.flags = 0;
-        colrec.flags |= 0x1f00;
-
-        ray.origin.x = ep->model->Mat->pos.x;
-        ray.origin.y = ep->model->Mat->pos.y;
-        ray.origin.z = ep->model->Mat->pos.z;
-
-        iRayHitsModel(&ray, ep->model, &colrec);
-
-        if (!(colrec.flags & 1))
-        {
-            continue;
-        }
-        if (colrec.dist > 21.7f)
-        {
-            continue;
-        }
-
-        ent_best = ep;
-        idx_best = i;
-    }
-
-    if (idx_best > 0)
-    {
-        mgr->cache->ent[idx_best] = mgr->cache->ent[0];
-        mgr->cache->ent[0] = ent_best;
-    }
+    xShadowManager_Add(ent);
 }
 
-static void xShadow_PickEntForNPC(xShadowMgr* mgr)
+int Im2DRenderQuad(float x1, float y1, float x2, float y2, float z, float recipCamZ, float uvOffset)
 {
-    if (mgr->cache->entCount >= 2)
-    {
-        if ((mgr->ent->baseType == eBaseTypeNPC) &&
-            (((xNPCBasic*)mgr->ent)->flags1.flg_basenpc & 0x8))
-        {
-            xShadow_PickByRayCast(mgr);
-        }
-    }
+    RwIm2DVertex v[4];
+
+    RwIm2DVertexSetScreenX(&v[0], x1);
+    RwIm2DVertexSetScreenY(&v[0], y1);
+    RwIm2DVertexSetScreenZ(&v[0], z);
+    RwIm2DVertexSetRecipCameraZ(&v[0], recipCamZ);
+    RwIm2DVertexSetIntRGBA(&v[0], 255, 255, 255, 255);
+    RwIm2DVertexSetU(&v[0], uvOffset, recipCamZ);
+    RwIm2DVertexSetV(&v[0], uvOffset, recipCamZ);
+
+    RwIm2DVertexSetScreenX(&v[1], x1);
+    RwIm2DVertexSetScreenY(&v[1], y2);
+    RwIm2DVertexSetScreenZ(&v[1], z);
+    RwIm2DVertexSetRecipCameraZ(&v[1], recipCamZ);
+    RwIm2DVertexSetIntRGBA(&v[1], 255, 255, 255, 255);
+    RwIm2DVertexSetU(&v[1], uvOffset, recipCamZ);
+    RwIm2DVertexSetV(&v[1], 1.0f + uvOffset, recipCamZ);
+
+    RwIm2DVertexSetScreenX(&v[2], x2);
+    RwIm2DVertexSetScreenY(&v[2], y1);
+    RwIm2DVertexSetScreenZ(&v[2], z);
+    RwIm2DVertexSetRecipCameraZ(&v[2], recipCamZ);
+    RwIm2DVertexSetIntRGBA(&v[2], 255, 255, 255, 255);
+    RwIm2DVertexSetU(&v[2], 1.0f + uvOffset, recipCamZ);
+    RwIm2DVertexSetV(&v[2], uvOffset, recipCamZ);
+
+    RwIm2DVertexSetScreenX(&v[3], x2);
+    RwIm2DVertexSetScreenY(&v[3], y2);
+    RwIm2DVertexSetScreenZ(&v[3], z);
+    RwIm2DVertexSetRecipCameraZ(&v[3], recipCamZ);
+    RwIm2DVertexSetIntRGBA(&v[3], 255, 255, 255, 255);
+    RwIm2DVertexSetU(&v[3], 1.0f + uvOffset, recipCamZ);
+    RwIm2DVertexSetV(&v[3], 1.0f + uvOffset, recipCamZ);
+
+    RwIm2DRenderPrimitive(rwPRIMTYPETRISTRIP, v, 4);
+    return 1;
 }
 
-void ShadowCameraDestroy(RwCamera* shadowCamera)
+void __deadstripped_xShadow_conversion(F32* values, S32 value)
 {
-    if (shadowCamera == NULL)
-    {
-        return;
-    }
-
-    _rwFrameSyncDirty();
-    RwFrame* parent = (RwFrame*)shadowCamera->object.object.parent;
-    if (parent != NULL)
-    {
-        _rwObjectHasFrameSetFrame(shadowCamera, NULL);
-        RwFrameDestroy(parent);
-    }
-
-    // Scheduling issue with RwRasterDestroy calls
-
-    RwRaster* zBuffer = shadowCamera->zBuffer;
-    if (zBuffer != NULL)
-    {
-        shadowCamera->zBuffer = NULL;
-        RwRasterDestroy(zBuffer);
-    }
-
-    RwRaster* frameBuffer = shadowCamera->frameBuffer;
-    if (frameBuffer != NULL)
-    {
-        shadowCamera->frameBuffer = NULL;
-        RwRasterDestroy(frameBuffer);
-    }
-
-    RwCameraDestroy(shadowCamera);
+    values[0] = 10.0f;
+    values[1] = (F32)value;
 }
 
 static void InvertRaster(RwCamera* shadowCamera)
@@ -755,6 +727,45 @@ static void InvertRaster(RwCamera* shadowCamera)
     RwRenderStateSet(rwRENDERSTATEZTESTENABLE, (void*)1);
     RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDINVSRCALPHA);
     RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)rwBLENDSRCALPHA);
+}
+
+F32 __deadstripped_xShadow_square(F32 value)
+{
+    return 0.001f * SQ(value);
+}
+
+void ShadowCameraDestroy(RwCamera* shadowCamera)
+{
+    if (shadowCamera == NULL)
+    {
+        return;
+    }
+
+    _rwFrameSyncDirty();
+    RwFrame* parent = (RwFrame*)shadowCamera->object.object.parent;
+    if (parent != NULL)
+    {
+        _rwObjectHasFrameSetFrame(shadowCamera, NULL);
+        RwFrameDestroy(parent);
+    }
+
+    // Scheduling issue with RwRasterDestroy calls
+
+    RwRaster* zBuffer = shadowCamera->zBuffer;
+    if (zBuffer != NULL)
+    {
+        shadowCamera->zBuffer = NULL;
+        RwRasterDestroy(zBuffer);
+    }
+
+    RwRaster* frameBuffer = shadowCamera->frameBuffer;
+    if (frameBuffer != NULL)
+    {
+        shadowCamera->frameBuffer = NULL;
+        RwRasterDestroy(frameBuffer);
+    }
+
+    RwCameraDestroy(shadowCamera);
 }
 
 static RwCamera* ShadowCameraUpdate(RwCamera* shadowCamera, void* model, void (*renderCB)(void*),
@@ -815,71 +826,6 @@ static RwCamera* ShadowCameraUpdate(RwCamera* shadowCamera, void* model, void (*
     RwRenderStateSet(rwRENDERSTATEFOGENABLE, (void*)fogstate);
 
     return shadowCamera;
-}
-
-static RwCamera* ShadowCameraSetSpherePersp(RwCamera* camera, RwV3d* center, F32 radius)
-{
-    RwFrame* camFrame = (RwFrame*)camera->object.object.parent;
-    RwMatrixTag* camMatrix = &camFrame->modelling;
-    RwV3d* camPos = &camMatrix->pos;
-
-    F32 objDepth = 572.95807f * radius;
-    F32 nearZ = objDepth - rscale * radius;
-    F32 farZ = objDepth + rscale * radius;
-
-    camera->nearPlane = nearZ;
-    camera->farPlane = farZ;
-    RwCameraSetNearClipPlane(camera, nearZ);
-    RwCameraSetFarClipPlane(camera, farZ);
-
-    *camPos = *center;
-    RwV3dIncrementScaledMacro(camPos, &camMatrix->at, -objDepth);
-    gCamPos = *camPos;
-
-    RwMatrixUpdate(camMatrix);
-    RwFrameUpdateObjects(camFrame);
-
-    gShadowObjectRadius = radius;
-
-    return camera;
-}
-
-static S32 CmpShadowMgr(const void* a, const void* b)
-{
-    xEnt* entA = ((const xShadowMgr*)a)->ent;
-    xEnt* entB = ((const xShadowMgr*)b)->ent;
-
-    S32 isPlayerA =
-        (entA->baseType == eBaseTypePlayer) || (entA->baseType == eBaseTypeBoulder);
-    S32 isPlayerB =
-        (entB->baseType == eBaseTypePlayer) || (entB->baseType == eBaseTypeBoulder);
-
-    if (isPlayerA && !isPlayerB)
-    {
-        return -1;
-    }
-    if (isPlayerB && !isPlayerA)
-    {
-        return 1;
-    }
-
-    xVec3* campos = &globals.camera.mat.pos;
-
-    F32 dxa = campos->x - entA->model->Mat->pos.x;
-    F32 dya = campos->y - entA->model->Mat->pos.y;
-    F32 dza = campos->z - entA->model->Mat->pos.z;
-    F32 distA = dxa * dxa + dya * dya + dza * dza;
-
-    F32 dxb = campos->x - entB->model->Mat->pos.x;
-    F32 dyb = campos->y - entB->model->Mat->pos.y;
-    F32 dzb = campos->z - entB->model->Mat->pos.z;
-    F32 distB = dxb * dxb + dyb * dyb + dzb * dzb;
-
-    if (distA < distB)
-    {
-        return -1;
-    }
-    return distA > distB;
 }
 
 static RwRaster* ShadowRasterCreate(S32 res)
@@ -1127,6 +1073,33 @@ static RwCamera* ShadowCameraCreatePersp(S32 param)
     }
     ShadowCameraDestroy(cam);
     return NULL;
+}
+
+static RwCamera* ShadowCameraSetSpherePersp(RwCamera* camera, RwV3d* center, F32 radius)
+{
+    RwFrame* camFrame = (RwFrame*)camera->object.object.parent;
+    RwMatrixTag* camMatrix = &camFrame->modelling;
+    RwV3d* camPos = &camMatrix->pos;
+
+    F32 objDepth = 572.95807f * radius;
+    F32 nearZ = objDepth - rscale * radius;
+    F32 farZ = objDepth + rscale * radius;
+
+    camera->nearPlane = nearZ;
+    camera->farPlane = farZ;
+    RwCameraSetNearClipPlane(camera, nearZ);
+    RwCameraSetFarClipPlane(camera, farZ);
+
+    *camPos = *center;
+    RwV3dIncrementScaledMacro(camPos, &camMatrix->at, -objDepth);
+    gCamPos = *camPos;
+
+    RwMatrixUpdate(camMatrix);
+    RwFrameUpdateObjects(camFrame);
+
+    gShadowObjectRadius = radius;
+
+    return camera;
 }
 
 struct ShadowCacheContext
@@ -1763,57 +1736,68 @@ void xShadowManager_Add(xEnt* ent)
     }
 }
 
-int Im2DRenderQuad(float x1, float y1, float x2, float y2, float z, float recipCamZ, float uvOffset)
+void xShadowManager_Remove(xEnt* ent)
 {
-    RwIm2DVertex v[4];
+    int a = 0;
+    for (int i = 6; i < sMgrCount; i++)
+    {
+        sMgrList[i].cache = NULL;
+        a++;
+    }
 
-    RwIm2DVertexSetScreenX(&v[0], x1);
-    RwIm2DVertexSetScreenY(&v[0], y1);
-    RwIm2DVertexSetScreenZ(&v[0], z);
-    RwIm2DVertexSetRecipCameraZ(&v[0], recipCamZ);
-    RwIm2DVertexSetIntRGBA(&v[0], 255, 255, 255, 255);
-    RwIm2DVertexSetU(&v[0], uvOffset, recipCamZ);
-    RwIm2DVertexSetV(&v[0], uvOffset, recipCamZ);
-
-    RwIm2DVertexSetScreenX(&v[1], x1);
-    RwIm2DVertexSetScreenY(&v[1], y2);
-    RwIm2DVertexSetScreenZ(&v[1], z);
-    RwIm2DVertexSetRecipCameraZ(&v[1], recipCamZ);
-    RwIm2DVertexSetIntRGBA(&v[1], 255, 255, 255, 255);
-    RwIm2DVertexSetU(&v[1], uvOffset, recipCamZ);
-    RwIm2DVertexSetV(&v[1], 1.0f + uvOffset, recipCamZ);
-
-    RwIm2DVertexSetScreenX(&v[2], x2);
-    RwIm2DVertexSetScreenY(&v[2], y1);
-    RwIm2DVertexSetScreenZ(&v[2], z);
-    RwIm2DVertexSetRecipCameraZ(&v[2], recipCamZ);
-    RwIm2DVertexSetIntRGBA(&v[2], 255, 255, 255, 255);
-    RwIm2DVertexSetU(&v[2], 1.0f + uvOffset, recipCamZ);
-    RwIm2DVertexSetV(&v[2], uvOffset, recipCamZ);
-
-    RwIm2DVertexSetScreenX(&v[3], x2);
-    RwIm2DVertexSetScreenY(&v[3], y2);
-    RwIm2DVertexSetScreenZ(&v[3], z);
-    RwIm2DVertexSetRecipCameraZ(&v[3], recipCamZ);
-    RwIm2DVertexSetIntRGBA(&v[3], 255, 255, 255, 255);
-    RwIm2DVertexSetU(&v[3], 1.0f + uvOffset, recipCamZ);
-    RwIm2DVertexSetV(&v[3], 1.0f + uvOffset, recipCamZ);
-
-    RwIm2DRenderPrimitive(rwPRIMTYPETRISTRIP, v, 4);
-    return 1;
+    a = 0;
+    int i = 0;
+    while (a < sMgrCount)
+    {
+        if (ent == sMgrList[i].ent)
+        {
+            sMgrList[i] = sMgrList[sMgrCount - 1];
+            sMgrCount--;
+        }
+        else
+        {
+            i++;
+            a++;
+        }
+    }
 }
 
-float SQ(float x)
+static S32 CmpShadowMgr(const void* a, const void* b)
 {
-    return x * x;
-}
+    xEnt* entA = ((const xShadowMgr*)a)->ent;
+    xEnt* entB = ((const xShadowMgr*)b)->ent;
 
-void xDrawSphere(const xVec3* center, F32 r, U32 flags)
-{
-}
+    S32 isPlayerA =
+        (entA->baseType == eBaseTypePlayer) || (entA->baseType == eBaseTypeBoulder);
+    S32 isPlayerB =
+        (entB->baseType == eBaseTypePlayer) || (entB->baseType == eBaseTypeBoulder);
 
-void xDrawSetColor(U8 r, U8 g, U8 b, U8 a)
-{
+    if (isPlayerA && !isPlayerB)
+    {
+        return -1;
+    }
+    if (isPlayerB && !isPlayerA)
+    {
+        return 1;
+    }
+
+    xVec3* campos = &globals.camera.mat.pos;
+
+    F32 dxa = campos->x - entA->model->Mat->pos.x;
+    F32 dya = campos->y - entA->model->Mat->pos.y;
+    F32 dza = campos->z - entA->model->Mat->pos.z;
+    F32 distA = dxa * dxa + dya * dya + dza * dza;
+
+    F32 dxb = campos->x - entB->model->Mat->pos.x;
+    F32 dyb = campos->y - entB->model->Mat->pos.y;
+    F32 dzb = campos->z - entB->model->Mat->pos.z;
+    F32 distB = dxb * dxb + dyb * dyb + dzb * dzb;
+
+    if (distA < distB)
+    {
+        return -1;
+    }
+    return distA > distB;
 }
 
 void xShadowManager_Render()
@@ -2046,28 +2030,62 @@ void xShadowManager_Render()
     xClumpColl_FilterFlags = old_xClumpColl_FilterFlags;
 }
 
-void xShadowManager_Remove(xEnt* ent)
+static void xShadow_PickByRayCast(xShadowMgr* mgr)
 {
-    int a = 0;
-    for (int i = 6; i < sMgrCount; i++)
+    xEnt* ent_best = NULL;
+    S32 idx_best = -1;
+    xCollis colrec;
+    xRay3 ray;
+
+    memset(&colrec, 0, sizeof(colrec));
+
+    ray.dir = g_NY3;
+    ray.min_t = 0.0f;
+    ray.max_t = 10.5f;
+    ray.flags = 0xc00;
+
+    S32 num = mgr->cache->entCount;
+    for (S32 i = 0; i < num; i++)
     {
-        sMgrList[i].cache = NULL;
-        a++;
+        xEnt* ep = mgr->cache->ent[i];
+
+        colrec.flags = 0;
+        colrec.flags |= 0x1f00;
+
+        ray.origin.x = ep->model->Mat->pos.x;
+        ray.origin.y = ep->model->Mat->pos.y;
+        ray.origin.z = ep->model->Mat->pos.z;
+
+        iRayHitsModel(&ray, ep->model, &colrec);
+
+        if (!(colrec.flags & 1))
+        {
+            continue;
+        }
+        if (colrec.dist > 21.7f)
+        {
+            continue;
+        }
+
+        ent_best = ep;
+        idx_best = i;
     }
 
-    a = 0;
-    int i = 0;
-    while (a < sMgrCount)
+    if (idx_best > 0)
     {
-        if (ent == sMgrList[i].ent)
+        mgr->cache->ent[idx_best] = mgr->cache->ent[0];
+        mgr->cache->ent[0] = ent_best;
+    }
+}
+
+static void xShadow_PickEntForNPC(xShadowMgr* mgr)
+{
+    if (mgr->cache->entCount >= 2)
+    {
+        if ((mgr->ent->baseType == eBaseTypeNPC) &&
+            (((xNPCBasic*)mgr->ent)->flags1.flg_basenpc & 0x8))
         {
-            sMgrList[i] = sMgrList[sMgrCount - 1];
-            sMgrCount--;
-        }
-        else
-        {
-            i++;
-            a++;
+            xShadow_PickByRayCast(mgr);
         }
     }
 }
