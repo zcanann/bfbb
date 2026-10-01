@@ -861,10 +861,11 @@ label##_push:                                                                   
                                 bitbuf >>= level;                                                                   \
                                 bitcount = bitcount - level;                                                        \
                             } else {                                                                                \
-                                code = *words++;                                                                    \
-                                coeff_value = (bitbuf | (code << bitcount)) & bit_mask;                             \
-                                bitbuf = code >> (level - bitcount);                                                \
-                                bitcount = bitcount + BP_BITS_PER_WORD - level;                                     \
+                                code = *words; \
+                                coeff_value = (bitbuf | (code << bitcount)) & bit_mask; \
+                                bitbuf = code >> (level - bitcount); \
+                                bitcount = bitcount + BP_BITS_PER_WORD - level; \
+                                words++; \
                             }                                                                                       \
                             coeff_value = coeff_value | highbit;                                                    \
                             coeff_dest = &workspace.coeffs.values[slot];                                                      \
@@ -917,10 +918,11 @@ deferred_lossless_coeff:
                     bitbuf >>= level;
                     bitcount = bitcount - level;
                 } else {
-                    code = *words++;
+                    code = *words;
                     coeff_value = (bitbuf | (code << bitcount)) & bit_mask;
                     bitbuf = code >> (level - bitcount);
                     bitcount = bitcount + BP_BITS_PER_WORD - level;
+                    words++;
                 }
                 coeff_value = coeff_value | highbit;
                 deferred_dest = &workspace.coeffs.values[node];

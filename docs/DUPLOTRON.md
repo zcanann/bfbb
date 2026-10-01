@@ -8115,3 +8115,17 @@ All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
 early-cutoff invariant checks pass. Full all-source compilation and normal
 retail DOL SHA-1 validation pass. Bitplane remains NonMatching; source-linked
 Bink playback remains unverified.
+
+
+## Bink lossless magnitude refill update order (2026-10-01)
+
+Separating the refill word load from pointer advancement and advancing the
+pointer after reservoir/count updates improves ReadBPLossless from 89.03834%
+to 89.31216%. Updating the count earlier and deriving the reservoir shift
+from it scored 89.20263% and was not retained. The full deduplicated report
+changes only ReadBPLossless.
+
+All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
+early-cutoff invariant checks pass. Full all-source compilation and normal
+retail DOL SHA-1 validation pass. Bitplane remains NonMatching; source-linked
+Bink playback remains unverified.
