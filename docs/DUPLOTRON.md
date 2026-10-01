@@ -7776,3 +7776,20 @@ an independent retail oracle for partial coefficient ordering or movie playback.
 Full all-source compilation passes; the normal linked DOL retains retail SHA-1
 306526d90b48e99894c3138f5fc8f2716d9fecf6. Bitplane remains NonMatching, so that
 DOL check does not establish source-linked Bink decoding.
+
+
+## Bink lossy node control flow (2026-10-01)
+
+`readlossy` improves from 65.71619% to 67.3592% by putting the remaining
+node-presence bit read in buffered-first order and moving empty-node
+advancement to the loop tail, consistent with retail branches. All decoding
+operations and mask cutoff behavior are preserved. The checker passes 16,384
+lossless round trips, 6,911 nonempty lossy round trips, and 27,644 early-cutoff
+invariant checks. Full all-source compilation and the normal retail DOL SHA-1
+check pass. No report scores regress; the unrelated unstable
+`check_hide_entities` row returns from 91.04651% to 100% on this rebuild.
+Bitplane remains NonMatching and is not source-linked into the normal DOL.
+
+Rejected experiments: spelling refinement as explicit sample-minus-mask or
+sample-plus-mask lowered readlossy to 65.57428%; moving the high-node case
+before the group-node case left it unchanged at 65.71619%. Neither is retained.
