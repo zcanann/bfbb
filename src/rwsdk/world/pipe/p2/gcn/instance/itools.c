@@ -141,8 +141,8 @@ void _rwGCNInstanceIndices(RwUInt16* posIndices, RwUInt16* indices, RwUInt32 num
                                                       (RwUInt8*)memory + numStripsWritten * 3 +
                                                           numIndicesWritten * stride);
                             numIndicesWritten += length + 2;
-                            length = 0;
                             numStripsWritten++;
+                            length = 0;
                         }
                         else
                         {
@@ -156,8 +156,8 @@ void _rwGCNInstanceIndices(RwUInt16* posIndices, RwUInt16* indices, RwUInt32 num
                                                   (RwUInt8*)memory + numStripsWritten * 3 +
                                                       numIndicesWritten * stride);
                         numIndicesWritten += length + 2;
-                        length = 0;
                         numStripsWritten++;
+                        length = 0;
                     }
                 }
                 else
@@ -166,8 +166,8 @@ void _rwGCNInstanceIndices(RwUInt16* posIndices, RwUInt16* indices, RwUInt32 num
                                               (RwUInt8*)memory + numStripsWritten * 3 +
                                                   numIndicesWritten * stride);
                     numIndicesWritten += length + 2;
-                    length = 0;
                     numStripsWritten++;
+                    length = 0;
                 }
             }
 
@@ -239,8 +239,8 @@ static void WriteHeaders(RwUInt16* posIndices, RwUInt32 numIndices, RwUInt32 num
                         {
                             WRITESTRIPHEADER(length + 2);
                             numIndicesWritten += length + 2;
-                            length = 0;
                             numStripsWritten++;
+                            length = 0;
                         }
                         else
                         {
@@ -251,16 +251,16 @@ static void WriteHeaders(RwUInt16* posIndices, RwUInt32 numIndices, RwUInt32 num
                     {
                         WRITESTRIPHEADER(length + 2);
                         numIndicesWritten += length + 2;
-                        length = 0;
                         numStripsWritten++;
+                        length = 0;
                     }
                 }
                 else
                 {
                     WRITESTRIPHEADER(length + 2);
                     numIndicesWritten += length + 2;
-                    length = 0;
                     numStripsWritten++;
+                    length = 0;
                 }
             }
 

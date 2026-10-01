@@ -144,10 +144,202 @@ extern RpCollBSPTree* _rpCollBSPTreeForAllBoxLeafNodeIntersections(RpCollBSPTree
                                                                    RpCollBSPLeafCallBack callBack,
                                                                    void* data);
 
-extern RpWorld* WorldForAllLineWorldSectorIntersections(RpWorld* world, RwLine* line,
+/* Where a line crosses the axis aligned plane at _value. _type is the byte
+ * offset of the plane's axis within an RwV3d. */
+#define rpCOLLISLINEPLANEINTERSECT(_point, _line, _grad, _type, _value)                            \
+    MACRO_START                                                                                    \
+    {                                                                                              \
+        RwReal _delta;                                                                             \
+                                                                                                   \
+        switch (_type)                                                                             \
+        {                                                                                          \
+        case 0:                                                                                    \
+            _delta = (_value) - (_line).start.x;                                                   \
+            (_point).x = (_value);                                                                 \
+            (_point).y = (_grad)->dydx * _delta + (_line).start.y;                                 \
+            (_point).z = (_grad)->dzdx * _delta + (_line).start.z;                                 \
+            break;                                                                                 \
+        case 4:                                                                                    \
+            _delta = (_value) - (_line).start.y;                                                   \
+            (_point).x = (_grad)->dxdy * _delta + (_line).start.x;                                 \
+            (_point).y = (_value);                                                                 \
+            (_point).z = (_grad)->dzdy * _delta + (_line).start.z;                                 \
+            break;                                                                                 \
+        case 8:                                                                                    \
+            _delta = (_value) - (_line).start.z;                                                   \
+            (_point).x = (_grad)->dxdz * _delta + (_line).start.x;                                 \
+            (_point).y = (_grad)->dydz * _delta + (_line).start.y;                                 \
+            (_point).z = (_value);                                                                 \
+            break;                                                                                 \
+        }                                                                                          \
+    }                                                                                              \
+    MACRO_STOP
+
+/* Walk the world BSP, calling back for each world sector the line passes
+ * through with the part of the line inside it */
+static RpWorld* WorldForAllLineWorldSectorIntersections(RpWorld* world, RwLine* line,
                                                         RpV3dGradient* grad,
                                                         RpWorldSectorCallBack callBack, void* data,
-                                                        RwLine* sectorLine);
+                                                        RwLine* sectorLine)
+{
+    RpSector* sectorStack[rpCOLLISWORLDMAXBSPDEPTH];
+    RwLine lineStack[rpCOLLISWORLDMAXBSPDEPTH];
+    RpSector* sector;
+    RwLine currLine;
+    RwInt32 nStack = 0;
+
+    currLine = *line;
+    sector = world->rootSector;
+
+    while (nStack >= 0)
+    {
+        if (sector->type < 0)
+        {
+            if (sectorLine)
+            {
+                *sectorLine = currLine;
+            }
+
+            if (!callBack((RpWorldSector*)sector, data))
+            {
+                return world;
+            }
+
+            sector = sectorStack[nStack];
+            currLine = lineStack[nStack];
+            nStack--;
+        }
+        else
+        {
+            RpPlaneSector* plane = (RpPlaneSector*)sector;
+            RwSplitBits startLeft;
+            RwSplitBits endLeft;
+            RwSplitBits startRight;
+            RwSplitBits endRight;
+
+            /* Distances of the line ends from the two splitting planes */
+            startRight.nReal =
+                *(RwReal*)((RwUInt8*)&currLine.start + plane->type) - plane->rightValue;
+            startLeft.nReal = *(RwReal*)((RwUInt8*)&currLine.start + plane->type) - plane->leftValue;
+            endLeft.nReal = *(RwReal*)((RwUInt8*)&currLine.end + plane->type) - plane->leftValue;
+            endRight.nReal = *(RwReal*)((RwUInt8*)&currLine.end + plane->type) - plane->rightValue;
+
+            if (startRight.nInt < 0 && endRight.nInt < 0)
+            {
+                /* Entirely on the left */
+                sector = plane->leftSubTree;
+            }
+            else if (startLeft.nInt >= 0 && endLeft.nInt >= 0)
+            {
+                /* Entirely on the right */
+                sector = plane->rightSubTree;
+            }
+            else if (!((startLeft.nInt ^ endLeft.nInt) & 0x80000000) &&
+                     !((startRight.nInt ^ endRight.nInt) & 0x80000000))
+            {
+                /* Within the overlap: visit both sides with the whole line */
+                if (startRight.nInt < endRight.nInt)
+                {
+                    nStack++;
+                    sectorStack[nStack] = plane->rightSubTree;
+                    lineStack[nStack] = currLine;
+                    sector = plane->leftSubTree;
+                }
+                else
+                {
+                    nStack++;
+                    sectorStack[nStack] = plane->leftSubTree;
+                    lineStack[nStack] = currLine;
+                    sector = plane->rightSubTree;
+                }
+            }
+            else if (((startLeft.nInt ^ endLeft.nInt) & 0x80000000) && startRight.nInt >= 0 &&
+                     endRight.nInt >= 0)
+            {
+                /* Crosses the left plane only */
+                RwV3d leftPoint;
+
+                rpCOLLISLINEPLANEINTERSECT(leftPoint, currLine, grad, plane->type,
+                                           plane->leftValue);
+
+                if (startLeft.nInt < 0)
+                {
+                    nStack++;
+                    sectorStack[nStack] = plane->rightSubTree;
+                    lineStack[nStack] = currLine;
+                    sector = plane->leftSubTree;
+                    currLine.end = leftPoint;
+                }
+                else
+                {
+                    nStack++;
+                    sectorStack[nStack] = plane->leftSubTree;
+                    lineStack[nStack].start = leftPoint;
+                    lineStack[nStack].end = currLine.end;
+                    sector = plane->rightSubTree;
+                }
+            }
+            else if (((startRight.nInt ^ endRight.nInt) & 0x80000000) && startLeft.nInt < 0 &&
+                     endLeft.nInt < 0)
+            {
+                /* Crosses the right plane only */
+                RwV3d rightPoint;
+
+                rpCOLLISLINEPLANEINTERSECT(rightPoint, currLine, grad, plane->type,
+                                           plane->rightValue);
+
+                if (startRight.nInt < 0)
+                {
+                    nStack++;
+                    sectorStack[nStack] = plane->rightSubTree;
+                    lineStack[nStack].start = rightPoint;
+                    lineStack[nStack].end = currLine.end;
+                    sector = plane->leftSubTree;
+                }
+                else
+                {
+                    nStack++;
+                    sectorStack[nStack] = plane->leftSubTree;
+                    lineStack[nStack] = currLine;
+                    sector = plane->rightSubTree;
+                    currLine.end = rightPoint;
+                }
+            }
+            else
+            {
+                /* Crosses both planes */
+                RwV3d leftPoint;
+                RwV3d rightPoint;
+
+                rpCOLLISLINEPLANEINTERSECT(leftPoint, currLine, grad, plane->type,
+                                           plane->leftValue);
+                rpCOLLISLINEPLANEINTERSECT(rightPoint, currLine, grad, plane->type,
+                                           plane->rightValue);
+
+                if (startLeft.nInt < 0)
+                {
+                    nStack++;
+                    sectorStack[nStack] = plane->rightSubTree;
+                    lineStack[nStack].start = rightPoint;
+                    lineStack[nStack].end = currLine.end;
+                    sector = plane->leftSubTree;
+                    currLine.end = leftPoint;
+                }
+                else
+                {
+                    nStack++;
+                    sectorStack[nStack] = plane->leftSubTree;
+                    lineStack[nStack].start = leftPoint;
+                    lineStack[nStack].end = currLine.end;
+                    sector = plane->rightSubTree;
+                    currLine.end = rightPoint;
+                }
+            }
+        }
+    }
+
+    return world;
+}
 
 /* Walk the world BSP, calling the leaf callback for the world sectors the box overlaps */
 #define RpCollisWorldForAllBoxSectorsMacro(_world, _isData)                                        \

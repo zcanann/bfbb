@@ -158,6 +158,228 @@ RwInt32 _rpCollBSPTreeStreamGetSize(RpCollBSPTree* tree)
            tree->numLeafNodes * sizeof(RpCollBSPLeafNode);
 }
 
+/* Where a line crosses the axis aligned plane at _value. _type is the byte
+ * offset of the plane's axis within an RwV3d. */
+#define rpCOLLBSPLINEPLANEINTERSECT(_point, _line, _grad, _type, _value)                           \
+    MACRO_START                                                                                    \
+    {                                                                                              \
+        RwReal _delta;                                                                             \
+                                                                                                   \
+        switch (_type)                                                                             \
+        {                                                                                          \
+        case 0:                                                                                    \
+            _delta = (_value) - (_line).start.x;                                                   \
+            (_point).x = (_value);                                                                 \
+            (_point).y = (_grad)->dydx * _delta + (_line).start.y;                                 \
+            (_point).z = (_grad)->dzdx * _delta + (_line).start.z;                                 \
+            break;                                                                                 \
+        case 4:                                                                                    \
+            _delta = (_value) - (_line).start.y;                                                   \
+            (_point).x = (_grad)->dxdy * _delta + (_line).start.x;                                 \
+            (_point).y = (_value);                                                                 \
+            (_point).z = (_grad)->dzdy * _delta + (_line).start.z;                                 \
+            break;                                                                                 \
+        case 8:                                                                                    \
+            _delta = (_value) - (_line).start.z;                                                   \
+            (_point).x = (_grad)->dxdz * _delta + (_line).start.x;                                 \
+            (_point).y = (_grad)->dydz * _delta + (_line).start.y;                                 \
+            (_point).z = (_value);                                                                 \
+            break;                                                                                 \
+        }                                                                                          \
+    }                                                                                              \
+    MACRO_STOP
+
+RpCollBSPTree* _rpCollBSPTreeForAllLineLeafNodeIntersections(RpCollBSPTree* tree, RwLine* line,
+                                                             RpV3dGradient* grad,
+                                                             RpCollBSPLeafCallBack callBack,
+                                                             void* data)
+{
+    RpCollBSPNodeRef nodeStack[rpCOLLBSPTREEMAXDEPTH + 1];
+    RwLine lineStack[rpCOLLBSPTREEMAXDEPTH + 1];
+    RpCollBSPNodeRef node;
+    RwLine currLine;
+    RwInt32 nStack = 0;
+
+    node.type = tree->branchNodes ? rpCOLLBSPBRANCHNODE : rpCOLLBSPLEAFNODE;
+    node.index = 0;
+    currLine = *line;
+
+    while (nStack >= 0)
+    {
+        if (node.type == rpCOLLBSPLEAFNODE)
+        {
+            RpCollBSPLeafNode* leaf = &tree->leafNodes[node.index];
+
+            if (!callBack(leaf->numPolygons, leaf->firstPolygon, data))
+            {
+                return (RpCollBSPTree*)NULL;
+            }
+
+            node = nodeStack[nStack];
+            currLine = lineStack[nStack];
+            nStack--;
+        }
+        else
+        {
+            RpCollBSPBranchNode* branch = &tree->branchNodes[node.index];
+            RwUInt32 type;
+            RwUInt32 leftType;
+            RwUInt32 rightType;
+            RwUInt32 leftNode;
+            RwUInt32 rightNode;
+            RwSplitBits startLeft;
+            RwSplitBits endLeft;
+            RwSplitBits startRight;
+            RwSplitBits endRight;
+
+            type = branch->type;
+
+            /* Distances of the line ends from the two splitting planes */
+            startRight.nReal = *(RwReal*)((RwUInt8*)&currLine.start + type) - branch->rightValue;
+            startLeft.nReal = *(RwReal*)((RwUInt8*)&currLine.start + type) - branch->leftValue;
+            endLeft.nReal = *(RwReal*)((RwUInt8*)&currLine.end + type) - branch->leftValue;
+            endRight.nReal = *(RwReal*)((RwUInt8*)&currLine.end + type) - branch->rightValue;
+
+            leftType = branch->leftType;
+            rightType = branch->rightType;
+            leftNode = branch->leftNode;
+            rightNode = branch->rightNode;
+
+            if (startRight.nInt < 0 && endRight.nInt < 0)
+            {
+                /* Entirely on the left */
+                node.type = leftType;
+                node.index = leftNode;
+            }
+            else if (startLeft.nInt >= 0 && endLeft.nInt >= 0)
+            {
+                /* Entirely on the right */
+                node.type = rightType;
+                node.index = rightNode;
+            }
+            else if (!((startLeft.nInt ^ endLeft.nInt) & 0x80000000) &&
+                     !((startRight.nInt ^ endRight.nInt) & 0x80000000))
+            {
+                /* Within the overlap: visit both sides with the whole line */
+                if (startRight.nInt < endRight.nInt)
+                {
+                    nStack++;
+                    nodeStack[nStack].type = rightType;
+                    nodeStack[nStack].index = rightNode;
+                    lineStack[nStack] = currLine;
+                    node.type = leftType;
+                    node.index = leftNode;
+                }
+                else
+                {
+                    nStack++;
+                    nodeStack[nStack].type = leftType;
+                    nodeStack[nStack].index = leftNode;
+                    lineStack[nStack] = currLine;
+                    node.type = rightType;
+                    node.index = rightNode;
+                }
+            }
+            else if (((startLeft.nInt ^ endLeft.nInt) & 0x80000000) &&
+                     startRight.nInt >= 0 && endRight.nInt >= 0)
+            {
+                /* Crosses the left plane only */
+                RwV3d leftPoint;
+
+                rpCOLLBSPLINEPLANEINTERSECT(leftPoint, currLine, grad, type,
+                                            branch->leftValue);
+
+                if (startLeft.nInt < 0)
+                {
+                    nStack++;
+                    nodeStack[nStack].type = rightType;
+                    nodeStack[nStack].index = rightNode;
+                    lineStack[nStack] = currLine;
+                    node.type = leftType;
+                    node.index = leftNode;
+                    currLine.end = leftPoint;
+                }
+                else
+                {
+                    nStack++;
+                    nodeStack[nStack].type = leftType;
+                    nodeStack[nStack].index = leftNode;
+                    lineStack[nStack].start = leftPoint;
+                    lineStack[nStack].end = currLine.end;
+                    node.type = rightType;
+                    node.index = rightNode;
+                }
+            }
+            else if (((startRight.nInt ^ endRight.nInt) & 0x80000000) &&
+                     startLeft.nInt < 0 && endLeft.nInt < 0)
+            {
+                /* Crosses the right plane only */
+                RwV3d rightPoint;
+
+                rpCOLLBSPLINEPLANEINTERSECT(rightPoint, currLine, grad, type,
+                                            branch->rightValue);
+
+                if (startRight.nInt < 0)
+                {
+                    nStack++;
+                    nodeStack[nStack].type = rightType;
+                    nodeStack[nStack].index = rightNode;
+                    lineStack[nStack].start = rightPoint;
+                    lineStack[nStack].end = currLine.end;
+                    node.type = leftType;
+                    node.index = leftNode;
+                }
+                else
+                {
+                    nStack++;
+                    nodeStack[nStack].type = leftType;
+                    nodeStack[nStack].index = leftNode;
+                    lineStack[nStack] = currLine;
+                    node.type = rightType;
+                    node.index = rightNode;
+                    currLine.end = rightPoint;
+                }
+            }
+            else
+            {
+                /* Crosses both planes */
+                RwV3d leftPoint;
+                RwV3d rightPoint;
+
+                rpCOLLBSPLINEPLANEINTERSECT(leftPoint, currLine, grad, type,
+                                            branch->leftValue);
+                rpCOLLBSPLINEPLANEINTERSECT(rightPoint, currLine, grad, type,
+                                            branch->rightValue);
+
+                if (startLeft.nInt < 0)
+                {
+                    nStack++;
+                    nodeStack[nStack].type = rightType;
+                    nodeStack[nStack].index = rightNode;
+                    lineStack[nStack].start = rightPoint;
+                    lineStack[nStack].end = currLine.end;
+                    node.type = leftType;
+                    node.index = leftNode;
+                    currLine.end = leftPoint;
+                }
+                else
+                {
+                    nStack++;
+                    nodeStack[nStack].type = leftType;
+                    nodeStack[nStack].index = leftNode;
+                    lineStack[nStack].start = leftPoint;
+                    lineStack[nStack].end = currLine.end;
+                    node.type = rightType;
+                    node.index = rightNode;
+                    currLine.end = rightPoint;
+                }
+            }
+        }
+    }
+
+    return tree;
+}
+
 RpCollBSPTree* _rpCollBSPTreeForAllBoxLeafNodeIntersections(RpCollBSPTree* tree, RwBBox* box,
                                                             RpCollBSPLeafCallBack callBack,
                                                             void* data)
