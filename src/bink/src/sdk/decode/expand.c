@@ -611,9 +611,7 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
     u32 last_explicit;
     u32 count;
     u32 missing_symbols;
-    u32 fill_symbol;
     u32 symbol;
-    u32 j;
     u32 i;
     EXPBITSTYPE bit;
     HUFF4MERGES merges;
@@ -623,8 +621,8 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
     *decode = huff4decodes[codebook];
     *bits_to_peek = (u8)BINK_HUFF4_BITS_TO_PEEK[codebook];
     if (codebook == HUFF4_IDENTITY_CODEBOOK) {
-        for (j = 0; j < HUFF4_SYMBOLS; ++j) {
-            syms[j] = j;
+        for (i = 0; i < HUFF4_SYMBOLS; ++i) {
+            syms[i] = i;
         }
         return;
     }
@@ -636,9 +634,7 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
             i = 0;
             count = HUFF4_PAIR_COUNT;
             do {
-                u32 swap_pair = EXPBITS_GET1(*vb, bit);
-
-                if (swap_pair != 0) {
+                if (EXPBITS_GET1_BRANCH(*vb, bit)) {
                     syms[i + 1] = i;
                     syms[i] = i + 1;
                 } else {
@@ -649,23 +645,20 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
                 count--;
             } while (count != 0);
         } else {
-            u32 left;
             u32 right;
 
-            left = 0;
+            i = 0;
             right = 1;
-            for (i = 0; i < HUFF4_PAIR_COUNT; ++i) {
-                u32 swap_pair = EXPBITS_GET1(*vb, bit);
-
-                if (swap_pair != 0) {
-                    merges.order[left] = right;
-                    merges.order[right] = left;
+            for (count = 0; count < HUFF4_PAIR_COUNT; ++count) {
+                if (EXPBITS_GET1_BRANCH(*vb, bit)) {
+                    merges.order[i] = right;
+                    merges.order[right] = i;
                 } else {
-                    merges.order[left] = left;
+                    merges.order[i] = i;
                     merges.order[right] = right;
                 }
-                left += HUFF4_PAIR_SYMBOLS;
                 right += HUFF4_PAIR_SYMBOLS;
+                i += HUFF4_PAIR_SYMBOLS;
             }
 
             if (sort_mode == HUFF4_SORT_QUARTERS) {
@@ -721,13 +714,13 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
             missing_symbols &= ~(HUFF4_SYMBOL_PRESENT_BIT << symbol);
         }
 
-        fill_symbol = 0;
+        i = 0;
         do {
             if ((missing_symbols & HUFF4_SYMBOL_PRESENT_BIT) != 0) {
                 last_explicit++;
-                syms[last_explicit] = fill_symbol;
+                syms[last_explicit] = i;
             }
-            fill_symbol++;
+            i++;
             missing_symbols >>= 1;
         } while (missing_symbols != 0);
     }
