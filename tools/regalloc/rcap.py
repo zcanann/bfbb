@@ -73,6 +73,7 @@ class Dbg:
         self.threads = {pi.dwThreadId: pi.hThread}
         self.bps = {}
         self.base = None
+        self.extra = []  # additional breakpoint addresses armed at process start
 
     def rd(self, a, n):
         b = ctypes.create_string_buffer(n); got = ctypes.c_size_t()
@@ -113,7 +114,7 @@ class Dbg:
             if code == 3:  # CREATE_PROCESS
                 self.threads[tid] = struct.unpack_from('<Q', ev, 32)[0]
                 self.base = struct.unpack_from('<Q', ev, 40)[0]
-                for a in (BP_COLORINSTR, BP_COLORGRAPH, BP_COLORRET):
+                for a in (BP_COLORINSTR, BP_COLORGRAPH, BP_COLORRET) + tuple(self.extra):
                     self.arm(a)
             elif code == 2:  # CREATE_THREAD
                 self.threads[tid] = struct.unpack_from('<Q', ev, 16)[0]
@@ -228,6 +229,9 @@ def compile_cmd(src, unit, outobj):
             cf = re.search(r"cflags = ((?:.*\$\n)*.*)\n", body).group(1)
             flags = re.sub(r"\s+", " ", cf.replace("$\n", " ")).strip()
             exe = os.path.join(ROOT, 'build/compilers', mw, 'mwcceppc.exe').replace('/', '\\')
+            flags += ' ' + os.environ.get('RCAP_EXTRA_FLAGS', '')
+            if os.environ.get('RCAP_MW'):
+                exe = os.path.join(ROOT, 'build/compilers', os.environ['RCAP_MW'], 'mwcceppc.exe').replace('/', '\\')
             return '"%s" %s -c "%s" -o "%s"' % (exe, flags, src, outobj)
     raise SystemExit('unit not found')
 

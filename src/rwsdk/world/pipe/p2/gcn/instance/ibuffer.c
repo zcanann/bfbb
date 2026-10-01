@@ -53,7 +53,8 @@ RwUInt32 _rwGCNDisplayListGetStride(rwVertexDescriptor* vtxDesc)
         case rwGCNVA_NRM:
         {
             type = (vtxDesc->VCDRegLO >> 11) & 0x3;
-            if (((vtxDesc->VATRegA >> 9) & 0x1) == rwGCNCC_NRM_NBT)
+            cnt = (vtxDesc->VATRegA >> 9) & 0x1;
+            if (cnt == rwGCNCC_NRM_NBT)
             {
                 cnt = !(vtxDesc->VATRegA >> 31) ? 1 : 3;
 

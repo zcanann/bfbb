@@ -4,7 +4,7 @@ Prints per vreg: name, our colour, target colour votes. Emits 'v:col' string for
 """
 import os as _os
 _REPO = _os.path.dirname(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))).replace("\\", "/")
-import json, sys, re, subprocess, collections
+import json, sys, re, subprocess, collections, os
 HERE = __file__.rsplit('\\', 1)[0].rsplit('/', 1)[0]
 ops = {int(k): v for k, v in json.load(open(HERE + '/opmap.json')).items()}
 capf, fn, unit = sys.argv[1:4]
@@ -27,7 +27,9 @@ def colour(v):
     return col
 
 
-out = subprocess.run(['python', 'tools/fdiff.py', unit, fn, '--all'], cwd=_REPO,
+# vfdiff compiles privately (nothing in build/ is written); TMAP_SRC points it at a source COPY
+_vsrc = ['--src', os.environ['TMAP_SRC']] if os.environ.get('TMAP_SRC') else []
+out = subprocess.run(['python', 'tools/regalloc/vfdiff.py', unit.split('/')[-1], fn] + _vsrc, cwd=_REPO,
                      capture_output=True, text=True).stdout.splitlines()[1:]
 rows = []
 for l in out:

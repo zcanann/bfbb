@@ -1146,7 +1146,7 @@ config.libs = [
             Object(Matching, "rwsdk/world/pipe/p2/gcn/setup.c", mw_version="GC/2.0p1"),
             Object(Matching, "rwsdk/world/pipe/p2/gcn/instance/geomcond.c"),
             Object(NonMatching, "rwsdk/world/pipe/p2/gcn/instance/geominst.c"),
-            Object(NonMatching, "rwsdk/world/pipe/p2/gcn/instance/ibuffer.c"),
+            Object(Matching, "rwsdk/world/pipe/p2/gcn/instance/ibuffer.c"),
             Object(Matching, "rwsdk/world/pipe/p2/gcn/instance/instancegeom.c"),
             Object(Matching, "rwsdk/world/pipe/p2/gcn/instance/instanceworld.c"),
             Object(Matching, "rwsdk/world/pipe/p2/gcn/instance/itools.c"),
