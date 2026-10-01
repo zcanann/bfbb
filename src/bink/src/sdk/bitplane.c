@@ -759,7 +759,7 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
 
     /* The stream starts with the maximum active lossless bitplane level. */
     VarBitsGet(maxlevel, u8, bitcopy, BP_LOSSLESS_LEVEL_BITS);
-    had_level = maxlevel != 0;
+    had_level = maxlevel;
     highbit = (u16)BP_LEVEL_MASK(maxlevel);
     /* Root nodes mirror WriteBPLossless: three grouped roots plus coeffs 1..3. */
     roots = tree.roots;
@@ -770,13 +770,13 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
     roots[BP_ROOT_LOSSLESS_COEFF2_SLOT] = BP_READ_TREE_COEFF2_ROOT;
     roots[BP_ROOT_LOSSLESS_COEFF3_SLOT] = BP_READ_TREE_COEFF3_ROOT;
 
-    node_ptr = roots;
+    next_node_ptr = roots;
     tree_end_ptr = tree.nodes;
 
     /* Non-final planes read lower magnitude bits plus a sign for new coeffs. */
     while (1 < maxlevel) {
         level = BP_NEXT_LEVEL(maxlevel);
-        next_node_ptr = node_ptr;
+        node_ptr = next_node_ptr;
         next_highbit = (s16)highbit >> 1;
         if (node_ptr < tree_end_ptr) {
             bit_mask = GetBitsLen(level);
@@ -952,12 +952,11 @@ lossless_node_done:
         }
         highbit = next_highbit;
         maxlevel = level;
-        node_ptr = next_node_ptr;
     }
 
     /* Level one coeffs need only a sign bit; their magnitude is implicit. */
-    if (had_level && node_ptr < tree_end_ptr) {
-        next_node_ptr = node_ptr;
+    if (had_level && next_node_ptr < tree_end_ptr) {
+        node_ptr = next_node_ptr;
         do {
             node = *node_ptr;
             if (node == BP_READ_TREE_EMPTY_ENTRY) {

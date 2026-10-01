@@ -8072,3 +8072,17 @@ early-cutoff invariant checks pass. Full all-source compilation passed, and
 the final pointer correction was rebuilt with normal retail DOL SHA-1
 validation passing again. Bitplane remains NonMatching; source-linked Bink
 playback remains unverified.
+
+
+## Bink lossless level guard and cursor lifetime (2026-10-01)
+
+Preserving the original level value for the final-plane guard instead of
+materialising a boolean raises ReadBPLossless from 87.50055% to 87.73932%.
+Keeping the next-plane cursor across iterations and deriving the traversal
+cursor from it brings the score to 87.9529%. The final-plane entry condition
+uses that next-plane cursor too. The full report changes only ReadBPLossless.
+
+All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
+early-cutoff invariant checks pass. Full all-source compilation and normal
+retail DOL SHA-1 validation pass. Bitplane remains NonMatching; source-linked
+Bink playback remains unverified.
