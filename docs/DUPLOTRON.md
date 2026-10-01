@@ -8013,3 +8013,16 @@ early-cutoff invariant checks pass. Full all-source compilation and normal
 retail DOL SHA-1 validation pass, including after integrating staging's
 d10c877fa bavector source-link promotion. Bitplane remains NonMatching;
 source-linked Bink playback remains unverified.
+
+
+## Bink lossless final-plane index progression (2026-10-01)
+
+Reusing the final-plane group index, decoding the high-node index before
+entering the child path, and advancing child indices sequentially improves
+ReadBPLossless from 80.50164% to 82.90581%. The now-unused `kind` temporary is
+removed. The full deduplicated report changes only ReadBPLossless.
+
+All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
+early-cutoff invariant checks pass. Full all-source compilation and normal
+retail DOL SHA-1 validation pass. Bitplane remains NonMatching; source-linked
+Bink playback remains unverified.

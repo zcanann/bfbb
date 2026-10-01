@@ -745,7 +745,6 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
     u8 PTR4* next_node_ptr;
     u8 PTR4* tree_end_ptr;
     u8 node;
-    u8 kind;
     u8 base;
     BPLOSSLESSREADTREE tree;
     BPLOSSLESSCOEFFS coeffs;
@@ -967,17 +966,18 @@ lossless_node_done:
                     }
                 }
                 switch (BP_READ_TREE_KIND(node)) {
+                case BP_READ_TREE_HIGH_NODE:
+                    base = BP_READ_TREE_INDEX(node);
+                    *node_ptr = BP_READ_TREE_GROUP_FROM_INDEX(base);
+                    goto decoded_lossless_final_children;
                 case BP_READ_TREE_GROUP_NODE:
-                    kind = BP_READ_TREE_INDEX(node);
-                    *node_ptr = BP_READ_TREE_BRANCH(kind);
-                    *tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(kind, BP_READ_TREE_CHILD1_BASE);
-                    *++tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(kind, BP_READ_TREE_CHILD2_BASE);
-                    *++tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(kind, BP_READ_TREE_CHILD3_BASE);
+                    node = BP_READ_TREE_INDEX(node);
+                    *node_ptr = BP_READ_TREE_BRANCH(node);
+                    *tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(node, BP_READ_TREE_CHILD1_BASE);
+                    *++tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(node, BP_READ_TREE_CHILD2_BASE);
+                    *++tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(node, BP_READ_TREE_CHILD3_BASE);
                     ++tree_end_ptr;
                     goto after_lossless_final_children;
-                case BP_READ_TREE_HIGH_NODE:
-                    *node_ptr = BP_READ_TREE_GROUP_FROM_INDEX(BP_READ_TREE_INDEX(node));
-                    goto handle_lossless_final_children;
                 case BP_READ_TREE_BRANCH_NODE:
                     *node_ptr = BP_READ_TREE_EMPTY_ENTRY;
                     node_ptr++;
@@ -990,6 +990,7 @@ lossless_node_done:
 
 handle_lossless_final_children:
                 base = BP_READ_TREE_INDEX(node);
+decoded_lossless_final_children:
 #define READ_LOSSLESS_FINAL_CHILD(slot, label)                                                                      \
                     do {                                                                                            \
                         if (bitcount != 0) {                                                                        \
@@ -1025,11 +1026,14 @@ label##_push:                                                                   
                     } while (0)
                     READ_LOSSLESS_FINAL_CHILD(base, after_lossless_final0);
 after_lossless_final0:
-                    READ_LOSSLESS_FINAL_CHILD(base + BP_TREE_CHILD1_INDEX, after_lossless_final1);
+                    base++;
+                    READ_LOSSLESS_FINAL_CHILD(base, after_lossless_final1);
 after_lossless_final1:
-                    READ_LOSSLESS_FINAL_CHILD(base + BP_TREE_CHILD2_INDEX, after_lossless_final2);
+                    base++;
+                    READ_LOSSLESS_FINAL_CHILD(base, after_lossless_final2);
 after_lossless_final2:
-                    READ_LOSSLESS_FINAL_CHILD(base + BP_TREE_CHILD3_INDEX, after_lossless_final3);
+                    base++;
+                    READ_LOSSLESS_FINAL_CHILD(base, after_lossless_final3);
 after_lossless_final3:
 #undef READ_LOSSLESS_FINAL_CHILD
                 ;
