@@ -784,8 +784,7 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
             do {
                 node = *node_ptr;
                 if (node == BP_READ_TREE_EMPTY_ENTRY) {
-next_lossless_read_node:
-                    node_ptr++;
+                    goto next_lossless_read_node;
                 } else {
                     if (bitcount != 0) {
                         bitcount = bitcount - 1;
@@ -821,33 +820,7 @@ next_lossless_read_node:
                         node_ptr++;
                         goto handle_lossless_read_children;
                     case BP_READ_TREE_COEFF_NODE:
-                        coeff_value = bitbuf & bit_mask;
-                        if (bitcount < level) {
-                            code = *words++;
-                            coeff_value |= code << bitcount;
-                            bitbuf = code >> (level - bitcount);
-                            bitcount = bitcount + BP_BITS_PER_WORD - level;
-                        } else {
-                            bitbuf >>= level;
-                            bitcount = bitcount - level;
-                        }
-                        coeff_value = (coeff_value & bit_mask) | highbit;
-                        if (bitcount != 0) {
-                            bitcount = bitcount - 1;
-                            code = bitbuf & BP_BIT_MASK;
-                            bitbuf >>= 1;
-                        } else {
-                            code = *words;
-                            bitcount = BP_WORD_TOP_BIT;
-                            words++;
-                            bitbuf = code >> 1;
-                        }
-                        if ((code & BP_BIT_MASK) != 0) {
-                            coeff_value = -coeff_value;
-                        }
-                        coeffs.values[BP_READ_TREE_INDEX(node)] = (u16)coeff_value;
-                        *node_ptr = BP_READ_TREE_EMPTY_ENTRY;
-                        goto next_lossless_read_node;
+                        goto deferred_lossless_coeff;
                     default:
                         goto next_lossless_read_node;
                     }
@@ -915,6 +888,39 @@ after_lossless_child3:
 after_lossless_read_children:
                     ;
                 }
+                goto lossless_node_done;
+deferred_lossless_coeff:
+                coeff_value = bitbuf & bit_mask;
+                if (bitcount < level) {
+                    code = *words++;
+                    coeff_value |= code << bitcount;
+                    bitbuf = code >> (level - bitcount);
+                    bitcount = bitcount + BP_BITS_PER_WORD - level;
+                } else {
+                    bitbuf >>= level;
+                    bitcount = bitcount - level;
+                }
+                coeff_value = (coeff_value & bit_mask) | highbit;
+                if (bitcount != 0) {
+                    bitcount = bitcount - 1;
+                    code = bitbuf & BP_BIT_MASK;
+                    bitbuf >>= 1;
+                } else {
+                    code = *words;
+                    bitcount = BP_WORD_TOP_BIT;
+                    words++;
+                    bitbuf = code >> 1;
+                }
+                if ((code & BP_BIT_MASK) != 0) {
+                    coeff_value = -coeff_value;
+                }
+                coeffs.values[BP_READ_TREE_INDEX(node)] = (u16)coeff_value;
+                *node_ptr = BP_READ_TREE_EMPTY_ENTRY;
+                goto next_lossless_read_node;
+next_lossless_read_node:
+                node_ptr++;
+lossless_node_done:
+                ;
             } while (node_ptr < tree_end_ptr);
         }
         highbit = next_highbit;
