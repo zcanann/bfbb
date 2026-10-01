@@ -7512,3 +7512,22 @@ confirmed that the unwanted template-load scheduling is already present
 at graph-coloring entry. Its five copy registers are unnamed compiler
 temporaries; local declaration reordering cannot repair that schedule.
 No Plankton source change was retained.
+
+## Bink Huff4 byte-bundle follow-up (2026-10-01)
+
+`CheckReadHuff4Bundle` improves from 88.90909% to 99.56364%, retaining
+the retail 660-byte size. Its byte-store helper is now a macro, advancing
+the output pointer before updating the bitstream. The bit count is read
+after the byte store instead of reusing a cached count. The one-bit mode
+read uses the existing branch-local extraction macro; the unsigned
+countdown and shared peek-width/repeat-symbol temporary also follow
+retail's instruction shape. Remaining differences are register allocation
+and two setup-load positions. No assembly or compiler changes are used.
+
+`python tools/check_bink_huff4.py` extracts the production macro and checks
+it against an independent bit-at-a-time reader: 67,584 cases across all
+0..32 buffered-bit counts and 1..8 peek widths, plus 1,000 unsigned-countdown
+cases. This is a focused host-side check, not an end-to-end movie test.
+The full source build passes, with no other function-score regressions;
+the normal link still reproduces the retail SHA-1. `expand` remains
+NonMatching and is still supplied by the original object in that link.

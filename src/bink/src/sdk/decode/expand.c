@@ -487,41 +487,39 @@ static inline u32 exp_read_huff4(EXPBITS PTR4* bits, u32 bits_to_peek,
     return symbol;
 }
 
-static inline void exp_read_huff4_store(EXPBITS PTR4* bits, u32 bits_to_peek,
-                                        const u8 PTR4* decode, u8 PTR4* syms,
-                                        u8 PTR4* dest)
-{
-    u32 bitcount;
-    EXPBITSTYPE bitbuf;
-    EXPBITSTYPE word;
-    u32 mask;
-    u8 code;
-
-    bitcount = bits->bitlen;
-    mask = GetBitsLen(bits_to_peek);
-    if (bitcount >= bits_to_peek) {
-        bitbuf = bits->bits & mask;
-        code = decode[bitbuf];
-        *dest = (u8)HUFF4_CODE_SYM(code, syms);
-        code = HUFF4_CODE_USED(code);
-        bits->bits >>= code;
-        bits->bitlen = bitcount - code;
-    } else {
-        word = *bits->cur;
-        bitbuf = (bits->bits | (word << bitcount)) & mask;
-        code = decode[bitbuf];
-        *dest = (u8)HUFF4_CODE_SYM(code, syms);
-        code = HUFF4_CODE_USED(code);
-        if (bitcount >= code) {
-            bits->bits >>= code;
-            bits->bitlen = bitcount - code;
-        } else {
-            bits->bits = word >> (code - bitcount);
-            bits->bitlen = bitcount + EXP_BITS_PER_WORD - code;
-            bits->cur++;
-        }
-    }
-}
+/* Store and advance before updating the bitstream, as in the other bundle macros. */
+#define EXP_READ_HUFF4_STORE(vb, peek, decode_table, symbols, out)                       \
+    do {                                                                                 \
+        u32 bitcount;                                                                    \
+        EXPBITSTYPE bitbuf;                                                              \
+        EXPBITSTYPE word;                                                                \
+        u32 mask;                                                                        \
+        u8 code;                                                                         \
+        bitcount = (vb)->bitlen;                                                         \
+        mask = GetBitsLen((peek));                                                       \
+        if (bitcount >= (peek)) {                                                        \
+            bitbuf = (vb)->bits & mask;                                                  \
+            code = (decode_table)[bitbuf];                                               \
+            *(out)++ = (u8)HUFF4_CODE_SYM(code, (symbols));                              \
+            code = HUFF4_CODE_USED(code);                                                \
+            (vb)->bits >>= code;                                                         \
+            (vb)->bitlen -= code;                                                        \
+        } else {                                                                         \
+            word = *(vb)->cur;                                                           \
+            bitbuf = ((vb)->bits | (word << bitcount)) & mask;                           \
+            code = (decode_table)[bitbuf];                                               \
+            *(out)++ = (u8)HUFF4_CODE_SYM(code, (symbols));                              \
+            code = HUFF4_CODE_USED(code);                                                \
+            if ((vb)->bitlen >= code) {                                                  \
+                (vb)->bits >>= code;                                                     \
+                (vb)->bitlen -= code;                                                    \
+            } else {                                                                     \
+                (vb)->bits = word >> (code - (vb)->bitlen);                              \
+                (vb)->bitlen = (vb)->bitlen + EXP_BITS_PER_WORD - code;                  \
+                (vb)->cur++;                                                             \
+            }                                                                            \
+        }                                                                                \
+    } while (0)
 
 static inline u32 exp_read_huff4_mask(EXPBITS PTR4* bits, u32 bits_to_peek,
                                       const u8 PTR4* decode, u8 PTR4* syms,
@@ -918,8 +916,7 @@ static void CheckReadHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     u8 PTR4* dest;
     u8 PTR4* syms;
     const u8 PTR4* decode;
-    u32 peek;
-    u32 fill_symbol;
+    u32 value;
     EXPBITSTYPE bit;
 
     if (BINK_BUNDLE_HAS_UNREAD_DATA(bundle)) {
@@ -930,19 +927,18 @@ static void CheckReadHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     if (count != 0) {
         bundle->cur_ptr = BINK_BUNDLE_DATA_BEGIN(bundle);
         bundle->cur_dec = BINK_BUNDLE_DATA_END(bundle, count);
-        if (!EXPBITS_GET1(*bits, bit)) {
+        if (!EXPBITS_GET1_BRANCH(*bits, bit)) {
             /* Direct Huff4 bundles decode one nibble-sized symbol per byte. */
-            syms = bundle->syms;
             decode = bundle->decode;
-            peek = bundle->bits_to_peek;
             dest = BINK_BUNDLE_DATA_BEGIN(bundle);
-            while (count-- != 0) {
-                exp_read_huff4_store(bits, peek, decode, syms, dest);
-                ++dest;
+            value = bundle->bits_to_peek;
+            syms = bundle->syms;
+            while (--count != (u32)-1) {
+                EXP_READ_HUFF4_STORE(bits, value, decode, syms, dest);
             }
         } else {
-            VarBitsGet(fill_symbol, u32, *bits, HUFF4_NIBBLE_BITS);
-            memset(bundle->data, fill_symbol, count);
+            VarBitsGet(value, u32, *bits, HUFF4_NIBBLE_BITS);
+            memset(bundle->data, value, count);
         }
     } else {
         BINK_BUNDLE_MARK_EMPTY(bundle);
