@@ -65,7 +65,7 @@ template <typename T> T* xUtil_select(T** data, S32 size, const F32* arg2)
     return data[selectIdx];
 }
 
-template <typename T> T xUtil_choose(T const* list, S32 size, F32 const* float_list)
+template <typename T> inline T xUtil_choose(T const* list, S32 size, F32 const* float_list)
 {
     if (list == NULL)
         return NULL;

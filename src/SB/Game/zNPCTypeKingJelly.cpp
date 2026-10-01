@@ -53,72 +53,6 @@ typedef void (*tweak_change_cb)(tweak_info&);
 #define SOUND_TAUNT 9
 #define SOUND_WAVE_RING 10
 
-namespace auto_tweak
-{
-    template <>
-    inline void load_param<iColor_tag, S32>(iColor_tag& value, S32 scale, S32 lo, S32 hi,
-                                     xModelAssetParam* ap, U32 apsize, const char* name)
-    {
-        F32 def[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
-        F32 result[4];
-
-        def[0] = value.r;
-        def[1] = value.g;
-        def[2] = value.b;
-        def[3] = value.a;
-
-        zParamGetFloatList(ap, apsize, name, 4, def, result);
-
-        value.r = result[0];
-        value.g = result[1];
-        value.b = result[2];
-        value.a = result[3];
-    }
-
-    template <>
-    inline void load_param<bool, S32>(bool& value, S32 scale, S32 lo, S32 hi, xModelAssetParam* ap,
-                               U32 apsize, const char* name)
-    {
-        value = zParamGetInt(ap, apsize, name, value);
-    }
-
-    template <>
-    inline void load_param<F32, F32>(F32& value, F32 scale, F32 lo, F32 hi, xModelAssetParam* ap,
-                              U32 apsize, const char* name)
-    {
-        value = zParamGetFloat(ap, apsize, name, value);
-
-        if (value < lo)
-        {
-            value = lo;
-        }
-        else if (value > hi)
-        {
-            value = hi;
-        }
-
-        value = value * scale;
-    }
-
-    template <>
-    inline void load_param<S32, S32>(S32& value, S32 scale, S32 lo, S32 hi, xModelAssetParam* ap,
-                              U32 apsize, const char* name)
-    {
-        S32 v = zParamGetInt(ap, apsize, name, value);
-
-        if (v < lo)
-        {
-            v = lo;
-        }
-        else if (v > hi)
-        {
-            v = hi;
-        }
-
-        v = v * scale;
-        value = v;
-    }
-} // namespace auto_tweak
 
 namespace
 {
@@ -410,6 +344,19 @@ namespace
         sound.time = 0.0f;
     }
 
+    void kill_sound(S32 sound_index)
+    {
+        sound_data_type& sound = sound_data[sound_index];
+
+        if (sound.handle != 0)
+        {
+            xSndStop(sound.handle);
+            sound.handle = 0;
+            sound.playing = -1;
+            sound.delayed = FALSE;
+        }
+    }
+
     void sound_update(F32 dt)
     {
         for (S32 i = 0; i < 11; i++)
@@ -430,6 +377,14 @@ namespace
         }
     }
 
+    void kill_sounds()
+    {
+        for (S32 i = 0; i < 11; i++)
+        {
+            kill_sound(i);
+        }
+    }
+
 } // namespace
 
 namespace
@@ -441,6 +396,8 @@ namespace
         static U8 sclookup_inited = FALSE;
         static F32 sin_lookup[9];
         static F32 cos_lookup[9];
+        // Unreferenced, but present in retail .bss right after the lookup tables.
+        static xVec3 segments[64];
 
         if (!sclookup_inited)
         {
@@ -566,27 +523,6 @@ namespace
         }
     }
     
-    void kill_sound(S32 sound_index)
-    {
-        sound_data_type& sound = sound_data[sound_index];
-
-        if (sound.handle != 0)
-        {
-            xSndStop(sound.handle);
-            sound.handle = 0;
-            sound.playing = -1;
-            sound.delayed = FALSE;
-        }
-    }
-
-    void kill_sounds()
-    {
-        for (S32 i = 0; i < 11; i++)
-        {
-            kill_sound(i);
-        }
-    }
-
 } // namespace
 
 void lightning_ring::create()
@@ -2019,47 +1955,6 @@ void zNPCKingJelly::ParseLinks()
     }
 }
 
-U32 zNPCKingJelly::AnimPick(S32 rawgoal, en_NPC_GOAL_SPOT gspot, xGoal* goal)
-{
-    U32 hash = 0;
-    S32 anim;
-
-    switch (rawgoal)
-    {
-    case NPC_GOAL_KJIDLE:
-        anim = ANIM_Idle01;
-        break;
-    case NPC_GOAL_KJBORED:
-        anim = xUtil_choose<S32>(bored_anims, 2, NULL);
-        break;
-    case NPC_GOAL_KJSPAWNKIDS:
-        anim = ANIM_SpawnKids01;
-        break;
-    case NPC_GOAL_KJTAUNT:
-        anim = ANIM_Taunt01;
-        break;
-    case NPC_GOAL_KJSHOCKGROUND:
-        anim = ANIM_AttackWindup01;
-        break;
-    case NPC_GOAL_KJDAMAGE:
-        anim = ANIM_Damage01;
-        break;
-    case NPC_GOAL_KJDEATH:
-        anim = -1;
-        break;
-    default:
-        anim = ANIM_Idle01;
-        break;
-    }
-
-    if (anim > -1)
-    {
-        hash = g_hash_subbanim[anim];
-    }
-
-    return hash;
-}
-
 void zNPCKingJelly::SelfSetup()
 {
     xBehaveMgr* bmgr;
@@ -2110,6 +2005,47 @@ void zNPCKingJelly::Damage(en_NPC_DAMAGE_TYPE damtype, xBase*, const xVec3*)
         }
         break;
     }
+}
+
+U32 zNPCKingJelly::AnimPick(S32 rawgoal, en_NPC_GOAL_SPOT gspot, xGoal* goal)
+{
+    U32 hash = 0;
+    S32 anim;
+
+    switch (rawgoal)
+    {
+    case NPC_GOAL_KJIDLE:
+        anim = ANIM_Idle01;
+        break;
+    case NPC_GOAL_KJBORED:
+        anim = xUtil_choose<S32>(bored_anims, 2, NULL);
+        break;
+    case NPC_GOAL_KJSPAWNKIDS:
+        anim = ANIM_SpawnKids01;
+        break;
+    case NPC_GOAL_KJTAUNT:
+        anim = ANIM_Taunt01;
+        break;
+    case NPC_GOAL_KJSHOCKGROUND:
+        anim = ANIM_AttackWindup01;
+        break;
+    case NPC_GOAL_KJDAMAGE:
+        anim = ANIM_Damage01;
+        break;
+    case NPC_GOAL_KJDEATH:
+        anim = -1;
+        break;
+    default:
+        anim = ANIM_Idle01;
+        break;
+    }
+
+    if (anim > -1)
+    {
+        hash = g_hash_subbanim[anim];
+    }
+
+    return hash;
 }
 
 F32 zNPCKingJelly::get_variance() const
@@ -2172,6 +2108,17 @@ void zNPCKingJelly::set_life(S32 life)
         update_round();
     }
 
+}
+
+void zNPCKingJelly::update_round()
+{
+    if (life == 0)
+    {
+        round = 0;
+        return;
+    }
+
+    round = 2 - ((life - 1) * 3) / tweak.max_life;
 }
 
 void zNPCKingJelly::add_child(xBase& child, S32 wave)
@@ -3629,27 +3576,6 @@ S32 zNPCGoalKJTaunt::Process(en_trantype* trantype, float dt, void* updCtxt, xSc
 //     // 0x44 render
 // }
 
-S32 zNPCGoalKJDamage::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
-{
-    zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
-
-    xAnimState* state = kj.AnimCurState();
-
-    if (state->ID != g_hash_subbanim[ANIM_Damage01] || dt > kj.AnimTimeRemain(NULL))
-    {
-        *trantype = GOAL_TRAN_SET;
-
-        if (kj.life <= 0)
-        {
-            return 'NGM7';
-        }
-
-        return 'NGM3';
-    }
-
-    return xGoal::Process(trantype, dt, updCtxt, xscn);
-}
-
 S32 zNPCGoalKJShockGround::Enter(F32 dt, void* updCtxt)
 {
     zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
@@ -3662,6 +3588,18 @@ S32 zNPCGoalKJShockGround::Enter(F32 dt, void* updCtxt)
     kj.disable_tentacle_damage = 1;
 
     return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalKJShockGround::Exit(F32 dt, void* updCtxt)
+{
+    zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
+    if (kj.flag.charging != 0)
+    {
+        kj.end_charge();
+    }
+    kj.create_ambient_rings();
+    kj.disable_tentacle_damage = 0;
+    return xGoal::Exit(dt, updCtxt);
 }
 
 S32 zNPCGoalKJShockGround::Process(en_trantype* trantype, float dt, void* updCtxt, xScene* xscn)
@@ -3696,18 +3634,6 @@ S32 zNPCGoalKJShockGround::Process(en_trantype* trantype, float dt, void* updCtx
     }
 
     return xGoal::Process(trantype, dt, updCtxt, xscn);
-}
-
-S32 zNPCGoalKJShockGround::Exit(F32 dt, void* updCtxt)
-{
-    zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
-    if (kj.flag.charging != 0)
-    {
-        kj.end_charge();
-    }
-    kj.create_ambient_rings();
-    kj.disable_tentacle_damage = 0;
-    return xGoal::Exit(dt, updCtxt);
 }
 
 S32 zNPCGoalKJShockGround::update_start(F32 dt)
@@ -3852,15 +3778,25 @@ S32 zNPCGoalKJDamage::Exit(F32 dt, void* updCtxt)
     return xGoal::Exit(dt, updCtxt);
 }
 
-void zNPCKingJelly::update_round()
+S32 zNPCGoalKJDamage::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
 {
-    if (life == 0)
+    zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
+
+    xAnimState* state = kj.AnimCurState();
+
+    if (state->ID != g_hash_subbanim[ANIM_Damage01] || dt > kj.AnimTimeRemain(NULL))
     {
-        round = 0;
-        return;
+        *trantype = GOAL_TRAN_SET;
+
+        if (kj.life <= 0)
+        {
+            return 'NGM7';
+        }
+
+        return 'NGM3';
     }
 
-    round = 2 - ((life - 1) * 3) / tweak.max_life;
+    return xGoal::Process(trantype, dt, updCtxt, xscn);
 }
 
 S32 zNPCGoalKJDeath::Enter(float dt, void* updCtxt)
@@ -3879,6 +3815,11 @@ S32 zNPCGoalKJDeath::Exit(float dt, void* updCtxt)
 S32 zNPCGoalKJDeath::Process(en_trantype* trantype, float dt, void* updCtxt, xScene* xscn)
 {
     return xGoal::Process(trantype, dt, updCtxt, xscn);
+}
+
+void zNPCJelly::MeetTheKing(zNPCCommon* king)
+{
+    npc_daddyJelly = king;
 }
 
 void zNPCKingJelly::render_debug()

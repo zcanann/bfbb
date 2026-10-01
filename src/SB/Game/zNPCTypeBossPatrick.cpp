@@ -328,6 +328,11 @@ static void GetBonePos(xVec3* result, xMat4x3* matArray, S32 index, xVec3* offse
     }
 }
 
+S32 BoundEventCB(xBase*, xBase*, U32, const F32*, xBase*)
+{
+    return 1;
+}
+
 static void Pat_ResetGlobalStuff()
 {
 }
@@ -645,7 +650,6 @@ void zNPCBPatrick::SelfSetup()
     psy->SetSafety(NPC_GOAL_BOSSPATIDLE);
 }
 
-WEAK void xDebugAddTweak(const char*, U32*, U32, U32, const tweak_callback*, void*, U32);
 void xDebugAddTweak(const char*, float*, float, float, const tweak_callback*, void*, unsigned int);
 
 void zNPCBPatrick::Reset()
@@ -1765,6 +1769,42 @@ void zNPCBPatrick::Damage(en_NPC_DAMAGE_TYPE dmg_type, xBase* who, const xVec3* 
     }
 }
 
+void zNPCBPatrick_AddBoundEntsToGrid(zScene* scn)
+{
+    if (sOthersHaventBeenAdded)
+    {
+        sOthersHaventBeenAdded = false;
+
+        for (S32 i = 0; i < 4; i++)
+        {
+            xEnt* ent = sPat_Ptr->boundList[i];
+
+            if (xGridEntIsTooBig(&colls_grid, ent))
+            {
+                xGridAdd(&colls_oso_grid, ent);
+
+                if (xGridEntIsTooBig(&colls_oso_grid, ent))
+                {
+                    ent->gridb.oversize = 2;
+                }
+                else
+                {
+                    ent->gridb.oversize = 1;
+                }
+            }
+            else
+            {
+                xGridAdd(&colls_grid, ent);
+                ent->gridb.oversize = 0;
+            }
+        }
+    }
+    else
+    {
+        sPat_Ptr = NULL;
+    }
+}
+
 void zNPCBPatrick_GameIsPaused(zScene* scn)
 {
     if (sPat_Ptr && sPat_Ptr->bossFlags & 0x100)
@@ -2131,6 +2171,82 @@ void zNPCBPatrick::gotoRound(S32 num)
         this->currTask = 0;
         this->hitPoints = 0;
         this->gooLevel = 3;
+        break;
+    }
+    }
+}
+
+void zNPCBPatrick::hiddenByCutscene()
+{
+    for (S32 i = 0; i < 2; i++)
+    {
+        this->underwear[i]->state = this->underwear[i]->state & ~0x3F | 1;
+        zEntEvent(this->underwear[i], eEventCollision_Visible_On);
+        this->underwear[i]->timer = 0.0f;
+    }
+
+    switch (this->round)
+    {
+    case 1:
+    {
+        zEntPlayer_SNDStop(ePlayerSnd_Heli);
+        gCurrentPlayer = eCurrentPlayerSpongeBob;
+        globals.player.lassoInfo.swingTarget = NULL;
+
+        for (S32 i = 0; i < 4; i++)
+        {
+            for (S32 j = 0; j < 6; j++)
+            {
+                bossPatBox* bx = &this->box[2 * i][j];
+                bx->velocity = 0.0f;
+                bx->flags = 0;
+                bx->pos = 20.0f + bx->minY;
+            }
+        }
+
+        this->backBox.velocity = 0.0f;
+        this->backBox.flags = 0;
+        this->backBox.pos = 20.0f + this->backBox.minY;
+
+        break;
+    }
+    case 2:
+    {
+        gCurrentPlayer = eCurrentPlayerSandy;
+        zEntEvent(this->safeGroundPortal, eEventTeleportPlayer);
+        xEntShow(this->fudgeHandle);
+        break;
+    }
+    case 3:
+    {
+        zEntPlayer_SNDStop(ePlayerSnd_Heli);
+        gCurrentPlayer = eCurrentPlayerSpongeBob;
+        globals.player.lassoInfo.swingTarget = NULL;
+        zEntEvent(this->safeGroundPortal, eEventTeleportPlayer);
+
+        for (S32 i = 0; i < 4; i++)
+        {
+            for (S32 j = 0; j < 6; j++)
+            {
+                bossPatBox* bx = &this->box[2 * i][j];
+                bx->velocity = 0.0f;
+                bx->flags = 0;
+                bx->pos = 20.0f + bx->minY;
+            }
+        }
+
+        this->backBox.velocity = 0.0f;
+        this->backBox.flags = 0;
+        this->backBox.pos = 20.0f + this->backBox.minY;
+
+        xEntHide(this->fudgeHandle);
+
+        break;
+    }
+    case 4:
+    {
+        gCurrentPlayer = eCurrentPlayerSpongeBob;
+        zEntEvent(this->safeGroundPortal, eEventTeleportPlayer);
         break;
     }
     }
@@ -2675,118 +2791,6 @@ static S32 Pat_FaceTarget(zNPCBPatrick* pat, const xVec3* target, F32 turn_rate,
     because the two issues above are resolved and things make more sense this way
     and the box arrays still take up the same size.
 */
-void zNPCBPatrick::hiddenByCutscene()
-{
-    for (S32 i = 0; i < 2; i++)
-    {
-        this->underwear[i]->state = this->underwear[i]->state & ~0x3F | 1;
-        zEntEvent(this->underwear[i], eEventCollision_Visible_On);
-        this->underwear[i]->timer = 0.0f;
-    }
-
-    switch (this->round)
-    {
-    case 1:
-    {
-        zEntPlayer_SNDStop(ePlayerSnd_Heli);
-        gCurrentPlayer = eCurrentPlayerSpongeBob;
-        globals.player.lassoInfo.swingTarget = NULL;
-
-        for (S32 i = 0; i < 4; i++)
-        {
-            for (S32 j = 0; j < 6; j++)
-            {
-                bossPatBox* bx = &this->box[2 * i][j];
-                bx->velocity = 0.0f;
-                bx->flags = 0;
-                bx->pos = 20.0f + bx->minY;
-            }
-        }
-
-        this->backBox.velocity = 0.0f;
-        this->backBox.flags = 0;
-        this->backBox.pos = 20.0f + this->backBox.minY;
-
-        break;
-    }
-    case 2:
-    {
-        gCurrentPlayer = eCurrentPlayerSandy;
-        zEntEvent(this->safeGroundPortal, eEventTeleportPlayer);
-        xEntShow(this->fudgeHandle);
-        break;
-    }
-    case 3:
-    {
-        zEntPlayer_SNDStop(ePlayerSnd_Heli);
-        gCurrentPlayer = eCurrentPlayerSpongeBob;
-        globals.player.lassoInfo.swingTarget = NULL;
-        zEntEvent(this->safeGroundPortal, eEventTeleportPlayer);
-
-        for (S32 i = 0; i < 4; i++)
-        {
-            for (S32 j = 0; j < 6; j++)
-            {
-                bossPatBox* bx = &this->box[2 * i][j];
-                bx->velocity = 0.0f;
-                bx->flags = 0;
-                bx->pos = 20.0f + bx->minY;
-            }
-        }
-
-        this->backBox.velocity = 0.0f;
-        this->backBox.flags = 0;
-        this->backBox.pos = 20.0f + this->backBox.minY;
-
-        xEntHide(this->fudgeHandle);
-
-        break;
-    }
-    case 4:
-    {
-        gCurrentPlayer = eCurrentPlayerSpongeBob;
-        zEntEvent(this->safeGroundPortal, eEventTeleportPlayer);
-        break;
-    }
-    }
-}
-
-void zNPCBPatrick_AddBoundEntsToGrid(zScene* scn)
-{
-    if (sOthersHaventBeenAdded)
-    {
-        sOthersHaventBeenAdded = false;
-
-        for (S32 i = 0; i < 4; i++)
-        {
-            xEnt* ent = sPat_Ptr->boundList[i];
-
-            if (xGridEntIsTooBig(&colls_grid, ent))
-            {
-                xGridAdd(&colls_oso_grid, ent);
-
-                if (xGridEntIsTooBig(&colls_oso_grid, ent))
-                {
-                    ent->gridb.oversize = 2;
-                }
-                else
-                {
-                    ent->gridb.oversize = 1;
-                }
-            }
-            else
-            {
-                xGridAdd(&colls_grid, ent);
-                ent->gridb.oversize = 0;
-            }
-        }
-    }
-    else
-    {
-        sPat_Ptr = NULL;
-    }
-}
-
 S32 zNPCGoalBossPatIdle::Enter(F32 dt, void* unk)
 {
     zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
@@ -4223,13 +4227,4 @@ S32 zNPCGoalBossPatFudge::Process(en_trantype* trantype, F32 dt, void* ctxt, xSc
     pat->model->Anim->Single->Blend->BilinearLerp[0] = this->lerp;
 
     return xGoal::Process(trantype, dt, ctxt, scene);
-}
-
-WEAK void xDebugAddTweak(const char*, U32*, U32, U32, const tweak_callback*, void*, U32)
-{
-}
-
-S32 BoundEventCB(xBase*, xBase*, U32, const F32*, xBase*)
-{
-    return 1;
 }

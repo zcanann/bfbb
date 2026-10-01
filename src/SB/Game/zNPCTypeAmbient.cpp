@@ -848,6 +848,11 @@ zNPCAmbient::zNPCAmbient(S32 myType) : zNPCCommon(myType)
 {
 }
 
+S32 zNPCAmbient::AmbiHandleMail(NPCMsg* mail)
+{
+    return 0;
+}
+
 S32 zNPCJelly::IsAlive()
 {
     return (-(U32)hitpoints & ~(U32)hitpoints) >> 0x1f;

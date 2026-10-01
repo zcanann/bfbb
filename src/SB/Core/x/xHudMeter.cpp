@@ -8,22 +8,6 @@
 
 #include <math.h>
 
-// NOTE: these two belong in headers (std::powf in <math.h>, xpow in
-// xMathInlines.h). They are inline, so the compiler emits a weak out-of-line
-// copy into every translation unit that calls them.
-namespace std
-{
-    extern inline float powf(float x, float y)
-    {
-        return ::pow(x, y);
-    }
-}
-
-inline F32 xpow(F32 x, F32 y)
-{
-    return std::powf(x, y);
-}
-
 namespace xhud
 {
     namespace
@@ -162,7 +146,8 @@ void xhud::meter_widget::updater(F32 dt)
 
             pitch = -4.0f * this->pitch;
             pitch = range_limit<F32>(pitch, -10.0f, 6.5f);
-            min_ping_time = 0.05f * xpow(0.5f, 0.083333336f * pitch);
+            min_ping_time = xpow(0.5f, 0.083333336f * pitch);
+            min_ping_time = 0.05f * min_ping_time;
 
             if ((S32)value != (S32)old_value && res.sound.decrement != 0 &&
                 ping_delay > min_ping_time)
@@ -181,7 +166,8 @@ void xhud::meter_widget::updater(F32 dt)
 
             pitch = 2.0f * this->pitch;
             pitch = range_limit<F32>(pitch, -10.0f, 6.5f);
-            min_ping_time = 0.05f * xpow(0.5f, 0.083333336f * pitch);
+            min_ping_time = xpow(0.5f, 0.083333336f * pitch);
+            min_ping_time = 0.05f * min_ping_time;
 
             if ((S32)value != (S32)old_value && res.sound.increment != 0 &&
                 ping_delay > min_ping_time)
@@ -191,37 +177,4 @@ void xhud::meter_widget::updater(F32 dt)
             }
         }
     }
-}
-
-// NOTE: these belong in xSnd.h. They are template members, so the compiler
-// emits a weak out-of-line copy into every translation unit that instantiates
-// them.
-template <S32 N>
-void sound_queue<N>::play(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, U32 parentID,
-                          sound_category snd_category)
-{
-    U32 assetID = xSndPlay(id, vol, pitch, priority, flags, parentID, snd_category, 0.0f);
-
-    push(assetID);
-}
-
-template <S32 N> void sound_queue<N>::push(U32 id)
-{
-    _playing[tail] = id;
-
-    S32 h = head;
-    S32 t = tail + 1;
-
-    if (t <= h)
-    {
-        t += (N + 1);
-    }
-
-    if (t - h > N)
-    {
-        xSndStop(_playing[h]);
-        head = (h + 1) % (N + 1);
-    }
-
-    tail = t % (N + 1);
 }

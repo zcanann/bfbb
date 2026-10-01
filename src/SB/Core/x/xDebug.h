@@ -115,6 +115,10 @@ inline void xDebugAddTweak(const char*, U8*, U8, U8, const tweak_callback*, void
 {
 }
 
+inline void xDebugAddTweak(const char*, U32*, U32, U32, const tweak_callback*, void*, U32)
+{
+}
+
 inline void xDebugAddTweak(const char*, const char*, const tweak_callback*, void*, U32)
 {
 }

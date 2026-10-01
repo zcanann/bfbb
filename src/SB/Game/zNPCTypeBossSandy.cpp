@@ -4531,8 +4531,3 @@ void xBinaryCamera::set_targets(xVec3 const& par_1, xVec3 const& par_2, F32 par_
     this->s2 = (xVec3*)(&par_2);
     this->s2_radius = par_3;
 }
-
-S32 zNPCGoalBossSandyLeap::Name()
-{
-    return 0;
-}

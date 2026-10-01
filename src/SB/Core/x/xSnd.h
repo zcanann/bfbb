@@ -235,4 +235,34 @@ inline U32 xSndIsPlaying(U32 assetID, U32 parid)
     return iSndIsPlaying(assetID, parid);
 }
 
+template <S32 N>
+void sound_queue<N>::play(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, U32 parentID,
+                          sound_category snd_category)
+{
+    U32 assetID = xSndPlay(id, vol, pitch, priority, flags, parentID, snd_category, 0.0f);
+
+    push(assetID);
+}
+
+template <S32 N> void sound_queue<N>::push(U32 id)
+{
+    _playing[tail] = id;
+
+    S32 h = head;
+    S32 t = tail + 1;
+
+    if (t <= h)
+    {
+        t += (N + 1);
+    }
+
+    if (t - h > N)
+    {
+        xSndStop(_playing[h]);
+        head = (h + 1) % (N + 1);
+    }
+
+    tail = t % (N + 1);
+}
+
 #endif

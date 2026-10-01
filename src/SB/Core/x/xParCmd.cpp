@@ -910,10 +910,3 @@ void xParCmd_Shaper_Update(xParCmd* c, xParGroup* ps, F32 dt)
         }
     }
 }
-
-WEAK F32 xVec3LengthFast(F32 x, F32 y, F32 z)
-{
-    F32 len;
-    xsqrtfast(len, SQR(x) + SQR(y) + SQR(z));
-    return len;
-}

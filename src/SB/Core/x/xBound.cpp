@@ -361,15 +361,6 @@ void xQuickCullForBound(xQCData* q, const xBound* b)
     xQuickCullForBound(&xqc_def_ctrl, q, b);
 }
 
-void xMat4x3Toworld(xVec3* o, const xMat4x3* m, const xVec3* v)
-{
-    xMat3x3RMulVec(o, m, v);
-
-    o->x += m->pos.x;
-    o->y += m->pos.y;
-    o->z += m->pos.z;
-}
-
 void xMat4x3Tolocal(xVec3* o, const xMat4x3* m, const xVec3* v)
 {
     o->x = v->x - m->pos.x;

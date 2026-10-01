@@ -144,7 +144,6 @@ void xQuatFlip(xQuat* o1, const xQuat* o2);
 F32 xQuatDot(const xQuat* a, const xQuat* b);
 void xMat3x3Copy(xMat3x3* o, const xMat3x3* m);
 void xMat4x3Copy(xMat4x3* o, const xMat4x3* m);
-void xMat4x3Toworld(xVec3* o, const xMat4x3* m, const xVec3* v);
 void xMat3x3MulRotC(xMat3x3* o, xMat3x3* m, F32 _x, F32 _y, F32 _z, F32 t);
 void xMat4x3Identity(xMat4x3* m);
 void xMat4x3Tolocal(xVec3* o, const xMat4x3* m, const xVec3* v);
@@ -180,6 +179,15 @@ static inline void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
     o->x = x;
     o->y = y;
     o->z = z;
+}
+
+inline void xMat4x3Toworld(xVec3* o, const xMat4x3* m, const xVec3* v)
+{
+    xMat3x3RMulVec(o, m, v);
+
+    o->x += m->pos.x;
+    o->y += m->pos.y;
+    o->z += m->pos.z;
 }
 
 inline void xMat3x3Rot(xMat3x3* m, const xVec3* a, F32 t)

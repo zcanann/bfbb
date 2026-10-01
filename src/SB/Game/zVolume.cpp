@@ -11,8 +11,14 @@ struct PreCalcOcclude
     xVec4 FrustVec[4];
 };
 
-zVolume* vols;
-volatile U16 nvols;
+// Unreferenced in retail (stripped by the linker), but present in this TU per
+// the DWARF. Being the TU's first common, it anchors the common block: without
+// it mwld allocates gOccludeList over the whole block and gOccludeCalc again
+// after it, doubling the .bss footprint.
+char buffer[16];
+
+static zVolume* vols;
+static volatile U16 nvols;
 
 volatile S32 gOccludeCount;
 zVolume* volatile gOccludeList[10];

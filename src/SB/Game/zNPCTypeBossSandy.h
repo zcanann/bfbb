@@ -277,7 +277,11 @@ struct zNPCGoalBossSandyLeap : zNPCGoalCommon
     virtual S32 Enter(F32 dt, void* updCtxt);
     virtual S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene);
     virtual S32 Exit(F32 dt, void* updCtxt);
-    S32 Name();
+
+    S32 Name()
+    {
+        return 0;
+    }
 };
 
 struct zNPCGoalBossSandySit : zNPCGoalCommon

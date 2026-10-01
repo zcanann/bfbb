@@ -19,10 +19,7 @@ struct zNPCAmbient : zNPCCommon
     virtual U8 ColChkByFlags() const;
     virtual U8 ColPenByFlags() const;
     virtual U8 PhysicsFlags() const;
-    virtual S32 AmbiHandleMail(NPCMsg* mail)
-    {
-        return 0;
-    }
+    virtual S32 AmbiHandleMail(NPCMsg* mail);
 };
 
 struct zNPCJelly : zNPCAmbient
@@ -46,10 +43,7 @@ struct zNPCJelly : zNPCAmbient
     void SelfSetup();
     S32 IsAlive();
 
-    void MeetTheKing(zNPCCommon* king)
-    {
-        npc_daddyJelly = king;
-    }
+    void MeetTheKing(zNPCCommon* king);
 
     void PlayWithAlpha(F32 unk);
     void PlayWithAnimSpd();

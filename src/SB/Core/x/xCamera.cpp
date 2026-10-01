@@ -1732,11 +1732,6 @@ U32 xEntIsVisible(const xEnt* ent)
     return (ent->flags & 0x81) == 0x1;
 }
 
-F32 xVec3Length(const xVec3* v)
-{
-    return xsqrt(SQR(v->x) + SQR(v->y) + SQR(v->z));
-}
-
 void xVec3Sub(xVec3* o, const xVec3* a, const xVec3* b)
 {
     o->x = a->x - b->x;

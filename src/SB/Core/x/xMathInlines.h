@@ -9,9 +9,13 @@ F32 xatan2(F32 y, F32 x);
 F32 xasin(F32 x);
 F32 xacos(F32 x);
 F32 xexp(F32 x);
-F32 xpow(F32 x, F32 y);
 
 F32 SQ(F32 x);
+
+inline F32 xpow(F32 x, F32 y)
+{
+    return std::powf(x, y);
+}
 
 inline U8 LERP(F32 x, U8 y, U8 z)
 {
@@ -33,7 +37,10 @@ inline F32 SMOOTH(F32 x, F32 y, F32 z)
     return (z - y) * EASE(x) + y;
 }
 
-void xsqrtfast(F32& out, F32 x);
+inline void xsqrtfast(F32& out, F32 x)
+{
+    out = std::sqrtf(x);
+}
 
 // Inline in retail: every caller's TU emits its own weak copy (and its pool
 // literals); xBound.o owns the copy that survives linking.

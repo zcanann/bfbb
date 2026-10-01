@@ -96,4 +96,33 @@ int __ieee754_rem_pio2(double, double*);
 };
 #endif // ifdef __cplusplus
 
+#ifdef __cplusplus
+namespace std
+{
+    extern inline float powf(float x, float y)
+    {
+        return ::pow(x, y);
+    }
+
+    extern inline float sqrtf(float x)
+    {
+        volatile float y;
+
+        if (x > 0.0f)
+        {
+            double guess = __frsqrte(x);
+            guess = 0.5 * guess * -(guess * guess * x - 3);
+            guess = 0.5 * guess * -(guess * guess * x - 3);
+            guess = 0.5 * guess * -(guess * guess * x - 3);
+            y = x * guess;
+            return y;
+        }
+        else
+        {
+            return x;
+        }
+    }
+} // namespace std
+#endif // ifdef __cplusplus
+
 #endif

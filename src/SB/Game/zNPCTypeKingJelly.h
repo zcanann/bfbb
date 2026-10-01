@@ -14,6 +14,70 @@ namespace auto_tweak
 {
     template <class T1, class T2>
     void load_param(T1&, T2, T2, T2, xModelAssetParam*, U32, const char*);
+
+    template <>
+    inline void load_param<iColor_tag, S32>(iColor_tag& value, S32 scale, S32 lo, S32 hi,
+                                     xModelAssetParam* ap, U32 apsize, const char* name)
+    {
+        F32 def[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+        F32 result[4];
+
+        def[0] = value.r;
+        def[1] = value.g;
+        def[2] = value.b;
+        def[3] = value.a;
+
+        zParamGetFloatList(ap, apsize, name, 4, def, result);
+
+        value.r = result[0];
+        value.g = result[1];
+        value.b = result[2];
+        value.a = result[3];
+    }
+
+    template <>
+    inline void load_param<bool, S32>(bool& value, S32 scale, S32 lo, S32 hi, xModelAssetParam* ap,
+                               U32 apsize, const char* name)
+    {
+        value = zParamGetInt(ap, apsize, name, value);
+    }
+
+    template <>
+    inline void load_param<F32, F32>(F32& value, F32 scale, F32 lo, F32 hi, xModelAssetParam* ap,
+                              U32 apsize, const char* name)
+    {
+        value = zParamGetFloat(ap, apsize, name, value);
+
+        if (value < lo)
+        {
+            value = lo;
+        }
+        else if (value > hi)
+        {
+            value = hi;
+        }
+
+        value = value * scale;
+    }
+
+    template <>
+    inline void load_param<S32, S32>(S32& value, S32 scale, S32 lo, S32 hi, xModelAssetParam* ap,
+                              U32 apsize, const char* name)
+    {
+        S32 v = zParamGetInt(ap, apsize, name, value);
+
+        if (v < lo)
+        {
+            v = lo;
+        }
+        else if (v > hi)
+        {
+            v = hi;
+        }
+
+        v = v * scale;
+        value = v;
+    }
 };
 
 struct unit_type
