@@ -8086,3 +8086,18 @@ All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
 early-cutoff invariant checks pass. Full all-source compilation and normal
 retail DOL SHA-1 validation pass. Bitplane remains NonMatching; source-linked
 Bink playback remains unverified.
+
+
+## Bink lossless combined stack workspace (2026-10-01)
+
+Retail computes coefficient addresses from the tree workspace base with a
+0x88 offset. Grouping the read tree and coefficient buffer into a single
+local workspace struct follows that addressing model and improves
+ReadBPLossless from 87.9529% to 88.45783%. This supports the layout hypothesis
+but does not prove the original source declaration. The full deduplicated
+report changes only ReadBPLossless.
+
+All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
+early-cutoff invariant checks pass. Full all-source compilation and normal
+retail DOL SHA-1 validation pass. Bitplane remains NonMatching; source-linked
+Bink playback remains unverified.

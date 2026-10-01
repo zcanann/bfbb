@@ -746,23 +746,26 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
     u8 PTR4* tree_end_ptr;
     u8 node;
     u8 base;
-    BPLOSSLESSREADTREE tree;
-    BPLOSSLESSCOEFFS coeffs;
+    struct
+    {
+        BPLOSSLESSREADTREE tree;
+        BPLOSSLESSCOEFFS coeffs;
+    } workspace;
     BPBITSTREAM bitcopy;
 
     bitcopy = *bits;
 #define words bitcopy.cur
 #define bitbuf bitcopy.bits
 #define bitcount bitcopy.bitlen
-    coeffs.values[BP_COEFF1_INDEX] = 0;
-    memset(coeffs.values + BP_LOSSLESS_CLEAR_START, 0, BP_LOSSLESS_CLEAR_BYTES(coeffs));
+    workspace.coeffs.values[BP_COEFF1_INDEX] = 0;
+    memset(workspace.coeffs.values + BP_LOSSLESS_CLEAR_START, 0, BP_LOSSLESS_CLEAR_BYTES(workspace.coeffs));
 
     /* The stream starts with the maximum active lossless bitplane level. */
     VarBitsGet(maxlevel, u8, bitcopy, BP_LOSSLESS_LEVEL_BITS);
     had_level = maxlevel;
     highbit = (u16)BP_LEVEL_MASK(maxlevel);
     /* Root nodes mirror WriteBPLossless: three grouped roots plus coeffs 1..3. */
-    roots = tree.roots;
+    roots = workspace.tree.roots;
     roots[BP_ROOT_GROUP1_SLOT] = BP_READ_TREE_GROUP1_ROOT;
     roots[BP_ROOT_GROUP6_SLOT] = BP_READ_TREE_GROUP6_ROOT;
     roots[BP_ROOT_GROUP11_SLOT] = BP_READ_TREE_GROUP11_ROOT;
@@ -771,7 +774,7 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
     roots[BP_ROOT_LOSSLESS_COEFF3_SLOT] = BP_READ_TREE_COEFF3_ROOT;
 
     next_node_ptr = roots;
-    tree_end_ptr = tree.nodes;
+    tree_end_ptr = workspace.tree.nodes;
 
     /* Non-final planes read lower magnitude bits plus a sign for new coeffs. */
     while (1 < maxlevel) {
@@ -863,7 +866,7 @@ label##_push:                                                                   
                                 bitcount = bitcount + BP_BITS_PER_WORD - level;                                     \
                             }                                                                                       \
                             coeff_value = coeff_value | highbit;                                                    \
-                            coeff_dest = &coeffs.values[slot];                                                      \
+                            coeff_dest = &workspace.coeffs.values[slot];                                                      \
                             if (bitcount != 0) {                                                                    \
                                 bitcount = bitcount - 1;                                                            \
                                 code = bitbuf & BP_BIT_MASK;                                                        \
@@ -941,7 +944,7 @@ lossless_deferred_negative:
 lossless_deferred_positive:
                 code = coeff_value;
 lossless_deferred_store:
-                coeffs.values[BP_READ_TREE_INDEX(node)] = (u16)code;
+                workspace.coeffs.values[BP_READ_TREE_INDEX(node)] = (u16)code;
                 *node_ptr = BP_READ_TREE_EMPTY_ENTRY;
                 goto next_lossless_read_node;
 next_lossless_read_node:
@@ -1050,7 +1053,7 @@ label##_negative:                                                               
 label##_positive:                                                                                                   \
                         code = BP_POSITIVE_COEFF_SIGN;                                                              \
 label##_store:                                                                                                      \
-                        coeffs.values[slot] = (u16)code;                                                            \
+                        workspace.coeffs.values[slot] = (u16)code;                                                            \
                     } while (0)
                     READ_LOSSLESS_FINAL_CHILD(base, after_lossless_final0);
 after_lossless_final0:
@@ -1093,7 +1096,7 @@ lossless_final_negative:
 lossless_final_positive:
             code = BP_POSITIVE_COEFF_SIGN;
 lossless_final_store:
-            coeffs.values[BP_READ_TREE_INDEX(node)] = (u16)code;
+            workspace.coeffs.values[BP_READ_TREE_INDEX(node)] = (u16)code;
             *node_ptr = BP_READ_TREE_EMPTY_ENTRY;
             goto next_lossless_final_node;
 next_lossless_final_node:
@@ -1110,41 +1113,41 @@ lossless_final_done:
 #undef words
 #undef bitbuf
 #undef bitcount
-    (void)tree;
+    (void)workspace.tree;
 
     /* Scatter scan-order coefficients back into the 8x8 block. */
-    out[BP_COEFF1_INDEX] = coeffs.values[BP_COEFF1_INDEX];
-    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(1), coeffs, BP_LOSSLESS_SCAN_PAIR(2));
-    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(2), coeffs, BP_LOSSLESS_SCAN_PAIR(4));
-    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(3), coeffs, BP_LOSSLESS_SCAN_PAIR(6));
-    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(4), coeffs, BP_LOSSLESS_SCAN_PAIR(1));
-    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(5), coeffs, BP_LOSSLESS_SCAN_PAIR(3));
-    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(6), coeffs, BP_LOSSLESS_SCAN_PAIR(5));
-    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(7), coeffs, BP_LOSSLESS_SCAN_PAIR(7));
-    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(8), coeffs, BP_LOSSLESS_SCAN_PAIR(12));
-    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(9), coeffs, BP_LOSSLESS_SCAN_PAIR(22));
-    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(10), coeffs, BP_LOSSLESS_SCAN_PAIR(8));
-    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(11), coeffs, BP_LOSSLESS_SCAN_PAIR(10));
-    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(12), coeffs, BP_LOSSLESS_SCAN_PAIR(13));
-    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(13), coeffs, BP_LOSSLESS_SCAN_PAIR(23));
-    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(14), coeffs, BP_LOSSLESS_SCAN_PAIR(9));
-    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(15), coeffs, BP_LOSSLESS_SCAN_PAIR(11));
-    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(16), coeffs, BP_LOSSLESS_SCAN_PAIR(14));
-    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(17), coeffs, BP_LOSSLESS_SCAN_PAIR(16));
-    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(18), coeffs, BP_LOSSLESS_SCAN_PAIR(24));
-    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(19), coeffs, BP_LOSSLESS_SCAN_PAIR(26));
-    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(20), coeffs, BP_LOSSLESS_SCAN_PAIR(15));
-    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(21), coeffs, BP_LOSSLESS_SCAN_PAIR(17));
-    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(22), coeffs, BP_LOSSLESS_SCAN_PAIR(25));
-    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(23), coeffs, BP_LOSSLESS_SCAN_PAIR(27));
-    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(24), coeffs, BP_LOSSLESS_SCAN_PAIR(18));
-    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(25), coeffs, BP_LOSSLESS_SCAN_PAIR(20));
-    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(26), coeffs, BP_LOSSLESS_SCAN_PAIR(28));
-    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(27), coeffs, BP_LOSSLESS_SCAN_PAIR(30));
-    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(28), coeffs, BP_LOSSLESS_SCAN_PAIR(19));
-    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(29), coeffs, BP_LOSSLESS_SCAN_PAIR(21));
-    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(30), coeffs, BP_LOSSLESS_SCAN_PAIR(29));
-    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(31), coeffs, BP_LOSSLESS_SCAN_PAIR(31));
+    out[BP_COEFF1_INDEX] = workspace.coeffs.values[BP_COEFF1_INDEX];
+    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(1), workspace.coeffs, BP_LOSSLESS_SCAN_PAIR(2));
+    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(2), workspace.coeffs, BP_LOSSLESS_SCAN_PAIR(4));
+    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(3), workspace.coeffs, BP_LOSSLESS_SCAN_PAIR(6));
+    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(4), workspace.coeffs, BP_LOSSLESS_SCAN_PAIR(1));
+    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(5), workspace.coeffs, BP_LOSSLESS_SCAN_PAIR(3));
+    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(6), workspace.coeffs, BP_LOSSLESS_SCAN_PAIR(5));
+    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(7), workspace.coeffs, BP_LOSSLESS_SCAN_PAIR(7));
+    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(8), workspace.coeffs, BP_LOSSLESS_SCAN_PAIR(12));
+    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(9), workspace.coeffs, BP_LOSSLESS_SCAN_PAIR(22));
+    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(10), workspace.coeffs, BP_LOSSLESS_SCAN_PAIR(8));
+    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(11), workspace.coeffs, BP_LOSSLESS_SCAN_PAIR(10));
+    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(12), workspace.coeffs, BP_LOSSLESS_SCAN_PAIR(13));
+    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(13), workspace.coeffs, BP_LOSSLESS_SCAN_PAIR(23));
+    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(14), workspace.coeffs, BP_LOSSLESS_SCAN_PAIR(9));
+    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(15), workspace.coeffs, BP_LOSSLESS_SCAN_PAIR(11));
+    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(16), workspace.coeffs, BP_LOSSLESS_SCAN_PAIR(14));
+    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(17), workspace.coeffs, BP_LOSSLESS_SCAN_PAIR(16));
+    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(18), workspace.coeffs, BP_LOSSLESS_SCAN_PAIR(24));
+    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(19), workspace.coeffs, BP_LOSSLESS_SCAN_PAIR(26));
+    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(20), workspace.coeffs, BP_LOSSLESS_SCAN_PAIR(15));
+    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(21), workspace.coeffs, BP_LOSSLESS_SCAN_PAIR(17));
+    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(22), workspace.coeffs, BP_LOSSLESS_SCAN_PAIR(25));
+    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(23), workspace.coeffs, BP_LOSSLESS_SCAN_PAIR(27));
+    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(24), workspace.coeffs, BP_LOSSLESS_SCAN_PAIR(18));
+    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(25), workspace.coeffs, BP_LOSSLESS_SCAN_PAIR(20));
+    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(26), workspace.coeffs, BP_LOSSLESS_SCAN_PAIR(28));
+    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(27), workspace.coeffs, BP_LOSSLESS_SCAN_PAIR(30));
+    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(28), workspace.coeffs, BP_LOSSLESS_SCAN_PAIR(19));
+    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(29), workspace.coeffs, BP_LOSSLESS_SCAN_PAIR(21));
+    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(30), workspace.coeffs, BP_LOSSLESS_SCAN_PAIR(29));
+    BP_SCATTER_LOSSLESS_PAIR(out, BP_LOSSLESS_OUT_PAIR(31), workspace.coeffs, BP_LOSSLESS_SCAN_PAIR(31));
 }
 
 u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
