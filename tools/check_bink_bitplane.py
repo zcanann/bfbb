@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Round-trip production lossless bitplane coding and check exact bit lengths.
+"""Round-trip production lossless and lossy bitplane coding.
 
 Covers zero/sparse/dense blocks with magnitudes up to 32767, every initial
-word offset, output guards, and DC preservation. Host-only; the PowerPC
+word offset, output guards, exact bit lengths, and lossless DC preservation.
+Lossy checks decode every plane (no early mask cutoff). Host-only; the PowerPC
 leading-zero intrinsic is replaced by its portable equivalent.
 """
 import argparse
@@ -54,6 +55,35 @@ int main(void){
   }
   ++cases;
  }
+ u32 lossy_cases=0;
+ for(u32 level=1;level<=7;level++)for(u32 offset=0;offset<32;offset++)
+ for(u32 trial=0;trial<32;trial++){
+  s8 input[64],output[66];u32 words[128]={0},mask=(1u<<level)-1;
+  for(u32 i=0;i<64;i++){
+   s32 v=(rnd()>>16)&mask;if((rnd()>>16)&1)v=-v;
+   if(trial%4==0 && i!=trial+1)v=0;
+   if(trial%4==1 && i%8)v=0;
+   input[i]=(s8)v;
+  }
+  BPBITSTREAM writer={words,words,0,offset};
+  if(!WriteBPLossy(&writer,(char*)input)){
+   for(u32 k=0;k<64;k++)if(input[k]){printf("FAIL nonzero lossy block omitted\n");return 4;}
+   if(writer.cur!=words || writer.bitlen!=offset || writer.bits){printf("FAIL empty lossy stream changed\n");return 5;}
+   continue;
+  }
+  u32 written=(u32)(writer.cur-words)*32+writer.bitlen-offset;
+  *writer.cur=writer.bits;
+  BPBITSTREAM reader={words,words,0,0};
+  if(offset){u32 ignored;VarBitsGet(ignored,u32,reader,offset);}
+  memset(output,0x5a,sizeof(output));readlossy(output+1,&reader,65535);
+  for(u32 k=0;k<64;k++)if(output[k+1]!=input[zigzag[k]]){
+   printf("FAIL lossy level=%u offset=%u trial=%u scan=%u: %d != %d\n",level,offset,trial,k,output[k+1],input[zigzag[k]]);return 2;
+  }
+  u32 consumed=(u32)(reader.cur-words)*32-reader.bitlen-offset;
+  if(consumed!=written || output[0]!=0x5a || output[65]!=0x5a){printf("FAIL lossy bit count or guards\n");return 3;}
+  ++lossy_cases;
+ }
+ printf("PASS %u nonempty lossy round trips and stream lengths\n",lossy_cases);
  if(roundtrip_failures){printf("FAIL %u of %u round trips\n",roundtrip_failures,cases);return 1;}
  printf("PASS %u lossless bitplane round trips, guards, and bit-length checks\n",cases);return 0;
 }
@@ -69,7 +99,7 @@ def main():
     vb = vb[:start] + "static inline u32 getbitlevelvar(u32 v){return v?32-__builtin_clz(v):0;}" + vb[end:]
     bp = (sdk / "bitplane.h").read_text().replace('#include "bink.h"', '')
     source = (sdk / "bitplane.c").read_text()
-    source = source[source.index("#define BP_BITS_PER_WORD"):source.index("\nu32 WriteBPLossy(")]
+    source = source[source.index("#define BP_BITS_PER_WORD"):source.index("\nvoid ReadBPLossy(")]
     dct = (sdk / "dct.c").read_text()
     zigzag = re.search(r"const u8 zigzag[^=]+=(.*?);", dct, re.S)[1]
     tables = "const u8 zigzag[64]=" + zigzag + ";\n"

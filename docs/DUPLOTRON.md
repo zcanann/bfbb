@@ -7742,3 +7742,19 @@ The last layout/regalloc tradeoff is retained because its previous indexing
 was demonstrably incorrect and disagreed with retail. No other scores
 change. Full source build and normal retail DOL verification pass; the
 bitplane unit remains NonMatching. Prior commit CI 36918100491 passed.
+
+## Bink lossy reader buffered-bit branch order (2026-10-01)
+
+`readlossy` improves from 54.733925% to 65.53215% by placing the buffered-bit
+path before refill in ten branches, as in the lossless reader. Conditions
+are inverted and branch bodies exchanged without changing their operations.
+The rebuilt deduplicated report changes only this routine. Full source
+build and normal retail DOL verification pass; the unit is NonMatching.
+
+The bitplane checker now also runs 7,168 lossy trials over magnitude levels
+1-7 and all initial word offsets. The 6,911 nonempty blocks round-trip in
+scan order with exact bit consumption and output guards; the 257 empty
+blocks must return without changing the stream. All 16,384 lossless cases
+continue to pass. Lossy tests decode every plane and do not yet exercise
+early mask cutoffs or GameCube runtime playback. Previous fix CI 36918932454
+passed.

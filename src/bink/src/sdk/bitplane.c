@@ -1364,14 +1364,14 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count)
         if (scan < nz_coeff_count) {
             do {
                 word = bitbuf;
-                if (bitcount == 0) {
+                if (bitcount != 0) {
+                    bitcount = bitcount - 1;
+                    bitbuf = bitbuf >> 1;
+                } else {
                     word = *words;
                     bitcount = BP_WORD_TOP_BIT;
                     words = words + 1;
                     bitbuf = word >> 1;
-                } else {
-                    bitcount = bitcount - 1;
-                    bitbuf = bitbuf >> 1;
                 }
                 if ((word & BP_BIT_MASK) != 0) {
                     sample = dest[(u32)nz_coeff[scan]];
@@ -1434,14 +1434,14 @@ decode_node:
                     /* Deferred coeff nodes already carry their scan index. */
                     word = bitbuf;
                     nz_coeff_count = nz_coeff_count + 1;
-                    if (bitcount == 0) {
+                    if (bitcount != 0) {
+                        bitcount = bitcount - 1;
+                        bitbuf = bitbuf >> 1;
+                    } else {
                         word = *words;
                         bitcount = BP_WORD_TOP_BIT;
                         words = words + 1;
                         bitbuf = word >> 1;
-                    } else {
-                        bitcount = bitcount - 1;
-                        bitbuf = bitbuf >> 1;
                     }
                     delta = scan;
                     if ((word & BP_BIT_MASK) == 0) {
@@ -1457,7 +1457,15 @@ decode_node:
                     goto next_node;
                 }
                 code = (u32)BP_READ_TREE_INDEX(node);
-                if (bitcount == 0) {
+                if (bitcount != 0) {
+                    bitcount = bitcount - 1;
+                    word = bitbuf >> 1;
+                    bit = bitbuf & BP_BIT_MASK;
+                    bitbuf = word;
+                    if (bit != 0) {
+                        goto push_0;
+                    }
+                } else {
                     word = *words;
                     bitcount = BP_WORD_TOP_BIT;
                     bitbuf = word >> 1;
@@ -1467,24 +1475,16 @@ push_0:
                         *--next_node_ptr = BP_READ_TREE_COEFF(code);
                         goto after_0;
                     }
-                } else {
-                    bitcount = bitcount - 1;
-                    word = bitbuf >> 1;
-                    bit = bitbuf & BP_BIT_MASK;
-                    bitbuf = word;
-                    if (bit != 0) {
-                        goto push_0;
-                    }
                 }
                 nz_coeff[nz_coeff_count] = BP_READ_TREE_INDEX(node);
                 /* A zero child-presence bit introduces the coefficient immediately. */
                 nz_coeff_count = nz_coeff_count + 1;
-                if (bitcount == 0) {
+                if (bitcount != 0) {
+                    bitcount = bitcount - 1;
+                } else {
                     bitbuf = *words;
                     bitcount = BP_WORD_TOP_BIT;
                     words = words + 1;
-                } else {
-                    bitcount = bitcount - 1;
                 }
                 bit = bitbuf & BP_BIT_MASK;
                 bitbuf = bitbuf >> 1;
@@ -1498,7 +1498,15 @@ push_0:
                 }
 after_0:
                 node = (u8)(code + BP_TREE_CHILD1_INDEX);
-                if (bitcount == 0) {
+                if (bitcount != 0) {
+                    bitcount = bitcount - 1;
+                    word = bitbuf >> 1;
+                    bit = bitbuf & BP_BIT_MASK;
+                    bitbuf = word;
+                    if (bit != 0) {
+                        goto push_1;
+                    }
+                } else {
                     word = *words;
                     bitcount = BP_WORD_TOP_BIT;
                     bitbuf = word >> 1;
@@ -1508,24 +1516,16 @@ push_1:
                         *--next_node_ptr = BP_READ_TREE_COEFF(node);
                         goto after_1;
                     }
-                } else {
-                    bitcount = bitcount - 1;
-                    word = bitbuf >> 1;
-                    bit = bitbuf & BP_BIT_MASK;
-                    bitbuf = word;
-                    if (bit != 0) {
-                        goto push_1;
-                    }
                 }
                 nz_coeff[nz_coeff_count] = node;
                 /* Nonzero children are pushed for later planes instead. */
                 nz_coeff_count = nz_coeff_count + 1;
-                if (bitcount == 0) {
+                if (bitcount != 0) {
+                    bitcount = bitcount - 1;
+                } else {
                     bitbuf = *words;
                     bitcount = BP_WORD_TOP_BIT;
                     words = words + 1;
-                } else {
-                    bitcount = bitcount - 1;
                 }
                 bit = bitbuf & BP_BIT_MASK;
                 bitbuf = bitbuf >> 1;
@@ -1539,7 +1539,15 @@ push_1:
                 }
 after_1:
                 node = (u8)(code + BP_TREE_CHILD2_INDEX);
-                if (bitcount == 0) {
+                if (bitcount != 0) {
+                    bitcount = bitcount - 1;
+                    word = bitbuf >> 1;
+                    bit = bitbuf & BP_BIT_MASK;
+                    bitbuf = word;
+                    if (bit != 0) {
+                        goto push_2;
+                    }
+                } else {
                     word = *words;
                     bitcount = BP_WORD_TOP_BIT;
                     bitbuf = word >> 1;
@@ -1549,23 +1557,15 @@ push_2:
                         *--next_node_ptr = BP_READ_TREE_COEFF(node);
                         goto after_2;
                     }
-                } else {
-                    bitcount = bitcount - 1;
-                    word = bitbuf >> 1;
-                    bit = bitbuf & BP_BIT_MASK;
-                    bitbuf = word;
-                    if (bit != 0) {
-                        goto push_2;
-                    }
                 }
                 nz_coeff[nz_coeff_count] = node;
                 nz_coeff_count = nz_coeff_count + 1;
-                if (bitcount == 0) {
+                if (bitcount != 0) {
+                    bitcount = bitcount - 1;
+                } else {
                     bitbuf = *words;
                     bitcount = BP_WORD_TOP_BIT;
                     words = words + 1;
-                } else {
-                    bitcount = bitcount - 1;
                 }
                 bit = bitbuf & BP_BIT_MASK;
                 bitbuf = bitbuf >> 1;
@@ -1580,28 +1580,28 @@ push_2:
 after_2:
                 word = bitbuf;
                 node = (u8)(code + BP_TREE_CHILD3_INDEX);
-                if (bitcount == 0) {
+                if (bitcount != 0) {
+                    bitcount = bitcount - 1;
+                    bitbuf = bitbuf >> 1;
+                } else {
                     word = *words;
                     bitcount = BP_WORD_TOP_BIT;
                     words = words + 1;
                     bitbuf = word >> 1;
-                } else {
-                    bitcount = bitcount - 1;
-                    bitbuf = bitbuf >> 1;
                 }
                 if ((word & BP_BIT_MASK) == 0) {
                     nz_coeff[nz_coeff_count] = node;
                     word = bitbuf;
                     /* The sign bit follows the first nonzero magnitude bit. */
                     nz_coeff_count = nz_coeff_count + 1;
-                    if (bitcount == 0) {
+                    if (bitcount != 0) {
+                        bitcount = bitcount - 1;
+                        bitbuf = bitbuf >> 1;
+                    } else {
                         word = *words;
                         bitcount = BP_WORD_TOP_BIT;
                         words = words + 1;
                         bitbuf = word >> 1;
-                    } else {
-                        bitcount = bitcount - 1;
-                        bitbuf = bitbuf >> 1;
                     }
                     delta = scan;
                     if ((word & BP_BIT_MASK) == 0) {
