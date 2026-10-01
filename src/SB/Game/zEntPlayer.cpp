@@ -3608,9 +3608,9 @@ static U32 LassoSwingReleaseCB(xAnimTransition* tran, xAnimSingle* anim, void* o
     return 0;
 }
 
-static U8 StunBubbleTrail(xAnimSingle* single)
+static U32 StunBubbleTrail(xAnimSingle* single)
 {
-    S32 ret = 0;
+    U8 ret = 0;
     xAnimState* astate = single->State;
     if ((strcmp(astate->Name, "StunFall") == 0) ||
         ((strcmp(astate->Name, "StunJump") == 0) && (single->Time >= 0.6f) && (single->Time <= 1.0f)))
@@ -3620,9 +3620,9 @@ static U8 StunBubbleTrail(xAnimSingle* single)
     return ret;
 }
 
-static U8 BubbleBashContrails(xAnimSingle* single)
+static U32 BubbleBashContrails(xAnimSingle* single)
 {
-    S32 ret = 0;
+    U8 ret = 0;
     xAnimState* astate = single->State;
     if (((strcmp(astate->Name, "BbashStart01") == 0) && (single->Time >= 0.3f)) ||
         (strcmp(astate->Name, "BbashAttack01") == 0) ||
@@ -3633,9 +3633,9 @@ static U8 BubbleBashContrails(xAnimSingle* single)
     return ret;
 }
 
-static U8 BubbleBounceContrails(xAnimSingle* single)
+static U32 BubbleBounceContrails(xAnimSingle* single)
 {
-    S32 ret = 0;
+    U8 ret = 0;
     xAnimState* astate = single->State;
     if (
 
@@ -7108,7 +7108,7 @@ void zEntPlayer_Update(xEnt* ent, xScene* sc, F32 dt)
             {
                 if (ent->collis->colls[0].dist > 2.0f)
                 {
-                    return;
+                    goto patrick_stun_done;
                 }
 
                 pos.x += ent->collis->colls[0].tohit.x * ent->collis->colls[0].dist;
@@ -7145,6 +7145,7 @@ void zEntPlayer_Update(xEnt* ent, xScene* sc, F32 dt)
         }
     }
 
+patrick_stun_done:
     if (globals.player.SundaeTimer >= 0.0f)
     {
         globals.player.SundaeTimer -= dt;
@@ -7231,11 +7232,12 @@ void zEntPlayer_Update(xEnt* ent, xScene* sc, F32 dt)
         {
             xVec3* pp = posbuf;
             xVec3* vp = velbuf;
+            bp = bonelist;
             U32 j = 0;
-            for (; j < num; j++, pp++, vp++, bonelist++)
+            for (; j < num; j++, pp++, vp++, bp++)
             {
                 xMat4x3 mat;
-                xMat4x3Mul(&mat, (xMat4x3*)(ent->model->Mat + *bonelist),
+                xMat4x3Mul(&mat, (xMat4x3*)(ent->model->Mat + *bp),
                            (xMat4x3*)ent->model->Mat);
                 *pp = mat.pos;
                 pp->x += 0.1f * (xurand() - 0.5f);
@@ -7441,7 +7443,7 @@ void zEntPlayer_Update(xEnt* ent, xScene* sc, F32 dt)
 
     xAnimState* astate = globals.player.ent.model->Anim->Single->State;
 
-    if (bbash_end_tmr != 0.0f && strncmp(astate->Name, "Bbash", 5) != 0)
+    if (bbash_end_tmr && strncmp(astate->Name, "Bbash", 5) != 0)
     {
         bbash_end_tmr -= dt;
         if (bbash_end_tmr < 0.0f)
@@ -7524,7 +7526,7 @@ void zEntPlayer_Update(xEnt* ent, xScene* sc, F32 dt)
     ent->frame->oldmat.pos.y += sPlayerCollAdjust;
     ent->frame->mat.pos.y += sPlayerCollAdjust;
 
-    if (globals.player.ShockRadius != 0.0f)
+    if (globals.player.ShockRadius)
     {
         globals.player.ShockRadius += 6.0f * dt;
         if (globals.player.ShockRadius > 4.0f)
@@ -7561,7 +7563,7 @@ void zEntPlayer_Update(xEnt* ent, xScene* sc, F32 dt)
 
         if (ent->collis->colls[0].flags & 1)
         {
-            if (sHackStuckTimer != 0.0f)
+            if (sHackStuckTimer)
             {
                 ent->frame->vel = sHackStuckVel;
                 ent->frame->oldvel = sHackStuckVel;
@@ -7573,14 +7575,14 @@ void zEntPlayer_Update(xEnt* ent, xScene* sc, F32 dt)
                  ((ent->collis->colls[2].flags & 1) || (ent->collis->colls[3].flags & 1) ||
                   (ent->collis->colls[4].flags & 1) || (ent->collis->colls[5].flags & 1)))
         {
-            if (sHackStuckTimer == 0.0f)
+            if (!sHackStuckTimer)
             {
                 sHackStuckVel = ent->frame->vel;
             }
 
             sHackStuckTimer = 0.15f;
         }
-        else if (sHackStuckTimer != 0.0f)
+        else if (sHackStuckTimer)
         {
             sHackStuckTimer -= dt;
             if (sHackStuckTimer < 0.0f)
@@ -7591,7 +7593,7 @@ void zEntPlayer_Update(xEnt* ent, xScene* sc, F32 dt)
             }
         }
 
-        if (sHackStuckTimer != 0.0f)
+        if (sHackStuckTimer)
         {
             if (!sHackStuckSetDir)
             {
@@ -7702,7 +7704,7 @@ void zEntPlayer_Update(xEnt* ent, xScene* sc, F32 dt)
             {
                 if (gust_fkt->doEffect == zGustUpdateEnt)
                 {
-                    if (globals.player.JumpState == 3 || surfSlickRatio != 0.0f)
+                    if (globals.player.JumpState == 3 || surfSlickRatio)
                     {
                         xFFXTurnOn(gust_fkt);
                     }
@@ -7731,7 +7733,7 @@ void zEntPlayer_Update(xEnt* ent, xScene* sc, F32 dt)
 
         if (!globals.player.cheat_mode &&
             (globals.player.JumpState == 0 || globals.player.JumpState == 1) &&
-            globals.player.FallDeathTimer == 0.0f)
+            !globals.player.FallDeathTimer)
         {
             ent->frame->mat.pos.y -= 0.5f * dt;
 
@@ -7739,7 +7741,7 @@ void zEntPlayer_Update(xEnt* ent, xScene* sc, F32 dt)
                         globals.player.floor_norm.z * motion.z;
 
             if (ndotm > 0.0f &&
-                (req_motion.x != 0.0f || req_motion.z != 0.0f || surfSlickRatio != 0.0f))
+                (req_motion.x != 0.0f || req_motion.z != 0.0f || surfSlickRatio))
             {
                 globals.player.slope = -1;
                 ent->frame->mat.pos.y -= xsqrt(ndotm);
@@ -7756,7 +7758,9 @@ void zEntPlayer_Update(xEnt* ent, xScene* sc, F32 dt)
 
         if (lastFloorEnt)
         {
-            if (surfSlickRatio != 0.0f)
+            F32 sft = globals.player.SlipFadeTimer;
+
+            if (surfSlickRatio)
             {
                 ent->frame->mat.pos.x += 13.0f * dt * globals.player.floor_norm.x;
                 ent->frame->mat.pos.y -=
@@ -7765,9 +7769,9 @@ void zEntPlayer_Update(xEnt* ent, xScene* sc, F32 dt)
                           globals.player.floor_norm.z * globals.player.floor_norm.z);
                 ent->frame->mat.pos.z += 13.0f * dt * globals.player.floor_norm.z;
             }
-            else if (globals.player.SlipFadeTimer > 0.0f)
+            else if (sft > 0.0f)
             {
-                F32 sett = 30.0f * (globals.player.SlipFadeTimer / 0.8f * dt);
+                F32 sett = 30.0f * (sft / 0.8f * dt);
                 ent->frame->mat.pos.x += sett * lastFloorNorm.x;
                 ent->frame->mat.pos.z += sett * lastFloorNorm.z;
             }
@@ -7777,23 +7781,21 @@ void zEntPlayer_Update(xEnt* ent, xScene* sc, F32 dt)
 
         zEntPlayerCollide(ent, sc, dt);
 
-        U32 stuckforce =
+        bool hitting_floor = ent->collis->colls[0].flags & 1;
+        bool hitting_wall =
             (ent->collis->colls[2].flags & 1) || (ent->collis->colls[3].flags & 1) ||
             (ent->collis->colls[4].flags & 1) || (ent->collis->colls[5].flags & 1);
 
-        if ((ent->collis->colls[0].flags & 1) ||
-            (globals.player.ControlOff & ~CONTROL_OWNER_SPRINGBOARD))
+        if (hitting_floor || (globals.player.ControlOff & ~CONTROL_OWNER_SPRINGBOARD))
         {
-            stuck_timer = 0.0f;
-            not_stuck_timer = 0.0f;
+            not_stuck_timer = stuck_timer = 0.0f;
         }
-        else if (!stuckforce)
+        else if (!hitting_wall)
         {
             not_stuck_timer += dt;
             if (not_stuck_timer > 0.2f)
             {
-                stuck_timer = 0.0f;
-                not_stuck_timer = 0.0f;
+                not_stuck_timer = stuck_timer = 0.0f;
             }
         }
         else
@@ -7810,8 +7812,7 @@ void zEntPlayer_Update(xEnt* ent, xScene* sc, F32 dt)
 
             if (dist2 > 1.0f)
             {
-                stuck_timer = 0.0f;
-                not_stuck_timer = 0.0f;
+                not_stuck_timer = stuck_timer = 0.0f;
             }
             else
             {
@@ -7833,9 +7834,9 @@ void zEntPlayer_Update(xEnt* ent, xScene* sc, F32 dt)
         xEntBoulder_ApplyForces(ent->collis);
     }
 
-    xVec3 driveDist = sDriveVel;
-
     dt = update_dt;
+
+    xVec3 driveDist = sDriveVel;
 
     if (update_dt > 0.0001f)
     {
@@ -7866,7 +7867,7 @@ void zEntPlayer_Update(xEnt* ent, xScene* sc, F32 dt)
         }
     }
 
-    if (sCatchCapsuleTimer != 0.0f)
+    if (sCatchCapsuleTimer)
     {
         sCatchCapsuleTimer -= dt;
         if (sCatchCapsuleTimer <= 0.0f)
@@ -7907,7 +7908,7 @@ void zEntPlayer_Update(xEnt* ent, xScene* sc, F32 dt)
 
                 xSweptSphereGetResults(&sws);
 
-                if (sCatchCapsuleTimer == 0.0f)
+                if (!sCatchCapsuleTimer)
                 {
                     sCatchCapsuleTimer = 0.3f;
                 }
@@ -8012,9 +8013,9 @@ void zEntPlayer_Update(xEnt* ent, xScene* sc, F32 dt)
 
 catchtunnel_done:
 
-    F32 fg = 1.5f * dt;
-
-    for (xCollis* wcoll = &ent->collis->colls[2]; wcoll < &ent->collis->colls[6]; wcoll++)
+    xCollis* wcoll = &ent->collis->colls[2];
+    xCollis* gcoll = &ent->collis->colls[6];
+    for (; wcoll < gcoll; wcoll++)
     {
         if (wcoll->flags & 1)
         {
@@ -8023,7 +8024,7 @@ catchtunnel_done:
 
             if (hdotm > 0.0f && wcoll->hdng.y < 0.0f && zSurfaceGetStep(wsurf))
             {
-                ent->frame->mat.pos.y += fg;
+                ent->frame->mat.pos.y += 1.5f * dt;
                 ent->collis->colls[0] = *wcoll;
                 wcoll->flags = 0;
             }
@@ -8118,7 +8119,7 @@ catchtunnel_done:
     {
         xCollis* ceil = &ent->collis->colls[1];
         xEnt* destructent = (xEnt*)ent->collis->colls[1].optr;
-        U8 destroyed = (destructent == NULL);
+        bool destroyed = (destructent == NULL);
 
         if (strcmp(astate->Name, "BbashStrike01") != 0 && (ceil->flags & 1) && destructent &&
             (destructent->moreFlags & 0x10))
@@ -8163,14 +8164,14 @@ catchtunnel_done:
                 npc->Damage(DMGTYP_BELOW, &globals.player.ent, &ceil->tohit);
                 if (!npc->IsHealthy())
                 {
-                    destroyed = 1;
+                    destroyed = true;
                 }
             }
             else if (destructent->baseType == eBaseTypeDestructObj)
             {
                 if (!(destructent->chkby & 0x10))
                 {
-                    destroyed = 1;
+                    destroyed = true;
                 }
             }
         }
@@ -8196,7 +8197,7 @@ catchtunnel_done:
     {
         xCollis* floor = &ent->collis->colls[0];
         xEnt* destructent = (xEnt*)ent->collis->colls[0].optr;
-        U8 destroyed = (destructent == NULL);
+        bool destroyed = (destructent == NULL);
 
         if ((floor->flags & 1) && destructent && (destructent->moreFlags & 0x10))
         {
@@ -8238,14 +8239,14 @@ catchtunnel_done:
                 npc->Damage(DMGTYP_ABOVE, &globals.player.ent, &floor->tohit);
                 if (!npc->IsHealthy())
                 {
-                    destroyed = 1;
+                    destroyed = true;
                 }
             }
             else if (destructent->baseType == eBaseTypeDestructObj)
             {
                 if (!(destructent->chkby & 0x10))
                 {
-                    destroyed = 1;
+                    destroyed = true;
                 }
             }
         }
@@ -8266,17 +8267,8 @@ catchtunnel_done:
 
     if (sRingDelay >= 1.1f)
     {
-        F32 stunlerp;
         F32 mag = 1.25f * (2.0f - sRingDelay);
-
-        if (1.0f < mag)
-        {
-            stunlerp = 1.0f;
-        }
-        else
-        {
-            stunlerp = mag;
-        }
+        F32 stunlerp = (1.0f < mag) ? 1.0f : mag;
 
         zNPCMsg_AreaPlayerStun(5.0f, 5.0f * stunlerp + (1.0f - stunlerp), NULL);
     }
@@ -8423,7 +8415,7 @@ catchtunnel_done:
 
     xVec3Sub(&lastDeltaPos, &ent->frame->mat.pos, &ent->frame->oldmat.pos);
 
-    if (surfSlickRatio != 0.0f)
+    if (surfSlickRatio)
     {
         lastFloorNorm = globals.player.floor_norm;
         lastFloorEnt = (xEnt*)ent->collis->colls[0].optr;
@@ -8610,25 +8602,20 @@ catchtunnel_done:
                 else
                 {
                     xVec3 tempPos;
+                    xMat4x3* tgtmat = (xMat4x3*)globals.player.carry.throwTarget->model->Mat;
 
                     if (globals.player.carry.throwTarget->baseType == eBaseTypeButton)
                     {
-                        tempPos.x =
-                            0.95f * globals.player.carry.throwTarget->model->Mat->up.x +
-                            globals.player.carry.throwTarget->model->Mat->pos.x;
-                        tempPos.y =
-                            0.95f * globals.player.carry.throwTarget->model->Mat->up.y +
-                            globals.player.carry.throwTarget->model->Mat->pos.y - 0.5f;
-                        tempPos.z =
-                            0.95f * globals.player.carry.throwTarget->model->Mat->up.z +
-                            globals.player.carry.throwTarget->model->Mat->pos.z;
+                        tempPos.x = 0.95f * tgtmat->up.x + tgtmat->pos.x;
+                        tempPos.y = 0.95f * tgtmat->up.y + tgtmat->pos.y - 0.5f;
+                        tempPos.z = 0.95f * tgtmat->up.z + tgtmat->pos.z;
                     }
                     else
                     {
-                        tempPos.x = globals.player.carry.throwTarget->model->Mat->pos.x;
-                        tempPos.y =
-                            globals.player.carry.throwTarget->model->Mat->pos.y + 1.12f;
-                        tempPos.z = globals.player.carry.throwTarget->model->Mat->pos.z;
+                        F32 throwHeightOffset = 1.12f;
+                        tempPos.x = tgtmat->pos.x;
+                        tempPos.y = tgtmat->pos.y + throwHeightOffset;
+                        tempPos.z = tgtmat->pos.z;
                     }
 
                     if (zThrown_LaunchPos(globals.player.carry.grabbed, &tempPos,
@@ -8952,6 +8939,8 @@ catchtunnel_done:
 
                 sTimeToRetarget = 0.25f;
 
+                F32 currDist_sqr;
+                F32 maxDist_sqr;
                 F32 closestDist_sqr = 100.0f;
                 xVec3 toTarget;
 
@@ -8984,7 +8973,7 @@ catchtunnel_done:
                         xVec3Sub(&toTarget, (xVec3*)&targent->model->Mat->pos,
                                  (xVec3*)&ent->model->Mat->pos);
 
-                        F32 currDist_sqr = xVec3Length2(&toTarget);
+                        currDist_sqr = xVec3Length2(&toTarget);
 
                         if (currDist_sqr >= 100.0f)
                         {
@@ -9024,15 +9013,13 @@ catchtunnel_done:
 
                         rayCollis.flags = 0;
 
-                        F32 dist = xsqrt(currDist_sqr);
-
-                        ray.max_t = dist;
+                        ray.max_t = xsqrt(currDist_sqr);
                         ray.min_t = 0.5f;
 
                         xVec3Copy(&ray.origin, (xVec3*)&ent->model->Mat->pos);
                         ray.origin.y += 0.5f;
 
-                        xVec3SMul(&ray.dir, &toTarget, 1.0f / dist);
+                        xVec3SMul(&ray.dir, &toTarget, 1.0f / ray.max_t);
 
                         ray.flags = 0xc00;
 
@@ -9043,65 +9030,64 @@ catchtunnel_done:
                             continue;
                         }
 
-                        if (xVec3Dot(&toTarget, (xVec3*)&ent->model->Mat->at) <= 0.0f)
+                        if (xVec3Dot(&toTarget, (xVec3*)&ent->model->Mat->at) > 0.0f)
                         {
-                            continue;
+                            closestDist_sqr = currDist_sqr;
+                            closest = targent;
                         }
-
-                        closestDist_sqr = currDist_sqr;
-                        closest = targent;
                     }
 
                     gReticleTarget = closest;
                     sTypeOfTarget = 0;
                 }
 
-                if (!gReticleTarget || globals.player.JumpState)
+                S32 canSwing = globals.player.JumpState != 0;
+                if (!gReticleTarget)
                 {
-                    F32 maxDist_sqr = 100.0f;
-                    xEnt* targent = NULL;
+                    canSwing = 1;
+                }
+                if (canSwing)
+                {
+                    maxDist_sqr = 100.0f;
+                    closest = NULL;
 
                     for (S32 i = 0; i < sNumHitches; i++)
                     {
-                        xEnt* hitchent = sHitch[i];
+                        xEnt* targent = sHitch[i];
 
-                        if (sLassoInfo->swingTarget == hitchent)
+                        if (sLassoInfo->swingTarget == targent)
                         {
                             continue;
                         }
 
-                        if (!(hitchent->flags & 1))
+                        if (!(targent->flags & 1))
                         {
                             continue;
                         }
 
-                        xVec3Sub(&toTarget, (xVec3*)&hitchent->model->Mat->pos,
+                        xVec3Sub(&toTarget, (xVec3*)&targent->model->Mat->pos,
                                  (xVec3*)&ent->model->Mat->pos);
 
-                        if (globals.player.JumpState == 0 && toTarget.y <= 1.0f)
+                        if (globals.player.JumpState != 0 || toTarget.y > 1.0f)
                         {
-                            continue;
+                            currDist_sqr = xVec3Length2(&toTarget);
+
+                            if (currDist_sqr >= maxDist_sqr)
+                            {
+                                continue;
+                            }
+
+                            if (xVec3Dot(&toTarget, (xVec3*)&ent->model->Mat->at) > 0.0f)
+                            {
+                                maxDist_sqr = currDist_sqr;
+                                closest = targent;
+                            }
                         }
-
-                        F32 currDist_sqr = xVec3Length2(&toTarget);
-
-                        if (currDist_sqr >= maxDist_sqr)
-                        {
-                            continue;
-                        }
-
-                        if (xVec3Dot(&toTarget, (xVec3*)&ent->model->Mat->at) <= 0.0f)
-                        {
-                            continue;
-                        }
-
-                        maxDist_sqr = currDist_sqr;
-                        targent = hitchent;
                     }
 
-                    if (targent)
+                    if (closest)
                     {
-                        gReticleTarget = targent;
+                        gReticleTarget = closest;
                         sTypeOfTarget = 1;
                     }
                 }
@@ -14472,19 +14458,19 @@ static void zEntPlayer_SNDInit()
     sPlayerSndFxVolume[2] *= 0.23f;
     sPlayerSndFxVolume[3] *= 0.25f;
     sPlayerSndFxVolume[0x2d] *= 0.4f;
-    sPlayerSndFxVolume[0x18] *= 0.4f;
-    sPlayerSndFxVolume[0x2e] *= 0.4f;
     sPlayerSndFxVolume[4] *= 0.7f;
     sPlayerSndFxVolume[5] *= 0.7f;
+    sPlayerSndFxVolume[9] *= 0.45f;
     sPlayerSndFxVolume[7] *= 0.7f;
+    sPlayerSndFxVolume[8] *= 0.5f;
     sPlayerSndFxVolume[6] *= 0.7f;
     sPlayerSndFxVolume[0xd] *= 0.7f;
     sPlayerSndFxVolume[0x11] *= 0.7f;
-    sPlayerSndFxVolume[0x17] *= 0.7f;
-    sPlayerSndFxVolume[9] *= 0.45f;
-    sPlayerSndFxVolume[8] *= 0.5f;
     sPlayerSndFxVolume[0x15] *= 0.6f;
     sPlayerSndFxVolume[0x16] *= 0.6f;
+    sPlayerSndFxVolume[0x17] *= 0.7f;
+    sPlayerSndFxVolume[0x18] *= 0.4f;
+    sPlayerSndFxVolume[0x2e] *= 0.4f;
 
     for (S32 snd = 0; snd < ePlayerStreamSnd_Total; snd++)
     {
@@ -15023,14 +15009,15 @@ static void zEntPlayer_SNDInit()
     sPlayerStreamSndTimer[0x5f].time = 360.0f;
     sPlayerStreamSndTimer[0x60].time = 360.0f;
 
-    F32 minutes =
-        globals.player.Inv_Spatula ? 2.0f * xlog(globals.player.Inv_Spatula) - 3.5f : 0.0f;
+    F32 minutes = 0.0f;
+    if (globals.player.Inv_Spatula)
+    {
+        minutes = 2.0f * xlog(globals.player.Inv_Spatula) - 3.5f;
+    }
     if (minutes <= 0.0f)
     {
         minutes = 0.0f;
     }
-
-    minutes *= 60.0f;
 
     for (S32 i = 0; i < ePlayerStreamSnd_Total; i++)
     {
@@ -15040,7 +15027,7 @@ static void zEntPlayer_SNDInit()
         }
         if (sPlayerStreamSndTimer[i].time > 0.0f)
         {
-            sPlayerStreamSndTimer[i].time += minutes;
+            sPlayerStreamSndTimer[i].time += 60.0f * minutes;
         }
         sPlayerStreamSndTimer[i].timer = 0.3f * sPlayerStreamSndTimer[i].time;
     }
