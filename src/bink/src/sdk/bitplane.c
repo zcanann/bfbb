@@ -395,11 +395,11 @@ u32 LenBPLossless(s16 PTR4* vals)
                     switch (BP_TREE_ENTRY_KIND(entry)) {
                     case BP_TREE_GROUP_NODE:
                         kind = BP_TREE_ENTRY_INDEX(entry);
-                        bits = (u32)BP_TREE_ENTRY_GROUP(entry);
-                        *cur = BP_TREE_BRANCH_ENTRY(groups[bits], kind);
-                        *end = BP_TREE_CHILD_BRANCH_ENTRY(groups[bits + BP_TREE_CHILD1_INDEX], kind, BP_TREE_CHILD1_BASE);
-                        *++end = BP_TREE_CHILD_BRANCH_ENTRY(groups[bits + BP_TREE_CHILD2_INDEX], kind, BP_TREE_CHILD2_BASE);
-                        *++end = BP_TREE_CHILD_BRANCH_ENTRY(groups[bits + BP_TREE_CHILD3_INDEX], kind, BP_TREE_CHILD3_BASE);
+                        bits = BP_TREE_GROUP_INDEX(kind);
+                        *cur = BP_TREE_BRANCH_ENTRY(groups[bits - 1], kind);
+                        *end = BP_TREE_CHILD_BRANCH_ENTRY(groups[bits], kind, BP_TREE_CHILD1_BASE);
+                        *++end = BP_TREE_CHILD_BRANCH_ENTRY(groups[bits + BP_TREE_CHILD1_INDEX], kind, BP_TREE_CHILD2_BASE);
+                        *++end = BP_TREE_CHILD_BRANCH_ENTRY(groups[bits + BP_TREE_CHILD2_INDEX], kind, BP_TREE_CHILD3_BASE);
                         ++end;
                         break;
                     case BP_TREE_HIGH_NODE:
@@ -459,11 +459,11 @@ handle_children:
                 switch (BP_TREE_ENTRY_KIND(entry)) {
                 case BP_TREE_GROUP_NODE:
                     kind = BP_TREE_ENTRY_INDEX(entry);
-                    maxbits = (u32)BP_TREE_ENTRY_GROUP(entry);
-                    *cur = BP_TREE_BRANCH_ENTRY(groups[maxbits], kind);
-                    *end = BP_TREE_CHILD_BRANCH_ENTRY(groups[maxbits + BP_TREE_CHILD1_INDEX], kind, BP_TREE_CHILD1_BASE);
-                    *++end = BP_TREE_CHILD_BRANCH_ENTRY(groups[maxbits + BP_TREE_CHILD2_INDEX], kind, BP_TREE_CHILD2_BASE);
-                    *++end = BP_TREE_CHILD_BRANCH_ENTRY(groups[maxbits + BP_TREE_CHILD3_INDEX], kind, BP_TREE_CHILD3_BASE);
+                    maxbits = BP_TREE_GROUP_INDEX(kind);
+                    *cur = BP_TREE_BRANCH_ENTRY(groups[maxbits - 1], kind);
+                    *end = BP_TREE_CHILD_BRANCH_ENTRY(groups[maxbits], kind, BP_TREE_CHILD1_BASE);
+                    *++end = BP_TREE_CHILD_BRANCH_ENTRY(groups[maxbits + BP_TREE_CHILD1_INDEX], kind, BP_TREE_CHILD2_BASE);
+                    *++end = BP_TREE_CHILD_BRANCH_ENTRY(groups[maxbits + BP_TREE_CHILD2_INDEX], kind, BP_TREE_CHILD3_BASE);
                     ++end;
                     break;
                 case BP_TREE_HIGH_NODE:
@@ -663,11 +663,11 @@ next_lossless_node:
                     switch (BP_TREE_ENTRY_KIND(entry)) {
                     case BP_TREE_GROUP_NODE:
                         kind = BP_TREE_ENTRY_INDEX(entry);
-                        count = (u32)BP_TREE_ENTRY_GROUP(entry);
-                        *cur = BP_TREE_BASE_BRANCH_ENTRY(groups[count], BP_TREE_ENTRY_BASE(entry));
-                        *end = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD1_INDEX], kind, BP_TREE_CHILD1_BASE);
-                        end[1] = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD2_INDEX], kind, BP_TREE_CHILD2_BASE);
-                        end[2] = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD3_INDEX], kind, BP_TREE_CHILD3_BASE);
+                        count = BP_TREE_GROUP_INDEX(kind);
+                        *cur = BP_TREE_BASE_BRANCH_ENTRY(groups[count - 1], BP_TREE_ENTRY_BASE(entry));
+                        *end = BP_TREE_CHILD_BRANCH_ENTRY(groups[count], kind, BP_TREE_CHILD1_BASE);
+                        end[1] = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD1_INDEX], kind, BP_TREE_CHILD2_BASE);
+                        end[2] = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD2_INDEX], kind, BP_TREE_CHILD3_BASE);
                         end += BP_TREE_ADDED_CHILD_COUNT;
                         break;
                     case BP_TREE_HIGH_NODE:
@@ -737,6 +737,7 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
     u8 maxlevel;
     u8 had_level;
     s16 highbit;
+    s16 next_highbit;
     s16 coeff_value;
     u32 bit_mask;
     u8 PTR4* roots;
@@ -777,7 +778,7 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
     while (1 < maxlevel) {
         level = BP_NEXT_LEVEL(maxlevel);
         next_node_ptr = node_ptr;
-        highbit = (s16)highbit >> 1;
+        next_highbit = (s16)highbit >> 1;
         if (node_ptr < tree_end_ptr) {
             bit_mask = GetBitsLen(level);
             do {
@@ -916,6 +917,7 @@ after_lossless_read_children:
                 }
             } while (node_ptr < tree_end_ptr);
         }
+        highbit = next_highbit;
         maxlevel = level;
         node_ptr = next_node_ptr;
     }

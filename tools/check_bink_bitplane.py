@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Compare the lossless reader with its pre-reordering baseline.
+"""Round-trip production lossless bitplane coding and check exact bit lengths.
 
-Uses the production writer, checks reader equivalence, and reports round-trip
-failures separately (these also occur in the baseline). Host-only;
-the PowerPC leading-zero intrinsic is replaced by its portable equivalent.
+Covers zero/sparse/dense blocks with magnitudes up to 32767, every initial
+word offset, output guards, and DC preservation. Host-only; the PowerPC
+leading-zero intrinsic is replaced by its portable equivalent.
 """
 import argparse
 from pathlib import Path
@@ -31,7 +31,7 @@ int main(void){
  u32 cases=0,roundtrip_failures=0;
  for(u32 level=0;level<16;level++)for(u32 offset=0;offset<32;offset++)
  for(u32 trial=0;trial<32;trial++){
-  s16 input[64],output[66],reference[66];u32 words[128]={0};
+  s16 input[64],output[66];u32 words[128]={0};
   u32 mask=(1u<<level)-1;
   for(u32 i=0;i<64;i++){
    s32 v=(rnd()>>16)&mask;if((rnd()>>16)&1)v=-v;
@@ -46,18 +46,16 @@ int main(void){
   *writer.cur=writer.bits;
   BPBITSTREAM reader={words,words,0,0};
   if(offset){u32 ignored;VarBitsGet(ignored,u32,reader,offset);}
-  memcpy(reference,output,sizeof(output));
-  BPBITSTREAM baseline=reader;
-  ReadBPLossless_reference(reference+1,&baseline);
   ReadBPLossless(output+1,&reader);
   u32 consumed=(u32)(reader.cur-words)*32-reader.bitlen-offset;
-  if(memcmp(reference,output,sizeof(output)) || reader.cur!=baseline.cur || reader.bits!=baseline.bits || reader.bitlen!=baseline.bitlen || reader.init!=baseline.init){
-   printf("FAIL equivalence level=%u offset=%u trial=%u\n",level,offset,trial);return 1;
+  if(memcmp(input,output+1,sizeof(input)) || output[0]!=0x5a5a || output[65]!=0x5a5a || consumed!=written || LenBPLossless(input)!=written){
+   if(!roundtrip_failures){printf("FIRST level=%u offset=%u trial=%u written=%u consumed=%u len=%u\n",level,offset,trial,written,consumed,LenBPLossless(input));for(u32 k=0;k<64;k++)if(input[k]!=output[k+1])printf("coeff %u: %d != %d\n",k,input[k],output[k+1]);}
+   ++roundtrip_failures;
   }
-  if(memcmp(input,output+1,sizeof(input)) || output[0]!=0x5a5a || output[65]!=0x5a5a || consumed!=written || LenBPLossless(input)!=written)++roundtrip_failures;
   ++cases;
  }
- printf("PASS %u reader-equivalence cases; %u existing writer/reader round-trip failures\n",cases,roundtrip_failures);return 0;
+ if(roundtrip_failures){printf("FAIL %u of %u round trips\n",roundtrip_failures,cases);return 1;}
+ printf("PASS %u lossless bitplane round trips, guards, and bit-length checks\n",cases);return 0;
 }
 """
 def main():
@@ -72,9 +70,6 @@ def main():
     bp = (sdk / "bitplane.h").read_text().replace('#include "bink.h"', '')
     source = (sdk / "bitplane.c").read_text()
     source = source[source.index("#define BP_BITS_PER_WORD"):source.index("\nu32 WriteBPLossy(")]
-    original = subprocess.check_output(["git", "show", "c9b08d77e0bb1c0a9b0e08d772c503fa68f29fdc:src/bink/src/sdk/bitplane.c"], cwd=ROOT, text=True)
-    original = original[original.index("void ReadBPLossless("):original.index("\nu32 WriteBPLossy(")]
-    original = original.replace("void ReadBPLossless(", "void ReadBPLossless_reference(", 1)
     dct = (sdk / "dct.c").read_text()
     zigzag = re.search(r"const u8 zigzag[^=]+=(.*?);", dct, re.S)[1]
     tables = "const u8 zigzag[64]=" + zigzag + ";\n"
@@ -82,7 +77,7 @@ def main():
     with tempfile.TemporaryDirectory(prefix="bink_bitplane_") as directory:
         path = Path(directory)
         cfile, exe = path / "check.c", path / "check.exe"
-        cfile.write_text(HEADER + vb + bp + tables + source + original + TEST)
+        cfile.write_text(HEADER + vb + bp + tables + source + TEST)
         subprocess.run([args.cc,"-O2","-fwrapv","-fno-strict-aliasing","-std=c99",str(cfile),"-o",str(exe)],check=True)
         subprocess.run([str(exe)],check=True)
 if __name__ == "__main__":

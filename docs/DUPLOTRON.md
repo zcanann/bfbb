@@ -7713,3 +7713,32 @@ aliasing disabled. This is a host test finding, not yet a diagnosis of the
 writer versus reader or GameCube runtime behavior. The test reports these
 separately; its passing equivalence result does not claim correct decoding.
 Investigate this before claiming the bitplane codec is functionally verified.
+
+## Corrected lossless bitplane indexing and magnitude lifetime (2026-10-01)
+
+This resolves the host round-trip failures documented immediately above.
+Lossless group arrays omit the first four-coefficient group, so expansion
+must read groups[n-1], groups[n], groups[n+1], groups[n+2]. The length routine
+and writer instead read n through n+3. Retail explicitly subtracts one for
+the first lookup. They now derive the group number from the coefficient
+index and use the correct four array positions.
+
+The reader also shifted highbit before decoding the current plane. Retail
+keeps the current leading bit and the shifted next value in separate
+registers (r27/r30 at loop entry). A separate next_highbit now preserves the
+current magnitude until the plane finishes. Previously even a single -3
+coefficient decoded as -1. These are source-recovery corrections, not new
+codec behavior or assembly workarounds.
+
+The checker now requires full writer/reader round trips, guards, DC
+preservation and exact encoded/consumed/calculated lengths. All 16,384 cases
+pass, versus 14,955 failures before these fixes. It no longer depends on a
+historical reader or git history. This remains host validation, not movie
+playback or execution of a source-linked GameCube bitplane unit.
+
+Deduplicated scores: WriteBPLossless 77.81737 -> 78.211075;
+ReadBPLossless 61.21906 -> 61.396496; LenBPLossless 65.018 -> 64.1054.
+The last layout/regalloc tradeoff is retained because its previous indexing
+was demonstrably incorrect and disagreed with retail. No other scores
+change. Full source build and normal retail DOL verification pass; the
+bitplane unit remains NonMatching. Prior commit CI 36918100491 passed.
