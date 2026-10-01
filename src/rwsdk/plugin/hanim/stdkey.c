@@ -296,7 +296,11 @@ RwBool RpHAnimKeyFrameStreamWrite(const RtAnimAnimation* animation, RwStream* st
 
 RwInt32 RpHAnimKeyFrameStreamGetSize(const RtAnimAnimation* animation)
 {
-    return animation->numFrames * sizeof(RpHAnimKeyFrame);
+    RwInt32 size = sizeof(RpHAnimKeyFrame);
+
+    size *= animation->numFrames;
+
+    return size;
 }
 
 void RpHAnimKeyFrameMulRecip(void* voidFrame, void* voidStart)

@@ -443,14 +443,13 @@ static RwInt32 nCut(_rwPalQuantOctNode* root, _rwPalQuantRGBABox* set1, _rwPalQu
 
 static RwInt32 CountLeafs(_rwPalQuantOctNode* root, RwInt32 depth)
 {
+    RwInt32 i;
     RwInt32 n = 0;
 
     if (root)
     {
         if (depth > 0)
         {
-            RwInt32 i;
-
             for (i = 0; i < 16; i++)
             {
                 n += CountLeafs(root->Branch.dir[i], depth - 1);
@@ -468,12 +467,12 @@ static RwInt32 CountLeafs(_rwPalQuantOctNode* root, RwInt32 depth)
 static RwInt32 ExtractNodes(_rwPalQuantOctNode* root, RwRGBA* palette, RwInt32 nodeIndex,
                             RwInt32 depth)
 {
+    RwInt32 i;
+
     if (root)
     {
         if (depth > 0)
         {
-            RwInt32 i;
-
             for (i = 0; i < 16; i++)
             {
                 nodeIndex = ExtractNodes(root->Branch.dir[i], palette, nodeIndex, depth - 1);
@@ -774,9 +773,9 @@ void _rwPalQuantMatchImage(RwUInt8* dstpixels, RwInt32 dststride, RwInt32 dstdep
 
 RwBool _rwPalQuantInit(RwPalQuant* pq)
 {
-    RwUInt32 i;
-    RwUInt32 j;
-    RwUInt32 maxval = 1 << MaxDepth;
+    RwInt32 i;
+    RwInt32 j;
+    RwInt32 maxval = 1 << MaxDepth;
 
     /* Build the bit interleaving table */
     for (i = 0; i < maxval; i++)

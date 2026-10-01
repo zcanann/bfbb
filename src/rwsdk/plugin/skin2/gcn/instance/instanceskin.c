@@ -602,8 +602,9 @@ RwResEntry* _rwDlGeometrySkinInstanceOptimized(RpGeometry* geometry, void* owner
         }
     }
 
-    displayLists = (RxGameCubeDisplayList*)((RwUInt8*)memory + vBufferHeaderSize);
-    memory = (RwUInt8*)displayLists + displayListSize;
+    memory = (RwUInt8*)memory + vBufferHeaderSize;
+    displayLists = (RxGameCubeDisplayList*)memory;
+    memory = (RwUInt8*)memory + displayListSize;
     memory = (RwUInt8*)memory + 31;
     memory = (void*)((RwUInt32)memory & ~31);
 
@@ -613,6 +614,7 @@ RwResEntry* _rwDlGeometrySkinInstanceOptimized(RpGeometry* geometry, void* owner
     {
         RwUInt32 numStrips;
         RwUInt32 numIndices;
+        RwUInt32 displayListStride;
         RwUInt32 meshDisplayListSize;
         RwUInt16* matrixIndices;
 
@@ -675,9 +677,11 @@ RwResEntry* _rwDlGeometrySkinInstanceOptimized(RpGeometry* geometry, void* owner
                                     matrixIndices);
         }
 
+        displayListStride = _rwGCNDisplayListGetStride(vtxDesc);
+
         _rwGCNDisplayListFill(vtxDesc, &displayLists[i], &displayListData,
                               GEOMETRYGETMESH(geometry, i)->numIndices, numStrips,
-                              _rwGCNDisplayListGetStride(vtxDesc), TRUE, primTypeVAT);
+                              displayListStride, TRUE, primTypeVAT);
 
         if (matrixIndices != NULL)
         {
@@ -1057,8 +1061,9 @@ RwResEntry* _rwDlGeometrySkinInstanceFast(RpGeometry* geometry, void* owner,
         }
     }
 
-    displayLists = (RxGameCubeDisplayList*)((RwUInt8*)memory + vBufferHeaderSize);
-    memory = (RwUInt8*)displayLists + displayListSize;
+    memory = (RwUInt8*)memory + vBufferHeaderSize;
+    displayLists = (RxGameCubeDisplayList*)memory;
+    memory = (RwUInt8*)memory + displayListSize;
     memory = (RwUInt8*)memory + 31;
     memory = (void*)((RwUInt32)memory & ~31);
 

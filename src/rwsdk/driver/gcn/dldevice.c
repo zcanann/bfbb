@@ -117,7 +117,7 @@ static RwUInt32 _RwDlFifoSize = 256 * 1024;
 static void* _RwGCXFB1;
 static void* _RwGCXFB2;
 static void* _RwGCXFBCopy;
-static void* volatile _RwGCXFBDisp;
+static void* _RwGCXFBDisp;
 static volatile RwInt32 _RwDlFrameCurrent;
 static volatile RwInt32 _RwDlFrameNew;
 static volatile RwInt32 _RwDlFrameTokenNew;
@@ -198,7 +198,14 @@ static void _rwDlVIPreRetraceCallback(u32 retraceCount)
     {
         _RwDlRetraceCount = 0;
 
-        _RwGCXFBDisp = (_RwGCXFBDisp == _RwGCXFB1) ? _RwGCXFB2 : _RwGCXFB1;
+        if (_RwGCXFBDisp == _RwGCXFB1)
+        {
+            _RwGCXFBDisp = _RwGCXFB2;
+        }
+        else
+        {
+            _RwGCXFBDisp = _RwGCXFB1;
+        }
         VISetNextFrameBuffer(_RwGCXFBDisp);
 
         if (_RwDlFirstFrame)
@@ -590,10 +597,12 @@ static RwBool _rwDlSystem(RwInt32 request, void* out, void* inOut, RwInt32 in)
     }
     case rwDEVICESYSTEMSTOP:
     {
-        if ((_RwDlFrameReadyOnToken != TRUE) && (_RwDlFrameTokenNew == _RwDlFrameTokenCurrent))
+        /* Wait for the GPU to finish any outstanding frames */
+        while ((_RwDlFrameReadyOnToken == TRUE) || (_RwDlFrameTokenNew != _RwDlFrameTokenCurrent))
         {
-            return TRUE;
         }
+
+        return TRUE;
     }
     case rwDEVICESYSTEMINITPIPELINE:
     {

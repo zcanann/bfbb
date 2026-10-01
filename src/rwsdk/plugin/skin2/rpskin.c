@@ -90,9 +90,8 @@ static RwBool SkinAllocate(RpSkin* skin, RwUInt32 numVertices, RwUInt32 numBones
 {
     RwUInt32 size;
 
-    size = sizeof(RwMatrix) * numBones + numUsedBones;
-    size += 15; /* alignment padding for the matrices */
-    size += (sizeof(RwUInt32) + sizeof(RwMatrixWeights)) * numVertices;
+    size = (sizeof(RwUInt32) + sizeof(RwMatrixWeights)) * numVertices +
+           sizeof(RwMatrix) * numBones + numUsedBones + 15;
 
     skin->unaligned = RwMalloc(size);
     if (!skin->unaligned)
@@ -538,7 +537,9 @@ static RwStream* SkinAtomicRead(RwStream* stream, RwInt32 binaryLength, void* ob
     RpAtomic* atomic = (RpAtomic*)object;
     RpGeometry* geometry = atomic->geometry;
 
-    if (!RpSkinGeometryGetSkin(geometry))
+    skin = RpSkinGeometryGetSkin(geometry);
+
+    if (!skin)
     {
         /* Old format: the skin was stored with the atomic */
         RwInt32 numBones;

@@ -148,11 +148,11 @@ static RwInt32 GeomLeafNodeForAllLineIntersections(RwInt32 numPolygons, RwInt32 
     RpCollisCallBackData* cbData = isData->cbData;
     RwUInt16* triangleMap;
 
+    vertices = geometry->morphTarget->verts;
+    triangles = geometry->triangles;
     triangleMap = (*RWPLUGINOFFSET(RpCollisionData*, geometry, _rpCollisionGeometryDataOffset))
                       ->triangleMap +
                   firstPolygon;
-    vertices = geometry->morphTarget->verts;
-    triangles = geometry->triangles;
 
     while (numPolygons--)
     {
@@ -202,11 +202,11 @@ static RwInt32 GeomLeafNodeForAllSphereIntersections(RwInt32 numPolygons, RwInt3
     RpCollisCallBackData* cbData = isData->cbData;
     RwUInt16* triangleMap;
 
+    vertices = geometry->morphTarget->verts;
+    triangles = geometry->triangles;
     triangleMap = (*RWPLUGINOFFSET(RpCollisionData*, geometry, _rpCollisionGeometryDataOffset))
                       ->triangleMap +
                   firstPolygon;
-    vertices = geometry->morphTarget->verts;
-    triangles = geometry->triangles;
 
     while (numPolygons--)
     {
