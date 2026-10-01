@@ -704,11 +704,19 @@ static void YUV_blit(void PTR4* dest,
     S.a1 = (u32 PTR4*)(abase + srcpitch);
 
     chroma_pitch = srcpitch >> YUV_CHROMA_SHIFT;
-    cbase = (u8 PTR4*)src + srcpitch * srcheight;
+    y_delta = srcpitch - srcw;
+    a_delta = y_delta;
+    c_delta = chroma_pitch - (srcw >> YUV_CHROMA_SHIFT);
+    if ((srcw & 1) != 0 && (srcx & 1) != 0) {
+        c_delta--;
+    }
+
     if ((flags & BINKRBINVERT) != 0) {
+        cbase = (u8 PTR4*)src + srcpitch * srcheight;
         S.u = (u16 PTR4*)cbase;
         S.v = (u16 PTR4*)(cbase + chroma_pitch * (srcheight >> YUV_CHROMA_SHIFT));
     } else {
+        cbase = (u8 PTR4*)src + srcpitch * srcheight;
         S.v = (u16 PTR4*)cbase;
         S.u = (u16 PTR4*)(cbase + chroma_pitch * (srcheight >> YUV_CHROMA_SHIFT));
     }
@@ -717,13 +725,6 @@ static void YUV_blit(void PTR4* dest,
                        (srcy >> YUV_CHROMA_SHIFT) * chroma_pitch);
     S.v = (u16 PTR4*)((u8 PTR4*)S.v + (srcx >> YUV_CHROMA_SHIFT) +
                        (srcy >> YUV_CHROMA_SHIFT) * chroma_pitch);
-
-    y_delta = srcpitch - srcw;
-    a_delta = y_delta;
-    c_delta = chroma_pitch - (srcw >> YUV_CHROMA_SHIFT);
-    if ((srcw & 1) != 0 && (srcx & 1) != 0) {
-        c_delta--;
-    }
 
     endy = srcy + srch - 1;
     if ((srcy & 1) != 0 && (s32)srcy <= (s32)endy) {
