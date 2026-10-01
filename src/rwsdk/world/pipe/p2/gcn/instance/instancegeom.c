@@ -422,8 +422,9 @@ RwResEntry* _rwDlGeometryInstanceOptimized(RpGeometry* geometry, void* owner,
         }
     }
 
-    displayLists = (RxGameCubeDisplayList*)((RwUInt8*)memory + vBufferHeaderSize);
-    memory = (RwUInt8*)displayLists + displayListSize;
+    memory = (RwUInt8*)memory + vBufferHeaderSize;
+    displayLists = (RxGameCubeDisplayList*)memory;
+    memory = (RwUInt8*)memory + displayListSize;
     memory = (RwUInt8*)memory + 31;
     memory = (void*)((RwUInt32)memory & ~31);
 
@@ -431,6 +432,7 @@ RwResEntry* _rwDlGeometryInstanceOptimized(RpGeometry* geometry, void* owner,
     {
         RwUInt32 numStrips;
         RwUInt32 numIndices;
+        RwUInt32 displayListstride;
         RwUInt32 meshDisplayListSize;
 
         if (RpGeometryGetFlags(geometry) & rpGEOMETRYTRISTRIP)
@@ -449,8 +451,9 @@ RwResEntry* _rwDlGeometryInstanceOptimized(RpGeometry* geometry, void* owner,
 
         IndexDataSetupOptimized(&displayListData, indexDataRemapped[i], geometry);
 
+        displayListstride = _rwGCNDisplayListGetStride(vtxDesc);
         _rwGCNDisplayListFill(vtxDesc, &displayLists[i], &displayListData, GEOMETRYGETMESH(geometry, i)->numIndices,
-                              numStrips, _rwGCNDisplayListGetStride(vtxDesc), TRUE, primTypeVAT);
+                              numStrips, displayListstride, TRUE, primTypeVAT);
 
         memory = (RwUInt8*)memory + meshDisplayListSize;
     }
@@ -715,8 +718,9 @@ RwResEntry* _rwDlGeometryInstanceFast(RpGeometry* geometry, void* owner,
         }
     }
 
-    displayLists = (RxGameCubeDisplayList*)((RwUInt8*)memory + vBufferHeaderSize);
-    memory = (RwUInt8*)displayLists + displayListSize;
+    memory = (RwUInt8*)memory + vBufferHeaderSize;
+    displayLists = (RxGameCubeDisplayList*)memory;
+    memory = (RwUInt8*)memory + displayListSize;
     memory = (RwUInt8*)memory + 31;
     memory = (void*)((RwUInt32)memory & ~31);
 

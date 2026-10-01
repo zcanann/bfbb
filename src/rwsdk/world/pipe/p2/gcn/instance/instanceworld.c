@@ -426,8 +426,9 @@ RwResEntry* _rwDlWorldSectorInstanceOptimized(RpWorld* world, RpWorldSector* sec
         }
     }
 
-    displayLists = (RxGameCubeDisplayList*)((RwUInt8*)memory + vBufferHeaderSize);
-    memory = (RwUInt8*)displayLists + displayListSize;
+    memory = (RwUInt8*)memory + vBufferHeaderSize;
+    displayLists = (RxGameCubeDisplayList*)memory;
+    memory = (RwUInt8*)memory + displayListSize;
     memory = (RwUInt8*)memory + 31;
     memory = (void*)((RwUInt32)memory & ~31);
 
@@ -435,6 +436,7 @@ RwResEntry* _rwDlWorldSectorInstanceOptimized(RpWorld* world, RpWorldSector* sec
     {
         RwUInt32 numStrips;
         RwUInt32 numIndices;
+        RwUInt32 displayListstride;
         RwUInt32 meshDisplayListSize;
 
         if (RpWorldGetFlags(world) & rpWORLDTRISTRIP)
@@ -453,8 +455,9 @@ RwResEntry* _rwDlWorldSectorInstanceOptimized(RpWorld* world, RpWorldSector* sec
 
         IndexDataSetupOptimized(&displayListData, indexDataRemapped[i], world);
 
+        displayListstride = _rwGCNDisplayListGetStride(vtxDesc);
         _rwGCNDisplayListFill(vtxDesc, &displayLists[i], &displayListData, SECTORGETMESH(sector, i)->numIndices,
-                              numStrips, _rwGCNDisplayListGetStride(vtxDesc), TRUE, primTypeVAT);
+                              numStrips, displayListstride, TRUE, primTypeVAT);
 
         memory = (RwUInt8*)memory + meshDisplayListSize;
     }
@@ -717,8 +720,9 @@ RwResEntry* _rwDlWorldSectorInstanceFast(RpWorld* world, RpWorldSector* sector, 
         }
     }
 
-    displayLists = (RxGameCubeDisplayList*)((RwUInt8*)memory + vBufferHeaderSize);
-    memory = (RwUInt8*)displayLists + displayListSize;
+    memory = (RwUInt8*)memory + vBufferHeaderSize;
+    displayLists = (RxGameCubeDisplayList*)memory;
+    memory = (RwUInt8*)memory + displayListSize;
     memory = (RwUInt8*)memory + 31;
     memory = (void*)((RwUInt32)memory & ~31);
 
