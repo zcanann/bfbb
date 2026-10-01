@@ -849,17 +849,17 @@ handle_lossless_read_children:
                                     goto label;                                                                        \
                                 }                                                                                      \
                             }                                                                                          \
-                            coeff_value = bitbuf & bit_mask;                                                           \
-                            if (bitcount < level) {                                                                    \
-                                code = *words++;                                                                       \
-                                coeff_value |= code << bitcount;                                                       \
-                                bitbuf = code >> (level - bitcount);                                                   \
-                                bitcount = bitcount + BP_BITS_PER_WORD - level;                                        \
-                            } else {                                                                                   \
-                                bitbuf >>= level;                                                                      \
-                                bitcount = bitcount - level;                                                           \
-                            }                                                                                          \
-                            coeff_value = (coeff_value & bit_mask) | highbit;                                          \
+                            if (bitcount >= level) { \
+                                coeff_value = bitbuf & bit_mask; \
+                                bitbuf >>= level; \
+                                bitcount = bitcount - level; \
+                            } else { \
+                                code = *words++; \
+                                coeff_value = (bitbuf | (code << bitcount)) & bit_mask; \
+                                bitbuf = code >> (level - bitcount); \
+                                bitcount = bitcount + BP_BITS_PER_WORD - level; \
+                            } \
+                            coeff_value = coeff_value | highbit; \
                             if (bitcount != 0) {                                                                                   \
                                 bitcount = bitcount - 1;                                                               \
                                 code = bitbuf & BP_BIT_MASK;                                                                     \
@@ -890,17 +890,17 @@ after_lossless_read_children:
                 }
                 goto lossless_node_done;
 deferred_lossless_coeff:
-                coeff_value = bitbuf & bit_mask;
-                if (bitcount < level) {
-                    code = *words++;
-                    coeff_value |= code << bitcount;
-                    bitbuf = code >> (level - bitcount);
-                    bitcount = bitcount + BP_BITS_PER_WORD - level;
-                } else {
+                if (bitcount >= level) {
+                    coeff_value = bitbuf & bit_mask;
                     bitbuf >>= level;
                     bitcount = bitcount - level;
+                } else {
+                    code = *words++;
+                    coeff_value = (bitbuf | (code << bitcount)) & bit_mask;
+                    bitbuf = code >> (level - bitcount);
+                    bitcount = bitcount + BP_BITS_PER_WORD - level;
                 }
-                coeff_value = (coeff_value & bit_mask) | highbit;
+                coeff_value = coeff_value | highbit;
                 if (bitcount != 0) {
                     bitcount = bitcount - 1;
                     code = bitbuf & BP_BIT_MASK;

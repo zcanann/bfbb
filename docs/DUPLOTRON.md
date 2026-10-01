@@ -7941,3 +7941,18 @@ All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
 early-cutoff invariant checks pass. Full all-source compilation and normal
 retail DOL SHA-1 validation pass. Bitplane remains NonMatching, so source-linked
 Bink playback remains unverified.
+
+
+## Bink lossless magnitude-bit branch order (2026-10-01)
+
+Putting the buffered magnitude read before the refill path, and applying its
+mask within each path, follows retail's instruction order and improves
+ReadBPLossless from 64.83242% to 70.72618%. This removes the unnecessary
+intermediate narrow value in the refill path. Both deferred coefficients and
+the shared child macro use this form. The full deduplicated report changes
+only ReadBPLossless.
+
+All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
+early-cutoff invariant checks pass. Full all-source compilation and normal
+retail DOL SHA-1 validation pass. Bitplane remains NonMatching; source-linked
+Bink playback remains unverified.
