@@ -6445,11 +6445,11 @@ S32 zNPCGoalDamage::InputInfo(NPCDamageInfo* info)
     flg_info = 0x10;
     switch (info->dmg_type)
     {
-    case DMGTYP_BELOW:
+    case DMGTYP_INSTAKILL:
         npc->InflictPain(-1, 0);
         flg_howtodie = 1;
         break;
-    case DMGTYP_INSTAKILL:
+    case DMGTYP_BELOW:
         flg_howtodie = 4;
         npc->InflictPain(-1, 0);
         break;
