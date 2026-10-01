@@ -1432,6 +1432,7 @@ void YUV_16a4x2_4x2_even(u32 count)
         u32 PTR4* gb_table;
         u32 PTR4* r_table;
         u16 yhalf;
+        u16 ahalf;
         u32 ya;
         u32 yb;
 
@@ -1453,16 +1454,18 @@ void YUV_16a4x2_4x2_even(u32 count)
         yv1 = *y1++;
         av1 = *a1++;
 
-        pix0 = RGB565_A4_PREBIASED(r_table, gb_table, b_table, clamp_a4_base, ya, RGB_WORD_BYTE3(av0));
-        pix1 = RGB565_A4_PREBIASED(r_table, gb_table, b_table, clamp_a4_base, yb, RGB_WORD_BYTE2(av0));
+        ahalf = av0 >> RGB_HALFWORD_SHIFT;
+        pix0 = RGB565_A4_PREBIASED(r_table, gb_table, b_table, clamp_a4_base, ya, RGB_WORD_BYTE1(ahalf));
+        pix1 = RGB565_A4_PREBIASED(r_table, gb_table, b_table, clamp_a4_base, yb, RGB_WORD_BYTE0(ahalf));
         dest0[RGB_TILE_WORD0] = RGB565_PAIR(pix0);
         dest0[RGB_TILE_WORD1] = RGB565_PAIR(pix1);
 
         yhalf = yv1 >> RGB_HALFWORD_SHIFT;
         ya = ytable[RGB_WORD_BYTE1(yhalf)];
         yb = ytable[RGB_WORD_BYTE0(yhalf)];
-        pix0 = RGB565_A4_PREBIASED(r_table, gb_table, b_table, clamp_a4_base, ya, RGB_WORD_BYTE3(av1));
-        pix1 = RGB565_A4_PREBIASED(r_table, gb_table, b_table, clamp_a4_base, yb, RGB_WORD_BYTE2(av1));
+        ahalf = av1 >> RGB_HALFWORD_SHIFT;
+        pix0 = RGB565_A4_PREBIASED(r_table, gb_table, b_table, clamp_a4_base, ya, RGB_WORD_BYTE1(ahalf));
+        pix1 = RGB565_A4_PREBIASED(r_table, gb_table, b_table, clamp_a4_base, yb, RGB_WORD_BYTE0(ahalf));
         dest1[RGB_TILE_WORD0] = RGB565_PAIR(pix0);
         dest1[RGB_TILE_WORD1] = RGB565_PAIR(pix1);
 
@@ -1474,6 +1477,7 @@ void YUV_16a4x2_4x2_even(u32 count)
         b_table = clamp_b_base + b;
         gb_table = clamp_g_base + gb;
         r_table = clamp_r_base + r;
+        av0 = (u16)av0;
         yv0 = (u16)yv0;
         ya = ytable[RGB_WORD_BYTE1(yv0)];
         yb = ytable[RGB_WORD_BYTE0(yv0)];
@@ -1483,6 +1487,7 @@ void YUV_16a4x2_4x2_even(u32 count)
         dest0[RGB_TILE_NEXT_ROW_WORD1] = RGB565_PAIR(pix1);
         dest0 += RGB_TILE_BLOCK_WORDS;
 
+        av1 = (u16)av1;
         yv1 = (u16)yv1;
         ya = ytable[RGB_WORD_BYTE1(yv1)];
         yb = ytable[RGB_WORD_BYTE0(yv1)];
