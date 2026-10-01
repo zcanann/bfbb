@@ -7621,3 +7621,15 @@ measured replacement still scores below the retained temporary-block path;
 that experiment was not retained. Advancing local skip-copy cursors also
 regressed. Revisit the direct scaled pattern alongside the remaining layout
 work rather than claiming the current decoder is fully reconstructed.
+
+## Bink RLE Huff4 shared temporary (2026-10-01)
+
+`CheckReadRLEHuff4Bundle` improves from 94.48588% to 96.60452% by sharing
+`peek` between the mutually exclusive Huffman-width and repeat-fill paths.
+The repeat fill still uses the same unsigned-byte cast of a four-bit read;
+no decoded values or bundle consumption change. ProDG's allocation changes
+when this shared local is renamed `value` (95.38983%), so the original name
+is retained. Compiled size is 704 bytes; the retail function is 708 bytes.
+No other deduplicated function score changes. All-source build, Huff4 and
+run-block host checks, and normal retail DOL SHA-1 verification pass.
+The unit remains NonMatching.

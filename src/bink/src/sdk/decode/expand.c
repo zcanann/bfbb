@@ -749,10 +749,9 @@ static void CheckReadRLEHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     u32 last_symbol;
     u8 run_length;
     u32 repeat_word;
-    u8 fill_symbol;
     u8 PTR4* syms;
     const u8 PTR4* decode;
-    u32 peek;
+    u32 peek; /* Also holds the fill nibble in repeat packets. */
     EXPBITSTYPE bit;
 
     if (BINK_BUNDLE_HAS_UNREAD_DATA(bundle)) {
@@ -791,8 +790,8 @@ static void CheckReadRLEHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
                 }
             }
         } else {
-            VarBitsGet(fill_symbol, u8, *bits, HUFF4_NIBBLE_BITS);
-            memset(bundle->data, fill_symbol, count);
+            VarBitsGet(peek, u8, *bits, HUFF4_NIBBLE_BITS);
+            memset(bundle->data, peek, count);
         }
     } else {
         /* Empty bundles point cur_ptr past data so callers see no decoded elements. */
