@@ -334,14 +334,14 @@ void _rpSkinBlendBody(RpSkin* skin, RwMatrix* matrixCache, void* vertices, void*
         RwUInt8 vtxFmtSizeConvTable[5] = { 1, 1, 2, 2, 4 };
         RwUInt8 vtxFmtNormConvTable[5] = { 0, 6, 0, 14, 0 };
 
-        vertexSize = vtxFmtSizeConvTable[vtxFmt->pos];
-
-        posGQR = vtxFmtTypeConvTable[vtxFmt->pos] | (vtxFmt->posFrac << 8);
+        posGQR = (vtxFmt->posFrac << 8) | vtxFmtTypeConvTable[vtxFmt->pos];
         posGQR |= posGQR << 16;
+
+        vertexSize = vtxFmtSizeConvTable[vtxFmt->pos];
 
         normalSize = vtxFmtSizeConvTable[vtxFmt->norm];
 
-        normGQR = vtxFmtTypeConvTable[vtxFmt->norm] | (vtxFmtNormConvTable[vtxFmt->norm] << 8);
+        normGQR = (vtxFmtNormConvTable[vtxFmt->norm] << 8) | vtxFmtTypeConvTable[vtxFmt->norm];
         normGQR |= normGQR << 16;
 
         normalPad = vtxFmt->nbt ? normalSize * 6 : 0;
@@ -540,32 +540,59 @@ void* _rpSkinAtomicReinstanceCallBack(void* object, RxGameCubePipeData* pipeData
 }
 
 /* Load a bone matrix into a hardware matrix slot (column major, right handed) */
-#define SKINLOADBONEMATRIX(_mtx, _matrix, _index, _normals)                                        \
-    MACRO_START                                                                                    \
-    {                                                                                              \
-        RwBool _loadNormals = (_normals);                                                          \
-                                                                                                   \
-        (_mtx)[0][0] = -(_matrix)->right.x;                                                        \
-        (_mtx)[0][1] = -(_matrix)->up.x;                                                           \
-        (_mtx)[0][2] = -(_matrix)->at.x;                                                           \
-        (_mtx)[0][3] = -(_matrix)->pos.x;                                                          \
-        (_mtx)[1][0] = (_matrix)->right.y;                                                         \
-        (_mtx)[1][1] = (_matrix)->up.y;                                                            \
-        (_mtx)[1][2] = (_matrix)->at.y;                                                            \
-        (_mtx)[1][3] = (_matrix)->pos.y;                                                           \
-        (_mtx)[2][0] = -(_matrix)->right.z;                                                        \
-        (_mtx)[2][1] = -(_matrix)->up.z;                                                           \
-        (_mtx)[2][2] = -(_matrix)->at.z;                                                           \
-        (_mtx)[2][3] = -(_matrix)->pos.z;                                                          \
-                                                                                                   \
-        GXLoadPosMtxImm((_mtx), (_index));                                                         \
-                                                                                                   \
-        if (_loadNormals)                                                                          \
-        {                                                                                          \
-            GXLoadNrmMtxImm((_mtx), (_index));                                                     \
-        }                                                                                          \
-    }                                                                                              \
-    MACRO_STOP
+static void _rpSkinLoadMatrix(RwMatrix* matrix, RwUInt32 index, RwBool normals)
+{
+    f32 mtx[3][4];
+
+    mtx[0][0] = -matrix->right.x;
+    mtx[0][1] = -matrix->up.x;
+    mtx[0][2] = -matrix->at.x;
+    mtx[0][3] = -matrix->pos.x;
+    mtx[1][0] = matrix->right.y;
+    mtx[1][1] = matrix->up.y;
+    mtx[1][2] = matrix->at.y;
+    mtx[1][3] = matrix->pos.y;
+    mtx[2][0] = -matrix->right.z;
+    mtx[2][1] = -matrix->up.z;
+    mtx[2][2] = -matrix->at.z;
+    mtx[2][3] = -matrix->pos.z;
+
+    GXLoadPosMtxImm(mtx, index);
+
+    if (normals)
+    {
+        GXLoadNrmMtxImm(mtx, index);
+    }
+}
+
+/* Load the run-length encoded bone matrices used by one split mesh */
+static inline void _rpSkinLoadMatrixPalette(RpSkin* skin, RwUInt32 mesh, RwBool normals)
+{
+    RwUInt8 i;
+    RwUInt8 index;
+    RwUInt8 count;
+    RwUInt32 matrixID;
+    RwUInt32 j;
+    RwUInt8 start;
+    RwUInt8 run;
+
+    matrixID = 0;
+
+    index = skin->skinSplitData.meshRLECount[mesh * 2] * 2;
+    count = skin->skinSplitData.meshRLECount[mesh * 2 + 1];
+
+    for (i = 0; i < count; i++)
+    {
+        start = skin->skinSplitData.meshRLE[index + i * 2];
+        run = skin->skinSplitData.meshRLE[index + i * 2 + 1];
+
+        for (j = 0; j < run; j++)
+        {
+            _rpSkinLoadMatrix(&_rpSkinGlobals.matrixCache.aligned[start + j], matrixID, normals);
+            matrixID += 3;
+        }
+    }
+}
 
 void* _rpSkinRenderCallback(void* object, RxGameCubePipeData* pipeData)
 {
@@ -622,12 +649,8 @@ void* _rpSkinRenderCallback(void* object, RxGameCubePipeData* pipeData)
     {
         for (i = 0; i < skin->boneData.numUsedBones; i++)
         {
-            f32 mtx[3][4];
-            RwMatrix* matrix;
-
-            matrix = &_rpSkinGlobals.matrixCache.aligned[skin->boneData.usedBoneList[i]];
-            SKINLOADBONEMATRIX(mtx, matrix, i * 3,
-                               (pipeData->flags & rpGEOMETRYNORMALS) ? TRUE : FALSE);
+            _rpSkinLoadMatrix(&_rpSkinGlobals.matrixCache.aligned[skin->boneData.usedBoneList[i]],
+                              i * 3, (pipeData->flags & rpGEOMETRYNORMALS) ? TRUE : FALSE);
         }
     }
 
@@ -652,42 +675,8 @@ void* _rpSkinRenderCallback(void* object, RxGameCubePipeData* pipeData)
 
             if (skin->vertexMaps.maxWeights == 1 && skin->skinSplitData.numMeshes != 0)
             {
-                RwUInt8* rleCount;
-                RwUInt8 index;
-                RwUInt8 count;
-                RwUInt8 j;
-                RwUInt32 slot;
-                RwBool normals;
-
-                slot = 0;
-                normals = (pipeData->flags & rpGEOMETRYNORMALS) ? TRUE : FALSE;
-
-                rleCount = &skin->skinSplitData
-                                .meshRLECount[(pipeData->meshHeader->numMeshes - (numMeshes + 1)) * 2];
-                index = rleCount[0] * 2;
-                count = rleCount[1];
-
-                for (j = 0; j < count; j++)
-                {
-                    RwUInt8* rle;
-                    RwUInt32 bone;
-                    RwUInt32 run;
-                    RwUInt32 k;
-
-                    rle = &skin->skinSplitData.meshRLE[index + j * 2];
-                    bone = rle[0];
-                    run = rle[1];
-
-                    for (k = 0; k < run; k++, bone++)
-                    {
-                        f32 mtx[3][4];
-                        RwMatrix* matrix;
-
-                        matrix = &_rpSkinGlobals.matrixCache.aligned[bone];
-                        SKINLOADBONEMATRIX(mtx, matrix, slot, normals);
-                        slot += 3;
-                    }
-                }
+                _rpSkinLoadMatrixPalette(skin, pipeData->meshHeader->numMeshes - (numMeshes + 1),
+                                         (pipeData->flags & rpGEOMETRYNORMALS) ? TRUE : FALSE);
             }
 
             GXCallDisplayList(dList->displayList, dList->size);
@@ -708,42 +697,8 @@ void* _rpSkinRenderCallback(void* object, RxGameCubePipeData* pipeData)
 
             if (skin->vertexMaps.maxWeights == 1 && skin->skinSplitData.numMeshes != 0)
             {
-                RwUInt8* rleCount;
-                RwUInt8 index;
-                RwUInt8 count;
-                RwUInt8 j;
-                RwUInt32 slot;
-                RwBool normals;
-
-                slot = 0;
-                normals = (pipeData->flags & rpGEOMETRYNORMALS) ? TRUE : FALSE;
-
-                rleCount = &skin->skinSplitData
-                                .meshRLECount[(pipeData->meshHeader->numMeshes - (numMeshes + 1)) * 2];
-                index = rleCount[0] * 2;
-                count = rleCount[1];
-
-                for (j = 0; j < count; j++)
-                {
-                    RwUInt8* rle;
-                    RwUInt32 bone;
-                    RwUInt32 run;
-                    RwUInt32 k;
-
-                    rle = &skin->skinSplitData.meshRLE[index + j * 2];
-                    bone = rle[0];
-                    run = rle[1];
-
-                    for (k = 0; k < run; k++, bone++)
-                    {
-                        f32 mtx[3][4];
-                        RwMatrix* matrix;
-
-                        matrix = &_rpSkinGlobals.matrixCache.aligned[bone];
-                        SKINLOADBONEMATRIX(mtx, matrix, slot, normals);
-                        slot += 3;
-                    }
-                }
+                _rpSkinLoadMatrixPalette(skin, pipeData->meshHeader->numMeshes - (numMeshes + 1),
+                                         (pipeData->flags & rpGEOMETRYNORMALS) ? TRUE : FALSE);
             }
 
             GXCallDisplayList(dList->displayList, dList->size);

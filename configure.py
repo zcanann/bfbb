@@ -1121,7 +1121,7 @@ config.libs = [
         [
             Object(Matching, "rwsdk/plugin/skin2/bsplit.c"),
             Object(Matching, "rwsdk/plugin/skin2/rpskin.c"),
-            Object(NonMatching, "rwsdk/plugin/skin2/gcn/skingcn.c"),
+            Object(Matching, "rwsdk/plugin/skin2/gcn/skingcn.c"),
             Object(Matching, "rwsdk/plugin/skin2/gcn/skinstream.c"),
             Object(Matching, "rwsdk/plugin/skin2/gcn/instance/instanceskin.c"),
             Object(Matching, "rwsdk/plugin/skin2/gcn/skinmatrixblend.c"),
