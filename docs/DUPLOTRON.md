@@ -7881,3 +7881,19 @@ All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
 early-cutoff invariant checks pass. Full all-source compilation and normal
 retail DOL SHA-1 validation pass. Bitplane remains NonMatching, so Bink
 source linking and playback remain outstanding.
+
+
+## Bink saved bit-buffer word (2026-10-01)
+
+Using the saved original buffer word for the buffered-path bit tests raises
+readlossy from 90.50555% to 90.61641%. Applying it consistently to the node
+presence test and removing the now-unused `bit` and `code` temporaries gives
+95.08647%. With these lifetimes corrected, direct sample-minus-mask or
+sample-plus-mask refinement now improves the score to 95.19734% and is
+retained (it had regressed earlier layouts). The full deduplicated report
+changes only readlossy.
+
+All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
+early-cutoff invariant checks pass. Full all-source compilation and normal
+retail DOL SHA-1 validation pass. Bitplane remains NonMatching; source-linked
+Bink playback remains unverified.

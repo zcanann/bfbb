@@ -1327,8 +1327,6 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count)
     s32 nz_coeff_count;
     u8 PTR4* node_ptr;
     u8 node;
-    u32 code;
-    u32 bit;
     s32 delta;
     s32 scan;
     BPBITSTYPE word;
@@ -1364,10 +1362,9 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count)
             do {
                 if (bitcount != 0) {
                     bitcount = bitcount - 1;
-                    word = bitbuf >> 1;
-                    bit = bitbuf & BP_BIT_MASK;
-                    bitbuf = word;
-                    if (bit != 0) {
+                    word = bitbuf;
+                    bitbuf = bitbuf >> 1;
+                    if ((word & BP_BIT_MASK) != 0) {
                         goto refine_coeff;
                     }
                     goto next_refinement;
@@ -1382,11 +1379,11 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count)
                 }
 refine_coeff:
                 sample = dest[(u32)nz_coeff[scan]];
-                delta = mask;
                 if (sample < 0) {
-                    delta = -mask;
+                    dest[(u32)nz_coeff[scan]] = sample - mask;
+                } else {
+                    dest[(u32)nz_coeff[scan]] = sample + mask;
                 }
-                dest[(u32)nz_coeff[scan]] = sample + (s8)delta;
                 if (masks_used++ == masks_count) {
                     goto done;
                 }
@@ -1404,9 +1401,9 @@ read_node:
             }
             if (bitcount != 0) {
                 bitcount = bitcount - 1;
-                code = bitbuf & BP_BIT_MASK;
+                word = bitbuf;
                 bitbuf = bitbuf >> 1;
-                if (code != 0) {
+                if ((word & BP_BIT_MASK) != 0) {
                     goto decode_node;
                 }
                 goto next_node;
@@ -1446,10 +1443,9 @@ decode_node:
 decode_children:
             if (bitcount != 0) {
                 bitcount = bitcount - 1;
-                word = bitbuf >> 1;
-                bit = bitbuf & BP_BIT_MASK;
-                bitbuf = word;
-                if (bit != 0) {
+                word = bitbuf;
+                bitbuf = bitbuf >> 1;
+                if ((word & BP_BIT_MASK) != 0) {
                     goto push_0;
                 }
             } else {
@@ -1468,10 +1464,9 @@ push_0:
             nz_coeff_count = nz_coeff_count + 1;
             if (bitcount != 0) {
                 bitcount = bitcount - 1;
-                word = bitbuf >> 1;
-                bit = bitbuf & BP_BIT_MASK;
-                bitbuf = word;
-                if (bit != 0) {
+                word = bitbuf;
+                bitbuf = bitbuf >> 1;
+                if ((word & BP_BIT_MASK) != 0) {
                     goto negative_0;
                 }
                 goto positive_0;
@@ -1498,10 +1493,9 @@ after_0:
             node++;
             if (bitcount != 0) {
                 bitcount = bitcount - 1;
-                word = bitbuf >> 1;
-                bit = bitbuf & BP_BIT_MASK;
-                bitbuf = word;
-                if (bit != 0) {
+                word = bitbuf;
+                bitbuf = bitbuf >> 1;
+                if ((word & BP_BIT_MASK) != 0) {
                     goto push_1;
                 }
             } else {
@@ -1520,10 +1514,9 @@ push_1:
             nz_coeff_count = nz_coeff_count + 1;
             if (bitcount != 0) {
                 bitcount = bitcount - 1;
-                word = bitbuf >> 1;
-                bit = bitbuf & BP_BIT_MASK;
-                bitbuf = word;
-                if (bit != 0) {
+                word = bitbuf;
+                bitbuf = bitbuf >> 1;
+                if ((word & BP_BIT_MASK) != 0) {
                     goto negative_1;
                 }
                 goto positive_1;
@@ -1550,10 +1543,9 @@ after_1:
             node++;
             if (bitcount != 0) {
                 bitcount = bitcount - 1;
-                word = bitbuf >> 1;
-                bit = bitbuf & BP_BIT_MASK;
-                bitbuf = word;
-                if (bit != 0) {
+                word = bitbuf;
+                bitbuf = bitbuf >> 1;
+                if ((word & BP_BIT_MASK) != 0) {
                     goto push_2;
                 }
             } else {
@@ -1571,10 +1563,9 @@ push_2:
             nz_coeff_count = nz_coeff_count + 1;
             if (bitcount != 0) {
                 bitcount = bitcount - 1;
-                word = bitbuf >> 1;
-                bit = bitbuf & BP_BIT_MASK;
-                bitbuf = word;
-                if (bit != 0) {
+                word = bitbuf;
+                bitbuf = bitbuf >> 1;
+                if ((word & BP_BIT_MASK) != 0) {
                     goto negative_2;
                 }
                 goto positive_2;
@@ -1601,10 +1592,9 @@ after_2:
             node++;
             if (bitcount != 0) {
                 bitcount = bitcount - 1;
-                word = bitbuf >> 1;
-                bit = bitbuf & BP_BIT_MASK;
-                bitbuf = word;
-                if (bit != 0) {
+                word = bitbuf;
+                bitbuf = bitbuf >> 1;
+                if ((word & BP_BIT_MASK) != 0) {
                     goto push_3;
                 }
             } else {
@@ -1622,10 +1612,9 @@ push_3:
             nz_coeff_count = nz_coeff_count + 1;
             if (bitcount != 0) {
                 bitcount = bitcount - 1;
-                word = bitbuf >> 1;
-                bit = bitbuf & BP_BIT_MASK;
-                bitbuf = word;
-                if (bit != 0) {
+                word = bitbuf;
+                bitbuf = bitbuf >> 1;
+                if ((word & BP_BIT_MASK) != 0) {
                     goto negative_3;
                 }
                 goto positive_3;
@@ -1656,10 +1645,9 @@ deferred_coeff:
             nz_coeff_count = nz_coeff_count + 1;
             if (bitcount != 0) {
                 bitcount = bitcount - 1;
-                word = bitbuf >> 1;
-                bit = bitbuf & BP_BIT_MASK;
-                bitbuf = word;
-                if (bit != 0) {
+                word = bitbuf;
+                bitbuf = bitbuf >> 1;
+                if ((word & BP_BIT_MASK) != 0) {
                     goto negative_4;
                 }
                 goto positive_4;
