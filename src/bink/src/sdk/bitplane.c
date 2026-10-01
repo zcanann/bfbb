@@ -918,16 +918,26 @@ deferred_lossless_coeff:
                     bitcount = bitcount - 1;
                     code = bitbuf & BP_BIT_MASK;
                     bitbuf >>= 1;
+                    if (code != 0) {
+                        goto lossless_deferred_negative;
+                    }
+                    goto lossless_deferred_positive;
                 } else {
                     code = *words;
                     bitcount = BP_WORD_TOP_BIT;
                     words++;
                     bitbuf = code >> 1;
+                    if ((code & BP_BIT_MASK) == 0) {
+                        goto lossless_deferred_positive;
+                    }
                 }
-                if ((code & BP_BIT_MASK) != 0) {
-                    coeff_value = -coeff_value;
-                }
-                coeffs.values[BP_READ_TREE_INDEX(node)] = (u16)coeff_value;
+lossless_deferred_negative:
+                code = -coeff_value;
+                goto lossless_deferred_store;
+lossless_deferred_positive:
+                code = coeff_value;
+lossless_deferred_store:
+                coeffs.values[BP_READ_TREE_INDEX(node)] = (u16)code;
                 *node_ptr = BP_READ_TREE_EMPTY_ENTRY;
                 goto next_lossless_read_node;
 next_lossless_read_node:
@@ -1059,14 +1069,26 @@ deferred_lossless_final:
                 bitcount = bitcount - 1;
                 code = bitbuf & BP_BIT_MASK;
                 bitbuf >>= 1;
+                if (code != 0) {
+                    goto lossless_final_negative;
+                }
+                goto lossless_final_positive;
             } else {
                 code = *words;
                 bitcount = BP_WORD_TOP_BIT;
                 words++;
                 bitbuf = code >> 1;
+                if ((code & BP_BIT_MASK) == 0) {
+                    goto lossless_final_positive;
+                }
             }
-            coeffs.values[BP_READ_TREE_INDEX(node)] =
-                (code & BP_BIT_MASK) ? BP_NEGATIVE_COEFF_SIGN : BP_POSITIVE_COEFF_SIGN;
+lossless_final_negative:
+            code = BP_NEGATIVE_COEFF_SIGN;
+            goto lossless_final_store;
+lossless_final_positive:
+            code = BP_POSITIVE_COEFF_SIGN;
+lossless_final_store:
+            coeffs.values[BP_READ_TREE_INDEX(node)] = (u16)code;
             *node_ptr = BP_READ_TREE_EMPTY_ENTRY;
             goto next_lossless_final_node;
 next_lossless_final_node:

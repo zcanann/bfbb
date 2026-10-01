@@ -8042,3 +8042,17 @@ game-code switch to GC/2.0p1d. Bink continues to use ProDG. An initial ProDG
 temporary assembly-file open failure cleared when using a worktree-local
 TEMP/TMP directory; validation used that directory too. Bitplane remains
 NonMatching; source-linked Bink playback remains unverified.
+
+
+## Bink lossless deferred sign branches (2026-10-01)
+
+Matching buffered/refill sign branches for both deferred-coefficient paths,
+with sign selection before the common store, improves ReadBPLossless from
+86.59036% to 87.150055%. No other Bink scores change. Game-code differences
+from the earlier report belong to the integrated a12d41401 compiler update.
+Retesting saved full-word bit reads scored 86.27382% and was reverted.
+
+All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
+early-cutoff invariant checks pass. Full all-source compilation and normal
+retail DOL SHA-1 validation pass. Bitplane remains NonMatching; source-linked
+Bink playback remains unverified.
