@@ -1,2 +1,791 @@
 #include <rwsdk/rwcore.h>
 #include <rwsdk/rpworld.h>
+#include <rwsdk/rpusrdat.h>
+#include <string.h>
+
+#define rwID_USERDATAPLUGIN 0x11F
+
+typedef struct RwModuleInfo RwModuleInfo;
+struct RwModuleInfo
+{
+    RwInt32 globalsOffset;
+    RwInt32 numInstances;
+};
+
+typedef struct RpUserDataList RpUserDataList;
+struct RpUserDataList
+{
+    RwInt32 numElements;
+    RpUserDataArray* userData;
+};
+
+#define RPUSERDATALISTGETDATA(_object, _offset) (RWPLUGINOFFSET(RpUserDataList, _object, _offset))
+
+/* Duplicate a string with RwMalloc */
+#define UserDataStringDuplicate(_dst, _src)                                                        \
+    MACRO_START                                                                                    \
+    {                                                                                              \
+        (_dst) = (RwChar*)NULL;                                                                    \
+                                                                                                   \
+        if (_src)                                                                                  \
+        {                                                                                          \
+            (_dst) = (RwChar*)RwMalloc(rwstrlen(_src) + 1);                                        \
+                                                                                                   \
+            if (_dst)                                                                              \
+            {                                                                                      \
+                rwstrcpy(_dst, _src);                                                              \
+            }                                                                                      \
+        }                                                                                          \
+    }                                                                                              \
+    MACRO_STOP
+
+static RwInt32 userDataGeometryOffset;
+static RwInt32 userDataGeometryStreamOffset;
+static RwInt32 userDataWorldSectorOffset;
+static RwInt32 userDataWorldSectorStreamOffset;
+static RwInt32 userDataFrameOffset;
+static RwInt32 userDataFrameStreamOffset;
+static RwInt32 userDataCameraOffset;
+static RwInt32 userDataCameraStreamOffset;
+static RwInt32 userDataLightOffset;
+static RwInt32 userDataLightStreamOffset;
+static RwInt32 userDataMaterialOffset;
+static RwInt32 userDataMaterialStreamOffset;
+static RwInt32 userDataTextureOffset;
+static RwInt32 userDataTextureStreamOffset;
+
+RwModuleInfo userDataModule;
+
+static void* UserDataOpen(void* instance, RwInt32 offset, RwInt32 size)
+{
+    userDataModule.numInstances++;
+
+    return instance;
+}
+
+static void* UserDataClose(void* instance, RwInt32 offset, RwInt32 size)
+{
+    userDataModule.numInstances--;
+
+    return instance;
+}
+
+static RwStream* UserDataStreamRead(RpUserDataArray* userData, RwStream* stream)
+{
+    RwInt32 nameLength;
+    RwInt32 i;
+
+    if (!RwStreamReadInt32(stream, &nameLength, sizeof(RwInt32)))
+    {
+        return (RwStream*)NULL;
+    }
+
+    if (nameLength > 0)
+    {
+        userData->name = (RwChar*)RwMalloc(nameLength);
+        if (!userData->name)
+        {
+            return (RwStream*)NULL;
+        }
+
+        if (!RwStreamRead(stream, userData->name, nameLength))
+        {
+            return (RwStream*)NULL;
+        }
+    }
+
+    if (!RwStreamReadInt32(stream, (RwInt32*)&userData->format, sizeof(RwInt32)))
+    {
+        return (RwStream*)NULL;
+    }
+
+    if (!RwStreamReadInt32(stream, &userData->numElements, sizeof(RwInt32)))
+    {
+        return (RwStream*)NULL;
+    }
+
+    switch (userData->format)
+    {
+    case rpINTUSERDATA:
+    {
+        RwInt32* intData;
+
+        userData->data = RwMalloc(sizeof(RwInt32) * userData->numElements);
+        if (!userData->data)
+        {
+            return (RwStream*)NULL;
+        }
+
+        intData = (RwInt32*)userData->data;
+
+        for (i = 0; i < userData->numElements; i++)
+        {
+            if (!RwStreamReadInt32(stream, &intData[i], sizeof(RwInt32)))
+            {
+                return (RwStream*)NULL;
+            }
+
+        }
+
+        break;
+    }
+    case rpREALUSERDATA:
+    {
+        RwReal* realData;
+
+        userData->data = RwMalloc(sizeof(RwReal) * userData->numElements);
+        if (!userData->data)
+        {
+            return (RwStream*)NULL;
+        }
+
+        realData = (RwReal*)userData->data;
+
+        for (i = 0; i < userData->numElements; i++)
+        {
+            if (!RwStreamReadReal(stream, &realData[i], sizeof(RwReal)))
+            {
+                return (RwStream*)NULL;
+            }
+
+        }
+
+        break;
+    }
+    case rpSTRINGUSERDATA:
+    {
+        RwChar** stringData;
+
+        userData->data = RwMalloc(sizeof(RwChar*) * userData->numElements);
+        if (!userData->data)
+        {
+            return (RwStream*)NULL;
+        }
+
+        stringData = (RwChar**)userData->data;
+
+        for (i = 0; i < userData->numElements; i++)
+        {
+            if (!RwStreamReadInt32(stream, &nameLength, sizeof(RwInt32)))
+            {
+                return (RwStream*)NULL;
+            }
+
+            if (nameLength > 0)
+            {
+                stringData[i] = (RwChar*)RwMalloc(nameLength);
+                if (!stringData[i])
+                {
+                    return (RwStream*)NULL;
+                }
+
+                if (!RwStreamRead(stream, stringData[i], nameLength))
+                {
+                    return (RwStream*)NULL;
+                }
+            }
+            else
+            {
+                stringData[i] = (RwChar*)NULL;
+            }
+        }
+
+        break;
+    }
+    default:
+        return (RwStream*)NULL;
+    }
+
+    return stream;
+}
+
+static RwStream* UserDataStreamWrite(RpUserDataArray* userData, RwStream* stream)
+{
+    RwInt32 nameLength;
+    RwInt32 i;
+
+    if (userData->name)
+    {
+        nameLength = rwstrlen(userData->name) + 1;
+    }
+    else
+    {
+        nameLength = 0;
+    }
+
+    if (!RwStreamWriteInt32(stream, &nameLength, sizeof(RwInt32)))
+    {
+        return (RwStream*)NULL;
+    }
+
+    if (nameLength > 0)
+    {
+        if (!RwStreamWrite(stream, userData->name, nameLength))
+        {
+            return (RwStream*)NULL;
+        }
+    }
+
+    if (!RwStreamWriteInt32(stream, (RwInt32*)&userData->format, sizeof(RwInt32)))
+    {
+        return (RwStream*)NULL;
+    }
+
+    if (!RwStreamWriteInt32(stream, &userData->numElements, sizeof(RwInt32)))
+    {
+        return (RwStream*)NULL;
+    }
+
+    switch (userData->format)
+    {
+    case rpINTUSERDATA:
+    {
+        RwInt32* intData = (RwInt32*)userData->data;
+
+        for (i = 0; i < userData->numElements; i++)
+        {
+            if (!RwStreamWriteInt32(stream, &intData[i], sizeof(RwInt32)))
+            {
+                return (RwStream*)NULL;
+            }
+
+        }
+
+        break;
+    }
+    case rpREALUSERDATA:
+    {
+        RwReal* realData = (RwReal*)userData->data;
+
+        for (i = 0; i < userData->numElements; i++)
+        {
+            if (!RwStreamWriteReal(stream, &realData[i], sizeof(RwReal)))
+            {
+                return (RwStream*)NULL;
+            }
+
+        }
+
+        break;
+    }
+    case rpSTRINGUSERDATA:
+    {
+        RwChar** stringData = (RwChar**)userData->data;
+
+        for (i = 0; i < userData->numElements; i++)
+        {
+            if (stringData[i])
+            {
+                nameLength = rwstrlen(stringData[i]) + 1;
+            }
+            else
+            {
+                nameLength = 0;
+            }
+
+            if (!RwStreamWriteInt32(stream, &nameLength, sizeof(RwInt32)))
+            {
+                return (RwStream*)NULL;
+            }
+
+            if (nameLength > 0)
+            {
+                if (!RwStreamWrite(stream, stringData[i], nameLength))
+                {
+                    return (RwStream*)NULL;
+                }
+            }
+        }
+
+        break;
+    }
+    default:
+        return (RwStream*)NULL;
+    }
+
+    return stream;
+}
+
+static void UserDataListDestroy(RpUserDataList* list)
+{
+    RwInt32 i;
+    RwInt32 j;
+
+    if (list->userData)
+    {
+        for (i = 0; i < list->numElements; i++)
+        {
+            RpUserDataArray* userData = &list->userData[i];
+
+            if (userData->name)
+            {
+                RwFree(userData->name);
+            }
+
+            if (userData->format == rpSTRINGUSERDATA)
+            {
+                RwChar** stringData = (RwChar**)userData->data;
+
+                for (j = 0; j < userData->numElements; j++)
+                {
+                    if (stringData[j])
+                    {
+                        RwFree(stringData[j]);
+                    }
+                }
+            }
+
+            if (userData->data)
+            {
+                RwFree(userData->data);
+            }
+        }
+
+        RwFree(list->userData);
+    }
+
+    list->userData = (RpUserDataArray*)NULL;
+    list->numElements = 0;
+}
+
+static void UserDataListCopy(RpUserDataList* dstList, const RpUserDataList* srcList)
+{
+    RwInt32 i;
+    RwInt32 j;
+
+    UserDataListDestroy(dstList);
+
+    dstList->numElements = srcList->numElements;
+
+    if (dstList->numElements > 0)
+    {
+        dstList->userData =
+            (RpUserDataArray*)RwMalloc(sizeof(RpUserDataArray) * dstList->numElements);
+
+        for (i = 0; i < dstList->numElements; i++)
+        {
+            const RpUserDataArray* srcData = &srcList->userData[i];
+            RpUserDataArray* dstData = &dstList->userData[i];
+
+            dstData->format = srcData->format;
+            dstData->numElements = srcData->numElements;
+
+            if (srcData->name)
+            {
+                UserDataStringDuplicate(dstData->name, srcData->name);
+            }
+
+            if (srcData->data)
+            {
+                RwInt32 size = dstData->numElements * RpUserDataGetFormatSize(dstData->format);
+
+                dstData->data = RwMalloc(size);
+
+                if (dstData->format == rpSTRINGUSERDATA)
+                {
+                    RwChar** srcString = (RwChar**)srcData->data;
+                    RwChar** dstString = (RwChar**)dstData->data;
+
+                    for (j = 0; j < dstData->numElements; j++)
+                    {
+                        if (!*srcString)
+                        {
+                            *dstString = (RwChar*)NULL;
+                        }
+                        else
+                        {
+                            UserDataStringDuplicate(*dstString, *srcString);
+                        }
+
+                        srcString++;
+                        dstString++;
+                    }
+                }
+                else
+                {
+                    memcpy(dstData->data, srcData->data, size);
+                }
+            }
+        }
+    }
+}
+
+static RwInt32 UserDataListAddElement(RpUserDataList* list, RwChar* name, RpUserDataFormat format,
+                                      RwInt32 numElements)
+{
+    RwInt32 index = -1;
+    RwInt32 i;
+    RpUserDataArray* userData;
+
+    /* Look for a free slot */
+    for (i = 0; i < list->numElements; i++)
+    {
+        if (!list->userData[i].data)
+        {
+            index = i;
+        }
+    }
+
+    if (index == -1)
+    {
+        if (list->userData)
+        {
+            RpUserDataArray* newData = (RpUserDataArray*)RwMalloc(sizeof(RpUserDataArray) *
+                                                                  (list->numElements + 1));
+            if (!newData)
+            {
+                return -1;
+            }
+
+            memcpy(newData, list->userData, sizeof(RpUserDataArray) * list->numElements);
+            RwFree(list->userData);
+            list->userData = newData;
+        }
+        else
+        {
+            list->userData = (RpUserDataArray*)RwMalloc(sizeof(RpUserDataArray) *
+                                                        (list->numElements + 1));
+            if (!list->userData)
+            {
+                return -1;
+            }
+        }
+
+        index = list->numElements++;
+    }
+
+    userData = &list->userData[index];
+
+    userData->data = RwMalloc(numElements * RpUserDataGetFormatSize(format));
+    if (!userData->data)
+    {
+        return -1;
+    }
+
+    UserDataStringDuplicate(userData->name, name);
+
+    userData->format = format;
+    userData->numElements = numElements;
+
+    return index;
+}
+
+static void* UserDataObjectConstruct(void* object, RwInt32 offset, RwInt32 size)
+{
+    RpUserDataList* list = RPUSERDATALISTGETDATA(object, offset);
+
+    list->numElements = 0;
+    list->userData = (RpUserDataArray*)NULL;
+
+    return object;
+}
+
+static void* UserDataObjectDestruct(void* object, RwInt32 offset, RwInt32 size)
+{
+    UserDataListDestroy(RPUSERDATALISTGETDATA(object, offset));
+
+    return object;
+}
+
+static void* UserDataObjectCopy(void* dstObject, const void* srcObject, RwInt32 offset,
+                                RwInt32 size)
+{
+    UserDataListCopy(RPUSERDATALISTGETDATA(dstObject, offset),
+                     RPUSERDATALISTGETDATA(srcObject, offset));
+
+    return dstObject;
+}
+
+static RwStream* UserDataObjectStreamRead(RwStream* stream, RwInt32 binaryLength, void* object,
+                                          RwInt32 offset, RwInt32 size)
+{
+    RpUserDataList* list = RPUSERDATALISTGETDATA(object, offset);
+    RwStream* result = stream;
+    RwInt32 numElements;
+    RwInt32 i;
+
+    if (list)
+    {
+        if (RwStreamReadInt32(stream, &numElements, sizeof(RwInt32)))
+        {
+            list->numElements = numElements;
+            list->userData =
+                (RpUserDataArray*)RwMalloc(sizeof(RpUserDataArray) * list->numElements);
+
+            for (i = 0; i < list->numElements; i++)
+            {
+                result = UserDataStreamRead(&list->userData[i], result);
+            }
+        }
+    }
+
+    return stream;
+}
+
+static RwStream* UserDataObjectStreamWrite(RwStream* stream, RwInt32 binaryLength,
+                                           const void* object, RwInt32 offset, RwInt32 size)
+{
+    RpUserDataList* list = RPUSERDATALISTGETDATA(object, offset);
+    RwStream* result = stream;
+    RwInt32 i;
+
+    if (list && list->numElements > 0)
+    {
+        if (RwStreamWriteInt32(stream, &list->numElements, sizeof(RwInt32)))
+        {
+            for (i = 0; i < list->numElements; i++)
+            {
+                result = UserDataStreamWrite(&list->userData[i], result);
+            }
+        }
+    }
+
+    return stream;
+}
+
+static RwInt32 UserDataStreamGetSize(const RpUserDataArray* userData)
+{
+    RwInt32 size = 0;
+    RwInt32 i;
+
+    if (userData)
+    {
+        size = sizeof(RwInt32);
+
+        if (userData->name)
+        {
+            size += rwstrlen(userData->name) + 1;
+        }
+
+        size += sizeof(RwInt32) + sizeof(RwInt32);
+
+        switch (userData->format)
+        {
+        case rpINTUSERDATA:
+            size += sizeof(RwInt32) * userData->numElements;
+            break;
+        case rpREALUSERDATA:
+            size += sizeof(RwReal) * userData->numElements;
+            break;
+        case rpSTRINGUSERDATA:
+        {
+            RwChar** stringData = (RwChar**)userData->data;
+
+            for (i = 0; i < userData->numElements; i++)
+            {
+                size += sizeof(RwInt32);
+
+                if (*stringData)
+                {
+                    size += rwstrlen(*stringData) + 1;
+                }
+
+                stringData++;
+            }
+
+            break;
+        }
+        }
+    }
+
+    return size;
+}
+
+static RwInt32 UserDataObjectGetSize(const void* object, RwInt32 offset, RwInt32 size)
+{
+    const RpUserDataList* list = RPUSERDATALISTGETDATA(object, offset);
+    RwInt32 streamSize = 0;
+    RwInt32 i;
+
+    if (list && list->numElements > 0)
+    {
+        streamSize = sizeof(RwInt32);
+
+        for (i = 0; i < list->numElements; i++)
+        {
+            streamSize += UserDataStreamGetSize(&list->userData[i]);
+        }
+    }
+
+    return streamSize;
+}
+
+RwInt32 RpGeometryAddUserDataArray(RpGeometry* geometry, RwChar* name, RpUserDataFormat format,
+                                   RwInt32 numElements)
+{
+    return UserDataListAddElement(RPUSERDATALISTGETDATA(geometry, userDataGeometryOffset), name,
+                                  format, numElements);
+}
+
+RwInt32 RpGeometryGetUserDataArrayCount(const RpGeometry* geometry)
+{
+    RwInt32 count = 0;
+    const RpUserDataList* list = RPUSERDATALISTGETDATA(geometry, userDataGeometryOffset);
+    RwInt32 i;
+
+    for (i = 0; i < list->numElements; i++)
+    {
+        if (list->userData[i].data)
+        {
+            count++;
+        }
+    }
+
+    return count;
+}
+
+RpUserDataArray* RpGeometryGetUserDataArray(const RpGeometry* geometry, RwInt32 data)
+{
+    const RpUserDataList* list = RPUSERDATALISTGETDATA(geometry, userDataGeometryOffset);
+
+    if (data < list->numElements)
+    {
+        return &list->userData[data];
+    }
+
+    return (RpUserDataArray*)NULL;
+}
+
+RwInt32 RpUserDataGetFormatSize(RpUserDataFormat format)
+{
+    switch (format)
+    {
+    case rpINTUSERDATA:
+        return sizeof(RwInt32);
+    case rpREALUSERDATA:
+        return sizeof(RwReal);
+    case rpSTRINGUSERDATA:
+        return sizeof(RwChar*);
+    default:
+        return 0;
+    }
+}
+
+RwBool RpUserDataPluginAttach(void)
+{
+    if (RwEngineRegisterPlugin(0, rwID_USERDATAPLUGIN, UserDataOpen, UserDataClose) < 0)
+    {
+        return FALSE;
+    }
+
+    /* Geometry */
+    userDataGeometryOffset =
+        RpGeometryRegisterPlugin(sizeof(RpUserDataList), rwID_USERDATAPLUGIN,
+                                 UserDataObjectConstruct, UserDataObjectDestruct,
+                                 UserDataObjectCopy);
+    if (userDataGeometryOffset < 0)
+    {
+        return FALSE;
+    }
+
+    userDataGeometryStreamOffset = RpGeometryRegisterPluginStream(
+        rwID_USERDATAPLUGIN, UserDataObjectStreamRead, UserDataObjectStreamWrite,
+        UserDataObjectGetSize);
+    if (userDataGeometryStreamOffset < 0)
+    {
+        return FALSE;
+    }
+
+    /* World sector */
+    userDataWorldSectorOffset =
+        RpWorldSectorRegisterPlugin(sizeof(RpUserDataList), rwID_USERDATAPLUGIN,
+                                    UserDataObjectConstruct, UserDataObjectDestruct,
+                                    UserDataObjectCopy);
+    if (userDataGeometryOffset < 0)
+    {
+        return FALSE;
+    }
+
+    userDataWorldSectorStreamOffset = RpWorldSectorRegisterPluginStream(
+        rwID_USERDATAPLUGIN, UserDataObjectStreamRead, UserDataObjectStreamWrite,
+        UserDataObjectGetSize);
+    if (userDataGeometryStreamOffset < 0)
+    {
+        return FALSE;
+    }
+
+    /* Frame */
+    userDataFrameOffset =
+        RwFrameRegisterPlugin(sizeof(RpUserDataList), rwID_USERDATAPLUGIN,
+                              UserDataObjectConstruct, UserDataObjectDestruct, UserDataObjectCopy);
+    if (userDataFrameOffset < 0)
+    {
+        return FALSE;
+    }
+
+    userDataFrameStreamOffset =
+        RwFrameRegisterPluginStream(rwID_USERDATAPLUGIN, UserDataObjectStreamRead,
+                                    UserDataObjectStreamWrite, UserDataObjectGetSize);
+    if (userDataFrameStreamOffset < 0)
+    {
+        return FALSE;
+    }
+
+    /* Camera */
+    userDataCameraOffset =
+        RwCameraRegisterPlugin(sizeof(RpUserDataList), rwID_USERDATAPLUGIN,
+                               UserDataObjectConstruct, UserDataObjectDestruct, UserDataObjectCopy);
+    if (userDataCameraOffset < 0)
+    {
+        return FALSE;
+    }
+
+    userDataCameraStreamOffset =
+        RwCameraRegisterPluginStream(rwID_USERDATAPLUGIN, UserDataObjectStreamRead,
+                                     UserDataObjectStreamWrite, UserDataObjectGetSize);
+    if (userDataCameraStreamOffset < 0)
+    {
+        return FALSE;
+    }
+
+    /* Light */
+    userDataLightOffset =
+        RpLightRegisterPlugin(sizeof(RpUserDataList), rwID_USERDATAPLUGIN,
+                              UserDataObjectConstruct, UserDataObjectDestruct, UserDataObjectCopy);
+    if (userDataLightOffset < 0)
+    {
+        return FALSE;
+    }
+
+    userDataLightStreamOffset =
+        RpLightRegisterPluginStream(rwID_USERDATAPLUGIN, UserDataObjectStreamRead,
+                                    UserDataObjectStreamWrite, UserDataObjectGetSize);
+    if (userDataLightStreamOffset < 0)
+    {
+        return FALSE;
+    }
+
+    /* Material */
+    userDataMaterialOffset =
+        RpMaterialRegisterPlugin(sizeof(RpUserDataList), rwID_USERDATAPLUGIN,
+                                 UserDataObjectConstruct, UserDataObjectDestruct,
+                                 UserDataObjectCopy);
+    if (userDataMaterialOffset < 0)
+    {
+        return FALSE;
+    }
+
+    userDataMaterialStreamOffset =
+        RpMaterialRegisterPluginStream(rwID_USERDATAPLUGIN, UserDataObjectStreamRead,
+                                       UserDataObjectStreamWrite, UserDataObjectGetSize);
+    if (userDataMaterialStreamOffset < 0)
+    {
+        return FALSE;
+    }
+
+    /* Texture */
+    userDataTextureOffset =
+        RwTextureRegisterPlugin(sizeof(RpUserDataList), rwID_USERDATAPLUGIN,
+                                UserDataObjectConstruct, UserDataObjectDestruct,
+                                UserDataObjectCopy);
+    if (userDataTextureOffset < 0)
+    {
+        return FALSE;
+    }
+
+    userDataTextureStreamOffset =
+        RwTextureRegisterPluginStream(rwID_USERDATAPLUGIN, UserDataObjectStreamRead,
+                                      UserDataObjectStreamWrite, UserDataObjectGetSize);
+
+    return userDataTextureStreamOffset >= 0;
+}

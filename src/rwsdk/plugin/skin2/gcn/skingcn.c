@@ -1,2 +1,636 @@
 #include <rwsdk/rwcore.h>
 #include <rwsdk/rpworld.h>
+#include <string.h>
+
+#include "rwsdk/world/pipe/p2/gcn/gcpipe.h"
+#include "rwsdk/plugin/skin2/skin.h"
+
+#define rwMatrixInitialize(_m, _t) ((_m)->flags = (RwUInt32)(_t))
+
+#define SKINALIGN4(_ptr) ((RwUInt8*)(((RwUInt32)(_ptr) + 3) & ~3))
+#define SKINALIGN32(_size) (((_size) + 31) & ~31)
+
+/* The vertex arrays are held in a child resource entry: a token, then the
+ * owning entry just before the 32 byte aligned array */
+#define SKINVTXARRAYHEADERSIZE (sizeof(RwUInt16) + sizeof(RwResEntry*))
+#define SKINVTXARRAYGETRESENTRY(_array) (((RwResEntry**)(_array))[-1])
+
+typedef void (*RxGameCubeAllInOneRenderCallBack)(RwResEntry* repEntry, void* object,
+                                                 RwUInt8 type, RwUInt32 flags);
+
+extern RxPipelineNode* RxGameCubeAllInOneSetRenderCallBack(RxPipelineNode* node,
+                                                           RxGameCubeAllInOneCallBack cb);
+extern RxPipelineNode* _rxGameCubeAllInOneSetInstanceCallBack(RxPipelineNode* node,
+                                                              RxGameCubeAllInOneCallBack cb);
+extern RxPipelineNode* _rxGameCubeAllInOneSetReinstanceCallBack(RxPipelineNode* node,
+                                                                RxGameCubeAllInOneCallBack cb);
+extern RxGameCubeAllInOneCallBack _rxGameCubeAllInOneGetReinstanceCallBack(RxPipelineNode* node);
+
+extern RwResEntry* _rwDlGeometrySkinInstanceOptimized(RpGeometry* geometry, void* owner,
+                                                      RwResEntry** resEntryOwner);
+extern RwResEntry* _rwDlGeometrySkinInstanceFast(RpGeometry* geometry, void* owner,
+                                                 RwResEntry** resEntryOwner);
+
+extern RwResEntry* RwResourcesAllocateResEntry(void* owner, RwResEntry** ownerRef, RwInt32 size,
+                                               RwResEntryDestroyNotify destroyNotify);
+
+extern RwMatrix _RwDlInvCamLTM;
+
+extern void _rpSkinMatrixBlendUpdateASM(RwMatrix* dstMat, const RwMatrix* invBoneToSkinMat,
+                                        const RwMatrix* boneMatrices, const RwMatrix* invLTM,
+                                        const RwUInt8* usedBoneList, RwUInt32 numUsedBones);
+
+extern void _rpSkinBlendBody(RpSkin* skin, RwMatrix* matrixCache, void* vertices, void* normals,
+                             RpGameCubeVtxFmt* vtxFmt, RwInt32 numVertices);
+
+SkinGlobals _rpSkinGlobals = { 0, 0, 0, { (RwMatrix*)NULL, NULL }, 0, (RwFreeList*)NULL,
+                               { 0, 0 }, { { (RxPipeline*)NULL } }, (SkinSplitData*)NULL };
+
+static RxGameCubeAllInOneCallBack _RwDlDefaultReinstanceCallBack;
+
+static void _rpSkinMainResEntryCB(RwResEntry* resEntry)
+{
+    RxGameCubeVertexBuffer* vbHeader = (RxGameCubeVertexBuffer*)(resEntry + 1);
+    RpGeometry* geometry;
+    RpSkin* skin;
+
+    RXGCVERTEXBUFFERWAITDONE(vbHeader);
+
+    if (vbHeader->attr[0].array)
+    {
+        RwResourcesFreeResEntry(SKINVTXARRAYGETRESENTRY(vbHeader->attr[0].array));
+    }
+
+    /* Give the original vertex buffers back to the main entry */
+    if (RwObjectGetType(resEntry->owner) == rpATOMIC)
+    {
+        geometry = ((RpAtomic*)resEntry->owner)->geometry;
+        skin = *RPSKINGEOMETRYGETDATA(geometry);
+
+        vbHeader->attr[0].array = skin->platformData.vertices;
+        if (geometry->flags & rpGEOMETRYNORMALS)
+        {
+            vbHeader->attr[1].array = skin->platformData.normals;
+        }
+    }
+    else
+    {
+        geometry = (RpGeometry*)resEntry->owner;
+        skin = *RPSKINGEOMETRYGETDATA(geometry);
+
+        vbHeader->attr[0].array = skin->platformData.vertices;
+        if (geometry->flags & rpGEOMETRYNORMALS)
+        {
+            vbHeader->attr[1].array = skin->platformData.normals;
+        }
+    }
+
+    skin->platformData.vertices = NULL;
+    skin->platformData.normals = NULL;
+
+    GXInvalidateVtxCache();
+}
+
+static void _rpSkinResEntryWaitDone(RwResEntry* resEntry)
+{
+    RxGameCubeVertexBuffer* vbHeader = (RxGameCubeVertexBuffer*)(resEntry + 1);
+
+    RXGCVERTEXBUFFERWAITDONE(vbHeader);
+
+    GXInvalidateVtxCache();
+}
+
+RwBool _rpSkinVertexBuffersUpdate(RpSkin* skin, RpAtomic* atomic, RxGameCubeVertexBuffer* vbHeader,
+                                  RxGameCubePipeData* pipeData)
+{
+    RwResEntry* childResEntry;
+    RwResEntry* parentResEntry;
+    RpGeometry* geometry = atomic->geometry;
+    RwUInt32 size;
+    RpGameCubeVtxFmt* vtxFmt;
+
+    RwResourcesUseResEntry(pipeData->resEntry);
+    pipeData->resEntry->destroyNotify = _rpSkinMainResEntryCB;
+
+    /* Keep hold of the original (unskinned) buffers */
+    if (!skin->platformData.vertices)
+    {
+        skin->platformData.vertices = vbHeader->attr[0].array;
+        vbHeader->attr[0].array = NULL;
+
+        if (geometry->flags & rpGEOMETRYNORMALS)
+        {
+            skin->platformData.normals = vbHeader->attr[1].array;
+            vbHeader->attr[1].array = NULL;
+        }
+    }
+
+    /* The skinned buffers can't be reused while the GPU is still reading them */
+    if (vbHeader->attr[0].array)
+    {
+        if (!_rwDlTokenQueryDone(
+                ((RxGameCubeVertexBuffer*)(SKINVTXARRAYGETRESENTRY(vbHeader->attr[0].array) + 1))
+                    ->token))
+        {
+            SKINVTXARRAYGETRESENTRY(vbHeader->attr[0].array)->ownerRef = (RwResEntry**)NULL;
+            vbHeader->attr[0].array = NULL;
+
+            if (geometry->flags & rpGEOMETRYNORMALS)
+            {
+                vbHeader->attr[1].array = NULL;
+            }
+        }
+        else
+        {
+            GXInvalidateVtxCache();
+        }
+    }
+
+    if (!vbHeader->attr[0].array)
+    {
+        vtxFmt = GEOMVTXFMT(geometry);
+
+        if (vtxFmt)
+        {
+            RwUInt32 vtxSizeConvTable[5] = { 3, 3, 6, 6, 12 };
+
+            size = SKINALIGN32(geometry->numVertices * vtxSizeConvTable[vtxFmt->pos]) +
+                   SKINVTXARRAYHEADERSIZE;
+
+            if (geometry->flags & rpGEOMETRYNORMALS)
+            {
+                size += SKINALIGN32(geometry->numVertices *
+                                    (vtxSizeConvTable[vtxFmt->norm] * (vtxFmt->nbt ? 3 : 1)));
+            }
+        }
+        else
+        {
+            size = SKINALIGN32(geometry->numVertices * sizeof(RwV3d)) + SKINVTXARRAYHEADERSIZE;
+
+            if (geometry->flags & rpGEOMETRYNORMALS)
+            {
+                size += SKINALIGN32(geometry->numVertices * sizeof(RwV3d));
+            }
+        }
+
+        childResEntry = RwResourcesAllocateResEntry(atomic, (RwResEntry**)&vbHeader->attr[0].array,
+                                                    size, _rpSkinResEntryWaitDone);
+
+        if (geometry->numMorphTargets == 1)
+        {
+            parentResEntry = geometry->repEntry;
+        }
+        else
+        {
+            parentResEntry = atomic->repEntry;
+        }
+
+        if (!childResEntry || !parentResEntry)
+        {
+            if (childResEntry)
+            {
+                RwResourcesFreeResEntry(childResEntry);
+            }
+
+            return FALSE;
+        }
+
+        vbHeader->attr[0].array =
+            (void*)(((RwUInt32)vbHeader->attr[0].array + sizeof(RwResEntry) +
+                     SKINVTXARRAYHEADERSIZE + 31) & ~31);
+
+        if (geometry->flags & rpGEOMETRYNORMALS)
+        {
+            vbHeader->attr[1].array =
+                (RwUInt8*)vbHeader->attr[0].array +
+                SKINALIGN32(geometry->numVertices * vbHeader->attr[0].stride);
+        }
+
+        SKINVTXARRAYGETRESENTRY(vbHeader->attr[0].array) = childResEntry;
+    }
+    else
+    {
+        RwResourcesUseResEntry(SKINVTXARRAYGETRESENTRY(vbHeader->attr[0].array));
+    }
+
+    ((RxGameCubeVertexBuffer*)(SKINVTXARRAYGETRESENTRY(vbHeader->attr[0].array) + 1))->token =
+        _RwDlTokenCurrent;
+
+    return TRUE;
+}
+
+void _rpSkinMatrixBlendUpdate(RwMatrix* matDst, const RpSkin* skin, const RwMatrix* ltm,
+                              RpHAnimHierarchy* hierarchy)
+{
+    if (hierarchy)
+    {
+        if (hierarchy->flags & rpHANIMHIERARCHYNOMATRICES)
+        {
+            RwMatrix invLTM;
+            const RwMatrix* pInvLTM;
+            const RwUInt8* usedBoneList;
+            const RwMatrix* invBoneToSkinMat;
+            RwUInt32 numUsedBones;
+            RwUInt32 i;
+
+            if (skin->vertexMaps.maxWeights > 1)
+            {
+                rwMatrixInitialize(&invLTM, 0);
+                RwMatrixInvert(&invLTM, ltm);
+                pInvLTM = &invLTM;
+            }
+            else
+            {
+                pInvLTM = &_RwDlInvCamLTM;
+            }
+
+            usedBoneList = skin->boneData.usedBoneList;
+            invBoneToSkinMat = skin->boneData.invBoneToSkinMat;
+            numUsedBones = skin->boneData.numUsedBones;
+
+            for (i = 0; i < numUsedBones; i++)
+            {
+                RwMatrix tmpMatrix;
+
+                rwMatrixInitialize(&tmpMatrix, 0);
+
+                RwMatrixMultiply(&tmpMatrix, &invBoneToSkinMat[usedBoneList[i]],
+                                 RwFrameGetLTM(hierarchy->pNodeInfo[usedBoneList[i]].pFrame));
+
+                RwMatrixMultiply(&matDst[usedBoneList[i]], &tmpMatrix, pInvLTM);
+            }
+        }
+        else if (hierarchy->flags & rpHANIMHIERARCHYLOCALSPACEMATRICES)
+        {
+            if (skin->vertexMaps.maxWeights > 1)
+            {
+                const RwUInt8* usedBoneList = skin->boneData.usedBoneList;
+                const RwMatrix* invBoneToSkinMat = skin->boneData.invBoneToSkinMat;
+                RwUInt32 numUsedBones = skin->boneData.numUsedBones;
+                RwUInt32 i;
+
+                for (i = 0; i < numUsedBones; i++)
+                {
+                    RwUInt32 bone = usedBoneList[i];
+
+                    RwMatrixMultiply(&matDst[bone], &invBoneToSkinMat[bone],
+                                     &hierarchy->pMatrixArray[bone]);
+                }
+            }
+            else
+            {
+                RwMatrix camLTM;
+
+                rwMatrixInitialize(&camLTM, 0);
+                RwMatrixMultiply(&camLTM, ltm, &_RwDlInvCamLTM);
+
+                _rpSkinMatrixBlendUpdateASM(matDst, skin->boneData.invBoneToSkinMat,
+                                            hierarchy->pMatrixArray, &camLTM,
+                                            skin->boneData.usedBoneList,
+                                            skin->boneData.numUsedBones);
+            }
+        }
+        else
+        {
+            RwMatrix invLTM;
+            const RwMatrix* pInvLTM;
+
+            if (skin->vertexMaps.maxWeights > 1)
+            {
+                rwMatrixInitialize(&invLTM, 0);
+                RwMatrixInvert(&invLTM, ltm);
+                pInvLTM = &invLTM;
+            }
+            else
+            {
+                pInvLTM = &_RwDlInvCamLTM;
+            }
+
+            _rpSkinMatrixBlendUpdateASM(matDst, skin->boneData.invBoneToSkinMat,
+                                        hierarchy->pMatrixArray, pInvLTM,
+                                        skin->boneData.usedBoneList, skin->boneData.numUsedBones);
+        }
+    }
+}
+
+void* _rpSkinInstanceCallback(void* object, RxGameCubePipeData* pipeData)
+{
+    RpAtomic* atomic = (RpAtomic*)object;
+    RpGeometry* geometry = atomic->geometry;
+    RpSkin* skin = RpSkinGeometryGetSkin(geometry);
+    void* owner;
+    RwResEntry** ownerRef;
+
+    if (geometry->numMorphTargets != 1)
+    {
+        owner = atomic;
+        ownerRef = &atomic->repEntry;
+    }
+    else
+    {
+        owner = geometry;
+        ownerRef = &geometry->repEntry;
+    }
+
+    if (skin->vertexMaps.maxWeights > 1)
+    {
+        /* Skinned on the CPU, so the vertices are instanced as normal */
+        if (geometry->flags & rpGEOMETRYNATIVEINSTANCE)
+        {
+            if (_RwDlPreInstanceOptimize == TRUE)
+            {
+                pipeData->resEntry = _rwDlGeometrySkinInstanceOptimized(geometry, owner, ownerRef);
+            }
+            else
+            {
+                pipeData->resEntry = _rwDlGeometryInstanceFast(geometry, owner, ownerRef);
+            }
+        }
+        else
+        {
+            pipeData->resEntry = _rwDlGeometryInstanceFast(geometry, owner, ownerRef);
+        }
+    }
+    else
+    {
+        if (geometry->flags & rpGEOMETRYNATIVEINSTANCE)
+        {
+            if (_RwDlPreInstanceOptimize == TRUE)
+            {
+                pipeData->resEntry = _rwDlGeometrySkinInstanceOptimized(geometry, owner, ownerRef);
+            }
+            else
+            {
+                pipeData->resEntry = _rwDlGeometrySkinInstanceFast(geometry, owner, ownerRef);
+            }
+        }
+        else
+        {
+            pipeData->resEntry = _rwDlGeometrySkinInstanceFast(geometry, owner, ownerRef);
+        }
+    }
+
+    geometry->lockedSinceLastInst = 0;
+
+    return object;
+}
+
+void* _rpSkinAtomicReinstanceCallBack(void* object, RxGameCubePipeData* pipeData)
+{
+    RxGameCubeVertexBuffer* vbHeader;
+    RpAtomic* atomic = (RpAtomic*)object;
+    RpGeometry* geometry = atomic->geometry;
+    RpSkin* skin = *RPSKINGEOMETRYGETDATA(geometry);
+
+    if (skin->vertexMaps.maxWeights > 1)
+    {
+        vbHeader = (RxGameCubeVertexBuffer*)(pipeData->resEntry + 1);
+
+        if (!skin->platformData.vertices)
+        {
+            if (!(geometry->flags & rpGEOMETRYNATIVE))
+            {
+                _RwDlDefaultReinstanceCallBack(object, pipeData);
+            }
+
+            skin->platformData.vertices = vbHeader->attr[0].array;
+            vbHeader->attr[0].array = NULL;
+
+            if (geometry->flags & rpGEOMETRYNORMALS)
+            {
+                skin->platformData.normals = vbHeader->attr[1].array;
+                vbHeader->attr[1].array = NULL;
+            }
+        }
+        else if (!(geometry->flags & rpGEOMETRYNATIVE))
+        {
+            /* Reinstance into the original buffers */
+            void* positions = vbHeader->attr[0].array;
+
+            vbHeader->attr[0].array = skin->platformData.vertices;
+
+            if (geometry->flags & rpGEOMETRYNORMALS)
+            {
+                void* normals = vbHeader->attr[1].array;
+
+                vbHeader->attr[1].array = skin->platformData.normals;
+                _RwDlDefaultReinstanceCallBack(object, pipeData);
+                vbHeader->attr[1].array = normals;
+            }
+            else
+            {
+                _RwDlDefaultReinstanceCallBack(object, pipeData);
+            }
+
+            vbHeader->attr[0].array = positions;
+        }
+
+        if (!_rpSkinVertexBuffersUpdate(skin, atomic, vbHeader, pipeData))
+        {
+            return NULL;
+        }
+
+        _rpSkinMatrixBlendUpdate(_rpSkinGlobals.matrixCache.aligned, skin,
+                                 RwFrameGetLTM((RwFrame*)rwObjectGetParent(atomic)),
+                                 *RPSKINATOMICGETDATA(atomic));
+
+        _rpSkinBlendBody(skin, _rpSkinGlobals.matrixCache.aligned, vbHeader->attr[0].array,
+                         (geometry->flags & rpGEOMETRYNORMALS) ? vbHeader->attr[1].array : NULL,
+                         GEOMVTXFMT(geometry), geometry->numVertices);
+    }
+    else
+    {
+        _rpSkinMatrixBlendUpdate(_rpSkinGlobals.matrixCache.aligned, skin,
+                                 RwFrameGetLTM((RwFrame*)rwObjectGetParent(atomic)),
+                                 *RPSKINATOMICGETDATA(atomic));
+    }
+
+    return object;
+}
+
+static RpSkin* _rpSkinCreate(RpSkin* skin, RwUInt32 numVertices)
+{
+    RwUInt32 i;
+    RwUInt32 j;
+    RwUInt32 k;
+
+    skin->platformData.vertices = NULL;
+    skin->platformData.normals = NULL;
+    skin->platformData.weights = (RwUInt8*)NULL;
+    skin->platformData.indices = (RwUInt8*)NULL;
+
+    if (skin->vertexMaps.maxWeights > 1)
+    {
+        RwUInt8* weights;
+        RwUInt8* indices;
+
+        /* Sort each vertex's weights, largest first */
+        for (i = 0; i < numVertices; i++)
+        {
+            for (j = 0; j < rpSKINMAXWEIGHTS - 1; j++)
+            {
+                RwUInt32 jShift = j * 8;
+                RwUInt32 jMask = ~(0xFF << jShift);
+
+                for (k = 1; k < rpSKINMAXWEIGHTS - j; k++)
+                {
+                    RwReal* vertexWeights = &skin->vertexMaps.matrixWeights[i].w0;
+
+                    if (vertexWeights[j + k] > vertexWeights[j])
+                    {
+                        RwReal temp = vertexWeights[j];
+                        RwUInt32 kShift = (j + k) * 8;
+                        RwUInt32 kMask = ~(0xFF << kShift);
+                        RwUInt32 index;
+
+                        vertexWeights[j] = vertexWeights[j + k];
+                        (&skin->vertexMaps.matrixWeights[i].w0)[j + k] = temp;
+
+                        index = skin->vertexMaps.matrixIndices[i];
+                        skin->vertexMaps.matrixIndices[i] = index & jMask;
+                        skin->vertexMaps.matrixIndices[i] |= ((index >> kShift) & 0xFF) << jShift;
+                        skin->vertexMaps.matrixIndices[i] &= kMask;
+                        skin->vertexMaps.matrixIndices[i] |= ((index >> jShift) & 0xFF) << kShift;
+                    }
+                }
+            }
+        }
+
+        /* Weights are quantized to 1.7 */
+        skin->platformData.weights =
+            (RwUInt8*)RwMalloc(numVertices * (2 * skin->vertexMaps.maxWeights) + 3);
+
+        weights = skin->platformData.weights;
+
+        for (i = 0; i < numVertices; i++)
+        {
+            RwUInt8 total = 0;
+
+            for (j = 0; j < skin->vertexMaps.maxWeights; j++)
+            {
+                *weights = (RwUInt8)(128.0f * (&skin->vertexMaps.matrixWeights[i].w0)[j]);
+                total += *weights;
+                weights++;
+            }
+
+            /* Make up any rounding error */
+            if (total < 128)
+            {
+                for (j = 0; j < skin->vertexMaps.maxWeights; j++)
+                {
+                    weights[j - skin->vertexMaps.maxWeights]++;
+                    total++;
+
+                    if (total == 128)
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+
+        skin->platformData.indices =
+            skin->platformData.weights + skin->vertexMaps.maxWeights * numVertices;
+        skin->platformData.indices = SKINALIGN4(skin->platformData.indices);
+
+        indices = skin->platformData.indices;
+
+        for (i = 0; i < numVertices; i++)
+        {
+            for (j = 0; j < skin->vertexMaps.maxWeights; j++)
+            {
+                *indices++ = (RwUInt8)(skin->vertexMaps.matrixIndices[i] >> (j * 8));
+            }
+        }
+    }
+
+    return skin;
+}
+
+RpGeometry* _rpSkinInitialize(RpGeometry* geometry)
+{
+    RpSkin* skin = *RPSKINGEOMETRYGETDATA(geometry);
+
+    if (skin)
+    {
+        if (geometry->flags & rpGEOMETRYNATIVE)
+        {
+            if (geometry->flags & rpGEOMETRYNORMALS)
+            {
+                geometry->lockedSinceLastInst |= rpGEOMETRYLOCKVERTICES | rpGEOMETRYLOCKNORMALS;
+            }
+            else
+            {
+                geometry->lockedSinceLastInst |= rpGEOMETRYLOCKVERTICES;
+            }
+
+            skin->platformData.vertices = NULL;
+            skin->platformData.normals = NULL;
+        }
+        else
+        {
+            if (!_rpSkinCreate(skin, geometry->numVertices))
+            {
+                return (RpGeometry*)NULL;
+            }
+        }
+    }
+
+    return geometry;
+}
+
+RpGeometry* _rpSkinDeinitialize(RpGeometry* geometry)
+{
+    RpSkin* skin = *RPSKINGEOMETRYGETDATA(geometry);
+
+    if (skin->platformData.weights)
+    {
+        RwFree(skin->platformData.weights);
+        skin->platformData.weights = (RwUInt8*)NULL;
+        skin->platformData.indices = (RwUInt8*)NULL;
+    }
+
+    skin->platformData.vertices = NULL;
+    skin->platformData.normals = NULL;
+
+    return geometry;
+}
+
+RxPipeline* _rpSkinPipelineCreate(RwUInt32 type, RxGameCubeAllInOneCallBack instanceCB,
+                                  RxGameCubeAllInOneCallBack reinstanceCB,
+                                  RxGameCubeAllInOneCallBack renderCB)
+{
+    RxPipeline* pipe;
+    RxLockedPipe* lpipe;
+    RxNodeDefinition* allInOne;
+    RxPipelineNode* node;
+
+    pipe = RxPipelineCreate();
+    pipe->pluginId = rwID_SKINPLUGIN;
+    pipe->pluginData = type;
+
+    lpipe = RxPipelineLock(pipe);
+    allInOne = RxNodeDefinitionGetGameCubeAtomicAllInOne();
+    lpipe = RxLockedPipeAddFragment(lpipe, (RwUInt32*)NULL, allInOne, (RxNodeDefinition*)NULL);
+    RxLockedPipeUnlock(lpipe);
+
+    node = RxPipelineFindNodeByName(pipe, allInOne->name, (RxPipelineNode*)NULL, (RwInt32*)NULL);
+
+    if (instanceCB)
+    {
+        _rxGameCubeAllInOneSetInstanceCallBack(node, instanceCB);
+    }
+
+    if (reinstanceCB)
+    {
+        _RwDlDefaultReinstanceCallBack = _rxGameCubeAllInOneGetReinstanceCallBack(node);
+        _rxGameCubeAllInOneSetReinstanceCallBack(node, reinstanceCB);
+    }
+
+    if (renderCB)
+    {
+        RxGameCubeAllInOneSetRenderCallBack(node, renderCB);
+    }
+
+    return pipe;
+}

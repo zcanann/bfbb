@@ -60,7 +60,7 @@ NINJA = open(os.path.join(ROOT, "build.ninja")).read()
 # fits and on the next line when it does not, so match the whole rule body and
 # search it rather than anchoring to a fixed position.
 BUILD_RE = re.compile(
-    r"^build (?P<obj>\S+\.o): (?P<rule>mwcc_sjis|mwcc) (?P<body>(?:.*\n)*?)  basedir",
+    r"^build (?P<obj>\S+\.o):(?: \$\n\s+| )(?P<rule>mwcc_sjis|mwcc) (?P<body>(?:.*\n)*?)  basedir",
     re.M)
 SRC_RE = re.compile(r"(?:^|\s)(src[\\/]\S+\.(?:c|cp|cpp))(?:\s|$)")
 
