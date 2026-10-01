@@ -7402,3 +7402,20 @@ All three units now link from source and reproduce the retail DOL SHA-1:
 The two added stubs are explicitly identified layout scaffolding; their
 original stripped routines are unknown. No live function behavior, assembly,
 compiler patch, split boundary, or output binary is changed.
+
+## Surface and HUD meter source linking (2026-10-01)
+
+`zSurface` now links from source. Its initial full-link test differed by 43
+bytes because the signed-integer conversion bias appeared after the UV
+animation constants. A documented dead-stripped conversion reference after
+GetSlideStopAngle puts that shared literal in the retail position.
+
+`xHudMeter` also links from source. Enabling `-sym on` moves the inline
+helpers out of the middle of the main functions. Two dead-stripped references
+then establish the sound_queue group before the math group, and the std::powf
+group before meter_asset helpers. This reproduces all 15 function positions
+without modifying a shared header or any live function body.
+
+The added stubs are explicit layout scaffolding, not recovered original
+stripped routines. Both promotions reproduce retail DOL SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6.

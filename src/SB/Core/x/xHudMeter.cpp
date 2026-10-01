@@ -18,6 +18,18 @@ namespace xhud
     } // namespace
 } // namespace xhud
 
+// Layout-only references reproduce inline groups left by stripped code.
+// The original stripped routines are unknown; these stubs do not enter the DOL.
+void __deadstripped_xHudMeter_queue()
+{
+    sound_queue<4> queue;
+}
+
+F32 __deadstripped_xHudMeter_power(F32 value)
+{
+    return xpow(value, value);
+}
+
 void xhud::meter_widget::set_value(F32 v)
 {
     F32 dvalue;

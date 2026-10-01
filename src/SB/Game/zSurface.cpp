@@ -239,6 +239,13 @@ F32 zSurfaceGetSlideStopAngle(const xSurface* surf)
     return DEG2RAD(10);
 }
 
+// Layout-only reference reproduces the conversion literal left by stripped code.
+// The original stripped routine is unknown; this stub does not enter the DOL.
+F32 __deadstripped_zSurface_signed_conversion(S32 value)
+{
+    return (F32)value;
+}
+
 U32 zSurfaceGetMatchOrient(const xSurface* surf)
 {
     if (surf->moprops)
