@@ -7839,3 +7839,17 @@ early-cutoff invariant checks pass. Full all-source compilation and the normal
 retail DOL SHA-1 check pass, also after integrating staging c2cf5cb6c's two
 RenderWare source-link promotions. Bitplane remains NonMatching; source-linked
 Bink playback is still unverified.
+
+
+## Bink final presence and refinement branches (2026-10-01)
+
+Matching the buffered/refill branching for the final child-presence bit raises
+readlossy from 82.241684% to 84.89357%. Applying the same retail control-flow
+shape to active-coefficient refinement bits brings it to 85.40576%. The full
+deduplicated report changes only readlossy. Direct sample-minus-mask versus
+sample-plus-mask arithmetic scored 85.330376% and was reverted.
+
+The host checker passes all 16,384 lossless round trips, 6,911 nonempty lossy
+round trips, and 27,644 early-cutoff invariant checks. Full all-source
+compilation and the normal retail DOL SHA-1 check pass. Bitplane remains
+NonMatching; source-linked Bink playback remains unverified.

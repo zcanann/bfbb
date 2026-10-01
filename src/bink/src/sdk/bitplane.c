@@ -1363,27 +1363,35 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count)
         /* Active coefficients receive one refinement bit at each lower plane. */
         if (scan < nz_coeff_count) {
             do {
-                word = bitbuf;
                 if (bitcount != 0) {
                     bitcount = bitcount - 1;
-                    bitbuf = bitbuf >> 1;
+                    word = bitbuf >> 1;
+                    bit = bitbuf & BP_BIT_MASK;
+                    bitbuf = word;
+                    if (bit != 0) {
+                        goto refine_coeff;
+                    }
+                    goto next_refinement;
                 } else {
                     word = *words;
                     bitcount = BP_WORD_TOP_BIT;
                     words = words + 1;
                     bitbuf = word >> 1;
-                }
-                if ((word & BP_BIT_MASK) != 0) {
-                    sample = dest[(u32)nz_coeff[scan]];
-                    delta = mask;
-                    if (sample < 0) {
-                        delta = -mask;
-                    }
-                    dest[(u32)nz_coeff[scan]] = sample + (s8)delta;
-                    if (masks_used++ == masks_count) {
-                        goto done;
+                    if ((word & BP_BIT_MASK) == 0) {
+                        goto next_refinement;
                     }
                 }
+refine_coeff:
+                sample = dest[(u32)nz_coeff[scan]];
+                delta = mask;
+                if (sample < 0) {
+                    delta = -mask;
+                }
+                dest[(u32)nz_coeff[scan]] = sample + (s8)delta;
+                if (masks_used++ == masks_count) {
+                    goto done;
+                }
+next_refinement:
                 scan = scan + 1;
             } while (scan < nz_coeff_count);
         }
@@ -1589,50 +1597,55 @@ store_2:
                 goto done;
             }
 after_2:
-            word = bitbuf;
             node++;
             if (bitcount != 0) {
                 bitcount = bitcount - 1;
-                bitbuf = bitbuf >> 1;
+                word = bitbuf >> 1;
+                bit = bitbuf & BP_BIT_MASK;
+                bitbuf = word;
+                if (bit != 0) {
+                    goto push_3;
+                }
+            } else {
+                word = *words;
+                bitcount = BP_WORD_TOP_BIT;
+                bitbuf = word >> 1;
+                words = words + 1;
+                if ((word & BP_BIT_MASK) != 0) {
+push_3:
+                    *--next_node_ptr = BP_READ_TREE_COEFF(node);
+                    goto node_done;
+                }
+            }
+            nz_coeff[nz_coeff_count] = node;
+            nz_coeff_count = nz_coeff_count + 1;
+            if (bitcount != 0) {
+                bitcount = bitcount - 1;
+                word = bitbuf >> 1;
+                bit = bitbuf & BP_BIT_MASK;
+                bitbuf = word;
+                if (bit != 0) {
+                    goto negative_3;
+                }
+                goto positive_3;
             } else {
                 word = *words;
                 bitcount = BP_WORD_TOP_BIT;
                 words = words + 1;
                 bitbuf = word >> 1;
-            }
-            if ((word & BP_BIT_MASK) == 0) {
-                nz_coeff[nz_coeff_count] = node;
-                nz_coeff_count = nz_coeff_count + 1;
-                if (bitcount != 0) {
-                    bitcount = bitcount - 1;
-                    word = bitbuf >> 1;
-                    bit = bitbuf & BP_BIT_MASK;
-                    bitbuf = word;
-                    if (bit != 0) {
-                        goto negative_3;
-                    }
+                if ((word & BP_BIT_MASK) == 0) {
                     goto positive_3;
-                } else {
-                    word = *words;
-                    bitcount = BP_WORD_TOP_BIT;
-                    words = words + 1;
-                    bitbuf = word >> 1;
-                    if ((word & BP_BIT_MASK) == 0) {
-                        goto positive_3;
-                    }
                 }
+            }
 negative_3:
-                delta = scan;
-                goto store_3;
+            delta = scan;
+            goto store_3;
 positive_3:
-                delta = mask;
+            delta = mask;
 store_3:
-                dest[(u32)node] = (s8)delta;
-                if (masks_used++ == masks_count) {
-                    goto done;
-                }
-            } else {
-                *--next_node_ptr = BP_READ_TREE_COEFF(node);
+            dest[(u32)node] = (s8)delta;
+            if (masks_used++ == masks_count) {
+                goto done;
             }
             goto node_done;
 deferred_coeff:
