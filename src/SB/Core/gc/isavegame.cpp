@@ -806,7 +806,14 @@ S32 iSGReadLeader(st_ISGSESSION* isgdata, const char* fname, char* databuf, S32 
 
     if (iSG_mc_fopen(data, fname, -1, ISG_IOMODE_READ, &operr) != 0)
     {
-        readret = (bool)iSG_mc_fread(data, (char*)readbuf, bufsize, iconsize);
+        if (iSG_mc_fread(data, readbuf, bufsize, iconsize) != 0)
+        {
+            readret = 1;
+        }
+        else
+        {
+            readret = 0;
+        }
         iSG_mc_fclose(data);
     }
 

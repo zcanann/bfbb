@@ -7322,3 +7322,28 @@ code bytes and 6,728/6,728 data bytes. The normal full build still
 reproduces the retail DOL SHA-1, with no other SB matching regressions.
 This does not validate source-linking Plankton: its unmatched object is
 still supplied by the original binary.
+
+
+## Save/load follow-up (2026-10-01)
+
+`iSGReadLeader` improves from 99.000 to 99.875 with an explicit
+`if (iSG_mc_fread(...) != 0) readret = 1; else readret = 0;`, matching
+the success/failure style already used by `iSGSaveFile`. The compiler now
+emits retail's direct `srwi r31,r0,31` instead of a temporary result plus
+`mr r31,r0`; the function is the retail 480 bytes. The only remaining
+difference is allocation size held in r22 where retail uses r29 for three
+instructions before reusing r29 for the allocation pointer. Local order,
+scopes, temporary pointers, scalar types and one-element arrays did not
+close it; those experiments were reverted.
+
+Other measured holdouts remain unchanged: `zSaveLoad_Tick` moves the
+active-pad byte load across the two `sTimeLast` stores; volatile accesses
+did not change this and memcpy introduced a call. `iSG_mc_format` and
+`iSG_mc_fdel` retain their branch-direction differences under equivalent
+error/default case groupings and localized optimizer settings. The
+`iSG_mcidx2slot` initializer-order variants did not improve its current
+95.672 score. No compiler changes were retained.
+
+The full build reproduces the retail DOL SHA-1; no other SB function
+matching scores regress. `isavegame` remains NonMatching with four
+holdouts and 100% data.
