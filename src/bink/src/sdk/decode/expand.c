@@ -949,7 +949,7 @@ static void CheckReadHuff4Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
                 ++dest;
             }
         } else {
-            fill_symbol = exp_get_bits(bits, HUFF4_NIBBLE_BITS);
+            VarBitsGet(fill_symbol, u32, *bits, HUFF4_NIBBLE_BITS);
             memset(bundle->data, fill_symbol, count);
         }
     } else {
