@@ -373,6 +373,12 @@ config.linker_version = "GC/2.0p1"
 # tools/patch_compiler.py. Derived from the stock compiler during the build.
 PATCHED_COMPILER = "GC/2.0p1a"
 
+# The RenderWare SDK's compiler: GC/2.0p1a plus one change -- clause V's
+# literal-kill walk does not fire on stores to compiler temporaries. See
+# tools/patch_compiler_rw.py and docs/RW_RESIDUE.md ("What would close the
+# rest", item 1). Derived from GC/2.0p1a during the build.
+RW_COMPILER = "GC/2.0p1b"
+
 
 # Helper function for Dolphin libraries
 def DolphinLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
@@ -417,8 +423,10 @@ def RenderWareLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
         # Not GC/1.3.2. Sweeping every available compiler over the seven rwsdk
         # units that have real source, 2.0p1 wins or ties every one of them and
         # beats 1.3.2 by ten functions overall - bacamera 9 -> 14, baworobj
-        # 35 -> 37, baframe/baclump/bageomet +1 each.
-        "mw_version": PATCHED_COMPILER,
+        # 35 -> 37, baframe/baclump/bageomet +1 each. The patched derivative
+        # RW_COMPILER (2.0p1a + no clause V on compiler temporaries) adds
+        # four more over 2.0p1a with no regressions.
+        "mw_version": RW_COMPILER,
         "cflags": cflags_renderware,
         "progress_category": "RW",
         "objects": objects,
@@ -1140,7 +1148,7 @@ config.libs = [
             Object(Matching, "rwsdk/world/pipe/p2/gcn/wrldpipe.c"),
             Object(Matching, "rwsdk/world/pipe/p2/gcn/nodeGameCubeAtomicAllInOne.c"),
             Object(Matching, "rwsdk/world/pipe/p2/gcn/nodeGameCubeWorldSectorAllInOne.c"),
-            Object(NonMatching, "rwsdk/world/pipe/p2/gcn/gclights.c"),
+            Object(Matching, "rwsdk/world/pipe/p2/gcn/gclights.c"),
             Object(Matching, "rwsdk/world/pipe/p2/gcn/gcmorph.c"),
             Object(Matching, "rwsdk/world/pipe/p2/gcn/native.c"),
             Object(Matching, "rwsdk/world/pipe/p2/gcn/setup.c", mw_version="GC/2.0p1"),
@@ -1281,7 +1289,12 @@ config.custom_build_rules = [
         "name": "patch_compiler",
         "command": "$python tools/patch_compiler.py $out",
         "description": "PATCH $out",
-    }
+    },
+    {
+        "name": "patch_compiler_rw",
+        "command": "$python tools/patch_compiler_rw.py $out",
+        "description": "PATCH $out",
+    },
 ]
 config.custom_build_steps = {
     "pre-compile": [
@@ -1304,7 +1317,20 @@ config.custom_build_steps = {
             ]
             + ([Path(ALIASPATCH_SRC)] if Path(ALIASPATCH_SRC).exists() else [])
             + ([compilers_dir] if config.compilers_path is None else []),
-        }
+        },
+        {
+            # GC/2.0p1b is derived from the GC/2.0p1a above, so that exe is an
+            # input (it orders the two steps, and a re-derived 2.0p1a re-derives
+            # 2.0p1b). patch_compiler.py holds the 2.0p1a hash and layout
+            # constants patch_compiler_rw.py checks against.
+            "outputs": [compilers_dir / RW_COMPILER / "mwcceppc.exe"],
+            "rule": "patch_compiler_rw",
+            "implicit": [
+                compilers_dir / PATCHED_COMPILER / "mwcceppc.exe",
+                Path("tools") / "patch_compiler_rw.py",
+                Path("tools") / "patch_compiler.py",
+            ],
+        },
     ]
 }
 

@@ -1488,6 +1488,7 @@ def generate_objdiff_config(
         # Locally patched 2.0p1 (tools/patch_compiler.py); decomp.me only has
         # the stock build, so scratches fall back to it.
         "GC/2.0p1a": "mwcc_247_92p1",
+        "GC/2.0p1b": "mwcc_247_92p1",  # 2.0p1a + tools/patch_compiler_rw.py
         "GC/2.5": "mwcc_247_105",
         "GC/2.6": "mwcc_247_107",
         "GC/2.7": "mwcc_247_108",
