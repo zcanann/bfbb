@@ -43,7 +43,7 @@ struct rwVectorGlobals
 static RwModuleInfo vectorModule;
 
 /* Single precision square root, refined from the hardware estimate */
-static RwReal VectorSqrt(RwReal x)
+static __inline RwReal VectorSqrt(RwReal x)
 {
     volatile RwReal y;
 

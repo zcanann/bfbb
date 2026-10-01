@@ -1199,7 +1199,7 @@ config.libs = [
             Object(Matching, "rwsdk/src/plcore/bastream.c"),
             Object(Matching, "rwsdk/src/plcore/batkbin.c"),
             Object(Matching, "rwsdk/src/plcore/batkreg.c"),
-            Object(NonMatching, "rwsdk/src/plcore/bavector.c"),
+            Object(Matching, "rwsdk/src/plcore/bavector.c"),
             Object(Matching, "rwsdk/src/plcore/resmem.c"),
             Object(Matching, "rwsdk/src/plcore/rwstring.c"),
             Object(Matching, "rwsdk/os/gcn/osintf.c"),
