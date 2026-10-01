@@ -83,7 +83,10 @@ struct st_PACKER_ATOC_NODE
     // Evidence: memory allocation; Name function returns a constant
     // char basename[32];
 
-    char* Name() const;
+    char* Name() const
+    {
+        return "<unknown>";
+    }
 };
 
 struct st_PACKER_LTOC_NODE

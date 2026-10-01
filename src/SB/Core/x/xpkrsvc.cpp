@@ -595,6 +595,7 @@ S32 PKR_findNextLayerToLoad(st_PACKER_READ_DATA** work_on_pkg, st_PACKER_LTOC_NO
 
 void PKR_updateLayerAssets(st_PACKER_LTOC_NODE* laynode)
 {
+    st_PACKER_ATOC_NODE* asset;
     S32 i;
     st_PACKER_ATOC_NODE* tmpass;
     S32 lay_hip_pos;
@@ -615,19 +616,19 @@ void PKR_updateLayerAssets(st_PACKER_LTOC_NODE* laynode)
         lay_hip_pos = tmpass->d_off;
         for (i = 0; i < laynode->assref.cnt; i++)
         {
-            tmpass = (st_PACKER_ATOC_NODE*)laynode->assref.list[i];
-            if (!(tmpass->loadflag & 0x100000))
+            asset = (st_PACKER_ATOC_NODE*)laynode->assref.list[i];
+            if (!(asset->loadflag & 0x100000))
             {
-                if (tmpass->loadflag & 0x200000)
+                if (asset->loadflag & 0x200000)
                 {
-                    tmpass->Name();
-                    tmpass->memloc = NULL;
+                    asset->Name();
+                    asset->memloc = NULL;
                 }
                 else
                 {
-                    tmpass->memloc = laynode->laymem + (tmpass->d_off - lay_hip_pos);
-                    tmpass->loadflag |= 0x80000;
-                    tmpass->Name();
+                    asset->memloc = laynode->laymem + (asset->d_off - lay_hip_pos);
+                    asset->loadflag |= 0x80000;
+                    asset->Name();
                 }
             }
         }
@@ -1631,17 +1632,18 @@ void PKR_bld_typecnt(st_PACKER_READ_DATA* pr)
         }
     }
 
-    for (i = 0; i < 129; i++)
+    S32 k;
+    for (k = 0; k < 129; k++)
     {
-        if (typcnt[i] >= 1)
+        if (typcnt[k] >= 1)
         {
-            XOrdInit(&pr->typelist[i], typcnt[i] > 1 ? typcnt[i] : 2, false);
+            XOrdInit(&pr->typelist[k], typcnt[k] > 1 ? typcnt[k] : 2, false);
         }
     }
 
-    for (i = 0; i < pr->laytoc.cnt; i++)
+    for (k = 0; k < pr->laytoc.cnt; k++)
     {
-        laynode = (st_PACKER_LTOC_NODE*)pr->laytoc.list[i];
+        laynode = (st_PACKER_LTOC_NODE*)pr->laytoc.list[k];
         for (j = 0; j < laynode->assref.cnt; j++)
         {
             assnode = (st_PACKER_ATOC_NODE*)laynode->assref.list[j];
@@ -1786,9 +1788,4 @@ void PKR_push_memmark()
 void PKR_pop_memmark()
 {
     xMemPopBase(xMemGetBase() - 1);
-}
-
-char* st_PACKER_ATOC_NODE::Name() const
-{
-    return "<unknown>";
 }
