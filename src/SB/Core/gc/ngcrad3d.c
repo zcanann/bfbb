@@ -59,7 +59,7 @@ HRAD3DIMAGE Open_RAD_3D_image(HRAD3D rad_3d, u32 width, u32 height, u32 rad3d_su
     image = (RAD3DIMAGE*)iFMVmalloc(sizeof(RAD3DIMAGE));
     if (image == 0)
     {
-        image = 0;
+        return 0;
     }
     else
     {

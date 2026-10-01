@@ -5942,10 +5942,10 @@ void zEntPlayer_Init(xEnt* ent, xEntAsset* asset)
         globals.player.model_sandy = NULL;
     }
 
-    for (aa = 0; aa < drybob_anim_count; aa++)
+    for (S32 i = 0; i < drybob_anim_count; i++)
     {
-        *drybob_chgData[aa] = drybob_oldData[aa];
-        *drybob_chgTime[aa] = drybob_oldTime[aa];
+        *drybob_chgData[i] = drybob_oldData[i];
+        *drybob_chgTime[i] = drybob_oldTime[i];
     }
 
     drybob_anim_count = 0;
@@ -6046,9 +6046,9 @@ void zEntPlayer_Init(xEnt* ent, xEntAsset* asset)
     sHitchAngle = 0.0f;
     trailerHash = xStrHash("trailer_hitch");
 
-    for (aa = 0; aa < globals.sceneCur->num_base; aa++)
+    for (U32 i = 0; i < globals.sceneCur->num_base; i++)
     {
-        xEnt* hitch = (xEnt*)globals.sceneCur->base[aa];
+        xEnt* hitch = (xEnt*)globals.sceneCur->base[i];
 
         if (hitch->baseType == eBaseTypeDestructObj || hitch->baseType == eBaseTypePlatform ||
             hitch->baseType == eBaseTypeStatic)
@@ -14273,6 +14273,7 @@ static void PlayerRotMatchUpdateEnt(xEnt* ent, xScene* sc, F32 dt, void* fdata)
     S32 hit_it = coll->flags & 0x1;
     xSurface* surf = zSurfaceGetSurface(coll);
     S32 grounded = hit_it && surf && !surf->state && zSurfaceGetMatchOrient(surf);
+    xVec3* eup;
 
     if (grounded)
     {
@@ -14281,7 +14282,7 @@ static void PlayerRotMatchUpdateEnt(xEnt* ent, xScene* sc, F32 dt, void* fdata)
             rms->tmr = 0.0f;
         }
 
-        xVec3* eup = &globals.player.RootUpTarget;
+        eup = &globals.player.RootUpTarget;
         xVec3* fup = &globals.player.floor_norm;
         xVec3 nfup;
         xVec3 neup;
@@ -14342,7 +14343,7 @@ static void PlayerRotMatchUpdateEnt(xEnt* ent, xScene* sc, F32 dt, void* fdata)
 
         if (rms->tmr > 0.0f)
         {
-            xVec3* eup = &globals.player.RootUpTarget;
+            eup = &globals.player.RootUpTarget;
             xVec3 neup;
 
             F32 eup_len = xVec3Normalize(&neup, eup);

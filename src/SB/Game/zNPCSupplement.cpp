@@ -1020,7 +1020,7 @@ void NPAR_Upd_TubeSpiral(NPARMgmt* mgmt, F32 dt)
     pool.rs.flags = 0;
     pool.reset();
 
-    xVec3 pos_plyr = *xEntGetCenter(&globals.player.ent);
+    const xVec3 pos_plyr = *xEntGetCenter(&globals.player.ent);
 
     for (S32 i = 0; i < mgmt->cnt_active; i++)
     {
@@ -2119,7 +2119,7 @@ void NPAR_Upd_DogBreath(NPARMgmt* mgmt, F32 dt)
     pool.rs.flags = 0;
     pool.reset();
 
-    xVec3 pos_plyr = *xEntGetCenter(&globals.player.ent);
+    const xVec3 pos_plyr = *xEntGetCenter(&globals.player.ent);
 
     for (S32 i = 0; i < mgmt->cnt_active; i++)
     {

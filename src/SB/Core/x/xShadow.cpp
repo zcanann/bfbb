@@ -31,7 +31,7 @@ static F32 SHADOW_BF_DOT;
 static F32 SHADOW_BOTH;
 static RxObjSpace3DVertex* Im3DBuffer;
 static U32 Im3DBufferPos;
-RwCamera* volatile ShadowCamera;
+RwCamera* ShadowCamera;
 RwRaster* volatile ShadowCameraRaster;
 static RwRaster* ShadowRenderRaster;
 U32 gShadowFlags;
