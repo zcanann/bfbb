@@ -597,6 +597,8 @@ static RxPipelineNode* RxPipelineNodeFindInput(RxPipelineNode* node)
 
 RxPipeline* RxLockedPipeUnlock(RxLockedPipe* pipeline)
 {
+    RxPipelineNodeTopSortData* newTopSortData;
+    RxPipelineNodeTopSortData* topSortData;
     RwUInt32 numUniqueClusters;
     RwUInt32 unlockStartBlockSize;
     RwUInt32 unlockEndBlockSize;
@@ -613,9 +615,6 @@ RxPipeline* RxLockedPipeUnlock(RxLockedPipe* pipeline)
     {
         if (pipeline->numNodes != 0)
         {
-            RxPipelineNodeTopSortData* newTopSortData;
-            RxPipelineNodeTopSortData* topSortData;
-
             totalOutputs = 0;
             error = FALSE;
             doneNodes = 0;

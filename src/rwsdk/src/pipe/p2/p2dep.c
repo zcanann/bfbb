@@ -308,7 +308,7 @@ static RwUInt32 _PropagateDependenciesAndKillDeadPaths(RxPipeline* pipeline)
 
                 if (cluster == cluster2)
                 {
-                    RWERROR((E_RX_DEP_DUPLICATECLUSTERDEFS, node->nodeDef->name, cluster->name));
+                    RWERROR((E_RX_DEP_DUPLICATECLUSTERDEFS, node->nodeDef->name, cluster2->name));
                     return E_RX_DEP_DUPLICATECLUSTERDEFS;
                 }
             }
@@ -375,12 +375,11 @@ static RwUInt32 _PropagateDependenciesAndKillDeadPaths(RxPipeline* pipeline)
 
         for (j = 0; j < iospec->numClustersOfInterest; j++)
         {
-            RxClusterValidityReq required = iospec->inputRequirements[j];
-
-            if (required != rxCLREQ_DONTWANT)
+            if (iospec->inputRequirements[j] != rxCLREQ_DONTWANT)
             {
                 if (_ReqMergeEntry(node->topSortData->req, iospec->clustersOfInterest[j].clusterDef,
-                                   required, node->topSortData->numIns, node) == NULL)
+                                   iospec->inputRequirements[j], node->topSortData->numIns,
+                                   node) == NULL)
                 {
                     RWERROR((E_RX_DEP_OUTOFMEMORY));
                     return E_RX_DEP_OUTOFMEMORY;

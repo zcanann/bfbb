@@ -476,24 +476,72 @@ static void TriStripMarkTriUsed(TriBinEntry* tri, TriBinList* binListArray, RwIn
     }
 }
 
-static RwBool TriStripEdgeIsLast(Edge* edge)
+static RwBool TriStripEdgeNoFreeTris(Edge* edge)
 {
     return !edge || !TriStripEdgeFreeTris(edge);
 }
 
-static RwBool TriStripEdgeIsLast2(Edge* edge)
+static RwBool TriStripEdgeNoFreeTris2(Edge* edge)
 {
     return !edge || !TriStripEdgeFreeTris2(edge);
 }
 
-static RwBool TriStripEdgeIsAvailable(Edge* edge)
+static RwBool TriStripEdgeHasFreeTris(Edge* edge)
 {
     return edge && TriStripEdgeFreeTris(edge);
 }
 
-static RwBool TriStripEdgeIsAvailable2(Edge* edge)
+static RwBool TriStripEdgeHasFreeTris2(Edge* edge)
 {
     return edge && TriStripEdgeFreeTris2(edge);
+}
+
+static RwBool TriStripEdgeIsLast(Edge* edge)
+{
+    RwBool result = TRUE;
+
+    if (!TriStripEdgeNoFreeTris(edge))
+    {
+        result = FALSE;
+    }
+
+    return result;
+}
+
+static RwBool TriStripEdgeIsLast2(Edge* edge)
+{
+    RwBool result = TRUE;
+
+    if (!TriStripEdgeNoFreeTris2(edge))
+    {
+        result = FALSE;
+    }
+
+    return result;
+}
+
+static RwBool TriStripEdgeIsAvailable(Edge* edge)
+{
+    RwBool result = FALSE;
+
+    if (TriStripEdgeHasFreeTris(edge))
+    {
+        result = TRUE;
+    }
+
+    return result;
+}
+
+static RwBool TriStripEdgeIsAvailable2(Edge* edge)
+{
+    RwBool result = FALSE;
+
+    if (TriStripEdgeHasFreeTris2(edge))
+    {
+        result = TRUE;
+    }
+
+    return result;
 }
 
 static RwUInt32 TriStripFollow(TriStripListEntry* strip, Edge* nextEdge, TriBinList* binListArray,
@@ -867,7 +915,7 @@ static RwBool TriStripStripTris(RpBuildMeshTriangle* triList, RwUInt32 numTris,
                     newStrip->next = stripList->head;
                     stripList->head = newStrip;
 
-                    newStrip->stripSize = (revBuildStrip->stripLen - 2) + buildStrip->stripLen;
+                    newStrip->stripSize = buildStrip->stripLen + revBuildStrip->stripLen - 2;
                     newStrip->stripLen = 0;
                     newStrip->strip =
                         (RxVertexIndex*)RwMalloc(newStrip->stripSize * sizeof(RwUInt32));
