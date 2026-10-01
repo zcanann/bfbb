@@ -7531,3 +7531,25 @@ cases. This is a focused host-side check, not an end-to-end movie test.
 The full source build passes, with no other function-score regressions;
 the normal link still reproduces the retail SHA-1. `expand` remains
 NonMatching and is still supplied by the original object in that link.
+
+## Bink paired Huff4 match (2026-10-01)
+
+`CheckReadHuff4PairBundle` now matches all 604 bytes (87.072845% -> 100%).
+The pair reader uses the ordinary Huff4 helper for each symbol, derives
+each mask at its lookup, and starts its destination cursor after recording
+the bundle bounds. Its unsigned countdown follows the already-matched
+instruction shape used by the byte reader.
+
+The shared helper now reads the bit buffer directly instead of forcing
+both branches through one cached local. This gives each path its retail
+register allocation. It also improves `CheckReadRLEHuff4Bundle` from
+93.27119% to 94.48588% and `CheckReadHuff4SBundle` from 92.53081% to
+93.791466%, without regressing any other function score. No compiler,
+assembly, or artificial storage workaround is needed.
+
+`expand` advances to 8/16 exact functions, with 1,852/13,964 exact code
+bytes and all 1,272 data bytes matching. It remains NonMatching. The host
+checker now compares two consecutive production-helper reads as well as
+the byte-store macro against the independent reader in each of its 67,584
+cases (135,168 helper reads), plus 1,000 countdown cases. The full source
+build and normal retail DOL SHA-1 check pass.
