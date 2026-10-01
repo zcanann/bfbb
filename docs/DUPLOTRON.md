@@ -7897,3 +7897,18 @@ All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
 early-cutoff invariant checks pass. Full all-source compilation and normal
 retail DOL SHA-1 validation pass. Bitplane remains NonMatching; source-linked
 Bink playback remains unverified.
+
+
+## Bink next-plane cursor lifetime (2026-10-01)
+
+Keeping the next-plane cursor across iterations and deriving the traversal
+cursor at the start of node processing follows retail's pointer lifetime and
+improves readlossy from 95.19734% to 95.50776%. The full deduplicated report
+changes only readlossy. Moving saved-word loads before bit-count decrements
+had no effect; reusing node for the initial level scored 95.00887%; neither
+experiment is retained.
+
+All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
+early-cutoff invariant checks pass. Full all-source compilation and normal
+retail DOL SHA-1 validation pass. Bitplane remains NonMatching, with Bink
+source linking and playback still outstanding.

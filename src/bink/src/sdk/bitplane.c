@@ -1354,7 +1354,7 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count)
     roots[BP_ROOT_LOSSY_DC_SLOT] = BP_READ_TREE_DC_ROOT;
     tree_end_ptr = tree.nodes;
     nz_coeff_count = 0;
-    node_ptr = roots;
+    next_node_ptr = roots;
     while (levels_remaining != 0) {
         scan = 0;
         /* Active coefficients receive one refinement bit at each lower plane. */
@@ -1391,7 +1391,7 @@ next_refinement:
                 scan = scan + 1;
             } while (scan < nz_coeff_count);
         }
-        next_node_ptr = node_ptr;
+        node_ptr = next_node_ptr;
         if (node_ptr < tree_end_ptr) {
             scan = -mask;
 read_node:
@@ -1682,7 +1682,6 @@ node_done:
 level_done:
         mask = mask >> 1;
         levels_remaining = BP_NEXT_LEVEL(levels_remaining);
-        node_ptr = next_node_ptr;
     }
 
 done:
