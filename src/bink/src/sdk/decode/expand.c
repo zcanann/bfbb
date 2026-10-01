@@ -1083,40 +1083,29 @@ static inline void expand_run_block(u8 PTR4* dest,
                                     EXPBITS PTR4* bits)
 {
     const u8 PTR4* scan;
-    u32 filled_pixels;
+    u32 filled_pixels = 0;
     EXPBITSTYPE bit;
 
     scan = BINK_DCT_PATTERN_SCAN(exp_get_bits(bits, BINK_DCT_PATTERN_BITS));
-    filled_pixels = 0;
     do {
-        u32 run_length;
-
-        run_length = *runs->cur_ptr++ + 1;
-        filled_pixels += run_length;
+        s32 run_length;
         if (EXPBITS_GET1(*bits, bit)) {
-            u8 color;
-
-            color = *colors->cur_ptr++;
-            do {
-                u32 scan_offset;
-
-                scan_offset = *scan++;
+            u8 color = *colors->cur_ptr++;
+            run_length = *runs->cur_ptr++;
+            for (; run_length >= 0; --run_length) {
+                u32 scan_offset = scan[filled_pixels++];
                 dest[BINK_BLOCK_PATTERN_OFFSET(scan_offset, pitch)] = color;
-            } while (--run_length != 0);
+            }
         } else {
-            do {
-                u32 scan_offset;
-
-                scan_offset = *scan++;
+            run_length = *runs->cur_ptr++;
+            for (; run_length >= 0; --run_length) {
+                u32 scan_offset = scan[filled_pixels++];
                 dest[BINK_BLOCK_PATTERN_OFFSET(scan_offset, pitch)] = *colors->cur_ptr++;
-            } while (--run_length != 0);
+            }
         }
     } while (filled_pixels < BINK_RUN_BLOCK_LAST_PIXEL);
-
     if (filled_pixels == BINK_RUN_BLOCK_LAST_PIXEL) {
-        u32 scan_offset;
-
-        scan_offset = *scan++;
+        u32 scan_offset = scan[filled_pixels];
         dest[BINK_BLOCK_PATTERN_OFFSET(scan_offset, pitch)] = *colors->cur_ptr++;
     }
 }
@@ -1213,7 +1202,7 @@ void ExpandBundleSizes(u32 PTR4* sizes, u32 rows)
      (((u32)(pair) & BINK_BYTE_PAIR_HIGH_MASK) << (BINK_BYTE_BITS * 2)))
 
 /* Scale an 8x8 source block up to a 16x16 destination, doubling each pixel. */
-static void scale_block(const u8 PTR4* src, u8 PTR4* dest, u32 pitch)
+static inline void scale_block(const u8 PTR4* src, u8 PTR4* dest, u32 pitch)
 {
     const u16 PTR4* in = (const u16 PTR4*)src;
     u32 row;
@@ -1490,7 +1479,8 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 }
                 subblock_type = BINK_BUNDLE_U8(subblock_types);
                 BINK_BUNDLE_ADVANCE(subblock_types, BINK_BUNDLE_BYTE_PITCH);
-                if (subblock_type == BINK_BLOCK_FILL) {
+                switch (subblock_type) {
+                case BINK_BLOCK_FILL: {
                     u8 color = BINK_BUNDLE_U8(colors);
                     u32 fill = BINK_FILL_WORD(color);
                     u32 scaled_row;
@@ -1504,10 +1494,19 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                         fill_dest[BINK_SCALED_BLOCK_ROW_WORD_2] = fill;
                         fill_dest[BINK_SCALED_BLOCK_ROW_WORD_3] = fill;
                     }
-                } else if (subblock_type == BINK_BLOCK_RUN) {
+                    break;
+                }
+                case BINK_BLOCK_PATTERN: {
+                    expand_pattern_block_pixels(motion_block, BINK_BLOCK_SIDE, &colors, &patterns);
+                    scale_block(motion_block, dest, pitch);
+                    break;
+                }
+                case BINK_BLOCK_RUN: {
                     expand_run_block(motion_block, BINK_BLOCK_SIDE, &colors, &runs, &bitstate);
                     scale_block(motion_block, dest, pitch);
-                } else if (subblock_type == BINK_BLOCK_INTRA) {
+                    break;
+                }
+                case BINK_BLOCK_INTRA: {
                     u32 quant;
 
                     dct_block[0] = BINK_BUNDLE_S16(intra_dc);
@@ -1515,12 +1514,13 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                     ReadBPLossless(dct_block, (BPBITSTREAM PTR4*)&bitstate);
                     quant = exp_get_bits(&bitstate, BINK_DCT_QUANT_BITS);
                     FastIDCT8x8d(dest, pitch, dct_block, quant);
-                } else if (subblock_type == BINK_BLOCK_PATTERN) {
-                    expand_pattern_block_pixels(motion_block, BINK_BLOCK_SIDE, &colors, &patterns);
-                    scale_block(motion_block, dest, pitch);
-                } else if (subblock_type == BINK_BLOCK_RAW) {
+                    break;
+                }
+                case BINK_BLOCK_RAW: {
                     scale_block(colors.cur_ptr, dest, pitch);
                     BINK_BUNDLE_ADVANCE(colors, BINK_COLOR_BLOCK_BYTES);
+                    break;
+                }
                 }
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
                 col += BINK_BLOCK_SIDE;

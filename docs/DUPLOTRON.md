@@ -7599,3 +7599,25 @@ scale helper inline also reduced it. Those experiments were reverted.
 All-source compilation, the Huff4 host checker, and the normal linked
 retail DOL SHA-1 check pass. No other function score regresses. The retail
 DOL check does not validate execution of this NonMatching decoder.
+
+## Bink scaled dispatch and indexed runs (2026-10-01)
+
+`ExpandPlane` improves from 40.515213% to 48.724136% in the deduplicated
+report, with no other function score changes. Scaled blocks now dispatch
+through a switch in retail body order, and the scale helper is inline.
+Run decoding reads the repeat/literal bit before its branch-local run length
+and indexes the scan table by pixels written, using a signed countdown for
+the stored length-minus-one. These structures follow the retail disassembly.
+The function is now 4,472 bytes versus retail's 5,916; still NonMatching.
+
+`python tools/check_bink_runs.py` compiles the production run helper against
+synthetic decoded bundles: 32,768 cases check both run modes, lengths 1-16,
+permuted scan tables, four destination pitches, padding, and exact bundle
+consumption. Bit extraction is mocked, so this is not a movie playback test.
+The Huff4 checker, full source compilation, and normal DOL SHA-1 check pass.
+
+Direct scaled-pattern output using mask3/mask4 is visible in retail, but the
+measured replacement still scores below the retained temporary-block path;
+that experiment was not retained. Advancing local skip-copy cursors also
+regressed. Revisit the direct scaled pattern alongside the remaining layout
+work rather than claiming the current decoder is fully reconstructed.
