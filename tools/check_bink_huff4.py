@@ -82,7 +82,7 @@ def main():
     helper_start = source.index("static inline u32 exp_read_huff4(")
     helper_end = source.index("/* Store and advance", helper_start)
     start = source.index("#define EXP_READ_HUFF4_STORE")
-    end = source.index("\nstatic inline u32 exp_read_huff4_mask", start)
+    end = source.index("\nstatic inline u32 exp_read_huff8", start)
     with tempfile.TemporaryDirectory(prefix="bink_huff4_") as directory:
         path = Path(directory)
         cfile = path / "check.c"

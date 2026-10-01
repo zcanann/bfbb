@@ -7553,3 +7553,18 @@ checker now compares two consecutive production-helper reads as well as
 the byte-store macro against the independent reader in each of its 67,584
 cases (135,168 helper reads), plus 1,000 countdown cases. The full source
 build and normal retail DOL SHA-1 check pass.
+
+## Bink Huff8 low-symbol cleanup (2026-10-01)
+
+Both Huff8 bundle readers now use the ordinary Huff4 helper for their low
+symbol instead of explicitly sharing a precomputed mask. This improves
+`CheckReadHuff8Bundle` from 91.891624% to 93.44827% and
+`NewCheckReadHuff8Bundle` from 94.25128% to 96.02564%. The newer reader
+has the exact 780-byte size; the older one is still four bytes short.
+The unused masked helper and its caller-side mask locals are removed.
+No other function score regresses, including the paired Huff4 match.
+
+The existing production-helper/byte-store host checks pass, as do the full
+source build and normal retail DOL SHA-1 check. `expand` remains
+NonMatching at 8/16 exact functions. Byte-reader direct/scoped bit-buffer
+trials did not improve its retained 99.56364% and were reverted.
