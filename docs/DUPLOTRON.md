@@ -7984,3 +7984,18 @@ All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
 early-cutoff invariant checks pass. Full all-source compilation and normal
 retail DOL SHA-1 validation pass. Bitplane remains NonMatching; source-linked
 Bink playback remains unverified.
+
+
+## Bink lossless decoded-index progression (2026-10-01)
+
+Reusing the group-node index and decoding the high-node index before entering
+the common child path raises ReadBPLossless from 75.0011% to 76.21249%.
+Advancing the byte child index sequentially brings it to 77.28806%, following
+retail's index progression. No other game or Bink function scores change;
+RenderWare differences from the previous report belong to the already
+integrated 976c9c28f update.
+
+All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
+early-cutoff invariant checks pass. Full all-source compilation and normal
+retail DOL SHA-1 validation pass. Bitplane remains NonMatching; source-linked
+Bink playback remains unverified.
