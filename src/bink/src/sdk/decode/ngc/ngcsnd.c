@@ -856,7 +856,7 @@ static s32 Ready(BINKSND PTR4* snd)
     state = NGC_SOUND_STATE(snd);
     now = RADTimerRead();
     address_shift = NGC_ADDRESS_SHIFT(state);
-    voice = NGC_SOUND_STATE(snd)->voices[0];
+    voice = state->voices[0];
     voice_cursor = NGC_AX_CURRENT_CURSOR(voice, address_shift);
     if (NGC_SOUND_STATE(snd)->play_state == NGC_PLAY_STATE_RUNNING) {
         end_cursor = NGC_AX_END_CURSOR(voice, address_shift);
@@ -874,13 +874,13 @@ static s32 Ready(BINKSND PTR4* snd)
         }
 
         if (NGC_SOUND_IN_STARVATION_WINDOW(NGC_SOUND_STATE(snd), now)) {
-            buffered_bytes = NGC_SOUND_STATE(snd)->play_cursor;
-            if (voice_cursor < buffered_bytes) {
-                buffered_bytes -= voice_cursor;
+            u32 play_cursor = NGC_SOUND_STATE(snd)->play_cursor;
+            if (voice_cursor < play_cursor) {
+                buffered_bytes = play_cursor - voice_cursor;
             } else {
                 buffered_bytes =
                     (end_cursor - voice_cursor) +
-                    (buffered_bytes - NGC_SOUND_RING_START(NGC_SOUND_STATE(snd)));
+                    (play_cursor - NGC_SOUND_RING_START(NGC_SOUND_STATE(snd)));
             }
             if (buffered_bytes >= NGC_SOUND_STATE(snd)->starvation_threshold) {
                 goto check_tasks;
@@ -912,6 +912,8 @@ check_tasks:
                     break;
                 }
             }
+        } else {
+            lock_index = NGC_SOUND_NO_LOCK_INDEX;
         }
     }
 
