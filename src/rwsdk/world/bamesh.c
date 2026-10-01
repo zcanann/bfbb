@@ -432,11 +432,8 @@ RpMeshHeader* _rpMeshRead(RwStream* stream, const void* object, const RpMaterial
                 {
                     source = IndexBuffer;
 
-                    readIndices = rpMESHINDEXBUFFERSIZE;
-                    if (remainingIndices < rpMESHINDEXBUFFERSIZE)
-                    {
-                        readIndices = remainingIndices;
-                    }
+                    readIndices = (remainingIndices < rpMESHINDEXBUFFERSIZE) ? remainingIndices
+                                                                              : rpMESHINDEXBUFFERSIZE;
 
                     if (!RwStreamReadInt32(stream, (RwInt32*)source,
                                            readIndices * sizeof(RwUInt32)))

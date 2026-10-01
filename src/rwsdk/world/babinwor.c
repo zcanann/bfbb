@@ -634,11 +634,12 @@ RpWorld* RpWorldStreamRead(RwStream* stream)
 
     RwMemNative32(&w, sizeof(w));
 
-    worldSize = worldTKList.sizeOfStruct + w.numPlaneSectors * sizeof(RpPlaneSector) +
-                w.numWorldSectors * sectorTKList.sizeOfStruct;
+    worldSize = worldTKList.sizeOfStruct;
+    worldSize += w.numPlaneSectors * sizeof(RpPlaneSector);
+    worldSize += w.numWorldSectors * sectorTKList.sizeOfStruct;
 
     flags = w.format;
-    numTexCoordSets = rpWORLDNUMTEXCOORDSETS(flags);
+    numTexCoordSets = rpWORLDNUMTEXCOORDSETS(w.format);
 
     if (!(flags & rpWORLDNATIVE))
     {

@@ -111,11 +111,11 @@ RwInt32 _rpMaterialListAppendMaterial(RpMaterialList* matList, RpMaterial* mater
 
     if (matList->materials)
     {
-        materials = (RpMaterial**)RwRealloc(matList->materials, memSize);
+        materials = (RpMaterial**)RwRealloc(matList->materials, count * sizeof(RpMaterial*));
     }
     else
     {
-        materials = (RpMaterial**)RwMalloc(memSize);
+        materials = (RpMaterial**)RwMalloc(count * sizeof(RpMaterial*));
     }
 
     if (!materials)
@@ -323,7 +323,7 @@ RpMaterialList* _rpMaterialListStreamRead(RwStream* stream, RpMaterialList* matL
             }
             else
             {
-                material = matList->materials[matindex[i]];
+                material = _rpMaterialListGetMaterial(matList, matindex[i]);
                 RpMaterialAddRef(material);
             }
 
