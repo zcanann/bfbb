@@ -8150,3 +8150,19 @@ retained. The deduplicated report is build/supplement-frequency-report.json.
 Validation: full all_source build passed and the normal link reproduces retail
 DOL SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6. The deduplicated
 report has no function-score changes across the project.
+
+
+## Bink lossless single-bit refill temporaries (2026-10-01)
+
+`ReadBPLossless` improves from 89.31216% to 89.64075% by keeping each
+single-bit refill word in a block-local temporary instead of sharing the
+function-wide sign/result variable. Magnitude refills retain their prior
+form; localizing those too only reaches 89.38554%. Full-width saved-level
+and boolean-condition trials did not improve the baseline and were restored.
+
+Production-source checks pass all 16,384 lossless round trips, 6,911
+nonempty lossy round trips, and 27,644 early-cutoff cases, including the
+existing guard and bit-consumption checks. The full source build and normal
+retail DOL hash pass. The deduplicated report changes only ReadBPLossless;
+bitplane remains NonMatching, so the normal hash is not source-linked Bink
+playback validation. Report: build/bitplane-local-bitword-report.json.

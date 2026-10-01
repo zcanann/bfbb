@@ -798,11 +798,11 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
                         }
                         goto next_lossless_read_node;
                     } else {
-                        code = *words;
+                        u32 word = *words;
                         bitcount = BP_WORD_TOP_BIT;
                         words++;
-                        bitbuf = code >> 1;
-                        if ((code & BP_BIT_MASK) == 0) {
+                        bitbuf = word >> 1;
+                        if ((word & BP_BIT_MASK) == 0) {
                             goto next_lossless_read_node;
                         }
                     }
@@ -845,11 +845,11 @@ decoded_lossless_children:
                                     goto label##_push;                                                              \
                                 }                                                                                   \
                             } else {                                                                                \
-                                code = *words;                                                                      \
+                                u32 word = *words;                                                                  \
                                 bitcount = BP_WORD_TOP_BIT;                                                         \
-                                bitbuf = code >> 1;                                                                 \
+                                bitbuf = word >> 1;                                                                 \
                                 words++;                                                                            \
-                                if ((code & BP_BIT_MASK) != 0) {                                                    \
+                                if ((word & BP_BIT_MASK) != 0) {                                                    \
 label##_push:                                                                                                       \
                                     next_node_ptr--;                                                                \
                                     *next_node_ptr = BP_READ_TREE_COEFF(slot);                                      \
@@ -878,11 +878,11 @@ label##_push:                                                                   
                                 }                                                                                   \
                                 goto label##_positive;                                                              \
                             } else {                                                                                \
-                                code = *words;                                                                      \
+                                u32 word = *words;                                                                  \
                                 bitcount = BP_WORD_TOP_BIT;                                                         \
                                 words++;                                                                            \
-                                bitbuf = code >> 1;                                                                 \
-                                if ((code & BP_BIT_MASK) == 0) {                                                    \
+                                bitbuf = word >> 1;                                                                 \
+                                if ((word & BP_BIT_MASK) == 0) {                                                    \
                                     goto label##_positive;                                                          \
                                 }                                                                                   \
                             }                                                                                       \
@@ -935,11 +935,11 @@ deferred_lossless_coeff:
                     }
                     goto lossless_deferred_positive;
                 } else {
-                    code = *words;
+                    u32 word = *words;
                     bitcount = BP_WORD_TOP_BIT;
                     words++;
-                    bitbuf = code >> 1;
-                    if ((code & BP_BIT_MASK) == 0) {
+                    bitbuf = word >> 1;
+                    if ((word & BP_BIT_MASK) == 0) {
                         goto lossless_deferred_positive;
                     }
                 }
@@ -979,11 +979,11 @@ lossless_node_done:
                     }
                     goto next_lossless_final_node;
                 } else {
-                    code = *words;
+                    u32 word = *words;
                     bitcount = BP_WORD_TOP_BIT;
                     words++;
-                    bitbuf = code >> 1;
-                    if ((code & BP_BIT_MASK) == 0) {
+                    bitbuf = word >> 1;
+                    if ((word & BP_BIT_MASK) == 0) {
                         goto next_lossless_final_node;
                     }
                 }
@@ -1024,11 +1024,11 @@ decoded_lossless_final_children:
                                 goto label##_push;                                                                  \
                             }                                                                                       \
                         } else {                                                                                    \
-                            code = *words;                                                                          \
+                            u32 word = *words;                                                                      \
                             bitcount = BP_WORD_TOP_BIT;                                                             \
-                            bitbuf = code >> 1;                                                                     \
+                            bitbuf = word >> 1;                                                                     \
                             words++;                                                                                \
-                            if ((code & BP_BIT_MASK) != 0) {                                                        \
+                            if ((word & BP_BIT_MASK) != 0) {                                                        \
 label##_push:                                                                                                       \
                                 next_node_ptr--;                                                                    \
                                 *next_node_ptr = BP_READ_TREE_COEFF(slot);                                          \
@@ -1044,11 +1044,11 @@ label##_push:                                                                   
                             }                                                                                       \
                             goto label##_positive;                                                                  \
                         } else {                                                                                    \
-                            code = *words;                                                                          \
+                            u32 word = *words;                                                                      \
                             bitcount = BP_WORD_TOP_BIT;                                                             \
                             words++;                                                                                \
-                            bitbuf = code >> 1;                                                                     \
-                            if ((code & BP_BIT_MASK) == 0) {                                                        \
+                            bitbuf = word >> 1;                                                                     \
+                            if ((word & BP_BIT_MASK) == 0) {                                                        \
                                 goto label##_positive;                                                              \
                             }                                                                                       \
                         }                                                                                           \
@@ -1087,11 +1087,11 @@ deferred_lossless_final:
                 }
                 goto lossless_final_positive;
             } else {
-                code = *words;
+                u32 word = *words;
                 bitcount = BP_WORD_TOP_BIT;
                 words++;
-                bitbuf = code >> 1;
-                if ((code & BP_BIT_MASK) == 0) {
+                bitbuf = word >> 1;
+                if ((word & BP_BIT_MASK) == 0) {
                     goto lossless_final_positive;
                 }
             }
