@@ -8284,3 +8284,20 @@ lengths, guards, and DC preservation. All 6,911 nonempty lossy round trips
 and 27,644 early-cutoff checks pass. Full all_source build passes. Report:
 build/bitplane-packed-report.json. Bitplane remains NonMatching; the normal
 retail DOL hash does not establish source-linked movie playback.
+
+
+## Bink lossy writer child traversal (2026-10-01)
+
+WriteBPLossy improves from 77.710014% to 87.27416% in the deduplicated
+report. Dispatch now places high/group nodes before the branch-node shared
+child path. Each child handles deferred coefficients before active emission,
+and the child index advances sequentially. High nodes decode their index
+once for both the high-group lookup and child traversal. These changes
+preserve the stream traversal and sign-bit order; no assembly is added.
+
+All 16,384 lossless round trips and 6,911 nonempty lossy round trips pass,
+along with 27,644 early-cutoff checks. The full all_source build and retail
+DOL SHA-1 pass. No other function scores change against
+build/bitplane-packed-report.json. New report:
+build/bitplane-lossy-writer-report.json. Bitplane remains NonMatching;
+normal DOL identity does not establish source-linked movie playback.
