@@ -5,8 +5,8 @@
 
 #define rwID_GCNVTXFMTPLUGIN 0x511
 
-RwInt32 _rpDlGeomVtxFmtOffset;
-RwInt32 _rpDlWorldVtxFmtOffset;
+RwInt32 _rpDlGeomVtxFmtOffset = 0;
+RwInt32 _rpDlWorldVtxFmtOffset = 0;
 
 static RwModuleInfo _RpVtxFmtModule;
 static RpGameCubeVtxFmt _RpDlVtxFmtDefault;

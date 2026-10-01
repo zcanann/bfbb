@@ -142,18 +142,17 @@ extern RwStream* _rpWriteMaterialRights(RwStream* s, RwInt32 len, const void* ob
 extern RwInt32 _rpSizeMaterialRights(const void* obj, RwInt32 off, RwInt32 size);
 extern RwBool _rpWorldPipeAttach(void);
 
+static RwInt32 cameraExtOffset = 0;
+static RwInt32 atomicExtOffset = 0;
+static RwInt32 clumpExtOffset = 0;
+static RwInt32 lightExtOffset = 0;
+
+static RwInt32 _rpTieFreeListBlockSize = 256;
+static RwInt32 _rpTieFreeListPreallocBlocks = 1;
+static RwInt32 _rpLightTieFreeListBlockSize = 32;
+static RwInt32 _rpLightTieFreeListPreallocBlocks = 1;
+
 static RwModuleInfo worldObjModule;
-
-RwInt32 atomicExtOffset = 0;
-RwInt32 clumpExtOffset = 0;
-RwInt32 lightExtOffset = 0;
-RwInt32 cameraExtOffset = 0;
-
-RwInt32 _rpTieFreeListBlockSize = 256;
-RwInt32 _rpTieFreeListPreallocBlocks = 1;
-RwInt32 _rpLightTieFreeListBlockSize = 32;
-RwInt32 _rpLightTieFreeListPreallocBlocks = 1;
-
 static RwFreeList _rpTieFreeList;
 static RwFreeList _rpLightTieFreeList;
 

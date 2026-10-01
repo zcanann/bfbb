@@ -3,6 +3,8 @@
 
 #include "rwsdk/world/pipe/p2/gcn/gcpipe.h"
 
+RwBool _RwDlPreInstanceOptimize = TRUE;
+
 void _rxGCResEntryWaitDone(RwResEntry* resEntry)
 {
     RxGameCubeVertexBuffer* vbHeader;
