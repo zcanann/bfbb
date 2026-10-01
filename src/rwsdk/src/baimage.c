@@ -334,20 +334,19 @@ RwImage* RwImageMakeMask(RwImage* image)
 
         for (i = 0; i < palSize; i++)
         {
-            RwInt32 nOpacity = rpPal->red;
+            RwInt32 nOpacity = rpPal[i].red;
 
-            if (rpPal->green > nOpacity)
+            if (rpPal[i].green > nOpacity)
             {
-                nOpacity = rpPal->green;
+                nOpacity = rpPal[i].green;
             }
 
-            if (rpPal->blue > nOpacity)
+            if (rpPal[i].blue > nOpacity)
             {
-                nOpacity = rpPal->blue;
+                nOpacity = rpPal[i].blue;
             }
 
-            rpPal->alpha = (RwUInt8)nOpacity;
-            rpPal++;
+            rpPal[i].alpha = (RwUInt8)nOpacity;
         }
         break;
     }
@@ -362,20 +361,19 @@ RwImage* RwImageMakeMask(RwImage* image)
 
             for (j = 0; j < image->width; j++)
             {
-                RwInt32 nOpacity = rpCur->red;
+                RwInt32 nOpacity = rpCur[j].red;
 
-                if (rpCur->green > nOpacity)
+                if (rpCur[j].green > nOpacity)
                 {
-                    nOpacity = rpCur->green;
+                    nOpacity = rpCur[j].green;
                 }
 
-                if (rpCur->blue > nOpacity)
+                if (rpCur[j].blue > nOpacity)
                 {
-                    nOpacity = rpCur->blue;
+                    nOpacity = rpCur[j].blue;
                 }
 
-                rpCur->alpha = (RwUInt8)nOpacity;
-                rpCur++;
+                rpCur[j].alpha = (RwUInt8)nOpacity;
             }
 
             cpSpan += image->stride;
@@ -508,41 +506,41 @@ static const RwChar* ImagePathForAllFullNames(const RwChar* filename, RwInt32 ex
 
         rwstrcpy(fullname, filename);
         callBack(fullname, data);
-
-        return filename;
     }
-
-    while (pathElement && *pathElement)
+    else
     {
-        rwstrchr(pathElement, ';');
-        nextPathElement = rwstrchr(pathElement, ';');
-        if (nextPathElement)
+        while (pathElement && *pathElement)
         {
-            pathElementLength = nextPathElement - pathElement;
-            nextPathElement++;
+            rwstrchr(pathElement, ';');
+            nextPathElement = rwstrchr(pathElement, ';');
+            if (nextPathElement)
+            {
+                pathElementLength = nextPathElement - pathElement;
+                nextPathElement++;
+            }
+            else
+            {
+                pathElementLength = rwstrlen(pathElement);
+            }
+
+            pathsize = pathElementLength + rwstrlen(filename) + extraBytes;
+
+            fullname = (RwChar*)ImageGetScratchMem(pathsize);
+            if (!fullname)
+            {
+                return NULL;
+            }
+
+            memcpy(fullname, pathElement, pathElementLength);
+            rwstrcpy(fullname + pathElementLength, filename);
+
+            if (!callBack(fullname, data))
+            {
+                return filename;
+            }
+
+            pathElement = nextPathElement;
         }
-        else
-        {
-            pathElementLength = rwstrlen(pathElement);
-        }
-
-        pathsize = pathElementLength + (rwstrlen(filename) + extraBytes);
-
-        fullname = (RwChar*)ImageGetScratchMem(pathsize);
-        if (!fullname)
-        {
-            return NULL;
-        }
-
-        memcpy(fullname, pathElement, pathElementLength);
-        rwstrcpy(fullname + pathElementLength, filename);
-
-        if (!callBack(fullname, data))
-        {
-            return filename;
-        }
-
-        pathElement = nextPathElement;
     }
 
     return filename;

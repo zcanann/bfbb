@@ -256,8 +256,7 @@ RwUInt32 _rwGCNDisplayListGetSize(rwVertexDescriptor* vtxDesc, RwUInt32 numStrip
     stride = _rwGCNDisplayListGetStride(vtxDesc);
 
     /* One primitive header per strip (GXBegin = 3 bytes) plus the indices */
-    size = numIndices * stride;
-    size += numStrips * 3;
+    size = numStrips * 3 + numIndices * stride;
     size = (size + 31) & ~31;
 
     return size;

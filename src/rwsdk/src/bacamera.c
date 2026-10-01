@@ -203,38 +203,37 @@ static void CameraBuildPerspClipPlanes(RwCamera* camera)
 
 static RwCamera* CameraBuildPerspViewMatrix(RwCamera* camera)
 {
-    RwFrame* frame = (RwFrame*)rwObjectGetParent(camera);
-    RwMatrix* ltm = &frame->ltm;
-    RwV3d col;
-    RwReal recip;
-    RwReal shift;
+    RwReal scale;
+    RwV3d vVector;
+    const RwMatrix* cameraLTM = &((RwFrame*)rwObjectGetParent(camera))->ltm;
+    RwMatrix* viewMatrix = &camera->viewMatrix;
 
-    recip = ((RwReal)-0.5) * camera->recipViewWindow.x;
-    RwV3dScaleMacro(&col, &ltm->right, recip);
-    shift = ((RwReal)0.5) - recip * camera->viewOffset.x;
-    RwV3dIncrementScaledMacro(&col, &ltm->at, shift);
+    scale = ((RwReal)-0.5) * camera->recipViewWindow.x;
+    RwV3dScaleMacro(&vVector, &cameraLTM->right, scale);
+    scale = ((RwReal)0.5) - scale * camera->viewOffset.x;
+    RwV3dIncrementScaledMacro(&vVector, &cameraLTM->at, scale);
 
-    camera->viewMatrix.right.x = col.x;
-    camera->viewMatrix.up.x = col.y;
-    camera->viewMatrix.at.x = col.z;
-    camera->viewMatrix.pos.x = ((RwReal)0.5) - (shift + RwV3dDotProductMacro(&ltm->pos, &col));
+    viewMatrix->right.x = vVector.x;
+    viewMatrix->up.x = vVector.y;
+    viewMatrix->at.x = vVector.z;
+    viewMatrix->pos.x = ((RwReal)0.5) - (scale + RwV3dDotProductMacro(&cameraLTM->pos, &vVector));
 
-    recip = ((RwReal)-0.5) * camera->recipViewWindow.y;
-    RwV3dScaleMacro(&col, &ltm->up, recip);
-    shift = recip * camera->viewOffset.y + ((RwReal)0.5);
-    RwV3dIncrementScaledMacro(&col, &ltm->at, shift);
+    scale = ((RwReal)-0.5) * camera->recipViewWindow.y;
+    RwV3dScaleMacro(&vVector, &cameraLTM->up, scale);
+    scale = scale * camera->viewOffset.y + ((RwReal)0.5);
+    RwV3dIncrementScaledMacro(&vVector, &cameraLTM->at, scale);
 
-    camera->viewMatrix.right.y = col.x;
-    camera->viewMatrix.up.y = col.y;
-    camera->viewMatrix.at.y = col.z;
-    camera->viewMatrix.pos.y = ((RwReal)0.5) - (shift + RwV3dDotProductMacro(&ltm->pos, &col));
+    viewMatrix->right.y = vVector.x;
+    viewMatrix->up.y = vVector.y;
+    viewMatrix->at.y = vVector.z;
+    viewMatrix->pos.y = ((RwReal)0.5) - (scale + RwV3dDotProductMacro(&cameraLTM->pos, &vVector));
 
-    camera->viewMatrix.right.z = ltm->at.x;
-    camera->viewMatrix.up.z = ltm->at.y;
-    camera->viewMatrix.at.z = ltm->at.z;
-    camera->viewMatrix.pos.z = -RwV3dDotProductMacro(&ltm->pos, &ltm->at);
+    viewMatrix->right.z = cameraLTM->at.x;
+    viewMatrix->up.z = cameraLTM->at.y;
+    viewMatrix->at.z = cameraLTM->at.z;
+    viewMatrix->pos.z = -RwV3dDotProductMacro(&cameraLTM->pos, &cameraLTM->at);
 
-    RwMatrixOptimize(&camera->viewMatrix, (const RwMatrixTolerance*)NULL);
+    RwMatrixOptimize(viewMatrix, (const RwMatrixTolerance*)NULL);
 
     return camera;
 }
@@ -276,38 +275,37 @@ static void CameraBuildParallelClipPlanes(RwCamera* camera)
 
 static RwCamera* CameraBuildParallelViewMatrix(RwCamera* camera)
 {
-    RwFrame* frame = (RwFrame*)rwObjectGetParent(camera);
-    RwMatrix* ltm = &frame->ltm;
-    RwV3d col;
-    RwReal recip;
-    RwReal shift;
+    RwReal scale;
+    RwV3d vVector;
+    const RwMatrix* cameraLTM = &((RwFrame*)rwObjectGetParent(camera))->ltm;
+    RwMatrix* viewMatrix = &camera->viewMatrix;
 
-    recip = ((RwReal)-0.5) * camera->recipViewWindow.x;
-    RwV3dScaleMacro(&col, &ltm->right, recip);
-    shift = -(recip * camera->viewOffset.x);
-    RwV3dIncrementScaledMacro(&col, &ltm->at, shift);
+    scale = ((RwReal)-0.5) * camera->recipViewWindow.x;
+    RwV3dScaleMacro(&vVector, &cameraLTM->right, scale);
+    scale = -(scale * camera->viewOffset.x);
+    RwV3dIncrementScaledMacro(&vVector, &cameraLTM->at, scale);
 
-    camera->viewMatrix.right.x = col.x;
-    camera->viewMatrix.up.x = col.y;
-    camera->viewMatrix.at.x = col.z;
-    camera->viewMatrix.pos.x = ((RwReal)0.5) - (shift + RwV3dDotProductMacro(&ltm->pos, &col));
+    viewMatrix->right.x = vVector.x;
+    viewMatrix->up.x = vVector.y;
+    viewMatrix->at.x = vVector.z;
+    viewMatrix->pos.x = ((RwReal)0.5) - (scale + RwV3dDotProductMacro(&cameraLTM->pos, &vVector));
 
-    recip = ((RwReal)-0.5) * camera->recipViewWindow.y;
-    RwV3dScaleMacro(&col, &ltm->up, recip);
-    shift = recip * camera->viewOffset.y;
-    RwV3dIncrementScaledMacro(&col, &ltm->at, shift);
+    scale = ((RwReal)-0.5) * camera->recipViewWindow.y;
+    RwV3dScaleMacro(&vVector, &cameraLTM->up, scale);
+    scale *= camera->viewOffset.y;
+    RwV3dIncrementScaledMacro(&vVector, &cameraLTM->at, scale);
 
-    camera->viewMatrix.right.y = col.x;
-    camera->viewMatrix.up.y = col.y;
-    camera->viewMatrix.at.y = col.z;
-    camera->viewMatrix.pos.y = ((RwReal)0.5) - (shift + RwV3dDotProductMacro(&ltm->pos, &col));
+    viewMatrix->right.y = vVector.x;
+    viewMatrix->up.y = vVector.y;
+    viewMatrix->at.y = vVector.z;
+    viewMatrix->pos.y = ((RwReal)0.5) - (scale + RwV3dDotProductMacro(&cameraLTM->pos, &vVector));
 
-    camera->viewMatrix.right.z = ltm->at.x;
-    camera->viewMatrix.up.z = ltm->at.y;
-    camera->viewMatrix.at.z = ltm->at.z;
-    camera->viewMatrix.pos.z = -RwV3dDotProductMacro(&ltm->pos, &ltm->at);
+    viewMatrix->right.z = cameraLTM->at.x;
+    viewMatrix->up.z = cameraLTM->at.y;
+    viewMatrix->at.z = cameraLTM->at.z;
+    viewMatrix->pos.z = -RwV3dDotProductMacro(&cameraLTM->pos, &cameraLTM->at);
 
-    RwMatrixOptimize(&camera->viewMatrix, (const RwMatrixTolerance*)NULL);
+    RwMatrixOptimize(viewMatrix, (const RwMatrixTolerance*)NULL);
 
     return camera;
 }
@@ -442,24 +440,28 @@ RwCamera* RwCameraSetFarClipPlane(RwCamera* camera, RwReal farClip)
 
 RwFrustumTestResult RwCameraFrustumTestSphere(const RwCamera* camera, const RwSphere* sphere)
 {
-    RwFrustumTestResult result = rwSPHEREINSIDE;
     const RwFrustumPlane* frustumPlane = camera->frustumPlanes;
     RwInt32 numPlanes = 6;
+    RwFrustumTestResult result = rwSPHEREINSIDE;
     RwReal radius = sphere->radius;
     RwReal negRadius = -radius;
-    RwV3d center = sphere->center;
+    RwV3d center;
+
+    center.x = sphere->center.x;
+    center.y = sphere->center.y;
+    center.z = sphere->center.z;
 
     while (numPlanes--)
     {
-        RwReal dist = RwV3dDotProductMacro(&center, &frustumPlane->plane.normal) -
+        RwReal nDot = RwV3dDotProductMacro(&center, &frustumPlane->plane.normal) -
                       frustumPlane->plane.distance;
 
-        if (dist > radius)
+        if (nDot > radius)
         {
             return rwSPHEREOUTSIDE;
         }
 
-        if (dist > negRadius)
+        if (nDot > negRadius)
         {
             result = rwSPHEREBOUNDARY;
         }
@@ -504,15 +506,14 @@ RwCamera* RwCameraSetProjection(RwCamera* camera, RwCameraProjection projection)
         }
 
         CameraSetZ(camera);
-        break;
+
+        return camera;
     default:
         RWERROR((E_RW_INVCAMERAPROJECTION));
-
-        camera = (RwCamera*)NULL;
         break;
     }
 
-    return camera;
+    return (RwCamera*)NULL;
 }
 
 RwCamera* RwCameraSetViewWindow(RwCamera* camera, const RwV2d* viewWindow)

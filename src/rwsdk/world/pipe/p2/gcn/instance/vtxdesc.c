@@ -146,8 +146,8 @@ void _rwGCNVertexDescSetElementDesc(rwVertexDescriptor* vtxDesc, rwGCNVertexAttr
     case rwGCNVA_TEX6MTXIDX:
     case rwGCNVA_TEX7MTXIDX:
     {
-        vtxDesc->VCDRegLO &= ~(0x2 << (attr - rwGCNVA_TEX0MTXIDX));
-        vtxDesc->VCDRegLO |= (type << attr) & (0x2 << (attr - rwGCNVA_TEX0MTXIDX));
+        vtxDesc->VCDRegLO &= ~(0x2U << (attr - rwGCNVA_TEX0MTXIDX));
+        vtxDesc->VCDRegLO |= (type << attr) & (0x2U << (attr - rwGCNVA_TEX0MTXIDX));
         break;
     }
     case rwGCNVA_POS:
@@ -193,8 +193,8 @@ void _rwGCNVertexDescSetElementDesc(rwVertexDescriptor* vtxDesc, rwGCNVertexAttr
     case rwGCNVA_CLR0:
     case rwGCNVA_CLR1:
     {
-        vtxDesc->VCDRegLO &= ~(0x6000 << (attr - rwGCNVA_CLR0));
-        vtxDesc->VCDRegLO |= (type << (attr + 2)) & (0x6000 << (attr - rwGCNVA_CLR0));
+        vtxDesc->VCDRegLO &= ~(0x6000U << (attr - rwGCNVA_CLR0));
+        vtxDesc->VCDRegLO |= (type << (attr + 2)) & (0x6000U << (attr - rwGCNVA_CLR0));
 
         numcols = 0;
         if (vtxDesc->VCDRegLO & 0x6000)

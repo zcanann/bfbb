@@ -811,12 +811,12 @@ static RwUInt32 _ForAllNodesWriteClusterAllocations(RxPipeline* pipeline, RwScop
     {
         pipeline->inputRequirements = (RxPipelineRequiresCluster*)StalacMiteAlloc(
             numPipelineRequiresClusters * sizeof(RxPipelineRequiresCluster));
-
-        _WriteHeadNodeRqdsAndOpts2PipelineRequirements(pipeline);
-
-        _rx_rxRadixExchangeSort(pipeline->inputRequirements, pipeline->numInputRequirements,
-                                sizeof(RxPipelineRequiresCluster), 0, 0, 0xFFFFFFFF);
     }
+
+    _WriteHeadNodeRqdsAndOpts2PipelineRequirements(pipeline);
+
+    _rx_rxRadixExchangeSort(pipeline->inputRequirements, pipeline->numInputRequirements,
+                            sizeof(RxPipelineRequiresCluster), 0, 0, 0xFFFFFFFF);
 
     return 0;
 }

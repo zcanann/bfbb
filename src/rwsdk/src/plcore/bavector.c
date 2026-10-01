@@ -174,6 +174,9 @@ static RwV3d* VectorMultPoint(RwV3d* pointsOut, const RwV3d* pointsIn, RwInt32 n
     const RwReal posX = matrix->pos.x;
     const RwReal posY = matrix->pos.y;
     const RwReal posZ = matrix->pos.z;
+    RwReal outX;
+    RwReal outY;
+    RwReal outZ;
 
     while (--numPoints >= 0)
     {
@@ -183,9 +186,21 @@ static RwV3d* VectorMultPoint(RwV3d* pointsOut, const RwV3d* pointsIn, RwInt32 n
 
         pointsIn++;
 
-        pointsOut->x = x * rightX + y * upX + z * atX + posX;
-        pointsOut->y = x * rightY + y * upY + z * atY + posY;
-        pointsOut->z = x * rightZ + y * upZ + z * atZ + posZ;
+        outX = x * rightX;
+        outY = x * rightY;
+        outZ = x * rightZ;
+
+        outX += y * upX;
+        outY += y * upY;
+        outZ += y * upZ;
+
+        outX += z * atX;
+        outY += z * atY;
+        outZ += z * atZ;
+
+        pointsOut->x = outX + posX;
+        pointsOut->y = outY + posY;
+        pointsOut->z = outZ + posZ;
 
         pointsOut++;
     }
@@ -206,15 +221,15 @@ static RwV3d* VectorMultVector(RwV3d* pointsOut, const RwV3d* pointsIn, RwInt32 
     const RwReal atX = matrix->at.x;
     const RwReal atY = matrix->at.y;
     const RwReal atZ = matrix->at.z;
+    RwReal outX;
+    RwReal outY;
+    RwReal outZ;
 
     while (--numPoints >= 0)
     {
         RwReal x = pointsIn->x;
         RwReal y = pointsIn->y;
         RwReal z = pointsIn->z;
-        RwReal outX;
-        RwReal outY;
-        RwReal outZ;
 
         pointsIn++;
 

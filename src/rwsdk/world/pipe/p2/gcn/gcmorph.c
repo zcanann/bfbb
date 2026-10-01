@@ -41,7 +41,7 @@ static void _rwDlV3dInterpNormGQRSetup(const RpGameCubeVtxFmt* fmt, RwUInt32* ou
         RwUInt8 vtxFmtSizeConvTable[5] = { 1, 1, 2, 2, 4 };
         RwUInt8 vtxFmtNormConvTable[5] = { 0, 6, 0, 14, 0 };
 
-        gqr = vtxFmtTypeConvTable[fmt->norm] | (vtxFmtNormConvTable[fmt->norm] << 8);
+        gqr = (vtxFmtNormConvTable[fmt->norm] << 8) | vtxFmtTypeConvTable[fmt->norm];
         *outSize = vtxFmtSizeConvTable[fmt->norm];
         *outSkip = fmt->nbt ? (*outSize * 6) : 0;
     }

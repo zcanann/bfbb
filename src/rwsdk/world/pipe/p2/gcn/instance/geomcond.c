@@ -257,8 +257,8 @@ rwGCNVtxDataMap* VertexDataCreateMaps(rwGCNVtxData* vtxData, RwUInt32 numEntries
                 while (dep >= 0)
                 {
                     if (!TypeCheckEqual(vtxData[dep].type,
-                                        (RwUInt8*)vtxData[dep].data + j * depSize,
-                                        (RwUInt8*)vtxData[dep].data + k * depSize))
+                                        (RwUInt8*)vtxData[dep].data + depSize * j,
+                                        (RwUInt8*)vtxData[dep].data + depSize * k))
                     {
                         equal = FALSE;
                         break;
