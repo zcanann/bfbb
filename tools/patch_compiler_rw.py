@@ -170,6 +170,91 @@ identical to 2.0p1c's):
             under GC/2.0p1), stdkey 7/8 (RpHAnimKeyFrameStreamWrite 94.26, the
             R3 cost; 8/8 only under GC/2.0p1). Game +7 / -0 against 2.0p1c,
             +9 / -0 against GC/2.0p1a (adds xfont::irender, validate_popper).
+
+GC/2.0p1e
+---------
+GC/2.0p1d plus rep + nps (the GC/2.5 const-pointee alias graft). Built by
+path (`patch_compiler_rw.py <compilers>/GC/2.0p1e/mwcceppc.exe`) or with
+`patch_compiler_rw.py <compilers dir> --p1e`. Three further retail-only parts
+(dss, volb, e3n4) have no later-compiler provenance and too little evidence
+for generality, so they are experimental only: any subset of the five with
+`--p1e-parts rep,nps,dss,volb,e3n4 --out <dir>` (never GC/2.0p1e itself).
+Every part writes at fixed places. dss, e3n4 and volb all extend scheduler
+entry 4; its handler chain is dss -> e3n4 -> volb -> 2.0p1a's entry-4 stub,
+skipping the parts that are off, so every subset is well defined.
+
+  rep   2.5's alias for a const/restrict pointee (GC/2.5 behaviour). Both
+        compilers give the `mr` of a pointer-to-const or restrict variable an
+        alias on a fresh pseudo-object. 2.0p1's maker (0x513330) wraps it in a
+        one-member alias SET. 2.5's maker (0x513620) returns
+        make_alias(pseudo, 0x7fffff, 1): a plain subrange at a mid offset, so
+        the stock transfer function (0x512740; the same code in both
+        compilers) moves the offset through addi, and gives a merge of
+        different offsets (a loop's IV increment, or an addi whose source
+        has two reaching defs) a whole-object alias. The patch makes
+        2.0p1's maker return 2.5's alias (one site, 0x51336c).
+        Consequences, all from stock code reading the plain alias:
+          * LICM hoists loads through a const pointer (stock 2.0p1 rejects a
+            SET alias; a plain one has no defs inside the loop). This is all
+            of R3: with rep, 2.0p1c's R3 hooks never see a SET and are inert
+            (byte-identical objects on all 342 units with or without them),
+            and every R3 gain stays.
+          * AddPropagation (2.0p1 0x56bd70; identical code in 2.5) refuses to
+            fold an addi whose alias is a whole-object alias of a non-frame
+            object. So an unrolled loop over a pointer-to-const keeps one
+            `addi rP,rP,stride` per copy (the later peephole sinks each past
+            the next copy's loads) instead of folding them all into the
+            displacements and one final addi. This is R10: it is not an
+            unroller difference (IroUnrollLoop.c and LoopOptimization.c are
+            the same code in 2.0p1 and 2.5).
+        Repros (written for this, not RW source): of 30 functions, 2.0p1
+        differs from 2.5 on 9 and 2.0p1d on 6 (unrolled const-pointer loops, an
+        addi off a twice-defined const pointer); 2.0p1e equals 2.5 on 29. The
+        30th differs from 2.5 under 2.0p1d too (2.0p1a's whole-static-read LICM
+        hook keeps an int->float bias load in the loop).
+  nps   needed by rep. 2.0p1a's clause predicates test "static object" as
+        word0 == 5, which a pseudo-object also satisfies; under 2.0p1 they
+        never saw one (it only appeared inside a SET) and 2.5 has no clauses.
+        The eight tests in 2.0p1a's blob (A's and S's static tests, E3n's and
+        W's, the LICM static-read hook, clause V's walk and clause F) skip
+        objects of the pseudo type. No effect without rep; without it rep
+        loses three iCollide functions to clause V killing pseudo values.
+  dss   retail-only (a narrow form of 2.0p1a's clause B on entry 4, which
+        DUPLOTRON measured at -199 in its general form). On entry 4 (field x
+        field), a plain store addressed directly by symbol (`stw rS,
+        sym@sda21`) to a field of a static is ordered before a later store
+        to a field of a frame object. Stock 2.0p1, 2.5 and 2.0p1d have no such
+        edge. Retail has it in StalacTiteAlloc and _rwDlCameraBeginUpdate;
+        StalacMiteAlloc, where the same store goes through a base register
+        (`stw rS,4(rB)`), has no edge, so the direct-symbol condition is
+        needed (without it StalacMiteAlloc is lost). Allowing a static field as
+        the second store costs four game functions.
+  volb  retail-only: a volatile store is ordered before any later store
+        (entries 0, 1, 3 and 4). Stock compilers order volatile accesses only
+        among themselves. _rwDlRasterShowRaster needs it once _RwGCXFBCopy is
+        declared volatile (which also fixes its six load-order rows); on the
+        current source it changes nothing.
+  e3n4  retail-only, the weakest: p1d's address-taken-gated clause E3n also on
+        entry 4 when the load is a field of a static of at most 8 bytes
+        (clause S's alias unit) that is outside the literal pool (section
+        byte 0x0b). RpMaterialStreamRead (both RwEngineInstance and
+        materialModule.globalsOffset stay below `mat.color = tmp`). E3n on
+        entry 4 in general is -200; for small statics only it is -9 (8-byte
+        aggregate literals @NNN); the literal-pool exclusion makes it +1 / -0
+        but rests on that one RW function.
+
+Measured (solo-equivalent sweep of every unit, paired against GC/2.0p1d; 117
+RW_COMPILER units, stdkey, and the 224 SB units):
+  rep+nps   RW +0 / -0, RwCameraFrustumTestSphere 90.77 -> 94.13 (100 with
+            the in-loop sphere->center/radius source form). Game +3 / -0:
+            zNPCSpawner::Owned, xtextbox::layout::yextent,
+            zNPCBPlankton::player_left_territory.
+  dss       RW +2 / -0: StalacTiteAlloc, _rwDlCameraBeginUpdate
+            (RxLockedPipeUnlock 98.06 -> 98.02). Game 0 / 0.
+  volb      RW 0 / 0, game 0 / 0 on the current source.
+  e3n4      RW +1 / -0: RpMaterialStreamRead. Game 0 / 0
+            (zNPCFodBzzt::DiscoRender 77.59 -> 74.14, two partials up).
+  all five  RW +3 / -0, game +3 / -0; stdkey unchanged.
 """
 
 import hashlib
@@ -699,6 +784,354 @@ def patch_compiler_p1d(compilers: Path, parts=P1D_PARTS, out_dir: Path = None) -
     return True
 
 
+# ---- GC/2.0p1e: 2.5's const-pointee alias + three retail store/load edges ------
+# See the module docstring. Five parts, each writing at fixed places; GC/2.0p1e is
+# all five. The scheduler entry-4 handler chain is dss -> e3n4 -> volb -> 2.0p1a's
+# entry-4 stub, skipping the parts that are off.
+
+P1E_VERSION = "GC/2.0p1e"
+P1E_PARTS = ("rep", "nps", "dss", "volb", "e3n4")
+# GC/2.0p1e itself is the GC/2.5 graft only (rep + nps). dss, volb and e3n4 are
+# retail-only rules without a later-compiler counterpart, resting on one or two
+# functions each; they stay experimental (--p1e-parts ... --out DIR).
+P1E_DEFAULT = ("rep", "nps")
+P1E_SHA1 = "9d445725489050035740aaff35860eddbaf3c3c9"     # rep + nps
+# Experimental subsets (--p1e-parts), checked the same way.
+P1E_SUBSET_SHA1 = {
+    frozenset(P1E_PARTS): "4e16e6e2e025ff0168ba93714f1fba2594ec4d39",
+    frozenset(("rep",)): "8d8dc8d0a6f13a5166836c482b51b3bc404c9249",
+    frozenset(("nps",)): "65ff5af729e74cc27434dadce687068d00d5d43a",
+    frozenset(("dss",)): "0710f60def6e90882194538c85827b77c520578b",
+    frozenset(("volb",)): "b345e0983e640be8baee941d753fc34c8e81d885",
+    frozenset(("e3n4",)): "b86da3a87be9889ddf3b1c482f8712662082b241",
+    frozenset(("rep", "nps")): "9d445725489050035740aaff35860eddbaf3c3c9",
+    frozenset(("rep", "nps", "dss", "volb")): "352b8caaa52228fd938494d4a7544ff600f4ef41",
+}
+
+MAKE_ALIAS = 0x00512E20            # Alias.c make_alias(Object *, offset, size)
+PSEUDO_TYPE = PSEUDO_OBJECT_TYPE   # 0x5bd008
+MAY_ALIAS_YES = 0x00512081         # may_alias: the "may alias" answer tail
+S_SMALL_STATIC = 0x0060E018        # 2.0p1a blob: (Alias *) -> whole alias if a field of a static <= 8 bytes
+SCHED_DISPATCH = {                 # may_alias table word, 2.0p1a's handler
+    0: (0x005BD0BC, 0x0060E57C), 1: (0x005BD0C0, 0x0060E59B),
+    3: (0x005BD0C8, 0x0060E5BA), 4: (0x005BD0CC, 0x0060E5D9),
+}
+
+# rep: the pseudo-object maker's set construction -> return 2.5's plain alias.
+REP_SITE = 0x0051336C
+REP_OLD = bytes.fromhex("6a2ee8edd9f2ff")      # push 0x2e ; call 0x440d60 (allocate the set)
+
+# nps: `cmp dword [reg],5 ; jcc` static tests in 2.0p1a's blob:
+#      (site, reg, jcc, taken target, fall-through)
+NPS_SITES = (
+    (0x0060E00F, "edx", "jne", 0x0060E015, 0x0060E014),   # is_static (clause A)
+    (0x0060E02C, "ebx", "je", 0x0060E035, 0x0060E031),    # clause S small static
+    (0x0060E0B3, "esi", "jne", 0x0060E0E2, 0x0060E0B8),   # clause C/C+
+    (0x0060E0DD, "eax", "je", 0x0060E0E6, 0x0060E0E2),
+    (0x0060E1B8, "eax", "je", 0x0060E1C1, 0x0060E1BD),    # clause E3n
+    (0x0060E4C2, "edx", "je", 0x0060E4CA, 0x0060E4C7),    # LICM static-read hook
+    (0x0060E4EA, "ecx", "jne", 0x0060E4F9, 0x0060E4EF),   # clause V walk
+)
+NPS_F_SITE = 0x0060E518                        # clause F: mov ebx,[eax] ; cmp ebx,5
+NPS_F_OLD = bytes.fromhex("8b1883fb05")
+_X86 = {"eax": 0, "ecx": 1, "edx": 2, "ebx": 3, "esi": 6, "edi": 7}
+
+# Fixed places in .sbpatch padding (2.0p1a ~+0x000..+0x652, p1d +0x700..+0x800,
+# R3 +0xC00..+0xD52, vtmp +0xF00..+0xF1E).
+NPS_VA = SECTION_VA + 0x900                    # .. +0xA6F
+E3N4_VA = SECTION_VA + 0xB00
+DSS_VA = SECTION_VA + 0xD60                    # entry-4 wrapper
+DSS_PRED_VA = SECTION_VA + 0xD80
+VOLB_VA = SECTION_VA + 0xE00                   # wrappers for entries 0, 1, 3, 4 (0x20 each)
+VOLB_PRED_VA = SECTION_VA + 0xE80
+P1E_REGIONS = ((0x900, 0xB00), (0xB00, 0xB40), (0xD60, 0xF00))
+
+
+def _p1e_rep():
+    b = bytearray()
+    b += b"\x6A\x01"                                   # push 1
+    b += b"\x68\xFF\xFF\x7F\x00"                       # push 0x7fffff
+    b += b"\x53"                                       # push ebx (the pseudo-object)
+    b += b"\xE8" + _rel32(REP_SITE + len(b) + 5, MAKE_ALIAS)
+    b += b"\x83\xC4\x0C"                               # add esp,0xc
+    b += b"\x5E\x5B\xC3"                               # pop esi ; pop ebx ; ret
+    return bytes(b)
+
+
+def _nps_stub(at, reg, jcc, taken, fall):
+    """cmp dword [reg],5 as before, but a pseudo-object (type at +0xe) is not static.
+    The type is compared PC-relatively, so the stub needs no base relocation."""
+    r = _X86[reg]
+    s = 0 if r != 0 else 1                             # scratch: eax, or ecx when reg is eax
+    static_tgt, other_tgt = (taken, fall) if jcc == "je" else (fall, taken)
+    b = bytearray()
+    b += bytes((0x83, 0x38 | r, 0x05))                 # cmp dword [reg],5
+    p0 = len(b); b += b"\x75\x00"                      # jne other
+    b += bytes((0x50 | s,))                            # push s
+    b += b"\xE8\x00\x00\x00\x00"                       # call $+5
+    pc = at + len(b)
+    b += bytes((0x58 | s,))                            # pop s
+    b += bytes((0x8D, 0x80 | (s << 3) | s)) + struct.pack("<i", PSEUDO_TYPE - pc)  # lea s,[s+type]
+    b += bytes((0x39, 0x40 | (s << 3) | r, 0x0E))      # cmp [reg+0xe],s
+    b += bytes((0x58 | s,))                            # pop s (flags kept)
+    p1 = len(b); b += b"\x74\x00"                      # je other (a pseudo-object)
+    b += b"\xE9" + _rel32(at + len(b) + 5, static_tgt)
+    other = len(b)
+    b += b"\xE9" + _rel32(at + len(b) + 5, other_tgt)
+    b[p0 + 1] = other - (p0 + 2)
+    b[p1 + 1] = other - (p1 + 2)
+    return bytes(b)
+
+
+def _nps_f_stub(at):
+    """mov ebx,[eax] ; cmp ebx,5 -- with a pseudo-object reading as word 0."""
+    b = bytearray()
+    b += b"\x8B\x18"                                   # mov ebx,[eax]
+    b += b"\x51"                                       # push ecx
+    b += b"\xE8\x00\x00\x00\x00"                       # call $+5
+    pc = at + len(b)
+    b += b"\x59"                                       # pop ecx
+    b += b"\x8D\x89" + struct.pack("<i", PSEUDO_TYPE - pc)   # lea ecx,[ecx+type]
+    b += b"\x39\x48\x0E"                               # cmp [eax+0xe],ecx
+    b += b"\x59"                                       # pop ecx
+    b += b"\x75\x02"                                   # jne +2
+    b += b"\x31\xDB"                                   # xor ebx,ebx
+    b += b"\x83\xFB\x05"                               # cmp ebx,5
+    b += b"\xE9" + _rel32(at + len(b) + 5, NPS_F_SITE + 5)
+    return bytes(b)
+
+
+def _sched_wrapper(at, pred, nxt):
+    """Scheduler dispatch entry (a = esi, b = ebp): if pred(a, b) -> may alias,
+    else go on to nxt."""
+    b = bytearray()
+    b += b"\x55\x56"                                   # push ebp ; push esi
+    b += b"\xE8" + _rel32(at + len(b) + 5, pred)
+    b += b"\x83\xC4\x08\x85\xC0"                       # add esp,8 ; test eax,eax
+    b += b"\x0F\x85" + _rel32(at + len(b) + 6, MAY_ALIAS_YES)
+    b += b"\xE9" + _rel32(at + len(b) + 5, nxt)
+    assert len(b) <= 0x20
+    return bytes(b)
+
+
+def _pcode_pred(body):
+    """cdecl int pred(PCode *a, PCode *b) with esi = a, edi = b; body() appends
+    tests and registers the short jumps that mean 'no'."""
+    b = bytearray()
+    b += b"\x56\x57\x8B\x74\x24\x0C\x8B\x7C\x24\x10"   # push esi ; push edi ; esi=a ; edi=b
+    fails = []
+
+    def no(op):
+        b.extend(bytes((op, 0)))
+        fails.append(len(b) - 1)
+    body(b, no)
+    b += b"\xB8\x01\x00\x00\x00\x5F\x5E\xC3"           # mov eax,1 ; pop edi ; pop esi ; ret
+    fail = len(b)
+    b += b"\x31\xC0\x5F\x5E\xC3"                       # xor eax,eax ; pop edi ; pop esi ; ret
+    for f in fails:
+        b[f] = fail - (f + 1)
+    return bytes(b)
+
+
+def _dss_pred():
+    """a: a plain store whose displacement is a symbol, to a static (an alias that
+    is not a set, object word 5); b: a plain store to a frame object (0x10005)."""
+    def body(b, no):
+        b += b"\x8B\x46\x14\x83\xE0\xDF\x83\xF8\x04"; no(0x75)   # a: flags & ~0x20 == 4
+        b += b"\x8B\x47\x14\x83\xE0\xDF\x83\xF8\x04"; no(0x75)   # b: flags & ~0x20 == 4
+        b += b"\x80\x7E\x3C\x03"; no(0x75)                       # a: operand 2 is a relocation
+        b += b"\x8B\x46\x18\x85\xC0"; no(0x74)                   # ma
+        b += b"\x80\x78\x2C\x02"; no(0x74)                       # not a set
+        b += b"\x8B\x40\x10\x85\xC0"; no(0x74)
+        b += b"\x83\x38\x05"; no(0x75)                           # a static
+        b += b"\x8B\x47\x18\x85\xC0"; no(0x74)                   # mb
+        b += b"\x80\x78\x2C\x02"; no(0x74)
+        b += b"\x8B\x40\x10\x85\xC0"; no(0x74)
+        b += b"\x81\x38" + struct.pack("<I", FRAME_WORD); no(0x75)   # a frame object
+    return _pcode_pred(body)
+
+
+def _volb_pred():
+    """a: a volatile store (flags & ~0xa0 == 4 and flags & 0x80); b: a store."""
+    def body(b, no):
+        b += b"\x8B\x46\x14\x25\x5F\xFF\xFF\xFF\x83\xF8\x04"; no(0x75)
+        b += b"\xF6\x46\x14\x80"; no(0x74)
+        b += b"\x8B\x47\x14\x25\x5F\xFF\xFF\xFF\x83\xF8\x04"; no(0x75)
+    return _pcode_pred(body)
+
+
+def _e3n4_wrapper(at, nxt):
+    """Entry 4: if mb is a field of a static of at most 8 bytes outside the literal
+    pool (section byte 0x0b), ask p1d's gated E3n(a, b, ma, mb); else nxt."""
+    b = bytearray()
+    b += b"\xFF\x75\x18"                               # push [ebp+0x18]  mb
+    b += b"\xE8" + _rel32(at + len(b) + 5, S_SMALL_STATIC)
+    b += b"\x59\x85\xC0"                               # pop ecx ; test eax,eax
+    p0 = len(b); b += b"\x74\x00"                      # jz next
+    b += b"\x8B\x40\x10"                               # mov eax,[eax+0x10]  the object
+    b += b"\x80\x78\x04\x0B"                           # cmp byte [eax+4],0x0b
+    p1 = len(b); b += b"\x74\x00"                      # je next
+    b += b"\xFF\x75\x18\xFF\x76\x18\x55\x56"           # push mb ; push ma ; push b ; push a
+    b += b"\xE8" + _rel32(at + len(b) + 5, AT_E3N_VA)
+    b += b"\x83\xC4\x10\x85\xC0"                       # add esp,16 ; test eax,eax
+    b += b"\x0F\x85" + _rel32(at + len(b) + 6, MAY_ALIAS_YES)
+    nxt_off = len(b)
+    b += b"\xE9" + _rel32(at + len(b) + 5, nxt)
+    b[p0 + 1] = nxt_off - (p0 + 2)
+    b[p1 + 1] = nxt_off - (p1 + 2)
+    assert len(b) <= 0x40
+    return bytes(b)
+
+
+def _apply_p1e(data: bytearray, parts) -> bytes:
+    parts = set(parts)
+    if not parts or parts - set(P1E_PARTS):
+        sys.exit(f"--p1e-parts must be a non-empty subset of {','.join(P1E_PARTS)}")
+
+    def text(va):
+        return va - TEXT_FILE_DELTA
+
+    def expect(off, want, what):
+        if bytes(data[off:off + len(want)]) != want:
+            sys.exit(f"{what} at {off:#x} is {bytes(data[off:off + len(want)]).hex()}, "
+                     f"expected {want.hex()}")
+
+    def put(va, code):
+        rel = va - SECTION_VA
+        if not any(lo <= rel and rel + len(code) <= hi for lo, hi in P1E_REGIONS):
+            sys.exit(f"{P1E_VERSION}: {va:#x} is outside its regions")
+        so = SECTION_FILE + rel
+        if any(data[so:so + len(code)]):
+            sys.exit(f"{P1E_VERSION} region at {so:#x} is not free in {P1D_VERSION}")
+        data[so:so + len(code)] = code
+
+    def dispatch(entry, new):
+        word, old = SCHED_DISPATCH[entry]
+        off = _p1e_data_offset(data, word)
+        found = struct.unpack_from("<I", data, off)[0]
+        if found != old:
+            sys.exit(f"scheduler entry {entry} is {found:#x}, expected {old:#x}")
+        struct.pack_into("<I", data, off, new)
+
+    if len(data) != SECTION_FILE + SECTION_SIZE:
+        sys.exit(f"unexpected {P1D_VERSION} layout (file size {len(data):#x})")
+
+    if "rep" in parts:
+        o = text(REP_SITE)
+        expect(o, REP_OLD, "pseudo-object set allocation")
+        code = _p1e_rep()
+        data[o:o + len(code)] = code
+
+    if "nps" in parts:
+        at = NPS_VA
+        for site, reg, jcc, taken, fall in NPS_SITES:
+            stub = _nps_stub(at, reg, jcc, taken, fall)
+            r = _X86[reg]
+            old = bytes((0x83, 0x38 | r, 0x05, 0x74 if jcc == "je" else 0x75,
+                         (taken - (site + 5)) & 0xFF))
+            o = SECTION_FILE + (site - SECTION_VA)
+            expect(o, old, f"static test at {site:#x}")
+            put(at, stub)
+            data[o:o + 5] = b"\xE9" + _rel32(site + 5, at)
+            at += (len(stub) + 0xF) & ~0xF
+        stub = _nps_f_stub(at)
+        o = SECTION_FILE + (NPS_F_SITE - SECTION_VA)
+        expect(o, NPS_F_OLD, "clause F static test")
+        put(at, stub)
+        data[o:o + 5] = b"\xE9" + _rel32(NPS_F_SITE + 5, at)
+
+    # scheduler entry 4: dss -> e3n4 -> volb -> 2.0p1a's handler
+    chain = [va for name, va in (("dss", DSS_VA), ("e3n4", E3N4_VA), ("volb", VOLB_VA + 0x60))
+             if name in parts]
+    for i, va in enumerate(chain):
+        nxt = chain[i + 1] if i + 1 < len(chain) else SCHED_DISPATCH[4][1]
+        if va == DSS_VA:
+            put(va, _sched_wrapper(va, DSS_PRED_VA, nxt))
+        elif va == E3N4_VA:
+            put(va, _e3n4_wrapper(va, nxt))
+        else:
+            put(va, _sched_wrapper(va, VOLB_PRED_VA, nxt))
+    if chain:
+        dispatch(4, chain[0])
+    if "dss" in parts:
+        put(DSS_PRED_VA, _dss_pred())
+    if "volb" in parts:
+        for k, entry in enumerate((0, 1, 3)):
+            va = VOLB_VA + 0x20 * k
+            put(va, _sched_wrapper(va, VOLB_PRED_VA, SCHED_DISPATCH[entry][1]))
+            dispatch(entry, va)
+        put(VOLB_PRED_VA, _volb_pred())
+    return bytes(data)
+
+
+def _p1e_data_offset(data, va):
+    """File offset of `va` from the image's own section table (the may_alias
+    dispatch table is in .data, not .text)."""
+    rva = va - patch_compiler.IMAGE_BASE
+    e = struct.unpack_from("<I", data, 0x3C)[0]
+    nsec = struct.unpack_from("<H", data, e + 6)[0]
+    opt = struct.unpack_from("<H", data, e + 20)[0]
+    o = e + 24 + opt
+    for _ in range(nsec):
+        vsz, sva, rsz, raw = struct.unpack_from("<IIII", data, o + 8)
+        if sva <= rva < sva + max(vsz, rsz):
+            return raw + rva - sva
+        o += 40
+    sys.exit(f"{va:#x} is in no section")
+
+
+def _p1e_expected_sha1(parts):
+    if set(parts) == set(P1E_DEFAULT):
+        return P1E_SHA1
+    return P1E_SUBSET_SHA1.get(frozenset(parts))
+
+
+def patch_compiler_p1e(compilers: Path, parts=P1E_DEFAULT, out_dir: Path = None) -> bool:
+    """Create GC/2.0p1e (rep + nps) next to GC/2.0p1d, deriving 2.0p1b/c/d first if
+    needed. With a subset of parts, out_dir names where the experimental build goes."""
+    if not patch_compiler_p1d(compilers):
+        return False
+    parts = tuple(p for p in P1E_PARTS if p in set(parts))
+    src_dir = compilers / P1D_VERSION
+    full = set(parts) == set(P1E_DEFAULT)
+    if out_dir is None:
+        if not full:
+            sys.exit("a partial GC/2.0p1e needs --out <dir> (never GC/2.0p1e itself)")
+        out_dir = compilers / P1E_VERSION
+    elif not full and out_dir.resolve() == (compilers / P1E_VERSION).resolve():
+        sys.exit(f"refusing to write a partial build to {P1E_VERSION}")
+    src = src_dir / "mwcceppc.exe"
+    dst = out_dir / "mwcceppc.exe"
+
+    actual = patch_compiler.sha1(src)
+    if actual != P1D_SHA1:
+        sys.exit(f"{src} has unexpected SHA-1 {actual}\n"
+                 f"  expected {P1D_SHA1}; refusing to patch an unknown build")
+    want = _p1e_expected_sha1(parts)
+    if want and dst.exists() and patch_compiler.sha1(dst) == want:
+        return True
+
+    out_dir.mkdir(parents=True, exist_ok=True)
+    for f in src_dir.iterdir():
+        if f.is_file():
+            shutil.copy2(f, out_dir / f.name)
+    if dst.exists():
+        dst.unlink()
+
+    out = _apply_p1e(bytearray(src.read_bytes()), parts)
+    result = hashlib.sha1(out).hexdigest()
+    if want is None:
+        print(f"NOTE: no recorded SHA-1 for parts {','.join(parts)}; this build is {result}")
+    elif result != want:
+        sys.exit(f"derived {P1E_VERSION} ({','.join(parts)}) has SHA-1 {result}, expected {want}")
+
+    tmp = dst.with_suffix(".exe.tmp")
+    tmp.write_bytes(out)
+    os.replace(tmp, dst)
+    print(f"Patched compiler written to {dst}  (sha1 {result})")
+    return True
+
+
 def _opt(flag):
     if flag in sys.argv[2:]:
         i = sys.argv.index(flag)
@@ -710,15 +1143,21 @@ def _opt(flag):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        sys.exit("usage: patch_compiler_rw.py <compilers dir | GC/2.0p1b, 2.0p1c or 2.0p1d "
-                 "mwcceppc.exe> [--r3 | --p1d | --p1d-parts r4,at-sched,at-w,at-v --out DIR]")
+        sys.exit("usage: patch_compiler_rw.py <compilers dir | GC/2.0p1b, 2.0p1c, 2.0p1d or 2.0p1e "
+                 "mwcceppc.exe> [--r3 | --p1d | --p1d-parts r4,at-sched,at-w,at-v --out DIR"
+                 " | --p1e | --p1e-parts rep,nps,dss,volb,e3n4 --out DIR]")
     arg = Path(sys.argv[1])
     # Invoked from ninja with $out, i.e. <compilers>/GC/2.0p1b/mwcceppc.exe
-    # (or .../GC/2.0p1c or .../GC/2.0p1d for the experimental compilers)
+    # (or .../GC/2.0p1c, 2.0p1d or 2.0p1e for the experimental compilers)
     root = arg.parents[2] if arg.name.endswith(".exe") else arg
     exe_dir = arg.parent.name if arg.name.endswith(".exe") else None
     parts_arg = _opt("--p1d-parts")
-    if parts_arg is not None or "--p1d" in sys.argv[2:] or exe_dir == P1D_VERSION.split("/")[1]:
+    p1e_arg = _opt("--p1e-parts")
+    if p1e_arg is not None or "--p1e" in sys.argv[2:] or exe_dir == P1E_VERSION.split("/")[1]:
+        parts = tuple(p for p in p1e_arg.split(",") if p) if p1e_arg is not None else P1E_DEFAULT
+        out = _opt("--out")
+        ok = patch_compiler_p1e(root, parts, Path(out) if out else None)
+    elif parts_arg is not None or "--p1d" in sys.argv[2:] or exe_dir == P1D_VERSION.split("/")[1]:
         parts = tuple(p for p in parts_arg.split(",") if p) if parts_arg is not None else P1D_PARTS
         out = _opt("--out")
         ok = patch_compiler_p1d(root, parts, Path(out) if out else None)

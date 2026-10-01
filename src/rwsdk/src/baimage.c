@@ -731,9 +731,13 @@ static RwBool ImageConvertDepth(RwImage* ipDestin, const RwImage* ipSource)
     RwInt32 width = ipDestin->width;
     RwInt32 height = ipDestin->height;
     RwUInt32 switchKey = (ipSource->depth << 8) | ipDestin->depth;
-    RwUInt8* cpDst = ipDestin->cpPixels;
-    const RwRGBA* rpSrcPalette = ipSource->palette;
-    const RwUInt8* cpSrc = ipSource->cpPixels;
+    RwUInt8* cpDst;
+    const RwRGBA* rpSrcPalette;
+    const RwUInt8* cpSrc;
+
+    rpSrcPalette = ipSource->palette;
+    cpSrc = ipSource->cpPixels;
+    cpDst = ipDestin->cpPixels;
 
     switch (switchKey)
     {

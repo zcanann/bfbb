@@ -1,6 +1,6 @@
-# Compiler variants GC/2.0p1b/c/d: audit of each change
+# Compiler variants GC/2.0p1b/c/d/e: audit of each change
 
-This audits the five changes that `tools/patch_compiler_rw.py` makes on top of
+This audits the changes that `tools/patch_compiler_rw.py` makes on top of
 GC/2.0p1a, to decide whether each one is a legitimate model of the compiler
 that built the retail objects ("compiler B") and whether game code can move to
 GC/2.0p1d. GC/2.0p1a itself (joey's clauses A/B/C/E3n/F/S/V/W/H and the LICM
@@ -11,7 +11,7 @@ Names used below:
 - **A**: stock GC/2.0p1, the compiler our patches start from.
 - **C**: GC/2.5 (2.6 and 2.7 behave the same on every repro here).
 - **B**: retail, as seen through the target objects.
-- **2.0p1a/b/c/d**: our derived compilers in `build/compilers/GC/`.
+- **2.0p1a/b/c/d/e**: our derived compilers in `build/compilers/GC/`.
 
 ## Verdicts
 
@@ -22,6 +22,8 @@ Names used below:
 | (c-veto) large-loop veto | the >25-instruction veto in LICM tests AltiVec splats instead of FP loads | grafted from C | **Yes** |
 | (d-R4) two-register-load alias | a register with no alias does not force worst_case on an X-form access | grafted from C | **Yes** |
 | (d-gate) address-taken gate | E3n/A/W/V fire on a frame object only when its address escapes | emulation correction | **Yes** for at-sched and at-w. at-v is weaker: it has no effect alone and pays off only with at-sched |
+| (e-rep) const-pointee alias | a const/restrict pointee gets 2.5's plain subrange alias instead of 2.0p1's one-member SET (with `nps`, a guard so 2.0p1a's clauses don't treat the pseudo-object as a static) | grafted from C | **Yes** |
+| (e) dss, volb, e3n4 | three extra scheduler edges seen only in retail | retail-only | **No**, kept as experimental parts; see "Not adopted" |
 
 **Game code.** Moving it from 2.0p1a to 2.0p1d measures **+9 exact / −0** over
 the 224 SB units (7442 → 7451). 11 partial functions go up and 2 go down. The
@@ -480,6 +482,56 @@ and has no game effect.
 
 ---
 
+## (e-rep) 2.5's alias for a const/restrict pointee (2.0p1e parts `rep`, `nps`)
+
+**Mechanism.** Both compilers give the `mr` of a pointer-to-const or restrict
+variable an alias on a fresh pseudo-object. 2.0p1's maker (0x513330) wraps it
+in a one-member alias SET; 2.5's (0x513620) returns
+`make_alias(pseudo, 0x7fffff, 1)`. `rep` makes 2.0p1 return 2.5's form (one
+site, 0x51336c). Everything downstream is stock code identical in 2.0p1 and 2.5:
+
+- LICM hoists loads through the const pointer. With `rep`, 2.0p1c's R3 hooks
+  never see a SET and are inert (objects byte-identical with or without them),
+  so R3 turns out to be a consequence of this one representation change.
+- AddPropagation (identical code in both) refuses to fold an `addi` whose alias
+  covers a whole non-frame object. 2.5's transfer function produces that alias
+  for a loop's pointer increment, so an unrolled const-pointer loop keeps one
+  `addi` per copy. This is residue class R10 in RW_RESIDUE.md; it is not an
+  unroller difference (the unroller is the same code in 2.0p1 and 2.5).
+
+`nps` is required with `rep`: 2.0p1a's clause predicates test "static" as
+object kind 5, which a pseudo-object also is. Stock 2.0p1 never exposed a bare
+pseudo-object to them. Without `nps`, clause V kills pseudo values and three
+iCollide functions are lost. Alone it changes nothing.
+
+**Provenance.** Grafted from C. **Generality.** `e_rep_*.c` (written for this,
+not RW source): every function where A and C differ, 2.0p1e equals C
+(`f`, `g`, `b2`, `u1`, `u2`); every function where they agree stays in one group.
+On the earlier repros (`b_`, `c_`, `d_`, `r3_`), 2.0p1e is identical to 2.0p1d
+on all 64 functions. **Measured** against 2.0p1d over every unit: RW +0 / -0 on
+the existing source; game **+3 / -0** (`xtextbox::layout::yextent`,
+`zNPCSpawner::Owned`, `zNPCBPlankton::player_left_territory`). With the RW-style
+in-loop form (`nDot = dot(&sphere->center, ...); nDot -= distance;` compared
+against `sphere->radius`), `RwCameraFrustumTestSphere` goes 90.77 -> 100.
+`ImageConvertDepth` was fixed by source shape in the same change (100 under any
+compiler).
+
+## Not adopted: retail-only edges `dss`, `volb`, `e3n4`
+
+`tools/patch_compiler_rw.py --p1e-parts ... --out DIR` still builds them, for
+experiments only. None has a later-compiler counterpart (2.0p1, 2.5, 2.6 and 2.7
+all lack each edge), so the provenance criterion fails, and the generality
+evidence is too thin to count as an emulation correction:
+
+| part | rule | evidence | why not |
+|---|---|---|---|
+| dss | a store addressed directly by symbol (`sym@sda21`) to a static field is ordered before a later store to a frame-object field | RW +2 (`StalacTiteAlloc`, `_rwDlCameraBeginUpdate`) | The direct-symbol condition exists only because `StalacMiteAlloc` (the same store through a base register) has no edge in retail. That condition is fitted to the data. |
+| volb | a volatile store is ordered before any later store | 0 / 0; +1 (`_rwDlRasterShowRaster`) only if `_RwGCXFBCopy` is also made `volatile` | It needs a source change and a compiler change together to show anything. |
+| e3n4 | 2.0p1d's gated E3n also on scheduler entry 4 for small, non-literal-pool statics | RW +1 (`RpMaterialStreamRead`); `zNPCFodBzzt::DiscoRender` 77.59 -> 74.14 | It rests on one function, and the general forms measure -9 and -200. |
+
+They are recorded as candidate behaviours of the real compiler B, to revisit if
+more functions turn up the same pattern.
+
 ## Game code: can it move to GC/2.0p1d?
 
 Measured per function, frozen tree, all 224 SB units, 2.0p1a → 2.0p1d:
@@ -544,8 +596,8 @@ nothing. When switching:
 3. Look at the two partials that go down (`get_bounds`, `DiscoRender`)
    before attributing their residue to source.
 
-Not covered here: the GC/2.0p1e prototype that is being developed
-concurrently in `tools/patch_compiler_rw.py`.
+**Update:** game code and RW have since moved to GC/2.0p1e (+3 game functions
+over 2.0p1d, -0; see (e-rep)).
 
 ## Reproducing
 

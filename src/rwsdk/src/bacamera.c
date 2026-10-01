@@ -518,25 +518,20 @@ RwFrustumTestResult RwCameraFrustumTestSphere(const RwCamera* camera, const RwSp
     const RwFrustumPlane* frustumPlane = camera->frustumPlanes;
     RwInt32 numPlanes = 6;
     RwFrustumTestResult result = rwSPHEREINSIDE;
-    RwReal radius = sphere->radius;
-    RwReal negRadius = -radius;
-    RwV3d center;
-
-    center.x = sphere->center.x;
-    center.y = sphere->center.y;
-    center.z = sphere->center.z;
 
     while (numPlanes--)
     {
-        RwReal nDot = RwV3dDotProductMacro(&center, &frustumPlane->plane.normal) -
-                      frustumPlane->plane.distance;
+        RwReal nDot;
 
-        if (nDot > radius)
+        nDot = RwV3dDotProductMacro(&sphere->center, &frustumPlane->plane.normal);
+        nDot -= frustumPlane->plane.distance;
+
+        if (nDot > sphere->radius)
         {
             return rwSPHEREOUTSIDE;
         }
 
-        if (nDot > negRadius)
+        if (nDot > -sphere->radius)
         {
             result = rwSPHEREBOUNDARY;
         }
