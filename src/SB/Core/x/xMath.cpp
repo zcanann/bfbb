@@ -9,6 +9,19 @@ S32 xmath_inited;
 S32 xmath_exited;
 U32 rndseed;
 
+// Layout-only references reproduce the literal order left by stripped code.
+// The original stripped routines are unknown; these stubs do not enter the DOL.
+void __deadstripped_xMath_constants(F32* values)
+{
+    values[0] = FLOAT_MAX;
+    values[1] = 0.5f;
+    values[2] = 1.0f;
+    values[3] = 2.0f;
+    values[4] = 0.0f;
+    values[5] = 3.0f;
+    values[6] = 1e-5f;
+}
+
 void xMathInit()
 {
     if (!xmath_inited)
@@ -185,6 +198,12 @@ U32 xMathSolveCubic(F32 a, F32 b, F32 c, F32 d, F32* x1, F32* x2, F32* x3)
     *x1 = (2.0f * var_f1) - fOffset;
     *x2 = -var_f1 - fOffset;
     return 2;
+}
+
+void __deadstripped_xMath_angles(F32* values)
+{
+    values[0] = PI;
+    values[1] = -1.0f;
 }
 
 F32 xAngleClamp(F32 a)

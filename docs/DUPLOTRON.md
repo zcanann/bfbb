@@ -7364,3 +7364,22 @@ stubs themselves; no assembly or output-binary modification is involved.
 The full source build preserves every other SB function matching score,
 and the linked DOL reproduces retail SHA-1
 306526d90b48e99894c3138f5fc8f2716d9fecf6.
+
+## Math and collision-geometry source linking (2026-10-01)
+
+`zCollGeom` already has matching function order and data layout under the
+current compiler. Promoting its four functions (868 code bytes, 32 data
+bytes) to Matching reproduces the complete retail DOL without source edits.
+
+`xMath` has 18 matching functions (3,252 code bytes, 120 data bytes), but
+its shared literals were emitted in a different order. Two explicitly named
+dead-stripped stubs reproduce the early scalar constants and PI/-1 first-use
+positions. They are layout scaffolding, not recovered original routines.
+The linker discards the stub code and the unused xsqrt literal; the resulting
+DOL is byte-identical to retail. No assembly or binary patch is involved.
+
+A separate `xEntDrive` promotion failed because its generated tri_data
+assignment appears between normal functions. An explicit inline assignment
+fixed the per-object ordering, but changed global helper ownership and
+regressed zEntPlayer. That experiment was fully reverted; xEntDrive remains
+Equivalent.
