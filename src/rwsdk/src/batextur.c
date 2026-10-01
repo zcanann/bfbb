@@ -986,6 +986,8 @@ RwTexture* RwTextureCreate(RwRaster* raster)
 
 RwBool RwTextureDestroy(RwTexture* texture)
 {
+    RwBool result = TRUE;
+
     texture->refCount--;
 
     if (texture->refCount <= 0)
@@ -1008,9 +1010,10 @@ RwBool RwTextureDestroy(RwTexture* texture)
         texture->refCount--;
 
         RwFreeListFree(RWTEXTUREGLOBAL(textureFreeList), texture);
+        result = TRUE;
     }
 
-    return TRUE;
+    return result;
 }
 
 RwTexture* RwTextureSetName(RwTexture* texture, const RwChar* name)

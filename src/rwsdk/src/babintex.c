@@ -93,7 +93,7 @@ static RwChar* StringStreamRead(RwChar* nativeString, RwStream* stream, RwUInt32
     RwChar multiByteString[rwSTRINGSTREAMBUFFERSIZE];
     RwChar* baseString;
 
-    if (!nativeString)
+    if (nativeString == NULL)
     {
         nativeString = (RwChar*)RwMalloc(length);
         if (!nativeString)
@@ -135,7 +135,7 @@ static RwChar* UnicodeStringStreamRead(RwChar* nativeString, RwStream* stream, R
     RwChar* baseString;
     RwBool mallocced = FALSE;
 
-    if (!nativeString)
+    if (nativeString == NULL)
     {
         nativeString = (RwChar*)RwMalloc(length);
         if (!nativeString)

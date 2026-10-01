@@ -148,57 +148,92 @@ static void CameraSetZ(RwCamera* camera)
 
 static void CameraBuildPerspClipPlanes(RwCamera* camera)
 {
-    RwFrame* frame = (RwFrame*)rwObjectGetParent(camera);
-    RwMatrix* ltm = &frame->ltm;
-    RwV3d* corner = camera->frustumCorners;
-    RwV3d right;
-    RwV3d up;
-    RwV3d offset;
+    RwV3d vTmp;
+    RwV3d vTmp2;
+    RwV3d vRight;
+    RwV3d vUp;
+    RwV3d vCOP;
+    RwMatrix* cameraLTM = &((RwFrame*)rwObjectGetParent(camera))->ltm;
+    RwReal recip;
+    RwReal scale;
     RwInt32 i;
+    RwV3d* frustumVerts;
+    RwFrustumPlane* frustumPlanes;
+    RwV3d* target;
 
-    RwV3dScaleMacro(&right, &ltm->right, camera->viewWindow.x);
-    RwV3dScaleMacro(&up, &ltm->up, camera->viewWindow.y);
+    frustumVerts = camera->frustumCorners;
 
-    corner[0].x = ltm->at.x + right.x + up.x;
-    corner[0].y = ltm->at.y + right.y + up.y;
-    corner[0].z = ltm->at.z + right.z + up.z;
+    RwV3dScaleMacro(&vRight, &cameraLTM->right, camera->viewWindow.x);
+    RwV3dScaleMacro(&vUp, &cameraLTM->up, camera->viewWindow.y);
 
-    corner[1].x = corner[0].x - ((RwReal)2) * right.x;
-    corner[1].y = corner[0].y - ((RwReal)2) * right.y;
-    corner[1].z = corner[0].z - ((RwReal)2) * right.z;
+    RwV3dScaleMacro(&vTmp2, &vRight, ((RwReal)2));
+    RwV3dAddMacro(&vTmp, &cameraLTM->at, &vRight);
+    RwV3dScaleMacro(&vCOP, &cameraLTM->right, -camera->viewOffset.x);
+    scale = camera->viewOffset.y;
+    RwV3dIncrementScaledMacro(&vCOP, &cameraLTM->up, scale);
+    RwV3dAddMacro(&vTmp, &vTmp, &vUp);
+    RwV3dScaleMacro(&vUp, &vUp, ((RwReal)2));
+    frustumVerts[0] = vTmp;
 
-    corner[2].x = corner[1].x - ((RwReal)2) * up.x;
-    corner[2].y = corner[1].y - ((RwReal)2) * up.y;
-    corner[2].z = corner[1].z - ((RwReal)2) * up.z;
-
-    corner[3].x = corner[2].x + ((RwReal)2) * right.x;
-    corner[3].y = corner[2].y + ((RwReal)2) * right.y;
-    corner[3].z = corner[2].z + ((RwReal)2) * right.z;
-
-    offset.x = ltm->right.x * -camera->viewOffset.x + ltm->up.x * camera->viewOffset.y;
-    offset.y = ltm->right.y * -camera->viewOffset.x + ltm->up.y * camera->viewOffset.y;
-    offset.z = ltm->right.z * -camera->viewOffset.x + ltm->up.z * camera->viewOffset.y;
+    RwV3dSubMacro(&vTmp, &vTmp, &vTmp2);
+    frustumVerts[1] = vTmp;
+    RwV3dSubMacro(&vTmp, &vTmp, &vUp);
+    frustumVerts[2] = vTmp;
+    RwV3dAddMacro(&vTmp, &vTmp, &vTmp2);
+    frustumVerts[3] = vTmp;
 
     for (i = 0; i < 4; i++)
     {
-        RwV3d dir = corner[i];
+        target = &frustumVerts[i + 4];
 
-        corner[i].x = offset.x + ltm->pos.x;
-        corner[i].y = offset.y + ltm->pos.y;
-        corner[i].z = offset.z + ltm->pos.z;
-        corner[i].x += (dir.x - offset.x) * camera->nearPlane;
-        corner[i].y += (dir.y - offset.y) * camera->nearPlane;
-        corner[i].z += (dir.z - offset.z) * camera->nearPlane;
+        RwV3dSubMacro(&vTmp, &frustumVerts[i], &vCOP);
+        RwV3dAddMacro(&frustumVerts[i], &vCOP, &cameraLTM->pos);
+        RwV3dIncrementScaledMacro(&frustumVerts[i], &vTmp, camera->nearPlane);
 
-        corner[i + 4].x = offset.x + ltm->pos.x;
-        corner[i + 4].y = offset.y + ltm->pos.y;
-        corner[i + 4].z = offset.z + ltm->pos.z;
-        corner[i + 4].x += (dir.x - offset.x) * camera->farPlane;
-        corner[i + 4].y += (dir.y - offset.y) * camera->farPlane;
-        corner[i + 4].z += (dir.z - offset.z) * camera->farPlane;
+        RwV3dAddMacro(target, &vCOP, &cameraLTM->pos);
+        RwV3dIncrementScaledMacro(target, &vTmp, camera->farPlane);
     }
 
-    CameraBuildClipPlanes(camera, ltm);
+    frustumPlanes = camera->frustumPlanes;
+
+    frustumPlanes[0].plane.normal = cameraLTM->at;
+    frustumPlanes[0].plane.distance = RwV3dDotProductMacro(&frustumVerts[4], &cameraLTM->at);
+    rwFrustumPlaneSetClosest(&frustumPlanes[0]);
+
+    RwV3dNegateMacro(&frustumPlanes[1].plane.normal, &frustumPlanes[0].plane.normal);
+    frustumPlanes[1].plane.distance =
+        RwV3dDotProductMacro(&frustumVerts[0], &frustumPlanes[1].plane.normal);
+    rwFrustumPlaneSetClosest(&frustumPlanes[1]);
+
+    RwV3dSubMacro(&vTmp, &frustumVerts[1], &frustumVerts[5]);
+    RwV3dSubMacro(&vTmp2, &frustumVerts[6], &frustumVerts[5]);
+    RwV3dCrossProductMacro(&frustumPlanes[2].plane.normal, &vTmp, &vTmp2);
+    _rwV3dNormalizeMacro(recip, &frustumPlanes[2].plane.normal, &frustumPlanes[2].plane.normal);
+    frustumPlanes[2].plane.distance =
+        RwV3dDotProductMacro(&frustumVerts[1], &frustumPlanes[2].plane.normal);
+    rwFrustumPlaneSetClosest(&frustumPlanes[2]);
+
+    RwV3dSubMacro(&vTmp2, &frustumVerts[4], &frustumVerts[5]);
+    RwV3dCrossProductMacro(&frustumPlanes[3].plane.normal, &vTmp2, &vTmp);
+    _rwV3dNormalizeMacro(recip, &frustumPlanes[3].plane.normal, &frustumPlanes[3].plane.normal);
+    frustumPlanes[3].plane.distance =
+        RwV3dDotProductMacro(&frustumVerts[1], &frustumPlanes[3].plane.normal);
+    rwFrustumPlaneSetClosest(&frustumPlanes[3]);
+
+    RwV3dSubMacro(&vTmp, &frustumVerts[3], &frustumVerts[7]);
+    RwV3dSubMacro(&vTmp2, &frustumVerts[4], &frustumVerts[7]);
+    RwV3dCrossProductMacro(&frustumPlanes[4].plane.normal, &vTmp, &vTmp2);
+    _rwV3dNormalizeMacro(recip, &frustumPlanes[4].plane.normal, &frustumPlanes[4].plane.normal);
+    frustumPlanes[4].plane.distance =
+        RwV3dDotProductMacro(&frustumVerts[3], &frustumPlanes[4].plane.normal);
+    rwFrustumPlaneSetClosest(&frustumPlanes[4]);
+
+    RwV3dSubMacro(&vTmp2, &frustumVerts[6], &frustumVerts[7]);
+    RwV3dCrossProductMacro(&frustumPlanes[5].plane.normal, &vTmp2, &vTmp);
+    _rwV3dNormalizeMacro(recip, &frustumPlanes[5].plane.normal, &frustumPlanes[5].plane.normal);
+    frustumPlanes[5].plane.distance =
+        RwV3dDotProductMacro(&frustumVerts[3], &frustumPlanes[5].plane.normal);
+    rwFrustumPlaneSetClosest(&frustumPlanes[5]);
 }
 
 static RwCamera* CameraBuildPerspViewMatrix(RwCamera* camera)
@@ -240,37 +275,77 @@ static RwCamera* CameraBuildPerspViewMatrix(RwCamera* camera)
 
 static void CameraBuildParallelClipPlanes(RwCamera* camera)
 {
-    RwFrame* frame = (RwFrame*)rwObjectGetParent(camera);
-    RwV3d* corner = camera->frustumCorners;
-    RwReal viewWindowX = camera->viewWindow.x;
-    RwReal viewWindowY = camera->viewWindow.y;
-    RwReal nearPlane = camera->nearPlane;
-    RwReal farPlane = camera->farPlane;
-    RwReal offsetX;
-    RwReal offsetY;
+    RwReal width;
+    RwReal height;
+    RwReal nearPlane;
+    RwReal farPlane;
+    RwReal offsetx;
+    RwReal offsety;
+    RwV3d vTmp;
+    RwV3d vTmp2;
+    RwReal recip;
+    RwV3d* frustumVerts;
+    RwMatrix* cameraLTM;
+    RwFrustumPlane* frustumPlanes;
 
-    corner[0].z = corner[1].z = corner[2].z = corner[3].z = nearPlane;
-    corner[4].z = corner[5].z = corner[6].z = corner[7].z = farPlane;
+    cameraLTM = &((RwFrame*)rwObjectGetParent(camera))->ltm;
+    width = camera->viewWindow.x;
+    height = camera->viewWindow.y;
+    nearPlane = camera->nearPlane;
+    farPlane = camera->farPlane;
+    offsetx = -camera->viewOffset.x;
+    offsety = camera->viewOffset.y;
+    frustumVerts = camera->frustumCorners;
+    frustumPlanes = camera->frustumPlanes;
 
-    offsetX = (((RwReal)1) - nearPlane) * -camera->viewOffset.x;
-    offsetY = (((RwReal)1) - nearPlane) * camera->viewOffset.y;
+    frustumVerts[0].z = frustumVerts[1].z = frustumVerts[2].z = frustumVerts[3].z = nearPlane;
+    frustumVerts[4].z = frustumVerts[5].z = frustumVerts[6].z = frustumVerts[7].z = farPlane;
 
-    corner[0].x = corner[3].x = viewWindowX + offsetX;
-    corner[1].x = corner[2].x = -viewWindowX + offsetX;
-    corner[0].y = corner[1].y = viewWindowY + offsetY;
-    corner[2].y = corner[3].y = -viewWindowY + offsetY;
+    frustumVerts[0].x = frustumVerts[3].x = width + (((RwReal)1) - nearPlane) * offsetx;
+    frustumVerts[1].x = frustumVerts[2].x = -width + (((RwReal)1) - nearPlane) * offsetx;
+    frustumVerts[4].x = frustumVerts[7].x = width + (((RwReal)1) - farPlane) * offsetx;
+    frustumVerts[5].x = frustumVerts[6].x = -width + (((RwReal)1) - farPlane) * offsetx;
+    frustumVerts[0].y = frustumVerts[1].y = height + (((RwReal)1) - nearPlane) * offsety;
+    frustumVerts[2].y = frustumVerts[3].y = -height + (((RwReal)1) - nearPlane) * offsety;
+    frustumVerts[4].y = frustumVerts[5].y = height + (((RwReal)1) - farPlane) * offsety;
+    frustumVerts[6].y = frustumVerts[7].y = -height + (((RwReal)1) - farPlane) * offsety;
 
-    offsetX = (((RwReal)1) - farPlane) * -camera->viewOffset.x;
-    offsetY = (((RwReal)1) - farPlane) * camera->viewOffset.y;
+    RwV3dTransformPoints(frustumVerts, frustumVerts, 8, cameraLTM);
 
-    corner[4].x = corner[7].x = viewWindowX + offsetX;
-    corner[5].x = corner[6].x = -viewWindowX + offsetX;
-    corner[4].y = corner[5].y = viewWindowY + offsetY;
-    corner[6].y = corner[7].y = -viewWindowY + offsetY;
+    frustumPlanes[0].plane.normal = cameraLTM->at;
+    frustumPlanes[0].plane.distance =
+        RwV3dDotProductMacro(&frustumVerts[4], &frustumPlanes[0].plane.normal);
+    rwFrustumPlaneSetClosest(&frustumPlanes[0]);
 
-    RwV3dTransformPoints(corner, corner, 8, &frame->ltm);
+    RwV3dNegateMacro(&frustumPlanes[1].plane.normal, &frustumPlanes[0].plane.normal);
+    frustumPlanes[1].plane.distance =
+        RwV3dDotProductMacro(&frustumVerts[0], &frustumPlanes[1].plane.normal);
+    rwFrustumPlaneSetClosest(&frustumPlanes[1]);
 
-    CameraBuildClipPlanes(camera, (&frame->ltm));
+    RwV3dSubMacro(&vTmp, &frustumVerts[1], &frustumVerts[5]);
+    RwV3dSubMacro(&vTmp2, &frustumVerts[6], &frustumVerts[5]);
+    RwV3dCrossProductMacro(&frustumPlanes[2].plane.normal, &vTmp, &vTmp2);
+    _rwV3dNormalizeMacro(recip, &frustumPlanes[2].plane.normal, &frustumPlanes[2].plane.normal);
+    frustumPlanes[2].plane.distance =
+        RwV3dDotProductMacro(&frustumVerts[1], &frustumPlanes[2].plane.normal);
+    rwFrustumPlaneSetClosest(&frustumPlanes[2]);
+
+    RwV3dSubMacro(&vTmp2, &frustumVerts[4], &frustumVerts[5]);
+    RwV3dCrossProductMacro(&frustumPlanes[3].plane.normal, &vTmp2, &vTmp);
+    _rwV3dNormalizeMacro(recip, &frustumPlanes[3].plane.normal, &frustumPlanes[3].plane.normal);
+    frustumPlanes[3].plane.distance =
+        RwV3dDotProductMacro(&frustumVerts[1], &frustumPlanes[3].plane.normal);
+    rwFrustumPlaneSetClosest(&frustumPlanes[3]);
+
+    RwV3dNegateMacro(&frustumPlanes[4].plane.normal, &frustumPlanes[2].plane.normal);
+    frustumPlanes[4].plane.distance =
+        RwV3dDotProductMacro(&frustumVerts[3], &frustumPlanes[4].plane.normal);
+    rwFrustumPlaneSetClosest(&frustumPlanes[4]);
+
+    RwV3dNegateMacro(&frustumPlanes[5].plane.normal, &frustumPlanes[3].plane.normal);
+    frustumPlanes[5].plane.distance =
+        RwV3dDotProductMacro(&frustumVerts[3], &frustumPlanes[5].plane.normal);
+    rwFrustumPlaneSetClosest(&frustumPlanes[5]);
 }
 
 static RwCamera* CameraBuildParallelViewMatrix(RwCamera* camera)
