@@ -518,7 +518,6 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
     u16 entry;
     s32 coeff;
     s32 sign;
-    u16 kind;
     s32 i;
     s32 count;
     u32 maxbits;
@@ -664,62 +663,62 @@ next_lossless_node:
                         goto next_lossless_node;
                     }
                     switch (BP_TREE_ENTRY_KIND(entry)) {
-                    case BP_TREE_GROUP_NODE:
-                        kind = BP_TREE_ENTRY_INDEX(entry);
-                        count = BP_TREE_GROUP_INDEX(kind);
-                        *cur = BP_TREE_BASE_BRANCH_ENTRY(groups[count - 1], BP_TREE_ENTRY_BASE(entry));
-                        *end = BP_TREE_CHILD_BRANCH_ENTRY(groups[count], kind, BP_TREE_CHILD1_BASE);
-                        end[1] = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD1_INDEX], kind, BP_TREE_CHILD2_BASE);
-                        end[2] = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD2_INDEX], kind, BP_TREE_CHILD3_BASE);
-                        end += BP_TREE_ADDED_CHILD_COUNT;
-                        break;
                     case BP_TREE_HIGH_NODE:
                         *cur = BP_TREE_HIGH_GROUP_ENTRY(hi_groups[BP_TREE_ENTRY_HIGH_GROUP(entry)], BP_TREE_ENTRY_INDEX(entry));
-handle_lossless_children:
-                        kind = BP_TREE_ENTRY_INDEX(entry);
-                        PUT_BP_BIT(bits, lens[kind] != level);
-                        if (lens[kind] == level) {
-                            PUT_BP_BITS(bits, absvals[kind], lenbits, VarBitsLens[lenbits]);
-                            PUT_BP_BIT(bits, ordered[kind] < 0);
-                        } else {
-                            *--restart = BP_TREE_BASE_COEFF_ENTRY(lens[kind], BP_TREE_ENTRY_BASE(entry));
-                        }
-
-                        i = kind + BP_TREE_CHILD1_INDEX;
-                        PUT_BP_BIT(bits, lens[i] != level);
-                        if (lens[i] == level) {
-                            PUT_BP_BITS(bits, absvals[i], lenbits, VarBitsLens[lenbits]);
-                            PUT_BP_BIT(bits, ordered[i] < 0);
-                        } else {
-                            *--restart = BP_TREE_COEFF_ENTRY(lens[i], i);
-                        }
-
-                        i = kind + BP_TREE_CHILD2_INDEX;
-                        PUT_BP_BIT(bits, lens[i] != level);
-                        if (lens[i] == level) {
-                            PUT_BP_BITS(bits, absvals[i], lenbits, VarBitsLens[lenbits]);
-                            PUT_BP_BIT(bits, ordered[i] < 0);
-                        } else {
-                            *--restart = BP_TREE_COEFF_ENTRY(lens[i], i);
-                        }
-
-                        i = kind + BP_TREE_CHILD3_INDEX;
-                        PUT_BP_BIT(bits, lens[i] != level);
-                        if (lens[i] == level) {
-                            PUT_BP_BITS(bits, absvals[i], lenbits, VarBitsLens[lenbits]);
-                            PUT_BP_BIT(bits, ordered[i] < 0);
-                        } else {
-                            *--restart = BP_TREE_COEFF_ENTRY(lens[i], i);
-                        }
+                        goto handle_lossless_children;
+                    case BP_TREE_GROUP_NODE:
+                        entry = BP_TREE_ENTRY_INDEX(entry);
+                        count = BP_TREE_GROUP_INDEX(entry);
+                        *cur = BP_TREE_BRANCH_ENTRY(groups[count - 1], entry);
+                        *end = BP_TREE_CHILD_BRANCH_ENTRY(groups[count], entry, BP_TREE_CHILD1_BASE);
+                        end[1] = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD1_INDEX], entry, BP_TREE_CHILD2_BASE);
+                        end[2] = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD2_INDEX], entry, BP_TREE_CHILD3_BASE);
+                        end += BP_TREE_ADDED_CHILD_COUNT;
                         break;
                     case BP_TREE_BRANCH_NODE:
                         *cur = BP_TREE_EMPTY_ENTRY;
                         cur++;
-                        goto handle_lossless_children;
+handle_lossless_children:
+                        entry = BP_TREE_ENTRY_INDEX(entry);
+                        PUT_BP_BIT(bits, lens[entry] != level);
+                        if (lens[entry] != level) {
+                            *--restart = BP_TREE_COEFF_ENTRY(lens[entry], entry);
+                        } else {
+                            PUT_BP_BITS(bits, absvals[entry], lenbits, VarBitsLens[lenbits]);
+                            PUT_BP_BIT(bits, ordered[entry] < 0);
+                        }
+
+                        i = entry + BP_TREE_CHILD1_INDEX;
+                        PUT_BP_BIT(bits, lens[i] != level);
+                        if (lens[i] != level) {
+                            *--restart = BP_TREE_COEFF_ENTRY(lens[i], i);
+                        } else {
+                            PUT_BP_BITS(bits, absvals[i], lenbits, VarBitsLens[lenbits]);
+                            PUT_BP_BIT(bits, ordered[i] < 0);
+                        }
+
+                        i = entry + BP_TREE_CHILD2_INDEX;
+                        PUT_BP_BIT(bits, lens[i] != level);
+                        if (lens[i] != level) {
+                            *--restart = BP_TREE_COEFF_ENTRY(lens[i], i);
+                        } else {
+                            PUT_BP_BITS(bits, absvals[i], lenbits, VarBitsLens[lenbits]);
+                            PUT_BP_BIT(bits, ordered[i] < 0);
+                        }
+
+                        i = entry + BP_TREE_CHILD3_INDEX;
+                        PUT_BP_BIT(bits, lens[i] != level);
+                        if (lens[i] != level) {
+                            *--restart = BP_TREE_COEFF_ENTRY(lens[i], i);
+                        } else {
+                            PUT_BP_BITS(bits, absvals[i], lenbits, VarBitsLens[lenbits]);
+                            PUT_BP_BIT(bits, ordered[i] < 0);
+                        }
+                        break;
                     case BP_TREE_COEFF_NODE:
-                        kind = BP_TREE_ENTRY_INDEX(entry);
-                        PUT_BP_BITS(bits, absvals[kind], lenbits, VarBitsLens[lenbits]);
-                        PUT_BP_BIT(bits, ordered[kind] < 0);
+                        entry = BP_TREE_ENTRY_INDEX(entry);
+                        PUT_BP_BITS(bits, absvals[entry], lenbits, VarBitsLens[lenbits]);
+                        PUT_BP_BIT(bits, ordered[entry] < 0);
                         *cur = BP_TREE_EMPTY_ENTRY;
                         goto next_lossless_node;
                     default:

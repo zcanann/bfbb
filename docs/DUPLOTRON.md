@@ -8222,3 +8222,22 @@ trips and 27,644 early-cutoff checks pass as well. The full all_source build
 passes with no function-score regressions. Report:
 build/bitplane-length-dispatch-report.json. The unit remains NonMatching;
 normal DOL identity does not establish source-linked movie playback.
+
+
+## Bink lossless writer node traversal (2026-10-01)
+
+`WriteBPLossless` improves from 78.95659% to 87.199104%. Retail's high/group/
+branch dispatch order reaches 80.56437%; deferred-child-first branches reach
+86.86976%; constructing the first deferred child from its decoded index
+reaches 86.952095%. Reusing the entry as its decoded index reaches the final
+87.199104%, provided the group branch is also constructed from that index
+rather than attempting to mask base bits from an already decoded value.
+The round-trip checker caught that intermediate mistake; only the corrected
+version is retained. Sequential child-index trials regressed and were dropped.
+
+All 16,384 lossless round trips, exact predicted/written lengths, guards and
+DC checks pass. All 6,911 nonempty lossy round trips and 27,644 early-cutoff
+checks also pass. Full all_source build and normal retail DOL SHA-1 pass;
+only WriteBPLossless changes in the deduplicated report, with no regressions.
+Report: build/bitplane-writer-dispatch-report.json. Bitplane remains
+NonMatching, so this does not establish source-linked movie playback.
