@@ -1748,21 +1748,15 @@ s32 BinkDoFrame(HBINK bnk)
                     next_track = track + 1;
                     frame_payload = BINK_TRACK_FRAME_PAYLOAD(frame_data);
                     frame_data = (BINKTRACKFRAME PTR4*)frame_payload;
-                    next_frame_data = BINK_TRACK_FRAME_AFTER_PAYLOAD(frame_data, compressed_size);
-                    if (playing_index < playing_tracks) {
-                        s32 PTR4* indexes;
+                    for (playing_index = 0; playing_index < playing_tracks; ++playing_index) {
+                        if (bnk->trackindexes[playing_index] == track) {
+                            goto found_playing_track;
+                        }
+                    }
+                    playing_index = BINK_TRACK_NOT_FOUND;
 
-                        indexes = bnk->trackindexes;
-                        do {
-                            if (*indexes++ == track) {
-                                break;
-                            }
-                            ++playing_index;
-                        } while (playing_index < playing_tracks);
-                    }
-                    if (playing_index >= playing_tracks) {
-                        playing_index = BINK_TRACK_NOT_FOUND;
-                    }
+found_playing_track:
+                    next_frame_data = BINK_TRACK_FRAME_AFTER_PAYLOAD(frame_data, compressed_size);
 
                     if (playing_index != BINK_TRACK_NOT_FOUND && compressed_size != 0) {
                         void PTR4* in;
@@ -1792,11 +1786,9 @@ s32 BinkDoFrame(HBINK bnk)
                                 in_bytes -= out_bytes;
 
                                 if (out_bytes > free_bytes) {
-                                    u32 over;
-
-                                    over = out_bytes - free_bytes;
-                                    bnk->bsnd[playing_index].sndreadpos += over;
-                                    bnk->bsnd[playing_index].sndamt -= over;
+                                    free_bytes = out_bytes - free_bytes;
+                                    bnk->bsnd[playing_index].sndreadpos += free_bytes;
+                                    bnk->bsnd[playing_index].sndamt -= free_bytes;
                                     if (bnk->bsnd[playing_index].sndreadpos >
                                         bnk->bsnd[playing_index].sndend) {
                                         bnk->bsnd[playing_index].sndreadpos -=
