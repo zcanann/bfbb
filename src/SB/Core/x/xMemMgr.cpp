@@ -185,12 +185,13 @@ U32 xMemGetBlockInfo(xMemHeap_tag* heap, U32 size, S32 align, xMemBlkInfo_tag* i
     S32 post;
     S32 dir;
     xHeapState_tag* sp = &heap->state[heap->state_idx];
-    S32 r10;
+    // A one-element temporary preserves retail register allocation for the
+    // optional header size; a scalar coalesces it with different temporaries.
+    S32 header[1];
 
     dir = (heap->flags & 0x100) ? -1 : 1;
-    r10 = sizeof(xMemBlock_tag);
-    r10 &= -XMEMHEAP_GET_0x8000(heap->flags);
-    header_size = r10;
+    header[0] = XMEMHEAP_GET_0x8000(heap->flags) ? sizeof(xMemBlock_tag) : 0;
+    header_size = header[0];
 
     if (heap->flags & 0x100)
     {

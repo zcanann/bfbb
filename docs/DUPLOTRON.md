@@ -7492,3 +7492,23 @@ regressions. The full source build reproduces retail DOL SHA-1
 306526d90b48e99894c3138f5fc8f2716d9fecf6. No split or compiler-patch changes
 are needed; no independent original linker map was found to substantiate
 the alternative bad-split hypothesis.
+
+## Memory-manager match and source linking (2026-10-01)
+
+`xMemGetBlockInfo` now matches all 304 bytes. The optional block-header
+size uses the flag's conditional value (sizeof(xMemBlock_tag) or zero)
+rather than a manually expanded mask. A one-element temporary preserves
+the retail register allocation; the scalar forms coalesce it with different
+locals. This is a documented compiler-layout workaround, with no assembly
+or compiler changes.
+
+`xMemMgr` now links all 21 functions (2,264 code bytes) and 8 data bytes
+from source. The all-source build passes, no SB function match scores
+regress, and the linked DOL reproduces retail SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6.
+
+A separate register-allocation capture of Plankton's `impart_velocity`
+confirmed that the unwanted template-load scheduling is already present
+at graph-coloring entry. Its five copy registers are unnamed compiler
+temporaries; local declaration reordering cannot repair that schedule.
+No Plankton source change was retained.
