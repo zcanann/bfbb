@@ -52,11 +52,11 @@ extern void _rwFrameSyncHierarchyLTM(RwFrame* frame);
 
 static RwModuleInfo frameModule;
 
-RwInt32 _rwFrameFreeListBlockSize = 50;
-RwInt32 _rwFrameFreeListPreallocBlocks = 1;
+static RwInt32 _rwFrameFreeListBlockSize = 50;
+static RwInt32 _rwFrameFreeListPreallocBlocks = 1;
 
-static RwPluginRegistry frameTKList = { sizeof(RwFrame),         sizeof(RwFrame),        0, 0,
-                                        (RwPluginRegEntry*)NULL, (RwPluginRegEntry*)NULL };
+RwPluginRegistry frameTKList = { sizeof(RwFrame),         sizeof(RwFrame),        0, 0,
+                                 (RwPluginRegEntry*)NULL, (RwPluginRegEntry*)NULL };
 
 void* _rwFrameOpen(void* instance, RwInt32 offset, RwInt32 size)
 {
@@ -96,14 +96,19 @@ void* _rwFrameClose(void* instance, RwInt32 offset, RwInt32 size)
 
 static void rwSetHierarchyRoot(RwFrame* frame, RwFrame* root)
 {
-    RwFrame* child;
-
     frame->root = root;
+    frame = frame->child;
 
-    for (child = frame->child; child; child = child->next)
+    while (frame)
     {
-        rwSetHierarchyRoot(child, root);
+        rwSetHierarchyRoot(frame, root);
+        frame = frame->next;
     }
+}
+
+RwBool RwFrameDirty(const RwFrame* frame)
+{
+    return rwObjectTestPrivateFlags(frame->root, rwFRAMEPRIVATEHIERARCHYSYNC);
 }
 
 RwFrame* RwFrameCreate(void)
@@ -133,16 +138,6 @@ RwFrame* RwFrameCreate(void)
     return frame;
 }
 
-static void FrameDestroyRecurseDeInitLeaf(RwFrame* frame)
-{
-    _rwPluginRegistryDeInitObject(&frameTKList, frame);
-
-    if (rwObjectTestPrivateFlags(frame, rwFRAMEPRIVATEHIERARCHYSYNC))
-    {
-        rwLinkListRemoveLLLink(&frame->inDirtyListLink);
-    }
-}
-
 RwBool RwFrameDestroy(RwFrame* frame)
 {
     RwFrame* child;
@@ -169,6 +164,16 @@ RwBool RwFrameDestroy(RwFrame* frame)
     RwFreeListFree(RWFRAMEGLOBAL(frameFreeList), frame);
 
     return TRUE;
+}
+
+static void FrameDestroyRecurseDeInitLeaf(RwFrame* frame)
+{
+    _rwPluginRegistryDeInitObject(&frameTKList, frame);
+
+    if (rwObjectTestPrivateFlags(frame, rwFRAMEPRIVATEHIERARCHYSYNC))
+    {
+        rwLinkListRemoveLLLink(&frame->inDirtyListLink);
+    }
 }
 
 static void rwFrameDestroyRecurseDestroyLeaf(RwFrame* frame)
@@ -209,6 +214,23 @@ RwFrame* RwFrameUpdateObjects(RwFrame* frame)
     rwFrameSetDirty(frame);
 
     return frame;
+}
+
+RwMatrix* RwFrameGetLTM(RwFrame* frame)
+{
+    RwFrame* root = frame->root;
+
+    if (rwObjectTestPrivateFlags(root, rwFRAMEPRIVATEHIERARCHYSYNCLTM))
+    {
+        _rwFrameSyncHierarchyLTM(root);
+    }
+
+    return &frame->ltm;
+}
+
+RwFrame* RwFrameGetRoot(const RwFrame* frame)
+{
+    return frame->root;
 }
 
 RwFrame* RwFrameAddChild(RwFrame* parent, RwFrame* child)
@@ -318,28 +340,6 @@ RwFrame* RwFrameOrthoNormalize(RwFrame* frame)
     rwFrameSetDirty(frame);
 
     return frame;
-}
-
-RwMatrix* RwFrameGetLTM(RwFrame* frame)
-{
-    RwFrame* root = frame->root;
-
-    if (rwObjectTestPrivateFlags(root, rwFRAMEPRIVATEHIERARCHYSYNCLTM))
-    {
-        _rwFrameSyncHierarchyLTM(root);
-    }
-
-    return &frame->ltm;
-}
-
-RwFrame* RwFrameGetRoot(const RwFrame* frame)
-{
-    return frame->root;
-}
-
-RwBool RwFrameDirty(const RwFrame* frame)
-{
-    return rwObjectTestPrivateFlags(frame->root, rwFRAMEPRIVATEHIERARCHYSYNC);
 }
 
 RwInt32 RwFrameRegisterPlugin(RwInt32 size, RwUInt32 pluginID,

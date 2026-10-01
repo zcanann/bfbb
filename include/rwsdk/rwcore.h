@@ -829,7 +829,7 @@ extern RwRaster* RwRasterCreate(RwInt32 width, RwInt32 height, RwInt32 depth, Rw
 extern RwUInt8* RwRasterLock(RwRaster* raster, RwUInt8 level, RwInt32 lockMode);
 extern RwImage* RwImageResample(RwImage* dstImage, const RwImage* srcImage);
 extern RwImage* RwImageCreateResample(const RwImage* srcImage, RwInt32 width, RwInt32 height);
-extern void _rwFrameSyncDirty(void);
+extern RwBool _rwFrameSyncDirty(void);
 extern RwBool RwTextureSetReadCallBack(RwTextureCallBackRead callBack);
 extern RwBool RwTextureSetMipmapping(RwBool enable);
 extern RwBool RwTextureGetMipmapping(void);

@@ -50,10 +50,10 @@ static RwModuleInfo cameraModule;
 
 static RwFreeList _rwCameraFreeList;
 
-RwInt32 _rwCameraFreeListBlockSize = 4;
-RwInt32 _rwCameraFreeListPreallocBlocks = 1;
+static RwInt32 _rwCameraFreeListBlockSize = 4;
+static RwInt32 _rwCameraFreeListPreallocBlocks = 1;
 
-static RwPluginRegistry cameraTKList = { sizeof(RwCamera),        sizeof(RwCamera),       0, 0,
+RwPluginRegistry cameraTKList = { sizeof(RwCamera),        sizeof(RwCamera),       0, 0,
                                          (RwPluginRegEntry*)NULL, (RwPluginRegEntry*)NULL };
 
 #define rwInvSqrtMacro(_result, _num) ((*(_result)) = _rwInvSqrt(_num))
@@ -210,11 +210,9 @@ static RwCamera* CameraBuildPerspViewMatrix(RwCamera* camera)
     RwReal shift;
 
     recip = ((RwReal)-0.5) * camera->recipViewWindow.x;
+    RwV3dScaleMacro(&col, &ltm->right, recip);
     shift = ((RwReal)0.5) - recip * camera->viewOffset.x;
-
-    col.x = ltm->right.x * recip + ltm->at.x * shift;
-    col.y = ltm->right.y * recip + ltm->at.y * shift;
-    col.z = ltm->right.z * recip + ltm->at.z * shift;
+    RwV3dIncrementScaledMacro(&col, &ltm->at, shift);
 
     camera->viewMatrix.right.x = col.x;
     camera->viewMatrix.up.x = col.y;
@@ -222,11 +220,9 @@ static RwCamera* CameraBuildPerspViewMatrix(RwCamera* camera)
     camera->viewMatrix.pos.x = ((RwReal)0.5) - (shift + RwV3dDotProductMacro(&ltm->pos, &col));
 
     recip = ((RwReal)-0.5) * camera->recipViewWindow.y;
+    RwV3dScaleMacro(&col, &ltm->up, recip);
     shift = recip * camera->viewOffset.y + ((RwReal)0.5);
-
-    col.x = ltm->up.x * recip + ltm->at.x * shift;
-    col.y = ltm->up.y * recip + ltm->at.y * shift;
-    col.z = ltm->up.z * recip + ltm->at.z * shift;
+    RwV3dIncrementScaledMacro(&col, &ltm->at, shift);
 
     camera->viewMatrix.right.y = col.x;
     camera->viewMatrix.up.y = col.y;
@@ -287,11 +283,9 @@ static RwCamera* CameraBuildParallelViewMatrix(RwCamera* camera)
     RwReal shift;
 
     recip = ((RwReal)-0.5) * camera->recipViewWindow.x;
+    RwV3dScaleMacro(&col, &ltm->right, recip);
     shift = -(recip * camera->viewOffset.x);
-
-    col.x = ltm->right.x * recip + ltm->at.x * shift;
-    col.y = ltm->right.y * recip + ltm->at.y * shift;
-    col.z = ltm->right.z * recip + ltm->at.z * shift;
+    RwV3dIncrementScaledMacro(&col, &ltm->at, shift);
 
     camera->viewMatrix.right.x = col.x;
     camera->viewMatrix.up.x = col.y;
@@ -299,11 +293,9 @@ static RwCamera* CameraBuildParallelViewMatrix(RwCamera* camera)
     camera->viewMatrix.pos.x = ((RwReal)0.5) - (shift + RwV3dDotProductMacro(&ltm->pos, &col));
 
     recip = ((RwReal)-0.5) * camera->recipViewWindow.y;
+    RwV3dScaleMacro(&col, &ltm->up, recip);
     shift = recip * camera->viewOffset.y;
-
-    col.x = ltm->up.x * recip + ltm->at.x * shift;
-    col.y = ltm->up.y * recip + ltm->at.y * shift;
-    col.z = ltm->up.z * recip + ltm->at.z * shift;
+    RwV3dIncrementScaledMacro(&col, &ltm->at, shift);
 
     camera->viewMatrix.right.y = col.x;
     camera->viewMatrix.up.y = col.y;

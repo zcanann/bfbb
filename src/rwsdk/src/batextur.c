@@ -24,12 +24,16 @@
     MACRO_STOP
 
 #define rwTEXTUREBASENAMELENGTH 32
+#define rwTEXTURENAMEBUFFERLENGTH 256
+#define rwTEXTUREMAXMIPLEVELS 64
+#define rwTEXTUREMAXMIPLEVELS16 16
+
+#define E_RW_INVIMAGEDEPTH 0x80000009
 
 extern void* memcpy(void* dst, const void* src, RwUInt32 size);
 
 #define E_RW_STRINGTOOLONG 0x8000001e
-#define E_RW_READTEXMASK 0x8000000a
-#define E_RW_READTEX 0x8000000b
+#define E_RW_READTEXMASK 0x16
 
 typedef struct RwModuleInfo RwModuleInfo;
 struct RwModuleInfo
@@ -39,7 +43,7 @@ struct RwModuleInfo
 };
 
 typedef RwTexture* (*RwTextureCallBackFind)(const RwChar* name);
-typedef RwBool (*RwTextureCallBackMipmapGenerate)(RwRaster* raster, RwImage* image);
+typedef RwRaster* (*RwTextureCallBackMipmapGenerate)(RwRaster* raster, RwImage* image);
 typedef RwBool (*RwTextureCallBackMipmapName)(RwChar* name, RwChar* maskName, RwUInt8 mipLevel,
                                               RwInt32 format);
 
@@ -71,22 +75,22 @@ extern void _rwPalQuantMatchImage(RwUInt8* dstPixels, RwInt32 dstStride, RwInt32
                                   RwBool dither, void* pQuant, RwImage* image);
 extern void _rwPalQuantTerm(void* pQuant);
 
-static RwTexDictionary* dummyTexDict;
 static RwModuleInfo textureModule;
+static RwTexDictionary* dummyTexDict;
 
 static RwFreeList _rwTextureFreeList;
 static RwFreeList _rwTexDictionaryFreeList;
 
-RwInt32 _rwTextureFreeListBlockSize = 128;
-RwInt32 _rwTextureFreeListPreallocBlocks = 1;
-RwInt32 _rwTexDictionaryFreeListBlockSize = 5;
-RwInt32 _rwTexDictionaryFreeListPreallocBlocks = 1;
+static RwInt32 _rwTextureFreeListBlockSize = 128;
+static RwInt32 _rwTextureFreeListPreallocBlocks = 1;
+static RwInt32 _rwTexDictionaryFreeListBlockSize = 5;
+static RwInt32 _rwTexDictionaryFreeListPreallocBlocks = 1;
 
-static RwPluginRegistry textureTKList = { sizeof(RwTexture),       sizeof(RwTexture),      0, 0,
-                                          (RwPluginRegEntry*)NULL, (RwPluginRegEntry*)NULL };
+RwPluginRegistry textureTKList = { sizeof(RwTexture),       sizeof(RwTexture),      0, 0,
+                                   (RwPluginRegEntry*)NULL, (RwPluginRegEntry*)NULL };
 
-static RwPluginRegistry texDictTKList = { sizeof(RwTexDictionary), sizeof(RwTexDictionary), 0, 0,
-                                          (RwPluginRegEntry*)NULL, (RwPluginRegEntry*)NULL };
+RwPluginRegistry texDictTKList = { sizeof(RwTexDictionary), sizeof(RwTexDictionary), 0, 0,
+                                   (RwPluginRegEntry*)NULL, (RwPluginRegEntry*)NULL };
 
 static RwBool TextureCompareName(const RwChar* string1, const RwChar* string2)
 {
@@ -95,14 +99,14 @@ static RwBool TextureCompareName(const RwChar* string1, const RwChar* string2)
         RwChar char1 = *string1;
         RwChar char2 = *string2;
 
-        if ((char1 > '`') && (char1 < '{'))
+        if (char1 >= 'a' && char1 <= 'z')
         {
-            char1 -= 0x20;
+            char1 -= 'a' - 'A';
         }
 
-        if ((char2 > '`') && (char2 < '{'))
+        if (char2 >= 'a' && char2 <= 'z')
         {
-            char2 -= 0x20;
+            char2 -= 'a' - 'A';
         }
 
         if (char1 != char2)
@@ -114,7 +118,12 @@ static RwBool TextureCompareName(const RwChar* string1, const RwChar* string2)
         string2++;
     }
 
-    return (*string1 == *string2);
+    if (*string1 == *string2)
+    {
+        return TRUE;
+    }
+
+    return FALSE;
 }
 
 static RwBool TextureDefaultMipmapName(RwChar* name, RwChar* maskName, RwUInt8 mipLevel,
@@ -131,14 +140,7 @@ static RwBool TextureDefaultMipmapName(RwChar* name, RwChar* maskName, RwUInt8 m
         valid = TRUE;
     }
 
-    if (valid)
-    {
-        extension[1] = character[mipLevel];
-    }
-    else
-    {
-        extension[1] = '\0';
-    }
+    extension[1] = valid ? character[mipLevel] : '\0';
 
     extension[2] = '\0';
 
@@ -170,59 +172,497 @@ static RwBool PalettizeImage(RwImage** image, RwInt32 depth)
     _rwPalQuantResolvePalette(palette, 1 << depth, palQuant);
 
     newImage = RwImageCreate((*image)->width, (*image)->height, depth);
-    if (!newImage)
+    if (newImage)
+    {
+        RwImageAllocatePixels(newImage);
+
+        _rwPalQuantMatchImage(newImage->cpPixels, newImage->stride, newImage->depth, FALSE,
+                              palQuant, *image);
+
+        memcpy(newImage->palette, palette, (1 << depth) << 2);
+
+        RwImageDestroy(*image);
+        *image = newImage;
+    }
+    else
     {
         return FALSE;
     }
-
-    RwImageAllocatePixels(newImage);
-
-    _rwPalQuantMatchImage(newImage->cpPixels, newImage->stride, newImage->depth, FALSE, palQuant,
-                          *image);
-
-    memcpy(newImage->palette, palette, (1 << depth) << 2);
-
-    RwImageDestroy(*image);
-    *image = newImage;
 
     _rwPalQuantTerm(palQuant);
 
     return TRUE;
 }
 
-static RwBool PalettizeMipmaps(RwImage** image, RwInt32 numLevels, RwInt32 depth)
+static RwBool PalettizeMipmaps(RwRGBA* palette, RwImage* srcImage, RwImage** images,
+                               RwInt32 numLevels, RwInt32 depth)
 {
+    RwInt32 palQuant[4];
+    RwInt32 palSize;
     RwInt32 i;
+
+    /* If every level already shares one palette there is nothing to do */
+    if (images[0]->palette)
+    {
+        palSize = 1 << depth;
+
+        for (i = 1; i < numLevels; i++)
+        {
+            RwUInt32* basePal = (RwUInt32*)images[0]->palette;
+            RwUInt32* levelPal = (RwUInt32*)images[i]->palette;
+            RwInt32 j;
+
+            if (!basePal || !levelPal)
+            {
+                i = rwTEXTUREMAXMIPLEVELS;
+                break;
+            }
+
+            for (j = 0; j < palSize; j++)
+            {
+                if (basePal[j] != levelPal[j])
+                {
+                    i = rwTEXTUREMAXMIPLEVELS;
+                    break;
+                }
+            }
+        }
+
+        if (i == numLevels)
+        {
+            memcpy(palette, images[0]->palette, (1 << images[0]->depth) * sizeof(RwRGBA));
+            return TRUE;
+        }
+    }
+
+    if (!_rwPalQuantInit(palQuant))
+    {
+        return FALSE;
+    }
 
     for (i = 0; i < numLevels; i++)
     {
-        if (!PalettizeImage(&image[i], depth))
+        _rwPalQuantAddImage(palQuant, images[i], ((RwReal)1));
+    }
+
+    _rwPalQuantResolvePalette(palette, 1 << depth, palQuant);
+
+    for (i = 0; i < numLevels; i++)
+    {
+        RwImage* oldImage = images[i];
+        RwImage* newImage;
+
+        newImage = RwImageCreate(oldImage->width, oldImage->height, depth);
+        if (newImage)
+        {
+            RwImageAllocatePixels(newImage);
+            _rwPalQuantMatchImage(newImage->cpPixels, newImage->stride, newImage->depth, FALSE,
+                                  palQuant, oldImage);
+
+            /* All levels share the one palette */
+            newImage->palette = palette;
+            images[i] = newImage;
+
+            if (oldImage != srcImage)
+            {
+                RwImageDestroy(oldImage);
+            }
+        }
+        else
         {
             return FALSE;
         }
     }
 
+    _rwPalQuantTerm(palQuant);
+
     return TRUE;
 }
 
-static RwImage* TextureImageReadAndSize(const RwChar* name, RwInt32* width, RwInt32* height,
+#define rwTextureCopyName(_dst, _src)                                                              \
+    MACRO_START                                                                                    \
+    {                                                                                              \
+        rwstrncpy((_dst), (_src), rwTEXTURENAMEBUFFERLENGTH);                                      \
+        if (rwstrlen(_src) >= rwTEXTURENAMEBUFFERLENGTH)                                           \
+        {                                                                                          \
+            RWERROR((E_RW_STRINGTOOLONG, (_src), rwTEXTURENAMEBUFFERLENGTH,                        \
+                     rwTEXTURENAMEBUFFERLENGTH - 1, (_src)[rwTEXTURENAMEBUFFERLENGTH - 1]));       \
+            (_dst)[rwTEXTURENAMEBUFFERLENGTH - 1] = '\0';                                          \
+        }                                                                                          \
+    }                                                                                              \
+    MACRO_STOP
+
+static RwImage* TextureImageReadAndSize(const RwChar* name, const RwChar* maskName,
+                                        RwInt32 rasterType, RwInt32* width, RwInt32* height,
                                         RwInt32* depth, RwInt32* format)
 {
     RwImage* image;
+    RwChar imageName[rwTEXTURENAMEBUFFERLENGTH];
+    RwChar imageMaskName[rwTEXTURENAMEBUFFERLENGTH];
+    const RwChar* extension;
 
-    image = RwImageReadMaskedImage(name, (const RwChar*)NULL);
+    rwTextureCopyName(imageName, name);
+    extension = RwImageFindFileType(name);
+    if (extension)
+    {
+        rwstrcat(imageName, extension);
+    }
+
+    imageMaskName[0] = '\0';
+    if (maskName && maskName[0])
+    {
+        rwTextureCopyName(imageMaskName, maskName);
+        extension = RwImageFindFileType(maskName);
+        if (extension)
+        {
+            rwstrcat(imageMaskName, extension);
+        }
+    }
+
+    image = RwImageReadMaskedImage(imageName, imageMaskName);
     if (!image)
     {
         return (RwImage*)NULL;
     }
 
-    RwImageFindRasterFormat(image, rwRASTERTYPETEXTURE, width, height, depth, format);
+    if (!*width || !*height)
+    {
+        if (!RwImageFindRasterFormat(image, rasterType, width, height, depth, format))
+        {
+            RwImageDestroy(image);
+            RWERROR((E_RW_INVIMAGEDEPTH));
+            return (RwImage*)NULL;
+        }
+    }
+
+    /* Resize to what the raster wants */
+    if (image->width != *width || image->height != *height)
+    {
+        RwInt32 imageDepth = image->depth;
+        RwImage* resampled;
+
+        if (imageDepth != 32)
+        {
+            RwImage* origImage = image;
+
+            image = RwImageCreate(origImage->width, origImage->height, 32);
+            if (!image)
+            {
+                RwImageDestroy(origImage);
+                return (RwImage*)NULL;
+            }
+
+            if (!RwImageAllocatePixels(image))
+            {
+                RwImageDestroy(image);
+                RwImageDestroy(origImage);
+                return (RwImage*)NULL;
+            }
+
+            RwImageCopy(image, origImage);
+            RwImageDestroy(origImage);
+        }
+
+        resampled = RwImageCreate(*width, *height, 32);
+        if (!resampled)
+        {
+            RwImageDestroy(image);
+            return (RwImage*)NULL;
+        }
+
+        if (!RwImageAllocatePixels(resampled))
+        {
+            RwImageDestroy(resampled);
+            RwImageDestroy(image);
+            return (RwImage*)NULL;
+        }
+
+        RwImageResample(resampled, image);
+        RwImageDestroy(image);
+        image = resampled;
+
+        /* Return to a palettised image if that is what we started with */
+        if (imageDepth == 4)
+        {
+            PalettizeImage(&image, imageDepth);
+        }
+        else if (imageDepth == 8)
+        {
+            PalettizeImage(&image, imageDepth);
+        }
+    }
 
     return image;
 }
 
-static RwTexture* TextureDefaultNormalRead(const RwChar* name, const RwChar* maskName);
-static RwTexture* TextureDefaultMipmapRead(const RwChar* name, const RwChar* maskName);
+static RwTexture* TextureDefaultNormalRead(const RwChar* name, const RwChar* maskName)
+{
+    RwImage* image;
+    RwTexture* texture;
+    RwRaster* raster;
+    RwInt32 width;
+    RwInt32 height;
+    RwInt32 depth;
+    RwInt32 format;
+    RwChar imageName[rwTEXTURENAMEBUFFERLENGTH];
+    RwChar imageMaskName[rwTEXTURENAMEBUFFERLENGTH];
+    RwRGBA palette[256];
+
+    rwTextureCopyName(imageName, name);
+
+    imageMaskName[0] = '\0';
+    if (maskName && maskName[0])
+    {
+        rwTextureCopyName(imageMaskName, maskName);
+    }
+
+    RwTextureGenerateMipmapName(imageName, imageMaskName, 0, rwRASTERTYPETEXTURE);
+
+    width = 0;
+    height = 0;
+    image = TextureImageReadAndSize(imageName, imageMaskName, rwRASTERTYPETEXTURE, &width, &height,
+                                    &depth, &format);
+    if (!image)
+    {
+        return (RwTexture*)NULL;
+    }
+
+    raster = RwRasterCreate(width, height, depth, format);
+    if (!raster)
+    {
+        RwImageDestroy(image);
+        return (RwTexture*)NULL;
+    }
+
+    if (RwRasterGetFormat(raster) & (rwRASTERFORMATPAL4 | rwRASTERFORMATPAL8))
+    {
+        if (RwRasterGetFormat(raster) & rwRASTERFORMATPAL4)
+        {
+            PalettizeMipmaps(palette, (RwImage*)NULL, &image, 1, 4);
+        }
+        else
+        {
+            PalettizeMipmaps(palette, (RwImage*)NULL, &image, 1, 8);
+        }
+
+        image->palette = palette;
+    }
+
+    RwImageGammaCorrect(image);
+
+    if (!RwRasterSetFromImage(raster, image))
+    {
+        RwRasterDestroy(raster);
+        RwImageDestroy(image);
+        return (RwTexture*)NULL;
+    }
+
+    RwImageDestroy(image);
+
+    texture = RwTextureCreate(raster);
+    if (!texture)
+    {
+        RwRasterDestroy(raster);
+        return (RwTexture*)NULL;
+    }
+
+    RwTextureSetName(texture, name);
+
+    if (maskName)
+    {
+        RwTextureSetMaskName(texture, maskName);
+    }
+    else
+    {
+        RwTextureSetMaskName(texture, "");
+    }
+
+    return texture;
+}
+
+static RwTexture* TextureDefaultMipmapRead(const RwChar* name, const RwChar* maskName)
+{
+    RwImage* images[rwTEXTUREMAXMIPLEVELS16];
+    RwRaster* raster;
+    RwTexture* texture;
+    RwInt32 rasterType;
+    RwInt32 width;
+    RwInt32 height;
+    RwInt32 depth;
+    RwInt32 format;
+    RwInt32 i;
+    RwInt32 numLevels;
+    RwChar imageName[rwTEXTURENAMEBUFFERLENGTH];
+    RwChar imageMaskName[rwTEXTURENAMEBUFFERLENGTH];
+    RwRGBA palette[256];
+
+    rwTextureCopyName(imageName, name);
+
+    imageMaskName[0] = '\0';
+    if (maskName && maskName[0])
+    {
+        rwTextureCopyName(imageMaskName, maskName);
+    }
+
+    rasterType = rwRASTERTYPETEXTURE;
+    if (RWTEXTUREGLOBAL(haveTextureMipmaps))
+    {
+        rasterType |= rwRASTERFORMATMIPMAP;
+
+        if (RWTEXTUREGLOBAL(haveTextureAutoMipmaps))
+        {
+            rasterType |= rwRASTERFORMATAUTOMIPMAP;
+        }
+    }
+
+    RwTextureGenerateMipmapName(imageName, imageMaskName, 0, rasterType);
+
+    width = 0;
+    height = 0;
+    images[0] = TextureImageReadAndSize(imageName, imageMaskName, rasterType, &width, &height,
+                                        &depth, &format);
+    if (!images[0])
+    {
+        return (RwTexture*)NULL;
+    }
+
+    raster = RwRasterCreate(width, height, depth, format);
+    if (!raster)
+    {
+        RwImageDestroy(images[0]);
+        return (RwTexture*)NULL;
+    }
+
+    if (format & rwRASTERFORMATMIPMAP)
+    {
+        if (format & rwRASTERFORMATAUTOMIPMAP)
+        {
+            /* The driver builds the other levels */
+            if (!RwRasterSetFromImage(raster, images[0]))
+            {
+                RwRasterDestroy(raster);
+                RwImageDestroy(images[0]);
+                return (RwTexture*)NULL;
+            }
+
+            RwImageDestroy(images[0]);
+        }
+        else
+        {
+            numLevels = RwRasterGetNumLevels(raster);
+
+            /* Read each level from its own file */
+            for (i = 1; i < numLevels; i++)
+            {
+                rwTextureCopyName(imageName, name);
+
+                imageMaskName[0] = '\0';
+                if (maskName && maskName[0])
+                {
+                    rwTextureCopyName(imageMaskName, maskName);
+                }
+
+                RwTextureGenerateMipmapName(imageName, imageMaskName, (RwUInt8)i, rasterType);
+
+                RwRasterLock(raster, (RwUInt8)i, rwRASTERLOCKWRITE | rwRASTERLOCKNOFETCH);
+                width = RwRasterGetWidth(raster);
+                height = RwRasterGetHeight(raster);
+                depth = RwRasterGetDepth(raster);
+                format = RwRasterGetFormat(raster) | raster->cType;
+                RwRasterUnlock(raster);
+
+                images[i] = TextureImageReadAndSize(imageName, imageMaskName, rasterType, &width,
+                                                    &height, &depth, &format);
+                if (!images[i])
+                {
+                    while (--i >= 0)
+                    {
+                        RwImageDestroy(images[i]);
+                    }
+
+                    RwRasterDestroy(raster);
+                    return (RwTexture*)NULL;
+                }
+            }
+
+            if (RwRasterGetFormat(raster) & (rwRASTERFORMATPAL4 | rwRASTERFORMATPAL8))
+            {
+                if (RwRasterGetFormat(raster) & rwRASTERFORMATPAL4)
+                {
+                    PalettizeMipmaps(palette, (RwImage*)NULL, images, numLevels, 4);
+                }
+                else
+                {
+                    PalettizeMipmaps(palette, (RwImage*)NULL, images, numLevels, 8);
+                }
+
+                /* The levels share a palette, so correct it once */
+                RwImageGammaCorrect(images[0]);
+            }
+            else
+            {
+                for (i = 0; i < numLevels; i++)
+                {
+                    RwImageGammaCorrect(images[i]);
+                }
+            }
+
+            for (i = 0; i < numLevels; i++)
+            {
+                if (RwRasterLock(raster, (RwUInt8)i, rwRASTERLOCKWRITE | rwRASTERLOCKNOFETCH))
+                {
+                    if (!RwRasterSetFromImage(raster, images[i]))
+                    {
+                        for (; i < numLevels; i++)
+                        {
+                            RwImageDestroy(images[i]);
+                        }
+
+                        RwRasterDestroy(raster);
+                        return (RwTexture*)NULL;
+                    }
+
+                    RwRasterUnlock(raster);
+                }
+
+                RwImageDestroy(images[i]);
+            }
+        }
+    }
+    else
+    {
+        RwImageGammaCorrect(images[0]);
+
+        if (!RwRasterSetFromImage(raster, images[0]))
+        {
+            RwRasterDestroy(raster);
+            RwImageDestroy(images[0]);
+            return (RwTexture*)NULL;
+        }
+
+        RwImageDestroy(images[0]);
+    }
+
+    texture = RwTextureCreate(raster);
+    if (!texture)
+    {
+        RwRasterDestroy(raster);
+        return (RwTexture*)NULL;
+    }
+
+    RwTextureSetName(texture, name);
+
+    if (maskName)
+    {
+        RwTextureSetMaskName(texture, maskName);
+    }
+    else
+    {
+        RwTextureSetMaskName(texture, "");
+    }
+
+    return texture;
+}
 
 static RwTexture* TextureDefaultRead(const RwChar* name, const RwChar* maskName)
 {
@@ -234,81 +674,147 @@ static RwTexture* TextureDefaultRead(const RwChar* name, const RwChar* maskName)
     return TextureDefaultNormalRead(name, maskName);
 }
 
-static RwTexture* TextureDefaultNormalRead(const RwChar* name, const RwChar* maskName)
+static RwRaster* TextureRasterDefaultBuildMipmaps(RwRaster* raster, RwImage* image)
 {
-    RwImage* image;
-    RwRaster* raster;
-    RwTexture* texture;
-    RwInt32 width;
-    RwInt32 height;
-    RwInt32 depth;
-    RwInt32 format;
+    RwImage* images[rwTEXTUREMAXMIPLEVELS16];
+    RwRGBA palette[256];
+    RwInt32 i;
+    RwInt32 numLevels;
+    RwUInt8 autoMipmap;
+    RwInt32 width = raster->width;
+    RwInt32 height = raster->height;
 
-    image = TextureImageReadAndSize(name, &width, &height, &depth, &format);
     if (!image)
     {
-        return (RwTexture*)NULL;
-    }
+        images[0] = RwImageCreate(width, height, 32);
+        if (images[0])
+        {
+            if (!RwImageAllocatePixels(images[0]))
+            {
+                return (RwRaster*)NULL;
+            }
 
-    raster = RwRasterCreate(width, height, depth, format);
-    if (!raster)
+            RwImageSetFromRaster(images[0], raster);
+        }
+    }
+    else if (image->depth != 32)
     {
-        RwImageDestroy(image);
+        images[0] = RwImageCreate(width, height, 32);
+        if (images[0])
+        {
+            if (!RwImageAllocatePixels(images[0]))
+            {
+                return (RwRaster*)NULL;
+            }
 
-        return (RwTexture*)NULL;
+            RwImageCopy(images[0], image);
+        }
     }
-
-    RwRasterSetFromImage(raster, image);
-    RwImageDestroy(image);
-
-    texture = RwTextureCreate(raster);
-    if (!texture)
+    else
     {
-        RwRasterDestroy(raster);
-
-        return (RwTexture*)NULL;
+        images[0] = image;
     }
 
-    RwTextureSetName(texture, name);
-    RwTextureSetMaskName(texture, maskName);
-
-    return texture;
-}
-
-static RwTexture* TextureDefaultMipmapRead(const RwChar* name, const RwChar* maskName)
-{
-    RwTexture* texture;
-
-    texture = TextureDefaultNormalRead(name, maskName);
-    if (!texture)
+    if (!images[0])
     {
-        return (RwTexture*)NULL;
+        return (RwRaster*)NULL;
     }
 
-    RwTextureRasterGenerateMipmaps(texture->raster, (RwImage*)NULL);
-
-    return texture;
-}
-
-static RwBool TextureRasterDefaultBuildMipmaps(RwRaster* raster, RwImage* image)
-{
-    RwInt32 numLevels;
-    RwInt32 i;
+    /* Stop the driver regenerating the levels while we fill them */
+    autoMipmap = raster->cFormat & (rwRASTERFORMATAUTOMIPMAP >> 8);
+    raster->cFormat &= ~autoMipmap;
 
     numLevels = RwRasterGetNumLevels(raster);
 
     for (i = 1; i < numLevels; i++)
     {
-        RwImage* mipImage;
+        images[i] = (RwImage*)NULL;
 
-        RwRasterLock(raster, (RwUInt8)i, rwRASTERLOCKWRITE);
-        mipImage = RwImageCreateResample(image, 1, 1);
-        RwRasterSetFromImage(raster, mipImage);
-        RwImageDestroy(mipImage);
-        RwRasterUnlock(raster);
+        if (RwRasterLock(raster, (RwUInt8)i, rwRASTERLOCKREAD))
+        {
+            images[i] = RwImageCreateResample(images[i - 1], raster->width, raster->height);
+            RwRasterUnlock(raster);
+        }
+
+        if (!images[i])
+        {
+            while (--i >= 0)
+            {
+                if (images[i] != image)
+                {
+                    RwImageDestroy(images[i]);
+                }
+            }
+
+            raster->cFormat |= autoMipmap;
+            return (RwRaster*)NULL;
+        }
     }
 
-    return TRUE;
+    if (RwRasterGetFormat(raster) & (rwRASTERFORMATPAL4 | rwRASTERFORMATPAL8))
+    {
+        if (RwRasterGetFormat(raster) & rwRASTERFORMATPAL4)
+        {
+            if (!PalettizeMipmaps(palette, image, images, numLevels, 4))
+            {
+                /* NOTE: retail returns from inside this loop on its first pass */
+                for (i = 0; i < numLevels; i++)
+                {
+                    if (images[i] != image)
+                    {
+                        RwImageDestroy(images[i]);
+                    }
+
+                    raster->cFormat |= autoMipmap;
+                    return (RwRaster*)NULL;
+                }
+            }
+        }
+        else
+        {
+            if (!PalettizeMipmaps(palette, image, images, numLevels, 8))
+            {
+                /* NOTE: retail returns from inside this loop on its first pass */
+                for (i = 0; i < numLevels; i++)
+                {
+                    if (images[i] != image)
+                    {
+                        RwImageDestroy(images[i]);
+                    }
+
+                    raster->cFormat |= autoMipmap;
+                    return (RwRaster*)NULL;
+                }
+            }
+        }
+
+        RwImageGammaCorrect(images[0]);
+    }
+    else
+    {
+        for (i = 0; i < numLevels; i++)
+        {
+            RwImageGammaCorrect(images[i]);
+        }
+    }
+
+    for (i = 0; i < numLevels; i++)
+    {
+        if (RwRasterLock(raster, (RwUInt8)i, rwRASTERLOCKWRITE | rwRASTERLOCKNOFETCH))
+        {
+            RwRasterSetFromImage(raster, images[i]);
+            RwRasterUnlock(raster);
+        }
+
+        if (images[i] != image)
+        {
+            RwImageDestroy(images[i]);
+        }
+    }
+
+    raster->cFormat |= autoMipmap;
+
+    return raster;
 }
 
 static RwTexture* TextureDefaultFind(const RwChar* name)
@@ -621,7 +1127,7 @@ RwTexture* RwTextureRead(const RwChar* name, const RwChar* maskName)
         }
         else
         {
-            RWERROR((E_RW_READTEX, name));
+            RWERROR((E_RW_READTEXMASK, name, "(null)"));
         }
 
         return (RwTexture*)NULL;
@@ -650,68 +1156,33 @@ RwBool RwTextureRasterGenerateMipmaps(RwRaster* raster, RwImage* image)
 
 void* _rwTextureClose(void* instance, RwInt32 offset, RwInt32 size)
 {
-    rwTextureGlobals* globals =
-        RWPLUGINOFFSET(rwTextureGlobals, RwEngineInstance, textureModule.globalsOffset);
-
-    if (globals->mipmapNameBuffer)
+    if (RWTEXTUREGLOBAL(mipmapNameBuffer))
     {
-        RwFree(globals->mipmapNameBuffer);
-        globals->mipmapNameBuffer = (RwChar*)NULL;
-        globals->mipmapNameBufferSize = 0;
+        RwFree(RWTEXTUREGLOBAL(mipmapNameBuffer));
+        RWTEXTUREGLOBAL(mipmapNameBuffer) = (RwChar*)NULL;
+        RWTEXTUREGLOBAL(mipmapNameBufferSize) = 0;
     }
 
-    if (globals->textureFreeList && globals->texDictFreeList)
+    if (RWTEXTUREGLOBAL(textureFreeList) && RWTEXTUREGLOBAL(texDictFreeList))
     {
-        RwTexDictionary* dict = dummyTexDict;
+        rwTextureGlobals* globals =
+            RWPLUGINOFFSET(rwTextureGlobals, RwEngineInstance, textureModule.globalsOffset);
         RwLLLink* cur = rwLinkListGetFirstLLLink(&globals->texDictList);
         RwLLLink* end = rwLinkListGetTerminator(&globals->texDictList);
-        RwBool found = FALSE;
 
+        /* Only destroy the dummy dictionary if it is still registered */
         while (cur != end)
         {
-            RwTexDictionary* cursor = rwLLLinkGetData(cur, RwTexDictionary, lInInstance);
+            RwTexDictionary* dict = rwLLLinkGetData(cur, RwTexDictionary, lInInstance);
 
             cur = rwLLLinkGetNext(cur);
 
-            if (cursor == dummyTexDict)
+            if (dict == dummyTexDict)
             {
-                found = TRUE;
+                RwTexDictionaryDestroy(dummyTexDict);
+                dummyTexDict = (RwTexDictionary*)NULL;
                 break;
             }
-        }
-
-        if (found)
-        {
-            RwLLLink* texCur;
-            RwLLLink* texEnd;
-
-            if (globals->currentTexDict == dummyTexDict)
-            {
-                globals->currentTexDict = (RwTexDictionary*)NULL;
-            }
-
-            texCur = rwLinkListGetFirstLLLink(&dict->texturesInDict);
-            texEnd = rwLinkListGetTerminator(&dict->texturesInDict);
-
-            while (texCur != texEnd)
-            {
-                RwTexture* texture = rwLLLinkGetData(texCur, RwTexture, lInDictionary);
-
-                texCur = rwLLLinkGetNext(texCur);
-
-                if (!RwTextureDestroy(texture))
-                {
-                    break;
-                }
-            }
-
-            _rwPluginRegistryDeInitObject(&texDictTKList, dict);
-
-            rwLinkListRemoveLLLink(&dict->lInInstance);
-
-            RwFreeListFree(globals->texDictFreeList, dict);
-
-            dummyTexDict = (RwTexDictionary*)NULL;
         }
     }
 
@@ -762,7 +1233,7 @@ void* _rwTextureOpen(void* instance, RwInt32 offset, RwInt32 size)
         return NULL;
     }
 
-    rwLinkListInitialize(&globals->texDictList);
+    rwLinkListInitialize(&RWTEXTUREGLOBAL(texDictList));
 
     textureModule.numInstances++;
 
