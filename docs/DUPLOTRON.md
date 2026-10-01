@@ -7583,3 +7583,19 @@ function score regresses; the paired Huff4 decoder stays exact. The host
 checker now also verifies 67,584 signed reads, alongside 135,168 unsigned
 reads, the byte-store checks, and 1,000 countdown cases. The full source
 build and normal retail DOL SHA-1 pass. `expand` remains NonMatching.
+
+## Bink plane block dispatch (2026-10-01)
+
+`ExpandPlane` improves from 36.542934% to 40.515213% in the deduplicated
+report. The decoded block and subblock IDs now use their stored byte type;
+the switch cases follow the retail body order (skip, run, intra, residue,
+inter, fill, pattern, motion, raw, scaled). Case bodies are unchanged and
+all cases terminate with a break. This is a source-layout improvement,
+not a complete reconstruction: the function remains 3,916 bytes against
+retail's 5,916, and the expand unit remains NonMatching.
+
+Unrolling the three motion-copy loops reduced the match; forcing the
+scale helper inline also reduced it. Those experiments were reverted.
+All-source compilation, the Huff4 host checker, and the normal linked
+retail DOL SHA-1 check pass. No other function score regresses. The retail
+DOL check does not validate execution of this NonMatching decoder.

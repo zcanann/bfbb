@@ -1271,8 +1271,8 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
     u32 col;
     u32 work_col;
     u32 work_pitch;
-    enum BINKBLOCKTYPE block_type;
-    enum BINKBLOCKTYPE subblock_type;
+    u8 block_type;
+    u8 subblock_type;
     u8 PTR4* dest;
     u8 PTR4* old;
     u8 PTR4* work_row;
@@ -1360,22 +1360,19 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 }
                 break;
             }
-            case BINK_BLOCK_MOTION: {
-                s32 motion_x = BINK_BUNDLE_S8(xoff);
-                s32 motion_y = BINK_BUNDLE_S8(yoff);
-                u8 PTR4* motion_source;
-                u32 block_row;
+            case BINK_BLOCK_RUN:
+                BINK_MARK_WORK_BLOCK(work_row, work_col);
+                expand_run_block(dest, pitch, &colors, &runs, &bitstate);
+                break;
+            case BINK_BLOCK_INTRA: {
+                u32 quant;
 
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
-                BINK_BUNDLE_ADVANCE(xoff, BINK_BUNDLE_BYTE_PITCH);
-                BINK_BUNDLE_ADVANCE(yoff, BINK_BUNDLE_BYTE_PITCH);
-                motion_source = BINK_MOTION_SOURCE(old, pitch, motion_x, motion_y);
-                for (block_row = 0; block_row < BINK_BLOCK_SIDE; ++block_row) {
-                    BINK_BLOCK_ROW_WORD(dest, pitch, block_row, BINK_BLOCK_ROW_WORD_0) =
-                        BINK_BLOCK_ROW_WORD(motion_source, pitch, block_row, BINK_BLOCK_ROW_WORD_0);
-                    BINK_BLOCK_ROW_WORD(dest, pitch, block_row, BINK_BLOCK_ROW_WORD_1) =
-                        BINK_BLOCK_ROW_WORD(motion_source, pitch, block_row, BINK_BLOCK_ROW_WORD_1);
-                }
+                dct_block[0] = BINK_BUNDLE_S16(intra_dc);
+                BINK_BUNDLE_ADVANCE(intra_dc, BINK_DC_BYTES);
+                ReadBPLossless(dct_block, (BPBITSTREAM PTR4*)&bitstate);
+                quant = exp_get_bits(&bitstate, BINK_DCT_QUANT_BITS);
+                FastIDCT8x8(dest, pitch, dct_block, quant);
                 break;
             }
             case BINK_BLOCK_RESIDUE: {
@@ -1399,17 +1396,6 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 ReadBPLossyWithMotion((char PTR4*)dest, (s32)pitch,
                                       (BPBITSTREAM PTR4*)&bitstate, residue_limit,
                                       (char PTR4*)motion_block);
-                break;
-            }
-            case BINK_BLOCK_INTRA: {
-                u32 quant;
-
-                BINK_MARK_WORK_BLOCK(work_row, work_col);
-                dct_block[0] = BINK_BUNDLE_S16(intra_dc);
-                BINK_BUNDLE_ADVANCE(intra_dc, BINK_DC_BYTES);
-                ReadBPLossless(dct_block, (BPBITSTREAM PTR4*)&bitstate);
-                quant = exp_get_bits(&bitstate, BINK_DCT_QUANT_BITS);
-                FastIDCT8x8(dest, pitch, dct_block, quant);
                 break;
             }
             case BINK_BLOCK_INTER: {
@@ -1456,6 +1442,24 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
                 expand_pattern_block(dest, pitch, &colors, &patterns);
                 break;
+            case BINK_BLOCK_MOTION: {
+                s32 motion_x = BINK_BUNDLE_S8(xoff);
+                s32 motion_y = BINK_BUNDLE_S8(yoff);
+                u8 PTR4* motion_source;
+                u32 block_row;
+
+                BINK_MARK_WORK_BLOCK(work_row, work_col);
+                BINK_BUNDLE_ADVANCE(xoff, BINK_BUNDLE_BYTE_PITCH);
+                BINK_BUNDLE_ADVANCE(yoff, BINK_BUNDLE_BYTE_PITCH);
+                motion_source = BINK_MOTION_SOURCE(old, pitch, motion_x, motion_y);
+                for (block_row = 0; block_row < BINK_BLOCK_SIDE; ++block_row) {
+                    BINK_BLOCK_ROW_WORD(dest, pitch, block_row, BINK_BLOCK_ROW_WORD_0) =
+                        BINK_BLOCK_ROW_WORD(motion_source, pitch, block_row, BINK_BLOCK_ROW_WORD_0);
+                    BINK_BLOCK_ROW_WORD(dest, pitch, block_row, BINK_BLOCK_ROW_WORD_1) =
+                        BINK_BLOCK_ROW_WORD(motion_source, pitch, block_row, BINK_BLOCK_ROW_WORD_1);
+                }
+                break;
+            }
             case BINK_BLOCK_RAW: {
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
                 if (BINK_BLOCK_DOUBLE_ALIGNED(dest, colors.cur_ptr)) {
@@ -1480,10 +1484,6 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 BINK_BUNDLE_ADVANCE(colors, BINK_COLOR_BLOCK_BYTES);
                 break;
             }
-            case BINK_BLOCK_RUN:
-                BINK_MARK_WORK_BLOCK(work_row, work_col);
-                expand_run_block(dest, pitch, &colors, &runs, &bitstate);
-                break;
             case BINK_BLOCK_SCALED:
                 if (BINK_BLOCK_ODD_ROW(row)) {
                     break;
