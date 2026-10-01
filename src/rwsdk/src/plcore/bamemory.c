@@ -75,7 +75,7 @@ static RwFreeList* FreeListCreate(RwUInt32 entrySize, RwUInt32 entriesPerBlock,
     heapSize = freeList->heapSize = (entriesPerBlock + 7) >> 3;
     rwLinkListInitialize(&freeList->blockList);
 
-    alignedBlockSize = heapSize + entriesPerBlock * entrySize + (alignment - 1) + sizeof(RwLLLink);
+    alignedBlockSize = (RwUInt32)sizeof(RwLLLink) + heapSize + entriesPerBlock * entrySize + alignment - 1;
 
     while (blocks)
     {
