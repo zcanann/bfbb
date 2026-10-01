@@ -7347,3 +7347,20 @@ error/default case groupings and localized optimizer settings. The
 The full build reproduces the retail DOL SHA-1; no other SB function
 matching scores regress. `isavegame` remains NonMatching with four
 holdouts and 100% data.
+
+## Robo source linking (2026-10-01)
+
+zNPCGoalRobo now links from source with all 361 functions and all 5,584
+data bytes matching. Robot goal declarations belong together in
+zNPCGoalRobo.h; their inline constructors previously straddled the Std
+and Robo headers. Shared inline definitions now live with their classes
+or helper declarations, and ROBO_PrepRoboCop precedes its two callers.
+
+Five explicitly named dead-stripped layout stubs reproduce inline emission
+groups and the first-use positions of 2.5f and PI. These are reconstruction
+scaffolding, not claimed recovered debug routines. The linker discards the
+stubs themselves; no assembly or output-binary modification is involved.
+
+The full source build preserves every other SB function matching score,
+and the linked DOL reproduces retail SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6.

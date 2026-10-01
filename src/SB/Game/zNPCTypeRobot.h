@@ -29,40 +29,50 @@ struct NPCArena
     F32 DstSqFromHome(xVec3* pos, xVec3* delt);
     F32 PctFromHome(xVec3* pos);
     S32 IncludesPos(xVec3* pos, F32 rad_thresh, xVec3* vec);
-    S32 IncludesNPC(zNPCCommon*, float, xVec3*);
-    F32 Radius(F32 unk);
-    xVec3* Pos();
-    S32 IncludesPlayer(F32 rad_thresh, xVec3* vec);
-    S32 IsReady();
-    void DBG_Draw(zNPCCommon*);
+    S32 IncludesNPC(zNPCCommon* npc, float dt, xVec3* vec)
+    {
+        xVec3* pos = npc->Pos();
+        return IncludesPos(pos, dt, vec);
+    }
+    F32 Radius(F32 unk)
+    {
+        return unk * rad_arena;
+    }
+    xVec3* Pos()
+    {
+        return &pos_arena;
+    }
+    S32 IncludesPlayer(F32 rad_thresh, xVec3* vec)
+    {
+        if (NPCC_LampStatus())
+        {
+            xVec3* pos = xEntGetPos(&globals.player.ent);
+            return NPCArena::IncludesPos(pos, rad_thresh, vec);
+        }
+
+        return 0;
+    }
+    S32 IsReady()
+    {
+        return rad_arena > 0.0f;
+    }
+    void DBG_Draw(zNPCCommon*)
+    {
+    }
     void AdjustHome(zNPCCommon* npc, xVec3* pos, F32 rad);
     void SyncHomeFromNav();
     zMovePoint* NextBestNav(zNPCCommon* npc, zMovePoint* nav);
 };
 
-struct NPCLaser
-{
-    RwRaster* rast_laser;
-    F32 radius[2];
-    F32 uv_scroll[2];
-    RwRGBA rgba[2];
-    F32 uv_base[2];
-
-    void ColorSet(const RwRGBA*, const RwRGBA*);
-    void TextureSet(RwRaster* rast);
-    RwRaster* TextureGet();
-    void RadiusSet(F32 rad_start, F32 rad_end);
-    void UVScrollSet(F32 u, F32 v);
-    void Render(xVec3*, xVec3*);
-    void UVScrollUpdate(F32);
-    void Prepare();
-};
-
 struct NPCBattle
 {
     zNPCRobot* members[5];
-    void JoinBattle(zNPCRobot*);
-    void LeaveBattle(zNPCRobot*);
+    void JoinBattle(zNPCRobot*)
+    {
+    }
+    void LeaveBattle(zNPCRobot*)
+    {
+    }
 };
 
 struct zNPCRobot : zNPCCommon
@@ -154,7 +164,11 @@ struct zNPCRobot : zNPCCommon
     zNPCLassoInfo* PRIV_GetLassoData();
     S32 LassoSetup();
     F32 GetParm(en_npcparm, zMovePoint**);
-    F32 FacePlayer(F32 dt, F32 spd_turn);
+    F32 FacePlayer(F32 dt, F32 spd_turn)
+    {
+        xVec3* pos = xEntGetPos(&globals.player.ent);
+        return FacePos(pos, dt, spd_turn);
+    }
     U32 AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal);
 
     // vTable (zNPCRobot)
@@ -405,7 +419,10 @@ struct zNPCArfArf : zNPCRobot
     {
     }
 
-    zMovePoint* GetTelepoint(S32 unk);
+    zMovePoint* GetTelepoint(S32 unk)
+    {
+        return nav_dest;
+    }
     void Reset();
     void Init(xEntAsset* asset);
     void ParseINI();

@@ -20,4 +20,8 @@ inline void xDrawSetColor(iColor_tag color)
 {
 }
 
+inline void xDrawCyl(const xVec3*, F32, F32, U32)
+{
+}
+
 #endif

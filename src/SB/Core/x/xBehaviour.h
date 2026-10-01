@@ -352,4 +352,14 @@ inline S32 xPsyche::IndexInStack(const xGoal* gid) const
     return IndexInStack(gid->GetID());
 }
 
+inline void xGoal::AddFlags(S32 flags)
+{
+    this->flg_able |= flags;
+}
+
+inline xPsyche* xGoal::GetPsyche() const
+{
+    return psyche;
+}
+
 #endif

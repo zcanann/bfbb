@@ -176,4 +176,32 @@ void NPCC_Bounce(xVec3* vec_input, xVec3* vec_anti, F32 elastic);
 void NPCC_xBoundAway(xBound* bnd);
 void NPCC_xBoundBack(xBound* bnd);
 
+struct NPCLaser
+{
+    RwRaster* rast_laser;
+    F32 radius[2];
+    F32 uv_scroll[2];
+    RwRGBA rgba[2];
+    F32 uv_base[2];
+
+    void ColorSet(const RwRGBA*, const RwRGBA*);
+    void TextureSet(RwRaster* rast);
+    RwRaster* TextureGet();
+    void RadiusSet(F32 rad_start, F32 rad_end);
+    void UVScrollSet(F32 u, F32 v);
+    void Render(xVec3*, xVec3*);
+    void UVScrollUpdate(F32);
+    void Prepare();
+};
+
+inline void NPCC_DrawPlayerPredict(S32, F32, F32)
+{
+}
+
+inline void NPCLaser::ColorSet(const RwRGBA* unk1, const RwRGBA* unk2)
+{
+    rgba[0] = *unk1;
+    rgba[1] = *unk2;
+}
+
 #endif

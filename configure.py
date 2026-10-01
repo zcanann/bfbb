@@ -596,7 +596,7 @@ config.libs = [
             Object(Matching, "SB/Game/zNPCGoals.cpp"),
             Object(Matching, "SB/Game/zNPCGoalCommon.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zNPCGoalStd.cpp", extra_cflags=["-sym on"]),
-            Object(NonMatching, "SB/Game/zNPCGoalRobo.cpp", extra_cflags=["-sym on"]),
+            Object(Matching, "SB/Game/zNPCGoalRobo.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zNPCGoalTiki.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zNPCMessenger.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zNPCMgr.cpp", extra_cflags=["-sym on"]),

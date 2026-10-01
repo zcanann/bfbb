@@ -133,4 +133,9 @@ F32 xVec3NormalizeFast(xVec3* o, const xVec3* v);
 void xVec3Copy(xVec3* dst, const xVec3* src);
 F32 xVec3Dot(const xVec3* a, const xVec3* b);
 
+inline xVec3& xVec3::assign(float dt)
+{
+    return assign(dt, dt, dt);
+}
+
 #endif

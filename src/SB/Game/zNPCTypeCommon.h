@@ -13,6 +13,7 @@
 #include "zMovePoint.h"
 #include "zShrapnel.h"
 #include "zNPCMessenger.h"
+#include "zGlobals.h"
 
 #define XRAY3_USE_MIN (1 << 10)
 #define XRAY3_USE_MAX (1 << 11)
@@ -347,7 +348,10 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
     void TagVerts();
     S32 HaveLOSToPos(xVec3*, float, xScene*, xBase*, xCollis*);
     void ModelScaleSet(F32 x, F32 y, F32 z);
-    void ModelScaleSet(F32 unk);
+    void ModelScaleSet(F32 unk)
+    {
+        ModelScaleSet(unk, unk, unk);
+    }
     xModelInstance* ModelAtomicFind(int index, int idx_prev, xModelInstance* mdl_prev);
     xModelInstance* ModelAtomicHide(int index, xModelInstance* mdl);
     xModelInstance* ModelAtomicShow(int index, xModelInstance* mdl);
@@ -394,13 +398,24 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
                      int (*)(xGoal*, void*, en_trantype*, float, void*));
     zMovePoint* FirstAssigned();
 
-    // defined from zNPCGoalRobo.cpp
-    xVec3* Center();
+    xVec3* Center()
+    {
+        return xEntGetCenter(this);
+    }
     xVec3* Pos();
-    RwMatrix* BoneMat(S32 unk) const;
-    RwV3d* BonePos(S32 unk) const;
+    RwMatrix* BoneMat(S32 unk) const
+    {
+        return &this->model->Mat[unk];
+    }
+    RwV3d* BonePos(S32 unk) const
+    {
+        return &this->model->Mat[unk].pos;
+    }
     xVec3* MatPosSet(xVec3* pos);
-    void XZVecToPlayer(xVec3* unk1, F32* unk2);
+    void XZVecToPlayer(xVec3* unk1, F32* unk2)
+    {
+        XZVecToPos(unk1, xEntGetPos(&globals.player.ent), unk2);
+    }
     F32 XZDstSqToPlayer(xVec3* unk1, F32* unk2);
     F32 XZDstSqToPos(const xVec3* unk1, xVec3* unk2, F32* unk3);
     void XZVecToPos(xVec3* unk1, const xVec3* unk2, F32* unk3);
@@ -408,7 +423,10 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
     {
         xVec3Sub(dest, unk2, Pos());
     }
-    F32 XYZDstSqToPlayer(xVec3* unk);
+    F32 XYZDstSqToPlayer(xVec3* unk)
+    {
+        return XYZDstSqToPos(xEntGetPos(&globals.player.ent), unk);
+    }
     F32 XYZDstSqToPos(xVec3* unk1, xVec3* dest)
     {
         xVec3 dest_vec;
@@ -519,7 +537,9 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
     {
         npc_duplodude = duper;
     }
-    virtual void DuploNotice(en_SM_NOTICES, void*);
+    virtual void DuploNotice(en_SM_NOTICES, void*)
+    {
+    }
     virtual S32 CanRope();
     virtual void LassoNotify(en_LASSO_EVENT event);
     virtual S32 SetCarryState(en_NPC_CARRY_STATE);

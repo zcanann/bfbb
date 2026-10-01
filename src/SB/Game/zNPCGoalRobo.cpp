@@ -279,6 +279,15 @@ xFactoryInst* GOALCreate_Robotic(S32 who, RyzMemGrow* grow, void*)
     return goal;
 }
 
+// Layout-only references reproduce the inline groups left by stripped code.
+// The original stripped routines are unknown; these stubs do not enter the DOL.
+void __deadstripped_zNPCGoalRobo_predict(zNPCCommon* npc, xVec3* delta, F32* distance,
+                                        F32 prediction)
+{
+    NPCC_DrawPlayerPredict(0, prediction, prediction);
+    npc->XZVecToPlayer(delta, distance);
+}
+
 S32 zNPCGoalNotice::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
 {
     zNPCRobot* npc = (zNPCRobot*)(psyche->clt_owner);
@@ -652,6 +661,13 @@ S32 zNPCGoalAlertFodder::Process(en_trantype* trantype, F32 dt, void* updCtxt, x
     return this->xGoal::Process(trantype, dt, updCtxt, NULL);
 }
 
+void __deadstripped_zNPCGoalRobo_motion(xVec3* value, F32 amount, NPCHazard* haz,
+                                       zNPCCommon* npc)
+{
+    haz->SetNPCOwner(npc);
+    value->assign(amount);
+}
+
 S32 zNPCGoalAlertFodder::CheckSpot(F32 dt)
 {
     S32 plyrInSpot;
@@ -957,6 +973,12 @@ S32 zNPCGoalAlertFodBomb::Process(en_trantype* trantype, F32 dt, void* updCtxt, 
         return xGoal::Process(trantype, dt, updCtxt, NULL);
     }
     return nextgoal;
+}
+
+// Layout-only reference preserves the shared literal pool order.
+F32 __deadstripped_zNPCGoalRobo_bomb_radius()
+{
+    return 2.5f;
 }
 
 void zNPCGoalAlertFodBomb::Detonate()
@@ -3672,6 +3694,11 @@ S32 zNPCGoalAlertTubelet::Resume(F32 dt, void* updCtxt)
     return zNPCGoalCommon::Resume(dt, updCtxt);
 }
 
+F32 __deadstripped_zNPCGoalRobo_tube_angle()
+{
+    return PI;
+}
+
 S32 zNPCGoalAlertTubelet::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
 {
     S32 nextgoal = 0;
@@ -5618,6 +5645,11 @@ S32 zNPCGoalTeleport::Exit(F32 dt, void* updCtxt)
     npc->RestoreColFlags();
 
     return xGoal::Exit(dt, updCtxt);
+}
+
+void __deadstripped_zNPCGoalRobo_arena(NPCArena* arena, zNPCCommon* npc)
+{
+    arena->DBG_Draw(npc);
 }
 
 S32 zNPCGoalTeleport::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
@@ -8425,6 +8457,30 @@ static RoboCopMap g_map_policeCounter[17] = {
     // clang-format on
 };
 
+static _xCounter* g_cntr_policeLineup[15] = {};
+
+void ROBO_PrepRoboCop()
+{
+    char name[40];
+    U8 tag;
+    S32 i;
+
+    strcpy(name, "HB09 ROBOT COUNTER 01");
+
+    tag = '1';
+    for (i = 0; i < 15; i++)
+    {
+        if (tag > '9')
+        {
+            tag = '0';
+            name[19]++;
+        }
+        name[20] = tag;
+        tag++;
+        g_cntr_policeLineup[i] = (_xCounter*)zSceneFindObject(xStrHash(name));
+    }
+}
+
 S32 RoboToCntrIdx(S32 robotId)
 {
     S32 res = ROBOCOP_CNTR_FORCE;
@@ -8451,8 +8507,6 @@ S32 RoboToCntrIdx(S32 robotId)
     return res;
 }
 
-static _xCounter* g_cntr_policeLineup[15] = {};
-
 void CollectBountyOnRobot(S32 robotId)
 {
     S32 cntrIdx = RoboToCntrIdx(robotId);
@@ -8465,206 +8519,4 @@ void CollectBountyOnRobot(S32 robotId)
             counter->count = 1;
         }
     }
-}
-
-void ROBO_PrepRoboCop()
-{
-    char name[40];
-    U8 tag;
-    S32 i;
-
-    strcpy(name, "HB09 ROBOT COUNTER 01");
-
-    tag = '1';
-    for (i = 0; i < 15; i++)
-    {
-        if (tag > '9')
-        {
-            tag = '0';
-            name[19]++;
-        }
-        name[20] = tag;
-        tag++;
-        g_cntr_policeLineup[i] = (_xCounter*)zSceneFindObject(xStrHash(name));
-    }
-}
-
-// .text (113c)
-
-void zNPCGoalDogLaunch::SilentSwimout(xVec3* unk1, xVec3* unk2, zMovePoint* unk3)
-{
-    this->ViciousAttack(unk1, unk2, unk3, 1);
-}
-
-S32 zNPCGoalPatThrow::CollReview(void*)
-{
-    return 0;
-}
-
-S32 zNPCGoalDogLaunch::CollReview(void*)
-{
-    return 0;
-}
-
-// .text (38)
-
-void zNPCGoalDead::DieWithAWhimper()
-{
-    flg_deadinfo &= ~1;
-    flg_deadinfo |= 2;
-}
-
-void zNPCGoalDead::DieWithABang()
-{
-    flg_deadinfo &= ~1;
-    flg_deadinfo &= ~2;
-}
-
-// .text (18)
-
-void xGoal::AddFlags(S32 flags)
-{
-    this->flg_able |= flags;
-}
-
-xPsyche* xGoal::GetPsyche() const
-{
-    return psyche;
-}
-
-// .text (130)
-
-void zNPCCommon::XZVecToPlayer(xVec3* unk1, F32* unk2)
-{
-    XZVecToPos(unk1, xEntGetPos(&globals.player.ent), unk2);
-}
-
-RwMatrix* zNPCCommon::BoneMat(S32 unk) const
-{
-    return &this->model->Mat[unk];
-}
-
-RwV3d* zNPCCommon::BonePos(S32 unk) const
-{
-    return &this->model->Mat[unk].pos;
-}
-
-F32 zNPCCommon::XYZDstSqToPlayer(xVec3* unk)
-{
-    return XYZDstSqToPos(xEntGetPos(&globals.player.ent), unk);
-}
-
-void zNPCCommon::DuploNotice(en_SM_NOTICES, void*)
-{
-}
-
-xVec3* zNPCCommon::Center()
-{
-    return xEntGetCenter(this);
-}
-
-void zNPCCommon::ModelScaleSet(F32 unk)
-{
-    ModelScaleSet(unk, unk, unk);
-}
-
-// .text (4c)
-
-void NPCC_DrawPlayerPredict(S32, F32, F32)
-{
-}
-
-void NPCLaser::ColorSet(const RwRGBA* unk1, const RwRGBA* unk2)
-{
-    rgba[0] = *unk1;
-    rgba[1] = *unk2;
-}
-
-// .text (4)
-
-void xDrawCyl(const xVec3*, F32, F32, U32)
-{
-}
-
-// .text (178)
-
-F32 NPCArena::Radius(F32 unk)
-{
-    return unk * rad_arena;
-}
-
-xVec3* NPCArena::Pos()
-{
-    return &pos_arena;
-}
-
-void NPCBattle::JoinBattle(zNPCRobot*)
-{
-}
-
-S32 NPCArena::IncludesPlayer(F32 rad_thresh, xVec3* vec)
-{
-    if (NPCC_LampStatus())
-    {
-        xVec3* pos = xEntGetPos(&globals.player.ent);
-        return NPCArena::IncludesPos(pos, rad_thresh, vec);
-    }
-
-    return 0;
-}
-
-NPCGlyph* GLYF_Acquire(en_npcglyph);
-
-S32 NPCArena::IsReady()
-{
-    return rad_arena > 0.0f;
-}
-
-void NPCBattle::LeaveBattle(zNPCRobot*)
-{
-}
-
-S32 NPCArena::IncludesNPC(zNPCCommon* npc, float dt, xVec3* vec)
-{
-    xVec3* pos = npc->Pos();
-    return IncludesPos(pos, dt, vec);
-}
-
-F32 zNPCRobot::FacePlayer(F32 dt, F32 spd_turn)
-{
-    xVec3* pos = xEntGetPos(&globals.player.ent);
-    return FacePos(pos, dt, spd_turn);
-}
-
-void NPCArena::DBG_Draw(zNPCCommon*)
-{
-}
-
-zMovePoint* zNPCArfArf::GetTelepoint(S32 unk)
-{
-    return nav_dest;
-}
-
-// .text (28)
-
-xVec3& xVec3::assign(float dt)
-{
-    return assign(dt, dt, dt);
-}
-
-// .text (18)
-
-inline void NPCHazard::SetNPCOwner(zNPCCommon* owner)
-{
-    this->npc_owner = owner;
-}
-
-inline void NPCHazard::NotifyCBSet(HAZNotify* noter)
-{
-    this->cb_notify = noter;
-}
-
-inline S32 HAZNotify::Notify(en_haznote note, NPCHazard* haz)
-{
-    return 0;
 }
