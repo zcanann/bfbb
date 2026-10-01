@@ -8241,3 +8241,23 @@ checks also pass. Full all_source build and normal retail DOL SHA-1 pass;
 only WriteBPLossless changes in the deduplicated report, with no regressions.
 Report: build/bitplane-writer-dispatch-report.json. Bitplane remains
 NonMatching, so this does not establish source-linked movie playback.
+
+
+## Bink length-estimator high-node index reuse (2026-10-01)
+
+`LenBPLossless` improves from 80.14396% to 81.87918%. An unsigned plane
+counter matches retail's comparison and reaches 80.45758%. Decoding each
+high node's index before both its high-group lookup and shared child path
+reaches 81.655525% on non-final planes and 81.87918% on both loops. The
+separate branch-node path still decodes its packed entry before joining.
+A next-plane cursor lifetime trial regressed and was restored.
+
+All 16,384 lossless round trips pass with exact estimator/writer bit-length
+agreement, guards, and DC preservation. All 6,911 nonempty lossy round trips
+and 27,644 early-cutoff checks also pass. Report:
+build/bitplane-length-high-report.json. Bitplane remains NonMatching;
+normal DOL identity is not a source-linked playback claim.
+
+Full all_source build and retail DOL SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6 pass. No function-score regressions;
+the other report changes are the integrated babinwor/bameshop matches.

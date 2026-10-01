@@ -290,7 +290,7 @@ u32 LenBPLossless(s16 PTR4* vals)
     u16 entry;
     s32 sign;
     u32 bits;
-    s32 maxbits;
+    u32 maxbits;
     s32 i;
     s32 group;
     s32 len;
@@ -391,8 +391,9 @@ u32 LenBPLossless(s16 PTR4* vals)
                 } else {
                     switch (BP_TREE_ENTRY_KIND(entry)) {
                     case BP_TREE_HIGH_NODE:
-                        *cur = BP_TREE_HIGH_GROUP_ENTRY(hi_groups[BP_TREE_ENTRY_HIGH_GROUP(entry)], BP_TREE_ENTRY_INDEX(entry));
-                        goto handle_children;
+                        entry = BP_TREE_ENTRY_INDEX(entry);
+                        *cur = BP_TREE_HIGH_GROUP_ENTRY(hi_groups[entry >> (BP_TREE_HIGH_GROUP_SHIFT - BP_TREE_INDEX_SHIFT)], entry);
+                        goto decoded_length_children;
                     case BP_TREE_GROUP_NODE:
                         entry = BP_TREE_ENTRY_INDEX(entry);
                         bits = BP_TREE_GROUP_INDEX(entry);
@@ -405,8 +406,8 @@ u32 LenBPLossless(s16 PTR4* vals)
                     case BP_TREE_BRANCH_NODE:
                         *cur = BP_TREE_EMPTY_ENTRY;
                         cur++;
-handle_children:
                         entry = BP_TREE_ENTRY_INDEX(entry);
+decoded_length_children:
                         len += BP_TREE_NODE_SIGNAL_BITS - BP_TREE_NODE_PRESENT_BITS;
                         if (lens[entry] != maxbits) {
                             *--restart = BP_TREE_COEFF_ENTRY(lens[entry], entry);
@@ -456,8 +457,9 @@ handle_children:
             } else {
                 switch (BP_TREE_ENTRY_KIND(entry)) {
                 case BP_TREE_HIGH_NODE:
-                    *cur = BP_TREE_HIGH_GROUP_ENTRY(hi_groups[BP_TREE_ENTRY_HIGH_GROUP(entry)], BP_TREE_ENTRY_INDEX(entry));
-                    goto handle_final_children;
+                    entry = BP_TREE_ENTRY_INDEX(entry);
+                    *cur = BP_TREE_HIGH_GROUP_ENTRY(hi_groups[entry >> (BP_TREE_HIGH_GROUP_SHIFT - BP_TREE_INDEX_SHIFT)], entry);
+                    goto decoded_length_final_children;
                 case BP_TREE_GROUP_NODE:
                     entry = BP_TREE_ENTRY_INDEX(entry);
                     maxbits = BP_TREE_GROUP_INDEX(entry);
@@ -470,8 +472,8 @@ handle_children:
                 case BP_TREE_BRANCH_NODE:
                     *cur = BP_TREE_EMPTY_ENTRY;
                     cur++;
-handle_final_children:
                     entry = BP_TREE_ENTRY_INDEX(entry);
+decoded_length_final_children:
                     len += BP_TREE_NODE_SIGNAL_BITS - BP_TREE_NODE_PRESENT_BITS;
                     if (lens[entry] != 1) {
                         *--restart = BP_TREE_COEFF_ENTRY(lens[entry], entry);
