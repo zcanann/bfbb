@@ -7686,3 +7686,30 @@ prediction bytes, checking byte wrapping and row padding alongside the
 and normal retail DOL verification. The deduplicated report changes only
 this routine; no score regressions. The preceding doubled-output commit's
 CI run 36916110711 passed.
+
+## Bink lossless reader buffered-bit branch order (2026-10-01)
+
+`ReadBPLossless` improves from 51.703175% to 61.21906%. Eight bit-reading
+branches now put the buffered-bit path before the refill path, following
+retail's layout; their bodies and conditions are otherwise equivalent.
+The routine remains 3,516 bytes versus retail's 3,652 and NonMatching.
+Full source compilation and normal retail DOL verification pass; the
+rebuilt deduplicated report changes only this function.
+
+`python tools/check_bink_bitplane.py` compares the production reader with
+the pre-change reader at c9b08d77e0bb1c0a9b0e08d772c503fa68f29fdc (that
+commit must be available in local git history). It passes 16,384 cases,
+checking output plus the complete bitstream state across 0-15 magnitude
+levels and every initial word offset. Only the leading-zero intrinsic is
+replaced for host execution; the writer, reader, length routine, scan
+order and bitstream macros come from source.
+
+Important unresolved finding: 14,955 of those writer/reader round trips
+fail output or length checks in the existing implementation too. The first
+failure is level 1, offset 0, trial 1: coefficients 48 and 56 are dropped,
+although writer length, reader consumption and LenBPLossless all report
+25 bits. It reproduces with the pre-change reader and with host strict
+aliasing disabled. This is a host test finding, not yet a diagnosis of the
+writer versus reader or GameCube runtime behavior. The test reports these
+separately; its passing equivalence result does not claim correct decoding.
+Investigate this before claiming the bitplane codec is functionally verified.

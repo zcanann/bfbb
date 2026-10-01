@@ -786,19 +786,19 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
 next_lossless_read_node:
                     node_ptr++;
                 } else {
-                    if (bitcount == 0) {
+                    if (bitcount != 0) {
+                        bitcount = bitcount - 1;
+                        code = bitbuf & BP_BIT_MASK;
+                        bitbuf >>= 1;
+                        if (code == 0) {
+                            goto next_lossless_read_node;
+                        }
+                    } else {
                         code = *words;
                         bitcount = BP_WORD_TOP_BIT;
                         words++;
                         bitbuf = code >> 1;
                         if ((code & BP_BIT_MASK) == 0) {
-                            goto next_lossless_read_node;
-                        }
-                    } else {
-                        bitcount = bitcount - 1;
-                        code = bitbuf & BP_BIT_MASK;
-                        bitbuf >>= 1;
-                        if (code == 0) {
                             goto next_lossless_read_node;
                         }
                     }
@@ -831,15 +831,15 @@ next_lossless_read_node:
                             bitcount = bitcount - level;
                         }
                         coeff_value = (coeff_value & bit_mask) | highbit;
-                        if (bitcount == 0) {
+                        if (bitcount != 0) {
+                            bitcount = bitcount - 1;
+                            code = bitbuf & BP_BIT_MASK;
+                            bitbuf >>= 1;
+                        } else {
                             code = *words;
                             bitcount = BP_WORD_TOP_BIT;
                             words++;
                             bitbuf = code >> 1;
-                        } else {
-                            bitcount = bitcount - 1;
-                            code = bitbuf & BP_BIT_MASK;
-                            bitbuf >>= 1;
                         }
                         if ((code & BP_BIT_MASK) != 0) {
                             coeff_value = -coeff_value;
@@ -855,21 +855,21 @@ handle_lossless_read_children:
                     base = BP_READ_TREE_INDEX(node);
 #define READ_LOSSLESS_CHILD(slot, label)                                                                               \
                         do {                                                                                           \
-                            if (bitcount == 0) {                                                                       \
+                            if (bitcount != 0) {                                                                                   \
+                                bitcount = bitcount - 1;                                                               \
+                                code = bitbuf & BP_BIT_MASK;                                                                     \
+                                bitbuf >>= 1;                                                                          \
+                                if (code != 0) {                                                                       \
+                                    next_node_ptr--;                                                                   \
+                                    *next_node_ptr = BP_READ_TREE_COEFF(slot);                                          \
+                                    goto label;                                                                        \
+                                }                                                                                      \
+                            } else {                                                                       \
                                 code = *words;                                                                         \
                                 bitcount = BP_WORD_TOP_BIT;                                                            \
                                 bitbuf = code >> 1;                                                                    \
                                 words++;                                                                               \
                                 if ((code & BP_BIT_MASK) != 0) {                                                                 \
-                                    next_node_ptr--;                                                                   \
-                                    *next_node_ptr = BP_READ_TREE_COEFF(slot);                                          \
-                                    goto label;                                                                        \
-                                }                                                                                      \
-                            } else {                                                                                   \
-                                bitcount = bitcount - 1;                                                               \
-                                code = bitbuf & BP_BIT_MASK;                                                                     \
-                                bitbuf >>= 1;                                                                          \
-                                if (code != 0) {                                                                       \
                                     next_node_ptr--;                                                                   \
                                     *next_node_ptr = BP_READ_TREE_COEFF(slot);                                          \
                                     goto label;                                                                        \
@@ -886,15 +886,15 @@ handle_lossless_read_children:
                                 bitcount = bitcount - level;                                                           \
                             }                                                                                          \
                             coeff_value = (coeff_value & bit_mask) | highbit;                                          \
-                            if (bitcount == 0) {                                                                       \
+                            if (bitcount != 0) {                                                                                   \
+                                bitcount = bitcount - 1;                                                               \
+                                code = bitbuf & BP_BIT_MASK;                                                                     \
+                                bitbuf >>= 1;                                                                          \
+                            } else {                                                                       \
                                 code = *words;                                                                         \
                                 bitcount = BP_WORD_TOP_BIT;                                                            \
                                 words++;                                                                               \
                                 bitbuf = code >> 1;                                                                    \
-                            } else {                                                                                   \
-                                bitcount = bitcount - 1;                                                               \
-                                code = bitbuf & BP_BIT_MASK;                                                                     \
-                                bitbuf >>= 1;                                                                          \
                             }                                                                                          \
                             if ((code & BP_BIT_MASK) != 0) {                                                                     \
                                 coeff_value = -coeff_value;                                                            \
@@ -929,19 +929,19 @@ after_lossless_read_children:
 next_lossless_final_node:
                 node_ptr++;
             } else {
-                if (bitcount == 0) {
+                if (bitcount != 0) {
+                    bitcount = bitcount - 1;
+                    code = bitbuf & BP_BIT_MASK;
+                    bitbuf >>= 1;
+                    if (code == 0) {
+                        goto next_lossless_final_node;
+                    }
+                } else {
                     code = *words;
                     bitcount = BP_WORD_TOP_BIT;
                     words++;
                     bitbuf = code >> 1;
                     if ((code & BP_BIT_MASK) == 0) {
-                        goto next_lossless_final_node;
-                    }
-                } else {
-                    bitcount = bitcount - 1;
-                    code = bitbuf & BP_BIT_MASK;
-                    bitbuf >>= 1;
-                    if (code == 0) {
                         goto next_lossless_final_node;
                     }
                 }
@@ -962,15 +962,15 @@ next_lossless_final_node:
                     node_ptr++;
                     goto handle_lossless_final_children;
                 case BP_READ_TREE_COEFF_NODE:
-                    if (bitcount == 0) {
+                    if (bitcount != 0) {
+                        bitcount = bitcount - 1;
+                        code = bitbuf & BP_BIT_MASK;
+                        bitbuf >>= 1;
+                    } else {
                         code = *words;
                         bitcount = BP_WORD_TOP_BIT;
                         words++;
                         bitbuf = code >> 1;
-                    } else {
-                        bitcount = bitcount - 1;
-                        code = bitbuf & BP_BIT_MASK;
-                        bitbuf >>= 1;
                     }
                     coeffs.values[BP_READ_TREE_INDEX(node)] =
                         (code & BP_BIT_MASK) ? BP_NEGATIVE_COEFF_SIGN : BP_POSITIVE_COEFF_SIGN;
@@ -984,7 +984,16 @@ handle_lossless_final_children:
                 base = BP_READ_TREE_INDEX(node);
 #define READ_LOSSLESS_FINAL_CHILD(slot, label)                                                                          \
                     do {                                                                                                \
-                        if (bitcount == 0) {                                                                            \
+                        if (bitcount != 0) {                                                                                        \
+                            bitcount = bitcount - 1;                                                                    \
+                            code = bitbuf & BP_BIT_MASK;                                                                          \
+                            bitbuf >>= 1;                                                                               \
+                            if (code != 0) {                                                                            \
+                                next_node_ptr--;                                                                        \
+                                *next_node_ptr = BP_READ_TREE_COEFF(slot);                                               \
+                                goto label;                                                                             \
+                            }                                                                                           \
+                        } else {                                                                            \
                             code = *words;                                                                              \
                             bitcount = BP_WORD_TOP_BIT;                                                                 \
                             bitbuf = code >> 1;                                                                         \
@@ -994,25 +1003,16 @@ handle_lossless_final_children:
                                 *next_node_ptr = BP_READ_TREE_COEFF(slot);                                               \
                                 goto label;                                                                             \
                             }                                                                                           \
-                        } else {                                                                                        \
+                        }                                                                                               \
+                        if (bitcount != 0) {                                                                                        \
                             bitcount = bitcount - 1;                                                                    \
                             code = bitbuf & BP_BIT_MASK;                                                                          \
                             bitbuf >>= 1;                                                                               \
-                            if (code != 0) {                                                                            \
-                                next_node_ptr--;                                                                        \
-                                *next_node_ptr = BP_READ_TREE_COEFF(slot);                                               \
-                                goto label;                                                                             \
-                            }                                                                                           \
-                        }                                                                                               \
-                        if (bitcount == 0) {                                                                            \
+                        } else {                                                                            \
                             code = *words;                                                                              \
                             bitcount = BP_WORD_TOP_BIT;                                                                 \
                             words++;                                                                                    \
                             bitbuf = code >> 1;                                                                         \
-                        } else {                                                                                        \
-                            bitcount = bitcount - 1;                                                                    \
-                            code = bitbuf & BP_BIT_MASK;                                                                          \
-                            bitbuf >>= 1;                                                                               \
                         }                                                                                               \
                         coeffs.values[slot] = (code & BP_BIT_MASK) ? BP_NEGATIVE_COEFF_SIGN : BP_POSITIVE_COEFF_SIGN;                                                  \
                     } while (0)
