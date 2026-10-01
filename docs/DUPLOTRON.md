@@ -8357,3 +8357,20 @@ All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and
 SHA-1 pass. No other function scores change. Report:
 build/bitplane-lossy-traversal-report.json. Bitplane remains NonMatching;
 normal DOL identity does not establish source-linked movie playback.
+
+
+## Bink lossy writer plane cursor and residual emission (2026-10-01)
+
+WriteBPLossy improves from 93.88225% to 94.43585%. The pending insertion
+pointer persists across bitplanes, with the traversal cursor initialized
+from it at each plane, matching retail's pointer lifetimes (94.06678%).
+The residual loop loads its coefficient and increments the counter before
+bit emission (94.40949%). Standalone coefficient nodes also decode their
+index in place (94.43585%). A separate byte-sized child-depth temporary
+regressed and was discarded.
+
+All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and
+27,644 early-cutoff checks pass. Full all_source build and retail DOL
+SHA-1 pass; no other function scores change. Report:
+build/bitplane-lossy-cursor-report.json. Bitplane remains NonMatching;
+normal DOL identity does not establish source-linked movie playback.

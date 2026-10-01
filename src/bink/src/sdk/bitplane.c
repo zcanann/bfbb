@@ -1298,7 +1298,7 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     }
     roots[BP_ROOT_LOSSY_DC_SLOT] = groups[BP_TREE_GROUP_INDEX(BP_DC_COEFF)] + BP_TREE_BRANCH_NODE;
 
-    cur = roots;
+    insert = roots;
     next_node = roots + BP_LOSSY_ROOT_NODES;
     bit_mask = (u16)BP_LEVEL_MASK(maxbits);
     active_count = 0;
@@ -1308,12 +1308,13 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
         /* Coefficients introduced on earlier planes emit one residual bit here. */
         if (count < active_count) {
             do {
-                PUT_BP_BIT(bits, (active_absvals[count] & bit_mask) != 0);
+                u32 active_value = active_absvals[count];
                 count++;
+                PUT_BP_BIT(bits, (active_value & bit_mask) != 0);
             } while (count < active_count);
         }
 
-        insert = cur;
+        cur = insert;
         if (cur < next_node) {
             do {
                 node_entry = *cur;
@@ -1393,9 +1394,10 @@ decoded_lossy_write_children:
                         }
                         break;
                     case BP_TREE_COEFF_NODE:
-                        active_absvals[active_count] = absvals[BP_TREE_ENTRY_INDEX(node_entry)];
+                        node_entry = BP_TREE_ENTRY_INDEX(node_entry);
+                        active_absvals[active_count] = absvals[node_entry];
                         active_count++;
-                        PUT_BP_BIT(bits, (ordered[BP_TREE_ENTRY_INDEX(node_entry)] & BP_SIGN_BIT) != 0);
+                        PUT_BP_BIT(bits, (ordered[node_entry] & BP_SIGN_BIT) != 0);
                         *cur = BP_TREE_EMPTY_ENTRY;
                         goto next_lossy_node;
                     default:
@@ -1407,7 +1409,6 @@ next_lossy_node:
                 cur++;
             } while (cur < next_node);
         }
-        cur = insert;
         bit_mask = (s16)bit_mask >> 1;
     }
 
