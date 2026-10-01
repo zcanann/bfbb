@@ -527,7 +527,7 @@ config.libs = [
             Object(Matching, "SB/Game/zEntButton.cpp"),
             Object(NonMatching, "SB/Game/zEntCruiseBubble.cpp"),
             Object(Matching, "SB/Game/zEntDestructObj.cpp"),
-            Object(NonMatching, "SB/Game/zEntHangable.cpp"),
+            Object(NonMatching, "SB/Game/zEntHangable.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zEntPickup.cpp"),
             Object(NonMatching, "SB/Game/zEntPlayer.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zEntSimpleObj.cpp"),
