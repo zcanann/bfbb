@@ -261,6 +261,14 @@ void on_change_recenter(const tweak_info& tweak);
 static const tweak_callback newsfish_cb = { (void (*)(tweak_info&))on_change_newsfish };
 static const tweak_callback recenter_cb = { (void (*)(tweak_info&))on_change_recenter };
 
+// Layout-only references reproduce the literal order left by stripped code.
+// The original stripped routine is unknown; this stub does not enter the DOL.
+F32 __deadstripped_zNPCTypeBossPatrick_literals(F32* value, S32 count)
+{
+    *value = -1.0f;
+    return (F32)count;
+}
+
 static void UpdatePatrickBossCam(zNPCBPatrick* pat, F32 dt)
 {
     S32 needToCallStart = false;

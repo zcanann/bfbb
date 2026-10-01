@@ -7383,3 +7383,22 @@ assignment appears between normal functions. An explicit inline assignment
 fixed the per-object ordering, but changed global helper ownership and
 regressed zEntPlayer. That experiment was fully reverted; xEntDrive remains
 Equivalent.
+
+## Textbox, Villager, and Boss Patrick source linking (2026-10-01)
+
+All three units now link from source and reproduce the retail DOL SHA-1:
+
+- `zTextBox`: 26/26 functions, 2,916 code bytes, 240 data bytes. The current
+  source already has the correct layout; only its Matching marker changes.
+- `zNPCTypeVillager`: 122/122 functions, 19,316 code bytes, 5,120 data bytes.
+  Its first link differed by 13 bytes because 0.5f and 60.25f were emitted
+  in reverse order. One documented dead-stripped reference before Fish Reset
+  puts the shared half constant in the original position.
+- `zNPCTypeBossPatrick`: 71/71 functions, 35,152 code bytes, 3,584 data bytes.
+  Its first link differed by 671 bytes. A dead-stripped reference before
+  UpdatePatrickBossCam emits -1.0f and the signed-integer conversion bias
+  before 2.0f, restoring the shared pool order.
+
+The two added stubs are explicitly identified layout scaffolding; their
+original stripped routines are unknown. No live function behavior, assembly,
+compiler patch, split boundary, or output binary is changed.

@@ -993,6 +993,12 @@ void zNPCFish::Init(xEntAsset* asset)
     return;
 }
 
+// Layout-only reference preserves the shared literal order from stripped code.
+F32 __deadstripped_zNPCTypeVillager_half()
+{
+    return 0.5f;
+}
+
 void zNPCFish::Reset()
 {
     zNPCVillager::Reset();
