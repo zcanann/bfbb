@@ -647,7 +647,6 @@ static void YUV_blit(void PTR4* dest,
     u32 pitch;
     u32 pitch_delta;
     u32 chroma_pitch;
-    u32 mode;
     u32 endy;
     u32 align_count;
     s32 y_delta;
@@ -658,9 +657,8 @@ static void YUV_blit(void PTR4* dest,
     u8 PTR4* cbase;
 
     pitch = destpitch;
-    mode = YUV_SURFACE_MODE(flags);
 
-    if (mode == BINKCOPY1XI) {
+    if (YUV_SURFACE_MODE(flags) == BINKCOPY1XI) {
         pitch *= YUV_2X_SCALE;
         srcy >>= 1;
         srch >>= 1;
@@ -687,8 +685,8 @@ static void YUV_blit(void PTR4* dest,
         }
     }
 
-    S.dest0 = (u8 PTR4*)dest + desty * destpitch + YUV_BLIT_ROW_BYTES(destx, blits);
-    if (mode == BINKCOPY2XHI || mode == BINKCOPY2XWHI) {
+    S.dest0 = (u8 PTR4*)dest + (desty * destpitch + YUV_BLIT_ROW_BYTES(destx, blits));
+    if (YUV_SURFACE_MODE(flags) == BINKCOPY2XHI || YUV_SURFACE_MODE(flags) == BINKCOPY2XWHI) {
         pitch *= YUV_2X_SCALE;
     }
 
