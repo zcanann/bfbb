@@ -226,30 +226,19 @@ static void quanttos16chans2(s16 PTR4* samples, const f32 PTR4* decoded_coeffs,
     }
 }
 
-static inline u32 read_bit(BINKVARBITS PTR4* vb)
-{
-    u32 bitcount = vb->bitlen;
-
-    if (bitcount != 0) {
-        u32 bits = vb->bits;
-
-        vb->bitlen = bitcount - 1;
-        vb->bits = bits >> 1;
-        return bits & BINKAC_BIT_MASK;
-    } else {
-        u32 refill = BINKAC_LOAD32(vb->cur);
-
-        VARBITS_ADVANCE_CUR(vb->cur);
-        vb->bitlen = BINKAC_LAST_BIT_INDEX;
-        vb->bits = refill >> 1;
-        return refill & BINKAC_BIT_MASK;
-    }
-}
+#define BINKAC_GET_BIT(vb, temp) \
+    (((vb).bitlen != 0) \
+         ? ((temp) = (vb).bits & BINKAC_BIT_MASK, (vb).bitlen--, (vb).bits >>= 1, \
+            (temp)) \
+         : ((temp) = BINKAC_LOAD32((vb).cur), VARBITS_ADVANCE_CUR((vb).cur), \
+            (vb).bitlen = BINKAC_LAST_BIT_INDEX, (vb).bits = (u32)(temp) >> 1, \
+            ((temp) & BINKAC_BIT_MASK)))
 
 static void read_rle_samples(f32 PTR4* samps, u32 transform_size, BINKVARBITS PTR4* vbp,
                              const f32 PTR4* threshold, const u32 PTR4* bands)
 {
     u32 coeff;
+    u32 scratch;
     u32 band = 0;
     f32 dequant = BINKAC_SAMPLE_ZERO;
     f32 PTR4* out;
@@ -270,7 +259,7 @@ static void read_rle_samples(f32 PTR4* samps, u32 transform_size, BINKVARBITS PT
            bits (literal VQ run) or BINKAC_RLE_PACKET_BITS bits (RLE flag,
            run index, and coefficient bit length). */
         {
-            if ((read_bit(vbp) & BINKAC_BIT_MASK) != 0) {
+            if (BINKAC_GET_BIT(*vbp, scratch) != 0) {
                 VarBitsGet(run_end, u32, *vbp, RLEBITS);
                 run_end = coeff + BINKAC_RLE_SAMPLE_RUN(run_end);
             } else {
@@ -284,10 +273,10 @@ static void read_rle_samples(f32 PTR4* samps, u32 transform_size, BINKVARBITS PT
 
         VarBitsGet(coeff_bit_count, u32, *vbp, RLEBITS);
         if (coeff_bit_count == 0) {
-            u32 zero_count = BINKAC_ZERO_SAMPLE_RUN(coeff, run_end);
+            scratch = BINKAC_ZERO_SAMPLE_RUN(coeff, run_end);
 
-            memset(out, BINKAC_ZERO_BYTE, BINKAC_COEFF_BYTES(zero_count, out));
-            out += zero_count;
+            memset(out, BINKAC_ZERO_BYTE, BINKAC_COEFF_BYTES(scratch, out));
+            out += scratch;
             coeff = run_end;
 
             while (BINKAC_COEFF_PAST_BAND(coeff, bands, band)) {
@@ -307,7 +296,7 @@ static void read_rle_samples(f32 PTR4* samps, u32 transform_size, BINKVARBITS PT
 
                     if (magnitude != 0) {
                         /* Bink audio 1 stores the sign bit after each nonzero coefficient. */
-                        s32 sign = BINKAC_SIGN_MASK(read_bit(vbp));
+                        s32 sign = BINKAC_SIGN_MASK(BINKAC_GET_BIT(*vbp, scratch));
                         magnitude = BINKAC_APPLY_SIGN(magnitude, sign);
                         *out++ = magnitude * dequant;
                     } else {
