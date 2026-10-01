@@ -7825,3 +7825,17 @@ and normal retail DOL SHA-1 validation pass. No other game or Bink function
 scores change; RenderWare differences from the earlier report belong to the
 already-integrated 92251cd16 compiler update. Bitplane remains NonMatching,
 so the retail DOL check does not establish source-linked Bink playback.
+
+
+## Bink remaining sign branches (2026-10-01)
+
+Extending the buffered/refill sign branching to the last child and deferred
+coefficient paths raises readlossy from 80.00887% to 82.241684%. The individual
+trials score 80.97339% (last child) and 80.35477% (deferred coefficient).
+The deduplicated full-report comparison changes only readlossy.
+
+All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
+early-cutoff invariant checks pass. Full all-source compilation and the normal
+retail DOL SHA-1 check pass, also after integrating staging c2cf5cb6c's two
+RenderWare source-link promotions. Bitplane remains NonMatching; source-linked
+Bink playback is still unverified.

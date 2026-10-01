@@ -1602,22 +1602,31 @@ after_2:
             }
             if ((word & BP_BIT_MASK) == 0) {
                 nz_coeff[nz_coeff_count] = node;
-                word = bitbuf;
-                /* The sign bit follows the first nonzero magnitude bit. */
                 nz_coeff_count = nz_coeff_count + 1;
                 if (bitcount != 0) {
                     bitcount = bitcount - 1;
-                    bitbuf = bitbuf >> 1;
+                    word = bitbuf >> 1;
+                    bit = bitbuf & BP_BIT_MASK;
+                    bitbuf = word;
+                    if (bit != 0) {
+                        goto negative_3;
+                    }
+                    goto positive_3;
                 } else {
                     word = *words;
                     bitcount = BP_WORD_TOP_BIT;
                     words = words + 1;
                     bitbuf = word >> 1;
+                    if ((word & BP_BIT_MASK) == 0) {
+                        goto positive_3;
+                    }
                 }
+negative_3:
                 delta = scan;
-                if ((word & BP_BIT_MASK) == 0) {
-                    delta = mask;
-                }
+                goto store_3;
+positive_3:
+                delta = mask;
+store_3:
                 dest[(u32)node] = (s8)delta;
                 if (masks_used++ == masks_count) {
                     goto done;
@@ -1629,21 +1638,31 @@ after_2:
 deferred_coeff:
             nz_coeff[nz_coeff_count] = BP_READ_TREE_INDEX(node);
             /* Deferred coeff nodes already carry their scan index. */
-            word = bitbuf;
             nz_coeff_count = nz_coeff_count + 1;
             if (bitcount != 0) {
                 bitcount = bitcount - 1;
-                bitbuf = bitbuf >> 1;
+                word = bitbuf >> 1;
+                bit = bitbuf & BP_BIT_MASK;
+                bitbuf = word;
+                if (bit != 0) {
+                    goto negative_4;
+                }
+                goto positive_4;
             } else {
                 word = *words;
                 bitcount = BP_WORD_TOP_BIT;
                 words = words + 1;
                 bitbuf = word >> 1;
+                if ((word & BP_BIT_MASK) == 0) {
+                    goto positive_4;
+                }
             }
+negative_4:
             delta = scan;
-            if ((word & BP_BIT_MASK) == 0) {
-                delta = mask;
-            }
+            goto store_4;
+positive_4:
+            delta = mask;
+store_4:
             dest[(u32)BP_READ_TREE_INDEX(node)] = (s8)delta;
             if (masks_used++ == masks_count) {
                 goto done;
