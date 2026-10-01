@@ -29,6 +29,20 @@ struct EffectRegEntry
     RpMTEffectStreamGetSizeCallBack streamGetSize;
 };
 
+typedef struct Iterator Iterator;
+struct Iterator
+{
+    void* cur;
+    void* end;
+};
+
+typedef union RpPtrMTEffect RpPtrMTEffect;
+union RpPtrMTEffect
+{
+    RpMTEffect* ptrMTEffect;
+    const RpMTEffect* constptrMTEffect;
+};
+
 typedef struct BinaryEffect BinaryEffect;
 struct BinaryEffect
 {
@@ -101,8 +115,7 @@ RwBool _rpMTEffectOpen(void)
 
 RwBool _rpMTEffectClose(void)
 {
-    RwLLLink* cur;
-    RwLLLink* end;
+    Iterator iter;
     const RpMTEffectDict* dict;
 
     if (RPMULTITEXTUREGLOBAL(path) != NULL)
@@ -113,11 +126,11 @@ RwBool _rpMTEffectClose(void)
         RPMULTITEXTUREGLOBAL(pathSize) = 0;
     }
 
-    end = rwLinkListGetTerminator(&RPMULTITEXTUREGLOBAL(dictList));
-    cur = rwLinkListGetFirstLLLink(&RPMULTITEXTUREGLOBAL(dictList));
-    while (cur != end)
+    iter.cur = rwLinkListGetFirstLLLink(&RPMULTITEXTUREGLOBAL(dictList));
+    iter.end = rwLinkListGetTerminator(&RPMULTITEXTUREGLOBAL(dictList));
+    while (iter.cur != iter.end)
     {
-        dict = rwLLLinkGetConstData(cur, RpMTEffectDict, dictListLink);
+        dict = rwLLLinkGetConstData((const RwLLLink*)iter.cur, RpMTEffectDict, dictListLink);
         if (dict == DummyDict)
         {
             RpMTEffectDictDestroy(DummyDict);
@@ -125,7 +138,7 @@ RwBool _rpMTEffectClose(void)
             break;
         }
 
-        cur = rwLLLinkGetNext(cur);
+        iter.cur = (void*)rwLLLinkGetNext((const RwLLLink*)iter.cur);
     }
 
     return TRUE;
@@ -215,19 +228,21 @@ RpMTEffect* RpMTEffectDictRemoveEffect(RpMTEffect* effect)
 
 static RpMTEffect* RpMTEffectDictFindNamedEffect(const RpMTEffectDict* dict, const RwChar* name)
 {
-    const RwLLLink* cur;
-    RpMTEffect* effect;
+    Iterator iter;
+    RpPtrMTEffect PtrMTEffect;
 
-    cur = rwLinkListGetFirstLLLink(&dict->effectList);
-    while (cur != rwLinkListGetTerminator(&dict->effectList))
+    iter.cur = (void*)rwLinkListGetFirstLLLink(&dict->effectList);
+    iter.end = (void*)rwLinkListGetTerminator(&dict->effectList);
+    while (iter.cur != iter.end)
     {
-        effect = (RpMTEffect*)rwLLLinkGetConstData(cur, RpMTEffect, dictLink);
-        if (!rwstrcmp(effect->name, name))
+        PtrMTEffect.constptrMTEffect =
+            rwLLLinkGetConstData((const RwLLLink*)iter.cur, RpMTEffect, dictLink);
+        if (!rwstrcmp(PtrMTEffect.constptrMTEffect->name, name))
         {
-            return effect;
+            return PtrMTEffect.ptrMTEffect;
         }
 
-        cur = rwLLLinkGetNext(cur);
+        iter.cur = (void*)rwLLLinkGetNext((const RwLLLink*)iter.cur);
     }
 
     return NULL;
@@ -321,8 +336,7 @@ RpMTEffect* RpMTEffectFind(RwChar* name)
     RpMTEffect* effect;
     RwStream* stream;
     RwChar* scratch;
-    RwLLLink* cur;
-    RwLLLink* end;
+    Iterator iter;
     const RpMTEffectDict* dict;
 
     effect = NULL;
@@ -333,11 +347,11 @@ RpMTEffect* RpMTEffectFind(RwChar* name)
     }
     else
     {
-        end = rwLinkListGetTerminator(&RPMULTITEXTUREGLOBAL(dictList));
-        cur = rwLinkListGetFirstLLLink(&RPMULTITEXTUREGLOBAL(dictList));
-        while (cur != end)
+        iter.cur = rwLinkListGetFirstLLLink(&RPMULTITEXTUREGLOBAL(dictList));
+        iter.end = rwLinkListGetTerminator(&RPMULTITEXTUREGLOBAL(dictList));
+        while (iter.cur != iter.end)
         {
-            dict = rwLLLinkGetConstData(cur, RpMTEffectDict, dictListLink);
+            dict = rwLLLinkGetConstData((const RwLLLink*)iter.cur, RpMTEffectDict, dictListLink);
 
             effect = RpMTEffectDictFindNamedEffect(dict, name);
             if (effect != NULL)
@@ -345,7 +359,7 @@ RpMTEffect* RpMTEffectFind(RwChar* name)
                 break;
             }
 
-            cur = rwLLLinkGetNext(cur);
+            iter.cur = (void*)rwLLLinkGetNext((const RwLLLink*)iter.cur);
         }
     }
 

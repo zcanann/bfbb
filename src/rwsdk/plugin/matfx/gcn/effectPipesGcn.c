@@ -479,12 +479,10 @@ static void MeshRenderUVAnimDual(RpMesh* mesh, RxGameCubeDisplayList* dList,
 static void MeshRenderEnvMap(RpMesh* mesh, RxGameCubeDisplayList* dList, RwMatrix* objectLTM,
                              RxGameCubePipeData* pipeData)
 {
-    MatFXEnvMapData* envMapData;
+    MatFXEnvMapData* envMapData = &(*MATFXMATERIALGETDATA(mesh->material))->data[0].data.envMap;
     RwBlendFunction srcBlend;
     RwBlendFunction dstBlend;
     GXColor shiney = { 255, 255, 255, 255 };
-
-    envMapData = &(*MATFXMATERIALGETDATA(mesh->material))->data[0].data.envMap;
 
     MATFXCHANNELSETUP(pipeData, mesh->material);
     MATFXTEVDEFAULTSETUP(pipeData);

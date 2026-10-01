@@ -992,7 +992,7 @@ RpMTEffect* _rpGameCubeMTEffectSend(RpMTEffect* effect, RwUInt32 numTextures, Rw
                     GXSetTevIndirect((GXTevStageID)i, (GXIndTexStageID)ind.indStage,
                                      (GXIndTexFormat)ind.format, (GXIndTexBiasSel)ind.biasSel,
                                      (GXIndTexMtxID)ind.matrixSel, (GXIndTexWrap)ind.wrapS,
-                                     (GXIndTexWrap)ind.wrapT, ind.addPrev, ind.utcLod,
+                                     (GXIndTexWrap)ind.wrapT, (GXBool)ind.addPrev, (GXBool)ind.utcLod,
                                      (GXIndTexAlphaSel)ind.alphaSel);
                 }
                 else
@@ -1019,10 +1019,10 @@ RpMTEffect* _rpGameCubeMTEffectSend(RpMTEffect* effect, RwUInt32 numTextures, Rw
                 GXSetTevKAlphaSel((GXTevStageID)i, (GXTevKAlphaSel)stage->op.alphaSel);
                 GXSetTevColorOp((GXTevStageID)i, (GXTevOp)stage->op.colorOp,
                                 (GXTevBias)stage->op.colorBias, (GXTevScale)stage->op.colorScale,
-                                stage->op.colorClamp, (GXTevRegID)stage->op.colorOutReg);
+                                (GXBool)stage->op.colorClamp, (GXTevRegID)stage->op.colorOutReg);
                 GXSetTevAlphaOp((GXTevStageID)i, (GXTevOp)stage->op.alphaOp,
                                 (GXTevBias)stage->op.alphaBias, (GXTevScale)stage->op.alphaScale,
-                                stage->op.alphaClamp, (GXTevRegID)stage->op.alphaOutReg);
+                                (GXBool)stage->op.alphaClamp, (GXTevRegID)stage->op.alphaOutReg);
 
                 texGenTexture[stage->texCoordID] = (RwInt8)stage->texMapID;
             }
