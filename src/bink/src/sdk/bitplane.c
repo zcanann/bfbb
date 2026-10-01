@@ -645,23 +645,19 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
     roots[BP_ROOT_LOSSLESS_COEFF2_SLOT] = BP_TREE_COEFF_LEAF_ENTRY(lens[BP_COEFF2_INDEX], BP_COEFF2_LEAF_BASE);
     roots[BP_ROOT_LOSSLESS_COEFF3_SLOT] = BP_TREE_COEFF_LEAF_ENTRY(lens[BP_COEFF3_INDEX], BP_COEFF3_LEAF_BASE);
 
-    cur = roots;
+    restart = roots;
     end = roots + BP_LOSSLESS_ROOT_NODES;
     level = maxbits;
     while (level != 0) {
         lenbits = level - 1;
-        restart = cur;
+        cur = restart;
         /* Active children at lower bit depths are pushed before the current cursor. */
         if (cur < end) {
             do {
                 entry = *cur;
-                if (entry == BP_TREE_EMPTY_ENTRY) {
-next_lossless_node:
-                    cur++;
-                } else {
-                    sign = BP_TREE_ENTRY_LEVEL(entry) != level;
-                    PUT_BP_BIT(bits, !sign);
-                    if (sign) {
+                if (entry != BP_TREE_EMPTY_ENTRY) {
+                    PUT_BP_BIT(bits, BP_TREE_ENTRY_LEVEL(entry) == level);
+                    if (BP_TREE_ENTRY_LEVEL(entry) != level) {
                         goto next_lossless_node;
                     }
                     switch (BP_TREE_ENTRY_KIND(entry)) {
@@ -727,11 +723,13 @@ decoded_write_children:
                     default:
                         goto next_lossless_node;
                     }
+                    continue;
                 }
+next_lossless_node:
+                cur++;
             } while (cur < end);
         }
         level = lenbits & BP_BYTE_MASK;
-        cur = restart;
     }
 }
 

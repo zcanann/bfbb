@@ -8374,3 +8374,21 @@ All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and
 SHA-1 pass; no other function scores change. Report:
 build/bitplane-lossy-cursor-report.json. Bitplane remains NonMatching;
 normal DOL identity does not establish source-linked movie playback.
+
+
+## Bink lossless writer presence and plane cursor (2026-10-01)
+
+WriteBPLossless improves from 89.79641% to 91.47605%. Moving the
+next-node path to the loop bottom reaches 90.20659%; direct node-presence
+comparisons instead of a materialized sign temporary reach 91.19461%.
+Keeping the pending insertion pointer across planes and initializing the
+traversal cursor from it each plane reaches 91.47605%. Expanded nodes
+continue without an extra cursor increment, preserving tree traversal.
+
+All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and
+27,644 early-cutoff checks pass. Full all_source build and retail DOL
+SHA-1 pass, including integrated baimage commit 8ded2f347. No function
+scores regress; the only other change is the incoming RwImageApplyMask
+99.089554% -> 100%. Report: build/bitplane-lossless-presence-report.json.
+Bitplane remains NonMatching; normal DOL identity does not establish
+source-linked movie playback.
