@@ -465,6 +465,66 @@ static void TriListNBTDataSetup16(NBTCalcData* data, RwUInt8* indices, RwUInt32 
         }                                                                                          \
     }
 
+static void CalcNBTSetup(RpGameCubeVtxFmt* vtxFmt, RwUInt8* posSize, RwUInt8* nbtSize,
+                         RwUInt8* uvSize, RwUInt32* gqr5Val)
+{
+    register RwUInt32 tmpReg;
+    register RwUInt32* gqr5ValReg = gqr5Val;
+    register RwUInt32 posGQR;
+    register RwUInt32 nbtGQR;
+    register RwUInt32 uvGQR;
+
+    if (vtxFmt != NULL)
+    {
+        RwUInt8 vtxFmtTypeConvTable[5] = { 4, 6, 5, 7, 0 };
+        RwUInt8 vtxFmtSizeConvTable[5] = { 1, 1, 2, 2, 4 };
+        RwUInt8 vtxFmtNormConvTable[5] = { 0, 6, 0, 14, 0 };
+
+        *posSize = vtxFmtSizeConvTable[vtxFmt->pos];
+        *nbtSize = vtxFmtSizeConvTable[vtxFmt->norm];
+        *uvSize = vtxFmtSizeConvTable[vtxFmt->texCoord[0]];
+
+        posGQR = vtxFmtTypeConvTable[vtxFmt->pos] | (vtxFmt->posFrac << 8);
+        posGQR |= posGQR << 16;
+
+        nbtGQR = vtxFmtTypeConvTable[vtxFmt->norm] | (vtxFmtNormConvTable[vtxFmt->norm] << 8);
+        nbtGQR |= nbtGQR << 16;
+
+        uvGQR = vtxFmtTypeConvTable[vtxFmt->texCoord[0]] | (vtxFmt->texCoordFrac[0] << 8);
+        uvGQR |= uvGQR << 16;
+    }
+    else
+    {
+        *posSize = sizeof(RwReal);
+        *nbtSize = sizeof(RwReal);
+
+        posGQR = 0;
+        nbtGQR = 0;
+        uvGQR = 0;
+    }
+
+    /* GQR5 is restored when done */
+    asm
+    {
+        mfspr tmpReg, GQR5
+        stw tmpReg, 0(gqr5ValReg)
+        mtspr GQR5, posGQR
+        mtspr GQR6, nbtGQR
+        mtspr GQR7, uvGQR
+    }
+}
+
+static void CalcNBTRestore(RwUInt32 gqr5Val)
+{
+    register RwUInt32 tmpReg;
+
+    asm
+    {
+        lwz tmpReg, gqr5Val
+        mtspr GQR5, tmpReg
+    }
+}
+
 static void CalcMeshNBTs(RxGameCubeVertexBuffer* vbHeader, RxGameCubeDisplayList* dList,
                          RpGameCubeVtxFmt* vtxFmt)
 {
@@ -476,11 +536,7 @@ static void CalcMeshNBTs(RxGameCubeVertexBuffer* vbHeader, RxGameCubeDisplayList
     RwUInt8* dl;
     RwInt32 i;
     RwInt32 numVerts;
-    register RwUInt32 posGQR;
-    register RwUInt32 nbtGQR;
-    register RwUInt32 uvGQR;
-    volatile RwUInt32 savedGQR;
-    register RwUInt32 gqr;
+    RwUInt32 gqr5Val;
     NBTCalcData data;
 
     pos = (RwUInt8*)vbHeader->attr[0].array;
@@ -506,41 +562,7 @@ static void CalcMeshNBTs(RxGameCubeVertexBuffer* vbHeader, RxGameCubeDisplayList
         }
     }
 
-    if (vtxFmt != NULL)
-    {
-        RwUInt8 vtxFmtNormConvTable[5] = { 0, 6, 0, 14, 0 };
-        RwUInt8 vtxFmtSizeConvTable[5] = { 1, 1, 2, 2, 4 };
-        RwUInt8 vtxFmtTypeConvTable[5] = { 4, 6, 5, 7, 0 };
-
-        data.posSize = vtxFmtSizeConvTable[vtxFmt->pos];
-        data.nbtSize = vtxFmtSizeConvTable[vtxFmt->norm];
-        data.uvSize = vtxFmtSizeConvTable[vtxFmt->texCoord[0]];
-
-        posGQR = vtxFmtTypeConvTable[vtxFmt->pos] | (vtxFmt->posFrac << 8);
-        posGQR |= posGQR << 16;
-
-        nbtGQR = vtxFmtTypeConvTable[vtxFmt->norm] | (vtxFmtNormConvTable[vtxFmt->norm] << 8);
-        nbtGQR |= nbtGQR << 16;
-
-        uvGQR = vtxFmtTypeConvTable[vtxFmt->texCoord[0]] | (vtxFmt->texCoordFrac[0] << 8);
-        uvGQR |= uvGQR << 16;
-    }
-    else
-    {
-        data.posSize = sizeof(RwReal);
-        data.nbtSize = sizeof(RwReal);
-
-        posGQR = 0;
-        nbtGQR = 0;
-        uvGQR = 0;
-    }
-
-    /* GQR5 is restored when done */
-    asm { mfspr gqr, GQR5 }
-    savedGQR = gqr;
-    asm { mtspr GQR5, posGQR }
-    asm { mtspr GQR6, nbtGQR }
-    asm { mtspr GQR7, uvGQR }
+    CalcNBTSetup(vtxFmt, &data.posSize, &data.nbtSize, &data.uvSize, &gqr5Val);
 
     dl = (RwUInt8*)dList->displayList;
     offset = 0;
@@ -593,8 +615,7 @@ static void CalcMeshNBTs(RxGameCubeVertexBuffer* vbHeader, RxGameCubeDisplayList
         }
     }
 
-    gqr = savedGQR;
-    asm { mtspr GQR5, gqr }
+    CalcNBTRestore(gqr5Val);
 }
 
 void _rpGameCubeMTPipeDataCalcNBTs(RxGameCubePipeData* pipeData, RpGameCubeVtxFmt* vtxFmt,
