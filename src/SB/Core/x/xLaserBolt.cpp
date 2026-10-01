@@ -136,8 +136,10 @@ void xLaserBoltEmitter::update(F32 dt)
     {
         bolt& b = *it;
 
-        bool collided = b.dist >= b.hit_dist;
-        F32 prev_dist = b.dist;
+        // Keep the comparison snapshot separate from the saved F32 value (retail fmr).
+        F64 dist = b.dist;
+        bool collided = dist >= b.hit_dist;
+        F32 prev_dist = dist;
 
         update(b, dt);
 
