@@ -773,7 +773,7 @@ S32 zNPCVillager::FolkHandleMail(NPCMsg* mail)
     case 1:
         if (mail->sysevent.toEvent == 0x20e)
         {
-            psy->GoalSet(NPC_GOAL_TALK, 0);
+            psy_instinct->GoalSet(NPC_GOAL_TALK, 0);
         }
         else if (mail->sysevent.toEvent == 0x1d9)
         {
@@ -2240,7 +2240,7 @@ RpAtomic* NPC_BubBud_RenderCB(RpAtomic* atomic)
 
     if (zNPCBubbleBuddy::rast_fresnel != 0)
     {
-        iModelSetMaterialAlpha(atomic, fade * 127.5f + 0.5f);
+        iModelSetMaterialAlpha(atomic, (S32)(fade * 127.5f + 0.5f));
         gFXSurfaceFlags = 0x10;
         xFXAtomicEnvMapSetup(atomic, bb_fresnel_texture, fade);
         gFXSurfaceFlags = 0;
@@ -2249,7 +2249,7 @@ RpAtomic* NPC_BubBud_RenderCB(RpAtomic* atomic)
 
     if (zNPCBubbleBuddy::rast_enviro != 0)
     {
-        iModelSetMaterialAlpha(atomic, fade * 127.5f + 0.5f);
+        iModelSetMaterialAlpha(atomic, (S32)(fade * 127.5f + 0.5f));
         AtomicDisableMatFX(atomic);
         gFXSurfaceFlags = 0x10;
         xFXAtomicEnvMapSetup(atomic, bb_env_texture, fade);

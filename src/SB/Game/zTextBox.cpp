@@ -40,11 +40,9 @@ namespace
 
     void render_bk_tex_scale(const ztextbox& e)
     {
-        // non-matching: float instruction order
-
         static RwIm2DVertex vert[6];
 
-        iColor_tag c = convert(e.asset->backdrop.color);
+        const iColor_tag c = convert(e.asset->backdrop.color);
 
         F32 rcz = 1.0f / RwCameraGetNearClipPlane(RwCameraGetCurrentCamera());
         F32 nsz = RwIm2DGetNearScreenZ();
