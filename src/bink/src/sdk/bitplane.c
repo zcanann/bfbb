@@ -1533,7 +1533,7 @@ push_1:
                 if (bit == 0) {
                     delta = mask;
                 }
-                dest[code + BP_TREE_CHILD1_INDEX] = (s8)delta;
+                dest[(u32)node] = (s8)delta;
                 if (masks_used++ == masks_count) {
                     goto done;
                 }
@@ -1573,7 +1573,7 @@ push_2:
                 if (bit == 0) {
                     delta = mask;
                 }
-                dest[code + BP_TREE_CHILD2_INDEX] = (s8)delta;
+                dest[(u32)node] = (s8)delta;
                 if (masks_used++ == masks_count) {
                     goto done;
                 }
@@ -1607,7 +1607,7 @@ after_2:
                     if ((word & BP_BIT_MASK) == 0) {
                         delta = mask;
                     }
-                    dest[code + BP_TREE_CHILD3_INDEX] = (s8)delta;
+                    dest[(u32)node] = (s8)delta;
                     if (masks_used++ == masks_count) {
                         goto done;
                     }

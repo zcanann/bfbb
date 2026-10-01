@@ -7758,3 +7758,21 @@ blocks must return without changing the stream. All 16,384 lossless cases
 continue to pass. Lossy tests decode every plane and do not yet exercise
 early mask cutoffs or GameCube runtime playback. Previous fix CI 36918932454
 passed.
+
+
+## Bink lossy child-index reuse (2026-10-01)
+
+`readlossy` now uses the already-decoded byte child index for three coefficient
+stores, improving its deduplicated match from 65.53215% to 65.71619%.
+A controlled rebuild of HEAD and the candidate changes only that function's
+score. The older report's `check_hide_entities` 100% versus 91.04651% discrepancy
+also appears with unchanged HEAD source and is not caused by this edit.
+
+The host bitplane checker passes 16,384 lossless round trips and 6,911 nonempty
+lossy round trips. Added 27,644 early-cutoff checks cover the first, middle,
+last, and beyond-last update: magnitude-bit subsets, signs, update counts,
+stream position, buffered bits, and output guards. These are invariants, not
+an independent retail oracle for partial coefficient ordering or movie playback.
+Full all-source compilation passes; the normal linked DOL retains retail SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. Bitplane remains NonMatching, so that
+DOL check does not establish source-linked Bink decoding.

@@ -3,7 +3,7 @@
 
 Covers zero/sparse/dense blocks with magnitudes up to 32767, every initial
 word offset, output guards, exact bit lengths, and lossless DC preservation.
-Lossy checks decode every plane (no early mask cutoff). Host-only; the PowerPC
+Lossy checks also cover early mask cutoffs. Host-only; the PowerPC
 leading-zero intrinsic is replaced by its portable equivalent.
 """
 import argparse
@@ -55,7 +55,7 @@ int main(void){
   }
   ++cases;
  }
- u32 lossy_cases=0;
+ u32 lossy_cases=0,cutoff_cases=0;
  for(u32 level=1;level<=7;level++)for(u32 offset=0;offset<32;offset++)
  for(u32 trial=0;trial<32;trial++){
   s8 input[64],output[66];u32 words[128]={0},mask=(1u<<level)-1;
@@ -81,9 +81,35 @@ int main(void){
   }
   u32 consumed=(u32)(reader.cur-words)*32-reader.bitlen-offset;
   if(consumed!=written || output[0]!=0x5a || output[65]!=0x5a){printf("FAIL lossy bit count or guards\n");return 3;}
+  u32 updates=0,last_consumed=0;
+  for(u32 k=0;k<64;k++){
+   u32 magnitude=input[k]<0?-input[k]:input[k];
+   for(;magnitude;magnitude>>=1)updates+=magnitude&1;
+  }
+  for(u32 checkpoint=0;checkpoint<4;checkpoint++){
+   u32 cutoff=checkpoint==0?0:checkpoint==1?updates/2:checkpoint==2?updates-1:updates;
+   BPBITSTREAM partial={words,words,0,0};
+   if(offset){u32 ignored;VarBitsGet(ignored,u32,partial,offset);}
+   memset(output,0x5a,sizeof(output));readlossy(output+1,&partial,cutoff);
+   u32 found=0;
+   for(u32 k=0;k<64;k++){
+    s32 want=input[zigzag[k]],got=output[k+1];
+    u32 wm=want<0?-want:want,gm=got<0?-got:got;
+    if((gm&~wm) || (got && ((got<0)!=(want<0)))){printf("FAIL partial magnitude/sign\n");return 6;}
+    for(;gm;gm>>=1)found+=gm&1;
+   }
+   u32 used=(u32)(partial.cur-words)*32-partial.bitlen-offset;
+   u32 wanted=cutoff<updates?cutoff+1:updates;
+   if(found!=wanted || used<last_consumed || used>written ||
+      (cutoff>=updates && used!=written) || output[0]!=0x5a || output[65]!=0x5a){
+    printf("FAIL cutoff level=%u offset=%u trial=%u limit=%u found=%u wanted=%u\n",level,offset,trial,cutoff,found,wanted);return 7;
+   }
+   if(partial.bitlen && partial.bits!=(words[partial.cur-words-1]>>(32-partial.bitlen))){printf("FAIL partial reservoir\n");return 8;}
+   last_consumed=used;++cutoff_cases;
+  }
   ++lossy_cases;
  }
- printf("PASS %u nonempty lossy round trips and stream lengths\n",lossy_cases);
+ printf("PASS %u nonempty lossy round trips and %u early-cutoff checks\n",lossy_cases,cutoff_cases);
  if(roundtrip_failures){printf("FAIL %u of %u round trips\n",roundtrip_failures,cases);return 1;}
  printf("PASS %u lossless bitplane round trips, guards, and bit-length checks\n",cases);return 0;
 }
