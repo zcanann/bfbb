@@ -916,8 +916,8 @@ static void fastidct8x8(u8 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4* 
             row[DCT_COL6] = odd_mid;
             row[DCT_COL2] = even5;
             row[DCT_COL5] = odd_cross;
-            row[DCT_COL4] = even3;
-            row[DCT_COL3] = odd_tail;
+            row[DCT_COL3] = even3;
+            row[DCT_COL4] = odd_tail;
 
             out[DCT_ROW0] = row[DCT_COL0] + row[DCT_COL7];
             out[DCT_ROW7] = row[DCT_COL0] - row[DCT_COL7];
@@ -925,8 +925,8 @@ static void fastidct8x8(u8 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4* 
             out[DCT_ROW6] = row[DCT_COL1] - row[DCT_COL6];
             out[DCT_ROW2] = row[DCT_COL2] + row[DCT_COL5];
             out[DCT_ROW5] = row[DCT_COL2] - row[DCT_COL5];
-            out[DCT_ROW4] = row[DCT_COL4] + row[DCT_COL3];
-            out[DCT_ROW3] = row[DCT_COL4] - row[DCT_COL3];
+            out[DCT_ROW4] = row[DCT_COL3] + row[DCT_COL4];
+            out[DCT_ROW3] = row[DCT_COL3] - row[DCT_COL4];
         }
 
         ++out;
@@ -936,32 +936,33 @@ static void fastidct8x8(u8 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4* 
     d = dest;
     /* Second pass writes reconstructed rows to the output block. */
     for (i = DCT_BLOCK_WIDTH; i != 0; --i) {
-        s32 a0 = out[DCT_COL2] + out[DCT_COL6];
-        s32 a1 = out[DCT_COL0] + out[DCT_COL4];
-        s32 a2 = a1 - a0;
-        s32 a3 = out[DCT_COL0] - out[DCT_COL4];
-        s32 a4 = a1 + a0;
-        s32 a5 = DCT_FIXED_MUL(out[DCT_COL2] - out[DCT_COL6], DCT_IDCT_A1) - a0;
-        s32 a6 = a3 - a5;
-        s32 a7 = a3 + a5;
-        s32 a8 = out[DCT_COL5] - out[DCT_COL3];
-        s32 a9 = out[DCT_COL5] + out[DCT_COL3];
-        s32 b0 = out[DCT_COL1] - out[DCT_COL7];
-        s32 b1 = out[DCT_COL1] + out[DCT_COL7];
-        s32 b2 = b1 + a9;
-        s32 b3 = DCT_FIXED_MUL(a8 + b0, DCT_IDCT_A3);
-        s32 b4 = (DCT_FIXED_MUL(a8, DCT_IDCT_A4) + b3) - b2;
-        s32 b5 = DCT_FIXED_MUL(b1 - a9, DCT_IDCT_A1) - b4;
-        s32 b6 = (DCT_FIXED_MUL(b0, DCT_IDCT_A2) - b3) + b5;
+        s32 a0, a1, a3, a5, a8, a9, b0, b1, b3;
+        a0 = out[DCT_COL2] + out[DCT_COL6];
+        a1 = out[DCT_COL0] + out[DCT_COL4];
+        row[DCT_COL3] = a1 - a0;
+        a3 = out[DCT_COL0] - out[DCT_COL4];
+        row[DCT_COL0] = a1 + a0;
+        a5 = DCT_FIXED_MUL(out[DCT_COL2] - out[DCT_COL6], DCT_IDCT_A1) - a0;
+        row[DCT_COL2] = a3 - a5;
+        row[DCT_COL1] = a3 + a5;
+        a8 = out[DCT_COL5] - out[DCT_COL3];
+        a9 = out[DCT_COL5] + out[DCT_COL3];
+        b0 = out[DCT_COL1] - out[DCT_COL7];
+        b1 = out[DCT_COL1] + out[DCT_COL7];
+        row[DCT_COL7] = b1 + a9;
+        b3 = DCT_FIXED_MUL(a8 + b0, DCT_IDCT_A3);
+        row[DCT_COL6] = (DCT_FIXED_MUL(a8, DCT_IDCT_A4) + b3) - row[DCT_COL7];
+        row[DCT_COL5] = DCT_FIXED_MUL(b1 - a9, DCT_IDCT_A1) - row[DCT_COL6];
+        row[DCT_COL4] = (DCT_FIXED_MUL(b0, DCT_IDCT_A2) - b3) + row[DCT_COL5];
 
-        d[DCT_COL0] = DCT_BYTE_SAMPLE(a4 + b2);
-        d[DCT_COL7] = DCT_BYTE_SAMPLE(a4 - b2);
-        d[DCT_COL1] = DCT_BYTE_SAMPLE(a7 + b4);
-        d[DCT_COL6] = DCT_BYTE_SAMPLE(a7 - b4);
-        d[DCT_COL2] = DCT_BYTE_SAMPLE(a6 + b5);
-        d[DCT_COL5] = DCT_BYTE_SAMPLE(a6 - b5);
-        d[DCT_COL4] = DCT_BYTE_SAMPLE(a2 + b6);
-        d[DCT_COL3] = DCT_BYTE_SAMPLE(a2 - b6);
+        d[DCT_COL0] = DCT_BYTE_SAMPLE(row[DCT_COL0] + row[DCT_COL7]);
+        d[DCT_COL7] = DCT_BYTE_SAMPLE(row[DCT_COL0] - row[DCT_COL7]);
+        d[DCT_COL1] = DCT_BYTE_SAMPLE(row[DCT_COL1] + row[DCT_COL6]);
+        d[DCT_COL6] = DCT_BYTE_SAMPLE(row[DCT_COL1] - row[DCT_COL6]);
+        d[DCT_COL2] = DCT_BYTE_SAMPLE(row[DCT_COL2] + row[DCT_COL5]);
+        d[DCT_COL5] = DCT_BYTE_SAMPLE(row[DCT_COL2] - row[DCT_COL5]);
+        d[DCT_COL4] = DCT_BYTE_SAMPLE(row[DCT_COL3] + row[DCT_COL4]);
+        d[DCT_COL3] = DCT_BYTE_SAMPLE(row[DCT_COL3] - row[DCT_COL4]);
 
         out += DCT_BLOCK_WIDTH;
         d += pitch;

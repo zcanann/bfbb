@@ -7633,3 +7633,26 @@ is retained. Compiled size is 704 bytes; the retail function is 708 bytes.
 No other deduplicated function score changes. All-source build, Huff4 and
 run-block host checks, and normal retail DOL SHA-1 verification pass.
 The unit remains NonMatching.
+
+## Bink byte IDCT scratch rows (2026-10-01)
+
+`fastidct8x8` improves from 56.963562% to 58.927124% by staging the
+second-pass even/odd terms through the existing scratch row as they are
+calculated. Scratch slots 3 and 4 also now follow the retail first-pass
+layout. Arithmetic, dequantization, rounding, and output order are preserved.
+The compiled function is 948 bytes versus retail's 988; still NonMatching.
+
+`python tools/check_bink_idct.py` checks 32,768 blocks against a separate
+scalar one-dimensional transform applied by columns and rows. It covers
+both production inverse-quantization table families, all 16 levels, DC-only,
+sparse, and dense inputs, and four padded pitches. The host build uses
+32-bit wrapping arithmetic, matching the tested integer operations. This
+is not a GameCube or movie playback test.
+
+Full source compilation and normal retail DOL verification pass after
+integrating staging's RenderWare 2.0p1c update. No rebuilt function score
+regresses. Beware scratch restores: Copy-Item retains old timestamps and
+can leave experiment objects current in Ninja. Touch restored sources;
+this validation explicitly rebuilt the reverted Bink sources and compared
+a rebuilt pre-change DCT baseline. The local trial harness now touches its
+restored source automatically.
