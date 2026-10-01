@@ -1383,11 +1383,12 @@ void zEntPickup_Update(zEntPickup* ent, xScene* sc, F32 dt)
                         distMult = 1.2f;
                     }
 
-                    distMult = distMult * 2.0f;
+                    F32 scaledDist = distMult;
+                    scaledDist *= 2.0f;
 
-                    ent->model->Mat->pos.x += distMult * (ent->vel.x * dt);
-                    ent->model->Mat->pos.y += distMult * (ent->vel.y * dt);
-                    ent->model->Mat->pos.z += distMult * (ent->vel.z * dt);
+                    ent->model->Mat->pos.x += scaledDist * (ent->vel.x * dt);
+                    ent->model->Mat->pos.y += scaledDist * (ent->vel.y * dt);
+                    ent->model->Mat->pos.z += scaledDist * (ent->vel.z * dt);
                 }
             }
         }
