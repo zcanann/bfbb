@@ -1179,6 +1179,7 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     u16 PTR4* roots;
     s16 bit_mask;
     u16 node_entry;
+    u8 PTR4* child_lens;
     BPLOSSYWRITETREE tree;
     u8 lens[BP_BLOCK_COEFFS];
     u8 groups[BP_TREE_GROUPS];
@@ -1316,13 +1317,9 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
         if (cur < next_node) {
             do {
                 node_entry = *cur;
-                if (node_entry == BP_TREE_EMPTY_ENTRY) {
-next_lossy_node:
-                    cur++;
-                } else {
-                    count = BP_TREE_ENTRY_LEVEL(node_entry) == level;
-                    PUT_BP_BIT(bits, count);
-                    if (!count) {
+                if (node_entry != BP_TREE_EMPTY_ENTRY) {
+                    PUT_BP_BIT(bits, BP_TREE_ENTRY_LEVEL(node_entry) == level);
+                    if (BP_TREE_ENTRY_LEVEL(node_entry) != level) {
                         goto next_lossy_node;
                     }
 
@@ -1332,8 +1329,8 @@ next_lossy_node:
                         *cur = BP_TREE_HIGH_GROUP_ENTRY(hi_groups[node_entry >> (BP_TREE_HIGH_GROUP_SHIFT - BP_TREE_INDEX_SHIFT)], node_entry);
                         goto decoded_lossy_write_children;
                     case BP_TREE_GROUP_NODE:
-                        count = (u32)BP_TREE_ENTRY_GROUP(node_entry);
                         node_entry = BP_TREE_ENTRY_INDEX(node_entry);
+                        count = node_entry >> (BP_TREE_GROUP_SHIFT - BP_TREE_INDEX_SHIFT);
                         *cur = BP_TREE_BRANCH_ENTRY(groups[count], node_entry);
                         *next_node = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD1_INDEX], node_entry, BP_TREE_CHILD1_BASE);
                         *++next_node = BP_TREE_CHILD_BRANCH_ENTRY(groups[count + BP_TREE_CHILD2_INDEX], node_entry, BP_TREE_CHILD2_BASE);
@@ -1345,10 +1342,11 @@ next_lossy_node:
                         cur++;
                         node_entry = BP_TREE_ENTRY_INDEX(node_entry);
 decoded_lossy_write_children:
-                        PUT_BP_BIT(bits, lens[node_entry] != level);
-                        if (lens[node_entry] != level) {
+                        child_lens = lens + node_entry;
+                        PUT_BP_BIT(bits, *child_lens != level);
+                        if (*child_lens != level) {
                             --insert;
-                            *insert = BP_TREE_COEFF_ENTRY(lens[node_entry], node_entry);
+                            *insert = BP_TREE_COEFF_ENTRY(*child_lens, node_entry);
                         } else {
                             active_absvals[active_count] = absvals[node_entry];
                             active_count++;
@@ -1356,8 +1354,9 @@ decoded_lossy_write_children:
                         }
 
                         node_entry++;
-                        PUT_BP_BIT(bits, lens[node_entry] != level);
-                        entry = lens[node_entry];
+                        child_lens++;
+                        PUT_BP_BIT(bits, *child_lens != level);
+                        entry = *child_lens;
                         if (entry != level) {
                             --insert;
                             *insert = BP_TREE_COEFF_ENTRY(entry, node_entry);
@@ -1368,8 +1367,9 @@ decoded_lossy_write_children:
                         }
 
                         node_entry++;
-                        PUT_BP_BIT(bits, lens[node_entry] != level);
-                        entry = lens[node_entry];
+                        child_lens++;
+                        PUT_BP_BIT(bits, *child_lens != level);
+                        entry = *child_lens;
                         if (entry != level) {
                             --insert;
                             *insert = BP_TREE_COEFF_ENTRY(entry, node_entry);
@@ -1380,8 +1380,9 @@ decoded_lossy_write_children:
                         }
 
                         node_entry++;
-                        PUT_BP_BIT(bits, lens[node_entry] != level);
-                        entry = lens[node_entry];
+                        child_lens++;
+                        PUT_BP_BIT(bits, *child_lens != level);
+                        entry = *child_lens;
                         if (entry != level) {
                             --insert;
                             *insert = BP_TREE_COEFF_ENTRY(entry, node_entry);
@@ -1400,7 +1401,10 @@ decoded_lossy_write_children:
                     default:
                         goto next_lossy_node;
                     }
+                    continue;
                 }
+next_lossy_node:
+                cur++;
             } while (cur < next_node);
         }
         cur = insert;

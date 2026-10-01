@@ -8340,3 +8340,20 @@ its unchanged source returned 100%. A diagnostic explicit-null-comparison
 edit was discarded; no cutscene source change is retained. The cause of
 that transient build discrepancy is not established. Bitplane remains
 NonMatching; normal DOL identity is not source-linked playback evidence.
+
+
+## Bink lossy writer presence and child-depth traversal (2026-10-01)
+
+WriteBPLossy improves from 92.63972% to 93.88225%. Direct node-presence
+comparisons avoid materializing a boolean in the shared count variable.
+An advancing child_lens pointer follows retail's update-form depth loads.
+The next-node label moves to the loop bottom, with expanded nodes continuing
+without an extra cursor increment. Finally, group indices derive from the
+already-decoded coefficient index, using the packed-group/index shift
+difference (two bits). No assembly is added.
+
+All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and
+27,644 early-cutoff checks pass. Full all_source build and retail DOL
+SHA-1 pass. No other function scores change. Report:
+build/bitplane-lossy-traversal-report.json. Bitplane remains NonMatching;
+normal DOL identity does not establish source-linked movie playback.
