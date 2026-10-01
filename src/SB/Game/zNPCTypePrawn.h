@@ -99,17 +99,6 @@ struct _class_14
     _class_18 pattern;
 };
 
-namespace auto_tweak
-{
-    template <class T1, class T2>
-    void load_param(T1&, T2, T2, T2, xModelAssetParam*, U32, const char*);
-
-    // Specialized at the bottom of the matching .cpp, below every use; declared here so
-    // a use sees the specialization.
-    template <> void load_param<F32, F32>(F32&, F32, F32, F32, xModelAssetParam*, U32, const char*);
-    template <> void load_param<S32, S32>(S32&, S32, S32, S32, xModelAssetParam*, U32, const char*);
-};
-
 struct aqua_beam
 {
     struct config
@@ -186,8 +175,15 @@ struct aqua_beam
     void render();
     void render_ring(aqua_beam::ring_segment&);
     void emit_ring();
-    bool active() const;
-    void move(const xVec3&, const xVec3&);
+    bool active() const
+    {
+        return firing || !ring.queue.empty();
+    }
+    void move(const xVec3& new_loc, const xVec3& new_dir)
+    {
+        loc = new_loc;
+        dir = new_dir;
+    }
 };
 
 struct fire_type : aqua_beam::config
@@ -259,7 +255,9 @@ struct zNPCPrawn : zNPCSubBoss
     U32 closeups_used;
 
     zNPCPrawn(S32 myType);
-    void render_debug();
+    void render_debug()
+    {
+    }
     void Render();
     void update_particles(float);
     void Init(xEntAsset*);
@@ -286,7 +284,15 @@ struct zNPCPrawn : zNPCSubBoss
     void vanish();
     void reappear();
     void render_closeup();
-    bool turning() const;
+    bool turning() const
+    {
+        const xVec2 facing = { model->Mat->at.x, model->Mat->at.z };
+
+        return !xfeq0(turn.vel) ||
+               (!xfeq0(turn.accel) &&
+                (!(look_dir.x > look_dir.y) || !(xabs(look_dir.x - facing.x) < 0.001f)) &&
+                (!(look_dir.x < look_dir.y) || !(xabs(look_dir.y - facing.y) < 0.001f)));
+    }
     void update_round();
     void decompose();
     void set_floor_state(zNPCPrawn::floor_state_enum, bool, bool);
@@ -299,14 +305,38 @@ struct zNPCPrawn : zNPCSubBoss
     zNPCSpawner* make_spawner(S32);
     void Damage(en_NPC_DAMAGE_TYPE, xBase*, const xVec3*);
 
-    xVec3& get_center() const;
-    xVec3& get_facing() const;
-    U8 ColChkFlags() const;
-    U8 ColPenFlags() const;
-    U8 ColChkByFlags() const;
-    U8 ColPenByFlags() const;
-    U8 PhysicsFlags() const;
-    S32 IsAlive();
+    xVec3& get_center() const
+    {
+        return reinterpret_cast<xVec3&>(this->model->Mat->pos);
+    }
+    xVec3& get_facing() const
+    {
+        return reinterpret_cast<xVec3&>(this->model->Mat->at);
+    }
+    U8 ColChkFlags() const
+    {
+        return 0;
+    }
+    U8 ColPenFlags() const
+    {
+        return 0;
+    }
+    U8 ColChkByFlags() const
+    {
+        return 16;
+    }
+    U8 ColPenByFlags() const
+    {
+        return 16;
+    }
+    U8 PhysicsFlags() const
+    {
+        return 3;
+    }
+    S32 IsAlive()
+    {
+        return this->life > 0;
+    }
 };
 
 struct zNPCGoalPrawnIdle : zNPCGoalCommon

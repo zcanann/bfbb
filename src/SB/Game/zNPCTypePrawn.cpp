@@ -1,5 +1,17 @@
+#include <types.h>
+
+struct xModelAssetParam;
+
+// Retail keeps private copies of the parameter loaders in this translation unit.
+namespace auto_tweak
+{
+    template <class T1, class T2>
+    static void load_param(T1&, T2, T2, T2, xModelAssetParam*, U32, const char*);
+}
+
 #include "zNPCTypePrawn.h"
 
+#include "auto_tweak.h"
 #include "rwcore.h"
 #include "xDebug.h"
 
@@ -37,7 +49,18 @@
 
 U32 xSndPlay3DFade(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, const xVec3* pos,
                    F32 innerRadius, F32 outerRadius, sound_category category, F32 fade, F32 delay);
-void xDebugAddTweak(const char*, xVec3*, const tweak_callback*, void*, U32);
+
+// Retail emits these inline vector helpers here; the linker keeps their earlier copies.
+inline F32 xVec3::length() const
+{
+    return xsqrt(length2());
+}
+
+inline xVec3& xVec3::normalize()
+{
+    *this /= length();
+    return *this;
+}
 
 namespace
 {
@@ -414,6 +437,105 @@ void aqua_beam::render_ring(aqua_beam::ring_segment& r)
     xModelRender(r.model);
 }
 
+namespace
+{
+    struct television
+    {
+        RwCamera* cam;
+        RwRaster* raster;
+        RwRaster* bgraster;
+        RpWorld* world;
+        RwTexture* texture;
+        U32 vert_buffer_used;
+        RwRGBA bgcolor;
+        F32 rcz;
+        F32 w;
+        F32 h;
+
+        bool create(S32 width, S32 height)
+        {
+            cam = NULL;
+            bgraster = NULL;
+            raster = NULL;
+            world = NULL;
+            memset(&bgcolor, 0x0, sizeof(bgcolor));
+
+            w = (float)width;
+            h = (float)height;
+            cam = RwCameraCreate();
+            if (cam == NULL)
+            {
+                destroy();
+                return FALSE;
+            }
+
+            RwBBox worldBbox;
+            worldBbox.sup.z = 100000.f;
+            worldBbox.sup.y = 100000.f;
+            worldBbox.sup.x = 100000.f;
+
+            worldBbox.inf.z = -100000.f;
+            worldBbox.inf.y = -100000.f;
+            worldBbox.inf.x = -100000.f;
+
+            world = RpWorldCreate(&worldBbox);
+            if (world == NULL)
+            {
+                destroy();
+                return FALSE;
+            }
+
+            RpWorldAddCamera(world, cam);
+            _rwObjectHasFrameSetFrame(cam, RwFrameCreate());
+
+            const xVec2 windowSize = { 1.0f, 1.0f };
+            RwCameraSetViewWindow(cam, (const RwV2d*)&windowSize);
+            RwCameraSetProjection(cam, rwPERSPECTIVE);
+
+            if (cam->object.object.parent == NULL)
+            {
+                destroy();
+                return FALSE;
+            }
+
+            raster =
+                RwRasterCreate(width, height, 32, rwRASTERGAMMACORRECTED | rwRASTERPIXELLOCKEDWRITE);
+            if (raster == NULL)
+            {
+                destroy();
+                return FALSE;
+            }
+            cam->frameBuffer = raster;
+            if (cam == NULL)
+            {
+                destroy();
+                return FALSE;
+            }
+            texture = RwTextureCreate(raster);
+            if (texture == NULL)
+            {
+                destroy();
+                return FALSE;
+            }
+            texture->filterAddressing = (texture->filterAddressing & 0xFFFFFF00) | rwFILTERLINEAR;
+
+            RwCameraSetNearClipPlane(cam, 0.3f);
+            RwCameraSetFarClipPlane(cam, 10000.0f);
+
+            return TRUE;
+        }
+
+        void destroy();
+        void set_background(iColor_tag);
+        void set_model_texture(xModelInstance&);
+        void update(xModelInstance&, xLightKit*);
+        void render_static();
+        void render_background();
+        void set_vert(rwGameCube2DVertex&, F32, F32, F32, F32);
+        void move(const xVec3&, const xVec3&);
+    };
+} // namespace
+
 xAnimTable* ZNPC_AnimTable_Prawn()
 {
     // clang-format off
@@ -424,11 +546,10 @@ xAnimTable* ZNPC_AnimTable_Prawn()
         ANIM_Taunt01,
         ANIM_AttackWindup01,
         ANIM_AttackLoop01,
-        ANIM_AttackLoop01,
         ANIM_AttackEnd01,
         ANIM_Damage01,
-        ANIM_Damage02 NPCC_ANIM_LIST_END
-
+        ANIM_Damage02,
+        0
     };
     // clang-format on
     xAnimTable* table = xAnimTableNew("zNPCPrawn", NULL, 0);
@@ -471,29 +592,6 @@ zNPCPrawn::zNPCPrawn(S32 myType) : zNPCSubBoss(myType)
 
 namespace
 {
-    struct television
-    {
-        RwCamera* cam;
-        RwRaster* raster;
-        RwRaster* bgraster;
-        RpWorld* world;
-        RwTexture* texture;
-        U32 vert_buffer_used;
-        RwRGBA bgcolor;
-        F32 rcz;
-        F32 w;
-        F32 h;
-
-        bool create(S32, S32);
-        void destroy();
-        void set_background(iColor_tag);
-        void set_model_texture(xModelInstance&);
-        void update(xModelInstance&, xLightKit*);
-        void render_static();
-        void render_background();
-        void set_vert(rwGameCube2DVertex&, F32, F32, F32, F32);
-        void move(const xVec3&, const xVec3&);
-    };
 
     static television closeup;
 
@@ -531,78 +629,6 @@ void zNPCPrawn::Init(xEntAsset* asset)
 
 namespace
 {
-    bool television::create(S32 width, S32 height)
-    {
-        cam = NULL;
-        bgraster = NULL;
-        raster = NULL;
-        world = NULL;
-        memset(&bgcolor, 0x0, sizeof(bgcolor));
-
-        w = (float)width;
-        h = (float)height;
-        cam = RwCameraCreate();
-        if (cam == NULL)
-        {
-            destroy();
-            return FALSE;
-        }
-
-        RwBBox worldBbox;
-        worldBbox.sup.z = 100000.f;
-        worldBbox.sup.y = 100000.f;
-        worldBbox.sup.x = 100000.f;
-
-        worldBbox.inf.z = -100000.f;
-        worldBbox.inf.y = -100000.f;
-        worldBbox.inf.x = -100000.f;
-
-        world = RpWorldCreate(&worldBbox);
-        if (world == NULL)
-        {
-            destroy();
-            return FALSE;
-        }
-
-        RpWorldAddCamera(world, cam);
-        _rwObjectHasFrameSetFrame(cam, RwFrameCreate());
-
-        xVec2 windowSize = { 1.0f, 1.0f };
-        RwCameraSetViewWindow(cam, (const RwV2d*)&windowSize);
-        RwCameraSetProjection(cam, rwPERSPECTIVE);
-
-        if (cam->object.object.parent == NULL)
-        {
-            destroy();
-            return FALSE;
-        }
-
-        raster =
-            RwRasterCreate(width, height, 32, rwRASTERGAMMACORRECTED | rwRASTERPIXELLOCKEDWRITE);
-        if (raster == NULL)
-        {
-            destroy();
-            return FALSE;
-        }
-        cam->frameBuffer = raster;
-        if (cam == NULL)
-        {
-            destroy();
-            return FALSE;
-        }
-        texture = RwTextureCreate(raster);
-        if (texture == NULL)
-        {
-            destroy();
-            return FALSE;
-        }
-        texture->filterAddressing = (texture->filterAddressing & 0xFFFFFF00) | rwFILTERLINEAR;
-
-        RwCameraSetNearClipPlane(cam, 0.3f);
-        RwCameraSetFarClipPlane(cam, 10000.0f);
-
-        return TRUE;
-    }
 
     void television::destroy()
     {
@@ -1375,12 +1401,8 @@ void zNPCPrawn::update_turn(F32 dt)
         diff += 6.2831855f;
     }
 
-    bool decel = true;
-
-    if (!(FABS(this->turn.vel) < 0.001f) && (diff < 0.0f ? 1 : 0) == (this->turn.vel < 0.0f ? 1 : 0))
-    {
-        decel = false;
-    }
+    bool decel = FABS(this->turn.vel) < 0.001f ||
+                 (diff < 0.0f ? 1 : 0) != (this->turn.vel < 0.0f ? 1 : 0);
 
     if (decel)
     {
@@ -2228,119 +2250,3 @@ S32 zNPCGoalPrawnDeath::Process(en_trantype* trantype, float dt, void* updCtxt, 
 {
     return xGoal::Process(trantype, dt, updCtxt, xscn);
 }
-
-void xDebugAddTweak(const char*, xVec3*, const tweak_callback*, void*, U32)
-{
-}
-
-xVec3& zNPCPrawn::get_center() const
-{
-    return reinterpret_cast<xVec3&>(this->model->Mat->pos);
-}
-
-void zNPCPrawn::render_debug()
-{
-}
-
-bool zNPCPrawn::turning() const
-{
-    bool result = false;
-    xVec2 facing = { 0.0f, 0.0f };
-    RwMatrix* mat = this->model->Mat;
-
-    facing.x = mat->at.x;
-    facing.y = mat->at.z;
-
-    if (!(this->turn.vel >= -1.0e-05f && this->turn.vel <= 1.0e-05f) ||
-        (!(this->turn.accel >= -1.0e-05f && this->turn.accel <= 1.0e-05f) &&
-         (!(this->look_dir.x > this->look_dir.y) ||
-          !(FABS(this->look_dir.x - facing.x) < 0.001f)) &&
-         (!(this->look_dir.x < this->look_dir.y) || !(FABS(this->look_dir.y - facing.y) < 0.001f))))
-    {
-        result = true;
-    }
-
-    return result;
-}
-
-bool aqua_beam::active() const
-{
-    return firing || !ring.queue.empty();
-}
-
-void aqua_beam::move(const xVec3& new_loc, const xVec3& new_dir)
-{
-    loc = new_loc;
-    dir = new_dir;
-}
-
-xVec3& zNPCPrawn::get_facing() const
-{
-    return reinterpret_cast<xVec3&>(this->model->Mat->at);
-}
-
-U8 zNPCPrawn::ColChkFlags() const
-{
-    return 0;
-}
-
-U8 zNPCPrawn::ColPenFlags() const
-{
-    return 0;
-}
-
-U8 zNPCPrawn::ColChkByFlags() const
-{
-    return 16;
-}
-
-U8 zNPCPrawn::ColPenByFlags() const
-{
-    return 16;
-}
-
-U8 zNPCPrawn::PhysicsFlags() const
-{
-    return 3;
-}
-
-S32 zNPCPrawn::IsAlive()
-{
-    return this->life > 0;
-}
-
-namespace auto_tweak
-{
-    template <>
-    inline void load_param<F32, F32>(F32& value, F32 scale, F32 lo, F32 hi, xModelAssetParam* ap,
-                              U32 apsize, const char* name)
-    {
-        value = zParamGetFloat(ap, apsize, name, value);
-        if (value < lo)
-        {
-            value = lo;
-        }
-        else if (value > hi)
-        {
-            value = hi;
-        }
-        value = value * scale;
-    }
-
-    template <>
-    inline void load_param<S32, S32>(S32& value, S32 scale, S32 lo, S32 hi, xModelAssetParam* ap,
-                              U32 apsize, const char* name)
-    {
-        S32 result = zParamGetInt(ap, apsize, name, value);
-        if (result < lo)
-        {
-            result = lo;
-        }
-        else if (result > hi)
-        {
-            result = hi;
-        }
-        result *= scale;
-        value = result;
-    }
-} // namespace auto_tweak

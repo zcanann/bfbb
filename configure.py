@@ -655,7 +655,7 @@ config.libs = [
             Object(Matching, "SB/Game/zNPCTypeBossSandy.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zNPCTypeKingJelly.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zNPCGoalBoss.cpp"),
-            Object(NonMatching, "SB/Game/zNPCTypePrawn.cpp"),
+            Object(Matching, "SB/Game/zNPCTypePrawn.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zNPCTypeBossSB1.cpp"),
             Object(Matching, "SB/Game/zNPCTypeBossSB2.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Core/x/xJaw.cpp"),

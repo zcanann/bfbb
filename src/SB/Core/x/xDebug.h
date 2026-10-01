@@ -133,4 +133,8 @@ inline void xDebugAddSelectTweak(const char*, U32*, const char**, const U32*, U3
 {
 }
 
+inline void xDebugAddTweak(const char*, xVec3*, const tweak_callback*, void*, U32)
+{
+}
+
 #endif
