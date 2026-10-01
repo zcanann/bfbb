@@ -453,29 +453,24 @@ static inline u32 exp_read_huff4(EXPBITS PTR4* bits, u32 bits_to_peek,
                                  const u8 PTR4* decode, u8 PTR4* syms)
 {
     u32 bitcount;
-    EXPBITSTYPE bitbuf;
     EXPBITSTYPE word;
-    u32 mask;
     u8 code;
     u32 symbol;
 
     bitcount = bits->bitlen;
-    mask = GetBitsLen(bits_to_peek);
     if (bitcount >= bits_to_peek) {
-        bitbuf = bits->bits;
-        code = decode[bitbuf & mask];
+        code = decode[bits->bits & GetBitsLen(bits_to_peek)];
         symbol = HUFF4_CODE_SYM(code, syms);
         code = HUFF4_CODE_USED(code);
-        bits->bits = bitbuf >> code;
+        bits->bits = bits->bits >> code;
         bits->bitlen = bitcount - code;
     } else {
         word = *bits->cur;
-        bitbuf = bits->bits;
-        code = decode[(bitbuf | (word << bitcount)) & mask];
+        code = decode[(bits->bits | (word << bitcount)) & GetBitsLen(bits_to_peek)];
         symbol = HUFF4_CODE_SYM(code, syms);
         code = HUFF4_CODE_USED(code);
         if (bitcount >= code) {
-            bits->bits = bitbuf >> code;
+            bits->bits = bits->bits >> code;
             bits->bitlen = bitcount - code;
         } else {
             bits->bits = word >> (code - bitcount);
@@ -952,7 +947,6 @@ static void CheckReadHuff4PairBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits
     u8 PTR4* syms;
     const u8 PTR4* decode;
     u32 peek;
-    u32 mask;
     u32 low_nibble;
     u32 high_nibble;
 
@@ -962,20 +956,18 @@ static void CheckReadHuff4PairBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits
 
     VarBitsGet(count, u32, *bits, bundle->count_length);
     if (count != 0) {
-        dest = BINK_BUNDLE_DATA_BEGIN(bundle);
-        bundle->cur_ptr = dest;
+        bundle->cur_ptr = BINK_BUNDLE_DATA_BEGIN(bundle);
         bundle->cur_dec = BINK_BUNDLE_DATA_END(bundle, count);
         syms = bundle->syms;
         decode = bundle->decode;
         peek = bundle->bits_to_peek;
-        mask = GetBitsLen(peek);
-        do {
+        dest = BINK_BUNDLE_DATA_BEGIN(bundle);
+        while (--count != (u32)-1) {
             /* Pair bundles pack two Huff4 symbols into each output byte. */
-            count--;
-            low_nibble = exp_read_huff4_mask(bits, peek, decode, syms, mask);
-            high_nibble = exp_read_huff4_mask(bits, peek, decode, syms, mask);
+            low_nibble = exp_read_huff4(bits, peek, decode, syms);
+            high_nibble = exp_read_huff4(bits, peek, decode, syms);
             *dest++ = (u8)HUFF4_PACK_NIBBLES(low_nibble, high_nibble);
-        } while (count != 0);
+        }
     } else {
         BINK_BUNDLE_MARK_EMPTY(bundle);
     }
