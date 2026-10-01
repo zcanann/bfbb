@@ -1213,7 +1213,7 @@ config.libs = [
             Object(NonMatching, "rwsdk/src/bacamera.c"),
             Object(Matching, "rwsdk/src/badevice.c"),
             Object(Matching, "rwsdk/src/baframe.c"),
-            Object(NonMatching, "rwsdk/src/baimage.c"),
+            Object(Matching, "rwsdk/src/baimage.c"),
             Object(Matching, "rwsdk/src/baimras.c"),
             Object(Matching, "rwsdk/src/baraster.c"),
             Object(NonMatching, "rwsdk/src/baresamp.c"),

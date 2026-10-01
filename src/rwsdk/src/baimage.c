@@ -276,15 +276,10 @@ RwBool RwImageDestroy(RwImage* image)
 RwImage* RwImageAllocatePixels(RwImage* image)
 {
     RwUInt32 imageDepth = image->depth;
-    RwBool imagePalette = FALSE;
+    RwBool imagePalette = (imageDepth == 4 || imageDepth == 8);
     RwUInt32 paletteSize;
     RwUInt32 pixelsSize;
     RwUInt32 totalSize;
-
-    if (imageDepth == 4 || imageDepth == 8)
-    {
-        imagePalette = TRUE;
-    }
 
     paletteSize = imagePalette ? (1 << imageDepth) * sizeof(RwRGBA) : 0;
 
