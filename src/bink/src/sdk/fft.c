@@ -182,7 +182,6 @@ void ddct(u32 n, s32 isgn, f32 PTR4* a, s32 PTR4* ip, f32 PTR4* w)
     }
 }
 
-#pragma dont_inline on
 /* Build complex FFT twiddle factors and the matching bit-reversal table. */
 static void makewt(s32 nw, s32 PTR4* ip, f32 PTR4* w)
 {
@@ -2333,5 +2332,3 @@ static void dctsub(s32 n, f32 PTR4* a, s32 nc, f32 PTR4* c)
     }
     a[m] *= c[0];
 }
-
-#pragma dont_inline reset
