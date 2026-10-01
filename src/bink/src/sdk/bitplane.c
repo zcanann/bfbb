@@ -1434,7 +1434,7 @@ decode_node:
             default:
                 goto next_node;
             }
-            code = (u32)BP_READ_TREE_INDEX(node);
+            node = BP_READ_TREE_INDEX(node);
             if (bitcount != 0) {
                 bitcount = bitcount - 1;
                 word = bitbuf >> 1;
@@ -1450,32 +1450,43 @@ decode_node:
                 words = words + 1;
                 if ((word & BP_BIT_MASK) != 0) {
 push_0:
-                    *--next_node_ptr = BP_READ_TREE_COEFF(code);
+                    *--next_node_ptr = BP_READ_TREE_COEFF(node);
                     goto after_0;
                 }
             }
-            nz_coeff[nz_coeff_count] = BP_READ_TREE_INDEX(node);
+            nz_coeff[nz_coeff_count] = node;
             /* A zero child-presence bit introduces the coefficient immediately. */
             nz_coeff_count = nz_coeff_count + 1;
             if (bitcount != 0) {
                 bitcount = bitcount - 1;
+                word = bitbuf >> 1;
+                bit = bitbuf & BP_BIT_MASK;
+                bitbuf = word;
+                if (bit != 0) {
+                    goto negative_0;
+                }
+                goto positive_0;
             } else {
-                bitbuf = *words;
+                word = *words;
                 bitcount = BP_WORD_TOP_BIT;
                 words = words + 1;
+                bitbuf = word >> 1;
+                if ((word & BP_BIT_MASK) == 0) {
+                    goto positive_0;
+                }
             }
-            bit = bitbuf & BP_BIT_MASK;
-            bitbuf = bitbuf >> 1;
+negative_0:
             delta = scan;
-            if (bit == 0) {
-                delta = mask;
-            }
-            dest[code] = (s8)delta;
+            goto store_0;
+positive_0:
+            delta = mask;
+store_0:
+            dest[(u32)node] = (s8)delta;
             if (masks_used++ == masks_count) {
                 goto done;
             }
 after_0:
-            node = (u8)(code + BP_TREE_CHILD1_INDEX);
+            node++;
             if (bitcount != 0) {
                 bitcount = bitcount - 1;
                 word = bitbuf >> 1;
@@ -1500,23 +1511,34 @@ push_1:
             nz_coeff_count = nz_coeff_count + 1;
             if (bitcount != 0) {
                 bitcount = bitcount - 1;
+                word = bitbuf >> 1;
+                bit = bitbuf & BP_BIT_MASK;
+                bitbuf = word;
+                if (bit != 0) {
+                    goto negative_1;
+                }
+                goto positive_1;
             } else {
-                bitbuf = *words;
+                word = *words;
                 bitcount = BP_WORD_TOP_BIT;
                 words = words + 1;
+                bitbuf = word >> 1;
+                if ((word & BP_BIT_MASK) == 0) {
+                    goto positive_1;
+                }
             }
-            bit = bitbuf & BP_BIT_MASK;
-            bitbuf = bitbuf >> 1;
+negative_1:
             delta = scan;
-            if (bit == 0) {
-                delta = mask;
-            }
+            goto store_1;
+positive_1:
+            delta = mask;
+store_1:
             dest[(u32)node] = (s8)delta;
             if (masks_used++ == masks_count) {
                 goto done;
             }
 after_1:
-            node = (u8)(code + BP_TREE_CHILD2_INDEX);
+            node++;
             if (bitcount != 0) {
                 bitcount = bitcount - 1;
                 word = bitbuf >> 1;
@@ -1540,24 +1562,35 @@ push_2:
             nz_coeff_count = nz_coeff_count + 1;
             if (bitcount != 0) {
                 bitcount = bitcount - 1;
+                word = bitbuf >> 1;
+                bit = bitbuf & BP_BIT_MASK;
+                bitbuf = word;
+                if (bit != 0) {
+                    goto negative_2;
+                }
+                goto positive_2;
             } else {
-                bitbuf = *words;
+                word = *words;
                 bitcount = BP_WORD_TOP_BIT;
                 words = words + 1;
+                bitbuf = word >> 1;
+                if ((word & BP_BIT_MASK) == 0) {
+                    goto positive_2;
+                }
             }
-            bit = bitbuf & BP_BIT_MASK;
-            bitbuf = bitbuf >> 1;
+negative_2:
             delta = scan;
-            if (bit == 0) {
-                delta = mask;
-            }
+            goto store_2;
+positive_2:
+            delta = mask;
+store_2:
             dest[(u32)node] = (s8)delta;
             if (masks_used++ == masks_count) {
                 goto done;
             }
 after_2:
             word = bitbuf;
-            node = (u8)(code + BP_TREE_CHILD3_INDEX);
+            node++;
             if (bitcount != 0) {
                 bitcount = bitcount - 1;
                 bitbuf = bitbuf >> 1;

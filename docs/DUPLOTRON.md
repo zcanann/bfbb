@@ -7807,3 +7807,21 @@ early-cutoff invariant checks pass. Full all-source compilation and the normal
 retail DOL SHA-1 check pass, including after integrating staging's 92251cd16
 RenderWare compiler/linking update. Bink bitplane remains NonMatching; these
 checks do not establish source-linked Bink playback.
+
+
+## Bink child-index progression and sign branches (2026-10-01)
+
+`readlossy` now decodes the child scan index into `node` and increments it
+for successive children, matching retail's byte-index progression. That alone
+raises the match from 73.266075% to 73.36364%. For the first three children,
+branching on the sign inside the buffered/refill paths, instead of merging
+before testing it, brings the deduplicated match to 80.00887%. The explicit
+labels reproduce the retail control flow using ordinary C; no assembly or
+compiler changes are involved.
+
+The checker passes 16,384 lossless round trips, 6,911 nonempty lossy round
+trips, and 27,644 early-cutoff invariant checks. Full all-source compilation
+and normal retail DOL SHA-1 validation pass. No other game or Bink function
+scores change; RenderWare differences from the earlier report belong to the
+already-integrated 92251cd16 compiler update. Bitplane remains NonMatching,
+so the retail DOL check does not establish source-linked Bink playback.
