@@ -4438,19 +4438,9 @@ S32 zNPCGoalAttackHammer::Process(en_trantype* trantype, F32 dt, void* updCtxt, 
             xVec3 pos_fake =
                 (pos_vert + *(const xVec3*)NPCC_faceDir(npc)) - (pos_lastVert - pos_oldVert);
             xVec3 pos_mid[4];
-            xVec3* pos_midref[4] = {};
-            xVec3* pos_ref[4] = {};
+            xVec3* pos_midref[4] = { &pos_mid[0], &pos_mid[1], &pos_mid[2], &pos_mid[3] };
+            xVec3* pos_ref[4] = { &pos_oldVert, &pos_lastVert, &pos_vert, &pos_fake };
             S32 i;
-
-            pos_midref[0] = &pos_mid[0];
-            pos_midref[1] = &pos_mid[1];
-            pos_midref[2] = &pos_mid[2];
-            pos_midref[3] = &pos_mid[3];
-
-            pos_ref[0] = &pos_oldVert;
-            pos_ref[1] = &pos_lastVert;
-            pos_ref[2] = &pos_vert;
-            pos_ref[3] = &pos_fake;
 
             NPCC_GenSmooth(pos_ref, pos_midref);
 
