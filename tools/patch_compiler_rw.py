@@ -96,6 +96,80 @@ baseline 2.0p1a/2.0p1b, which are identical on the game):
         GC/2.5.
   Game: +2 / -0 (xfont::irender, zFX validate_popper);
         xParCmdAnimalMagentism_Update 81.04 -> 85.85.
+
+GC/2.0p1d (EXPERIMENTAL; not used by configure.py yet)
+------------------------------------------------------
+GC/2.0p1c plus four independent parts. Built only when asked for by path
+(`patch_compiler_rw.py <compilers>/GC/2.0p1d/mwcceppc.exe`) or with
+`patch_compiler_rw.py <compilers dir> --p1d`. For measurement, any subset can
+be built into a directory of its own (never GC/2.0p1d) with
+`--p1d-parts r4,at-sched,at-w,at-v --out <dir>`; single-part builds are
+hash-checked too (P1D_PART_SHA1). Every part writes at a fixed place, so a
+subset is well defined.
+
+  r4  ("R4" in docs/RW_RESIDUE.md). Not really an X-form scheduling rule: it is
+      the alias that Alias.c's pointer-load pass (2.0p1 0x5123b0) gives an
+      access with two address registers (lwzx/stbx...). For each GPR it uses,
+      2.0p1 takes the access's own alias unless a reaching def is unknown, in
+      which case worst_case. With two registers, 2.0p1 answers worst_case when
+      NEITHER is unknown -- typically `lwzx rD, obj, off` with both incoming
+      parameters -- and adds the access's alias into the worst_case set. The
+      prologue's callee-save spills carry the worst_case set, so the scheduler
+      sees the load alias every spill and keeps it below all of them.
+      2.5 rewrote the pass (0x512570): a register whose defs give no alias
+      contributes nothing, so the access keeps its alias. For
+      `*(T **)((const char *)object + offset)` that alias is R3's
+      pointer-to-const pseudo-object, which no spill touches, and the load
+      issues right after the spill of its own destination register. (A
+      non-const pointer has no alias there and stays pinned under 2.5 too.)
+      The patch is one byte: that `jne` (0x51258b, 75 2d -> 75 31) goes to the
+      "keep the access's alias" tail (0x5125be) instead of "worst_case".
+      It also lets the indexed loads of a static table (`li r4,tbl@sda21;
+      lbzx r4,r4,r5`) keep the table's alias, as 2.5 does.
+
+  at-sched, at-w, at-v: the ADDRESS-TAKEN GATE. 2.0p1a's frame-object clauses
+      now apply only to frame objects whose address escapes, i.e. that are a
+      member of the worst_case alias set (in_wc, at .sbpatch+0x700). Retail
+      lets a static or literal load pass a store to a local that no pointer
+      can reach (the IEEE pun unions _gf/_sf/gf_u/sf_u, the `shiney` colour of
+      MeshRenderEnvMap) but keeps it below a store to one that escapes (a
+      GXColor argument temporary in dlrendst, `scale` and `stripList` passed to
+      calls) -- the split R2/R6/R7 could not find on opcode, size or
+      partialness.
+      at-sched  clause E3n (sb_sched_clause entries 0 and 3) and clause A
+                (entry 0): a non-escaping frame object answers "no alias".
+                E3n's call sites 0x60e2ee/0x60e3f3 and A's 0x60e371 are
+                retargeted to wrappers at +0x740 / +0x760.
+      at-w      clause W (entries 0 and 1; calls 0x60e304/0x60e3a5 -> +0x7b0).
+      at-v      VN entry 0: a store to a non-escaping frame object takes the
+                stock whole-object kill (no clause V walk, no F); everything
+                else goes on to 2.0p1b's vtmp stub. The dispatch word (already
+                HIGHLOW-relocated) points at +0x7d0.
+      in_wc reads worst_case PC-relatively and walks the set's members, so
+      nothing new needs a base relocation.
+
+Measured (solo.py on every unit, against 2.0p1c; RW_COMPILER units, the five
+GC/2.0p1 override units separately, and all 224 SB units; RW data sections are
+identical to 2.0p1c's):
+  r4        RW +3 / -0: CollisionDataStreamWrite 89.29, MultiTextureStreamGetSize
+            85.00, MultiTextureStreamWrite 92.59 -> 100. Game +1 / -0
+            (zDiscoFloor set_object_state 70.18 -> 100).
+  at-sched  RW +2 / -0: RpLightGetConeAngle 84.50, MeshRenderEnvMap 97.61 -> 100;
+            _rwDlNativeTextureWrite 97.73 -> 97.75. Override units:
+            RtQuatSetupSlerpCache 91.52 -> 100 (rtslerp), stdkey Blend /
+            Interpolate 88.3 -> 96.7, _rpPTankGameCubeCreateCallBack 95.90 ->
+            98.21. Game +5 / -0 (xSpline BasisBspline, zEntPlayerOOBState
+            render_fade, zNPCGoalJellyBirth::Process, zNPCGoalPatrol::MoveNormal,
+            zSceneSetup); xParCmdAnimalMagentism_Update 85.85 -> 98.27, two
+            partials down (xFont get_bounds 67.12 -> 61.42, zNPCFodBzzt
+            DiscoRender 79.10 -> 76.25).
+  at-w      RW 0 / 0; override unit setup: MatFunc1 53.28 -> 100. Game 0 / 0.
+  at-v      RW 0 / 0; stdkey Blend / Interpolate 88.3 -> 91.7. Game 0 / 0.
+  all four  RW +5 / -0. Override units: ptankgcncallbacks 4/4, ptankgcnrender
+            1/1, setup 7/7, rtslerp 1/1 (its .sdata2 residue is the same as
+            under GC/2.0p1), stdkey 7/8 (RpHAnimKeyFrameStreamWrite 94.26, the
+            R3 cost; 8/8 only under GC/2.0p1). Game +7 / -0 against 2.0p1c,
+            +9 / -0 against GC/2.0p1a (adds xfont::irender, validate_popper).
 """
 
 import hashlib
@@ -400,16 +474,257 @@ def patch_compiler_r3(compilers: Path) -> bool:
     return True
 
 
+# ---- GC/2.0p1d: R4 + the address-taken gate ----------------------------------
+# See the module docstring. Four independent parts; GC/2.0p1d is all four. Every
+# part writes at a fixed place, so any subset is a well-defined build.
+
+P1D_VERSION = "GC/2.0p1d"
+P1D_PARTS = ("r4", "at-sched", "at-w", "at-v")
+P1D_SHA1 = "0a4878bb49f808bc137f7a8ae2fa08ae99c0c3b5"     # all four parts
+# Single-part builds (experimental, --p1d-parts), checked the same way.
+P1D_PART_SHA1 = {
+    "r4": "7d8428b22c8d99218b188e3a047cd4175d08be74",
+    "at-sched": "d2a7e752f9469bc1f5aa1a4e49ccb040b544485d",
+    "at-w": "a5597f3b04ff2168602712363c5fe6a633bca497",
+    "at-v": "4e468882b8e0656019848028e8d3705c1e4af40f",
+}
+
+# R4: Alias.c's pointer-load alias pass (2.0p1 0x5123b0), two-register case.
+R4_SITE = 0x0051258B               # jne 0x5125ba (both registers non-worst -> worst_case)
+R4_OLD = bytes.fromhex("752d")
+R4_NEW = bytes.fromhex("7531")     # jne 0x5125be (the access keeps its own alias)
+
+# The address-taken gate. AliasPatch.c's clause predicates, reached by rel32
+# calls from sb_sched_clause (2.0p1a's blob), and the VN entry-0 dispatch word.
+E3N_FN = 0x0060E13C                # clause E3n (store to declared frame object -> static load)
+W_FN = 0x0060E1C8                  # clause W   (literal load -> store to declared frame object)
+A_FN = 0x0060E2A0                  # clause A   (differing opcodes, <= 4 bytes, one side static)
+E3N_CALLS = (0x0060E2EE, 0x0060E3F3)   # sb_sched_clause entry 0 and entry 3
+W_CALLS = (0x0060E304, 0x0060E3A5)     # entry 0 and entry 1
+A_CALLS = (0x0060E371,)                # entry 0
+FRAME_WORD = FRAME_OBJECT_WORD
+
+# Fixed places in .sbpatch padding (2.0p1a ends ~+0x652; R3 is +0xC00..+0xD52;
+# vtmp is +0xF00..+0xF1E).
+IN_WC_VA = SECTION_VA + 0x700
+AT_E3N_VA = SECTION_VA + 0x740
+AT_A_VA = SECTION_VA + 0x760
+AT_W_VA = SECTION_VA + 0x7B0
+AT_V_VA = SECTION_VA + 0x7D0
+P1D_REGION = (0x700, 0x800)
+
+
+def in_wc_fn(at):
+    """cdecl int in_wc(Object *o): 1 if a member of the worst_case alias set is
+    an alias of `o`, i.e. `o` is address-taken (its address escapes)."""
+    b = bytearray()
+    b += b"\xE8\x00\x00\x00\x00"               # call $+5
+    pop_va = at + len(b)
+    b += b"\x5A"                               # pop edx
+    b += b"\x8B\x92" + struct.pack("<i", WORST_CASE_ALIAS - pop_va)   # mov edx,[worst_case]
+    b += b"\x85\xD2\x74\x1D"                   # test edx,edx ; jz no
+    b += b"\x80\x7A\x2C\x02\x75\x17"           # cmp byte [edx+0x2c],2 ; jne no (not a set)
+    b += b"\x8B\x52\x0C"                       # mov edx,[edx+0xc]   first member node
+    assert len(b) == 0x19                      # loop:
+    b += b"\x85\xD2\x74\x10"                   # test edx,edx ; jz no
+    b += b"\x8B\x4A\x0C"                       # mov ecx,[edx+0xc]   member alias
+    b += b"\x8B\x49\x10"                       # mov ecx,[ecx+0x10]  its object
+    b += b"\x3B\x4C\x24\x04\x74\x07"           # cmp ecx,[esp+4] ; je yes
+    b += b"\x8B\x12\xEB\xEC"                   # mov edx,[edx] ; jmp loop
+    assert len(b) == 0x2D                      # no:
+    b += b"\x31\xC0\xC3"                       # xor eax,eax ; ret
+    b += b"\xB8\x01\x00\x00\x00\xC3"           # yes: mov eax,1 ; ret
+    return bytes(b)
+
+
+def at_arg_wrap(at, arg_off, clause):
+    """clause(a, b, ma, mb) wrapper: answer 0 unless the alias at [esp+arg_off]
+    (ma for E3n, mb for W -- the frame side) belongs to an address-taken object."""
+    b = bytearray()
+    b += b"\x8B\x44\x24" + bytes((arg_off,))   # mov eax,[esp+arg_off]
+    b += b"\xFF\x70\x10"                       # push [eax+0x10]  (object)
+    b += b"\xE8" + _rel32(at + len(b) + 5, IN_WC_VA)   # call in_wc
+    b += b"\x59\x85\xC0\x74\x05"               # pop ecx ; test eax,eax ; jz skip
+    b += b"\xE9" + _rel32(at + len(b) + 5, clause)     # jmp clause
+    b += b"\x31\xC0\xC3"                       # skip: xor eax,eax ; ret
+    return bytes(b)
+
+
+def at_a_wrap(at):
+    """A(a, b) wrapper: answer 0 if either pcode's alias is a frame object that
+    is not address-taken; otherwise the stock clause A."""
+    b = bytearray()
+    for side, (arg, nxt) in enumerate(((4, 0x21), (8, 0x42))):
+        start = len(b)
+        b += b"\x8B\x4C\x24" + bytes((arg,))   # mov ecx,[esp+arg]  pcode
+        b += b"\x8B\x49\x18\x8B\x49\x10"       # mov ecx,[ecx+0x18] ; mov ecx,[ecx+0x10]
+        b += b"\x85\xC9" + bytes((0x74, nxt - (len(b) + 4)))       # test ecx,ecx ; jz next
+        b += b"\x81\x39" + struct.pack("<I", FRAME_WORD)            # cmp dword [ecx],0x10005
+        b += bytes((0x75, nxt - (len(b) + 2)))                      # jne next
+        b += b"\x51"                                                # push ecx
+        b += b"\xE8" + _rel32(at + len(b) + 5, IN_WC_VA)            # call in_wc
+        b += b"\x59\x85\xC0" + bytes((0x74, 0x47 - (len(b) + 5)))   # pop ecx ; test ; jz skip
+        assert len(b) == nxt, (side, hex(len(b)))
+    b += b"\xE9" + _rel32(at + len(b) + 5, A_FN)       # jmp A
+    assert len(b) == 0x47
+    b += b"\x31\xC0\xC3"                               # skip: xor eax,eax ; ret
+    return bytes(b)
+
+
+def at_v_stub(at):
+    """VN entry 0 (ebx = stored alias): a store to a frame object that is not
+    address-taken takes the stock whole-object kill (no V walk, no F); everything
+    else goes on to 2.0p1b's vtmp stub as before."""
+    b = bytearray()
+    b += b"\x8B\x43\x10\x85\xC0\x74\x1C"       # mov eax,[ebx+0x10] ; test ; jz p1b
+    b += b"\x81\x38" + struct.pack("<I", FRAME_WORD) + b"\x75\x14"   # cmp [eax],0x10005 ; jne p1b
+    b += b"\x51\x52\x50"                       # push ecx ; push edx ; push eax
+    b += b"\xE8" + _rel32(at + len(b) + 5, IN_WC_VA)   # call in_wc
+    b += b"\x59\x5A\x59"                       # pop ecx (arg) ; pop edx ; pop ecx
+    b += b"\x85\xC0\x75\x05"                   # test eax,eax ; jnz p1b
+    b += b"\xE9" + _rel32(at + len(b) + 5, STOCK_KILL)   # jmp stock kill
+    assert len(b) == 0x23                      # p1b:
+    b += b"\xE9" + _rel32(at + len(b) + 5, VTMP_STUB_VA)
+    return bytes(b)
+
+
+def _apply_p1d(data: bytearray, parts) -> bytes:
+    parts = set(parts)
+    if not parts or parts - set(P1D_PARTS):
+        sys.exit(f"--p1d-parts must be a non-empty subset of {','.join(P1D_PARTS)}")
+
+    def text(va):
+        return va - TEXT_FILE_DELTA
+
+    def expect(off, want, what):
+        if bytes(data[off:off + len(want)]) != want:
+            sys.exit(f"{what} at {off:#x} is {bytes(data[off:off + len(want)]).hex()}, "
+                     f"expected {want.hex()}")
+
+    def put(va, code):
+        so = SECTION_FILE + (va - SECTION_VA)
+        if any(data[so:so + len(code)]) or not (
+                P1D_REGION[0] <= va - SECTION_VA and va - SECTION_VA + len(code) <= P1D_REGION[1]):
+            sys.exit(f"{P1D_VERSION} region at {so:#x} is not free in {R3_VERSION}")
+        data[so:so + len(code)] = code
+
+    def retarget(site, old, new):
+        o = SECTION_FILE + (site - SECTION_VA)       # the calls are in 2.0p1a's blob
+        expect(o, b"\xE8" + _rel32(site + 5, old), f"call at {site:#x}")
+        data[o + 1:o + 5] = _rel32(site + 5, new)
+
+    if len(data) != SECTION_FILE + SECTION_SIZE:
+        sys.exit(f"unexpected {R3_VERSION} layout (file size {len(data):#x})")
+    if any(data[SECTION_FILE + P1D_REGION[0]:SECTION_FILE + P1D_REGION[1]]):
+        sys.exit(f"{P1D_VERSION} region is not free in {R3_VERSION}")
+
+    if "r4" in parts:
+        o = text(R4_SITE)
+        expect(o, R4_OLD, "R4 two-register branch")
+        data[o:o + len(R4_NEW)] = R4_NEW
+
+    if parts & {"at-sched", "at-w", "at-v"}:
+        put(IN_WC_VA, in_wc_fn(IN_WC_VA))
+    if "at-sched" in parts:
+        put(AT_E3N_VA, at_arg_wrap(AT_E3N_VA, 0x0C, E3N_FN))     # ma: the store
+        for site in E3N_CALLS:
+            retarget(site, E3N_FN, AT_E3N_VA)
+        put(AT_A_VA, at_a_wrap(AT_A_VA))
+        for site in A_CALLS:
+            retarget(site, A_FN, AT_A_VA)
+    if "at-w" in parts:
+        put(AT_W_VA, at_arg_wrap(AT_W_VA, 0x10, W_FN))           # mb: the store
+        for site in W_CALLS:
+            retarget(site, W_FN, AT_W_VA)
+    if "at-v" in parts:
+        put(AT_V_VA, at_v_stub(AT_V_VA))
+        found = struct.unpack_from("<I", data, VN_DISPATCH_OFFSET)[0]
+        if found != VTMP_STUB_VA:
+            sys.exit(f"vn dispatch entry 0 is {found:#x}, expected {VTMP_STUB_VA:#x}")
+        struct.pack_into("<I", data, VN_DISPATCH_OFFSET, AT_V_VA)
+    return bytes(data)
+
+
+def _p1d_expected_sha1(parts):
+    if set(parts) == set(P1D_PARTS):
+        return P1D_SHA1
+    if len(parts) == 1:
+        return P1D_PART_SHA1[next(iter(parts))]
+    return None
+
+
+def patch_compiler_p1d(compilers: Path, parts=P1D_PARTS, out_dir: Path = None) -> bool:
+    """Create GC/2.0p1d (all parts) next to GC/2.0p1c, deriving 2.0p1b/c first if
+    needed. With a subset of parts, out_dir names where the experimental build goes."""
+    if not patch_compiler_r3(compilers):
+        return False
+    parts = tuple(p for p in P1D_PARTS if p in set(parts))
+    src_dir = compilers / R3_VERSION
+    full = set(parts) == set(P1D_PARTS)
+    if out_dir is None:
+        if not full:
+            sys.exit("a partial GC/2.0p1d needs --out <dir> (never GC/2.0p1d itself)")
+        out_dir = compilers / P1D_VERSION
+    elif not full and out_dir.resolve() == (compilers / P1D_VERSION).resolve():
+        sys.exit(f"refusing to write a partial build to {P1D_VERSION}")
+    src = src_dir / "mwcceppc.exe"
+    dst = out_dir / "mwcceppc.exe"
+
+    actual = patch_compiler.sha1(src)
+    if actual != R3_SHA1:
+        sys.exit(f"{src} has unexpected SHA-1 {actual}\n"
+                 f"  expected {R3_SHA1}; refusing to patch an unknown build")
+    want = _p1d_expected_sha1(parts)
+    if want and dst.exists() and patch_compiler.sha1(dst) == want:
+        return True
+
+    out_dir.mkdir(parents=True, exist_ok=True)
+    for f in src_dir.iterdir():
+        if f.is_file():
+            shutil.copy2(f, out_dir / f.name)
+    if dst.exists():
+        dst.unlink()
+
+    out = _apply_p1d(bytearray(src.read_bytes()), parts)
+    result = hashlib.sha1(out).hexdigest()
+    if want is None:
+        print(f"NOTE: no recorded SHA-1 for parts {','.join(parts)}; this build is {result}")
+    elif result != want:
+        sys.exit(f"derived {P1D_VERSION} ({','.join(parts)}) has SHA-1 {result}, expected {want}")
+
+    tmp = dst.with_suffix(".exe.tmp")
+    tmp.write_bytes(out)
+    os.replace(tmp, dst)
+    print(f"Patched compiler written to {dst}  (sha1 {result})")
+    return True
+
+
+def _opt(flag):
+    if flag in sys.argv[2:]:
+        i = sys.argv.index(flag)
+        if i + 1 < len(sys.argv):
+            return sys.argv[i + 1]
+        sys.exit(f"{flag} needs a value")
+    return None
+
+
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        sys.exit("usage: patch_compiler_rw.py <compilers dir | GC/2.0p1b or GC/2.0p1c "
-                 "mwcceppc.exe> [--r3]")
+        sys.exit("usage: patch_compiler_rw.py <compilers dir | GC/2.0p1b, 2.0p1c or 2.0p1d "
+                 "mwcceppc.exe> [--r3 | --p1d | --p1d-parts r4,at-sched,at-w,at-v --out DIR]")
     arg = Path(sys.argv[1])
     # Invoked from ninja with $out, i.e. <compilers>/GC/2.0p1b/mwcceppc.exe
-    # (or .../GC/2.0p1c/mwcceppc.exe for the experimental R3 compiler)
+    # (or .../GC/2.0p1c or .../GC/2.0p1d for the experimental compilers)
     root = arg.parents[2] if arg.name.endswith(".exe") else arg
-    want_r3 = "--r3" in sys.argv[2:] or (arg.name.endswith(".exe")
-                                          and arg.parent.name == R3_VERSION.split("/")[1])
-    ok = patch_compiler_r3(root) if want_r3 else patch_compiler_rw(root)
+    exe_dir = arg.parent.name if arg.name.endswith(".exe") else None
+    parts_arg = _opt("--p1d-parts")
+    if parts_arg is not None or "--p1d" in sys.argv[2:] or exe_dir == P1D_VERSION.split("/")[1]:
+        parts = tuple(p for p in parts_arg.split(",") if p) if parts_arg is not None else P1D_PARTS
+        out = _opt("--out")
+        ok = patch_compiler_p1d(root, parts, Path(out) if out else None)
+    elif "--r3" in sys.argv[2:] or exe_dir == R3_VERSION.split("/")[1]:
+        ok = patch_compiler_r3(root)
+    else:
+        ok = patch_compiler_rw(root)
     if not ok:
         sys.exit(f"{root / BASE_VERSION} not found")

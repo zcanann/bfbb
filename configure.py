@@ -377,9 +377,11 @@ PATCHED_COMPILER = "GC/2.0p1a"
 # was built with (see docs/RW_RESIDUE.md): GC/2.0p1a plus (1) clause V's
 # literal-kill walk does not fire on stores to compiler temporaries (2.0p1b),
 # and (2) GC/2.5's loop-invariant hoisting of loads through pointer-to-const
-# and its large-loop FP-load veto (2.0p1c). Derived from GC/2.0p1a during the
-# build by tools/patch_compiler_rw.py.
-RW_COMPILER = "GC/2.0p1c"
+# and its large-loop FP-load veto (2.0p1c), and (3) 2.5's alias for two-register
+# loads plus clauses E3n/A/W/V firing on a frame object only when its address
+# escapes (2.0p1d). Derived from GC/2.0p1a during the build by
+# tools/patch_compiler_rw.py.
+RW_COMPILER = "GC/2.0p1d"
 
 
 # Helper function for Dolphin libraries
@@ -1086,7 +1088,7 @@ config.libs = [
             Object(Matching, "rwsdk/plugin/matfx/gcn/multiTexGcnData.c"),
             Object(NonMatching, "rwsdk/plugin/matfx/gcn/multiTexGcnPipe.c"),
             Object(Matching, "rwsdk/plugin/matfx/gcn/multiTexGcn.c"),
-            Object(NonMatching, "rwsdk/plugin/matfx/multiTex.c"),
+            Object(Matching, "rwsdk/plugin/matfx/multiTex.c"),
             Object(Matching, "rwsdk/plugin/matfx/multiTexEffect.c"),
             Object(Matching, "rwsdk/plugin/matfx/rpmatfx.c"),
         ],
@@ -1096,8 +1098,8 @@ config.libs = [
         [
             Object(Matching, "rwsdk/plugin/ptank/rpptank.c"),
             Object(Matching, "rwsdk/plugin/ptank/gcn/ptankgcn.c"),
-            Object(Matching, "rwsdk/plugin/ptank/gcn/ptankgcncallbacks.c", mw_version="GC/2.0p1"),
-            Object(Matching, "rwsdk/plugin/ptank/gcn/ptankgcnrender.c", mw_version="GC/2.0p1"),
+            Object(Matching, "rwsdk/plugin/ptank/gcn/ptankgcncallbacks.c"),
+            Object(Matching, "rwsdk/plugin/ptank/gcn/ptankgcnrender.c"),
             Object(Matching, "rwsdk/plugin/ptank/gcn/ptankgcntransforms.c"),
             Object(Matching, "rwsdk/plugin/ptank/gcn/ptankgcn_nc_ppm.c"),
             Object(Matching, "rwsdk/plugin/ptank/gcn/ptankgcn_cc_ppm.c"),
@@ -1136,7 +1138,7 @@ config.libs = [
             Object(NonMatching, "rwsdk/world/babinwor.c"),
             Object(Matching, "rwsdk/world/baclump.c"),
             Object(NonMatching, "rwsdk/world/bageomet.c"),
-            Object(NonMatching, "rwsdk/world/balight.c"),
+            Object(Matching, "rwsdk/world/balight.c"),
             Object(NonMatching, "rwsdk/world/bamateri.c"),
             Object(NonMatching, "rwsdk/world/bamatlst.c"),
             Object(Matching, "rwsdk/world/bamesh.c"),
@@ -1153,7 +1155,7 @@ config.libs = [
             Object(Matching, "rwsdk/world/pipe/p2/gcn/gclights.c"),
             Object(Matching, "rwsdk/world/pipe/p2/gcn/gcmorph.c"),
             Object(Matching, "rwsdk/world/pipe/p2/gcn/native.c"),
-            Object(Matching, "rwsdk/world/pipe/p2/gcn/setup.c", mw_version="GC/2.0p1"),
+            Object(Matching, "rwsdk/world/pipe/p2/gcn/setup.c"),
             Object(Matching, "rwsdk/world/pipe/p2/gcn/instance/geomcond.c"),
             Object(NonMatching, "rwsdk/world/pipe/p2/gcn/instance/geominst.c"),
             Object(Matching, "rwsdk/world/pipe/p2/gcn/instance/ibuffer.c"),
@@ -1180,7 +1182,7 @@ config.libs = [
     RenderWareLib(
         "rtslerp",
         [
-            Object(NonMatching, "rwsdk/tool/slerp/rtslerp.c", mw_version="GC/2.0p1"),
+            Object(NonMatching, "rwsdk/tool/slerp/rtslerp.c"),
         ],
     ),
     RenderWareLib(
