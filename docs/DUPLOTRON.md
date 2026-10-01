@@ -7956,3 +7956,17 @@ All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
 early-cutoff invariant checks pass. Full all-source compilation and normal
 retail DOL SHA-1 validation pass. Bitplane remains NonMatching; source-linked
 Bink playback remains unverified.
+
+
+## Bink lossless shared child-push path (2026-10-01)
+
+Sharing the child-node push path between buffered and refill presence reads
+in READ_LOSSLESS_CHILD follows retail's branch layout and raises
+ReadBPLossless from 70.72618% to 74.16758%. The macro uses a label derived
+from its existing per-child label argument. The full deduplicated report
+changes only ReadBPLossless.
+
+All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
+early-cutoff invariant checks pass. Full all-source compilation and normal
+retail DOL SHA-1 validation pass. Bitplane remains NonMatching; source-linked
+Bink playback remains unverified.
