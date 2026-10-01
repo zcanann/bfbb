@@ -1180,10 +1180,9 @@ struct RwEngineOpenParams
 
 struct RwGameCubeDeviceConfig
 {
-    /* unknown */
-#ifndef __cplusplus
-    RwUInt8 pad; /* C has no empty struct */
-#endif
+    void* renderMode;
+    RwInt32 pixFmt;
+    RwUInt32 fifoSize;
 };
 
 typedef RwBool (*RwSystemFunc)(RwInt32 nOption, void* pOut, void* pInOut, RwInt32 nIn);
