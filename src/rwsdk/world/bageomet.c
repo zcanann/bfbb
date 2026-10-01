@@ -507,7 +507,6 @@ RpGeometry* RpGeometryUnlock(RpGeometry* geometry)
 RpGeometry* RpGeometryCreate(RwInt32 numVerts, RwInt32 numTriangles, RwUInt32 format)
 {
     RwUInt32 numTexCoordSets;
-    RwUInt32 native;
     RwInt32 flags;
     RpGeometry* geometry;
     RwUInt8* goffset;
@@ -533,8 +532,7 @@ RpGeometry* RpGeometryCreate(RwInt32 numVerts, RwInt32 numTriangles, RwUInt32 fo
             ((numTexCoordSets == 1) ? rpGEOMETRYTEXTURED :
                                       ((numTexCoordSets > 1) ? rpGEOMETRYTEXTURED2 : 0));
 
-    native = format & rpGEOMETRYNATIVE;
-    if (!native)
+    if (!(format & rpGEOMETRYNATIVE))
     {
         if (flags & rpGEOMETRYPRELIT)
         {
@@ -580,7 +578,7 @@ RpGeometry* RpGeometryCreate(RwInt32 numVerts, RwInt32 numTriangles, RwUInt32 fo
     geometry->flags = flags | (format & rpGEOMETRYNATIVEFLAGSMASK);
     geometry->numVertices = numVerts;
 
-    if (!native)
+    if (!(format & rpGEOMETRYNATIVE))
     {
         goffset = (RwUInt8*)geometry + geometryTKList.sizeOfStruct;
 

@@ -729,6 +729,7 @@ extern RwBool _rpWorldFindBBox(RpWorld* world, RwBBox* boundingBox);
 extern RpWorld* _rpWorldSetupSectorBoundingBoxes(RpWorld* world);
 extern void _rpWorldRegisterWorld(RpWorld* world, RwUInt32 memorySize);
 extern void _rpWorldUnregisterWorld(RpWorld* world);
+extern RpWorld* RpWorldLock(RpWorld* world);
 extern RpWorld* RpWorldUnlock(RpWorld* world);
 extern RpWorld* RpWorldSectorGetWorld(const RpWorldSector* sector);
 extern RpWorld* RpWorldRender(RpWorld* world);

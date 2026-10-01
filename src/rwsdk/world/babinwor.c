@@ -230,10 +230,21 @@ static void* BinaryWorldMalloc(RwUInt8** binaryWorldMallocAddr, RwInt32 size)
 static RpWorldSector* WorldSectorStreamRead(RwStream* stream, RwUInt8** binaryWorldMallocAddr,
                                             RpWorld* world, RwUInt32 flags)
 {
-    RpWorldSector* worldSector;
     RpWorldChunkInfoSector as;
     RwUInt32 version;
     RwInt32 i;
+    RwInt32 vertexSize;
+    RwInt32 normalSize;
+    RwInt32 preLitLumSize;
+    RwInt32 texCoordSize;
+    RwInt32 triangleSize;
+    RwUInt8* src;
+    RwUInt8* oldPolygons;
+    RpWorldSector* worldSector;
+    RpPolygon* polygons;
+    RwUInt32 bytes;
+    RwInt32 numPolygons;
+    RwInt32 readSize;
 
     if (!RwStreamFindChunk(stream, rwID_STRUCT, (RwUInt32*)NULL, &version))
     {
@@ -288,7 +299,7 @@ static RpWorldSector* WorldSectorStreamRead(RwStream* stream, RwUInt8** binaryWo
     {
         if (as.numVertices)
         {
-            RwInt32 vertexSize = as.numVertices * sizeof(RwV3d);
+            vertexSize = as.numVertices * sizeof(RwV3d);
 
             worldSector->vertices = (RwV3d*)BinaryWorldMalloc(binaryWorldMallocAddr, vertexSize);
             if (!worldSector->vertices)
@@ -304,7 +315,7 @@ static RpWorldSector* WorldSectorStreamRead(RwStream* stream, RwUInt8** binaryWo
 
             if (flags & rpWORLDNORMALS)
             {
-                RwInt32 normalSize = as.numVertices * sizeof(RpVertexNormal);
+                normalSize = as.numVertices * sizeof(RpVertexNormal);
 
                 worldSector->normals =
                     (RpVertexNormal*)BinaryWorldMalloc(binaryWorldMallocAddr, normalSize);
@@ -322,7 +333,7 @@ static RpWorldSector* WorldSectorStreamRead(RwStream* stream, RwUInt8** binaryWo
 
             if (flags & rpWORLDPRELIT)
             {
-                RwInt32 preLitLumSize = as.numVertices * sizeof(RwRGBA);
+                preLitLumSize = as.numVertices * sizeof(RwRGBA);
 
                 worldSector->preLitLum =
                     (RwRGBA*)BinaryWorldMalloc(binaryWorldMallocAddr, preLitLumSize);
@@ -340,7 +351,7 @@ static RpWorldSector* WorldSectorStreamRead(RwStream* stream, RwUInt8** binaryWo
 
             if (world->numTexCoordSets > 0)
             {
-                RwInt32 texCoordSize = worldSector->numVertices * sizeof(RwTexCoords);
+                texCoordSize = worldSector->numVertices * sizeof(RwTexCoords);
 
                 for (i = 0; i < world->numTexCoordSets; i++)
                 {
@@ -362,9 +373,7 @@ static RpWorldSector* WorldSectorStreamRead(RwStream* stream, RwUInt8** binaryWo
 
         if (as.numTriangles)
         {
-            RwInt32 triangleSize = as.numTriangles * sizeof(RpPolygon);
-            RwInt32 readSize;
-
+            triangleSize = as.numTriangles * sizeof(RpPolygon);
             worldSector->polygons =
                 (RpPolygon*)BinaryWorldMalloc(binaryWorldMallocAddr, triangleSize);
             if (!worldSector->polygons)
@@ -387,11 +396,12 @@ static RpWorldSector* WorldSectorStreamRead(RwStream* stream, RwUInt8** binaryWo
 
             if (version < rpWORLDOLDPOLYGONVERSION)
             {
-                RwInt32 numPolygons = worldSector->numPolygons;
-                RwUInt32 bytes = numPolygons * sizeof(RwUInt32);
-                RpPolygon* polygons = worldSector->polygons;
-                RwUInt8* oldPolygons = (RwUInt8*)RwMalloc(bytes);
-                RwUInt8* src = oldPolygons;
+
+                numPolygons = worldSector->numPolygons;
+                bytes = numPolygons * sizeof(RwUInt32);
+                polygons = worldSector->polygons;
+                oldPolygons = (RwUInt8*)RwMalloc(bytes);
+                src = oldPolygons;
 
                 memcpy(oldPolygons, polygons, bytes);
 

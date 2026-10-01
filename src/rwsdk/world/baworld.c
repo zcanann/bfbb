@@ -635,8 +635,8 @@ RpWorld* _rpWorldSetupSectorBoundingBoxes(RpWorld* world)
 
             worldSector->boundingBox = bbox;
 
-            bbox = bboxStack[nStack];
             sector = sectorStack[nStack];
+            bbox = bboxStack[nStack];
             nStack--;
         }
         else
@@ -644,8 +644,8 @@ RpWorld* _rpWorldSetupSectorBoundingBoxes(RpWorld* world)
             RpPlaneSector* plane = (RpPlaneSector*)sector;
 
             nStack++;
-            bboxStack[nStack] = bbox;
             sectorStack[nStack] = plane->rightSubTree;
+            bboxStack[nStack] = bbox;
             SETCOORD(bboxStack[nStack].inf, plane->type, plane->rightValue);
 
             SETCOORD(bbox.sup, plane->type, plane->leftValue);
@@ -691,6 +691,43 @@ void _rpWorldUnregisterWorld(RpWorld* world)
         }
 
         cur = rwLLLinkGetNext(cur);
+    }
+}
+
+RpWorld* RpWorldLock(RpWorld* world)
+{
+    RpSector* spaStack[rpWORLDMAXBSPDEPTH];
+    RpSector* spSect = world->rootSector;
+    RwInt32 numSectors = 0;
+
+    while (1)
+    {
+        if (spSect->type < 0)
+        {
+            RpWorldSector* worldSector = (RpWorldSector*)spSect;
+
+            if (worldSector->mesh)
+            {
+                _rpMeshDestroy(worldSector->mesh);
+                worldSector->mesh = (RpMeshHeader*)NULL;
+            }
+
+            spSect = spaStack[numSectors];
+            numSectors--;
+        }
+        else
+        {
+            RpPlaneSector* planeSector = (RpPlaneSector*)spSect;
+
+            numSectors++;
+            spSect = planeSector->leftSubTree;
+            spaStack[numSectors] = planeSector->rightSubTree;
+        }
+
+        if (numSectors < 0)
+        {
+            return world;
+        }
     }
 }
 
@@ -795,44 +832,10 @@ RpWorld* RpWorldRender(RpWorld* world)
 
 RwBool RpWorldDestroy(RpWorld* world)
 {
-    RpSector* spaStack[rpWORLDMAXBSPDEPTH];
-    RpSector* spSect;
-    RwInt32 numSectors;
-
     _rpWorldUnregisterWorld(world);
 
     /* Throw away the meshes */
-    numSectors = 0;
-    spSect = world->rootSector;
-    while (1)
-    {
-        if (spSect->type < 0)
-        {
-            RpWorldSector* worldSector = (RpWorldSector*)spSect;
-
-            if (worldSector->mesh)
-            {
-                _rpMeshDestroy(worldSector->mesh);
-                worldSector->mesh = (RpMeshHeader*)NULL;
-            }
-
-            spSect = spaStack[numSectors];
-            numSectors--;
-        }
-        else
-        {
-            RpPlaneSector* planeSector = (RpPlaneSector*)spSect;
-
-            numSectors++;
-            spSect = planeSector->leftSubTree;
-            spaStack[numSectors] = planeSector->rightSubTree;
-        }
-
-        if (numSectors < 0)
-        {
-            break;
-        }
-    }
+    RpWorldLock(world);
 
     _rpMaterialListDeinitialize(&world->matList);
 

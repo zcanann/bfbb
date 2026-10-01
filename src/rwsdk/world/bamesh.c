@@ -295,10 +295,16 @@ RpMeshHeader* _rpMeshHeaderForAllMeshes(RpMeshHeader* meshHeader, RpMeshCallBack
 RwStream* _rpMeshWrite(const RpMeshHeader* meshHeader, const void* object, RwStream* stream,
                        const RpMaterialList* matList)
 {
+    RwUInt32 writeIndices;
+    RwUInt32 objectType;
     binMeshHeader bmh;
     RwUInt32 numMeshes;
     const RpMesh* mesh;
-    RwUInt32 objectType;
+    binMesh bm;
+    RwUInt32 numIndices;
+    RxVertexIndex* meshIndices;
+    RwUInt32 IndexBuffer[rpMESHINDEXBUFFERSIZE];
+    RwUInt32 i;
 
     bmh.flags = meshHeader->flags;
     bmh.numMeshes = meshHeader->numMeshes;
@@ -315,8 +321,6 @@ RwStream* _rpMeshWrite(const RpMeshHeader* meshHeader, const void* object, RwStr
 
     while (numMeshes--)
     {
-        binMesh bm;
-
         bm.numIndices = mesh->numIndices;
         bm.matIndex = _rpMaterialListFindMaterialIndex(matList, mesh->material);
         if (bm.matIndex < 0)
@@ -333,15 +337,11 @@ RwStream* _rpMeshWrite(const RpMeshHeader* meshHeader, const void* object, RwStr
              !(((const RpGeometry*)object)->flags & rpMESHNATIVEFLAG)) ||
             (objectType == rpWORLD && !(((const RpWorld*)object)->flags & rpMESHNATIVEFLAG)))
         {
-            RwUInt32 numIndices = mesh->numIndices;
-            RxVertexIndex* meshIndices = mesh->indices;
-            RwUInt32 IndexBuffer[rpMESHINDEXBUFFERSIZE];
+            numIndices = mesh->numIndices;
+            meshIndices = mesh->indices;
 
             while (numIndices)
             {
-                RwUInt32 writeIndices;
-                RwUInt32 i;
-
                 writeIndices = rpMESHINDEXBUFFERSIZE;
                 if (numIndices < rpMESHINDEXBUFFERSIZE)
                 {
@@ -371,9 +371,18 @@ RwStream* _rpMeshWrite(const RpMeshHeader* meshHeader, const void* object, RwStr
 
 RpMeshHeader* _rpMeshRead(RwStream* stream, const void* object, const RpMaterialList* matList)
 {
-    binMeshHeader bmh;
     RpMeshHeader* meshHeader;
+    RwUInt32 objectType;
+    RpMesh* mesh;
+    RxVertexIndex* meshIndices;
+    RwUInt32 readIndices;
+    RwUInt32 numMeshes;
+    RwUInt32 remainingIndices;
+    RwUInt32* source;
+    binMeshHeader bmh;
     RwUInt32 size;
+    binMesh bm;
+    RwUInt32 IndexBuffer[rpMESHINDEXBUFFERSIZE];
 
     if (!RwStreamReadInt32(stream, (RwInt32*)&bmh, sizeof(bmh)))
     {
@@ -389,10 +398,9 @@ RpMeshHeader* _rpMeshRead(RwStream* stream, const void* object, const RpMaterial
     meshHeader = (RpMeshHeader*)RwMalloc(size);
     if (meshHeader)
     {
-        RpMesh* mesh = (RpMesh*)(meshHeader + 1);
-        RxVertexIndex* meshIndices = (RxVertexIndex*)(mesh + bmh.numMeshes);
-        RwUInt32 objectType = RwObjectGetType(object);
-        RwUInt32 numMeshes;
+        mesh = (RpMesh*)(meshHeader + 1);
+        meshIndices = (RxVertexIndex*)(mesh + bmh.numMeshes);
+        objectType = RwObjectGetType(object);
 
         meshHeader->flags = bmh.flags;
         meshHeader->numMeshes = (RwUInt16)bmh.numMeshes;
@@ -405,8 +413,6 @@ RpMeshHeader* _rpMeshRead(RwStream* stream, const void* object, const RpMaterial
         numMeshes = meshHeader->numMeshes;
         while (numMeshes--)
         {
-            binMesh bm;
-
             if (!RwStreamReadInt32(stream, (RwInt32*)&bm, sizeof(bm)))
             {
                 return (RpMeshHeader*)NULL;
@@ -420,14 +426,10 @@ RpMeshHeader* _rpMeshRead(RwStream* stream, const void* object, const RpMaterial
                  !(((const RpGeometry*)object)->flags & rpMESHNATIVEFLAG)) ||
                 (objectType == rpWORLD && !(((const RpWorld*)object)->flags & rpMESHNATIVEFLAG)))
             {
-                RwUInt32 remainingIndices = mesh->numIndices;
-                RwUInt32 IndexBuffer[rpMESHINDEXBUFFERSIZE];
+                remainingIndices = mesh->numIndices;
 
                 while (remainingIndices)
                 {
-                    RwUInt32 readIndices;
-                    RwUInt32* source;
-
                     source = IndexBuffer;
 
                     readIndices = rpMESHINDEXBUFFERSIZE;

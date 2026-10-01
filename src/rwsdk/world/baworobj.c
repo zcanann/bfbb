@@ -367,6 +367,22 @@ RwBool _rpTieDestroy(RpTie* tie)
     return TRUE;
 }
 
+static void AtomicDestroyTies(RpAtomic* atomic)
+{
+    RwLLLink* cur;
+    RwLLLink* end;
+    RpTie* tie;
+
+    cur = rwLinkListGetFirstLLLink(&atomic->llWorldSectorsInAtomic);
+    end = rwLinkListGetTerminator(&atomic->llWorldSectorsInAtomic);
+    while (cur != end)
+    {
+        tie = rwLLLinkGetData(cur, RpTie, lAtomic);
+        cur = rwLLLinkGetNext(cur);
+        _rpTieDestroy(tie);
+    }
+}
+
 static void WorldAttachAtomicSphere(RpWorld* world, RpAtomic* atomic)
 {
     RwInt32 nStack = 0;
@@ -454,17 +470,7 @@ RwObjectHasFrame* WorldAtomicSync(RwObjectHasFrame* object)
 
         if (world)
         {
-            RwLLLink* cur = rwLinkListGetFirstLLLink(&atomic->llWorldSectorsInAtomic);
-            RwLLLink* end = rwLinkListGetTerminator(&atomic->llWorldSectorsInAtomic);
-
-            while (cur != end)
-            {
-                RpTie* tie = rwLLLinkGetData(cur, RpTie, lAtomic);
-
-                cur = rwLLLinkGetNext(cur);
-                _rpTieDestroy(tie);
-            }
-
+            AtomicDestroyTies(atomic);
             WorldAttachAtomicSphere(world, atomic);
         }
 
@@ -496,17 +502,9 @@ static void* WorldCopyAtomicExt(void* dstObject, const void* srcObject, RwInt32 
 static void* WorldDeInitAtomicExt(void* object, RwInt32 offsetInObject, RwInt32 sizeInObject)
 {
     RpAtomic* atomic = (RpAtomic*)object;
-    RwLLLink* end = rwLinkListGetTerminator(&atomic->llWorldSectorsInAtomic);
-    RwLLLink* cur = rwLinkListGetFirstLLLink(&atomic->llWorldSectorsInAtomic);
     rpWorldAtomicExt* atomicExt = ATOMICEXTFROMATOMIC(atomic);
 
-    while (cur != end)
-    {
-        RpTie* tie = rwLLLinkGetData(cur, RpTie, lAtomic);
-
-        cur = rwLLLinkGetNext(cur);
-        _rpTieDestroy(tie);
-    }
+    AtomicDestroyTies(atomic);
 
     atomic->object.sync = atomicExt->originalSync;
 
@@ -539,6 +537,22 @@ static void* WorldDeInitClumpExt(void* object, RwInt32 offsetInObject, RwInt32 s
     return object;
 }
 
+static void LightDestroyTies(RpLight* light)
+{
+    RwLLLink* cur;
+    RwLLLink* end;
+    RpLightTie* tie;
+
+    cur = rwLinkListGetFirstLLLink(&light->WorldSectorsInLight);
+    end = rwLinkListGetTerminator(&light->WorldSectorsInLight);
+    while (cur != end)
+    {
+        tie = rwLLLinkGetData(cur, RpLightTie, lLight);
+        cur = rwLLLinkGetNext(cur);
+        _rpLightTieDestroy(tie);
+    }
+}
+
 static RwObjectHasFrame* WorldLightSync(RwObjectHasFrame* object)
 {
     RpLight* light = (RpLight*)object;
@@ -565,17 +579,9 @@ static RwObjectHasFrame* WorldLightSync(RwObjectHasFrame* object)
             RwV3d inf;
             RwV3d sup;
             RwReal radius = light->radius;
-            RwLLLink* cur = rwLinkListGetFirstLLLink(&light->WorldSectorsInLight);
-            RwLLLink* end = rwLinkListGetTerminator(&light->WorldSectorsInLight);
 
             /* Remove the light from all the sectors it was in */
-            while (cur != end)
-            {
-                RpLightTie* tie = rwLLLinkGetData(cur, RpLightTie, lLight);
-
-                cur = rwLLLinkGetNext(cur);
-                _rpLightTieDestroy(tie);
-            }
+            LightDestroyTies(light);
 
             inf = RwFrameGetLTM(lightFrame)->pos;
             sup = inf;
@@ -668,16 +674,8 @@ static void* WorldCopyLightExt(void* dstObject, const void* srcObject, RwInt32 o
 static void* WorldDeInitLightExt(void* object, RwInt32 offsetInObject, RwInt32 sizeInObject)
 {
     RpLight* light = (RpLight*)object;
-    RwLLLink* end = rwLinkListGetTerminator(&light->WorldSectorsInLight);
-    RwLLLink* cur = rwLinkListGetFirstLLLink(&light->WorldSectorsInLight);
 
-    while (cur != end)
-    {
-        RpLightTie* tie = rwLLLinkGetData(cur, RpLightTie, lLight);
-
-        cur = rwLLLinkGetNext(cur);
-        _rpLightTieDestroy(tie);
-    }
+    LightDestroyTies(light);
 
     return object;
 }
@@ -1139,20 +1137,9 @@ RpWorld* RpWorldAddLight(RpWorld* world, RpLight* light)
 
 RpWorld* RpWorldRemoveLight(RpWorld* world, RpLight* light)
 {
-    RwLLLink* end;
-    RwLLLink* cur;
-
     LIGHTEXTFROMLIGHT(light)->world = (RpWorld*)NULL;
 
-    cur = rwLinkListGetFirstLLLink(&light->WorldSectorsInLight);
-    end = rwLinkListGetTerminator(&light->WorldSectorsInLight);
-    while (cur != end)
-    {
-        RpLightTie* tie = rwLLLinkGetData(cur, RpLightTie, lLight);
-
-        cur = rwLLLinkGetNext(cur);
-        _rpLightTieDestroy(tie);
-    }
+    LightDestroyTies(light);
 
     rwLinkListRemoveLLLink(&light->inWorld);
 
