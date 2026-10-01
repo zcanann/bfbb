@@ -7475,3 +7475,20 @@ scaffolding and contribute no linked code.
 The full source build reproduces retail DOL SHA-1
 306526d90b48e99894c3138f5fc8f2716d9fecf6. No split or compiler-patch changes
 are needed.
+
+## Entity-drive source linking (2026-10-01)
+
+`xEntDrive` now links all 6 functions (3,380 code bytes) and 16 data bytes
+from source. Its implicit xCollis::tri_data assignment was emitted between
+Mount and Dismount, while retail places it after Update. A labelled
+dead-stripped header wrapper and early reference instantiate the implicit
+operator in the header's weak group, preserving all original function bodies.
+These two stubs are layout scaffolding, not claimed recovered routines.
+
+Making that assignment operator explicit also moves it, but changes nested
+aggregate-copy semantics and regresses zEntPlayer's xEntCollis assignment.
+The retained approach preserves the implicit operator and has no SB match
+regressions. The full source build reproduces retail DOL SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. No split or compiler-patch changes
+are needed; no independent original linker map was found to substantiate
+the alternative bad-split hypothesis.

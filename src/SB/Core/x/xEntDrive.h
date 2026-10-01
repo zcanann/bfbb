@@ -38,4 +38,11 @@ void xEntDriveMount(xEntDrive* drv, xEnt* driver, F32 mt, const xCollis* coll);
 void xEntDriveDismount(xEntDrive* drv, F32 dmt);
 void xEntDriveUpdate(xEntDrive* drv, xScene* s, F32 dt, const xCollis* coll);
 
+// Keep the copy operator implicit: an explicit operator changes aggregate-copy
+// generation in zEntPlayer. This dead-stripped wrapper establishes its weak group.
+inline void __deadstripped_xEntDrive_copy(xCollis::tri_data& dst, const xCollis::tri_data& src)
+{
+    dst = src;
+}
+
 #endif

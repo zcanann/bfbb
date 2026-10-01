@@ -6,6 +6,13 @@
 
 #include <types.h>
 
+// Layout scaffolding: instantiate the implicit copy through the header before
+// Mount uses it, placing the helper after the main functions. Both stubs strip.
+void __deadstripped_xEntDrive_copy_use(xCollis::tri_data& dst, const xCollis::tri_data& src)
+{
+    __deadstripped_xEntDrive_copy(dst, src);
+}
+
 void xEntDriveInit(xEntDrive* drv, xEnt* driven)
 {
     if (drv == NULL)
