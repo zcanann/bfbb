@@ -1321,7 +1321,6 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count)
 {
     s8 sample;
     u32 levels_remaining;
-    u8 node_kind;
     u8 PTR4* tree_end_ptr;
     s8 mask;
     s32 masks_used;
@@ -1422,17 +1421,18 @@ read_node:
             }
 decode_node:
             switch (BP_READ_TREE_KIND(node)) {
+            case BP_READ_TREE_HIGH_NODE:
+                node = BP_READ_TREE_INDEX(node);
+                *node_ptr = BP_READ_TREE_GROUP_FROM_INDEX(node);
+                goto decode_children;
             case BP_READ_TREE_GROUP_NODE:
-                node_kind = BP_READ_TREE_INDEX(node);
-                *node_ptr = BP_READ_TREE_BRANCH(node_kind);
-                *tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(node_kind, BP_READ_TREE_CHILD1_BASE);
-                *++tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(node_kind, BP_READ_TREE_CHILD2_BASE);
-                *++tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(node_kind, BP_READ_TREE_CHILD3_BASE);
+                node = BP_READ_TREE_INDEX(node);
+                *node_ptr = BP_READ_TREE_BRANCH(node);
+                *tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(node, BP_READ_TREE_CHILD1_BASE);
+                *++tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(node, BP_READ_TREE_CHILD2_BASE);
+                *++tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(node, BP_READ_TREE_CHILD3_BASE);
                 ++tree_end_ptr;
                 goto node_done;
-            case BP_READ_TREE_HIGH_NODE:
-                *node_ptr = BP_READ_TREE_GROUP_FROM_INDEX(BP_READ_TREE_INDEX(node));
-                break;
             case BP_READ_TREE_BRANCH_NODE:
                 *node_ptr = BP_READ_TREE_EMPTY_ENTRY;
                 node_ptr = node_ptr + 1;
@@ -1443,6 +1443,7 @@ decode_node:
                 goto next_node;
             }
             node = BP_READ_TREE_INDEX(node);
+decode_children:
             if (bitcount != 0) {
                 bitcount = bitcount - 1;
                 word = bitbuf >> 1;

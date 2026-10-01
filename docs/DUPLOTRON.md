@@ -7853,3 +7853,17 @@ The host checker passes all 16,384 lossless round trips, 6,911 nonempty lossy
 round trips, and 27,644 early-cutoff invariant checks. Full all-source
 compilation and the normal retail DOL SHA-1 check pass. Bitplane remains
 NonMatching; source-linked Bink playback remains unverified.
+
+
+## Bink node dispatch index lifetime (2026-10-01)
+
+In readlossy, decoding the high-node index within its case and branching to
+the common child path follows retail's block order and raises the score from
+85.40576% to 88.117516%. Reusing `node` for the decoded group index instead of
+a separate `node_kind` temporary brings the deduplicated match to 89.59424%.
+The full report comparison changes only readlossy.
+
+All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and 27,644
+early-cutoff invariant checks pass, as do full all-source compilation and
+the normal retail DOL SHA-1 check. Bitplane remains NonMatching; source-linked
+Bink playback is not established by these checks.
