@@ -482,6 +482,40 @@ static inline u32 exp_read_huff4(EXPBITS PTR4* bits, u32 bits_to_peek,
     return symbol;
 }
 
+/* Keep signed-byte conversion in each decoding path. */
+static inline s8 exp_read_huff4_signed(EXPBITS PTR4* bits, u32 bits_to_peek,
+                                 const u8 PTR4* decode, u8 PTR4* syms)
+{
+    u32 bitcount;
+    EXPBITSTYPE word;
+    u8 code;
+    s8 symbol;
+
+    bitcount = bits->bitlen;
+    if (bitcount >= bits_to_peek) {
+        code = decode[bits->bits & GetBitsLen(bits_to_peek)];
+        symbol = (s8)HUFF4_CODE_SYM(code, syms);
+        code = HUFF4_CODE_USED(code);
+        bits->bits = bits->bits >> code;
+        bits->bitlen = bitcount - code;
+    } else {
+        word = *bits->cur;
+        code = decode[(bits->bits | (word << bitcount)) & GetBitsLen(bits_to_peek)];
+        symbol = (s8)HUFF4_CODE_SYM(code, syms);
+        code = HUFF4_CODE_USED(code);
+        if (bitcount >= code) {
+            bits->bits = bits->bits >> code;
+            bits->bitlen = bitcount - code;
+        } else {
+            bits->bits = word >> (code - bitcount);
+            bits->bitlen = bitcount + EXP_BITS_PER_WORD - code;
+            bits->cur++;
+        }
+    }
+
+    return symbol;
+}
+
 /* Store and advance before updating the bitstream, as in the other bundle macros. */
 #define EXP_READ_HUFF4_STORE(vb, peek, decode_table, symbols, out)                       \
     do {                                                                                 \
@@ -952,12 +986,12 @@ static void CheckReadHuff4SBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
         bundle->cur_dec = BINK_BUNDLE_DATA_END(bundle, count);
         if (!EXPBITS_GET1_BRANCH(*bits, bit)) {
             /* Signed Huff4 bundles store a sign bit only for nonzero symbols. */
-            syms = bundle->syms;
-            peek = bundle->bits_to_peek;
             decode = bundle->decode;
             dest = BINK_BUNDLE_DATA_BEGIN(bundle);
-            while (count-- != 0) {
-                symbol = (s8)exp_read_huff4(bits, peek, decode, syms);
+            peek = bundle->bits_to_peek;
+            syms = bundle->syms;
+            while (--count != (u32)-1) {
+                symbol = (s8)exp_read_huff4_signed(bits, peek, decode, syms);
                 if (symbol != 0 && EXPBITS_GET1_BRANCH(*bits, bit)) {
                     symbol = -symbol;
                 }

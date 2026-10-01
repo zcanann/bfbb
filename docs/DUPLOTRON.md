@@ -7568,3 +7568,18 @@ The existing production-helper/byte-store host checks pass, as do the full
 source build and normal retail DOL SHA-1 check. `expand` remains
 NonMatching at 8/16 exact functions. Byte-reader direct/scoped bit-buffer
 trials did not improve its retained 99.56364% and were reverted.
+
+## Bink signed Huff4 conversion placement (2026-10-01)
+
+`CheckReadHuff4SBundle` improves from 93.791466% to 98.78199%, now at
+the exact 844-byte size. A signed-byte Huff4 helper performs the conversion
+in both decoding paths, matching retail's two sign extensions instead of
+converting the unsigned helper's result at the join. The unsigned countdown
+and decoder setup order remove the remaining size difference. Register
+allocation, a result-register copy and some load ordering still differ.
+
+The separate signed helper leaves the unsigned callers unchanged. No other
+function score regresses; the paired Huff4 decoder stays exact. The host
+checker now also verifies 67,584 signed reads, alongside 135,168 unsigned
+reads, the byte-store checks, and 1,000 countdown cases. The full source
+build and normal retail DOL SHA-1 pass. `expand` remains NonMatching.

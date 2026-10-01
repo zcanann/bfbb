@@ -13,6 +13,7 @@ HEADER = r"""#include <stdint.h>
 #include <stdio.h>
 typedef uint32_t u32;
 typedef uint8_t u8;
+typedef int8_t s8;
 typedef u32 EXPBITSTYPE;
 typedef struct {u32* cur; u32 bits; u32 bitlen;} EXPBITS;
 #define PTR4
@@ -29,12 +30,12 @@ int main(void){
  for(trial=0;trial<256;trial++){
   u32 words[2]={rnd(),rnd()},i,used,index;
   u8 table[256],symbols[16],output=0,*dest=&output,expected;
-  EXPBITS actual,ref,helper;
+  EXPBITS actual,ref,helper,signed_state;
   for(i=0;i<(1u<<width);i++)table[i]=(u8)(((1+rnd()%width)<<4)|(rnd()&15));
   for(i=0;i<16;i++)symbols[i]=(u8)rnd();
   actual.cur=words;actual.bitlen=available;
   actual.bits=rnd() & (available==32 ? 0xffffffffu : ((1u<<available)-1));
-  helper=ref=actual;
+  signed_state=helper=ref=actual;
   index=ref.bits;
   if(available<32)index|=*ref.cur<<available;
   index&=GetBitsLen(width);
@@ -44,11 +45,13 @@ int main(void){
    ref.bits>>=1;--ref.bitlen;
   }
   u32 decoded=exp_read_huff4(&helper,width,table,symbols);
+  s8 signed_decoded=exp_read_huff4_signed(&signed_state,width,table,symbols);
   EXP_READ_HUFF4_STORE(&actual,width,table,symbols,dest);
   if(output!=expected || dest!=&output+1 || actual.cur!=ref.cur || actual.bits!=ref.bits || actual.bitlen!=ref.bitlen){
    printf("FAIL width=%u available=%u trial=%u\n",width,available,trial);return 1;
   }
   if(decoded!=expected || helper.cur!=ref.cur || helper.bits!=ref.bits || helper.bitlen!=ref.bitlen)return 3;
+  if(signed_decoded!=(s8)expected || signed_state.cur!=ref.cur || signed_state.bits!=ref.bits || signed_state.bitlen!=ref.bitlen)return 5;
   /* A second read exercises the paired decoder's use of the updated buffer. */
   index=ref.bits;
   if(ref.bitlen<32)index|=*ref.cur<<ref.bitlen;
@@ -68,7 +71,7 @@ int main(void){
   while(--now !=(u32)-1)++nnew;
   if(nold!=nnew || old!=now)return 2;
  }
- printf("PASS %u Huff4 cases (one store and two helper reads each); 1000 countdown cases\n",cases);
+ printf("PASS %u Huff4 cases (one store, two unsigned reads, one signed read each); 1000 countdown cases\n",cases);
  return 0;
 }
 """
