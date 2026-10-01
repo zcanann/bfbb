@@ -648,6 +648,7 @@ static void YUV_blit(void PTR4* dest,
     u32 pitch_delta;
     u32 chroma_pitch;
     u32 endy;
+    u32 row;
     u32 align_count;
     s32 y_delta;
     s32 c_delta;
@@ -724,9 +725,10 @@ static void YUV_blit(void PTR4* dest,
     S.v = (u16 PTR4*)((u8 PTR4*)S.v + (srcx >> YUV_CHROMA_SHIFT) +
                        (srcy >> YUV_CHROMA_SHIFT) * chroma_pitch);
 
-    endy = srcy + srch - 1;
-    if ((srcy & 1) != 0 && (s32)srcy <= (s32)endy) {
-        srcy++;
+    row = srcy;
+    endy = row + srch - 1;
+    if ((row & 1) != 0 && (s32)row <= (s32)endy) {
+        row++;
         dounalignedrow(srcx, srcw);
         dest = S.dest0 + pitch_delta;
         ybase = (u8 PTR4*)S.y0 + y_delta;
@@ -746,7 +748,7 @@ static void YUV_blit(void PTR4* dest,
         align_count = srcw;
     }
 
-    while ((s32)srcy < (s32)endy) {
+    while ((s32)row < (s32)endy) {
         u32 phase;
         u32 count;
         u32 tail;
@@ -775,7 +777,7 @@ static void YUV_blit(void PTR4* dest,
             dounalignedcol(tail, phase);
         }
 
-        srcy += 2;
+        row += 2;
         S.dest0 = S.dest1 + pitch_delta;
         S.dest1 = S.dest0 + pitch;
         S.y0 = (u32 PTR4*)((u8 PTR4*)S.y1 + y_delta);
@@ -786,7 +788,7 @@ static void YUV_blit(void PTR4* dest,
         S.a1 = (u32 PTR4*)((u8 PTR4*)S.a0 + srcpitch);
     }
 
-    if ((s32)srcy <= (s32)endy) {
+    if ((s32)row <= (s32)endy) {
         dounalignedrow(srcx, srcw);
     }
 }
