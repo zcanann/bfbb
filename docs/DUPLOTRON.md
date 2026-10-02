@@ -9092,3 +9092,24 @@ The full source build reproduces retail DOL SHA-1
 selected. The report marks the unit complete. Its missing `Remove` is the
 only project-wide function-score change, from absent to 100%; no symbols
 or earlier matches regress.
+
+## BinkOpen completion (2026-10-02)
+
+`BinkOpen` improves from 98.50099% to 100% in the deduplicated report,
+matching the retail function's 4,040 bytes. Shared failure paths sit at their
+first use, and preload-allocation failure now frees the Bink object before
+reporting out of memory, as retail does. A shared track-loop index and the
+height-before-width scaling-case order recover the remaining register and
+branch layout. No assembly, compiler patches, or split changes are involved.
+
+Raw objdiff still annotates equivalent R_PPC_NONE instructions and names the
+integer-to-double bias constants differently; the deduplicated report resolves
+these to 100%. The full source build passes and the normal DOL retains SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. `binkread.c` remains NonMatching:
+this does not establish source-linked Bink playback or complete the unit.
+
+The verified project report changes only BinkOpen and loses no symbols.
+An unexpected check_hide_entities regression disappeared after rebuilding
+zCutsceneMgr without source changes; the compiler file hash was unchanged.
+The cause of that inconsistent object remains undetermined. Audio, keyframe,
+DoFrame-tail, and ngcrad3d dimension experiments produced no retained gains.
