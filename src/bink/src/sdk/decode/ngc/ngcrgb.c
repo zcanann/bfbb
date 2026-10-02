@@ -917,8 +917,8 @@ void YUV_32a_4x2_even(u32 count)
         count--;
     } while (count != 0);
 
-    S.v = v;
     S.u = u;
+    S.v = v;
     S.y1 = y1;
     S.y0 = y0;
     S.a0 = a0;
