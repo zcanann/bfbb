@@ -2602,9 +2602,6 @@ void zNPCFodBzzt::DiscoRender()
                         rgba_top.alpha);
     RwIm3DVertexSetUV(&vert_list[0], uv_top[0], uv_top[1]);
 
-    F32 u_bot = uv_bot[0];
-    F32 v_bot = uv_bot[1];
-
     for (S32 i = 0; i < 8; i++)
     {
         F32 uoff = 0.125f * i;
@@ -2619,7 +2616,7 @@ void zNPCFodBzzt::DiscoRender()
         const F32 z = pos_vtx.z;
         RwIm3DVertexSetPos(vtx, x, y, z);
         RwIm3DVertexSetRGBA(vtx, rgba_bot.red, rgba_bot.green, rgba_bot.blue, rgba_bot.alpha);
-        RwIm3DVertexSetUV(vtx, u_bot + uoff, v_bot);
+        RwIm3DVertexSetUV(vtx, uv_bot[0] + uoff, uv_bot[1]);
 
         vtx++;
     }
