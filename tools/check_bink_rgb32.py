@@ -100,6 +100,8 @@ int main(void) {
                         u32 aa = edges[(trial + 2 * r + n) % 9];
                         y[r][n] = yy * 0x01010101u;
                         a[r][n] = aa * 0x01010101u;
+                    } else if (trial == 9) {
+                        a[r][n] = 0x11223344u; /* Distinct bytes expose the retail alpha quirk. */
                     }
                 }
                 if (trial < 9) {

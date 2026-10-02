@@ -1001,8 +1001,8 @@ void YUV_32ax2_4x2_even(u32 count)
         b = tables->u_to_b[uhi];
         gb = tables->u_to_gb[uhi] + tables->v_to_gb[vhi];
 
-        dest0[RGB_TILE_WORD0] = RGB32_ALPHA_COLOR_DUP_PAIR(alpha0 << RGB_BYTE3_SHIFT, alpha0 << RGB_BYTE1_SHIFT, y00[r]);
-        dest0[RGB_TILE_WORD1] = RGB32_ALPHA_COLOR_DUP_PAIR(alpha1 << RGB_BYTE3_SHIFT, alpha1 << RGB_BYTE1_SHIFT, y01[r]);
+        dest0[RGB_TILE_WORD0] = RGB32_ALPHA_COLOR_DUP_PAIR((u32)alpha0 << RGB_BYTE3_SHIFT, alpha0 << RGB_BYTE1_SHIFT, y00[r]);
+        dest0[RGB_TILE_WORD1] = RGB32_ALPHA_COLOR_DUP_PAIR((u32)alpha1 << RGB_BYTE3_SHIFT, alpha1 << RGB_BYTE1_SHIFT, y01[r]);
         dest0[RGB_TILE_NEXT_ROW_WORD0] = RGB32_COLOR_GB_DUP(y00, gb, b);
         dest0[RGB_TILE_NEXT_ROW_WORD1] = RGB32_COLOR_GB_DUP(y01, gb, b);
 
@@ -1010,8 +1010,8 @@ void YUV_32ax2_4x2_even(u32 count)
         alpha1 = RGB_WORD_BYTE2(av1);
         y00 = clamp_ytable[RGB_WORD_BYTE3(yv1)];
         y01 = clamp_ytable[RGB_WORD_BYTE2(yv1)];
-        dest1[RGB_TILE_WORD0] = RGB32_ALPHA_COLOR_DUP_PAIR(alpha0 << RGB_BYTE3_SHIFT, alpha0 << RGB_BYTE1_SHIFT, y00[r]);
-        dest1[RGB_TILE_WORD1] = RGB32_ALPHA_COLOR_DUP_PAIR(alpha1 << RGB_BYTE3_SHIFT, alpha1 << RGB_BYTE1_SHIFT, y01[r]);
+        dest1[RGB_TILE_WORD0] = RGB32_ALPHA_COLOR_DUP_PAIR((u32)alpha0 << RGB_BYTE3_SHIFT, alpha0 << RGB_BYTE1_SHIFT, y00[r]);
+        dest1[RGB_TILE_WORD1] = RGB32_ALPHA_COLOR_DUP_PAIR((u32)alpha1 << RGB_BYTE3_SHIFT, alpha1 << RGB_BYTE1_SHIFT, y01[r]);
         dest1[RGB_TILE_NEXT_ROW_WORD0] = RGB32_COLOR_GB_DUP(y00, gb, b);
         dest1[RGB_TILE_NEXT_ROW_WORD1] = RGB32_COLOR_GB_DUP(y01, gb, b);
 
@@ -1025,8 +1025,8 @@ void YUV_32ax2_4x2_even(u32 count)
 
         alpha0 = RGB_WORD_BYTE1(av0);
         alpha1 = RGB_WORD_BYTE0(av0);
-        dest0[RGB_TILE_SECOND_BLOCK_WORD0] = RGB32_ALPHA_COLOR_DUP_PAIR(alpha0 << RGB_BYTE3_SHIFT, alpha0 << RGB_BYTE1_SHIFT, y00[r]);
-        dest0[RGB_TILE_SECOND_BLOCK_WORD1] = RGB32_ALPHA_COLOR_DUP_PAIR(alpha1 << RGB_BYTE3_SHIFT, alpha1 << RGB_BYTE1_SHIFT, y01[r]);
+        dest0[RGB_TILE_SECOND_BLOCK_WORD0] = RGB32_ALPHA_COLOR_DUP_PAIR((u32)alpha0 << RGB_BYTE3_SHIFT, alpha0 << RGB_BYTE1_SHIFT, y00[r]);
+        dest0[RGB_TILE_SECOND_BLOCK_WORD1] = RGB32_ALPHA_COLOR_DUP_PAIR((u32)alpha1 << RGB_BYTE3_SHIFT, alpha1 << RGB_BYTE1_SHIFT, y01[r]);
         dest0[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD0] = RGB32_COLOR_GB_DUP(y00, gb, b);
         dest0[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD1] = RGB32_COLOR_GB_DUP(y01, gb, b);
         dest0 += RGB_TILE_X2_BLOCK_WORDS;
@@ -1036,8 +1036,8 @@ void YUV_32ax2_4x2_even(u32 count)
         y00 = clamp_ytable[RGB_WORD_BYTE1(yv1)];
         y01 = clamp_ytable[RGB_WORD_BYTE0(yv1)];
         // Retail uses the next input alpha for the second copy of this pixel.
-        dest1[RGB_TILE_SECOND_BLOCK_WORD0] = RGB32_ALPHA_COLOR_DUP_PAIR(alpha0 << RGB_BYTE3_SHIFT, alpha1 << RGB_BYTE1_SHIFT, y00[r]);
-        dest1[RGB_TILE_SECOND_BLOCK_WORD1] = RGB32_ALPHA_COLOR_DUP_PAIR(alpha1 << RGB_BYTE3_SHIFT, alpha1 << RGB_BYTE1_SHIFT, y01[r]);
+        dest1[RGB_TILE_SECOND_BLOCK_WORD0] = RGB32_ALPHA_COLOR_DUP_PAIR((u32)alpha0 << RGB_BYTE3_SHIFT, alpha1 << RGB_BYTE1_SHIFT, y00[r]);
+        dest1[RGB_TILE_SECOND_BLOCK_WORD1] = RGB32_ALPHA_COLOR_DUP_PAIR((u32)alpha1 << RGB_BYTE3_SHIFT, alpha1 << RGB_BYTE1_SHIFT, y01[r]);
         dest1[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD0] = RGB32_COLOR_GB_DUP(y00, gb, b);
         dest1[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD1] = RGB32_COLOR_GB_DUP(y01, gb, b);
         dest1 += RGB_TILE_X2_BLOCK_WORDS;
