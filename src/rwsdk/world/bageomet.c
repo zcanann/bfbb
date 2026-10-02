@@ -856,13 +856,17 @@ const RpGeometry* RpGeometryStreamWrite(const RpGeometry* geometry, RwStream* st
     return geometry;
 }
 
+static RpMorphTarget* GeometryGetMorphTarget(RpGeometry* geometry, RwInt32 index)
+{
+    return &geometry->morphTarget[index];
+}
+
 RpGeometry* RpGeometryStreamRead(RwStream* stream)
 {
     RpGeometry* geometry;
     RpGeometryChunkInfo geom;
     RwUInt32 version;
     RwSurfaceProperties surfaceProps;
-    RwInt32 i;
 
     if (!RwStreamFindChunk(stream, rwID_STRUCT, (RwUInt32*)NULL, &version))
     {
@@ -980,50 +984,54 @@ RpGeometry* RpGeometryStreamRead(RwStream* stream)
         }
     }
 
-    for (i = 0; i < geometry->numMorphTargets; i++)
     {
-        RpMorphTarget* morphTarget = &geometry->morphTarget[i];
-        _rpMorphTarget kf;
+        RwInt32 i;
 
-        if (RwStreamRead(stream, &kf, sizeof(kf)) != sizeof(kf))
+        for (i = 0; i < geometry->numMorphTargets; i++)
         {
-            RpGeometryDestroy(geometry);
-            return (RpGeometry*)NULL;
-        }
+            _rpMorphTarget kf;
+            RpMorphTarget* morphTarget = GeometryGetMorphTarget(geometry, i);
 
-        RwMemNative32(&kf, sizeof(kf));
-
-        morphTarget->boundingSphere = kf.boundingSphere;
-
-        if (kf.pointsPresent && kf.normalsPresent)
-        {
-            /* Vertices and normals are contiguous, so read them in one go */
-            if (!RwStreamReadReal(stream, (RwReal*)morphTarget->verts,
-                                  geometry->numVertices * sizeof(RwV3d) * 2))
+            if (RwStreamRead(stream, &kf, sizeof(kf)) != sizeof(kf))
             {
                 RpGeometryDestroy(geometry);
                 return (RpGeometry*)NULL;
             }
-        }
-        else
-        {
-            if (kf.pointsPresent)
+
+            RwMemNative32(&kf, sizeof(kf));
+
+            morphTarget->boundingSphere = kf.boundingSphere;
+
+            if (kf.pointsPresent && kf.normalsPresent)
             {
+                /* Vertices and normals are contiguous, so read them in one go */
                 if (!RwStreamReadReal(stream, (RwReal*)morphTarget->verts,
-                                      geometry->numVertices * sizeof(RwV3d)))
+                                      geometry->numVertices * sizeof(RwV3d) * 2))
                 {
                     RpGeometryDestroy(geometry);
                     return (RpGeometry*)NULL;
                 }
             }
-
-            if (kf.normalsPresent)
+            else
             {
-                if (!RwStreamReadReal(stream, (RwReal*)morphTarget->normals,
-                                      geometry->numVertices * sizeof(RwV3d)))
+                if (kf.pointsPresent)
                 {
-                    RpGeometryDestroy(geometry);
-                    return (RpGeometry*)NULL;
+                    if (!RwStreamReadReal(stream, (RwReal*)morphTarget->verts,
+                                          geometry->numVertices * sizeof(RwV3d)))
+                    {
+                        RpGeometryDestroy(geometry);
+                        return (RpGeometry*)NULL;
+                    }
+                }
+
+                if (kf.normalsPresent)
+                {
+                    if (!RwStreamReadReal(stream, (RwReal*)morphTarget->normals,
+                                          geometry->numVertices * sizeof(RwV3d)))
+                    {
+                        RpGeometryDestroy(geometry);
+                        return (RpGeometry*)NULL;
+                    }
                 }
             }
         }
