@@ -8120,7 +8120,7 @@ catchtunnel_done:
     if (strcmp(astate->Name, "BbashAttack01") == 0 || strcmp(astate->Name, "BbashStart01") == 0)
     {
         xCollis* ceil = &ent->collis->colls[1];
-        xEnt* destructent = (xEnt*)ent->collis->colls[1].optr;
+        xEnt* destructent = (xEnt*)ceil->optr;
         bool destroyed = (destructent == NULL);
 
         if (strcmp(astate->Name, "BbashStrike01") != 0 && (ceil->flags & 1) && destructent &&

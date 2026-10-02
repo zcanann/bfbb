@@ -9656,3 +9656,19 @@ and source-linked totals are unchanged. Overall fuzzy matching improves
 from 99.43971% to 99.44198%. The linked DOL retains retail SHA-1
 306526d90b48e99894c3138f5fc8f2716d9fecf6. These units remain NonMatching,
 so this does not establish source-linked rendering, gameplay, or playback.
+
+## Player ceiling collision pointer reuse (2026-10-02)
+
+`zEntPlayer_Update` improves from 98.76138% to 98.80427% in the full
+deduplicated report. The ceiling collision's entity pointer is read through
+the existing `ceil` local instead of repeating its parent/member expression.
+Both expressions access the same field, with no intervening writes. This
+matches retail's collision-pointer setup and object-load ordering more closely.
+
+All-source compilation passes; no other function scores change and no symbols
+are lost. The normal linked DOL retains retail SHA-1
+`306526d90b48e99894c3138f5fc8f2716d9fecf6`. The player unit remains
+NonMatching, so this does not establish source-linked gameplay. Wand-pointer
+declaration, reference, and consistent-access variants were rejected after
+compilation and scoring; the shorter consistent-access form also scored lower
+in the deduplicated report. No compiler, volatile, or assembly changes were made.
