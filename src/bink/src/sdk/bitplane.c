@@ -455,6 +455,7 @@ decoded_length_children:
     }
 
     if (had_level != 0 && (cur = restart, cur < end)) {
+        u32 group_index;
         do {
             entry = *cur;
             if ((entry == BP_TREE_EMPTY_ENTRY) ||
@@ -468,11 +469,11 @@ decoded_length_children:
                     goto decoded_length_final_children;
                 case BP_TREE_GROUP_NODE:
                     entry = BP_TREE_ENTRY_INDEX(entry);
-                    maxbits = BP_TREE_GROUP_INDEX(entry);
-                    *cur = BP_TREE_BRANCH_ENTRY(groups[maxbits - 1], entry);
-                    *end = BP_TREE_CHILD_BRANCH_ENTRY(groups[maxbits], entry, BP_TREE_CHILD1_BASE);
-                    *++end = BP_TREE_CHILD_BRANCH_ENTRY(groups[maxbits + BP_TREE_CHILD1_INDEX], entry, BP_TREE_CHILD2_BASE);
-                    *++end = BP_TREE_CHILD_BRANCH_ENTRY(groups[maxbits + BP_TREE_CHILD2_INDEX], entry, BP_TREE_CHILD3_BASE);
+                    group_index = BP_TREE_GROUP_INDEX(entry);
+                    *cur = BP_TREE_BRANCH_ENTRY(groups[group_index - 1], entry);
+                    *end = BP_TREE_CHILD_BRANCH_ENTRY(groups[group_index], entry, BP_TREE_CHILD1_BASE);
+                    *++end = BP_TREE_CHILD_BRANCH_ENTRY(groups[group_index + BP_TREE_CHILD1_INDEX], entry, BP_TREE_CHILD2_BASE);
+                    *++end = BP_TREE_CHILD_BRANCH_ENTRY(groups[group_index + BP_TREE_CHILD2_INDEX], entry, BP_TREE_CHILD3_BASE);
                     ++end;
                     break;
                 case BP_TREE_BRANCH_NODE:

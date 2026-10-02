@@ -8441,3 +8441,18 @@ and 27,644 early-cutoff checks pass. Full all_source build and retail DOL
 SHA-1 pass; no other function scores change. Report:
 build/bitplane-length-guard-report.json. Bitplane remains NonMatching;
 normal DOL identity does not establish source-linked playback.
+
+
+## Bink length estimator final-plane group index (2026-10-01)
+
+LenBPLossless improves from 92.95373% to 93.018% by giving the final
+plane its own group_index rather than reusing maxbits for group lookups.
+The separate final-plane node-entry, high-group-depth scope, and ordinary
+group-depth scope trials regressed and were discarded.
+
+All 16,384 lossless round trips pass with exact estimator/writer bit-length
+agreement; all 6,911 nonempty lossy round trips and 27,644 early-cutoff
+checks pass. Full all_source build and retail DOL SHA-1 pass. No other
+function scores change. Report: build/bitplane-length-final-report.json.
+Bitplane remains NonMatching; normal DOL identity does not establish
+source-linked playback.
