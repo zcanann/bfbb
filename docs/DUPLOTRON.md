@@ -8456,3 +8456,18 @@ checks pass. Full all_source build and retail DOL SHA-1 pass. No other
 function scores change. Report: build/bitplane-length-final-report.json.
 Bitplane remains NonMatching; normal DOL identity does not establish
 source-linked playback.
+
+
+## Bink length estimator root-entry lifetime (2026-10-01)
+
+LenBPLossless improves from 93.018% to 93.133675% by giving root setup
+a block-local packed root_entry, independent of the later traversal entry.
+The separate root-depth and explicit high-group-table-pointer trials
+regressed and were discarded.
+
+All 16,384 lossless round trips pass with exact estimator/writer bit-length
+agreement; all 6,911 nonempty lossy round trips and 27,644 early-cutoff
+checks pass. Full all_source build and retail DOL SHA-1 pass. No other
+function scores change. Report: build/bitplane-length-root-report.json.
+Bitplane remains NonMatching; normal DOL identity does not establish
+source-linked playback.
