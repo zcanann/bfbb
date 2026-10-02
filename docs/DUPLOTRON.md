@@ -8549,3 +8549,20 @@ and run expansion, not an independent full ReadHuffTable round-trip test.
 Full all_source build and retail DOL SHA-1 pass. Report:
 build/expand-huff-table-report.json. The expand unit remains NonMatching;
 this exact function match is not a source-linked playback claim.
+
+
+## Bink Huff8 lookup-mask lifetimes (2026-10-01)
+
+The buffered and refill paths of exp_read_huff8 now each declare their
+own lookup mask. CheckReadHuff8Bundle improves from 93.44827% to
+93.487686%; NewCheckReadHuff8Bundle improves from 96.02564% to 96.14359%.
+No other function scores change. Reordering symbol/used extraction and
+making the refill word local produced identical code and were discarded.
+
+Existing related Huff4 checks pass 67,584 cases and 1,000 countdown cases;
+run-block checks pass 32,768 cases. These do not independently exercise
+Huff8's state-dependent tables. The retained change only narrows the scope
+of the identically initialized mask, with no lookup or bit-consumption
+changes. Full all_source build and retail DOL SHA-1 pass. Report:
+build/expand-huff8-mask-report.json. Expand remains NonMatching; normal
+DOL identity does not establish source-linked playback.
