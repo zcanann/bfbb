@@ -1085,6 +1085,8 @@ namespace oob_state
 
         void grab_state_type::start()
         {
+            xEnt& player = globals.player.ent;
+
             this->finished_tutorial = FALSE;
             zEntPlayerControlOff(CONTROL_OWNER_OOB);
 
@@ -1110,11 +1112,11 @@ namespace oob_state
             this->fade_time = fixed.grab.fade_time;
 
             shared.fade_alpha = 1.0f;
-            this->player_start = globals.player.ent.frame->mat.pos;
+            this->player_start = player.frame->mat.pos;
 
             xVec3 eulerOut;
-            xMat3x3GetEuler(&globals.player.ent.frame->mat, &eulerOut);
-            globals.player.ent.frame->rot.angle = xrmod(eulerOut.x);
+            xMat3x3GetEuler(&player.frame->mat, &eulerOut);
+            player.frame->rot.angle = xrmod(eulerOut.x);
 
             this->angle_delta = xrmod(PI + (globals.camera.pcur - eulerOut.x)) - PI;
             this->angle_delta /= fixed.reorient_time;

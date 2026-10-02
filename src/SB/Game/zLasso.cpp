@@ -962,7 +962,8 @@ static void fizzicalNormal(zLasso* lasso, F32 dt, xVec3* newPoint)
 
     xVec3Sub(&sp8, &lasso->lastRefs[lasso->reindex[0]], &lasso->lastRefs[lasso->reindex[1]]);
     temp_f31 = xVec3Dot(&lasso->crNormal, &sp8);
-    xVec3AddScaled(&lasso->crNormal, &sp8, 1.1f * (-temp_f31 / xVec3Length(&sp8)));
+    F32 len = xVec3Length(&sp8);
+    xVec3AddScaled(&lasso->crNormal, &sp8, 1.1f * (-temp_f31 / len));
     xVec3Normalize(&lasso->crNormal, &lasso->crNormal);
 }
 

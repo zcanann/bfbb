@@ -393,16 +393,13 @@ namespace
             return true;
         }
 
-        U32 flags = c.flags;
-
         for (U32 i = 0; i < 20; i++)
         {
-            if (flags & (1 << i))
+            if (c.flags & (1 << i))
             {
                 trigger(signals[i]);
             }
         }
-
         if (shared.cb)
         {
             shared.cb->on_signal(c.flags & 0x7FFFFFFF);

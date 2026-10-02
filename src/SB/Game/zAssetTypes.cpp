@@ -318,16 +318,16 @@ static RpAtomic* jsp_shadow_hack_atomic_cb(RpAtomic* atomic, void* data)
     }
 
     xClumpCollBSPTree* colltree = context.jsp->colltree;
-    if (context.jsp->jspNodeList[index].originalMatIndex == context.last_material)
+    S32 material_index = context.jsp->jspNodeList[index].originalMatIndex;
+    if (material_index == context.last_material)
     {
         return atomic;
     }
 
-    S32 material_index = context.jsp->jspNodeList[index].originalMatIndex;
     context.last_material = material_index;
 
     xClumpCollBSPTriangle* tri = colltree->triangles;
-    xClumpCollBSPTriangle* end_tri = colltree->triangles + colltree->numTriangles;
+    xClumpCollBSPTriangle* end_tri = tri + colltree->numTriangles;
 
     for (; tri != end_tri; ++tri)
     {

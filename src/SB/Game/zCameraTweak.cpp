@@ -139,19 +139,20 @@ void zCameraTweakGlobal_Reset()
 
 void zCameraTweakGlobal_Update(F32 dt)
 {
+    zCamTweakLook* tlook;
+
     sCamTweakLerp -= dt / sCamTweakTime;
     if (sCamTweakLerp < 0.0f)
     {
         sCamTweakLerp = 0.0f;
     }
 
-    zCamTweakLook* tlook = &zcam_fartweak;
     sCamTweakPitchCur =
         sCamTweakPitch[1] * sCamTweakLerp + sCamTweakPitch[0] * (1.0f - sCamTweakLerp);
     sCamTweakDistMultCur =
         sCamTweakDistMult[1] * sCamTweakLerp + sCamTweakDistMult[0] * (1.0f - sCamTweakLerp);
 
-    tlook = zcam_near != 0 ? &zcam_neartweak : tlook;
+    tlook = zcam_near != 0 ? &zcam_neartweak : &zcam_fartweak;
     sCamD = sCamTweakDistMultCur * tlook->dist * icos(tlook->pitch + sCamTweakPitchCur);
     sCamH = sCamTweakDistMultCur * tlook->dist * isin(tlook->pitch + sCamTweakPitchCur) + tlook->h;
     sCamPitch = tlook->pitch + sCamTweakPitchCur;

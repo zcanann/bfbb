@@ -107,34 +107,41 @@ zGust* zGustGetGust(U16 n)
     return NULL;
 }
 
-// NOTE(jelly): non-matching
 void zGustUpdateEnt(xEnt* ent, xScene* sc, float dt, void* gdata)
 {
+    U32 i;
+    U32 j;
+    U32 minidx;
+    F32 minlerp;
+    zGustData* data;
+    xCollis coll;
+    F32 lerpinc;
+    xVec3* gvel;
+    xVec3 dpos;
+
     if (!gusts)
         return;
 
-    zGustData* data = (zGustData*)gdata;
+    data = (zGustData*)gdata;
 
-    xCollis coll;
     coll.flags = 0;
-    for (U32 i = 0; i < ngusts; i++)
+    for (i = 0; i < ngusts; i++)
     {
         if (gusts[i].flags & 1)
         {
             xBoundHitsBound(&ent->bound, &gusts[i].volume->asset->bound, &coll);
             if (coll.flags & 1)
             {
-                U32 j;
-                U32 minidx;
+                minlerp = 2.0f;
                 for (j = 0; j < 4; j++)
                 {
-                    if (data->lerp[j] < 2.0f)
+                    if (data->lerp[j] < minlerp)
                     {
                         minidx = j;
-                        if (data->g[j] == &gusts[i])
-                        {
-                            break;
-                        }
+                    }
+                    if (data->g[j] == &gusts[i])
+                    {
+                        break;
                     }
                 }
 
@@ -146,7 +153,7 @@ void zGustUpdateEnt(xEnt* ent, xScene* sc, float dt, void* gdata)
             }
             else
             {
-                for (U32 j = 0; j < 4; j++)
+                for (j = 0; j < 4; j++)
                 {
                     if (data->g[j] == &gusts[i] && data->lerp[j] == 1.0f)
                     {
@@ -158,14 +165,13 @@ void zGustUpdateEnt(xEnt* ent, xScene* sc, float dt, void* gdata)
         }
     }
 
-    for (U32 i = 0; i < 4; i++)
+    for (i = 0; i < 4; i++)
     {
-        zGust* g = data->g[i];
-        if (g)
+        if (data->g[i])
         {
-            if (g->flags & 1)
+            if (data->g[i]->flags & 1)
             {
-                float lerpinc = g->asset->fade;
+                lerpinc = data->g[i]->asset->fade;
                 if (dt >= lerpinc)
                 {
                     if (!(data->lerp[i] < 0.0f))
@@ -184,6 +190,7 @@ void zGustUpdateEnt(xEnt* ent, xScene* sc, float dt, void* gdata)
                         {
                             data->lerp[i] = 1.0f;
                         }
+                        continue;
                     }
                     else
                     {
@@ -203,14 +210,14 @@ void zGustUpdateEnt(xEnt* ent, xScene* sc, float dt, void* gdata)
 
     data->gust_on = 0;
 
-    for (U32 i = 0; i < 4; i++)
+    for (i = 0; i < 4; i++)
     {
         if (data->g[i])
         {
             data->gust_on = 1;
 
-            xVec3 dpos;
-            xVec3SMul(&dpos, &data->g[i]->asset->vel, dt * xabs(data->lerp[i]));
+            gvel = &data->g[i]->asset->vel;
+            xVec3SMul(&dpos, gvel, dt * xabs(data->lerp[i]));
             xVec3AddTo(&ent->frame->mat.pos, &dpos);
         }
     }
@@ -256,9 +263,13 @@ S32 zGustEventCB(xBase* from, xBase* to, U32 toEvent, const float* toParam, xBas
     return 1;
 }
 
-// NOTE(jelly): equivalent? i think it's just registers & float scheduling
 static void UpdateGustFX(zGust* g, float seconds)
 {
+    xBBox* box;
+    xParEmitterCustomSettings info;
+    zParEmitter* e;
+    S32 total_debris;
+    S32 vol_area;
     S32 i;
 
     if (g->asset->partMod <= 0.0f)
@@ -269,11 +280,9 @@ static void UpdateGustFX(zGust* g, float seconds)
     if (!(g->debris_timer <= 0.0f))
         return;
 
-    zVolume* volume = !g->asset->effectID ? g->volume : g->fx_volume;
-    xVolumeAsset* asset = volume->asset;
+    box = &(!g->asset->effectID ? g->volume : g->fx_volume)->asset->bound.box;
 
-    S32 vol_area = ((asset->bound.sph.r - asset->bound.box.box.lower.x) *
-                    (asset->bound.box.box.upper.z - asset->bound.box.box.lower.z));
+    vol_area = ((box->box.upper.x - box->box.lower.x) * (box->box.upper.z - box->box.lower.z));
 
     if (vol_area > 1000)
     {
@@ -281,7 +290,7 @@ static void UpdateGustFX(zGust* g, float seconds)
         return;
     }
 
-    S32 total_debris = vol_area >> 5;
+    total_debris = vol_area >> 5;
     if (total_debris > 5)
         total_debris = 5;
     else if (total_debris < 1)
@@ -289,12 +298,18 @@ static void UpdateGustFX(zGust* g, float seconds)
 
     g->debris_timer = xurand() * 0.15f + 0.15f;
 
-    xParEmitter* e = g->asset->flags & 2 ? sGustDustEmitter : sGustDebrisEmitter;
+    if (g->asset->flags & 2)
+    {
+        e = sGustDustEmitter;
+    }
+    else
+    {
+        e = sGustDebrisEmitter;
+    }
 
     if (!e)
         return;
 
-    xParEmitterCustomSettings info;
     info.custom_flags =
         eParEmitterCustomVel | eParEmitterCustomPos | eParEmitterCustomLife;
 
@@ -302,11 +317,10 @@ static void UpdateGustFX(zGust* g, float seconds)
     {
         if (g->asset->effectID == 0)
         {
-            asset = g->volume->asset;
-            xBBox* box = &asset->bound.box;
+            box = &g->volume->asset->bound.box;
 
             info.pos = box->box.lower;
-            info.pos.x = (asset->bound.sph.r - box->box.lower.x) * xurand() + info.pos.x;
+            info.pos.x = (box->box.upper.x - box->box.lower.x) * xurand() + info.pos.x;
             info.pos.z = (box->box.upper.z - box->box.lower.z) * xurand() + info.pos.z;
             info.vel.x = 0.0f;
             info.vel.y = 5.0f;
@@ -316,10 +330,9 @@ static void UpdateGustFX(zGust* g, float seconds)
         }
         else
         {
-            asset = g->fx_volume->asset;
-            xBBox* box = &asset->bound.box;
+            box = &g->fx_volume->asset->bound.box;
 
-            info.pos.x = (asset->bound.sph.r - box->box.lower.x) * xurand() + box->box.lower.x;
+            info.pos.x = (box->box.upper.x - box->box.lower.x) * xurand() + box->box.lower.x;
             info.pos.y = (box->box.upper.y - box->box.lower.y) * xurand() + box->box.lower.y;
             info.pos.z = (box->box.upper.z - box->box.lower.z) * xurand() + box->box.lower.z;
             info.vel.x = 1.5f * g->asset->vel.x;

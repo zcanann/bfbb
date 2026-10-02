@@ -340,7 +340,7 @@ void zMusicUpdate(F32 dt)
 
         for (i = 0; i < TRACK_COUNT; i++)
         {
-            if ((sMusicTimer[i] != 0.0f || sMusicQueueData[i] != NULL) &&
+            if ((sMusicTimer[i] || sMusicQueueData[i] != NULL) &&
                 (gGameMode == eGameMode_Game) == sMusicQueueData[i]->game_state)
             {
                 if (sMusicTimer[i] > 0.0f)
