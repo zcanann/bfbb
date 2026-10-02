@@ -7455,23 +7455,10 @@ patrick_stun_done:
         }
     }
 
-    U8 hitting_floor = 0;
-    U8 hitting_wall = 0;
-
-    if (strcmp(astate->Name, "Bspin01") == 0 ? single->CurrentSpeed != 0.0f : 0)
-    {
-        if (single->Time >= globals.player.g.BSpinMinFrame)
-        {
-            hitting_wall = 1;
-        }
-    }
-
-    if (hitting_wall && single->Time <= globals.player.g.BSpinMaxFrame)
-    {
-        hitting_floor = 1;
-    }
-
-    globals.player.IsBubbleSpinning = hitting_floor;
+    globals.player.IsBubbleSpinning =
+        (strcmp(astate->Name, "Bspin01") == 0 ? single->CurrentSpeed != 0.0f : 0) &&
+        single->Time >= globals.player.g.BSpinMinFrame &&
+        single->Time <= globals.player.g.BSpinMaxFrame;
 
     if (!tslide_ground &&
         (strcmp(ent->model->Anim->Single->State->Name, "BbashAttack01") == 0 ||

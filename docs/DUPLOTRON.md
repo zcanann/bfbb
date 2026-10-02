@@ -9812,3 +9812,24 @@ The linked DOL retains SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6;
 these Bink objects remain NonMatching, so this does not establish target
 playback. Evidence: build/parallel-sixth-{baseline-report,report}.json and
 build/parallel-sixth-validation.log.
+
+## Player bubble-spin Boolean expression (2026-10-02)
+
+`zEntPlayer_Update` improves from 98.80427% to 98.91313% in the full
+deduplicated report. The bubble-spin predicate is expressed as a short-circuit
+Boolean chain instead of two explicit U8 flag locals. The animation-name,
+nonzero-speed, minimum-frame, and maximum-frame tests retain their original
+order and short-circuit behavior. Each form stores exactly zero or one.
+
+This recovers retail's zero-register copy and surrounding string-address/load
+schedule. It revises the earlier compiler-only classification of this specific
+`li` versus `mr` site: expression-generated Boolean temporaries reproduce the
+copy that explicit named flags did not. DWARF's U8 floor/wall locals belong to
+the later physics block, supporting a re-examination of these earlier names.
+A separate S32 condition local regressed and was discarded.
+
+All-source compilation passes; no other function scores change, no symbols
+are lost, and the exact-function count is unchanged. The normal linked DOL
+retains SHA-1 `306526d90b48e99894c3138f5fc8f2716d9fecf6`. The player unit
+remains NonMatching, so this hash does not establish source-linked gameplay.
+No compiler, volatile, or assembly changes were made.
