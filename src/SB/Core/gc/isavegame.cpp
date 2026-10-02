@@ -761,8 +761,9 @@ S32 iSGReadLeader(st_ISGSESSION* isgdata, const char* fname, char* databuf, S32 
 {
     char* readbuf;
     S32 iconsize;
-    S32 bufsize;
+    S32 tmpsize;
     S32 allocsize;
+    S32 bufsize;
 
     S32 readret = 0;
     st_ISG_MEMCARD_DATA* data;
@@ -789,7 +790,7 @@ S32 iSGReadLeader(st_ISGSESSION* isgdata, const char* fname, char* databuf, S32 
     S32 sectorsize200 = ALIGN_THING(data->sectorSize, 0x200);
     if ((S32)databuf % 32 != 0 || numbytes % sectorsize200 != 0)
     {
-        S32 tmpsize = (numbytes + 0x1ff & ~0x1ff);
+        tmpsize = (numbytes + 0x1ff & ~0x1ff);
         allocsize = tmpsize + 0x1f;
         alloc = xMemPushTemp(allocsize);
         memset(alloc, 0, allocsize);

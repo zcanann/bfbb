@@ -649,7 +649,6 @@ void iSndInit()
         ;
 
     char str_buf[0x20];
-    U32 offset = 0;
 
     for (i = 0; i < 6; i++)
     {
@@ -657,8 +656,7 @@ void iSndInit()
         sprintf(str_buf, "streaming channel %d\n", i);
         streams[i].dest_a = buf;
         streams[i].dest_b = buf + 0x4000;
-        streams[i].source_a = (u32)stream_buffer + offset;
-        offset += 0x4000;
+        streams[i].source_a = (u32)stream_buffer + i * 0x4000;
     }
     AXRegisterCallback(fcb);
 }
@@ -775,10 +773,9 @@ iSndFileInfo* iSndLookup(U32 id)
         }
 
         sndhdr* entry = info->entry;
-        U32 n = info->num_sfx;
         U32 j = 0;
 
-        for (; j < n; j++)
+        for (; j < info->num_sfx; j++)
         {
             if (id == entry[j].assetID)
             {
@@ -793,8 +790,7 @@ iSndFileInfo* iSndLookup(U32 id)
             }
         }
 
-        n = info->num_streams + n;
-        for (; j < n; j++)
+        for (; j < info->num_streams + info->num_sfx; j++)
         {
             if (id == entry[j].assetID)
             {
@@ -818,8 +814,7 @@ iSndFileInfo* iSndLookup(U32 id)
             }
         }
 
-        n = info->num_cutscene + n;
-        for (; j < n; j++)
+        for (; j < info->num_cutscene + (info->num_streams + info->num_sfx); j++)
         {
             if (id == entry[j].assetID)
             {
@@ -995,8 +990,9 @@ void iSndCalcVol3d(xSndVoiceInfo* vp, vinfo* info)
         volscale = std::sqrtf((fadeRange - (dist2 - vp->innerRadius2)) / fadeRange);
     }
 
+    volscale *= vp->vol * gSnd.categoryVolFader[vp->category];
     S32 ipan = (S32)(64.0f * pan) + 0x40;
-    S32 vol = iVolFromX(volscale * (vp->vol * gSnd.categoryVolFader[vp->category]));
+    S32 vol = iVolFromX(volscale);
 
     if (ipan < 0)
     {
@@ -1141,8 +1137,13 @@ void iSndUpdate()
 
     for (S32 i = 0; i < 64; i++)
     {
-        xSndVoiceInfo* vp = &gSnd.voice[i];
+        U8 done;
+        U32 f;
+        xSndVoiceInfo* vp;
+        U32 addr;
         U8 active;
+
+        vp = &gSnd.voice[i];
 
         if (i < 6)
         {
@@ -1150,15 +1151,15 @@ void iSndUpdate()
         }
         else
         {
-            U32 addr = 0;
+            addr = 0;
             if (voices[i - 6].voice != NULL)
             {
-                addr = (voices[i - 6].voice->pb.addr.currentAddressHi << 16) +
-                       voices[i - 6].voice->pb.addr.currentAddressLo;
+                addr = voices[i - 6].voice->pb.addr.currentAddressHi << 16;
+                addr += voices[i - 6].voice->pb.addr.currentAddressLo;
             }
 
-            U32 f = voices[i - 6].flags;
-            U8 done = 0;
+            f = voices[i - 6].flags;
+            done = 0;
             if ((f & 0x4) && !(f & 0x8) && addr >= zero_point && addr < zero_end)
             {
                 done = 1;

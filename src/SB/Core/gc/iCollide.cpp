@@ -139,32 +139,30 @@ void FindNearestPointOnLine(xVec3* _result, xVec3* _point, xVec3* _start, xVec3*
 
     float mu;
     float lineLength2;
+    RwV3d d;
 
-    F32 dx, dy, dz;
-    F32 sy = start->y;
-    F32 sx = start->x;
-    F32 sz = start->z;
-    dy = end->y - sy;
-    dx = end->x - sx;
-    dz = end->z - sz;
+    d.x = end->x - start->x;
+    d.y = end->y - start->y;
+    d.z = end->z - start->z;
 
-    mu = (point->x * dx + point->y * dy + point->z * dz) - (sx * dx + sy * dy + sz * dz);
+    mu = (point->x * d.x + point->y * d.y + point->z * d.z) -
+         (start->x * d.x + start->y * d.y + start->z * d.z);
     if (mu <= 0.0f)
     {
         localResult = *start;
     }
     else
     {
-        lineLength2 = SQR(dx) + SQR(dy) + SQR(dz);
+        lineLength2 = d.x * d.x + d.y * d.y + d.z * d.z;
         if (mu < lineLength2)
         {
             mu /= lineLength2;
-            localResult.x = dx * mu;
-            localResult.x += sx;
-            localResult.y = dy * mu;
-            localResult.y += sy;
-            localResult.z = dz * mu;
-            localResult.z += sz;
+            localResult.x = d.x * mu;
+            localResult.y = d.y * mu;
+            localResult.z = d.z * mu;
+            localResult.x += start->x;
+            localResult.y += start->y;
+            localResult.z += start->z;
         }
         else
         {

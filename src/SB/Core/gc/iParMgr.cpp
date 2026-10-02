@@ -71,12 +71,12 @@ void iParMgrRenderParSys_Sprite(void* data, xParGroup* ps)
     }
 
     tex = ps->m_cmdTex;
-    pivot = s->tasset->parFlags;
 
     indexCount = 0;
     vertexCount = 0;
     i3d = gRenderBuffer.m_index;
     v3d = gRenderBuffer.m_vertex;
+    pivot = s->tasset->parFlags;
 
     if (pivot & 0x8)
     {
@@ -122,26 +122,20 @@ void iParMgrRenderParSys_Sprite(void* data, xParGroup* ps)
         U8 g = p->m_c[1];
         U8 b = p->m_c[2];
         U8 a = p->m_c[3];
-        F32 size = p->m_size;
-        F32 px = p->m_pos.x;
-        F32 py = p->m_pos.y;
-        F32 pz = p->m_pos.z;
+        xVec3 pos0, pos1, pos2, pos3;
 
-        // Written a component at a time across all four corners, not a corner
-        // at a time: retail loads offset[0..3].x, then [0..3].y, then [0..3].z,
-        // in exactly that order, and this compiler emits loads in source order.
-        v3d[0].x = offset[0].x * size + px;
-        v3d[1].x = offset[1].x * size + px;
-        v3d[2].x = offset[2].x * size + px;
-        v3d[3].x = offset[3].x * size + px;
-        v3d[0].y = offset[0].y * size + py;
-        v3d[1].y = offset[1].y * size + py;
-        v3d[2].y = offset[2].y * size + py;
-        v3d[3].y = offset[3].y * size + py;
-        v3d[0].z = offset[0].z * size + pz;
-        v3d[1].z = offset[1].z * size + pz;
-        v3d[2].z = offset[2].z * size + pz;
-        v3d[3].z = offset[3].z * size + pz;
+        pos0.x = offset[0].x * p->m_size + p->m_pos.x;
+        pos0.y = offset[0].y * p->m_size + p->m_pos.y;
+        pos0.z = offset[0].z * p->m_size + p->m_pos.z;
+        pos1.x = offset[1].x * p->m_size + p->m_pos.x;
+        pos1.y = offset[1].y * p->m_size + p->m_pos.y;
+        pos1.z = offset[1].z * p->m_size + p->m_pos.z;
+        pos2.x = offset[2].x * p->m_size + p->m_pos.x;
+        pos2.y = offset[2].y * p->m_size + p->m_pos.y;
+        pos2.z = offset[2].z * p->m_size + p->m_pos.z;
+        pos3.x = offset[3].x * p->m_size + p->m_pos.x;
+        pos3.y = offset[3].y * p->m_size + p->m_pos.y;
+        pos3.z = offset[3].z * p->m_size + p->m_pos.z;
 
         v3d[0].r = r;
         v3d[0].g = g;
@@ -159,6 +153,19 @@ void iParMgrRenderParSys_Sprite(void* data, xParGroup* ps)
         v3d[3].g = g;
         v3d[3].b = b;
         v3d[3].a = a;
+
+        v3d[0].x = pos0.x;
+        v3d[0].y = pos0.y;
+        v3d[0].z = pos0.z;
+        v3d[1].x = pos1.x;
+        v3d[1].y = pos1.y;
+        v3d[1].z = pos1.z;
+        v3d[2].x = pos2.x;
+        v3d[2].y = pos2.y;
+        v3d[2].z = pos2.z;
+        v3d[3].x = pos3.x;
+        v3d[3].y = pos3.y;
+        v3d[3].z = pos3.z;
 
         if (tex != NULL)
         {
@@ -580,7 +587,7 @@ void iParMgrRenderParSys_Streak(void* data, xParGroup* ps)
     {
         // See iRenderPushQuadStreak: the tail is walked in place for one edge
         // and added into a copy of itself for the other, which is what retail's
-        // three `fmr` copies encode.  Declaration order is the FP colour order.
+        // three `fmr` copies encode.
         F32 dx, dy, dz;
         F32 tx, ty, tz;
         F32 ax, ay, az;
@@ -590,16 +597,16 @@ void iParMgrRenderParSys_Streak(void* data, xParGroup* ps)
         px = idx->m_pos.x;
         py = idx->m_pos.y;
         pz = idx->m_pos.z;
+        size = idx->m_size;
+        dx = size * gRenderBuffer.m_camViewR.x;
+        dy = size * gRenderBuffer.m_camViewR.y;
+        dz = size * gRenderBuffer.m_camViewR.z;
         tx = px - 5.0f * idx->m_vel.x;
         ty = py - 5.0f * idx->m_vel.y;
         tz = pz - 5.0f * idx->m_vel.z;
         ax = tx;
         ay = ty;
         az = tz;
-        size = idx->m_size;
-        dx = size * gRenderBuffer.m_camViewR.x;
-        dy = size * gRenderBuffer.m_camViewR.y;
-        dz = size * gRenderBuffer.m_camViewR.z;
 
         tx -= dx;
         ty -= dy;
@@ -659,8 +666,9 @@ void iParMgrRenderParSys_Streak(void* data, xParGroup* ps)
     iRenderFlush();
 }
 
-// Identical to iParMgrRenderParSys_Streak in the retail object: the two
-// functions differ only in which FPRs the allocator picked for the y lane.
+// Identical to iParMgrRenderParSys_Streak in the retail object except for the
+// FPRs picked for the y lane, which come from the tail/head locals being
+// declared a lane at a time here.
 void iParMgrRenderParSys_InvStreak(void* data, xParGroup* ps)
 {
     xPar* idx = ps->m_root;
@@ -693,26 +701,27 @@ void iParMgrRenderParSys_InvStreak(void* data, xParGroup* ps)
     {
         // See iRenderPushQuadStreak: the tail is walked in place for one edge
         // and added into a copy of itself for the other, which is what retail's
-        // three `fmr` copies encode.  Declaration order is the FP colour order.
+        // three `fmr` copies encode.
         F32 dx, dy, dz;
-        F32 tx, ty, tz;
-        F32 ax, ay, az;
+        F32 tx, ax;
+        F32 ty, ay;
+        F32 tz, az;
         F32 px, py, pz;
         F32 size;
 
         px = idx->m_pos.x;
         py = idx->m_pos.y;
         pz = idx->m_pos.z;
+        size = idx->m_size;
+        dx = size * gRenderBuffer.m_camViewR.x;
+        dy = size * gRenderBuffer.m_camViewR.y;
+        dz = size * gRenderBuffer.m_camViewR.z;
         tx = px - 5.0f * idx->m_vel.x;
         ty = py - 5.0f * idx->m_vel.y;
         tz = pz - 5.0f * idx->m_vel.z;
         ax = tx;
         ay = ty;
         az = tz;
-        size = idx->m_size;
-        dx = size * gRenderBuffer.m_camViewR.x;
-        dy = size * gRenderBuffer.m_camViewR.y;
-        dz = size * gRenderBuffer.m_camViewR.z;
 
         tx -= dx;
         ty -= dy;
