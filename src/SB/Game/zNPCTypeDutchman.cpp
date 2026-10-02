@@ -1682,19 +1682,13 @@ inline U8 zNPCDutchman::turning(F32 dt) const
     return result;
 }
 
-inline U8 zNPCDutchman::turning() const
+inline bool zNPCDutchman::turning() const
 {
-    U8 result = 0;
     const xVec2 facing = { model->Mat->at.x, model->Mat->at.z };
 
-    if (!xfeq0(turn.vel) ||
+    return !xfeq0(turn.vel) ||
         (!xfeq0(turn.accel) && !(turn.dir.x > turn.dir.y && xabs(turn.dir.x - facing.x) < 0.001f) &&
-         !(turn.dir.x < turn.dir.y && xabs(turn.dir.y - facing.y) < 0.001f)))
-    {
-        result = 1;
-    }
-
-    return result;
+         !(turn.dir.x < turn.dir.y && xabs(turn.dir.y - facing.y) < 0.001f));
 }
 
 void zNPCDutchman::update_turn(F32 dt)

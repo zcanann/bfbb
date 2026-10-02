@@ -3644,7 +3644,8 @@ void zNPCSleepy::ConeOfRange(F32 dt, S32 which)
 
     F32 rad2 = SQ(cfg_npc->rad_detect);
     F32 dst2 = XZDstSqToPlayer(NULL, NULL);
-    F32 pct = MAX(0.0f, MIN(0.2f + (1.0f - dst2 / rad2), 1.0f));
+    dst2 = 1.0f - dst2 / rad2;
+    F32 pct = MAX(0.0f, MIN(0.2f + dst2, 1.0f));
 
     for (i = 0; i < 3; i++)
     {
@@ -3746,9 +3747,10 @@ void zNPCSleepy::RendConeOfDeath(S32 tgt_isBowlingBall)
                             rgba_beg.alpha);
 
         F32 u_off = 0.0625f * ((i & 1) ? i : i + 1);
+        F32 v_off = 0.0f;
         F32 u_seg = u_beg + u_off;
 
-        RwIm3DVertexSetUV(&vtx[0], u_seg, v_beg + 0.0f);
+        RwIm3DVertexSetUV(&vtx[0], u_seg, v_beg + v_off);
 
         pos_vtx = vec_ray * 0.5f + pos_bot;
 

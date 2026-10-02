@@ -670,7 +670,8 @@ void NPCBlinker::Render(const xVec3* pos_blink, F32 rad_blink, const RwRaster* r
     xVec3Copy(&pos_bot, pos_blink);
 
     xVec3AddScaled(&pos_top, &dir_up, rad_blink);
-    xVec3AddScaled(&pos_bot, &dir_up, -rad_blink);
+    F32 rad_neg = -rad_blink;
+    xVec3AddScaled(&pos_bot, &dir_up, rad_neg);
 
     IndexToUVCoord(idx_uvcell, uv_lo, uv_hi);
 
@@ -700,7 +701,7 @@ void NPCBlinker::Render(const xVec3* pos_blink, F32 rad_blink, const RwRaster* r
         RwIm3DVertexSetRGBA(&vtx_horz[0], rgba.red, rgba.green, rgba.blue, rgba.alpha);
         RwIm3DVertexSetUV(&vtx_horz[0], uv_lo[0], v);
 
-        pos_vtx = dir_card * -rad_blink;
+        pos_vtx = dir_card * rad_neg;
         pos_vtx += pos_lerp;
         px = pos_vtx.x;
         py = pos_vtx.y;
@@ -711,7 +712,7 @@ void NPCBlinker::Render(const xVec3* pos_blink, F32 rad_blink, const RwRaster* r
 
         vtx_horz += 2;
 
-        pos_vtx = dir_perp * -rad_blink;
+        pos_vtx = dir_perp * rad_neg;
         pos_vtx += pos_lerp;
         px = pos_vtx.x;
         py = pos_vtx.y;

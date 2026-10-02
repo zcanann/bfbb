@@ -1719,11 +1719,10 @@ static NCINEntry* zNPCFXCutscenePickTable(const zCutsceneMgr* csnmgr)
     }
 
     cutmap = g_cutmap;
-    xCutscene* csn = csnmgr->csn;
 
     while (cutmap->csn_name != NULL)
     {
-        if (cutmap->hash_name == csn->Info->AssetID)
+        if (cutmap->hash_name == csnmgr->csn->Info->AssetID)
         {
             fxtab = cutmap->fxtab;
             break;
@@ -2009,27 +2008,20 @@ static void NCIN_BubWipe(const zCutsceneMgr*, NCINEntry* fxrec, S32 killit)
 
     xVec3 vec_infront = mat->at * 1.2f;
 
-    F32 sx = scl_wall.x;
-    F32 sy = scl_wall.y;
-    F32 sz = scl_wall.z;
-    F32 vx = vel_wall.x;
-    F32 vy = vel_wall.y;
-    F32 vz = vel_wall.z;
-
     pp = pos;
     vp = vel;
 
     for (i = 0; i < 50; i++)
     {
-        pp->x = mat->pos.x + (xurand() - 0.5f) + sx * (xurand() - 0.5f);
-        pp->y = mat->pos.y + (xurand() - 0.5f) + sy * (xurand() - 0.5f);
-        pp->z = mat->pos.z + (xurand() - 0.5f) + sz * (xurand() - 0.5f);
+        pp->x = mat->pos.x + (xurand() - 0.5f) + scl_wall.x * (xurand() - 0.5f);
+        pp->y = mat->pos.y + (xurand() - 0.5f) + scl_wall.y * (xurand() - 0.5f);
+        pp->z = mat->pos.z + (xurand() - 0.5f) + scl_wall.z * (xurand() - 0.5f);
 
         *pp += vec_infront;
 
-        vp->x = vx * (xurand() - 0.5f);
-        vp->y = vy * (xurand() - 0.5f);
-        vp->z = vz * (xurand() - 0.5f);
+        vp->x = vel_wall.x * (xurand() - 0.5f);
+        vp->y = vel_wall.y * (xurand() - 0.5f);
+        vp->z = vel_wall.z * (xurand() - 0.5f);
 
         pp++;
         vp++;
@@ -2530,9 +2522,10 @@ static void NCIN_SleepyLamp_AR(const zCutsceneMgr* csnmgr, NCINEntry* fxrec, RpA
         SMOOTH(CLAMP(pct, 0.0f, 1.0f), &rgb_current, &rgb_peace, &rgb_anger);
     }
 
-    U8 red = (U8)(255.0f * rgb_current.x);
-    U8 green = (U8)(255.0f * rgb_current.y);
-    U8 blue = (U8)(255.0f * rgb_current.z);
+    U8 blue, green, red;
+    red = (U8)(255.0f * rgb_current.x);
+    green = (U8)(255.0f * rgb_current.y);
+    blue = (U8)(255.0f * rgb_current.z);
 
     rgba_top.red = red;
     rgba_top.green = green;

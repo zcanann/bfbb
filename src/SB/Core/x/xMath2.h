@@ -74,11 +74,7 @@ struct xVec2
 
     static xVec2 create(F32 x, F32 y)
     {
-        xVec2 v;
-
-        v.x = x;
-        v.y = y;
-
+        xVec2 v = { x, y };
         return v;
     }
 
