@@ -2368,10 +2368,10 @@ static void NCIN_TTGunSmoke_AR(const zCutsceneMgr* csnmgr, NCINEntry* fxrec, RpA
 
     idx_boneGun = fxrec->pos_A[1].y;
 
+    xMat4x3* mat_bone = (xMat4x3*)&animMat[idx_boneGun];
+
     xVec3 vec_offset = fxrec->pos_A[0];
     xVec3 pos_smoke;
-
-    xMat4x3* mat_bone = (xMat4x3*)&animMat[idx_boneGun];
 
     pos_smoke = mat_bone->pos;
     pos_smoke += mat_bone->right * vec_offset.x;
@@ -2399,10 +2399,10 @@ static void NCIN_TTGunSmoke_AR(const zCutsceneMgr* csnmgr, NCINEntry* fxrec, RpA
 
     spd_blow += spd_blow * (0.25f * (xurand() - 0.5f));
 
-    const xVec3 dir_blow = fxrec->pos_B[0];
     xVec3 vel_smoke;
 
     vel_smoke = g_Y3 * 2.0f;
+    const xVec3 dir_blow = fxrec->pos_B[0];
     vel_smoke += g_Y3 * (2.0f * (xurand() - 0.5f));
     vel_smoke += dir_blow * spd_blow;
 
@@ -2591,8 +2591,8 @@ static void NCIN_SleepyDRay_AR(const zCutsceneMgr* csnmgr, NCINEntry* fxrec, RpA
     const RwRGBA rgba_bot = { 255, 255, 255, 255 };
 
     F32 tym = csnmgr->csn->Time - fxrec->tym_beg;
-    F32 uv_u = tym * uv_scroll_dray[0];
     F32 uv_v = tym * uv_scroll_dray[1];
+    F32 uv_u = tym * uv_scroll_dray[0];
 
     NPCCone cone;
 

@@ -808,8 +808,8 @@ void zLightningFunc_Render(zLightning* l)
             RwIm3DVertexSetUV(&vert[i][nvert + 1], tex + sLFuncUVOffset, 1.0f);
         }
 
-        tex = 1 - tex;
         nvert += 2;
+        tex = 1 - tex;
 
         xVec3Copy(&lastPos, &pos);
     }

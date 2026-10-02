@@ -989,16 +989,16 @@ void zMainFirstScreen(S32 mode)
 // nothing at all, the second costs 1.4 points.
 void zMainMemCardSpaceQuery()
 {
+    S32 startBytes = 0;
     S32 bytesNeeded = 0;
     S32 availOnDisk = 0;
     S32 neededFiles = 0;
-    S32 do_chk = 1;
     S32 fullCard = -1;
+    S32 do_chk = 1;
     U8 formatInProgress = 0;
     U8 formatFailed = 0;
     eStartupErrors startupError = eNoError;
     S32 status = 1;
-    S32 startBytes = 0;
     void* workArea = RwMalloc(CARD_WORKAREA_SIZE);
     while (1)
     {

@@ -1585,9 +1585,9 @@ static S32 thunderCountCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, 
     hght = 8.0f * factor;
 
     factor = factor - (F32)(S32)factor;
-    hght = hght - (F32)(S32)hght;
-
     factor = factor * 0.75f + 0.25f;
+
+    hght = hght - (F32)(S32)hght;
     hght = hght * 0.75f + 0.25f;
 
     tiki->model->RedMultiplier = hght;

@@ -468,11 +468,9 @@ void zNPCDuplotron::VFXSmokeStack(F32 dt)
                 for (S32 i = 0; i < npar; i++)
                 {
                     xVec3Copy(&g_parf_smoky.pos, &pos_emit);
-                    F32 rand = xurand();
+                    g_parf_smoky.pos.x += 0.1f * (2.0f * (xurand() - 0.5f));
                     g_parf_smoky.pos.y += 0.1f;
-                    g_parf_smoky.pos.x += 0.1f * (2.0f * (rand - 0.5f));
-                    rand = xurand();
-                    g_parf_smoky.pos.z += 0.1f * (2.0f * (rand - 0.5f));
+                    g_parf_smoky.pos.z += 0.1f * (2.0f * (xurand() - 0.5f));
                     xParEmitterEmitCustom(g_pemit_smoky, dt, &g_parf_smoky);
                 }
             }

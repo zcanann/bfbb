@@ -1143,6 +1143,11 @@ void z_disco_floor::render(S32 group)
 
 void z_disco_floor::effects_render(S32 group)
 {
+    F32 alphaf;
+    F32 dalpha;
+    F32 dyoffset;
+    F32 alpha;
+    F32 yoffset;
     F32 glow = pulse_glow[group];
 
     if (0.0f == glow)
@@ -1150,19 +1155,17 @@ void z_disco_floor::effects_render(S32 group)
         return;
     }
 
-    // non-matching: regalloc
-
-    F32 dyoffset = 0.1f * glow;
-    F32 dalpha = 0.35f * -glow;
-    F32 yoffset = dyoffset;
-    F32 alpha = 0.7f * glow;
+    dyoffset = 0.1f * glow;
+    dalpha = 0.35f * -glow;
+    yoffset = dyoffset;
+    alpha = 0.7f * glow;
 
     for (S32 i = 0; i < 2; i++)
     {
         RpAtomic* atomic = NULL;
         tile_data* tile = tiles[group];
         tile_data* end_tile = tile + tiles_size;
-        F32 alphaf = 255.0f * alpha + 0.5f;
+        alphaf = 255.0f * alpha + 0.5f;
 
         while (tile != end_tile)
         {

@@ -316,15 +316,14 @@ namespace oob_state
             zRenderState(SDRS_OOBHand);
 
             xVec3 modelLoc = { 0.0f, 0.0f, 0.0f };
-            xVec3 modelSize = { 0.0f, 0.0f, 1.0f };
-            xVec3 modelYpr = { 0.0f, 0.0f, 0.0f };
-
             modelLoc.x = shared.loc.x;
             modelLoc.y = shared.loc.y;
 
+            xVec3 modelSize = { 0.0f, 0.0f, 1.0f };
             modelSize.x = fixed.hand_size_x;
             modelSize.y = fixed.hand_size_y;
 
+            xVec3 modelYpr = { 0.0f, 0.0f, 0.0f };
             modelYpr.x = fixed.hand_yaw;
             modelYpr.y = fixed.hand_pitch;
             modelYpr.z = fixed.hand_roll;
