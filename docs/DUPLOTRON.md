@@ -9217,3 +9217,29 @@ Full all-source compilation passes and the normal DOL retains retail SHA-1
 build/ngcrgb-chroma-integrated-report.json and
 build/ngcrgb-chroma-integrated-validation.log. ngcrgb remains NonMatching;
 the host check does not establish source-linked GameCube movie playback.
+
+## Bink tiled RGBA conversion (2026-10-02)
+
+`YUV_32a_4x2_even` improves from 79.65000% to 99.58182% in the
+full deduplicated report (880 bytes). The low alpha pair shifts alpha and
+red independently before combining them, matching retail's expression
+shape. Context pointers load after destination tile setup, and chroma words
+load before luma and alpha. These are ordinary C changes; the packing
+expression is algebraically equivalent. Remaining differences concern
+input pointer registers and context load/store scheduling.
+
+The ngcrgb unit improves from 85.381485% to 86.83108%. No other function
+scores change, and no symbols disappear. The doubled RGBA experiments
+were rejected because their match scores decreased.
+
+`tools/check_bink_rgb32.py` validates all four colored RGB32 kernels against
+an independent scalar pixel/tile oracle: 13,568 cases cover alpha, color,
+normal and doubled pixels, multiple pitches and row/tile boundaries,
+context advancement, and output guards. A negative control that drops the
+last alpha byte fails as expected. Non-alpha kernels write zero alpha,
+as their matching retail implementations do. Input words are represented
+as big-endian numeric values for host testing.
+
+The full source build passes and the linked DOL retains retail SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. ngcrgb remains NonMatching;
+that DOL check does not validate playback of these source kernels.

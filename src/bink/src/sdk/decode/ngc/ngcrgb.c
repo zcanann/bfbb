@@ -76,7 +76,7 @@ typedef enum RGBWordMasks
 #define RGB32_ALPHA_COLOR_PAIR_HIGH(alpha, left, right) \
     (((alpha) & RGB_ALPHA0_MASK) | ((left) << RGB_HALFWORD_SHIFT) | (((alpha) >> RGB_BYTE1_SHIFT) & RGB_ALPHA2_MASK) | (right))
 #define RGB32_ALPHA_COLOR_PAIR_LOW(alpha, left, right) \
-    ((((alpha) & RGB_ALPHA2_MASK) | (left)) << RGB_HALFWORD_SHIFT | (RGB_WORD_BYTE0(alpha) << RGB_BYTE1_SHIFT) | (right))
+    ((((alpha) & RGB_ALPHA2_MASK) << RGB_HALFWORD_SHIFT) | ((left) << RGB_HALFWORD_SHIFT) | (RGB_WORD_BYTE0(alpha) << RGB_BYTE1_SHIFT) | (right))
 #define RGB32_ALPHA_COLOR_DUP_PAIR(alpha_hi, alpha_lo, value) \
     ((alpha_hi) | ((value) << RGB_HALFWORD_SHIFT) | (alpha_lo) | (value))
 #define RGB32_ALPHA_DUP_PAIR(alpha_hi, alpha_lo, pixel) \
@@ -852,25 +852,23 @@ void YUV_32a_4x2_even(u32 count)
     RGBYUVTables PTR4* tables;
 
     linear0 = S.dest0;
-    linear1 = S.dest1;
-    y1 = S.y1;
-    y0 = S.y0;
-    u = S.u;
-    v = S.v;
-    a0 = S.a0;
-    a1 = S.a1;
-    pitch = S.pitch;
     base = S.base;
+    linear1 = S.dest1;
+    pitch = S.pitch;
     tiledPitch = RGB_TILE_PITCH32(pitch);
-    tables = &YUVTables;
-
     S.dest0 += count * RGB_32_4X2_ROW_BYTES;
     S.dest1 += count * RGB_32_4X2_ROW_BYTES;
-
     row0 = RGB_TILE_ROW(linear0, base, pitch);
     row1 = RGB_TILE_ROW(linear1, base, pitch);
     dest0 = (u32 PTR4*)RGB_TILE_LOC(base, linear0, pitch, tiledPitch, row0);
     dest1 = (u32 PTR4*)RGB_TILE_LOC(base, linear1, pitch, tiledPitch, row1);
+    u = S.u;
+    a0 = S.a0;
+    a1 = S.a1;
+    v = S.v;
+    y0 = S.y0;
+    y1 = S.y1;
+    tables = &YUVTables;
 
     do {
         u8 vhi;
@@ -883,12 +881,12 @@ void YUV_32a_4x2_even(u32 count)
         s32 b;
         s32 gb;
 
-        yv0 = *y0++;
         vword = *v++;
+        uword = *u++;
+        yv0 = *y0++;
         yv1 = *y1++;
         av0 = *a0++;
         av1 = *a1++;
-        uword = *u++;
         vhi = RGB_WORD_BYTE1(vword);
         uhi = RGB_WORD_BYTE1(uword);
 
