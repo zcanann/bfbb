@@ -8566,3 +8566,21 @@ of the identically initialized mask, with no lookup or bit-consumption
 changes. Full all_source build and retail DOL SHA-1 pass. Report:
 build/expand-huff8-mask-report.json. Expand remains NonMatching; normal
 DOL identity does not establish source-linked playback.
+
+
+## Bink Huff8 buffered-word reuse (2026-10-01)
+
+exp_read_huff8 retains the original bit buffer for both symbol lookup and
+bit consumption. The lookup masks the expression directly; consuming bits
+shifts that saved buffer. Both buffered and refill paths use this form.
+CheckReadHuff8Bundle improves from 93.487686% to 93.84236%, and
+NewCheckReadHuff8Bundle from 96.14359% to 96.28205%. No other function
+scores change. The buffered-only variant regressed the newer caller;
+separate lookup-value/code scopes produced identical code and were dropped.
+
+Related Huff4 checks pass 67,584 cases plus 1,000 countdown cases; run-block
+checks pass 32,768 cases. These do not independently exercise Huff8's
+state-dependent tables. The retained expressions use the same original
+buffer, refill word, mask, and consumed-bit count. Full all_source build
+and retail DOL SHA-1 pass. Report: build/expand-huff8-buffer-report.json.
+Expand remains NonMatching; normal DOL identity is not playback evidence.

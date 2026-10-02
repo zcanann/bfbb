@@ -564,21 +564,21 @@ static inline u32 exp_read_huff8(EXPBITS PTR4* bits, u32 state, HUFF8TABLE PTR4*
     bitcount = bits->bitlen;
     if (bitcount >= bits_to_peek) {
         u32 mask = GetBitsLen(bits_to_peek);
-        bitbuf = bits->bits & mask;
-        code = table->decode[state][bitbuf];
+        bitbuf = bits->bits;
+        code = table->decode[state][bitbuf & mask];
         used = HUFF4_CODE_USED(code);
         symbol = table->syms[state][HUFF4_CODE_SYMBOL(code)];
-        bits->bits >>= used;
+        bits->bits = bitbuf >> used;
         bits->bitlen = bitcount - used;
     } else {
         u32 mask = GetBitsLen(bits_to_peek);
         word = *bits->cur;
-        bitbuf = (bits->bits | (word << bitcount)) & mask;
-        code = table->decode[state][bitbuf];
+        bitbuf = bits->bits;
+        code = table->decode[state][(bitbuf | (word << bitcount)) & mask];
         used = HUFF4_CODE_USED(code);
         symbol = table->syms[state][HUFF4_CODE_SYMBOL(code)];
         if (bitcount >= used) {
-            bits->bits >>= used;
+            bits->bits = bitbuf >> used;
             bits->bitlen = bitcount - used;
         } else {
             bits->bits = word >> (used - bitcount);
