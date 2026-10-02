@@ -8591,8 +8591,9 @@ The buffered path in `exp_read_huff8` now writes the remaining bit count
 before the shifted buffer, matching the target instruction order.
 `CheckReadHuff8Bundle` improves from 93.84236% to 93.867%, and
 `NewCheckReadHuff8Bundle` from 96.28205% to 96.30769%. No other function
-scores change in the deduplicated project report. Branch-local `used`
-variables were also tested and discarded because they did not improve either caller.
+scores change in the deduplicated project report. An earlier branch-local `used` trial failed C89 compilation; its
+stale-object score was mistakenly treated as unchanged and provides no
+evidence about that variant.
 
 Validation: 67,584 Huff4 cases, 1,000 countdown cases, and 32,768 run-block
 cases pass; the full source build succeeds and the normal DOL retains
@@ -8609,9 +8610,9 @@ register reuse and removes the separate `used` temporary. The high
 nibble is in 0..15, so storing it back to `u8` loses no information;
 subsequent arithmetic still combines it with unsigned bit counts.
 `CheckReadHuff8Bundle` improves from 93.867% to 95.113304%, and
-`NewCheckReadHuff8Bundle` from 96.30769% to 97.63077%. A separate trial
-scoping the buffered word to each branch produced no improvement and
-was discarded.
+`NewCheckReadHuff8Bundle` from 96.30769% to 97.63077%. The earlier branch-local buffered-word trial failed C89 compilation.
+Its stale-object score was incorrectly recorded as unchanged; the corrected
+trial and exact match are documented below.
 
 Validation: the new `tools/check_bink_huff8.py` extracts the production
 helper and table structure and checks 135,168 cases with four chained
@@ -8640,3 +8641,26 @@ also passed during this pass. Full source build and retail DOL SHA-1
 306526d90b48e99894c3138f5fc8f2716d9fecf6 pass, and the deduplicated
 project report shows only the two intended improvements. `expand`
 remains NonMatching; no source-linked playback claim is made.
+
+## Bink New Huff8 exact match (2026-10-01)
+
+Giving each branch of `exp_read_huff8` its own buffered-word temporary
+makes `NewCheckReadHuff8Bundle` match all 780 bytes (99.46154% to 100%).
+The older `CheckReadHuff8Bundle` also improves from 96.87192% to 97.16749%.
+Declarations are at the start of each block, as required by the ProDG C
+compiler. Earlier scope trials mixed declarations with statements and
+failed compilation, but the trial shell commands still compared the prior
+object. Those notes are corrected above; trial commands now explicitly
+stop on a failed compile before running objdiff. Retained earlier changes
+had successful full builds and fresh reports and remain valid.
+
+Validation: 135,168 Huff8 cases (four stateful reads each), 67,584 Huff4
+cases, 1,000 countdown cases, and 32,768 run-block cases pass. Full source
+build succeeds and the normal DOL retains retail SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. The initial project report
+showed the previously observed untouched `zCutsceneMgr::check_hide_entities`
+object anomaly (100% to 91.04651%). Rebuilding its byte-identical source
+restored 100%; the final deduplicated report changes only the two Huff8
+scores. No cutscene source change was retained; the anomaly's cause is
+not established. The whole `expand` unit remains NonMatching, so the
+exact function match is not a source-linked playback claim.
