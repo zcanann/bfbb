@@ -8924,3 +8924,19 @@ blocks with padding. Full source build and retail DOL SHA-1
 306526d90b48e99894c3138f5fc8f2716d9fecf6 pass. The deduplicated report
 changes only this function. The `dct` unit remains NonMatching; the
 retail hash does not establish source-linked IDCT playback.
+
+## Bink IDCT odd-intermediate reuse (2026-10-01)
+
+`fastidct8x8d` improves from 70.72065% to 71.28745% by updating its
+first-pass odd_sum with the scaled rotation instead of keeping a separate
+odd_rot variable. `FastmIDCT8x8WithMotion` improves from 58.171642%
+to 58.182835% by updating odd1 with its scaled tail value instead of
+keeping a separate odd_scaled1. Arithmetic and output-store order are
+unchanged. The equivalent forms in the other paths were unchanged or
+regressed, and were discarded.
+
+The scalar checker passes 32,768 byte/doubled cases and 16,384 motion
+blocks with padding. Full source build and retail DOL SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6 pass. The deduplicated report
+changes only these two functions. The `dct` unit remains NonMatching;
+the retail hash does not establish source-linked IDCT playback.
