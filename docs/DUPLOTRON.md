@@ -8392,3 +8392,18 @@ scores regress; the only other change is the incoming RwImageApplyMask
 99.089554% -> 100%. Report: build/bitplane-lossless-presence-report.json.
 Bitplane remains NonMatching; normal DOL identity does not establish
 source-linked movie playback.
+
+
+## Bink magnitude reservoir store order (2026-10-01)
+
+WriteBPLossless improves from 91.47605% to 91.50898% by storing the
+magnitude bit buffer before its bit count, matching retail's order.
+An explicit else for the empty reservoir, advancing the stream cursor
+before the remaining-count calculation, and advancing child-depth pointers
+all regressed in the tested forms and were discarded.
+
+All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and
+27,644 early-cutoff checks pass. Full all_source build and retail DOL
+SHA-1 pass. No other function scores change. Report:
+build/bitplane-magnitude-store-report.json. Bitplane remains NonMatching;
+normal DOL identity does not establish source-linked playback.

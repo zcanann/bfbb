@@ -271,8 +271,8 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count);
         BPBITSTYPE _value = (value) & (mask);                                                                            \
         u32 _bitcount = BP_STREAM_BITLEN(bits) + (size);                                                               \
         BPBITSTYPE _bitbuf = BP_STREAM_BITS(bits) | (_value << BP_STREAM_BITLEN(bits));                                \
-        BP_STREAM_BITLEN(bits) = _bitcount;                                                                            \
         BP_STREAM_BITS(bits) = _bitbuf;                                                                                \
+        BP_STREAM_BITLEN(bits) = _bitcount;                                                                            \
         if (_bitcount >= BP_BITS_PER_WORD) {                                                                           \
             *BP_STREAM_CUR(bits) = _bitbuf;                                                                            \
             _bitcount = BP_STREAM_BITLEN(bits) - BP_BITS_PER_WORD;                                                     \
