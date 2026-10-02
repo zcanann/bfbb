@@ -104,12 +104,12 @@ static RwChar* StringStreamRead(RwChar* nativeString, RwStream* stream, RwUInt32
     }
 
     baseString = nativeString;
-    while (length > 0)
+    while ((RwUInt32)length > 0)
     {
         RwUInt32 bytesToRead;
         RwUInt32 i;
 
-        bytesToRead = (length > rwSTRINGSTREAMBUFFERSIZE) ? rwSTRINGSTREAMBUFFERSIZE : length;
+        bytesToRead = (length > rwSTRINGSTREAMBUFFERSIZE) ? rwSTRINGSTREAMBUFFERSIZE : (RwUInt32)length;
 
         if (RwStreamRead(stream, multiByteString, bytesToRead) != bytesToRead)
         {
