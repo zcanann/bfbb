@@ -9243,3 +9243,22 @@ as big-endian numeric values for host testing.
 The full source build passes and the linked DOL retains retail SHA-1
 306526d90b48e99894c3138f5fc8f2716d9fecf6. ngcrgb remains NonMatching;
 that DOL check does not validate playback of these source kernels.
+
+## Bink doubled-pixel RGBA conversion (2026-10-02)
+
+`YUV_32ax2_4x2_even` improves from 71.53846% to 76.44551% in the
+full deduplicated report. Alpha is extracted as an unshifted byte before
+constructing the duplicated AR halfwords, matching retail's shift sequence.
+Channel lookups use the shared YUV table structure directly; their evaluation
+order and green-sum operand order now agree more closely with retail.
+These are ordinary C expression and local-variable changes, with no compiler
+patches or assembly. Remaining differences include register allocation,
+context-pointer spills, and loop scheduling; the function is not exact.
+
+All 13,568 cases in `tools/check_bink_rgb32.py` pass. The complete source
+build passes, no other function scores change, and no symbols disappear.
+The linked DOL retains retail SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. ngcrgb remains NonMatching, so
+that hash does not validate source playback. Further context-load ordering,
+alpha temporary types/lifetimes, and pointer-advance experiments decreased
+scores and were restored.

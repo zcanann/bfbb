@@ -954,10 +954,6 @@ void YUV_32ax2_4x2_even(u32 count)
     s32 row0;
     s32 row1;
     u32 tiledPitch;
-    s32 PTR4* u_to_b;
-    s32 PTR4* v_to_gb;
-    s32 PTR4* u_to_gb;
-    s32 PTR4* v_to_r;
     RGBYUVTables PTR4* tables;
 
     linear0 = S.dest0;
@@ -980,10 +976,6 @@ void YUV_32ax2_4x2_even(u32 count)
     a0 = S.a0;
     a1 = S.a1;
     tables = &YUVTables;
-    u_to_b = tables->u_to_b;
-    v_to_gb = tables->v_to_gb;
-    u_to_gb = tables->u_to_gb;
-    v_to_r = tables->v_to_r;
 
     do {
         u8 vhi;
@@ -1006,25 +998,25 @@ void YUV_32ax2_4x2_even(u32 count)
         yv1 = *y1++;
         vhi = RGB_WORD_BYTE1(vword);
         uhi = RGB_WORD_BYTE1(uword);
-        alpha0 = av0 & RGB_ALPHA0_MASK;
+        alpha0 = RGB_WORD_BYTE3(av0);
         alpha1 = RGB_WORD_BYTE2(av0);
 
         y00 = clamp_ytable[RGB_WORD_BYTE3(yv0)];
         y01 = clamp_ytable[RGB_WORD_BYTE2(yv0)];
-        r = v_to_r[vhi];
-        gb = v_to_gb[vhi] + u_to_gb[uhi];
-        b = u_to_b[uhi];
+        r = tables->v_to_r[vhi];
+        b = tables->u_to_b[uhi];
+        gb = tables->u_to_gb[uhi] + tables->v_to_gb[vhi];
 
-        dest0[RGB_TILE_WORD0] = RGB32_ALPHA_COLOR_DUP_PAIR(alpha0, RGB_WORD_BYTE3(av0) << RGB_BYTE1_SHIFT, y00[r]);
+        dest0[RGB_TILE_WORD0] = RGB32_ALPHA_COLOR_DUP_PAIR(alpha0 << RGB_BYTE3_SHIFT, alpha0 << RGB_BYTE1_SHIFT, y00[r]);
         dest0[RGB_TILE_WORD1] = RGB32_ALPHA_COLOR_DUP_PAIR(alpha1 << RGB_BYTE3_SHIFT, alpha1 << RGB_BYTE1_SHIFT, y01[r]);
         dest0[RGB_TILE_NEXT_ROW_WORD0] = RGB32_COLOR_GB_DUP(y00, gb, b);
         dest0[RGB_TILE_NEXT_ROW_WORD1] = RGB32_COLOR_GB_DUP(y01, gb, b);
 
-        alpha0 = av1 & RGB_ALPHA0_MASK;
+        alpha0 = RGB_WORD_BYTE3(av1);
         alpha1 = RGB_WORD_BYTE2(av1);
         y00 = clamp_ytable[RGB_WORD_BYTE3(yv1)];
         y01 = clamp_ytable[RGB_WORD_BYTE2(yv1)];
-        dest1[RGB_TILE_WORD0] = RGB32_ALPHA_COLOR_DUP_PAIR(alpha0, RGB_WORD_BYTE3(av1) << RGB_BYTE1_SHIFT, y00[r]);
+        dest1[RGB_TILE_WORD0] = RGB32_ALPHA_COLOR_DUP_PAIR(alpha0 << RGB_BYTE3_SHIFT, alpha0 << RGB_BYTE1_SHIFT, y00[r]);
         dest1[RGB_TILE_WORD1] = RGB32_ALPHA_COLOR_DUP_PAIR(alpha1 << RGB_BYTE3_SHIFT, alpha1 << RGB_BYTE1_SHIFT, y01[r]);
         dest1[RGB_TILE_NEXT_ROW_WORD0] = RGB32_COLOR_GB_DUP(y00, gb, b);
         dest1[RGB_TILE_NEXT_ROW_WORD1] = RGB32_COLOR_GB_DUP(y01, gb, b);
@@ -1033,9 +1025,9 @@ void YUV_32ax2_4x2_even(u32 count)
         ulo = RGB_WORD_BYTE0(uword);
         y00 = clamp_ytable[RGB_WORD_BYTE1(yv0)];
         y01 = clamp_ytable[RGB_WORD_BYTE0(yv0)];
-        r = v_to_r[vlo];
-        gb = v_to_gb[vlo] + u_to_gb[ulo];
-        b = u_to_b[ulo];
+        r = tables->v_to_r[vlo];
+        b = tables->u_to_b[ulo];
+        gb = tables->u_to_gb[ulo] + tables->v_to_gb[vlo];
 
         alpha0 = RGB_WORD_BYTE1(av0);
         alpha1 = RGB_WORD_BYTE0(av0);
