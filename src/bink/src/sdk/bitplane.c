@@ -570,7 +570,8 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
     do {
         coeff = ordered[i];
         sign = coeff >> BP_S32_SIGN_SHIFT;
-        absvals[i] = BP_ABS_COEFF(coeff, sign);
+        sign = BP_ABS_COEFF(coeff, sign);
+        absvals[i] = sign;
         i++;
         count--;
     } while (count != 0);
@@ -638,6 +639,7 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
     }
 
     roots = tree.roots;
+    restart = roots;
     {
         u16 root_entry;
         lenbits = hi_groups[BP_TREE_HIGH_GROUP0_SLOT];
@@ -662,12 +664,11 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
         }
         roots[BP_ROOT_GROUP11_SLOT] = root_entry;
     }
+    end = roots + BP_LOSSLESS_ROOT_NODES;
     roots[BP_ROOT_LOSSLESS_COEFF1_SLOT] = BP_TREE_COEFF_LEAF_ENTRY(lens[BP_COEFF1_INDEX], BP_COEFF1_LEAF_BASE);
     roots[BP_ROOT_LOSSLESS_COEFF2_SLOT] = BP_TREE_COEFF_LEAF_ENTRY(lens[BP_COEFF2_INDEX], BP_COEFF2_LEAF_BASE);
     roots[BP_ROOT_LOSSLESS_COEFF3_SLOT] = BP_TREE_COEFF_LEAF_ENTRY(lens[BP_COEFF3_INDEX], BP_COEFF3_LEAF_BASE);
 
-    restart = roots;
-    end = roots + BP_LOSSLESS_ROOT_NODES;
     level = maxbits;
     while (level != 0) {
         u32 magnitude_bits = level - 1;

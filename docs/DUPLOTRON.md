@@ -9411,3 +9411,22 @@ Byte-sized child temporaries, reordered child increments, direct stores
 inside the root-selection branches, and alternate header scratch reuse
 were tested and rejected. Remaining differences include register
 allocation and instruction scheduling.
+
+## Bink lossless writer pointer setup (2026-10-02)
+
+`WriteBPLossless` improves from 92.25000% to 92.58383% in the full
+deduplicated report. The restart pointer is saved as soon as the roots
+are selected, and the child-node end pointer is initialized before the
+individual coefficient roots. The absolute-value pass reuses its signed
+scratch value for the resulting magnitude, as in the lossy writer.
+
+The bitplane checker passes 6,911 nonempty lossy round trips, 27,644 early
+cutoff checks, and 16,384 lossless round trips with bit-length, reservoir,
+and output-guard checks. The full source build passes; no other function
+scores change and no symbols disappear. The linked DOL retains retail
+SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6. bitplane remains
+NonMatching, so this hash does not establish source playback.
+
+Separate coefficient-table caches, incrementing child entries and pointers,
+and explicit reservoir-flush branch variants were tested and rejected.
+Several resemble retail locally but worsen the overall function match.
