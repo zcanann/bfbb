@@ -9711,3 +9711,43 @@ The linked DOL retains retail SHA-1
 306526d90b48e99894c3138f5fc8f2716d9fecf6. These units remain NonMatching;
 source-linked totals are unchanged, and the hash does not validate source
 rendering, gameplay, or playback. Overall fuzzy matching is 99.44312%.
+
+## Robot UV/cone and Bink alpha-column follow-up (2026-10-02)
+
+The full combined deduplicated report verifies four gains:
+
+| Function | Before | After |
+| --- | ---: | ---: |
+| zNPCSleepy::NightLightUVStep | 91.700000% | 99.600000% |
+| zNPCSleepy::RendConeOfDeath | 93.282180% | 93.816830% |
+| dounaligned32acolm | 94.952380% | 100.000000% |
+| YUV_32ax2_4x2_even | 89.522440% | 95.006410% |
+
+The UV step reuses one scalar rate across the four coordinate updates.
+Static const rate tables and fused arithmetic are preserved; the remaining
+instruction difference is address-load ordering. The cone renderer names
+const references to its existing static colors, improving byte-load/store
+ordering without changing their storage or values. Both functions retain
+their retail sizes. Other qualifier, reference-scope, and pointer forms
+were restored; all Robot data remains 100% matched.
+
+The unscaled alpha grayscale column uses separate luma/alpha cursors and
+pixel locals for its two source rows. Existing RGB32_M_A keeps alpha shifts
+unsigned. This adds 168 exact code bytes and one exact function; YUV now has
+88/97 exact functions and 22,008/29,376 exact code bytes. The scalar column
+oracle now covers this fourth production kernel and passes 36,864 cases,
+including both expected pixel/cursor mutation failures.
+
+Doubled RGBA writes its chroma cursors back before luma and alpha cursors,
+matching retail's register allocation more closely. The known retail alpha
+quirk is preserved. RGB32 passes 13,568 independent pixel/context/guard
+cases. Alternate channel temporaries and context-load groupings were rejected.
+Player's six new immutable-vector trials produced no gain and were restored.
+
+Combined source compilation passes. Exactly these four scores improve;
+no functions disappear, no other scores regress, and matched data totals
+are unchanged. Exact functions reach 9,930; overall fuzzy matching reaches
+99.44714%. The linked DOL retains retail SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. These units remain NonMatching,
+with unchanged source-linked totals; the hash does not establish source
+rendering, gameplay, or playback.
