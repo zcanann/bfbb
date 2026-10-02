@@ -21,6 +21,8 @@
 #include <string.h>
 #include <stdio.h>
 
+extern U32 gPTankDisable;
+
 #define PICKUP_TYPE_SHINY 0
 #define PICKUP_TYPE_1 1
 

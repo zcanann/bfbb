@@ -10,6 +10,8 @@
 #include "zParEmitter.h"
 #include "zParPTank.h"
 
+extern U32 gPTankDisable;
+
 _tagClimate* sClimate;
 
 float snow_life = 3.0f;

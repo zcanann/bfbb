@@ -70,6 +70,8 @@
 #include "zSurface.h"
 #include "zThrown.h"
 
+extern U32 gPTankDisable;
+
 static F32 sHackStuckTimer;
 static xVec3 sHackStuckDir;
 static xVec3 sHackStuckVel;

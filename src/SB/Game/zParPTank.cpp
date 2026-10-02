@@ -32,7 +32,7 @@ struct BubbleData
 
 extern RwCamera* sGameScreenTransCam;
 
-const U32 gPTankDisable = 0;
+extern const U32 gPTankDisable = 0;
 static zParPTank sPTank[7];
 static U32 sNumPTanks;
 static zParPTank* sSparklePTank;
