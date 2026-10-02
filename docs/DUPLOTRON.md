@@ -8471,3 +8471,19 @@ checks pass. Full all_source build and retail DOL SHA-1 pass. No other
 function scores change. Report: build/bitplane-length-root-report.json.
 Bitplane remains NonMatching; normal DOL identity does not establish
 source-linked playback.
+
+
+## Bink lossy decoder level and buffered-word lifetimes (2026-10-01)
+
+readlossy improves from 95.585365% to 96.59424%. Separating the decoded
+maximum level from the remaining-plane counter reaches 95.61862%.
+Eleven buffered-bit paths then use a block-local word loaded before the
+bit-count decrement, reaching 96.59424%. Giving refill words their own
+locals produced identical code, so that extra change was discarded.
+
+All 6,911 nonempty lossy round trips and 27,644 early-cutoff checks pass,
+including exact coefficient results, stream consumption, and guard checks.
+All 16,384 lossless round trips also pass. Full all_source build and retail
+DOL SHA-1 pass; no other function scores change. Report:
+build/bitplane-readlossy-buffered-report.json. Bitplane remains NonMatching;
+normal DOL identity does not establish source-linked movie playback.

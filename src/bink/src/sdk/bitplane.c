@@ -1432,6 +1432,7 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count)
 {
     s8 sample;
     u32 levels_remaining;
+    u32 maxlevel;
     u8 PTR4* tree_end_ptr;
     s8 mask;
     s32 masks_used;
@@ -1456,25 +1457,26 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count)
     memset(dest, 0, BP_LOSSY_BLOCK_BYTES);
 
     /* Lossy blocks store max level minus one in the stream header. */
-    VarBitsGet(levels_remaining, u8, bitcopy, BP_LOSSY_LEVEL_BITS);
-    levels_remaining = BP_LOSSY_LEVEL_COUNT(levels_remaining);
+    VarBitsGet(maxlevel, u8, bitcopy, BP_LOSSY_LEVEL_BITS);
+    maxlevel = BP_LOSSY_LEVEL_COUNT(maxlevel);
     roots = tree.roots;
     roots[BP_ROOT_GROUP1_SLOT] = BP_READ_TREE_GROUP1_ROOT;
     roots[BP_ROOT_GROUP6_SLOT] = BP_READ_TREE_GROUP6_ROOT;
     roots[BP_ROOT_GROUP11_SLOT] = BP_READ_TREE_GROUP11_ROOT;
-    mask = (s32)(s8)BP_LEVEL_MASK(levels_remaining);
+    mask = (s32)(s8)BP_LEVEL_MASK(maxlevel);
     roots[BP_ROOT_LOSSY_DC_SLOT] = BP_READ_TREE_DC_ROOT;
     tree_end_ptr = tree.nodes;
     nz_coeff_count = 0;
     next_node_ptr = roots;
+    levels_remaining = maxlevel;
     while (levels_remaining != 0) {
         scan = 0;
         /* Active coefficients receive one refinement bit at each lower plane. */
         if (scan < nz_coeff_count) {
             do {
                 if (bitcount != 0) {
+                    u32 word = bitbuf;
                     bitcount = bitcount - 1;
-                    word = bitbuf;
                     bitbuf = bitbuf >> 1;
                     if ((word & BP_BIT_MASK) != 0) {
                         goto refine_coeff;
@@ -1512,8 +1514,8 @@ read_node:
                 goto next_node;
             }
             if (bitcount != 0) {
+                u32 word = bitbuf;
                 bitcount = bitcount - 1;
-                word = bitbuf;
                 bitbuf = bitbuf >> 1;
                 if ((word & BP_BIT_MASK) != 0) {
                     goto decode_node;
@@ -1554,8 +1556,8 @@ decode_node:
             node = BP_READ_TREE_INDEX(node);
 decode_children:
             if (bitcount != 0) {
+                u32 word = bitbuf;
                 bitcount = bitcount - 1;
-                word = bitbuf;
                 bitbuf = bitbuf >> 1;
                 if ((word & BP_BIT_MASK) != 0) {
                     goto push_0;
@@ -1575,8 +1577,8 @@ push_0:
             /* A zero child-presence bit introduces the coefficient immediately. */
             nz_coeff_count = nz_coeff_count + 1;
             if (bitcount != 0) {
+                u32 word = bitbuf;
                 bitcount = bitcount - 1;
-                word = bitbuf;
                 bitbuf = bitbuf >> 1;
                 if ((word & BP_BIT_MASK) != 0) {
                     goto negative_0;
@@ -1604,8 +1606,8 @@ store_0:
 after_0:
             node++;
             if (bitcount != 0) {
+                u32 word = bitbuf;
                 bitcount = bitcount - 1;
-                word = bitbuf;
                 bitbuf = bitbuf >> 1;
                 if ((word & BP_BIT_MASK) != 0) {
                     goto push_1;
@@ -1625,8 +1627,8 @@ push_1:
             /* Nonzero children are pushed for later planes instead. */
             nz_coeff_count = nz_coeff_count + 1;
             if (bitcount != 0) {
+                u32 word = bitbuf;
                 bitcount = bitcount - 1;
-                word = bitbuf;
                 bitbuf = bitbuf >> 1;
                 if ((word & BP_BIT_MASK) != 0) {
                     goto negative_1;
@@ -1654,8 +1656,8 @@ store_1:
 after_1:
             node++;
             if (bitcount != 0) {
+                u32 word = bitbuf;
                 bitcount = bitcount - 1;
-                word = bitbuf;
                 bitbuf = bitbuf >> 1;
                 if ((word & BP_BIT_MASK) != 0) {
                     goto push_2;
@@ -1674,8 +1676,8 @@ push_2:
             nz_coeff[nz_coeff_count] = node;
             nz_coeff_count = nz_coeff_count + 1;
             if (bitcount != 0) {
+                u32 word = bitbuf;
                 bitcount = bitcount - 1;
-                word = bitbuf;
                 bitbuf = bitbuf >> 1;
                 if ((word & BP_BIT_MASK) != 0) {
                     goto negative_2;
@@ -1703,8 +1705,8 @@ store_2:
 after_2:
             node++;
             if (bitcount != 0) {
+                u32 word = bitbuf;
                 bitcount = bitcount - 1;
-                word = bitbuf;
                 bitbuf = bitbuf >> 1;
                 if ((word & BP_BIT_MASK) != 0) {
                     goto push_3;
@@ -1723,8 +1725,8 @@ push_3:
             nz_coeff[nz_coeff_count] = node;
             nz_coeff_count = nz_coeff_count + 1;
             if (bitcount != 0) {
+                u32 word = bitbuf;
                 bitcount = bitcount - 1;
-                word = bitbuf;
                 bitbuf = bitbuf >> 1;
                 if ((word & BP_BIT_MASK) != 0) {
                     goto negative_3;
@@ -1756,8 +1758,8 @@ deferred_coeff:
             /* Deferred coeff nodes already carry their scan index. */
             nz_coeff_count = nz_coeff_count + 1;
             if (bitcount != 0) {
+                u32 word = bitbuf;
                 bitcount = bitcount - 1;
-                word = bitbuf;
                 bitbuf = bitbuf >> 1;
                 if ((word & BP_BIT_MASK) != 0) {
                     goto negative_4;
