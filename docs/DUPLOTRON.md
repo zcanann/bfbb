@@ -8531,3 +8531,21 @@ SHA-1 pass, including incoming material-list commit 401809d4b. No function
 scores regress. Report: build/bitplane-writer-mag-integrated-report.json.
 Bitplane remains NonMatching; normal DOL identity does not establish
 source-linked playback.
+
+
+## Bink Huffman-table reader exact code match (2026-10-01)
+
+ReadHuffTable improves from 99.01529% to 100% in the deduplicated report.
+The merge-mode pair shuffle derives its right-hand index as i + 1 instead
+of maintaining a separate right counter. This restores the initialization
+schedule and indexed-store operands, while simplifying the source. Both
+forms visit the same pairs: i starts at zero and advances by two. An
+explicit pointer-addition-order trial regressed and was discarded.
+
+The raw diff retains only relocation-name differences. No other function
+scores change. Existing Huff4 checks pass 67,584 cases and 1,000 countdown
+cases; run-block checks pass 32,768 cases. These cover the decoding helpers
+and run expansion, not an independent full ReadHuffTable round-trip test.
+Full all_source build and retail DOL SHA-1 pass. Report:
+build/expand-huff-table-report.json. The expand unit remains NonMatching;
+this exact function match is not a source-linked playback claim.

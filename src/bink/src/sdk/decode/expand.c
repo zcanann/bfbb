@@ -633,19 +633,15 @@ static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
                 count--;
             } while (count != 0);
         } else {
-            u32 right;
-
             i = 0;
-            right = 1;
             for (count = 0; count < HUFF4_PAIR_COUNT; ++count) {
                 if (EXPBITS_GET1_BRANCH(*vb, bit)) {
-                    merges.order[i] = right;
-                    merges.order[right] = i;
+                    merges.order[i] = i + 1;
+                    merges.order[i + 1] = i;
                 } else {
                     merges.order[i] = i;
-                    merges.order[right] = right;
+                    merges.order[i + 1] = i + 1;
                 }
-                right += HUFF4_PAIR_SYMBOLS;
                 i += HUFF4_PAIR_SYMBOLS;
             }
 
