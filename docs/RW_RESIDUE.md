@@ -1,4 +1,4 @@
-# RenderWare residue: why the last 23 RW functions do not match
+# RenderWare residue: why the last 19 RW functions do not match
 
 This document lists, for every RenderWare SDK function in the bfbb GameCube
 decomp that is below 100%, what exactly differs from retail and what causes
@@ -22,7 +22,7 @@ it. The aim is to separate the kinds of residue:
    - **OPS**: the same count but different opcodes.
 
    The "matches under" column lists the alternative compilers that give 100%
-   from the unchanged source. Today it is empty for all 23 functions.
+   from the unchanged source. Today it is empty for all 19 functions.
 2. **Per-function experiments.** Each function was reduced to a small C repro
    and compiled with `tools/regalloc/cc.py` under the GC/2.0p1a–e variants,
    2.0p1, 2.5, 2.6 and 2.7, and sometimes 1.1–1.3.2, 2.0 and 3.0a. Suspected
@@ -49,15 +49,15 @@ Measured from `build/GQPE78/report.json` and a fresh
 | measure | value |
 |---|---|
 | RW compiler | **GC/2.0p1e** (all units except `stdkey`) |
-| RW functions matched | **1016 / 1039** (97.79%) |
-| RW units complete (linked) | **101 / 120** |
-| RW code matched | 337,128 / 371,428 bytes (90.77%); the 23 residue functions are the whole 34,300-byte gap |
+| RW functions matched | **1020 / 1039** (98.17%) |
+| RW units complete (linked) | **105 / 120** |
+| RW code matched | 343,364 / 371,428 bytes (92.44%); the 19 residue functions are the whole 28,064-byte gap |
 | RW data matched | 11,764 / 11,764 bytes (100%) |
-| non-matching functions | 24, in 19 units |
-| residue shapes | REG 13, SCHED 9, COUNT 2 |
-| match 100% under GC/2.0p1 or GC/2.5 from the same source | 0 / 23 |
+| non-matching functions | 19, in 14 units |
+| residue shapes | REG 8, SCHED 9, COUNT 2 |
+| match 100% under GC/2.0p1 or GC/2.5 from the same source | 0 / 19 |
 
-The 20th incomplete unit is `rtslerp`. All its functions match, but it cannot
+The 15th incomplete unit is `rtslerp`. All its functions match, but it cannot
 link: its `.sdata2` constant order depends on `RtSlerp*` functions that were
 stripped from the retail binary (see 3.8).
 
@@ -110,6 +110,13 @@ kept because it is reusable.
 | `TriStripFollow` | an if/else that reuses the `nextIsLast` flag; its second web becomes an IROUseDef split temp (N8) |
 | `RwCameraFrustumTestSphere` | compiler 2.0p1e (R10) plus the RW-style in-loop `sphere->center`/`sphere->radius` reads |
 | `ImageConvertDepth` | declare `palette`, `cpSrc`, `cpDst` first, then assign them |
+| `RwImageApplyMask` | in the inlined `RwImageAllocatePixels`, initialise `RwBool imagePalette = (imageDepth == 4 \|\| imageDepth == 8);` instead of setting it later. The value then lives in a temp that ranks above `tempImage`'s inline web |
+| `RpGeometryStreamRead` | a small static auto-inlined morph-target accessor (`return &geometry->morphTarget[index];`) makes the pointer an inline return value, which ranks above FindLoops IV @733; the morph loop's `i` is block-scoped and `kf` is declared before `morphTarget`, per Rat DWARF. RW's public `RpGeometryGetMorphTarget` is a macro in release builds, so the helper is private |
+| `ExtractNodes` | `recip = (root->Leaf.weight > 0.0f) ? (255.9999f / root->Leaf.weight) : 0.0f;` (`recip` becomes an objectless/linearise temp, `weight` a CSE), plus each channel through one reused `RwInt32 c` (`c = (RwInt32)(... * recip); palette[n].red = (RwUInt8)c;`). The extra statements also restore the self-inline depth through complexity (3.6) |
+| `DlRasterTile` | the existing local `index` holds the whole byte offset `(tb << 2) + ((tdy + (x & 3)) << 1)`, which creates the offset temps before the pixel `lhz` |
+
+Units newly linked in rounds 3–4: `rpusrdat`, `babinwor`, `bameshop`,
+`skingcn`, `baimage`, `bageomet`, `palquant`, `dlraster`.
 
 **General lever found this round:** `p = (T *)((RwUInt8 *)p + s)` instead of
 `p += s` changes how the unroller renames the induction variable in the
@@ -224,7 +231,7 @@ joey's clauses). What remains attributable to compiler B is:
 
 Many residues below come down to which virtual register (vreg) a web gets,
 because the graph colourer is deterministic given that number. The rules
-(N1–N10) were measured with `wcap.py`/`diag.py` on test files
+(N1–N13) were measured with `wcap.py`/`diag.py` on test files
 `cse/t/t1..t8.c` and on the real units. Replays reproduce the compiler's
 colours exactly on every residue capture below. See also
 `tools/regalloc/README.md`.
@@ -241,6 +248,9 @@ colours exactly on every residue capture below. See also
 | N8 | a variable with several disjoint webs keeps its own object for the **first** web. Each later web becomes a new IROUseDef `@` object, ranked just above the named-local block and below every CSE temp. |
 | N9 | `x = c ? a : b` (or an if/else that IRO turns into `?:`) gives `x` **no web of its own**: the value lives in an objectless temp. Assign-then-conditionally-reassign keeps `x`'s web. |
 | N10 | colouring: simplify scans vregs ascending and pushes nodes of degree < 29 (GPR) / 32 (FPR). Survivors pop first in descending vreg. Select takes the lowest free volatile register, else the lowest already-claimed callee-saved register free of neighbours, else claims the next from r31/f31 down. |
+| N11 | an objectless `?:` temp (N9) coalesces into an N8 split web or a CSE temp, but **not** into a named local's first web. So `x = c ? a : b` on a fresh local leaves `x` webless, while the same `?:` into a reused local's later web joins that web. |
+| N12 | reusing an existing local whose first web is dead makes each later assignment an IROUseDef split temp (N8), ranked **below** every CSE temp. This puts a value under the CSE band without a new named local. |
+| N13 | a static helper inlined inside another inlined helper creates its inline objects after **all** the outer calls' inline objects, so its group ranks below every outer inline group. |
 
 A `hyp.py` test re-ranked whole families the other way. None of these fixes a
 residue without breaking the matched controls, so the REG residues are **not**
@@ -258,7 +268,26 @@ Levers that have generalised (each fixed at least one function):
 - a cast around a product, `(RwReal)(a * b)`, to block `fmadds` fusion and
   make the product objectless (`RwImageSetGamma`);
 - declare-then-assign instead of initialising declarations
-  (`ImageConvertDepth`).
+  (`ImageConvertDepth`), and the reverse: an initialiser instead of a later
+  assignment inside an inlined helper (`RwImageApplyMask`);
+- a small static accessor that returns a pointer, so the value becomes an
+  inline return temp ranked above FindLoops (`RpGeometryStreamRead`);
+- a `?:` into a local plus one reused integer local for several channels, so
+  the values go through objectless/split temps (`ExtractNodes`, N11);
+- widen what an existing local holds (a whole byte offset instead of an index)
+  to create its temps earlier (`DlRasterTile`);
+- pass a size expression straight to the callee instead of through a local, so
+  it becomes a CSE and the local coalesces (`_rpMaterialListSetSize`, which
+  lifted `_rpMaterialListStreamRead` 97.77 → 99.88).
+
+Linking facts found while completing units:
+- an unreferenced static helper that is fully inlined is still emitted out of
+  line by our compiler, but the linker strips it, so it does not block linking;
+- `.sbss` statics are emitted in **reverse declaration order**; `rpusrdat`
+  linked only after its declarations were reversed with the module struct
+  first;
+- the auto-inline limit (complexity after the callee's own inlines at most
+  512) is in 3.6; `ExtractNodes` depends on it for its self-inline depth.
 
 ---
 
@@ -271,18 +300,14 @@ Columns:
 
 | class | function | unit | size | % | shape | alt (2.0p1 / 2.5) |
 |---|---|---|---|---|---|---|
-| a | `ExtractNodes` | driver/common/palquant | 616 | 99.51 | REG | 99.51 / 99.51 |
-| a | `DlRasterTile` | driver/gcn/dlraster | 660 | 99.67 | REG | 99.67 / 99.67 |
 | a | `_PropagateDependenciesAndKillDeadPaths` | src/pipe/p2/p2dep | 1296 | 99.32 | REG | 99.32 / 99.32 |
 | a | `_rwStringStreamFindAndRead` | src/babintex | 980 | 99.33 | REG | 99.33 / 99.33 |
 | a | `RwTextureStreamRead` | src/babintex | 2400 | 99.59 | REG | 99.59 / 99.59 |
 | a | `MatrixOrthoNormalize` | src/plcore/bamatrix | 1132 | 99.52 | REG | 98.11 / 98.11 |
-| a | `RwImageApplyMask` | src/baimage | 1340 | 99.09 | REG | 96.49 / 99.09 |
-| a | `RpGeometryStreamRead` | world/bageomet | 3620 | 99.91 | REG | 99.91 / 99.91 |
+| a | `_rpMaterialListStreamRead` | world/bamatlst | 1508 | 99.88 | REG | 99.88 / 99.88 |
 | b | `_rwFreeListAllocReal` | src/plcore/bamemory | 432 | 99.68 | REG | 99.68 / 99.68 |
 | b | `RwImageResample` | src/baresamp | 468 | 97.82 | REG | 97.82 / 57.81 |
 | b | `CameraBuildPerspClipPlanes` | src/bacamera | 2020 | 99.11 | REG | 99.11 / 99.11 |
-| b | `_rpMaterialListStreamRead` | world/bamatlst | 1508 | 97.77 | REG | 97.77 / 97.77 |
 | c | `StalacTiteAlloc` | src/pipe/p2/p2define | 116 | 90.69 | SCHED | 68.45 / 68.45 |
 | c | `_rwDlCameraBeginUpdate` | driver/gcn/dldevice | 1464 | 98.88 | SCHED | 97.42 / 97.42 |
 | c | `_rwDlRasterShowRaster` | driver/gcn/dldevice | 1060 | 99.89 | SCHED | 80.17 / 80.17 |
@@ -292,37 +317,14 @@ Columns:
 | d | `AtomicForAllLineIntersections` | plugin/collis/ctgeom | 1432 | 98.30 | SCHED | 98.30 / 95.78 |
 | d | `AtomicForAllSphereIntersections` | plugin/collis/ctgeom | 936 | 98.24 | SCHED | 98.24 / 98.24 |
 | d | `_rpGameCubeMTEffectSend` | plugin/matfx/gcn/multiTexGcnPipe | 1804 | 95.85 | SCHED | 96.15 / 96.15 |
-| e | `CalcMeshNBTs` | plugin/matfx/gcn/multiTexGcnPipe | 4340 | 98.72 | SCHED | 98.72 / 95.73 |
+| d (inferred) | `CalcMeshNBTs` | plugin/matfx/gcn/multiTexGcnPipe | 4340 | 98.72 | SCHED | 98.72 / 95.73 |
 | e | `_rwGCNVtxFmtInstClr` | world/pipe/p2/gcn/instance/geominst | 2176 | 97.13 | COUNT | 97.13 / 97.13 |
 
 ### 3.1 (a) Allocator: the needed rank is unreachable by the numbering rules
 
 The interference graph is retail's; the replay names the vreg move that would
-give retail's colours, but N1–N10 put no source-expressible web at that rank.
-
-#### `ExtractNodes`
-
-- **Unit:** driver/common/palquant. **Size / %:** 616 b, 99.51.
-- **Exact difference:** the outer (out-of-line) copy only. FPR: `recip` v32
-  and `weight` v33 swap. GPR: CSE `nodeIndex*4` @649 against the objectless
-  `fctiwz` result load v72. The two self-inlined copies already match.
-- **Rule:** N2 vs N5. The named-local order is reversed out of line (N2) and
-  inlined (N5), so no declaration order fixes both contexts.
-- **Evidence:** swapping the declarations fixes the outer copy and breaks both
-  inlined copies (96.98). Forms that split the family (including a
-  RepresentativeColor-style helper, which exists in Rat DWARF) change the
-  self-inline depth: 68–83%.
-- **Status:** REG, no lever.
-
-#### `DlRasterTile`
-
-- **Unit:** driver/gcn/dlraster. **Size / %:** 660 b, 99.67.
-- **Exact difference:** 32-bit case: the pixel `lhz` v111 is created before the
-  offset temps v112–v114 (the RHS is lowered first).
-- **Move needed:** v111 to rank 114.5..122.5.
-- **Evidence:** Rat DWARF confirms the local set, so no named local can be
-  added. Seven address/load/index spellings: inert or worse.
-- **Status:** REG, no lever.
+give retail's colours, but N1–N13 put no source-expressible web at that rank,
+or the only known lever was rejected as not source-likely.
 
 #### `_PropagateDependenciesAndKillDeadPaths`
 
@@ -331,9 +333,11 @@ give retail's colours, but N1–N10 put no source-expressible web at that rank.
   every `iospec->` access) r28→r31, which pushes `pipeline`, `node` and `i` down
   one register.
 - **Move needed:** v100 to rank 42.5–44.5, i.e. into the named/split band.
-- **Evidence:** IRO always copy-propagates `iospec` and any `nodeDef` local,
-  so neither gets a web; declaration moves only move the dead slot
-  (99.32/99.37).
+- **Evidence:** IRO always copy-propagates `iospec` and any named `nodeDef`
+  local, so neither gets a web; declaration moves only move the dead slot
+  (99.32/99.37). The CSE route ranks too high: a CSE temp lands at ≥46.5,
+  behind the `j`/`k` split temps (96.9). The N12 reuse lever needs an existing
+  `RxNodeDefinition *` local, and there is none.
 - **Status:** REG, no lever.
 
 #### `_rwStringStreamFindAndRead` and `RwTextureStreamRead`
@@ -347,12 +351,14 @@ give retail's colours, but N1–N10 put no source-expressible web at that rank.
 - **Exact difference (TextureStreamRead):** `mipmapState` v35 r30→r29 and
   `autoMipmapState` v34 r29→r30; the first FindAndRead inline's @370 r25→r26
   and @350 r27→r28.
-- **Move needed:** a modified inline param (`length`) numbered outside its N5
-  slot, which is impossible. TextureStreamRead also needs the
-  `mipmapState`/`autoMipmapState` swap, which contradicts the DWARF
-  declaration order (swapping gives 99.49).
-- **Evidence:** the assign-then-reassign `bytesToRead` form gives it an object
-  web (FindAndRead 99.53) but drops TextureStreamRead to 99.20.
+- **Move needed:** inline param objects ranked outside their N5 group, which is
+  impossible because params are created last in the group. TextureStreamRead
+  also needs the `mipmapState`/`autoMipmapState` swap, which contradicts the
+  DWARF declaration order (swapping gives 99.49).
+- **Evidence:** the best forms reach 99.59 (FindAndRead) and 99.717
+  (TextureStreamRead) separately, never both at once. The assign-then-reassign
+  `bytesToRead` form gives it an object web (FindAndRead 99.53) but drops
+  TextureStreamRead to 99.20.
 - **Status:** REG, no lever.
 
 #### `MatrixOrthoNormalize`
@@ -360,34 +366,29 @@ give retail's colours, but N1–N10 put no source-expressible web at that rank.
 - **Unit:** src/plcore/bamatrix. **Size / %:** 1132 b, 99.52.
 - **Exact difference:** FPR abs-dot block: abs-dot CSE temps @121/@125 against
   the component CSE temps @126–@131.
-- **Move needed:** @121/@125 must rank after @126–@131, against N7's
-  first-occurrence order.
-- **Evidence:** dot-local shapes are inert; splitting dot/abs changes
-  contraction (91.7).
-- **Status:** REG (FPR), no lever.
+- **Move needed:** the raw dots must rank below the CSE band.
+- **Known lever (rejected):** reusing an existing dead local (`recipAt`, or
+  `recipUp`/`recipRight`) to hold each raw dot before `RwRealAbs` gives 100%:
+  the later webs become N12 split temps, which rank below CSE. It is not
+  committed because reusing a reciprocal-named variable for dot products was
+  judged not source-likely. A fresh local fails: its first web is a named web,
+  the `?:` does not coalesce into it (N11), and an extra `fmr` appears (99.33).
+  The patch is kept outside the repo.
+- **Status:** REG (FPR), known lever rejected.
 
-#### `RwImageApplyMask`
+#### `_rpMaterialListStreamRead`
 
-- **Unit:** src/baimage. **Size / %:** 1340 b, 99.09.
-- **Exact difference:** a callee-saved r30/r31 swap: `image->width` and the
-  inlined `imagePalette` against `tempImage`.
-- **Move needed:** `tempImage` is fully copy-propagated and has no web. The
-  merged @218/@216 web must rank 33.5..59.5, below the inlined
-  `RwImageAllocatePixels` `imagePalette` webs.
-- **Evidence:** seven declaration and expression variants did not move it.
-- **Status:** REG, no lever.
-
-#### `RpGeometryStreamRead`
-
-- **Unit:** world/bageomet. **Size / %:** 3620 b, 99.91.
-- **Exact difference:** morph-target loop: `i` v43 r28→r27; FindLoops offset
-  @733 v92 r29→r28.
-- **Move needed:** a named `morphTarget` above FindLoops IV @733, which N6
-  forbids. The inline-helper lever does not apply: the target has no inline
-  helper here.
-- **Evidence:** the DWARF-faithful block-scoped `i`s give 99.917; the
-  no-variable `sizeTC` form gives 99.07.
-- **Status:** REG, no lever.
+- **Unit:** world/bamatlst. **Size / %:** 1508 b, 99.88 (was 97.77).
+- **What fixed most of it:** passing `size * sizeof(RpMaterial *)` directly to
+  `RwRealloc`/`RwMalloc` in the inlined `_rpMaterialListSetSize`. `size*4`
+  becomes a CSE, `memSize` coalesces, and the params gain the neighbour they
+  were missing, so the callee-saved permutation is gone.
+- **Exact difference:** a colour swap between CSE `len` (@299) and `len*4`
+  (@300).
+- **Move needed:** the two CSE temps in the opposite order. N7 creates CSE
+  temps by first occurrence, and the `len == 0` test comes first, so no
+  ordering of the source reverses them.
+- **Status:** REG, no lever (reclassified from (b)).
 
 ### 3.2 (b) Interference graph or pre-RA order differs
 
@@ -399,10 +400,12 @@ orders the defining instructions differently.
 
 - **Unit:** src/plcore/bamemory. **Size / %:** 432 b, 99.68.
 - **Exact difference:** CSE v49 against objectless v63/v64.
-- **Cause:** our pre-RA order is `addi v63; subi v65; add v64`, which ends
-  v49's life before v64 is defined. Retail's order is `addi; add; subi`, so
-  v64 interferes with v49. No rank move suffices.
-- **Status:** graph differs.
+- **Cause:** our pre-RA scheduler emits `addi v63; subi v65; add v64`, which
+  ends v49's life before v64 is defined, even though the IR order is
+  `addi, add, subi`. Retail's order is `addi; add; subi`, so v64 interferes
+  with v49. No rank move suffices.
+- **Evidence:** about 20 more source variants were inert.
+- **Status:** graph differs (pre-RA scheduler).
 
 #### `RwImageResample`
 
@@ -414,9 +417,10 @@ orders the defining instructions differently.
   `mullw` and the walker `add`, which gives nX/nXPos degree 29 (= K), so they
   become survivors. Deleting the edges v64/v66–nX/nXPos in the capture
   reproduces the target exactly.
-- **Evidence:** an `rpDstSpan++` form gives 99.15 but contradicts the DWARF
-  `const` pointer, so it is not applied. (The R1t literal reloads are gone
-  under 2.0p1b+.)
+- **Evidence:** unchanged this round. `RwImageCreateResample` inlines the
+  resampler, which constrains the forms that can be tried (both must keep
+  matching). An `rpDstSpan++` form gives 99.15 but contradicts the DWARF
+  `const` pointer, so it is not applied.
 - **Status:** graph differs.
 
 #### `CameraBuildPerspClipPlanes`
@@ -424,24 +428,13 @@ orders the defining instructions differently.
 - **Unit:** src/bacamera. **Size / %:** 2020 b, 99.11.
 - **Exact difference:** FPR, 29 webs. IroVars scalarisation temps @205..@213
   (vTmp, vTmp2, vRight, vUp, vCOP); `scale` f3→f29 (retail keeps it live across
-  calls).
+  calls). Only the FPR colouring before the loop differs.
+- **Cause:** our `scale` v32 has degree 34, so it is a survivor and pops early;
+  retail's `scale` must have had degree < 32, i.e. fewer FPR neighbours.
 - **Evidence:** no pop order of our graph reaches the target. Rat DWARF has
-  **four** `length2` locals (an earlier revision said three normalisations).
-  Reorder search best 99.257, only via unnatural statement orders.
+  **four** `length2` locals. Reorder search best 99.257, only via unnatural
+  statement orders.
 - **Status:** graph differs (FPR).
-
-#### `_rpMaterialListStreamRead`
-
-- **Unit:** world/bamatlst. **Size / %:** 1508 b, 97.77.
-- **Exact difference:** a callee-saved permutation. Target: matList r31,
-  stream r30, matindex-IV r29, i r28, len r27, len*4 r26. Ours: the locals
-  first (@295 IV r31, i r30, matindex r29, material r28), then the params
-  (matList r27, stream r26). 24 webs shift.
-- **Cause:** retail needs the params ranked above the FindLoops walker plus a
-  third move; N1/N6 put params below. Rat's locals match ours.
-- **Evidence:** the same 97.77 under 1.3.2–2.7; 0 of 720 named-local orders
-  work.
-- **Status:** graph/structure differs.
 
 ### 3.3 (c) Needs a retail-only scheduler edge
 
@@ -557,31 +550,41 @@ corresponding experimental part, which was rejected for lack of provenance.
   source-likely, so it is not applied.
 - **Status:** compiler-missing plus allocator.
 
-### 3.5 (e) Source shape unknown, compiler-invariant
-
-#### `CalcMeshNBTs`
+#### `CalcMeshNBTs` (inferred)
 
 - **Unit:** plugin/matfx/gcn/multiTexGcnPipe. **Size / %:** 4340 b, 98.72,
   SCHED.
 - **Exact difference:** only the inlined `CalcNBTSetup` `vtxFmt != NULL`
-  block. Target issues every table literal and `lbz r3,0xc(r5)` before the
-  first `lbzx r0,r6,r12`, and builds the uv GQR before the norm table stores.
-- **Rule:** list-scheduler priority over a DAG of a different shape; the same
-  under every compiler.
-- **Evidence:** all 720 hazard-preserving orders of the six statements: best
-  99.08.
-- **Status:** source unknown.
+  block. Target issues every `type`/`normFrac` table literal and
+  `lbz r3,0xc(r5)` before the first `lbzx r0,r6,r12` (`size[pos]`), and builds
+  the uv GQR before the norm table stores.
+- **Rule (inferred):** retail has **fewer** alias edges from the `size[pos]`
+  stores to the `vtxFmt` loads, not a different statement order. All 720
+  hazard-preserving orders of the six statements stay at or below about 99.1
+  (best 99.08), so ordering cannot produce the target.
+- **Evidence:** the DWARF params are non-`const` and the locals match, so
+  neither the const lever nor a local change applies. The class is inferred
+  from the schedule shape; no compiler or ablation has reproduced it yet.
+- **Status:** compiler-missing (inferred; reclassified from (e)).
+
+### 3.5 (e) Source shape unknown, compiler-invariant
 
 #### `_rwGCNVtxFmtInstClr`
 
 - **Unit:** world/pipe/p2/gcn/instance/geominst. **Size / %:** 2176 b, 97.13,
   COUNT (`lwz` +1, `stw` +1).
-- **Exact difference:** the RGB565/RGBA4 8× unrolled loops. Ours places the
-  IV `add` early under register pressure, which needs one more callee-saved
-  register.
-- **Evidence:** identical under 1.3.2–2.7. The byte-pointer step
-  `p = (T *)((RwUInt8 *)p + s)` fixed the RGB8 loop (94.33 → 97.13) but not
-  these two.
+- **Exact difference:** the RGB565/RGBA4 8× unrolled loops need one more
+  callee-saved register than retail.
+- **Cause:** the scheduler, not register pressure: `#pragma scheduling off`
+  still interleaves the `add`s. In RGB565 retail's 7th pointer and the IV share
+  a vreg; ours are separate (@19/@18). RGBA4 differs elsewhere: p6/p7 are
+  defined late, which depends on the body DAG.
+- **Evidence:** identical under 1.3.2–2.7. A byte-pointer temp
+  `{RwUInt8 *p = (RwUInt8 *)dstColor; p += stride; dstColor = (RwUInt16 *)p;}`
+  reproduces retail's unrolled 565 block exactly, but breaks the remainder loop
+  and RGBA4 and needs a local that is not in DWARF (98.11, not applied). The
+  byte-pointer step `p = (T *)((RwUInt8 *)p + s)` fixed the RGB8 loop
+  (94.33 → 97.13).
 - **Status:** source unknown.
 
 (`RxLockedPipeUnlock`'s size sum is also in this class; see 3.3.)
@@ -597,7 +600,9 @@ inlined into `UserDataObjectCopy`. RenderWare's explicit `NULL != x`
 comparisons (as in its `rwstrdup` macro) add complexity without changing the
 code; with them it is 520 and stays a `bl`, as in retail. Lever: an
 unexpected auto-inline can be a size-accounting difference in code-neutral
-style, not a compiler difference.
+style, not a compiler difference. The same accounting sets `ExtractNodes`'s
+self-inline depth: its fix needed statements that keep the complexity where
+retail's was (see the solved table and section 2).
 
 ### 3.7 (g) Link-only
 
@@ -613,21 +618,23 @@ residue.
 
 | class | meaning | functions | bytes | fixable how |
 |---|---|---|---|---|
-| (a) | allocator rank unreachable by the numbering rules | 8: `ExtractNodes`, `DlRasterTile`, `_PropagateDependenciesAndKillDeadPaths`, `_rwStringStreamFindAndRead`, `RwTextureStreamRead`, `MatrixOrthoNormalize`, `RwImageApplyMask`, `RpGeometryStreamRead` | 12,044 | a new source lever; most candidates contradict DWARF |
-| (b) | interference graph or pre-RA order differs | 4: `_rwFreeListAllocReal`, `RwImageResample`, `CameraBuildPerspClipPlanes`, `_rpMaterialListStreamRead` | 4,428 | source structure (none found) |
+| (a) | allocator rank unreachable by the numbering rules (or lever rejected) | 5: `_PropagateDependenciesAndKillDeadPaths`, `_rwStringStreamFindAndRead`, `RwTextureStreamRead`, `MatrixOrthoNormalize` (100% lever known, rejected), `_rpMaterialListStreamRead` | 7,316 | a new source lever; most candidates contradict DWARF |
+| (b) | interference graph or pre-RA order differs | 3: `_rwFreeListAllocReal`, `RwImageResample`, `CameraBuildPerspClipPlanes` | 2,920 | source structure (none found) |
 | (c) | needs a retail-only scheduler edge (`dss`/`volb`/`e3n4`, candidate behaviours of compiler B) | 5: `StalacTiteAlloc`, `_rwDlCameraBeginUpdate`, `RxLockedPipeUnlock` (`dss`); `_rwDlRasterShowRaster` (`volb`); `RpMaterialStreamRead` (`e3n4`) | 6,408 | compiler, if the edges gain provenance or more witnesses |
-| (d) | alias precision no compiler has (R9a/R9b/R9c) | 4: `AtomicForAllLineIntersections`, `AtomicForAllSphereIntersections`, `_rpGameCubeMTEffectSend`, `_rwDlNativeTextureWrite` | 4,904 | none known |
-| (e) | source shape unknown, compiler-invariant | 2: `CalcMeshNBTs`, `_rwGCNVtxFmtInstClr` (plus `RxLockedPipeUnlock`'s sum) | 6,516 | source |
+| (d) | alias precision no compiler has (R9a/R9b/R9c, plus `CalcMeshNBTs` inferred) | 5: `AtomicForAllLineIntersections`, `AtomicForAllSphereIntersections`, `_rpGameCubeMTEffectSend`, `_rwDlNativeTextureWrite`, `CalcMeshNBTs` | 9,244 | none known |
+| (e) | source shape unknown, compiler-invariant | 1: `_rwGCNVtxFmtInstClr` (plus `RxLockedPipeUnlock`'s sum) | 2,176 | source |
 | (f) | inliner decision | 0 (`UserDataListCopy` solved) | 0 | - |
 | (g) | link-only | unit `rtslerp` (0 functions) | 0 | `.sdata2` ordering without the stripped functions |
-| **total** | | **23** | **34,300** | |
+| **total** | | **19** | **28,064** | |
 
 Roughly:
-- 9 functions (11,312 bytes) are blocked by retail behaviour that no archived
-  compiler has: the three rejected edges (c) and alias precision (d).
-- 12 functions (16,472 bytes) are register-allocator residue (a, b). All have
-  exact replays; none has a source lever consistent with DWARF.
-- 2 functions are source questions with unknown shapes (e).
+- 10 functions (15,652 bytes) are blocked by retail behaviour that no archived
+  compiler has: the three rejected edges (c) and alias precision (d, with
+  `CalcMeshNBTs` inferred).
+- 8 functions (10,236 bytes) are register-allocator residue (a, b). All have
+  exact replays; only `MatrixOrthoNormalize` has a known source lever, and it
+  was rejected as not source-likely.
+- 1 function is a source question with an unknown shape (e).
 
 **Where the evidence is thin:**
 - `dss` rests on three functions but its direct-symbol condition is fitted to
@@ -635,6 +642,8 @@ Roughly:
   `e3n4` rests on one function.
 - R9b's discriminator is unknown: retail serialises the structurally
   identical `GetTexFrameMatrix` loop.
+- `CalcMeshNBTs` is in (d) by inference from the schedule shape (fewer
+  `size[pos]`→`vtxFmt` edges), not from a reproduced compiler behaviour.
 - The (b) entries' pre-RA orders were shown to reproduce the target by editing
   the capture (`RwImageResample`, `_rwFreeListAllocReal`), not by a source
   change.
