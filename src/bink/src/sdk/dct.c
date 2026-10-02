@@ -1180,8 +1180,9 @@ void FastmIDCT8x8WithMotion(u8 PTR4* dest, s32 pitch, s16 PTR4* in, u32 quant, u
                 s32 odd_out0 = odd_pair0 + odd_pair1;
                 odd1 = DCT_FIXED_MUL(odd1, DCT_IDCT_A2);
                 row[DCT_COL6] = (DCT_FIXED_MUL(odd0, DCT_IDCT_A4) + odd_rot) - odd_out0;
+                odd1 -= odd_rot;
                 row[DCT_COL5] = DCT_FIXED_MUL(odd_pair0 - odd_pair1, DCT_IDCT_A1) - row[DCT_COL6];
-                row[DCT_COL4] = (odd1 - odd_rot) + row[DCT_COL5];
+                row[DCT_COL4] = odd1 + row[DCT_COL5];
 
                 ++in;
                 ++q;

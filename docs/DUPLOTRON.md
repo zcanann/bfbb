@@ -8971,3 +8971,20 @@ blocks with padding. Full source build and retail DOL SHA-1
 306526d90b48e99894c3138f5fc8f2716d9fecf6 pass. The deduplicated report
 changes only these three functions. The `dct` unit remains NonMatching;
 the retail hash does not establish source-linked IDCT playback.
+
+## Bink motion-IDCT tail reuse (2026-10-01)
+
+`FastmIDCT8x8WithMotion` improves from 58.33209% to 58.347015% by
+subtracting the odd rotation into the already-scaled `odd1` temporary before
+computing the cross term. The arithmetic and fixed-point rounding stay the
+same. Byte and doubled IDCT scores remain 63.765182% and 71.951416%.
+
+The scalar reference check passes 32,768 byte/doubled cases and 16,384
+motion blocks, including padded pitches. The full source compilation and
+retail DOL hash check pass, with no other function-score changes. `dct.c`
+is still NonMatching; the normal DOL link uses its original object, so that
+hash does not verify source-linked Bink playback.
+
+Other rotation-sum reuse forms regressed or were unchanged. This pass also
+rejected new iAnimSKB multiply-order, zCombo local-lifetime, and glare-render
+macro/indexing experiments; all three game sources were restored and rebuilt.
