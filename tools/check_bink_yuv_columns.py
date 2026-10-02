@@ -173,10 +173,14 @@ def main():
                 ('input cursor', 'S.y1 = (u32 PTR4*)yptr1;',
                  'S.y1 = (u32 PTR4*)(yptr1 + 1);', 'FAIL context/cursors'),
             )
+            start = source.index('static u32 ' + FUNCTIONS[0] + '(')
+            end = source.index('\n}', start) + 2
+            control = source[start:end]
             for name, original, replacement, expected in mutations:
-                if source.count(original) != 1:
+                if control.count(original) != 1:
                     raise RuntimeError('Negative-control mutation site changed: ' + name)
-                result = run(source.replace(original, replacement))
+                mutated = control.replace(original, replacement)
+                result = run(source[:start] + mutated + source[end:])
                 if result.returncode != 1 or expected not in result.stdout:
                     raise RuntimeError('Negative control did not detect ' + name + ': ' + result.stdout)
                 print('PASS negative control (' + name + '): ' + result.stdout.strip())

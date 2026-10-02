@@ -1826,8 +1826,10 @@ static void dounaligned32arowm2h(u32 phase, u32 count)
 static u32 dounaligned32acolm2h(u32 count, s32 phase)
 {
     const u32 PTR4* table;
+    u32 PTR4* out;
     u32 remaining;
-    u8 PTR4* yptr;
+    u8 PTR4* yptr0;
+    u8 PTR4* yptr1;
     u8 PTR4* aptr;
     u32 y;
     u32 a;
@@ -1836,25 +1838,27 @@ static u32 dounaligned32acolm2h(u32 count, s32 phase)
     table = mono32;
     remaining = count;
     do {
-        yptr = (u8 PTR4*)S.y0;
+        out = (u32 PTR4*)S.dest0;
+        yptr0 = (u8 PTR4*)S.y0;
         aptr = (u8 PTR4*)S.a0;
-        y = *yptr++;
+        y = *yptr0++;
         a = *aptr++;
-        S.y0 = (u32 PTR4*)yptr;
+        S.y0 = (u32 PTR4*)yptr0;
         S.a0 = (u32 PTR4*)aptr;
         pixel = table[y];
         pixel |= a << RGB_ALPHA_SHIFT;
-        *(u32 PTR4*)S.dest0 = pixel;
+        *out = pixel;
         *(u32 PTR4*)(S.dest0 + S.pitch) = pixel;
-        yptr = (u8 PTR4*)S.y1;
+        out = (u32 PTR4*)S.dest1;
+        yptr1 = (u8 PTR4*)S.y1;
         aptr = (u8 PTR4*)S.a1;
-        y = *yptr++;
+        y = *yptr1++;
         a = *aptr++;
-        S.y1 = (u32 PTR4*)yptr;
+        S.y1 = (u32 PTR4*)yptr1;
         S.a1 = (u32 PTR4*)aptr;
         pixel = table[y];
         pixel |= a << RGB_ALPHA_SHIFT;
-        *(u32 PTR4*)S.dest1 = pixel;
+        *out = pixel;
         *(u32 PTR4*)(S.dest1 + S.pitch) = pixel;
         S.dest0 += YUV_PACKED_WORD_BYTES;
         S.dest1 += YUV_PACKED_WORD_BYTES;
@@ -1899,7 +1903,8 @@ static u32 dounaligned32acolm2wh(u32 count, s32 phase)
 {
     const u32 PTR4* table;
     u32 remaining;
-    u8 PTR4* yptr;
+    u8 PTR4* yptr0;
+    u8 PTR4* yptr1;
     u8 PTR4* aptr;
     u32 y;
     u32 a;
@@ -1909,11 +1914,11 @@ static u32 dounaligned32acolm2wh(u32 count, s32 phase)
     table = mono32;
     remaining = count;
     do {
-        yptr = (u8 PTR4*)S.y0;
+        yptr0 = (u8 PTR4*)S.y0;
         aptr = (u8 PTR4*)S.a0;
-        y = *yptr++;
+        y = *yptr0++;
         a = *aptr++;
-        S.y0 = (u32 PTR4*)yptr;
+        S.y0 = (u32 PTR4*)yptr0;
         S.a0 = (u32 PTR4*)aptr;
         pixel0 = table[y];
         pixel0 |= a << RGB_ALPHA_SHIFT;
@@ -1921,11 +1926,11 @@ static u32 dounaligned32acolm2wh(u32 count, s32 phase)
         ((u32 PTR4*)S.dest0)[1] = pixel0;
         *(u32 PTR4*)(S.dest0 + S.pitch) = pixel0;
         *(u32 PTR4*)(S.dest0 + S.pitch + YUV_PACKED_WORD_BYTES) = pixel0;
-        yptr = (u8 PTR4*)S.y1;
+        yptr1 = (u8 PTR4*)S.y1;
         aptr = (u8 PTR4*)S.a1;
-        y = *yptr++;
+        y = *yptr1++;
         a = *aptr++;
-        S.y1 = (u32 PTR4*)yptr;
+        S.y1 = (u32 PTR4*)yptr1;
         S.a1 = (u32 PTR4*)aptr;
         pixel1 = table[y];
         pixel1 |= a << RGB_ALPHA_SHIFT;
