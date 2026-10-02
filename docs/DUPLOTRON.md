@@ -9179,3 +9179,41 @@ retail SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6. Artifacts:
 build/binkread-doframe-cursor-final-report.json and
 build/binkread-doframe-cursor-final-validation.log. binkread.c remains
 NonMatching, so this does not establish source-linked movie playback.
+
+## Tiled RGB16 chroma-table correction (2026-10-02)
+
+The four colored RGB16 kernels selected the opposite clamp tables from retail:
+the U-derived contribution must bias clamp_r, and the V-derived contribution
+must bias clamp_b. The target object's address arithmetic and the existing
+scalar RGB565 conversion in yuv.cpp independently show this pairing. Correcting
+it fixes the reconstructed tiled conversion's channel placement. Halfword luma
+extraction, clamp-pointer lifetime, and alpha expression order also recover
+more of retail's code generation without assembly or compiler changes.
+
+The deduplicated ngcrgb unit score rises from 84.92959% to 85.381485%:
+
+| Function | Before | After |
+| --- | ---: | ---: |
+| YUV_16_4x2_even | 77.10185% | 77.07407% |
+| YUV_16x2_4x2_even | 76.943726% | 78.09091% |
+| YUV_16a4_4x2_even | 62.104694% | 64.595665% |
+| YUV_16a4x2_4x2_even | 61.277027% | 62.68919% |
+
+The first kernel's 0.02778-point decrease is an intentional tradeoff for the
+confirmed table correction; retaining the old pairing would preserve wrong
+pixel values. No other project function changes score and no symbols disappear.
+Delta-bundle countdown experiments produced no gain and were restored.
+
+The new tools/check_bink_rgb16.py compiles the production kernels with a host
+compiler and compares them to a separate scalar pixel and tile-address oracle.
+It uses synthetic valid lookup tables and packed words modeling big-endian
+loads. All 13,568 cases pass across normal/doubled output, alpha, padded pitches,
+row/tile boundaries, pointer advances, and untouched output guards. The prior
+source fails the first case (0x58005800 versus expected 0x000b000b), confirming
+that the check detects the repaired channel error.
+
+Full all-source compilation passes and the normal DOL retains retail SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. Artifacts:
+build/ngcrgb-chroma-integrated-report.json and
+build/ngcrgb-chroma-integrated-validation.log. ngcrgb remains NonMatching;
+the host check does not establish source-linked GameCube movie playback.

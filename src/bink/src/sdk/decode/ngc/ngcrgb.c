@@ -105,10 +105,12 @@ typedef enum RGBClampLayout
     ((u16)(blue_table)[(y) + (blue)] | (u16)(red_table)[(y) + (red)] | (u16)(green_table)[(y) + (green)] |          \
      (u16)(alpha_table)[(alpha)])
 #define RGB565_A4_PREBIASED(red_table, green_table, blue_table, alpha_table, y, alpha)                             \
-    ((u16)(blue_table)[(y)] | (u16)(red_table)[(y)] | (u16)(green_table)[(y)] | (u16)(alpha_table)[(alpha)])
+    ((u16)(red_table)[(y)] | (u16)(green_table)[(y)] | (u16)(blue_table)[(y)] | (u16)(alpha_table)[(alpha)])
 #define RGB32_M(y) (mono32[(y)])
 #define RGB565_PAIR2(left, right) (((left) << RGB_HALFWORD_SHIFT) | (right))
 
+// As in the scalar 16-bit converter, the U-derived contribution biases clamp_r
+// and the V-derived contribution biases clamp_b in the colored 16-bit kernels.
 // Core kernels consume two luma rows and one chroma row, producing a 4x2 tile
 // chunk. The monochrome paths use mono16/mono32 directly, while color paths
 // bias through the YUV contribution tables prepared by YUV_init.
@@ -471,9 +473,6 @@ void YUV_16_4x2_even(u32 count)
     s32 PTR4* v_to_gb;
     s32 PTR4* u_to_gb;
     s32 PTR4* v_to_r;
-    u32 PTR4* clamp_r_base;
-    u32 PTR4* clamp_g_base;
-    u32 PTR4* clamp_b_base;
     RGBYUVTables PTR4* tables;
 
     linear0 = S.dest0;
@@ -494,9 +493,6 @@ void YUV_16_4x2_even(u32 count)
     v_to_r = tables->v_to_r;
     u_to_gb = tables->u_to_gb;
     v_to_gb = tables->v_to_gb;
-    clamp_r_base = clamp_r + RGB_CLAMP_BIAS;
-    clamp_b_base = clamp_b + RGB_CLAMP_BIAS;
-    clamp_g_base = clamp_g + RGB_CLAMP_BIAS;
 
     row0 = RGB_TILE_ROW(linear0, base, pitch);
     row1 = RGB_TILE_ROW(linear1, base, pitch);
@@ -518,16 +514,16 @@ void YUV_16_4x2_even(u32 count)
         u32 yb;
 
         uword = *u++;
-        vword = *v++;
+        vword = *v;
         yv0 = *y0++;
         uhi = RGB_WORD_BYTE1(uword);
         vhi = RGB_WORD_BYTE1(vword);
         b = u_to_b[uhi];
         gb = u_to_gb[uhi] + v_to_gb[vhi];
         r = v_to_r[vhi];
-        r_table = clamp_r_base + r;
-        gb_table = clamp_g_base + gb;
-        b_table = clamp_b_base + b;
+        r_table = (clamp_r + RGB_CLAMP_BIAS) + b;
+        gb_table = (clamp_g + RGB_CLAMP_BIAS) + gb;
+        b_table = (clamp_b + RGB_CLAMP_BIAS) + r;
         ya = ytable[RGB_WORD_BYTE3(yv0)];
         yb = ytable[RGB_WORD_BYTE2(yv0)];
         yv1 = *y1++;
@@ -544,9 +540,9 @@ void YUV_16_4x2_even(u32 count)
         b = u_to_b[ulo];
         gb = u_to_gb[ulo] + v_to_gb[vlo];
         r = v_to_r[vlo];
-        b_table = clamp_b_base + b;
-        gb_table = clamp_g_base + gb;
-        r_table = clamp_r_base + r;
+        r_table = (clamp_r + RGB_CLAMP_BIAS) + b;
+        gb_table = (clamp_g + RGB_CLAMP_BIAS) + gb;
+        b_table = (clamp_b + RGB_CLAMP_BIAS) + r;
         ya = ytable[RGB_WORD_BYTE1(yv0)];
         yb = ytable[RGB_WORD_BYTE0(yv0)];
         dest0[RGB_TILE_WORD1] =
@@ -559,6 +555,7 @@ void YUV_16_4x2_even(u32 count)
             RGB565_PAIR2(RGB565_PREBIASED(r_table, gb_table, b_table, ya), RGB565_PREBIASED(r_table, gb_table, b_table, yb));
         dest1 += RGB_TILE_HALF_BLOCK_WORDS;
 
+        ++v;
         count--;
     } while (count != 0);
 
@@ -640,9 +637,9 @@ void YUV_16x2_4x2_even(u32 count)
         gb = tables->u_to_gb[uhi] + tables->v_to_gb[vhi];
         b = tables->u_to_b[uhi];
         r = tables->v_to_r[vhi];
-        b_table = clamp_b_base + b;
+        b_table = clamp_b_base + r;
         gb_table = clamp_g_base + gb;
-        r_table = clamp_r_base + r;
+        r_table = clamp_r_base + b;
         yhalf = yv0 >> RGB_HALFWORD_SHIFT;
         ya = ytable[RGB_WORD_BYTE1(yhalf)];
         yb = ytable[RGB_WORD_BYTE0(yhalf)];
@@ -665,9 +662,9 @@ void YUV_16x2_4x2_even(u32 count)
         r = tables->v_to_r[vlo];
         b = tables->u_to_b[ulo];
         gb = tables->u_to_gb[ulo] + tables->v_to_gb[vlo];
-        b_table = clamp_b_base + b;
+        b_table = clamp_b_base + r;
         gb_table = clamp_g_base + gb;
-        r_table = clamp_r_base + r;
+        r_table = clamp_r_base + b;
         yv0 = (u16)yv0;
         ya = ytable[RGB_WORD_BYTE1(yv0)];
         yb = ytable[RGB_WORD_BYTE0(yv0)];
@@ -1294,6 +1291,7 @@ void YUV_16a4_4x2_even(u32 count)
         u32 PTR4* b_table;
         u32 PTR4* gb_table;
         u32 PTR4* r_table;
+        u16 yhalf;
         u32 ya;
         u32 yb;
 
@@ -1306,19 +1304,21 @@ void YUV_16a4_4x2_even(u32 count)
         b = tables->u_to_b[uhi];
         gb = tables->u_to_gb[uhi] + tables->v_to_gb[vhi];
         r = tables->v_to_r[vhi];
-        b_table = clamp_b_base + b;
+        b_table = clamp_b_base + r;
         gb_table = clamp_g_base + gb;
-        r_table = clamp_r_base + r;
-        ya = ytable[RGB_WORD_BYTE3(yv0)];
-        yb = ytable[RGB_WORD_BYTE2(yv0)];
+        r_table = clamp_r_base + b;
+        yhalf = yv0 >> RGB_HALFWORD_SHIFT;
+        ya = ytable[RGB_WORD_BYTE1(yhalf)];
+        yb = ytable[RGB_WORD_BYTE0(yhalf)];
         yv1 = *y1++;
         av1 = *a1++;
         dest0[RGB_TILE_WORD0] = RGB565_PAIR2(
             RGB565_A4_PREBIASED(r_table, gb_table, b_table, clamp_a4_base, ya, RGB_WORD_BYTE3(av0)),
             RGB565_A4_PREBIASED(r_table, gb_table, b_table, clamp_a4_base, yb, RGB_WORD_BYTE2(av0)));
 
-        ya = ytable[RGB_WORD_BYTE3(yv1)];
-        yb = ytable[RGB_WORD_BYTE2(yv1)];
+        yhalf = yv1 >> RGB_HALFWORD_SHIFT;
+        ya = ytable[RGB_WORD_BYTE1(yhalf)];
+        yb = ytable[RGB_WORD_BYTE0(yhalf)];
         dest1[RGB_TILE_WORD0] = RGB565_PAIR2(
             RGB565_A4_PREBIASED(r_table, gb_table, b_table, clamp_a4_base, ya, RGB_WORD_BYTE3(av1)),
             RGB565_A4_PREBIASED(r_table, gb_table, b_table, clamp_a4_base, yb, RGB_WORD_BYTE2(av1)));
@@ -1329,8 +1329,9 @@ void YUV_16a4_4x2_even(u32 count)
         b = tables->u_to_b[ulo];
         r = tables->v_to_r[vlo];
         gb_table = clamp_g_base + gb;
-        r_table = clamp_r_base + r;
-        b_table = clamp_b_base + b;
+        r_table = clamp_r_base + b;
+        b_table = clamp_b_base + r;
+        yv0 = (u16)yv0;
         ya = ytable[RGB_WORD_BYTE1(yv0)];
         yb = ytable[RGB_WORD_BYTE0(yv0)];
         dest0[RGB_TILE_WORD1] = RGB565_PAIR2(
@@ -1338,6 +1339,7 @@ void YUV_16a4_4x2_even(u32 count)
             RGB565_A4_PREBIASED(r_table, gb_table, b_table, clamp_a4_base, yb, RGB_WORD_BYTE0(av0)));
         dest0 += RGB_TILE_HALF_BLOCK_WORDS;
 
+        yv1 = (u16)yv1;
         ya = ytable[RGB_WORD_BYTE1(yv1)];
         yb = ytable[RGB_WORD_BYTE0(yv1)];
         dest1[RGB_TILE_WORD1] = RGB565_PAIR2(
@@ -1446,8 +1448,8 @@ void YUV_16a4x2_4x2_even(u32 count)
         r = v_to_r[vhi];
         b = u_to_b[uhi];
         gb_table = clamp_g_base + gb;
-        r_table = clamp_r_base + r;
-        b_table = clamp_b_base + b;
+        r_table = clamp_r_base + b;
+        b_table = clamp_b_base + r;
         yhalf = yv0 >> RGB_HALFWORD_SHIFT;
         ya = ytable[RGB_WORD_BYTE1(yhalf)];
         yb = ytable[RGB_WORD_BYTE0(yhalf)];
@@ -1474,9 +1476,9 @@ void YUV_16a4x2_4x2_even(u32 count)
         r = v_to_r[vlo];
         b = u_to_b[ulo];
         gb = u_to_gb[ulo] + v_to_gb[vlo];
-        b_table = clamp_b_base + b;
+        b_table = clamp_b_base + r;
         gb_table = clamp_g_base + gb;
-        r_table = clamp_r_base + r;
+        r_table = clamp_r_base + b;
         av0 = (u16)av0;
         yv0 = (u16)yv0;
         ya = ytable[RGB_WORD_BYTE1(yv0)];
