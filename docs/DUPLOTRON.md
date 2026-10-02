@@ -8876,3 +8876,19 @@ The deduplicated report retains the three incoming vector-helper matches
 and changes only this additional function, with no regressions. Plankton
 impart_velocity remains 91.12676%. The `dct` unit remains NonMatching;
 the DOL hash does not validate source-linked IDCT playback.
+
+## Bink doubled IDCT scaled odd intermediate (2026-10-01)
+
+`fastidct8x8d` improves from 69.57085% to 70.42105%. Its first-pass
+odd1 term is scaled into a named intermediate before odd_out0 and the
+remaining odd scratch values are computed. The final tail uses that
+intermediate with the same subtraction and addition. Arithmetic and
+output-store order are unchanged. Naming the other odd scale or pair
+difference gives no improvement, nor does separating the final-pass
+even scaling from its subtraction in any of the three IDCT variants.
+
+The scalar checker passes 32,768 byte/doubled cases and 16,384 motion
+blocks with padding. Full source build and retail DOL SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6 pass. The deduplicated report
+changes only this function. The `dct` unit remains NonMatching, so the
+retail hash does not validate source-linked IDCT playback.

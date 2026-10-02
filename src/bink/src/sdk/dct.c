@@ -1024,10 +1024,11 @@ static void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4
                 s32 odd_pair0 = row1 + row7;
                 s32 odd_pair1 = row5 + row3;
                 s32 odd_rot = DCT_FIXED_MUL(odd_sum, DCT_IDCT_A3);
+                s32 odd_scaled1 = DCT_FIXED_MUL(odd1, DCT_IDCT_A2);
                 s32 odd_out0 = odd_pair0 + odd_pair1;
                 row[DCT_COL6] = (DCT_FIXED_MUL(odd0, DCT_IDCT_A4) + odd_rot) - odd_out0;
                 row[DCT_COL5] = DCT_FIXED_MUL(odd_pair0 - odd_pair1, DCT_IDCT_A1) - row[DCT_COL6];
-                row[DCT_COL4] = (DCT_FIXED_MUL(odd1, DCT_IDCT_A2) - odd_rot) + row[DCT_COL5];
+                row[DCT_COL4] = (odd_scaled1 - odd_rot) + row[DCT_COL5];
 
                 ++inptr;
                 ++qptr;
