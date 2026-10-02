@@ -8843,3 +8843,18 @@ blocks with padding. Full source build and retail DOL SHA-1
 306526d90b48e99894c3138f5fc8f2716d9fecf6 pass. The deduplicated project
 report changes only this function. The `dct` unit remains NonMatching;
 the DOL hash does not establish source-linked IDCT playback.
+
+## Bink doubled IDCT outer-word duplication (2026-10-01)
+
+`fastidct8x8d` improves from 68.38057% to 68.44129% by duplicating the
+bytes of packed words 0 and 3 immediately after each pair is calculated.
+All output stores retain their existing order. Moving the other two
+duplications adds no gain, and splitting the pair calculations into
+earlier partial words adds no gain or regresses, so those forms were
+discarded.
+
+The scalar checker passes 32,768 byte/doubled cases and 16,384 motion
+blocks with padding. The full source build and retail DOL SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6 pass. The deduplicated report
+changes only this function. The `dct` unit remains NonMatching; the DOL
+hash does not validate source-linked IDCT playback.
