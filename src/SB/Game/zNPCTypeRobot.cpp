@@ -3724,6 +3724,8 @@ void zNPCSleepy::RendConeOfDeath(S32 tgt_isBowlingBall)
     F32 u_end = zNPCSleepy::uv_deathcone[0] + zNPCSleepy::uv_slice_deathcone[0];
     F32 v_end = zNPCSleepy::uv_deathcone[1] + zNPCSleepy::uv_slice_deathcone[1];
 
+    const RwRGBA& beg = rgba_beg;
+    const RwRGBA& end = rgba_end;
     RxObjSpace3DVertex* vtx = g_vert_list;
 
     for (S32 i = 0; i < 16; i++)
@@ -3738,8 +3740,7 @@ void zNPCSleepy::RendConeOfDeath(S32 tgt_isBowlingBall)
         pos_vtx = vec_ray * 0.1f + pos_top;
 
         RwIm3DVertexSetPos(&vtx[0], pos_vtx.x, pos_vtx.y, pos_vtx.z);
-        RwIm3DVertexSetRGBA(&vtx[0], rgba_beg.red, rgba_beg.green, rgba_beg.blue,
-                            rgba_beg.alpha);
+        RwIm3DVertexSetRGBA(&vtx[0], beg.red, beg.green, beg.blue, beg.alpha);
 
         F32 u_off = 0.0625f * ((i & 1) ? i : i + 1);
         F32 v_off = 0.0f;
@@ -3750,8 +3751,7 @@ void zNPCSleepy::RendConeOfDeath(S32 tgt_isBowlingBall)
         pos_vtx = vec_ray * 0.5f + pos_bot;
 
         RwIm3DVertexSetPos(&vtx[1], pos_vtx.x, pos_vtx.y, pos_vtx.z);
-        RwIm3DVertexSetRGBA(&vtx[1], rgba_end.red, rgba_end.green, rgba_end.blue,
-                            rgba_end.alpha);
+        RwIm3DVertexSetRGBA(&vtx[1], end.red, end.green, end.blue, end.alpha);
         RwIm3DVertexSetUV(&vtx[1], u_seg, v_end);
 
         vtx += 2;
