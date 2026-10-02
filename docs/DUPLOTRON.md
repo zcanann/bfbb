@@ -9603,3 +9603,22 @@ functions. The normal linked DOL retains SHA-1
 306526d90b48e99894c3138f5fc8f2716d9fecf6. These units remain NonMatching;
 the host checks exercise pixel conversion, addressing, context, and guards,
 while the retail hash does not establish source playback or gameplay.
+
+## Player catch-tunnel iteration setup (2026-10-02)
+
+`zEntPlayer_Update` improves from 98.71497% to 98.76138% in the full
+deduplicated report. The catch-tunnel sweep counter is reset before forming
+its endpoint instead of in the following loop initializer. The counter is
+still reset on every traversal entry, and the endpoint calculation cannot
+access this local. This follows retail's earlier counter initialization.
+
+All-source compilation passes; no other function scores change, no symbols
+are lost, and the exact-function count is unchanged. The normal linked DOL
+retains SHA-1 `306526d90b48e99894c3138f5fc8f2716d9fecf6`. The player unit
+remains NonMatching; source-linked gameplay is not established by this hash.
+
+NPC shock-loop calculations inferred from DWARF were diagnostic only and
+were discarded. They either retained unwanted position-accessor calls or
+changed empty-loop unrolling without reproducing retail's count reload and
+dead pointer stride. No speculative arithmetic, volatile access, assembly,
+or compiler change is retained.

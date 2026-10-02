@@ -7919,10 +7919,11 @@ patrick_stun_done:
                     goto catchtunnel_reset;
                 }
 
+                iter = 0;
                 vend = vstart + precollide_motion;
                 swscurr = swsredo;
 
-                for (iter = 0; iter < 3; iter++, swscurr++)
+                for (; iter < 3; iter++, swscurr++)
                 {
                     xSweptSpherePrepare(swscurr, &vstart, &vend,
                                         ent->bound.sph.r * CATCH_CAPSULE_RAD);
