@@ -9451,3 +9451,25 @@ Alternate flag widths, initial-depth lifetimes, early root-pointer setup,
 and separate sign-result temporaries were tested and rejected. An inline
 local-word form gives the same score as the existing helper; the helper
 is retained to remove duplicated decoding logic.
+
+## Bink lossless decoder final-plane guards (2026-10-02)
+
+`ReadBPLossless` improves from 91.87185% to 92.44140% in the full
+deduplicated report. The final-plane cursor is initialized inside the
+nonzero-plane guard, followed by a separate cursor/end comparison. This
+follows retail's cursor assignment and branch order more closely. Final
+positive/negative unit coefficients reuse the existing code scratch word;
+the negative constant still passes through a signed 16-bit conversion,
+and stores preserve the same 16-bit coefficient representation.
+
+The bitplane checker passes 6,911 nonempty lossy round trips, 27,644 early
+cutoff checks, and 16,384 lossless round trips with bit-length, reservoir,
+and output-guard checks. The full source build passes; no other function
+scores change and no symbols disappear. The linked DOL retains retail
+SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6. bitplane remains
+NonMatching, so the DOL hash does not establish source playback.
+
+Workspace-pointer address forms, wider/inverted plane flags, skipping
+zero planes earlier, and alternate coefficient-address scheduling were
+tested and rejected. Remaining differences include register allocation,
+the initial-plane condition lifetime, and coefficient address formation.

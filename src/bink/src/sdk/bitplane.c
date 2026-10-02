@@ -966,155 +966,157 @@ lossless_node_done:
     }
 
     /* Level one coeffs need only a sign bit; their magnitude is implicit. */
-    if (had_level && next_node_ptr < tree_end_ptr) {
+    if (had_level) {
         node_ptr = next_node_ptr;
-        do {
-            node = *node_ptr;
-            if (node == BP_READ_TREE_EMPTY_ENTRY) {
-                goto next_lossless_final_node;
-            } else {
+        if (node_ptr < tree_end_ptr) {
+            do {
+                node = *node_ptr;
+                if (node == BP_READ_TREE_EMPTY_ENTRY) {
+                    goto next_lossless_final_node;
+                } else {
+                    if (bitcount != 0) {
+                        bitcount = bitcount - 1;
+                        code = bitbuf & BP_BIT_MASK;
+                        bitbuf >>= 1;
+                        if (code != 0) {
+                            goto decode_lossless_final_node;
+                        }
+                        goto next_lossless_final_node;
+                    } else {
+                        u32 word = *words;
+                        bitcount = BP_WORD_TOP_BIT;
+                        words++;
+                        bitbuf = word >> 1;
+                        if ((word & BP_BIT_MASK) == 0) {
+                            goto next_lossless_final_node;
+                        }
+                    }
+decode_lossless_final_node:
+                    switch (BP_READ_TREE_KIND(node)) {
+                    case BP_READ_TREE_HIGH_NODE:
+                        base = BP_READ_TREE_INDEX(node);
+                        *node_ptr = BP_READ_TREE_GROUP_FROM_INDEX(base);
+                        goto decoded_lossless_final_children;
+                    case BP_READ_TREE_GROUP_NODE:
+                        node = BP_READ_TREE_INDEX(node);
+                        *node_ptr = BP_READ_TREE_BRANCH(node);
+                        *tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(node, BP_READ_TREE_CHILD1_BASE);
+                        *++tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(node, BP_READ_TREE_CHILD2_BASE);
+                        *++tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(node, BP_READ_TREE_CHILD3_BASE);
+                        ++tree_end_ptr;
+                        goto after_lossless_final_children;
+                    case BP_READ_TREE_BRANCH_NODE:
+                        *node_ptr = BP_READ_TREE_EMPTY_ENTRY;
+                        node_ptr++;
+                        goto handle_lossless_final_children;
+                    case BP_READ_TREE_COEFF_NODE:
+                        goto deferred_lossless_final;
+                    default:
+                        goto next_lossless_final_node;
+                    }
+
+handle_lossless_final_children:
+                    base = BP_READ_TREE_INDEX(node);
+decoded_lossless_final_children:
+#define READ_LOSSLESS_FINAL_CHILD(slot, label)                                                                      \
+                        do {                                                                                            \
+                            u16* coeff_dest;                                                                           \
+                            if (bitcount != 0) {                                                                        \
+                                bitcount = bitcount - 1;                                                                \
+                                code = bitbuf & BP_BIT_MASK;                                                            \
+                                bitbuf >>= 1;                                                                           \
+                                if (code != 0) {                                                                        \
+                                    goto label##_push;                                                                  \
+                                }                                                                                       \
+                            } else {                                                                                    \
+                                u32 word = *words;                                                                      \
+                                bitcount = BP_WORD_TOP_BIT;                                                             \
+                                bitbuf = word >> 1;                                                                     \
+                                words++;                                                                                \
+                                if ((word & BP_BIT_MASK) != 0) {                                                        \
+label##_push:                                                                                                       \
+                                    next_node_ptr--;                                                                    \
+                                    *next_node_ptr = BP_READ_TREE_COEFF(slot);                                          \
+                                    goto label;                                                                         \
+                                }                                                                                       \
+                            }                                                                                           \
+                            coeff_dest = &workspace.coeffs.values[slot];                                               \
+                            if (bitcount != 0) {                                                                        \
+                                bitcount = bitcount - 1;                                                                \
+                                code = bitbuf & BP_BIT_MASK;                                                            \
+                                bitbuf >>= 1;                                                                           \
+                                if (code != 0) {                                                                        \
+                                    goto label##_negative;                                                              \
+                                }                                                                                       \
+                                goto label##_positive;                                                                  \
+                            } else {                                                                                    \
+                                u32 word = *words;                                                                      \
+                                bitcount = BP_WORD_TOP_BIT;                                                             \
+                                words++;                                                                                \
+                                bitbuf = word >> 1;                                                                     \
+                                if ((word & BP_BIT_MASK) == 0) {                                                        \
+                                    goto label##_positive;                                                              \
+                                }                                                                                       \
+                            }                                                                                           \
+label##_negative:                                                                                                   \
+                            code = (s16)BP_NEGATIVE_COEFF_SIGN;                                                              \
+                            goto label##_store;                                                                         \
+label##_positive:                                                                                                   \
+                            code = BP_POSITIVE_COEFF_SIGN;                                                              \
+label##_store:                                                                                                      \
+                            *coeff_dest = (u16)code;                                                            \
+                        } while (0)
+                        READ_LOSSLESS_FINAL_CHILD(base, after_lossless_final0);
+after_lossless_final0:
+                        base++;
+                        READ_LOSSLESS_FINAL_CHILD(base, after_lossless_final1);
+after_lossless_final1:
+                        base++;
+                        READ_LOSSLESS_FINAL_CHILD(base, after_lossless_final2);
+after_lossless_final2:
+                        base++;
+                        READ_LOSSLESS_FINAL_CHILD(base, after_lossless_final3);
+after_lossless_final3:
+#undef READ_LOSSLESS_FINAL_CHILD
+                    ;
+after_lossless_final_children:
+                    ;
+                }
+                goto lossless_final_done;
+deferred_lossless_final:
+                deferred_dest = &workspace.coeffs.values[BP_READ_TREE_INDEX(node)];
                 if (bitcount != 0) {
                     bitcount = bitcount - 1;
                     code = bitbuf & BP_BIT_MASK;
                     bitbuf >>= 1;
                     if (code != 0) {
-                        goto decode_lossless_final_node;
+                        goto lossless_final_negative;
                     }
-                    goto next_lossless_final_node;
+                    goto lossless_final_positive;
                 } else {
                     u32 word = *words;
                     bitcount = BP_WORD_TOP_BIT;
                     words++;
                     bitbuf = word >> 1;
                     if ((word & BP_BIT_MASK) == 0) {
-                        goto next_lossless_final_node;
+                        goto lossless_final_positive;
                     }
                 }
-decode_lossless_final_node:
-                switch (BP_READ_TREE_KIND(node)) {
-                case BP_READ_TREE_HIGH_NODE:
-                    base = BP_READ_TREE_INDEX(node);
-                    *node_ptr = BP_READ_TREE_GROUP_FROM_INDEX(base);
-                    goto decoded_lossless_final_children;
-                case BP_READ_TREE_GROUP_NODE:
-                    node = BP_READ_TREE_INDEX(node);
-                    *node_ptr = BP_READ_TREE_BRANCH(node);
-                    *tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(node, BP_READ_TREE_CHILD1_BASE);
-                    *++tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(node, BP_READ_TREE_CHILD2_BASE);
-                    *++tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(node, BP_READ_TREE_CHILD3_BASE);
-                    ++tree_end_ptr;
-                    goto after_lossless_final_children;
-                case BP_READ_TREE_BRANCH_NODE:
-                    *node_ptr = BP_READ_TREE_EMPTY_ENTRY;
-                    node_ptr++;
-                    goto handle_lossless_final_children;
-                case BP_READ_TREE_COEFF_NODE:
-                    goto deferred_lossless_final;
-                default:
-                    goto next_lossless_final_node;
-                }
-
-handle_lossless_final_children:
-                base = BP_READ_TREE_INDEX(node);
-decoded_lossless_final_children:
-#define READ_LOSSLESS_FINAL_CHILD(slot, label)                                                                      \
-                    do {                                                                                            \
-                        u16* coeff_dest;                                                                           \
-                        if (bitcount != 0) {                                                                        \
-                            bitcount = bitcount - 1;                                                                \
-                            code = bitbuf & BP_BIT_MASK;                                                            \
-                            bitbuf >>= 1;                                                                           \
-                            if (code != 0) {                                                                        \
-                                goto label##_push;                                                                  \
-                            }                                                                                       \
-                        } else {                                                                                    \
-                            u32 word = *words;                                                                      \
-                            bitcount = BP_WORD_TOP_BIT;                                                             \
-                            bitbuf = word >> 1;                                                                     \
-                            words++;                                                                                \
-                            if ((word & BP_BIT_MASK) != 0) {                                                        \
-label##_push:                                                                                                       \
-                                next_node_ptr--;                                                                    \
-                                *next_node_ptr = BP_READ_TREE_COEFF(slot);                                          \
-                                goto label;                                                                         \
-                            }                                                                                       \
-                        }                                                                                           \
-                        coeff_dest = &workspace.coeffs.values[slot];                                               \
-                        if (bitcount != 0) {                                                                        \
-                            bitcount = bitcount - 1;                                                                \
-                            code = bitbuf & BP_BIT_MASK;                                                            \
-                            bitbuf >>= 1;                                                                           \
-                            if (code != 0) {                                                                        \
-                                goto label##_negative;                                                              \
-                            }                                                                                       \
-                            goto label##_positive;                                                                  \
-                        } else {                                                                                    \
-                            u32 word = *words;                                                                      \
-                            bitcount = BP_WORD_TOP_BIT;                                                             \
-                            words++;                                                                                \
-                            bitbuf = word >> 1;                                                                     \
-                            if ((word & BP_BIT_MASK) == 0) {                                                        \
-                                goto label##_positive;                                                              \
-                            }                                                                                       \
-                        }                                                                                           \
-label##_negative:                                                                                                   \
-                        coeff_value = (s16)BP_NEGATIVE_COEFF_SIGN;                                                              \
-                        goto label##_store;                                                                         \
-label##_positive:                                                                                                   \
-                        coeff_value = BP_POSITIVE_COEFF_SIGN;                                                              \
-label##_store:                                                                                                      \
-                        *coeff_dest = (u16)coeff_value;                                                            \
-                    } while (0)
-                    READ_LOSSLESS_FINAL_CHILD(base, after_lossless_final0);
-after_lossless_final0:
-                    base++;
-                    READ_LOSSLESS_FINAL_CHILD(base, after_lossless_final1);
-after_lossless_final1:
-                    base++;
-                    READ_LOSSLESS_FINAL_CHILD(base, after_lossless_final2);
-after_lossless_final2:
-                    base++;
-                    READ_LOSSLESS_FINAL_CHILD(base, after_lossless_final3);
-after_lossless_final3:
-#undef READ_LOSSLESS_FINAL_CHILD
-                ;
-after_lossless_final_children:
-                ;
-            }
-            goto lossless_final_done;
-deferred_lossless_final:
-            deferred_dest = &workspace.coeffs.values[BP_READ_TREE_INDEX(node)];
-            if (bitcount != 0) {
-                bitcount = bitcount - 1;
-                code = bitbuf & BP_BIT_MASK;
-                bitbuf >>= 1;
-                if (code != 0) {
-                    goto lossless_final_negative;
-                }
-                goto lossless_final_positive;
-            } else {
-                u32 word = *words;
-                bitcount = BP_WORD_TOP_BIT;
-                words++;
-                bitbuf = word >> 1;
-                if ((word & BP_BIT_MASK) == 0) {
-                    goto lossless_final_positive;
-                }
-            }
 lossless_final_negative:
-            coeff_value = (s16)BP_NEGATIVE_COEFF_SIGN;
-            goto lossless_final_store;
+                code = (s16)BP_NEGATIVE_COEFF_SIGN;
+                goto lossless_final_store;
 lossless_final_positive:
-            coeff_value = BP_POSITIVE_COEFF_SIGN;
+                code = BP_POSITIVE_COEFF_SIGN;
 lossless_final_store:
-            *deferred_dest = (u16)coeff_value;
-            *node_ptr = BP_READ_TREE_EMPTY_ENTRY;
-            goto next_lossless_final_node;
+                *deferred_dest = (u16)code;
+                *node_ptr = BP_READ_TREE_EMPTY_ENTRY;
+                goto next_lossless_final_node;
 next_lossless_final_node:
-            node_ptr++;
+                node_ptr++;
 lossless_final_done:
-            ;
-        } while (node_ptr < tree_end_ptr);
+                ;
+            } while (node_ptr < tree_end_ptr);
+        }
     }
 
     bitcopy.cur = words;
