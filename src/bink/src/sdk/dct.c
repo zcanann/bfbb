@@ -1003,12 +1003,13 @@ static void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4
             s32 row2 = DCT_DEQUANT(inptr, qptr, DCT_ROW2);
             s32 row6 = DCT_DEQUANT(inptr, qptr, DCT_ROW6);
             s32 even_sum = row2 + row6;
-            s32 even_diff = DCT_FIXED_MUL(row2 - row6, DCT_IDCT_A1) - even_sum;
+            s32 even_diff = DCT_FIXED_MUL(row2 - row6, DCT_IDCT_A1);
             s32 row4 = DCT_DEQUANT(inptr, qptr, DCT_ROW4);
             s32 row0 = DCT_DEQUANT(inptr, qptr, DCT_ROW0);
             s32 even0 = row0 + row4;
             s32 even1 = row0 - row4;
             s32 even3 = even0 - even_sum;
+            even_diff -= even_sum;
             row[DCT_COL0] = even0 + even_sum;
             row[DCT_COL1] = even1 + even_diff;
             row[DCT_COL2] = even1 - even_diff;

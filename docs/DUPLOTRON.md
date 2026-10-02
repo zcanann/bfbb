@@ -8858,3 +8858,21 @@ blocks with padding. The full source build and retail DOL SHA-1
 306526d90b48e99894c3138f5fc8f2716d9fecf6 pass. The deduplicated report
 changes only this function. The `dct` unit remains NonMatching; the DOL
 hash does not validate source-linked IDCT playback.
+
+## Bink doubled IDCT scaled even difference (2026-10-01)
+
+`fastidct8x8d` improves from 68.44129% to 69.57085%. The first-pass
+even difference is initially the fixed-point scaled difference of rows
+2 and 6; subtracting their sum is a separate update after the remaining
+even terms are calculated. The arithmetic and output order are unchanged.
+Keeping the unscaled difference until later regresses; reusing the sum
+variable gives a smaller gain. Applying the retained form to byte/motion
+IDCT regresses, so those variants are unchanged.
+
+The scalar checker passes 32,768 byte/doubled cases and 16,384 motion
+blocks with padding. After integrating `a4fd0cd8f`, the full source build
+and retail DOL SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6 pass.
+The deduplicated report retains the three incoming vector-helper matches
+and changes only this additional function, with no regressions. Plankton
+impart_velocity remains 91.12676%. The `dct` unit remains NonMatching;
+the DOL hash does not validate source-linked IDCT playback.
