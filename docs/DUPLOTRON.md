@@ -8751,3 +8751,24 @@ unchanged. Full source build succeeds; the deduplicated project report
 changes only this function. The normal DOL retains retail SHA-1
 306526d90b48e99894c3138f5fc8f2716d9fecf6. `dct` remains NonMatching;
 this is not a source-linked playback claim.
+
+## Bink byte IDCT first-pass odd intermediates (2026-10-01)
+
+`fastidct8x8` improves from 60.765182% to 60.785423% by computing odd
+intermediates directly into scratch columns 6, 5, and 4, rather than
+keeping three scalar results and storing them later. Arithmetic and
+rounding are unchanged. Delaying the cross-term store lost the gain;
+earlier odd dequantization and earlier odd-sum storage added no gain,
+so those follow-ups are not retained.
+
+The scalar-reference checker passes 32,768 IDCT cases for byte/doubled
+outputs plus 16,384 motion blocks, including padded pitches. Full source
+build succeeds; the deduplicated project report changes only this score.
+The normal DOL retains retail SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. `dct` remains NonMatching.
+
+Before pushing, rebased onto concurrent staging commit `b14699bc9` (Core/x
+matching work). The combined full build and retail hash pass. Its nine
+new exact functions and `UpdateRain` improvement are preserved; the
+post-rebase project report has no regressions and the IDCT score is
+unchanged from the validated local result.
