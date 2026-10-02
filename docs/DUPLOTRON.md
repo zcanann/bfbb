@@ -9005,3 +9005,19 @@ The full source build and retail DOL SHA-1 check pass. The project-wide
 report changes only these two function scores, both upward. `ngcsnd.c`
 remains NonMatching, so the normal DOL still links its original object;
 these checks do not establish source-linked audio playback.
+
+## Bink audio upload addressing (2026-10-01)
+
+`NGC_SoundPlay` improves from 97.395065% to 99.87654%. A branch-local
+right-channel task index reproduces retail's separate address calculation;
+the same index form is already used by starvation recovery. Loading the
+play cursor before adding the upload length further improves register
+allocation. The remaining difference is the cursor load and its use in the
+addition (r29 instead of retail r11), with both bodies measuring 324 bytes.
+
+The full source build and retail DOL SHA-1 check pass. The project-wide
+report changes only this function's score; the previous reinitialization
+and lock gains are preserved. `ngcsnd.c` is still NonMatching and the normal
+DOL uses its original object, so the hash does not verify source-linked
+Bink audio playback. Other tested pointer, cursor, and array forms were
+unchanged or worse and were discarded.

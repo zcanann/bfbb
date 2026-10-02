@@ -300,12 +300,13 @@ static void NGC_SoundPlay(BINKSND PTR4* snd, u32 index, u32 upload_bytes)
     ARQRequest PTR4* right_task;
 
     state = NGC_SOUND_STATE(snd);
-    play_end = NGC_SOUND_STATE(snd)->play_cursor + upload_bytes;
+    play_end = NGC_SOUND_STATE(snd)->play_cursor;
+    play_end += upload_bytes;
     task = NGC_LEFT_LOCK_TASK(state, index);
 
     if (NGC_SOUND_STATE(snd)->voices[1] != 0) {
-        right_task = NGC_RIGHT_LOCK_TASK_BASE(state);
-        right_task += index;
+        u32 right_index = NGC_RIGHT_LOCK_TASK_INDEX(index);
+        right_task = NGC_TASK(state, right_index);
 
         DCFlushRange((void PTR4*)right_task->source, upload_bytes);
         ARQPostRequest(right_task, 0, ARQ_TYPE_MRAM_TO_ARAM, ARQ_PRIORITY_HIGH,
