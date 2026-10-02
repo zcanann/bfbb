@@ -1045,10 +1045,10 @@ void YUV_32ax2_4x2_even(u32 count)
         count--;
     } while (count != 0);
 
-    S.y0 = y0;
-    S.y1 = y1;
     S.u = u;
     S.v = v;
+    S.y0 = y0;
+    S.y1 = y1;
     S.a0 = a0;
     S.a1 = a1;
 }
