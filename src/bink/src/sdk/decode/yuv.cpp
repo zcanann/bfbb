@@ -1747,6 +1747,7 @@ static u32 dounaligned32acolm2w(u32 count, s32 phase)
     const u32 PTR4* table;
     u32 remaining;
     u32 y;
+    u32 y1;
     u32 a;
     u32 pixel;
 
@@ -1760,11 +1761,11 @@ static u32 dounaligned32acolm2w(u32 count, s32 phase)
         pixel = table[y] | (a << RGB_ALPHA_SHIFT);
         ((u32 PTR4*)S.dest0)[0] = pixel;
         ((u32 PTR4*)S.dest0)[1] = pixel;
-        y = *(u8 PTR4*)S.y1;
+        y1 = *(u8 PTR4*)S.y1;
         a = *(u8 PTR4*)S.a1;
         S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_LUMA_SAMPLE_BYTES);
         S.a1 = (u32 PTR4*)((u8 PTR4*)S.a1 + YUV_ALPHA_SAMPLE_BYTES);
-        pixel = table[y] | (a << RGB_ALPHA_SHIFT);
+        pixel = table[y1] | (a << RGB_ALPHA_SHIFT);
         ((u32 PTR4*)S.dest1)[0] = pixel;
         ((u32 PTR4*)S.dest1)[1] = pixel;
         S.dest0 += YUV_PACKED_PAIR_BYTES;
