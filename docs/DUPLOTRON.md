@@ -8623,3 +8623,20 @@ The full source build succeeds; the deduplicated project report changes
 only these two scores, and the normal DOL retains retail SHA-1
 306526d90b48e99894c3138f5fc8f2716d9fecf6. `expand` remains NonMatching;
 this does not establish source-linked playback or retail table parsing.
+
+## Bink Huff8 buffered-word consumption (2026-10-01)
+
+The buffered path now shifts the local word in place before storing the
+remaining count and word. Keeping the original count temporary produces
+a better result than also decrementing it in place. This brings
+`CheckReadHuff8Bundle` from 95.113304% to 96.87192%, and
+`NewCheckReadHuff8Bundle` from 97.63077% to 99.46154%. The newer caller's
+remaining raw differences are register assignments, with instruction
+order now matching.
+
+Validation: 135,168 Huff8 cases (four state-dependent reads each) pass
+on the retained version. The related Huff4/countdown/run-block checks
+also passed during this pass. Full source build and retail DOL SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6 pass, and the deduplicated
+project report shows only the two intended improvements. `expand`
+remains NonMatching; no source-linked playback claim is made.
