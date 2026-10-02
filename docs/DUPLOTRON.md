@@ -9786,3 +9786,29 @@ six Player AbsControl shared-scratch forms; and Robot's two-element animation
 array const/aggregate/pointer variants. The animation-array callee was verified
 read-only, but even safe local const forms produced no gain, so no cast or
 wrapper is retained. Robot data remains 100%.
+
+
+## Exact doubled RGBA and alpha-column follow-up (2026-10-02)
+
+YUV_32ax2_4x2_even improves from 96.503204% to 100%, adding one exact
+function and 1,248 exact code bytes. Capturing alpha pointers before chroma
+and luma, then explicitly advancing the five non-V input pointers after the
+first output block, reproduces retail register allocation and scheduling.
+The existing mixed-alpha retail copy and unsigned shifts are preserved.
+No assembly or compiler modifications are involved.
+
+dounaligned32acolm2w improves from 98.36957% to 99.021736% by naming the
+second row's luma sample separately. The independent column oracle now
+covers all five grayscale/alpha column kernels: 45,504 cases and both
+negative controls pass. RGB16 and RGB32 each pass 13,568 cases, for 72,640
+combined pixel/context/guard checks.
+
+After incorporating staging's independent SkinNormals/NPCC_GenSmooth
+updates, combined source compilation and a full deduplicated report verify
+exactly these two additional gains, no removed symbols or score regressions,
+and unchanged matched data and source-linked totals. Overall fuzzy matching
+is 99.451%; exact functions reach 9,934 with 2,208,072 exact code bytes.
+The linked DOL retains SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6;
+these Bink objects remain NonMatching, so this does not establish target
+playback. Evidence: build/parallel-sixth-{baseline-report,report}.json and
+build/parallel-sixth-validation.log.
