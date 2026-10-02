@@ -805,7 +805,7 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
     u32 peek;
     u32 last_high_nibble;
     u32 low_nibble;
-    u32 packed;
+    u8 packed;
     EXPBITSTYPE bit;
 
     if (BINK_BUNDLE_HAS_UNREAD_DATA(bundle)) {
@@ -826,9 +826,10 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
             count = BINK_BUNDLE_REPEAT_COUNT(count);
         }
         do {
-            last_high_nibble = exp_read_huff8(bits, last_high_nibble, huff8_table);
+            packed = exp_read_huff8(bits, last_high_nibble, huff8_table);
+            last_high_nibble = packed;
             low_nibble = exp_read_huff4(bits, peek, decode, syms);
-            packed = HUFF4_PACK_MASKED_NIBBLES(low_nibble, last_high_nibble);
+            packed = HUFF4_PACK_MASKED_NIBBLES(low_nibble, packed);
             *dest++ = (u8)((packed & BINK_SIGNED_BYTE_BIAS) != 0
                                ? BINK_SIGNED_BYTE_NEGATIVE(packed)
                                : BINK_SIGNED_BYTE_POSITIVE(packed));

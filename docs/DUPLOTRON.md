@@ -8664,3 +8664,22 @@ restored 100%; the final deduplicated report changes only the two Huff8
 scores. No cutscene source change was retained; the anomaly's cause is
 not established. The whole `expand` unit remains NonMatching, so the
 exact function match is not a source-linked playback claim.
+
+## Bink old Huff8 decoded-byte lifetime (2026-10-01)
+
+`CheckReadHuff8Bundle` now decodes the high nibble into its byte-sized
+`packed` temporary, saves the next table state, and then reuses the
+temporary for nibble packing. This improves 97.16749% to 98.99015%;
+`NewCheckReadHuff8Bundle` stays at 100%. A separate high-nibble temporary
+regressed to 97.044334%, and a shared u32 packed temporary reached only
+97.14286%; neither is retained. The decoded table symbol is a byte, and
+the masked high nibble combined with a byte-valued low result is also
+within 0..255, so the narrowing preserves every value. An exhaustive
+check of all 65,536 decoded-byte pairs confirmed this.
+
+Huff8's 135,168 stateful cases and Huff4's 67,584 cases plus 1,000
+countdown cases pass. These are helper checks, not complete old-format
+bundle playback tests. Full source build succeeds, the final deduplicated
+project report shows only the intended old-Huff8 improvement, and the
+normal DOL retains retail SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6.
+The whole `expand` unit remains NonMatching.
