@@ -632,13 +632,13 @@ static inline void SkinNormals(xVec3* dest, const xVec3* normal, const RwMatrix*
         for (U32 i = 0; i < 4; i++)
         {
             U32 midx = (*idx >> (i * 8)) & 0xFF;
-            U32 bit = 1 << (midx & 31);
-            if (!(catMatFlags[midx >> 5] & bit))
+            if (!(catMatFlags[midx >> 5] & (1 << (midx & 31))))
             {
-                xMat3x3Mul((xMat3x3*)(catmat + midx), (const xMat3x3*)(skinmat + midx),
+                RwMatrix* cm = catmat + midx;
+                xMat3x3Mul((xMat3x3*)cm, (const xMat3x3*)(skinmat + midx),
                            (const xMat3x3*)(mat + midx));
-                xMat3x3Normalize((xMat3x3*)(catmat + midx), (xMat3x3*)(catmat + midx));
-                catMatFlags[midx >> 5] |= bit;
+                xMat3x3Normalize((xMat3x3*)cm, (xMat3x3*)cm);
+                catMatFlags[midx >> 5] |= 1 << (midx & 31);
             }
         }
 

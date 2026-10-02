@@ -354,6 +354,8 @@ static void iSndMyAXFree(AXVPB**);
 
 static void fcb()
 {
+    U32 source;
+
     if (!soundInited && iTRCDisk::IsDiskIDed())
     {
         return;
@@ -503,7 +505,6 @@ static void fcb()
         }
         if ((orig_flags & 0x800) || (orig_flags & 0x4000000))
         {
-            U32 source;
             U32 length;
             if (orig_flags & 0x800)
             {

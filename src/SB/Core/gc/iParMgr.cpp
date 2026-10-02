@@ -421,8 +421,8 @@ static void iRenderPushFlat(xPar* p, xParCmdTex* tex)
     U8 b = p->m_c[2];
     U8 a = p->m_c[3];
     F32 size = 0.5f * p->m_size;
-    xMat3x3 groundmat;
     F32 yaw = 0.0f;
+    xMat3x3 groundmat;
 
     if (p->m_rotdeg[0])
     {
@@ -462,8 +462,8 @@ static void iRenderPushFlat(xPar* p, xParCmdTex* tex)
     v3d[3].b = b;
     v3d[3].a = a;
 
-    F32 mx = px - xdx;
     F32 mz = pz - xdz;
+    F32 mx = px - xdx;
     F32 sx = px + xdx;
     F32 sz = pz + xdz;
 

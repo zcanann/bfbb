@@ -536,10 +536,10 @@ void xShadowSimple_Add(xShadowSimpleCache* cache, xEnt* ent, F32 radius, F32 ecc
                 vert = cache->poly.vert;
             }
 
-            for (j = 0; j < 3; j++)
+            for (i = 0; i < 3; i++)
             {
-                v0 = &vert[j];
-                v1 = &vert[(j == 2) ? 0 : j + 1];
+                v0 = &vert[i];
+                v1 = &vert[(i == 2) ? 0 : i + 1];
 
                 pdot = (v0->z - v1->z) * (ent->model->Mat->pos.x - v0->x) +
                        (v1->x - v0->x) * (ent->model->Mat->pos.z - v0->z);

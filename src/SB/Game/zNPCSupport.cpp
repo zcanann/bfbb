@@ -529,7 +529,7 @@ void NPCCone::RenderCone(xVec3* pos_tiptop, xVec3* pos_botcenter)
     F32 u_tip = this->uv_tip[0] + 0.5f * this->uv_slice[0];
     F32 v_tip = this->uv_tip[1];
     F32 u_base = this->uv_tip[0] + this->uv_slice[0];
-    F32 v_base = this->uv_tip[1] + this->uv_slice[1];
+    F32 v_base = v_tip + this->uv_slice[1];
     RwRGBA rgba_top = this->rgba_top;
     RwRGBA rgba_bot = this->rgba_bot;
     xVec3 pos_top = *pos_tiptop;
@@ -1390,13 +1390,16 @@ void NPCC_GenSmooth(xVec3** pos_base, xVec3** pos_mid)
     {
         init = 1;
 
-        for (i = 0; i < 4; i++)
+        i = 0;
+        while (i < 4)
         {
             F32 u2, u, u3;
-            F32* pre = prepute[i];
+            F32* pre;
             u = yews[i];
             u2 = u * u;
             u3 = u * u2;
+            pre = prepute[i];
+            i++;
 
             pre[0] = u2 + -0.5f * u3 + -0.5f * u;
             pre[1] = 1.5f * u3 + -2.5f * u2 + 1.0f;
