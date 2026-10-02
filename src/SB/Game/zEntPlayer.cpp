@@ -607,6 +607,7 @@ static void PlayerAbsControl(xEnt* ent, F32 x, F32 z, F32 dt)
     F32 mag = 1.0f;
     F32 rot;
     F32 angle;
+    F32 turnfactor = 7.0f;
     rot = angle = 0.0f;
     maxVelmag = 0.0f;
 
@@ -846,7 +847,7 @@ static void PlayerAbsControl(xEnt* ent, F32 x, F32 z, F32 dt)
                             CLAMP_ANGLE(angle);
 
                             rot = icos(angle);
-                            ent->frame->drot.angle = dt * (7.0f * angle);
+                            ent->frame->drot.angle = dt * (angle * turnfactor);
                             ent->frame->mode |= 0x20;
                         }
 
@@ -854,7 +855,7 @@ static void PlayerAbsControl(xEnt* ent, F32 x, F32 z, F32 dt)
                         {
                             angle *= 0.1f;
                             rot = icos(angle);
-                            ent->frame->drot.angle = dt * (7.0f * angle);
+                            ent->frame->drot.angle = dt * (angle * turnfactor);
                             xMat3x3 rotY;
                             xMat3x3RotY(&rotY, ent->frame->drot.angle);
                             xMat3x3RMulVec(&ent->frame->vel, &rotY, &ent->frame->vel);
@@ -909,7 +910,8 @@ static void PlayerAbsControl(xEnt* ent, F32 x, F32 z, F32 dt)
 
                     if (sLassoCamLinger)
                     {
-                        F32 curFactor = zCameraGetLassoCamFactor() + dt;
+                        F32 curFactor = zCameraGetLassoCamFactor();
+                        curFactor += dt;
                         if (curFactor > 1.0f)
                         {
                             zCameraDisableLassoCam();
@@ -1008,7 +1010,7 @@ static void PlayerAbsControl(xEnt* ent, F32 x, F32 z, F32 dt)
                                 if (fwdComponent > 0.0f)
                                 {
                                     tslide_maxspd_tmr +=
-                                        fwdComponent * dt * pg->g.SlideVelMaxIncAccel;
+                                        fwdComponent * dt * globals.player.g.SlideVelMaxIncAccel;
                                 }
                             }
 
@@ -2063,7 +2065,6 @@ S32 zEntPlayer_InBossBattle()
     );
 }
 
-// Equivalent: scheduling
 static U32 SpatulaGrabCB(xAnimTransition*, xAnimSingle*, void* data)
 {
     sSpatulaGrabbed = 0;
@@ -2096,17 +2097,16 @@ static U32 SpatulaGrabCB(xAnimTransition*, xAnimSingle*, void* data)
     }
 
     xCollis rcoll;
-    xVec3 cam;
-    xVec3 center;
+    xLine3 line;
     xRay3 r;
     rcoll.flags = 0;
 
-    xVec3Copy(&center, &globals.player.ent.bound.cyl.center);
+    xVec3Copy(&line.p1, &globals.player.ent.bound.cyl.center);
 
-    xVec3Copy(&cam, &globals.camera.mat.pos);
+    xVec3Copy(&line.p2, &globals.camera.mat.pos);
 
-    xVec3Copy(&r.origin, &center);
-    xVec3Sub(&r.dir, &cam, &center);
+    xVec3Copy(&r.origin, &line.p1);
+    xVec3Sub(&r.dir, &line.p2, &line.p1);
     r.max_t = xVec3Length(&r.dir);
     F32 one_len = 1.0f / MAX(r.max_t, 0.00001f);
     xVec3SMul(&r.dir, &r.dir, one_len);
@@ -2976,7 +2976,7 @@ void zEntPlayerSpeakStop()
     globals.player.ent.model->Anim->Single->BilinearLerp[0] = 0.0f;
 }
 
-// Close, some float mismatches + regswaps
+// Close: retail copies `result`'s zero into `plat` (mr r23, r27) where we rematerialise it
 static xEnt* GetPatrickTarget(xEnt* ent)
 {
     xEnt* result = NULL;
@@ -2998,9 +2998,9 @@ static xEnt* GetPatrickTarget(xEnt* ent)
             worldpos.z = -2.0f;
             xMat4x3Toworld(&worldpos, (xMat4x3*)plat->model->Mat, &worldpos);
 
-            if (ent->model->Mat->at.x * (worldpos.x - ent->model->Mat->pos.x) +
-                    ent->model->Mat->at.z * (worldpos.z - ent->model->Mat->pos.z) >
-                0.0f)
+            F32 dx = worldpos.x - ent->model->Mat->pos.x;
+            F32 dz = worldpos.z - ent->model->Mat->pos.z;
+            if (dx * ent->model->Mat->at.x + dz * ent->model->Mat->at.z > 0.0f)
             {
                 globals.player.carry.targetRot =
                     xatan2(worldpos.x - globals.player.ent.frame->mat.pos.x,
@@ -10457,14 +10457,14 @@ static F32 CalcJumpImpulse_Smooth(F32 g, F32 j, F32 h, F32 Tgc, F32 Tgs)
     F32 A = (j - g) / (6.0f * Tgs);
     F32 B = (g * Tgc - j * Tgc - j * Tgs) / (2.0f * Tgs);
     F32 Tgc2 = Tgc * Tgc;
-    F32 T12 = T1 * T1;
     A3 = 3.0f * A;
+    F32 T12 = T1 * T1;
     B2 = 2.0f * B;
 
     F32 Kc = -(A3 * Tgc2 + j * Tgc + B2 * Tgc);
     F32 D = b2 * Tgc2 - A * (Tgc * Tgc2) - B * Tgc2 - Kc * Tgc;
     F32 c2 = -g / 2.0f;
-    F32 v1 = A3 * T12 + B2 * T1 + g * T1;
+    F32 v1 = B2 * T1 + A3 * T12 + g * T1;
     F32 c0 = D + (A * (T1 * T12) + B * T12) - c2 * T12 - v1 * T1;
 
     F32 t1 = xsqrt((b0 - h) / b2);
@@ -10497,7 +10497,7 @@ static F32 CalcJumpImpulse_Smooth(F32 g, F32 j, F32 h, F32 Tgc, F32 Tgs)
 
     if (Tmfound != -1.0f)
     {
-        return -Kc - B2 * Tmfound - A3 * Tmfound * Tmfound;
+        return -Kc - B2 * Tmfound - A3 * (Tmfound * Tmfound);
     }
 
     return 1.0f;
@@ -13200,6 +13200,7 @@ static void PlayerCollsSelectDepen(xEnt* ent, xScene* sc, F32 dt)
 {
     xCollis* colls = ent->collis->colls;
     xMat4x3* mat = &ent->frame->mat;
+    xEnt* cent;
     xCollis* c = colls + k_XCOLLS_IDX_COUNT;
     xCollis* cend = colls + ent->collis->idx;
     xVec3 motion_delta = mat->pos - ent->frame->oldmat.pos;
@@ -13263,7 +13264,7 @@ static void PlayerCollsSelectDepen(xEnt* ent, xScene* sc, F32 dt)
 
     for (; c < cend; c++)
     {
-        xEnt* cent = (xEnt*)c->optr;
+        cent = (xEnt*)c->optr;
 
         if (!cent)
         {
@@ -14297,22 +14298,22 @@ static void PlayerRotMatchUpdateEnt(xEnt* ent, xScene* sc, F32 dt, void* fdata)
             if (rang)
             {
                 F32 dang = dt / rms->tmatch;
-                F32 s = MIN(1.0f, dang);
+                dang = MIN(1.0f, dang);
 
                 if (fdecl >= rms->max_decl)
                 {
-                    dang = (rms->max_decl - edecl) / (fdecl - edecl);
-                    s = MIN(s, dang);
+                    F32 s = (rms->max_decl - edecl) / (fdecl - edecl);
+                    dang = MIN(dang, s);
                 }
 
-                if (s)
+                if (dang)
                 {
-                    s = s * rang;
-                    s -= 0.001f;
+                    dang = dang * rang;
+                    dang -= 0.001f;
 
                     xMat4x3 rot;
 
-                    xMat4x3Rot(&rot, &raxis, s, xEntGetPos(ent));
+                    xMat4x3Rot(&rot, &raxis, dang, xEntGetPos(ent));
                     xMat3x3RMulVec(eup, &rot, &neup);
 
                     globals.player.HangElapsed = 0.0f;
@@ -14342,13 +14343,14 @@ static void PlayerRotMatchUpdateEnt(xEnt* ent, xScene* sc, F32 dt, void* fdata)
 
             if (rang)
             {
-                F32 s = MIN(1.0f, dt / rms->trelax);
+                F32 dang = dt / rms->trelax;
+                dang = MIN(1.0f, dang);
 
-                s = s * rang;
+                dang *= rang;
 
                 xMat4x3 rot;
 
-                xMat4x3Rot(&rot, &raxis, s, xEntGetPos(ent));
+                xMat4x3Rot(&rot, &raxis, dang, xEntGetPos(ent));
                 xMat3x3RMulVec(eup, &rot, &neup);
 
                 globals.player.HangElapsed = 0.0f;
