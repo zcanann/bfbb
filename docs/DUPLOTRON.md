@@ -9116,7 +9116,7 @@ DoFrame-tail, and ngcrad3d dimension experiments produced no retained gains.
 
 ## Bink audio-open refinement temporaries (2026-10-02)
 
-`BinkAudioDecompressOpen` improves from 99.55556% to 99.82222% (1,800 bytes).
+`BinkAudioDecompressOpen` improves from 99.55556% to 99.82222% (900 bytes).
 The second and third Newton refinements use their error expressions directly,
 keeping the first error temporary. Arithmetic, double precision, and operation
 order are unchanged; the remaining six operand differences are register choices
