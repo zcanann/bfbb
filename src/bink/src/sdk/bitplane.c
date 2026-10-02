@@ -288,6 +288,7 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count);
 u32 LenBPLossless(s16 PTR4* vals)
 {
     u16 entry;
+    u8 PTR4* child_lens;
     s32 sign;
     u32 bits;
     u32 maxbits;
@@ -408,27 +409,31 @@ u32 LenBPLossless(s16 PTR4* vals)
                         cur++;
                         entry = BP_TREE_ENTRY_INDEX(entry);
 decoded_length_children:
+                        child_lens = lens + entry;
                         len += BP_TREE_NODE_SIGNAL_BITS - BP_TREE_NODE_PRESENT_BITS;
-                        if (lens[entry] != maxbits) {
-                            *--restart = BP_TREE_COEFF_ENTRY(lens[entry], entry);
+                        if (*child_lens != maxbits) {
+                            *--restart = BP_TREE_COEFF_ENTRY(*child_lens, entry);
                         } else {
                             len += maxbits;
                         }
                         entry++;
-                        if (lens[entry] != maxbits) {
-                            *--restart = BP_TREE_COEFF_ENTRY(lens[entry], entry);
+                        child_lens++;
+                        if (*child_lens != maxbits) {
+                            *--restart = BP_TREE_COEFF_ENTRY(*child_lens, entry);
                         } else {
                             len += maxbits;
                         }
                         entry++;
-                        if (lens[entry] != maxbits) {
-                            *--restart = BP_TREE_COEFF_ENTRY(lens[entry], entry);
+                        child_lens++;
+                        if (*child_lens != maxbits) {
+                            *--restart = BP_TREE_COEFF_ENTRY(*child_lens, entry);
                         } else {
                             len += maxbits;
                         }
                         entry++;
-                        if (lens[entry] != maxbits) {
-                            *--restart = BP_TREE_COEFF_ENTRY(lens[entry], entry);
+                        child_lens++;
+                        if (*child_lens != maxbits) {
+                            *--restart = BP_TREE_COEFF_ENTRY(*child_lens, entry);
                         } else {
                             len += maxbits;
                         }
@@ -474,27 +479,31 @@ decoded_length_children:
                     cur++;
                     entry = BP_TREE_ENTRY_INDEX(entry);
 decoded_length_final_children:
+                    child_lens = lens + entry;
                     len += BP_TREE_NODE_SIGNAL_BITS - BP_TREE_NODE_PRESENT_BITS;
-                    if (lens[entry] != 1) {
-                        *--restart = BP_TREE_COEFF_ENTRY(lens[entry], entry);
+                    if (*child_lens != 1) {
+                        *--restart = BP_TREE_COEFF_ENTRY(*child_lens, entry);
                     } else {
                         len++;
                     }
                     entry++;
-                    if (lens[entry] != 1) {
-                        *--restart = BP_TREE_COEFF_ENTRY(lens[entry], entry);
+                    child_lens++;
+                    if (*child_lens != 1) {
+                        *--restart = BP_TREE_COEFF_ENTRY(*child_lens, entry);
                     } else {
                         len++;
                     }
                     entry++;
-                    if (lens[entry] != 1) {
-                        *--restart = BP_TREE_COEFF_ENTRY(lens[entry], entry);
+                    child_lens++;
+                    if (*child_lens != 1) {
+                        *--restart = BP_TREE_COEFF_ENTRY(*child_lens, entry);
                     } else {
                         len++;
                     }
                     entry++;
-                    if (lens[entry] != 1) {
-                        *--restart = BP_TREE_COEFF_ENTRY(lens[entry], entry);
+                    child_lens++;
+                    if (*child_lens != 1) {
+                        *--restart = BP_TREE_COEFF_ENTRY(*child_lens, entry);
                     } else {
                         len++;
                     }

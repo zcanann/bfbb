@@ -8407,3 +8407,20 @@ All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and
 SHA-1 pass. No other function scores change. Report:
 build/bitplane-magnitude-store-report.json. Bitplane remains NonMatching;
 normal DOL identity does not establish source-linked playback.
+
+
+## Bink length estimator child-depth pointers (2026-10-01)
+
+LenBPLossless improves from 89.83034% to 92.04113%. An advancing
+child_lens pointer supplies each child's depth while the packed-node index
+advances independently. Applying this to the non-final loop reaches
+90.35989%, and to both loops reaches 92.04113%. A shared next-node label
+trial generated identical code and was discarded.
+
+All 16,384 lossless round trips pass with exact estimator/writer bit-length
+agreement; all 6,911 nonempty lossy round trips and 27,644 early-cutoff
+checks pass. Full all_source build and retail DOL SHA-1 pass. Integrated
+RenderWare commits 13baf74ea and 045d8935e also pass the combined build.
+No function scores regress. Report:
+build/bitplane-length-pointer-integrated-report.json. Bitplane remains
+NonMatching; normal DOL identity does not establish source-linked playback.
