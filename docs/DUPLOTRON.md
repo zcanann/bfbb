@@ -8516,3 +8516,18 @@ All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and
 SHA-1 pass; no other function scores change. Report:
 build/bitplane-writer-root-entry-report.json. Bitplane remains NonMatching;
 normal DOL identity does not establish source-linked playback.
+
+
+## Bink lossless writer magnitude-bit lifetime (2026-10-01)
+
+WriteBPLossless improves from 91.67365% to 91.696106% with a plane-local
+magnitude_bits variable, independent of the header/root lenbits temporary.
+A zero-reservoir branch using the known-zero count register regressed and
+was discarded.
+
+All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and
+27,644 early-cutoff checks pass. Full all_source build and retail DOL
+SHA-1 pass, including incoming material-list commit 401809d4b. No function
+scores regress. Report: build/bitplane-writer-mag-integrated-report.json.
+Bitplane remains NonMatching; normal DOL identity does not establish
+source-linked playback.

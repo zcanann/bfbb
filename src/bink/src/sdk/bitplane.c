@@ -666,7 +666,7 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
     end = roots + BP_LOSSLESS_ROOT_NODES;
     level = maxbits;
     while (level != 0) {
-        lenbits = level - 1;
+        u32 magnitude_bits = level - 1;
         cur = restart;
         /* Active children at lower bit depths are pushed before the current cursor. */
         if (cur < end) {
@@ -700,7 +700,7 @@ decoded_write_children:
                         if (lens[entry] != level) {
                             *--restart = BP_TREE_COEFF_ENTRY(lens[entry], entry);
                         } else {
-                            PUT_BP_BITS(bits, absvals[entry], lenbits, VarBitsLens[lenbits]);
+                            PUT_BP_BITS(bits, absvals[entry], magnitude_bits, VarBitsLens[magnitude_bits]);
                             PUT_BP_BIT(bits, ordered[entry] < 0);
                         }
 
@@ -709,7 +709,7 @@ decoded_write_children:
                         if (lens[i] != level) {
                             *--restart = BP_TREE_COEFF_ENTRY(lens[i], i);
                         } else {
-                            PUT_BP_BITS(bits, absvals[i], lenbits, VarBitsLens[lenbits]);
+                            PUT_BP_BITS(bits, absvals[i], magnitude_bits, VarBitsLens[magnitude_bits]);
                             PUT_BP_BIT(bits, ordered[i] < 0);
                         }
 
@@ -718,7 +718,7 @@ decoded_write_children:
                         if (lens[i] != level) {
                             *--restart = BP_TREE_COEFF_ENTRY(lens[i], i);
                         } else {
-                            PUT_BP_BITS(bits, absvals[i], lenbits, VarBitsLens[lenbits]);
+                            PUT_BP_BITS(bits, absvals[i], magnitude_bits, VarBitsLens[magnitude_bits]);
                             PUT_BP_BIT(bits, ordered[i] < 0);
                         }
 
@@ -727,13 +727,13 @@ decoded_write_children:
                         if (lens[i] != level) {
                             *--restart = BP_TREE_COEFF_ENTRY(lens[i], i);
                         } else {
-                            PUT_BP_BITS(bits, absvals[i], lenbits, VarBitsLens[lenbits]);
+                            PUT_BP_BITS(bits, absvals[i], magnitude_bits, VarBitsLens[magnitude_bits]);
                             PUT_BP_BIT(bits, ordered[i] < 0);
                         }
                         break;
                     case BP_TREE_COEFF_NODE:
                         entry = BP_TREE_ENTRY_INDEX(entry);
-                        PUT_BP_BITS(bits, absvals[entry], lenbits, VarBitsLens[lenbits]);
+                        PUT_BP_BITS(bits, absvals[entry], magnitude_bits, VarBitsLens[magnitude_bits]);
                         PUT_BP_BIT(bits, ordered[entry] < 0);
                         *cur = BP_TREE_EMPTY_ENTRY;
                         goto next_lossless_node;
@@ -746,7 +746,7 @@ next_lossless_node:
                 cur++;
             } while (cur < end);
         }
-        level = lenbits & BP_BYTE_MASK;
+        level = magnitude_bits & BP_BYTE_MASK;
     }
 }
 
