@@ -9430,3 +9430,24 @@ NonMatching, so this hash does not establish source playback.
 Separate coefficient-table caches, incrementing child entries and pointers,
 and explicit reservoir-flush branch variants were tested and rejected.
 Several resemble retail locally but worsen the overall function match.
+
+## Bink lossless decoder magnitude helper (2026-10-02)
+
+`ReadBPLossless` improves from 90.614456% to 91.87185% in the full
+deduplicated report. Both non-final-plane magnitude reads now use the
+existing `VarBitsGet` helper instead of duplicated refill logic. Its local
+refill word improves instruction scheduling and register allocation; the
+explicit bit-mask local is no longer needed. The signed 16-bit extraction
+preserves the former coefficient conversion and bitstream operations.
+
+The bitplane checker passes 6,911 nonempty lossy round trips, 27,644 early
+cutoff checks, and 16,384 lossless round trips with bit-length, reservoir,
+and output-guard checks. The full source build passes; no other function
+scores change and no symbols disappear. The linked DOL retains retail
+SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6. bitplane remains
+NonMatching, so the DOL hash does not establish source playback.
+
+Alternate flag widths, initial-depth lifetimes, early root-pointer setup,
+and separate sign-result temporaries were tested and rejected. An inline
+local-word form gives the same score as the existing helper; the helper
+is retained to remove duplicated decoding logic.
