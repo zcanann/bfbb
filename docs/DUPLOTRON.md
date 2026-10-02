@@ -8716,3 +8716,19 @@ not independently exercise complete signed-bundle packets. Full source
 build succeeds; the deduplicated project report shows only this gain.
 The normal DOL retains retail SHA-1
 306526d90b48e99894c3138f5fc8f2716d9fecf6. `expand` remains NonMatching.
+
+## Bink lossless header overflow count (2026-10-01)
+
+`WriteBPLossless` improves from 91.696106% to 91.711075% by keeping the
+header overflow count in `bit_count` instead of repurposing `bit_buf`.
+The expressions and stream updates are unchanged. Capturing the shared
+single-bit macro's count before its buffer update regressed both writers;
+storing the incremented count in that macro was unchanged. Both macro
+trials were discarded.
+
+Validation passes 16,384 lossless roundtrips with guards and bit-length
+checks, 6,911 nonempty lossy roundtrips, and 27,644 early-cutoff checks.
+Full source build succeeds; the deduplicated project report changes
+only `WriteBPLossless`. The normal DOL retains retail SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. `bitplane` remains NonMatching,
+so this does not establish source-linked playback.

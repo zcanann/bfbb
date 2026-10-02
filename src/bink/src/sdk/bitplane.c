@@ -623,11 +623,11 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
     BP_STREAM_BITS(bits) = bit_buf;
     if (bit_count >= BP_BITS_PER_WORD) {
         *BP_STREAM_CUR(bits) = bit_buf;
-        bit_buf = BP_STREAM_BITLEN(bits) - BP_BITS_PER_WORD;
+        bit_count = BP_STREAM_BITLEN(bits) - BP_BITS_PER_WORD;
         BP_STREAM_CUR(bits) = BP_STREAM_CUR(bits) + 1;
-        BP_STREAM_BITLEN(bits) = bit_buf;
-        if (bit_buf != 0) {
-            BP_STREAM_BITS(bits) = lenbits >> (BP_LOSSLESS_LEVEL_BITS - bit_buf);
+        BP_STREAM_BITLEN(bits) = bit_count;
+        if (bit_count != 0) {
+            BP_STREAM_BITS(bits) = lenbits >> (BP_LOSSLESS_LEVEL_BITS - bit_count);
         } else {
             BP_STREAM_BITS(bits) = 0;
         }
