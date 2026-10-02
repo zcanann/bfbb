@@ -8502,3 +8502,17 @@ All 6,911 nonempty lossy round trips, 27,644 early-cutoff checks, and
 SHA-1 pass. No other function scores change. Report:
 build/bitplane-readlossy-root-report.json. Bitplane remains NonMatching;
 normal DOL identity does not establish source-linked movie playback.
+
+
+## Bink lossless writer root-entry lifetime (2026-10-01)
+
+WriteBPLossless improves from 91.50898% to 91.67365% by using a
+block-local packed root_entry during root setup, separate from the later
+traversal entry. A separate 16-bit child-index trial regressed to 91.547905%
+and was discarded.
+
+All 16,384 lossless round trips, 6,911 nonempty lossy round trips, and
+27,644 early-cutoff checks pass. Full all_source build and retail DOL
+SHA-1 pass; no other function scores change. Report:
+build/bitplane-writer-root-entry-report.json. Bitplane remains NonMatching;
+normal DOL identity does not establish source-linked playback.
