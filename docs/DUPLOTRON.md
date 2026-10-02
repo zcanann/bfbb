@@ -8940,3 +8940,18 @@ blocks with padding. Full source build and retail DOL SHA-1
 306526d90b48e99894c3138f5fc8f2716d9fecf6 pass. The deduplicated report
 changes only these two functions. The `dct` unit remains NonMatching;
 the retail hash does not establish source-linked IDCT playback.
+
+## Bink byte IDCT odd0 scale reuse (2026-10-01)
+
+`fastidct8x8` improves from 61.06073% to 63.603237% by updating odd0
+with its scaled value before constructing odd row 6. This preserves
+the fixed-point arithmetic and output-store order. Reusing odd_pair0
+for the scaled pair difference independently reaches 62.137653%, but
+combining both changes reaches only 62.68826%, so only odd0 reuse is
+retained. The equivalent doubled/motion trials regress and were restored.
+
+The scalar checker passes 32,768 byte/doubled cases and 16,384 motion
+blocks with padding. Full source build and retail DOL SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6 pass. The deduplicated report
+changes only byte IDCT. The `dct` unit remains NonMatching; the retail
+hash does not establish source-linked IDCT playback.
