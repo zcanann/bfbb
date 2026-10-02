@@ -9672,3 +9672,42 @@ NonMatching, so this does not establish source-linked gameplay. Wand-pointer
 declaration, reference, and consistent-access variants were rejected after
 compilation and scoring; the shorter consistent-access form also scored lower
 in the deduplicated report. No compiler, volatile, or assembly changes were made.
+
+## Robot exact setup/data and YUV exact scaling (2026-10-02)
+
+`zNPCFodBzzt::Setup` improves from 95.34722% to 100% (288 bytes).
+Its two unchanged local colors are now const, matching ColorSet's const
+parameters and retail's complete template-load sequence before the stores.
+No array, volatile access, assembly, or compiler workaround is needed.
+
+Robot's data improves from 6,312/10,664 bytes to 10,664/10,664 (100%).
+The TubeSlave animation switch had two equivalent idx=3 case bodies in the
+opposite source order: TUBEATTACK and TUBEDUCKLING. Restoring retail's case
+order makes their two jump-table destinations exact without changing any
+animation result or function score. Exact-section accounting had excluded
+the entire 4,352-byte .data section for that small table mismatch. All six
+retail data/BSS sections now report 100%; Robot has 319/328 exact functions.
+Further bounded DiscoUpdate and ParseChild variants produced no gain and
+were restored.
+
+`setup_scaling` in YUV improves from 99.563866% to 100% (1,284 bytes).
+Four direct conditional-expression maxima replace a repeated temporary and
+if-update sequence. The independent setup checker covers all mode patterns,
+grayscale and channel inversion, prior table order, pixel sizes, row widths
+and pitches, even/odd step combinations, dispatch functions, zoom requests,
+and unchanged context/table state. It passes 37,632 cases and rejects a
+maximum changed to a minimum. This exercises setup state, not playback.
+
+Normal RGBA improves from 99.58182% to 99.704544% by writing back its U
+cursor before its V cursor. The Player ceiling-pointer improvement above
+is included. Full combined source compilation and deduplicated reporting
+verify exactly four function-score gains, no regressions or lost symbols,
++2 exact functions (9,929 total), +1,572 exact code bytes, and +4,352 matched
+data bytes. RGB32 passes 13,568 pixel cases; YUV columns pass 27,456 cases
+and both mutation controls. Combined with scaling, 78,656 host cases and
+three negative controls pass.
+
+The linked DOL retains retail SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. These units remain NonMatching;
+source-linked totals are unchanged, and the hash does not validate source
+rendering, gameplay, or playback. Overall fuzzy matching is 99.44312%.
