@@ -510,7 +510,6 @@ static void setup_scaling(u32 flags, u32 PTR4* pitch, u32 width, u32 srcpitch, B
                           u32 PTR4* pitch_delta)
 {
     u32 mode;
-    u32 step;
 
     testing[0] = 0;
     S.pitch = *pitch;
@@ -545,17 +544,13 @@ static void setup_scaling(u32 flags, u32 PTR4* pitch, u32 width, u32 srcpitch, B
             ODDx = EVENx;
             alignshift = blits->masked_step;
         } else {
-            step = blits->odd_step;
             EVEN = zoom2heven;
             ODD = zoom2hodd;
             dounalignedrow = blits->row2h;
             dounalignedcol = blits->col2h;
             EVENx = blits->even;
             ODDx = blits->odd;
-            if (step < blits->even_step) {
-                step = blits->even_step;
-            }
-            alignshift = step;
+            alignshift = blits->odd_step < blits->even_step ? blits->even_step : blits->odd_step;
         }
     } else if (mode == BINKCOPY2XW || mode == BINKCOPY2XWHI) {
         *pitch_delta = *pitch - YUV_BLIT_ROW_BYTES_X2(width, blits);
@@ -566,15 +561,11 @@ static void setup_scaling(u32 flags, u32 PTR4* pitch, u32 width, u32 srcpitch, B
             ODD = EVEN;
             alignshift = blits->masked_x2_step;
         } else {
-            step = blits->odd_x2_step;
             dounalignedrow = blits->row2w;
             dounalignedcol = blits->col2w;
             EVEN = blits->even_x2;
             ODD = blits->odd_x2;
-            if (step < blits->even_x2_step) {
-                step = blits->even_x2_step;
-            }
-            alignshift = step;
+            alignshift = blits->odd_x2_step < blits->even_x2_step ? blits->even_x2_step : blits->odd_x2_step;
         }
     } else if (mode == BINKCOPY2XWH) {
         checkzoombufs(YUV_BLIT_ROW_BYTES_X2(width, blits));
@@ -589,17 +580,13 @@ static void setup_scaling(u32 flags, u32 PTR4* pitch, u32 width, u32 srcpitch, B
             ODDx = EVENx;
             alignshift = blits->masked_x2_step;
         } else {
-            step = blits->odd_x2_step;
             EVEN = zoom2heven;
             ODD = zoom2hodd;
             dounalignedrow = blits->row2wh;
             dounalignedcol = blits->col2wh;
             EVENx = blits->even_x2;
             ODDx = blits->odd_x2;
-            if (step < blits->even_x2_step) {
-                step = blits->even_x2_step;
-            }
-            alignshift = step;
+            alignshift = blits->odd_x2_step < blits->even_x2_step ? blits->even_x2_step : blits->odd_x2_step;
         }
     } else {
         *pitch_delta = *pitch - YUV_BLIT_ROW_BYTES(width, blits);
@@ -610,15 +597,11 @@ static void setup_scaling(u32 flags, u32 PTR4* pitch, u32 width, u32 srcpitch, B
             ODD = EVEN;
             alignshift = blits->masked_step;
         } else {
-            step = blits->odd_step;
             dounalignedrow = blits->row;
             dounalignedcol = blits->col;
             EVEN = blits->even;
             ODD = blits->odd;
-            if (step < blits->even_step) {
-                step = blits->even_step;
-            }
-            alignshift = step;
+            alignshift = blits->odd_step < blits->even_step ? blits->even_step : blits->odd_step;
         }
     }
 
