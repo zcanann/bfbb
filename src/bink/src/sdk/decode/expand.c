@@ -568,8 +568,8 @@ static inline u32 exp_read_huff8(EXPBITS PTR4* bits, u32 state, HUFF8TABLE PTR4*
         code = table->decode[state][bitbuf & mask];
         used = HUFF4_CODE_USED(code);
         symbol = table->syms[state][HUFF4_CODE_SYMBOL(code)];
-        bits->bits = bitbuf >> used;
         bits->bitlen = bitcount - used;
+        bits->bits = bitbuf >> used;
     } else {
         u32 mask = GetBitsLen(bits_to_peek);
         word = *bits->cur;

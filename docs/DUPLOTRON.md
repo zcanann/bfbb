@@ -8584,3 +8584,19 @@ state-dependent tables. The retained expressions use the same original
 buffer, refill word, mask, and consumed-bit count. Full all_source build
 and retail DOL SHA-1 pass. Report: build/expand-huff8-buffer-report.json.
 Expand remains NonMatching; normal DOL identity is not playback evidence.
+
+## Bink Huff8 buffered-path store order (2026-10-01)
+
+The buffered path in `exp_read_huff8` now writes the remaining bit count
+before the shifted buffer, matching the target instruction order.
+`CheckReadHuff8Bundle` improves from 93.84236% to 93.867%, and
+`NewCheckReadHuff8Bundle` from 96.28205% to 96.30769%. No other function
+scores change in the deduplicated project report. Branch-local `used`
+variables were also tested and discarded because they did not improve either caller.
+
+Validation: 67,584 Huff4 cases, 1,000 countdown cases, and 32,768 run-block
+cases pass; the full source build succeeds and the normal DOL retains
+retail SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6. These existing
+helper checks do not independently exercise Huff8 state-dependent tables.
+The retained change only reorders independent field stores. `expand`
+remains NonMatching, so the normal DOL hash is not source-linked Huff8 proof.
