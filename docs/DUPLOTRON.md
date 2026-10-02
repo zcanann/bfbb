@@ -9283,3 +9283,25 @@ luma-table caching, and pointer-increment experiments were rejected.
 full source build passes and the linked DOL retains retail SHA-1
 306526d90b48e99894c3138f5fc8f2716d9fecf6. ngcrgb remains NonMatching;
 source playback is not established by this DOL hash.
+
+## Bink lossy bitplane traversal (2026-10-02)
+
+`readlossy` improves from 97.03770% to 99.756096% in the full deduplicated
+report. Node traversal uses a guarded do/while loop, with its refill count,
+empty-node value, and active-coefficient pointer initialized before the
+negative mask. Explicit byte conversion of the next plane matches retail's
+counter truncation. Refinement reuses the scratch word for the coefficient
+index and the existing delta temporary for arithmetic; an explicit cutoff
+count snapshot preserves the update on both exit and continuation paths.
+
+These are ordinary C changes, without compiler patches or assembly. The
+remaining difference is a missing counter-copy instruction and its compare
+operand: source is 1,800 bytes versus retail's 1,804. The alternative that
+keeps this copy schedules the increment differently and scores lower.
+
+The host bitplane checker passes 6,911 nonempty lossy round trips, 27,644
+early-cutoff checks, and 16,384 lossless round trips with guard, bit-length,
+and reservoir validation. The full source build passes, no other function
+scores change, and no symbols disappear. The linked DOL retains retail
+SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6; bitplane remains
+NonMatching, so this hash does not establish source playback.

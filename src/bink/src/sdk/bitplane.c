@@ -1439,12 +1439,16 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count)
     u8 PTR4* tree_end_ptr;
     s8 mask;
     s32 masks_used;
+    s32 previous_masks;
     s32 nz_coeff_count;
     u8 PTR4* node_ptr;
     u8 node;
     s32 delta;
     s32 scan;
     s32 negative_mask;
+    u32 refill_bits;
+    u8 empty_node;
+    u8 PTR4* active_coeff;
     BPBITSTYPE word;
     u8 PTR4* next_node_ptr;
     BPLOSSYREADTREE tree;
@@ -1493,310 +1497,320 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count)
                     }
                 }
 refine_coeff:
-                sample = dest[(u32)nz_coeff[scan]];
+                word = nz_coeff[scan];
+                sample = dest[word];
                 if (sample < 0) {
-                    dest[(u32)nz_coeff[scan]] = sample - mask;
+                    delta = sample - mask;
+                    previous_masks = masks_used;
+                    dest[word] = delta;
                 } else {
-                    dest[(u32)nz_coeff[scan]] = sample + mask;
+                    delta = sample + mask;
+                    previous_masks = masks_used;
+                    dest[word] = delta;
                 }
-                if (masks_used++ == masks_count) {
+                if (previous_masks == masks_count) {
+                    masks_used = previous_masks + 1;
                     goto done;
                 }
+                masks_used = previous_masks + 1;
 next_refinement:
                 scan = scan + 1;
             } while (scan < nz_coeff_count);
         }
         node_ptr = next_node_ptr;
         if (node_ptr < tree_end_ptr) {
+            /* Cache traversal invariants before walking the active nodes. */
+            refill_bits = BP_WORD_TOP_BIT;
+            empty_node = BP_READ_TREE_EMPTY_ENTRY;
+            active_coeff = nz_coeff;
             negative_mask = -mask;
-read_node:
-            node = *node_ptr;
-            if (node == BP_READ_TREE_EMPTY_ENTRY) {
-                goto next_node;
-            }
-            if (bitcount != 0) {
-                u32 word = bitbuf;
-                bitcount = bitcount - 1;
-                bitbuf = bitbuf >> 1;
-                if ((word & BP_BIT_MASK) != 0) {
-                    goto decode_node;
-                }
-                goto next_node;
-            } else {
-                word = *words;
-                bitcount = BP_WORD_TOP_BIT;
-                words = words + 1;
-                bitbuf = word >> 1;
-                if ((word & BP_BIT_MASK) == 0) {
+            do {
+                node = *node_ptr;
+                if (node == empty_node) {
                     goto next_node;
                 }
-            }
+                if (bitcount != 0) {
+                    u32 word = bitbuf;
+                    bitcount = bitcount - 1;
+                    bitbuf = bitbuf >> 1;
+                    if ((word & BP_BIT_MASK) != 0) {
+                        goto decode_node;
+                    }
+                    goto next_node;
+                } else {
+                    word = *words;
+                    bitcount = refill_bits;
+                    words = words + 1;
+                    bitbuf = word >> 1;
+                    if ((word & BP_BIT_MASK) == 0) {
+                        goto next_node;
+                    }
+                }
 decode_node:
-            switch (BP_READ_TREE_KIND(node)) {
-            case BP_READ_TREE_HIGH_NODE:
-                node = BP_READ_TREE_INDEX(node);
-                *node_ptr = BP_READ_TREE_GROUP_FROM_INDEX(node);
-                goto decode_children;
-            case BP_READ_TREE_GROUP_NODE:
-                node = BP_READ_TREE_INDEX(node);
-                *node_ptr = BP_READ_TREE_BRANCH(node);
-                *tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(node, BP_READ_TREE_CHILD1_BASE);
-                *++tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(node, BP_READ_TREE_CHILD2_BASE);
-                *++tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(node, BP_READ_TREE_CHILD3_BASE);
-                ++tree_end_ptr;
-                goto node_done;
-            case BP_READ_TREE_BRANCH_NODE:
-                *node_ptr = BP_READ_TREE_EMPTY_ENTRY;
-                node_ptr = node_ptr + 1;
-                break;
-            case BP_READ_TREE_COEFF_NODE:
-                goto deferred_coeff;
-            default:
-                goto next_node;
-            }
-            node = BP_READ_TREE_INDEX(node);
-decode_children:
-            if (bitcount != 0) {
-                u32 word = bitbuf;
-                bitcount = bitcount - 1;
-                bitbuf = bitbuf >> 1;
-                if ((word & BP_BIT_MASK) != 0) {
-                    goto push_0;
-                }
-            } else {
-                word = *words;
-                bitcount = BP_WORD_TOP_BIT;
-                bitbuf = word >> 1;
-                words = words + 1;
-                if ((word & BP_BIT_MASK) != 0) {
-push_0:
-                    *--next_node_ptr = BP_READ_TREE_COEFF(node);
-                    goto after_0;
-                }
-            }
-            nz_coeff[nz_coeff_count] = node;
-            /* A zero child-presence bit introduces the coefficient immediately. */
-            nz_coeff_count = nz_coeff_count + 1;
-            if (bitcount != 0) {
-                u32 word = bitbuf;
-                bitcount = bitcount - 1;
-                bitbuf = bitbuf >> 1;
-                if ((word & BP_BIT_MASK) != 0) {
-                    goto negative_0;
-                }
-                goto positive_0;
-            } else {
-                word = *words;
-                bitcount = BP_WORD_TOP_BIT;
-                words = words + 1;
-                bitbuf = word >> 1;
-                if ((word & BP_BIT_MASK) == 0) {
-                    goto positive_0;
-                }
-            }
-negative_0:
-            delta = negative_mask;
-            goto store_0;
-positive_0:
-            delta = mask;
-store_0:
-            dest[(u32)node] = (s8)delta;
-            if (masks_used++ == masks_count) {
-                goto done;
-            }
-after_0:
-            node++;
-            if (bitcount != 0) {
-                u32 word = bitbuf;
-                bitcount = bitcount - 1;
-                bitbuf = bitbuf >> 1;
-                if ((word & BP_BIT_MASK) != 0) {
-                    goto push_1;
-                }
-            } else {
-                word = *words;
-                bitcount = BP_WORD_TOP_BIT;
-                bitbuf = word >> 1;
-                words = words + 1;
-                if ((word & BP_BIT_MASK) != 0) {
-push_1:
-                    *--next_node_ptr = BP_READ_TREE_COEFF(node);
-                    goto after_1;
-                }
-            }
-            nz_coeff[nz_coeff_count] = node;
-            /* Nonzero children are pushed for later planes instead. */
-            nz_coeff_count = nz_coeff_count + 1;
-            if (bitcount != 0) {
-                u32 word = bitbuf;
-                bitcount = bitcount - 1;
-                bitbuf = bitbuf >> 1;
-                if ((word & BP_BIT_MASK) != 0) {
-                    goto negative_1;
-                }
-                goto positive_1;
-            } else {
-                word = *words;
-                bitcount = BP_WORD_TOP_BIT;
-                words = words + 1;
-                bitbuf = word >> 1;
-                if ((word & BP_BIT_MASK) == 0) {
-                    goto positive_1;
-                }
-            }
-negative_1:
-            delta = negative_mask;
-            goto store_1;
-positive_1:
-            delta = mask;
-store_1:
-            dest[(u32)node] = (s8)delta;
-            if (masks_used++ == masks_count) {
-                goto done;
-            }
-after_1:
-            node++;
-            if (bitcount != 0) {
-                u32 word = bitbuf;
-                bitcount = bitcount - 1;
-                bitbuf = bitbuf >> 1;
-                if ((word & BP_BIT_MASK) != 0) {
-                    goto push_2;
-                }
-            } else {
-                word = *words;
-                bitcount = BP_WORD_TOP_BIT;
-                bitbuf = word >> 1;
-                words = words + 1;
-                if ((word & BP_BIT_MASK) != 0) {
-push_2:
-                    *--next_node_ptr = BP_READ_TREE_COEFF(node);
-                    goto after_2;
-                }
-            }
-            nz_coeff[nz_coeff_count] = node;
-            nz_coeff_count = nz_coeff_count + 1;
-            if (bitcount != 0) {
-                u32 word = bitbuf;
-                bitcount = bitcount - 1;
-                bitbuf = bitbuf >> 1;
-                if ((word & BP_BIT_MASK) != 0) {
-                    goto negative_2;
-                }
-                goto positive_2;
-            } else {
-                word = *words;
-                bitcount = BP_WORD_TOP_BIT;
-                words = words + 1;
-                bitbuf = word >> 1;
-                if ((word & BP_BIT_MASK) == 0) {
-                    goto positive_2;
-                }
-            }
-negative_2:
-            delta = negative_mask;
-            goto store_2;
-positive_2:
-            delta = mask;
-store_2:
-            dest[(u32)node] = (s8)delta;
-            if (masks_used++ == masks_count) {
-                goto done;
-            }
-after_2:
-            node++;
-            if (bitcount != 0) {
-                u32 word = bitbuf;
-                bitcount = bitcount - 1;
-                bitbuf = bitbuf >> 1;
-                if ((word & BP_BIT_MASK) != 0) {
-                    goto push_3;
-                }
-            } else {
-                word = *words;
-                bitcount = BP_WORD_TOP_BIT;
-                bitbuf = word >> 1;
-                words = words + 1;
-                if ((word & BP_BIT_MASK) != 0) {
-push_3:
-                    *--next_node_ptr = BP_READ_TREE_COEFF(node);
+                switch (BP_READ_TREE_KIND(node)) {
+                case BP_READ_TREE_HIGH_NODE:
+                    node = BP_READ_TREE_INDEX(node);
+                    *node_ptr = BP_READ_TREE_GROUP_FROM_INDEX(node);
+                    goto decode_children;
+                case BP_READ_TREE_GROUP_NODE:
+                    node = BP_READ_TREE_INDEX(node);
+                    *node_ptr = BP_READ_TREE_BRANCH(node);
+                    *tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(node, BP_READ_TREE_CHILD1_BASE);
+                    *++tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(node, BP_READ_TREE_CHILD2_BASE);
+                    *++tree_end_ptr = BP_READ_TREE_CHILD_BRANCH(node, BP_READ_TREE_CHILD3_BASE);
+                    ++tree_end_ptr;
                     goto node_done;
+                case BP_READ_TREE_BRANCH_NODE:
+                    *node_ptr = empty_node;
+                    node_ptr = node_ptr + 1;
+                    break;
+                case BP_READ_TREE_COEFF_NODE:
+                    goto deferred_coeff;
+                default:
+                    goto next_node;
                 }
-            }
-            nz_coeff[nz_coeff_count] = node;
-            nz_coeff_count = nz_coeff_count + 1;
-            if (bitcount != 0) {
-                u32 word = bitbuf;
-                bitcount = bitcount - 1;
-                bitbuf = bitbuf >> 1;
-                if ((word & BP_BIT_MASK) != 0) {
-                    goto negative_3;
+                node = BP_READ_TREE_INDEX(node);
+decode_children:
+                if (bitcount != 0) {
+                    u32 word = bitbuf;
+                    bitcount = bitcount - 1;
+                    bitbuf = bitbuf >> 1;
+                    if ((word & BP_BIT_MASK) != 0) {
+                        goto push_0;
+                    }
+                } else {
+                    word = *words;
+                    bitcount = refill_bits;
+                    bitbuf = word >> 1;
+                    words = words + 1;
+                    if ((word & BP_BIT_MASK) != 0) {
+push_0:
+                        *--next_node_ptr = BP_READ_TREE_COEFF(node);
+                        goto after_0;
+                    }
                 }
-                goto positive_3;
-            } else {
-                word = *words;
-                bitcount = BP_WORD_TOP_BIT;
-                words = words + 1;
-                bitbuf = word >> 1;
-                if ((word & BP_BIT_MASK) == 0) {
+                active_coeff[nz_coeff_count] = node;
+                /* A zero child-presence bit introduces the coefficient immediately. */
+                nz_coeff_count = nz_coeff_count + 1;
+                if (bitcount != 0) {
+                    u32 word = bitbuf;
+                    bitcount = bitcount - 1;
+                    bitbuf = bitbuf >> 1;
+                    if ((word & BP_BIT_MASK) != 0) {
+                        goto negative_0;
+                    }
+                    goto positive_0;
+                } else {
+                    word = *words;
+                    bitcount = refill_bits;
+                    words = words + 1;
+                    bitbuf = word >> 1;
+                    if ((word & BP_BIT_MASK) == 0) {
+                        goto positive_0;
+                    }
+                }
+negative_0:
+                delta = negative_mask;
+                goto store_0;
+positive_0:
+                delta = mask;
+store_0:
+                dest[(u32)node] = (s8)delta;
+                if (masks_used++ == masks_count) {
+                    goto done;
+                }
+after_0:
+                node++;
+                if (bitcount != 0) {
+                    u32 word = bitbuf;
+                    bitcount = bitcount - 1;
+                    bitbuf = bitbuf >> 1;
+                    if ((word & BP_BIT_MASK) != 0) {
+                        goto push_1;
+                    }
+                } else {
+                    word = *words;
+                    bitcount = refill_bits;
+                    bitbuf = word >> 1;
+                    words = words + 1;
+                    if ((word & BP_BIT_MASK) != 0) {
+push_1:
+                        *--next_node_ptr = BP_READ_TREE_COEFF(node);
+                        goto after_1;
+                    }
+                }
+                active_coeff[nz_coeff_count] = node;
+                /* Nonzero children are pushed for later planes instead. */
+                nz_coeff_count = nz_coeff_count + 1;
+                if (bitcount != 0) {
+                    u32 word = bitbuf;
+                    bitcount = bitcount - 1;
+                    bitbuf = bitbuf >> 1;
+                    if ((word & BP_BIT_MASK) != 0) {
+                        goto negative_1;
+                    }
+                    goto positive_1;
+                } else {
+                    word = *words;
+                    bitcount = refill_bits;
+                    words = words + 1;
+                    bitbuf = word >> 1;
+                    if ((word & BP_BIT_MASK) == 0) {
+                        goto positive_1;
+                    }
+                }
+negative_1:
+                delta = negative_mask;
+                goto store_1;
+positive_1:
+                delta = mask;
+store_1:
+                dest[(u32)node] = (s8)delta;
+                if (masks_used++ == masks_count) {
+                    goto done;
+                }
+after_1:
+                node++;
+                if (bitcount != 0) {
+                    u32 word = bitbuf;
+                    bitcount = bitcount - 1;
+                    bitbuf = bitbuf >> 1;
+                    if ((word & BP_BIT_MASK) != 0) {
+                        goto push_2;
+                    }
+                } else {
+                    word = *words;
+                    bitcount = refill_bits;
+                    bitbuf = word >> 1;
+                    words = words + 1;
+                    if ((word & BP_BIT_MASK) != 0) {
+push_2:
+                        *--next_node_ptr = BP_READ_TREE_COEFF(node);
+                        goto after_2;
+                    }
+                }
+                active_coeff[nz_coeff_count] = node;
+                nz_coeff_count = nz_coeff_count + 1;
+                if (bitcount != 0) {
+                    u32 word = bitbuf;
+                    bitcount = bitcount - 1;
+                    bitbuf = bitbuf >> 1;
+                    if ((word & BP_BIT_MASK) != 0) {
+                        goto negative_2;
+                    }
+                    goto positive_2;
+                } else {
+                    word = *words;
+                    bitcount = refill_bits;
+                    words = words + 1;
+                    bitbuf = word >> 1;
+                    if ((word & BP_BIT_MASK) == 0) {
+                        goto positive_2;
+                    }
+                }
+negative_2:
+                delta = negative_mask;
+                goto store_2;
+positive_2:
+                delta = mask;
+store_2:
+                dest[(u32)node] = (s8)delta;
+                if (masks_used++ == masks_count) {
+                    goto done;
+                }
+after_2:
+                node++;
+                if (bitcount != 0) {
+                    u32 word = bitbuf;
+                    bitcount = bitcount - 1;
+                    bitbuf = bitbuf >> 1;
+                    if ((word & BP_BIT_MASK) != 0) {
+                        goto push_3;
+                    }
+                } else {
+                    word = *words;
+                    bitcount = refill_bits;
+                    bitbuf = word >> 1;
+                    words = words + 1;
+                    if ((word & BP_BIT_MASK) != 0) {
+push_3:
+                        *--next_node_ptr = BP_READ_TREE_COEFF(node);
+                        goto node_done;
+                    }
+                }
+                active_coeff[nz_coeff_count] = node;
+                nz_coeff_count = nz_coeff_count + 1;
+                if (bitcount != 0) {
+                    u32 word = bitbuf;
+                    bitcount = bitcount - 1;
+                    bitbuf = bitbuf >> 1;
+                    if ((word & BP_BIT_MASK) != 0) {
+                        goto negative_3;
+                    }
                     goto positive_3;
+                } else {
+                    word = *words;
+                    bitcount = refill_bits;
+                    words = words + 1;
+                    bitbuf = word >> 1;
+                    if ((word & BP_BIT_MASK) == 0) {
+                        goto positive_3;
+                    }
                 }
-            }
 negative_3:
-            delta = negative_mask;
-            goto store_3;
+                delta = negative_mask;
+                goto store_3;
 positive_3:
-            delta = mask;
+                delta = mask;
 store_3:
-            dest[(u32)node] = (s8)delta;
-            if (masks_used++ == masks_count) {
-                goto done;
-            }
-            goto node_done;
+                dest[(u32)node] = (s8)delta;
+                if (masks_used++ == masks_count) {
+                    goto done;
+                }
+                goto node_done;
 deferred_coeff:
-            node = BP_READ_TREE_INDEX(node);
-            nz_coeff[nz_coeff_count] = node;
-            /* Deferred coeff nodes already carry their scan index. */
-            nz_coeff_count = nz_coeff_count + 1;
-            if (bitcount != 0) {
-                u32 word = bitbuf;
-                bitcount = bitcount - 1;
-                bitbuf = bitbuf >> 1;
-                if ((word & BP_BIT_MASK) != 0) {
-                    goto negative_4;
-                }
-                goto positive_4;
-            } else {
-                word = *words;
-                bitcount = BP_WORD_TOP_BIT;
-                words = words + 1;
-                bitbuf = word >> 1;
-                if ((word & BP_BIT_MASK) == 0) {
+                node = BP_READ_TREE_INDEX(node);
+                active_coeff[nz_coeff_count] = node;
+                /* Deferred coeff nodes already carry their scan index. */
+                nz_coeff_count = nz_coeff_count + 1;
+                if (bitcount != 0) {
+                    u32 word = bitbuf;
+                    bitcount = bitcount - 1;
+                    bitbuf = bitbuf >> 1;
+                    if ((word & BP_BIT_MASK) != 0) {
+                        goto negative_4;
+                    }
                     goto positive_4;
+                } else {
+                    word = *words;
+                    bitcount = refill_bits;
+                    words = words + 1;
+                    bitbuf = word >> 1;
+                    if ((word & BP_BIT_MASK) == 0) {
+                        goto positive_4;
+                    }
                 }
-            }
 negative_4:
-            delta = negative_mask;
-            goto store_4;
+                delta = negative_mask;
+                goto store_4;
 positive_4:
-            delta = mask;
+                delta = mask;
 store_4:
-            dest[(u32)node] = (s8)delta;
-            if (masks_used++ == masks_count) {
-                goto done;
-            }
-            *node_ptr = BP_READ_TREE_EMPTY_ENTRY;
-            goto next_node;
+                dest[(u32)node] = (s8)delta;
+                if (masks_used++ == masks_count) {
+                    goto done;
+                }
+                *node_ptr = empty_node;
+                goto next_node;
 next_node:
-            node_ptr = node_ptr + 1;
+                node_ptr = node_ptr + 1;
 node_done:
-            if (node_ptr < tree_end_ptr) {
-                goto read_node;
-            }
+                ;
+            } while (node_ptr < tree_end_ptr);
         }
 level_done:
         mask = mask >> 1;
-        levels_remaining = BP_NEXT_LEVEL(levels_remaining);
+        levels_remaining = (u8)(levels_remaining - 1);
     }
 
 done:
