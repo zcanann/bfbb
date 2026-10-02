@@ -71,11 +71,11 @@ static RpMaterialList* _rpMaterialListSetSize(RpMaterialList* matList, RwInt32 s
 
         if (matList->materials)
         {
-            materials = (RpMaterial**)RwRealloc(matList->materials, memSize);
+            materials = (RpMaterial**)RwRealloc(matList->materials, size * sizeof(RpMaterial*));
         }
         else
         {
-            materials = (RpMaterial**)RwMalloc(memSize);
+            materials = (RpMaterial**)RwMalloc(size * sizeof(RpMaterial*));
         }
 
         if (!materials)
