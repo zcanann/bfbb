@@ -985,11 +985,11 @@ void YUV_32ax2_4x2_even(u32 count)
         s32 gb;
 
         vword = *v++;
-        uword = *u++;
-        av0 = *a0++;
         yv0 = *y0++;
-        av1 = *a1++;
+        av0 = *a0++;
+        uword = *u++;
         yv1 = *y1++;
+        av1 = *a1++;
         vhi = RGB_WORD_BYTE1(vword);
         uhi = RGB_WORD_BYTE1(uword);
         alpha0 = RGB_WORD_BYTE3(av0);
