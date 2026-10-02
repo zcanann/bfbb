@@ -963,12 +963,12 @@ void YUV_32ax2_4x2_even(u32 count)
     row1 = RGB_TILE_ROW(linear1, base, pitch);
     dest0 = (u32 PTR4*)RGB_TILE_LOC(base, linear0, pitch, tiledPitch, row0);
     dest1 = (u32 PTR4*)RGB_TILE_LOC(base, linear1, pitch, tiledPitch, row1);
-    y1 = S.y1;
-    y0 = S.y0;
-    u = S.u;
-    v = S.v;
     a0 = S.a0;
     a1 = S.a1;
+    u = S.u;
+    v = S.v;
+    y0 = S.y0;
+    y1 = S.y1;
     tables = &YUVTables;
 
     do {
@@ -985,11 +985,11 @@ void YUV_32ax2_4x2_even(u32 count)
         s32 gb;
 
         vword = *v++;
-        yv0 = *y0++;
-        av0 = *a0++;
-        uword = *u++;
-        yv1 = *y1++;
-        av1 = *a1++;
+        yv0 = *y0;
+        av0 = *a0;
+        uword = *u;
+        yv1 = *y1;
+        av1 = *a1;
         vhi = RGB_WORD_BYTE1(vword);
         uhi = RGB_WORD_BYTE1(uword);
         alpha0 = RGB_WORD_BYTE3(av0);
@@ -1006,6 +1006,11 @@ void YUV_32ax2_4x2_even(u32 count)
         dest0[RGB_TILE_NEXT_ROW_WORD0] = RGB32_COLOR_GB_DUP(y00, gb, b);
         dest0[RGB_TILE_NEXT_ROW_WORD1] = RGB32_COLOR_GB_DUP(y01, gb, b);
 
+        ++u;
+        ++y0;
+        ++y1;
+        ++a0;
+        ++a1;
         alpha0 = RGB_WORD_BYTE3(av1);
         alpha1 = RGB_WORD_BYTE2(av1);
         y00 = clamp_ytable[RGB_WORD_BYTE3(yv1)];
