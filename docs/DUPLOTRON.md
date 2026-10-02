@@ -9070,3 +9070,25 @@ runtime code. No compiler, split, linker, or assembly changes are needed.
 The full source build passes, the report marks OOB complete, and the linked
 DOL reproduces retail SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6. Every
 project-wide function score is unchanged from the verified Tiki baseline.
+
+## Standard NPC goal completion and source linking (2026-10-02)
+
+`zNPCGoalStd.cpp` now matches and links all 96 functions: 15,916 code bytes
+and 784 data bytes. Its last missing function was the 56-byte
+`xListItem<xGoal>::Remove`, which now matches exactly.
+
+The source-likely fix is the list-item destructor calling `Remove`. It both
+instantiates the missing method and places the list-item constructor before
+the factory inline group, matching retail. The template removal body moves
+from `xBehaveMgr.cpp` into an included `xListItem.inl`, so the destructor can
+instantiate it in each consuming unit. `NPCC_DstSq` moves unchanged into
+`zNPCSupport.h` as an inline, and `GIDOfSafety` moves unchanged into
+`xBehaveMgr.h`; these placements restore the remaining weak-function order.
+No artificial callers, constructor specializations, compiler changes, or
+assembly remain in the final implementation.
+
+The full source build reproduces retail DOL SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6 with the standard-goal source object
+selected. The report marks the unit complete. Its missing `Remove` is the
+only project-wide function-score change, from absent to 100%; no symbols
+or earlier matches regress.

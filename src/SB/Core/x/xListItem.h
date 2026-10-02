@@ -16,11 +16,18 @@ template <class T> struct xListItem
         next = NULL;
     }
 
+    ~xListItem()
+    {
+        Remove();
+    }
+
     T* Next();
     void Insert(T* list);
     T* RemHead(T** listhead);
     T* Head();
     void Remove();
 };
+
+#include "xListItem.inl"
 
 #endif

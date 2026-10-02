@@ -108,10 +108,7 @@ struct xPsyche : RyzMemData
     xGoal* GIDInStack(S32 gid) const;
     S32 GIDOfActive() const;
     S32 GIDOfPending() const;
-    S32 GIDOfSafety() const
-    {
-        return gid_safegoal;
-    }
+    S32 GIDOfSafety() const;
     xGoal* GetPrevRecovery(S32 gid) const;
     S32 Timestep(F32 dt, void* updCtxt);
     S32 ParseTranRequest(en_trantype trantyp, S32 trangid);

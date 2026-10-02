@@ -231,4 +231,19 @@ inline F32 BOWL(F32 param_1)
 {
     return SQ((F32)2.0f * (param_1 - 0.5f));
 }
+
+inline F32 NPCC_DstSq(const xVec3* pos_a, const xVec3* pos_b, xVec3* dir)
+{
+    xVec3 tmp;
+
+    if (dir == NULL)
+    {
+        dir = &tmp;
+    }
+
+    xVec3Sub(dir, pos_b, pos_a);
+
+    return xVec3Length2(dir);
+}
+
 #endif

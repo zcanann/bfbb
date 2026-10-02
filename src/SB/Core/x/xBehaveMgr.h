@@ -38,4 +38,9 @@ void xBehaveMgr_Shutdown();
 void xBehaveMgr_SceneFinish();
 xBehaveMgr* xBehaveMgr_GetSelf();
 
+inline S32 xPsyche::GIDOfSafety() const
+{
+    return gid_safegoal;
+}
+
 #endif

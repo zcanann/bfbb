@@ -871,20 +871,6 @@ void zNPCGoalPatrol::Chk_AutoSmooth()
     }
 }
 
-F32 NPCC_DstSq(const xVec3* pos_a, const xVec3* pos_b, xVec3* dir)
-{
-    xVec3 tmp;
-
-    if (dir == NULL)
-    {
-        dir = &tmp;
-    }
-
-    xVec3Sub(dir, pos_b, pos_a);
-
-    return xVec3Length2(dir);
-}
-
 void zNPCGoalPatrol::MoveAutoSmooth(F32 dt)
 {
     zNPCCommon* npc = (zNPCCommon*)psyche->clt_owner;
