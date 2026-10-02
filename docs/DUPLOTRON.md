@@ -9390,3 +9390,24 @@ NonMatching, so this hash does not establish source playback.
 Shared group-depth locals and byte-sized child-depth temporaries were
 also tested and rejected. Remaining differences include register
 allocation, child-depth truncations, and instruction scheduling.
+
+## Bink lossy writer child-depth reads (2026-10-02)
+
+`WriteBPLossy` improves from 95.90685% to 96.14938% in the full
+deduplicated report. A coefficient-depth table pointer is established
+before the plane loop, and child depths are read directly instead of
+passing through the root-entry temporary. The first child bit is written
+before the advancing child pointer is assigned. The absolute-value pass
+also reuses its signed scratch value for the resulting magnitude.
+
+The bitplane checker passes 6,911 nonempty lossy round trips, 27,644 early
+cutoff checks, and 16,384 lossless round trips with bit-length, reservoir,
+and output-guard checks. The full source build passes; no other function
+scores change and no symbols disappear. The linked DOL retains retail
+SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6. bitplane remains
+NonMatching, so the DOL hash does not establish source playback.
+
+Byte-sized child temporaries, reordered child increments, direct stores
+inside the root-selection branches, and alternate header scratch reuse
+were tested and rejected. Remaining differences include register
+allocation and instruction scheduling.

@@ -1210,6 +1210,7 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     u8 active_absvals[BP_BLOCK_COEFFS];
     u8 hi_groups[BP_TREE_HIGH_GROUPS];
     u8 PTR4* high_lens;
+    u8 PTR4* coeff_lens;
 
     /* Lossy bitplanes scan all 64 byte coefficients, including DC. */
     count = BP_BLOCK_COEFFS;
@@ -1225,7 +1226,8 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     do {
         coeff = (s8)ordered[i];
         sign = coeff >> BP_S32_SIGN_SHIFT;
-        absvals[i] = (u8)BP_ABS_COEFF(coeff, sign);
+        sign = BP_ABS_COEFF(coeff, sign);
+        absvals[i] = sign;
         i++;
         count--;
     } while (count != 0);
@@ -1324,6 +1326,7 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     next_node = roots + BP_LOSSY_ROOT_NODES;
     roots[BP_ROOT_LOSSY_DC_SLOT] = groups[BP_TREE_GROUP_INDEX(BP_DC_COEFF)] + BP_TREE_BRANCH_NODE;
 
+    coeff_lens = lens;
     bit_mask = (u16)BP_LEVEL_MASK(maxbits);
     active_count = 0;
     level = maxbits;
@@ -1367,7 +1370,19 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
                         cur++;
                         node_entry = BP_TREE_ENTRY_INDEX(node_entry);
 decoded_lossy_write_children:
-                        child_lens = lens + node_entry;
+                        PUT_BP_BIT(bits, coeff_lens[node_entry] != level);
+                        child_lens = coeff_lens + node_entry;
+                        if (*child_lens != level) {
+                            --insert;
+                            *insert = BP_TREE_COEFF_ENTRY(*child_lens, node_entry);
+                        } else {
+                            active_absvals[active_count] = absvals[node_entry];
+                            active_count++;
+                            PUT_BP_BIT(bits, (ordered[node_entry] & BP_SIGN_BIT) != 0);
+                        }
+
+                        node_entry++;
+                        child_lens++;
                         PUT_BP_BIT(bits, *child_lens != level);
                         if (*child_lens != level) {
                             --insert;
@@ -1381,10 +1396,9 @@ decoded_lossy_write_children:
                         node_entry++;
                         child_lens++;
                         PUT_BP_BIT(bits, *child_lens != level);
-                        entry = *child_lens;
-                        if (entry != level) {
+                        if (*child_lens != level) {
                             --insert;
-                            *insert = BP_TREE_COEFF_ENTRY(entry, node_entry);
+                            *insert = BP_TREE_COEFF_ENTRY(*child_lens, node_entry);
                         } else {
                             active_absvals[active_count] = absvals[node_entry];
                             active_count++;
@@ -1394,23 +1408,9 @@ decoded_lossy_write_children:
                         node_entry++;
                         child_lens++;
                         PUT_BP_BIT(bits, *child_lens != level);
-                        entry = *child_lens;
-                        if (entry != level) {
+                        if (*child_lens != level) {
                             --insert;
-                            *insert = BP_TREE_COEFF_ENTRY(entry, node_entry);
-                        } else {
-                            active_absvals[active_count] = absvals[node_entry];
-                            active_count++;
-                            PUT_BP_BIT(bits, (ordered[node_entry] & BP_SIGN_BIT) != 0);
-                        }
-
-                        node_entry++;
-                        child_lens++;
-                        PUT_BP_BIT(bits, *child_lens != level);
-                        entry = *child_lens;
-                        if (entry != level) {
-                            --insert;
-                            *insert = BP_TREE_COEFF_ENTRY(entry, node_entry);
+                            *insert = BP_TREE_COEFF_ENTRY(*child_lens, node_entry);
                         } else {
                             active_absvals[active_count] = absvals[node_entry];
                             active_count++;
