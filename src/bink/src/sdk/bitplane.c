@@ -297,7 +297,8 @@ u32 LenBPLossless(s16 PTR4* vals)
         u32 coeff_bits;
         coeff = BP_ZIGZAG_COEFF(vals, i);
         sign = coeff >> BP_S32_SIGN_SHIFT;
-        coeff_bits = BP_COEFF_BIT_LEVEL(BP_ABS_COEFF(coeff, sign) & BP_U16_MASK);
+        sign = BP_ABS_COEFF(coeff, sign);
+        coeff_bits = BP_COEFF_BIT_LEVEL(sign & BP_U16_MASK);
         if (coeff_bits > maxbits) {
             maxbits = coeff_bits;
         }
@@ -608,12 +609,13 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
     BP_STREAM_BITLEN(bits) = bit_count;
     BP_STREAM_BITS(bits) = bit_buf;
     if (bit_count >= BP_BITS_PER_WORD) {
+        u32 remaining;
         *BP_STREAM_CUR(bits) = bit_buf;
-        bit_count = BP_STREAM_BITLEN(bits) - BP_BITS_PER_WORD;
         BP_STREAM_CUR(bits) = BP_STREAM_CUR(bits) + 1;
-        BP_STREAM_BITLEN(bits) = bit_count;
-        if (bit_count != 0) {
-            BP_STREAM_BITS(bits) = lenbits >> (BP_LOSSLESS_LEVEL_BITS - bit_count);
+        remaining = BP_STREAM_BITLEN(bits) - BP_BITS_PER_WORD;
+        BP_STREAM_BITLEN(bits) = remaining;
+        if (remaining != 0) {
+            BP_STREAM_BITS(bits) = lenbits >> (BP_LOSSLESS_LEVEL_BITS - remaining);
         } else {
             BP_STREAM_BITS(bits) = 0;
         }

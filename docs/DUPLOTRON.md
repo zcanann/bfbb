@@ -9495,3 +9495,23 @@ as did advancing child-depth pointers and alternate root temporaries.
 The retained helper removes duplicated bit-writing logic without compiler
 changes or new assembly. Remaining differences include register allocation,
 header scheduling, and child-depth addressing.
+
+## Bink lossless header remainder and magnitude scratch (2026-10-02)
+
+`WriteBPLossless` improves from 97.60479% to 97.65120% in the full
+deduplicated report. Header flushes advance the output cursor before
+computing the remaining bit count, using a local remainder instead of
+reusing the earlier total count. `LenBPLossless` improves from 94.40360%
+to 94.41645% by reusing the signed scratch value for the absolute magnitude
+before its existing 16-bit mask and leading-zero count.
+
+The bitplane checker passes 6,911 nonempty lossy round trips, 27,644 early
+cutoff checks, and 16,384 lossless round trips with bit-length, reservoir,
+and output-guard checks. The full source build passes; no other function
+scores change and no symbols disappear. The linked DOL retains retail
+SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6. bitplane remains
+NonMatching, so the hash does not establish source playback.
+
+Narrower plane counters, child-pointer combinations, alternate plane-loop
+forms, and splitting the length calculator's final-plane guard produced
+no additional gain and were restored.
