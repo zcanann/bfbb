@@ -392,7 +392,7 @@ static s32 NGC_SoundReinit(BINKSND PTR4* snd)
             ARQRemoveRequest(&state->tasks[i]);
         }
 
-        state->tasks[i].owner = (u32)state; /* reset owner and clear the busy latch */
+        state->tasks[i].owner = (u32)NGC_SOUND_STATE(snd); /* reset owner and clear the busy latch */
     }
 
     return 1;
@@ -629,10 +629,10 @@ static s32 Lock(BINKSND PTR4* snd, u8 PTR4* PTR4* addr, u32 PTR4* len)
         voice_cursor = NGC_AX_CURRENT_CURSOR(voice, shift);
 
         if (writable_bytes >= voice_cursor) {
-            channel_stride = NGC_SOUND_STATE(snd)->channel_stride;
+            channel_stride = state->channel_stride;
             writable_bytes = NGC_SOUND_RING_END(NGC_SOUND_STATE(snd)) - writable_bytes;
         } else {
-            channel_stride = NGC_SOUND_STATE(snd)->channel_stride;
+            channel_stride = state->channel_stride;
             writable_bytes = (voice_cursor - writable_bytes) - NGC_SOUND_CURSOR_GUARD_BYTES;
         }
 

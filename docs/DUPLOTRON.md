@@ -8988,3 +8988,20 @@ hash does not verify source-linked Bink playback.
 Other rotation-sum reuse forms regressed or were unchanged. This pass also
 rejected new iAnimSKB multiply-order, zCombo local-lifetime, and glare-render
 macro/indexing experiments; all three game sources were restored and rebuilt.
+
+## Bink audio reinitialization match (2026-10-01)
+
+`NGC_SoundReinit` now matches all 348 bytes (94.655174% -> 100%). Resetting
+an ARQ request's owner through `NGC_SOUND_STATE(snd)` instead of the cached
+`state` local gives the retail register allocation, including the owner copy
+before the cleanup loop. Both expressions identify the same embedded sound
+state; the calls, busy-latch checks, and owner values are unchanged.
+
+`Lock` improves from 92.21429% to 92.78571% by reading the channel stride
+through its cached state pointer in both cursor branches. Separate owner
+locals, later state initialization, and other direct-access forms did not help.
+
+The full source build and retail DOL SHA-1 check pass. The project-wide
+report changes only these two function scores, both upward. `ngcsnd.c`
+remains NonMatching, so the normal DOL still links its original object;
+these checks do not establish source-linked audio playback.
