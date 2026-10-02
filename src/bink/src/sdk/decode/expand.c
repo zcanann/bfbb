@@ -987,6 +987,7 @@ static void CheckReadHuff4SBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
             peek = bundle->bits_to_peek;
             syms = bundle->syms;
             while (--count != (u32)-1) {
+                EXPBITSTYPE bit;
                 symbol = (s8)exp_read_huff4_signed(bits, peek, decode, syms);
                 if (symbol != 0 && EXPBITS_GET1_BRANCH(*bits, bit)) {
                     symbol = -symbol;

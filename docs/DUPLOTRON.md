@@ -8683,3 +8683,21 @@ bundle playback tests. Full source build succeeds, the final deduplicated
 project report shows only the intended old-Huff8 improvement, and the
 normal DOL retains retail SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6.
 The whole `expand` unit remains NonMatching.
+
+## Bink signed Huff4 sign-bit lifetime (2026-10-01)
+
+`CheckReadHuff4SBundle` improves from 98.78199% to 98.85308% by giving
+the per-symbol sign read its own loop-local bit temporary. Packet flags
+and repeat-packet signs retain the existing outer temporary. A separate
+repeat-packet temporary regressed to 98.75829%; a loop-local symbol,
+word-sized caller symbol, and helper branch-local packed codes also
+regressed and were discarded.
+
+The retained change only narrows a temporary's scope. Existing Huff4
+checks pass 67,584 cases plus 1,000 countdown cases; Huff8 passes
+135,168 cases with four stateful reads each. These do not independently
+exercise complete signed-bundle packets. Full source build succeeds, the
+deduplicated project report shows only this improvement, and the normal
+DOL retains retail SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6. Both
+Huff8 scores are preserved, including the newer caller's exact match.
+The whole `expand` unit remains NonMatching.
