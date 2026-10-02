@@ -50,16 +50,15 @@ Measured from `build/GQPE78/report.json` and a fresh
 |---|---|
 | RW compiler | **GC/2.0p1e** (all units except `stdkey`) |
 | RW functions matched | **1020 / 1039** (98.17%) |
-| RW units complete (linked) | **105 / 120** |
+| RW units complete (linked) | **106 / 120** |
 | RW code matched | 343,364 / 371,428 bytes (92.44%); the 19 residue functions are the whole 28,064-byte gap |
 | RW data matched | 11,764 / 11,764 bytes (100%) |
 | non-matching functions | 19, in 14 units |
 | residue shapes | REG 8, SCHED 9, COUNT 2 |
 | match 100% under GC/2.0p1 or GC/2.5 from the same source | 0 / 19 |
 
-The 15th incomplete unit is `rtslerp`. All its functions match, but it cannot
-link: its `.sdata2` constant order depends on `RtSlerp*` functions that were
-stripped from the retail binary (see 3.8).
+`rtslerp` now links (stripped `RtSlerp*` functions restored for the `.sdata2`
+order; see 3.7).
 
 **Compiler override still in `configure.py`** (all other RW units use
 GC/2.0p1e, see `docs/COMPILER_VARIANTS.md`):
@@ -608,9 +607,16 @@ retail's was (see the solved table and section 2).
 
 #### `rtslerp`
 
-All functions match, but the unit cannot link: the `.sdata2` constant order
-needs the `RtSlerp*` functions that were stripped from retail. Not a function
-residue.
+Solved: linked. Retail's `.sdata2` numbers the 1.0, 0.0 and 2.0 literals at
+@304..@306, far below `RtQuatSetupSlerpCache`'s own @500.., so earlier code in
+the file created them first. The stripped matrix-slerp API (`RtSlerpCreate`,
+`RtSlerpDestroy`, `RtSlerpInitialize`, `RtSlerpGetMatrix`, `RtSlerpSetLerp`,
+from the public `rtslerp.h`) is reconstructed ahead of it: `RtSlerpGetMatrix`'s
+delta clamp creates 1.0 then 0.0 and its quat-to-matrix conversion 2.0. The
+game never calls them, so the DOL link strips them. The bodies are
+reconstructions; only the constant order is hard evidence (the label gaps
+suggest the real bodies were larger). Lever: when a unit's constant pool order
+cannot come from its retained functions, restore the stripped functions.
 
 ---
 
@@ -624,7 +630,7 @@ residue.
 | (d) | alias precision no compiler has (R9a/R9b/R9c, plus `CalcMeshNBTs` inferred) | 5: `AtomicForAllLineIntersections`, `AtomicForAllSphereIntersections`, `_rpGameCubeMTEffectSend`, `_rwDlNativeTextureWrite`, `CalcMeshNBTs` | 9,244 | none known |
 | (e) | source shape unknown, compiler-invariant | 1: `_rwGCNVtxFmtInstClr` (plus `RxLockedPipeUnlock`'s sum) | 2,176 | source |
 | (f) | inliner decision | 0 (`UserDataListCopy` solved) | 0 | - |
-| (g) | link-only | unit `rtslerp` (0 functions) | 0 | `.sdata2` ordering without the stripped functions |
+| (g) | link-only | 0 (`rtslerp` linked) | 0 | - |
 | **total** | | **19** | **28,064** | |
 
 Roughly:
