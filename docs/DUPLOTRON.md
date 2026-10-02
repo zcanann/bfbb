@@ -9582,3 +9582,24 @@ The restored unit remains 179/180 exact with all data exact. Player NPC-loop
 pointer forms and volatile-count diagnostics were also discarded. Retail
 reloads the NPC count and retains a dead four-byte induction variable; DWARF
 records NPC shock-distance locals absent from the current empty loop.
+
+## Bink doubled RGBA retail alpha handling (2026-10-02)
+
+`YUV_32ax2_4x2_even` improves from 76.44551% to 86.70513% in the
+full deduplicated report. Byte-sized alpha locals match the input samples;
+explicit unsigned casts keep every high-byte shift defined for alpha >= 128.
+
+Two independent inspections of the retail object confirm that the second
+copy of sample 2 in the second source row uses sample 3's alpha. The source
+and independent scalar oracle now preserve this behavior. For input alpha
+word 0x11223344 and red 0x55, the retail AR word is 0x33554455. The checker
+records the relevant retail instruction offsets and includes a deterministic
+distinct-byte case; the previous idealized duplication fails that case.
+
+Both RGB32 and RGB16 host checkers pass 13,568 cases each. Combined with the
+Robot, Player, and YUV work above, the full source build and deduplicated
+report verify eight function-score gains, no regressions, and no removed
+functions. The normal linked DOL retains SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. These units remain NonMatching;
+the host checks exercise pixel conversion, addressing, context, and guards,
+while the retail hash does not establish source playback or gameplay.
