@@ -1647,7 +1647,7 @@ void zNPCNewsFish::SpeakStop()
 
 S32 zNPCNewsFish::IsTalking()
 {
-    return (soundHandle) ? xSndIsPlayingByHandle(soundHandle) : false;
+    return (soundHandle) ? xSndIsPlayingByHandle(soundHandle) : 0;
 }
 
 void zNPCNewsFish::TalkOnScreen(S32 talkOnScreen)

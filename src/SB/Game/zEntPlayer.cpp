@@ -8341,9 +8341,9 @@ catchtunnel_done:
 
         wandB.sph.center.x = 0.5f * (a.x + b.x);
         wandB.sph.center.y = 0.5f * (a.y + b.y);
+        wandB.sph.center.y = 0.5f * (a.y + b.y) - 0.15f;
         wandB.sph.center.z = 0.5f * (a.z + b.z);
         wandB.sph.r = globals.player.g.BSpinRadius;
-        wandB.sph.center.y = 0.5f * (a.y + b.y) - 0.15f;
 
         if (streakBubbleSpinID == 0xdead)
         {
@@ -9488,9 +9488,10 @@ inline void get_reticle_bound(xVec3& center, F32& radius)
 
         if (type == NPC_TYPE_SLEEPY)
         {
-            xBox* box = &npc->bound.box.box;
+            xBound* bound = &npc->bound;
+            xBox* box = &bound->box.box;
 
-            center = npc->bound.box.center;
+            center = bound->box.center;
             radius = box->upper.y - box->lower.y;
             radius *= 0.5f;
         }
@@ -16293,7 +16294,7 @@ WEAK U32 xSndIsPlaying(U32 assetID)
     return iSndIsPlaying(assetID);
 }
 
-WEAK U8 xSndIsPlayingByHandle(U32 sndID)
+WEAK bool xSndIsPlayingByHandle(U32 sndID)
 {
     return iSndIsPlayingByHandle(sndID);
 }
