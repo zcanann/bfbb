@@ -103,6 +103,164 @@ union rwIEEEFloatShape
     MACRO_STOP
 
 
+/* The matrix-slerp half of this toolkit (RtSlerp*) is never called by the
+ * game, so the linker strips it from the DOL. Its presence ahead of
+ * RtQuatSetupSlerpCache is evidenced by retail's .sdata2: the 1.0, 0.0 and
+ * 2.0 literals RtQuatSetupSlerpCache shares are numbered @304..@306, far
+ * below its own @500.., i.e. they were created first, in that order, by
+ * earlier code in this file. The bodies are reconstructions following the
+ * public toolkit API and the RtSlerp structure (axis/angle in degrees). */
+
+RtSlerp* RtSlerpCreate(RwInt32 nMatRefMask)
+{
+    RtSlerp* spNew;
+
+    spNew = (RtSlerp*)RwMalloc(sizeof(RtSlerp));
+    if (spNew == NULL)
+    {
+        return NULL;
+    }
+
+    spNew->matRefMask = nMatRefMask;
+    spNew->useLerp = FALSE;
+    spNew->startMat = NULL;
+    spNew->endMat = NULL;
+
+    if (!(nMatRefMask & rtSLERPREFSTARTMAT))
+    {
+        spNew->startMat = RwMatrixCreate();
+        if (spNew->startMat == NULL)
+        {
+            RwFree(spNew);
+            return NULL;
+        }
+    }
+
+    if (!(nMatRefMask & rtSLERPREFENDMAT))
+    {
+        spNew->endMat = RwMatrixCreate();
+        if (spNew->endMat == NULL)
+        {
+            if (spNew->startMat != NULL && !(nMatRefMask & rtSLERPREFSTARTMAT))
+            {
+                RwMatrixDestroy(spNew->startMat);
+            }
+            RwFree(spNew);
+            return NULL;
+        }
+    }
+
+    return spNew;
+}
+
+void RtSlerpDestroy(RtSlerp* spSlerp)
+{
+    if (!(spSlerp->matRefMask & rtSLERPREFSTARTMAT))
+    {
+        RwMatrixDestroy(spSlerp->startMat);
+    }
+
+    if (!(spSlerp->matRefMask & rtSLERPREFENDMAT))
+    {
+        RwMatrixDestroy(spSlerp->endMat);
+    }
+
+    RwFree(spSlerp);
+}
+
+RtSlerp* RtSlerpInitialize(RtSlerp* spSlerp, RwMatrix* mpMat1, RwMatrix* mpMat2)
+{
+    RwMatrix mInvStart;
+    RwMatrix mRelative;
+    RtQuat qRelative;
+
+    if (spSlerp->matRefMask & rtSLERPREFSTARTMAT)
+    {
+        spSlerp->startMat = mpMat1;
+    }
+    else
+    {
+        RwMatrixCopy(spSlerp->startMat, mpMat1);
+    }
+
+    if (spSlerp->matRefMask & rtSLERPREFENDMAT)
+    {
+        spSlerp->endMat = mpMat2;
+    }
+    else
+    {
+        RwMatrixCopy(spSlerp->endMat, mpMat2);
+    }
+
+    /* Rotation taking the start orientation onto the end orientation */
+    RwMatrixInvert(&mInvStart, spSlerp->startMat);
+    RwMatrixMultiply(&mRelative, &mInvStart, spSlerp->endMat);
+
+    RtQuatConvertFromMatrix(&qRelative, &mRelative);
+    RtQuatQueryRotate(&qRelative, &spSlerp->axis, &spSlerp->angle);
+
+    return spSlerp;
+}
+
+RwMatrix* RtSlerpGetMatrix(RtSlerp* spSlerp, RwMatrix* mpResultMat, RwReal nDelta)
+{
+    RwMatrix* mpStart = spSlerp->startMat;
+    RwMatrix* mpEnd = spSlerp->endMat;
+    RwV3d vDiff;
+
+    /* Keep the interpolant within [0, 1] */
+    if (nDelta > (RwReal)1)
+    {
+        nDelta = (RwReal)1;
+    }
+    else if (nDelta < (RwReal)0)
+    {
+        nDelta = (RwReal)0;
+    }
+
+    if (spSlerp->useLerp)
+    {
+        /* Straight linear interpolation of the basis vectors */
+        RwV3dSubMacro(&vDiff, &mpEnd->right, &mpStart->right);
+        RwV3dScaleMacro(&vDiff, &vDiff, nDelta);
+        RwV3dAddMacro(&mpResultMat->right, &mpStart->right, &vDiff);
+
+        RwV3dSubMacro(&vDiff, &mpEnd->up, &mpStart->up);
+        RwV3dScaleMacro(&vDiff, &vDiff, nDelta);
+        RwV3dAddMacro(&mpResultMat->up, &mpStart->up, &vDiff);
+
+        RwV3dSubMacro(&vDiff, &mpEnd->at, &mpStart->at);
+        RwV3dScaleMacro(&vDiff, &vDiff, nDelta);
+        RwV3dAddMacro(&mpResultMat->at, &mpStart->at, &vDiff);
+    }
+    else
+    {
+        RtQuat qRotate;
+        RwMatrix mRotate;
+
+        /* Rotate part of the way about the slerp axis */
+        RtQuatRotate(&qRotate, &spSlerp->axis, spSlerp->angle * nDelta, rwCOMBINEREPLACE);
+        RtQuatUnitConvertToMatrix(&qRotate, &mRotate);
+        RwMatrixMultiply(mpResultMat, &mRotate, mpStart);
+    }
+
+    /* The position is always lerped */
+    RwV3dSubMacro(&vDiff, &mpEnd->pos, &mpStart->pos);
+    RwV3dScaleMacro(&vDiff, &vDiff, nDelta);
+    RwV3dAddMacro(&mpResultMat->pos, &mpStart->pos, &vDiff);
+
+    RwMatrixUpdate(mpResultMat);
+
+    return mpResultMat;
+}
+
+RtSlerp* RtSlerpSetLerp(RtSlerp* spSlerp, RwBool bUseLerp)
+{
+    spSlerp->useLerp = bUseLerp;
+
+    return spSlerp;
+}
+
 void RtQuatSetupSlerpCache(RtQuat* qpFrom, RtQuat* qpTo, RtQuatSlerpCache* sCache)
 {
     RwReal cosOm;

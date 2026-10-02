@@ -1185,7 +1185,7 @@ config.libs = [
     RenderWareLib(
         "rtslerp",
         [
-            Object(NonMatching, "rwsdk/tool/slerp/rtslerp.c"),
+            Object(Matching, "rwsdk/tool/slerp/rtslerp.c"),
         ],
     ),
     RenderWareLib(

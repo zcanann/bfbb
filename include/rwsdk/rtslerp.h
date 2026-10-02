@@ -5,6 +5,24 @@
 #include <rwsdk/rtquat.h>
 #include <rwsdk/rtslerp.h>
 
+/* Masks for specifying which matrices to store by reference */
+#define rtSLERPREFNONE 0x00
+#define rtSLERPREFSTARTMAT 0x01
+#define rtSLERPREFENDMAT 0x02
+#define rtSLERPREFALL (~rtSLERPREFNONE)
+
+typedef struct RtSlerp RtSlerp;
+
+struct RtSlerp
+{
+    RwInt32 matRefMask; /* Which matrices do we NOT own */
+    RwMatrix* startMat; /* The start matrix */
+    RwMatrix* endMat; /* The end matrix */
+    RwV3d axis; /* The axis of rotation for the slerp */
+    RwReal angle; /* The angle (in degrees) between src & dest */
+    RwBool useLerp; /* If true, lerps are used instead of slerps */
+};
+
 /* C compatibility: these headers use bare tag names as types. */
 typedef struct RtQuatSlerpCache RtQuatSlerpCache;
 
@@ -63,6 +81,12 @@ struct RtQuatSlerpCache
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+extern RtSlerp* RtSlerpCreate(RwInt32 nMatRefMask);
+extern void RtSlerpDestroy(RtSlerp* spSlerp);
+extern RtSlerp* RtSlerpInitialize(RtSlerp* spSlerp, RwMatrix* mpMat1, RwMatrix* mpMat2);
+extern RwMatrix* RtSlerpGetMatrix(RtSlerp* spSlerp, RwMatrix* mpResultMat, RwReal nDelta);
+extern RtSlerp* RtSlerpSetLerp(RtSlerp* spSlerp, RwBool bUseLerp);
 
 extern void RtQuatSetupSlerpCache(RtQuat* qpFrom, RtQuat* qpTo, RtQuatSlerpCache* sCache);
 

@@ -1388,6 +1388,8 @@ extern RwReal _rwMatrixOrthogonalError(const RwMatrix* matrix);
 extern RwReal _rwMatrixNormalError(const RwMatrix* matrix);
 extern RwBool RwEngineSetMatrixTolerances(const RwMatrixTolerance* const tolerance);
 extern RwMatrix* RwMatrixOptimize(RwMatrix* matrix, const RwMatrixTolerance* tolerance);
+extern RwMatrix* RwMatrixCreate(void);
+extern RwBool RwMatrixDestroy(RwMatrix* mpMat);
 extern RwMatrix* RwMatrixUpdate(RwMatrix* matrix);
 extern RwMatrix* RwMatrixMultiply(RwMatrix* matrixOut, const RwMatrix* MatrixIn1,
                                   const RwMatrix* matrixIn2);
