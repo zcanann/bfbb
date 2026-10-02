@@ -1727,8 +1727,6 @@ s32 BinkDoFrame(HBINK bnk)
                 do {
                     s32 playing_index;
                     s32 playing_tracks;
-                    BINKTRACKFRAME PTR4* next_frame_data;
-                    BINKTRACKPAYLOAD PTR4* frame_payload;
                     u32 compressed_size;
                     s32 next_track;
 
@@ -1736,8 +1734,7 @@ s32 BinkDoFrame(HBINK bnk)
                     playing_tracks = bnk->playingtracks;
                     compressed_size = frame_data->size;
                     next_track = track + 1;
-                    frame_payload = BINK_TRACK_FRAME_PAYLOAD(frame_data);
-                    frame_data = (BINKTRACKFRAME PTR4*)frame_payload;
+                    ++frame_data;
                     for (playing_index = 0; playing_index < playing_tracks; ++playing_index) {
                         if (bnk->trackindexes[playing_index] == track) {
                             goto found_playing_track;
@@ -1746,14 +1743,13 @@ s32 BinkDoFrame(HBINK bnk)
                     playing_index = BINK_TRACK_NOT_FOUND;
 
 found_playing_track:
-                    next_frame_data = BINK_TRACK_FRAME_AFTER_PAYLOAD(frame_data, compressed_size);
-
                     if (playing_index != BINK_TRACK_NOT_FOUND && compressed_size != 0) {
                         void PTR4* in;
                         u32 in_bytes;
 
-                        in = frame_payload->data;
-                        in_bytes = frame_payload->decoded_size;
+                        in = frame_data;
+                        in_bytes = *(u32 PTR4*)in;
+                        in = (u32 PTR4*)in + 1;
                         if (sound_callback_suspended == 0) {
                             sound_callback_suspended = 1;
                             RADCB_suspend_callback(cb_bink_sound, BINK_SOUND_CALLBACK(bnk));
@@ -1810,7 +1806,7 @@ found_playing_track:
                     }
 
                     track = next_track;
-                    frame_data = next_frame_data;
+                    frame_data = BINK_TRACK_FRAME_AFTER_PAYLOAD(frame_data, compressed_size);
                 } while (track < (s32)bnk->NumTracks);
             }
         }
@@ -1875,9 +1871,8 @@ found_playing_track:
                 bnk->bio.Working = 0;
                 bnk->timeadecomp += video_start - bnk->startframetime;
                 bnk->timevdecomp += end - video_start;
-                bnk->LastFrameNum = bnk->FrameNum;
                 bnk->startblittime = end;
-                bnk->lastdecompframe = bnk->FrameNum;
+                bnk->LastFrameNum = bnk->lastdecompframe = bnk->FrameNum;
             }
         }
     }

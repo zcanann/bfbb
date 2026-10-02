@@ -9156,3 +9156,26 @@ The unit now has 12 of 13 exact functions; BinkFileReadHeader remains 99.75%.
 Cursor lifetime, signedness, and evaluation-order trials did not improve that
 holdout and were restored. ngcfile.c remains NonMatching, so this is not yet
 source-linked DVD I/O or a playback validation.
+
+## Bink frame-decoder cursor lifetime (2026-10-02)
+
+`BinkDoFrame` improves from 98.74114% to 99.57493%. Walking the input past
+its decoded-size word restores retail's initial cursor stack store. Advancing
+the compressed-frame cursor at the end of each track removes the saved next
+pointer and restores the branch and add scheduling. The payload temporary is
+also unnecessary. Updating both decoded-frame fields with one assignment
+chain slightly improves the final store order. These are ordinary C changes;
+no assembly, compiler, split, or linker edits are involved.
+
+The source function is now 1,464 bytes against retail's 1,468. One register
+copy, a pair of load positions, and final bookkeeping-store order remain.
+Cached byte counts, wider local scopes, signedness, raw pointer variants, and
+register hints did not improve this result. Keyframe shared-exit and loop-shape
+experiments also scored below their baseline and were restored.
+
+Full all-source compilation passes with the isolated compiler copy. The full
+report changes only BinkDoFrame and removes no symbols; the normal DOL retains
+retail SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6. Artifacts:
+build/binkread-doframe-cursor-final-report.json and
+build/binkread-doframe-cursor-final-validation.log. binkread.c remains
+NonMatching, so this does not establish source-linked movie playback.
