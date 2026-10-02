@@ -584,9 +584,6 @@ void YUV_16x2_4x2_even(u32 count)
     s32 row0;
     s32 row1;
     u32 tiledPitch;
-    u32 PTR4* clamp_r_base;
-    u32 PTR4* clamp_g_base;
-    u32 PTR4* clamp_b_base;
     RGBYUVTables PTR4* tables;
 
     linear0 = S.dest0;
@@ -603,9 +600,6 @@ void YUV_16x2_4x2_even(u32 count)
     v = S.v;
     y1 = S.y1;
     tables = &YUVTables;
-    clamp_r_base = clamp_r + RGB_CLAMP_BIAS;
-    clamp_b_base = clamp_b + RGB_CLAMP_BIAS;
-    clamp_g_base = clamp_g + RGB_CLAMP_BIAS;
 
     row0 = RGB_TILE_ROW(linear0, base, pitch);
     row1 = RGB_TILE_ROW(linear1, base, pitch);
@@ -637,9 +631,9 @@ void YUV_16x2_4x2_even(u32 count)
         gb = tables->u_to_gb[uhi] + tables->v_to_gb[vhi];
         b = tables->u_to_b[uhi];
         r = tables->v_to_r[vhi];
-        b_table = clamp_b_base + r;
-        gb_table = clamp_g_base + gb;
-        r_table = clamp_r_base + b;
+        b_table = (clamp_b + RGB_CLAMP_BIAS) + r;
+        gb_table = (clamp_g + RGB_CLAMP_BIAS) + gb;
+        r_table = (clamp_r + RGB_CLAMP_BIAS) + b;
         yhalf = yv0 >> RGB_HALFWORD_SHIFT;
         ya = ytable[RGB_WORD_BYTE1(yhalf)];
         yb = ytable[RGB_WORD_BYTE0(yhalf)];
@@ -662,9 +656,9 @@ void YUV_16x2_4x2_even(u32 count)
         r = tables->v_to_r[vlo];
         b = tables->u_to_b[ulo];
         gb = tables->u_to_gb[ulo] + tables->v_to_gb[vlo];
-        b_table = clamp_b_base + r;
-        gb_table = clamp_g_base + gb;
-        r_table = clamp_r_base + b;
+        b_table = (clamp_b + RGB_CLAMP_BIAS) + r;
+        gb_table = (clamp_g + RGB_CLAMP_BIAS) + gb;
+        r_table = (clamp_r + RGB_CLAMP_BIAS) + b;
         yv0 = (u16)yv0;
         ya = ytable[RGB_WORD_BYTE1(yv0)];
         yb = ytable[RGB_WORD_BYTE0(yv0)];
@@ -1371,14 +1365,6 @@ void YUV_16a4x2_4x2_even(u32 count)
     s32 row0;
     s32 row1;
     u32 tiledPitch;
-    s32 PTR4* u_to_b;
-    s32 PTR4* v_to_gb;
-    s32 PTR4* u_to_gb;
-    s32 PTR4* v_to_r;
-    u32 PTR4* clamp_r_base;
-    u32 PTR4* clamp_g_base;
-    u32 PTR4* clamp_b_base;
-    u32 PTR4* clamp_a4_base;
     RGBYUVTables PTR4* tables;
 
     linear0 = S.dest0;
@@ -1393,14 +1379,6 @@ void YUV_16a4x2_4x2_even(u32 count)
     base = S.base;
     tiledPitch = RGB_TILE_PITCH16(pitch);
     tables = &YUVTables;
-    u_to_b = tables->u_to_b;
-    v_to_gb = tables->v_to_gb;
-    u_to_gb = tables->u_to_gb;
-    v_to_r = tables->v_to_r;
-    clamp_r_base = clamp_r + RGB_CLAMP_BIAS;
-    clamp_g_base = clamp_g + RGB_CLAMP_BIAS;
-    clamp_b_base = clamp_b + RGB_CLAMP_BIAS;
-    clamp_a4_base = clamp_a4;
 
     S.dest0 += count * RGB_16_X2_4X2_ROW_BYTES;
     S.dest1 += count * RGB_16_X2_4X2_ROW_BYTES;
@@ -1434,12 +1412,12 @@ void YUV_16a4x2_4x2_even(u32 count)
         av0 = *a0++;
         uhi = RGB_WORD_BYTE1(uword);
         vhi = RGB_WORD_BYTE1(vword);
-        gb = u_to_gb[uhi] + v_to_gb[vhi];
-        r = v_to_r[vhi];
-        b = u_to_b[uhi];
-        gb_table = clamp_g_base + gb;
-        r_table = clamp_r_base + b;
-        b_table = clamp_b_base + r;
+        gb = tables->u_to_gb[uhi] + tables->v_to_gb[vhi];
+        r = tables->v_to_r[vhi];
+        b = tables->u_to_b[uhi];
+        r_table = (clamp_r + RGB_CLAMP_BIAS) + b;
+        gb_table = (clamp_g + RGB_CLAMP_BIAS) + gb;
+        b_table = (clamp_b + RGB_CLAMP_BIAS) + r;
         yhalf = yv0 >> RGB_HALFWORD_SHIFT;
         ya = ytable[RGB_WORD_BYTE1(yhalf)];
         yb = ytable[RGB_WORD_BYTE0(yhalf)];
@@ -1447,8 +1425,8 @@ void YUV_16a4x2_4x2_even(u32 count)
         av1 = *a1++;
 
         ahalf = av0 >> RGB_HALFWORD_SHIFT;
-        pix0 = RGB565_A4_PREBIASED(r_table, gb_table, b_table, clamp_a4_base, ya, RGB_WORD_BYTE1(ahalf));
-        pix1 = RGB565_A4_PREBIASED(r_table, gb_table, b_table, clamp_a4_base, yb, RGB_WORD_BYTE0(ahalf));
+        pix0 = RGB565_A4_PREBIASED(r_table, gb_table, b_table, clamp_a4, ya, RGB_WORD_BYTE1(ahalf));
+        pix1 = RGB565_A4_PREBIASED(r_table, gb_table, b_table, clamp_a4, yb, RGB_WORD_BYTE0(ahalf));
         dest0[RGB_TILE_WORD0] = RGB565_PAIR(pix0);
         dest0[RGB_TILE_WORD1] = RGB565_PAIR(pix1);
 
@@ -1456,25 +1434,25 @@ void YUV_16a4x2_4x2_even(u32 count)
         ya = ytable[RGB_WORD_BYTE1(yhalf)];
         yb = ytable[RGB_WORD_BYTE0(yhalf)];
         ahalf = av1 >> RGB_HALFWORD_SHIFT;
-        pix0 = RGB565_A4_PREBIASED(r_table, gb_table, b_table, clamp_a4_base, ya, RGB_WORD_BYTE1(ahalf));
-        pix1 = RGB565_A4_PREBIASED(r_table, gb_table, b_table, clamp_a4_base, yb, RGB_WORD_BYTE0(ahalf));
+        pix0 = RGB565_A4_PREBIASED(r_table, gb_table, b_table, clamp_a4, ya, RGB_WORD_BYTE1(ahalf));
+        pix1 = RGB565_A4_PREBIASED(r_table, gb_table, b_table, clamp_a4, yb, RGB_WORD_BYTE0(ahalf));
         dest1[RGB_TILE_WORD0] = RGB565_PAIR(pix0);
         dest1[RGB_TILE_WORD1] = RGB565_PAIR(pix1);
 
         ulo = RGB_WORD_BYTE0(uword);
         vlo = RGB_WORD_BYTE0(vword);
-        r = v_to_r[vlo];
-        b = u_to_b[ulo];
-        gb = u_to_gb[ulo] + v_to_gb[vlo];
-        b_table = clamp_b_base + r;
-        gb_table = clamp_g_base + gb;
-        r_table = clamp_r_base + b;
+        r = tables->v_to_r[vlo];
+        b = tables->u_to_b[ulo];
+        gb = tables->u_to_gb[ulo] + tables->v_to_gb[vlo];
+        r_table = (clamp_r + RGB_CLAMP_BIAS) + b;
+        gb_table = (clamp_g + RGB_CLAMP_BIAS) + gb;
+        b_table = (clamp_b + RGB_CLAMP_BIAS) + r;
         av0 = (u16)av0;
         yv0 = (u16)yv0;
         ya = ytable[RGB_WORD_BYTE1(yv0)];
         yb = ytable[RGB_WORD_BYTE0(yv0)];
-        pix0 = RGB565_A4_PREBIASED(r_table, gb_table, b_table, clamp_a4_base, ya, RGB_WORD_BYTE1(av0));
-        pix1 = RGB565_A4_PREBIASED(r_table, gb_table, b_table, clamp_a4_base, yb, RGB_WORD_BYTE0(av0));
+        pix0 = RGB565_A4_PREBIASED(r_table, gb_table, b_table, clamp_a4, ya, RGB_WORD_BYTE1(av0));
+        pix1 = RGB565_A4_PREBIASED(r_table, gb_table, b_table, clamp_a4, yb, RGB_WORD_BYTE0(av0));
         dest0[RGB_TILE_NEXT_ROW_WORD0] = RGB565_PAIR(pix0);
         dest0[RGB_TILE_NEXT_ROW_WORD1] = RGB565_PAIR(pix1);
         dest0 += RGB_TILE_BLOCK_WORDS;
@@ -1483,8 +1461,8 @@ void YUV_16a4x2_4x2_even(u32 count)
         yv1 = (u16)yv1;
         ya = ytable[RGB_WORD_BYTE1(yv1)];
         yb = ytable[RGB_WORD_BYTE0(yv1)];
-        pix0 = RGB565_A4_PREBIASED(r_table, gb_table, b_table, clamp_a4_base, ya, RGB_WORD_BYTE1(av1));
-        pix1 = RGB565_A4_PREBIASED(r_table, gb_table, b_table, clamp_a4_base, yb, RGB_WORD_BYTE0(av1));
+        pix0 = RGB565_A4_PREBIASED(r_table, gb_table, b_table, clamp_a4, ya, RGB_WORD_BYTE1(av1));
+        pix1 = RGB565_A4_PREBIASED(r_table, gb_table, b_table, clamp_a4, yb, RGB_WORD_BYTE0(av1));
         dest1[RGB_TILE_NEXT_ROW_WORD0] = RGB565_PAIR(pix0);
         dest1[RGB_TILE_NEXT_ROW_WORD1] = RGB565_PAIR(pix1);
         dest1 += RGB_TILE_BLOCK_WORDS;

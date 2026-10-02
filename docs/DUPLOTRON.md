@@ -9262,3 +9262,24 @@ The linked DOL retains retail SHA-1
 that hash does not validate source playback. Further context-load ordering,
 alpha temporary types/lifetimes, and pointer-advance experiments decreased
 scores and were restored.
+
+## Bink doubled RGB16 table access (2026-10-02)
+
+The doubled RGB16 kernels now access clamp-table bases directly instead of
+keeping redundant pointer locals. The alpha variant also accesses channel
+contributions through YUVTables and constructs biased pointers in RGB order.
+These are ordinary C lifetime/evaluation-order changes; the previously
+verified U-to-clamp_r and V-to-clamp_b mapping is preserved.
+
+The final deduplicated report improves `YUV_16x2_4x2_even` from 78.09091%
+to 78.13420% and `YUV_16a4x2_4x2_even` from 62.68919% to 64.26689%.
+The ngcrgb unit rises from 87.33719% to 87.49487%. No other function scores
+change, and no symbols disappear. The analogous non-doubled alpha cleanup
+was restored because its raw-score increase vanished after normalization.
+Additional halfword-alpha extraction, alpha/channel packing order, explicit
+luma-table caching, and pointer-increment experiments were rejected.
+
+`tools/check_bink_rgb16.py` passes all 13,568 scalar-reference cases. The
+full source build passes and the linked DOL retains retail SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. ngcrgb remains NonMatching;
+source playback is not established by this DOL hash.
