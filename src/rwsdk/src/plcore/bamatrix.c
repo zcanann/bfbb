@@ -96,9 +96,16 @@ static RwMatrix* MatrixOrthoNormalize(RwMatrix* dst, const RwMatrix* src)
         {
             if (recipAt > 0.0f)
             {
-                RwReal dotUpAt = RwRealAbs(RwV3dDotProductMacro(&up, &at));
-                RwReal dotAtRight = RwRealAbs(RwV3dDotProductMacro(&at, &right));
-                RwReal dotRightUp = RwRealAbs(RwV3dDotProductMacro(&right, &up));
+                RwReal dotUpAt;
+                RwReal dotAtRight;
+                RwReal dotRightUp;
+
+                recipAt = RwV3dDotProductMacro(&up, &at);
+                dotUpAt = RwRealAbs(recipAt);
+                recipAt = RwV3dDotProductMacro(&at, &right);
+                dotAtRight = RwRealAbs(recipAt);
+                recipAt = RwV3dDotProductMacro(&right, &up);
+                dotRightUp = RwRealAbs(recipAt);
 
                 if (dotUpAt < dotAtRight)
                 {
