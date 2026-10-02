@@ -3450,13 +3450,17 @@ void zNPCSleepy::NightLightUVStep(F32 dt)
     static const F32 uv_scroll_nightlight[2] = { 0.0f, -0.2f };
     static const F32 uv_scroll_deathcone[2] = { 0.0f, -1.55f };
 
-    zNPCSleepy::uv_nightlight[0] = zNPCSleepy::uv_nightlight[0] + dt * uv_scroll_nightlight[0];
-    zNPCSleepy::uv_nightlight[1] = zNPCSleepy::uv_nightlight[1] + dt * uv_scroll_nightlight[1];
+    F32 rate = uv_scroll_nightlight[0];
+    zNPCSleepy::uv_nightlight[0] = zNPCSleepy::uv_nightlight[0] + dt * rate;
+    rate = uv_scroll_nightlight[1];
+    zNPCSleepy::uv_nightlight[1] = zNPCSleepy::uv_nightlight[1] + dt * rate;
     RANGEWRAP(&zNPCSleepy::uv_nightlight[0], 0.0f, 1.0f);
     RANGEWRAP(&zNPCSleepy::uv_nightlight[1], 0.0f, 1.0f);
 
-    zNPCSleepy::uv_deathcone[0] = zNPCSleepy::uv_deathcone[0] + dt * uv_scroll_deathcone[0];
-    zNPCSleepy::uv_deathcone[1] = zNPCSleepy::uv_deathcone[1] + dt * uv_scroll_deathcone[1];
+    rate = uv_scroll_deathcone[0];
+    zNPCSleepy::uv_deathcone[0] = zNPCSleepy::uv_deathcone[0] + dt * rate;
+    rate = uv_scroll_deathcone[1];
+    zNPCSleepy::uv_deathcone[1] = zNPCSleepy::uv_deathcone[1] + dt * rate;
     RANGEWRAP(&zNPCSleepy::uv_deathcone[0], 0.0f, 1.0f);
     RANGEWRAP(&zNPCSleepy::uv_deathcone[1], 0.0f, 1.0f);
 }
