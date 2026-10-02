@@ -8772,3 +8772,18 @@ matching work). The combined full build and retail hash pass. Its nine
 new exact functions and `UpdateRain` improvement are preserved; the
 post-rebase project report has no regressions and the IDCT score is
 unchanged from the validated local result.
+
+## Bink doubled IDCT first-pass scratch results (2026-10-01)
+
+`fastidct8x8d` improves from 67.41296% to 67.510124% with the same
+first-pass scratch staging used by the byte variant, but stores the even
+sum to column 1 before the difference to column 2, matching this target's
+order. Copying the byte variant's opposite order regressed to 66.97976%.
+An additional attempt to reproduce the later odd-store order was unchanged
+and is not retained. Arithmetic and output expansion are preserved.
+
+The independent scalar checker passes 32,768 byte/doubled IDCT cases and
+16,384 motion blocks, including padded pitches. Full source build succeeds;
+the deduplicated project report changes only this function. The normal
+DOL retains retail SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6.
+The `dct` unit remains NonMatching.
