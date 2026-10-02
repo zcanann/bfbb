@@ -44,7 +44,7 @@ U32 xhud::font_meter_widget::type() const
 
     if (init == 0)
     {
-        myid = xStrHash(((xhud::font_meter_asset*)this)->type_name());
+        myid = xStrHash(font_meter_asset::type_name());
         init = 1;
     }
     return myid;
@@ -59,16 +59,6 @@ bool xhud::font_meter_widget::is(U32 id) const
         val = true;
     }
     return val;
-}
-
-// NOTE: this belongs in xHudFontMeter.h, defined inline in the class body --
-// the target emits it weak, in its own section, and its string literal opens
-// @stringBase0 ahead of update()'s format strings. Defined here it is strong
-// and lands in .text between is() and update(); it has to sit above update()
-// for the string pool to come out in the target's order.
-char* xhud::font_meter_asset::type_name()
-{
-    return "hud:meter:font";
 }
 
 void xhud::font_meter_widget::update(F32 dt)
@@ -134,13 +124,4 @@ void xhud::font_meter_widget::render()
         this->xf.render(this->buffer, temp_x, y);
     }
     return;
-}
-
-// NOTE: this belongs in xFont.h. It is inline, so the compiler emits a weak
-// out-of-line copy into every translation unit that calls it.
-inline void xfont::render(const char* text, F32 x, F32 y) const
-{
-    start_render();
-    irender(text, x, y);
-    stop_render();
 }

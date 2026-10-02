@@ -494,7 +494,7 @@ config.libs = [
             Object(Matching, "SB/Core/x/xGroup.cpp"),
             Object(Matching, "SB/Core/x/xhipio.cpp"),
             Object(Matching, "SB/Core/x/xHud.cpp", extra_cflags=["-sym on"]),
-            Object(NonMatching, "SB/Core/x/xHudFontMeter.cpp"),
+            Object(Matching, "SB/Core/x/xHudFontMeter.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Core/x/xHudMeter.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Core/x/xHudModel.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Core/x/xHudUnitMeter.cpp", extra_cflags=["-sym on   "]),

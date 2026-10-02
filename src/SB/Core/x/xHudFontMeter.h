@@ -31,7 +31,10 @@ namespace xhud
         U8 pad2; // offset 0x72, size 0x1
         U8 pad3; // offset 0x73, size 0x1
 
-        char* type_name();
+        static const char* type_name()
+        {
+            return "hud:meter:font";
+        }
     };
 
     struct font_meter_widget : meter_widget
@@ -59,5 +62,15 @@ namespace xhud
         }
     };
 } // namespace xhud
+
+// Defined outside xFont.h: under -sym on a weak inline lands in the section of
+// the file that defines it, and retail places this copy after type_name()'s,
+// not with iColor_tag::operator= in xFont.h's group (which xDebug needs).
+inline void xfont::render(const char* text, F32 x, F32 y) const
+{
+    start_render();
+    irender(text, x, y);
+    stop_render();
+}
 
 #endif
