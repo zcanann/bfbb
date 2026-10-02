@@ -12,9 +12,6 @@
 
 void __deadstripped_rodata()
 {
-    const xVec3 dead0 = {};
-    const xVec3 dead1 = {};
-    const xVec3 dead2 = {};
     const xVec3 dead3 = {};
     const U8 dead4[0x28] = {};
     const U8 dead5[0x28] = {};

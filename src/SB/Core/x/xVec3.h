@@ -13,25 +13,18 @@ struct xVec3
     static const xVec3 m_UnitAxisX;
     static const xVec3 m_UnitAxisY;
 
+    // The aggregate initializers in create() and cross() each emit a 12-byte
+    // .rodata template in every unit that includes this header, as retail's
+    // did; the linker strips them wherever nothing else keeps the section.
     static xVec3 create(F32 x, F32 y, F32 z)
     {
-        xVec3 v;
-
-        v.x = x;
-        v.y = y;
-        v.z = z;
-
+        xVec3 v = { x, y, z };
         return v;
     }
 
     static xVec3 create(F32 f)
     {
-        xVec3 v;
-
-        v.x = f;
-        v.y = f;
-        v.z = f;
-
+        xVec3 v = { f, f, f };
         return v;
     }
 
@@ -113,7 +106,7 @@ struct xVec3
 
     xVec3 cross(const xVec3& c) const
     {
-        xVec3 v = xVec3::m_Null;
+        xVec3 v = { 0.0f, 0.0f, 0.0f };
 
         v.x = y * c.z - c.y * z;
         v.y = z * c.x - c.z * x;

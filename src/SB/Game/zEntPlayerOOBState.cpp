@@ -20,9 +20,6 @@ bool oob_player_teleported;
 // This function is here to force the symbols to be linked.
 void __deadstripped_zEntPlayerOOBState()
 {
-    const char _405[0x0C] = {};
-    const char _406[0x0C] = {};
-    const char _410[0x0C] = {};
     const char _441[0x0C] = {};
 
     const char _612[0x28] = {};

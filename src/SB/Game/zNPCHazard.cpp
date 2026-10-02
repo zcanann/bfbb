@@ -20,10 +20,6 @@ extern const xVec3 g_O3;
 // This function is here to force the symbols to be linked.
 void __deadstripped_zNPCHazard()
 {
-    const char _446[0x0C] = {};
-    const char _447[0x0C] = {};
-    const char _451[0x0C] = {};
-
     const char _461[0x28] = {};
     const char _462[0x28] = {};
     const char _463[0x28] = {};

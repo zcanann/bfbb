@@ -15,9 +15,6 @@
 // as zVar.cpp, which uses this idiom in a Matching unit.
 void __deadstripped_xParEmitterType()
 {
-    const char _427[0x0C] = {};
-    const char _428[0x0C] = {};
-    const char _432[0x0C] = {};
     const char _463[0x0C] = {};
 
     const char _617[0x28] = {};

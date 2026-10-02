@@ -14,12 +14,10 @@
 //
 // The target opens .rodata with 4 unreferenced all-zero
 // templates (0x30 total) that offset every later .rodata
-// relocation. Same idiom as zVar.cpp.
+// relocation. Same idiom as zVar.cpp. The first three are
+// xVec3::create/cross's initializer templates (xVec3.h).
 void __deadstripped_xMath3()
 {
-    const char _405[0x0C] = {};
-    const char _406[0x0C] = {};
-    const char _410[0x0C] = {};
     const char _441[0x0C] = {};
 }
 //#include "xVec3Inlines.h" // xVec3Init, imported, realized xClimate has a declaration as well though.

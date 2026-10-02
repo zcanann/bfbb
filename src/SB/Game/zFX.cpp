@@ -39,9 +39,6 @@ void xSCurve(F32& p, F32& v, F32& a, F32 t);
 // sits where the target's .rodata order puts it.
 void __deadstripped_zFX()
 {
-    const char _446[0x0C] = {};
-    const char _447[0x0C] = {};
-    const char _451[0x0C] = {};
     const char _482[0x0C] = {};
 
     const char _553[0x28] = {};

@@ -20,9 +20,6 @@
 // which offsets every later .rodata relocation.
 void __deadstripped_zNPCTypeVillager_head()
 {
-    const char _405[0x0C] = {};
-    const char _406[0x0C] = {};
-    const char _410[0x0C] = {};
     const char _441[0x0C] = {};
 
     const char _607[0x28] = {};

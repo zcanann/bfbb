@@ -48,9 +48,6 @@ void xCameraRotate(xCamera* cam, const xVec3& at, F32 roll, F32 time, F32 accel,
 // offsets every later .rodata relocation.
 void __deadstripped_zEntCruiseBubble_head()
 {
-    const char _405[0x0C] = {};
-    const char _406[0x0C] = {};
-    const char _410[0x0C] = {};
     const char _441[0x0C] = {};
 
     const char _624[0x28] = {};

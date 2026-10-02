@@ -77,9 +77,6 @@ static xCollis g_SharedCollisRecord = { k_HIT_0xF00 | k_HIT_CALC_HDNG };
 // This function is here to force the symbols to be linked.
 void __deadstripped_zNPCGoalRobo()
 {
-    const char _437[0x0C] = {};
-    const char _438[0x0C] = {};
-    const char _442[0x0C] = {};
     const char _473[0x0C] = {};
 
     const char _626[0x28] = {};

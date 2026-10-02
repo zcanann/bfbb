@@ -72,14 +72,11 @@ inline F32 range_limit<F32>(F32 v, F32 minv, F32 maxv)
 // This function is here to force the symbols to be linked.
 //
 // The target opens .rodata with the same unreferenced all-zero templates other
-// units carry -- three more of 0x0C, seven of 0x28, one more 0x0C and one of
+// units carry -- four of 0x0C (xVec3::create/cross's initializer templates from
+// xVec3.h, then laser_bolt_zero), seven of 0x28, one more 0x0C and one of
 // 0x10 -- which offsets every later .rodata relocation.
 void __deadstripped_zNPCTypeBossPlankton_head()
 {
-    const char _406[0x0C] = {};
-    const char _410[0x0C] = {};
-    const char _441[0x0C] = {};
-
     const char _607[0x28] = {};
     const char _608[0x28] = {};
     const char _609[0x28] = {};

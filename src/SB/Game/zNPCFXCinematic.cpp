@@ -25,13 +25,11 @@
 //
 // The target opens .rodata with 11 unreferenced all-zero
 // templates (0x148 total) that offset every later .rodata
-// relocation. Same idiom as zVar.cpp.
+// relocation. Same idiom as zVar.cpp. The first three 0x0C ones
+// are xVec3::create/cross's initializer templates (xVec3.h); the
+// fourth is laser_bolt_zero (xLaserBolt.inl). The 0x28 ones remain here.
 void __deadstripped_zNPCFXCinematic()
 {
-    const char _406[0x0C] = {};
-    const char _410[0x0C] = {};
-    const char _441[0x0C] = {};
-
     const char _612[0x28] = {};
     const char _613[0x28] = {};
     const char _614[0x28] = {};
