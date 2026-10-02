@@ -612,3 +612,21 @@ python tools/compilerprobe/repros/sweep_units.py --diff sb.json 2.0p1a 2.0p1d
 
 `sweep_units.py` accepts a scratch compiler as a path relative to
 `build/compilers`, for example `../../<rel>/s_veto`.
+
+## Candidate behaviours of the retail compiler, not adopted
+
+GC/2.0p1e is the final compiler model. Research after it (2026-10-01)
+characterised more retail-only alias behaviour; none of it is adopted, because
+no released compiler (1.3 through 3.0) has it, and closing holdout functions
+through ever more compiler patches is not a goal. Measured against 2.0p1e over
+all 120 RW and 224 game units:
+
+| candidate | rule | measured |
+|---|---|---|
+| DS+VND | a store addressed directly (`sym@sda21` or frame offset) to a named static is ordered before later accesses to an address-taken frame object or to another named static through a register (any load, or a pointer-op store), and kills cached whole values of other named statics | +10 / -0 (`StalacTiteAlloc`, `_rwDlCameraBeginUpdate`, `zThrown_LaunchVel`, `zThrown_AddFruit`, `zNPCHazard_ScenePrepare`/`SceneFinish`, `zGameModeSwitch`, `zCutsceneMgrPlayStart`, `zSaveLoad_Tick`, `zCameraFlyStart`); generalises the rejected `dss` |
+| L8 | clauses C+/V treat the 8-byte int-to-float constant as a small literal | +3 / -0 (`iParMgrInit`, `zhud::setup`, `zhud::update`); one partial down (`Show_frame`) |
+| WE | clause W extended to whole loads of statics of at most 8 bytes | +2 / -0 (`_rwDlNativeTextureWrite`, `zGameScreenTransitionUpdate`) |
+| E3nc | clause E3n ignores the load's const flag | +1 / -0 (`zEntPlayer_Render`, since matched by source) |
+
+The functions above are accepted holdouts. `tools/compilerprobe/qprobe.py`
+logs a function's `may_alias` queries and finds the decisive one.
