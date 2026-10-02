@@ -9305,3 +9305,25 @@ and reservoir validation. The full source build passes, no other function
 scores change, and no symbols disappear. The linked DOL retains retail
 SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6; bitplane remains
 NonMatching, so this hash does not establish source playback.
+
+## Bink lossless final-plane coefficient stores (2026-10-02)
+
+`ReadBPLossless` improves from 89.64075% to 90.614456% in the full
+deduplicated report. Its maximum-plane counter uses a 32-bit local while
+the stream read still extracts the same four-bit value. Final-plane child
+and deferred-coefficient destinations are computed before their sign bits
+are read. Signs use the existing signed 16-bit coefficient temporary,
+matching retail's negative-one value instead of constructing an unsigned
+65535 in the bit-reading scratch word. Stored coefficient bits are unchanged.
+
+The bitplane checker passes 6,911 nonempty lossy round trips, 27,644 early
+cutoff cases, and 16,384 lossless round trips, including bit lengths,
+reservoir state, and output guards. The full source build passes; no other
+function scores change and no symbols disappear. The linked DOL retains
+retail SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6. bitplane remains
+NonMatching; the DOL hash does not establish source playback.
+
+Boolean had-level flags, shared node/base indices, broader counter changes,
+and explicit traversal-constant caches were tested and rejected. Remaining
+lossless differences include register allocation, address evaluation order,
+and final-plane instruction scheduling.

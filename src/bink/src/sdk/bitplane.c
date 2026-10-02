@@ -754,7 +754,7 @@ void ReadBPLossless(s16 PTR4* out, BPBITSTREAM PTR4* bits)
 {
     u32 code;
     u8 level;
-    u8 maxlevel;
+    u32 maxlevel;
     u8 had_level;
     s16 highbit;
     s16 next_highbit;
@@ -1036,6 +1036,7 @@ handle_lossless_final_children:
 decoded_lossless_final_children:
 #define READ_LOSSLESS_FINAL_CHILD(slot, label)                                                                      \
                     do {                                                                                            \
+                        u16* coeff_dest;                                                                           \
                         if (bitcount != 0) {                                                                        \
                             bitcount = bitcount - 1;                                                                \
                             code = bitbuf & BP_BIT_MASK;                                                            \
@@ -1055,6 +1056,7 @@ label##_push:                                                                   
                                 goto label;                                                                         \
                             }                                                                                       \
                         }                                                                                           \
+                        coeff_dest = &workspace.coeffs.values[slot];                                               \
                         if (bitcount != 0) {                                                                        \
                             bitcount = bitcount - 1;                                                                \
                             code = bitbuf & BP_BIT_MASK;                                                            \
@@ -1073,12 +1075,12 @@ label##_push:                                                                   
                             }                                                                                       \
                         }                                                                                           \
 label##_negative:                                                                                                   \
-                        code = BP_NEGATIVE_COEFF_SIGN;                                                              \
+                        coeff_value = (s16)BP_NEGATIVE_COEFF_SIGN;                                                              \
                         goto label##_store;                                                                         \
 label##_positive:                                                                                                   \
-                        code = BP_POSITIVE_COEFF_SIGN;                                                              \
+                        coeff_value = BP_POSITIVE_COEFF_SIGN;                                                              \
 label##_store:                                                                                                      \
-                        workspace.coeffs.values[slot] = (u16)code;                                                            \
+                        *coeff_dest = (u16)coeff_value;                                                            \
                     } while (0)
                     READ_LOSSLESS_FINAL_CHILD(base, after_lossless_final0);
 after_lossless_final0:
@@ -1098,6 +1100,7 @@ after_lossless_final_children:
             }
             goto lossless_final_done;
 deferred_lossless_final:
+            deferred_dest = &workspace.coeffs.values[BP_READ_TREE_INDEX(node)];
             if (bitcount != 0) {
                 bitcount = bitcount - 1;
                 code = bitbuf & BP_BIT_MASK;
@@ -1116,12 +1119,12 @@ deferred_lossless_final:
                 }
             }
 lossless_final_negative:
-            code = BP_NEGATIVE_COEFF_SIGN;
+            coeff_value = (s16)BP_NEGATIVE_COEFF_SIGN;
             goto lossless_final_store;
 lossless_final_positive:
-            code = BP_POSITIVE_COEFF_SIGN;
+            coeff_value = BP_POSITIVE_COEFF_SIGN;
 lossless_final_store:
-            workspace.coeffs.values[BP_READ_TREE_INDEX(node)] = (u16)code;
+            *deferred_dest = (u16)coeff_value;
             *node_ptr = BP_READ_TREE_EMPTY_ENTRY;
             goto next_lossless_final_node;
 next_lossless_final_node:
