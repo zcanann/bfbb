@@ -9369,3 +9369,24 @@ and output-guard checks. The full source build passes; no other function
 scores change and no symbols disappear. The linked DOL retains retail
 SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6. bitplane remains
 NonMatching, so that hash does not establish source playback.
+
+## Bink lossy writer root setup (2026-10-02)
+
+`WriteBPLossy` improves from 94.43585% to 95.90685% in the full
+deduplicated report. Its high-group pointer is initialized after the group
+loop and reused for table construction and traversal, while root-depth
+reads remain direct array accesses. The insertion pointer is preserved
+when roots are initialized, and the child-node pointer is set before the
+DC root store. The next-plane update explicitly casts to a byte, following
+retail's truncation and comparison instructions.
+
+The bitplane checker passes 6,911 nonempty lossy round trips, 27,644 early
+cutoff checks, and 16,384 lossless round trips with bit-length, reservoir,
+and output-guard checks. The full source build passes; no other function
+scores change and no symbols disappear. The linked DOL retains retail
+SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6. bitplane remains
+NonMatching, so this hash does not establish source playback.
+
+Shared group-depth locals and byte-sized child-depth temporaries were
+also tested and rejected. Remaining differences include register
+allocation, child-depth truncations, and instruction scheduling.

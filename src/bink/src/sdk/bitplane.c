@@ -1209,6 +1209,7 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     u8 absvals[BP_BLOCK_COEFFS];
     u8 active_absvals[BP_BLOCK_COEFFS];
     u8 hi_groups[BP_TREE_HIGH_GROUPS];
+    u8 PTR4* high_lens;
 
     /* Lossy bitplanes scan all 64 byte coefficients, including DC. */
     count = BP_BLOCK_COEFFS;
@@ -1265,14 +1266,15 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
         count--;
     } while (count != 0);
 
+    high_lens = hi_groups;
     {
         u32 group_bits;
         BP_TREE_HIGH_GROUP_MAX(groups, group_bits, BP_TREE_HIGH_GROUP0_INDEX, BP_TREE_HIGH_GROUP0_CHILD0_INDEX);
-        hi_groups[BP_TREE_HIGH_GROUP0_SLOT] = (u8)group_bits;
+        high_lens[BP_TREE_HIGH_GROUP0_SLOT] = (u8)group_bits;
         BP_TREE_HIGH_GROUP_MAX(groups, group_bits, BP_TREE_HIGH_GROUP1_INDEX, BP_TREE_HIGH_GROUP1_CHILD0_INDEX);
-        hi_groups[BP_TREE_HIGH_GROUP1_SLOT] = (u8)group_bits;
+        high_lens[BP_TREE_HIGH_GROUP1_SLOT] = (u8)group_bits;
         BP_TREE_HIGH_GROUP_MAX(groups, group_bits, BP_TREE_HIGH_GROUP2_INDEX, BP_TREE_HIGH_GROUP2_CHILD0_INDEX);
-        hi_groups[BP_TREE_HIGH_GROUP2_SLOT] = (u8)group_bits;
+        high_lens[BP_TREE_HIGH_GROUP2_SLOT] = (u8)group_bits;
 
     }
 
@@ -1294,6 +1296,7 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
     }
 
     roots = tree.roots;
+    insert = roots;
     {
         u32 group_bits;
         group_bits = hi_groups[BP_TREE_HIGH_GROUP0_SLOT];
@@ -1318,14 +1321,13 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
         }
         roots[BP_ROOT_GROUP11_SLOT] = entry;
     }
+    next_node = roots + BP_LOSSY_ROOT_NODES;
     roots[BP_ROOT_LOSSY_DC_SLOT] = groups[BP_TREE_GROUP_INDEX(BP_DC_COEFF)] + BP_TREE_BRANCH_NODE;
 
-    insert = roots;
-    next_node = roots + BP_LOSSY_ROOT_NODES;
     bit_mask = (u16)BP_LEVEL_MASK(maxbits);
     active_count = 0;
     level = maxbits;
-    for (; level != 0; level = BP_NEXT_LEVEL(level)) {
+    for (; level != 0; level = (u8)(level - 1)) {
         count = 0;
         /* Coefficients introduced on earlier planes emit one residual bit here. */
         if (count < active_count) {
@@ -1349,7 +1351,7 @@ u32 WriteBPLossy(BPBITSTREAM PTR4* bits, char PTR4* vals)
                     switch (BP_TREE_ENTRY_KIND(node_entry)) {
                     case BP_TREE_HIGH_NODE:
                         node_entry = BP_TREE_ENTRY_INDEX(node_entry);
-                        *cur = BP_TREE_HIGH_GROUP_ENTRY(hi_groups[node_entry >> (BP_TREE_HIGH_GROUP_SHIFT - BP_TREE_INDEX_SHIFT)], node_entry);
+                        *cur = BP_TREE_HIGH_GROUP_ENTRY(high_lens[node_entry >> (BP_TREE_HIGH_GROUP_SHIFT - BP_TREE_INDEX_SHIFT)], node_entry);
                         goto decoded_lossy_write_children;
                     case BP_TREE_GROUP_NODE:
                         node_entry = BP_TREE_ENTRY_INDEX(node_entry);
