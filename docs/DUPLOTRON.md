@@ -8806,3 +8806,24 @@ The combined full build and retail SHA-1
 306526d90b48e99894c3138f5fc8f2716d9fecf6 pass; the final deduplicated
 report preserves the IDCT improvement and incoming game/NPC gains with
 no regressions. The `dct` unit remains NonMatching.
+
+## Bink doubled IDCT even-sum scratch lifetime (2026-10-01)
+
+`fastidct8x8d` improves from 67.510124% to 67.89474%. The first-pass
+even sum is written directly into row scratch instead of keeping an
+`even2` temporary alive through the odd transform. The even difference
+remains a scalar; staging both gives only 67.51417%. Arithmetic and output
+store order are unchanged. The byte and motion variants did not benefit
+from the same scratch change and were restored.
+
+The scalar checker passes 32,768 byte/doubled IDCT cases and 16,384 motion
+blocks, including padded pitches. The full source build and retail DOL
+SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6 pass. The deduplicated
+project report preserves the incoming `84e64e3af` zEntPlayer gains and
+shows no regressions; this is the only additional score change. The `dct`
+unit remains NonMatching, so the retail hash does not validate source-linked
+IDCT playback.
+
+Rebased onto concurrent platform commit `5780419b5`; the combined full
+source build and retail hash pass. The final report retains this IDCT gain,
+all incoming platform improvements, and no regressions.
