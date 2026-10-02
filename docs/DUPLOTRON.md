@@ -8732,3 +8732,22 @@ Full source build succeeds; the deduplicated project report changes
 only `WriteBPLossless`. The normal DOL retains retail SHA-1
 306526d90b48e99894c3138f5fc8f2716d9fecf6. `bitplane` remains NonMatching,
 so this does not establish source-linked playback.
+
+## Bink byte IDCT first-pass even pair (2026-10-01)
+
+`fastidct8x8` improves from 58.927124% to 60.765182% by storing the first
+pass's even difference/sum pair into scratch columns 2 and 1 before
+computing the odd terms. The target also stores this pair early. The
+other even values stay live until the final output combination. A nested
+scope keeps subsequent declarations valid for the ProDG C compiler.
+Merely moving the scalar even calculations earlier did not change the
+score, nor did additionally moving the odd-result stores; those extra
+store-order changes are not retained.
+
+The independent scalar-transform checker passes 32,768 IDCT cases
+covering byte/doubled outputs and 16,384 motion blocks, quantization
+levels, and padded pitches. Arithmetic and rounding expressions remain
+unchanged. Full source build succeeds; the deduplicated project report
+changes only this function. The normal DOL retains retail SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. `dct` remains NonMatching;
+this is not a source-linked playback claim.
