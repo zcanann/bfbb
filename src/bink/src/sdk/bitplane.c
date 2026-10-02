@@ -292,6 +292,7 @@ u32 LenBPLossless(s16 PTR4* vals)
     s32 sign;
     u32 bits;
     u32 maxbits;
+    u32 had_level;
     s32 i;
     s32 group;
     s32 len;
@@ -322,6 +323,7 @@ u32 LenBPLossless(s16 PTR4* vals)
         i++;
         count--;
     } while (count != 0);
+    had_level = maxbits;
     /* Each four-coefficient subtree inherits the deepest child bit depth. */
     group = BP_FIRST_LOSSLESS_TREE_GROUP_INDEX;
     count = BP_TREE_LAST_GROUP;
@@ -377,12 +379,12 @@ u32 LenBPLossless(s16 PTR4* vals)
     roots[BP_ROOT_LOSSLESS_COEFF1_SLOT] = BP_TREE_COEFF_LEAF_ENTRY(lens[BP_COEFF1_INDEX], BP_COEFF1_LEAF_BASE);
     roots[BP_ROOT_LOSSLESS_COEFF2_SLOT] = BP_TREE_COEFF_LEAF_ENTRY(lens[BP_COEFF2_INDEX], BP_COEFF2_LEAF_BASE);
     roots[BP_ROOT_LOSSLESS_COEFF3_SLOT] = BP_TREE_COEFF_LEAF_ENTRY(lens[BP_COEFF3_INDEX], BP_COEFF3_LEAF_BASE);
-    cur = roots;
+    restart = roots;
     end = tree.nodes;
 
     /* Expand pending group/branch/coeff nodes one bitplane level at a time. */
     for (; 1 < maxbits; maxbits = BP_NEXT_LEVEL(maxbits)) {
-        restart = cur;
+        cur = restart;
         if (cur < end) {
             do {
                 entry = *cur;
@@ -450,10 +452,9 @@ decoded_length_children:
                 }
         } while (cur < end);
         }
-        cur = restart;
     }
 
-    if (maxbits != 0 && (restart = cur, cur < end)) {
+    if (had_level != 0 && (cur = restart, cur < end)) {
         do {
             entry = *cur;
             if ((entry == BP_TREE_EMPTY_ENTRY) ||

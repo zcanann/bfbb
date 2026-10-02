@@ -8424,3 +8424,20 @@ RenderWare commits 13baf74ea and 045d8935e also pass the combined build.
 No function scores regress. Report:
 build/bitplane-length-pointer-integrated-report.json. Bitplane remains
 NonMatching; normal DOL identity does not establish source-linked playback.
+
+
+## Bink length estimator original-level guard and plane cursor (2026-10-01)
+
+LenBPLossless improves from 92.04113% to 92.95373%. Retaining the
+original maximum level for the final-plane guard reaches 92.19537%,
+matching retail's early comparison. The pending-node insertion pointer
+then persists across planes, and each plane initializes the traversal
+cursor from it, reaching 92.95373%. The final plane initializes the cursor
+the same way. Zero-level inputs still skip the final traversal.
+
+All 16,384 lossless round trips pass with exact estimator/writer bit-length
+agreement, including zero-level inputs. All 6,911 nonempty lossy round trips
+and 27,644 early-cutoff checks pass. Full all_source build and retail DOL
+SHA-1 pass; no other function scores change. Report:
+build/bitplane-length-guard-report.json. Bitplane remains NonMatching;
+normal DOL identity does not establish source-linked playback.
