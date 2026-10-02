@@ -2308,8 +2308,8 @@ void zNPCFodBzzt::Setup()
     if (!laser.TextureGet())
     {
         RwRaster* rast = NPCC_FindRWRaster("fx_fodbzzt_deathray");
-        RwRGBA rgba_beg = { 0, 255, 0, 255 };
-        RwRGBA rgba_end = { 0, 204, 0, 0 };
+        const RwRGBA rgba_beg = { 0, 255, 0, 255 };
+        const RwRGBA rgba_end = { 0, 204, 0, 0 };
         F32 uv_scroll[2] = { 0.0f, 10.0f };
         F32 radius[2] = { 0.01f, 0.3f };
 
@@ -5044,7 +5044,7 @@ U32 zNPCTubeSlave::AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal)
     case NPC_GOAL_TUBEPAL:
         idx = 1;
         break;
-    case NPC_GOAL_TUBEDUCKLING:
+    case NPC_GOAL_TUBEATTACK:
         idx = 3;
         break;
     case NPC_GOAL_TUBELASSO:
@@ -5056,7 +5056,7 @@ U32 zNPCTubeSlave::AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal)
     case NPC_GOAL_TUBEDEAD:
         idx = 0x25;
         break;
-    case NPC_GOAL_TUBEATTACK:
+    case NPC_GOAL_TUBEDUCKLING:
         idx = 3;
         break;
     default:
