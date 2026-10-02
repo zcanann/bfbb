@@ -615,10 +615,10 @@ python tools/compilerprobe/repros/sweep_units.py --diff sb.json 2.0p1a 2.0p1d
 
 ## Candidate behaviours of the retail compiler, not adopted
 
-GC/2.0p1e is the final compiler model. Research after it (2026-10-01)
+GC/2.0p1e is the current compiler model. Research after it (2026-10-01)
 characterised more retail-only alias behaviour; none of it is adopted, because
-no released compiler (1.3 through 3.0) has it, and closing holdout functions
-through ever more compiler patches is not a goal. Measured against 2.0p1e over
+no released compiler (1.3 through 3.0) has it, and compiler patches are not
+added greedily to close holdout functions. Measured against 2.0p1e over
 all 120 RW and 224 game units:
 
 | candidate | rule | measured |
