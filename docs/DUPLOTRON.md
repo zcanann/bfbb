@@ -9113,3 +9113,26 @@ An unexpected check_hide_entities regression disappeared after rebuilding
 zCutsceneMgr without source changes; the compiler file hash was unchanged.
 The cause of that inconsistent object remains undetermined. Audio, keyframe,
 DoFrame-tail, and ngcrad3d dimension experiments produced no retained gains.
+
+## Bink audio-open refinement temporaries (2026-10-02)
+
+`BinkAudioDecompressOpen` improves from 99.55556% to 99.82222% (1,800 bytes).
+The second and third Newton refinements use their error expressions directly,
+keeping the first error temporary. Arithmetic, double precision, and operation
+order are unchanged; the remaining six operand differences are register choices
+in the first refinement at the two inline sites. No assembly was added or changed.
+
+All-nested, separate-product/correction, and initial-estimate reuse variants
+scored lower and were discarded. The final all-source build uses a private
+copy of the unchanged compiler distribution under build/compilers-isolated.
+This avoids sharing mutable compiler files with another worktree. Its full
+report changes only BinkAudioDecompressOpen, removes no symbols, and retains
+check_hide_entities at 100% without a corrective compile. Earlier full builds
+using the shared compiler path reproduced that function's intermittent 91.047%
+result; six direct recompiles produced identical exact objects. Isolation's
+successful build is not proof of the discrepancy's cause.
+
+The normal DOL remains byte-identical to retail, SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. Audio decoding remains NonMatching;
+source-linked playback is not established. Validation artifacts:
+build/binkacd-isolated-validation.log and build/binkacd-isolated-report.json.

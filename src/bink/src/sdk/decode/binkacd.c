@@ -384,10 +384,10 @@ static inline f32 radfsqrt(f32 value)
         guess = error;
         error = guess * guess * input;
         guess = BINKAC_RSQRT_NEWTON_HALF_CONST * guess * (BINKAC_RSQRT_NEWTON_THREE_CONST - error);
-        error = guess * guess * input;
-        guess = BINKAC_RSQRT_NEWTON_HALF_CONST * guess * (BINKAC_RSQRT_NEWTON_THREE_CONST - error);
-        error = guess * guess * input;
-        guess = BINKAC_RSQRT_NEWTON_HALF_CONST * guess * (BINKAC_RSQRT_NEWTON_THREE_CONST - error);
+        guess = BINKAC_RSQRT_NEWTON_HALF_CONST * guess *
+                (BINKAC_RSQRT_NEWTON_THREE_CONST - guess * guess * input);
+        guess = BINKAC_RSQRT_NEWTON_HALF_CONST * guess *
+                (BINKAC_RSQRT_NEWTON_THREE_CONST - guess * guess * input);
         return guess * input;
     }
 
