@@ -9515,3 +9515,46 @@ NonMatching, so the hash does not establish source playback.
 Narrower plane counters, child-pointer combinations, alternate plane-loop
 forms, and splitting the length calculator's final-plane guard produced
 no additional gain and were restored.
+
+## Parallel Robot rendering and YUV column matching (2026-10-02)
+
+Separate worktrees produced six gains, verified together in the full
+deduplicated report:
+
+| Function | Before | After |
+| --- | ---: | ---: |
+| zNPCFodBzzt::DiscoRender | 77.588234% | 82.513370% |
+| zNPCSleepy::NightLightUVStep | 67.700000% | 91.700000% |
+| zNPCSleepy::RendConeOfDeath | 91.297030% | 93.282180% |
+| dounaligned32colm | 95.166664% | 100.000000% |
+| dounaligned32acolm2h | 94.270836% | 96.041664% |
+| dounaligned32acolm2wh | 94.916664% | 97.333336% |
+
+Robot rendering uses memset's returned vertex pointer, explicit position
+component locals, expanded UV assignments, and a directly initialized
+immutable direction vector. Mutable UV-rate tables were rejected despite
+higher code matching because retail places those tables in .sdata2.
+Robot remains at 318/328 exact functions; its overall fuzzy score improves
+from 99.10535% to 99.27990%.
+
+YUV column routines use separate row temporaries and advancing byte sample
+pointers while preserving unsigned alpha shifts and output stores. The
+plain grayscale column routine adds 120 exactly matched code bytes and
+one exact function, bringing YUV to 86/97 exact functions. The combined
+all-source build and normal link pass, with no other function-score
+changes or removed symbols. The DOL retains retail SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. Both units remain NonMatching;
+the DOL hash does not establish source rendering or playback.
+
+`python tools/check_bink_yuv_columns.py --self-test` passes 27,456
+independent scalar-oracle cases covering the three changed production
+routines, grayscale/alpha pixels, doubled dimensions, both rows, positive
+and negative pitches, phase wrap, cursor updates, and buffer/context
+guards. Deliberate pixel-channel and input-cursor mutations both fail with
+the expected diagnostics. This checks numeric packed output on the host;
+it does not simulate the GameCube ABI or source playback.
+
+Bungee's bounded scheduling experiments and Plankton's new initializer
+variants were restored after failing to beat their baselines. Player
+speech casts, rotation-pointer order, streak-zero lifetimes, and animation
+copy-loop forms likewise produced no retained root-worktree changes.
