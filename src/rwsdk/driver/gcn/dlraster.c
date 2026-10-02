@@ -277,10 +277,10 @@ static void DlRasterTile(void* dstBuffer, void* srcBuffer, RwInt32 width, RwInt3
                     tb = (tiles + (x >> 2)) << 4;
                 }
 
-                index = tdy + (x & 3);
+                index = (tb << 2) + ((tdy + (x & 3)) << 1);
 
-                *(RwUInt16*)((RwUInt8*)dstBuffer + ((tb << 2) + (index << 1))) = ((RwUInt16*)line)[x << 1];
-                *(RwUInt16*)((RwUInt8*)dstBuffer + ((tb << 2) + (index << 1) + 32)) = ((RwUInt16*)line)[(x << 1) + 1];
+                *(RwUInt16*)((RwUInt8*)dstBuffer + index) = ((RwUInt16*)line)[x << 1];
+                *(RwUInt16*)((RwUInt8*)dstBuffer + (index + 32)) = ((RwUInt16*)line)[(x << 1) + 1];
             }
         }
         break;

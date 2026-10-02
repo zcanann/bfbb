@@ -508,18 +508,19 @@ static RwInt32 ExtractNodes(_rwPalQuantOctNode* root, RwRGBA* palette, RwInt32 n
         }
         else
         {
-            RwReal weight = root->Leaf.weight;
-            RwReal recip = 0.0f;
+            RwReal recip;
+            RwInt32 c;
 
-            if (weight > 0.0f)
-            {
-                recip = 255.9999f / weight;
-            }
+            recip = (root->Leaf.weight > 0.0f) ? (255.9999f / root->Leaf.weight) : 0.0f;
 
-            palette[nodeIndex].red = (RwUInt8)(RwInt32)(root->Leaf.ac.red * recip);
-            palette[nodeIndex].green = (RwUInt8)(RwInt32)(root->Leaf.ac.green * recip);
-            palette[nodeIndex].blue = (RwUInt8)(RwInt32)(root->Leaf.ac.blue * recip);
-            palette[nodeIndex].alpha = (RwUInt8)(RwInt32)(root->Leaf.ac.alpha * recip);
+            c = (RwInt32)(root->Leaf.ac.red * recip);
+            palette[nodeIndex].red = (RwUInt8)c;
+            c = (RwInt32)(root->Leaf.ac.green * recip);
+            palette[nodeIndex].green = (RwUInt8)c;
+            c = (RwInt32)(root->Leaf.ac.blue * recip);
+            palette[nodeIndex].blue = (RwUInt8)c;
+            c = (RwInt32)(root->Leaf.ac.alpha * recip);
+            palette[nodeIndex].alpha = (RwUInt8)c;
 
             root->Leaf.palIndex = (RwUInt8)nodeIndex;
             nodeIndex++;
