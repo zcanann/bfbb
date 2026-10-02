@@ -557,7 +557,6 @@ static inline u32 exp_read_huff8(EXPBITS PTR4* bits, u32 state, HUFF8TABLE PTR4*
     EXPBITSTYPE bitbuf;
     EXPBITSTYPE word;
     u8 code;
-    u32 used;
     u32 symbol;
 
     bits_to_peek = table->bits_to_peek[state];
@@ -566,23 +565,23 @@ static inline u32 exp_read_huff8(EXPBITS PTR4* bits, u32 state, HUFF8TABLE PTR4*
         u32 mask = GetBitsLen(bits_to_peek);
         bitbuf = bits->bits;
         code = table->decode[state][bitbuf & mask];
-        used = HUFF4_CODE_USED(code);
         symbol = table->syms[state][HUFF4_CODE_SYMBOL(code)];
-        bits->bitlen = bitcount - used;
-        bits->bits = bitbuf >> used;
+        code = HUFF4_CODE_USED(code);
+        bits->bitlen = bitcount - code;
+        bits->bits = bitbuf >> code;
     } else {
         u32 mask = GetBitsLen(bits_to_peek);
         word = *bits->cur;
         bitbuf = bits->bits;
         code = table->decode[state][(bitbuf | (word << bitcount)) & mask];
-        used = HUFF4_CODE_USED(code);
         symbol = table->syms[state][HUFF4_CODE_SYMBOL(code)];
-        if (bitcount >= used) {
-            bits->bits = bitbuf >> used;
-            bits->bitlen = bitcount - used;
+        code = HUFF4_CODE_USED(code);
+        if (bitcount >= code) {
+            bits->bits = bitbuf >> code;
+            bits->bitlen = bitcount - code;
         } else {
-            bits->bits = word >> (used - bitcount);
-            bits->bitlen = bitcount + EXP_BITS_PER_WORD - used;
+            bits->bits = word >> (code - bitcount);
+            bits->bitlen = bitcount + EXP_BITS_PER_WORD - code;
             bits->cur++;
         }
     }

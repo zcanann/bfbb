@@ -8600,3 +8600,26 @@ retail SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6. These existing
 helper checks do not independently exercise Huff8 state-dependent tables.
 The retained change only reorders independent field stores. `expand`
 remains NonMatching, so the normal DOL hash is not source-linked Huff8 proof.
+
+## Bink Huff8 packed-code lifetime (2026-10-01)
+
+`exp_read_huff8` now reuses the packed code byte for the consumed-bit
+count after looking up the decoded symbol. This follows the target's
+register reuse and removes the separate `used` temporary. The high
+nibble is in 0..15, so storing it back to `u8` loses no information;
+subsequent arithmetic still combines it with unsigned bit counts.
+`CheckReadHuff8Bundle` improves from 93.867% to 95.113304%, and
+`NewCheckReadHuff8Bundle` from 96.30769% to 97.63077%. A separate trial
+scoping the buffered word to each branch produced no improvement and
+was discarded.
+
+Validation: the new `tools/check_bink_huff8.py` extracts the production
+helper and table structure and checks 135,168 cases with four chained
+state-dependent reads each against a bit-at-a-time reader. It covers
+all 16 initial states, lookup widths 1..8, and buffered lengths 0..32,
+checking the symbol, cursor, buffer, and remaining bit count after each
+read. All pass. Existing Huff4/countdown/run-block checks also pass.
+The full source build succeeds; the deduplicated project report changes
+only these two scores, and the normal DOL retains retail SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. `expand` remains NonMatching;
+this does not establish source-linked playback or retail table parsing.
