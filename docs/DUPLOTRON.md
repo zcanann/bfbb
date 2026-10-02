@@ -8908,3 +8908,19 @@ blocks with padding. Full source build and retail DOL SHA-1
 306526d90b48e99894c3138f5fc8f2716d9fecf6 pass. The deduplicated report
 changes only these two functions. The `dct` unit remains NonMatching;
 the retail hash does not establish source-linked IDCT playback.
+
+## Bink doubled IDCT final-pass odd scale (2026-10-01)
+
+`fastidct8x8d` improves from 70.42105% to 70.72065%. The final pass
+names the scaled odd tail input immediately after the shared rotation
+is calculated, and reuses it in row 4 after rows 6 and 5 are available.
+Arithmetic and output-store order are unchanged. This final-pass change
+regresses byte IDCT and leaves motion unchanged, so only doubled IDCT
+is edited. Naming the remaining first-pass odd scale and pair difference
+in byte/motion variants also gave no gain.
+
+The scalar checker passes 32,768 byte/doubled cases and 16,384 motion
+blocks with padding. Full source build and retail DOL SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6 pass. The deduplicated report
+changes only this function. The `dct` unit remains NonMatching; the
+retail hash does not establish source-linked IDCT playback.

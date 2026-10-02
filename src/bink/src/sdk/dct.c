@@ -1067,6 +1067,7 @@ static void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4
         u32 packed2;
         u32 packed3;
 
+        s32 odd_scaled1;
         a0 = out[DCT_COL2] + out[DCT_COL6];
         a1 = out[DCT_COL0] + out[DCT_COL4];
         row[DCT_COL3] = a1 - a0;
@@ -1081,13 +1082,14 @@ static void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4
         b1 = out[DCT_COL1] + out[DCT_COL7];
         row[DCT_COL7] = b1 + a9;
         b3 = DCT_FIXED_MUL(a8 + b0, DCT_IDCT_A3);
+        odd_scaled1 = DCT_FIXED_MUL(b0, DCT_IDCT_A2);
         row[DCT_COL6] = (DCT_FIXED_MUL(a8, DCT_IDCT_A4) + b3) - row[DCT_COL7];
         packed0 = (((u32)(row[DCT_COL0] + row[DCT_COL7] + DCT_BYTE_ROUND) << DCT_PACKED_BYTE_SHIFT) & DCT_BYTE_PAIR_MASK) | (((u32)(row[DCT_COL1] + row[DCT_COL6] + DCT_BYTE_ROUND) >> DCT_OUTPUT_SHIFT) & DCT_BYTE_MASK);
         packed0 |= packed0 << DCT_PACKED_BYTE_SHIFT;
         packed3 = (((u32)(row[DCT_COL0] - row[DCT_COL7] + DCT_BYTE_ROUND) >> DCT_OUTPUT_SHIFT) & DCT_BYTE_MASK) | (((u32)(row[DCT_COL1] - row[DCT_COL6] + DCT_BYTE_ROUND) << DCT_PACKED_BYTE_SHIFT) & DCT_BYTE_PAIR_MASK);
         packed3 |= packed3 << DCT_PACKED_BYTE_SHIFT;
         row[DCT_COL5] = DCT_FIXED_MUL(b1 - a9, DCT_IDCT_A1) - row[DCT_COL6];
-        row[DCT_COL4] = (DCT_FIXED_MUL(b0, DCT_IDCT_A2) - b3) + row[DCT_COL5];
+        row[DCT_COL4] = (odd_scaled1 - b3) + row[DCT_COL5];
         packed1 = (((u32)(row[DCT_COL2] + row[DCT_COL5] + DCT_BYTE_ROUND) << DCT_PACKED_BYTE_SHIFT) & DCT_BYTE_PAIR_MASK) | (((u32)(row[DCT_COL3] - row[DCT_COL4] + DCT_BYTE_ROUND) >> DCT_OUTPUT_SHIFT) & DCT_BYTE_MASK);
         packed2 = (((u32)(row[DCT_COL2] - row[DCT_COL5] + DCT_BYTE_ROUND) >> DCT_OUTPUT_SHIFT) & DCT_BYTE_MASK) | (((u32)(row[DCT_COL3] + row[DCT_COL4] + DCT_BYTE_ROUND) << DCT_PACKED_BYTE_SHIFT) & DCT_BYTE_PAIR_MASK);
 
