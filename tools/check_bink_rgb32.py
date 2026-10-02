@@ -4,6 +4,14 @@
 Synthetic valid lookup tables exercise color conversion, alpha, horizontal
 pixel duplication, and the GameCube's separate AR/GB tile planes. Packed
 input and output words model big-endian values on the host compiler.
+
+The doubled color-alpha kernel preserves a retail quirk: the second copy of
+sample 2 in the second row takes sample 3's alpha. In the retail ngcrgb.o,
+0x1918 loads av1 into r3; 0x19bc extracts its low byte into r5, 0x19c8 leaves
+byte 1 in r3's high byte, and 0x19cc sets r17 to byte 0 << 8. At 0x1b98-0x1ba4,
+the AR word stored at dest1 + 64 combines r3, red << 16, r17, and red. For
+av1=0x11223344 and red=0x55 this gives 0x33554455, not 0x33553355.
+
 This checks conversion and addressing, not game playback.
 """
 import argparse
@@ -110,8 +118,13 @@ int main(void) {
                 u32 n = x / 4, pos = x % 4, chroma_shift = pos < 2 ? 8 : 0;
                 u32 pixel = reference_pixel(byte_at(y[r][n], pos), (u[n] >> chroma_shift) & 255,
                                              (v[n] >> chroma_shift) & 255, byte_at(a[r][n], pos), alpha);
-                for (u32 dup = 0; dup < scale; ++dup)
-                    write_pixel(expected + 16, pitch, row + r, col + x * scale + dup, pixel);
+                for (u32 dup = 0; dup < scale; ++dup) {
+                    u32 output_pixel = pixel;
+                    /* Retail mixes in the next sample's alpha for this one copy. */
+                    if (kind == 3 && r == 1 && pos == 2 && dup == 1)
+                        output_pixel = (pixel & 0x00ffffffu) | (byte_at(a[r][n], 3) << 24);
+                    write_pixel(expected + 16, pitch, row + r, col + x * scale + dup, output_pixel);
+                }
             }
             kernels[kind](count);
             if (memcmp(actual, expected, sizeof(actual))) {

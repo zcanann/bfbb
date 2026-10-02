@@ -978,8 +978,8 @@ void YUV_32ax2_4x2_even(u32 count)
         u8 ulo;
         u32 PTR4* y00;
         u32 PTR4* y01;
-        u32 alpha0;
-        u32 alpha1;
+        u8 alpha0;
+        u8 alpha1;
         s32 r;
         s32 b;
         s32 gb;
@@ -1035,7 +1035,8 @@ void YUV_32ax2_4x2_even(u32 count)
         alpha1 = RGB_WORD_BYTE0(av1);
         y00 = clamp_ytable[RGB_WORD_BYTE1(yv1)];
         y01 = clamp_ytable[RGB_WORD_BYTE0(yv1)];
-        dest1[RGB_TILE_SECOND_BLOCK_WORD0] = RGB32_ALPHA_COLOR_DUP_PAIR(alpha0 << RGB_BYTE3_SHIFT, alpha0 << RGB_BYTE1_SHIFT, y00[r]);
+        // Retail uses the next input alpha for the second copy of this pixel.
+        dest1[RGB_TILE_SECOND_BLOCK_WORD0] = RGB32_ALPHA_COLOR_DUP_PAIR(alpha0 << RGB_BYTE3_SHIFT, alpha1 << RGB_BYTE1_SHIFT, y00[r]);
         dest1[RGB_TILE_SECOND_BLOCK_WORD1] = RGB32_ALPHA_COLOR_DUP_PAIR(alpha1 << RGB_BYTE3_SHIFT, alpha1 << RGB_BYTE1_SHIFT, y01[r]);
         dest1[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD0] = RGB32_COLOR_GB_DUP(y00, gb, b);
         dest1[RGB_TILE_SECOND_BLOCK_NEXT_ROW_WORD1] = RGB32_COLOR_GB_DUP(y01, gb, b);
