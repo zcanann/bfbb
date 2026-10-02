@@ -636,7 +636,7 @@ config.libs = [
             Object(Matching, "SB/Core/x/xParEmitterType.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Core/x/xRenderState.cpp"),
             Object(Matching, "SB/Game/zEntPlayerOOBState.cpp", extra_cflags=["-sym on"]),
-            Object(Equivalent, "SB/Core/x/xClumpColl.cpp"),
+            Object(Matching, "SB/Core/x/xClumpColl.cpp"),
             Object(Matching, "SB/Core/x/xEntBoulder.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Core/x/xGrid.cpp"),
             Object(Matching, "SB/Core/x/xJSP.cpp"),

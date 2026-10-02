@@ -71,13 +71,6 @@ char* xhud::font_meter_asset::type_name()
     return "hud:meter:font";
 }
 
-// Non-matching by six instructions, all register allocation: the target leaves
-// r3 free until after format_text[mode] is loaded, so the `this->a` load and
-// the format_text base both get r3, and `this->buffer` is materialised into r3
-// only just before the call. Ours hoists `addi r3, r31, 0x118` to the top of
-// the block and pushes the other two into r4. Identical instruction multiset
-// modulo register numbering; ~20 source shapes measured, none below the r3/r4
-// split, and the unpatched GC/2.0p1 emits the same code.
 void xhud::font_meter_widget::update(F32 dt)
 
 {
@@ -107,18 +100,12 @@ void xhud::font_meter_widget::update(F32 dt)
     {
         this->last_value = new_value;
         font_meter_asset& fma = *(font_meter_asset*)this->a;
-        U8 mode;
 
-        a = this->max_value;
-        if (a < this->min_value)
-        {
-            mode = 0;
-        }
-        else
-        {
-            mode = fma.counter_mode;
-        }
-        sprintf(this->buffer, format_text[mode], new_value, (S32)(a + 0.5f));
+        // No `mode` local (the DWARF has none): the index is a ?: inline in the
+        // call, U8-typed so the clrlslwi survives, and max_value is re-read.
+        sprintf(this->buffer,
+                format_text[(this->max_value < this->min_value) ? (U8)0 : fma.counter_mode],
+                new_value, (S32)(this->max_value + 0.5f));
         basic_rect<F32> bounds = this->xf.bounds(this->buffer);
         this->offset.x = -bounds.x;
         this->offset.y = -bounds.y;

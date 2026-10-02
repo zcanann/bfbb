@@ -833,10 +833,10 @@ static void _xAnimTableAddTransitionHelper(xAnimState* state, xAnimTransition* t
 void _xAnimTableAddTransition(xAnimTable* table, xAnimTransition* tran, const char* source,
                               const char* dest)
 {
-    U8* buffer = (U8*)giAnimScratch;
-    xAnimState** stateList = (xAnimState**)(giAnimScratch + 0x400);
+    U8* buffer;
+    xAnimState** stateList;
     U32 i;
-    U32 allocCount = 0;
+    U32 allocCount;
     U32 stateCount = 0;
     char* stateName;
 
@@ -844,6 +844,10 @@ void _xAnimTableAddTransition(xAnimTable* table, xAnimTransition* tran, const ch
     xAnimTransition* substTransitionList[32];
     U32 substTransitionCount = 0;
     U8 hasSubst = false;
+
+    buffer = (U8*)giAnimScratch;
+    stateList = (xAnimState**)(giAnimScratch + 0x400);
+    allocCount = 0;
 
     char tempName[128];
     char extra[128];
@@ -898,9 +902,8 @@ void _xAnimTableAddTransition(xAnimTable* table, xAnimTransition* tran, const ch
                                 allowMissingState = dest[i] == '~';
                                 U32 extraIteratorLength = strlen(tempIterator);
                                 strcpy(extraIterator, tempIterator);
-                                tempIterator += extraIteratorLength;
+                                tempIterator += extraIteratorLength + 1;
                                 extraIterator += extraIteratorLength;
-                                tempIterator++;
                             }
                             else
                             {

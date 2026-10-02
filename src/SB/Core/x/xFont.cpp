@@ -3340,8 +3340,9 @@ namespace
                 size = get_texture_size(*ttc.raster);
 
                 F32 tmpX = tb.font.width;
-                F32 tmpY = size.y * (tmpX / size.x);
+                F32 tmpY = size.y;
 
+                tmpY *= tmpX / size.x;
                 size.x = tmpX;
                 size.y = tmpY;
                 break;
@@ -3351,8 +3352,9 @@ namespace
                 size = get_texture_size(*ttc.raster);
 
                 F32 tmpY = tb.font.height;
-                F32 tmpX = size.x * (tmpY / size.y);
+                F32 tmpX = size.x;
 
+                tmpX *= tmpY / size.y;
                 size.x = tmpX;
                 size.y = tmpY;
                 break;

@@ -861,11 +861,10 @@ xClumpCollBSPTree* xClumpColl_ForAllIntersections(xClumpCollBSPTree* tree,
             isData.bbox.sup.z += intersection->t.sphere.radius;
 
             testSphere.sphere = &intersection->t.sphere;
+            testSphere.recipRadius = 1.0f / testSphere.sphere->radius;
 
             isData.leafTestData = &testSphere;
             isData.cbParam = &cbParam;
-
-            testSphere.recipRadius = 1.0f / testSphere.sphere->radius;
 
             xClumpColl_ForAllBoxLeafNodeIntersections(tree, &isData.bbox, LeafNodeSpherePolyIntersect,
                                                     &isData);
