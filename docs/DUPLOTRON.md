@@ -9021,3 +9021,22 @@ and lock gains are preserved. `ngcsnd.c` is still NonMatching and the normal
 DOL uses its original object, so the hash does not verify source-linked
 Bink audio playback. Other tested pointer, cursor, and array forms were
 unchanged or worse and were discarded.
+
+## Bink readiness and starvation recovery (2026-10-01)
+
+`NGC_StarvedClear` improves from 98.19588% to 99.93814%. Once a free ARQ
+task is found, the completed polling counter is reused as the selected
+staging-buffer index. Busy iterations branch before this assignment, so
+the retry bound is unchanged. Reading the stereo buffer through `state`
+also fixes the callee-saved register permutation. The only remaining
+instruction difference loads that field from state+0x2c instead of
+snd+0xa4; the addresses are equivalent.
+
+`Ready` improves from 96.223305% to 96.660194% by reading the address shift
+through `NGC_SOUND_STATE(snd)`. Other cursor-order and lock-buffer access
+variants did not improve their baselines and were discarded.
+
+The full source build and retail DOL SHA-1 check pass, and the project-wide
+report changes only these two scores, both upward. `ngcsnd.c` remains
+NonMatching: the DOL uses its original object and does not validate
+source-linked audio playback.

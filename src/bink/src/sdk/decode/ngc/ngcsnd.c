@@ -792,12 +792,13 @@ check_busy:
     if (NGC_TASK_BUSY(task)) {
         goto busy;
     }
+    poll_count = lock_side;
     silent_start = NGC_SOUND_STATE(snd)->play_cursor;
     silent_end = silent_start + NGC_SOUND_STATE(snd)->frame_size;
     if (NGC_SND(snd)->chans == NGC_SOUND_STEREO_CHANNELS) {
-        silence_buffer = NGC_SOUND_STATE(snd)->stereo_buffer;
+        silence_buffer = state->stereo_buffer;
     } else {
-        silence_buffer = NGC_SOUND_LOCK_BUFFER(NGC_SOUND_STATE(snd)->decode_buffer, lock_side,
+        silence_buffer = NGC_SOUND_LOCK_BUFFER(NGC_SOUND_STATE(snd)->decode_buffer, poll_count,
                                                NGC_SOUND_STATE(snd)->channel_stride);
     }
 
@@ -858,7 +859,7 @@ static s32 Ready(BINKSND PTR4* snd)
 
     state = NGC_SOUND_STATE(snd);
     now = RADTimerRead();
-    address_shift = NGC_ADDRESS_SHIFT(state);
+    address_shift = NGC_SOUND_STATE(snd)->address_shift;
     voice = state->voices[0];
     voice_cursor = NGC_AX_CURRENT_CURSOR(voice, address_shift);
     if (NGC_SOUND_STATE(snd)->play_state == NGC_PLAY_STATE_RUNNING) {
