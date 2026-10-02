@@ -222,10 +222,11 @@ S32 xStrParseFloatList(F32* dest, const char* strbuf, S32 max)
     char* numstart;
     char savech;
 
-    if (!(str = (char*)strbuf))
+    if (!strbuf)
     {
         return 0;
     }
+    str = (char*)strbuf;
 
     for (index = 0; *str != '\0' && index < max; index++)
     {

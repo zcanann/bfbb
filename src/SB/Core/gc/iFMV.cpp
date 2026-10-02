@@ -89,12 +89,11 @@ void Decompress_frame(HBINK bnk, HRAD3DIMAGE rad_image, long flags)
     RAD3DLockInfo lock_info;
 
     lock_info.do_frame_status = BinkDoFrame(bnk);
-    if (Lock_RAD_3D_image(rad_image, &pixels, &lock_info.buffer_pitch, &lock_info.surface_type) != 0)
+    if (Lock_RAD_3D_image(rad_image, &pixels, &lock_info.buffer_pitch, &lock_info.surface_type))
     {
-        u32 copy_flags =
-            Bink_surface_type[lock_info.surface_type] | (flags != 0 ? BINKCOPYALL : 0);
         lock_info.copy_status =
-            BinkCopyToBuffer(bnk, pixels, lock_info.buffer_pitch, bnk->Height, NULL, NULL, copy_flags);
+            BinkCopyToBuffer(bnk, pixels, lock_info.buffer_pitch, bnk->Height, NULL, NULL,
+                             (flags ? BINKCOPYALL : 0) | Bink_surface_type[lock_info.surface_type]);
         Unlock_RAD_3D_image(rad_image);
     }
 }
