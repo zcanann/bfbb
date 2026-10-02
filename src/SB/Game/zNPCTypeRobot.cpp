@@ -2594,9 +2594,7 @@ void zNPCFodBzzt::DiscoRender()
         return;
     }
 
-    memset(mem, 0, 10 * sizeof(RwIm3DVertex));
-
-    RwIm3DVertex* vert_list = (RwIm3DVertex*)mem;
+    RwIm3DVertex* vert_list = (RwIm3DVertex*)memset(mem, 0, 10 * sizeof(RwIm3DVertex));
     RwIm3DVertex* vtx = vert_list + 1;
 
     RwIm3DVertexSetPos(&vert_list[0], pos_top.x, pos_top.y, pos_top.z);
@@ -2616,7 +2614,10 @@ void zNPCFodBzzt::DiscoRender()
         pos_vtx *= 0.2f;
         pos_vtx += pos_bot;
 
-        RwIm3DVertexSetPos(vtx, pos_vtx.x, pos_vtx.y, pos_vtx.z);
+        const F32 x = pos_vtx.x;
+        const F32 y = pos_vtx.y;
+        const F32 z = pos_vtx.z;
+        RwIm3DVertexSetPos(vtx, x, y, z);
         RwIm3DVertexSetRGBA(vtx, rgba_bot.red, rgba_bot.green, rgba_bot.blue, rgba_bot.alpha);
         RwIm3DVertexSetUV(vtx, u_bot + uoff, v_bot);
 
@@ -3449,13 +3450,13 @@ void zNPCSleepy::NightLightUVStep(F32 dt)
     static const F32 uv_scroll_nightlight[2] = { 0.0f, -0.2f };
     static const F32 uv_scroll_deathcone[2] = { 0.0f, -1.55f };
 
-    zNPCSleepy::uv_nightlight[0] += dt * uv_scroll_nightlight[0];
-    zNPCSleepy::uv_nightlight[1] += dt * uv_scroll_nightlight[1];
+    zNPCSleepy::uv_nightlight[0] = zNPCSleepy::uv_nightlight[0] + dt * uv_scroll_nightlight[0];
+    zNPCSleepy::uv_nightlight[1] = zNPCSleepy::uv_nightlight[1] + dt * uv_scroll_nightlight[1];
     RANGEWRAP(&zNPCSleepy::uv_nightlight[0], 0.0f, 1.0f);
     RANGEWRAP(&zNPCSleepy::uv_nightlight[1], 0.0f, 1.0f);
 
-    zNPCSleepy::uv_deathcone[0] += dt * uv_scroll_deathcone[0];
-    zNPCSleepy::uv_deathcone[1] += dt * uv_scroll_deathcone[1];
+    zNPCSleepy::uv_deathcone[0] = zNPCSleepy::uv_deathcone[0] + dt * uv_scroll_deathcone[0];
+    zNPCSleepy::uv_deathcone[1] = zNPCSleepy::uv_deathcone[1] + dt * uv_scroll_deathcone[1];
     RANGEWRAP(&zNPCSleepy::uv_deathcone[0], 0.0f, 1.0f);
     RANGEWRAP(&zNPCSleepy::uv_deathcone[1], 0.0f, 1.0f);
 }
@@ -3731,11 +3732,8 @@ void zNPCSleepy::RendConeOfDeath(S32 tgt_isBowlingBall)
         F32 sn = isin(ang_seg);
         F32 cs = icos(ang_seg);
 
-        xVec3 vec_ray = { 0.0f, 0.0f, 0.0f };
+        const xVec3 vec_ray = { sn, 0.0f, cs };
         xVec3 pos_vtx;
-
-        vec_ray.z = cs;
-        vec_ray.x = sn;
 
         pos_vtx = vec_ray * 0.1f + pos_top;
 
