@@ -9751,3 +9751,38 @@ are unchanged. Exact functions reach 9,930; overall fuzzy matching reaches
 306526d90b48e99894c3138f5fc8f2716d9fecf6. These units remain NonMatching,
 with unchanged source-linked totals; the hash does not establish source
 rendering, gameplay, or playback.
+
+## Bink doubled color row and RGBA stack layout (2026-10-02)
+
+`dounaligned32row2wh` improves from 96.07595% to 100% (316 bytes).
+It follows the existing row2h sibling's count lifetime: the zero-count guard
+post-decrements count, and the loop reuses that counter instead of a separate
+remaining temporary. Zero counts still return without changing output or
+context. YUV now has 89/97 exact functions and 22,324/29,376 exact code bytes.
+
+The independent row oracle passes 10,368 cases covering saturated color
+conversion, chroma phase/parity and unsigned wrap, zero and positive counts,
+2x2 duplication, signed pitch, cursors, unchanged tables/input, and output
+and context guards. Pixel-channel and chroma-advance mutations both fail as
+expected. It checks host packed-word behavior, not GameCube playback.
+
+`YUV_32ax2_4x2_even` improves from 95.00641% to 96.503204%. Pointer
+declarations follow chroma then luma order, matching retail stack slots.
+The final high alpha is retained in the existing unsigned av1 word through
+a mask and shift instead of a new byte temporary. The retail mixed-alpha
+copy is preserved. RGB32 passes all 13,568 pixel/context/guard cases.
+
+Combined source compilation and the full deduplicated report verify exactly
+these two gains, no regressions or removed functions, and unchanged matched
+data totals. Exact functions reach 9,931 with 316 added exact code bytes;
+overall fuzzy matching reaches 99.44842%. The normal DOL retains retail
+SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6. Units remain NonMatching
+and source-linked totals are unchanged; this hash does not establish source
+playback or gameplay.
+
+Unsuccessful bounded follow-ups were restored: DiscoUpdate's reused-rate
+and shared alpha/UV scalar forms; four new Delta16 narrow-counter/loop forms;
+six Player AbsControl shared-scratch forms; and Robot's two-element animation
+array const/aggregate/pointer variants. The animation-array callee was verified
+read-only, but even safe local const forms produced no gain, so no cast or
+wrapper is retained. Robot data remains 100%.
