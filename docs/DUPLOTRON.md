@@ -9558,3 +9558,27 @@ Bungee's bounded scheduling experiments and Plankton's new initializer
 variants were restored after failing to beat their baselines. Player
 speech casts, rotation-pointer order, streak-zero lifetimes, and animation
 copy-loop forms likewise produced no retained root-worktree changes.
+
+## Player slippery-floor normal calculation (2026-10-02)
+
+`zEntPlayer_Update` improves from 98.53860% to 98.71497% in the full
+deduplicated report. A local computes the floor normal's horizontal squared
+length before the slippery-floor X displacement; the Y displacement then
+passes this value to `xsqrt`. The expression keeps the same multiplication
+and addition order. Updating the entity frame's position does not modify the
+separate `globals.player.floor_norm` fields. This reproduces retail's normal
+loads and products before the X-position store, without assembly, compiler
+changes, or volatile accesses.
+
+All-source compilation passes. No other function scores change, no symbols
+are lost, and no previously exact functions regress. The normal linked DOL retains
+SHA-1 `306526d90b48e99894c3138f5fc8f2716d9fecf6`. The player unit remains
+NonMatching, so that hash does not validate source-linked player gameplay.
+
+A separate Plankton follow-up retains no change: inline diff helpers,
+initializer-sequenced zeroing, nested/union aggregates, and 24 selective
+volatile word-copy variants did not improve `impart_velocity` (91.12676%).
+The restored unit remains 179/180 exact with all data exact. Player NPC-loop
+pointer forms and volatile-count diagnostics were also discarded. Retail
+reloads the NPC count and retains a dead four-byte induction variable; DWARF
+records NPC shock-distance locals absent from the current empty loop.

@@ -7764,11 +7764,10 @@ patrick_stun_done:
 
             if (surfSlickRatio)
             {
+                F32 floor_norm2 = globals.player.floor_norm.x * globals.player.floor_norm.x +
+                                  globals.player.floor_norm.z * globals.player.floor_norm.z;
                 ent->frame->mat.pos.x += 13.0f * dt * globals.player.floor_norm.x;
-                ent->frame->mat.pos.y -=
-                    13.0f * dt *
-                    xsqrt(globals.player.floor_norm.x * globals.player.floor_norm.x +
-                          globals.player.floor_norm.z * globals.player.floor_norm.z);
+                ent->frame->mat.pos.y -= 13.0f * dt * xsqrt(floor_norm2);
                 ent->frame->mat.pos.z += 13.0f * dt * globals.player.floor_norm.z;
             }
             else if (sft > 0.0f)
