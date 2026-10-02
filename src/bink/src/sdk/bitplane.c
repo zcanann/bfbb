@@ -539,6 +539,7 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
     u32 maxbits;
     u32 level;
     u32 lenbits;
+    u32 group_bits;
     u32 bit_count;
     BPBITSTYPE bit_buf;
     u16 PTR4* cur;
@@ -551,6 +552,7 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
     u16 absvals[BP_BLOCK_COEFFS];
     s16 ordered[BP_BLOCK_COEFFS];
     u8 hi_groups[BP_TREE_HIGH_GROUPS];
+    u8 PTR4* high_lens;
 
     /* Put coefficients in scan order before building bit-depth tables. */
     count = BP_BLOCK_COEFFS;
@@ -588,7 +590,7 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
     i = BP_FIRST_LOSSLESS_TREE_GROUP_INDEX;
     count = BP_TREE_LAST_GROUP;
     do {
-        u32 group_bits = lens[i];
+        group_bits = lens[i];
         if (group_bits < lens[i + BP_TREE_CHILD1_INDEX]) {
             group_bits = lens[i + BP_TREE_CHILD1_INDEX];
         }
@@ -603,17 +605,17 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
         count--;
     } while (count != 0);
 
+    high_lens = hi_groups;
     {
-        u32 group_bits;
         BP_TREE_HIGH_GROUP_MAX(groups, group_bits, BP_LOSSLESS_TREE_HIGH_GROUP0_INDEX,
                                BP_LOSSLESS_TREE_HIGH_GROUP0_CHILD0_INDEX);
-        hi_groups[BP_TREE_HIGH_GROUP0_SLOT] = (u8)group_bits;
+        high_lens[BP_TREE_HIGH_GROUP0_SLOT] = (u8)group_bits;
         BP_TREE_HIGH_GROUP_MAX(groups, group_bits, BP_LOSSLESS_TREE_HIGH_GROUP1_INDEX,
                                BP_LOSSLESS_TREE_HIGH_GROUP1_CHILD0_INDEX);
-        hi_groups[BP_TREE_HIGH_GROUP1_SLOT] = (u8)group_bits;
+        high_lens[BP_TREE_HIGH_GROUP1_SLOT] = (u8)group_bits;
         BP_TREE_HIGH_GROUP_MAX(groups, group_bits, BP_LOSSLESS_TREE_HIGH_GROUP2_INDEX,
                                BP_LOSSLESS_TREE_HIGH_GROUP2_CHILD0_INDEX);
-        hi_groups[BP_TREE_HIGH_GROUP2_SLOT] = (u8)group_bits;
+        high_lens[BP_TREE_HIGH_GROUP2_SLOT] = (u8)group_bits;
     }
 
     bit_count = BP_STREAM_BITLEN(bits) + BP_LOSSLESS_LEVEL_BITS;
@@ -636,21 +638,21 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
     roots = tree.roots;
     {
         u16 root_entry;
-        lenbits = hi_groups[BP_TREE_HIGH_GROUP0_SLOT];
+        lenbits = high_lens[BP_TREE_HIGH_GROUP0_SLOT];
         if (lenbits > groups[BP_LOSSLESS_TREE_GROUP1_INDEX]) {
             root_entry = BP_TREE_GROUP_ENTRY(lenbits, BP_GROUP1_NODE_BASE);
         } else {
             root_entry = BP_TREE_GROUP_ENTRY(groups[BP_LOSSLESS_TREE_GROUP1_INDEX], BP_GROUP1_NODE_BASE);
         }
         roots[BP_ROOT_GROUP1_SLOT] = root_entry;
-        lenbits = hi_groups[BP_TREE_HIGH_GROUP1_SLOT];
+        lenbits = high_lens[BP_TREE_HIGH_GROUP1_SLOT];
         if (lenbits > groups[BP_LOSSLESS_TREE_GROUP6_INDEX]) {
             root_entry = BP_TREE_GROUP_ENTRY(lenbits, BP_GROUP6_NODE_BASE);
         } else {
             root_entry = BP_TREE_GROUP_ENTRY(groups[BP_LOSSLESS_TREE_GROUP6_INDEX], BP_GROUP6_NODE_BASE);
         }
         roots[BP_ROOT_GROUP6_SLOT] = root_entry;
-        lenbits = hi_groups[BP_TREE_HIGH_GROUP2_SLOT];
+        lenbits = high_lens[BP_TREE_HIGH_GROUP2_SLOT];
         if (lenbits > groups[BP_LOSSLESS_TREE_GROUP11_INDEX]) {
             root_entry = BP_TREE_GROUP_ENTRY(lenbits, BP_GROUP11_NODE_BASE);
         } else {
@@ -680,7 +682,7 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
                     switch (BP_TREE_ENTRY_KIND(entry)) {
                     case BP_TREE_HIGH_NODE:
                         entry = BP_TREE_ENTRY_INDEX(entry);
-                        *cur = BP_TREE_HIGH_GROUP_ENTRY(hi_groups[entry >> (BP_TREE_HIGH_GROUP_SHIFT - BP_TREE_INDEX_SHIFT)], entry);
+                        *cur = BP_TREE_HIGH_GROUP_ENTRY(high_lens[entry >> (BP_TREE_HIGH_GROUP_SHIFT - BP_TREE_INDEX_SHIFT)], entry);
                         goto decoded_write_children;
                     case BP_TREE_GROUP_NODE:
                         entry = BP_TREE_ENTRY_INDEX(entry);

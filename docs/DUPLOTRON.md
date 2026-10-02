@@ -9327,3 +9327,23 @@ Boolean had-level flags, shared node/base indices, broader counter changes,
 and explicit traversal-constant caches were tested and rejected. Remaining
 lossless differences include register allocation, address evaluation order,
 and final-plane instruction scheduling.
+
+## Bink lossless writer table lifetimes (2026-10-02)
+
+`WriteBPLossless` improves from 91.711075% to 92.128746% in the full
+deduplicated report. The group-depth loops share one `group_bits` temporary,
+and a pointer to the high-group depth table is initialized after the first
+group loop and reused for table construction, root setup, and traversal.
+The tree and encoded bitstream operations are otherwise unchanged.
+
+The bitplane checker passes 6,911 nonempty lossy round trips, 27,644 early
+cutoff cases, and 16,384 lossless round trips with bit-length, reservoir,
+and guard checks. The full source build passes, no other function scores
+change, and no symbols disappear. The linked DOL retains retail SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6; bitplane remains NonMatching.
+
+Decoder address-expression and early input-cursor variants were rejected.
+Writer header ordering, separate root-depth locals, and byte-cast level
+updates also scored lower. Retail visibly increments the 16-bit entry for
+successive children; that shape was tested with all table-lifetime variants
+but currently scores below the retained version and was restored.
