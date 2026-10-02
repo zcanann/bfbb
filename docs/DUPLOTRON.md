@@ -8827,3 +8827,19 @@ IDCT playback.
 Rebased onto concurrent platform commit `5780419b5`; the combined full
 source build and retail hash pass. The final report retains this IDCT gain,
 all incoming platform improvements, and no regressions.
+
+## Bink doubled IDCT outer-pair packing (2026-10-01)
+
+`fastidct8x8d` improves from 67.89474% to 68.38057%. Its final pass
+computes the first and last packed pixel words once odd row 6 is available,
+before computing odd rows 5 and 4. This shortens the live ranges of their
+even/odd inputs; rounding, byte duplication, and output-store order are
+unchanged. Moving each duplication next to its initializer alone had no
+effect. Individual even scratch changes in the byte/motion variants
+regressed and were discarded.
+
+The scalar checker passes 32,768 byte/doubled IDCT cases and 16,384 motion
+blocks with padding. Full source build and retail DOL SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6 pass. The deduplicated project
+report changes only this function. The `dct` unit remains NonMatching;
+the DOL hash does not establish source-linked IDCT playback.
