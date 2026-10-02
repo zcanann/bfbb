@@ -1,3 +1,4 @@
+#define XVEC3_SCALE_ADD_INLINE
 #include "zParPTank.h"
 
 #include <PowerPC_EABI_Support\MSL_C\MSL_Common\cmath>

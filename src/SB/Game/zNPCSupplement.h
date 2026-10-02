@@ -274,14 +274,44 @@ struct NPARMgmt
 
     void Init(en_nparptyp parType, void** userData, NPARXtraData* xtraData);
     void Clear();
-    void Done();
-    void Reset();
-    S32 IsReady();
+    void Done()
+    {
+        Clear();
+    }
+    void Reset()
+    {
+        cnt_active = 0;
+    }
+    S32 IsReady()
+    {
+        return num_max != 0 && par_buf != 0;
+    }
     void UpdateAndRender(F32 param_1);
-    void XtraDataSet(NPARXtraData* param_1);
-    void UserDataSet(void** user_data);
-    void PromoteTail(S32 idx);
-    NPARData* NextAvail();
+    void XtraDataSet(NPARXtraData* param_1)
+    {
+        xtra_data = param_1;
+    }
+    void UserDataSet(void** param_1)
+    {
+        user_data = param_1;
+    }
+    void PromoteTail(S32 idx)
+    {
+        cnt_active--;
+        par_buf[idx] = par_buf[cnt_active];
+    }
+    NPARData* NextAvail()
+    {
+        if (cnt_active >= num_max)
+        {
+            return NULL;
+        }
+
+        NPARData* par = &par_buf[cnt_active++];
+        memset(par, 0, sizeof(NPARData));
+
+        return par;
+    }
 };
 
 struct NPARInfo
@@ -292,18 +322,7 @@ struct NPARInfo
     S32 flg_npar;
 };
 
-struct StreakInfo
-{
-    void Defaults();
-
-    F32 freq;
-    F32 alf_fade;
-    F32 alf_start;
-    U32 idx_useTxtr;
-    iColor_tag rgba_left;
-    iColor_tag rgba_right;
-    S32 taper;
-};
+struct StreakInfo;
 
 void NPCC_MakeASplash(const xVec3* pos, F32 radius);
 void NPCSupplement_Startup();
@@ -357,17 +376,19 @@ void NPCC_ShadowCacheRelease(xShadowCache* shadcache);
 void NPAR_Timestep(F32 dt);
 void NPAR_EmitDroplets(en_nparmode, const xVec3*, const xVec3*);
 void NPCC_MakeStreakInfo(en_npcstreak styp, StreakInfo* info);
-U32 xFXStreakStart(StreakInfo* styp);
 U32 NPCC_StreakCreate(en_npcstreak styp);
 void NPCC_Slick_MakePlayerSlip(zNPCCommon* npc);
 void NPCC_RenderProjTextureFaceCamera(RwRaster* rast, F32 factor, xVec3* pos, F32 radius,
                                       F32 height, xShadowCache* cache, S32 fillCache, xEnt* ent);
 void UpdateAndRender(NPARMgmt param_1, F32 dt);
-F32 ARCH3(F32 param_1);
-F32 BOWL3(F32 param_1);
-F32 QUB(F32 param_1);
-F32 ARCH(F32 param_1);
-F32 BOWL(F32 param_1);
 void NPAR_EmitOilShieldPop(const xVec3* pos);
+NPARMgmt* NPAR_FindParty(en_nparptyp parType);
+void NPAR_EmitOilBubble(en_nparmode pmod, const xVec3* pos, const xVec3* vel);
+void NPAR_EmitTubeSpiral(const xVec3* pos, const xVec3* vel, F32 lifespan);
+void NPAR_EmitTubeSpiralCin(const xVec3* pos, const xVec3* vel, float lifespan);
+void NPAR_EmitTarTarGunk(en_nparmode pmod, const xVec3* pos, const xVec3* vel);
+void NPAR_EmitDoggyBreath(en_nparmode pmod, const xVec3* pos, const xVec3* vel);
+void NPAR_EmitVisSplash(en_nparmode pmod, const xVec3* vel, const xVec3* pos);
+void NPAR_EmitFireworks(en_nparmode pmod, const xVec3* pos, const xVec3* vel);
 
 #endif

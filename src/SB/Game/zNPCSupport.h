@@ -204,4 +204,31 @@ inline void NPCLaser::ColorSet(const RwRGBA* unk1, const RwRGBA* unk2)
     rgba[1] = *unk2;
 }
 
+F32 BOWL3(F32 param_1);
+F32 BOWL(F32 param_1);
+
+inline F32 ARCH3(F32 param_1)
+{
+    return 1.0f - BOWL3(param_1);
+}
+
+inline F32 QUB(F32 param_1)
+{
+    return param_1 * param_1 * param_1;
+}
+
+inline F32 BOWL3(F32 param_1)
+{
+    return QUB((F32)2.0f * (F32)iabs(param_1 - 0.5f));
+}
+
+inline F32 ARCH(F32 param_1)
+{
+    return 1.0f - BOWL(param_1);
+}
+
+inline F32 BOWL(F32 param_1)
+{
+    return SQ((F32)2.0f * (param_1 - 0.5f));
+}
 #endif

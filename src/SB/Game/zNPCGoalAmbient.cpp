@@ -35,11 +35,6 @@ xFactoryInst* GOALCreate_Ambient(S32 who, RyzMemGrow* grow, void*)
     return goal;
 }
 
-zNPCGoalJellyBumped::zNPCGoalJellyBumped(S32 who) : zNPCGoalPushAnim(who)
-{
-    SetFlags(1 << 1);
-}
-
 S32 zNPCGoalJellyBumped::Enter(F32 dt, void* updCtxt)
 {
     zNPCJelly* npc;
@@ -238,11 +233,6 @@ F32 zNPCGoalJellyBumped::CalcEndPoint(xVec3* pos_end, const xVec3* dir_aim)
     return dst_toEndPnt;
 }
 
-zNPCGoalJellyAttack::zNPCGoalJellyAttack(S32 who) : zNPCGoalPushAnim(who)
-{
-    SetFlags(1 << 1);
-}
-
 S32 zNPCGoalJellyAttack::Enter(F32 arg0, void* arg1)
 {
     zNPCJelly* npc = (zNPCJelly*)psyche->clt_owner;
@@ -384,11 +374,6 @@ void zNPCGoalJellyAttack::ZapperUpdate()
             }
         }
     }
-}
-
-zNPCGoalJellyBirth::zNPCGoalJellyBirth(S32 who) : zNPCGoalCommon(who)
-{
-    SetFlags(1 << 1);
 }
 
 S32 zNPCGoalJellyBirth::Enter(F32 dt, void* updCtxt)

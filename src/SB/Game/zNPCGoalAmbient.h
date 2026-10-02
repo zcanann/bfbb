@@ -16,7 +16,10 @@ struct zNPCGoalJellyBirth : zNPCGoalCommon
     xVec3 pos_spawn;
     F32 tmr_fall;
 
-    zNPCGoalJellyBirth(S32 who);
+    zNPCGoalJellyBirth(S32 who) : zNPCGoalCommon(who)
+    {
+        SetFlags(1 << 1);
+    }
 
     void BirthInfoSet(const xVec3* pos_birth, F32 tym_fall);
     S32 Process(en_trantype* trantyp, F32 dt, void* ctxt, xScene* xscn);
@@ -28,7 +31,10 @@ struct zNPCGoalJellyAttack : zNPCGoalPushAnim
     S32 flg_attack;
     zLightning* zap_lytnin[3];
 
-    zNPCGoalJellyAttack(S32 who);
+    zNPCGoalJellyAttack(S32 who) : zNPCGoalPushAnim(who)
+    {
+        SetFlags(1 << 1);
+    }
     S32 Enter(F32 dt, void* updCtxt);
     S32 Exit(F32 dt, void* updCtxt);
     S32 Process(en_trantype* trantyp, F32 dt, void* updCxt, xScene* xscn);
@@ -44,7 +50,10 @@ struct zNPCGoalJellyBumped : zNPCGoalPushAnim
     xVec3 pos_grindin;
     U32 streakID;
 
-    zNPCGoalJellyBumped(S32 who);
+    zNPCGoalJellyBumped(S32 who) : zNPCGoalPushAnim(who)
+    {
+        SetFlags(1 << 1);
+    }
 
     S32 Enter(F32 dt, void* updCtxt);
     S32 Exit(F32 dt, void* updCtxt);

@@ -1,3 +1,4 @@
+#define XVEC2_DIVEQ_OUT_OF_LINE
 #include "xPad.h"
 
 #include "xMathInlines.h"
@@ -422,6 +423,16 @@ void xPadAnalogIsDigital(S32 idx, S32 enable)
     {
         pad->d_timer = 0.35f;
     }
+}
+
+inline xVec2& xVec2::operator/=(F32 f)
+{
+    F32 inv = 1.0f / f;
+
+    x *= inv;
+    y *= inv;
+
+    return *this;
 }
 
 inline F32 xVec2::length() const

@@ -61,14 +61,6 @@ void xMovePointSetup(xMovePoint* m, xScene* sc)
     }
 }
 
-void xMovePointSplineDestroy(xMovePoint* m)
-{
-    if (m->spl != NULL)
-    {
-        m->spl = NULL;
-    }
-}
-
 void xMovePointSplineSetup(xMovePoint* m)
 {
     xMovePoint *w0, *w1, *w2, *w3;
@@ -105,6 +97,14 @@ void xMovePointSplineSetup(xMovePoint* m)
 
     m->spl = xSpline3_Bezier(points, NULL, 2, 0, &p1, &p2);
     xSpline3_ArcInit(m->spl, 20);
+}
+
+void xMovePointSplineDestroy(xMovePoint* m)
+{
+    if (m->spl != NULL)
+    {
+        m->spl = NULL;
+    }
 }
 
 F32 xMovePointGetNext(const xMovePoint* m, const xMovePoint* prev, xMovePoint** next, xVec3* hdng)

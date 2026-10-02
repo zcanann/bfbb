@@ -33,7 +33,12 @@ struct zMovePoint : xMovePoint
     {
         return (zMovePoint*)nodes[i];
     }
-    S32 IsOn();
+    S32 IsOn()
+    {
+        // Cast is required by calling functions to occur in here
+        // even though a single byte is moved into the return register
+        return (S32)this->on;
+    }
 
     S32 HasSpline()
     {

@@ -98,6 +98,12 @@ struct xVec2
         return tmp;
     }
 
+    // xPad.cpp defines XVEC2_DIVEQ_OUT_OF_LINE and supplies this body after
+    // its own functions: retail emits xPad's weak copy at the end of its
+    // .text, which only happens when the body is not yet visible at the call.
+#ifdef XVEC2_DIVEQ_OUT_OF_LINE
+    xVec2& operator/=(F32 f);
+#else
     xVec2& operator/=(F32 f)
     {
         F32 inv = 1.0f / f;
@@ -107,6 +113,7 @@ struct xVec2
 
         return *this;
     }
+#endif
 
     xVec2 operator+(const xVec2& v) const
     {

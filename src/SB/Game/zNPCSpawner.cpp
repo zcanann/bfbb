@@ -826,10 +826,3 @@ void zNPCSpawner::ChildCleanup(F32 dt)
         cnt_cleanup++;
     }
 }
-
-S32 zMovePoint::IsOn()
-{
-    // Cast is required by calling functions to occur in here
-    // even though a single byte is moved into the return register
-    return (S32)this->on;
-}
