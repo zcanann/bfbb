@@ -362,7 +362,7 @@ S32 xPadAddRumble(S32 idx, _tagRumbleType type, F32 time, S32 replace, U32 fxfla
 
     r = &pad->rumble_head;
     last_r = r;
-    if (pad->rumble_head.next == NULL)
+    if (r->next == NULL)
     {
         appended = 0;
     }

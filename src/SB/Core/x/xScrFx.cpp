@@ -468,8 +468,7 @@ void xScrFXGlareRender(xCamera* cam)
 
     for (S32 i = 0; i < 10; i++)
     {
-        xGlare* g = &sGlare[i];
-        if (g->flags == 0)
+        if (sGlare[i].flags == 0)
         {
             continue;
         }
@@ -479,54 +478,46 @@ void xScrFXGlareRender(xCamera* cam)
         w = cam->mat.up;
         xVec3Normalize(&h, &h);
         xVec3Normalize(&w, &w);
-        h *= 0.5f * g->size;
-        w *= 0.5f * g->size;
+        h *= 0.5f * sGlare[i].size;
+        w *= 0.5f * sGlare[i].size;
 
         xVec3 v;
         xVec3Copy(&v, &cam->mat.at);
         xVec3Normalize(&v, &v);
 
         xVec3 glareDir;
-        glareDir.x = g->pos.x - cam->mat.pos.x;
-        glareDir.y = g->pos.y - cam->mat.pos.y;
-        glareDir.z = g->pos.z - cam->mat.pos.z;
+        glareDir.x = sGlare[i].pos.x - cam->mat.pos.x;
+        glareDir.y = sGlare[i].pos.y - cam->mat.pos.y;
+        glareDir.z = sGlare[i].pos.z - cam->mat.pos.z;
         xVec3Normalize(&glareDir, &glareDir);
 
-        F32 dot = glareDir.dot(v);
-
-        F32 val = (1.0f + dot) * 0.5f;
+        F32 val = (1.0f + glareDir.dot(v)) * 0.5f;
         val *= val * val * val;
 
-        F32 glareDirLen = xVec3Length(&glareDir);
-
-        val *= g->intensity / glareDirLen;
+        val *= sGlare[i].intensity / xVec3Length(&glareDir);
         if (val != 0.0f)
         {
             static RwIm3DVertex sStripVert[4];
 
             RwIm3DVertex* vert = &sStripVert[0];
-            RwIm3DVertexSetPos(vert, g->pos.x - w.x - h.x, g->pos.y - w.y - h.y, g->pos.z - w.z - h.z);
+            RwIm3DVertexSetPos(vert, sGlare[i].pos.x - w.x - h.x, sGlare[i].pos.y - w.y - h.y, sGlare[i].pos.z - w.z - h.z);
             RwIm3DVertexSetUV(vert, 0.0f, 0.0f);
-            F32 cr = 255.0f * g->col.red;
-            F32 cg = 255.0f * g->col.green;
-            F32 cb = 255.0f * g->col.blue;
-            F32 ca = 255.0f * g->col.alpha * val;
 
-            RwIm3DVertexSetRGBA(vert, cr, cg, cb, ca);
+            RwIm3DVertexSetRGBA(vert, 255.0f * sGlare[i].col.red, 255.0f * sGlare[i].col.green, 255.0f * sGlare[i].col.blue, 255.0f * sGlare[i].col.alpha * val);
             vert++;
-            RwIm3DVertexSetPos(vert, g->pos.x - w.x + h.x, g->pos.y - w.y + h.y, g->pos.z - w.z + h.z);
+            RwIm3DVertexSetPos(vert, sGlare[i].pos.x - w.x + h.x, sGlare[i].pos.y - w.y + h.y, sGlare[i].pos.z - w.z + h.z);
             RwIm3DVertexSetUV(vert, 0.0f, 1.0f);
-            RwIm3DVertexSetRGBA(vert, cr, cg, cb, ca);
+            RwIm3DVertexSetRGBA(vert, 255.0f * sGlare[i].col.red, 255.0f * sGlare[i].col.green, 255.0f * sGlare[i].col.blue, 255.0f * sGlare[i].col.alpha * val);
             vert++;
-            RwIm3DVertexSetPos(vert, g->pos.x + w.x - h.x, g->pos.y + w.y - h.y, g->pos.z + w.z - h.z);
+            RwIm3DVertexSetPos(vert, sGlare[i].pos.x + w.x - h.x, sGlare[i].pos.y + w.y - h.y, sGlare[i].pos.z + w.z - h.z);
             RwIm3DVertexSetUV(vert, 1.0f, 0.0f);
-            RwIm3DVertexSetRGBA(vert, cr, cg, cb, ca);
+            RwIm3DVertexSetRGBA(vert, 255.0f * sGlare[i].col.red, 255.0f * sGlare[i].col.green, 255.0f * sGlare[i].col.blue, 255.0f * sGlare[i].col.alpha * val);
             vert++;
-            RwIm3DVertexSetPos(vert, g->pos.x + w.x + h.x, g->pos.y + w.y + h.y, g->pos.z + w.z + h.z);
+            RwIm3DVertexSetPos(vert, sGlare[i].pos.x + w.x + h.x, sGlare[i].pos.y + w.y + h.y, sGlare[i].pos.z + w.z + h.z);
             RwIm3DVertexSetUV(vert, 1.0f, 1.0f);
-            RwIm3DVertexSetRGBA(vert, cr, cg, cb, ca);
+            RwIm3DVertexSetRGBA(vert, 255.0f * sGlare[i].col.red, 255.0f * sGlare[i].col.green, 255.0f * sGlare[i].col.blue, 255.0f * sGlare[i].col.alpha * val);
 
-            RwRenderStateSet(rwRENDERSTATETEXTURERASTER, (void*)g->raster);
+            RwRenderStateSet(rwRENDERSTATETEXTURERASTER, (void*)sGlare[i].raster);
             
             if (RwIm3DTransform(sStripVert, 4, NULL, rwIM3D_VERTEXXYZ | rwIM3D_VERTEXUV | rwIM3D_VERTEXRGBA))
             {

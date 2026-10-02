@@ -6,8 +6,8 @@
 #include "iFMV.h"
 #include <bink/include/rad3d.h>
 
-static int GX_texture_format[RAD3DSURFACECOUNT];
-static u32 Surface_info[RAD3DSURFACECOUNT];
+static int D3D_surface_type[RAD3DSURFACECOUNT];
+static u32 Pixel_info[RAD3DSURFACECOUNT];
 
 static int Built_tables;
 
@@ -21,17 +21,17 @@ static void Setup_surface_array()
         return;
     }
 
-    GX_texture_format[RAD3DSURFACE32] = GX_TF_RGBA8;
-    GX_texture_format[RAD3DSURFACE32A] = GX_TF_RGBA8;
-    GX_texture_format[RAD3DSURFACE565] = GX_TF_RGB565;
-    GX_texture_format[RAD3DSURFACE4444] = GX_TF_RGB5A3;
-    GX_texture_format[RAD3DSURFACEYUY2] = -1;
+    D3D_surface_type[RAD3DSURFACE32] = GX_TF_RGBA8;
+    D3D_surface_type[RAD3DSURFACE32A] = GX_TF_RGBA8;
+    D3D_surface_type[RAD3DSURFACE565] = GX_TF_RGB565;
+    D3D_surface_type[RAD3DSURFACE4444] = GX_TF_RGB5A3;
+    D3D_surface_type[RAD3DSURFACEYUY2] = -1;
 
-    Surface_info[RAD3DSURFACE32] = 4;
-    Surface_info[RAD3DSURFACE32A] = RAD3D_ALPHA_PIXELS | 4;
-    Surface_info[RAD3DSURFACE565] = 2;
-    Surface_info[RAD3DSURFACE4444] = RAD3D_ALPHA_PIXELS | 2;
-    Surface_info[RAD3DSURFACEYUY2] = 2;
+    Pixel_info[RAD3DSURFACE32] = 4;
+    Pixel_info[RAD3DSURFACE32A] = RAD3D_ALPHA_PIXELS | 4;
+    Pixel_info[RAD3DSURFACE565] = 2;
+    Pixel_info[RAD3DSURFACE4444] = RAD3D_ALPHA_PIXELS | 2;
+    Pixel_info[RAD3DSURFACEYUY2] = 2;
 
     Built_tables = 1;
 }
@@ -55,7 +55,7 @@ HRAD3DIMAGE Open_RAD_3D_image(HRAD3D rad_3d, u32 width, u32 height, u32 rad3d_su
 
     Setup_surface_array();
 
-    bytes_per_pixel = Surface_info[rad3d_surface_format] & RAD3D_BYTES_PER_PIXEL_MASK;
+    bytes_per_pixel = Pixel_info[rad3d_surface_format] & RAD3D_BYTES_PER_PIXEL_MASK;
     image = (RAD3DIMAGE*)iFMVmalloc(sizeof(RAD3DIMAGE));
     if (image == 0)
     {
@@ -65,15 +65,15 @@ HRAD3DIMAGE Open_RAD_3D_image(HRAD3D rad_3d, u32 width, u32 height, u32 rad3d_su
     {
         image->width = width;
         image->height = height;
-        image->alpha_pixels = Surface_info[rad3d_surface_format] >> 31;
+        image->alpha_pixels = Pixel_info[rad3d_surface_format] >> 31;
         image->bytes_per_pixel = bytes_per_pixel;
         image->surface_format = rad3d_surface_format;
         image->buffer_size = GXGetTexBufferSize((u16)width, (u16)height,
-                                                (GXTexFmt)GX_texture_format[rad3d_surface_format],
+                                                (GXTexFmt)D3D_surface_type[rad3d_surface_format],
                                                 GX_FALSE, 0);
         image->pixels = iFMVmalloc(image->buffer_size);
         GXInitTexObj(&image->texobj, image->pixels, (u16)width, (u16)height,
-                     (GXTexFmt)GX_texture_format[rad3d_surface_format],
+                     (GXTexFmt)D3D_surface_type[rad3d_surface_format],
                      GX_CLAMP, GX_CLAMP, GX_FALSE);
         GXInitTexObjLOD(&image->texobj, GX_LINEAR, GX_NEAR, 0.0f, 0.0f, 0.0f,
                         GX_FALSE, GX_FALSE, GX_ANISO_1);

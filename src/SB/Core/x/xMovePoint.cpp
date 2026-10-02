@@ -115,20 +115,15 @@ F32 xMovePointGetNext(const xMovePoint* m, const xMovePoint* prev, xMovePoint** 
         return 0.0f;
     }
 
-    xMovePoint* previousOption = NULL;
-
-    xMovePoint** n;
-    xMovePointAsset* a;
     S32 rnd;
+    U16 idx;
+    xMovePoint* previousOption = NULL;
 
     rnd = xrand() % m->node_wt_sum;
 
-    n = m->nodes;
-    a = m->asset;
-
-    for (U16 idx = 0; idx < a->numPoints; idx++)
+    for (idx = 0; idx < m->asset->numPoints; idx++)
     {
-        *next = n[idx];
+        *next = m->nodes[idx];
         rnd -= (*next)->asset->wt;
         if ((*next)->on == 0)
         {

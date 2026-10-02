@@ -53,46 +53,79 @@ void xSFXUpdateEnvironmentalStreamSounds(xSFX* pSFXList, U32 numSounds)
             continue;
         }
 
-        if (*bestSFX == NULL)
+        for (U32 j = 0; j < 1; j++)
         {
-            *bestSFX = &pSFXList[i];
-            *bestDist2 = dist;
-        }
-        else if ((*bestSFX)->asset->priority < pSFXList[i].asset->priority)
-        {
-            *bestSFX = &pSFXList[i];
-            *bestDist2 = dist;
-        }
-        else if ((*bestSFX)->asset->priority == pSFXList[i].asset->priority && *bestDist2 > dist)
-        {
-            *bestSFX = &pSFXList[i];
-            *bestDist2 = dist;
+            if (bestSFX[j] == NULL)
+            {
+                bestSFX[j] = &pSFXList[i];
+                bestDist2[j] = dist;
+                break;
+            }
+            else
+            {
+                for (U32 j = 0; j < 1; j++)
+                {
+                    if (bestSFX[j]->asset->priority < pSFXList[i].asset->priority)
+                    {
+                        bestSFX[j] = &pSFXList[i];
+                        bestDist2[j] = dist;
+                        break;
+                    }
+                    else
+                    {
+                        for (U32 j = 0; j < 1; j++)
+                        {
+                            if (pSFXList[i].asset->priority == bestSFX[j]->asset->priority && bestDist2[j] > dist)
+                            {
+                                bestSFX[j] = &pSFXList[i];
+                                bestDist2[j] = dist;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
-    bool found = false;
-    if (*s_managedEnvSFX == *bestSFX)
+    for (i = 0; i < 1; i++)
     {
-        *bestSFX = NULL;
-        found = true;
-    }
-
-    if (!found && *s_managedEnvSFX != NULL)
-    {
-        xSFXStop(*s_managedEnvSFX);
-        *s_managedEnvSFX = NULL;
-    }
-
-    if (*bestSFX != NULL)
-    {
-        if (*s_managedEnvSFX == NULL)
+        bool found = false;
+        for (U32 j = 0; j < 1; j++)
         {
-            *s_managedEnvSFX = *bestSFX;
+            if (s_managedEnvSFX[i] == bestSFX[j])
+            {
+                bestSFX[j] = NULL;
+                found = true;
+                break;
+            }
         }
 
-        xSFXPlay(*bestSFX);
+        if (!found && s_managedEnvSFX[i] != NULL)
+        {
+            xSFXStop(s_managedEnvSFX[i]);
+            s_managedEnvSFX[i] = NULL;
+        }
+    }
+
+    for (i = 0; i < 1; i++)
+    {
+        if (bestSFX[i] != NULL)
+        {
+            for (U32 j = 0; j < 1; j++)
+            {
+                if (s_managedEnvSFX[j] == NULL)
+                {
+                    s_managedEnvSFX[j] = bestSFX[i];
+                    break;
+                }
+            }
+
+            xSFXPlay(bestSFX[i]);
+        }
     }
 }
+
 
 static bool xSFXWillSendDone(xSFX* param_1)
 {
