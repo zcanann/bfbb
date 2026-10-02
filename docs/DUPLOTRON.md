@@ -9833,3 +9833,24 @@ are lost, and the exact-function count is unchanged. The normal linked DOL
 retains SHA-1 `306526d90b48e99894c3138f5fc8f2716d9fecf6`. The player unit
 remains NonMatching, so this hash does not establish source-linked gameplay.
 No compiler, volatile, or assembly changes were made.
+
+
+## Combined Player/Robot source simplifications (2026-10-02)
+
+DiscoRender improves from 82.51337% to 85.7754% by using its unchanged
+local uv_bot array directly when emitting the eight ring vertices, removing
+two redundant scalar snapshots. Robot data stays 100% matched. Combined with
+the bubble-spin expression above, the full source build and deduplicated
+report verify exactly two improved functions, no lost symbols or regressions,
+and unchanged exact-code, exact-function, data, and source-linked totals.
+Independent staging changes to zLasso and NPCHazard are included in the
+baseline. Evidence: build/parallel-seventh-{baseline-report,report}.json and
+build/parallel-seventh-validation.log.
+
+Bungee review confirms that four anonymous assignment bodies (176 bytes)
+contain identical relocation-free instructions but different generated class
+identities. start_detaching has two independent address calculations in the
+opposite order. Prior source and include-order forms did not resolve these;
+no artificial symbol mapping is retained. Six additional save/load shared-zero,
+chained-zero, and return-initialization trials were unchanged or worse; all
+were restored and the original source rebuilt.
