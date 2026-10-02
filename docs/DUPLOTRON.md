@@ -9347,3 +9347,25 @@ Writer header ordering, separate root-depth locals, and byte-cast level
 updates also scored lower. Retail visibly increments the 16-bit entry for
 successive children; that shape was tested with all table-lifetime variants
 but currently scores below the retained version and was restored.
+
+## Bink lossless root setup and length calculation (2026-10-02)
+
+`LenBPLossless` improves from 93.133675% to 94.40360% in the full
+deduplicated report. A high-group pointer is initialized after the group
+loop and used for table construction and traversal; root depths remain
+direct array accesses. The restart pointer is preserved when roots are
+initialized, and the initial end pointer is derived from the root count
+before the individual coefficient roots are filled. This equals the former
+tree.nodes address and follows retail's pointer setup more closely.
+
+Direct root-depth accesses also improve `WriteBPLossless` from 92.128746%
+to 92.25000%, while its cached high-group traversal pointer remains.
+Other child-depth temporary, flag-type, root-depth scope, and combined
+lifetime variants were rejected after successful compilation and scoring.
+
+The bitplane checker passes 6,911 nonempty lossy round trips, 27,644 early
+cutoff checks, and 16,384 lossless round trips with bit-length, reservoir,
+and output-guard checks. The full source build passes; no other function
+scores change and no symbols disappear. The linked DOL retains retail
+SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6. bitplane remains
+NonMatching, so that hash does not establish source playback.
