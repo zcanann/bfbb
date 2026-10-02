@@ -8955,3 +8955,19 @@ blocks with padding. Full source build and retail DOL SHA-1
 306526d90b48e99894c3138f5fc8f2716d9fecf6 pass. The deduplicated report
 changes only byte IDCT. The `dct` unit remains NonMatching; the retail
 hash does not establish source-linked IDCT playback.
+
+## Bink IDCT final-pass intermediate reuse (2026-10-01)
+
+Reusing a8 for its fixed-point scaled value in the final pass improves
+`fastidct8x8` from 63.603237% to 63.765182% and `fastidct8x8d` from
+71.28745% to 71.951416%. Motion IDCT instead benefits from reusing
+b1 for the scaled odd-pair difference, improving from 58.182835% to
+58.33209%. Each update occurs after the old value's last use. Fixed-point
+arithmetic and output-store order are unchanged. The alternative reuse
+form in each path regresses and was discarded.
+
+The scalar checker passes 32,768 byte/doubled cases and 16,384 motion
+blocks with padding. Full source build and retail DOL SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6 pass. The deduplicated report
+changes only these three functions. The `dct` unit remains NonMatching;
+the retail hash does not establish source-linked IDCT playback.
