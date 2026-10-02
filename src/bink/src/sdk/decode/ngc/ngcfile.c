@@ -454,8 +454,7 @@ static void CancelReadRequests(BINKIO PTR4* io)
 static u32 BinkFileReadFrame(BINKIO PTR4* io, u32 frame_num, s32 offset, void PTR4* dest, u32 size)
 {
     u32 start_time;
-    u32 read_time;
-    u32 foreground_time;
+    u32 value;
     u32 total = 0;
     void PTR4* start_dest = dest;
 
@@ -468,18 +467,17 @@ static u32 BinkFileReadFrame(BINKIO PTR4* io, u32 frame_num, s32 offset, void PT
     if (offset != BINK_IO_CURRENT_OFFSET && NGC_CONSUME_CURSOR(io) != (u32)offset) {
         if (NGC_BUFFERED_FORWARD_SEEK(io, offset)) {
             BOOL enabled;
-            u32 skip;
             u8 PTR4* read_ptr;
 
             /* A forward seek already buffered by DVD can be consumed by advancing the ring pointer. */
             enabled = OSDisableInterrupts();
-            skip = offset - NGC_CONSUME_CURSOR(io);
+            value = offset - NGC_CONSUME_CURSOR(io);
             NGC_VOLATILE_U32(NGC_FREE_SIZE(io)) =
-                NGC_VOLATILE_U32(NGC_FREE_SIZE(io)) + skip;
-            read_ptr = NGC_READ_PTR(io) + skip;
+                NGC_VOLATILE_U32(NGC_FREE_SIZE(io)) + value;
+            read_ptr = NGC_READ_PTR(io) + value;
             NGC_CONSUME_CURSOR(io) = offset;
             NGC_READ_PTR(io) = read_ptr;
-            io->CurBufUsed -= skip;
+            io->CurBufUsed -= value;
             if (NGC_RING_READ_PAST_END(io, read_ptr)) {
                 NGC_READ_PTR(io) = read_ptr - io->BufSize;
             }
@@ -519,9 +517,9 @@ static u32 BinkFileReadFrame(BINKIO PTR4* io, u32 frame_num, s32 offset, void PT
             dosimulate(io, total, direct_start);
         }
 
-        read_time = RADTimerRead();
-        io->TotalTime += read_time - direct_start;
-        foreground_time = io->ForegroundTime + (read_time - start_time);
+        value = RADTimerRead();
+        io->TotalTime += value - direct_start;
+        io->ForegroundTime += value - start_time;
     } else {
         while (size != 0 && io->ReadError == NGC_READ_OK) {
             u32 amount;
@@ -572,19 +570,18 @@ static u32 BinkFileReadFrame(BINKIO PTR4* io, u32 frame_num, s32 offset, void PT
             }
         }
 
-        read_time = RADTimerRead();
-        foreground_time = io->ForegroundTime + (read_time - start_time);
+        value = RADTimerRead();
+        io->ForegroundTime += value - start_time;
     }
-    io->ForegroundTime = foreground_time;
 
     {
-        u32 cur_buf_size = NGC_BYTES_LEFT_TO_CONSUME(io);
+        value = NGC_BYTES_LEFT_TO_CONSUME(io);
 
-        if (cur_buf_size >= io->BufSize) {
-            cur_buf_size = io->BufSize;
+        if (value >= io->BufSize) {
+            value = io->BufSize;
         }
 
-        io->CurBufSize = cur_buf_size;
+        io->CurBufSize = value;
     }
 
     if (io->CurBufUsed + NGC_READ_BLOCK_SIZE > io->CurBufSize) {

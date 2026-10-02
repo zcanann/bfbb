@@ -9136,3 +9136,23 @@ The normal DOL remains byte-identical to retail, SHA-1
 306526d90b48e99894c3138f5fc8f2716d9fecf6. Audio decoding remains NonMatching;
 source-linked playback is not established. Validation artifacts:
 build/binkacd-isolated-validation.log and build/binkacd-isolated-report.json.
+
+## Bink DVD frame-reader completion (2026-10-02)
+
+`BinkFileReadFrame` improves from 98.44388% to 100%, matching all 784 bytes.
+A shared scratch value holds the buffered-seek distance, timer sample, and
+final buffer-size calculation at their separate uses. Updating ForegroundTime
+directly in each read path recovers the remaining register allocation. The
+read, interrupt, volatile-access, and timing operations keep their behavior.
+No compiler, assembly, split, or linker changes are involved.
+
+The full source build with the isolated compiler copy passes. The full report
+changes only BinkFileReadFrame, removes no symbols, and retains all previous
+matches. The normal DOL retains retail SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. Reports and log:
+build/ngcfile-frame-final-report.json and build/ngcfile-frame-final-validation.log.
+
+The unit now has 12 of 13 exact functions; BinkFileReadHeader remains 99.75%.
+Cursor lifetime, signedness, and evaluation-order trials did not improve that
+holdout and were restored. ngcfile.c remains NonMatching, so this is not yet
+source-linked DVD I/O or a playback validation.
