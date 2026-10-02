@@ -2228,30 +2228,33 @@ static void dounaligned32arowm(u32 phase, u32 count)
 static u32 dounaligned32acolm(u32 count, s32 phase)
 {
     u32 remaining;
-    u8 PTR4* yptr;
-    u8 PTR4* aptr;
+    u8 PTR4* yptr0;
+    u8 PTR4* yptr1;
+    u8 PTR4* aptr0;
+    u8 PTR4* aptr1;
     u8 y;
     u8 a;
-    u32 pixel;
+    u32 pixel0;
+    u32 pixel1;
 
     remaining = count;
     do {
-        yptr = (u8 PTR4*)S.y0;
-        aptr = (u8 PTR4*)S.a0;
-        y = *yptr++;
-        a = *aptr++;
-        pixel = RGB32_M_A(y, a);
-        *(u32 PTR4*)S.dest0 = pixel;
-        S.a0 = (u32 PTR4*)aptr;
-        S.y0 = (u32 PTR4*)yptr;
-        yptr = (u8 PTR4*)S.y1;
-        aptr = (u8 PTR4*)S.a1;
-        y = *yptr++;
-        a = *aptr++;
-        pixel = RGB32_M_A(y, a);
-        *(u32 PTR4*)S.dest1 = pixel;
-        S.a1 = (u32 PTR4*)aptr;
-        S.y1 = (u32 PTR4*)yptr;
+        yptr0 = (u8 PTR4*)S.y0;
+        aptr0 = (u8 PTR4*)S.a0;
+        y = *yptr0++;
+        a = *aptr0++;
+        pixel0 = RGB32_M_A(y, a);
+        *(u32 PTR4*)S.dest0 = pixel0;
+        S.a0 = (u32 PTR4*)aptr0;
+        S.y0 = (u32 PTR4*)yptr0;
+        yptr1 = (u8 PTR4*)S.y1;
+        aptr1 = (u8 PTR4*)S.a1;
+        y = *yptr1++;
+        a = *aptr1++;
+        pixel1 = RGB32_M_A(y, a);
+        *(u32 PTR4*)S.dest1 = pixel1;
+        S.a1 = (u32 PTR4*)aptr1;
+        S.y1 = (u32 PTR4*)yptr1;
         S.dest0 += YUV_PACKED_WORD_BYTES;
         S.dest1 += YUV_PACKED_WORD_BYTES;
         remaining--;

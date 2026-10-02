@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check three production grayscale YUV column routines with a scalar oracle.
+"""Check four production grayscale YUV column routines with a scalar oracle.
 
 Extracts the current source bodies and constants, then checks positive pixel
 counts, both source rows, 1x/2x dimensions, alpha, signed pitch, phase wrap,
@@ -13,7 +13,8 @@ import subprocess
 import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
-FUNCTIONS = ('dounaligned32colm', 'dounaligned32acolm2h', 'dounaligned32acolm2wh')
+FUNCTIONS = ('dounaligned32colm', 'dounaligned32acolm2h', 'dounaligned32acolm2wh',
+             'dounaligned32acolm')
 HEADER = r"""
 #include <stdint.h>
 #include <stdio.h>
@@ -39,7 +40,7 @@ static u32 gray(u8 y) {
 }
 int main(void) {
     u32 (*kernels[])(u32, s32) = {
-        dounaligned32colm, dounaligned32acolm2h, dounaligned32acolm2wh
+        dounaligned32colm, dounaligned32acolm2h, dounaligned32acolm2wh, dounaligned32acolm
     };
     const u32 counts[] = {1, 2, 3, 7, 16, 31};
     const s32 pitches[] = {64, 144, 288};
@@ -52,7 +53,7 @@ int main(void) {
         mono32[i] = value * 0x010101u;
     }
     memcpy(table_before, mono32, sizeof(mono32));
-    for (u32 kind = 0; kind < 3; ++kind)
+    for (u32 kind = 0; kind < 4; ++kind)
     for (u32 ci = 0; ci < 6; ++ci)
     for (u32 pi = 0; pi < 3; ++pi)
     for (u32 ph = 0; ph < 6; ++ph)
@@ -60,7 +61,7 @@ int main(void) {
     for (u32 reverse = 0; reverse < 2; ++reverse)
     for (u32 trial = 0; trial < 16; ++trial) {
         const u32 count = counts[ci], scale_x = kind == 2 ? 2 : 1;
-        const u32 scale_y = kind ? 2 : 1;
+        const u32 scale_y = kind == 1 || kind == 2 ? 2 : 1;
         const s32 pitch = reverse ? -pitches[pi] : pitches[pi];
         const s32 row = reverse ? 6 : 1;
         const s32 first_word = 16 + row * pitches[pi] / 4 + (s32)col;
@@ -138,7 +139,8 @@ def extract(source):
     for name in ('RGBPackConstants', 'YUVBlitLayout'):
         start = source.index('enum ' + name + ' {')
         pieces.append(source[start:source.index('};', start) + 2])
-    pieces.append(next(line for line in source.splitlines() if line.startswith('#define RGB32_M(y)')))
+    for macro in ('RGB32_M(y)', 'RGB32_M_A(y, a)'):
+        pieces.append(next(line for line in source.splitlines() if line.startswith('#define ' + macro)))
     for name in FUNCTIONS:
         start = source.index('static u32 ' + name + '(u32 count, s32 phase)\n{')
         pieces.append(source[start:source.index('\n}', start) + 2])
