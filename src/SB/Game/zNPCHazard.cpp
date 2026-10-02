@@ -1281,9 +1281,9 @@ void NPCHazard::Render()
     case NPC_HAZ_DUPLOBOOM:
         if (this->mdl_hazard != NULL)
         {
+            const xVec3 tallish = { 1.0f, 2.0f, 1.0f };
             F32 alpha = 0.2f * (1.0f - this->pam_interp);
             F32 scaleit = 2.0f * this->custdata.typical.rad_cur;
-            const xVec3 tallish = { 1.0f, 2.0f, 1.0f };
 
             this->SetAlpha(alpha);
             xVec3SMul(&this->mdl_hazard->Scale, &tallish, scaleit);
@@ -1371,8 +1371,8 @@ void NPCHazard::Render()
             F32 ds2_cam = NPCC_ds2_toCam(&this->pos_hazard, NULL);
             if (ds2_cam < SQ(20.0f))
             {
-                F32 rat_sq = ds2_cam / SQ(20.0f);
-                F32 alf_shadow = CLAMP(0.3f + (1.0f - rat_sq), 0.0f, 1.0f);
+                F32 rat_sq = 1.0f - ds2_cam / SQ(20.0f);
+                F32 alf_shadow = CLAMP(0.3f + rat_sq, 0.0f, 1.0f);
 
                 mat.right = *(xVec3*)this->Right();
                 mat.at = g_NY3;
@@ -1534,7 +1534,8 @@ void NPCHazard::Render()
             this->SetAlpha(fx);
 
             {
-                F32 dim_flux = 1.2f * fx;
+                F32 dim_flux = 1.2f;
+                dim_flux *= fx;
                 xVec3 scl_wave = { 2.0f, 0.0f, 2.0f };
 
                 scl_wave.y = dim_flux;
@@ -1551,11 +1552,14 @@ void NPCHazard::Render()
                 }
                 else
                 {
-                    rat_ff = 1.0f - (this->pam_interp - 0.15f) / 0.85f;
+                    rat_ff = this->pam_interp - 0.15f;
+                    rat_ff /= 0.85f;
+                    rat_ff = 1.0f - rat_ff;
                 }
 
                 F32 arch = EASE(rat_ff);
-                F32 dim_flux = 3.75f * arch;
+                F32 dim_flux = 3.75f;
+                dim_flux *= arch;
                 xVec3 scl_fount = { 1.0f, 0.0f, 1.0f };
 
                 scl_fount.y = dim_flux;
@@ -1609,7 +1613,8 @@ void NPCHazard::Render()
             this->SetAlpha(fx);
 
             {
-                F32 dim_flux = 1.2f * fx;
+                F32 dim_flux = 1.2f;
+                dim_flux *= fx;
                 xVec3 scl_wave = { 2.0f, 0.0f, 2.0f };
 
                 scl_wave.y = dim_flux;
@@ -1626,11 +1631,14 @@ void NPCHazard::Render()
                 }
                 else
                 {
-                    rat_ff = 1.0f - (this->pam_interp - 0.15f) / 0.85f;
+                    rat_ff = this->pam_interp - 0.15f;
+                    rat_ff /= 0.85f;
+                    rat_ff = 1.0f - rat_ff;
                 }
 
                 F32 arch = EASE(rat_ff);
-                F32 dim_flux = 3.75f * arch;
+                F32 dim_flux = 3.75f;
+                dim_flux *= arch;
                 xVec3 scl_fount = { 1.0f, 0.0f, 1.0f };
 
                 scl_fount.y = dim_flux;
@@ -1949,7 +1957,7 @@ S32 NPCHazard::StaggeredCollide()
         return 0;
     }
 
-    hazcol->cnt_skipcol = ((xrand() >> 23) & 1) + 5;
+    hazcol->cnt_skipcol = ((xrand() & 0x800000) ? 1 : 0) + 5;
 
     static xCollis colrec;
     memset(&colrec, 0, sizeof(colrec));
