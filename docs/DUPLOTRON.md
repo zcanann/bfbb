@@ -9040,3 +9040,15 @@ The full source build and retail DOL SHA-1 check pass, and the project-wide
 report changes only these two scores, both upward. `ngcsnd.c` remains
 NonMatching: the DOL uses its original object and does not validate
 source-linked audio playback.
+
+## Tiki source linking (2026-10-01)
+
+After staging's `thunderCountCB` match, `zNPCTypeTiki.cpp` now links from
+source: all 48 functions, 14,492 code bytes, and 1,424 data bytes are exact.
+The promotion requires only changing the unit to Matching; no source,
+split, weak-helper placement, or compiler changes are needed.
+
+The full source build reproduces retail DOL SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. The generated link selects the
+source Tiki object, the report marks the unit complete, and every function
+score elsewhere remains unchanged.
