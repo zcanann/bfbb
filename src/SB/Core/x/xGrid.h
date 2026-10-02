@@ -186,9 +186,11 @@ struct grid_index
 
 inline grid_index get_grid_index(const xGrid& grid, F32 x, F32 z)
 {
-    grid_index index;
-    index.x = range_limit<U16>((U16)((x - grid.minx) * grid.inv_csizex), 0, grid.nx - 1);
-    index.z = range_limit<U16>((U16)((z - grid.minz) * grid.inv_csizez), 0, grid.nz - 1);
+    grid_index index = {};
+    x = (x - grid.minx) * grid.inv_csizex;
+    z = (z - grid.minz) * grid.inv_csizez;
+    index.x = range_limit<U16>((U16)x, 0, grid.nx - 1);
+    index.z = range_limit<U16>((U16)z, 0, grid.nz - 1);
     return index;
 }
 

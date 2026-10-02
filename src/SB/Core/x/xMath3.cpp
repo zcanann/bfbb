@@ -389,20 +389,18 @@ void xMat3x3RMulRotY(xMat3x3* o, const xMat3x3* m, F32 t)
     F32 sin = isin(t);
     if (o == m)
     {
-        F32 temp1 = o->right.x;
-        F32 temp2 = o->right.z;
-        o->right.z = ((cos * temp2) - (sin * temp1));
-        o->right.x = ((cos * temp1) + (sin * temp2));
+        F32 temp;
+        temp = cos * o->right.x + sin * o->right.z;
+        o->right.z = cos * o->right.z - sin * o->right.x;
+        o->right.x = temp;
 
-        temp1 = o->up.x;
-        temp2 = o->up.z;
-        o->up.z = ((cos * temp2) - (sin * temp1));
-        o->up.x = ((cos * temp1) + (sin * temp2));
+        temp = cos * o->up.x + sin * o->up.z;
+        o->up.z = cos * o->up.z - sin * o->up.x;
+        o->up.x = temp;
 
-        temp1 = o->at.x;
-        temp2 = o->at.z;
-        o->at.z = ((cos * temp2) - (sin * temp1));
-        o->at.x = ((cos * temp1) + (sin * temp2));
+        temp = cos * o->at.x + sin * o->at.z;
+        o->at.z = cos * o->at.z - sin * o->at.x;
+        o->at.x = temp;
     }
     else
     {

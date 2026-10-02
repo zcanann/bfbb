@@ -144,19 +144,18 @@ static void xBoundOBBIsectRay(const xBox* b, const xMat4x3* m, const xRay3* r, x
 
     {
         F32 len2 = SQR(m->right.x) + SQR(m->right.y) + SQR(m->right.z);
+        F32 vx = m->right.x, vy = m->right.y, vz = m->right.z;
 
         if ((F32)iabs(len2 - 1.0f) <= 0.00001f)
         {
             scale.x = 1.0f;
 
-            mnormal.right.x = m->right.x;
-            mnormal.right.y = m->right.y;
-            mnormal.right.z = m->right.z;
+            mnormal.right.x = vx;
+            mnormal.right.y = vy;
+            mnormal.right.z = vz;
         }
         else if ((F32)iabs(len2) <= 0.00001f)
         {
-            // non-matching: incorrect order
-
             scale.x = 0.0f;
 
             mnormal.right.x = 0.0f;
@@ -177,19 +176,18 @@ static void xBoundOBBIsectRay(const xBox* b, const xMat4x3* m, const xRay3* r, x
 
     {
         F32 len2 = SQR(m->up.x) + SQR(m->up.y) + SQR(m->up.z);
+        F32 vx = m->up.x, vy = m->up.y, vz = m->up.z;
 
         if ((F32)iabs(len2 - 1.0f) <= 0.00001f)
         {
             scale.y = 1.0f;
 
-            mnormal.up.x = m->up.x;
-            mnormal.up.y = m->up.y;
-            mnormal.up.z = m->up.z;
+            mnormal.up.x = vx;
+            mnormal.up.y = vy;
+            mnormal.up.z = vz;
         }
         else if ((F32)iabs(len2) <= 0.00001f)
         {
-            // non-matching: incorrect order
-
             scale.y = 0.0f;
 
             mnormal.up.x = 0.0f;
@@ -210,19 +208,18 @@ static void xBoundOBBIsectRay(const xBox* b, const xMat4x3* m, const xRay3* r, x
 
     {
         F32 len2 = SQR(m->at.x) + SQR(m->at.y) + SQR(m->at.z);
+        F32 vx = m->at.x, vy = m->at.y, vz = m->at.z;
 
         if ((F32)iabs(len2 - 1.0f) <= 0.00001f)
         {
             scale.z = 1.0f;
 
-            mnormal.at.x = m->at.x;
-            mnormal.at.y = m->at.y;
-            mnormal.at.z = m->at.z;
+            mnormal.at.x = vx;
+            mnormal.at.y = vy;
+            mnormal.at.z = vz;
         }
         else if ((F32)iabs(len2) <= 0.00001f)
         {
-            // non-matching: incorrect order
-
             scale.z = 0.0f;
 
             mnormal.at.x = 0.0f;

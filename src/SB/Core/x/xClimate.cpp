@@ -116,13 +116,6 @@ static void UpdateRain(_tagClimate* climate, float seconds)
     GetPosBigDogWhattupFool(&fool);
     if (gPTankDisable)
     {
-        F32 dvx = snow_dvel.x;
-        F32 vx = snow_vel.x;
-        F32 dvy = snow_dvel.y;
-        F32 vy = snow_vel.y;
-        F32 dvz = snow_dvel.z;
-        F32 vz = snow_vel.z;
-
         for (S32 i = 0; i < total_snow_flakes; i++)
         {
             info.pos = fool;
@@ -133,9 +126,9 @@ static void UpdateRain(_tagClimate* climate, float seconds)
             F32 zz = info.pos.z - fool.z;
             F32 perc = 1.0f - xx * zz / 506.25f;
 
-            info.vel.x = dvx * xurand() + vx;
-            info.vel.y = dvy * xurand() + vy;
-            info.vel.z = dvz * xurand() + vz;
+            info.vel.x = snow_dvel.x * xurand() + snow_vel.x;
+            info.vel.y = snow_dvel.y * xurand() + snow_vel.y;
+            info.vel.z = snow_dvel.z * xurand() + snow_vel.z;
 
             info.pos.y += 4.0f * perc + 4.0f;
             info.life.val[0] = snow_life * perc + snow_life;
@@ -151,12 +144,6 @@ static void UpdateRain(_tagClimate* climate, float seconds)
         xVec3* vel = pos + num;
         if (pos != NULL)
         {
-            F32 dvx = snow_dvel.x;
-            F32 vx = snow_vel.x;
-            F32 dvy = snow_dvel.y;
-            F32 vy = snow_vel.y;
-            F32 dvz = snow_dvel.z;
-            F32 vz = snow_vel.z;
             xVec3* p = pos;
             xVec3* v = vel;
 
@@ -172,9 +159,9 @@ static void UpdateRain(_tagClimate* climate, float seconds)
 
                 p->y += 4.0f * perc + 4.0f;
 
-                v->x = dvx * xurand() + vx;
-                v->y = dvy * xurand() + vy;
-                v->z = dvz * xurand() + vz;
+                v->x = snow_dvel.x * xurand() + snow_vel.x;
+                v->y = snow_dvel.y * xurand() + snow_vel.y;
+                v->z = snow_dvel.z * xurand() + snow_vel.z;
             }
 
             zParPTankSpawnSnow(pos, vel, num);

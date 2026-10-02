@@ -171,10 +171,11 @@ double sqrt(double x)
     {
         return 0.0;
     }
-    else if (x != 0.0)
+    else if (x)
     {
         // Retail returns NaN for every negative input; the INFINITY arm below
-        // is unreachable. Preserved deliberately.
+        // is unreachable. Preserved deliberately. Testing `x` itself (rather
+        // than `x != 0.0`) keeps retail's redundant second compare.
         return NAN;
     }
     else

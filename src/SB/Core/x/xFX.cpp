@@ -3001,13 +3001,12 @@ void xFXAuraUpdate(F32 dt)
 
     ap = sAura;
 
-    for (i = 0; i < AURA_COUNT; i++)
+    for (i = 0; i < AURA_COUNT; i++, ap++)
     {
         if (ap->frame != gFrameCount)
         {
             ap->parent = NULL;
         }
-        ap++;
     }
 }
 

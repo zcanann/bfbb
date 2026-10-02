@@ -325,8 +325,8 @@ namespace
 
         result.x = 0.0f;
         result.y = (F32)-a.baseline / a.dv;
-        result.h = 1.0f;
         result.w = (F32)(a.char_pos[c].size + a.space.x) / (a.du + a.space.x);
+        result.h = 1.0f;
 
         return result;
     }
@@ -1494,14 +1494,12 @@ xtextbox::tag_entry_list xtextbox::read_tag(const substr& s)
 
 xtextbox::tag_entry* xtextbox::find_entry(const tag_entry_list& el, const substr& name)
 {
-    tag_entry* entries = el.entries;
-    size_t size = el.size;
-
-    for (size_t i = 0; i < size; i++)
+    for (size_t i = 0; i < el.size; i++)
     {
-        if (icompare(name, entries[i].name) == 0)
+        tag_entry& e = el.entries[i];
+        if (icompare(name, e.name) == 0)
         {
-            return &entries[i];
+            return &e;
         }
     }
 
