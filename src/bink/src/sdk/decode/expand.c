@@ -982,9 +982,9 @@ static void CheckReadHuff4SBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
         bundle->cur_dec = BINK_BUNDLE_DATA_END(bundle, count);
         if (!EXPBITS_GET1_BRANCH(*bits, bit)) {
             /* Signed Huff4 bundles store a sign bit only for nonzero symbols. */
-            decode = bundle->decode;
-            dest = BINK_BUNDLE_DATA_BEGIN(bundle);
             peek = bundle->bits_to_peek;
+            dest = BINK_BUNDLE_DATA_BEGIN(bundle);
+            decode = bundle->decode;
             syms = bundle->syms;
             while (--count != (u32)-1) {
                 EXPBITSTYPE bit;

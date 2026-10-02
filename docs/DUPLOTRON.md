@@ -8701,3 +8701,18 @@ deduplicated project report shows only this improvement, and the normal
 DOL retains retail SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6. Both
 Huff8 scores are preserved, including the newer caller's exact match.
 The whole `expand` unit remains NonMatching.
+
+## Bink signed Huff4 table setup (2026-10-01)
+
+Loading the signed bundle's lookup width before its decode pointer improves
+`CheckReadHuff4SBundle` from 98.85308% to 98.90995%. The destination
+assignment remains between the two loads. This follows the target's
+setup order and changes no values or decoding logic. A refill-local word
+was unchanged; branch-local signed return values regressed to 96.86256%
+and were discarded.
+
+The Huff4 helper's 67,584 cases and 1,000 countdown cases pass. They do
+not independently exercise complete signed-bundle packets. Full source
+build succeeds; the deduplicated project report shows only this gain.
+The normal DOL retains retail SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. `expand` remains NonMatching.
