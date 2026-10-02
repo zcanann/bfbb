@@ -9622,3 +9622,37 @@ were discarded. They either retained unwanted position-accessor calls or
 changed empty-loop unrolling without reproducing retail's count reload and
 dead pointer stride. No speculative arithmetic, volatile access, assembly,
 or compiler change is retained.
+
+## Parallel Player, Robot, and Bink follow-up (2026-10-02)
+
+The combined full deduplicated report verifies five gains:
+
+| Function | Before | After |
+| --- | ---: | ---: |
+| zEntPlayer_Update | 98.714970% | 98.761380% |
+| zNPCSleepy::RendConeRange | 85.966805% | 86.423230% |
+| YUV_32ax2_4x2_even | 86.705130% | 89.522440% |
+| dounaligned32acolm2h | 96.041664% | 97.708336% |
+| dounaligned32acolm2wh | 97.333336% | 98.833336% |
+
+The Player change is described above. Robot's cone fade stores the distance
+above its inner threshold in the existing scalar before converting it to a
+fraction. Generated subtraction, division, and subtraction remain in the
+same single-precision order. Its register allocation improves, although the
+source function grows from 968 to 972 bytes (retail is 964); it remains a
+partial match. Vector-storage and other clamp experiments were restored.
+
+Doubled RGBA reads its six independent input words in retail's order:
+v, y0, a0, u, y1, a1. The alpha-column kernels use separate luma cursors for
+the two rows; the doubled-height kernel also caches its first output address.
+Unsigned alpha arithmetic and the previously confirmed retail quirk remain.
+The YUV checker's deliberate cursor mutation is now scoped to its grayscale
+control function because the same cursor name also occurs in alpha kernels.
+
+The full source build passes. RGB32 passes 13,568 independent pixel cases;
+YUV columns pass 27,456 cases and both deliberate mutation checks. No other
+function scores change, no symbols disappear, and exact code/data totals
+and source-linked totals are unchanged. Overall fuzzy matching improves
+from 99.43971% to 99.44198%. The linked DOL retains retail SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. These units remain NonMatching,
+so this does not establish source-linked rendering, gameplay, or playback.

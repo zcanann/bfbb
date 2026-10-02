@@ -3816,7 +3816,8 @@ void zNPCSleepy::RendConeRange()
     }
     else
     {
-        F32 pct = 1.0f - (xsqrt(ds2) - 20.0f) / 10.0f;
+        F32 pct = xsqrt(ds2) - 20.0f;
+        pct = 1.0f - pct / 10.0f;
 
         pct = CLAMP(pct, 0.0f, 1.0f);
 
