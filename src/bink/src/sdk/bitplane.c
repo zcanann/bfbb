@@ -1444,7 +1444,6 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count)
     s32 negative_mask;
     BPBITSTYPE word;
     u8 PTR4* next_node_ptr;
-    u8 PTR4* roots;
     BPLOSSYREADTREE tree;
     u8 nz_coeff[BP_BLOCK_COEFFS];
     BPBITSTREAM bitcopy;
@@ -1459,15 +1458,14 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count)
     /* Lossy blocks store max level minus one in the stream header. */
     VarBitsGet(maxlevel, u8, bitcopy, BP_LOSSY_LEVEL_BITS);
     maxlevel = BP_LOSSY_LEVEL_COUNT(maxlevel);
-    roots = tree.roots;
-    roots[BP_ROOT_GROUP1_SLOT] = BP_READ_TREE_GROUP1_ROOT;
-    roots[BP_ROOT_GROUP6_SLOT] = BP_READ_TREE_GROUP6_ROOT;
-    roots[BP_ROOT_GROUP11_SLOT] = BP_READ_TREE_GROUP11_ROOT;
+    next_node_ptr = tree.roots;
+    next_node_ptr[BP_ROOT_GROUP1_SLOT] = BP_READ_TREE_GROUP1_ROOT;
+    next_node_ptr[BP_ROOT_GROUP6_SLOT] = BP_READ_TREE_GROUP6_ROOT;
+    next_node_ptr[BP_ROOT_GROUP11_SLOT] = BP_READ_TREE_GROUP11_ROOT;
     mask = (s32)(s8)BP_LEVEL_MASK(maxlevel);
-    roots[BP_ROOT_LOSSY_DC_SLOT] = BP_READ_TREE_DC_ROOT;
+    next_node_ptr[BP_ROOT_LOSSY_DC_SLOT] = BP_READ_TREE_DC_ROOT;
     tree_end_ptr = tree.nodes;
     nz_coeff_count = 0;
-    next_node_ptr = roots;
     levels_remaining = maxlevel;
     while (levels_remaining != 0) {
         scan = 0;

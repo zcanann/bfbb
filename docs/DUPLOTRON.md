@@ -8487,3 +8487,18 @@ All 16,384 lossless round trips also pass. Full all_source build and retail
 DOL SHA-1 pass; no other function scores change. Report:
 build/bitplane-readlossy-buffered-report.json. Bitplane remains NonMatching;
 normal DOL identity does not establish source-linked movie playback.
+
+
+## Bink lossy decoder root-pointer lifetime (2026-10-01)
+
+readlossy improves from 96.59424% to 97.0377%. Root setup initializes
+the persistent pending-node pointer directly instead of using and copying
+a separate roots temporary. Shared refinement-result/counter-order trials
+regressed, while a signed-word mask produced identical code; all were
+discarded.
+
+All 6,911 nonempty lossy round trips, 27,644 early-cutoff checks, and
+16,384 lossless round trips pass. Full all_source build and retail DOL
+SHA-1 pass. No other function scores change. Report:
+build/bitplane-readlossy-root-report.json. Bitplane remains NonMatching;
+normal DOL identity does not establish source-linked movie playback.
