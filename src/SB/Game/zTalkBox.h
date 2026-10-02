@@ -61,10 +61,6 @@ struct ztalkbox : xBase
 
     struct callback
     {
-        callback()
-        {
-        }
-
         virtual void on_signal(U32)
         {
         }

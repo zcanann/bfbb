@@ -9052,3 +9052,21 @@ The full source build reproduces retail DOL SHA-1
 306526d90b48e99894c3138f5fc8f2716d9fecf6. The generated link selects the
 source Tiki object, the report marks the unit complete, and every function
 score elsewhere remains unchanged.
+
+## OOB state source linking (2026-10-02)
+
+`zEntPlayerOOBState.cpp` now links from source: all 86 functions, 11,124 code
+bytes, and 2,576 data bytes are exact. Its previous object-level 100% hid
+layout differences in virtual tables, inline callbacks, and the float pool.
+
+Declaring the state virtual methods inline makes CodeWarrior emit the tables
+in retail's constructor-driven order. An implicit `ztalkbox::callback`
+constructor and the tutorial callback body in the `.cpp` restore their code
+positions. Two discarded C++ helpers retain the early 0.5f/3.0f pool entries
+and emit the empty base callbacks before `oob_state::update`. These helpers
+are layout scaffolding, not recovered original function bodies; neither adds
+runtime code. No compiler, split, linker, or assembly changes are needed.
+
+The full source build passes, the report marks OOB complete, and the linked
+DOL reproduces retail SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6. Every
+project-wide function score is unchanged from the verified Tiki baseline.

@@ -38,30 +38,31 @@ namespace oob_state
             MAX_STATE = 4,
         };
 
+        // Inline virtuals preserve the constructor-driven vtable order.
         struct state_type
         {
             state_enum type;
 
             state_type(state_enum state);
-            virtual void start();
-            virtual void stop();
-            virtual state_enum update(xScene& scene, F32& dt) = 0;
+            virtual inline void start();
+            virtual inline void stop();
+            virtual inline state_enum update(xScene& scene, F32& dt) = 0;
         };
 
         struct in_state_type : state_type
         {
             in_state_type();
-            virtual void start();
-            virtual void stop();
-            virtual state_enum update(xScene& scene, F32& dt);
+            virtual inline void start();
+            virtual inline void stop();
+            virtual inline state_enum update(xScene& scene, F32& dt);
         };
 
         struct out_state_type : state_type
         {
             out_state_type();
-            virtual void start();
-            virtual void stop();
-            virtual state_enum update(xScene& scene, F32& dt);
+            virtual inline void start();
+            virtual inline void stop();
+            virtual inline state_enum update(xScene& scene, F32& dt);
         };
 
         struct grab_state_type : state_type
@@ -88,10 +89,7 @@ namespace oob_state
 
                 tutorial_callback(grab_state_type& owner);
 
-                virtual void on_stop()
-                {
-                    owner.finished_tutorial = true;
-                }
+                virtual inline void on_stop();
             };
 
             tutorial_callback cb;
@@ -109,9 +107,9 @@ namespace oob_state
             substate_enum (*updatess[10])(grab_state_type&, xScene&, float&);
             
             grab_state_type();
-            virtual void start();
-            virtual void stop();
-            virtual state_enum update(xScene& scene, F32& dt);
+            virtual inline void start();
+            virtual inline void stop();
+            virtual inline state_enum update(xScene& scene, F32& dt);
 
             static substate_enum supdate_reorient(grab_state_type& gst, xScene& scene, F32& dt);
             substate_enum update_reorient(xScene&, F32&);
@@ -159,9 +157,9 @@ namespace oob_state
             substate_enum (*updatess[7])(drop_state_type&, xScene&, F32&);
 
             drop_state_type();
-            virtual void start();
-            virtual void stop();
-            virtual state_enum update(xScene& scene, F32& dt);
+            virtual inline void start();
+            virtual inline void stop();
+            virtual inline state_enum update(xScene& scene, F32& dt);
 
             static substate_enum supdate_fade_in(drop_state_type&, xScene&, F32&);
             substate_enum update_fade_in(xScene&, F32&);

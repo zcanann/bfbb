@@ -167,6 +167,13 @@ namespace oob_state
             xModelRender2D(model, screen_rect, from, to);
         }
 
+        // Preserve the early float-pool entries left by stripped OOB helpers.
+        void __deadstripped_motion_settings(F32& time, F32& distance)
+        {
+            time = 0.5f;
+            distance = 3.0f;
+        }
+
         static void move_up(xVec3& vec, F32 scale)
         {
             xMat4x3& camMat = globals.camera.mat;
@@ -856,6 +863,14 @@ namespace oob_state
     } // namespace
 } // namespace oob_state
 
+// Keep the empty base callbacks before update, as in retail. This discarded
+// caller controls their emission order without adding a live call.
+void __deadstripped_oob_base_callbacks(oob_state::state_type& state)
+{
+    state.oob_state::state_type::stop();
+    state.oob_state::state_type::start();
+}
+
 U8 oob_state::update(xScene& scene, F32 dt)
 {
     if ((shared.flags & 0x3) != 0x3)
@@ -1078,6 +1093,11 @@ namespace oob_state
 
             return STATE_OUT;
         };
+
+        void grab_state_type::tutorial_callback::on_stop()
+        {
+            owner.finished_tutorial = true;
+        }
 
         void grab_state_type::start()
         {
