@@ -1507,14 +1507,12 @@ static u32 dounaligned32col2h(u32 count, s32 phase)
 
 static void dounaligned32row2wh(u32 phase, u32 count)
 {
-    u32 remaining;
     u8 PTR4* yptr;
     u8 y;
     const u32 PTR4* ytable;
     u32 pixel;
 
-    remaining = YUV_REMAINING_PIXELS_AFTER_FIRST(count);
-    if (count == 0) {
+    if (count-- == 0) {
         return;
     }
 
@@ -1537,7 +1535,7 @@ static void dounaligned32row2wh(u32 phase, u32 count)
             S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_SAMPLE_BYTES);
             S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_SAMPLE_BYTES);
         }
-    } while (remaining-- != 0);
+    } while (count-- != 0);
 }
 
 static u32 dounaligned32col2wh(u32 count, s32 phase)
