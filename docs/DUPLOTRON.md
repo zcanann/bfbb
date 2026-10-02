@@ -9473,3 +9473,25 @@ Workspace-pointer address forms, wider/inverted plane flags, skipping
 zero planes earlier, and alternate coefficient-address scheduling were
 tested and rejected. Remaining differences include register allocation,
 the initial-plane condition lifetime, and coefficient address formation.
+
+## Bink lossless writer magnitude helper (2026-10-02)
+
+`WriteBPLossless` improves from 92.58383% to 97.60479% in the full
+deduplicated report. Magnitude writes use the existing `VarBitsPut` helper,
+which follows retail's local size/value handling and reservoir-flush
+sequence more closely. The now-unused `PUT_BP_BITS` macro is removed.
+Successive children advance the 16-bit entry directly, and the next-plane
+update explicitly casts the remaining bit count to a byte.
+
+The bitplane checker passes 6,911 nonempty lossy round trips, 27,644 early
+cutoff checks, and 16,384 lossless round trips with bit-length, reservoir,
+and output-guard checks. The full source build passes; no other function
+scores change and no symbols disappear. The linked DOL retains retail
+SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6. bitplane remains
+NonMatching, so this hash does not establish source playback.
+
+Replacing the initial stream-header write with the helper scored lower,
+as did advancing child-depth pointers and alternate root temporaries.
+The retained helper removes duplicated bit-writing logic without compiler
+changes or new assembly. Remaining differences include register allocation,
+header scheduling, and child-depth addressing.

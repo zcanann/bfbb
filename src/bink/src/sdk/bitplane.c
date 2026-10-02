@@ -266,25 +266,6 @@ static void readlossy(s8 PTR4* dest, BPBITSTREAM PTR4* bits, s32 masks_count);
         }                                                                                                              \
     } while (0)
 
-#define PUT_BP_BITS(bits, value, size, mask)                                                                            \
-    do {                                                                                                               \
-        BPBITSTYPE _value = (value) & (mask);                                                                            \
-        u32 _bitcount = BP_STREAM_BITLEN(bits) + (size);                                                               \
-        BPBITSTYPE _bitbuf = BP_STREAM_BITS(bits) | (_value << BP_STREAM_BITLEN(bits));                                \
-        BP_STREAM_BITS(bits) = _bitbuf;                                                                                \
-        BP_STREAM_BITLEN(bits) = _bitcount;                                                                            \
-        if (_bitcount >= BP_BITS_PER_WORD) {                                                                           \
-            *BP_STREAM_CUR(bits) = _bitbuf;                                                                            \
-            _bitcount = BP_STREAM_BITLEN(bits) - BP_BITS_PER_WORD;                                                     \
-            BP_STREAM_CUR(bits) = BP_STREAM_CUR(bits) + 1;                                                            \
-            BP_STREAM_BITLEN(bits) = _bitcount;                                                                        \
-            BP_STREAM_BITS(bits) = 0;                                                                                  \
-            if (_bitcount != 0) {                                                                                      \
-                BP_STREAM_BITS(bits) = _value >> ((size) - _bitcount);                                                 \
-            }                                                                                                          \
-        }                                                                                                              \
-    } while (0)
-
 u32 LenBPLossless(s16 PTR4* vals)
 {
     u16 entry;
@@ -705,40 +686,40 @@ decoded_write_children:
                         if (lens[entry] != level) {
                             *--restart = BP_TREE_COEFF_ENTRY(lens[entry], entry);
                         } else {
-                            PUT_BP_BITS(bits, absvals[entry], magnitude_bits, VarBitsLens[magnitude_bits]);
+                            VarBitsPut(*bits, absvals[entry], magnitude_bits);
                             PUT_BP_BIT(bits, ordered[entry] < 0);
                         }
 
-                        i = entry + BP_TREE_CHILD1_INDEX;
-                        PUT_BP_BIT(bits, lens[i] != level);
-                        if (lens[i] != level) {
-                            *--restart = BP_TREE_COEFF_ENTRY(lens[i], i);
+                        entry++;
+                        PUT_BP_BIT(bits, lens[entry] != level);
+                        if (lens[entry] != level) {
+                            *--restart = BP_TREE_COEFF_ENTRY(lens[entry], entry);
                         } else {
-                            PUT_BP_BITS(bits, absvals[i], magnitude_bits, VarBitsLens[magnitude_bits]);
-                            PUT_BP_BIT(bits, ordered[i] < 0);
+                            VarBitsPut(*bits, absvals[entry], magnitude_bits);
+                            PUT_BP_BIT(bits, ordered[entry] < 0);
                         }
 
-                        i = entry + BP_TREE_CHILD2_INDEX;
-                        PUT_BP_BIT(bits, lens[i] != level);
-                        if (lens[i] != level) {
-                            *--restart = BP_TREE_COEFF_ENTRY(lens[i], i);
+                        entry++;
+                        PUT_BP_BIT(bits, lens[entry] != level);
+                        if (lens[entry] != level) {
+                            *--restart = BP_TREE_COEFF_ENTRY(lens[entry], entry);
                         } else {
-                            PUT_BP_BITS(bits, absvals[i], magnitude_bits, VarBitsLens[magnitude_bits]);
-                            PUT_BP_BIT(bits, ordered[i] < 0);
+                            VarBitsPut(*bits, absvals[entry], magnitude_bits);
+                            PUT_BP_BIT(bits, ordered[entry] < 0);
                         }
 
-                        i = entry + BP_TREE_CHILD3_INDEX;
-                        PUT_BP_BIT(bits, lens[i] != level);
-                        if (lens[i] != level) {
-                            *--restart = BP_TREE_COEFF_ENTRY(lens[i], i);
+                        entry++;
+                        PUT_BP_BIT(bits, lens[entry] != level);
+                        if (lens[entry] != level) {
+                            *--restart = BP_TREE_COEFF_ENTRY(lens[entry], entry);
                         } else {
-                            PUT_BP_BITS(bits, absvals[i], magnitude_bits, VarBitsLens[magnitude_bits]);
-                            PUT_BP_BIT(bits, ordered[i] < 0);
+                            VarBitsPut(*bits, absvals[entry], magnitude_bits);
+                            PUT_BP_BIT(bits, ordered[entry] < 0);
                         }
                         break;
                     case BP_TREE_COEFF_NODE:
                         entry = BP_TREE_ENTRY_INDEX(entry);
-                        PUT_BP_BITS(bits, absvals[entry], magnitude_bits, VarBitsLens[magnitude_bits]);
+                        VarBitsPut(*bits, absvals[entry], magnitude_bits);
                         PUT_BP_BIT(bits, ordered[entry] < 0);
                         *cur = BP_TREE_EMPTY_ENTRY;
                         goto next_lossless_node;
@@ -751,7 +732,7 @@ next_lossless_node:
                 cur++;
             } while (cur < end);
         }
-        level = magnitude_bits & BP_BYTE_MASK;
+        level = (u8)magnitude_bits;
     }
 }
 
