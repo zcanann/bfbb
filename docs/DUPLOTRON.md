@@ -8787,3 +8787,22 @@ The independent scalar checker passes 32,768 byte/doubled IDCT cases and
 the deduplicated project report changes only this function. The normal
 DOL retains retail SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6.
 The `dct` unit remains NonMatching.
+
+## Bink motion IDCT paired output stores (2026-10-01)
+
+`FastmIDCT8x8WithMotion` improves from 55.77239% to 56.36194%. First-pass
+scratch staging with even columns 1 then 2 reaches 55.80597%; the larger
+gain comes from writing each final output pair as its odd intermediate
+becomes available, following the target's interleaved arithmetic/stores.
+Pixel write order, arithmetic, rounding, and prediction addition are
+unchanged. Removing the intermediate byte cast added no gain and was
+discarded.
+
+The independent scalar checker passes 32,768 byte/doubled IDCT cases
+and 16,384 motion blocks with padded pitches. The local full source build
+and retail DOL hash pass, and its project report changes only this score.
+Rebased onto the concurrent game commits `1a52d2e77` and `ba03aebed`.
+The combined full build and retail SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6 pass; the final deduplicated
+report preserves the IDCT improvement and incoming game/NPC gains with
+no regressions. The `dct` unit remains NonMatching.

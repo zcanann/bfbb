@@ -1151,48 +1151,45 @@ void FastmIDCT8x8WithMotion(u8 PTR4* dest, s32 pitch, s16 PTR4* in, u32 quant, u
             s32 row6 = DCT_DEQUANT(in, q, DCT_ROW6);
             s32 even_sum = row2 + row6;
             s32 even_diff = DCT_FIXED_MUL(row2 - row6, DCT_IDCT_A1) - even_sum;
-            s32 row1 = DCT_DEQUANT(in, q, DCT_ROW1);
-            s32 row3 = DCT_DEQUANT(in, q, DCT_ROW3);
-            s32 row5 = DCT_DEQUANT(in, q, DCT_ROW5);
-            s32 row7 = DCT_DEQUANT(in, q, DCT_ROW7);
-            s32 odd0 = row5 - row3;
-            s32 odd1 = row1 - row7;
-            s32 odd_sum = odd0 + odd1;
-            s32 odd_pair0 = row1 + row7;
-            s32 odd_pair1 = row5 + row3;
-            s32 odd_rot = DCT_FIXED_MUL(odd_sum, DCT_IDCT_A3);
-            s32 odd_mid = (DCT_FIXED_MUL(odd0, DCT_IDCT_A4) + odd_rot) - (odd_pair0 + odd_pair1);
-            s32 odd_cross = DCT_FIXED_MUL(odd_pair0 - odd_pair1, DCT_IDCT_A1) - odd_mid;
-            s32 odd_tail = (DCT_FIXED_MUL(odd1, DCT_IDCT_A2) - odd_rot) + odd_cross;
             s32 row4 = DCT_DEQUANT(in, q, DCT_ROW4);
             s32 row0 = DCT_DEQUANT(in, q, DCT_ROW0);
             s32 even0 = row0 + row4;
             s32 even1 = row0 - row4;
             s32 even2 = even0 + even_sum;
             s32 even3 = even0 - even_sum;
-            s32 even4 = even1 + even_diff;
-            s32 even5 = even1 - even_diff;
-            s32 odd_out0 = odd_pair0 + odd_pair1;
+            row[DCT_COL1] = even1 + even_diff;
+            row[DCT_COL2] = even1 - even_diff;
+            {
+                s32 row1 = DCT_DEQUANT(in, q, DCT_ROW1);
+                s32 row3 = DCT_DEQUANT(in, q, DCT_ROW3);
+                s32 row5 = DCT_DEQUANT(in, q, DCT_ROW5);
+                s32 row7 = DCT_DEQUANT(in, q, DCT_ROW7);
+                s32 odd0 = row5 - row3;
+                s32 odd1 = row1 - row7;
+                s32 odd_sum = odd0 + odd1;
+                s32 odd_pair0 = row1 + row7;
+                s32 odd_pair1 = row5 + row3;
+                s32 odd_rot = DCT_FIXED_MUL(odd_sum, DCT_IDCT_A3);
+                s32 odd_out0 = odd_pair0 + odd_pair1;
+                row[DCT_COL6] = (DCT_FIXED_MUL(odd0, DCT_IDCT_A4) + odd_rot) - odd_out0;
+                row[DCT_COL5] = DCT_FIXED_MUL(odd_pair0 - odd_pair1, DCT_IDCT_A1) - row[DCT_COL6];
+                row[DCT_COL4] = (DCT_FIXED_MUL(odd1, DCT_IDCT_A2) - odd_rot) + row[DCT_COL5];
 
-            ++in;
-            ++q;
-            row[DCT_COL0] = even2;
-            row[DCT_COL7] = odd_out0;
-            row[DCT_COL1] = even4;
-            row[DCT_COL6] = odd_mid;
-            row[DCT_COL2] = even5;
-            row[DCT_COL5] = odd_cross;
-            row[DCT_COL3] = even3;
-            row[DCT_COL4] = odd_tail;
+                ++in;
+                ++q;
+                row[DCT_COL0] = even2;
+                row[DCT_COL7] = odd_out0;
+                row[DCT_COL3] = even3;
 
-            out[DCT_ROW0] = row[DCT_COL0] + row[DCT_COL7];
-            out[DCT_ROW7] = row[DCT_COL0] - row[DCT_COL7];
-            out[DCT_ROW1] = row[DCT_COL1] + row[DCT_COL6];
-            out[DCT_ROW6] = row[DCT_COL1] - row[DCT_COL6];
-            out[DCT_ROW2] = row[DCT_COL2] + row[DCT_COL5];
-            out[DCT_ROW5] = row[DCT_COL2] - row[DCT_COL5];
-            out[DCT_ROW4] = row[DCT_COL3] + row[DCT_COL4];
-            out[DCT_ROW3] = row[DCT_COL3] - row[DCT_COL4];
+                out[DCT_ROW0] = row[DCT_COL0] + row[DCT_COL7];
+                out[DCT_ROW7] = row[DCT_COL0] - row[DCT_COL7];
+                out[DCT_ROW1] = row[DCT_COL1] + row[DCT_COL6];
+                out[DCT_ROW6] = row[DCT_COL1] - row[DCT_COL6];
+                out[DCT_ROW2] = row[DCT_COL2] + row[DCT_COL5];
+                out[DCT_ROW5] = row[DCT_COL2] - row[DCT_COL5];
+                out[DCT_ROW4] = row[DCT_COL3] + row[DCT_COL4];
+                out[DCT_ROW3] = row[DCT_COL3] - row[DCT_COL4];
+            }
         }
 
         ++out;
@@ -1215,17 +1212,16 @@ void FastmIDCT8x8WithMotion(u8 PTR4* dest, s32 pitch, s16 PTR4* in, u32 quant, u
         b0 = out[DCT_COL1] - out[DCT_COL7];
         b1 = out[DCT_COL1] + out[DCT_COL7];
         row[DCT_COL7] = b1 + a9;
-        b3 = DCT_FIXED_MUL(a8 + b0, DCT_IDCT_A3);
-        row[DCT_COL6] = (DCT_FIXED_MUL(a8, DCT_IDCT_A4) + b3) - row[DCT_COL7];
-        row[DCT_COL5] = DCT_FIXED_MUL(b1 - a9, DCT_IDCT_A1) - row[DCT_COL6];
-        row[DCT_COL4] = (DCT_FIXED_MUL(b0, DCT_IDCT_A2) - b3) + row[DCT_COL5];
-
         dest[DCT_COL0] = motion[DCT_COL0] + DCT_BYTE_SAMPLE(row[DCT_COL0] + row[DCT_COL7]);
         dest[DCT_COL7] = motion[DCT_COL7] + DCT_BYTE_SAMPLE(row[DCT_COL0] - row[DCT_COL7]);
+        b3 = DCT_FIXED_MUL(a8 + b0, DCT_IDCT_A3);
+        row[DCT_COL6] = (DCT_FIXED_MUL(a8, DCT_IDCT_A4) + b3) - row[DCT_COL7];
         dest[DCT_COL1] = motion[DCT_COL1] + DCT_BYTE_SAMPLE(row[DCT_COL1] + row[DCT_COL6]);
         dest[DCT_COL6] = motion[DCT_COL6] + DCT_BYTE_SAMPLE(row[DCT_COL1] - row[DCT_COL6]);
+        row[DCT_COL5] = DCT_FIXED_MUL(b1 - a9, DCT_IDCT_A1) - row[DCT_COL6];
         dest[DCT_COL2] = motion[DCT_COL2] + DCT_BYTE_SAMPLE(row[DCT_COL2] + row[DCT_COL5]);
         dest[DCT_COL5] = motion[DCT_COL5] + DCT_BYTE_SAMPLE(row[DCT_COL2] - row[DCT_COL5]);
+        row[DCT_COL4] = (DCT_FIXED_MUL(b0, DCT_IDCT_A2) - b3) + row[DCT_COL5];
         dest[DCT_COL4] = motion[DCT_COL4] + DCT_BYTE_SAMPLE(row[DCT_COL3] + row[DCT_COL4]);
         dest[DCT_COL3] = motion[DCT_COL3] + DCT_BYTE_SAMPLE(row[DCT_COL3] - row[DCT_COL4]);
 
