@@ -12197,3 +12197,65 @@ Ignored worker evidence: `build/zlightning-layout-parity-{report.json,
 allsource.log,link.log,validation.json,mismatches.json}` and private trial
 `build/zlightning-layout/render_parity_both_loops/`. The mismatch artifact
 records the eighteen removed rows and an empty newly differing row list.
+
+
+## Cutscene manager pointer-to-Boolean lowering (2026-10-03)
+
+`check_hide_entities` now spells its pointer test explicitly:
+`bool mgrNotNull = (globals.cmgr != NULL);`. This preserves the intended
+null test and avoids an independently reproduced, intermittent wrong lowering
+of the implicit conversion. The good 172-byte function is exact. The bad
+160-byte function replaces `lwz` at `globals + 0x1fbc` followed by
+`neg / or / srwi` with a single `lbz` at that address, then stores that byte
+to `ents_hidden`. Reading one byte of a pointer is not the required Boolean
+conversion (for example, a non-null GameCube address beginning with 0x80
+must produce 1, not 0x80).
+
+The first observation followed camera checkpoint `0074ec3ec`, but an
+old-header/new-header paired rebuild was exact in both cases. Root then
+reproduced an exact new-header rebuild too. The header change is therefore
+not established as the cause. A private fixed-environment repetition used
+baseline `6a3eee3e7` with only `xVec3Inlines.h` taken from `0074ec3ec`:
+
+- Configured GC/2.0p1e, implicit conversion: 3 bad and 5 good objects in 8 runs.
+- Stock GC/2.0p1, implicit conversion: initially 8/8 good, then one identical
+  bad object in a second 8-run cohort (15 good / 1 bad overall).
+- GC/2.0p1e, explicit null comparison: 8/8 good, byte-identical whole objects.
+- Existing GC/2.0p1a and GC/2.0p1d controls: each 8/8 good; these finite
+  results do not exclude intermittent failure in either version.
+
+Stock reproducing the same bad object rules out claiming that the observed
+failure requires our compiler patches. The precise cause is not identified;
+there is no proposed compiler modification. Finite successful repetitions do
+not establish an absolute guarantee. The source uses the ordinary explicit
+null comparison as the bounded workaround.
+
+SHA-1 identities:
+
+- Stock p1 compiler: `74bc177b10d1bbe8a60a21a6c0aa86d2dd9c0668`.
+- p1a compiler: `a78a5fdb6c1d5677e987636b2e0743dbaefe9542`.
+- p1d compiler: `0a4878bb49f808bc137f7a8ae2fa08ae99c0c3b5`.
+- p1e compiler: `9d445725489050035740aaff35860eddbaf3c3c9`.
+- Good complete zCutsceneMgr object: `feeae14c8669bc5cb5249b2245aae65804fa981c`.
+- Bad complete object: `a1232f288bcb17fbebf4adf19ad3b0c68c2ffdb4`.
+
+The private RGB worktree preserves the exact compile command in
+`build/camera-audit-command.txt`, repetition scripts and results in
+`build/camera-audit-repeat.py`, `camera-audit-repetitions.json`,
+`camera-audit-earlier-patches.py` and `camera-audit-earlier-patches.json`,
+and both object images under `build/camera-audit-objects/<compiler>/<sha>.o`.
+The command comes from `ninja -t commands
+build/GQPE78/src/SB/Game/zCutsceneMgr.o`; each repetition executes its final
+sjiswrap/mwcceppc command afresh, with TEMP and TMP both set to the private
+`build/tmp-camera-audit` directory. Relevant settings are `-O4,p`,
+`-proc gekko`, `-enum int`, `-fp hardware`, `-fp_contract on`, `-char unsigned`,
+`-inline off`, `-common on`, `-use_lmw_stmw on`, and the normal GameCube SB
+include paths/defines. The scripts replace only the compiler directory for
+existing-binary controls and restore the temporary header/source edits.
+No compiler binaries were changed and no behavioral test suite was added.
+
+The retained one-line source change passes the full deduplicated comparison
+without score/data regressions, `all_source`, and the normal build;
+`zCutsceneMgr` remains NonMatching, so its retail object is still selected
+for that link. The built DOL retains retail SHA-1
+`306526d90b48e99894c3138f5fc8f2716d9fecf6`.

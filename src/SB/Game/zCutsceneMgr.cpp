@@ -490,7 +490,7 @@ void zCutsceneMgrUpdate(xBase* to, xScene* sc, F32 dt)
 
 static void check_hide_entities()
 {
-    bool mgrNotNull = globals.cmgr;
+    bool mgrNotNull = (globals.cmgr != NULL);
     if (mgrNotNull == ents_hidden)
     {
         return;
