@@ -720,6 +720,145 @@ namespace cruise_bubble
             // empty
         }
 
+        // These four are inline: retail numbers their rodata templates and float literals
+        // before update_player's, yet emits each right after its first caller (deferred
+        // inline emission), so they were defined ahead of the code that uses them.
+        inline U8 cruise_bubble::state_missle_fly::hit_test(xVec3& hit_loc, xVec3& hit_norm,
+                                                            xVec3& hit_depen, xEnt*& hit_ent) const
+        {
+            xScene& s = *globals.sceneCur;
+            xVec3& loc = get_missle_mat()->pos;
+            xSweptSphere ss;
+            xSweptSpherePrepare(&ss, (xVec3*)&this->last_loc, &loc,
+                                current_tweak->missle.hit_dist);
+            ss.optr = NULL;
+            if (!xSweptSphereToScene(&ss, &s, NULL, 0x10))
+            {
+                return false;
+            }
+
+            xSweptSphereGetResults(&ss);
+            const xVec3 overshoot = { loc.x - ss.worldPos.x, loc.y - ss.worldPos.y,
+                                      loc.z - ss.worldPos.z };
+            hit_loc = ss.worldPos + ss.worldTangent * overshoot.dot(ss.worldTangent);
+            hit_depen = hit_loc - loc;
+            hit_norm = ss.worldNormal;
+            hit_ent = (xEnt*)ss.optr;
+
+            return true;
+        }
+
+        inline void cruise_bubble::state_missle_explode::start_effects()
+        {
+            U32 emit;
+            U32 emit_max;
+            tweak_group* tweak = current_tweak;
+
+            zFX_SpawnBubbleBlast(&get_missle_mat()->pos, tweak->blast.emit, tweak->blast.radius,
+                                 tweak->blast.vel, tweak->blast.rand_vel);
+
+            xVec3 scale = { 1.0f, 1.0f, 1.0f };
+
+            explode_decal.emit(*get_missle_mat(), scale, -1);
+
+            zShrapnelAsset* shrap = shared.droplet_shrapnel;
+            if ((shrap != NULL) && (shrap->initCB != NULL))
+            {
+                emit = current_tweak->droplet.emit_min;
+                emit_max = current_tweak->droplet.emit_max;
+
+                if (emit >= emit_max)
+                {
+                    emit = emit_max;
+                }
+                else
+                {
+                    U32 rand = xrand();
+                    emit += (rand / 0x2000) -
+                            ((rand / 0x2000) / (emit_max - emit)) * (emit_max - emit);
+                }
+
+                reset_quadrants(emit, current_tweak->droplet.vel_angle);
+
+                for (U32 i = 0; i < emit; i++)
+                {
+                    shrap->initCB(shrap, shared.missle_model, NULL, cb_droplet);
+                }
+            }
+        }
+
+        inline xVec3 cruise_bubble::state_missle_explode::perturb_direction(const xVec3& dir, F32 zmin,
+                                                                            F32 zmax, F32 amin, F32 amax)
+        {
+            xMat3x3 mat;
+
+            F32 a = amin + (amax - amin) * xurand();
+            F32 z = zmin + (zmax - zmin) * xurand();
+            F32 r = xsqrt(1.0f - z * z);
+
+            xVec3 v = { r * icos(a), r * isin(a), z };
+            xVec3 result;
+
+            mat.at = v;
+
+            if (xabs(z) > 0.5f)
+            {
+                mat.right.assign(1.0f, 0.0f, 0.0f);
+            }
+            else
+            {
+                mat.right.assign(0.0f, 0.0f, 1.0f);
+            }
+
+            mat.up = mat.at.cross(mat.right);
+            mat.up.normalize();
+            mat.right = mat.up.cross(mat.at);
+
+            xMat3x3LMulVec(&result, &mat, &dir);
+            return result;
+        }
+
+        inline bool cruise_bubble::state_missle_explode::cb_damage_ent::operator()(xEnt& ent,
+                                                                                   xGridBound& bound)
+        {
+            if (!(ent.chkby & 0x10))
+            {
+                return 1;
+            }
+            if (!(cruise_bubble::can_damage(&ent)))
+            {
+                return 1;
+            }
+
+            F32 rad = this->radius;
+            xSphere o = { shared.hit_loc, rad };
+
+            if (!xSphereHitsBound(o, ent.bound))
+            {
+                return 1;
+            }
+            if (cruise_bubble::was_damaged(&ent))
+            {
+                return 1;
+            }
+
+            if (ent.collLev == 5)
+            {
+                xCollis coll;
+                coll.flags = 0;
+                xSphereHitsModel(&o, ent.model, &coll);
+                if (!(coll.flags & 0x1))
+                {
+                    return 1;
+                }
+            }
+
+            damage_entity(ent, shared.hit_loc, get_missle_mat()->at, shared.hit_norm, this->radius,
+                          true);
+
+            return 1;
+        }
+
         void update_player(xScene& s, F32 dt)
         {
             const xVec3 pre_update_loc = cruise_bubble::get_player_loc();
@@ -1054,9 +1193,6 @@ namespace cruise_bubble
             {
                 shared.trail.bubbles -= bubbles;
 
-                // Retail places the 52-byte hit_test/start_effects/perturb_direction/
-                // cb_damage_ent template group before these trail templates.
-                // Their remaining offset difference is a translation-unit layout issue.
                 const xVec3 vel_rnd = { 0.0f, 0.0f, 0.0f };
                 zFX_SpawnBubbleTrail(&loc0, &loc1, bubbles, &vel_rnd, NULL);
 
@@ -3328,31 +3464,6 @@ namespace cruise_bubble
             return this->hit_test(*hit_loc, *hit_norm, hit_depen, hit_ent);
         }
 
-        U8 cruise_bubble::state_missle_fly::hit_test(xVec3& hit_loc, xVec3& hit_norm,
-                                                     xVec3& hit_depen, xEnt*& hit_ent) const
-        {
-            xScene& s = *globals.sceneCur;
-            xVec3& loc = get_missle_mat()->pos;
-            xSweptSphere ss;
-            xSweptSpherePrepare(&ss, (xVec3*)&this->last_loc, &loc,
-                                current_tweak->missle.hit_dist);
-            ss.optr = NULL;
-            if (!xSweptSphereToScene(&ss, &s, NULL, 0x10))
-            {
-                return false;
-            }
-
-            xSweptSphereGetResults(&ss);
-            const xVec3 overshoot = { loc.x - ss.worldPos.x, loc.y - ss.worldPos.y,
-                                      loc.z - ss.worldPos.z };
-            hit_loc = ss.worldPos + ss.worldTangent * overshoot.dot(ss.worldTangent);
-            hit_depen = hit_loc - loc;
-            hit_norm = ss.worldNormal;
-            hit_ent = (xEnt*)ss.optr;
-
-            return true;
-        }
-
         void cruise_bubble::state_missle_fly::update_move(F32 dt)
         {
             F32 accel = current_tweak->missle.fly.accel;
@@ -3450,45 +3561,6 @@ namespace cruise_bubble
             this->start_effects();
         }
 
-        void cruise_bubble::state_missle_explode::start_effects()
-        {
-            U32 emit;
-            U32 emit_max;
-            tweak_group* tweak = current_tweak;
-
-            zFX_SpawnBubbleBlast(&get_missle_mat()->pos, tweak->blast.emit, tweak->blast.radius,
-                                 tweak->blast.vel, tweak->blast.rand_vel);
-
-            xVec3 scale = { 1.0f, 1.0f, 1.0f };
-
-            explode_decal.emit(*get_missle_mat(), scale, -1);
-
-            zShrapnelAsset* shrap = shared.droplet_shrapnel;
-            if ((shrap != NULL) && (shrap->initCB != NULL))
-            {
-                emit = current_tweak->droplet.emit_min;
-                emit_max = current_tweak->droplet.emit_max;
-
-                if (emit >= emit_max)
-                {
-                    emit = emit_max;
-                }
-                else
-                {
-                    U32 rand = xrand();
-                    emit += (rand / 0x2000) -
-                            ((rand / 0x2000) / (emit_max - emit)) * (emit_max - emit);
-                }
-
-                reset_quadrants(emit, current_tweak->droplet.vel_angle);
-
-                for (U32 i = 0; i < emit; i++)
-                {
-                    shrap->initCB(shrap, shared.missle_model, NULL, cb_droplet);
-                }
-            }
-        }
-
         void cruise_bubble::state_missle_explode::cb_droplet(zFrag* frag, zFragAsset* asset)
         {
             F32 rand;
@@ -3521,37 +3593,6 @@ namespace cruise_bubble
                 frag->info.projectile.path.initVel.z;
             frag->info.projectile.angVel = current_tweak->droplet.rot_vel_max * xurand();
             frag->info.projectile.alpha = 0.25f;
-        }
-
-        xVec3 cruise_bubble::state_missle_explode::perturb_direction(const xVec3& dir, F32 zmin,
-                                                                     F32 zmax, F32 amin, F32 amax)
-        {
-            xMat3x3 mat;
-
-            F32 a = amin + (amax - amin) * xurand();
-            F32 z = zmin + (zmax - zmin) * xurand();
-            F32 r = xsqrt(1.0f - z * z);
-
-            xVec3 v = { r * icos(a), r * isin(a), z };
-            xVec3 result;
-
-            mat.at = v;
-
-            if (xabs(z) > 0.5f)
-            {
-                mat.right.assign(1.0f, 0.0f, 0.0f);
-            }
-            else
-            {
-                mat.right.assign(0.0f, 0.0f, 1.0f);
-            }
-
-            mat.up = mat.at.cross(mat.right);
-            mat.up.normalize();
-            mat.right = mat.up.cross(mat.at);
-
-            xMat3x3LMulVec(&result, &mat, &dir);
-            return result;
         }
 
         void cruise_bubble::state_missle_explode::get_next_quadrant(F32& zmin, F32& zmax, F32& amin,
@@ -4228,47 +4269,6 @@ namespace cruise_bubble
             }
 
             return STATE_CAMERA_RESTORE;
-        }
-
-        bool cruise_bubble::state_missle_explode::cb_damage_ent::operator()(xEnt& ent,
-                                                                            xGridBound& bound)
-        {
-            if (!(ent.chkby & 0x10))
-            {
-                return 1;
-            }
-            if (!(cruise_bubble::can_damage(&ent)))
-            {
-                return 1;
-            }
-
-            F32 rad = this->radius;
-            xSphere o = { shared.hit_loc, rad };
-
-            if (!xSphereHitsBound(o, ent.bound))
-            {
-                return 1;
-            }
-            if (cruise_bubble::was_damaged(&ent))
-            {
-                return 1;
-            }
-
-            if (ent.collLev == 5)
-            {
-                xCollis coll;
-                coll.flags = 0;
-                xSphereHitsModel(&o, ent.model, &coll);
-                if (!(coll.flags & 0x1))
-                {
-                    return 1;
-                }
-            }
-
-            damage_entity(ent, shared.hit_loc, get_missle_mat()->at, shared.hit_norm, this->radius,
-                          true);
-
-            return 1;
         }
 
         bool cruise_bubble::state_camera_attach::cb_lock_targets::operator()(xEnt& ent,
