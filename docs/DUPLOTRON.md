@@ -12669,3 +12669,31 @@ modification, new assembly, or behavioral test suite was used. Evidence:
 `build/cinematic-layout-final-report.json`, `cinematic-layout-affected-sources.txt`,
 `cinematic-layout-owned-link.json`, saved linked ELF, and associated build/raw
 comparison logs.
+
+
+### Bink run-block reconstruction and integrated cinematic verification (2026-10-03)
+
+ExpandPlane improves from 67.05882 to 74.951996 in the full deduplicated
+report. Retail decodes ordinary run blocks into the 8x8 scratch buffer before
+copying to the output. Recover that path, alternating destination cursors for
+pattern/motion rows, and chained doubled rows for scaled runs. Use the ordinary
+outer row loop, stage fill-word replication, and consume the inter DC value
+after its motion copy as retail does. The existing VarBitsGet macro replaces
+the custom exp_get_bits implementation. All changes are ordinary C.
+
+The retained source frame is retail's 0x478 bytes; function size is 5,576
+versus retail 5,916. A row-cursor generation error in a private intermediate
+experiment was corrected during source review before commit. Only the corrected
+source and final report are authoritative; earlier private scores are rejected.
+
+All 162 consumers of cinematic's changed headers rebuilt. The final all-source
+and normal retail builds pass, and every other function score plus every
+per-unit/global exact code, data and completion measure is unchanged. Complete
+units remain 467/543. Root also independently reproduces cinematic's actual
+source link: 3,972 differing bytes at the retail size, SHA1
+fdac9623e12b452529a126922fe41e174b5ff7ab. Normal selection is restored and
+retail DOL SHA1 306526d90b48e99894c3138f5fc8f2716d9fecf6 passes.
+
+Evidence: build/parallel-fiftyfirst-final-report.json, its validation log,
+expand51-corrected-private/corrected_motion.*, and cinematic51-source-link.json.
+Both TUs remain NonMatching; no compiler modifications or new assembly.

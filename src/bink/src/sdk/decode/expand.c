@@ -393,26 +393,9 @@ static void OpenReadBundle(u8 PTR4* bits, READBUNDLE PTR4* bundle, s32 bundle_wi
 
 static inline u32 exp_get_bits(EXPBITS PTR4* bits, u32 count)
 {
-    u32 bitcount;
-    EXPBITSTYPE bitbuf;
-    EXPBITSTYPE word;
-    u32 mask;
-
-    mask = GetBitsLen(count);
-    bitcount = bits->bitlen;
-    if (bitcount > count - 1) {
-        bitbuf = bits->bits;
-        bits->bitlen = bitcount - count;
-        bits->bits = bitbuf >> count;
-    } else {
-        bitbuf = bits->bits;
-        word = *bits->cur++;
-        bits->bitlen = bitcount + EXP_BITS_PER_WORD - count;
-        bits->bits = word >> (count - bitcount);
-        bitbuf |= word << bitcount;
-    }
-
-    return bitbuf & mask;
+    u32 value;
+    VarBitsGet(value, u32, *bits, count);
+    return value;
 }
 
 static inline u32 exp_get_bit(EXPBITS PTR4* bits)
@@ -1151,6 +1134,8 @@ static inline void expand_pattern_block(u8 PTR4* dest,
 {
     u32 color0;
     u32 color1;
+    u8 PTR4* row0 = dest;
+    u8 PTR4* row1 = dest + pitch;
 
     color0 = colors->cur_ptr[BINK_PATTERN_COLOR_0];
     color1 = colors->cur_ptr[BINK_PATTERN_COLOR_1];
@@ -1159,21 +1144,20 @@ static inline void expand_pattern_block(u8 PTR4* dest,
     color0 |= color0 << BINK_BUNDLE_MIN_WORD_BITS;
     color1 |= color1 << BINK_BYTE_BITS;
     color1 |= color1 << BINK_BUNDLE_MIN_WORD_BITS;
-    expand_pattern_row(dest, pitch, color0, color1, patterns);
-    dest += pitch;
-    expand_pattern_row(dest, pitch, color0, color1, patterns);
-    dest += pitch;
-    expand_pattern_row(dest, pitch, color0, color1, patterns);
-    dest += pitch;
-    expand_pattern_row(dest, pitch, color0, color1, patterns);
-    dest += pitch;
-    expand_pattern_row(dest, pitch, color0, color1, patterns);
-    dest += pitch;
-    expand_pattern_row(dest, pitch, color0, color1, patterns);
-    dest += pitch;
-    expand_pattern_row(dest, pitch, color0, color1, patterns);
-    dest += pitch;
-    expand_pattern_row(dest, pitch, color0, color1, patterns);
+    expand_pattern_row(row0, pitch, color0, color1, patterns);
+    row0 = row1 + pitch;
+    expand_pattern_row(row1, pitch, color0, color1, patterns);
+    row1 = row0 + pitch;
+    expand_pattern_row(row0, pitch, color0, color1, patterns);
+    row0 = row1 + pitch;
+    expand_pattern_row(row1, pitch, color0, color1, patterns);
+    row1 = row0 + pitch;
+    expand_pattern_row(row0, pitch, color0, color1, patterns);
+    row0 = row1 + pitch;
+    expand_pattern_row(row1, pitch, color0, color1, patterns);
+    row1 = row0 + pitch;
+    expand_pattern_row(row0, pitch, color0, color1, patterns);
+    expand_pattern_row(row1, pitch, color0, color1, patterns);
 }
 
 /* Expand two pattern bits into four pixels in each of two output rows. */
@@ -1257,10 +1241,11 @@ static inline void scale_block(const u8 PTR4* src, u8 PTR4* dest, u32 pitch)
 {
     const u16 PTR4* in = (const u16 PTR4*)src;
     u32 row;
+    u8 PTR4* odd_row = dest + pitch;
 
     for (row = 0; row < BINK_BLOCK_SIDE; ++row) {
         u32 PTR4* even = (u32 PTR4*)dest;
-        u32 PTR4* odd = (u32 PTR4*)(dest + pitch);
+        u32 PTR4* odd = (u32 PTR4*)odd_row;
         u32 word;
 
         word = BINK_SCALE_PIXELS(in[0]);
@@ -1276,7 +1261,8 @@ static inline void scale_block(const u8 PTR4* src, u8 PTR4* dest, u32 pitch)
         even[3] = word;
         odd[3] = word;
         in += BINK_BLOCK_HALF_SIDE;
-        dest += pitch * BINK_BLOCK_SCALE;
+        dest = odd_row + pitch;
+        odd_row = dest + pitch;
     }
 }
 
@@ -1388,9 +1374,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
     dest = out;
     old = prev;
     work_row = work;
-    row = 0;
-    if (height != 0) {
-    do {
+    for (row = 0; row < height; row += BINK_BLOCK_SIDE) {
         CheckReadRLEHuff4Bundle(&block_types, &bitstate);
         CheckReadRLEHuff4Bundle(&subblock_types, &bitstate);
         read_huff8(&colors, &bitstate, &huff8_table);
@@ -1458,10 +1442,45 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 }
                 break;
             }
-            case BINK_BLOCK_RUN:
+            case BINK_BLOCK_RUN: {
+                /* Runs decode in scan order before the block is copied to the frame. */
+                u8 PTR4* dst0 = dest;
+                u8 PTR4* dst1 = dest + pitch;
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
-                expand_run_block(dest, pitch, &colors, &runs, &bitstate);
+                expand_run_block(motion_block, BINK_BLOCK_SIDE, &colors, &runs, &bitstate);
+                if ((((u32)dest & BINK_BLOCK_DOUBLE_ALIGN_MASK) == 0)) {
+                    BINK_COPY_BLOCK_DOUBLE_ROW(dst0, motion_block + BINK_BLOCK_SIDE * 0, 0, 0);
+                    dst0 = dst1 + pitch;
+                    BINK_COPY_BLOCK_DOUBLE_ROW(dst1, motion_block + BINK_BLOCK_SIDE * 1, 0, 0);
+                    dst1 = dst0 + pitch;
+                    BINK_COPY_BLOCK_DOUBLE_ROW(dst0, motion_block + BINK_BLOCK_SIDE * 2, 0, 0);
+                    dst0 = dst1 + pitch;
+                    BINK_COPY_BLOCK_DOUBLE_ROW(dst1, motion_block + BINK_BLOCK_SIDE * 3, 0, 0);
+                    dst1 = dst0 + pitch;
+                    BINK_COPY_BLOCK_DOUBLE_ROW(dst0, motion_block + BINK_BLOCK_SIDE * 4, 0, 0);
+                    dst0 = dst1 + pitch;
+                    BINK_COPY_BLOCK_DOUBLE_ROW(dst1, motion_block + BINK_BLOCK_SIDE * 5, 0, 0);
+                    dst1 = dst0 + pitch;
+                    BINK_COPY_BLOCK_DOUBLE_ROW(dst0, motion_block + BINK_BLOCK_SIDE * 6, 0, 0);
+                    BINK_COPY_BLOCK_DOUBLE_ROW(dst1, motion_block + BINK_BLOCK_SIDE * 7, 0, 0);
+                } else {
+                    BINK_COPY_BLOCK_WORD_ROW(dst0, motion_block + BINK_BLOCK_SIDE * 0, 0, 0);
+                    dst0 = dst1 + pitch;
+                    BINK_COPY_BLOCK_WORD_ROW(dst1, motion_block + BINK_BLOCK_SIDE * 1, 0, 0);
+                    dst1 = dst0 + pitch;
+                    BINK_COPY_BLOCK_WORD_ROW(dst0, motion_block + BINK_BLOCK_SIDE * 2, 0, 0);
+                    dst0 = dst1 + pitch;
+                    BINK_COPY_BLOCK_WORD_ROW(dst1, motion_block + BINK_BLOCK_SIDE * 3, 0, 0);
+                    dst1 = dst0 + pitch;
+                    BINK_COPY_BLOCK_WORD_ROW(dst0, motion_block + BINK_BLOCK_SIDE * 4, 0, 0);
+                    dst0 = dst1 + pitch;
+                    BINK_COPY_BLOCK_WORD_ROW(dst1, motion_block + BINK_BLOCK_SIDE * 5, 0, 0);
+                    dst1 = dst0 + pitch;
+                    BINK_COPY_BLOCK_WORD_ROW(dst0, motion_block + BINK_BLOCK_SIDE * 6, 0, 0);
+                    BINK_COPY_BLOCK_WORD_ROW(dst1, motion_block + BINK_BLOCK_SIDE * 7, 0, 0);
+                }
                 break;
+            }
             case BINK_BLOCK_INTRA: {
                 u32 quant;
 
@@ -1531,8 +1550,6 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 u32 quant;
 
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
-                dct_block[0] = BINK_BUNDLE_S16(inter_dc);
-                BINK_BUNDLE_ADVANCE(inter_dc, BINK_DC_BYTES);
                 BINK_BUNDLE_ADVANCE(xoff, BINK_BUNDLE_BYTE_PITCH);
                 BINK_BUNDLE_ADVANCE(yoff, BINK_BUNDLE_BYTE_PITCH);
                 motion_source = BINK_MOTION_SOURCE(old, pitch, motion_x, motion_y);
@@ -1571,6 +1588,8 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                         BINK_COPY_MOTION_WORD_ROW(motion_block, BINK_BLOCK_SIDE, BINK_BLOCK_ROW_7, motion_row1);
                     }
                 }
+                dct_block[0] = BINK_BUNDLE_S16(inter_dc);
+                BINK_BUNDLE_ADVANCE(inter_dc, BINK_DC_BYTES);
                 ReadBPLossless(dct_block, (BPBITSTREAM PTR4*)&bitstate);
                 quant = exp_get_bits(&bitstate, BINK_DCT_QUANT_BITS);
                 FastmIDCT8x8WithMotion(dest, (s32)pitch, dct_block, quant, motion_block);
@@ -1580,8 +1599,10 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 u8 PTR4* copy_dest0 = dest;
                 u8 PTR4* copy_dest1 = dest + pitch;
                 u8 color = BINK_BUNDLE_U8(colors);
-                u32 fill = BINK_FILL_WORD(color);
+                u32 fill = color;
 
+                fill |= fill << BINK_BYTE_BITS;
+                fill |= fill << (BINK_BYTE_BITS * 2);
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
                 BINK_BUNDLE_ADVANCE(colors, BINK_BUNDLE_BYTE_PITCH);
                 BINK_FILL_BLOCK_WORD_ROW(copy_dest0, 0, 0, fill);
@@ -1616,36 +1637,50 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 {
                     u8 PTR4* motion_row0 = motion_source;
                     u8 PTR4* motion_row1 = motion_source + pitch;
+                    u8 PTR4* dst0 = dest;
+                    u8 PTR4* dst1 = dest + pitch;
                     if (BINK_BLOCK_DOUBLE_ALIGNED(dest, motion_source)) {
-                        BINK_COPY_MOTION_DOUBLE_ROW(dest, pitch, BINK_BLOCK_ROW_0, motion_row0);
+                        BINK_COPY_BLOCK_DOUBLE_ROW(dst0, motion_row0, 0, 0);
                         motion_row0 = motion_row1 + pitch;
-                        BINK_COPY_MOTION_DOUBLE_ROW(dest, pitch, BINK_BLOCK_ROW_1, motion_row1);
+                        dst0 = dst1 + pitch;
+                        BINK_COPY_BLOCK_DOUBLE_ROW(dst1, motion_row1, 0, 0);
                         motion_row1 = motion_row0 + pitch;
-                        BINK_COPY_MOTION_DOUBLE_ROW(dest, pitch, BINK_BLOCK_ROW_2, motion_row0);
+                        dst1 = dst0 + pitch;
+                        BINK_COPY_BLOCK_DOUBLE_ROW(dst0, motion_row0, 0, 0);
                         motion_row0 = motion_row1 + pitch;
-                        BINK_COPY_MOTION_DOUBLE_ROW(dest, pitch, BINK_BLOCK_ROW_3, motion_row1);
+                        dst0 = dst1 + pitch;
+                        BINK_COPY_BLOCK_DOUBLE_ROW(dst1, motion_row1, 0, 0);
                         motion_row1 = motion_row0 + pitch;
-                        BINK_COPY_MOTION_DOUBLE_ROW(dest, pitch, BINK_BLOCK_ROW_4, motion_row0);
+                        dst1 = dst0 + pitch;
+                        BINK_COPY_BLOCK_DOUBLE_ROW(dst0, motion_row0, 0, 0);
                         motion_row0 = motion_row1 + pitch;
-                        BINK_COPY_MOTION_DOUBLE_ROW(dest, pitch, BINK_BLOCK_ROW_5, motion_row1);
+                        dst0 = dst1 + pitch;
+                        BINK_COPY_BLOCK_DOUBLE_ROW(dst1, motion_row1, 0, 0);
                         motion_row1 = motion_row0 + pitch;
-                        BINK_COPY_MOTION_DOUBLE_ROW(dest, pitch, BINK_BLOCK_ROW_6, motion_row0);
-                        BINK_COPY_MOTION_DOUBLE_ROW(dest, pitch, BINK_BLOCK_ROW_7, motion_row1);
+                        dst1 = dst0 + pitch;
+                        BINK_COPY_BLOCK_DOUBLE_ROW(dst0, motion_row0, 0, 0);
+                        BINK_COPY_BLOCK_DOUBLE_ROW(dst1, motion_row1, 0, 0);
                     } else {
-                        BINK_COPY_MOTION_WORD_ROW(dest, pitch, BINK_BLOCK_ROW_0, motion_row0);
+                        BINK_COPY_BLOCK_WORD_ROW(dst0, motion_row0, 0, 0);
                         motion_row0 = motion_row1 + pitch;
-                        BINK_COPY_MOTION_WORD_ROW(dest, pitch, BINK_BLOCK_ROW_1, motion_row1);
+                        dst0 = dst1 + pitch;
+                        BINK_COPY_BLOCK_WORD_ROW(dst1, motion_row1, 0, 0);
                         motion_row1 = motion_row0 + pitch;
-                        BINK_COPY_MOTION_WORD_ROW(dest, pitch, BINK_BLOCK_ROW_2, motion_row0);
+                        dst1 = dst0 + pitch;
+                        BINK_COPY_BLOCK_WORD_ROW(dst0, motion_row0, 0, 0);
                         motion_row0 = motion_row1 + pitch;
-                        BINK_COPY_MOTION_WORD_ROW(dest, pitch, BINK_BLOCK_ROW_3, motion_row1);
+                        dst0 = dst1 + pitch;
+                        BINK_COPY_BLOCK_WORD_ROW(dst1, motion_row1, 0, 0);
                         motion_row1 = motion_row0 + pitch;
-                        BINK_COPY_MOTION_WORD_ROW(dest, pitch, BINK_BLOCK_ROW_4, motion_row0);
+                        dst1 = dst0 + pitch;
+                        BINK_COPY_BLOCK_WORD_ROW(dst0, motion_row0, 0, 0);
                         motion_row0 = motion_row1 + pitch;
-                        BINK_COPY_MOTION_WORD_ROW(dest, pitch, BINK_BLOCK_ROW_5, motion_row1);
+                        dst0 = dst1 + pitch;
+                        BINK_COPY_BLOCK_WORD_ROW(dst1, motion_row1, 0, 0);
                         motion_row1 = motion_row0 + pitch;
-                        BINK_COPY_MOTION_WORD_ROW(dest, pitch, BINK_BLOCK_ROW_6, motion_row0);
-                        BINK_COPY_MOTION_WORD_ROW(dest, pitch, BINK_BLOCK_ROW_7, motion_row1);
+                        dst1 = dst0 + pitch;
+                        BINK_COPY_BLOCK_WORD_ROW(dst0, motion_row0, 0, 0);
+                        BINK_COPY_BLOCK_WORD_ROW(dst1, motion_row1, 0, 0);
                     }
                 }
                 break;
@@ -1695,10 +1730,12 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                     switch (subblock_type) {
                     case BINK_BLOCK_FILL: {
                         u8 color = BINK_BUNDLE_U8(colors);
-                        u32 fill = BINK_FILL_WORD(color);
+                        u32 fill = color;
                         u32 scaled_row;
                         u8 PTR4* fill_row = dest;
 
+                        fill |= fill << BINK_BYTE_BITS;
+                        fill |= fill << (BINK_BYTE_BITS * 2);
                         BINK_BUNDLE_ADVANCE(colors, BINK_BUNDLE_BYTE_PITCH);
                         for (scaled_row = 0; scaled_row < BINK_BLOCK_SIDE; ++scaled_row) {
                             u32 PTR4* fill_dest = (u32 PTR4*)fill_row;
@@ -1765,10 +1802,8 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
             work_row += work_pitch;
         }
         work_col = 0;
-        row += BINK_BLOCK_SIDE;
         dest += row_advance;
         old += row_advance;
-    } while (row < height);
     }
 
     VarBitsGetAlign(bitstate);
