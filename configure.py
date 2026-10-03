@@ -607,7 +607,7 @@ config.libs = [
             Object(NonMatching, "SB/Core/gc/iSnd.cpp"),
             Object(NonMatching, "SB/Core/gc/iSystem.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Core/gc/iTime.cpp"),
-            Object(NonMatching, "SB/Core/gc/ngcrad3d.c", extra_cflags=["-DGEKKO"]),
+            Object(Matching, "SB/Core/gc/ngcrad3d.c", extra_cflags=["-DGEKKO"]),
             Object(Matching, "SB/Game/zNPCGoals.cpp"),
             Object(Matching, "SB/Game/zNPCGoalCommon.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zNPCGoalStd.cpp", extra_cflags=["-sym on"]),

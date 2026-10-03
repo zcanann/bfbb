@@ -11719,3 +11719,30 @@ and were not retained. Existing assembly elsewhere in the file is unchanged.
 Evidence: build/ngcfile38d-private/compound_ternary.*,
 build/ngcfile38-link-diff.json and build/parallel-thirtyeighth-ngcfile-report.json
 with build/parallel-thirtyeighth-ngcfile-validation.log.
+
+
+### ngcrad3d: texture-format capture completes actual source linking (2026-10-03)
+
+`Open_RAD_3D_image` now captures the first GX texture format in a local
+`const GXTexFmt format` immediately before `GXGetTexBufferSize`. The call
+uses that value; dimensions and the later `GXInitTexObj` table lookup are
+unchanged. Separating the third argument's value from the call expression
+makes the compiler prepare height before width, matching retail's two `clrlwi`
+instructions around the height store. Earlier dimension captures had left
+these instructions swapped; capturing the height assignment instead fixed
+the ordering but changed the table-address temporary from retail r3 to r5.
+The format-value capture alone reproduces the entire function naturally.
+
+Authoritative full deduplicated report: `Open_RAD_3D_image`
+99.68254 -> 100; no other function, data, or exact-code regression. The TU
+is now 12/12 exact, with 1704/1704 code bytes and 96/96 data bytes. Both
+`all_source` and the normal build pass. Selecting this object as `Matching`
+produces a byte-identical retail DOL, SHA1
+`306526d90b48e99894c3138f5fc8f2716d9fecf6`. Compiler binaries are unchanged:
+GC/2.0p1a `a78a5fdb6c1d5677e987636b2e0743dbaefe9542`, GC/2.0p1e
+`9d445725489050035740aaff35860eddbaf3c3c9`. No assembly or compiler changes
+and no extra behavior-test infrastructure were needed.
+
+Worker artifacts: `build/rad-exact-baseline-report.json`,
+`rad-exact-linked-report.json`, `rad-exact-linked-source-build.log`,
+`rad-exact-link.log`, and `rad-exact-callprep-notes.json`.

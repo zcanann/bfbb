@@ -68,9 +68,8 @@ HRAD3DIMAGE Open_RAD_3D_image(HRAD3D rad_3d, u32 width, u32 height, u32 rad3d_su
         image->alpha_pixels = Pixel_info[rad3d_surface_format] >> 31;
         image->bytes_per_pixel = bytes_per_pixel;
         image->surface_format = rad3d_surface_format;
-        image->buffer_size = GXGetTexBufferSize((u16)width, (u16)height,
-                                                (GXTexFmt)D3D_surface_type[rad3d_surface_format],
-                                                GX_FALSE, 0);
+        const GXTexFmt format = (GXTexFmt)D3D_surface_type[rad3d_surface_format];
+        image->buffer_size = GXGetTexBufferSize((u16)width, (u16)height, format, GX_FALSE, 0);
         image->pixels = iFMVmalloc(image->buffer_size);
         GXInitTexObj(&image->texobj, image->pixels, (u16)width, (u16)height,
                      (GXTexFmt)D3D_surface_type[rad3d_surface_format],
