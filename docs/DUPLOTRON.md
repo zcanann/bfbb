@@ -12042,3 +12042,34 @@ source object links exactly. Evidence in the isolated worker build directory:
 thrown-exact-baseline-report.json, thrown-exact-gain-report.json,
 thrown-exact-gain-build.log, thrown-exact-gain-link.log, and the reservation
 and actual-inlining trial sources/diffs. No ancillary tests were added.
+
+
+### Bink plane read alignment restored (2026-10-03)
+
+ExpandPlane now uses the existing VarBitsGetAlign macro before returning its
+read cursor. Bitstream refills already advance cur past the word being
+consumed; unused buffered bits are discarded at the plane boundary. Retail's
+epilogue clears bitlen and returns cur without advancing it. The previous
+conditional cur++ incorrectly skipped another word when buffered bits remained.
+The macro reproduces retail's operation directly, with no new helper or flag.
+
+ExpandPlane improves from 55.890465% to 56.033806% in the authoritative full
+deduplicated report. Source size changes from 5376 to 5360 bytes against
+retail's 5916; the function still has substantial unrelated holdouts and the
+unit remains NonMatching. Raw comparison is 55.430695% to 55.44557%; the full
+report also normalizes relocation effects.
+
+Combined verification includes the separately documented zScene mask-scope
+and zThrown entry-reservation gains. Exactly those three functions improve;
+all other scores, matched-data totals, exact-function/code counts, and complete
+TU counts are unchanged. All-source build passes and the normal selected-object
+DOL retains retail SHA1 306526d90b48e99894c3138f5fc8f2716d9fecf6. That normal
+link is not evidence that these NonMatching source units link exactly. No
+behavioral suite, compiler modification, or inline assembly was added.
+Evidence: build/parallel-fortysixth-final-report.json, its validation log,
+expand46d-private/read_align.json, and expand46-left.txt retail epilogue.
+
+The direct scaled-pattern mask expansion and paired-row fill reconstructions
+were privately compared but lowered overall matching and were not retained.
+These overlap earlier rejected structures; subsequent work should use the
+recorded assembly and a new surrounding lifetime/control-flow hypothesis.

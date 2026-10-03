@@ -1668,9 +1668,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
     } while (row < height);
     }
 
-    if (bitstate.bitlen != 0) {
-        bitstate.cur++;
-    }
+    VarBitsGetAlign(bitstate);
     return bitstate.cur;
 }
 
