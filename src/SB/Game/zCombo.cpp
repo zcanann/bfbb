@@ -195,22 +195,19 @@ void zCombo_Update(F32 dt)
     xVec3Copy(&sUnderCamPos, &globals.camera.mat.pos);
     xVec3AddScaled(&sUnderCamPos, &globals.camera.mat.up, -3.0f);
 
-    S32 counter = comboCounter;
-    S32 toShow = counter;
-    if (counter >= 16)
+    S32 toShow = comboCounter;
+    if (toShow >= 16)
     {
         toShow = 15;
     }
 
     zComboReward* c = &comboReward[toShow];
 
-    if (comboLastCounter != counter && c->reward != 0)
+    if (comboLastCounter != comboCounter && c->reward != 0)
     {
-        widget_chunk* hud = comboHUD;
-
-        if (hud != NULL)
+        if (comboHUD != NULL)
         {
-            strcpy(hud->w.text, xTextAssetGetText(c->textAsset));
+            strcpy(comboHUD->w.text, xTextAssetGetText(comboReward[toShow].textAsset));
             comboHUD->w.show();
         }
         comboLastCounter = comboCounter;

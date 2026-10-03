@@ -973,33 +973,22 @@ void zMainFirstScreen(S32 mode)
     iCameraDestroy(cam);
 }
 
-// non-matching at 97.051% (121 differing rows of 416; our object carries three
-// extra `mr` copies).  Pure REGS: the callee-saved set is r20-r31 in both, the
-// instruction structure matches, and only the colouring differs.  Splitting the
-// declarations from the initialisations and reordering them permutes the
-// colours - the best of ~120 orders measured, `startBytes, formatFailed,
-// formatInProgress, do_chk, fullCard, workArea, status, startupError`, reaches
-// 97.888% / 53 rows with five of the nine registers exactly right - but it can
-// never close, because our allocator pins the function's two anonymous temps
-// (the hoisted `globals` base and the `result` of CARDGetResultCode) to r30 and
-// r31 in every one of the 15 declaration orders sampled, while retail puts them
-// in r28/r29 and gives r30/r31 to startBytes and workArea.  Reverted to the
-// readable form; hoisting `result` to function scope (9 positions) and binding
-// `zGlobals& g = globals;` (9 positions) were also measured - the first changes
-// nothing at all, the second costs 1.4 points.
 void zMainMemCardSpaceQuery()
 {
-    S32 startBytes = 0;
     S32 bytesNeeded = 0;
     S32 availOnDisk = 0;
     S32 neededFiles = 0;
-    S32 fullCard = -1;
     S32 do_chk = 1;
+    S32 status = 1;
     U8 formatInProgress = 0;
     U8 formatFailed = 0;
     eStartupErrors startupError = eNoError;
-    S32 status = 1;
-    void* workArea = RwMalloc(CARD_WORKAREA_SIZE);
+    S32 fullCard = -1;
+    void* workArea;
+    S32 startBytes = 0;
+    S32 result;
+
+    workArea = RwMalloc(CARD_WORKAREA_SIZE);
     while (1)
     {
         iTRCDisk::CheckDVDAndResetState();
@@ -1043,13 +1032,14 @@ void zMainMemCardSpaceQuery()
         {
             char bar[16];
             char msg[256];
-            S32 result = CARDGetResultCode(fullCard);
+            result = CARDGetResultCode(fullCard);
             F32 pct;
 
             memset(bar, 0, sizeof(bar));
             strcpy(bar, "oooooooo");
             pct = (F32)(CARDGetXferredBytes(fullCard) - startBytes) / CARD_WORKAREA_SIZE;
-            bar[(S32)(pct * strlen(bar))] = 'O';
+            S32 idx = pct * strlen(bar);
+            bar[idx] = 'O';
             sprintf(msg, "{i:text_mem_card_formatting}{n}[%s]", bar);
             zMainMemCardRenderText(msg, 1);
 
@@ -1186,8 +1176,6 @@ void zMainMemCardSpaceQuery()
 
                 for (i = 0; i < fileCount; i++)
                 {
-                    S32 result;
-
                     zMainMemCardRenderText("{i:text_mem_card_deleting_file}", 1);
                     result = CARDDelete(fullCard, files[i]);
 

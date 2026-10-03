@@ -220,8 +220,8 @@ void zLasso_Render(zLasso* lasso)
     F32 t;
     F32 ropeLen;
     F32 ropeDist;
-    F32 travelled;
     F32 du;
+    F32 travelled;
     F32 stepLen;
     F32 xDisp;
     F32 yDisp;
