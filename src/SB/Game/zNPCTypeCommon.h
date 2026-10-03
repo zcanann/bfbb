@@ -593,18 +593,6 @@ void zNPCSettings_MakeDummy();
 void ZNPC_Common_Startup();
 void zNPCCommon_WonderReset();
 void ZNPC_Common_Shutdown();
-// NPCC_BuildStandardAnimTran walks ourAnims until it reads a 0. Keep the
-// existing Prawn terminator workaround conditional on runnable source builds.
-// Dutchman's retail list already has 12 animation indices followed by 0; its
-// initializer uses that explicit terminator in every build mode. Function-code
-// matching alone did not reveal the previous incorrect Dutchman data template.
-// See "Matching data and the NON_MATCHING escape hatch" in docs/PCPORT.md.
-#ifdef NON_MATCHING
-#define NPCC_ANIM_LIST_END , 0
-#else
-#define NPCC_ANIM_LIST_END
-#endif
-
 void NPCC_BuildStandardAnimTran(xAnimTable* table, char** namelist, S32* ourAnims, S32 idx_dflt,
                                 F32 blend);
 void zNPCCommon_Timestep(xScene* xscn, F32 dt);

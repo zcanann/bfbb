@@ -175,12 +175,18 @@ The function's instructions matched while its copied data did not. The source
 now uses the retail list, including its terminator, in both matching and
 `NON_MATCHING` builds. It remains thirteen entries in both modes.
 
+Prawn's referenced retail initializer is also terminated: its 40-byte
+`@1446` template contains `1, 4, 5, 7, 12, 13, 14, 9, 10, 0`, nine animation
+indices followed by zero. The current Prawn source already uses that exact
+ten-entry list. Prawn is source-linked as Matching, with all 128 functions and
+4600 data bytes exact. The earlier Prawn-workaround claim was stale too.
+The unused `NPCC_ANIM_LIST_END` macro has been removed; neither boss needs a
+conditional terminator.
+
 For a verified retail defect that must be repaired in a port, `configure.py`
 appends `-DNON_MATCHING` to `cflags_bfbb` when configured with `--non-matching`.
-`NPCC_ANIM_LIST_END` in `zNPCTypeCommon.h` still expands to `, 0` under that
-flag and to nothing otherwise. The existing Prawn workaround retains that
-behavior; correcting Dutchman's initializer does not change the macro or its
-other users.
+This remains available for justified source deviations; these two animation
+lists are not examples of such defects.
 
 Before adding such an exception, inspect the referenced retail data as well
 as function instructions. A 100% function score does not establish that its

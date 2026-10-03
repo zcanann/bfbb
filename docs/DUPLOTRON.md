@@ -6100,11 +6100,12 @@ should discard every single-word `.rodata` row in it.
 
 Explained and deliberate:
 
-- `zNPCTypePrawn` retains its conditional `NPCC_ANIM_LIST_END` workaround.
-  The old attribution of Dutchman's source-only `00000007` to a terminator
-  workaround was incorrect: it was an extra Taunt01 entry. Retail's 13-word
-  Dutchman template contains twelve animation indices and a zero terminator.
-  The source list is corrected below in the 2026-10-02 data audit.
+- Both Prawn and Dutchman retail animation templates contain explicit zero
+  terminators. Prawn's ten-entry list was already correct and source-linked;
+  Dutchman's source-only `00000007` was an extra Taunt01 entry, not a
+  terminator workaround. Its thirteen-word retail list has twelve animation
+  indices followed by zero. See the 2026-10-02 data audits below; the unused
+  `NPCC_ANIM_LIST_END` macro is removed.
 - `3acccccd`/`3b088889` (1/640, 1/480) ours-only in `zGame`, `zMain`, `xTRC`,
   `xCM`, `zUIFont`: our object emits weak out-of-line copies of `NSCREENX__Ff`
   and `NSCREENY__Ff` along with their pool constants. Retail's objects did too --
@@ -10138,8 +10139,9 @@ Move Death01 (11) after Idle01, remove Taunt01 (7) from this standard-transition
 list, and include the retail zero explicitly. The Taunt animation state itself
 remains present, as in retail. Both matching and NON_MATCHING builds now have
 the same thirteen-entry terminated list; Dutchman no longer uses the conditional
-terminator macro. Its definition and other users retain their prior behavior.
-The stale header comment and PCPORT explanation are corrected accordingly.
+terminator macro. A follow-up audit also confirms Prawn already uses its
+terminated retail list, and the now-unused macro is removed. The stale header
+comment and PCPORT explanation are corrected accordingly.
 
 Validation: all_source rebuilds all 55 affected objects successfully. The full
 deduplicated report changes only Dutchman's data: 5280/8840 to 8840/8840 bytes
@@ -10152,3 +10154,22 @@ holdouts remain, so the unit is not promoted and exact source linking is not
 claimed. Evidence: build/dutchman-anim-report.json, dutchman-anim-modes.log and
 the ELF/template audit helpers in the isolated worktree. Plankton's exhausted
 impart_velocity holdout is unchanged; no compiler or assembly edits were made.
+
+
+## 2026-10-02: Prawn terminator follow-up removes stale workaround claim
+
+The Prawn audit follows relocations inside ZNPC_AnimTable_Prawn to retail
+@1446, .rodata offset 224, size 40 bytes. Its ten words are
+`1, 4, 5, 7, 12, 13, 14, 9, 10, 0`.
+The current source references @597 at offset 260 with the identical ten words.
+Thus retail and source both have nine animation indices and a terminator.
+Prawn already uses an explicit zero and does not need a conditional workaround.
+
+Remove the now-unused NPCC_ANIM_LIST_END macro and correct the remaining
+Prawn-workaround statements. A repository source search finds no call sites.
+No initializer, gameplay logic, compiler setting, or Matching marker changes.
+Prawn remains Object(Matching), with 128/128 exact functions and 4600/4600 data
+bytes. Full all_source and normal link validation pass; the full deduplicated
+report is identical to the preceding Dutchman correction. Retail DOL SHA1
+remains 306526d90b48e99894c3138f5fc8f2716d9fecf6. Both earlier claims of
+unterminated retail lists were based on insufficient initializer-data evidence.
