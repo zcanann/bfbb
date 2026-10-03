@@ -12438,3 +12438,34 @@ bytes and 7,808 complete data bytes. Actual linked DOL SHA1 remains
 306526d90b48e99894c3138f5fc8f2716d9fecf6. iMath3 remains NonMatching.
 Evidence: the final report, validation log and report-comparison script
 under `build/parallel-fortyeighth-*`.
+
+
+### bamatlst: immutable material-count snapshot improves the final holdout
+
+On the worker's `218988381` baseline, snapshot `len` as a scoped
+`const RwInt32 materialCount` after list initialization, and use that snapshot
+for the empty check and `_rpMaterialListSetSize`. The count remains immutable
+across the allocation helper's inlined body. The later streamed-index reads
+and loop still use the original `len` variable. `_rpMaterialListStreamRead`
+improves **99.88064 -> 99.933685**, at unchanged 1,508 bytes. The allocation
+byte count now uses retail's r26. Differing rows fall **8 -> 5**, with no new
+differing row; the remaining count operand uses r25 instead of retail r27.
+This narrows the CSE-pair barrier described in `docs/RW_RESIDUE.md` without
+claiming it is fully resolved.
+
+Full deduplicated report changes only this function; unit **99.96464**,
+7/8 functions exact and 1,320/2,828 exact code bytes, with data unchanged.
+`all_source`, normal build, retail SHA1 and unchanged compiler hashes pass.
+Actual source linking yields a same-size 2,859,136-byte DOL with exactly
+**five differing bytes**, at `0x80218909`, `0x8021890D`, `0x80218922`,
+`0x8021892D`, and `0x802189A1`; all are the residual count-register operands.
+There is no independent helper/data/layout discrepancy. NonMatching remains
+set, and the normal retail checksum is restored.
+
+The bounded controls were an existing chunk-size scratch reuse (extra stack
+store, 1,504 bytes and regression), unsigned count snapshot (regression),
+capture before initialization (regression), and reuse of the existing loop
+counter (neutral). None is retained. Source/compiler/behavior tests were not
+expanded. Evidence under ignored `build/`: `bamatlst-lifetime-count-` report,
+validation, mismatch, allsource/link and source-link artifacts; private source
+controls are in `bamatlst-lifetime/`.

@@ -270,18 +270,21 @@ RpMaterialList* _rpMaterialListStreamRead(RwStream* stream, RpMaterialList* matL
         }
 
         _rpMaterialListInitialize(matList);
-
-        if (len == 0)
         {
-            return matList;
-        }
+            const RwInt32 materialCount = len;
 
-        if (!_rpMaterialListSetSize(matList, len))
-        {
-            _rpMaterialListDeinitialize(matList);
-            return (RpMaterialList*)NULL;
-        }
+            if (materialCount == 0)
+            {
+                return matList;
+            }
 
+            if (!_rpMaterialListSetSize(matList, materialCount))
+            {
+                _rpMaterialListDeinitialize(matList);
+                return (RpMaterialList*)NULL;
+            }
+
+        }
         matindex = (RwInt32*)RwMalloc(sizeof(RwInt32) * len);
 
         status = (NULL != RwStreamReadInt32(stream, matindex, sizeof(RwInt32) * len));
