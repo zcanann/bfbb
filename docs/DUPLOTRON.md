@@ -12807,3 +12807,29 @@ measure is unchanged.467/543 units remain complete; both TUs remain NonMatching.
 Evidence: build/parallel-fiftysecond-report.json and validation log,
 expand52-combined-private/combined.*, and lasso52-source-link.json/saved DOL.
 No compiler edits, new assembly, or behavioral test suites were used.
+
+
+### Bink scaled pattern: prepare the next word before storing (2026-10-03)
+
+On the verified normal-pattern checkpoint b0253478e, the scaled pattern loop
+still completes both stores for each packed word before loading the next mask
+pair. Retail starts the next pair earlier: loads at 0x3044/0x304c precede the
+first store at 0x3058, and loads at 0x306c/0x3070 precede the store at 0x3074.
+Two ordinary u32 word temporaries express that preparation boundary while
+retaining all eight stores, row coverage, and bundle consumption. Only
+expand_pattern_block_scaled changes; the normal pattern helpers remain intact.
+
+Moving the second color load earlier is byte-identical because ProDG already
+schedules it there. Computing all four words before any stores barely improves
+raw matching (78.38472 -> 78.40365). Preparing one word ahead with four locals
+reaches 78.82691; reusing two rolling word locals reaches 78.93847. The retained
+function is 5,596 bytes versus the 5,584-byte baseline and 5,916-byte retail.
+
+Full deduplicated verification changes only ExpandPlane, 79.16565 -> 79.658554;
+all other function records, data, exact counts, and unit identities are unchanged.
+The source build and normal link pass, retaining retail DOL SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. Expand remains NonMatching. This is
+an isolated helper result before interaction with the newer run/fill changes.
+Evidence: build/scaled-pattern-order-private/*, the private trial scripts,
+scaled-pattern-order-retained-report.json, scaled-pattern-order-validation.json,
+and retained build/link logs in the RGB worktree.

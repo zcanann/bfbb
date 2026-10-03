@@ -1178,23 +1178,24 @@ static inline void expand_pattern_block_scaled(u8 PTR4* dest,
     color1 |= color1 << (BINK_BYTE_BITS * 2);
     for (row = 0; row < BINK_BLOCK_SIDE; ++row) {
         u32 row_bits = *patterns->cur_ptr++;
-        u32 word;
-        word = (color0 & ((const u32 PTR4*)mask3)[(row_bits >> 0) & 3]) |
+        u32 word0;
+        u32 word1;
+        word0 = (color0 & ((const u32 PTR4*)mask3)[(row_bits >> 0) & 3]) |
                (color1 & ((const u32 PTR4*)mask4)[(row_bits >> 0) & 3]);
-        ((u32 PTR4*)even)[0] = word;
-        ((u32 PTR4*)odd)[0] = word;
-        word = (color0 & ((const u32 PTR4*)mask3)[(row_bits >> 2) & 3]) |
+        word1 = (color0 & ((const u32 PTR4*)mask3)[(row_bits >> 2) & 3]) |
                (color1 & ((const u32 PTR4*)mask4)[(row_bits >> 2) & 3]);
-        ((u32 PTR4*)even)[1] = word;
-        ((u32 PTR4*)odd)[1] = word;
-        word = (color0 & ((const u32 PTR4*)mask3)[(row_bits >> 4) & 3]) |
+        ((u32 PTR4*)even)[0] = word0;
+        ((u32 PTR4*)odd)[0] = word0;
+        word0 = (color0 & ((const u32 PTR4*)mask3)[(row_bits >> 4) & 3]) |
                (color1 & ((const u32 PTR4*)mask4)[(row_bits >> 4) & 3]);
-        ((u32 PTR4*)even)[2] = word;
-        ((u32 PTR4*)odd)[2] = word;
-        word = (color0 & ((const u32 PTR4*)mask3)[(row_bits >> 6) & 3]) |
+        ((u32 PTR4*)even)[1] = word1;
+        ((u32 PTR4*)odd)[1] = word1;
+        word1 = (color0 & ((const u32 PTR4*)mask3)[(row_bits >> 6) & 3]) |
                (color1 & ((const u32 PTR4*)mask4)[(row_bits >> 6) & 3]);
-        ((u32 PTR4*)even)[3] = word;
-        ((u32 PTR4*)odd)[3] = word;
+        ((u32 PTR4*)even)[2] = word0;
+        ((u32 PTR4*)odd)[2] = word0;
+        ((u32 PTR4*)even)[3] = word1;
+        ((u32 PTR4*)odd)[3] = word1;
         even = odd + pitch;
         odd = even + pitch;
     }
