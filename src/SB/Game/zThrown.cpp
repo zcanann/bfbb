@@ -569,12 +569,12 @@ static void zThrown_Update(xEnt* ent, xScene* sc, F32 dt)
             {
                 if (collis.colls[i].flags & k_HIT_IT)
                 {
-                    F32 d = -collis.colls[i].hdng.x * thrown->vel.x +
+                    F32 dothdng = -collis.colls[i].hdng.x * thrown->vel.x +
                             -collis.colls[i].hdng.y * thrown->vel.y +
                             -collis.colls[i].hdng.z * thrown->vel.z;
-                    F32 px = -collis.colls[i].hdng.x * d;
-                    F32 py = -collis.colls[i].hdng.y * d;
-                    F32 pz = -collis.colls[i].hdng.z * d;
+                    F32 px = -collis.colls[i].hdng.x * dothdng;
+                    F32 py = -collis.colls[i].hdng.y * dothdng;
+                    F32 pz = -collis.colls[i].hdng.z * dothdng;
                     F32 tx = thrown->vel.x - px;
                     F32 ty = thrown->vel.y - py;
                     F32 tz = thrown->vel.z - pz;
