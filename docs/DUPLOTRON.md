@@ -10432,3 +10432,42 @@ untouched context and cache state. All eight deliberate regressions fail,
 including the legacy shift slots, luma coefficient/saturation, signed chroma
 rounding, alpha mask and cache guards. The original source/header also fails.
 This is host table/state coverage, not a target-ABI or movie playback test.
+
+## zEntPlayer: exact retail damage-timer constant (2026-10-02)
+
+At staging `d04b1f26f`, `globals.player.DamageTimer = 0.333333f` emitted
+`0x3eaaaa9f`, one float step below retail's `0x3eaaaaa0`. The decimal
+`0.33333302f` emits the exact target value (0.33333301544189453). Both ELF
+objects have exactly one reference to this constant: `zEntPlayer_Update`
++0x11e4; target `.sdata2` +0x298, source +0x284. This corrects a value,
+not a relocation-label or anonymous-pool matching artifact.
+
+Full `all_source` and authoritative deduplicated report verification:
+
+- `.sdata2`: 99.893616% -> 100%, all 952 bytes credited exact.
+- Unit matched data: 12052 -> 13004 / 27820 bytes.
+- Every function entry in the complete project report is unchanged; no
+  other unit changes. zEntPlayer stays 335/342 exact, code 99.861046%.
+- Full normal build preserves retail SHA1
+  `306526d90b48e99894c3138f5fc8f2716d9fecf6`.
+- Compiler hashes remain GC/2.0p1a
+  `a78a5fdb6c1d5677e987636b2e0743dbaefe9542` and GC/2.0p1e
+  `9d445725489050035740aaff35860eddbaf3c3c9`.
+
+The `.rodata` residual remains 99.91898%. Raw source section length is
+14848 versus target 14816: sequence alignment finds 36 extra zero bytes
+before `patsock_totals` (three header aggregate templates) and four fewer
+trailing padding bytes. String content is unchanged. Constant-pool order
+also still differs physically; report exactness does not establish a source
+link. No Matching flag or whole-TU source-link claim is made.
+
+Bounded orientation trials were restored: naming `floor_norm` through a
+reference is neutral at 98.96635%; deferring `eup` initialization into its
+normalization call regresses to 97.5%. The residual remains the globals-base
+register and `mr r4` scheduling before the first normalization. No exhausted
+Update permutations or compiler changes were attempted.
+
+Isolated evidence: `build/player-literal-refs.py`,
+`player-literal-report.json`, `player-final-verify.txt`,
+`player-literal-build.log`, `player-literal-link.log`,
+`player-bounded-trials.py`, and `player-data-small.py`.

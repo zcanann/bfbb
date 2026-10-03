@@ -7417,7 +7417,7 @@ patrick_stun_done:
             !xScrFxIsFading() && (single->State->UserFlags & 0x400))
         {
             xScrFxFade(&clear, &black, 0.3f, NULL, 1);
-            globals.player.DamageTimer = 0.333333f;
+            globals.player.DamageTimer = 0.33333302f;
         }
 
         if (globals.player.DamageTimer <= 0.0f)
