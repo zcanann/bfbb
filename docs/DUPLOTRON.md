@@ -9941,3 +9941,41 @@ regressions, data changes or exact-function-count changes. iMath3 retains
 Neither unit is promoted to Matching. The normal retail link SHA1 remains
 306526d90b48e99894c3138f5fc8f2716d9fecf6; this is not a claim of exact source
 linking for these still-NonMatching units. Compiler binaries are unchanged.
+
+
+## zDiscoFloor source-link completion and combined near-TU gains (2026-10-02)
+
+Making refresh_bound's unchanged mid_center const raises it from 96.21591%
+to 100%, completing all 50 functions, 8,432 code bytes, and 992 data bytes.
+The first real source link still differed from retail: independent binary
+comparisons found exactly eight single-byte differences, all get_tile
+relocations exchanging bit_index/init .sbss displacements. Declaring bit_index
+before init restores the actual static storage order. The corrected isolated
+flip test and retained Matching build pass. Integration independently rebuilt
+all source and linked the Matching object, retaining retail DOL SHA-1
+306526d90b48e99894c3138f5fc8f2716d9fecf6.
+
+CruiseBubble's add_trail_sample improves from 91.456985% to 99.91936% by
+making vel_rnd, off0, and off1 immutable. This corrects an obsolete source
+comment that attributed every mismatch to layout: source vector-copy
+scheduling was also involved. The remaining trail offsets and reset_quadrants
+holdout keep this TU NonMatching; its data stays 11,028/11,028 exact.
+
+Together with the xScene, iMath3, and xString changes above, the final full
+deduplicated report verifies exactly five improved functions, no missing
+symbols or regressions, unchanged matched data, and one additional exact
+function (+704 exact code bytes). Source-linked units rise from 451 to 452,
+adding 8,432 linked code bytes and 992 linked data bytes. Compiler hashes
+remain unchanged. Evidence: build/parallel-ninth-baseline-report.json,
+build/parallel-ninth-final-report.json, and
+build/parallel-ninth-final-validation.log.
+
+Eight root Bink trials (three lossless plane-guard/flag forms and five YUV
+initializer forms) produced no gain and were restored/rebuilt. The immutable
+flag's initial invalid C89 declaration was corrected to block scope before
+scoring. Near-TU worker trials on iPad, xFont, xstransvc, zGame, and zCamera
+also produced no retained change; their saved artifacts document the exact
+remaining instruction differences. Earlier blanket compiler-only claims
+remain suspect: source-only changes have now closed both xClimate and
+zDiscoFloor and substantially improved CruiseBubble. No compiler patch was
+made or presented as necessary.
