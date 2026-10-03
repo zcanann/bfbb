@@ -1806,7 +1806,10 @@ void xFXStreakRender()
                 break;
             }
 
-            RwIm3DVertexSetPos(&sStripVert_2188[0], e->p[0].x, e->p[0].y, e->p[0].z);
+            const F32 p0x = e->p[0].x;
+            const F32 p0y = e->p[0].y;
+            const F32 p0z = e->p[0].z;
+            RwIm3DVertexSetPos(&sStripVert_2188[0], p0x, p0y, p0z);
             RwIm3DVertexSetUV(&sStripVert_2188[0], 0.0f, 0.0f);
             U8 c0r = s->color_a.r;
             U8 c0g = s->color_a.g;
@@ -1815,21 +1818,30 @@ void xFXStreakRender()
             F32 c2af = 255.0f * e1->a;
             RwIm3DVertexSetRGBA(&sStripVert_2188[0], c0r, c0g, c0b, (U8)c0af);
 
-            RwIm3DVertexSetPos(&sStripVert_2188[1], e->p[1].x, e->p[1].y, e->p[1].z);
+            const F32 p1x = e->p[1].x;
+            const F32 p1y = e->p[1].y;
+            const F32 p1z = e->p[1].z;
+            RwIm3DVertexSetPos(&sStripVert_2188[1], p1x, p1y, p1z);
             RwIm3DVertexSetUV(&sStripVert_2188[1], 0.0f, 1.0f);
             U8 c1r = s->color_b.r;
             U8 c1g = s->color_b.g;
             U8 c1b = s->color_b.b;
             RwIm3DVertexSetRGBA(&sStripVert_2188[1], c1r, c1g, c1b, (U8)c0af);
 
-            RwIm3DVertexSetPos(&sStripVert_2188[2], e1->p[0].x, e1->p[0].y, e1->p[0].z);
+            const F32 p2x = e1->p[0].x;
+            const F32 p2y = e1->p[0].y;
+            const F32 p2z = e1->p[0].z;
+            RwIm3DVertexSetPos(&sStripVert_2188[2], p2x, p2y, p2z);
             RwIm3DVertexSetUV(&sStripVert_2188[2], 1.0f, 0.0f);
             U8 c2r = s->color_a.r;
             U8 c2g = s->color_a.g;
             U8 c2b = s->color_a.b;
             RwIm3DVertexSetRGBA(&sStripVert_2188[2], c2r, c2g, c2b, (U8)c2af);
 
-            RwIm3DVertexSetPos(&sStripVert_2188[3], e1->p[1].x, e1->p[1].y, e1->p[1].z);
+            const F32 p3x = e1->p[1].x;
+            const F32 p3y = e1->p[1].y;
+            const F32 p3z = e1->p[1].z;
+            RwIm3DVertexSetPos(&sStripVert_2188[3], p3x, p3y, p3z);
             RwIm3DVertexSetUV(&sStripVert_2188[3], 1.0f, 1.0f);
             U8 c3r = s->color_b.r;
             U8 c3g = s->color_b.g;

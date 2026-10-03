@@ -10471,3 +10471,33 @@ Isolated evidence: `build/player-literal-refs.py`,
 `player-literal-report.json`, `player-final-verify.txt`,
 `player-literal-build.log`, `player-literal-link.log`,
 `player-bounded-trials.py`, and `player-data-small.py`.
+
+
+
+### xFX streak position captures and raw data audit (2026-10-02)
+
+Baseline d04b1f26f. Explicit immutable scalar captures for the four streak
+positions improve `xFXStreakRender` 92.19259 -> **93.67407**, and xFX TU
+99.666824 -> **99.69812**. Retail loads each position's y/z/x components
+before writing them, whereas direct macro arguments gave x/y/z loads and
+different floating-point registers. Local `const F32` components recover
+retail's load order and floating-point assignments without changing arithmetic
+or moving reads across calls. Capturing whole `const xVec3` values instead
+regressed to 58.044445 and was rejected. No declaration permutations or
+shared RenderWare macro edits were tried.
+
+Authoritative full deduplicated reports changed only StreakRender; all other
+functions, exact counts, data scores and 452 source-linked units are unchanged.
+Full source build passes and retail DOL SHA1 remains
+`306526d90b48e99894c3138f5fc8f2716d9fecf6`. GC/2.0p1e SHA1 remains
+`9d445725489050035740aaff35860eddbaf3c3c9`. Unit stays NonMatching: six
+functions remain partial, so this is not a whole-TU source-link claim.
+
+Raw object data was also checked independently of the 100% report score.
+The entire retail .rodata (392 bytes) equals ours after removing 36 leading
+zero bytes: three unused 12-byte header vector constants with no relocations.
+The .sdata2 pool matches except for inserted 3.0f and 100000.0f at offsets
+0x84/0x88, both referenced by the extra emitted weak `xsqrt` body. Remaining
+constants retain their sequence. .data/.sdata bytes and relocation sets match.
+These existing layout/emission differences are not repaired by fake mapping
+or removed constants. No new compiler-deficiency claim follows from this trial.
