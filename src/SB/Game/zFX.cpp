@@ -1480,8 +1480,9 @@ namespace
             U32 bones = bone_idx[vidx];
             const F32* wt = &weights[vidx * 4];
 
+            U32 j = 0;
             shift = 0;
-            for (U32 j = 0; j < 4; j++, shift += 8)
+            for (; j < 4; j++, shift += 8)
             {
                 U32 b = bones >> shift;
                 U32 word = (b >> 5) & 7;
