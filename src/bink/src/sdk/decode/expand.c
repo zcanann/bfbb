@@ -1742,21 +1742,27 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                         fill |= fill << BINK_BYTE_BITS;
                         fill |= fill << (BINK_BYTE_BITS * 2);
                         BINK_BUNDLE_ADVANCE(colors, BINK_BUNDLE_BYTE_PITCH);
-                        for (scaled_row = 0; scaled_row < BINK_BLOCK_SIDE; ++scaled_row) {
-                            u32 PTR4* fill_dest = (u32 PTR4*)fill_row0;
-
-                            fill_dest[BINK_SCALED_BLOCK_ROW_WORD_0] = fill;
-                            fill_dest[BINK_SCALED_BLOCK_ROW_WORD_1] = fill;
-                            fill_dest[BINK_SCALED_BLOCK_ROW_WORD_2] = fill;
-                            fill_dest[BINK_SCALED_BLOCK_ROW_WORD_3] = fill;
-                            fill_dest = (u32 PTR4*)fill_row1;
-                            fill_dest[BINK_SCALED_BLOCK_ROW_WORD_0] = fill;
-                            fill_dest[BINK_SCALED_BLOCK_ROW_WORD_1] = fill;
-                            fill_dest[BINK_SCALED_BLOCK_ROW_WORD_2] = fill;
-                            fill_dest[BINK_SCALED_BLOCK_ROW_WORD_3] = fill;
+                        /* Fill the edge rows around seven interior row pairs. */
+                        ((u32 PTR4*)fill_row0)[BINK_SCALED_BLOCK_ROW_WORD_0] = fill;
+                        ((u32 PTR4*)fill_row0)[BINK_SCALED_BLOCK_ROW_WORD_1] = fill;
+                        ((u32 PTR4*)fill_row0)[BINK_SCALED_BLOCK_ROW_WORD_2] = fill;
+                        ((u32 PTR4*)fill_row0)[BINK_SCALED_BLOCK_ROW_WORD_3] = fill;
+                        for (scaled_row = 1; scaled_row < BINK_BLOCK_SIDE; ++scaled_row) {
+                            ((u32 PTR4*)fill_row1)[BINK_SCALED_BLOCK_ROW_WORD_0] = fill;
+                            ((u32 PTR4*)fill_row1)[BINK_SCALED_BLOCK_ROW_WORD_1] = fill;
+                            ((u32 PTR4*)fill_row1)[BINK_SCALED_BLOCK_ROW_WORD_2] = fill;
+                            ((u32 PTR4*)fill_row1)[BINK_SCALED_BLOCK_ROW_WORD_3] = fill;
                             fill_row0 = fill_row1 + pitch;
                             fill_row1 = fill_row0 + pitch;
+                            ((u32 PTR4*)fill_row0)[BINK_SCALED_BLOCK_ROW_WORD_0] = fill;
+                            ((u32 PTR4*)fill_row0)[BINK_SCALED_BLOCK_ROW_WORD_1] = fill;
+                            ((u32 PTR4*)fill_row0)[BINK_SCALED_BLOCK_ROW_WORD_2] = fill;
+                            ((u32 PTR4*)fill_row0)[BINK_SCALED_BLOCK_ROW_WORD_3] = fill;
                         }
+                        ((u32 PTR4*)fill_row1)[BINK_SCALED_BLOCK_ROW_WORD_0] = fill;
+                        ((u32 PTR4*)fill_row1)[BINK_SCALED_BLOCK_ROW_WORD_1] = fill;
+                        ((u32 PTR4*)fill_row1)[BINK_SCALED_BLOCK_ROW_WORD_2] = fill;
+                        ((u32 PTR4*)fill_row1)[BINK_SCALED_BLOCK_ROW_WORD_3] = fill;
                         break;
                     }
                     case BINK_BLOCK_PATTERN: {

@@ -12949,3 +12949,35 @@ Expand remains NonMatching, so this checksum does not claim source-link closure.
 Evidence: build/parallel-fiftyfifth-report.json and validation log, root
 build/expand55-threshold-private and expand55-combined-private, and RGB
 build/run-lexical-private/lexical_mark_formatted.c with corresponding raw diff.
+
+
+### Bink scaled-fill loop edges and copy-folding audit (2026-10-03)
+
+The scaled fill now writes its first row, seven interior row pairs, then the
+last row. This follows retail's seven-count loop at 0x2f80 instead of the
+reconstructed eight paired iterations. It still writes all sixteen 16-byte
+rows and consumes one color. ExpandPlane improves 81.08249 -> 81.1474 in the
+full deduplicated report (raw 80.38607 -> 80.45774), source 5,632 -> 5,660 bytes.
+Only this function changes; all exact-code/data/completion measures are stable.
+All-source build and normal retail link pass with SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. Expand remains NonMatching.
+
+A chained odd-row assignment only reversed store offsets without recovering
+retail's pointer/store schedule, so it was discarded. Combining the peeled
+fill with guarded do-loops for runs scored lower and was also discarded.
+Evidence: build/expand56-fill-private, expand56-combined-private, and
+parallel-fiftysixth-report.json/validation.log; RGB scaled-fill-chain-private.
+
+The complete skip/motion audit explains 224 bytes of shared-tail folding:
+76 for double copies and 148 for word copies, exactly 56 deleted diff rows.
+Word skip executes three loads/two stores before branching to a shared tail
+with thirteen loads/fourteen stores; all eight rows are preserved. This
+leaves a net 32-byte size gap after the scaled-fill change, not proof of any
+missing pixel operation. RGB evidence: build/expand-skip-motion-folding-audit.txt.
+
+Bink reader .rodata is already byte-identical (128/128), with all twelve
+normalized relocations equal. Its 93.333336 section score reflects named
+retail conversion constants versus anonymous compiler constants, not wrong
+data. A fresh bidirectional keyframe-loop variant regressed and was restored.
+Evidence in the plankton worktree: build/binkread-closure-rodata-proof.json
+and build/binkread-closure-findings.md. No reader source changes were retained.
