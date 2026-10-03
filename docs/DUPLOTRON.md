@@ -11122,3 +11122,31 @@ xShadowSimple's completion status versus the preceding merged report: complete
 units 457, complete code 1370984, complete data 706516; all match scores and
 matched data remain unchanged. Evidence: build/parallel-twentythird-linked-report.json
 and build/parallel-twentythird-linked-validation.log.
+
+
+## Bink row-plane calculation order (2026-10-02)
+
+YUV_blit improves from 89.09259 to 90.87037 and YUV_blit_mask from 82.31114
+to 82.67094. In their paired-row postludes, calculate the luma and alpha row
+positions before the destination positions, then advance chroma. Retail
+loads/calculates those row bases in that order (generic .text 0xa74..0xa94).
+The fields are distinct and the calculations read unchanged pitch/delta
+locals, so no callback, pointed-to pixel access, or traversal step changes.
+
+The generic blitter's odd-row postlude now uses three u8 pointer locals in
+that block instead of reusing dest, ybase and abase from the outer setup.
+They hold the same computed addresses through the same stores. Generic
+plane order alone gives 89.36667; a local destination alone gives 89.31111,
+and all three row-local pointers give 90.87037. Swapping the first two odd
+stores is neutral and restored. Masked plane order alone gives 82.67094;
+base-capture temporaries in that loop regress to 82.10115 and are restored.
+Evidence: build/yuv-mask24*, yuv-planes24*, yuv-odd24*, yuv-odd24b*.
+
+Full all_source and normal build pass. The complete deduplicated report
+changes only these two functions, with no data or exact/source-linked count
+changes. YUV reaches 95.835785 and overall fuzzy 99.53079. Retail DOL SHA1
+remains 306526d90b48e99894c3138f5fc8f2716d9fecf6; YUV stays NonMatching.
+Validation: build/parallel-twentyfourth-final-report.json and
+build/parallel-twentyfourth-final-validation.log. No compiler/assembly changes
+or ancillary behavior tests. Worker iSystem, camera and xFX type/macro audits
+found no additional gain; unchanged/restored reports and builds pass.

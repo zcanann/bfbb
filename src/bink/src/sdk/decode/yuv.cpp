@@ -713,17 +713,17 @@ static void YUV_blit(void PTR4* dest,
     if ((row & 1) != 0 && (s32)row <= (s32)endy) {
         row++;
         dounalignedrow(srcx, srcw);
-        dest = S.dest0 + pitch_delta;
-        ybase = (u8 PTR4*)S.y0 + y_delta;
-        abase = (u8 PTR4*)S.a0 + a_delta;
-        S.dest1 = (u8 PTR4*)dest + pitch;
-        S.y1 = (u32 PTR4*)(ybase + srcpitch);
-        S.a1 = (u32 PTR4*)(abase + srcpitch);
+        u8 PTR4* row_dest = S.dest0 + pitch_delta;
+        u8 PTR4* row_y = (u8 PTR4*)S.y0 + y_delta;
+        u8 PTR4* row_a = (u8 PTR4*)S.a0 + a_delta;
+        S.dest1 = row_dest + pitch;
+        S.y1 = (u32 PTR4*)(row_y + srcpitch);
+        S.a1 = (u32 PTR4*)(row_a + srcpitch);
         S.u = (u16 PTR4*)((u8 PTR4*)S.u + c_delta);
         S.v = (u16 PTR4*)((u8 PTR4*)S.v + c_delta);
-        S.dest0 = (u8 PTR4*)dest;
-        S.y0 = (u32 PTR4*)ybase;
-        S.a0 = (u32 PTR4*)abase;
+        S.dest0 = row_dest;
+        S.y0 = (u32 PTR4*)row_y;
+        S.a0 = (u32 PTR4*)row_a;
     }
 
     align_count = (YUV_PACKED_WORD_BYTES - (destx & YUV_DEST_ALIGN_MASK)) & YUV_DEST_ALIGN_MASK;
@@ -761,14 +761,14 @@ static void YUV_blit(void PTR4* dest,
         }
 
         row += 2;
-        S.dest0 = S.dest1 + pitch_delta;
-        S.dest1 = S.dest0 + pitch;
         S.y0 = (u32 PTR4*)((u8 PTR4*)S.y1 + y_delta);
         S.y1 = (u32 PTR4*)((u8 PTR4*)S.y0 + srcpitch);
-        S.u = (u16 PTR4*)((u8 PTR4*)S.u + c_delta);
-        S.v = (u16 PTR4*)((u8 PTR4*)S.v + c_delta);
         S.a0 = (u32 PTR4*)((u8 PTR4*)S.a1 + a_delta);
         S.a1 = (u32 PTR4*)((u8 PTR4*)S.a0 + srcpitch);
+        S.dest0 = S.dest1 + pitch_delta;
+        S.dest1 = S.dest0 + pitch;
+        S.u = (u16 PTR4*)((u8 PTR4*)S.u + c_delta);
+        S.v = (u16 PTR4*)((u8 PTR4*)S.v + c_delta);
     }
 
     if ((s32)row <= (s32)endy) {
@@ -786,14 +786,14 @@ static void YUV_blit(void PTR4* dest,
     do { \
         EVEN((count)); \
         i--; \
-        S.dest0 = S.dest1 + (s32)(pitch_delta); \
-        S.dest1 = S.dest0 + (row_pitch); \
         S.y0 = (u32 PTR4*)((u8 PTR4*)S.y1 + (y_delta)); \
         S.y1 = (u32 PTR4*)((u8 PTR4*)S.y0 + (srcpitch)); \
-        S.u = (u16 PTR4*)((u8 PTR4*)S.u + (c_delta)); \
-        S.v = (u16 PTR4*)((u8 PTR4*)S.v + (c_delta)); \
         S.a0 = (u32 PTR4*)((u8 PTR4*)S.a1 + (a_delta)); \
         S.a1 = (u32 PTR4*)((u8 PTR4*)S.a0 + (srcpitch)); \
+        S.dest0 = S.dest1 + (s32)(pitch_delta); \
+        S.dest1 = S.dest0 + (row_pitch); \
+        S.u = (u16 PTR4*)((u8 PTR4*)S.u + (c_delta)); \
+        S.v = (u16 PTR4*)((u8 PTR4*)S.v + (c_delta)); \
     } while (i != 0); \
 }
 
