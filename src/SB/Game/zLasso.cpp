@@ -258,8 +258,10 @@ void zLasso_Render(zLasso* lasso)
         numPts = geom->numTriangles;
         ropeLen = 0.0f;
         mIndx1 = mIndx1 % numMorphs;
-        v0 = geom->morphTarget[mIndx1].verts;
-        v1 = geom->morphTarget[(mIndx1 + 1) % numMorphs].verts;
+        const RpMorphTarget& firstMorph = geom->morphTarget[mIndx1];
+        const RpMorphTarget& nextMorph = geom->morphTarget[(mIndx1 + 1) % numMorphs];
+        v0 = firstMorph.verts;
+        v1 = nextMorph.verts;
 
         for (i = 0; i < numPts; i++)
         {

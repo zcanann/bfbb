@@ -12697,3 +12697,38 @@ retail DOL SHA1 306526d90b48e99894c3138f5fc8f2716d9fecf6 passes.
 Evidence: build/parallel-fiftyfirst-final-report.json, its validation log,
 expand51-corrected-private/corrected_motion.*, and cinematic51-source-link.json.
 Both TUs remain NonMatching; no compiler modifications or new assembly.
+
+
+## zLasso morph-target object references (2026-10-03)
+
+Bind the two existing morph targets to const RpMorphTarget references before
+reading their vertex pointers. This preserves object identity and the original
+index arithmetic; no aggregate copy or public layout changes. Retail separately
+adds the verts field offset to both scaled indices. Direct field accesses in the
+previous source instead shared morphTarget+0x14, removing one instruction. The
+reference form restores the target 4048-byte function from 4044 bytes.
+
+Full deduplicated zLasso_Render improves 98.70257 -> 99.242096, and the unit
+99.36231 -> 99.62749. Only this function changes in the full report; all 14504
+data bytes remain exact and the unit stays 19/20 exact and NonMatching. Existing
+RenderWare accessor macros and advancing the original index were neutral;
+scoping the vertex pointers regressed slightly. Separate branch matrix scopes
+were neutral. Sharing the UV scratch variables suggested by the debug names
+regressed to 98.64921 / 4044 bytes and was restored. These results do not imply a
+compiler defect or that the remaining source search is exhausted.
+
+Actual source selection now differs in 840 DOL bytes, down from 1221211 caused
+largely by the previous four-byte text shortfall. Source DOL remains 2859136
+bytes, SHA1 499c7b26129eaff41142c2ee87841164a7361275. All 840 differences are
+in .text: 153 inside Render; the remaining 687 are at initVertMap, bakeMorphAnim,
+vec2vecMat, xMat4x3Rot/C and two AddGuide call bytes, requiring a separate helper
+layout audit. This is partial matching progress, not a completed/source-linked
+TU. Remaining Render differences include register lifetimes through geometry
+setup and vertex emission, plus the last emission loop's increment scheduling.
+
+Evidence: build/lasso-closure-gain-report.json, lasso-closure-gain-link.json,
+lasso-closure-gain-linked.elf and lasso-closure-gain-build.log. Full all_source
+and normal build pass; normal retail SHA1 is
+306526d90b48e99894c3138f5fc8f2716d9fecf6. GC/2.0p1a and GC/2.0p1e remain
+respectively a78a5fdb6c1d5677e987636b2e0743dbaefe9542 and
+9d445725489050035740aaff35860eddbaf3c3c9.
