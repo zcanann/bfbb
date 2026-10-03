@@ -89,8 +89,6 @@ static void GetPosBigDogWhattupFool(xVec3* vec)
     vec->z = 10.0f * camera->mat.at.z + camera->mat.pos.z;
 }
 
-// NOTE (Square): I think it's equivalent but it's very hard to tell. Our compiler is optimizing the float ops
-// much more aggresively and it's throwing the regalloc off.
 static void UpdateRain(_tagClimate* climate, float seconds)
 {
     _tagRain* r = &climate->rain;
@@ -126,7 +124,8 @@ static void UpdateRain(_tagClimate* climate, float seconds)
 
             F32 xx = info.pos.x - fool.x;
             F32 zz = info.pos.z - fool.z;
-            F32 perc = 1.0f - xx * zz / 506.25f;
+            F32 perc = xx * zz / 506.25f;
+            perc = 1.0f - perc;
 
             info.vel.x = snow_dvel.x * xurand() + snow_vel.x;
             info.vel.y = snow_dvel.y * xurand() + snow_vel.y;
@@ -155,9 +154,10 @@ static void UpdateRain(_tagClimate* climate, float seconds)
                 p->x += 45.0f * xurand() - 22.5f;
                 p->z += 45.0f * xurand() - 22.5f;
 
-                F32 zz = p->z - fool.z;
                 F32 xx = p->x - fool.x;
-                float perc = (1.0f - (xx * xx + zz * zz) / 506.25f);
+                F32 zz = p->z - fool.z;
+                float perc = (xx * xx + zz * zz) / 506.25f;
+                perc = 1.0f - perc;
 
                 p->y += 4.0f * perc + 4.0f;
 
