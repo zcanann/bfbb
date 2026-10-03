@@ -307,7 +307,6 @@ void iModelAnimMatrices(RpAtomic* model, xQuat* quat, xVec3* tran, RwMatrixTag* 
 
     if (pCurrentFrame != NULL)
     {
-        // float/sda scheduling
         pMatrixStackTop = &matrixStack[0];
         pMatrixStackTop->at.z = 1.0f;
 
@@ -324,8 +323,6 @@ void iModelAnimMatrices(RpAtomic* model, xQuat* quat, xVec3* tran, RwMatrixTag* 
         matrixStack[0].pos.x = 0.0f;
         matrixStack[0].flags |= 0x20003;
 
-        // non-volatile registers are acting up and their instructions
-        // are being scheduled weirdly
         matrixStack[1] = matrixStack[0];
         numFrames = pCurrentFrame->nodeIndex;
         pMatrixArray = (&matrixStack[1]);
@@ -337,7 +334,8 @@ void iModelAnimMatrices(RpAtomic* model, xQuat* quat, xVec3* tran, RwMatrixTag* 
             pCurrentFrameFlags = iVar1->flags;
             if ((pCurrentFrameFlags & 2) != 0)
             {
-                *pMatrixArray++ = matrixStack[0];
+                RwMatrixTag& pushedMatrix = *pMatrixArray++;
+                pushedMatrix = matrixStack[0];
             }
 
             RwMatrixTag afStack_8e8;
@@ -361,7 +359,6 @@ void iModelAnimMatrices(RpAtomic* model, xQuat* quat, xVec3* tran, RwMatrixTag* 
             quat++;
             tran++;
             iVar1++;
-            // r27 and r28 swap
         }
     }
 }
