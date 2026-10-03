@@ -1,3 +1,5 @@
+// Own the concrete grid callback and its helper group at the retail boundaries.
+#define XGRID_DEFER_BOUND_HELPERS
 #include "xScene.h"
 
 #include "xMemMgr.h"
@@ -39,6 +41,10 @@ namespace
         bool operator()(xEnt& ent, xGridBound& gridb);
     };
 } // namespace
+
+template <>
+void xGridCheckBound<cb_ray_hits_ent>(xGrid& grid, const xBound& bound, const xQCData& qcd,
+                                    cb_ray_hits_ent cb);
 
 void xSceneInit(xScene* sc, U16 num_trigs, U16 num_stats, U16 num_dyns, U16 num_npcs)
 {
@@ -186,13 +192,13 @@ void xRayHitsGrid(xGrid* grid, xScene* sc, xRay3* r, xRayEntCallback rentcb, xQC
     r->flags |= (XRAY3_USE_MIN | XRAY3_USE_MAX);
     if (r->flags & XRAY3_USE_MIN)
     {
-        xVec3 delta;
-        delta.x = r->dir.x * r->min_t;
-        delta.y = r->dir.y * r->min_t;
-        delta.z = r->dir.z * r->min_t;
-        ln.p1.y = r->origin.y + delta.y;
-        ln.p1.x = r->origin.x + delta.x;
-        ln.p1.z = r->origin.z + delta.z;
+        // Keep each rounded product alive through the endpoint additions.
+        const F32& dz = r->dir.z * r->min_t;
+        const F32& dx = r->dir.x * r->min_t;
+        const F32& dy = r->dir.y * r->min_t;
+        ln.p1.x = r->origin.x + dx;
+        ln.p1.y = r->origin.y + dy;
+        ln.p1.z = r->origin.z + dz;
     }
     else
     {
@@ -651,11 +657,6 @@ void xRayHitsScene(xScene* sc, xRay3* r, xCollis* coll)
     }
 }
 
-cb_ray_hits_ent::cb_ray_hits_ent(const xRay3& ray, xCollis& coll, U8 chkby, U8 collType)
-    : ray(ray), coll(coll), chkby(chkby), collType(collType)
-{
-}
-
 void xRayHitsSceneFlags(xScene* sc, xRay3* r, xCollis* coll, U8 collType, U8 chk)
 {
     coll->dist = FLOAT_MAX;
@@ -698,6 +699,14 @@ void xRayHitsSceneFlags(xScene* sc, xRay3* r, xCollis* coll, U8 collType, U8 chk
         }
     }
 }
+
+cb_ray_hits_ent::cb_ray_hits_ent(const xRay3& ray, xCollis& coll, U8 chkby, U8 collType)
+    : ray(ray), coll(coll), chkby(chkby), collType(collType)
+{
+}
+
+// Parse these after the grid callback use and before the matrix helper use.
+#include "xSceneHelpers.h"
 
 void ProjectTriangle(xVec3* param_1, xVec3* param_2, float* param_3, float* param_4)
 {
@@ -1185,75 +1194,23 @@ bool cb_ray_hits_ent::operator()(xEnt& ent, xGridBound& gridb)
     return true;
 }
 
+__declspec(weak) grid_index& grid_index::operator=(const grid_index& other)
+{
+    x = other.x;
+    z = other.z;
+    return *this;
+}
+
 void xEntEnable(xEnt* ent)
 {
     xBaseEnable(ent);
 }
 
-template <> U16 range_limit<U16>(U16 v, U16 minv, U16 maxv)
-{
-    if (v <= minv)
-    {
-        return minv;
-    }
-
-    if (v >= maxv)
-    {
-        return maxv;
-    }
-
-    return v;
-}
-
-void xBoxFromRay(xBox& box, const xRay3& ray)
-{
-    xLine3 line;
-
-    if (ray.flags & 0x400)
-    {
-        F32 x = ray.dir.x * ray.min_t;
-        F32 y = ray.dir.y * ray.min_t;
-        F32 z = ray.dir.z * ray.min_t;
-
-        line.p1.x = ray.origin.x + x;
-        line.p1.y = ray.origin.y + y;
-        line.p1.z = ray.origin.z + z;
-    }
-    else
-    {
-        line.p1.x = ray.origin.x;
-        line.p1.y = ray.origin.y;
-        line.p1.z = ray.origin.z;
-    }
-
-    if (ray.flags & 0x800)
-    {
-        F32 dist = (ray.flags & 0x400) ? ray.max_t - ray.min_t : ray.max_t;
-
-        line.p2.x = ray.dir.x * dist;
-        line.p2.y = ray.dir.y * dist;
-        line.p2.z = ray.dir.z * dist;
-    }
-    else
-    {
-        line.p2.x = ray.dir.x;
-        line.p2.y = ray.dir.y;
-        line.p2.z = ray.dir.z;
-    }
-
-    line.p2.x = line.p1.x + line.p2.x;
-    line.p2.y = line.p1.y + line.p2.y;
-    line.p2.z = line.p1.z + line.p2.z;
-
-    xBoxFromLine(box, line);
-}
-
-void xBoxFromLine(xBox& box, const xLine3& line)
-{
-    box.upper.x = MAX(line.p1.x, line.p2.x);
-    box.upper.y = MAX(line.p1.y, line.p2.y);
-    box.upper.z = MAX(line.p1.z, line.p2.z);
-    box.lower.x = MIN(line.p1.x, line.p2.x);
-    box.lower.y = MIN(line.p1.y, line.p2.y);
-    box.lower.z = MIN(line.p1.z, line.p2.z);
-}
+// Emit the concrete callback specialization, then its weak index helper.
+#define XGRID_BOUND_CALLBACK cb_ray_hits_ent
+#include "xGrid.h"
+#undef XGRID_BOUND_CALLBACK
+#undef XGRID_DEFER_BOUND_HELPERS
+#define XGRID_WEAK_GET_INDEX
+#include "xGrid.h"
+#undef XGRID_WEAK_GET_INDEX

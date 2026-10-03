@@ -11908,3 +11908,40 @@ full deduplicated report. Per-unit target data totals move with their true
 ownership. The full source/normal build passes and retains the retail SHA1.
 Evidence: build/parallel-fortysecond-bink-pools-report.json and corresponding
 validation log, bink42-link-comparison.json, and bink42-pools-private artifacts.
+
+
+## 2026-10-03: xScene exact arithmetic and actual source-link completion
+
+`xRayHitsGrid` improves from 99.8243% to 100%, completing xScene's 36/36
+functions, 9,596 code bytes, and 184 data bytes. The only code residue was
+scheduling/register allocation in the first ray endpoint calculation. Three
+`const F32&` bindings keep the rounded product temporaries alive until the
+endpoint additions: Z first, then X and Y, followed by natural X/Y/Z endpoint
+assignments. Scalar value declarations alone were neutral; temporary bindings
+alone and Z-first bindings alone were incomplete. This is an explicit C++
+temporary-lifetime compromise, not a claim that these were the original source
+qualifiers, and it introduces neither assembly nor a compiler change.
+
+Exact function scores initially still left actual source-link differences.
+Moving the callback constructor after `xRayHitsSceneFlags` restored its retail
+position. A narrow xGrid opt-in then gives xScene an explicit weak grid-index
+assignment, the concrete callback specialization, and a weak `get_grid_index`
+definition at the retail boundaries. The grid algorithm remains shared in
+xGrid.h; normal callers keep the existing definitions and header grouping.
+The existing range-limit and box helper bodies move unchanged into private
+xSceneHelpers.h. Its include sits after the grid callback use and before the
+matrix helper use, reproducing the final group order without moving shared
+matrix/vector definitions. The TU retains `-sym on` and is now Matching.
+
+Validation: the final authoritative deduplicated report changes only
+`xRayHitsGrid`; every other function score and unit's matched data/code/function
+counts are unchanged or increase. The full all_source build and normal build
+pass. The actually source-linked DOL is byte-for-byte identical to retail,
+SHA1 `306526d90b48e99894c3138f5fc8f2716d9fecf6`. Isolated compiler hashes remain
+GC/2.0p1a `a78a5fdb6c1d5677e987636b2e0743dbaefe9542` and GC/2.0p1e
+`9d445725489050035740aaff35860eddbaf3c3c9`. No ancillary behavior suite was added.
+Evidence in the isolated worktree: scene-exact-baseline-report.json,
+scene-exact-final-report.json, scene-exact-final-build.log,
+scene-exact-final-link.log, and the zero-difference diagnostic source-link
+inventory. Header work was coordinated with the Bungee worker; its separate
+ordinary-template spelling change can be combined with this opt-in.
