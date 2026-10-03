@@ -12849,3 +12849,27 @@ The actual source-selected link has zero differing bytes and retains retail
 DOL SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6, so zUIFont is now Matching.
 Evidence in the isolated robot worktree: build/uifont-output-report.json,
 build/uifont-output-source-diff.json, and build/uifont-output-source-link.log.
+
+
+### UIFont completion and integrated Bink verification (2026-10-03)
+
+Root independently verifies zUIFont as Matching: all 13 functions, 3,160 code
+bytes and 96 data bytes are exact. The actual main.elf input is
+build/GQPE78/src/SB/Game/zUIFont.o, and the resulting DOL retains retail SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. The source change is the immutable
+empty-text background rectangle. Completed units increase from 467 to 468;
+exact function count increases by one and exact code by 1,204 bytes.
+
+Bink's scaled pattern helper prepares the next packed word before the current
+output stores. Combine that with the retail signed filled-pixel comparison
+and pitch-first motion multiplication. Full deduplicated ExpandPlane improves
+79.55849 -> 80.09398. The count is bounded by block/run lengths, and neither
+its signed comparison nor the commuted multiplication changes pixel or bundle
+consumption. Offset-consumption rewrites were worse and were not retained.
+
+The full report changes exactly UIFont Render and ExpandPlane. All other
+functions and per-unit exact/data/completion measures are unchanged. Global
+completion gains are exactly the UIFont totals above. All-source and normal
+retail builds pass. No shared headers, compiler binaries or assembly changed.
+Evidence: build/parallel-fiftythird-report.json and validation log, plus
+expand53-run-count-private, expand53-motion-private and expand53-combined-private.

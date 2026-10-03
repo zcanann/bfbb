@@ -209,7 +209,7 @@ typedef enum BINKBUNDLEINITIALVALUE
             (vb).bitlen = EXP_LAST_BIT_INDEX, (vb).bits = ((EXPBITSTYPE)(temp)) >> 1, \
             ((temp) & EXP_BIT_MASK)))
 #define BINK_MARK_WORK_BLOCK(work_row, work_col) ((work_row)[(work_col) >> BINK_CHROMA_SHIFT] = BINK_WORK_BLOCK_MARKED)
-#define BINK_MOTION_SOURCE(old, pitch, mx, my) ((old) + (my) * (s32)(pitch) + (mx))
+#define BINK_MOTION_SOURCE(old, pitch, mx, my) ((old) + (s32)(pitch) * (my) + (mx))
 #define BINK_DCT_PATTERN_SCAN(pattern) (patterns + (pattern) * BINK_BLOCK_PIXELS)
 #define BINK_FILL_WORD(value) \
     ((value) | ((value) << BINK_BYTE_BITS) | ((value) << (BINK_BYTE_BITS * 2)) | ((value) << (BINK_BYTE_BITS * 3)))
@@ -1078,7 +1078,7 @@ static inline void expand_run_block(u8 PTR4* dest,
                                     EXPBITS PTR4* bits)
 {
     const u8 PTR4* scan;
-    u32 filled_pixels = 0;
+    s32 filled_pixels = 0;
     EXPBITSTYPE bit;
 
     scan = BINK_DCT_PATTERN_SCAN(exp_get_bits(bits, BINK_DCT_PATTERN_BITS));
