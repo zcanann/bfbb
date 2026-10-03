@@ -777,19 +777,17 @@ static void YUV_blit(void PTR4* dest,
 }
 }
 
-static inline void blit_mask_block(u32 count, s32 y_delta, s32 a_delta, s32 c_delta, s32 pitch_delta,
-                                   u32 srcpitch)
+static inline void blit_mask_rows(u32 count, s32 y_delta, s32 a_delta, s32 c_delta, s32 pitch_delta,
+                                  u32 srcpitch, u32 row_pitch)
 {
-    RGBContext saved;
     s32 i;
 
-    saved = S;
     i = YUV_MASK_HALF_BLOCK_ROWS;
     do {
         EVEN(count);
         i--;
         S.dest0 = S.dest1 + pitch_delta;
-        S.dest1 = S.dest0 + S.pitch;
+        S.dest1 = S.dest0 + row_pitch;
         S.y0 = (u32 PTR4*)((u8 PTR4*)S.y1 + y_delta);
         S.y1 = (u32 PTR4*)((u8 PTR4*)S.y0 + srcpitch);
         S.u = (u16 PTR4*)((u8 PTR4*)S.u + c_delta);
@@ -797,6 +795,13 @@ static inline void blit_mask_block(u32 count, s32 y_delta, s32 a_delta, s32 c_de
         S.a0 = (u32 PTR4*)((u8 PTR4*)S.a1 + a_delta);
         S.a1 = (u32 PTR4*)((u8 PTR4*)S.a0 + srcpitch);
     } while (i != 0);
+}
+
+static inline void blit_mask_block(u32 count, s32 y_delta, s32 a_delta, s32 c_delta, s32 pitch_delta,
+                                   u32 srcpitch, u32 row_pitch)
+{
+    RGBContext saved = S;
+    blit_mask_rows(count, y_delta, a_delta, c_delta, pitch_delta, srcpitch, row_pitch);
     S = saved;
 }
 
@@ -849,6 +854,8 @@ static void YUV_blit_mask(void PTR4* dest,
     s32 c_delta16;
     s32 c_delta32;
     s32 row_skip;
+    s32 luma_row_skip;
+    s32 chroma_row_skip;
     s32 mask_row_skip;
 
     old_srcw = srcw;
@@ -876,8 +883,9 @@ static void YUV_blit_mask(void PTR4* dest,
         pitch16 *= YUV_2X_SCALE;
     }
 
-    setup_scaling(flags, &pitch16, YUV_MASK_BLOCK_PIXELS, srch, blits, &pitch_delta16);
+    // Each block width starts from the same pitch before scaling.
     pitch32 = pitch16;
+    setup_scaling(flags, &pitch16, YUV_MASK_BLOCK_PIXELS, srch, blits, &pitch_delta16);
     setup_scaling(flags, &pitch32, YUV_MASK_BLOCK_PAIR_PIXELS, srch, blits, &pitch_delta32);
 
     if (mode == BINKCOPY2XW || mode == BINKCOPY2XWHI || mode == BINKCOPY2XWH) {
@@ -916,12 +924,16 @@ static void YUV_blit_mask(void PTR4* dest,
     c_delta32 = chroma_pitch - YUV_MASK_BLOCK_PIXELS;
     row_skip = (pitch16 * YUV_MASK_BLOCK_MASK - YUV_BLIT_SCALED_ROW_BYTES(srcw, blits, xscale)) +
                YUV_BLIT_SCALED_ROW_BYTES(srcw & YUV_MASK_BLOCK_MASK, blits, xscale);
+    luma_row_skip = srcpitch - srcw + (srcw & YUV_MASK_BLOCK_MASK) +
+                    srcpitch * (YUV_MASK_BLOCK_PIXELS - 2);
+    chroma_row_skip = chroma_pitch - (srcw >> YUV_CHROMA_SHIFT) +
+                      ((srcw & YUV_MASK_BLOCK_MASK) >> YUV_CHROMA_SHIFT) + chroma_pitch * 7;
     mask_row_skip = maskpitch - (srcw >> YUV_MASK_BLOCK_SHIFT);
 
     end_y = srcy + srch - 1;
     end_x = srcx + srcw - 1;
     maskp = mask + maskpitch * (srcy >> YUV_MASK_BLOCK_SHIFT) +
-            (((s32)srcx < 0 ? srcx + YUV_MASK_BLOCK_MASK : srcx) >> YUV_MASK_BLOCK_SHIFT);
+            (s32)srcx / YUV_MASK_BLOCK_PIXELS;
 
     inner_y = srcy;
     while ((s32)(inner_y + YUV_MASK_BLOCK_MASK) <= (s32)end_y) {
@@ -951,26 +963,30 @@ static void YUV_blit_mask(void PTR4* dest,
 
             if (bits == YUV_MASK_LEFT_HALF_BIT) {
                 blit_mask_block(YUV_MASK_HALF_BLOCKS, y_delta16, a_delta16, c_delta16, pitch_delta16,
-                                srcpitch);
+                                srcpitch, pitch32);
             } else if (bits == YUV_MASK_RIGHT_HALF_BIT) {
                 RGBContext saved = S;
-                S.dest0 += YUV_MASK_BLOCK_PIXELS;
-                S.dest1 += YUV_MASK_BLOCK_PIXELS;
+                S.dest0 += YUV_BLIT_SCALED_ROW_BYTES(YUV_MASK_BLOCK_PIXELS, blits, xscale);
+                S.dest1 += YUV_BLIT_SCALED_ROW_BYTES(YUV_MASK_BLOCK_PIXELS, blits, xscale);
                 S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_MASK_BLOCK_PIXELS);
                 S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_MASK_BLOCK_PIXELS);
+                S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + YUV_MASK_BLOCK_PIXELS);
+                S.a1 = (u32 PTR4*)((u8 PTR4*)S.a1 + YUV_MASK_BLOCK_PIXELS);
                 S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_BLOCK_BYTES);
                 S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_BLOCK_BYTES);
-                blit_mask_block(YUV_MASK_HALF_BLOCKS, y_delta16, a_delta16, c_delta16, pitch_delta16,
-                                srcpitch);
+                blit_mask_rows(YUV_MASK_HALF_BLOCKS, y_delta16, a_delta16, c_delta16, pitch_delta16,
+                               srcpitch, pitch32);
                 S = saved;
             } else if (bits == YUV_MASK_BOTH_HALVES) {
                 blit_mask_block(YUV_MASK_FULL_BLOCKS, y_delta32, a_delta32, c_delta32, pitch_delta32,
-                                srcpitch);
+                                srcpitch, pitch32);
             }
 
             maskp += 2;
             S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_MASK_BLOCK_PAIR_PIXELS);
             S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_MASK_BLOCK_PAIR_PIXELS);
+            S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + YUV_MASK_BLOCK_PAIR_PIXELS);
+            S.a1 = (u32 PTR4*)((u8 PTR4*)S.a1 + YUV_MASK_BLOCK_PAIR_PIXELS);
             S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_MASK_BLOCK_PIXELS);
             S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_MASK_BLOCK_PIXELS);
             S.dest0 += YUV_BLIT_SCALED_ROW_BYTES(YUV_MASK_BLOCK_PAIR_PIXELS, blits, xscale);
@@ -985,10 +1001,12 @@ static void YUV_blit_mask(void PTR4* dest,
             }
             if (bits != 0) {
                 blit_mask_block(YUV_MASK_HALF_BLOCKS, y_delta16, a_delta16, c_delta16, pitch_delta16,
-                                srcpitch);
+                                srcpitch, pitch32);
             }
             S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_MASK_BLOCK_PIXELS);
             S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_MASK_BLOCK_PIXELS);
+            S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + YUV_MASK_BLOCK_PIXELS);
+            S.a1 = (u32 PTR4*)((u8 PTR4*)S.a1 + YUV_MASK_BLOCK_PIXELS);
             S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_BLOCK_BYTES);
             S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_BLOCK_BYTES);
             S.dest0 += YUV_BLIT_SCALED_ROW_BYTES(YUV_MASK_BLOCK_PIXELS, blits, xscale);
@@ -997,10 +1015,12 @@ static void YUV_blit_mask(void PTR4* dest,
 
         S.dest0 = S.dest1 + row_skip;
         S.dest1 = S.dest0 + pitch16;
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y1 + y_delta16 + (srcpitch * (YUV_MASK_BLOCK_PIXELS - 2)));
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y1 + luma_row_skip);
         S.y1 = (u32 PTR4*)((u8 PTR4*)S.y0 + srcpitch);
-        S.u = (u16 PTR4*)((u8 PTR4*)S.u + c_delta16 + (chroma_pitch * 7));
-        S.v = (u16 PTR4*)((u8 PTR4*)S.v + c_delta16 + (chroma_pitch * 7));
+        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a1 + luma_row_skip);
+        S.a1 = (u32 PTR4*)((u8 PTR4*)S.a0 + srcpitch);
+        S.u = (u16 PTR4*)((u8 PTR4*)S.u + chroma_row_skip);
+        S.v = (u16 PTR4*)((u8 PTR4*)S.v + chroma_row_skip);
         maskp += mask_row_skip;
         inner_y = next_y;
     }
@@ -1012,9 +1032,9 @@ static void YUV_blit_mask(void PTR4* dest,
     }
 
     if ((srch & YUV_MASK_BLOCK_MASK) != 0) {
-        full_h = srch & ~YUV_MASK_BLOCK_MASK;
-        YUV_blit(dest, destx, desty + mult64anddiv(full_h, pitch16 * old_srcheight, destpitch * srcpitch),
-                 destpitch, src, 0, full_h, old_srcw, srch - full_h, old_srcpitch, old_srcheight, flags, alpha, blits);
+        full_h = mult64anddiv(srch & ~YUV_MASK_BLOCK_MASK, old_srch, srch);
+        YUV_blit(dest, destx, desty + mult64anddiv(full_h, pitch32 * old_srcpitch, destpitch * srcpitch),
+                 destpitch, src, 0, full_h, old_srcw, old_srch - full_h, old_srcpitch, old_srcheight, flags, alpha, blits);
     }
 }
 }

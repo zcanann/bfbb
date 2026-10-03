@@ -10310,3 +10310,77 @@ compiler changes or new assembly were used.
 Independent audit confirmed the scaled-row branch and consumption contract.
 The bounded Dutchman follow-up and xBehaveMgr audit produced no additional
 changes; their prior source/compiler hypotheses remain unresolved.
+
+
+## Hazard immutable render scales (2026-10-02)
+
+`NPCHazard::Render` improves from 98.09605% to 99.94915% by directly
+initializing four const wave/fountain scale vectors with their computed
+`dim_flux`. Previously each vector was initialized with a zero y component
+and then assigned its actual y value. The arithmetic and model calls are
+unchanged; four aggregate-copy/call scheduling clusters now match retail.
+Only entry register allocation remains. The Hazard unit rises from
+99.71361% to 99.90262%; all 20,612 data bytes remain exact. It is still
+NonMatching, with no new inline assembly or compiler changes.
+
+## Bink masked YUV cursor and edge corrections (2026-10-02)
+
+`YUV_blit_mask` improves from 59.317543% to 62.74776%. Retail disassembly
+also exposes several behavioral errors in the old reconstruction, corrected
+together here:
+
+- Both block-width pitches are copied from the original pitch before either
+  `setup_scaling` call. Retail `.text` 0xc1c..0xc64 passes separate stack
+  slots 0x70 and 0x78. Copying after the first call compounded 2XH/2XWH
+  scaling: an original pitch of 640 became 2,560 instead of 1,280.
+- Masked row-pair advancement uses the caller's scaled row pitch, matching
+  retail loads from stack 0x78. `S.pitch` remains the underlying pitch used
+  inside the zoom callback.
+- The right-half destination offset is 16 pixels times pixel size and
+  horizontal scale, not 16 bytes. Its luma and alpha offsets are both 16
+  source samples; chroma advances by eight. Retail 0x10dc..0x114c shows
+  all eight cursor updates. One context save encloses this adjustment and
+  the eight row calls. Splitting row iteration from its save/restore wrapper
+  removes the old redundant nested context copy.
+- Pair and single-block postludes advance alpha alongside luma, even when a
+  mask is clean. Retail 0x1360..0x13cc and 0x1534..0x1594 contain these
+  updates; the previous source omitted them.
+- Row-end luma/alpha and chroma skips subtract the entire processed width.
+  With P = adjusted source pitch, C = P / 2, and B = srcw rounded down to
+  16, retail computes 15P - B and 8C - B / 2. The former source subtracted
+  one block regardless of width, drifting on widths of 32 or more.
+- The bottom fallback converts full rows back to original source coordinates
+  with `mult64anddiv(full_rows, old_srch, srch)`. Destination conversion uses
+  the original source pitch, not the source image height. Remaining height
+  is measured in original source rows. Retail 0x169c..0x1728 establishes
+  both conversions. Retail's fallback omission of incoming source origins
+  is preserved rather than replaced with a guessed API contract.
+- Signed division by 16 restores retail's arithmetic mask-origin shift.
+  Positive origins are unchanged; the previous unsigned expression differed
+  for high-bit origin encodings. No claim is made about caller validity of
+  negative origins.
+
+The all-source build and retail DOL SHA-1 pass. The authoritative report
+changes only these two functions versus staging 4bd8f821c, with overall
+fuzzy matching 99.48905% -> 99.496185%. Data, exact function/code totals,
+and source-link totals are unchanged. The normal DOL still uses the original
+objects for these NonMatching units; its hash is not a playback test of the
+corrected source. Compiler hashes are unchanged.
+
+The earlier ExpandPlane scaled-helper, fill-replication, row-loop and raw-copy
+cursor trials in this pass all scored lower and were restored. RW material,
+memory, camera, geometry and device/dependency trials also retained no gain.
+An explicit output cursor raised standalone RwImageResample to 99.1453%,
+but regressed its exact inlined RwImageCreateResample caller to 97.82007%;
+the full report rejected it. Common's apparent data differences were unused
+header templates, pool ordering and padding, not evidence for a data fix.
+
+`tools/check_bink_yuv_mask.py --self-test` checks 16,800 cases and ten
+negative controls. It compiles the production setup, mask dispatcher and row
+helpers, then compares callback cursor geometry to an independent rectangle
+oracle. Coverage includes modes 0-6, pixel sizes 2-4, grayscale/channel inversion,
+five mask patterns, multiple block rows, aligned origins, and partial right and
+bottom edges. The old source fails this checker. Callbacks and edge rendering
+are mocked: this is not a pixel, target-ABI or playback test, and signed/unaligned
+origins are not covered. The existing scaling checker also passes 37,632 cases
+and its inverted-maximum negative control.
