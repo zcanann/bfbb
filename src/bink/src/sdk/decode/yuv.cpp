@@ -1159,10 +1159,10 @@ extern "C" void YUV_init(s32 flags)
     RGBshift[RGB_SHIFT_BLUE_SHIFT] = blue_shift;
     RGBshift[RGB_SHIFT_RESERVED5] = 0;
     RGBshift[RGB_SHIFT_RED_DOWN] = red_down;
+    RGBshift[RGB_SHIFT_RESERVED7] = 0;
     RGBshift[RGB_SHIFT_GREEN_DOWN] = green_down;
-    RGBshift[RGB_SHIFT_BLUE_DOWN] = blue_down;
     RGBshift[RGB_SHIFT_RESERVED9] = 0;
-    RGBshift[RGB_SHIFT_RESERVED10] = 0;
+    RGBshift[RGB_SHIFT_BLUE_DOWN] = blue_down;
     RGBshift[RGB_SHIFT_RESERVED11] = 0;
     for (i = 0; i < YUV_TABLE_PLANE_SIZE; i++) {
         u32 mono;
@@ -1174,16 +1174,16 @@ extern "C" void YUV_init(s32 flags)
             mono16[i] = 0;
             mono16x2[i] = 0;
             mono32[i] = 0;
-        } else if (i < YUV_LUMA_WHITE_CUTOFF) {
+        } else if (i >= YUV_LUMA_WHITE_CUTOFF) {
+            mono16[i] = white;
+            mono16x2[i] = white | (white << RGB_HIGH_WORD_SHIFT);
+            mono32[i] = RGB_MONO_WHITE;
+        } else {
             mono = ((i - YUV_LUMA_BLACK) * RGB_CHANNEL_MAX) / YUV_LUMA_RANGE;
             y = (mono >> red_down) | ((mono >> green_down) << red_bits) | ((mono >> blue_down) << blue_shift);
             mono16x2[i] = y | (y << RGB_HIGH_WORD_SHIFT);
             mono32[i] = (mono << RGB_HIGH_WORD_SHIFT) | (mono << RGB_GREEN_SHIFT) | mono;
             mono16[i] = y;
-        } else {
-            mono16[i] = white;
-            mono16x2[i] = white | (white << RGB_HIGH_WORD_SHIFT);
-            mono32[i] = RGB_MONO_WHITE;
         }
 
         clamp_r[i] = 0;
@@ -1204,7 +1204,6 @@ extern "C" void YUV_init(s32 flags)
         clamp_rh[i] = clamp_r[i] << RGB_HIGH_WORD_SHIFT;
         clamp_gh[i] = clamp_g[i] << RGB_HIGH_WORD_SHIFT;
         clamp_bh[i] = clamp_b[i] << RGB_HIGH_WORD_SHIFT;
-        clamp_a4[i] = (i & RGB_A4_SOURCE_MASK) << RGB_A4_SHIFT;
 
         clamp_rr[i] = 0;
         clamp_gg[i] = 0;
@@ -1215,6 +1214,7 @@ extern "C" void YUV_init(s32 flags)
         clamp_rh[RGB_CLAMP_BIAS + i] = clamp_r[RGB_CLAMP_BIAS + i] << RGB_HIGH_WORD_SHIFT;
         clamp_gh[RGB_CLAMP_BIAS + i] = clamp_g[RGB_CLAMP_BIAS + i] << RGB_HIGH_WORD_SHIFT;
         clamp_bh[RGB_CLAMP_BIAS + i] = clamp_b[RGB_CLAMP_BIAS + i] << RGB_HIGH_WORD_SHIFT;
+        clamp_a4[i] = (i & RGB_A4_SOURCE_MASK) << RGB_A4_SHIFT;
 
         clamp_rr[RGB_CLAMP_HIGH_OFFSET + i] = red_mask * RGB_DUP16;
         clamp_gg[RGB_CLAMP_HIGH_OFFSET + i] = green_mask * RGB_DUP16;

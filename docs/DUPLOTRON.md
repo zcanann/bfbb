@@ -10384,3 +10384,51 @@ bottom edges. The old source fails this checker. Callbacks and edge rendering
 are mocked: this is not a pixel, target-ABI or playback test, and signed/unaligned
 origins are not covered. The existing scaling checker also passes 37,632 cases
 and its inverted-maximum negative control.
+
+
+## Bink RGB shift slots and initialization layout (2026-10-02)
+
+`YUV_init` improves from 65.0962% to 68.080536%. The RGBshift downshift
+entries now occupy retail's even-numbered words: red at 6, green at 8,
+blue at 10, with zero words at 7, 9 and 11. Previously the header assigned
+green to 7 and blue to 8, leaving word 10 zero. This is an initialized-table
+layout correction, not a compiler workaround. Source searches find no current
+reader of RGBshift besides its initializer, declaration and storage definition;
+no claim is made about an observed playback symptom.
+
+The target's register meanings are independently traceable: `.text` 0x1a2c
+computes r4 = 8 - green_bits, 0x1a30 computes r5 = 8 - blue_bits, and 0x1a44
+computes r6 = 8 - red_bits. Packing white at 0x1a48..0x1a74 confirms those
+roles. Stores at 0x1b38, 0x1b48 and 0x1b58 write r6/r4/r5 to RGBshift byte
+offsets 0x18/0x20/0x28. Interleaved zero stores use r8, explicitly zeroed
+at 0x1acc. For RGB565 the three downshifts are 3, 2, 3; for RGB655 they
+are 2, 3, 3. The table remains twelve words and its storage is unchanged.
+
+Two source-layout changes preserve table values while improving the match:
+the saturated-white grayscale case precedes the linear-range case, matching
+retail block order, and the alpha clamp store follows the middle clamp-table
+stores. Low-format-first dispatch and grouping high-word tables together
+scored lower and were restored. The function remains 1,760 bytes versus
+retail's 1,788 and the YUV unit remains NonMatching.
+
+The all-source build and retail DOL SHA-1 pass. The full deduplicated report
+changes only YUV_init versus staging a969b39d7; overall fuzzy matching rises
+from 99.496185% to 99.4984%. Exact code/functions, object data and source-link
+totals are unchanged. Object data matching cannot validate a table initialized
+at runtime, and the normal DOL still uses the original NonMatching object.
+Compiler hashes are unchanged.
+
+The accompanying near-TU pass retained no Glyph/xString, zThrown/zLightning
+or zFX changes. Each worktree restored its baseline report and retail hash.
+The remaining register lifetime, address association and load-order residues
+supplied no new focused cross-TU mechanism that justified a compiler patch.
+
+`tools/check_bink_yuv_init.py --self-test` passes 418 initialization calls:
+19 cold flags, 19 poisoned same-layout returns, 19 invalid returns, and all
+361 ordered warm format pairs for flags -2, -1 and 0..16. The independent
+integer oracle checks every luma, chroma, packed-color, alpha and RGBshift
+entry, the original UV copy, unused trailing entries, per-array guards,
+untouched context and cache state. All eight deliberate regressions fail,
+including the legacy shift slots, luma coefficient/saturation, signed chroma
+rounding, alpha mask and cache guards. The original source/header also fails.
+This is host table/state coverage, not a target-ABI or movie playback test.
