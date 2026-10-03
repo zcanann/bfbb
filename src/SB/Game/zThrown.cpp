@@ -1029,8 +1029,7 @@ void zThrown_AddFruit(xEnt* ent)
         return;
     }
 
-    newThrown = &zThrownList[zThrownCount];
-    zThrownCount++;
+    newThrown = &zThrownList[zThrownCount++];
     newThrown->killTimer = stats->carry->killTimer;
     newThrown->stats = stats;
     newThrown->oldupdate = ent->update;

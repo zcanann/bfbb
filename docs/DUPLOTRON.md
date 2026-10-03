@@ -12009,3 +12009,36 @@ neutral. Folding the global assignment into b's initializer added a redundant
 byte store; its higher raw score was an alignment artifact and was rejected.
 No helper, pragma, register hint, volatility, compiler change, or behavior test
 was retained. These controls do not prove the remaining forms unreachable.
+
+
+## 2026-10-03: zThrown fruit-entry reservation ownership
+
+`zThrown_AddFruit` improves from 96.01852% to 96.203705% in the full
+deduplicated report (raw 95.97222% to 96.15741%). Reserve its new entry as
+`newThrown = &zThrownList[zThrownCount++]`, combining the existing entry
+selection and counter increment into one expression. This preserves their
+order and behavior, restores the stats pointer to retail r8 through its lookup
+and later store, and removes the separate counter-update statement. It does
+not recover the missing carry-pointer reload: source remains 428 bytes versus
+retail 432. zThrown remains NonMatching, with 28/32 exact functions and all
+15,000 data bytes exact. This is a small source-expression gain, not whole-TU
+completion or evidence for a compiler patch.
+
+The fresh pass reviewed the prior table-versus-parameter alias-provenance
+probe and the exact Remove/LaunchStack controls. Real inline lookup and
+allocation helpers were tested under isolated inline controls and confirmed
+actually inlined; neither recovered the retail carry reload/order, so those
+changes and flags were restored. LaunchVel remains unchanged. Capturing the
+old counter in a local and narrowing the new-entry pointer gave no advantage
+over the retained one-line expression. Shared types match the debug records;
+no volatile global or speculative compiler modification was introduced.
+
+Validation: all_source and normal builds pass. The full deduplicated report
+changes only AddFruit; there are no other function-score, matched-code,
+matched-data, or exact-count regressions. The selected-object DOL remains
+byte-identical to retail, SHA1 `306526d90b48e99894c3138f5fc8f2716d9fecf6`.
+Because zThrown is still NonMatching, that DOL check is not a claim that its
+source object links exactly. Evidence in the isolated worker build directory:
+thrown-exact-baseline-report.json, thrown-exact-gain-report.json,
+thrown-exact-gain-build.log, thrown-exact-gain-link.log, and the reservation
+and actual-inlining trial sources/diffs. No ancillary tests were added.
