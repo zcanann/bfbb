@@ -11347,3 +11347,36 @@ that genuine literal creation order is still required before Matching.
 No compiler modifications, new assembly, fake mappings, or ancillary
 behavior tests were used. Evidence: build/imodel-exact-*-trials.py and
 build/imodel-exact-candidate.json in the isolated RGB worktree.
+
+
+## xFont: both remaining functions source-exact (2026-10-02)
+
+Baseline dde4bde5e. parse_next_text_jot reaches 100% from 94.202896% by
+retaining the debug-recorded char local while explicitly converting text[0]
+to U8 at initialization and converting comparisons and the bounds argument
+to U8. This combination preserves the loaded value across is_ws and narrows
+at the later bounds call with the retail registers; the previous char-only
+and U8-only failures did not establish a compiler limitation. The current
+xFont flags use -char unsigned; the obsolete contrary source comment is removed.
+
+parse_tag_tex reaches 100% from 99.87261% by binding the selected font
+dimension as a const F32 reference, capturing the other size component by
+value, and assigning the scaled result after restoring the selected dimension.
+No call or font write occurs during this reference lifetime.
+
+Full all_source build and authoritative deduplicated report pass: all 184
+xFont functions, all 26392 code bytes and all 69096 data bytes are exact.
+Only these two function scores change across the full report; no code or data
+regresses. Evidence: build/xfont-agent-exact-allsource.log and
+build/xfont-agent-exact-report.json against xfont-agent-baseline-report.json.
+GC/2.0p1a SHA1 remains a78a5fdb6c1d5677e987636b2e0743dbaefe9542;
+GC/2.0p1e remains 9d445725489050035740aaff35860eddbaf3c3c9.
+Normal build retains retail DOL SHA1 306526d90b48e99894c3138f5fc8f2716d9fecf6.
+
+The Matching marker is deliberately withheld pending real source-link layout
+closure. Initial source-link differs in 21566 bytes. Moving substr::create
+from the file start to its retail helper position after xVec2::assign reduces
+this to four bytes: references at 0x8002582b/0x80025857 and
+0x8002632b/0x8002632f select reversed 8-byte zero aggregate templates for
+get_texture_size and substr::create. These layout experiments remain uncommitted;
+the retained commit contains only the verified function improvements.

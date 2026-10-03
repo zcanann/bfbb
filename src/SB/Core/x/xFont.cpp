@@ -643,10 +643,6 @@ void xfont::restore_render_state()
 basic_rect<F32> xfont::bounds(char c) const
 {
     font_data& fd = active_fonts[id];
-    // char is signed here -- the build passes -char signed to match CodeWarrior
-    // -- so a byte at or above 0x80 indexes before the table. CodeWarrior reuses
-    // the zero-extended byte and emits no extsb, so the console has always
-    // behaved unsigned; nothing else is entitled to.
     U8 uc = c;
     U32 char_index = fd.char_index[uc];
 
@@ -914,21 +910,21 @@ namespace
     const char* parse_next_text_jot(xtextbox::jot& a, const xtextbox& tb, const xtextbox& ctb,
                                     const char* text, size_t text_size)
     {
-        U8 c = text[0];
+        char c = (U8)text[0];
 
         a.s.text = text;
         a.s.size = 1;
         a.flag.merge = true;
 
-        if (c == '\n')
+        if ((U8)c == '\n')
         {
             a.flag.line_break = true;
         }
-        else if (c == '\t')
+        else if ((U8)c == '\t')
         {
             a.flag.tab = true;
         }
-        else if (c == '-')
+        else if ((U8)c == '-')
         {
             a.flag.word_end = true;
         }
@@ -938,7 +934,7 @@ namespace
             a.flag.invisible = a.flag.word_break = true;
         }
 
-        a.bounds = tb.font.bounds(c);
+        a.bounds = tb.font.bounds((U8)c);
         a.cb = &xtextbox::text_cb;
         a.context = NULL;
         a.context_size = 0;
@@ -3339,24 +3335,22 @@ namespace
             {
                 size = get_texture_size(*ttc.raster);
 
-                F32 tmpX = tb.font.width;
-                F32 tmpY = size.y;
-
-                tmpY *= tmpX / size.x;
-                size.x = tmpX;
-                size.y = tmpY;
+                const F32& font_size = tb.font.width;
+                const F32 component = size.y;
+                F32 scale = font_size / size.x;
+                size.x = font_size;
+                size.y = component * scale;
                 break;
             }
             case tex_args::SCALE_FONT_HEIGHT:
             {
                 size = get_texture_size(*ttc.raster);
 
-                F32 tmpY = tb.font.height;
-                F32 tmpX = size.x;
-
-                tmpX *= tmpY / size.y;
-                size.x = tmpX;
-                size.y = tmpY;
+                const F32& font_size = tb.font.height;
+                const F32 component = size.x;
+                F32 scale = font_size / size.y;
+                size.y = font_size;
+                size.x = component * scale;
                 break;
             }
             case tex_args::SCALE_SCREEN_WIDTH:
