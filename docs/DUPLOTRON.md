@@ -10969,3 +10969,29 @@ GC/2.0p1a and GC/2.0p1e remain a78a5fdb6c1d5677e987636b2e0743dbaefe9542 and
 no additional behavior cases or compiler/assembly changes were introduced.
 Report/log: build/parallel-twentyfirst-report.json and
 build/parallel-twentyfirst-validation.log.
+
+
+## Old-format Huff8 byte-return boundary (2026-10-02)
+
+`CheckReadHuff8Bundle` improves from 98.99015% to 99.01478% by routing its
+high-symbol decode through a small `u8` forwarding wrapper. The old reader
+already assigned this result to a byte before copying it to the next Huff8
+state and packing it with the low nibble. The wrapper preserves that
+conversion and all bitstream operations. It replaces one `clrlwi` with `mr`;
+source size remains 816 bytes against the 812-byte target, so the extra move
+and remaining register differences are not resolved.
+
+The previous global helper-return-type experiment improved this reader but
+regressed the exact newer reader. Restricting the byte boundary to the old
+caller retains `NewCheckReadHuff8Bundle` at 100%. A duplicated byte-return
+helper body produced the same output and was discarded in favor of the
+forwarding wrapper. This is a source-level narrowing control, not evidence
+that a compiler patch is required.
+
+Full all_source compilation passes. The complete deduplicated report changes
+only CheckReadHuff8Bundle and its unit (80.92753% to 80.92896%); all 1,272 data
+bytes remain exact, with no missing functions or regressions. The normal DOL
+retains SHA1 306526d90b48e99894c3138f5fc8f2716d9fecf6 and both isolated compiler
+hashes are unchanged. Expand remains NonMatching, so this hash does not prove
+an exact source link of the unit. No ancillary behavior tests were added or
+run. Trial/report artifacts use build/expand-worker-* in the isolated worktree.

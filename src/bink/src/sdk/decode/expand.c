@@ -602,6 +602,12 @@ static inline u32 exp_read_huff8(EXPBITS PTR4* bits, u32 state, HUFF8TABLE PTR4*
     return symbol;
 }
 
+/* The old-format reader narrows the high symbol before signed-byte packing. */
+static inline u8 exp_read_huff8_byte(EXPBITS PTR4* bits, u32 state, HUFF8TABLE PTR4* table)
+{
+    return (u8)exp_read_huff8(bits, state, table);
+}
+
 static void ReadHuffTable(EXPBITS PTR4* vb, const u8 PTR4* PTR4* decode,
                           u32 PTR4* bits_to_peek, u8 PTR4* syms)
 {
@@ -837,7 +843,7 @@ static void CheckReadHuff8Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits,
             count = BINK_BUNDLE_REPEAT_COUNT(count);
         }
         do {
-            packed = exp_read_huff8(bits, last_high_nibble, huff8_table);
+            packed = exp_read_huff8_byte(bits, last_high_nibble, huff8_table);
             last_high_nibble = packed;
             low_nibble = exp_read_huff4(bits, peek, decode, syms);
             packed = HUFF4_PACK_MASKED_NIBBLES(low_nibble, packed);
