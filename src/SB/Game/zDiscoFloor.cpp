@@ -140,8 +140,8 @@ namespace
 
     U32 get_tile(const U8* a, size_t b)
     {
-        static S8 init;
         static volatile S32 bit_index;
+        static S8 init;
         static S32 r;
 
         U32 uVar1 = a[(b >> 2) & 0x1fffffff] >> ((b & 3) << 1) & 3;
@@ -1006,10 +1006,8 @@ void z_disco_floor::refresh_bound()
     }
 
     xVec3 box_center = (box.upper + box.lower) * 0.5f;
-    xVec3 mid_center = (avg_center + box_center) * 0.5f;
+    const xVec3 mid_center = (avg_center + box_center) * 0.5f;
 
-    // non-matching: scheduling. The target hoists the three `lfs`/`fmr` that
-    // zero these across the stores that copy `mid_center` into place.
     F32 avg_radius = 0.0f;
     F32 box_radius = 0.0f;
     F32 mid_radius = 0.0f;
