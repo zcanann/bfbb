@@ -454,7 +454,8 @@ void zNPCDuplotron::VFXSmokeStack(F32 dt)
         if (!(ds2_cam > SQ(25.0f)))
         {
             // temp var needed for .sdata2 match
-            F32 s = isin(this->tmr_smokeCycle * 2.0f * PI);
+            F32 s = this->tmr_smokeCycle;
+            s = isin(s * 2.0f * PI);
             S32 npar = 5.0f * s;
             if (npar >= 1)
             {

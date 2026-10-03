@@ -9979,3 +9979,29 @@ remaining instruction differences. Earlier blanket compiler-only claims
 remain suspect: source-only changes have now closed both xClimate and
 zDiscoFloor and substantially improved CruiseBubble. No compiler patch was
 made or presented as necessary.
+
+## 2026-10-02: Duplotron smoke phase scratch
+
+VFXSmokeStack improves from 99.016396% to 99.79508% in the deduplicated
+report by reusing its F32 scratch for the smoke-cycle value and the subsequent
+sine result. The angle expression remains `(cycle * 2.0f) * PI`; particle
+counts, emission control flow and floating-point operations are unchanged.
+The compiler now reads the cycle before the angle constants, as retail does.
+Remaining differences are FP register allocation and multiplication operand
+order. The 488-byte function remains the only holdout: 34/35 exact functions,
+unit 99.89593% to 99.97832%, and 2608/2608 exact data bytes.
+
+Separate phase locals, factor permutations and staged expressions were tested
+before retaining this form. A phase multiplied through separate assignments
+changed constant ordering and was rejected. The retained object's actual
+.sdata2 bytes match the prior source object, including its existing 12-byte
+tail after the 40-byte retail prefix; normalized data matching alone would
+not have established that. No new constant or speculative calculation is
+introduced, and the unit remains NonMatching.
+
+Full all_source compilation passes. The complete deduplicated report changes
+only VFXSmokeStack and its unit's text score, with no regression or other
+function/section change. The normal retail-link SHA1 remains
+306526d90b48e99894c3138f5fc8f2716d9fecf6; source-link exactness is not claimed.
+Raw trials and final report are retained under build/duplotron-* in the
+isolated worktree. No compiler or inline-assembly changes were made.
