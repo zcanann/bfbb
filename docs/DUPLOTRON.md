@@ -11278,3 +11278,30 @@ branch-audit-results.txt, branch-audit-byte-equality.json, the four probe .o/.s
 pairs, branch-audit-talkbox-raw.json, branch-audit-hangable-raw.json, and
 branch-audit-exact-clamp.txt. This appendix preserves the complete probe and
 identities if ignored build artifacts are later removed.
+
+
+## Bink chroma cursor and destination-row stores (2026-10-02)
+
+YUV_blit improves 93.577774 -> 95.14445; YUV_blit_mask improves
+82.67094 -> 82.76312. Advance the generic blitter's existing cbase pointer
+between its first and second chroma-plane assignments. Retail reuses the
+base/result register for this add (.text 0x8b4/0x8dc). The final cbase value
+is otherwise unused; both plane addresses and inversion behavior are unchanged.
+In both paired-row loops, assign S.dest1 after advancing U/V, recovering
+retail's store order without changing callback or traversal behavior.
+
+Destination-store placement alone gives generic 93.64445 and masked
+82.76312. Chaining the second chroma address through S.u/S.v is neutral;
+advancing cbase gives generic 95.14445. Applying the cursor pattern to luma,
+alpha, or masked chroma regresses and is restored, as is alpha-parameter reuse.
+Artifacts: build/yuv-blit26*, yuv-blit26b*, yuv-blit26c*, yuv-blit26d*.
+
+Full all_source and normal build pass. The complete report changes only the
+two blitters: YUV reaches 96.00272, overall fuzzy 99.532814. Data, exact-function
+and source-linked totals are unchanged. Retail SHA1 remains
+306526d90b48e99894c3138f5fc8f2716d9fecf6; YUV remains NonMatching.
+Validation: build/parallel-twentysixth-report.json and
+build/parallel-twentysixth-validation.log. No compiler/assembly changes or
+ancillary behavior tests. Save/load and doubled-IDCT follow-ups produced no
+gain; ordinary switch break/default forms also failed to reproduce Hangable's
+retail branch order, so no production or compiler change was made for those.

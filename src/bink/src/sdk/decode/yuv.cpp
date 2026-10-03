@@ -697,11 +697,13 @@ static void YUV_blit(void PTR4* dest,
     if ((flags & BINKRBINVERT) != 0) {
         cbase = (u8 PTR4*)src + srcpitch * srcheight;
         S.u = (u16 PTR4*)cbase;
-        S.v = (u16 PTR4*)(cbase + chroma_pitch * (srcheight >> YUV_CHROMA_SHIFT));
+        cbase += chroma_pitch * (srcheight >> YUV_CHROMA_SHIFT);
+        S.v = (u16 PTR4*)cbase;
     } else {
         cbase = (u8 PTR4*)src + srcpitch * srcheight;
         S.v = (u16 PTR4*)cbase;
-        S.u = (u16 PTR4*)(cbase + chroma_pitch * (srcheight >> YUV_CHROMA_SHIFT));
+        cbase += chroma_pitch * (srcheight >> YUV_CHROMA_SHIFT);
+        S.u = (u16 PTR4*)cbase;
     }
 
     S.u = (u16 PTR4*)((u8 PTR4*)S.u + (srcx >> YUV_CHROMA_SHIFT) +
@@ -767,9 +769,9 @@ static void YUV_blit(void PTR4* dest,
         S.a0 = (u32 PTR4*)((u8 PTR4*)S.a1 + a_delta);
         S.a1 = (u32 PTR4*)((u8 PTR4*)S.a0 + srcpitch);
         S.dest0 = S.dest1 + pitch_delta;
-        S.dest1 = S.dest0 + destpitch;
         S.u = (u16 PTR4*)((u8 PTR4*)S.u + c_delta);
         S.v = (u16 PTR4*)((u8 PTR4*)S.v + c_delta);
+        S.dest1 = S.dest0 + destpitch;
     }
 
     if ((s32)row <= (s32)endy) {
@@ -792,9 +794,9 @@ static void YUV_blit(void PTR4* dest,
         S.a0 = (u32 PTR4*)((u8 PTR4*)S.a1 + (a_delta)); \
         S.a1 = (u32 PTR4*)((u8 PTR4*)S.a0 + (srcpitch)); \
         S.dest0 = S.dest1 + (s32)(pitch_delta); \
-        S.dest1 = S.dest0 + (row_pitch); \
         S.u = (u16 PTR4*)((u8 PTR4*)S.u + (c_delta)); \
         S.v = (u16 PTR4*)((u8 PTR4*)S.v + (c_delta)); \
+        S.dest1 = S.dest0 + (row_pitch); \
     } while (i != 0); \
 }
 
