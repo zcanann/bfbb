@@ -241,8 +241,8 @@ def negative_controls(source):
         'setup_scaling(flags, &pitch16, YUV_MASK_BLOCK_PIXELS, srch, blits, &pitch_delta16);\n    pitch32 = pitch16;')
     yield 'helper uses unscaled context pitch', replace_once(source,
         'S.dest1 = S.dest0 + row_pitch;', 'S.dest1 = S.dest0 + S.pitch;')
-    start = source.index('} else if (bits == YUV_MASK_RIGHT_HALF_BIT) {')
-    end = source.index('} else if (bits == YUV_MASK_BOTH_HALVES)', start)
+    start = source.index('case YUV_MASK_RIGHT_HALF_BIT: {')
+    end = source.index('case YUV_MASK_BOTH_HALVES:', start)
     right = source[start:end]
     old = 'YUV_BLIT_SCALED_ROW_BYTES(YUV_MASK_BLOCK_PIXELS, blits, xscale)'
     if right.count(old) != 2: raise RuntimeError('Right-half destination mutation sites changed')

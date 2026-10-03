@@ -10785,3 +10785,54 @@ parallel-eighteenth-merged-validation.log and parallel-eighteenth-compare.py.
 Retail DOL SHA1 remains 306526d90b48e99894c3138f5fc8f2716d9fecf6; isolated
 GC/2.0p1a and GC/2.0p1e remain a78a5fdb6c1d5677e987636b2e0743dbaefe9542
 and 9d445725489050035740aaff35860eddbaf3c3c9.
+
+## Bink masked-blitter dispatch and mode lifetimes (2026-10-02)
+
+YUV_blit_mask improves from 62.74776 to 66.67222 in the full deduplicated
+report. Retail .text 0xf14..0xf30 dispatches the signed mask value through a
+switch, testing 2 then 1/3; the reconstruction previously used an if/else
+chain. Use a switch with signed word-sized bits/lower temporaries. Their
+values remain 0..3, so removing byte narrowing preserves the value domain.
+Retail .text 0xea8..0xed0 reads the right dirty byte before the left and sums
+the two Boolean contributions; .text0xedc..0xf10 does the same for the lower
+mask row. Reproduce that order without changing which blocks are selected.
+
+The destination surface mode is now read through YUV_SURFACE_MODE(flags) at
+each decision instead of keeping a cached mode through the setup calls.
+Retail explicitly reloads/recomputes it at .text0xbe4 and .text0xc68..0xc6c.
+The flags parameter and mask bytes are ordinary nonvolatile inputs; no memory
+writes or callbacks are moved between the paired mask reads. All block calls,
+context saves/restores, cursor advances and edge fallbacks retain their behavior.
+Source size improves from 3084 toward retail 3124, now 3116 bytes.
+
+Ablation reports: switch alone 63.816902, right-first reads alone 63.167732,
+both with byte mask 64.51729, unsigned word mask 64.95903, uncached mode 65.99232,
+then signed word mask 66.67222. int and s32 gave the same final score; s32 follows
+the surrounding SDK types. No duplicate-condition or compiler workaround is
+introduced. Evidence: build/yuv-mask19-*.
+
+The independent host checker passes all 16800 callback-geometry/mask/pitch/
+alpha/context/edge-argument cases and all 10 deliberate negative controls.
+Only the negative-control region locators changed from if/else to case labels;
+expected values and mutation behavior are unchanged. Independent read-only review
+also confirmed all 512 selected dirty-mask truth-table combinations. This checks dispatcher
+geometry with mock core callbacks, not pixel conversion, generic-edge execution,
+GameCube ABI behavior or movie playback.
+
+Full all_source and normal build pass. The complete deduplicated report changes
+only YUV_blit_mask versus 21eabc1c2; overall fuzzy code 99.501755 -> 99.50682.
+YUV remains 89/97 exact and NonMatching; all data, exact-function and source-linked
+totals remain unchanged. Retail DOL SHA1 stays
+306526d90b48e99894c3138f5fc8f2716d9fecf6. Isolated GC/2.0p1a and GC/2.0p1e
+hashes remain a78a5fdb6c1d5677e987636b2e0743dbaefe9542 and
+9d445725489050035740aaff35860eddbaf3c3c9. Logs/report:
+build/yuv-mask19-final-check.log, parallel-nineteenth-final-validation.log,
+parallel-nineteenth-final-report.json and parallel-nineteenth-compare.py.
+
+Other bounded trials were restored. Five readlossy counter forms did not beat
+99.756096: unsigned/register snapshot and inverted cutoff were neutral,
+materialized cutoff 98.95787, conditional delta 99.32372. Audio raw .rodata is
+already byte-identical (96 bytes); its uncredited anonymous pool is not evidence of
+a wrong constant. Workers' zTalkBox traversal, savegame type/reference and iModel
+hierarchy-type forms produced no gain, and their restored full reports equal
+baseline. No compiler deficiency or new patch requirement follows from them.
