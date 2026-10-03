@@ -10704,3 +10704,23 @@ from `build.ninja`; essential flags are `-O4,p -proc gekko -fp hardware
 with the project's unchanged includes/defines and pragma flags recorded in
 `thrown-alias-meta.json`. This is documentation-only; no production source,
 Matching marker, or build configuration changed.
+
+### Concurrent TimerUpdate match and real link check (2026-10-02)
+
+Concurrent staging commit 04b4a32d3 resolves xPsyche::TimerUpdate through an
+ordinary loop over en_xpsytime with a switch on the timer type. The one-iteration
+loop retains the duplicated default arm seen in retail. Combined verification
+makes xBehaveMgr 59/59 exact, all 7280 code bytes and 24 data bytes matched.
+This supersedes the earlier unresolved TimerUpdate CFG hypothesis: the branch
+shape is source-reachable without changing the compiler.
+
+A real Matching-marker flip still fails the DOL hash, so the marker was restored.
+Fresh symorder diagnosis shows extra header constants, extra weak inline bodies
+and different weak/template definition order. The 100% report is not a source
+link. Evidence: build/xBehaveMgr-link17.log, xBehaveMgr-link17-restored.log and
+xBehaveMgr-symorder17.txt. No layout edits were retained in this pass.
+
+After merging that concurrent change, parallel-seventeenth-merged-report.json
+adds only the TimerUpdate result to the verified player/xFX changes: overall
+fuzzy code 99.500046, exact code 2217640 bytes and 9941/10147 exact functions.
+Source-linked units remain 452/543. The restored normal link passes again.
