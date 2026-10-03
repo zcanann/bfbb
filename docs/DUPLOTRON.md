@@ -10173,3 +10173,26 @@ bytes. Full all_source and normal link validation pass; the full deduplicated
 report is identical to the preceding Dutchman correction. Retail DOL SHA1
 remains 306526d90b48e99894c3138f5fc8f2716d9fecf6. Both earlier claims of
 unterminated retail lists were based on insufficient initializer-data evidence.
+
+
+## Combined fill, FX and Dutchman verification (2026-10-02)
+
+The final batch also improves `SkinXformVertAndNormal` from 86.95489% to
+91.54135%. Each weighted loop captures its selected scratch matrix before
+shifting the packed bone indices, and the normal-loop counter is initialized
+before resetting the accumulator. The same matrices, weights, arithmetic and
+iteration limits are used; this recovers retail's pointer/counter lifetimes.
+zFX data remains 26696/26696, and no other FX function changes.
+
+The full integrated report `build/parallel-twelfth-final-report.json` changes
+only that function and Bink ExpandPlane versus staging46e0b5f10, plus the
+Dutchman data correction documented above. No function scores, identities or
+matched-data totals regress. Matched data increases by 3560 reported bytes to
+1264032/1280684 (98.69975%). Overall fuzzy matching is 99.48759%; exact
+functions remain9939 and source-linked complete units remain452.
+
+All-source compilation and the normal retail DOL link/check pass with SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. Removing the unused terminator macro
+leaves the entire combined report unchanged. Both MWCC compiler hashes are
+unchanged; no compiler patch or new inline assembly was used. Bink and FX
+remain NonMatching, and Dutchman still has three code holdouts.
