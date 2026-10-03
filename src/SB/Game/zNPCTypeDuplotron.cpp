@@ -455,7 +455,8 @@ void zNPCDuplotron::VFXSmokeStack(F32 dt)
         {
             // temp var needed for .sdata2 match
             F32 s = this->tmr_smokeCycle;
-            s = isin(s * 2.0f * PI);
+            F32 cycleScale = 2.0f;
+            s = isin(s * cycleScale * PI);
             S32 npar = 5.0f * s;
             if (npar >= 1)
             {

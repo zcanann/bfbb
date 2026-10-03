@@ -11806,3 +11806,29 @@ partial-staging, and half-period-division forms were neutral or worse and
 restored. The half-period form emits `fdivs`, so it is not the retail multiply
 lowering. The tested member helper boundary remained an actual call and must
 not be represented as an exhausted inline-parameter experiment.
+
+
+## 2026-10-03: Duplotron named cycle scale
+
+Keep the existing mutable phase scratch and name its `2.0f` cycle scale as an
+`F32` local. Later constant propagation now preserves the cycle as the first
+operand of the initial multiply, matching retail. No instruction, arithmetic
+operation, emitted constant, or state change is added. A `const` coefficient
+returns to the old operand order; naming both coefficients gives no further
+benefit, so only the useful cycle scale is retained.
+
+`VFXSmokeStack` improves from 99.79508% to 99.83607%, still 488 bytes. The full
+deduplicated report changes only that function and its unit's fuzzy score
+(99.97832% to 99.98265%). Exact-function counts and all 2608 data bytes are
+unchanged. `all_source`, the normal retail DOL hash, and both isolated compiler
+hashes pass. A temporary actual source link improves from five differing bytes
+to four: `0x122c09`, `0x122c11`, `0x122c15`, and `0x122c19`; its SHA1 is
+`59c1eae09e1de1bd8ade4dda975d136fe70b3142`. Only the cycle/PI `f1`/`f2`
+allocation remains. The unit stays NonMatching.
+
+The earlier helper caveat was resolved diagnostically: inline settings must
+remain active through deferred member emission to inline the helper. That
+actual-inline trial produced the earlier, worse phase load order and expanded
+other helpers, so it was restored. Direct count construction, double-literal
+boundaries, and the other phase forms were also rejected. Artifacts and full
+verification are saved under `build/duplotron-scale-checkpoint-*`.
