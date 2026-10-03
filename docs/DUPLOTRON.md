@@ -12757,3 +12757,28 @@ Evidence: build/lasso-layout-tail.json, lasso-layout-tail-link.json,
 lasso-layout-tail-linked.elf and lasso-layout-final-report.json. The remaining
 146 bytes are register assignment and emission-loop scheduling, not unexplained
 pool or layout displacement. No artificial constants or padding were added.
+
+
+### Bink normal pattern: assemble both words before writing (2026-10-03)
+
+On staging8f9204062, the normal pattern path at retail .text0x2984..0x2c24
+assembles both four-pixel words before the row stores. In particular, its two
+ORs at0x2a0c/0x2a10 precede stores at0x2a14/0x2a18. Preserve that operation
+boundary with ordinary u32 low_word/high_word locals in expand_pattern_row.
+Also consume the two colors with individual cur_ptr increments, matching the
+pointer updates at0x299c..0x29b4. The alternating row cursors and scaled pattern
+helper are unchanged. No qualifiers, compiler changes, or assembly were added.
+
+Private ProDG3.5 raw scores: baseline74.13049 (5576 bytes), paired word
+snapshots78.1021 (5576), snapshots plus separate color consumption78.38472
+(5584). The full source build and authoritative deduplicated report confirm
+ExpandPlane74.951996 ->79.16565; exactly that one function changes globally.
+All other function records, data totals, exact-code/function totals, and unit
+identities are unchanged. Both all_source and the normal link pass; normal
+DOL SHA1 remains306526d90b48e99894c3138f5fc8f2716d9fecf6. Expand remains
+NonMatching, so this checksum is not a whole-unit source-link claim.
+
+Evidence in the RGB worktree: build/pattern-order-private.py and its private
+candidate objects/raw reports, pattern-order-baseline-report.json,
+pattern-order-retained-report.json, pattern-order-validation.json, and both
+baseline/retained build/link logs. Compiler hashes remain unchanged.

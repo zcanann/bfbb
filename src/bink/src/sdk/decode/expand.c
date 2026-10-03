@@ -1115,16 +1115,18 @@ static inline void expand_pattern_row(u8 PTR4* dest, u32 pitch,
     u32 row_bits;
     u32 low_bits;
     u32 high_bits;
+    u32 low_word;
+    u32 high_word;
 
     row_bits = *patterns->cur_ptr++;
     low_bits = row_bits & HUFF4_SYMBOL_MASK;
     high_bits = row_bits >> HUFF4_NIBBLE_BITS;
-    BINK_BLOCK_ROW_WORD(dest, pitch, BINK_BLOCK_ROW_0, BINK_BLOCK_ROW_WORD_0) =
-        (color0 & ((const u32 PTR4*)mask1)[low_bits]) |
-        (color1 & ((const u32 PTR4*)mask2)[low_bits]);
-    BINK_BLOCK_ROW_WORD(dest, pitch, BINK_BLOCK_ROW_0, BINK_BLOCK_ROW_WORD_1) =
-        (color0 & ((const u32 PTR4*)mask1)[high_bits]) |
-        (color1 & ((const u32 PTR4*)mask2)[high_bits]);
+    low_word = (color0 & ((const u32 PTR4*)mask1)[low_bits]) |
+               (color1 & ((const u32 PTR4*)mask2)[low_bits]);
+    high_word = (color0 & ((const u32 PTR4*)mask1)[high_bits]) |
+                (color1 & ((const u32 PTR4*)mask2)[high_bits]);
+    BINK_BLOCK_ROW_WORD(dest, pitch, BINK_BLOCK_ROW_0, BINK_BLOCK_ROW_WORD_0) = low_word;
+    BINK_BLOCK_ROW_WORD(dest, pitch, BINK_BLOCK_ROW_0, BINK_BLOCK_ROW_WORD_1) = high_word;
 }
 
 static inline void expand_pattern_block(u8 PTR4* dest,
@@ -1137,9 +1139,8 @@ static inline void expand_pattern_block(u8 PTR4* dest,
     u8 PTR4* row0 = dest;
     u8 PTR4* row1 = dest + pitch;
 
-    color0 = colors->cur_ptr[BINK_PATTERN_COLOR_0];
-    color1 = colors->cur_ptr[BINK_PATTERN_COLOR_1];
-    colors->cur_ptr += BINK_PATTERN_COLOR_COUNT;
+    color0 = *colors->cur_ptr++;
+    color1 = *colors->cur_ptr++;
     color0 |= color0 << BINK_BYTE_BITS;
     color0 |= color0 << BINK_BUNDLE_MIN_WORD_BITS;
     color1 |= color1 << BINK_BYTE_BITS;
