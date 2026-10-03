@@ -627,7 +627,7 @@ static void YUV_blit(void PTR4* dest,
                      void PTR4* alpha,
                      BLITS PTR4* blits)
 {
-    u32 pitch;
+    u32 old_destpitch;
     u32 pitch_delta;
     u32 chroma_pitch;
     u32 endy;
@@ -640,10 +640,10 @@ static void YUV_blit(void PTR4* dest,
     u8 PTR4* abase;
     u8 PTR4* cbase;
 
-    pitch = destpitch;
+    old_destpitch = destpitch;
 
     if (YUV_SURFACE_MODE(flags) == BINKCOPY1XI) {
-        pitch *= YUV_2X_SCALE;
+        destpitch *= YUV_2X_SCALE;
         srcy >>= 1;
         srch >>= 1;
         srcheight >>= 1;
@@ -669,14 +669,19 @@ static void YUV_blit(void PTR4* dest,
         }
     }
 
-    S.dest0 = (u8 PTR4*)dest + (desty * destpitch + YUV_BLIT_ROW_BYTES(destx, blits));
+    S.dest0 = (u8 PTR4*)dest + (desty * old_destpitch + YUV_BLIT_ROW_BYTES(destx, blits));
     if (YUV_SURFACE_MODE(flags) == BINKCOPY2XHI || YUV_SURFACE_MODE(flags) == BINKCOPY2XWHI) {
-        pitch *= YUV_2X_SCALE;
+        destpitch *= YUV_2X_SCALE;
     }
 
-    setup_scaling(flags, &pitch, srcw, srch, blits, &pitch_delta);
+    setup_scaling(flags, &destpitch, srcw, srch, blits, &pitch_delta);
 
-    S.dest1 = S.dest0 + pitch;
+    chroma_pitch = srcpitch >> YUV_CHROMA_SHIFT;
+    y_delta = srcpitch - srcw;
+    a_delta = y_delta;
+    c_delta = chroma_pitch - (srcw >> YUV_CHROMA_SHIFT);
+
+    S.dest1 = S.dest0 + destpitch;
     ybase = (u8 PTR4*)src + srcx + srcy * srcpitch;
     S.y0 = (u32 PTR4*)ybase;
     S.y1 = (u32 PTR4*)(ybase + srcpitch);
@@ -685,10 +690,6 @@ static void YUV_blit(void PTR4* dest,
     S.a0 = (u32 PTR4*)abase;
     S.a1 = (u32 PTR4*)(abase + srcpitch);
 
-    chroma_pitch = srcpitch >> YUV_CHROMA_SHIFT;
-    y_delta = srcpitch - srcw;
-    a_delta = y_delta;
-    c_delta = chroma_pitch - (srcw >> YUV_CHROMA_SHIFT);
     if ((srcw & 1) != 0 && (srcx & 1) != 0) {
         c_delta--;
     }
@@ -716,7 +717,7 @@ static void YUV_blit(void PTR4* dest,
         u8 PTR4* row_dest = S.dest0 + pitch_delta;
         u8 PTR4* row_y = (u8 PTR4*)S.y0 + y_delta;
         u8 PTR4* row_a = (u8 PTR4*)S.a0 + a_delta;
-        S.dest1 = row_dest + pitch;
+        S.dest1 = row_dest + destpitch;
         S.y1 = (u32 PTR4*)(row_y + srcpitch);
         S.a1 = (u32 PTR4*)(row_a + srcpitch);
         S.u = (u16 PTR4*)((u8 PTR4*)S.u + c_delta);
@@ -766,7 +767,7 @@ static void YUV_blit(void PTR4* dest,
         S.a0 = (u32 PTR4*)((u8 PTR4*)S.a1 + a_delta);
         S.a1 = (u32 PTR4*)((u8 PTR4*)S.a0 + srcpitch);
         S.dest0 = S.dest1 + pitch_delta;
-        S.dest1 = S.dest0 + pitch;
+        S.dest1 = S.dest0 + destpitch;
         S.u = (u16 PTR4*)((u8 PTR4*)S.u + c_delta);
         S.v = (u16 PTR4*)((u8 PTR4*)S.v + c_delta);
     }

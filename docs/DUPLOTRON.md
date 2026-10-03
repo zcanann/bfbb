@@ -11150,3 +11150,32 @@ Validation: build/parallel-twentyfourth-final-report.json and
 build/parallel-twentyfourth-final-validation.log. No compiler/assembly changes
 or ancillary behavior tests. Worker iSystem, camera and xFX type/macro audits
 found no additional gain; unchanged/restored reports and builds pass.
+
+
+## Bink generic-blitter working pitch parameter (2026-10-02)
+
+YUV_blit improves from 90.87037 to 93.577774. Save the original destination
+pitch in old_destpitch and use the destpitch parameter itself as the working
+pitch passed by address to setup_scaling. The initial destination origin still
+uses the original pitch; scaling and subsequent row advances use the same
+working values as before. This recovers the retail prologue's destination-Y
+and original-pitch copies (.text 0x6f8/0x714) and initial pitch stack home.
+The parameter form alone gives 93.35185 and grows source length from 1068 to
+1076 bytes toward retail 1080. It is a natural parameter/local lifetime
+choice, not a forced address escape or compiler change.
+
+Move chroma pitch and row-delta calculations immediately after setup_scaling,
+before the plane-pointer stores. Retail performs these invariant calculations
+before those stores. This gives 93.577774. A named pitch pointer is neutral;
+reusing the source-pitch parameter for chroma regresses to 90.9 and is restored.
+Division by two and copy-then-half chroma forms are neutral and restored.
+Artifacts: build/yuv-blit25*, yuv-blit25b*, yuv-blit25c*, yuv-blit25d*.
+
+Full all_source and normal build pass. The complete deduplicated report
+changes only YUV_blit; YUV reaches 95.93532 and overall fuzzy 99.532. All
+matched data, exact-function and source-linked totals remain unchanged.
+Retail DOL SHA1 remains 306526d90b48e99894c3138f5fc8f2716d9fecf6; YUV stays
+NonMatching. Validation: build/parallel-twentyfifth-report.json and
+build/parallel-twentyfifth-validation.log. No ancillary behavior tests run.
+Header, GetKeyFrame and audio parameter/helper follow-ups produced no gain
+and were restored; a useful parameter-lifetime fix does not transfer blindly.
