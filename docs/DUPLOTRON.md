@@ -10091,3 +10091,32 @@ to its loop, improving 86.42323% to 86.46473%. The combined full report
 gain, no data or function regressions, and an overall fuzzy score of 99.47782%.
 Exact functions remain 9,939 and complete units remain 452. Bungee trials
 were restored. All-source compilation and the normal retail hash pass.
+
+
+## Bink fill-row cursor (2026-10-02)
+
+`ExpandPlane` improves from 51.981068% to 55.563896% in the full
+deduplicated report. Its normal fill block now advances a local destination
+cursor after each of the first seven rows instead of computing every row
+from the original base. The eight two-word stores, repeated color, work mark
+and one-byte color-bundle consumption are unchanged. Retail's fill path at
+801A7E10-801A7E94 uses this sequential destination structure.
+
+`python tools/check_bink_fill.py --self-test` passes 8,192 host cases covering
+all byte colors, four pitches, two word-aligned output offsets and four work
+indices. It checks pixels, padding, guards, work marks and bundle consumption.
+Negative controls detect a missing row advance and missing bundle consumption.
+This exercises the production case body on a host, not a movie or GameCube.
+Full source compilation and the normal retail DOL hash pass. The expand unit
+remains NonMatching, so the linked DOL does not execute this decoder source.
+
+The complete report `build/parallel-twelfth-report.json` improves only
+ExpandPlane against `build/parallel-eleventh-combined-report.json`; data,
+function identities and exact/source-linked totals are unchanged. Overall
+fuzzy progress increases from 99.47782% to 99.48658%.
+
+Raw-copy destination cursors helped alone but reduced the combined fill
+result. Skip cursors, staged fill construction, direct scaled patterns, and
+the remaining-width loop also scored lower. All those trials were restored.
+No compiler changes were made. Workers' four bounded zScene/zLightning
+scope/lifetime variants were likewise neutral or worse and restored.

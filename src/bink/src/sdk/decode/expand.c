@@ -1490,19 +1490,27 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 break;
             }
             case BINK_BLOCK_FILL: {
+                u8 PTR4* copy_dest = dest;
                 u8 color = BINK_BUNDLE_U8(colors);
                 u32 fill = BINK_FILL_WORD(color);
 
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
                 BINK_BUNDLE_ADVANCE(colors, BINK_BUNDLE_BYTE_PITCH);
-                BINK_FILL_BLOCK_WORD_ROW(dest, pitch, BINK_BLOCK_ROW_0, fill);
-                BINK_FILL_BLOCK_WORD_ROW(dest, pitch, BINK_BLOCK_ROW_1, fill);
-                BINK_FILL_BLOCK_WORD_ROW(dest, pitch, BINK_BLOCK_ROW_2, fill);
-                BINK_FILL_BLOCK_WORD_ROW(dest, pitch, BINK_BLOCK_ROW_3, fill);
-                BINK_FILL_BLOCK_WORD_ROW(dest, pitch, BINK_BLOCK_ROW_4, fill);
-                BINK_FILL_BLOCK_WORD_ROW(dest, pitch, BINK_BLOCK_ROW_5, fill);
-                BINK_FILL_BLOCK_WORD_ROW(dest, pitch, BINK_BLOCK_ROW_6, fill);
-                BINK_FILL_BLOCK_WORD_ROW(dest, pitch, BINK_BLOCK_ROW_7, fill);
+                BINK_FILL_BLOCK_WORD_ROW(copy_dest, pitch, BINK_BLOCK_ROW_0, fill);
+                copy_dest += pitch;
+                BINK_FILL_BLOCK_WORD_ROW(copy_dest, pitch, BINK_BLOCK_ROW_0, fill);
+                copy_dest += pitch;
+                BINK_FILL_BLOCK_WORD_ROW(copy_dest, pitch, BINK_BLOCK_ROW_0, fill);
+                copy_dest += pitch;
+                BINK_FILL_BLOCK_WORD_ROW(copy_dest, pitch, BINK_BLOCK_ROW_0, fill);
+                copy_dest += pitch;
+                BINK_FILL_BLOCK_WORD_ROW(copy_dest, pitch, BINK_BLOCK_ROW_0, fill);
+                copy_dest += pitch;
+                BINK_FILL_BLOCK_WORD_ROW(copy_dest, pitch, BINK_BLOCK_ROW_0, fill);
+                copy_dest += pitch;
+                BINK_FILL_BLOCK_WORD_ROW(copy_dest, pitch, BINK_BLOCK_ROW_0, fill);
+                copy_dest += pitch;
+                BINK_FILL_BLOCK_WORD_ROW(copy_dest, pitch, BINK_BLOCK_ROW_0, fill);
                 break;
             }
             case BINK_BLOCK_PATTERN:
