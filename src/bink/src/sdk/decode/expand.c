@@ -540,7 +540,8 @@ static inline s8 exp_read_huff4_signed(EXPBITS PTR4* bits, u32 bits_to_peek,
         if (bitcount >= (peek)) {                                                        \
             bitbuf = (vb)->bits & mask;                                                  \
             code = (decode_table)[bitbuf];                                               \
-            *(out)++ = (u8)HUFF4_CODE_SYM(code, (symbols));                              \
+            bitbuf = HUFF4_CODE_SYM(code, (symbols));                                   \
+            *(out)++ = (u8)bitbuf;                                                      \
             code = HUFF4_CODE_USED(code);                                                \
             (vb)->bits >>= code;                                                         \
             (vb)->bitlen -= code;                                                        \

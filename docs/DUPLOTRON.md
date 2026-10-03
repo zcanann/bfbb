@@ -11554,3 +11554,25 @@ p1e compiler SHA1 remains 9d445725489050035740aaff35860eddbaf3c3c9. The
 unit remains NonMatching pending turn_to_face; this is not a source-link
 claim. Evidence is in ignored build/dutchman-empty-event-* and
 build/dutchman-lasso-exact-report.json.
+
+
+### Bink Huff4 fast-path symbol scratch (2026-10-03)
+
+CheckReadHuff4Bundle improves from 99.56364 to 99.624245 at the same
+660-byte size. In the no-refill branch, reuse the decoded-bit scratch for
+the byte symbol before writing and advancing the destination. This recovers
+the retail output byte register and store without changing bitstream update
+order. The refill branch retains its original expression and word lifetime.
+
+Compiler register-allocation diagnostics helped distinguish the remaining
+mask/refill-word allocation from this symbol temporary. Inline decoder
+helpers, explicit mask hoisting, and separate named symbol locals did not
+improve the baseline and were restored. No compiler or assembly changes.
+
+Combined with the Dutchman LassoNotify checkpoint, the full deduplicated
+report changes exactly those two functions and no matched data totals.
+All-source and normal builds pass; the normal DOL remains retail SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. Both units remain NonMatching;
+this hash is not a claim that either complete unit is source-linked.
+Evidence: build/parallel-thirtythird-report.json,
+build/parallel-thirtythird-validation.log and build/expand33d-*.
