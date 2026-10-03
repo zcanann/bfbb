@@ -11969,3 +11969,43 @@ The full source build passes; the normal DOL retains its retail SHA1. Bitplane
 remains NonMatching, so that normal-link check is not a claim of an exact
 source link for this unit. Evidence: build/parallel-fortyfourth-writer-report.json,
 parallel-fortyfourth-writer-validation.log, and bitplane44*-writer-private.
+
+
+### zScene per-model mask scope retained (2026-10-03)
+
+On staging `d92ee32f0`, `zScene` still has two holdouts: the 340-byte
+`PipeForAllSceneModels` and 2,108-byte `zSceneInit`; `zSceneSetup` is already
+exact. The primary worktree had no concurrent zScene source change.
+
+Retained the previously measured but unbanked mask-scope improvement: declare
+`remainSubObjBits` in the outer per-model iteration, before `model`, and assign
+it after counting subobjects as before. This puts `model` in retail's r24 and
+reduces differing register operands from twelve to eight. The remaining swap
+is `k` (source r23, retail r25) versus `remainSubObjBits` (source r25, retail
+r23). No new wrong role, extra instruction, changed control flow, or changed
+function size is introduced. Removed the oversized source comment that treated
+a limited declaration experiment as a proof of impossibility.
+
+Authoritative full deduplicated report changes only PipeForAllSceneModels:
+99.17647 -> 99.411766. Unit fuzzy score is 99.7793 -> 99.78364; exact totals
+remain 72/74 functions and 15,984/18,432 code bytes, with all 4,040 data bytes
+exact. This is a limited fuzzy improvement, not an exact-function or linked-unit
+completion. zScene remains NonMatching.
+
+Fresh baseline all_source and the retained all_source build pass, as does the
+normal retail DOL SHA1 `306526d90b48e99894c3138f5fc8f2716d9fecf6`. Compiler
+hashes remain GC/2.0p1a `a78a5fdb6c1d5677e987636b2e0743dbaefe9542` and
+GC/2.0p1e `9d445725489050035740aaff35860eddbaf3c3c9`. Full report comparison
+confirms every other function/unit and all data unchanged. Evidence is in the
+isolated robot worktree's `build/zscene-layout-mask-validation.json`,
+`build/zscene-layout-mask-report.json`, and `build/zscene-layout-mask-link.log`.
+
+New unretained controls included an outer-for declaration of k with and without
+moving i, a table-loop scope for k, an immutable model pointer/reference, a
+block-local const subobject mask, a register hint on k, and inline helper
+ownership. None improved on the retained control. In Init, the equivalent color
+struct, late global definition, const descriptor/callback references were
+neutral. Folding the global assignment into b's initializer added a redundant
+byte store; its higher raw score was an alignment artifact and was rejected.
+No helper, pragma, register hint, volatility, compiler change, or behavior test
+was retained. These controls do not prove the remaining forms unreachable.

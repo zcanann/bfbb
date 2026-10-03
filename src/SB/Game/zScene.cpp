@@ -721,45 +721,20 @@ static void PipeAddStuffCB(RpAtomic* data, U32 pipeFlags, U32)
 
 static void PipeForAllSceneModels(void (*pipeCB)(RpAtomic* data, U32 pipeFlags, U32 subObjects))
 {
-    // non-matching: identical instructions throughout; model /
-    // remainSubObjBits / k get r24/r23/r25 in retail and r25/r24/r23 here - a
-    // three-way permutation of the same register allocation.
-    //
-    // Worked with the colour-index table (0..7 = r27 r29 r28 r26 r30 r31 r25
-    // r24, then r23 r22 r21 r20). This function fills colours 0..11 with, in
-    // order: i, &xModelPipeData[j], &xModelPipeCount[j], j, numModels, the
-    // hoisted 'MODL' constant, model, remainSubObjBits, k, pipeCB, the k*12
-    // byte offset, currSubObjBits. Retail differs only in wanting k at index
-    // 6, model at 7, remainSubObjBits at 8 - i.e. k coloured FIRST of the
-    // three. Measured:
-    //   baseline (k in the for-init)                      99.176%, 12 rows
-    //   numModels declared before i,j          BIT-IDENTICAL to baseline
-    //   'S32 k;' at outer-loop top, for (k=0;...)          98.765%, 18 rows
-    //   same but 'S32 k = 0;'                              98.765%, 18 rows
-    //   'S32 k;' in the if-block, for (k=0;...)            98.765%, 18 rows
-    //   remainSubObjBits declared at outer-loop top        99.412%,  8 rows
-    //   both k and remainSubObjBits at outer-loop top      99.000%, 14 rows
-    // remainSubObjBits hoisted to the outer loop DOES move it to colour 6 and
-    // puts model on retail's r24 - so this permutation is driven by lexical
-    // declaration order after all, not by definition order. But k has only two
-    // reachable slots: index 8 when it is declared in the inner for-init (the
-    // last declaration lexically), and index 10 when it is declared anywhere
-    // else, which ejects it past pipeCB and the byte offset. Index 6 requires
-    // k declared before model while still being a for-init declaration, which
-    // is a contradiction. NOT EXPRESSIBLE; the 99.412% form banks nothing and
-    // is not kept.
-
+    // The per-model mask scope preserves the retail model register.
+    // Remaining mismatch: the mask and inner table index use swapped registers.
     S32 i, j;
     S32 numModels = xSTAssetCountByType('MODL');
 
     for (i = 0; i < numModels; i++)
     {
+        U32 remainSubObjBits;
         RpAtomic* model = (RpAtomic*)xSTFindAssetByType('MODL', i, NULL);
 
         if (model)
         {
             st_PKR_ASSET_TOCINFO ainfo;
-            U32 numSubObjects, remainSubObjBits, currSubObjBits;
+            U32 numSubObjects, currSubObjBits;
             RpAtomic* tempmodel;
 
             xSTGetAssetInfoByType('MODL', i, &ainfo);
