@@ -10724,3 +10724,64 @@ After merging that concurrent change, parallel-seventeenth-merged-report.json
 adds only the TimerUpdate result to the verified player/xFX changes: overall
 fuzzy code 99.500046, exact code 2217640 bytes and 9941/10147 exact functions.
 Source-linked units remain 452/543. The restored normal link passes again.
+
+## Bink and near-TU follow-ups restored (2026-10-02)
+
+At bd62963f8, eight doubled-alpha column lifetime forms were tested with full
+deduplicated reports. Explicit luma/alpha cursors in the width-doubled routine
+regressed to 80.652176/80.978264; separate alpha cursors or output pixels in
+the height variants also regressed. Separate row-luma samples and a captured
+first output pointer were neutral. All source was restored (89/97 YUV functions
+remain exact). Evidence: build/yuv-cols18-*.
+
+Byte IDCT reusing the dequantized DC value for its even sum and hoisting the
+first-pass scalar declarations were neutral at 63.765182. Reusing row2 for the
+scaled even difference regressed to 59.94332. YUV_init's target keeps the
+clamp_bh base live where ours keeps clamp_bb; explicit outer, inner and register
+blue-high pointers all regressed from 68.080536 to 66.8613. Those experiments
+are restored; they establish no compiler deficiency. Evidence: build/dct18-*
+and build/yuv-init18-*.
+
+Independent workers found no new literal/data discrepancy in Dutchman's two
+holdouts and no improvement from Common's two explicit-default placements.
+Robot's direct-red cone load regressed and was restored. A direct scaled-pattern
+ExpandPlane implementation with explicit mask bases was pixel-correct across
+262144 oracle cases but reduced matching to 54.427315 from 55.890465 in both
+scoped and helper forms. The original source was restored, with exact full-report
+equality and pattern/dispatch regression controls passing. These rejected
+structures should not be repeated without a new layout or lifetime hypothesis.
+
+
+### Concurrent source-only whole-TU wins, independently verified (2026-10-02)
+
+Staging advanced with 97e496eea, 607e0ab80 and 1f7aacce0 while the isolated
+follow-ups ran. The existing weak-inline xBehaveMgr solution is retained:
+expression-transition/history bodies belong in xBehaveMgr.h rather than
+xBehaviour.h, Next in xListItem.h, and the other list templates in xListItem.inl.
+This restores retained helper order without changing weak binding. Our separate
+worker also proved an ordinary out-of-line strong-binding alternative can link,
+but that broader alternative was not integrated. Its audit establishes that
+extra unused constants/weak bodies are stripped; the observed initial 351-byte
+DOL mismatch was retained definition order, not the extra symbol sets themselves.
+
+zCombo_Update reaches 100% using comboReward[toShow] for the text lookup and
+removing redundant counter/HUD snapshots. zMainMemCardSpaceQuery reaches 100%
+with a named signed progress-bar index, one function-scope result shared across
+both call sites, and the retained local initialization layout. These supersede
+older claims that their remaining register choices could not be source-reached.
+As with TimerUpdate, failed declaration-only sweeps did not establish a necessary
+compiler patch. No compiler change is involved in these wins.
+
+Independent root all_source and retail-link verification passes. The full report
+against bd62963f8 changes only the intended zCombo_Update, memory-card query and
+small zLasso_Render gain, plus the three completion markers. xBehaveMgr, zCombo
+and zMain all source-link: complete units 452 -> 455, complete code 1338564 ->
+1362288 (+23724), complete data 685168 -> 692220 (+7052). Exact functions rise
+9941 -> 9943 and overall fuzzy code 99.500046 -> 99.501755. All Bink experiments
+are restored and no other function or matched-data score regresses.
+
+Evidence: build/parallel-eighteenth-merged-report.json,
+parallel-eighteenth-merged-validation.log and parallel-eighteenth-compare.py.
+Retail DOL SHA1 remains 306526d90b48e99894c3138f5fc8f2716d9fecf6; isolated
+GC/2.0p1a and GC/2.0p1e remain a78a5fdb6c1d5677e987636b2e0743dbaefe9542
+and 9d445725489050035740aaff35860eddbaf3c3c9.
