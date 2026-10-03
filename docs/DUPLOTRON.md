@@ -12162,3 +12162,38 @@ Worker evidence under ignored `build/`: `zlightning-layout-retained-report.json`
 `zlightning-layout-retained-validation.json`, and private variants in
 `zlightning-layout/`. Validation compares against the preceding verified
 `zscene-layout-mask-report.json`.
+
+
+### zLightning: paired UV parity fixes the second-loop register cluster (2026-10-03)
+
+Following `85d1e0935`, give the UV parity reused by each vertex pair a named
+`S32 odd = i & 1` at its first use in both `RenderLightning` loops. This is
+**99.028496 -> 99.15061**, with the same 2,948 bytes. All **18** differences in
+the second loop's direction/parity/color/position-register cluster disappear;
+differing rows fall **106 -> 88**, and the new differing-row set is a strict
+subset of the old one. This is not merely a higher numerical score. Retail's
+r0 parity and r3 direction-result roles are recovered, together with the
+registers derived from their interference. The first loop stays byte-exact.
+
+This result supersedes the earlier assertion that the two loops' allocation
+asymmetry was not source-reachable. Applying the same source pattern to both
+loops produces the required different allocation naturally. Capturing parity
+before the direction calculation instead grows the function by four bytes
+and regresses; the first-use lifetime is material. Naming parity in the end
+caps is neutral. U32 color temporaries and a camera reference are neutral;
+boolean direction, named tail-vertex references, and initial color aggregates
+regress. No header, compiler, macro or alternative trial change is retained.
+
+Full deduplicated comparison against the preceding verified report changes
+only `RenderLightning`. Unit score is **99.75321**, exact totals remain 15/17
+functions and 7,920/12,448 code bytes, and all 7,808 data bytes remain exact.
+The retained `zLightningFunc_Render` score stays 99.6405. `all_source`, normal
+build, retail DOL SHA1 `306526d90b48e99894c3138f5fc8f2716d9fecf6`, and the
+unchanged 2.0p1a/2.0p1e compiler hashes pass. The unit is still NonMatching;
+no actual source-link success is claimed. Remaining render differences are
+in color-load scheduling and end-cap/address register allocation.
+
+Ignored worker evidence: `build/zlightning-layout-parity-{report.json,
+allsource.log,link.log,validation.json,mismatches.json}` and private trial
+`build/zlightning-layout/render_parity_both_loops/`. The mismatch artifact
+records the eighteen removed rows and an empty newly differing row list.

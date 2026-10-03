@@ -929,7 +929,8 @@ void RenderLightning(zLightning* l)
                 RwIm3DVertexSetPos(&sStripVert[verts], pt1.x, pt1.y, pt1.z);
             }
 
-            if (i & 1)
+            S32 odd = i & 1;
+            if (odd)
             {
                 sStripVert[verts].u = 1.0f;
             }
@@ -955,7 +956,7 @@ void RenderLightning(zLightning* l)
                 RwIm3DVertexSetPos(&sStripVert[verts], pt2.x, pt2.y, pt2.z);
             }
 
-            if (i & 1)
+            if (odd)
             {
                 sStripVert[verts].u = 1.0f;
             }
@@ -1096,7 +1097,8 @@ void RenderLightning(zLightning* l)
                 RwIm3DVertexSetPos(&sStripVert[verts], pt1.x, pt1.y, pt1.z);
             }
 
-            if (i & 1)
+            S32 odd = i & 1;
+            if (odd)
             {
                 sStripVert[verts].u = 1.0f;
             }
@@ -1122,7 +1124,7 @@ void RenderLightning(zLightning* l)
                 RwIm3DVertexSetPos(&sStripVert[verts], pt2.x, pt2.y, pt2.z);
             }
 
-            if (i & 1)
+            if (odd)
             {
                 sStripVert[verts].u = 1.0f;
             }
