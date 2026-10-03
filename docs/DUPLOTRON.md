@@ -11630,3 +11630,42 @@ build/binkacd35-alignment-link-diff.json (10-byte residue), and
 build/parallel-thirtyfifth-layout-report.json / validation.log. The combined
 report also confirms the four independent improvements from concurrent staging
 commit c5b00d4dd, with no regressions.
+
+
+### zTalkBox complete source link (2026-10-03)
+
+The unchanged state bodies need consistent inline declarations and definitions:
+this restores deferred state-method order and the start/next/wait/base/stop
+vtable order. Inline trigger_jot overloads emit index then jot at first use.
+The earlier inline pad_pressed definition allocates its zero static first in
+.sbss, and the empty base methods precede set_text so their first use places
+them correctly. The unchanged pointer/location asset definitions have their
+own header, which puts their helpers after the sound queue group.
+
+The last mismatch was physical ownership of the exact 40-byte __sinit and
+56-byte shared_type constructor. With generic query instantiations visible,
+these landed after xSnd.h helpers. Constructor/play/push definitions now live
+in xSndQueue.h, included by their existing xHudMeter owner. The four-entry
+playing/recent queries have explicit inline specializations in xSnd.h;
+generic implementations remain in xSndQueue.h. This is a documented compiler
+layout compromise, not a claim that retail used identical specializations.
+All queue arithmetic and behavior are unchanged. Ordinary generic inline
+query definitions, or removing either specialization, restored the wrong
+initializer placement. No compiler edits, assembly, fake symbols, or padding
+are used.
+
+Validation: explicitly rebuilt all 138 transitive shared-header source users,
+including both implementation owners. MW dependency output omitted xSnd.h
+for zTalkBox, so the rebuild list came from a conservative include graph,
+not solely Ninja's dependency cache. The full deduplicated report preserves
+all 10147 function scores, all matched code, and all matched data relative to
+the exact-function checkpoint. zTalkBox is 118/118 functions, 14396/14396 code
+bytes and 37492/37492 data bytes. With Matching retained, linked progress rises
+by exactly one unit, 14396 code bytes, and 37492 data bytes.
+
+The actual source-linked DOL is byte-for-byte retail: 2859136 bytes, SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. Both compiler SHA1s are unchanged:
+a78a5fdb6c1d5677e987636b2e0743dbaefe9542 (2.0p1a) and
+9d445725489050035740aaff35860eddbaf3c3c9 (2.0p1e). Local evidence:
+build/talkbox-next-agent-retained-report.json, retained-build.log,
+final-allsource.log, transitive-rebuild.json, and final-link-summary.txt.

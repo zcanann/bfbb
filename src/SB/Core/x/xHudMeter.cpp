@@ -1,4 +1,5 @@
 #include "xHudMeter.h"
+#include "xSndQueue.h"
 
 #include <types.h>
 

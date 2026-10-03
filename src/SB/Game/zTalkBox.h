@@ -168,17 +168,17 @@ namespace
         state_enum type;
 
         state_type(state_enum t);
-        virtual void start();
-        virtual void stop();
-        virtual state_enum update(xScene& scn, F32 dt) = 0;
+        virtual inline void start();
+        virtual inline void stop();
+        virtual inline state_enum update(xScene& scn, F32 dt) = 0;
     };
 
     struct start_state_type : state_type
     {
         start_state_type();
-        virtual void start();
-        virtual void stop();
-        virtual state_enum update(xScene& scn, F32 dt);
+        virtual inline void start();
+        virtual inline void stop();
+        virtual inline state_enum update(xScene& scn, F32 dt);
     };
 
     struct next_state_type : state_type
@@ -186,9 +186,9 @@ namespace
         S32 prev_wait_jot; // offset 0x8, size 0x4
 
         next_state_type();
-        virtual void start();
-        virtual void stop();
-        virtual state_enum update(xScene& scn, F32 dt);
+        virtual inline void start();
+        virtual inline void stop();
+        virtual inline state_enum update(xScene& scn, F32 dt);
     };
 
     struct wait_state_type : state_type
@@ -196,16 +196,16 @@ namespace
         U8 answer_yes; // offset 0x8, size 0x1
 
         wait_state_type();
-        virtual void start();
-        virtual void stop();
-        virtual state_enum update(xScene& scn, F32 dt);
+        virtual inline void start();
+        virtual inline void stop();
+        virtual inline state_enum update(xScene& scn, F32 dt);
     };
     struct stop_state_type : state_type
     {
         stop_state_type();
-        virtual void start();
-        virtual void stop();
-        virtual state_enum update(xScene& scn, F32 dt);
+        virtual inline void start();
+        virtual inline void stop();
+        virtual inline state_enum update(xScene& scn, F32 dt);
     };
     struct wait_context
     {
@@ -233,6 +233,7 @@ namespace
 
     struct shared_type
     {
+
         S32 flags;
         U32 permit;
         ztalkbox* active; // 0x8
@@ -314,26 +315,6 @@ namespace
     };
 
 } // namespace
-struct location_asset : xDynAsset
-{
-    xVec3 loc; // offset 0x10, size 0xC
-
-    static const char* type_name()
-    {
-        return "location";
-    }
-};
-struct pointer_asset : xDynAsset
-{
-    xVec3 loc; // offset 0x10, size 0xC
-    float yaw; // offset 0x1C, size 0x4
-    float pitch; // offset 0x20, size 0x4
-    float roll; // offset 0x24, size 0x4
-
-    static const char* type_name()
-    {
-        return "pointer";
-    }
-};
+#include "zTalkBoxAssets.h"
 
 #endif

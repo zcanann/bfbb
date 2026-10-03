@@ -655,7 +655,7 @@ config.libs = [
             Object(Matching, "SB/Game/zEntTeleportBox.cpp"),
             Object(Matching, "SB/Game/zBusStop.cpp"),
             Object(NonMatching, "SB/Game/zNPCSupport.cpp"),
-            Object(NonMatching, "SB/Game/zTalkBox.cpp", extra_cflags=["-sym on"]),
+            Object(Matching, "SB/Game/zTalkBox.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zTextBox.cpp"),
             Object(Matching, "SB/Game/zTaskBox.cpp"),
             Object(Matching, "SB/Core/gc/iCutscene.cpp"),

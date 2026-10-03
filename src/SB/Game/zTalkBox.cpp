@@ -27,6 +27,18 @@ namespace
     static void stop();
     static U32* pad_pressed();
 
+    inline U32* pad_pressed()
+    {
+        if (shared.permit & 2)
+        {
+            return &globals.pad0->pressed;
+        }
+
+        static U32 zero;
+        zero = 0;
+        return &zero;
+    }
+
     static U32 new_tags_size = 9;
     static F32 music_fade = 0.25f;
     static F32 music_fade_delay = 0.5f;
@@ -1299,6 +1311,18 @@ void ztalkbox::reset()
         deactivate();
     }
 }
+namespace
+{
+    inline void state_type::start()
+    {
+    }
+
+    inline void state_type::stop()
+    {
+    }
+
+}
+
 void ztalkbox::set_text(const char* s)
 {
     ztextbox& d = *dialog_box;
@@ -1678,21 +1702,6 @@ void ztalkbox::update_all(xScene& s, F32 dt)
     shared.delay_events = false;
     flush_triggered();
 }
-namespace
-{
-    static U32* pad_pressed()
-    {
-        if (shared.permit & 2)
-        {
-            return &globals.pad0->pressed;
-        }
-
-        static U32 zero;
-        zero = 0;
-        return &zero;
-    }
-
-}; // namespace
 void ztalkbox::render_all()
 {
     if (!(shared.permit & 1))
@@ -1755,31 +1764,25 @@ void ztalkbox::permit(U32 add_flags, U32 remove_flags)
 
 namespace
 {
-    void stop_state_type::start()
+    inline void stop_state_type::start()
     {
     }
-    void stop_state_type::stop()
+    inline void stop_state_type::stop()
     {
     }
 
-    state_enum stop_state_type::update(xScene& scn, F32 dt)
+    inline state_enum stop_state_type::update(xScene& scn, F32 dt)
     {
         return (state_enum)-1;
     }
-    void state_type::start()
-    {
-    }
 
-    void state_type::stop()
-    {
-    }
-    void wait_state_type::start()
+    inline void wait_state_type::start()
     {
         this->answer_yes = false;
         refresh_prompts();
     }
 
-    void wait_state_type::stop()
+    inline void wait_state_type::stop()
     {
         if (!shared.wait.type.time || shared.wait.type.prompt)
         {
@@ -1810,7 +1813,7 @@ namespace
         shared.wait.delay = 0.0f;
         shared.wait.need = false;
     }
-    state_enum wait_state_type::update(xScene& scn, F32 dt)
+    inline state_enum wait_state_type::update(xScene& scn, F32 dt)
     {
         update_prompt_status(dt);
         update_quit_status(dt);
@@ -1888,7 +1891,7 @@ namespace
 
         return (state_enum)3;
     }
-    static bool trigger_jot(const xtextbox::jot& j)
+    inline bool trigger_jot(const xtextbox::jot& j)
     {
         if (!j.tag)
         {
@@ -1902,7 +1905,7 @@ namespace
 
         return true;
     }
-    static bool trigger_jot(S32 index)
+    inline bool trigger_jot(S32 index)
     {
         xtextbox::jot* jots = shared.lt.jots();
         return trigger_jot(jots[index]);
@@ -1952,10 +1955,10 @@ namespace
         }
     }
 
-    void next_state_type::stop()
+    inline void next_state_type::stop()
     {
     }
-    state_enum next_state_type::update(xScene& scn, F32 dt)
+    inline state_enum next_state_type::update(xScene& scn, F32 dt)
     {
         if (shared.begin_jot == shared.page_end_jot)
         {
@@ -1963,7 +1966,7 @@ namespace
         }
         return (state_enum)3;
     }
-    void start_state_type::start()
+    inline void start_state_type::start()
     {
         shared.page_end_jot = 0;
         shared.end_jot = 0;
@@ -1976,11 +1979,11 @@ namespace
         shared.prompt_ready = false;
         refresh_prompts();
     }
-    void start_state_type::stop()
+    inline void start_state_type::stop()
     {
     }
 
-    state_enum start_state_type::update(xScene& scn, F32 dt)
+    inline state_enum start_state_type::update(xScene& scn, F32 dt)
     {
         return (state_enum)2;
     }
