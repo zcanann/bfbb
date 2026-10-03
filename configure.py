@@ -552,7 +552,7 @@ config.libs = [
             Object(Matching, "SB/Game/zFeet.cpp"),
             Object(Matching, "SB/Game/zFMV.cpp"),
             Object(NonMatching, "SB/Game/zFX.cpp", extra_cflags=["-sym on"]),
-            Object(NonMatching, "SB/Game/zGame.cpp"),
+            Object(NonMatching, "SB/Game/zGame.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zGameExtras.cpp", extra_cflags=["-sym on"]),
             Object(Equivalent, "SB/Game/zGameState.cpp"),
             Object(Matching, "SB/Game/zGust.cpp"),

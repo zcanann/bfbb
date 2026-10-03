@@ -63,6 +63,8 @@ extern _tagTRCPadInfo gTrcPad[4];
 // .sbss, so its definition sits near the bottom of the original file even
 // though the first function already writes it.
 extern eGameWhereAmI gGameWhereAmI;
+// The debug-recorded common buffer precedes the portal common objects.
+char buffer[16];
 xPortalAsset dummyPortalAsset;
 _zPortal dummyPortal;
 U32 gSoak;
@@ -1305,11 +1307,7 @@ F32 bgu1;
 F32 bgv1;
 eGameWhereAmI gGameWhereAmI;
 
-// 93.654%.  Everything outside the background-quad fill matches; inside it the
-// target stores vx[0..3] in strictly ascending offset order and never fills a
-// load-use gap, while our compiler interleaves the next vertex's stores between
-// each `lbz`/`stb` and `lfs`/`stfs` pair.  Same instruction multiset - SCHED,
-// same family as zGame_HackDrawCard.
+// Three background-quad stores still differ in their instruction scheduling.
 void zGameScreenTransitionUpdate(F32 percentComplete, char* msg, U8* rgba)
 {
     RwTexture* tex;
@@ -1536,12 +1534,4 @@ void zGameStats_Init()
 {
 }
 
-void xDrawEnd()
-{
-    iDrawEnd();
-}
-
-void xDrawBegin()
-{
-    iDrawBegin();
-}
+#include "zGameDrawHelpers.h"

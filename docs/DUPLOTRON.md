@@ -12532,3 +12532,51 @@ complete totals are unchanged (467 complete units). DOL SHA1 remains
 306526d90b48e99894c3138f5fc8f2716d9fecf6. Expand remains NonMatching, so that
 normal link does not establish a retail source link for the Bink decoder.
 No behavioral test suite was added or run.
+
+
+### zGame: recover source-link layout, retain the three-store holdout (2026-10-03)
+
+The near-exact report concealed a substantial source-link layout difference.
+Selecting the original zGame source object produced a same-size DOL with
+9,313 differing bytes. The 276-byte `xUtil_select<char>` body appeared before
+`zGameInit`, shifting the main functions by 0x114, and common-object placement
+also displaced `globals` by 24 bytes.
+
+Three source-supported changes recover the real layout:
+
+- The existing per-TU `-sym on` setting mechanism moves the template out of
+  the main function group; this alone reduces the DOL residue to 2,410 bytes.
+- Restore `char buffer[16]` before `dummyPortalAsset`. The actual declaration
+  is recorded twice at file scope in `dwarf/SB/Game/zGame.cpp`, lines 8-9.
+  It is a genuine common declaration, not synthetic padding. This recovers
+  common-object placement and reduces the residue to 345 bytes.
+- Keep the existing `xDrawEnd` and `xDrawBegin` implementation bodies in a
+  private `zGameDrawHelpers.h` include at the end of the cpp, with inline
+  definitions matching their retail weak binding. Their implementation-file
+  ownership places them after `xUtil_select<char>` as retail requires.
+  Merely adding inline in the cpp fixes binding but leaves their order wrong.
+
+The final diagnostic source DOL has the retail length of 2,859,136 bytes and
+only **49 differing bytes**, all inside `zGameScreenTransitionUpdate` at DOL
+offsets **0x95e98..0x95f1b**. Its SHA-1 is
+`73cc28c7208a9d3c90966e1e1c6e2a2cb1380a67`. Every byte outside the existing
+three-store scheduling residue matches. The TU remains **NonMatching**:
+23/24 functions exact, 7,680/8,664 code bytes exact, all 3,656 data bytes exact,
+and transition score 99.11382% (98.97154 raw).
+
+Source controls retained no code changes: shared quad-coordinate copies,
+immutable UV snapshots, normalized color captures and inline transition
+emission are neutral or worse. Shared UV copies regress; named screen-edge
+reference values add an instruction. A scoped scheduling-off control regresses
+the raw function to 80.01626%, so it is not retained and does not justify a
+compiler change. The exact adjacent `zGame_HackDrawCard` remains an important
+counterexample to a blanket scheduler explanation.
+
+The retained full deduplicated report equals the lightning-complete baseline
+exactly; `all_source` and the normal build pass. After restoring NonMatching,
+the normal DOL again has retail SHA-1
+`306526d90b48e99894c3138f5fc8f2716d9fecf6`. No shared headers, compiler binaries,
+assembly or behavioral tests changed. RGB-worktree evidence is under
+`build/zgame-close-*`: `retained-report.json`, `retained-build.log`,
+`retained-final-link.log`, `retained-source.json`, `retained-source.dol`,
+`retained-audit.py`, and the restored source trial scripts/raw diffs.
