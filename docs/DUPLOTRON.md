@@ -11477,3 +11477,20 @@ The source-linked DOL is byte-identical to retail, SHA1
 worktree: build/imodel-exact-linked-report.json,
 build/imodel-exact-final-validation.log, and
 build/imodel-exact-compare-final.py. No ancillary behavior tests were added.
+
+
+### zTalkBox next_state::start inline definition (2026-10-03)
+
+The unchanged method body becomes exact when its source definition is declared
+`inline`: 97.916664 -> 100, 376 -> 384 emitted bytes. The compiler now retains
+both retail tail branches. Earlier isolated loop probes did not establish a
+compiler deficiency; they omitted this source-level compilation distinction.
+No goto restructuring, assembly, or compiler modification is retained.
+
+Full deduplicated report changes only this function; zTalkBox is now 118/118
+functions, 14396/14396 code bytes and 37492/37492 data bytes. All-source and
+normal build pass with retail SHA1 306526d90b48e99894c3138f5fc8f2716d9fecf6.
+The first actual source-link attempt still differs due to physical method and
+static-data ordering, so the unit remains NonMatching while that is audited.
+Evidence: build/talkbox-next-agent-exact-report.json and
+build/talkbox-next-agent-exact-allsource.log (local ignored artifacts).

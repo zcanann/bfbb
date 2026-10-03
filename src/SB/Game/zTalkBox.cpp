@@ -1907,7 +1907,7 @@ namespace
         xtextbox::jot* jots = shared.lt.jots();
         return trigger_jot(jots[index]);
     }
-    void next_state_type::start()
+    inline void next_state_type::start()
     {
         if (shared.end_jot == shared.page_end_jot)
         {
