@@ -9854,3 +9854,32 @@ opposite order. Prior source and include-order forms did not resolve these;
 no artificial symbol mapping is retained. Six additional save/load shared-zero,
 chained-zero, and return-initialization trials were unchanged or worse; all
 were restored and the original source rebuilt.
+
+
+## xClimate exact source-link completion (2026-10-02)
+
+UpdateRain improves from 99.40476% to 100% (1,008 bytes). Both snowfall
+percentage expressions name the normalized value before subtracting it from
+one; the particle loop declares and computes xx before zz, as supported by
+DWARF. Arithmetic and calls are unchanged. The obsolete compiler-mismatch
+comment is removed.
+
+xClimate now matches all 12 functions, all 1,772 code bytes, and all 136 data
+bytes. The worker's isolated real-link test passed, and integration independently
+rebuilt the full source set and linked with xClimate marked Matching. The DOL
+retains retail SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6. The full
+deduplicated report confirms only UpdateRain's score changes; no symbols are
+lost and no other function regresses. Source-linked units increase from 450 to
+451, adding 1,772 source-linked code bytes and 136 source-linked data bytes.
+Both isolated MWCC hashes remain unchanged. Evidence:
+build/parallel-eighth-{baseline-report,report}.json and
+build/parallel-eighth-validation.log.
+
+The root Bink pass tested 27 bounded rectangle-countdown, audio initial-estimate,
+and YUV temporary/cursor forms without a retained gain. Every experiment restored
+and rebuilt the original source; the restored full report exactly matched the
+published baseline before xClimate integration. No compiler modifications were
+made. The zTalkBox worker recorded a separate compiler-behavior investigation
+packet for its two absent unreachable tail branches; this is a concrete CFG
+residue, not proof that a compiler patch rather than original-source differences
+is required. Register-allocation-only holdouts remain weaker patch evidence.
