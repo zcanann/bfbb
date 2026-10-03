@@ -664,7 +664,7 @@ config.libs = [
             Object(NonMatching, "SB/Game/zNPCTypeBoss.cpp"),
             Object(Matching, "SB/Game/zNPCGoalVillager.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zNPCGoalSubBoss.cpp", extra_cflags=["-sym on"]),
-            Object(NonMatching, "SB/Core/x/xShadowSimple.cpp"),
+            Object(Matching, "SB/Core/x/xShadowSimple.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Core/x/xUpdateCull.cpp"),
             Object(Matching, "SB/Game/zDiscoFloor.cpp"),
             Object(Matching, "SB/Game/zNPCTypeBossSandy.cpp", extra_cflags=["-sym on"]),

@@ -32,11 +32,6 @@ static RwRaster* sShadRaster;
 static u32 sShadVertCount;
 static RwMatrixTag* sModelMat;
 
-inline void xQuickCullForLine(xQCData* q, const xLine3* ln)
-{
-    xQuickCullForLine(&xqc_def_ctrl, q, ln);
-}
-
 static RpCollisionTriangle* shadowRayCB(RpIntersection*, RpWorldSector*, RpCollisionTriangle* tri,
                                         F32 dist, void* data)
 {
