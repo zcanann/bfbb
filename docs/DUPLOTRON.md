@@ -11015,3 +11015,14 @@ passes and the normal DOL retains SHA1
 `306526d90b48e99894c3138f5fc8f2716d9fecf6`. The TU remains NonMatching;
 this is a source matching gain, not a playback or whole-TU source-link claim.
 No ancillary tests or test infrastructure were added for this lifetime change.
+
+
+Combined verification also includes concurrent staging 759a79625: deferred
+inline helper placement makes cruise-bubble add_trail_sample exact, leaving
+that unit at 243/244. The complete report changes only that function and the
+three Bink gains above. Overall fuzzy reaches 99.52468; exact functions rise
+to 9944 and exact code to 2220856. Data and source-linked totals are unchanged.
+Full all_source/normal build and retail SHA1 pass. Evidence:
+build/parallel-twentyfirst-merged-report.json and
+build/parallel-twentyfirst-merged-validation.log. No compiler patch is needed
+for these gains; the cruise-bubble result is another source-layout control.
