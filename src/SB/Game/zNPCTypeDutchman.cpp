@@ -1547,7 +1547,7 @@ void zNPCDutchman::LassoNotify(en_LASSO_EVENT event)
     case LASS_EVNT_GRABSTART:
         psy_instinct->GoalSet(NPC_GOAL_DUTCHMANCAUGHT, 1);
         break;
-    case LASS_EVNT_GRABEND:
+    case LASS_EVNT_YANK:
         break;
     }
 

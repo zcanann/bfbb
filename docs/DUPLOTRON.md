@@ -11526,3 +11526,31 @@ Evidence in the isolated RGB worktree: build/motion-exact-sourcefield.py,
 build/motion-exact-code-report.json, build/motion-exact-linked-report.json,
 build/motion-exact-code-validation.log and
 build/motion-exact-link-validation.log.
+
+
+### Dutchman LassoNotify: exact switch reconstruction (2026-10-03)
+
+The former 112-byte 96.42857% holdout is now exact from a one-token source
+correction: the empty case is `LASS_EVNT_YANK` (4), not `LASS_EVNT_GRABEND`
+(3). The compiler splits cases 2 and 4 at midpoint 3, producing retail's
+`cmpwi 3; beq; bge; cmpwi 2; bge` and the previously missing redundant
+branch. Thus the comparison against 3 did not identify the original empty
+case. This supersedes the earlier compiler-only/dead-branch claims and the
+partial BEGIN-case counterexample; no new event value or compiler change
+is needed. The original strong out-of-line definition is preserved.
+
+Behavior is unchanged: GRABSTART still selects DUTCHMANCAUGHT; every event,
+including YANK and GRABEND, still forwards its original value to
+`zNPCCommon::LassoNotify`. Empty-case/default classification has no other
+effect. Definition-inline, header/class ownership, scope, and forwarding
+label forms were neutral; examining existing protocol cases exposed the
+incorrect switch assumption instead.
+
+Validation at fa0ea7608: all_source and normal build pass; full deduplicated
+report changes only LassoNotify, 96.42857 -> 100. Dutchman rises 225/227 ->
+226/227 functions, 99.969 -> 99.97913, with all 8,840 data bytes still exact.
+Normal DOL SHA1 remains 306526d90b48e99894c3138f5fc8f2716d9fecf6. Isolated
+p1e compiler SHA1 remains 9d445725489050035740aaff35860eddbaf3c3c9. The
+unit remains NonMatching pending turn_to_face; this is not a source-link
+claim. Evidence is in ignored build/dutchman-empty-event-* and
+build/dutchman-lasso-exact-report.json.
