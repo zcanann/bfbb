@@ -12383,3 +12383,43 @@ and `9d445725489050035740aaff35860eddbaf3c3c9`. Evidence is saved under ignored
 `build/imath3-return-*`: baseline/candidate full reports, source-link byte
 inventory, build logs, rejected sources and raw diffs. Only score/build/link
 validation was used.
+
+
+### zLightning: complete Func_Render and source-link the unit (2026-10-03)
+
+`zLightningFunc_Render` reaches 100% at the original 1,580 bytes through
+four interacting source lifetimes: keep alpha in `U32` after explicitly
+normalizing each random value through `U8`, use direct vertex-array indexing,
+share the function's loop counter as in the debug locals, and separate the
+initial zero UV phase from the repeated-segment phase initialized to one.
+The initial phase remains a named integer, preserving retail's two floating
+additions; the earlier literal-zero spelling had removed those instructions.
+The explicit byte conversion preserves the original alpha values. The wider
+local and separate phase bindings are bounded C++ reconstruction choices,
+not claims that the PS2 debug types describe the original GameCube source.
+
+These forms must be assessed together. Normalized word alpha removes the
+initial alpha/cursor swap and fixes the repeated alpha register; direct
+indexing then fixes both repeated cursors and their increment order. The
+shared counter fixes its own lifetime but initially exchanges the UV phase
+and vertex count registers. Separating the initial and repeated UV phases
+resolves that last exchange. The former vertex-element reference is no
+longer needed. This supersedes the old claim that the remaining register
+allocation could not be reached from source.
+
+Combined with the independently verified exact `RenderLightning` commits
+`504003484` and `218988381`, the TU is now **17/17 exact**, with all
+**12,448 code bytes and 7,808 data bytes** exact. The complete deduplicated
+comparison against checkpoint `4a05bb532` plus the explicit cutscene-null fix
+changes only the two lightning render functions; all other function scores,
+matched data and exact counts are unchanged. The combined gain is 4,528 exact
+code bytes and two functions. `all_source` passes.
+
+`zLightning.cpp` is marked Matching only after the actual source-object link:
+the 2,859,136-byte DOL is byte-for-byte identical to retail, SHA-1
+`306526d90b48e99894c3138f5fc8f2716d9fecf6`. The existing `-sym on` remains.
+No compiler, header, macro, assembler or behavioral-test changes are involved.
+Evidence is preserved in the RGB worktree under `build/lightningfunc-*`:
+`base-report.json`, `exact-report.json`, `source-linked-report.json`,
+`exact-build.log`, `exact-source-link.log`, and the private source/raw-diff
+trials. The retained Func_Render candidate is `separate_initial_phase.cpp`.

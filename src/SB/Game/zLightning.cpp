@@ -649,6 +649,7 @@ void zLightningFunc_Render(zLightning* l)
     xFuncPiece* pieceY[2];
     xFuncPiece* pieceZ[2];
     RwIm3DVertex* vert[2];
+    S32 i;
 
     if (l->func.length > 0.00001f)
     {
@@ -665,7 +666,7 @@ void zLightningFunc_Render(zLightning* l)
         pstep = sLFuncMinPStep;
     }
 
-    for (S32 i = 0; i < 2; i++)
+    for (i = 0; i < 2; i++)
     {
         param[i] = l->func.endParam[i];
         pieceX[i] = sLFuncX;
@@ -693,11 +694,11 @@ void zLightningFunc_Render(zLightning* l)
 
     xVec3Copy(&lastPos, &l->func.endPoint[0]);
 
-    U8 alpha = xrand();
-    S32 tex = 0;
+    U32 alpha = U8(xrand());
+    S32 firstTex = 0;
     U32 nvert = 0;
 
-    for (S32 i = 0; i < 2; i++)
+    for (i = 0; i < 2; i++)
     {
         xVec3Copy(&vpos, &lastPos);
 
@@ -709,7 +710,7 @@ void zLightningFunc_Render(zLightning* l)
         U8 cg = l->color.g;
         U8 cb = l->color.b;
         RwIm3DVertexSetRGBA(&vert[i][nvert], cr, cg, cb, alpha);
-        RwIm3DVertexSetUV(&vert[i][nvert], tex + sLFuncUVOffset, 0.0f);
+        RwIm3DVertexSetUV(&vert[i][nvert], firstTex + sLFuncUVOffset, 0.0f);
 
         vx = vpos.x;
         vy = vpos.y;
@@ -719,11 +720,11 @@ void zLightningFunc_Render(zLightning* l)
         cg = l->color.g;
         cb = l->color.b;
         RwIm3DVertexSetRGBA(&vert[i][nvert + 1], cr, cg, cb, alpha);
-        RwIm3DVertexSetUV(&vert[i][nvert + 1], tex + sLFuncUVOffset, 1.0f);
+        RwIm3DVertexSetUV(&vert[i][nvert + 1], firstTex + sLFuncUVOffset, 1.0f);
     }
 
     nvert += 2;
-    tex = 1;
+    S32 tex = 1;
 
     while (t < 1.0f)
     {
@@ -736,7 +737,7 @@ void zLightningFunc_Render(zLightning* l)
         xVec3SMul(&pos, &l->func.endPoint[0], 1.0f - t);
         xVec3AddScaled(&pos, &l->func.endPoint[1], t);
 
-        for (S32 i = 0; i < 2; i++)
+        for (i = 0; i < 2; i++)
         {
             F32 p = l->func.endParam[i] + t * l->func.paramSpan[i];
 
@@ -776,11 +777,10 @@ void zLightningFunc_Render(zLightning* l)
             }
         }
 
-        alpha = xrand();
+        alpha = U8(xrand());
 
-        for (S32 i = 0; i < 2; i++)
+        for (i = 0; i < 2; i++)
         {
-            RwIm3DVertex* const& drawVerts = vert[i];
             xVec3Copy(&vpos, &pos);
             xVec3AddScaled(&vpos, &side[i],
                            l->func.width * (l->func.scale * (scalar1 + scalar2)));
@@ -788,12 +788,12 @@ void zLightningFunc_Render(zLightning* l)
             F32 vx = vpos.x;
             F32 vy = vpos.y;
             F32 vz = vpos.z;
-            RwIm3DVertexSetPos(&drawVerts[nvert], vx, vy, vz);
+            RwIm3DVertexSetPos(&vert[i][nvert], vx, vy, vz);
             U8 cr = l->color.r;
             U8 cg = l->color.g;
             U8 cb = l->color.b;
-            RwIm3DVertexSetRGBA(&drawVerts[nvert], cr, cg, cb, alpha);
-            RwIm3DVertexSetUV(&drawVerts[nvert], tex + sLFuncUVOffset, 0.0f);
+            RwIm3DVertexSetRGBA(&vert[i][nvert], cr, cg, cb, alpha);
+            RwIm3DVertexSetUV(&vert[i][nvert], tex + sLFuncUVOffset, 0.0f);
 
             xVec3AddScaled(&vpos, &side[i],
                            (scalar1 + scalar2) * (-2.0f * l->func.scale * l->func.width));
@@ -801,12 +801,12 @@ void zLightningFunc_Render(zLightning* l)
             vx = vpos.x;
             vy = vpos.y;
             vz = vpos.z;
-            RwIm3DVertexSetPos(&drawVerts[nvert + 1], vx, vy, vz);
+            RwIm3DVertexSetPos(&vert[i][nvert + 1], vx, vy, vz);
             cr = l->color.r;
             cg = l->color.g;
             cb = l->color.b;
-            RwIm3DVertexSetRGBA(&drawVerts[nvert + 1], cr, cg, cb, alpha);
-            RwIm3DVertexSetUV(&drawVerts[nvert + 1], tex + sLFuncUVOffset, 1.0f);
+            RwIm3DVertexSetRGBA(&vert[i][nvert + 1], cr, cg, cb, alpha);
+            RwIm3DVertexSetUV(&vert[i][nvert + 1], tex + sLFuncUVOffset, 1.0f);
         }
 
         nvert += 2;
