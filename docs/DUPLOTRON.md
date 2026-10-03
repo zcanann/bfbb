@@ -11494,3 +11494,35 @@ The first actual source-link attempt still differs due to physical method and
 static-data ordering, so the unit remains NonMatching while that is audited.
 Evidence: build/talkbox-next-agent-exact-report.json and
 build/talkbox-next-agent-exact-allsource.log (local ignored artifacts).
+
+
+## xEntMotion whole-TU completion (2026-10-03)
+
+`xEntMotionDebugDraw` reaches 100% from 99.93198% (588 bytes). Remove the
+explicit cached `src` local from the move-point case and compare `omp`
+directly against `xem->mp.src`. The debug local list includes xmp/idx/omp/jdx,
+but no src. The compiler still hoists the source-field load into exactly
+the retail loop-entry position. All later instructions remain identical;
+the first owner/target draw now preserves its target position in retail's
+r29 instead of r30. Thus the old allocator-only/unreachable classification
+for this residue was incorrect: the source-level cache was the blocker.
+
+Named position captures, function-level debug-local scopes, scratch pointer
+bindings, equivalent entry/switch CFGs, and inline/deferred helper forms did
+not solve it. A shared scalar scratch capture obtained r29 but introduced a
+redundant move and was rejected. The retained direct-field form is the
+minimal reconstruction; no casts, pragmas, helper changes, compiler flag
+changes, assembly, or compiler binary modifications are needed.
+
+Full all_source and normal builds pass. The full deduplicated report changes
+only DebugDraw: +588 exact code bytes and +1 exact function, without any
+function, inline-caller, or data regressions. xEntMotion is now 41/41 exact,
+with 11,184 code bytes and 1,464 data bytes exact. Actual source linking
+produces zero differing bytes across the 2,859,136-byte DOL and retail SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6, so the TU is Matching. The existing
+`-sym on` flag remains. No ancillary behavior tests were added.
+
+Evidence in the isolated RGB worktree: build/motion-exact-sourcefield.py,
+build/motion-exact-code-report.json, build/motion-exact-linked-report.json,
+build/motion-exact-code-validation.log and
+build/motion-exact-link-validation.log.

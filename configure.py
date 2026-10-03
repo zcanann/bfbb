@@ -484,7 +484,7 @@ config.libs = [
             Object(Matching, "SB/Core/x/xDebug.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Core/x/xEnt.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Core/x/xEntDrive.cpp", extra_cflags=["-sym on"]),
-            Object(NonMatching, "SB/Core/x/xEntMotion.cpp", extra_cflags=["-sym on"]),
+            Object(Matching, "SB/Core/x/xEntMotion.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Core/x/xEnv.cpp"),
             Object(Matching, "SB/Core/x/xEvent.cpp"),
             Object(Matching, "SB/Core/x/xFFX.cpp"),
