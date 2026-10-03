@@ -10590,3 +10590,117 @@ source-linked units 452/543. Retail DOL SHA1 remains
 hashes remain a78a5fdb6c1d5677e987636b2e0743dbaefe9542 and
 9d445725489050035740aaff35860eddbaf3c3c9. The changed TUs remain NonMatching;
 the normal retail link does not establish their source-linked runtime behavior.
+
+
+## zThrown pointer-load audit: provenance matters (2026-10-02)
+
+This corrects the older statement that an sda21 store "simply does not treat"
+a pointer load as killed. Six focused probes were compiled using the exact
+`zThrown.o` flags, with unmodified stock GC/2.0p1 (SHA1
+`74bc177b10d1bbe8a60a21a6c0aa86d2dd9c0668`) and installed GC/2.0p1a
+(`a78a5fdb6c1d5677e987636b2e0743dbaefe9542`). All 384 emitted text bytes,
+including support accessors, are identical between the two compilers.
+
+The complete standalone diagnostic source is:
+
+```cpp
+// Read-only compiler diagnostic: no retail reference exists for these functions.
+struct Carry { float timer; };
+struct Stats { const char* name; void* callback; Carry* carry; unsigned id; };
+static unsigned count;
+static Carry fruit = { 24.0f };
+static Stats table[23];
+Stats* expose_table() { return table; }
+unsigned read_count() { return count; }
+Carry* fruit_address() { return &fruit; }
+float known_static(unsigned i) {
+    Stats* stats = table + i;
+    if (stats->carry != &fruit) return 0.0f;
+    ++count;
+    return stats->carry->timer;
+}
+float no_store(unsigned i) {
+    Stats* stats = table + i;
+    if (stats->carry != &fruit) return 0.0f;
+    return stats->carry->timer;
+}
+float unknown_stats(Stats* stats) {
+    if (stats->carry != &fruit) return 0.0f;
+    ++count;
+    return stats->carry->timer;
+}
+float aliasing_member(Stats* stats, Stats* destination, Carry* replacement) {
+    if (stats->carry != &fruit) return 0.0f;
+    destination->carry = replacement;
+    return stats->carry->timer;
+}
+float distinct_member(unsigned i) {
+    Stats* stats = table + i;
+    if (stats->carry != &fruit) return 0.0f;
+    ++stats->id;
+    return stats->carry->timer;
+}
+float unknown_call(unsigned i, void (*call)()) {
+    Stats* stats = table + i;
+    if (stats->carry != &fruit) return 0.0f;
+    call();
+    return stats->carry->timer;
+}
+```
+
+`known_static` loads carry once, tests it, stores count, then loads timer
+through the cached carry. `unknown_stats` loads carry for the test, stores
+count, **reloads carry**, then loads timer. The known table's address really
+escapes through `expose_table`; this is not a proof based on a never-exposed
+array. Other controls in the same source:
+
+| Intervening operation | Carry reload after operation, both compilers |
+| --- | --- |
+| None, table-derived pointer | No |
+| `++count`, table-derived pointer | No |
+| `++count`, parameter pointer | Yes |
+| `destination->carry = replacement`, unknown destination | Yes |
+| `++stats->id`, table-derived pointer | Yes |
+| Unknown function-pointer call, table-derived pointer | Yes |
+
+The sibling-member control is especially useful: this compiler conservatively
+kills carry when another member of the same known table entry changes, while
+preserving carry over a store to the separate count object. Therefore the
+repro is consistent with alias-object provenance, not a blanket failure to
+invalidate pointer-valued loads or a regression introduced by current patches.
+
+Retail witnesses remain `zThrown_AddFruit` (96.01852%, target reloads carry
+after count increment) and `zThrown_LaunchVel` (93.820755%, target schedules
+its carry load after the count store). The prior cross-TU witness
+`zCutsceneMgrPlayStart` still reloads `cutsceneHackTable[i].alphaBits` after
+`s_atomicNumber = 0`, while our compiler retains it. Its authoritative score
+is 99.12949%; the isolated raw score prints 98.777%. It is supporting evidence,
+**not an exact counterexample**.
+
+Exact same-TU controls were inspected: `zThrown_Remove` and
+`zThrown_LaunchStack` remain 100%. Remove preserves its explicitly snapshotted
+callback across the list assignment/count decrement and reads the unknown
+entity's baseType after the count store. That is consistent with the probe,
+but it is not the equivalent cached-table-field expression. No exact retail
+function with that identical expression/store pair was established in this
+bounded audit. The broad-rule regression boundary therefore remains unproven.
+The earlier volatile-counter trial already lost exact functions; it is not a
+source fix or a substitute for such a boundary.
+
+**Decision:** preserve a narrowly framed provenance/CSE hypothesis for review;
+do not claim a compiler deficiency, safe predicate, or expected match gain.
+A reduced probe has no retail target, and source/alias provenance differences
+in the real functions remain possible. A future candidate needs an actual
+alias-query/pass attribution and exact retail controls before a patch scope
+can be justified. No compiler files or running compiler process were patched.
+
+Reproduction artifacts in the isolated worktree: `build/thrown-alias-repro.cpp`,
+`thrown-alias-run.py`, `thrown-alias-results.txt`, `thrown-alias-meta.json`,
+`thrown-remove-control.txt`, `thrown-stack-control.txt`, and
+`thrown-cutscene-control.txt`. The runner extracts the actual zThrown rule
+from `build.ninja`; essential flags are `-O4,p -proc gekko -fp hardware
+-fp_contract on -lang=c++ -common on -char unsigned -inline off
+-use_lmw_stmw on -str reuse,pool,readonly -RTTI off -Cpp_exceptions off`,
+with the project's unchanged includes/defines and pragma flags recorded in
+`thrown-alias-meta.json`. This is documentation-only; no production source,
+Matching marker, or build configuration changed.
