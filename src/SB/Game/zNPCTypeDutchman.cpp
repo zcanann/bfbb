@@ -380,19 +380,18 @@ xAnimTable* ZNPC_AnimTable_Dutchman()
     // clang-format off
     S32 ourAnims[] = {
         ANIM_Idle01,
-        ANIM_Fidget01, 
-        ANIM_Fidget02, 
-        ANIM_Fidget03, 
-        ANIM_Taunt01, 
-        ANIM_Death01, 
-        ANIM_AttackWindup01, 
+        ANIM_Death01,
+        ANIM_Fidget01,
+        ANIM_Fidget02,
+        ANIM_Fidget03,
+        ANIM_AttackWindup01,
         ANIM_AttackLoop01,
-        ANIM_AttackEnd01, 
-        ANIM_Attack02Windup01, 
-        ANIM_Attack02Loop01, 
+        ANIM_AttackEnd01,
+        ANIM_Attack02Windup01,
+        ANIM_Attack02Loop01,
         ANIM_Attack02End01,
-        ANIM_LassoGrab01 NPCC_ANIM_LIST_END
-        
+        ANIM_LassoGrab01,
+        0
     };
     // clang-format on
     xAnimTable* table = xAnimTableNew("zNPCDutchman", NULL, 0);

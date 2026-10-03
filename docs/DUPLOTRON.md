@@ -6100,9 +6100,11 @@ should discard every single-word `.rodata` row in it.
 
 Explained and deliberate:
 
-- `zNPCTypePrawn` `0000000d` and `zNPCTypeDutchman` `00000007`, ours-only: the
-  `NPCC_ANIM_LIST_END` terminators added to fix retail's unterminated anim
-  lists. Correctness over match; leave them.
+- `zNPCTypePrawn` retains its conditional `NPCC_ANIM_LIST_END` workaround.
+  The old attribution of Dutchman's source-only `00000007` to a terminator
+  workaround was incorrect: it was an extra Taunt01 entry. Retail's 13-word
+  Dutchman template contains twelve animation indices and a zero terminator.
+  The source list is corrected below in the 2026-10-02 data audit.
 - `3acccccd`/`3b088889` (1/640, 1/480) ours-only in `zGame`, `zMain`, `xTRC`,
   `xCM`, `zUIFont`: our object emits weak out-of-line copies of `NSCREENX__Ff`
   and `NSCREENY__Ff` along with their pool constants. Retail's objects did too --
@@ -10120,3 +10122,33 @@ result. Skip cursors, staged fill construction, direct scaled patterns, and
 the remaining-width loop also scored lower. All those trials were restored.
 No compiler changes were made. Workers' four bounded zScene/zLightning
 scope/lifetime variants were likewise neutral or worse and restored.
+
+
+## 2026-10-02: Dutchman animation template restores exact data
+
+A direct retail-object audit corrects the earlier claim that Dutchman's
+animation list was unterminated. `ZNPC_AnimTable_Dutchman` references the
+52-byte `.rodata` object `@1674` at offset 540. Its thirteen words are:
+`1, 11, 4, 5, 6, 12, 13, 14, 16, 17, 18, 19, 0`.
+The source template instead contained
+`1, 4, 5, 6, 7, 11, 12, 13, 14, 16, 17, 18, 19`.
+Function-code matching had hidden the incorrect copied data.
+
+Move Death01 (11) after Idle01, remove Taunt01 (7) from this standard-transition
+list, and include the retail zero explicitly. The Taunt animation state itself
+remains present, as in retail. Both matching and NON_MATCHING builds now have
+the same thirteen-entry terminated list; Dutchman no longer uses the conditional
+terminator macro. Its definition and other users retain their prior behavior.
+The stale header comment and PCPORT explanation are corrected accordingly.
+
+Validation: all_source rebuilds all 55 affected objects successfully. The full
+deduplicated report changes only Dutchman's data: 5280/8840 to 8840/8840 bytes
+(59.728508% to 100%). All 227 function records are unchanged, with 224 exact;
+there are no other unit changes or regressions. A separate compilation with
+-DNON_MATCHING into ignored scratch output and the normal matching object both
+contain the exact thirteen-word retail template once. The normal retail link
+passes SHA1 306526d90b48e99894c3138f5fc8f2716d9fecf6. The three existing code
+holdouts remain, so the unit is not promoted and exact source linking is not
+claimed. Evidence: build/dutchman-anim-report.json, dutchman-anim-modes.log and
+the ELF/template audit helpers in the isolated worktree. Plankton's exhausted
+impart_velocity holdout is unchanged; no compiler or assembly edits were made.
