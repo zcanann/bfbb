@@ -12345,3 +12345,41 @@ The private Bink decoder root-cursor forms and guarded next-magnitude shift
 did not improve ReadBPLossless (91.80942 / 91.47207 versus 92.4414). They were
 not applied to production source. The root-cursor form overlaps older root
 initialization experiments and provides no new compiler-deficiency evidence.
+
+
+### iMath3 sphere slab bound lifetimes (2026-10-03)
+
+`iBoxIsectSphere` now scopes each axis's box lower bound and sphere upper
+bound to that axis's classification. The sphere center and radius remain
+snapshots; the lower sphere bound is expressed at its two comparison sites,
+which the compiler combines into one subtraction. No values, branch cases,
+helper calls, or post-helper radius reads change. The debug record names only
+`xcode`, `ycode`, and `zcode`; it does not establish the earlier long-lived
+`lo`/`hi` scratch arrangement. Retail keeps radius in f2 and the lower sphere
+bound in f0. These shorter lifetimes recover that allocation without a new
+helper, volatile access, compiler change, or inline assembly.
+
+The authoritative full deduplicated report improves the 668-byte function
+from 98.98203% to 99.371254%, and the unit from 99.869026% to 99.919106%.
+Every other unit and function is identical to the fresh baseline; the unit
+remains 17/18 exact functions with all 40 data bytes matching. Scoped scalar
+bounds alone reached 99.19162%; aggregate intervals and temporary references
+introduced extra memory traffic, while broader center scopes or comparison
+booleans lost matching. Only the strongest verified form is retained.
+
+A real source-selected link remains 55 bytes different at the unchanged
+2,859,136-byte DOL size (SHA1 `99ca180599ee0a199fc604e8456c240f6dc8d109`).
+Twenty-one bytes are register operands in this function: retail reuses f1
+for center/upper sphere bound and the dead lower-box register for its upper
+bound, while source uses distinct registers. Another 32 relocation bytes
+and two data bytes reflect a pre-existing swap of the 0.0f/1.0f constant
+pool entries. Thus deduplicated data equality does not establish actual pool
+layout equality. The TU stays NonMatching; no completion is claimed.
+
+All-source and normal builds pass; the restored normal selected-object DOL
+has retail SHA1 `306526d90b48e99894c3138f5fc8f2716d9fecf6`. Isolated GC/2.0p1a
+and GC/2.0p1e compiler hashes remain `a78a5fdb6c1d5677e987636b2e0743dbaefe9542`
+and `9d445725489050035740aaff35860eddbaf3c3c9`. Evidence is saved under ignored
+`build/imath3-return-*`: baseline/candidate full reports, source-link byte
+inventory, build logs, rejected sources and raw diffs. Only score/build/link
+validation was used.

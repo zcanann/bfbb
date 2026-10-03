@@ -554,39 +554,41 @@ void iBoxIsectRay(const xBox* b, const xRay3* r, xIsect* isx)
 void iBoxIsectSphere(const xBox* box, const xSphere* p, xIsect* isx)
 {
     U32 xcode, ycode, zcode;
-    F32 hi = p->center.x;
+    F32 center = p->center.x;
     const F32 radius = p->r;
-    F32 lo = hi - radius;
-    hi += radius;
+    {
+        const F32 lower = box->lower.x;
+        const F32 hi = center + radius;
 
-    if (lo < box->lower.x)
-    {
-        if (hi < box->lower.x)
+        if (center - radius < lower)
         {
-            xcode = 2;
-        }
-        else if (hi > box->upper.x)
-        {
-            xcode = 0;
-        }
-        else
-        {
-            xcode = 1;
-        }
-    }
-    else
-    {
-        if (lo > box->upper.x)
-        {
-            xcode = 5;
-        }
-        else if (hi > box->upper.x)
-        {
-            xcode = 4;
+            if (hi < lower)
+            {
+                xcode = 2;
+            }
+            else if (hi > box->upper.x)
+            {
+                xcode = 0;
+            }
+            else
+            {
+                xcode = 1;
+            }
         }
         else
         {
-            xcode = 3;
+            if (center - radius > box->upper.x)
+            {
+                xcode = 5;
+            }
+            else if (hi > box->upper.x)
+            {
+                xcode = 4;
+            }
+            else
+            {
+                xcode = 3;
+            }
         }
     }
 
@@ -596,38 +598,40 @@ void iBoxIsectSphere(const xBox* box, const xSphere* p, xIsect* isx)
         return;
     }
 
-    hi = p->center.y;
-    lo = hi - radius;
-    hi += radius;
+    center = p->center.y;
+    {
+        const F32 lower = box->lower.y;
+        const F32 hi = center + radius;
 
-    if (lo < box->lower.y)
-    {
-        if (hi < box->lower.y)
+        if (center - radius < lower)
         {
-            ycode = 2;
-        }
-        else if (hi > box->upper.y)
-        {
-            ycode = 0;
-        }
-        else
-        {
-            ycode = 1;
-        }
-    }
-    else
-    {
-        if (lo > box->upper.y)
-        {
-            ycode = 5;
-        }
-        else if (hi > box->upper.y)
-        {
-            ycode = 4;
+            if (hi < lower)
+            {
+                ycode = 2;
+            }
+            else if (hi > box->upper.y)
+            {
+                ycode = 0;
+            }
+            else
+            {
+                ycode = 1;
+            }
         }
         else
         {
-            ycode = 3;
+            if (center - radius > box->upper.y)
+            {
+                ycode = 5;
+            }
+            else if (hi > box->upper.y)
+            {
+                ycode = 4;
+            }
+            else
+            {
+                ycode = 3;
+            }
         }
     }
 
@@ -637,38 +641,40 @@ void iBoxIsectSphere(const xBox* box, const xSphere* p, xIsect* isx)
         return;
     }
 
-    hi = p->center.z;
-    lo = hi - radius;
-    hi += radius;
+    center = p->center.z;
+    {
+        const F32 lower = box->lower.z;
+        const F32 hi = center + radius;
 
-    if (lo < box->lower.z)
-    {
-        if (hi < box->lower.z)
+        if (center - radius < lower)
         {
-            zcode = 2;
-        }
-        else if (hi > box->upper.z)
-        {
-            zcode = 0;
-        }
-        else
-        {
-            zcode = 1;
-        }
-    }
-    else
-    {
-        if (lo > box->upper.z)
-        {
-            zcode = 5;
-        }
-        else if (hi > box->upper.z)
-        {
-            zcode = 4;
+            if (hi < lower)
+            {
+                zcode = 2;
+            }
+            else if (hi > box->upper.z)
+            {
+                zcode = 0;
+            }
+            else
+            {
+                zcode = 1;
+            }
         }
         else
         {
-            zcode = 3;
+            if (center - radius > box->upper.z)
+            {
+                zcode = 5;
+            }
+            else if (hi > box->upper.z)
+            {
+                zcode = 4;
+            }
+            else
+            {
+                zcode = 3;
+            }
         }
     }
 
