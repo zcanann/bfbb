@@ -295,17 +295,17 @@ void iModelQuatToMat(xQuat* q, xVec3* a, RwMatrixTag* t)
 void iModelAnimMatrices(RpAtomic* model, xQuat* quat, xVec3* tran, RwMatrixTag* mat)
 {
     RwMatrixTag* pMatrixArray;
-    RpHAnimNodeInfo* iVar1;
+    RpHAnimNodeInfo* pCurrentFrame;
     RwMatrixTag matrixStack[33];
     U32 pCurrentFrameFlags;
-    RpHAnimNodeInfo* pCurrentFrame;
+    RpHAnimHierarchy* pHierarchy;
     S32 i;
     S32 numFrames;
     RwMatrixTag* pMatrixStackTop;
 
-    pCurrentFrame = (RpHAnimNodeInfo*)GetHierarchy(model);
+    pHierarchy = (RpHAnimHierarchy*)GetHierarchy(model);
 
-    if (pCurrentFrame != NULL)
+    if (pHierarchy != NULL)
     {
         pMatrixStackTop = &matrixStack[0];
         pMatrixStackTop->at.z = 1.0f;
@@ -323,15 +323,15 @@ void iModelAnimMatrices(RpAtomic* model, xQuat* quat, xVec3* tran, RwMatrixTag* 
         matrixStack[0].pos.x = 0.0f;
         matrixStack[0].flags |= 0x20003;
 
-        matrixStack[1] = matrixStack[0];
-        numFrames = pCurrentFrame->nodeIndex;
-        pMatrixArray = (&matrixStack[1]);
-        iVar1 = (RpHAnimNodeInfo*)pCurrentFrame[1].nodeID;
+        pMatrixArray = matrixStack;
+        *++pMatrixArray = matrixStack[0];
+        numFrames = pHierarchy->numNodes;
+        pCurrentFrame = pHierarchy->pNodeInfo;
 
         pMatrixArray++;
         for (i = 0; i < numFrames; i++)
         {
-            pCurrentFrameFlags = iVar1->flags;
+            pCurrentFrameFlags = pCurrentFrame->flags;
             if ((pCurrentFrameFlags & 2) != 0)
             {
                 RwMatrixTag& pushedMatrix = *pMatrixArray++;
@@ -358,7 +358,7 @@ void iModelAnimMatrices(RpAtomic* model, xQuat* quat, xVec3* tran, RwMatrixTag* 
             mat++;
             quat++;
             tran++;
-            iVar1++;
+            pCurrentFrame++;
         }
     }
 }

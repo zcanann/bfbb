@@ -11324,3 +11324,26 @@ Validation: build/parallel-twentyseventh-report.json and
 build/parallel-twentyseventh-validation.log. Related half-pitch temporary,
 row-pointer capture, signedness, and assignment-placement trials are neutral
 or worse (build/yuv-blit27*, 27b*, 27c*, 27d*); only the improvement is retained.
+
+
+## iModel animation matrix stack initialization (2026-10-02)
+
+`iModelAnimMatrices` improves from 98.4% to 100% (300 bytes). Initializing
+its stack cursor at the base, then copying the identity through
+`*++pMatrixArray`, recovers the remaining loop-entry instruction order.
+The hierarchy now uses its actual `RpHAnimHierarchy` type and named
+`numNodes`/`pNodeInfo` fields instead of a node-info cast and integer pointer.
+The stack contents, quaternion conversion, and parent push/pop behavior
+are unchanged. Earlier isolated hierarchy and index-initialization forms
+were neutral; the initial stack-copy expression was the missing interaction.
+
+The full deduplicated report changes only this function, with no function,
+inline-caller, data, or exact-count regressions. iModel now has 38/38 exact
+functions, 7,532 matched code bytes, and 1,336 matched data bytes. Full source
+compilation and the normal retail DOL hash pass. The TU remains NonMatching:
+an actual source-link trial differs in just the zero/one floating-point
+literal slots and 14 referring load operands (18 bytes total). Resolving
+that genuine literal creation order is still required before Matching.
+No compiler modifications, new assembly, fake mappings, or ancillary
+behavior tests were used. Evidence: build/imodel-exact-*-trials.py and
+build/imodel-exact-candidate.json in the isolated RGB worktree.
