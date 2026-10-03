@@ -1979,14 +1979,10 @@ void zNPCCommon::ISeePlayer()
     {
         g_tmr_talkless = 3.0f + (xurand() - 0.5f) * 0.25f * 3.0f;
 
-        // The one remaining difference is an extra `beq` on our side for
-        // NPC_TYPE_FISH ('NTF0'): retail uses that value only as a binary-search
-        // pivot, we also emit an equality test for it.
-        //
-        // The obvious reading -- that retail does not have NPC_TYPE_FISH in the
-        // fallthrough group below and lets it reach the `if (ven != eEventUnknown)`
-        // at the end -- was TESTED on 2026-08-26 and is WRONG: commenting the case
-        // out drops this function from 99.39% to 96.83%. Do not retry it.
+        // Retail compares NTF0 only as the start of a multi-value range, so the
+        // fish types NTF0..NTF; are all listed. The remaining difference is three
+        // pivot immediates in the NTF subtree (NTFJ/NTFH/NTFF vs retail
+        // NTFK/NTFG/NTF<); the exact set of listed fish cases is still unknown.
         switch (this->SelfType())
         {
         //case NPC_TYPE_UNKNOWN:
@@ -2020,15 +2016,15 @@ void zNPCCommon::ISeePlayer()
             ven = eEventSituationSeeStoneTiki;
             break;
         case NPC_TYPE_FISH:
-        //case NPC_TYPE_FISH_MALE:
-        //case NPC_TYPE_FISH_FEMALE:
-        //case NPC_TYPE_FISH_ELDER:
-        //case NPC_TYPE_FISH_ELDESS:
-        //case NPC_TYPE_FISH_BOY:
-        //case NPC_TYPE_FISH_GIRL:
-        //case NPC_TYPE_BALLOONBOY:
-        //case NPC_TYPE_GARY:
-        //case NPC_TYPE_SQUIDWARD:
+        case NPC_TYPE_FISH_MALE:
+        case NPC_TYPE_FISH_FEMALE:
+        case NPC_TYPE_FISH_ELDER:
+        case NPC_TYPE_FISH_ELDESS:
+        case NPC_TYPE_FISH_BOY:
+        case NPC_TYPE_FISH_GIRL:
+        case NPC_TYPE_BALLOONBOY:
+        case NPC_TYPE_GARY:
+        case NPC_TYPE_SQUIDWARD:
         case NPC_TYPE_SQUIDWARD_MUSIC:
         case NPC_TYPE_SQUIDWARD_BANDAID:
         //case NPC_TYPE_DUTCHMAN_NSB:
@@ -2041,10 +2037,10 @@ void zNPCCommon::ISeePlayer()
         //case NPC_TYPE_MSPUFFS:
         //case NPC_TYPE_LARRY:
         //case NPC_TYPE_BUBBUDDY:
-        //case NPC_TYPE_NEWSFISH:
+        case NPC_TYPE_NEWSFISH:
         case NPC_TYPE_NEWSFISHTV:
         //case NPC_TYPE_MOTORIST:
-        //case NPC_TYPE_MERMANCHAIR:
+        case NPC_TYPE_MERMANCHAIR:
         //case NPC_TYPE_MERMAN:
         case NPC_TYPE_BARNACLEBOY:
             //case NPC_TYPE_WORM:
