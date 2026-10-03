@@ -12873,3 +12873,29 @@ completion gains are exactly the UIFont totals above. All-source and normal
 retail builds pass. No shared headers, compiler binaries or assembly changed.
 Evidence: build/parallel-fiftythird-report.json and validation log, plus
 expand53-run-count-private, expand53-motion-private and expand53-combined-private.
+
+
+## UI rectangle construction and source-link closure (2026-10-03)
+
+zUI_Render improves from 94.85797% to 100% by initializing the model's
+immutable rectangle directly from asset expressions. This removes four
+reconstruction-only scalar locals absent from the debug local list and
+restores retail's dimension-conversion and field-store ordering. All 47
+functions, 11,936 code bytes, and 10,660 data bytes now match. The full
+all_source build passes; no other function or matched-data total changes.
+
+Actual linkage additionally needs the file-scope buffer[16] recorded before
+sSorted in dwarf/SB/Game/zUI.cpp. Without that original declaration, the
+linker enlarges sSorted from 3,072 to 3,104 bytes despite the input symbol's
+correct size, shifting subsequent COMMON storage. Restoring the declaration
+reduces the DOL difference from 559 to 193 bytes without changing any score.
+
+The remaining difference is the 44-byte xMat3x3Scale wrapper emitted before
+the generated initializer instead of after it. Its unchanged body now belongs
+to zUI's private inline implementation header, included before its first use;
+the compiler's existing -sym on mode supplies retail's deferred header group.
+The private header has no other consumers. No compiler binary or assembly
+changes are involved. The retained source-selected link has zero differences
+and SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6, so zUI is Matching.
+Evidence: build/zui-output-sym-report.json, build/zui-output-source-diff.json,
+and build/zui-output-source-link.log in the isolated robot worktree.

@@ -24,6 +24,9 @@
 #include <string.h>
 #include <stdio.h>
 
+// Emit this weak wrapper in the header group after the generated initializer.
+#include "zUIRenderHelpers.h"
+
 #define TASK_COUNT 8
 #define TASK_COUNT_BOSS 2
 #define TASK_COUNT_SMALLBOSS 1
@@ -59,6 +62,9 @@ struct menuWorldInfo
 {
     menuTaskInfo taskInfo[TASK_COUNT];
 };
+
+// Retained from the debug globals; its declaration anchors the COMMON group.
+char buffer[16];
 
 _zUI* sSorted[768];
 zUIMgr gUIMgr;
@@ -889,15 +895,8 @@ void zUI_Render(xEnt* ent)
             else if (ui->model != NULL)
             {
                 zUIAsset& a = *ui->sasset;
-                F32 rw = a.dim[0] / 640.0f;
-                F32 rh = a.dim[1] / 480.0f;
-                F32 rx = a.pos.x / 640.0f;
-                F32 ry = a.pos.y / 480.0f;
-                basic_rect<F32> r = {};
-                r.x = rx;
-                r.y = ry;
-                r.w = rw;
-                r.h = rh;
+                const basic_rect<F32> r = { a.pos.x / 640.0f, a.pos.y / 480.0f,
+                                             a.dim[0] / 640.0f, a.dim[1] / 480.0f };
 
                 if (r.w <= 0.0f || r.h <= 0.0f)
                 {
@@ -1990,7 +1989,3 @@ void zUI_ScenePortalLoad(xSerial* s)
     }
 }
 
-WEAK void xMat3x3Scale(xMat3x3* m, const xVec3* s)
-{
-    xMat3x3ScaleC(m, s->x, s->y, s->z);
-}

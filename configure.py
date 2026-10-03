@@ -579,7 +579,7 @@ config.libs = [
             Object(Matching, "SB/Game/zScript.cpp"),
             Object(Matching, "SB/Game/zSurface.cpp"),
             Object(NonMatching, "SB/Game/zThrown.cpp"),
-            Object(NonMatching, "SB/Game/zUI.cpp"),
+            Object(Matching, "SB/Game/zUI.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zUIFont.cpp"),
             Object(Matching, "SB/Game/zVar.cpp"),
             Object(Matching, "SB/Game/zVolume.cpp"),
