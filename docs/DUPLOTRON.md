@@ -12599,3 +12599,23 @@ All three units remain NonMatching. Evidence: final report/validation log
 `build/parallel-fortyninth-final-*` and `build/zgame49-source-link.json`,
 saved DOL, source-link and restoration logs. No new inline assembly,
 compiler modification, or ancillary behavioral suite was used.
+
+
+### Bink ExpandPlane: recover scaled block output (2026-10-03)
+
+Retail scaled-pattern output expands pairs of mask bits directly into two
+output rows using mask3/mask4. Reconstruct that path instead of expanding
+to an intermediate block first. Scaled raw output advances the color bundle
+once per input row, and scaled fills write paired output rows. Recover the
+remaining-width loop counter and end-of-row work-column reset. These ordinary
+C changes follow the retail block structure without assembly or compiler edits.
+
+Full deduplicated ExpandPlane score improves 64.977684 -> 67.05882.
+Source size is 5,644 bytes versus retail 5,916. The full source build and
+normal retail build pass; every other function score and all global/per-unit
+exact code, data and completion measures are unchanged. Complete units remain
+467/543; this is partial Bink progress, not a completed TU.
+
+Evidence: build/expand50-scaled-private and expand50-fill-private contain
+isolated comparisons; build/parallel-fiftieth-scaled-report.json and
+parallel-fiftieth-scaled-validation.log contain integrated verification.
