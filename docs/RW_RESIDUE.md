@@ -387,6 +387,12 @@ or the only known lever was rejected as not source-likely.
 - **Move needed:** the two CSE temps in the opposite order. N7 creates CSE
   temps by first occurrence, and the `len == 0` test comes first, so no
   ordering of the source reverses them.
+- **Replay check:** a hand replay of the capture with only @300 coloured
+  before @299 gives retail's colours exactly, so the residue is just that one
+  rank pair (diag's own search runs out of budget and reports it unreachable).
+  Inert: memSize assigned twice / block-local / in one call only, store and
+  sizeof order, own-type casts, caching materials first; memSize in both calls
+  fixes the pair but scrambles the callee-saved params (97.77).
 - **Status:** REG, no lever (reclassified from (b)).
 
 ### 3.2 (b) Interference graph or pre-RA order differs
@@ -404,6 +410,10 @@ orders the defining instructions differently.
   `addi, add, subi`. Retail's order is `addi; add; subi`, so v64 interferes
   with v49. No rank move suffices.
 - **Evidence:** about 20 more source variants were inert.
+- **DWARF:** Ratatouille declares `link` and `aligned` block-local in the
+  every-block-full branch. Block-local `link` is neutral; block-local
+  `aligned` gives 98.70 by dropping retail's final `mr r3,r0`, which suggests
+  retail's `aligned` and `freeEntry` are separate webs there.
 - **Status:** graph differs (pre-RA scheduler).
 
 #### `RwImageResample`
