@@ -1,11 +1,15 @@
+#define ZNPCB_SB2_DEFER_SINGLETON
+#define XMATH3_DEFER_RMULVEC
 #include "xVec3.h"
 #include "xMath3.h"
 #include "xMathInlines.h"
 #include "xParEmitter.h"
 
 #include "zNPCFXCinematic.h"
+#undef XMATH3_DEFER_RMULVEC
 #include "zParPTank.h"
 #include "zNPCTypeBossSB2.h"
+#undef ZNPCB_SB2_DEFER_SINGLETON
 #include "xLaserBolt.inl"
 #include "zNPCSupport.h"
 #include "xString.h"
@@ -2555,9 +2559,6 @@ static void NCIN_SleepyDRay_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 killi
 static void NCIN_SleepyDRay_AR(const zCutsceneMgr* csnmgr, NCINEntry* fxrec, RpAtomic*,
                         RwMatrixTag* animMat, U32 animIndex, U32 dataIndex)
 {
-    static const F32 uv_scroll_dray[2] = { 0.0f, -4.55f };
-    static const F32 uv_slice_dray[2] = { 0.25f, 0.25f };
-
     xVec3 pos_trail;
 
     if (animIndex == 0)
@@ -2583,6 +2584,9 @@ static void NCIN_SleepyDRay_AR(const zCutsceneMgr* csnmgr, NCINEntry* fxrec, RpA
 
     const RwRGBA rgba_top = { 255, 255, 255, 255 };
     const RwRGBA rgba_bot = { 255, 255, 255, 255 };
+
+    static const F32 uv_scroll_dray[2] = { 0.0f, -4.55f };
+    static const F32 uv_slice_dray[2] = { 0.25f, 0.25f };
 
     F32 tym = csnmgr->csn->Time - fxrec->tym_beg;
     F32 uv_v = tym * uv_scroll_dray[1];
@@ -3842,48 +3846,17 @@ static void NCIN_SBBNode_AR(const zCutsceneMgr*, NCINEntry* fxrec, RpAtomic* mod
     sb2->render_nodes();
 }
 
-void xCutscene::NoseyClear()
+__declspec(weak) void xCutscene::NoseyClear()
 {
     this->NoseySet(0);
 }
 
-void xCutscene::NoseySet(XCSNNosey* nosey)
+__declspec(weak) void xCutscene::NoseySet(XCSNNosey* nosey)
 {
     this->cb_nosey = nosey;
 }
 
-void NPCCone::TextureSet(RwRaster* raster)
-{
-    rast_cone = raster;
-}
-
-void NPCCone::UVSliceSet(F32 u, F32 v)
-{
-    this->uv_slice[0] = u;
-    this->uv_slice[1] = v;
-}
-
-void NPCCone::UVBaseSet(F32 u, F32 v)
-{
-    this->uv_tip[0] = u;
-    this->uv_tip[1] = v;
-}
-
-void NPCCone::ColorSet(RwRGBA top, RwRGBA bot)
-{
-    this->rgba_top = top;
-    this->rgba_bot = bot;
-}
-
-void NPCCone::RadiusSet(F32 conefloat)
-{
-    rad_cone = conefloat;
-}
-
-void NPARMgmt::KillAll()
-{
-    this->cnt_active = 0;
-}
+#include "zNPCFXCinematic.inl"
 
 // This string was used in a deadstripped function.
 // This function is here to force the symbol to be linked.

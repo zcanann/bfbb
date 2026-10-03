@@ -690,7 +690,7 @@ config.libs = [
             Object(NonMatching, "SB/Game/zNPCGlyph.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zNPCHazard.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zNPCGoalAmbient.cpp", extra_cflags=["-sym on"]),
-            Object(NonMatching, "SB/Game/zNPCFXCinematic.cpp"),
+            Object(NonMatching, "SB/Game/zNPCFXCinematic.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Core/x/xHudText.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zCombo.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Core/x/xCM.cpp"),

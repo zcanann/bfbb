@@ -170,6 +170,10 @@ inline void xRotCopy(xRot* o, const xRot* r)
     o->angle = r->angle;
 }
 
+// Cinematic owns a deferred copy alongside its other local math helpers.
+#ifdef XMATH3_DEFER_RMULVEC
+static void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v);
+#else
 static inline void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 {
     F32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
@@ -180,6 +184,7 @@ static inline void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
     o->y = y;
     o->z = z;
 }
+#endif
 
 inline void xMat4x3Toworld(xVec3* o, const xMat4x3* m, const xVec3* v)
 {

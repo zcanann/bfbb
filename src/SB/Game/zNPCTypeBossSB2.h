@@ -210,10 +210,14 @@ struct zNPCB_SB2 : zNPCBoss
 
     static zNPCB_SB2* _singleton;
 
+#ifdef ZNPCB_SB2_DEFER_SINGLETON
+    static zNPCB_SB2* singleton();
+#else
     static zNPCB_SB2* singleton()
     {
         return _singleton;
     }
+#endif
 
     zNPCB_SB2(S32 myType);
     void Init(xEntAsset* asset);

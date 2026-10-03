@@ -12619,3 +12619,53 @@ exact code, data and completion measures are unchanged. Complete units remain
 Evidence: build/expand50-scaled-private and expand50-fill-private contain
 isolated comparisons; build/parallel-fiftieth-scaled-report.json and
 parallel-fiftieth-scaled-validation.log contain integrated verification.
+
+
+### Cinematic helper ownership and source-link preparation (2026-10-03)
+
+The actual zNPCFXCinematic source link improves from 8,217 differing DOL
+bytes to 3,972 at the unchanged 2,859,136-byte size. Its SHA1 is now
+`fdac9623e12b452529a126922fe41e174b5ff7ab`. This is layout preparation, not a
+completed TU: NCIN_SleepyDRay_AR remains 436 bytes and 97.477066% matched,
+with 92/93 functions and all 27,624 data bytes exact in the full report.
+
+Retail places NoseyClear/NoseySet, the local matrix-vector helper, five cone
+setters, KillAll and singleton after the ordinary callbacks, in that order.
+The source previously emitted the matrix helper and singleton among the
+callbacks and gave the Nosey/cone/KillAll methods strong bindings instead of
+retail's weak bindings. `-sym on`, explicit weak Nosey definitions and a
+TU-private helper definition group recover that order and those bindings.
+Two narrow opt-ins expose declarations for xMat3x3RMulVec and SB2::singleton
+in this TU; the private group supplies their existing arithmetic/accessor
+bodies in the required positions. Every other TU retains its previous
+header definitions. The duplicated local matrix body is a documented small
+C++ compromise to avoid moving a widely shared definition's emission group.
+No common-BSS workaround is needed: neither object has COMMON symbols and
+the named BSS/SBSS layouts already agree. No padding or constants were added.
+
+The existing UV table declarations now follow the two color initializers,
+as their retail pool ordering requires. This preserves all code/data scores.
+With the earlier pool still displaced, that correct ordering adds five
+incidental absolute-byte differences compared with the 3,967-byte helper-only
+checkpoint; preserving the incorrect relative order would obstruct closure.
+
+The remaining pool issue is explicit: retail creates 3.0f and the signed
+integer-to-double bias `4330000080000000` before PI; source creates them at
+later uses. This changes alignment and leaves the linked .sdata2 eight bytes
+shorter. All shared global function addresses now agree; the only shifted
+shared globals are eight objects following that pool, at -8 bytes. Current
+residue partitions as 1,904 .text, 2,066 .sdata2, one .init and one .sdata
+byte. No supported earlier literal owner was found, and none was invented.
+The separate code holdout still concerns UV-product register assignment and
+scroll-load/color-stack-store scheduling. Earlier notes about a heap-store
+alias residue do not describe this current source.
+
+All 162 affected source consumers rebuilt after the header changes. The full
+deduplicated report is identical to baseline across all units/functions and
+data, including inline callers. All-source and normal builds pass; restored
+normal DOL SHA1 is `306526d90b48e99894c3138f5fc8f2716d9fecf6`. Both isolated
+compiler hashes remain unchanged. NonMatching is retained. No compiler
+modification, new assembly, or behavioral test suite was used. Evidence:
+`build/cinematic-layout-final-report.json`, `cinematic-layout-affected-sources.txt`,
+`cinematic-layout-owned-link.json`, saved linked ELF, and associated build/raw
+comparison logs.
