@@ -11305,3 +11305,22 @@ build/parallel-twentysixth-validation.log. No compiler/assembly changes or
 ancillary behavior tests. Save/load and doubled-IDCT follow-ups produced no
 gain; ordinary switch break/default forms also failed to reproduce Hangable's
 retail branch order, so no production or compiler change was made for those.
+
+
+## Bink chroma-delta lifetime (2026-10-02)
+
+YUV_blit improves 95.14445 -> 95.9963. Initialize c_delta from chroma_pitch,
+then subtract the half-width in place. This separates the shared half-pitch
+value from the row delta and restores a register copy; source size grows from
+1076 to retail's 1080 bytes. The copy is not yet in retail's exact register or
+position, and initial-plane/odd-row scheduling remains unresolved. This is
+ordinary C++ with unchanged arithmetic, no compiler or assembly changes.
+
+Full all_source/normal build passes. The deduplicated report changes only
+YUV_blit; YUV reaches 96.03404, overall fuzzy 99.533195. Exact functions, data,
+and linked totals are unchanged. Retail SHA1 remains
+306526d90b48e99894c3138f5fc8f2716d9fecf6; YUV remains NonMatching.
+Validation: build/parallel-twentyseventh-report.json and
+build/parallel-twentyseventh-validation.log. Related half-pitch temporary,
+row-pointer capture, signedness, and assignment-placement trials are neutral
+or worse (build/yuv-blit27*, 27b*, 27c*, 27d*); only the improvement is retained.

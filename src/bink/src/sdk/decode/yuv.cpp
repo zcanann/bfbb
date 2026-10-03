@@ -677,9 +677,10 @@ static void YUV_blit(void PTR4* dest,
     setup_scaling(flags, &destpitch, srcw, srch, blits, &pitch_delta);
 
     chroma_pitch = srcpitch >> YUV_CHROMA_SHIFT;
+    c_delta = chroma_pitch;
     y_delta = srcpitch - srcw;
     a_delta = y_delta;
-    c_delta = chroma_pitch - (srcw >> YUV_CHROMA_SHIFT);
+    c_delta -= srcw >> YUV_CHROMA_SHIFT;
 
     S.dest1 = S.dest0 + destpitch;
     ybase = (u8 PTR4*)src + srcx + srcy * srcpitch;
