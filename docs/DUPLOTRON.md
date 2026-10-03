@@ -10262,3 +10262,51 @@ regress. Exact functions increase to 9940 and exact code to 2217572 bytes;
 complete source-linked units remain 452. Overall fuzzy progress is 99.489044%.
 Full source compilation and the retail DOL link/hash check pass. Dutchman has
 two code holdouts and remains NonMatching. No compiler changes were made.
+
+
+## Correct scaled-block lower-row dispatch (2026-10-02)
+
+A retail control-flow audit found a real ExpandPlane error. On a lower block
+row (`row & 8`), the source broke out of the scaled case before its extra
+column advance and work marks. Retail's branch at 801A8410 goes to 801A8950,
+which marks both covered work positions and advances output, previous-frame
+and column cursors by an extra eight pixels before the common eight-pixel
+advance. It consumes one block-type byte, no subtype byte and no payload.
+The old source advanced only eight pixels, omitted the marks, and would read
+another block type for the second half of the same sixteen-pixel block.
+
+Guard only the subtype decoding with the row-parity check, leaving scaled
+advancement and work marking common to both rows. The simpler sixteen-row
+fill loop matches better with the corrected control flow than the preceding
+paired-row form, so that equivalent fill implementation is restored.
+
+`python tools/check_bink_scaled_dispatch.py --self-test` compiles production
+scaled dispatch and common advancement with payload decoders stubbed. It
+passes 112 cases across both row parities, luma/chroma plane scales and seven
+starting columns, checking bundle consumption, both work positions, cursor
+advancement and guards. Before correction it fails at row 8 / plane 1 / column 0:
+an eight-pixel advance instead of sixteen. Reinserting that early exit is a failing negative
+control; removing subtype consumption is a second negative control. The
+separate fill checker passes 14,336 pixel/state cases and three negative
+controls. These are host dispatch/block tests, not movie playback.
+
+There is a small, explicit local score tradeoff: ExpandPlane changes from
+55.901283% to 55.890465% in the authoritative deduplicated report. The retail
+behavioral correction is retained; it is not called a Bink score gain. Other
+corrected source forms measured lower. A temporary trial script's CRLF
+handling caused one rejected compilation; it was corrected, the original
+source rebuilt, and failed output was never scored.
+
+The same batch improves iModelAnimMatrices from 98.10667% to 98.4% by naming
+the existing matrix-stack push destination before copying the current matrix.
+The complete `build/parallel-fourteenth-final-report.json` has exactly those
+two score changes versus staging 3120c8fad. All function identities, matched
+data, exact function/code and source-linked totals are unchanged. Overall
+fuzzy progress increases slightly, from 99.489044% to 99.48905%. All-source
+compilation and the normal retail DOL link/hash pass. Both changed units
+remain NonMatching, so that DOL check does not execute their source. No
+compiler changes or new assembly were used.
+
+Independent audit confirmed the scaled-row branch and consumption contract.
+The bounded Dutchman follow-up and xBehaveMgr audit produced no additional
+changes; their prior source/compiler hypotheses remain unresolved.

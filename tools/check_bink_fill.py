@@ -62,7 +62,7 @@ def production_code():
     start=source.index('typedef enum BINKBlockLayout')
     end=source.index('typedef BITSTYPE EXPBITSTYPE;',start)
     code=HEADER+source[start:end]
-    for name in ('BINK_BLOCK_ROW_WORD','BINK_FILL_BLOCK_WORD_ROW','BINK_FILL_WORD',
+    for name in ('BINK_BLOCK_ROW_WORD','BINK_SCALED_BLOCK_ROW_PTR','BINK_FILL_BLOCK_WORD_ROW','BINK_FILL_WORD',
                  'BINK_BUNDLE_U8','BINK_BUNDLE_ADVANCE','BINK_MARK_WORK_BLOCK'):
         lines=source[source.index('#define '+name+'('):].splitlines(keepends=True)
         definition=lines[0]
@@ -95,7 +95,7 @@ def main():
         if result.returncode: raise SystemExit(result.returncode)
         if args.self_test:
             for label,broken in [('row advance',code.replace('copy_dest += pitch;','copy_dest += 0;',1)),
-                                 ('scaled row advance',code.replace('fill_row += pitch;','fill_row += 0;',1)),
+                                 ('scaled row coverage',code.replace('++scaled_row','scaled_row += 2',1)),
                                  ('bundle consumption',code.replace('BINK_BUNDLE_ADVANCE(colors, BINK_BUNDLE_BYTE_PITCH);',''))]:
                 assert broken!=code
                 if run(broken).returncode==0: raise SystemExit('Negative control incorrectly passed: '+label)

@@ -1586,61 +1586,52 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 break;
             }
             case BINK_BLOCK_SCALED:
-                if (BINK_BLOCK_ODD_ROW(row)) {
-                    break;
-                }
-                subblock_type = BINK_BUNDLE_U8(subblock_types);
-                BINK_BUNDLE_ADVANCE(subblock_types, BINK_BUNDLE_BYTE_PITCH);
-                switch (subblock_type) {
-                case BINK_BLOCK_FILL: {
-                    u8 color = BINK_BUNDLE_U8(colors);
-                    u32 fill = BINK_FILL_WORD(color);
-                    u32 scaled_row;
-                    u8 PTR4* fill_row = dest;
+                if (!BINK_BLOCK_ODD_ROW(row)) {
+                    subblock_type = BINK_BUNDLE_U8(subblock_types);
+                    BINK_BUNDLE_ADVANCE(subblock_types, BINK_BUNDLE_BYTE_PITCH);
+                    switch (subblock_type) {
+                    case BINK_BLOCK_FILL: {
+                        u8 color = BINK_BUNDLE_U8(colors);
+                        u32 fill = BINK_FILL_WORD(color);
+                        u32 scaled_row;
 
-                    BINK_BUNDLE_ADVANCE(colors, BINK_BUNDLE_BYTE_PITCH);
-                    for (scaled_row = 0; scaled_row < BINK_BLOCK_SIDE; ++scaled_row) {
-                        u32 PTR4* fill_dest = (u32 PTR4*)fill_row;
+                        BINK_BUNDLE_ADVANCE(colors, BINK_BUNDLE_BYTE_PITCH);
+                        for (scaled_row = 0; scaled_row < BINK_SCALED_BLOCK_SIDE; ++scaled_row) {
+                            u32 PTR4* fill_dest = BINK_SCALED_BLOCK_ROW_PTR(dest, pitch, scaled_row);
 
-                        fill_dest[BINK_SCALED_BLOCK_ROW_WORD_0] = fill;
-                        fill_dest[BINK_SCALED_BLOCK_ROW_WORD_1] = fill;
-                        fill_dest[BINK_SCALED_BLOCK_ROW_WORD_2] = fill;
-                        fill_dest[BINK_SCALED_BLOCK_ROW_WORD_3] = fill;
-                        fill_row += pitch;
-                        fill_dest = (u32 PTR4*)fill_row;
-                        fill_dest[BINK_SCALED_BLOCK_ROW_WORD_0] = fill;
-                        fill_dest[BINK_SCALED_BLOCK_ROW_WORD_1] = fill;
-                        fill_dest[BINK_SCALED_BLOCK_ROW_WORD_2] = fill;
-                        fill_dest[BINK_SCALED_BLOCK_ROW_WORD_3] = fill;
-                        fill_row += pitch;
+                            fill_dest[BINK_SCALED_BLOCK_ROW_WORD_0] = fill;
+                            fill_dest[BINK_SCALED_BLOCK_ROW_WORD_1] = fill;
+                            fill_dest[BINK_SCALED_BLOCK_ROW_WORD_2] = fill;
+                            fill_dest[BINK_SCALED_BLOCK_ROW_WORD_3] = fill;
+                        }
+                        break;
                     }
-                    break;
-                }
-                case BINK_BLOCK_PATTERN: {
-                    expand_pattern_block_pixels(motion_block, BINK_BLOCK_SIDE, &colors, &patterns);
-                    scale_block(motion_block, dest, pitch);
-                    break;
-                }
-                case BINK_BLOCK_RUN: {
-                    expand_run_block(motion_block, BINK_BLOCK_SIDE, &colors, &runs, &bitstate);
-                    scale_block(motion_block, dest, pitch);
-                    break;
-                }
-                case BINK_BLOCK_INTRA: {
-                    u32 quant;
+                    case BINK_BLOCK_PATTERN: {
+                        expand_pattern_block_pixels(motion_block, BINK_BLOCK_SIDE, &colors, &patterns);
+                        scale_block(motion_block, dest, pitch);
+                        break;
+                    }
+                    case BINK_BLOCK_RUN: {
+                        expand_run_block(motion_block, BINK_BLOCK_SIDE, &colors, &runs, &bitstate);
+                        scale_block(motion_block, dest, pitch);
+                        break;
+                    }
+                    case BINK_BLOCK_INTRA: {
+                        u32 quant;
 
-                    dct_block[0] = BINK_BUNDLE_S16(intra_dc);
-                    BINK_BUNDLE_ADVANCE(intra_dc, BINK_DC_BYTES);
-                    ReadBPLossless(dct_block, (BPBITSTREAM PTR4*)&bitstate);
-                    quant = exp_get_bits(&bitstate, BINK_DCT_QUANT_BITS);
-                    FastIDCT8x8d(dest, pitch, dct_block, quant);
-                    break;
-                }
-                case BINK_BLOCK_RAW: {
-                    scale_block(colors.cur_ptr, dest, pitch);
-                    BINK_BUNDLE_ADVANCE(colors, BINK_COLOR_BLOCK_BYTES);
-                    break;
-                }
+                        dct_block[0] = BINK_BUNDLE_S16(intra_dc);
+                        BINK_BUNDLE_ADVANCE(intra_dc, BINK_DC_BYTES);
+                        ReadBPLossless(dct_block, (BPBITSTREAM PTR4*)&bitstate);
+                        quant = exp_get_bits(&bitstate, BINK_DCT_QUANT_BITS);
+                        FastIDCT8x8d(dest, pitch, dct_block, quant);
+                        break;
+                    }
+                    case BINK_BLOCK_RAW: {
+                        scale_block(colors.cur_ptr, dest, pitch);
+                        BINK_BUNDLE_ADVANCE(colors, BINK_COLOR_BLOCK_BYTES);
+                        break;
+                    }
+                    }
                 }
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
                 col += BINK_BLOCK_SIDE;
