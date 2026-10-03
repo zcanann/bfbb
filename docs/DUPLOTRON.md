@@ -10933,3 +10933,39 @@ were made. Evidence in the isolated worktree: `build/bungee-layout-assignments.j
 `bungee-layout-symorder.txt`, `bungee-reorder-trial.py`,
 `bungee-reorder-report.json`, `bungee-reorder-link-diff.json`, and
 `bungee-layout-final-report.json`/`bungee-layout-final-link.log`.
+
+
+## Bink masked-blitter block stride (2026-10-02)
+
+YUV_blit_mask improves from 72.2548 to 80.47119 in the full deduplicated
+report. Compute the destination byte stride for one 16-pixel mask block once,
+then reuse it for right-half positioning and horizontal advancement. Retail
+keeps this block stride in r31 after .text 0xce8; the old source repeatedly
+formed the expression from the BLITS table and xscale around callbacks.
+The actual callers use the same fixed internal BLITS tables throughout the
+operation. Multiplying the shared stride by two for a 32-pixel block preserves
+the unsigned arithmetic of the original expression.
+
+Keep pitch32 as the main pitch from initialization onward. Give the first
+setup call its own short-lived pitch16 copy, and use pitch32 for final-row
+advancement. Retail initializes stack 0x78, copies it to 0x70 for the first
+setup, then uses 0x78 for subsequent rows. Both setup calls apply the same
+width-independent pitch scaling, so their resulting pitches are equal.
+
+The pitch change alone gives 72.2612; narrowing the old pitch16 scope alone
+is neutral. Reusing the first pitch variable as a row delta regresses to
+67.79257 and is restored. Deriving row-skip pixel sizes from the cached block
+stride regresses to 69.193344 alone or 78.18438 combined with block advances;
+retain the original row-skip expression. Retail-inspired second-row-first
+plane stores and V-before-U origin stores are neutral and restored.
+Evidence: build/yuv-mask21*, yuv-mask21b*, yuv-mask21c*, and yuv-mask21d*.
+
+Full all_source and normal build pass. The full report changes only this
+function: YUV unit 94.661354 -> 95.53513, overall fuzzy 99.51403 -> 99.52464.
+Exact functions, data, and source-linked totals are unchanged. The unit stays
+NonMatching. Retail DOL SHA1 remains 306526d90b48e99894c3138f5fc8f2716d9fecf6;
+GC/2.0p1a and GC/2.0p1e remain a78a5fdb6c1d5677e987636b2e0743dbaefe9542 and
+9d445725489050035740aaff35860eddbaf3c3c9. Validation uses score/build/link checks;
+no additional behavior cases or compiler/assembly changes were introduced.
+Report/log: build/parallel-twentyfirst-report.json and
+build/parallel-twentyfirst-validation.log.

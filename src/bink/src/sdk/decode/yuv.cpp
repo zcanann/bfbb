@@ -825,12 +825,12 @@ static void YUV_blit_mask(void PTR4* dest,
                           void PTR4* alpha,
                           BLITS PTR4* blits)
 {
-    u32 pitch16;
     u32 pitch32;
     u32 pitch_delta16;
     u32 pitch_delta32;
     u32 mask_step;
     u32 xscale;
+    u32 block_bytes;
     u32 chroma_pitch;
     u32 inner_x;
     u32 inner_y;
@@ -862,9 +862,9 @@ static void YUV_blit_mask(void PTR4* dest,
     old_srcheight = srcheight;
     old_srcpitch = srcpitch;
 
-    pitch16 = destpitch;
+    pitch32 = destpitch;
     if (YUV_SURFACE_MODE(flags) == BINKCOPY1XI) {
-        pitch16 *= YUV_2X_SCALE;
+        pitch32 *= YUV_2X_SCALE;
         srch >>= 1;
         srcy >>= 1;
         srcheight >>= 1;
@@ -878,13 +878,14 @@ static void YUV_blit_mask(void PTR4* dest,
     S.base = (u8 PTR4*)dest;
     S.dest0 = (u8 PTR4*)dest + desty * destpitch + YUV_BLIT_ROW_BYTES(destx, blits);
     if (YUV_SURFACE_MODE(flags) == BINKCOPY2XHI || YUV_SURFACE_MODE(flags) == BINKCOPY2XWHI) {
-        pitch16 *= YUV_2X_SCALE;
+        pitch32 *= YUV_2X_SCALE;
     }
 
-    // Each block width starts from the same pitch before scaling.
-    pitch32 = pitch16;
     mask_row_skip = maskpitch - (srcw >> YUV_MASK_BLOCK_SHIFT);
-    setup_scaling(flags, &pitch16, YUV_MASK_BLOCK_PIXELS, srch, blits, &pitch_delta16);
+    {
+        u32 pitch16 = pitch32;
+        setup_scaling(flags, &pitch16, YUV_MASK_BLOCK_PIXELS, srch, blits, &pitch_delta16);
+    }
     setup_scaling(flags, &pitch32, YUV_MASK_BLOCK_PAIR_PIXELS, srch, blits, &pitch_delta32);
 
     if (YUV_SURFACE_MODE(flags) == BINKCOPY2XW || YUV_SURFACE_MODE(flags) == BINKCOPY2XWHI ||
@@ -894,6 +895,7 @@ static void YUV_blit_mask(void PTR4* dest,
         xscale = 1;
     }
 
+    block_bytes = YUV_BLIT_SCALED_ROW_BYTES(YUV_MASK_BLOCK_PIXELS, blits, xscale);
     chroma_pitch = srcpitch >> YUV_CHROMA_SHIFT;
     y_delta16 = srcpitch - YUV_MASK_BLOCK_PIXELS;
     y_delta32 = srcpitch - YUV_MASK_BLOCK_PAIR_PIXELS;
@@ -963,8 +965,8 @@ static void YUV_blit_mask(void PTR4* dest,
             }
             case YUV_MASK_RIGHT_HALF_BIT: {
                 RGBContext saved = S;
-                S.dest0 += YUV_BLIT_SCALED_ROW_BYTES(YUV_MASK_BLOCK_PIXELS, blits, xscale);
-                S.dest1 += YUV_BLIT_SCALED_ROW_BYTES(YUV_MASK_BLOCK_PIXELS, blits, xscale);
+                S.dest0 += block_bytes;
+                S.dest1 += block_bytes;
                 S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_MASK_BLOCK_PIXELS);
                 S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_MASK_BLOCK_PIXELS);
                 S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + YUV_MASK_BLOCK_PIXELS);
@@ -990,8 +992,8 @@ static void YUV_blit_mask(void PTR4* dest,
             S.a1 = (u32 PTR4*)((u8 PTR4*)S.a1 + YUV_MASK_BLOCK_PAIR_PIXELS);
             S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_MASK_BLOCK_PIXELS);
             S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_MASK_BLOCK_PIXELS);
-            S.dest0 += YUV_BLIT_SCALED_ROW_BYTES(YUV_MASK_BLOCK_PAIR_PIXELS, blits, xscale);
-            S.dest1 += YUV_BLIT_SCALED_ROW_BYTES(YUV_MASK_BLOCK_PAIR_PIXELS, blits, xscale);
+            S.dest0 += block_bytes * 2;
+            S.dest1 += block_bytes * 2;
             x += YUV_MASK_BLOCK_PAIR_PIXELS;
         }
 
@@ -1010,12 +1012,12 @@ static void YUV_blit_mask(void PTR4* dest,
             S.a1 = (u32 PTR4*)((u8 PTR4*)S.a1 + YUV_MASK_BLOCK_PIXELS);
             S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_BLOCK_BYTES);
             S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_BLOCK_BYTES);
-            S.dest0 += YUV_BLIT_SCALED_ROW_BYTES(YUV_MASK_BLOCK_PIXELS, blits, xscale);
-            S.dest1 += YUV_BLIT_SCALED_ROW_BYTES(YUV_MASK_BLOCK_PIXELS, blits, xscale);
+            S.dest0 += block_bytes;
+            S.dest1 += block_bytes;
         }
 
         S.dest0 = S.dest1 + row_skip;
-        S.dest1 = S.dest0 + pitch16;
+        S.dest1 = S.dest0 + pitch32;
         S.y0 = (u32 PTR4*)((u8 PTR4*)S.y1 + luma_row_skip);
         S.y1 = (u32 PTR4*)((u8 PTR4*)S.y0 + srcpitch);
         S.a0 = (u32 PTR4*)((u8 PTR4*)S.a1 + luma_row_skip);
