@@ -3790,7 +3790,6 @@ void zNPCSleepy::RendConeRange()
     xMat3x3 mat_spin;
     xVec3 pos_top;
     xVec3 pos_bot;
-    xVec3 pos_vtx;
     RwRGBA rgba_top;
     RwRGBA rgba_bot;
 
@@ -3841,6 +3840,7 @@ void zNPCSleepy::RendConeRange()
 
         vec_ray.z = 0.0f;
 
+        xVec3 pos_vtx;
         xMat3x3LMulVec(&pos_vtx, &mat_spin, &vec_ray);
         xVec3AddTo(&pos_vtx, &pos_top);
 
