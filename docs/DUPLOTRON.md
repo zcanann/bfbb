@@ -12899,3 +12899,24 @@ changes are involved. The retained source-selected link has zero differences
 and SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6, so zUI is Matching.
 Evidence: build/zui-output-sym-report.json, build/zui-output-source-diff.json,
 and build/zui-output-source-link.log in the isolated robot worktree.
+
+
+### Integrated zUI completion verification (2026-10-03)
+
+Root independently rebuilds all_source and the retail link with zUI selected
+from build/GQPE78/src/SB/Game/zUI.o. The resulting DOL retains SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. The full deduplicated report changes
+only zUI_Render, 94.85797 -> 100; all other function records and per-unit
+measures remain unchanged. Completion increases to 469/543, with 11,936 code
+and 10,660 data bytes newly source-linked. Exact code increases by 1,380 bytes
+and exact functions by one. Evidence: build/parallel-fiftyfourth-report.json
+and build/parallel-fiftyfourth-validation.log.
+
+A separate read-only Bink audit explains 76 of ExpandPlane's 296-byte size
+deficit: source skip shares 19 instructions with the motion-copy tail. Its
+physical two double loads and one store are followed by six loads and seven
+stores in the shared tail, preserving all eight copied rows. Retail tails
+differ only in cursor register names, so this does not justify an artificial
+anti-folding rewrite. ExpandPlane remains 80.09398 and NonMatching. Evidence:
+build/expand-double-copy-audit.txt in the RGB worktree and root
+build/expand53-combined-private/scaled_signed_pitch.json.
