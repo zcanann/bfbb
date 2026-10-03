@@ -10220,3 +10220,34 @@ are unchanged. Overall fuzzy progress is 99.48842%. The unit remains
 NonMatching. Sequential pattern-color reads helped alone but lost the gain
 when combined with paired fill; direct scaled patterns also scored lower.
 Those variants and the neutral motion-offset ordering trial were restored.
+
+
+## 2026-10-02: Dutchman update_turn matches through the established yaw scratch
+
+Dutchman's update_turn improves from 94.30769% to 100%, adding 260 exact code
+bytes. Use the same one-element F32 yaw array already present in the Plankton
+and SB2 turn helpers, plus Plankton's matrix local and immutable facing-vector
+initializer. Name the target yaw before computing the difference. The array
+retains retail's frsp at the stored-yaw/target-angle sum, and the matrix/facing
+form recovers the template-copy registers. Wrap thresholds, atan calls,
+acceleration arguments and matrix update are unchanged. This is an explicit
+source workaround for the observed rounding, not a claim that retail's local
+was originally an array.
+
+The historical scalar/double NO-GOs above did not exhaust source possibilities.
+An array-only candidate recovered the rounding but retained the initial copy
+register difference; the established sibling form resolves both. The final raw
+diff has only anonymous zero-template symbol-name differences, and the
+normalized function is exact. Coordinate snapshots in turn_to_face and explicit
+or shared default labels in LassoNotify did not improve their baselines and
+were restored. Those two holdouts remain; the TU stays NonMatching.
+
+Validation: full all_source passes. The complete deduplicated report changes
+only update_turn and its containing unit, with no missing symbols, regressions
+or data changes. Dutchman advances from 224/227 to 225/227 exact functions,
+38928/39484 to 39188/39484 exact code bytes, unit 99.93152% to 99.969%, and
+retains 8840/8840 exact data bytes. The normal retail link verifies SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6; exact source linking for the whole
+unit is not claimed. Evidence remains under build/dutchman-turn-* and
+build/dutchman-other-* in the isolated worktree. No compiler changes or inline
+assembly are used.

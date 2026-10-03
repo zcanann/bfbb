@@ -1694,15 +1694,14 @@ void zNPCDutchman::update_turn(F32 dt)
 {
     get_center();
 
-    xVec2 facing = { 0.0f, 0.0f };
-
-    facing.x = model->Mat->at.x;
-    facing.y = model->Mat->at.z;
+    RwMatrix* mat = model->Mat;
+    const xVec2 facing = { mat->at.x, mat->at.z };
 
     if (turning())
     {
         F32 cur = xatan2(facing.x, facing.y);
-        F32 diff = xatan2(turn.dir.x, turn.dir.y) - cur;
+        F32 target = xatan2(turn.dir.x, turn.dir.y);
+        F32 diff = target - cur;
 
         if (diff > PI)
         {
@@ -1713,11 +1712,14 @@ void zNPCDutchman::update_turn(F32 dt)
             diff += 2.0f * PI;
         }
 
-        F32 angle = cur;
+        // Preserve the stored yaw's F32 rounding before the target-angle sum.
+        // This matches the array scratch used by the other boss turn helpers.
+        F32 angle[1];
+        angle[0] = cur;
 
-        xAccelMove(angle, turn.vel, turn.accel, dt, angle + diff, turn.max_vel);
+        xAccelMove(angle[0], turn.vel, turn.accel, dt, angle[0] + diff, turn.max_vel);
 
-        set_yaw_matrix(frame->mat, angle);
+        set_yaw_matrix(frame->mat, angle[0]);
     }
 }
 
