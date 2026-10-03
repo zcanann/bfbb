@@ -10845,28 +10845,28 @@ alpha, chroma and destination row deltas beside chroma_pitch before initializing
 the plane pointers. Retail computes these invariants in that region rather than
 keeping their inputs live through the plane setup.
 
-Express the destination row skip as pitch 32 minus the full scaled width, plus
-the scaled remainder, plus fourteen pitch 32 rows. Retail .text 0xcd 0 loads the
-second setup's pitch from stack 0x 78; 0xcdc multiplies it by 14, and 0xd 20/0xd 28/
-0xd 38 subtract width, add remainder and add the fourteen rows. Both setup calls
+Express the destination row skip as pitch32 minus the full scaled width, plus
+the scaled remainder, plus fourteen pitch32 rows. Retail .text 0xcd0 loads the
+second setup's pitch from stack 0x78; 0xcdc multiplies it by 14, and 0xd20/0xd28/
+0xd38 subtract width, add remainder and add the fourteen rows. Both setup calls
 start with equal pitch and the same flags. setup_scaling changes pitch only by
-a width-independent doubling for 2XH/2XWH, so pitch 16 equals pitch 32 for every
+a width-independent doubling for 2XH/2XWH, so pitch16 equals pitch32 for every
 mode. The replacement equals the old fifteen-pitch expression modulo 32 bits,
 including overflow, before the same signed result conversion. Independent
 review checked all mode cases and 1536 boundary-value arithmetic cases.
 
-Place the inverted U/V branch first, as retail .text 0xda 4..0xdec does, while
+Place the inverted U/V branch first, as retail .text 0xda4..0xdec does, while
 preserving its existing shared chroma base calculation and both assignments.
 Moved computations read unchanged locals; their BLITS reads use the distinct
 static tables passed by the actual callers, so plane-state stores cannot alias
 them. No callback, allocation, mask read or setup call changes order.
 
-Ablations from 2a 2fdf 851: row-skip expression 67.35723; early mask skip 67.40333;
+Ablations from 2a2fdf851: row-skip expression 67.35723; early mask skip 67.40333;
 early deltas 70.87324; combined setup 72.2484; inverted-first shared base 72.2548.
 Local chroma bases in each branch regressed to 70.16261, callback-row base
-captures regressed to 66.24328, and final-row pitch 32 substitution was neutral;
+captures regressed to 66.24328, and final-row pitch32 substitution was neutral;
 those follow-ups were restored. Source is 3112 bytes versus retail 3124 and stays
-NonMatching. Evidence: build/yuv-mask 20-*.
+NonMatching. Evidence: build/yuv-mask20-*.
 
 The masked-blitter checker passes 16800 geometry, cursor, context and fallback
 argument cases plus all 10 deliberate regressions. Its compounded-pitch mutation
@@ -10875,10 +10875,10 @@ adjacent lines; the faulty behavior and independent expected values are unchange
 This is mock-callback geometry coverage, not pixel, target-ABI or playback proof.
 
 Full all_source and normal build pass. The complete report changes only this
-function: overall fuzzy code 99.50682 ->99.51403; exact functions 9943/10147,
+function: overall fuzzy code 99.50682 -> 99.51403; exact functions 9943/10147,
 matched data 1264984/1280684 and source-linked units 455/543 remain unchanged.
-Retail DOL SHA 1 stays 306526d 90b 48e 99894c 3138f 5fc 8f 2716d 9fecf 6. Both isolated
-MWCC hashes remain a 78a 5fdb 6c 1d 5677e 987636b 2e 0743dbaefe 9542 and
-9d 445725489050035740aaff 35860eddbaf 3c 3c 9. Validation: build/yuv-mask 20-check.log,
+Retail DOL SHA1 stays 306526d90b48e99894c3138f5fc8f2716d9fecf6. Both isolated
+MWCC hashes remain a78a5fdb6c1d5677e987636b2e0743dbaefe9542 and
+9d445725489050035740aaff35860eddbaf3c3c9. Validation: build/yuv-mask20-check.log,
 parallel-twentieth-validation.log, parallel-twentieth-report.json and
 parallel-twentieth-compare.py. No compiler or assembly changes are involved.
