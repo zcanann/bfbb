@@ -79,21 +79,16 @@ static void Setup_surface_array()
 
 void Decompress_frame(HBINK bnk, HRAD3DIMAGE rad_image, long flags)
 {
-    struct RAD3DLockInfo
-    {
-        S32 copy_status;
-        S32 do_frame_status;
-        u32 surface_type;
-        u32 buffer_pitch;
-    };
-    RAD3DLockInfo lock_info;
+    u32 pixel_pitch;
+    u32 pixel_format;
+    volatile S32 do_frame_status;
+    volatile S32 copy_status;
 
-    lock_info.do_frame_status = BinkDoFrame(bnk);
-    if (Lock_RAD_3D_image(rad_image, &pixels, &lock_info.buffer_pitch, &lock_info.surface_type))
+    do_frame_status = BinkDoFrame(bnk);
+    if (Lock_RAD_3D_image(rad_image, &pixels, &pixel_pitch, &pixel_format))
     {
-        lock_info.copy_status =
-            BinkCopyToBuffer(bnk, pixels, lock_info.buffer_pitch, bnk->Height, NULL, NULL,
-                             (flags ? BINKCOPYALL : 0) | Bink_surface_type[lock_info.surface_type]);
+        copy_status = BinkCopyToBuffer(bnk, pixels, pixel_pitch, bnk->Height, 0, 0,
+                                       Bink_surface_type[pixel_format] | (flags ? BINKCOPYALL : 0));
         Unlock_RAD_3D_image(rad_image);
     }
 }
@@ -407,7 +402,8 @@ static void xDrawLine2D_LocaliFMVVersion(F32 arg0, F32 arg1, F32 arg2, F32 arg3)
     RwIm2DVertexSetScreenX(&verts[1], arg2);
     RwIm2DVertexSetScreenY(&verts[1], arg3);
     RwIm2DVertexSetScreenZ(&verts[1], nearz);
-    RwIm2DVertexSetIntRGBA(&verts[1], color.red, color.green, color.blue, color.alpha);
+    RwIm2DVertexSetIntRGBA(&verts[1], RwIm2DVertexGetRed(&verts[0]), RwIm2DVertexGetGreen(&verts[0]),
+                           RwIm2DVertexGetBlue(&verts[0]), RwIm2DVertexGetAlpha(&verts[0]));
 
     RwRenderStateSet(rwRENDERSTATETEXTURERASTER, NULL);
     RwRenderStateSet(rwRENDERSTATEVERTEXALPHAENABLE, NULL);

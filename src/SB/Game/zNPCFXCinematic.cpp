@@ -2393,16 +2393,16 @@ static void NCIN_TTGunSmoke_AR(const zCutsceneMgr* csnmgr, NCINEntry* fxrec, RpA
     }
     else
     {
-        rat_blow = (csn->Time - tym_blow[0]) / (tym_blow[1] - tym_blow[0]);
-        spd_blow = LERP(ARCH3(1.0f - CLAMP(rat_blow, 0.0f, 1.0f)), 0.5f, 15.5f);
+        rat_blow = CLAMP((csn->Time - tym_blow[0]) / (tym_blow[1] - tym_blow[0]), 0.0f, 1.0f);
+        spd_blow = LERP(ARCH3(1.0f - rat_blow), 0.5f, 15.5f);
     }
 
     spd_blow += spd_blow * (0.25f * (xurand() - 0.5f));
 
+    xVec3 dir_blow = fxrec->pos_B[0];
     xVec3 vel_smoke;
 
     vel_smoke = g_Y3 * 2.0f;
-    const xVec3 dir_blow = fxrec->pos_B[0];
     vel_smoke += g_Y3 * (2.0f * (xurand() - 0.5f));
     vel_smoke += dir_blow * spd_blow;
 
@@ -2520,19 +2520,14 @@ static void NCIN_SleepyLamp_AR(const zCutsceneMgr* csnmgr, NCINEntry* fxrec, RpA
         SMOOTH(CLAMP(pct, 0.0f, 1.0f), &rgb_current, &rgb_peace, &rgb_anger);
     }
 
-    U8 blue, green, red;
-    red = (U8)(255.0f * rgb_current.x);
-    green = (U8)(255.0f * rgb_current.y);
-    blue = (U8)(255.0f * rgb_current.z);
-
-    rgba_top.red = red;
-    rgba_top.green = green;
-    rgba_top.blue = blue;
+    rgba_top.red = (U8)(255.0f * rgb_current.x);
+    rgba_top.green = (U8)(255.0f * rgb_current.y);
+    rgba_top.blue = (U8)(255.0f * rgb_current.z);
     rgba_top.alpha = 96;
 
-    rgba_bot.red = red;
-    rgba_bot.green = green;
-    rgba_bot.blue = blue;
+    rgba_bot.red = rgba_top.red;
+    rgba_bot.green = rgba_top.green;
+    rgba_bot.blue = rgba_top.blue;
     rgba_bot.alpha = 16;
 
     memset(&cone, 0, sizeof(NPCCone));
