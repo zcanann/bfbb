@@ -222,12 +222,12 @@ S32 xStrParseFloatList(F32* dest, const char* strbuf, S32 max)
     char* numstart;
     char savech;
 
-    if (!strbuf)
+    if (!(str = (char*)strbuf))
     {
         return 0;
     }
-    str = (char*)strbuf;
 
+    F32* values = dest;
     for (index = 0; *str != '\0' && index < max; index++)
     {
         while (*str == '\t' || *str == ' ' || *str == '[' || *str == ']' || *str == '{' ||
@@ -279,15 +279,15 @@ S32 xStrParseFloatList(F32* dest, const char* strbuf, S32 max)
         savech = *str;
 
         *str = '\0';
-        *dest = xatof(numstart);
+        *values = xatof(numstart);
 
         if (negate)
         {
-            *dest = -*dest;
+            *values = -*values;
         }
 
         *str = savech;
-        dest++;
+        values++;
     }
 
     return index;

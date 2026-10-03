@@ -554,10 +554,10 @@ void iBoxIsectRay(const xBox* b, const xRay3* r, xIsect* isx)
 void iBoxIsectSphere(const xBox* box, const xSphere* p, xIsect* isx)
 {
     U32 xcode, ycode, zcode;
-    F32 lo, hi;
-
-    lo = p->center.x - p->r;
-    hi = p->center.x + p->r;
+    F32 hi = p->center.x;
+    const F32 radius = p->r;
+    F32 lo = hi - radius;
+    hi += radius;
 
     if (lo < box->lower.x)
     {
@@ -596,8 +596,9 @@ void iBoxIsectSphere(const xBox* box, const xSphere* p, xIsect* isx)
         return;
     }
 
-    lo = p->center.y - p->r;
-    hi = p->center.y + p->r;
+    hi = p->center.y;
+    lo = hi - radius;
+    hi += radius;
 
     if (lo < box->lower.y)
     {
@@ -636,8 +637,9 @@ void iBoxIsectSphere(const xBox* box, const xSphere* p, xIsect* isx)
         return;
     }
 
-    lo = p->center.z - p->r;
-    hi = p->center.z + p->r;
+    hi = p->center.z;
+    lo = hi - radius;
+    hi += radius;
 
     if (lo < box->lower.z)
     {

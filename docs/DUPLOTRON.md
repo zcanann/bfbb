@@ -9909,3 +9909,35 @@ link verifies SHA1 306526d90b48e99894c3138f5fc8f2716d9fecf6. This hash check doe
 not assert that the still-NonMatching source object links exactly. Trial
 sources, raw diffs, and scene-p1_yxz-report.json remain under the isolated
 worktree's ignored build directory. Compiler binaries were not changed.
+
+## 2026-10-02: iMath3 sphere slab scratch and xString output cursor
+
+Two bounded source-lifetime changes improve the full deduplicated report:
+
+- iBoxIsectSphere: 98.47305% to 98.98203%, still 668 bytes. Snapshot the
+  sphere radius for the three slab classifications and reuse hi for each
+  center coordinate before adding the radius. This matches retail's reuse of
+  its center register; remaining differences are FP register allocation.
+  The snapshot spans no calls or continuing-path writes. Any early slab
+  rejection writes the result and returns. The later post-collision radius
+  read remains p->r, so no value is cached across the collision helper calls.
+- xStrParseFloatList: 98.809525% to 99.61905%. Assign the input cursor within
+  its null check and initialize a separate output cursor after the early
+  return. This recovers retail's combined move/test and removes the extra
+  instruction (source 424 to 420 bytes). The remaining differences swap the
+  maximum-count and output-cursor registers. Parsing, input restoration,
+  output writes and null-input behavior are unchanged.
+
+Rejected trials included separate null assignment/declaration forms, cursor
+  declaration positions, comparison-expression/character-local rewrites of
+  imemcmp, and radius/hi/lo scratch variants. imemcmp remains unchanged; the
+  target's extra byte-to-argument move is still absent. The trial evidence is
+  retained under build/imath-* and build/string-* in the isolated worktree.
+
+Validation: all_source passes. imath-string-gains-report.json changes only
+these two function scores and their containing units. No missing symbols,
+regressions, data changes or exact-function-count changes. iMath3 retains
+17/18 exact functions and 40/40 data bytes; xString retains 12/14 and 48/48.
+Neither unit is promoted to Matching. The normal retail link SHA1 remains
+306526d90b48e99894c3138f5fc8f2716d9fecf6; this is not a claim of exact source
+linking for these still-NonMatching units. Compiler binaries are unchanged.
