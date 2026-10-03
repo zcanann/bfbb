@@ -9,10 +9,10 @@
 #include "yuv.h"
 
 void PTR4* memmove(void PTR4* dest, const void PTR4* src, u32 len);
-extern const char BINK_ERROR_OPENING_FILE[];
-extern const char BINK_ERROR_NOT_BINK[];
-extern const char BINK_ERROR_NO_COMPRESSED_FRAMES[];
-extern const char BINK_ERROR_OUT_OF_MEMORY[];
+const char BINK_ERROR_OPENING_FILE[] = "Error opening file.";
+const char BINK_ERROR_NOT_BINK[20] = "Not a Bink file.";
+const char BINK_ERROR_NO_COMPRESSED_FRAMES[] = "The file doesn't contain any compressed frames yet.";
+const char BINK_ERROR_OUT_OF_MEMORY[20] = "Out of memory.";
 
 typedef enum BINKTrackTypeFlags
 {

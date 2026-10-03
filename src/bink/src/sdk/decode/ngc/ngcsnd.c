@@ -248,27 +248,16 @@ typedef char NGCSoundStateFitsInBinkSndData
 #define AX_VOICE_MIX_MODE(voice) ((voice)->pb.mixerCtrl)
 #define AX_VOICE_SYNC_FLAGS(voice) ((voice)->sync)
 
-static const f32 BINK_NGC_PAN_ONE = 1.0f;
-static const f32 BINK_NGC_PAN_EXPONENT = 0.3f;
-static const f32 BINK_NGC_MIX_SCALE = (f32)BINK_NGC_MIX_MAX;
-static const f32 BINK_NGC_AX_SAMPLE_RATE = (f32)AX_SAMPLE_RATE;
-static const f32 BINK_NGC_PAN_TO_FLOAT = 1.0f / BINK_NGC_PAN_MAX;
-static const f32 BINK_NGC_PAN_CENTER[] = { 0.5f };
-#define NGC_SOUND_PAN_ONE BINK_NGC_PAN_ONE
-#define NGC_SOUND_PAN_EXPONENT BINK_NGC_PAN_EXPONENT
-#define NGC_SOUND_MIX_SCALE BINK_NGC_MIX_SCALE
-#define NGC_SOUND_AX_SAMPLE_RATE BINK_NGC_AX_SAMPLE_RATE
-#define NGC_SOUND_PAN_TO_FLOAT BINK_NGC_PAN_TO_FLOAT
-#define NGC_SOUND_PAN_CENTER BINK_NGC_PAN_CENTER[0]
+#define NGC_SOUND_PAN_ONE 1.0f
+#define NGC_SOUND_PAN_EXPONENT 0.3f
+#define NGC_SOUND_MIX_SCALE ((f32)BINK_NGC_MIX_MAX)
+#define NGC_SOUND_AX_SAMPLE_RATE ((f32)AX_SAMPLE_RATE)
+#define NGC_SOUND_PAN_TO_FLOAT (1.0f / BINK_NGC_PAN_MAX)
+#define NGC_SOUND_PAN_CENTER 0.5f
 
 static void NGC_SoundPlay(BINKSND PTR4* snd, u32 index, u32 upload_bytes);
 static void NGC_StarvedClear(BINKSND PTR4* snd);
 static void NGC_SoundVolume(BINKSND PTR4* snd);
-
-const char BINK_ERROR_OPENING_FILE[] = "Error opening file.";
-const char BINK_ERROR_NOT_BINK[20] = "Not a Bink file.";
-const char BINK_ERROR_NO_COMPRESSED_FRAMES[] = "The file doesn't contain any compressed frames yet.";
-const char BINK_ERROR_OUT_OF_MEMORY[20] = "Out of memory.";
 
 static void startVoices(u32 task)
 {

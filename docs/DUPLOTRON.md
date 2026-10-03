@@ -11881,3 +11881,30 @@ No compiler modification, new assembly, speculative arithmetic, or ancillary
 behavior test was required. Final proof is retained in
 `build/duplotron-exact-final-report.json`, `build/duplotron-exact-source-link.json`,
 and the corresponding build/link logs in the isolated worktree.
+
+
+### Bink sound/reader read-only pools reconstructed (2026-10-03)
+
+All four error strings currently emitted by ngcsnd.c are referenced only by
+BinkOpen. Move their existing definitions into binkread.c and assign
+.rodata 0x80274D80..0x80274E00 to the reader. Sound owns the preceding
+0x80274D50..0x80274D80 range. The reader now emits its error strings followed
+by the two conversion doubles identified in the earlier ownership audit.
+
+Replace the sound unit's unused named scalar float objects and its one-element
+pan-center array with equivalent typed literal macros. The compiler emits the
+retail literal pool without duplicate objects. Both source .rodata sections
+are byte-identical to their retail sections: sound48bytes, reader128bytes.
+A deferred real center-array definition also reproduced the pool, but the
+simpler literal form produces the same code and data and is retained.
+
+Actual links with both sound and reader sourced shrink from2,859,200 to the
+retail2,859,136 bytes. Code holdouts remain in both units, so neither is marked
+Matching. This removes a layout discrepancy; it is not a claim that the linked
+DOL is otherwise exact. No fake symbols or padding objects were added.
+
+All function scores and project-wide matched-data totals are unchanged in the
+full deduplicated report. Per-unit target data totals move with their true
+ownership. The full source/normal build passes and retains the retail SHA1.
+Evidence: build/parallel-fortysecond-bink-pools-report.json and corresponding
+validation log, bink42-link-comparison.json, and bink42-pools-private artifacts.
