@@ -11091,3 +11091,23 @@ SpeakStart helper trials produced no gain and were restored with full-report
 baseline equality and passing builds. Player builds with -inline off, so the
 Bink byte-return helper technique introduced real calls there and regressed;
 the inlining context must be checked before transferring such patterns.
+
+
+Combined verification includes concurrent staging 584230526. xString now
+source-links at 14/14 exact (3648 code, 48 data): direct destination indexing
+fixes xStrParseFloatList and the byte-cast boundary fixes imemcmp. Both
+xShadowSimple holdouts also reach 100 through the entry-pointer lifetime
+inside the loop and testing castOnEnt before capturing it. iModelCullPlusShadow
+reaches 100 with the existing RenderWare dot-product macro; iFile async_cb
+improves 92.19388 -> 97.5 with the file's ordinary round-up expression.
+These source-reachable results supersede any older register-only exhaustion
+claims for those functions and add no compiler patch requirement.
+
+The merged full report changes only these six game functions and the masked
+Bink gain. xShadowSimple is 13/13 exact but is not marked source-linked here.
+Source-linked units rise 455 -> 456; complete code 1362288 -> 1365936 (+3648),
+complete data 692220 -> 692268 (+48), exact functions 9944 -> 9949. Overall
+fuzzy reaches 99.52953. All matched data remains unchanged, and full all_source
+and normal retail-hash verification pass. Evidence:
+build/parallel-twentythird-merged-report.json and
+build/parallel-twentythird-merged-validation.log.
