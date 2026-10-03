@@ -12372,7 +12372,7 @@ A real source-selected link remains 55 bytes different at the unchanged
 Twenty-one bytes are register operands in this function: retail reuses f1
 for center/upper sphere bound and the dead lower-box register for its upper
 bound, while source uses distinct registers. Another 32 relocation bytes
-and two data bytes reflect a pre-existing swap of the 0.0f/1.0f constant
+and two data bytes reflect a pre-existing swap of the 0.5f/0.0f constant
 pool entries. Thus deduplicated data equality does not establish actual pool
 layout equality. The TU stays NonMatching; no completion is claimed.
 
@@ -12469,3 +12469,34 @@ counter (neutral). None is retained. Source/compiler/behavior tests were not
 expanded. Evidence under ignored `build/`: `bamatlst-lifetime-count-` report,
 validation, mismatch, allsource/link and source-link artifacts; private source
 controls are in `bamatlst-lifetime/`.
+
+
+### iMath3 pool ownership follow-up (2026-10-03)
+
+ELF inspection corrects the preceding checkpoint's original pool label:
+retail begins with 0.5f (`3f000000`), then 0.0f (`00000000`), then 1.0f.
+The first two retained source entries are reversed. This accounts for two
+data-byte differences and 32 relocated load operands in the actual-link
+inventory; the other 21 differences remain sphere-slab register operands.
+The earlier reference to a 0/1 swap was incorrect.
+
+The actively called `xsqrt` implementation in xMathInlines.h creates these
+constants. Its surviving retail copy in xBound loads half and three before
+`__fpclassifyf` and preserves them in f31/f30; current source loads them
+afterward. The helper is itself only 67.51163% matched, so its source cannot
+be treated as an exact control for iMath3's literal creation order. Selecting
+its existing explicit-weak emission form in iMath3 and a separate `-sym on`
+control both preserved the wrong order. Temporary-reference representations
+of half and both coefficients introduced addressable temporary storage,
+moved the pool further away, and lowered the xBound helper's raw score. They were rejected.
+No artificial pool declarations, padding, compiler changes, or new assembly
+were used; no shared-header or configuration change remains.
+
+The retained checkpoint remains 99.371254% for iBoxIsectSphere and 17/18 exact
+functions. Fresh all-source build and full deduplicated report reproduce the
+checkpoint with no differences; the normal selected-object DOL again has
+retail SHA1 `306526d90b48e99894c3138f5fc8f2716d9fecf6`, with both isolated
+compiler hashes unchanged. This bounded follow-up does not resolve the
+original coefficient lifetime or prove an optimizer defect. Local evidence:
+`build/imath3-pool-*` raw diffs, rejected header/source forms, and restored
+report/build logs.
