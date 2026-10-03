@@ -12580,3 +12580,22 @@ assembly or behavioral tests changed. RGB-worktree evidence is under
 `build/zgame-close-*`: `retained-report.json`, `retained-build.log`,
 `retained-final-link.log`, `retained-source.json`, `retained-source.dol`,
 `retained-audit.py`, and the restored source trial scripts/raw diffs.
+
+
+### Integrated Bink/material/zGame verification (2026-10-03)
+
+Final root all-source build and full report retain exactly two score changes:
+ExpandPlane 56.033806 -> 64.977684 and _rpMaterialListStreamRead
+99.88064 -> 99.933685. Every per-unit/global data, exact-code/function and
+completion measure is unchanged; 467 units remain complete. Bink source size
+is 5,640 bytes versus retail 5,916 (previous source 5,360), recovering real
+row-address operations rather than adding padding.
+
+Root independently reproduces the zGame worker's actual source link: same
+2,859,136-byte DOL, 49 differing bytes confined to offsets 0x95e98..0x95f1b,
+SHA1 73cc28c7208a9d3c90966e1e1c6e2a2cb1380a67. Normal object selection is
+restored, and retail DOL SHA1 306526d90b48e99894c3138f5fc8f2716d9fecf6 passes.
+All three units remain NonMatching. Evidence: final report/validation log
+`build/parallel-fortyninth-final-*` and `build/zgame49-source-link.json`,
+saved DOL, source-link and restoration logs. No new inline assembly,
+compiler modification, or ancillary behavioral suite was used.
