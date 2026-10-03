@@ -12500,3 +12500,35 @@ compiler hashes unchanged. This bounded follow-up does not resolve the
 original coefficient lifetime or prove an optimizer defect. Local evidence:
 `build/imath3-pool-*` raw diffs, rejected header/source forms, and restored
 report/build logs.
+
+
+## Bink block-copy alternating row cursors (2026-10-03)
+
+`ExpandPlane` improves **56.033806 -> 64.977684** in the complete deduplicated
+report. Retail's skip and raw copy paths alternate two row-address chains;
+previous source advanced a single cursor or recomputed each row from a base.
+Recover those independent even/odd row cursors for skip source/destination,
+raw destination, all three motion-copy sources, and the normal fill destination.
+Each pair is still copied in scan order, with the same aligned-double versus
+word-copy branches, eight rows, pitches, and bundle/work consumption. The last
+pair needs no additional cursor advance. This is ordinary C pointer lifetime
+reconstruction, with no compiler changes or new assembly.
+
+The source evidence is explicit in the retail add/copy chains (for example,
+skip at object text 0x2118..0x2248 and raw at 0x2d94..0x2ef0). The first skip
+change alone reaches 57.17985 full-report; raw and motion paths then improve
+the combined function further. Extending alternating destination cursors to
+the direct motion path instead regresses and is not retained. Earlier scaled
+pattern/fill/raw and loop-counter combinations also remain rejected. All
+private candidates are under `build/expand49-*-private`; keyframe wrapping
+and IDCT helper controls produced no gain and are documented in
+`build/bink49-findings.txt`.
+
+Full `all_source` and the normal selected-object retail link pass. Comparing
+`parallel-fortyninth-final-report.json` against `parallel-fortyeighth-final-report.json`
+changes only ExpandPlane and the separately documented material-list stream
+reader gain. All other function scores, matched-data totals, exact counts and
+complete totals are unchanged (467 complete units). DOL SHA1 remains
+306526d90b48e99894c3138f5fc8f2716d9fecf6. Expand remains NonMatching, so that
+normal link does not establish a retail source link for the Bink decoder.
+No behavioral test suite was added or run.
