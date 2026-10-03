@@ -11410,3 +11410,35 @@ Both isolated compiler hashes remain unchanged (2.0p1a a78a5fdb6c1d5677e987636b2
 Evidence: build/xfont-agent-helpergroup-report.json,
 build/xfont-agent-link-allsource.log, build/xfont-agent-link-link-diff.json,
 and final retained build/report artifacts build/xfont-agent-final-*.
+
+
+## Plankton returned-vector copy checkpoint (2026-10-03)
+
+`impart_velocity` improves from 91.12676% to 95.49296% with an explicitly
+8-byte-aligned local wrapper around the existing `xVec2` offset. This is a
+small compiler-layout workaround, not a claim about the original source.
+Only local storage alignment changes: the same two `location()` calls build
+the same `xVec2`, and `length2()` still receives that member by const reference.
+The returned velocity copy now uses retail's r5/r4/r0 loads and contiguous
+stores, followed by the y-zero store. The residual is the offset template
+copy: source uses `lfd/stfd`, while retail uses two `lwz/stw` pairs. Source is
+276 bytes against retail's 284 bytes; the unit remains NonMatching, 179/180
+exact, and no source-link claim is made.
+
+A header-free reproduction and logging-only alias capture isolate the
+interaction: the compiler orders the velocity stores before the scalar
+zero's whole-object literal load, but permits both 4-byte subrange loads
+from the offset template to pass those stores. Exact controls rule out a
+blanket aggregate-copy ordering rule: `xOBBHitsOBB` interleaves returned-vector
+and template loads, and `world_to_ring_vel` interleaves a register-returned
+`xVec2` with its next initializer. This overlaps the previously documented
+whole-object/subrange alias question; it does not establish a new compiler
+patch or show that source reconstruction is exhausted. No compiler decisions
+or binary bytes were changed.
+
+The full source build passes. The authoritative deduplicated report changes
+only `impart_velocity`; all 6,728 Plankton data bytes remain exact. Normal
+link reproduces retail SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6, using
+the original object for this still-NonMatching unit. Isolated compiler hashes
+remain p1a a78a5fdb6c1d5677e987636b2e0743dbaefe9542 and p1e
+9d445725489050035740aaff35860eddbaf3c3c9.

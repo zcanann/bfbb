@@ -2261,7 +2261,15 @@ void zNPCBPlankton::impart_velocity(const xVec3& vel)
 
         add.y = 0.0f;
 
-        const xVec2 diff = { location().x - orbit.center.x, location().z - orbit.center.z };
+        // Layout workaround: keep this initializer after the returned velocity copy.
+        struct orbit_offset
+        {
+            xVec2 value;
+        } __attribute__((aligned(8)));
+        const orbit_offset offset = {
+            { location().x - orbit.center.x, location().z - orbit.center.z }
+        };
+        const xVec2& diff = offset.value;
         const F32 max_dist = orbit.radius + tweak.hit_max_dist;
 
         if (diff.length2() > max_dist * max_dist)
