@@ -5817,6 +5817,8 @@ void zEntPlayer_Init(xEnt* ent, xEntAsset* asset)
     F32 bbncvtm;
     U32 bufsize;
     xAnimTable* wettbl;
+    xAnimTable* drytbl;
+    xAnimState* wetstate;
     xAnimState* drystate;
     xAnimFile* wetfile;
     xAnimFile* dryfile;
@@ -5966,7 +5968,7 @@ void zEntPlayer_Init(xEnt* ent, xEntAsset* asset)
         globals.player.sb_models[0]->Data = treedome3;
 
         wettbl = (xAnimTable*)xSTFindAsset(xStrHash("spongebob_bind.ATBL"), NULL);
-        xAnimTable* drytbl = (xAnimTable*)xSTFindAsset(xStrHash("spongebob_bind_treedome.ATBL"), NULL);
+        drytbl = (xAnimTable*)xSTFindAsset(xStrHash("spongebob_bind_treedome.ATBL"), NULL);
 
         if (wettbl != NULL && drytbl != NULL)
         {
@@ -5974,7 +5976,7 @@ void zEntPlayer_Init(xEnt* ent, xEntAsset* asset)
             {
                 if (!(drystate->UserFlags & 0x40000000))
                 {
-                    xAnimState* wetstate = xAnimTableGetState(wettbl, drystate->Name);
+                    wetstate = xAnimTableGetState(wettbl, drystate->Name);
                     wetfile = wetstate->Data;
                     dryfile = drystate->Data;
                     numa = wetfile->NumAnims[0] * wetfile->NumAnims[1];
