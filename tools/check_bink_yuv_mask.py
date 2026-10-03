@@ -236,9 +236,10 @@ def replace_once(text, old, new):
 
 
 def negative_controls(source):
-    setup = ('pitch32 = pitch16;\n    setup_scaling(flags, &pitch16, YUV_MASK_BLOCK_PIXELS, srch, blits, &pitch_delta16);')
-    yield 'compounded setup pitch', replace_once(source, setup,
-        'setup_scaling(flags, &pitch16, YUV_MASK_BLOCK_PIXELS, srch, blits, &pitch_delta16);\n    pitch32 = pitch16;')
+    setup = 'setup_scaling(flags, &pitch16, YUV_MASK_BLOCK_PIXELS, srch, blits, &pitch_delta16);'
+    changed = replace_once(source, '    pitch32 = pitch16;\n', '')
+    yield 'compounded setup pitch', replace_once(changed, setup,
+        setup + '\n    pitch32 = pitch16;')
     yield 'helper uses unscaled context pitch', replace_once(source,
         'S.dest1 = S.dest0 + row_pitch;', 'S.dest1 = S.dest0 + S.pitch;')
     start = source.index('case YUV_MASK_RIGHT_HALF_BIT: {')

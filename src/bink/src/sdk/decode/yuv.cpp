@@ -883,16 +883,31 @@ static void YUV_blit_mask(void PTR4* dest,
 
     // Each block width starts from the same pitch before scaling.
     pitch32 = pitch16;
+    mask_row_skip = maskpitch - (srcw >> YUV_MASK_BLOCK_SHIFT);
     setup_scaling(flags, &pitch16, YUV_MASK_BLOCK_PIXELS, srch, blits, &pitch_delta16);
     setup_scaling(flags, &pitch32, YUV_MASK_BLOCK_PAIR_PIXELS, srch, blits, &pitch_delta32);
 
-    if (YUV_SURFACE_MODE(flags) == BINKCOPY2XW || YUV_SURFACE_MODE(flags) == BINKCOPY2XWHI || YUV_SURFACE_MODE(flags) == BINKCOPY2XWH) {
+    if (YUV_SURFACE_MODE(flags) == BINKCOPY2XW || YUV_SURFACE_MODE(flags) == BINKCOPY2XWHI ||
+        YUV_SURFACE_MODE(flags) == BINKCOPY2XWH) {
         xscale = YUV_2X_SCALE;
     } else {
         xscale = 1;
     }
 
     chroma_pitch = srcpitch >> YUV_CHROMA_SHIFT;
+    y_delta16 = srcpitch - YUV_MASK_BLOCK_PIXELS;
+    y_delta32 = srcpitch - YUV_MASK_BLOCK_PAIR_PIXELS;
+    a_delta16 = y_delta16;
+    a_delta32 = y_delta32;
+    c_delta16 = chroma_pitch - YUV_CHROMA_BLOCK_BYTES;
+    c_delta32 = chroma_pitch - YUV_MASK_BLOCK_PIXELS;
+    row_skip = pitch32 - YUV_BLIT_SCALED_ROW_BYTES(srcw, blits, xscale) +
+               YUV_BLIT_SCALED_ROW_BYTES(srcw & YUV_MASK_BLOCK_MASK, blits, xscale) +
+               pitch32 * (YUV_MASK_BLOCK_PIXELS - 2);
+    luma_row_skip = srcpitch - srcw + (srcw & YUV_MASK_BLOCK_MASK) +
+                    srcpitch * (YUV_MASK_BLOCK_PIXELS - 2);
+    chroma_row_skip = chroma_pitch - (srcw >> YUV_CHROMA_SHIFT) +
+                      ((srcw & YUV_MASK_BLOCK_MASK) >> YUV_CHROMA_SHIFT) + chroma_pitch * 7;
     S.dest1 = S.dest0 + pitch32;
     ybase = (u8 PTR4*)src + srcx + srcy * srcpitch;
     S.y0 = (u32 PTR4*)ybase;
@@ -902,31 +917,17 @@ static void YUV_blit_mask(void PTR4* dest,
     S.a1 = (u32 PTR4*)(abase + srcpitch);
 
     cbase = (u8 PTR4*)src + srcpitch * srcheight;
-    if ((flags & BINKRBINVERT) == 0) {
-        S.v = (u16 PTR4*)cbase;
-        S.u = (u16 PTR4*)(cbase + chroma_pitch * (srcheight >> YUV_CHROMA_SHIFT));
-    } else {
+    if ((flags & BINKRBINVERT) != 0) {
         S.u = (u16 PTR4*)cbase;
         S.v = (u16 PTR4*)(cbase + chroma_pitch * (srcheight >> YUV_CHROMA_SHIFT));
+    } else {
+        S.v = (u16 PTR4*)cbase;
+        S.u = (u16 PTR4*)(cbase + chroma_pitch * (srcheight >> YUV_CHROMA_SHIFT));
     }
     S.u = (u16 PTR4*)((u8 PTR4*)S.u + (srcx >> YUV_CHROMA_SHIFT) +
                        (srcy >> YUV_CHROMA_SHIFT) * chroma_pitch);
     S.v = (u16 PTR4*)((u8 PTR4*)S.v + (srcx >> YUV_CHROMA_SHIFT) +
                        (srcy >> YUV_CHROMA_SHIFT) * chroma_pitch);
-
-    y_delta16 = srcpitch - YUV_MASK_BLOCK_PIXELS;
-    y_delta32 = srcpitch - YUV_MASK_BLOCK_PAIR_PIXELS;
-    a_delta16 = y_delta16;
-    a_delta32 = y_delta32;
-    c_delta16 = chroma_pitch - YUV_CHROMA_BLOCK_BYTES;
-    c_delta32 = chroma_pitch - YUV_MASK_BLOCK_PIXELS;
-    row_skip = (pitch16 * YUV_MASK_BLOCK_MASK - YUV_BLIT_SCALED_ROW_BYTES(srcw, blits, xscale)) +
-               YUV_BLIT_SCALED_ROW_BYTES(srcw & YUV_MASK_BLOCK_MASK, blits, xscale);
-    luma_row_skip = srcpitch - srcw + (srcw & YUV_MASK_BLOCK_MASK) +
-                    srcpitch * (YUV_MASK_BLOCK_PIXELS - 2);
-    chroma_row_skip = chroma_pitch - (srcw >> YUV_CHROMA_SHIFT) +
-                      ((srcw & YUV_MASK_BLOCK_MASK) >> YUV_CHROMA_SHIFT) + chroma_pitch * 7;
-    mask_row_skip = maskpitch - (srcw >> YUV_MASK_BLOCK_SHIFT);
 
     end_y = srcy + srch - 1;
     end_x = srcx + srcw - 1;
