@@ -11576,3 +11576,26 @@ All-source and normal builds pass; the normal DOL remains retail SHA1
 this hash is not a claim that either complete unit is source-linked.
 Evidence: build/parallel-thirtythird-report.json,
 build/parallel-thirtythird-validation.log and build/expand33d-*.
+
+
+### Bink stereo quantizer completion (2026-10-03)
+
+quanttos16chans2 is now exact: 99.88372 -> 100, all 172 bytes. Give the left
+and right channel conversions separate ordinary local scopes, rather than
+reassigning the same output/sample temporaries for the second channel. The
+first output-pointer increment now uses the running samples register, as in
+retail. Separate channel-named locals also match, corroborating a local
+lifetime distinction. Store order, clamping, multiplication and loop behavior
+are unchanged. No assembly or compiler changes.
+
+The full report changes only quanttos16chans2, adds one exact function and
+172 exact code bytes, and loses no matched data. binkacd is now 7/8 exact
+functions with BinkAudioDecompressOpen still at 99.82222. Its reported matched
+data remains 320/416 bytes; the unit remains NonMatching.
+
+The all-source and normal builds pass; the normal DOL retains retail SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. This does not claim a complete
+source link for binkacd. Evidence: build/parallel-thirtyfourth-audio-report.json,
+build/parallel-thirtyfourth-audio-validation.log and build/binkacd34b-*.
+The loop-form trials and first-refinement-only square-root trials yielded no
+additional gains and were restored.
