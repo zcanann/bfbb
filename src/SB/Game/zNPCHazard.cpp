@@ -1536,9 +1536,7 @@ void NPCHazard::Render()
             {
                 F32 dim_flux = 1.2f;
                 dim_flux *= fx;
-                xVec3 scl_wave = { 2.0f, 0.0f, 2.0f };
-
-                scl_wave.y = dim_flux;
+                const xVec3 scl_wave = { 2.0f, dim_flux, 2.0f };
                 xVec3SMul(&this->mdl_hazard->Scale, &scl_wave, rad);
                 xModelRender(this->mdl_hazard);
             }
@@ -1560,9 +1558,7 @@ void NPCHazard::Render()
                 F32 arch = EASE(rat_ff);
                 F32 dim_flux = 3.75f;
                 dim_flux *= arch;
-                xVec3 scl_fount = { 1.0f, 0.0f, 1.0f };
-
-                scl_fount.y = dim_flux;
+                const xVec3 scl_fount = { 1.0f, dim_flux, 1.0f };
                 xVec3SMul(&this->mdl_hazard->Scale, &scl_fount, rad);
                 xModelRender(this->mdl_hazard);
             }
@@ -1615,9 +1611,7 @@ void NPCHazard::Render()
             {
                 F32 dim_flux = 1.2f;
                 dim_flux *= fx;
-                xVec3 scl_wave = { 2.0f, 0.0f, 2.0f };
-
-                scl_wave.y = dim_flux;
+                const xVec3 scl_wave = { 2.0f, dim_flux, 2.0f };
                 xVec3SMul(&this->mdl_hazard->Scale, &scl_wave, rad);
                 xModelRender(this->mdl_hazard);
             }
@@ -1639,9 +1633,7 @@ void NPCHazard::Render()
                 F32 arch = EASE(rat_ff);
                 F32 dim_flux = 3.75f;
                 dim_flux *= arch;
-                xVec3 scl_fount = { 1.0f, 0.0f, 1.0f };
-
-                scl_fount.y = dim_flux;
+                const xVec3 scl_fount = { 1.0f, dim_flux, 1.0f };
                 xVec3SMul(&this->mdl_hazard->Scale, &scl_fount, rad);
                 xModelRender(this->mdl_hazard);
             }
