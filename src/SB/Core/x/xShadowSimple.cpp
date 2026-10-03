@@ -411,10 +411,9 @@ void xShadowSimple_CacheInit(xShadowSimpleCache* cache, xEnt* ent, U8 alpha)
     {
         sst = (zSimpleShadowTableHeader*)xSTFindAssetByType('SHDW', i, &size);
 
-        zSimpleShadowTableEntry* entries = (zSimpleShadowTableEntry*)(sst + 1);
-
         for (j = 0; j < sst->num; j++)
         {
+            zSimpleShadowTableEntry* entries = (zSimpleShadowTableEntry*)(sst + 1);
             if (ent->model->modelID == entries[j].modelID)
             {
                 tex = (RwTexture*)xSTFindAsset(entries[j].assetID, NULL);
@@ -497,10 +496,9 @@ void xShadowSimple_Add(xShadowSimpleCache* cache, xEnt* ent, F32 radius, F32 ecc
 
         if (1e38f != cache->shadowHeight && (moved || cache->castOnEnt != NULL))
         {
-            castOnEnt = cache->castOnEnt;
-
-            if (castOnEnt != NULL)
+            if (cache->castOnEnt != NULL)
             {
+                castOnEnt = cache->castOnEnt;
                 xMat4x3Toworld(&xformvert[0], (xMat4x3*)castOnEnt->model->Mat,
                                &cache->poly.vert[0]);
                 xMat4x3Toworld(&xformvert[1], (xMat4x3*)castOnEnt->model->Mat,

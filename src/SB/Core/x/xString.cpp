@@ -227,7 +227,6 @@ S32 xStrParseFloatList(F32* dest, const char* strbuf, S32 max)
         return 0;
     }
 
-    F32* values = dest;
     for (index = 0; *str != '\0' && index < max; index++)
     {
         while (*str == '\t' || *str == ' ' || *str == '[' || *str == ']' || *str == '{' ||
@@ -279,15 +278,14 @@ S32 xStrParseFloatList(F32* dest, const char* strbuf, S32 max)
         savech = *str;
 
         *str = '\0';
-        *values = xatof(numstart);
+        dest[index] = xatof(numstart);
 
         if (negate)
         {
-            *values = -*values;
+            dest[index] = -dest[index];
         }
 
         *str = savech;
-        values++;
     }
 
     return index;
@@ -300,8 +298,8 @@ S32 imemcmp(void const* d1, void const* d2, size_t size)
 
     for (size_t i = 0; i < size; i++, s1++, s2++)
     {
-        S32 cval1 = tolower(*s1);
-        S32 cval2 = tolower(*s2);
+        S32 cval1 = tolower((char)(U8)*s1);
+        S32 cval2 = tolower((char)(U8)*s2);
         if (cval1 != cval2)
         {
             return cval1 - cval2;

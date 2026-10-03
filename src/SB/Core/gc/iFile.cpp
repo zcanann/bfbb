@@ -222,10 +222,12 @@ static void async_cb(s32 result, DVDFileInfo* fileInfo)
         entry->offset += r7;
         entry->stat = IFILE_RDSTAT_INPROG;
 
-        U32 length = entry->size - entry->offset;
-        if (length < 0x8000)
+        U32 remain = entry->size - entry->offset;
+        U32 length;
+        if (remain < 0x8000)
         {
-            length = ALIGN(length, 4);
+            length = remain + 4 - 1;
+            length = length & ~(4 - 1);
         }
         else
         {

@@ -524,7 +524,7 @@ config.libs = [
             Object(Matching, "SB/Core/x/xSnd.cpp"),
             Object(NonMatching, "SB/Core/x/xSpline.cpp"),
             Object(Equivalent, "SB/Core/x/xstransvc.cpp"),
-            Object(NonMatching, "SB/Core/x/xString.cpp"),
+            Object(Matching, "SB/Core/x/xString.cpp"),
             Object(Matching, "SB/Core/x/xSurface.cpp"),
             Object(Matching, "SB/Core/x/xTimer.cpp"),
             Object(Matching, "SB/Core/x/xTRC.cpp", extra_cflags=["-sym on"]),

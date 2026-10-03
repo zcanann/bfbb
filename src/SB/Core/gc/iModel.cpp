@@ -466,9 +466,7 @@ S32 iModelCullPlusShadow(RpAtomic* model, RwMatrix* mat, xVec3* shadowVec, S32* 
     frustumPlane = cam->frustumPlanes;
     while (numPlanes--)
     {
-        nDot = worldsph.center.x * frustumPlane->plane.normal.x +
-               worldsph.center.y * frustumPlane->plane.normal.y +
-               worldsph.center.z * frustumPlane->plane.normal.z;
+        nDot = RwV3dDotProductMacro(&worldsph.center, &frustumPlane->plane.normal);
         nDot -= frustumPlane->plane.distance;
 
         if (nDot > worldsph.radius)
@@ -483,9 +481,7 @@ S32 iModelCullPlusShadow(RpAtomic* model, RwMatrix* mat, xVec3* shadowVec, S32* 
     return 0;
 
 shadow_test:
-    sDot = shadowVec->x * frustumPlane->plane.normal.x +
-           shadowVec->y * frustumPlane->plane.normal.y +
-           shadowVec->z * frustumPlane->plane.normal.z;
+    sDot = RwV3dDotProductMacro((RwV3d*)shadowVec, &frustumPlane->plane.normal);
     sDot -= frustumPlane->plane.distance;
 
     if (sDot > worldsph.radius)
@@ -497,14 +493,10 @@ shadow_test:
     frustumPlane++;
     while (numPlanes--)
     {
-        nDot = worldsph.center.x * frustumPlane->plane.normal.x +
-               worldsph.center.y * frustumPlane->plane.normal.y +
-               worldsph.center.z * frustumPlane->plane.normal.z;
+        nDot = RwV3dDotProductMacro(&worldsph.center, &frustumPlane->plane.normal);
         nDot -= frustumPlane->plane.distance;
 
-        sDot = shadowVec->x * frustumPlane->plane.normal.x +
-               shadowVec->y * frustumPlane->plane.normal.y +
-               shadowVec->z * frustumPlane->plane.normal.z;
+        sDot = RwV3dDotProductMacro((RwV3d*)shadowVec, &frustumPlane->plane.normal);
         sDot -= frustumPlane->plane.distance;
 
         if (nDot > worldsph.radius && sDot > worldsph.radius)
