@@ -1054,18 +1054,14 @@ namespace cruise_bubble
             {
                 shared.trail.bubbles -= bubbles;
 
-                // The residue here is NOT source shape: every remaining differing row is a
-                // .rodata displacement (target reaches these templates as base+0x230/0x23c/
-                // 0x254, we reach them at +0x98/0xa4/0xbc). The 0x198 gap is exactly the 356
-                // bytes of unreferenced .rodata the retail link deadstripped (@410, @441,
-                // @624-@630, @822, @881) plus the 52 bytes of the hit_test/start_effects/
-                // perturb_direction/cb_damage_ent literal group, which the target emits
-                // BEFORE these. Both must be fixed together; neither is local to this body.
-                xVec3 vel_rnd = { 0.0f, 0.0f, 0.0f };
+                // Retail places the 52-byte hit_test/start_effects/perturb_direction/
+                // cb_damage_ent template group before these trail templates.
+                // Their remaining offset difference is a translation-unit layout issue.
+                const xVec3 vel_rnd = { 0.0f, 0.0f, 0.0f };
                 zFX_SpawnBubbleTrail(&loc0, &loc1, bubbles, &vel_rnd, NULL);
 
-                xVec3 off0 = dir0 * current_tweak->trail.bubble_emit_radius;
-                xVec3 off1 = dir1 * current_tweak->trail.bubble_emit_radius;
+                const xVec3 off0 = dir0 * current_tweak->trail.bubble_emit_radius;
+                const xVec3 off1 = dir1 * current_tweak->trail.bubble_emit_radius;
                 xVec3 edge0[2] = { loc0 + off0, loc0 - off0 };
                 xVec3 edge1[2] = { loc1 + off1, loc1 - off1 };
 
