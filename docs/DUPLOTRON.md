@@ -11694,3 +11694,28 @@ one exact function, and regresses no code/data scores. All-source and actual
 source-link builds pass. Evidence: build/binkacd37-private/float_estimate_nested.*,
 build/parallel-thirtyseventh-audio-code-report.json,
 build/parallel-thirtyseventh-audio-linked-report.json and their validation logs.
+
+
+### Bink DVD-reader whole-TU completion (2026-10-03)
+
+BinkFileReadHeader reaches 100 from 99.75, all 160 bytes. Increment the
+volatile read cursor directly, then assign CurBufSize using the conditional
+expression for the remaining/limit choice. Both ordinary source changes are
+needed together: compound increment alone gives 98.875 and the conditional
+expression alone gives 98.5. Together they restore the retail temporary
+lifetimes without dummy values, assembly additions, or compiler changes.
+
+The previous actual source link differed by just four bytes, all at the two
+remaining header instructions. The retained exact form now source-links to
+retail SHA1 306526d90b48e99894c3138f5fc8f2716d9fecf6. ngcfile is Matching:
+13/13 functions, 2784/2784 code bytes and 42592/42592 data bytes exact.
+The complete progress increase is exactly one TU and those code/data sizes.
+
+All-source and actual source-link builds pass. The full deduplicated report
+changes only BinkFileReadHeader, adds one exact function and 160 exact code
+bytes, and regresses no code/data scores. Direct-field volatility, signed/int
+cursor, scope, and in-place subtraction controls did not improve the match
+and were not retained. Existing assembly elsewhere in the file is unchanged.
+Evidence: build/ngcfile38d-private/compound_ternary.*,
+build/ngcfile38-link-diff.json and build/parallel-thirtyeighth-ngcfile-report.json
+with build/parallel-thirtyeighth-ngcfile-validation.log.

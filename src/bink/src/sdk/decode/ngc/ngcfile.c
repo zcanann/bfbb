@@ -252,18 +252,13 @@ static u32 BinkFileReadHeader(BINKIO PTR4* io, s32 offset, void PTR4* dest, u32 
     }
 
     amount = radreadngc(NGC_DVD(io), NGC_DVD_FILE_OFFSET(io, NGC_READ_CURSOR(io)), dest, size);
-    cursor = NGC_READ_CURSOR(io) + amount;
-    NGC_VOLATILE_U32(NGC_READ_CURSOR(io)) = cursor;
+    NGC_VOLATILE_U32(NGC_READ_CURSOR(io)) += amount;
     cursor = NGC_VOLATILE_U32(NGC_READ_CURSOR(io));
     limit = io->BufSize;
     remaining = NGC_FILE_SIZE(io) - cursor;
     NGC_VOLATILE_U32(NGC_CONSUME_CURSOR(io)) = cursor;
 
-    if (remaining >= limit) {
-        remaining = io->BufSize;
-    }
-
-    io->CurBufSize = remaining;
+    io->CurBufSize = remaining >= limit ? io->BufSize : remaining;
     intelendian(dest, amount);
     return amount;
 }
