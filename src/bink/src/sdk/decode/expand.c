@@ -392,7 +392,18 @@ static void OpenReadBundle(u8 PTR4* bits, READBUNDLE PTR4* bundle, s32 bundle_wi
 static inline u32 exp_get_bits(EXPBITS PTR4* bits, u32 count)
 {
     u32 value;
-    VarBitsGet(value, u32, *bits, count);
+    u32 bitcount = bits->bitlen;
+    if (bitcount > count - 1) {
+        value = bits->bits & GetBitsLen(count);
+        bits->bits >>= count;
+        bits->bitlen = bitcount - count;
+    } else {
+        register VARBITSTEMP word = *bits->cur;
+        value = (bits->bits | (word << bitcount)) & GetBitsLen(count);
+        bits->bits = word >> (count - bitcount);
+        bits->bitlen = bitcount + BITSTYPELEN - count;
+        VARBITS_ADVANCE_CUR(bits->cur);
+    }
     return value;
 }
 
@@ -1072,39 +1083,6 @@ static void CheckReadDelta16Bundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
     }
 }
 
-static inline void expand_run_block(u8 PTR4* dest,
-                                    READBUNDLE PTR4* colors,
-                                    READBUNDLE PTR4* runs,
-                                    EXPBITS PTR4* bits)
-{
-    const u8 PTR4* scan;
-    s32 filled_pixels = 0;
-    EXPBITSTYPE bit;
-
-    scan = BINK_DCT_PATTERN_SCAN(exp_get_bits(bits, BINK_DCT_PATTERN_BITS));
-    do {
-        s32 run_length;
-        if (EXPBITS_GET1_BRANCH(*bits, bit)) {
-            u8 color = *colors->cur_ptr++;
-            run_length = *runs->cur_ptr++;
-            for (; run_length >= 0; --run_length) {
-                u32 scan_offset = scan[filled_pixels++];
-                dest[scan_offset] = color;
-            }
-        } else {
-            run_length = *runs->cur_ptr++;
-            for (; run_length >= 0; --run_length) {
-                u32 scan_offset = scan[filled_pixels++];
-                dest[scan_offset] = *colors->cur_ptr++;
-            }
-        }
-    } while (filled_pixels < BINK_RUN_BLOCK_LAST_PIXEL);
-    if (filled_pixels == BINK_RUN_BLOCK_LAST_PIXEL) {
-        u32 scan_offset = scan[filled_pixels];
-        dest[scan_offset] = *colors->cur_ptr++;
-    }
-}
-
 static inline void expand_pattern_row(u8 PTR4* dest, u32 pitch,
                                       u32 color0, u32 color1,
                                       READBUNDLE PTR4* patterns)
@@ -1310,7 +1288,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
     READBUNDLE block_types;
     READBUNDLE subblock_types;
     READBUNDLE colors;
-    READBUNDLE patterns;
+    READBUNDLE pattern_bundle;
     READBUNDLE xoff;
     READBUNDLE yoff;
     READBUNDLE intra_dc;
@@ -1348,7 +1326,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                    BINK_BUNDLE_NO_INITIAL_VALUE);
     OpenReadBundle(table->colorptr, &colors, BINK_BUNDLE_WIDTH, width,
                    BINK_COLOR_BITS, BINK_COLOR_BLOCK_BYTES, BINK_BUNDLE_NO_INITIAL_VALUE);
-    OpenReadBundle(table->bits2ptr, &patterns,
+    OpenReadBundle(table->bits2ptr, &pattern_bundle,
                    BINK_BUNDLE_WIDTH, width, BINK_PATTERN_BITS, BINK_PATTERN_BLOCK_BYTES,
                    BINK_BUNDLE_NO_INITIAL_VALUE);
     OpenReadBundle(table->motionXptr, &xoff, BINK_BUNDLE_WIDTH, width,
@@ -1365,7 +1343,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
     StartReadHuff4Bundle(&block_types, &bitstate);
     StartReadHuff4Bundle(&subblock_types, &bitstate);
     StartReadHuff8Bundle(&colors, &bitstate, &huff8_table);
-    StartReadHuff4Bundle(&patterns, &bitstate);
+    StartReadHuff4Bundle(&pattern_bundle, &bitstate);
     StartReadHuff4Bundle(&xoff, &bitstate);
     StartReadHuff4Bundle(&yoff, &bitstate);
     StartReadHuff4Bundle(&runs, &bitstate);
@@ -1377,7 +1355,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
         CheckReadRLEHuff4Bundle(&block_types, &bitstate);
         CheckReadRLEHuff4Bundle(&subblock_types, &bitstate);
         read_huff8(&colors, &bitstate, &huff8_table);
-        CheckReadHuff4PairBundle(&patterns, &bitstate);
+        CheckReadHuff4PairBundle(&pattern_bundle, &bitstate);
         CheckReadHuff4SBundle(&xoff, &bitstate);
         CheckReadHuff4SBundle(&yoff, &bitstate);
         CheckReadDelta16Bundle(&intra_dc, &bitstate);
@@ -1445,8 +1423,35 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 /* Runs decode in scan order before the block is copied to the frame. */
                 u8 PTR4* dst0 = dest;
                 u8 PTR4* dst1 = dest + pitch;
-                BINK_MARK_WORK_BLOCK(work_row, work_col);
-                expand_run_block(motion_block, &colors, &runs, &bitstate);
+                {
+                    const u8 PTR4* scan;
+                    s32 filled_pixels = 0;
+                    EXPBITSTYPE bit;
+
+                    scan = BINK_DCT_PATTERN_SCAN(exp_get_bits(&bitstate, BINK_DCT_PATTERN_BITS));
+                    BINK_MARK_WORK_BLOCK(work_row, work_col);
+                    do {
+                        s32 run_length;
+                        if (EXPBITS_GET1_BRANCH(bitstate, bit)) {
+                            u8 color = *colors.cur_ptr++;
+                            run_length = *runs.cur_ptr++;
+                            for (; run_length >= 0; --run_length) {
+                                u32 scan_offset = scan[filled_pixels++];
+                                motion_block[scan_offset] = color;
+                            }
+                        } else {
+                            run_length = *runs.cur_ptr++;
+                            for (; run_length >= 0; --run_length) {
+                                u32 scan_offset = scan[filled_pixels++];
+                                motion_block[scan_offset] = *colors.cur_ptr++;
+                            }
+                        }
+                    } while (filled_pixels < BINK_RUN_BLOCK_LAST_PIXEL);
+                    if (filled_pixels == BINK_RUN_BLOCK_LAST_PIXEL) {
+                        u32 scan_offset = scan[filled_pixels];
+                        motion_block[scan_offset] = *colors.cur_ptr++;
+                    }
+                }
                 if ((((u32)dest & BINK_BLOCK_DOUBLE_ALIGN_MASK) == 0)) {
                     BINK_COPY_BLOCK_DOUBLE_ROW(dst0, motion_block + BINK_BLOCK_SIDE * 0, 0, 0);
                     dst0 = dst1 + pitch;
@@ -1622,7 +1627,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
             }
             case BINK_BLOCK_PATTERN:
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
-                expand_pattern_block(dest, pitch, &colors, &patterns);
+                expand_pattern_block(dest, pitch, &colors, &pattern_bundle);
                 break;
             case BINK_BLOCK_MOTION: {
                 s32 motion_x = BINK_BUNDLE_S8(xoff);
@@ -1755,11 +1760,38 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                         break;
                     }
                     case BINK_BLOCK_PATTERN: {
-                        expand_pattern_block_scaled(dest, pitch, &colors, &patterns);
+                        expand_pattern_block_scaled(dest, pitch, &colors, &pattern_bundle);
                         break;
                     }
                     case BINK_BLOCK_RUN: {
-                        expand_run_block(motion_block, &colors, &runs, &bitstate);
+                        {
+                            const u8 PTR4* scan;
+                            s32 filled_pixels = 0;
+                            EXPBITSTYPE bit;
+
+                            scan = BINK_DCT_PATTERN_SCAN(exp_get_bits(&bitstate, BINK_DCT_PATTERN_BITS));
+                            do {
+                                s32 run_length;
+                                if (EXPBITS_GET1_BRANCH(bitstate, bit)) {
+                                    u8 color = *colors.cur_ptr++;
+                                    run_length = *runs.cur_ptr++;
+                                    for (; run_length >= 0; --run_length) {
+                                        u32 scan_offset = scan[filled_pixels++];
+                                        motion_block[scan_offset] = color;
+                                    }
+                                } else {
+                                    run_length = *runs.cur_ptr++;
+                                    for (; run_length >= 0; --run_length) {
+                                        u32 scan_offset = scan[filled_pixels++];
+                                        motion_block[scan_offset] = *colors.cur_ptr++;
+                                    }
+                                }
+                            } while (filled_pixels < BINK_RUN_BLOCK_LAST_PIXEL);
+                            if (filled_pixels == BINK_RUN_BLOCK_LAST_PIXEL) {
+                                u32 scan_offset = scan[filled_pixels];
+                                motion_block[scan_offset] = *colors.cur_ptr++;
+                            }
+                        }
                         scale_block(motion_block, dest, pitch);
                         break;
                     }

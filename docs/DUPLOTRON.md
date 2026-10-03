@@ -12920,3 +12920,32 @@ differ only in cursor register names, so this does not justify an artificial
 anti-folding rewrite. ExpandPlane remains 80.09398 and NonMatching. Evidence:
 build/expand-double-copy-audit.txt in the RGB worktree and root
 build/expand53-combined-private/scaled_signed_pitch.json.
+
+
+### Bink local run decoding and bit-reader comparisons (2026-10-03)
+
+ExpandPlane improves 80.09398 -> 81.08249 in the full deduplicated report.
+Both run paths now decode directly into the actual local motion_block array,
+rather than passing it through a reconstructed inline helper's pointer formal.
+This improves local lifetimes and scheduling; it does not yet reproduce all
+retail frame-indexed stores. Normal runs mark the work block immediately after
+reading the scan pattern, matching retail's 0x22b8 store. Scaled runs retain
+their existing common work marking. The local patterns bundle is renamed
+pattern_bundle so the scan macro still resolves the genuine global table.
+Bitstream reads, run lengths, scratch writes, and bundle advances are preserved.
+
+The six positive fixed-width bit reads use the equivalent buffered-count
+comparison > count-1. This changes exactly six compare immediates and their
+blt branches to retail's ble forms, with no size or other-function changes.
+Widths are four and seven bits; no zero-width caller exists. The combined raw
+score is 80.38607 and source size 5,632 bytes (retail 5,916). A guarded do-loop
+recovered retail's -1 entry guard and zero exit comparison but reduced overall
+matching, so it was rejected. No frame padding or compiler changes were used.
+
+All-source build and normal retail link pass with SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. Every other function and all exact
+code/data/completion measures are unchanged; completion remains 469/543.
+Expand remains NonMatching, so this checksum does not claim source-link closure.
+Evidence: build/parallel-fiftyfifth-report.json and validation log, root
+build/expand55-threshold-private and expand55-combined-private, and RGB
+build/run-lexical-private/lexical_mark_formatted.c with corresponding raw diff.
