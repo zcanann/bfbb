@@ -3617,7 +3617,8 @@ namespace cruise_bubble
                     {
                         if (seen >= k)
                         {
-                            qzone.mask &= ~(1 << j);
+                            const U32 bit = 1 << j;
+                            qzone.mask &= ~bit;
                             break;
                         }
                         else
