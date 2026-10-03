@@ -11179,3 +11179,102 @@ NonMatching. Validation: build/parallel-twentyfifth-report.json and
 build/parallel-twentyfifth-validation.log. No ancillary behavior tests run.
 Header, GetKeyFrame and audio parameter/helper follow-ups produced no gain
 and were restored; a useful parameter-lifetime fix does not transfer blindly.
+
+
+## Branch-emission audit: TalkBox and Hangable (2026-10-02)
+
+At staging d90e7695f, these two residues are not the same missing-dead-code
+pattern. Fresh successful compilations with configured GC/2.0p1e show:
+
+- zEntHangable_UpdateFX remains 260 bytes and 99.76923% after relocation
+  normalization. Retail .text 0x280/284/288 is `bne 0x28c; b 0x304; b 0x304`;
+  source is `beq epilogue; b default; b epilogue`. Both retain the third,
+  unreachable branch. The current difference is polarity and block ordering,
+  not deletion of that branch. This supersedes the earlier broad reading that
+  Hangable proves the compiler always drops the unreachable end-of-case branch;
+  historical runs may have used different compiler variants.
+- TalkBox next_state_type::start remains 384 target / 376 source bytes,
+  97.916664%. Retail .text 0x2f78 branches to the epilogue at 0x2f80, followed
+  by an unreachable branch at 0x2f7c back to the traversal test at 0x2ee0.
+  Source falls into the epilogue and lacks both instructions.
+
+There are stronger exact controls in the same freshly compiled TalkBox TU:
+parse_tag_sound is 824 bytes at 100%, including unreachable second branches
+at retail .text 0xc68 and 0xe1c; cb_dispatch is 424 bytes at 100%, including
+`b 0x1ee4; b 0x1ee4` at 0x1db8/1dbc. No direct branch targets those second
+instructions. The parse function uses if/else/return; dispatch uses a switch.
+CalcCombinedDepen was also recompiled and remains 608 bytes at 100%, preserving
+the previously source-recovered clamp branch form. Thus neither dead-branch
+retention generally nor a broad switch-emission limitation is established.
+
+The complete standalone probe below is a control for source-sensitive branch
+emission, not a reproduction of retail TalkBox's absent back-edge. It preserves
+Hangable's current source dispatch shape while removing game types and calls.
+The equivalent if form removes its two unconditional branches. The reduced
+traversal falls through after copy_wait and does not preserve the retail pair.
+
+```cpp
+extern void emit_effect(int state);
+extern bool trigger(int index);
+extern bool wait_needed();
+extern void copy_wait();
+struct Traversal { int end; int page_end; };
+extern Traversal traversal;
+
+void switch_return(int enabled, int state)
+{
+    if (enabled) {
+        switch (state) {
+        case 2: return;
+        default: emit_effect(state); break;
+        }
+    }
+}
+
+void if_return(int enabled, int state)
+{
+    if (enabled) {
+        if (state == 2) return;
+        emit_effect(state);
+    }
+}
+
+void traversal_tail()
+{
+    while (traversal.end < traversal.page_end) {
+        if (!trigger(traversal.end++)) break;
+    }
+    if (traversal.end == traversal.page_end) {
+        if (!wait_needed()) copy_wait();
+    }
+}
+```
+
+All three compile successfully under both units' identical current flags with
+stock GC/2.0p1 and configured GC/2.0p1e. Each produces the same 228 .text bytes:
+switch_return 60, if_return 52, traversal_tail 116. Section SHA1 is
+b23ea962cad122d67b8b73da1aeaee967a324a3d. External-call relocations are unresolved;
+this standalone probe has no retail reference binary. Byte identity across
+these compilers does not establish the original retail compiler or source CFG.
+
+Compiler SHA1: stock2.0p1 74bc177b10d1bbe8a60a21a6c0aa86d2dd9c0668;
+configured2.0p1e 9d445725489050035740aaff35860eddbaf3c3c9. Invocation uses the
+unchanged executable via sjiswrap, the flags below, then
+`-c build/branch-audit-probe.cpp -o build/branch-audit-probe.o`:
+
+```text
+-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -W err -O4,p -inline auto -pragma "cats off" -pragma "warn_notinlined off" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i src/PowerPC_EABI_Support/include -i src/dolphin/include -i src/dolphin/src -i src/bink/include -i src/bink/src -i src -i build/GQPE78/include -DBUILD_VERSION=0 -DVERSION_GQPE78 -DNDEBUG=1 -lang=c++ -common on -char unsigned -str reuse,pool,readonly -use_lmw_stmw on -pragma "cpp_extensions on" -inline off -gccinc -i include/inline -i include/rwsdk -i src/SB/Core/gc -i src/SB/Core/x -i src/SB/Game -DGAMECUBE -sym on
+```
+
+No production or compiler bytes changed. This bounds the hypothesis: current
+switch/if lowering can retain unreachable blocks, but no reduced case yet
+explains why retail TalkBox retains that particular loop back-edge. The original
+source structure and exact retail flags remain unknown; the responsible stage
+(IR construction, CFG cleanup, or emission) is not located. No shared patch
+mechanism or safe patch scope is inferred from these two holdouts.
+
+Private artifacts: build/branch-audit-run.py, branch-audit-meta.json,
+branch-audit-results.txt, branch-audit-byte-equality.json, the four probe .o/.s
+pairs, branch-audit-talkbox-raw.json, branch-audit-hangable-raw.json, and
+branch-audit-exact-clamp.txt. This appendix preserves the complete probe and
+identities if ignored build artifacts are later removed.
