@@ -10083,3 +10083,11 @@ Worker camera const/reference variants and iTRC rectangle/token lifetime
 variants were neutral or worse and were restored. The remaining camera
 scheduling edge is already recorded in docs/COMPILER_VARIANTS.md; this pass
 adds no compelling new case for a compiler patch.
+
+
+The final integration also narrows Robot `RendConeRange`'s temporary vertex
+to its loop, improving 86.42323% to 86.46473%. The combined full report
+(`build/parallel-eleventh-combined-report.json`) confirms only that additional
+gain, no data or function regressions, and an overall fuzzy score of 99.47782%.
+Exact functions remain 9,939 and complete units remain 452. Bungee trials
+were restored. All-source compilation and the normal retail hash pass.
