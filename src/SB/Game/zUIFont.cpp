@@ -370,7 +370,7 @@ void zUIFont_Render(xEnt* e)
         if (ent->uiFontFlags & 0x8)
         {
             iColor_tag c = xColorFromRGBA(a.bcolor[0], a.bcolor[1], a.bcolor[2], a.bcolor[3]);
-            basic_rect<F32> r = { NSCREENX(a.pos.x), NSCREENY(a.pos.y), NSCREENX(a.dim[0]),
+            const basic_rect<F32> r = { NSCREENX(a.pos.x), NSCREENY(a.pos.y), NSCREENX(a.dim[0]),
                                   NSCREENY(a.dim[1]) };
 
             render_fill_rect(r, c);

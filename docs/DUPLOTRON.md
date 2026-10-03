@@ -12833,3 +12833,19 @@ an isolated helper result before interaction with the newer run/fill changes.
 Evidence: build/scaled-pattern-order-private/*, the private trial scripts,
 scaled-pattern-order-retained-report.json, scaled-pattern-order-validation.json,
 and retained build/link logs in the RGB worktree.
+
+
+## UIFont immutable background rectangle (2026-10-03)
+
+Making the empty-text background rectangle const in zUIFont_Render restores
+retail's coordinate-load and delayed field-store ordering during aggregate
+construction. The authoritative deduplicated score improves from 97.54153%
+to 100%; all 13 functions, 3,160 code bytes, and 96 data bytes are exact.
+The full report changes no other function or matched-data total, and the
+all_source build passes. A separate coordinate-reference trial regressed
+and was discarded; no header or compiler changes are involved.
+
+The actual source-selected link has zero differing bytes and retains retail
+DOL SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6, so zUIFont is now Matching.
+Evidence in the isolated robot worktree: build/uifont-output-report.json,
+build/uifont-output-source-diff.json, and build/uifont-output-source-link.log.
