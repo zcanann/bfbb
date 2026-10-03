@@ -10501,3 +10501,65 @@ The .sdata2 pool matches except for inserted 3.0f and 100000.0f at offsets
 constants retain their sequence. .data/.sdata bytes and relocation sets match.
 These existing layout/emission differences are not repaired by fake mapping
 or removed constants. No new compiler-deficiency claim follows from this trial.
+
+
+## 2026-10-02: Recheck branch and narrowing claims against exact source controls
+
+A bounded audit at staging d04b1f26f separates two remaining observations from
+claims about compiler deficiencies. No compiler or production source is changed.
+The local zTalkBox review packet and xFont reports are diagnostic evidence, not
+patch specifications. Failed source permutations alone do not locate a compiler
+pass or prove the original source and flags.
+
+The older CalcCombinedDepen caveat above is now superseded: the function is
+608 bytes and 100% in the full deduplicated report. Source commit 7dbba28a6
+reuses normZ for the second normal instead of introducing nby, and changes the
+second clamp to MAX(nddot, 0.25f), following the earlier reuse of nddot. Thus the
+previously conflicting branch shape and register allocation are simultaneously
+source-reachable. LassoNotify remains 112 bytes at 96.42857%; its empty-case
+experiment establishes only that the dead branch can be emitted, not an exact
+function or a justification to retain an invented case. Dutchman's update_turn
+is another exact control: the documented sibling yaw-array form recovers its
+frsp, and the current 260-byte function is 100% without a compiler change.
+
+The older xSndIsPlayingByHandle '+1/-1 whichever end' conclusion is also
+superseded. Commit f46dcd2fc changes the wrapper declarations/definition to bool
+and zNPCNewsFish::IsTalking's ternary fallback from false to integer 0. The
+wrapper, iSndIsPlayingByHandle and IsTalking are all currently 100%. The caller's
+other operand type mattered; the earlier isolated return-type trials did not
+prove that U8 was required. The exact wrap_block helper in xFX is a separate
+control: its u32 return with a U8 cast in the body preserves a deliberate
+narrowing site without imposing a U8 return type on its callers.
+
+For zTalkBox, next_state_type::start still differs by a branch to the epilogue
+followed by an unreachable branch back to the traversal test: recorded retail
+.text addresses 0x2f78 and 0x2f7c, versus source fallthrough. This is a distinct
+CFG/emission question, not instruction scheduling, and warrants focused
+read-only compiler investigation if that work is prioritized. It is not ready
+for a patch proposal. The packet's complete method is not a standalone reduced
+reproducer. What is missing is a small case that preserves the absent branch
+pair under the recorded flags, plus evidence locating its disappearance in
+IR construction, CFG cleanup or final emission. Controls must include the
+source-reachable LassoNotify and now-exact CalcCombinedDepen shapes. Their
+existence does not explain this loop, but rules out a general claim that the
+compiler cannot emit such branches.
+
+For xFont, parse_next_text_jot's baseline U8 local narrows before is_ws and
+forwards that narrowed value to bounds; retail saves the loaded value and
+narrows at the later bounds call. A char local with explicit U8 casts at the
+comparisons and bounds reproduces the desired narrowing sites but rotates the
+saved a/c/tb registers, lowering the complete function score. This already
+rules out treating the symptom alone as inability to emit the desired
+extension placement. A useful reduced case must retain the byte load, bitfield
+stores, both char-argument calls, aggregate return and value liveness across
+the first call; compare the two typed source forms before reducing them further.
+No validated standalone case yet separates value-width tracking, copy
+coalescing and register allocation, so no distinct narrowing patch is proposed.
+
+Evidence: build/stagingd04b1f26f-baseline-report.json confirms all exact controls;
+build/xfont-d04-*.json and build/zTalkBox-compiler-review.md retain the mismatches.
+The isolated GC/2.0p1e compiler remains SHA1
+9d445725489050035740aaff35860eddbaf3c3c9. The preceding restored source build,
+full-report equality and retail DOL SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6 remain the validation baseline. This
+append-only documentation audit requires no new code or compiler build.
