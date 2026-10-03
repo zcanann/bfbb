@@ -1186,7 +1186,7 @@ namespace bungee_state
             eulerVec.z = 0.0f;
             xMat3x3Euler(&mat, &eulerVec);
 
-            xQuatFromMat(&detach.start_dir, &globals.camera.mat);
+            xQuatFromMat(&detach.start_dir, &cam);
             xQuatFromMat(&detach.end_dir, &mat);
 
             detach.time = 0.0f;

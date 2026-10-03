@@ -11746,3 +11746,24 @@ and no extra behavior-test infrastructure were needed.
 Worker artifacts: `build/rad-exact-baseline-report.json`,
 `rad-exact-linked-report.json`, `rad-exact-linked-source-build.log`,
 `rad-exact-link.log`, and `rad-exact-callprep-notes.json`.
+
+
+### Bungee detachment: preserve the existing camera reference (2026-10-03)
+
+`hanging_state_type::start_detaching` now passes its existing `cam` reference
+into `xQuatFromMat` instead of recomputing `&globals.camera.mat`. Keeping that
+reference live removes the two remaining address-preparation scheduling
+mismatches: 99.848274% -> 100%, 580 bytes. The one-line source change is
+independent of the ongoing helper/layout work; no shared headers changed.
+
+The full deduplicated report changes only this function, with no function or
+data regressions. Bungee now has 116/120 reported exact functions,
+25,120/25,296 exact code bytes, and all 6,528 data bytes exact. It remains
+NonMatching: anonymous helper identities and actual source-link layout are
+still unresolved. The normal full source build and retail DOL hash pass;
+that hash is not a claim that the Bungee object is source-linked.
+
+Worker verification rebuilt all 224 SB source objects against restored
+baseline headers. Root evidence: `build/parallel-fortieth-bungee-report.json`
+and `build/parallel-fortieth-bungee-validation.log`. No compiler edits or new
+assembly were used.
