@@ -11767,3 +11767,42 @@ Worker verification rebuilt all 224 SB source objects against restored
 baseline headers. Root evidence: `build/parallel-fortieth-bungee-report.json`
 and `build/parallel-fortieth-bungee-validation.log`. No compiler edits or new
 assembly were used.
+
+
+## 2026-10-03: Duplotron source-link layout preparation
+
+Reconstruct the retail definition layout without claiming the final smoke-phase
+match. `ScenePrepare` belongs before `SceneFinish` and `ScenePostInit`. The
+constructor and six trivial overrides have weak bindings in retail; place their
+unchanged bodies in the class header as inline definitions. Enable this unit's
+existing compiler `-sym on` mode so deferred emission puts those definitions and
+the local matrix helper in retail order. Moving the header bodies alone does not
+solve the layout; deferred emission is the necessary companion change.
+
+A temporary actual source link now differs from retail in only five bytes,
+down from 1,076 before preparation, at DOL offsets `0x122c09`, `0x122c11`,
+`0x122c15`, `0x122c17`, and `0x122c19`. All five belong to the known phase
+register/operand residue in `VFXSmokeStack`; there are no remaining differences
+in data, other functions, weak ordering, padding, or downstream addresses. Both
+DOL files are 2,859,136 bytes. The source-linked SHA1 is
+`9469c7c1a4ba89741fad6e955f1739c77af808de`, so the unit stays **NonMatching**.
+The extra source-object constant tail noted previously does not create an
+actual linked-data difference.
+
+Freshly rebuild all six transitive consumers of the changed header:
+`zAssetTypes.cpp`, `zNPCGoalDuplotron.cpp`, `zNPCMgr.cpp`, `zNPCTypeCommon.cpp`,
+`zNPCTypeDuplotron.cpp`, and `zNPCTypes.cpp`, all under `src/SB/Game`.
+The full deduplicated report is exactly equal to the baseline, including all
+other units and data. Duplotron remains 34/35 functions, smoke-stack 99.79508%,
+unit 99.97832%, and 2608/2608 exact data bytes. `all_source` and the restored
+normal retail-link hash pass; compiler hashes remain unchanged. There is no
+compiler modification, assembly addition, or behavioral change.
+
+Raw source-link inventories and logs are retained as
+`build/duplotron-layout-retained-*` in the isolated worktree. Root-usable affected
+source/object lists are `build/duplotron-layout-affected-sources.txt` and
+`build/duplotron-layout-affected-objects.txt`. New immutable/reused phase,
+partial-staging, and half-period-division forms were neutral or worse and
+restored. The half-period form emits `fdivs`, so it is not the retail multiply
+lowering. The tested member helper boundary remained an actual call and must
+not be represented as an exhausted inline-parameter experiment.

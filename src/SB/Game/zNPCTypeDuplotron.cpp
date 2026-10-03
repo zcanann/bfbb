@@ -40,6 +40,10 @@ void ZNPC_Duplotron_Shutdown()
 {
 }
 
+void zNPCDuplotron_ScenePrepare()
+{
+}
+
 void zNPCDuplotron_SceneFinish()
 {
     DUPO_KillEffects();
@@ -48,10 +52,6 @@ void zNPCDuplotron_SceneFinish()
 void zNPCDuplotron_ScenePostInit()
 {
     DUPO_InitEffects();
-}
-
-void zNPCDuplotron_ScenePrepare()
-{
 }
 
 xFactoryInst* ZNPC_Create_Duplotron(S32 who, RyzMemGrow* grow, void*)
@@ -603,37 +603,4 @@ void zNPCDuplotron::VFXCycleLights(F32 dt, S32 fastpace)
     }
 
     return;
-}
-
-zNPCDuplotron::zNPCDuplotron(S32 myType) : zNPCCommon(myType)
-{
-}
-
-void zNPCDuplotron::Move(xScene*, F32, xEntFrame*)
-{
-}
-
-U8 zNPCDuplotron::ColChkFlags() const
-{
-    return 0;
-}
-
-U8 zNPCDuplotron::ColPenFlags() const
-{
-    return 0;
-}
-
-U8 zNPCDuplotron::ColChkByFlags() const
-{
-    return XENT_COLLTYPE_PLYR | XENT_COLLTYPE_NPC;
-}
-
-U8 zNPCDuplotron::ColPenByFlags() const
-{
-    return XENT_COLLTYPE_PLYR | XENT_COLLTYPE_NPC;
-}
-
-U8 zNPCDuplotron::PhysicsFlags() const
-{
-    return 0;
 }
