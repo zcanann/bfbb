@@ -11026,3 +11026,34 @@ Full all_source/normal build and retail SHA1 pass. Evidence:
 build/parallel-twentyfirst-merged-report.json and
 build/parallel-twentyfirst-merged-validation.log. No compiler patch is needed
 for these gains; the cruise-bubble result is another source-layout control.
+
+
+## Bink masked-blitter branch merge and pitch loads (2026-10-02)
+
+YUV_blit_mask improves from 80.47119 to 81.54674. Form the destination byte
+offset before adding the destination base, matching retail .text 0xbf0/0xbf4.
+For the lower dirty-mask row, merge bits inside both arms of the left-bit
+condition; retail .text 0xefc..0xf10 performs the OR separately in each arm.
+The tested bit values and selected blocks are unchanged.
+
+Pass the setup-produced pitch delta and row pitch to the inline block/row
+helpers by const u32 reference, retaining the signed delta conversion at its
+pointer-add use. Retail reloads these setup outputs after the EVEN callback
+(e.g. .text 0xfc8 and 0xfe0); the value parameters captured them beforehand.
+setup_scaling does not retain these stack addresses, and core callbacks do
+not modify the pitch locals. This preserves behavior while recovering the
+observed lifetime. No volatile accesses, assembly, or compiler changes.
+
+Ablations: destination offset alone 80.60051; branch merge with it 81.103714;
+pitch references with it 80.9808; combined 81.54674. From the combined form,
+keeping only the delta reference gives 79.984634 and only the row reference
+81.270164. Removing the unchanged source-width snapshot, capturing mask pitch
+before doubling, and a lower-bit ternary all regress and were restored.
+Artifacts: build/yuv-mask22*, yuv-mask22b*, yuv-mask22c*, yuv-mask22d*.
+
+The complete deduplicated report changes only YUV_blit_mask; YUV reaches
+95.65087 and overall fuzzy 99.52607. All data, exact-function and source-linked
+totals remain unchanged. Full all_source and normal build pass; retail SHA1
+remains 306526d90b48e99894c3138f5fc8f2716d9fecf6. The unit stays NonMatching.
+Validation: build/parallel-twentysecond-report.json and
+build/parallel-twentysecond-validation.log. No ancillary behavior tests run.

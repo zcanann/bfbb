@@ -777,8 +777,8 @@ static void YUV_blit(void PTR4* dest,
 }
 }
 
-static inline void blit_mask_rows(u32 count, s32 y_delta, s32 a_delta, s32 c_delta, s32 pitch_delta,
-                                  u32 srcpitch, u32 row_pitch)
+static inline void blit_mask_rows(u32 count, s32 y_delta, s32 a_delta, s32 c_delta, const u32& pitch_delta,
+                                  u32 srcpitch, const u32& row_pitch)
 {
     s32 i;
 
@@ -786,7 +786,7 @@ static inline void blit_mask_rows(u32 count, s32 y_delta, s32 a_delta, s32 c_del
     do {
         EVEN(count);
         i--;
-        S.dest0 = S.dest1 + pitch_delta;
+        S.dest0 = S.dest1 + (s32)pitch_delta;
         S.dest1 = S.dest0 + row_pitch;
         S.y0 = (u32 PTR4*)((u8 PTR4*)S.y1 + y_delta);
         S.y1 = (u32 PTR4*)((u8 PTR4*)S.y0 + srcpitch);
@@ -797,8 +797,8 @@ static inline void blit_mask_rows(u32 count, s32 y_delta, s32 a_delta, s32 c_del
     } while (i != 0);
 }
 
-static inline void blit_mask_block(u32 count, s32 y_delta, s32 a_delta, s32 c_delta, s32 pitch_delta,
-                                   u32 srcpitch, u32 row_pitch)
+static inline void blit_mask_block(u32 count, s32 y_delta, s32 a_delta, s32 c_delta, const u32& pitch_delta,
+                                   u32 srcpitch, const u32& row_pitch)
 {
     RGBContext saved = S;
     blit_mask_rows(count, y_delta, a_delta, c_delta, pitch_delta, srcpitch, row_pitch);
@@ -876,7 +876,7 @@ static void YUV_blit_mask(void PTR4* dest,
     }
 
     S.base = (u8 PTR4*)dest;
-    S.dest0 = (u8 PTR4*)dest + desty * destpitch + YUV_BLIT_ROW_BYTES(destx, blits);
+    S.dest0 = (u8 PTR4*)dest + (desty * destpitch + YUV_BLIT_ROW_BYTES(destx, blits));
     if (YUV_SURFACE_MODE(flags) == BINKCOPY2XHI || YUV_SURFACE_MODE(flags) == BINKCOPY2XWHI) {
         pitch32 *= YUV_2X_SCALE;
     }
@@ -952,9 +952,10 @@ static void YUV_blit_mask(void PTR4* dest,
                 s32 lower;
                 lower = (maskp[mask_step + 1] != 0) ? YUV_MASK_RIGHT_HALF_BIT : 0;
                 if (maskp[mask_step] != 0) {
-                    lower += YUV_MASK_LEFT_HALF_BIT;
+                    bits |= lower + YUV_MASK_LEFT_HALF_BIT;
+                } else {
+                    bits |= lower;
                 }
-                bits |= lower;
             }
 
             switch (bits) {
