@@ -11832,3 +11832,25 @@ actual-inline trial produced the earlier, worse phase load order and expanded
 other helpers, so it was restored. Direct count construction, double-literal
 boundaries, and the other phase forms were also rejected. Artifacts and full
 verification are saved under `build/duplotron-scale-checkpoint-*`.
+
+
+### Bink reader conversion constants belong to the reader (2026-10-03)
+
+Move .rodata 0x80274DF0..0x80274E00 from ngcsnd.c to binkread.c in the
+split configuration. The two doubles (bits 0x4330000000000000 and
+0x41E0000000000000) are referenced only by BinkOpen at 0x801995B8/0x801995C0
+and 0x80199688/0x80199698. They exactly equal binkread.o's compiler-generated
+16-byte conversion pool. Their historical SOUND symbol labels did not prove
+sound-unit ownership; the retail references and emitted reader pool do.
+
+An actual reader source-link audit previously grew the DOL from 2,859,136 to
+2,859,200 bytes by emitting this pool again. Correcting ownership restores
+the retail DOL length. The reader remains NonMatching with three code
+holdouts; this is layout preparation, not a complete link claim.
+
+The full source/normal build retains the retail SHA1. All Bink function scores
+are unchanged; the 16 target data bytes move between units, and project-wide
+matched data remains 1,264,984 / 1,280,684. The compiler-generated anonymous
+pool remains uncredited in the report; no fake symbols were introduced.
+Evidence: build/binkread41-link-diff.json, binkread41-split-link-diff.json,
+binkread41-retained-split-report.json and retained-split-validation.log.
