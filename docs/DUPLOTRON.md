@@ -12259,3 +12259,21 @@ without score/data regressions, `all_source`, and the normal build;
 `zCutsceneMgr` remains NonMatching, so its retail object is still selected
 for that link. The built DOL retains retail SHA-1
 `306526d90b48e99894c3138f5fc8f2716d9fecf6`.
+
+
+### Integrated camera/lightning verification (2026-10-03)
+
+Root report `build/parallel-fortyseventh-final-report.json` against
+`parallel-fortysixth-final-report.json` changes exactly two scores:
+`zLightningFunc_Render` 99.6076 -> 99.6405 and `RenderLightning`
+99.028496 -> 99.15061. All other function scores and all per-unit/global
+exact-code, data, function and completion measures are unchanged (466/543
+complete units). The explicit cutscene null comparison retains its exact
+function. `all_source` and the normal retail link pass.
+
+The root camera source-link audit independently reproduced the worker's
+16 differing bytes, solely at DOL offsets 0x4d2f4..0x4d303, with original
+length 2,859,136 and SHA1 78638dbe2495c05c0b581213376159ed3098fbf6.
+Evidence: `build/camera47-source-link.json` and its saved DOL/link log.
+Normal object selection was restored. These are partial gains; no additional
+unit is marked Matching and no compiler binary was changed.
