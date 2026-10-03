@@ -10882,3 +10882,54 @@ MWCC hashes remain a78a5fdb6c1d5677e987636b2e0743dbaefe9542 and
 9d445725489050035740aaff35860eddbaf3c3c9. Validation: build/yuv-mask20-check.log,
 parallel-twentieth-validation.log, parallel-twentieth-report.json and
 parallel-twentieth-compare.py. No compiler or assembly changes are involved.
+
+
+## Bungee anonymous helpers and real link audit (2026-10-02)
+
+On staging `2a2fdf851`, the four reported-missing hook_asset anonymous
+assignment operators are emitted: source class IDs 167-170 versus retail
+910-913. Their 12/28/52/84-byte bodies (176 bytes total) are byte-identical.
+This is actual object-byte comparison, without object symbol renaming or
+objdiff pairing configuration. Bungee remains 115/120 exact functions,
+99.30076% code, all 6528 data bytes exact in the deduplicated report.
+
+A natural private-definition trial moved hook_asset from its public header
+into the implementation, leaving a forward declaration for hook_type's
+asset pointer. Generated IDs became 283-286; the four report holes remained.
+The trial was restored. No dummy declarations or generated-name padding
+were added, and prior start_detaching permutations were not repeated.
+
+The first real source-substitution diagnostic in this pass shows a broader
+link blocker: normal source Bungee produces a 2859136-byte DOL with 19396
+changed bytes and SHA1 `46f91b6ddfca7eb998a9a6530c6c397dde50aaf3`.
+The first changed instruction, at 0x80063404, is an external call to
+bungee_state::active: target branch destination 0x8011246c, source destination
+0x80112fa8. This is a retained function-address shift, not an anonymous
+assignment instruction mismatch. The marker was restored immediately.
+
+Fresh symorder finds different retained definition positions: the eight
+hanging-state movement/detach/render functions occur much earlier in source
+than in retail; update_camera also occurs earlier. The target data order is
+shared, tweak_cord_off, attaching vtable, base-state vtable, hanging vtable,
+then the 132-byte anonymous table. Source instead has shared, tweak_cord_off,
+the anonymous table, hanging/attaching/base vtables. Constant-pool positions
+also differ despite deduplicated data scoring 100%.
+
+A bounded trial moved the nine ordinary function definitions to their retail
+relative positions. It regressed hanging_state::start from 100% to 99.949554%
+(1348 bytes), kept all data exact, and increased real-link differences to
+19757 bytes. It was restored. Definition ordering alone therefore does not
+resolve the interacting weak-helper/pool layout; these failures do not prove
+that matching or source linking is impossible.
+
+Restored all_source and complete deduplicated report equality pass. The normal
+DOL again hashes to `306526d90b48e99894c3138f5fc8f2716d9fecf6`; GC/2.0p1a
+and GC/2.0p1e remain `a78a5fdb6c1d5677e987636b2e0743dbaefe9542` and
+`9d445725489050035740aaff35860eddbaf3c3c9`. No production/header/configuration
+change or Matching marker is retained, and no compiler or assembly changes
+were made. Evidence in the isolated worktree: `build/bungee-layout-assignments.json`,
+`bungee-layout-trial.py`, `bungee-layout-link-diff.json`,
+`bungee-layout-source-link.log`, `bungee-layout-source.dol`,
+`bungee-layout-symorder.txt`, `bungee-reorder-trial.py`,
+`bungee-reorder-report.json`, `bungee-reorder-link-diff.json`, and
+`bungee-layout-final-report.json`/`bungee-layout-final-link.log`.
