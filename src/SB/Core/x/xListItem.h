@@ -28,6 +28,11 @@ template <class T> struct xListItem
     void Remove();
 };
 
+template <class T> T* xListItem<T>::Next()
+{
+    return next;
+}
+
 #include "xListItem.inl"
 
 #endif

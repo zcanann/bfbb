@@ -43,4 +43,23 @@ inline S32 xPsyche::GIDOfSafety() const
     return gid_safegoal;
 }
 
+inline S32 xPsyche::ExpTranIsOn()
+{
+    return !(this->flg_psyche & 4);
+}
+
+inline void xPsyche::ExpTranOff()
+{
+    this->flg_psyche |= 4;
+}
+
+inline void xPsyche::ExpTranOn()
+{
+    this->flg_psyche &= ~4;
+}
+
+inline void xPsyche::DBG_HistAdd(S32 gid)
+{
+}
+
 #endif

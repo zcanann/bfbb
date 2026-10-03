@@ -152,21 +152,10 @@ struct xPsyche : RyzMemData
     {
         return this->clt_owner;
     }
-    S32 ExpTranIsOn()
-    {
-        return !(this->flg_psyche & 4);
-    }
-    void ExpTranOff()
-    {
-        this->flg_psyche |= 4;
-    }
-    void ExpTranOn()
-    {
-        this->flg_psyche &= ~4;
-    }
-    void DBG_HistAdd(S32 gid)
-    {
-    }
+    S32 ExpTranIsOn();
+    void ExpTranOff();
+    void ExpTranOn();
+    void DBG_HistAdd(S32 gid);
 
     void ImmTranOn()
     {

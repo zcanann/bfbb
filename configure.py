@@ -621,7 +621,7 @@ config.libs = [
             Object(Matching, "SB/Game/zNPCTypeVillager.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zNPCTypeAmbient.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zNPCTypeTiki.cpp", extra_cflags=["-sym on"]),
-            Object(NonMatching, "SB/Core/x/xBehaveMgr.cpp", extra_cflags=["-sym on"]),
+            Object(Matching, "SB/Core/x/xBehaveMgr.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Core/x/xBehaviour.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Core/x/xBehaveGoalSimple.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Core/x/xSkyDome.cpp"),
