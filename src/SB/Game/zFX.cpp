@@ -1501,23 +1501,24 @@ namespace
             for (U32 k = 4; *w && k != 0; k--)
             {
                 xVec3 tmp;
-                U32 bi = bones & 0xff;
+                const xMat4x3* bone = &scratch[bones & 0xff];
                 bones >>= 8;
-                xMat4x3Toworld(&tmp, &scratch[bi], vert);
+                xMat4x3Toworld(&tmp, bone, vert);
                 tmp *= *w;
                 acc += tmp;
                 w++;
             }
             xMat4x3Toworld(dst_verts, mat, &acc);
 
+            U32 k = 4;
             acc = 0.0f;
             w = wt;
-            for (U32 k = 4; *w && k != 0; k--)
+            for (; *w && k != 0; k--)
             {
                 xVec3 tmp;
-                U32 bi = nbones & 0xff;
+                const xMat4x3* bone = &scratch[nbones & 0xff];
                 nbones >>= 8;
-                xMat3x3RMulVec(&tmp, &scratch[bi], norm);
+                xMat3x3RMulVec(&tmp, bone, norm);
                 tmp *= *w;
                 acc += tmp;
                 w++;
