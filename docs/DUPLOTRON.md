@@ -10185,14 +10185,38 @@ iteration limits are used; this recovers retail's pointer/counter lifetimes.
 zFX data remains 26696/26696, and no other FX function changes.
 
 The full integrated report `build/parallel-twelfth-final-report.json` changes
-only that function and Bink ExpandPlane versus staging46e0b5f10, plus the
+only that function and Bink ExpandPlane versus staging 46e0b5f10, plus the
 Dutchman data correction documented above. No function scores, identities or
 matched-data totals regress. Matched data increases by 3560 reported bytes to
 1264032/1280684 (98.69975%). Overall fuzzy matching is 99.48759%; exact
-functions remain9939 and source-linked complete units remain452.
+functions remain 9939 and source-linked complete units remain 452.
 
 All-source compilation and the normal retail DOL link/check pass with SHA1
 306526d90b48e99894c3138f5fc8f2716d9fecf6. Removing the unused terminator macro
 leaves the entire combined report unchanged. Both MWCC compiler hashes are
 unchanged; no compiler patch or new inline assembly was used. Bink and FX
 remain NonMatching, and Dutchman still has three code holdouts.
+
+
+## Bink scaled fill row pairs (2026-10-02)
+
+`ExpandPlane` improves from 55.563896% to 55.901283% in the full
+deduplicated report. The scaled fill case writes two successive 16-byte rows
+per iteration, advancing a local output cursor through eight row pairs. This
+matches retail's paired-row loop structure. The previous source iterated over
+sixteen indexed rows; both write the same 16x16 block and consume one color.
+
+The fill checker now exercises both production fill cases. Its 14,336 cases
+cover every byte color, normal and scaled widths, valid padded pitches, word
+alignment offsets, output guards, normal work marks and color-bundle advances.
+Three negative controls detect missing normal/scaled row advances and missing
+bundle consumption. Scaled dispatch's later work marking is outside the case
+body checked here. This remains a host block test, not movie playback.
+
+All-source compilation and the normal retail DOL check pass. The complete
+`build/parallel-thirteenth-report.json` changes only ExpandPlane relative to
+`build/parallel-twelfth-final-report.json`; data and exact/source-linked totals
+are unchanged. Overall fuzzy progress is 99.48842%. The unit remains
+NonMatching. Sequential pattern-color reads helped alone but lost the gain
+when combined with paired fill; direct scaled patterns also scored lower.
+Those variants and the neutral motion-offset ordering trial were restored.
