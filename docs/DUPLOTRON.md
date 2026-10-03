@@ -12328,3 +12328,20 @@ match retail. DOL size remains 2,859,136. NonMatching is restored until the
 last function closes; no layout work or compiler change is needed on this
 baseline. Evidence: `build/zlightning-layout-renderexact-{report.json,
 validation.json,allsource.log,link.log,source-diff.json,source-main.dol}`.
+
+
+### Root verification of the exact lightning render (2026-10-03)
+
+Against the preceding staging report, `parallel-fortyeighth-render-report.json`
+changes only RenderLightning from 99.15061 to 100: +2,948 matched code bytes
+and +1 exact function. All other scores/data and completed-unit totals are
+unchanged. All-source and normal retail build pass. Root independently
+source-linked zLightning and reproduced exactly 24 differing DOL bytes,
+original length 2,859,136 and SHA1 b0cb70a2d8a199d7902a131dc89456b4b2c84999;
+normal object selection and retail hash were then restored. Artifacts:
+`build/lightning48-source-link.json`, saved DOL, and restoration log.
+
+The private Bink decoder root-cursor forms and guarded next-magnitude shift
+did not improve ReadBPLossless (91.80942 / 91.47207 versus 92.4414). They were
+not applied to production source. The root-cursor form overlaps older root
+initialization experiments and provides no new compiler-deficiency evidence.
