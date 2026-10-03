@@ -940,10 +940,12 @@ void RenderLightning(zLightning* l)
             }
 
             sStripVert[verts].v = 0.0f;
-            cr = l->color.r;
-            cg = l->color.g;
-            cb = l->color.b;
-            RwIm3DVertexSetRGBA(&sStripVert[verts], cr, cg, cb, alphau8);
+            {
+                const U32& cr = U32(l->color.r);
+                const U32& cg = U32(l->color.g);
+                const U32& cb = U32(l->color.b);
+                RwIm3DVertexSetRGBA(&sStripVert[verts], cr, cg, cb, alphau8);
+            }
 
             verts++;
 
@@ -966,10 +968,12 @@ void RenderLightning(zLightning* l)
             }
 
             sStripVert[verts].v = 1.0f;
-            cr = l->color.r;
-            cg = l->color.g;
-            cb = l->color.b;
-            RwIm3DVertexSetRGBA(&sStripVert[verts], cr, cg, cb, alphau8);
+            {
+                const U32& cr = U32(l->color.r);
+                const U32& cg = U32(l->color.g);
+                const U32& cb = U32(l->color.b);
+                RwIm3DVertexSetRGBA(&sStripVert[verts], cr, cg, cb, alphau8);
+            }
 
             verts++;
             if (verts >= 128)
@@ -998,10 +1002,12 @@ void RenderLightning(zLightning* l)
             }
 
             sStripVert[verts].v = 0.0f;
-            cr = l->color.r;
-            cg = l->color.g;
-            cb = l->color.b;
-            RwIm3DVertexSetRGBA(&sStripVert[verts], cr, cg, cb, alphau8);
+            {
+                const U32& cr = U32(l->color.r);
+                const U32& cg = U32(l->color.g);
+                const U32& cb = U32(l->color.b);
+                RwIm3DVertexSetRGBA(&sStripVert[verts], cr, cg, cb, alphau8);
+            }
 
             verts++;
 
@@ -1017,10 +1023,12 @@ void RenderLightning(zLightning* l)
             }
 
             sStripVert[verts].v = 1.0f;
-            cr = l->color.r;
-            cg = l->color.g;
-            cb = l->color.b;
-            RwIm3DVertexSetRGBA(&sStripVert[verts], cr, cg, cb, alphau8);
+            {
+                const U32& cr = U32(l->color.r);
+                const U32& cg = U32(l->color.g);
+                const U32& cb = U32(l->color.b);
+                RwIm3DVertexSetRGBA(&sStripVert[verts], cr, cg, cb, alphau8);
+            }
 
             verts++;
         }
@@ -1108,10 +1116,12 @@ void RenderLightning(zLightning* l)
             }
 
             sStripVert[verts].v = 0.0f;
-            cr = l->color.r;
-            cg = l->color.g;
-            cb = l->color.b;
-            RwIm3DVertexSetRGBA(&sStripVert[verts], cr, cg, cb, alphau8);
+            {
+                const U32& cr = U32(l->color.r);
+                const U32& cg = U32(l->color.g);
+                const U32& cb = U32(l->color.b);
+                RwIm3DVertexSetRGBA(&sStripVert[verts], cr, cg, cb, alphau8);
+            }
 
             verts++;
 
@@ -1134,10 +1144,12 @@ void RenderLightning(zLightning* l)
             }
 
             sStripVert[verts].v = 1.0f;
-            cr = l->color.r;
-            cg = l->color.g;
-            cb = l->color.b;
-            RwIm3DVertexSetRGBA(&sStripVert[verts], cr, cg, cb, alphau8);
+            {
+                const U32& cr = U32(l->color.r);
+                const U32& cg = U32(l->color.g);
+                const U32& cb = U32(l->color.b);
+                RwIm3DVertexSetRGBA(&sStripVert[verts], cr, cg, cb, alphau8);
+            }
 
             verts++;
             if (verts >= 128)
@@ -1166,10 +1178,12 @@ void RenderLightning(zLightning* l)
             }
 
             sStripVert[verts].v = 0.0f;
-            cr = l->color.r;
-            cg = l->color.g;
-            cb = l->color.b;
-            RwIm3DVertexSetRGBA(&sStripVert[verts], cr, cg, cb, alphau8);
+            {
+                const U32& cr = U32(l->color.r);
+                const U32& cg = U32(l->color.g);
+                const U32& cb = U32(l->color.b);
+                RwIm3DVertexSetRGBA(&sStripVert[verts], cr, cg, cb, alphau8);
+            }
 
             verts++;
 
@@ -1185,10 +1199,12 @@ void RenderLightning(zLightning* l)
             }
 
             sStripVert[verts].v = 1.0f;
-            cr = l->color.r;
-            cg = l->color.g;
-            cb = l->color.b;
-            RwIm3DVertexSetRGBA(&sStripVert[verts], cr, cg, cb, alphau8);
+            {
+                const U32& cr = U32(l->color.r);
+                const U32& cg = U32(l->color.g);
+                const U32& cb = U32(l->color.b);
+                RwIm3DVertexSetRGBA(&sStripVert[verts], cr, cg, cb, alphau8);
+            }
 
             verts++;
         }

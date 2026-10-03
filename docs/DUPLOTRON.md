@@ -12277,3 +12277,33 @@ length 2,859,136 and SHA1 78638dbe2495c05c0b581213376159ed3098fbf6.
 Evidence: `build/camera47-source-link.json` and its saved DOL/link log.
 Normal object selection was restored. These are partial gains; no additional
 unit is marked Matching and no compiler binary was changed.
+
+
+### zLightning: promoted color snapshots remove the endpoint register rotations
+
+After `4f5612234`, each single-write RGB snapshot in `RenderLightning` binds
+`const U32&` to an explicit `U32(l->color.channel)` value. The conversion creates
+a value snapshot, rather than aliasing the original byte field. The references
+remain local to their one color write. This small lifetime compromise improves
+**99.15061 -> 99.95116** at unchanged 2,948 bytes: **82 differing rows disappear**,
+leaving just the two initial three-load RGB scheduling clusters. Every tail
+and end-cap register operand is now retail-exact. Plain U32 locals, plain
+per-write const U8 values, and references to the original byte fields do not
+produce this result; promotion plus reference lifetime is material.
+
+Full deduplicated comparison changes only this function. Unit **99.9428**,
+15/17 exact functions, 7,920/12,448 exact code bytes, and 7,808/7,808 data bytes;
+Func_Render remains 99.6405. `all_source`, normal build and retail/compiler
+hashes pass. An actual source-link check keeps the retail DOL size and leaves
+36 differing bytes, all inside the two remaining render functions; no helper,
+constant-pool or data-layout discrepancy is present. NonMatching is restored
+and the normal retail checksum passes. The function and TU are not yet exact.
+
+Controls retained only in ignored artifacts: explicit promoted snapshots at
+the initial pairs are neutral, reordering those captures to match the observed
+load order regresses, and byte-typed snapshot references regress. The same
+promoted RGB snapshots in Func_Render are neutral and are not retained there.
+Artifacts: `build/zlightning-layout-snapshots-{report.json,validation.json,
+allsource.log,link.log,source-diff.json,source-main.dol}`. Prior source-link
+inventory was 162 differing bytes; the retained gain removes the large shared
+endpoint/tail clusters without a linked layout change.
