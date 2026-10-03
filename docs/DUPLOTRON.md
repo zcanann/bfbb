@@ -12423,3 +12423,18 @@ Evidence is preserved in the RGB worktree under `build/lightningfunc-*`:
 `base-report.json`, `exact-report.json`, `source-linked-report.json`,
 `exact-build.log`, `exact-source-link.log`, and the private source/raw-diff
 trials. The retained Func_Render candidate is `separate_initial_phase.cpp`.
+
+
+### Integrated lightning completion and iMath3 verification (2026-10-03)
+
+Root all-source build and actual retail DOL checksum pass with zLightning
+selected from its compiled source object. The full deduplicated report
+`build/parallel-fortyeighth-final-report.json` changes only the two lightning
+render functions (both now 100) and iBoxIsectSphere (98.98203 -> 99.371254)
+against the preceding staging report. No other unit/function regresses.
+Matched code increases 4,528 bytes and exact functions increase by two;
+complete source-linked units rise 466 -> 467, adding 12,448 complete code
+bytes and 7,808 complete data bytes. Actual linked DOL SHA1 remains
+306526d90b48e99894c3138f5fc8f2716d9fecf6. iMath3 remains NonMatching.
+Evidence: the final report, validation log and report-comparison script
+under `build/parallel-fortyeighth-*`.
