@@ -11854,3 +11854,30 @@ matched data remains 1,264,984 / 1,280,684. The compiler-generated anonymous
 pool remains uncredited in the report; no fake symbols were introduced.
 Evidence: build/binkread41-link-diff.json, binkread41-split-link-diff.json,
 binkread41-retained-split-report.json and retained-split-validation.log.
+
+
+## 2026-10-03: Duplotron fully exact and source-linked
+
+Combine the mutable cycle scale with an immutable phase value, then keep the
+sine result separate. The coefficient alone fixed multiply operand order; the
+immutable phase alone was worse. Together they recover retail's phase in `f1`,
+`2.0f` in `f0`, and PI in `f2`, with both multiply instructions exact. This is a
+source-lifetime interaction, not a compiler patch. The arithmetic remains
+`(cycle * 2.0f) * PI`, with the same sine and particle-count conversion.
+
+`VFXSmokeStack` reaches 100%, completing all 35 functions, 4612 code bytes, and
+2608 data bytes. Before changing the marker, the full deduplicated report
+changes only this function and its unit, with no regression in any other
+function, inline instance, or data. The earlier header/order/deferred-emission
+preparation now permits a byte-identical actual source link: all 2,859,136 DOL
+bytes equal retail, SHA1 `306526d90b48e99894c3138f5fc8f2716d9fecf6`.
+Only after that check is the unit marked Matching, adding one complete TU,
+4612 source-linked code bytes, and 2608 source-linked data bytes.
+
+The full source build, normal DOL hash check, and unchanged isolated compiler
+hashes pass. All six header consumers were freshly compiled during the layout
+checkpoint; the final change is confined to this cpp and its Matching marker.
+No compiler modification, new assembly, speculative arithmetic, or ancillary
+behavior test was required. Final proof is retained in
+`build/duplotron-exact-final-report.json`, `build/duplotron-exact-source-link.json`,
+and the corresponding build/link logs in the isolated worktree.

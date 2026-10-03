@@ -453,10 +453,10 @@ void zNPCDuplotron::VFXSmokeStack(F32 dt)
         F32 ds2_cam = NPCC_ds2_toCam(this->Pos(), 0x0);
         if (!(ds2_cam > SQ(25.0f)))
         {
-            // temp var needed for .sdata2 match
-            F32 s = this->tmr_smokeCycle;
+            // Keep the phase and scale separate for the original FP temporaries.
+            const F32 phase = this->tmr_smokeCycle;
             F32 cycleScale = 2.0f;
-            s = isin(s * cycleScale * PI);
+            F32 s = isin(phase * cycleScale * PI);
             S32 npar = 5.0f * s;
             if (npar >= 1)
             {
