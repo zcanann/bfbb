@@ -459,12 +459,7 @@ void xMat3x3Mul(xMat3x3* o, const xMat3x3* a, const xMat3x3* b)
 {
     xMat3x3 temp;
     xMat3x3* tp;
-    U32 usetemp = 0;
-
-    if (o == a || o == b)
-    {
-        usetemp = 1;
-    }
+    U32 usetemp = (o == a || o == b);
 
     if (usetemp != 0)
     {
@@ -765,10 +760,10 @@ void xBoxUnion(xBox& a, const xBox& b, const xBox& c)
 void xBoxFromCircle(xBox& box, const xVec3& center, const xVec3& dir, F32 r)
 {
     xVec3 ext = { 0.0f, 0.0f, 0.0f };
-
-    ext.x = r * xsqrt(1.0f - (dir.x * dir.x));
-    ext.y = r * xsqrt(1.0f - (dir.y * dir.y));
-    ext.z = r * xsqrt(1.0f - (dir.z * dir.z));
+    const F32 one = 1.0f;
+    ext.x = r * xsqrt(one - dir.x * dir.x);
+    ext.y = r * xsqrt(one - dir.y * dir.y);
+    ext.z = r * xsqrt(one - dir.z * dir.z);
 
     box.upper = center + ext;
     box.lower = center - ext;

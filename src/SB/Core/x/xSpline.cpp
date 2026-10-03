@@ -243,6 +243,7 @@ void CoefToUnity3(xCoef3* coef1, xCoef3* coef2, F32 f1, F32 f2)
     F32 coef2_3;
 
     F32 factor;
+    F32 temp;
     S32 i;
     xCoef* c1;
     xCoef* c2;
@@ -257,11 +258,12 @@ void CoefToUnity3(xCoef3* coef1, xCoef3* coef2, F32 f1, F32 f2)
         coef2_2 = c2->a[2];
         coef2_3 = c2->a[3];
 
+        temp = 2.0f * coef2_1 * fdiff;
         factor = 3.0f * coef2_0 * fdiff;
-
         c1->a[0] = fdiff * (fdiff * (coef2_0 * fdiff));
         c1->a[1] = (f1 * (fdiff * factor)) + (fdiff * (coef2_1 * fdiff));
-        c1->a[2] = (coef2_2 * fdiff) + ((f1 * (f1 * factor)) + (f1 * (2.0f * coef2_1 * fdiff)));
+        temp = (f1 * (f1 * factor)) + (f1 * temp);
+        c1->a[2] = (coef2_2 * fdiff) + temp;
         c1->a[3] =
             coef2_3 + ((coef2_2 * f1) + ((f1 * (f1 * (coef2_0 * f1))) + (f1 * (coef2_1 * f1))));
 
@@ -454,15 +456,12 @@ F32 ArcEvalIterate(xSpline3* spl, F32 s, U32 deriv, xVec3* o, U32 iterations)
 {
     xCoef3* coef;
     xCoef3 tempCoef;
-
     F32 umin;
-    F32 smax;
-    F32 smin;
     F32 umax;
+    F32 smin;
+    F32 smax;
     F32 utest;
     F32 arctest;
-    F32 arclengthmax;
-
     S32 min;
     S32 max;
     S32 test;
@@ -487,41 +486,27 @@ F32 ArcEvalIterate(xSpline3* spl, F32 s, U32 deriv, xVec3* o, U32 iterations)
     min = seg * spl->arcSample;
     umin = (F32)(max - min) / (F32)spl->arcSample;
     umax = (F32)((max + 1) - min) / (F32)spl->arcSample;
-    if (max - 1 >= 0)
-    {
-        smax = spl->arcLength[max - 1];
-    }
-    else
-    {
-        smax = 0.0f;
-    }
+    smin = (max - 1 >= 0) ? spl->arcLength[max - 1] : 0.0f;
 
-    arclengthmax = spl->arcLength[max];
-    if (min - 1 >= 0)
-    {
-        smin = spl->arcLength[min - 1];
-    }
-    else
-    {
-        smin = 0.0f;
-    }
+    smax = spl->arcLength[max];
+    utest = (min - 1 >= 0) ? spl->arcLength[min - 1] : 0.0f;
     coef = CoefSeg3(spl, seg, &tempCoef);
 
-    if (s <= smax)
+    if (s <= smin)
     {
         EvalCoef3(coef, umin, deriv, o);
         return (F32)seg + umin;
     }
 
-    if (s >= arclengthmax)
+    if (s >= smax)
     {
         EvalCoef3(coef, umax, deriv, o);
         return (F32)seg + umax;
     }
 
-    s = s - smin;
-    smax = smax - smin;
-    arclengthmax = arclengthmax - smin;
+    s = s - utest;
+    smin = smin - utest;
+    smax = smax - utest;
 
     while (iterations != 0)
     {
@@ -530,23 +515,23 @@ F32 ArcEvalIterate(xSpline3* spl, F32 s, U32 deriv, xVec3* o, U32 iterations)
         if (s > arctest)
         {
             umin = utest;
-            smax = arctest;
+            smin = arctest;
         }
         else
         {
             umax = utest;
-            arclengthmax = arctest;
+            smax = arctest;
         }
         iterations -= 1;
     }
 
-    if (0.0f == arclengthmax - smax)
+    if (0.0f == smax - smin)
     {
         utest = umin;
     }
     else
     {
-        utest = umin + ((umax - umin) * (s - smax)) / (arclengthmax - smax);
+        utest = umin + ((umax - umin) * (s - smin)) / (smax - smin);
         if (utest < 0.0f)
         {
             utest = 0.0f;

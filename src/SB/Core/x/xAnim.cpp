@@ -153,7 +153,7 @@ static U8 _xCheckAnimNameInner(const char* name, const char* pattern, S32 patter
             }
             nameCurrent++;
 
-            for (const char* x = &name[nameCurrent]; *x >= '0' && *x <= '9'; x++)
+            while (name[nameCurrent] >= '0' && name[nameCurrent] <= '9')
             {
                 nameCurrent++;
             }
@@ -181,40 +181,39 @@ static U8 _xCheckAnimNameInner(const char* name, const char* pattern, S32 patter
         {
             patternCurrent++;
             U8 done = 0;
-            const char* groupStart = &pattern[patternCurrent];
-            const char* current = groupStart;
+            const char* current = &pattern[patternCurrent];
             while (*current != ')' && *current != NULL)
             {
                 const char* startPattern = current;
-                while (*startPattern != NULL && *startPattern != ')' && *startPattern != '|')
+                while (*current != NULL && *current != ')' && *current != '|')
                 {
-                    if (*startPattern == '(')
+                    if (*current == '(')
                     {
                         S32 pc = 1;
-                        while (*startPattern != NULL && pc > 0)
+                        while (*current != NULL && pc > 0)
                         {
-                            if (*startPattern == ')')
+                            if (*current == ')')
                             {
                                 pc--;
                             }
-                            else if (*startPattern == '(')
+                            else if (*current == '(')
                             {
                                 pc++;
                             }
-                            startPattern++;
+                            current++;
                         }
-                        if (*startPattern != NULL)
+                        if (*current != NULL)
                         {
-                            startPattern++;
+                            current++;
                         }
                     }
                     else
                     {
-                        startPattern++;
+                        current++;
                     }
                 }
 
-                if (startPattern != current)
+                if (current != startPattern)
                 {
                     S32 nameOut;
                     S32 extraOut;
@@ -223,7 +222,7 @@ static U8 _xCheckAnimNameInner(const char* name, const char* pattern, S32 patter
                     // extremely wack. I think this "variable" is completely compiler generated for some reason
                     U8 wtfman = 0;
                     if (!done &&
-                        _xCheckAnimNameInner(&name[nameCurrent], current, startPattern - current,
+                        _xCheckAnimNameInner(&name[nameCurrent], startPattern, current - startPattern,
                                              extra, &nameOut, &extraOut))
                     {
                         wtfman = 1;
@@ -241,8 +240,7 @@ static U8 _xCheckAnimNameInner(const char* name, const char* pattern, S32 patter
                     }
                 }
 
-                current = startPattern;
-                if (*startPattern == '|')
+                if (*current == '|')
                 {
                     current++;
                 }
@@ -251,7 +249,7 @@ static U8 _xCheckAnimNameInner(const char* name, const char* pattern, S32 patter
             {
                 current++;
             }
-            patternCurrent += current - groupStart;
+            patternCurrent += current - &pattern[patternCurrent];
             if (!done)
             {
                 return 0;
@@ -262,29 +260,31 @@ static U8 _xCheckAnimNameInner(const char* name, const char* pattern, S32 patter
         {
             patternCurrent++;
             const char* current = &pattern[patternCurrent];
-            const char* positiveEnd = current;
-            while (*positiveEnd != NULL && *positiveEnd != ';' && *positiveEnd != '>')
+            while (*current != NULL && *current != ';' && *current != '>')
             {
-                positiveEnd++;
+                current++;
             }
 
+            const char* positiveEnd = current;
             const char* negative = NULL;
             const char* negativeEnd = NULL;
 
-            if (*positiveEnd == ';')
+            if (*current == ';')
             {
-                negativeEnd = positiveEnd + 1;
-                negative = negativeEnd;
-                while (*negativeEnd != NULL && *negativeEnd != '>')
+                current++;
+                negative = current;
+                while (*current != NULL && *current != '>')
                 {
-                    negativeEnd++;
-                };
-                positiveEnd = negativeEnd;
+                    current++;
+                }
+                negativeEnd = current;
             }
+
             S32 nameOut;
             S32 extraOut;
-            U8 matched = _xCheckAnimNameInner(&name[nameCurrent], current, positiveEnd - current,
-                                              extra, &nameOut, &extraOut);
+            U8 matched = _xCheckAnimNameInner(&name[nameCurrent], &pattern[patternCurrent],
+                                              positiveEnd - &pattern[patternCurrent], extra,
+                                              &nameOut, &extraOut);
             if (matched != 0)
             {
                 if (negative != NULL &&
@@ -304,11 +304,11 @@ static U8 _xCheckAnimNameInner(const char* name, const char* pattern, S32 patter
                 }
             }
 
-            if (*positiveEnd != NULL)
+            if (*current != NULL)
             {
-                positiveEnd++;
+                current++;
             }
-            patternCurrent += positiveEnd - current;
+            patternCurrent += current - &pattern[patternCurrent];
             if (matched == 0)
             {
                 return 0;
@@ -605,8 +605,9 @@ void xAnimFileEval(xAnimFile* data, F32 time, F32* bilinear, U32 flags, xVec3* t
     U32 biindex[2];
     U32 biplus[2];
     xQuat* q0;
+    U32 fileFlags = data->FileFlags;
 
-    time = xAnimFileRawTime(data, CLAMP(time, 0.0f, data->Duration));
+    F32 rawTime = xAnimFileRawTime(data, CLAMP(time, 0.0f, data->Duration));
     if (data->FileFlags & 0x8000)
     {
         return;
@@ -631,7 +632,7 @@ void xAnimFileEval(xAnimFile* data, F32 time, F32* bilinear, U32 flags, xVec3* t
         return;
     }
 
-    if (bilinear != NULL && data->FileFlags & 0x4000)
+    if (bilinear != NULL && fileFlags & 0x4000)
     {
         for (i = 0; i < 2; ++i)
         {
@@ -639,7 +640,7 @@ void xAnimFileEval(xAnimFile* data, F32 time, F32* bilinear, U32 flags, xVec3* t
             f32 t = std::floorf(f30);
             bilerp[i] = f30 - t;
             biindex[i] = t;
-            biplus[i] = MIN(biindex[i] + 1, data->NumAnims[i]);
+            biplus[i] = (biindex[i] + 1 < data->NumAnims[i]) ? biindex[i] + 1 : biindex[i];
         }
 
         q0 = (xQuat*)(giAnimScratch + 3 * IANIM_POSE_SIZE);
@@ -649,47 +650,46 @@ void xAnimFileEval(xAnimFile* data, F32 time, F32* bilinear, U32 flags, xVec3* t
             xQuat* q1 = (xQuat*)(giAnimScratch + 4 * IANIM_POSE_SIZE);
             xVec3* t1 = (xVec3*)(q1 + IANIM_MAXBONES);
 
-            iAnimEval(data->RawData[biindex[0] + biindex[1] * data->NumAnims[0]], time, flags, tran,
+            iAnimEval(data->RawData[biindex[0] + biindex[1] * data->NumAnims[0]], rawTime, flags, tran,
                       quat);
-            iAnimEval(data->RawData[biplus[0] + biindex[1] * data->NumAnims[0]], time, flags, t0,
+            iAnimEval(data->RawData[biplus[0] + biindex[1] * data->NumAnims[0]], rawTime, flags, t0,
                       q0);
             iAnimBlend(bilerp[0], 1.0f, NULL, NULL, numBones, tran, quat, t0, q0, tran, quat);
 
-            iAnimEval(data->RawData[biindex[0] + biplus[1] * data->NumAnims[0]], time, flags, t0,
+            iAnimEval(data->RawData[biindex[0] + biplus[1] * data->NumAnims[0]], rawTime, flags, t0,
                       q0);
-            iAnimEval(data->RawData[biplus[0] + biplus[1] * data->NumAnims[0]], time, flags, t1,
+            iAnimEval(data->RawData[biplus[0] + biplus[1] * data->NumAnims[0]], rawTime, flags, t1,
                       q1);
             iAnimBlend(bilerp[0], 1.0f, NULL, NULL, numBones, t0, q0, t1, q1, t0, q0);
             iAnimBlend(bilerp[1], 1.0f, NULL, NULL, numBones, tran, quat, t0, q0, tran, quat);
         }
         else if (bilerp[0])
         {
-            iAnimEval(data->RawData[biindex[0] + biindex[1] * data->NumAnims[0]], time, flags, tran,
+            iAnimEval(data->RawData[biindex[0] + biindex[1] * data->NumAnims[0]], rawTime, flags, tran,
                       quat);
-            iAnimEval(data->RawData[biplus[0] + biindex[1] * data->NumAnims[0]], time, flags, t0,
+            iAnimEval(data->RawData[biplus[0] + biindex[1] * data->NumAnims[0]], rawTime, flags, t0,
                       q0);
             iAnimBlend(bilerp[0], 1.0f, NULL, NULL, numBones, tran, quat, t0, q0, tran, quat);
         }
         else if (bilerp[1])
         {
-            iAnimEval(data->RawData[biindex[0] + biindex[1] * data->NumAnims[0]], time, flags, tran,
+            iAnimEval(data->RawData[biindex[0] + biindex[1] * data->NumAnims[0]], rawTime, flags, tran,
                       quat);
-            iAnimEval(data->RawData[biindex[0] + biplus[1] * data->NumAnims[0]], time, flags, t0,
+            iAnimEval(data->RawData[biindex[0] + biplus[1] * data->NumAnims[0]], rawTime, flags, t0,
                       q0);
             iAnimBlend(bilerp[0], 1.0f, NULL, NULL, numBones, tran, quat, t0, q0, tran, quat);
         }
         else
         {
-            iAnimEval(data->RawData[biindex[0] + biindex[1] * data->NumAnims[0]], time, flags, tran,
+            iAnimEval(data->RawData[biindex[0] + biindex[1] * data->NumAnims[0]], rawTime, flags, tran,
                       quat);
         }
     }
     else
     {
-        iAnimEval(data->RawData[0], time, flags, tran, quat);
+        iAnimEval(data->RawData[0], rawTime, flags, tran, quat);
     }
 }
-
 #ifndef INLINE
 namespace std
 {
