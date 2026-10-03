@@ -12732,3 +12732,28 @@ and normal build pass; normal retail SHA1 is
 306526d90b48e99894c3138f5fc8f2716d9fecf6. GC/2.0p1a and GC/2.0p1e remain
 respectively a78a5fdb6c1d5677e987636b2e0743dbaefe9542 and
 9d445725489050035740aaff35860eddbaf3c3c9.
+
+
+## zLasso weak rotation-helper layout (2026-10-03)
+
+The retail object places xMat4x3Rot and xMat4x3RotC in a separate weak .text
+section, after the local initVertMap, vec2vecMat and bakeMorphAnim bodies. The
+source instead defined both strongly before those local helpers. Marking the
+definitions inline recovers the weak bindings; placing their definitions after
+the local helpers recovers retained order. All changes are private to this TU,
+with the existing -inline off preserving the calls and exact helper code.
+
+The complete deduplicated report is identical to the preceding morph-reference
+checkpoint. all_source and normal build pass. Actual source selection reduces
+840 differing DOL bytes to 146, all inside zLasso_Render; helper order, bindings,
+and call destinations now match. This also resolves seven relocation bytes
+previously counted within Render. Source SHA1 is
+1078ecccdfe9c2a0cbe5dcfa1f8d8f32264db9f3, size 2859136. Normal selection restores
+retail SHA1 306526d90b48e99894c3138f5fc8f2716d9fecf6. The unit remains
+NonMatching, 19/20 exact; Render remains 99.242096. No compiler or shared-header
+change is involved.
+
+Evidence: build/lasso-layout-tail.json, lasso-layout-tail-link.json,
+lasso-layout-tail-linked.elf and lasso-layout-final-report.json. The remaining
+146 bytes are register assignment and emission-loop scheduling, not unexplained
+pool or layout displacement. No artificial constants or padding were added.

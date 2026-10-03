@@ -33,7 +33,8 @@ static void initVertMap(zLassoGuide* guide);
 static void bakeMorphAnim(RpGeometry* geom, void* anim);
 static void vec2vecMat(xMat4x3* m, xVec3* v1, xVec3* v2);
 
-void xMat4x3Rot(xMat4x3* m, const xVec3* v, F32 f);
+inline void xMat4x3RotC(xMat4x3* m, F32 f1, F32 f2, F32 f3, F32 f4);
+inline void xMat4x3Rot(xMat4x3* m, const xVec3* v, F32 f);
 
 void zLasso_Init(zLasso* lasso, xModelInstance* model, F32 x, F32 y, F32 z)
 {
@@ -1041,17 +1042,6 @@ void zLasso_scenePrepare()
     sCurrentGuide = NULL;
 }
 
-void xMat4x3RotC(xMat4x3* m, F32 f1, F32 f2, F32 f3, F32 f4)
-{
-    xMat3x3RotC(m, f1, f2, f3, f4);
-    xVec3Copy(&m->pos, &g_O3);
-}
-
-void xMat4x3Rot(xMat4x3* m, const xVec3* v, F32 f)
-{
-    xMat4x3RotC(m, v->x, v->y, v->z, f);
-}
-
 static void initVertMap(zLassoGuide* guide)
 {
     S32 center;
@@ -1157,4 +1147,15 @@ static void bakeMorphAnim(RpGeometry* geom, void* anim)
             xMat4x3Toworld(&v[j], &mat, &v[j]);
         }
     }
+}
+
+inline void xMat4x3Rot(xMat4x3* m, const xVec3* v, F32 f)
+{
+    xMat4x3RotC(m, v->x, v->y, v->z, f);
+}
+
+inline void xMat4x3RotC(xMat4x3* m, F32 f1, F32 f2, F32 f3, F32 f4)
+{
+    xMat3x3RotC(m, f1, f2, f3, f4);
+    xVec3Copy(&m->pos, &g_O3);
 }
