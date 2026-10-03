@@ -10563,3 +10563,30 @@ The isolated GC/2.0p1e compiler remains SHA1
 full-report equality and retail DOL SHA1
 306526d90b48e99894c3138f5fc8f2716d9fecf6 remain the validation baseline. This
 append-only documentation audit requires no new code or compiler build.
+
+## Bink generic blitter: restored cursor experiments and integrated verification (2026-10-02)
+
+Baseline d04b1f26f. Replacing the paired-row global cursor updates with local
+base temporaries improved the direct YUV_blit diff from 87.90741 to 88.155556,
+but the authoritative full deduplicated score fell from 89.09259 to 88.82222.
+The experiment was restored. This is another concrete case where the direct
+function score is insufficient for deciding whether to retain a change.
+
+Five follow-up source forms were also restored after full deduplicated reports:
+setup base captures 88.659256, shared initial source offset 87.3, shared chroma
+base 88.30741, odd-row store ordering 89.09259 (neutral), and paired-plus-odd
+row stores 88.82222. These were base lifetime and store scheduling experiments;
+no behavior correction or compiler-deficiency evidence was established.
+Artifacts are build/yuv-blit17-* and build/yuv-setup17-*.
+
+The combined player literal and xFX scalar-capture changes pass all_source and
+the normal build. Comparing parallel-seventeenth-final-report.json against
+parallel-sixteenth-tables-report.json changes only xFXStreakRender and the
+player constant section: overall fuzzy code 99.4984 -> 99.498726, exact data
+1264032 -> 1264984 (+952). All other function entries and unit reports are
+unchanged, including restored Bink. Exact functions remain 9940/10147 and
+source-linked units 452/543. Retail DOL SHA1 remains
+306526d90b48e99894c3138f5fc8f2716d9fecf6; isolated GC/2.0p1a and GC/2.0p1e
+hashes remain a78a5fdb6c1d5677e987636b2e0743dbaefe9542 and
+9d445725489050035740aaff35860eddbaf3c3c9. The changed TUs remain NonMatching;
+the normal retail link does not establish their source-linked runtime behavior.
