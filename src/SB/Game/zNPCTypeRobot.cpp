@@ -2594,7 +2594,8 @@ void zNPCFodBzzt::DiscoRender()
         return;
     }
 
-    RwIm3DVertex* vert_list = (RwIm3DVertex*)memset(mem, 0, 10 * sizeof(RwIm3DVertex));
+    memset(mem, 0, 10 * sizeof(RwIm3DVertex));
+    RwIm3DVertex* vert_list = (RwIm3DVertex*)mem;
     RwIm3DVertex* vtx = vert_list + 1;
 
     RwIm3DVertexSetPos(&vert_list[0], pos_top.x, pos_top.y, pos_top.z);
@@ -2640,7 +2641,7 @@ void zNPCFodBzzt::DiscoRender()
 
     zRenderState(old_rendstat);
 
-    xMemPopTemp(mem);
+    xMemPopTemp(vert_list);
 }
 
 void zNPCChomper::Init(xEntAsset* asset)
@@ -3816,10 +3817,8 @@ void zNPCSleepy::RendConeRange()
     }
     else
     {
-        F32 pct = xsqrt(ds2) - 20.0f;
-        pct = 1.0f - pct / 10.0f;
-
-        pct = CLAMP(pct, 0.0f, 1.0f);
+        F32 pct = (xsqrt(ds2) - 20.0f) / 10.0f;
+        pct = CLAMP(1.0f - pct, 0.0f, 1.0f);
 
         rgba_top.alpha = (U8)SMOOTH(pct, 0.0f, 128.0f);
         rgba_bot.alpha = (U8)SMOOTH(pct, 0.0f, 32.0f);
@@ -3827,6 +3826,7 @@ void zNPCSleepy::RendConeRange()
 
     xVec3 vec_ray = { 0.0f, 0.0f, 1.0f };
 
+    S32 i;
     RxObjSpace3DVertex* vtx = g_vert_list;
 
     uv_top[0] = zNPCSleepy::uv_nightlight[0];
@@ -3834,7 +3834,7 @@ void zNPCSleepy::RendConeRange()
     uv_bot[0] = zNPCSleepy::uv_nightlight[0] + zNPCSleepy::uv_slice_nightlight[0];
     uv_bot[1] = zNPCSleepy::uv_nightlight[1] + zNPCSleepy::uv_slice_nightlight[1];
 
-    for (S32 i = 0; i < 16; i++)
+    for (i = 0; i < 16; i++)
     {
         xMat3x3Euler(&mat_spin, (PI / 8) * i, 0.0f, 0.0f);
 
@@ -3848,7 +3848,7 @@ void zNPCSleepy::RendConeRange()
         RwIm3DVertexSetRGBA(&vtx[0], rgba_top.red, rgba_top.green, rgba_top.blue,
                             rgba_top.alpha);
 
-        F32 u_ofs = 0.0625f * ((i & 1) ? i : i + 1);
+        F32 u_ofs = 0.0625f * (!(i & 1) ? i : i + 1);
 
         RwIm3DVertexSetUV(&vtx[0], uv_top[0] + u_ofs, uv_top[1]);
 

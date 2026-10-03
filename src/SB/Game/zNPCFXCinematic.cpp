@@ -2395,11 +2395,10 @@ static void NCIN_TTGunSmoke_AR(const zCutsceneMgr* csnmgr, NCINEntry* fxrec, RpA
     {
         rat_blow = CLAMP((csn->Time - tym_blow[0]) / (tym_blow[1] - tym_blow[0]), 0.0f, 1.0f);
         spd_blow = LERP(ARCH3(1.0f - rat_blow), 0.5f, 15.5f);
+        spd_blow += spd_blow * (0.25f * (xurand() - 0.5f));
     }
 
-    spd_blow += spd_blow * (0.25f * (xurand() - 0.5f));
-
-    xVec3 dir_blow = fxrec->pos_B[0];
+    const xVec3 dir_blow = fxrec->pos_B[0];
     xVec3 vel_smoke;
 
     vel_smoke = g_Y3 * 2.0f;

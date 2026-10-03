@@ -1469,7 +1469,6 @@ namespace
     {
         U32 done[2] = { 0, 0 };
         U32 mask;
-        U32 shift;
         xMat4x3* scratch = (xMat4x3*)giAnimScratch;
 
         for (; count != 0; count--)
@@ -1480,11 +1479,9 @@ namespace
             U32 bones = bone_idx[vidx];
             const F32* wt = &weights[vidx * 4];
 
-            U32 j = 0;
-            shift = 0;
-            for (; j < 4; j++, shift += 8)
+            for (U32 j = 0; j < 4; j++)
             {
-                U32 b = bones >> shift;
+                U32 b = bones >> (j * 8);
                 U32 word = (b >> 5) & 7;
                 mask = 1 << (b & 0x1f);
                 U32 bi = b & 0xff;
