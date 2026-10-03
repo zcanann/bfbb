@@ -11945,3 +11945,27 @@ scene-exact-final-report.json, scene-exact-final-build.log,
 scene-exact-final-link.log, and the zero-difference diagnostic source-link
 inventory. Header work was coordinated with the Bungee worker; its separate
 ordinary-template spelling change can be combined with this opt-in.
+
+
+### Bink lossless writer child-length cursor (2026-10-03)
+
+WriteBPLossless improves from 97.6512% to 97.92515%. Retail walks the four
+adjacent coefficient lengths with a byte pointer: an indexed first load plus
+a saved address, followed by three update-addressing loads and plain reloads
+after bitstream writes. Reconstruct that cursor alongside the coefficient
+index, capturing each child depth before writing its presence bit. The reload
+after the bitstream macro remains explicit, matching the original access
+sequence. No arithmetic, tree format, compiler flag, or assembly is changed.
+
+The generated function remains 2668 bytes against retail's 2672;
+register allocation and a remaining copy still prevent an exact match. A
+pointer without the initial depth capture, narrower temporary scopes, and
+direct increment expressions were worse and were not retained. These are
+private assembly comparisons, not behavioral test cases.
+
+The authoritative full deduplicated report changes only WriteBPLossless. All
+other function scores and all matched-code/data/function counts are unchanged.
+The full source build passes; the normal DOL retains its retail SHA1. Bitplane
+remains NonMatching, so that normal-link check is not a claim of an exact
+source link for this unit. Evidence: build/parallel-fortyfourth-writer-report.json,
+parallel-fortyfourth-writer-validation.log, and bitplane44*-writer-private.

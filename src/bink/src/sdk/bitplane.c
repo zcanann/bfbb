@@ -516,6 +516,8 @@ decoded_length_final_children:
 void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
 {
     u16 entry;
+    u8 PTR4* child_lens;
+    u32 child_bits;
     s32 coeff;
     s32 sign;
     s32 i;
@@ -684,36 +686,42 @@ void WriteBPLossless(BPBITSTREAM PTR4* bits, s16 PTR4* vals)
                         cur++;
                         entry = BP_TREE_ENTRY_INDEX(entry);
 decoded_write_children:
-                        PUT_BP_BIT(bits, lens[entry] != level);
-                        if (lens[entry] != level) {
-                            *--restart = BP_TREE_COEFF_ENTRY(lens[entry], entry);
+                        /* Walk the four adjacent bit lengths with their coefficient indices. */
+                        child_bits = lens[entry];
+                        child_lens = lens + entry;
+                        PUT_BP_BIT(bits, child_bits != level);
+                        if (*child_lens != level) {
+                            *--restart = BP_TREE_COEFF_ENTRY(*child_lens, entry);
                         } else {
                             VarBitsPut(*bits, absvals[entry], magnitude_bits);
                             PUT_BP_BIT(bits, ordered[entry] < 0);
                         }
 
+                        child_bits = *++child_lens;
                         entry++;
-                        PUT_BP_BIT(bits, lens[entry] != level);
-                        if (lens[entry] != level) {
-                            *--restart = BP_TREE_COEFF_ENTRY(lens[entry], entry);
+                        PUT_BP_BIT(bits, child_bits != level);
+                        if (*child_lens != level) {
+                            *--restart = BP_TREE_COEFF_ENTRY(*child_lens, entry);
                         } else {
                             VarBitsPut(*bits, absvals[entry], magnitude_bits);
                             PUT_BP_BIT(bits, ordered[entry] < 0);
                         }
 
+                        child_bits = *++child_lens;
                         entry++;
-                        PUT_BP_BIT(bits, lens[entry] != level);
-                        if (lens[entry] != level) {
-                            *--restart = BP_TREE_COEFF_ENTRY(lens[entry], entry);
+                        PUT_BP_BIT(bits, child_bits != level);
+                        if (*child_lens != level) {
+                            *--restart = BP_TREE_COEFF_ENTRY(*child_lens, entry);
                         } else {
                             VarBitsPut(*bits, absvals[entry], magnitude_bits);
                             PUT_BP_BIT(bits, ordered[entry] < 0);
                         }
 
+                        child_bits = *++child_lens;
                         entry++;
-                        PUT_BP_BIT(bits, lens[entry] != level);
-                        if (lens[entry] != level) {
-                            *--restart = BP_TREE_COEFF_ENTRY(lens[entry], entry);
+                        PUT_BP_BIT(bits, child_bits != level);
+                        if (*child_lens != level) {
+                            *--restart = BP_TREE_COEFF_ENTRY(*child_lens, entry);
                         } else {
                             VarBitsPut(*bits, absvals[entry], magnitude_bits);
                             PUT_BP_BIT(bits, ordered[entry] < 0);
