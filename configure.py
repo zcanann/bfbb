@@ -489,7 +489,7 @@ config.libs = [
             Object(Matching, "SB/Core/x/xEvent.cpp"),
             Object(Matching, "SB/Core/x/xFFX.cpp"),
             Object(Matching, "SB/Core/x/xFog.cpp"),
-            Object(NonMatching, "SB/Core/x/xFont.cpp"),
+            Object(Matching, "SB/Core/x/xFont.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Core/x/xFX.cpp"),
             Object(Matching, "SB/Core/x/xGroup.cpp"),
             Object(Matching, "SB/Core/x/xhipio.cpp"),

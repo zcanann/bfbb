@@ -11380,3 +11380,33 @@ this to four bytes: references at 0x8002582b/0x80025857 and
 0x8002632b/0x8002632f select reversed 8-byte zero aggregate templates for
 get_texture_size and substr::create. These layout experiments remain uncommitted;
 the retained commit contains only the verified function improvements.
+
+## xFont: verified whole-unit source link (2026-10-03)
+
+Follow-up to af1013dc7 closes the actual link, not just symbol scores. The
+private xFontHelpers.h implementation include retains the real trailing helper
+bodies as a separate debug code group under -sym on. It is included only by
+xFont.cpp, after tex_render: parsing it earlier moves the first 0.0f literal
+and shifts the float pool; parsing its substr initializer after get_texture_size
+reverses their zero templates. This boundary preserves both allocation and code
+order without extra objects, forced sections, dummy symbols or compiler changes.
+
+The existing rwGameCube2DVertex and xtextbox custom assignment bodies move from
+the public headers to their retail positions in xFont.cpp. Their declarations
+and bodies are unchanged; making these definitions out-of-line prevents debug
+header grouping from moving them away from their first callers. This is a
+documented source-layout compromise: the source definitions have strong binding
+where retail used weak copies, but the linked bytes and all caller scores agree.
+
+The shared-header all_source rebuild compiled 311 affected objects. The full
+deduplicated report has no function or data changes against the preceding exact
+xFont checkpoint: 184/184 functions, 26392/26392 code and 69096/69096 data.
+The real source-linked DOL is exactly 2859136 bytes and SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6, with zero differing bytes.
+Matching is now retained, adding one linked unit and 26392 code/69096 data bytes.
+Both isolated compiler hashes remain unchanged (2.0p1a a78a5fdb6c1d5677e987636b2e0743dbaefe9542,
+2.0p1e 9d445725489050035740aaff35860eddbaf3c3c9).
+
+Evidence: build/xfont-agent-helpergroup-report.json,
+build/xfont-agent-link-allsource.log, build/xfont-agent-link-link-diff.json,
+and final retained build/report artifacts build/xfont-agent-final-*.

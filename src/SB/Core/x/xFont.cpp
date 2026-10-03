@@ -50,12 +50,6 @@ template <> basic_rect<F32>& basic_rect<F32>::scale(F32 s);
 
 static const basic_rect<F32> screen_bounds = { 0, 0, 1, 1 };
 
-substr substr::create(const char* text, size_t size)
-{
-    substr s = { text, size };
-    return s;
-}
-
 namespace
 {
     struct font_asset
@@ -467,6 +461,27 @@ namespace
         vert_buffer_used += 6;
     }
 } // namespace
+
+// Parse helper initializers after the early font literals. With -sym on,
+// their implementation-header group is emitted after this file's functions.
+#include "xFontHelpers.h"
+
+rwGameCube2DVertex& rwGameCube2DVertex::operator=(const rwGameCube2DVertex& rhs)
+{
+    this->x = rhs.x;
+    this->y = rhs.y;
+    this->z = rhs.z;
+
+    this->emissiveColor.red = rhs.emissiveColor.red;
+    this->emissiveColor.green = rhs.emissiveColor.green;
+    this->emissiveColor.blue = rhs.emissiveColor.blue;
+    this->emissiveColor.alpha = rhs.emissiveColor.alpha;
+
+    this->u = rhs.u;
+    this->v = rhs.v;
+
+    return *this;
+}
 
 namespace
 {
@@ -1365,6 +1380,45 @@ xtextbox::layout& xtextbox::temp_layout(bool cache) const
     }
 
     return e.tl;
+}
+
+xtextbox& xtextbox::operator=(const xtextbox& rhs)
+{
+    this->font.id = rhs.font.id;
+
+    *(S32*)(&this->font.width) = *(S32*)(&rhs.font.width);
+    *(S32*)(&this->font.height) = *(S32*)(&rhs.font.height);
+    *(S32*)(&this->font.space) = *(S32*)(&rhs.font.space);
+
+    *(S32*)(&this->font.color) = *(S32*)(&rhs.font.color);
+
+    *(S32*)(&this->font.clip.x) = *(S32*)(&rhs.font.clip.x);
+    *(S32*)(&this->font.clip.y) = *(S32*)(&rhs.font.clip.y);
+    *(S32*)(&this->font.clip.w) = *(S32*)(&rhs.font.clip.w);
+    *(S32*)(&this->font.clip.h) = *(S32*)(&rhs.font.clip.h);
+
+    *(S32*)(&this->bounds.x) = *(S32*)(&rhs.bounds.x);
+    *(S32*)(&this->bounds.y) = *(S32*)(&rhs.bounds.y);
+    *(S32*)(&this->bounds.w) = *(S32*)(&rhs.bounds.w);
+    *(S32*)(&this->bounds.h) = *(S32*)(&rhs.bounds.h);
+
+    this->flags = rhs.flags;
+
+    this->line_space = rhs.line_space;
+    this->tab_stop = rhs.tab_stop;
+    this->left_indent = rhs.left_indent;
+    this->right_indent = rhs.right_indent;
+
+    this->cb = rhs.cb;
+    this->context = rhs.context;
+    this->texts = rhs.texts;
+    this->text_sizes = rhs.text_sizes;
+    this->texts_size = rhs.texts_size;
+    this->text.text = rhs.text.text;
+    this->text.size = rhs.text.size;
+    this->text_hash = rhs.text_hash;
+
+    return *this;
 }
 
 void xtextbox::render(layout& l, S32 begin_jot, S32 end_jot) const
@@ -3831,125 +3885,4 @@ xVec2& xVec2::assign(F32 x, F32 y)
     this->x = x;
     this->y = y;
     return *this;
-}
-
-size_t rskip_ws(substr& s)
-{
-    return rskip_ws(s.text, s.size);
-}
-
-size_t rskip_ws(const char*& text, size_t& size)
-{
-    while (size && is_ws(text[size - 1]))
-    {
-        size--;
-    }
-
-    return size;
-}
-
-bool is_ws(char c)
-{
-    return (c == ' ' || c == '\t' || c == '\n');
-}
-
-const char* find_char(const substr& s, char c)
-{
-    if (!s.text)
-    {
-        return NULL;
-    }
-
-    const char* text = s.text;
-    S32 size = s.size;
-
-    while (size > 0 && *text != '\0')
-    {
-        if (*text == c)
-        {
-            return text;
-        }
-
-        size--;
-        text++;
-    }
-
-    return NULL;
-}
-
-const char* skip_ws(substr& s)
-{
-    return skip_ws(s.text, s.size);
-}
-
-const char* skip_ws(const char*& text, size_t& size)
-{
-    size_t i = 0;
-
-    while (i < size && *text != '\0')
-    {
-        if (!is_ws(*text))
-        {
-            size -= i;
-            break;
-        }
-
-        text++;
-        i++;
-    }
-
-    return text;
-}
-
-size_t atox(const substr& s)
-{
-    size_t read_size;
-    return atox(s, read_size);
-}
-
-size_t trim_ws(substr& s)
-{
-    return trim_ws(s.text, s.size);
-}
-
-size_t trim_ws(const char*& text, size_t& size)
-{
-    skip_ws(text, size);
-    return rskip_ws(text, size);
-}
-
-xtextbox::tag_type* xtextbox::find_format_tag(const substr& s)
-{
-    S32 index;
-    return find_format_tag(s, index);
-}
-
-size_t xtextbox::layout::jots_size() const
-{
-    return _jots_size;
-}
-
-xtextbox xtextbox::create()
-{
-    return create(xfont::create(), screen_bounds, 0, 0.0f, 0.0f, 0.0f, 0.0f);
-}
-
-xfont xfont::create()
-{
-    return create(0, 0.0f, 0.0f, 0.0f, g_WHITE, screen_bounds);
-}
-
-void xtextbox::jot::intersect_flags(const jot& other)
-{
-    *(U16*)&flag &= *(U16*)&other.flag;
-}
-
-void xtextbox::jot::reset_flags()
-{
-    *(U16*)&flag = 0;
-}
-
-xSphere* xModelGetLocalSBound(xModelInstance* model)
-{
-    return (xSphere*)RpAtomicGetBoundingSphere(model->Data);
 }
