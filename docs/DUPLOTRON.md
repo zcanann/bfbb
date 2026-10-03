@@ -11669,3 +11669,28 @@ a78a5fdb6c1d5677e987636b2e0743dbaefe9542 (2.0p1a) and
 9d445725489050035740aaff35860eddbaf3c3c9 (2.0p1e). Local evidence:
 build/talkbox-next-agent-retained-report.json, retained-build.log,
 final-allsource.log, transitive-rebuild.json, and final-link-summary.txt.
+
+
+### Bink audio whole-TU completion (2026-10-03)
+
+BinkAudioDecompressOpen reaches 100 from 99.82222, all 900 bytes. The existing
+reciprocal-square-root estimate has a float temporary, which is then promoted
+to the double-precision guess. All three Newton refinements use the same ordinary
+expression. Earlier double-estimate variants either reused the estimate register
+for the first product or eliminated the retail estimate-to-guess copy. The float
+estimate preserves that copy and recovers the six remaining register operands.
+The existing frsqrte assembly statement is unchanged; no assembly or compiler
+changes were added. The refinement arithmetic remains double precision.
+
+With the preceding literal/table-alignment repair, the complete source-linked
+DOL has retail SHA1 306526d90b48e99894c3138f5fc8f2716d9fecf6, and binkacd is now
+Matching. All 8 functions and 3300 code bytes are exact; complete progress adds one
+TU, 3300 code bytes and 416 data bytes. Objdiff still reports only 320/416 matched data
+because the 96-byte literal pool has no source object symbols, although its bytes
+and every linked relocation match retail. No synthetic pool symbols were added.
+
+Full report changes only BinkAudioDecompressOpen, adds 900 exact code bytes and
+one exact function, and regresses no code/data scores. All-source and actual
+source-link builds pass. Evidence: build/binkacd37-private/float_estimate_nested.*,
+build/parallel-thirtyseventh-audio-code-report.json,
+build/parallel-thirtyseventh-audio-linked-report.json and their validation logs.

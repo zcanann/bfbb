@@ -707,7 +707,7 @@ config.libs = [
             Object(NonMatching, "bink/src/sdk/decode/binkread.c"),
             Object(NonMatching, "bink/src/sdk/decode/ngc/ngcfile.c"),
             Object(NonMatching, "bink/src/sdk/decode/yuv.cpp"),
-            Object(NonMatching, "bink/src/sdk/decode/binkacd.c"),
+            Object(Matching, "bink/src/sdk/decode/binkacd.c"),
             Object(Matching, "bink/shared/time/radcb.c"),
             Object(NonMatching, "bink/src/sdk/decode/expand.c"),
             Object(Matching, "bink/src/sdk/popmal.c"),
