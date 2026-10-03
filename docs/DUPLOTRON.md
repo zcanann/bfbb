@@ -11599,3 +11599,34 @@ source link for binkacd. Evidence: build/parallel-thirtyfourth-audio-report.json
 build/parallel-thirtyfourth-audio-validation.log and build/binkacd34b-*.
 The loop-form trials and first-refinement-only square-root trials yielded no
 additional gains and were restored.
+
+
+### Bink audio source-link layout closure (2026-10-03)
+
+An actual source-link check exposed layout failures hidden by isolated object
+scores: the DOL grew by 64 bytes, with 16857 differing bytes. The named static
+floating constants emitted unused .sdata2 storage as well as the correct
+96-byte .rodata literal pool. Expressing those eight constants as typed literal
+macros removes the unused storage without changing any generated function or
+the literal pool bytes.
+
+The remaining large data shift began at 0x802B0378, immediately after the final
+audio array. Retail's next Huffman pointer table begins at 0x802B0380. Restoring
+16-byte alignment on that table and its split metadata reproduces this boundary
+without invented padding objects. Sixteen is the minimum alignment explaining
+the observed gap; the binary does not distinguish it from a larger alignment
+satisfied by the same address. The source declaration and split now agree.
+
+With both fixes, an actual source-linked binkacd DOL has the retail size and
+only 10 differing bytes: the six known floating-register operands in the two
+inlined square-root sites. All other bytes, including all data and relocations,
+match. BinkAudioDecompressOpen still scores 99.82222, so binkacd remains
+NonMatching. Normal all-source/build and retail SHA1 checks pass. No function
+or matched-data score changes come from this layout repair.
+
+Evidence: build/binkacd35-link-diff.json (initial),
+build/binkacd35-literals-link-diff.json (literal-only),
+build/binkacd35-alignment-link-diff.json (10-byte residue), and
+build/parallel-thirtyfifth-layout-report.json / validation.log. The combined
+report also confirms the four independent improvements from concurrent staging
+commit c5b00d4dd, with no regressions.

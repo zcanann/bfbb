@@ -310,7 +310,7 @@ static const u8 huff4decode14[HUFF4_DECODE_8BYTE_SIZE] =
     "132T132x132e132|132T132z132v132~132T132y132e132}132T132{132w132";
 static const u8 huff4decode15[HUFF4_DECODE_8BYTE_SIZE] =
     " 2!4 3!e 2!4 3!i 2!4 3!g 2!4 3!| 2!4 3!f 2!4 3!z 2!4 3!h 2!4 3!~ 2!4 3!e 2!4 3!i 2!4 3!g 2!4 3!} 2!4 3!f 2!4 3!{ 2!4 3!h 2!4 3!";
-static const u8 PTR4* huff4decodes[HUFF4_SYMBOLS] = {
+static const u8 PTR4* huff4decodes[HUFF4_SYMBOLS] RAD_ATTRIBUTE_ALIGN(16) = {
     huff4decode00, huff4decode01, huff4decode02, huff4decode03,
     huff4decode04, huff4decode05, huff4decode06, huff4decode07,
     huff4decode08, huff4decode09, huff4decode10, huff4decode11,

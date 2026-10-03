@@ -2423,7 +2423,7 @@ bink/src/sdk/decode/expand.c:
 	.text       start:0x801A5514 end:0x801A8BA0
 	.text       start:0x801A8BA0 end:0x801A8BA0
 	.rodata     start:0x80274E60 end:0x80275300
-	.data       start:0x802B0380 end:0x802B03C0
+	.data       start:0x802B0380 end:0x802B03C0 align:16
 	.bss        start:0x80363C88 end:0x80363C88
 	.sdata      start:0x803CAE30 end:0x803CAE30
 	.sdata2     start:0x803CFC18 end:0x803CFC30
