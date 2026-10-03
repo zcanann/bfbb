@@ -10995,3 +10995,23 @@ retains SHA1 306526d90b48e99894c3138f5fc8f2716d9fecf6 and both isolated compiler
 hashes are unchanged. Expand remains NonMatching, so this hash does not prove
 an exact source link of the unit. No ancillary behavior tests were added or
 run. Trial/report artifacts use build/expand-worker-* in the isolated worktree.
+
+
+## Bink doubled alpha-column sample lifetime (2026-10-02)
+
+`dounaligned32acolm2h` improves from 97.708336% to 97.916664% by naming
+its second row's alpha sample separately as `u32 a1`. Retail loads/shifts
+the first alpha in r11 and the second in r9; the shared source local used
+r11 for both loads. The second load and shift now match. Pointer traversal,
+unsigned alpha shifts, table lookup and destination stores are unchanged.
+Splitting the alpha cursor as well regressed to 94.166664% and was restored.
+Prior IDCT/dequant/output and alpha-column cursor trials were reviewed rather
+than repeated. No compiler changes or new assembly were used.
+
+Against staging f7d228e19, the authoritative full deduplicated report changes
+only this 192-byte function. YUV moves 94.661354% to 94.66272%; all exact
+function/code, data and source-linked counts are unchanged. Full source build
+passes and the normal DOL retains SHA1
+`306526d90b48e99894c3138f5fc8f2716d9fecf6`. The TU remains NonMatching;
+this is a source matching gain, not a playback or whole-TU source-link claim.
+No ancillary tests or test infrastructure were added for this lifetime change.

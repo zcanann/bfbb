@@ -1838,6 +1838,7 @@ static u32 dounaligned32acolm2h(u32 count, s32 phase)
     u8 PTR4* aptr;
     u32 y;
     u32 a;
+    u32 a1;
     u32 pixel;
 
     table = mono32;
@@ -1858,11 +1859,11 @@ static u32 dounaligned32acolm2h(u32 count, s32 phase)
         yptr1 = (u8 PTR4*)S.y1;
         aptr = (u8 PTR4*)S.a1;
         y = *yptr1++;
-        a = *aptr++;
+        a1 = *aptr++;
         S.y1 = (u32 PTR4*)yptr1;
         S.a1 = (u32 PTR4*)aptr;
         pixel = table[y];
-        pixel |= a << RGB_ALPHA_SHIFT;
+        pixel |= a1 << RGB_ALPHA_SHIFT;
         *out = pixel;
         *(u32 PTR4*)(S.dest1 + S.pitch) = pixel;
         S.dest0 += YUV_PACKED_WORD_BYTES;
