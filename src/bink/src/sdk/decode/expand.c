@@ -247,6 +247,17 @@ typedef enum BINKBUNDLEINITIALVALUE
         BINK_BLOCK_ROW_WORD(dest, pitch, row, BINK_BLOCK_ROW_WORD_0) = (fill);               \
         BINK_BLOCK_ROW_WORD(dest, pitch, row, BINK_BLOCK_ROW_WORD_1) = (fill);               \
     } while (0)
+/* Motion copies consume one pitched source row at a time. */
+#define BINK_COPY_MOTION_DOUBLE_ROW(dest, dest_pitch, row, src) \
+    (BINK_BLOCK_ROW_DOUBLE(dest, dest_pitch, row) = \
+     BINK_BLOCK_ROW_DOUBLE(src, 0, 0))
+#define BINK_COPY_MOTION_WORD_ROW(dest, dest_pitch, row, src) \
+    do { \
+        BINK_BLOCK_ROW_WORD(dest, dest_pitch, row, BINK_BLOCK_ROW_WORD_0) = \
+            BINK_BLOCK_ROW_WORD(src, 0, 0, BINK_BLOCK_ROW_WORD_0); \
+        BINK_BLOCK_ROW_WORD(dest, dest_pitch, row, BINK_BLOCK_ROW_WORD_1) = \
+            BINK_BLOCK_ROW_WORD(src, 0, 0, BINK_BLOCK_ROW_WORD_1); \
+    } while (0)
 #define BINK_HUFF4_RLE_LENGTH(value) (BINK_HUFF4_RLE_LENGTHS_PACKED[(value)])
 #define BINK_BUNDLE_REPEAT_COUNT(count) (-(s32)(count) - BINK_BUNDLE_REPEAT_BIAS)
 #define BINK_BUNDLE_REPEAT_FILL_COUNT(remaining) (-(remaining + BINK_BUNDLE_REPEAT_BIAS + 1))
@@ -1366,17 +1377,43 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 s32 motion_y = BINK_BUNDLE_S8(yoff);
                 u8 PTR4* motion_source;
                 u32 residue_limit;
-                u32 block_row;
 
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
                 BINK_BUNDLE_ADVANCE(xoff, BINK_BUNDLE_BYTE_PITCH);
                 BINK_BUNDLE_ADVANCE(yoff, BINK_BUNDLE_BYTE_PITCH);
                 motion_source = BINK_MOTION_SOURCE(old, pitch, motion_x, motion_y);
-                for (block_row = 0; block_row < BINK_BLOCK_SIDE; ++block_row) {
-                    BINK_LINEAR_BLOCK_ROW_WORD(motion_block, block_row, BINK_BLOCK_ROW_WORD_0) =
-                        BINK_BLOCK_ROW_WORD(motion_source, pitch, block_row, BINK_BLOCK_ROW_WORD_0);
-                    BINK_LINEAR_BLOCK_ROW_WORD(motion_block, block_row, BINK_BLOCK_ROW_WORD_1) =
-                        BINK_BLOCK_ROW_WORD(motion_source, pitch, block_row, BINK_BLOCK_ROW_WORD_1);
+                if (((u32)motion_source & BINK_BLOCK_DOUBLE_ALIGN_MASK) == 0) {
+                    BINK_COPY_MOTION_DOUBLE_ROW(motion_block, BINK_BLOCK_SIDE, BINK_BLOCK_ROW_0, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_DOUBLE_ROW(motion_block, BINK_BLOCK_SIDE, BINK_BLOCK_ROW_1, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_DOUBLE_ROW(motion_block, BINK_BLOCK_SIDE, BINK_BLOCK_ROW_2, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_DOUBLE_ROW(motion_block, BINK_BLOCK_SIDE, BINK_BLOCK_ROW_3, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_DOUBLE_ROW(motion_block, BINK_BLOCK_SIDE, BINK_BLOCK_ROW_4, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_DOUBLE_ROW(motion_block, BINK_BLOCK_SIDE, BINK_BLOCK_ROW_5, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_DOUBLE_ROW(motion_block, BINK_BLOCK_SIDE, BINK_BLOCK_ROW_6, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_DOUBLE_ROW(motion_block, BINK_BLOCK_SIDE, BINK_BLOCK_ROW_7, motion_source);
+                } else {
+                    BINK_COPY_MOTION_WORD_ROW(motion_block, BINK_BLOCK_SIDE, BINK_BLOCK_ROW_0, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_WORD_ROW(motion_block, BINK_BLOCK_SIDE, BINK_BLOCK_ROW_1, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_WORD_ROW(motion_block, BINK_BLOCK_SIDE, BINK_BLOCK_ROW_2, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_WORD_ROW(motion_block, BINK_BLOCK_SIDE, BINK_BLOCK_ROW_3, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_WORD_ROW(motion_block, BINK_BLOCK_SIDE, BINK_BLOCK_ROW_4, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_WORD_ROW(motion_block, BINK_BLOCK_SIDE, BINK_BLOCK_ROW_5, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_WORD_ROW(motion_block, BINK_BLOCK_SIDE, BINK_BLOCK_ROW_6, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_WORD_ROW(motion_block, BINK_BLOCK_SIDE, BINK_BLOCK_ROW_7, motion_source);
                 }
                 residue_limit = exp_get_bits(&bitstate, BINK_RESIDUE_LIMIT_BITS);
                 ReadBPLossyWithMotion((char PTR4*)dest, (s32)pitch,
@@ -1389,7 +1426,6 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 s32 motion_y = BINK_BUNDLE_S8(yoff);
                 u8 PTR4* motion_source;
                 u32 quant;
-                u32 block_row;
 
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
                 dct_block[0] = BINK_BUNDLE_S16(inter_dc);
@@ -1397,11 +1433,38 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 BINK_BUNDLE_ADVANCE(xoff, BINK_BUNDLE_BYTE_PITCH);
                 BINK_BUNDLE_ADVANCE(yoff, BINK_BUNDLE_BYTE_PITCH);
                 motion_source = BINK_MOTION_SOURCE(old, pitch, motion_x, motion_y);
-                for (block_row = 0; block_row < BINK_BLOCK_SIDE; ++block_row) {
-                    BINK_LINEAR_BLOCK_ROW_WORD(motion_block, block_row, BINK_BLOCK_ROW_WORD_0) =
-                        BINK_BLOCK_ROW_WORD(motion_source, pitch, block_row, BINK_BLOCK_ROW_WORD_0);
-                    BINK_LINEAR_BLOCK_ROW_WORD(motion_block, block_row, BINK_BLOCK_ROW_WORD_1) =
-                        BINK_BLOCK_ROW_WORD(motion_source, pitch, block_row, BINK_BLOCK_ROW_WORD_1);
+                if (((u32)motion_source & BINK_BLOCK_DOUBLE_ALIGN_MASK) == 0) {
+                    BINK_COPY_MOTION_DOUBLE_ROW(motion_block, BINK_BLOCK_SIDE, BINK_BLOCK_ROW_0, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_DOUBLE_ROW(motion_block, BINK_BLOCK_SIDE, BINK_BLOCK_ROW_1, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_DOUBLE_ROW(motion_block, BINK_BLOCK_SIDE, BINK_BLOCK_ROW_2, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_DOUBLE_ROW(motion_block, BINK_BLOCK_SIDE, BINK_BLOCK_ROW_3, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_DOUBLE_ROW(motion_block, BINK_BLOCK_SIDE, BINK_BLOCK_ROW_4, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_DOUBLE_ROW(motion_block, BINK_BLOCK_SIDE, BINK_BLOCK_ROW_5, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_DOUBLE_ROW(motion_block, BINK_BLOCK_SIDE, BINK_BLOCK_ROW_6, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_DOUBLE_ROW(motion_block, BINK_BLOCK_SIDE, BINK_BLOCK_ROW_7, motion_source);
+                } else {
+                    BINK_COPY_MOTION_WORD_ROW(motion_block, BINK_BLOCK_SIDE, BINK_BLOCK_ROW_0, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_WORD_ROW(motion_block, BINK_BLOCK_SIDE, BINK_BLOCK_ROW_1, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_WORD_ROW(motion_block, BINK_BLOCK_SIDE, BINK_BLOCK_ROW_2, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_WORD_ROW(motion_block, BINK_BLOCK_SIDE, BINK_BLOCK_ROW_3, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_WORD_ROW(motion_block, BINK_BLOCK_SIDE, BINK_BLOCK_ROW_4, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_WORD_ROW(motion_block, BINK_BLOCK_SIDE, BINK_BLOCK_ROW_5, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_WORD_ROW(motion_block, BINK_BLOCK_SIDE, BINK_BLOCK_ROW_6, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_WORD_ROW(motion_block, BINK_BLOCK_SIDE, BINK_BLOCK_ROW_7, motion_source);
                 }
                 ReadBPLossless(dct_block, (BPBITSTREAM PTR4*)&bitstate);
                 quant = exp_get_bits(&bitstate, BINK_DCT_QUANT_BITS);
@@ -1432,17 +1495,43 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 s32 motion_x = BINK_BUNDLE_S8(xoff);
                 s32 motion_y = BINK_BUNDLE_S8(yoff);
                 u8 PTR4* motion_source;
-                u32 block_row;
 
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
                 BINK_BUNDLE_ADVANCE(xoff, BINK_BUNDLE_BYTE_PITCH);
                 BINK_BUNDLE_ADVANCE(yoff, BINK_BUNDLE_BYTE_PITCH);
                 motion_source = BINK_MOTION_SOURCE(old, pitch, motion_x, motion_y);
-                for (block_row = 0; block_row < BINK_BLOCK_SIDE; ++block_row) {
-                    BINK_BLOCK_ROW_WORD(dest, pitch, block_row, BINK_BLOCK_ROW_WORD_0) =
-                        BINK_BLOCK_ROW_WORD(motion_source, pitch, block_row, BINK_BLOCK_ROW_WORD_0);
-                    BINK_BLOCK_ROW_WORD(dest, pitch, block_row, BINK_BLOCK_ROW_WORD_1) =
-                        BINK_BLOCK_ROW_WORD(motion_source, pitch, block_row, BINK_BLOCK_ROW_WORD_1);
+                if (BINK_BLOCK_DOUBLE_ALIGNED(dest, motion_source)) {
+                    BINK_COPY_MOTION_DOUBLE_ROW(dest, pitch, BINK_BLOCK_ROW_0, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_DOUBLE_ROW(dest, pitch, BINK_BLOCK_ROW_1, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_DOUBLE_ROW(dest, pitch, BINK_BLOCK_ROW_2, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_DOUBLE_ROW(dest, pitch, BINK_BLOCK_ROW_3, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_DOUBLE_ROW(dest, pitch, BINK_BLOCK_ROW_4, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_DOUBLE_ROW(dest, pitch, BINK_BLOCK_ROW_5, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_DOUBLE_ROW(dest, pitch, BINK_BLOCK_ROW_6, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_DOUBLE_ROW(dest, pitch, BINK_BLOCK_ROW_7, motion_source);
+                } else {
+                    BINK_COPY_MOTION_WORD_ROW(dest, pitch, BINK_BLOCK_ROW_0, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_WORD_ROW(dest, pitch, BINK_BLOCK_ROW_1, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_WORD_ROW(dest, pitch, BINK_BLOCK_ROW_2, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_WORD_ROW(dest, pitch, BINK_BLOCK_ROW_3, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_WORD_ROW(dest, pitch, BINK_BLOCK_ROW_4, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_WORD_ROW(dest, pitch, BINK_BLOCK_ROW_5, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_WORD_ROW(dest, pitch, BINK_BLOCK_ROW_6, motion_source);
+                    motion_source += pitch;
+                    BINK_COPY_MOTION_WORD_ROW(dest, pitch, BINK_BLOCK_ROW_7, motion_source);
                 }
                 break;
             }

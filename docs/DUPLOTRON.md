@@ -10005,3 +10005,48 @@ function/section change. The normal retail-link SHA1 remains
 306526d90b48e99894c3138f5fc8f2716d9fecf6; source-link exactness is not claimed.
 Raw trials and final report are retained under build/duplotron-* in the
 isolated worktree. No compiler or inline-assembly changes were made.
+
+
+## Bink aligned motion copies and parallel TU gains (2026-10-02)
+
+`ExpandPlane` improves from 48.724136% to 50.689655% in the full
+relocation-deduplicated report. Retail's residue, inter-DCT and motion-only
+blocks each branch between aligned double copies and word copies. The source
+previously used only eight-iteration word loops. Restore the two unrolled
+paths and advance the motion source by its pitch after each row. The residue
+and inter copies target the linear stack block; motion-only copies target
+pitched output. Small row macros keep the three sites readable. No compiler
+changes or inline assembly are involved.
+
+`python tools/check_bink_motion.py --self-test` passes 12,288 host cases
+covering all three production copy sites, four pitches, four-byte-aligned
+source/output offsets that exercise both eight-byte alignment branches,
+varied bytes, padding and guards. Its negative control detects a missing
+source-row advance. This tests the copy operations, not movie decoding or
+GameCube playback. The full source build and normal retail DOL SHA-1 check
+pass; expand remains NonMatching, so that DOL does not execute this source.
+
+The same integration includes CruiseBubble `reset_quadrants` improving from
+93.17204% to 93.27957% by capturing the selected bit in the clear branch, and
+Duplotron `VFXSmokeStack` improving from 99.016396% to 99.79508% (documented
+above). No other function scores or matched-data totals regress. Exact and
+source-linked totals are unchanged: 9,937 exact functions and 452 complete
+units. Overall fuzzy progress is 99.47452%, up from 99.46954%.
+
+Other bounded trials were restored: DCT const inputs and per-pass row
+lifetimes; scaled raw bundle advancement; normal pattern unrolling; direct
+scaled mask-table output. The latter two structures are visible in retail
+but the tested forms still reduce the overall function match. Revisit them
+with further layout work rather than treating a lower score as completion.
+The initial restored-source object was newer than a copied candidate file;
+the final validation explicitly refreshed the source timestamp and rebuilt
+expand before generating `build/parallel-tenth-final-report.json`.
+
+Near-TU passes on iSystem, zAssetTypes, zMain and save/load retained no changes.
+zAssetTypes' data relocation names resolve to the same verified boundary
+address; introducing an unrelated symbol cast would obscure the source.
+CruiseBubble's early-inline literal-order experiment makes the trail symbol
+exact but shifts another method's code position, so it was rejected. No
+new evidence here establishes a required compiler patch. Any patch proposal
+still needs a focused reproducer, explanation and exact-neighbor regression
+checks for review.
