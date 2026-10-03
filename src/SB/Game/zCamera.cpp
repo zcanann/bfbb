@@ -822,10 +822,8 @@ void zCameraUpdate(xCamera* cam, F32 dt)
     plerp = 5.729579f * (xabs(cam->pitch_cur) - 1.2217306f);
     plerp = CLAMP(plerp, 0.0f, 1.0f);
 
-    dist = xsqrt(SQR(cam->mat.pos.x - cam->tgt_mat->pos.x) +
-                 SQR(cam->mat.pos.z - cam->tgt_mat->pos.z));
-
-    dlerp = 1.6666666f * (1.2f - dist);
+    dlerp = 1.6666666f * (1.2f - xsqrt(SQR(cam->mat.pos.x - cam->tgt_mat->pos.x) +
+                                       SQR(cam->mat.pos.z - cam->tgt_mat->pos.z)));
     dlerp = CLAMP(dlerp, 0.0f, 1.0f);
 
     vertical_lerp = MAX(dlerp, plerp);
@@ -898,10 +896,9 @@ void zCameraUpdate(xCamera* cam, F32 dt)
 
     if (input_enabled && wall_jump_enabled == WJVS_DISABLED)
     {
-        S8 x = globals.pad0->analog2.x;
-
-        if (x > 32)
+        if (globals.pad0->analog2.x > 32)
         {
+            S8 x = globals.pad0->analog2.x;
             F32 dp = (F32)(MAX(32, MIN(x, 110)) - 32);
             dp = 0.016666668f * (dp * zcam_pad_pyaw_scale);
 
@@ -925,8 +922,9 @@ void zCameraUpdate(xCamera* cam, F32 dt)
 
             zcam_overrot_tmr = -zcam_overrot_tmanual;
         }
-        else if (x < -32)
+        else if (globals.pad0->analog2.x < -32)
         {
+            S8 x = globals.pad0->analog2.x;
             F32 dp = (F32)(MAX(-110, MIN(x, -32)) + 32);
             dp = 0.016666668f * (dp * zcam_pad_pyaw_scale);
 
@@ -956,10 +954,9 @@ void zCameraUpdate(xCamera* cam, F32 dt)
 
     if (input_enabled && wall_jump_enabled == WJVS_DISABLED && zcam_highbounce == 0)
     {
-        S8 y = globals.pad0->analog2.y;
-
-        if (y > 32)
+        if (globals.pad0->analog2.y > 32)
         {
+            S8 y = globals.pad0->analog2.y;
             F32 dp = (F32)(MAX(32, MIN(y, 110)) - 32);
             pitch_s = 0.016666668f * (dp * zcam_pad_pitch_scale);
 
@@ -970,8 +967,9 @@ void zCameraUpdate(xCamera* cam, F32 dt)
 
             zcam_overrot_tmr = -zcam_overrot_tmanual;
         }
-        else if (y < -32)
+        else if (globals.pad0->analog2.y < -32)
         {
+            S8 y = globals.pad0->analog2.y;
             F32 dp = (F32)(MAX(-110, MIN(y, -32)) + 32);
             pitch_s = 0.016666668f * (dp * zcam_pad_pitch_scale);
 
