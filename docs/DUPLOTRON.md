@@ -11111,3 +11111,14 @@ fuzzy reaches 99.52953. All matched data remains unchanged, and full all_source
 and normal retail-hash verification pass. Evidence:
 build/parallel-twentythird-merged-report.json and
 build/parallel-twentythird-merged-validation.log.
+
+
+Concurrent follow-up 81f2a2e2b also source-links xShadowSimple: its quick-cull
+wrapper moves from the implementation into xQuickCull.h, with the established
+-sym on setting for this unit. The retained matrix/quick-cull helper order
+then links without a body change or conditional header suppression. Independent
+combined validation passes with the retail SHA1. The full report changes only
+xShadowSimple's completion status versus the preceding merged report: complete
+units 457, complete code 1370984, complete data 706516; all match scores and
+matched data remain unchanged. Evidence: build/parallel-twentythird-linked-report.json
+and build/parallel-twentythird-linked-validation.log.
