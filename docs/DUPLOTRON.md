@@ -12073,3 +12073,51 @@ The direct scaled-pattern mask expansion and paired-row fill reconstructions
 were privately compared but lowered overall matching and were not retained.
 These overlap earlier rejected structures; subsequent work should use the
 recorded assembly and a new surrounding lifetime/control-flow hypothesis.
+
+
+## zCamera source-link preparation (2026-10-03)
+
+The unit still has one 160-byte code holdout, `zCameraFlyStart` (94.85%
+deduplicated), so it remains NonMatching. Its first actual source-link audit
+changed 4,671 DOL bytes despite 41/42 exact functions and 552 exact data bytes.
+
+The major layout error was the documented old-mwld common-BSS inflation bug:
+`zcam_backupcam`, the first common, grew from 0x31c to the entire 0x648-byte
+common block. Restore the unreferenced `char buffer[16]` recorded at the top
+of this TU's debug symbols. It is stripped from retail, just as in the
+existing zVolume reconstruction, and prevents the camera backup from
+absorbing the whole block. This reduces the actual link residue to 273 bytes.
+
+The remaining layout differences identify two misplaced existing helpers.
+Retail owns weak `xVec3Dist2` in zCamera and weak `xVec3Dist` in xCollide;
+move their unchanged arithmetic into their existing xVec3Inlines.h header.
+Header ownership of `xVec3Dist2` fixes its order after `zCamera_FlyOnly`.
+Making `xVec3Dist` available at TranSpeed causes its called xsqrt helper to
+create the 1e-5 literal before MatrixSpeed's 114.59155 literal, exactly as
+retail does. The other unused xsqrt constants strip normally. xCollide has
+no reconstructed local call to xVec3Dist, so a narrow explicit-weak emission
+guard preserves its retail helper and avoids losing its 80 exact bytes.
+Also recover the retail local binding of zCameraFreeLookSetGoals and use
+this TU's deferred `-sym on` emission path.
+
+The resulting actual source-link residue is confined to 16 bytes in
+FlyStart's frame-load/store cluster. Its source hoists TOCINFO.mempos above
+the pause-state store and TOCINFO.size above the data-pointer store; retail
+uses serial r0 load/store pairs. Struct, array, union, reference, immutable
+copy, and genuinely inlined activation-helper trials did not resolve that
+ordering and were restored. No compiler-only conclusion follows from them.
+
+Validation artifacts are build/camera-flystart-retained-report.json,
+build/camera-flystart-retained-all-source.log and the camera-flystart layout
+link inventories. The affected source list is
+build/camera-flystart-affected-sources.txt (186 header consumers). No compiler
+binary changes, new assembly, or ancillary behavior tests were used.
+
+Final checkpoint checks: all 186 header consumers were rebuilt, and the
+entire deduplicated report is identical to the pre-change report. Normal
+link retains retail SHA1 306526d90b48e99894c3138f5fc8f2716d9fecf6.
+The actual camera source-linked DOL has the original 2,859,136-byte length,
+16 differing bytes, and SHA1 78638dbe2495c05c0b581213376159ed3098fbf6.
+Removing only this TU's `-sym on` increases that residue to 5,376 bytes,
+so the emission flag is necessary for this header layout. The unit remains
+NonMatching. Isolated p1a/p1e compiler hashes are unchanged.

@@ -533,7 +533,7 @@ config.libs = [
             Object(Matching, "SB/Game/zActionLine.cpp"),
             Object(Matching, "SB/Game/zAnimList.cpp"),
             Object(Equivalent, "SB/Game/zAssetTypes.cpp", extra_cflags=["-sym on"]),
-            Object(NonMatching, "SB/Game/zCamera.cpp"),
+            Object(NonMatching, "SB/Game/zCamera.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zConditional.cpp"),
             Object(NonMatching, "SB/Game/zCutsceneMgr.cpp"),
             Object(Matching, "SB/Game/zDispatcher.cpp"),

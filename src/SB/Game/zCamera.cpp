@@ -12,6 +12,10 @@
 #include "xScrFx.h"
 #include "xstransvc.h"
 
+// The stripped first common appears in the debug symbols. It prevents mwld
+// from inflating the first camera backup to the entire common block.
+char buffer[16];
+
 F32 zcam_overrot_tmr;
 S32 zcam_near;
 S32 zcam_mode;
@@ -562,7 +566,7 @@ static S32 zCameraRewardUpdate(xCamera* cam, F32 dt)
     return 1;
 }
 
-void zCameraFreeLookSetGoals(xCamera* cam, F32 pitch_s, F32& dgoal, F32& hgoal, F32& pitch_goal,
+static void zCameraFreeLookSetGoals(xCamera* cam, F32 pitch_s, F32& dgoal, F32& hgoal, F32& pitch_goal,
                              F32& lktm, F32 dt)
 {
     if (zcam_bbounce != 0)
@@ -1357,13 +1361,6 @@ void zCameraMinTargetHeightClear()
     zcam_mintgtheight = -1.0e38f;
 }
 
-F32 xVec3Dist2(const xVec3* vecA, const xVec3* vecB)
-{
-    float dx = vecA->x - vecB->x;
-    float dy = vecA->y - vecB->y;
-    float dz = vecA->z - vecB->z;
-    return dx * dx + dy * dy + dz * dz;
-}
 
 U32 zCamera_FlyOnly()
 {

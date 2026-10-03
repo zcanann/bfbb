@@ -1,3 +1,5 @@
+// Keep this TU's retail weak distance helper even without a remaining local call.
+#define XVEC3INLINES_WEAK_DIST
 #include "xCollide.h"
 #include "xCollideFast.h"
 #include "zSurface.h"
@@ -12,6 +14,8 @@
 
 #include <PowerPC_EABI_Support/MSL_C/MSL_Common/cmath>
 #include <types.h>
+
+#undef XVEC3INLINES_WEAK_DIST
 
 static S32 sSweptSphereHitFound;
 static xMat4x3* sSwsModelMat;
@@ -2569,13 +2573,6 @@ F32 xVec3Length2(const xVec3* vec)
     return vec->x * vec->x + vec->y * vec->y + vec->z * vec->z;
 }
 
-F32 xVec3Dist(const xVec3* a, const xVec3* b)
-{
-    F32 dx = a->x - b->x;
-    F32 dy = a->y - b->y;
-    F32 dz = a->z - b->z;
-    return xsqrt(dx * dx + dy * dy + dz * dz);
-}
 
 void xMat4x3OrthoInv(xMat4x3* a, const xMat4x3* b)
 {

@@ -20,8 +20,27 @@ void xVec3Init(xVec3* v, F32 _x, F32 _y, F32 _z);
 void xVec3AddTo(xVec3* o, const xVec3* v);
 void xVec3Lerp(xVec3* o, const xVec3* a, const xVec3* b, F32 t);
 void xVec3ScaleC(xVec3* o, const xVec3* v, F32 x, F32 y, F32 z);
-F32 xVec3Dist(const xVec3* a, const xVec3* b);
-F32 xVec3Dist2(const xVec3* vecA, const xVec3* vecB);
+#ifdef XVEC3INLINES_WEAK_DIST
+__declspec(weak)
+#else
+inline
+#endif
+F32 xVec3Dist(const xVec3* a, const xVec3* b)
+{
+    F32 dx = a->x - b->x;
+    F32 dy = a->y - b->y;
+    F32 dz = a->z - b->z;
+    return xsqrt(dx * dx + dy * dy + dz * dz);
+}
+
+inline F32 xVec3Dist2(const xVec3* vecA, const xVec3* vecB)
+{
+    float dx = vecA->x - vecB->x;
+    float dy = vecA->y - vecB->y;
+    float dz = vecA->z - vecB->z;
+    return dx * dx + dy * dy + dz * dz;
+}
+
 F32 xVec3Length2(const xVec3* vec);
 
 inline F32 xVec3LengthFast(F32 x, F32 y, F32 z)
