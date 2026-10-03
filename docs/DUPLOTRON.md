@@ -12307,3 +12307,24 @@ Artifacts: `build/zlightning-layout-snapshots-{report.json,validation.json,
 allsource.log,link.log,source-diff.json,source-main.dol}`. Prior source-link
 inventory was 162 differing bytes; the retained gain removes the large shared
 endpoint/tail clusters without a linked layout change.
+
+
+### zLightning: RenderLightning is fully exact (2026-10-03)
+
+The last six rows after `504003484` were the two initial pairs' load order.
+Read `l->color.r` directly in their RGBA macros, retaining the shared green
+and blue snapshots. The compiler still emits one shared red load per pair,
+but now schedules it after green and blue without changing their register
+roles. A named red-field reference also matches, so the smaller direct form
+is retained. **RenderLightning is 100%, all 2,948 bytes**, and the full report
+changes only that function. Unit **99.95437**, 16/17 functions exact,
+10,868/12,448 exact code bytes, and 7,808/7,808 data bytes. Func_Render remains
+99.6405 and is the sole holdout.
+
+`all_source`, normal build, retail and compiler hashes pass. An actual source
+link now differs by just **24 bytes**, every one inside Func_Render's range
+`0x800A0648..0x800A0C74`; the exact RenderLightning and all other DOL bytes
+match retail. DOL size remains 2,859,136. NonMatching is restored until the
+last function closes; no layout work or compiler change is needed on this
+baseline. Evidence: `build/zlightning-layout-renderexact-{report.json,
+validation.json,allsource.log,link.log,source-diff.json,source-main.dol}`.
