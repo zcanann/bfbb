@@ -9883,3 +9883,29 @@ made. The zTalkBox worker recorded a separate compiler-behavior investigation
 packet for its two absent unreachable tail branches; this is a concrete CFG
 residue, not proof that a compiler patch rather than original-source differences
 is required. Register-allocation-only holdouts remain weaker patch evidence.
+
+## 2026-10-02: xScene first ray endpoint assignment order
+
+A bounded xScene/xModelBucket pass improves `xRayHitsGrid` from 99.820564%
+to 99.8243% in the authoritative deduplicated report. Compute the first
+endpoint's Y component before its X component; leave the expressions and Z
+assignment unchanged. These are independent writes to a local vector, with
+read-only ray fields and delta operands. No arithmetic operation or externally
+visible access order changes. The function remains 2,140 bytes; xScene has
+35/36 exact functions and all 184 data bytes exact. This is a small scheduling
+improvement, not a completed TU, so its configuration remains NonMatching.
+
+The other first-endpoint component orders, aggregate delta initialization,
+copy-then-scale delta, and named min_t scalar did not improve the baseline.
+The sole xModelBucket holdout, FullAtomicDupe, did not improve with explicit
+zero fields, immutable or mutable named zero-template copies, or named/reused
+RwFrameCreate results. Those changes were restored. The residual is the
+second RwMemory template's load/store register scheduling.
+
+Validation: full all_source build passes. The full deduplicated report changes
+only xRayHitsGrid and its containing unit (99.959984% to 99.960815%); no other
+function, section, size, or exact-function count changes. The unchanged retail
+link verifies SHA1 306526d90b48e99894c3138f5fc8f2716d9fecf6. This hash check does
+not assert that the still-NonMatching source object links exactly. Trial
+sources, raw diffs, and scene-p1_yxz-report.json remain under the isolated
+worktree's ignored build directory. Compiler binaries were not changed.
