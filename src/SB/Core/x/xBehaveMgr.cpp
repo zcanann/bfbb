@@ -1030,17 +1030,27 @@ void xPsyche::TimerClear()
     this->tmr_stack[0][this->staktop] = 0.0f;
 }
 
-// Non-matching: Needs an extra branch that does the same `+= dt`
 void xPsyche::TimerUpdate(F32 dt)
 {
-    F32* p;
     if (this->staktop < 0)
     {
         return;
     }
 
-    p = &this->tmr_stack[0][this->staktop];
-    *p += dt;
+    // One timer per en_xpsytime. The loop unrolls to the single CURGOAL timer, but the
+    // compiler keeps the (dead) default arm's copy of the body, as retail does.
+    for (S32 i = 0; i < XPSY_TYMR_NOMORE; i++)
+    {
+        switch (i)
+        {
+        case XPSY_TYMR_CURGOAL:
+            this->tmr_stack[i][this->staktop] += dt;
+            break;
+        default:
+            this->tmr_stack[i][this->staktop] += dt;
+            break;
+        }
+    }
 }
 
 // NOTE: these belong in xListItem.h. They are template members, so the
