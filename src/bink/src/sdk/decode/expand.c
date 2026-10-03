@@ -1118,6 +1118,25 @@ static inline void expand_run_block(u8 PTR4* dest,
     }
 }
 
+static inline void expand_pattern_row(u8 PTR4* dest, u32 pitch,
+                                      u32 color0, u32 color1,
+                                      READBUNDLE PTR4* patterns)
+{
+    u32 row_bits;
+    u32 low_bits;
+    u32 high_bits;
+
+    row_bits = *patterns->cur_ptr++;
+    low_bits = row_bits & HUFF4_SYMBOL_MASK;
+    high_bits = row_bits >> HUFF4_NIBBLE_BITS;
+    BINK_BLOCK_ROW_WORD(dest, pitch, BINK_BLOCK_ROW_0, BINK_BLOCK_ROW_WORD_0) =
+        (color0 & ((const u32 PTR4*)mask1)[low_bits]) |
+        (color1 & ((const u32 PTR4*)mask2)[low_bits]);
+    BINK_BLOCK_ROW_WORD(dest, pitch, BINK_BLOCK_ROW_0, BINK_BLOCK_ROW_WORD_1) =
+        (color0 & ((const u32 PTR4*)mask1)[high_bits]) |
+        (color1 & ((const u32 PTR4*)mask2)[high_bits]);
+}
+
 static inline void expand_pattern_block(u8 PTR4* dest,
                                         u32 pitch,
                                         READBUNDLE PTR4* colors,
@@ -1125,7 +1144,6 @@ static inline void expand_pattern_block(u8 PTR4* dest,
 {
     u32 color0;
     u32 color1;
-    u32 i;
 
     color0 = colors->cur_ptr[BINK_PATTERN_COLOR_0];
     color1 = colors->cur_ptr[BINK_PATTERN_COLOR_1];
@@ -1134,21 +1152,21 @@ static inline void expand_pattern_block(u8 PTR4* dest,
     color0 |= color0 << BINK_BUNDLE_MIN_WORD_BITS;
     color1 |= color1 << BINK_BYTE_BITS;
     color1 |= color1 << BINK_BUNDLE_MIN_WORD_BITS;
-    for (i = 0; i < BINK_BLOCK_SIDE; ++i) {
-        u32 row_bits;
-        u32 low_bits;
-        u32 high_bits;
-
-        row_bits = *patterns->cur_ptr++;
-        low_bits = row_bits & HUFF4_SYMBOL_MASK;
-        high_bits = row_bits >> HUFF4_NIBBLE_BITS;
-        BINK_BLOCK_ROW_WORD(dest, pitch, i, BINK_BLOCK_ROW_WORD_0) =
-            (color0 & ((const u32 PTR4*)mask1)[low_bits]) |
-            (color1 & ((const u32 PTR4*)mask2)[low_bits]);
-        BINK_BLOCK_ROW_WORD(dest, pitch, i, BINK_BLOCK_ROW_WORD_1) =
-            (color0 & ((const u32 PTR4*)mask1)[high_bits]) |
-            (color1 & ((const u32 PTR4*)mask2)[high_bits]);
-    }
+    expand_pattern_row(dest, pitch, color0, color1, patterns);
+    dest += pitch;
+    expand_pattern_row(dest, pitch, color0, color1, patterns);
+    dest += pitch;
+    expand_pattern_row(dest, pitch, color0, color1, patterns);
+    dest += pitch;
+    expand_pattern_row(dest, pitch, color0, color1, patterns);
+    dest += pitch;
+    expand_pattern_row(dest, pitch, color0, color1, patterns);
+    dest += pitch;
+    expand_pattern_row(dest, pitch, color0, color1, patterns);
+    dest += pitch;
+    expand_pattern_row(dest, pitch, color0, color1, patterns);
+    dest += pitch;
+    expand_pattern_row(dest, pitch, color0, color1, patterns);
 }
 
 static inline void expand_pattern_block_pixels(u8 PTR4* dest,

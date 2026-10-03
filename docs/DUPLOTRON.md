@@ -10050,3 +10050,36 @@ exact but shifts another method's code position, so it was rejected. No
 new evidence here establishes a required compiler patch. Any patch proposal
 still needs a focused reproducer, explanation and exact-neighbor regression
 checks for review.
+
+
+## Bink sequential pattern rows (2026-10-02)
+
+`ExpandPlane` improves from 50.689655% to 51.981068% in the full
+deduplicated report. The normal pattern block now emits eight row operations
+and advances its destination cursor after each row, matching retail's
+unrolled body. A small inline row helper reads one pattern byte and combines
+the same two colors through the existing mask tables. Neither pixel values
+nor color/pattern bundle consumption change. Indexing unrolled rows from the
+original base was worse; the sequential cursor is the relevant source detail.
+
+`python tools/check_bink_patterns.py --self-test` passes 262,144 host cases:
+all 256 row patterns, 256 generated color pairs, four pitches, padded output
+and bundle consumption. Expected pixel words are built independently from
+the pattern bits; source mask words are interpreted in target big-endian
+order. Two negative controls detect a missing destination-row advance and
+incorrect mask selection. This checks block expansion, not movie playback.
+The full source build and retail DOL SHA-1 check pass. Expand remains
+NonMatching; exact and source-linked totals do not increase.
+
+Baseline `build/parallel-tenth-merged-report.json` includes the independently
+published zCameraUpdate and zEntPlayer_Init exact matches. The first full
+report for this pass, `build/parallel-eleventh-report.json`, changes only
+ExpandPlane, with no symbol or data regression. Its overall fuzzy score is
+99.47781%, versus the combined baseline's 99.47465%.
+
+Direct scaled-pattern output and an extra advancing motion destination
+cursor were again measured with the new structure and were lower; restored.
+Worker camera const/reference variants and iTRC rectangle/token lifetime
+variants were neutral or worse and were restored. The remaining camera
+scheduling edge is already recorded in docs/COMPILER_VARIANTS.md; this pass
+adds no compelling new case for a compiler patch.
