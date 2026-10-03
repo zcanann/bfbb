@@ -777,32 +777,31 @@ static void YUV_blit(void PTR4* dest,
 }
 }
 
-static inline void blit_mask_rows(u32 count, s32 y_delta, s32 a_delta, s32 c_delta, const u32& pitch_delta,
-                                  u32 srcpitch, const u32& row_pitch)
-{
-    s32 i;
-
-    i = YUV_MASK_HALF_BLOCK_ROWS;
-    do {
-        EVEN(count);
-        i--;
-        S.dest0 = S.dest1 + (s32)pitch_delta;
-        S.dest1 = S.dest0 + row_pitch;
-        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y1 + y_delta);
-        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y0 + srcpitch);
-        S.u = (u16 PTR4*)((u8 PTR4*)S.u + c_delta);
-        S.v = (u16 PTR4*)((u8 PTR4*)S.v + c_delta);
-        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a1 + a_delta);
-        S.a1 = (u32 PTR4*)((u8 PTR4*)S.a0 + srcpitch);
-    } while (i != 0);
+// Keep setup pitches in the caller scope across the core callbacks.
+#define YUV_BLIT_MASK_ROWS(count, y_delta, a_delta, c_delta, pitch_delta, srcpitch, row_pitch) \
+{ \
+    s32 i; \
+ \
+    i = YUV_MASK_HALF_BLOCK_ROWS; \
+    do { \
+        EVEN((count)); \
+        i--; \
+        S.dest0 = S.dest1 + (s32)(pitch_delta); \
+        S.dest1 = S.dest0 + (row_pitch); \
+        S.y0 = (u32 PTR4*)((u8 PTR4*)S.y1 + (y_delta)); \
+        S.y1 = (u32 PTR4*)((u8 PTR4*)S.y0 + (srcpitch)); \
+        S.u = (u16 PTR4*)((u8 PTR4*)S.u + (c_delta)); \
+        S.v = (u16 PTR4*)((u8 PTR4*)S.v + (c_delta)); \
+        S.a0 = (u32 PTR4*)((u8 PTR4*)S.a1 + (a_delta)); \
+        S.a1 = (u32 PTR4*)((u8 PTR4*)S.a0 + (srcpitch)); \
+    } while (i != 0); \
 }
 
-static inline void blit_mask_block(u32 count, s32 y_delta, s32 a_delta, s32 c_delta, const u32& pitch_delta,
-                                   u32 srcpitch, const u32& row_pitch)
-{
-    RGBContext saved = S;
-    blit_mask_rows(count, y_delta, a_delta, c_delta, pitch_delta, srcpitch, row_pitch);
-    S = saved;
+#define YUV_BLIT_MASK_BLOCK(count, y_delta, a_delta, c_delta, pitch_delta, srcpitch, row_pitch) \
+{ \
+    RGBContext saved = S; \
+    YUV_BLIT_MASK_ROWS(count, y_delta, a_delta, c_delta, pitch_delta, srcpitch, row_pitch); \
+    S = saved; \
 }
 
 extern "C" {
@@ -960,7 +959,7 @@ static void YUV_blit_mask(void PTR4* dest,
 
             switch (bits) {
             case YUV_MASK_LEFT_HALF_BIT: {
-                blit_mask_block(YUV_MASK_HALF_BLOCKS, y_delta16, a_delta16, c_delta16, pitch_delta16,
+                YUV_BLIT_MASK_BLOCK(YUV_MASK_HALF_BLOCKS, y_delta16, a_delta16, c_delta16, pitch_delta16,
                                 srcpitch, pitch32);
                 break;
             }
@@ -974,13 +973,13 @@ static void YUV_blit_mask(void PTR4* dest,
                 S.a1 = (u32 PTR4*)((u8 PTR4*)S.a1 + YUV_MASK_BLOCK_PIXELS);
                 S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_BLOCK_BYTES);
                 S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_BLOCK_BYTES);
-                blit_mask_rows(YUV_MASK_HALF_BLOCKS, y_delta16, a_delta16, c_delta16, pitch_delta16,
+                YUV_BLIT_MASK_ROWS(YUV_MASK_HALF_BLOCKS, y_delta16, a_delta16, c_delta16, pitch_delta16,
                                srcpitch, pitch32);
                 S = saved;
                 break;
             }
             case YUV_MASK_BOTH_HALVES: {
-                blit_mask_block(YUV_MASK_FULL_BLOCKS, y_delta32, a_delta32, c_delta32, pitch_delta32,
+                YUV_BLIT_MASK_BLOCK(YUV_MASK_FULL_BLOCKS, y_delta32, a_delta32, c_delta32, pitch_delta32,
                                 srcpitch, pitch32);
                 break;
             }
@@ -1004,7 +1003,7 @@ static void YUV_blit_mask(void PTR4* dest,
                 bits |= maskp[mask_step - 1];
             }
             if (bits != 0) {
-                blit_mask_block(YUV_MASK_HALF_BLOCKS, y_delta16, a_delta16, c_delta16, pitch_delta16,
+                YUV_BLIT_MASK_BLOCK(YUV_MASK_HALF_BLOCKS, y_delta16, a_delta16, c_delta16, pitch_delta16,
                                 srcpitch, pitch32);
             }
             S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_MASK_BLOCK_PIXELS);
@@ -1042,6 +1041,9 @@ static void YUV_blit_mask(void PTR4* dest,
     }
 }
 }
+
+#undef YUV_BLIT_MASK_BLOCK
+#undef YUV_BLIT_MASK_ROWS
 
 extern "C" void YUV_init(s32 flags)
 {

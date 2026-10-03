@@ -11057,3 +11057,37 @@ totals remain unchanged. Full all_source and normal build pass; retail SHA1
 remains 306526d90b48e99894c3138f5fc8f2716d9fecf6. The unit stays NonMatching.
 Validation: build/parallel-twentysecond-report.json and
 build/parallel-twentysecond-validation.log. No ancillary behavior tests run.
+
+
+## Bink masked-blitter caller scopes (2026-10-02)
+
+YUV_blit_mask improves from 81.54674 to 82.31114 by keeping the masked
+row loops in their caller's scope. Shared scoped macros replace the two
+inline helpers, retaining one copy of each source body and the same four
+call sites. They are private to this function and undefined afterward.
+Every call site is a standalone statement inside a compound block; arguments
+are constants or existing locals, with no side effects from reevaluation.
+The loop reads the setup-produced pitch variables directly after EVEN,
+without forwarding references or keeping their addresses in extra registers.
+
+Moving only context-save ownership into the caller gives 81.43406. Expanding
+all row loops directly gives 82.31114; the retained plain-scope macros give
+the same score as that expansion. Wrapping both macros in do/while
+zero gives 79.61332 and is not retained. The stack frame is now 0x118, matching
+retail, rather than the prior larger frame. Source length is 3088 bytes versus
+retail 3124. Reusing setup pitch scratch as a later luma delta still regresses
+(78.78617) and was restored. Evidence: build/yuv-mask23*, yuv-mask23b*, and
+yuv-mask23c*. This is source lifetime evidence, not a compiler patch requirement.
+
+Full all_source and normal build pass. The complete deduplicated report
+changes only this function; YUV reaches 95.73216 and overall fuzzy 99.52706.
+Exact functions, all data, and source-linked totals are unchanged. Retail
+SHA1 remains 306526d90b48e99894c3138f5fc8f2716d9fecf6. YUV stays NonMatching.
+Validation: build/parallel-twentythird-report.json and
+build/parallel-twentythird-validation.log. No ancillary behavior tests run.
+
+Parallel bounded YUY2 sample-lifetime, lightning color-reference, and player
+SpeakStart helper trials produced no gain and were restored with full-report
+baseline equality and passing builds. Player builds with -inline off, so the
+Bink byte-return helper technique introduced real calls there and regressed;
+the inlining context must be checked before transferring such patterns.
