@@ -10251,3 +10251,14 @@ retains 8840/8840 exact data bytes. The normal retail link verifies SHA1
 unit is not claimed. Evidence remains under build/dutchman-turn-* and
 build/dutchman-other-* in the isolated worktree. No compiler changes or inline
 assembly are used.
+
+
+Final integration also retains the FX skinning loop's explicit index
+initialization before packed-shift setup, improving 91.54135% to 91.57895%.
+`build/parallel-thirteenth-final-report.json` confirms exactly three improved
+functions versus staging 5a4ca721c: Bink ExpandPlane, the FX skinning helper,
+and Dutchman update_turn. No function identities, scores or matched-data totals
+regress. Exact functions increase to 9940 and exact code to 2217572 bytes;
+complete source-linked units remain 452. Overall fuzzy progress is 99.489044%.
+Full source compilation and the retail DOL link/hash check pass. Dutchman has
+two code holdouts and remains NonMatching. No compiler changes were made.
