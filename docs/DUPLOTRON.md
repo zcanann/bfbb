@@ -12782,3 +12782,28 @@ Evidence in the RGB worktree: build/pattern-order-private.py and its private
 candidate objects/raw reports, pattern-order-baseline-report.json,
 pattern-order-retained-report.json, pattern-order-validation.json, and both
 baseline/retained build/link logs. Compiler hashes remain unchanged.
+
+
+### Integrated pattern/run/fill and lasso verification (2026-10-03)
+
+Combining the normal pattern word snapshots with paired scaled-fill row cursors
+and the contiguous run-block decoder improves ExpandPlane74.951996->79.55849
+in the full deduplicated report. Both run callers consume a contiguous8x8
+scratch block, so remove the unused pitch parameter/offset mapping and use
+EXPBITS_GET1_BRANCH for retail's branch-local one-bit handling. The scaled
+fill retains sixteen16-byte output rows with one consumed color. Independent
+source review confirmed unchanged row coverage, pixel arithmetic, bitstream
+and bundle consumption for these changes and the pattern helper checkpoint.
+
+zLasso_Render improves98.70257->99.242096 and restores retail function size.
+Root reproduces the recovered helper layout's source-selected DOL:146 differing
+bytes, all within Render, at the retail size; SHA1
+1078ecccdfe9c2a0cbe5dcfa1f8d8f32264db9f3. Normal object selection is restored
+and retail SHA1 306526d90b48e99894c3138f5fc8f2716d9fecf6 passes.
+
+Full all-source/normal builds pass. Exactly those two function scores improve;
+every other function and every per-unit/global exact-code, data and completion
+measure is unchanged.467/543 units remain complete; both TUs remain NonMatching.
+Evidence: build/parallel-fiftysecond-report.json and validation log,
+expand52-combined-private/combined.*, and lasso52-source-link.json/saved DOL.
+No compiler edits, new assembly, or behavioral test suites were used.
