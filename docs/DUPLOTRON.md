@@ -12121,3 +12121,44 @@ The actual camera source-linked DOL has the original 2,859,136-byte length,
 Removing only this TU's `-sym on` increases that residue to 5,376 bytes,
 so the emission flag is necessary for this header layout. The unit remains
 NonMatching. Isolated p1a/p1e compiler hashes are unchanged.
+
+
+### zLightning: name the repeated segment's vertex-array element (2026-10-03)
+
+On the zScene checkpoint `7ce41aba1`, bind `RwIm3DVertex* const& drawVerts =
+vert[i]` at the start of the repeated-segment draw loop, and use that element
+for both vertices. This preserves the element's reloads across vector helper
+calls while giving its lifetime an explicit source identity. The initial pair
+needs no change. Authoritative deduplicated `zLightningFunc_Render` improves
+**99.6076 -> 99.6405**, at the same 1,580 bytes; its differing instruction rows
+fall **25 -> 22**. The axis cursor now uses retail's r25. The vertex cursor and
+alpha still differ, and the two cursor increments are exchanged; this is a
+partial improvement, not an exact-function claim.
+
+The unit improves **99.720116 -> 99.7243**. Exact totals remain 15/17 functions,
+7,920/12,448 code bytes, and all 7,808 data bytes. `RenderLightning` remains
+99.028496. A full report comparison found this one function change only;
+`all_source` and the normal build pass. Normal DOL SHA1 is
+`306526d90b48e99894c3138f5fc8f2716d9fecf6`. Compiler hashes remain
+2.0p1a `a78a5fdb6c1d5677e987636b2e0743dbaefe9542` and
+2.0p1e `9d445725489050035740aaff35860eddbaf3c3c9`.
+`zLightning` remains NonMatching: the normal checksum does not establish an
+actual source link for this TU.
+
+Focused controls: delaying the reference until the first vertex write loses
+the gain; naming the axis too is neutral against baseline. Splitting the inner
+alpha and making the element reference mutable do not improve on the retained
+form. Shared-counter forms with this reference score 99.551895 (all loops) or
+99.60253 (draw phase). Moving UV-phase initialization to the repeated segments
+shortens the function and regresses; an initial vertex-pointer loop also
+regresses. A local diagnostic of the PS2 DWARF `_col` macro form changes both
+function sizes and regresses, so it does not justify changing the shared GC
+header. An aggregate RGB snapshot for the initial pairs also regresses. None
+of these alternatives or macro/header changes is retained; the earlier broad
+claims of source impossibility are not conclusions supported by this pass.
+
+Worker evidence under ignored `build/`: `zlightning-layout-retained-report.json`,
+`zlightning-layout-retained-allsource.log`, `zlightning-layout-retained-link.log`,
+`zlightning-layout-retained-validation.json`, and private variants in
+`zlightning-layout/`. Validation compares against the preceding verified
+`zscene-layout-mask-report.json`.
