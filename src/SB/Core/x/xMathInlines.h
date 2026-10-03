@@ -45,9 +45,25 @@ inline void xsqrtfast(F32& out, F32 x)
     out = std::sqrtf(x);
 }
 
+#ifdef XMATHINLINES_DEFER_XSQRT
+F32 xsqrt(F32 x);
+#endif
+
+#endif // XMATHINLINES_H
+
+// Keep this implementation in its original header group. iModel defers it
+// until after its stream-reader literals, then emits an explicit weak copy.
+#if !defined(XMATHINLINES_DEFER_XSQRT) && !defined(XMATHINLINES_XSQRT_H)
+#define XMATHINLINES_XSQRT_H
+
 // Inline in retail: every caller's TU emits its own weak copy (and its pool
 // literals); xBound.o owns the copy that survives linking.
-inline F32 xsqrt(F32 x)
+#ifdef XMATHINLINES_WEAK_XSQRT
+__declspec(weak)
+#else
+inline
+#endif
+F32 xsqrt(F32 x)
 {
     const F32 half = 0.5f;
     const F32 three = 3.0f;
@@ -68,4 +84,4 @@ inline F32 xsqrt(F32 x)
     return 100000.0f;
 }
 
-#endif
+#endif // XMATHINLINES_XSQRT_H

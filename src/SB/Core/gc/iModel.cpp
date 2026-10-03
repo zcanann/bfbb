@@ -1,3 +1,5 @@
+// Defer this weak helper's definition until after the stream-reader literals.
+#define XMATHINLINES_DEFER_XSQRT
 #include "iModel.h"
 
 #include <stdio.h>
@@ -291,6 +293,13 @@ void iModelQuatToMat(xQuat* q, xVec3* a, RwMatrixTag* t)
     t->pos.y = a->y;
     t->pos.z = a->z;
 }
+
+// Emit the existing helper before matrix identity initialization creates its
+// one constant. Its zero constant must precede that one in the shared pool.
+#undef XMATHINLINES_DEFER_XSQRT
+#define XMATHINLINES_WEAK_XSQRT
+#include "xMathInlines.h"
+#undef XMATHINLINES_WEAK_XSQRT
 
 void iModelAnimMatrices(RpAtomic* model, xQuat* quat, xVec3* tran, RwMatrixTag* mat)
 {

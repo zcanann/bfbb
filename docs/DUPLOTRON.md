@@ -11442,3 +11442,38 @@ link reproduces retail SHA-1 306526d90b48e99894c3138f5fc8f2716d9fecf6, using
 the original object for this still-NonMatching unit. Isolated compiler hashes
 remain p1a a78a5fdb6c1d5677e987636b2e0743dbaefe9542 and p1e
 9d445725489050035740aaff35860eddbaf3c3c9.
+
+
+## iModel actual source-link completion (2026-10-03)
+
+After the exact-code checkpoint, the sole real link difference was literal
+creation order: retail places 0.0f before 1.0f after the stream-reader's -1.0f
+and 1.05f constants. The source placed one before zero, changing two literal
+words and 14 referring load operands (18 differing bytes in total).
+
+Keep xsqrt's existing arithmetic and weak linkage, but defer its definition
+only in iModel until immediately before iModelAnimMatrices. Emitting that
+actively called helper as an explicit `__declspec(weak)` definition creates
+its zero before the matrix identity's one while preserving direct calls.
+This is a documented compiler-specific C++ compromise, not a claim that the
+original source used the same guard. The definition remains physically in
+xMathInlines.h under a separate implementation guard; every other TU sees
+its ordinary inline definition at the original include position. The
+existing per-TU `-sym on` remains. No unused anchors, forced sections, fake
+symbol mappings, padding, assembly, or compiler binary edits are involved.
+
+Moving only the inline definition was neutral because emission remained
+lazy. An address/reference binding created the right pool order but made
+calls indirect, and a one-element zero object moved the identity flags
+store; both were rejected. The explicit weak definition retains all code
+and data matches and resolves the actual link, so iModel is now Matching.
+
+Full all_source and normal builds pass. The complete deduplicated report
+against the exact-code checkpoint has no function or data changes and no
+regressions: 38/38 functions, 7,532 code bytes and 1,336 data bytes remain
+exact. Completion increases by exactly those code/data bytes and one TU.
+The source-linked DOL is byte-identical to retail, SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. Evidence in the isolated RGB
+worktree: build/imodel-exact-linked-report.json,
+build/imodel-exact-final-validation.log, and
+build/imodel-exact-compare-final.py. No ancillary behavior tests were added.
