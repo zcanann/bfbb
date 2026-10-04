@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """locfix.py: which of a function's residual hunks does ANOTHER compiler get right?
 
-    locfix.py --sweep sweep.json --base 2.0p1f --alt 3.0a3[,3.0a5.2] [--set sb|rw] [--k 2]
-    locfix.py --unit SB/Game/zFoo --fn sym --base 2.0p1f --alt 3.0a3     one function, print hunks
+    locfix.py --sweep sweep.json --base 2.0p1g --alt 3.0a3[,3.0a5.2] [--set sb|rw] [--k 2]
+    locfix.py --unit SB/Game/zFoo --fn sym --base 2.0p1g --alt 3.0a3     one function, print hunks
 
 A later compiler can be far from retail overall (prologue scheduling, register numbering)
 and still reproduce one local decision retail made. Per-function scores hide that, so this
@@ -137,7 +137,7 @@ def disasm_target(u):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--sweep"); ap.add_argument("--base", default="2.0p1f")
+    ap.add_argument("--sweep"); ap.add_argument("--base", default="2.0p1g")
     ap.add_argument("--alt", default="3.0a3"); ap.add_argument("--k", type=int, default=2)
     ap.add_argument("--unit"); ap.add_argument("--fn")
     ap.add_argument("--jobs", type=int, default=16)

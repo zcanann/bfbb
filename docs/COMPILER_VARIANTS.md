@@ -1,4 +1,4 @@
-# Compiler variants GC/2.0p1b/c/d/e/f: audit of each change
+# Compiler variants GC/2.0p1b/c/d/e/f/g: audit of each change
 
 This audits the changes that `tools/patch_compiler_rw.py` makes on top of
 GC/2.0p1a, to decide whether each one is a legitimate model of the compiler
@@ -11,7 +11,7 @@ Names used below:
 - **A**: stock GC/2.0p1, the compiler our patches start from.
 - **C**: GC/2.5 (2.6 and 2.7 behave the same on every repro here).
 - **B**: retail, as seen through the target objects.
-- **2.0p1a/b/c/d/e/f**: our derived compilers in `build/compilers/GC/`.
+- **2.0p1a/b/c/d/e/f/g**: our derived compilers in `build/compilers/GC/`.
 
 ## Verdicts
 
@@ -24,6 +24,7 @@ Names used below:
 | (d-gate) address-taken gate | E3n/A/W/V fire on a frame object only when its address escapes | emulation correction | **Yes** for at-sched and at-w. at-v is weaker: it has no effect alone and pays off only with at-sched |
 | (e-rep) const-pointee alias | a const/restrict pointee gets 2.5's plain subrange alias instead of 2.0p1's one-member SET (with `nps`, a guard so 2.0p1a's clauses don't treat the pseudo-object as a static) | grafted from C | **Yes** |
 | (f-nap) no propagation into an address-taken local | IRO copy propagation does not replace a read of an address-taken local with the register it was copied from | grafted from GC/3.0a3 / 3.0a5.2 | **Yes** |
+| (g-ssi) indirect stores to different objects | 2.0p1a's clause C/C+ no longer order two indirect stores to different objects | emulation correction, toward A and C | **Yes** |
 | (e) dss, volb, e3n4 | three extra scheduler edges seen only in retail | retail-only | **No**, kept as experimental parts; see "Not adopted" |
 
 **Game code.** Moving it from 2.0p1a to 2.0p1d measures **+9 exact / −0** over
@@ -564,6 +565,63 @@ honest scalars. `main.dol` is OK in both builds. Every function and section
 score is identical: RW 1023 / 1039, game 7560 / 7673. The three
 `update_turn` functions stay at 100 with the honest source.
 
+## (g-ssi) Two indirect stores to different objects are not ordered (2.0p1g part `ssi`)
+
+**Mechanism.** 2.0p1a's AliasPatch.c clause C+ (blob `0x60e06c`) answers "may
+alias" for an access pair with differing opcodes, both on static objects, the
+non-store side at most 4 bytes. It is reached from the scheduler's entry 0
+(`sb_sched_clause`, call at `0x60e31a`) and from clause C's tail call
+(`0x60e12d`, entries 1 and 3). As written it also fires when BOTH sides are
+stores, so two stores to different statics with different opcodes (an `stfsx`
+to one array and an `stwx` to another) are pinned in source order. Stock
+2.0p1 never orders that pair, and neither do 2.5, 2.6 and 2.7. Retail
+reorders it: in `zMusicNotify` and `zMusicNotifyEvent` the `stwx` to
+`sMusicQueueData[t]` is scheduled above the earlier `stfsx` to
+`sMusicTimer[t]`, because it feeds the following load of
+`sMusicQueueData[t]`.
+
+`ssi` puts a 0x31-byte stub at `.sbpatch+0xFC0` (`0x60efc0`) and retargets both
+calls of C+ to it. When both pcodes are indirect stores (`pcode+0x14 & 0x24 ==
+0x24`: the store flag plus fIsPtrOp, i.e. an X-form or pointer store whose
+memref is the whole object) and their memrefs name different objects, the stub
+answers 0. Every other pair still reaches C+. The narrowing matters: the
+broader "C+ never orders two stores" (`ss0`/`ss` in
+`tools/compilerprobe/patch_licm_x.py`) measured -3/+1, because direct-symbol
+stores (`zGameLoop`, `FindAndInstanceAtomicCallback`) and two stores into one
+array (`zLasso_AddGuide`) do need the edge in retail.
+
+**Provenance.** An emulation correction. 2.0p1a's clause was over-broad for
+this pair; with the fix 2.0p1g behaves like stock 2.0p1 and 2.5 to 2.7 on it.
+
+**Generality.** `tools/compilerprobe/repros/x_ss.c` (written for this, not game
+source), under both RW and game flags:
+
+| function | grouping |
+|---|---|
+| `q_noglob`, `q_ptr`, `q_rev`: indirect `stfsx`/`stwx` to two different arrays | **[2.0p1 2.5 2.6 2.7 2.0p1g]** [2.0p1f] [3.0a3 3.0a5.2] |
+| `q_idx`: the same, then a load of another static | 2.0p1g differs from 2.0p1f (the pointer store moves up); both still keep the float store above the `gMode` load (C+'s store/load answer is untouched) |
+| `c_direct` (direct-symbol `stw` then `stwx`), `q_const` (constant index: direct-symbol stores) | [2.0p1f 2.0p1g]: unchanged |
+| `c_same` (two stores into one array), `sameop_idx`, `lit_idx` | 2.0p1f and 2.0p1g identical |
+
+**Measured.** A per-unit sweep against 2.0p1f (all 224 game and 120 RW units)
+gives RW **0 / 0** and game **+1 / −0** on the source as it was
+(`zEntPlayer_SNDInit` 99.92 -> 100). That source had been written around
+the edge: `zMusicNotify` and `zMusicNotifyEvent` stored to `sMusicQueueData`
+before `sMusicTimer`, and `zMusicNotifyEvent` carried `track`, `musicInfoIdx`
+and `musicEnum` locals that the debug info does not have. With both written
+honestly (only the local `s`, the timer store first as the debug-info local
+list and the retail data flow suggest), game is **+3 / −0**:
+`zEntPlayer_SNDInit`, `zMusicNotify` and `zMusicNotifyEvent`.
+
+A full build confirms this (`ninja` plus `report.json`). The baseline was
+`origin/staging` at `f89da5949` with 2.0p1f; the new build was 2.0p1g with the
+honest `zMusic` source. `main.dol` is OK in both builds. Exactly three
+functions change, all up, and no function or section score drops anywhere:
+`zEntPlayer_SNDInit` 99.92 -> 100, `zMusicNotify` 99.52 -> 100 and
+`zMusicNotifyEvent` 87.00 -> 100. Game goes 7562 -> 7565 / 7673, and RW stays
+at 1024 / 1039. With every function and section exact, `zMusic.cpp` is now
+linked as Matching, and `main.dol` still verifies.
+
 ## Not adopted: retail-only edges `dss`, `volb`, `e3n4`
 
 `tools/patch_compiler_rw.py --p1e-parts ... --out DIR` still builds them, for
@@ -646,7 +704,8 @@ nothing. When switching:
 
 **Update:** game code and RW have since moved to GC/2.0p1e (+3 game functions
 over 2.0p1d, -0; see (e-rep)), and then to GC/2.0p1f (+3 game functions with
-honest source, -0; see (f-nap)).
+honest source, -0; see (f-nap)), and then to GC/2.0p1g (+3 game functions with
+honest source, -0; see (g-ssi)).
 
 ## Reproducing
 
@@ -654,6 +713,7 @@ honest source, -0; see (f-nap)).
 python tools/compilerprobe/repros/run.py                       # all repros, A/C/2.0p1a-d
 python tools/compilerprobe/repros/run.py --flags sb            # same under game flags
 python tools/compilerprobe/repros/run.py x_nap.cpp x_nap.c --mw 2.0p1e,2.0p1f,3.0a3,3.0a5.2   # (f-nap)
+python tools/compilerprobe/repros/run.py x_ss.c --mw 2.0p1,2.5,2.6,2.7,2.0p1f,2.0p1g,3.0a3,3.0a5.2  # (g-ssi)
 python tools/compilerprobe/repros/build_parts.py <scratch>     # ablation compilers (never under build/compilers)
 python tools/compilerprobe/repros/run.py c_veto.c --mw 2.0p1,<scratch>/s_veto,2.5
 python tools/compilerprobe/repros/sweep_units.py --set sb --mw 2.0p1a,2.0p1d --out sb.json
@@ -665,7 +725,7 @@ python tools/compilerprobe/repros/sweep_units.py --diff sb.json 2.0p1a 2.0p1d
 
 ## Candidate behaviours of the retail compiler, not adopted
 
-GC/2.0p1f is the current compiler model (2.0p1e plus (f-nap)). Research after
+GC/2.0p1g is the current compiler model (2.0p1e plus (f-nap) and (g-ssi)). Research after
 2.0p1e (2026-10-01)
 characterised more retail-only alias behaviour; none of it is adopted, because
 no released compiler (1.3 through 3.0) has it, and compiler patches are not

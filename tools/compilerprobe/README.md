@@ -16,3 +16,13 @@ small Win32 debugger (built on `tools/regalloc/rcap.py`).
   locals, `vfr` all frame stores, `log` to just record hits).
 - `trace.py` — log which scheduler/alias clauses answer may-alias queries
   while compiling a function.
+- `hprobe.py` — log (or `--flip`) IRO_IsExpressionCandidate (0x457540) answers
+  for EINDIRECT nodes of one function, with the object, its type and VarInfo
+  noregister byte; `--plain --score fn` compiles a source copy with any
+  compiler and prints objdiff scores (no frida).
+- `patch_licm_x.py` — research-only parts on top of GC/2.0p1f, written to a
+  scratch `--out` dir: `agg` (offset-0 member reads of aggregate locals become
+  IRO expressions; rejected, -10/+0) `ss0`/`ss` (clause C+ no longer orders two
+  stores; -3/+1) and `ssi0`/`ssi` (only two indirect stores to different
+  objects; +1/-0, +2/-0 with honest zMusic). Repros `repros/x_ss.c`,
+  `repros/x_hoist.cpp`, `repros/x_hoist2.cpp`.

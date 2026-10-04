@@ -282,6 +282,37 @@ Measured (full-tree sweep against GC/2.0p1e): RW 0 / 0; game 0 / 0 on the
 source as it was (written around the propagation with one-element arrays),
 +3 / -0 with those arrays reverted to honest scalars (the update_turn functions
 of zNPCB_SB2, zNPCDutchman and zNPCBPlankton).
+
+GC/2.0p1g
+---------
+GC/2.0p1f plus ssi. Built by path
+(`patch_compiler_rw.py <compilers>/GC/2.0p1g/mwcceppc.exe`) or with
+`patch_compiler_rw.py <compilers dir> --p1g`.
+
+  ssi   2.0p1a's AliasPatch.c clause C+ (blob 0x60e06c: differing opcodes,
+        both static objects, the non-store side at most 4 bytes) answers
+        "may alias" for a pair of STORES too, so the scheduler never reorders
+        two stores to different statics with different opcodes. Stock 2.0p1,
+        2.5, 2.6 and 2.7 answer "no alias" for two indirect stores to
+        different objects, and retail reorders them (zMusicNotify: the
+        `stwx` to sMusicQueueData[t] is scheduled above the earlier `stfsx`
+        to sMusicTimer[t]). ssi narrows the clause: when BOTH pcodes are
+        indirect stores (pcode+0x14 & 0x24 == 0x24: store, and an X-form or
+        pointer access whose memref is the whole object) and their memrefs
+        name DIFFERENT objects, C/C+ answer 0. Everything else still reaches
+        C+. Direct-symbol stores and two stores into one array keep the edge
+        (zGameLoop, FindAndInstanceAtomicCallback and zLasso_AddGuide need
+        it). The 0x31-byte stub lives at .sbpatch+0xFC0; entry 0's call of
+        C+ (0x60e31a) and clause C's call of it (0x60e12d, entries 1 and 3)
+        are retargeted to it.
+        Repros: tools/compilerprobe/repros/x_ss.c (q_noglob, q_ptr, q_rev
+        byte-identical to stock 2.0p1/2.5/2.6/2.7; c_direct and c_same
+        unchanged from 2.0p1f).
+
+Measured (full build against GC/2.0p1f): RW 0 / 0; game +1 / -0 on the source
+as it was (zEntPlayer_SNDInit 99.92 -> 100), +3 / -0 with zMusicNotify and
+zMusicNotifyEvent written honestly (only the DWARF local `s`, timer store
+first): both go to 100 and zMusic.cpp links as Matching.
 """
 
 import hashlib
@@ -1215,6 +1246,95 @@ def patch_compiler_p1f(compilers: Path) -> bool:
     return True
 
 
+# ---- GC/2.0p1g: clause C/C+ do not order two indirect stores to different objects
+# See the module docstring. A stub in front of AliasPatch.c's clause C+.
+
+P1G_VERSION = "GC/2.0p1g"
+P1G_SHA1 = "99bd18455ff674337d7a6186164df8a1b1ba13a7"
+SSI_STUB_VA = SECTION_VA + 0xFC0
+CPLUS_VA = 0x0060E06C               # 2.0p1a AliasPatch.c clause C+ (a, b, ma, mb)
+SSI_SITES = (0x0060E31A,            # entry 0's call of C+
+             0x0060E12D)            # clause C's call of C+ (entries 1 and 3)
+
+
+def ssi_stub(at):
+    """C/C+ never order two INDIRECT stores (pcode+0x14 & 0x24) to DIFFERENT objects."""
+    c = bytearray()
+    to_cplus = []
+    for arg in (4, 8):                          # a, b: pcodes
+        c += bytes((0x8B, 0x44, 0x24, arg))     # mov eax,[esp+arg]
+        c += bytes.fromhex("8B4814")            # mov ecx,[eax+0x14]  flags
+        c += bytes.fromhex("83E124")            # and ecx,0x24        indirect | store
+        c += bytes.fromhex("83F924")            # cmp ecx,0x24
+        c += bytes.fromhex("7500")              # jne go
+        to_cplus.append(len(c) - 1)
+    c += bytes.fromhex("8B44240C")              # mov eax,[esp+0xc]   ma
+    c += bytes.fromhex("8B4C2410")              # mov ecx,[esp+0x10]  mb
+    c += bytes.fromhex("8B4010")                # mov eax,[eax+0x10]  ma->object
+    c += bytes.fromhex("3B4110")                # cmp eax,[ecx+0x10]  mb->object
+    c += bytes.fromhex("7400")                  # je go
+    to_cplus.append(len(c) - 1)
+    c += bytes.fromhex("31C0C3")                # xor eax,eax ; ret   no alias
+    go = len(c)
+    c += b"\xE9" + _rel32(at + len(c) + 5, CPLUS_VA)   # go: jmp C+
+    for f in to_cplus:
+        c[f] = go - (f + 1)
+    return bytes(c)
+
+
+def _apply_p1g(data: bytearray) -> bytes:
+    if len(data) != SECTION_FILE + SECTION_SIZE:
+        sys.exit(f"unexpected {P1F_VERSION} layout (file size {len(data):#x})")
+    stub = ssi_stub(SSI_STUB_VA)
+    so = SECTION_FILE + (SSI_STUB_VA - SECTION_VA)
+    if any(data[so:so + len(stub)]):
+        sys.exit(f".sbpatch region {SSI_STUB_VA:#x} is not free")
+    data[so:so + len(stub)] = stub
+    for site in SSI_SITES:
+        o = SECTION_FILE + (site - SECTION_VA)
+        old = b"\xE8" + _rel32(site + 5, CPLUS_VA)
+        if bytes(data[o:o + 5]) != old:
+            sys.exit(f"clause C+ call at {site:#x} is {bytes(data[o:o + 5]).hex()}, "
+                     f"expected {old.hex()}")
+        data[o:o + 5] = b"\xE8" + _rel32(site + 5, SSI_STUB_VA)
+    return bytes(data)
+
+
+def patch_compiler_p1g(compilers: Path) -> bool:
+    """Create GC/2.0p1g next to GC/2.0p1f, deriving 2.0p1b..f first if needed."""
+    if not patch_compiler_p1f(compilers):
+        return False
+    src_dir = compilers / P1F_VERSION
+    dst_dir = compilers / P1G_VERSION
+    src = src_dir / "mwcceppc.exe"
+    dst = dst_dir / "mwcceppc.exe"
+
+    actual = patch_compiler.sha1(src)
+    if actual != P1F_SHA1:
+        sys.exit(f"{src} has unexpected SHA-1 {actual}\n"
+                 f"  expected {P1F_SHA1}; refusing to patch an unknown build")
+    if dst.exists() and patch_compiler.sha1(dst) == P1G_SHA1:
+        return True
+
+    dst_dir.mkdir(parents=True, exist_ok=True)
+    for f in src_dir.iterdir():
+        if f.is_file():
+            shutil.copy2(f, dst_dir / f.name)
+    if dst.exists():
+        dst.unlink()
+
+    out = _apply_p1g(bytearray(src.read_bytes()))
+    result = hashlib.sha1(out).hexdigest()
+    if result != P1G_SHA1:
+        sys.exit(f"derived {P1G_VERSION} has SHA-1 {result}, expected {P1G_SHA1}")
+
+    tmp = dst.with_suffix(".exe.tmp")
+    tmp.write_bytes(out)
+    os.replace(tmp, dst)
+    print(f"Patched compiler written to {dst}  (sha1 {result})")
+    return True
+
+
 def _opt(flag):
     if flag in sys.argv[2:]:
         i = sys.argv.index(flag)
@@ -1226,17 +1346,19 @@ def _opt(flag):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        sys.exit("usage: patch_compiler_rw.py <compilers dir | GC/2.0p1b, 2.0p1c, 2.0p1d, 2.0p1e or "
-                 "2.0p1f mwcceppc.exe> [--r3 | --p1d | --p1d-parts r4,at-sched,at-w,at-v --out DIR"
-                 " | --p1e | --p1e-parts rep,nps,dss,volb,e3n4 --out DIR | --p1f]")
+        sys.exit("usage: patch_compiler_rw.py <compilers dir | GC/2.0p1b, 2.0p1c, 2.0p1d, 2.0p1e, "
+                 "2.0p1f or 2.0p1g mwcceppc.exe> [--r3 | --p1d | --p1d-parts r4,at-sched,at-w,at-v"
+                 " --out DIR | --p1e | --p1e-parts rep,nps,dss,volb,e3n4 --out DIR | --p1f | --p1g]")
     arg = Path(sys.argv[1])
     # Invoked from ninja with $out, i.e. <compilers>/GC/2.0p1b/mwcceppc.exe
-    # (or .../GC/2.0p1c, 2.0p1d, 2.0p1e or 2.0p1f)
+    # (or .../GC/2.0p1c, 2.0p1d, 2.0p1e, 2.0p1f or 2.0p1g)
     root = arg.parents[2] if arg.name.endswith(".exe") else arg
     exe_dir = arg.parent.name if arg.name.endswith(".exe") else None
     parts_arg = _opt("--p1d-parts")
     p1e_arg = _opt("--p1e-parts")
-    if "--p1f" in sys.argv[2:] or exe_dir == P1F_VERSION.split("/")[1]:
+    if "--p1g" in sys.argv[2:] or exe_dir == P1G_VERSION.split("/")[1]:
+        ok = patch_compiler_p1g(root)
+    elif "--p1f" in sys.argv[2:] or exe_dir == P1F_VERSION.split("/")[1]:
         ok = patch_compiler_p1f(root)
     elif p1e_arg is not None or "--p1e" in sys.argv[2:] or exe_dir == P1E_VERSION.split("/")[1]:
         parts = tuple(p for p in p1e_arg.split(",") if p) if p1e_arg is not None else P1E_DEFAULT

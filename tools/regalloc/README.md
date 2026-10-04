@@ -61,7 +61,7 @@ pair therefore ranks oppositely out of line and in an inlined copy.
 All of this works from any cwd (repo root = `$BFBB_ROOT`, else the ancestor of `tools/regalloc`
 holding `build.ninja`).
 
-- Compiler: the unit's own `mw_version` from build.ninja (currently GC/2.0p1f); `RCAP_MW=GC/2.0p1a`
+- Compiler: the unit's own `mw_version` from build.ninja (currently GC/2.0p1g); `RCAP_MW=GC/2.0p1a`
   overrides it for rcap/wcap/diag AND the vfdiff/tmap target alignment (both sides must agree).
 - `RCAP_EXTRA_FLAGS="-DFOO -i dir"` is appended to the unit's cflags (capture and vfdiff).
 - A source COPY outside the unit's directory (e.g. a scratchpad `zcopy.cpp`) automatically gets
