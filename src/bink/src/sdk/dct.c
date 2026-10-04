@@ -942,9 +942,9 @@ static void fastidct8x8(u8 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4* 
         s32 input4 = out[DCT_COL4];
         a0 = input2 + input6;
         a1 = input0 + input4;
+        row[DCT_COL0] = a1 + a0;
         row[DCT_COL3] = a1 - a0;
         a3 = input0 - input4;
-        row[DCT_COL0] = a1 + a0;
         a5 = DCT_FIXED_MUL(input2 - input6, DCT_IDCT_A1) - a0;
         row[DCT_COL2] = a3 - a5;
         row[DCT_COL1] = a3 + a5;
@@ -1080,9 +1080,9 @@ static void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4
         s32 input4 = out[DCT_COL4];
         a0 = input2 + input6;
         a1 = input0 + input4;
+        row[DCT_COL0] = a1 + a0;
         row[DCT_COL3] = a1 - a0;
         a3 = input0 - input4;
-        row[DCT_COL0] = a1 + a0;
         a5 = DCT_FIXED_MUL(input2 - input6, DCT_IDCT_A1) - a0;
         row[DCT_COL2] = a3 - a5;
         row[DCT_COL1] = a3 + a5;
@@ -1222,9 +1222,9 @@ void FastmIDCT8x8WithMotion(u8 PTR4* dest, s32 pitch, s16 PTR4* in, u32 quant, u
         s32 input4 = out[DCT_COL4];
         a0 = input2 + input6;
         a1 = input0 + input4;
+        row[DCT_COL0] = a1 + a0;
         row[DCT_COL3] = a1 - a0;
         a3 = input0 - input4;
-        row[DCT_COL0] = a1 + a0;
         a5 = DCT_FIXED_MUL(input2 - input6, DCT_IDCT_A1) - a0;
         row[DCT_COL2] = a3 - a5;
         row[DCT_COL1] = a3 + a5;

@@ -13813,3 +13813,22 @@ Private evidence: `build/bungee-port-{baseline,final}-report.json`,
 `bungee-port-affected-consumers.json`, `bungee-port-final-build.log`,
 `bungee-port-source-link-input.txt`, `bungee-port-source-diff.json`, and the
 saved diagnostic DOL/ELF; the diagnostic script restores the normal link.
+
+
+### Bink IDCT even-output store order (2026-10-03)
+
+After capturing the four even inputs, store the even sum in row[0] before
+the difference in row[3], as retail does. Keep the separate input difference
+calculation after those stores. This changes only independent local scratch
+assignments; arithmetic expressions and final destination writes are unchanged.
+The input-snapshot checkpoint makes this previously obscured scheduling
+boundary measurable in all three final-pass variants.
+
+Full deduplicated gains: fastidct8x8 63.97166 -> 64.052635,
+fastidct8x8d 73.19433 -> 73.51417, and FastmIDCT8x8WithMotion
+58.41418 -> 58.61194. Source sizes stay 932/984/1012 bytes, respectively.
+Every other function record, data credit, and completion count is unchanged.
+all_source and normal retail link pass, with SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. No compiler or assembly change;
+DCT remains NonMatching. Private evidence: build/dct74-even-store-*.json
+and build/parallel-seventyfourth-{final-report.json,final-build.log,verify.py}.
