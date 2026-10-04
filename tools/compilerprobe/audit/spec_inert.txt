@@ -1,0 +1,3 @@
+# classes whose separate ablation changed no object at all, ablated together
+g_inert	^W@0|^A@.*:(lit|tmp):|^W@.*:tmp:|^S=@4:l|^V@0:tmp|^F@0:st:w(8|16|L)$|^SV@1:[^D]*$|^LICM:[a-z]+\*?c|=same$
+g_B_tmp	^B@.*:tmp:
