@@ -1332,16 +1332,17 @@ static void EffectSingleLoop(xAnimSingle* single)
     xAnimActiveEffect* alist = single->ActiveList;
     U32 index = 0;
     U32 count = single->ActiveCount;
-    while (index < count && alist[index].Effect != NULL)
+    while (index < count && alist->Effect != NULL)
     {
-        if (!(alist[index].Effect->Flags & 0x20))
+        if (!(alist->Effect->Flags & 0x20))
         {
-            alist[index].Effect->Callback(3, &alist[index], single, single->Play->Object);
+            alist->Effect->Callback(3, alist, single, single->Play->Object);
 
-            EffectActiveRemove(&alist[index], index, count);
+            EffectActiveRemove(alist, index, count);
         }
         else
         {
+            alist++;
             index++;
         }
     }
