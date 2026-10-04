@@ -333,8 +333,9 @@ or the only known lever was rejected as not source-likely.
   one register.
 - **Move needed:** v100 to rank 42.5–44.5, i.e. into the named/split band.
 - **Evidence:** IRO always copy-propagates `iospec` and any named `nodeDef`
-  local, so neither gets a web; declaration moves only move the dead slot
-  (99.32/99.37). The CSE route ranks too high: a CSE temp lands at ≥46.5,
+  local, so neither gets a web. The recorded node-first declaration order
+  is retained: 99.320984 to 99.36729 at the same 1296 bytes, with no other
+  function or data changes in the full report. The CSE route ranks too high: a CSE temp lands at ≥46.5,
   behind the `j`/`k` split temps (96.9). The N12 reuse lever needs an existing
   `RxNodeDefinition *` local, and there is none.
 - **Status:** REG, no lever.

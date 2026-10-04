@@ -278,11 +278,11 @@ static void _ScopeTraceMerge(RwScopeTrace* p, RwScopeTrace* q, RwScopeTrace** he
 
 static RwUInt32 _PropagateDependenciesAndKillDeadPaths(RxPipeline* pipeline)
 {
+    RxPipelineNode* node;
     RwUInt32 numUniqueClusters;
     RwUInt32 i;
     RwUInt32 j;
     RwUInt32 k;
-    RxPipelineNode* node;
     RxIoSpec* iospec;
 
     i = pipeline->numNodes;
