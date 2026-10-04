@@ -14051,3 +14051,37 @@ this does not claim source-linked retail identity. No compiler change or
 behavioral test. Private evidence: build/dct79-shared-pass,
 build/dct79-shared-fastidct8x8d, build/dct79-shared-FastmIDCT8x8WithMotion;
 combined validation: build/parallel-seventyninth-{report.json,verify.py,build.log}.
+
+
+### Bink inverse-transform even/odd butterfly scratch (2026-10-03)
+
+After saving the even butterfly outputs, reuse its three working scalars
+for the odd rotation sum, scaled pair difference and remaining rotation
+difference. The same mathematical reuse applies in both passes of the byte,
+doubled and motion transforms. All values needed from the even part have
+already been saved; no arithmetic expression, output address, rounding or
+scratch-array write boundary changes. This follows the ordinary staged
+butterfly temporary ownership also visible in the forward transforms.
+
+Full deduplicated and raw improvements:
+
+- fastidct8x8: 65.2915 -> 74.72065 (932 bytes; retail 988).
+- fastidct8x8d: 76.38461 -> 82.69231 (988 bytes; retail 988).
+- FastmIDCT8x8WithMotion: 58.61194 -> 65.01119 (1012 bytes; retail 1072).
+
+All three opcode multisets and sizes are unchanged; the gain comes from
+scheduling and operand lifetimes. The first two retain the preceding
+cross-pass working-variable reuse, while motion keeps separate pass scopes.
+No new assembly, compiler changes or claimed compiler deficiency.
+
+The full report changes only these three function scores and fuzzy
+aggregates; all other function records, exact code, data and completion
+measures remain unchanged. all_source and normal link/check pass, retaining
+DOL SHA1 306526d90b48e99894c3138f5fc8f2716d9fecf6. DCT remains NonMatching;
+this is not a source-linked retail-identity claim. Private evidence:
+build/dct80-butterfly-scratch-{fastidct8x8,fastidct8x8d,motion}; combined
+validation: build/parallel-eightieth-{report.json,verify.py,build.log}.
+
+A separate even-output store-order control on the preceding checkpoint was
+nearly neutral for byte and regressed doubled. It is not combined with the
+retained scratch reconstruction.
