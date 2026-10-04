@@ -1275,14 +1275,25 @@ S32 ValidatePlatform(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, S32 plattag, 
         return 0;
     }
 
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+    rc = !(strcmp(vid, "PAL"));
+#else
     rc = !(strcmp(vid, "NTSC"));
+#endif
     if (!rc)
     {
         return 0;
     }
 
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+    S32 langMatches = !strcmp(lang, "United Kingdom");
+    langMatches += !strcmp(lang, "French");
+    langMatches += !strcmp(lang, "German");
+    if (!langMatches)
+#else
     rc = !(strcmp(lang, "US Common"));
     if (!rc)
+#endif
     {
         return 0;
     }

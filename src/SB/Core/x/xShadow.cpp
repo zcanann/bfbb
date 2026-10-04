@@ -116,7 +116,11 @@ static S32 SetupShadow()
     // equal to either display width or height.
     // On GCN, this routine normally won't happen,
     // as we're already below both dimensions.
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+    for (; (res > 640) || (res > 528); res >>= 1);
+#else
     for (; (res > 640) || (res > 480); res >>= 1);
+#endif
 
     ShadowCamera = ShadowCameraCreatePersp(res);
     if (ShadowCamera == NULL)

@@ -159,7 +159,11 @@ static RpAtomic* iModelStreamRead(RwStream* stream)
     RwBBox bbox = { { 1000.0f, 1000.0f, 1000.0f }, { -1000.0f, -1000.0f, -1000.0f } };
 
     instance_world = RpWorldCreate(&bbox);
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+    instance_camera = (RwCamera*)iCameraCreate(0x280, 0x210, 0);
+#else
     instance_camera = (RwCamera*)iCameraCreate(0x280, 0x1e0, 0);
+#endif
     RpWorldAddCamera(instance_world, instance_camera);
 
     gLastAtomicCount = 0;

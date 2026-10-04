@@ -60,7 +60,11 @@ void iEnvLoad(iEnv* env, const void* data, U32, S32 dataType)
 
             env->world = RpWorldCreate(&tmpbbox);
 
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+            sPipeCamera = iCameraCreate(640, 528, 0);
+#else
             sPipeCamera = iCameraCreate(640, 480, 0);
+#endif
             sPipeWorld = env->world;
 
             RpWorldAddCamera(sPipeWorld, sPipeCamera);

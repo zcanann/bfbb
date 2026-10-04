@@ -37,7 +37,11 @@ void iMemInit()
     // The original writes the stack base as a plain constant -- there is no
     // relocation on it -- but reaches _stack_end through one, so only the size
     // is expressed in terms of a linker symbol.
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+    gMemInfo.stack.addr = 0x803d8e70;
+#else
     gMemInfo.stack.addr = 0x803d8a50;
+#endif
     gMemInfo.stack.size = (U32)_stack_end - gMemInfo.stack.addr;
     gMemInfo.stack.flags = 0x820;
     HeapSize = 0x384000;
