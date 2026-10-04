@@ -13850,3 +13850,27 @@ DCT remains NonMatching. No math, output addressing, compiler flag, or assembly
 changed. A separate byte-IDCT odd-input snapshot was byte-neutral and discarded.
 Private evidence: build/dct75-{late-output,odd-inputs}.json and
 build/parallel-seventyfifth-{final-report.json,final-build.log,verify.py}.
+
+
+### Bink pattern-byte consumption (2026-10-03)
+
+In expand_pattern_row, retain the low nibble and consume the high nibble by
+shifting row_bits in place. This removes an unnecessary high_bits local and
+recovers retail's low-mask-before-high-mask load ordering in the normal
+pattern rows. All lookup indices, packed colors, stores and bundle advances
+are unchanged. The compiler still splits the low mask/scale into two
+instructions rather than retail's combined rotate-mask; this is not closure.
+
+Full deduplicated ExpandPlane improves 85.97836 -> 86.06153. Raw comparison
+improves 85.17377 -> 85.338066, with source size 5644 -> 5676 versus retail5916.
+Full report comparison changes only that function and fuzzy aggregates;
+all data, exact-match totals and completion fields remain unchanged.
+all_source and normal link/check pass; normal DOL SHA1 remains
+306526d90b48e99894c3138f5fc8f2716d9fecf6. Expand remains NonMatching.
+
+A raw four-mask snapshot regressed, and masking only at lookup also regressed;
+neither is retained. DCT output cursor char/int scratch type controls and a
+paired scalar output reconstruction were byte-neutral and discarded. No new
+assembly, compiler changes, or behavioral tests. Evidence:
+build/expand76-{baseline.json,row-bits-private},
+build/parallel-seventysixth-{report.json,verify.py,build.log}.
