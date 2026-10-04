@@ -13125,3 +13125,25 @@ The all-source build and normal retail link pass, retaining SHA1
 completion remains 469/543; no whole-TU source-link closure is claimed.
 Evidence: build/expand59-last-private and parallel-fiftyninth-report.json
 with its validation log. No compiler changes, assembly, or behavioral tests.
+
+
+## Bink trailing dirty-mask cursor (2026-10-03)
+
+On staging94d28d676, retail YUV_blit_mask .text0x13e0..0x13fc reads
+maskp[0], conditionally reads maskp[mask_step], and then increments maskp.
+The source incremented after its first read and compensated with mask_step-1,
+producing an address add plus a displaced byte load instead of retail's lbzx.
+Keep the cursor unchanged through both reads, then increment it before the
+existing dirty-block test. Both byte addresses and the final cursor are unchanged.
+
+The sole candidate improves full deduplicated YUV_blit_mask82.76312 ->83.02945
+(raw81.300896 ->81.51856), reducing source size3088 ->3084 versus retail3124.
+Exactly one function record changes globally; other function scores, data,
+exact counts, and source-linked totals are unchanged. all_source and normal
+link pass; retail DOL SHA1 remains306526d90b48e99894c3138f5fc8f2716d9fecf6.
+YUV remains NonMatching; this is not a whole-unit source-link claim. Compiler
+hashes are unchanged; no new assembly, compiler edits, or ancillary tests.
+
+Evidence in the RGB worktree: build/masked-tail-baseline-report.json,
+masked-tail-retained-report.json, masked-tail-retained-raw.json,
+masked-tail-validation.json, and baseline/retained build and link logs.

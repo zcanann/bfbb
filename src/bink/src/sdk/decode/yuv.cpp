@@ -1002,10 +1002,11 @@ static void YUV_blit_mask(void PTR4* dest,
         }
 
         if ((s32)(x + YUV_MASK_BLOCK_MASK) <= (s32)end_x) {
-            u8 bits = *maskp++;
+            u8 bits = *maskp;
             if (mask_step != 0) {
-                bits |= maskp[mask_step - 1];
+                bits |= maskp[mask_step];
             }
+            ++maskp;
             if (bits != 0) {
                 YUV_BLIT_MASK_BLOCK(YUV_MASK_HALF_BLOCKS, y_delta16, a_delta16, c_delta16, pitch_delta16,
                                 srcpitch, pitch32);
