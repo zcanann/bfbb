@@ -71,10 +71,11 @@ void zCameraTweakGlobal_Add(U32 owner, F32 priority, F32 time, F32 pitch, F32 di
 
     if (i == 0)
     {
+        const F32& oldDistMult = F32(sCamTweakDistMult[1]);
         sCamTweakPitch[1] =
             sCamTweakPitch[1] * sCamTweakLerp + sCamTweakPitch[0] * (1.0f - sCamTweakLerp);
         sCamTweakDistMult[1] =
-            sCamTweakDistMult[1] * sCamTweakLerp + sCamTweakDistMult[0] * (1.0f - sCamTweakLerp);
+            oldDistMult * sCamTweakLerp + sCamTweakDistMult[0] * (1.0f - sCamTweakLerp);
         sCamTweakLerp = 1.0f;
         sCamTweakTime = sCamTweakList[0].time;
         sCamTweakPitch[0] = sCamTweakList[0].pitch;
@@ -93,9 +94,10 @@ void zCameraTweakGlobal_Remove(U32 owner)
         {
             if (i == 0)
             {
+                const F32& oldDistMult = F32(sCamTweakDistMult[1]);
                 sCamTweakPitch[1] =
                     sCamTweakPitch[1] * sCamTweakLerp + sCamTweakPitch[0] * (1.0f - sCamTweakLerp);
-                sCamTweakDistMult[1] = sCamTweakDistMult[1] * sCamTweakLerp +
+                sCamTweakDistMult[1] = oldDistMult * sCamTweakLerp +
                                        sCamTweakDistMult[0] * (1.0f - sCamTweakLerp);
                 sCamTweakLerp = 1.0f;
                 sCamTweakTime = sCamTweakList[0].time;
