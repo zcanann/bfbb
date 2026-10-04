@@ -238,41 +238,50 @@ void BasisToCoef3(xCoef3* coef, F32 (*N)[4], xVec3* v1, xVec3* v2, xVec3* v3, xV
 
 void CoefToUnity3(xCoef3* coef1, xCoef3* coef2, F32 f1, F32 f2)
 {
-    F32 fdiff;
-    F32 coef2_0;
-    F32 coef2_1;
-    F32 coef2_2;
-    F32 coef2_3;
-
     F32 factor;
-    F32 temp;
-    S32 i;
-    xCoef* c1;
+    F32 fdiff;
     xCoef* c2;
+    F32 linear;
+    S32 i;
+    F32 factorWork;
+    F32 coef2_2;
+    xCoef* c1;
+    F32 coef2_0;
 
     fdiff = f2 - f1;
-    c1 = &coef1->x;
     c2 = &coef2->x;
-    for (i = 3; i != 0; i -= 1)
+    c1 = &coef1->x;
+    i = 3;
+    while (i)
     {
-        coef2_0 = c2->a[0];
-        coef2_1 = c2->a[1];
+        F32 coef2_1;
+        F32 accumulated;
+        F32 quadratic;
+        F32 coef2_3;
+        F32 sharedWork;
+
         coef2_2 = c2->a[2];
         coef2_3 = c2->a[3];
-
-        factor = 3.0f * coef2_0 * fdiff;
-        temp = 2.0f * coef2_1 * fdiff;
-        temp = (f1 * (f1 * factor)) + (f1 * temp);
-        F32 constant =
-            coef2_3 + ((coef2_2 * f1) + ((f1 * (f1 * (coef2_0 * f1))) + (f1 * (coef2_1 * f1))));
-
-        c1->a[0] = fdiff * (fdiff * (coef2_0 * fdiff));
-        c1->a[1] = (f1 * (fdiff * factor)) + (fdiff * (coef2_1 * fdiff));
-        c1->a[2] = (coef2_2 * fdiff) + temp;
-        c1->a[3] = constant;
-
-        c1++;
+        coef2_0 = c2->a[0];
+        sharedWork = coef2_0 * 3.0f;
+        coef2_1 = c2->a[1];
+        factorWork = sharedWork * fdiff;
+        factor = factorWork;
+        quadratic = 2.0f * coef2_1;
+        accumulated = quadratic;
+        quadratic = accumulated * fdiff;
+        factorWork = f1 * quadratic;
+        sharedWork = factorWork;
+        accumulated = ((f1 * factor) * f1) + sharedWork;
+        linear = accumulated;
+        c1->a[0] = fdiff * (fdiff * (fdiff * coef2_0));
+        c1->a[1] = (f1 * (fdiff * factor)) + (fdiff * (fdiff * coef2_1));
         c2++;
+        accumulated = (coef2_2 * fdiff) + linear;
+        c1->a[2] = accumulated;
+        c1->a[3] = ((coef2_2 * f1) + ((f1 * (f1 * coef2_1)) + (((coef2_0 * f1) * f1) * f1))) + coef2_3;
+        c1++;
+        i--;
     }
 }
 
