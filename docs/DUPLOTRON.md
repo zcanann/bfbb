@@ -13971,3 +13971,34 @@ were modified. Evidence: build/dldevice77-zero-control.c/.o,
 dldevice77-baseline-report.json, dldevice77-zero-report.json,
 dldevice77-zero-source-link.json, dldevice77-zero-residual.json, and the
 self-restoring source-link diagnostic dldevice77-zero-link.py.
+
+
+### Bink lossy writer root/child scratch ownership (2026-10-03)
+
+`WriteBPLossy` improves from 96.50967% to 96.86995% by using its existing
+16-bit entry scratch for the pre-write child-depth acquisitions introduced
+in the preceding change. The depth still comes from a byte table, and every
+post-bitstream-write reload remains separate. This restores all three retail
+root-selection branch pairs at object offsets 0x2138/0x2140, 0x2158/0x2160
+and 0x2178/0x2180: each root computes its packed entry inside the chosen arm,
+then reaches the common halfword store. Source size grows from 2,260 to
+2,272 bytes against retail's 2,276. This is actual branch recovery, although
+operand allocation and the remaining copy still prevent an exact match.
+
+The old shared-entry trials also reused the value after bitstream writes;
+this reconstruction preserves those reloads and changes only the pre-write
+scratch ownership. Separate reader controls were rejected: capturing the
+initial nonzero condition explicitly adds boolean-normalization instructions,
+and retaining the header depth with a separate mutable counter does not
+improve the complete function. Neither reader change is retained.
+
+The full deduplicated report changes only `WriteBPLossy`. Every other function
+record, non-text section and unit non-fuzzy measure is unchanged. Full source
+and normal builds pass; normal DOL SHA1 remains
+`306526d90b48e99894c3138f5fc8f2716d9fecf6`. Bitplane stays NonMatching, so this
+normal-link result is not an exact source-link claim. The isolated worktree
+uses staging's published p1f variant (SHA1
+`8641f1a15bab7d961b7b7558e8d0de64449c509c`); bitplane itself still uses ProDG3.5.
+Evidence: `build/bitplane77-entry-scratch.json`,
+`bitplane77-retained-report.json`, `bitplane77-retained-validation.json`,
+and corresponding build/link logs. No behavioral suites or compiler changes.
