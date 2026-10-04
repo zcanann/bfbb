@@ -5062,6 +5062,9 @@ static const U8 SBBBounceBones[8] = { 22, 30, 38, 42 };
 
 void zEntPlayer_Update(xEnt* ent, xScene* sc, F32 dt)
 {
+    xAnimState* astate;
+    F32 s;
+
     if ((gCurrentPlayer == eCurrentPlayerPatrick && !globals.player.model_patrick) ||
         (gCurrentPlayer == eCurrentPlayerSandy && !globals.player.model_sandy))
     {
@@ -5322,7 +5325,6 @@ void zEntPlayer_Update(xEnt* ent, xScene* sc, F32 dt)
 
         if (sRingDelay > 0.0f)
         {
-            F32 s;
             if (dt > sRingDelay)
             {
                 s = sRingDelay;
@@ -5417,17 +5419,19 @@ patrick_stun_done:
 
     if ((ent->model->Anim->Single->State->UserFlags & 0x1000) || tslide_ground)
     {
+        F32 rate;
+        xBound slideB;
         xVec3 normvel;
+
         normvel = globals.player.SlideTrackVel;
         normvel.y = -1e-07f;
 
-        xBound slideB;
         slideB.type = XBOUND_TYPE_SPHERE;
-        slideB.sph.center.x =
-            ent->bound.sph.center.x + 1.25f * dt * globals.player.SlideTrackVel.x;
-        slideB.sph.center.y = ent->bound.sph.center.y + 1.25f * dt * ent->frame->vel.y;
-        slideB.sph.center.z =
-            ent->bound.sph.center.z + 1.25f * dt * globals.player.SlideTrackVel.z;
+
+        rate = 1.25f * dt;
+        slideB.sph.center.x = ent->bound.sph.center.x + rate * globals.player.SlideTrackVel.x;
+        slideB.sph.center.y = ent->bound.sph.center.y + rate * ent->frame->vel.y;
+        slideB.sph.center.z = ent->bound.sph.center.z + rate * globals.player.SlideTrackVel.z;
         slideB.sph.r = ent->bound.sph.r + 0.3f;
 
         xQuickCullForBound(&slideB.qcd, &slideB);
@@ -5642,11 +5646,14 @@ patrick_stun_done:
 
     if (!globals.player.Health)
     {
-        if (globals.player.DamageTimer >= 0.3f && single->CurrentSpeed == 0.0f &&
-            !xScrFxIsFading() && (single->State->UserFlags & 0x400))
+        if (globals.player.DamageTimer >= 0.3f)
         {
-            xScrFxFade(&clear, &black, 0.3f, NULL, 1);
-            globals.player.DamageTimer = 0.33333302f;
+            S32 anim_done = single->CurrentSpeed == 0.0f;
+            if (anim_done && !xScrFxIsFading() && (single->State->UserFlags & 0x400))
+            {
+                xScrFxFade(&clear, &black, 0.3f, NULL, 1);
+                globals.player.DamageTimer = 0.33333302f;
+            }
         }
 
         if (globals.player.DamageTimer <= 0.0f)
@@ -5674,7 +5681,7 @@ patrick_stun_done:
 
     xEntBeginUpdate(ent, sc, dt);
 
-    xAnimState* astate = globals.player.ent.model->Anim->Single->State;
+    astate = globals.player.ent.model->Anim->Single->State;
 
     if (bbash_end_tmr && strncmp(astate->Name, "Bbash", 5) != 0)
     {
@@ -5756,16 +5763,20 @@ patrick_stun_done:
 
         // DWARF keeps this loop's per-NPC ring test locals; whatever the test
         // triggered is absent from the retail build, so only the test remains.
+        U32 i;
         F32 rad2 = SQR(globals.player.ShockRadius);
         F32 radold2 = SQR(globals.player.ShockRadiusOld);
-        for (U32 i = 0; i < sc->num_npcs; i++)
+        for (i = 0; i < sc->num_npcs; i++)
         {
+            F32 sdist2;
+            F32 sdistold2;
+            F32 ydist;
             xEnt* vill = sc->npcs[i];
-            F32 sdist2 = SQR(vill->frame->mat.pos.x - ent->frame->mat.pos.x) +
-                         SQR(vill->frame->mat.pos.z - ent->frame->mat.pos.z);
-            F32 sdistold2 = SQR(vill->frame->oldmat.pos.x - ent->frame->oldmat.pos.x) +
-                            SQR(vill->frame->oldmat.pos.z - ent->frame->oldmat.pos.z);
-            F32 ydist = vill->frame->mat.pos.y - ent->frame->mat.pos.y;
+            sdist2 = SQR(vill->frame->mat.pos.x - ent->frame->mat.pos.x) +
+                     SQR(vill->frame->mat.pos.z - ent->frame->mat.pos.z);
+            sdistold2 = SQR(vill->frame->oldmat.pos.x - ent->frame->oldmat.pos.x) +
+                        SQR(vill->frame->oldmat.pos.z - ent->frame->oldmat.pos.z);
+            ydist = vill->frame->mat.pos.y - ent->frame->mat.pos.y;
             if (sdist2 < rad2 && sdistold2 >= radold2 && ydist > -1.0f && ydist < 1.0f)
             {
             }
@@ -5791,8 +5802,8 @@ patrick_stun_done:
     }
     else
     {
-        F32 mvelx = xVec3Length2(&ent->frame->vel);
-        F32 mvelz = xVec3Length2(&tslide_lastrealvel);
+        F32 playerVel = xVec3Length2(&ent->frame->vel);
+        F32 actualVel = xVec3Length2(&tslide_lastrealvel);
 
         if (ent->collis->colls[0].flags & 1)
         {
@@ -5804,7 +5815,7 @@ patrick_stun_done:
 
             sHackStuckTimer = 0.0f;
         }
-        else if (mvelx >= 36.0f && mvelz <= 0.25f && !(ent->collis->colls[0].flags & 1) &&
+        else if (playerVel >= 36.0f && actualVel <= 0.25f && !(ent->collis->colls[0].flags & 1) &&
                  ((ent->collis->colls[2].flags & 1) || (ent->collis->colls[3].flags & 1) ||
                   (ent->collis->colls[4].flags & 1) || (ent->collis->colls[5].flags & 1)))
         {
@@ -5858,7 +5869,7 @@ patrick_stun_done:
 
             if (sHackStuckSetDir)
             {
-                F32 s = xsqrt(mvelx);
+                s = xsqrt(playerVel);
                 if (s > 10.0f)
                 {
                     s = 10.0f;
@@ -5968,7 +5979,8 @@ patrick_stun_done:
             (globals.player.JumpState == 0 || globals.player.JumpState == 1) &&
             !globals.player.FallDeathTimer)
         {
-            ent->frame->mat.pos.y -= 0.5f * dt;
+            F32 sett = 0.5f * dt;
+            ent->frame->mat.pos.y -= sett;
 
             F32 ndotm = globals.player.floor_norm.x * motion.x +
                         globals.player.floor_norm.z * motion.z;
@@ -5977,7 +5989,8 @@ patrick_stun_done:
                 (req_motion.x != 0.0f || req_motion.z != 0.0f || surfSlickRatio))
             {
                 globals.player.slope = -1;
-                ent->frame->mat.pos.y -= xsqrt(ndotm);
+                F32 sett2 = xsqrt(ndotm);
+                ent->frame->mat.pos.y -= sett2;
             }
             else if (ndotm < 0.0f)
             {
@@ -5995,17 +6008,20 @@ patrick_stun_done:
 
             if (surfSlickRatio)
             {
-                F32 floor_norm2 = globals.player.floor_norm.x * globals.player.floor_norm.x +
-                                  globals.player.floor_norm.z * globals.player.floor_norm.z;
-                ent->frame->mat.pos.x += 13.0f * dt * globals.player.floor_norm.x;
-                ent->frame->mat.pos.y -= 13.0f * dt * xsqrt(floor_norm2);
-                ent->frame->mat.pos.z += 13.0f * dt * globals.player.floor_norm.z;
+                F32 fg = 13.0f * dt;
+                F32 m = globals.player.floor_norm.x * globals.player.floor_norm.x +
+                        globals.player.floor_norm.z * globals.player.floor_norm.z;
+                ent->frame->mat.pos.x += fg * globals.player.floor_norm.x;
+                ent->frame->mat.pos.y -= fg * xsqrt(m);
+                ent->frame->mat.pos.z += fg * globals.player.floor_norm.z;
             }
             else if (sft > 0.0f)
             {
-                F32 sett = 30.0f * (sft / 0.8f * dt);
-                ent->frame->mat.pos.x += sett * lastFloorNorm.x;
-                ent->frame->mat.pos.z += sett * lastFloorNorm.z;
+                F32 fg = 30.0f;
+                F32 s = sft / 0.8f;
+                F32 m = fg * (s * dt);
+                ent->frame->mat.pos.x += m * lastFloorNorm.x;
+                ent->frame->mat.pos.z += m * lastFloorNorm.z;
             }
         }
 
@@ -6112,7 +6128,8 @@ patrick_stun_done:
     {
         sHackStuckSetDir = 0;
 
-        if (update_motion.length() > 1e-5f)
+        F32 dist = update_motion.length();
+        if (dist > 1e-5f)
         {
             U32 redo_catchtunnel = 1;
             xVec3 vstart;
@@ -6122,6 +6139,9 @@ patrick_stun_done:
             xSweptSphere swsredo[3];
             xSweptSphere* swscurr;
             xVec3 totalTan;
+            F32 tandot;
+            F32 catchdot;
+            F32 distremain;
             xVec3 deltaremain;
 
             while (1)
@@ -6194,9 +6214,9 @@ patrick_stun_done:
 
                         totalTan.normalize();
 
-                        F32 catchdot = totalTan.x * swscurr->basis.xm.at.x +
-                                       totalTan.y * swscurr->basis.xm.at.y +
-                                       totalTan.z * swscurr->basis.xm.at.z;
+                        catchdot = totalTan.x * swscurr->basis.xm.at.x +
+                                   totalTan.y * swscurr->basis.xm.at.y +
+                                   totalTan.z * swscurr->basis.xm.at.z;
 
                         if (catchdot < 0.0f)
                         {
@@ -6212,13 +6232,13 @@ patrick_stun_done:
                         }
                     }
 
-                    F32 distremain = swscurr->dist - swscurr->curdist;
+                    distremain = swscurr->dist - swscurr->curdist;
 
                     deltaremain.x = distremain * swscurr->basis.xm.at.x;
                     deltaremain.y = distremain * swscurr->basis.xm.at.y;
                     deltaremain.z = distremain * swscurr->basis.xm.at.z;
 
-                    F32 tandot = xVec3Dot(&deltaremain, &totalTan);
+                    tandot = xVec3Dot(&deltaremain, &totalTan);
 
                     vstart = swscurr->worldPos;
 
@@ -6500,8 +6520,7 @@ catchtunnel_done:
 
     if (sRingDelay >= 1.1f)
     {
-        F32 mag = 1.25f * (2.0f - sRingDelay);
-        F32 stunlerp = (1.0f < mag) ? 1.0f : mag;
+        F32 stunlerp = MIN(1.0f, 1.25f * (2.0f - sRingDelay));
 
         zNPCMsg_AreaPlayerStun(5.0f, 5.0f * stunlerp + (1.0f - stunlerp), NULL);
     }
@@ -6517,33 +6536,35 @@ catchtunnel_done:
     if (globals.player.RootUp.y != globals.player.RootUpTarget.y ||
         1.0f != globals.player.RootUp.y)
     {
-        xVec3 ax;
-        xVec3Sub(&ax, &globals.player.RootUpTarget, &globals.player.RootUp);
+        F32 mag;
+        F32 lerpspeed;
+        xVec3 delta;
 
-        F32 rads = xVec3Dot(&ax, &ax);
-        F32 crs;
+        xVec3Sub(&delta, &globals.player.RootUpTarget, &globals.player.RootUp);
+
+        mag = xVec3Dot(&delta, &delta);
 
         if (globals.player.HangElapsed <= 0.25f)
         {
-            crs = 0.07f;
+            lerpspeed = 0.07f;
         }
         else if (globals.player.HangElapsed >= 0.5f)
         {
-            crs = 0.5f;
+            lerpspeed = 0.5f;
         }
         else
         {
-            crs = 1.72f * (globals.player.HangElapsed - 0.25f);
+            lerpspeed = 1.72f * (globals.player.HangElapsed - 0.25f);
         }
 
-        if (rads < crs * crs)
+        if (mag < lerpspeed * lerpspeed)
         {
             globals.player.RootUp = globals.player.RootUpTarget;
         }
         else
         {
-            xVec3SMul(&ax, &ax, 1.0f / xsqrt(rads) * crs);
-            xVec3Add(&globals.player.RootUp, &globals.player.RootUp, &ax);
+            xVec3SMul(&delta, &delta, 1.0f / xsqrt(mag) * lerpspeed);
+            xVec3Add(&globals.player.RootUp, &globals.player.RootUp, &delta);
             xVec3Normalize(&globals.player.RootUp, &globals.player.RootUp);
         }
     }
@@ -6560,12 +6581,12 @@ catchtunnel_done:
     if (ent->model == globals.player.model_spongebob && globals.player.IsBubbleSpinning &&
         globals.player.model_wand)
     {
-        xBound wandB;
-        wandB.type = XBOUND_TYPE_SPHERE;
-
-        xSphere* wand = &wandB.sph;
         xVec3 a;
         xVec3 b;
+        xBound wandB;
+        xSphere* wand = &wandB.sph;
+
+        wandB.type = XBOUND_TYPE_SPHERE;
 
         iModelTagEval(ent->model->Data, &globals.player.BubbleWandTag[0],
                       globals.player.model_wand->Mat, &a);
@@ -6778,8 +6799,8 @@ catchtunnel_done:
         {
             if (globals.player.carry.grabbed->baseType == eBaseTypeNPC)
             {
-                ((zNPCCommon*)globals.player.carry.grabbed)
-                    ->SetCarryState((en_NPC_CARRY_STATE)0);
+                zNPCCommon* npc = (zNPCCommon*)globals.player.carry.grabbed;
+                npc->SetCarryState((en_NPC_CARRY_STATE)0);
             }
             else if (!zThrown_KillFruit(globals.player.carry.grabbed))
             {
@@ -6792,9 +6813,13 @@ catchtunnel_done:
             if (globals.player.carry.grabbed->baseType == eBaseTypeNPC)
             {
                 zNPCCommon* npc = (zNPCCommon*)globals.player.carry.grabbed;
-                if ((((xNPCBasic*)npc)->SelfType() & 0xffffff00) == 'NTT\0' && !npc->IsHealthy())
+                if ((((xNPCBasic*)npc)->SelfType() & 0xffffff00) == 'NTT\0')
                 {
-                    globals.player.carry.grabbed->chkby = 0;
+                    zNPCTiki* tiki = (zNPCTiki*)npc;
+                    if (!tiki->IsHealthy())
+                    {
+                        globals.player.carry.grabbed->chkby = 0;
+                    }
                 }
             }
 
@@ -6888,10 +6913,14 @@ catchtunnel_done:
         tmpMat.up = globals.player.RootUp;
 
         xVec3 ax;
+        F32 rads;
+        F32 crs;
+        F32 dot;
+
         xVec3Cross(&ax, &globals.player.RootUp, (xVec3*)&ent->model->Mat->up);
 
-        F32 crs = xVec3Normalize(&ax, &ax);
-        F32 dot = xVec3Dot((xVec3*)&ent->model->Mat->up, &globals.player.RootUp);
+        crs = xVec3Normalize(&ax, &ax);
+        dot = xVec3Dot((xVec3*)&ent->model->Mat->up, &globals.player.RootUp);
 
         if (0.0f == crs)
         {
@@ -6902,7 +6931,7 @@ catchtunnel_done:
         }
         else
         {
-            F32 rads = xasin(crs);
+            rads = xasin(crs);
             if (dot < 0.0f)
             {
                 rads = PI - rads;
@@ -6973,9 +7002,11 @@ catchtunnel_done:
     }
 
     xMat3x3 hitchMat;
+    S32 hitch;
+
     xMat3x3RotY(&hitchMat, sHitchAngle);
 
-    for (S32 hitch = 0; hitch < sNumHitches; hitch++)
+    for (hitch = 0; hitch < sNumHitches; hitch++)
     {
         if (sHitch[hitch]->flags & 1)
         {
@@ -6986,7 +7017,8 @@ catchtunnel_done:
     if (ent->model == globals.player.model_sandy)
     {
         S32 wasCoptering = globals.player.IsCoptering;
-        S32 hitch = 0;
+
+        hitch = 0;
 
         if (strcmp(ent->model->Anim->Single->State->Name, "LCopter01") == 0 ||
             strcmp(ent->model->Anim->Single->State->Name, "LCopterHeadUp01") == 0)
@@ -7126,20 +7158,25 @@ catchtunnel_done:
             MeleeAttackBoundCollide(ent, (zScene*)sc, &meleeB);
         }
 
-        if (gReticleTarget && gReticleTarget->baseType == eBaseTypeNPC &&
-            !((zNPCCommon*)gReticleTarget)->CanRope())
+        if (gReticleTarget && gReticleTarget->baseType == eBaseTypeNPC)
         {
-            gReticleTarget = NULL;
-            sTimeToRetarget = 0.0f;
+            zNPCCommon* npc = (zNPCCommon*)gReticleTarget;
+            if (!npc->CanRope())
+            {
+                gReticleTarget = NULL;
+                sTimeToRetarget = 0.0f;
+            }
         }
 
         if (gReticleTarget)
         {
+            F32 dist_sqr;
             xVec3 disp;
             xVec3Sub(&disp, (xVec3*)&gReticleTarget->model->Mat->pos,
                      (xVec3*)&ent->model->Mat->pos);
 
-            if (xVec3Length2(&disp) > 100.0f)
+            dist_sqr = xVec3Length2(&disp);
+            if (dist_sqr > 100.0f)
             {
                 gReticleTarget = NULL;
                 sTimeToRetarget = 0.0f;
@@ -7168,19 +7205,18 @@ catchtunnel_done:
                 globals.player.IsCoptering || sLassoInfo->swingTarget)
             {
                 xEnt* oldTarget = gReticleTarget;
-                xEnt* closest = NULL;
-
-                sTimeToRetarget = 0.25f;
-
                 F32 currDist_sqr;
                 F32 maxDist_sqr;
-                F32 closestDist_sqr = 100.0f;
+                F32 closestDist_sqr;
                 xVec3 toTarget;
+                xEnt* closest;
+
+                sTimeToRetarget = 0.25f;
+                closest = NULL;
+                closestDist_sqr = 100.0f;
 
                 if (globals.player.JumpState == 0 && !sliding)
                 {
-                    xRay3 ray;
-                    xCollis rayCollis;
                     U32 i = 0;
 
                     for (; i < ((zScene*)sc)->num_base; i++)
@@ -7220,13 +7256,15 @@ catchtunnel_done:
 
                         if (targent->baseType == eBaseTypeNPC)
                         {
-                            if ((((xNPCBasic*)targent)->SelfType() & 0xffffff00) == 'NTT\0' &&
-                                !((zNPCCommon*)targent)->flg_vuln)
+                            xNPCBasic* npc = (xNPCBasic*)targent;
+
+                            if ((npc->SelfType() & 0xffffff00) == 'NTT\0' &&
+                                !((zNPCCommon*)npc)->flg_vuln)
                             {
                                 continue;
                             }
 
-                            if (((xNPCBasic*)targent)->SelfType() == 'NTT4')
+                            if (npc->SelfType() == 'NTT4')
                             {
                                 continue;
                             }
@@ -7243,6 +7281,9 @@ catchtunnel_done:
                         {
                             continue;
                         }
+
+                        xRay3 ray;
+                        xCollis rayCollis;
 
                         rayCollis.flags = 0;
 
@@ -7347,11 +7388,12 @@ catchtunnel_done:
             {
                 if (gReticleTarget)
                 {
+                    F32 dist;
                     xVec3 disp;
                     xVec3Sub(&disp, (xVec3*)&gReticleTarget->model->Mat->pos,
                              (xVec3*)&ent->model->Mat->pos);
 
-                    F32 dist = xVec3Length(&disp);
+                    dist = xVec3Length(&disp);
 
                     switch (sTypeOfTarget)
                     {
