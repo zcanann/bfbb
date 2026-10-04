@@ -13832,3 +13832,21 @@ all_source and normal retail link pass, with SHA1
 306526d90b48e99894c3138f5fc8f2716d9fecf6. No compiler or assembly change;
 DCT remains NonMatching. Private evidence: build/dct74-even-store-*.json
 and build/parallel-seventyfourth-{final-report.json,final-build.log,verify.py}.
+
+
+### Bink doubled-IDCT output cursor lifetime (2026-10-03)
+
+Initialize d0 from dest at the second-pass boundary beside resetting the
+workspace cursor. It is unused during the first pass. Retail retains the
+original destination across that pass and creates the writing cursor afterward;
+the reconstruction initialized the cursor early and lost the corresponding
+register move. This source-lifetime correction restores that move and brings
+fastidct8x8d from 984 to the retail 988-byte size.
+
+Full deduplicated match improves 73.51417 -> 73.728745. Every other report
+record is unchanged apart from aggregate fuzzy percentages. all_source and
+the normal retail link pass (SHA1 306526d90b48e99894c3138f5fc8f2716d9fecf6).
+DCT remains NonMatching. No math, output addressing, compiler flag, or assembly
+changed. A separate byte-IDCT odd-input snapshot was byte-neutral and discarded.
+Private evidence: build/dct75-{late-output,odd-inputs}.json and
+build/parallel-seventyfifth-{final-report.json,final-build.log,verify.py}.

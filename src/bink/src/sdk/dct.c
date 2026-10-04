@@ -987,7 +987,6 @@ static void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4
 
     qptr = q;
     inptr = in;
-    d0 = dest;
     doublepitch = pitch + pitch;
     out = workspace;
     d1 = DCT_ADVANCE_U32_BYTES(dest, pitch);
@@ -1057,6 +1056,7 @@ static void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4
     }
 
     out = workspace;
+    d0 = dest;
     /* The doubled variant expands each row into two adjacent output rows. */
     for (i = DCT_BLOCK_WIDTH; i != 0; --i) {
         s32 a0;
