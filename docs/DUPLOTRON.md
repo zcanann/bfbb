@@ -14106,3 +14106,29 @@ and normal link/check pass, preserving retail SHA1
 306526d90b48e99894c3138f5fc8f2716d9fecf6. No compiler or assembly changes.
 Evidence: build/dct81-final-scratch-{fastidct8x8,fastidct8x8d,FastmIDCT8x8WithMotion}
 and build/parallel-eightyfirst-{report.json,verify.py,build.log}.
+
+
+## Glare per-vertex coordinate captures (2026-10-04)
+
+xScrFXGlareRender now computes each vertex's three coordinates into immutable
+F32 scalars immediately before the position macro. These are the same corner
+expressions and vertex order, with each vertex prepared before its stores;
+UV/color calculations and rendering calls are unchanged. This mirrors the
+existing streak position captures. It improves the arithmetic/store schedule
+and register assignments without introducing additional instructions; both
+source and retail remain 920 bytes. The remaining differences include the
+initial coordinate load order and register allocation, so this is not closure.
+
+The authoritative full deduplicated function score improves 93.35217% to
+96.74348%; xScrFx improves 98.82294% to 99.4234%. Only this function's score
+and aggregate fuzzy measures change. All other functions, exact measures,
+data, sizes, and completion totals remain unchanged. All-source compilation
+and normal retail link/check pass with SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. No compiler changes, assembly, or
+additional behavioral tests were introduced; xScrFx remains NonMatching.
+
+Evidence in the isolated rendering worktree: build/glare81/{baseline,
+position_scalars}/{xScrFx.cpp,xScrFx.o,diff.json}, build/render81-{baseline,
+final}-report.json, build/render81-{baseline,final}-build.log, and
+build/render81-verify.py. The raw private score is 93.17826% to 96.569565%;
+the full report above is the authoritative progress measure.

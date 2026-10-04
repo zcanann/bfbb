@@ -500,20 +500,32 @@ void xScrFXGlareRender(xCamera* cam)
             static RwIm3DVertex sStripVert[4];
 
             RwIm3DVertex* vert = &sStripVert[0];
-            RwIm3DVertexSetPos(vert, sGlare[i].pos.x - w.x - h.x, sGlare[i].pos.y - w.y - h.y, sGlare[i].pos.z - w.z - h.z);
+            const F32 p0x = sGlare[i].pos.x - w.x - h.x;
+            const F32 p0y = sGlare[i].pos.y - w.y - h.y;
+            const F32 p0z = sGlare[i].pos.z - w.z - h.z;
+            RwIm3DVertexSetPos(vert, p0x, p0y, p0z);
             RwIm3DVertexSetUV(vert, 0.0f, 0.0f);
 
             RwIm3DVertexSetRGBA(vert, 255.0f * sGlare[i].col.red, 255.0f * sGlare[i].col.green, 255.0f * sGlare[i].col.blue, 255.0f * sGlare[i].col.alpha * val);
             vert++;
-            RwIm3DVertexSetPos(vert, sGlare[i].pos.x - w.x + h.x, sGlare[i].pos.y - w.y + h.y, sGlare[i].pos.z - w.z + h.z);
+            const F32 p1x = sGlare[i].pos.x - w.x + h.x;
+            const F32 p1y = sGlare[i].pos.y - w.y + h.y;
+            const F32 p1z = sGlare[i].pos.z - w.z + h.z;
+            RwIm3DVertexSetPos(vert, p1x, p1y, p1z);
             RwIm3DVertexSetUV(vert, 0.0f, 1.0f);
             RwIm3DVertexSetRGBA(vert, 255.0f * sGlare[i].col.red, 255.0f * sGlare[i].col.green, 255.0f * sGlare[i].col.blue, 255.0f * sGlare[i].col.alpha * val);
             vert++;
-            RwIm3DVertexSetPos(vert, sGlare[i].pos.x + w.x - h.x, sGlare[i].pos.y + w.y - h.y, sGlare[i].pos.z + w.z - h.z);
+            const F32 p2x = sGlare[i].pos.x + w.x - h.x;
+            const F32 p2y = sGlare[i].pos.y + w.y - h.y;
+            const F32 p2z = sGlare[i].pos.z + w.z - h.z;
+            RwIm3DVertexSetPos(vert, p2x, p2y, p2z);
             RwIm3DVertexSetUV(vert, 1.0f, 0.0f);
             RwIm3DVertexSetRGBA(vert, 255.0f * sGlare[i].col.red, 255.0f * sGlare[i].col.green, 255.0f * sGlare[i].col.blue, 255.0f * sGlare[i].col.alpha * val);
             vert++;
-            RwIm3DVertexSetPos(vert, sGlare[i].pos.x + w.x + h.x, sGlare[i].pos.y + w.y + h.y, sGlare[i].pos.z + w.z + h.z);
+            const F32 p3x = sGlare[i].pos.x + w.x + h.x;
+            const F32 p3y = sGlare[i].pos.y + w.y + h.y;
+            const F32 p3z = sGlare[i].pos.z + w.z + h.z;
+            RwIm3DVertexSetPos(vert, p3x, p3y, p3z);
             RwIm3DVertexSetUV(vert, 1.0f, 1.0f);
             RwIm3DVertexSetRGBA(vert, 255.0f * sGlare[i].col.red, 255.0f * sGlare[i].col.green, 255.0f * sGlare[i].col.blue, 255.0f * sGlare[i].col.alpha * val);
 
