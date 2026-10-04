@@ -13043,3 +13043,37 @@ Fresh all_source and normal builds pass with retail SHA1
 changes. Evidence: build/yuv-init-closure-{baseline,red-shift}.json,
 yuv-init-closure-gain-report.json and yuv-init-closure-gain-build.log; baseline
 full comparison is build/binkread-closure-restored-report.json at dcbec2d53.
+
+
+### Integrated Bink sentinel loops, pattern boundary and YUV verification (2026-10-03)
+
+Use the ordinary descending for-loop condition run_length != -1 in both
+normal/scaled run branches. Each length comes from a byte, and the loop only
+decrements it, so iteration counts and scratch writes are unchanged. This
+recovers retail's minus-one entry checks, improving raw ExpandPlane
+81.362404 -> 81.960785 and source size 5,648 -> 5,664 bytes. The earlier
+guarded do-loop form still scores lower and is not retained. A standard
+register qualifier on the plane parameter was neutral and is also discarded.
+
+With these loop lifetimes, the saved normal-pattern boundary now gains when
+combined: capture both colors before marking the work block. The normal case
+contains its former inline helper body, preserving color replication, all
+eight row calls and sixteen word stores. The row helper and scaled pattern
+path are unchanged. Combined raw score is 82.04868 at the same 5,664 bytes.
+This previously lost against the pointer-only checkpoint, so it was measured
+again specifically after the run-loop allocation changed.
+
+Root independently integrates the format-owned YUV red shift and verifies
+exactly two full-report changes: ExpandPlane 82.05882 -> 82.80257 and
+YUV_init 68.080536 -> 68.67785. Every other function record and all per-unit
+and global exact-code/data/completion measures remain unchanged. All-source
+compilation and normal retail linkage pass with SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. Both units remain NonMatching;
+completion remains 469/543 and no source-link closure is claimed.
+
+Evidence: build/parallel-fiftyeighth-final-report.json and final validation
+log, expand58-for-private and expand58-run-private; RGB
+build/pattern-loop-interaction-private contains the isolated combined source
+and raw diff. Its CheckReadRLEHuff4Bundle audit found only register allocation
+and scheduling, including one retail argument-copy instruction; no RLE edits
+were justified.

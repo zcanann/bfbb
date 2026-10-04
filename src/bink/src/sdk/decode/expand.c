@@ -1104,38 +1104,6 @@ static inline void expand_pattern_row(u8 PTR4* dest, u32 pitch,
     BINK_BLOCK_ROW_WORD(dest, pitch, BINK_BLOCK_ROW_0, BINK_BLOCK_ROW_WORD_1) = high_word;
 }
 
-static inline void expand_pattern_block(u8 PTR4* dest,
-                                        u32 pitch,
-                                        READBUNDLE PTR4* colors,
-                                        READBUNDLE PTR4* patterns)
-{
-    u32 color0;
-    u32 color1;
-    u8 PTR4* row0 = dest;
-    u8 PTR4* row1 = dest + pitch;
-
-    color0 = *colors->cur_ptr++;
-    color1 = *colors->cur_ptr++;
-    color0 |= color0 << BINK_BYTE_BITS;
-    color0 |= color0 << BINK_BUNDLE_MIN_WORD_BITS;
-    color1 |= color1 << BINK_BYTE_BITS;
-    color1 |= color1 << BINK_BUNDLE_MIN_WORD_BITS;
-    expand_pattern_row(row0, pitch, color0, color1, patterns);
-    row0 = row1 + pitch;
-    expand_pattern_row(row1, pitch, color0, color1, patterns);
-    row1 = row0 + pitch;
-    expand_pattern_row(row0, pitch, color0, color1, patterns);
-    row0 = row1 + pitch;
-    expand_pattern_row(row1, pitch, color0, color1, patterns);
-    row1 = row0 + pitch;
-    expand_pattern_row(row0, pitch, color0, color1, patterns);
-    row0 = row1 + pitch;
-    expand_pattern_row(row1, pitch, color0, color1, patterns);
-    row1 = row0 + pitch;
-    expand_pattern_row(row0, pitch, color0, color1, patterns);
-    expand_pattern_row(row1, pitch, color0, color1, patterns);
-}
-
 /* Expand two pattern bits into four pixels in each of two output rows. */
 static inline void expand_pattern_block_scaled(u8 PTR4* dest,
                                                 u32 pitch,
@@ -1432,13 +1400,13 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                         if (EXPBITS_GET1_BRANCH(bitstate, bit)) {
                             u8 color = *colors.cur_ptr++;
                             run_length = *runs.cur_ptr++;
-                            for (; run_length >= 0; --run_length) {
+                            for (; run_length != -1; --run_length) {
                                 u32 scan_offset = scan[filled_pixels++];
                                 motion_block[scan_offset] = color;
                             }
                         } else {
                             run_length = *runs.cur_ptr++;
-                            for (; run_length >= 0; --run_length) {
+                            for (; run_length != -1; --run_length) {
                                 u32 scan_offset = scan[filled_pixels++];
                                 motion_block[scan_offset] = *colors.cur_ptr++;
                             }
@@ -1622,10 +1590,35 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 BINK_FILL_BLOCK_WORD_ROW(copy_dest1, 0, 0, fill);
                 break;
             }
-            case BINK_BLOCK_PATTERN:
+            case BINK_BLOCK_PATTERN: {
+                u32 color0;
+                u32 color1;
+                u8 PTR4* row0 = dest;
+                u8 PTR4* row1 = dest + pitch;
+
+                color0 = *colors.cur_ptr++;
+                color1 = *colors.cur_ptr++;
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
-                expand_pattern_block(dest, pitch, &colors, &pattern_bundle);
+                color0 |= color0 << BINK_BYTE_BITS;
+                color0 |= color0 << BINK_BUNDLE_MIN_WORD_BITS;
+                color1 |= color1 << BINK_BYTE_BITS;
+                color1 |= color1 << BINK_BUNDLE_MIN_WORD_BITS;
+                expand_pattern_row(row0, pitch, color0, color1, &pattern_bundle);
+                row0 = row1 + pitch;
+                expand_pattern_row(row1, pitch, color0, color1, &pattern_bundle);
+                row1 = row0 + pitch;
+                expand_pattern_row(row0, pitch, color0, color1, &pattern_bundle);
+                row0 = row1 + pitch;
+                expand_pattern_row(row1, pitch, color0, color1, &pattern_bundle);
+                row1 = row0 + pitch;
+                expand_pattern_row(row0, pitch, color0, color1, &pattern_bundle);
+                row0 = row1 + pitch;
+                expand_pattern_row(row1, pitch, color0, color1, &pattern_bundle);
+                row1 = row0 + pitch;
+                expand_pattern_row(row0, pitch, color0, color1, &pattern_bundle);
+                expand_pattern_row(row1, pitch, color0, color1, &pattern_bundle);
                 break;
+            }
             case BINK_BLOCK_MOTION: {
                 s32 motion_x = BINK_BUNDLE_S8(xoff);
                 s32 motion_y = BINK_BUNDLE_S8(yoff);
@@ -1778,13 +1771,13 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                                 if (EXPBITS_GET1_BRANCH(bitstate, bit)) {
                                     u8 color = *colors.cur_ptr++;
                                     run_length = *runs.cur_ptr++;
-                                    for (; run_length >= 0; --run_length) {
+                                    for (; run_length != -1; --run_length) {
                                         u32 scan_offset = scan[filled_pixels++];
                                         motion_block[scan_offset] = color;
                                     }
                                 } else {
                                     run_length = *runs.cur_ptr++;
-                                    for (; run_length >= 0; --run_length) {
+                                    for (; run_length != -1; --run_length) {
                                         u32 scan_offset = scan[filled_pixels++];
                                         motion_block[scan_offset] = *colors.cur_ptr++;
                                     }
