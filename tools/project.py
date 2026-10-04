@@ -163,6 +163,7 @@ class ProjectConfig:
         self.build_rels: bool = True  # Build REL files
         self.check_sha_path: Optional[Path] = None  # Path to version.sha1
         self.config_path: Optional[Path] = None  # Path to config.yml
+        self.dol_file_alignment: Optional[int] = None  # Retail file padding beyond sections
         self.generate_map: bool = False  # Generate map file(s)
         self.asflags: Optional[List[str]] = None  # Assembler flags
         self.ldflags: Optional[List[str]] = None  # Linker flags
@@ -688,9 +689,15 @@ def generate_build_ninja(
     n.newline()
 
     n.comment("Generate DOL")
+    dol_command = f"{dtk} elf2dol $in $out"
+    dol_dependencies = [dtk]
+    if config.dol_file_alignment is not None:
+        pad_script = config.tools_dir / "pad_dol.py"
+        dol_command = f"{CHAIN}{dol_command} && $python {pad_script} $out --alignment {config.dol_file_alignment}"
+        dol_dependencies.append(pad_script)
     n.rule(
         name="elf2dol",
-        command=f"{dtk} elf2dol $in $out",
+        command=dol_command,
         description="DOL $out",
     )
     n.newline()
@@ -1176,7 +1183,7 @@ def generate_build_ninja(
             outputs=link_steps[0].output(),
             rule="elf2dol",
             inputs=link_steps[0].partial_output(),
-            implicit=dtk,
+            implicit=dol_dependencies,
             order_only="post-link",
         )
 
@@ -1326,7 +1333,7 @@ def generate_build_ninja(
         n.build(
             outputs=report_path,
             rule="report",
-            implicit=[objdiff, "all_source"],
+            implicit=[objdiff, "objdiff.json", "all_source"],
             order_only="post-build",
         )
 
@@ -1536,9 +1543,10 @@ def generate_objdiff_config(
             "symbol_mappings": None,
         }
 
-        # Preserve existing symbol mappings
+        # Preserve interactive mappings only for the same target object,
+        # never across version switches.
         existing_unit = existing_units.get(name)
-        if existing_unit is not None:
+        if existing_unit is not None and existing_unit.get("target_path") == str(obj_path):
             unit_config["symbol_mappings"] = existing_unit.get("symbol_mappings")
 
         obj = objects.get(obj_name)

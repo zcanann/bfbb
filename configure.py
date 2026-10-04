@@ -21,7 +21,7 @@ sys.path.append(str(Path(__file__).parent / "tools"))
 import aliaspatch_link  # noqa: E402  -- for the AliasPatch.c dependency path
 
 from tools.project import (
-    Object,
+    Object as ProjectObject,
     ProgressCategory,
     ProjectConfig,
     calculate_progress,
@@ -32,7 +32,9 @@ from tools.project import (
 # Game versions
 DEFAULT_VERSION = 0
 VERSIONS = [
-    "GQPE78",  # 0
+    "GQPE78",  # 0: USA
+    "GQPP78",  # 1: Europe
+    "GU4Y78",  # 2: German compilation disc (BFBB files/Game.dol)
 ]
 
 parser = argparse.ArgumentParser()
@@ -169,6 +171,9 @@ config.wibo_tag = "1.0.0-beta.5"
 # Project
 config.config_path = Path("config") / config.version / "config.yml"
 config.check_sha_path = Path("config") / config.version / "build.sha1"
+# The compilation disc stores Game.dol with a zero-filled 128-byte file boundary.
+if config.version == "GU4Y78":
+    config.dol_file_alignment = 128
 config.asflags = [
     "-mgekko",
     "--strip-local-absolute",
@@ -189,6 +194,16 @@ if args.map:
 
 # Use for any additional files that should cause a re-configure when modified
 config.reconfig_deps = []
+# Completed source objects are tracked independently for each retail executable.
+matching_units_path = Path("config") / config.version / "matching_units.txt"
+matching_units = set()
+if matching_units_path.is_file():
+    matching_units = {
+        line.split("#", 1)[0].strip()
+        for line in matching_units_path.read_text(encoding="utf-8").splitlines()
+        if line.split("#", 1)[0].strip()
+    }
+    config.reconfig_deps.append(matching_units_path)
 
 # Optional numeric ID for decomp.me preset
 # Can be overridden in libraries or objects
@@ -390,7 +405,7 @@ RW_COMPILER = "GC/2.0p1g"
 
 
 # Helper function for Dolphin libraries
-def DolphinLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
+def DolphinLib(lib_name: str, objects: List[ProjectObject]) -> Dict[str, Any]:
     return {
         "lib": lib_name,
         "src_dir": "src/",
@@ -402,7 +417,7 @@ def DolphinLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
     }
 
 # Helper function for MSL libraries
-def mslLib(lib_name: str, extra_cflags: List[str], objects: List[Object]) -> Dict[str, Any]:
+def mslLib(lib_name: str, extra_cflags: List[str], objects: List[ProjectObject]) -> Dict[str, Any]:
     return {
         "lib": lib_name,
         "src_dir": "src/PowerPC_EABI_Support/src",
@@ -413,7 +428,7 @@ def mslLib(lib_name: str, extra_cflags: List[str], objects: List[Object]) -> Dic
         "objects": objects,
     }
 
-def trkLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
+def trkLib(lib_name: str, objects: List[ProjectObject]) -> Dict[str, Any]:
     return {
         "lib": lib_name,
         "src_dir": "src/runtime_libs",
@@ -425,7 +440,7 @@ def trkLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
     }
 
 # Helper function for RenderWare libraries
-def RenderWareLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
+def RenderWareLib(lib_name: str, objects: List[ProjectObject]) -> Dict[str, Any]:
     return {
         "lib": lib_name,
         "src_dir": "src",
@@ -443,7 +458,7 @@ def RenderWareLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
 
 
 # Helper function for REL script objects
-def Rel(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
+def Rel(lib_name: str, objects: List[ProjectObject]) -> Dict[str, Any]:
     return {
         "lib": lib_name,
         "mw_version": "GC/1.3.2",
@@ -453,9 +468,14 @@ def Rel(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
     }
 
 
-Matching = True                   # Object matches and should be linked
+Matching = config.version == "GQPE78"  # Existing completed objects are verified for USA
 NonMatching = False               # Object does not match and should not be linked
 Equivalent = config.non_matching  # Object should be linked when configured with --non-matching
+
+
+def Object(completed, name, **options):
+    """Link only source objects verified for the selected version."""
+    return ProjectObject(completed or name in matching_units, name, **options)
 
 
 # Object is only matching for specific versions
@@ -1265,6 +1285,13 @@ def link_order_callback(module_id: int, objects: List[str]) -> List[str]:
 
 # Uncomment to enable the link order callback.
 # config.link_order_callback = link_order_callback
+
+
+unknown_matching_units = matching_units - {
+    obj.name for library in config.libs for obj in library["objects"]
+}
+if unknown_matching_units:
+    sys.exit("Unknown matching source units: " + ", ".join(sorted(unknown_matching_units)))
 
 
 # Optional extra categories for progress tracking

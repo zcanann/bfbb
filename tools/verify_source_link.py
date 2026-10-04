@@ -136,7 +136,7 @@ def verify(
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("version", choices=VERSIONS)
-    parser.add_argument("units", nargs="*", help="source paths relative to src/")
+    parser.add_argument("units", nargs="*", help="configured unit names from config/<version>/splits.txt")
     parser.add_argument("--units-file", type=Path, help="matching manifest (one unit per line; # comments allowed)")
     parser.add_argument("--build-dir", type=Path, default=Path("build"), help="build directory relative to repository root")
     parser.add_argument("--compilers", type=Path, help="compiler directory (default: <build-dir>/compilers)")

@@ -18,15 +18,20 @@
 
 A work-in-progress decompilation of SpongeBob SquarePants: Battle for Bikini Bottom.
 
-It builds the following DOL:
+The build supports these GameCube releases:
 
-main.dol: `sha1: 306526d90b48e99894c3138f5fc8f2716d9fecf6`
+| Version | Release | Required original executable | SHA-1 |
+| --- | --- | --- | --- |
+| `GQPE78` (default) | USA | `orig/GQPE78/sys/main.dol` | `306526d90b48e99894c3138f5fc8f2716d9fecf6` |
+| `GQPP78` | Europe | `orig/GQPP78/sys/main.dol` | `6da9022f06bfb62a203017ec38046ba2566dc0cf` |
+| `GU4Y78` | German compilation, BFBB disc | `orig/GU4Y78/files/Game.dol` | `aeda497067bb53e4715db5b074535645a0ea9b3e` |
 
-This repository does **not** contain any game assets or assembly whatsoever. An existing copy of the game is required.
+The German compilation's `sys/main.dol` is its game launcher. BFBB is
+`files/Game.dol`; the launcher and the other game are outside this project's
+build and progress totals. All versions produce `build/<version>/main.dol`.
 
-Supported versions:
-
-- `GQPE78`: (NTSC-U)
+This repository does **not** contain game assets or original executables.
+An existing copy of the corresponding release is required.
 
 # Dependencies
 
@@ -71,26 +76,37 @@ sudo xattr -rd com.apple.quarantine '/Applications/Wine Crossover.app'
 - Clone the repository:
 
   ```sh
-  git clone https://github.com/bfbbdecomp/bfbb.git
+  git clone https://github.com/zcanann/bfbb.git
   ```
 
-- Using [Dolphin Emulator](https://dolphin-emu.org/), extract your game to `orig/GQPE78`.
+- Using [Dolphin Emulator](https://dolphin-emu.org/), extract the release to
+  `orig/<version>`. Only the executable listed above is required.
   ![](assets/dolphin-extract.png)
-  - To save space, the only necessary files are the following. Any others can be deleted.
-    - `sys/main.dol`
-- Configure:
+- Configure and build the default USA release:
 
   ```sh
   python configure.py
+  ninja all_source progress
   ```
 
-  To use a version other than `GQPE78` (NTSC-U), specify it with `--version`.
-
-- Build:
+- Select Europe or the German compilation with `--version`:
 
   ```sh
-  ninja
+  python configure.py --version GQPP78
+  ninja all_source progress
   ```
+
+  Use `--version GU4Y78` for the German BFBB executable. Configure one version
+  at a time; generated Ninja and objdiff configuration follow that selection,
+  while compiled objects and reports remain in separate `build/<version>`
+  directories. `progress` requires the complete source build and an exact
+  retail executable checksum.
+
+CI follows the same per-version build with independent `<version>_report`
+artifacts. The [progress site][progress] includes a version selector; its root
+badge API continues to report USA. Source completion is verified separately for
+each version, so USA matching status is not automatically applied to PAL or the
+German compilation. See [regional build notes](docs/MULTIVERSION.md).
 
 # Visual Studio Code
 
