@@ -43,8 +43,6 @@ cameraFXTableEntry sCameraFXTable[3] = { { CAMERAFX_TYPE_NONE, NULL, NULL },
                                          { CAMERAFX_TYPE_ZOOM, xCameraFXZoomUpdate, NULL },
                                          { CAMERAFX_TYPE_SHAKE, xCameraFXShakeUpdate, NULL } };
 
-zGlobals globals;
-
 // These structs were used in deadstripped functions.
 // This function is here to force the symbols to be linked.
 void __deadstripped_xCamera()

@@ -13539,3 +13539,26 @@ Private reproduction/evidence: `build/xcamera-layout-pool-order-link.py`
 `xcamera-layout-pool-order-report.json`, `xcamera-layout-fresh-build.log`,
 `xcamera-layout-final-build.log`, and
 `xcamera-layout-affected-{sources,objects}.txt` in the Plankton worktree.
+
+### xCamera globals declaration ownership (2026-10-03)
+
+The retail xCamera object has no definition of `globals`, but the source
+contained a redundant `zGlobals globals;` definition despite including
+`zGlobals.h`, which already declares it extern. Both source xCamera.o and
+zMain.o consequently emitted an 8136-byte, 8-byte-aligned SHN_COMMON object.
+Removing only the xCamera definition leaves the existing zMain definition
+and the header declaration intact. xCamera.o now references globals as
+undefined, matching its actual ownership; no structure or behavior changes.
+
+This single control reduces actual source-selected DOL differences from
+**13,191 to 6,617 bytes**. The resulting 2,859,136-byte DOL SHA-1 is
+`276e6d7a6503ba086d2fc6c1e4ebc1d8b5fa4a42`. The full deduplicated report is
+identical to the preceding layout checkpoint, all_source builds, and the
+restored normal link retains retail SHA-1
+`306526d90b48e99894c3138f5fc8f2716d9fecf6`. xCamera remains NonMatching;
+the implicit quaternion copy placement and binary-camera update holdout
+are still unresolved. No additional source variants were attempted.
+
+Private reproduction/evidence: `build/xcamera-layout-globals-link.py`,
+`xcamera-layout-globals-link.json`, `xcamera-layout-globals-linked.elf`,
+and `xcamera-layout-globals-report.json` in the Plankton worktree.
