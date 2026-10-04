@@ -13711,3 +13711,39 @@ all_source and restored normal builds pass. Normal retail SHA-1 remains
 Player stays NonMatching. Private reproduction: `build/player72-common-link.py`
 with `before`/`after` arguments, corresponding reports/link inventories and
 linked ELF/DOL files; `player71-gust-ownership-findings.md` records diagnosis.
+
+### Player animation-table definition ownership (2026-10-03)
+
+Retail groups six exact animation-table builders together in a separate
+56,908-byte text section: Sandy, Patrick, player, tongue, boulder vehicle,
+and TreeDome. The source had scattered those strong definitions throughout
+zEntPlayer.cpp's primary section. The debug data confirms the missing owner
+by name: `dwarf/dwarf_data.cpp` attributes the builders to
+`C:\SB\Game\zEntPlayerAnimationTables.h`. This is header definition
+ownership, not a reason to make these public functions weak or inline.
+
+The unchanged bodies now live together in TU-private
+zEntPlayerAnimationTables.inl, included at the former first-builder boundary.
+The existing shared zEntPlayerAnimationTables.h remains unchanged and keeps
+its public declarations for other consumers. Two existing static callback
+forward declarations are needed before the include. All six definitions
+retain their strong binding, exact body, and retail relative offsets.
+
+Actual source-selected linking improves from **1,934,872 to 1,904,631 differing
+DOL bytes**. The six builder addresses now share a uniform +760-byte
+displacement from retail, versus Sandy -89,676, Patrick/player/tongue/boulder
+-87,848, and TreeDome -2,380 previously. Source DOL size remains 2,859,200
+(retail 2,859,136); other primary/helper ordering and code residues remain.
+The candidate source-selected SHA-1 is
+`2fb2c0b4d9ec18f9c9059224d5c06681e9ac3250`. This is partial layout recovery;
+zEntPlayer remains NonMatching.
+
+The full deduplicated report is byte-for-byte equal to the preceding COMMON
+checkpoint, including all 27,820 reported player data bytes exact. all_source
+and restored normal builds pass; normal DOL SHA-1 remains
+`306526d90b48e99894c3138f5fc8f2716d9fecf6`. The shared declaration header was
+restored before validation, and its two other direct consumers rebuilt.
+No APIs, shared headers, compiler binaries, or assembly changed. Private
+evidence: `build/player73-function-ownership.json` and
+`player72-common-anim-header-{report.json,link.json,linked.elf,linked.dol}`;
+`player72-common-link.py anim-header` reproduces the link with normal restore.
