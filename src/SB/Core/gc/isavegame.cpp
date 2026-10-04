@@ -547,8 +547,13 @@ char* iSGFileModDate(st_ISGSESSION* isgdata, const char* fname, S32* sec, S32* m
     if (iSG_get_fmoddate(&isgdata->mcdata[isgdata->slot], fname, &sec_str, &min_str, &hr_str,
                          &mon_str, &day_str, &yr_str) != 0)
     {
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+        sprintf(datestr, "%02d.%02d.%04d %02d:%02d:%02d", day_str, mon_str, yr_str, hr_str, min_str,
+                sec_str);
+#else
         sprintf(datestr, "%02d/%02d/%04d %02d:%02d:%02d", mon_str, day_str, yr_str, hr_str, min_str,
                 sec_str);
+#endif
 
         if (sec != NULL)
         {
@@ -587,8 +592,13 @@ void iSGMakeTimeStamp(char* str)
     OSCalendarTime calendar_time = { 0 };
     OSTime time = OSGetTime();
     OSTicksToCalendarTime(time, &calendar_time);
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+    sprintf(str, "%02d.%02d.%04d %02d:%02d:%02d", calendar_time.mday, calendar_time.mon + 1,
+            calendar_time.year, calendar_time.hour, calendar_time.min, calendar_time.sec);
+#else
     sprintf(str, "%02d/%02d/%04d %02d:%02d:%02d", calendar_time.mon + 1, calendar_time.mday,
             calendar_time.year, calendar_time.hour, calendar_time.min, calendar_time.sec);
+#endif
 }
 
 S32 iSGSelectGameDir(st_ISGSESSION* isgdata, const char* dname)

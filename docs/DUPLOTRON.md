@@ -14552,3 +14552,24 @@ Evidence: build/mask126/{baseline,shared_order,shared_helper}.cpp,
 private-validation.json, validation.json, shared_order-diff.txt, and the
 baseline/candidate report and build logs. Baseline yuv.cpp is byte-identical
 to the saved round124 baseline, allowing its private object evidence reuse.
+
+
+### Regional save-game date formatting
+
+PAL and German retail format both save modification dates and new timestamps
+as day.month.year. Use the existing regional version defines to select that
+format and argument order in iSGFileModDate and iSGMakeTimeStamp; preserve
+USA's month/day/year calls unchanged.
+
+The regional 25,648-byte unmatched-data total was two slash characters in
+@stringBase0. The 23,616-byte zero initializer for IconData was already exact;
+no bitmap or icon extraction is involved. PAL object comparison now gives
+100% for both date functions and .rodata. Its full report changes only
+isavegame: matched functions 61 -> 63, matched data 83,136 -> 108,784, fuzzy
+code 99.89019% -> 99.897766%. PAL all_source and its normal 445-unit source
+link pass with retail SHA1 6da9022f06bfb62a203017ec38046ba2566dc0cf.
+USA and German integration verification is delegated to the parent worktree.
+The three existing holdouts remain; the TU is not promoted to Matching.
+
+Evidence: build/isavegame127/{findings.json,date-functions.txt} and
+build/isavegame128/GQPP78-{unit.json,report.json,build.log}, PAL-validation.json.
