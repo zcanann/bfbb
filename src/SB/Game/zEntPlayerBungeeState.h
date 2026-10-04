@@ -5,7 +5,6 @@
 #include "xEnt.h"
 #include "xIni.h"
 
-
 namespace bungee_state
 {
     struct hook_asset : xDynAsset
@@ -64,18 +63,6 @@ namespace bungee_state
     {
         hook_asset* asset;
         xEnt* ent;
-    };
-
-    struct drop_asset : xDynAsset
-    {
-        U32 marker;
-        U32 set_view_angle;
-        F32 view_angle;
-
-        static const char* type_name()
-        {
-            return "game_object:bungee_drop";
-        }
     };
 
     void load(xBase& data, xDynAsset& asset, size_t);

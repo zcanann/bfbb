@@ -13773,3 +13773,43 @@ column helper regressed and was discarded. Private evidence:
 build/dct73-{baseline,even-inputs,even-inputs-fastidct8x8d,
 even-inputs-FastmIDCT8x8WithMotion}.json and
 build/parallel-seventythird-{final-report.json,final-build.log,verify.py}.
+
+
+
+### Bungee ownership checkpoint ported onto current staging
+
+Port of the previously isolated `7c71df654` preparation onto `a0d34bb80`.
+The unchanged private attaching/hanging methods and collision functor return
+to their deferred class groups; `drop_asset` returns to its implementation
+scope (there are no external users). The real down-vector aggregate and
+matrix/vector helper ownership reproduce the earlier method, vtable and
+initializer layout. Public hook types, entry points and object layouts stay
+unchanged. This is layout preparation, **not a Matching conversion**.
+
+Unlike the original checkpoint, `xBoxFromSphere`'s header body and the ordinary
+`xGridCheckBound` template spelling are Bungee-only opt-ins. Other callers keep
+their previous definitions. The newer `XMATH3_DEFER_RMULVEC`,
+`XVEC3_DEFER_AGGREGATE_HELPERS` and `XGRID_DEFER_BOUND_HELPERS` paths remain
+intact. The `XVEC3_MATMUL_INLINE` matrix definition/body must stay identical
+to their ordinary xMath3.h counterparts.
+
+Forced all 224 game sources to rebuild, covering every transitive consumer:
+xVec3.h 188, xMath3.h 187, xGrid.h 156, Bungee's header 6. The complete
+deduplicated report is JSON-identical to the current baseline: Bungee remains
+116/120 paired exact functions and 6,528/6,528 data bytes; no caller regresses.
+The normal source-selected Matching units still produce retail SHA1
+`306526d90b48e99894c3138f5fc8f2716d9fecf6`.
+
+Temporarily source-selecting Bungee produces the same 2,859,136-byte image
+with exactly **267 differing bytes**, SHA1
+`b08482d6b8930465c578eb8b5decd69e2b747a99`, identical to the original checkpoint.
+Thus the remaining barrier is still the genuine 0.5f/0.1f constant-pool
+allocation order; no new method, helper or data-layout discrepancy appeared.
+No literal padding, compiler changes or Matching marker were retained.
+Compiler SHA1s remain `a78a5fdb6c1d5677e987636b2e0743dbaefe9542` (2.0p1a)
+and `9d445725489050035740aaff35860eddbaf3c3c9` (2.0p1e).
+
+Private evidence: `build/bungee-port-{baseline,final}-report.json`,
+`bungee-port-affected-consumers.json`, `bungee-port-final-build.log`,
+`bungee-port-source-link-input.txt`, `bungee-port-source-diff.json`, and the
+saved diagnostic DOL/ELF; the diagnostic script restores the normal link.

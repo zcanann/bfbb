@@ -227,7 +227,10 @@ void xGridCheckBound<XGRID_BOUND_CALLBACK>(xGrid& grid, const xBound& bound,
                                          const xQCData& qcd, XGRID_BOUND_CALLBACK cb)
 #else
 template <class T>
-inline void xGridCheckBound(xGrid& grid, const xBound& bound, const xQCData& qcd, T cb)
+#ifndef XGRID_BOUND_HELPER_OUT_OF_LINE
+inline
+#endif
+void xGridCheckBound(xGrid& grid, const xBound& bound, const xQCData& qcd, T cb)
 #endif
 {
     xGridIterator it;

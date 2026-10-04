@@ -8,6 +8,7 @@
 #include "xIsect.h"
 
 // Size: 0x30
+#ifndef XVEC3_MATMUL_INLINE
 struct xMat3x3
 {
     xVec3 right;
@@ -17,6 +18,8 @@ struct xMat3x3
     xVec3 at;
     U32 pad2;
 };
+
+#endif
 
 // Size: 0x40
 struct xMat4x3 : xMat3x3
@@ -155,10 +158,17 @@ F32 xMat3x3LookVec3(xMat3x3& m, const xVec3& at);
 void xMat3x3Scale(xMat3x3* m, const xVec3* s);
 void xBoxFromLine(xBox& box, const xLine3& line);
 void xBoxFromRay(xBox& box, const xRay3& ray);
-// The only definition is the inline in zEntPlayerBungeeState.cpp: retail emits
-// the weak copy there and calls it out of line from zDiscoFloor.o, so this stays
-// a declaration.
+// Bungee owns the retained header-inline copy; other callers use that copy.
+#ifdef XMATH3_BOX_FROM_SPHERE_INLINE
+inline void xBoxFromSphere(xBox& box, const xSphere& o)
+{
+    box.upper = box.lower = o.center;
+    box.upper += o.r;
+    box.lower -= o.r;
+}
+#else
 void xBoxFromSphere(xBox& box, const xSphere& o);
+#endif
 void xMat3x3Identity(xMat3x3* matrix);
 void xMat3x3SMul(xMat3x3*, const xMat3x3*, F32);
 
@@ -170,6 +180,7 @@ inline void xRotCopy(xRot* o, const xRot* r)
     o->angle = r->angle;
 }
 
+#ifndef XVEC3_MATMUL_INLINE
 // Cinematic owns a deferred copy alongside its other local math helpers.
 #ifdef XMATH3_DEFER_RMULVEC
 static void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v);
@@ -185,6 +196,8 @@ static inline void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
     o->z = z;
 }
 #endif
+
+#endif // XVEC3_MATMUL_INLINE
 
 inline void xMat4x3Toworld(xVec3* o, const xMat4x3* m, const xVec3* v)
 {
