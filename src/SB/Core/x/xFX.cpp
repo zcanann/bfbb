@@ -1496,10 +1496,6 @@ static zParEmitter* sFirework2Emit = NULL;
 static U32 sFireworkSoundID = 0;
 static U32 sFireworkLaunchSoundID = 0;
 
-static RwIm3DVertex sStripVert_2188[4];
-
-static RwIm3DVertex blah_2485[4];
-
 namespace
 {
 #define RIBBON_COUNT 64
@@ -1763,6 +1759,8 @@ void xFXStreakUpdate(F32 dt)
 
 void xFXStreakRender()
 {
+    static RwIm3DVertex sStripVert[4];
+
     xFXStreakElem* e1;
     S32 streak;
     xFXStreak* s;
@@ -1809,48 +1807,48 @@ void xFXStreakRender()
             const F32 p0x = e->p[0].x;
             const F32 p0y = e->p[0].y;
             const F32 p0z = e->p[0].z;
-            RwIm3DVertexSetPos(&sStripVert_2188[0], p0x, p0y, p0z);
-            RwIm3DVertexSetUV(&sStripVert_2188[0], 0.0f, 0.0f);
+            RwIm3DVertexSetPos(&sStripVert[0], p0x, p0y, p0z);
+            RwIm3DVertexSetUV(&sStripVert[0], 0.0f, 0.0f);
             U8 c0r = s->color_a.r;
             U8 c0g = s->color_a.g;
             U8 c0b = s->color_a.b;
             F32 c0af = 255.0f * e->a;
             F32 c2af = 255.0f * e1->a;
-            RwIm3DVertexSetRGBA(&sStripVert_2188[0], c0r, c0g, c0b, (U8)c0af);
+            RwIm3DVertexSetRGBA(&sStripVert[0], c0r, c0g, c0b, (U8)c0af);
 
             const F32 p1x = e->p[1].x;
             const F32 p1y = e->p[1].y;
             const F32 p1z = e->p[1].z;
-            RwIm3DVertexSetPos(&sStripVert_2188[1], p1x, p1y, p1z);
-            RwIm3DVertexSetUV(&sStripVert_2188[1], 0.0f, 1.0f);
+            RwIm3DVertexSetPos(&sStripVert[1], p1x, p1y, p1z);
+            RwIm3DVertexSetUV(&sStripVert[1], 0.0f, 1.0f);
             U8 c1r = s->color_b.r;
             U8 c1g = s->color_b.g;
             U8 c1b = s->color_b.b;
-            RwIm3DVertexSetRGBA(&sStripVert_2188[1], c1r, c1g, c1b, (U8)c0af);
+            RwIm3DVertexSetRGBA(&sStripVert[1], c1r, c1g, c1b, (U8)c0af);
 
             const F32 p2x = e1->p[0].x;
             const F32 p2y = e1->p[0].y;
             const F32 p2z = e1->p[0].z;
-            RwIm3DVertexSetPos(&sStripVert_2188[2], p2x, p2y, p2z);
-            RwIm3DVertexSetUV(&sStripVert_2188[2], 1.0f, 0.0f);
+            RwIm3DVertexSetPos(&sStripVert[2], p2x, p2y, p2z);
+            RwIm3DVertexSetUV(&sStripVert[2], 1.0f, 0.0f);
             U8 c2r = s->color_a.r;
             U8 c2g = s->color_a.g;
             U8 c2b = s->color_a.b;
-            RwIm3DVertexSetRGBA(&sStripVert_2188[2], c2r, c2g, c2b, (U8)c2af);
+            RwIm3DVertexSetRGBA(&sStripVert[2], c2r, c2g, c2b, (U8)c2af);
 
             const F32 p3x = e1->p[1].x;
             const F32 p3y = e1->p[1].y;
             const F32 p3z = e1->p[1].z;
-            RwIm3DVertexSetPos(&sStripVert_2188[3], p3x, p3y, p3z);
-            RwIm3DVertexSetUV(&sStripVert_2188[3], 1.0f, 1.0f);
+            RwIm3DVertexSetPos(&sStripVert[3], p3x, p3y, p3z);
+            RwIm3DVertexSetUV(&sStripVert[3], 1.0f, 1.0f);
             U8 c3r = s->color_b.r;
             U8 c3g = s->color_b.g;
             U8 c3b = s->color_b.b;
-            RwIm3DVertexSetRGBA(&sStripVert_2188[3], c3r, c3g, c3b, (U8)c2af);
+            RwIm3DVertexSetRGBA(&sStripVert[3], c3r, c3g, c3b, (U8)c2af);
 
             RwRenderStateSet(rwRENDERSTATETEXTURERASTER, (void*)s->textureRasterPtr);
 
-            if (RwIm3DTransform(sStripVert_2188, 4, NULL,
+            if (RwIm3DTransform(sStripVert, 4, NULL,
                                 rwIM3D_VERTEXUV | rwIM3D_VERTEXXYZ | rwIM3D_VERTEXRGBA))
             {
                 RwIm3DRenderPrimitive(rwPRIMTYPETRISTRIP);
@@ -2103,6 +2101,8 @@ void xFXShineUpdate(F32 dt)
 
 void xFXShineRender()
 {
+    static RwIm3DVertex blah[4];
+
     xFXShineElem* e;
     S32 shine;
     xFXShine* s;
@@ -2133,7 +2133,7 @@ void xFXShineRender()
                 continue;
             }
 
-            vert = blah_2485;
+            vert = blah;
 
             if (globals.camera.lo_cam)
             {
@@ -2198,14 +2198,14 @@ void xFXShineRender()
 
             RwRenderStateSet(rwRENDERSTATETEXTURERASTER, (void*)s->textureRasterPtr);
 
-            if (RwIm3DTransform(blah_2485, 4, NULL,
+            if (RwIm3DTransform(blah, 4, NULL,
                                 rwIM3D_VERTEXUV | rwIM3D_VERTEXXYZ | rwIM3D_VERTEXRGBA))
             {
                 RwIm3DRenderPrimitive(rwPRIMTYPETRISTRIP);
                 RwIm3DEnd();
             }
 
-            vert = blah_2485;
+            vert = blah;
 
             F32 b0x = s->pos.x;
             F32 b0y = s->pos.y;
@@ -2250,7 +2250,7 @@ void xFXShineRender()
 
             RwRenderStateSet(rwRENDERSTATETEXTURERASTER, (void*)s->textureRasterPtr);
 
-            if (RwIm3DTransform(blah_2485, 4, NULL,
+            if (RwIm3DTransform(blah, 4, NULL,
                                 rwIM3D_VERTEXUV | rwIM3D_VERTEXXYZ | rwIM3D_VERTEXRGBA))
             {
                 RwIm3DRenderPrimitive(rwPRIMTYPETRISTRIP);
