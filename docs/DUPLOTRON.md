@@ -13637,3 +13637,38 @@ NonMatching. Evidence: build/player70-{baseline.json,aggregate-visibility,
 affected-sources.txt,baseline-source-link.json,candidate-source-link.json};
 build/parallel-seventieth-{final-report.json,final-build.log,verify.py};
 build/xcamera70-{source-link.json,source-linked.dol}.
+
+
+### xCamera completed: immutable interpolated position (2026-10-03)
+
+With link layout resolved, all 205 remaining source-selected DOL differences
+were inside xBinaryCamera::update. Retail snapshots A's three coordinates and
+computes all three interpolated outputs before their stores. Source instead
+zero-initialized cam_loc and assigned its components separately, extending
+different floating-point and general-register lifetimes. Earlier standalone
+scalar snapshots were worse and a mutable runtime aggregate was neutral.
+
+The successful reconstruction initializes `const xVec3 cam_loc` directly from
+the three existing xlerp expressions. This local is never modified afterward
+and is consumed by xCameraMove through a const reference. Making its complete
+value immutable recovers the aggregate construction boundary, including all
+register allocation and interleaving with heading initialization. Arithmetic
+and consumers remain unchanged; no helper, compiler, or shared-header change
+is required. The DWARF dump preserves cam_loc's name/order but is not evidence
+that this exact qualifier spelling appeared in the original source.
+
+Full deduplicated scoring changes only xBinaryCamera::update,
+**92.087% to 100%** at 1,420 bytes. xCamera is now **77/77 exact functions**,
+**14,012/14,012 code bytes** and **688/688 data bytes** exact. Raw objdiff's
+99.95775% is solely three literal-symbol pairings; full dedup resolves them,
+and actual source-selected linking independently proves there is no residual.
+The resulting DOL is byte-identical to retail, SHA-1
+`306526d90b48e99894c3138f5fc8f2716d9fecf6`, with zero differing bytes.
+The unit is therefore marked Matching while retaining its verified -sym on
+configuration and private emission ownership reconstruction.
+
+Final all_source and source-selected normal builds pass; full report has no
+code/data regression. Compiler binaries are unchanged. Private evidence:
+`build/xcamera-round71-immutable.json`, `xcamera-round71-immutable-link.py`,
+corresponding link.json, linked.elf, report.json, and final-report.json.
+No behavioral tests, assembly, or compiler edits were used.

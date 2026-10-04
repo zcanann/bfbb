@@ -1502,7 +1502,6 @@ void xBinaryCamera::stop()
 }
 
 void xBinaryCamera::update(F32 dt)
-// NONMATCH("https://decomp.me/scratch/c9iST")
 {
     xVec3& A = camera->mat.pos;
     const xVec3& B = *s1;
@@ -1618,10 +1617,8 @@ void xBinaryCamera::update(F32 dt)
 
     F32 sloc = 1.0f - xexp(-cfg.move_speed * dt);
 
-    xVec3 cam_loc = { 0.0f, 0.0f, 0.0f };
-    cam_loc.x = xlerp(A.x, end_loc.x, sloc);
-    cam_loc.y = xlerp(A.y, end_loc.y, sloc);
-    cam_loc.z = xlerp(A.z, end_loc.z, sloc);
+    const xVec3 cam_loc = { xlerp(A.x, end_loc.x, sloc), xlerp(A.y, end_loc.y, sloc),
+                           xlerp(A.z, end_loc.z, sloc) };
 
     xVec3 heading = { 0.0f, 0.0f, 0.0f };
     heading.x = B.x - end_loc.x;
