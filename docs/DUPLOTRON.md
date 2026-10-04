@@ -14401,3 +14401,25 @@ All-source compilation and the normal retail link/check pass with DOL SHA1
 99bd18455ff674337d7a6186164df8a1b1ba13a7. iTRC remains NonMatching; this is
 not a source-selected link claim. Evidence: build/textbox112/, including the
 complete archive candidate, minimal candidate, reports and build logs.
+
+## Spline arc evaluation: separate search and segment indices (2026-10-04)
+
+The complete archived ArcEvalIterate candidate remains a gain under p1g.
+Keep a separate signed `segStart` for the segment's first arc sample instead
+of reusing the binary-search lower index, retain the recorded endpoint setup
+order, and express the unchanged refinement loop as a for loop. The readable
+version omits the archive's redundant cast and formatting changes. All
+coefficient/evaluation calls, stores, guards and loop behavior are preserved;
+the original spelling is not proven. This recovers retail's r8 search upper
+index, r7 sample count and r5 conversion bias, although endpoint conversion
+scheduling and other register differences remain.
+
+The full deduplicated report changes only ArcEvalIterate, 96.910995% to
+97.40838%, at the same 764 bytes. All non-fuzzy report fields, matched data,
+exact counts, other function scores and completion markers are unchanged.
+All-source compilation and the normal retail link/check pass with DOL SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6 and unchanged p1g SHA1
+99bd18455ff674337d7a6186164df8a1b1ba13a7. xSpline remains NonMatching; no
+source-selected link claim is made. Evidence: build/archive113/, including
+the remaining-candidate index, complete/readable candidate diffs, assembly,
+full reports and build logs.

@@ -460,9 +460,9 @@ F32 ArcEvalIterate(xSpline3* spl, F32 s, U32 deriv, xVec3* o, U32 iterations)
 {
     xCoef3* coef;
     xCoef3 tempCoef;
-    F32 umin;
     F32 umax;
     F32 smin;
+    F32 umin;
     F32 smax;
     F32 utest;
     F32 arctest;
@@ -470,9 +470,10 @@ F32 ArcEvalIterate(xSpline3* spl, F32 s, U32 deriv, xVec3* o, U32 iterations)
     S32 max;
     S32 test;
     S32 seg;
+    S32 segStart;
 
-    min = -1;
     max = spl->arcSample * spl->N - 1;
+    min = -1;
     while (min + 1 != max)
     {
         test = (min + max) >> 1;
@@ -487,13 +488,13 @@ F32 ArcEvalIterate(xSpline3* spl, F32 s, U32 deriv, xVec3* o, U32 iterations)
     }
 
     seg = max / (S32)spl->arcSample;
-    min = seg * spl->arcSample;
-    umin = (F32)(max - min) / (F32)spl->arcSample;
-    umax = (F32)((max + 1) - min) / (F32)spl->arcSample;
+    segStart = seg * spl->arcSample;
+    umax = (F32)((max + 1) - segStart) / (F32)spl->arcSample;
+    umin = (F32)(max - segStart) / (F32)spl->arcSample;
     smin = (max - 1 >= 0) ? spl->arcLength[max - 1] : 0.0f;
 
     smax = spl->arcLength[max];
-    utest = (min - 1 >= 0) ? spl->arcLength[min - 1] : 0.0f;
+    utest = (segStart - 1 >= 0) ? spl->arcLength[segStart - 1] : 0.0f;
     coef = CoefSeg3(spl, seg, &tempCoef);
 
     if (s <= smin)
@@ -510,9 +511,8 @@ F32 ArcEvalIterate(xSpline3* spl, F32 s, U32 deriv, xVec3* o, U32 iterations)
 
     s = s - utest;
     smin = smin - utest;
-    smax = smax - utest;
 
-    while (iterations != 0)
+    for (smax = smax - utest; iterations != 0; iterations -= 1)
     {
         utest = umin + 0.5f * (umax - umin);
         arctest = ArcLength3(coef, 0.0, utest);
@@ -526,7 +526,6 @@ F32 ArcEvalIterate(xSpline3* spl, F32 s, U32 deriv, xVec3* o, U32 iterations)
             umax = utest;
             smax = arctest;
         }
-        iterations -= 1;
     }
 
     if (0.0f == smax - smin)
