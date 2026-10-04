@@ -13672,3 +13672,42 @@ code/data regression. Compiler binaries are unchanged. Private evidence:
 `build/xcamera-round71-immutable.json`, `xcamera-round71-immutable-link.py`,
 corresponding link.json, linked.elf, report.json, and final-report.json.
 No behavioral tests, assembly, or compiler edits were used.
+
+### Player COMMON ownership: restore the debug buffer declaration (2026-10-03)
+
+A source-selected player link inflated gust_data from its genuine 36-byte
+COMMON definition to 1,036 bytes and still allocated every following COMMON
+object. Scanning all root object inputs found no other gust_data definition.
+The inflated size is exactly the sum of the eleven player COMMON objects,
+matching the documented first-COMMON linker bug in `docs/common_bss.md`.
+Retail's split object instead has a leading stripped
+__unknown_common_bss_symbol before gust_data.
+
+The missing source owner is evidenced directly: dwarf/SB/Game/zEntPlayer.cpp
+lines 6-7 lists global `char buffer[16]` before the player globals. Exact linked
+zUI and zVolume preserve the same leading declaration from their debug data.
+Restoring it in zEntPlayer makes that unused COMMON absorb the linker grouping
+behavior and then disappear from the linked ELF, preserving the real objects'
+sizes. This is a recovered declaration, not an invented padding object; no
+new reference or fabricated size is used.
+
+On published c6c145768, the isolated before/after source-selected links show:
+
+- gust_data: **1,036 -> 36 bytes**, at 0x803bf640 in both links.
+- gPlayerAbsMat: 0x803bfa4c -> 0x803bf664; later COMMON objects likewise
+  lose the erroneous 1,000-byte displacement.
+- BSS size: **1,123,056 -> 1,122,056 bytes**. The linked global buffer is absent.
+- DOL differences: **1,935,330 -> 1,934,872 bytes**; size remains 2,859,200
+  versus retail 2,859,136 because the separate player code/layout residue
+  still shifts the image. After this fix, player COMMON addresses retain only
+  that uniform +0x40 shift.
+- Source-selected DOL SHA-1:
+  `1ea86c30b428dd4b6e0d01d92e1fc6d951550063`.
+
+Full deduplicated reports are byte-for-byte identical before and after. All
+source files were freshly built after syncing the isolated branch; candidate
+all_source and restored normal builds pass. Normal retail SHA-1 remains
+`306526d90b48e99894c3138f5fc8f2716d9fecf6`; p1a/p1e compiler hashes are unchanged.
+Player stays NonMatching. Private reproduction: `build/player72-common-link.py`
+with `before`/`after` arguments, corresponding reports/link inventories and
+linked ELF/DOL files; `player71-gust-ownership-findings.md` records diagnosis.

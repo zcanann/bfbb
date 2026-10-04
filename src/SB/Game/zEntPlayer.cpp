@@ -77,6 +77,9 @@
 
 extern U32 gPTankDisable;
 
+// Retained from the debug globals; its declaration anchors the COMMON group.
+char buffer[16];
+
 static F32 sHackStuckTimer;
 static xVec3 sHackStuckDir;
 static xVec3 sHackStuckVel;
