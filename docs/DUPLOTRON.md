@@ -14185,3 +14185,24 @@ Evidence in the RGB worktree: build/expand84-shared-row-cursors.py and its
 private candidate/diff directory, expand84-baseline-report.json,
 expand84-candidate-report.json, expand84-{baseline,candidate}-build.log,
 expand84-verify.py and expand84-validation.json.
+
+
+### Doubled IDCT output-pass odd-pair rotation (2026-10-04)
+
+Compute the scaled odd-pair difference in a3 immediately after the pair
+sum is stored in row7, before the shared odd rotation. Both input sums are
+available at that point. All expressions, remaining scratch writes, packed
+output calculations and destination stores retain their order.
+
+Moving this calculation in both passes regresses to 83.29555%; isolating
+the passes shows first-pass-only 82.62348%, but output-pass-only improves
+fastidct8x8d from 85.23482% to 85.408905%. Only the output-pass change is
+retained, at unchanged source/retail 988-byte size. This is a small scheduling
+and operand-lifetime gain, not exact-function or TU closure.
+
+The full deduplicated report changes only fastidct8x8d and fuzzy aggregates.
+All other function records, exact code, data and completion measures are
+unchanged. all_source and normal link/check pass, retaining retail SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. No compiler or assembly changes.
+Evidence: build/dct85-odd-pair-{rotation,first_only,second_only} and
+build/parallel-eightyfifth-{report.json,verify.py,build.log}.
