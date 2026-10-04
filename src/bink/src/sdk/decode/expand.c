@@ -1090,15 +1090,15 @@ static inline void expand_pattern_row(u8 PTR4* dest, u32 pitch,
                                       READBUNDLE PTR4* patterns)
 {
     u32 row_bits;
-    u32 low_bits;
+    u32 low_offset;
     u32 low_word;
     u32 high_word;
 
     row_bits = *patterns->cur_ptr++;
-    low_bits = row_bits & HUFF4_SYMBOL_MASK;
+    low_offset = (row_bits * sizeof(u32)) & (HUFF4_SYMBOL_MASK * sizeof(u32));
     row_bits >>= HUFF4_NIBBLE_BITS;
-    low_word = (color0 & ((const u32 PTR4*)mask1)[low_bits]) |
-               (color1 & ((const u32 PTR4*)mask2)[low_bits]);
+    low_word = (color0 & *(const u32 PTR4*)(mask1 + low_offset)) |
+               (color1 & *(const u32 PTR4*)(mask2 + low_offset));
     high_word = (color0 & ((const u32 PTR4*)mask1)[row_bits]) |
                 (color1 & ((const u32 PTR4*)mask2)[row_bits]);
     BINK_BLOCK_ROW_WORD(dest, pitch, BINK_BLOCK_ROW_0, BINK_BLOCK_ROW_WORD_0) = low_word;

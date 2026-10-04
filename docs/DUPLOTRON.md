@@ -14573,3 +14573,33 @@ The three existing holdouts remain; the TU is not promoted to Matching.
 
 Evidence: build/isavegame127/{findings.json,date-functions.txt} and
 build/isavegame128/GQPP78-{unit.json,report.json,build.log}, PAL-validation.json.
+
+
+### Bink pattern lookup byte offset (round 136)
+
+ExpandPlane improves from 88.09601% to 88.40568% in all three full,
+deduplicated regional reports. The normal pattern-row helper now computes
+the low-nibble table byte offset by scaling the pattern byte before masking:
+`(row_bits * sizeof(u32)) & (HUFF4_SYMBOL_MASK * sizeof(u32))`.
+Both low-word mask loads use that offset. This selects exactly the same
+four-byte table entries for the unsigned input byte; the high nibble,
+color arithmetic, reads, and writes retain their existing behavior.
+
+Retail combines each low-nibble mask and scale into one clrlslwi. The old
+source emitted separate clrlwi/slwi instructions for all eight rows. The
+new expression recovers all eight combined instructions: clrlslwi count
+1 -> 9, clrlwi 28 -> 20, and slwi 31 -> 23, matching those retail counts.
+The function shrinks from 5900 to 5868 bytes versus retail5916. Raw score
+87.342125 -> 87.570656. The earlier round77 offset candidate masked before
+scaling; this candidate scales before masking. Original source spelling is
+unproven, but the correction is ordinary unsigned table-address arithmetic.
+No assembly, volatile, flags, or compiler patch is added.
+
+All-source compilation passes for USA, Europe, and Germany. Every full-report
+field outside fuzzy scores is identical, and ExpandPlane is the only changed
+function record. All three normal DOL SHA1 checks pass. Expand remains
+NonMatching, so these existing source selections do not prove a source-linked
+Bink decoder match. No exact-function or completed-TU gain is claimed.
+
+Evidence: build/expand136-shift-mask.py, its candidate and raw diff directory,
+build/expand136-baseline.json, and build/parallel-136-final-validation.json.
