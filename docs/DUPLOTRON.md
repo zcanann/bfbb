@@ -14423,3 +14423,26 @@ All-source compilation and the normal retail link/check pass with DOL SHA1
 source-selected link claim is made. Evidence: build/archive113/, including
 the remaining-candidate index, complete/readable candidate diffs, assembly,
 full reports and build logs.
+
+## Swept sphere: recover box-axis evaluation order (2026-10-04)
+
+The complete archived xSweptSphereToBox candidate recovers a small gain on
+current p1g. Only two moves among independent axis-component calculations
+are needed: evaluate aZx before aYz and aZz before aZy. The archived syntax
+and declaration changes were omitted after the smaller change reproduced
+the entire gain. Every expression, collision call, output store, guard and
+return remains unchanged. The change adjusts initial axis loads and their
+floating-point register assignments; it does not duplicate calculations.
+
+The authoritative full report changes only xSweptSphereToBox, 99.15849% to
+99.174835%, with source size unchanged at 2448 bytes. All non-fuzzy report
+fields, matched data, exact counts, other function scores and completion
+markers are unchanged. All-source compilation and the normal retail link/check
+pass with DOL SHA1 306526d90b48e99894c3138f5fc8f2716d9fecf6. xCollide remains
+NonMatching; this is not a source-selected link claim. No compiler changes,
+assembly, volatile accesses or behavioral tests were introduced. Evidence:
+build/swept114/ (complete archive and minimal candidate, private diffs,
+validation.json), plus build/swept114-{baseline,candidate}-report.json and
+build logs. Archive provenance is the complete gbest.json in scratchpad/cs/gp/
+xSweptSphereToBox__FP12xSweptSphereP4xBoxP7xMat4x3; no reduced body that drops
+calls was used.

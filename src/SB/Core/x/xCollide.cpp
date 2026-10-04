@@ -1651,10 +1651,10 @@ S32 xSweptSphereToBox(xSweptSphere* sws, xBox* box, xMat4x3* mat)
     aXz = dx * boxinvbasis->right.z;
     aYx = dy * boxinvbasis->up.x;
     aYy = dy * boxinvbasis->up.y;
-    aYz = dy * boxinvbasis->up.z;
     aZx = dz * boxinvbasis->at.x;
-    aZy = dz * boxinvbasis->at.y;
+    aYz = dy * boxinvbasis->up.z;
     aZz = dz * boxinvbasis->at.z;
+    aZy = dz * boxinvbasis->at.y;
     boxaX.x = aXx;
     boxaX.y = aXy;
     boxaX.z = aXz;
