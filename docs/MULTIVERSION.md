@@ -239,3 +239,10 @@ regional data bytes match; the eight shared code holdouts remain unchanged,
 so the unit stays outside the source-completion manifests. USA's allocated
 object sections and full report remain unchanged, and all three existing
 472-unit source selections still reproduce their complete retail DOLs.
+
+
+The fullscreen glare rectangle also uses 528 lines in PAL. Restoring that
+constant completes `xScrFx` data matching in both regions; its existing shared
+glare-render code holdout remains unchanged. Together with Sleepy's fixed
+50 Hz timer, these changes leave only Hazard's known inline-pool discrepancy
+and Bink audio's alignment-tail accounting as additional regional data gaps.

@@ -6,6 +6,12 @@
 #include "zGlobals.h"
 #include "xstransvc.h"
 
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+enum { SCRFX_SCREEN_HEIGHT = 528 };
+#else
+enum { SCRFX_SCREEN_HEIGHT = 480 };
+#endif
+
 struct _xFadeData
 {
     S32 active;
@@ -456,7 +462,7 @@ void xScrFXFullScreenGlareRender()
     RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)rwBLENDSRCALPHA);
     RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDONE);
 
-    xScrFxDrawBox(0.0f, 0.0f, 640.0f, 480.0f, color.red, color.green, color.blue, color.alpha, dp, 0.0f);
+    xScrFxDrawBox(0.0f, 0.0f, 640.0f, (F32)SCRFX_SCREEN_HEIGHT, color.red, color.green, color.blue, color.alpha, dp, 0.0f);
 }
 
 void xScrFXGlareRender(xCamera* cam)
