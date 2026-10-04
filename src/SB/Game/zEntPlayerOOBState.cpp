@@ -44,6 +44,12 @@ void __deadstripped_zEntPlayerOOBState2()
 }
 
 
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+#define OOB_SCREEN_HEIGHT 528.0f
+#else
+#define OOB_SCREEN_HEIGHT 480.0f
+#endif
+
 namespace oob_state
 {
     namespace
@@ -191,7 +197,7 @@ namespace oob_state
             xVec3 localCoords;
             xMat4x3Tolocal(&localCoords, &camMat, &loc);
 
-            loc += camMat.right * x * localCoords.z * (4.0f / 3.0f);
+            loc += camMat.right * x * localCoords.z * (640.0f / OOB_SCREEN_HEIGHT);
         }
 
         static void update_max_out_time(const xSurface& surface)
@@ -254,7 +260,7 @@ namespace oob_state
             F32 rcz = RwIm2DGetFarScreenZ();
 
             RwIm2DVertex vert[4];
-            set_rect_verts((rwGameCube2DVertex*)vert, 0.0f, 0.0f, 640.0f, 480.0f, color, rcz, nsz);
+            set_rect_verts((rwGameCube2DVertex*)vert, 0.0f, 0.0f, 640.0f, OOB_SCREEN_HEIGHT, color, rcz, nsz);
             RwIm2DRenderPrimitive(rwPRIMTYPETRISTRIP, (RwIm2DVertex*)vert, 4);
         }
 

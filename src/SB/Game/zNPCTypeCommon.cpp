@@ -1,3 +1,9 @@
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+#define NPC_FRAME_TIME (1.0f / 50.0f)
+#else
+#define NPC_FRAME_TIME (1.0f / 60.0f)
+#endif
+
 #include "zNPCTypeCommon.h"
 
 #include <stdio.h>
@@ -2882,15 +2888,15 @@ void zNPCCommon::Vibrate(en_npcvibe vibe, F32 duration)
     switch (vibe)
     {
     case NPC_VIBE_BUILD_A:
-        tym_rum = 0.050000004f;
+        tym_rum = 3.0f * NPC_FRAME_TIME;
         typ_rum = eRumble_Light;
         break;
     case NPC_VIBE_BUILD_B:
-        tym_rum = 0.050000004f;
+        tym_rum = 3.0f * NPC_FRAME_TIME;
         typ_rum = eRumble_Medium;
         break;
     case NPC_VIBE_BUILD_C:
-        tym_rum = 0.050000004f;
+        tym_rum = 3.0f * NPC_FRAME_TIME;
         typ_rum = eRumble_Heavy;
         break;
     case NPC_VIBE_SOFT:

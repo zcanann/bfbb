@@ -11,6 +11,12 @@
 
 #include "xMath.h"
 
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+#define SURFACE_FRAME_TIME (1.0f / 50.0f)
+#else
+#define SURFACE_FRAME_TIME (1.0f / 60.0f)
+#endif
+
 #define MAX_MAPPER 1
 
 static zSurfaceProps* zsps;
@@ -389,10 +395,10 @@ void zSurfaceUpdate(xBase* to, xScene* sc, F32 dt)
             }
             case 1:
             {
-                moprops->uvfx[j].trans.x = isin(2.0f * gFrameCount * (1.0f/60));
-                moprops->uvfx[j].trans.y = isin(2.0f * gFrameCount * (1.0f/60));
-                moprops->uvfx[j].scale.x = isin(2.0f * gFrameCount * (1.0f/60));
-                moprops->uvfx[j].scale.y = isin(2.0f * gFrameCount * (1.0f/60));
+                moprops->uvfx[j].trans.x = isin(2.0f * gFrameCount * SURFACE_FRAME_TIME);
+                moprops->uvfx[j].trans.y = isin(2.0f * gFrameCount * SURFACE_FRAME_TIME);
+                moprops->uvfx[j].scale.x = isin(2.0f * gFrameCount * SURFACE_FRAME_TIME);
+                moprops->uvfx[j].scale.y = isin(2.0f * gFrameCount * SURFACE_FRAME_TIME);
                 break;
             }
             case 2:

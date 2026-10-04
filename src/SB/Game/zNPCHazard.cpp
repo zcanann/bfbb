@@ -1,3 +1,9 @@
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+#define NPC_FRAME_TIME (1.0f / 50.0f)
+#else
+#define NPC_FRAME_TIME (1.0f / 60.0f)
+#endif
+
 #include "zNPCHazard.h"
 
 #include <types.h>
@@ -652,7 +658,7 @@ S32 NPCHazard::ConfigHelper(en_npchaz haztype)
         this->custdata.typical.rad_max = 5.0f;
         this->custdata.typical.rad_cur = this->custdata.typical.rad_min;
 
-        ang_spin.x = 0.016666668f * ((xrand() & 0x800000) ? 3.1415927f : -0.78539819f);
+        ang_spin.x = NPC_FRAME_TIME * ((xrand() & 0x800000) ? 3.1415927f : -0.78539819f);
         ang_spin.y = ang_spin.z = 0.0f;
         this->TypData_RotMatStore(&ang_spin);
         break;
@@ -671,7 +677,7 @@ S32 NPCHazard::ConfigHelper(en_npchaz haztype)
         this->custdata.typical.rad_max = 5.0f;
         this->custdata.typical.rad_cur = this->custdata.typical.rad_min;
 
-        ang_spin.x = 0.016666668f * ((xrand() & 0x800000) ? 3.1415927f : -0.78539819f);
+        ang_spin.x = NPC_FRAME_TIME * ((xrand() & 0x800000) ? 3.1415927f : -0.78539819f);
         ang_spin.y = ang_spin.z = 0.0f;
         this->TypData_RotMatStore(&ang_spin);
         break;
@@ -792,7 +798,7 @@ S32 NPCHazard::ConfigHelper(en_npchaz haztype)
         this->custdata.typical.rad_max = 1.0f;
         this->custdata.typical.rad_cur = this->custdata.typical.rad_min;
 
-        ang_spin.x = 0.016666668f * ((xrand() & 0x800000) ? 12.566371f : -12.566371f);
+        ang_spin.x = NPC_FRAME_TIME * ((xrand() & 0x800000) ? 12.566371f : -12.566371f);
         ang_spin.y = ang_spin.z = 0.0f;
         this->TypData_RotMatStore(&ang_spin);
         this->custdata.collide.flg_collide |= 7;
@@ -894,7 +900,7 @@ S32 NPCHazard::ConfigHelper(en_npchaz haztype)
         this->custdata.typical.rad_cur = this->custdata.typical.rad_min;
         xVec3Copy(&this->custdata.cloud.pos_home, &g_O3);
 
-        ang_spin.x = 0.016666668f * ((xrand() & 0x800000) ? 0.78539819f : -0.78539819f);
+        ang_spin.x = NPC_FRAME_TIME * ((xrand() & 0x800000) ? 0.78539819f : -0.78539819f);
         ang_spin.y = ang_spin.z = 0.0f;
         this->TypData_RotMatStore(&ang_spin);
         break;
@@ -933,7 +939,7 @@ S32 NPCHazard::ConfigHelper(en_npchaz haztype)
         ang_spin.x *= 2.0f * (xurand() - 0.5f);
         ang_spin.y *= 2.0f * (xurand() - 0.5f);
         ang_spin.z *= 2.0f * (xurand() - 0.5f);
-        ang_spin *= 0.016666668f;
+        ang_spin *= NPC_FRAME_TIME;
         this->TypData_RotMatStore(&ang_spin);
         break;
     }
@@ -1813,7 +1819,7 @@ void NPCHazard::TypData_RotMatStore(xVec3* euler)
         ang_spin.x = 12.566371f * (2.0f * (xurand() - 0.5f));
         ang_spin.y = 0.78539819f * (2.0f * (xurand() - 0.5f));
         ang_spin.z = 12.566371f * (2.0f * (xurand() - 0.5f));
-        xVec3SMulBy(&ang_spin, 0.016666668f);
+        xVec3SMulBy(&ang_spin, NPC_FRAME_TIME);
         xMat3x3Euler(mat_spin, &ang_spin);
     }
 
@@ -1992,9 +1998,9 @@ void NPCHazard::StagColGeneral(S32 who)
     xParabola* parab = &this->custdata.collide.parabinfo;
     F32 tym_used = this->tym_lifespan - this->tmr_remain;
     F32 tym_beg = MIN(tym_used, this->tym_lifespan);
-    F32 tym_end = MIN(0.5f + tym_beg, this->tym_lifespan);
+    F32 tym_end = MIN(30.0f * NPC_FRAME_TIME + tym_beg, this->tym_lifespan);
 
-    tym_end += 0.016666668f;
+    tym_end += NPC_FRAME_TIME;
     xVec3 pos_beg = this->pos_hazard;
     xVec3 pos_end;
     xSweptSphere swdata;

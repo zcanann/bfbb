@@ -50,7 +50,11 @@ namespace
         xfont::set_render_state(e.bgtex);
 
         basic_rect<F32> r = e.tb.font.clip;
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+        r.scale(640.0f, 528.0f);
+#else
         r.scale(640.0f, 480.0f);
+#endif
 
         set_vert(vert[0], r.x, r.y, 0.0f, 0.0f, c, nsz, rcz);
         set_vert(vert[1], r.x, r.y + r.h, 0.0f, 1.0f, c, nsz, rcz);

@@ -173,3 +173,24 @@ unselected. Only these two units change in the full PAL report, with no losses.
 All three full source builds and strict retail SHA-1 checks pass. The complete
 USA report is unchanged. Verification artifacts are under
 `build/regional131/` in the RGB worktree.
+
+## Remaining NPC timing and complete surface/OOB units
+
+Original relocation users establish three further regional timing differences:
+NPC vibration lasts three fixed frames, hazard spin/collision updates use the
+regional frame period, and Dutchman's particle rates use its reciprocal.
+Hazard's collision lookahead is thirty frames; the PAL product rounds to
+`0.599999964f`, not the separate `0.6f` literal already used elsewhere.
+
+The corrected Common and Dutchman units now have fully matching regional data.
+Hazard's small-data section improves from 97.39884% to 98.85057%; its existing
+unused `xsqrt` literal/alignment residue remains. These three units retain
+shared code holdouts and are not promoted merely because timing data improved.
+
+Surface oscillation uses 1/50-second frame counts in PAL. Textbox backgrounds
+and the OOB fade use 528 screen lines, and OOB horizontal motion uses the
+corresponding `640.0f / 528.0f` aspect ratio. `zSurface`, `zTextBox`, and
+`zEntPlayerOOBState` now have fully matching code and data; all three together
+with the previous 456-unit selection reproduce both complete regional DOLs.
+All six changes leave USA allocated object sections and its full report
+unchanged; its source-selected retail DOL also remains exact.

@@ -1,3 +1,9 @@
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+#define NPC_FRAME_TIME (1.0f / 50.0f)
+#else
+#define NPC_FRAME_TIME (1.0f / 60.0f)
+#endif
+
 #include "xVec3.h"
 #include "xMath3.h"
 #include "xMathInlines.h"
@@ -550,7 +556,7 @@ void zNPCDutchman::Reset()
     light_emitter = zParEmitterFind("PAREMIT_DUTCHMAN_LIGHT");
     light_emitter_settings.custom_flags = 0x110;
     light_emitter_settings.pos = g_O3;
-    light_emitter_settings.rate.set(119.99999f * tweak.beam.light_rate);
+    light_emitter_settings.rate.set((2.0f / NPC_FRAME_TIME) * tweak.beam.light_rate);
 
     eyeglow_emitter[0] = zParEmitterFind("PAREMIT_DUTCHMAN_EYEGLOW0");
     eyeglow_emitter[1] = zParEmitterFind("PAREMIT_DUTCHMAN_EYEGLOW1");
@@ -564,7 +570,7 @@ void zNPCDutchman::Reset()
     flame_emitter[2] = zParEmitterFind("PAREMIT_DUTCHMAN_FLAME_SPRAY");
     flame_emitter_settings.custom_flags = 0x110;
     flame_emitter_settings.pos = g_O3;
-    flame_emitter_settings.rate.set(59.999996f);
+    flame_emitter_settings.rate.set((1.0f / NPC_FRAME_TIME));
 
     snot_emitter = zParEmitterFind("PAREMIT_DUTCHMAN_FLAME_SNOT");
     snot_emitter_settings.custom_flags = 0x300;
@@ -1865,7 +1871,7 @@ void zNPCDutchman::update_wave(zNPCDutchman::wave_data& wave, F32 dt)
 
             flame_emitter_settings.pos = wave.loc + wave.dir * dist0 + tan * dist1;
 
-            emit_particles(*flame_emitter[i], 1.0f / 60.0f, flame_emitter_settings);
+            emit_particles(*flame_emitter[i], NPC_FRAME_TIME, flame_emitter_settings);
 
             wave.emitted[i]++;
         }
@@ -3325,8 +3331,8 @@ void zNPCGoalDutchmanBeam::add_blast_effects(S32 which, F32 dt)
     owner.emit_particles(*spark_emitter, dt, spark_emitter_settings);
 
     light_emitter_settings.pos = beam[which].loc;
-    light_emitter_settings.rate.set(119.99999f * tweak.beam.light_rate);
-    owner.emit_particles(*light_emitter, 1.0f / 60.0f, light_emitter_settings);
+    light_emitter_settings.rate.set((2.0f / NPC_FRAME_TIME) * tweak.beam.light_rate);
+    owner.emit_particles(*light_emitter, NPC_FRAME_TIME, light_emitter_settings);
 }
 
 void zNPCGoalDutchmanBeam::add_effects(S32 which, F32 dt)
