@@ -644,11 +644,15 @@ RpMaterial* MaterialSetEnvMap(RpMaterial* material, void* data)
 
 RpMaterial* MaterialSetEnvMap2(RpMaterial* material, void* data)
 {
+    char* textureName;
+    RwTexture* texture;
+    RwFrame* frame;
+
     if (material->texture != NULL)
     {
-        RwTexture* texture = (RwTexture*)data;
-        RwFrame* frame;
-        if (RwEngineInstance->stringFuncs.vecStrcmp(texture->name, "spec3") == 0)
+        texture = (RwTexture*)data;
+        textureName = texture->name;
+        if (rwstrcmp(textureName, "spec3") == 0)
         {
             frame = (RwFrame*)globals.camera.lo_cam->object.object.parent;
         }

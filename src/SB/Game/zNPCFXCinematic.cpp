@@ -2559,49 +2559,48 @@ static void NCIN_SleepyDRay_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 killi
 static void NCIN_SleepyDRay_AR(const zCutsceneMgr* csnmgr, NCINEntry* fxrec, RpAtomic*,
                         RwMatrixTag* animMat, U32 animIndex, U32 dataIndex)
 {
-    xVec3 pos_trail;
-
     if (animIndex == 0)
     {
-        const xVec3* pos_beam = &fxrec->pos_A[0];
+        xMat4x3* mat_root = (xMat4x3*)animMat;
+        xVec3* pos_orig = &fxrec->pos_A[0];
 
         for (S32 i = 0; i < 6; i++)
         {
-            LERP(i / 6.0f, &pos_trail, pos_beam, (const xVec3*)&animMat->pos);
-            zFX_SpawnBubbleTrail(&pos_trail, 4);
+            F32 rat = i / 6.0f;
+            xVec3 pos_emit;
+
+            LERP(rat, &pos_emit, pos_orig, &mat_root->pos);
+            zFX_SpawnBubbleTrail(&pos_emit, 4);
         }
 
-        zFX_SpawnBubbleTrail((const xVec3*)&animMat->pos, 4);
-        return;
+        zFX_SpawnBubbleTrail(&mat_root->pos, 4);
     }
-
-    if (animIndex != 2)
+    else if (animIndex == 2)
     {
-        return;
+        xMat4x3* mat_root = (xMat4x3*)animMat;
+        xVec3 pos_dray = ((xMat4x3*)&animMat[16])->pos + mat_root->pos;
+
+        const RwRGBA rgba_top = { 255, 255, 255, 255 };
+        const RwRGBA rgba_bot = { 255, 255, 255, 255 };
+
+        static const F32 uv_scroll_dray[2] = { 0.0f, -4.55f };
+        static const F32 uv_slice_dray[2] = { 0.25f, 0.25f };
+
+        F32 tym_instate = csnmgr->csn->Time - fxrec->tym_beg;
+        F32 uv_v = tym_instate * uv_scroll_dray[1];
+        F32 uv_u = tym_instate * uv_scroll_dray[0];
+
+        NPCCone conedata;
+
+        memset(&conedata, 0, sizeof(NPCCone));
+
+        conedata.RadiusSet(0.5f);
+        conedata.ColorSet(rgba_top, rgba_bot);
+        conedata.UVBaseSet(uv_u, uv_v);
+        conedata.UVSliceSet(uv_slice_dray[0], uv_slice_dray[1]);
+        conedata.TextureSet(fxrec->fxdata.draydata.rast);
+        conedata.RenderCone(&pos_dray, &fxrec->pos_A[0]);
     }
-
-    xVec3 pos_top = *(const xVec3*)&animMat[16].pos + *(const xVec3*)&animMat->pos;
-
-    const RwRGBA rgba_top = { 255, 255, 255, 255 };
-    const RwRGBA rgba_bot = { 255, 255, 255, 255 };
-
-    static const F32 uv_scroll_dray[2] = { 0.0f, -4.55f };
-    static const F32 uv_slice_dray[2] = { 0.25f, 0.25f };
-
-    F32 tym = csnmgr->csn->Time - fxrec->tym_beg;
-    F32 uv_v = tym * uv_scroll_dray[1];
-    F32 uv_u = tym * uv_scroll_dray[0];
-
-    NPCCone cone;
-
-    memset(&cone, 0, sizeof(NPCCone));
-
-    cone.RadiusSet(0.5f);
-    cone.ColorSet(rgba_top, rgba_bot);
-    cone.UVBaseSet(uv_u, uv_v);
-    cone.UVSliceSet(uv_slice_dray[0], uv_slice_dray[1]);
-    cone.TextureSet(fxrec->fxdata.draydata.rast);
-    cone.RenderCone(&pos_top, &fxrec->pos_A[0]);
 }
 
 static void NCIN_MaryBoom(const zCutsceneMgr*, NCINEntry* fxrec, S32 killit)

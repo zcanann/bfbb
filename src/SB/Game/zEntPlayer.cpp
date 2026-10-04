@@ -2958,6 +2958,9 @@ namespace
 // WIP, not equivalent
 void zEntPlayerSpeakStart(U32 sndid, U32, S32 anim)
 {
+    U8 filter_size;
+    U32 which;
+
     zEntPlayerSpeakStop();
 
     player_talk.data = xJaw_FindData(sndid);
@@ -2967,10 +2970,10 @@ void zEntPlayerSpeakStart(U32 sndid, U32, S32 anim)
         player_talk.time = 0.0f;
         if (anim < 0 || anim >= globals.player.s->talk_anims)
         {
-            U8 filter_size;
             U8* filter = globals.player.s->talk_filter;
             filter_size = globals.player.s->talk_filter_size;
-            player_talk.anim = filter[(xrand() >> 13) % filter_size];
+            which = (xrand() >> 13) % filter_size;
+            player_talk.anim = filter[which];
         }
         else
         {

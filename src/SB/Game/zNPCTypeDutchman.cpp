@@ -1692,16 +1692,16 @@ inline bool zNPCDutchman::turning() const
 
 void zNPCDutchman::update_turn(F32 dt)
 {
-    get_center();
-
-    RwMatrix* mat = model->Mat;
-    const xVec2 facing = { mat->at.x, mat->at.z };
+    const xVec3& loc3 = get_center();
+    const xVec3& start3 = (const xVec3&)model->Mat->at;
+    xVec2 loc = { loc3.x, loc3.z };
+    xVec2 start_dir = { start3.x, start3.z };
 
     if (turning())
     {
-        F32 cur = xatan2(facing.x, facing.y);
-        F32 target = xatan2(turn.dir.x, turn.dir.y);
-        F32 diff = target - cur;
+        F32 start = xatan2(start_dir.x, start_dir.y);
+        F32 end = xatan2(turn.dir.x, turn.dir.y);
+        F32 diff = end - start;
 
         if (diff > PI)
         {
@@ -1712,11 +1712,10 @@ void zNPCDutchman::update_turn(F32 dt)
             diff += 2.0f * PI;
         }
 
-        F32 angle = cur;
+        F32 yaw = start;
+        xAccelMove(yaw, turn.vel, turn.accel, dt, yaw + diff, turn.max_vel);
 
-        xAccelMove(angle, turn.vel, turn.accel, dt, angle + diff, turn.max_vel);
-
-        set_yaw_matrix(frame->mat, angle);
+        set_yaw_matrix(frame->mat, yaw);
     }
 }
 

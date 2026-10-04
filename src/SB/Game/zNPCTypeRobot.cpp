@@ -2533,7 +2533,8 @@ void zNPCFodBzzt::DiscoUpdate(F32 dt)
         tmr_discoLight = MAX(-1.0f, tmr_discoLight - dt);
     }
 
-    rgba_discoLight.alpha = (U8)(255.0f * (MAX(0.0f, tmr_discoLight) / 0.75f));
+    F32 rat = MAX(0.0f, tmr_discoLight) / 0.75f;
+    rgba_discoLight.alpha = (U8)(255.0f * rat);
 
     uv_discoLight[0] += dt * uv_scroll_discoLight[0];
     uv_discoLight[1] += dt * uv_scroll_discoLight[1];

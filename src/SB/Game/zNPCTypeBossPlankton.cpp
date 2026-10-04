@@ -1699,29 +1699,29 @@ namespace
 
 void zNPCBPlankton::update_turn(F32 dt)
 {
-    location();
-
-    RwMatrix* mat = model->Mat;
-    const xVec2 at = { mat->at.x, mat->at.z };
+    xVec3& loc3 = location();
+    xVec3& start3 = (xVec3&)model->Mat->at;
+    xVec2 loc = { loc3.x, loc3.z };
+    xVec2 start_dir = { start3.x, start3.z };
 
     if (turning())
     {
-        F32 cur_yaw = xatan2(at.x, at.y);
-        F32 target_yaw = xatan2(turn.dir.x, turn.dir.y);
-        F32 diff = target_yaw - cur_yaw;
+        F32 start = xatan2(start_dir.x, start_dir.y);
+        F32 end = xatan2(turn.dir.x, turn.dir.y);
+        F32 diff = end - start;
 
         if (diff > PI)
         {
-            diff -= 6.2831855f;
+            diff -= 2.0f * PI;
         }
         else if (diff < -PI)
         {
-            diff += 6.2831855f;
+            diff += 2.0f * PI;
         }
 
-        F32 new_yaw = cur_yaw;
-        xAccelMove(new_yaw, turn.vel, turn.accel, dt, new_yaw + diff, turn.max_vel);
-        set_yaw_matrix(frame->mat, new_yaw);
+        F32 yaw = start;
+        xAccelMove(yaw, turn.vel, turn.accel, dt, yaw + diff, turn.max_vel);
+        set_yaw_matrix(frame->mat, yaw);
     }
 }
 
