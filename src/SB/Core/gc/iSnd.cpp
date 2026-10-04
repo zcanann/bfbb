@@ -355,6 +355,10 @@ static void iSndMyAXFree(AXVPB**);
 static void fcb()
 {
     U32 source;
+    U32 flags_bit_12;
+    U32 flags_bit_10;
+    U32 flags_bit_13;
+    U32 flags_bit_9;
 
     if (!soundInited && iTRCDisk::IsDiskIDed())
     {
@@ -521,10 +525,6 @@ static void fcb()
                 source = streams[i].source_b;
             }
 
-            U32 flags_bit_12;
-            U32 flags_bit_10;
-            U32 flags_bit_13;
-            U32 flags_bit_9;
             flags_bit_9 = orig_flags & 0x200;
             flags_bit_12 = orig_flags & 0x1000;
             flags_bit_10 = orig_flags & 0x400;
@@ -1340,8 +1340,8 @@ S32 iSndPlayMemStream(xSndVoiceInfo* vp)
     F32 ratio = std::powf(2.0f, vp->pitch / 12.0f);
     F32 srcRatio = (s->hdr.sample_rate * ratio) / 32000.0f;
 
-    s->vinf.voice->pb.src.ratioHi = (S32)srcRatio;
-    s->vinf.voice->pb.src.ratioLo = (S32)(65536.0f * srcRatio);
+    s->vinf.voice->pb.src.ratioHi = srcRatio;
+    s->vinf.voice->pb.src.ratioLo = 65536.0f * srcRatio;
     s->vinf.voice->sync |= 0x80000000;
 
     streams[i].vinf.x14 = 0x7fffffff;
@@ -1411,8 +1411,8 @@ S32 iSndPlayStream(xSndVoiceInfo* vp)
         F32 ratio = std::powf(2.0f, vp->pitch / 12.0f);
         F32 srcRatio = (s->hdr.sample_rate * ratio) / 32000.0f;
 
-        s->vinf.voice->pb.src.ratioHi = (S32)srcRatio;
-        s->vinf.voice->pb.src.ratioLo = (S32)(65536.0f * srcRatio);
+        s->vinf.voice->pb.src.ratioHi = srcRatio;
+        s->vinf.voice->pb.src.ratioLo = 65536.0f * srcRatio;
         s->vinf.voice->sync |= 0x80000000;
 
         streams[i].vinf.x14 = 0x7fffffff;
@@ -1443,21 +1443,26 @@ S32 iSndPlaySound(xSndVoiceInfo* vp)
         sound_stream = 0;
     }
 
-    U32 prio = vp->priority;
-    S32 i = vp - gSnd.voice;
+    vinfo* v;
+    S32 i;
+    U32 prio;
+    S32 j;
+
+    prio = vp->priority;
+    i = vp - gSnd.voice;
 
     if (prio >= 0xff)
     {
         prio = 0xff;
     }
 
-    S32 j = i - 6;
-    vinfo* v = &voices[j];
+    j = i - 6;
+    v = &voices[j];
     prio >>= 3;
 
     if (v->voice == NULL)
     {
-        v->aid = vp->assetID;
+        voices[j].aid = vp->assetID;
         v->xc = 1000.0f * snd.hdr.num_samples;
         v->xc = v->xc / snd.hdr.sample_rate;
 

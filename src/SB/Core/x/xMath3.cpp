@@ -728,10 +728,14 @@ void xQuatSlerp(xQuat* o, const xQuat* a, const xQuat* b, F32 t)
 void xQuatMul(xQuat* o, const xQuat* a, const xQuat* b)
 
 {
-    o->v.x = a->s * b->v.x + a->v.x * b->s + a->v.y * b->v.z - a->v.z * b->v.y;
-    o->v.y = a->s * b->v.y + a->v.y * b->s + a->v.z * b->v.x - a->v.x * b->v.z;
-    o->v.z = a->s * b->v.z + a->v.z * b->s + a->v.x * b->v.y - a->v.y * b->v.x;
-    o->s = a->s * b->s - a->v.x * b->v.x - a->v.y * b->v.y - a->v.z * b->v.z;
+    F32 s = a->s * b->s - a->v.x * b->v.x - a->v.y * b->v.y - a->v.z * b->v.z;
+    F32 x = a->s * b->v.x + a->v.x * b->s + a->v.y * b->v.z - a->v.z * b->v.y;
+    F32 y = a->s * b->v.y + a->v.y * b->s + a->v.z * b->v.x - a->v.x * b->v.z;
+    F32 z = a->s * b->v.z + a->v.z * b->s + a->v.x * b->v.y - a->v.y * b->v.x;
+    o->v.x = x;
+    o->v.y = y;
+    o->v.z = z;
+    o->s = s;
     xQuatNormalize(o, o);
     return;
 }

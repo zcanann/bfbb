@@ -170,8 +170,8 @@ static U8 _xCheckAnimNameInner(const char* name, const char* pattern, S32 patter
             {
                 memcpy(extra, startExtra, length);
                 extra[length] = NULL;
-                extra = extra + length;
-                *++extra = '\x01';
+                extra += length + 1;
+                *extra = '\x01';
             }
             startExtra = NULL;
             patternCurrent++;

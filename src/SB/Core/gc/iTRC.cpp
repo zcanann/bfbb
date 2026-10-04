@@ -315,7 +315,7 @@ void ROMFont::DrawTextBox(S32 x, S32 y, S32 width, S32 height, char* str)
             }
             DrawString(cursor_x, cursor_y, word);
             word = strtok(NULL, " ");
-            cursor_x += tokWidth + baseWidth;
+            cursor_x += baseWidth + tokWidth;
         }
         RenderEnd();
     }
