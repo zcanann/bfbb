@@ -14277,3 +14277,28 @@ for this unit, so this is partial source progress rather than source-link closur
 
 Evidence in the RGB worktree: build/bink103-{baseline,candidate}-report.json,
 matching build logs, bink103-validation.json, and binkread103-doframe-private/.
+
+
+## Skinning model-bone pointer boundary (2026-10-04)
+
+`SkinXformVertAndNormal` now names the selected model matrix, advances that
+pointer past the root matrix, and passes it to the existing `xMat4x3Mul`.
+This is the same `mat[bi + 1]` input. It recovers retail's six-instruction
+call setup: scale the bone index, add it to each matrix base, then advance
+the model pointer by one matrix before the call. The previous expression
+combined the index and root offset before adding the model base.
+
+The full deduplicated score improves from 91.766914% to 93.646614%, at the
+same 532 bytes. The remaining differences include entry scheduling and the
+mask/done/weight-cursor register roles. Exactly this function's score changes;
+all non-fuzzy report fields, data totals, exact-function counts and other
+function scores are unchanged. All-source compilation and the normal retail
+link/check pass, with DOL SHA1 306526d90b48e99894c3138f5fc8f2716d9fecf6.
+The unit remains NonMatching; this normal link does not establish an exact
+source-selected DOL. No compiler changes, assembly or behavioral tests were
+introduced. Isolated evidence is under build/cutscene107/.
+
+The preceding cutscene/camera audit retained no changes: FinishLoad and
+FinishExit still differ in incoming/derived pointer storage and address
+rematerialization; FlyStart retains its documented TOCINFO load-order residue.
+Their existing aggregate/reference/helper controls were not repeated.

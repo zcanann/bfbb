@@ -1465,7 +1465,9 @@ namespace
                 U32 bi = b & 0xff;
                 if (!(mask & done[word]))
                 {
-                    xMat4x3Mul(&scratch[bi], &bone_mats[bi], &mat[bi] + 1);
+                    const xMat4x3* model_bone = &mat[bi];
+                    model_bone++;
+                    xMat4x3Mul(&scratch[bi], &bone_mats[bi], model_bone);
                     done[word] |= mask;
                 }
             }
