@@ -599,7 +599,7 @@ RpAtomic* zFXGooRenderAtomic(class RpAtomic* atomic)
         }
 
         RpTriangle* tri = geom->triangles;
-        for (i = 0; i < geom->numTriangles; i++, tri++)
+        for (i = 0; i < geom->numTriangles; numVerts += 3, i++, tri++)
         {
             if (numVerts > 0x1dd)
             {
@@ -619,7 +619,6 @@ RpAtomic* zFXGooRenderAtomic(class RpAtomic* atomic)
             a += refPos;
             b += refPos;
             c += refPos;
-            numVerts += 3;
 
             F32 ax = a.x;
             F32 ay = 0.02f + a.y;
