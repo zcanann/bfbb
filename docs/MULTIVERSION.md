@@ -99,3 +99,9 @@ a Robo-only substitution into otherwise extracted objects encounters a duplicate
 `__fpclassifyf`; the normal selection already uses the source `math_ppc` object
 and coalesces those helper definitions correctly. Both regional manifests now
 include 446 units, with unchanged full retail checksums.
+
+Regional `zMain` uses 528-line startup/save-card cameras and a 50 Hz vertical
+blank rate (including the three-second startup delay and pad timestep). These
+constants recover all three regional code holdouts and the data pool. The full
+source selection including `zMain` reproduces both retail DOLs exactly; USA
+keeps its 480-line/60 Hz behavior and its entire progress report is unchanged.
