@@ -1,6 +1,9 @@
 """cc.py <file.c> [symbol] : compile a scratch C file with the babintex RW flags, print disassembly."""
 import os as _os
-_REPO = _os.path.dirname(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))).replace("\\", "/")
+import sys as _sys
+_sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
+import ra_common
+_REPO = ra_common.ROOT
 import sys, os, subprocess, shlex, tempfile, re
 ROOT = _REPO
 sys.path.insert(0, ROOT + "/tools")

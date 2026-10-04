@@ -45,7 +45,7 @@ chosen, symname = ra_common.resolve(caps, None if sym else fn, sym, idx, data)
 cc = [x for x in chosen if x['cls'] == cls]
 if not cc:
     raise SystemExit('no class-%d capture for %s' % (cls, symname))
-c = cc[0]
+c = cc[-1]  # the last colouring round (earlier ones spilled)
 N = {int(k): v for k, v in c['nodes'].items()}
 pref = 'r' if cls == 4 else 'f'
 

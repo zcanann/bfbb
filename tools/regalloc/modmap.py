@@ -2,7 +2,8 @@
 import os, re, struct, sys, bisect
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from pe import PE
-ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import ra_common
+ROOT = ra_common.ROOT
 p = PE(os.path.join(ROOT, 'build/compilers/GC/2.0p1a/mwcceppc.exe'))
 b = p.b
 tb, t = p.text()

@@ -92,3 +92,19 @@ python tools/regalloc/diag.py src/SB/Game/zNPCSupport.cpp SB/Game/zNPCSupport Re
 - The capture runs the compiler directly (not through sjiswrap), so a source with non-ASCII
   (Shift-JIS) text may not compile identically; on a compile failure rcap re-runs the command and
   prints the compiler's diagnostics.
+
+## Corpus and allocator-model tests (added)
+
+- `corpus.py residues res.json... --out DIR` captures every REG-shaped residue of a
+  `tools/residue.py --json` dump (`diag.py --capture-only`: graph, target colours, replay check).
+  `corpus.py controls UNIT... --out DIR` captures every function of whole units (`rcap.py`).
+- `ordmodel.py --res DIR --ctl DIR [-v]` replays alternative simplify/spill/select/numbering
+  rules on both corpora. It counts residues fixed and matched controls broken. Spilling functions
+  are replayed round by round, and each earlier round must reproduce its failed set.
+- Spill support: `rcap.py` now records the real spill cost (`IGNode+0xc`; `+8` was read before)
+  and the no-spill mark (`0x5e0898`). `replay.simplify` uses both, so the spill pick is exact.
+  `diag.py` and `tmap.py` use the last colouring round of a function that spilled.
+- Result (2026-10-04, 12 747 matched function/class colourings, 344 units): base replay is
+  exact everywhere, and every alternative rule breaks matched functions. The colouring code is
+  identical in GC/2.0p1 to 2.7. See docs/RW_RESIDUE.md section 2.
+- Set `BFBB_ROOT=C:/Projects/bfbb` when running from a worktree without `build/`.

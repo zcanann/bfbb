@@ -46,8 +46,14 @@ def simplify(c, K, rank=None, costs=None):
         # remaining list is built LIFO: walk from last-pushed to first
         cand = None
         best = None
+        # 0x508ad2: walk the LIFO list (last scanned first), keep the first minimum of cost/degree;
+        # webs numbered at or above the no-spill mark (spill temps of an earlier round) cost FLT_MAX.
+        ns = c.get('nospill')
         for i in reversed(remaining):
-            sc = (costs or {}).get(i, nodes[i]['cost']) / max(deg[i], 1)
+            if ns is not None and nodes[i].get('f10', i) >= ns:
+                sc = 3.4028234663852886e+38
+            else:
+                sc = (costs or {}).get(i, nodes[i]['cost']) / max(deg[i], 1)
             if best is None or sc < best:
                 cand, best = i, sc
         for nb in nodes[cand]['nb']:

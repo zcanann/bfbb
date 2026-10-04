@@ -250,6 +250,22 @@ colours exactly on every residue capture below. See also
 | N11 | an objectless `?:` temp (N9) coalesces into an N8 split web or a CSE temp, but **not** into a named local's first web. So `x = c ? a : b` on a fresh local leaves `x` webless, while the same `?:` into a reused local's later web joins that web. |
 | N12 | reusing an existing local whose first web is dead makes each later assignment an IROUseDef split temp (N8), ranked **below** every CSE temp. This puts a value under the CSE band without a new named local. |
 | N13 | a static helper inlined inside another inlined helper creates its inline objects after **all** the outer calls' inline objects, so its group ranks below every outer inline group. |
+| N14 | spilling: when no web has degree < K, the candidate is the **first** minimum of cost/degree walking the remainder list from the highest vreg down (cost = the int at IGNode+0xc, set by 0x57cd00 only when a spill is needed); webs at or above the no-spill mark (0x5e0898: spill temps of an earlier round) cost FLT_MAX. The candidate is pushed (optimistic colouring); webs that then find no register are spilled and the function is coloured again. |
+
+Offline test of the allocator itself (2026-10-04, `corpus.py` + `ordmodel.py`): the replay
+reproduces all 12 747 matched function/class colourings in 344 RW and game units exactly,
+including the 8 that need several spill rounds. Alternative rules were scored against the 24
+residue colourings that differ in a target-mapped web: post-spill descending scan, rescanning
+the remainder list first, other spill picks (last minimum, ascending walk, highest degree),
+named webs after temps (globally or only after a spill), `@` objects in creation order, and
+highest-free select variants. None fixes a residue without breaking matched functions. The best,
+named-after-temps only after a spill, takes `zEntPlayer_Update` from 14 to 7 differing webs
+and breaks 7 matched spilling functions. K = 28 or 30 breaks about 220. The colouring code is
+also byte-identical (addresses masked) in GC/2.0p1, 2.0p1a, 2.5, 2.6 and 2.7: simplify,
+colorgraph, colorinstructions and the spill-cost pass. 3.0a3 rewrote the graph storage but
+keeps the same ascending scan, LIFO remainder and first-minimum cost/degree pick. So
+retail's allocator is ours. The residues come from a different graph or numbering, which means
+different source.
 
 A `hyp.py` test re-ranked whole families the other way. None of these fixes a
 residue without breaking the matched controls, so the REG residues are **not**

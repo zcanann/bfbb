@@ -1,7 +1,10 @@
 """try.py <srcfile> <symbol> <unitstem> <variantfile> [--keep]
 variantfile: python file defining list VARIANTS = [(name, [(old,new),...]), ...]"""
 import os as _os
-_REPO = _os.path.dirname(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))).replace("\\", "/")
+import sys as _sys
+_sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
+import ra_common
+_REPO = ra_common.ROOT
 import sys, subprocess, re, runpy
 src, sym, unit, vf = sys.argv[1:5]
 keep = '--keep' in sys.argv

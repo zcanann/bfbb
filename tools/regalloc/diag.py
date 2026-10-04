@@ -14,6 +14,7 @@ functions (overloads, several classes' Render) are told apart by the qualified n
 $TMAP_SYM (mangled), or --idx N / $TMAP_IDX (index among the captured candidates).
 Env: RCAP_MW (compiler override, default = the unit's mw_version), RCAP_EXTRA_FLAGS.
 Writes <out>/<sanitised fn>.json (all captures of the chosen function) and .json.tgt<cls>.
+--capture-only: stop after the capture, the target colours and the replay check (corpus runs).
 """
 import os, sys, json, subprocess, itertools
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -111,7 +112,14 @@ def pop_inversions(c, tgt, cls, budget=2000000):
     return found[0], cs
 
 
+# A function that spills is coloured again after spill code is inserted; only the last round per
+# class produced the final registers (earlier rounds end in a failed colouring).
+_last = {}
 for c in caps:
+    _last[c['cls']] = c
+for c in caps:
+    if _last[c['cls']] is not c:
+        continue
     temps = c.get('temps', {})
     cls = c['cls']
     K = 29 if cls == 4 else 32
@@ -147,6 +155,8 @@ for c in caps:
     for v in sorted(bad):
         n = N[v]
         print('   v%-4d %-10s %-28s ours=%-3d target=%d' % (v, n['name'] or '-', kind(n, c['nreal']), col[v], bad[v]))
+    if '--capture-only' in sys.argv:
+        continue
 
     def score(rank):
         cc = colour(c, simplify(c, K, rank), mask0)

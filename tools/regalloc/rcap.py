@@ -32,6 +32,7 @@ G_IGRAPH = 0x5e9858
 G_CLASS = 0x5ea299
 G_NREAL = 0x5e9800
 G_USEDVR = 0x5e9b04
+G_NOSPILL = 0x5e0898  # vregs >= this (spill temps of an earlier round) get cost FLT_MAX
 G_AVAIL_FN = None
 
 DEBUG_ONLY_THIS_PROCESS = 2
@@ -230,10 +231,11 @@ class Capture:
                 if not p:
                     continue
                 hdr = d.rd(p, 0x1a)
-                nxt, obj, cost = struct.unpack_from('<III', hdr, 0)
+                # +8 is not the cost: the spill heuristic (0x508ad2) reads the int at +0xc.
+                nxt, obj, f8, cost = struct.unpack_from('<IIIi', hdr, 0)
                 f10, deg, col, flg, n = struct.unpack_from('<hhhHh', hdr, 0x10)
                 nb = list(struct.unpack('<%dh' % n, d.rd(p + 0x1a, 2 * n))) if n > 0 else []
-                nodes[i] = dict(ptr=p, obj=obj, name=objname(d, obj), cost=cost, f10=f10, deg=deg,
+                nodes[i] = dict(ptr=p, obj=obj, name=objname(d, obj), cost=cost, f8=f8, f10=f10, deg=deg,
                                 color=col, flags=flg, nb=nb)
             order = []
             p = head
@@ -258,7 +260,8 @@ class Capture:
                     pc = struct.unpack_from('<I', hdr, 0)[0]
                 blocks.append(ins)
                 b = d.u32(b)
-            self.cur = dict(fn=self.fn, qual=self.qual, fnidx=self.nfn, cls=cls, nreal=nreal, used=used, nodes=nodes, order=order, blocks=blocks)
+            self.cur = dict(fn=self.fn, qual=self.qual, fnidx=self.nfn, cls=cls, nreal=nreal, used=used,
+                            nospill=d.s16(G_NOSPILL), nodes=nodes, order=order, blocks=blocks)
         elif addr == BP_COLORRET and self.cur is not None:
             for i, nd in self.cur['nodes'].items():
                 nd['final'] = d.s16(nd['ptr'] + 0x14)
