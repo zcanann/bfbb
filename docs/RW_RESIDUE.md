@@ -378,6 +378,14 @@ or the only known lever was rejected as not source-likely.
 
 #### `_rpMaterialListStreamRead`
 
+**Closed:** the material-list TU now has all eight functions exact and links from
+source into a byte-identical retail DOL. The saved valid candidate was restored
+with explicit `size_t` locals and readable names. Its allocation-size copies
+are a documented compiler-lifetime workaround; collapsing them drops the
+function from 100 to 97.77188. Both allocation branches remain intact. This
+replaces the earlier `materialCount` snapshot (99.933685); the historical
+residue diagnosis below describes the preceding source form.
+
 - **Unit:** world/bamatlst. **Size / %:** 1508 b, 99.88 (was 97.77).
 - **What fixed most of it:** passing `size * sizeof(RpMaterial *)` directly to
   `RwRealloc`/`RwMalloc` in the inlined `_rpMaterialListSetSize`. `size*4`

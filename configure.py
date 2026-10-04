@@ -1145,7 +1145,7 @@ config.libs = [
             Object(Matching, "rwsdk/world/bageomet.c"),
             Object(Matching, "rwsdk/world/balight.c"),
             Object(NonMatching, "rwsdk/world/bamateri.c"),
-            Object(NonMatching, "rwsdk/world/bamatlst.c"),
+            Object(Matching, "rwsdk/world/bamatlst.c"),
             Object(Matching, "rwsdk/world/bamesh.c"),
             Object(Matching, "rwsdk/world/bameshop.c"),
             Object(Matching, "rwsdk/world/basector.c"),

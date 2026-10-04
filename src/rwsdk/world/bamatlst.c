@@ -67,15 +67,29 @@ static RpMaterialList* _rpMaterialListSetSize(RpMaterialList* matList, RwInt32 s
     if (matList->space < size)
     {
         RpMaterial** materials;
-        RwUInt32 memSize = size * sizeof(RpMaterial*);
+        // Compiler-lifetime workaround; the original source spelling is unproven.
+        size_t byteCount = sizeof(RpMaterial*) * size;
+        RwUInt32 memSize;
+        size_t requestedBytes;
+        RpMaterial** existingMaterials;
+        size_t allocationBytes;
 
-        if (matList->materials)
+        allocationBytes = (size_t)byteCount;
+        requestedBytes = allocationBytes;
+        memSize = requestedBytes;
+        existingMaterials = matList->materials;
+
+        if (existingMaterials)
         {
-            materials = (RpMaterial**)RwRealloc(matList->materials, size * sizeof(RpMaterial*));
+            size_t elementSize;
+            elementSize = sizeof(RpMaterial*);
+            materials = (RpMaterial**)RwRealloc(matList->materials, elementSize * size);
         }
         else
         {
-            materials = (RpMaterial**)RwMalloc(size * sizeof(RpMaterial*));
+            size_t elementSize, pointerSize = sizeof(RpMaterial*);
+            elementSize = pointerSize;
+            materials = (RpMaterial**)RwMalloc(((elementSize) * size));
         }
 
         if (!materials)
@@ -248,12 +262,12 @@ const RpMaterialList* _rpMaterialListStreamWrite(const RpMaterialList* matList, 
 
 RpMaterialList* _rpMaterialListStreamRead(RwStream* stream, RpMaterialList* matList)
 {
+    RwBool status;
     RwInt32 i;
     RwInt32 len;
     RwInt32* matindex;
     RwUInt32 size;
     RwUInt32 version;
-    RwBool status;
     RpMaterial* material;
 
     if (!RwStreamFindChunk(stream, rwID_STRUCT, &size, &version))
@@ -270,21 +284,17 @@ RpMaterialList* _rpMaterialListStreamRead(RwStream* stream, RpMaterialList* matL
         }
 
         _rpMaterialListInitialize(matList);
+        if (len == 0)
         {
-            const RwInt32 materialCount = len;
-
-            if (materialCount == 0)
-            {
-                return matList;
-            }
-
-            if (!_rpMaterialListSetSize(matList, materialCount))
-            {
-                _rpMaterialListDeinitialize(matList);
-                return (RpMaterialList*)NULL;
-            }
-
+            return matList;
         }
+
+        if (!_rpMaterialListSetSize(matList, len))
+        {
+            _rpMaterialListDeinitialize(matList);
+            return (RpMaterialList*)NULL;
+        }
+
         matindex = (RwInt32*)RwMalloc(sizeof(RwInt32) * len);
 
         status = (NULL != RwStreamReadInt32(stream, matindex, sizeof(RwInt32) * len));
@@ -295,7 +305,8 @@ RpMaterialList* _rpMaterialListStreamRead(RwStream* stream, RpMaterialList* matL
             return (RpMaterialList*)NULL;
         }
 
-        for (i = 0; i < len; i++)
+        i = 0;
+        while ((RwInt32)len > i)
         {
             if (matindex[i] < 0)
             {
@@ -332,6 +343,7 @@ RpMaterialList* _rpMaterialListStreamRead(RwStream* stream, RpMaterialList* matL
 
             _rpMaterialListAppendMaterial(matList, material);
             RpMaterialDestroy(material);
+            i++;
         }
 
         RwFree(matindex);
