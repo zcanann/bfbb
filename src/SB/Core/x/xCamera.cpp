@@ -1178,6 +1178,14 @@ void xCameraSetScene(xCamera* cam, xScene* sc)
     iCameraAssignEnv(cam->lo_cam, sc->env->geom);
 }
 
+// Reconstruct a stripped bound-copy reference at the retail emission boundary.
+// The original caller is unknown. This emits the compiler-generated weak copy
+// used by other TUs; the reconstruction itself is removed from the linked DOL.
+void __deadstripped_xCamera_bound(xBound& bound, const xBound& source)
+{
+    bound = source;
+}
+
 void xCameraSetTargetMatrix(xCamera* cam, xMat4x3* mat)
 {
     cam->tgt_mat = mat;
@@ -1461,37 +1469,6 @@ F32 xQuatGetAngle(const xQuat* q)
         return 2.0f * xacos(q->s);
     }
 }
-
-// xBound& xBound::operator=(const xBound& b)
-// {
-//     qcd.xmin = b.qcd.xmin;
-//     qcd.ymin = b.qcd.ymin;
-//     qcd.zmin = b.qcd.zmin;
-//     qcd.zmin_dup = b.qcd.zmin_dup;
-//     qcd.xmax = b.qcd.xmax;
-//     qcd.ymax = b.qcd.ymax;
-//     qcd.zmax = b.qcd.zmax;
-//     qcd.zmax_dup = b.qcd.zmax_dup;
-//     qcd.min.x = b.qcd.min.x;
-//     qcd.min.y = b.qcd.min.y;
-//     qcd.min.z = b.qcd.min.z;
-//     qcd.max.x = b.qcd.max.x;
-//     qcd.max.y = b.qcd.max.y;
-//     qcd.max.z = b.qcd.max.z;
-//     pad = b.pad;
-//     box.center.x = b.box.center.x;
-//     box.center.y = b.box.center.y;
-//     box.center.z = b.box.center.z;
-//     box.box.upper.x = b.box.box.upper.x;
-//     box.box.upper.y = b.box.box.upper.y;
-//     box.box.upper.z = b.box.box.upper.z;
-//     box.box.lower.x = b.box.box.lower.x;
-//     box.box.lower.y = b.box.box.lower.y;
-//     box.box.lower.z = b.box.box.lower.z;
-//     mat = b.mat;
-
-//     return *this;
-// }
 
 static void bound_sphere_xz(xVec3& r3, xVec3& r4, const xVec3& r5, F32 f1, const xVec3& r6, F32 f2)
 {

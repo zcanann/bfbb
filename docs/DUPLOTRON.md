@@ -13445,3 +13445,41 @@ remain `a78a5fdb6c1d5677e987636b2e0743dbaefe9542` and
 whole-unit link claim. Worker evidence: `build/unitmeter-audit.json`,
 `unitmeter-postincrement.json`, `unitmeter-model-cursor.json`,
 `unitmeter-retained-report.json`, and `unitmeter-retained-validation.json`.
+
+
+
+### xCamera: recover the missing implicit xBound copy helper (2026-10-03)
+
+`__as__6xBoundFRC6xBound` was genuinely absent from the source object, not a
+symbol-pairing artifact. An ordinary `bound = source` emits its exact 224-byte
+weak compiler-generated definition using the existing xBound type: eight
+quick-cull words, type byte, `__copy` for the three-byte pad, nine union words,
+and the matrix pointer. The old commented manual float-member copy was not
+this operation and has been removed.
+
+The explicit `__deadstripped_xCamera_bound` reconstruction supplies that copy
+reference between `xCameraSetScene` and `xCameraSetTargetMatrix`, matching the
+retail helper's emission boundary. Its original caller is unknown; this is a
+small documented C++ emission compromise, not a claim to recover that source.
+The reconstruction is absent from the linked ELF. No shared header or copy
+implementation was changed.
+
+Retail xBinaryCamera::update does not call this helper, nor does any surviving
+function in the retail xCamera unit. Its callers survive in other units:
+`zThrown_Update`, `NPCC_bnd_ofBase`, and `zCameraFlyRestoreBackup`. Consequently,
+the original source-selected xCamera link failed with the missing helper.
+With the reconstruction it links successfully, although 16,841 DOL bytes still
+differ (SHA-1 `af8ad819b24cd43653382b969ee0a17618b29842`); this does not complete
+the TU. xCamera stays NonMatching and xBinaryCamera::update remains a separate
+1420-byte, 92.087% deduplicated holdout.
+
+Full deduplicated validation changes only this helper from 0 to100%, adding224
+matched code bytes and one exact function. The unit moves75/77 to76/77 exact,
+97.59949 to99.19811 fuzzy, with all688data bytes still exact. `all_source` and
+the normal build pass; normal DOL SHA-1 remains
+`306526d90b48e99894c3138f5fc8f2716d9fecf6`. No behavioral tests or compiler edits.
+
+Private evidence: `build/xcamera-closure-bound-emission.json` (initial exact
+copy body), `xcamera-closure-bound-report.json`, baseline-link.log (undefined
+references), bound-emission-link.json and bound-emission-linked.elf, and
+`xcamera-closure-bound-final-verify.py` in the Plankton worktree.
