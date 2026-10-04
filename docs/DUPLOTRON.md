@@ -13105,3 +13105,23 @@ Evidence: build/yuv-init-closure-ordered-switch.{cpp,json,py},
 yuv-init-closure-switch-report.json and yuv-init-closure-switch-build.log.
 The read-only phase inventory before this change is in
 build/yuv-init-closure-residue-review.md.
+
+
+### Integrated YUV switch and constant final-pixel verification (2026-10-03)
+
+In each run path's existing filled_pixels == BINK_RUN_BLOCK_LAST_PIXEL
+branch, index the scan with that constant instead of the counter. Retail
+uses two direct byte loads at offset63; the previous source used indexed
+loads despite the equality guard. Values, bundle consumption and scratch
+writes are identical. Raw ExpandPlane improves 82.04868 -> 82.30088 with
+source size unchanged at 5,664 bytes. Only ExpandPlane changes in the raw diff.
+
+Root independently verifies the ordered YUV switch and this final-pixel
+change together. The full report changes exactly YUV_init 68.67785 -> 72.979866
+and ExpandPlane 82.80257 -> 83.05476. Every other function record and all
+per-unit/global exact-code, data and completion measures are unchanged.
+The all-source build and normal retail link pass, retaining SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. Both TUs remain NonMatching and
+completion remains 469/543; no whole-TU source-link closure is claimed.
+Evidence: build/expand59-last-private and parallel-fiftyninth-report.json
+with its validation log. No compiler changes, assembly, or behavioral tests.

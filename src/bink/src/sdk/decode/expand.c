@@ -1413,7 +1413,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                         }
                     } while (filled_pixels < BINK_RUN_BLOCK_LAST_PIXEL);
                     if (filled_pixels == BINK_RUN_BLOCK_LAST_PIXEL) {
-                        u32 scan_offset = scan[filled_pixels];
+                        u32 scan_offset = scan[BINK_RUN_BLOCK_LAST_PIXEL];
                         motion_block[scan_offset] = *colors.cur_ptr++;
                     }
                 }
@@ -1784,7 +1784,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                                 }
                             } while (filled_pixels < BINK_RUN_BLOCK_LAST_PIXEL);
                             if (filled_pixels == BINK_RUN_BLOCK_LAST_PIXEL) {
-                                u32 scan_offset = scan[filled_pixels];
+                                u32 scan_offset = scan[BINK_RUN_BLOCK_LAST_PIXEL];
                                 motion_block[scan_offset] = *colors.cur_ptr++;
                             }
                         }
