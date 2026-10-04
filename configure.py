@@ -1293,16 +1293,20 @@ compilers_dir = (
 # it is not, patch_compiler.py must derive from the checked-in blob instead.
 ALIASPATCH_SRC = aliaspatch_link.SRC
 
+# Hash-valid compilers retain their timestamps. Restat records revalidation
+# and prunes dependent rebuilds when a patch script leaves the bytes unchanged.
 config.custom_build_rules = [
     {
         "name": "patch_compiler",
         "command": "$python tools/patch_compiler.py $out",
         "description": "PATCH $out",
+        "restat": True,
     },
     {
         "name": "patch_compiler_rw",
         "command": "$python tools/patch_compiler_rw.py $out",
         "description": "PATCH $out",
+        "restat": True,
     },
 ]
 config.custom_build_steps = {
