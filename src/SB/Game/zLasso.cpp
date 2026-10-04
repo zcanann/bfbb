@@ -241,9 +241,6 @@ void zLasso_Render(zLasso* lasso)
     S32 jm;
     S32 i0;
     S32 i1;
-    F32 px;
-    F32 py;
-    F32 pz;
     F32 mu;
     F32 mdu;
 
@@ -408,31 +405,13 @@ void zLasso_Render(zLasso* lasso)
         }
 
         i0 = prevRing + 2;
-        py = vtx[i0].y;
-        pz = vtx[i0].z;
-        px = vtx[i0].x;
-        vp[0].x = px;
-        vp[0].y = py;
-        vp[0].z = pz;
-        vp[0].r = 255;
-        vp[0].g = 255;
-        vp[0].b = 255;
-        vp[0].a = 255;
-        vp[0].u = mu;
-        vp[0].v = 2.0f / 3.0f;
+        RwIm3DVertexSetPos(&vp[0], vtx[i0].x, vtx[i0].y, vtx[i0].z);
+        RwIm3DVertexSetRGBA(&vp[0], 255, 255, 255, 255);
+        RwIm3DVertexSetUV(&vp[0], mu, 2.0f / 3.0f);
         i1 = curRing + 2;
-        py = vtx[i1].y;
-        pz = vtx[i1].z;
-        px = vtx[i1].x;
-        vp[1].x = px;
-        vp[1].y = py;
-        vp[1].z = pz;
-        vp[1].r = 255;
-        vp[1].g = 255;
-        vp[1].b = 255;
-        vp[1].a = 255;
-        vp[1].u = mu + mdu;
-        vp[1].v = 2.0f / 3.0f;
+        RwIm3DVertexSetPos(&vp[1], vtx[i1].x, vtx[i1].y, vtx[i1].z);
+        RwIm3DVertexSetRGBA(&vp[1], 255, 255, 255, 255);
+        RwIm3DVertexSetUV(&vp[1], mu + mdu, 2.0f / 3.0f);
         numVerts += 2;
         vp += 2;
 
@@ -440,30 +419,12 @@ void zLasso_Render(zLasso* lasso)
         {
             v = k;
                 v *= (1.0f / 3.0f);
-            py = vtx[prevRing + k].y;
-            pz = vtx[prevRing + k].z;
-            px = vtx[prevRing + k].x;
-            vp[0].x = px;
-            vp[0].y = py;
-            vp[0].z = pz;
-            vp[0].r = 255;
-            vp[0].g = 255;
-            vp[0].b = 255;
-            vp[0].a = 255;
-            vp[0].u = mu;
-            vp[0].v = v;
-            py = vtx[curRing + k].y;
-            pz = vtx[curRing + k].z;
-            px = vtx[curRing + k].x;
-            vp[1].x = px;
-            vp[1].y = py;
-            vp[1].z = pz;
-            vp[1].r = 255;
-            vp[1].g = 255;
-            vp[1].b = 255;
-            vp[1].a = 255;
-            vp[1].u = mu + mdu;
-            vp[1].v = v;
+            RwIm3DVertexSetPos(&vp[0], vtx[prevRing + k].x, vtx[prevRing + k].y, vtx[prevRing + k].z);
+            RwIm3DVertexSetRGBA(&vp[0], 255, 255, 255, 255);
+            RwIm3DVertexSetUV(&vp[0], mu, v);
+            RwIm3DVertexSetPos(&vp[1], vtx[curRing + k].x, vtx[curRing + k].y, vtx[curRing + k].z);
+            RwIm3DVertexSetRGBA(&vp[1], 255, 255, 255, 255);
+            RwIm3DVertexSetUV(&vp[1], mu + mdu, v);
             numVerts += 2;
             vp += 2;
         }
@@ -474,18 +435,9 @@ void zLasso_Render(zLasso* lasso)
         numPrims++;
     }
 
-    py = vtx[prevRing + 2].y;
-    pz = vtx[prevRing + 2].z;
-    px = vtx[prevRing + 2].x;
-    vp[0].x = px;
-    vp[0].y = py;
-    vp[0].z = pz;
-    vp[0].r = 255;
-    vp[0].g = 255;
-    vp[0].b = 255;
-    vp[0].a = 255;
-    vp[0].u = mu;
-    vp[0].v = v;
+    RwIm3DVertexSetPos(&vp[0], vtx[prevRing + 2].x, vtx[prevRing + 2].y, vtx[prevRing + 2].z);
+    RwIm3DVertexSetRGBA(&vp[0], 255, 255, 255, 255);
+    RwIm3DVertexSetUV(&vp[0], mu, v);
     numVerts += 1;
     vp += 1;
     pending = 1;
@@ -536,49 +488,22 @@ void zLasso_Render(zLasso* lasso)
             if (pending)
             {
                 i0 = prevRing + 2;
-                py = vtx[i0].y;
-                pz = vtx[i0].z;
-                px = vtx[i0].x;
-                vp[0].x = px;
-                vp[0].y = py;
-                vp[0].z = pz;
-                vp[0].r = 255;
-                vp[0].g = 255;
-                vp[0].b = 255;
-                vp[0].a = 255;
-                vp[0].u = u;
-                vp[0].v = 2.0f / 3.0f;
+                RwIm3DVertexSetPos(&vp[0], vtx[i0].x, vtx[i0].y, vtx[i0].z);
+                RwIm3DVertexSetRGBA(&vp[0], 255, 255, 255, 255);
+                RwIm3DVertexSetUV(&vp[0], u, 2.0f / 3.0f);
                 pending = 0;
                 numVerts += 1;
                 vp += 1;
             }
 
             i0 = prevRing + 2;
-            py = vtx[i0].y;
-            pz = vtx[i0].z;
-            px = vtx[i0].x;
-            vp[0].x = px;
-            vp[0].y = py;
-            vp[0].z = pz;
-            vp[0].r = 255;
-            vp[0].g = 255;
-            vp[0].b = 255;
-            vp[0].a = 255;
-            vp[0].u = u;
-            vp[0].v = 2.0f / 3.0f;
+            RwIm3DVertexSetPos(&vp[0], vtx[i0].x, vtx[i0].y, vtx[i0].z);
+            RwIm3DVertexSetRGBA(&vp[0], 255, 255, 255, 255);
+            RwIm3DVertexSetUV(&vp[0], u, 2.0f / 3.0f);
             i1 = curRing + 2;
-            py = vtx[i1].y;
-            pz = vtx[i1].z;
-            px = vtx[i1].x;
-            vp[1].x = px;
-            vp[1].y = py;
-            vp[1].z = pz;
-            vp[1].r = 255;
-            vp[1].g = 255;
-            vp[1].b = 255;
-            vp[1].a = 255;
-            vp[1].u = u + du;
-            vp[1].v = 2.0f / 3.0f;
+            RwIm3DVertexSetPos(&vp[1], vtx[i1].x, vtx[i1].y, vtx[i1].z);
+            RwIm3DVertexSetRGBA(&vp[1], 255, 255, 255, 255);
+            RwIm3DVertexSetUV(&vp[1], u + du, 2.0f / 3.0f);
             numVerts += 2;
             vp += 2;
 
@@ -586,30 +511,12 @@ void zLasso_Render(zLasso* lasso)
             {
                 v = k;
                 v *= (1.0f / 3.0f);
-                py = vtx[prevRing + k].y;
-                pz = vtx[prevRing + k].z;
-                px = vtx[prevRing + k].x;
-                vp[0].x = px;
-                vp[0].y = py;
-                vp[0].z = pz;
-                vp[0].r = 255;
-                vp[0].g = 255;
-                vp[0].b = 255;
-                vp[0].a = 255;
-                vp[0].u = u;
-                vp[0].v = v;
-                py = vtx[curRing + k].y;
-                pz = vtx[curRing + k].z;
-                px = vtx[curRing + k].x;
-                vp[1].x = px;
-                vp[1].y = py;
-                vp[1].z = pz;
-                vp[1].r = 255;
-                vp[1].g = 255;
-                vp[1].b = 255;
-                vp[1].a = 255;
-                vp[1].u = u + du;
-                vp[1].v = v;
+                RwIm3DVertexSetPos(&vp[0], vtx[prevRing + k].x, vtx[prevRing + k].y, vtx[prevRing + k].z);
+                RwIm3DVertexSetRGBA(&vp[0], 255, 255, 255, 255);
+                RwIm3DVertexSetUV(&vp[0], u, v);
+                RwIm3DVertexSetPos(&vp[1], vtx[curRing + k].x, vtx[curRing + k].y, vtx[curRing + k].z);
+                RwIm3DVertexSetRGBA(&vp[1], 255, 255, 255, 255);
+                RwIm3DVertexSetUV(&vp[1], u + du, v);
                 numVerts += 2;
                 vp += 2;
             }
@@ -669,49 +576,22 @@ void zLasso_Render(zLasso* lasso)
             if (pending)
             {
                 i0 = prevRing + 2;
-                py = vtx[i0].y;
-                pz = vtx[i0].z;
-                px = vtx[i0].x;
-                vp[0].x = px;
-                vp[0].y = py;
-                vp[0].z = pz;
-                vp[0].r = 255;
-                vp[0].g = 255;
-                vp[0].b = 255;
-                vp[0].a = 255;
-                vp[0].u = u;
-                vp[0].v = 2.0f / 3.0f;
+                RwIm3DVertexSetPos(&vp[0], vtx[i0].x, vtx[i0].y, vtx[i0].z);
+                RwIm3DVertexSetRGBA(&vp[0], 255, 255, 255, 255);
+                RwIm3DVertexSetUV(&vp[0], u, 2.0f / 3.0f);
                 pending = 0;
                 numVerts += 1;
                 vp += 1;
             }
 
             i0 = prevRing + 2;
-            py = vtx[i0].y;
-            pz = vtx[i0].z;
-            px = vtx[i0].x;
-            vp[0].x = px;
-            vp[0].y = py;
-            vp[0].z = pz;
-            vp[0].r = 255;
-            vp[0].g = 255;
-            vp[0].b = 255;
-            vp[0].a = 255;
-            vp[0].u = u;
-            vp[0].v = 2.0f / 3.0f;
+            RwIm3DVertexSetPos(&vp[0], vtx[i0].x, vtx[i0].y, vtx[i0].z);
+            RwIm3DVertexSetRGBA(&vp[0], 255, 255, 255, 255);
+            RwIm3DVertexSetUV(&vp[0], u, 2.0f / 3.0f);
             i1 = curRing + 2;
-            py = vtx[i1].y;
-            pz = vtx[i1].z;
-            px = vtx[i1].x;
-            vp[1].x = px;
-            vp[1].y = py;
-            vp[1].z = pz;
-            vp[1].r = 255;
-            vp[1].g = 255;
-            vp[1].b = 255;
-            vp[1].a = 255;
-            vp[1].u = u + du;
-            vp[1].v = 2.0f / 3.0f;
+            RwIm3DVertexSetPos(&vp[1], vtx[i1].x, vtx[i1].y, vtx[i1].z);
+            RwIm3DVertexSetRGBA(&vp[1], 255, 255, 255, 255);
+            RwIm3DVertexSetUV(&vp[1], u + du, 2.0f / 3.0f);
             numVerts += 2;
             vp += 2;
 
@@ -719,30 +599,12 @@ void zLasso_Render(zLasso* lasso)
             {
                 v = k;
                 v *= (1.0f / 3.0f);
-                py = vtx[prevRing + k].y;
-                pz = vtx[prevRing + k].z;
-                px = vtx[prevRing + k].x;
-                vp[0].x = px;
-                vp[0].y = py;
-                vp[0].z = pz;
-                vp[0].r = 255;
-                vp[0].g = 255;
-                vp[0].b = 255;
-                vp[0].a = 255;
-                vp[0].u = u;
-                vp[0].v = v;
-                py = vtx[curRing + k].y;
-                pz = vtx[curRing + k].z;
-                px = vtx[curRing + k].x;
-                vp[1].x = px;
-                vp[1].y = py;
-                vp[1].z = pz;
-                vp[1].r = 255;
-                vp[1].g = 255;
-                vp[1].b = 255;
-                vp[1].a = 255;
-                vp[1].u = u + du;
-                vp[1].v = v;
+                RwIm3DVertexSetPos(&vp[0], vtx[prevRing + k].x, vtx[prevRing + k].y, vtx[prevRing + k].z);
+                RwIm3DVertexSetRGBA(&vp[0], 255, 255, 255, 255);
+                RwIm3DVertexSetUV(&vp[0], u, v);
+                RwIm3DVertexSetPos(&vp[1], vtx[curRing + k].x, vtx[curRing + k].y, vtx[curRing + k].z);
+                RwIm3DVertexSetRGBA(&vp[1], 255, 255, 255, 255);
+                RwIm3DVertexSetUV(&vp[1], u + du, v);
                 numVerts += 2;
                 vp += 2;
             }

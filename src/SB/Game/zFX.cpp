@@ -620,18 +620,9 @@ RpAtomic* zFXGooRenderAtomic(class RpAtomic* atomic)
             b += refPos;
             c += refPos;
 
-            F32 ax = a.x;
-            F32 ay = 0.02f + a.y;
-            F32 az = a.z;
-            RwIm3DVertexSetPos(&currentVertBuf[0], ax, ay, az);
-            F32 bx = b.x;
-            F32 by = 0.02f + b.y;
-            F32 bz = b.z;
-            RwIm3DVertexSetPos(&currentVertBuf[1], bx, by, bz);
-            F32 cx = c.x;
-            F32 cy = 0.02f + c.y;
-            F32 cz = c.z;
-            RwIm3DVertexSetPos(&currentVertBuf[2], cx, cy, cz);
+            RwIm3DVertexSetPos(&currentVertBuf[0], a.x, 0.02f + a.y, a.z);
+            RwIm3DVertexSetPos(&currentVertBuf[1], b.x, 0.02f + b.y, b.z);
+            RwIm3DVertexSetPos(&currentVertBuf[2], c.x, 0.02f + c.y, c.z);
 
             RwUInt16 ai = tri->vertIndex[0];
             RwIm3DVertexSetRGBA(&currentVertBuf[0], preLitLum[ai].red, preLitLum[ai].green, preLitLum[ai].blue, bytes[ai]);

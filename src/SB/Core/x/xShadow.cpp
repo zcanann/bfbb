@@ -545,26 +545,11 @@ void xShadowReceiveShadow(xEnt* ent, F32 shadowFactor, S32 shadowMode, RwMatrixT
                     continue;
                 }
 
-                F32 t0x = v0->x + normal.x;
-                F32 t0y = v0->y + normal.y;
-                F32 t0z = v0->z + normal.z;
-                imv[0].x = t0x;
-                imv[0].y = t0y;
-                imv[0].z = t0z;
+                RwIm3DVertexSetPos(&imv[0], v0->x + normal.x, v0->y + normal.y, v0->z + normal.z);
 
-                F32 t1x = v1->x + normal.x;
-                F32 t1y = v1->y + normal.y;
-                F32 t1z = v1->z + normal.z;
-                imv[1].x = t1x;
-                imv[1].y = t1y;
-                imv[1].z = t1z;
+                RwIm3DVertexSetPos(&imv[1], v1->x + normal.x, v1->y + normal.y, v1->z + normal.z);
 
-                F32 t2x = v2->x + normal.x;
-                F32 t2y = v2->y + normal.y;
-                F32 t2z = v2->z + normal.z;
-                imv[2].x = t2x;
-                imv[2].y = t2y;
-                imv[2].z = t2z;
+                RwIm3DVertexSetPos(&imv[2], v2->x + normal.x, v2->y + normal.y, v2->z + normal.z);
 
                 imv[0].u = vShadOut[0].x;
                 imv[1].u = vShadOut[1].x;
@@ -573,18 +558,9 @@ void xShadowReceiveShadow(xEnt* ent, F32 shadowFactor, S32 shadowMode, RwMatrixT
                 imv[1].v = vShadOut[1].y;
                 imv[2].v = vShadOut[2].y;
 
-                imv[0].r = val;
-                imv[0].g = val;
-                imv[0].b = val;
-                imv[0].a = val;
-                imv[1].r = val;
-                imv[1].g = val;
-                imv[1].b = val;
-                imv[1].a = val;
-                imv[2].r = val;
-                imv[2].g = val;
-                imv[2].b = val;
-                imv[2].a = val;
+                RwIm3DVertexSetRGBA(&imv[0], val, val, val, val);
+                RwIm3DVertexSetRGBA(&imv[1], val, val, val, val);
+                RwIm3DVertexSetRGBA(&imv[2], val, val, val, val);
 
                 Im3DBufferPos += 3;
             }
@@ -883,28 +859,13 @@ static RpCollisionTriangle* ShadowRenderTriangleCB(RpIntersection* isx, RpWorldS
     c.y = 0.008f * collTriangle->normal.y;
     c.z = 0.008f * collTriangle->normal.z;
 
-    F32 t0x = v->x + c.x;
-    F32 t0y = v->y + c.y;
-    F32 t0z = v->z + c.z;
-    imv[0].x = t0x;
-    imv[0].y = t0y;
-    imv[0].z = t0z;
+    RwIm3DVertexSetPos(&imv[0], v->x + c.x, v->y + c.y, v->z + c.z);
 
     v = collTriangle->vertices[1];
-    F32 t1x = v->x + c.x;
-    F32 t1y = v->y + c.y;
-    F32 t1z = v->z + c.z;
-    imv[1].x = t1x;
-    imv[1].y = t1y;
-    imv[1].z = t1z;
+    RwIm3DVertexSetPos(&imv[1], v->x + c.x, v->y + c.y, v->z + c.z);
 
     v = collTriangle->vertices[2];
-    F32 t2x = v->x + c.x;
-    F32 t2y = v->y + c.y;
-    F32 t2z = v->z + c.z;
-    imv[2].x = t2x;
-    imv[2].y = t2y;
-    imv[2].z = t2z;
+    RwIm3DVertexSetPos(&imv[2], v->x + c.x, v->y + c.y, v->z + c.z);
 
     imv[0].u = vShadOut[0].x;
     imv[1].u = vShadOut[1].x;
@@ -915,18 +876,9 @@ static RpCollisionTriangle* ShadowRenderTriangleCB(RpIntersection* isx, RpWorldS
 
     U8 sw = param->shadowValue;
 
-    imv[0].r = sw;
-    imv[0].g = sw;
-    imv[0].b = sw;
-    imv[0].a = sw;
-    imv[1].r = sw;
-    imv[1].g = sw;
-    imv[1].b = sw;
-    imv[1].a = sw;
-    imv[2].r = sw;
-    imv[2].g = sw;
-    imv[2].b = sw;
-    imv[2].a = sw;
+    RwIm3DVertexSetRGBA(&imv[0], sw, sw, sw, sw);
+    RwIm3DVertexSetRGBA(&imv[1], sw, sw, sw, sw);
+    RwIm3DVertexSetRGBA(&imv[2], sw, sw, sw, sw);
 
     Im3DBufferPos += 3;
 

@@ -563,10 +563,7 @@ void NPCCone::RenderCone(xVec3* pos_tiptop, xVec3* pos_botcenter)
         pos_vtx *= this->rad_cone;
         pos_vtx += pos_bot;
 
-        F32 px = pos_vtx.x;
-        F32 py = pos_vtx.y;
-        F32 pz = pos_vtx.z;
-        RwIm3DVertexSetPos(vtx, px, py, pz);
+        RwIm3DVertexSetPos(vtx, pos_vtx.x, pos_vtx.y, pos_vtx.z);
         RwIm3DVertexSetRGBA(vtx, rgba_bot.red, rgba_bot.green, rgba_bot.blue, rgba_bot.alpha);
 
         F32 u_off = 1 / 8.0f * i;
@@ -681,7 +678,6 @@ void NPCBlinker::Render(const xVec3* pos_blink, F32 rad_blink, const RwRaster* r
     for (i = 0; i <= 6; i++)
     {
         F32 rat = (F32)i / 6.0f;
-        F32 px, py, pz;
 
         pos_lerp.x = LERP(rat, pos_top.x, pos_bot.x);
         pos_lerp.y = LERP(rat, pos_top.y, pos_bot.y);
@@ -691,19 +687,13 @@ void NPCBlinker::Render(const xVec3* pos_blink, F32 rad_blink, const RwRaster* r
 
         pos_vtx = dir_card * rad_blink;
         pos_vtx += pos_lerp;
-        px = pos_vtx.x;
-        py = pos_vtx.y;
-        pz = pos_vtx.z;
-        RwIm3DVertexSetPos(&vtx_horz[0], px, py, pz);
+        RwIm3DVertexSetPos(&vtx_horz[0], pos_vtx.x, pos_vtx.y, pos_vtx.z);
         RwIm3DVertexSetRGBA(&vtx_horz[0], rgba.red, rgba.green, rgba.blue, rgba.alpha);
         RwIm3DVertexSetUV(&vtx_horz[0], uv_lo[0], v);
 
         pos_vtx = dir_card * rad_neg;
         pos_vtx += pos_lerp;
-        px = pos_vtx.x;
-        py = pos_vtx.y;
-        pz = pos_vtx.z;
-        RwIm3DVertexSetPos(&vtx_horz[1], px, py, pz);
+        RwIm3DVertexSetPos(&vtx_horz[1], pos_vtx.x, pos_vtx.y, pos_vtx.z);
         RwIm3DVertexSetRGBA(&vtx_horz[1], rgba.red, rgba.green, rgba.blue, rgba.alpha);
         RwIm3DVertexSetUV(&vtx_horz[1], uv_hi[0], v);
 
@@ -711,19 +701,13 @@ void NPCBlinker::Render(const xVec3* pos_blink, F32 rad_blink, const RwRaster* r
 
         pos_vtx = dir_perp * rad_neg;
         pos_vtx += pos_lerp;
-        px = pos_vtx.x;
-        py = pos_vtx.y;
-        pz = pos_vtx.z;
-        RwIm3DVertexSetPos(&vtx_vert[0], px, py, pz);
+        RwIm3DVertexSetPos(&vtx_vert[0], pos_vtx.x, pos_vtx.y, pos_vtx.z);
         RwIm3DVertexSetRGBA(&vtx_vert[0], rgba.red, rgba.green, rgba.blue, rgba.alpha);
         RwIm3DVertexSetUV(&vtx_vert[0], uv_lo[0], v);
 
         pos_vtx = dir_perp * rad_blink;
         pos_vtx += pos_lerp;
-        px = pos_vtx.x;
-        py = pos_vtx.y;
-        pz = pos_vtx.z;
-        RwIm3DVertexSetPos(&vtx_vert[1], px, py, pz);
+        RwIm3DVertexSetPos(&vtx_vert[1], pos_vtx.x, pos_vtx.y, pos_vtx.z);
         RwIm3DVertexSetRGBA(&vtx_vert[1], rgba.red, rgba.green, rgba.blue, rgba.alpha);
         RwIm3DVertexSetUV(&vtx_vert[1], uv_hi[0], v);
 

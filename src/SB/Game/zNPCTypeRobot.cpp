@@ -2612,10 +2612,7 @@ void zNPCFodBzzt::DiscoRender()
         pos_vtx *= 0.2f;
         pos_vtx += pos_bot;
 
-        const F32 x = pos_vtx.x;
-        const F32 y = pos_vtx.y;
-        const F32 z = pos_vtx.z;
-        RwIm3DVertexSetPos(vtx, x, y, z);
+        RwIm3DVertexSetPos(vtx, pos_vtx.x, pos_vtx.y, pos_vtx.z);
         RwIm3DVertexSetRGBA(vtx, rgba_bot.red, rgba_bot.green, rgba_bot.blue, rgba_bot.alpha);
         RwIm3DVertexSetUV(vtx, uv_bot[0] + uoff, uv_bot[1]);
 

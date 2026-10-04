@@ -55,21 +55,43 @@ struct RxObjSpace3DVertex
 typedef RxObjSpace3DVertex RxObjSpace3DLitVertex;
 typedef RxObjSpace3DLitVertex RwIm3DVertex;
 
+#define RxObjSpace3DVertexSetPos(_vert, _pos)                                                     \
+MACRO_START                                                                                       \
+{                                                                                                 \
+    (_vert)->x = (_pos)->x;                                                                       \
+    (_vert)->y = (_pos)->y;                                                                       \
+    (_vert)->z = (_pos)->z;                                                                       \
+}                                                                                                 \
+MACRO_STOP
+
 #define RwIm3DVertexSetPos(_vert, _imx, _imy, _imz)                                               \
 MACRO_START                                                                                       \
 {                                                                                                 \
-    (_vert)->x = _imx;                                                                            \
-    (_vert)->y = _imy;                                                                            \
-    (_vert)->z = _imz;                                                                            \
+    RwV3d tmp;                                                                                    \
+    tmp.x = (_imx);                                                                               \
+    tmp.y = (_imy);                                                                               \
+    tmp.z = (_imz);                                                                               \
+    RxObjSpace3DVertexSetPos(_vert, &tmp);                                                        \
+}                                                                                                 \
+MACRO_STOP
+
+#define RxObjSpace3DVertexSetNormal(_vert, _normal)                                               \
+MACRO_START                                                                                       \
+{                                                                                                 \
+    (_vert)->nx = (_normal)->x;                                                                   \
+    (_vert)->ny = (_normal)->y;                                                                   \
+    (_vert)->nz = (_normal)->z;                                                                   \
 }                                                                                                 \
 MACRO_STOP
 
 #define RwIm3DVertexSetNormal(_vert, _imx, _imy, _imz)                                            \
 MACRO_START                                                                                       \
 {                                                                                                 \
-    (_vert)->nx = _imx;                                                                           \
-    (_vert)->ny = _imy;                                                                           \
-    (_vert)->nz = _imz;                                                                           \
+    RwV3d tmp;                                                                                    \
+    tmp.x = (_imx);                                                                               \
+    tmp.y = (_imy);                                                                               \
+    tmp.z = (_imz);                                                                               \
+    RxObjSpace3DVertexSetNormal(_vert, &tmp);                                                     \
 }                                                                                                 \
 MACRO_STOP
 
@@ -86,12 +108,12 @@ MACRO_STOP
 #define RwIm3DVertexSetRGBA(_vert, _r, _g, _b, _a)                                                \
 MACRO_START                                                                                       \
 {                                                                                                 \
-    RwRGBA _col;                                                                                  \
-    _col.red = (_r);                                                                              \
-    _col.green = (_g);                                                                            \
-    _col.blue = (_b);                                                                             \
-    _col.alpha = (_a);                                                                            \
-    RxObjSpace3DVertexSetPreLitColor(_vert, &_col);                                               \
+    RwRGBA col;                                                                                   \
+    col.red = (_r);                                                                               \
+    col.green = (_g);                                                                             \
+    col.blue = (_b);                                                                              \
+    col.alpha = (_a);                                                                             \
+    RxObjSpace3DVertexSetPreLitColor(_vert, &col);                                                \
 }                                                                                                 \
 MACRO_STOP
 
