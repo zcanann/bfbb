@@ -861,6 +861,9 @@ static void fastidct8x8(u8 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4* 
     s16 PTR4* inptr;
     u8 PTR4* d;
     s32 i;
+    /* Both passes share the same butterfly working variables. */
+    s32 a0, a1, a3, a5, a8, a9, b0, b1, b3;
+    s32 row2, row6, row4, row0, even2, even3, row1, row3, row5, row7, odd_sum, odd_scaled1, odd_out0;
 
     qptr = q;
     inptr = in;
@@ -881,35 +884,35 @@ static void fastidct8x8(u8 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4* 
             out[DCT_ROW6] = dc;
             out[DCT_ROW7] = dc;
         } else {
-            s32 row2 = DCT_DEQUANT(inptr, qptr, DCT_ROW2);
-            s32 row6 = DCT_DEQUANT(inptr, qptr, DCT_ROW6);
-            s32 even_sum = row2 + row6;
-            s32 even_diff = DCT_FIXED_MUL(row2 - row6, DCT_IDCT_A1) - even_sum;
-            s32 row4 = DCT_DEQUANT(inptr, qptr, DCT_ROW4);
-            s32 row0 = DCT_DEQUANT(inptr, qptr, DCT_ROW0);
-            s32 even0 = row0 + row4;
-            s32 even1 = row0 - row4;
-            s32 even2 = even0 + even_sum;
-            s32 even3 = even0 - even_sum;
-            row[DCT_COL2] = even1 - even_diff;
-            row[DCT_COL1] = even1 + even_diff;
+            row2 = DCT_DEQUANT(inptr, qptr, DCT_ROW2);
+            row6 = DCT_DEQUANT(inptr, qptr, DCT_ROW6);
+            a0 = row2 + row6;
+            a5 = DCT_FIXED_MUL(row2 - row6, DCT_IDCT_A1) - a0;
+            row4 = DCT_DEQUANT(inptr, qptr, DCT_ROW4);
+            row0 = DCT_DEQUANT(inptr, qptr, DCT_ROW0);
+            a1 = row0 + row4;
+            a3 = row0 - row4;
+            even2 = a1 + a0;
+            even3 = a1 - a0;
+            row[DCT_COL2] = a3 - a5;
+            row[DCT_COL1] = a3 + a5;
             {
-                s32 row1 = DCT_DEQUANT(inptr, qptr, DCT_ROW1);
-                s32 row3 = DCT_DEQUANT(inptr, qptr, DCT_ROW3);
-                s32 row5 = DCT_DEQUANT(inptr, qptr, DCT_ROW5);
-                s32 row7 = DCT_DEQUANT(inptr, qptr, DCT_ROW7);
-                s32 odd0 = row5 - row3;
-                s32 odd1 = row1 - row7;
-                s32 odd_sum = odd0 + odd1;
-                s32 odd_pair0 = row1 + row7;
-                s32 odd_pair1 = row5 + row3;
-                s32 odd_rot = DCT_FIXED_MUL(odd_sum, DCT_IDCT_A3);
-                s32 odd_scaled1 = DCT_FIXED_MUL(odd1, DCT_IDCT_A2);
-                s32 odd_out0 = odd_pair0 + odd_pair1;
-                odd0 = DCT_FIXED_MUL(odd0, DCT_IDCT_A4);
-                row[DCT_COL6] = (odd0 + odd_rot) - odd_out0;
-                row[DCT_COL5] = DCT_FIXED_MUL(odd_pair0 - odd_pair1, DCT_IDCT_A1) - row[DCT_COL6];
-                row[DCT_COL4] = (odd_scaled1 - odd_rot) + row[DCT_COL5];
+                row1 = DCT_DEQUANT(inptr, qptr, DCT_ROW1);
+                row3 = DCT_DEQUANT(inptr, qptr, DCT_ROW3);
+                row5 = DCT_DEQUANT(inptr, qptr, DCT_ROW5);
+                row7 = DCT_DEQUANT(inptr, qptr, DCT_ROW7);
+                a8 = row5 - row3;
+                b0 = row1 - row7;
+                odd_sum = a8 + b0;
+                b1 = row1 + row7;
+                a9 = row5 + row3;
+                b3 = DCT_FIXED_MUL(odd_sum, DCT_IDCT_A3);
+                odd_scaled1 = DCT_FIXED_MUL(b0, DCT_IDCT_A2);
+                odd_out0 = b1 + a9;
+                a8 = DCT_FIXED_MUL(a8, DCT_IDCT_A4);
+                row[DCT_COL6] = (a8 + b3) - odd_out0;
+                row[DCT_COL5] = DCT_FIXED_MUL(b1 - a9, DCT_IDCT_A1) - row[DCT_COL6];
+                row[DCT_COL4] = (odd_scaled1 - b3) + row[DCT_COL5];
 
                 ++inptr;
                 ++qptr;
@@ -935,7 +938,6 @@ static void fastidct8x8(u8 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4* 
     d = dest;
     /* Second pass writes reconstructed rows to the output block. */
     for (i = DCT_BLOCK_WIDTH; i != 0; --i) {
-        s32 a0, a1, a3, a5, a8, a9, b0, b1, b3;
         s32 input2 = out[DCT_COL2];
         s32 input6 = out[DCT_COL6];
         s32 input0 = out[DCT_COL0];
@@ -984,6 +986,9 @@ static void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4
     u32 PTR4* d1;
     s32 doublepitch;
     s32 i;
+    /* Both passes share the same butterfly working variables. */
+    s32 a0, a1, a3, a5, a8, a9, b0, b1, b3;
+    s32 row2, row6, row4, row0, even3, row1, row3, row5, row7, odd_scaled1, odd_out0;
 
     qptr = q;
     inptr = in;
@@ -1006,35 +1011,35 @@ static void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4
             out[DCT_ROW6] = dc;
             out[DCT_ROW7] = dc;
         } else {
-            s32 row2 = DCT_DEQUANT(inptr, qptr, DCT_ROW2);
-            s32 row6 = DCT_DEQUANT(inptr, qptr, DCT_ROW6);
-            s32 even_sum = row2 + row6;
-            s32 even_diff = DCT_FIXED_MUL(row2 - row6, DCT_IDCT_A1);
-            s32 row4 = DCT_DEQUANT(inptr, qptr, DCT_ROW4);
-            s32 row0 = DCT_DEQUANT(inptr, qptr, DCT_ROW0);
-            s32 even0 = row0 + row4;
-            s32 even1 = row0 - row4;
-            s32 even3 = even0 - even_sum;
-            even_diff -= even_sum;
-            row[DCT_COL0] = even0 + even_sum;
-            row[DCT_COL1] = even1 + even_diff;
-            row[DCT_COL2] = even1 - even_diff;
+            row2 = DCT_DEQUANT(inptr, qptr, DCT_ROW2);
+            row6 = DCT_DEQUANT(inptr, qptr, DCT_ROW6);
+            a0 = row2 + row6;
+            a5 = DCT_FIXED_MUL(row2 - row6, DCT_IDCT_A1);
+            row4 = DCT_DEQUANT(inptr, qptr, DCT_ROW4);
+            row0 = DCT_DEQUANT(inptr, qptr, DCT_ROW0);
+            a1 = row0 + row4;
+            a3 = row0 - row4;
+            even3 = a1 - a0;
+            a5 -= a0;
+            row[DCT_COL0] = a1 + a0;
+            row[DCT_COL1] = a3 + a5;
+            row[DCT_COL2] = a3 - a5;
             {
-                s32 row1 = DCT_DEQUANT(inptr, qptr, DCT_ROW1);
-                s32 row3 = DCT_DEQUANT(inptr, qptr, DCT_ROW3);
-                s32 row5 = DCT_DEQUANT(inptr, qptr, DCT_ROW5);
-                s32 row7 = DCT_DEQUANT(inptr, qptr, DCT_ROW7);
-                s32 odd0 = row5 - row3;
-                s32 odd1 = row1 - row7;
-                s32 odd_sum = odd0 + odd1;
-                s32 odd_pair0 = row1 + row7;
-                s32 odd_pair1 = row5 + row3;
-                s32 odd_scaled1 = DCT_FIXED_MUL(odd1, DCT_IDCT_A2);
-                s32 odd_out0 = odd_pair0 + odd_pair1;
-                odd_sum = DCT_FIXED_MUL(odd_sum, DCT_IDCT_A3);
-                row[DCT_COL6] = (DCT_FIXED_MUL(odd0, DCT_IDCT_A4) + odd_sum) - odd_out0;
-                row[DCT_COL5] = DCT_FIXED_MUL(odd_pair0 - odd_pair1, DCT_IDCT_A1) - row[DCT_COL6];
-                row[DCT_COL4] = (odd_scaled1 - odd_sum) + row[DCT_COL5];
+                row1 = DCT_DEQUANT(inptr, qptr, DCT_ROW1);
+                row3 = DCT_DEQUANT(inptr, qptr, DCT_ROW3);
+                row5 = DCT_DEQUANT(inptr, qptr, DCT_ROW5);
+                row7 = DCT_DEQUANT(inptr, qptr, DCT_ROW7);
+                a8 = row5 - row3;
+                b0 = row1 - row7;
+                b3 = a8 + b0;
+                b1 = row1 + row7;
+                a9 = row5 + row3;
+                odd_scaled1 = DCT_FIXED_MUL(b0, DCT_IDCT_A2);
+                odd_out0 = b1 + a9;
+                b3 = DCT_FIXED_MUL(b3, DCT_IDCT_A3);
+                row[DCT_COL6] = (DCT_FIXED_MUL(a8, DCT_IDCT_A4) + b3) - odd_out0;
+                row[DCT_COL5] = DCT_FIXED_MUL(b1 - a9, DCT_IDCT_A1) - row[DCT_COL6];
+                row[DCT_COL4] = (odd_scaled1 - b3) + row[DCT_COL5];
 
                 ++inptr;
                 ++qptr;
@@ -1059,21 +1064,11 @@ static void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4
     d0 = dest;
     /* The doubled variant expands each row into two adjacent output rows. */
     for (i = DCT_BLOCK_WIDTH; i != 0; --i) {
-        s32 a0;
-        s32 a1;
-        s32 a3;
-        s32 a5;
-        s32 a8;
-        s32 a9;
-        s32 b0;
-        s32 b1;
-        s32 b3;
         u32 packed0;
         u32 packed1;
         u32 packed2;
         u32 packed3;
 
-        s32 odd_scaled1;
         s32 input2 = out[DCT_COL2];
         s32 input6 = out[DCT_COL6];
         s32 input0 = out[DCT_COL0];

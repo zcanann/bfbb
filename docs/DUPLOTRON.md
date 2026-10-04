@@ -14024,3 +14024,30 @@ linkage is not a whole-unit source-link claim. The private compile uses the
 unit's actual ProDG3.5 -G0 configuration. No new assembly, compiler change or
 behavioral test. Evidence: build/ngcsnd78-{baseline.json,tasks-private},
 build/parallel-seventyeighth-{report.json,verify.py,build.log}.
+
+
+### Bink inverse-transform working variables across passes (2026-10-03)
+
+The byte and doubled IDCT now reuse the same butterfly working variables
+across the dequantizing and output passes, following the ownership pattern
+of the exact forward transforms in this file. Each reused variable has the
+same mathematical role in both passes. Expressions, evaluation statement
+order, scratch stores and output writes are unchanged. First-pass local
+declarations move to function scope to keep the C declaration rules valid.
+The doubled variant also shares its existing odd_scaled1 working value.
+
+Full deduplicated and raw scores improve: fastidct8x8 64.052635 -> 65.2915
+and fastidct8x8d 73.728745 -> 76.38461. Source sizes remain 932 and 988 bytes
+respectively, against retail 988 for each. Opcode multisets are unchanged;
+this recovers some scheduling and operand allocation, not missing arithmetic.
+The motion variant regresses 58.61194 -> 56.656715 with the analogous change
+and is not retained. Neither retained function is claimed exact.
+
+The full report changes only these two function scores and fuzzy aggregates.
+All other function records and all exact-code, data and completion measures
+are unchanged. all_source and normal link/check pass; the normal DOL retains
+SHA1 306526d90b48e99894c3138f5fc8f2716d9fecf6. DCT remains NonMatching, so
+this does not claim source-linked retail identity. No compiler change or
+behavioral test. Private evidence: build/dct79-shared-pass,
+build/dct79-shared-fastidct8x8d, build/dct79-shared-FastmIDCT8x8WithMotion;
+combined validation: build/parallel-seventyninth-{report.json,verify.py,build.log}.
