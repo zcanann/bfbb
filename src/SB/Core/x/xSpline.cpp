@@ -279,7 +279,7 @@ void CoefToUnity3(xCoef3* coef1, xCoef3* coef2, F32 f1, F32 f2)
         c2++;
         accumulated = (coef2_2 * fdiff) + linear;
         c1->a[2] = accumulated;
-        c1->a[3] = ((coef2_2 * f1) + ((f1 * (f1 * coef2_1)) + (((coef2_0 * f1) * f1) * f1))) + coef2_3;
+        c1->a[3] = coef2_3 + ((coef2_2 * f1) + ((f1 * (f1 * (coef2_0 * f1))) + (f1 * (coef2_1 * f1))));
         c1++;
         i--;
     }
