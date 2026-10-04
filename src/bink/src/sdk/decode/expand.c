@@ -485,7 +485,7 @@ static inline u32 exp_read_huff4(EXPBITS PTR4* bits, u32 bits_to_peek,
     return symbol;
 }
 
-/* Keep signed-byte conversion in each decoding path. */
+/* Convert each magnitude to a signed byte, then consume its optional sign bit. */
 static inline s8 exp_read_huff4_signed(EXPBITS PTR4* bits, u32 bits_to_peek,
                                  const u8 PTR4* decode, u8 PTR4* syms)
 {
@@ -516,6 +516,12 @@ static inline s8 exp_read_huff4_signed(EXPBITS PTR4* bits, u32 bits_to_peek,
         }
     }
 
+    {
+        EXPBITSTYPE bit;
+        if (symbol != 0 && EXPBITS_GET1_BRANCH(*bits, bit)) {
+            symbol = -symbol;
+        }
+    }
     return symbol;
 }
 
@@ -997,11 +1003,7 @@ static void CheckReadHuff4SBundle(READBUNDLE PTR4* bundle, EXPBITS PTR4* bits)
             decode = bundle->decode;
             syms = bundle->syms;
             while (--count != (u32)-1) {
-                EXPBITSTYPE bit;
                 symbol = (s8)exp_read_huff4_signed(bits, peek, decode, syms);
-                if (symbol != 0 && EXPBITS_GET1_BRANCH(*bits, bit)) {
-                    symbol = -symbol;
-                }
                 *dest++ = (s8)symbol;
             }
         } else {

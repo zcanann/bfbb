@@ -14497,3 +14497,28 @@ build/parallel-hundredeighteenth-{report.json,changes.json,verify.py,build.log}.
 The preceding load-provenance investigation is build/dct116-rtl/; the old
 helper's address-pseudo/loop-hoisting proof is in the RGB worktree under
 build/dct118-helper-rtl/.
+
+## Bink signed Huff4: return the complete signed symbol (2026-10-04)
+
+Move the existing conditional sign-bit read and negation into
+exp_read_huff4_signed after its magnitude decode and bitstream updates. The
+helper now returns the complete signed symbol; the caller only stores it.
+Signed-byte conversion remains in each decode path, zero still consumes no
+sign bit, and all bit reads, cursor updates, narrowing and output-store order
+are preserved. Repeat packets and the unsigned readers are unchanged. The
+helper fully inlines. This replaces the former result-copy/zero-test with a
+comparison on the helper's symbol, though other register roles still differ.
+The original source spelling remains unproven.
+
+The full deduplicated CheckReadHuff4SBundle score improves 98.90995% to
+99.028435%, with source and retail size unchanged at 844 bytes. No other
+function score or non-fuzzy report field changes, including all data and
+completion totals. All-source compilation and the normal retail check pass;
+DOL SHA1 remains 306526d90b48e99894c3138f5fc8f2716d9fecf6. Expand remains
+NonMatching; no source-link completion is claimed. No assembly, volatile,
+compiler changes or behavioral tests were introduced.
+
+Evidence: build/huff120/ (one complete private candidate, instruction changes,
+validation.json), build/huff120-candidate-{report.json,build.log}, and the
+unchanged baseline build/dct119-baseline-report.json. Prior output-parameter
+and output-macro helper trials were not repeated.
