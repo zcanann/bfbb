@@ -427,42 +427,35 @@ xPar* xParEmitterEmitSetTexIdxs(xPar* p, const xParSys* ps)
 
 xPar* xParEmitterEmit(xParEmitter* pe, F32 emit_dt, F32 par_dt)
 {
-    xPar* last_p;
-    xParEmitterAsset* pea;
-    xParEmitterPropsAsset* prop;
+    F32 life;
     S32 rate_has_elapsed;
     F32 rate;
-    S32 count;
     xParSys* ps;
+    S32 count;
+    xParEmitterPropsAsset* prop;
+    xParEmitterAsset* pea;
     xPar* p;
-    F32 life;
     F32 size_birth;
     F32 size_death;
     xVec3 emitPosition;
-    xBase* attachObject;
-    S32 attachGroupIndex;
-    S32 attachGroupTotal;
-    S32 emitAgain;
-    xBase* emitObj;
-    S32 marker;
-    xGroup* g;
-    U32 get_rnd_group_idx;
+    S32 attachGroupIndex, attachGroupTotal;
     xEnt* attach_ent;
+    S32 c;
+    S32 emitAgain;
     xMat4x3* bone_mat;
     xVec3 bone_vel;
     xVec3 emitvel;
     S32 i;
-    S32 c;
-    F32 fc1;
-    F32 fc2;
-    xBase* obj;
+    U32 get_rnd_group_idx;
+    F32 fc2, fc1;
+    S32 marker;
 
     if (pe->parSys == NULL)
     {
         return NULL;
     }
 
-    last_p = NULL;
+    xPar* last_p = NULL;
     pea = pe->tasset;
     prop = pe->prop;
 
@@ -524,21 +517,21 @@ xPar* xParEmitterEmit(xParEmitter* pe, F32 emit_dt, F32 par_dt)
         rate_has_elapsed = ps->tasset->maxPar - ps->group->m_num_of_particles;
     }
 
-    emitObj = (xBase*)pe->attachTo;
+    xBase* emitObj = (xBase*)pe->attachTo;
     count = -1;
     attachGroupTotal = -1;
 
     do
     {
         emitAgain = 0;
-        attachObject = NULL;
+        xBase* attachObject = NULL;
         marker = 0;
 
         if (emitObj != NULL)
         {
             if (emitObj->baseType == eBaseTypeGroup)
             {
-                g = (xGroup*)emitObj;
+                xGroup* g = (xGroup*)emitObj;
 
                 if (count == -1)
                 {
@@ -650,7 +643,8 @@ xPar* xParEmitterEmit(xParEmitter* pe, F32 emit_dt, F32 par_dt)
                 emitvel = 0.0f;
             }
 
-            for (i = 0; i < rate_has_elapsed; i++)
+            i = 0;
+            while (i < rate_has_elapsed)
             {
                 p = xParGroupAddPar(ps->group);
 
@@ -700,6 +694,7 @@ xPar* xParEmitterEmit(xParEmitter* pe, F32 emit_dt, F32 par_dt)
 
                     switch (pea->emit_type)
                     {
+                        xBase* obj;
                     case eParEmitterPoint:
                         xParEmitterEmitPoint(p, pea, par_dt);
                         break;
@@ -787,6 +782,7 @@ xPar* xParEmitterEmit(xParEmitter* pe, F32 emit_dt, F32 par_dt)
                 {
                     emitAgain = 0;
                 }
+                i++;
             }
         }
     } while (emitAgain);
