@@ -13302,3 +13302,28 @@ modifications, new assembly or ancillary tests.
 Evidence: build/expand64-motion-marks-private,
 build/expand64-scratch-destination-private, and
 build/parallel-sixtyfourth-{report.json,validation.log}.
+
+
+## Bink run counter and Goo color capture (2026-10-03)
+
+Initialize the normal RUN filled-pixel count after reading the scan-pattern
+bits. Retail initializes the counter at 0x22c0 after the pattern lookup;
+its lifetime need not overlap that bit read. This raises raw ExpandPlane
+84.98242% to 85.17377% and full deduplicated score 85.78702% to 85.97836%.
+The equivalent scaled-path change alone and combined were weaker; retain
+only the normal-path lifetime change. Source size remains 5644 bytes.
+
+Before other integration, the full report changes only ExpandPlane; all
+other function records, data and exact/completion totals are unchanged.
+All-source build and normal retail link/check pass, DOL SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. Expand remains NonMatching.
+Evidence: build/expand65-run-count-private and
+build/parallel-sixtyfifth-{report.json,validation.log}.
+
+The independently verified zFXGooRenderAtomic color-capture change is
+integrated separately: immutable promoted green/blue values and direct red
+output recover more retail channel roles in all three vertex blocks.
+Worker deduplicated score improves 99.182076% to 99.35014%, with all other
+functions and all 26696 zFX data bytes unchanged. Goo and skinning residuals
+still prevent zFX closure. Its scoped skin-mask trial regressed and was
+restored. No new assembly, compiler modifications or ancillary tests.

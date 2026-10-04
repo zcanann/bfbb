@@ -1397,10 +1397,11 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 /* Runs decode in scan order before the block is copied to the frame. */
                 {
                     const u8 PTR4* scan;
-                    s32 filled_pixels = 0;
+                    s32 filled_pixels;
                     EXPBITSTYPE bit;
 
                     scan = BINK_DCT_PATTERN_SCAN(exp_get_bits(&bitstate, BINK_DCT_PATTERN_BITS));
+                    filled_pixels = 0;
                     BINK_MARK_WORK_BLOCK(work_row, work_col);
                     do {
                         s32 run_length;
