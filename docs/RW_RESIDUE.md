@@ -686,3 +686,25 @@ argument / loop register roles are unresolved, as is CalcMeshNBTs.
 Evidence: `build/multitex-input-capture`, `build/multitex-{baseline,final}-report.json`
 and `build/multitex-validation.json`. The prior blanket "compiler-missing"
 label does not apply to this recovered source-level capture boundary.
+
+
+### Native texture writer accounting follow-up (2026-10-04)
+
+The previously measured format/accounting boundary is now retained under
+current source-compromise guidance. `_rwDlNativeTextureWrite` obtains the
+raster and builds its packed format before subtracting the completed native
+texture header from `bytesLeftToWrite`. No call, write size, failure path,
+or counter arithmetic changes. This is a small source ordering compromise,
+not a claim that the original statement placement has been recovered.
+
+Current GC/2.0p1f reproduces the gain: 97.748634 -> 98.59563 at unchanged
+732-byte retail size. Raster parent/extension reads move before the counter
+store, but the counter/format store order and several register roles remain
+unmatched. The earlier blanket compiler-missing label overstates this gap.
+
+The full deduplicated report changes only this function and fuzzy totals;
+all exact-code, data, function, and completion measures are unchanged.
+All-source compilation and the normal retail DOL SHA1 check pass. The unit
+remains NonMatching; this is not a source-link closure. Evidence in the
+isolated worker: `build/dltexdic88-{baseline,candidate}-report.json`,
+`build/dltexdic88-validation.json`, and private diffs in `build/dltexdic88/`.

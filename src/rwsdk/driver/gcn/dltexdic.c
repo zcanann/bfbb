@@ -105,12 +105,11 @@ RwBool _rwDlNativeTextureWrite(void* streamIn, void* textureIn, RwInt32 flags)
         return FALSE;
     }
 
-    bytesLeftToWrite -= sizeof(nativeTexture);
-
     raster = ((RwTexture*)textureIn)->raster;
     rasExt = RASTEREXTFROMRASTER(raster->parent);
 
     nativeRaster.formatType = (raster->cFormat << 8) | raster->cType;
+    bytesLeftToWrite -= sizeof(nativeTexture);
     nativeRaster.width = (RwUInt16)raster->width;
     nativeRaster.height = (RwUInt16)raster->height;
     nativeRaster.depth = (RwUInt8)raster->depth;
