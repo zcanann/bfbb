@@ -46,9 +46,9 @@ xhud::unit_meter_widget::unit_meter_widget(const xhud::unit_meter_asset& a)
 
     for (i = 0; i < 2; i++)
     {
-        for (j = 0; j < 6; j++)
+        for (j = 0; j < 6;)
         {
-            model[j][i] = load_model(res.model[i].id);
+            model[j++][i] = load_model(res.model[i].id);
         }
     }
 

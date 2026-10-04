@@ -13418,3 +13418,30 @@ Show_frame, with historical broad-rule tradeoffs; it did not establish a
 safe common compiler patch. The Bink sound/Huffman/bitplane audits found
 prior controls already covering the observed residuals, so no repeated
 source permutations were retained.
+
+
+## HUD unit-meter indexed initialization (2026-10-03)
+
+`unit_meter_widget::unit_meter_widget` advances its inner row index in the
+assignment (`model[j++][i]`) rather than in the `for` increment. This keeps the
+same twelve model loads and `[6][2]` indexing, while recovering the retail
+indexed store and inner byte-offset induction. Retail advances the row/count
+before the store at target `0xd0..0xe4`; the previous source folded both loops
+into a walking output pointer. This is a source evaluation-boundary change,
+not the previously exhausted pointer/reference spelling sweep.
+
+Authoritative deduplicated constructor score: **90.246376 -> 93.21739**;
+source size **268 -> 272 bytes**, retail **276**. Unit score improves
+98.44213 -> 98.916664. A second, combined model-info cursor trial scored
+92.695656 and was rejected. The remaining four-byte gap concerns the outer
+output offset/base calculation; the unit remains `NonMatching`.
+
+`all_source` and normal link pass. Full report changes only this constructor;
+all other function scores, data, exact counts and linked-unit counts are
+unchanged. Normal DOL SHA1 remains
+`306526d90b48e99894c3138f5fc8f2716d9fecf6`; isolated p1a/p1e compiler hashes
+remain `a78a5fdb6c1d5677e987636b2e0743dbaefe9542` and
+`9d445725489050035740aaff35860eddbaf3c3c9`. This is not a source-selected
+whole-unit link claim. Worker evidence: `build/unitmeter-audit.json`,
+`unitmeter-postincrement.json`, `unitmeter-model-cursor.json`,
+`unitmeter-retained-report.json`, and `unitmeter-retained-validation.json`.
