@@ -12981,3 +12981,36 @@ retail conversion constants versus anonymous compiler constants, not wrong
 data. A fresh bidirectional keyframe-loop variant regressed and was restored.
 Evidence in the plankton worktree: build/binkread-closure-rodata-proof.json
 and build/binkread-closure-findings.md. No reader source changes were retained.
+
+
+### Bink frame-pointer lifetimes and tail updates (2026-10-03)
+
+Initialize ExpandPlane's existing dest/old/work_row locals at declaration,
+before decoder setup calls. Their values are unchanged, but their lifetimes
+now recover retail's frame/work register roles (r22/r21/r20) and remove three
+late pointer copies. Using the formal parameters directly also improves the
+private score but is weaker than these ordinary initialized locals. Move the
+independent work-column and frame-pointer updates before the remaining-width
+subtraction, following the target tail; row coverage and work marks are intact.
+
+Combined raw matching improves 80.45774 -> 81.362404, with source size
+5,660 -> 5,648 bytes. Full deduplicated ExpandPlane improves
+81.1474 -> 82.05882. Every other function record and all per-unit/global exact
+code, data, and completion measures are unchanged. All-source compilation and
+normal retail linkage pass, SHA1 306526d90b48e99894c3138f5fc8f2716d9fecf6.
+Expand remains NonMatching and completion remains 469/543.
+
+A separate normal-pattern audit finds identical 168-instruction/672-byte
+operation inventories, including all mask loads, pixel stores and pattern
+cursor reloads. Moving its work mark after both color captures gains alone,
+but loses against this pointer-lifetime checkpoint when combined (81.1359 raw).
+Preserving the helper with captured color-value arguments has the same loss.
+Both pattern variants are therefore saved but not retained. A fresh Dutchman
+review also confirms the proposed aggregate-lifetime mechanism was already
+tried and regressed; no repeated compilation or source edit was made.
+
+Evidence: build/expand57-formals-private, expand57-tail-private,
+expand57-combined-private, expand57-pattern-combined-private, and
+parallel-fiftyseventh-report.json/validation.log. RGB evidence is
+normal-pattern-audit-rows.txt, pattern-lexical-private and
+pattern-captured-helper-private under build.

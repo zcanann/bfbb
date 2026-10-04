@@ -1306,9 +1306,9 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
     u32 work_pitch;
     u8 block_type;
     u8 subblock_type;
-    u8 PTR4* dest;
-    u8 PTR4* old;
-    u8 PTR4* work_row;
+    u8 PTR4* dest = out;
+    u8 PTR4* old = prev;
+    u8 PTR4* work_row = work;
 
     (void)key_frame;
 
@@ -1348,9 +1348,6 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
     StartReadHuff4Bundle(&yoff, &bitstate);
     StartReadHuff4Bundle(&runs, &bitstate);
 
-    dest = out;
-    old = prev;
-    work_row = work;
     for (row = 0; row < height; row += BINK_BLOCK_SIDE) {
         CheckReadRLEHuff4Bundle(&block_types, &bitstate);
         CheckReadRLEHuff4Bundle(&subblock_types, &bitstate);
@@ -1818,18 +1815,18 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                     }
                 }
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
-                remaining_width -= BINK_BLOCK_SIDE;
-                dest += BINK_BLOCK_SIDE;
-                old += BINK_BLOCK_SIDE;
                 work_col += plane;
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
+                dest += BINK_BLOCK_SIDE;
+                old += BINK_BLOCK_SIDE;
+                remaining_width -= BINK_BLOCK_SIDE;
                 break;
             }
 
-            remaining_width -= BINK_BLOCK_SIDE;
+            work_col += plane;
             dest += BINK_BLOCK_SIDE;
             old += BINK_BLOCK_SIDE;
-            work_col += plane;
+            remaining_width -= BINK_BLOCK_SIDE;
         }
 
         if (plane == BINK_LUMA_PLANE_SCALE) {
