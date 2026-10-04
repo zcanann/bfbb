@@ -73,13 +73,25 @@ MACRO_START                                                                     
 }                                                                                                 \
 MACRO_STOP
 
+#define RxObjSpace3DVertexSetPreLitColor(_vert, _col)                                             \
+MACRO_START                                                                                       \
+{                                                                                                 \
+    (_vert)->r = (_col)->red;                                                                     \
+    (_vert)->g = (_col)->green;                                                                   \
+    (_vert)->b = (_col)->blue;                                                                    \
+    (_vert)->a = (_col)->alpha;                                                                   \
+}                                                                                                 \
+MACRO_STOP
+
 #define RwIm3DVertexSetRGBA(_vert, _r, _g, _b, _a)                                                \
 MACRO_START                                                                                       \
 {                                                                                                 \
-    (_vert)->r = _r;                                                                              \
-    (_vert)->g = _g;                                                                              \
-    (_vert)->b = _b;                                                                              \
-    (_vert)->a = _a;                                                                              \
+    RwRGBA _col;                                                                                  \
+    _col.red = (_r);                                                                              \
+    _col.green = (_g);                                                                            \
+    _col.blue = (_b);                                                                             \
+    _col.alpha = (_a);                                                                            \
+    RxObjSpace3DVertexSetPreLitColor(_vert, &_col);                                               \
 }                                                                                                 \
 MACRO_STOP
 

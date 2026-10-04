@@ -48,7 +48,7 @@ void zActionLineUpdate(F32 seconds)
 
 static void RenderActionLine(_tagActionLine* l)
 {
-    static volatile RxObjSpace3DVertex sStripVert[4];
+    static RxObjSpace3DVertex sStripVert[4];
 
     for (S32 i = 0; i < 4; i++)
     {
