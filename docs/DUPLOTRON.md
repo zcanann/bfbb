@@ -13874,3 +13874,29 @@ paired scalar output reconstruction were byte-neutral and discarded. No new
 assembly, compiler changes, or behavioral tests. Evidence:
 build/expand76-{baseline.json,row-bits-private},
 build/parallel-seventysixth-{report.json,verify.py,build.log}.
+
+
+### Bink lossy writer child-depth acquisition (2026-10-03)
+
+`WriteBPLossy` improves from 96.14938% to 96.50967% in the authoritative
+full deduplicated report. Retail's first child read at 0x2398 is followed by
+its persistent cursor address at 0x239c before the presence-bit write. The
+later children likewise load their depth through the advanced cursor before
+finishing the coefficient-index increment. Capture that depth separately,
+using the same input/cursor boundary already present in `WriteBPLossless`.
+The post-bitstream-write depth reloads remain intact; tree contents, child
+coverage, index truncation and bitstream updates are unchanged.
+
+This recovers the first cursor setup boundary and improves later load order,
+while some index-increment scheduling remains different. Source size remains
+2,260 bytes versus retail's 2,276. The older child-type/caching trials replaced
+or reused post-write values; this change only captures the pre-write input.
+No compiler flags, compiler binaries, assembly or behavioral suites change.
+
+All other function records, non-text sections and per-unit non-fuzzy measures
+are identical to the baseline report. The full `all_source` build and normal
+build pass, retaining DOL SHA1 `306526d90b48e99894c3138f5fc8f2716d9fecf6`.
+Bitplane remains NonMatching: normal linking does not establish source-linked
+retail equivalence for this unit. Evidence in the isolated RGB worktree:
+`build/bitplane-lossy-phase-report.json`, `bitplane-lossy-phase-validation.json`,
+`bitplane-lossy-phase-build.log` and `bitplane-lossy-phase-link.log`.
