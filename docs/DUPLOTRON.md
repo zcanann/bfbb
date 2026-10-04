@@ -13279,3 +13279,26 @@ normal retail hash does not establish a source-selected Bink match. No new
 assembly, compiler modifications or ancillary behavioral tests.
 Evidence: build/expand63-{scale-samples,pattern-masks}-private and
 build/parallel-sixtythird-{report.json,validation.log}.
+
+
+## Bink residue and inter dirty-mark ordering (2026-10-03)
+
+Like the previously corrected motion-only case, retail marks residue and
+inter blocks dirty before loading the signed X/Y offsets (0x2584 and 0x2734).
+Move each mark ahead of those loads while keeping bundle advances, motion
+copy bodies and decoder calls unchanged. Work-mask storage and offset bundles
+are independent; each block receives the same mark and consumes the same
+motion values. The two paths share substantial code, so evaluate the combined
+form: residue alone and inter alone score slightly lower, but together raw
+ExpandPlane improves 84.643005% to 84.98242%, with unchanged 5644-byte size.
+
+The full deduplicated report improves 85.4476% to 85.78702%. All other function
+records, data, exact measures and completion counts are unchanged (469/543).
+All-source build and normal retail link/check pass; DOL SHA1 remains
+306526d90b48e99894c3138f5fc8f2716d9fecf6. Expand remains NonMatching; no
+source-selected closure is claimed. A separate explicit scratch-destination
+pointer trial regressed to 84.54361% raw and was discarded. No compiler
+modifications, new assembly or ancillary tests.
+Evidence: build/expand64-motion-marks-private,
+build/expand64-scratch-destination-private, and
+build/parallel-sixtyfourth-{report.json,validation.log}.

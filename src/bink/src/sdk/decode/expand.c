@@ -1473,12 +1473,14 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 break;
             }
             case BINK_BLOCK_RESIDUE: {
-                s32 motion_x = BINK_BUNDLE_S8(xoff);
-                s32 motion_y = BINK_BUNDLE_S8(yoff);
+                s32 motion_x;
+                s32 motion_y;
                 u8 PTR4* motion_source;
                 u32 residue_limit;
 
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
+                motion_x = BINK_BUNDLE_S8(xoff);
+                motion_y = BINK_BUNDLE_S8(yoff);
                 BINK_BUNDLE_ADVANCE(xoff, BINK_BUNDLE_BYTE_PITCH);
                 BINK_BUNDLE_ADVANCE(yoff, BINK_BUNDLE_BYTE_PITCH);
                 motion_source = BINK_MOTION_SOURCE(old, pitch, motion_x, motion_y);
@@ -1524,12 +1526,14 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 break;
             }
             case BINK_BLOCK_INTER: {
-                s32 motion_x = BINK_BUNDLE_S8(xoff);
-                s32 motion_y = BINK_BUNDLE_S8(yoff);
+                s32 motion_x;
+                s32 motion_y;
                 u8 PTR4* motion_source;
                 u32 quant;
 
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
+                motion_x = BINK_BUNDLE_S8(xoff);
+                motion_y = BINK_BUNDLE_S8(yoff);
                 BINK_BUNDLE_ADVANCE(xoff, BINK_BUNDLE_BYTE_PITCH);
                 BINK_BUNDLE_ADVANCE(yoff, BINK_BUNDLE_BYTE_PITCH);
                 motion_source = BINK_MOTION_SOURCE(old, pitch, motion_x, motion_y);
