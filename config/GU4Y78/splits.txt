@@ -1090,7 +1090,7 @@ SB/Core/gc/iCollide.cpp:
 	.text       start:0x800C30EC end:0x800C3150
 	.bss        start:0x802FB1E0 end:0x802FB220
 	.sbss       start:0x803CBE48 end:0x803CBE70
-	.sdata2     start:0x803CE458 end:0x803CE498
+	.sdata2     start:0x803CE458 end:0x803CE478
 
 SB/Core/gc/iCollideFast.cpp:
 	.text       start:0x800C3150 end:0x800C3154
@@ -1098,6 +1098,7 @@ SB/Core/gc/iCollideFast.cpp:
 SB/Core/gc/iDraw.cpp:
 	.text       start:0x800C3154 end:0x800C3290
 	.text       start:0x800C3290 end:0x800C3290
+	.sdata2     start:0x803CE478 end:0x803CE498
 
 SB/Core/gc/iEnv.cpp:
 	.text       start:0x800C3290 end:0x800C36E4

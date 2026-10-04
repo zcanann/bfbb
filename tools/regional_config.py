@@ -195,6 +195,40 @@ class Mapping:
 
 
 
+def restore_regional_sections(splits: str, target: Elf) -> str:
+    """Restore input sections added in PAL that USA ownership cannot project."""
+    # iDraw's PAL-only display-offset function adds a constant pool between
+    # iCollide and iFMV. Projecting USA's iCollide endpoint swallowed that pool.
+    donor, owner, section = "SB/Core/gc/iCollide.cpp", "SB/Core/gc/iDraw.cpp", ".sdata2"
+    key = ("section", Path(owner).name, section, 0)
+    start = target.symbols[key][1]
+    lines = splits.splitlines()
+    current = ""
+    end = None
+    for index, line in enumerate(lines):
+        if line and not line[0].isspace() and line.endswith(":"):
+            current = line[:-1]
+        match = SPLIT.fullmatch(line)
+        if current != donor or not match or match[2] != section:
+            continue
+        indent, sec, space, lo, hi, suffix = match.groups()
+        if not int(lo, 16) < start < int(hi, 16):
+            raise ValueError("PAL iDraw pool is not inside the projected iCollide interval")
+        end = int(hi, 16)
+        following = min(value[1] for anchor, value in target.symbols.items()
+                        if anchor[0] == "section" and value[0] == section and value[1] > start)
+        if end != following:
+            raise ValueError("PAL iDraw pool endpoint disagrees with the next ELF input section")
+        lines[index] = f"{indent}{sec}{space}start:0x{int(lo, 16):08X} end:0x{start:08X}{suffix}"
+    if end is None or f"{owner}:" not in lines:
+        raise ValueError("Missing projected iCollide or iDraw ownership")
+    insert = lines.index(f"{owner}:") + 1
+    while insert < len(lines) and lines[insert].strip():
+        insert += 1
+    lines.insert(insert, f"\t{section:<12}start:0x{start:08X} end:0x{end:08X}")
+    return "\n".join(lines) + "\n"
+
+
 def normalize(dtk: Path, original: Path, splits: str, symbols: str):
     """Use DTK's actual relocation/data analysis, without touching project files."""
     with tempfile.TemporaryDirectory(prefix="bfbb-pal-normalize-") as temp:
@@ -229,6 +263,7 @@ def generate(args):
         raise ValueError("Unexpected PAL retail ELF")
     mapping = Mapping(source, target)
     splits = mapping.splits((root / "config/GQPE78/splits.txt").read_text())
+    splits = restore_regional_sections(splits, target)
     split_counts = dict(mapping.counts)
     with tempfile.TemporaryDirectory(prefix="bfbb-pal-config-") as scratch:
         subprocess.run([str(args.dtk.resolve()), "elf", "config", str(orig / "GQPP78/files/sbpeM.elf"), scratch], check=True)
