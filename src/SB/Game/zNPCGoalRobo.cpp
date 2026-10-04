@@ -5787,7 +5787,11 @@ S32 zNPCGoalHokeyPokey::Process(en_trantype* trantype, F32 dt, void* updCtxt, xS
     }
 
     if ((zNPCFodBzzt::tmr_hokeypokey < 0.32f) && (flg_hokey & 2) &&
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+        (xabs(ang_spinrate) < 0.37699112f))
+#else
         (xabs(ang_spinrate) < 0.31415927f))
+#endif
     {
         flg_hokey &= ~2;
         TriggerExit();
@@ -5882,7 +5886,12 @@ S32 zNPCGoalEvilPat::InputStun(NPCStunInfo* info)
 
 void zNPCGoalEvilPat::GlyphStart()
 {
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+    // The double literal preserves the PAL retail angle rounding.
+    static xVec3 ang_delta = { DEG2RAD(2.52), 0.0f, 0.0f };
+#else
     static xVec3 ang_delta = { DEG2RAD(2.1000001f), 0.0f, 0.0f };
+#endif
     static xVec3 scale = { 0.75f, 0.75f, 0.75f };
 
     zNPCRobot* robot = (zNPCRobot*)psyche->clt_owner;
