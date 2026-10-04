@@ -480,18 +480,17 @@ static void CalcNBTSetup(RpGameCubeVtxFmt* vtxFmt, RwUInt8* posSize, RwUInt8* nb
         RwUInt8 vtxFmtSizeConvTable[5] = { 1, 1, 2, 2, 4 };
         RwUInt8 vtxFmtNormConvTable[5] = { 0, 6, 0, 14, 0 };
 
-        *posSize = vtxFmtSizeConvTable[vtxFmt->pos];
-        *nbtSize = vtxFmtSizeConvTable[vtxFmt->norm];
-        *uvSize = vtxFmtSizeConvTable[vtxFmt->texCoord[0]];
-
-        posGQR = vtxFmtTypeConvTable[vtxFmt->pos] | (vtxFmt->posFrac << 8);
+        posGQR = (vtxFmt->posFrac << 8) | vtxFmtTypeConvTable[vtxFmt->pos];
         posGQR |= posGQR << 16;
+        *posSize = vtxFmtSizeConvTable[vtxFmt->pos];
 
         nbtGQR = vtxFmtTypeConvTable[vtxFmt->norm] | (vtxFmtNormConvTable[vtxFmt->norm] << 8);
         nbtGQR |= nbtGQR << 16;
+        *nbtSize = vtxFmtSizeConvTable[vtxFmt->norm];
 
         uvGQR = vtxFmtTypeConvTable[vtxFmt->texCoord[0]] | (vtxFmt->texCoordFrac[0] << 8);
         uvGQR |= uvGQR << 16;
+        *uvSize = vtxFmtSizeConvTable[vtxFmt->texCoord[0]];
     }
     else
     {
