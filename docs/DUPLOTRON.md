@@ -13014,3 +13014,32 @@ expand57-combined-private, expand57-pattern-combined-private, and
 parallel-fiftyseventh-report.json/validation.log. RGB evidence is
 normal-pattern-audit-rows.txt, pattern-lexical-private and
 pattern-captured-helper-private under build.
+
+
+## YUV initializer format-owned red shift (2026-10-03)
+
+Retain the red-channel packing shift alongside each format's channel widths and
+blue shift. All existing formats/defaults use red_shift = 0; write that value to
+the existing first RGBshift slot. No format cases, table slots, packed values,
+header declarations or storage sizes change. The first word's historical
+RGB_SHIFT_RESERVED0 spelling is preserved to avoid an unrelated header change.
+
+Retail YUV_init defines r31 = 0 within its format cases (+0x254, +0x268,
++0x284, +0x2a0, +0x2b8 and +0x2dc), then keeps it through the first RGBshift
+store at +0x374. This is distinct from the generic reserved-word zero formed at
++0x38c. The neighboring first-triplet values are the green shift (red_bits)
+and blue_shift, supporting red-shift ownership rather than arbitrary register
+spelling. Earlier format-switch/table-pointer/blue-high trials did not exercise
+this value boundary. Only this single source hypothesis was tried this pass.
+
+Full deduplicated YUV_init improves 68.080536 -> 68.67785; raw objdiff improves
+66.447426 -> 67.30872. Source size rises 1760 -> 1768 toward retail 1788. The full
+report changes only YUV_init: unit 96.03404 -> 96.0704, all 4804 data bytes remain
+exact, and 89/97 exact functions remain unchanged. This is partial source progress;
+the YUV unit stays NonMatching and no actual source-link completion is claimed.
+
+Fresh all_source and normal builds pass with retail SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. No compiler, assembly or behavioral-test
+changes. Evidence: build/yuv-init-closure-{baseline,red-shift}.json,
+yuv-init-closure-gain-report.json and yuv-init-closure-gain-build.log; baseline
+full comparison is build/binkread-closure-restored-report.json at dcbec2d53.

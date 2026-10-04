@@ -1058,6 +1058,7 @@ extern "C" void YUV_init(s32 flags)
     u32 green_bits;
     u32 blue_bits;
     u32 blue_shift;
+    u32 red_shift;
     u32 red_down;
     u32 green_down;
     u32 blue_down;
@@ -1117,21 +1118,25 @@ extern "C" void YUV_init(s32 flags)
             red_bits = RGB_BITS_6;
             green_bits = RGB_BITS_5;
             blue_bits = RGB_BITS_5;
+            red_shift = 0;
             blue_shift = RGB_565_BLUE_SHIFT;
         } else if (flags < BINKSURFACE655) {
             red_bits = RGB_BITS_5;
             green_bits = RGB_BITS_6;
             blue_bits = RGB_BITS_5;
+            red_shift = 0;
             blue_shift = RGB_565_BLUE_SHIFT;
         } else if (flags == BINKSURFACE664) {
             red_bits = RGB_BITS_6;
             green_bits = RGB_BITS_6;
             blue_bits = RGB_BITS_4;
+            red_shift = 0;
             blue_shift = RGB_664_BLUE_SHIFT;
         } else {
             red_bits = RGB_BITS_NONE;
             green_bits = RGB_BITS_NONE;
             blue_bits = RGB_BITS_NONE;
+            red_shift = 0;
             blue_shift = RGB_BITS_NONE;
         }
     } else if (flags < BINKSURFACE5551) {
@@ -1139,17 +1144,20 @@ extern "C" void YUV_init(s32 flags)
             red_bits = RGB_BITS_4;
             green_bits = RGB_BITS_4;
             blue_bits = RGB_BITS_4;
+            red_shift = 0;
             blue_shift = RGB_444_BLUE_SHIFT;
         } else {
             red_bits = RGB_BITS_NONE;
             green_bits = RGB_BITS_NONE;
             blue_bits = RGB_BITS_NONE;
+            red_shift = 0;
             blue_shift = RGB_BITS_NONE;
         }
     } else {
         red_bits = RGB_BITS_5;
         green_bits = RGB_BITS_5;
         blue_bits = RGB_BITS_5;
+        red_shift = 0;
         blue_shift = RGB_555_BLUE_SHIFT;
     }
 
@@ -1162,7 +1170,7 @@ extern "C" void YUV_init(s32 flags)
     white = (RGB_CHANNEL_MAX >> red_down) | ((RGB_CHANNEL_MAX >> green_down) << red_bits) |
             ((RGB_CHANNEL_MAX >> blue_down) << blue_shift);
 
-    RGBshift[RGB_SHIFT_RESERVED0] = 0;
+    RGBshift[RGB_SHIFT_RESERVED0] = red_shift;
     RGBshift[RGB_SHIFT_RESERVED1] = 0;
     RGBshift[RGB_SHIFT_RED_BITS] = red_bits;
     RGBshift[RGB_SHIFT_RESERVED3] = 0;
