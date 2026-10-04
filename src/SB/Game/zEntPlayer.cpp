@@ -1,3 +1,6 @@
+// Retail resolves these vector helpers externally and has no local templates.
+#define XVEC3_DEFER_AGGREGATE_HELPERS
+
 // Retail called the 9-argument xVec3* xSndPlay3D out of line from this TU (see
 // zEntPlayerDriveUpdate), so opt out of zEnt.h's inline definition of it.
 #define XSNDPLAY3D_OUT_OF_LINE
@@ -69,6 +72,8 @@
 #include "zShrapnel.h"
 #include "zSurface.h"
 #include "zThrown.h"
+
+#undef XVEC3_DEFER_AGGREGATE_HELPERS
 
 extern U32 gPTankDisable;
 

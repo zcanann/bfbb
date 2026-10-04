@@ -13,9 +13,12 @@ struct xVec3
     static const xVec3 m_UnitAxisX;
     static const xVec3 m_UnitAxisY;
 
-    // The aggregate initializers in create() and cross() each emit a 12-byte
-    // .rodata template in every unit that includes this header, as retail's
-    // did; the linker strips them wherever nothing else keeps the section.
+    // These inline aggregate initializers emit 12-byte .rodata templates.
+    // Declaration-only users resolve the helpers in another translation unit.
+#ifdef XVEC3_DEFER_AGGREGATE_HELPERS
+    static xVec3 create(F32 x, F32 y, F32 z);
+    static xVec3 create(F32 f);
+#else
     static xVec3 create(F32 x, F32 y, F32 z)
     {
         xVec3 v = { x, y, z };
@@ -27,6 +30,8 @@ struct xVec3
         xVec3 v = { f, f, f };
         return v;
     }
+
+#endif
 
     xVec3& operator=(F32 f)
     {
@@ -104,6 +109,9 @@ struct xVec3
 
     F32 dot(const xVec3& c) const;
 
+#ifdef XVEC3_DEFER_AGGREGATE_HELPERS
+    xVec3 cross(const xVec3& c) const;
+#else
     xVec3 cross(const xVec3& c) const
     {
         xVec3 v = { 0.0f, 0.0f, 0.0f };
@@ -114,6 +122,8 @@ struct xVec3
 
         return v;
     }
+
+#endif
 
     xVec3& normalize();
     xVec3& assign(F32 val);

@@ -13597,3 +13597,43 @@ and restored normal SHA-1 remains
 there are no new shared-header consumers to rebuild. Private artifacts:
 `build/xcamera-round70-quat-owner-link.py`, corresponding link.json,
 linked.elf, report.json, and residue.json. No behavioral tests or compiler edits.
+
+
+## zEntPlayer external vector-helper ownership (2026-10-03)
+
+The retail player object declares xVec3::create(F32,F32,F32) externally and
+contains none of the three 12-byte aggregate initializer templates emitted
+by xVec3.h's two create overloads and cross. The source object emitted all
+three zero templates plus an extra weak create body. Only the third template
+had a reference, from that extra body; the other two were unused.
+
+XVEC3_DEFER_AGGREGATE_HELPERS preserves declarations for these methods while
+leaving their existing inline definitions unchanged for default consumers.
+zEntPlayer opts in around its includes. No retail function body, arithmetic,
+or class layout changes.
+
+The authoritative full report changes only player .rodata from 99.91898% to
+100%. Crediting that 14,816-byte section takes player matched data from
+13,004/27,820 to 27,820/27,820 (100%), and project matched data from 1,264,984
+to 1,279,800 (99.93097%). Every function record and all exact-code/completion
+counts remain unchanged; completion is 469/543. Raw relocation comparisons
+improve at five call sites, but the authoritative report already normalizes
+those differences; they are not additional function gains.
+
+The raw source .rodata is now 14,812 bytes versus retail's 14,816, with trailing
+alignment padding excluded from the report comparison. All 183 dependency-
+recorded xVec3.h consumers were explicitly rebuilt, followed by all_source
+and the normal retail link/hash check. Before/after player source-selected
+DOLs are identical: 2,859,200 bytes, SHA1
+f7c68a5c8dbd50bc76bead3b88d8c7344b1c8888. The linker already stripped the
+removed definitions/templates. Independent player layout/function differences
+remain; this is object-data matching, not TU closure. Normal DOL SHA1 remains
+306526d90b48e99894c3138f5fc8f2716d9fecf6.
+
+The integrated camera ownership checkpoint independently reproduces 205
+source-DOL byte differences, all within xBinaryCamera::update and none
+elsewhere, SHA1 ea4e9276c185b32cc9fcf1e3bf00a223dd031541. Both units remain
+NonMatching. Evidence: build/player70-{baseline.json,aggregate-visibility,
+affected-sources.txt,baseline-source-link.json,candidate-source-link.json};
+build/parallel-seventieth-{final-report.json,final-build.log,verify.py};
+build/xcamera70-{source-link.json,source-linked.dol}.
