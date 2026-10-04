@@ -97,11 +97,18 @@ The regional Robo goal unit also links exactly with the existing source
 selection after restoring its PAL angle constants. Verify the full manifest:
 a Robo-only substitution into otherwise extracted objects encounters a duplicate
 `__fpclassifyf`; the normal selection already uses the source `math_ppc` object
-and coalesces those helper definitions correctly. Both regional manifests now
-include 446 units, with unchanged full retail checksums.
+and coalesces those helper definitions correctly. Both regions retain unchanged full retail checksums.
 
 Regional `zMain` uses 528-line startup/save-card cameras and a 50 Hz vertical
 blank rate (including the three-second startup delay and pad timestep). These
 constants recover all three regional code holdouts and the data pool. The full
 source selection including `zMain` reproduces both retail DOLs exactly; USA
 keeps its 480-line/60 Hz behavior and its entire progress report is unchanged.
+
+The regional Villager glyphs rotate by 3.6 degrees per frame instead of 3;
+King Jelly and NPC supplement effects use a 50 Hz frame period instead of
+60 Hz. Their source units reproduce retail exactly together with the existing
+selection. Regional scene updating also includes the display-offset adjustment
+controls and applies those offsets before rendering. Two pre-existing
+holdouts still prevent marking the entire unit complete; the recovered update
+and pre-render functions match.

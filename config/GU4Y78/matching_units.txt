@@ -446,3 +446,6 @@ rwsdk/world/pipe/p2/gcn/vtxfmt.c
 rwsdk/world/pipe/p2/gcn/wrldpipe.c
 SB/Game/zNPCGoalRobo.cpp
 SB/Game/zMain.cpp
+SB/Game/zNPCGoalVillager.cpp
+SB/Game/zNPCTypeKingJelly.cpp
+SB/Game/zNPCSupplement.cpp
