@@ -14206,3 +14206,29 @@ unchanged. all_source and normal link/check pass, retaining retail SHA1
 306526d90b48e99894c3138f5fc8f2716d9fecf6. No compiler or assembly changes.
 Evidence: build/dct85-odd-pair-{rotation,first_only,second_only} and
 build/parallel-eightyfifth-{report.json,verify.py,build.log}.
+
+
+### Motion IDCT shared butterfly variables across passes (2026-10-04)
+
+FastmIDCT8x8WithMotion now shares the same nine butterfly working variables
+across its column and output passes, as the byte and doubled variants already
+do. The existing even/odd scratch reuse is preserved. First-pass coefficient
+locals move to function scope for C89; every read, arithmetic expression,
+assignment boundary, scratch write and prediction/output operation retains
+its order. Each working value is assigned before use in each pass.
+
+The full deduplicated score improves 65.01119 -> 68.54851, with source size
+unchanged at 1012 bytes against retail 1072. The earlier cross-pass control
+predated the retained even/odd reuse and regressed; that relevant source
+change justified this follow-up. No instruction-count or exact-TU closure
+is claimed.
+
+Full report changes only this function and aggregate fuzzy measures. All
+other function records, exact code, data and completion measures are identical.
+all_source and normal retail link/check pass, preserving DOL SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. DCT remains NonMatching, so the
+normal DOL does not establish source-linked IDCT identity. No assembly,
+compiler changes or behavioral tests were introduced.
+
+Evidence: build/dct93-motion-shared-butterfly/{candidate.c,candidate.o,diff.json}
+and build/parallel-ninetythird-{report.json,verify.py,build.log}.
