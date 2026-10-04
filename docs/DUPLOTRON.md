@@ -14522,3 +14522,33 @@ Evidence: build/huff120/ (one complete private candidate, instruction changes,
 validation.json), build/huff120-candidate-{report.json,build.log}, and the
 unchanged baseline build/dct119-baseline-report.json. Prior output-parameter
 and output-macro helper trials were not repeated.
+
+
+### Bink masked right-half context advance (round 126)
+
+YUV_blit_mask improves from 83.979515% to 84.79642% in the full
+deduplicated report. The right-half case now advances luma, alpha and chroma
+before its two destination pointers, matching the source order already used
+by the paired-block and final single-block horizontal advances. Retail's
+right-half instruction path follows that same order. The saved context,
+mask reads, arithmetic, callback sequence and restored context are unchanged;
+there is no intervening call between these independent field updates.
+
+A private shared inline helper for all three horizontal advances produced
+exactly the same instructions as this two-line move. Retain the smaller
+source correction. The previous lower-mask merge helper was not repeated.
+Source size remains 3088 bytes versus retail 3124; all four callback loops
+remain aligned, while setup and other context scheduling differences remain.
+Original source spelling is unproven; this is an ordinary statement-order
+correction supported by the matching neighboring operations.
+
+The complete deduplicated report changes only YUV_blit_mask and aggregate
+fuzzy scores. No other function score or non-fuzzy field changes. All-source
+compilation and normal USA retail verification pass; DOL SHA1 remains
+306526d90b48e99894c3138f5fc8f2716d9fecf6. The unit remains NonMatching.
+No compiler, assembly, volatile, flags or behavioral-test changes.
+
+Evidence: build/mask126/{baseline,shared_order,shared_helper}.cpp,
+private-validation.json, validation.json, shared_order-diff.txt, and the
+baseline/candidate report and build logs. Baseline yuv.cpp is byte-identical
+to the saved round124 baseline, allowing its private object evidence reuse.

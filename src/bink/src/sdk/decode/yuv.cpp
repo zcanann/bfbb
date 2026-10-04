@@ -969,14 +969,14 @@ static void YUV_blit_mask(void PTR4* dest,
             }
             case YUV_MASK_RIGHT_HALF_BIT: {
                 RGBContext saved = S;
-                S.dest0 += block_bytes;
-                S.dest1 += block_bytes;
                 S.y0 = (u32 PTR4*)((u8 PTR4*)S.y0 + YUV_MASK_BLOCK_PIXELS);
                 S.y1 = (u32 PTR4*)((u8 PTR4*)S.y1 + YUV_MASK_BLOCK_PIXELS);
                 S.a0 = (u32 PTR4*)((u8 PTR4*)S.a0 + YUV_MASK_BLOCK_PIXELS);
                 S.a1 = (u32 PTR4*)((u8 PTR4*)S.a1 + YUV_MASK_BLOCK_PIXELS);
                 S.u = (u16 PTR4*)((u8 PTR4*)S.u + YUV_CHROMA_BLOCK_BYTES);
                 S.v = (u16 PTR4*)((u8 PTR4*)S.v + YUV_CHROMA_BLOCK_BYTES);
+                S.dest0 += block_bytes;
+                S.dest1 += block_bytes;
                 YUV_BLIT_MASK_ROWS(YUV_MASK_HALF_BLOCKS, y_delta16, a_delta16, c_delta16, pitch_delta16,
                                srcpitch, pitch32);
                 S = saved;
