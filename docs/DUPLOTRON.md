@@ -14255,3 +14255,25 @@ changes and no behavioral tests.
 
 Evidence: build/dct97-motion-output-cursor and
 build/parallel-ninetyseventh-{report.json,verify.py,validation.json,build.log}.
+
+
+## Bink decoded-audio count lifetime (2026-10-04)
+
+In BinkDoFrame, retain the clamped decoded-byte count in an ordinary u32 local
+through the audio-buffer overflow check. Use it for the overflow amount and
+queued-byte update, refreshing it after the overflow path's sound-state writes.
+This recovers retail's branch around an output-count reload. The original local
+spelling is unproven; the small redundant value lifetime is an accepted matching
+compromise, with no volatile access, assembly, compiler change or fake symbol.
+The round 39 private candidate was previously declined for source complexity;
+this pass revalidates it under the user's permission for reasonable locals.
+
+Full deduplicated BinkDoFrame improves 99.57493 -> 99.621254. Source size remains
+1464 versus retail 1468; the unit remains NonMatching. Exactly one function score
+changes; all exact-code/data/completion measures and other functions are unchanged.
+All-source compilation and normal retail linkage pass, retaining SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. The normal DOL still uses the retail object
+for this unit, so this is partial source progress rather than source-link closure.
+
+Evidence in the RGB worktree: build/bink103-{baseline,candidate}-report.json,
+matching build logs, bink103-validation.json, and binkread103-doframe-private/.

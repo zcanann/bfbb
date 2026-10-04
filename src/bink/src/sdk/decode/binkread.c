@@ -1760,6 +1760,7 @@ found_playing_track:
                                 void PTR4* out;
                                 u32 out_bytes;
                                 u32 free_bytes;
+                                u32 decoded_bytes;
 
                                 free_bytes = bnk->bsnd[playing_index].sndbufsize -
                                              bnk->bsnd[playing_index].sndamt;
@@ -1769,10 +1770,11 @@ found_playing_track:
                                 if (out_bytes > in_bytes) {
                                     out_bytes = in_bytes;
                                 }
+                                decoded_bytes = out_bytes;
                                 in_bytes -= out_bytes;
 
                                 if (out_bytes > free_bytes) {
-                                    free_bytes = out_bytes - free_bytes;
+                                    free_bytes = decoded_bytes - free_bytes;
                                     bnk->bsnd[playing_index].sndreadpos += free_bytes;
                                     bnk->bsnd[playing_index].sndamt -= free_bytes;
                                     if (bnk->bsnd[playing_index].sndreadpos >
@@ -1780,9 +1782,10 @@ found_playing_track:
                                         bnk->bsnd[playing_index].sndreadpos -=
                                             bnk->bsnd[playing_index].sndbufsize;
                                     }
+                                    decoded_bytes = out_bytes;
                                 }
 
-                                bnk->bsnd[playing_index].sndamt += out_bytes;
+                                bnk->bsnd[playing_index].sndamt += decoded_bytes;
                                 {
                                     u32 tail;
 
