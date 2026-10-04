@@ -13483,3 +13483,59 @@ Private evidence: `build/xcamera-closure-bound-emission.json` (initial exact
 copy body), `xcamera-closure-bound-report.json`, baseline-link.log (undefined
 references), bound-emission-link.json and bound-emission-linked.elf, and
 `xcamera-closure-bound-final-verify.py` in the Plankton worktree.
+
+
+### xCamera private inline groups: source-link preparation (2026-10-03)
+
+After the exact xBound copy checkpoint, the source-selected xCamera DOL linked
+but differed in16,841bytes. Retail's seven text groups distinguish primary
+functions from camera accessors, matrix helpers, entity visibility, vector
+helpers, math helpers, and the vector2 assignment. Many corresponding source
+bodies were still strong definitions in xCamera.cpp.
+
+The retained change moves those existing bodies into six TU-private inline
+files and enables `-sym on` only for xCamera, restoring retail weak bindings
+and section ownership. The existing `XMATH3_DEFER_RMULVEC` opt-in preserves the
+local matrix multiply in its matrix group. A narrow new
+`XVEC3INLINES_DEFER_LENGTH` opt-in lets xCamera supply the identical vector-length
+body in its private vector group; all other consumers retain the unchanged
+shared-header body. Including the camera/matrix groups at the former
+xQuatGetAngle definition boundary also restores that helper's literal order
+before the binary-camera literals. No arithmetic, public layout, padding, or
+synthetic constant owner was introduced.
+
+Actual source-selected DOL differences fall **16,841 ->13,363 ->13,210 ->13,191**
+(private groups, vector-length ownership, then known literal-owner ordering).
+The final DOL has2,859,136bytes and SHA-1
+`ee9f9ff56e2a78ebb3a786fabc732af3d03489a5`. This is a partial layout recovery,
+not TU completion: xCamera remains NonMatching,76/77functions exact, and the
+1420-byte xBinaryCamera::update still scores92.087% deduplicated.
+
+The principal remaining code-layout error is exact and isolated: the implicit
+36-byte xQuat assignment is generated in the primary section at its first use
+inside _xCameraUpdate, whereas retail places it between xVec3Inv and xacos in
+the vector group. It shifts subsequent primary functions36bytes. Marking the
+existing static _xCameraUpdate definition inline did not recover that owner
+and was restored. No hand-written replacement copy was added. Remaining
+external relocations/data layout still prevent an identical source link.
+
+A useful negative control: omitting xCamera's unused weak xsqrt definition via
+the existing deferral mechanism removed3.0f/100000.0f from its *object* pool but
+changed no DOL byte. The linker already strips those duplicate-body literals.
+That neutral control was restored; extra object literals alone were not a
+source-link blocker.
+
+Validation force-rebuilt all186dependency-recorded xVec3Inlines.h consumers,
+then completed all_source and normal builds. Full deduplicated report equals
+the preceding exact-bound-helper checkpoint: no code/data regression and
+all688reported camera data bytes remain exact. Normal DOL SHA-1 stays
+`306526d90b48e99894c3138f5fc8f2716d9fecf6`; p1a/p1e compiler SHA-1 values remain
+`a78a5fdb6c1d5677e987636b2e0743dbaefe9542` and
+`9d445725489050035740aaff35860eddbaf3c3c9`. No behavioral tests or compiler edits.
+
+Private reproduction/evidence: `build/xcamera-layout-pool-order-link.py`
+(temporary Matching selection with normal restoration in finally),
+`xcamera-layout-pool-order-link.json`, `xcamera-layout-pool-order-linked.elf`,
+`xcamera-layout-pool-order-report.json`, `xcamera-layout-fresh-build.log`,
+`xcamera-layout-final-build.log`, and
+`xcamera-layout-affected-{sources,objects}.txt` in the Plankton worktree.

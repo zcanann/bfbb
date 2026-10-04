@@ -1,3 +1,5 @@
+#define XVEC3INLINES_DEFER_LENGTH
+#define XMATH3_DEFER_RMULVEC
 #include "xCamera.h"
 
 #include "xstransvc.h"
@@ -10,6 +12,8 @@
 #include "zGrid.h"
 
 #include "iMath.h"
+#undef XMATH3_DEFER_RMULVEC
+#undef XVEC3INLINES_DEFER_LENGTH
 
 #include <PowerPC_EABI_Support\MSL_C\MSL_Common\cmath>
 #include <PowerPC_EABI_Support\MSL_C\MSL_Common\cstring>
@@ -1454,21 +1458,8 @@ float std::asinf(float x)
 }
 #endif
 
-F32 xQuatGetAngle(const xQuat* q)
-{
-    if (q->s > 0.99998999f)
-    {
-        return 0.0f;
-    }
-    else if (q->s < -0.99998999f)
-    {
-        return 6.2831855f;
-    }
-    else
-    {
-        return 2.0f * xacos(q->s);
-    }
-}
+#include "xCameraCamera.inl"
+#include "xCameraMath3.inl"
 
 static void bound_sphere_xz(xVec3& r3, xVec3& r4, const xVec3& r5, F32 f1, const xVec3& r6, F32 f2)
 {
@@ -1660,171 +1651,7 @@ void xBinaryCamera::update(F32 dt)
     render_debug();
 }
 
-void xCameraSetFOV(xCamera* cam, F32 fov)
-{
-    cam->fov = fov;
-
-    iCameraSetFOV(cam->lo_cam, fov);
-}
-
-F32 xCameraGetFOV(const xCamera* cam)
-{
-    return cam->fov;
-}
-
-void xBinaryCamera::render_debug()
-{
-}
-
-void xMat4x3Identity(xMat4x3* m)
-{
-    xMat4x3Copy(m, &g_I3);
-}
-
-void xMat4x3Copy(xMat4x3* o, const xMat4x3* m)
-{
-    memcpy(o, m, sizeof(xMat4x3));
-}
-
-void xQuatConj(xQuat* o, const xQuat* q)
-{
-    o->s = q->s;
-
-    xVec3Inv(&o->v, &q->v);
-}
-
-void xMat3x3LookAt(xMat3x3* m, const xVec3* pos, const xVec3* at)
-{
-    xVec3 v;
-
-    xVec3Sub(&v, at, pos);
-    xMat3x3LookVec(m, &v);
-}
-
-U32 xEntIsVisible(const xEnt* ent)
-{
-    return (ent->flags & 0x81) == 0x1;
-}
-
-void xVec3Sub(xVec3* o, const xVec3* a, const xVec3* b)
-{
-    o->x = a->x - b->x;
-    o->y = a->y - b->y;
-    o->z = a->z - b->z;
-}
-
-void xVec3Inv(xVec3* o, const xVec3* v)
-{
-    o->x = -v->x;
-    o->y = -v->y;
-    o->z = -v->z;
-}
-
-F32 xacos(F32 x)
-{
-    return std::acosf(x);
-}
-
-#ifndef INLINE
-float std::acosf(float x)
-{
-    return (float)acos((double)x);
-}
-#endif
-
-void xVec3AddTo(xVec3* o, const xVec3* v)
-{
-    o->x += v->x;
-    o->y += v->y;
-    o->z += v->z;
-}
-
-xVec3& xVec3::invert()
-{
-    this->x = -this->x;
-    this->y = -this->y;
-    this->z = -this->z;
-
-    return *this;
-}
-
-F32 xexp(F32 x)
-{
-    return std::expf(x);
-}
-
-#ifndef INLINE
-float std::expf(float x)
-{
-    return (float)exp((double)x);
-}
-#endif
-
-F32 xrmod(F32 ang)
-{
-    F32 frac = 0.15915494f * ang;
-
-    if (frac < 0.0f)
-    {
-        return (frac - std::ceilf(frac) + 1.0f) * 6.2831855f;
-    }
-    else if (frac >= 1.0f)
-    {
-        return (frac - std::floorf(frac)) * 6.2831855f;
-    }
-
-    return ang;
-}
-
-xVec3& xVec3::operator/=(F32 f)
-{
-    F32 f2 = 1.0f / f;
-
-    this->x *= f2;
-    this->y *= f2;
-    this->z *= f2;
-
-    return *this;
-}
-
-xVec3& xVec3::right_normalize()
-{
-    return this->safe_normalize(xVec3::m_UnitAxisX);
-}
-
-xVec3& xVec3::safe_normalize(const xVec3& val)
-{
-    F32 len = this->length2();
-
-    if (len < 0.000099999997f)
-    {
-        return (*this = val);
-    }
-    else
-    {
-        return (*this *= 1.0f / xsqrt(len));
-    }
-}
-
-template <>
-inline F32 range_limit<F32>(F32 v, F32 minv, F32 maxv)
-{
-    if (v <= minv)
-    {
-        return minv;
-    }
-
-    if (v >= maxv)
-    {
-        return maxv;
-    }
-
-    return v;
-}
-
-xVec2& xVec2::operator=(F32 f)
-{
-    this->x = this->y = f;
-
-    return *this;
-}
+#include "xCameraEnt.inl"
+#include "xCameraVec3.inl"
+#include "xCameraMath.inl"
+#include "xCameraVec2.inl"
