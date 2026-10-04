@@ -29,6 +29,12 @@
 #include "zMusic.h"
 #include "zSaveLoad.h"
 
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+enum { MENU_SCREEN_HEIGHT = 528, MENU_VBLANKS_PER_SECOND = 50 };
+#else
+enum { MENU_SCREEN_HEIGHT = 480, MENU_VBLANKS_PER_SECOND = 60 };
+#endif
+
 bool menu_fmv_played;
 
 // These three are declared here rather than beside time_elapsed and holdTmr
@@ -65,7 +71,7 @@ void zMenuInit(U32 theSceneID)
     iTimeGet();
     xrand();
     zSceneInit(theSceneID, 0);
-    xCameraInit(&globals.camera, 0x280, 0x1e0);
+    xCameraInit(&globals.camera, 640, MENU_SCREEN_HEIGHT);
     zCameraReset(&globals.camera);
     xCameraSetScene(&globals.camera, globals.sceneCur);
     zMusicInit();
@@ -100,8 +106,6 @@ void zMenuSetup()
 
 void zMenuFirstBootSet(S32 value);
 
-// Equivalent
-// Scheduling is a mess. Some float constants are being pushed onto the stack
 U32 zMenuLoop()
 {
     S32 s = 0;
@@ -118,7 +122,7 @@ U32 zMenuLoop()
         zMusicNotify(0);
     }
 
-    time_last = 1.0f / float(GET_BUS_FREQUENCY() >> 2) * iTimeGet() - 1.0f / 60.f;
+    time_last = 1.0f / float(GET_BUS_FREQUENCY() >> 2) * iTimeGet() - 1.0f / (F32)MENU_VBLANKS_PER_SECOND;
 
     zGameExtras_NewGameReset();
 
@@ -127,7 +131,7 @@ U32 zMenuLoop()
     xScrFxFade(&black, &clear, 0.0f, NULL, 1);
     S32 ostrich_delay = 0xa;
 
-    time_last = 1.0f / float(GET_BUS_FREQUENCY() >> 2) * iTimeGet() - 1.0f / 60.f;
+    time_last = 1.0f / float(GET_BUS_FREQUENCY() >> 2) * iTimeGet() - 1.0f / (F32)MENU_VBLANKS_PER_SECOND;
 
     S32 draw_black;
 
@@ -153,7 +157,7 @@ U32 zMenuLoop()
                 zGameStateSwitch(1);
                 xScrFxFade(&black, &clear, 0.1f, NULL, 1);
 
-                time_last = 1.0f / float(GET_BUS_FREQUENCY() >> 2) * iTimeGet() - 1.0f / 60.f;
+                time_last = 1.0f / float(GET_BUS_FREQUENCY() >> 2) * iTimeGet() - 1.0f / (F32)MENU_VBLANKS_PER_SECOND;
                 break;
             }
         }
@@ -164,16 +168,16 @@ U32 zMenuLoop()
 
         time_elapsed = current - time_last;
 
-        if (menu_fmv_played && time_elapsed > 1.0f / 60.f)
+        if (menu_fmv_played && time_elapsed > 1.0f / (F32)MENU_VBLANKS_PER_SECOND)
         {
-            time_last = current - 1.0f / 60.f;
-            time_elapsed = 1.0f / 60.f;
+            time_last = current - 1.0f / (F32)MENU_VBLANKS_PER_SECOND;
+            time_elapsed = 1.0f / (F32)MENU_VBLANKS_PER_SECOND;
         }
 
         menu_fmv_played = 0;
         if (time_elapsed < 0.0f)
         {
-            time_elapsed = 1.0f / 60.f;
+            time_elapsed = 1.0f / (F32)MENU_VBLANKS_PER_SECOND;
         }
 
         if (zGameModeGet() == eGameMode_Title)
@@ -210,6 +214,9 @@ U32 zMenuLoop()
             else
             {
                 zMusicUpdate(time_elapsed);
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+                zEntEvent("mnu3 black card", eEventInvisible);
+#endif
             }
 
             if (mPad[globals.currentActivePad].pressed)

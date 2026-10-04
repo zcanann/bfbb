@@ -790,6 +790,12 @@ void zUIRenderAll()
     debug_render();
 }
 
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+enum { UI_SCREEN_HEIGHT = 528 };
+#else
+enum { UI_SCREEN_HEIGHT = 480 };
+#endif
+
 void zUI_Render(xEnt* ent)
 {
     static xVec3 from = { 0.0f, 0.0f, -1.0f };
@@ -825,7 +831,7 @@ void zUI_Render(xEnt* ent)
                 U8 b = 0xFF;
                 U8 a = 0xFF;
                 F32 w = 640.0f;
-                F32 h = 480.0f;
+                F32 h = (F32)UI_SCREEN_HEIGHT;
 
                 F32 u1 = ui->sasset->uva[0];
                 F32 v1 = ui->sasset->uva[1];
@@ -835,10 +841,11 @@ void zUI_Render(xEnt* ent)
                 F32 v3 = ui->sasset->uvc[1];
                 F32 u4 = ui->sasset->uvd[0];
                 F32 v4 = ui->sasset->uvd[1];
+                // Asset coordinates retain their 640x480 basis in PAL.
                 F32 x1 = w * ui->sasset->pos.x / w;
-                F32 y1 = h * ui->sasset->pos.y / h;
+                F32 y1 = h * ui->sasset->pos.y / 480.0f;
                 F32 x2 = w * (ui->sasset->pos.x + ui->sasset->dim[0]) / w;
-                F32 y2 = h * (ui->sasset->pos.y + ui->sasset->dim[1]) / h;
+                F32 y2 = h * (ui->sasset->pos.y + ui->sasset->dim[1]) / 480.0f;
 
                 F32 z = RwIm2DGetNearScreenZ();
                 F32 cz = z;

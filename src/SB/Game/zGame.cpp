@@ -35,6 +35,12 @@
 
 #include <stdio.h>
 
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+enum { GAME_SCREEN_HEIGHT = 528, GAME_VBLANKS_PER_SECOND = 50 };
+#else
+enum { GAME_SCREEN_HEIGHT = 480, GAME_VBLANKS_PER_SECOND = 60 };
+#endif
+
 const static basic_rect<F32> screen_bounds =
 {
     0.0f, 0.0f, 1.0f, 1.0f
@@ -390,7 +396,7 @@ void zGameInit(U32 theSceneID)
     g_hiphopReloadHIP = 0;
     g_hiphopForcePortal = 0;
     gGameWhereAmI = eGameWhere_InitCamera;
-    xCameraInit(&globals.camera, 640, 480);
+    xCameraInit(&globals.camera, 640, GAME_SCREEN_HEIGHT);
     zCameraReset(&globals.camera);
     xCameraSetScene(&globals.camera, globals.sceneCur);
     gGameWhereAmI = eGameWhere_InitMusic;
@@ -501,7 +507,7 @@ void zGameLoop()
     gGameWhereAmI = eGameWhere_LoopStart;
     zGameStateSwitch(eGameState_Play);
 
-    iTime bus = (iTime)((GET_BUS_FREQUENCY() / 4) / 60.0f);
+    iTime bus = (iTime)((GET_BUS_FREQUENCY() / 4) / (F32)GAME_VBLANKS_PER_SECOND);
     sTimeLast = iTimeGet() - bus;
 
     gGameWhereAmI = eGameWhere_CutsceneFinish;
@@ -561,7 +567,7 @@ void zGameLoop()
 
         if (sTimeElapsed < 1e-5f)
         {
-            sTimeElapsed = 1.0f / 60.0f;
+            sTimeElapsed = 1.0f / (F32)GAME_VBLANKS_PER_SECOND;
         }
         else if (sTimeElapsed > 0.1f)
         {
@@ -918,7 +924,7 @@ static void zGame_HackPostPortalAutoSaveDraw()
 	
     sprintf(str, "{font=0}{i:MNU4 AUTO SAVE TXT}");
 	
-    ccam = (RwCamera *)iCameraCreate(640, 480, 0);
+    ccam = (RwCamera *)iCameraCreate(640, GAME_SCREEN_HEIGHT, 0);
 	
     xtextbox tb = xtextbox::create
 	(
@@ -955,10 +961,10 @@ static void zGame_HackPostPortalAutoSaveDraw()
             rast = NULL;
         }
 		
-        zGame_HackDrawCard(0.0f,   0.0f,   320.0f, 240.0f, rast);
-        zGame_HackDrawCard(320.0f, 0.0f,   320.0f, 240.0f, rast);
-        zGame_HackDrawCard(0.0f,   240.0f, 320.0f, 240.0f, rast);
-        zGame_HackDrawCard(320.0f, 240.0f, 320.0f, 240.0f, rast);
+        zGame_HackDrawCard(0.0f,   0.0f,   320.0f, (F32)GAME_SCREEN_HEIGHT * 0.5f, rast);
+        zGame_HackDrawCard(320.0f, 0.0f,   320.0f, (F32)GAME_SCREEN_HEIGHT * 0.5f, rast);
+        zGame_HackDrawCard(0.0f,   (F32)GAME_SCREEN_HEIGHT * 0.5f, 320.0f, (F32)GAME_SCREEN_HEIGHT * 0.5f, rast);
+        zGame_HackDrawCard(320.0f, (F32)GAME_SCREEN_HEIGHT * 0.5f, 320.0f, (F32)GAME_SCREEN_HEIGHT * 0.5f, rast);
 		
         tex = (RwTexture*)xSTFindAsset(xStrHash("ui_savinggame"), NULL);
         if (tex == NULL)
@@ -1015,7 +1021,7 @@ static void zGameUpdateMode()
 
     if ((gSoak != 0) && (gGameState == eGameState_Play) && (globals.cmgr == NULL))
     {
-        soaktime -= (1.0f / 30.0f);
+        soaktime -= (2.0f / (F32)GAME_VBLANKS_PER_SECOND);
         if (soaktime < 0.0f)
         {
             id = xUtil_idtag2string(globals.sceneCur->sceneID, 0);
@@ -1178,7 +1184,7 @@ static void zGameUpdateMode()
             gPendingPlayer = eCurrentPlayerCount;
         }
 
-        iTime bus = (iTime)((GET_BUS_FREQUENCY() / 4) / 60.0f);
+        iTime bus = (iTime)((GET_BUS_FREQUENCY() / 4) / (F32)GAME_VBLANKS_PER_SECOND);
         sTimeLast = iTimeGet() - bus;
 
         zGameStateSwitch(eGameState_Play);
@@ -1265,7 +1271,7 @@ void zGameScreenTransitionBegin()
     gGameWhereAmI = eGameWhere_TransitionBegin;
     zGameSetOstrich(eGameOstrich_Loading);
     globals.dontShowPadMessageDuringLoadingOrCutScene = '\0';
-    sGameScreenTransCam = iCameraCreate(640, 480, 0);
+    sGameScreenTransCam = iCameraCreate(640, GAME_SCREEN_HEIGHT, 0);
     if (sGameScreenTransCam != NULL)
     {
         DirectionalLight = RpLightCreate(1);
@@ -1372,7 +1378,7 @@ void zGameScreenTransitionUpdate(F32 percentComplete, char* msg, U8* rgba)
             vx[0].v = bgv1;
 
             vx[1].x = 0.0f;
-            vx[1].y = 480.0f;
+            vx[1].y = (F32)GAME_SCREEN_HEIGHT;
             vx[1].z = z;
             vx[1].emissiveColor.red   = bgr;
             vx[1].emissiveColor.green = bgb;
@@ -1392,7 +1398,7 @@ void zGameScreenTransitionUpdate(F32 percentComplete, char* msg, U8* rgba)
             vx[2].v = bgv1;
 
             vx[3].x = 640.0f;
-            vx[3].y = 480.0f;
+            vx[3].y = (F32)GAME_SCREEN_HEIGHT;
             vx[3].z = z;
             vx[3].emissiveColor.red   = bgr;
             vx[3].emissiveColor.green = bgb;

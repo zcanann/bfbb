@@ -130,3 +130,27 @@ With these constants restored, `xCamera`, `xFont`, and `zParPTank` have 100%
 code and data matching in both regional reports. Adding all three to the
 450-unit regional source selection reproduces both retail DOLs exactly.
 USA's allocated object sections, complete report, and retail link are unchanged.
+
+
+## Regional menu, UI, and display offset
+
+The regional source selection now contains 456 units. The combined selection
+including `iDraw`, `xCamera`, `xFont`, `zParPTank`, `zMenu`, and `zUI` reproduces
+both complete retail DOLs exactly.
+
+PAL menu timing uses 50 Hz and its camera is 528 lines tall. The title-menu
+music-update path also sends Invisible to `mnu3 black card`. UI textures scale
+480-line asset coordinates to 528 display lines; model rectangles keep their
+480-line normalization. The full link check verifies these constant values and
+pool order, which the object-level score alone does not guarantee.
+
+`iDrawSetDisplayOffset` is PAL-only. It clamps the VI origins to the retail
+ranges and calls `VIConfigure`. Its seven constants and alignment tail belong
+to `iDraw`, not `iCollide`; the regional metadata generator derives this
+additional input-section boundary from the PAL ELF.
+
+`zGame` now has its regional camera dimensions, autosave-card dimensions,
+vertical-blank timing, minimum timestep, and soak timer. Its smoothing fallback
+and initial frame history still use 1/60 second in PAL, as in retail. All data
+and three additional functions match; the existing screen-transition function
+holdout still prevents whole-unit completion.
