@@ -134,9 +134,8 @@ USA's allocated object sections, complete report, and retail link are unchanged.
 
 ## Regional menu, UI, and display offset
 
-The regional source selection now contains 456 units. The combined selection
-including `iDraw`, `xCamera`, `xFont`, `zParPTank`, `zMenu`, and `zUI` reproduces
-both complete retail DOLs exactly.
+The regional source selection including `iDraw`, `xCamera`, `xFont`,
+`zParPTank`, `zMenu`, and `zUI` reproduces both complete retail DOLs exactly.
 
 PAL menu timing uses 50 Hz and its camera is 528 lines tall. The title-menu
 music-update path also sends Invisible to `mnu3 black card`. UI textures scale
@@ -164,8 +163,7 @@ The FMV camera, projection, height scaling, and RAD image renderer use a
 instructions and constant pools. The header was already included by both units.
 
 `ngcrad3d` now matches all 1704 code bytes and 96 data bytes in both regions.
-Selecting it from source increases each regional manifest to 457 units and
-reproduces the complete retail DOL, including the German trailer. `iFMV` data
+Selecting it from source reproduces the complete retail DOL, including the German trailer. `iFMV` data
 matching rises from 104/152 to 152/152 bytes; its remaining `Show_frame`
 instruction-order holdout matches the USA score of 96.84746%, so that unit stays
 unselected. Only these two units change in the full PAL report, with no losses.
@@ -212,3 +210,23 @@ pool accounting therefore does not prevent these units from source linking.
 The combined manifest promotions are integrated separately. USA metadata and
 source are unchanged. Evidence: `build/regional131/bink-validation.json` and
 `binkacd-alignment-proof.json`.
+
+
+## Combined regional source selection
+
+All three versions now link the same 472 completed units from source and
+reproduce their complete retail DOLs byte for byte. PAL-specific code restores
+package validation for PAL video and United Kingdom/French/German languages,
+the regional stack base, and 528-line model/environment cameras and shadow cap.
+
+Laser effects, NPC reset updates, and save/load fallback timing use 1/50 second
+in PAL. Credits rendering uses 528 lines, and regional movies use the `.bkp`
+extension. These values come from the regional retail instructions and pools.
+`zSaveLoad` retains its existing code holdout; its data now matches completely.
+The unchanged FFT and exception-runtime source also pass the full regional link;
+an anonymous-pool object report alone was insufficient to establish completion.
+
+The combined selection includes Bink audio with the restored Expand alignment.
+The USA binary and its entire progress report remain unchanged. Regional shared
+code holdouts remain available for further matching work; regional completion
+is not inferred simply from the USA flags.

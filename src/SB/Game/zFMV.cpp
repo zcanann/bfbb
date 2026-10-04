@@ -32,7 +32,11 @@ U32 zFMVPlay(char* filename, U32 buttons, F32 time, bool skippable, bool lockCon
         filename++;
     }
 
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+    sprintf(fullname, "%s%s", filename, ".bkp");
+#else
     sprintf(fullname, "%s%s", filename, ".bik");
+#endif
     xSndSuspend();
     _GameOstrich old = zGameGetOstrich();
     zGameSetOstrich(eGameOstrich_PlayingMovie);

@@ -19,6 +19,12 @@
 #include "xTRC.h"
 #include "xutil.h"
 
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+#define SAVE_LOAD_FRAME_TIME (1.0f / 50.0f)
+#else
+#define SAVE_LOAD_FRAME_TIME (1.0f / 60.0f)
+#endif
+
 zSaveLoadGame zSaveLoadGameTable[3];
 
 U32 saveSuccess;
@@ -158,11 +164,11 @@ void zSaveLoad_Tick()
     time_elapsed = time_current - time_last;
     if (time_elapsed < 0.0f)
     {
-        time_elapsed = 1.0f / 60.f;
+        time_elapsed = SAVE_LOAD_FRAME_TIME;
     }
     else if (time_elapsed > 0.1f)
     {
-        time_elapsed = 1.0f / 60.f;
+        time_elapsed = SAVE_LOAD_FRAME_TIME;
     }
 
     dontPoll = dontPoll - time_elapsed;

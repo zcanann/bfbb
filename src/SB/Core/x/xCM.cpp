@@ -10,6 +10,12 @@
 #include <stdio.h>
 #include <types.h>
 
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+enum { CREDITS_SCREEN_HEIGHT = 528 };
+#else
+enum { CREDITS_SCREEN_HEIGHT = 480 };
+#endif
+
 void __deadstripped_rodata()
 {
     const xVec3 dead3 = {};
@@ -185,9 +191,9 @@ static U32 xCMrender(F32 time, xCreditsData* data)
                     ty = tex->y;
 
                     x0 = 640.0f * tx;
-                    y0 = 480.0f * ty;
+                    y0 = (F32)CREDITS_SCREEN_HEIGHT * ty;
                     x1 = 640.0f * (tx + tex->w);
-                    y1 = 480.0f * (ty + tex->h);
+                    y1 = (F32)CREDITS_SCREEN_HEIGHT * (ty + tex->h);
                     Im2DRenderQuad(x0, y0, x1, y1, 0.0f, 1000000.0f, 0.5f);
                     xprintf("tex %6.2f,%6.2f - %6.2f,%6.2f\n", x0, y0, x1, y1);
                     break;

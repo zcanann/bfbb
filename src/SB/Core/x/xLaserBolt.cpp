@@ -11,6 +11,12 @@
 
 #include <types.h>
 
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+#define LASER_BOLT_FRAME_TIME (1.0f / 50.0f)
+#else
+#define LASER_BOLT_FRAME_TIME (1.0f / 60.0f)
+#endif
+
 void xLaserBoltEmitter::init(u32 max_bolts, const char* texture_name)
 {
     this->bolt_raster = NULL;
@@ -58,7 +64,7 @@ void xLaserBoltEmitter::reset()
         effect_data* endfx = itfx + this->fxsize[6];
         while (itfx != endfx)
         {
-            emit_fx(*itfx, b, b.hit_dist, b.hit_dist, (1.0f / 60.0f));
+            emit_fx(*itfx, b, b.hit_dist, b.hit_dist, LASER_BOLT_FRAME_TIME);
             itfx++;
         }
         
@@ -120,7 +126,7 @@ void xLaserBoltEmitter::emit(const xVec3& loc, const xVec3& dir)
     effect_data* fx_end = fx + this->fxsize[0];
     while (fx != fx_end)
     {
-        emit_fx(*fx, b, 0.0f, 0.0f, (1.0f / 60.0f));
+        emit_fx(*fx, b, 0.0f, 0.0f, LASER_BOLT_FRAME_TIME);
         fx++;
     }
 }
