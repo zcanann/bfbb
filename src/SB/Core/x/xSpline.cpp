@@ -41,11 +41,12 @@ void Tridiag_Solve(F32* a, F32* b, F32* c, xVec3* d, xVec3* x, S32 n)
 
     for (j = 1; j < n; j++)
     {
-        beta = b[j] - a[j] * gamma[j - 1];
+        S32 previous = j - 1;
+        beta = b[j] - a[j] * gamma[previous];
         gamma[j] = c[j] / beta;
-        delta[j].x = (d[j].x - a[j] * delta[j - 1].x) / beta;
-        delta[j].y = (d[j].y - a[j] * delta[j - 1].y) / beta;
-        delta[j].z = (d[j].z - a[j] * delta[j - 1].z) / beta;
+        delta[j].x = (d[j].x - a[j] * delta[previous].x) / beta;
+        delta[j].y = (d[j].y - a[j] * delta[previous].y) / beta;
+        delta[j].z = (d[j].z - a[j] * delta[previous].z) / beta;
     }
 
     j = n - 1;
@@ -53,11 +54,12 @@ void Tridiag_Solve(F32* a, F32* b, F32* c, xVec3* d, xVec3* x, S32 n)
     x[j].y = delta[j].y;
     x[j].z = delta[j].z;
 
-    for (j = n - 2; j >= 0; j--)
+    while (j-- > 0)
     {
-        x[j].x = delta[j].x - gamma[j] * x[j + 1].x;
-        x[j].y = delta[j].y - gamma[j] * x[j + 1].y;
-        x[j].z = delta[j].z - gamma[j] * x[j + 1].z;
+        S32 next = j + 1;
+        x[j].x = delta[j].x - gamma[j] * x[next].x;
+        x[j].y = delta[j].y - gamma[j] * x[next].y;
+        x[j].z = delta[j].z - gamma[j] * x[next].z;
     }
 
     RwFree(gamma);

@@ -13380,3 +13380,41 @@ combined Bink/Goo report; source-selected zHud DOL is retail size 2859136 with
 Temporary source selection was restored and the normal retail SHA1 passes.
 Evidence: build/parallel-sixtyfifth-{combined,hud}-report.json,
 build/parallel-sixtyfifth-hud-validation.log, and build/zhud65-source-link.json.
+
+
+## Spline tridiagonal solver loop ownership (2026-10-03)
+
+Tridiag_Solve was semantically reconstructed but scored zero: the source
+function was 940 bytes against retail's 572, with loop unrolling absent in
+retail. Name the forward predecessor index, then traverse backward from the
+already selected last element using while (j-- > 0), naming the successor
+index inside that loop. The same coefficients, three component expressions,
+allocation/free calls and output order are preserved. For positive n the
+backward body still visits n-2 through zero, finishing with j=-1.
+
+The named forward index removes its unwanted unrolling. Reusing the last
+index for the backward countdown removes that loop's unrolling as well.
+Keeping both neighbor indices in the final form recovers more of retail's
+explicit address arithmetic. No optimization pragma, compiler change,
+assembly or ancillary behavioral test was added.
+
+The full deduplicated Tridiag_Solve score improves 0% to 84.05595%, source
+size 940 to 556 bytes. xSpline improves 89.62188% to 97.738014%. Only this
+function's report record changes; all other functions, data, exact measures
+and 469/543 completion totals are unchanged. Full source build and normal
+retail DOL check pass, SHA1 306526d90b48e99894c3138f5fc8f2716d9fecf6.
+xSpline remains NonMatching; this does not claim a source-selected closure.
+
+An initial integration check correctly found no gain because copying an
+older trial file left the restored baseline object newer than its source.
+The retained source timestamp was refreshed and compilation repeated before
+both final report and validation. Evidence: build/spline67-{baseline.json,
+indices,previous-only,backward-count,count-next} and
+build/parallel-sixtyseventh-final-{report.json,validation.log}.
+
+Parallel bacamera and p2define audits retained no change. The conversion-bias
+review found distinct scheduling and value-numbering effects in zHud and
+Show_frame, with historical broad-rule tradeoffs; it did not establish a
+safe common compiler patch. The Bink sound/Huffman/bitplane audits found
+prior controls already covering the observed residuals, so no repeated
+source permutations were retained.
