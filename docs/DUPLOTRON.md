@@ -13254,3 +13254,28 @@ instruction-identical, its positive-pattern pointer capture regressed, and
 bamatlst's explicit serialized-index cursor regressed. Masked-blitter local
 chroma initialization and outer-row base captures also regressed. No new
 assembly, compiler patch or ancillary behavioral tests were introduced.
+
+
+## Bink scaled-pattern mask lifetimes (2026-10-03)
+
+The scaled-pattern loop now preloads the next pair of raw mask-table entries
+before the current output stores, then combines that pair with the colors
+when it becomes the current output word. Retail's next mask loads precede
+current stores (0x3044/0x304c before 0x3058 and 0x306c/0x3070 before 0x3074),
+but its next packed word is formed later. The earlier two-word pipeline
+computed that next packed result too early. Reuse one packed word and a pair
+of mask values, preserving all eight stores, four mask pairs, input-byte
+consumption and row advances. Raw scaling also captures each halfword into
+its word variable before expansion, making the source-sample lifetime explicit.
+
+The sample capture alone raises raw ExpandPlane from 83.13928% to 83.17985%;
+the combined mask pipeline reaches 84.643005%. The authoritative deduplicated
+report improves 83.9236% to 85.4476%. Source size drops from 5656 to 5644 bytes.
+Only ExpandPlane's function record changes; all other functions, data, exact
+measures and 469/543 completed units are unchanged. All-source build and
+normal retail link/check pass with SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. Expand remains NonMatching, so the
+normal retail hash does not establish a source-selected Bink match. No new
+assembly, compiler modifications or ancillary behavioral tests.
+Evidence: build/expand63-{scale-samples,pattern-masks}-private and
+build/parallel-sixtythird-{report.json,validation.log}.
