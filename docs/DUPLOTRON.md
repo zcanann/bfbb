@@ -13194,3 +13194,36 @@ YUV remains NonMatching. No compiler edits, new assembly, or ancillary tests.
 Evidence: RGB worktree build/masked-endpoint-{report,raw,validation}.json,
 masked-endpoint-build.log and masked-endpoint-link.log; comparison baseline is
 build/masked-tail-retained-report.json.
+
+
+## Integrated Bink motion marking and fallback endpoint (2026-10-03)
+
+Mark the motion block dirty before reading its X/Y motion bytes. Retail does
+this store at 0x2c2c, before either byte load; the previous source placed the
+mark after both reads. The independent work mask and motion bundles retain
+the same final values and advancement, and the copy body is unchanged.
+ExpandPlane improves 83.47262% to 83.5355% in the full deduplicated report
+(raw 82.6883% to 82.78161%, unchanged 5660-byte source function).
+
+Integrated with the inclusive bottom-fallback endpoint, YUV_blit_mask improves
+83.02945% to 83.979515%. These are the only two changed function records;
+all other functions, data measures, exact totals and completion totals are
+unchanged. Completion remains 469/543. All-source compilation and the normal
+retail link/check pass, with DOL SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. Both Bink units remain NonMatching;
+this normal retail hash is not source-selected closure evidence.
+
+The separately isolated xAnim EffectSingleLoop count-first snapshot trial
+regressed 99.781815% to 99.145454% and was discarded. It retained the wrong
+load order and changed register roles; no xAnim source change is included.
+No new inline assembly, compiler patch or ancillary behavioral tests.
+Evidence: build/expand61-motion-mark-private and
+build/parallel-sixtyfirst-{report.json,validation.log}.
+
+Before publication, staging independently gained 7fa246016 (EffectSingleLoop).
+Rebased these Bink commits onto it and repeated the combined build/report.
+That independent pointer-walk change matches the neighboring
+EffectSingleDuration idiom and makes the 220-byte function exact. The rebased
+report adds only that function match relative to the integrated report above;
+Bink scores, data and 469/543 completion are unchanged. Retail DOL hash passes.
+Evidence: build/parallel-sixtyfirst-rebased-{report.json,validation.log}.
