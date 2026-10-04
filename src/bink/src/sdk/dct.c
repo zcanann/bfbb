@@ -936,12 +936,16 @@ static void fastidct8x8(u8 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4* 
     /* Second pass writes reconstructed rows to the output block. */
     for (i = DCT_BLOCK_WIDTH; i != 0; --i) {
         s32 a0, a1, a3, a5, a8, a9, b0, b1, b3;
-        a0 = out[DCT_COL2] + out[DCT_COL6];
-        a1 = out[DCT_COL0] + out[DCT_COL4];
+        s32 input2 = out[DCT_COL2];
+        s32 input6 = out[DCT_COL6];
+        s32 input0 = out[DCT_COL0];
+        s32 input4 = out[DCT_COL4];
+        a0 = input2 + input6;
+        a1 = input0 + input4;
         row[DCT_COL3] = a1 - a0;
-        a3 = out[DCT_COL0] - out[DCT_COL4];
+        a3 = input0 - input4;
         row[DCT_COL0] = a1 + a0;
-        a5 = DCT_FIXED_MUL(out[DCT_COL2] - out[DCT_COL6], DCT_IDCT_A1) - a0;
+        a5 = DCT_FIXED_MUL(input2 - input6, DCT_IDCT_A1) - a0;
         row[DCT_COL2] = a3 - a5;
         row[DCT_COL1] = a3 + a5;
         a8 = out[DCT_COL5] - out[DCT_COL3];
@@ -1070,12 +1074,16 @@ static void fastidct8x8d(u32 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4
         u32 packed3;
 
         s32 odd_scaled1;
-        a0 = out[DCT_COL2] + out[DCT_COL6];
-        a1 = out[DCT_COL0] + out[DCT_COL4];
+        s32 input2 = out[DCT_COL2];
+        s32 input6 = out[DCT_COL6];
+        s32 input0 = out[DCT_COL0];
+        s32 input4 = out[DCT_COL4];
+        a0 = input2 + input6;
+        a1 = input0 + input4;
         row[DCT_COL3] = a1 - a0;
-        a3 = out[DCT_COL0] - out[DCT_COL4];
+        a3 = input0 - input4;
         row[DCT_COL0] = a1 + a0;
-        a5 = DCT_FIXED_MUL(out[DCT_COL2] - out[DCT_COL6], DCT_IDCT_A1) - a0;
+        a5 = DCT_FIXED_MUL(input2 - input6, DCT_IDCT_A1) - a0;
         row[DCT_COL2] = a3 - a5;
         row[DCT_COL1] = a3 + a5;
         a8 = out[DCT_COL5] - out[DCT_COL3];
@@ -1208,12 +1216,16 @@ void FastmIDCT8x8WithMotion(u8 PTR4* dest, s32 pitch, s16 PTR4* in, u32 quant, u
     /* Final pass adds the residual IDCT result to the prediction block. */
     for (i = DCT_BLOCK_WIDTH; i != 0; --i) {
         s32 a0, a1, a3, a5, a8, a9, b0, b1, b3;
-        a0 = out[DCT_COL2] + out[DCT_COL6];
-        a1 = out[DCT_COL0] + out[DCT_COL4];
+        s32 input2 = out[DCT_COL2];
+        s32 input6 = out[DCT_COL6];
+        s32 input0 = out[DCT_COL0];
+        s32 input4 = out[DCT_COL4];
+        a0 = input2 + input6;
+        a1 = input0 + input4;
         row[DCT_COL3] = a1 - a0;
-        a3 = out[DCT_COL0] - out[DCT_COL4];
+        a3 = input0 - input4;
         row[DCT_COL0] = a1 + a0;
-        a5 = DCT_FIXED_MUL(out[DCT_COL2] - out[DCT_COL6], DCT_IDCT_A1) - a0;
+        a5 = DCT_FIXED_MUL(input2 - input6, DCT_IDCT_A1) - a0;
         row[DCT_COL2] = a3 - a5;
         row[DCT_COL1] = a3 + a5;
         a8 = out[DCT_COL5] - out[DCT_COL3];

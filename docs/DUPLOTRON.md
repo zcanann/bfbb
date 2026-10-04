@@ -13747,3 +13747,29 @@ No APIs, shared headers, compiler binaries, or assembly changed. Private
 evidence: `build/player73-function-ownership.json` and
 `player72-common-anim-header-{report.json,link.json,linked.elf,linked.dol}`;
 `player72-common-link.py anim-header` reproduces the link with normal restore.
+
+
+### Bink IDCT even-input lifetimes (2026-10-03)
+
+Retail's final transform pass loads the four even workspace inputs before
+writing the row scratch array. The reconstruction read those inputs again
+after scratch stores. Capture inputs 2, 6, 0, and 4 once, then use those
+values in the same sum, difference, multiply, and shift expressions. This
+removes four redundant input loads in each variant without changing the
+integer arithmetic tree or output order. Both arrays are private local
+storage, so the snapshots retain the same values.
+
+The full deduplicated report improves only these three functions:
+- fastidct8x8: 63.765182 -> 63.97166 (source 948 -> 932 bytes; retail 988).
+- fastidct8x8d: 71.951416 -> 73.19433 (1000 -> 984; retail 988).
+- FastmIDCT8x8WithMotion: 58.347015 -> 58.41418 (1028 -> 1012; retail 1072).
+
+All other function records, data credit, and completion counts are unchanged.
+all_source and the normal retail link pass; SHA1 remains
+306526d90b48e99894c3138f5fc8f2716d9fecf6. DCT remains NonMatching. No behavioral
+tests, assembly, compiler changes, or dummy storage were introduced. Earlier
+first-pass scalar-output staging was neutral; an eight-argument inline
+column helper regressed and was discarded. Private evidence:
+build/dct73-{baseline,even-inputs,even-inputs-fastidct8x8d,
+even-inputs-FastmIDCT8x8WithMotion}.json and
+build/parallel-seventythird-{final-report.json,final-build.log,verify.py}.
