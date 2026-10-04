@@ -260,14 +260,16 @@ void CoefToUnity3(xCoef3* coef1, xCoef3* coef2, F32 f1, F32 f2)
         coef2_2 = c2->a[2];
         coef2_3 = c2->a[3];
 
+        F32 constant =
+            coef2_3 + ((coef2_2 * f1) + ((f1 * (f1 * (coef2_0 * f1))) + (f1 * (coef2_1 * f1))));
+
         temp = 2.0f * coef2_1 * fdiff;
         factor = 3.0f * coef2_0 * fdiff;
         c1->a[0] = fdiff * (fdiff * (coef2_0 * fdiff));
         c1->a[1] = (f1 * (fdiff * factor)) + (fdiff * (coef2_1 * fdiff));
         temp = (f1 * (f1 * factor)) + (f1 * temp);
         c1->a[2] = (coef2_2 * fdiff) + temp;
-        c1->a[3] =
-            coef2_3 + ((coef2_2 * f1) + ((f1 * (f1 * (coef2_0 * f1))) + (f1 * (coef2_1 * f1))));
+        c1->a[3] = constant;
 
         c1++;
         c2++;
