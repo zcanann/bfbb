@@ -3264,7 +3264,11 @@ void zNPCSleepy_Timestep(F32 dt)
         init = 1;
     }
 
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+    F32 dVar1 = NPCC_TmrCycle(&tmr_cycle, 1.0f / 50.0f, 2.63f);
+#else
     F32 dVar1 = NPCC_TmrCycle(&tmr_cycle, 0.016666667f, 2.63f);
+#endif
     zNPCSleepy::hyt_NightLightCurrent = 4.0f;
     zNPCSleepy::hyt_NightLightCurrent += (0.35f * isin(PI * dVar1));
 }

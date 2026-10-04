@@ -230,3 +230,12 @@ The combined selection includes Bink audio with the restored Expand alignment.
 The USA binary and its entire progress report remain unchanged. Regional shared
 code holdouts remain available for further matching work; regional completion
 is not inferred simply from the USA flags.
+
+Robot's remaining regional data difference is the fixed step passed by
+`zNPCSleepy_Timestep` to `NPCC_TmrCycle`: USA uses 1/60 second, while PAL and the
+German compilation use 1/50. Direct original-object comparison finds no other
+regional difference in this unit. Restoring that argument makes all 10,664
+regional data bytes match; the eight shared code holdouts remain unchanged,
+so the unit stays outside the source-completion manifests. USA's allocated
+object sections and full report remain unchanged, and all three existing
+472-unit source selections still reproduce their complete retail DOLs.
