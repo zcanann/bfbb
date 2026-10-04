@@ -852,6 +852,13 @@ const u8 patterns[DCT_PATTERN_BYTES] RAD_ATTRIBUTE_ALIGN(DCT_TABLE_ALIGNMENT) = 
     0x1e, 0x1f, 0x16, 0x17, 0x0e, 0x0f, 0x06, 0x07
 };
 
+static inline void dct_store_byte_pair(u8 PTR4* d, const s32 PTR4* row,
+                                       s32 even, s32 odd, s32 plus, s32 minus)
+{
+    d[plus] = DCT_BYTE_SAMPLE(row[even] + row[odd]);
+    d[minus] = DCT_BYTE_SAMPLE(row[even] - row[odd]);
+}
+
 static void fastidct8x8(u8 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4* q)
 {
     s32 row[DCT_BLOCK_WIDTH];
@@ -967,14 +974,10 @@ static void fastidct8x8(u8 PTR4* dest, s32 pitch, s16 PTR4* in, const s32 PTR4* 
         a1 = DCT_FIXED_MUL(b0, DCT_IDCT_A2) - b3;
         row[DCT_COL4] = a1 + row[DCT_COL5];
 
-        d[DCT_COL0] = DCT_BYTE_SAMPLE(row[DCT_COL0] + row[DCT_COL7]);
-        d[DCT_COL7] = DCT_BYTE_SAMPLE(row[DCT_COL0] - row[DCT_COL7]);
-        d[DCT_COL1] = DCT_BYTE_SAMPLE(row[DCT_COL1] + row[DCT_COL6]);
-        d[DCT_COL6] = DCT_BYTE_SAMPLE(row[DCT_COL1] - row[DCT_COL6]);
-        d[DCT_COL2] = DCT_BYTE_SAMPLE(row[DCT_COL2] + row[DCT_COL5]);
-        d[DCT_COL5] = DCT_BYTE_SAMPLE(row[DCT_COL2] - row[DCT_COL5]);
-        d[DCT_COL4] = DCT_BYTE_SAMPLE(row[DCT_COL3] + row[DCT_COL4]);
-        d[DCT_COL3] = DCT_BYTE_SAMPLE(row[DCT_COL3] - row[DCT_COL4]);
+        dct_store_byte_pair(d, row, DCT_COL0, DCT_COL7, DCT_COL0, DCT_COL7);
+        dct_store_byte_pair(d, row, DCT_COL1, DCT_COL6, DCT_COL1, DCT_COL6);
+        dct_store_byte_pair(d, row, DCT_COL2, DCT_COL5, DCT_COL2, DCT_COL5);
+        dct_store_byte_pair(d, row, DCT_COL3, DCT_COL4, DCT_COL4, DCT_COL3);
 
         out += DCT_BLOCK_WIDTH;
         d += pitch;

@@ -14472,3 +14472,28 @@ source-selected link claim is made. Evidence: build/thrown114/, including
 complete/readable/shared-dot candidates, normalized source diff, assembly,
 and the final shared-report.json, shared-report-comparison.json and
 shared-build.log. No assembly, volatile or compiler changes were introduced.
+
+## Bink byte IDCT: mirrored output-pair lifetime (2026-10-04)
+
+Write each mirrored byte pair through an ordinary inline helper taking the row
+and its input/output column indices. The four calls retain the same integer
+sum/difference expressions, rounding, narrowing and eight byte-store order.
+The helper fully inlines and adds no emitted function or call. This is distinct
+from the previous whole-row helper and scalar-pair helper: the pointer-backed
+pair boundary improves the match while those earlier forms regressed or were
+neutral. The original source spelling remains unproven.
+
+The full deduplicated fastidct8x8 score improves 74.72065% to 75.76113%.
+Source size moves from 932 to 944 bytes toward retail's 988. Relative to the
+previous source it gains one lwz, one mr and one addi; the retail load/copy
+residue is not solved. All other function scores and all non-fuzzy report
+fields, including data and completion totals, are unchanged. All-source build
+and the normal retail check pass with DOL SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. DCT remains NonMatching; no source-link
+completion is claimed. No assembly, volatile accesses or compiler changes.
+
+Evidence: build/dct118-pointer-pairs/ and
+build/parallel-hundredeighteenth-{report.json,changes.json,verify.py,build.log}.
+The preceding load-provenance investigation is build/dct116-rtl/; the old
+helper's address-pseudo/loop-hoisting proof is in the RGB worktree under
+build/dct118-helper-rtl/.
