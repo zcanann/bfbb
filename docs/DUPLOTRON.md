@@ -14446,3 +14446,29 @@ validation.json), plus build/swept114-{baseline,candidate}-report.json and
 build logs. Archive provenance is the complete gbest.json in scratchpad/cs/gp/
 xSweptSphereToBox__FP12xSweptSphereP4xBoxP7xMat4x3; no reduced body that drops
 calls was used.
+
+## Thrown collision response: retain projection lifetimes with a shared dot product (2026-10-04)
+
+The complete `big5/gp/thr2` best candidate reproduces 99.941864% under p1g.
+Its body was checked against original best_99.9419_w2.c; differences from
+current code, excluding historical renames and formatting, are confined to
+the collision-reflection loop. A single simplification check restored the
+shared `dothdng` expression while retaining recorded projection lifetimes and
+the equivalent while traversal. This keeps a smaller gain at 99.93129%, and
+is preferred over repeating the dot formula for another 0.010574 points.
+All calls, stores, guards and iteration behavior remain intact.
+
+The retained form keeps current debug names and uses an ordinary F32
+`tangentX` instead of the archive's typeof temporary. The redundant capture
+is a matching compromise, not a claim about original source spelling.
+The original complete candidate is preserved in local commit 62ad79379.
+The full deduplicated report improves only zThrown_Update, 99.915436% to
+99.93129%, at unchanged 3784 bytes. All non-fuzzy fields, matched data, exact
+counts, other function scores and completion markers are unchanged.
+All-source compilation and normal retail link/check pass with DOL SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6 and unchanged p1g SHA1
+99bd18455ff674337d7a6186164df8a1b1ba13a7. The unit remains NonMatching; no
+source-selected link claim is made. Evidence: build/thrown114/, including
+complete/readable/shared-dot candidates, normalized source diff, assembly,
+and the final shared-report.json, shared-report-comparison.json and
+shared-build.log. No assembly, volatile or compiler changes were introduced.

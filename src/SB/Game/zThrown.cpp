@@ -565,27 +565,33 @@ static void zThrown_Update(xEnt* ent, xScene* sc, F32 dt)
         }
         else
         {
-            for (i = 0; i < 18; i++)
+            F32 tz;
+            i = 0;
+            while (i < 18)
             {
                 if (collis.colls[i].flags & k_HIT_IT)
                 {
+                    F32 px, py, pz, tx, ty;
+                    F32 tangentX;
                     F32 dothdng = -collis.colls[i].hdng.x * thrown->vel.x +
-                            -collis.colls[i].hdng.y * thrown->vel.y +
-                            -collis.colls[i].hdng.z * thrown->vel.z;
-                    F32 px = -collis.colls[i].hdng.x * dothdng;
-                    F32 py = -collis.colls[i].hdng.y * dothdng;
-                    F32 pz = -collis.colls[i].hdng.z * dothdng;
-                    F32 tx = thrown->vel.x - px;
-                    F32 ty = thrown->vel.y - py;
-                    F32 tz = thrown->vel.z - pz;
+                                  -collis.colls[i].hdng.y * thrown->vel.y +
+                                  -collis.colls[i].hdng.z * thrown->vel.z;
+                    px = -collis.colls[i].hdng.x * dothdng;
+                    pz = -collis.colls[i].hdng.z * dothdng;
+                    py = -collis.colls[i].hdng.y * dothdng;
+                    tz = thrown->vel.z - pz;
+                    tangentX = thrown->vel.x - px;
+                    tx = tangentX;
+                    ty = thrown->vel.y - py;
                     ent->frame->vel.x =
-                        thrown->vel.x - (1.0f + bounce) * px - (1.0f - friction) * tx;
+                        thrown->vel.x - (bounce + 1.0f) * px - (1.0f - friction) * tx;
                     ent->frame->vel.y =
                         thrown->vel.y - (1.0f + bounce) * py - (1.0f - friction) * ty;
                     ent->frame->vel.z =
-                        thrown->vel.z - (1.0f + bounce) * pz - (1.0f - friction) * tz;
+                        thrown->vel.z - (bounce + 1.0f) * pz - (1.0f - friction) * tz;
                     break;
                 }
+                i++;
             }
         }
     }
