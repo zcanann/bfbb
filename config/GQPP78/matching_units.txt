@@ -455,3 +455,4 @@ SB/Core/x/xFont.cpp
 SB/Game/zParPTank.cpp
 SB/Game/zMenu.cpp
 SB/Game/zUI.cpp
+SB/Core/gc/ngcrad3d.c

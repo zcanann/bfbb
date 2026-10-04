@@ -154,3 +154,22 @@ vertical-blank timing, minimum timestep, and soak timer. Its smoothing fallback
 and initial frame history still use 1/60 second in PAL, as in retail. All data
 and three additional functions match; the existing screen-transition function
 holdout still prevents whole-unit completion.
+
+
+## Regional FMV framebuffer height
+
+The FMV camera, projection, height scaling, and RAD image renderer use a
+528-line screen in Europe and German builds, versus 480 lines in USA. A shared
+`FMV_SCREEN_HEIGHT` constant restores the values shown in regional retail
+instructions and constant pools. The header was already included by both units.
+
+`ngcrad3d` now matches all 1704 code bytes and 96 data bytes in both regions.
+Selecting it from source increases each regional manifest to 457 units and
+reproduces the complete retail DOL, including the German trailer. `iFMV` data
+matching rises from 104/152 to 152/152 bytes; its remaining `Show_frame`
+instruction-order holdout matches the USA score of 96.84746%, so that unit stays
+unselected. Only these two units change in the full PAL report, with no losses.
+
+All three full source builds and strict retail SHA-1 checks pass. The complete
+USA report is unchanged. Verification artifacts are under
+`build/regional131/` in the RGB worktree.

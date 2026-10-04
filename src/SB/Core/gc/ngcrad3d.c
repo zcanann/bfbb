@@ -214,9 +214,9 @@ void Blit_RAD_3D_image(HRAD3DIMAGE rad_image, F32 x_offset, F32 y_offset, F32 x_
     GXSetTexCoordGen(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_TEX0, GX_TEXMTX0);
 
     // Retail ignores the caller's offsets and scales and always covers the
-    // whole 640x480 screen.
+    // whole regional framebuffer.
     screen_width = 640.0f;
-    screen_height = 480.0f;
+    screen_height = (F32)FMV_SCREEN_HEIGHT;
     Submit_vertices(0.0f, 0.0f, 1.0f, 1.0f, screen_width, screen_height, alpha_level);
 
     GXSetBlendMode(GX_BM_NONE, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_CLEAR);

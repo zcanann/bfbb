@@ -116,7 +116,7 @@ static void DrawFrame(float arg0, float arg1, float arg2, float arg3)
     }
 
     GXSetDispCopyGamma(GX_GM_1_0);
-    C_MTXOrtho(mtx, 0.0f, 480.0f, 0.0f, 640.0f, 0.0f, 10000.0f);
+    C_MTXOrtho(mtx, 0.0f, (F32)FMV_SCREEN_HEIGHT, 0.0f, 640.0f, 0.0f, 10000.0f);
     GXSetProjection(mtx, GX_ORTHOGRAPHIC);
     PSMTXIdentity(idt);
     GXLoadPosMtxImm(idt, 0);
@@ -155,12 +155,12 @@ static void xDrawLine2D_LocaliFMVVersion(float, float, float, float);
 static void Show_frame()
 {
     RwRGBA color = { 0 };
-    RwCamera* cam = iCameraCreate(640, 480, FALSE);
+    RwCamera* cam = iCameraCreate(640, FMV_SCREEN_HEIGHT, FALSE);
     RwCameraClear(cam, &color, rwCAMERACLEARIMAGE);
 
     RwCameraBeginUpdate(cam);
     Width_scale = 640 / Bink->Width;
-    Height_scale = 480 / Bink->Height;
+    Height_scale = FMV_SCREEN_HEIGHT / Bink->Height;
     xDrawLine2D_LocaliFMVVersion(0.0f, 0.0f, 0.0f, 0.0f);
     DrawFrame(0.0f, 0.0f, Width_scale, Height_scale);
     RwCameraEndUpdate(cam);
