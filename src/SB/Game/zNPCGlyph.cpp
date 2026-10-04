@@ -250,14 +250,14 @@ S32 zNPCGlyph_TypeNeedsLightKit(en_npcglyph gtyp)
     }
 }
 
-// Nonmatching
 void zNPCCommon_Glyphs_RenderAll(S32 doOpaqueStuff)
 {
+    NPCGlyph* glyph;
+    en_npcglyph gtyp;
+    NPCGlyph* list = NULL;
+    S32 cnt;
     S32 k;
     S32 i;
-    NPCGlyph* glyph;
-    S32 cnt;
-    NPCGlyph* list = NULL;
     _SDRenderState old_rendstat = zRenderStateCurrent();
 
     if (doOpaqueStuff)
@@ -274,7 +274,8 @@ void zNPCCommon_Glyphs_RenderAll(S32 doOpaqueStuff)
         if ((!doOpaqueStuff || zNPCGlyph_TypeIsOpaque((en_npcglyph)i)) &&
             (doOpaqueStuff || !zNPCGlyph_TypeIsOpaque((en_npcglyph)i)))
         {
-            if (zNPCGlyph_TypeNeedsLightKit((en_npcglyph)i))
+            gtyp = (en_npcglyph)i;
+            if (zNPCGlyph_TypeNeedsLightKit(gtyp))
             {
                 xLightKit_Enable(globals.player.ent.lightKit, globals.currWorld);
             }
@@ -283,20 +284,22 @@ void zNPCCommon_Glyphs_RenderAll(S32 doOpaqueStuff)
                 xLightKit_Enable(NULL, globals.currWorld);
             }
 
-            cnt = zNPCGlyph_TypeToList((en_npcglyph)i, &list);
+            cnt = zNPCGlyph_TypeToList(gtyp, &list);
 
             if (list == NULL || cnt < 1 || g_cnt_activeGlyphs[i] < 1)
             {
                 continue;
             }
 
-            for (k = 0; k < cnt; k++)
+            k = 0;
+            while (cnt > k)
             {
                 glyph = &list[k];
                 if (glyph->flg_glyph & (1 << 0) && glyph->flg_glyph & (1 << 1))
                 {
                     glyph->Render();
                 }
+                k++;
             }
         }
     }

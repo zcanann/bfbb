@@ -14320,3 +14320,26 @@ still emits 1532 bytes against retail's 1556 and remains NonMatching. The
 all-source build and normal retail check pass; DOL SHA-1 remains
 `306526d90b48e99894c3138f5fc8f2716d9fecf6`. No compiler, assembly, layout,
 or qualification changes are involved.
+
+
+## Glyph renderer: restore the verified typed capture (2026-10-04)
+
+An archived complete `zNPCCommon_Glyphs_RenderAll` candidate still reaches
+100% with the current compiler. Capture the current `en_npcglyph` before
+light-kit setup and use it for the light-kit predicate and list lookup.
+The glyph/list locals precede the count/index locals, and the inner traversal
+uses `k = 0; while (cnt > k)` with its increment after the unchanged render
+condition. All calls, guards and iteration behavior are preserved. This is
+an ordinary typed lifetime and equivalent loop form; its original spelling
+is not proven. The archive's complete source and minimization records were
+checked before transplanting only this function into current source.
+
+The full deduplicated report changes only this function, 98.735634% to 100%,
+at 348 bytes. Exact code increases by 348 bytes and exact functions by one;
+no other scores, data, symbol identities or unit-completion markers change.
+Glyph now has 28/29 exact functions, 4808/5060 exact code bytes and all
+10948 data bytes matched. `zNPCGlyph_ScenePrepare` remains 96.87302%, so the
+unit remains NonMatching. All-source compilation and the normal retail
+link/check pass with DOL SHA1 306526d90b48e99894c3138f5fc8f2716d9fecf6;
+this does not establish a source-selected Glyph DOL. No compiler, assembly,
+volatile or behavioral-test changes. Evidence: build/glyph109/.
