@@ -1386,8 +1386,6 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
             }
             case BINK_BLOCK_RUN: {
                 /* Runs decode in scan order before the block is copied to the frame. */
-                u8 PTR4* dst0 = dest;
-                u8 PTR4* dst1 = dest + pitch;
                 {
                     const u8 PTR4* scan;
                     s32 filled_pixels = 0;
@@ -1417,36 +1415,40 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                         motion_block[scan_offset] = *colors.cur_ptr++;
                     }
                 }
-                if ((((u32)dest & BINK_BLOCK_DOUBLE_ALIGN_MASK) == 0)) {
-                    BINK_COPY_BLOCK_DOUBLE_ROW(dst0, motion_block + BINK_BLOCK_SIDE * 0, 0, 0);
-                    dst0 = dst1 + pitch;
-                    BINK_COPY_BLOCK_DOUBLE_ROW(dst1, motion_block + BINK_BLOCK_SIDE * 1, 0, 0);
-                    dst1 = dst0 + pitch;
-                    BINK_COPY_BLOCK_DOUBLE_ROW(dst0, motion_block + BINK_BLOCK_SIDE * 2, 0, 0);
-                    dst0 = dst1 + pitch;
-                    BINK_COPY_BLOCK_DOUBLE_ROW(dst1, motion_block + BINK_BLOCK_SIDE * 3, 0, 0);
-                    dst1 = dst0 + pitch;
-                    BINK_COPY_BLOCK_DOUBLE_ROW(dst0, motion_block + BINK_BLOCK_SIDE * 4, 0, 0);
-                    dst0 = dst1 + pitch;
-                    BINK_COPY_BLOCK_DOUBLE_ROW(dst1, motion_block + BINK_BLOCK_SIDE * 5, 0, 0);
-                    dst1 = dst0 + pitch;
-                    BINK_COPY_BLOCK_DOUBLE_ROW(dst0, motion_block + BINK_BLOCK_SIDE * 6, 0, 0);
-                    BINK_COPY_BLOCK_DOUBLE_ROW(dst1, motion_block + BINK_BLOCK_SIDE * 7, 0, 0);
-                } else {
-                    BINK_COPY_BLOCK_WORD_ROW(dst0, motion_block + BINK_BLOCK_SIDE * 0, 0, 0);
-                    dst0 = dst1 + pitch;
-                    BINK_COPY_BLOCK_WORD_ROW(dst1, motion_block + BINK_BLOCK_SIDE * 1, 0, 0);
-                    dst1 = dst0 + pitch;
-                    BINK_COPY_BLOCK_WORD_ROW(dst0, motion_block + BINK_BLOCK_SIDE * 2, 0, 0);
-                    dst0 = dst1 + pitch;
-                    BINK_COPY_BLOCK_WORD_ROW(dst1, motion_block + BINK_BLOCK_SIDE * 3, 0, 0);
-                    dst1 = dst0 + pitch;
-                    BINK_COPY_BLOCK_WORD_ROW(dst0, motion_block + BINK_BLOCK_SIDE * 4, 0, 0);
-                    dst0 = dst1 + pitch;
-                    BINK_COPY_BLOCK_WORD_ROW(dst1, motion_block + BINK_BLOCK_SIDE * 5, 0, 0);
-                    dst1 = dst0 + pitch;
-                    BINK_COPY_BLOCK_WORD_ROW(dst0, motion_block + BINK_BLOCK_SIDE * 6, 0, 0);
-                    BINK_COPY_BLOCK_WORD_ROW(dst1, motion_block + BINK_BLOCK_SIDE * 7, 0, 0);
+                {
+                    u8 PTR4* dst0 = dest;
+                    u8 PTR4* dst1 = dest + pitch;
+                    if ((((u32)dest & BINK_BLOCK_DOUBLE_ALIGN_MASK) == 0)) {
+                        BINK_COPY_BLOCK_DOUBLE_ROW(dst0, motion_block + BINK_BLOCK_SIDE * 0, 0, 0);
+                        dst0 = dst1 + pitch;
+                        BINK_COPY_BLOCK_DOUBLE_ROW(dst1, motion_block + BINK_BLOCK_SIDE * 1, 0, 0);
+                        dst1 = dst0 + pitch;
+                        BINK_COPY_BLOCK_DOUBLE_ROW(dst0, motion_block + BINK_BLOCK_SIDE * 2, 0, 0);
+                        dst0 = dst1 + pitch;
+                        BINK_COPY_BLOCK_DOUBLE_ROW(dst1, motion_block + BINK_BLOCK_SIDE * 3, 0, 0);
+                        dst1 = dst0 + pitch;
+                        BINK_COPY_BLOCK_DOUBLE_ROW(dst0, motion_block + BINK_BLOCK_SIDE * 4, 0, 0);
+                        dst0 = dst1 + pitch;
+                        BINK_COPY_BLOCK_DOUBLE_ROW(dst1, motion_block + BINK_BLOCK_SIDE * 5, 0, 0);
+                        dst1 = dst0 + pitch;
+                        BINK_COPY_BLOCK_DOUBLE_ROW(dst0, motion_block + BINK_BLOCK_SIDE * 6, 0, 0);
+                        BINK_COPY_BLOCK_DOUBLE_ROW(dst1, motion_block + BINK_BLOCK_SIDE * 7, 0, 0);
+                    } else {
+                        BINK_COPY_BLOCK_WORD_ROW(dst0, motion_block + BINK_BLOCK_SIDE * 0, 0, 0);
+                        dst0 = dst1 + pitch;
+                        BINK_COPY_BLOCK_WORD_ROW(dst1, motion_block + BINK_BLOCK_SIDE * 1, 0, 0);
+                        dst1 = dst0 + pitch;
+                        BINK_COPY_BLOCK_WORD_ROW(dst0, motion_block + BINK_BLOCK_SIDE * 2, 0, 0);
+                        dst0 = dst1 + pitch;
+                        BINK_COPY_BLOCK_WORD_ROW(dst1, motion_block + BINK_BLOCK_SIDE * 3, 0, 0);
+                        dst1 = dst0 + pitch;
+                        BINK_COPY_BLOCK_WORD_ROW(dst0, motion_block + BINK_BLOCK_SIDE * 4, 0, 0);
+                        dst0 = dst1 + pitch;
+                        BINK_COPY_BLOCK_WORD_ROW(dst1, motion_block + BINK_BLOCK_SIDE * 5, 0, 0);
+                        dst1 = dst0 + pitch;
+                        BINK_COPY_BLOCK_WORD_ROW(dst0, motion_block + BINK_BLOCK_SIDE * 6, 0, 0);
+                        BINK_COPY_BLOCK_WORD_ROW(dst1, motion_block + BINK_BLOCK_SIDE * 7, 0, 0);
+                    }
                 }
                 break;
             }

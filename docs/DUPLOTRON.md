@@ -13147,3 +13147,26 @@ hashes are unchanged; no new assembly, compiler edits, or ancillary tests.
 Evidence in the RGB worktree: build/masked-tail-baseline-report.json,
 masked-tail-retained-report.json, masked-tail-retained-raw.json,
 masked-tail-validation.json, and baseline/retained build and link logs.
+
+
+### Integrated masked-tail and run-copy lifetime verification (2026-10-03)
+
+Initialize normal RUN's destination row cursors in the copy phase, after
+decoding the scratch block. They need not remain live across bitstream and
+run decoding. The copy body, eight rows, alignment branch and all stores are
+unchanged. This restores retail's initial double-copy sequence, including
+two indexed stores and alternating f0/f13 values. Raw ExpandPlane improves
+82.30088 -> 82.6883 and source size falls 5,664 -> 5,660 bytes. The raw-copy
+branch was separately audited: its cursor reloads already agree with retail,
+so no source snapshot or other raw-copy change was justified.
+
+Root independently integrates the masked-tail cursor fix. Full deduplicated
+verification changes exactly ExpandPlane 83.05476 -> 83.47262 and
+YUV_blit_mask 82.76312 -> 83.02945. Every other function record and all per-unit
+and global exact-code/data/completion measures are unchanged. All-source
+compilation and normal retail linkage pass with SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. Both units remain NonMatching and
+completion remains 469/543; no source-link completion is claimed. Evidence:
+build/expand60-run-copy-private, parallel-sixtieth-report.json and its
+validation log. The YUV_init format-owned green_shift trial regressed and was
+restored; the published ordered-switch checkpoint remains intact.
