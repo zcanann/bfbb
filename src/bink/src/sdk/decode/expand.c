@@ -1218,7 +1218,8 @@ static inline void scale_raw_block(READBUNDLE PTR4* colors, u8 PTR4* dest, u32 p
     u8 PTR4* odd_row = dest + pitch;
 
     for (row = 0; row < BINK_BLOCK_SIDE; ++row) {
-        const u16 PTR4* in = (const u16 PTR4*)colors->cur_ptr;
+        u8 PTR4* source_row = colors->cur_ptr;
+        const u16 PTR4* in = (const u16 PTR4*)source_row;
         u32 PTR4* even = (u32 PTR4*)dest;
         u32 PTR4* odd = (u32 PTR4*)odd_row;
         u32 word;
@@ -1235,7 +1236,7 @@ static inline void scale_raw_block(READBUNDLE PTR4* colors, u8 PTR4* dest, u32 p
         word = BINK_SCALE_PIXELS(in[3]);
         even[3] = word;
         odd[3] = word;
-        colors->cur_ptr += BINK_BLOCK_SIDE;
+        colors->cur_ptr = source_row + BINK_BLOCK_SIDE;
         dest += pitch * BINK_BLOCK_SCALE;
         odd_row += pitch * BINK_BLOCK_SCALE;
     }

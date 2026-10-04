@@ -13227,3 +13227,30 @@ EffectSingleDuration idiom and makes the 220-byte function exact. The rebased
 report adds only that function match relative to the integrated report above;
 Bink scores, data and 469/543 completion are unchanged. Retail DOL hash passes.
 Evidence: build/parallel-sixtyfirst-rebased-{report.json,validation.log}.
+
+
+## Bink scaled raw row cursor ownership (2026-10-03)
+
+Capture colors.cur_ptr once at each scaled raw row entry and advance that
+same source_row after writing the doubled output rows. Retail 0x33a4..0x33ac
+loads the row cursor and forms its next value before the output stores;
+0x3430 commits that saved next value. The previous source reloaded the bundle
+cursor after the stores. The source row and output buffers are independent;
+the four halfword reads, sixteen output pixels per doubled row, eight-row
+loop and eight-byte input advance are unchanged.
+
+ExpandPlane improves 83.5355% to 83.9236% in the full deduplicated report
+(raw 82.78161% to 83.13928%). Source code shrinks 5660 to 5656 bytes by
+removing the extra cursor reload. Only this function record changes; all
+other functions, data, exact measures and completion totals remain unchanged.
+Completion is still 469/543. All-source build and normal retail link/check
+pass with SHA1 306526d90b48e99894c3138f5fc8f2716d9fecf6. Expand remains
+NonMatching; this hash does not prove a source-selected Bink DOL match.
+Evidence: build/expand62-raw-row-private and
+build/parallel-sixtysecond-{report.json,validation.log}.
+
+Parallel near-TU trials retained no changes: xAnim's allocation if/else was
+instruction-identical, its positive-pattern pointer capture regressed, and
+bamatlst's explicit serialized-index cursor regressed. Masked-blitter local
+chroma initialization and outer-row base captures also regressed. No new
+assembly, compiler patch or ancillary behavioral tests were introduced.
