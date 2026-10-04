@@ -344,7 +344,7 @@ struct zNPCSleepy : zNPCRobot
     static S8 init;
     static RwRaster* rast_detectcone;
     static RwRaster* rast_killcone;
-    volatile static F32 hyt_NightLightCurrent;
+    static F32 hyt_NightLightCurrent;
     static F32 uv_deathcone[2];
     static F32 uv_nightlight[2];
     static F32 uv_slice_nightlight[2];

@@ -3248,7 +3248,7 @@ RwRaster* zNPCSleepy::rast_killcone;
 
 RwRaster* zNPCSleepy::rast_detectcone;
 
-volatile F32 zNPCSleepy::hyt_NightLightCurrent;
+F32 zNPCSleepy::hyt_NightLightCurrent;
 
 static S32 g_sleepy_NightLightStates[10] = { 'NGN0', 'NGN2', 'NGN1', 'NGN3', 'NGN4',
                                              'NGR4', 'NGR=', 'NGR0', 'NGR1', 0 };
