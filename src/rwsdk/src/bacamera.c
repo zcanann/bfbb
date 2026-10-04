@@ -166,8 +166,8 @@ static void CameraBuildPerspClipPlanes(RwCamera* camera)
     RwV3dScaleMacro(&vRight, &cameraLTM->right, camera->viewWindow.x);
     RwV3dScaleMacro(&vUp, &cameraLTM->up, camera->viewWindow.y);
 
-    RwV3dScaleMacro(&vTmp2, &vRight, ((RwReal)2));
     RwV3dAddMacro(&vTmp, &cameraLTM->at, &vRight);
+    RwV3dScaleMacro(&vTmp2, &vRight, ((RwReal)2));
     RwV3dScaleMacro(&vCOP, &cameraLTM->right, -camera->viewOffset.x);
     scale = camera->viewOffset.y;
     RwV3dIncrementScaledMacro(&vCOP, &cameraLTM->up, scale);

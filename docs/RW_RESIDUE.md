@@ -441,8 +441,10 @@ orders the defining instructions differently.
 - **Cause:** our `scale` v32 has degree 34, so it is a survivor and pops early;
   retail's `scale` must have had degree < 32, i.e. fewer FPR neighbours.
 - **Evidence:** no pop order of our graph reaches the target. Rat DWARF has
-  **four** `length2` locals. Reorder search best 99.257, only via unnatural
-  statement orders.
+  **four** `length2` locals. The recorded `124356789` order from the earlier
+  search is now retained: compute `vTmp = at + vRight` before
+  `vTmp2 = 2 * vRight`. These independent local assignments preserve all
+  inputs and operations, improving 99.10891 to 99.25742 at the same 2020 bytes.
 - **Status:** graph differs (FPR).
 
 ### 3.3 (c) Needs a retail-only scheduler edge
