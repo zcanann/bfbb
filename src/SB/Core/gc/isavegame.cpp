@@ -1749,7 +1749,13 @@ static S32 iSG_mc_fopen(st_ISG_MEMCARD_DATA* mcdata, const char* fname, S32 fsiz
 
     if (ret != 0)
     {
+#if defined(VERSION_GU4Y78)
+        if (memcmp(stat->gameName, "GU4Y", 4) != 0 || memcmp(stat->company, "78", 2) != 0)
+#elif defined(VERSION_GQPP78)
+        if (memcmp(stat->gameName, "GQPP", 4) != 0 || memcmp(stat->company, "78", 2) != 0)
+#else
         if (memcmp(stat->gameName, "GQPE", 4) != 0 || memcmp(stat->company, "78", 2) != 0)
+#endif
         {
             iSG_mc_fclose(mcdata);
             ret = 0;
