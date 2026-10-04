@@ -54,10 +54,14 @@ namespace xhud
             updater(dt);
         }
 
+#ifdef XHUDMETER_DEFER_CHANGING
+        U32 changing() const;
+#else
         U32 changing() const
         {
             return (value == end_value) ^ 1;
         }
+#endif
     };
 } // namespace xhud
 

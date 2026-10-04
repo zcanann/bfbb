@@ -556,7 +556,7 @@ config.libs = [
             Object(Matching, "SB/Game/zGameExtras.cpp", extra_cflags=["-sym on"]),
             Object(Equivalent, "SB/Game/zGameState.cpp"),
             Object(Matching, "SB/Game/zGust.cpp"),
-            Object(NonMatching, "SB/Game/zHud.cpp"),
+            Object(NonMatching, "SB/Game/zHud.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zLasso.cpp"),
             Object(Matching, "SB/Game/zLight.cpp"),
             Object(Matching, "SB/Game/zLightEffect.cpp"),

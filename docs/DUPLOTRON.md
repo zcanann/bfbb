@@ -13327,3 +13327,56 @@ Worker deduplicated score improves 99.182076% to 99.35014%, with all other
 functions and all 26696 zFX data bytes unchanged. Goo and skinning residuals
 still prevent zFX closure. Its scoped skin-mask trial regressed and was
 restored. No new assembly, compiler modifications or ancillary tests.
+
+
+### zHud: recover source-link function groups; conversion residue remains (2026-10-03)
+
+The two code holdouts are `zhud::setup` (556 bytes, 97.1223%) and
+`zhud::update` (756 bytes, 97.8836%). Their four unsigned-counter conversions
+have identical operations to retail, but load the `0x4330000000000000` bias
+before the saved-counter store/reload pair; retail loads it after that pair.
+DWARF confirms the `old_value` and `old_max_value` arrays are unsigned ints.
+Combining assignment and conversion into `(F32)(old_value[i] = *value[i])`
+removed the required reloads and regressed both functions (95.647484% and
+96.79894%); this trial was restored. This evidence does not establish that a
+compiler patch is necessary.
+
+There was also an independent source-link layout mismatch. TU-local `-sym on`
+keeps primary functions in source order instead of pulling `show`/`hide`
+forward and interleaving weak functions. Actual source-selected DOL differences
+fall from 1,232 to 85 bytes with code/data scores unchanged. Retail then places
+`meter_widget::changing` in its own final weak section, after the font-meter
+`get_asset` section. The opt-in `XHUDMETER_DEFER_CHANGING` declaration and
+`zHudMeter.inl` preserve that ownership only for zHud; every other consumer
+keeps the original header body. This reduces the actual DOL difference to
+**57 bytes**, SHA-1 `e10ffdd59ac1d4c79fcf81040696f73d8c16f3b5`.
+
+The remaining bytes are 19 in setup, 19 in update (the four bias-load moves),
+and 19 in the literal pool at `0x8025cd01..0x8025cd14`. The older note describing
+zHud's target-only `64006875` as a constant is misleading: those bytes straddle
+strings. Retail has `"hud\0hud:meter\0hud:model\0"`; source lacks the first
+`"hud\0"`. `xhud::asset::type_name()` supplies this real string elsewhere,
+but no surviving zHud debug/source use establishes its original stripped
+owner. No synthetic reference or padding was added. The TU stays NonMatching.
+
+Validation: force-rebuilt all five dependency-recorded xHudMeter consumers
+(`xHudMeter`, `xHudFontMeter`, `xHudUnitMeter`, `xHud`, `zHud`), then completed
+`all_source`, full deduplicated report equality, and normal retail DOL SHA-1
+`306526d90b48e99894c3138f5fc8f2716d9fecf6`. The source-selected link reproduced
+57 differing bytes after that rebuild. Compiler p1a/p1e hashes remain
+`a78a5fdb6c1d5677e987636b2e0743dbaefe9542` and
+`9d445725489050035740aaff35860eddbaf3c3c9`.
+
+Local artifacts in the Plankton worktree: `build/zhud-closure-ownership-link.py`
+(temporary Matching audit, restores normal configuration in `finally`),
+`zhud-closure-ownership-link.json`, `zhud-closure-ownership-linked.elf`,
+`zhud-closure-final-report.json`, `zhud-closure-fresh-build.log`, and
+`zhud-closure-affected-{sources,objects}.txt`. No behavioral tests were run.
+
+Root independently reproduced the integrated HUD checkpoint after rebuilding
+all five affected translation units. The full report is exactly equal to the
+combined Bink/Goo report; source-selected zHud DOL is retail size 2859136 with
+57 differing bytes and SHA1 e10ffdd59ac1d4c79fcf81040696f73d8c16f3b5.
+Temporary source selection was restored and the normal retail SHA1 passes.
+Evidence: build/parallel-sixtyfifth-{combined,hud}-report.json,
+build/parallel-sixtyfifth-hud-validation.log, and build/zhud65-source-link.json.

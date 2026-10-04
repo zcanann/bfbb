@@ -1,3 +1,4 @@
+#define XHUDMETER_DEFER_CHANGING
 #include "xHud.h"
 #include "xHudText.h"
 #include "xHudFontMeter.h"
@@ -8,6 +9,9 @@
 #include "zGlobals.h"
 #include "zGameState.h"
 #include "zGame.h"
+#undef XHUDMETER_DEFER_CHANGING
+
+#include "zHudMeter.inl"
 
 #include <types.h>
 #include <string.h>
