@@ -635,25 +635,22 @@ RpAtomic* zFXGooRenderAtomic(class RpAtomic* atomic)
             RwIm3DVertexSetPos(&currentVertBuf[2], cx, cy, cz);
 
             RwUInt16 ai = tri->vertIndex[0];
-            U8 ar = preLitLum[ai].red;
-            U8 ag = preLitLum[ai].green;
-            U8 ab = preLitLum[ai].blue;
+            const U32& ag = (U32)preLitLum[ai].green;
+            const U32& ab = (U32)preLitLum[ai].blue;
             U8 aa = bytes[ai];
-            RwIm3DVertexSetRGBA(&currentVertBuf[0], ar, ag, ab, aa);
+            RwIm3DVertexSetRGBA(&currentVertBuf[0], preLitLum[ai].red, ag, ab, aa);
 
             RwUInt16 bi = tri->vertIndex[1];
-            U8 br = preLitLum[bi].red;
-            U8 bg = preLitLum[bi].green;
-            U8 bb = preLitLum[bi].blue;
+            const U32& bg = (U32)preLitLum[bi].green;
+            const U32& bb = (U32)preLitLum[bi].blue;
             U8 ba = bytes[bi];
-            RwIm3DVertexSetRGBA(&currentVertBuf[1], br, bg, bb, ba);
+            RwIm3DVertexSetRGBA(&currentVertBuf[1], preLitLum[bi].red, bg, bb, ba);
 
             RwUInt16 ci = tri->vertIndex[2];
-            U8 cr = preLitLum[ci].red;
-            U8 cg = preLitLum[ci].green;
-            U8 cb = preLitLum[ci].blue;
+            const U32& cg = (U32)preLitLum[ci].green;
+            const U32& cb = (U32)preLitLum[ci].blue;
             U8 ca = bytes[ci];
-            RwIm3DVertexSetRGBA(&currentVertBuf[2], cr, cg, cb, ca);
+            RwIm3DVertexSetRGBA(&currentVertBuf[2], preLitLum[ci].red, cg, cb, ca);
 
             currentVertBuf[0].u = goo->orig_uvs[tri->vertIndex[0]].u;
             currentVertBuf[1].u = goo->orig_uvs[tri->vertIndex[1]].u;
