@@ -140,11 +140,11 @@ static void ImageResampleGetAvgPixel(const RwImage* _image, RwInt32 _nXStart, Rw
 
 RwImage* RwImageResample(RwImage* dstImage, const RwImage* srcImage)
 {
-    RwInt32 nX;
     RwInt32 nY;
+    RwInt32 nYPos;
+    RwInt32 nX;
     RwInt32 nXPos;
     RwInt32 nXDelta;
-    RwInt32 nYPos;
     RwInt32 nYDelta;
     RwInt32 dstWidth = dstImage->width;
     RwInt32 dstHeight = dstImage->height;
@@ -154,23 +154,24 @@ RwImage* RwImageResample(RwImage* dstImage, const RwImage* srcImage)
     dstImage->flags |= (srcImage->flags & rwIMAGEGAMMACORRECTED);
 
     nXDelta = (RwInt32)(((RwReal)rwRESAMPLEFIXEDONE) * ((RwReal)srcWidth / (RwReal)dstWidth));
+    nYPos = 0;
     nYDelta = (RwInt32)(((RwReal)rwRESAMPLEFIXEDONE) * ((RwReal)srcHeight / (RwReal)dstHeight));
 
-    nYPos = 0;
     for (nY = 0; nY < dstHeight; nY++)
     {
+        RwRGBAReal rrCol;
         RwRGBA* const rpDstSpan = (RwRGBA*)(dstImage->cpPixels + dstImage->stride * nY);
 
         nXPos = 0;
-        for (nX = 0; nX < dstWidth; nX++)
+        nX = 0;
+        while (nX < dstWidth)
         {
-            RwRGBAReal rrCol;
-
             ImageResampleGetAvgPixel(srcImage, nXPos, nXPos + nXDelta - 1, nYPos,
                                      nYPos + nYDelta - 1, &rrCol);
             RwRGBAFromRwRGBARealMacro(&rpDstSpan[nX], &rrCol);
 
             nXPos += nXDelta;
+            nX++;
         }
 
         nYPos += nYDelta;

@@ -443,6 +443,12 @@ orders the defining instructions differently.
 
 #### `RwImageResample`
 
+The saved row-local color and explicit inner-loop lifetime form is retained:
+97.82051 -> 98.03419 at the same 468 bytes. `rpDstSpan` remains const, and
+`RwImageCreateResample` plus both sampling helpers remain exact. Archive-only
+helper edits and redundant expression spellings were omitted without losing
+the gain. Full deduplicated reporting shows no other function or data changes.
+
 - **Unit:** src/baresamp. **Size / %:** 468 b, 97.82.
 - **Exact difference:** a callee-saved GPR permutation. Target: r31=nY,
   r30=nXDelta, r29=nYPos, r28=nYDelta, r27=dstWidth, r26=dstHeight, r25=src,
