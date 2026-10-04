@@ -13562,3 +13562,38 @@ are still unresolved. No additional source variants were attempted.
 Private reproduction/evidence: `build/xcamera-layout-globals-link.py`,
 `xcamera-layout-globals-link.json`, `xcamera-layout-globals-linked.elf`,
 and `xcamera-layout-globals-report.json` in the Plankton worktree.
+
+### xCamera implicit quaternion copy ownership (2026-10-03)
+
+After removing the duplicate globals definition, all primary functions after
+_xCameraUpdate and the first helper groups remained displaced by 36 bytes.
+The compiler-generated weak xQuat assignment was emitted after its first
+source use in _xCameraUpdate instead of retail's vector-header group between
+xVec3Inv and xacos. This single ownership error accounted for most of the
+remaining 6,617 source-linked DOL differences.
+
+A TU-private inline stripped-reference reconstruction now performs the
+ordinary `dest = source` operation between those two vector helpers. Moving
+the existing camera, matrix, entity, and vector private includes before
+_xCameraUpdate establishes this first-use owner while preserving retail's
+helper group order. The original stripped caller is unknown: this is an
+explicit matching compromise, not a claim of recovered original source.
+The reconstruction has no emitted caller in either the object or linked ELF;
+the compiler-generated assignment retains its exact 36-byte body and weak
+binding. No manual copy implementation, padding, or literal owner was added.
+
+The actual source-selected DOL now differs in **205 bytes**, down from
+**6,617**. All 205 lie inside the 1,420-byte xBinaryCamera::update function;
+there are no remaining differences elsewhere in the DOL. Thus the measured
+helper, global, and literal link-layout blockers are resolved, while the
+existing 92.087% deduplicated update holdout remains. xCamera stays NonMatching.
+The source-selected DOL SHA-1 is
+`ea4e9276c185b32cc9fcf1e3bf00a223dd031541`.
+
+Full deduplicated report equals the preceding checkpoint (76/77 exact camera
+functions, 688/688 camera data bytes exact), all_source and normal builds pass,
+and restored normal SHA-1 remains
+`306526d90b48e99894c3138f5fc8f2716d9fecf6`. Only TU-private files changed;
+there are no new shared-header consumers to rebuild. Private artifacts:
+`build/xcamera-round70-quat-owner-link.py`, corresponding link.json,
+linked.elf, report.json, and residue.json. No behavioral tests or compiler edits.

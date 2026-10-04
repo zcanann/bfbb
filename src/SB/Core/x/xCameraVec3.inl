@@ -19,6 +19,13 @@ inline void xVec3Inv(xVec3* o, const xVec3* v)
     o->z = -v->z;
 }
 
+// Reconstruct a stripped reference at the retail implicit-copy boundary.
+// The original caller is unknown; this inline caller is not emitted.
+inline void __deadstripped_xCamera_quat(xQuat& dest, const xQuat& source)
+{
+    dest = source;
+}
+
 inline F32 xacos(F32 x)
 {
     return std::acosf(x);

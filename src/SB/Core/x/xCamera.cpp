@@ -476,6 +476,11 @@ void SweptSphereHitsCameraEnt(xScene*, xRay3* ray, xQCData* qcd, xEnt* ent, void
     }
 }
 
+#include "xCameraCamera.inl"
+#include "xCameraMath3.inl"
+#include "xCameraEnt.inl"
+#include "xCameraVec3.inl"
+
 static void _xCameraUpdate(xCamera* cam, F32 dt)
 {
     if (!cam->tgt_mat)
@@ -1456,9 +1461,6 @@ float std::asinf(float x)
 }
 #endif
 
-#include "xCameraCamera.inl"
-#include "xCameraMath3.inl"
-
 static void bound_sphere_xz(xVec3& r3, xVec3& r4, const xVec3& r5, F32 f1, const xVec3& r6, F32 f2)
 {
     F32 _f31 = f1 / f2;
@@ -1649,7 +1651,5 @@ void xBinaryCamera::update(F32 dt)
     render_debug();
 }
 
-#include "xCameraEnt.inl"
-#include "xCameraVec3.inl"
 #include "xCameraMath.inl"
 #include "xCameraVec2.inl"
