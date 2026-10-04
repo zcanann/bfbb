@@ -30,7 +30,13 @@ SIZE = re.compile(r"size:0x([\dA-Fa-f]+)")
 # OS.c declares its first BSS object, DriveInfo, ALIGN(32) for DVD DMA.
 # The linked ELF loses input sh_addralign; preceding retail tail padding used
 # to hide this requirement when all objects were extracted from the DOL.
-INPUT_SECTION_ALIGNMENT = {("dolphin/src/os/OS.c", ".bss"): 32}
+# Expand's first Huffman table starts on a 32-byte boundary in both retail ELFs.
+# USA needs no gap after the preceding 96-byte audio pool; PAL needs 16 bytes.
+# Together these layouts distinguish alignment 32 from both 16 and 64.
+INPUT_SECTION_ALIGNMENT = {
+    ("dolphin/src/os/OS.c", ".bss"): 32,
+    ("bink/src/sdk/decode/expand.c", ".rodata"): 32,
+}
 
 
 class Elf:

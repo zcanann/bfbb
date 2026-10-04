@@ -194,3 +194,21 @@ corresponding `640.0f / 528.0f` aspect ratio. `zSurface`, `zTextBox`, and
 with the previous 456-unit selection reproduce both complete regional DOLs.
 All six changes leave USA allocated object sections and its full report
 unchanged; its source-selected retail DOL also remains exact.
+
+## Bink audio constant-pool boundary
+
+The `expand.c` read-only input section needs 32-byte alignment in regional
+metadata. Its first Huffman table starts at `0x80274e60` in USA and
+`0x80275240` in PAL. The preceding Bink audio pool contains the same 96 bytes
+in both builds: USA ends exactly at the next table, while PAL ends at
+`0x80275230` and requires 16 alignment bytes. These two layouts distinguish
+32-byte alignment from both 16 and 64. No source padding or new data is needed.
+
+The generator now retains this input alignment when extracting regional
+objects. The complete 457-unit regional source selections plus unchanged
+`fft.c` and `binkacd.c` reproduce both retail DOLs byte for byte, including the
+German trailer. Every function and section score is unchanged. Raw anonymous
+pool accounting therefore does not prevent these units from source linking.
+The combined manifest promotions are integrated separately. USA metadata and
+source are unchanged. Evidence: `build/regional131/bink-validation.json` and
+`binkacd-alignment-proof.json`.
