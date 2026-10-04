@@ -14232,3 +14232,26 @@ compiler changes or behavioral tests were introduced.
 
 Evidence: build/dct93-motion-shared-butterfly/{candidate.c,candidate.o,diff.json}
 and build/parallel-ninetythird-{report.json,verify.py,build.log}.
+
+### Motion IDCT output cursor ownership (2026-10-04)
+
+The motion transform now gives its output pass a separate byte cursor,
+initialized from dest after the column pass, as the byte transform already
+does. All arithmetic, prediction reads, output stores and advances retain
+their order. The local cursor recovers the missing pass-entry copy, although
+its allocated register still differs from retail.
+
+FastmIDCT8x8WithMotion improves 68.54851 -> 68.79478 in the full deduplicated
+report; source size rises 1012 -> 1016 bytes against retail 1072. Exactly one
+mr is added; the remaining opcode inventory is unchanged. This is a partial
+match, not function or TU closure.
+
+all_source passes, and the normal retail link target remains up to date with
+DOL SHA1 306526d90b48e99894c3138f5fc8f2716d9fecf6. The full report changes only
+this function and fuzzy aggregates; every other function record and every
+non-fuzzy metric is identical. DCT remains NonMatching, so the normal retail
+DOL does not establish source-linked IDCT identity. No compiler or assembly
+changes and no behavioral tests.
+
+Evidence: build/dct97-motion-output-cursor and
+build/parallel-ninetyseventh-{report.json,verify.py,validation.json,build.log}.

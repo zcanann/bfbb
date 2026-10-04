@@ -1154,6 +1154,7 @@ void FastmIDCT8x8WithMotion(u8 PTR4* dest, s32 pitch, s16 PTR4* in, u32 quant, u
     s32 row[DCT_BLOCK_WIDTH];
     s32 workspace[DCT_BLOCK_COEFFS];
     s32 PTR4* out;
+    u8 PTR4* d;
     const s32 PTR4* q;
     s32 i;
     /* Both passes share butterfly temporaries; the odd part reuses the even work. */
@@ -1231,6 +1232,7 @@ void FastmIDCT8x8WithMotion(u8 PTR4* dest, s32 pitch, s16 PTR4* in, u32 quant, u
     }
 
     out = workspace;
+    d = dest;
     /* Final pass adds the residual IDCT result to the prediction block. */
     for (i = DCT_BLOCK_WIDTH; i != 0; --i) {
         s32 input2 = out[DCT_COL2];
@@ -1250,25 +1252,25 @@ void FastmIDCT8x8WithMotion(u8 PTR4* dest, s32 pitch, s16 PTR4* in, u32 quant, u
         b0 = out[DCT_COL1] - out[DCT_COL7];
         b1 = out[DCT_COL1] + out[DCT_COL7];
         row[DCT_COL7] = b1 + a9;
-        dest[DCT_COL0] = motion[DCT_COL0] + DCT_BYTE_SAMPLE(row[DCT_COL0] + row[DCT_COL7]);
-        dest[DCT_COL7] = motion[DCT_COL7] + DCT_BYTE_SAMPLE(row[DCT_COL0] - row[DCT_COL7]);
+        d[DCT_COL0] = motion[DCT_COL0] + DCT_BYTE_SAMPLE(row[DCT_COL0] + row[DCT_COL7]);
+        d[DCT_COL7] = motion[DCT_COL7] + DCT_BYTE_SAMPLE(row[DCT_COL0] - row[DCT_COL7]);
         b3 = DCT_FIXED_MUL(a8 + b0, DCT_IDCT_A3);
         a3 = DCT_FIXED_MUL(b1 - a9, DCT_IDCT_A1);
         a5 = DCT_FIXED_MUL(a8, DCT_IDCT_A4) + b3;
         row[DCT_COL6] = a5 - row[DCT_COL7];
-        dest[DCT_COL1] = motion[DCT_COL1] + DCT_BYTE_SAMPLE(row[DCT_COL1] + row[DCT_COL6]);
-        dest[DCT_COL6] = motion[DCT_COL6] + DCT_BYTE_SAMPLE(row[DCT_COL1] - row[DCT_COL6]);
+        d[DCT_COL1] = motion[DCT_COL1] + DCT_BYTE_SAMPLE(row[DCT_COL1] + row[DCT_COL6]);
+        d[DCT_COL6] = motion[DCT_COL6] + DCT_BYTE_SAMPLE(row[DCT_COL1] - row[DCT_COL6]);
         row[DCT_COL5] = a3 - row[DCT_COL6];
-        dest[DCT_COL2] = motion[DCT_COL2] + DCT_BYTE_SAMPLE(row[DCT_COL2] + row[DCT_COL5]);
-        dest[DCT_COL5] = motion[DCT_COL5] + DCT_BYTE_SAMPLE(row[DCT_COL2] - row[DCT_COL5]);
+        d[DCT_COL2] = motion[DCT_COL2] + DCT_BYTE_SAMPLE(row[DCT_COL2] + row[DCT_COL5]);
+        d[DCT_COL5] = motion[DCT_COL5] + DCT_BYTE_SAMPLE(row[DCT_COL2] - row[DCT_COL5]);
         a1 = DCT_FIXED_MUL(b0, DCT_IDCT_A2) - b3;
         row[DCT_COL4] = a1 + row[DCT_COL5];
-        dest[DCT_COL4] = motion[DCT_COL4] + DCT_BYTE_SAMPLE(row[DCT_COL3] + row[DCT_COL4]);
-        dest[DCT_COL3] = motion[DCT_COL3] + DCT_BYTE_SAMPLE(row[DCT_COL3] - row[DCT_COL4]);
+        d[DCT_COL4] = motion[DCT_COL4] + DCT_BYTE_SAMPLE(row[DCT_COL3] + row[DCT_COL4]);
+        d[DCT_COL3] = motion[DCT_COL3] + DCT_BYTE_SAMPLE(row[DCT_COL3] - row[DCT_COL4]);
 
         out += DCT_BLOCK_WIDTH;
         motion += DCT_BLOCK_WIDTH;
-        dest += pitch;
+        d += pitch;
     }
 }
 
