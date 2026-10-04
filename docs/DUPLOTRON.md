@@ -13170,3 +13170,27 @@ completion remains 469/543; no source-link completion is claimed. Evidence:
 build/expand60-run-copy-private, parallel-sixtieth-report.json and its
 validation log. The YUV_init format-owned green_shift trial regressed and was
 restored; the published ordered-switch checkpoint remains intact.
+
+
+## Bink bottom fallback inclusive endpoint (2026-10-03)
+
+Retail YUV_blit_mask .text0x16a4 computes the original last row, old_srch-1,
+before both mult64anddiv calls. At0x16d4/0x16dc it derives the remaining height
+as last_row-full_h+1. Preserve that phase boundary with an ordinary unsigned
+last_row local inside the existing bottom-fallback guard. The two conversions,
+guards, and fallback arguments otherwise stay unchanged. Unsigned subtraction
+and addition preserve the prior height modulo32bits, including zero values.
+
+On the verified trailing-mask checkpoint c548c81b8, the sole candidate improves
+full deduplicated YUV_blit_mask83.02945 ->83.979515 (raw81.51856 ->82.51729).
+Source size3084 ->3088 versus retail3124. It recovers the endpoint subtraction
+before conversion and subtract/add pair afterward, using retail's r30/r29
+endpoint/full-height roles. Exactly one function record changes globally; data,
+exact counts, source-linked totals, and other function scores are unchanged.
+all_source and normal link pass, with retail DOL SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6 and unchanged compiler hashes.
+YUV remains NonMatching. No compiler edits, new assembly, or ancillary tests.
+
+Evidence: RGB worktree build/masked-endpoint-{report,raw,validation}.json,
+masked-endpoint-build.log and masked-endpoint-link.log; comparison baseline is
+build/masked-tail-retained-report.json.

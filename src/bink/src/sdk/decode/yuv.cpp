@@ -1040,9 +1040,10 @@ static void YUV_blit_mask(void PTR4* dest,
     }
 
     if ((srch & YUV_MASK_BLOCK_MASK) != 0) {
+        u32 last_row = old_srch - 1;
         full_h = mult64anddiv(srch & ~YUV_MASK_BLOCK_MASK, old_srch, srch);
         YUV_blit(dest, destx, desty + mult64anddiv(full_h, pitch32 * old_srcpitch, destpitch * srcpitch),
-                 destpitch, src, 0, full_h, old_srcw, old_srch - full_h, old_srcpitch, old_srcheight, flags, alpha, blits);
+                 destpitch, src, 0, full_h, old_srcw, last_row - full_h + 1, old_srcpitch, old_srcheight, flags, alpha, blits);
     }
 }
 }
