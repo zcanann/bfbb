@@ -115,6 +115,7 @@ jobs:
       - name: Prepare verified originals and objdiff
         run: |
           cp -a /orig .
+          mkdir -p build/tools
           python tools/download_tool.py objdiff-cli build/tools/objdiff-cli --tag v3.7.1
 
       - name: Verify original and generate available target baseline

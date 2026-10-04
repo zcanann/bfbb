@@ -39,6 +39,7 @@ python tools/platform_progress.py extract --iso-dir orig --version SLUS-20680
 
 # CI uses the already extracted, hash-locked originals from the private image.
 python tools/platform_progress.py verify
+python -c "from pathlib import Path; Path('build/tools').mkdir(parents=True, exist_ok=True)"
 python tools/download_tool.py objdiff-cli build/tools/objdiff-cli --tag v3.7.1
 python tools/platform_progress.py report
 ```
