@@ -1072,8 +1072,8 @@ static void PlayerAbsControl(xEnt* ent, F32 x, F32 z, F32 dt)
 
                         if (animUserFlag & 0x40)
                         {
-                            F32 targetLean = 0.0f;
-                            if (stackMag)
+                            F32 targetLean;
+                            if (stackMag != (targetLean = 0.0f))
                             {
                                 targetLean = stackAng - ent->frame->rot.angle;
                                 CLAMP_ANGLE(targetLean);
@@ -5751,8 +5751,21 @@ patrick_stun_done:
             globals.player.ShockRadius = 4.0f;
         }
 
+        // DWARF keeps this loop's per-NPC ring test locals; whatever the test
+        // triggered is absent from the retail build, so only the test remains.
+        F32 rad2 = SQR(globals.player.ShockRadius);
+        F32 radold2 = SQR(globals.player.ShockRadiusOld);
         for (U32 i = 0; i < sc->num_npcs; i++)
         {
+            xEnt* vill = sc->npcs[i];
+            F32 sdist2 = SQR(vill->frame->mat.pos.x - ent->frame->mat.pos.x) +
+                         SQR(vill->frame->mat.pos.z - ent->frame->mat.pos.z);
+            F32 sdistold2 = SQR(vill->frame->oldmat.pos.x - ent->frame->oldmat.pos.x) +
+                            SQR(vill->frame->oldmat.pos.z - ent->frame->oldmat.pos.z);
+            F32 ydist = vill->frame->mat.pos.y - ent->frame->mat.pos.y;
+            if (sdist2 < rad2 && sdistold2 >= radold2 && ydist > -1.0f && ydist < 1.0f)
+            {
+            }
         }
 
         if (4.0f == globals.player.ShockRadius)
