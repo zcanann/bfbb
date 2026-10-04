@@ -865,14 +865,24 @@ RpMTEffect* _rpGameCubeMTEffectSend(RpMTEffect* effect, RwUInt32 numTextures, Rw
             matrix = &_RwDlInvCamLTM;
         }
 
-        texMtx[0][0] = -0.5f * matrix->right.x;
-        texMtx[0][1] = -0.5f * matrix->up.x;
-        texMtx[0][2] = -0.5f * matrix->at.x;
-        texMtx[0][3] = 0.5f;
-        texMtx[1][0] = -0.5f * matrix->right.y;
-        texMtx[1][1] = -0.5f * matrix->up.y;
-        texMtx[1][2] = -0.5f * matrix->at.y;
-        texMtx[1][3] = 0.5f;
+        {
+            /* Capture the environment projection before writing the upload matrix. */
+            const RwReal rightX = -0.5f * matrix->right.x;
+            const RwReal upX = -0.5f * matrix->up.x;
+            const RwReal atX = -0.5f * matrix->at.x;
+            const RwReal rightY = -0.5f * matrix->right.y;
+            const RwReal upY = -0.5f * matrix->up.y;
+            const RwReal atY = -0.5f * matrix->at.y;
+
+            texMtx[0][0] = rightX;
+            texMtx[0][1] = upX;
+            texMtx[0][2] = atX;
+            texMtx[0][3] = 0.5f;
+            texMtx[1][0] = rightY;
+            texMtx[1][1] = upY;
+            texMtx[1][2] = atY;
+            texMtx[1][3] = 0.5f;
+        }
 
         GXLoadTexMtxImm(texMtx, GX_TEXMTX0, GX_MTX2x4);
     }

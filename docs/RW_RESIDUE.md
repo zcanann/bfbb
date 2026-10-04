@@ -663,3 +663,26 @@ Roughly:
 - The (b) entries' pre-RA orders were shown to reproduce the target by editing
   the capture (`RwImageResample`, `_rwFreeListAllocReal`), not by a source
   change.
+
+
+### Environment-matrix input capture follow-up (2026-10-03)
+
+The earlier `_rpGameCubeMTEffectSend` locals control is now retained as a
+small C source compromise: capture the six scaled x/y matrix components
+before storing the upload matrix. These are genuinely used values, with no
+extra storage or instructions. Retail likewise reads all six components
+before its first upload-matrix store. This recovers that memory-operation
+boundary without changing alias rules or compiler binaries.
+
+Full deduplicated matching improves 95.84922 -> 97.95787 at the unchanged
+1,804-byte retail size; the unit improves 98.67894 -> 99.086044. Only this
+function changes in the full report. All exact code, data and completion
+measures are unchanged; the unit remains 10/12 exact with all 64 data bytes
+exact. Full source and normal builds pass, and the normal DOL SHA1 remains
+`306526d90b48e99894c3138f5fc8f2716d9fecf6`. This is a NonMatching partial,
+not proof of the TU's source link. Remaining FPR scheduling and config /
+argument / loop register roles are unresolved, as is CalcMeshNBTs.
+
+Evidence: `build/multitex-input-capture`, `build/multitex-{baseline,final}-report.json`
+and `build/multitex-validation.json`. The prior blanket "compiler-missing"
+label does not apply to this recovered source-level capture boundary.
