@@ -1113,52 +1113,50 @@ extern "C" void YUV_init(s32 flags)
 
     rgb_layout = flags;
 
-    if (flags > BINKSURFACE555) {
-        if (flags == BINKSURFACE655) {
-            red_bits = RGB_BITS_6;
-            green_bits = RGB_BITS_5;
-            blue_bits = RGB_BITS_5;
-            red_shift = 0;
-            blue_shift = RGB_565_BLUE_SHIFT;
-        } else if (flags < BINKSURFACE655) {
-            red_bits = RGB_BITS_5;
-            green_bits = RGB_BITS_6;
-            blue_bits = RGB_BITS_5;
-            red_shift = 0;
-            blue_shift = RGB_565_BLUE_SHIFT;
-        } else if (flags == BINKSURFACE664) {
-            red_bits = RGB_BITS_6;
-            green_bits = RGB_BITS_6;
-            blue_bits = RGB_BITS_4;
-            red_shift = 0;
-            blue_shift = RGB_664_BLUE_SHIFT;
-        } else {
-            red_bits = RGB_BITS_NONE;
-            green_bits = RGB_BITS_NONE;
-            blue_bits = RGB_BITS_NONE;
-            red_shift = 0;
-            blue_shift = RGB_BITS_NONE;
-        }
-    } else if (flags < BINKSURFACE5551) {
-        if (flags == BINKSURFACE4444) {
-            red_bits = RGB_BITS_4;
-            green_bits = RGB_BITS_4;
-            blue_bits = RGB_BITS_4;
-            red_shift = 0;
-            blue_shift = RGB_444_BLUE_SHIFT;
-        } else {
-            red_bits = RGB_BITS_NONE;
-            green_bits = RGB_BITS_NONE;
-            blue_bits = RGB_BITS_NONE;
-            red_shift = 0;
-            blue_shift = RGB_BITS_NONE;
-        }
-    } else {
+    switch (flags) {
+    case BINKSURFACE565:
+        red_bits = RGB_BITS_5;
+        green_bits = RGB_BITS_6;
+        blue_bits = RGB_BITS_5;
+        red_shift = 0;
+        blue_shift = RGB_565_BLUE_SHIFT;
+        break;
+    case BINKSURFACE5551:
+    case BINKSURFACE555:
         red_bits = RGB_BITS_5;
         green_bits = RGB_BITS_5;
         blue_bits = RGB_BITS_5;
         red_shift = 0;
         blue_shift = RGB_555_BLUE_SHIFT;
+        break;
+    case BINKSURFACE4444:
+        red_bits = RGB_BITS_4;
+        green_bits = RGB_BITS_4;
+        blue_bits = RGB_BITS_4;
+        red_shift = 0;
+        blue_shift = RGB_444_BLUE_SHIFT;
+        break;
+    case BINKSURFACE664:
+        red_bits = RGB_BITS_6;
+        green_bits = RGB_BITS_6;
+        blue_bits = RGB_BITS_4;
+        red_shift = 0;
+        blue_shift = RGB_664_BLUE_SHIFT;
+        break;
+    case BINKSURFACE655:
+        red_bits = RGB_BITS_6;
+        green_bits = RGB_BITS_5;
+        blue_bits = RGB_BITS_5;
+        red_shift = 0;
+        blue_shift = RGB_565_BLUE_SHIFT;
+        break;
+    default:
+        red_bits = RGB_BITS_NONE;
+        green_bits = RGB_BITS_NONE;
+        blue_bits = RGB_BITS_NONE;
+        red_shift = 0;
+        blue_shift = RGB_BITS_NONE;
+        break;
     }
 
     red_down = 8 - red_bits;

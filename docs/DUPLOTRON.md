@@ -13077,3 +13077,31 @@ build/pattern-loop-interaction-private contains the isolated combined source
 and raw diff. Its CheckReadRLEHuff4Bundle audit found only register allocation
 and scheduling, including one retail argument-copy instruction; no RLE edits
 were justified.
+
+
+## YUV format-switch body ownership (2026-10-03)
+
+Replace the initializer's nested format if-chain with a switch in retail body
+order: 565, 5551/555, 4444, 664, 655, default. Keep the explicit format-owned red_shift
+from the preceding checkpoint. All accepted/default flag values and the cache
+and invalid-flag guards remain unchanged. No forced jumps or padding are used;
+identical suffixes remain available for ordinary compiler folding.
+
+The old ascending-case switch trial was not evidence against switch ownership:
+its raw disassembly already matched retail's comparison tree (split 9, then 8/7,
+and 11/12), while its case bodies occurred in a different order and it lacked
+the retained red-shift value. Retail places 565 first and shares its suffix with
+the later 655 body. This coherent combination is the only new variant tried.
+
+Full deduplicated YUV_init improves 68.67785 -> 72.979866; raw objdiff improves
+67.30872 -> 71.87696. Source size changes 1768 -> 1796 versus retail 1788, so
+some operation/lifetime differences remain. The full report changes only this
+function; all 4804 data bytes and 89/97 exact YUV functions remain unchanged.
+The unit stays NonMatching. all_source and normal build pass; normal DOL SHA1
+is 306526d90b48e99894c3138f5fc8f2716d9fecf6. No behavioral tests, compiler edits,
+assembly changes or source-link completion claim are involved.
+
+Evidence: build/yuv-init-closure-ordered-switch.{cpp,json,py},
+yuv-init-closure-switch-report.json and yuv-init-closure-switch-build.log.
+The read-only phase inventory before this change is in
+build/yuv-init-closure-residue-review.md.
