@@ -13900,3 +13900,41 @@ Bitplane remains NonMatching: normal linking does not establish source-linked
 retail equivalence for this unit. Evidence in the isolated RGB worktree:
 `build/bitplane-lossy-phase-report.json`, `bitplane-lossy-phase-validation.json`,
 `bitplane-lossy-phase-build.log` and `bitplane-lossy-phase-link.log`.
+
+
+## 2026-10-03: dldevice small-BSS declaration order
+
+The source-selected dldevice DOL differs from retail in 371 bytes despite
+identical total size. The C compiler emits its small-BSS definitions in
+reverse declaration order: for example, _RwDlCopyClear is at 0x803cc91c
+instead of retail 0x803cc8a8. The existing per-TU `-sym on` control is neutral
+for this C file and was not retained.
+
+Gathering the 25 existing file-scope small-BSS definitions in reverse retail
+order reduces the actual source-selected DOL residue to 165 bytes. Types,
+qualifiers, bindings, values, and function bodies are unchanged. The seven
+objects from _RwDlWaitingDoneRender through dgGGlobals now have exact retail
+addresses. The two function-local statics, swap and gxInit, still precede
+this group in emitted storage; the 18 earlier globals remain eight bytes
+late. Their lexical ownership has not been changed to force placement.
+This is partial layout preparation, not a completed translation unit.
+
+The authoritative full report is identical before and after: 14/16 exact
+functions, unit 99.73589%, 968/968 data bytes. CameraBeginUpdate's initial
+store/setup ordering and RasterShowRaster's three framebuffer/index-load
+swaps remain. A genuine shared inline queue-copy setter was also tried; it
+inlined completely but left the load swaps unchanged, and was restored.
+No compiler defect is established by these source controls.
+
+Both source-linked DOLs are 2,859,136 bytes. Before SHA1 is
+`e165898fb0cc3aae3120c80f74d1d6a8b9b85d3a`; after SHA1 is
+`ccc0ed7b263193958cc9bc4336c8518ab8ade440`. The unit stays NonMatching.
+The ordinary build retains the exact retail SHA1
+`306526d90b48e99894c3138f5fc8f2716d9fecf6`. Full source build passes, and
+private p1a/p1e compiler hashes remain `a78a5fdb6c1d5677e987636b2e0743dbaefe9542`
+and `9d445725489050035740aaff35860eddbaf3c3c9` respectively.
+Evidence in the isolated worker build directory: dldevice76-restored-report.json,
+dldevice76-reverse-report.json, dldevice76-source-link.json,
+dldevice76-reverse-source-link.json, and dldevice76-link.py. The diagnostic
+script temporarily selects only this source object, captures the ELF/DOL,
+then restores NonMatching and verifies the ordinary retail hash in finally.
