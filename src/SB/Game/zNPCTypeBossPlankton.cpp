@@ -1719,12 +1719,9 @@ void zNPCBPlankton::update_turn(F32 dt)
             diff += 6.2831855f;
         }
 
-        // Preserve retail's float rounding before adding the yaw difference.
-        // The scalar form loses that frsp with this compiler.
-        F32 new_yaw[1];
-        new_yaw[0] = cur_yaw;
-        xAccelMove(new_yaw[0], turn.vel, turn.accel, dt, new_yaw[0] + diff, turn.max_vel);
-        set_yaw_matrix(frame->mat, new_yaw[0]);
+        F32 new_yaw = cur_yaw;
+        xAccelMove(new_yaw, turn.vel, turn.accel, dt, new_yaw + diff, turn.max_vel);
+        set_yaw_matrix(frame->mat, new_yaw);
     }
 }
 

@@ -10,7 +10,7 @@
                          a mwcceppc.exe -- e.g. a scratch single-part build)
     --flags rw|sb        RenderWare (C) flags, the default, or game (C++) flags
 
-Flags are read from build.ninja (the first rwsdk unit built with GC/2.0p1a, 2.0p1d or 2.0p1e for rw,
+Flags are read from build.ninja (the first rwsdk unit built with GC/2.0p1a, 2.0p1d, 2.0p1e or 2.0p1f for rw,
 SB/Core/x/xAnim for sb), so they are exactly the project's. Nothing in build/
 is written; objects go to a temp dir.
 
@@ -36,7 +36,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(HERE)))
 sys.path.insert(0, os.path.join(ROOT, "tools"))
 import cwexec  # noqa: E402
 
-DEFAULT_MW = "2.0p1,2.5,2.6,2.7,2.0p1a,2.0p1b,2.0p1c,2.0p1d,2.0p1e"
+DEFAULT_MW = "2.0p1,2.5,2.6,2.7,2.0p1a,2.0p1b,2.0p1c,2.0p1d,2.0p1e,2.0p1f"
 NINJA = open(os.path.join(ROOT, "build.ninja")).read()
 BUILD_RE = re.compile(
     r"^build (?P<obj>\S+\.o):(?: \$\n\s+| )(?P<rule>mwcc_sjis|mwcc) (?P<body>(?:.*\n)*?)  basedir", re.M)
@@ -47,7 +47,7 @@ def unit_flags(kind):
         body = m.group("body")
         mw = re.search(r"mw_version = (\S+)", body).group(1).replace("\\", "/")
         obj = m.group("obj").replace("\\", "/")
-        if kind == "rw" and not (mw in ("GC/2.0p1a", "GC/2.0p1d", "GC/2.0p1e") and "/rwsdk/" in obj):
+        if kind == "rw" and not (mw in ("GC/2.0p1a", "GC/2.0p1d", "GC/2.0p1e", "GC/2.0p1f") and "/rwsdk/" in obj):
             continue
         if kind == "sb" and not obj.endswith("SB/Core/x/xAnim.o"):
             continue

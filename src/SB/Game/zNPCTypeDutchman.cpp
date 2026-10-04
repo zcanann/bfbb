@@ -1712,14 +1712,11 @@ void zNPCDutchman::update_turn(F32 dt)
             diff += 2.0f * PI;
         }
 
-        // Preserve the stored yaw's F32 rounding before the target-angle sum.
-        // This matches the array scratch used by the other boss turn helpers.
-        F32 angle[1];
-        angle[0] = cur;
+        F32 angle = cur;
 
-        xAccelMove(angle[0], turn.vel, turn.accel, dt, angle[0] + diff, turn.max_vel);
+        xAccelMove(angle, turn.vel, turn.accel, dt, angle + diff, turn.max_vel);
 
-        set_yaw_matrix(frame->mat, angle[0]);
+        set_yaw_matrix(frame->mat, angle);
     }
 }
 

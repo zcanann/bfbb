@@ -380,9 +380,11 @@ PATCHED_COMPILER = "GC/2.0p1a"
 # and its large-loop FP-load veto (2.0p1c), and (3) 2.5's alias for two-register
 # loads plus clauses E3n/A/W/V firing on a frame object only when its address
 # escapes (2.0p1d), and (4) 2.5's plain alias for a const/restrict pointee,
-# which also keeps unrolled const-pointer loops' per-copy addi (2.0p1e).
+# which also keeps unrolled const-pointer loops' per-copy addi (2.0p1e), and
+# (5) GC/3.0a's refusal to copy-propagate a variable into an address-taken
+# local, so a read of it stays a (forwarded, F32-rounded) load (2.0p1f).
 # Derived from GC/2.0p1a during the build by tools/patch_compiler_rw.py.
-RW_COMPILER = "GC/2.0p1e"
+RW_COMPILER = "GC/2.0p1f"
 
 
 # Helper function for Dolphin libraries
@@ -465,7 +467,7 @@ config.libs = [
     {
         "lib": "SB",
         # Game code also builds with the retail-compiler model; see
-        # docs/COMPILER_VARIANTS.md (2.0p1a -> 2.0p1e: +12 functions, -0).
+        # docs/COMPILER_VARIANTS.md (2.0p1a -> 2.0p1f: +15 functions, -0).
         "mw_version": RW_COMPILER,
         "cflags": cflags_bfbb,
         "progress_category": "game",

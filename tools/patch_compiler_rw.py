@@ -255,6 +255,33 @@ RW_COMPILER units, stdkey, and the 224 SB units):
   e3n4      RW +1 / -0: RpMaterialStreamRead. Game 0 / 0
             (zNPCFodBzzt::DiscoRender 77.59 -> 74.14, two partials up).
   all five  RW +3 / -0, game +3 / -0; stdkey unchanged.
+
+GC/2.0p1f
+---------
+GC/2.0p1e plus nap. Built by path
+(`patch_compiler_rw.py <compilers>/GC/2.0p1f/mwcceppc.exe`) or with
+`patch_compiler_rw.py <compilers dir> --p1f`.
+
+  nap   no IRO copy propagation into an address-taken local (GC/3.0a3 and
+        3.0a5.2 behaviour). IroPropagate.c's IsPropagatable (2.0p1 0x4709f0)
+        decides whether a variable-to-variable copy `y = x` may be propagated
+        into later reads of y. Stock 2.0p1 refuses only a register-allocatable
+        y fed from a non-allocatable x; when y itself is not allocatable
+        (VarInfo+0x22 != 0: its address is taken) it propagates, so a later
+        read of y becomes the unrounded register x. 3.0a3 and 3.0a5.2 refuse
+        that direction too: the read stays a load of y's home, which the
+        backend's store->load forwarding then supplies (with `frsp` for an
+        F32, since stfs rounds). 1.3.2 .. 2.7 propagate. The patch is one
+        byte: that `jne` (0x470aec, 75 05 -> 75 28) goes to the `return 0`
+        tail (0x470b16) instead of the "destination not allocatable ->
+        propagate" exit.
+        Repros: tools/compilerprobe/repros/x_nap.cpp and x_nap.c group 2.0p1f
+        with 3.0a3/3.0a5.2 wherever 2.0p1e and 3.0a differ.
+
+Measured (full-tree sweep against GC/2.0p1e): RW 0 / 0; game 0 / 0 on the
+source as it was (written around the propagation with one-element arrays),
++3 / -0 with those arrays reverted to honest scalars (the update_turn functions
+of zNPCB_SB2, zNPCDutchman and zNPCBPlankton).
 """
 
 import hashlib
@@ -1132,6 +1159,62 @@ def patch_compiler_p1e(compilers: Path, parts=P1E_DEFAULT, out_dir: Path = None)
     return True
 
 
+# ---- GC/2.0p1f: no copy propagation into an address-taken local ---------------
+# See the module docstring. One byte in IroPropagate.c's IsPropagatable.
+
+P1F_VERSION = "GC/2.0p1f"
+P1F_SHA1 = "8641f1a15bab7d961b7b7558e8d0de64449c509c"
+NAP_SITE = 0x00470AEC              # jne: destination not regable -> propagate
+NAP_OLD = bytes.fromhex("7505")
+NAP_NEW = bytes.fromhex("7528")    # jne 0x470b16: return 0 (do not propagate)
+
+
+def _apply_p1f(data: bytearray) -> bytes:
+    if len(data) != SECTION_FILE + SECTION_SIZE:
+        sys.exit(f"unexpected {P1E_VERSION} layout (file size {len(data):#x})")
+    o = NAP_SITE - TEXT_FILE_DELTA
+    if bytes(data[o:o + len(NAP_OLD)]) != NAP_OLD:
+        sys.exit(f"IsPropagatable branch at {o:#x} is {bytes(data[o:o + 2]).hex()}, "
+                 f"expected {NAP_OLD.hex()}")
+    data[o:o + len(NAP_NEW)] = NAP_NEW
+    return bytes(data)
+
+
+def patch_compiler_p1f(compilers: Path) -> bool:
+    """Create GC/2.0p1f next to GC/2.0p1e, deriving 2.0p1b..e first if needed."""
+    if not patch_compiler_p1e(compilers):
+        return False
+    src_dir = compilers / P1E_VERSION
+    dst_dir = compilers / P1F_VERSION
+    src = src_dir / "mwcceppc.exe"
+    dst = dst_dir / "mwcceppc.exe"
+
+    actual = patch_compiler.sha1(src)
+    if actual != P1E_SHA1:
+        sys.exit(f"{src} has unexpected SHA-1 {actual}\n"
+                 f"  expected {P1E_SHA1}; refusing to patch an unknown build")
+    if dst.exists() and patch_compiler.sha1(dst) == P1F_SHA1:
+        return True
+
+    dst_dir.mkdir(parents=True, exist_ok=True)
+    for f in src_dir.iterdir():
+        if f.is_file():
+            shutil.copy2(f, dst_dir / f.name)
+    if dst.exists():
+        dst.unlink()
+
+    out = _apply_p1f(bytearray(src.read_bytes()))
+    result = hashlib.sha1(out).hexdigest()
+    if result != P1F_SHA1:
+        sys.exit(f"derived {P1F_VERSION} has SHA-1 {result}, expected {P1F_SHA1}")
+
+    tmp = dst.with_suffix(".exe.tmp")
+    tmp.write_bytes(out)
+    os.replace(tmp, dst)
+    print(f"Patched compiler written to {dst}  (sha1 {result})")
+    return True
+
+
 def _opt(flag):
     if flag in sys.argv[2:]:
         i = sys.argv.index(flag)
@@ -1143,17 +1226,19 @@ def _opt(flag):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        sys.exit("usage: patch_compiler_rw.py <compilers dir | GC/2.0p1b, 2.0p1c, 2.0p1d or 2.0p1e "
-                 "mwcceppc.exe> [--r3 | --p1d | --p1d-parts r4,at-sched,at-w,at-v --out DIR"
-                 " | --p1e | --p1e-parts rep,nps,dss,volb,e3n4 --out DIR]")
+        sys.exit("usage: patch_compiler_rw.py <compilers dir | GC/2.0p1b, 2.0p1c, 2.0p1d, 2.0p1e or "
+                 "2.0p1f mwcceppc.exe> [--r3 | --p1d | --p1d-parts r4,at-sched,at-w,at-v --out DIR"
+                 " | --p1e | --p1e-parts rep,nps,dss,volb,e3n4 --out DIR | --p1f]")
     arg = Path(sys.argv[1])
     # Invoked from ninja with $out, i.e. <compilers>/GC/2.0p1b/mwcceppc.exe
-    # (or .../GC/2.0p1c, 2.0p1d or 2.0p1e for the experimental compilers)
+    # (or .../GC/2.0p1c, 2.0p1d, 2.0p1e or 2.0p1f)
     root = arg.parents[2] if arg.name.endswith(".exe") else arg
     exe_dir = arg.parent.name if arg.name.endswith(".exe") else None
     parts_arg = _opt("--p1d-parts")
     p1e_arg = _opt("--p1e-parts")
-    if p1e_arg is not None or "--p1e" in sys.argv[2:] or exe_dir == P1E_VERSION.split("/")[1]:
+    if "--p1f" in sys.argv[2:] or exe_dir == P1F_VERSION.split("/")[1]:
+        ok = patch_compiler_p1f(root)
+    elif p1e_arg is not None or "--p1e" in sys.argv[2:] or exe_dir == P1E_VERSION.split("/")[1]:
         parts = tuple(p for p in p1e_arg.split(",") if p) if p1e_arg is not None else P1E_DEFAULT
         out = _opt("--out")
         ok = patch_compiler_p1e(root, parts, Path(out) if out else None)

@@ -1,4 +1,4 @@
-# Compiler variants GC/2.0p1b/c/d/e: audit of each change
+# Compiler variants GC/2.0p1b/c/d/e/f: audit of each change
 
 This audits the changes that `tools/patch_compiler_rw.py` makes on top of
 GC/2.0p1a, to decide whether each one is a legitimate model of the compiler
@@ -11,7 +11,7 @@ Names used below:
 - **A**: stock GC/2.0p1, the compiler our patches start from.
 - **C**: GC/2.5 (2.6 and 2.7 behave the same on every repro here).
 - **B**: retail, as seen through the target objects.
-- **2.0p1a/b/c/d/e**: our derived compilers in `build/compilers/GC/`.
+- **2.0p1a/b/c/d/e/f**: our derived compilers in `build/compilers/GC/`.
 
 ## Verdicts
 
@@ -23,6 +23,7 @@ Names used below:
 | (d-R4) two-register-load alias | a register with no alias does not force worst_case on an X-form access | grafted from C | **Yes** |
 | (d-gate) address-taken gate | E3n/A/W/V fire on a frame object only when its address escapes | emulation correction | **Yes** for at-sched and at-w. at-v is weaker: it has no effect alone and pays off only with at-sched |
 | (e-rep) const-pointee alias | a const/restrict pointee gets 2.5's plain subrange alias instead of 2.0p1's one-member SET (with `nps`, a guard so 2.0p1a's clauses don't treat the pseudo-object as a static) | grafted from C | **Yes** |
+| (f-nap) no propagation into an address-taken local | IRO copy propagation does not replace a read of an address-taken local with the register it was copied from | grafted from GC/3.0a3 / 3.0a5.2 | **Yes** |
 | (e) dss, volb, e3n4 | three extra scheduler edges seen only in retail | retail-only | **No**, kept as experimental parts; see "Not adopted" |
 
 **Game code.** Moving it from 2.0p1a to 2.0p1d measures **+9 exact / −0** over
@@ -516,6 +517,53 @@ against `sphere->radius`), `RwCameraFrustumTestSphere` goes 90.77 -> 100.
 `ImageConvertDepth` was fixed by source shape in the same change (100 under any
 compiler).
 
+## (f-nap) No copy propagation into an address-taken local (2.0p1f part `nap`)
+
+**Mechanism.** IroPropagate.c's `IsPropagatable` (2.0p1 0x4709f0) decides
+whether a variable-to-variable copy `y = x` may be propagated into later reads
+of `y`. Stock 2.0p1 refuses only one direction: a register-allocatable `y` fed
+from a non-allocatable `x`. When `y` itself is not allocatable (its VarInfo
+has `+0x22 != 0` because its address is taken, e.g. it is passed by reference
+to `xAccelMove`), 2.0p1 propagates, and a later read of `y` before the call
+becomes the unrounded register `x`. `nap` refuses that direction too. The read
+then stays a load of `y`'s home, and the backend's store-to-load forwarding
+supplies it, with an `frsp` for an F32 because `stfs` rounds. The patch is one
+byte: the `jne` at 0x470aec (`75 05` → `75 28`) goes to the `return 0` tail at
+0x470b16 instead of to the "destination not allocatable, propagate" exit.
+
+**Provenance.** Grafted from GC/3.0a3 and 3.0a5.2, which refuse in the same
+way on every repro tried. GC/1.3.2 through 2.7 all propagate.
+
+**Generality.** `x_nap.cpp` and `x_nap.c` (written for this, not game source)
+contain 31 functions: copies into address-taken F32, F64, S32 and S16 locals,
+copies consumed before the address is taken, copies reassigned before the
+address is taken, address-taken to address-taken copies, struct members,
+loops, and controls that are never address-taken or copy from a constant,
+global or pointer. 2.0p1f differs from 2.0p1e exactly where a register value
+is copied into an address-taken local and then read (`sb2`, `pk_copy`,
+`ictl`, `p1`, `p2`, `p5`, `q4`, `r6`). On `p1`, `p2` and `p5`, 2.0p1f is
+byte-identical to 3.0a3 and 3.0a5.2. On `sb2`, `pk_copy`, `q4` and `r6`,
+3.0a's own prologue scheduling keeps it in a separate group, but the body
+(`frsp` of the copied value, then `stfs`, then the sum from the rounded copy)
+is the same instruction for instruction. On the S32 control `ictl`, the read
+of the copy is forwarded from the store as in 3.0a, and the two differ only
+in expression order and register allocation. Every control function is
+unchanged.
+
+**Measured.** A per-unit sweep against 2.0p1e gives RW **0 / 0**. On the
+source as it was, game is 0 / 0. That source wrote the three boss
+`update_turn` functions with a one-element array (`F32 yaw[1]`) to stop the
+propagation; those functions were 100 under 2.0p1e only with the array. With
+the arrays reverted to honest scalars, game is **+3 / −0**:
+`zNPCB_SB2::update_turn`, `zNPCDutchman::update_turn` and
+`zNPCBPlankton::update_turn`.
+
+A full build confirms this (`ninja` plus `report.json`, both at `29df3fb20`).
+The baseline was 2.0p1e with the arrays; the new build was 2.0p1f with the
+honest scalars. `main.dol` is OK in both builds. Every function and section
+score is identical: RW 1023 / 1039, game 7560 / 7673. The three
+`update_turn` functions stay at 100 with the honest source.
+
 ## Not adopted: retail-only edges `dss`, `volb`, `e3n4`
 
 `tools/patch_compiler_rw.py --p1e-parts ... --out DIR` still builds them, for
@@ -597,13 +645,15 @@ nothing. When switching:
    before attributing their residue to source.
 
 **Update:** game code and RW have since moved to GC/2.0p1e (+3 game functions
-over 2.0p1d, -0; see (e-rep)).
+over 2.0p1d, -0; see (e-rep)), and then to GC/2.0p1f (+3 game functions with
+honest source, -0; see (f-nap)).
 
 ## Reproducing
 
 ```sh
 python tools/compilerprobe/repros/run.py                       # all repros, A/C/2.0p1a-d
 python tools/compilerprobe/repros/run.py --flags sb            # same under game flags
+python tools/compilerprobe/repros/run.py x_nap.cpp x_nap.c --mw 2.0p1e,2.0p1f,3.0a3,3.0a5.2   # (f-nap)
 python tools/compilerprobe/repros/build_parts.py <scratch>     # ablation compilers (never under build/compilers)
 python tools/compilerprobe/repros/run.py c_veto.c --mw 2.0p1,<scratch>/s_veto,2.5
 python tools/compilerprobe/repros/sweep_units.py --set sb --mw 2.0p1a,2.0p1d --out sb.json
@@ -615,7 +665,8 @@ python tools/compilerprobe/repros/sweep_units.py --diff sb.json 2.0p1a 2.0p1d
 
 ## Candidate behaviours of the retail compiler, not adopted
 
-GC/2.0p1e is the current compiler model. Research after it (2026-10-01)
+GC/2.0p1f is the current compiler model (2.0p1e plus (f-nap)). Research after
+2.0p1e (2026-10-01)
 characterised more retail-only alias behaviour; none of it is adopted, because
 no released compiler (1.3 through 3.0) has it, and compiler patches are not
 added greedily to close holdout functions. Measured against 2.0p1e over

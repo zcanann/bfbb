@@ -2218,15 +2218,12 @@ void zNPCB_SB2::update_turn(F32 dt)
         diff += 2.0f * PI;
     }
 
-    // Keep the stored yaw rounded to F32 when it is reused for the target angle.
-    // A scalar lets this compiler forward the unrounded register value instead.
-    F32 yaw[1];
-    yaw[0] = start;
+    F32 yaw = start;
 
-    diff = yaw[0] + diff;
+    diff = yaw + diff;
 
-    xAccelMove(yaw[0], turn.vel, turn.accel, dt, diff, turn.max_vel);
-    set_yaw_matrix(frame->mat, yaw[0]);
+    xAccelMove(yaw, turn.vel, turn.accel, dt, diff, turn.max_vel);
+    set_yaw_matrix(frame->mat, yaw);
 }
 
 void zNPCB_SB2::update_halt(F32 dt)
