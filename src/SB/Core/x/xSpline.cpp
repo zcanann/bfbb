@@ -72,8 +72,8 @@ void Interpolate_Bspline(xVec3* data, xVec3* control, F32* knots, U32 nodata)
     F32* beta = (F32*)RwMalloc(nodata * sizeof(F32));
     F32* gamma = (F32*)RwMalloc(nodata * sizeof(F32));
 
-    beta[0] = beta[nodata - 1] = 1.0f;
     alpha[0] = alpha[nodata - 1] = 0.0f;
+    beta[0] = beta[nodata - 1] = 1.0f;
     gamma[0] = gamma[nodata - 1] = 0.0f;
 
     for (U32 i = 1; i < nodata - 1; i++)
