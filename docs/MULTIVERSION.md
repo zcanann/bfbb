@@ -92,3 +92,10 @@ executables and assets. The private build image carries only the required DOLs.
 The progress site has one page per version. The root page and `api.json` remain
 USA for compatibility with existing badges. Standard per-version report artifact
 names allow decomp.dev to consume each version independently.
+
+The regional Robo goal unit also links exactly with the existing source
+selection after restoring its PAL angle constants. Verify the full manifest:
+a Robo-only substitution into otherwise extracted objects encounters a duplicate
+`__fpclassifyf`; the normal selection already uses the source `math_ppc` object
+and coalesces those helper definitions correctly. Both regional manifests now
+include 446 units, with unchanged full retail checksums.
