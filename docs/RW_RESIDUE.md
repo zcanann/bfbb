@@ -708,3 +708,22 @@ All-source compilation and the normal retail DOL SHA1 check pass. The unit
 remains NonMatching; this is not a source-link closure. Evidence in the
 isolated worker: `build/dltexdic88-{baseline,candidate}-report.json`,
 `build/dltexdic88-validation.json`, and private diffs in `build/dltexdic88/`.
+
+
+### Geometry color byte-stride follow-up (2026-10-04)
+
+The documented `_rwGCNVtxFmtInstClr` byte-pointer control is now retained
+under current source-compromise guidance. Its RGB565 and RGBA4 loops advance
+the existing 16-bit destination through a named byte pointer, then cast back.
+The temporary performs the existing byte-stride operation; packed-color
+arithmetic, source increments, default strides, and returned sizes are
+unchanged. This extra local is not claimed to be recovered from DWARF.
+
+Current GC/2.0p1f reproduces the earlier gain: 97.132355 -> 98.10662. Source
+size remains 2,184 bytes against retail's 2,176; the function and unit remain
+NonMatching. The full deduplicated report changes only this function and
+fuzzy totals; all other report fields are equal. Full source compilation and
+the normal retail DOL SHA1 check pass, with compiler bytes unchanged. This
+partial does not establish source-link equivalence. Evidence in the isolated
+worker: `build/geominst90-{baseline,candidate}-report.json`,
+`build/geominst90-validation.json`, and private diffs in `build/geominst90/`.

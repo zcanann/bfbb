@@ -722,7 +722,11 @@ RwUInt32 _rwGCNVtxFmtInstClr(RwUInt8* mem, RwRGBA* srcColor, RwUInt32 fmt, RwInt
                         ((srcColor->blue >> 3) & 0x001F);
 
             srcColor++;
-            dstColor = (RwUInt16*)((RwUInt8*)dstColor + stride);
+            {
+                RwUInt8* nextColor = (RwUInt8*)dstColor;
+                nextColor += stride;
+                dstColor = (RwUInt16*)nextColor;
+            }
         }
 
         bytesWritten = numVerts * sizeof(RwUInt16);
@@ -771,7 +775,11 @@ RwUInt32 _rwGCNVtxFmtInstClr(RwUInt8* mem, RwRGBA* srcColor, RwUInt32 fmt, RwInt
                         (srcColor->blue & 0x00F0) | ((srcColor->alpha >> 4) & 0x000F);
 
             srcColor++;
-            dstColor = (RwUInt16*)((RwUInt8*)dstColor + stride);
+            {
+                RwUInt8* nextColor = (RwUInt8*)dstColor;
+                nextColor += stride;
+                dstColor = (RwUInt16*)nextColor;
+            }
         }
 
         bytesWritten = numVerts * sizeof(RwUInt16);
