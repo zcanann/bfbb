@@ -15,6 +15,12 @@
 #include <types.h>
 #include <rwplcore.h>
 
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+#define NPC_FRAME_TIME (1.0f / 50.0f)
+#else
+#define NPC_FRAME_TIME (1.0f / 60.0f)
+#endif
+
 // MSL's <cmath> is not reachable from here; the target calls floorf__3stdFf.
 namespace std
 {
@@ -529,7 +535,7 @@ void NPCC_MakeStreakInfo(en_npcstreak styp, StreakInfo* info)
         info->rgba_left.g = 0xf0;
         info->rgba_left.b = 0xf0;
         info->rgba_left.a = 0xf0;
-        info->freq = 1.0f / 60.0f;
+        info->freq = NPC_FRAME_TIME;
         break;
     case NPC_STRK_HAMMERSMASH_VERT:
         info->rgba_right.r = 0xb0;
@@ -575,7 +581,7 @@ void NPCC_MakeStreakInfo(en_npcstreak styp, StreakInfo* info)
         info->rgba_left.g = 0x40;
         info->rgba_left.b = 0xf0;
         info->rgba_left.a = 0xf0;
-        info->freq = 1.5f * (1.0f / 60.0f);
+        info->freq = 1.5f * (NPC_FRAME_TIME);
         break;
     case NPC_STRK_TOSSEDJELLYBLUE:
         info->rgba_right.r = 0x40;
@@ -586,7 +592,7 @@ void NPCC_MakeStreakInfo(en_npcstreak styp, StreakInfo* info)
         info->rgba_left.g = 0x40;
         info->rgba_left.b = 0xf0;
         info->rgba_left.a = 0xf0;
-        info->freq = 1.5f * (1.0f / 60.0f);
+        info->freq = 1.5f * (NPC_FRAME_TIME);
         break;
     }
 }
@@ -1029,7 +1035,7 @@ void NPARParmTubeSpiral::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3*
 
 void NPAR_Upd_TubeSpiral(NPARMgmt* mgmt, F32 dt)
 {
-    static const F32 useFixedTimestepForSpiral = 1.0f / 60.0f;
+    static const F32 useFixedTimestepForSpiral = NPC_FRAME_TIME;
     static const F32 seg_allowCollide[2] = { 0.0f, 0.9f };
 
     ptank_pool__pos_color_size_uv2 pool;

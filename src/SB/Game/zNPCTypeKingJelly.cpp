@@ -17,6 +17,12 @@ typedef void (*tweak_change_cb)(tweak_info&);
 #include "string.h"
 #include "stdlib.h"
 
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+#define NPC_FRAME_TIME (1.0f / 50.0f)
+#else
+#define NPC_FRAME_TIME (1.0f / 60.0f)
+#endif
+
 #define ANIM_Unknown 0 // 0x0
 #define ANIM_Idle01 1 // 0x04
 #define ANIM_Idle02 2 // 0x08
@@ -795,7 +801,7 @@ void zNPCKingJelly::Reset()
     shock_ring_emitter = zParEmitterFind("PAREMIT_KJ_SHOCK_RING");
     shock_ring_emitter_settings.custom_flags = 0x110;
     shock_ring_emitter_settings.pos = g_O3;
-    shock_ring_emitter_settings.rate.val[0] = 59.999996f;
+    shock_ring_emitter_settings.rate.val[0] = (1.0f / NPC_FRAME_TIME);
     shock_ring_emitter_settings.rate.interp = 0;
     shock_ring_emitter_settings.rate.oofreq = 1.0f;
     shock_ring_emitter_settings.rate.freq = 1.0f;
@@ -803,7 +809,7 @@ void zNPCKingJelly::Reset()
     thump_ring_emitter = zParEmitterFind("PAREMIT_KJ_THUMP_RING");
     thump_ring_emitter_settings.custom_flags = 0x1310;
     thump_ring_emitter_settings.pos = g_O3;
-    thump_ring_emitter_settings.rate.val[0] = 59.999996f;
+    thump_ring_emitter_settings.rate.val[0] = (1.0f / NPC_FRAME_TIME);
     thump_ring_emitter_settings.rate.interp = 0;
     thump_ring_emitter_settings.rate.oofreq = 1.0f;
     thump_ring_emitter_settings.rate.freq = 1.0f;
@@ -2969,7 +2975,7 @@ void zNPCKingJelly::generate_ring_particles(const lightning_ring& ring, F32 dt)
         {
             shock_ring_emitter_settings.pos = ring_segments[j] + offset * xurand();
             shock_ring_emitter_settings.pos.y += tweak.wave_ring.particle_height;
-            xParEmitterEmitCustom(shock_ring_emitter, 1.0f / 60.0f, &shock_ring_emitter_settings);
+            xParEmitterEmitCustom(shock_ring_emitter, NPC_FRAME_TIME, &shock_ring_emitter_settings);
         }
     }
 }
@@ -2990,7 +2996,7 @@ void zNPCKingJelly::generate_thump_particles()
     s.pos = *get_bottom();
     s.pos.y += tweak.thump.voffset;
 
-    s.rate.val[0] = 59.999996f * tweak.thump.particles;
+    s.rate.val[0] = (1.0f / NPC_FRAME_TIME) * tweak.thump.particles;
     s.vel.y = tweak.thump.vel;
 
     F32 drate = s.rate.val[0] * (-tweak.thump.particle_drop_off * iring);
@@ -3001,7 +3007,7 @@ void zNPCKingJelly::generate_thump_particles()
 
     for (S32 i = 0; i < tweak.thump.rings; i++)
     {
-        xParEmitterEmitCustom(thump_ring_emitter, 1.0f / 60.0f, &s);
+        xParEmitterEmitCustom(thump_ring_emitter, NPC_FRAME_TIME, &s);
 
         s.rate.val[0] += drate;
         s.vel.y += dvel;

@@ -73,7 +73,11 @@ S32 zNPCGoalPlayerNear::Enter(F32 dt, void* updCtxt)
         if (talk_glyph != NULL)
         {
             talk_glyph->Enable(1);
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+            xVec3 ang_delta = { DEG2RAD(3.6), 0.0f, 0.0f };
+#else
             xVec3 ang_delta = { 0.052359881f, 0.0f, 0.0f }; // DEG2RAD(3)
+#endif
             talk_glyph->RotSet(&ang_delta, 0);
         }
         talk_font = NPCWidget_Find(NPC_WIDGE_TALK);
@@ -85,7 +89,11 @@ S32 zNPCGoalPlayerNear::Enter(F32 dt, void* updCtxt)
         if (talk_glyph != NULL)
         {
             talk_glyph->Enable(1);
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+            xVec3 ang_delta = { DEG2RAD(-3.6), 0.0f, 0.0f };
+#else
             xVec3 ang_delta = { -0.052359881f, 0.0f, 0.0f }; // DEG2RAD(-3)
+#endif
             talk_glyph->RotSet(&ang_delta, 0);
         }
         flg_plyrnear |= 4;
