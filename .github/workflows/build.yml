@@ -14,7 +14,12 @@ concurrency:
 
 jobs:
   build:
-    # The private image contains the original executable. Only run trusted code.
+    name: Build ${{ matrix.version }}
+    strategy:
+      fail-fast: false
+      matrix:
+        version: [GQPE78, GQPP78, GU4Y78]
+    # The private image contains the original executables. Only run trusted code.
     if: >-
       github.repository == 'zcanann/bfbb' &&
       (github.event_name != 'pull_request' ||
@@ -44,39 +49,41 @@ jobs:
 
       - name: Build and verify executable
         run: |
-          python configure.py --map --version GQPE78 --binutils /binutils --compilers /compilers
-          ninja all_source build/GQPE78/progress.json build/GQPE78/report.json
+          python configure.py --map --version ${{ matrix.version }} --binutils /binutils --compilers /compilers
+          ninja all_source build/${{ matrix.version }}/progress.json build/${{ matrix.version }}/report.json
 
       - name: Generate progress page
-        run: python tools/ci_progress.py build/GQPE78 --output build/progress-site
+        run: python tools/ci_progress.py build/${{ matrix.version }} --version ${{ matrix.version }} --version-page --output build/progress-site
 
       - name: Upload progress report
         uses: actions/upload-artifact@v4
         with:
-          name: GQPE78_report
+          name: ${{ matrix.version }}_report
           if-no-files-found: error
-          path: build/GQPE78/report.json
+          path: build/${{ matrix.version }}/report.json
 
       - name: Upload progress metadata
         uses: actions/upload-artifact@v4
         with:
-          name: GQPE78_metadata
+          name: ${{ matrix.version }}_metadata
           if-no-files-found: error
           path: |
-            build/GQPE78/progress.json
-            build/GQPE78/progress-commit.json
+            build/${{ matrix.version }}/progress.json
+            build/${{ matrix.version }}/progress-commit.json
 
       - name: Upload map
         uses: actions/upload-artifact@v4
         with:
-          name: GQPE78_maps
+          name: ${{ matrix.version }}_maps
           if-no-files-found: error
-          path: build/GQPE78/**/*.MAP
+          path: build/${{ matrix.version }}/**/*.MAP
 
       - name: Upload progress site
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-artifact@v4
         with:
+          name: ${{ matrix.version }}_site
+          if-no-files-found: error
           path: build/progress-site
 
   deploy:
@@ -84,12 +91,38 @@ jobs:
     needs: build
     runs-on: ubuntu-24.04
     permissions:
+      contents: read
+      actions: read
       pages: write
       id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Download public progress pages
+        uses: actions/download-artifact@v4
+        with:
+          pattern: '*_site'
+          path: build/progress-pages
+
+      - name: Assemble version pages and USA defaults
+        run: |
+          mkdir -p build/progress-site
+          for version in GQPE78 GQPP78 GU4Y78; do
+            cp -a "build/progress-pages/${version}_site" "build/progress-site/$version"
+          done
+          python tools/ci_progress.py build/progress-site/GQPE78 --version GQPE78 --output build/progress-site
+
+      - name: Upload combined progress site
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: build/progress-site
+
       - name: Deploy progress page
         id: deployment
         uses: actions/deploy-pages@v4
