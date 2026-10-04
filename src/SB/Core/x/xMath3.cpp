@@ -470,42 +470,47 @@ void xMat3x3Mul(xMat3x3* o, const xMat3x3* a, const xMat3x3* b)
         tp = o;
     }
 
-    F32 arx = a->right.x;
-    F32 ary = a->right.y;
-    F32 arz = a->right.z;
-    F32 aux = a->up.x;
-    F32 auy = a->up.y;
-    F32 auz = a->up.z;
-    F32 aax = a->at.x;
-    F32 aay = a->at.y;
-    F32 aaz = a->at.z;
+    // Form the middle products, then accumulate the first and third terms.
+    F32 out_right_x = a->right.y * b->up.x;
+    F32 out_right_y = a->right.y * b->up.y;
+    F32 out_right_z = a->right.y * b->up.z;
+    F32 out_up_x = a->up.y * b->up.x;
+    F32 out_up_y = a->up.y * b->up.y;
+    F32 out_up_z = a->up.y * b->up.z;
+    F32 out_at_x = a->at.y * b->up.x;
+    F32 out_at_y = a->at.y * b->up.y;
+    F32 out_at_z = a->at.y * b->up.z;
 
-    F32 brx = b->right.x;
-    F32 bry = b->right.y;
-    F32 brz = b->right.z;
-    F32 bux = b->up.x;
-    F32 buy = b->up.y;
-    F32 buz = b->up.z;
-    F32 bax = b->at.x;
-    //F32 bay = b->at.y;
-    F32 baz = b->at.z;
+    out_right_x = a->right.x * b->right.x + out_right_x;
+    out_right_y = a->right.x * b->right.y + out_right_y;
+    out_right_z = a->right.x * b->right.z + out_right_z;
+    out_up_x = a->up.x * b->right.x + out_up_x;
+    out_up_y = a->up.x * b->right.y + out_up_y;
+    out_up_z = a->up.x * b->right.z + out_up_z;
+    out_at_x = a->at.x * b->right.x + out_at_x;
+    out_at_y = a->at.x * b->right.y + out_at_y;
+    out_at_z = a->at.x * b->right.z + out_at_z;
 
-    // Right
-    tp->right.x = arx * brx + ary * bux + arz * bax;
+    out_right_x = a->right.z * b->at.x + out_right_x;
+    out_right_y = a->right.z * b->at.y + out_right_y;
+    out_right_z = a->right.z * b->at.z + out_right_z;
+    out_up_x = a->up.z * b->at.x + out_up_x;
+    out_up_y = a->up.z * b->at.y + out_up_y;
+    out_up_z = a->up.z * b->at.z + out_up_z;
+    out_at_x = a->at.z * b->at.x + out_at_x;
+    out_at_y = a->at.z * b->at.y + out_at_y;
+    out_at_z = a->at.z * b->at.z + out_at_z;
+
+    tp->right.x = out_right_x;
     tp->flags = 0;
-    tp->right.y = arx * bry + ary * buy + arz * b->at.y;
-    tp->right.z = arx * brz + ary * buz + arz * baz;
-
-    // Up
-    tp->up.x = aux * brx + auy * bux + auz * bax;
-    tp->up.y = aux * bry + auy * buy + auz * b->at.y;
-    tp->up.z = aux * brz + auy * buz + auz * baz;
-
-    // At
-    tp->at.x = aax * brx + aay * bux + aaz * bax;
-    tp->at.y = aax * bry + aay * buy + aaz * b->at.y;
-    tp->at.z = aax * brz + aay * buz + aaz * baz;
-
+    tp->right.y = out_right_y;
+    tp->right.z = out_right_z;
+    tp->up.x = out_up_x;
+    tp->up.y = out_up_y;
+    tp->up.z = out_up_z;
+    tp->at.x = out_at_x;
+    tp->at.y = out_at_y;
+    tp->at.z = out_at_z;
     if (usetemp != 0)
     {
         xMat3x3Copy(o, tp);
