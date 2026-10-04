@@ -113,6 +113,10 @@
 // change to shared headers, so it is left alone here.)
 void FootstepHackSceneEnter();
 
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+void iDrawSetDisplayOffset(F32 offsetx, F32 offsety);
+#endif
+
 U8 HACK_BASETYPE;
 static S32 bytesNeeded;
 static S32 availOnDisk;
@@ -2782,6 +2786,109 @@ void zSceneUpdate(F32 elapsedSec)
         zCutsceneMgrUpdate(globals.cmgr, globals.sceneCur, elapsedSec);
     }
 
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+    if (enableScreenAdj)
+    {
+        F32 deltax;
+        F32 deltay;
+
+        // Retail leaves these uninitialized when the stick is in its deadzone.
+#ifdef NON_MATCHING
+        deltax = 0.0f;
+        deltay = 0.0f;
+#endif
+
+        if (globals.pad0->pressed & XPAD_BUTTON_SQUARE)
+        {
+            offsetx = oldOffsetx;
+            offsety = oldOffsety;
+        }
+
+        if (globals.pad0->pressed & XPAD_BUTTON_O)
+        {
+            offsetx = 0.0f;
+            offsety = 0.0f;
+        }
+
+        if (globals.pad0->analog1.x > 45.0f)
+        {
+            deltax = globals.pad0->analog1.x - 45.0f;
+            if (deltax > 90.0f)
+            {
+                deltax = 90.0f;
+            }
+        }
+        if (globals.pad0->analog1.x < -45.0f)
+        {
+            if (45.0f + globals.pad0->analog1.x < -90.0f)
+            {
+                deltax = -90.0f;
+            }
+            else
+            {
+                deltax = 45.0f + globals.pad0->analog1.x;
+            }
+        }
+
+        if (globals.pad0->analog1.y > 45.0f)
+        {
+            deltay = globals.pad0->analog1.y - 45.0f;
+            if (deltay > 90.0f)
+            {
+                deltay = 90.0f;
+            }
+        }
+        if (globals.pad0->analog1.y < -45.0f)
+        {
+            if (45.0f + globals.pad0->analog1.y < -90.0f)
+            {
+                deltay = -90.0f;
+            }
+            else
+            {
+                deltay = 45.0f + globals.pad0->analog1.y;
+            }
+        }
+
+        if (globals.pad0->pressed & XPAD_BUTTON_UP)
+        {
+            offsety -= 0.001f;
+        }
+        else if (globals.pad0->pressed & XPAD_BUTTON_DOWN)
+        {
+            offsety += 0.001f;
+        }
+        else if (globals.pad0->pressed & XPAD_BUTTON_LEFT)
+        {
+            offsetx -= 0.001f;
+        }
+        else if (globals.pad0->pressed & XPAD_BUTTON_RIGHT)
+        {
+            offsetx += 0.001f;
+        }
+
+        offsetx += 0.00006f * deltax;
+        offsety += 0.00006f * deltay;
+
+        if (offsetx > 0.06f)
+        {
+            offsetx = 0.06f;
+        }
+        if (offsetx < -0.06f)
+        {
+            offsetx = -0.06f;
+        }
+        if (offsety > 0.06f)
+        {
+            offsety = 0.06f;
+        }
+        if (offsety < -0.06f)
+        {
+            offsety = -0.06f;
+        }
+    }
+#endif
+
     s = globals.sceneCur;
     b = s->update_base;
 
@@ -3016,6 +3123,10 @@ static void zSceneRenderPreFX()
     zScene* s = globals.sceneCur;
 
     globals.currWorld = s->env->geom->world;
+
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+    iDrawSetDisplayOffset(offsetx, offsety);
+#endif
 
     xLightKit_Enable(NULL, globals.currWorld);
 
