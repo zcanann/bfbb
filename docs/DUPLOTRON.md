@@ -14132,3 +14132,26 @@ position_scalars}/{xScrFx.cpp,xScrFx.o,diff.json}, build/render81-{baseline,
 final}-report.json, build/render81-{baseline,final}-build.log, and
 build/render81-verify.py. The raw private score is 93.17826% to 96.569565%;
 the full report above is the authoritative progress measure.
+
+
+### Doubled IDCT even-butterfly phase (2026-10-04)
+
+In the doubled transform's output pass, evaluate all four even working
+values before storing the four even outputs. Compute the input0/input4
+sum and difference together, then the input2/input6 sum and scaled
+difference, followed by row0, row3, row1 and row2. The four inputs remain
+captured before the phase, and every arithmetic expression is unchanged.
+This restores more of retail's computation and local-store scheduling at
+the current shared-temporary checkpoint.
+
+Full deduplicated and raw fastidct8x8d improves 82.77328 -> 85.23482, with
+source and retail both 988 bytes. Applying the same phase ordering to byte
+and motion regresses to 72.10121 and 63.00373, so those controls are rejected.
+The full report changes only fastidct8x8d and aggregate fuzzy measures; all
+other function records, exact code, data and completion totals are unchanged.
+
+all_source and normal link/check pass, preserving DOL SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. No compiler change or assembly.
+DCT stays NonMatching; retail-size equality is not an exact-link claim.
+Evidence: build/dct84-even-phase-{fastidct8x8d,fastidct8x8,FastmIDCT8x8WithMotion}
+and build/parallel-eightyfourth-{report.json,verify.py,build.log}.
