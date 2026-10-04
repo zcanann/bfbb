@@ -272,6 +272,7 @@ u32 LenBPLossless(s16 PTR4* vals)
     u8 PTR4* child_lens;
     s32 sign;
     u32 bits;
+    u8 child_bits;
     u32 maxbits;
     u32 had_level;
     s32 i;
@@ -398,31 +399,32 @@ u32 LenBPLossless(s16 PTR4* vals)
                         cur++;
                         entry = BP_TREE_ENTRY_INDEX(entry);
 decoded_length_children:
+                        child_bits = lens[entry];
                         child_lens = lens + entry;
                         len += BP_TREE_NODE_SIGNAL_BITS - BP_TREE_NODE_PRESENT_BITS;
-                        if (*child_lens != maxbits) {
-                            *--restart = BP_TREE_COEFF_ENTRY(*child_lens, entry);
+                        if ((u8)child_bits != maxbits) {
+                            *--restart = BP_TREE_COEFF_ENTRY(child_bits, entry);
                         } else {
                             len += maxbits;
                         }
+                        child_bits = *++child_lens;
                         entry++;
-                        child_lens++;
-                        if (*child_lens != maxbits) {
-                            *--restart = BP_TREE_COEFF_ENTRY(*child_lens, entry);
+                        if ((u8)child_bits != maxbits) {
+                            *--restart = BP_TREE_COEFF_ENTRY(child_bits, entry);
                         } else {
                             len += maxbits;
                         }
+                        child_bits = *++child_lens;
                         entry++;
-                        child_lens++;
-                        if (*child_lens != maxbits) {
-                            *--restart = BP_TREE_COEFF_ENTRY(*child_lens, entry);
+                        if ((u8)child_bits != maxbits) {
+                            *--restart = BP_TREE_COEFF_ENTRY(child_bits, entry);
                         } else {
                             len += maxbits;
                         }
+                        child_bits = *++child_lens;
                         entry++;
-                        child_lens++;
-                        if (*child_lens != maxbits) {
-                            *--restart = BP_TREE_COEFF_ENTRY(*child_lens, entry);
+                        if ((u8)child_bits != maxbits) {
+                            *--restart = BP_TREE_COEFF_ENTRY(child_bits, entry);
                         } else {
                             len += maxbits;
                         }

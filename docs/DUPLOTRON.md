@@ -14302,3 +14302,21 @@ The preceding cutscene/camera audit retained no changes: FinishLoad and
 FinishExit still differ in incoming/derived pointer storage and address
 rematerialization; FlyStart retains its documented TOCINFO load-order residue.
 Their existing aggregate/reference/helper controls were not repeated.
+
+
+## 2026-10-04: Retain the lossless length child-depth capture
+
+LenBPLossless improves from 94.41645% to 94.429306% by capturing each
+main-plane child depth in an ordinary byte local before consuming it in the
+comparison and encoded tree entry. The four-child traversal, depth values,
+bit-count arithmetic, and final-plane path are preserved. This recovers the
+round45 private candidate, which was previously discarded because the gain
+was only one register encoding. Its original source spelling is unproven;
+the small local lifetime is an accepted matching compromise.
+
+The full deduplicated report changes only LenBPLossless and fuzzy aggregates.
+All exact-match, data, and completion measures remain identical. The function
+still emits 1532 bytes against retail's 1556 and remains NonMatching. The
+all-source build and normal retail check pass; DOL SHA-1 remains
+`306526d90b48e99894c3138f5fc8f2716d9fecf6`. No compiler, assembly, layout,
+or qualification changes are involved.
