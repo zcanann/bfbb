@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "executable_sha1": "ef675520304c2ce0df9cbfa03222e42fb2e7a09e",
+  "scope": "All file-backed PT_LOAD bytes; zero-fill memory and non-loadable ELF metadata excluded",
+  "code_classification_complete": false,
+  "loaded_file_bytes": 4255232,
+  "known_code_bytes": 0,
+  "unclassified_loaded_bytes": 4255232,
+  "segments": [
+    {
+      "address": 1048576,
+      "file_offset": 128,
+      "file_size": 4255232,
+      "memory_size": 4255232,
+      "flags": 7
+    }
+  ],
+  "ranges": [
+    {
+      "segment": 0,
+      "kind": "unclassified",
+      "address": 1048576,
+      "size": 4255232,
+      "file_offset": 128
+    }
+  ]
+}

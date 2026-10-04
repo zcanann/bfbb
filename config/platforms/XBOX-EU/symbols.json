@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "executable_sha1": "3cc6795aad6a51005b4178ca35d76786eb620cab",
+  "status": "confirmed",
+  "coverage_complete": false,
+  "provenance": "XBE supplies no original function symbol table; analyzer candidates are separate",
+  "symbols": []
+}

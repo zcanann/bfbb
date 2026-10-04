@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "executable_sha1": "983ffc6d84427996ce35d0d204930ae713113370",
+  "status": "section_only",
+  "symbol_file": "symbols.json",
+  "translation_unit_ownership_recovered": false,
+  "relocations_recovered": false,
+  "retail_relink_verified": false,
+  "source_build_available": false,
+  "publish_matching_report": false,
+  "notes": [
+    "Authenticated executable sections, not translation-unit splits.",
+    "Analyzer candidates are in symbol-candidates.json and are not confirmed symbols.",
+    "Mixed SDK sections and embedded assets require further classification."
+  ],
+  "sections": [
+    {
+      "name": ".text",
+      "flags": 22,
+      "virtual_address": 69632,
+      "virtual_size": 1798760,
+      "raw_offset": 4096,
+      "raw_size": 1798760,
+      "sha1": "c9f78f9f3cdf3b3a20afaec2e8ce7572d72c568a",
+      "classification": "code"
+    },
+    {
+      "name": "D3D",
+      "flags": 7,
+      "virtual_address": 1868416,
+      "virtual_size": 80804,
+      "raw_offset": 1806336,
+      "raw_size": 66280,
+      "sha1": "75021c4735a00f27626dd246642c6988bafed373",
+      "classification": "unclassified"
+    },
+    {
+      "name": "D3DX",
+      "flags": 7,
+      "virtual_address": 1949248,
+      "virtual_size": 8744,
+      "raw_offset": 1875968,
+      "raw_size": 8736,
+      "sha1": "472ea6c47ed9f3cc0693aae22f0be929a7e61f3e",
+      "classification": "unclassified"
+    },
+    {
+      "name": "XGRPH",
+      "flags": 7,
+      "virtual_address": 1958016,
+      "virtual_size": 135952,
+      "raw_offset": 1888256,
+      "raw_size": 132756,
+      "sha1": "97b9fe9bd049ce1bff4af3039f9b01a317b02094",
+      "classification": "unclassified"
+    },
+    {
+      "name": "DSOUND",
+      "flags": 7,
+      "virtual_address": 2093984,
+      "virtual_size": 124516,
+      "raw_offset": 2023424,
+      "raw_size": 123900,
+      "sha1": "f472a5fdbcfe394659da1e38627c5c545c86b5a1",
+      "classification": "unclassified"
+    },
+    {
+      "name": "XMV",
+      "flags": 7,
+      "virtual_address": 2218528,
+      "virtual_size": 163588,
+      "raw_offset": 2150400,
+      "raw_size": 163572,
+      "sha1": "52c03412e063d315010d5b11d8cc8712a84e2830",
+      "classification": "unclassified"
+    },
+    {
+      "name": "XPP",
+      "flags": 7,
+      "virtual_address": 2382144,
+      "virtual_size": 25268,
+      "raw_offset": 2314240,
+      "raw_size": 25268,
+      "sha1": "9ee403d09aff626e54fc493e30fcd5bc3b52ab26",
+      "classification": "unclassified"
+    },
+    {
+      "name": ".rdata",
+      "flags": 6,
+      "virtual_address": 2407424,
+      "virtual_size": 141864,
+      "raw_offset": 2342912,
+      "raw_size": 141848,
+      "sha1": "be3a52854c757c0bc06bde0fa433b824c1dece47",
+      "classification": "initialized_data"
+    },
+    {
+      "name": ".data",
+      "flags": 7,
+      "virtual_address": 2549312,
+      "virtual_size": 1323964,
+      "raw_offset": 2486272,
+      "raw_size": 101148,
+      "sha1": "b2855723390c707a04095e77c692bd1e2772a732",
+      "classification": "initialized_data"
+    },
+    {
+      "name": "DOLBY",
+      "flags": 38,
+      "virtual_address": 3873280,
+      "virtual_size": 29056,
+      "raw_offset": 2588672,
+      "raw_size": 29036,
+      "sha1": "c007311d9c8262810e5db09670dc440dbe80fbb9",
+      "classification": "unclassified"
+    },
+    {
+      "name": "$$XTIMAGE",
+      "flags": 56,
+      "virtual_address": 3902336,
+      "virtual_size": 10240,
+      "raw_offset": 2650112,
+      "raw_size": 10240,
+      "sha1": "1f4bb714b41ce5be297d260e00557249e0c9722f",
+      "classification": "unclassified"
+    },
+    {
+      "name": "$$XSIMAGE",
+      "flags": 56,
+      "virtual_address": 3912576,
+      "virtual_size": 4096,
+      "raw_offset": 2662400,
+      "raw_size": 4096,
+      "sha1": "113cde1eb3933099d218ce8f2f96d529994c83d8",
+      "classification": "unclassified"
+    },
+    {
+      "name": "DSP",
+      "flags": 58,
+      "virtual_address": 3916672,
+      "virtual_size": 24936,
+      "raw_offset": 2621440,
+      "raw_size": 24936,
+      "sha1": "dfb96766eefb6049305cc49c55060a062f944586",
+      "classification": "unclassified"
+    }
+  ]
+}

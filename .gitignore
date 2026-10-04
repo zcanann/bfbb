@@ -10,6 +10,8 @@ __pycache__
 # Original files
 orig/*/*
 !orig/*/.gitkeep
+*.iso
+*.xbe
 *.dol
 *.rel
 *.elf

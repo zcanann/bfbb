@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "versions": {
+    "SLES-51968": {
+      "platform": "ps2",
+      "region": "Europe / Australia",
+      "disc": {
+        "size": 2236481536,
+        "crc32": "b43871e9",
+        "md5": "e95ac909d47574c4b3b48f994aff44f8",
+        "sha1": "bb2686e1f24422c6fda145c8fbbb5f38c6ca38e1"
+      },
+      "reference": {
+        "source": "Redump",
+        "url": "http://redump.org/disc/82840/",
+        "dat_url": "http://redump.org/datfile/ps2/",
+        "rom_name": "Nickelodeon SpongeBob SquarePants - Battle for Bikini Bottom (Europe, Australia) (v1.01).iso",
+        "dat_version": "2026-06-15 03-41-38",
+        "dat_sha256": "c11ea9fa2d09a754ac755c2cdf7cf6b44bad6ae7505eed9eb2a4f5b4a4e5f4a1"
+      },
+      "executable": {
+        "path": "orig/SLES-51968/boot.elf",
+        "sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597"
+      },
+      "revision": "1.01"
+    },
+    "SLES-51970": {
+      "platform": "ps2",
+      "region": "Germany",
+      "disc": {
+        "size": 2737176576,
+        "crc32": "7d27e6e6",
+        "md5": "b48dfc28d5c64d5c784f1ea327c0761d",
+        "sha1": "c6046ebd9ff5ceaa360dde1dfafc18ff7f1f4789"
+      },
+      "reference": {
+        "source": "Redump",
+        "url": "http://redump.org/disc/14785/",
+        "dat_url": "http://redump.org/datfile/ps2/",
+        "rom_name": "Nickelodeon SpongeBob Schwammkopf - Schlacht um Bikini Bottom (Germany).iso",
+        "dat_version": "2026-06-15 03-41-38",
+        "dat_sha256": "c11ea9fa2d09a754ac755c2cdf7cf6b44bad6ae7505eed9eb2a4f5b4a4e5f4a1"
+      },
+      "executable": {
+        "path": "orig/SLES-51970/boot.elf",
+        "sha1": "83bf81a139ea24fdb015f1419377de85b643828a"
+      }
+    },
+    "SLES-53623": {
+      "platform": "ps2",
+      "region": "France",
+      "disc": {
+        "size": 1249804288,
+        "crc32": "ba9118c3",
+        "md5": "8581ea1df6c32f5e09be235cedba14af",
+        "sha1": "7a921a24bdff8bd7725a9308c1dce4f1d0272be2"
+      },
+      "reference": {
+        "source": "Redump",
+        "url": "http://redump.org/disc/26550/",
+        "dat_url": "http://redump.org/datfile/ps2/",
+        "rom_name": "Nickelodeon Bob L'eponge - La Bataille de Bikini Bottom (France).iso",
+        "dat_version": "2026-06-15 03-41-38",
+        "dat_sha256": "c11ea9fa2d09a754ac755c2cdf7cf6b44bad6ae7505eed9eb2a4f5b4a4e5f4a1"
+      },
+      "executable": {
+        "path": "orig/SLES-53623/boot.elf",
+        "sha1": "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      }
+    },
+    "SLUS-20680": {
+      "platform": "ps2",
+      "region": "USA",
+      "disc": {
+        "size": 1240072192,
+        "crc32": "37704f38",
+        "md5": "84307df9931d76cac3df239da24c7898",
+        "sha1": "fb4a16f971f18807ad6c477648fb2bd8b46d44ad"
+      },
+      "reference": {
+        "source": "Redump",
+        "url": "http://redump.org/disc/32423/",
+        "dat_url": "http://redump.org/datfile/ps2/",
+        "rom_name": "Nickelodeon SpongeBob SquarePants - Battle for Bikini Bottom (USA).iso",
+        "dat_version": "2026-06-15 03-41-38",
+        "dat_sha256": "c11ea9fa2d09a754ac755c2cdf7cf6b44bad6ae7505eed9eb2a4f5b4a4e5f4a1"
+      },
+      "executable": {
+        "path": "orig/SLUS-20680/boot.elf",
+        "sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df"
+      }
+    },
+    "XBOX-EU": {
+      "platform": "xbox",
+      "region": "Europe",
+      "disc": {
+        "size": 7825162240,
+        "crc32": "1dc5af85",
+        "md5": "8eccb1baa6761453635e453367f2d535",
+        "sha1": "a214dbf19b2a0b5ab1694ff0e3d2b3c72a390cbb"
+      },
+      "reference": {
+        "source": "Redump",
+        "url": "http://redump.org/disc/25597/",
+        "dat_url": "http://redump.org/datfile/xbox/",
+        "rom_name": "Nickelodeon SpongeBob SquarePants - Battle for Bikini Bottom (Europe).iso",
+        "dat_version": "2026-06-14 23-43-27",
+        "dat_sha256": "e7a76ba732b7b978148e93ecd92befd3b59ef8e850eca10241390d405f7f4116"
+      },
+      "executable": {
+        "path": "orig/XBOX-EU/default.xbe",
+        "sha1": "3cc6795aad6a51005b4178ca35d76786eb620cab"
+      }
+    },
+    "XBOX-US": {
+      "platform": "xbox",
+      "region": "USA",
+      "disc": {
+        "size": 7825162240,
+        "crc32": "a9ca7069",
+        "md5": "7c8123cc3df7dca32fbf9f86931b098f",
+        "sha1": "a3ab5054af71f3804150de4e618f7b53d56f70f8"
+      },
+      "reference": {
+        "source": "Redump",
+        "url": "http://redump.org/disc/49757/",
+        "dat_url": "http://redump.org/datfile/xbox/",
+        "rom_name": "Nickelodeon SpongeBob SquarePants - Battle for Bikini Bottom (USA).iso",
+        "dat_version": "2026-06-14 23-43-27",
+        "dat_sha256": "e7a76ba732b7b978148e93ecd92befd3b59ef8e850eca10241390d405f7f4116"
+      },
+      "executable": {
+        "path": "orig/XBOX-US/default.xbe",
+        "sha1": "983ffc6d84427996ce35d0d204930ae713113370"
+      }
+    }
+  }
+}

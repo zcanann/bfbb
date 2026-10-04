@@ -33,6 +33,10 @@ build and progress totals. All versions produce `build/<version>/main.dol`.
 This repository does **not** contain game assets or original executables.
 An existing copy of the corresponding release is required.
 
+Four PS2 releases and two Xbox releases also have [verified-input CI, symbol
+registries, and analysis tooling](docs/platforms.md). Their matching source builds
+are not yet implemented; the badges above measure GameCube progress.
+
 # Dependencies
 
 ## Windows

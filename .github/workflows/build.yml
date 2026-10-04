@@ -86,6 +86,68 @@ jobs:
           if-no-files-found: error
           path: build/progress-site
 
+  platform-baseline:
+    name: Verify ${{ matrix.version }} baseline
+    strategy:
+      fail-fast: false
+      matrix:
+        version: [SLUS-20680, SLES-51968, SLES-51970, SLES-53623, XBOX-US, XBOX-EU]
+    if: >-
+      github.repository == 'zcanann/bfbb' &&
+      (github.event_name != 'pull_request' ||
+       github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      packages: read
+    container:
+      image: ghcr.io/zcanann/bfbb-build:main
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Prepare verified originals and objdiff
+        run: |
+          cp -a /orig .
+          python tools/download_tool.py objdiff-cli build/tools/objdiff-cli --tag v3.7.1
+
+      - name: Verify original and generate available target baseline
+        run: python tools/platform_progress.py report --version ${{ matrix.version }}
+
+      - name: Verify France recovery candidates
+        if: matrix.version == 'SLES-53623'
+        run: |
+          python tools/platforms/france_candidates.py --check
+          cp config/platforms/SLES-53623/symbol-candidates.json build/SLES-53623/symbol-candidates.json
+
+      # Incomplete coverage is deliberately not named <version>_report: decomp.dev
+      # must not ingest inventories or empty-denominator percentages as progress.
+      - name: Upload platform status and coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.version }}_baseline
+          if-no-files-found: error
+          path: |
+            build/${{ matrix.version }}/progress.json
+            build/${{ matrix.version }}/coverage.json
+            build/${{ matrix.version }}/symbols.json
+            build/${{ matrix.version }}/splits.json
+            build/${{ matrix.version }}/symbol-candidates.json
+
+      - name: Upload debug-backed objdiff baseline
+        if: matrix.version == 'SLUS-20680' || matrix.version == 'SLES-51968' || matrix.version == 'SLES-51970'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.version }}_debug_functions
+          if-no-files-found: error
+          path: build/${{ matrix.version }}/baseline-report.json
+
   deploy:
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     needs: build
