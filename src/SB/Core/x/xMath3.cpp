@@ -492,6 +492,7 @@ void xMat3x3Mul(xMat3x3* o, const xMat3x3* a, const xMat3x3* b)
 
     // Right
     tp->right.x = arx * brx + ary * bux + arz * bax;
+    tp->flags = 0;
     tp->right.y = arx * bry + ary * buy + arz * b->at.y;
     tp->right.z = arx * brz + ary * buz + arz * baz;
 
@@ -505,7 +506,6 @@ void xMat3x3Mul(xMat3x3* o, const xMat3x3* a, const xMat3x3* b)
     tp->at.y = aax * bry + aay * buy + aaz * b->at.y;
     tp->at.z = aax * brz + aay * buz + aaz * baz;
 
-    tp->flags = 0;
     if (usetemp != 0)
     {
         xMat3x3Copy(o, tp);
