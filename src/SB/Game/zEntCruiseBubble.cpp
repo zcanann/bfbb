@@ -3630,32 +3630,31 @@ namespace cruise_bubble
             // past the qzone.index store, so it needs a second GPR for the zero (r5) and a
             // free f1 for the u32->double magic; we emit the magic store immediately after
             // its `lis` and cascade into r0/f2. Measured and rejected: count-before-index
-            // 92.785, a `U32 count` local 77.892, an `F32` local for the cast inert, and
+            // 92.785, caching qzone.count in a local 77.892, an `F32` local for the cast inert, and
             // dropping the `c` local inert. Everything after `bl xsqrt` matches.
             qzone.index = 0;
             qzone.count = (U32)xsqrt((F32)size);
 
-            U32 rows = (size + qzone.count - 1) / qzone.count;
-            F32 c = icos(ring);
+            U32 rings = (size + qzone.count - 1) / qzone.count;
 
-            qzone.dz = (1.0f - c) / rows;
+            qzone.dz = (1.0f - icos(ring)) / rings;
             qzone.da = 6.28318548f / qzone.count;
 
-            U32 total = rows * qzone.count;
+            U32 max_size = rings * qzone.count;
 
-            qzone.mask = (1 << total) - 1;
+            qzone.mask = (1 << max_size) - 1;
 
-            for (U32 i = 0, end = total - size; i < end; i++)
+            for (U32 i = 0, end = max_size - size; i < end; i++)
             {
-                U32 k = (xrand() >> 13) % (total - i);
+                U32 r = (xrand() >> 13) % (max_size - i);
                 U32 j = 0;
-                U32 seen = 0;
+                U32 count = 0;
 
                 for (;; j++)
                 {
                     if (qzone.mask & (1 << j))
                     {
-                        if (seen >= k)
+                        if (count >= r)
                         {
                             const U32 bit = 1 << j;
                             qzone.mask &= ~bit;
@@ -3663,7 +3662,7 @@ namespace cruise_bubble
                         }
                         else
                         {
-                            seen++;
+                            count++;
                         }
                     }
                 }

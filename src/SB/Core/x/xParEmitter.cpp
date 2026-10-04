@@ -427,6 +427,7 @@ xPar* xParEmitterEmitSetTexIdxs(xPar* p, const xParSys* ps)
 
 xPar* xParEmitterEmit(xParEmitter* pe, F32 emit_dt, F32 par_dt)
 {
+    xPar* last_p;
     xParEmitterAsset* pea;
     xParEmitterPropsAsset* prop;
     S32 rate_has_elapsed;
@@ -438,10 +439,13 @@ xPar* xParEmitterEmit(xParEmitter* pe, F32 emit_dt, F32 par_dt)
     F32 size_birth;
     F32 size_death;
     xVec3 emitPosition;
+    xBase* attachObject;
     S32 attachGroupIndex;
     S32 attachGroupTotal;
     S32 emitAgain;
+    xBase* emitObj;
     S32 marker;
+    xGroup* g;
     U32 get_rnd_group_idx;
     xEnt* attach_ent;
     xMat4x3* bone_mat;
@@ -451,13 +455,14 @@ xPar* xParEmitterEmit(xParEmitter* pe, F32 emit_dt, F32 par_dt)
     S32 c;
     F32 fc1;
     F32 fc2;
+    xBase* obj;
 
     if (pe->parSys == NULL)
     {
         return NULL;
     }
 
-    xPar* last_p = NULL;
+    last_p = NULL;
     pea = pe->tasset;
     prop = pe->prop;
 
@@ -519,21 +524,21 @@ xPar* xParEmitterEmit(xParEmitter* pe, F32 emit_dt, F32 par_dt)
         rate_has_elapsed = ps->tasset->maxPar - ps->group->m_num_of_particles;
     }
 
-    xBase* emitObj = (xBase*)pe->attachTo;
+    emitObj = (xBase*)pe->attachTo;
     count = -1;
     attachGroupTotal = -1;
 
     do
     {
         emitAgain = 0;
-        xBase* attachObject = NULL;
+        attachObject = NULL;
         marker = 0;
 
         if (emitObj != NULL)
         {
             if (emitObj->baseType == eBaseTypeGroup)
             {
-                xGroup* g = (xGroup*)emitObj;
+                g = (xGroup*)emitObj;
 
                 if (count == -1)
                 {
@@ -727,7 +732,7 @@ xPar* xParEmitterEmit(xParEmitter* pe, F32 emit_dt, F32 par_dt)
                         break;
                     case eParEmitterVolume:
                     {
-                        xBase* obj = (xBase*)pe->emit_volume;
+                        obj = (xBase*)pe->emit_volume;
 
                         if (obj != NULL)
                         {
