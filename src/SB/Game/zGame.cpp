@@ -298,7 +298,7 @@ static U32 PickNextSoak()
         case SOAK_FOR:
             name = soaklevels[soakidx];
             soakidx++;
-            if (*(volatile S32*)(&soakidx) < soakcnt)
+            if (soakidx < soakcnt)
             {
                 break;
             }
@@ -315,7 +315,7 @@ static U32 PickNextSoak()
         case SOAK_BACK:
             name = soaklevels[soakidx];
             soakidx--;
-            if (*(volatile S32*)(&soakidx) >= 0)
+            if (soakidx >= 0)
             {
                 break;
             }
@@ -1203,7 +1203,7 @@ static void zGameUpdateMode()
         else
         {
             sGameOverTimer = sGameOverTimer - sTimeElapsed;
-            xprintf("GAME OVER (%f secs)\n", *(volatile F32*)(&sGameOverTimer));
+            xprintf("GAME OVER (%f secs)\n", sGameOverTimer);
             if (sGameOverTimer <= 0.0f)
             {
                 sGameOverTimer = 0.0f;

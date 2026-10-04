@@ -48,7 +48,7 @@ void zGustInit()
 {
     ngusts = xSTAssetCountByType('GUST');
 
-    U32 n = *(volatile U16*)&ngusts;
+    U32 n = ngusts;
 
     if (n)
     {

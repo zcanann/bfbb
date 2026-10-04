@@ -1852,41 +1852,40 @@ namespace cruise_bubble
             return false;
         }
 
-        // Very dumb scheduling.
         void load_cheat_tweak()
         {
-            *(volatile F32*)(&cheat_tweak.missle.crash_angle) = 0.7536f;
-            *(volatile F32*)(&cheat_tweak.missle.collide_twist) = 0.05f;
-            *(volatile F32*)(&cheat_tweak.missle.appear.delay_fly) = 0.16666667f;
-            *(volatile F32*)(&cheat_tweak.missle.fly.accel) = 12.0f;
-            *(volatile F32*)(&cheat_tweak.missle.fly.turn.xdelta) = 7.0f;
-            *(volatile F32*)(&cheat_tweak.missle.fly.turn.ydelta) = 5.0f;
-            *(volatile F32*)(&cheat_tweak.missle.fly.turn.ydecay) =
-                *(volatile F32*)(&cheat_tweak.missle.fly.turn.xdecay) = 0.985f;
-            *(volatile F32*)(&cheat_tweak.missle.fly.turn.ybound) = 1.24248f;
+            cheat_tweak.missle.crash_angle = 0.7536f;
+            cheat_tweak.missle.collide_twist = 0.05f;
+            cheat_tweak.missle.appear.delay_fly = 0.16666667f;
+            cheat_tweak.missle.fly.accel = 12.0f;
+            cheat_tweak.missle.fly.turn.xdelta = 7.0f;
+            cheat_tweak.missle.fly.turn.ydelta = 5.0f;
+            cheat_tweak.missle.fly.turn.ydecay =
+                cheat_tweak.missle.fly.turn.xdecay = 0.985f;
+            cheat_tweak.missle.fly.turn.ybound = 1.24248f;
 
             F32 one_tenth = 0.1f;
-            *(volatile F32*)(&cheat_tweak.missle.fly.turn.roll_frac) = one_tenth;
-            *(volatile F32*)(&cheat_tweak.missle.explode.hit_radius) = 2.0f;
-            *(volatile F32*)(&cheat_tweak.camera.seize.blend_time) = 0.75f;
-            *(volatile F32*)(&cheat_tweak.camera.survey.duration) = 1.0f;
-            *(volatile F32*)(&cheat_tweak.camera.survey.min_duration) = one_tenth;
+            cheat_tweak.missle.fly.turn.roll_frac = one_tenth;
+            cheat_tweak.missle.explode.hit_radius = 2.0f;
+            cheat_tweak.camera.seize.blend_time = 0.75f;
+            cheat_tweak.camera.survey.duration = 1.0f;
+            cheat_tweak.camera.survey.min_duration = one_tenth;
 
-            *(volatile F32*)(&cheat_tweak.camera.survey.drift_dist) = 10.0f;
-            *(volatile F32*)(&cheat_tweak.material.env_alpha) = 0.2f;
-            *(volatile U32*)(&cheat_tweak.material.env_texture) = xStrHash("aura2");
-            *(volatile F32*)(&cheat_tweak.material.fresnel_alpha) = 0.1f;
-            *(volatile F32*)(&cheat_tweak.material.fresnel_coeff) = 1.0f;
-            *(volatile U32*)(&cheat_tweak.material.fresnel_texture) =
+            cheat_tweak.camera.survey.drift_dist = 10.0f;
+            cheat_tweak.material.env_alpha = 0.2f;
+            cheat_tweak.material.env_texture = xStrHash("aura2");
+            cheat_tweak.material.fresnel_alpha = 0.1f;
+            cheat_tweak.material.fresnel_coeff = 1.0f;
+            cheat_tweak.material.fresnel_texture =
                 xStrHash("par_cruise_explode");
-            *(volatile F32*)(&cheat_tweak.trail.bubble_rate) = 90.0f;
-            *(volatile F32*)(&cheat_tweak.trail.bubble_emit_radius) = 0.75f;
-            *(volatile F32*)(&cheat_tweak.trail.wake_emit_radius) = 0.3f;
-            *(volatile U32*)(&cheat_tweak.blast.emit) = 400;
-            *(volatile F32*)(&cheat_tweak.blast.vel) = 7.5f;
-            *(volatile U32*)(&cheat_tweak.droplet.emit_min) = 0xf;
-            *(volatile F32*)(&cheat_tweak.droplet.vel_min) = 4.0f;
-            *(volatile F32*)(&cheat_tweak.droplet.vel_max) = 8.0f;
+            cheat_tweak.trail.bubble_rate = 90.0f;
+            cheat_tweak.trail.bubble_emit_radius = 0.75f;
+            cheat_tweak.trail.wake_emit_radius = 0.3f;
+            cheat_tweak.blast.emit = 400;
+            cheat_tweak.blast.vel = 7.5f;
+            cheat_tweak.droplet.emit_min = 0xf;
+            cheat_tweak.droplet.vel_min = 4.0f;
+            cheat_tweak.droplet.vel_max = 8.0f;
         }
 
         void load_settings()

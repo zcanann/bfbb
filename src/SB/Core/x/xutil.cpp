@@ -159,7 +159,7 @@ S32 xUtil_yesno(F32 wt_yes)
 
 void xUtil_wtadjust(F32* wts, S32 cnt, F32 arbref)
 {
-    const volatile F32 ZERO = 0.0f;
+    const F32 ZERO = 0.0f;
 
     S32 i;
     F32 sum = 0.0f, fac;

@@ -1306,18 +1306,18 @@ static void xEntMotionDebugIPad(xEntMotion* xem)
 {
     if (gDebugPad->pressed & 0x20)
     {
-        *(volatile S16*)(&dbg_idx) = *(volatile S16*)(&dbg_idx) + 1;
-        if (*(volatile S16*)(&dbg_idx) >= *(volatile U16*)(&dbg_num))
+        dbg_idx = dbg_idx + 1;
+        if (dbg_idx >= dbg_num)
         {
-            *(volatile S16*)(&dbg_idx) = 0;
+            dbg_idx = 0;
         }
     }
     if (gDebugPad->pressed & 0x80)
     {
-        *(volatile S16*)(&dbg_idx) = *(volatile S16*)(&dbg_idx) - 1;
-        if (*(volatile S16*)(&dbg_idx) < 0)
+        dbg_idx = dbg_idx - 1;
+        if (dbg_idx < 0)
         {
-            *(volatile S16*)(&dbg_idx) = *(volatile U16*)(&dbg_num) - 1;
+            dbg_idx = dbg_num - 1;
         }
     }
     if (gDebugPad->pressed & 0x10000)
