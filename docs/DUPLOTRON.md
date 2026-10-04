@@ -14364,3 +14364,22 @@ SHA1 99bd18455ff674337d7a6186164df8a1b1ba13a7. No additional compiler changes,
 assembly, volatile accesses or behavioral tests were introduced. Evidence:
 build/archive110/, including the archived-candidate transplant, fresh p1g
 baseline, full-report comparison and build logs.
+
+
+## dlFread: advance the destination before the disk cursor (2026-10-04)
+
+After each complete buffered copy, advance `addr` before `posTmp`. These are
+independent local updates, and the values passed to every read/copy call and
+the function's returns remain unchanged. The complete archived dlFread
+candidate recorded this order; its second, unrelated final-accounting reorder
+was omitted after verifying that the smaller change preserves the full report.
+The retained change recovers retail's two-add sequence at function offsets
+0x170 and 0x174.
+
+The authoritative full report changes only dlFread, 99.27007% to 99.34306%,
+at the same 548 bytes. All non-fuzzy report fields, matched data, exact counts,
+other function scores and completion markers are unchanged. All-source
+compilation and the normal retail link/check pass with DOL SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. Published p1g is unchanged. iSystem
+remains NonMatching; this is not a source-selected link claim. Evidence:
+build/archive111/, including the final minimal-source report.

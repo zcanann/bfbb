@@ -654,8 +654,8 @@ static size_t dlFread(void* addr, size_t size, size_t count, void* fptr)
                         memcpy(addr, fp->readBuffer, readSize);
                         numBytesToRead -= readSize;
                         uVar1 += readSize;
-                        posTmp += readSize;
                         addr = (char*)addr + readSize;
+                        posTmp += readSize;
                     }
                     else
                     {
