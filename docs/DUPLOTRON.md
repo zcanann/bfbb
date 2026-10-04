@@ -14155,3 +14155,33 @@ all_source and normal link/check pass, preserving DOL SHA1
 DCT stays NonMatching; retail-size equality is not an exact-link claim.
 Evidence: build/dct84-even-phase-{fastidct8x8d,fastidct8x8,FastmIDCT8x8WithMotion}
 and build/parallel-eightyfourth-{report.json,verify.py,build.log}.
+
+
+## Bink copy-block destination cursor ownership (2026-10-04)
+
+ExpandPlane improves from 86.06153% to 88.09601% in the full deduplicated
+report (raw 85.338066% to 87.342125%). SKIP, RUN-copy, MOTION and RAW now
+reuse one function-scope dst0/dst1 pair for their alternating destination
+rows. Each case still initializes both cursors at its original point; all
+source loads, destination stores, arithmetic and cursor advances are unchanged.
+
+The source function grows from 5,676 to 5,900 bytes against retail 5,916.
+Previously the compiler merged SKIP copy tails with later copy cases; its
+SKIP exits jumped into those later tails. With shared cursor ownership,
+those exits reach the common block end and each copy case retains its own
+instructions, as retail does. Every floating copy-load/store opcode count
+now equals retail. Integer lwz counts rise 189 to 201 (retail 201); stw counts
+rise 233 to 245 (retail 244). Remaining scheduling and instruction differences
+mean this is a partial source match, not TU closure.
+
+The full all_source build passes. The complete deduplicated report changes
+only ExpandPlane and fuzzy aggregates; all other metrics are identical.
+The normal retail DOL remains 2,859,136 bytes with SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. Expand remains NonMatching, so
+this link check does not establish source-linked playback. No assembly,
+compiler patch or new behavioral tests were introduced.
+
+Evidence in the RGB worktree: build/expand84-shared-row-cursors.py and its
+private candidate/diff directory, expand84-baseline-report.json,
+expand84-candidate-report.json, expand84-{baseline,candidate}-build.log,
+expand84-verify.py and expand84-validation.json.

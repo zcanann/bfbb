@@ -1285,6 +1285,8 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
     u8 PTR4* dest = out;
     u8 PTR4* old = prev;
     u8 PTR4* work_row = work;
+    u8 PTR4* dst0;
+    u8 PTR4* dst1;
 
     (void)key_frame;
 
@@ -1345,8 +1347,8 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 /* Alternate row cursors while copying each pair in scan order. */
                 const u8 PTR4* src0 = old;
                 const u8 PTR4* src1 = old + pitch;
-                u8 PTR4* dst0 = dest;
-                u8 PTR4* dst1 = dest + pitch;
+                dst0 = dest;
+                dst1 = dest + pitch;
                 if (BINK_BLOCK_DOUBLE_ALIGNED(dest, old)) {
                     BINK_COPY_BLOCK_DOUBLE_ROW(dst0, src0, 0, 0);
                     src0 = src1 + pitch;
@@ -1425,8 +1427,8 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                     }
                 }
                 {
-                    u8 PTR4* dst0 = dest;
-                    u8 PTR4* dst1 = dest + pitch;
+                    dst0 = dest;
+                    dst1 = dest + pitch;
                     if ((((u32)dest & BINK_BLOCK_DOUBLE_ALIGN_MASK) == 0)) {
                         BINK_COPY_BLOCK_DOUBLE_ROW(dst0, motion_block + BINK_BLOCK_SIDE * 0, 0, 0);
                         dst0 = dst1 + pitch;
@@ -1648,8 +1650,8 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 {
                     u8 PTR4* motion_row0 = motion_source;
                     u8 PTR4* motion_row1 = motion_source + pitch;
-                    u8 PTR4* dst0 = dest;
-                    u8 PTR4* dst1 = dest + pitch;
+                    dst0 = dest;
+                    dst1 = dest + pitch;
                     if (BINK_BLOCK_DOUBLE_ALIGNED(dest, motion_source)) {
                         BINK_COPY_BLOCK_DOUBLE_ROW(dst0, motion_row0, 0, 0);
                         motion_row0 = motion_row1 + pitch;
@@ -1697,8 +1699,8 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
                 break;
             }
             case BINK_BLOCK_RAW: {
-                u8 PTR4* dst0 = dest;
-                u8 PTR4* dst1 = dest + pitch;
+                dst0 = dest;
+                dst1 = dest + pitch;
                 BINK_MARK_WORK_BLOCK(work_row, work_col);
                 if (BINK_BLOCK_DOUBLE_ALIGNED(dest, colors.cur_ptr)) {
                     BINK_COPY_BLOCK_DOUBLE_ROW(dst0, colors.cur_ptr + BINK_BLOCK_SIDE * 0, 0, 0);
