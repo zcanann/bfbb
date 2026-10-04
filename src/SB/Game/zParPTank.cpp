@@ -20,6 +20,12 @@
 #include "zGame.h"
 #include "zGlobals.h"
 
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+#define PARTICLE_FRAME_RATE 50.0f
+#else
+#define PARTICLE_FRAME_RATE 60.0f
+#endif
+
 // NOTE (Square)
 // There's something slightly off in this file. Functions appear to be equivalent but it's hard to
 // analyze due to the scheduling differences. Right now, attempting to load or start a new game
@@ -114,7 +120,7 @@ static void zParPTankSparkleCreate(zParPTank* zp, U32 max_particles, zParPTankUp
 static void zParPTankSparkleUpdate(zParPTank* zp, float dt)
 {
     sSparkleAnimTime += dt;
-    if (!(sSparkleAnimTime >= 1.0f / 30.0f))
+    if (!(sSparkleAnimTime >= 2.0f / PARTICLE_FRAME_RATE))
     {
         return;
     }
@@ -155,7 +161,7 @@ static void zParPTankSparkleUpdate(zParPTank* zp, float dt)
 
     RPATOMICPTANKPLUGINDATA(zp->ptank)->instFlags |= rpPTANKIFLAGACTNUMCHG;
     RPATOMICPTANKPLUGINDATA(zp->ptank)->actPCount = zp->num_particles;
-    sSparkleAnimTime -= 1.0f / 30.f;
+    sSparkleAnimTime -= 2.0f / PARTICLE_FRAME_RATE;
 }
 
 void zParPTankSpawnSparkles(xVec3* pos, U32 count)
@@ -329,7 +335,7 @@ static void zParPTankBubbleUpdate(zParPTank* zp, float dt)
     slock_base = (U32)slock.data;
     uvlock_base = (U32)uvlock.data;
 
-    damp = xpow(0.95f, 60.0f * dt);
+    damp = xpow(0.95f, PARTICLE_FRAME_RATE * dt);
 
     base_xp = zp == sBubblePTank ? sBubbleData : sMenuBubbleData;
     xp = base_xp;
@@ -687,7 +693,7 @@ static void zParPTankSteamUpdate(zParPTank* zp, float dt)
 
     sSteamAnimTime += dt;
 
-    if (!(sSteamAnimTime >= 1.0f / 30.0f))
+    if (!(sSteamAnimTime >= 2.0f / PARTICLE_FRAME_RATE))
     {
         return;
     }

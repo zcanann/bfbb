@@ -112,3 +112,21 @@ selection. Regional scene updating also includes the display-offset adjustment
 controls and applies those offsets before rendering. Two pre-existing
 holdouts still prevent marking the entire unit complete; the recovered update
 and pre-render functions match.
+
+## Camera, font, and particle timing
+
+Direct USA/PAL object comparisons also establish these regional differences:
+
+- Camera damping and orientation interpolation use the regional fixed step.
+  `0.425f / (1.0f / 50.0f)` preserves PAL's `21.250001907` interpolation rate;
+  rounding it to `21.25f` would change retail data. The same expression at 60 Hz
+  reproduces USA's `25.5f`.
+- Font drawing scales normalized rectangles to 528 screen lines in PAL and
+  480 in USA. Texture-size normalization still uses 480 in both versions.
+- Sparkle/steam animation advances every two frames (1/25 second in PAL,
+  1/30 in USA), and bubble damping uses 50 or 60 frames per second.
+
+With these constants restored, `xCamera`, `xFont`, and `zParPTank` have 100%
+code and data matching in both regional reports. Adding all three to the
+450-unit regional source selection reproduces both retail DOLs exactly.
+USA's allocated object sections, complete report, and retail link are unchanged.

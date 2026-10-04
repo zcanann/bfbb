@@ -16,6 +16,12 @@
 #include <stdio.h>
 #include <PowerPC_EABI_Support\MSL_C\MSL_Common\strtoul.h>
 
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+#define FONT_SCREEN_HEIGHT 528.0f
+#else
+#define FONT_SCREEN_HEIGHT 480.0f
+#endif
+
 // basic_rect<F32> is specialized below; its first use is several hundred lines above.
 template <> basic_rect<F32>& basic_rect<F32>::scale(F32 x, F32 y);
 template <> basic_rect<F32>& basic_rect<F32>::scale(F32 x, F32 y, F32 w, F32 h);
@@ -447,7 +453,7 @@ namespace
 
         RwIm2DVertex* vert = &vert_buffer[vert_buffer_used];
 
-        r.scale(640.0f, 480.0f);
+        r.scale(640.0f, FONT_SCREEN_HEIGHT);
 
         set_vert(vert[0], r.x, r.y, rt.x, rt.y, color);
         set_vert(vert[1], r.x, r.y + r.h, rt.x, rt.y + rt.h, color);
@@ -3711,7 +3717,7 @@ void render_fill_rect(const basic_rect<F32>& bounds, iColor_tag color)
         RwIm2DVertex vert[4];
         basic_rect<F32> r = bounds;
 
-        r.scale(640.0f, 480.0f);
+        r.scale(640.0f, FONT_SCREEN_HEIGHT);
 
         set_rect_verts(vert, r.x, r.y, r.w, r.h, color, rcz, nsz);
         RwIm2DRenderPrimitive(rwPRIMTYPETRISTRIP, vert, 4);

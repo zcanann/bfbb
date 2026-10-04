@@ -18,6 +18,12 @@
 #include <PowerPC_EABI_Support\MSL_C\MSL_Common\cmath>
 #include <PowerPC_EABI_Support\MSL_C\MSL_Common\cstring>
 
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+#define CAMERA_FRAME_TIME (1.0f / 50.0f)
+#else
+#define CAMERA_FRAME_TIME (1.0f / 60.0f)
+#endif
+
 #define CAMERAFX_ZOOM_MODE_0 0
 #define CAMERAFX_ZOOM_MODE_1 1
 #define CAMERAFX_ZOOM_MODE_2 2
@@ -335,7 +341,7 @@ static void xCam_DampP(xCamera* r3, F32 f1, F32 f2)
 {
     F32 tmp1, tmp2;
 
-    f1 = -6.0f * f1;
+    f1 = (-0.1f / CAMERA_FRAME_TIME) * f1;
     f2 = f1 * f2 * f2;
 
     tmp1 = r3->mbasis.right.x * f2;
@@ -486,7 +492,7 @@ static void _xCameraUpdate(xCamera* cam, F32 dt)
     if (!cam->tgt_mat)
         return;
 
-    static F32 last_dt = 1.0f / 60;
+    static F32 last_dt = CAMERA_FRAME_TIME;
 
     xCam_worldtocyl(cam->dcur, cam->hcur, cam->pcur, cam->tgt_mat, &cam->mat.pos, cam->flags);
 
@@ -846,7 +852,7 @@ static void _xCameraUpdate(xCamera* cam, F32 dt)
         xQuatMul(&difq, &difq, &desq);
 
         xQuat newq;
-        xQuatSlerp(&newq, &cam->orn_cur, &desq, 25.5f * dt);
+        xQuatSlerp(&newq, &cam->orn_cur, &desq, (0.425f / CAMERA_FRAME_TIME) * dt);
         xQuatToMat(&newq, &cam->mat);
     }
 
