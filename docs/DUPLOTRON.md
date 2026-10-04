@@ -14085,3 +14085,24 @@ validation: build/parallel-eightieth-{report.json,verify.py,build.log}.
 A separate even-output store-order control on the preceding checkpoint was
 nearly neutral for byte and regressed doubled. It is not combined with the
 retained scratch reconstruction.
+
+
+### Doubled IDCT final butterfly scratch values (2026-10-04)
+
+In fastidct8x8d, carry each odd butterfly's final sum or difference through
+its existing arithmetic temporary before writing row[6], row[5] and row[4].
+The previous checkpoint used those temporaries only for the intermediate
+rotation results. Both passes now finish each working value in place; all
+operands, arithmetic order and scratch/output store boundaries are preserved.
+
+Full deduplicated and raw score improves 82.69231 -> 82.77328, with source
+and retail both 988 bytes. The analogous byte and motion controls regress
+to 74.04453 and 60.847015 and are rejected. This is a small operand-lifetime
+gain; no exact-function or source-link closure is claimed.
+
+Full report changes only fastidct8x8d and fuzzy aggregates. All other function
+records, exact-code, data and completion measures are unchanged. all_source
+and normal link/check pass, preserving retail SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. No compiler or assembly changes.
+Evidence: build/dct81-final-scratch-{fastidct8x8,fastidct8x8d,FastmIDCT8x8WithMotion}
+and build/parallel-eightyfirst-{report.json,verify.py,build.log}.
