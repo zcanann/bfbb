@@ -1,6 +1,9 @@
 """wcap.py: one compile, two captures: colouring graph (rcap) + '@' temp creation causes (tcap).
 
-usage: python wcap.py <src.c> <unit-substring> --fn NAME [--json out.json] [--cls 4] [--all]
+usage: python wcap.py <src.c|cpp> <unit> --fn NAME [--json out.json] [--cls 4] [--all]
+
+NAME is bare or qualified (NPCBlinker::Render); every function it matches is captured, each
+capture carries its own 'temps', 'qual' and 'fnidx' (see rcap.py for RCAP_MW/RCAP_EXTRA_FLAGS).
 
 Prints every object-backed GPR web of NAME (plus, with --all, objectless ones) with:
 vreg, object name, creation cause (PARAM/LOCAL for source names; INLINE/IRO-CSE/IRO-LOOP/...
@@ -79,21 +82,23 @@ def run(src, unit, fn, cls=4):
                 pending.append((s.decode(), tag, ch))
             return
         if addr == rcap.BP_COLORINSTR:
-            f = rcap.objname(d, d.u32(regs['esp'] + 4))
-            if f != state['fn']:
-                state['fn'] = f
+            obj = d.u32(regs['esp'] + 4)
+            if obj != state['fn']:      # new function (colorinstructions runs once per class)
+                state['fn'] = obj
                 state['phase'] = 'FE'
-                if f == fn:
-                    for n, c, ch in pending:
-                        temps[n] = (c, ' '.join('%06x' % x for x in ch))
+                cap(d, addr, regs)
+                if cap.matches(cap.fn, cap.qual):
+                    temps[cap.nfn] = {n: (c, ' '.join('%06x' % x for x in ch)) for n, c, ch in pending}
                 pending.clear()
+                return
         cap(d, addr, regs)
     rc = d.run(on_bp)
     if rc != 0:
-        print('compiler exit', rc)
+        rcap.report_failure(cmd, rc)
     for c in cap.out:
-        c['temps'] = temps
-    return cap.out, temps
+        c['temps'] = temps.get(c['fnidx'], {})
+    # backward compatible second value: the temps of the first captured function
+    return cap.out, (cap.out[0]['temps'] if cap.out else {})
 
 
 def main():
@@ -106,9 +111,10 @@ def main():
     for c in out:
         if c['cls'] != cls:
             continue
+        temps = c['temps']
         N = {int(k): v for k, v in c['nodes'].items()}
         pos = {v: i for i, v in enumerate(c['order'])}
-        print('== %s cls %d (%d webs)' % (c['fn'], c['cls'], c['used'] - c['nreal']))
+        print('== %s [fnidx %d] cls %d (%d webs)' % (c.get('qual') or c['fn'], c['fnidx'], c['cls'], c['used'] - c['nreal']))
         if '--temps' in sys.argv:
             have = {n['name'] for n in N.values() if n['name']}
             for t in sorted(temps, key=lambda x: int(x[1:])):

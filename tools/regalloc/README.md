@@ -5,11 +5,12 @@ the instructions already match. They drive the patched CodeWarrior
 (`build/compilers/GC/2.0p1a/mwcceppc.exe`) under a tiny Win32 debugger and dump
 its graph-colouring state.
 
-- `rcap.py <src.c> <unit-substring> [--fn NAME] [--json out.json]` — compile
-  with the unit's flags and capture, per function, the interference graph,
+- `rcap.py <src.c|cpp> <unit> [--fn NAME] [--json out.json]` — compile
+  with the unit's flags and compiler (build.ninja `mw_version`) and capture, per function, the interference graph,
   the simplify (pop) order and the final colours. Breakpoints are hard-wired
   to GC/2.0p1a addresses (`colorinstructions` 0x508680, `colorgraph`
-  0x508900, its return 0x508766).
+  0x508900, its return 0x508766); the derived 2.0p1b..f share them, and rcap refuses a compiler
+  whose bytes there differ.
 - `replay.py` — re-runs the colouring algorithm on a capture; reproduces the
   compiler's colours exactly (validates the model).
 - `tmap.py` — maps captured virtual registers to the target's registers using
@@ -54,3 +55,40 @@ FindLoops temps < unroller temps < IRO linearise temps (`?:`, `&&`) < inline-exp
 DECLARATION order, block locals, return temp) < objectless lowering temps (instruction order).
 `x = c ? a : b` leaves x without a web (the value is an objectless temp). The same declaration
 pair therefore ranks oppositely out of line and in an inlined copy.
+
+## C++ units, compiler selection, source copies
+
+All of this works from any cwd (repo root = `$BFBB_ROOT`, else the ancestor of `tools/regalloc`
+holding `build.ninja`).
+
+- Compiler: the unit's own `mw_version` from build.ninja (currently GC/2.0p1f); `RCAP_MW=GC/2.0p1a`
+  overrides it for rcap/wcap/diag AND the vfdiff/tmap target alignment (both sides must agree).
+- `RCAP_EXTRA_FLAGS="-DFOO -i dir"` is appended to the unit's cflags (capture and vfdiff).
+- A source COPY outside the unit's directory (e.g. a scratchpad `zcopy.cpp`) automatically gets
+  `-i <unit source dir>` so its `#include "local.h"` still resolves.
+- `<unit>` may be a fragment (`bamatlst`) or a path (`SB/Game/zNPCSupport`); exact path/stem
+  matches win over substrings.
+- Function names: the compiler Object only holds the bare name (`Render`, `__ct`), so rcap also
+  walks its namespace chain (Object+6 -> NameSpace {+0 parent, +4 name}) and stores `qual`
+  (`NPCBlinker::Render`) and `fnidx` (codegen ordinal among matching functions) in each capture.
+  Pass the function to diag/wcap/tmap as bare, qualified or mangled:
+
+```
+python tools/regalloc/diag.py src/rwsdk/world/bamatlst.c rwsdk/world/bamatlst _rpMaterialListStreamRead
+python tools/regalloc/diag.py src/SB/Core/x/xMath3.cpp SB/Core/x/xMath3 xMat3x3Mul
+python tools/regalloc/diag.py src/SB/Game/zNPCSupport.cpp SB/Game/zNPCSupport NPCBlinker::Render
+python tools/regalloc/diag.py src/SB/Game/zNPCSupport.cpp SB/Game/zNPCSupport Render__8NPCLaserFP5xVec3P5xVec3
+python tools/regalloc/diag.py src/SB/Game/zNPCSupport.cpp SB/Game/zNPCSupport Render --idx 1
+```
+
+  A bare name matching several functions is an error listing the choices. `--sym <mangled>` /
+  `TMAP_SYM` selects by mangled symbol; same-class overloads (`LERP__Ffff` vs `LERP__FfUcUc`) are
+  then matched to captures by the address order of those symbols in our object (= codegen
+  order, a note is printed); `--idx N` / `TMAP_IDX` forces the index among the candidates.
+- diag output files use a sanitised name (`NPCBlinker__Render.json`, `.json.tgt<cls>`,
+  `.diff.json` = the objdiff dump reused by tmap via `--diff`).
+- `vfdiff.py <unit> <symbol>` accepts a mangled name, mangled prefix (`Render__10NPCBlinker`),
+  qualified or bare name (ambiguity lists candidates); importable (`diff_json`, `rows`).
+- The capture runs the compiler directly (not through sjiswrap), so a source with non-ASCII
+  (Shift-JIS) text may not compile identically; on a compile failure rcap re-runs the command and
+  prints the compiler's diagnostics.

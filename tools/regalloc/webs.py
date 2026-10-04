@@ -5,7 +5,7 @@ ops = {int(k): v for k, v in json.load(open(os.path.join(HERE, 'opmap.json'))).i
 caps = json.load(open(sys.argv[1]))
 fn = sys.argv[2]
 cls = int(sys.argv[3]) if len(sys.argv) > 3 else 4
-c = [x for x in caps if x['fn'] == fn and x['cls'] == cls][0]
+c = [x for x in caps if fn in (x['fn'], x.get('qual')) and x['cls'] == cls][0]
 N = {int(k): v for k, v in c['nodes'].items()}
 pos = {v: i for i, v in enumerate(c['order'])}
 occ = {}

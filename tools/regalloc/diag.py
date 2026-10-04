@@ -1,23 +1,63 @@
-"""diag.py <src.c> <unit-path> <fn> [--out dir] [--pairs]: one-shot register-residue diagnosis.
+"""diag.py <src> <unit> <fn> [--sym MANGLED] [--idx N] [--out dir] [--pairs]: one-shot
+register-residue diagnosis.
 
 1. wcap capture (graph + '@' temp causes) of <fn>;
-2. per register class, tmap-style target colours from tools/fdiff.py;
+2. per register class, tmap-style target colours from a private objdiff of <src>;
 3. replay check, then a rank-move search: which webs must move (single move, else pair) for the
    captured graph to colour exactly like the target.
-Prints web table rows for every web involved.  <unit-path> as fdiff takes it (rwsdk/src/babintex).
+Prints web table rows for every web involved.
+
+<src>: the unit's .c/.cpp or a private copy of it.  <unit>: a build.ninja/objdiff unit path or
+fragment (rwsdk/world/bamatlst, SB/Game/zNPCSupport).  <fn>: bare (xMat3x3Mul), qualified
+(NPCBlinker::Render) or mangled (Render__10NPCBlinkerFPC5xVec3fPC8RwRaster) name.  Same-named
+functions (overloads, several classes' Render) are told apart by the qualified name, --sym /
+$TMAP_SYM (mangled), or --idx N / $TMAP_IDX (index among the captured candidates).
+Env: RCAP_MW (compiler override, default = the unit's mw_version), RCAP_EXTRA_FLAGS.
+Writes <out>/<sanitised fn>.json (all captures of the chosen function) and .json.tgt<cls>.
 """
 import os, sys, json, subprocess, itertools
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
+import ra_common
 import wcap
+import vfdiff
 from replay import simplify, colour
 
+
+def _opt(flag, env=None):
+    if flag in sys.argv:
+        i = sys.argv.index(flag)
+        v = sys.argv[i + 1]
+        del sys.argv[i:i + 2]
+        return v
+    return os.environ.get(env) if env else None
+
+
+out = _opt('--out') or os.environ.get('TEMP', '.')
+sym = _opt('--sym', 'TMAP_SYM') or None
+idx = _opt('--idx', 'TMAP_IDX')
+idx = int(idx) if idx not in (None, '') else None
 src, unit, fn = sys.argv[1:4]
-os.environ['TMAP_SRC'] = os.path.abspath(src)  # target colours from THIS source (may be a copy)
-out = sys.argv[sys.argv.index('--out') + 1] if '--out' in sys.argv else os.environ.get('TEMP', '.')
+if ra_common.looks_mangled(fn) and not sym:
+    sym = fn
+want = ra_common.qual_of(sym) if sym else fn
 os.makedirs(out, exist_ok=True)
-caps, temps = wcap.run(src, unit.split('/')[-1], fn)
-jp = os.path.join(out, fn + '.json')
+base = os.path.join(out, ra_common.safe_name(sym or fn))
+
+# target side first: the objdiff of THIS source (may be a copy) also resolves overloads
+try:
+    data = vfdiff.diff_json(unit, src)
+except SystemExit:
+    data = vfdiff.diff_json(unit.split('/')[-1], src)
+dj = base + '.diff.json'
+json.dump(data, open(dj, 'w'))
+
+caps, _ = wcap.run(src, unit, want)
+if not caps and sym:   # e.g. template scope spelled differently: capture by bare name
+    caps, _ = wcap.run(src, unit, (ra_common.parse_mangled(sym) or (sym,))[0])
+caps, symname = ra_common.resolve(caps, None if sym else fn, sym, idx, data)
+print('function %s  (symbol %s, fnidx %d)' % (caps[0].get('qual') or caps[0]['fn'], symname, caps[0]['fnidx']))
+jp = base + '.json'
 json.dump(caps, open(jp, 'w'))
 
 
@@ -72,13 +112,20 @@ def pop_inversions(c, tgt, cls, budget=2000000):
 
 
 for c in caps:
+    temps = c.get('temps', {})
     cls = c['cls']
     K = 29 if cls == 4 else 32
     mask0 = 0x1ff9 if cls == 4 else 0x3fff
     N = {int(k): v for k, v in c['nodes'].items()}
     c['nodes'] = N
-    r = subprocess.run([sys.executable, os.path.join(HERE, 'tmap.py'), jp, fn, unit, str(cls)],
+    try:
+        os.remove(jp + '.tgt')
+    except OSError:
+        pass
+    r = subprocess.run([sys.executable, os.path.join(HERE, 'tmap.py'), jp, symname, unit, str(cls),
+                        '--sym', symname, '--idx', '0', '--diff', dj],
                        capture_output=True, text=True, cwd=HERE)
+    summary = [l for l in r.stdout.splitlines() if l.startswith('matched ')]
     try:
         spec = open(jp + '.tgt').read().strip()
         open(jp + '.tgt%d' % cls, 'w').write(spec)
@@ -86,13 +133,15 @@ for c in caps:
         spec = ''
     tgt = {int(a): int(b) for a, b in (x.split(':') for x in spec.split(',') if x)}
     if not tgt:
+        print('== %s cls %d: no target colours (%s)' % (
+            symname, cls, (summary or (r.stdout + r.stderr).strip().splitlines()[-1:] or ['tmap gave nothing'])[0]))
         continue
     pops = simplify(c, K)
     col = colour(c, c['order'], mask0)
     ok = pops == c['order'] and all(col[i] == N[i]['final'] for i in c['order'])
     bad = {v: t for v, t in tgt.items() if v in col and col[v] != t}
     print('== %s cls %d: %s; replay %s; %d/%d target-mapped webs differ' % (
-        fn, cls, r.stdout.splitlines()[0] if r.stdout else '?', 'exact' if ok else 'MISMATCH', len(bad), len(tgt)))
+        symname, cls, summary[0] if summary else '?', 'exact' if ok else 'MISMATCH', len(bad), len(tgt)))
     if not bad:
         continue
     for v in sorted(bad):

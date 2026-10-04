@@ -1,6 +1,12 @@
 """rcap.py: capture GC/2.0p1a graph-colouring state with a tiny Win32 debugger.
 
-usage: python rcap.py <src.c> <unit-substring-for-flags> [--fn NAME] [--json out.json]
+usage: python rcap.py <src.c|cpp> <unit> [--fn NAME] [--json out.json]
+
+<unit> is a build.ninja unit (substring or path, e.g. bamatlst, SB/Game/zNPCSupport); its flags
+and compiler (mw_version) are used.  NAME is a bare ('Render') or qualified ('NPCBlinker::Render')
+function name.  Env: RCAP_MW=GC/2.0p1x overrides the compiler, RCAP_EXTRA_FLAGS appends flags;
+a source COPY outside the unit's directory gets '-i <unit source dir>' automatically.
+Each capture records fn (bare), qual (namespace-qualified) and fnidx (codegen ordinal).
 
 Breakpoints (GC/2.0p1a mwcceppc.exe, image base 0x400000):
   0x508680 colorinstructions(Object *proc)   -> current function name
@@ -10,7 +16,10 @@ IGNode: +0 next, +4 object, +0xc cost, +0x10 short, +0x12 degree, +0x14 color,
         +0x16 flags, +0x18 arraySize, +0x1a short neighbors[]
 """
 import os as _os
-_REPO = _os.path.dirname(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))).replace("\\", "/")
+import sys as _sys
+_sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
+import ra_common
+_REPO = ra_common.ROOT
 import ctypes, ctypes.wintypes as wt, struct, sys, os, re, shlex, json, subprocess
 
 ROOT = _REPO
@@ -146,29 +155,68 @@ class Dbg:
             K.ContinueDebugEvent(pid, tid, cont)
 
 
+def hashname(d, hn):
+    try:
+        raw = d.rd(hn + 0xa, 256)
+    except OSError:   # near the end of a mapped region
+        raw = d.rd(hn + 0xa, 64)
+    return raw.split(b'\0')[0].decode('latin1')
+
+
 def objname(d, obj):
     if not obj:
         return None
     try:
-        hn = d.u32(obj + 0xa)
-        raw = d.rd(hn + 0xa, 64)
-        return raw.split(b'\0')[0].decode('latin1')
+        return hashname(d, d.u32(obj + 0xa))
     except OSError:
         return '?'
 
 
+def qualname(d, obj):
+    """Namespace-qualified name: Object+6 -> NameSpace {+0 parent, +4 HashNameNode *name}."""
+    nm = objname(d, obj)
+    if not obj:
+        return nm
+    scopes = []
+    try:
+        ns = d.u32(obj + 6)
+        while ns and len(scopes) < 16:
+            hn = d.u32(ns + 4)
+            if hn:
+                scopes.append(hashname(d, hn))
+            ns = d.u32(ns)
+    except OSError:
+        return nm
+    return '::'.join(scopes[::-1] + [nm])
+
+
 class Capture:
+    """want: bare or qualified function name (None = every function)."""
     def __init__(self, want):
         self.want = want
         self.fn = None
+        self.qual = None
+        self.obj = None
+        self.nfn = -1     # ordinal of the current matching function (codegen order)
         self.cur = None
         self.out = []
 
+    def matches(self, fn, qual):
+        return not self.want or self.want in (fn, qual)
+
+    def enter(self, d, obj):
+        """colorinstructions(obj): note the function being coloured (once per register class)."""
+        self.fn = objname(d, obj)
+        self.qual = qualname(d, obj)
+        if obj != self.obj and self.matches(self.fn, self.qual):
+            self.nfn += 1
+        self.obj = obj
+
     def __call__(self, d, addr, regs):
         if addr == BP_COLORINSTR:
-            self.fn = objname(d, d.u32(regs['esp'] + 4))
+            self.enter(d, d.u32(regs['esp'] + 4))
             return
-        if self.want and self.fn != self.want:
+        if not self.matches(self.fn, self.qual):
             return
         cls = d.rd(G_CLASS, 1)[0]
         g = d.u32(G_IGRAPH)
@@ -210,7 +258,7 @@ class Capture:
                     pc = struct.unpack_from('<I', hdr, 0)[0]
                 blocks.append(ins)
                 b = d.u32(b)
-            self.cur = dict(fn=self.fn, cls=cls, nreal=nreal, used=used, nodes=nodes, order=order, blocks=blocks)
+            self.cur = dict(fn=self.fn, qual=self.qual, fnidx=self.nfn, cls=cls, nreal=nreal, used=used, nodes=nodes, order=order, blocks=blocks)
         elif addr == BP_COLORRET and self.cur is not None:
             for i, nd in self.cur['nodes'].items():
                 nd['final'] = d.s16(nd['ptr'] + 0x14)
@@ -220,20 +268,35 @@ class Capture:
             self.cur = None
 
 
+# bytes at the hard-wired breakpoints in GC/2.0p1a; its derived variants (2.0p1b..f) share them
+_BP_BYTES = {BP_COLORINSTR: '53565583ec08', BP_COLORGRAPH: '5356575583ec', BP_COLORRET: '5985c07505be'}
+
+
+def check_compiler(exe):
+    from pe import PE
+    p = PE(exe)
+    bad = [hex(a) for a, h in _BP_BYTES.items() if (p.read(a, len(h) // 2) or b'').hex() != h]
+    if bad:
+        raise SystemExit('%s does not have the GC/2.0p1a code layout (breakpoints %s differ); '
+                         'set RCAP_MW to a GC/2.0p1* compiler' % (exe, ', '.join(bad)))
+
+
 def compile_cmd(src, unit, outobj):
-    N = open(os.path.join(ROOT, 'build.ninja')).read()
-    for m in re.finditer(r"^build (\S+\.o):(?: \$\n\s+| )(mwcc_sjis|mwcc) ((?:.*\n)*?)  basedir", N, re.M):
-        if unit in m.group(1).replace('\\', '/'):
-            body = m.group(3)
-            mw = re.search(r"mw_version = (\S+)", body).group(1).replace('\\', '/')
-            cf = re.search(r"cflags = ((?:.*\$\n)*.*)\n", body).group(1)
-            flags = re.sub(r"\s+", " ", cf.replace("$\n", " ")).strip()
-            exe = os.path.join(ROOT, 'build/compilers', mw, 'mwcceppc.exe').replace('/', '\\')
-            flags += ' ' + os.environ.get('RCAP_EXTRA_FLAGS', '')
-            if os.environ.get('RCAP_MW'):
-                exe = os.path.join(ROOT, 'build/compilers', os.environ['RCAP_MW'], 'mwcceppc.exe').replace('/', '\\')
-            return '"%s" %s -c "%s" -o "%s"' % (exe, flags, src, outobj)
-    raise SystemExit('unit not found')
+    """Command line for <src> with <unit>'s build.ninja flags.  Compiler: $RCAP_MW, else the unit's
+    mw_version.  Flags: + $RCAP_EXTRA_FLAGS, + '-i <unit source dir>' for a source copy."""
+    rule = ra_common.find_rule(unit)
+    mw = ra_common.compiler_version(rule)
+    exe = os.path.join(ROOT, 'build/compilers', mw, 'mwcceppc.exe').replace('/', '\\')
+    check_compiler(exe)
+    flags = (rule['flags'] + ' ' + ra_common.extra_flags(rule, src)).strip()
+    return '"%s" %s -c "%s" -o "%s"' % (exe, flags, src, outobj)
+
+
+def report_failure(cmd, rc):
+    """The debugged compiler has no console, so re-run it plainly to show its diagnostics."""
+    print('compiler exit', rc)
+    r = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
+    print((r.stdout + r.stderr)[-3000:])
 
 
 def main():
@@ -247,7 +310,7 @@ def main():
     cap = Capture(want)
     rc = d.run(cap)
     if rc != 0:
-        print('compiler exit', rc)
+        report_failure(cmd, rc)
     if outj:
         json.dump(cap.out, open(outj, 'w'))
     return cap.out
@@ -256,4 +319,4 @@ def main():
 if __name__ == '__main__':
     out = main()
     for c in out:
-        print(c['fn'], 'class', c['cls'], 'nodes', len(c['nodes']), 'ok', c.get('ok'))
+        print(c.get('qual') or c['fn'], 'fnidx', c.get('fnidx'), 'class', c['cls'], 'nodes', len(c['nodes']), 'ok', c.get('ok'))

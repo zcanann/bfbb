@@ -1,15 +1,51 @@
-"""tmap.py cap.json fn unit-stem [cls]: derive TARGET colours per vreg by aligning PCode to fdiff output.
+"""tmap.py cap.json fn unit [cls] [--sym MANGLED] [--idx N] [--diff d.json] [-v]: derive TARGET
+colours per vreg by aligning PCode to fdiff output.
 
+fn: bare ('xMat3x3Mul'), qualified ('NPCBlinker::Render') or mangled name.  When several captured
+functions share the name, --sym (or $TMAP_SYM) picks by mangled symbol and --idx N (or $TMAP_IDX)
+by position among them.  The objdiff symbol is resolved from the capture's qualified name (exact
+mangled name with --sym).  $TMAP_SRC: compile a source copy (vfdiff --src).  --diff: reuse a
+vfdiff.diff_json() dump instead of compiling.
 Prints per vreg: name, our colour, target colour votes. Emits 'v:col' string for solve.py.
 """
-import os as _os
-_REPO = _os.path.dirname(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))).replace("\\", "/")
-import json, sys, re, subprocess, collections, os
-HERE = __file__.rsplit('\\', 1)[0].rsplit('/', 1)[0]
-ops = {int(k): v for k, v in json.load(open(HERE + '/opmap.json')).items()}
+import json, sys, re, collections, os
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+import ra_common
+import vfdiff
+
+
+def _opt(flag, env):
+    if flag in sys.argv:
+        i = sys.argv.index(flag)
+        v = sys.argv[i + 1]
+        del sys.argv[i:i + 2]
+        return v
+    return os.environ.get(env) or None
+
+
+ops = {int(k): v for k, v in json.load(open(os.path.join(HERE, 'opmap.json'))).items()}
+sym = _opt('--sym', 'TMAP_SYM')
+idx = _opt('--idx', 'TMAP_IDX')
+idx = int(idx) if idx not in (None, '') else None
+dfile = _opt('--diff', 'TMAP_DIFF')
 capf, fn, unit = sys.argv[1:4]
-cls = int(sys.argv[4]) if len(sys.argv) > 4 else 4
-c = [x for x in json.load(open(capf)) if x['cls'] == cls and x['fn'] == fn][0]
+cls = int(sys.argv[4]) if len(sys.argv) > 4 and sys.argv[4].isdigit() else 4
+if ra_common.looks_mangled(fn) and not sym:
+    sym = fn
+if dfile:
+    data = json.load(open(dfile))
+else:
+    try:
+        data = vfdiff.diff_json(unit, os.environ.get('TMAP_SRC'))
+    except SystemExit:
+        data = vfdiff.diff_json(unit.split('/')[-1], os.environ.get('TMAP_SRC'))
+caps = [x for x in json.load(open(capf))]
+chosen, symname = ra_common.resolve(caps, None if sym else fn, sym, idx, data)
+cc = [x for x in chosen if x['cls'] == cls]
+if not cc:
+    raise SystemExit('no class-%d capture for %s' % (cls, symname))
+c = cc[0]
 N = {int(k): v for k, v in c['nodes'].items()}
 pref = 'r' if cls == 4 else 'f'
 
@@ -28,9 +64,9 @@ def colour(v):
 
 
 # vfdiff compiles privately (nothing in build/ is written); TMAP_SRC points it at a source COPY
-_vsrc = ['--src', os.environ['TMAP_SRC']] if os.environ.get('TMAP_SRC') else []
-out = subprocess.run(['python', 'tools/regalloc/vfdiff.py', unit.split('/')[-1], fn] + _vsrc, cwd=_REPO,
-                     capture_output=True, text=True).stdout.splitlines()[1:]
+out = vfdiff.rows(data, symname)
+print('symbol %s' % out[0])
+out = out[1:]
 rows = []
 for l in out:
     m = re.match(r'\s*(\d+) (.)  (.*?)\s*\|\s(.*)$', l)
