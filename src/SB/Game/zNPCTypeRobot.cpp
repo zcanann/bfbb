@@ -2564,7 +2564,6 @@ F32 RANGEWRAP(F32* val, F32 lo, F32 hi)
 
 void zNPCFodBzzt::DiscoRender()
 {
-    RwRGBA rgba_disco = rgba_discoLight;
     RwRGBA rgba_top = rgba_discoLight;
     RwRGBA rgba_bot = rgba_discoLight;
 
@@ -2573,9 +2572,6 @@ void zNPCFodBzzt::DiscoRender()
 
     xVec3 pos_top = pos_discoLight;
     xVec3 pos_bot = *Pos();
-    const xVec3 vec_ray = { 0.0f, 0.0f, 1.0f };
-    xVec3 pos_vtx;
-    xMat3x3 mat_spin;
 
     pos_bot.y += 1.0f;
 
@@ -2587,35 +2583,38 @@ void zNPCFodBzzt::DiscoRender()
     uv_bot[0] = uv_discoLight[0] + uv_slice_discoLight[0];
     uv_bot[1] = uv_discoLight[1] + uv_slice_discoLight[1];
 
-    void* mem = xMemPushTemp(10 * sizeof(RwIm3DVertex));
+    xVec3 vec_aim = { 0.0f, 0.0f, 1.0f };
+
+    void* mem = xMemPushTemp(10 * sizeof(RxObjSpace3DVertex));
 
     if (!mem)
     {
         return;
     }
 
-    memset(mem, 0, 10 * sizeof(RwIm3DVertex));
-    RwIm3DVertex* vert_list = (RwIm3DVertex*)mem;
-    RwIm3DVertex* vtx = vert_list + 1;
+    memset(mem, 0, 10 * sizeof(RxObjSpace3DVertex));
 
-    RwIm3DVertexSetPos(&vert_list[0], pos_top.x, pos_top.y, pos_top.z);
-    RwIm3DVertexSetRGBA(&vert_list[0], rgba_top.red, rgba_top.green, rgba_top.blue,
-                        rgba_top.alpha);
-    RwIm3DVertexSetUV(&vert_list[0], uv_top[0], uv_top[1]);
+    RxObjSpace3DVertex* vert_list = (RxObjSpace3DVertex*)mem;
+    RxObjSpace3DVertex* vtx = vert_list;
+
+    RwIm3DVertexSetPos(vtx, pos_top.x, pos_top.y, pos_top.z);
+    RwIm3DVertexSetRGBA(vtx, rgba_top.red, rgba_top.green, rgba_top.blue, rgba_top.alpha);
+    RwIm3DVertexSetUV(vtx, uv_top[0], uv_top[1]);
+    vtx++;
 
     for (S32 i = 0; i < 8; i++)
     {
-        F32 uoff = 0.125f * i;
+        xMat3x3 mat;
+        xVec3 pos_edge;
 
-        xMat3x3Euler(&mat_spin, (PI / 4) * i, 0.0f, 0.0f);
-        xMat3x3LMulVec(&pos_vtx, &mat_spin, &vec_ray);
-        pos_vtx *= 0.2f;
-        pos_vtx += pos_bot;
+        xMat3x3Euler(&mat, (PI / 4) * i, 0.0f, 0.0f);
+        xMat3x3LMulVec(&pos_edge, &mat, &vec_aim);
+        pos_edge *= 0.2f;
+        pos_edge += pos_bot;
 
-        RwIm3DVertexSetPos(vtx, pos_vtx.x, pos_vtx.y, pos_vtx.z);
+        RwIm3DVertexSetPos(vtx, pos_edge.x, pos_edge.y, pos_edge.z);
         RwIm3DVertexSetRGBA(vtx, rgba_bot.red, rgba_bot.green, rgba_bot.blue, rgba_bot.alpha);
-        RwIm3DVertexSetUV(vtx, uv_bot[0] + uoff, uv_bot[1]);
-
+        RwIm3DVertexSetUV(vtx, uv_bot[0] + 0.125f * i, uv_bot[1]);
         vtx++;
     }
 
@@ -3696,6 +3695,7 @@ void zNPCSleepy::RendConeOfDeath(S32 tgt_isBowlingBall)
     static RwRGBA rgba_beg = { 0, 200, 240, 0 };
     static RwRGBA rgba_end = { 80, 204, 204, 255 };
 
+    S32 i;
     xVec3 pos_top;
     xVec3 pos_bot;
 
@@ -3723,23 +3723,21 @@ void zNPCSleepy::RendConeOfDeath(S32 tgt_isBowlingBall)
     F32 u_end = zNPCSleepy::uv_deathcone[0] + zNPCSleepy::uv_slice_deathcone[0];
     F32 v_end = zNPCSleepy::uv_deathcone[1] + zNPCSleepy::uv_slice_deathcone[1];
 
-    const RwRGBA& beg = rgba_beg;
-    const RwRGBA& end = rgba_end;
     RxObjSpace3DVertex* vtx = g_vert_list;
 
-    for (S32 i = 0; i < 16; i++)
+    for (i = 0; i < 16; i++)
     {
         F32 ang_seg = (PI / 8) * i;
         F32 sn = isin(ang_seg);
         F32 cs = icos(ang_seg);
 
         const xVec3 vec_ray = { sn, 0.0f, cs };
-        xVec3 pos_vtx;
+        xVec3 pos_edge;
 
-        pos_vtx = vec_ray * 0.1f + pos_top;
+        pos_edge = vec_ray * 0.1f + pos_top;
 
-        RwIm3DVertexSetPos(&vtx[0], pos_vtx.x, pos_vtx.y, pos_vtx.z);
-        RwIm3DVertexSetRGBA(&vtx[0], beg.red, beg.green, beg.blue, beg.alpha);
+        RwIm3DVertexSetPos(&vtx[0], pos_edge.x, pos_edge.y, pos_edge.z);
+        RwIm3DVertexSetRGBA(&vtx[0], rgba_beg.red, rgba_beg.green, rgba_beg.blue, rgba_beg.alpha);
 
         F32 u_off = 0.0625f * ((i & 1) ? i : i + 1);
         F32 v_off = 0.0f;
@@ -3747,10 +3745,10 @@ void zNPCSleepy::RendConeOfDeath(S32 tgt_isBowlingBall)
 
         RwIm3DVertexSetUV(&vtx[0], u_seg, v_beg + v_off);
 
-        pos_vtx = vec_ray * 0.5f + pos_bot;
+        pos_edge = vec_ray * 0.5f + pos_bot;
 
-        RwIm3DVertexSetPos(&vtx[1], pos_vtx.x, pos_vtx.y, pos_vtx.z);
-        RwIm3DVertexSetRGBA(&vtx[1], end.red, end.green, end.blue, end.alpha);
+        RwIm3DVertexSetPos(&vtx[1], pos_edge.x, pos_edge.y, pos_edge.z);
+        RwIm3DVertexSetRGBA(&vtx[1], rgba_end.red, rgba_end.green, rgba_end.blue, rgba_end.alpha);
         RwIm3DVertexSetUV(&vtx[1], u_seg, v_end);
 
         vtx += 2;
@@ -3782,16 +3780,18 @@ void zNPCSleepy::RendConeOfDeath(S32 tgt_isBowlingBall)
 
 void zNPCSleepy::RendConeRange()
 {
+    static const F32 rad_fadeinOuter = 30.0f;
+    static const F32 rad_fadeinInner = 20.0f;
     static F32 uv_top[2] = { 0.0f, 0.0f };
     static F32 uv_bot[2] = { 0.0f, 1.0f };
 
-    xMat3x3 mat_spin;
+    xMat3x3 mat;
     xVec3 pos_top;
     xVec3 pos_bot;
     RwRGBA rgba_top;
     RwRGBA rgba_bot;
 
-    F32 rad_cone = cfg_npc->rad_detect;
+    F32 rad_end = cfg_npc->rad_detect;
 
     NightLightPos(&pos_top);
 
@@ -3802,62 +3802,60 @@ void zNPCSleepy::RendConeRange()
 
     F32 ds2 = XZDstSqToPlayer(NULL, NULL);
 
-    if (ds2 < SQ(20.0f))
+    if (ds2 < SQ(rad_fadeinInner))
     {
         rgba_top.alpha = 128;
         rgba_bot.alpha = 32;
     }
-    else if (ds2 > SQ(30.0f))
+    else if (ds2 > SQ(rad_fadeinOuter))
     {
         rgba_top.alpha = 0;
         rgba_bot.alpha = 0;
     }
     else
     {
-        F32 pct = (xsqrt(ds2) - 20.0f) / 10.0f;
+        F32 pct = (xsqrt(ds2) - rad_fadeinInner) / (rad_fadeinOuter - rad_fadeinInner);
         pct = CLAMP(1.0f - pct, 0.0f, 1.0f);
 
         rgba_top.alpha = (U8)SMOOTH(pct, 0.0f, 128.0f);
         rgba_bot.alpha = (U8)SMOOTH(pct, 0.0f, 32.0f);
     }
 
-    xVec3 vec_ray = { 0.0f, 0.0f, 1.0f };
+    xVec3 vec_aim = { 0.0f, 0.0f, 1.0f };
 
     S32 i;
     RxObjSpace3DVertex* vtx = g_vert_list;
 
-    uv_top[0] = zNPCSleepy::uv_nightlight[0];
-    uv_top[1] = zNPCSleepy::uv_nightlight[1];
-    uv_bot[0] = zNPCSleepy::uv_nightlight[0] + zNPCSleepy::uv_slice_nightlight[0];
-    uv_bot[1] = zNPCSleepy::uv_nightlight[1] + zNPCSleepy::uv_slice_nightlight[1];
+    uv_top[0] = uv_nightlight[0];
+    uv_top[1] = uv_nightlight[1];
+    uv_bot[0] = uv_nightlight[0] + uv_slice_nightlight[0];
+    uv_bot[1] = uv_nightlight[1] + uv_slice_nightlight[1];
 
     for (i = 0; i < 16; i++)
     {
-        xMat3x3Euler(&mat_spin, (PI / 8) * i, 0.0f, 0.0f);
+        xMat3x3Euler(&mat, (PI / 8) * i, 0.0f, 0.0f);
 
-        vec_ray.z = 0.0f;
+        vec_aim.z = 0.0f;
 
-        xVec3 pos_vtx;
-        xMat3x3LMulVec(&pos_vtx, &mat_spin, &vec_ray);
-        xVec3AddTo(&pos_vtx, &pos_top);
+        xVec3 offset;
+        xMat3x3LMulVec(&offset, &mat, &vec_aim);
+        xVec3AddTo(&offset, &pos_top);
 
-        RwIm3DVertexSetPos(&vtx[0], pos_vtx.x, pos_vtx.y, pos_vtx.z);
-        RwIm3DVertexSetRGBA(&vtx[0], rgba_top.red, rgba_top.green, rgba_top.blue,
-                            rgba_top.alpha);
+        RwIm3DVertexSetPos(&vtx[0], offset.x, offset.y, offset.z);
+        RwIm3DVertexSetRGBA(&vtx[0], rgba_top.red, rgba_top.green, rgba_top.blue, rgba_top.alpha);
 
-        F32 u_ofs = 0.0625f * (!(i & 1) ? i : i + 1);
+        F32 u = 0.0625f * (!(i & 1) ? i : i + 1);
 
-        RwIm3DVertexSetUV(&vtx[0], uv_top[0] + u_ofs, uv_top[1]);
+        RwIm3DVertexSetUV(&vtx[0], uv_top[0] + u, uv_top[1]);
 
-        vec_ray.z = rad_cone;
+        vec_aim.z = rad_end;
 
-        xMat3x3LMulVec(&pos_vtx, &mat_spin, &vec_ray);
-        xVec3AddTo(&pos_vtx, &pos_bot);
+        xMat3x3LMulVec(&offset, &mat, &vec_aim);
+        xVec3AddTo(&offset, &pos_bot);
 
-        RwIm3DVertexSetPos(&vtx[1], pos_vtx.x, pos_vtx.y, pos_vtx.z);
-        RwIm3DVertexSetRGBA(&vtx[1], rgba_bot.red, rgba_bot.green, rgba_bot.blue,
-                            rgba_bot.alpha);
-        RwIm3DVertexSetUV(&vtx[1], uv_top[0] + u_ofs, uv_bot[1]);
+        RwIm3DVertexSetPos(&vtx[1], offset.x, offset.y, offset.z);
+        RwIm3DVertexSetRGBA(&vtx[1], rgba_bot.red, rgba_bot.green, rgba_bot.blue, rgba_bot.alpha);
+        RwIm3DVertexSetUV(&vtx[1], uv_top[0] + u, uv_bot[1]);
 
         vtx += 2;
     }
