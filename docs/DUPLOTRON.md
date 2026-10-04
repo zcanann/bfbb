@@ -14002,3 +14002,25 @@ uses staging's published p1f variant (SHA1
 Evidence: `build/bitplane77-entry-scratch.json`,
 `bitplane77-retained-report.json`, `bitplane77-retained-validation.json`,
 and corresponding build/link logs. No behavioral suites or compiler changes.
+
+
+### Bink sound task-array base lifetime (2026-10-03)
+
+Lock captures state->tasks after reading the AX cursor, then uses that base
+for the left and right lock tasks. This gives cursor-state access and task
+addressing their own pointer lifetimes, preserving every task index, source
+address, clamp and returned buffer/length. No qualifiers or layout changes.
+
+Full deduplicated and raw Lock improve 92.78571 -> 93.46429; source grows
+216 -> 220 bytes against retail224. This is partial: the dedicated task-base
+addi is not retail's state-pointer mr, and some base/displacement choices,
+channel-stride reads and repeated lock-index reads remain different.
+
+Only this function's score and fuzzy aggregates change in the full report.
+All other function records, exact code, data and completion measures remain
+unchanged. all_source and normal link/check pass, preserving retail SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6. ngcsnd stays NonMatching, so normal
+linkage is not a whole-unit source-link claim. The private compile uses the
+unit's actual ProDG3.5 -G0 configuration. No new assembly, compiler change or
+behavioral test. Evidence: build/ngcsnd78-{baseline.json,tasks-private},
+build/parallel-seventyeighth-{report.json,verify.py,build.log}.
