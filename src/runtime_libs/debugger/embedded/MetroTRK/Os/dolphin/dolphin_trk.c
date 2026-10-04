@@ -1,5 +1,7 @@
 #include "PowerPC_EABI_Support/MetroTRK/trk.h"
 
+extern char _db_stack_addr[];
+
 #define EXCEPTIONMASK_ADDR 0x80000044
 
 static u32 lc_base;
@@ -67,8 +69,8 @@ ASM void InitMetroTRK()
 	mtspr  0x3f2, r0
 	mtspr  0x3f5, r0
 	//Restore stack pointer
-	lis r1, 0x803D
-	ori r1, r1, 0x9A50
+	lis r1, _db_stack_addr@h
+	ori r1, r1, _db_stack_addr@l
 	mr r3, r5
 	bl InitMetroTRKCommTable //Initialize comm table
 	/*

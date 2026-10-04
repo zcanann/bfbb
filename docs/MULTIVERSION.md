@@ -46,6 +46,24 @@ This requires `orig/GQPE78/files/sbgcM.elf`,
 Use `--orig-root`, `--output-root`, or `--dtk` to override their locations.
 Ordinary builds need only the version's original DOL and checked-in metadata.
 
+## SDK stack and arena addresses
+
+The regional SDK/MetroTRK holdouts used USA addresses for the application stack,
+debugger stack, and arena. The linker scripts calculate their regional values:
+
+| Symbol | USA | PAL and German compilation |
+| --- | --- | --- |
+| `_stack_addr`, `_db_stack_end` | `0x803D8A50` | `0x803D8E70` |
+| `_db_stack_addr` | `0x803D9A50` | `0x803D9E70` |
+| `__ArenaLo` | `0x803D9A60` | `0x803D9E80` |
+
+Startup and MetroTRK's existing assembly now reference the linker symbols.
+`OS.c` and `OSThread.c` retain version-specific absolute declarations because
+retail embeds those C references as immediate operands. These changes make
+`OS.c`, `OSThread.c`, `__start.c`, and `dolphin_trk.c` fully match in both regions.
+The expanded 445-unit regional selections and the existing 472-unit USA
+selection were each linked and compared byte-for-byte with their retail DOL.
+
 ## Completion and progress
 
 USA's existing `Matching` flags remain USA-only. A regional

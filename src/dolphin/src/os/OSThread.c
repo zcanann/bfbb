@@ -20,7 +20,11 @@ static void DefaultSwitchThreadCallback(OSThread* from, OSThread* to)
 {
 }
 
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+extern u8 _stack_addr[] AT_ADDRESS(0x803D8E70);
+#else
 extern u8 _stack_addr[] AT_ADDRESS(0x803D8A50);
+#endif
 extern u8 _stack_end[];
 
 #define AddTail(queue, thread, link)                                                               \

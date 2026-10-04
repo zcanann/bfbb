@@ -222,6 +222,7 @@ bink/src/sdk/decode/ngc/ngcyuy2.c
 bink/src/sdk/popmal.c
 bink/src/sdk/varbits.c
 debugger/embedded/MetroTRK/Export/mslsupp.c
+debugger/embedded/MetroTRK/Os/dolphin/dolphin_trk.c
 debugger/embedded/MetroTRK/Os/dolphin/dolphin_trk_glue.c
 debugger/embedded/MetroTRK/Os/dolphin/targcont.c
 debugger/embedded/MetroTRK/Os/dolphin/target_options.c
@@ -307,6 +308,7 @@ dolphin/src/gx/GXTransform.c
 dolphin/src/mtx/mtx.c
 dolphin/src/mtx/mtx44.c
 dolphin/src/odenotstub/odenotstub.c
+dolphin/src/os/OS.c
 dolphin/src/os/OSAlarm.c
 dolphin/src/os/OSAlloc.c
 dolphin/src/os/OSArena.c
@@ -324,8 +326,10 @@ dolphin/src/os/OSReset.c
 dolphin/src/os/OSResetSW.c
 dolphin/src/os/OSRtc.c
 dolphin/src/os/OSSync.c
+dolphin/src/os/OSThread.c
 dolphin/src/os/OSTime.c
 dolphin/src/os/init/__ppc_eabi_init.cpp
+dolphin/src/os/init/__start.c
 dolphin/src/pad/Pad.c
 dolphin/src/pad/Padclamp.c
 dolphin/src/si/SIBios.c

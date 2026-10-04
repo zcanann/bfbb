@@ -189,8 +189,8 @@ SECTION_INIT asm void __init_registers(void)
     li r29, 0
     li r30, 0
     li r31, 0
-    lis r1, 0x803D
-    ori r1, r1, 0x8A50
+    lis r1, _stack_addr@h
+    ori r1, r1, _stack_addr@l
     lis r2, _SDA2_BASE_@h
     ori r2, r2, _SDA2_BASE_@l
     lis r13, _SDA_BASE_@h
