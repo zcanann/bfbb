@@ -13938,3 +13938,36 @@ dldevice76-reverse-report.json, dldevice76-source-link.json,
 dldevice76-reverse-source-link.json, and dldevice76-link.py. The diagnostic
 script temporarily selects only this source object, captures the ELF/DOL,
 then restores NonMatching and verifies the ordinary retail hash in finally.
+
+
+## 2026-10-03: dldevice explicit-zero ownership
+
+A reduced C control establishes the remaining definition distinction under
+published GC/2.0p1f: explicit file-scope zero definitions emit first, in
+source order; tentative definitions emit later, in reverse order. Both
+forms remain in .sbss. Function-local statics retain their separate delayed
+emission, including a local explicitly initialized to zero.
+
+The eighteen existing globals from _RwDlCopyClear through _RwDlFrameGo now
+use explicit zero initializers in retail order. The seven later globals stay
+tentative and reverse-declared. No objects, types, qualifiers, bindings, or
+nonzero values are added or changed. All 25 file-scope .sbss offsets now
+match retail exactly. This replaces the earlier eight-byte displacement
+without changing any instruction body or data score.
+
+Actual source-selected DOL differences fall from 165 to 37 bytes, at unchanged
+2,859,136-byte length; new SHA1 is
+`fdad768bc469c93e318ae28d2fa5b497b4b5645f`. Eight residual bytes refer to the
+swapped function statics: swap/gxInit have source offsets 76/72 instead of
+retail 72/76. These affect _rwDlBreakPtCallback (3 bytes),
+_rwDlVIPostRetraceCallback (3), and _rwDlSystem (2). The original code
+residues remain in _rwDlCameraBeginUpdate (17 bytes) and
+_rwDlRasterShowRaster (12). This remains a NonMatching layout checkpoint.
+
+Full deduplicated report equality, full source build, and ordinary retail
+SHA1 `306526d90b48e99894c3138f5fc8f2716d9fecf6` pass. Private compiler p1f
+SHA1 remains `8641f1a15bab7d961b7b7558e8d0de64449c509c`; no compiler bytes
+were modified. Evidence: build/dldevice77-zero-control.c/.o,
+dldevice77-baseline-report.json, dldevice77-zero-report.json,
+dldevice77-zero-source-link.json, dldevice77-zero-residual.json, and the
+self-restoring source-link diagnostic dldevice77-zero-link.py.

@@ -97,7 +97,7 @@ RwBool _rwDlCameraEndUpdate(void* unused1, void* unused2, RwInt32 unused3);
 RwBool _rwDlCameraClear(void* cameraIn, void* colorIn, RwInt32 clearFlags);
 RwBool _rwDlRasterShowRaster(void* unused1, void* unused2, RwInt32 unused3);
 
-/* The C compiler emits these small-BSS declarations in reverse order. */
+/* Tentative definitions follow initialized definitions in reverse order. */
 RwRwDeviceGlobals dgGGlobals;
 GXRenderModeObj* _RwDlRenderMode;
 RwInt32 _RwDlHalfHeight;
@@ -105,24 +105,24 @@ static GXFifoObj* _RwDlDefaultFifoObj;
 static void* _RwDlDefaultFifo;
 static RwUInt16 _RwDlFrameSwap[3];
 static OSThreadQueue _RwDlWaitingDoneRender;
-static volatile RwBool _RwDlFrameGo;
-static volatile RwBool _RwDlFrameWait;
-static volatile RwBool _RwDlFrameReadyOnToken;
-static RwBool _RwDlBreakPointEnabled;
-static volatile RwInt32 _RwDlFrameTokenCurrent;
-static volatile RwInt32 _RwDlFrameTokenNew;
-static volatile RwInt32 _RwDlFrameNew;
-static volatile RwInt32 _RwDlFrameCurrent;
-static void* _RwGCXFBDisp;
-static void* _RwGCXFBCopy;
-static void* _RwGCXFB2;
-static void* _RwGCXFB1;
-static void* _RwDl_FIFO_XFB;
-RwInt32 _RwDlFSAA;
-RwInt32 _RwGameCubeVideoMode;
-GXPixelFmt _RwDlCurPixelFormat;
-GXPixelFmt _RwDlPixelFormat;
-static RwBool _RwDlCopyClear;
+static RwBool _RwDlCopyClear = 0;
+GXPixelFmt _RwDlPixelFormat = 0;
+GXPixelFmt _RwDlCurPixelFormat = 0;
+RwInt32 _RwGameCubeVideoMode = 0;
+RwInt32 _RwDlFSAA = 0;
+static void* _RwDl_FIFO_XFB = 0;
+static void* _RwGCXFB1 = 0;
+static void* _RwGCXFB2 = 0;
+static void* _RwGCXFBCopy = 0;
+static void* _RwGCXFBDisp = 0;
+static volatile RwInt32 _RwDlFrameCurrent = 0;
+static volatile RwInt32 _RwDlFrameNew = 0;
+static volatile RwInt32 _RwDlFrameTokenNew = 0;
+static volatile RwInt32 _RwDlFrameTokenCurrent = 0;
+static RwBool _RwDlBreakPointEnabled = 0;
+static volatile RwBool _RwDlFrameReadyOnToken = 0;
+static volatile RwBool _RwDlFrameWait = 0;
+static volatile RwBool _RwDlFrameGo = 0;
 
 static RwVideoMode _RwDlVideoModes[4] = {
     { 640, 480, 24, rwVIDEOMODEEXCLUSIVE, 0, 0 },
