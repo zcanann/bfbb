@@ -14343,3 +14343,24 @@ unit remains NonMatching. All-source compilation and the normal retail
 link/check pass with DOL SHA1 306526d90b48e99894c3138f5fc8f2716d9fecf6;
 this does not establish a source-selected Glyph DOL. No compiler, assembly,
 volatile or behavioral-test changes. Evidence: build/glyph109/.
+
+
+## Glyph preparation: recover the per-type model lifetime (2026-10-04)
+
+The complete archived `zNPCGlyph_ScenePrepare` scope candidate also improves
+with the published p1g compiler. Keep `mdl_raw` and `cnt` inside the glyph-type
+loop, with the existing outer glyph/list/index declarations in the recorded
+order. Every initialization, asset lookup and glyph initialization call remains
+unchanged. The model pointer now uses retail's r26. The missing separate copy
+of the glyph type and other register roles remain unresolved.
+
+The authoritative full report changes only ScenePrepare, 96.87302% to
+97.111115%. Source size remains 248 bytes against retail's 252. Exact counts,
+all matched data, other function scores and completion markers are unchanged;
+Glyphs_RenderAll remains 100%, and the unit remains NonMatching at 28/29
+exact functions. All-source compilation and the normal retail link/check pass,
+with DOL SHA1 306526d90b48e99894c3138f5fc8f2716d9fecf6. Published p1g retains
+SHA1 99bd18455ff674337d7a6186164df8a1b1ba13a7. No additional compiler changes,
+assembly, volatile accesses or behavioral tests were introduced. Evidence:
+build/archive110/, including the archived-candidate transplant, fresh p1g
+baseline, full-report comparison and build logs.

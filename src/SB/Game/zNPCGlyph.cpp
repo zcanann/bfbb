@@ -50,13 +50,11 @@ void zNPCGlyph_Shutdown()
 // Nonmatching
 void zNPCGlyph_ScenePrepare()
 {
-    RpAtomic* mdl_raw;
     NPCGlyph* glyph;
-    U32 aid;
     S32 i;
     S32 k;
-    S32 cnt;
     NPCGlyph* list = NULL;
+    U32 aid;
 
     for (i = 0; i < 10; i++)
     {
@@ -65,6 +63,9 @@ void zNPCGlyph_ScenePrepare()
 
     for (i = NPC_GLYPH_SHINYONE; i < NPC_GLYPH_NOMORE; i++)
     {
+        RpAtomic* mdl_raw;
+        S32 cnt;
+
         cnt = zNPCGlyph_TypeToList((en_npcglyph)i, &list);
 
         if (list == NULL || cnt < 1)
