@@ -308,7 +308,7 @@ void ROMFont::DrawTextBox(S32 x, S32 y, S32 width, S32 height, char* str)
         while (word != NULL && y + height > cursor_y)
         {
             tokWidth = GetWidth(word);
-            if (cursor_x + tokWidth > x + width)
+            if (cursor_x + tokWidth > width + x)
             {
                 cursor_y += mFontData->cellHeight;
                 cursor_x = x;

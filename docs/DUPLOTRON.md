@@ -14383,3 +14383,21 @@ compilation and the normal retail link/check pass with DOL SHA1
 306526d90b48e99894c3138f5fc8f2716d9fecf6. Published p1g is unchanged. iSystem
 remains NonMatching; this is not a source-selected link claim. Evidence:
 build/archive111/, including the final minimal-source report.
+
+## ROM font: recover the text-box right-edge operand order (2026-10-04)
+
+The complete archived DrawTextBox candidate improves with p1g, but only its
+right-edge addition spelling is needed: use `width + x` in the existing wrap
+comparison. The archived declaration and null-check changes were omitted.
+This preserves all calls, stores, guards and iteration behavior, and changes
+only the generated add at function offset 0x6c from `add r25,r29,r25` to
+retail's `add r25,r25,r29`.
+
+The authoritative full report changes only DrawTextBox, 98.60656% to
+98.68852%, at the same 244 bytes. All non-fuzzy fields, matched data, exact
+counts, other function scores and completion markers are unchanged.
+All-source compilation and the normal retail link/check pass with DOL SHA1
+306526d90b48e99894c3138f5fc8f2716d9fecf6; published p1g retains SHA1
+99bd18455ff674337d7a6186164df8a1b1ba13a7. iTRC remains NonMatching; this is
+not a source-selected link claim. Evidence: build/textbox112/, including the
+complete archive candidate, minimal candidate, reports and build logs.
