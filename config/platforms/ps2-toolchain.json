@@ -5062,6 +5062,495 @@
           "lo_offset": 32
         }
       ]
+    },
+    {
+      "source": "src/SB/Core/x/xBehaveMgr.cpp",
+      "target_unit": "SB/Core/x/xBehaveMgr.cpp",
+      "object": "source/xBehaveMgr.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "TimerGet__7xPsycheF11en_xpsytime": "TimerGet__7xPsycheF11en_xpsytime",
+        "TranGoal__7xPsycheFfPv": "TranGoal__7xPsycheFfPv",
+        "ParseTranRequest__7xPsycheF11en_trantypei": "ParseTranRequest__7xPsycheF11en_trantypei",
+        "Timestep__7xPsycheFfPv": "Timestep__7xPsycheFfPv",
+        "FindGoal__7xPsycheFi": "FindGoal__7xPsycheFi",
+        "GoalNone__7xPsycheFii": "GoalNone__7xPsycheFii",
+        "GoalSwap__7xPsycheFii": "GoalSwap__7xPsycheFii",
+        "GoalPop__7xPsycheFii": "GoalPop__7xPsycheFii",
+        "GoalPopRecover__7xPsycheFi": "GoalPopRecover__7xPsycheFi",
+        "GoalPopToBase__7xPsycheFi": "GoalPopToBase__7xPsycheFi",
+        "GoalPush__7xPsycheFii": "GoalPush__7xPsycheFii",
+        "GoalSet__7xPsycheFii": "GoalSet__7xPsycheFii",
+        "GetPrevRecovery__7xPsycheCFi": "GetPrevRecovery__7xPsycheCFi",
+        "GIDOfPending__7xPsycheCFv": "GIDOfPending__7xPsycheCFv",
+        "GIDOfActive__7xPsycheCFv": "GIDOfActive__7xPsycheCFv",
+        "GIDInStack__7xPsycheCFi": "GIDInStack__7xPsycheCFi",
+        "GetCurGoal__7xPsycheCFv": "GetCurGoal__7xPsycheCFv",
+        "IndexInStack__7xPsycheCFi": "IndexInStack__7xPsycheCFi",
+        "FreshWipe__7xPsycheFv": "FreshWipe__7xPsycheFv",
+        "AddGoal__7xPsycheFiPv": "AddGoal__7xPsycheFiPv",
+        "BrainEnd__7xPsycheFv": "BrainEnd__7xPsycheFv",
+        "BrainExtend__7xPsycheFv": "BrainExtend__7xPsycheFv",
+        "BrainBegin__7xPsycheFv": "BrainBegin__7xPsycheFv",
+        "UnSubscribe__10xBehaveMgrFP7xPsyche": "UnSubscribe__10xBehaveMgrFP7xPsyche",
+        "Subscribe__10xBehaveMgrFP5xBasei": "Subscribe__10xBehaveMgrFP5xBasei",
+        "xBehaveMgr_SceneReset__Fv": "xBehaveMgr_SceneReset__Fv",
+        "xBehaveMgr_SceneFinish__Fv": "xBehaveMgr_SceneFinish__Fv",
+        "xBehaveMgr_ScenePrepare__Fv": "xBehaveMgr_ScenePrepare__Fv",
+        "xBehaveMgr_GetSelf__Fv": "xBehaveMgr_GetSelf__Fv",
+        "xBehaveMgr_Shutdown__Fv": "xBehaveMgr_Shutdown__Fv",
+        "xBehaveMgr_Startup__Fv": "xBehaveMgr_Startup__Fv"
+      },
+      "calls": [
+        {
+          "function": "ParseTranRequest__7xPsycheF11en_trantypei",
+          "offset": 48,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "GoalPop__7xPsycheFii",
+          "symbol": "GoalPop__7xPsycheFii"
+        },
+        {
+          "function": "ParseTranRequest__7xPsycheF11en_trantypei",
+          "offset": 80,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "GoalNone__7xPsycheFii",
+          "symbol": "GoalNone__7xPsycheFii"
+        },
+        {
+          "function": "ParseTranRequest__7xPsycheF11en_trantypei",
+          "offset": 108,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "GoalPopToBase__7xPsycheFi",
+          "symbol": "GoalPopToBase__7xPsycheFi"
+        },
+        {
+          "function": "ParseTranRequest__7xPsycheF11en_trantypei",
+          "offset": 140,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "GoalPopRecover__7xPsycheFi",
+          "symbol": "GoalPopRecover__7xPsycheFi"
+        },
+        {
+          "function": "ParseTranRequest__7xPsycheF11en_trantypei",
+          "offset": 180,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "GoalPush__7xPsycheFii",
+          "symbol": "GoalPush__7xPsycheFii"
+        },
+        {
+          "function": "ParseTranRequest__7xPsycheF11en_trantypei",
+          "offset": 216,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "GoalPop__7xPsycheFii",
+          "symbol": "GoalPop__7xPsycheFii"
+        },
+        {
+          "function": "ParseTranRequest__7xPsycheF11en_trantypei",
+          "offset": 248,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "GoalSwap__7xPsycheFii",
+          "symbol": "GoalSwap__7xPsycheFii"
+        },
+        {
+          "function": "ParseTranRequest__7xPsycheF11en_trantypei",
+          "offset": 280,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "GoalSet__7xPsycheFii",
+          "symbol": "GoalSet__7xPsycheFii"
+        },
+        {
+          "function": "Timestep__7xPsycheFfPv",
+          "offset": 152,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "TranGoal__7xPsycheFfPv",
+          "symbol": "TranGoal__7xPsycheFfPv"
+        },
+        {
+          "function": "Timestep__7xPsycheFfPv",
+          "offset": 360,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "ParseTranRequest__7xPsycheF11en_trantypei",
+          "symbol": "ParseTranRequest__7xPsycheF11en_trantypei"
+        },
+        {
+          "function": "Timestep__7xPsycheFfPv",
+          "offset": 448,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "ParseTranRequest__7xPsycheF11en_trantypei",
+          "symbol": "ParseTranRequest__7xPsycheF11en_trantypei"
+        },
+        {
+          "function": "FindGoal__7xPsycheFi",
+          "offset": 88,
+          "target_source": "SB/Core/x/xutil.cpp",
+          "target_function": "xUtil_idtag2string__FUii",
+          "symbol": "xUtil_idtag2string__FUii"
+        },
+        {
+          "function": "FindGoal__7xPsycheFi",
+          "offset": 108,
+          "target_source": "SB/Core/x/xutil.cpp",
+          "target_function": "xUtil_idtag2string__FUii",
+          "symbol": "xUtil_idtag2string__FUii"
+        },
+        {
+          "function": "GoalNone__7xPsycheFii",
+          "offset": 200,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "Timestep__7xPsycheFfPv",
+          "symbol": "Timestep__7xPsycheFfPv"
+        },
+        {
+          "function": "GoalNone__7xPsycheFii",
+          "offset": 292,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "Timestep__7xPsycheFfPv",
+          "symbol": "Timestep__7xPsycheFfPv"
+        },
+        {
+          "function": "GoalSwap__7xPsycheFii",
+          "offset": 108,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "FindGoal__7xPsycheFi",
+          "symbol": "FindGoal__7xPsycheFi"
+        },
+        {
+          "function": "GoalSwap__7xPsycheFii",
+          "offset": 236,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "Timestep__7xPsycheFfPv",
+          "symbol": "Timestep__7xPsycheFfPv"
+        },
+        {
+          "function": "GoalPop__7xPsycheFii",
+          "offset": 452,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "Timestep__7xPsycheFfPv",
+          "symbol": "Timestep__7xPsycheFfPv"
+        },
+        {
+          "function": "GoalPopRecover__7xPsycheFi",
+          "offset": 172,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "GoalPop__7xPsycheFii",
+          "symbol": "GoalPop__7xPsycheFii"
+        },
+        {
+          "function": "GoalPopRecover__7xPsycheFi",
+          "offset": 252,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "Timestep__7xPsycheFfPv",
+          "symbol": "Timestep__7xPsycheFfPv"
+        },
+        {
+          "function": "GoalPopToBase__7xPsycheFi",
+          "offset": 68,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "GoalPop__7xPsycheFii",
+          "symbol": "GoalPop__7xPsycheFii"
+        },
+        {
+          "function": "GoalPopToBase__7xPsycheFi",
+          "offset": 136,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "Timestep__7xPsycheFfPv",
+          "symbol": "Timestep__7xPsycheFfPv"
+        },
+        {
+          "function": "GoalPush__7xPsycheFii",
+          "offset": 172,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "FindGoal__7xPsycheFi",
+          "symbol": "FindGoal__7xPsycheFi"
+        },
+        {
+          "function": "GoalPush__7xPsycheFii",
+          "offset": 316,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "Timestep__7xPsycheFfPv",
+          "symbol": "Timestep__7xPsycheFfPv"
+        },
+        {
+          "function": "GoalSet__7xPsycheFii",
+          "offset": 132,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "FindGoal__7xPsycheFi",
+          "symbol": "FindGoal__7xPsycheFi"
+        },
+        {
+          "function": "GoalSet__7xPsycheFii",
+          "offset": 260,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "Timestep__7xPsycheFfPv",
+          "symbol": "Timestep__7xPsycheFfPv"
+        },
+        {
+          "function": "AddGoal__7xPsycheFiPv",
+          "offset": 36,
+          "target_source": "SB/Core/x/xFactory.cpp",
+          "target_function": "CreateItem__8xFactoryFiPvP10RyzMemGrow",
+          "symbol": "CreateItem__8xFactoryFiPvP10RyzMemGrow"
+        },
+        {
+          "function": "AddGoal__7xPsycheFiPv",
+          "offset": 80,
+          "target_source": "SB/Core/x/xListItem.cpp",
+          "target_function": "Insert__17xListItem<5xGoal>FP5xGoal",
+          "symbol": "Insert__17xListItem<5xGoal>FP5xGoal"
+        },
+        {
+          "function": "AddGoal__7xPsycheFiPv",
+          "offset": 116,
+          "target_source": "SB/Core/x/xutil.cpp",
+          "target_function": "xUtil_idtag2string__FUii",
+          "symbol": "xUtil_idtag2string__FUii"
+        },
+        {
+          "function": "BrainEnd__7xPsycheFv",
+          "offset": 20,
+          "target_source": "SB/Core/x/xFactory.cpp",
+          "target_function": "GrowDataDisable__8xFactoryFv",
+          "symbol": "GrowDataDisable__8xFactoryFv"
+        },
+        {
+          "function": "BrainExtend__7xPsycheFv",
+          "offset": 24,
+          "target_source": "SB/Core/x/xFactory.cpp",
+          "target_function": "GrowDataEnable__8xFactoryFP5xBasei",
+          "symbol": "GrowDataEnable__8xFactoryFP5xBasei",
+          "opcode": 2
+        },
+        {
+          "function": "BrainBegin__7xPsycheFv",
+          "offset": 24,
+          "target_source": "SB/Core/x/xFactory.cpp",
+          "target_function": "GrowDataEnable__8xFactoryFP5xBasei",
+          "symbol": "GrowDataEnable__8xFactoryFP5xBasei",
+          "opcode": 2
+        },
+        {
+          "function": "UnSubscribe__10xBehaveMgrFP7xPsyche",
+          "offset": 40,
+          "target_source": "SB/Core/x/xListItem.cpp",
+          "target_function": "RemHead__17xListItem<5xGoal>FPP5xGoal",
+          "symbol": "RemHead__17xListItem<5xGoal>FPP5xGoal"
+        },
+        {
+          "function": "UnSubscribe__10xBehaveMgrFP7xPsyche",
+          "offset": 68,
+          "target_source": "SB/Core/x/xFactory.cpp",
+          "target_function": "DestroyItem__8xFactoryFP12xFactoryInst",
+          "symbol": "DestroyItem__8xFactoryFP12xFactoryInst"
+        },
+        {
+          "function": "UnSubscribe__10xBehaveMgrFP7xPsyche",
+          "offset": 100,
+          "target_source": "SB/Core/x/xordarray.cpp",
+          "target_function": "XOrdRemove__FP16st_XORDEREDARRAYPvi",
+          "symbol": "XOrdRemove__FP16st_XORDEREDARRAYPvi"
+        },
+        {
+          "function": "Subscribe__10xBehaveMgrFP5xBasei",
+          "offset": 56,
+          "target_source": "SB/Core/x/xordarray.cpp",
+          "target_function": "XOrdAppend__FP16st_XORDEREDARRAYPv",
+          "symbol": "XOrdAppend__FP16st_XORDEREDARRAYPv"
+        },
+        {
+          "function": "Subscribe__10xBehaveMgrFP5xBasei",
+          "offset": 64,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "FreshWipe__7xPsycheFv",
+          "symbol": "FreshWipe__7xPsycheFv"
+        },
+        {
+          "function": "xBehaveMgr_SceneFinish__Fv",
+          "offset": 4,
+          "target_source": "SB/Core/x/xordarray.cpp",
+          "target_function": "XOrdReset__FP16st_XORDEREDARRAY",
+          "symbol": "XOrdReset__FP16st_XORDEREDARRAY",
+          "opcode": 2
+        },
+        {
+          "function": "xBehaveMgr_Shutdown__Fv",
+          "offset": 44,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__dl__10RyzMemDataFPv",
+          "symbol": "__dl__10RyzMemDataFPv"
+        },
+        {
+          "function": "xBehaveMgr_Startup__Fv",
+          "offset": 40,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "xBehaveMgr_Startup__Fv",
+          "offset": 68,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "xBehaveMgr_Startup__Fv",
+          "offset": 84,
+          "target_source": "SB/Core/x/xFactory.cpp",
+          "target_function": "__ct__8xFactoryFi",
+          "symbol": "__ct__8xFactoryFi"
+        },
+        {
+          "function": "xBehaveMgr_Startup__Fv",
+          "offset": 104,
+          "target_source": "SB/Core/x/xBehaveGoalSimple.cpp",
+          "target_function": "xGoalSimple_RegisterTypes__FP8xFactory",
+          "symbol": "xGoalSimple_RegisterTypes__FP8xFactory"
+        },
+        {
+          "function": "xBehaveMgr_Startup__Fv",
+          "offset": 120,
+          "target_source": "SB/Core/x/xordarray.cpp",
+          "target_function": "XOrdInit__FP16st_XORDEREDARRAYii",
+          "symbol": "XOrdInit__FP16st_XORDEREDARRAYii"
+        },
+        {
+          "function": "xBehaveMgr_Startup__Fv",
+          "offset": 136,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xBehaveMgr_Startup__Fv",
+          "offset": 156,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "AddGoal__7xPsycheFiPv",
+          "offset": 28,
+          "opcode": 35,
+          "target_name": "g_behavmgr",
+          "symbol": "g_behavmgr"
+        },
+        {
+          "function": "BrainEnd__7xPsycheFv",
+          "offset": 12,
+          "opcode": 35,
+          "target_name": "g_behavmgr",
+          "symbol": "g_behavmgr"
+        },
+        {
+          "function": "BrainExtend__7xPsycheFv",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "g_behavmgr",
+          "symbol": "g_behavmgr"
+        },
+        {
+          "function": "BrainBegin__7xPsycheFv",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "g_behavmgr",
+          "symbol": "g_behavmgr"
+        },
+        {
+          "function": "xBehaveMgr_SceneReset__Fv",
+          "offset": 28,
+          "opcode": 35,
+          "target_name": "g_behavmgr",
+          "symbol": "g_behavmgr"
+        },
+        {
+          "function": "xBehaveMgr_SceneFinish__Fv",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "g_behavmgr",
+          "symbol": "g_behavmgr"
+        },
+        {
+          "function": "xBehaveMgr_GetSelf__Fv",
+          "offset": 4,
+          "opcode": 35,
+          "target_name": "g_behavmgr",
+          "symbol": "g_behavmgr"
+        },
+        {
+          "function": "xBehaveMgr_Shutdown__Fv",
+          "offset": 8,
+          "opcode": 35,
+          "target_name": "g_modinit",
+          "symbol": "g_modinit",
+          "target_source": "SB/Core/x/xBehaveMgr.cpp"
+        },
+        {
+          "function": "xBehaveMgr_Shutdown__Fv",
+          "offset": 20,
+          "opcode": 43,
+          "target_name": "g_modinit",
+          "symbol": "g_modinit",
+          "target_source": "SB/Core/x/xBehaveMgr.cpp"
+        },
+        {
+          "function": "xBehaveMgr_Shutdown__Fv",
+          "offset": 24,
+          "opcode": 35,
+          "target_name": "g_behavmgr",
+          "symbol": "g_behavmgr"
+        },
+        {
+          "function": "xBehaveMgr_Shutdown__Fv",
+          "offset": 56,
+          "opcode": 43,
+          "target_name": "g_behavmgr",
+          "symbol": "g_behavmgr"
+        },
+        {
+          "function": "xBehaveMgr_Startup__Fv",
+          "offset": 12,
+          "opcode": 35,
+          "target_name": "g_modinit",
+          "symbol": "g_modinit",
+          "target_source": "SB/Core/x/xBehaveMgr.cpp"
+        },
+        {
+          "function": "xBehaveMgr_Startup__Fv",
+          "offset": 24,
+          "opcode": 43,
+          "target_name": "g_modinit",
+          "symbol": "g_modinit",
+          "target_source": "SB/Core/x/xBehaveMgr.cpp"
+        },
+        {
+          "function": "xBehaveMgr_Startup__Fv",
+          "offset": 72,
+          "opcode": 43,
+          "target_name": "g_behavmgr",
+          "symbol": "g_behavmgr"
+        },
+        {
+          "function": "xBehaveMgr_Startup__Fv",
+          "offset": 100,
+          "opcode": 35,
+          "target_name": "g_behavmgr",
+          "symbol": "g_behavmgr"
+        },
+        {
+          "function": "xBehaveMgr_Startup__Fv",
+          "offset": 128,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap"
+        }
+      ]
     }
   ]
 }
