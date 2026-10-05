@@ -14888,6 +14888,758 @@
         }
       ],
       "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/x/xCollide.cpp",
+      "target_unit": "SB/Core/x/xCollide.cpp",
+      "object": "source/xCollide.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xSphereHitsVCircle__FRC5xVec3fRC5xVec3f": "xSphereHitsVCircle__FRC5xVec3fRC5xVec3f",
+        "xSphereHitsVCylinder__FRC5xVec3fRC5xVec3ff": "xSphereHitsVCylinder__FRC5xVec3fRC5xVec3ff",
+        "xOBBHitsOBB__FRC4xBoxRC7xMat4x3RC4xBoxRC7xMat4x3": "xOBBHitsOBB__FRC4xBoxRC7xMat4x3RC4xBoxRC7xMat4x3",
+        "xSphereHitsBound__FRC7xSphereRC6xBound": "xSphereHitsBound__FRC7xSphereRC6xBound",
+        "xSphereHitsCapsule__FRC5xVec3fRC5xVec3RC5xVec3f": "xSphereHitsCapsule__FRC5xVec3fRC5xVec3RC5xVec3f",
+        "xSweptSphereToNonMoving__FP12xSweptSphereP6xSceneP4xEntUc": "xSweptSphereToNonMoving__FP12xSweptSphereP6xSceneP4xEntUc",
+        "xSweptSphereToNPC__FP12xSweptSphereP6xSceneP4xEntUc": "xSweptSphereToNPC__FP12xSweptSphereP6xSceneP4xEntUc",
+        "xSweptSphereToStatDyn__FP12xSweptSphereP6xSceneP4xEntUc": "xSweptSphereToStatDyn__FP12xSweptSphereP6xSceneP4xEntUc",
+        "xSweptSphereToScene__FP12xSweptSphereP6xSceneP4xEntUc": "xSweptSphereToScene__FP12xSweptSphereP6xSceneP4xEntUc",
+        "SweptSphereHitsEntCB__FP6xSceneP5xRay3P7xQCDataP4xEntPv": "SweptSphereHitsEntCB__FP6xSceneP5xRay3P7xQCDataP4xEntPv",
+        "xSweptSphereToModel__FP12xSweptSphereP8RpAtomicP11RwMatrixTag": "xSweptSphereToModel__FP12xSweptSphereP8RpAtomicP11RwMatrixTag",
+        "SweptSphereModelCB__FiiPv": "SweptSphereModelCB__FiiPv",
+        "xSweptSphereToEnv__FP12xSweptSphereP4xEnv": "xSweptSphereToEnv__FP12xSweptSphereP4xEnv",
+        "SweptSphereLeafNodeCB__FP21xClumpCollBSPTrianglePv": "SweptSphereLeafNodeCB__FP21xClumpCollBSPTrianglePv",
+        "SweptSphereHitsEnvCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv": "SweptSphereHitsEnvCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv",
+        "xSweptSphereToBox__FP12xSweptSphereP4xBoxP7xMat4x3": "xSweptSphereToBox__FP12xSweptSphereP4xBoxP7xMat4x3",
+        "xSweptSphereToSphere__FP12xSweptSphereP7xSphere": "xSweptSphereToSphere__FP12xSweptSphereP7xSphere",
+        "xSweptSphereToTriangle__FP12xSweptSphereP5xVec3P5xVec3P5xVec3": "xSweptSphereToTriangle__FP12xSweptSphereP5xVec3P5xVec3P5xVec3",
+        "xSweptSphereGetResults__FP12xSweptSphere": "xSweptSphereGetResults__FP12xSweptSphere",
+        "xSweptSpherePrepare__FP12xSweptSphereP5xVec3P5xVec3f": "xSweptSpherePrepare__FP12xSweptSphereP5xVec3P5xVec3f",
+        "_rpCollBSPTreeForAllCapsuleLeafNodeIntersections__FP13RpCollBSPTreeP6RwLinefP13RpV3dGradientPFiiPv_iPv": "_rpCollBSPTreeForAllCapsuleLeafNodeIntersections__FP13RpCollBSPTreeP6RwLinefP13RpV3dGradientPFiiPv_iPv",
+        "xCollisTriHit__FRCQ27xCollis8tri_dataRC14xModelInstance": "xCollisTriHit__FRCQ27xCollis8tri_dataRC14xModelInstance",
+        "xCollideCalcTri__FRQ27xCollis8tri_dataRC14xModelInstanceRC5xVec3RC5xVec3": "xCollideCalcTri__FRQ27xCollis8tri_dataRC14xModelInstanceRC5xVec3RC5xVec3",
+        "xBoxHitsObb__FPC4xBoxPC4xBoxPC7xMat4x3P7xCollis": "xBoxHitsObb__FPC4xBoxPC4xBoxPC7xMat4x3P7xCollis",
+        "Mgc_BoxBoxTest__FPC4xBoxPC7xMat4x3PC4xBoxPC7xMat4x3": "Mgc_BoxBoxTest__FPC4xBoxPC7xMat4x3PC4xBoxPC7xMat4x3",
+        "xBoxHitsSphere__FPC4xBoxPC7xSphereP7xCollis": "xBoxHitsSphere__FPC4xBoxPC7xSphereP7xCollis",
+        "xParabolaHitsEnv__FP9xParabolaPC4xEnvP7xCollis": "xParabolaHitsEnv__FP9xParabolaPC4xEnvP7xCollis",
+        "xParabolaEnvCB__FP21xClumpCollBSPTrianglePv": "xParabolaEnvCB__FP21xClumpCollBSPTrianglePv",
+        "xParabolaRecenter__FP9xParabolaf": "xParabolaRecenter__FP9xParabolaf",
+        "xSphereHitsModel__FPC7xSpherePC14xModelInstanceP7xCollis": "xSphereHitsModel__FPC7xSpherePC14xModelInstanceP7xCollis",
+        "sphereHitsModelCB__FP14RpIntersectionP19RpCollisionTrianglefPv": "sphereHitsModelCB__FP14RpIntersectionP19RpCollisionTrianglefPv",
+        "xSphereHitsOBB_nu__FPC7xSpherePC4xBoxPC7xMat4x3P7xCollis": "xSphereHitsOBB_nu__FPC7xSpherePC4xBoxPC7xMat4x3P7xCollis",
+        "xSphereHitsBox__FPC7xSpherePC4xBoxP7xCollis": "xSphereHitsBox__FPC7xSpherePC4xBoxP7xCollis",
+        "xSphereHitsSphere__FPC7xSpherePC7xSphereP7xCollis": "xSphereHitsSphere__FPC7xSpherePC7xSphereP7xCollis",
+        "xCollideInit__FP6xScene": "xCollideInit__FP6xScene",
+        "xCollideGetCollsIdx__FPC7xCollisPC5xVec3PC7xMat3x3": "xCollideGetCollsIdx__FPC7xCollisPC5xVec3PC7xMat3x3"
+      },
+      "calls": [
+        {
+          "function": "xSphereHitsBound__FRC7xSphereRC6xBound",
+          "offset": 524,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xSweptSphereToNonMoving__FP12xSweptSphereP6xSceneP4xEntUc",
+          "offset": 68,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xSweptSphereToEnv__FP12xSweptSphereP4xEnv",
+          "symbol": "xSweptSphereToEnv__FP12xSweptSphereP4xEnv"
+        },
+        {
+          "function": "xSweptSphereToNonMoving__FP12xSweptSphereP6xSceneP4xEntUc",
+          "offset": 332,
+          "target_source": "SB/Core/x/xScene.cpp",
+          "target_function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "symbol": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv"
+        },
+        {
+          "function": "xSweptSphereToNonMoving__FP12xSweptSphereP6xSceneP4xEntUc",
+          "offset": 368,
+          "target_source": "SB/Core/x/xScene.cpp",
+          "target_function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "symbol": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv"
+        },
+        {
+          "function": "xSweptSphereToNPC__FP12xSweptSphereP6xSceneP4xEntUc",
+          "offset": 284,
+          "target_source": "SB/Core/x/xScene.cpp",
+          "target_function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "symbol": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv"
+        },
+        {
+          "function": "xSweptSphereToStatDyn__FP12xSweptSphereP6xSceneP4xEntUc",
+          "offset": 300,
+          "target_source": "SB/Core/x/xScene.cpp",
+          "target_function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "symbol": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv"
+        },
+        {
+          "function": "xSweptSphereToStatDyn__FP12xSweptSphereP6xSceneP4xEntUc",
+          "offset": 336,
+          "target_source": "SB/Core/x/xScene.cpp",
+          "target_function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "symbol": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv"
+        },
+        {
+          "function": "xSweptSphereToScene__FP12xSweptSphereP6xSceneP4xEntUc",
+          "offset": 68,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xSweptSphereToEnv__FP12xSweptSphereP4xEnv",
+          "symbol": "xSweptSphereToEnv__FP12xSweptSphereP4xEnv"
+        },
+        {
+          "function": "xSweptSphereToScene__FP12xSweptSphereP6xSceneP4xEntUc",
+          "offset": 324,
+          "target_source": "SB/Core/x/xScene.cpp",
+          "target_function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "symbol": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv"
+        },
+        {
+          "function": "xSweptSphereToScene__FP12xSweptSphereP6xSceneP4xEntUc",
+          "offset": 360,
+          "target_source": "SB/Core/x/xScene.cpp",
+          "target_function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "symbol": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv"
+        },
+        {
+          "function": "xSweptSphereToScene__FP12xSweptSphereP6xSceneP4xEntUc",
+          "offset": 396,
+          "target_source": "SB/Core/x/xScene.cpp",
+          "target_function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "symbol": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv"
+        },
+        {
+          "function": "SweptSphereHitsEntCB__FP6xSceneP5xRay3P7xQCDataP4xEntPv",
+          "offset": 40,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullIsects__FPC7xQCDataPC7xQCData",
+          "symbol": "xQuickCullIsects__FPC7xQCDataPC7xQCData"
+        },
+        {
+          "function": "SweptSphereHitsEntCB__FP6xSceneP5xRay3P7xQCDataP4xEntPv",
+          "offset": 444,
+          "target_source": "SB/Core/x/xCollideFast.cpp",
+          "target_function": "xRayHitsSphereFast__FPC5xRay3PC7xSphere",
+          "symbol": "xRayHitsSphereFast__FPC5xRay3PC7xSphere"
+        },
+        {
+          "function": "SweptSphereHitsEntCB__FP6xSceneP5xRay3P7xQCDataP4xEntPv",
+          "offset": 564,
+          "target_source": "SB/Core/x/xCollideFast.cpp",
+          "target_function": "xRayHitsBoxFast__FPC5xRay3PC4xBox",
+          "symbol": "xRayHitsBoxFast__FPC5xRay3PC4xBox"
+        },
+        {
+          "function": "SweptSphereHitsEntCB__FP6xSceneP5xRay3P7xQCDataP4xEntPv",
+          "offset": 632,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Normalize__FP7xMat3x3PC7xMat3x3",
+          "symbol": "xMat3x3Normalize__FP7xMat3x3PC7xMat3x3"
+        },
+        {
+          "function": "SweptSphereHitsEntCB__FP6xSceneP5xRay3P7xQCDataP4xEntPv",
+          "offset": 696,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "SweptSphereHitsEntCB__FP6xSceneP5xRay3P7xQCDataP4xEntPv",
+          "offset": 712,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "SweptSphereHitsEntCB__FP6xSceneP5xRay3P7xQCDataP4xEntPv",
+          "offset": 880,
+          "target_source": "SB/Core/x/xCollideFast.cpp",
+          "target_function": "xRayHitsBoxFast__FPC5xRay3PC4xBox",
+          "symbol": "xRayHitsBoxFast__FPC5xRay3PC4xBox"
+        },
+        {
+          "function": "SweptSphereHitsEntCB__FP6xSceneP5xRay3P7xQCDataP4xEntPv",
+          "offset": 964,
+          "target_source": "SB/Core/x/xModel.cpp",
+          "target_function": "xModelAnimCollRefresh__FRC14xModelInstance",
+          "symbol": "xModelAnimCollRefresh__FRC14xModelInstance"
+        },
+        {
+          "function": "SweptSphereHitsEntCB__FP6xSceneP5xRay3P7xQCDataP4xEntPv",
+          "offset": 1016,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xSweptSphereToModel__FP12xSweptSphereP8RpAtomicP11RwMatrixTag",
+          "symbol": "xSweptSphereToModel__FP12xSweptSphereP8RpAtomicP11RwMatrixTag"
+        },
+        {
+          "function": "SweptSphereHitsEntCB__FP6xSceneP5xRay3P7xQCDataP4xEntPv",
+          "offset": 1164,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xSweptSphereToSphere__FP12xSweptSphereP7xSphere",
+          "symbol": "xSweptSphereToSphere__FP12xSweptSphereP7xSphere"
+        },
+        {
+          "function": "SweptSphereHitsEntCB__FP6xSceneP5xRay3P7xQCDataP4xEntPv",
+          "offset": 1208,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xSweptSphereToBox__FP12xSweptSphereP4xBoxP7xMat4x3",
+          "symbol": "xSweptSphereToBox__FP12xSweptSphereP4xBoxP7xMat4x3"
+        },
+        {
+          "function": "SweptSphereHitsEntCB__FP6xSceneP5xRay3P7xQCDataP4xEntPv",
+          "offset": 1248,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xSweptSphereToBox__FP12xSweptSphereP4xBoxP7xMat4x3",
+          "symbol": "xSweptSphereToBox__FP12xSweptSphereP4xBoxP7xMat4x3"
+        },
+        {
+          "function": "xSweptSphereToModel__FP12xSweptSphereP8RpAtomicP11RwMatrixTag",
+          "offset": 144,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3",
+          "symbol": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3"
+        },
+        {
+          "function": "xSweptSphereToModel__FP12xSweptSphereP8RpAtomicP11RwMatrixTag",
+          "offset": 296,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xSweptSphereToModel__FP12xSweptSphereP8RpAtomicP11RwMatrixTag",
+          "offset": 364,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xSweptSphereToModel__FP12xSweptSphereP8RpAtomicP11RwMatrixTag",
+          "offset": 632,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "_rpCollBSPTreeForAllCapsuleLeafNodeIntersections__FP13RpCollBSPTreeP6RwLinefP13RpV3dGradientPFiiPv_iPv",
+          "symbol": "_rpCollBSPTreeForAllCapsuleLeafNodeIntersections__FP13RpCollBSPTreeP6RwLinefP13RpV3dGradientPFiiPv_iPv"
+        },
+        {
+          "function": "xSweptSphereToModel__FP12xSweptSphereP8RpAtomicP11RwMatrixTag",
+          "offset": 740,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xSweptSphereToTriangle__FP12xSweptSphereP5xVec3P5xVec3P5xVec3",
+          "symbol": "xSweptSphereToTriangle__FP12xSweptSphereP5xVec3P5xVec3P5xVec3"
+        },
+        {
+          "function": "SweptSphereModelCB__FiiPv",
+          "offset": 180,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xSweptSphereToTriangle__FP12xSweptSphereP5xVec3P5xVec3P5xVec3",
+          "symbol": "xSweptSphereToTriangle__FP12xSweptSphereP5xVec3P5xVec3P5xVec3"
+        },
+        {
+          "function": "xSweptSphereToEnv__FP12xSweptSphereP4xEnv",
+          "offset": 364,
+          "target_source": "SB/Core/x/xClumpColl.cpp",
+          "target_function": "xClumpColl_ForAllCapsuleLeafNodeIntersections__FP17xClumpCollBSPTreeP6RwLinefP21xClumpCollV3dGradientPFP21xClumpCollBSPTrianglePv_iPv",
+          "symbol": "xClumpColl_ForAllCapsuleLeafNodeIntersections__FP17xClumpCollBSPTreeP6RwLinefP21xClumpCollV3dGradientPFP21xClumpCollBSPTrianglePv_iPv"
+        },
+        {
+          "function": "SweptSphereLeafNodeCB__FP21xClumpCollBSPTrianglePv",
+          "offset": 80,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xSweptSphereToTriangle__FP12xSweptSphereP5xVec3P5xVec3P5xVec3",
+          "symbol": "xSweptSphereToTriangle__FP12xSweptSphereP5xVec3P5xVec3P5xVec3"
+        },
+        {
+          "function": "SweptSphereHitsEnvCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv",
+          "offset": 44,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xSweptSphereToTriangle__FP12xSweptSphereP5xVec3P5xVec3P5xVec3",
+          "symbol": "xSweptSphereToTriangle__FP12xSweptSphereP5xVec3P5xVec3P5xVec3"
+        },
+        {
+          "function": "xSweptSphereToBox__FP12xSweptSphereP4xBoxP7xMat4x3",
+          "offset": 112,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3",
+          "symbol": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3"
+        },
+        {
+          "function": "xSweptSphereToBox__FP12xSweptSphereP4xBoxP7xMat4x3",
+          "offset": 1636,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xSweptSphereGetResults__FP12xSweptSphere",
+          "offset": 448,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xSweptSphereGetResults__FP12xSweptSphere",
+          "offset": 640,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xSweptSpherePrepare__FP12xSweptSphereP5xVec3P5xVec3f",
+          "offset": 540,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Transpose__FP7xMat3x3PC7xMat3x3",
+          "symbol": "xMat3x3Transpose__FP7xMat3x3PC7xMat3x3"
+        },
+        {
+          "function": "xSweptSpherePrepare__FP12xSweptSphereP5xVec3P5xVec3f",
+          "offset": 764,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xBoxInitBoundCapsule__FP4xBoxPC8xCapsule",
+          "symbol": "xBoxInitBoundCapsule__FP4xBoxPC8xCapsule"
+        },
+        {
+          "function": "xSweptSpherePrepare__FP12xSweptSphereP5xVec3P5xVec3f",
+          "offset": 784,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullForBox__FP10xQCControlP7xQCDataPC4xBox",
+          "symbol": "xQuickCullForBox__FP10xQCControlP7xQCDataPC4xBox"
+        },
+        {
+          "function": "xBoxHitsObb__FPC4xBoxPC4xBoxPC7xMat4x3P7xCollis",
+          "offset": 32,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "Mgc_BoxBoxTest__FPC4xBoxPC7xMat4x3PC4xBoxPC7xMat4x3",
+          "symbol": "Mgc_BoxBoxTest__FPC4xBoxPC7xMat4x3PC4xBoxPC7xMat4x3"
+        },
+        {
+          "function": "xBoxHitsSphere__FPC4xBoxPC7xSphereP7xCollis",
+          "offset": 16,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iBoxIsectSphere__FPC4xBoxPC7xSphereP6xIsect",
+          "symbol": "iBoxIsectSphere__FPC4xBoxPC7xSphereP6xIsect"
+        },
+        {
+          "function": "xBoxHitsSphere__FPC4xBoxPC7xSphereP7xCollis",
+          "offset": 312,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xParabolaHitsEnv__FP9xParabolaPC4xEnvP7xCollis",
+          "offset": 768,
+          "target_source": "SB/Core/x/xClumpColl.cpp",
+          "target_function": "xClumpColl_ForAllBoxLeafNodeIntersections__FP17xClumpCollBSPTreeP6RwBBoxPFP21xClumpCollBSPTrianglePv_iPv",
+          "symbol": "xClumpColl_ForAllBoxLeafNodeIntersections__FP17xClumpCollBSPTreeP6RwBBoxPFP21xClumpCollBSPTrianglePv_iPv"
+        },
+        {
+          "function": "xParabolaEnvCB__FP21xClumpCollBSPTrianglePv",
+          "offset": 484,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xSphereHitsModel__FPC7xSpherePC14xModelInstanceP7xCollis",
+          "offset": 72,
+          "target_source": "SB/Core/x/xModel.cpp",
+          "target_function": "xModelAnimCollRefresh__FRC14xModelInstance",
+          "symbol": "xModelAnimCollRefresh__FRC14xModelInstance"
+        },
+        {
+          "function": "xSphereHitsModel__FPC7xSpherePC14xModelInstanceP7xCollis",
+          "offset": 268,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xSphereHitsModel__FPC7xSpherePC14xModelInstanceP7xCollis",
+          "offset": 392,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xCollideCalcTri__FRQ27xCollis8tri_dataRC14xModelInstanceRC5xVec3RC5xVec3",
+          "symbol": "xCollideCalcTri__FRQ27xCollis8tri_dataRC14xModelInstanceRC5xVec3RC5xVec3"
+        },
+        {
+          "function": "sphereHitsModelCB__FP14RpIntersectionP19RpCollisionTrianglefPv",
+          "offset": 20,
+          "target_source": "SB/Core/p2/iCollide.cpp",
+          "target_function": "sphereHitsEnvCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv",
+          "symbol": "sphereHitsEnvCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv",
+          "opcode": 2
+        },
+        {
+          "function": "xSphereHitsOBB_nu__FPC7xSpherePC4xBoxPC7xMat4x3P7xCollis",
+          "offset": 920,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xSphereHitsOBB_nu__FPC7xSpherePC4xBoxPC7xMat4x3P7xCollis",
+          "offset": 944,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xSphereHitsBox__FPC7xSpherePC4xBoxP7xCollis",
+          "symbol": "xSphereHitsBox__FPC7xSpherePC4xBoxP7xCollis"
+        },
+        {
+          "function": "xSphereHitsBox__FPC7xSpherePC4xBoxP7xCollis",
+          "offset": 28,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iBoxIsectSphere__FPC4xBoxPC7xSphereP6xIsect",
+          "symbol": "iBoxIsectSphere__FPC4xBoxPC7xSphereP6xIsect"
+        },
+        {
+          "function": "xSphereHitsBox__FPC7xSpherePC4xBoxP7xCollis",
+          "offset": 320,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xSphereHitsSphere__FPC7xSpherePC7xSphereP7xCollis",
+          "offset": 32,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iSphereIsectSphere__FPC7xSpherePC7xSphereP6xIsect",
+          "symbol": "iSphereIsectSphere__FPC7xSpherePC7xSphereP6xIsect"
+        },
+        {
+          "function": "xSphereHitsSphere__FPC7xSpherePC7xSphereP7xCollis",
+          "offset": 416,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xCollideInit__FP6xScene",
+          "offset": 0,
+          "target_source": "SB/Core/p2/iCollide.cpp",
+          "target_function": "iCollideInit__FP6xScene",
+          "symbol": "iCollideInit__FP6xScene",
+          "opcode": 2
+        },
+        {
+          "function": "xCollideGetCollsIdx__FPC7xCollisPC5xVec3PC7xMat3x3",
+          "offset": 132,
+          "target_source": "SB/Game/zSurface.cpp",
+          "target_function": "zSurfaceGetStandOn__FPC8xSurface",
+          "symbol": "zSurfaceGetStandOn__FPC8xSurface"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xSweptSphereToNonMoving__FP12xSweptSphereP6xSceneP4xEntUc",
+          "offset": 56,
+          "opcode": 43,
+          "target_name": "sSweptSphereMover",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "sSweptSphereMover"
+        },
+        {
+          "function": "xSweptSphereToNonMoving__FP12xSweptSphereP6xSceneP4xEntUc",
+          "offset": 60,
+          "opcode": 40,
+          "target_name": "sSweptSphereCollType",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "sSweptSphereCollType"
+        },
+        {
+          "function": "xSweptSphereToNonMoving__FP12xSweptSphereP6xSceneP4xEntUc",
+          "offset": 64,
+          "opcode": 43,
+          "target_name": "sSweptSphereEntFound",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "sSweptSphereEntFound"
+        },
+        {
+          "function": "xSweptSphereToNonMoving__FP12xSweptSphereP6xSceneP4xEntUc",
+          "offset": 308,
+          "opcode": 43,
+          "target_name": "sSweptSphereIgnoreMovers",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "sSweptSphereIgnoreMovers"
+        },
+        {
+          "function": "xSweptSphereToNonMoving__FP12xSweptSphereP6xSceneP4xEntUc",
+          "offset": 376,
+          "opcode": 35,
+          "target_name": "sSweptSphereEntFound",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "sSweptSphereEntFound"
+        },
+        {
+          "function": "xSweptSphereToNonMoving__FP12xSweptSphereP6xSceneP4xEntUc",
+          "offset": 388,
+          "opcode": 43,
+          "target_name": "sSweptSphereIgnoreMovers",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "sSweptSphereIgnoreMovers"
+        },
+        {
+          "function": "xSweptSphereToNPC__FP12xSweptSphereP6xSceneP4xEntUc",
+          "offset": 40,
+          "opcode": 43,
+          "target_name": "sSweptSphereMover",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "sSweptSphereMover"
+        },
+        {
+          "function": "xSweptSphereToNPC__FP12xSweptSphereP6xSceneP4xEntUc",
+          "offset": 44,
+          "opcode": 40,
+          "target_name": "sSweptSphereCollType",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "sSweptSphereCollType"
+        },
+        {
+          "function": "xSweptSphereToNPC__FP12xSweptSphereP6xSceneP4xEntUc",
+          "offset": 52,
+          "opcode": 43,
+          "target_name": "sSweptSphereEntFound",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "sSweptSphereEntFound"
+        },
+        {
+          "function": "xSweptSphereToNPC__FP12xSweptSphereP6xSceneP4xEntUc",
+          "offset": 292,
+          "opcode": 35,
+          "target_name": "sSweptSphereEntFound",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "sSweptSphereEntFound"
+        },
+        {
+          "function": "xSweptSphereToStatDyn__FP12xSweptSphereP6xSceneP4xEntUc",
+          "offset": 48,
+          "opcode": 43,
+          "target_name": "sSweptSphereMover",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "sSweptSphereMover"
+        },
+        {
+          "function": "xSweptSphereToStatDyn__FP12xSweptSphereP6xSceneP4xEntUc",
+          "offset": 52,
+          "opcode": 40,
+          "target_name": "sSweptSphereCollType",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "sSweptSphereCollType"
+        },
+        {
+          "function": "xSweptSphereToStatDyn__FP12xSweptSphereP6xSceneP4xEntUc",
+          "offset": 60,
+          "opcode": 43,
+          "target_name": "sSweptSphereEntFound",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "sSweptSphereEntFound"
+        },
+        {
+          "function": "xSweptSphereToStatDyn__FP12xSweptSphereP6xSceneP4xEntUc",
+          "offset": 344,
+          "opcode": 35,
+          "target_name": "sSweptSphereEntFound",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "sSweptSphereEntFound"
+        },
+        {
+          "function": "xSweptSphereToScene__FP12xSweptSphereP6xSceneP4xEntUc",
+          "offset": 56,
+          "opcode": 43,
+          "target_name": "sSweptSphereMover",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "sSweptSphereMover"
+        },
+        {
+          "function": "xSweptSphereToScene__FP12xSweptSphereP6xSceneP4xEntUc",
+          "offset": 60,
+          "opcode": 40,
+          "target_name": "sSweptSphereCollType",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "sSweptSphereCollType"
+        },
+        {
+          "function": "xSweptSphereToScene__FP12xSweptSphereP6xSceneP4xEntUc",
+          "offset": 64,
+          "opcode": 43,
+          "target_name": "sSweptSphereEntFound",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "sSweptSphereEntFound"
+        },
+        {
+          "function": "xSweptSphereToScene__FP12xSweptSphereP6xSceneP4xEntUc",
+          "offset": 404,
+          "opcode": 35,
+          "target_name": "sSweptSphereEntFound",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "sSweptSphereEntFound"
+        },
+        {
+          "function": "SweptSphereHitsEntCB__FP6xSceneP5xRay3P7xQCDataP4xEntPv",
+          "offset": 56,
+          "opcode": 35,
+          "target_name": "sSweptSphereMover",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "sSweptSphereMover"
+        },
+        {
+          "function": "SweptSphereHitsEntCB__FP6xSceneP5xRay3P7xQCDataP4xEntPv",
+          "offset": 72,
+          "opcode": 36,
+          "target_name": "sSweptSphereCollType",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "sSweptSphereCollType"
+        },
+        {
+          "function": "SweptSphereHitsEntCB__FP6xSceneP5xRay3P7xQCDataP4xEntPv",
+          "offset": 88,
+          "opcode": 35,
+          "target_name": "sSweptSphereIgnoreMovers",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "sSweptSphereIgnoreMovers"
+        },
+        {
+          "function": "SweptSphereHitsEntCB__FP6xSceneP5xRay3P7xQCDataP4xEntPv",
+          "offset": 1048,
+          "opcode": 43,
+          "target_name": "sSweptSphereEntFound",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "sSweptSphereEntFound"
+        },
+        {
+          "function": "SweptSphereHitsEntCB__FP6xSceneP5xRay3P7xQCDataP4xEntPv",
+          "offset": 1192,
+          "opcode": 43,
+          "target_name": "sSweptSphereEntFound",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "sSweptSphereEntFound"
+        },
+        {
+          "function": "SweptSphereHitsEntCB__FP6xSceneP5xRay3P7xQCDataP4xEntPv",
+          "offset": 1236,
+          "opcode": 43,
+          "target_name": "sSweptSphereEntFound",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "sSweptSphereEntFound"
+        },
+        {
+          "function": "SweptSphereHitsEntCB__FP6xSceneP5xRay3P7xQCDataP4xEntPv",
+          "offset": 1272,
+          "opcode": 43,
+          "target_name": "sSweptSphereEntFound",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "sSweptSphereEntFound"
+        },
+        {
+          "function": "xSweptSphereToModel__FP12xSweptSphereP8RpAtomicP11RwMatrixTag",
+          "offset": 80,
+          "opcode": 43,
+          "target_name": "sSweptSphereHitFound",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "sSweptSphereHitFound"
+        },
+        {
+          "function": "xSweptSphereToModel__FP12xSweptSphereP8RpAtomicP11RwMatrixTag",
+          "offset": 84,
+          "opcode": 43,
+          "target_name": "sSwsModelMat",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "sSwsModelMat"
+        },
+        {
+          "function": "xSweptSphereToModel__FP12xSweptSphereP8RpAtomicP11RwMatrixTag",
+          "offset": 156,
+          "opcode": 35,
+          "target_name": "_rpCollisionGeometryDataOffset",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "_rpCollisionGeometryDataOffset"
+        },
+        {
+          "function": "xSweptSphereToModel__FP12xSweptSphereP8RpAtomicP11RwMatrixTag",
+          "offset": 760,
+          "opcode": 43,
+          "target_name": "sSweptSphereHitFound",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "sSweptSphereHitFound"
+        },
+        {
+          "function": "xSweptSphereToModel__FP12xSweptSphereP8RpAtomicP11RwMatrixTag",
+          "offset": 928,
+          "opcode": 35,
+          "target_name": "sSweptSphereHitFound",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "sSweptSphereHitFound"
+        },
+        {
+          "function": "SweptSphereModelCB__FiiPv",
+          "offset": 36,
+          "opcode": 35,
+          "target_name": "_rpCollisionGeometryDataOffset",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "_rpCollisionGeometryDataOffset"
+        },
+        {
+          "function": "SweptSphereModelCB__FiiPv",
+          "offset": 200,
+          "opcode": 43,
+          "target_name": "sSweptSphereHitFound",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "sSweptSphereHitFound"
+        },
+        {
+          "function": "xSweptSphereToEnv__FP12xSweptSphereP4xEnv",
+          "offset": 40,
+          "opcode": 43,
+          "target_name": "sSweptSphereHitFound",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "sSweptSphereHitFound"
+        },
+        {
+          "function": "xSweptSphereToEnv__FP12xSweptSphereP4xEnv",
+          "offset": 472,
+          "opcode": 35,
+          "target_name": "sSweptSphereHitFound",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "sSweptSphereHitFound"
+        },
+        {
+          "function": "SweptSphereLeafNodeCB__FP21xClumpCollBSPTrianglePv",
+          "offset": 28,
+          "opcode": 36,
+          "target_name": "xClumpColl_FilterFlags",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "xClumpColl_FilterFlags"
+        },
+        {
+          "function": "SweptSphereLeafNodeCB__FP21xClumpCollBSPTrianglePv",
+          "offset": 116,
+          "opcode": 43,
+          "target_name": "sSweptSphereHitFound",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "sSweptSphereHitFound"
+        },
+        {
+          "function": "SweptSphereHitsEnvCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv",
+          "offset": 96,
+          "opcode": 43,
+          "target_name": "sSweptSphereHitFound",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "sSweptSphereHitFound"
+        },
+        {
+          "function": "xParabolaEnvCB__FP21xClumpCollBSPTrianglePv",
+          "offset": 100,
+          "opcode": 36,
+          "target_name": "xClumpColl_FilterFlags",
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "symbol": "xClumpColl_FilterFlags"
+        }
+      ],
+      "address_pairs": []
     }
   ]
 }

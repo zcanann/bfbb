@@ -75,9 +75,9 @@ checked, and the standard objdiff parser accepts the result.
 
 | Version | Full code-region bytes | Objdiff code-matched bytes |
 | --- | ---: | ---: |
-| SLUS-20680 | 2,978,560 | 38,392 |
-| SLES-51968 | 2,979,712 | 38,392 |
-| SLES-51970 | 2,976,512 | 38,392 |
+| SLUS-20680 | 2,978,560 | 40,628 |
+| SLES-51968 | 2,979,712 | 40,628 |
+| SLES-51970 | 2,976,512 | 40,628 |
 | SLES-53623 | 2,979,968 | 14,968 |
 | XBOX-US | 1,798,760 | 3,354 |
 | XBOX-EU | 1,798,760 | 3,354 |
@@ -88,6 +88,10 @@ original bytes, adding 1,224 code-matched bytes per debug version.
 
 The subsequent [grid and drive comparisons](PS2_GRID_DRIVE.md) add 16 functions /
 11,412 original bytes, including 876 independently reconstructed code bytes.
+
+The [collision SDK foundation](PS2_COLLISION_SOURCE.md) adds the complete
+36-function / 36,648-byte collision TU, with 2,236 code-matched bytes per debug
+version. Its remaining functions retain their partial scores.
 
 This checkpoint includes utility, serializer, bounds, streaming, environment, light-kit,
 move-point, fog, behavior-manager, binary-reader, event, volume and conditional source comparisons, plus comparisons for independently verified French function
@@ -115,9 +119,9 @@ The narrower function-only baselines currently contain:
 
 | PS2 baseline | Functions | Measured function bytes | Source matches |
 | --- | ---: | ---: | ---: |
-| USA | 5,391 | 2,107,460 | 341 functions / 38,392 bytes |
-| Europe/Australia | 5,392 | 2,108,700 | 341 functions / 38,392 bytes |
-| Germany | 5,394 | 2,105,512 | 341 functions / 38,392 bytes |
+| USA | 5,391 | 2,107,460 | 349 functions / 40,628 bytes |
+| Europe/Australia | 5,392 | 2,108,700 | 349 functions / 40,628 bytes |
+| Germany | 5,394 | 2,105,512 | 349 functions / 40,628 bytes |
 | France (reviewed and corroborated bounds) | 406 | 118,352 | 95 functions / 14,968 bytes |
 
 The `address-anchors.json` registries also recover over 2,500 named data addresses
