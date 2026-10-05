@@ -11,6 +11,7 @@
 #include "xSnd.h"
 #include "xString.h"
 #include "xstransvc.h"
+#include "xpkrsvc.h"
 #include "xMath.h"
 
 #include <dolphin/ar.h>

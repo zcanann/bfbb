@@ -2,6 +2,7 @@
 
 #include "xAnim.h"
 #include "xstransvc.h"
+#include "xpkrsvc.h"
 #include "xMemMgr.h"
 
 #include "zAnimList.h"

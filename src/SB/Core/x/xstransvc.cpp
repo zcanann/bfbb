@@ -1,4 +1,5 @@
 #include "xstransvc.h"
+#include "xpkrsvc.h"
 
 #include <types.h>
 #include <string.h>

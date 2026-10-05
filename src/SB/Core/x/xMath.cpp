@@ -1,9 +1,19 @@
 #include "xMath.h"
 
 #include <types.h>
+#if defined(PS2)
+#include <stdlib.h>
+#else
 #include <PowerPC_EABI_Support\MSL_C\MSL_Common\stdlib.h>
+#endif
 
 #include "xMathInlines.h"
+
+#if defined(PS2)
+#define xMathAbs iabs
+#else
+#define xMathAbs __fabs
+#endif
 
 S32 xmath_inited;
 S32 xmath_exited;
@@ -148,7 +158,7 @@ U32 xMathSolveCubic(F32 a, F32 b, F32 c, F32 d, F32* x1, F32* x2, F32* x3)
     fOffset = 0.33333334f * b;
     fDiscr = (0.25f * (fB * fB)) + (0.037037037f * (fA * (fA * fA)));
     fHalfB = 0.5f * fB;
-    if ((F32)__fabs(fDiscr) < 0.000001f)
+    if ((F32)xMathAbs(fDiscr) < 0.000001f)
     {
         fDiscr = 0.0f;
     }
@@ -282,7 +292,7 @@ void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 endx, F32 maxv)
     F32 temp_f28;
 
     temp_f29 = endx - x;
-    var_r3 = (F32)__fabs(v) < 0.001f || (temp_f29 < 0.0f ? 1 : 0) != (v < 0.0f ? 1 : 0);
+    var_r3 = (F32)xMathAbs(v) < 0.001f || (temp_f29 < 0.0f ? 1 : 0) != (v < 0.0f ? 1 : 0);
     if (var_r3 & 0xff)
     {
         var_f31 = 1e38f;
@@ -291,7 +301,7 @@ void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 endx, F32 maxv)
     {
         var_f31 = temp_f29 / v;
     }
-    temp_f28 = (F32)__fabs(v / a);
+    temp_f28 = (F32)xMathAbs(v / a);
     if (var_f31 < temp_f28)
     {
         a *= -1.0f;
@@ -304,14 +314,14 @@ void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 endx, F32 maxv)
     oldv = v;
     newv = oldv + dv;
 
-    if ((F32)__fabs(newv) <= maxv)
+    if ((F32)xMathAbs(newv) <= maxv)
     {
         v = newv;
         var_f0 = 0.5f * dv * dt;
     }
     else
     {
-        if ((F32)__fabs(oldv) <= maxv)
+        if ((F32)xMathAbs(oldv) <= maxv)
         {
             v = range_limit(newv, -maxv, maxv);
             if (oldv != v)
@@ -372,7 +382,7 @@ void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 endx, F32 maxv)
         {
             var_r0_3 = 0;
         }
-        if ((var_r0_3 == var_r3_3) && ((F32)__fabs(var_f2) > (F32)__fabs(temp_f29)))
+        if ((var_r0_3 == var_r3_3) && ((F32)xMathAbs(var_f2) > (F32)xMathAbs(temp_f29)))
         {
             var_f2 = temp_f29;
             v = 0.0f;
@@ -425,7 +435,7 @@ void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 maxv)
     F32 diff;
     F32 dv;
 
-    if ((F32)__fabs(v) > (F32)__fabs(maxv))
+    if ((F32)xMathAbs(v) > (F32)xMathAbs(maxv))
     {
         if (v < 0.0f)
         {
@@ -453,7 +463,7 @@ void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 maxv)
     }
     diff = maxv - v;
     dv = a * dt;
-    if ((F32)__fabs(diff) < (F32)__fabs(dv))
+    if ((F32)xMathAbs(diff) < (F32)xMathAbs(dv))
     {
         x += (v * dt) + ((0.5f * diff * diff) / a);
         v = maxv;

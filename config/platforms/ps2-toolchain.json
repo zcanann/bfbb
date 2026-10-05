@@ -27,7 +27,7 @@
     "-inline",
     "deferred"
   ],
-  "scope": "Validated xBase, xordarray, xRMemData and xBehaviour profiles, plus debug-region xCounter, xBehaveGoalSimple, xSurface, xVolume and xQuickCull; compiler identity for other units remains unproven; debug-region whole-source comparisons also include xPar, xFactory, xParGroup and xString with partial matches",
+  "scope": "Validated shared-source code comparison profiles for core units, including debug-region math, geometry and streaming consumers; incomplete units and unresolved runtime references remain explicit",
   "units": [
     {
       "source": "src/SB/Core/x/xBase.cpp",
@@ -1169,6 +1169,677 @@
           "target_source": "SB/Core/x/xMath.cpp",
           "target_function": "xatof__FPCc",
           "symbol": "xatof__FPCc"
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xMath.cpp",
+      "target_unit": "SB/Core/x/xMath.cpp",
+      "object": "source/xMath.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xFuncPiece_ShiftPiece__FP10xFuncPieceP10xFuncPiecef": "xFuncPiece_ShiftPiece__FP10xFuncPieceP10xFuncPiecef",
+        "xFuncPiece_EndPoints__FP10xFuncPieceffff": "xFuncPiece_EndPoints__FP10xFuncPieceffff",
+        "xFuncPiece_Eval__FP10xFuncPiecefPP10xFuncPiece": "xFuncPiece_Eval__FP10xFuncPiecefPP10xFuncPiece",
+        "xAccelStop__FRfRfff": "xAccelStop__FRfRfff",
+        "xAccelMove__FRfRffff": "xAccelMove__FRfRffff",
+        "xAccelMoveTime__Fffff": "xAccelMoveTime__Fffff",
+        "xAccelMove__FRfRfffff": "xAccelMove__FRfRfffff",
+        "xDangleClamp__Ff": "xDangleClamp__Ff",
+        "xAngleClampFast__Ff": "xAngleClampFast__Ff",
+        "xAngleClamp__Ff": "xAngleClamp__Ff",
+        "xMathSolveCubic__FffffPfPfPf": "xMathSolveCubic__FffffPfPfPf",
+        "xMathSolveQuadratic__FfffPfPf": "xMathSolveQuadratic__FfffPfPf",
+        "xurand__Fv": "xurand__Fv",
+        "xrand__Fv": "xrand__Fv",
+        "xsrand__FUi": "xsrand__FUi",
+        "xatof__FPCc": "xatof__FPCc",
+        "xMathExit__Fv": "xMathExit__Fv",
+        "xMathInit__Fv": "xMathInit__Fv"
+      },
+      "calls": [
+        {
+          "function": "xFuncPiece_EndPoints__FP10xFuncPieceffff",
+          "offset": 52,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xFuncPiece_ShiftPiece__FP10xFuncPieceP10xFuncPiecef",
+          "symbol": "xFuncPiece_ShiftPiece__FP10xFuncPieceP10xFuncPiecef",
+          "opcode": 2
+        },
+        {
+          "function": "xAccelMove__FRfRfffff",
+          "offset": 396,
+          "target_source": "SB/Core/x/xMath.h",
+          "target_function": "range_limit<f>__Ffff_f",
+          "symbol": "range_limit<f>__Ffff_f"
+        },
+        {
+          "function": "xMathSolveCubic__FffffPfPfPf",
+          "offset": 64,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xMathSolveQuadratic__FfffPfPf",
+          "symbol": "xMathSolveQuadratic__FfffPfPf"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xurand__Fv",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "rndseed",
+          "symbol": "rndseed"
+        },
+        {
+          "function": "xurand__Fv",
+          "offset": 28,
+          "opcode": 43,
+          "target_name": "rndseed",
+          "symbol": "rndseed"
+        },
+        {
+          "function": "xurand__Fv",
+          "offset": 32,
+          "opcode": 35,
+          "target_name": "rndseed",
+          "symbol": "rndseed"
+        },
+        {
+          "function": "xrand__Fv",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "rndseed",
+          "symbol": "rndseed"
+        },
+        {
+          "function": "xrand__Fv",
+          "offset": 20,
+          "opcode": 43,
+          "target_name": "rndseed",
+          "symbol": "rndseed"
+        },
+        {
+          "function": "xrand__Fv",
+          "offset": 28,
+          "opcode": 35,
+          "target_name": "rndseed",
+          "symbol": "rndseed"
+        },
+        {
+          "function": "xsrand__FUi",
+          "offset": 4,
+          "opcode": 43,
+          "target_name": "rndseed",
+          "symbol": "rndseed"
+        },
+        {
+          "function": "xMathExit__Fv",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "xmath_exited",
+          "symbol": "xmath_exited"
+        },
+        {
+          "function": "xMathExit__Fv",
+          "offset": 12,
+          "opcode": 43,
+          "target_name": "xmath_exited",
+          "symbol": "xmath_exited"
+        },
+        {
+          "function": "xMathInit__Fv",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "xmath_inited",
+          "symbol": "xmath_inited"
+        },
+        {
+          "function": "xMathInit__Fv",
+          "offset": 12,
+          "opcode": 43,
+          "target_name": "rndseed",
+          "symbol": "rndseed"
+        },
+        {
+          "function": "xMathInit__Fv",
+          "offset": 16,
+          "opcode": 43,
+          "target_name": "xmath_inited",
+          "symbol": "xmath_inited"
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xJaw.cpp",
+      "target_unit": "SB/Core/x/xJaw.cpp",
+      "object": "source/xJaw.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xJaw_EvalData__FPvf": "xJaw_EvalData__FPvf",
+        "xJaw_FindData__FUi": "xJaw_FindData__FUi"
+      },
+      "calls": [
+        {
+          "function": "xJaw_FindData__FUi",
+          "offset": 28,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTAssetCountByType__FUi",
+          "symbol": "xSTAssetCountByType__FUi"
+        },
+        {
+          "function": "xJaw_FindData__FUi",
+          "offset": 68,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAssetByType__FUiiPUi",
+          "symbol": "xSTFindAssetByType__FUiiPUi"
+        },
+        {
+          "function": "xJaw_FindData__FUi",
+          "offset": 192,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTAssetName__FUi",
+          "symbol": "xSTAssetName__FUi"
+        }
+      ],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/x/xVec3.cpp",
+      "target_unit": "SB/Core/x/xVec3.cpp",
+      "object": "source/xVec3.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xVec3NormalizeFast__FP5xVec3PC5xVec3": "xVec3NormalizeFast__FP5xVec3PC5xVec3",
+        "xVec3Normalize__FP5xVec3PC5xVec3": "xVec3Normalize__FP5xVec3PC5xVec3"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Core/x/xMath3.cpp",
+      "target_unit": "SB/Core/x/xMath3.cpp",
+      "object": "source/xMath3.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xQuatDiff__FP5xQuatPC5xQuatPC5xQuat": "xQuatDiff__FP5xQuatPC5xQuatPC5xQuat",
+        "xQuatMul__FP5xQuatPC5xQuatPC5xQuat": "xQuatMul__FP5xQuatPC5xQuatPC5xQuat",
+        "xQuatSlerp__FP5xQuatPC5xQuatPC5xQuatf": "xQuatSlerp__FP5xQuatPC5xQuatPC5xQuatf",
+        "xQuatNormalize__FP5xQuatPC5xQuat": "xQuatNormalize__FP5xQuatPC5xQuat",
+        "xQuatToAxisAngle__FPC5xQuatP5xVec3Pf": "xQuatToAxisAngle__FPC5xQuatP5xVec3Pf",
+        "xQuatToMat__FPC5xQuatP7xMat3x3": "xQuatToMat__FPC5xQuatP7xMat3x3",
+        "xQuatFromAxisAngle__FP5xQuatPC5xVec3f": "xQuatFromAxisAngle__FP5xQuatPC5xVec3f",
+        "xQuatFromMat__FP5xQuatPC7xMat3x3": "xQuatFromMat__FP5xQuatPC7xMat3x3",
+        "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3",
+        "xMat4x3Rot__FP7xMat4x3PC5xVec3fPC5xVec3": "xMat4x3Rot__FP7xMat4x3PC5xVec3fPC5xVec3",
+        "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+        "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3",
+        "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3",
+        "xMat3x3Transpose__FP7xMat3x3PC7xMat3x3": "xMat3x3Transpose__FP7xMat3x3PC7xMat3x3",
+        "xMat3x3RMulRotY__FP7xMat3x3PC7xMat3x3f": "xMat3x3RMulRotY__FP7xMat3x3PC7xMat3x3f",
+        "xMat3x3ScaleC__FP7xMat3x3fff": "xMat3x3ScaleC__FP7xMat3x3fff",
+        "xMat3x3RotZ__FP7xMat3x3f": "xMat3x3RotZ__FP7xMat3x3f",
+        "xMat3x3RotY__FP7xMat3x3f": "xMat3x3RotY__FP7xMat3x3f",
+        "xMat3x3RotX__FP7xMat3x3f": "xMat3x3RotX__FP7xMat3x3f",
+        "xMat3x3RotC__FP7xMat3x3ffff": "xMat3x3RotC__FP7xMat3x3ffff",
+        "xMat3x3Euler__FP7xMat3x3fff": "xMat3x3Euler__FP7xMat3x3fff",
+        "xMat3x3Euler__FP7xMat3x3PC5xVec3": "xMat3x3Euler__FP7xMat3x3PC5xVec3",
+        "xMat3x3LookVec__FP7xMat3x3PC5xVec3": "xMat3x3LookVec__FP7xMat3x3PC5xVec3",
+        "xMat4x3MoveLocalAt__FP7xMat4x3f": "xMat4x3MoveLocalAt__FP7xMat4x3f",
+        "xMat4x3MoveLocalUp__FP7xMat4x3f": "xMat4x3MoveLocalUp__FP7xMat4x3f",
+        "xMat4x3MoveLocalRight__FP7xMat4x3f": "xMat4x3MoveLocalRight__FP7xMat4x3f",
+        "xMat3x3GetEuler__FPC7xMat3x3P5xVec3": "xMat3x3GetEuler__FPC7xMat3x3P5xVec3",
+        "xMat3x3Normalize__FP7xMat3x3PC7xMat3x3": "xMat3x3Normalize__FP7xMat3x3PC7xMat3x3",
+        "xBoxFromCone__FR4xBoxRC5xVec3RC5xVec3fff": "xBoxFromCone__FR4xBoxRC5xVec3RC5xVec3fff",
+        "xBoxInitBoundCapsule__FP4xBoxPC8xCapsule": "xBoxInitBoundCapsule__FP4xBoxPC8xCapsule",
+        "xBoxInitBoundOBB__FP4xBoxPC4xBoxPC7xMat4x3": "xBoxInitBoundOBB__FP4xBoxPC4xBoxPC7xMat4x3",
+        "xPointInBox__FPC4xBoxPC5xVec3": "xPointInBox__FPC4xBoxPC5xVec3",
+        "xLine3VecDist2__FPC5xVec3PC5xVec3PC5xVec3P6xIsect": "xLine3VecDist2__FPC5xVec3PC5xVec3PC5xVec3P6xIsect",
+        "xMath3Exit__Fv": "xMath3Exit__Fv",
+        "xMath3Init__Fv": "xMath3Init__Fv"
+      },
+      "calls": [
+        {
+          "function": "xQuatDiff__FP5xQuatPC5xQuatPC5xQuat",
+          "offset": 60,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xQuatMul__FP5xQuatPC5xQuatPC5xQuat",
+          "symbol": "xQuatMul__FP5xQuatPC5xQuatPC5xQuat"
+        },
+        {
+          "function": "xQuatMul__FP5xQuatPC5xQuatPC5xQuat",
+          "offset": 128,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xQuatNormalize__FP5xQuatPC5xQuat",
+          "symbol": "xQuatNormalize__FP5xQuatPC5xQuat",
+          "opcode": 2
+        },
+        {
+          "function": "xQuatSlerp__FP5xQuatPC5xQuatPC5xQuatf",
+          "offset": 376,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xQuatNormalize__FP5xQuatPC5xQuat",
+          "symbol": "xQuatNormalize__FP5xQuatPC5xQuat"
+        },
+        {
+          "function": "xQuatToAxisAngle__FPC5xQuatP5xVec3Pf",
+          "offset": 60,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3",
+          "offset": 144,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3",
+          "symbol": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3"
+        },
+        {
+          "function": "xMat4x3Rot__FP7xMat4x3PC5xVec3fPC5xVec3",
+          "offset": 48,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3RotC__FP7xMat3x3ffff",
+          "symbol": "xMat3x3RotC__FP7xMat3x3ffff"
+        },
+        {
+          "function": "xMat4x3Rot__FP7xMat4x3PC5xVec3fPC5xVec3",
+          "offset": 264,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3",
+          "symbol": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3"
+        },
+        {
+          "function": "xMat3x3Euler__FP7xMat3x3PC5xVec3",
+          "offset": 8,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Euler__FP7xMat3x3fff",
+          "symbol": "xMat3x3Euler__FP7xMat3x3fff",
+          "opcode": 2
+        },
+        {
+          "function": "xMat3x3LookVec__FP7xMat3x3PC5xVec3",
+          "offset": 28,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xMat3x3LookVec__FP7xMat3x3PC5xVec3",
+          "offset": 404,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xMat3x3GetEuler__FPC7xMat3x3P5xVec3",
+          "offset": 108,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xAngleClampFast__Ff",
+          "symbol": "xAngleClampFast__Ff"
+        },
+        {
+          "function": "xMat3x3GetEuler__FPC7xMat3x3P5xVec3",
+          "offset": 132,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xAngleClampFast__Ff",
+          "symbol": "xAngleClampFast__Ff"
+        },
+        {
+          "function": "xMat3x3GetEuler__FPC7xMat3x3P5xVec3",
+          "offset": 168,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xAngleClampFast__Ff",
+          "symbol": "xAngleClampFast__Ff"
+        },
+        {
+          "function": "xMat3x3GetEuler__FPC7xMat3x3P5xVec3",
+          "offset": 208,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xAngleClampFast__Ff",
+          "symbol": "xAngleClampFast__Ff"
+        },
+        {
+          "function": "xMat3x3Normalize__FP7xMat3x3PC7xMat3x3",
+          "offset": 20,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xMat3x3Normalize__FP7xMat3x3PC7xMat3x3",
+          "offset": 32,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xMat3x3Normalize__FP7xMat3x3PC7xMat3x3",
+          "offset": 44,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xBoxFromCone__FR4xBoxRC5xVec3RC5xVec3fff",
+          "offset": 112,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xsqrt__Ff",
+          "symbol": "xsqrt__Ff"
+        },
+        {
+          "function": "xBoxFromCone__FR4xBoxRC5xVec3RC5xVec3fff",
+          "offset": 148,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xsqrt__Ff",
+          "symbol": "xsqrt__Ff"
+        },
+        {
+          "function": "xBoxFromCone__FR4xBoxRC5xVec3RC5xVec3fff",
+          "offset": 184,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xsqrt__Ff",
+          "symbol": "xsqrt__Ff"
+        },
+        {
+          "function": "xBoxFromCone__FR4xBoxRC5xVec3RC5xVec3fff",
+          "offset": 208,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__pl__5xVec3CFRC5xVec3",
+          "symbol": "__pl__5xVec3CFRC5xVec3"
+        },
+        {
+          "function": "xBoxFromCone__FR4xBoxRC5xVec3RC5xVec3fff",
+          "offset": 236,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__mi__5xVec3CFRC5xVec3",
+          "symbol": "__mi__5xVec3CFRC5xVec3"
+        },
+        {
+          "function": "xBoxFromCone__FR4xBoxRC5xVec3RC5xVec3fff",
+          "offset": 492,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xsqrt__Ff",
+          "symbol": "xsqrt__Ff"
+        },
+        {
+          "function": "xBoxFromCone__FR4xBoxRC5xVec3RC5xVec3fff",
+          "offset": 528,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xsqrt__Ff",
+          "symbol": "xsqrt__Ff"
+        },
+        {
+          "function": "xBoxFromCone__FR4xBoxRC5xVec3RC5xVec3fff",
+          "offset": 564,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xsqrt__Ff",
+          "symbol": "xsqrt__Ff"
+        },
+        {
+          "function": "xBoxFromCone__FR4xBoxRC5xVec3RC5xVec3fff",
+          "offset": 588,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__pl__5xVec3CFRC5xVec3",
+          "symbol": "__pl__5xVec3CFRC5xVec3"
+        },
+        {
+          "function": "xBoxFromCone__FR4xBoxRC5xVec3RC5xVec3fff",
+          "offset": 616,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__mi__5xVec3CFRC5xVec3",
+          "symbol": "__mi__5xVec3CFRC5xVec3"
+        },
+        {
+          "function": "xMath3Exit__Fv",
+          "offset": 0,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iMath3Exit__Fv",
+          "symbol": "iMath3Exit__Fv",
+          "opcode": 2
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "offset": 8,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iMath3Init__Fv",
+          "symbol": "iMath3Init__Fv"
+        }
+      ],
+      "gp_relocations": [],
+      "address_pairs": [
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_X3",
+          "symbol": "g_X3",
+          "hi_offset": 16,
+          "lo_offset": 20,
+          "lo_opcode": 49,
+          "addend": 0
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_X3",
+          "symbol": "g_X3",
+          "hi_offset": 24,
+          "lo_offset": 28,
+          "lo_opcode": 49,
+          "addend": 4
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_X3",
+          "symbol": "g_X3",
+          "hi_offset": 32,
+          "lo_offset": 36,
+          "lo_opcode": 49,
+          "addend": 8
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_Y3",
+          "symbol": "g_Y3",
+          "hi_offset": 40,
+          "lo_offset": 44,
+          "lo_opcode": 49,
+          "addend": 0
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_Y3",
+          "symbol": "g_Y3",
+          "hi_offset": 48,
+          "lo_offset": 52,
+          "lo_opcode": 49,
+          "addend": 4
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_Y3",
+          "symbol": "g_Y3",
+          "hi_offset": 56,
+          "lo_offset": 60,
+          "lo_opcode": 49,
+          "addend": 8
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_I3",
+          "symbol": "g_I3",
+          "hi_offset": 64,
+          "lo_offset": 68,
+          "lo_opcode": 57,
+          "addend": 0
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_I3",
+          "symbol": "g_I3",
+          "hi_offset": 72,
+          "lo_offset": 76,
+          "lo_opcode": 57,
+          "addend": 4
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_I3",
+          "symbol": "g_I3",
+          "hi_offset": 80,
+          "lo_offset": 84,
+          "lo_opcode": 57,
+          "addend": 8
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_I3",
+          "symbol": "g_I3",
+          "hi_offset": 88,
+          "lo_offset": 92,
+          "lo_opcode": 57,
+          "addend": 16
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_I3",
+          "symbol": "g_I3",
+          "hi_offset": 96,
+          "lo_offset": 100,
+          "lo_opcode": 57,
+          "addend": 20
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_I3",
+          "symbol": "g_I3",
+          "hi_offset": 104,
+          "lo_offset": 108,
+          "lo_opcode": 57,
+          "addend": 24
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_Z3",
+          "symbol": "g_Z3",
+          "hi_offset": 112,
+          "lo_offset": 116,
+          "lo_opcode": 49,
+          "addend": 0
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_Z3",
+          "symbol": "g_Z3",
+          "hi_offset": 120,
+          "lo_offset": 124,
+          "lo_opcode": 49,
+          "addend": 4
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_Z3",
+          "symbol": "g_Z3",
+          "hi_offset": 128,
+          "lo_offset": 132,
+          "lo_opcode": 49,
+          "addend": 8
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_O3",
+          "symbol": "g_O3",
+          "hi_offset": 136,
+          "lo_offset": 140,
+          "lo_opcode": 49,
+          "addend": 0
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_O3",
+          "symbol": "g_O3",
+          "hi_offset": 144,
+          "lo_offset": 148,
+          "lo_opcode": 49,
+          "addend": 4
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_O3",
+          "symbol": "g_O3",
+          "hi_offset": 152,
+          "lo_offset": 156,
+          "lo_opcode": 49,
+          "addend": 8
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_I3",
+          "symbol": "g_I3",
+          "hi_offset": 160,
+          "lo_offset": 164,
+          "lo_opcode": 57,
+          "addend": 32
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_I3",
+          "symbol": "g_I3",
+          "hi_offset": 168,
+          "lo_offset": 172,
+          "lo_opcode": 57,
+          "addend": 36
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_I3",
+          "symbol": "g_I3",
+          "hi_offset": 176,
+          "lo_offset": 180,
+          "lo_opcode": 57,
+          "addend": 40
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_I3",
+          "symbol": "g_I3",
+          "hi_offset": 184,
+          "lo_offset": 188,
+          "lo_opcode": 57,
+          "addend": 48
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_I3",
+          "symbol": "g_I3",
+          "hi_offset": 192,
+          "lo_offset": 196,
+          "lo_opcode": 57,
+          "addend": 52
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_I3",
+          "symbol": "g_I3",
+          "hi_offset": 200,
+          "lo_offset": 204,
+          "lo_opcode": 57,
+          "addend": 56
         }
       ]
     }

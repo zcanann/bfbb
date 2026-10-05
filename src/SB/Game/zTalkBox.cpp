@@ -1,4 +1,5 @@
 #include "xstransvc.h"
+#include "xpkrsvc.h"
 #include "zTalkBox.h"
 #include "xDebug.h"
 #include "zEntPlayer.h"

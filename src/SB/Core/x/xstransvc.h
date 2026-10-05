@@ -1,7 +1,11 @@
 #ifndef XSTRANSVC_H
 #define XSTRANSVC_H
 
-#include "xpkrsvc.h"
+#include <types.h>
+
+struct st_PACKER_ASSETTYPE;
+struct st_PACKER_READ_DATA;
+struct st_PKR_ASSET_TOCINFO;
 
 struct st_STRAN_SCENE
 {

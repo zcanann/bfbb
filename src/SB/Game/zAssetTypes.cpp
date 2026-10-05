@@ -3,6 +3,7 @@
 #include "xAnim.h"
 #include "xCurveAsset.h"
 #include "xstransvc.h"
+#include "xpkrsvc.h"
 #include "xDebug.h"
 #include "xEnv.h"
 #include "xJSP.h"

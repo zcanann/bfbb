@@ -1,11 +1,15 @@
 #include "xVec3.h"
+#if !defined(PS2)
 #include "xCollide.h"
+#endif
 #include "xMathInlines.h"
 #include "iMath.h"
 #include "xMath.h"
 
 #include <types.h>
+#if !defined(PS2)
 #include <fastmath.h>
+#endif
 
 const xVec3 xVec3::m_Null = { 0.0f, 0.0f, 0.0f };
 const xVec3 xVec3::m_UnitAxisX = { 1.0f, 0.0f, 0.0f };
@@ -25,9 +29,15 @@ F32 xVec3Normalize(xVec3* o, const xVec3* v)
 
     if ((F32)iabs(len2 - 1.0f) <= 0.00001f)
     {
+#if defined(PS2)
+        o->x = v->x;
+        o->y = v->y;
+        o->z = v->z;
+#else
         o->x = x;
         o->y = y;
         o->z = z;
+#endif
         len = 1.0f;
     }
     else if ((F32)iabs(len2) <= 0.00001f)
@@ -62,9 +72,15 @@ F32 xVec3NormalizeFast(xVec3* o, const xVec3* v)
 
     if ((F32)iabs(len2 - 1.0f) <= 0.00001f)
     {
+#if defined(PS2)
+        o->x = v->x;
+        o->y = v->y;
+        o->z = v->z;
+#else
         o->x = x;
         o->y = y;
         o->z = z;
+#endif
         len = 1.0f;
     }
     else if ((F32)iabs(len2) <= 0.00001f)
@@ -85,6 +101,7 @@ F32 xVec3NormalizeFast(xVec3* o, const xVec3* v)
     return len;
 }
 
+#if !defined(PS2)
 void xVec3Copy(register xVec3* dst, const register xVec3* src)
 {
     PSVECCopy(dst, src);
@@ -94,3 +111,4 @@ asm F32 xVec3Dot(const register xVec3* a, const register xVec3* b)
 {
     PSVECDotProduct(a, b)
 }
+#endif
