@@ -62,9 +62,11 @@
         "xStrHashCat(U32,const char*)": "?xStrHashCat@@YAIIPBD@Z",
         "atox(const substr&,size_t&)": "?atox@@YAIABUsubstr@@AAI@Z",
         "xStricmp(const char*,const char*)": "?xStricmp@@YAHPBD0@Z",
-        "imemcmp(const void*,const void*,size_t)": "?imemcmp@@YAHPBX0I@Z"
+        "imemcmp(const void*,const void*,size_t)": "?imemcmp@@YAHPBX0I@Z",
+        "xStrTok(char*,const char*,char**)": "?xStrTok@@YAPADPADPBDPAPAD@Z",
+        "xStrTokBuffer(const char*,const char*,void*)": "?xStrTokBuffer@@YAPADPBD0PAX@Z"
       },
-      "scope": "Six individually reviewed leaf functions from actual full-TU compilation; no TU or executable completion claim"
+      "scope": "Eight individually reviewed leaf functions from actual full-TU compilation; no TU or executable completion claim"
     },
     {
       "source": "src/SB/Core/x/xPar.cpp",

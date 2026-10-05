@@ -86,12 +86,18 @@ char* xStrTok(char* string, const char* control, char** nextoken)
     S32 count;
     U8 c;
 
+#ifdef XBOX
+    ctrl = (U8*)control;
+#endif
+
     for (S32 i = 0; i < 32; i++)
     {
         map[i] = 0;
     }
 
+#ifndef XBOX
     ctrl = (U8*)control;
+#endif
 
     do
     {
@@ -108,9 +114,15 @@ char* xStrTok(char* string, const char* control, char** nextoken)
 
     string = (char*)str;
 
+#ifdef XBOX
+    while (*str != '\0')
+    {
+        if (map[(*str >> 3) & 0x1F] & (1 << (*str & 0x7)))
+#else
     while ((c = *str) != '\0')
     {
         if (map[(c >> 3) & 0x1F] & (1 << (c & 0x7)))
+#endif
         {
             *str = '\0';
             str++;
@@ -122,12 +134,16 @@ char* xStrTok(char* string, const char* control, char** nextoken)
 
     *nextoken = (char*)str;
 
+#ifdef XBOX
+    return string == (char*)str ? NULL : string;
+#else
     if (string == (char*)str)
     {
         string = NULL;
     }
 
     return string;
+#endif
 }
 
 char* xStrTokBuffer(const char* string, const char* control, void* buffer)
@@ -139,12 +155,18 @@ char* xStrTokBuffer(const char* string, const char* control, void* buffer)
     char* dest = (char*)buffer;
     dest += sizeof(char*);
 
+#ifdef XBOX
+    ctrl = (U8*)control;
+#endif
+
     for (S32 i = 0; i < 32; i++)
     {
         map[i] = 0;
     }
 
+#ifndef XBOX
     ctrl = (U8*)control;
+#endif
 
     do
     {

@@ -11294,20 +11294,20 @@
       "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0015b180",
-      "source": null,
+      "name": "xStrTok",
+      "canonical_identifier": "xStrTok(char*,const char*,char**)",
+      "source": "SB/Core/x/xString.cpp",
       "address": 1421696,
       "size": 242,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0015b280",
-      "source": null,
+      "name": "xStrTokBuffer",
+      "canonical_identifier": "xStrTokBuffer(const char*,const char*,void*)",
+      "source": "SB/Core/x/xString.cpp",
       "address": 1421952,
       "size": 249,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
       "name": "xStricmp",
