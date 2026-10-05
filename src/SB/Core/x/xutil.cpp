@@ -14,6 +14,20 @@ static S32 g_xutilinit;
 static S32 g_crc_needinit = 1;
 static U32 g_crc32_table[256] = {};
 
+#if defined(PS2)
+U8 itoBCD(U16 dec)
+{
+    S32 ones = dec % 10;
+    return ones + (((dec % 100 - ones) / 10) << 4);
+}
+
+U8 itoBCD(U8 dec)
+{
+    S32 ones = dec % 10;
+    return ones + (((dec % 100 - ones) / 10) << 4);
+}
+#endif
+
 S32 xUtilStartup()
 {
     if (!g_xutilinit++)
