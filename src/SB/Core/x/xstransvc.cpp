@@ -1,12 +1,18 @@
 #include "xstransvc.h"
+#if defined(PS2)
+#include "xpkrsvc_api.h"
+#else
 #include "xpkrsvc.h"
+#endif
 
 #include <types.h>
 #include <string.h>
 #include <stdio.h>
 #include "xString.h"
 #include "xutil.h"
+#if !defined(PS2)
 #include "xTRC.h"
+#endif
 #include "iFile.h"
 
 static st_STRAN_DATA g_xstdata = {};
@@ -15,17 +21,50 @@ static st_PACKER_READ_FUNCS* g_pkrf;
 static st_PACKER_ASSETTYPE* g_typeHandlers;
 
 static st_STRAN_SCENE* XST_lock_next();
+#if defined(PS2)
+inline
+#endif
 static void XST_unlock_all();
+#if defined(PS2)
+inline
+#endif
 static S32 XST_cnt_locked();
+#if defined(PS2)
+inline
+#endif
 static S32 XST_PreLoadScene(st_STRAN_SCENE* sdata, const char* path);
+#if defined(PS2)
+inline
+#endif
 static char* XST_translate_sid(U32 sid, char* extension);
+#if defined(PS2)
+inline
+#endif
 static char* XST_translate_sid_path(U32 sid, char* extension);
 static st_STRAN_SCENE* XST_find_bySID(U32 sid, S32 findTheHOP);
+#if defined(PS2)
+inline
+#endif
 static void XST_reset_raw();
+#if defined(PS2)
+inline
+#endif
 static void XST_unlock(st_STRAN_SCENE* sdata);
+#if defined(PS2)
+inline
+#endif
 static void XST_unlock_all();
+#if defined(PS2)
+inline
+#endif
 static st_STRAN_SCENE* XST_get_rawinst(S32 index);
+#if defined(PS2)
+inline
+#endif
 static S32 XST_cnt_locked();
+#if defined(PS2)
+inline
+#endif
 static st_STRAN_SCENE* XST_nth_locked(S32 index);
 
 S32 xSTStartup(st_PACKER_ASSETTYPE* handlers)
@@ -187,7 +226,9 @@ F32 xSTLoadStep(U32)
 {
     F32 pct = PKRLoadStep(0) != 0 ? 0.0f : 1.00001f;
 
+#if !defined(PS2)
     iTRCDisk::CheckDVDAndResetState();
+#endif
     iFileAsyncService();
     return pct;
 }
@@ -580,6 +621,8 @@ static st_STRAN_SCENE* XST_find_bySID(U32 sid, S32 findTheHOP)
     return da_sdata;
 }
 
+#if !defined(PS2)
 WEAK void iFileAsyncService()
 {
 }
+#endif
