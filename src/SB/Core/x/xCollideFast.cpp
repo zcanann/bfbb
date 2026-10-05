@@ -1,6 +1,6 @@
 #include "xCollideFast.h"
 #include "iCollideFast.h"
-#if defined(PS2)
+#if defined(PS2) || defined(XBOX)
 #include "iMath3.h"
 #endif
 #include "xMath.h"

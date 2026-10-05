@@ -138,6 +138,370 @@
       }
     },
     {
+      "name": "xRayHitsSphereFast",
+      "canonical_identifier": "xRayHitsSphereFast(const xRay3*,const xSphere*)",
+      "display_name": "xRayHitsSphereFast(const xRay3*,const xSphere*)",
+      "source": "SB/Core/x/xCollideFast.cpp",
+      "linkage_name": null,
+      "address": 1218016,
+      "size": 189,
+      "sha256": "d69eab22ee5fb17f27a6da9af18a849f29330496d7381e8e9543dad04a261be7",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 189,
+      "instruction_count": 66,
+      "semantics": {
+        "identity": "Original subtracts sphere center from ray origin, tests squared center distance minus radius squared, applies flag0x800/max_t distance cutoff, rejects nonnegative direction dot, and tests squared dot. Independent original bound dispatch selects type1 then calls with ECX=ray and EDX=embedded sphere after expanding radius.",
+        "entry_evidence": "Original decoded direct-call witnesses and closed CFG; instruction-pattern source search proposed candidates only, and does not establish their boundaries."
+      },
+      "corroboration": {
+        "return_address": 1218204,
+        "branches": [
+          {
+            "address": 1218103,
+            "size": 2,
+            "opcode": 123,
+            "target": 1218196
+          },
+          {
+            "address": 1218111,
+            "size": 2,
+            "opcode": 116,
+            "target": 1218134
+          },
+          {
+            "address": 1218132,
+            "size": 2,
+            "opcode": 123,
+            "target": 1218174
+          },
+          {
+            "address": 1218170,
+            "size": 2,
+            "opcode": 117,
+            "target": 1218180
+          },
+          {
+            "address": 1218194,
+            "size": 2,
+            "opcode": 117,
+            "target": 1218174
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1173942,
+            "target": 1218016
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 189,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
+        },
+        "previous_boundary": {
+          "return_address": 1218010,
+          "padding_address": 1218011,
+          "padding_size": 5,
+          "padding_byte": 204
+        },
+        "next_function_address": 1218208,
+        "following_padding": {
+          "address": 1218205,
+          "size": 3,
+          "byte": 204
+        },
+        "caller_context": {
+          "address": 1173572,
+          "size": 415,
+          "sha256": "c0ca30469c33c76d023aa030a6b5334aa70f831e067929060779d175457ce732",
+          "identity": "Manually decoded original bound-type dispatcher: type1 branch targets0x11e98f, type2 branch targets0x11e92a. Constructed sphere/box arguments and actual E8 witnesses are preserved in this hashed block."
+        }
+      },
+      "address_expressions": [
+        {
+          "offset": 78,
+          "instruction_offset": 76,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        },
+        {
+          "offset": 145,
+          "instruction_offset": 143,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d815",
+          "addend": 0
+        }
+      ],
+      "direct_calls": []
+    },
+    {
+      "name": "xRayHitsBoxFast",
+      "canonical_identifier": "xRayHitsBoxFast(const xRay3*,const xBox*)",
+      "display_name": "xRayHitsBoxFast(const xRay3*,const xBox*)",
+      "source": "SB/Core/x/xCollideFast.cpp",
+      "linkage_name": null,
+      "address": 1218208,
+      "size": 71,
+      "sha256": "209de10d94baddd46edaa0e9090e663c77227cb158cfad6e49852d4f80519b95",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 71,
+      "instruction_count": 24,
+      "semantics": {
+        "identity": "Original creates its real xIsect temporary and calls independently reviewed iBoxIsectRay, returning true if either penned or contained is nonpositive. Independent original bound dispatch selects type2, expands the two box corners into a stack box, then passes EAX=ray and a stack box pointer.",
+        "entry_evidence": "Original decoded direct-call witnesses and closed CFG; instruction-pattern source search proposed candidates only, and does not establish their boundaries."
+      },
+      "corroboration": {
+        "return_address": 1218278,
+        "branches": [
+          {
+            "address": 1218245,
+            "size": 2,
+            "opcode": 123,
+            "target": 1218270
+          },
+          {
+            "address": 1218262,
+            "size": 2,
+            "opcode": 123,
+            "target": 1218270
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1173893,
+            "target": 1218208
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 71,
+          "internal_gap_ranges": [],
+          "direct_call_targets": [
+            1490288
+          ]
+        },
+        "previous_boundary": {
+          "return_address": 1218204,
+          "padding_address": 1218205,
+          "padding_size": 3,
+          "padding_byte": 204
+        },
+        "next_function_address": 1218288,
+        "following_padding": {
+          "address": 1218279,
+          "size": 9,
+          "byte": 204
+        },
+        "caller_context": {
+          "address": 1173572,
+          "size": 415,
+          "sha256": "c0ca30469c33c76d023aa030a6b5334aa70f831e067929060779d175457ce732",
+          "identity": "Manually decoded original bound-type dispatcher: type1 branch targets0x11e98f, type2 branch targets0x11e92a. Constructed sphere/box arguments and actual E8 witnesses are preserved in this hashed block."
+        }
+      },
+      "address_expressions": [
+        {
+          "offset": 24,
+          "instruction_offset": 22,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        },
+        {
+          "offset": 45,
+          "instruction_offset": 43,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        }
+      ],
+      "direct_calls": [
+        {
+          "offset": 14,
+          "symbol": "iBoxIsectRay(const xBox*,const xRay3*,xIsect*)"
+        }
+      ]
+    },
+    {
+      "name": "xCurveAssetEvaluate",
+      "canonical_identifier": "xCurveAssetEvaluate(const xCurveAsset*,F32)",
+      "display_name": "xCurveAssetEvaluate(const xCurveAsset*,F32)",
+      "source": "SB/Core/x/xCurveAsset.cpp",
+      "linkage_name": null,
+      "address": 1218928,
+      "size": 241,
+      "sha256": "b584c8a723211d72417190bc14d0798cc97f279e4a405aea38c2705756e203c0",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 241,
+      "instruction_count": 81,
+      "semantics": {
+        "identity": "Original curve asset fields clamp+4, delta+8, count+12, points+16; clamps or cycles time, applies oscillation parity, obtains adjacent samples and linearly interpolates. Two calls to the independently reviewed __ftol2. Original caller0x10b308 supplies ESI=asset and stack time; returned x87 value scales the caller result.",
+        "entry_evidence": "Original decoded direct-call witnesses and closed CFG; instruction-pattern source search proposed candidates only, and does not establish their boundaries."
+      },
+      "corroboration": {
+        "return_address": 1219168,
+        "branches": [
+          {
+            "address": 1218956,
+            "size": 2,
+            "opcode": 117,
+            "target": 1219002
+          },
+          {
+            "address": 1218971,
+            "size": 2,
+            "opcode": 123,
+            "target": 1218979
+          },
+          {
+            "address": 1218990,
+            "size": 2,
+            "opcode": 116,
+            "target": 1219096
+          },
+          {
+            "address": 1219000,
+            "size": 2,
+            "opcode": 235,
+            "target": 1219096
+          },
+          {
+            "address": 1219044,
+            "size": 2,
+            "opcode": 122,
+            "target": 1219051
+          },
+          {
+            "address": 1219066,
+            "size": 2,
+            "opcode": 117,
+            "target": 1219096
+          },
+          {
+            "address": 1219075,
+            "size": 2,
+            "opcode": 121,
+            "target": 1219082
+          },
+          {
+            "address": 1219090,
+            "size": 2,
+            "opcode": 117,
+            "target": 1219096
+          },
+          {
+            "address": 1219124,
+            "size": 2,
+            "opcode": 125,
+            "target": 1219132
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1094408,
+            "target": 1218928
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 1091577,
+            "target": 1218928
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 241,
+          "internal_gap_ranges": [],
+          "direct_call_targets": [
+            1824368
+          ]
+        },
+        "next_function_address": 1219184,
+        "following_padding": {
+          "address": 1219169,
+          "size": 15,
+          "byte": 204
+        }
+      },
+      "address_expressions": [
+        {
+          "offset": 53,
+          "instruction_offset": 51,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d815",
+          "addend": 0
+        },
+        {
+          "offset": 68,
+          "instruction_offset": 66,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 101,
+          "instruction_offset": 99,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        },
+        {
+          "offset": 170,
+          "instruction_offset": 168,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 200,
+          "instruction_offset": 198,
+          "symbol": "float:4f800000",
+          "field": "displacement",
+          "prefix": "d805",
+          "addend": 0
+        },
+        {
+          "offset": 222,
+          "instruction_offset": 220,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        }
+      ],
+      "direct_calls": [
+        {
+          "offset": 91,
+          "symbol": "__ftol2"
+        },
+        {
+          "offset": 182,
+          "symbol": "__ftol2"
+        }
+      ]
+    },
+    {
       "name": "xurand",
       "canonical_identifier": "xurand()",
       "display_name": "xurand()",

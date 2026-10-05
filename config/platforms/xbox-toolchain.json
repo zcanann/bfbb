@@ -2515,6 +2515,181 @@
           }
         ]
       }
+    },
+    {
+      "source": "src/SB/Core/x/xCurveAsset.cpp",
+      "target_unit": "SB/Core/x/xCurveAsset.cpp",
+      "object": "source/xCurveAsset/xCurveAsset.obj",
+      "comparison_object": "source/xCurveAsset-functions.obj",
+      "host_entry": "tools/platforms/xbox_support/curve_entry.cpp",
+      "host_context": {
+        "xatof": null,
+        "imports": "tools/platforms/xbox_support/math_crt.def"
+      },
+      "source_dependencies": [],
+      "runtime_libraries": [
+        "libcmt"
+      ],
+      "symbols": {
+        "xCurveAssetEvaluate(const xCurveAsset*,F32)": "?xCurveAssetEvaluate@@YAMPBUxCurveAsset@@M@Z"
+      },
+      "scope": "Complete real curve TU; independently reviewed original function remains partial. No executable or linked-data completion claim.",
+      "globals": {
+        "float:4f800000": {
+          "linkage_name": "__real@4f800000",
+          "size": 4,
+          "object": "xCurveAsset.obj",
+          "value_hex": "0000804f"
+        },
+        "float:3f800000": {
+          "linkage_name": "__real@3f800000",
+          "size": 4,
+          "object": "xCurveAsset.obj",
+          "value_hex": "0000803f"
+        },
+        "float:00000000": {
+          "linkage_name": "__real@00000000",
+          "size": 4,
+          "object": "xCurveAsset.obj",
+          "value_hex": "00000000"
+        }
+      },
+      "direct_calls": {
+        "xCurveAssetEvaluate(const xCurveAsset*,F32)": [
+          "__ftol2"
+        ]
+      },
+      "call_symbols": {
+        "__ftol2": {
+          "linkage_name": "__ftol2",
+          "object": "libcmt:ftol2.obj"
+        }
+      },
+      "address_expressions": {
+        "xCurveAssetEvaluate(const xCurveAsset*,F32)": [
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d815",
+            "addend": 0
+          },
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0
+          },
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d81d",
+            "addend": 0
+          },
+          {
+            "symbol": "float:3f800000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0,
+            "count": 2
+          },
+          {
+            "symbol": "float:4f800000",
+            "field": "displacement",
+            "prefix": "d805",
+            "addend": 0
+          }
+        ]
+      }
+    },
+    {
+      "source": "src/SB/Core/x/xCollideFast.cpp",
+      "target_unit": "SB/Core/x/xCollideFast.cpp",
+      "object": "source/xCollideFast/xCollideFast.obj",
+      "comparison_object": "source/xCollideFast-functions.obj",
+      "host_entry": "tools/platforms/xbox_support/collide_fast_entry.cpp",
+      "host_context": {
+        "xatof": null,
+        "imports": "tools/platforms/xbox_support/math_crt.def"
+      },
+      "source_dependencies": [
+        {
+          "source": "src/SB/Core/gc/iCollideFast.cpp",
+          "object": "iCollideFast.obj"
+        },
+        {
+          "source": "src/SB/Core/gc/iMath3.cpp",
+          "object": "iMath3.obj"
+        },
+        {
+          "source": "src/SB/Core/x/xMath.cpp",
+          "object": "xMath.obj"
+        },
+        {
+          "source": "src/SB/Core/x/xMath3.cpp",
+          "object": "xMath3.obj"
+        },
+        {
+          "source": "src/SB/Core/x/xVec3.cpp",
+          "object": "xVec3.obj"
+        },
+        {
+          "source": "src/SB/Core/gc/iMath.cpp",
+          "object": "iMath.obj"
+        }
+      ],
+      "runtime_libraries": [
+        "libcmt"
+      ],
+      "symbols": {
+        "xRayHitsSphereFast(const xRay3*,const xSphere*)": "?xRayHitsSphereFast@@YAIPBUxRay3@@PBUxSphere@@@Z",
+        "xRayHitsBoxFast(const xRay3*,const xBox*)": "?xRayHitsBoxFast@@YAIPBUxRay3@@PBUxBox@@@Z"
+      },
+      "scope": "Two independently reviewed fast-collision functions; complete shared TU and six genuine shared math/platform source dependencies are compiled. Diagnostic host retains all three public APIs. Original initializer entry is unassigned; shared empty platform initializer receives no source credit. No complete TU or executable claim.",
+      "globals": {
+        "float:00000000": {
+          "linkage_name": "__real@00000000",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "00000000"
+        }
+      },
+      "direct_calls": {
+        "xRayHitsSphereFast(const xRay3*,const xSphere*)": [],
+        "xRayHitsBoxFast(const xRay3*,const xBox*)": [
+          "iBoxIsectRay(const xBox*,const xRay3*,xIsect*)"
+        ]
+      },
+      "call_symbols": {
+        "iBoxIsectRay(const xBox*,const xRay3*,xIsect*)": {
+          "linkage_name": "?iBoxIsectRay@@YAXPBUxBox@@PBUxRay3@@PAUxIsect@@@Z",
+          "object": "iMath3.obj"
+        }
+      },
+      "address_expressions": {
+        "xRayHitsSphereFast(const xRay3*,const xSphere*)": [
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d81d",
+            "addend": 0
+          },
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d815",
+            "addend": 0
+          }
+        ],
+        "xRayHitsBoxFast(const xRay3*,const xBox*)": [
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d81d",
+            "addend": 0,
+            "count": 2
+          }
+        ]
+      }
     }
   ],
   "static_runtime": {
