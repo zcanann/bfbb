@@ -50,7 +50,7 @@ void __deadstripped_zEntPlayerOOBState2()
 
 
 #if defined(PS2)
-#if defined(VERSION_SLES_51968) || defined(VERSION_SLES_51970) || defined(VERSION_SLES_53623)
+#if defined(VERSION_SLES_51968) || defined(VERSION_SLES_51970)
 #define OOB_SCREEN_WIDTH 512.0f
 #define OOB_SCREEN_HEIGHT 512.0f
 #else
