@@ -4,9 +4,9 @@
   "scope": "All file-backed PT_LOAD bytes; zero-fill memory and non-loadable ELF metadata excluded",
   "code_classification_complete": false,
   "loaded_file_bytes": 4255232,
-  "known_code_bytes": 214848,
+  "known_code_bytes": 216832,
   "known_data_bytes": 0,
-  "unclassified_loaded_bytes": 4040384,
+  "unclassified_loaded_bytes": 4038400,
   "segments": [
     {
       "address": 1048576,
@@ -6809,7 +6809,7 @@
     },
     {
       "segment": 0,
-      "kind": "unclassified",
+      "kind": "function",
       "address": 3164672,
       "size": 1984,
       "file_offset": 2116224

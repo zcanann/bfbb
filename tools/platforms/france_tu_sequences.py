@@ -440,6 +440,16 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     for key, value in goals['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
     document['limitations'].append('Common/Standard goal identity uses unique complete sequences in three named originals plus full original vtables/globals. Rooted direct-call witnesses are empty; header interleaves and external table methods remain nonpromoted context. No missing NoManLand class layout or method is inferred.')
+    from platforms.france_grid_sequence import generate_unit as generate_grid
+    grid = generate_grid(originals, registry_dir)
+    document['functions'].extend(grid['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(grid['sequence_proofs'])
+    document['call_neighbors'].extend(grid['call_neighbors'])
+    document['grid_data_proofs'] = grid['data_proofs']
+    for key, value in grid['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Grid adds only xGridCheckPosition. Its eleven previously confirmed neighbors remain unchanged; all twelve original members form a unique sequence. The complete signed-int offs[4][3][2] array and four named calls are independently checked; external entry prefixes remain context only.')
     return document
 
 

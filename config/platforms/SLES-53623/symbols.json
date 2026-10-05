@@ -3841,6 +3841,13 @@
       "provenance": "reviewed-whole-tu-sequence"
     },
     {
+      "name": "xGridCheckPosition",
+      "source": "SB/Core/x/xGrid.cpp",
+      "address": 3164672,
+      "size": 1984,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "xGridEntIsTooBig",
       "source": "SB/Core/x/xGrid.cpp",
       "address": 3166656,

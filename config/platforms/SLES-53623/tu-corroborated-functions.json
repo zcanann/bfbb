@@ -27,14 +27,15 @@
     "Collision uses two explicitly closed platform leaf-tail callees, six complete callback entries and original DWARF-typed global components; external entry prefixes are not promoted.",
     "Entity verifies one exact pointer-return leaf, original typed arrays and one unnamed immutable interleaved leaf as context only; that context is not assigned source ownership or promoted.",
     "Clump collision and splines retain strict CFG checks; original array descriptors prove two coefficient matrices and observed allocator-array slots without inferring a RenderWare struct layout.",
-    "Common/Standard goal identity uses unique complete sequences in three named originals plus full original vtables/globals. Rooted direct-call witnesses are empty; header interleaves and external table methods remain nonpromoted context. No missing NoManLand class layout or method is inferred."
+    "Common/Standard goal identity uses unique complete sequences in three named originals plus full original vtables/globals. Rooted direct-call witnesses are empty; header interleaves and external table methods remain nonpromoted context. No missing NoManLand class layout or method is inferred.",
+    "Grid adds only xGridCheckPosition. Its eleven previously confirmed neighbors remain unchanged; all twelve original members form a unique sequence. The complete signed-int offs[4][3][2] array and four named calls are independently checked; external entry prefixes remain context only."
   ],
   "counts": {
-    "functions": 305,
-    "code_bytes": 145980,
-    "source_units": 11,
+    "functions": 306,
+    "code_bytes": 147964,
+    "source_units": 12,
     "rooted_direct_call_entries": 129,
-    "closed_return_bodies": 292,
+    "closed_return_bodies": 293,
     "reviewed_tail_wrappers": 1,
     "registered_callback_entries": 26,
     "reviewed_leaf_tail_functions": 11,
@@ -49,7 +50,8 @@
     "reviewed_dead_islands": 1,
     "original_vtables": 15,
     "complete_external_table_methods": 11,
-    "header_context_bodies_not_promoted": 2
+    "header_context_bodies_not_promoted": 2,
+    "reviewed_grid_arrays": 1
   },
   "sequence_proofs": [
     {
@@ -731,6 +733,81 @@
         "sha256": "008d26890102af179c703d77fae42cb7b3f424a11b8db552383dd8e5313f4061",
         "promoted_as_named_anchor": false,
         "included_in_source_unit": false
+      }
+    },
+    {
+      "version": "SLUS-20680",
+      "source": "SB/Core/x/xGrid.cpp",
+      "source_start": 3163264,
+      "target_start": 3164672,
+      "complete_original_members": 12,
+      "previously_confirmed_members": 11,
+      "sequence_bytes_with_alignment": 5772,
+      "uniqueness": {
+        "matching_addresses": [
+          3164672
+        ],
+        "unchanged_anchor_offset": 1496,
+        "unchanged_anchor_bytes": 1908,
+        "masked_instruction_count": 15
+      },
+      "candidate_uniqueness": {
+        "matching_addresses": [
+          3164672
+        ],
+        "unchanged_anchor_offset": 120,
+        "unchanged_anchor_bytes": 620,
+        "masked_instruction_count": 5
+      }
+    },
+    {
+      "version": "SLES-51968",
+      "source": "SB/Core/x/xGrid.cpp",
+      "source_start": 3164560,
+      "target_start": 3164672,
+      "complete_original_members": 12,
+      "previously_confirmed_members": 11,
+      "sequence_bytes_with_alignment": 5772,
+      "uniqueness": {
+        "matching_addresses": [
+          3164672
+        ],
+        "unchanged_anchor_offset": 1496,
+        "unchanged_anchor_bytes": 1908,
+        "masked_instruction_count": 15
+      },
+      "candidate_uniqueness": {
+        "matching_addresses": [
+          3164672
+        ],
+        "unchanged_anchor_offset": 120,
+        "unchanged_anchor_bytes": 620,
+        "masked_instruction_count": 5
+      }
+    },
+    {
+      "version": "SLES-51970",
+      "source": "SB/Core/x/xGrid.cpp",
+      "source_start": 3161248,
+      "target_start": 3164672,
+      "complete_original_members": 12,
+      "previously_confirmed_members": 11,
+      "sequence_bytes_with_alignment": 5772,
+      "uniqueness": {
+        "matching_addresses": [
+          3164672
+        ],
+        "unchanged_anchor_offset": 1496,
+        "unchanged_anchor_bytes": 1908,
+        "masked_instruction_count": 15
+      },
+      "candidate_uniqueness": {
+        "matching_addresses": [
+          3164672
+        ],
+        "unchanged_anchor_offset": 120,
+        "unchanged_anchor_bytes": 620,
+        "masked_instruction_count": 5
       }
     }
   ],
@@ -9862,6 +9939,150 @@
           "target_address": 1132848
         }
       ],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "reference_address": 1149960,
+      "target_address": 1149960,
+      "reference_name": null,
+      "reference_source": null,
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "25ec01e68f8e49d0b3ee211f0323590052a1fce40879cecdba1a4b1a49f9c655",
+      "target_sha256": "25ec01e68f8e49d0b3ee211f0323590052a1fce40879cecdba1a4b1a49f9c655",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "reference_address": 2033296,
+      "target_address": 2034656,
+      "reference_name": "xMemAlloc",
+      "reference_source": "SB/Core/x/xMemMgr.cpp",
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "bc7ada52c9345012cd2db35dfbff560dccec9bb2ea7bc1f843a04e7a9a50c0c7",
+      "target_sha256": "93b45deb7826095a9d3faecdf7a621d051378f267fed2a2520a17088247eccc6",
+      "data_address_operands": [
+        {
+          "hi_offset": 4,
+          "lo_offset": 20,
+          "opcode": 9,
+          "reference_address": 5671216,
+          "target_address": 5670192,
+          "storage": "zero_fill"
+        }
+      ],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "reference_address": 2075360,
+      "target_address": 2076784,
+      "reference_name": "xQuickCullIsects",
+      "reference_source": "SB/Core/x/xQuickCull.cpp",
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "68bd478d557ff3c16f671e21fc500ece7c22f0417f19dea1211c2bee3bc47e67",
+      "target_sha256": "68bd478d557ff3c16f671e21fc500ece7c22f0417f19dea1211c2bee3bc47e67",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "reference_address": 1149960,
+      "target_address": 1149960,
+      "reference_name": null,
+      "reference_source": null,
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "25ec01e68f8e49d0b3ee211f0323590052a1fce40879cecdba1a4b1a49f9c655",
+      "target_sha256": "25ec01e68f8e49d0b3ee211f0323590052a1fce40879cecdba1a4b1a49f9c655",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "reference_address": 2034544,
+      "target_address": 2034656,
+      "reference_name": "xMemAlloc",
+      "reference_source": "SB/Core/x/xMemMgr.cpp",
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "eb2932a02d5f63718f41346f2744d27135b30f0a6463134a86e4bbdf56bcd1bc",
+      "target_sha256": "93b45deb7826095a9d3faecdf7a621d051378f267fed2a2520a17088247eccc6",
+      "data_address_operands": [
+        {
+          "hi_offset": 4,
+          "lo_offset": 20,
+          "opcode": 9,
+          "reference_address": 5669936,
+          "target_address": 5670192,
+          "storage": "zero_fill"
+        }
+      ],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "reference_address": 2076672,
+      "target_address": 2076784,
+      "reference_name": "xQuickCullIsects",
+      "reference_source": "SB/Core/x/xQuickCull.cpp",
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "68bd478d557ff3c16f671e21fc500ece7c22f0417f19dea1211c2bee3bc47e67",
+      "target_sha256": "68bd478d557ff3c16f671e21fc500ece7c22f0417f19dea1211c2bee3bc47e67",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "reference_address": 1149960,
+      "target_address": 1149960,
+      "reference_name": null,
+      "reference_source": null,
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "25ec01e68f8e49d0b3ee211f0323590052a1fce40879cecdba1a4b1a49f9c655",
+      "target_sha256": "25ec01e68f8e49d0b3ee211f0323590052a1fce40879cecdba1a4b1a49f9c655",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "reference_address": 2031184,
+      "target_address": 2034656,
+      "reference_name": "xMemAlloc",
+      "reference_source": "SB/Core/x/xMemMgr.cpp",
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "cf79affd6a789b2f9e8c95d1f5ede0b68efb61061e201810e42fc19b8925e859",
+      "target_sha256": "93b45deb7826095a9d3faecdf7a621d051378f267fed2a2520a17088247eccc6",
+      "data_address_operands": [
+        {
+          "hi_offset": 4,
+          "lo_offset": 20,
+          "opcode": 9,
+          "reference_address": 5668400,
+          "target_address": 5670192,
+          "storage": "zero_fill"
+        }
+      ],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "reference_address": 2073328,
+      "target_address": 2076784,
+      "reference_name": "xQuickCullIsects",
+      "reference_source": "SB/Core/x/xQuickCull.cpp",
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "68bd478d557ff3c16f671e21fc500ece7c22f0417f19dea1211c2bee3bc47e67",
+      "target_sha256": "68bd478d557ff3c16f671e21fc500ece7c22f0417f19dea1211c2bee3bc47e67",
+      "data_address_operands": [],
+      "direct_transfers": [],
       "promoted_as_named_anchor": false
     }
   ],
@@ -80228,6 +80449,594 @@
         },
         "direct_rooted_call_sites": []
       }
+    },
+    {
+      "name": "xGridCheckPosition",
+      "source": "SB/Core/x/xGrid.cpp",
+      "address": 3164672,
+      "size": 1984,
+      "sha256": "59508dbf49a30af3d7344f07203db79cc3d2f18efb684284eade81d76cf858b4",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3163264,
+          "name": "xGridCheckPosition",
+          "source": "SB/Core/x/xGrid.cpp",
+          "linkage_name": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "reference_sha256": "22a279c52cc5167e29972912e4578a25b1d571c98066ed24aeba8a65f9934c8c",
+          "data_address_operands": [
+            {
+              "hi_offset": 732,
+              "lo_offset": 740,
+              "opcode": 9,
+              "reference_address": 5110320,
+              "target_address": 5109296,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 84,
+              "opcode": 3,
+              "reference_address": 3165600,
+              "target_address": 3167008
+            },
+            {
+              "offset": 116,
+              "opcode": 3,
+              "reference_address": 2075360,
+              "target_address": 2076784
+            },
+            {
+              "offset": 964,
+              "opcode": 3,
+              "reference_address": 2075360,
+              "target_address": 2076784
+            },
+            {
+              "offset": 1492,
+              "opcode": 3,
+              "reference_address": 2075360,
+              "target_address": 2076784
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3164560,
+          "name": "xGridCheckPosition",
+          "source": "SB/Core/x/xGrid.cpp",
+          "linkage_name": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "reference_sha256": "001a15ec9a9f756abbd984b2afeb149d63e3009877669ecdade2f097958985c0",
+          "data_address_operands": [
+            {
+              "hi_offset": 732,
+              "lo_offset": 740,
+              "opcode": 9,
+              "reference_address": 5109040,
+              "target_address": 5109296,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 84,
+              "opcode": 3,
+              "reference_address": 3166896,
+              "target_address": 3167008
+            },
+            {
+              "offset": 116,
+              "opcode": 3,
+              "reference_address": 2076672,
+              "target_address": 2076784
+            },
+            {
+              "offset": 964,
+              "opcode": 3,
+              "reference_address": 2076672,
+              "target_address": 2076784
+            },
+            {
+              "offset": 1492,
+              "opcode": 3,
+              "reference_address": 2076672,
+              "target_address": 2076784
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3161248,
+          "name": "xGridCheckPosition",
+          "source": "SB/Core/x/xGrid.cpp",
+          "linkage_name": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "reference_sha256": "a2b3d9c492e3894873ec505c65800413fa6115c0c8e2b2a4a0a418d24ed2e4a3",
+          "data_address_operands": [
+            {
+              "hi_offset": 732,
+              "lo_offset": 740,
+              "opcode": 9,
+              "reference_address": 5107440,
+              "target_address": 5109296,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 84,
+              "opcode": 3,
+              "reference_address": 3163584,
+              "target_address": 3167008
+            },
+            {
+              "offset": 116,
+              "opcode": 3,
+              "reference_address": 2073328,
+              "target_address": 2076784
+            },
+            {
+              "offset": 964,
+              "opcode": 3,
+              "reference_address": 2073328,
+              "target_address": 2076784
+            },
+            {
+              "offset": 1492,
+              "opcode": 3,
+              "reference_address": 2073328,
+              "target_address": 2076784
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            3166648
+          ],
+          "direct_or_indirect_calls": [
+            3164756,
+            3164788,
+            3164808,
+            3165636,
+            3165656,
+            3166164,
+            3166184
+          ],
+          "branches": [
+            [
+              3164768,
+              3165232
+            ],
+            [
+              3164796,
+              3164984
+            ],
+            [
+              3164816,
+              3164984
+            ],
+            [
+              3164828,
+              3164976
+            ],
+            [
+              3164852,
+              3164960
+            ],
+            [
+              3164864,
+              3164960
+            ],
+            [
+              3164876,
+              3164960
+            ],
+            [
+              3164892,
+              3164944
+            ],
+            [
+              3164932,
+              3164952
+            ],
+            [
+              3164952,
+              3164888
+            ],
+            [
+              3164976,
+              3166608
+            ],
+            [
+              3164988,
+              3165056
+            ],
+            [
+              3165000,
+              3165056
+            ],
+            [
+              3165012,
+              3165032
+            ],
+            [
+              3165020,
+              3165224
+            ],
+            [
+              3165060,
+              3165008
+            ],
+            [
+              3165072,
+              3165216
+            ],
+            [
+              3165096,
+              3165200
+            ],
+            [
+              3165108,
+              3165200
+            ],
+            [
+              3165120,
+              3165200
+            ],
+            [
+              3165132,
+              3165184
+            ],
+            [
+              3165172,
+              3165192
+            ],
+            [
+              3165192,
+              3165128
+            ],
+            [
+              3165224,
+              3164784
+            ],
+            [
+              3165304,
+              3165352
+            ],
+            [
+              3165320,
+              3165336
+            ],
+            [
+              3165328,
+              3165384
+            ],
+            [
+              3165340,
+              3165384
+            ],
+            [
+              3165360,
+              3165376
+            ],
+            [
+              3165368,
+              3165384
+            ],
+            [
+              3165444,
+              3166080
+            ],
+            [
+              3165460,
+              3166080
+            ],
+            [
+              3165480,
+              3166080
+            ],
+            [
+              3165496,
+              3166080
+            ],
+            [
+              3165504,
+              3165520
+            ],
+            [
+              3165512,
+              3165528
+            ],
+            [
+              3165520,
+              3165624
+            ],
+            [
+              3165528,
+              3165544
+            ],
+            [
+              3165536,
+              3165552
+            ],
+            [
+              3165544,
+              3165624
+            ],
+            [
+              3165580,
+              3165600
+            ],
+            [
+              3165588,
+              3165624
+            ],
+            [
+              3165624,
+              3166080
+            ],
+            [
+              3165644,
+              3165832
+            ],
+            [
+              3165664,
+              3165832
+            ],
+            [
+              3165676,
+              3165824
+            ],
+            [
+              3165700,
+              3165808
+            ],
+            [
+              3165712,
+              3165808
+            ],
+            [
+              3165724,
+              3165808
+            ],
+            [
+              3165740,
+              3165792
+            ],
+            [
+              3165780,
+              3165800
+            ],
+            [
+              3165800,
+              3165736
+            ],
+            [
+              3165824,
+              3166608
+            ],
+            [
+              3165836,
+              3165904
+            ],
+            [
+              3165848,
+              3165904
+            ],
+            [
+              3165860,
+              3165880
+            ],
+            [
+              3165868,
+              3166072
+            ],
+            [
+              3165908,
+              3165856
+            ],
+            [
+              3165920,
+              3166064
+            ],
+            [
+              3165944,
+              3166048
+            ],
+            [
+              3165956,
+              3166048
+            ],
+            [
+              3165968,
+              3166048
+            ],
+            [
+              3165980,
+              3166032
+            ],
+            [
+              3166020,
+              3166040
+            ],
+            [
+              3166040,
+              3165976
+            ],
+            [
+              3166072,
+              3165632
+            ],
+            [
+              3166088,
+              3165400
+            ],
+            [
+              3166100,
+              3166120
+            ],
+            [
+              3166108,
+              3166152
+            ],
+            [
+              3166152,
+              3166608
+            ],
+            [
+              3166172,
+              3166360
+            ],
+            [
+              3166192,
+              3166360
+            ],
+            [
+              3166204,
+              3166352
+            ],
+            [
+              3166228,
+              3166336
+            ],
+            [
+              3166240,
+              3166336
+            ],
+            [
+              3166252,
+              3166336
+            ],
+            [
+              3166268,
+              3166320
+            ],
+            [
+              3166308,
+              3166328
+            ],
+            [
+              3166328,
+              3166264
+            ],
+            [
+              3166352,
+              3166608
+            ],
+            [
+              3166364,
+              3166432
+            ],
+            [
+              3166376,
+              3166432
+            ],
+            [
+              3166388,
+              3166408
+            ],
+            [
+              3166396,
+              3166600
+            ],
+            [
+              3166436,
+              3166384
+            ],
+            [
+              3166448,
+              3166592
+            ],
+            [
+              3166472,
+              3166576
+            ],
+            [
+              3166484,
+              3166576
+            ],
+            [
+              3166496,
+              3166576
+            ],
+            [
+              3166508,
+              3166560
+            ],
+            [
+              3166548,
+              3166568
+            ],
+            [
+              3166568,
+              3166504
+            ],
+            [
+              3166600,
+              3166160
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              3164672,
+              -192
+            ],
+            [
+              3166652,
+              192
+            ]
+          ],
+          "ra_saves": [
+            [
+              3164676,
+              -48
+            ]
+          ],
+          "ra_loads": [
+            [
+              3166608,
+              -48
+            ]
+          ],
+          "unreachable_zero_words": [
+            3164940,
+            3165028,
+            3165180,
+            3165348,
+            3165596,
+            3165788,
+            3165876,
+            3166028,
+            3166116,
+            3166316,
+            3166404,
+            3166556
+          ],
+          "following_zero_alignment": 0
+        },
+        "previously_confirmed_neighbor_entries": [
+          3166656,
+          3167008,
+          3167408,
+          3167664,
+          3168048,
+          3168256,
+          3168400,
+          3169504,
+          3169760,
+          3169808,
+          3170400
+        ]
+      }
     }
   ],
   "particle_registration_proofs": [
@@ -91755,6 +92564,95 @@
         }
       ],
       "no_man_land_scope": "Original vtable descriptor and actual entries only; no inferred class layout or missing method."
+    }
+  ],
+  "grid_data_proofs": [
+    {
+      "version": "SLUS-20680",
+      "name": "offs",
+      "reference_address": 5110320,
+      "size": 96,
+      "dimensions": [
+        4,
+        3,
+        2
+      ],
+      "element_fundamental_type": 8,
+      "declaration_die": 8382734,
+      "type_chain": [
+        {
+          "die": 8367146,
+          "subscript_descriptor": "000a00000000000300000008720004ac7f00"
+        },
+        {
+          "die": 8367108,
+          "subscript_descriptor": "000a00000000000200000008720021aa7f00"
+        },
+        {
+          "die": 8366625,
+          "subscript_descriptor": "000a0000000000010000000855000800"
+        }
+      ],
+      "target_address": 5109296,
+      "sha256": "45612568afb3242892bcbe094390e6736dab150c2af7620a056f1c92663b2226"
+    },
+    {
+      "version": "SLES-51968",
+      "name": "offs",
+      "reference_address": 5109040,
+      "size": 96,
+      "dimensions": [
+        4,
+        3,
+        2
+      ],
+      "element_fundamental_type": 8,
+      "declaration_die": 8383192,
+      "type_chain": [
+        {
+          "die": 8367604,
+          "subscript_descriptor": "000a000000000003000000087200cead7f00"
+        },
+        {
+          "die": 8367566,
+          "subscript_descriptor": "000a000000000002000000087200ebab7f00"
+        },
+        {
+          "die": 8367083,
+          "subscript_descriptor": "000a0000000000010000000855000800"
+        }
+      ],
+      "target_address": 5109296,
+      "sha256": "45612568afb3242892bcbe094390e6736dab150c2af7620a056f1c92663b2226"
+    },
+    {
+      "version": "SLES-51970",
+      "name": "offs",
+      "reference_address": 5107440,
+      "size": 96,
+      "dimensions": [
+        4,
+        3,
+        2
+      ],
+      "element_fundamental_type": 8,
+      "declaration_die": 8384038,
+      "type_chain": [
+        {
+          "die": 8368450,
+          "subscript_descriptor": "000a0000000000030000000872001cb17f00"
+        },
+        {
+          "die": 8368412,
+          "subscript_descriptor": "000a00000000000200000008720039af7f00"
+        },
+        {
+          "die": 8367929,
+          "subscript_descriptor": "000a0000000000010000000855000800"
+        }
+      ],
+      "target_address": 5109296,
+      "sha256": "45612568afb3242892bcbe094390e6736dab150c2af7620a056f1c92663b2226"
     }
   ]
 }
