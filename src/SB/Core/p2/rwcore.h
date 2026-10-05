@@ -1,6 +1,14 @@
 #ifndef PS2_RWCORE_H
 #define PS2_RWCORE_H
 
+// Statement macros shared by the RenderWare SDK headers.
+#ifndef MACRO_START
+#define MACRO_START do
+#endif
+#ifndef MACRO_STOP
+#define MACRO_STOP while (0)
+#endif
+
 // Minimal PS2 RenderWare geometry declarations recovered from retail DWARF.
 typedef unsigned char RwUInt8;
 typedef unsigned short RwUInt16;
