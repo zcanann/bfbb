@@ -15,14 +15,18 @@ void xFogInit(void* b, void* tasset)
     xFogInit((xBase*)b, (xFogAsset*)tasset);
 }
 
+#if defined(PS2)
+inline
+#endif
 void xFogInit(xBase* ent, xFogAsset* tasset)
 {
     xBaseInit(ent, (xBaseAsset*)tasset);
     ent->eventFunc = xFogEventCB;
-    ((_xFog*)ent)->tasset = tasset;
+    _xFog* fog = (_xFog*)ent;
+    fog->tasset = tasset;
     if (ent->linkCount != 0)
     {
-        ent->link = (xLinkAsset*)(((_xFog*)ent)->tasset + 1);
+        ent->link = (xLinkAsset*)(fog->tasset + 1);
     }
     else
     {
@@ -30,6 +34,9 @@ void xFogInit(xBase* ent, xFogAsset* tasset)
     }
 }
 
+#if defined(PS2)
+inline
+#endif
 void xFogReset(_xFog* ent)
 {
     xBaseReset((xBase*)ent, (xBaseAsset*)ent->tasset);
@@ -53,20 +60,20 @@ S32 xFogEventCB(xBase* to, xBase* from, U32 toEvent, const F32* toParam, xBase* 
     {
         iFogParams fog;
         fog.type = rwFOGTYPELINEAR;
-        xFogAsset* fromFog = ((_xFog*)from)->tasset;
-        fog.start = fromFog->fogStart;
-        fog.stop = fromFog->fogStop;
-        fog.density = fromFog->fogDensity;
-        fog.fogcolor.red = fromFog->fogColor[0];
-        fog.fogcolor.green = fromFog->fogColor[1];
-        fog.fogcolor.blue = fromFog->fogColor[2];
-        fog.fogcolor.alpha = fromFog->fogColor[3];
-        fog.bgcolor.red = fromFog->bkgndColor[0];
-        fog.bgcolor.green = fromFog->bkgndColor[1];
-        fog.bgcolor.blue = fromFog->bkgndColor[2];
-        fog.bgcolor.alpha = fromFog->bkgndColor[3];
+        _xFog* t = (_xFog*)from;
+        fog.start = t->tasset->fogStart;
+        fog.stop = t->tasset->fogStop;
+        fog.density = t->tasset->fogDensity;
+        fog.fogcolor.red = t->tasset->fogColor[0];
+        fog.fogcolor.green = t->tasset->fogColor[1];
+        fog.fogcolor.blue = t->tasset->fogColor[2];
+        fog.fogcolor.alpha = t->tasset->fogColor[3];
+        fog.bgcolor.red = t->tasset->bkgndColor[0];
+        fog.bgcolor.green = t->tasset->bkgndColor[1];
+        fog.bgcolor.blue = t->tasset->bkgndColor[2];
+        fog.bgcolor.alpha = t->tasset->bkgndColor[3];
         fog.table = NULL;
-        iCameraSetFogParams(&fog, fromFog->transitionTime);
+        iCameraSetFogParams(&fog, t->tasset->transitionTime);
         break;
     }
     case eEventOff:

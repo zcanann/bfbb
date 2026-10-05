@@ -235,8 +235,13 @@ char* xStrupr(char* string)
 
 namespace
 {
+#ifdef XBOX
+    inline U32 tolower(char param_1);
+    inline U32 tolower(S32 param_1);
+#else
     U32 tolower(char param_1);
     U32 tolower(S32 param_1);
+#endif
 } // namespace
 
 S32 xStrParseFloatList(F32* dest, const char* strbuf, S32 max)

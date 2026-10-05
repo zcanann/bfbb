@@ -1,7 +1,11 @@
 #ifndef XFOG_H
 #define XFOG_H
 
+#if defined(PS2)
+struct xScene;
+#else
 #include "xEnt.h"
+#endif
 #include "xBase.h"
 
 #include <types.h>

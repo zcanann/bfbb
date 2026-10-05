@@ -4880,6 +4880,188 @@
         }
       ],
       "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/x/xMovePoint.cpp",
+      "target_unit": "SB/Core/x/xMovePoint.cpp",
+      "object": "source/xMovePoint.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xMovePointGetPos__FPC10xMovePoint": "xMovePointGetPos__FPC10xMovePoint",
+        "xMovePointGetNext__FPC10xMovePointPC10xMovePointPP10xMovePointP5xVec3": "xMovePointGetNext__FPC10xMovePointPC10xMovePointPP10xMovePointP5xVec3",
+        "xMovePointSplineDestroy__FP10xMovePoint": "xMovePointSplineDestroy__FP10xMovePoint",
+        "xMovePointSplineSetup__FP10xMovePoint": "xMovePointSplineSetup__FP10xMovePoint",
+        "xMovePointSetup__FP10xMovePointP6xScene": "xMovePointSetup__FP10xMovePointP6xScene",
+        "xMovePointReset__FP10xMovePoint": "xMovePointReset__FP10xMovePoint",
+        "xMovePointLoad__FP10xMovePointP7xSerial": "xMovePointLoad__FP10xMovePointP7xSerial",
+        "xMovePointSave__FP10xMovePointP7xSerial": "xMovePointSave__FP10xMovePointP7xSerial",
+        "xMovePointInit__FP10xMovePointP15xMovePointAsset": "xMovePointInit__FP10xMovePointP15xMovePointAsset"
+      },
+      "calls": [
+        {
+          "function": "xMovePointGetNext__FPC10xMovePointPC10xMovePointPP10xMovePointP5xVec3",
+          "offset": 72,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xrand__Fv",
+          "symbol": "xrand__Fv"
+        },
+        {
+          "function": "xMovePointSplineSetup__FP10xMovePoint",
+          "offset": 444,
+          "target_source": "SB/Core/x/xSpline.cpp",
+          "target_function": "xSpline3_Bezier__FP5xVec3PfUiUiP5xVec3P5xVec3",
+          "symbol": "xSpline3_Bezier__FP5xVec3PfUiUiP5xVec3P5xVec3"
+        },
+        {
+          "function": "xMovePointSplineSetup__FP10xMovePoint",
+          "offset": 460,
+          "target_source": "SB/Core/x/xSpline.cpp",
+          "target_function": "xSpline3_ArcInit__FP8xSpline3Ui",
+          "symbol": "xSpline3_ArcInit__FP8xSpline3Ui"
+        },
+        {
+          "function": "xMovePointSetup__FP10xMovePointP6xScene",
+          "offset": 76,
+          "target_source": "SB/Core/x/xScene.cpp",
+          "target_function": "xSceneResolvID__FP6xSceneUi",
+          "symbol": "xSceneResolvID__FP6xSceneUi"
+        },
+        {
+          "function": "xMovePointReset__FP10xMovePoint",
+          "offset": 16,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseReset__FP5xBaseP10xBaseAsset",
+          "symbol": "xBaseReset__FP5xBaseP10xBaseAsset"
+        },
+        {
+          "function": "xMovePointLoad__FP10xMovePointP7xSerial",
+          "offset": 0,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseLoad__FP5xBaseP7xSerial",
+          "symbol": "xBaseLoad__FP5xBaseP7xSerial",
+          "opcode": 2
+        },
+        {
+          "function": "xMovePointSave__FP10xMovePointP7xSerial",
+          "offset": 0,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseSave__FP5xBaseP7xSerial",
+          "symbol": "xBaseSave__FP5xBaseP7xSerial",
+          "opcode": 2
+        },
+        {
+          "function": "xMovePointInit__FP10xMovePointP15xMovePointAsset",
+          "offset": 20,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseInit__FP5xBaseP10xBaseAsset",
+          "symbol": "xBaseInit__FP5xBaseP10xBaseAsset"
+        },
+        {
+          "function": "xMovePointInit__FP10xMovePointP15xMovePointAsset",
+          "offset": 84,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xMovePointInit__FP10xMovePointP15xMovePointAsset",
+          "offset": 76,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap"
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xFog.cpp",
+      "target_unit": "SB/Core/x/xFog.cpp",
+      "object": "source/xFog.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xFogUpdate__FP5xBaseP6xScenef": "xFogUpdate__FP5xBaseP6xScenef",
+        "xFogEventCB__FP5xBaseP5xBaseUiPCfP5xBase": "xFogEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "xFogLoad__FP5_xFogP7xSerial": "xFogLoad__FP5_xFogP7xSerial",
+        "xFogSave__FP5_xFogP7xSerial": "xFogSave__FP5_xFogP7xSerial",
+        "xFogInit__FPvPv": "xFogInit__FPvPv",
+        "xFogClearFog__Fv": "xFogClearFog__Fv"
+      },
+      "calls": [
+        {
+          "function": "xFogEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 200,
+          "target_source": "SB/Core/x/iCamera.cpp",
+          "target_function": "iCameraSetFogParams__FP10iFogParamsf",
+          "symbol": "iCameraSetFogParams__FP10iFogParamsf"
+        },
+        {
+          "function": "xFogEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 220,
+          "target_source": "SB/Core/x/iCamera.cpp",
+          "target_function": "iCameraSetFogParams__FP10iFogParamsf",
+          "symbol": "iCameraSetFogParams__FP10iFogParamsf"
+        },
+        {
+          "function": "xFogEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 244,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseReset__FP5xBaseP10xBaseAsset",
+          "symbol": "xBaseReset__FP5xBaseP10xBaseAsset"
+        },
+        {
+          "function": "xFogLoad__FP5_xFogP7xSerial",
+          "offset": 0,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseLoad__FP5xBaseP7xSerial",
+          "symbol": "xBaseLoad__FP5xBaseP7xSerial",
+          "opcode": 2
+        },
+        {
+          "function": "xFogSave__FP5_xFogP7xSerial",
+          "offset": 0,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseSave__FP5xBaseP7xSerial",
+          "symbol": "xBaseSave__FP5xBaseP7xSerial",
+          "opcode": 2
+        },
+        {
+          "function": "xFogInit__FPvPv",
+          "offset": 20,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseInit__FP5xBaseP10xBaseAsset",
+          "symbol": "xBaseInit__FP5xBaseP10xBaseAsset"
+        },
+        {
+          "function": "xFogClearFog__Fv",
+          "offset": 8,
+          "target_source": "SB/Core/x/iCamera.cpp",
+          "target_function": "iCameraSetFogParams__FP10iFogParamsf",
+          "symbol": "iCameraSetFogParams__FP10iFogParamsf",
+          "opcode": 2
+        }
+      ],
+      "gp_relocations": [],
+      "address_pairs": [
+        {
+          "function": "xFogInit__FPvPv",
+          "target_source": "SB/Core/x/xFog.cpp",
+          "target_function": "xFogEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "symbol": "xFogEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "hi_offset": 28,
+          "lo_offset": 32
+        }
+      ]
     }
   ]
 }

@@ -15435,7 +15435,7 @@
       "kind": "function",
       "address": 1422208,
       "size": 158,
-      "canonical_identifier": "anon_0015b380"
+      "canonical_identifier": "xStricmp(const char*,const char*)"
     },
     {
       "kind": "unclassified",
@@ -15446,7 +15446,7 @@
       "kind": "function",
       "address": 1422608,
       "size": 61,
-      "canonical_identifier": "anon_0015b510"
+      "canonical_identifier": "imemcmp(const void*,const void*,size_t)"
     },
     {
       "kind": "unclassified",

@@ -40,6 +40,20 @@ struct RwLinkList
     RwLLLink link;
 };
 
+struct RwRGBA
+{
+    RwUInt8 red, green, blue, alpha;
+};
+
+enum RwFogType
+{
+    rwFOGTYPENAFOGTYPE = 0,
+    rwFOGTYPELINEAR = 1,
+    rwFOGTYPEEXPONENTIAL = 2,
+    rwFOGTYPEEXPONENTIAL2 = 3,
+    rwFOGTYPEFORCEENUMSIZEINT = 0x7fffffff
+};
+
 struct RwRGBAReal
 {
     RwReal red, green, blue, alpha;
@@ -74,6 +88,7 @@ enum RwOpCombineType
     rwOPCOMBINETYPEFORCEENUMSIZEINT = 0x7fffffff
 };
 
+struct RwCamera;
 struct RwFrame;
 struct RxPipeline;
 

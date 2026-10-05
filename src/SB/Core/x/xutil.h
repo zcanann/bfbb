@@ -98,6 +98,8 @@ template <typename T> inline T xUtil_choose(T const* list, S32 size, F32 const* 
 }
 
 #if defined(PS2)
+void strtosjis(U8* string, U8* dest);
+U8 BCDtoi(U8 hex);
 U8 itoBCD(U16 dec);
 U8 itoBCD(U8 dec);
 #endif
