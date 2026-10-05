@@ -3615,6 +3615,242 @@
         }
       ],
       "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/x/xhipio.cpp",
+      "target_unit": "SB/Core/x/xhipio.cpp",
+      "object": "source/xhipio.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "HIPLReadString__FP14st_HIPLOADDATAPc": "HIPLReadString__FP14st_HIPLOADDATAPc",
+        "HIPLReadFloats__FP14st_HIPLOADDATAPfi": "HIPLReadFloats__FP14st_HIPLOADDATAPfi",
+        "HIPLReadLongs__FP14st_HIPLOADDATAPii": "HIPLReadLongs__FP14st_HIPLOADDATAPii",
+        "HIPLReadShorts__FP14st_HIPLOADDATAPsi": "HIPLReadShorts__FP14st_HIPLOADDATAPsi",
+        "HIPLReadBytes__FP14st_HIPLOADDATAPci": "HIPLReadBytes__FP14st_HIPLOADDATAPci",
+        "HIPLPollRead__FP14st_HIPLOADDATA": "HIPLPollRead__FP14st_HIPLOADDATA",
+        "HIPLBypassRead__FP14st_HIPLOADDATAPvii": "HIPLBypassRead__FP14st_HIPLOADDATAPvii",
+        "HIPLBlockRead__FP14st_HIPLOADDATAPvii": "HIPLBlockRead__FP14st_HIPLOADDATAPvii",
+        "HIPLBlockExit__FP14st_HIPLOADDATA": "HIPLBlockExit__FP14st_HIPLOADDATA",
+        "HIPLBlockEnter__FP14st_HIPLOADDATA": "HIPLBlockEnter__FP14st_HIPLOADDATA",
+        "HIPLSetSpot__FP14st_HIPLOADDATAi": "HIPLSetSpot__FP14st_HIPLOADDATAi",
+        "HIPLSetBypass__FP14st_HIPLOADDATAii": "HIPLSetBypass__FP14st_HIPLOADDATAii",
+        "HIPLBaseSector__FP14st_HIPLOADDATA": "HIPLBaseSector__FP14st_HIPLOADDATA",
+        "HIPLDestroy__FP14st_HIPLOADDATA": "HIPLDestroy__FP14st_HIPLOADDATA",
+        "HIPLCreate__FPCcPci": "HIPLCreate__FPCcPci",
+        "get_HIPLFuncs__Fv": "get_HIPLFuncs__Fv"
+      },
+      "calls": [
+        {
+          "function": "HIPLReadString__FP14st_HIPLOADDATAPc",
+          "offset": 52,
+          "target_source": "SB/Core/x/xhipio.cpp",
+          "target_function": "HIPLBypassRead__FP14st_HIPLOADDATAPvii",
+          "symbol": "HIPLBypassRead__FP14st_HIPLOADDATAPvii"
+        },
+        {
+          "function": "HIPLReadString__FP14st_HIPLOADDATAPc",
+          "offset": 104,
+          "target_source": "SB/Core/x/xhipio.cpp",
+          "target_function": "HIPLBypassRead__FP14st_HIPLOADDATAPvii",
+          "symbol": "HIPLBypassRead__FP14st_HIPLOADDATAPvii"
+        },
+        {
+          "function": "HIPLReadString__FP14st_HIPLOADDATAPc",
+          "offset": 136,
+          "target_source": "SB/Core/x/xhipio.cpp",
+          "target_function": "HIPLBypassRead__FP14st_HIPLOADDATAPvii",
+          "symbol": "HIPLBypassRead__FP14st_HIPLOADDATAPvii"
+        },
+        {
+          "function": "HIPLReadString__FP14st_HIPLOADDATAPc",
+          "offset": 188,
+          "target_source": "SB/Core/x/xhipio.cpp",
+          "target_function": "HIPLBlockRead__FP14st_HIPLOADDATAPvii",
+          "symbol": "HIPLBlockRead__FP14st_HIPLOADDATAPvii"
+        },
+        {
+          "function": "HIPLReadString__FP14st_HIPLOADDATAPc",
+          "offset": 232,
+          "target_source": "SB/Core/x/xhipio.cpp",
+          "target_function": "HIPLBlockRead__FP14st_HIPLOADDATAPvii",
+          "symbol": "HIPLBlockRead__FP14st_HIPLOADDATAPvii"
+        },
+        {
+          "function": "HIPLReadFloats__FP14st_HIPLOADDATAPfi",
+          "offset": 20,
+          "target_source": "SB/Core/x/xhipio.cpp",
+          "target_function": "HIPLBypassRead__FP14st_HIPLOADDATAPvii",
+          "symbol": "HIPLBypassRead__FP14st_HIPLOADDATAPvii"
+        },
+        {
+          "function": "HIPLReadFloats__FP14st_HIPLOADDATAPfi",
+          "offset": 36,
+          "target_source": "SB/Core/x/xhipio.cpp",
+          "target_function": "HIPLBlockRead__FP14st_HIPLOADDATAPvii",
+          "symbol": "HIPLBlockRead__FP14st_HIPLOADDATAPvii"
+        },
+        {
+          "function": "HIPLReadLongs__FP14st_HIPLOADDATAPii",
+          "offset": 20,
+          "target_source": "SB/Core/x/xhipio.cpp",
+          "target_function": "HIPLBypassRead__FP14st_HIPLOADDATAPvii",
+          "symbol": "HIPLBypassRead__FP14st_HIPLOADDATAPvii"
+        },
+        {
+          "function": "HIPLReadLongs__FP14st_HIPLOADDATAPii",
+          "offset": 36,
+          "target_source": "SB/Core/x/xhipio.cpp",
+          "target_function": "HIPLBlockRead__FP14st_HIPLOADDATAPvii",
+          "symbol": "HIPLBlockRead__FP14st_HIPLOADDATAPvii"
+        },
+        {
+          "function": "HIPLReadShorts__FP14st_HIPLOADDATAPsi",
+          "offset": 20,
+          "target_source": "SB/Core/x/xhipio.cpp",
+          "target_function": "HIPLBypassRead__FP14st_HIPLOADDATAPvii",
+          "symbol": "HIPLBypassRead__FP14st_HIPLOADDATAPvii"
+        },
+        {
+          "function": "HIPLReadShorts__FP14st_HIPLOADDATAPsi",
+          "offset": 36,
+          "target_source": "SB/Core/x/xhipio.cpp",
+          "target_function": "HIPLBlockRead__FP14st_HIPLOADDATAPvii",
+          "symbol": "HIPLBlockRead__FP14st_HIPLOADDATAPvii"
+        },
+        {
+          "function": "HIPLReadBytes__FP14st_HIPLOADDATAPci",
+          "offset": 20,
+          "target_source": "SB/Core/x/xhipio.cpp",
+          "target_function": "HIPLBypassRead__FP14st_HIPLOADDATAPvii",
+          "symbol": "HIPLBypassRead__FP14st_HIPLOADDATAPvii"
+        },
+        {
+          "function": "HIPLReadBytes__FP14st_HIPLOADDATAPci",
+          "offset": 36,
+          "target_source": "SB/Core/x/xhipio.cpp",
+          "target_function": "HIPLBlockRead__FP14st_HIPLOADDATAPvii",
+          "symbol": "HIPLBlockRead__FP14st_HIPLOADDATAPvii"
+        },
+        {
+          "function": "HIPLBlockEnter__FP14st_HIPLOADDATA",
+          "offset": 100,
+          "target_source": "SB/Core/x/xhipio.cpp",
+          "target_function": "HIPLBypassRead__FP14st_HIPLOADDATAPvii",
+          "symbol": "HIPLBypassRead__FP14st_HIPLOADDATAPvii"
+        },
+        {
+          "function": "HIPLBlockEnter__FP14st_HIPLOADDATA",
+          "offset": 124,
+          "target_source": "SB/Core/x/xhipio.cpp",
+          "target_function": "HIPLBlockRead__FP14st_HIPLOADDATAPvii",
+          "symbol": "HIPLBlockRead__FP14st_HIPLOADDATAPvii"
+        },
+        {
+          "function": "HIPLBlockEnter__FP14st_HIPLOADDATA",
+          "offset": 188,
+          "target_source": "SB/Core/x/xhipio.cpp",
+          "target_function": "HIPLBypassRead__FP14st_HIPLOADDATAPvii",
+          "symbol": "HIPLBypassRead__FP14st_HIPLOADDATAPvii"
+        },
+        {
+          "function": "HIPLBlockEnter__FP14st_HIPLOADDATA",
+          "offset": 220,
+          "target_source": "SB/Core/x/xhipio.cpp",
+          "target_function": "HIPLBlockRead__FP14st_HIPLOADDATAPvii",
+          "symbol": "HIPLBlockRead__FP14st_HIPLOADDATAPvii"
+        },
+        {
+          "function": "HIPLCreate__FPCcPci",
+          "offset": 332,
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "target_function": "xBinioLoadCreate__FPCc",
+          "symbol": "xBinioLoadCreate__FPCc"
+        },
+        {
+          "function": "HIPLDestroy__FP14st_HIPLOADDATA",
+          "offset": 60,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "HIPLCreate__FPCcPci",
+          "offset": 156,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "HIPLCreate__FPCcPci",
+          "offset": 444,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "HIPLDestroy__FP14st_HIPLOADDATA",
+          "offset": 68,
+          "opcode": 35,
+          "target_name": "g_loadlock",
+          "symbol": "g_loadlock",
+          "target_source": "SB/Core/x/xhipio.cpp"
+        },
+        {
+          "function": "HIPLDestroy__FP14st_HIPLOADDATA",
+          "offset": 88,
+          "opcode": 43,
+          "target_name": "g_loadlock",
+          "symbol": "g_loadlock",
+          "target_source": "SB/Core/x/xhipio.cpp"
+        },
+        {
+          "function": "HIPLCreate__FPCcPci",
+          "offset": 48,
+          "opcode": 35,
+          "target_name": "g_loadlock",
+          "symbol": "g_loadlock",
+          "target_source": "SB/Core/x/xhipio.cpp"
+        },
+        {
+          "function": "HIPLCreate__FPCcPci",
+          "offset": 80,
+          "opcode": 35,
+          "target_name": "g_loadlock",
+          "symbol": "g_loadlock",
+          "target_source": "SB/Core/x/xhipio.cpp"
+        },
+        {
+          "function": "HIPLCreate__FPCcPci",
+          "offset": 124,
+          "opcode": 43,
+          "target_name": "g_loadlock",
+          "symbol": "g_loadlock",
+          "target_source": "SB/Core/x/xhipio.cpp"
+        },
+        {
+          "function": "HIPLCreate__FPCcPci",
+          "offset": 452,
+          "opcode": 35,
+          "target_name": "g_loadlock",
+          "symbol": "g_loadlock",
+          "target_source": "SB/Core/x/xhipio.cpp"
+        },
+        {
+          "function": "HIPLCreate__FPCcPci",
+          "offset": 472,
+          "opcode": 43,
+          "target_name": "g_loadlock",
+          "symbol": "g_loadlock",
+          "target_source": "SB/Core/x/xhipio.cpp"
+        }
+      ]
     }
   ]
 }

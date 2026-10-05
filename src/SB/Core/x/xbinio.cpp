@@ -1,4 +1,5 @@
 #include "xbinio.h"
+#include "xFile.h"
 
 #include "xMath.h"
 
