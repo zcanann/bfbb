@@ -498,3 +498,6 @@ see [Robot layout evidence](PS2_ROBOT_LAYOUT.md).
 
 Complete PS2 Plankton source comparison adds 5,420 matched bytes per debug
 region; see [Plankton evidence](PS2_PLANKTON_SOURCE.md).
+
+Complete PS2 Tiki source comparison adds 768 matched bytes per debug region;
+see [Tiki evidence](PS2_TIKI_SOURCE.md).
