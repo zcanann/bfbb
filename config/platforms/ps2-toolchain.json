@@ -8509,6 +8509,150 @@
         }
       ],
       "address_pairs": []
+    },
+    {
+      "source": "src/SB/Core/x/xParCmd.cpp",
+      "target_unit": "SB/Core/x/xParCmd.cpp",
+      "object": "source/xParCmd.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xParCmd_Shaper_Update__FP7xParCmdP9xParGroupf": "xParCmd_Shaper_Update__FP7xParCmdP9xParGroupf",
+        "xParCmd_AlphaInOut_Update__FP7xParCmdP9xParGroupf": "xParCmd_AlphaInOut_Update__FP7xParCmdP9xParGroupf",
+        "xParCmd_SizeInOut_Update__FP7xParCmdP9xParGroupf": "xParCmd_SizeInOut_Update__FP7xParCmdP9xParGroupf",
+        "xParCmd_DampenSpeed_Update__FP7xParCmdP9xParGroupf": "xParCmd_DampenSpeed_Update__FP7xParCmdP9xParGroupf",
+        "xParCmdCollideFallSticky_Update__FP7xParCmdP9xParGroupf": "xParCmdCollideFallSticky_Update__FP7xParCmdP9xParGroupf",
+        "xParCmdCollideFall_Update__FP7xParCmdP9xParGroupf": "xParCmdCollideFall_Update__FP7xParCmdP9xParGroupf",
+        "xParCmdTexAnim_Update__FP7xParCmdP9xParGroupf": "xParCmdTexAnim_Update__FP7xParCmdP9xParGroupf",
+        "xParCmdTex_Update__FP7xParCmdP9xParGroupf": "xParCmdTex_Update__FP7xParCmdP9xParGroupf",
+        "xParCmdRotateAround_Update__FP7xParCmdP9xParGroupf": "xParCmdRotateAround_Update__FP7xParCmdP9xParGroupf",
+        "xParCmdVelocityApply_Update__FP7xParCmdP9xParGroupf": "xParCmdVelocityApply_Update__FP7xParCmdP9xParGroupf",
+        "xParCmdRotPar_Update__FP7xParCmdP9xParGroupf": "xParCmdRotPar_Update__FP7xParCmdP9xParGroupf",
+        "xParCmdApplyWind_Update__FP7xParCmdP9xParGroupf": "xParCmdApplyWind_Update__FP7xParCmdP9xParGroupf",
+        "xParCmdRandomVelocityPar_Update__FP7xParCmdP9xParGroupf": "xParCmdRandomVelocityPar_Update__FP7xParCmdP9xParGroupf",
+        "xParCmdAlpha3rdPolyReg_Update__FP7xParCmdP9xParGroupf": "xParCmdAlpha3rdPolyReg_Update__FP7xParCmdP9xParGroupf",
+        "xParCmdScale_Update__FP7xParCmdP9xParGroupf": "xParCmdScale_Update__FP7xParCmdP9xParGroupf",
+        "xParCmdSmokeAlpha_Update__FP7xParCmdP9xParGroupf": "xParCmdSmokeAlpha_Update__FP7xParCmdP9xParGroupf",
+        "xParCmdScale3rdPolyReg_Update__FP7xParCmdP9xParGroupf": "xParCmdScale3rdPolyReg_Update__FP7xParCmdP9xParGroupf",
+        "xParCmdMoveRandomPar_Update__FP7xParCmdP9xParGroupf": "xParCmdMoveRandomPar_Update__FP7xParCmdP9xParGroupf",
+        "xParCmdMoveRandom_Update__FP7xParCmdP9xParGroupf": "xParCmdMoveRandom_Update__FP7xParCmdP9xParGroupf",
+        "xParCmdMove_Update__FP7xParCmdP9xParGroupf": "xParCmdMove_Update__FP7xParCmdP9xParGroupf",
+        "xParCmdAccelerate_Update__FP7xParCmdP9xParGroupf": "xParCmdAccelerate_Update__FP7xParCmdP9xParGroupf",
+        "xParCmdOrbitLine_Update__FP7xParCmdP9xParGroupf": "xParCmdOrbitLine_Update__FP7xParCmdP9xParGroupf",
+        "xParCmdOrbitPoint_Update__FP7xParCmdP9xParGroupf": "xParCmdOrbitPoint_Update__FP7xParCmdP9xParGroupf",
+        "xParCmdFollow_Update__FP7xParCmdP9xParGroupf": "xParCmdFollow_Update__FP7xParCmdP9xParGroupf",
+        "xParCmdAge_Update__FP7xParCmdP9xParGroupf": "xParCmdAge_Update__FP7xParCmdP9xParGroupf",
+        "xParCmdKillSlow_Update__FP7xParCmdP9xParGroupf": "xParCmdKillSlow_Update__FP7xParCmdP9xParGroupf",
+        "xParCmdGetUpdateFunc__FUi": "xParCmdGetUpdateFunc__FUi",
+        "xParCmdGetSize__FUi": "xParCmdGetSize__FUi",
+        "xParCmdRegister__FUiUiPFP7xParCmdP9xParGroupf_v": "xParCmdRegister__FUiUiPFP7xParCmdP9xParGroupf_v",
+        "xParCmdInit__Fv": "xParCmdInit__Fv"
+      },
+      "calls": [
+        {
+          "function": "xParCmdTexAnim_Update__FP7xParCmdP9xParGroupf",
+          "offset": 104,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xrand__Fv",
+          "symbol": "xrand__Fv"
+        },
+        {
+          "function": "xParCmdTexAnim_Update__FP7xParCmdP9xParGroupf",
+          "offset": 132,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xrand__Fv",
+          "symbol": "xrand__Fv"
+        },
+        {
+          "function": "xParCmdRotateAround_Update__FP7xParCmdP9xParGroupf",
+          "offset": 220,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3LookVec__FP7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3LookVec__FP7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xParCmdRotateAround_Update__FP7xParCmdP9xParGroupf",
+          "offset": 236,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3GetEuler__FPC7xMat3x3P5xVec3",
+          "symbol": "xMat3x3GetEuler__FPC7xMat3x3P5xVec3"
+        },
+        {
+          "function": "xParCmdRotateAround_Update__FP7xParCmdP9xParGroupf",
+          "offset": 268,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Euler__FP7xMat3x3fff",
+          "symbol": "xMat3x3Euler__FP7xMat3x3fff"
+        },
+        {
+          "function": "xParCmdRotPar_Update__FP7xParCmdP9xParGroupf",
+          "offset": 160,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParCmdRotPar_Update__FP7xParCmdP9xParGroupf",
+          "offset": 252,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParCmdRotPar_Update__FP7xParCmdP9xParGroupf",
+          "offset": 344,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParCmdRandomVelocityPar_Update__FP7xParCmdP9xParGroupf",
+          "offset": 180,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParCmdMoveRandomPar_Update__FP7xParCmdP9xParGroupf",
+          "offset": 64,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParCmdMoveRandomPar_Update__FP7xParCmdP9xParGroupf",
+          "offset": 96,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParCmdMoveRandom_Update__FP7xParCmdP9xParGroupf",
+          "offset": 52,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParCmdMoveRandom_Update__FP7xParCmdP9xParGroupf",
+          "offset": 76,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParCmdMoveRandom_Update__FP7xParCmdP9xParGroupf",
+          "offset": 100,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        }
+      ],
+      "gp_relocations": []
     }
   ]
 }
