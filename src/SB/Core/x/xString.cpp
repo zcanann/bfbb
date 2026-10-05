@@ -489,7 +489,11 @@ const char* find_char(const substr& s, const substr& cs)
 
     const char* text = s.text;
     S32 size;
+#if defined(XBOX)
+    char c;
+#else
     U8 c;
+#endif
 
     switch (cs.size)
     {

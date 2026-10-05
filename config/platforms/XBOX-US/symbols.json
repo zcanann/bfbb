@@ -11550,6 +11550,14 @@
       "identity_kind": "reviewed"
     },
     {
+      "name": "xStrParseFloatList",
+      "canonical_identifier": "xStrParseFloatList(F32*,const char*,S32)",
+      "source": "SB/Core/x/xString.cpp",
+      "address": 1422368,
+      "size": 234,
+      "identity_kind": "reviewed"
+    },
+    {
       "name": "imemcmp",
       "canonical_identifier": "imemcmp(const void*,const void*,size_t)",
       "source": "SB/Core/x/xString.cpp",
@@ -11571,6 +11579,14 @@
       "source": "SB/Core/x/xString.cpp",
       "address": 1422736,
       "size": 111,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "find_char",
+      "canonical_identifier": "find_char(const substr&,const substr&)",
+      "source": "SB/Core/x/xString.cpp",
+      "address": 1422848,
+      "size": 1024,
       "identity_kind": "reviewed"
     },
     {
@@ -12310,28 +12326,36 @@
       "identity_kind": "anonymous"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00164400",
-      "source": null,
+      "name": "xUtil_crc_init",
+      "canonical_identifier": "xUtil_crc_init()",
+      "source": "SB/Core/x/xutil.cpp",
       "address": 1459200,
       "size": 175,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_001644b0",
-      "source": null,
+      "name": "xUtil_crc_update",
+      "canonical_identifier": "xUtil_crc_update(U32,char*,S32)",
+      "source": "SB/Core/x/xutil.cpp",
       "address": 1459376,
       "size": 61,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_001644f0",
-      "source": null,
+      "name": "xUtil_yesno",
+      "canonical_identifier": "xUtil_yesno(F32)",
+      "source": "SB/Core/x/xutil.cpp",
       "address": 1459440,
       "size": 104,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xUtil_wtadjust",
+      "canonical_identifier": "xUtil_wtadjust(F32*,S32,F32)",
+      "source": "SB/Core/x/xutil.cpp",
+      "address": 1459552,
+      "size": 296,
+      "identity_kind": "reviewed"
     },
     {
       "name": null,

@@ -171,4 +171,12 @@ RpWorld* RpWorldAddLight(RpWorld* world, RpLight* light);
 RpWorld* RpWorldRemoveLight(RpWorld* world, RpLight* light);
 }
 
+extern "C" {
+RpAtomic* RpAtomicSetFrame(RpAtomic* atomic, RwFrame* frame);
+RpMaterial* RpMaterialSetTexture(RpMaterial* material, RwTexture* texture);
+}
+
+#define RpAtomicRenderMacro(_atomic) ((_atomic)->renderCallBack(_atomic))
+#define RpAtomicRender(_atomic) RpAtomicRenderMacro(_atomic)
+
 #endif

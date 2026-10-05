@@ -3,7 +3,7 @@
 #include "xMath.h"
 
 #include <ctype.h>
-#if defined(PS2)
+#if defined(PS2) || defined(XBOX)
 #include <stdlib.h>
 #include <stdio.h>
 #else

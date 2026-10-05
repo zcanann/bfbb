@@ -1083,11 +1083,39 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xEntReposition",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1905120,
+      "size": 664,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "xEntValidType",
       "source": "SB/Core/x/xEnt.cpp",
       "address": 1905792,
       "size": 80,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xEntAnimateCollision",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1905872,
+      "size": 160,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntGetAllEntsBox",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1906032,
+      "size": 12,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntSetNostepNormAngle",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1906048,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "xEntCollideWalls",
@@ -1111,6 +1139,69 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xEntCollCheckOneEntNoDepen",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1909072,
+      "size": 1328,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntCollCheckNPCs",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1910400,
+      "size": 72,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntCollCheckDyns",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1910480,
+      "size": 72,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntCollCheckStats",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1910560,
+      "size": 72,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntCollCheckNPCsByGrid",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1910640,
+      "size": 68,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntCollCheckByGrid",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1910720,
+      "size": 140,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntCollCheckOneGrid",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1910864,
+      "size": 1472,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntCollCheckEnv",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1912336,
+      "size": 156,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntEndCollide",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1912496,
+      "size": 44,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "xEntBeginCollide",
       "source": "SB/Core/x/xEnt.cpp",
       "address": 1912544,
@@ -1118,11 +1209,74 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xEntCollide",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1912864,
+      "size": 880,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "xEntApplyPhysics",
       "source": "SB/Core/x/xEnt.cpp",
       "address": 1913744,
       "size": 700,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xEntMove",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1914448,
+      "size": 388,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntMotionToMatrix",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1914992,
+      "size": 740,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntDefaultTranslate",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1915744,
+      "size": 444,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntDefaultBoundUpdate",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1916192,
+      "size": 120,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntEndUpdate",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1916320,
+      "size": 264,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntBeginUpdate",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1916592,
+      "size": 288,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntUpdate",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1916880,
+      "size": 416,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntRender",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1917296,
+      "size": 360,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "xEntRestorePipeline",
@@ -1139,11 +1293,123 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xEntSetupPipeline",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1917824,
+      "size": 500,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntSetupPipeline",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1918336,
+      "size": 12,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntLoadModel",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1918352,
+      "size": 172,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntReset",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1918528,
+      "size": 1536,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntLoad",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1920064,
+      "size": 108,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntSave",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1920176,
+      "size": 108,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntSetup",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1920288,
+      "size": 1068,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "stacked_owner_destroyed",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1921360,
+      "size": 64,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "collide_downward",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1921424,
+      "size": 532,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntInitForType",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1921968,
+      "size": 532,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntInit",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1922512,
+      "size": 268,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "xEntAddHittableFlag",
       "source": "SB/Core/x/xEnt.cpp",
       "address": 1922784,
       "size": 224,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xEntSceneExit",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1923008,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntSceneInit",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1923024,
+      "size": 12,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntSetTimePassed",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1923040,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "refresh",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1923056,
+      "size": 368,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "reset",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1923424,
+      "size": 1036,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "xEntDriveInit",
@@ -2441,11 +2707,60 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xSpline3_Bezier",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2142336,
+      "size": 324,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "AllocSpline3",
       "source": "SB/Core/x/xSpline.cpp",
       "address": 2142672,
       "size": 332,
       "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "xSpline3_ArcInit",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2143008,
+      "size": 428,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSpline3_EvalArcApprox",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2143440,
+      "size": 72,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "ArcEvalIterate",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2143520,
+      "size": 840,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSpline3_EvalSeg",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2144368,
+      "size": 868,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "CoefSeg3",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2145248,
+      "size": 1116,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "EvalBspline3",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2146368,
+      "size": 496,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "BasisBspline",
@@ -2455,11 +2770,32 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "EvalCoef3",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2147392,
+      "size": 488,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "ArcLength3",
       "source": "SB/Core/x/xSpline.cpp",
       "address": 2147888,
       "size": 468,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "Interpolate_Bspline",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2148368,
+      "size": 540,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Tridiag_Solve",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2148912,
+      "size": 664,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "XST_find_bySID",
@@ -3015,6 +3351,41 @@
       "provenance": "machine-corroborated-explicit-transfers"
     },
     {
+      "name": "FastIntersectSphereTriangle",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "address": 3154368,
+      "size": 1200,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xClumpColl_ForAllIntersections",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "address": 3155568,
+      "size": 832,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "LeafNodeBoxPolyIntersect",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "address": 3156400,
+      "size": 560,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "LeafNodeSpherePolyIntersect",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "address": 3156960,
+      "size": 512,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "LeafNodeLinePolyIntersect",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "address": 3157472,
+      "size": 920,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "xClumpColl_ForAllCapsuleLeafNodeIntersections",
       "source": "SB/Core/x/xClumpColl.cpp",
       "address": 3158400,
@@ -3034,6 +3405,27 @@
       "address": 3163536,
       "size": 320,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xClumpColl_InstancePointers",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "address": 3163856,
+      "size": 360,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "AddAtomicCB",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "address": 3164224,
+      "size": 308,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xClumpColl_StaticBufferInit",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "address": 3164544,
+      "size": 128,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "xGridEntIsTooBig",

@@ -1935,7 +1935,7 @@ S32 zNPCGoalAlertHammer::PlayerInSpot(F32 dt)
     plyrInSpot = 0;
     zNPCRobot* npc = (zNPCRobot*)(psyche->clt_owner);
     dst_plyr = xsqrt(npc->XZDstSqToPlayer(&dir_plyr, &dy));
-    dy = __fabs(dy);
+    dy = xabs(dy);
     if (dst_plyr < 2.25f)
     {
         return 1;
@@ -1964,7 +1964,7 @@ S32 zNPCGoalAlertHammer::PlayerInSpot(F32 dt)
             spd_mover = MAX(npc->spd_throttle, 12.0f);
             zEntPlayer_PredictPos(&pos_plyr, MIN((dst_guess / spd_mover) + 0.5f, 2.0f), 1.0f, 0);
             xVec3Sub(&vec, &pos_plyr, &pos_zone);
-            if ((F32)__fabs(vec.y) < 2.5f)
+            if ((F32)xabs(vec.y) < 2.5f)
             {
                 vec.y = 0.0f;
                 if (xVec3Length2(&vec) < 1.25f)
@@ -3660,7 +3660,7 @@ S32 zNPCGoalAlertChuck::ZoomMove(F32 dt)
         xVec3SMulBy(&dir, (1.0f / dist));
         npc->ThrottleApply(dt, &dir, 0);
         dst_zoom =
-            -((dt * npc->spd_throttle) * ((F32)__fabs(dir.x) + (F32)__fabs(dir.z)) - dst_zoom);
+            -((dt * npc->spd_throttle) * ((F32)xabs(dir.x) + (F32)xabs(dir.z)) - dst_zoom);
     }
     if (dst_zoom < 0.0f)
     {
@@ -3826,14 +3826,14 @@ void zNPCGoalAlertTubelet::PeteAttackParSys(F32 dt, S32 param_2)
     zNPCTubelet* iVar2 = (zNPCTubelet*)(psyche->clt_owner);
     iVar1 = (iVar2->frame);
     F32 dVar3 = (iVar1->drot.angle);
-    if ((F32)__fabs(dVar3) > 0.09599312f)
+    if ((F32)xabs(dVar3) > 0.09599312f)
     {
         iVar1->drot.angle *= 0.8f;
         iVar2->frame->mode |= 0x20;
     }
     else
     {
-        if ((F32)__fabs(dVar3) < 0.08726647f)
+        if ((F32)xabs(dVar3) < 0.08726647f)
         {
             iVar1->drot.angle = -(dt * 0.0872664675116539f - dVar3);
             iVar2->frame->mode |= 0x20;
