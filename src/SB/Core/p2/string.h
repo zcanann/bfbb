@@ -8,6 +8,7 @@ extern "C" {
 #endif
 
 void* memset(void* destination, int value, size_t size);
+size_t strlen(const char* string);
 
 #ifdef __cplusplus
 }

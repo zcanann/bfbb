@@ -1,0 +1,13 @@
+#ifndef PS2_IMORPH_H
+#define PS2_IMORPH_H
+
+#include <types.h>
+#include <rwcore.h>
+
+struct RpAtomic;
+
+void iMorphOptimize(RpAtomic* model, S32 normals);
+void iMorphRender(RpAtomic* model, RwMatrix* mat, S16** v_array, S16* weight,
+                  U32 normals, F32 scale);
+
+#endif

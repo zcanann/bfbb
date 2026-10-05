@@ -1,6 +1,8 @@
 #include "xMorph.h"
 
+#if !defined(PS2)
 #include "xDebug.h"
+#endif
 #include "iModel.h"
 
 #include <string.h>
@@ -56,7 +58,12 @@ xMorphSeqFile* xMorphSeqSetup(void* data, xMorphFindAssetCallback FindAssetCB)
         mphtgt = (xMorphTargetFile*)assetlist[(U32)framelist[i].Model*2+1];
         framelist[i].Model = model;
         for (j = 0; j < 4; j++) {
+#if defined(PS2)
+            // Serialized target indices use -1 for a missing target.
+            if ((U32)framelist[i].Targets[j] == 0xFFFFFFFF) {
+#else
             if ((U32)framelist[i].Targets[j] + 0x10000 == 0xFFFF) {
+#endif
                 framelist[i].Targets[j] = NULL;
             } else {
                 skipsize = (mphtgt->NumVerts * 3 + 7) & ~7;

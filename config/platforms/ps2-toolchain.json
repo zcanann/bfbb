@@ -4712,6 +4712,140 @@
         }
       ],
       "selector": "name_address"
+    },
+    {
+      "source": "src/SB/Core/x/xMorph.cpp",
+      "target_unit": "SB/Core/x/xMorph.cpp",
+      "object": "source/xMorph.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xMorphSeqDuration__FP13xMorphSeqFile": "xMorphSeqDuration__FP13xMorphSeqFile",
+        "xMorphRender__FP13xMorphSeqFileP11RwMatrixTagf": "xMorphRender__FP13xMorphSeqFileP11RwMatrixTagf",
+        "xMorphSeqSetup__FPvPFUiPc_Pv": "xMorphSeqSetup__FPvPFUiPc_Pv"
+      },
+      "calls": [
+        {
+          "function": "xMorphRender__FP13xMorphSeqFileP11RwMatrixTagf",
+          "offset": 204,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelRender__FP8RpAtomicP11RwMatrixTag",
+          "symbol": "iModelRender__FP8RpAtomicP11RwMatrixTag"
+        },
+        {
+          "function": "xMorphRender__FP13xMorphSeqFileP11RwMatrixTagf",
+          "offset": 488,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_function": "iMorphRender__FP8RpAtomicP11RwMatrixTagPPsPsUif",
+          "symbol": "iMorphRender__FP8RpAtomicP11RwMatrixTagPPsPsUif"
+        },
+        {
+          "function": "xMorphSeqSetup__FPvPFUiPc_Pv",
+          "offset": 284,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_function": "iMorphOptimize__FP8RpAtomici",
+          "symbol": "iMorphOptimize__FP8RpAtomici"
+        }
+      ],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/x/xPartition.cpp",
+      "target_unit": "SB/Core/x/xPartition.cpp",
+      "object": "source/xPartition.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xPartitionDump__FP13_tagPartitionPc": "xPartitionDump__FP13_tagPartitionPc",
+        "xPartitionSpaceMove__FP13_tagPartSpaceP13_tagPartSpaceUi": "xPartitionSpaceMove__FP13_tagPartSpaceP13_tagPartSpaceUi",
+        "xPartitionUpdate__FP13_tagPartitionPviP5xVec3": "xPartitionUpdate__FP13_tagPartitionPviP5xVec3",
+        "xPartitionInsert__FP13_tagPartitionPvP5xVec3": "xPartitionInsert__FP13_tagPartitionPvP5xVec3",
+        "xPartitionWorld__FP13_tagPartitionP4xEnviii": "xPartitionWorld__FP13_tagPartitionP4xEnviii",
+        "xPartitionVolume__FP13_tagPartitionP7xVolumeiii": "xPartitionVolume__FP13_tagPartitionP7xVolumeiii",
+        "xPartitionReset__Fv": "xPartitionReset__Fv"
+      },
+      "calls": [
+        {
+          "function": "xPartitionUpdate__FP13_tagPartitionPviP5xVec3",
+          "offset": 324,
+          "target_source": "SB/Core/x/xPartition.cpp",
+          "target_function": "xPartitionSpaceMove__FP13_tagPartSpaceP13_tagPartSpaceUi",
+          "symbol": "xPartitionSpaceMove__FP13_tagPartSpaceP13_tagPartSpaceUi"
+        },
+        {
+          "function": "xPartitionInsert__FP13_tagPartitionPvP5xVec3",
+          "offset": 184,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xPartitionInsert__FP13_tagPartitionPvP5xVec3",
+          "offset": 400,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xPartitionWorld__FP13_tagPartitionP4xEnviii",
+          "offset": 256,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xPartitionVolume__FP13_tagPartitionP7xVolumeiii",
+          "offset": 68,
+          "target_source": "SB/Core/x/xVolume.cpp",
+          "target_function": "GetBound__7xVolumeFv",
+          "symbol": "GetBound__7xVolumeFv"
+        },
+        {
+          "function": "xPartitionVolume__FP13_tagPartitionP7xVolumeiii",
+          "offset": 256,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xPartitionInsert__FP13_tagPartitionPvP5xVec3",
+          "offset": 176,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xPartitionInsert__FP13_tagPartitionPvP5xVec3",
+          "offset": 392,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xPartitionWorld__FP13_tagPartitionP4xEnviii",
+          "offset": 236,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xPartitionVolume__FP13_tagPartitionP7xVolumeiii",
+          "offset": 236,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap"
+        }
+      ]
     }
   ]
 }
