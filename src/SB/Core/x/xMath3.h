@@ -272,4 +272,24 @@ inline F32 xQuatDot(const xQuat* a, const xQuat* b)
     return xVec3Dot(&a->v, &b->v) + a->s * b->s;
 }
 
+#if defined(XBOX)
+inline void xQuatSMul(xQuat* q, const xQuat* a, F32 t)
+{
+    q->s = a->s * t;
+    xVec3SMul((xVec3*)q, (xVec3*)a, t);
+}
+
+inline F32 xQuatLength2(const xQuat* q)
+{
+    return xQuatDot(q, q);
+}
+
+inline void xQuatAdd(xQuat* q, const xQuat* a, const xQuat* b)
+{
+    q->s = a->s + b->s;
+    xVec3Add((xVec3*)q, (xVec3*)a, (xVec3*)b);
+}
+
+#endif
+
 #endif

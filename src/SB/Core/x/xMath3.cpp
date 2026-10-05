@@ -796,6 +796,7 @@ void xBoxFromCircle(xBox& box, const xVec3& center, const xVec3& dir, F32 r)
     box.lower = center - ext;
 }
 
+#if !defined(XBOX)
 void xQuatSMul(xQuat* q, const xQuat* a, F32 t)
 {
     q->s = a->s * t;
@@ -812,3 +813,4 @@ void xQuatAdd(xQuat* q, const xQuat* a, const xQuat* b)
     q->s = a->s + b->s;
     xVec3Add((xVec3*)q, (xVec3*)a, (xVec3*)b);
 }
+#endif

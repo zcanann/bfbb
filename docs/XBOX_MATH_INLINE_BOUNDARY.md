@@ -69,3 +69,21 @@ from the inline-helper result; code/data denominators and completion claims
 are unchanged. The actual GameCube xMath3 object retains all five ordered
 allocated sections byte for byte. Local evidence is
 `build/xbox222/final-verification.json` and `build/xbox222/gc/proof.json`.
+
+## Quaternion helper visibility
+
+The original quaternion normalizer contains the complete length-squared and
+scale operations. Slerp likewise contains its component scaling and addition
+before calling Normalize. Xbox now sees the existing, unchanged `xQuatLength2`,
+`xQuatSMul`, and `xQuatAdd` bodies as ordinary header inlines. Other platforms
+retain the existing out-of-line definitions; no compiler flags changed.
+
+The seven affected complete source builds have only two score changes:
+Normalize improves from 55.20548% to 97.78082%, and Slerp from 47.26% to 96.64%.
+Both full Xbox production reports pass with every other function and unit
+unchanged. These are partial gains: exact code remains 12,020 bytes / 63
+functions; the standard overall fuzzy score rises from 1.071856459597167% to
+1.0847653571599323%. All integer measures and completion claims are unchanged.
+Actual GameCube compilation preserves all five ordered xMath3 allocated
+sections. Evidence is `build/xbox226/final-verification.json` and
+`build/xbox226/gc/proof.json`; remaining operand differences are left unresolved.
