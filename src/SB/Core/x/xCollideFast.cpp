@@ -1,5 +1,8 @@
 #include "xCollideFast.h"
 #include "iCollideFast.h"
+#if defined(PS2)
+#include "iMath3.h"
+#endif
 #include "xMath.h"
 
 #include <types.h>
@@ -25,7 +28,11 @@ U32 xRayHitsSphereFast(const xRay3* r, const xSphere* s)
     }
 
     F32 dot = xVec3Dot(&length, &r->dir);
-    return (dot >= 0.0f) ? 0 : (SQR(dot) >= dVar3);
+    if (dot >= 0.0f)
+    {
+        return 0;
+    }
+    return SQR(dot) >= dVar3;
 }
 
 U32 xRayHitsBoxFast(const xRay3* r, const xBox* b)

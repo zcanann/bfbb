@@ -4,7 +4,16 @@
 #include "xVec3.h"
 #include "xMathInlines.h"
 
+#if defined(PS2)
+inline void xVec3Sub(xVec3* o, const xVec3* a, const xVec3* b)
+{
+    o->x = a->x - b->x;
+    o->y = a->y - b->y;
+    o->z = a->z - b->z;
+}
+#else
 void xVec3Sub(xVec3* o, const xVec3* a, const xVec3* b);
+#endif
 void xVec3Cross(xVec3* o, const xVec3* a, const xVec3* b);
 void xVec3Inv(xVec3* o, const xVec3* v);
 void xVec3Copy(xVec3* o, const xVec3* v);
