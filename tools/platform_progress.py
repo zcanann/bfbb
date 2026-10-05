@@ -143,6 +143,9 @@ def report(args, versions: dict) -> None:
             transfer_proofs = reviewed.with_name('relocation-corroborated-functions.json')
             if version['platform'] == 'ps2' and transfer_proofs.is_file():
                 options['relocation_corroborated_functions'] = transfer_proofs
+            tu_proofs = reviewed.with_name('tu-corroborated-functions.json')
+            if version['platform'] == 'ps2' and tu_proofs.is_file():
+                options['tu_corroborated_functions'] = tu_proofs
             coverage = backend.prepare_report(path, output, **options)
             status['coverage'] = coverage
             if hasattr(backend, 'verify_registries'):

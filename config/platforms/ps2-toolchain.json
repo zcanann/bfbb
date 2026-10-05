@@ -9746,6 +9746,81 @@
         }
       ],
       "address_pairs": []
+    },
+    {
+      "source": "src/SB/Core/x/xstransvc.cpp",
+      "target_unit": "SB/Core/x/xstransvc.cpp",
+      "object": "source/xstransvc.o",
+      "selector": "name_address",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "XST_find_bySID@0020ccd0": "XST_find_bySID__FUii",
+        "XST_lock_next@0020cd60": "XST_lock_next__Fv",
+        "xST_xAssetID_HIPFullPath@0020ce20": "xST_xAssetID_HIPFullPath__FUiPUi",
+        "xST_xAssetID_HIPFullPath@0020cf70": "xST_xAssetID_HIPFullPath__FUi",
+        "xSTGetAssetInfoByType@0020cf80": "xSTGetAssetInfoByType__FUiiP20st_PKR_ASSET_TOCINFO",
+        "xSTGetAssetInfo@0020d190": "xSTGetAssetInfo__FUiP20st_PKR_ASSET_TOCINFO",
+        "xSTFindAssetByType@0020d330": "xSTFindAssetByType__FUiiPUi",
+        "xSTAssetCountByType@0020d4c0": "xSTAssetCountByType__FUi",
+        "xSTFindAsset@0020d5e0": "xSTFindAsset__FUiPUi",
+        "xSTAssetName@0020d7a0": "xSTAssetName__FPv",
+        "xSTAssetName@0020d8d0": "xSTAssetName__FUi",
+        "xSTSwitchScene@0020d9f0": "xSTSwitchScene__FUiPvPFPvf_i",
+        "xSTDisconnect@0020dac0": "xSTDisconnect__FUii",
+        "xSTLoadStep@0020db10": "xSTLoadStep__FUi",
+        "xSTUnLoadScene@0020db60": "xSTUnLoadScene__FUii",
+        "xSTQueueSceneAssets@0020dd90": "xSTQueueSceneAssets__FUii",
+        "xSTPreLoadScene@0020de00": "xSTPreLoadScene__FUiPvi",
+        "xSTShutdown@0020e1f0": "xSTShutdown__Fv",
+        "xSTStartup@0020e2c0": "xSTStartup__FP19st_PACKER_ASSETTYPE"
+      },
+      "calls": [
+        {
+          "function": "xSTSwitchScene@0020d9f0",
+          "offset": 60,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "XST_find_bySID",
+          "symbol": "XST_find_bySID__FUii"
+        },
+        {
+          "function": "xSTDisconnect@0020dac0",
+          "offset": 16,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "XST_find_bySID",
+          "symbol": "XST_find_bySID__FUii"
+        },
+        {
+          "function": "xSTUnLoadScene@0020db60",
+          "offset": 400,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "XST_find_bySID",
+          "symbol": "XST_find_bySID__FUii"
+        },
+        {
+          "function": "xSTQueueSceneAssets@0020dd90",
+          "offset": 24,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "XST_find_bySID",
+          "symbol": "XST_find_bySID__FUii"
+        },
+        {
+          "function": "xSTPreLoadScene@0020de00",
+          "offset": 56,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "XST_lock_next",
+          "symbol": "XST_lock_next__Fv"
+        },
+        {
+          "function": "xSTPreLoadScene@0020de00",
+          "offset": 496,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "XST_lock_next",
+          "symbol": "XST_lock_next__Fv"
+        }
+      ],
+      "gp_relocations": []
     }
   ]
 }

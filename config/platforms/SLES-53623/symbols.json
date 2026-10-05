@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "executable_sha1": "ef675520304c2ce0df9cbfa03222e42fb2e7a09e",
-  "provenance": "Manual-reviewed and machine-corroborated function ranges; see reviewed-functions.json and corroborated-functions.json; explicit-transfer corroboration: relocation-corroborated-functions.json",
+  "provenance": "Manual-reviewed and machine-corroborated function ranges; see reviewed-functions.json and corroborated-functions.json; explicit-transfer corroboration: relocation-corroborated-functions.json; whole-TU sequence corroboration: tu-corroborated-functions.json",
   "coverage_complete": false,
   "symbols": [
     {
@@ -1718,6 +1718,139 @@
       "address": 2147888,
       "size": 468,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "XST_find_bySID",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2149584,
+      "size": 136,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "XST_lock_next",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2149728,
+      "size": 184,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xST_xAssetID_HIPFullPath",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2149920,
+      "size": 328,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xST_xAssetID_HIPFullPath",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2150256,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSTGetAssetInfoByType",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2150272,
+      "size": 516,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSTGetAssetInfo",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2150800,
+      "size": 408,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSTFindAssetByType",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2151216,
+      "size": 392,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSTAssetCountByType",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2151616,
+      "size": 288,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSTFindAsset",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2151904,
+      "size": 444,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSTAssetName",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2152352,
+      "size": 300,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSTAssetName",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2152656,
+      "size": 288,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSTSwitchScene",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2152944,
+      "size": 200,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSTDisconnect",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2153152,
+      "size": 68,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSTLoadStep",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2153232,
+      "size": 80,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSTUnLoadScene",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2153312,
+      "size": 552,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSTQueueSceneAssets",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2153872,
+      "size": 100,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSTPreLoadScene",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2153984,
+      "size": 1004,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSTShutdown",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2154992,
+      "size": 200,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSTStartup",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2155200,
+      "size": 88,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "icompare",

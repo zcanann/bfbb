@@ -242,7 +242,8 @@ def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path 
                    reviewed_call_targets: Path | None = None,
                    reviewed_data_anchors: Path | None = None,
                    corroborated_functions: Path | None = None,
-                   relocation_corroborated_functions: Path | None = None) -> dict:
+                   relocation_corroborated_functions: Path | None = None,
+                   tu_corroborated_functions: Path | None = None) -> dict:
     """Write genuine target objects/config, or pending metadata for stripped ELF.
 
     The returned coverage is partial, even for debug-bearing executables. Call
@@ -295,7 +296,7 @@ def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path 
             functions.append({"name": entry["name"], "source": entry["source"],
                               "low": low, "high": low + size, "provenance": "manual-reviewed"})
             reviewed_count += 1
-    corroborated_count = relocation_corroborated_count = 0
+    corroborated_count = relocation_corroborated_count = tu_corroborated_count = 0
     checked_registries = []
     manifest = Path(__file__).resolve().parents[2] / "config/platforms/versions.json"
     orig_dir = executable.resolve().parent.parent
@@ -323,6 +324,14 @@ def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path 
         relocation_corroborated_count = _merge_corroborated(
             functions, registry, regenerated, metadata, binary, loaded, "machine-corroborated-explicit-transfers")
         checked_registries.append(("relocation-corroborated-functions.json", regenerated))
+    if tu_corroborated_functions is not None:
+        from .france_tu_sequences import generate, KIND
+        registry_path = Path(tu_corroborated_functions)
+        registry = json.loads(registry_path.read_text(encoding="utf-8"))
+        regenerated = generate(manifest, orig_dir, registry_path.parent)
+        tu_corroborated_count = _merge_corroborated(
+            functions, registry, regenerated, metadata, binary, loaded, KIND)
+        checked_registries.append(("tu-corroborated-functions.json", regenerated))
     functions.sort(key=lambda f: f["low"])
     if any(right["low"] < left["high"] for left, right in zip(functions, functions[1:])):
         raise ValueError("Reviewed, corroborated and debug function extents overlap")
@@ -347,6 +356,9 @@ def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path 
     if relocation_corroborated_count:
         provenance += "; explicit-transfer corroboration: relocation-corroborated-functions.json"
         coverage["relocation_corroborated_function_count"] = relocation_corroborated_count
+    if tu_corroborated_count:
+        provenance += "; whole-TU sequence corroboration: tu-corroborated-functions.json"
+        coverage["tu_corroborated_function_count"] = tu_corroborated_count
     data_registry = write_anchors(binary, metadata, functions, output_dir / 'address-anchors.json')
     _write_registries(metadata, functions, output_dir, provenance, data_registry['extents'])
     data_bytes = data_registry['counts']['file_backed_bytes']
