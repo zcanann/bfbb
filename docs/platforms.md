@@ -79,8 +79,8 @@ checked, and the standard objdiff parser accepts the result.
 | SLES-51968 | 2,979,712 | 38,392 |
 | SLES-51970 | 2,976,512 | 38,392 |
 | SLES-53623 | 2,979,968 | 14,968 |
-| XBOX-US | 1,798,760 | 1,523 |
-| XBOX-EU | 1,798,760 | 1,523 |
+| XBOX-US | 1,798,760 | 3,354 |
+| XBOX-EU | 1,798,760 | 3,354 |
 
 The PS2 [math alignment restoration](PS2_MATH_ALIGNMENT.md) enables complete
 `xEntMotion`, `xPad`, and `xClimate` source comparisons: 34 functions / 20,040
@@ -319,14 +319,18 @@ closed function, and excludes foreign interior transfers across the candidate
 inventory. Reviewed extents take precedence. CI regenerates this registry from
 the original; the remaining candidates stay excluded. Anonymous identifiers
 establish neither original symbols nor source ownership. Together with the
-eighteen reviewed extents, measured coverage is 2,522 functions / 627,917 bytes;
-1,523 bytes match source. This is still partial coverage.
+39 reviewed extents, measured coverage is 2,543 functions / 632,688 bytes;
+3,354 bytes match source. This is still partial coverage.
 
 The complete particle-group source now compiles with its real particle dependency
 and a hash-pinned Microsoft static runtime library. Five independently reviewed
 group functions are compared; two add 412 exact bytes. The runtime helper is
 excluded from reconstructed-source gains. See [particle groups and runtime
 provisioning](XBOX_PARTICLE_GROUP.md).
+The complete particle-command TU also compiles with five real math dependencies.
+Its original registration table identifies 21 nonempty callbacks / 4,771 bytes;
+eight add 1,831 independently reconstructed bytes in both releases. All partial
+callbacks remain compared, and existing source matches remain unchanged.
 
 Three hash functions have been independently reviewed in both Xbox releases:
 `xStrHash(const char*)`, its bounded overload, and `xStrHashCat`, totaling 151
