@@ -13503,6 +13503,258 @@
       "direct_calls": []
     },
     {
+      "name": "iMemInit",
+      "canonical_identifier": "iMemInit()",
+      "display_name": "void iMemInit()",
+      "linkage_name": null,
+      "source": "SB/Core/xbox/iMemMgr.cpp",
+      "address": 1491472,
+      "size": 103,
+      "sha256": "a9790b99e4e83c7fd51035e5fa891e0e663b95ac3b72d6159a847f66ca451bbf",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "identity_evidence": "Original xMemInit caller initializes three220-byte heaps with the shared0x8826/0x8925/0x892a flags and opposite-heap indices. Its platform callee allocates0x384000 bytes, publishes base/end and initializes all12 words of the genuine48-byte xMemInfo structure. No shutdown implementation or original compiler symbol name is inferred.",
+      "address_expressions": [
+        {
+          "instruction_offset": 16,
+          "offset": 17,
+          "symbol": "mem_base_alloc",
+          "addend": 0,
+          "field": "displacement",
+          "prefix": "a3"
+        },
+        {
+          "instruction_offset": 21,
+          "offset": 22,
+          "symbol": "gMemInfo",
+          "addend": 24,
+          "field": "displacement",
+          "prefix": "a3"
+        },
+        {
+          "instruction_offset": 31,
+          "offset": 33,
+          "symbol": "mem_top_alloc",
+          "addend": 0,
+          "field": "displacement",
+          "prefix": "890d"
+        },
+        {
+          "instruction_offset": 37,
+          "offset": 39,
+          "symbol": "gMemInfo",
+          "addend": 28,
+          "field": "displacement",
+          "prefix": "c705"
+        },
+        {
+          "instruction_offset": 47,
+          "offset": 49,
+          "symbol": "gMemInfo",
+          "addend": 32,
+          "field": "displacement",
+          "prefix": "c705"
+        },
+        {
+          "instruction_offset": 57,
+          "offset": 58,
+          "symbol": "gMemInfo",
+          "addend": 0,
+          "field": "displacement",
+          "prefix": "a3"
+        },
+        {
+          "instruction_offset": 62,
+          "offset": 63,
+          "symbol": "gMemInfo",
+          "addend": 4,
+          "field": "displacement",
+          "prefix": "a3"
+        },
+        {
+          "instruction_offset": 67,
+          "offset": 68,
+          "symbol": "gMemInfo",
+          "addend": 8,
+          "field": "displacement",
+          "prefix": "a3"
+        },
+        {
+          "instruction_offset": 72,
+          "offset": 73,
+          "symbol": "gMemInfo",
+          "addend": 12,
+          "field": "displacement",
+          "prefix": "a3"
+        },
+        {
+          "instruction_offset": 77,
+          "offset": 78,
+          "symbol": "gMemInfo",
+          "addend": 16,
+          "field": "displacement",
+          "prefix": "a3"
+        },
+        {
+          "instruction_offset": 82,
+          "offset": 83,
+          "symbol": "gMemInfo",
+          "addend": 20,
+          "field": "displacement",
+          "prefix": "a3"
+        },
+        {
+          "instruction_offset": 87,
+          "offset": 88,
+          "symbol": "gMemInfo",
+          "addend": 36,
+          "field": "displacement",
+          "prefix": "a3"
+        },
+        {
+          "instruction_offset": 92,
+          "offset": 93,
+          "symbol": "gMemInfo",
+          "addend": 40,
+          "field": "displacement",
+          "prefix": "a3"
+        },
+        {
+          "instruction_offset": 97,
+          "offset": 98,
+          "symbol": "gMemInfo",
+          "addend": 44,
+          "field": "displacement",
+          "prefix": "a3"
+        }
+      ],
+      "corroboration": {
+        "return_address": 1491574,
+        "branches": [],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1336289,
+            "target": 1491472
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 103,
+          "internal_gap_ranges": [],
+          "direct_call_targets": [
+            1823398
+          ]
+        },
+        "following_padding": {
+          "address": 1491575,
+          "size": 9,
+          "byte": 204
+        },
+        "next_function_address": 1491584
+      },
+      "direct_calls": [
+        {
+          "offset": 6,
+          "symbol": "malloc(size_t)",
+          "opcode": 232
+        }
+      ]
+    },
+    {
+      "name": "malloc",
+      "canonical_identifier": "malloc(size_t)",
+      "display_name": "void* malloc(size_t)",
+      "linkage_name": null,
+      "source": "Runtime/MSVC/malloc.obj",
+      "address": 1823398,
+      "size": 18,
+      "sha256": "075b23876726cfea2c6646269b56a6cef27320268f27c12942c37394daa89d34",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": false,
+      "retail_link_verified": false,
+      "identity_evidence": "Complete pinned MSVC7.1 libcmt malloc.obj named _malloc18 and __nh_malloc44 functions equal both originals outside only their actual COFF relocations. Original wrapper calls that delegate, and RW default allocator table installs this wrapper. Runtime receives zero source credit; delegate and its callees are corroborating context only.",
+      "corroboration": {
+        "return_address": 1823415,
+        "branches": [],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1491477,
+            "target": 1823398
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 1596971,
+            "target": 1823398
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 18,
+          "internal_gap_ranges": [],
+          "direct_call_targets": [
+            1823354
+          ]
+        },
+        "runtime_malloc": {
+          "vendor": {
+            "archive_sha256": "780aa4cbe614efeeb72e3bb9538230f5cd37caeb0adc5d70c346b0dda19ba3a5",
+            "member": "build\\intel\\mt_obj\\malloc.obj",
+            "member_sha256": "682ee05b92be1eab3545eb7b87bf0fdc7a8d0e669b86f7b84e3e8a113e984abb",
+            "functions": [
+              {
+                "symbol": "_malloc",
+                "section": 10,
+                "size": 18,
+                "relocations": [
+                  [
+                    2,
+                    "__newmode",
+                    6
+                  ],
+                  [
+                    11,
+                    "__nh_malloc",
+                    20
+                  ]
+                ]
+              },
+              {
+                "symbol": "__nh_malloc",
+                "section": 7,
+                "size": 44,
+                "relocations": [
+                  [
+                    12,
+                    "__heap_alloc",
+                    20
+                  ],
+                  [
+                    32,
+                    "__callnewh",
+                    20
+                  ]
+                ]
+              }
+            ]
+          },
+          "delegate": {
+            "address": 1823354,
+            "size": 44,
+            "sha256": "990cce1b7cedaa0837867d0c7542e84c1ea67437817a63faa28193d16325e1d7"
+          },
+          "rw_registration": {
+            "address": 1597600,
+            "size": 105,
+            "sha256": "c2daaca0fb360041b902c75a70eed226f3e0fd5574372b9f4805456244af6b32"
+          },
+          "rw_malloc_slot": 3855028
+        }
+      }
+    },
+    {
       "name": "__ftol2",
       "canonical_identifier": "__ftol2",
       "display_name": "__ftol2",

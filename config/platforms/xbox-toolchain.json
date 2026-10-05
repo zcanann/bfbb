@@ -2690,6 +2690,141 @@
           }
         ]
       }
+    },
+    {
+      "source": "src/SB/Core/xbox/iMemMgr.cpp",
+      "target_unit": "SB/Core/xbox/iMemMgr.cpp",
+      "object": "source/iMemMgr/iMemMgr.obj",
+      "comparison_object": "source/iMemMgr-functions.obj",
+      "host_entry": "tools/platforms/xbox_support/memory_entry.cpp",
+      "host_context": {
+        "xatof": null,
+        "imports": "tools/platforms/xbox_support/memory_crt.def"
+      },
+      "symbols": {
+        "iMemInit()": "?iMemInit@@YAXXZ"
+      },
+      "scope": "Reconstructed original103-byte Xbox initializer. The complete current platform source file is compiled; unobserved shutdown remains unimplemented. Shared allocator gMemInfo remains original48-byte storage via explicitly verified data-only link assignment, receives no source-data credit, and is not an executable relink.",
+      "globals": {
+        "mem_base_alloc": {
+          "linkage_name": "?mem_base_alloc@@3IA",
+          "size": 4
+        },
+        "mem_top_alloc": {
+          "linkage_name": "?mem_top_alloc@@3IA",
+          "size": 4
+        }
+      },
+      "original_data_bindings": {
+        "gMemInfo": {
+          "linkage_name": "?gMemInfo@@3UxMemInfo_tag@@A",
+          "size": 48,
+          "source": "SB/Core/x/xMemMgr.cpp"
+        }
+      },
+      "address_expressions": {
+        "iMemInit()": [
+          {
+            "symbol": "mem_base_alloc",
+            "addend": 0,
+            "field": "displacement",
+            "prefix": "a3"
+          },
+          {
+            "symbol": "mem_top_alloc",
+            "addend": 0,
+            "field": "displacement",
+            "prefix": "890d"
+          }
+        ]
+      },
+      "original_data_expressions": {
+        "iMemInit()": [
+          {
+            "symbol": "gMemInfo",
+            "addend": 24,
+            "field": "displacement",
+            "prefix": "a3"
+          },
+          {
+            "symbol": "gMemInfo",
+            "addend": 28,
+            "field": "displacement",
+            "prefix": "c705"
+          },
+          {
+            "symbol": "gMemInfo",
+            "addend": 32,
+            "field": "displacement",
+            "prefix": "c705"
+          },
+          {
+            "symbol": "gMemInfo",
+            "addend": 0,
+            "field": "displacement",
+            "prefix": "a3"
+          },
+          {
+            "symbol": "gMemInfo",
+            "addend": 4,
+            "field": "displacement",
+            "prefix": "a3"
+          },
+          {
+            "symbol": "gMemInfo",
+            "addend": 8,
+            "field": "displacement",
+            "prefix": "a3"
+          },
+          {
+            "symbol": "gMemInfo",
+            "addend": 12,
+            "field": "displacement",
+            "prefix": "a3"
+          },
+          {
+            "symbol": "gMemInfo",
+            "addend": 16,
+            "field": "displacement",
+            "prefix": "a3"
+          },
+          {
+            "symbol": "gMemInfo",
+            "addend": 20,
+            "field": "displacement",
+            "prefix": "a3"
+          },
+          {
+            "symbol": "gMemInfo",
+            "addend": 36,
+            "field": "displacement",
+            "prefix": "a3"
+          },
+          {
+            "symbol": "gMemInfo",
+            "addend": 40,
+            "field": "displacement",
+            "prefix": "a3"
+          },
+          {
+            "symbol": "gMemInfo",
+            "addend": 44,
+            "field": "displacement",
+            "prefix": "a3"
+          }
+        ]
+      },
+      "direct_calls": {
+        "iMemInit()": [
+          "malloc(size_t)"
+        ]
+      },
+      "call_symbols": {
+        "malloc(size_t)": {
+          "linkage_name": "_malloc",
+          "object": "msvcrt:msvcrt.dll"
+        }
+      }
     }
   ],
   "static_runtime": {

@@ -17534,7 +17534,7 @@
       "kind": "function",
       "address": 1491472,
       "size": 103,
-      "canonical_identifier": "anon_0016c210"
+      "canonical_identifier": "iMemInit()"
     },
     {
       "kind": "unclassified",
@@ -25140,7 +25140,7 @@
       "kind": "function",
       "address": 1823398,
       "size": 18,
-      "canonical_identifier": "anon_001bd2a6"
+      "canonical_identifier": "malloc(size_t)"
     },
     {
       "kind": "function",

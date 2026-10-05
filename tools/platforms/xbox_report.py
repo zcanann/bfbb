@@ -311,12 +311,22 @@ def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path 
     output_dir.mkdir(parents=True, exist_ok=True)
     groups = defaultdict(list)
     switch_proof = {'schema_version': 1, 'executable_sha1': metadata['sha1'], 'units': {}}
+    data_proof = {'schema_version': 1, 'executable_sha1': metadata['sha1'],
+                  'anchors': {}, 'target_objects': {}}
+    if reviewed_functions is not None and anchors_path.is_file():
+        anchor_document = json.loads(anchors_path.read_text(encoding='utf-8'))
+        for anchor in anchor_document['anchors']:
+            if anchor.get('external_binding_allowed') is True:
+                data_proof['anchors'][anchor['name']] = {**anchors[anchor['name']],
+                    'kind': 'data', 'source': anchor['source']}
+
     for function in functions:
         groups[function['source'] or 'unassigned/xbox'].append(function)
     for index, (source, group) in enumerate(sorted(groups.items())):
         name = f'functions-{index:04d}.obj'
         object_bytes = function_object(group)
         (output_dir / name).write_bytes(object_bytes)
+        data_proof['target_objects'][source] = hashlib.sha256(object_bytes).hexdigest()
         from .xbox_switch import switch_signature
         checked_tables = {f['canonical_identifier']: switch_signature(f['address'],
             f['corroboration']['closed_cfg']['switch_tables']) for f in group
@@ -334,6 +344,7 @@ def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path 
         {'id': 'anonymous_functions', 'name': 'Anonymous code extents (partial coverage)'},
     ]
     (output_dir / 'switch-tables.json').write_text(json.dumps(switch_proof, indent=2) + '\n', encoding='utf-8')
+    (output_dir / 'original-data-bindings.json').write_text(json.dumps(data_proof, indent=2) + '\n', encoding='utf-8')
     _write_registries(metadata, output_dir, functions)
     (output_dir / "target.obj").write_bytes(target)
     (output_dir / "objdiff.json").write_text(json.dumps(config, indent=2) + "\n", encoding="utf-8")

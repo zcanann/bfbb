@@ -12862,12 +12862,12 @@
       "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0016c210",
-      "source": null,
+      "name": "iMemInit",
+      "canonical_identifier": "iMemInit()",
+      "source": "SB/Core/xbox/iMemMgr.cpp",
       "address": 1491472,
       "size": 103,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
       "name": null,
@@ -18950,12 +18950,12 @@
       "identity_kind": "anonymous"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_001bd2a6",
-      "source": null,
+      "name": "malloc",
+      "canonical_identifier": "malloc(size_t)",
+      "source": "Runtime/MSVC/malloc.obj",
       "address": 1823398,
       "size": 18,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
       "name": null,
