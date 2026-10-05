@@ -145,8 +145,8 @@
       "classification": "unclassified"
     }
   ],
-  "known_code_bytes": 634859,
-  "unclassified_text_bytes": 1163901,
+  "known_code_bytes": 635155,
+  "unclassified_text_bytes": 1163605,
   "text_ranges": [
     {
       "kind": "function",
@@ -16822,7 +16822,7 @@
       "kind": "function",
       "address": 1459200,
       "size": 175,
-      "canonical_identifier": "anon_00164400"
+      "canonical_identifier": "xUtil_crc_init()"
     },
     {
       "kind": "unclassified",
@@ -16833,7 +16833,7 @@
       "kind": "function",
       "address": 1459376,
       "size": 61,
-      "canonical_identifier": "anon_001644b0"
+      "canonical_identifier": "xUtil_crc_update(U32,char*,S32)"
     },
     {
       "kind": "unclassified",
@@ -16844,12 +16844,23 @@
       "kind": "function",
       "address": 1459440,
       "size": 104,
-      "canonical_identifier": "anon_001644f0"
+      "canonical_identifier": "xUtil_yesno(F32)"
     },
     {
       "kind": "unclassified",
       "address": 1459544,
-      "size": 312
+      "size": 8
+    },
+    {
+      "kind": "function",
+      "address": 1459552,
+      "size": 296,
+      "canonical_identifier": "xUtil_wtadjust(F32*,S32,F32)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1459848,
+      "size": 8
     },
     {
       "kind": "function",

@@ -12326,28 +12326,36 @@
       "identity_kind": "anonymous"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00164400",
-      "source": null,
+      "name": "xUtil_crc_init",
+      "canonical_identifier": "xUtil_crc_init()",
+      "source": "SB/Core/x/xutil.cpp",
       "address": 1459200,
       "size": 175,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_001644b0",
-      "source": null,
+      "name": "xUtil_crc_update",
+      "canonical_identifier": "xUtil_crc_update(U32,char*,S32)",
+      "source": "SB/Core/x/xutil.cpp",
       "address": 1459376,
       "size": 61,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_001644f0",
-      "source": null,
+      "name": "xUtil_yesno",
+      "canonical_identifier": "xUtil_yesno(F32)",
+      "source": "SB/Core/x/xutil.cpp",
       "address": 1459440,
       "size": 104,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xUtil_wtadjust",
+      "canonical_identifier": "xUtil_wtadjust(F32*,S32,F32)",
+      "source": "SB/Core/x/xutil.cpp",
+      "address": 1459552,
+      "size": 296,
+      "identity_kind": "reviewed"
     },
     {
       "name": null,

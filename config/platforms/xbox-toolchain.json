@@ -2376,6 +2376,145 @@
         ],
         "xFuncPiece_ShiftPiece(xFuncPiece*,xFuncPiece*,F32)": []
       }
+    },
+    {
+      "source": "src/SB/Core/x/xutil.cpp",
+      "target_unit": "SB/Core/x/xutil.cpp",
+      "object": "source/xutil/xutil.obj",
+      "comparison_object": "source/xutil-functions.obj",
+      "host_entry": "tools/platforms/xbox_support/util_entry.cpp",
+      "host_context": {
+        "xatof": null,
+        "imports": "tools/platforms/xbox_support/util_crt.def"
+      },
+      "source_dependencies": [
+        {
+          "source": "src/SB/Core/x/xMath.cpp",
+          "object": "xMath.obj"
+        }
+      ],
+      "runtime_libraries": [
+        "libcmt"
+      ],
+      "symbols": {
+        "xUtil_crc_init()": "?xUtil_crc_init@@YAIXZ",
+        "xUtil_crc_update(U32,char*,S32)": "?xUtil_crc_update@@YAIIPADH@Z",
+        "xUtil_yesno(F32)": "?xUtil_yesno@@YAHM@Z",
+        "xUtil_wtadjust(F32*,S32,F32)": "?xUtil_wtadjust@@YAXPAMHM@Z"
+      },
+      "scope": "Four independently reviewed original utility functions from complete real xutil and xMath compilation. All seven portable utility APIs retained by diagnostic host; startup/shutdown/idtag original entries remain unassigned. yesno is a genuine partial. No complete TU or executable claim.",
+      "globals": {
+        "float:3f800000": {
+          "linkage_name": "__real@3f800000",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "0000803f"
+        },
+        "float:00000000": {
+          "linkage_name": "__real@00000000",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "00000000"
+        },
+        "g_crc_needinit": {
+          "definition_use": {
+            "function": "?xUtil_crc_init@@YAIXZ",
+            "prefix": "a1"
+          },
+          "object": "xutil.obj",
+          "size": 4,
+          "initial_value_hex": "01000000"
+        },
+        "g_crc32_table": {
+          "definition_use": {
+            "function": "?xUtil_crc_init@@YAIXZ",
+            "prefix": "89048d"
+          },
+          "object": "xutil.obj",
+          "size": 1024
+        }
+      },
+      "direct_calls": {
+        "xUtil_crc_init()": [],
+        "xUtil_crc_update(U32,char*,S32)": [
+          "xUtil_crc_init()"
+        ],
+        "xUtil_yesno(F32)": [
+          "xurand()"
+        ],
+        "xUtil_wtadjust(F32*,S32,F32)": []
+      },
+      "call_symbols": {
+        "xurand()": {
+          "linkage_name": "?xurand@@YAMXZ",
+          "object": "xMath.obj"
+        }
+      },
+      "address_expressions": {
+        "xUtil_crc_init()": [
+          {
+            "symbol": "g_crc_needinit",
+            "field": "displacement",
+            "prefix": "a1",
+            "addend": 0
+          },
+          {
+            "symbol": "g_crc32_table",
+            "field": "displacement",
+            "prefix": "89048d",
+            "addend": 0
+          },
+          {
+            "symbol": "g_crc_needinit",
+            "field": "displacement",
+            "prefix": "c705",
+            "addend": 0
+          }
+        ],
+        "xUtil_crc_update(U32,char*,S32)": [
+          {
+            "symbol": "g_crc_needinit",
+            "field": "displacement",
+            "prefix": "a1",
+            "addend": 0
+          },
+          {
+            "symbol": "g_crc32_table",
+            "field": "displacement",
+            "prefix": "8b0c85",
+            "addend": 0
+          }
+        ],
+        "xUtil_yesno(F32)": [
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0
+          },
+          {
+            "symbol": "float:3f800000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0
+          }
+        ],
+        "xUtil_wtadjust(F32*,S32,F32)": [
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0
+          },
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d81d",
+            "addend": 0,
+            "count": 5
+          }
+        ]
+      }
     }
   ],
   "static_runtime": {

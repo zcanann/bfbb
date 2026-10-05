@@ -11186,6 +11186,592 @@
       }
     },
     {
+      "name": "xUtil_crc_init",
+      "canonical_identifier": "xUtil_crc_init()",
+      "display_name": "xUtil_crc_init()",
+      "source": "SB/Core/x/xutil.cpp",
+      "linkage_name": null,
+      "address": 1459200,
+      "size": 175,
+      "sha256": "c8584161277e285cb8880dd148517fd820e1fe13693352014cd688505fea1a4a",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 175,
+      "instruction_count": 62,
+      "semantics": {
+        "identity": "One-time CRC-32 table generation: 256 values initialized from index shifted24; eight high-bit tests shift/XOR polynomial0x04c11db7, then store a DWORD by index. Shared need-init flag starts1, clears0; return0xffffffff.",
+        "entry_evidence": "Original decoded direct-call witnesses and closed CFG; instruction-pattern source search proposed candidates only, and does not establish their boundaries."
+      },
+      "corroboration": {
+        "return_address": 1459374,
+        "branches": [
+          {
+            "address": 1459223,
+            "size": 2,
+            "opcode": 121,
+            "target": 1459234
+          },
+          {
+            "address": 1459232,
+            "size": 2,
+            "opcode": 235,
+            "target": 1459236
+          },
+          {
+            "address": 1459238,
+            "size": 2,
+            "opcode": 121,
+            "target": 1459249
+          },
+          {
+            "address": 1459247,
+            "size": 2,
+            "opcode": 235,
+            "target": 1459251
+          },
+          {
+            "address": 1459253,
+            "size": 2,
+            "opcode": 121,
+            "target": 1459264
+          },
+          {
+            "address": 1459262,
+            "size": 2,
+            "opcode": 235,
+            "target": 1459266
+          },
+          {
+            "address": 1459268,
+            "size": 2,
+            "opcode": 121,
+            "target": 1459279
+          },
+          {
+            "address": 1459277,
+            "size": 2,
+            "opcode": 235,
+            "target": 1459281
+          },
+          {
+            "address": 1459283,
+            "size": 2,
+            "opcode": 121,
+            "target": 1459294
+          },
+          {
+            "address": 1459292,
+            "size": 2,
+            "opcode": 235,
+            "target": 1459296
+          },
+          {
+            "address": 1459298,
+            "size": 2,
+            "opcode": 121,
+            "target": 1459309
+          },
+          {
+            "address": 1459307,
+            "size": 2,
+            "opcode": 235,
+            "target": 1459311
+          },
+          {
+            "address": 1459313,
+            "size": 2,
+            "opcode": 121,
+            "target": 1459324
+          },
+          {
+            "address": 1459322,
+            "size": 2,
+            "opcode": 235,
+            "target": 1459326
+          },
+          {
+            "address": 1459328,
+            "size": 2,
+            "opcode": 121,
+            "target": 1459339
+          },
+          {
+            "address": 1459337,
+            "size": 2,
+            "opcode": 235,
+            "target": 1459341
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1054669,
+            "target": 1459200
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 1054973,
+            "target": 1459200
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 175,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
+        },
+        "previous_boundary": {
+          "return_address": 1459186,
+          "padding_address": 1459187,
+          "padding_size": 13,
+          "padding_byte": 204
+        },
+        "next_function_address": 1459376,
+        "following_padding": {
+          "address": 1459375,
+          "size": 1,
+          "byte": 204
+        }
+      },
+      "address_expressions": [
+        {
+          "offset": 1,
+          "instruction_offset": 0,
+          "symbol": "g_crc_needinit",
+          "field": "displacement",
+          "prefix": "a1",
+          "addend": 0
+        },
+        {
+          "offset": 144,
+          "instruction_offset": 141,
+          "symbol": "g_crc32_table",
+          "field": "displacement",
+          "prefix": "89048d",
+          "addend": 0
+        },
+        {
+          "offset": 163,
+          "instruction_offset": 161,
+          "symbol": "g_crc_needinit",
+          "field": "displacement",
+          "prefix": "c705",
+          "addend": 0
+        }
+      ],
+      "direct_calls": []
+    },
+    {
+      "name": "xUtil_crc_update",
+      "canonical_identifier": "xUtil_crc_update(U32,char*,S32)",
+      "display_name": "xUtil_crc_update(U32,char*,S32)",
+      "source": "SB/Core/x/xutil.cpp",
+      "linkage_name": null,
+      "address": 1459376,
+      "size": 61,
+      "sha256": "58e0f232a5352465764f373ed74273936f0c789667e856a4dc7b4191266b4c6c",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 61,
+      "instruction_count": 26,
+      "semantics": {
+        "identity": "CRC update reads the same need-init flag/table and calls independently reviewed initializer; each byte indexes ((accumulator>>24)^byte)&255 then shifts accumulator8 and XORs table[index]. EDX accumulator, ECX buffer, EAX count are independently corroborated by the original caller.",
+        "entry_evidence": "Original decoded direct-call witnesses and closed CFG; instruction-pattern source search proposed candidates only, and does not establish their boundaries."
+      },
+      "corroboration": {
+        "return_address": 1459436,
+        "branches": [
+          {
+            "address": 1459389,
+            "size": 2,
+            "opcode": 116,
+            "target": 1459396
+          },
+          {
+            "address": 1459398,
+            "size": 2,
+            "opcode": 126,
+            "target": 1459432
+          },
+          {
+            "address": 1459430,
+            "size": 2,
+            "opcode": 117,
+            "target": 1459400
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1446598,
+            "target": 1459376
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 1451216,
+            "target": 1459376
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 61,
+          "internal_gap_ranges": [],
+          "direct_call_targets": [
+            1459200
+          ]
+        },
+        "previous_boundary": {
+          "return_address": 1459374,
+          "padding_address": 1459375,
+          "padding_size": 1,
+          "padding_byte": 204
+        },
+        "next_function_address": 1459440,
+        "following_padding": {
+          "address": 1459437,
+          "size": 3,
+          "byte": 204
+        }
+      },
+      "address_expressions": [
+        {
+          "offset": 5,
+          "instruction_offset": 4,
+          "symbol": "g_crc_needinit",
+          "field": "displacement",
+          "prefix": "a1",
+          "addend": 0
+        },
+        {
+          "offset": 46,
+          "instruction_offset": 43,
+          "symbol": "g_crc32_table",
+          "field": "displacement",
+          "prefix": "8b0c85",
+          "addend": 0
+        }
+      ],
+      "direct_calls": [
+        {
+          "offset": 16,
+          "symbol": "xUtil_crc_init()"
+        }
+      ]
+    },
+    {
+      "name": "xUtil_yesno",
+      "canonical_identifier": "xUtil_yesno(F32)",
+      "display_name": "xUtil_yesno(F32)",
+      "source": "SB/Core/x/xutil.cpp",
+      "linkage_name": null,
+      "address": 1459440,
+      "size": 104,
+      "sha256": "54cd6016d22d013bdbf14eaf3b994bdb9f47e925e77dfd427bc1fbaa5c83b2a6",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 104,
+      "instruction_count": 33,
+      "semantics": {
+        "identity": "Weighted yes/no checks exact0 and1, then compares weight to unsigned LCG output scaled by2^-32. Original body inlines the already reviewed rndseed multiplier1103515245/add12345 sequence; current whole-source compiler retains its genuine xurand call, so this remains partial.",
+        "entry_evidence": "Original decoded direct-call witnesses and closed CFG; instruction-pattern source search proposed candidates only, and does not establish their boundaries."
+      },
+      "corroboration": {
+        "return_address": 1459543,
+        "branches": [
+          {
+            "address": 1459458,
+            "size": 2,
+            "opcode": 123,
+            "target": 1459540
+          },
+          {
+            "address": 1459477,
+            "size": 2,
+            "opcode": 122,
+            "target": 1459486
+          },
+          {
+            "address": 1459515,
+            "size": 2,
+            "opcode": 125,
+            "target": 1459523
+          },
+          {
+            "address": 1459538,
+            "size": 2,
+            "opcode": 123,
+            "target": 1459479
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 675600,
+            "target": 1459440
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 104,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
+        },
+        "previous_boundary": {
+          "return_address": 1459436,
+          "padding_address": 1459437,
+          "padding_size": 3,
+          "padding_byte": 204
+        },
+        "next_function_address": 1459552,
+        "following_padding": {
+          "address": 1459544,
+          "size": 8,
+          "byte": 204
+        }
+      },
+      "address_expressions": [
+        {
+          "offset": 3,
+          "instruction_offset": 1,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 22,
+          "instruction_offset": 20,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 47,
+          "instruction_offset": 46,
+          "symbol": "rndseed",
+          "field": "displacement",
+          "prefix": "a1",
+          "addend": 0
+        },
+        {
+          "offset": 68,
+          "instruction_offset": 67,
+          "symbol": "rndseed",
+          "field": "displacement",
+          "prefix": "a3",
+          "addend": 0
+        },
+        {
+          "offset": 79,
+          "instruction_offset": 77,
+          "symbol": "float:4f800000",
+          "field": "displacement",
+          "prefix": "d805",
+          "addend": 0
+        },
+        {
+          "offset": 85,
+          "instruction_offset": 83,
+          "symbol": "float:2f800000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        }
+      ],
+      "direct_calls": []
+    },
+    {
+      "name": "xUtil_wtadjust",
+      "canonical_identifier": "xUtil_wtadjust(F32*,S32,F32)",
+      "display_name": "xUtil_wtadjust(F32*,S32,F32)",
+      "source": "SB/Core/x/xutil.cpp",
+      "linkage_name": null,
+      "address": 1459552,
+      "size": 296,
+      "sha256": "6d0d27ad023c8134c16fc61da8b181f87bdeb9ff87f4a22ee63f56817da309c4",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 288,
+      "instruction_count": 103,
+      "semantics": {
+        "identity": "Weight normalization first replaces negative array elements by their magnitude and sums them, divides caller reference by the sum, then scales all entries. Both loops unroll four-wide plus remainder. Independent caller0x9e8aa supplies EDI array, EBX count and stack1.0.",
+        "entry_evidence": "Original decoded direct-call witnesses and closed CFG; instruction-pattern source search proposed candidates only, and does not establish their boundaries."
+      },
+      "corroboration": {
+        "return_address": 1459847,
+        "branches": [
+          {
+            "address": 1459601,
+            "size": 2,
+            "opcode": 122,
+            "target": 1459611
+          },
+          {
+            "address": 1459628,
+            "size": 2,
+            "opcode": 122,
+            "target": 1459638
+          },
+          {
+            "address": 1459654,
+            "size": 2,
+            "opcode": 122,
+            "target": 1459662
+          },
+          {
+            "address": 1459678,
+            "size": 2,
+            "opcode": 122,
+            "target": 1459688
+          },
+          {
+            "address": 1459695,
+            "size": 2,
+            "opcode": 117,
+            "target": 1459587
+          },
+          {
+            "address": 1459700,
+            "size": 2,
+            "opcode": 125,
+            "target": 1459744
+          },
+          {
+            "address": 1459702,
+            "size": 2,
+            "opcode": 235,
+            "target": 1459712
+          },
+          {
+            "address": 1459726,
+            "size": 2,
+            "opcode": 122,
+            "target": 1459736
+          },
+          {
+            "address": 1459742,
+            "size": 2,
+            "opcode": 124,
+            "target": 1459712
+          },
+          {
+            "address": 1459761,
+            "size": 2,
+            "opcode": 124,
+            "target": 1459826
+          },
+          {
+            "address": 1459824,
+            "size": 2,
+            "opcode": 117,
+            "target": 1459780
+          },
+          {
+            "address": 1459828,
+            "size": 2,
+            "opcode": 125,
+            "target": 1459847
+          },
+          {
+            "address": 1459845,
+            "size": 2,
+            "opcode": 124,
+            "target": 1459830
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 649386,
+            "target": 1459552
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 288,
+          "internal_gap_ranges": [
+            [
+              1459704,
+              1459712
+            ]
+          ],
+          "direct_call_targets": []
+        },
+        "previous_boundary": {
+          "return_address": 1459543,
+          "padding_address": 1459544,
+          "padding_size": 8,
+          "padding_byte": 204
+        },
+        "next_function_address": 1459856,
+        "following_padding": {
+          "address": 1459848,
+          "size": 8,
+          "byte": 204
+        }
+      },
+      "address_expressions": [
+        {
+          "offset": 2,
+          "instruction_offset": 0,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 40,
+          "instruction_offset": 38,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        },
+        {
+          "offset": 67,
+          "instruction_offset": 65,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        },
+        {
+          "offset": 93,
+          "instruction_offset": 91,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        },
+        {
+          "offset": 117,
+          "instruction_offset": 115,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        },
+        {
+          "offset": 165,
+          "instruction_offset": 163,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        }
+      ],
+      "direct_calls": []
+    },
+    {
       "name": "iSphereIsectVec",
       "canonical_identifier": "iSphereIsectVec(const xSphere*,const xVec3*,xIsect*)",
       "display_name": "iSphereIsectVec(const xSphere*,const xVec3*,xIsect*)",

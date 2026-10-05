@@ -393,6 +393,23 @@
       "source": "SB/Core/x/xMath.cpp",
       "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
       "value_hex": "acc527b7"
+    },
+    {
+      "name": "g_crc_needinit",
+      "address": 2644984,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xutil.cpp",
+      "evidence": "One-time CRC-32 table generation: 256 values initialized from index shifted24; eight high-bit tests shift/XOR polynomial0x04c11db7, then store a DWORD by index. Shared need-init flag starts1, clears0; return0xffffffff. The update function independently uses exactly the same flag and table.",
+      "initial_value_hex": "01000000"
+    },
+    {
+      "name": "g_crc32_table",
+      "address": 3675888,
+      "size": 1024,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xutil.cpp",
+      "evidence": "One-time CRC-32 table generation: 256 values initialized from index shifted24; eight high-bit tests shift/XOR polynomial0x04c11db7, then store a DWORD by index. Shared need-init flag starts1, clears0; return0xffffffff. The update function independently uses exactly the same flag and table."
     }
   ],
   "pool_loop": {
@@ -1679,6 +1696,462 @@
           ""
         ]
       ]
+    },
+    {
+      "address": 1459200,
+      "size": 175,
+      "sha256": "c8584161277e285cb8880dd148517fd820e1fe13693352014cd688505fea1a4a",
+      "instructions": [
+        [
+          0,
+          "mov",
+          "eax, dword ptr [0x285bf8]"
+        ],
+        [
+          5,
+          "test",
+          "eax, eax"
+        ],
+        [
+          7,
+          "je",
+          "0x1644ab"
+        ],
+        [
+          13,
+          "xor",
+          "ecx, ecx"
+        ],
+        [
+          15,
+          "nop",
+          ""
+        ],
+        [
+          16,
+          "mov",
+          "eax, ecx"
+        ],
+        [
+          18,
+          "shl",
+          "eax, 0x18"
+        ],
+        [
+          21,
+          "test",
+          "eax, eax"
+        ],
+        [
+          23,
+          "jns",
+          "0x164422"
+        ],
+        [
+          25,
+          "add",
+          "eax, eax"
+        ],
+        [
+          27,
+          "xor",
+          "eax, 0x4c11db7"
+        ],
+        [
+          32,
+          "jmp",
+          "0x164424"
+        ],
+        [
+          34,
+          "shl",
+          "eax, 1"
+        ],
+        [
+          36,
+          "test",
+          "eax, eax"
+        ],
+        [
+          38,
+          "jns",
+          "0x164431"
+        ],
+        [
+          40,
+          "add",
+          "eax, eax"
+        ],
+        [
+          42,
+          "xor",
+          "eax, 0x4c11db7"
+        ],
+        [
+          47,
+          "jmp",
+          "0x164433"
+        ],
+        [
+          49,
+          "shl",
+          "eax, 1"
+        ],
+        [
+          51,
+          "test",
+          "eax, eax"
+        ],
+        [
+          53,
+          "jns",
+          "0x164440"
+        ],
+        [
+          55,
+          "add",
+          "eax, eax"
+        ],
+        [
+          57,
+          "xor",
+          "eax, 0x4c11db7"
+        ],
+        [
+          62,
+          "jmp",
+          "0x164442"
+        ],
+        [
+          64,
+          "shl",
+          "eax, 1"
+        ],
+        [
+          66,
+          "test",
+          "eax, eax"
+        ],
+        [
+          68,
+          "jns",
+          "0x16444f"
+        ],
+        [
+          70,
+          "add",
+          "eax, eax"
+        ],
+        [
+          72,
+          "xor",
+          "eax, 0x4c11db7"
+        ],
+        [
+          77,
+          "jmp",
+          "0x164451"
+        ],
+        [
+          79,
+          "shl",
+          "eax, 1"
+        ],
+        [
+          81,
+          "test",
+          "eax, eax"
+        ],
+        [
+          83,
+          "jns",
+          "0x16445e"
+        ],
+        [
+          85,
+          "add",
+          "eax, eax"
+        ],
+        [
+          87,
+          "xor",
+          "eax, 0x4c11db7"
+        ],
+        [
+          92,
+          "jmp",
+          "0x164460"
+        ],
+        [
+          94,
+          "shl",
+          "eax, 1"
+        ],
+        [
+          96,
+          "test",
+          "eax, eax"
+        ],
+        [
+          98,
+          "jns",
+          "0x16446d"
+        ],
+        [
+          100,
+          "add",
+          "eax, eax"
+        ],
+        [
+          102,
+          "xor",
+          "eax, 0x4c11db7"
+        ],
+        [
+          107,
+          "jmp",
+          "0x16446f"
+        ],
+        [
+          109,
+          "shl",
+          "eax, 1"
+        ],
+        [
+          111,
+          "test",
+          "eax, eax"
+        ],
+        [
+          113,
+          "jns",
+          "0x16447c"
+        ],
+        [
+          115,
+          "add",
+          "eax, eax"
+        ],
+        [
+          117,
+          "xor",
+          "eax, 0x4c11db7"
+        ],
+        [
+          122,
+          "jmp",
+          "0x16447e"
+        ],
+        [
+          124,
+          "shl",
+          "eax, 1"
+        ],
+        [
+          126,
+          "test",
+          "eax, eax"
+        ],
+        [
+          128,
+          "jns",
+          "0x16448b"
+        ],
+        [
+          130,
+          "add",
+          "eax, eax"
+        ],
+        [
+          132,
+          "xor",
+          "eax, 0x4c11db7"
+        ],
+        [
+          137,
+          "jmp",
+          "0x16448d"
+        ],
+        [
+          139,
+          "shl",
+          "eax, 1"
+        ],
+        [
+          141,
+          "mov",
+          "dword ptr [ecx*4 + 0x3816f0], eax"
+        ],
+        [
+          148,
+          "inc",
+          "ecx"
+        ],
+        [
+          149,
+          "cmp",
+          "ecx, 0x100"
+        ],
+        [
+          155,
+          "jl",
+          "0x164410"
+        ],
+        [
+          161,
+          "mov",
+          "dword ptr [0x285bf8], 0"
+        ],
+        [
+          171,
+          "or",
+          "eax, 0xffffffff"
+        ],
+        [
+          174,
+          "ret",
+          ""
+        ]
+      ],
+      "identity": "xUtil_crc_init()"
+    },
+    {
+      "address": 1459376,
+      "size": 61,
+      "sha256": "58e0f232a5352465764f373ed74273936f0c789667e856a4dc7b4191266b4c6c",
+      "instructions": [
+        [
+          0,
+          "push",
+          "esi"
+        ],
+        [
+          1,
+          "push",
+          "edi"
+        ],
+        [
+          2,
+          "mov",
+          "edi, eax"
+        ],
+        [
+          4,
+          "mov",
+          "eax, dword ptr [0x285bf8]"
+        ],
+        [
+          9,
+          "test",
+          "eax, eax"
+        ],
+        [
+          11,
+          "mov",
+          "esi, ecx"
+        ],
+        [
+          13,
+          "je",
+          "0x1644c4"
+        ],
+        [
+          15,
+          "call",
+          "0x164400"
+        ],
+        [
+          20,
+          "test",
+          "edi, edi"
+        ],
+        [
+          22,
+          "jle",
+          "0x1644e8"
+        ],
+        [
+          24,
+          "xor",
+          "ecx, ecx"
+        ],
+        [
+          26,
+          "mov",
+          "cl, byte ptr [esi]"
+        ],
+        [
+          28,
+          "mov",
+          "eax, edx"
+        ],
+        [
+          30,
+          "shr",
+          "eax, 0x18"
+        ],
+        [
+          33,
+          "shl",
+          "edx, 8"
+        ],
+        [
+          36,
+          "xor",
+          "eax, ecx"
+        ],
+        [
+          38,
+          "and",
+          "eax, 0xff"
+        ],
+        [
+          43,
+          "mov",
+          "ecx, dword ptr [eax*4 + 0x3816f0]"
+        ],
+        [
+          50,
+          "inc",
+          "esi"
+        ],
+        [
+          51,
+          "xor",
+          "edx, ecx"
+        ],
+        [
+          53,
+          "dec",
+          "edi"
+        ],
+        [
+          54,
+          "jne",
+          "0x1644c8"
+        ],
+        [
+          56,
+          "pop",
+          "edi"
+        ],
+        [
+          57,
+          "mov",
+          "eax, edx"
+        ],
+        [
+          59,
+          "pop",
+          "esi"
+        ],
+        [
+          60,
+          "ret",
+          ""
+        ]
+      ],
+      "identity": "xUtil_crc_update(U32,char*,S32)"
     }
   ]
 }
