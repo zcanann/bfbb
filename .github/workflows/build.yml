@@ -155,6 +155,7 @@ jobs:
             build/${{ matrix.version }}/symbols.json
             build/${{ matrix.version }}/address-anchors.json
             build/${{ matrix.version }}/data-extents.json
+            build/${{ matrix.version }}/original-data-bindings.json
             build/${{ matrix.version }}/splits.json
             build/${{ matrix.version }}/symbol-candidates.json
             build/${{ matrix.version }}/verified-anonymous-functions.json
