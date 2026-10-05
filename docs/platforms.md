@@ -75,12 +75,12 @@ checked, and the standard objdiff parser accepts the result.
 
 | Version | Full code-region bytes | Objdiff code-matched bytes |
 | --- | ---: | ---: |
-| SLUS-20680 | 2,978,560 | 26,120 |
-| SLES-51968 | 2,979,712 | 26,120 |
-| SLES-51970 | 2,976,512 | 26,120 |
+| SLUS-20680 | 2,978,560 | 27,720 |
+| SLES-51968 | 2,979,712 | 27,720 |
+| SLES-51970 | 2,976,512 | 27,720 |
 | SLES-53623 | 2,979,968 | 6,144 |
-| XBOX-US | 1,798,760 | 1,008 |
-| XBOX-EU | 1,798,760 | 1,008 |
+| XBOX-US | 1,798,760 | 1,111 |
+| XBOX-EU | 1,798,760 | 1,111 |
 
 This checkpoint includes utility, serializer, bounds, streaming, environment, light-kit,
 move-point, fog, behavior-manager, binary-reader, event, volume and conditional source comparisons, plus comparisons for independently verified French function
@@ -108,9 +108,9 @@ The narrower function-only baselines currently contain:
 
 | PS2 baseline | Functions | Measured function bytes | Source matches |
 | --- | ---: | ---: | ---: |
-| USA | 5,391 | 2,107,460 | 237 functions / 26,120 bytes |
-| Europe/Australia | 5,392 | 2,108,700 | 237 functions / 26,120 bytes |
-| Germany | 5,394 | 2,105,512 | 237 functions / 26,120 bytes |
+| USA | 5,391 | 2,107,460 | 256 functions / 27,720 bytes |
+| Europe/Australia | 5,392 | 2,108,700 | 256 functions / 27,720 bytes |
+| Germany | 5,394 | 2,105,512 | 256 functions / 27,720 bytes |
 | France (reviewed and corroborated bounds) | 331 | 90,040 | 46 functions / 6,144 bytes |
 
 The `address-anchors.json` registries also recover over 2,500 named data addresses
@@ -150,6 +150,14 @@ cannot distinguish code here: `.rdata` and `.data` also have that flag. No fake
 whole-section function is created to make a progress denominator.
 
 ## Compiled PS2 units
+
+The release `xDebug.cpp` matches all six original functions / 80 bytes in each
+debug-bearing version. Its font-only GameCube helper is excluded on PS2; the
+six shipping function bodies are unchanged and independently reproduce every
+original byte. The camera-tweak unit adds 11 exact functions / 1,444 bytes,
+and the particle manager adds two / 76 bytes. Their remaining functions stay
+in the comparison as unmatched code. See [camera evidence](PS2_CAMERA_TWEAK.md)
+and [particle-manager evidence](PS2_PARTICLE_MANAGER.md). France coverage is unchanged.
 
 The unchanged shared `src/SB/Core/x/xBase.cpp` compiles with the hash-pinned
 `mwcps2-3.0b38-030307` profile under unmodified Wibo 1.2.0. All five functions
@@ -277,7 +285,7 @@ inventory. Reviewed extents take precedence. CI regenerates this registry from
 the original; the remaining candidates stay excluded. Anonymous identifiers
 establish neither original symbols nor source ownership. Together with the
 twelve reviewed functions, measured coverage is 2,519 functions / 627,572 bytes;
-1,008 bytes match source. This is still partial coverage.
+1,111 bytes match source. This is still partial coverage.
 
 Three hash functions have been independently reviewed in both Xbox releases:
 `xStrHash(const char*)`, its bounded overload, and `xStrHashCat`, totaling 151
@@ -285,7 +293,8 @@ extent bytes. Their CFG, caller arguments, suffix strings, and signed-byte fold
 support their identities. These bounded functions have explicit i386 COFF symbols
 and sizes; they do not promote the remaining analyzer candidates. The actual full shared `xString.cpp` compiles with a pinned MSVC 7.1 candidate
 profile under Wine, followed by LTCG linking. Its plain hash function matches
-all 48 bytes in both Xbox releases; the other two functions remain nonmatching.
+all 48 bytes in both Xbox releases; the bounded hash and concatenating hash now
+match their 55 and 48 bytes as well. See [hash loop evidence](XBOX_HASH_LOOPS.md).
 The same leaf also matches with MSVC 7.0, so exact retail compiler identity is
 not established. Xbox's signed-byte fold is platform-scoped; GameCube retains
 its existing unsigned-byte behavior.
