@@ -93,7 +93,23 @@ def verify_functions(original: Original, document: dict, anchors: dict | None = 
         if "callback_registration" in evidence:
             from platforms.xbox_particle_commands import verify_callback
             verify_callback(original, function)
-        require(evidence["return_address"] == end - 1 and original.read(end - 1, 1) == b"\xc3",
+        if "closed_cfg" in evidence:
+            from platforms.xbox_source import _leaf_extent
+            cfg = evidence['closed_cfg']
+            section = original.section(start, size)
+            base = section['virtual_address']
+            text = original.read(base, min(section['raw_size'], section['virtual_size']))
+            # The entry and rejection bound are independently reviewed original
+            # ranges. Only decoded original call destinations are permitted;
+            # these placeholders assert no names or source matching.
+            actual = _leaf_extent(text, base, start, end,
+                {address: 'original-call' for address in cfg['direct_call_targets']})
+            require(actual['size'] == size and actual['instruction_bytes'] == cfg['instruction_bytes'] and
+                    actual['internal_gap_ranges'] == cfg['internal_gap_ranges'],
+                    f'{label}: original closed CFG or extent differs')
+        require((start <= evidence["return_address"] < end if "closed_cfg" in evidence else
+                 evidence["return_address"] == end - 1) and
+                original.read(evidence["return_address"], 1) == b"\xc3",
                 f"{label}: terminal RET boundary differs")
         for branch in evidence["branches"]:
             instruction = original.read(branch["address"], 2)

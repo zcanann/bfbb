@@ -852,6 +852,625 @@
           }
         ]
       }
+    },
+    {
+      "source": "src/SB/Core/x/xMath3.cpp",
+      "target_unit": "SB/Core/x/xMath3.cpp",
+      "object": "source/xMath3/xMath3.obj",
+      "comparison_object": "source/xMath3-functions.obj",
+      "host_entry": "tools/platforms/xbox_support/matrix_entry.cpp",
+      "host_context": {
+        "xatof": null,
+        "imports": "tools/platforms/xbox_support/math_crt.def"
+      },
+      "source_dependencies": [
+        {
+          "source": "src/SB/Core/x/xMath.cpp",
+          "object": "xMath.obj"
+        },
+        {
+          "source": "src/SB/Core/x/xVec3.cpp",
+          "object": "xVec3.obj"
+        },
+        {
+          "source": "src/SB/Core/gc/iMath.cpp",
+          "object": "iMath.obj"
+        },
+        {
+          "source": "src/SB/Core/gc/iMath3.cpp",
+          "object": "iMath3.obj"
+        },
+        {
+          "source": "src/SB/Core/x/xParCmd.cpp",
+          "object": "xParCmd.obj"
+        }
+      ],
+      "runtime_libraries": [
+        "libcmt"
+      ],
+      "symbols": {
+        "xMath3Init()": "?xMath3Init@@YAXXZ",
+        "xLine3VecDist2(const xVec3*,const xVec3*,const xVec3*,xIsect*)": "?xLine3VecDist2@@YAXPBUxVec3@@00PAUxIsect@@@Z",
+        "xPointInBox(const xBox*,const xVec3*)": "?xPointInBox@@YAHPBUxBox@@PBUxVec3@@@Z",
+        "xBoxInitBoundOBB(xBox*,const xBox*,const xMat4x3*)": "?xBoxInitBoundOBB@@YAXPAUxBox@@PBU1@PBUxMat4x3@@@Z",
+        "xBoxInitBoundCapsule(xBox*,const xCapsule*)": "?xBoxInitBoundCapsule@@YAXPAUxBox@@PBUxCapsule@@@Z",
+        "xBoxFromCone(xBox&,const xVec3&,const xVec3&,F32,F32,F32)": "?xBoxFromCone@@YAXAAUxBox@@ABUxVec3@@1MMM@Z",
+        "xMat3x3Normalize(xMat3x3*,const xMat3x3*)": "?xMat3x3Normalize@@YAXPAUxMat3x3@@PBU1@@Z",
+        "xMat3x3GetEuler(const xMat3x3*,xVec3*)": "?xMat3x3GetEuler@@YAXPBUxMat3x3@@PAUxVec3@@@Z",
+        "xMat3x3LookVec(xMat3x3*,const xVec3*)": "?xMat3x3LookVec@@YAMPAUxMat3x3@@PBUxVec3@@@Z",
+        "xMat3x3Euler(xMat3x3*,const xVec3*)": "?xMat3x3Euler@@YAXPAUxMat3x3@@PBUxVec3@@@Z",
+        "xMat3x3Euler(xMat3x3*,F32,F32,F32)": "?xMat3x3Euler@@YAXPAUxMat3x3@@MMM@Z",
+        "xMat3x3RotC(xMat3x3*,F32,F32,F32,F32)": "?xMat3x3RotC@@YAXPAUxMat3x3@@MMMM@Z",
+        "xMat3x3RotX(xMat3x3*,F32)": "?xMat3x3RotX@@YAXPAUxMat3x3@@M@Z",
+        "xMat3x3RotY(xMat3x3*,F32)": "?xMat3x3RotY@@YAXPAUxMat3x3@@M@Z",
+        "xMat3x3RotZ(xMat3x3*,F32)": "?xMat3x3RotZ@@YAXPAUxMat3x3@@M@Z",
+        "xMat3x3RMulRotY(xMat3x3*,const xMat3x3*,F32)": "?xMat3x3RMulRotY@@YAXPAUxMat3x3@@PBU1@M@Z",
+        "xMat3x3Transpose(xMat3x3*,const xMat3x3*)": "?xMat3x3Transpose@@YAXPAUxMat3x3@@PBU1@@Z",
+        "xMat3x3Mul(xMat3x3*,const xMat3x3*,const xMat3x3*)": "?xMat3x3Mul@@YAXPAUxMat3x3@@PBU1@1@Z",
+        "xMat3x3Tolocal(xVec3*,const xMat3x3*,const xVec3*)": "?xMat3x3Tolocal@@YAXPAUxVec3@@PBUxMat3x3@@PBU1@@Z",
+        "xMat4x3Rot(xMat4x3*,const xVec3*,F32,const xVec3*)": "?xMat4x3Rot@@YAXPAUxMat4x3@@PBUxVec3@@M1@Z",
+        "xMat4x3Mul(xMat4x3*,const xMat4x3*,const xMat4x3*)": "?xMat4x3Mul@@YAXPAUxMat4x3@@PBU1@1@Z",
+        "xQuatFromMat(xQuat*,const xMat3x3*)": "?xQuatFromMat@@YAXPAUxQuat@@PBUxMat3x3@@@Z",
+        "xQuatFromAxisAngle(xQuat*,const xVec3*,F32)": "?xQuatFromAxisAngle@@YAXPAUxQuat@@PBUxVec3@@M@Z",
+        "xQuatToMat(const xQuat*,xMat3x3*)": "?xQuatToMat@@YAXPBUxQuat@@PAUxMat3x3@@@Z",
+        "xQuatNormalize(xQuat*,const xQuat*)": "?xQuatNormalize@@YAMPAUxQuat@@PBU1@@Z",
+        "xQuatSlerp(xQuat*,const xQuat*,const xQuat*,F32)": "?xQuatSlerp@@YAXPAUxQuat@@PBU1@1M@Z",
+        "xQuatMul(xQuat*,const xQuat*,const xQuat*)": "?xQuatMul@@YAXPAUxQuat@@PBU1@1@Z",
+        "xQuatDiff(xQuat*,const xQuat*,const xQuat*)": "?xQuatDiff@@YAXPAUxQuat@@PBU1@1@Z",
+        "xBoxUnion(xBox&,const xBox&,const xBox&)": "?xBoxUnion@@YAXAAUxBox@@ABU1@1@Z",
+        "xBoxFromCircle(xBox&,const xVec3&,const xVec3&,F32)": "?xBoxFromCircle@@YAXAAUxBox@@ABUxVec3@@1M@Z"
+      },
+      "scope": "Thirty original-reviewed matrix/quaternion/bounds functions compared from complete real xMath3 plus five complete dependencies; nine further source APIs retained by diagnostic entry but unlocated originals remain unassigned. No whole-TU or executable completion claim. Unknown original calls remain raw.",
+      "globals": {
+        "g_X3": {
+          "linkage_name": "?g_X3@@3UxVec3@@B",
+          "size": 12,
+          "object": "xMath3.obj",
+          "value_hex": "0000803f0000000000000000"
+        },
+        "g_Y3": {
+          "linkage_name": "?g_Y3@@3UxVec3@@B",
+          "size": 12,
+          "object": "xMath3.obj",
+          "value_hex": "000000000000803f00000000"
+        },
+        "g_Z3": {
+          "linkage_name": "?g_Z3@@3UxVec3@@B",
+          "size": 12,
+          "object": "xMath3.obj",
+          "value_hex": "00000000000000000000803f"
+        },
+        "float:00000000": {
+          "linkage_name": "__real@00000000",
+          "size": 4,
+          "object": "xParCmd.obj",
+          "value_hex": "00000000"
+        },
+        "float:3f800000": {
+          "linkage_name": "__real@3f800000",
+          "size": 4,
+          "object": "xParCmd.obj",
+          "value_hex": "0000803f"
+        },
+        "float:3727c5ac": {
+          "linkage_name": "__real@3727c5ac",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "acc52737"
+        },
+        "float:3f000000": {
+          "linkage_name": "__real@3f000000",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "0000003f"
+        },
+        "float:bfc90fdb": {
+          "linkage_name": "__real@bfc90fdb",
+          "size": 4,
+          "object": "xMath3.obj",
+          "value_hex": "db0fc9bf"
+        },
+        "float:3fc90fdb": {
+          "linkage_name": "__real@3fc90fdb",
+          "size": 4,
+          "object": "xMath3.obj",
+          "value_hex": "db0fc93f"
+        },
+        "float:3f7fbe77": {
+          "linkage_name": "__real@3f7fbe77",
+          "size": 4,
+          "object": "xMath3.obj",
+          "value_hex": "77be7f3f"
+        },
+        "g_I3": {
+          "linkage_name": "?g_I3@@3UxMat4x3@@A",
+          "size": 64,
+          "object": "xMath3.obj"
+        },
+        "xQuatFromMat::nxt": {
+          "definition_use": {
+            "function": "?xQuatFromMat@@YAXPAUxQuat@@PBUxMat3x3@@@Z",
+            "prefix": "8b3c95"
+          },
+          "size": 12,
+          "object": "xMath3.obj",
+          "initial_value_hex": "010000000200000000000000"
+        }
+      },
+      "direct_calls": {
+        "xMath3Init()": [],
+        "xLine3VecDist2(const xVec3*,const xVec3*,const xVec3*,xIsect*)": [],
+        "xPointInBox(const xBox*,const xVec3*)": [],
+        "xBoxInitBoundOBB(xBox*,const xBox*,const xMat4x3*)": [],
+        "xBoxInitBoundCapsule(xBox*,const xCapsule*)": [],
+        "xBoxFromCone(xBox&,const xVec3&,const xVec3&,F32,F32,F32)": [
+          "xBoxFromCircle(xBox&,const xVec3&,const xVec3&,F32)",
+          "xBoxUnion(xBox&,const xBox&,const xBox&)"
+        ],
+        "xMat3x3Normalize(xMat3x3*,const xMat3x3*)": [
+          "xVec3Normalize(xVec3*,const xVec3*)"
+        ],
+        "xMat3x3GetEuler(const xMat3x3*,xVec3*)": [
+          "?xAngleClampFast@@YAMM@Z",
+          "__CIasin"
+        ],
+        "xMat3x3LookVec(xMat3x3*,const xVec3*)": [
+          "xVec3Normalize(xVec3*,const xVec3*)"
+        ],
+        "xMat3x3Euler(xMat3x3*,const xVec3*)": [
+          "xMat3x3Euler(xMat3x3*,F32,F32,F32)"
+        ],
+        "xMat3x3Euler(xMat3x3*,F32,F32,F32)": [],
+        "xMat3x3RotC(xMat3x3*,F32,F32,F32,F32)": [],
+        "xMat3x3RotX(xMat3x3*,F32)": [],
+        "xMat3x3RotY(xMat3x3*,F32)": [],
+        "xMat3x3RotZ(xMat3x3*,F32)": [],
+        "xMat3x3RMulRotY(xMat3x3*,const xMat3x3*,F32)": [],
+        "xMat3x3Transpose(xMat3x3*,const xMat3x3*)": [],
+        "xMat3x3Mul(xMat3x3*,const xMat3x3*,const xMat3x3*)": [],
+        "xMat3x3Tolocal(xVec3*,const xMat3x3*,const xVec3*)": [
+          "?xMat3x3LMulVec@@YAXPAUxVec3@@PBUxMat3x3@@PBU1@@Z"
+        ],
+        "xMat4x3Rot(xMat4x3*,const xVec3*,F32,const xVec3*)": [
+          "xMat3x3RotC(xMat3x3*,F32,F32,F32,F32)",
+          "xMat4x3Mul(xMat4x3*,const xMat4x3*,const xMat4x3*)"
+        ],
+        "xMat4x3Mul(xMat4x3*,const xMat4x3*,const xMat4x3*)": [
+          "xMat3x3Mul(xMat3x3*,const xMat3x3*,const xMat3x3*)"
+        ],
+        "xQuatFromMat(xQuat*,const xMat3x3*)": [],
+        "xQuatFromAxisAngle(xQuat*,const xVec3*,F32)": [],
+        "xQuatToMat(const xQuat*,xMat3x3*)": [],
+        "xQuatNormalize(xQuat*,const xQuat*)": [
+          "?xQuatLength2@@YAMPBUxQuat@@@Z",
+          "?xQuatSMul@@YAXPAUxQuat@@PBU1@M@Z"
+        ],
+        "xQuatSlerp(xQuat*,const xQuat*,const xQuat*,F32)": [
+          "?xQuatAdd@@YAXPAUxQuat@@PBU1@1@Z",
+          "?xQuatSMul@@YAXPAUxQuat@@PBU1@M@Z",
+          "__CIacos",
+          "xQuatNormalize(xQuat*,const xQuat*)"
+        ],
+        "xQuatMul(xQuat*,const xQuat*,const xQuat*)": [
+          "xQuatNormalize(xQuat*,const xQuat*)"
+        ],
+        "xQuatDiff(xQuat*,const xQuat*,const xQuat*)": [
+          "xQuatMul(xQuat*,const xQuat*,const xQuat*)"
+        ],
+        "xBoxUnion(xBox&,const xBox&,const xBox&)": [],
+        "xBoxFromCircle(xBox&,const xVec3&,const xVec3&,F32)": []
+      },
+      "call_symbols": {
+        "xVec3Normalize(xVec3*,const xVec3*)": {
+          "linkage_name": "?xVec3Normalize@@YAMPAUxVec3@@PBU1@@Z",
+          "object": "xVec3.obj"
+        },
+        "__CIasin": {
+          "linkage_name": "__CIasin",
+          "object": "msvcrt:msvcr71.dll"
+        },
+        "?xAngleClampFast@@YAMM@Z": {
+          "linkage_name": "?xAngleClampFast@@YAMM@Z",
+          "object": "xMath.obj"
+        },
+        "?xMat3x3LMulVec@@YAXPAUxVec3@@PBUxMat3x3@@PBU1@@Z": {
+          "linkage_name": "?xMat3x3LMulVec@@YAXPAUxVec3@@PBUxMat3x3@@PBU1@@Z",
+          "object": "xMath3.obj"
+        },
+        "?xQuatLength2@@YAMPBUxQuat@@@Z": {
+          "linkage_name": "?xQuatLength2@@YAMPBUxQuat@@@Z",
+          "object": "xMath3.obj"
+        },
+        "?xQuatSMul@@YAXPAUxQuat@@PBU1@M@Z": {
+          "linkage_name": "?xQuatSMul@@YAXPAUxQuat@@PBU1@M@Z",
+          "object": "xMath3.obj"
+        },
+        "__CIacos": {
+          "linkage_name": "__CIacos",
+          "object": "msvcrt:msvcr71.dll"
+        },
+        "?xQuatAdd@@YAXPAUxQuat@@PBU1@1@Z": {
+          "linkage_name": "?xQuatAdd@@YAXPAUxQuat@@PBU1@1@Z",
+          "object": "xMath3.obj"
+        }
+      },
+      "address_expressions": {
+        "xMath3Init()": [
+          {
+            "symbol": "g_I3",
+            "field": "displacement",
+            "prefix": "c705",
+            "addend": 0
+          },
+          {
+            "symbol": "g_I3",
+            "field": "displacement",
+            "prefix": "c705",
+            "addend": 4
+          },
+          {
+            "symbol": "g_I3",
+            "field": "displacement",
+            "prefix": "c705",
+            "addend": 8
+          },
+          {
+            "symbol": "g_I3",
+            "field": "displacement",
+            "prefix": "c705",
+            "addend": 16
+          },
+          {
+            "symbol": "g_I3",
+            "field": "displacement",
+            "prefix": "c705",
+            "addend": 20
+          },
+          {
+            "symbol": "g_I3",
+            "field": "displacement",
+            "prefix": "c705",
+            "addend": 24
+          },
+          {
+            "symbol": "g_I3",
+            "field": "displacement",
+            "prefix": "c705",
+            "addend": 32
+          },
+          {
+            "symbol": "g_I3",
+            "field": "displacement",
+            "prefix": "c705",
+            "addend": 36
+          },
+          {
+            "symbol": "g_I3",
+            "field": "displacement",
+            "prefix": "c705",
+            "addend": 40
+          },
+          {
+            "symbol": "g_I3",
+            "field": "displacement",
+            "prefix": "c705",
+            "addend": 48
+          },
+          {
+            "symbol": "g_I3",
+            "field": "displacement",
+            "prefix": "c705",
+            "addend": 52
+          },
+          {
+            "symbol": "g_I3",
+            "field": "displacement",
+            "prefix": "c705",
+            "addend": 56
+          }
+        ],
+        "xLine3VecDist2(const xVec3*,const xVec3*,const xVec3*,xIsect*)": [
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d81d",
+            "addend": 0
+          }
+        ],
+        "xPointInBox(const xBox*,const xVec3*)": [],
+        "xBoxInitBoundOBB(xBox*,const xBox*,const xMat4x3*)": [
+          {
+            "symbol": "float:3f000000",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0,
+            "count": 3
+          }
+        ],
+        "xBoxInitBoundCapsule(xBox*,const xCapsule*)": [],
+        "xBoxFromCone(xBox&,const xVec3&,const xVec3&,F32,F32,F32)": [],
+        "xMat3x3Normalize(xMat3x3*,const xMat3x3*)": [],
+        "xMat3x3GetEuler(const xMat3x3*,xVec3*)": [
+          {
+            "symbol": "float:3fc90fdb",
+            "field": "displacement",
+            "prefix": "d81d",
+            "addend": 0
+          },
+          {
+            "symbol": "float:bfc90fdb",
+            "field": "displacement",
+            "prefix": "d81d",
+            "addend": 0
+          },
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0
+          }
+        ],
+        "xMat3x3LookVec(xMat3x3*,const xVec3*)": [
+          {
+            "symbol": "float:3f800000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0
+          },
+          {
+            "symbol": "float:3727c5ac",
+            "field": "displacement",
+            "prefix": "d81d",
+            "addend": 0,
+            "count": 4
+          },
+          {
+            "symbol": "float:3f800000",
+            "field": "displacement",
+            "prefix": "d805",
+            "addend": 0
+          },
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0
+          }
+        ],
+        "xMat3x3Euler(xMat3x3*,const xVec3*)": [],
+        "xMat3x3Euler(xMat3x3*,F32,F32,F32)": [],
+        "xMat3x3RotC(xMat3x3*,F32,F32,F32,F32)": [
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0
+          },
+          {
+            "symbol": "g_I3",
+            "field": "immediate",
+            "prefix": "be",
+            "addend": 0
+          },
+          {
+            "symbol": "float:3f800000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0
+          }
+        ],
+        "xMat3x3RotX(xMat3x3*,F32)": [
+          {
+            "symbol": "g_X3",
+            "field": "displacement",
+            "prefix": "8b15",
+            "addend": 0
+          },
+          {
+            "symbol": "g_X3",
+            "field": "displacement",
+            "prefix": "8b15",
+            "addend": 4
+          },
+          {
+            "symbol": "g_X3",
+            "field": "displacement",
+            "prefix": "8b15",
+            "addend": 8
+          }
+        ],
+        "xMat3x3RotY(xMat3x3*,F32)": [
+          {
+            "symbol": "g_Y3",
+            "field": "displacement",
+            "prefix": "8b35",
+            "addend": 0
+          },
+          {
+            "symbol": "g_Y3",
+            "field": "displacement",
+            "prefix": "8b35",
+            "addend": 4
+          },
+          {
+            "symbol": "g_Y3",
+            "field": "displacement",
+            "prefix": "8b35",
+            "addend": 8
+          }
+        ],
+        "xMat3x3RotZ(xMat3x3*,F32)": [
+          {
+            "symbol": "g_Z3",
+            "field": "displacement",
+            "prefix": "8b35",
+            "addend": 0
+          },
+          {
+            "symbol": "g_Z3",
+            "field": "displacement",
+            "prefix": "8b35",
+            "addend": 4
+          },
+          {
+            "symbol": "g_Z3",
+            "field": "displacement",
+            "prefix": "8b35",
+            "addend": 8
+          }
+        ],
+        "xMat3x3RMulRotY(xMat3x3*,const xMat3x3*,F32)": [],
+        "xMat3x3Transpose(xMat3x3*,const xMat3x3*)": [],
+        "xMat3x3Mul(xMat3x3*,const xMat3x3*,const xMat3x3*)": [],
+        "xMat3x3Tolocal(xVec3*,const xMat3x3*,const xVec3*)": [],
+        "xMat4x3Rot(xMat4x3*,const xVec3*,F32,const xVec3*)": [
+          {
+            "symbol": "g_I3",
+            "field": "immediate",
+            "prefix": "be",
+            "addend": 0
+          }
+        ],
+        "xMat4x3Mul(xMat4x3*,const xMat4x3*,const xMat4x3*)": [],
+        "xQuatFromMat(xQuat*,const xMat3x3*)": [
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d815",
+            "addend": 0
+          },
+          {
+            "symbol": "float:3f800000",
+            "field": "displacement",
+            "prefix": "d805",
+            "addend": 0,
+            "count": 2
+          },
+          {
+            "symbol": "float:3f000000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0,
+            "count": 2
+          },
+          {
+            "symbol": "float:3f000000",
+            "field": "displacement",
+            "prefix": "d83d",
+            "addend": 0,
+            "count": 2
+          },
+          {
+            "symbol": "xQuatFromMat::nxt",
+            "field": "displacement",
+            "prefix": "8b3c95",
+            "addend": 0
+          },
+          {
+            "symbol": "xQuatFromMat::nxt",
+            "field": "displacement",
+            "prefix": "8b1cbd",
+            "addend": 0
+          },
+          {
+            "symbol": "float:3727c5ac",
+            "field": "displacement",
+            "prefix": "d81d",
+            "addend": 0
+          },
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d81d",
+            "addend": 0
+          }
+        ],
+        "xQuatFromAxisAngle(xQuat*,const xVec3*,F32)": [
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0
+          },
+          {
+            "symbol": "float:3f000000",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0
+          }
+        ],
+        "xQuatToMat(const xQuat*,xMat3x3*)": [
+          {
+            "symbol": "float:3f800000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0,
+            "count": 3
+          }
+        ],
+        "xQuatNormalize(xQuat*,const xQuat*)": [
+          {
+            "symbol": "float:3f800000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0,
+            "count": 3
+          },
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0,
+            "count": 2
+          }
+        ],
+        "xQuatSlerp(xQuat*,const xQuat*,const xQuat*,F32)": [
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d815",
+            "addend": 0
+          },
+          {
+            "symbol": "float:3f7fbe77",
+            "field": "displacement",
+            "prefix": "d81d",
+            "addend": 0
+          },
+          {
+            "symbol": "float:3f800000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0,
+            "count": 2
+          },
+          {
+            "symbol": "float:3f800000",
+            "field": "displacement",
+            "prefix": "d83d",
+            "addend": 0
+          }
+        ],
+        "xQuatMul(xQuat*,const xQuat*,const xQuat*)": [],
+        "xQuatDiff(xQuat*,const xQuat*,const xQuat*)": [
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d81d",
+            "addend": 0
+          }
+        ],
+        "xBoxUnion(xBox&,const xBox&,const xBox&)": [],
+        "xBoxFromCircle(xBox&,const xVec3&,const xVec3&,F32)": [
+          {
+            "symbol": "float:3f800000",
+            "field": "displacement",
+            "prefix": "d82d",
+            "addend": 0,
+            "count": 3
+          }
+        ]
+      }
     }
   ],
   "static_runtime": {

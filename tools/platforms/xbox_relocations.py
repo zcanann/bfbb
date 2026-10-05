@@ -110,10 +110,40 @@ def source_globals(map_path: Path, unit: dict, sections: list[dict], executable:
                     len(bytes.fromhex(spec['value_hex'])) == size and
                     executable.read_bytes()[offset:offset + size] == bytes.fromhex(spec['value_hex']),
                     'Source literal differs from independently reviewed value')
+        if 'initial_value_hex' in spec:
+            section = owners[0]
+            expected = bytes.fromhex(spec['initial_value_hex'])
+            offset = section['offset'] + address - section['address']
+            require(executable is not None and len(expected) == size and
+                    address + size <= section['address'] + section['raw_size'] and
+                    executable.read_bytes()[offset:offset + size] == expected,
+                    'Source static initial value differs from its declared definition')
         require(not any(address < other < address + size for _, other, _ in rows),
                 'Another MAP global lies inside the reviewed source range')
         result[name] = {'address': address, 'size': size}
     return result
+
+
+def _address_field(instruction, field: str) -> bool:
+    """Accept a decoded address field, preserving a C7 store's immediate."""
+    offset = instruction.disp_offset if field == 'displacement' else instruction.imm_offset
+    size = instruction.disp_size if field == 'displacement' else instruction.imm_size
+    if size != 4:
+        return False
+    if offset + 4 == instruction.size:
+        return True
+    # MOV dword ptr [disp32], imm32 has an absolute address followed by its
+    # stored value. The PE HIGHLOW must identify the displacement, never that
+    # trailing immediate. Keep this exception restricted to the decoded C7 /0
+    # absolute form; it is not permission to normalize arbitrary interior bytes.
+    import capstone as cs
+    operands = instruction.operands
+    return (field == 'displacement' and instruction.mnemonic == 'mov' and
+            bytes(instruction.bytes[:2]) == b'\xc7\x05' and offset == 2 and
+            instruction.size == 10 and instruction.imm_offset == 6 and instruction.imm_size == 4 and
+            len(operands) == 2 and operands[0].type == cs.x86.X86_OP_MEM and operands[0].size == 4 and
+            operands[0].mem.base == 0 and operands[0].mem.index == 0 and
+            operands[1].type == cs.x86.X86_OP_IMM and operands[1].size == 4)
 
 
 def normalize(body: bytes, expressions: list[dict], anchors: dict,
@@ -144,7 +174,7 @@ def normalize(body: bytes, expressions: list[dict], anchors: dict,
         field_size = instruction.disp_size if field == 'displacement' else instruction.imm_size
         require(field_size == 4 and instruction.address + field_offset == offset and
                 instruction.bytes[:field_offset].hex() == expression['prefix'] and
-                field_offset + 4 == instruction.size, 'Address expression does not describe the actual instruction operand')
+                _address_field(instruction, field), 'Address expression does not describe the actual instruction operand')
         anchor = anchors[symbol]
         require(isinstance(addend, int) and 0 <= addend <= anchor['size'], 'Address addend outside reviewed object/end')
         value = anchor['address'] + addend
@@ -176,7 +206,7 @@ def discover_source_expressions(body: bytes, templates: list[dict], anchors: dic
             at = instruction.disp_offset if field == 'displacement' else instruction.imm_offset
             size = instruction.disp_size if field == 'displacement' else instruction.imm_size
             offset = instruction.address + at
-            if (size == 4 and offset in highlow and at + 4 == instruction.size and
+            if (size == 4 and offset in highlow and _address_field(instruction, field) and
                     instruction.bytes[:at].hex() == template['prefix'] and
                     struct.unpack_from('<I', body, offset)[0] == anchors[symbol]['address'] + addend):
                 matches.append({**template, 'offset': offset, 'instruction_offset': instruction.address})
@@ -247,8 +277,8 @@ def verify_original_anchors(path: Path, original) -> dict:
                   for i in decoder.disasm(original.read(proof['address'], proof['size']), proof['address'])]
         require(actual == [tuple(i) for i in proof['instructions']], 'Reviewed data-anchor instruction witness differs')
     for anchor in document['anchors']:
-        if 'value_hex' in anchor:
-            value = bytes.fromhex(anchor['value_hex'])
+        if 'value_hex' in anchor or 'initial_value_hex' in anchor:
+            value = bytes.fromhex(anchor.get('value_hex', anchor.get('initial_value_hex')))
             require(len(value) == anchor['size'] and original.read(anchor['address'], anchor['size']) == value,
                     'Original literal value differs')
     return anchors

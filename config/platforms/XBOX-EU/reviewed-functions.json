@@ -14,6 +14,2679 @@
   },
   "functions": [
     {
+      "name": "xBoxUnion",
+      "canonical_identifier": "xBoxUnion(xBox&,const xBox&,const xBox&)",
+      "display_name": "xBoxUnion(xBox&,const xBox&,const xBox&)",
+      "source": "SB/Core/x/xMath3.cpp",
+      "linkage_name": null,
+      "address": 93232,
+      "size": 142,
+      "sha256": "145513a853c9971188c99f948989e5ef98fd81ba28b7069037ba4bd7b9e1aac8",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 142,
+      "instruction_count": 56,
+      "semantics": {
+        "identity": "Box union chooses three upper component maxima and three lower component minima.",
+        "calling_convention": "Original register/stack parameter uses are described by the math component dataflow; LTCG source ABI is independently generated and any mismatch remains compared.",
+        "entry_evidence": "Original decoded direct call witnesses and closed CFG; source bytes are not used to choose extents."
+      },
+      "address_expressions": [],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 93373,
+        "branches": [
+          {
+            "address": 93241,
+            "size": 2,
+            "opcode": 117,
+            "target": 93247
+          },
+          {
+            "address": 93245,
+            "size": 2,
+            "opcode": 235,
+            "target": 93249
+          },
+          {
+            "address": 93262,
+            "size": 2,
+            "opcode": 117,
+            "target": 93269
+          },
+          {
+            "address": 93267,
+            "size": 2,
+            "opcode": 235,
+            "target": 93272
+          },
+          {
+            "address": 93286,
+            "size": 2,
+            "opcode": 117,
+            "target": 93293
+          },
+          {
+            "address": 93291,
+            "size": 2,
+            "opcode": 235,
+            "target": 93296
+          },
+          {
+            "address": 93310,
+            "size": 2,
+            "opcode": 122,
+            "target": 93317
+          },
+          {
+            "address": 93315,
+            "size": 2,
+            "opcode": 235,
+            "target": 93320
+          },
+          {
+            "address": 93334,
+            "size": 2,
+            "opcode": 122,
+            "target": 93341
+          },
+          {
+            "address": 93339,
+            "size": 2,
+            "opcode": 235,
+            "target": 93344
+          },
+          {
+            "address": 93358,
+            "size": 2,
+            "opcode": 122,
+            "target": 93367
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 98539,
+            "target": 93232
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 1332389,
+            "target": 93232
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 142,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
+        },
+        "previous_boundary": {
+          "return_address": 93230,
+          "padding_address": 93231,
+          "padding_size": 1,
+          "padding_byte": 204
+        },
+        "next_function_address": 93376,
+        "following_padding": {
+          "address": 93374,
+          "size": 2,
+          "byte": 204
+        }
+      }
+    },
+    {
+      "name": "xBoxFromCircle",
+      "canonical_identifier": "xBoxFromCircle(xBox&,const xVec3&,const xVec3&,F32)",
+      "display_name": "xBoxFromCircle(xBox&,const xVec3&,const xVec3&,F32)",
+      "source": "SB/Core/x/xMath3.cpp",
+      "linkage_name": null,
+      "address": 1331040,
+      "size": 224,
+      "sha256": "9ea9e03a6527ff936578d69e15e093fe2edfc24ae4b1d2580aab0ac5299f4110",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 224,
+      "instruction_count": 71,
+      "semantics": {
+        "identity": "Oriented-circle extents use radius*sqrt(1-direction.component^2), then center plus/minus each extent.",
+        "calling_convention": "Original register/stack parameter uses are described by the math component dataflow; LTCG source ABI is independently generated and any mismatch remains compared.",
+        "entry_evidence": "Original decoded direct call witnesses and closed CFG; source bytes are not used to choose extents."
+      },
+      "address_expressions": [
+        {
+          "offset": 12,
+          "instruction_offset": 10,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d82d",
+          "addend": 0
+        },
+        {
+          "offset": 31,
+          "instruction_offset": 29,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d82d",
+          "addend": 0
+        },
+        {
+          "offset": 64,
+          "instruction_offset": 62,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d82d",
+          "addend": 0
+        }
+      ],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1331263,
+        "branches": [],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1332193,
+            "target": 1331040
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 224,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
+        },
+        "previous_boundary": {
+          "return_address": 1331024,
+          "padding_address": 1331025,
+          "padding_size": 15,
+          "padding_byte": 204
+        }
+      }
+    },
+    {
+      "name": "xMath3Init",
+      "canonical_identifier": "xMath3Init()",
+      "display_name": "xMath3Init()",
+      "source": "SB/Core/x/xMath3.cpp",
+      "linkage_name": null,
+      "address": 1331264,
+      "size": 121,
+      "sha256": "d7e1b8a4ed24381e21a26fe1870e8e34831d0a88d37ac035ab4fce314094dea0",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 121,
+      "instruction_count": 13,
+      "semantics": {
+        "identity": "Twelve identity-matrix component stores at 16-byte row spacing, leaving flags/padding untouched; shared g_I3 is also copied by axis rotation.",
+        "calling_convention": "Original register/stack parameter uses are described by the math component dataflow; LTCG source ABI is independently generated and any mismatch remains compared.",
+        "entry_evidence": "Original decoded direct call witnesses and closed CFG; source bytes are not used to choose extents."
+      },
+      "address_expressions": [
+        {
+          "offset": 2,
+          "instruction_offset": 0,
+          "symbol": "g_I3",
+          "field": "displacement",
+          "prefix": "c705",
+          "addend": 0
+        },
+        {
+          "offset": 12,
+          "instruction_offset": 10,
+          "symbol": "g_I3",
+          "field": "displacement",
+          "prefix": "c705",
+          "addend": 4
+        },
+        {
+          "offset": 22,
+          "instruction_offset": 20,
+          "symbol": "g_I3",
+          "field": "displacement",
+          "prefix": "c705",
+          "addend": 8
+        },
+        {
+          "offset": 32,
+          "instruction_offset": 30,
+          "symbol": "g_I3",
+          "field": "displacement",
+          "prefix": "c705",
+          "addend": 16
+        },
+        {
+          "offset": 42,
+          "instruction_offset": 40,
+          "symbol": "g_I3",
+          "field": "displacement",
+          "prefix": "c705",
+          "addend": 20
+        },
+        {
+          "offset": 52,
+          "instruction_offset": 50,
+          "symbol": "g_I3",
+          "field": "displacement",
+          "prefix": "c705",
+          "addend": 24
+        },
+        {
+          "offset": 62,
+          "instruction_offset": 60,
+          "symbol": "g_I3",
+          "field": "displacement",
+          "prefix": "c705",
+          "addend": 32
+        },
+        {
+          "offset": 72,
+          "instruction_offset": 70,
+          "symbol": "g_I3",
+          "field": "displacement",
+          "prefix": "c705",
+          "addend": 36
+        },
+        {
+          "offset": 82,
+          "instruction_offset": 80,
+          "symbol": "g_I3",
+          "field": "displacement",
+          "prefix": "c705",
+          "addend": 40
+        },
+        {
+          "offset": 92,
+          "instruction_offset": 90,
+          "symbol": "g_I3",
+          "field": "displacement",
+          "prefix": "c705",
+          "addend": 48
+        },
+        {
+          "offset": 102,
+          "instruction_offset": 100,
+          "symbol": "g_I3",
+          "field": "displacement",
+          "prefix": "c705",
+          "addend": 52
+        },
+        {
+          "offset": 112,
+          "instruction_offset": 110,
+          "symbol": "g_I3",
+          "field": "displacement",
+          "prefix": "c705",
+          "addend": 56
+        }
+      ],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1331384,
+        "branches": [],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1521831,
+            "target": 1331264
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 121,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
+        },
+        "next_function_address": 1331392,
+        "following_padding": {
+          "address": 1331385,
+          "size": 7,
+          "byte": 204
+        }
+      }
+    },
+    {
+      "name": "xLine3VecDist2",
+      "canonical_identifier": "xLine3VecDist2(const xVec3*,const xVec3*,const xVec3*,xIsect*)",
+      "display_name": "xLine3VecDist2(const xVec3*,const xVec3*,const xVec3*,xIsect*)",
+      "source": "SB/Core/x/xMath3.cpp",
+      "linkage_name": null,
+      "address": 1331392,
+      "size": 264,
+      "sha256": "fdd8987c5a010888ac7fc78f95089ce96f80848f07d7403f2cbe7260bce3f9c1",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 264,
+      "instruction_count": 114,
+      "semantics": {
+        "identity": "Line projection computes endpoint dot tests and squared perpendicular distance into xIsect, including normalized closest point.",
+        "calling_convention": "Original register/stack parameter uses are described by the math component dataflow; LTCG source ABI is independently generated and any mismatch remains compared.",
+        "entry_evidence": "Original decoded direct call witnesses and closed CFG; source bytes are not used to choose extents."
+      },
+      "address_expressions": [
+        {
+          "offset": 66,
+          "instruction_offset": 64,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        }
+      ],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1331655,
+        "branches": [
+          {
+            "address": 1331467,
+            "size": 2,
+            "opcode": 122,
+            "target": 1331511
+          },
+          {
+            "address": 1331543,
+            "size": 2,
+            "opcode": 117,
+            "target": 1331608
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 270033,
+            "target": 1331392
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 264,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
+        },
+        "previous_boundary": {
+          "return_address": 1331384,
+          "padding_address": 1331385,
+          "padding_size": 7,
+          "padding_byte": 204
+        },
+        "next_function_address": 1331664,
+        "following_padding": {
+          "address": 1331656,
+          "size": 8,
+          "byte": 204
+        }
+      }
+    },
+    {
+      "name": "xPointInBox",
+      "canonical_identifier": "xPointInBox(const xBox*,const xVec3*)",
+      "display_name": "xPointInBox(const xBox*,const xVec3*)",
+      "source": "SB/Core/x/xMath3.cpp",
+      "linkage_name": null,
+      "address": 1331664,
+      "size": 84,
+      "sha256": "216536b1760bebc9d4dee591fa1876f70dcf3b9ed07e3654777fa4a64dc781a8",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 84,
+      "instruction_count": 34,
+      "semantics": {
+        "identity": "Three inclusive component tests against xBox upper/lower vectors.",
+        "calling_convention": "Original register/stack parameter uses are described by the math component dataflow; LTCG source ABI is independently generated and any mismatch remains compared.",
+        "entry_evidence": "Original decoded direct call witnesses and closed CFG; source bytes are not used to choose extents."
+      },
+      "address_expressions": [],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1331747,
+        "branches": [
+          {
+            "address": 1331674,
+            "size": 2,
+            "opcode": 117,
+            "target": 1331745
+          },
+          {
+            "address": 1331685,
+            "size": 2,
+            "opcode": 122,
+            "target": 1331745
+          },
+          {
+            "address": 1331698,
+            "size": 2,
+            "opcode": 117,
+            "target": 1331745
+          },
+          {
+            "address": 1331711,
+            "size": 2,
+            "opcode": 122,
+            "target": 1331745
+          },
+          {
+            "address": 1331724,
+            "size": 2,
+            "opcode": 117,
+            "target": 1331745
+          },
+          {
+            "address": 1331737,
+            "size": 2,
+            "opcode": 122,
+            "target": 1331745
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 113737,
+            "target": 1331664
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 84,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
+        },
+        "previous_boundary": {
+          "return_address": 1331655,
+          "padding_address": 1331656,
+          "padding_size": 8,
+          "padding_byte": 204
+        },
+        "next_function_address": 1331760,
+        "following_padding": {
+          "address": 1331748,
+          "size": 12,
+          "byte": 204
+        }
+      }
+    },
+    {
+      "name": "xBoxInitBoundOBB",
+      "canonical_identifier": "xBoxInitBoundOBB(xBox*,const xBox*,const xMat4x3*)",
+      "display_name": "xBoxInitBoundOBB(xBox*,const xBox*,const xMat4x3*)",
+      "source": "SB/Core/x/xMath3.cpp",
+      "linkage_name": null,
+      "address": 1331760,
+      "size": 263,
+      "sha256": "13b4a8d76fbec4cda40fb1370786e4798c500a6f2402e4e80150e34bb7e1af7e",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 263,
+      "instruction_count": 87,
+      "semantics": {
+        "identity": "Box midpoint and half-extents transformed by a matrix with absolute row contributions.",
+        "calling_convention": "Original register/stack parameter uses are described by the math component dataflow; LTCG source ABI is independently generated and any mismatch remains compared.",
+        "entry_evidence": "Original decoded direct call witnesses and closed CFG; source bytes are not used to choose extents."
+      },
+      "address_expressions": [
+        {
+          "offset": 10,
+          "instruction_offset": 8,
+          "symbol": "float:3f000000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 26,
+          "instruction_offset": 24,
+          "symbol": "float:3f000000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 42,
+          "instruction_offset": 40,
+          "symbol": "float:3f000000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        }
+      ],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1332022,
+        "branches": [],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1125177,
+            "target": 1331760
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 1167144,
+            "target": 1331760
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 263,
+          "internal_gap_ranges": [],
+          "direct_call_targets": [
+            104192
+          ]
+        },
+        "previous_boundary": {
+          "return_address": 1331747,
+          "padding_address": 1331748,
+          "padding_size": 12,
+          "padding_byte": 204
+        },
+        "next_function_address": 1332032,
+        "following_padding": {
+          "address": 1332023,
+          "size": 9,
+          "byte": 204
+        }
+      }
+    },
+    {
+      "name": "xBoxInitBoundCapsule",
+      "canonical_identifier": "xBoxInitBoundCapsule(xBox*,const xCapsule*)",
+      "display_name": "xBoxInitBoundCapsule(xBox*,const xCapsule*)",
+      "source": "SB/Core/x/xMath3.cpp",
+      "linkage_name": null,
+      "address": 1332032,
+      "size": 143,
+      "sha256": "abdc0307d14051b1bd86b038095e44fe2f84bc76bfee4f55f36588103c590e10",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 143,
+      "instruction_count": 53,
+      "semantics": {
+        "identity": "Component minima/maxima of capsule endpoints extended by radius.",
+        "calling_convention": "Original register/stack parameter uses are described by the math component dataflow; LTCG source ABI is independently generated and any mismatch remains compared.",
+        "entry_evidence": "Original decoded direct call witnesses and closed CFG; source bytes are not used to choose extents."
+      },
+      "address_expressions": [],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1332174,
+        "branches": [
+          {
+            "address": 1332042,
+            "size": 2,
+            "opcode": 122,
+            "target": 1332060
+          },
+          {
+            "address": 1332058,
+            "size": 2,
+            "opcode": 235,
+            "target": 1332074
+          },
+          {
+            "address": 1332087,
+            "size": 2,
+            "opcode": 122,
+            "target": 1332106
+          },
+          {
+            "address": 1332104,
+            "size": 2,
+            "opcode": 235,
+            "target": 1332121
+          },
+          {
+            "address": 1332135,
+            "size": 2,
+            "opcode": 122,
+            "target": 1332156
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1206054,
+            "target": 1332032
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 143,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
+        },
+        "previous_boundary": {
+          "return_address": 1332022,
+          "padding_address": 1332023,
+          "padding_size": 9,
+          "padding_byte": 204
+        },
+        "next_function_address": 1332176,
+        "following_padding": {
+          "address": 1332175,
+          "size": 1,
+          "byte": 204
+        }
+      }
+    },
+    {
+      "name": "xBoxFromCone",
+      "canonical_identifier": "xBoxFromCone(xBox&,const xVec3&,const xVec3&,F32,F32,F32)",
+      "display_name": "xBoxFromCone(xBox&,const xVec3&,const xVec3&,F32,F32,F32)",
+      "source": "SB/Core/x/xMath3.cpp",
+      "linkage_name": null,
+      "address": 1332176,
+      "size": 223,
+      "sha256": "74048072cc6db6abaad8cb3c5a5d1043d711603d6bcee9770699a45753752405",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 223,
+      "instruction_count": 65,
+      "semantics": {
+        "identity": "Two independently identifiable oriented-circle bounds followed by componentwise box union.",
+        "calling_convention": "Original register/stack parameter uses are described by the math component dataflow; LTCG source ABI is independently generated and any mismatch remains compared.",
+        "entry_evidence": "Original decoded direct call witnesses and closed CFG; source bytes are not used to choose extents."
+      },
+      "address_expressions": [],
+      "direct_calls": [
+        {
+          "offset": 18,
+          "symbol": "xBoxFromCircle(xBox&,const xVec3&,const xVec3&,F32)"
+        },
+        {
+          "offset": 200,
+          "symbol": "xBoxFromCircle(xBox&,const xVec3&,const xVec3&,F32)"
+        },
+        {
+          "offset": 214,
+          "symbol": "xBoxUnion(xBox&,const xBox&,const xBox&)"
+        }
+      ],
+      "corroboration": {
+        "return_address": 1332398,
+        "branches": [],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 137944,
+            "target": 1332176
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 223,
+          "internal_gap_ranges": [],
+          "direct_call_targets": [
+            93232,
+            1331040
+          ]
+        },
+        "previous_boundary": {
+          "return_address": 1332174,
+          "padding_address": 1332175,
+          "padding_size": 1,
+          "padding_byte": 204
+        },
+        "next_function_address": 1332400,
+        "following_padding": {
+          "address": 1332399,
+          "size": 1,
+          "byte": 204
+        }
+      }
+    },
+    {
+      "name": "xMat3x3Normalize",
+      "canonical_identifier": "xMat3x3Normalize(xMat3x3*,const xMat3x3*)",
+      "display_name": "xMat3x3Normalize(xMat3x3*,const xMat3x3*)",
+      "source": "SB/Core/x/xMath3.cpp",
+      "linkage_name": null,
+      "address": 1332400,
+      "size": 38,
+      "sha256": "4ee279960b149a8b2550fb0d399e736c71b6ba4dde5a40cde610a67aa7763834",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 38,
+      "instruction_count": 13,
+      "semantics": {
+        "identity": "Three xVec3Normalize calls at input/output row offsets 0,16,32.",
+        "calling_convention": "Original register/stack parameter uses are described by the math component dataflow; LTCG source ABI is independently generated and any mismatch remains compared.",
+        "entry_evidence": "Original closed CFG and surrounding RET/CC boundaries; no direct entry call was found."
+      },
+      "address_expressions": [],
+      "direct_calls": [
+        {
+          "offset": 5,
+          "symbol": "xVec3Normalize(xVec3*,const xVec3*)"
+        },
+        {
+          "offset": 18,
+          "symbol": "xVec3Normalize(xVec3*,const xVec3*)"
+        },
+        {
+          "offset": 31,
+          "symbol": "xVec3Normalize(xVec3*,const xVec3*)"
+        }
+      ],
+      "corroboration": {
+        "return_address": 1332437,
+        "branches": [],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [],
+        "closed_cfg": {
+          "instruction_bytes": 38,
+          "internal_gap_ranges": [],
+          "direct_call_targets": [
+            1429248
+          ]
+        },
+        "previous_boundary": {
+          "return_address": 1332398,
+          "padding_address": 1332399,
+          "padding_size": 1,
+          "padding_byte": 204
+        },
+        "next_function_address": 1332448,
+        "following_padding": {
+          "address": 1332438,
+          "size": 10,
+          "byte": 204
+        }
+      }
+    },
+    {
+      "name": "xMat3x3GetEuler",
+      "canonical_identifier": "xMat3x3GetEuler(const xMat3x3*,xVec3*)",
+      "display_name": "xMat3x3GetEuler(const xMat3x3*,xVec3*)",
+      "source": "SB/Core/x/xMath3.cpp",
+      "linkage_name": null,
+      "address": 1332448,
+      "size": 338,
+      "sha256": "85e71ae1f3e53b71c1d4a6b8182e818343d0843934ae078d6741f97b3ac7405a",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 338,
+      "instruction_count": 108,
+      "semantics": {
+        "identity": "Matrix orientation to Euler extraction via asin, two atan2 paths and wrap to two pi; original particle rotate helper calls this entry.",
+        "calling_convention": "Original register/stack parameter uses are described by the math component dataflow; LTCG source ABI is independently generated and any mismatch remains compared.",
+        "entry_evidence": "Original decoded direct call witnesses and closed CFG; source bytes are not used to choose extents."
+      },
+      "address_expressions": [
+        {
+          "offset": 12,
+          "instruction_offset": 10,
+          "symbol": "float:3fc90fdb",
+          "field": "displacement",
+          "prefix": "d815",
+          "addend": 0
+        },
+        {
+          "offset": 29,
+          "instruction_offset": 27,
+          "symbol": "float:bfc90fdb",
+          "field": "displacement",
+          "prefix": "d815",
+          "addend": 0
+        },
+        {
+          "offset": 50,
+          "instruction_offset": 48,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d815",
+          "addend": 0
+        },
+        {
+          "offset": 63,
+          "instruction_offset": 61,
+          "symbol": "float:40c90fdb",
+          "field": "displacement",
+          "prefix": "d805",
+          "addend": 0
+        },
+        {
+          "offset": 71,
+          "instruction_offset": 69,
+          "symbol": "float:40c90fdb",
+          "field": "displacement",
+          "prefix": "d815",
+          "addend": 0
+        },
+        {
+          "offset": 84,
+          "instruction_offset": 82,
+          "symbol": "float:40c90fdb",
+          "field": "displacement",
+          "prefix": "d825",
+          "addend": 0
+        },
+        {
+          "offset": 98,
+          "instruction_offset": 96,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d815",
+          "addend": 0
+        },
+        {
+          "offset": 111,
+          "instruction_offset": 109,
+          "symbol": "float:40c90fdb",
+          "field": "displacement",
+          "prefix": "d805",
+          "addend": 0
+        },
+        {
+          "offset": 130,
+          "instruction_offset": 128,
+          "symbol": "float:40c90fdb",
+          "field": "displacement",
+          "prefix": "d815",
+          "addend": 0
+        },
+        {
+          "offset": 147,
+          "instruction_offset": 145,
+          "symbol": "float:40c90fdb",
+          "field": "displacement",
+          "prefix": "d825",
+          "addend": 0
+        },
+        {
+          "offset": 175,
+          "instruction_offset": 173,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d815",
+          "addend": 0
+        },
+        {
+          "offset": 188,
+          "instruction_offset": 186,
+          "symbol": "float:40c90fdb",
+          "field": "displacement",
+          "prefix": "d805",
+          "addend": 0
+        },
+        {
+          "offset": 196,
+          "instruction_offset": 194,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 215,
+          "instruction_offset": 213,
+          "symbol": "float:40c90fdb",
+          "field": "displacement",
+          "prefix": "d815",
+          "addend": 0
+        },
+        {
+          "offset": 228,
+          "instruction_offset": 226,
+          "symbol": "float:40c90fdb",
+          "field": "displacement",
+          "prefix": "d825",
+          "addend": 0
+        },
+        {
+          "offset": 236,
+          "instruction_offset": 234,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 264,
+          "instruction_offset": 262,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d815",
+          "addend": 0
+        },
+        {
+          "offset": 277,
+          "instruction_offset": 275,
+          "symbol": "float:40c90fdb",
+          "field": "displacement",
+          "prefix": "d805",
+          "addend": 0
+        },
+        {
+          "offset": 283,
+          "instruction_offset": 281,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 302,
+          "instruction_offset": 300,
+          "symbol": "float:40c90fdb",
+          "field": "displacement",
+          "prefix": "d815",
+          "addend": 0
+        },
+        {
+          "offset": 315,
+          "instruction_offset": 313,
+          "symbol": "float:40c90fdb",
+          "field": "displacement",
+          "prefix": "d825",
+          "addend": 0
+        },
+        {
+          "offset": 321,
+          "instruction_offset": 319,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        }
+      ],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1332785,
+        "branches": [
+          {
+            "address": 1332486,
+            "size": 2,
+            "opcode": 117,
+            "target": 1332612
+          },
+          {
+            "address": 1332507,
+            "size": 2,
+            "opcode": 122,
+            "target": 1332517
+          },
+          {
+            "address": 1332515,
+            "size": 2,
+            "opcode": 235,
+            "target": 1332536
+          },
+          {
+            "address": 1332528,
+            "size": 2,
+            "opcode": 117,
+            "target": 1332536
+          },
+          {
+            "address": 1332555,
+            "size": 2,
+            "opcode": 122,
+            "target": 1332576
+          },
+          {
+            "address": 1332632,
+            "size": 2,
+            "opcode": 122,
+            "target": 1332661
+          },
+          {
+            "address": 1332672,
+            "size": 2,
+            "opcode": 117,
+            "target": 1332680
+          },
+          {
+            "address": 1332721,
+            "size": 2,
+            "opcode": 122,
+            "target": 1332748
+          },
+          {
+            "address": 1332759,
+            "size": 2,
+            "opcode": 117,
+            "target": 1332767
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 127526,
+            "target": 1332448
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 156425,
+            "target": 1332448
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 338,
+          "internal_gap_ranges": [],
+          "direct_call_targets": [
+            1863844
+          ]
+        },
+        "previous_boundary": {
+          "return_address": 1332437,
+          "padding_address": 1332438,
+          "padding_size": 10,
+          "padding_byte": 204
+        },
+        "next_function_address": 1332800,
+        "following_padding": {
+          "address": 1332786,
+          "size": 14,
+          "byte": 204
+        }
+      }
+    },
+    {
+      "name": "xMat3x3LookVec",
+      "canonical_identifier": "xMat3x3LookVec(xMat3x3*,const xVec3*)",
+      "display_name": "xMat3x3LookVec(xMat3x3*,const xVec3*)",
+      "source": "SB/Core/x/xMath3.cpp",
+      "linkage_name": null,
+      "address": 1332800,
+      "size": 386,
+      "sha256": "1102279621db144d6999150d147829f0be4429568392f2908434aa785ddd8d4d",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 386,
+      "instruction_count": 143,
+      "semantics": {
+        "identity": "Vector normalization followed by special vertical branches and orthogonal basis construction; original particle jet calls this entry.",
+        "calling_convention": "Original register/stack parameter uses are described by the math component dataflow; LTCG source ABI is independently generated and any mismatch remains compared.",
+        "entry_evidence": "Original decoded direct call witnesses and closed CFG; source bytes are not used to choose extents."
+      },
+      "address_expressions": [
+        {
+          "offset": 45,
+          "instruction_offset": 43,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 56,
+          "instruction_offset": 54,
+          "symbol": "float:3727c5ac",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        },
+        {
+          "offset": 112,
+          "instruction_offset": 110,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d805",
+          "addend": 0
+        },
+        {
+          "offset": 120,
+          "instruction_offset": 118,
+          "symbol": "float:3727c5ac",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        },
+        {
+          "offset": 183,
+          "instruction_offset": 181,
+          "symbol": "float:3727c5ac",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        },
+        {
+          "offset": 200,
+          "instruction_offset": 198,
+          "symbol": "float:3727c5ac",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        },
+        {
+          "offset": 213,
+          "instruction_offset": 211,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        }
+      ],
+      "direct_calls": [
+        {
+          "offset": 13,
+          "symbol": "xVec3Normalize(xVec3*,const xVec3*)"
+        },
+        {
+          "offset": 275,
+          "symbol": "xVec3Normalize(xVec3*,const xVec3*)"
+        }
+      ],
+      "corroboration": {
+        "return_address": 1333185,
+        "branches": [
+          {
+            "address": 1332865,
+            "size": 2,
+            "opcode": 122,
+            "target": 1332907
+          },
+          {
+            "address": 1332929,
+            "size": 2,
+            "opcode": 122,
+            "target": 1332974
+          },
+          {
+            "address": 1332992,
+            "size": 2,
+            "opcode": 122,
+            "target": 1333053
+          },
+          {
+            "address": 1333009,
+            "size": 2,
+            "opcode": 122,
+            "target": 1333053
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 135333,
+            "target": 1332800
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 172001,
+            "target": 1332800
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 386,
+          "internal_gap_ranges": [],
+          "direct_call_targets": [
+            1429248
+          ]
+        },
+        "previous_boundary": {
+          "return_address": 1332785,
+          "padding_address": 1332786,
+          "padding_size": 14,
+          "padding_byte": 204
+        },
+        "next_function_address": 1333200,
+        "following_padding": {
+          "address": 1333186,
+          "size": 14,
+          "byte": 204
+        }
+      }
+    },
+    {
+      "name": "xMat3x3Euler",
+      "canonical_identifier": "xMat3x3Euler(xMat3x3*,const xVec3*)",
+      "display_name": "xMat3x3Euler(xMat3x3*,const xVec3*)",
+      "source": "SB/Core/x/xMath3.cpp",
+      "linkage_name": null,
+      "address": 1333200,
+      "size": 24,
+      "sha256": "3a243978cd7f7d681fd536a10f43df24b6831110713a00a1109c72d1c2cebd01",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 24,
+      "instruction_count": 10,
+      "semantics": {
+        "identity": "Three vector components passed to the independently identified scalar Euler entry.",
+        "calling_convention": "Original register/stack parameter uses are described by the math component dataflow; LTCG source ABI is independently generated and any mismatch remains compared.",
+        "entry_evidence": "Original closed CFG and surrounding RET/CC boundaries; no direct entry call was found."
+      },
+      "address_expressions": [],
+      "direct_calls": [
+        {
+          "offset": 16,
+          "symbol": "xMat3x3Euler(xMat3x3*,F32,F32,F32)"
+        }
+      ],
+      "corroboration": {
+        "return_address": 1333223,
+        "branches": [],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [],
+        "closed_cfg": {
+          "instruction_bytes": 24,
+          "internal_gap_ranges": [],
+          "direct_call_targets": [
+            1333232
+          ]
+        },
+        "previous_boundary": {
+          "return_address": 1333185,
+          "padding_address": 1333186,
+          "padding_size": 14,
+          "padding_byte": 204
+        },
+        "next_function_address": 1333232,
+        "following_padding": {
+          "address": 1333224,
+          "size": 8,
+          "byte": 204
+        }
+      }
+    },
+    {
+      "name": "xMat3x3Euler",
+      "canonical_identifier": "xMat3x3Euler(xMat3x3*,F32,F32,F32)",
+      "display_name": "xMat3x3Euler(xMat3x3*,F32,F32,F32)",
+      "source": "SB/Core/x/xMath3.cpp",
+      "linkage_name": null,
+      "address": 1333232,
+      "size": 152,
+      "sha256": "70ff11d98b7663ec62e224ee91a4cdb040c33a7a762c9bf845b556f107e5756b",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 152,
+      "instruction_count": 57,
+      "semantics": {
+        "identity": "Six inline FSIN/FCOS evaluations and nine Euler basis products at matrix component offsets; original particle rotation calls this entry.",
+        "calling_convention": "Original register/stack parameter uses are described by the math component dataflow; LTCG source ABI is independently generated and any mismatch remains compared.",
+        "entry_evidence": "Original decoded direct call witnesses and closed CFG; source bytes are not used to choose extents."
+      },
+      "address_expressions": [],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1333383,
+        "branches": [],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 127548,
+            "target": 1333232
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 129614,
+            "target": 1333232
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 152,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
+        },
+        "previous_boundary": {
+          "return_address": 1333223,
+          "padding_address": 1333224,
+          "padding_size": 8,
+          "padding_byte": 204
+        },
+        "next_function_address": 1333392,
+        "following_padding": {
+          "address": 1333384,
+          "size": 8,
+          "byte": 204
+        }
+      }
+    },
+    {
+      "name": "xMat3x3RotC",
+      "canonical_identifier": "xMat3x3RotC(xMat3x3*,F32,F32,F32,F32)",
+      "display_name": "xMat3x3RotC(xMat3x3*,F32,F32,F32,F32)",
+      "source": "SB/Core/x/xMath3.cpp",
+      "linkage_name": null,
+      "address": 1333392,
+      "size": 226,
+      "sha256": "38d8198574026461c9200af499abcc8ca2d11df4727ba8b85b7671e57b453631",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 226,
+      "instruction_count": 77,
+      "semantics": {
+        "identity": "Axis-angle Rodrigues matrix using sine/cosine and zero-angle identity copy.",
+        "calling_convention": "Original register/stack parameter uses are described by the math component dataflow; LTCG source ABI is independently generated and any mismatch remains compared.",
+        "entry_evidence": "Original decoded direct call witnesses and closed CFG; source bytes are not used to choose extents."
+      },
+      "address_expressions": [
+        {
+          "offset": 2,
+          "instruction_offset": 0,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 32,
+          "instruction_offset": 31,
+          "symbol": "g_I3",
+          "field": "immediate",
+          "prefix": "be",
+          "addend": 0
+        },
+        {
+          "offset": 65,
+          "instruction_offset": 63,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        }
+      ],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1333617,
+        "branches": [
+          {
+            "address": 1333415,
+            "size": 2,
+            "opcode": 122,
+            "target": 1333436
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 158283,
+            "target": 1333392
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 159579,
+            "target": 1333392
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 226,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
+        },
+        "previous_boundary": {
+          "return_address": 1333383,
+          "padding_address": 1333384,
+          "padding_size": 8,
+          "padding_byte": 204
+        },
+        "next_function_address": 1333632,
+        "following_padding": {
+          "address": 1333618,
+          "size": 14,
+          "byte": 204
+        }
+      }
+    },
+    {
+      "name": "xMat3x3RotX",
+      "canonical_identifier": "xMat3x3RotX(xMat3x3*,F32)",
+      "display_name": "xMat3x3RotX(xMat3x3*,F32)",
+      "source": "SB/Core/x/xMath3.cpp",
+      "linkage_name": null,
+      "address": 1333632,
+      "size": 52,
+      "sha256": "2c3688c9f4b60c5e51287533b23f48e88a5c1061bc01f17da857b4979301783a",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 52,
+      "instruction_count": 18,
+      "semantics": {
+        "identity": "X-axis rotation: unit right row, cosine/sine in remaining two rows.",
+        "calling_convention": "Original register/stack parameter uses are described by the math component dataflow; LTCG source ABI is independently generated and any mismatch remains compared.",
+        "entry_evidence": "Original decoded direct call witnesses and closed CFG; source bytes are not used to choose extents."
+      },
+      "address_expressions": [],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1333683,
+        "branches": [],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1039097,
+            "target": 1333632
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 52,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
+        },
+        "previous_boundary": {
+          "return_address": 1333617,
+          "padding_address": 1333618,
+          "padding_size": 14,
+          "padding_byte": 204
+        },
+        "next_function_address": 1333696,
+        "following_padding": {
+          "address": 1333684,
+          "size": 12,
+          "byte": 204
+        }
+      }
+    },
+    {
+      "name": "xMat3x3RotY",
+      "canonical_identifier": "xMat3x3RotY(xMat3x3*,F32)",
+      "display_name": "xMat3x3RotY(xMat3x3*,F32)",
+      "source": "SB/Core/x/xMath3.cpp",
+      "linkage_name": null,
+      "address": 1333696,
+      "size": 54,
+      "sha256": "97bc3af6c0d0be9b5d61372ffc23a6de0a8fcd327eb710ec0cb5041b70f49712",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 54,
+      "instruction_count": 19,
+      "semantics": {
+        "identity": "Y-axis rotation: unit up row, cosine/sine in right/at rows.",
+        "calling_convention": "Original register/stack parameter uses are described by the math component dataflow; LTCG source ABI is independently generated and any mismatch remains compared.",
+        "entry_evidence": "Original decoded direct call witnesses and closed CFG; source bytes are not used to choose extents."
+      },
+      "address_expressions": [],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1333749,
+        "branches": [],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1039123,
+            "target": 1333696
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 1254894,
+            "target": 1333696
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 54,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
+        },
+        "previous_boundary": {
+          "return_address": 1333683,
+          "padding_address": 1333684,
+          "padding_size": 12,
+          "padding_byte": 204
+        },
+        "next_function_address": 1333760,
+        "following_padding": {
+          "address": 1333750,
+          "size": 10,
+          "byte": 204
+        }
+      }
+    },
+    {
+      "name": "xMat3x3RotZ",
+      "canonical_identifier": "xMat3x3RotZ(xMat3x3*,F32)",
+      "display_name": "xMat3x3RotZ(xMat3x3*,F32)",
+      "source": "SB/Core/x/xMath3.cpp",
+      "linkage_name": null,
+      "address": 1333760,
+      "size": 52,
+      "sha256": "7bdbabf86357526de57d844c38bae409e883c02fa976b188cd46d35fba9ee941",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 52,
+      "instruction_count": 18,
+      "semantics": {
+        "identity": "Z-axis rotation: unit at row, cosine/sine in right/up rows.",
+        "calling_convention": "Original register/stack parameter uses are described by the math component dataflow; LTCG source ABI is independently generated and any mismatch remains compared.",
+        "entry_evidence": "Original decoded direct call witnesses and closed CFG; source bytes are not used to choose extents."
+      },
+      "address_expressions": [],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1333811,
+        "branches": [],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1039149,
+            "target": 1333760
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 52,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
+        },
+        "previous_boundary": {
+          "return_address": 1333749,
+          "padding_address": 1333750,
+          "padding_size": 10,
+          "padding_byte": 204
+        },
+        "next_function_address": 1333824,
+        "following_padding": {
+          "address": 1333812,
+          "size": 12,
+          "byte": 204
+        }
+      }
+    },
+    {
+      "name": "xMat3x3RMulRotY",
+      "canonical_identifier": "xMat3x3RMulRotY(xMat3x3*,const xMat3x3*,F32)",
+      "display_name": "xMat3x3RMulRotY(xMat3x3*,const xMat3x3*,F32)",
+      "source": "SB/Core/x/xMath3.cpp",
+      "linkage_name": null,
+      "address": 1333824,
+      "size": 263,
+      "sha256": "064149ecd92460222354d3cff54b6c2b2a43726e5f785d562cb573cab3644d9a",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 263,
+      "instruction_count": 92,
+      "semantics": {
+        "identity": "Right multiplication by Y rotation, retaining middle row and combining first/third rows.",
+        "calling_convention": "Original register/stack parameter uses are described by the math component dataflow; LTCG source ABI is independently generated and any mismatch remains compared.",
+        "entry_evidence": "Original decoded direct call witnesses and closed CFG; source bytes are not used to choose extents."
+      },
+      "address_expressions": [],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1334086,
+        "branches": [
+          {
+            "address": 1333846,
+            "size": 2,
+            "opcode": 117,
+            "target": 1333955
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 170889,
+            "target": 1333824
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 263,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
+        },
+        "previous_boundary": {
+          "return_address": 1333811,
+          "padding_address": 1333812,
+          "padding_size": 12,
+          "padding_byte": 204
+        },
+        "next_function_address": 1334096,
+        "following_padding": {
+          "address": 1334087,
+          "size": 9,
+          "byte": 204
+        }
+      }
+    },
+    {
+      "name": "xMat3x3Transpose",
+      "canonical_identifier": "xMat3x3Transpose(xMat3x3*,const xMat3x3*)",
+      "display_name": "xMat3x3Transpose(xMat3x3*,const xMat3x3*)",
+      "source": "SB/Core/x/xMath3.cpp",
+      "linkage_name": null,
+      "address": 1334096,
+      "size": 101,
+      "sha256": "7292e97a40e873b97675f300da6444bec50e02ab4aa96a705ca93adc78bff3bc",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 101,
+      "instruction_count": 35,
+      "semantics": {
+        "identity": "Transpose exchanges off-diagonal matrix elements while copying diagonals and flags.",
+        "calling_convention": "Original register/stack parameter uses are described by the math component dataflow; LTCG source ABI is independently generated and any mismatch remains compared.",
+        "entry_evidence": "Original decoded direct call witnesses and closed CFG; source bytes are not used to choose extents."
+      },
+      "address_expressions": [],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1334196,
+        "branches": [
+          {
+            "address": 1334098,
+            "size": 2,
+            "opcode": 117,
+            "target": 1334137
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 322613,
+            "target": 1334096
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 332297,
+            "target": 1334096
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 101,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
+        },
+        "previous_boundary": {
+          "return_address": 1334086,
+          "padding_address": 1334087,
+          "padding_size": 9,
+          "padding_byte": 204
+        },
+        "next_function_address": 1334208,
+        "following_padding": {
+          "address": 1334197,
+          "size": 11,
+          "byte": 204
+        }
+      }
+    },
+    {
+      "name": "xMat3x3Mul",
+      "canonical_identifier": "xMat3x3Mul(xMat3x3*,const xMat3x3*,const xMat3x3*)",
+      "display_name": "xMat3x3Mul(xMat3x3*,const xMat3x3*,const xMat3x3*)",
+      "source": "SB/Core/x/xMath3.cpp",
+      "linkage_name": null,
+      "address": 1334208,
+      "size": 283,
+      "sha256": "67c77836740919cf6450400ca43baa3643868c29d0659385296c10854385e826",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 283,
+      "instruction_count": 103,
+      "semantics": {
+        "identity": "Three-by-three matrix product with alias-safe temporary path.",
+        "calling_convention": "Original register/stack parameter uses are described by the math component dataflow; LTCG source ABI is independently generated and any mismatch remains compared.",
+        "entry_evidence": "Original decoded direct call witnesses and closed CFG; source bytes are not used to choose extents.",
+        "extent": "Original alias path is a final backward jump into the main body; the last reachable RET is earlier. Closed CFG establishes the complete extent."
+      },
+      "address_expressions": [],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1334476,
+        "branches": [
+          {
+            "address": 1334462,
+            "size": 2,
+            "opcode": 116,
+            "target": 1334471
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 125966,
+            "target": 1334208
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 159596,
+            "target": 1334208
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 283,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
+        },
+        "previous_boundary": {
+          "return_address": 1334196,
+          "padding_address": 1334197,
+          "padding_size": 11,
+          "padding_byte": 204
+        },
+        "next_function_address": 1334496,
+        "following_padding": {
+          "address": 1334491,
+          "size": 5,
+          "byte": 204
+        }
+      }
+    },
+    {
+      "name": "xMat3x3Tolocal",
+      "canonical_identifier": "xMat3x3Tolocal(xVec3*,const xMat3x3*,const xVec3*)",
+      "display_name": "xMat3x3Tolocal(xVec3*,const xMat3x3*,const xVec3*)",
+      "source": "SB/Core/x/xMath3.cpp",
+      "linkage_name": null,
+      "address": 1334496,
+      "size": 191,
+      "sha256": "8697b93fcccd06224473df7dfa81dccc9f3c02f8f6ec5be35c196fa536f78016",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 191,
+      "instruction_count": 80,
+      "semantics": {
+        "identity": "Project vector into local coordinates using basis dot products divided by squared basis lengths.",
+        "calling_convention": "Original register/stack parameter uses are described by the math component dataflow; LTCG source ABI is independently generated and any mismatch remains compared.",
+        "entry_evidence": "Original decoded direct call witnesses and closed CFG; source bytes are not used to choose extents."
+      },
+      "address_expressions": [],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1334686,
+        "branches": [],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 113718,
+            "target": 1334496
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 192891,
+            "target": 1334496
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 191,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
+        },
+        "next_function_address": 1334688,
+        "following_padding": {
+          "address": 1334687,
+          "size": 1,
+          "byte": 204
+        }
+      }
+    },
+    {
+      "name": "xMat4x3Rot",
+      "canonical_identifier": "xMat4x3Rot(xMat4x3*,const xVec3*,F32,const xVec3*)",
+      "display_name": "xMat4x3Rot(xMat4x3*,const xVec3*,F32,const xVec3*)",
+      "source": "SB/Core/x/xMath3.cpp",
+      "linkage_name": null,
+      "address": 1334688,
+      "size": 146,
+      "sha256": "c47444a4642c49a18093ae74c3ba30e5e2840ce4138bb85c5ceb30c3c5e97f5d",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 146,
+      "instruction_count": 52,
+      "semantics": {
+        "identity": "Axis rotation around a supplied pivot, constructing translation then multiplying transforms.",
+        "calling_convention": "Original register/stack parameter uses are described by the math component dataflow; LTCG source ABI is independently generated and any mismatch remains compared.",
+        "entry_evidence": "Original closed CFG and surrounding RET/CC boundaries; no direct entry call was found."
+      },
+      "address_expressions": [
+        {
+          "offset": 55,
+          "instruction_offset": 54,
+          "symbol": "g_I3",
+          "field": "immediate",
+          "prefix": "be",
+          "addend": 0
+        }
+      ],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1334833,
+        "branches": [],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [],
+        "closed_cfg": {
+          "instruction_bytes": 146,
+          "internal_gap_ranges": [],
+          "direct_call_targets": [
+            104192,
+            1333392,
+            1334208
+          ]
+        },
+        "previous_boundary": {
+          "return_address": 1334686,
+          "padding_address": 1334687,
+          "padding_size": 1,
+          "padding_byte": 204
+        },
+        "next_function_address": 1334848,
+        "following_padding": {
+          "address": 1334834,
+          "size": 14,
+          "byte": 204
+        }
+      }
+    },
+    {
+      "name": "xMat4x3Mul",
+      "canonical_identifier": "xMat4x3Mul(xMat4x3*,const xMat4x3*,const xMat4x3*)",
+      "display_name": "xMat4x3Mul(xMat4x3*,const xMat4x3*,const xMat4x3*)",
+      "source": "SB/Core/x/xMath3.cpp",
+      "linkage_name": null,
+      "address": 1334848,
+      "size": 63,
+      "sha256": "a648ec528bfe216fb2c76d2aad630316dbc224534635fa129bf1cedc6c4d083b",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 63,
+      "instruction_count": 22,
+      "semantics": {
+        "identity": "Transform composition: rotate/add position followed by three-by-three product.",
+        "calling_convention": "Original register/stack parameter uses are described by the math component dataflow; LTCG source ABI is independently generated and any mismatch remains compared.",
+        "entry_evidence": "Original decoded direct call witnesses and closed CFG; source bytes are not used to choose extents."
+      },
+      "address_expressions": [],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1334910,
+        "branches": [],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 262864,
+            "target": 1334848
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 317538,
+            "target": 1334848
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 63,
+          "internal_gap_ranges": [],
+          "direct_call_targets": [
+            104192,
+            1334208
+          ]
+        },
+        "previous_boundary": {
+          "return_address": 1334833,
+          "padding_address": 1334834,
+          "padding_size": 14,
+          "padding_byte": 204
+        },
+        "next_function_address": 1334912,
+        "following_padding": {
+          "address": 1334911,
+          "size": 1,
+          "byte": 204
+        }
+      }
+    },
+    {
+      "name": "xQuatFromMat",
+      "canonical_identifier": "xQuatFromMat(xQuat*,const xMat3x3*)",
+      "display_name": "xQuatFromMat(xQuat*,const xMat3x3*)",
+      "source": "SB/Core/x/xMath3.cpp",
+      "linkage_name": null,
+      "address": 1334912,
+      "size": 326,
+      "sha256": "40911ace6566d759e6b8dd1dbf03dacbc72d027cee11659e09bd8f290254b2c4",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 326,
+      "instruction_count": 115,
+      "semantics": {
+        "identity": "Trace/largest-diagonal matrix-to-quaternion branches, {1,2,0} cyclic index table, square roots and nonnegative scalar result.",
+        "calling_convention": "Original register/stack parameter uses are described by the math component dataflow; LTCG source ABI is independently generated and any mismatch remains compared.",
+        "entry_evidence": "Original decoded direct call witnesses and closed CFG; source bytes are not used to choose extents."
+      },
+      "address_expressions": [
+        {
+          "offset": 10,
+          "instruction_offset": 8,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d815",
+          "addend": 0
+        },
+        {
+          "offset": 23,
+          "instruction_offset": 21,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d805",
+          "addend": 0
+        },
+        {
+          "offset": 31,
+          "instruction_offset": 29,
+          "symbol": "float:3f000000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 42,
+          "instruction_offset": 40,
+          "symbol": "float:3f000000",
+          "field": "displacement",
+          "prefix": "d83d",
+          "addend": 0
+        },
+        {
+          "offset": 129,
+          "instruction_offset": 126,
+          "symbol": "xQuatFromMat::nxt",
+          "field": "displacement",
+          "prefix": "8b3c95",
+          "addend": 0
+        },
+        {
+          "offset": 136,
+          "instruction_offset": 133,
+          "symbol": "xQuatFromMat::nxt",
+          "field": "displacement",
+          "prefix": "8b1cbd",
+          "addend": 0
+        },
+        {
+          "offset": 160,
+          "instruction_offset": 158,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d805",
+          "addend": 0
+        },
+        {
+          "offset": 172,
+          "instruction_offset": 170,
+          "symbol": "float:3727c5ac",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        },
+        {
+          "offset": 208,
+          "instruction_offset": 206,
+          "symbol": "float:3f000000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 225,
+          "instruction_offset": 223,
+          "symbol": "float:3f000000",
+          "field": "displacement",
+          "prefix": "d83d",
+          "addend": 0
+        },
+        {
+          "offset": 281,
+          "instruction_offset": 279,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        }
+      ],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1335237,
+        "branches": [
+          {
+            "address": 1334931,
+            "size": 2,
+            "opcode": 117,
+            "target": 1334993
+          },
+          {
+            "address": 1335007,
+            "size": 2,
+            "opcode": 117,
+            "target": 1335014
+          },
+          {
+            "address": 1335028,
+            "size": 2,
+            "opcode": 117,
+            "target": 1335035
+          },
+          {
+            "address": 1335093,
+            "size": 2,
+            "opcode": 122,
+            "target": 1335118
+          },
+          {
+            "address": 1335202,
+            "size": 2,
+            "opcode": 122,
+            "target": 1335234
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 76626,
+            "target": 1334912
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 77744,
+            "target": 1334912
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 326,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
+        },
+        "previous_boundary": {
+          "return_address": 1334910,
+          "padding_address": 1334911,
+          "padding_size": 1,
+          "padding_byte": 204
+        },
+        "next_function_address": 1335248,
+        "following_padding": {
+          "address": 1335238,
+          "size": 10,
+          "byte": 204
+        }
+      }
+    },
+    {
+      "name": "xQuatFromAxisAngle",
+      "canonical_identifier": "xQuatFromAxisAngle(xQuat*,const xVec3*,F32)",
+      "display_name": "xQuatFromAxisAngle(xQuat*,const xVec3*,F32)",
+      "source": "SB/Core/x/xMath3.cpp",
+      "linkage_name": null,
+      "address": 1335248,
+      "size": 79,
+      "sha256": "87efb23b91e5433e447b7ce45533c077be5e241afd549847698a5da72941a690",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 79,
+      "instruction_count": 28,
+      "semantics": {
+        "identity": "Axis-angle quaternion: zero-angle identity or axis multiplied by sine of half-angle and cosine scalar.",
+        "calling_convention": "Original register/stack parameter uses are described by the math component dataflow; LTCG source ABI is independently generated and any mismatch remains compared.",
+        "entry_evidence": "Original decoded direct call witnesses and closed CFG; source bytes are not used to choose extents."
+      },
+      "address_expressions": [
+        {
+          "offset": 2,
+          "instruction_offset": 0,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 43,
+          "instruction_offset": 41,
+          "symbol": "float:3f000000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        }
+      ],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1335326,
+        "branches": [
+          {
+            "address": 1335265,
+            "size": 2,
+            "opcode": 122,
+            "target": 1335285
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 736809,
+            "target": 1335248
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 79,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
+        },
+        "previous_boundary": {
+          "return_address": 1335237,
+          "padding_address": 1335238,
+          "padding_size": 10,
+          "padding_byte": 204
+        },
+        "next_function_address": 1335328,
+        "following_padding": {
+          "address": 1335327,
+          "size": 1,
+          "byte": 204
+        }
+      }
+    },
+    {
+      "name": "xQuatToMat",
+      "canonical_identifier": "xQuatToMat(const xQuat*,xMat3x3*)",
+      "display_name": "xQuatToMat(const xQuat*,xMat3x3*)",
+      "source": "SB/Core/x/xMath3.cpp",
+      "linkage_name": null,
+      "address": 1335328,
+      "size": 205,
+      "sha256": "6685e3bff40282021459d5cf681de0c10368f162c0b19f6c7a52e476da841547",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 205,
+      "instruction_count": 65,
+      "semantics": {
+        "identity": "Quaternion-to-matrix doubled component products and three unit-minus-square diagonal expressions.",
+        "calling_convention": "Original register/stack parameter uses are described by the math component dataflow; LTCG source ABI is independently generated and any mismatch remains compared.",
+        "entry_evidence": "Original decoded direct call witnesses and closed CFG; source bytes are not used to choose extents."
+      },
+      "address_expressions": [
+        {
+          "offset": 97,
+          "instruction_offset": 95,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 142,
+          "instruction_offset": 140,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 186,
+          "instruction_offset": 184,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        }
+      ],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1335532,
+        "branches": [],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 76663,
+            "target": 1335328
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 77810,
+            "target": 1335328
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 205,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
+        },
+        "previous_boundary": {
+          "return_address": 1335326,
+          "padding_address": 1335327,
+          "padding_size": 1,
+          "padding_byte": 204
+        },
+        "next_function_address": 1335536,
+        "following_padding": {
+          "address": 1335533,
+          "size": 3,
+          "byte": 204
+        }
+      }
+    },
+    {
+      "name": "xQuatNormalize",
+      "canonical_identifier": "xQuatNormalize(xQuat*,const xQuat*)",
+      "display_name": "xQuatNormalize(xQuat*,const xQuat*)",
+      "source": "SB/Core/x/xMath3.cpp",
+      "linkage_name": null,
+      "address": 1335536,
+      "size": 187,
+      "sha256": "1533b85ad3e0a8e0aa82819a944b1ac854e068ea075177ee60c736e4ac2fb610",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 187,
+      "instruction_count": 73,
+      "semantics": {
+        "identity": "Quaternion norm with reciprocal length scaling, degenerate identity and unit fast path.",
+        "calling_convention": "Original register/stack parameter uses are described by the math component dataflow; LTCG source ABI is independently generated and any mismatch remains compared.",
+        "entry_evidence": "Original decoded direct call witnesses and closed CFG; source bytes are not used to choose extents."
+      },
+      "address_expressions": [
+        {
+          "offset": 47,
+          "instruction_offset": 45,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 91,
+          "instruction_offset": 89,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 99,
+          "instruction_offset": 97,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 138,
+          "instruction_offset": 136,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 151,
+          "instruction_offset": 149,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        }
+      ],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1335722,
+        "branches": [
+          {
+            "address": 1335597,
+            "size": 2,
+            "opcode": 122,
+            "target": 1335633
+          },
+          {
+            "address": 1335601,
+            "size": 2,
+            "opcode": 116,
+            "target": 1335625
+          },
+          {
+            "address": 1335649,
+            "size": 2,
+            "opcode": 122,
+            "target": 1335680
+          },
+          {
+            "address": 1335653,
+            "size": 2,
+            "opcode": 116,
+            "target": 1335672
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 584307,
+            "target": 1335536
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 1336024,
+            "target": 1335536
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 187,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
+        },
+        "previous_boundary": {
+          "return_address": 1335532,
+          "padding_address": 1335533,
+          "padding_size": 3,
+          "padding_byte": 204
+        },
+        "next_function_address": 1335728,
+        "following_padding": {
+          "address": 1335723,
+          "size": 5,
+          "byte": 204
+        }
+      }
+    },
+    {
+      "name": "xQuatSlerp",
+      "canonical_identifier": "xQuatSlerp(xQuat*,const xQuat*,const xQuat*,F32)",
+      "display_name": "xQuatSlerp(xQuat*,const xQuat*,const xQuat*,F32)",
+      "source": "SB/Core/x/xMath3.cpp",
+      "linkage_name": null,
+      "address": 1335728,
+      "size": 309,
+      "sha256": "36b7867f64518aec467805d688ab08d49c5d1a9af0692090d4d342bdf6f7f928",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 309,
+      "instruction_count": 100,
+      "semantics": {
+        "identity": "Shortest-path quaternion interpolation using sign-adjusted dot, 0.999 threshold, acos/sine weights and final normalize.",
+        "calling_convention": "Original register/stack parameter uses are described by the math component dataflow; LTCG source ABI is independently generated and any mismatch remains compared.",
+        "entry_evidence": "Original decoded direct call witnesses and closed CFG; source bytes are not used to choose extents."
+      },
+      "address_expressions": [
+        {
+          "offset": 41,
+          "instruction_offset": 39,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d815",
+          "addend": 0
+        },
+        {
+          "offset": 103,
+          "instruction_offset": 101,
+          "symbol": "float:3f7fbe77",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        },
+        {
+          "offset": 116,
+          "instruction_offset": 114,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 147,
+          "instruction_offset": 145,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d83d",
+          "addend": 0
+        },
+        {
+          "offset": 157,
+          "instruction_offset": 155,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        }
+      ],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1336036,
+        "branches": [
+          {
+            "address": 1335782,
+            "size": 2,
+            "opcode": 122,
+            "target": 1335829
+          },
+          {
+            "address": 1335840,
+            "size": 2,
+            "opcode": 117,
+            "target": 1335858
+          },
+          {
+            "address": 1335856,
+            "size": 2,
+            "opcode": 235,
+            "target": 1335917
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 76648,
+            "target": 1335728
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 77785,
+            "target": 1335728
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 309,
+          "internal_gap_ranges": [],
+          "direct_call_targets": [
+            1335536,
+            1830256
+          ]
+        },
+        "previous_boundary": {
+          "return_address": 1335722,
+          "padding_address": 1335723,
+          "padding_size": 5,
+          "padding_byte": 204
+        },
+        "next_function_address": 1336048,
+        "following_padding": {
+          "address": 1336037,
+          "size": 11,
+          "byte": 204
+        }
+      }
+    },
+    {
+      "name": "xQuatMul",
+      "canonical_identifier": "xQuatMul(xQuat*,const xQuat*,const xQuat*)",
+      "display_name": "xQuatMul(xQuat*,const xQuat*,const xQuat*)",
+      "source": "SB/Core/x/xMath3.cpp",
+      "linkage_name": null,
+      "address": 1336048,
+      "size": 135,
+      "sha256": "de229ac51f2bdce9615185ff59b608c01a9cfd6b0ebebca3b2029473d8bcdcf6",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 135,
+      "instruction_count": 53,
+      "semantics": {
+        "identity": "Hamilton product component expressions followed by quaternion normalization.",
+        "calling_convention": "Original register/stack parameter uses are described by the math component dataflow; LTCG source ABI is independently generated and any mismatch remains compared.",
+        "entry_evidence": "Original decoded direct call witnesses and closed CFG; source bytes are not used to choose extents."
+      },
+      "address_expressions": [],
+      "direct_calls": [
+        {
+          "offset": 128,
+          "symbol": "xQuatNormalize(xQuat*,const xQuat*)"
+        }
+      ],
+      "corroboration": {
+        "return_address": 1336182,
+        "branches": [],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1161244,
+            "target": 1336048
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 1336229,
+            "target": 1336048
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 135,
+          "internal_gap_ranges": [],
+          "direct_call_targets": [
+            1335536
+          ]
+        },
+        "previous_boundary": {
+          "return_address": 1336036,
+          "padding_address": 1336037,
+          "padding_size": 11,
+          "padding_byte": 204
+        },
+        "next_function_address": 1336192,
+        "following_padding": {
+          "address": 1336183,
+          "size": 9,
+          "byte": 204
+        }
+      }
+    },
+    {
+      "name": "xQuatDiff",
+      "canonical_identifier": "xQuatDiff(xQuat*,const xQuat*,const xQuat*)",
+      "display_name": "xQuatDiff(xQuat*,const xQuat*,const xQuat*)",
+      "source": "SB/Core/x/xMath3.cpp",
+      "linkage_name": null,
+      "address": 1336192,
+      "size": 90,
+      "sha256": "0b71e664f81d9c00131e0de1a3410ab75c970cff735ff3a4d730a0ab6d6d8658",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 90,
+      "instruction_count": 35,
+      "semantics": {
+        "identity": "Conjugate first quaternion, multiply by second, then negate result if scalar is negative.",
+        "calling_convention": "Original register/stack parameter uses are described by the math component dataflow; LTCG source ABI is independently generated and any mismatch remains compared.",
+        "entry_evidence": "Original decoded direct call witnesses and closed CFG; source bytes are not used to choose extents."
+      },
+      "address_expressions": [
+        {
+          "offset": 47,
+          "instruction_offset": 45,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        }
+      ],
+      "direct_calls": [
+        {
+          "offset": 38,
+          "symbol": "xQuatMul(xQuat*,const xQuat*,const xQuat*)"
+        }
+      ],
+      "corroboration": {
+        "return_address": 1336281,
+        "branches": [
+          {
+            "address": 1336248,
+            "size": 2,
+            "opcode": 122,
+            "target": 1336280
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1180417,
+            "target": 1336192
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 90,
+          "internal_gap_ranges": [],
+          "direct_call_targets": [
+            1336048
+          ]
+        },
+        "previous_boundary": {
+          "return_address": 1336182,
+          "padding_address": 1336183,
+          "padding_size": 9,
+          "padding_byte": 204
+        },
+        "next_function_address": 1336288,
+        "following_padding": {
+          "address": 1336282,
+          "size": 6,
+          "byte": 204
+        }
+      }
+    },
+    {
       "name": "xParMemInit",
       "canonical_identifier": "xParMemInit()",
       "display_name": "void xParMemInit()",
@@ -5221,6 +7894,59 @@
           "size": 205,
           "sha256": "4e908ddd23de93da9f9edd5660197715aa4fcc563721b419805be28794dc5b46",
           "description": "Hex-prefix substring branch and alternate bounded-hash identifier branch in the actual caller."
+        }
+      }
+    },
+    {
+      "name": "xVec3Normalize",
+      "canonical_identifier": "xVec3Normalize(xVec3*,const xVec3*)",
+      "display_name": "xVec3Normalize(xVec3*,const xVec3*)",
+      "source": "SB/Core/x/xVec3.cpp",
+      "linkage_name": null,
+      "address": 1429248,
+      "size": 163,
+      "sha256": "3ed7d2412fd828c349746460aa47c761fc9a1d6fda6be715ade92630d59195a1",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": false,
+      "retail_link_verified": false,
+      "instruction_bytes": 163,
+      "semantics": {
+        "identity": "Three-component squared length, hardware FSQRT, reciprocal length scaling, unit and degenerate branches; called three times for matrix rows and by LookVec."
+      },
+      "corroboration": {
+        "return_address": 1429410,
+        "branches": [
+          {
+            "address": 1429304,
+            "size": 2,
+            "opcode": 122,
+            "target": 1429330
+          },
+          {
+            "address": 1429346,
+            "size": 2,
+            "opcode": 122,
+            "target": 1429376
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 84646,
+            "target": 1429248
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 156650,
+            "target": 1429248
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 163,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
         }
       }
     },

@@ -13,7 +13,7 @@
     "candidate_analyzer": "Ghidra 11.0.1_PUBLIC",
     "registry_hash_format": "SHA256 of UTF-8 JSON with sorted keys and compact separators",
     "candidate_registry_sha256": "bcf6082a12fbd813f72cd8a854ade56c01ef86ec81621131fd4620b1e619f130",
-    "manual_registry_sha256": "b84482a504a69d83ff704aa77a7fde8a31003d1446640d2e739b28ddd199beb9",
+    "manual_registry_sha256": "13115bbce871d7dd263668c9bd5219a0a0ab942619aa05f8dfead09c45bdefd7",
     "validation_command": "python tools/platforms/xbox_boundaries.py --version XBOX-US",
     "constraints": [
       "Contiguous body with independently decoded closed direct-branch CFG and at least one RET.",
@@ -40,8 +40,8 @@
       "trap_or_privileged_exit": 3
     },
     "direct_transfers_checked": 58850,
-    "function_count": 2504,
-    "code_bytes": 625750,
+    "function_count": 2477,
+    "code_bytes": 620894,
     "text_raw_bytes": 1798760
   },
   "excluded_examples": [
@@ -73,6 +73,136 @@
     }
   ],
   "manual_overlap_exclusions": [
+    {
+      "address": 93232,
+      "size": 142,
+      "reason": "manual_extent_precedence"
+    },
+    {
+      "address": 1331040,
+      "size": 224,
+      "reason": "manual_extent_precedence"
+    },
+    {
+      "address": 1331264,
+      "size": 121,
+      "reason": "manual_extent_precedence"
+    },
+    {
+      "address": 1331392,
+      "size": 264,
+      "reason": "manual_extent_precedence"
+    },
+    {
+      "address": 1331664,
+      "size": 84,
+      "reason": "manual_extent_precedence"
+    },
+    {
+      "address": 1331760,
+      "size": 263,
+      "reason": "manual_extent_precedence"
+    },
+    {
+      "address": 1332032,
+      "size": 143,
+      "reason": "manual_extent_precedence"
+    },
+    {
+      "address": 1332176,
+      "size": 223,
+      "reason": "manual_extent_precedence"
+    },
+    {
+      "address": 1332448,
+      "size": 338,
+      "reason": "manual_extent_precedence"
+    },
+    {
+      "address": 1332800,
+      "size": 386,
+      "reason": "manual_extent_precedence"
+    },
+    {
+      "address": 1333232,
+      "size": 152,
+      "reason": "manual_extent_precedence"
+    },
+    {
+      "address": 1333392,
+      "size": 226,
+      "reason": "manual_extent_precedence"
+    },
+    {
+      "address": 1333632,
+      "size": 52,
+      "reason": "manual_extent_precedence"
+    },
+    {
+      "address": 1333696,
+      "size": 54,
+      "reason": "manual_extent_precedence"
+    },
+    {
+      "address": 1333760,
+      "size": 52,
+      "reason": "manual_extent_precedence"
+    },
+    {
+      "address": 1334096,
+      "size": 101,
+      "reason": "manual_extent_precedence"
+    },
+    {
+      "address": 1334208,
+      "size": 283,
+      "reason": "manual_extent_precedence"
+    },
+    {
+      "address": 1334496,
+      "size": 191,
+      "reason": "manual_extent_precedence"
+    },
+    {
+      "address": 1334848,
+      "size": 63,
+      "reason": "manual_extent_precedence"
+    },
+    {
+      "address": 1334912,
+      "size": 326,
+      "reason": "manual_extent_precedence"
+    },
+    {
+      "address": 1335248,
+      "size": 79,
+      "reason": "manual_extent_precedence"
+    },
+    {
+      "address": 1335328,
+      "size": 205,
+      "reason": "manual_extent_precedence"
+    },
+    {
+      "address": 1335536,
+      "size": 187,
+      "reason": "manual_extent_precedence"
+    },
+    {
+      "address": 1335728,
+      "size": 309,
+      "reason": "manual_extent_precedence"
+    },
+    {
+      "address": 1336048,
+      "size": 135,
+      "reason": "manual_extent_precedence"
+    },
+    {
+      "address": 1336192,
+      "size": 90,
+      "reason": "manual_extent_precedence"
+    },
     {
       "address": 1350064,
       "size": 37,
@@ -134,6 +264,11 @@
       "reason": "manual_extent_precedence"
     },
     {
+      "address": 1429248,
+      "size": 163,
+      "reason": "manual_extent_precedence"
+    },
+    {
       "address": 1824368,
       "size": 117,
       "reason": "manual_extent_precedence"
@@ -178,7 +313,6 @@
     {"address":93072,"size":31,"canonical_identifier":"anon_00016b90","original_name":null,"source":null,"sha256":"8cfe5109e72826a84333ec6e5e69ca32c0467c2bb6b90b6e8724639fcccdd331","instruction_count":10,"returns":[93100],"direct_call_count":2,"distinct_caller_count":2,"direct_call_witnesses":[{"caller_entry":908128,"call_address":908409},{"caller_entry":1254064,"call_address":1255604}]},
     {"address":93104,"size":83,"canonical_identifier":"anon_00016bb0","original_name":null,"source":null,"sha256":"24b628fb9889f2755393ba00909548ad22e09a9c7240d78a6f7fbffe37ce22ae","instruction_count":25,"returns":[93184],"direct_call_count":80,"distinct_caller_count":39,"direct_call_witnesses":[{"caller_entry":143104,"call_address":143245},{"caller_entry":143792,"call_address":143969}]},
     {"address":93200,"size":31,"canonical_identifier":"anon_00016c10","original_name":null,"source":null,"sha256":"1bb2977d1328841bf52e8d2b084e31e07ed807e7f4d714924545e6b006ba41d4","instruction_count":15,"returns":[93230],"direct_call_count":1,"distinct_caller_count":1,"direct_call_witnesses":[{"caller_entry":270208,"call_address":271272}]},
-    {"address":93232,"size":142,"canonical_identifier":"anon_00016c30","original_name":null,"source":null,"sha256":"145513a853c9971188c99f948989e5ef98fd81ba28b7069037ba4bd7b9e1aac8","instruction_count":56,"returns":[93366,93373],"direct_call_count":2,"distinct_caller_count":2,"direct_call_witnesses":[{"caller_entry":98112,"call_address":98539},{"caller_entry":1332176,"call_address":1332389}]},
     {"address":93376,"size":100,"canonical_identifier":"anon_00016cc0","original_name":null,"source":null,"sha256":"d2dab069c1031228087a62d3fd94d1a47b373c7338942a2c8ecdcdc5e6f16de8","instruction_count":44,"returns":[93475],"direct_call_count":1,"distinct_caller_count":1,"direct_call_witnesses":[{"caller_entry":334544,"call_address":334911}]},
     {"address":93488,"size":75,"canonical_identifier":"anon_00016d30","original_name":null,"source":null,"sha256":"025169dd16a20cca0071c405a053e2007eb113723cb24bcc8823109e46585007","instruction_count":31,"returns":[93539,93562],"direct_call_count":1,"distinct_caller_count":1,"direct_call_witnesses":[{"caller_entry":93568,"call_address":93588}]},
     {"address":94064,"size":96,"canonical_identifier":"anon_00016f70","original_name":null,"source":null,"sha256":"c1259e73f6f3464a2dafb52ed0137d43707033d507933d5a55753300f6900cd5","instruction_count":28,"returns":[94159],"direct_call_count":3,"distinct_caller_count":1,"direct_call_witnesses":[{"caller_entry":94336,"call_address":94373}]},
@@ -1394,31 +1528,6 @@
     {"address":1330384,"size":227,"canonical_identifier":"anon_00144cd0","original_name":null,"source":null,"sha256":"019f460565bf05e20ad96a0dd9be503de1eea2cebcf61a209f6da64d092297fb","instruction_count":78,"returns":[1330553,1330610],"direct_call_count":8,"distinct_caller_count":3,"direct_call_witnesses":[{"caller_entry":135088,"call_address":135112},{"caller_entry":734160,"call_address":734176}]},
     {"address":1330624,"size":154,"canonical_identifier":"anon_00144dc0","original_name":null,"source":null,"sha256":"9d6b7543185b75f97415564545026ca259d53b4eefa3a1425171a01483dcf7b0","instruction_count":58,"returns":[1330679,1330777],"direct_call_count":3,"distinct_caller_count":1,"direct_call_witnesses":[{"caller_entry":436368,"call_address":437189}]},
     {"address":1330784,"size":241,"canonical_identifier":"anon_00144e60","original_name":null,"source":null,"sha256":"a3e5c4bff36bedecc31e4f8e2e5ebf400ff89aadf1c93e819833b57a2e7452ca","instruction_count":85,"returns":[1331024],"direct_call_count":6,"distinct_caller_count":2,"direct_call_witnesses":[{"caller_entry":431184,"call_address":432068},{"caller_entry":435504,"call_address":436200}]},
-    {"address":1331040,"size":224,"canonical_identifier":"anon_00144f60","original_name":null,"source":null,"sha256":"9ea9e03a6527ff936578d69e15e093fe2edfc24ae4b1d2580aab0ac5299f4110","instruction_count":71,"returns":[1331263],"direct_call_count":2,"distinct_caller_count":1,"direct_call_witnesses":[{"caller_entry":1332176,"call_address":1332193}]},
-    {"address":1331264,"size":121,"canonical_identifier":"anon_00145040","original_name":null,"source":null,"sha256":"d7e1b8a4ed24381e21a26fe1870e8e34831d0a88d37ac035ab4fce314094dea0","instruction_count":13,"returns":[1331384],"direct_call_count":1,"distinct_caller_count":1,"direct_call_witnesses":[{"caller_entry":1521616,"call_address":1521831}]},
-    {"address":1331392,"size":264,"canonical_identifier":"anon_001450c0","original_name":null,"source":null,"sha256":"fdd8987c5a010888ac7fc78f95089ce96f80848f07d7403f2cbe7260bce3f9c1","instruction_count":114,"returns":[1331510,1331607,1331655],"direct_call_count":1,"distinct_caller_count":1,"direct_call_witnesses":[{"caller_entry":269936,"call_address":270033}]},
-    {"address":1331664,"size":84,"canonical_identifier":"anon_001451d0","original_name":null,"source":null,"sha256":"216536b1760bebc9d4dee591fa1876f70dcf3b9ed07e3654777fa4a64dc781a8","instruction_count":34,"returns":[1331744,1331747],"direct_call_count":1,"distinct_caller_count":1,"direct_call_witnesses":[{"caller_entry":113632,"call_address":113737}]},
-    {"address":1331760,"size":263,"canonical_identifier":"anon_00145230","original_name":null,"source":null,"sha256":"13b4a8d76fbec4cda40fb1370786e4798c500a6f2402e4e80150e34bb7e1af7e","instruction_count":87,"returns":[1332022],"direct_call_count":3,"distinct_caller_count":3,"direct_call_witnesses":[{"caller_entry":1125120,"call_address":1125177},{"caller_entry":1167120,"call_address":1167144}]},
-    {"address":1332032,"size":143,"canonical_identifier":"anon_00145340","original_name":null,"source":null,"sha256":"abdc0307d14051b1bd86b038095e44fe2f84bc76bfee4f55f36588103c590e10","instruction_count":53,"returns":[1332155,1332174],"direct_call_count":1,"distinct_caller_count":1,"direct_call_witnesses":[{"caller_entry":1205568,"call_address":1206054}]},
-    {"address":1332176,"size":223,"canonical_identifier":"anon_001453d0","original_name":null,"source":null,"sha256":"74048072cc6db6abaad8cb3c5a5d1043d711603d6bcee9770699a45753752405","instruction_count":65,"returns":[1332398],"direct_call_count":1,"distinct_caller_count":1,"direct_call_witnesses":[{"caller_entry":137680,"call_address":137944}]},
-    {"address":1332448,"size":338,"canonical_identifier":"anon_001454e0","original_name":null,"source":null,"sha256":"85e71ae1f3e53b71c1d4a6b8182e818343d0843934ae078d6741f97b3ac7405a","instruction_count":108,"returns":[1332575,1332611,1332785,1332660,1332700,1332747],"direct_call_count":12,"distinct_caller_count":11,"direct_call_witnesses":[{"caller_entry":127488,"call_address":127526},{"caller_entry":156400,"call_address":156425}]},
-    {"address":1332800,"size":386,"canonical_identifier":"anon_00145640","original_name":null,"source":null,"sha256":"1102279621db144d6999150d147829f0be4429568392f2908434aa785ddd8d4d","instruction_count":143,"returns":[1332906,1332973,1333052,1333185],"direct_call_count":21,"distinct_caller_count":20,"direct_call_witnesses":[{"caller_entry":135184,"call_address":135333},{"caller_entry":171968,"call_address":172001}]},
-    {"address":1333232,"size":152,"canonical_identifier":"anon_001457f0","original_name":null,"source":null,"sha256":"70ff11d98b7663ec62e224ee91a4cdb040c33a7a762c9bf845b556f107e5756b","instruction_count":57,"returns":[1333383],"direct_call_count":35,"distinct_caller_count":32,"direct_call_witnesses":[{"caller_entry":127488,"call_address":127548},{"caller_entry":129216,"call_address":129614}]},
-    {"address":1333392,"size":226,"canonical_identifier":"anon_00145890","original_name":null,"source":null,"sha256":"38d8198574026461c9200af499abcc8ca2d11df4727ba8b85b7671e57b453631","instruction_count":77,"returns":[1333435,1333617],"direct_call_count":26,"distinct_caller_count":22,"direct_call_witnesses":[{"caller_entry":158096,"call_address":158283},{"caller_entry":159552,"call_address":159579}]},
-    {"address":1333632,"size":52,"canonical_identifier":"anon_00145980","original_name":null,"source":null,"sha256":"2c3688c9f4b60c5e51287533b23f48e88a5c1061bc01f17da857b4979301783a","instruction_count":18,"returns":[1333683],"direct_call_count":2,"distinct_caller_count":1,"direct_call_witnesses":[{"caller_entry":1038048,"call_address":1039097}]},
-    {"address":1333696,"size":54,"canonical_identifier":"anon_001459c0","original_name":null,"source":null,"sha256":"97bc3af6c0d0be9b5d61372ffc23a6de0a8fcd327eb710ec0cb5041b70f49712","instruction_count":19,"returns":[1333749],"direct_call_count":3,"distinct_caller_count":2,"direct_call_witnesses":[{"caller_entry":1038048,"call_address":1039123},{"caller_entry":1254064,"call_address":1254894}]},
-    {"address":1333760,"size":52,"canonical_identifier":"anon_00145a00","original_name":null,"source":null,"sha256":"7bdbabf86357526de57d844c38bae409e883c02fa976b188cd46d35fba9ee941","instruction_count":18,"returns":[1333811],"direct_call_count":2,"distinct_caller_count":1,"direct_call_witnesses":[{"caller_entry":1038048,"call_address":1039149}]},
-    {"address":1334096,"size":101,"canonical_identifier":"anon_00145b50","original_name":null,"source":null,"sha256":"7292e97a40e873b97675f300da6444bec50e02ab4aa96a705ca93adc78bff3bc","instruction_count":35,"returns":[1334136,1334196],"direct_call_count":5,"distinct_caller_count":5,"direct_call_witnesses":[{"caller_entry":322608,"call_address":322613},{"caller_entry":331744,"call_address":332297}]},
-    {"address":1334208,"size":283,"canonical_identifier":"anon_00145bc0","original_name":null,"source":null,"sha256":"67c77836740919cf6450400ca43baa3643868c29d0659385296c10854385e826","instruction_count":103,"returns":[1334476],"direct_call_count":52,"distinct_caller_count":44,"direct_call_witnesses":[{"caller_entry":125920,"call_address":125966},{"caller_entry":159552,"call_address":159596}]},
-    {"address":1334496,"size":191,"canonical_identifier":"anon_00145ce0","original_name":null,"source":null,"sha256":"8697b93fcccd06224473df7dfa81dccc9f3c02f8f6ec5be35c196fa536f78016","instruction_count":80,"returns":[1334686],"direct_call_count":23,"distinct_caller_count":16,"direct_call_witnesses":[{"caller_entry":113632,"call_address":113718},{"caller_entry":192768,"call_address":192891}]},
-    {"address":1334848,"size":63,"canonical_identifier":"anon_00145e40","original_name":null,"source":null,"sha256":"a648ec528bfe216fb2c76d2aad630316dbc224534635fa129bf1cedc6c4d083b","instruction_count":22,"returns":[1334910],"direct_call_count":16,"distinct_caller_count":12,"direct_call_witnesses":[{"caller_entry":262816,"call_address":262864},{"caller_entry":317328,"call_address":317538}]},
-    {"address":1334912,"size":326,"canonical_identifier":"anon_00145e80","original_name":null,"source":null,"sha256":"40911ace6566d759e6b8dd1dbf03dacbc72d027cee11659e09bd8f290254b2c4","instruction_count":115,"returns":[1334992,1335117,1335237],"direct_call_count":28,"distinct_caller_count":18,"direct_call_witnesses":[{"caller_entry":76320,"call_address":76626},{"caller_entry":76992,"call_address":77744}]},
-    {"address":1335248,"size":79,"canonical_identifier":"anon_00145fd0","original_name":null,"source":null,"sha256":"87efb23b91e5433e447b7ce45533c077be5e241afd549847698a5da72941a690","instruction_count":28,"returns":[1335284,1335326],"direct_call_count":1,"distinct_caller_count":1,"direct_call_witnesses":[{"caller_entry":736544,"call_address":736809}]},
-    {"address":1335328,"size":205,"canonical_identifier":"anon_00146020","original_name":null,"source":null,"sha256":"6685e3bff40282021459d5cf681de0c10368f162c0b19f6c7a52e476da841547","instruction_count":65,"returns":[1335532],"direct_call_count":18,"distinct_caller_count":15,"direct_call_witnesses":[{"caller_entry":76320,"call_address":76663},{"caller_entry":76992,"call_address":77810}]},
-    {"address":1335536,"size":187,"canonical_identifier":"anon_001460f0","original_name":null,"source":null,"sha256":"1533b85ad3e0a8e0aa82819a944b1ac854e068ea075177ee60c736e4ac2fb610","instruction_count":73,"returns":[1335632,1335679,1335722],"direct_call_count":3,"distinct_caller_count":3,"direct_call_witnesses":[{"caller_entry":583648,"call_address":584307},{"caller_entry":1335728,"call_address":1336024}]},
-    {"address":1335728,"size":309,"canonical_identifier":"anon_001461b0","original_name":null,"source":null,"sha256":"36b7867f64518aec467805d688ab08d49c5d1a9af0692090d4d342bdf6f7f928","instruction_count":100,"returns":[1336036],"direct_call_count":12,"distinct_caller_count":11,"direct_call_witnesses":[{"caller_entry":76320,"call_address":76648},{"caller_entry":76992,"call_address":77785}]},
-    {"address":1336048,"size":135,"canonical_identifier":"anon_001462f0","original_name":null,"source":null,"sha256":"de229ac51f2bdce9615185ff59b608c01a9cfd6b0ebebca3b2029473d8bcdcf6","instruction_count":53,"returns":[1336182],"direct_call_count":2,"distinct_caller_count":2,"direct_call_witnesses":[{"caller_entry":1160816,"call_address":1161244},{"caller_entry":1336192,"call_address":1336229}]},
-    {"address":1336192,"size":90,"canonical_identifier":"anon_00146380","original_name":null,"source":null,"sha256":"0b71e664f81d9c00131e0de1a3410ab75c970cff735ff3a4d730a0ab6d6d8658","instruction_count":35,"returns":[1336281],"direct_call_count":1,"distinct_caller_count":1,"direct_call_witnesses":[{"caller_entry":1180208,"call_address":1180417}]},
     {"address":1336288,"size":154,"canonical_identifier":"anon_001463e0","original_name":null,"source":null,"sha256":"b8b3af9d853d24b8fffc692e0ccdc2a5b2a65a835efb6858166a5a791b12be71","instruction_count":35,"returns":[1336441],"direct_call_count":1,"distinct_caller_count":1,"direct_call_witnesses":[{"caller_entry":1521616,"call_address":1521719}]},
     {"address":1336448,"size":218,"canonical_identifier":"anon_00146480","original_name":null,"source":null,"sha256":"dfb9b2fa67b31e89e8323f51b46247e2f4ed793343fc80ef6ae1deb953665f8e","instruction_count":74,"returns":[1336635,1336665],"direct_call_count":3,"distinct_caller_count":1,"direct_call_witnesses":[{"caller_entry":1336288,"call_address":1336316}]},
     {"address":1336672,"size":254,"canonical_identifier":"anon_00146560","original_name":null,"source":null,"sha256":"a47f299359f5aefe35a6aa4445aa1b52ea44aa4481b7511754271074b69ef596","instruction_count":94,"returns":[1336925],"direct_call_count":1,"distinct_caller_count":1,"direct_call_witnesses":[{"caller_entry":1337072,"call_address":1337158}]},
@@ -1550,7 +1659,6 @@
     {"address":1426368,"size":76,"canonical_identifier":"anon_0015c3c0","original_name":null,"source":null,"sha256":"058bff9e71bee558061a7406c9e2fb3bf58e13d1816bfa79b99725d9dc7cddbc","instruction_count":23,"returns":[1426437,1426443],"direct_call_count":1,"distinct_caller_count":1,"direct_call_witnesses":[{"caller_entry":1426448,"call_address":1426523}]},
     {"address":1426976,"size":85,"canonical_identifier":"anon_0015c620","original_name":null,"source":null,"sha256":"9d703b2d93fd25dc739fdff8c427e7563e5f0e590966683b9037025eb59a5565","instruction_count":35,"returns":[1427060],"direct_call_count":5,"distinct_caller_count":2,"direct_call_witnesses":[{"caller_entry":1428560,"call_address":1428672},{"caller_entry":1429168,"call_address":1429202}]},
     {"address":1428560,"size":538,"canonical_identifier":"anon_0015cc50","original_name":null,"source":null,"sha256":"9e5457af92590afc29973cd42000117a35a9b33889baa1a65b5c94a81aff7685","instruction_count":186,"returns":[1429097],"direct_call_count":2,"distinct_caller_count":2,"direct_call_witnesses":[{"caller_entry":395088,"call_address":395380},{"caller_entry":462160,"call_address":462266}]},
-    {"address":1429248,"size":163,"canonical_identifier":"anon_0015cf00","original_name":null,"source":null,"sha256":"3ed7d2412fd828c349746460aa47c761fc9a1d6fda6be715ade92630d59195a1","instruction_count":58,"returns":[1429329,1429375,1429410],"direct_call_count":173,"distinct_caller_count":107,"direct_call_witnesses":[{"caller_entry":84560,"call_address":84646},{"caller_entry":156400,"call_address":156650}]},
     {"address":1429776,"size":104,"canonical_identifier":"anon_0015d110","original_name":null,"source":null,"sha256":"8a306d993e84bc00ea41933356d876cbb24505251676984a5bcc9fde2e74d3f1","instruction_count":37,"returns":[1429879],"direct_call_count":1,"distinct_caller_count":1,"direct_call_witnesses":[{"caller_entry":1429424,"call_address":1429758}]},
     {"address":1430800,"size":137,"canonical_identifier":"anon_0015d510","original_name":null,"source":null,"sha256":"99aff09a925c87ad8eb331d88d7dc53ab7b41654b4f963e0e93373c49ee7e011","instruction_count":55,"returns":[1430902,1430936],"direct_call_count":1,"distinct_caller_count":1,"direct_call_witnesses":[{"caller_entry":1429424,"call_address":1429684}]},
     {"address":1430944,"size":391,"canonical_identifier":"anon_0015d5a0","original_name":null,"source":null,"sha256":"56deb3b3567f53244805ad2c07ed07f3b16b40f6114e22fb4d01e58dea7560ec","instruction_count":140,"returns":[1430983,1431266,1431334],"direct_call_count":1,"distinct_caller_count":1,"direct_call_witnesses":[{"caller_entry":1430240,"call_address":1430296}]},
