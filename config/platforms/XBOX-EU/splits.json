@@ -814,7 +814,7 @@
       "kind": "function",
       "address": 104192,
       "size": 98,
-      "canonical_identifier": "anon_00019700"
+      "canonical_identifier": "xMat4x3Toworld(xVec3*,const xMat4x3*,const xVec3*)"
     },
     {
       "kind": "unclassified",

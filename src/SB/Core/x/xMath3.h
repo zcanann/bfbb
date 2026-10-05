@@ -234,6 +234,9 @@ static inline void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 
 #endif // XVEC3_MATMUL_INLINE
 
+#if defined(XBOX)
+void xMat4x3Toworld(xVec3* o, const xMat4x3* m, const xVec3* v);
+#else
 inline void xMat4x3Toworld(xVec3* o, const xMat4x3* m, const xVec3* v)
 {
     xMat3x3RMulVec(o, m, v);
@@ -242,6 +245,7 @@ inline void xMat4x3Toworld(xVec3* o, const xMat4x3* m, const xVec3* v)
     o->y += m->pos.y;
     o->z += m->pos.z;
 }
+#endif
 
 inline void xMat3x3Rot(xMat3x3* m, const xVec3* a, F32 t)
 {

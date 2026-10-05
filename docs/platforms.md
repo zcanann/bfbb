@@ -333,21 +333,21 @@ Both region registries keep independent executable identities.
 See the parameterized scripts in `tools/platforms/ghidra/`. No Xbox SDK is required
 for this analysis step.
 
-`verified-anonymous-functions.json` promotes 2,442 disjoint extents (613,208
+`verified-anonymous-functions.json` promotes 2,441 disjoint extents (613,110
 bytes) per release after Capstone 5.0.7 re-decodes closed control flow, verifies
 all body bytes are reachable, checks an incoming direct call from another
 closed function, and excludes foreign interior transfers across the candidate
 inventory. Reviewed extents take precedence. CI regenerates this registry from
 the original; the remaining candidates stay excluded. Anonymous identifiers
 establish neither original symbols nor source ownership. Together with the
-114 reviewed extents, measured coverage is 2,556 functions / 635,415 bytes;
+115 reviewed extents, measured coverage is 2,556 functions / 635,415 bytes;
 13,501 bytes match source. This is still partial coverage. The [Xbox memory initializer](XBOX_MEMORY_INITIALIZER.md) adds 103 exact source bytes using an explicitly verified data-only original binding; its recovered runtime allocator remains target-only. The [inline math boundary](XBOX_MATH_INLINE_BOUNDARY.md) adds 388 exact source bytes from Euler and the emitted xatan2 helper without changing the original denominator. The original-backed box-containment return structure adds another 84 bytes, the vector normalizer adds 163 bytes by preserving the original input-field reloads, direct axis-rotation subtraction adds 226 bytes, and ordinary random-generator inlining adds 661 bytes, and unchanged particle-list helper inlining adds 222 bytes. Ordinary allocator inlining adds another 209 bytes while preserving its existing standalone comparison in the actual particle-group source emission; that reporting group is explicitly reconstructed, not original TU ownership.
 
 The complete particle-group source now compiles with its real particle dependency
-and a hash-pinned Microsoft static runtime library. Five independently reviewed
-group functions are compared; two add 412 exact bytes. The runtime helper is
+and a hash-pinned Microsoft static runtime library. Six independently reviewed
+functions / 880 bytes match in this reconstructed reporting group. The runtime helper is
 excluded from reconstructed-source gains. See [particle groups and runtime
-provisioning](XBOX_PARTICLE_GROUP.md).
+provisioning](XBOX_PARTICLE_GROUP.md). Original TU ownership/completeness remains unproven.
 The complete particle-command TU also compiles with five real math dependencies.
 Its original registration table identifies 21 nonempty callbacks / 4,771 bytes;
 eight add 1,831 independently reconstructed bytes in both releases. All partial
@@ -578,3 +578,8 @@ The [remaining NPC and Player animation-table comparisons](PS2_REMAINING_NPC_PLA
 Restoring the original [four-voice PS2 stream limit](PS2_SOUND.md#original-stream-voice-limit) adds two standard matches / 488 bytes per debug region. After restoring the original direct platform stop calls, StreamUnlock (72 bytes) and StreamLock (416 bytes) both independently reproduce the original bytes in all three debug versions.
 
 The original [update-cull initializer statement order](PS2_RW_ALLOCATORS.md#update-cull-initializer-instruction-order) adds one standard match / 1,484 bytes per debug PS2 version. Only two adjacent instructions change; all other source instructions, relocations and regional function scores remain unchanged.
+
+The ordinary Xbox world-transform helper boundary improves four partial matrix
+and bounds functions while retaining every prior exact match. Its newly reviewed
+98-byte original extent was already counted anonymously; its 94-byte source
+body honestly scores 97.36842%. See [matrix evidence](XBOX_MATH3.md).

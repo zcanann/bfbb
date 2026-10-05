@@ -101,3 +101,67 @@ Repeat the report for `XBOX-EU`. Actual local production reports are under
 prior payload evidence is `build/xbox178/validation.json`. No binaries are
 committed. GC/PS2 source branches are preserved; the parent integration performs
 the final normal GC build and retail checksum check.
+
+
+## World-transform call boundary
+
+Three already reviewed original functions call the same 98-byte leaf at
+0x19700: BoxInitBoundOBB at 0x1452ed, Mat4x3Rot at 0x145e02 and Mat4x3Mul at 0x145e52.
+The prior source expanded xMat4x3Toworld inline. Xbox now declares the existing
+API in its header and supplies its unchanged body as an ordinary definition in
+xMath3.cpp. All other platforms retain the former inline body. No noinline,
+calling-convention override, compiler flag or artificial caller was added.
+
+Independent original-only review proves the helper identity and boundaries.
+Both authenticated originals contain exactly one copy of the complete 98 bytes;
+the existing anonymous registry had already bounded this same 38-instruction leaf.
+EAX points to the matrix and ECX to the input vector; the output pointer is loaded
+from entry ESP+4 into EDX. All input-vector and basis products are read before
+the first output store. The rotated x/y/z results are then stored, followed by
+position addition and x/y/z stores. The output-x float store/reload and actual
+x87 operation order are preserved; expression descriptions are provenance, not
+a claim of rounding equivalence. The same input/output vector may alias without
+clobbering unread components. Matrix/output alias effects are not rewritten.
+
+The original helper returns at+97, with preceding RET/two INT3 and fourteen INT3
+following. Its three semantic callers, full dataflow, unique payload and prior
+anonymous proof establish identity independently of compiled source. The original
+definition/header TU remains unknown. xMath3.cpp is the reconstructed reporting
+group because the actual emitted body belongs to xMath3.obj.
+
+Original call restoration includes all six real E8 operands across those three
+callers: the three new helper edges plus their already reviewed RotC/Mat3Mul
+callees. The existing verifier requires complete call lists and inverse equality;
+no unknown target or partial-list exemption is added. The helper takes over its
+same anonymous 98-byte extent without adding bytes/functions to the denominator.
+
+The compiled helper is 94 bytes: its complete arithmetic and read/write sequence
+is byte-identical apart from the original four-byte MOV EDX,[ESP+4] that the
+source ABI does not need. That real mismatch is retained in ordinary objdiff;
+no bytes are removed from comparison and the helper is not reported exact.
+Rot also still calls the real Mat4x3Mul where the original expanded composition,
+so that caller remains partial.
+
+Both final production reports measure the same gains:
+
+| Function | Original bytes | Before | After |
+| --- | ---: | ---: | ---: |
+| xBoxInitBoundOBB | 263 | 41.287357% | 82.63219% |
+| xMat4x3Rot | 146 | 70.26923% | 72.48077% |
+| xMat4x3Mul | 63 | 0% | 72.545456% |
+| xQuickCullForOBB | 68 | 43.695652% | 52.260868% |
+| xMat4x3Toworld | 98 | target-only anonymous | 97.36842% |
+
+The full code-weighted fuzzy measure rises from 1.1121375440798102% to
+1.1265316152705196%. The exact totals remain 13,501 bytes / 70 functions.
+Known coverage remains 2,556 functions / 635,415 bytes, with 115 reviewed and
+2,441 anonymous functions. Every other previous function record is unchanged
+apart from regenerated COFF offsets. No original address or coverage denominator
+changes. Seven actual source-consumer builds had no prior function regressions. Thirty-three
+ordered GameCube allocated sections across those consumers remain byte-identical.
+All prior exact matches remain; no TU or executable relink claim is added.
+
+Ignored evidence: build/xbox242/{original-helper-proof.json,proposed-helper.json,
+original-complete-calls.json,helper-abi-difference.json,consumer-deltas.json,
+gc/proof.json,production,final-verification.json}. The normal reviewed-original
+verifier and full report commands reproduce the production checks.

@@ -1019,9 +1019,10 @@
         "xQuatMul(xQuat*,const xQuat*,const xQuat*)": "?xQuatMul@@YAXPAUxQuat@@PBU1@1@Z",
         "xQuatDiff(xQuat*,const xQuat*,const xQuat*)": "?xQuatDiff@@YAXPAUxQuat@@PBU1@1@Z",
         "xBoxUnion(xBox&,const xBox&,const xBox&)": "?xBoxUnion@@YAXAAUxBox@@ABU1@1@Z",
-        "xBoxFromCircle(xBox&,const xVec3&,const xVec3&,F32)": "?xBoxFromCircle@@YAXAAUxBox@@ABUxVec3@@1M@Z"
+        "xBoxFromCircle(xBox&,const xVec3&,const xVec3&,F32)": "?xBoxFromCircle@@YAXAAUxBox@@ABUxVec3@@1M@Z",
+        "xMat4x3Toworld(xVec3*,const xMat4x3*,const xVec3*)": "?xMat4x3Toworld@@YAXPAUxVec3@@PBUxMat4x3@@PBU1@@Z"
       },
-      "scope": "Thirty original-reviewed matrix/quaternion/bounds functions compared from complete real xMath3 plus five complete dependencies; nine further source APIs retained by diagnostic entry but unlocated originals remain unassigned. No whole-TU or executable completion claim. Unknown original calls remain raw.",
+      "scope": "Thirty-one independently reviewed original functions from complete xMath3.cpp compilation, including the partial emitted world-transform helper whose original definition/header TU is unknown. All partial functions and actual ABI differences retained; no TU or executable completion claim.",
       "globals": {
         "g_X3": {
           "linkage_name": "?g_X3@@3UxVec3@@B",
@@ -1108,7 +1109,9 @@
         "xMath3Init()": [],
         "xLine3VecDist2(const xVec3*,const xVec3*,const xVec3*,xIsect*)": [],
         "xPointInBox(const xBox*,const xVec3*)": [],
-        "xBoxInitBoundOBB(xBox*,const xBox*,const xMat4x3*)": [],
+        "xBoxInitBoundOBB(xBox*,const xBox*,const xMat4x3*)": [
+          "xMat4x3Toworld(xVec3*,const xMat4x3*,const xVec3*)"
+        ],
         "xBoxInitBoundCapsule(xBox*,const xCapsule*)": [],
         "xBoxFromCone(xBox&,const xVec3&,const xVec3&,F32,F32,F32)": [
           "xBoxFromCircle(xBox&,const xVec3&,const xVec3&,F32)",
@@ -1142,7 +1145,8 @@
           "xMat4x3Mul(xMat4x3*,const xMat4x3*,const xMat4x3*)"
         ],
         "xMat4x3Mul(xMat4x3*,const xMat4x3*,const xMat4x3*)": [
-          "xMat3x3Mul(xMat3x3*,const xMat3x3*,const xMat3x3*)"
+          "xMat3x3Mul(xMat3x3*,const xMat3x3*,const xMat3x3*)",
+          "xMat4x3Toworld(xVec3*,const xMat4x3*,const xVec3*)"
         ],
         "xQuatFromMat(xQuat*,const xMat3x3*)": [],
         "xQuatFromAxisAngle(xQuat*,const xVec3*,F32)": [],
@@ -1164,7 +1168,8 @@
           "xQuatMul(xQuat*,const xQuat*,const xQuat*)"
         ],
         "xBoxUnion(xBox&,const xBox&,const xBox&)": [],
-        "xBoxFromCircle(xBox&,const xVec3&,const xVec3&,F32)": []
+        "xBoxFromCircle(xBox&,const xVec3&,const xVec3&,F32)": [],
+        "xMat4x3Toworld(xVec3*,const xMat4x3*,const xVec3*)": []
       },
       "call_symbols": {
         "xVec3Normalize(xVec3*,const xVec3*)": {
@@ -1197,6 +1202,10 @@
         },
         "?xQuatAdd@@YAXPAUxQuat@@PBU1@1@Z": {
           "linkage_name": "?xQuatAdd@@YAXPAUxQuat@@PBU1@1@Z",
+          "object": "xMath3.obj"
+        },
+        "xMat4x3Toworld(xVec3*,const xMat4x3*,const xVec3*)": {
+          "linkage_name": "?xMat4x3Toworld@@YAXPAUxVec3@@PBUxMat4x3@@PBU1@@Z",
           "object": "xMath3.obj"
         }
       },
@@ -1465,7 +1474,8 @@
             "symbol": "g_I3",
             "field": "immediate",
             "prefix": "be",
-            "addend": 0
+            "addend": 0,
+            "count": 1
           }
         ],
         "xMat4x3Mul(xMat4x3*,const xMat4x3*,const xMat4x3*)": [],
@@ -1606,7 +1616,8 @@
             "addend": 0,
             "count": 3
           }
-        ]
+        ],
+        "xMat4x3Toworld(xVec3*,const xMat4x3*,const xVec3*)": []
       }
     },
     {

@@ -588,6 +588,17 @@ void xMat4x3Rot(xMat4x3* m, const xVec3* a, F32 t, const xVec3* p)
     xMat4x3Mul(m, &temp, m);
 }
 
+#if defined(XBOX)
+void xMat4x3Toworld(xVec3* o, const xMat4x3* m, const xVec3* v)
+{
+    xMat3x3RMulVec(o, m, v);
+
+    o->x += m->pos.x;
+    o->y += m->pos.y;
+    o->z += m->pos.z;
+}
+#endif
+
 void xMat4x3Mul(xMat4x3* o, const xMat4x3* a, const xMat4x3* b)
 {
     xVec3 v;
