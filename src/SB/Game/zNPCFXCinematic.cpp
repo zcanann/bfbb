@@ -18,11 +18,20 @@
 #include "zScene.h"
 #include "xEnt.h"
 #include "iModel.h"
+#if defined(PS2)
+#include <rwsdk/rpskin.h>
+#include "xParSys.h"
+#else
 #include "rpskin.h"
+#endif
 
 #include <types.h>
 #include <stdio.h>
+#if defined(PS2)
+#include <math.h>
+#else
 #include <PowerPC_EABI_Support\MSL_C\MSL_Common\cmath>
+#endif
 
 // These structs were used in deadstripped functions.
 // This function is here to force the symbols to be linked.
