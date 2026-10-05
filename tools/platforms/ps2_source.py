@@ -39,9 +39,15 @@ def canonical_linkages(binary: bytes, metadata: dict) -> dict[int, str]:
 
 def profile_function_key(unit: dict, function: dict, linkages: dict[int, str]) -> str:
     """Select overloads explicitly; retain human-name keys for existing profiles."""
+    address = function.get('low', function.get('address'))
+    if unit.get('selector') == 'name_address':
+        # Stripped targets can have verified overloaded names but no DWARF linkage.
+        # Their explicit profile aliases come from recorded reference provenance.
+        if not isinstance(address, int):
+            raise ValueError('Address selector requires a verified function address')
+        return f"{function['name']}@{address:08x}"
     if unit.get('selector') != 'linkage_name':
         return function['name']
-    address = function.get('low', function.get('address'))
     if address in linkages:
         return linkages[address]
     raise ValueError('Canonical profile requires the original DWARF linkage attribute')
