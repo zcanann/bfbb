@@ -228,6 +228,9 @@ def compile_units(output: Path, compilers: Path, wine: Path | None = None) -> li
     config = json.loads(config_path.read_text(encoding='utf-8'))
     available = {unit['name']: unit for unit in config['units']}
     units = [unit for unit in profile['units'] if unit['target_unit'] in available]
+    if any('_CIfmod' in unit.get('call_symbols', {}) for unit in units):
+        from .xbox_runtime import verify_cifmod_vendor
+        verify_cifmod_vendor(compiler / profile['static_runtime']['libraries']['libcmt']['path'])
     # A failed refresh must not leave an older source object attached.
     for unit in units:
         available[unit['target_unit']].pop('base_path', None)

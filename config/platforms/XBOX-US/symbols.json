@@ -9950,12 +9950,12 @@
       "identity_kind": "anonymous"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00144530",
-      "source": null,
+      "name": "xurand",
+      "canonical_identifier": "xurand()",
+      "source": "SB/Core/x/xMath.cpp",
       "address": 1328432,
       "size": 46,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
       "name": "xMathSolveQuadratic",
@@ -9966,76 +9966,76 @@
       "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00144640",
-      "source": null,
+      "name": "xMathSolveCubic",
+      "canonical_identifier": "xMathSolveCubic(F32,F32,F32,F32,F32*,F32*,F32*)",
+      "source": "SB/Core/x/xMath.cpp",
       "address": 1328704,
       "size": 654,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_001448d0",
-      "source": null,
+      "name": "xAngleClamp",
+      "canonical_identifier": "xAngleClamp(F32)",
+      "source": "SB/Core/x/xMath.cpp",
       "address": 1329360,
       "size": 35,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00144900",
-      "source": null,
+      "name": "xDangleClamp",
+      "canonical_identifier": "xDangleClamp(F32)",
+      "source": "SB/Core/x/xMath.cpp",
       "address": 1329408,
       "size": 55,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00144940",
-      "source": null,
+      "name": "xAccelMove_end",
+      "canonical_identifier": "xAccelMove(F32&,F32&,F32,F32,F32,F32)",
+      "source": "SB/Core/x/xMath.cpp",
       "address": 1329472,
       "size": 574,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00144b80",
-      "source": null,
+      "name": "xAccelMoveTime",
+      "canonical_identifier": "xAccelMoveTime(F32,F32,F32,F32)",
+      "source": "SB/Core/x/xMath.cpp",
       "address": 1330048,
       "size": 83,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00144be0",
-      "source": null,
+      "name": "xAccelMove_speed",
+      "canonical_identifier": "xAccelMove(F32&,F32&,F32,F32,F32)",
+      "source": "SB/Core/x/xMath.cpp",
       "address": 1330144,
       "size": 225,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00144cd0",
-      "source": null,
+      "name": "xAccelStop",
+      "canonical_identifier": "xAccelStop(F32&,F32&,F32,F32)",
+      "source": "SB/Core/x/xMath.cpp",
       "address": 1330384,
       "size": 227,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00144dc0",
-      "source": null,
+      "name": "xFuncPiece_Eval",
+      "canonical_identifier": "xFuncPiece_Eval(xFuncPiece*,F32,xFuncPiece**)",
+      "source": "SB/Core/x/xMath.cpp",
       "address": 1330624,
       "size": 154,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00144e60",
-      "source": null,
+      "name": "xFuncPiece_ShiftPiece",
+      "canonical_identifier": "xFuncPiece_ShiftPiece(xFuncPiece*,xFuncPiece*,F32)",
+      "source": "SB/Core/x/xMath.cpp",
       "address": 1330784,
       "size": 241,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
       "name": "xBoxFromCircle",
@@ -20396,6 +20396,14 @@
       "address": 1863775,
       "size": 14,
       "identity_kind": "anonymous"
+    },
+    {
+      "name": "_CIfmod",
+      "canonical_identifier": "_CIfmod",
+      "source": "Runtime/MSVC/87fmod.obj",
+      "address": 1863818,
+      "size": 10,
+      "identity_kind": "reviewed"
     },
     {
       "name": null,

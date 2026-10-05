@@ -48,7 +48,8 @@ The call graph provides further independent identity evidence: ray/sphere
 intersection constructs the quadratic coefficients from direction length,
 twice direction/origin dot, and origin distance minus radius squared. Its
 callee at `0x144560` (217 bytes) handles degenerate coefficients, discriminant
-cases, stable root calculation and sorted roots. This callee is registered to
+cases, direct roots `-b/(2a) +/- sqrt(discriminant)/(2a)`, and root ordering by
+the sign of `a`. This callee is registered to
 validate its actual call relocation, but does not receive source-match credit
 in this batch. Box/ray intersection calls the six-plane clipping helper, whose
 six calls resolve to the independently reviewed sign-sensitive interval update

@@ -145,8 +145,8 @@
       "classification": "unclassified"
     }
   ],
-  "known_code_bytes": 633591,
-  "unclassified_text_bytes": 1165169,
+  "known_code_bytes": 633601,
+  "unclassified_text_bytes": 1165159,
   "text_ranges": [
     {
       "kind": "function",
@@ -13600,7 +13600,7 @@
       "kind": "function",
       "address": 1328432,
       "size": 46,
-      "canonical_identifier": "anon_00144530"
+      "canonical_identifier": "xurand()"
     },
     {
       "kind": "unclassified",
@@ -13622,7 +13622,7 @@
       "kind": "function",
       "address": 1328704,
       "size": 654,
-      "canonical_identifier": "anon_00144640"
+      "canonical_identifier": "xMathSolveCubic(F32,F32,F32,F32,F32*,F32*,F32*)"
     },
     {
       "kind": "unclassified",
@@ -13633,7 +13633,7 @@
       "kind": "function",
       "address": 1329360,
       "size": 35,
-      "canonical_identifier": "anon_001448d0"
+      "canonical_identifier": "xAngleClamp(F32)"
     },
     {
       "kind": "unclassified",
@@ -13644,7 +13644,7 @@
       "kind": "function",
       "address": 1329408,
       "size": 55,
-      "canonical_identifier": "anon_00144900"
+      "canonical_identifier": "xDangleClamp(F32)"
     },
     {
       "kind": "unclassified",
@@ -13655,7 +13655,7 @@
       "kind": "function",
       "address": 1329472,
       "size": 574,
-      "canonical_identifier": "anon_00144940"
+      "canonical_identifier": "xAccelMove(F32&,F32&,F32,F32,F32,F32)"
     },
     {
       "kind": "unclassified",
@@ -13666,7 +13666,7 @@
       "kind": "function",
       "address": 1330048,
       "size": 83,
-      "canonical_identifier": "anon_00144b80"
+      "canonical_identifier": "xAccelMoveTime(F32,F32,F32,F32)"
     },
     {
       "kind": "unclassified",
@@ -13677,7 +13677,7 @@
       "kind": "function",
       "address": 1330144,
       "size": 225,
-      "canonical_identifier": "anon_00144be0"
+      "canonical_identifier": "xAccelMove(F32&,F32&,F32,F32,F32)"
     },
     {
       "kind": "unclassified",
@@ -13688,7 +13688,7 @@
       "kind": "function",
       "address": 1330384,
       "size": 227,
-      "canonical_identifier": "anon_00144cd0"
+      "canonical_identifier": "xAccelStop(F32&,F32&,F32,F32)"
     },
     {
       "kind": "unclassified",
@@ -13699,7 +13699,7 @@
       "kind": "function",
       "address": 1330624,
       "size": 154,
-      "canonical_identifier": "anon_00144dc0"
+      "canonical_identifier": "xFuncPiece_Eval(xFuncPiece*,F32,xFuncPiece**)"
     },
     {
       "kind": "unclassified",
@@ -13710,7 +13710,7 @@
       "kind": "function",
       "address": 1330784,
       "size": 241,
-      "canonical_identifier": "anon_00144e60"
+      "canonical_identifier": "xFuncPiece_ShiftPiece(xFuncPiece*,xFuncPiece*,F32)"
     },
     {
       "kind": "unclassified",
@@ -26590,7 +26590,18 @@
     {
       "kind": "unclassified",
       "address": 1863789,
-      "size": 55
+      "size": 29
+    },
+    {
+      "kind": "function",
+      "address": 1863818,
+      "size": 10,
+      "canonical_identifier": "_CIfmod"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1863828,
+      "size": 16
     },
     {
       "kind": "function",

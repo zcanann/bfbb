@@ -249,6 +249,150 @@
       "source": "SB/Core/x/xQuickCull.cpp",
       "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
       "value_hex": "cdcc4c3d"
+    },
+    {
+      "name": "float:40800000",
+      "address": 2545096,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "00008040"
+    },
+    {
+      "name": "float:41100000",
+      "address": 2545460,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "00001041"
+    },
+    {
+      "name": "float:41d80000",
+      "address": 2545868,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "0000d841"
+    },
+    {
+      "name": "float:3d17b426",
+      "address": 2545864,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "26b4173d"
+    },
+    {
+      "name": "float:3e800000",
+      "address": 2545236,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "0000803e"
+    },
+    {
+      "name": "float:358637bd",
+      "address": 2545552,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "bd378635"
+    },
+    {
+      "name": "float:3fd5555560000000",
+      "address": 2545856,
+      "size": 8,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "000000605555d53f"
+    },
+    {
+      "name": "float:beaaaaab",
+      "address": 2545848,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "abaaaabe"
+    },
+    {
+      "name": "float:3fddb3d7",
+      "address": 2545844,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "d7b3dd3f"
+    },
+    {
+      "name": "float:401921fb60000000",
+      "address": 2545568,
+      "size": 8,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "00000060fb211940"
+    },
+    {
+      "name": "float:40490fdb",
+      "address": 2545092,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "db0f4940"
+    },
+    {
+      "name": "float:c0490fdb",
+      "address": 2545084,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "db0f49c0"
+    },
+    {
+      "name": "float:3a83126f",
+      "address": 2544856,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "6f12833a"
+    },
+    {
+      "name": "float:7e967699",
+      "address": 2545208,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "9976967e"
+    },
+    {
+      "name": "float:bf800000",
+      "address": 2544920,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "000080bf"
+    },
+    {
+      "name": "float:b727c5ac",
+      "address": 2545080,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "acc527b7"
     }
   ],
   "pool_loop": {

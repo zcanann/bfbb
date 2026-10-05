@@ -107,10 +107,14 @@ def verify_functions(original: Original, document: dict, anchors: dict | None = 
             require(actual['size'] == size and actual['instruction_bytes'] == cfg['instruction_bytes'] and
                     actual['internal_gap_ranges'] == cfg['internal_gap_ranges'],
                     f'{label}: original closed CFG or extent differs')
-        require((start <= evidence["return_address"] < end if "closed_cfg" in evidence else
-                 evidence["return_address"] == end - 1) and
-                original.read(evidence["return_address"], 1) == b"\xc3",
-                f"{label}: terminal RET boundary differs")
+        if "runtime_dispatch" in evidence:
+            from platforms.xbox_runtime import verify_cifmod_dispatch
+            verify_cifmod_dispatch(original, function)
+        else:
+            require((start <= evidence["return_address"] < end if "closed_cfg" in evidence else
+                     evidence["return_address"] == end - 1) and
+                    original.read(evidence["return_address"], 1) == b"\xc3",
+                    f"{label}: terminal RET boundary differs")
         for branch in evidence["branches"]:
             instruction = original.read(branch["address"], 2)
             opcode = instruction[0]

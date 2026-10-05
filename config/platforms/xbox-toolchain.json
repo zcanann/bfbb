@@ -1794,6 +1794,562 @@
         ],
         "xQuickCullForOBB(xQCControl*,xQCData*,const xBox*,const xMat4x3*)": []
       }
+    },
+    {
+      "source": "src/SB/Core/x/xMath.cpp",
+      "target_unit": "SB/Core/x/xMath.cpp",
+      "object": "source/xMath/xMath.obj",
+      "comparison_object": "source/xMath-functions.obj",
+      "host_entry": "tools/platforms/xbox_support/math_entry.cpp",
+      "host_context": {
+        "xatof": null,
+        "imports": "tools/platforms/xbox_support/math_crt.def"
+      },
+      "source_dependencies": [],
+      "runtime_libraries": [
+        "libcmt"
+      ],
+      "symbols": {
+        "xurand()": "?xurand@@YAMXZ",
+        "xMathSolveQuadratic(F32,F32,F32,F32*,F32*)": "?xMathSolveQuadratic@@YAIMMMPAM0@Z",
+        "xMathSolveCubic(F32,F32,F32,F32,F32*,F32*,F32*)": "?xMathSolveCubic@@YAIMMMMPAM00@Z",
+        "xAngleClamp(F32)": "?xAngleClamp@@YAMM@Z",
+        "xDangleClamp(F32)": "?xDangleClamp@@YAMM@Z",
+        "xAccelMove(F32&,F32&,F32,F32,F32,F32)": "?xAccelMove@@YAXAAM0MMMM@Z",
+        "xAccelMoveTime(F32,F32,F32,F32)": "?xAccelMoveTime@@YAMMMMM@Z",
+        "xAccelMove(F32&,F32&,F32,F32,F32)": "?xAccelMove@@YAXAAM0MMM@Z",
+        "xAccelStop(F32&,F32&,F32,F32)": "?xAccelStop@@YAXAAM0MM@Z",
+        "xFuncPiece_Eval(xFuncPiece*,F32,xFuncPiece**)": "?xFuncPiece_Eval@@YAMPAUxFuncPiece@@MPAPAU1@@Z",
+        "xFuncPiece_ShiftPiece(xFuncPiece*,xFuncPiece*,F32)": "?xFuncPiece_ShiftPiece@@YAXPAUxFuncPiece@@0M@Z"
+      },
+      "scope": "Eleven independently reviewed math functions from the complete real xMath source and genuine runtime. Seven further public APIs without verified original entries remain unassigned. Original unknown cubic callees remain raw. No TU or executable completion claim.",
+      "globals": {
+        "float:3f800000": {
+          "linkage_name": "__real@3f800000",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "0000803f"
+        },
+        "float:00000000": {
+          "linkage_name": "__real@00000000",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "00000000"
+        },
+        "float:3727c5ac": {
+          "linkage_name": "__real@3727c5ac",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "acc52737"
+        },
+        "float:3f000000": {
+          "linkage_name": "__real@3f000000",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "0000003f"
+        },
+        "float:b727c5ac": {
+          "linkage_name": "__real@b727c5ac",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "acc527b7"
+        },
+        "float:40c90fdb": {
+          "linkage_name": "__real@40c90fdb",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "db0fc940"
+        },
+        "float:2f800000": {
+          "linkage_name": "__real@2f800000",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "0000802f"
+        },
+        "float:4f800000": {
+          "linkage_name": "__real@4f800000",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "0000804f"
+        },
+        "float:bf800000": {
+          "linkage_name": "__real@bf800000",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "000080bf"
+        },
+        "float:7e967699": {
+          "linkage_name": "__real@7e967699",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "9976967e"
+        },
+        "float:3a83126f": {
+          "linkage_name": "__real@3a83126f",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "6f12833a"
+        },
+        "float:c0490fdb": {
+          "linkage_name": "__real@c0490fdb",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "db0f49c0"
+        },
+        "float:40490fdb": {
+          "linkage_name": "__real@40490fdb",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "db0f4940"
+        },
+        "float:401921fb60000000": {
+          "linkage_name": "__real@401921fb60000000",
+          "size": 8,
+          "object": "xMath.obj",
+          "value_hex": "00000060fb211940"
+        },
+        "float:40800000": {
+          "linkage_name": "__real@40800000",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "00008040"
+        },
+        "float:3fddb3d7": {
+          "linkage_name": "__real@3fddb3d7",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "d7b3dd3f"
+        },
+        "float:beaaaaab": {
+          "linkage_name": "__real@beaaaaab",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "abaaaabe"
+        },
+        "float:3fd5555560000000": {
+          "linkage_name": "__real@3fd5555560000000",
+          "size": 8,
+          "object": "xMath.obj",
+          "value_hex": "000000605555d53f"
+        },
+        "float:358637bd": {
+          "linkage_name": "__real@358637bd",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "bd378635"
+        },
+        "float:3e800000": {
+          "linkage_name": "__real@3e800000",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "0000803e"
+        },
+        "float:3d17b426": {
+          "linkage_name": "__real@3d17b426",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "26b4173d"
+        },
+        "float:41d80000": {
+          "linkage_name": "__real@41d80000",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "0000d841"
+        },
+        "float:41100000": {
+          "linkage_name": "__real@41100000",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "00001041"
+        },
+        "float:3eaaaaab": {
+          "linkage_name": "__real@3eaaaaab",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "abaaaa3e"
+        },
+        "float:40400000": {
+          "linkage_name": "__real@40400000",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "00004040"
+        }
+      },
+      "direct_calls": {
+        "xurand()": [
+          "?xrand@@YAIXZ"
+        ],
+        "xMathSolveQuadratic(F32,F32,F32,F32*,F32*)": [],
+        "xMathSolveCubic(F32,F32,F32,F32,F32*,F32*,F32*)": [
+          "?xAngleClampFast@@YAMM@Z",
+          "__CIpow",
+          "xMathSolveQuadratic(F32,F32,F32,F32*,F32*)"
+        ],
+        "xAngleClamp(F32)": [
+          "_CIfmod"
+        ],
+        "xDangleClamp(F32)": [
+          "_CIfmod"
+        ],
+        "xAccelMove(F32&,F32&,F32,F32,F32,F32)": [],
+        "xAccelMoveTime(F32,F32,F32,F32)": [],
+        "xAccelMove(F32&,F32&,F32,F32,F32)": [],
+        "xAccelStop(F32&,F32&,F32,F32)": [],
+        "xFuncPiece_Eval(xFuncPiece*,F32,xFuncPiece**)": [],
+        "xFuncPiece_ShiftPiece(xFuncPiece*,xFuncPiece*,F32)": []
+      },
+      "call_symbols": {
+        "?xrand@@YAIXZ": {
+          "linkage_name": "?xrand@@YAIXZ",
+          "object": "xMath.obj"
+        },
+        "__CIpow": {
+          "linkage_name": "__CIpow",
+          "object": "msvcrt:msvcr71.dll"
+        },
+        "?xAngleClampFast@@YAMM@Z": {
+          "linkage_name": "?xAngleClampFast@@YAMM@Z",
+          "object": "xMath.obj"
+        },
+        "_CIfmod": {
+          "linkage_name": "__CIfmod",
+          "object": "msvcrt:msvcr71.dll"
+        }
+      },
+      "address_expressions": {
+        "xurand()": [
+          {
+            "symbol": "float:4f800000",
+            "field": "displacement",
+            "prefix": "d805",
+            "addend": 0
+          },
+          {
+            "symbol": "float:2f800000",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0
+          }
+        ],
+        "xMathSolveQuadratic(F32,F32,F32,F32*,F32*)": [
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0,
+            "count": 3
+          },
+          {
+            "symbol": "float:40800000",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0
+          },
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d81d",
+            "addend": 0,
+            "count": 2
+          },
+          {
+            "symbol": "float:3f800000",
+            "field": "displacement",
+            "prefix": "d83d",
+            "addend": 0
+          }
+        ],
+        "xMathSolveCubic(F32,F32,F32,F32,F32*,F32*,F32*)": [
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0
+          },
+          {
+            "symbol": "float:3f800000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0,
+            "count": 2
+          },
+          {
+            "symbol": "float:40400000",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0
+          },
+          {
+            "symbol": "float:3eaaaaab",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0,
+            "count": 3
+          },
+          {
+            "symbol": "float:41100000",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0
+          },
+          {
+            "symbol": "float:41d80000",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0
+          },
+          {
+            "symbol": "float:3d17b426",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0,
+            "count": 2
+          },
+          {
+            "symbol": "float:3e800000",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0
+          },
+          {
+            "symbol": "float:3f000000",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0
+          },
+          {
+            "symbol": "float:358637bd",
+            "field": "displacement",
+            "prefix": "d81d",
+            "addend": 0
+          },
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d81d",
+            "addend": 0,
+            "count": 5
+          },
+          {
+            "symbol": "float:3fd5555560000000",
+            "field": "displacement",
+            "prefix": "dd05",
+            "addend": 0,
+            "count": 6
+          },
+          {
+            "symbol": "float:beaaaaab",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0
+          },
+          {
+            "symbol": "float:3fddb3d7",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0
+          }
+        ],
+        "xAngleClamp(F32)": [
+          {
+            "symbol": "float:401921fb60000000",
+            "field": "displacement",
+            "prefix": "dd05",
+            "addend": 0
+          },
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d815",
+            "addend": 0
+          },
+          {
+            "symbol": "float:40c90fdb",
+            "field": "displacement",
+            "prefix": "d805",
+            "addend": 0
+          }
+        ],
+        "xDangleClamp(F32)": [
+          {
+            "symbol": "float:401921fb60000000",
+            "field": "displacement",
+            "prefix": "dd05",
+            "addend": 0
+          },
+          {
+            "symbol": "float:40490fdb",
+            "field": "displacement",
+            "prefix": "d815",
+            "addend": 0
+          },
+          {
+            "symbol": "float:40c90fdb",
+            "field": "displacement",
+            "prefix": "d825",
+            "addend": 0
+          },
+          {
+            "symbol": "float:c0490fdb",
+            "field": "displacement",
+            "prefix": "d815",
+            "addend": 0
+          },
+          {
+            "symbol": "float:40c90fdb",
+            "field": "displacement",
+            "prefix": "d805",
+            "addend": 0
+          }
+        ],
+        "xAccelMove(F32&,F32&,F32,F32,F32,F32)": [
+          {
+            "symbol": "float:3a83126f",
+            "field": "displacement",
+            "prefix": "d81d",
+            "addend": 0
+          },
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d815",
+            "addend": 0,
+            "count": 2
+          },
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d81d",
+            "addend": 0,
+            "count": 6
+          },
+          {
+            "symbol": "float:7e967699",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0
+          },
+          {
+            "symbol": "float:bf800000",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0,
+            "count": 2
+          },
+          {
+            "symbol": "float:3f000000",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0,
+            "count": 3
+          },
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0
+          }
+        ],
+        "xAccelMoveTime(F32,F32,F32,F32)": [
+          {
+            "symbol": "float:3f800000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0
+          },
+          {
+            "symbol": "float:3f000000",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0,
+            "count": 2
+          }
+        ],
+        "xAccelMove(F32&,F32&,F32,F32,F32)": [
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d81d",
+            "addend": 0,
+            "count": 2
+          },
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d815",
+            "addend": 0,
+            "count": 2
+          },
+          {
+            "symbol": "float:3f000000",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0,
+            "count": 2
+          }
+        ],
+        "xAccelStop(F32&,F32&,F32,F32)": [
+          {
+            "symbol": "float:b727c5ac",
+            "field": "displacement",
+            "prefix": "d81d",
+            "addend": 0
+          },
+          {
+            "symbol": "float:3727c5ac",
+            "field": "displacement",
+            "prefix": "d81d",
+            "addend": 0
+          },
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d81d",
+            "addend": 0,
+            "count": 3
+          },
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d815",
+            "addend": 0
+          },
+          {
+            "symbol": "float:3f000000",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0,
+            "count": 2
+          },
+          {
+            "symbol": "float:b727c5ac",
+            "field": "displacement",
+            "prefix": "d815",
+            "addend": 0
+          },
+          {
+            "symbol": "float:3727c5ac",
+            "field": "displacement",
+            "prefix": "d815",
+            "addend": 0
+          }
+        ],
+        "xFuncPiece_Eval(xFuncPiece*,F32,xFuncPiece**)": [
+          {
+            "symbol": "float:3727c5ac",
+            "field": "displacement",
+            "prefix": "d825",
+            "addend": 0
+          },
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0
+          }
+        ],
+        "xFuncPiece_ShiftPiece(xFuncPiece*,xFuncPiece*,F32)": []
+      }
     }
   ],
   "static_runtime": {
