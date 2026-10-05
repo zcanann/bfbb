@@ -57,4 +57,6 @@ struct xGlobals
     U8 autoSaveFeature;
 };
 
+extern xGlobals* xglobals;
+
 #endif
