@@ -8042,6 +8042,473 @@
           "symbol": "zCamMarkerEventCB__FP5xBaseP5xBaseUiPCfP5xBase"
         }
       ]
+    },
+    {
+      "source": "src/SB/Core/x/xFFX.cpp",
+      "target_unit": "SB/Core/x/xFFX.cpp",
+      "object": "source/xFFX.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xFFXRotMatchAlloc__Fv": "xFFXRotMatchAlloc__Fv",
+        "xFFXRotMatchPoolInit__FUi": "xFFXRotMatchPoolInit__FUi",
+        "xFFXShakeFree__FP14xFFXShakeState": "xFFXShakeFree__FP14xFFXShakeState",
+        "xFFXShakeAlloc__Fv": "xFFXShakeAlloc__Fv",
+        "xFFXShakePoolInit__FUi": "xFFXShakePoolInit__FUi",
+        "xFFXShakeUpdateEnt__FP4xEntP6xScenefPv": "xFFXShakeUpdateEnt__FP4xEntP6xScenefPv",
+        "xFFXApply__FP4xEntP6xScenef": "xFFXApply__FP4xEntP6xScenef",
+        "xFFXApplyOne__FP4xFFXP4xEntP6xScenef": "xFFXApplyOne__FP4xFFXP4xEntP6xScenef",
+        "xFFXAddEffect__FP4xEntPFP4xEntP6xScenefPv_vPv": "xFFXAddEffect__FP4xEntPFP4xEntP6xScenefPv_vPv",
+        "xFFXAddEffect__FP4xEntP4xFFX": "xFFXAddEffect__FP4xEntP4xFFX",
+        "xFFXTurnOff__FP4xFFX": "xFFXTurnOff__FP4xFFX",
+        "xFFXTurnOn__FP4xFFX": "xFFXTurnOn__FP4xFFX",
+        "xFFXAlloc__Fv": "xFFXAlloc__Fv",
+        "xFFXPoolInit__FUi": "xFFXPoolInit__FUi"
+      },
+      "calls": [
+        {
+          "function": "xFFXRotMatchPoolInit__FUi",
+          "offset": 28,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xFFXShakePoolInit__FUi",
+          "offset": 28,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xFFXApply__FP4xEntP6xScenef",
+          "offset": 28,
+          "target_source": "SB/Core/x/xFFX.cpp",
+          "target_function": "xFFXApplyOne__FP4xFFXP4xEntP6xScenef",
+          "symbol": "xFFXApplyOne__FP4xFFXP4xEntP6xScenef"
+        },
+        {
+          "function": "xFFXApplyOne__FP4xFFXP4xEntP6xScenef",
+          "offset": 128,
+          "target_source": "SB/Core/x/xFFX.cpp",
+          "target_function": "xFFXApplyOne__FP4xFFXP4xEntP6xScenef",
+          "symbol": "xFFXApplyOne__FP4xFFXP4xEntP6xScenef"
+        },
+        {
+          "function": "xFFXPoolInit__FUi",
+          "offset": 20,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xFFXRotMatchAlloc__Fv",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "rot_match_alist",
+          "symbol": "rot_match_alist"
+        },
+        {
+          "function": "xFFXRotMatchAlloc__Fv",
+          "offset": 28,
+          "opcode": 43,
+          "target_name": "rot_match_alist",
+          "symbol": "rot_match_alist"
+        },
+        {
+          "function": "xFFXRotMatchPoolInit__FUi",
+          "offset": 16,
+          "opcode": 43,
+          "target_name": "rot_match_psize",
+          "symbol": "rot_match_psize"
+        },
+        {
+          "function": "xFFXRotMatchPoolInit__FUi",
+          "offset": 24,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xFFXRotMatchPoolInit__FUi",
+          "offset": 36,
+          "opcode": 43,
+          "target_name": "rot_match_pool",
+          "symbol": "rot_match_pool"
+        },
+        {
+          "function": "xFFXRotMatchPoolInit__FUi",
+          "offset": 40,
+          "opcode": 35,
+          "target_name": "rot_match_pool",
+          "symbol": "rot_match_pool"
+        },
+        {
+          "function": "xFFXRotMatchPoolInit__FUi",
+          "offset": 48,
+          "opcode": 35,
+          "target_name": "rot_match_psize",
+          "symbol": "rot_match_psize"
+        },
+        {
+          "function": "xFFXRotMatchPoolInit__FUi",
+          "offset": 72,
+          "opcode": 35,
+          "target_name": "rot_match_pool",
+          "symbol": "rot_match_pool"
+        },
+        {
+          "function": "xFFXRotMatchPoolInit__FUi",
+          "offset": 96,
+          "opcode": 35,
+          "target_name": "rot_match_psize",
+          "symbol": "rot_match_psize"
+        },
+        {
+          "function": "xFFXRotMatchPoolInit__FUi",
+          "offset": 112,
+          "opcode": 35,
+          "target_name": "rot_match_pool",
+          "symbol": "rot_match_pool"
+        },
+        {
+          "function": "xFFXRotMatchPoolInit__FUi",
+          "offset": 136,
+          "opcode": 43,
+          "target_name": "rot_match_alist",
+          "symbol": "rot_match_alist"
+        },
+        {
+          "function": "xFFXShakeFree__FP14xFFXShakeState",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "shake_alist",
+          "symbol": "shake_alist"
+        },
+        {
+          "function": "xFFXShakeFree__FP14xFFXShakeState",
+          "offset": 12,
+          "opcode": 43,
+          "target_name": "shake_alist",
+          "symbol": "shake_alist"
+        },
+        {
+          "function": "xFFXShakeAlloc__Fv",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "shake_alist",
+          "symbol": "shake_alist"
+        },
+        {
+          "function": "xFFXShakeAlloc__Fv",
+          "offset": 28,
+          "opcode": 43,
+          "target_name": "shake_alist",
+          "symbol": "shake_alist"
+        },
+        {
+          "function": "xFFXShakePoolInit__FUi",
+          "offset": 16,
+          "opcode": 43,
+          "target_name": "shake_psize",
+          "symbol": "shake_psize"
+        },
+        {
+          "function": "xFFXShakePoolInit__FUi",
+          "offset": 24,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xFFXShakePoolInit__FUi",
+          "offset": 36,
+          "opcode": 43,
+          "target_name": "shake_pool",
+          "symbol": "shake_pool"
+        },
+        {
+          "function": "xFFXShakePoolInit__FUi",
+          "offset": 40,
+          "opcode": 35,
+          "target_name": "shake_pool",
+          "symbol": "shake_pool"
+        },
+        {
+          "function": "xFFXShakePoolInit__FUi",
+          "offset": 48,
+          "opcode": 35,
+          "target_name": "shake_psize",
+          "symbol": "shake_psize"
+        },
+        {
+          "function": "xFFXShakePoolInit__FUi",
+          "offset": 72,
+          "opcode": 35,
+          "target_name": "shake_pool",
+          "symbol": "shake_pool"
+        },
+        {
+          "function": "xFFXShakePoolInit__FUi",
+          "offset": 96,
+          "opcode": 35,
+          "target_name": "shake_psize",
+          "symbol": "shake_psize"
+        },
+        {
+          "function": "xFFXShakePoolInit__FUi",
+          "offset": 112,
+          "opcode": 35,
+          "target_name": "shake_pool",
+          "symbol": "shake_pool"
+        },
+        {
+          "function": "xFFXShakePoolInit__FUi",
+          "offset": 136,
+          "opcode": 43,
+          "target_name": "shake_alist",
+          "symbol": "shake_alist"
+        },
+        {
+          "function": "xFFXShakeUpdateEnt__FP4xEntP6xScenefPv",
+          "offset": 184,
+          "opcode": 35,
+          "target_name": "alist",
+          "symbol": "alist"
+        },
+        {
+          "function": "xFFXShakeUpdateEnt__FP4xEntP6xScenefPv",
+          "offset": 192,
+          "opcode": 43,
+          "target_name": "alist",
+          "symbol": "alist"
+        },
+        {
+          "function": "xFFXShakeUpdateEnt__FP4xEntP6xScenefPv",
+          "offset": 224,
+          "opcode": 35,
+          "target_name": "shake_alist",
+          "symbol": "shake_alist"
+        },
+        {
+          "function": "xFFXShakeUpdateEnt__FP4xEntP6xScenefPv",
+          "offset": 236,
+          "opcode": 43,
+          "target_name": "shake_alist",
+          "symbol": "shake_alist"
+        },
+        {
+          "function": "xFFXAddEffect__FP4xEntPFP4xEntP6xScenefPv_vPv",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "alist",
+          "symbol": "alist"
+        },
+        {
+          "function": "xFFXAddEffect__FP4xEntPFP4xEntP6xScenefPv_vPv",
+          "offset": 28,
+          "opcode": 43,
+          "target_name": "alist",
+          "symbol": "alist"
+        },
+        {
+          "function": "xFFXAlloc__Fv",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "alist",
+          "symbol": "alist"
+        },
+        {
+          "function": "xFFXAlloc__Fv",
+          "offset": 28,
+          "opcode": 43,
+          "target_name": "alist",
+          "symbol": "alist"
+        },
+        {
+          "function": "xFFXPoolInit__FUi",
+          "offset": 12,
+          "opcode": 43,
+          "target_name": "psize",
+          "symbol": "psize"
+        },
+        {
+          "function": "xFFXPoolInit__FUi",
+          "offset": 16,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xFFXPoolInit__FUi",
+          "offset": 28,
+          "opcode": 43,
+          "target_name": "pool",
+          "symbol": "pool"
+        },
+        {
+          "function": "xFFXPoolInit__FUi",
+          "offset": 32,
+          "opcode": 35,
+          "target_name": "pool",
+          "symbol": "pool"
+        },
+        {
+          "function": "xFFXPoolInit__FUi",
+          "offset": 40,
+          "opcode": 35,
+          "target_name": "psize",
+          "symbol": "psize"
+        },
+        {
+          "function": "xFFXPoolInit__FUi",
+          "offset": 64,
+          "opcode": 35,
+          "target_name": "pool",
+          "symbol": "pool"
+        },
+        {
+          "function": "xFFXPoolInit__FUi",
+          "offset": 92,
+          "opcode": 35,
+          "target_name": "psize",
+          "symbol": "psize"
+        },
+        {
+          "function": "xFFXPoolInit__FUi",
+          "offset": 120,
+          "opcode": 35,
+          "target_name": "pool",
+          "symbol": "pool"
+        },
+        {
+          "function": "xFFXPoolInit__FUi",
+          "offset": 128,
+          "opcode": 43,
+          "target_name": "alist",
+          "symbol": "alist"
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xGroup.cpp",
+      "target_unit": "SB/Core/x/xGroup.cpp",
+      "object": "source/xGroup.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "get_any__6xGroupFv": "get_any__6xGroupFv",
+        "xGroupGetItem__FP6xGroupUi": "xGroupGetItem__FP6xGroupUi",
+        "xGroupGetItemPtr__FP6xGroupUi": "xGroupGetItemPtr__FP6xGroupUi",
+        "xGroupGetCount__FP6xGroup": "xGroupGetCount__FP6xGroup",
+        "xGroupEventCB__FP5xBaseP5xBaseUiPCfP5xBase": "xGroupEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "xGroupLoad__FP6xGroupP7xSerial": "xGroupLoad__FP6xGroupP7xSerial",
+        "xGroupSave__FP6xGroupP7xSerial": "xGroupSave__FP6xGroupP7xSerial",
+        "xGroupSetup__FP6xGroup": "xGroupSetup__FP6xGroup",
+        "xGroupInit__FPvPv": "xGroupInit__FPvPv"
+      },
+      "calls": [
+        {
+          "function": "xGroupGetItemPtr__FP6xGroupUi",
+          "offset": 88,
+          "target_source": "SB/Game/zScene.cpp",
+          "target_function": "zSceneFindObject__FUi",
+          "symbol": "zSceneFindObject__FUi"
+        },
+        {
+          "function": "xGroupEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 84,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseReset__FP5xBaseP10xBaseAsset",
+          "symbol": "xBaseReset__FP5xBaseP10xBaseAsset"
+        },
+        {
+          "function": "xGroupEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 132,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xrand__Fv",
+          "symbol": "xrand__Fv"
+        },
+        {
+          "function": "xGroupEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 368,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUiPCfP5xBase",
+          "symbol": "zEntEvent__FP5xBaseUiPCfP5xBase"
+        },
+        {
+          "function": "xGroupEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 520,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUiPCfP5xBase",
+          "symbol": "zEntEvent__FP5xBaseUiPCfP5xBase"
+        },
+        {
+          "function": "xGroupEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 632,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUiPCfP5xBase",
+          "symbol": "zEntEvent__FP5xBaseUiPCfP5xBase"
+        },
+        {
+          "function": "xGroupLoad__FP6xGroupP7xSerial",
+          "offset": 0,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseLoad__FP5xBaseP7xSerial",
+          "symbol": "xBaseLoad__FP5xBaseP7xSerial",
+          "opcode": 2
+        },
+        {
+          "function": "xGroupSave__FP6xGroupP7xSerial",
+          "offset": 0,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseSave__FP5xBaseP7xSerial",
+          "symbol": "xBaseSave__FP5xBaseP7xSerial",
+          "opcode": 2
+        },
+        {
+          "function": "xGroupSetup__FP6xGroup",
+          "offset": 72,
+          "target_source": "SB/Game/zScene.cpp",
+          "target_function": "zSceneFindObject__FUi",
+          "symbol": "zSceneFindObject__FUi"
+        },
+        {
+          "function": "xGroupInit__FPvPv",
+          "offset": 20,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseInit__FP5xBaseP10xBaseAsset",
+          "symbol": "xBaseInit__FP5xBaseP10xBaseAsset"
+        },
+        {
+          "function": "xGroupInit__FPvPv",
+          "offset": 120,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xGroupInit__FPvPv",
+          "offset": 112,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xGroup.cpp",
+          "symbol": "gActiveHeap"
+        }
+      ],
+      "address_pairs": []
     }
   ]
 }
