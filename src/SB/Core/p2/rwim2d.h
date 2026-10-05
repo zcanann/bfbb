@@ -105,6 +105,7 @@ MACRO_STOP
 
 extern "C" {
 RwReal RwIm2DGetNearScreenZ(void);
+RwReal RwIm2DGetFarScreenZ(void);
 RwBool RwIm2DRenderPrimitive(RwPrimitiveType primType, RwIm2DVertex* vertices, RwInt32 numVertices);
 RwBool RwIm2DRenderIndexedPrimitive(RwPrimitiveType primType, RwIm2DVertex* vertices,
                                    RwInt32 numVertices, RwImVertexIndex* indices,
