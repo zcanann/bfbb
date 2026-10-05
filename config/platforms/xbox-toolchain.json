@@ -70,9 +70,63 @@
       "comparison_object": "source/xPar-functions.obj",
       "host_entry": "tools/platforms/xbox_support/particle_entry.cpp",
       "symbols": {
+        "xParMemInit()": "?xParMemInit@@YIXXZ",
+        "xParAlloc()": "?xParAlloc@@YIPAUxPar@@XZ",
         "xParInit(xPar*)": "?xParInit@@YIXPAUxPar@@@Z"
       },
-      "scope": "One independently reviewed initializer from actual full-TU compilation; other particle functions remain outside the named source comparison; no TU or executable completion claim"
+      "scope": "Three independently reviewed particle leaves from complete source compilation, with six explicit named data-address operands restored from real PE HIGHLOW records; no TU or executable completion claim",
+      "globals": {
+        "gParPool": {
+          "linkage_name": "?gParPool@@3PAUxPar@@A",
+          "size": 192000
+        },
+        "gParDead": {
+          "linkage_name": "?gParDead@@3PAUxPar@@A",
+          "size": 4
+        }
+      },
+      "address_expressions": {
+        "xParMemInit()": [
+          {
+            "symbol": "gParDead",
+            "addend": 0,
+            "field": "displacement",
+            "prefix": "8b0d"
+          },
+          {
+            "symbol": "gParPool",
+            "addend": 0,
+            "field": "immediate",
+            "prefix": "b8"
+          },
+          {
+            "symbol": "gParPool",
+            "addend": 192000,
+            "field": "immediate",
+            "prefix": "3d"
+          },
+          {
+            "symbol": "gParDead",
+            "addend": 0,
+            "field": "displacement",
+            "prefix": "890d"
+          }
+        ],
+        "xParAlloc()": [
+          {
+            "symbol": "gParDead",
+            "addend": 0,
+            "field": "displacement",
+            "prefix": "a1"
+          },
+          {
+            "symbol": "gParDead",
+            "addend": 0,
+            "field": "displacement",
+            "prefix": "890d"
+          }
+        ]
+      }
     }
   ]
 }

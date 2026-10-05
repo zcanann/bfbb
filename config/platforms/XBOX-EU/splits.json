@@ -145,8 +145,8 @@
       "classification": "unclassified"
     }
   ],
-  "known_code_bytes": 627523,
-  "unclassified_text_bytes": 1171237,
+  "known_code_bytes": 627572,
+  "unclassified_text_bytes": 1171188,
   "text_ranges": [
     {
       "kind": "function",
@@ -14354,13 +14354,24 @@
     {
       "kind": "unclassified",
       "address": 1349997,
-      "size": 67
+      "size": 3
+    },
+    {
+      "kind": "function",
+      "address": 1350000,
+      "size": 49,
+      "canonical_identifier": "xParMemInit()"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1350049,
+      "size": 15
     },
     {
       "kind": "function",
       "address": 1350064,
       "size": 37,
-      "canonical_identifier": "anon_001499b0"
+      "canonical_identifier": "xParAlloc()"
     },
     {
       "kind": "unclassified",

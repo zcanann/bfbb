@@ -10510,12 +10510,20 @@
       "identity_kind": "anonymous"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_001499b0",
-      "source": null,
+      "name": "xParMemInit",
+      "canonical_identifier": "xParMemInit()",
+      "source": "SB/Core/x/xPar.cpp",
+      "address": 1350000,
+      "size": 49,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xParAlloc",
+      "canonical_identifier": "xParAlloc()",
+      "source": "SB/Core/x/xPar.cpp",
       "address": 1350064,
       "size": 37,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
       "name": "xParInit",

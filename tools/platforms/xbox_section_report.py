@@ -28,25 +28,29 @@ def _json(path: Path) -> dict:
     return json.loads(path.read_text(encoding='utf-8'))
 
 
-def _coff(path: Path) -> tuple[list[dict], dict[str, bytes]]:
-    """Read the simple comparison COFF containers; reject unsupported layouts."""
+def _coff(path: Path) -> tuple[list[dict], dict[str, bytes], dict[str, list[dict]]]:
+    """Read the comparison containers and their explicit named DIR32 records."""
     data = path.read_bytes()
     require(len(data) >= 20, 'Truncated comparison COFF')
     machine, count, _, symoff, symcount, optional, _ = struct.unpack_from('<HHIIIHH', data)
     require(machine == 0x14c and optional == 0 and 20 + 40 * count <= len(data), 'Expected i386 COFF')
     sections = []
     for index in range(count):
-        name, _, _, size, offset, _, _, relocs, _, flags = struct.unpack_from('<8sIIIIIIHHI', data, 20 + 40 * index)
-        require(not relocs and offset + size <= len(data), 'Unsupported relocations or truncated COFF section')
-        sections.append({'name': name.rstrip(b'\0').decode('ascii'), 'bytes': data[offset:offset + size], 'flags': flags})
-    functions = {}
+        name, _, _, size, offset, reloff, _, relocs, _, flags = struct.unpack_from('<8sIIIIIIHHI', data, 20 + 40 * index)
+        require(offset + size <= len(data) and (not relocs or reloff + 10 * relocs <= symoff),
+                'Truncated COFF section or relocations')
+        sections.append({'name': name.rstrip(b'\0').decode('ascii'), 'bytes': data[offset:offset + size],
+                         'flags': flags, 'relocation_offset': reloff, 'relocation_count': relocs})
+    functions, relocations = {}, {}
     if not symcount:
-        return sections, functions
+        require(not any(s['relocation_count'] for s in sections), 'Relocations without symbols')
+        return sections, functions, relocations
     strings = symoff + 18 * symcount
     require(symoff >= 20 + 40 * count and strings + 4 <= len(data), 'Invalid COFF symbol table')
     string_size = struct.unpack_from('<I', data, strings)[0]
     require(string_size >= 4 and strings + string_size <= len(data), 'Invalid COFF strings')
-    index = 0
+    index, externals, owners = 0, {}, {}
+    labels = set()
     while index < symcount:
         name, value, section, kind, storage, aux = struct.unpack_from('<8sIhHBB', data, symoff + 18 * index)
         require(index + aux < symcount, 'Invalid auxiliary symbol count')
@@ -58,14 +62,33 @@ def _coff(path: Path) -> tuple[list[dict], dict[str, bytes]]:
             label = data[strings + offset:end].decode('utf-8')
         else:
             label = name.rstrip(b'\0').decode('utf-8')
-        require(kind == 0x20 and storage == 2 and aux == 1 and 1 <= section <= len(sections),
-                'Expected explicit comparison function symbol')
-        size = struct.unpack_from('<I', data, symoff + 18 * (index + 1) + 4)[0]
-        payload = sections[section - 1]['bytes']
-        require(label not in functions and size > 0 and value + size <= len(payload), 'Invalid function extent')
-        functions[label] = payload[value:value + size]
+        require(label and label not in labels and storage == 2, 'Duplicate or invalid COFF identity')
+        labels.add(label)
+        if section == 0:
+            require(kind == 0 and value == 0 and aux == 0, 'Unsupported external COFF symbol')
+            externals[index] = label
+        else:
+            require(kind == 0x20 and aux == 1 and 1 <= section <= len(sections) and section not in owners,
+                    'Expected one explicit function per comparison section')
+            size = struct.unpack_from('<I', data, symoff + 18 * (index + 1) + 4)[0]
+            payload = sections[section - 1]['bytes']
+            require(size > 0 and value == 0 and size == len(payload), 'Invalid function extent')
+            functions[label] = payload
+            owners[section] = label
         index += aux + 1
-    return sections, functions
+    for section, label in owners.items():
+        record = sections[section - 1]
+        entries, previous = [], -4
+        for index in range(record['relocation_count']):
+            offset, symbol, kind = struct.unpack_from('<IIH', data, record['relocation_offset'] + 10 * index)
+            require(kind == 6 and symbol in externals and previous + 4 <= offset and offset + 4 <= len(record['bytes']),
+                    'Invalid, overlapping or unnamed COFF DIR32 relocation')
+            previous = offset
+            entries.append({'offset': offset, 'symbol': externals[symbol],
+                            'addend': struct.unpack_from('<I', record['bytes'], offset)[0]})
+        relocations[label] = entries
+    require(len(owners) == len(sections), 'Unowned comparison section')
+    return sections, functions, relocations
 
 
 def export_report(build_dir: Path) -> dict:
@@ -93,7 +116,7 @@ def export_report(build_dir: Path) -> dict:
     require(len(identities) == 1, 'Unregistered or ambiguous original')
     committed = _json(ROOT / 'config/platforms' / identities[0] / 'splits.json')
     require(splits['sections'] == committed['sections'], 'Original section metadata differs from committed identity')
-    inventory, inventory_functions = _coff(build / 'target.obj')
+    inventory, inventory_functions, _ = _coff(build / 'target.obj')
     require(not inventory_functions, 'Original inventory must not fabricate function symbols')
     by_section = {s['name']: s for s in inventory}
     require(len(by_section) == len(inventory) and set(by_section) == {'.text', '.rdata', '.data'}, 'Unexpected inventory sections')
@@ -104,6 +127,11 @@ def export_report(build_dir: Path) -> dict:
                 hashlib.sha1(section['bytes']).hexdigest() == expected['sha1'], 'Original section bytes differ')
     text = by_section['.text']['bytes']
     text_base = original_sections['.text']['virtual_address']
+    from platforms.xbox_relocations import original_anchors, reconstruct
+    directory = ROOT / 'config/platforms' / identities[0]
+    anchors_path = directory / 'reviewed-data-anchors.json'
+    anchors = original_anchors(anchors_path, original_hash, splits['sections']) if anchors_path.is_file() else {}
+    reviewed = {f['canonical_identifier']: f for f in _json(directory / 'reviewed-functions.json')['functions']}
     rows = sorted(symbols['symbols'], key=lambda f: f['address'])
     registry = {r['canonical_identifier']: r for r in rows}
     require(len(registry) == len(rows), 'Duplicate registered function identity')
@@ -135,8 +163,11 @@ def export_report(build_dir: Path) -> dict:
             require(not int(unit.get('measures', {}).get('matched_data', 0)), 'Data matching is outside this exporter scope')
             continue
         description = configurations[unit['name']]
-        _, targets = _coff(build / description['target_path'])
-        bases = _coff(build / description['base_path'])[1] if description.get('base_path') else {}
+        _, targets, target_relocations = _coff(build / description['target_path'])
+        if description.get('base_path'):
+            _, bases, base_relocations = _coff(build / description['base_path'])
+        else:
+            bases, base_relocations = {}, {}
         require(set(targets) == {f['name'] for f in functions}, 'Reported functions differ from actual target object')
         for function in functions:
             name = function['name']
@@ -146,10 +177,15 @@ def export_report(build_dir: Path) -> dict:
             size, score = int(function['size']), function.get('fuzzy_match_percent', 0)
             require(size == row['size'] and 0 <= score <= 100, 'Function size or score differs')
             offset = row['address'] - text_base
-            require(targets[name] == text[offset:offset + size], 'Function target bytes differ from authenticated .text')
+            expected_relocations = [{'offset': e['offset'], 'symbol': e['symbol'], 'addend': e.get('addend', 0)}
+                                    for e in reviewed.get(name, {}).get('address_expressions', [])]
+            require(target_relocations[name] == expected_relocations, 'Target relocations differ from reviewed original expressions')
+            require(reconstruct(targets[name], target_relocations[name], anchors) == text[offset:offset + size],
+                    'Inverse-relocated function target differs from authenticated .text')
             require(not score or name in bases, 'Nonzero match without actual source function')
             if score == 100:
-                require(bases[name] == targets[name], 'Exact matched function differs from source bytes')
+                require(bases[name] == targets[name] and base_relocations[name] == target_relocations[name],
+                        'Exact matched function differs in source bytes or named relocations')
         measured = measure_functions(functions)
         for key in ('total_code', 'matched_code', 'total_functions', 'matched_functions'):
             require(int(unit['measures'].get(key, 0)) == int(measured[key]), 'Baseline function measure sum differs')

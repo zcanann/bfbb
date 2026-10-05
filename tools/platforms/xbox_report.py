@@ -184,6 +184,14 @@ def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path 
         reviewed = json.loads(Path(reviewed_functions).read_text(encoding='utf-8'))
         if reviewed['executable_sha1'] != metadata['sha1']:
             raise ValueError('Reviewed Xbox functions identify another executable')
+        from .xbox_relocations import verify_original_anchors, normalize
+        anchors_path = Path(reviewed_functions).with_name('reviewed-data-anchors.json')
+        anchors = {}
+        if anchors_path.is_file():
+            from .verify_xbox_reviewed import Original
+            versions = json.loads((Path(__file__).resolve().parents[2] / 'config/platforms/versions.json').read_text())['versions']
+            original = Original(reviewed['version'], versions[reviewed['version']], executable.parent.parent)
+            anchors = verify_original_anchors(anchors_path, original)
         identifiers = set()
         for function in reviewed['functions']:
             function = dict(function)
@@ -203,7 +211,9 @@ def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path 
             raw = data[offset:offset + size]
             if hashlib.sha256(raw).hexdigest() != function['sha256']:
                 raise ValueError('Reviewed Xbox function bytes differ')
-            function.update({'bytes': raw, 'symbol': identifier, 'identity_kind': 'reviewed'})
+            normalized, relocations = normalize(raw, function.get('address_expressions', []), anchors)
+            function.update({'bytes': normalized, 'relocations': relocations,
+                             'symbol': identifier, 'identity_kind': 'reviewed'})
             functions.append(function)
     if anonymous_functions is not None:
         from .xbox_boundaries import generate

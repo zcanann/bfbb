@@ -2,7 +2,7 @@
   "schema_version": 1,
   "version": "XBOX-EU",
   "executable_sha1": "3cc6795aad6a51005b4178ca35d76786eb620cab",
-  "scope": "Individually reviewed xString hash functions and xPar initializer only; unreviewed Ghidra candidates remain separate.",
+  "scope": "Individually reviewed xString hashes and xPar pool initialization/allocation/particle initialization; other Ghidra candidates remain separate.",
   "coverage_complete": false,
   "source_comparison_available": false,
   "retail_link_verified": false,
@@ -13,6 +13,188 @@
     "method": "All section names, flags, virtual/raw layouts, SHA-1 values and actual payload bytes agree between independently authenticated originals."
   },
   "functions": [
+    {
+      "name": "xParMemInit",
+      "canonical_identifier": "xParMemInit()",
+      "display_name": "void xParMemInit()",
+      "source": "SB/Core/x/xPar.cpp",
+      "linkage_name": null,
+      "address": 1350000,
+      "size": 49,
+      "sha256": "ea1bb3a324b90a4e3fbdcea40fee479846f5e43eba14bea4c4655b454615947c",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": false,
+      "retail_link_verified": false,
+      "instruction_bytes": 49,
+      "instruction_count": 16,
+      "observed_calling_convention": {
+        "parameters": [],
+        "return": "void",
+        "stack_cleanup": "caller",
+        "saved_registers": [],
+        "convention_name": null
+      },
+      "semantics": {
+        "identity": "Build the doubly linked free list by visiting each of2000 consecutive96-byte particles once, retaining the previous head in ECX and publishing the final head."
+      },
+      "address_expressions": [
+        {
+          "offset": 2,
+          "symbol": "gParDead",
+          "addend": 0,
+          "instruction_offset": 0,
+          "field": "displacement",
+          "prefix": "8b0d"
+        },
+        {
+          "offset": 7,
+          "symbol": "gParPool",
+          "addend": 0,
+          "instruction_offset": 6,
+          "field": "immediate",
+          "prefix": "b8"
+        },
+        {
+          "offset": 36,
+          "symbol": "gParPool",
+          "addend": 192000,
+          "instruction_offset": 35,
+          "field": "immediate",
+          "prefix": "3d"
+        },
+        {
+          "offset": 44,
+          "symbol": "gParDead",
+          "addend": 0,
+          "instruction_offset": 42,
+          "field": "displacement",
+          "prefix": "890d"
+        }
+      ],
+      "corroboration": {
+        "method": "Individual original CFG/field data-flow review, shared independently reviewed free-list data anchors, direct decoded caller and terminal RET/alignment. Named source identities do not depend on source comparison scores.",
+        "branches": [
+          {
+            "address": 1350023,
+            "size": 2,
+            "opcode": 116,
+            "target": 1350030
+          },
+          {
+            "address": 1350040,
+            "size": 2,
+            "opcode": 124,
+            "target": 1350016
+          }
+        ],
+        "return_address": 1350048,
+        "saved_registers": [],
+        "recorded_direct_call_count": 1,
+        "reviewed_call_witnesses": [
+          {
+            "address": 443591,
+            "target": 1350000,
+            "kind": "x86_call_rel32"
+          }
+        ],
+        "following_padding": {
+          "address": 1350049,
+          "size": 15,
+          "byte": 204
+        },
+        "next_function_address": 1350064,
+        "caller_context": {
+          "address": 443582,
+          "size": 25,
+          "sha256": "068354af6cc54e849e917fa03616526369d9c3a12a8131cf00417b80533f5a3f",
+          "description": "Startup flag-guarded initialization call followed by publishing initialized flag."
+        }
+      }
+    },
+    {
+      "name": "xParAlloc",
+      "canonical_identifier": "xParAlloc()",
+      "display_name": "xPar* xParAlloc()",
+      "source": "SB/Core/x/xPar.cpp",
+      "linkage_name": null,
+      "address": 1350064,
+      "size": 37,
+      "sha256": "4bb78ce665ba0c618782610e0ae255bcfc0f4981c267f93bc1f6832530617872",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": false,
+      "retail_link_verified": false,
+      "instruction_bytes": 37,
+      "instruction_count": 15,
+      "observed_calling_convention": {
+        "parameters": [],
+        "return": "eax particle pointer or null",
+        "stack_cleanup": "caller",
+        "saved_registers": [],
+        "convention_name": null
+      },
+      "semantics": {
+        "identity": "Pop the head of that same particle free list, clear the successor previous pointer, update the global head and clear both returned particle links; return null for an empty list."
+      },
+      "address_expressions": [
+        {
+          "offset": 1,
+          "symbol": "gParDead",
+          "addend": 0,
+          "instruction_offset": 0,
+          "field": "displacement",
+          "prefix": "a1"
+        },
+        {
+          "offset": 27,
+          "symbol": "gParDead",
+          "addend": 0,
+          "instruction_offset": 25,
+          "field": "displacement",
+          "prefix": "890d"
+        }
+      ],
+      "corroboration": {
+        "method": "Individual original CFG/field data-flow review, shared independently reviewed free-list data anchors, direct decoded caller and terminal RET/alignment. Named source identities do not depend on source comparison scores.",
+        "branches": [
+          {
+            "address": 1350073,
+            "size": 2,
+            "opcode": 117,
+            "target": 1350078
+          },
+          {
+            "address": 1350082,
+            "size": 2,
+            "opcode": 116,
+            "target": 1350087
+          }
+        ],
+        "return_address": 1350100,
+        "saved_registers": [],
+        "recorded_direct_call_count": 1,
+        "reviewed_call_witnesses": [
+          {
+            "address": 1368951,
+            "target": 1350064,
+            "kind": "x86_call_rel32"
+          }
+        ],
+        "following_padding": {
+          "address": 1350101,
+          "size": 11,
+          "byte": 204
+        },
+        "next_function_address": 1350112,
+        "caller_context": {
+          "address": 1368816,
+          "size": 209,
+          "sha256": "2985b56cfc4f295a2e2bbc596616c1b4f841a21931594f8cf4a77622ceef8099",
+          "description": "Existing reviewed particle-group allocation caller passes the nonnull result directly to xParInit."
+        }
+      }
+    },
     {
       "name": "xParInit",
       "canonical_identifier": "xParInit(xPar*)",
