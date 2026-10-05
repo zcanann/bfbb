@@ -32,7 +32,7 @@
   },
   "analysis": {
     "capstone_version": "5.0.7",
-    "method": "Reachable direct no-call CFG bounded by MAP symbols; no target lengths used"
+    "method": "Reachable direct CFG bounded by MAP symbols; calls opt in to named same-TU MAP entries; no target lengths used"
   },
   "flags": [
     "/nologo",
@@ -62,9 +62,17 @@
         "xStrHashCat(U32,const char*)": "?xStrHashCat@@YAIIPBD@Z",
         "atox(const substr&,size_t&)": "?atox@@YAIABUsubstr@@AAI@Z",
         "xStricmp(const char*,const char*)": "?xStricmp@@YAHPBD0@Z",
-        "imemcmp(const void*,const void*,size_t)": "?imemcmp@@YAHPBX0I@Z"
+        "imemcmp(const void*,const void*,size_t)": "?imemcmp@@YAHPBX0I@Z",
+        "xStrTok(char*,const char*,char**)": "?xStrTok@@YAPADPADPBDPAPAD@Z",
+        "xStrTokBuffer(const char*,const char*,void*)": "?xStrTokBuffer@@YAPADPBD0PAX@Z",
+        "icompare(const substr&,const substr&)": "?icompare@@YAHABUsubstr@@0@Z"
       },
-      "scope": "Six individually reviewed leaf functions from actual full-TU compilation; no TU or executable completion claim"
+      "scope": "Nine individually reviewed functions from actual full-TU compilation; calls resolve only to reviewed same-TU MAP functions; no TU or executable completion claim",
+      "direct_calls": {
+        "icompare(const substr&,const substr&)": [
+          "imemcmp(const void*,const void*,size_t)"
+        ]
+      }
     },
     {
       "source": "src/SB/Core/x/xPar.cpp",

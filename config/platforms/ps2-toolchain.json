@@ -5062,6 +5062,1905 @@
           "lo_offset": 32
         }
       ]
+    },
+    {
+      "source": "src/SB/Core/x/xBehaveMgr.cpp",
+      "target_unit": "SB/Core/x/xBehaveMgr.cpp",
+      "object": "source/xBehaveMgr.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "TimerGet__7xPsycheF11en_xpsytime": "TimerGet__7xPsycheF11en_xpsytime",
+        "TranGoal__7xPsycheFfPv": "TranGoal__7xPsycheFfPv",
+        "ParseTranRequest__7xPsycheF11en_trantypei": "ParseTranRequest__7xPsycheF11en_trantypei",
+        "Timestep__7xPsycheFfPv": "Timestep__7xPsycheFfPv",
+        "FindGoal__7xPsycheFi": "FindGoal__7xPsycheFi",
+        "GoalNone__7xPsycheFii": "GoalNone__7xPsycheFii",
+        "GoalSwap__7xPsycheFii": "GoalSwap__7xPsycheFii",
+        "GoalPop__7xPsycheFii": "GoalPop__7xPsycheFii",
+        "GoalPopRecover__7xPsycheFi": "GoalPopRecover__7xPsycheFi",
+        "GoalPopToBase__7xPsycheFi": "GoalPopToBase__7xPsycheFi",
+        "GoalPush__7xPsycheFii": "GoalPush__7xPsycheFii",
+        "GoalSet__7xPsycheFii": "GoalSet__7xPsycheFii",
+        "GetPrevRecovery__7xPsycheCFi": "GetPrevRecovery__7xPsycheCFi",
+        "GIDOfPending__7xPsycheCFv": "GIDOfPending__7xPsycheCFv",
+        "GIDOfActive__7xPsycheCFv": "GIDOfActive__7xPsycheCFv",
+        "GIDInStack__7xPsycheCFi": "GIDInStack__7xPsycheCFi",
+        "GetCurGoal__7xPsycheCFv": "GetCurGoal__7xPsycheCFv",
+        "IndexInStack__7xPsycheCFi": "IndexInStack__7xPsycheCFi",
+        "FreshWipe__7xPsycheFv": "FreshWipe__7xPsycheFv",
+        "AddGoal__7xPsycheFiPv": "AddGoal__7xPsycheFiPv",
+        "BrainEnd__7xPsycheFv": "BrainEnd__7xPsycheFv",
+        "BrainExtend__7xPsycheFv": "BrainExtend__7xPsycheFv",
+        "BrainBegin__7xPsycheFv": "BrainBegin__7xPsycheFv",
+        "UnSubscribe__10xBehaveMgrFP7xPsyche": "UnSubscribe__10xBehaveMgrFP7xPsyche",
+        "Subscribe__10xBehaveMgrFP5xBasei": "Subscribe__10xBehaveMgrFP5xBasei",
+        "xBehaveMgr_SceneReset__Fv": "xBehaveMgr_SceneReset__Fv",
+        "xBehaveMgr_SceneFinish__Fv": "xBehaveMgr_SceneFinish__Fv",
+        "xBehaveMgr_ScenePrepare__Fv": "xBehaveMgr_ScenePrepare__Fv",
+        "xBehaveMgr_GetSelf__Fv": "xBehaveMgr_GetSelf__Fv",
+        "xBehaveMgr_Shutdown__Fv": "xBehaveMgr_Shutdown__Fv",
+        "xBehaveMgr_Startup__Fv": "xBehaveMgr_Startup__Fv"
+      },
+      "calls": [
+        {
+          "function": "ParseTranRequest__7xPsycheF11en_trantypei",
+          "offset": 48,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "GoalPop__7xPsycheFii",
+          "symbol": "GoalPop__7xPsycheFii"
+        },
+        {
+          "function": "ParseTranRequest__7xPsycheF11en_trantypei",
+          "offset": 80,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "GoalNone__7xPsycheFii",
+          "symbol": "GoalNone__7xPsycheFii"
+        },
+        {
+          "function": "ParseTranRequest__7xPsycheF11en_trantypei",
+          "offset": 108,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "GoalPopToBase__7xPsycheFi",
+          "symbol": "GoalPopToBase__7xPsycheFi"
+        },
+        {
+          "function": "ParseTranRequest__7xPsycheF11en_trantypei",
+          "offset": 140,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "GoalPopRecover__7xPsycheFi",
+          "symbol": "GoalPopRecover__7xPsycheFi"
+        },
+        {
+          "function": "ParseTranRequest__7xPsycheF11en_trantypei",
+          "offset": 180,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "GoalPush__7xPsycheFii",
+          "symbol": "GoalPush__7xPsycheFii"
+        },
+        {
+          "function": "ParseTranRequest__7xPsycheF11en_trantypei",
+          "offset": 216,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "GoalPop__7xPsycheFii",
+          "symbol": "GoalPop__7xPsycheFii"
+        },
+        {
+          "function": "ParseTranRequest__7xPsycheF11en_trantypei",
+          "offset": 248,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "GoalSwap__7xPsycheFii",
+          "symbol": "GoalSwap__7xPsycheFii"
+        },
+        {
+          "function": "ParseTranRequest__7xPsycheF11en_trantypei",
+          "offset": 280,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "GoalSet__7xPsycheFii",
+          "symbol": "GoalSet__7xPsycheFii"
+        },
+        {
+          "function": "Timestep__7xPsycheFfPv",
+          "offset": 152,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "TranGoal__7xPsycheFfPv",
+          "symbol": "TranGoal__7xPsycheFfPv"
+        },
+        {
+          "function": "Timestep__7xPsycheFfPv",
+          "offset": 360,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "ParseTranRequest__7xPsycheF11en_trantypei",
+          "symbol": "ParseTranRequest__7xPsycheF11en_trantypei"
+        },
+        {
+          "function": "Timestep__7xPsycheFfPv",
+          "offset": 448,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "ParseTranRequest__7xPsycheF11en_trantypei",
+          "symbol": "ParseTranRequest__7xPsycheF11en_trantypei"
+        },
+        {
+          "function": "FindGoal__7xPsycheFi",
+          "offset": 88,
+          "target_source": "SB/Core/x/xutil.cpp",
+          "target_function": "xUtil_idtag2string__FUii",
+          "symbol": "xUtil_idtag2string__FUii"
+        },
+        {
+          "function": "FindGoal__7xPsycheFi",
+          "offset": 108,
+          "target_source": "SB/Core/x/xutil.cpp",
+          "target_function": "xUtil_idtag2string__FUii",
+          "symbol": "xUtil_idtag2string__FUii"
+        },
+        {
+          "function": "GoalNone__7xPsycheFii",
+          "offset": 200,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "Timestep__7xPsycheFfPv",
+          "symbol": "Timestep__7xPsycheFfPv"
+        },
+        {
+          "function": "GoalNone__7xPsycheFii",
+          "offset": 292,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "Timestep__7xPsycheFfPv",
+          "symbol": "Timestep__7xPsycheFfPv"
+        },
+        {
+          "function": "GoalSwap__7xPsycheFii",
+          "offset": 108,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "FindGoal__7xPsycheFi",
+          "symbol": "FindGoal__7xPsycheFi"
+        },
+        {
+          "function": "GoalSwap__7xPsycheFii",
+          "offset": 236,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "Timestep__7xPsycheFfPv",
+          "symbol": "Timestep__7xPsycheFfPv"
+        },
+        {
+          "function": "GoalPop__7xPsycheFii",
+          "offset": 452,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "Timestep__7xPsycheFfPv",
+          "symbol": "Timestep__7xPsycheFfPv"
+        },
+        {
+          "function": "GoalPopRecover__7xPsycheFi",
+          "offset": 172,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "GoalPop__7xPsycheFii",
+          "symbol": "GoalPop__7xPsycheFii"
+        },
+        {
+          "function": "GoalPopRecover__7xPsycheFi",
+          "offset": 252,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "Timestep__7xPsycheFfPv",
+          "symbol": "Timestep__7xPsycheFfPv"
+        },
+        {
+          "function": "GoalPopToBase__7xPsycheFi",
+          "offset": 68,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "GoalPop__7xPsycheFii",
+          "symbol": "GoalPop__7xPsycheFii"
+        },
+        {
+          "function": "GoalPopToBase__7xPsycheFi",
+          "offset": 136,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "Timestep__7xPsycheFfPv",
+          "symbol": "Timestep__7xPsycheFfPv"
+        },
+        {
+          "function": "GoalPush__7xPsycheFii",
+          "offset": 172,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "FindGoal__7xPsycheFi",
+          "symbol": "FindGoal__7xPsycheFi"
+        },
+        {
+          "function": "GoalPush__7xPsycheFii",
+          "offset": 316,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "Timestep__7xPsycheFfPv",
+          "symbol": "Timestep__7xPsycheFfPv"
+        },
+        {
+          "function": "GoalSet__7xPsycheFii",
+          "offset": 132,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "FindGoal__7xPsycheFi",
+          "symbol": "FindGoal__7xPsycheFi"
+        },
+        {
+          "function": "GoalSet__7xPsycheFii",
+          "offset": 260,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "Timestep__7xPsycheFfPv",
+          "symbol": "Timestep__7xPsycheFfPv"
+        },
+        {
+          "function": "AddGoal__7xPsycheFiPv",
+          "offset": 36,
+          "target_source": "SB/Core/x/xFactory.cpp",
+          "target_function": "CreateItem__8xFactoryFiPvP10RyzMemGrow",
+          "symbol": "CreateItem__8xFactoryFiPvP10RyzMemGrow"
+        },
+        {
+          "function": "AddGoal__7xPsycheFiPv",
+          "offset": 80,
+          "target_source": "SB/Core/x/xListItem.cpp",
+          "target_function": "Insert__17xListItem<5xGoal>FP5xGoal",
+          "symbol": "Insert__17xListItem<5xGoal>FP5xGoal"
+        },
+        {
+          "function": "AddGoal__7xPsycheFiPv",
+          "offset": 116,
+          "target_source": "SB/Core/x/xutil.cpp",
+          "target_function": "xUtil_idtag2string__FUii",
+          "symbol": "xUtil_idtag2string__FUii"
+        },
+        {
+          "function": "BrainEnd__7xPsycheFv",
+          "offset": 20,
+          "target_source": "SB/Core/x/xFactory.cpp",
+          "target_function": "GrowDataDisable__8xFactoryFv",
+          "symbol": "GrowDataDisable__8xFactoryFv"
+        },
+        {
+          "function": "BrainExtend__7xPsycheFv",
+          "offset": 24,
+          "target_source": "SB/Core/x/xFactory.cpp",
+          "target_function": "GrowDataEnable__8xFactoryFP5xBasei",
+          "symbol": "GrowDataEnable__8xFactoryFP5xBasei",
+          "opcode": 2
+        },
+        {
+          "function": "BrainBegin__7xPsycheFv",
+          "offset": 24,
+          "target_source": "SB/Core/x/xFactory.cpp",
+          "target_function": "GrowDataEnable__8xFactoryFP5xBasei",
+          "symbol": "GrowDataEnable__8xFactoryFP5xBasei",
+          "opcode": 2
+        },
+        {
+          "function": "UnSubscribe__10xBehaveMgrFP7xPsyche",
+          "offset": 40,
+          "target_source": "SB/Core/x/xListItem.cpp",
+          "target_function": "RemHead__17xListItem<5xGoal>FPP5xGoal",
+          "symbol": "RemHead__17xListItem<5xGoal>FPP5xGoal"
+        },
+        {
+          "function": "UnSubscribe__10xBehaveMgrFP7xPsyche",
+          "offset": 68,
+          "target_source": "SB/Core/x/xFactory.cpp",
+          "target_function": "DestroyItem__8xFactoryFP12xFactoryInst",
+          "symbol": "DestroyItem__8xFactoryFP12xFactoryInst"
+        },
+        {
+          "function": "UnSubscribe__10xBehaveMgrFP7xPsyche",
+          "offset": 100,
+          "target_source": "SB/Core/x/xordarray.cpp",
+          "target_function": "XOrdRemove__FP16st_XORDEREDARRAYPvi",
+          "symbol": "XOrdRemove__FP16st_XORDEREDARRAYPvi"
+        },
+        {
+          "function": "Subscribe__10xBehaveMgrFP5xBasei",
+          "offset": 56,
+          "target_source": "SB/Core/x/xordarray.cpp",
+          "target_function": "XOrdAppend__FP16st_XORDEREDARRAYPv",
+          "symbol": "XOrdAppend__FP16st_XORDEREDARRAYPv"
+        },
+        {
+          "function": "Subscribe__10xBehaveMgrFP5xBasei",
+          "offset": 64,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "FreshWipe__7xPsycheFv",
+          "symbol": "FreshWipe__7xPsycheFv"
+        },
+        {
+          "function": "xBehaveMgr_SceneFinish__Fv",
+          "offset": 4,
+          "target_source": "SB/Core/x/xordarray.cpp",
+          "target_function": "XOrdReset__FP16st_XORDEREDARRAY",
+          "symbol": "XOrdReset__FP16st_XORDEREDARRAY",
+          "opcode": 2
+        },
+        {
+          "function": "xBehaveMgr_Shutdown__Fv",
+          "offset": 44,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__dl__10RyzMemDataFPv",
+          "symbol": "__dl__10RyzMemDataFPv"
+        },
+        {
+          "function": "xBehaveMgr_Startup__Fv",
+          "offset": 40,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "xBehaveMgr_Startup__Fv",
+          "offset": 68,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "xBehaveMgr_Startup__Fv",
+          "offset": 84,
+          "target_source": "SB/Core/x/xFactory.cpp",
+          "target_function": "__ct__8xFactoryFi",
+          "symbol": "__ct__8xFactoryFi"
+        },
+        {
+          "function": "xBehaveMgr_Startup__Fv",
+          "offset": 104,
+          "target_source": "SB/Core/x/xBehaveGoalSimple.cpp",
+          "target_function": "xGoalSimple_RegisterTypes__FP8xFactory",
+          "symbol": "xGoalSimple_RegisterTypes__FP8xFactory"
+        },
+        {
+          "function": "xBehaveMgr_Startup__Fv",
+          "offset": 120,
+          "target_source": "SB/Core/x/xordarray.cpp",
+          "target_function": "XOrdInit__FP16st_XORDEREDARRAYii",
+          "symbol": "XOrdInit__FP16st_XORDEREDARRAYii"
+        },
+        {
+          "function": "xBehaveMgr_Startup__Fv",
+          "offset": 136,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xBehaveMgr_Startup__Fv",
+          "offset": 156,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "AddGoal__7xPsycheFiPv",
+          "offset": 28,
+          "opcode": 35,
+          "target_name": "g_behavmgr",
+          "symbol": "g_behavmgr"
+        },
+        {
+          "function": "BrainEnd__7xPsycheFv",
+          "offset": 12,
+          "opcode": 35,
+          "target_name": "g_behavmgr",
+          "symbol": "g_behavmgr"
+        },
+        {
+          "function": "BrainExtend__7xPsycheFv",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "g_behavmgr",
+          "symbol": "g_behavmgr"
+        },
+        {
+          "function": "BrainBegin__7xPsycheFv",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "g_behavmgr",
+          "symbol": "g_behavmgr"
+        },
+        {
+          "function": "xBehaveMgr_SceneReset__Fv",
+          "offset": 28,
+          "opcode": 35,
+          "target_name": "g_behavmgr",
+          "symbol": "g_behavmgr"
+        },
+        {
+          "function": "xBehaveMgr_SceneFinish__Fv",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "g_behavmgr",
+          "symbol": "g_behavmgr"
+        },
+        {
+          "function": "xBehaveMgr_GetSelf__Fv",
+          "offset": 4,
+          "opcode": 35,
+          "target_name": "g_behavmgr",
+          "symbol": "g_behavmgr"
+        },
+        {
+          "function": "xBehaveMgr_Shutdown__Fv",
+          "offset": 8,
+          "opcode": 35,
+          "target_name": "g_modinit",
+          "symbol": "g_modinit",
+          "target_source": "SB/Core/x/xBehaveMgr.cpp"
+        },
+        {
+          "function": "xBehaveMgr_Shutdown__Fv",
+          "offset": 20,
+          "opcode": 43,
+          "target_name": "g_modinit",
+          "symbol": "g_modinit",
+          "target_source": "SB/Core/x/xBehaveMgr.cpp"
+        },
+        {
+          "function": "xBehaveMgr_Shutdown__Fv",
+          "offset": 24,
+          "opcode": 35,
+          "target_name": "g_behavmgr",
+          "symbol": "g_behavmgr"
+        },
+        {
+          "function": "xBehaveMgr_Shutdown__Fv",
+          "offset": 56,
+          "opcode": 43,
+          "target_name": "g_behavmgr",
+          "symbol": "g_behavmgr"
+        },
+        {
+          "function": "xBehaveMgr_Startup__Fv",
+          "offset": 12,
+          "opcode": 35,
+          "target_name": "g_modinit",
+          "symbol": "g_modinit",
+          "target_source": "SB/Core/x/xBehaveMgr.cpp"
+        },
+        {
+          "function": "xBehaveMgr_Startup__Fv",
+          "offset": 24,
+          "opcode": 43,
+          "target_name": "g_modinit",
+          "symbol": "g_modinit",
+          "target_source": "SB/Core/x/xBehaveMgr.cpp"
+        },
+        {
+          "function": "xBehaveMgr_Startup__Fv",
+          "offset": 72,
+          "opcode": 43,
+          "target_name": "g_behavmgr",
+          "symbol": "g_behavmgr"
+        },
+        {
+          "function": "xBehaveMgr_Startup__Fv",
+          "offset": 100,
+          "opcode": 35,
+          "target_name": "g_behavmgr",
+          "symbol": "g_behavmgr"
+        },
+        {
+          "function": "xBehaveMgr_Startup__Fv",
+          "offset": 128,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap"
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Game/zConditional.cpp",
+      "target_unit": "SB/Game/zConditional.cpp",
+      "object": "source/zConditional.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zConditionalEventCB__FP5xBaseP5xBaseUiPCfP5xBase": "zConditionalEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "zConditional_Evaluate__FP13_zConditional": "zConditional_Evaluate__FP13_zConditional",
+        "zConditionalLoad__FP13_zConditionalP7xSerial": "zConditionalLoad__FP13_zConditionalP7xSerial",
+        "zConditionalSave__FP13_zConditionalP7xSerial": "zConditionalSave__FP13_zConditionalP7xSerial",
+        "zConditionalInit__FPvPv": "zConditionalInit__FPvPv"
+      },
+      "calls": [
+        {
+          "function": "zConditionalEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 64,
+          "target_source": "SB/Game/zConditional.cpp",
+          "target_function": "zConditional_Evaluate__FP13_zConditional",
+          "symbol": "zConditional_Evaluate__FP13_zConditional"
+        },
+        {
+          "function": "zConditionalEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 84,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseP5xBaseUi"
+        },
+        {
+          "function": "zConditionalEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 112,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseP5xBaseUi"
+        },
+        {
+          "function": "zConditionalEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 132,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseReset__FP5xBaseP10xBaseAsset",
+          "symbol": "xBaseReset__FP5xBaseP10xBaseAsset"
+        },
+        {
+          "function": "zConditional_Evaluate__FP13_zConditional",
+          "offset": 108,
+          "target_source": "SB/Game/zScene.cpp",
+          "target_function": "zSceneFindObject__FUi",
+          "symbol": "zSceneFindObject__FUi"
+        },
+        {
+          "function": "zConditionalLoad__FP13_zConditionalP7xSerial",
+          "offset": 0,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseLoad__FP5xBaseP7xSerial",
+          "symbol": "xBaseLoad__FP5xBaseP7xSerial",
+          "opcode": 2
+        },
+        {
+          "function": "zConditionalSave__FP13_zConditionalP7xSerial",
+          "offset": 0,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseSave__FP5xBaseP7xSerial",
+          "symbol": "xBaseSave__FP5xBaseP7xSerial",
+          "opcode": 2
+        },
+        {
+          "function": "zConditionalInit__FPvPv",
+          "offset": 20,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseInit__FP5xBaseP10xBaseAsset",
+          "symbol": "xBaseInit__FP5xBaseP10xBaseAsset"
+        },
+        {
+          "function": "zConditionalInit__FPvPv",
+          "offset": 84,
+          "target_source": "SB/Game/zVar.cpp",
+          "target_function": "zVarInit__FP9zVarEntry",
+          "symbol": "zVarInit__FP9zVarEntry"
+        }
+      ],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/x/xCurveAsset.cpp",
+      "target_unit": "SB/Core/x/xCurveAsset.cpp",
+      "object": "source/xCurveAsset.o",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a",
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "xCurveAssetEvaluate": "xCurveAssetEvaluate__FPC11xCurveAssetf"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/x/xbinio.cpp",
+      "target_unit": "SB/Core/x/xbinio.cpp",
+      "object": "source/xbinio.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "BFD_AsyncReadStatus__FP15st_FILELOADINFO": "BFD_AsyncReadStatus__FP15st_FILELOADINFO",
+        "BFD_AsyncRead__FP15st_FILELOADINFOiPviii": "BFD_AsyncRead__FP15st_FILELOADINFOiPviii",
+        "BFD_cb_GCP2_readasync__FP9tag_xFile": "BFD_cb_GCP2_readasync__FP9tag_xFile",
+        "BFD_read__FPviiP9tag_xFilePv": "BFD_read__FPviiP9tag_xFilePv",
+        "BFD_open__FPCcPCcUiiPv": "BFD_open__FPCcPCcUiiPv",
+        "Swap8__FPci": "Swap8__FPci",
+        "AsyncReadStatus__FP15st_FILELOADINFO": "AsyncReadStatus__FP15st_FILELOADINFO",
+        "AsyncIRead__FP15st_FILELOADINFOiPcii": "AsyncIRead__FP15st_FILELOADINFOiPcii",
+        "AsyncMRead__FP15st_FILELOADINFOiPcii": "AsyncMRead__FP15st_FILELOADINFOiPcii",
+        "ReadIDoubles__FP15st_FILELOADINFOPdi": "ReadIDoubles__FP15st_FILELOADINFOPdi",
+        "ReadIFloats__FP15st_FILELOADINFOPfi": "ReadIFloats__FP15st_FILELOADINFOPfi",
+        "ReadILongs__FP15st_FILELOADINFOPii": "ReadILongs__FP15st_FILELOADINFOPii",
+        "ReadIShorts__FP15st_FILELOADINFOPsi": "ReadIShorts__FP15st_FILELOADINFOPsi",
+        "ReadMDoubles__FP15st_FILELOADINFOPdi": "ReadMDoubles__FP15st_FILELOADINFOPdi",
+        "ReadMFloats__FP15st_FILELOADINFOPfi": "ReadMFloats__FP15st_FILELOADINFOPfi",
+        "ReadMLongs__FP15st_FILELOADINFOPii": "ReadMLongs__FP15st_FILELOADINFOPii",
+        "ReadMShorts__FP15st_FILELOADINFOPsi": "ReadMShorts__FP15st_FILELOADINFOPsi",
+        "ReadBytes__FP15st_FILELOADINFOPci": "ReadBytes__FP15st_FILELOADINFOPci",
+        "ReadRaw__FP15st_FILELOADINFOPvii": "ReadRaw__FP15st_FILELOADINFOPvii",
+        "DiscardBuffer__FP15st_FILELOADINFO": "DiscardBuffer__FP15st_FILELOADINFO",
+        "SetBuffer__FP15st_FILELOADINFOPci": "SetBuffer__FP15st_FILELOADINFOPci",
+        "ReadSeek__FP15st_FILELOADINFOi": "ReadSeek__FP15st_FILELOADINFOi",
+        "SkipBytes__FP15st_FILELOADINFOi": "SkipBytes__FP15st_FILELOADINFOi",
+        "LoadDestroy__FP15st_FILELOADINFO": "LoadDestroy__FP15st_FILELOADINFO",
+        "xBinioLoadCreate__FPCc": "xBinioLoadCreate__FPCc"
+      },
+      "calls": [
+        {
+          "function": "BFD_AsyncReadStatus__FP15st_FILELOADINFO",
+          "offset": 72,
+          "target_source": "SB/Core/p2/iFile.cpp",
+          "target_function": "iFileReadAsyncStatus__FiPi",
+          "symbol": "iFileReadAsyncStatus__FiPi"
+        },
+        {
+          "function": "BFD_AsyncRead__FP15st_FILELOADINFOiPviii",
+          "offset": 128,
+          "target_source": "SB/Core/p2/iFile.cpp",
+          "target_function": "iFileSeek__FP9tag_xFileii",
+          "symbol": "iFileSeek__FP9tag_xFileii"
+        },
+        {
+          "function": "BFD_AsyncRead__FP15st_FILELOADINFOiPviii",
+          "offset": 160,
+          "target_source": "SB/Core/p2/iFile.cpp",
+          "target_function": "iFileReadAsync__FP9tag_xFilePvUiPFP9tag_xFile_vi",
+          "symbol": "iFileReadAsync__FP9tag_xFilePvUiPFP9tag_xFile_vi"
+        },
+        {
+          "function": "BFD_read__FPviiP9tag_xFilePv",
+          "offset": 128,
+          "target_source": "SB/Core/p2/iFile.cpp",
+          "target_function": "iFileSeek__FP9tag_xFileii",
+          "symbol": "iFileSeek__FP9tag_xFileii"
+        },
+        {
+          "function": "BFD_read__FPviiP9tag_xFilePv",
+          "offset": 144,
+          "target_source": "SB/Core/p2/iFile.cpp",
+          "target_function": "iFileRead__FP9tag_xFilePvUi",
+          "symbol": "iFileRead__FP9tag_xFilePvUi"
+        },
+        {
+          "function": "BFD_read__FPviiP9tag_xFilePv",
+          "offset": 356,
+          "target_source": "SB/Core/p2/iFile.cpp",
+          "target_function": "iFileSeek__FP9tag_xFileii",
+          "symbol": "iFileSeek__FP9tag_xFileii"
+        },
+        {
+          "function": "BFD_read__FPviiP9tag_xFilePv",
+          "offset": 376,
+          "target_source": "SB/Core/p2/iFile.cpp",
+          "target_function": "iFileRead__FP9tag_xFilePvUi",
+          "symbol": "iFileRead__FP9tag_xFilePvUi"
+        },
+        {
+          "function": "BFD_open__FPCcPCcUiiPv",
+          "offset": 176,
+          "target_source": "SB/Core/p2/iFile.cpp",
+          "target_function": "iFileOpen__FPCciP9tag_xFile",
+          "symbol": "iFileOpen__FPCciP9tag_xFile"
+        },
+        {
+          "function": "AsyncReadStatus__FP15st_FILELOADINFO",
+          "offset": 0,
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "target_function": "BFD_AsyncReadStatus__FP15st_FILELOADINFO",
+          "symbol": "BFD_AsyncReadStatus__FP15st_FILELOADINFO",
+          "opcode": 2
+        },
+        {
+          "function": "AsyncIRead__FP15st_FILELOADINFOiPcii",
+          "offset": 0,
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "target_function": "BFD_AsyncRead__FP15st_FILELOADINFOiPviii",
+          "symbol": "BFD_AsyncRead__FP15st_FILELOADINFOiPviii",
+          "opcode": 2
+        },
+        {
+          "function": "AsyncMRead__FP15st_FILELOADINFOiPcii",
+          "offset": 0,
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "target_function": "BFD_AsyncRead__FP15st_FILELOADINFOiPviii",
+          "symbol": "BFD_AsyncRead__FP15st_FILELOADINFOiPviii",
+          "opcode": 2
+        },
+        {
+          "function": "ReadIDoubles__FP15st_FILELOADINFOPdi",
+          "offset": 4,
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "target_function": "ReadRaw__FP15st_FILELOADINFOPvii",
+          "symbol": "ReadRaw__FP15st_FILELOADINFOPvii",
+          "opcode": 2
+        },
+        {
+          "function": "ReadIFloats__FP15st_FILELOADINFOPfi",
+          "offset": 4,
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "target_function": "ReadRaw__FP15st_FILELOADINFOPvii",
+          "symbol": "ReadRaw__FP15st_FILELOADINFOPvii",
+          "opcode": 2
+        },
+        {
+          "function": "ReadILongs__FP15st_FILELOADINFOPii",
+          "offset": 4,
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "target_function": "ReadRaw__FP15st_FILELOADINFOPvii",
+          "symbol": "ReadRaw__FP15st_FILELOADINFOPvii",
+          "opcode": 2
+        },
+        {
+          "function": "ReadIShorts__FP15st_FILELOADINFOPsi",
+          "offset": 4,
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "target_function": "ReadRaw__FP15st_FILELOADINFOPvii",
+          "symbol": "ReadRaw__FP15st_FILELOADINFOPvii",
+          "opcode": 2
+        },
+        {
+          "function": "ReadMDoubles__FP15st_FILELOADINFOPdi",
+          "offset": 20,
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "target_function": "ReadRaw__FP15st_FILELOADINFOPvii",
+          "symbol": "ReadRaw__FP15st_FILELOADINFOPvii"
+        },
+        {
+          "function": "ReadMDoubles__FP15st_FILELOADINFOPdi",
+          "offset": 32,
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "target_function": "Swap8__FPci",
+          "symbol": "Swap8__FPci"
+        },
+        {
+          "function": "ReadMFloats__FP15st_FILELOADINFOPfi",
+          "offset": 20,
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "target_function": "ReadRaw__FP15st_FILELOADINFOPvii",
+          "symbol": "ReadRaw__FP15st_FILELOADINFOPvii"
+        },
+        {
+          "function": "ReadMLongs__FP15st_FILELOADINFOPii",
+          "offset": 20,
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "target_function": "ReadRaw__FP15st_FILELOADINFOPvii",
+          "symbol": "ReadRaw__FP15st_FILELOADINFOPvii"
+        },
+        {
+          "function": "ReadMShorts__FP15st_FILELOADINFOPsi",
+          "offset": 20,
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "target_function": "ReadRaw__FP15st_FILELOADINFOPvii",
+          "symbol": "ReadRaw__FP15st_FILELOADINFOPvii"
+        },
+        {
+          "function": "ReadBytes__FP15st_FILELOADINFOPci",
+          "offset": 4,
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "target_function": "ReadRaw__FP15st_FILELOADINFOPvii",
+          "symbol": "ReadRaw__FP15st_FILELOADINFOPvii",
+          "opcode": 2
+        },
+        {
+          "function": "ReadRaw__FP15st_FILELOADINFOPvii",
+          "offset": 112,
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "target_function": "BFD_read__FPviiP9tag_xFilePv",
+          "symbol": "BFD_read__FPviiP9tag_xFilePv"
+        },
+        {
+          "function": "ReadSeek__FP15st_FILELOADINFOi",
+          "offset": 68,
+          "target_source": "SB/Core/p2/iFile.cpp",
+          "target_function": "iFileSeek__FP9tag_xFileii",
+          "symbol": "iFileSeek__FP9tag_xFileii"
+        },
+        {
+          "function": "SkipBytes__FP15st_FILELOADINFOi",
+          "offset": 104,
+          "target_source": "SB/Core/p2/iFile.cpp",
+          "target_function": "iFileSeek__FP9tag_xFileii",
+          "symbol": "iFileSeek__FP9tag_xFileii"
+        },
+        {
+          "function": "LoadDestroy__FP15st_FILELOADINFO",
+          "offset": 32,
+          "target_source": "SB/Core/p2/iFile.cpp",
+          "target_function": "iFileClose__FP9tag_xFile",
+          "symbol": "iFileClose__FP9tag_xFile"
+        },
+        {
+          "function": "xBinioLoadCreate__FPCc",
+          "offset": 440,
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "target_function": "BFD_open__FPCcPCcUiiPv",
+          "symbol": "BFD_open__FPCcPCcUiiPv"
+        },
+        {
+          "function": "xBinioLoadCreate__FPCc",
+          "offset": 464,
+          "target_source": "SB/Core/p2/iFile.cpp",
+          "target_function": "iFileGetSize__FP9tag_xFile",
+          "symbol": "iFileGetSize__FP9tag_xFile"
+        },
+        {
+          "function": "xBinioLoadCreate__FPCc",
+          "offset": 500,
+          "target_source": "SB/Core/p2/iFile.cpp",
+          "target_function": "iFileClose__FP9tag_xFile",
+          "symbol": "iFileClose__FP9tag_xFile"
+        },
+        {
+          "function": "LoadDestroy__FP15st_FILELOADINFO",
+          "offset": 76,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xBinioLoadCreate__FPCc",
+          "offset": 140,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xBinioLoadCreate__FPCc",
+          "offset": 548,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "BFD_AsyncReadStatus__FP15st_FILELOADINFO",
+          "offset": 12,
+          "opcode": 35,
+          "target_name": "g_async_context",
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "symbol": "g_async_context"
+        },
+        {
+          "function": "BFD_AsyncReadStatus__FP15st_FILELOADINFO",
+          "offset": 188,
+          "opcode": 43,
+          "target_name": "g_async_context",
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "symbol": "g_async_context"
+        },
+        {
+          "function": "BFD_AsyncRead__FP15st_FILELOADINFOiPviii",
+          "offset": 72,
+          "opcode": 35,
+          "target_name": "g_async_context",
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "symbol": "g_async_context"
+        },
+        {
+          "function": "BFD_AsyncRead__FP15st_FILELOADINFOiPviii",
+          "offset": 96,
+          "opcode": 43,
+          "target_name": "g_async_context",
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "symbol": "g_async_context"
+        },
+        {
+          "function": "BFD_AsyncRead__FP15st_FILELOADINFOiPviii",
+          "offset": 200,
+          "opcode": 43,
+          "target_name": "g_async_context",
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "symbol": "g_async_context"
+        },
+        {
+          "function": "LoadDestroy__FP15st_FILELOADINFO",
+          "offset": 84,
+          "opcode": 35,
+          "target_name": "g_loadlock",
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "symbol": "g_loadlock"
+        },
+        {
+          "function": "LoadDestroy__FP15st_FILELOADINFO",
+          "offset": 104,
+          "opcode": 43,
+          "target_name": "g_loadlock",
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "symbol": "g_loadlock"
+        },
+        {
+          "function": "xBinioLoadCreate__FPCc",
+          "offset": 32,
+          "opcode": 35,
+          "target_name": "g_loadlock",
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "symbol": "g_loadlock"
+        },
+        {
+          "function": "xBinioLoadCreate__FPCc",
+          "offset": 64,
+          "opcode": 35,
+          "target_name": "g_loadlock",
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "symbol": "g_loadlock"
+        },
+        {
+          "function": "xBinioLoadCreate__FPCc",
+          "offset": 108,
+          "opcode": 43,
+          "target_name": "g_loadlock",
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "symbol": "g_loadlock"
+        },
+        {
+          "function": "xBinioLoadCreate__FPCc",
+          "offset": 556,
+          "opcode": 35,
+          "target_name": "g_loadlock",
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "symbol": "g_loadlock"
+        },
+        {
+          "function": "xBinioLoadCreate__FPCc",
+          "offset": 580,
+          "opcode": 43,
+          "target_name": "g_loadlock",
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "symbol": "g_loadlock"
+        }
+      ],
+      "address_pairs": [
+        {
+          "function": "BFD_AsyncRead__FP15st_FILELOADINFOiPviii",
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "target_function": "BFD_cb_GCP2_readasync",
+          "symbol": "BFD_cb_GCP2_readasync__FP9tag_xFile",
+          "hi_offset": 140,
+          "lo_offset": 152,
+          "interleaved": true
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Game/zVolume.cpp",
+      "target_unit": "SB/Game/zVolume.cpp",
+      "object": "source/zVolume.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zVolumeEventCB__FP5xBaseP5xBaseUiPCfP5xBase": "zVolumeEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "zVolume_OccludePrecalc__FP5xVec3": "zVolume_OccludePrecalc__FP5xVec3",
+        "zVolumeGetVolume__FUs": "zVolumeGetVolume__FUs",
+        "zVolumeSetup__Fv": "zVolumeSetup__Fv",
+        "zVolumeInit__Fv": "zVolumeInit__Fv"
+      },
+      "calls": [
+        {
+          "function": "zVolumeEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 48,
+          "target_source": "SB/Core/x/xVolume.cpp",
+          "target_function": "Reset__7xVolumeFv",
+          "symbol": "Reset__7xVolumeFv"
+        },
+        {
+          "function": "zVolume_OccludePrecalc__FP5xVec3",
+          "offset": 544,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "zVolume_OccludePrecalc__FP5xVec3",
+          "offset": 928,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "zVolumeSetup__Fv",
+          "offset": 52,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullForEverything__FP7xQCData",
+          "symbol": "xQuickCullForEverything__FP7xQCData"
+        },
+        {
+          "function": "zVolumeInit__Fv",
+          "offset": 24,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTAssetCountByType__FUi",
+          "symbol": "xSTAssetCountByType__FUi"
+        },
+        {
+          "function": "zVolumeInit__Fv",
+          "offset": 68,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "zVolumeInit__Fv",
+          "offset": 116,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAssetByType__FUiiPUi",
+          "symbol": "xSTFindAssetByType__FUiiPUi"
+        },
+        {
+          "function": "zVolumeInit__Fv",
+          "offset": 136,
+          "target_source": "SB/Core/x/xVolume.cpp",
+          "target_function": "Init__7xVolumeFP12xVolumeAsset",
+          "symbol": "Init__7xVolumeFP12xVolumeAsset"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "zVolumeEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 64,
+          "opcode": 35,
+          "target_name": "gOccludeCount",
+          "symbol": "gOccludeCount"
+        },
+        {
+          "function": "zVolumeEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 172,
+          "opcode": 35,
+          "target_name": "gOccludeCount",
+          "symbol": "gOccludeCount"
+        },
+        {
+          "function": "zVolumeEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 184,
+          "opcode": 43,
+          "target_name": "gOccludeCount",
+          "symbol": "gOccludeCount"
+        },
+        {
+          "function": "zVolumeEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 192,
+          "opcode": 35,
+          "target_name": "gOccludeCount",
+          "symbol": "gOccludeCount"
+        },
+        {
+          "function": "zVolumeEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 264,
+          "opcode": 35,
+          "target_name": "gOccludeCount",
+          "symbol": "gOccludeCount"
+        },
+        {
+          "function": "zVolumeEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 276,
+          "opcode": 43,
+          "target_name": "gOccludeCount",
+          "symbol": "gOccludeCount"
+        },
+        {
+          "function": "zVolume_OccludePrecalc__FP5xVec3",
+          "offset": 40,
+          "opcode": 43,
+          "target_name": "gOccludeCalcCount",
+          "symbol": "gOccludeCalcCount"
+        },
+        {
+          "function": "zVolume_OccludePrecalc__FP5xVec3",
+          "offset": 96,
+          "opcode": 35,
+          "target_name": "gOccludeCalcCount",
+          "symbol": "gOccludeCalcCount"
+        },
+        {
+          "function": "zVolume_OccludePrecalc__FP5xVec3",
+          "offset": 1332,
+          "opcode": 35,
+          "target_name": "gOccludeCalcCount",
+          "symbol": "gOccludeCalcCount"
+        },
+        {
+          "function": "zVolume_OccludePrecalc__FP5xVec3",
+          "offset": 1340,
+          "opcode": 43,
+          "target_name": "gOccludeCalcCount",
+          "symbol": "gOccludeCalcCount"
+        },
+        {
+          "function": "zVolume_OccludePrecalc__FP5xVec3",
+          "offset": 1352,
+          "opcode": 35,
+          "target_name": "gOccludeCount",
+          "symbol": "gOccludeCount"
+        },
+        {
+          "function": "zVolumeGetVolume__FUs",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "vols",
+          "symbol": "vols"
+        },
+        {
+          "function": "zVolumeSetup__Fv",
+          "offset": 16,
+          "opcode": 37,
+          "target_name": "nvols",
+          "symbol": "nvols"
+        },
+        {
+          "function": "zVolumeSetup__Fv",
+          "offset": 40,
+          "opcode": 35,
+          "target_name": "vols",
+          "symbol": "vols"
+        },
+        {
+          "function": "zVolumeSetup__Fv",
+          "offset": 60,
+          "opcode": 37,
+          "target_name": "nvols",
+          "symbol": "nvols"
+        },
+        {
+          "function": "zVolumeInit__Fv",
+          "offset": 32,
+          "opcode": 41,
+          "target_name": "nvols",
+          "symbol": "nvols"
+        },
+        {
+          "function": "zVolumeInit__Fv",
+          "offset": 36,
+          "opcode": 37,
+          "target_name": "nvols",
+          "symbol": "nvols"
+        },
+        {
+          "function": "zVolumeInit__Fv",
+          "offset": 48,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "zVolumeInit__Fv",
+          "offset": 76,
+          "opcode": 37,
+          "target_name": "nvols",
+          "symbol": "nvols"
+        },
+        {
+          "function": "zVolumeInit__Fv",
+          "offset": 92,
+          "opcode": 43,
+          "target_name": "vols",
+          "symbol": "vols"
+        },
+        {
+          "function": "zVolumeInit__Fv",
+          "offset": 124,
+          "opcode": 35,
+          "target_name": "vols",
+          "symbol": "vols"
+        },
+        {
+          "function": "zVolumeInit__Fv",
+          "offset": 164,
+          "opcode": 37,
+          "target_name": "nvols",
+          "symbol": "nvols"
+        },
+        {
+          "function": "zVolumeInit__Fv",
+          "offset": 192,
+          "opcode": 43,
+          "target_name": "vols",
+          "symbol": "vols"
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xEvent.cpp",
+      "target_unit": "SB/Core/x/xEvent.cpp",
+      "object": "source/xEvent.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+        "zEntEvent__FP5xBaseP5xBaseUiPCf": "zEntEvent__FP5xBaseP5xBaseUiPCf",
+        "zEntEvent__FP5xBaseP5xBaseUi": "zEntEvent__FP5xBaseP5xBaseUi",
+        "zEntEvent__FP5xBaseUiPCfP5xBase": "zEntEvent__FP5xBaseUiPCfP5xBase",
+        "zEntEvent__FP5xBaseUiPCf": "zEntEvent__FP5xBaseUiPCf",
+        "zEntEvent__FP5xBaseUiffff": "zEntEvent__FP5xBaseUiffff",
+        "zEntEvent__FP5xBaseUi": "zEntEvent__FP5xBaseUi",
+        "zEntEvent__FUiUiffff": "zEntEvent__FUiUiffff",
+        "zEntEvent__FUiUi": "zEntEvent__FUiUi",
+        "zEntEvent__FPcUi": "zEntEvent__FPcUi"
+      },
+      "calls": [
+        {
+          "function": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "offset": 256,
+          "target_source": "SB/Game/zScene.cpp",
+          "target_function": "zSceneFindObject__FUi",
+          "symbol": "zSceneFindObject__FUi"
+        },
+        {
+          "function": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "offset": 288,
+          "target_source": "SB/Game/zScene.cpp",
+          "target_function": "zSceneFindObject__FUi",
+          "symbol": "zSceneFindObject__FUi"
+        },
+        {
+          "function": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "offset": 308,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "offset": 344,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "symbol": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei"
+        },
+        {
+          "function": "zEntEvent__FP5xBaseP5xBaseUiPCf",
+          "offset": 24,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "symbol": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "opcode": 2
+        },
+        {
+          "function": "zEntEvent__FP5xBaseP5xBaseUi",
+          "offset": 24,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "symbol": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "opcode": 2
+        },
+        {
+          "function": "zEntEvent__FP5xBaseUiPCfP5xBase",
+          "offset": 24,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "symbol": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "opcode": 2
+        },
+        {
+          "function": "zEntEvent__FP5xBaseUiPCf",
+          "offset": 24,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "symbol": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "opcode": 2
+        },
+        {
+          "function": "zEntEvent__FP5xBaseUiffff",
+          "offset": 48,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "symbol": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei"
+        },
+        {
+          "function": "zEntEvent__FP5xBaseUi",
+          "offset": 24,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "symbol": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "opcode": 2
+        },
+        {
+          "function": "zEntEvent__FUiUiffff",
+          "offset": 28,
+          "target_source": "SB/Game/zScene.cpp",
+          "target_function": "zSceneFindObject__FUi",
+          "symbol": "zSceneFindObject__FUi"
+        },
+        {
+          "function": "zEntEvent__FUiUiffff",
+          "offset": 64,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "symbol": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei"
+        },
+        {
+          "function": "zEntEvent__FUiUi",
+          "offset": 12,
+          "target_source": "SB/Game/zScene.cpp",
+          "target_function": "zSceneFindObject__FUi",
+          "symbol": "zSceneFindObject__FUi"
+        },
+        {
+          "function": "zEntEvent__FUiUi",
+          "offset": 48,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "symbol": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei"
+        },
+        {
+          "function": "zEntEvent__FPcUi",
+          "offset": 12,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "zEntEvent__FPcUi",
+          "offset": 20,
+          "target_source": "SB/Game/zScene.cpp",
+          "target_function": "zSceneFindObject__FUi",
+          "symbol": "zSceneFindObject__FUi"
+        },
+        {
+          "function": "zEntEvent__FPcUi",
+          "offset": 56,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "symbol": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei"
+        }
+      ],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/x/xstransvc.cpp",
+      "target_unit": "SB/Core/x/xstransvc.cpp",
+      "object": "source/xstransvc.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "XST_find_bySID__FUii": "XST_find_bySID__FUii",
+        "XST_lock_next__Fv": "XST_lock_next__Fv",
+        "xST_xAssetID_HIPFullPath__FUiPUi": "xST_xAssetID_HIPFullPath__FUiPUi",
+        "xST_xAssetID_HIPFullPath__FUi": "xST_xAssetID_HIPFullPath__FUi",
+        "xSTGetAssetInfoByType__FUiiP20st_PKR_ASSET_TOCINFO": "xSTGetAssetInfoByType__FUiiP20st_PKR_ASSET_TOCINFO",
+        "xSTGetAssetInfo__FUiP20st_PKR_ASSET_TOCINFO": "xSTGetAssetInfo__FUiP20st_PKR_ASSET_TOCINFO",
+        "xSTFindAssetByType__FUiiPUi": "xSTFindAssetByType__FUiiPUi",
+        "xSTAssetCountByType__FUi": "xSTAssetCountByType__FUi",
+        "xSTFindAsset__FUiPUi": "xSTFindAsset__FUiPUi",
+        "xSTAssetName__FPv": "xSTAssetName__FPv",
+        "xSTAssetName__FUi": "xSTAssetName__FUi",
+        "xSTSwitchScene__FUiPvPFPvf_i": "xSTSwitchScene__FUiPvPFPvf_i",
+        "xSTDisconnect__FUii": "xSTDisconnect__FUii",
+        "xSTLoadStep__FUi": "xSTLoadStep__FUi",
+        "xSTUnLoadScene__FUii": "xSTUnLoadScene__FUii",
+        "xSTQueueSceneAssets__FUii": "xSTQueueSceneAssets__FUii",
+        "xSTPreLoadScene__FUiPvi": "xSTPreLoadScene__FUiPvi",
+        "xSTShutdown__Fv": "xSTShutdown__Fv",
+        "xSTStartup__FP19st_PACKER_ASSETTYPE": "xSTStartup__FP19st_PACKER_ASSETTYPE"
+      },
+      "calls": [
+        {
+          "function": "xST_xAssetID_HIPFullPath__FUi",
+          "offset": 0,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xST_xAssetID_HIPFullPath__FUiPUi",
+          "symbol": "xST_xAssetID_HIPFullPath__FUiPUi",
+          "opcode": 2
+        },
+        {
+          "function": "xSTAssetName__FPv",
+          "offset": 216,
+          "target_source": "SB/Core/x/xpkrsvc.cpp",
+          "target_function": "PKRAssetIDFromInst__FPv",
+          "symbol": "PKRAssetIDFromInst__FPv"
+        },
+        {
+          "function": "xSTSwitchScene__FUiPvPFPvf_i",
+          "offset": 60,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "XST_find_bySID__FUii",
+          "symbol": "XST_find_bySID__FUii"
+        },
+        {
+          "function": "xSTDisconnect__FUii",
+          "offset": 16,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "XST_find_bySID__FUii",
+          "symbol": "XST_find_bySID__FUii"
+        },
+        {
+          "function": "xSTLoadStep__FUi",
+          "offset": 12,
+          "target_source": "SB/Core/x/xpkrsvc.cpp",
+          "target_function": "PKRLoadStep__Fi",
+          "symbol": "PKRLoadStep__Fi"
+        },
+        {
+          "function": "xSTLoadStep__FUi",
+          "offset": 52,
+          "target_source": "SB/Core/p2/iFile.cpp",
+          "target_function": "iFileAsyncService__Fv",
+          "symbol": "iFileAsyncService__Fv"
+        },
+        {
+          "function": "xSTUnLoadScene__FUii",
+          "offset": 400,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "XST_find_bySID__FUii",
+          "symbol": "XST_find_bySID__FUii"
+        },
+        {
+          "function": "xSTQueueSceneAssets__FUii",
+          "offset": 24,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "XST_find_bySID__FUii",
+          "symbol": "XST_find_bySID__FUii"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 56,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "XST_lock_next__Fv",
+          "symbol": "XST_lock_next__Fv"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 100,
+          "target_source": "SB/Core/x/xutil.cpp",
+          "target_function": "xUtil_idtag2string__FUii",
+          "symbol": "xUtil_idtag2string__FUii"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 116,
+          "target_source": "SB/Core/x/xutil.cpp",
+          "target_function": "xUtil_idtag2string__FUii",
+          "symbol": "xUtil_idtag2string__FUii"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 132,
+          "target_source": "SB/Core/x/xutil.cpp",
+          "target_function": "xUtil_idtag2string__FUii",
+          "symbol": "xUtil_idtag2string__FUii"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 280,
+          "target_source": "SB/Core/x/xutil.cpp",
+          "target_function": "xUtil_idtag2string__FUii",
+          "symbol": "xUtil_idtag2string__FUii"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 496,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "XST_lock_next__Fv",
+          "symbol": "XST_lock_next__Fv"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 568,
+          "target_source": "SB/Core/x/xutil.cpp",
+          "target_function": "xUtil_idtag2string__FUii",
+          "symbol": "xUtil_idtag2string__FUii"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 584,
+          "target_source": "SB/Core/x/xutil.cpp",
+          "target_function": "xUtil_idtag2string__FUii",
+          "symbol": "xUtil_idtag2string__FUii"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 600,
+          "target_source": "SB/Core/x/xutil.cpp",
+          "target_function": "xUtil_idtag2string__FUii",
+          "symbol": "xUtil_idtag2string__FUii"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 744,
+          "target_source": "SB/Core/x/xutil.cpp",
+          "target_function": "xUtil_idtag2string__FUii",
+          "symbol": "xUtil_idtag2string__FUii"
+        },
+        {
+          "function": "xSTShutdown__Fv",
+          "offset": 168,
+          "target_source": "SB/Core/x/xpkrsvc.cpp",
+          "target_function": "PKRShutdown__Fv",
+          "symbol": "PKRShutdown__Fv"
+        },
+        {
+          "function": "xSTStartup__FP19st_PACKER_ASSETTYPE",
+          "offset": 48,
+          "target_source": "SB/Core/x/xpkrsvc.cpp",
+          "target_function": "PKRStartup__Fv",
+          "symbol": "PKRStartup__Fv"
+        },
+        {
+          "function": "xSTStartup__FP19st_PACKER_ASSETTYPE",
+          "offset": 56,
+          "target_source": "SB/Core/x/xpkrsvc.cpp",
+          "target_function": "PKRGetReadFuncs__Fi",
+          "symbol": "PKRGetReadFuncs__Fi"
+        },
+        {
+          "function": "XST_lock_next__Fv",
+          "offset": 112,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xSTGetAssetInfoByType__FUiiP20st_PKR_ASSET_TOCINFO",
+          "offset": 108,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xSTUnLoadScene__FUii",
+          "offset": 360,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xSTUnLoadScene__FUii",
+          "offset": 516,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 472,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 936,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xSTShutdown__Fv",
+          "offset": 140,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xSTStartup__FP19st_PACKER_ASSETTYPE",
+          "offset": 40,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xST_xAssetID_HIPFullPath__FUiPUi",
+          "offset": 224,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTGetAssetInfoByType__FUiiP20st_PKR_ASSET_TOCINFO",
+          "offset": 296,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTGetAssetInfoByType__FUiiP20st_PKR_ASSET_TOCINFO",
+          "offset": 348,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTGetAssetInfoByType__FUiiP20st_PKR_ASSET_TOCINFO",
+          "offset": 364,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTGetAssetInfo__FUiP20st_PKR_ASSET_TOCINFO",
+          "offset": 264,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTGetAssetInfo__FUiP20st_PKR_ASSET_TOCINFO",
+          "offset": 292,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTGetAssetInfo__FUiP20st_PKR_ASSET_TOCINFO",
+          "offset": 308,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTFindAssetByType__FUiiPUi",
+          "offset": 240,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTFindAssetByType__FUiiPUi",
+          "offset": 284,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTAssetCountByType__FUi",
+          "offset": 216,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTFindAsset__FUiPUi",
+          "offset": 240,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTFindAsset__FUiPUi",
+          "offset": 268,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTFindAsset__FUiPUi",
+          "offset": 304,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTFindAsset__FUiPUi",
+          "offset": 352,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTAssetName__FPv",
+          "offset": 228,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTAssetName__FUi",
+          "offset": 220,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTSwitchScene__FUiPvPFPvf_i",
+          "offset": 104,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTDisconnect__FUii",
+          "offset": 36,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTUnLoadScene__FUii",
+          "offset": 220,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTUnLoadScene__FUii",
+          "offset": 432,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTQueueSceneAssets__FUii",
+          "offset": 60,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 208,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 228,
+          "opcode": 35,
+          "target_name": "g_typeHandlers",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_typeHandlers"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 344,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 364,
+          "opcode": 35,
+          "target_name": "g_typeHandlers",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_typeHandlers"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 676,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 696,
+          "opcode": 35,
+          "target_name": "g_typeHandlers",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_typeHandlers"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 808,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 828,
+          "opcode": 35,
+          "target_name": "g_typeHandlers",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_typeHandlers"
+        },
+        {
+          "function": "xSTShutdown__Fv",
+          "offset": 16,
+          "opcode": 35,
+          "target_name": "g_straninit",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_straninit"
+        },
+        {
+          "function": "xSTShutdown__Fv",
+          "offset": 28,
+          "opcode": 43,
+          "target_name": "g_straninit",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_straninit"
+        },
+        {
+          "function": "xSTShutdown__Fv",
+          "offset": 44,
+          "opcode": 43,
+          "target_name": "g_typeHandlers",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_typeHandlers"
+        },
+        {
+          "function": "xSTShutdown__Fv",
+          "offset": 188,
+          "opcode": 35,
+          "target_name": "g_straninit",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_straninit"
+        },
+        {
+          "function": "xSTStartup__FP19st_PACKER_ASSETTYPE",
+          "offset": 8,
+          "opcode": 35,
+          "target_name": "g_straninit",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_straninit"
+        },
+        {
+          "function": "xSTStartup__FP19st_PACKER_ASSETTYPE",
+          "offset": 20,
+          "opcode": 43,
+          "target_name": "g_straninit",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_straninit"
+        },
+        {
+          "function": "xSTStartup__FP19st_PACKER_ASSETTYPE",
+          "offset": 24,
+          "opcode": 43,
+          "target_name": "g_typeHandlers",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_typeHandlers"
+        },
+        {
+          "function": "xSTStartup__FP19st_PACKER_ASSETTYPE",
+          "offset": 64,
+          "opcode": 43,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTStartup__FP19st_PACKER_ASSETTYPE",
+          "offset": 76,
+          "opcode": 35,
+          "target_name": "g_straninit",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_straninit"
+        }
+      ],
+      "address_pairs": []
     }
   ]
 }

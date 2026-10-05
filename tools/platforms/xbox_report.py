@@ -192,6 +192,8 @@ def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path 
             versions = json.loads((Path(__file__).resolve().parents[2] / 'config/platforms/versions.json').read_text())['versions']
             original = Original(reviewed['version'], versions[reviewed['version']], executable.parent.parent)
             anchors = verify_original_anchors(anchors_path, original)
+        call_targets = {f['canonical_identifier']: f['address'] for f in reviewed['functions']
+                        if f.get('boundary_confirmation') and f.get('identity_confirmation')}
         identifiers = set()
         for function in reviewed['functions']:
             function = dict(function)
@@ -212,6 +214,10 @@ def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path 
             if hashlib.sha256(raw).hexdigest() != function['sha256']:
                 raise ValueError('Reviewed Xbox function bytes differ')
             normalized, relocations = normalize(raw, function.get('address_expressions', []), anchors)
+            if function.get('direct_calls'):
+                from .xbox_calls import normalize_calls
+                normalized, call_relocations = normalize_calls(normalized, address, function['direct_calls'], call_targets)
+                relocations = sorted(relocations + call_relocations, key=lambda r: r['offset'])
             function.update({'bytes': normalized, 'relocations': relocations,
                              'symbol': identifier, 'identity_kind': 'reviewed'})
             functions.append(function)

@@ -29,7 +29,7 @@ def _json(path: Path) -> dict:
 
 
 def _coff(path: Path) -> tuple[list[dict], dict[str, bytes], dict[str, list[dict]]]:
-    """Read the comparison containers and their explicit named DIR32 records."""
+    """Read the comparison containers and their explicit named DIR32/REL32 records."""
     data = path.read_bytes()
     require(len(data) >= 20, 'Truncated comparison COFF')
     machine, count, _, symoff, symcount, optional, _ = struct.unpack_from('<HHIIIHH', data)
@@ -49,7 +49,7 @@ def _coff(path: Path) -> tuple[list[dict], dict[str, bytes], dict[str, list[dict
     require(symoff >= 20 + 40 * count and strings + 4 <= len(data), 'Invalid COFF symbol table')
     string_size = struct.unpack_from('<I', data, strings)[0]
     require(string_size >= 4 and strings + string_size <= len(data), 'Invalid COFF strings')
-    index, externals, owners = 0, {}, {}
+    index, externals, owners, symbol_names = 0, {}, {}, {}
     labels = set()
     while index < symcount:
         name, value, section, kind, storage, aux = struct.unpack_from('<8sIhHBB', data, symoff + 18 * index)
@@ -64,6 +64,7 @@ def _coff(path: Path) -> tuple[list[dict], dict[str, bytes], dict[str, list[dict
             label = name.rstrip(b'\0').decode('utf-8')
         require(label and label not in labels and storage == 2, 'Duplicate or invalid COFF identity')
         labels.add(label)
+        symbol_names[index] = label
         if section == 0:
             require(kind == 0 and value == 0 and aux == 0, 'Unsupported external COFF symbol')
             externals[index] = label
@@ -81,11 +82,13 @@ def _coff(path: Path) -> tuple[list[dict], dict[str, bytes], dict[str, list[dict
         entries, previous = [], -4
         for index in range(record['relocation_count']):
             offset, symbol, kind = struct.unpack_from('<IIH', data, record['relocation_offset'] + 10 * index)
-            require(kind == 6 and symbol in externals and previous + 4 <= offset and offset + 4 <= len(record['bytes']),
-                    'Invalid, overlapping or unnamed COFF DIR32 relocation')
+            require(kind in (6, 20) and symbol in (externals if kind == 6 else symbol_names) and
+                    previous + 4 <= offset and offset + 4 <= len(record['bytes']),
+                    'Invalid, overlapping or unnamed COFF relocation')
             previous = offset
-            entries.append({'offset': offset, 'symbol': externals[symbol],
-                            'addend': struct.unpack_from('<I', record['bytes'], offset)[0]})
+            entries.append({'offset': offset, 'symbol': symbol_names[symbol],
+                            'addend': struct.unpack_from('<I', record['bytes'], offset)[0],
+                            **({'type': kind} if kind != 6 else {})})
         relocations[label] = entries
     require(len(owners) == len(sections), 'Unowned comparison section')
     return sections, functions, relocations
@@ -132,6 +135,8 @@ def export_report(build_dir: Path) -> dict:
     anchors_path = directory / 'reviewed-data-anchors.json'
     anchors = original_anchors(anchors_path, original_hash, splits['sections']) if anchors_path.is_file() else {}
     reviewed = {f['canonical_identifier']: f for f in _json(directory / 'reviewed-functions.json')['functions']}
+    call_targets = {name: f['address'] for name, f in reviewed.items()
+                    if f.get('boundary_confirmation') and f.get('identity_confirmation')}
     rows = sorted(symbols['symbols'], key=lambda f: f['address'])
     registry = {r['canonical_identifier']: r for r in rows}
     require(len(registry) == len(rows), 'Duplicate registered function identity')
@@ -179,8 +184,18 @@ def export_report(build_dir: Path) -> dict:
             offset = row['address'] - text_base
             expected_relocations = [{'offset': e['offset'], 'symbol': e['symbol'], 'addend': e.get('addend', 0)}
                                     for e in reviewed.get(name, {}).get('address_expressions', [])]
+            calls = reviewed.get(name, {}).get('direct_calls', [])
+            expected_relocations += [{'offset': c['offset'], 'symbol': c['symbol'], 'addend': 0, 'type': 20}
+                                     for c in calls]
+            expected_relocations.sort(key=lambda r: r['offset'])
             require(target_relocations[name] == expected_relocations, 'Target relocations differ from reviewed original expressions')
-            require(reconstruct(targets[name], target_relocations[name], anchors) == text[offset:offset + size],
+            restored = reconstruct(targets[name], [r for r in target_relocations[name] if r.get('type', 6) == 6], anchors)
+            if calls:
+                from platforms.xbox_calls import reconstruct_calls, normalize_calls
+                restored = reconstruct_calls(restored, row['address'],
+                                             [r for r in target_relocations[name] if r.get('type') == 20], call_targets)
+                normalize_calls(restored, row['address'], calls, call_targets)
+            require(restored == text[offset:offset + size],
                     'Inverse-relocated function target differs from authenticated .text')
             require(not score or name in bases, 'Nonzero match without actual source function')
             if score == 100:

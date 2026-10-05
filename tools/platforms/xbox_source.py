@@ -1,8 +1,9 @@
-"""Compile full Xbox source units and compare explicitly reviewed linked leaves.
+"""Compile full Xbox source units and compare explicitly reviewed linked functions.
 
 LTCG objects contain intermediate code. The comparison objects therefore contain
 final PE function bytes, independently bounded through decoded CFGs, with only
-explicitly reviewed address expressions restored from real PE HIGHLOW records.
+explicitly reviewed address expressions restored from real PE HIGHLOW records
+and direct calls resolved against independently named same-TU MAP functions.
 Host link support is never included in matching coverage or completion claims.
 """
 from __future__ import annotations
@@ -86,10 +87,12 @@ def _map_functions(path: Path) -> list[dict]:
     return sorted(functions, key=lambda f: (f['address'], f['name']))
 
 
-def _leaf_extent(text: bytes, text_address: int, entry: int, bound: int) -> dict:
+def _leaf_extent(text: bytes, text_address: int, entry: int, bound: int,
+                 call_targets: dict[int, str] | None = None) -> dict:
     """Follow actual source CFG; a neighboring MAP symbol is only a rejection bound.
 
-    This deliberately supports only reviewed no-call leaves. Branches must be
+    Calls default to rejected; opt-in E8 calls must resolve to named MAP entries.
+    Only their fallthrough is followed. Branches must be
     direct and local. Include interior alignment in the contiguous span, while
     excluding bytes following the last reachable instruction. No target is read.
     """
@@ -100,7 +103,7 @@ def _leaf_extent(text: bytes, text_address: int, entry: int, bound: int) -> dict
         raise ValueError('MAP function boundary lies outside linked .text')
     decoder = Cs(CS_ARCH_X86, CS_MODE_32)
     decoder.detail = True
-    pending, decoded, edges = [entry], {}, []
+    pending, decoded, edges, calls = [entry], {}, [], []
     while pending:
         address = pending.pop()
         if address in decoded:
@@ -114,7 +117,12 @@ def _leaf_extent(text: bytes, text_address: int, entry: int, bound: int) -> dict
         decoded[address] = instruction
         end = address + instruction.size
         if instruction.group(CS_GRP_CALL):
-            raise ValueError('Calls are unsupported by this reviewed leaf profile')
+            if (instruction.size != 5 or instruction.bytes[0] != 0xe8 or
+                    len(instruction.operands) != 1 or instruction.operands[0].type != X86_OP_IMM or
+                    instruction.operands[0].imm not in (call_targets or {})):
+                raise ValueError('Unknown or indirect source call in reviewed profile')
+            calls.append({'offset': address - entry + 1,
+                          'symbol': call_targets[instruction.operands[0].imm]})
         if instruction.group(CS_GRP_RET):
             continue
         if instruction.mnemonic in ('int3', 'ud2', 'hlt'):
@@ -139,7 +147,7 @@ def _leaf_extent(text: bytes, text_address: int, entry: int, bound: int) -> dict
             'instruction_bytes': sum(high - low for low, high in ranges),
             'internal_gap_ranges': [[left[1], right[0]] for left, right in zip(ranges, ranges[1:])
                                     if left[1] < right[0]],
-            'edges': edges}
+            'edges': edges, 'direct_calls': sorted(calls, key=lambda call: call['offset'])}
 
 
 def _extract_functions(executable: Path, map_path: Path, unit: dict) -> tuple[list[dict], list[dict]]:
@@ -160,23 +168,36 @@ def _extract_functions(executable: Path, map_path: Path, unit: dict) -> tuple[li
             raise ValueError('Compared function did not originate in the real source TU')
         address = function['address']
         bound = next((a for a in addresses if a > address), text_address + len(text))
-        extent = _leaf_extent(text, text_address, address, bound)
+        call_targets = {}
+        for callee in unit.get('direct_calls', {}).get(canonical, []):
+            target = by_name[unit['symbols'][callee]]
+            if (target['object'].lower() != Path(unit['object']).name.lower() or
+                    target['address'] in call_targets or not text_address <= target['address'] < text_address + len(text)):
+                raise ValueError('Ambiguous or foreign source call target')
+            call_targets[target['address']] = callee
+        extent = _leaf_extent(text, text_address, address, bound, call_targets)
         offset = address - text_address
         body = text[offset:offset + extent['size']]
         fields = {a - address for a in highlow if address <= a < address + len(body)}
         expressions = discover_source_expressions(body,
             unit.get('address_expressions', {}).get(canonical, []), anchors, fields)
         normalized, relocations = normalize(body, expressions, anchors, fields)
+        if extent['direct_calls']:
+            from .xbox_calls import normalize_calls
+            normalized, call_relocations = normalize_calls(normalized, address, extent['direct_calls'],
+                                                          {name: at for at, name in call_targets.items()})
+            relocations = sorted(relocations + call_relocations, key=lambda r: r['offset'])
         output.append({'symbol': canonical, 'bytes': normalized, 'relocations': relocations})
         evidence.append({**extent, 'canonical_identifier': canonical, 'linkage_name': linkage,
                          'source_object': function['object'], 'sha256': hashlib.sha256(body).hexdigest(),
                          'address_expressions': expressions, 'source_globals': anchors,
+                         'source_call_targets': {name: at for at, name in call_targets.items()},
                          'normalized_sha256': hashlib.sha256(normalized).hexdigest()})
     return output, evidence
 
 
 def compile_units(output: Path, compilers: Path, wine: Path | None = None) -> list[dict]:
-    """Build real source TUs through LTCG, then attach only reviewed leaf code.
+    """Build real source TUs through LTCG, then attach only reviewed function code.
 
     compilers contains the profile's compiler-id directory, with Bin/ and Include/.
     wine=None uses native Windows. Wine receives an isolated temporary prefix

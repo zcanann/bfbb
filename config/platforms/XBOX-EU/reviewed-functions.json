@@ -2,7 +2,7 @@
   "schema_version": 1,
   "version": "XBOX-EU",
   "executable_sha1": "3cc6795aad6a51005b4178ca35d76786eb620cab",
-  "scope": "Individually reviewed xString hashes, hexadecimal parser and comparison leaves plus xPar particle leaves; other Ghidra candidates remain separate.",
+  "scope": "Individually reviewed xString hashes, tokenizers, parser and comparisons plus xPar particle routines; other Ghidra candidates remain separate.",
   "coverage_complete": false,
   "source_comparison_available": false,
   "retail_link_verified": false,
@@ -595,6 +595,318 @@
       }
     },
     {
+      "name": "xStrTok",
+      "canonical_identifier": "xStrTok(char*,const char*,char**)",
+      "display_name": "char* xStrTok(char*,const char*,char**)",
+      "source": "SB/Core/x/xString.cpp",
+      "linkage_name": null,
+      "address": 1421696,
+      "size": 242,
+      "sha256": "6a57223b8b1cc13b460a228ef4c94965f6bb6c3bcd95d0bb3bab146714e83f6f",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": false,
+      "retail_link_verified": false,
+      "instruction_bytes": 242,
+      "instruction_count": 95,
+      "observed_calling_convention": {
+        "parameters": [
+          {
+            "name": "string",
+            "location": "stack [entry esp+4]"
+          },
+          {
+            "name": "control",
+            "location": "eax"
+          },
+          {
+            "name": "nextoken",
+            "location": "stack [entry esp+8]"
+          }
+        ],
+        "return": "eax token pointer or NULL",
+        "stack_cleanup": "caller",
+        "saved_registers": [
+          "ebx",
+          "ebp",
+          "esi",
+          "edi"
+        ],
+        "convention_name": null,
+        "limitation": "Observed whole-program register allocation, not a claimed public calling-convention declaration."
+      },
+      "semantics": {
+        "identity": "Build a 256-bit delimiter map including NUL, skip leading delimiters, replace the next delimiter with NUL, publish the continuation pointer, and return the token start or NULL. A NULL input resumes from *nextoken.",
+        "caller_evidence": "Original 0x114dbf passes an input string, space delimiter at 0x26b9a0, and a stack continuation slot; it reads returned token bytes then calls again with NULL. Original 0x142503 uses newline/CR delimiters at 0x26c624 and cleans both stack arguments."
+      },
+      "corroboration": {
+        "method": "Independent original bitmap/token semantics and caller argument/result review, existing closed-CFG anonymous extent with direct caller witnesses, terminal RET and following INT3 alignment. Actual source equality is verified separately.",
+        "branches": [
+          {
+            "address": 1421776,
+            "size": 2,
+            "opcode": 117,
+            "target": 1421744
+          },
+          {
+            "address": 1421780,
+            "size": 2,
+            "opcode": 116,
+            "target": 1421786
+          },
+          {
+            "address": 1421784,
+            "size": 2,
+            "opcode": 235,
+            "target": 1421792
+          },
+          {
+            "address": 1421818,
+            "size": 2,
+            "opcode": 116,
+            "target": 1421858
+          },
+          {
+            "address": 1421826,
+            "size": 2,
+            "opcode": 116,
+            "target": 1421858
+          },
+          {
+            "address": 1421856,
+            "size": 2,
+            "opcode": 117,
+            "target": 1421824
+          },
+          {
+            "address": 1421863,
+            "size": 2,
+            "opcode": 116,
+            "target": 1421912
+          },
+          {
+            "address": 1421896,
+            "size": 2,
+            "opcode": 117,
+            "target": 1421908
+          },
+          {
+            "address": 1421904,
+            "size": 2,
+            "opcode": 117,
+            "target": 1421872
+          },
+          {
+            "address": 1421906,
+            "size": 2,
+            "opcode": 235,
+            "target": 1421912
+          }
+        ],
+        "return_address": 1421937,
+        "saved_registers": [
+          {
+            "register": "ebx",
+            "push_address": 1421699,
+            "pop_address": 1421933
+          },
+          {
+            "register": "ebp",
+            "push_address": 1421700,
+            "pop_address": 1421930
+          },
+          {
+            "register": "esi",
+            "push_address": 1421705,
+            "pop_address": 1421929
+          },
+          {
+            "register": "edi",
+            "push_address": 1421706,
+            "pop_address": 1421928
+          }
+        ],
+        "recorded_direct_call_count": 7,
+        "reviewed_call_witnesses": [
+          {
+            "address": 1134026,
+            "target": 1421696,
+            "kind": "x86_call_rel32"
+          },
+          {
+            "address": 1320206,
+            "target": 1421696,
+            "kind": "x86_call_rel32"
+          }
+        ],
+        "following_padding": {
+          "address": 1421938,
+          "size": 14,
+          "byte": 204
+        },
+        "next_function_address": 1421952,
+        "caller_context": {
+          "address": 1134015,
+          "size": 58,
+          "sha256": "9bb904a2ed77cf5166a5d94833343ff62a3c8ff3e6daa5cd559b8c810ba1f050",
+          "description": "Decoded original input/control/output setup, direct call, caller stack cleanup and returned token consumption."
+        }
+      }
+    },
+    {
+      "name": "xStrTokBuffer",
+      "canonical_identifier": "xStrTokBuffer(const char*,const char*,void*)",
+      "display_name": "char* xStrTokBuffer(const char*,const char*,void*)",
+      "source": "SB/Core/x/xString.cpp",
+      "linkage_name": null,
+      "address": 1421952,
+      "size": 249,
+      "sha256": "20e0ffffd9a13f1597920ef147224235da1d4bbcb7c826ab831f05b860dc31e7",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": false,
+      "retail_link_verified": false,
+      "instruction_bytes": 249,
+      "instruction_count": 97,
+      "observed_calling_convention": {
+        "parameters": [
+          {
+            "name": "string",
+            "location": "stack [entry esp+4]"
+          },
+          {
+            "name": "control",
+            "location": "eax"
+          },
+          {
+            "name": "buffer",
+            "location": "stack [entry esp+8]"
+          }
+        ],
+        "return": "eax token pointer or NULL",
+        "stack_cleanup": "caller",
+        "saved_registers": [
+          "ebx",
+          "ebp",
+          "esi",
+          "edi"
+        ],
+        "convention_name": null,
+        "limitation": "Observed whole-program register allocation, not a claimed public calling-convention declaration."
+      },
+      "semantics": {
+        "identity": "Build the same delimiter bitmap, skip leading delimiters, copy token bytes into buffer+4 without modifying the input, append NUL, store the continuation pointer at buffer+0, and return buffer+4 or NULL. A NULL input resumes from that stored pointer.",
+        "caller_evidence": "Original 0x11a460 passes the buffer pointer loaded from 0x285c94, the input pointer, and delimiters space/comma/tab/newline/CR at 0x26bfc0. It checks the returned pointer and hashes its bytes; subsequent calls pass NULL with the same buffer."
+      },
+      "corroboration": {
+        "method": "Independent original bitmap/token semantics and caller argument/result review, existing closed-CFG anonymous extent with direct caller witnesses, terminal RET and following INT3 alignment. Actual source equality is verified separately.",
+        "branches": [
+          {
+            "address": 1422036,
+            "size": 2,
+            "opcode": 117,
+            "target": 1422006
+          },
+          {
+            "address": 1422044,
+            "size": 2,
+            "opcode": 117,
+            "target": 1422048
+          },
+          {
+            "address": 1422074,
+            "size": 2,
+            "opcode": 116,
+            "target": 1422114
+          },
+          {
+            "address": 1422082,
+            "size": 2,
+            "opcode": 116,
+            "target": 1422114
+          },
+          {
+            "address": 1422112,
+            "size": 2,
+            "opcode": 117,
+            "target": 1422080
+          },
+          {
+            "address": 1422120,
+            "size": 2,
+            "opcode": 116,
+            "target": 1422169
+          },
+          {
+            "address": 1422152,
+            "size": 2,
+            "opcode": 117,
+            "target": 1422168
+          },
+          {
+            "address": 1422164,
+            "size": 2,
+            "opcode": 117,
+            "target": 1422128
+          },
+          {
+            "address": 1422166,
+            "size": 2,
+            "opcode": 235,
+            "target": 1422169
+          }
+        ],
+        "return_address": 1422200,
+        "saved_registers": [
+          {
+            "register": "ebx",
+            "push_address": 1421955,
+            "pop_address": 1422196
+          },
+          {
+            "register": "ebp",
+            "push_address": 1421960,
+            "pop_address": 1422192
+          },
+          {
+            "register": "esi",
+            "push_address": 1421961,
+            "pop_address": 1422185
+          },
+          {
+            "register": "edi",
+            "push_address": 1421962,
+            "pop_address": 1422180
+          }
+        ],
+        "recorded_direct_call_count": 4,
+        "reviewed_call_witnesses": [
+          {
+            "address": 1154570,
+            "target": 1421952,
+            "kind": "x86_call_rel32"
+          },
+          {
+            "address": 1156206,
+            "target": 1421952,
+            "kind": "x86_call_rel32"
+          }
+        ],
+        "following_padding": {
+          "address": 1422201,
+          "size": 7,
+          "byte": 204
+        },
+        "next_function_address": 1422208,
+        "caller_context": {
+          "address": 1156192,
+          "size": 68,
+          "sha256": "46e0b1ab3ca01afd4db0e83d85b8b884e17f30d3a33a77285b5e4c0f75e25eb6",
+          "description": "Decoded original input/control/output setup, direct call, caller stack cleanup and returned token consumption."
+        }
+      }
+    },
+    {
       "name": "xStricmp",
       "canonical_identifier": "xStricmp(const char*,const char*)",
       "display_name": "S32 xStricmp(const char* string1, const char* string2)",
@@ -916,6 +1228,125 @@
           "size": 53,
           "sha256": "c947b0d7e14316b7f117475c8788b74c11c4c3bb3bb68b023452f33723e2abb0",
           "description": "Original argument setup, direct comparison call, caller stack cleanup when applicable and result consumption."
+        }
+      }
+    },
+    {
+      "name": "icompare",
+      "canonical_identifier": "icompare(const substr&,const substr&)",
+      "display_name": "S32 icompare(const substr& s1, const substr& s2)",
+      "source": "SB/Core/x/xString.cpp",
+      "linkage_name": null,
+      "address": 1422672,
+      "size": 53,
+      "sha256": "c947b0d7e14316b7f117475c8788b74c11c4c3bb3bb68b023452f33723e2abb0",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": false,
+      "retail_link_verified": false,
+      "instruction_bytes": 53,
+      "instruction_count": 30,
+      "direct_calls": [
+        {
+          "offset": 24,
+          "symbol": "imemcmp(const void*,const void*,size_t)"
+        }
+      ],
+      "observed_calling_convention": {
+        "parameters": [
+          {
+            "name": "s1",
+            "location": "edx"
+          },
+          {
+            "name": "s2",
+            "location": "ecx"
+          }
+        ],
+        "return": "eax signed comparison result",
+        "stack_cleanup": "caller",
+        "saved_registers": [
+          "ebp",
+          "esi",
+          "ebx",
+          "edi"
+        ],
+        "convention_name": null,
+        "limitation": "Observed whole-program parameter registers, not a public ABI declaration."
+      },
+      "semantics": {
+        "identity": "Compare substring data using the independently reviewed imemcmp over the smaller length. Preserve a nonzero byte comparison; otherwise compare the original lengths, returning zero for equality or -1/+1 for shorter/longer input.",
+        "caller_evidence": "Original 0x10da67 constructs a pointer/length substring of length5 at 0x26b580, passes another real substring at 0x10da79, calls at 0x10da80, and tests equality to select a game value. Other callers similarly construct constant substring pairs and test equality."
+      },
+      "corroboration": {
+        "method": "Existing anonymous closed-CFG extent and decoded callers, independently reviewed imemcmp destination, actual substring data/length ownership, all return paths and following INT3 alignment. Compiler equality is separate.",
+        "branches": [
+          {
+            "address": 1422684,
+            "size": 2,
+            "opcode": 114,
+            "target": 1422688
+          },
+          {
+            "address": 1422707,
+            "size": 2,
+            "opcode": 117,
+            "target": 1422722
+          },
+          {
+            "address": 1422711,
+            "size": 2,
+            "opcode": 117,
+            "target": 1422716
+          }
+        ],
+        "return_address": 1422724,
+        "saved_registers": [
+          {
+            "register": "ebp",
+            "push_address": 1422672,
+            "pop_address": 1422723
+          },
+          {
+            "register": "esi",
+            "push_address": 1422676,
+            "pop_address": 1422722
+          },
+          {
+            "register": "ebx",
+            "push_address": 1422688,
+            "pop_address": 1422706
+          },
+          {
+            "register": "edi",
+            "push_address": 1422691,
+            "pop_address": 1422705
+          }
+        ],
+        "recorded_direct_call_count": 13,
+        "reviewed_call_witnesses": [
+          {
+            "address": 1104512,
+            "target": 1422672,
+            "kind": "x86_call_rel32"
+          },
+          {
+            "address": 1292848,
+            "target": 1422672,
+            "kind": "x86_call_rel32"
+          }
+        ],
+        "following_padding": {
+          "address": 1422725,
+          "size": 11,
+          "byte": 204
+        },
+        "next_function_address": 1422736,
+        "caller_context": {
+          "address": 1104487,
+          "size": 39,
+          "sha256": "f0817a65622fecb61111b20ae8e1762cdeb30aa57aef741399dd1d346276b399",
+          "description": "Constructed five-byte substring, real second substring pointer, direct call and equality consumption."
         }
       }
     },

@@ -7,7 +7,11 @@ struct zVolume : xVolume
 {
 };
 
+#if defined(PS2)
+extern S32 gOccludeCount;
+#else
 extern volatile S32 gOccludeCount;
+#endif
 
 void zVolumeInit();
 void zVolumeSetup();

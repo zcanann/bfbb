@@ -1,7 +1,7 @@
 """Write i386 COFF containers for independently bounded functions.
 
 Callers own source identity, byte provenance and relocation recovery. Optional
-DIR32 records carry named external symbols and checked in-place addends; the
+DIR32/REL32 records carry named symbols and checked in-place addends; the
 encoder does not infer relocations or modify caller-supplied payload bytes.
 """
 import struct
@@ -31,9 +31,8 @@ def function_object(functions: list[dict]) -> bytes:
         names.add(name)
         symbols.append(struct.pack('<8sIhHBB', encode(name), 0, index, 0x20, 2, 1))
         symbols.append(struct.pack('<IIIIH', 0, len(data), 0, 0, 0))
-    external_names = sorted({r['symbol'] for f in functions for r in f.get('relocations', [])})
-    if names.intersection(external_names):
-        raise ValueError('External address symbol conflicts with a function')
+    function_symbols = {f['symbol']: 2 * i for i, f in enumerate(functions)}
+    external_names = sorted({r['symbol'] for f in functions for r in f.get('relocations', [])} - names)
     externals = {name: len(symbols) + i for i, name in enumerate(external_names)}
     for name in external_names:
         symbols.append(struct.pack('<8sIhHBB', encode(name), 0, 0, 0, 2, 0))
@@ -47,11 +46,15 @@ def function_object(functions: list[dict]) -> bytes:
         encoded_relocations = []
         for relocation in relocations:
             at = relocation['offset']
+            kind = relocation.get('type', 6)
+            symbol = relocation['symbol']
+            if kind not in (6, 20) or (kind == 6 and symbol in function_symbols):
+                raise ValueError('Unsupported COFF relocation or address/function conflict')
             if (not isinstance(at, int) or at < previous + 4 or at + 4 > len(data) or
                     struct.unpack_from('<I', data, at)[0] != relocation['addend']):
-                raise ValueError('Invalid, overlapping or mismatched DIR32 addend')
+                raise ValueError('Invalid, overlapping or mismatched COFF addend')
             previous = at
-            encoded_relocations.append(struct.pack('<IIH', at, externals[relocation['symbol']], 6))
+            encoded_relocations.append(struct.pack('<IIH', at, function_symbols[symbol] if symbol in function_symbols else externals[symbol], kind))
         records = b''.join(encoded_relocations)
         headers.append(struct.pack('<8sIIIIIIHHI', b'.text', 0, 0, len(data), offset,
                                    offset + len(data) if records else 0, 0, len(relocations), 0, 0x60100020))
