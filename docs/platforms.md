@@ -495,3 +495,6 @@ region; see [effects evidence](PS2_FX.md).
 Complete PS2 Robot source comparison adds 23,392 matched bytes per debug
 region. Its corrected original hazard layout also adds 204 bytes in Robo goals;
 see [Robot layout evidence](PS2_ROBOT_LAYOUT.md).
+
+Complete PS2 Plankton source comparison adds 5,420 matched bytes per debug
+region; see [Plankton evidence](PS2_PLANKTON_SOURCE.md).
