@@ -14,7 +14,12 @@
 
 #include <rwcore.h>
 #include <rpworld.h>
+#if defined(PS2)
+#include "xJSP.h"
+#include <rwsdk/rpcollis.h>
+#else
 #include <rpcollis.h>
+#endif
 
 #include <string.h>
 
