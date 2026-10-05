@@ -75,9 +75,9 @@ checked, and the standard objdiff parser accepts the result.
 
 | Version | Full code-region bytes | Objdiff code-matched bytes |
 | --- | ---: | ---: |
-| SLUS-20680 | 2,978,560 | 54,256 |
-| SLES-51968 | 2,979,712 | 54,256 |
-| SLES-51970 | 2,976,512 | 54,256 |
+| SLUS-20680 | 2,978,560 | 55,992 |
+| SLES-51968 | 2,979,712 | 55,992 |
+| SLES-51970 | 2,976,512 | 55,992 |
 | SLES-53623 | 2,979,968 | 18,888 |
 | XBOX-US | 1,798,760 | 9,629 |
 | XBOX-EU | 1,798,760 | 9,629 |
@@ -122,9 +122,9 @@ The narrower function-only baselines currently contain:
 
 | PS2 baseline | Functions | Measured function bytes | Source matches |
 | --- | ---: | ---: | ---: |
-| USA | 5,391 | 2,107,460 | 451 functions / 54,256 bytes |
-| Europe/Australia | 5,392 | 2,108,700 | 451 functions / 54,256 bytes |
-| Germany | 5,394 | 2,105,512 | 451 functions / 54,256 bytes |
+| USA | 5,391 | 2,107,460 | 457 functions / 55,992 bytes |
+| Europe/Australia | 5,392 | 2,108,700 | 457 functions / 55,992 bytes |
+| Germany | 5,394 | 2,105,512 | 457 functions / 55,992 bytes |
 | France (reviewed and corroborated bounds) | 482 | 170,808 | 116 functions / 18,888 bytes |
 
 The `address-anchors.json` registries also recover over 2,500 named data addresses
@@ -454,3 +454,6 @@ INI, update-culling and clump-collision comparisons: 22,568 bytes compared and
 Four further complete PS2 gameplay units add 1,600 bytes per debug region;
 see [gameplay object evidence](PS2_GAMEPLAY_OBJECTS.md). Xbox math adds 702 bytes
 per release with a verified genuine runtime callee; see [math evidence](XBOX_MATH.md).
+
+Complete PS2 laser and decal comparisons add 1,736 matched bytes per debug
+region, all independently raw-exact; see [rendering evidence](PS2_LASER_DECAL.md).

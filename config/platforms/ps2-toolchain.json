@@ -23904,6 +23904,897 @@
           "target_source": "SB/Game/zEntSimpleObj.cpp"
         }
       ]
+    },
+    {
+      "source": "src/SB/Core/x/xLaserBolt.cpp",
+      "target_unit": "SB/Core/x/xLaserBolt.cpp",
+      "object": "source/xLaserBolt.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+        "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+        "emit_particle__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff": "emit_particle__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+        "update_fx__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4boltff": "update_fx__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4boltff",
+        "render__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4boltP18RxObjSpace3DVertex": "render__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4boltP18RxObjSpace3DVertex",
+        "collide_update__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4bolt": "collide_update__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4bolt",
+        "attach_effects__17xLaserBoltEmitterFQ217xLaserBoltEmitter12fx_when_enumPQ217xLaserBoltEmitter11effect_dataUi": "attach_effects__17xLaserBoltEmitterFQ217xLaserBoltEmitter12fx_when_enumPQ217xLaserBoltEmitter11effect_dataUi",
+        "render__17xLaserBoltEmitterFv": "render__17xLaserBoltEmitterFv",
+        "update__17xLaserBoltEmitterFf": "update__17xLaserBoltEmitterFf",
+        "emit__17xLaserBoltEmitterFRC5xVec3RC5xVec3": "emit__17xLaserBoltEmitterFRC5xVec3RC5xVec3",
+        "refresh_config__17xLaserBoltEmitterFv": "refresh_config__17xLaserBoltEmitterFv",
+        "reset__17xLaserBoltEmitterFv": "reset__17xLaserBoltEmitterFv",
+        "set_texture__17xLaserBoltEmitterFPCc": "set_texture__17xLaserBoltEmitterFPCc",
+        "init__17xLaserBoltEmitterFUiPCc": "init__17xLaserBoltEmitterFUiPCc"
+      },
+      "calls": [
+        {
+          "function": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 192,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "length__5xVec3CFv",
+          "symbol": "length__5xVec3CFv"
+        },
+        {
+          "function": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 324,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__amu__5xVec3Ff",
+          "symbol": "__amu__5xVec3Ff"
+        },
+        {
+          "function": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 332,
+          "target_source": "SB/Core/x/xMath.h",
+          "target_function": "xabs__Ff",
+          "symbol": "xabs__Ff"
+        },
+        {
+          "function": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 348,
+          "target_source": "SB/Core/x/xMath.h",
+          "target_function": "xabs__Ff",
+          "symbol": "xabs__Ff"
+        },
+        {
+          "function": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 364,
+          "target_source": "SB/Core/x/xMath.h",
+          "target_function": "xabs__Ff",
+          "symbol": "xabs__Ff"
+        },
+        {
+          "function": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 412,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "assign__5xVec3Ffff",
+          "symbol": "assign__5xVec3Ffff"
+        },
+        {
+          "function": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 460,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "assign__5xVec3Ffff",
+          "symbol": "assign__5xVec3Ffff"
+        },
+        {
+          "function": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 496,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "assign__5xVec3Ffff",
+          "symbol": "assign__5xVec3Ffff"
+        },
+        {
+          "function": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 504,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "normalize__5xVec3Fv",
+          "symbol": "normalize__5xVec3Fv"
+        },
+        {
+          "function": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 520,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "cross__5xVec3CFRC5xVec3",
+          "symbol": "cross__5xVec3CFRC5xVec3"
+        },
+        {
+          "function": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 552,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "length__5xVec3CFv",
+          "symbol": "length__5xVec3CFv"
+        },
+        {
+          "function": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 684,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__amu__5xVec3Ff",
+          "symbol": "__amu__5xVec3Ff"
+        },
+        {
+          "function": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 692,
+          "target_source": "SB/Core/x/xMath.h",
+          "target_function": "xabs__Ff",
+          "symbol": "xabs__Ff"
+        },
+        {
+          "function": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 708,
+          "target_source": "SB/Core/x/xMath.h",
+          "target_function": "xabs__Ff",
+          "symbol": "xabs__Ff"
+        },
+        {
+          "function": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 724,
+          "target_source": "SB/Core/x/xMath.h",
+          "target_function": "xabs__Ff",
+          "symbol": "xabs__Ff"
+        },
+        {
+          "function": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 772,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "assign__5xVec3Ffff",
+          "symbol": "assign__5xVec3Ffff"
+        },
+        {
+          "function": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 820,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "assign__5xVec3Ffff",
+          "symbol": "assign__5xVec3Ffff"
+        },
+        {
+          "function": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 856,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "assign__5xVec3Ffff",
+          "symbol": "assign__5xVec3Ffff"
+        },
+        {
+          "function": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 864,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "normalize__5xVec3Fv",
+          "symbol": "normalize__5xVec3Fv"
+        },
+        {
+          "function": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 880,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "cross__5xVec3CFRC5xVec3",
+          "symbol": "cross__5xVec3CFRC5xVec3"
+        },
+        {
+          "function": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 1264,
+          "target_source": "SB/Core/x/xDecal.cpp",
+          "target_function": "emit__13xDecalEmitterFRC7xMat4x3i",
+          "symbol": "emit__13xDecalEmitterFRC7xMat4x3i"
+        },
+        {
+          "function": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 112,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "length__5xVec3CFv",
+          "symbol": "length__5xVec3CFv"
+        },
+        {
+          "function": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 244,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__amu__5xVec3Ff",
+          "symbol": "__amu__5xVec3Ff"
+        },
+        {
+          "function": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 252,
+          "target_source": "SB/Core/x/xMath.h",
+          "target_function": "xabs__Ff",
+          "symbol": "xabs__Ff"
+        },
+        {
+          "function": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 268,
+          "target_source": "SB/Core/x/xMath.h",
+          "target_function": "xabs__Ff",
+          "symbol": "xabs__Ff"
+        },
+        {
+          "function": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 284,
+          "target_source": "SB/Core/x/xMath.h",
+          "target_function": "xabs__Ff",
+          "symbol": "xabs__Ff"
+        },
+        {
+          "function": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 332,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "assign__5xVec3Ffff",
+          "symbol": "assign__5xVec3Ffff"
+        },
+        {
+          "function": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 380,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "assign__5xVec3Ffff",
+          "symbol": "assign__5xVec3Ffff"
+        },
+        {
+          "function": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 416,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "assign__5xVec3Ffff",
+          "symbol": "assign__5xVec3Ffff"
+        },
+        {
+          "function": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 424,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "normalize__5xVec3Fv",
+          "symbol": "normalize__5xVec3Fv"
+        },
+        {
+          "function": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 440,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "cross__5xVec3CFRC5xVec3",
+          "symbol": "cross__5xVec3CFRC5xVec3"
+        },
+        {
+          "function": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 472,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "length__5xVec3CFv",
+          "symbol": "length__5xVec3CFv"
+        },
+        {
+          "function": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 604,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__amu__5xVec3Ff",
+          "symbol": "__amu__5xVec3Ff"
+        },
+        {
+          "function": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 612,
+          "target_source": "SB/Core/x/xMath.h",
+          "target_function": "xabs__Ff",
+          "symbol": "xabs__Ff"
+        },
+        {
+          "function": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 628,
+          "target_source": "SB/Core/x/xMath.h",
+          "target_function": "xabs__Ff",
+          "symbol": "xabs__Ff"
+        },
+        {
+          "function": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 644,
+          "target_source": "SB/Core/x/xMath.h",
+          "target_function": "xabs__Ff",
+          "symbol": "xabs__Ff"
+        },
+        {
+          "function": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 692,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "assign__5xVec3Ffff",
+          "symbol": "assign__5xVec3Ffff"
+        },
+        {
+          "function": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 740,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "assign__5xVec3Ffff",
+          "symbol": "assign__5xVec3Ffff"
+        },
+        {
+          "function": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 776,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "assign__5xVec3Ffff",
+          "symbol": "assign__5xVec3Ffff"
+        },
+        {
+          "function": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 784,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "normalize__5xVec3Fv",
+          "symbol": "normalize__5xVec3Fv"
+        },
+        {
+          "function": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 800,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "cross__5xVec3CFRC5xVec3",
+          "symbol": "cross__5xVec3CFRC5xVec3"
+        },
+        {
+          "function": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 1036,
+          "target_source": "SB/Core/x/xDecal.cpp",
+          "target_function": "emit__13xDecalEmitterFRC7xMat4x3i",
+          "symbol": "emit__13xDecalEmitterFRC7xMat4x3i"
+        },
+        {
+          "function": "emit_particle__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 852,
+          "target_source": "SB/Core/x/xParEmitter.cpp",
+          "target_function": "xParEmitterEmit__FP11xParEmitterff",
+          "symbol": "xParEmitterEmit__FP11xParEmitterff"
+        },
+        {
+          "function": "emit_particle__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "offset": 1132,
+          "target_source": "SB/Core/x/xParEmitter.cpp",
+          "target_function": "xParEmitterEmit__FP11xParEmitterff",
+          "symbol": "xParEmitterEmit__FP11xParEmitterff"
+        },
+        {
+          "function": "update_fx__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4boltff",
+          "offset": 188,
+          "target_source": "SB/Core/x/xLaserBolt.cpp",
+          "target_function": "emit_particle__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "symbol": "emit_particle__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff"
+        },
+        {
+          "function": "update_fx__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4boltff",
+          "offset": 228,
+          "target_source": "SB/Core/x/xLaserBolt.cpp",
+          "target_function": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "symbol": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff"
+        },
+        {
+          "function": "update_fx__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4boltff",
+          "offset": 268,
+          "target_source": "SB/Core/x/xLaserBolt.cpp",
+          "target_function": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "symbol": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff"
+        },
+        {
+          "function": "update_fx__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4boltff",
+          "offset": 468,
+          "target_source": "SB/Core/x/xLaserBolt.cpp",
+          "target_function": "emit_particle__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "symbol": "emit_particle__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff"
+        },
+        {
+          "function": "update_fx__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4boltff",
+          "offset": 508,
+          "target_source": "SB/Core/x/xLaserBolt.cpp",
+          "target_function": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "symbol": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff"
+        },
+        {
+          "function": "update_fx__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4boltff",
+          "offset": 548,
+          "target_source": "SB/Core/x/xLaserBolt.cpp",
+          "target_function": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "symbol": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff"
+        },
+        {
+          "function": "update_fx__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4boltff",
+          "offset": 728,
+          "target_source": "SB/Core/x/xLaserBolt.cpp",
+          "target_function": "emit_particle__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "symbol": "emit_particle__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff"
+        },
+        {
+          "function": "update_fx__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4boltff",
+          "offset": 760,
+          "target_source": "SB/Core/x/xLaserBolt.cpp",
+          "target_function": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "symbol": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff"
+        },
+        {
+          "function": "update_fx__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4boltff",
+          "offset": 792,
+          "target_source": "SB/Core/x/xLaserBolt.cpp",
+          "target_function": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "symbol": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff"
+        },
+        {
+          "function": "update_fx__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4boltff",
+          "offset": 968,
+          "target_source": "SB/Core/x/xLaserBolt.cpp",
+          "target_function": "emit_particle__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "symbol": "emit_particle__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff"
+        },
+        {
+          "function": "update_fx__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4boltff",
+          "offset": 1000,
+          "target_source": "SB/Core/x/xLaserBolt.cpp",
+          "target_function": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "symbol": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff"
+        },
+        {
+          "function": "update_fx__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4boltff",
+          "offset": 1032,
+          "target_source": "SB/Core/x/xLaserBolt.cpp",
+          "target_function": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "symbol": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff"
+        },
+        {
+          "function": "render__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4boltP18RxObjSpace3DVertex",
+          "offset": 1212,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__mi__5xVec3CFRC5xVec3",
+          "symbol": "__mi__5xVec3CFRC5xVec3"
+        },
+        {
+          "function": "render__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4boltP18RxObjSpace3DVertex",
+          "offset": 1240,
+          "target_source": "SB/Core/x/xLaserBolt.h",
+          "target_function": "set_vert__17xLaserBoltEmitterFR18RxObjSpace3DVertexRC5xVec3ffUc",
+          "symbol": "set_vert__17xLaserBoltEmitterFR18RxObjSpace3DVertexRC5xVec3ffUc"
+        },
+        {
+          "function": "render__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4boltP18RxObjSpace3DVertex",
+          "offset": 1256,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__mi__5xVec3CFRC5xVec3",
+          "symbol": "__mi__5xVec3CFRC5xVec3"
+        },
+        {
+          "function": "render__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4boltP18RxObjSpace3DVertex",
+          "offset": 1284,
+          "target_source": "SB/Core/x/xLaserBolt.h",
+          "target_function": "set_vert__17xLaserBoltEmitterFR18RxObjSpace3DVertexRC5xVec3ffUc",
+          "symbol": "set_vert__17xLaserBoltEmitterFR18RxObjSpace3DVertexRC5xVec3ffUc"
+        },
+        {
+          "function": "render__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4boltP18RxObjSpace3DVertex",
+          "offset": 1300,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__pl__5xVec3CFRC5xVec3",
+          "symbol": "__pl__5xVec3CFRC5xVec3"
+        },
+        {
+          "function": "render__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4boltP18RxObjSpace3DVertex",
+          "offset": 1328,
+          "target_source": "SB/Core/x/xLaserBolt.h",
+          "target_function": "set_vert__17xLaserBoltEmitterFR18RxObjSpace3DVertexRC5xVec3ffUc",
+          "symbol": "set_vert__17xLaserBoltEmitterFR18RxObjSpace3DVertexRC5xVec3ffUc"
+        },
+        {
+          "function": "render__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4boltP18RxObjSpace3DVertex",
+          "offset": 1368,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__pl__5xVec3CFRC5xVec3",
+          "symbol": "__pl__5xVec3CFRC5xVec3"
+        },
+        {
+          "function": "render__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4boltP18RxObjSpace3DVertex",
+          "offset": 1396,
+          "target_source": "SB/Core/x/xLaserBolt.h",
+          "target_function": "set_vert__17xLaserBoltEmitterFR18RxObjSpace3DVertexRC5xVec3ffUc",
+          "symbol": "set_vert__17xLaserBoltEmitterFR18RxObjSpace3DVertexRC5xVec3ffUc"
+        },
+        {
+          "function": "collide_update__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4bolt",
+          "offset": 164,
+          "target_source": "SB/Core/x/xBound.cpp",
+          "target_function": "xRayHitsBound__FPC5xRay3PC6xBoundP7xCollis",
+          "symbol": "xRayHitsBound__FPC5xRay3PC6xBoundP7xCollis"
+        },
+        {
+          "function": "collide_update__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4bolt",
+          "offset": 224,
+          "target_source": "SB/Core/x/xScene.cpp",
+          "target_function": "xRayHitsSceneFlags__FP6xSceneP5xRay3P7xCollisUcUc",
+          "symbol": "xRayHitsSceneFlags__FP6xSceneP5xRay3P7xCollisUcUc"
+        },
+        {
+          "function": "render__17xLaserBoltEmitterFv",
+          "offset": 280,
+          "target_source": "SB/Core/x/xLaserBolt.cpp",
+          "target_function": "render__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4boltP18RxObjSpace3DVertex",
+          "symbol": "render__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4boltP18RxObjSpace3DVertex"
+        },
+        {
+          "function": "update__17xLaserBoltEmitterFf",
+          "offset": 688,
+          "target_source": "SB/Core/x/xLaserBolt.cpp",
+          "target_function": "emit_particle__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "symbol": "emit_particle__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff"
+        },
+        {
+          "function": "update__17xLaserBoltEmitterFf",
+          "offset": 720,
+          "target_source": "SB/Core/x/xLaserBolt.cpp",
+          "target_function": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "symbol": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff"
+        },
+        {
+          "function": "update__17xLaserBoltEmitterFf",
+          "offset": 752,
+          "target_source": "SB/Core/x/xLaserBolt.cpp",
+          "target_function": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "symbol": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff"
+        },
+        {
+          "function": "update__17xLaserBoltEmitterFf",
+          "offset": 944,
+          "target_source": "SB/Core/x/xLaserBolt.cpp",
+          "target_function": "update_fx__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4boltff",
+          "symbol": "update_fx__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4boltff"
+        },
+        {
+          "function": "update__17xLaserBoltEmitterFf",
+          "offset": 1044,
+          "target_source": "SB/Game/zEntDestructObj.cpp",
+          "target_function": "zEntDestructObj_Hit__FP15zEntDestructObjUi",
+          "symbol": "zEntDestructObj_Hit__FP15zEntDestructObjUi"
+        },
+        {
+          "function": "update__17xLaserBoltEmitterFf",
+          "offset": 1084,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUiffff",
+          "symbol": "zEntEvent__FP5xBaseUiffff"
+        },
+        {
+          "function": "update__17xLaserBoltEmitterFf",
+          "offset": 1160,
+          "target_source": "SB/Core/x/xLaserBolt.cpp",
+          "target_function": "collide_update__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4bolt",
+          "symbol": "collide_update__17xLaserBoltEmitterFRQ217xLaserBoltEmitter4bolt"
+        },
+        {
+          "function": "update__17xLaserBoltEmitterFf",
+          "offset": 1304,
+          "target_source": "SB/Core/x/xLaserBolt.cpp",
+          "target_function": "emit_particle__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "symbol": "emit_particle__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff"
+        },
+        {
+          "function": "update__17xLaserBoltEmitterFf",
+          "offset": 1336,
+          "target_source": "SB/Core/x/xLaserBolt.cpp",
+          "target_function": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "symbol": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff"
+        },
+        {
+          "function": "update__17xLaserBoltEmitterFf",
+          "offset": 1368,
+          "target_source": "SB/Core/x/xLaserBolt.cpp",
+          "target_function": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "symbol": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff"
+        },
+        {
+          "function": "emit__17xLaserBoltEmitterFRC5xVec3RC5xVec3",
+          "offset": 320,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "emit__17xLaserBoltEmitterFRC5xVec3RC5xVec3",
+          "offset": 348,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "emit__17xLaserBoltEmitterFRC5xVec3RC5xVec3",
+          "offset": 376,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "emit__17xLaserBoltEmitterFRC5xVec3RC5xVec3",
+          "offset": 408,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Euler__FP7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3Euler__FP7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "emit__17xLaserBoltEmitterFRC5xVec3RC5xVec3",
+          "offset": 424,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "emit__17xLaserBoltEmitterFRC5xVec3RC5xVec3",
+          "offset": 544,
+          "target_source": "SB/Core/x/xScene.cpp",
+          "target_function": "xRayHitsSceneFlags__FP6xSceneP5xRay3P7xCollisUcUc",
+          "symbol": "xRayHitsSceneFlags__FP6xSceneP5xRay3P7xCollisUcUc"
+        },
+        {
+          "function": "emit__17xLaserBoltEmitterFRC5xVec3RC5xVec3",
+          "offset": 740,
+          "target_source": "SB/Core/x/xLaserBolt.cpp",
+          "target_function": "emit_particle__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "symbol": "emit_particle__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff"
+        },
+        {
+          "function": "emit__17xLaserBoltEmitterFRC5xVec3RC5xVec3",
+          "offset": 788,
+          "target_source": "SB/Core/x/xLaserBolt.cpp",
+          "target_function": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "symbol": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff"
+        },
+        {
+          "function": "emit__17xLaserBoltEmitterFRC5xVec3RC5xVec3",
+          "offset": 836,
+          "target_source": "SB/Core/x/xLaserBolt.cpp",
+          "target_function": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "symbol": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff"
+        },
+        {
+          "function": "reset__17xLaserBoltEmitterFv",
+          "offset": 280,
+          "target_source": "SB/Core/x/xLaserBolt.cpp",
+          "target_function": "emit_particle__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "symbol": "emit_particle__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff"
+        },
+        {
+          "function": "reset__17xLaserBoltEmitterFv",
+          "offset": 320,
+          "target_source": "SB/Core/x/xLaserBolt.cpp",
+          "target_function": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "symbol": "emit_decal__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff"
+        },
+        {
+          "function": "reset__17xLaserBoltEmitterFv",
+          "offset": 360,
+          "target_source": "SB/Core/x/xLaserBolt.cpp",
+          "target_function": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff",
+          "symbol": "emit_decal_dist__17xLaserBoltEmitterFRQ217xLaserBoltEmitter11effect_dataRQ217xLaserBoltEmitter4boltfff"
+        },
+        {
+          "function": "set_texture__17xLaserBoltEmitterFPCc",
+          "offset": 16,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "set_texture__17xLaserBoltEmitterFPCc",
+          "offset": 28,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "init__17xLaserBoltEmitterFUiPCc",
+          "offset": 140,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "init__17xLaserBoltEmitterFUiPCc",
+          "offset": 36,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "init__17xLaserBoltEmitterFUiPCc",
+          "offset": 120,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xLaserBolt.cpp",
+          "symbol": "gActiveHeap"
+        }
+      ],
+      "address_pairs": []
+    },
+    {
+      "source": "src/SB/Core/x/xDecal.cpp",
+      "target_unit": "SB/Core/x/xDecal.cpp",
+      "object": "source/xDecal.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "get_render_data__13xDecalEmitterFRCQ213xDecalEmitter9unit_datafR10iColor_tagR7xMat4x3R5xVec2R5xVec2": "get_render_data__13xDecalEmitterFRCQ213xDecalEmitter9unit_datafR10iColor_tagR7xMat4x3R5xVec2R5xVec2",
+        "update__13xDecalEmitterFf": "update__13xDecalEmitterFf",
+        "emit__13xDecalEmitterFRC7xMat4x3RC5xVec3i": "emit__13xDecalEmitterFRC7xMat4x3RC5xVec3i",
+        "emit__13xDecalEmitterFRC7xMat4x3i": "emit__13xDecalEmitterFRC7xMat4x3i",
+        "set_curve__13xDecalEmitterFPCQ213xDecalEmitter10curve_nodeUi": "set_curve__13xDecalEmitterFPCQ213xDecalEmitter10curve_nodeUi",
+        "refresh_config__13xDecalEmitterFv": "refresh_config__13xDecalEmitterFv",
+        "set_texture__13xDecalEmitterFPCc": "set_texture__13xDecalEmitterFPCc",
+        "set_default_config__13xDecalEmitterFv": "set_default_config__13xDecalEmitterFv",
+        "init__13xDecalEmitterFiPCc": "init__13xDecalEmitterFiPCc",
+        "xDecalUpdate__Ff": "xDecalUpdate__Ff",
+        "xDecalInit__Fv": "xDecalInit__Fv"
+      },
+      "calls": [
+        {
+          "function": "update__13xDecalEmitterFf",
+          "offset": 756,
+          "target_source": "SB/Core/x/xPtankPool.cpp",
+          "target_function": "grab_block__10ptank_poolF16ptank_group_type",
+          "symbol": "grab_block__10ptank_poolF16ptank_group_type"
+        },
+        {
+          "function": "update__13xDecalEmitterFf",
+          "offset": 964,
+          "target_source": "SB/Core/x/xDecal.cpp",
+          "target_function": "get_render_data__13xDecalEmitterFRCQ213xDecalEmitter9unit_datafR10iColor_tagR7xMat4x3R5xVec2R5xVec2",
+          "symbol": "get_render_data__13xDecalEmitterFRCQ213xDecalEmitter9unit_datafR10iColor_tagR7xMat4x3R5xVec2R5xVec2"
+        },
+        {
+          "function": "update__13xDecalEmitterFf",
+          "offset": 1092,
+          "target_source": "SB/Core/x/xPtankPool.cpp",
+          "target_function": "flush__10ptank_poolFv",
+          "symbol": "flush__10ptank_poolFv"
+        },
+        {
+          "function": "emit__13xDecalEmitterFRC7xMat4x3RC5xVec3i",
+          "offset": 752,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xrand__Fv",
+          "symbol": "xrand__Fv"
+        },
+        {
+          "function": "emit__13xDecalEmitterFRC7xMat4x3i",
+          "offset": 568,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xrand__Fv",
+          "symbol": "xrand__Fv"
+        },
+        {
+          "function": "refresh_config__13xDecalEmitterFv",
+          "offset": 128,
+          "target_source": "SB/Core/x/xMath.h",
+          "target_function": "range_limit<f>__Ffff_f",
+          "symbol": "range_limit<f>__Ffff_f"
+        },
+        {
+          "function": "refresh_config__13xDecalEmitterFv",
+          "offset": 156,
+          "target_source": "SB/Core/x/xMath.h",
+          "target_function": "range_limit<f>__Ffff_f",
+          "symbol": "range_limit<f>__Ffff_f"
+        },
+        {
+          "function": "refresh_config__13xDecalEmitterFv",
+          "offset": 196,
+          "target_source": "SB/Core/x/xMath.h",
+          "target_function": "range_limit<f>__Ffff_f",
+          "symbol": "range_limit<f>__Ffff_f"
+        },
+        {
+          "function": "refresh_config__13xDecalEmitterFv",
+          "offset": 236,
+          "target_source": "SB/Core/x/xMath.h",
+          "target_function": "range_limit<f>__Ffff_f",
+          "symbol": "range_limit<f>__Ffff_f"
+        },
+        {
+          "function": "set_texture__13xDecalEmitterFPCc",
+          "offset": 16,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "set_texture__13xDecalEmitterFPCc",
+          "offset": 44,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "set_default_config__13xDecalEmitterFv",
+          "offset": 56,
+          "target_source": "SB/Core/x/xDecal.cpp",
+          "target_function": "refresh_config__13xDecalEmitterFv",
+          "symbol": "refresh_config__13xDecalEmitterFv",
+          "opcode": 2
+        },
+        {
+          "function": "init__13xDecalEmitterFiPCc",
+          "offset": 148,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xDecalUpdate__Ff",
+          "offset": 76,
+          "target_source": "SB/Core/x/xDecal.cpp",
+          "target_function": "update__13xDecalEmitterFf",
+          "symbol": "update__13xDecalEmitterFf"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "update__13xDecalEmitterFf",
+          "offset": 700,
+          "opcode": 35,
+          "target_name": "_rpPTankAtomicDataOffset",
+          "target_source": "SB/Core/x/xDecal.cpp",
+          "symbol": "_rpPTankAtomicDataOffset"
+        },
+        {
+          "function": "update__13xDecalEmitterFf",
+          "offset": 728,
+          "opcode": 35,
+          "target_name": "_rpPTankAtomicDataOffset",
+          "target_source": "SB/Core/x/xDecal.cpp",
+          "symbol": "_rpPTankAtomicDataOffset"
+        },
+        {
+          "function": "init__13xDecalEmitterFiPCc",
+          "offset": 12,
+          "opcode": 35,
+          "target_name": "active_emitters_size",
+          "target_source": "SB/Core/x/xDecal.cpp",
+          "symbol": "active_emitters_size__20@unnamed@xDecal_cpp@"
+        },
+        {
+          "function": "init__13xDecalEmitterFiPCc",
+          "offset": 48,
+          "opcode": 35,
+          "target_name": "active_emitters_size",
+          "target_source": "SB/Core/x/xDecal.cpp",
+          "symbol": "active_emitters_size__20@unnamed@xDecal_cpp@"
+        },
+        {
+          "function": "init__13xDecalEmitterFiPCc",
+          "offset": 56,
+          "opcode": 43,
+          "target_name": "active_emitters_size",
+          "target_source": "SB/Core/x/xDecal.cpp",
+          "symbol": "active_emitters_size__20@unnamed@xDecal_cpp@"
+        },
+        {
+          "function": "init__13xDecalEmitterFiPCc",
+          "offset": 136,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xDecal.cpp",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xDecalUpdate__Ff",
+          "offset": 24,
+          "opcode": 35,
+          "target_name": "active_emitters_size",
+          "target_source": "SB/Core/x/xDecal.cpp",
+          "symbol": "active_emitters_size__20@unnamed@xDecal_cpp@"
+        },
+        {
+          "function": "xDecalUpdate__Ff",
+          "offset": 88,
+          "opcode": 35,
+          "target_name": "active_emitters_size",
+          "target_source": "SB/Core/x/xDecal.cpp",
+          "symbol": "active_emitters_size__20@unnamed@xDecal_cpp@"
+        },
+        {
+          "function": "xDecalInit__Fv",
+          "offset": 4,
+          "opcode": 43,
+          "target_name": "active_emitters_size",
+          "target_source": "SB/Core/x/xDecal.cpp",
+          "symbol": "active_emitters_size__20@unnamed@xDecal_cpp@"
+        }
+      ],
+      "address_pairs": []
     }
   ]
 }
