@@ -17,10 +17,18 @@
 #include "zRumble.h"
 
 #include <string.h>
+#if defined(PS2)
+#include <rwsdk/rpmatfx.h>
+#include <rwplcore.h>
+#include <rwsdk/rpskin.h>
+#include <rwim3d.h>
+#include <stdlib.h>
+#else
 #include <rpmatfx.h>
 #include <rwplcore.h>
 #include <rpskin.h>
 #include <PowerPC_EABI_Support/MSL_C/MSL_Common/stdlib.h>
+#endif
 
 // no clue why this file is so out of order
 

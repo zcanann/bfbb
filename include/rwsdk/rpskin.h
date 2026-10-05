@@ -1,9 +1,15 @@
 #ifndef RPSKIN_H
 #define RPSKIN_H
 
+#if defined(PS2)
+#include <rwcore.h>
+#include <rpworld.h>
+struct RpHAnimHierarchy;
+#else
 #include <rwsdk/rwcore.h>
 #include <rwsdk/rpworld.h>
 #include <rwsdk/rphanim.h>
+#endif
 
 /* C compatibility: these headers use bare tag names as types. */
 typedef struct RwMatrixWeights RwMatrixWeights;

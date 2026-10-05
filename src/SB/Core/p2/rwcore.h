@@ -334,6 +334,9 @@ struct RwCamera
 };
 
 #define rwObjectGetParent(object) (((const RwObject*)(object))->parent)
+#define RwTextureGetRasterMacro(_tex) ((_tex)->raster)
+#define RwTextureGetRaster(_tex) RwTextureGetRasterMacro(_tex)
+#define rwObjectHasFrameSetFrame(object, frame) _rwObjectHasFrameSetFrame(object, frame)
 #define RwCameraGetCurrentCamera() ((RwCamera*)RWSRCGLOBAL(curCamera))
 #define RwCameraGetFrame(_camera) ((RwFrame*)rwObjectGetParent((_camera)))
 #define RwCameraGetViewWindow(_camera) (&((_camera)->viewWindow))
@@ -378,6 +381,7 @@ RwBool RwCameraDestroy(RwCamera* camera);
 RwRaster* RwRasterCreate(RwInt32 width, RwInt32 height, RwInt32 depth, RwInt32 flags);
 RwBool RwRasterDestroy(RwRaster* raster);
 RwBool RwFrameDestroy(RwFrame* frame);
+RwFrame* RwFrameRotate(RwFrame* frame, const RwV3d* axis, RwReal angle, RwOpCombineType combine);
 RwFrame* RwFrameTransform(RwFrame* frame, const RwMatrix* matrix, RwOpCombineType combine);
 RwBool _rwFrameSyncDirty(void);
 void _rwObjectHasFrameSetFrame(void* object, RwFrame* frame);

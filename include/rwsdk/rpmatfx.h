@@ -1,9 +1,15 @@
 #ifndef RPMATFX_H
 #define RPMATFX_H
 
+#if defined(PS2)
+#include <rwcore.h>
+#include <rpworld.h>
+#else
 #include <rwsdk/rwcore.h>
 #include <rwsdk/rpworld.h>
+#endif
 
+#if !defined(PS2)
 enum RpMatFXGameCubePipeline
 {
     rpNAMATFXGAMECUBEPIPELINE = 0,
@@ -13,6 +19,7 @@ enum RpMatFXGameCubePipeline
     rpMATFXGAMECUBEPIPELINEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
 typedef enum RpMatFXGameCubePipeline RpMatFXGameCubePipeline;
+#endif
 
 enum RpMatFXMaterialFlags
 {
@@ -33,7 +40,9 @@ typedef enum RpMatFXMaterialFlags RpMatFXMaterialFlags;
 extern "C" {
 #endif
 
+#if !defined(PS2)
 extern RxPipeline* RpMatFXGetGameCubePipeline(RpMatFXGameCubePipeline gamecubePipeline);
+#endif
 extern RwBool RpMatFXPluginAttach(void);
 extern RpAtomic* RpMatFXAtomicEnableEffects(RpAtomic* atomic);
 extern RpWorldSector* RpMatFXWorldSectorEnableEffects(RpWorldSector* worldSector);

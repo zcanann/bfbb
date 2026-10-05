@@ -3,6 +3,15 @@
 
 #include <rwplcore.h>
 
+enum RwCullMode
+{
+    rwCULLMODENACULLMODE = 0,
+    rwCULLMODECULLNONE,
+    rwCULLMODECULLBACK,
+    rwCULLMODECULLFRONT,
+    rwCULLMODEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+
 enum RwIm3DTransformFlags
 {
     rwIM3D_VERTEXUV = 1,
@@ -63,6 +72,7 @@ MACRO_START                                                                     
 MACRO_STOP
 
 extern "C" {
+RwBool RwRenderStateGet(RwRenderState state, void* value);
 RwBool RwRenderStateSet(RwRenderState state, void* value);
 void* RwIm3DTransform(RwIm3DVertex* vertices, RwUInt32 count, RwMatrix* matrix, RwUInt32 flags);
 RwBool RwIm3DEnd(void);

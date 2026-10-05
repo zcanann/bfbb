@@ -235,6 +235,7 @@ struct RwGlobals
 extern RwUInt32 ourGlobals[4096];
 #define RwEngineInstance ((RwGlobals*)ourGlobals)
 #define RWSRCGLOBAL(variable) (((RwGlobals*)RwEngineInstance)->variable)
+#define rwstrcmp RWSRCGLOBAL(stringFuncs).vecStrcmp
 #define RwMalloc(_s) ((RWSRCGLOBAL(memoryFuncs).rwmalloc)((_s)))
 #define RwFree(_p) ((RWSRCGLOBAL(memoryFuncs).rwfree)((_p)))
 #define RwCalloc(_n, _s) ((RWSRCGLOBAL(memoryFuncs).rwcalloc)((_n), (_s)))
