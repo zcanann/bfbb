@@ -10518,12 +10518,12 @@
       "identity_kind": "anonymous"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_001499e0",
-      "source": null,
+      "name": "xParInit",
+      "canonical_identifier": "xParInit(xPar*)",
+      "source": "SB/Core/x/xPar.cpp",
       "address": 1350112,
       "size": 96,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
       "name": null,

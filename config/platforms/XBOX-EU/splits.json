@@ -14371,7 +14371,7 @@
       "kind": "function",
       "address": 1350112,
       "size": 96,
-      "canonical_identifier": "anon_001499e0"
+      "canonical_identifier": "xParInit(xPar*)"
     },
     {
       "kind": "function",

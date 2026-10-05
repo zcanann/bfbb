@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Recheck the reviewed Xbox hash extents against both authenticated originals.
+"""Recheck the reviewed Xbox function extents against both authenticated originals.
 
 This read-only evidence check validates region payload equivalence, exact extent
 hashes, recorded short branches/returns, saved-register instructions, direct-call

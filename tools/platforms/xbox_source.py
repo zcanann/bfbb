@@ -237,7 +237,7 @@ def compile_units(output: Path, compilers: Path, wine: Path | None = None) -> li
                        tool_path(ROOT / unit['source'])], 'compile-source')
         support = profile['host_context']
         run('cl.exe', [*profile['flags'], *includes, '/Foentry.obj',
-                       tool_path(ROOT / support['entry'])], 'compile-entry')
+                       tool_path(ROOT / unit.get('host_entry', support['entry']))], 'compile-entry')
         run('cl.exe', [*profile['flags'], *includes, '/MD', '/Foxatof.obj',
                        tool_path(ROOT / support['xatof'])], 'compile-host-xatof')
         run('cl.exe', ['/nologo', '/c', '/O2', '/Fofltused.obj',

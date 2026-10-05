@@ -62,6 +62,17 @@
         "xStrHashCat(U32,const char*)": "?xStrHashCat@@YIIIPBD@Z"
       },
       "scope": "Three individually reviewed leaf functions from actual full-TU compilation; no TU or executable completion claim"
+    },
+    {
+      "source": "src/SB/Core/x/xPar.cpp",
+      "target_unit": "SB/Core/x/xPar.cpp",
+      "object": "source/xPar/xPar.obj",
+      "comparison_object": "source/xPar-functions.obj",
+      "host_entry": "tools/platforms/xbox_support/particle_entry.cpp",
+      "symbols": {
+        "xParInit(xPar*)": "?xParInit@@YIXPAUxPar@@@Z"
+      },
+      "scope": "One independently reviewed initializer from actual full-TU compilation; other particle functions remain outside the named source comparison; no TU or executable completion claim"
     }
   ]
 }

@@ -1,7 +1,11 @@
 #ifndef XPAR_H
 #define XPAR_H
 
+#if defined(XBOX)
+#include "xVec3.h"
+#else
 #include "xMath3.h"
+#endif
 
 struct xParEmitterAsset;
 struct xParEmitter;
