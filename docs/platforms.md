@@ -75,15 +75,15 @@ checked, and the standard objdiff parser accepts the result.
 
 | Version | Full code-region bytes | Objdiff code-matched bytes |
 | --- | ---: | ---: |
-| SLUS-20680 | 2,978,560 | 22,292 |
-| SLES-51968 | 2,979,712 | 22,292 |
-| SLES-51970 | 2,976,512 | 22,292 |
+| SLUS-20680 | 2,978,560 | 26,120 |
+| SLES-51968 | 2,979,712 | 26,120 |
+| SLES-51970 | 2,976,512 | 26,120 |
 | SLES-53623 | 2,979,968 | 6,144 |
-| XBOX-US | 1,798,760 | 955 |
-| XBOX-EU | 1,798,760 | 955 |
+| XBOX-US | 1,798,760 | 1,008 |
+| XBOX-EU | 1,798,760 | 1,008 |
 
 This checkpoint includes utility, serializer, bounds, streaming, environment, light-kit,
-move-point, fog, behavior-manager, binary-reader and conditional source comparisons, plus comparisons for independently verified French function
+move-point, fog, behavior-manager, binary-reader, event, volume and conditional source comparisons, plus comparisons for independently verified French function
 subsets. Reports retain
 standard objdiff `functionRelocDiffs=none`, as on GameCube. Code matches do not
 prove relocated byte equality or a completed link; independent reconstruction
@@ -108,9 +108,9 @@ The narrower function-only baselines currently contain:
 
 | PS2 baseline | Functions | Measured function bytes | Source matches |
 | --- | ---: | ---: | ---: |
-| USA | 5,391 | 2,107,460 | 211 functions / 22,292 bytes |
-| Europe/Australia | 5,392 | 2,108,700 | 211 functions / 22,292 bytes |
-| Germany | 5,394 | 2,105,512 | 211 functions / 22,292 bytes |
+| USA | 5,391 | 2,107,460 | 237 functions / 26,120 bytes |
+| Europe/Australia | 5,392 | 2,108,700 | 237 functions / 26,120 bytes |
+| Germany | 5,394 | 2,105,512 | 237 functions / 26,120 bytes |
 | France (reviewed and corroborated bounds) | 331 | 90,040 | 46 functions / 6,144 bytes |
 
 The `address-anchors.json` registries also recover over 2,500 named data addresses
@@ -269,15 +269,15 @@ Both region registries keep independent executable identities.
 See the parameterized scripts in `tools/platforms/ghidra/`. No Xbox SDK is required
 for this analysis step.
 
-`verified-anonymous-functions.json` promotes 2,508 disjoint extents (626,418
+`verified-anonymous-functions.json` promotes 2,507 disjoint extents (626,365
 bytes) per release after Capstone 5.0.7 re-decodes closed control flow, verifies
 all body bytes are reachable, checks an incoming direct call from another
 closed function, and excludes foreign interior transfers across the candidate
 inventory. Reviewed extents take precedence. CI regenerates this registry from
 the original; the remaining candidates stay excluded. Anonymous identifiers
 establish neither original symbols nor source ownership. Together with the
-eleven reviewed functions, measured coverage is 2,519 functions / 627,572 bytes;
-955 bytes match source. This is still partial coverage.
+twelve reviewed functions, measured coverage is 2,519 functions / 627,572 bytes;
+1,008 bytes match source. This is still partial coverage.
 
 Three hash functions have been independently reviewed in both Xbox releases:
 `xStrHash(const char*)`, its bounded overload, and `xStrHashCat`, totaling 151
@@ -295,6 +295,8 @@ The independently reviewed hexadecimal parser `atox` matches all 111 bytes in bo
 The independently reviewed string comparisons `xStricmp` and `imemcmp` add 219 exact bytes in both releases. Original caller stack cleanup supports the standard `/Gd` setting; prior matches remain intact. See [comparison and compiler-profile evidence](XBOX_STRING_COMPARE.md).
 
 Both independently reviewed tokenizers, `xStrTok` and `xStrTokBuffer`, now match all 491 original bytes from the complete shared string source. Prior matches and recovered coverage remain unchanged. See [tokenizer evidence](XBOX_TOKENIZERS.md).
+
+The 53-byte `icompare` also matches. Its decoded direct call resolves to the independently reviewed `imemcmp`; actual source MAP identities and explicit COFF REL32 records preserve that relationship. See [substring comparison evidence](XBOX_SUBSTRING_COMPARE.md).
 
 The complete `xPar.cpp` also compiles and links in its own host context after
 using its direct vector-header dependency on Xbox. Its independently reviewed
