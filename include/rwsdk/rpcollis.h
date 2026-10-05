@@ -1,8 +1,13 @@
 #ifndef RPCOLLIS_H
 #define RPCOLLIS_H
 
+#if defined(PS2)
+#include <rwcore.h>
+#include <rpworld.h>
+#else
 #include <rwsdk/rwcore.h>
 #include <rwsdk/rpworld.h>
+#endif
 
 /* C compatibility: these headers use bare tag names as types. */
 typedef union RpIntersectData RpIntersectData;

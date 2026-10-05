@@ -84,6 +84,42 @@ struct RpAtomic
     RxPipeline* pipeline;
 };
 
+struct RpVertexNormal;
+
+struct RpTriangle
+{
+    RwUInt16 vertIndex[3];
+    RwInt16 matIndex;
+};
+
+struct RpPolygon
+{
+    RwUInt16 matIndex;
+    RwUInt16 vertIndex[3];
+};
+
+struct RpWorldSector
+{
+    RwInt32 type;
+    RpPolygon* polygons;
+    RwV3d* vertices;
+    RpVertexNormal* normals;
+    RwTexCoords* texCoords[8];
+    RwRGBA* preLitLum;
+    RwResEntry* repEntry;
+    RwLinkList collAtomicsInWorldSector;
+    RwLinkList noCollAtomicsInWorldSector;
+    RwLinkList lightsInWorldSector;
+    RwBBox boundingBox;
+    RwBBox tightBoundingBox;
+    RpMeshHeader* mesh;
+    RxPipeline* pipeline;
+    RwUInt16 matListWindowBase;
+    RwUInt16 numVertices;
+    RwUInt16 numPolygons;
+    RwUInt16 pad;
+};
+
 enum RpWorldRenderOrder
 {
     rpWORLDRENDERNARENDERORDER = 0,
@@ -110,6 +146,9 @@ struct RpWorld
     RpWorldSector* (*renderCallBack)(RpWorldSector*);
     RxPipeline* pipeline;
 };
+
+#define RpAtomicGetFrame(_atomic) ((RwFrame*)((_atomic)->object.object.parent))
+#define RpAtomicGetGeometry(_atomic) ((_atomic)->geometry)
 
 extern "C" {
 RpLight* RpLightCreate(RwInt32 type);

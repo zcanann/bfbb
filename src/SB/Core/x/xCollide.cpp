@@ -5,14 +5,24 @@
 #include "zSurface.h"
 #include "iCollide.h"
 #include "iMath3.h"
+#if defined(PS2)
+#include "xJSP.h"
+#include <rwsdk/rpcollis.h>
+#include <rwsdk/rpcollbsptree.h>
+#else
 #include "rpcollis.h"
 #include "rpcollbsptree.h"
+#endif
 #include "rpworld.h"
 #include "xMathInlines.h"
 #include "xScene.h"
 #include "zGrid.h"
 
+#if defined(PS2)
+#include <math.h>
+#else
 #include <PowerPC_EABI_Support/MSL_C/MSL_Common/cmath>
+#endif
 #include <types.h>
 
 #undef XVEC3INLINES_WEAK_DIST
@@ -28,7 +38,11 @@ extern U8 xClumpColl_FilterFlags;
 
 #define rwInvSqrtMacro(_recip, _input) (*(_recip) = _rwInvSqrt(_input))
 
+#if defined(PS2)
+#include <rwsdk/world/bageomet.h>
+#else
 #include <world/bageomet.h>
+#endif
 
 // Same computation as xVec3NormalizeMacro in xVec3Inlines.h, but written the way the retail
 // object was built: the length is stored before the components are copied, and the squares are
@@ -1410,12 +1424,21 @@ S32 xSweptSphereToTriangle(xSweptSphere* sws, xVec3* v0, xVec3* v1, xVec3* v2)
     RwV3dSubMacro(&vTmp2, (RwV3d*)&xform[2], (RwV3d*)&xform[0]);
     RwV3dCrossProductMacro((RwV3d*)&xnorm, &vTmp, &vTmp2);
     lengthSq = RwV3dDotProductMacro((RwV3d*)&xnorm, (RwV3d*)&xnorm);
+#if defined(PS2)
+    recipLength = sqrtf(lengthSq);
+    if (recipLength > 0.0f)
+    {
+        recipLength = 1.0f / recipLength;
+    }
+    RwV3dScaleMacro((RwV3d*)&xnorm, (RwV3d*)&xnorm, recipLength);
+#else
     recipLength = _rwInvSqrt(lengthSq);
     RwV3dScaleMacro((RwV3d*)&xnorm, (RwV3d*)&xnorm, recipLength);
     if (isnan(xnorm.x))
     {
         return 0;
     }
+#endif
 
     startdot = xform[0].x * xnorm.x + xform[0].y * xnorm.y + xform[0].z * xnorm.z;
     enddot = startdot - xnorm.z * sws->curdist;
