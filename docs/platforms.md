@@ -78,7 +78,7 @@ checked, and the standard objdiff parser accepts the result.
 | SLUS-20680 | 2,978,560 | 52,656 |
 | SLES-51968 | 2,979,712 | 52,656 |
 | SLES-51970 | 2,976,512 | 52,656 |
-| SLES-53623 | 2,979,968 | 16,652 |
+| SLES-53623 | 2,979,968 | 18,888 |
 | XBOX-US | 1,798,760 | 8,927 |
 | XBOX-EU | 1,798,760 | 8,927 |
 
@@ -125,7 +125,7 @@ The narrower function-only baselines currently contain:
 | USA | 5,391 | 2,107,460 | 426 functions / 52,656 bytes |
 | Europe/Australia | 5,392 | 2,108,700 | 426 functions / 52,656 bytes |
 | Germany | 5,394 | 2,105,512 | 426 functions / 52,656 bytes |
-| France (reviewed and corroborated bounds) | 448 | 137,632 | 108 functions / 16,652 bytes |
+| France (reviewed and corroborated bounds) | 482 | 170,808 | 116 functions / 18,888 bytes |
 
 The `address-anchors.json` registries also recover over 2,500 named data addresses
 and 628 function declarations in each debug-bearing version. Addresses do not
@@ -152,8 +152,8 @@ load-range validation. Targets retain the exact original instructions. The `xBas
 other target objects are not relocation-restored link inputs. Code outside those function ranges, remaining data,
 and padding remain unclassified; the whole mixed load segment is not counted as
 code. France is stripped; independently reviewed and machine-corroborated
-extents establish its 448-function, 137,632-byte function-only baseline. Its
-16,652 matched code bytes describe that subset. The published code denominator
+extents establish its 482-function, 170,808-byte function-only baseline. Its
+18,888 matched code bytes describe that subset. The published code denominator
 is the full recovered CPU text region, not this function-only subset.
 
 Both Xbox releases have identical payloads in all 13 sections; their 532 differing
@@ -180,6 +180,8 @@ adding another 15 exact functions / 2,780 bytes while retaining all 30 functions
 five exact functions / 956 bytes while retaining the full 20-function unit.
 [Math sequence and named-global recovery](FRANCE_MATH_RECOVERY.md) expands
 France's math comparison from 12 to all 35 functions, adding eight matches / 728 bytes.
+[Collision sequence, callback and typed-global recovery](FRANCE_COLLISION_RECOVERY.md)
+adds eight matches / 2,236 bytes while retaining all 36 functions / 36,648 bytes.
 
 The complete animation TU now compares all 34 functions / 17,656 bytes,
 matching 17 functions / 3,032 bytes with the unchanged shipping function bodies.

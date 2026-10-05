@@ -21729,6 +21729,322 @@
         }
       ],
       "address_pairs": []
+    },
+    {
+      "calls": [
+        {
+          "function": "xSphereHitsBound@001c6ab0",
+          "offset": 524,
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+          "target_function": "xMat3x3Tolocal",
+          "target_source": "SB/Core/x/xMath3.cpp"
+        },
+        {
+          "function": "xSweptSphereToNonMoving@001c6fc0",
+          "offset": 68,
+          "symbol": "xSweptSphereToEnv__FP12xSweptSphereP4xEnv",
+          "target_function": "xSweptSphereToEnv",
+          "target_source": "SB/Core/x/xCollide.cpp"
+        },
+        {
+          "function": "xSweptSphereToNonMoving@001c6fc0",
+          "offset": 332,
+          "symbol": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "target_function": "xRayHitsGrid",
+          "target_source": "SB/Core/x/xScene.cpp"
+        },
+        {
+          "function": "xSweptSphereToNonMoving@001c6fc0",
+          "offset": 368,
+          "symbol": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "target_function": "xRayHitsGrid",
+          "target_source": "SB/Core/x/xScene.cpp"
+        },
+        {
+          "function": "xSweptSphereToNPC@001c7170",
+          "offset": 284,
+          "symbol": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "target_function": "xRayHitsGrid",
+          "target_source": "SB/Core/x/xScene.cpp"
+        },
+        {
+          "function": "xSweptSphereToStatDyn@001c72b0",
+          "offset": 300,
+          "symbol": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "target_function": "xRayHitsGrid",
+          "target_source": "SB/Core/x/xScene.cpp"
+        },
+        {
+          "function": "xSweptSphereToStatDyn@001c72b0",
+          "offset": 336,
+          "symbol": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "target_function": "xRayHitsGrid",
+          "target_source": "SB/Core/x/xScene.cpp"
+        },
+        {
+          "function": "xSweptSphereToScene@001c7430",
+          "offset": 68,
+          "symbol": "xSweptSphereToEnv__FP12xSweptSphereP4xEnv",
+          "target_function": "xSweptSphereToEnv",
+          "target_source": "SB/Core/x/xCollide.cpp"
+        },
+        {
+          "function": "xSweptSphereToScene@001c7430",
+          "offset": 324,
+          "symbol": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "target_function": "xRayHitsGrid",
+          "target_source": "SB/Core/x/xScene.cpp"
+        },
+        {
+          "function": "xSweptSphereToScene@001c7430",
+          "offset": 360,
+          "symbol": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "target_function": "xRayHitsGrid",
+          "target_source": "SB/Core/x/xScene.cpp"
+        },
+        {
+          "function": "xSweptSphereToScene@001c7430",
+          "offset": 396,
+          "symbol": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "target_function": "xRayHitsGrid",
+          "target_source": "SB/Core/x/xScene.cpp"
+        },
+        {
+          "function": "SweptSphereHitsEntCB@001c7600",
+          "offset": 40,
+          "symbol": "xQuickCullIsects__FPC7xQCDataPC7xQCData",
+          "target_function": "xQuickCullIsects",
+          "target_source": "SB/Core/x/xQuickCull.cpp"
+        },
+        {
+          "function": "SweptSphereHitsEntCB@001c7600",
+          "offset": 632,
+          "symbol": "xMat3x3Normalize__FP7xMat3x3PC7xMat3x3",
+          "target_function": "xMat3x3Normalize",
+          "target_source": "SB/Core/x/xMath3.cpp"
+        },
+        {
+          "function": "SweptSphereHitsEntCB@001c7600",
+          "offset": 696,
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+          "target_function": "xMat3x3Tolocal",
+          "target_source": "SB/Core/x/xMath3.cpp"
+        },
+        {
+          "function": "SweptSphereHitsEntCB@001c7600",
+          "offset": 712,
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+          "target_function": "xMat3x3Tolocal",
+          "target_source": "SB/Core/x/xMath3.cpp"
+        },
+        {
+          "function": "SweptSphereHitsEntCB@001c7600",
+          "offset": 1016,
+          "symbol": "xSweptSphereToModel__FP12xSweptSphereP8RpAtomicP11RwMatrixTag",
+          "target_function": "xSweptSphereToModel",
+          "target_source": "SB/Core/x/xCollide.cpp"
+        },
+        {
+          "function": "SweptSphereHitsEntCB@001c7600",
+          "offset": 1164,
+          "symbol": "xSweptSphereToSphere__FP12xSweptSphereP7xSphere",
+          "target_function": "xSweptSphereToSphere",
+          "target_source": "SB/Core/x/xCollide.cpp"
+        },
+        {
+          "function": "SweptSphereHitsEntCB@001c7600",
+          "offset": 1208,
+          "symbol": "xSweptSphereToBox__FP12xSweptSphereP4xBoxP7xMat4x3",
+          "target_function": "xSweptSphereToBox",
+          "target_source": "SB/Core/x/xCollide.cpp"
+        },
+        {
+          "function": "SweptSphereHitsEntCB@001c7600",
+          "offset": 1248,
+          "symbol": "xSweptSphereToBox__FP12xSweptSphereP4xBoxP7xMat4x3",
+          "target_function": "xSweptSphereToBox",
+          "target_source": "SB/Core/x/xCollide.cpp"
+        },
+        {
+          "function": "xSweptSphereToModel@001c7b20",
+          "offset": 144,
+          "symbol": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3",
+          "target_function": "xMat4x3Mul",
+          "target_source": "SB/Core/x/xMath3.cpp"
+        },
+        {
+          "function": "xSweptSphereToModel@001c7b20",
+          "offset": 296,
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+          "target_function": "xMat3x3Tolocal",
+          "target_source": "SB/Core/x/xMath3.cpp"
+        },
+        {
+          "function": "xSweptSphereToModel@001c7b20",
+          "offset": 364,
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+          "target_function": "xMat3x3Tolocal",
+          "target_source": "SB/Core/x/xMath3.cpp"
+        },
+        {
+          "function": "xSweptSphereToModel@001c7b20",
+          "offset": 632,
+          "symbol": "_rpCollBSPTreeForAllCapsuleLeafNodeIntersections__FP13RpCollBSPTreeP6RwLinefP13RpV3dGradientPFiiPv_iPv",
+          "target_function": "_rpCollBSPTreeForAllCapsuleLeafNodeIntersections",
+          "target_source": "SB/Core/x/xCollide.cpp"
+        },
+        {
+          "function": "xSweptSphereToModel@001c7b20",
+          "offset": 740,
+          "symbol": "xSweptSphereToTriangle__FP12xSweptSphereP5xVec3P5xVec3P5xVec3",
+          "target_function": "xSweptSphereToTriangle",
+          "target_source": "SB/Core/x/xCollide.cpp"
+        },
+        {
+          "function": "SweptSphereModelCB@001c7f00",
+          "offset": 180,
+          "symbol": "xSweptSphereToTriangle__FP12xSweptSphereP5xVec3P5xVec3P5xVec3",
+          "target_function": "xSweptSphereToTriangle",
+          "target_source": "SB/Core/x/xCollide.cpp"
+        },
+        {
+          "function": "xSweptSphereToEnv@001c8010",
+          "offset": 364,
+          "symbol": "xClumpColl_ForAllCapsuleLeafNodeIntersections__FP17xClumpCollBSPTreeP6RwLinefP21xClumpCollV3dGradientPFP21xClumpCollBSPTrianglePv_iPv",
+          "target_function": "xClumpColl_ForAllCapsuleLeafNodeIntersections",
+          "target_source": "SB/Core/x/xClumpColl.cpp"
+        },
+        {
+          "function": "SweptSphereLeafNodeCB@001c8200",
+          "offset": 80,
+          "symbol": "xSweptSphereToTriangle__FP12xSweptSphereP5xVec3P5xVec3P5xVec3",
+          "target_function": "xSweptSphereToTriangle",
+          "target_source": "SB/Core/x/xCollide.cpp"
+        },
+        {
+          "function": "SweptSphereHitsEnvCB@001c82b0",
+          "offset": 44,
+          "symbol": "xSweptSphereToTriangle__FP12xSweptSphereP5xVec3P5xVec3P5xVec3",
+          "target_function": "xSweptSphereToTriangle",
+          "target_source": "SB/Core/x/xCollide.cpp"
+        },
+        {
+          "function": "xSweptSphereToBox@001c8340",
+          "offset": 112,
+          "symbol": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3",
+          "target_function": "xMat4x3Mul",
+          "target_source": "SB/Core/x/xMath3.cpp"
+        },
+        {
+          "function": "xSweptSpherePrepare@001c9d90",
+          "offset": 540,
+          "symbol": "xMat3x3Transpose__FP7xMat3x3PC7xMat3x3",
+          "target_function": "xMat3x3Transpose",
+          "target_source": "SB/Core/x/xMath3.cpp"
+        },
+        {
+          "function": "xSweptSpherePrepare@001c9d90",
+          "offset": 764,
+          "symbol": "xBoxInitBoundCapsule__FP4xBoxPC8xCapsule",
+          "target_function": "xBoxInitBoundCapsule",
+          "target_source": "SB/Core/x/xMath3.cpp"
+        },
+        {
+          "function": "xSweptSpherePrepare@001c9d90",
+          "offset": 784,
+          "symbol": "xQuickCullForBox__FP10xQCControlP7xQCDataPC4xBox",
+          "target_function": "xQuickCullForBox",
+          "target_source": "SB/Core/x/xQuickCull.cpp"
+        },
+        {
+          "function": "xBoxHitsObb@001cbfe0",
+          "offset": 32,
+          "symbol": "Mgc_BoxBoxTest__FPC4xBoxPC7xMat4x3PC4xBoxPC7xMat4x3",
+          "target_function": "Mgc_BoxBoxTest",
+          "target_source": "SB/Core/x/xCollide.cpp"
+        },
+        {
+          "function": "xParabolaHitsEnv@001cd340",
+          "offset": 768,
+          "symbol": "xClumpColl_ForAllBoxLeafNodeIntersections__FP17xClumpCollBSPTreeP6RwBBoxPFP21xClumpCollBSPTrianglePv_iPv",
+          "target_function": "xClumpColl_ForAllBoxLeafNodeIntersections",
+          "target_source": "SB/Core/x/xClumpColl.cpp"
+        },
+        {
+          "function": "xSphereHitsModel@001cdda0",
+          "offset": 268,
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+          "target_function": "xMat3x3Tolocal",
+          "target_source": "SB/Core/x/xMath3.cpp"
+        },
+        {
+          "function": "xSphereHitsModel@001cdda0",
+          "offset": 392,
+          "symbol": "xCollideCalcTri__FRQ27xCollis8tri_dataRC14xModelInstanceRC5xVec3RC5xVec3",
+          "target_function": "xCollideCalcTri",
+          "target_source": "SB/Core/x/xCollide.cpp"
+        },
+        {
+          "function": "xSphereHitsOBB_nu@001ce230",
+          "offset": 920,
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+          "target_function": "xMat3x3Tolocal",
+          "target_source": "SB/Core/x/xMath3.cpp"
+        },
+        {
+          "function": "xSphereHitsOBB_nu@001ce230",
+          "offset": 944,
+          "symbol": "xSphereHitsBox__FPC7xSpherePC4xBoxP7xCollis",
+          "target_function": "xSphereHitsBox",
+          "target_source": "SB/Core/x/xCollide.cpp"
+        }
+      ],
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "gp_relocations": [],
+      "object": "source/xCollide.o",
+      "selector": "name_address",
+      "source": "src/SB/Core/x/xCollide.cpp",
+      "symbols": {
+        "Mgc_BoxBoxTest@001cc050": "Mgc_BoxBoxTest__FPC4xBoxPC7xMat4x3PC4xBoxPC7xMat4x3",
+        "SweptSphereHitsEntCB@001c7600": "SweptSphereHitsEntCB__FP6xSceneP5xRay3P7xQCDataP4xEntPv",
+        "SweptSphereHitsEnvCB@001c82b0": "SweptSphereHitsEnvCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv",
+        "SweptSphereLeafNodeCB@001c8200": "SweptSphereLeafNodeCB__FP21xClumpCollBSPTrianglePv",
+        "SweptSphereModelCB@001c7f00": "SweptSphereModelCB__FiiPv",
+        "_rpCollBSPTreeForAllCapsuleLeafNodeIntersections@001ca140": "_rpCollBSPTreeForAllCapsuleLeafNodeIntersections__FP13RpCollBSPTreeP6RwLinefP13RpV3dGradientPFiiPv_iPv",
+        "sphereHitsModelCB@001ce210": "sphereHitsModelCB__FP14RpIntersectionP19RpCollisionTrianglefPv",
+        "xBoxHitsObb@001cbfe0": "xBoxHitsObb__FPC4xBoxPC4xBoxPC7xMat4x3P7xCollis",
+        "xBoxHitsSphere@001cd1a0": "xBoxHitsSphere__FPC4xBoxPC7xSphereP7xCollis",
+        "xCollideCalcTri@001cb2d0": "xCollideCalcTri__FRQ27xCollis8tri_dataRC14xModelInstanceRC5xVec3RC5xVec3",
+        "xCollideGetCollsIdx@001cebe0": "xCollideGetCollsIdx__FPC7xCollisPC5xVec3PC7xMat3x3",
+        "xCollideInit@001cebd0": "xCollideInit__FP6xScene",
+        "xCollisTriHit@001caaa0": "xCollisTriHit__FRCQ27xCollis8tri_dataRC14xModelInstance",
+        "xOBBHitsOBB@001c5fe0": "xOBBHitsOBB__FRC4xBoxRC7xMat4x3RC4xBoxRC7xMat4x3",
+        "xParabolaEnvCB@001cd680": "xParabolaEnvCB__FP21xClumpCollBSPTrianglePv",
+        "xParabolaHitsEnv@001cd340": "xParabolaHitsEnv__FP9xParabolaPC4xEnvP7xCollis",
+        "xParabolaRecenter@001cdd10": "xParabolaRecenter__FP9xParabolaf",
+        "xSphereHitsBound@001c6ab0": "xSphereHitsBound__FRC7xSphereRC6xBound",
+        "xSphereHitsBox@001ce820": "xSphereHitsBox__FPC7xSpherePC4xBoxP7xCollis",
+        "xSphereHitsCapsule@001c6dd0": "xSphereHitsCapsule__FRC5xVec3fRC5xVec3RC5xVec3f",
+        "xSphereHitsModel@001cdda0": "xSphereHitsModel__FPC7xSpherePC14xModelInstanceP7xCollis",
+        "xSphereHitsOBB_nu@001ce230": "xSphereHitsOBB_nu__FPC7xSpherePC4xBoxPC7xMat4x3P7xCollis",
+        "xSphereHitsSphere@001ce9c0": "xSphereHitsSphere__FPC7xSpherePC7xSphereP7xCollis",
+        "xSphereHitsVCircle@001c5d50": "xSphereHitsVCircle__FRC5xVec3fRC5xVec3f",
+        "xSphereHitsVCylinder@001c5e80": "xSphereHitsVCylinder__FRC5xVec3fRC5xVec3ff",
+        "xSweptSphereGetResults@001c9aa0": "xSweptSphereGetResults__FP12xSweptSphere",
+        "xSweptSpherePrepare@001c9d90": "xSweptSpherePrepare__FP12xSweptSphereP5xVec3P5xVec3f",
+        "xSweptSphereToBox@001c8340": "xSweptSphereToBox__FP12xSweptSphereP4xBoxP7xMat4x3",
+        "xSweptSphereToEnv@001c8010": "xSweptSphereToEnv__FP12xSweptSphereP4xEnv",
+        "xSweptSphereToModel@001c7b20": "xSweptSphereToModel__FP12xSweptSphereP8RpAtomicP11RwMatrixTag",
+        "xSweptSphereToNPC@001c7170": "xSweptSphereToNPC__FP12xSweptSphereP6xSceneP4xEntUc",
+        "xSweptSphereToNonMoving@001c6fc0": "xSweptSphereToNonMoving__FP12xSweptSphereP6xSceneP4xEntUc",
+        "xSweptSphereToScene@001c7430": "xSweptSphereToScene__FP12xSweptSphereP6xSceneP4xEntUc",
+        "xSweptSphereToSphere@001c8f50": "xSweptSphereToSphere__FP12xSweptSphereP7xSphere",
+        "xSweptSphereToStatDyn@001c72b0": "xSweptSphereToStatDyn__FP12xSweptSphereP6xSceneP4xEntUc",
+        "xSweptSphereToTriangle@001c90b0": "xSweptSphereToTriangle__FP12xSweptSphereP5xVec3P5xVec3P5xVec3"
+      },
+      "target_unit": "SB/Core/x/xCollide.cpp"
     }
   ]
 }

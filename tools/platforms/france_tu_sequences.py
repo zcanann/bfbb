@@ -350,7 +350,7 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
             'status': 'reviewed-original-whole-tu-sequence',
             'original_sha1s': {v: originals[v].sha1 for v in (*REFERENCES, TARGET)},
             'method': 'Unique whole named-DWARF TU sequence in three originals; explicit address-producer and call relationships, unchanged non-address bits, closed local bounds and zero alignment.',
-            'limitations': ['Only the reviewed streaming, particle-command, animation, entity-motion and math TUs are eligible; this is not an automatic fuzzy-symbol promotion rule.',
+            'limitations': ['Only the reviewed streaming, particle-command, animation, entity-motion, math and collision TUs are eligible; this is not an automatic fuzzy-symbol promotion rule.',
                            'Names and ownership come from debug-reference DWARF, not a recovered France symbol table.',
                            'External call neighbors corroborate structure but are not independently promoted named relocation anchors.',
                            'Seventeen streaming entries have rooted direct-call witnesses; the remaining overload is reached by its verified tail wrapper, while shutdown also uses the unique complete streaming TU sequence.',
@@ -400,6 +400,16 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     for key, value in math['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
     document['limitations'].append('Math uses three reviewed leaf tails and explicit float-memory addresses for six original DWARF-named aggregates; unknown COP1 operations are not assumed harmless.')
+    from platforms.france_collision_sequence import generate_unit as generate_collision
+    collision = generate_collision(originals)
+    document['functions'].extend(collision['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(collision['sequence_proofs'])
+    document['call_neighbors'].extend(collision['call_neighbors'])
+    document['collision_data_proofs'] = collision['data_proofs']
+    for key, value in collision['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Collision uses two explicitly closed platform leaf-tail callees, six complete callback entries and original DWARF-typed global components; external entry prefixes are not promoted.')
     return document
 
 
