@@ -1594,11 +1594,32 @@
       "provenance": "machine-corroborated-explicit-transfers"
     },
     {
+      "name": "xFFXShakeFree",
+      "source": "SB/Core/x/xFFX.cpp",
+      "address": 1945328,
+      "size": 16,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xFFXShakeAlloc",
+      "source": "SB/Core/x/xFFX.cpp",
+      "address": 1945344,
+      "size": 40,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "xFFXShakePoolInit",
       "source": "SB/Core/x/xFFX.cpp",
       "address": 1945392,
       "size": 152,
       "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "xFFXShakeUpdateEnt",
+      "source": "SB/Core/x/xFFX.cpp",
+      "address": 1945552,
+      "size": 348,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "xFFXApply",
@@ -1620,6 +1641,34 @@
       "address": 1946400,
       "size": 104,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xFFXAddEffect",
+      "source": "SB/Core/x/xFFX.cpp",
+      "address": 1946512,
+      "size": 40,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xFFXTurnOff",
+      "source": "SB/Core/x/xFFX.cpp",
+      "address": 1946560,
+      "size": 20,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xFFXTurnOn",
+      "source": "SB/Core/x/xFFX.cpp",
+      "address": 1946592,
+      "size": 16,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xFFXAlloc",
+      "source": "SB/Core/x/xFFX.cpp",
+      "address": 1946608,
+      "size": 40,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "xFFXPoolInit",

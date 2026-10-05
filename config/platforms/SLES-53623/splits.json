@@ -4,9 +4,9 @@
   "scope": "All file-backed PT_LOAD bytes; zero-fill memory and non-loadable ELF metadata excluded",
   "code_classification_complete": false,
   "loaded_file_bytes": 4255232,
-  "known_code_bytes": 218624,
+  "known_code_bytes": 219144,
   "known_data_bytes": 0,
-  "unclassified_loaded_bytes": 4036608,
+  "unclassified_loaded_bytes": 4036088,
   "segments": [
     {
       "address": 1048576,
@@ -2856,8 +2856,29 @@
       "segment": 0,
       "kind": "unclassified",
       "address": 1945320,
-      "size": 72,
+      "size": 8,
       "file_offset": 896872
+    },
+    {
+      "segment": 0,
+      "kind": "function",
+      "address": 1945328,
+      "size": 16,
+      "file_offset": 896880
+    },
+    {
+      "segment": 0,
+      "kind": "function",
+      "address": 1945344,
+      "size": 40,
+      "file_offset": 896896
+    },
+    {
+      "segment": 0,
+      "kind": "unclassified",
+      "address": 1945384,
+      "size": 8,
+      "file_offset": 896936
     },
     {
       "segment": 0,
@@ -2870,8 +2891,22 @@
       "segment": 0,
       "kind": "unclassified",
       "address": 1945544,
-      "size": 360,
+      "size": 8,
       "file_offset": 897096
+    },
+    {
+      "segment": 0,
+      "kind": "function",
+      "address": 1945552,
+      "size": 348,
+      "file_offset": 897104
+    },
+    {
+      "segment": 0,
+      "kind": "unclassified",
+      "address": 1945900,
+      "size": 4,
+      "file_offset": 897452
     },
     {
       "segment": 0,
@@ -2912,8 +2947,57 @@
       "segment": 0,
       "kind": "unclassified",
       "address": 1946504,
-      "size": 152,
+      "size": 8,
       "file_offset": 898056
+    },
+    {
+      "segment": 0,
+      "kind": "function",
+      "address": 1946512,
+      "size": 40,
+      "file_offset": 898064
+    },
+    {
+      "segment": 0,
+      "kind": "unclassified",
+      "address": 1946552,
+      "size": 8,
+      "file_offset": 898104
+    },
+    {
+      "segment": 0,
+      "kind": "function",
+      "address": 1946560,
+      "size": 20,
+      "file_offset": 898112
+    },
+    {
+      "segment": 0,
+      "kind": "unclassified",
+      "address": 1946580,
+      "size": 12,
+      "file_offset": 898132
+    },
+    {
+      "segment": 0,
+      "kind": "function",
+      "address": 1946592,
+      "size": 16,
+      "file_offset": 898144
+    },
+    {
+      "segment": 0,
+      "kind": "function",
+      "address": 1946608,
+      "size": 40,
+      "file_offset": 898160
+    },
+    {
+      "segment": 0,
+      "kind": "unclassified",
+      "address": 1946648,
+      "size": 8,
+      "file_offset": 898200
     },
     {
       "segment": 0,

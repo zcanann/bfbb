@@ -186223,211 +186223,813 @@
       "executable_sha1s": [
         "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
       ],
+      "selector": "name_address",
       "symbols": {
-        "xFFXRotMatchAlloc": "xFFXRotMatchAlloc__Fv",
-        "xFFXRotMatchPoolInit": "xFFXRotMatchPoolInit__FUi",
-        "xFFXShakePoolInit": "xFFXShakePoolInit__FUi",
-        "xFFXApply": "xFFXApply__FP4xEntP6xScenef",
-        "xFFXApplyOne": "xFFXApplyOne__FP4xFFXP4xEntP6xScenef",
-        "xFFXAddEffect": "xFFXAddEffect__FP4xEntPFP4xEntP6xScenefPv_vPv",
-        "xFFXPoolInit": "xFFXPoolInit__FUi"
+        "xFFXRotMatchAlloc@001dae20": "xFFXRotMatchAlloc__Fv",
+        "xFFXRotMatchPoolInit@001dae50": "xFFXRotMatchPoolInit__FUi",
+        "xFFXShakeFree@001daef0": "xFFXShakeFree__FP14xFFXShakeState",
+        "xFFXShakeAlloc@001daf00": "xFFXShakeAlloc__Fv",
+        "xFFXShakePoolInit@001daf30": "xFFXShakePoolInit__FUi",
+        "xFFXShakeUpdateEnt@001dafd0": "xFFXShakeUpdateEnt__FP4xEntP6xScenefPv",
+        "xFFXApply@001db130": "xFFXApply__FP4xEntP6xScenef",
+        "xFFXApplyOne@001db170": "xFFXApplyOne__FP4xFFXP4xEntP6xScenef",
+        "xFFXAddEffect@001db320": "xFFXAddEffect__FP4xEntPFP4xEntP6xScenefPv_vPv",
+        "xFFXAddEffect@001db390": "xFFXAddEffect__FP4xEntP4xFFX",
+        "xFFXTurnOff@001db3c0": "xFFXTurnOff__FP4xFFX",
+        "xFFXTurnOn@001db3e0": "xFFXTurnOn__FP4xFFX",
+        "xFFXAlloc@001db3f0": "xFFXAlloc__Fv",
+        "xFFXPoolInit@001db420": "xFFXPoolInit__FUi"
       },
       "calls": [
         {
-          "function": "xFFXApply",
+          "function": "xFFXRotMatchPoolInit@001dae50",
+          "offset": 28,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xFFXShakePoolInit@001daf30",
+          "offset": 28,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xFFXApply@001db130",
           "offset": 28,
           "target_source": "SB/Core/x/xFFX.cpp",
-          "target_function": "xFFXApplyOne",
+          "target_function": "xFFXApplyOne@001db170",
           "symbol": "xFFXApplyOne__FP4xFFXP4xEntP6xScenef"
         },
         {
-          "function": "xFFXApplyOne",
+          "function": "xFFXApplyOne@001db170",
           "offset": 128,
           "target_source": "SB/Core/x/xFFX.cpp",
-          "target_function": "xFFXApplyOne",
+          "target_function": "xFFXApplyOne@001db170",
           "symbol": "xFFXApplyOne__FP4xFFXP4xEntP6xScenef"
+        },
+        {
+          "function": "xFFXPoolInit@001db420",
+          "offset": 20,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc",
+          "symbol": "xMemAlloc__FUiUii"
         }
       ],
       "linkage_provenance": [
         {
-          "function": "xFFXRotMatchAlloc",
-          "registry": "corroborated-functions.json",
+          "function": "xFFXRotMatchAlloc@001dae20",
           "france_address": 1945120,
           "size": 40,
           "references": [
             {
               "version": "SLES-51968",
-              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
               "source_address": 1945008,
+              "name": "xFFXRotMatchAlloc",
+              "source": "SB/Core/x/xFFX.cpp",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
               "reference_sha256": "cbdf477c12a016fc6ca343048fcdcfc3470b76f6975010e8188583b8a2c0dc53"
             },
             {
               "version": "SLES-51970",
-              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
               "source_address": 1941648,
+              "name": "xFFXRotMatchAlloc",
+              "source": "SB/Core/x/xFFX.cpp",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
               "reference_sha256": "cbdf477c12a016fc6ca343048fcdcfc3470b76f6975010e8188583b8a2c0dc53"
             },
             {
               "version": "SLUS-20680",
-              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
               "source_address": 1943744,
+              "name": "xFFXRotMatchAlloc",
+              "source": "SB/Core/x/xFFX.cpp",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
               "reference_sha256": "cbdf477c12a016fc6ca343048fcdcfc3470b76f6975010e8188583b8a2c0dc53"
             }
           ]
         },
         {
-          "function": "xFFXRotMatchPoolInit",
-          "registry": "relocation-corroborated-functions.json",
+          "function": "xFFXRotMatchPoolInit@001dae50",
           "france_address": 1945168,
           "size": 152,
           "references": [
             {
               "version": "SLUS-20680",
               "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "name": "xFFXRotMatchPoolInit",
+              "source": "SB/Core/x/xFFX.cpp",
               "source_address": 1943792,
-              "reference_sha256": "2875a809a69cad77edc8e07a706df7b54c238fcb1c508ec23e5e53ebc4845d78"
+              "reference_sha256": "2875a809a69cad77edc8e07a706df7b54c238fcb1c508ec23e5e53ebc4845d78",
+              "transfer_differences": [
+                {
+                  "offset": 28,
+                  "opcode": 3,
+                  "reference_target": 2033296,
+                  "french_target": 2034656,
+                  "reference_callee": {
+                    "name": "xMemAlloc",
+                    "source": "SB/Core/x/xMemMgr.cpp",
+                    "size": 328
+                  }
+                }
+              ]
             },
             {
               "version": "SLES-51968",
               "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "name": "xFFXRotMatchPoolInit",
+              "source": "SB/Core/x/xFFX.cpp",
               "source_address": 1945056,
-              "reference_sha256": "ec8767a5ae45165ad83ca00769b1b6bb21d138aa0c154042f6002074966c497c"
+              "reference_sha256": "ec8767a5ae45165ad83ca00769b1b6bb21d138aa0c154042f6002074966c497c",
+              "transfer_differences": [
+                {
+                  "offset": 28,
+                  "opcode": 3,
+                  "reference_target": 2034544,
+                  "french_target": 2034656,
+                  "reference_callee": {
+                    "name": "xMemAlloc",
+                    "source": "SB/Core/x/xMemMgr.cpp",
+                    "size": 328
+                  }
+                }
+              ]
             },
             {
               "version": "SLES-51970",
               "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "name": "xFFXRotMatchPoolInit",
+              "source": "SB/Core/x/xFFX.cpp",
               "source_address": 1941696,
-              "reference_sha256": "ba6e9ba5e1329587cb30a0beb6db3e47687613c1ceb93ab3ebee8bda94e78215"
+              "reference_sha256": "ba6e9ba5e1329587cb30a0beb6db3e47687613c1ceb93ab3ebee8bda94e78215",
+              "transfer_differences": [
+                {
+                  "offset": 28,
+                  "opcode": 3,
+                  "reference_target": 2031184,
+                  "french_target": 2034656,
+                  "reference_callee": {
+                    "name": "xMemAlloc",
+                    "source": "SB/Core/x/xMemMgr.cpp",
+                    "size": 328
+                  }
+                }
+              ]
             }
           ]
         },
         {
-          "function": "xFFXShakePoolInit",
-          "registry": "relocation-corroborated-functions.json",
+          "function": "xFFXShakeFree@001daef0",
+          "france_address": 1945328,
+          "size": 16,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1943952,
+              "name": "xFFXShakeFree",
+              "source": "SB/Core/x/xFFX.cpp",
+              "linkage_name": "xFFXShakeFree__FP14xFFXShakeState",
+              "reference_sha256": "01b2d9e1b0ceb59ab5801329ba06af840ec5bc4539f0d32632d64a24639155dc",
+              "data_address_operands": [],
+              "direct_transfers": []
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1945216,
+              "name": "xFFXShakeFree",
+              "source": "SB/Core/x/xFFX.cpp",
+              "linkage_name": "xFFXShakeFree__FP14xFFXShakeState",
+              "reference_sha256": "01b2d9e1b0ceb59ab5801329ba06af840ec5bc4539f0d32632d64a24639155dc",
+              "data_address_operands": [],
+              "direct_transfers": []
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1941856,
+              "name": "xFFXShakeFree",
+              "source": "SB/Core/x/xFFX.cpp",
+              "linkage_name": "xFFXShakeFree__FP14xFFXShakeState",
+              "reference_sha256": "01b2d9e1b0ceb59ab5801329ba06af840ec5bc4539f0d32632d64a24639155dc",
+              "data_address_operands": [],
+              "direct_transfers": []
+            }
+          ]
+        },
+        {
+          "function": "xFFXShakeAlloc@001daf00",
+          "france_address": 1945344,
+          "size": 40,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1943968,
+              "name": "xFFXShakeAlloc",
+              "source": "SB/Core/x/xFFX.cpp",
+              "linkage_name": "xFFXShakeAlloc__Fv",
+              "reference_sha256": "1ef9169731383af279b8ac043068bb5abd4e57825e8776ef447e222cf2c58ac4",
+              "data_address_operands": [],
+              "direct_transfers": []
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1945232,
+              "name": "xFFXShakeAlloc",
+              "source": "SB/Core/x/xFFX.cpp",
+              "linkage_name": "xFFXShakeAlloc__Fv",
+              "reference_sha256": "1ef9169731383af279b8ac043068bb5abd4e57825e8776ef447e222cf2c58ac4",
+              "data_address_operands": [],
+              "direct_transfers": []
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1941872,
+              "name": "xFFXShakeAlloc",
+              "source": "SB/Core/x/xFFX.cpp",
+              "linkage_name": "xFFXShakeAlloc__Fv",
+              "reference_sha256": "1ef9169731383af279b8ac043068bb5abd4e57825e8776ef447e222cf2c58ac4",
+              "data_address_operands": [],
+              "direct_transfers": []
+            }
+          ]
+        },
+        {
+          "function": "xFFXShakePoolInit@001daf30",
           "france_address": 1945392,
           "size": 152,
           "references": [
             {
               "version": "SLUS-20680",
               "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "name": "xFFXShakePoolInit",
+              "source": "SB/Core/x/xFFX.cpp",
               "source_address": 1944016,
-              "reference_sha256": "0188baca935a85c4e944fcb88fad37b310ff37579e3d79bc05c4e4fbe6c476dd"
+              "reference_sha256": "0188baca935a85c4e944fcb88fad37b310ff37579e3d79bc05c4e4fbe6c476dd",
+              "transfer_differences": [
+                {
+                  "offset": 28,
+                  "opcode": 3,
+                  "reference_target": 2033296,
+                  "french_target": 2034656,
+                  "reference_callee": {
+                    "name": "xMemAlloc",
+                    "source": "SB/Core/x/xMemMgr.cpp",
+                    "size": 328
+                  }
+                }
+              ]
             },
             {
               "version": "SLES-51968",
               "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "name": "xFFXShakePoolInit",
+              "source": "SB/Core/x/xFFX.cpp",
               "source_address": 1945280,
-              "reference_sha256": "89c4f064b09c86e0720764d37ae2b41a8b6dbb35b2d4ed4fec4970a7ff8e4a38"
+              "reference_sha256": "89c4f064b09c86e0720764d37ae2b41a8b6dbb35b2d4ed4fec4970a7ff8e4a38",
+              "transfer_differences": [
+                {
+                  "offset": 28,
+                  "opcode": 3,
+                  "reference_target": 2034544,
+                  "french_target": 2034656,
+                  "reference_callee": {
+                    "name": "xMemAlloc",
+                    "source": "SB/Core/x/xMemMgr.cpp",
+                    "size": 328
+                  }
+                }
+              ]
             },
             {
               "version": "SLES-51970",
               "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "name": "xFFXShakePoolInit",
+              "source": "SB/Core/x/xFFX.cpp",
               "source_address": 1941920,
-              "reference_sha256": "63b857873fb0aa90a91a5c2425dcca8b9eae4f194f9c46f56d1f36a22d18c54b"
+              "reference_sha256": "63b857873fb0aa90a91a5c2425dcca8b9eae4f194f9c46f56d1f36a22d18c54b",
+              "transfer_differences": [
+                {
+                  "offset": 28,
+                  "opcode": 3,
+                  "reference_target": 2031184,
+                  "french_target": 2034656,
+                  "reference_callee": {
+                    "name": "xMemAlloc",
+                    "source": "SB/Core/x/xMemMgr.cpp",
+                    "size": 328
+                  }
+                }
+              ]
             }
           ]
         },
         {
-          "function": "xFFXApply",
-          "registry": "relocation-corroborated-functions.json",
+          "function": "xFFXShakeUpdateEnt@001dafd0",
+          "france_address": 1945552,
+          "size": 348,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1944176,
+              "name": "xFFXShakeUpdateEnt",
+              "source": "SB/Core/x/xFFX.cpp",
+              "linkage_name": "xFFXShakeUpdateEnt__FP4xEntP6xScenefPv",
+              "reference_sha256": "48ae86a15c130aa48cc78f7f4bbd9bb982792796b6e5b8136b52035356220eed",
+              "data_address_operands": [],
+              "direct_transfers": [
+                {
+                  "offset": 44,
+                  "opcode": 3,
+                  "reference_address": 1133272,
+                  "target_address": 1133272,
+                  "opaque_context_prefix_sha256": "2653c72461be04b706ab84c9673feaff3d60cfaf1a727a5f06904bf791d41882",
+                  "opaque_context_bytes": 64,
+                  "no_identity_or_extent_claim": true,
+                  "transfer_word_unmasked": true
+                },
+                {
+                  "offset": 60,
+                  "opcode": 3,
+                  "reference_address": 1132848,
+                  "target_address": 1132848,
+                  "opaque_context_prefix_sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+                  "opaque_context_bytes": 64,
+                  "no_identity_or_extent_claim": true,
+                  "transfer_word_unmasked": true
+                }
+              ]
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1945440,
+              "name": "xFFXShakeUpdateEnt",
+              "source": "SB/Core/x/xFFX.cpp",
+              "linkage_name": "xFFXShakeUpdateEnt__FP4xEntP6xScenefPv",
+              "reference_sha256": "48ae86a15c130aa48cc78f7f4bbd9bb982792796b6e5b8136b52035356220eed",
+              "data_address_operands": [],
+              "direct_transfers": [
+                {
+                  "offset": 44,
+                  "opcode": 3,
+                  "reference_address": 1133272,
+                  "target_address": 1133272,
+                  "opaque_context_prefix_sha256": "2653c72461be04b706ab84c9673feaff3d60cfaf1a727a5f06904bf791d41882",
+                  "opaque_context_bytes": 64,
+                  "no_identity_or_extent_claim": true,
+                  "transfer_word_unmasked": true
+                },
+                {
+                  "offset": 60,
+                  "opcode": 3,
+                  "reference_address": 1132848,
+                  "target_address": 1132848,
+                  "opaque_context_prefix_sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+                  "opaque_context_bytes": 64,
+                  "no_identity_or_extent_claim": true,
+                  "transfer_word_unmasked": true
+                }
+              ]
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1942080,
+              "name": "xFFXShakeUpdateEnt",
+              "source": "SB/Core/x/xFFX.cpp",
+              "linkage_name": "xFFXShakeUpdateEnt__FP4xEntP6xScenefPv",
+              "reference_sha256": "48ae86a15c130aa48cc78f7f4bbd9bb982792796b6e5b8136b52035356220eed",
+              "data_address_operands": [],
+              "direct_transfers": [
+                {
+                  "offset": 44,
+                  "opcode": 3,
+                  "reference_address": 1133272,
+                  "target_address": 1133272,
+                  "opaque_context_prefix_sha256": "2653c72461be04b706ab84c9673feaff3d60cfaf1a727a5f06904bf791d41882",
+                  "opaque_context_bytes": 64,
+                  "no_identity_or_extent_claim": true,
+                  "transfer_word_unmasked": true
+                },
+                {
+                  "offset": 60,
+                  "opcode": 3,
+                  "reference_address": 1132848,
+                  "target_address": 1132848,
+                  "opaque_context_prefix_sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+                  "opaque_context_bytes": 64,
+                  "no_identity_or_extent_claim": true,
+                  "transfer_word_unmasked": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "function": "xFFXApply@001db130",
           "france_address": 1945904,
           "size": 52,
           "references": [
             {
               "version": "SLUS-20680",
               "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "name": "xFFXApply",
+              "source": "SB/Core/x/xFFX.cpp",
               "source_address": 1944528,
-              "reference_sha256": "f197ee5028ae5da516297f326e7cb2e0c230fb1cd2a8fa4eca111dbf8ec9f6a4"
+              "reference_sha256": "f197ee5028ae5da516297f326e7cb2e0c230fb1cd2a8fa4eca111dbf8ec9f6a4",
+              "transfer_differences": [
+                {
+                  "offset": 28,
+                  "opcode": 3,
+                  "reference_target": 1944592,
+                  "french_target": 1945968,
+                  "reference_callee": {
+                    "name": "xFFXApplyOne",
+                    "source": "SB/Core/x/xFFX.cpp",
+                    "size": 424
+                  }
+                }
+              ]
             },
             {
               "version": "SLES-51968",
               "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "name": "xFFXApply",
+              "source": "SB/Core/x/xFFX.cpp",
               "source_address": 1945792,
-              "reference_sha256": "a1f0cce01b2cf08cf4169d50854092a8ab2ceceb2fcdddfedba0b1a1d87aef86"
+              "reference_sha256": "a1f0cce01b2cf08cf4169d50854092a8ab2ceceb2fcdddfedba0b1a1d87aef86",
+              "transfer_differences": [
+                {
+                  "offset": 28,
+                  "opcode": 3,
+                  "reference_target": 1945856,
+                  "french_target": 1945968,
+                  "reference_callee": {
+                    "name": "xFFXApplyOne",
+                    "source": "SB/Core/x/xFFX.cpp",
+                    "size": 424
+                  }
+                }
+              ]
             },
             {
               "version": "SLES-51970",
               "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "name": "xFFXApply",
+              "source": "SB/Core/x/xFFX.cpp",
               "source_address": 1942432,
-              "reference_sha256": "886486d8c4e9ed67b940ecc540a43af36cddcd03f607121e056b944b53c908d4"
+              "reference_sha256": "886486d8c4e9ed67b940ecc540a43af36cddcd03f607121e056b944b53c908d4",
+              "transfer_differences": [
+                {
+                  "offset": 28,
+                  "opcode": 3,
+                  "reference_target": 1942496,
+                  "french_target": 1945968,
+                  "reference_callee": {
+                    "name": "xFFXApplyOne",
+                    "source": "SB/Core/x/xFFX.cpp",
+                    "size": 424
+                  }
+                }
+              ]
             }
           ]
         },
         {
-          "function": "xFFXApplyOne",
-          "registry": "relocation-corroborated-functions.json",
+          "function": "xFFXApplyOne@001db170",
           "france_address": 1945968,
           "size": 424,
           "references": [
             {
               "version": "SLUS-20680",
               "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "name": "xFFXApplyOne",
+              "source": "SB/Core/x/xFFX.cpp",
               "source_address": 1944592,
-              "reference_sha256": "2776c30a5e9ffea4797b1d66d3859f1d2db1f00ea545f7f36fb6b182f7a4182d"
+              "reference_sha256": "2776c30a5e9ffea4797b1d66d3859f1d2db1f00ea545f7f36fb6b182f7a4182d",
+              "transfer_differences": [
+                {
+                  "offset": 128,
+                  "opcode": 3,
+                  "reference_target": 1944592,
+                  "french_target": 1945968,
+                  "reference_callee": {
+                    "name": "xFFXApplyOne",
+                    "source": "SB/Core/x/xFFX.cpp",
+                    "size": 424
+                  }
+                }
+              ]
             },
             {
               "version": "SLES-51968",
               "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "name": "xFFXApplyOne",
+              "source": "SB/Core/x/xFFX.cpp",
               "source_address": 1945856,
-              "reference_sha256": "9f1559b89b111a0c227e87d59df916f6132afc0710109f780df3f1bffd4347c4"
+              "reference_sha256": "9f1559b89b111a0c227e87d59df916f6132afc0710109f780df3f1bffd4347c4",
+              "transfer_differences": [
+                {
+                  "offset": 128,
+                  "opcode": 3,
+                  "reference_target": 1945856,
+                  "french_target": 1945968,
+                  "reference_callee": {
+                    "name": "xFFXApplyOne",
+                    "source": "SB/Core/x/xFFX.cpp",
+                    "size": 424
+                  }
+                }
+              ]
             },
             {
               "version": "SLES-51970",
               "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "name": "xFFXApplyOne",
+              "source": "SB/Core/x/xFFX.cpp",
               "source_address": 1942496,
-              "reference_sha256": "9383bc1d866ceb79dc6219f45294563824ef8f92910c894fcec10a77b7417c64"
+              "reference_sha256": "9383bc1d866ceb79dc6219f45294563824ef8f92910c894fcec10a77b7417c64",
+              "transfer_differences": [
+                {
+                  "offset": 128,
+                  "opcode": 3,
+                  "reference_target": 1942496,
+                  "french_target": 1945968,
+                  "reference_callee": {
+                    "name": "xFFXApplyOne",
+                    "source": "SB/Core/x/xFFX.cpp",
+                    "size": 424
+                  }
+                }
+              ]
             }
           ]
         },
         {
-          "function": "xFFXAddEffect",
-          "registry": "corroborated-functions.json",
+          "function": "xFFXAddEffect@001db320",
           "france_address": 1946400,
           "size": 104,
           "references": [
             {
               "version": "SLES-51968",
-              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
               "source_address": 1946288,
+              "name": "xFFXAddEffect",
+              "source": "SB/Core/x/xFFX.cpp",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
               "reference_sha256": "6a0c8169d72d0f3a3ca124ffa53ecc494b7d2b24dc2f7fc0490b1f5474aeb188"
             },
             {
               "version": "SLES-51970",
-              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
               "source_address": 1942928,
+              "name": "xFFXAddEffect",
+              "source": "SB/Core/x/xFFX.cpp",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
               "reference_sha256": "6a0c8169d72d0f3a3ca124ffa53ecc494b7d2b24dc2f7fc0490b1f5474aeb188"
             },
             {
               "version": "SLUS-20680",
-              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
               "source_address": 1945024,
+              "name": "xFFXAddEffect",
+              "source": "SB/Core/x/xFFX.cpp",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
               "reference_sha256": "6a0c8169d72d0f3a3ca124ffa53ecc494b7d2b24dc2f7fc0490b1f5474aeb188"
             }
           ]
         },
         {
-          "function": "xFFXPoolInit",
-          "registry": "relocation-corroborated-functions.json",
+          "function": "xFFXAddEffect@001db390",
+          "france_address": 1946512,
+          "size": 40,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1945136,
+              "name": "xFFXAddEffect",
+              "source": "SB/Core/x/xFFX.cpp",
+              "linkage_name": "xFFXAddEffect__FP4xEntP4xFFX",
+              "reference_sha256": "2a04a307522fc6debf9285f297b0a4b3c77c1d52f0f83656c78b9f62ae8a85c9",
+              "data_address_operands": [],
+              "direct_transfers": []
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1946400,
+              "name": "xFFXAddEffect",
+              "source": "SB/Core/x/xFFX.cpp",
+              "linkage_name": "xFFXAddEffect__FP4xEntP4xFFX",
+              "reference_sha256": "2a04a307522fc6debf9285f297b0a4b3c77c1d52f0f83656c78b9f62ae8a85c9",
+              "data_address_operands": [],
+              "direct_transfers": []
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1943040,
+              "name": "xFFXAddEffect",
+              "source": "SB/Core/x/xFFX.cpp",
+              "linkage_name": "xFFXAddEffect__FP4xEntP4xFFX",
+              "reference_sha256": "2a04a307522fc6debf9285f297b0a4b3c77c1d52f0f83656c78b9f62ae8a85c9",
+              "data_address_operands": [],
+              "direct_transfers": []
+            }
+          ]
+        },
+        {
+          "function": "xFFXTurnOff@001db3c0",
+          "france_address": 1946560,
+          "size": 20,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1945184,
+              "name": "xFFXTurnOff",
+              "source": "SB/Core/x/xFFX.cpp",
+              "linkage_name": "xFFXTurnOff__FP4xFFX",
+              "reference_sha256": "4eed9ce0d7d2fad5fd6296087ecd86039bedbc11d92bc87602f535fb6f960c08",
+              "data_address_operands": [],
+              "direct_transfers": []
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1946448,
+              "name": "xFFXTurnOff",
+              "source": "SB/Core/x/xFFX.cpp",
+              "linkage_name": "xFFXTurnOff__FP4xFFX",
+              "reference_sha256": "4eed9ce0d7d2fad5fd6296087ecd86039bedbc11d92bc87602f535fb6f960c08",
+              "data_address_operands": [],
+              "direct_transfers": []
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1943088,
+              "name": "xFFXTurnOff",
+              "source": "SB/Core/x/xFFX.cpp",
+              "linkage_name": "xFFXTurnOff__FP4xFFX",
+              "reference_sha256": "4eed9ce0d7d2fad5fd6296087ecd86039bedbc11d92bc87602f535fb6f960c08",
+              "data_address_operands": [],
+              "direct_transfers": []
+            }
+          ]
+        },
+        {
+          "function": "xFFXTurnOn@001db3e0",
+          "france_address": 1946592,
+          "size": 16,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1945216,
+              "name": "xFFXTurnOn",
+              "source": "SB/Core/x/xFFX.cpp",
+              "linkage_name": "xFFXTurnOn__FP4xFFX",
+              "reference_sha256": "9cdc86f17d3877e674fa9c007523b5aa96095f8d44793485be38fe68c039cf89",
+              "data_address_operands": [],
+              "direct_transfers": []
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1946480,
+              "name": "xFFXTurnOn",
+              "source": "SB/Core/x/xFFX.cpp",
+              "linkage_name": "xFFXTurnOn__FP4xFFX",
+              "reference_sha256": "9cdc86f17d3877e674fa9c007523b5aa96095f8d44793485be38fe68c039cf89",
+              "data_address_operands": [],
+              "direct_transfers": []
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1943120,
+              "name": "xFFXTurnOn",
+              "source": "SB/Core/x/xFFX.cpp",
+              "linkage_name": "xFFXTurnOn__FP4xFFX",
+              "reference_sha256": "9cdc86f17d3877e674fa9c007523b5aa96095f8d44793485be38fe68c039cf89",
+              "data_address_operands": [],
+              "direct_transfers": []
+            }
+          ]
+        },
+        {
+          "function": "xFFXAlloc@001db3f0",
+          "france_address": 1946608,
+          "size": 40,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1945232,
+              "name": "xFFXAlloc",
+              "source": "SB/Core/x/xFFX.cpp",
+              "linkage_name": "xFFXAlloc__Fv",
+              "reference_sha256": "7771c59eb34e5d841f3e5b487cc0d1460b0b8a02460a23a2d4012ba34356d987",
+              "data_address_operands": [],
+              "direct_transfers": []
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1946496,
+              "name": "xFFXAlloc",
+              "source": "SB/Core/x/xFFX.cpp",
+              "linkage_name": "xFFXAlloc__Fv",
+              "reference_sha256": "7771c59eb34e5d841f3e5b487cc0d1460b0b8a02460a23a2d4012ba34356d987",
+              "data_address_operands": [],
+              "direct_transfers": []
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1943136,
+              "name": "xFFXAlloc",
+              "source": "SB/Core/x/xFFX.cpp",
+              "linkage_name": "xFFXAlloc__Fv",
+              "reference_sha256": "7771c59eb34e5d841f3e5b487cc0d1460b0b8a02460a23a2d4012ba34356d987",
+              "data_address_operands": [],
+              "direct_transfers": []
+            }
+          ]
+        },
+        {
+          "function": "xFFXPoolInit@001db420",
           "france_address": 1946656,
           "size": 144,
           "references": [
             {
               "version": "SLUS-20680",
               "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "name": "xFFXPoolInit",
+              "source": "SB/Core/x/xFFX.cpp",
               "source_address": 1945280,
-              "reference_sha256": "dd1a74af16c6115e620e4b2c92e4c98c738fa2b238be1abadc3fdb116bb780ce"
+              "reference_sha256": "dd1a74af16c6115e620e4b2c92e4c98c738fa2b238be1abadc3fdb116bb780ce",
+              "transfer_differences": [
+                {
+                  "offset": 20,
+                  "opcode": 3,
+                  "reference_target": 2033296,
+                  "french_target": 2034656,
+                  "reference_callee": {
+                    "name": "xMemAlloc",
+                    "source": "SB/Core/x/xMemMgr.cpp",
+                    "size": 328
+                  }
+                }
+              ]
             },
             {
               "version": "SLES-51968",
               "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "name": "xFFXPoolInit",
+              "source": "SB/Core/x/xFFX.cpp",
               "source_address": 1946544,
-              "reference_sha256": "14038017604231b5b2d9151c86869f2f836eaff64af29c5f85382dad5dc600ab"
+              "reference_sha256": "14038017604231b5b2d9151c86869f2f836eaff64af29c5f85382dad5dc600ab",
+              "transfer_differences": [
+                {
+                  "offset": 20,
+                  "opcode": 3,
+                  "reference_target": 2034544,
+                  "french_target": 2034656,
+                  "reference_callee": {
+                    "name": "xMemAlloc",
+                    "source": "SB/Core/x/xMemMgr.cpp",
+                    "size": 328
+                  }
+                }
+              ]
             },
             {
               "version": "SLES-51970",
               "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "name": "xFFXPoolInit",
+              "source": "SB/Core/x/xFFX.cpp",
               "source_address": 1943184,
-              "reference_sha256": "b9169f40d2989546d70aa5d2a91cb75df2a27862df22ee5c690fc962fb72f8ec"
+              "reference_sha256": "b9169f40d2989546d70aa5d2a91cb75df2a27862df22ee5c690fc962fb72f8ec",
+              "transfer_differences": [
+                {
+                  "offset": 20,
+                  "opcode": 3,
+                  "reference_target": 2031184,
+                  "french_target": 2034656,
+                  "reference_callee": {
+                    "name": "xMemAlloc",
+                    "source": "SB/Core/x/xMemMgr.cpp",
+                    "size": 328
+                  }
+                }
+              ]
             }
           ]
         }

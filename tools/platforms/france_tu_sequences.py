@@ -468,6 +468,15 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     for key, value in skb['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
     document['limitations'].append('SKB adds Duration and Eval using the complete four-member sequence and two independently confirmed neighbors. All bodies satisfy the unchanged strict CFG checks; original DWARF and all 96 bytes prove the sole changed slerpPolynomial address.')
+    from platforms.france_ffx_sequence import generate_unit as generate_ffx
+    ffx = generate_ffx(originals, registry_dir)
+    document['functions'].extend(ffx['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(ffx['sequence_proofs'])
+    document['call_neighbors'].extend(ffx['call_neighbors'])
+    for key, value in ffx['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('FFX adds seven members using all fourteen original functions and seven independently confirmed neighbors. Allocator context decodes original JALs from at least two other source units; unchanged opaque math calls remain unmasked and unnamed. Strict CFG checks remain unchanged.')
     return document
 
 
