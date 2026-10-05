@@ -1,4 +1,4 @@
-"""Verify the reviewed France streaming TU sequence using only retail originals.
+"""Verify reviewed French whole-TU sequences using only retail originals.
 
 This is a scoped sequence proof, not a general fuzzy-symbol promotion rule. It
 preserves every opcode, register, arithmetic immediate and branch displacement.
@@ -62,12 +62,14 @@ def gpr_writes(w):
     raise ValueError(f'Unsupported GPR effects: {w:#x}')
 
 
-def address_pair(body, address, offset):
+def address_pair(body, address, offset, *, allow_return_store=False):
     """Find a non-clobbered LUI reaching this actual ADDIU/LW/SW operand.
 
     Calls may occur only immediately before LO: its delay slot executes before
     the callee. Direct edges cannot bypass LUI, except a branch whose own delay
     slot is that LUI (both taken edges execute it). No indirect transfers pass.
+    A separate opt-in permits a final JR $ra followed immediately by a low SW
+    address consumer, with a non-$ra address register. Strict callers reject it.
     """
     code = words(body)
     low = code[offset // 4]
@@ -91,7 +93,9 @@ def address_pair(body, address, offset):
     for off in range(high_offset + 4, offset, 4):
         instruction = flow.instruction(address + off)
         require(instruction['kind'] in ('normal', 'branch') or
-                (instruction['kind'] == 'call' and off == offset - 4 and register != 31),
+                (instruction['kind'] == 'call' and off == offset - 4 and register != 31) or
+                (allow_return_store and instruction['word'] == 0x03e00008 and
+                 off == offset - 4 and offset == len(body) - 4 and low >> 26 == 43 and register != 31),
                 'Call or unsupported transfer interrupts address lifetime')
     for off in range(0, len(body), 4):
         instruction = flow.instruction(address + off)
@@ -125,7 +129,7 @@ def memory_kind(original, address):
     return 'zero_fill'
 
 
-def compare(reference, target, a, b, size):
+def compare(reference, target, a, b, size, *, allow_return_store=False):
     """Return explicit exceptions; all other actual instruction bits stay equal."""
     first, second = reference.read(a, size), target.read(b, size)
     pairs, transfers, masks, high_fields = [], [], {}, set()
@@ -149,8 +153,8 @@ def compare(reference, target, a, b, size):
             masks[off] = 0xffff0000
         elif x != y:
             require(x >> 16 == y >> 16, 'Non-address instruction bits changed')
-            hi_a, data_a = address_pair(first, a, off)
-            hi_b, data_b = address_pair(second, b, off)
+            hi_a, data_a = address_pair(first, a, off, allow_return_store=allow_return_store)
+            hi_b, data_b = address_pair(second, b, off, allow_return_store=allow_return_store)
             require(hi_a == hi_b, 'Address producer position changed')
             kind = memory_kind(reference, data_a)
             require(kind == memory_kind(target, data_b), 'Data storage class changed')
@@ -162,13 +166,13 @@ def compare(reference, target, a, b, size):
     return pairs, transfers, masks
 
 
-def named_data(original, name):
+def named_data(original, name, source_owner=SOURCE):
     section = next(s for s in original.metadata['sections'] if s['name'] == '.debug' and s['size'])
     data = original.data[section['offset']:section['offset'] + section['size']]
     addresses = set()
     for _, tag, source, attrs in iter_dies(data):
         location = attrs.get(2)
-        if (tag in (7, 12) and source.replace('\\', '/').endswith(SOURCE) and attrs.get(3) == name and
+        if (tag in (7, 12) and source.replace('\\', '/').endswith(source_owner) and attrs.get(3) == name and
                 isinstance(location, bytes) and len(location) == 5 and location[0] == 3):
             addresses.add(int.from_bytes(location[1:], 'little'))
     require(len(addresses) == 1, 'Expected one authentic named streaming global')
@@ -336,21 +340,32 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
         require(len(identities) == 1, 'Debug originals disagree on a call-neighbor identity')
     require(len([f for f in functions if f['corroboration']['direct_rooted_call_sites']]) == 17,
             'Reviewed sequence entry witnesses changed')
-    return {'schema_version': 1, 'version': TARGET, 'executable_sha1': target.sha1,
+    document = {'schema_version': 1, 'version': TARGET, 'executable_sha1': target.sha1,
             'coverage_complete': False, 'source_comparison_available': False, 'source_link_verified': False,
             'status': 'reviewed-original-whole-tu-sequence',
             'original_sha1s': {v: originals[v].sha1 for v in (*REFERENCES, TARGET)},
             'method': 'Unique whole named-DWARF TU sequence in three originals; explicit address-producer and call relationships, unchanged non-address bits, closed local bounds and zero alignment.',
-            'limitations': ['Only the reviewed streaming TU is eligible; this is not an automatic fuzzy-symbol promotion rule.',
+            'limitations': ['Only the reviewed streaming and particle-command TUs are eligible; this is not an automatic fuzzy-symbol promotion rule.',
                            'Names and ownership come from debug-reference DWARF, not a recovered France symbol table.',
                            'External call neighbors corroborate structure but are not independently promoted named relocation anchors.',
-                           'Seventeen entries have rooted direct-call witnesses; the remaining overload is reached by its verified tail wrapper, while shutdown also uses the unique complete TU sequence.',
+                           'Seventeen streaming entries have rooted direct-call witnesses; the remaining overload is reached by its verified tail wrapper, while shutdown also uses the unique complete streaming TU sequence.',
                            'Data operands preserve observed original relationships; no new data symbol sizes or public binary data are invented.',
                            'No compiled candidate is consulted. Named extents do not imply a source match or complete retail link.'],
             'counts': {'functions': len(functions), 'code_bytes': sum(f['size'] for f in functions),
                        'source_units': 1, 'rooted_direct_call_entries': 17, 'closed_return_bodies': 18,
                        'reviewed_tail_wrappers': 1},
             'sequence_proofs': sequence_proofs, 'call_neighbors': call_neighbors, 'functions': functions}
+    from platforms.france_particle_sequence import generate_unit
+    particles = generate_unit(originals)
+    document['functions'].extend(particles['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(particles['sequence_proofs'])
+    document['call_neighbors'].extend(particles['call_neighbors'])
+    document['particle_registration_proofs'] = particles['registration_proofs']
+    for key, value in particles['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Particle callback identities additionally use all 81 concrete stores in the original initializer; no compiled table or guessed record layout is used.')
+    return document
 
 
 def main():

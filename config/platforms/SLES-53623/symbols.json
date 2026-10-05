@@ -1447,6 +1447,216 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xParCmd_Shaper_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2050240,
+      "size": 768,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmd_AlphaInOut_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2051008,
+      "size": 472,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmd_SizeInOut_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2051488,
+      "size": 352,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmd_DampenSpeed_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2051840,
+      "size": 112,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdCollideFallSticky_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2051952,
+      "size": 160,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdCollideFall_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2052112,
+      "size": 120,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdTexAnim_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2052240,
+      "size": 1076,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdTex_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2053328,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdRotateAround_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2053344,
+      "size": 436,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdVelocityApply_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2053792,
+      "size": 88,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdRotPar_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2053888,
+      "size": 500,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdApplyWind_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2054400,
+      "size": 96,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdRandomVelocityPar_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2054496,
+      "size": 580,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdAlpha3rdPolyReg_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2055088,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdScale_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2055104,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdSmokeAlpha_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2055120,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdScale3rdPolyReg_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2055136,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdMoveRandomPar_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2055152,
+      "size": 168,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdMoveRandom_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2055328,
+      "size": 252,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdMove_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2055584,
+      "size": 96,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdAccelerate_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2055680,
+      "size": 96,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdOrbitLine_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2055776,
+      "size": 272,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdOrbitPoint_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2056048,
+      "size": 200,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdFollow_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2056256,
+      "size": 192,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdAge_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2056448,
+      "size": 56,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdKillSlow_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2056512,
+      "size": 176,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdGetUpdateFunc",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2056688,
+      "size": 96,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdGetSize",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2056784,
+      "size": 96,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdRegister",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2056880,
+      "size": 64,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdInit",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2056944,
+      "size": 980,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "xParGroupKillPar",
       "source": "SB/Core/x/xParGroup.cpp",
       "address": 2057936,

@@ -78,7 +78,7 @@ checked, and the standard objdiff parser accepts the result.
 | SLUS-20680 | 2,978,560 | 36,292 |
 | SLES-51968 | 2,979,712 | 36,292 |
 | SLES-51970 | 2,976,512 | 36,292 |
-| SLES-53623 | 2,979,968 | 9,156 |
+| SLES-53623 | 2,979,968 | 11,936 |
 | XBOX-US | 1,798,760 | 1,523 |
 | XBOX-EU | 1,798,760 | 1,523 |
 
@@ -111,7 +111,7 @@ The narrower function-only baselines currently contain:
 | USA | 5,391 | 2,107,460 | 325 functions / 36,292 bytes |
 | Europe/Australia | 5,392 | 2,108,700 | 325 functions / 36,292 bytes |
 | Germany | 5,394 | 2,105,512 | 325 functions / 36,292 bytes |
-| France (reviewed and corroborated bounds) | 350 | 95,624 | 63 functions / 9,156 bytes |
+| France (reviewed and corroborated bounds) | 380 | 103,168 | 78 functions / 11,936 bytes |
 
 The `address-anchors.json` registries also recover over 2,500 named data addresses
 and 628 function declarations in each debug-bearing version. Addresses do not
@@ -138,8 +138,8 @@ load-range validation. Targets retain the exact original instructions. The `xBas
 other target objects are not relocation-restored link inputs. Code outside those function ranges, remaining data,
 and padding remain unclassified; the whole mixed load segment is not counted as
 code. France is stripped; independently reviewed and machine-corroborated
-extents establish its 350-function, 95,624-byte function-only baseline. Its
-9,156 matched code bytes describe that subset. The published code denominator
+extents establish its 380-function, 103,168-byte function-only baseline. Its
+11,936 matched code bytes describe that subset. The published code denominator
 is the full recovered CPU text region, not this function-only subset.
 
 Both Xbox releases have identical payloads in all 13 sections; their 532 differing
@@ -157,7 +157,9 @@ functions / 1,388 bytes after restoring the original PS2 platform types. The
 (50.90% fuzzy matching, no exact functions yet). See [sound](PS2_SOUND.md) and
 [particle geometry](PS2_PARTICLE_GEOMETRY.md). France now compares the full
 streaming-service TU through [original-only sequence recovery](FRANCE_STREAMING_RECOVERY.md),
-adding 14 exact functions / 2,820 bytes.
+adding 14 exact functions / 2,820 bytes. Its complete particle-command TU is also
+identified by [original callback-table and sequence evidence](FRANCE_PARTICLE_COMMAND_RECOVERY.md),
+adding another 15 exact functions / 2,780 bytes while retaining all 30 functions.
 
 The complete animation TU now compares all 34 functions / 17,656 bytes,
 matching 17 functions / 3,032 bytes with the unchanged shipping function bodies.
