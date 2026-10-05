@@ -79,8 +79,8 @@ checked, and the standard objdiff parser accepts the result.
 | SLES-51968 | 2,979,712 | 44,908 |
 | SLES-51970 | 2,976,512 | 44,908 |
 | SLES-53623 | 2,979,968 | 15,924 |
-| XBOX-US | 1,798,760 | 3,354 |
-| XBOX-EU | 1,798,760 | 3,354 |
+| XBOX-US | 1,798,760 | 5,468 |
+| XBOX-EU | 1,798,760 | 5,468 |
 
 The PS2 [math alignment restoration](PS2_MATH_ALIGNMENT.md) enables complete
 `xEntMotion`, `xPad`, and `xClimate` source comparisons: 34 functions / 20,040
@@ -321,15 +321,15 @@ Both region registries keep independent executable identities.
 See the parameterized scripts in `tools/platforms/ghidra/`. No Xbox SDK is required
 for this analysis step.
 
-`verified-anonymous-functions.json` promotes 2,504 disjoint extents (625,750
+`verified-anonymous-functions.json` promotes 2,477 disjoint extents (620,894
 bytes) per release after Capstone 5.0.7 re-decodes closed control flow, verifies
 all body bytes are reachable, checks an incoming direct call from another
 closed function, and excludes foreign interior transfers across the candidate
 inventory. Reviewed extents take precedence. CI regenerates this registry from
 the original; the remaining candidates stay excluded. Anonymous identifiers
 establish neither original symbols nor source ownership. Together with the
-39 reviewed extents, measured coverage is 2,543 functions / 632,688 bytes;
-3,354 bytes match source. This is still partial coverage.
+70 reviewed extents, measured coverage is 2,547 functions / 633,159 bytes;
+5,468 bytes match source. This is still partial coverage.
 
 The complete particle-group source now compiles with its real particle dependency
 and a hash-pinned Microsoft static runtime library. Five independently reviewed
@@ -431,3 +431,6 @@ Useful established references: [PS2 split/build/report pipeline](https://github.
 [objdiff i386 COFF support](https://github.com/encounter/objdiff/blob/v3.7.1/objdiff-core/src/arch/x86.rs),
 [objdiff symbol-based report accounting](https://github.com/encounter/objdiff/blob/3cebee67667d440fa0fe1b64026c35db53ac40d6/objdiff-cli/src/cmd/report.rs#L288),
 and [decomp.dev multi-platform versions](https://github.com/encounter/decomp.dev/issues/31).
+
+The complete Xbox matrix source compares 30 reviewed functions / 5,164 bytes,
+including 14 exact functions / 2,114 bytes. See [matrix evidence](XBOX_MATH3.md).
