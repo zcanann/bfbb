@@ -745,7 +745,7 @@ void xSndStopFade(U32 snd, F32 fade_time)
                 end--;
                 if (it == end)
                 {
-                    return;
+                    break;
                 }
 
                 *it = *end;

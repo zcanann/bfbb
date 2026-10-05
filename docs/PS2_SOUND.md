@@ -67,3 +67,22 @@ raw/raw-proof.json and gc/proof.json; authenticated original callee identities
 are in build/sound243/lock-call-identities.json. All four actual whole-source
 objects remain byte-identical across PS2 versions, and the GC control preserves
 its seven allocated sections.
+
+## Stop-fade loop exit
+
+When deleting the last matching fader, the original PS2 StopFade branches to the
+loop's existing return block. Replacing the inner return with break preserves
+behavior because the loop is immediately followed by return. Actual source
+compilation changes only the branch displacement at function offset 176, from
+an epilogue jump to that existing exit; all relocation records remain identical.
+
+Each debug-region comparison gains StopFade's 396 bytes, reaching 18 / 2,272
+matched functions / bytes for the unchanged complete 37-function / 6,764-byte
+sound inventory. All other function records and France's existing subset remain
+unchanged. All four compiled whole-source objects are byte-identical, and actual
+GC compilation preserves all seven allocated sections.
+
+This is a standard code match. Raw reconstruction still distinguishes the two
+stop callees and the source xSndGetVol call from the original platform targets;
+no raw396 claim is made. Private evidence: build/near246/proof.json,
+raw/raw-proof.json and gc/proof.json. No profile, header or backend changed.
