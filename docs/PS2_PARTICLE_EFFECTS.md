@@ -16,7 +16,10 @@ and was rejected; no compiler flags, forced bodies, assembly, or padding were
 added.
 
 The comparison profile uses original DWARF identities for named calls and
-GP references. Two stripped runtime calls remain unresolved. Standard code
+GP references. Independently applying the eleven exact functions' real source
+R_MIPS_26 and GPREL16 relocations to named original addresses reproduces all
+712 original bytes in each debug-bearing release (`raw-proof.json`).
+Two stripped runtime calls in the unmatched functions remain unresolved. Standard code
 matching does not establish complete relocation or data matching, and no
 retail source link or complete-TU claim is made. France gains no inferred
 function identity from this unit.
