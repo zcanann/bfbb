@@ -467,18 +467,20 @@ size_t atox(const substr& s, size_t& read_size)
 // Each case of the switch is the same scan with the character set fully
 // unrolled, so that the common short sets never touch a second loop.
 #define FIND_CHAR_SCAN(match)                                                                      \
-    size = s.size;                                                                                 \
-    while (size > 0 && *text != '\0')                                                              \
-    {                                                                                              \
-        c = *text;                                                                                 \
-        if (match)                                                                                 \
-        {                                                                                          \
-            return text;                                                                           \
-        }                                                                                          \
-        size--;                                                                                    \
-        text++;                                                                                    \
-    }                                                                                              \
-    break
+    {                                                                                             \
+        S32 size = s.size;                                                                        \
+        while (size > 0 && *text != '\0')                                                         \
+        {                                                                                         \
+            c = *text;                                                                            \
+            if (match)                                                                            \
+            {                                                                                     \
+                return text;                                                                      \
+            }                                                                                     \
+            size--;                                                                               \
+            text++;                                                                               \
+        }                                                                                         \
+        break;                                                                                    \
+    }
 
 const char* find_char(const substr& s, const substr& cs)
 {
@@ -488,7 +490,6 @@ const char* find_char(const substr& s, const substr& cs)
     }
 
     const char* text = s.text;
-    S32 size;
 #if defined(XBOX)
     char c;
 #else
@@ -532,7 +533,8 @@ const char* find_char(const substr& s, const substr& cs)
                        c == cs.text[4] || c == cs.text[5] || c == cs.text[6] || c == cs.text[7] ||
                        c == cs.text[8] || c == cs.text[9] || c == cs.text[10]);
     default:
-        size = s.size;
+    {
+        S32 size = s.size;
 
         while (size > 0 && *text != '\0')
         {
@@ -549,6 +551,7 @@ const char* find_char(const substr& s, const substr& cs)
         }
 
         break;
+    }
     }
 
     return NULL;
