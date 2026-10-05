@@ -3959,108 +3959,119 @@
       "executable_sha1s": [
         "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
       ],
+      "selector": "name_address",
       "symbols": {
-        "xQuickCullForEverything": "xQuickCullForEverything__FP7xQCData",
-        "xQuickCullForOBB": "xQuickCullForOBB__FP10xQCControlP7xQCDataPC4xBoxPC7xMat4x3",
-        "xQuickCullForBox": "xQuickCullForBox__FP10xQCControlP7xQCDataPC4xBox",
-        "xQuickCullForSphere": "xQuickCullForSphere__FP10xQCControlP7xQCDataPC7xSphere",
-        "xQuickCullForRay": "xQuickCullForRay__FP10xQCControlP7xQCDataPC5xRay3",
-        "xQuickCullForLine": "xQuickCullForLine__FP10xQCControlP7xQCDataPC6xLine3",
-        "xQuickCullCellForVec": "xQuickCullCellForVec__FP10xQCControlP7xQCDataPC5xVec3",
-        "xQuickCullForBound": "xQuickCullForBound__FP10xQCControlP7xQCDataPC6xBound",
-        "xQuickCullIsects": "xQuickCullIsects__FPC7xQCDataPC7xQCData"
+        "xQuickCullForEverything@001fa8c0": "xQuickCullForEverything__FP7xQCData",
+        "xQuickCullForOBB@001fa8f0": "xQuickCullForOBB__FP10xQCControlP7xQCDataPC4xBoxPC7xMat4x3",
+        "xQuickCullForBox@001fa940": "xQuickCullForBox__FP10xQCControlP7xQCDataPC4xBox",
+        "xQuickCullForSphere@001faa30": "xQuickCullForSphere__FP10xQCControlP7xQCDataPC7xSphere",
+        "xQuickCullForRay@001fabb0": "xQuickCullForRay__FP10xQCControlP7xQCDataPC5xRay3",
+        "xQuickCullForLine@001fadd0": "xQuickCullForLine__FP10xQCControlP7xQCDataPC6xLine3",
+        "xQuickCullCellForVec@001faeb0": "xQuickCullCellForVec__FP10xQCControlP7xQCDataPC5xVec3",
+        "xQuickCullForBound@001faff0": "xQuickCullForBound__FP10xQCControlP7xQCDataPC6xBound",
+        "xQuickCullIsects@001fb070": "xQuickCullIsects__FPC7xQCDataPC7xQCData",
+        "xQuickCullInit@001fb0a0": "xQuickCullInit__FP10xQCControlPC4xBox",
+        "xQuickCullInit@001fb0c0": "xQuickCullInit__FP10xQCControlffffff"
       },
       "calls": [
         {
-          "function": "xQuickCullForOBB",
+          "function": "xQuickCullForOBB@001fa8f0",
           "offset": 32,
           "target_source": "SB/Core/x/xMath3.cpp",
-          "target_function": "xBoxInitBoundOBB",
+          "target_function": "xBoxInitBoundOBB@001f02a0",
           "symbol": "xBoxInitBoundOBB__FP4xBoxPC4xBoxPC7xMat4x3"
         },
         {
-          "function": "xQuickCullForOBB",
+          "function": "xQuickCullForOBB@001fa8f0",
           "offset": 48,
           "target_source": "SB/Core/x/xQuickCull.cpp",
-          "target_function": "xQuickCullForBox",
+          "target_function": "xQuickCullForBox@001fa940",
           "symbol": "xQuickCullForBox__FP10xQCControlP7xQCDataPC4xBox"
         },
         {
-          "function": "xQuickCullForBox",
+          "function": "xQuickCullForBox@001fa940",
           "offset": 36,
           "target_source": "SB/Core/x/xQuickCull.cpp",
-          "target_function": "xQuickCullCellForVec",
+          "target_function": "xQuickCullCellForVec@001faeb0",
           "symbol": "xQuickCullCellForVec__FP10xQCControlP7xQCDataPC5xVec3"
         },
         {
-          "function": "xQuickCullForBox",
+          "function": "xQuickCullForBox@001fa940",
           "offset": 52,
           "target_source": "SB/Core/x/xQuickCull.cpp",
-          "target_function": "xQuickCullCellForVec",
+          "target_function": "xQuickCullCellForVec@001faeb0",
           "symbol": "xQuickCullCellForVec__FP10xQCControlP7xQCDataPC5xVec3"
         },
         {
-          "function": "xQuickCullForSphere",
+          "function": "xQuickCullForSphere@001faa30",
           "offset": 188,
           "target_source": "SB/Core/x/xQuickCull.cpp",
-          "target_function": "xQuickCullCellForVec",
+          "target_function": "xQuickCullCellForVec@001faeb0",
           "symbol": "xQuickCullCellForVec__FP10xQCControlP7xQCDataPC5xVec3"
         },
         {
-          "function": "xQuickCullForSphere",
+          "function": "xQuickCullForSphere@001faa30",
           "offset": 204,
           "target_source": "SB/Core/x/xQuickCull.cpp",
-          "target_function": "xQuickCullCellForVec",
+          "target_function": "xQuickCullCellForVec@001faeb0",
           "symbol": "xQuickCullCellForVec__FP10xQCControlP7xQCDataPC5xVec3"
         },
         {
-          "function": "xQuickCullForRay",
+          "function": "xQuickCullForRay@001fabb0",
           "offset": 344,
           "target_source": "SB/Core/x/xQuickCull.cpp",
-          "target_function": "xQuickCullCellForVec",
+          "target_function": "xQuickCullCellForVec@001faeb0",
           "symbol": "xQuickCullCellForVec__FP10xQCControlP7xQCDataPC5xVec3"
         },
         {
-          "function": "xQuickCullForRay",
+          "function": "xQuickCullForRay@001fabb0",
           "offset": 360,
           "target_source": "SB/Core/x/xQuickCull.cpp",
-          "target_function": "xQuickCullCellForVec",
+          "target_function": "xQuickCullCellForVec@001faeb0",
           "symbol": "xQuickCullCellForVec__FP10xQCControlP7xQCDataPC5xVec3"
         },
         {
-          "function": "xQuickCullForLine",
+          "function": "xQuickCullForLine@001fadd0",
           "offset": 32,
           "target_source": "SB/Core/x/xQuickCull.cpp",
-          "target_function": "xQuickCullCellForVec",
+          "target_function": "xQuickCullCellForVec@001faeb0",
           "symbol": "xQuickCullCellForVec__FP10xQCControlP7xQCDataPC5xVec3"
         },
         {
-          "function": "xQuickCullForLine",
+          "function": "xQuickCullForLine@001fadd0",
           "offset": 48,
           "target_source": "SB/Core/x/xQuickCull.cpp",
-          "target_function": "xQuickCullCellForVec",
+          "target_function": "xQuickCullCellForVec@001faeb0",
           "symbol": "xQuickCullCellForVec__FP10xQCControlP7xQCDataPC5xVec3"
         },
         {
-          "function": "xQuickCullForBound",
+          "function": "xQuickCullForBound@001faff0",
           "offset": 28,
           "target_source": "SB/Core/x/xQuickCull.cpp",
-          "target_function": "xQuickCullForSphere",
+          "target_function": "xQuickCullForSphere@001faa30",
           "symbol": "xQuickCullForSphere__FP10xQCControlP7xQCDataPC7xSphere"
         },
         {
-          "function": "xQuickCullForBound",
+          "function": "xQuickCullForBound@001faff0",
           "offset": 60,
           "target_source": "SB/Core/x/xQuickCull.cpp",
-          "target_function": "xQuickCullForBox",
+          "target_function": "xQuickCullForBox@001fa940",
           "symbol": "xQuickCullForBox__FP10xQCControlP7xQCDataPC4xBox"
         },
         {
-          "function": "xQuickCullForBound",
+          "function": "xQuickCullForBound@001faff0",
           "offset": 96,
           "target_source": "SB/Core/x/xQuickCull.cpp",
-          "target_function": "xQuickCullForOBB",
+          "target_function": "xQuickCullForOBB@001fa8f0",
           "symbol": "xQuickCullForOBB__FP10xQCControlP7xQCDataPC4xBoxPC7xMat4x3"
+        },
+        {
+          "function": "xQuickCullInit@001fb0a0",
+          "offset": 20,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullInit@001fb0c0",
+          "symbol": "xQuickCullInit__FP10xQCControlffffff",
+          "opcode": 2
         }
       ],
       "linkage_provenance": [
@@ -4295,6 +4306,64 @@
               "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
               "source_address": 2075360,
               "reference_sha256": "1188274d9f9dbea91eb8f2c0e6b149aa01e419639f8c8474a97fa3fe7012c2b1"
+            }
+          ]
+        },
+        {
+          "function": "xQuickCullInit@001fb0a0",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2076832,
+          "size": 28,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2075408,
+              "reference_sha256": "c64e77d962cb16da0f27a72f3d20e3ed55b8cd3fe932cf244e366a26ab570b99",
+              "linkage_name": "xQuickCullInit__FP10xQCControlPC4xBox"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2076720,
+              "reference_sha256": "03d0ed040c56604025adca0962d6ff77a8fbcaa63d3a154ce39fa4e114f82482",
+              "linkage_name": "xQuickCullInit__FP10xQCControlPC4xBox"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2073376,
+              "reference_sha256": "c2a7c3d62c23f7fd1345d95842a0a7b6eec3e920cf0482d6a62d5d9cb85cee81",
+              "linkage_name": "xQuickCullInit__FP10xQCControlPC4xBox"
+            }
+          ]
+        },
+        {
+          "function": "xQuickCullInit@001fb0c0",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2076864,
+          "size": 252,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2075440,
+              "reference_sha256": "102371bd9ac09f44a1e467d69d518faaf98277e7ab40b58a92db956182de578c",
+              "linkage_name": "xQuickCullInit__FP10xQCControlffffff"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2076752,
+              "reference_sha256": "102371bd9ac09f44a1e467d69d518faaf98277e7ab40b58a92db956182de578c",
+              "linkage_name": "xQuickCullInit__FP10xQCControlffffff"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2073408,
+              "reference_sha256": "102371bd9ac09f44a1e467d69d518faaf98277e7ab40b58a92db956182de578c",
+              "linkage_name": "xQuickCullInit__FP10xQCControlffffff"
             }
           ]
         }

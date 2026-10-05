@@ -450,6 +450,15 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     for key, value in grid['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
     document['limitations'].append('Grid adds only xGridCheckPosition. Its eleven previously confirmed neighbors remain unchanged; all twelve original members form a unique sequence. The complete signed-int offs[4][3][2] array and four named calls are independently checked; external entry prefixes remain context only.')
+    from platforms.france_quickcull_sequence import generate_unit as generate_quickcull
+    quickcull = generate_quickcull(originals, registry_dir)
+    document['functions'].extend(quickcull['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(quickcull['sequence_proofs'])
+    document['call_neighbors'].extend(quickcull['call_neighbors'])
+    for key, value in quickcull['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('QuickCull adds only two Init overloads using all eleven original members and nine independently confirmed neighbors. The 28-byte wrapper is exactly six argument loads and a terminal J to the adjacent strictly closed initializer; generic CFG checks remain strict.')
     return document
 
 

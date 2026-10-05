@@ -2567,6 +2567,20 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xQuickCullInit",
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "address": 2076832,
+      "size": 28,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xQuickCullInit",
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "address": 2076864,
+      "size": 252,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "Discard",
       "source": "SB/Core/x/xsavegame.cpp",
       "address": 2077216,

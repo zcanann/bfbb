@@ -28,15 +28,16 @@
     "Entity verifies one exact pointer-return leaf, original typed arrays and one unnamed immutable interleaved leaf as context only; that context is not assigned source ownership or promoted.",
     "Clump collision and splines retain strict CFG checks; original array descriptors prove two coefficient matrices and observed allocator-array slots without inferring a RenderWare struct layout.",
     "Common/Standard goal identity uses unique complete sequences in three named originals plus full original vtables/globals. Rooted direct-call witnesses are empty; header interleaves and external table methods remain nonpromoted context. No missing NoManLand class layout or method is inferred.",
-    "Grid adds only xGridCheckPosition. Its eleven previously confirmed neighbors remain unchanged; all twelve original members form a unique sequence. The complete signed-int offs[4][3][2] array and four named calls are independently checked; external entry prefixes remain context only."
+    "Grid adds only xGridCheckPosition. Its eleven previously confirmed neighbors remain unchanged; all twelve original members form a unique sequence. The complete signed-int offs[4][3][2] array and four named calls are independently checked; external entry prefixes remain context only.",
+    "QuickCull adds only two Init overloads using all eleven original members and nine independently confirmed neighbors. The 28-byte wrapper is exactly six argument loads and a terminal J to the adjacent strictly closed initializer; generic CFG checks remain strict."
   ],
   "counts": {
-    "functions": 306,
-    "code_bytes": 147964,
-    "source_units": 12,
+    "functions": 308,
+    "code_bytes": 148244,
+    "source_units": 13,
     "rooted_direct_call_entries": 129,
-    "closed_return_bodies": 293,
-    "reviewed_tail_wrappers": 1,
+    "closed_return_bodies": 294,
+    "reviewed_tail_wrappers": 2,
     "registered_callback_entries": 26,
     "reviewed_leaf_tail_functions": 11,
     "reviewed_dead_delay_copies": 3,
@@ -808,6 +809,57 @@
         "unchanged_anchor_offset": 120,
         "unchanged_anchor_bytes": 620,
         "masked_instruction_count": 5
+      }
+    },
+    {
+      "version": "SLUS-20680",
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "source_start": 2073392,
+      "target_start": 2074816,
+      "complete_original_members": 11,
+      "previously_confirmed_members": 9,
+      "sequence_bytes_with_alignment": 2300,
+      "uniqueness": {
+        "matching_addresses": [
+          2074816
+        ],
+        "unchanged_anchor_offset": 1348,
+        "unchanged_anchor_bytes": 520,
+        "masked_instruction_count": 14
+      }
+    },
+    {
+      "version": "SLES-51968",
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "source_start": 2074704,
+      "target_start": 2074816,
+      "complete_original_members": 11,
+      "previously_confirmed_members": 9,
+      "sequence_bytes_with_alignment": 2300,
+      "uniqueness": {
+        "matching_addresses": [
+          2074816
+        ],
+        "unchanged_anchor_offset": 1348,
+        "unchanged_anchor_bytes": 520,
+        "masked_instruction_count": 14
+      }
+    },
+    {
+      "version": "SLES-51970",
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "source_start": 2071360,
+      "target_start": 2074816,
+      "complete_original_members": 11,
+      "previously_confirmed_members": 9,
+      "sequence_bytes_with_alignment": 2300,
+      "uniqueness": {
+        "matching_addresses": [
+          2074816
+        ],
+        "unchanged_anchor_offset": 1348,
+        "unchanged_anchor_bytes": 520,
+        "masked_instruction_count": 14
       }
     }
   ],
@@ -10083,6 +10135,36 @@
       "target_sha256": "68bd478d557ff3c16f671e21fc500ece7c22f0417f19dea1211c2bee3bc47e67",
       "data_address_operands": [],
       "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "reference_address": 2030928,
+      "target_address": 2032288,
+      "reference_name": "xBoxInitBoundOBB",
+      "reference_source": "SB/Core/x/xMath3.cpp",
+      "size": 712,
+      "target_sha256": "3b231b915fa7b89959e425ce64745e8890c2d4f91e480ca85fe33da7ab865e25",
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "reference_address": 2032176,
+      "target_address": 2032288,
+      "reference_name": "xBoxInitBoundOBB",
+      "reference_source": "SB/Core/x/xMath3.cpp",
+      "size": 712,
+      "target_sha256": "3b231b915fa7b89959e425ce64745e8890c2d4f91e480ca85fe33da7ab865e25",
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "reference_address": 2028816,
+      "target_address": 2032288,
+      "reference_name": "xBoxInitBoundOBB",
+      "reference_source": "SB/Core/x/xMath3.cpp",
+      "size": 712,
+      "target_sha256": "3b231b915fa7b89959e425ce64745e8890c2d4f91e480ca85fe33da7ab865e25",
       "promoted_as_named_anchor": false
     }
   ],
@@ -50379,6 +50461,228 @@
         },
         "direct_rooted_call_sites": [
           1625176
+        ]
+      }
+    },
+    {
+      "name": "xQuickCullInit",
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "address": 2076832,
+      "size": 28,
+      "sha256": "5ad7d10ebf7dfcf6be329a1595a029f447eb850f8d49439455b92f576167fbd7",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2075408,
+          "name": "xQuickCullInit",
+          "source": "SB/Core/x/xQuickCull.cpp",
+          "linkage_name": "xQuickCullInit__FP10xQCControlPC4xBox",
+          "reference_sha256": "c64e77d962cb16da0f27a72f3d20e3ed55b8cd3fe932cf244e366a26ab570b99",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 20,
+              "opcode": 2,
+              "reference_address": 2075440,
+              "target_address": 2076864
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2076720,
+          "name": "xQuickCullInit",
+          "source": "SB/Core/x/xQuickCull.cpp",
+          "linkage_name": "xQuickCullInit__FP10xQCControlPC4xBox",
+          "reference_sha256": "03d0ed040c56604025adca0962d6ff77a8fbcaa63d3a154ce39fa4e114f82482",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 20,
+              "opcode": 2,
+              "reference_address": 2076752,
+              "target_address": 2076864
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2073376,
+          "name": "xQuickCullInit",
+          "source": "SB/Core/x/xQuickCull.cpp",
+          "linkage_name": "xQuickCullInit__FP10xQCControlPC4xBox",
+          "reference_sha256": "c2a7c3d62c23f7fd1345d95842a0a7b6eec3e920cf0482d6a62d5d9cb85cee81",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 20,
+              "opcode": 2,
+              "reference_address": 2073408,
+              "target_address": 2076864
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": false,
+          "reasons": [
+            "extent_not_terminal_return_delay",
+            "local_edge_outside_extent",
+            "no_return"
+          ],
+          "returns": [],
+          "direct_or_indirect_calls": [],
+          "branches": [],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 4
+        },
+        "previously_confirmed_neighbor_entries": [
+          2074816,
+          2074864,
+          2074944,
+          2075184,
+          2075568,
+          2076112,
+          2076336,
+          2076656,
+          2076784
+        ],
+        "scoped_terminal_tail": {
+          "method": "Exact six LWC1 words and terminal J with LWC1 delay slot",
+          "tail_instruction_offset": 20,
+          "tail_target": 2076864,
+          "stack_and_return_address_unchanged": true,
+          "argument_loads": [
+            {
+              "offset": 0,
+              "base_register": 5,
+              "float_register": 13,
+              "displacement": 16
+            },
+            {
+              "offset": 4,
+              "base_register": 5,
+              "float_register": 14,
+              "displacement": 20
+            },
+            {
+              "offset": 8,
+              "base_register": 5,
+              "float_register": 15,
+              "displacement": 0
+            },
+            {
+              "offset": 12,
+              "base_register": 5,
+              "float_register": 16,
+              "displacement": 4
+            },
+            {
+              "offset": 16,
+              "base_register": 5,
+              "float_register": 17,
+              "displacement": 8
+            },
+            {
+              "offset": 24,
+              "base_register": 5,
+              "float_register": 12,
+              "displacement": 12
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "xQuickCullInit",
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "address": 2076864,
+      "size": 252,
+      "sha256": "102371bd9ac09f44a1e467d69d518faaf98277e7ab40b58a92db956182de578c",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2075440,
+          "name": "xQuickCullInit",
+          "source": "SB/Core/x/xQuickCull.cpp",
+          "linkage_name": "xQuickCullInit__FP10xQCControlffffff",
+          "reference_sha256": "102371bd9ac09f44a1e467d69d518faaf98277e7ab40b58a92db956182de578c",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2076752,
+          "name": "xQuickCullInit",
+          "source": "SB/Core/x/xQuickCull.cpp",
+          "linkage_name": "xQuickCullInit__FP10xQCControlffffff",
+          "reference_sha256": "102371bd9ac09f44a1e467d69d518faaf98277e7ab40b58a92db956182de578c",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2073408,
+          "name": "xQuickCullInit",
+          "source": "SB/Core/x/xQuickCull.cpp",
+          "linkage_name": "xQuickCullInit__FP10xQCControlffffff",
+          "reference_sha256": "102371bd9ac09f44a1e467d69d518faaf98277e7ab40b58a92db956182de578c",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2077108
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              2076928,
+              2076968
+            ],
+            [
+              2076944,
+              2076968
+            ],
+            [
+              2076960,
+              2076984
+            ]
+          ],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 4
+        },
+        "previously_confirmed_neighbor_entries": [
+          2074816,
+          2074864,
+          2074944,
+          2075184,
+          2075568,
+          2076112,
+          2076336,
+          2076656,
+          2076784
         ]
       }
     },
