@@ -26648,6 +26648,1788 @@
           "symbol": "gActiveHeap"
         }
       ]
+    },
+    {
+      "source": "src/SB/Core/x/xPtankPool.cpp",
+      "target_unit": "SB/Core/x/xPtankPool.cpp",
+      "object": "source/xPtankPool.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "flush__10ptank_poolFv": "flush__10ptank_poolFv",
+        "grab_block__10ptank_poolF16ptank_group_type": "grab_block__10ptank_poolF16ptank_group_type",
+        "xPTankPoolRender__Fv": "xPTankPoolRender__Fv",
+        "xPTankPoolSceneExit__Fv": "xPTankPoolSceneExit__Fv",
+        "xPTankPoolSceneEnter__Fv": "xPTankPoolSceneEnter__Fv",
+        "compare_ptanks__24@unnamed@xPtankPool_cpp@FPCvPCv": "compare_ptanks__24@unnamed@xPtankPool_cpp@FPCvPCv",
+        "create_ptank__24@unnamed@xPtankPool_cpp@FUi": "create_ptank__24@unnamed@xPtankPool_cpp@FUi",
+        "init_groups__24@unnamed@xPtankPool_cpp@Fv": "init_groups__24@unnamed@xPtankPool_cpp@Fv",
+        "sort_buckets__24@unnamed@xPtankPool_cpp@FRQ224@unnamed@xPtankPool_cpp@10group_data": "sort_buckets__24@unnamed@xPtankPool_cpp@FRQ224@unnamed@xPtankPool_cpp@10group_data"
+      },
+      "calls": [
+        {
+          "function": "grab_block__10ptank_poolF16ptank_group_type",
+          "offset": 160,
+          "target_source": "SB/Core/x/xPtankPool.cpp",
+          "target_function": "create_ptank__24@unnamed@xPtankPool_cpp@FUi",
+          "symbol": "create_ptank__24@unnamed@xPtankPool_cpp@FUi"
+        },
+        {
+          "function": "xPTankPoolRender__Fv",
+          "offset": 308,
+          "target_source": "SB/Core/x/xPtankPool.cpp",
+          "target_function": "sort_buckets__24@unnamed@xPtankPool_cpp@FRQ224@unnamed@xPtankPool_cpp@10group_data",
+          "symbol": "sort_buckets__24@unnamed@xPtankPool_cpp@FRQ224@unnamed@xPtankPool_cpp@10group_data"
+        },
+        {
+          "function": "xPTankPoolSceneEnter__Fv",
+          "offset": 28,
+          "target_source": "SB/Core/x/xPtankPool.cpp",
+          "target_function": "init_groups__24@unnamed@xPtankPool_cpp@Fv",
+          "symbol": "init_groups__24@unnamed@xPtankPool_cpp@Fv"
+        },
+        {
+          "function": "xPTankPoolSceneEnter__Fv",
+          "offset": 272,
+          "target_source": "SB/Core/x/xPtankPool.cpp",
+          "target_function": "create_ptank__24@unnamed@xPtankPool_cpp@FUi",
+          "symbol": "create_ptank__24@unnamed@xPtankPool_cpp@FUi"
+        },
+        {
+          "function": "init_groups__24@unnamed@xPtankPool_cpp@Fv",
+          "offset": 100,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "init_groups__24@unnamed@xPtankPool_cpp@Fv",
+          "offset": 200,
+          "target_source": "SB/Core/x/xPtankPool.cpp",
+          "target_function": "sort_buckets__24@unnamed@xPtankPool_cpp@FRQ224@unnamed@xPtankPool_cpp@10group_data",
+          "symbol": "sort_buckets__24@unnamed@xPtankPool_cpp@FRQ224@unnamed@xPtankPool_cpp@10group_data"
+        },
+        {
+          "function": "flush__10ptank_poolFv",
+          "offset": 152,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "sort_buckets__24@unnamed@xPtankPool_cpp@FRQ224@unnamed@xPtankPool_cpp@10group_data",
+          "offset": 28,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "flush__10ptank_poolFv",
+          "offset": 48,
+          "opcode": 35,
+          "target_name": "_rpPTankAtomicDataOffset",
+          "target_source": "SB/Core/x/xPtankPool.cpp",
+          "symbol": "_rpPTankAtomicDataOffset"
+        },
+        {
+          "function": "flush__10ptank_poolFv",
+          "offset": 180,
+          "opcode": 35,
+          "target_name": "_rpPTankAtomicDataOffset",
+          "target_source": "SB/Core/x/xPtankPool.cpp",
+          "symbol": "_rpPTankAtomicDataOffset"
+        },
+        {
+          "function": "flush__10ptank_poolFv",
+          "offset": 212,
+          "opcode": 35,
+          "target_name": "_rpPTankAtomicDataOffset",
+          "target_source": "SB/Core/x/xPtankPool.cpp",
+          "symbol": "_rpPTankAtomicDataOffset"
+        },
+        {
+          "function": "grab_block__10ptank_poolF16ptank_group_type",
+          "offset": 724,
+          "opcode": 35,
+          "target_name": "_rpPTankAtomicDataOffset",
+          "target_source": "SB/Core/x/xPtankPool.cpp",
+          "symbol": "_rpPTankAtomicDataOffset"
+        },
+        {
+          "function": "grab_block__10ptank_poolF16ptank_group_type",
+          "offset": 796,
+          "opcode": 35,
+          "target_name": "_rpPTankAtomicDataOffset",
+          "target_source": "SB/Core/x/xPtankPool.cpp",
+          "symbol": "_rpPTankAtomicDataOffset"
+        },
+        {
+          "function": "grab_block__10ptank_poolF16ptank_group_type",
+          "offset": 824,
+          "opcode": 35,
+          "target_name": "_rpPTankAtomicDataOffset",
+          "target_source": "SB/Core/x/xPtankPool.cpp",
+          "symbol": "_rpPTankAtomicDataOffset"
+        },
+        {
+          "function": "grab_block__10ptank_poolF16ptank_group_type",
+          "offset": 848,
+          "opcode": 35,
+          "target_name": "_rpPTankAtomicDataOffset",
+          "target_source": "SB/Core/x/xPtankPool.cpp",
+          "symbol": "_rpPTankAtomicDataOffset"
+        },
+        {
+          "function": "xPTankPoolSceneExit__Fv",
+          "offset": 52,
+          "opcode": 40,
+          "target_name": "inited",
+          "target_source": "SB/Core/x/xPtankPool.cpp",
+          "symbol": "inited"
+        },
+        {
+          "function": "xPTankPoolSceneEnter__Fv",
+          "offset": 32,
+          "opcode": 40,
+          "target_name": "inited",
+          "target_source": "SB/Core/x/xPtankPool.cpp",
+          "symbol": "inited"
+        },
+        {
+          "function": "create_ptank__24@unnamed@xPtankPool_cpp@FUi",
+          "offset": 172,
+          "opcode": 35,
+          "target_name": "_rpPTankAtomicDataOffset",
+          "target_source": "SB/Core/x/xPtankPool.cpp",
+          "symbol": "_rpPTankAtomicDataOffset"
+        },
+        {
+          "function": "init_groups__24@unnamed@xPtankPool_cpp@Fv",
+          "offset": 72,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xPtankPool.cpp",
+          "symbol": "gActiveHeap"
+        }
+      ],
+      "address_pairs": []
+    },
+    {
+      "source": "src/SB/Game/zEntPickup.cpp",
+      "target_unit": "SB/Game/zEntPickup.cpp",
+      "object": "source/zEntPickup.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zEntPickup_RewardPostSetup__Fv": "zEntPickup_RewardPostSetup__Fv",
+        "zEntPickup_SpawnNRewards__FPUiUi5xVec3": "zEntPickup_SpawnNRewards__FPUiUi5xVec3",
+        "zEntPickup_SpawnNRewards__FPUiUiP5xVec3": "zEntPickup_SpawnNRewards__FPUiUiP5xVec3",
+        "spawnNRewards__FPUiUiP5xVec35xVec3": "spawnNRewards__FPUiUiP5xVec35xVec3",
+        "zEntPickup_SceneUpdate__Ff": "zEntPickup_SceneUpdate__Ff",
+        "zEntPickup_SceneReset__Fv": "zEntPickup_SceneReset__Fv",
+        "zEntPickup_SceneEnter__Fv": "zEntPickup_SceneEnter__Fv",
+        "rewardRequest__FUiP5xVec35xVec3": "rewardRequest__FUiP5xVec35xVec3",
+        "zEntPickup_UpdateFlyToInterface__FP10zEntPickupUif": "zEntPickup_UpdateFlyToInterface__FP10zEntPickupUif",
+        "zEntPickup_RenderList__FP10zEntPickupUi": "zEntPickup_RenderList__FP10zEntPickupUi",
+        "zEntPickup_RenderOne__FP4xEnt": "zEntPickup_RenderOne__FP4xEnt",
+        "zEntPickup_Render__FP10zEntPickupUi": "zEntPickup_Render__FP10zEntPickupUi",
+        "zEntPickup_UpdateFX__FP10zEntPickupP6xScenef": "zEntPickup_UpdateFX__FP10zEntPickupP6xScenef",
+        "zEntPickup_Drop__FP10zEntPickup": "zEntPickup_Drop__FP10zEntPickup",
+        "zEntPickup_FlushGrabbed__Fv": "zEntPickup_FlushGrabbed__Fv",
+        "zEntPickup_Load__FP10zEntPickupP7xSerial": "zEntPickup_Load__FP10zEntPickupP7xSerial",
+        "zEntPickup_Save__FP10zEntPickupP7xSerial": "zEntPickup_Save__FP10zEntPickupP7xSerial",
+        "zEntPickup_Reset__FP10zEntPickup": "zEntPickup_Reset__FP10zEntPickup",
+        "zEntPickup_Update__FP10zEntPickupP6xScenef": "zEntPickup_Update__FP10zEntPickupP6xScenef",
+        "zEntPickup_GiveAllRewardsNow__Fv": "zEntPickup_GiveAllRewardsNow__Fv",
+        "collectPickup__FP10zEntPickup": "collectPickup__FP10zEntPickup",
+        "zEntPickup_GivePickup__FP10zEntPickup": "zEntPickup_GivePickup__FP10zEntPickup",
+        "CheckPickupAgainstPlayer__FP4xEntPv": "CheckPickupAgainstPlayer__FP4xEntPv",
+        "zEntPickup_CheckAllPickupsAgainstPlayer__FP6xScenef": "zEntPickup_CheckAllPickupsAgainstPlayer__FP6xScenef",
+        "zEntPickupEventCB__FP5xBaseP5xBaseUiPCfP5xBase": "zEntPickupEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "zEntPickup_Setup__Fv": "zEntPickup_Setup__Fv",
+        "zEntPickup_Setup__FP10zEntPickup": "zEntPickup_Setup__FP10zEntPickup",
+        "zEntPickup_ShinySparklyInit__FP8RpAtomic": "zEntPickup_ShinySparklyInit__FP8RpAtomic",
+        "zEntPickupInit__FP10zEntPickupP9xEntAsset": "zEntPickupInit__FP10zEntPickupP9xEntAsset",
+        "zEntPickupInit__FPvPv": "zEntPickupInit__FPvPv",
+        "zEntPickup_Startup__Fv": "zEntPickup_Startup__Fv",
+        "PickupFallPhysics__FP10zEntPickupP6xScenef": "PickupFallPhysics__FP10zEntPickupP6xScenef"
+      },
+      "calls": [
+        {
+          "function": "zEntPickup_RewardPostSetup__Fv",
+          "offset": 68,
+          "target_source": "SB/Game/zLOD.cpp",
+          "target_function": "zLOD_Get__FP4xEnt",
+          "symbol": "zLOD_Get__FP4xEnt"
+        },
+        {
+          "function": "zEntPickup_RewardPostSetup__Fv",
+          "offset": 164,
+          "target_source": "SB/Game/zLOD.cpp",
+          "target_function": "zLOD_UseCustomTable__FP4xEntP9zLODTable",
+          "symbol": "zLOD_UseCustomTable__FP4xEntP9zLODTable"
+        },
+        {
+          "function": "zEntPickup_SpawnNRewards__FPUiUi5xVec3",
+          "offset": 40,
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "target_function": "spawnNRewards__FPUiUiP5xVec35xVec3",
+          "symbol": "spawnNRewards__FPUiUiP5xVec35xVec3"
+        },
+        {
+          "function": "zEntPickup_SpawnNRewards__FPUiUiP5xVec3",
+          "offset": 36,
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "target_function": "spawnNRewards__FPUiUiP5xVec35xVec3",
+          "symbol": "spawnNRewards__FPUiUiP5xVec35xVec3"
+        },
+        {
+          "function": "zEntPickup_SceneUpdate__Ff",
+          "offset": 24,
+          "target_source": "SB/Game/zGame.cpp",
+          "target_function": "zGameIsPaused__Fv",
+          "symbol": "zGameIsPaused__Fv"
+        },
+        {
+          "function": "zEntPickup_SceneUpdate__Ff",
+          "offset": 64,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3RMulRotY__FP7xMat3x3PC7xMat3x3f",
+          "symbol": "xMat3x3RMulRotY__FP7xMat3x3PC7xMat3x3f"
+        },
+        {
+          "function": "zEntPickup_SceneUpdate__Ff",
+          "offset": 344,
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "target_function": "rewardRequest__FUiP5xVec35xVec3",
+          "symbol": "rewardRequest__FUiP5xVec35xVec3"
+        },
+        {
+          "function": "zEntPickup_SceneUpdate__Ff",
+          "offset": 748,
+          "target_source": "SB/Game/zEntPlayerBungeeState.cpp",
+          "target_function": "landed__12bungee_stateFv",
+          "symbol": "landed__12bungee_stateFv"
+        },
+        {
+          "function": "zEntPickup_SceneUpdate__Ff",
+          "offset": 944,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_SNDPlayStream__F20_tagePlayerStreamSnd",
+          "symbol": "zEntPlayer_SNDPlayStream__F20_tagePlayerStreamSnd"
+        },
+        {
+          "function": "zEntPickup_SceneUpdate__Ff",
+          "offset": 952,
+          "target_source": "SB/Game/zEntPlayerBungeeState.cpp",
+          "target_function": "active__12bungee_stateFv",
+          "symbol": "active__12bungee_stateFv"
+        },
+        {
+          "function": "zEntPickup_SceneUpdate__Ff",
+          "offset": 968,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayerControlOff__F13zControlOwner",
+          "symbol": "zEntPlayerControlOff__F13zControlOwner"
+        },
+        {
+          "function": "zEntPickup_SceneUpdate__Ff",
+          "offset": 976,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_GiveSpatula__Fi",
+          "symbol": "zEntPlayer_GiveSpatula__Fi"
+        },
+        {
+          "function": "zEntPickup_UpdateFlyToInterface__FP10zEntPickupUif",
+          "offset": 260,
+          "target_source": "SB/Core/x/xFX.cpp",
+          "target_function": "xFXAuraAdd__FPvP5xVec3P10iColor_tagf",
+          "symbol": "xFXAuraAdd__FPvP5xVec3P10iColor_tagf"
+        },
+        {
+          "function": "zEntPickup_UpdateFlyToInterface__FP10zEntPickupUif",
+          "offset": 1560,
+          "target_source": "SB/Core/x/xParEmitter.cpp",
+          "target_function": "xParEmitterEmitCustom__FP11xParEmitterfP25xParEmitterCustomSettings",
+          "symbol": "xParEmitterEmitCustom__FP11xParEmitterfP25xParEmitterCustomSettings"
+        },
+        {
+          "function": "zEntPickup_UpdateFlyToInterface__FP10zEntPickupUif",
+          "offset": 1768,
+          "target_source": "SB/Game/zParPTank.cpp",
+          "target_function": "zParPTankConvertEmitRate__FP11xParEmitterf",
+          "symbol": "zParPTankConvertEmitRate__FP11xParEmitterf"
+        },
+        {
+          "function": "zEntPickup_UpdateFlyToInterface__FP10zEntPickupUif",
+          "offset": 1880,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "zEntPickup_UpdateFlyToInterface__FP10zEntPickupUif",
+          "offset": 1996,
+          "target_source": "SB/Game/zParPTank.cpp",
+          "target_function": "zParPTankSpawnSparkles__FP5xVec3Ui",
+          "symbol": "zParPTankSpawnSparkles__FP5xVec3Ui"
+        },
+        {
+          "function": "zEntPickup_UpdateFlyToInterface__FP10zEntPickupUif",
+          "offset": 2152,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xrand__Fv",
+          "symbol": "xrand__Fv"
+        },
+        {
+          "function": "zEntPickup_RenderList__FP10zEntPickupUi",
+          "offset": 304,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelCullPlusShadow__FP8RpAtomicP11RwMatrixTagP5xVec3Pi",
+          "symbol": "iModelCullPlusShadow__FP8RpAtomicP11RwMatrixTagP5xVec3Pi"
+        },
+        {
+          "function": "zEntPickup_RenderList__FP10zEntPickupUi",
+          "offset": 1016,
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "target_function": "xShadowSimple_Add__FP18xShadowSimpleCacheP4xEntff",
+          "symbol": "xShadowSimple_Add__FP18xShadowSimpleCacheP4xEntff"
+        },
+        {
+          "function": "zEntPickup_RenderOne__FP4xEnt",
+          "offset": 152,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelCullPlusShadow__FP8RpAtomicP11RwMatrixTagP5xVec3Pi",
+          "symbol": "iModelCullPlusShadow__FP8RpAtomicP11RwMatrixTagP5xVec3Pi"
+        },
+        {
+          "function": "zEntPickup_Render__FP10zEntPickupUi",
+          "offset": 64,
+          "target_source": "SB/Core/x/xLightKit.cpp",
+          "target_function": "xLightKit_Enable__FP9xLightKitP7RpWorld",
+          "symbol": "xLightKit_Enable__FP9xLightKitP7RpWorld"
+        },
+        {
+          "function": "zEntPickup_Render__FP10zEntPickupUi",
+          "offset": 272,
+          "target_source": "SB/Core/x/xModelBucket.cpp",
+          "target_function": "xModelBucket_Add__FP14xModelInstance",
+          "symbol": "xModelBucket_Add__FP14xModelInstance"
+        },
+        {
+          "function": "zEntPickup_Render__FP10zEntPickupUi",
+          "offset": 408,
+          "target_source": "SB/Core/x/xLightKit.cpp",
+          "target_function": "xLightKit_Enable__FP9xLightKitP7RpWorld",
+          "symbol": "xLightKit_Enable__FP9xLightKitP7RpWorld"
+        },
+        {
+          "function": "zEntPickup_UpdateFX__FP10zEntPickupP6xScenef",
+          "offset": 460,
+          "target_source": "SB/Core/x/xFX.cpp",
+          "target_function": "xFXAuraAdd__FPvP5xVec3P10iColor_tagf",
+          "symbol": "xFXAuraAdd__FPvP5xVec3P10iColor_tagf"
+        },
+        {
+          "function": "zEntPickup_UpdateFX__FP10zEntPickupP6xScenef",
+          "offset": 1752,
+          "target_source": "SB/Core/x/xParEmitter.cpp",
+          "target_function": "xParEmitterEmitCustom__FP11xParEmitterfP25xParEmitterCustomSettings",
+          "symbol": "xParEmitterEmitCustom__FP11xParEmitterfP25xParEmitterCustomSettings"
+        },
+        {
+          "function": "zEntPickup_UpdateFX__FP10zEntPickupP6xScenef",
+          "offset": 2040,
+          "target_source": "SB/Game/zParPTank.cpp",
+          "target_function": "zParPTankConvertEmitRate__FP11xParEmitterf",
+          "symbol": "zParPTankConvertEmitRate__FP11xParEmitterf"
+        },
+        {
+          "function": "zEntPickup_UpdateFX__FP10zEntPickupP6xScenef",
+          "offset": 2152,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "zEntPickup_UpdateFX__FP10zEntPickupP6xScenef",
+          "offset": 2268,
+          "target_source": "SB/Game/zParPTank.cpp",
+          "target_function": "zParPTankSpawnSparkles__FP5xVec3Ui",
+          "symbol": "zParPTankSpawnSparkles__FP5xVec3Ui"
+        },
+        {
+          "function": "zEntPickup_Drop__FP10zEntPickup",
+          "offset": 216,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xMathSolveQuadratic__FfffPfPf",
+          "symbol": "xMathSolveQuadratic__FfffPfPf"
+        },
+        {
+          "function": "zEntPickup_FlushGrabbed__Fv",
+          "offset": 112,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "zEntPickup_FlushGrabbed__Fv",
+          "offset": 172,
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "target_function": "zEntPickup_GivePickup__FP10zEntPickup",
+          "symbol": "zEntPickup_GivePickup__FP10zEntPickup"
+        },
+        {
+          "function": "zEntPickup_Load__FP10zEntPickupP7xSerial",
+          "offset": 40,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zEntLoad__FP4zEntP7xSerial",
+          "symbol": "zEntLoad__FP4zEntP7xSerial"
+        },
+        {
+          "function": "zEntPickup_Load__FP10zEntPickupP7xSerial",
+          "offset": 84,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Read_b7__7xSerialFPUi",
+          "symbol": "Read_b7__7xSerialFPUi"
+        },
+        {
+          "function": "zEntPickup_Load__FP10zEntPickupP7xSerial",
+          "offset": 96,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Read_b1__7xSerialFPi",
+          "symbol": "Read_b1__7xSerialFPi"
+        },
+        {
+          "function": "zEntPickup_Save__FP10zEntPickupP7xSerial",
+          "offset": 20,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zEntSave__FP4zEntP7xSerial",
+          "symbol": "zEntSave__FP4zEntP7xSerial"
+        },
+        {
+          "function": "zEntPickup_Save__FP10zEntPickupP7xSerial",
+          "offset": 32,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Write_b7__7xSerialFUi",
+          "symbol": "Write_b7__7xSerialFUi"
+        },
+        {
+          "function": "zEntPickup_Save__FP10zEntPickupP7xSerial",
+          "offset": 56,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Write_b1__7xSerialFi",
+          "symbol": "Write_b1__7xSerialFi"
+        },
+        {
+          "function": "zEntPickup_Save__FP10zEntPickupP7xSerial",
+          "offset": 76,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Write_b1__7xSerialFi",
+          "symbol": "Write_b1__7xSerialFi"
+        },
+        {
+          "function": "zEntPickup_Reset__FP10zEntPickup",
+          "offset": 20,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zEntReset__FP4zEnt",
+          "symbol": "zEntReset__FP4zEnt"
+        },
+        {
+          "function": "zEntPickup_Reset__FP10zEntPickup",
+          "offset": 128,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "zEntPickup_Reset__FP10zEntPickup",
+          "offset": 196,
+          "target_source": "SB/Game/zParEmitter.cpp",
+          "target_function": "zParEmitterFind__FPCc",
+          "symbol": "zParEmitterFind__FPCc"
+        },
+        {
+          "function": "zEntPickup_Update__FP10zEntPickupP6xScenef",
+          "offset": 400,
+          "target_source": "SB/Core/x/xEntDrive.cpp",
+          "target_function": "xEntDriveUpdate__FP9xEntDriveP6xScenefPC7xCollis",
+          "symbol": "xEntDriveUpdate__FP9xEntDriveP6xScenefPC7xCollis"
+        },
+        {
+          "function": "zEntPickup_Update__FP10zEntPickupP6xScenef",
+          "offset": 636,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullForBound__FP10xQCControlP7xQCDataPC6xBound",
+          "symbol": "xQuickCullForBound__FP10xQCControlP7xQCDataPC6xBound"
+        },
+        {
+          "function": "zEntPickup_Update__FP10zEntPickupP6xScenef",
+          "offset": 644,
+          "target_source": "SB/Game/zGrid.cpp",
+          "target_function": "zGridUpdateEnt__FP4xEnt",
+          "symbol": "zGridUpdateEnt__FP4xEnt"
+        },
+        {
+          "function": "zEntPickup_Update__FP10zEntPickupP6xScenef",
+          "offset": 724,
+          "target_source": "SB/Core/p2/iAnim.cpp",
+          "target_function": "iAnimDuration__FPv",
+          "symbol": "iAnimDuration__FPv"
+        },
+        {
+          "function": "zEntPickup_Update__FP10zEntPickupP6xScenef",
+          "offset": 784,
+          "target_source": "SB/Core/p2/iAnim.cpp",
+          "target_function": "iAnimEval__FPvfUiP5xVec3P5xQuat",
+          "symbol": "iAnimEval__FPvfUiP5xVec3P5xQuat"
+        },
+        {
+          "function": "zEntPickup_Update__FP10zEntPickupP6xScenef",
+          "offset": 812,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelAnimMatrices__FP8RpAtomicP5xQuatP5xVec3P11RwMatrixTag",
+          "symbol": "iModelAnimMatrices__FP8RpAtomicP5xQuatP5xVec3P11RwMatrixTag"
+        },
+        {
+          "function": "zEntPickup_Update__FP10zEntPickupP6xScenef",
+          "offset": 948,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3RMulRotY__FP7xMat3x3PC7xMat3x3f",
+          "symbol": "xMat3x3RMulRotY__FP7xMat3x3PC7xMat3x3f"
+        },
+        {
+          "function": "zEntPickup_Update__FP10zEntPickupP6xScenef",
+          "offset": 1208,
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "target_function": "zEntPickup_UpdateFX__FP10zEntPickupP6xScenef",
+          "symbol": "zEntPickup_UpdateFX__FP10zEntPickupP6xScenef"
+        },
+        {
+          "function": "zEntPickup_Update__FP10zEntPickupP6xScenef",
+          "offset": 1232,
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "target_function": "PickupFallPhysics__FP10zEntPickupP6xScenef",
+          "symbol": "PickupFallPhysics__FP10zEntPickupP6xScenef"
+        },
+        {
+          "function": "zEntPickup_Update__FP10zEntPickupP6xScenef",
+          "offset": 1336,
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "target_function": "zEntPickup_UpdateFX__FP10zEntPickupP6xScenef",
+          "symbol": "zEntPickup_UpdateFX__FP10zEntPickupP6xScenef"
+        },
+        {
+          "function": "zEntPickup_Update__FP10zEntPickupP6xScenef",
+          "offset": 1384,
+          "target_source": "SB/Game/zEntPlayerBungeeState.cpp",
+          "target_function": "active__12bungee_stateFv",
+          "symbol": "active__12bungee_stateFv"
+        },
+        {
+          "function": "zEntPickup_Update__FP10zEntPickupP6xScenef",
+          "offset": 1400,
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "target_function": "collectPickup__FP10zEntPickup",
+          "symbol": "collectPickup__FP10zEntPickup"
+        },
+        {
+          "function": "zEntPickup_Update__FP10zEntPickupP6xScenef",
+          "offset": 1416,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_InBossBattle__Fv",
+          "symbol": "zEntPlayer_InBossBattle__Fv"
+        },
+        {
+          "function": "zEntPickup_Update__FP10zEntPickupP6xScenef",
+          "offset": 1432,
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "target_function": "collectPickup__FP10zEntPickup",
+          "symbol": "collectPickup__FP10zEntPickup"
+        },
+        {
+          "function": "zEntPickup_Update__FP10zEntPickupP6xScenef",
+          "offset": 1500,
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "target_function": "collectPickup__FP10zEntPickup",
+          "symbol": "collectPickup__FP10zEntPickup"
+        },
+        {
+          "function": "zEntPickup_Update__FP10zEntPickupP6xScenef",
+          "offset": 1596,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3RotC__FP7xMat3x3ffff",
+          "symbol": "xMat3x3RotC__FP7xMat3x3ffff"
+        },
+        {
+          "function": "zEntPickup_Update__FP10zEntPickupP6xScenef",
+          "offset": 1612,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3",
+          "symbol": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3"
+        },
+        {
+          "function": "zEntPickup_Update__FP10zEntPickupP6xScenef",
+          "offset": 1728,
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "target_function": "zEntPickup_GivePickup__FP10zEntPickup",
+          "symbol": "zEntPickup_GivePickup__FP10zEntPickup"
+        },
+        {
+          "function": "zEntPickup_Update__FP10zEntPickupP6xScenef",
+          "offset": 1856,
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "target_function": "collectPickup__FP10zEntPickup",
+          "symbol": "collectPickup__FP10zEntPickup"
+        },
+        {
+          "function": "zEntPickup_Update__FP10zEntPickupP6xScenef",
+          "offset": 1952,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "zEntPickup_Update__FP10zEntPickupP6xScenef",
+          "offset": 2032,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "zEntPickup_Update__FP10zEntPickupP6xScenef",
+          "offset": 2456,
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "target_function": "collectPickup__FP10zEntPickup",
+          "symbol": "collectPickup__FP10zEntPickup"
+        },
+        {
+          "function": "zEntPickup_GiveAllRewardsNow__Fv",
+          "offset": 88,
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "target_function": "zEntPickup_GivePickup__FP10zEntPickup",
+          "symbol": "zEntPickup_GivePickup__FP10zEntPickup"
+        },
+        {
+          "function": "collectPickup__FP10zEntPickup",
+          "offset": 32,
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "target_function": "zEntPickup_GivePickup__FP10zEntPickup",
+          "symbol": "zEntPickup_GivePickup__FP10zEntPickup"
+        },
+        {
+          "function": "collectPickup__FP10zEntPickup",
+          "offset": 96,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "collectPickup__FP10zEntPickup",
+          "offset": 264,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "collectPickup__FP10zEntPickup",
+          "offset": 392,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_SNDPlayStream__F20_tagePlayerStreamSnd",
+          "symbol": "zEntPlayer_SNDPlayStream__F20_tagePlayerStreamSnd"
+        },
+        {
+          "function": "collectPickup__FP10zEntPickup",
+          "offset": 408,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xrand__Fv",
+          "symbol": "xrand__Fv"
+        },
+        {
+          "function": "collectPickup__FP10zEntPickup",
+          "offset": 456,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_SNDPlayStreamRandom__FUiUi20_tagePlayerStreamSnd20_tagePlayerStreamSndf",
+          "symbol": "zEntPlayer_SNDPlayStreamRandom__FUiUi20_tagePlayerStreamSnd20_tagePlayerStreamSndf"
+        },
+        {
+          "function": "collectPickup__FP10zEntPickup",
+          "offset": 488,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_SNDPlayStreamRandom__FUiUi20_tagePlayerStreamSnd20_tagePlayerStreamSndf",
+          "symbol": "zEntPlayer_SNDPlayStreamRandom__FUiUi20_tagePlayerStreamSnd20_tagePlayerStreamSndf"
+        },
+        {
+          "function": "collectPickup__FP10zEntPickup",
+          "offset": 520,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_SNDPlayStreamRandom__FUiUi20_tagePlayerStreamSnd20_tagePlayerStreamSndf",
+          "symbol": "zEntPlayer_SNDPlayStreamRandom__FUiUi20_tagePlayerStreamSnd20_tagePlayerStreamSndf"
+        },
+        {
+          "function": "collectPickup__FP10zEntPickup",
+          "offset": 604,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_SNDPlay__F14_tagePlayerSndf",
+          "symbol": "zEntPlayer_SNDPlay__F14_tagePlayerSndf"
+        },
+        {
+          "function": "collectPickup__FP10zEntPickup",
+          "offset": 628,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_SNDPlayStreamRandom__F20_tagePlayerStreamSnd20_tagePlayerStreamSndf",
+          "symbol": "zEntPlayer_SNDPlayStreamRandom__F20_tagePlayerStreamSnd20_tagePlayerStreamSndf"
+        },
+        {
+          "function": "collectPickup__FP10zEntPickup",
+          "offset": 648,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xrand__Fv",
+          "symbol": "xrand__Fv"
+        },
+        {
+          "function": "collectPickup__FP10zEntPickup",
+          "offset": 676,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_SNDPlayStreamRandom__F20_tagePlayerStreamSnd20_tagePlayerStreamSndf",
+          "symbol": "zEntPlayer_SNDPlayStreamRandom__F20_tagePlayerStreamSnd20_tagePlayerStreamSndf"
+        },
+        {
+          "function": "collectPickup__FP10zEntPickup",
+          "offset": 704,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_SNDPlayStreamRandom__F20_tagePlayerStreamSnd20_tagePlayerStreamSndf",
+          "symbol": "zEntPlayer_SNDPlayStreamRandom__F20_tagePlayerStreamSnd20_tagePlayerStreamSndf"
+        },
+        {
+          "function": "zEntPickup_GivePickup__FP10zEntPickup",
+          "offset": 520,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_SNDPlayStream__F20_tagePlayerStreamSnd",
+          "symbol": "zEntPlayer_SNDPlayStream__F20_tagePlayerStreamSnd"
+        },
+        {
+          "function": "zEntPickup_GivePickup__FP10zEntPickup",
+          "offset": 548,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_SNDPlayStream__F20_tagePlayerStreamSnd",
+          "symbol": "zEntPlayer_SNDPlayStream__F20_tagePlayerStreamSnd"
+        },
+        {
+          "function": "zEntPickup_GivePickup__FP10zEntPickup",
+          "offset": 580,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_SNDPlayStream__F20_tagePlayerStreamSnd",
+          "symbol": "zEntPlayer_SNDPlayStream__F20_tagePlayerStreamSnd"
+        },
+        {
+          "function": "zEntPickup_GivePickup__FP10zEntPickup",
+          "offset": 640,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_GivePatsSocksCurrentLevel__Fi",
+          "symbol": "zEntPlayer_GivePatsSocksCurrentLevel__Fi"
+        },
+        {
+          "function": "zEntPickup_GivePickup__FP10zEntPickup",
+          "offset": 656,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_setBoulderMode__FUi",
+          "symbol": "zEntPlayer_setBoulderMode__FUi"
+        },
+        {
+          "function": "zEntPickup_GivePickup__FP10zEntPickup",
+          "offset": 672,
+          "target_source": "SB/Game/zScene.cpp",
+          "target_function": "zSceneGetLevelIndex__Fv",
+          "symbol": "zSceneGetLevelIndex__Fv"
+        },
+        {
+          "function": "zEntPickup_GivePickup__FP10zEntPickup",
+          "offset": 704,
+          "target_source": "SB/Game/zScene.cpp",
+          "target_function": "zSceneGetLevelIndex__Fv",
+          "symbol": "zSceneGetLevelIndex__Fv"
+        },
+        {
+          "function": "zEntPickup_GivePickup__FP10zEntPickup",
+          "offset": 748,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseUi"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 388,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_SNDPlayStream__F20_tagePlayerStreamSnd",
+          "symbol": "zEntPlayer_SNDPlayStream__F20_tagePlayerStreamSnd"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 396,
+          "target_source": "SB/Game/zEntPlayerBungeeState.cpp",
+          "target_function": "active__12bungee_stateFv",
+          "symbol": "active__12bungee_stateFv"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 412,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayerControlOff__F13zControlOwner",
+          "symbol": "zEntPlayerControlOff__F13zControlOwner"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 420,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_GiveSpatula__Fi",
+          "symbol": "zEntPlayer_GiveSpatula__Fi"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 688,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_SNDPlayStream__F20_tagePlayerStreamSnd",
+          "symbol": "zEntPlayer_SNDPlayStream__F20_tagePlayerStreamSnd"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 696,
+          "target_source": "SB/Game/zEntPlayerBungeeState.cpp",
+          "target_function": "active__12bungee_stateFv",
+          "symbol": "active__12bungee_stateFv"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 712,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayerControlOff__F13zControlOwner",
+          "symbol": "zEntPlayerControlOff__F13zControlOwner"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 720,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_GiveSpatula__Fi",
+          "symbol": "zEntPlayer_GiveSpatula__Fi"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 816,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 832,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 880,
+          "target_source": "SB/Core/x/xFX.cpp",
+          "target_function": "xFXFireworksLaunch__FfPC5xVec3f",
+          "symbol": "xFXFireworksLaunch__FfPC5xVec3f"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 1000,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_SNDPlayStream__F20_tagePlayerStreamSnd",
+          "symbol": "zEntPlayer_SNDPlayStream__F20_tagePlayerStreamSnd"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 1008,
+          "target_source": "SB/Game/zEntPlayerBungeeState.cpp",
+          "target_function": "active__12bungee_stateFv",
+          "symbol": "active__12bungee_stateFv"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 1024,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayerControlOff__F13zControlOwner",
+          "symbol": "zEntPlayerControlOff__F13zControlOwner"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 1032,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_GiveSpatula__Fi",
+          "symbol": "zEntPlayer_GiveSpatula__Fi"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 1120,
+          "target_source": "SB/Game/zEntPlayerBungeeState.cpp",
+          "target_function": "active__12bungee_stateFv",
+          "symbol": "active__12bungee_stateFv"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 1320,
+          "target_source": "SB/Game/zEntPlayerBungeeState.cpp",
+          "target_function": "active__12bungee_stateFv",
+          "symbol": "active__12bungee_stateFv"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 1336,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayerControlOff__F13zControlOwner",
+          "symbol": "zEntPlayerControlOff__F13zControlOwner"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 1352,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 1360,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 1408,
+          "target_source": "SB/Core/x/xFX.cpp",
+          "target_function": "xFXFireworksLaunch__FfPC5xVec3f",
+          "symbol": "xFXFireworksLaunch__FfPC5xVec3f"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 1436,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_SNDPlay__F14_tagePlayerSndf",
+          "symbol": "zEntPlayer_SNDPlay__F14_tagePlayerSndf"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 1540,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_SNDPlayStream__F20_tagePlayerStreamSnd",
+          "symbol": "zEntPlayer_SNDPlayStream__F20_tagePlayerStreamSnd"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 1548,
+          "target_source": "SB/Game/zEntPlayerBungeeState.cpp",
+          "target_function": "active__12bungee_stateFv",
+          "symbol": "active__12bungee_stateFv"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 1564,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayerControlOff__F13zControlOwner",
+          "symbol": "zEntPlayerControlOff__F13zControlOwner"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 1572,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_GiveSpatula__Fi",
+          "symbol": "zEntPlayer_GiveSpatula__Fi"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 1804,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_SNDPlayStream__F20_tagePlayerStreamSnd",
+          "symbol": "zEntPlayer_SNDPlayStream__F20_tagePlayerStreamSnd"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 1812,
+          "target_source": "SB/Game/zEntPlayerBungeeState.cpp",
+          "target_function": "active__12bungee_stateFv",
+          "symbol": "active__12bungee_stateFv"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 1828,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayerControlOff__F13zControlOwner",
+          "symbol": "zEntPlayerControlOff__F13zControlOwner"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 1836,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_GiveSpatula__Fi",
+          "symbol": "zEntPlayer_GiveSpatula__Fi"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 2020,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_SNDPlayStream__F20_tagePlayerStreamSnd",
+          "symbol": "zEntPlayer_SNDPlayStream__F20_tagePlayerStreamSnd"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 2028,
+          "target_source": "SB/Game/zEntPlayerBungeeState.cpp",
+          "target_function": "active__12bungee_stateFv",
+          "symbol": "active__12bungee_stateFv"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 2044,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayerControlOff__F13zControlOwner",
+          "symbol": "zEntPlayerControlOff__F13zControlOwner"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 2052,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_GiveSpatula__Fi",
+          "symbol": "zEntPlayer_GiveSpatula__Fi"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 2236,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_SNDPlayStream__F20_tagePlayerStreamSnd",
+          "symbol": "zEntPlayer_SNDPlayStream__F20_tagePlayerStreamSnd"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 2244,
+          "target_source": "SB/Game/zEntPlayerBungeeState.cpp",
+          "target_function": "active__12bungee_stateFv",
+          "symbol": "active__12bungee_stateFv"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 2260,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayerControlOff__F13zControlOwner",
+          "symbol": "zEntPlayerControlOff__F13zControlOwner"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 2268,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_GiveSpatula__Fi",
+          "symbol": "zEntPlayer_GiveSpatula__Fi"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 2452,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_SNDPlayStream__F20_tagePlayerStreamSnd",
+          "symbol": "zEntPlayer_SNDPlayStream__F20_tagePlayerStreamSnd"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 2460,
+          "target_source": "SB/Game/zEntPlayerBungeeState.cpp",
+          "target_function": "active__12bungee_stateFv",
+          "symbol": "active__12bungee_stateFv"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 2476,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayerControlOff__F13zControlOwner",
+          "symbol": "zEntPlayerControlOff__F13zControlOwner"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 2484,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_GiveSpatula__Fi",
+          "symbol": "zEntPlayer_GiveSpatula__Fi"
+        },
+        {
+          "function": "zEntPickup_CheckAllPickupsAgainstPlayer__FP6xScenef",
+          "offset": 56,
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "target_function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "symbol": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv"
+        },
+        {
+          "function": "zEntPickupEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 208,
+          "target_source": "SB/Game/zFX.cpp",
+          "target_function": "zFXPopOn__FR4xEntff",
+          "symbol": "zFXPopOn__FR4xEntff"
+        },
+        {
+          "function": "zEntPickupEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 288,
+          "target_source": "SB/Game/zFX.cpp",
+          "target_function": "zFXPopOff__FR4xEntff",
+          "symbol": "zFXPopOff__FR4xEntff"
+        },
+        {
+          "function": "zEntPickupEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 404,
+          "target_source": "SB/Game/zFX.cpp",
+          "target_function": "zFXPopOn__FR4xEntff",
+          "symbol": "zFXPopOn__FR4xEntff"
+        },
+        {
+          "function": "zEntPickupEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 500,
+          "target_source": "SB/Game/zFX.cpp",
+          "target_function": "zFXPopOff__FR4xEntff",
+          "symbol": "zFXPopOff__FR4xEntff"
+        },
+        {
+          "function": "zEntPickupEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 520,
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "target_function": "zEntPickup_Reset__FP10zEntPickup",
+          "symbol": "zEntPickup_Reset__FP10zEntPickup"
+        },
+        {
+          "function": "zEntPickupEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 648,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_SNDPlayStream__F20_tagePlayerStreamSnd",
+          "symbol": "zEntPlayer_SNDPlayStream__F20_tagePlayerStreamSnd"
+        },
+        {
+          "function": "zEntPickupEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 656,
+          "target_source": "SB/Game/zEntPlayerBungeeState.cpp",
+          "target_function": "active__12bungee_stateFv",
+          "symbol": "active__12bungee_stateFv"
+        },
+        {
+          "function": "zEntPickupEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 672,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayerControlOff__F13zControlOwner",
+          "symbol": "zEntPlayerControlOff__F13zControlOwner"
+        },
+        {
+          "function": "zEntPickupEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 680,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_GiveSpatula__Fi",
+          "symbol": "zEntPlayer_GiveSpatula__Fi"
+        },
+        {
+          "function": "zEntPickupEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 784,
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "target_function": "zEntPickup_Drop__FP10zEntPickup",
+          "symbol": "zEntPickup_Drop__FP10zEntPickup"
+        },
+        {
+          "function": "zEntPickupEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1008,
+          "target_source": "SB/Core/x/xEntDrive.cpp",
+          "target_function": "xEntDriveMount__FP9xEntDriveP4xEntfPC7xCollis",
+          "symbol": "xEntDriveMount__FP9xEntDriveP4xEntfPC7xCollis"
+        },
+        {
+          "function": "zEntPickupEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1192,
+          "target_source": "SB/Core/x/xEntDrive.cpp",
+          "target_function": "xEntDriveDismount__FP9xEntDrivef",
+          "symbol": "xEntDriveDismount__FP9xEntDrivef"
+        },
+        {
+          "function": "zEntPickup_Setup__Fv",
+          "offset": 168,
+          "target_source": "SB/Game/zScene.cpp",
+          "target_function": "zSceneFindObject__FUi",
+          "symbol": "zSceneFindObject__FUi"
+        },
+        {
+          "function": "zEntPickup_Setup__FP10zEntPickup",
+          "offset": 0,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zEntSetup__FP4zEnt",
+          "symbol": "zEntSetup__FP4zEnt",
+          "opcode": 2
+        },
+        {
+          "function": "zEntPickup_ShinySparklyInit__FP8RpAtomic",
+          "offset": 28,
+          "target_source": "SB/Core/x/xFX.cpp",
+          "target_function": "xFXAtomicEnvMapSetup__FP8RpAtomicUif",
+          "symbol": "xFXAtomicEnvMapSetup__FP8RpAtomicUif"
+        },
+        {
+          "function": "zEntPickupInit__FP10zEntPickupP9xEntAsset",
+          "offset": 48,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zEntInit__FP4zEntP9xEntAssetUi",
+          "symbol": "zEntInit__FP4zEntP9xEntAssetUi"
+        },
+        {
+          "function": "zEntPickupInit__FP10zEntPickupP9xEntAsset",
+          "offset": 356,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "zEntPickupInit__FP10zEntPickupP9xEntAsset",
+          "offset": 392,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "zEntPickupInit__FP10zEntPickupP9xEntAsset",
+          "offset": 420,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "zEntPickupInit__FP10zEntPickupP9xEntAsset",
+          "offset": 432,
+          "target_source": "SB/Core/p2/iAnim.cpp",
+          "target_function": "iAnimBoneCount__FPv",
+          "symbol": "iAnimBoneCount__FPv"
+        },
+        {
+          "function": "zEntPickupInit__FP10zEntPickupP9xEntAsset",
+          "offset": 444,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelNumBones__FP8RpAtomic",
+          "symbol": "iModelNumBones__FP8RpAtomic"
+        },
+        {
+          "function": "zEntPickupInit__FP10zEntPickupP9xEntAsset",
+          "offset": 480,
+          "target_source": "SB/Core/x/xModel.cpp",
+          "target_function": "xModelInstanceAlloc__FP8RpAtomicPvUsUcPUc",
+          "symbol": "xModelInstanceAlloc__FP8RpAtomicPvUsUcPUc"
+        },
+        {
+          "function": "zEntPickupInit__FP10zEntPickupP9xEntAsset",
+          "offset": 536,
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "target_function": "xShadowSimple_CacheInit__FP18xShadowSimpleCacheP4xEntUc",
+          "symbol": "xShadowSimple_CacheInit__FP18xShadowSimpleCacheP4xEntUc"
+        },
+        {
+          "function": "zEntPickupInit__FP10zEntPickupP9xEntAsset",
+          "offset": 676,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zEntReset__FP4zEnt",
+          "symbol": "zEntReset__FP4zEnt"
+        },
+        {
+          "function": "zEntPickupInit__FP10zEntPickupP9xEntAsset",
+          "offset": 764,
+          "target_source": "SB/Core/x/xEntDrive.cpp",
+          "target_function": "xEntDriveInit__FP9xEntDriveP4xEnt",
+          "symbol": "xEntDriveInit__FP9xEntDriveP4xEnt"
+        },
+        {
+          "function": "zEntPickupInit__FP10zEntPickupP9xEntAsset",
+          "offset": 864,
+          "target_source": "SB/Core/x/xFX.cpp",
+          "target_function": "xFXAtomicEnvMapSetup__FP8RpAtomicUif",
+          "symbol": "xFXAtomicEnvMapSetup__FP8RpAtomicUif"
+        },
+        {
+          "function": "zEntPickupInit__FP10zEntPickupP9xEntAsset",
+          "offset": 996,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "zEntPickupInit__FPvPv",
+          "offset": 0,
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "target_function": "zEntPickupInit__FP10zEntPickupP9xEntAsset",
+          "symbol": "zEntPickupInit__FP10zEntPickupP9xEntAsset",
+          "opcode": 2
+        },
+        {
+          "function": "PickupFallPhysics__FP10zEntPickupP6xScenef",
+          "offset": 648,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntCollide__FP4xEntP6xScenef",
+          "symbol": "xEntCollide__FP4xEntP6xScenef"
+        },
+        {
+          "function": "zEntPickup_SceneUpdate__Ff",
+          "offset": 616,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "zEntPickup_GiveAllRewardsNow__Fv",
+          "offset": 524,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "zEntPickup_Setup__Fv",
+          "offset": 56,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "spawnNRewards__FPUiUiP5xVec35xVec3",
+          "offset": 36,
+          "opcode": 35,
+          "target_name": "gEnableRewardsQueue",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "gEnableRewardsQueue"
+        },
+        {
+          "function": "zEntPickup_SceneUpdate__Ff",
+          "offset": 112,
+          "opcode": 49,
+          "target_name": "sUnderwearFade",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sUnderwearFade"
+        },
+        {
+          "function": "zEntPickup_SceneUpdate__Ff",
+          "offset": 168,
+          "opcode": 57,
+          "target_name": "sUnderwearFade",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sUnderwearFade"
+        },
+        {
+          "function": "zEntPickup_SceneUpdate__Ff",
+          "offset": 176,
+          "opcode": 57,
+          "target_name": "sUnderwearFade",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sUnderwearFade"
+        },
+        {
+          "function": "zEntPickup_SceneUpdate__Ff",
+          "offset": 188,
+          "opcode": 49,
+          "target_name": "sUnderwearFade",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sUnderwearFade"
+        },
+        {
+          "function": "zEntPickup_SceneUpdate__Ff",
+          "offset": 236,
+          "opcode": 57,
+          "target_name": "sUnderwearFade",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sUnderwearFade"
+        },
+        {
+          "function": "zEntPickup_SceneUpdate__Ff",
+          "offset": 240,
+          "opcode": 57,
+          "target_name": "sUnderwearFade",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sUnderwearFade"
+        },
+        {
+          "function": "zEntPickup_SceneUpdate__Ff",
+          "offset": 736,
+          "opcode": 35,
+          "target_name": "sSpatulaBungeeDeferred",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sSpatulaBungeeDeferred"
+        },
+        {
+          "function": "zEntPickup_SceneUpdate__Ff",
+          "offset": 764,
+          "opcode": 35,
+          "target_name": "sSpatulaBungeeDeferred",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sSpatulaBungeeDeferred"
+        },
+        {
+          "function": "zEntPickup_SceneUpdate__Ff",
+          "offset": 836,
+          "opcode": 35,
+          "target_name": "sSpatulaBungeeDeferred",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sSpatulaBungeeDeferred"
+        },
+        {
+          "function": "zEntPickup_SceneUpdate__Ff",
+          "offset": 852,
+          "opcode": 35,
+          "target_name": "sSpatulaBungeeDeferred",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sSpatulaBungeeDeferred"
+        },
+        {
+          "function": "zEntPickup_SceneUpdate__Ff",
+          "offset": 1056,
+          "opcode": 35,
+          "target_name": "sSpatulaBungeeDeferred",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sSpatulaBungeeDeferred"
+        },
+        {
+          "function": "zEntPickup_SceneUpdate__Ff",
+          "offset": 1060,
+          "opcode": 43,
+          "target_name": "sSpatulaAlreadyGiven",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sSpatulaAlreadyGiven"
+        },
+        {
+          "function": "zEntPickup_SceneUpdate__Ff",
+          "offset": 1064,
+          "opcode": 43,
+          "target_name": "sSpatulaBungeeDeferred",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sSpatulaBungeeDeferred"
+        },
+        {
+          "function": "zEntPickup_SceneReset__Fv",
+          "offset": 4,
+          "opcode": 43,
+          "target_name": "sSpatulaAlreadyGiven",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sSpatulaAlreadyGiven"
+        },
+        {
+          "function": "zEntPickup_SceneReset__Fv",
+          "offset": 8,
+          "opcode": 43,
+          "target_name": "sSpatulaBungeeDeferred",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sSpatulaBungeeDeferred"
+        },
+        {
+          "function": "zEntPickup_SceneReset__Fv",
+          "offset": 16,
+          "opcode": 43,
+          "target_name": "gEnableRewardsQueue",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "gEnableRewardsQueue"
+        },
+        {
+          "function": "zEntPickup_SceneEnter__Fv",
+          "offset": 4,
+          "opcode": 43,
+          "target_name": "sSpatulaAlreadyGiven",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sSpatulaAlreadyGiven"
+        },
+        {
+          "function": "zEntPickup_SceneEnter__Fv",
+          "offset": 8,
+          "opcode": 43,
+          "target_name": "sSpatulaBungeeDeferred",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sSpatulaBungeeDeferred"
+        },
+        {
+          "function": "zEntPickup_SceneEnter__Fv",
+          "offset": 16,
+          "opcode": 43,
+          "target_name": "gEnableRewardsQueue",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "gEnableRewardsQueue"
+        },
+        {
+          "function": "zEntPickup_UpdateFlyToInterface__FP10zEntPickupUif",
+          "offset": 1556,
+          "opcode": 35,
+          "target_name": "gEmitShinySparkles",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "gEmitShinySparkles"
+        },
+        {
+          "function": "zEntPickup_UpdateFlyToInterface__FP10zEntPickupUif",
+          "offset": 1736,
+          "opcode": 35,
+          "target_name": "gEmitShinySparkles",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "gEmitShinySparkles"
+        },
+        {
+          "function": "zEntPickup_UpdateFlyToInterface__FP10zEntPickupUif",
+          "offset": 1772,
+          "opcode": 35,
+          "target_name": "gEmitShinySparkles",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "gEmitShinySparkles"
+        },
+        {
+          "function": "zEntPickup_RenderList__FP10zEntPickupUi",
+          "offset": 52,
+          "opcode": 35,
+          "target_name": "sPickupAmbientLight",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sPickupAmbientLight"
+        },
+        {
+          "function": "zEntPickup_RenderList__FP10zEntPickupUi",
+          "offset": 60,
+          "opcode": 35,
+          "target_name": "sPickupDirectionalLight",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sPickupDirectionalLight"
+        },
+        {
+          "function": "zEntPickup_Render__FP10zEntPickupUi",
+          "offset": 260,
+          "opcode": 49,
+          "target_name": "sUnderwearFade",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sUnderwearFade"
+        },
+        {
+          "function": "zEntPickup_UpdateFX__FP10zEntPickupP6xScenef",
+          "offset": 700,
+          "opcode": 49,
+          "target_name": "SPARKLE_MAX_RATE",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "SPARKLE_MAX_RATE"
+        },
+        {
+          "function": "zEntPickup_UpdateFX__FP10zEntPickupP6xScenef",
+          "offset": 1724,
+          "opcode": 35,
+          "target_name": "gEmitShinySparkles",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "gEmitShinySparkles"
+        },
+        {
+          "function": "zEntPickup_UpdateFX__FP10zEntPickupP6xScenef",
+          "offset": 1920,
+          "opcode": 49,
+          "target_name": "SPARKLE_MAX_RATE",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "SPARKLE_MAX_RATE"
+        },
+        {
+          "function": "zEntPickup_UpdateFX__FP10zEntPickupP6xScenef",
+          "offset": 1988,
+          "opcode": 35,
+          "target_name": "gEmitShinySparkles",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "gEmitShinySparkles"
+        },
+        {
+          "function": "zEntPickup_UpdateFX__FP10zEntPickupP6xScenef",
+          "offset": 1996,
+          "opcode": 35,
+          "target_name": "gEmitShinySparkles",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "gEmitShinySparkles"
+        },
+        {
+          "function": "zEntPickup_UpdateFX__FP10zEntPickupP6xScenef",
+          "offset": 2044,
+          "opcode": 35,
+          "target_name": "gEmitShinySparkles",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "gEmitShinySparkles"
+        },
+        {
+          "function": "zEntPickup_Reset__FP10zEntPickup",
+          "offset": 204,
+          "opcode": 43,
+          "target_name": "gEmitShinySparkles",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "gEmitShinySparkles"
+        },
+        {
+          "function": "zEntPickup_Update__FP10zEntPickupP6xScenef",
+          "offset": 760,
+          "opcode": 35,
+          "target_name": "giAnimScratch",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "giAnimScratch"
+        },
+        {
+          "function": "zEntPickup_Update__FP10zEntPickupP6xScenef",
+          "offset": 1136,
+          "opcode": 35,
+          "target_name": "gSpongeBall",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "gSpongeBall"
+        },
+        {
+          "function": "zEntPickup_Update__FP10zEntPickupP6xScenef",
+          "offset": 1404,
+          "opcode": 43,
+          "target_name": "sSpatulaBungeeDeferred",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sSpatulaBungeeDeferred"
+        },
+        {
+          "function": "zEntPickup_Update__FP10zEntPickupP6xScenef",
+          "offset": 1448,
+          "opcode": 49,
+          "target_name": "sSpatulaGrabbedLife",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sSpatulaGrabbedLife"
+        },
+        {
+          "function": "zEntPickup_Update__FP10zEntPickupP6xScenef",
+          "offset": 1484,
+          "opcode": 57,
+          "target_name": "sSpatulaGrabbedLife",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sSpatulaGrabbedLife"
+        },
+        {
+          "function": "zEntPickup_Update__FP10zEntPickupP6xScenef",
+          "offset": 1496,
+          "opcode": 57,
+          "target_name": "sSpatulaGrabbedSpinMult",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sSpatulaGrabbedSpinMult"
+        },
+        {
+          "function": "zEntPickup_Update__FP10zEntPickupP6xScenef",
+          "offset": 1504,
+          "opcode": 43,
+          "target_name": "sSpatulaGrabbedLife",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sSpatulaGrabbedLife"
+        },
+        {
+          "function": "zEntPickup_Update__FP10zEntPickupP6xScenef",
+          "offset": 1532,
+          "opcode": 49,
+          "target_name": "sSpatulaGrabbedSpinMult",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sSpatulaGrabbedSpinMult"
+        },
+        {
+          "function": "zEntPickup_Update__FP10zEntPickupP6xScenef",
+          "offset": 1560,
+          "opcode": 57,
+          "target_name": "sSpatulaGrabbedSpinMult",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sSpatulaGrabbedSpinMult"
+        },
+        {
+          "function": "zEntPickup_Update__FP10zEntPickupP6xScenef",
+          "offset": 1572,
+          "opcode": 49,
+          "target_name": "sSpatulaGrabbedSpinMult",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sSpatulaGrabbedSpinMult"
+        },
+        {
+          "function": "zEntPickup_GivePickup__FP10zEntPickup",
+          "offset": 352,
+          "opcode": 35,
+          "target_name": "sSpatulaAlreadyGiven",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sSpatulaAlreadyGiven"
+        },
+        {
+          "function": "CheckPickupAgainstPlayer__FP4xEntPv",
+          "offset": 1700,
+          "opcode": 35,
+          "target_name": "gCurrentPlayer",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "gCurrentPlayer"
+        },
+        {
+          "function": "zEntPickup_Setup__Fv",
+          "offset": 68,
+          "opcode": 43,
+          "target_name": "gEnableRewardsQueue",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "gEnableRewardsQueue"
+        },
+        {
+          "function": "zEntPickup_Startup__Fv",
+          "offset": 8,
+          "opcode": 35,
+          "target_name": "sPickupDirectionalLight",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sPickupDirectionalLight"
+        },
+        {
+          "function": "zEntPickup_Startup__Fv",
+          "offset": 28,
+          "opcode": 43,
+          "target_name": "sPickupDirectionalLight",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sPickupDirectionalLight"
+        },
+        {
+          "function": "zEntPickup_Startup__Fv",
+          "offset": 36,
+          "opcode": 35,
+          "target_name": "sPickupDirectionalLight",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sPickupDirectionalLight"
+        },
+        {
+          "function": "zEntPickup_Startup__Fv",
+          "offset": 56,
+          "opcode": 35,
+          "target_name": "sPickupDirectionalLight",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sPickupDirectionalLight"
+        },
+        {
+          "function": "zEntPickup_Startup__Fv",
+          "offset": 76,
+          "opcode": 43,
+          "target_name": "sPickupAmbientLight",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sPickupAmbientLight"
+        },
+        {
+          "function": "zEntPickup_Startup__Fv",
+          "offset": 84,
+          "opcode": 35,
+          "target_name": "sPickupAmbientLight",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sPickupAmbientLight"
+        },
+        {
+          "function": "zEntPickup_Startup__Fv",
+          "offset": 240,
+          "opcode": 35,
+          "target_name": "sPickupAmbientLight",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sPickupAmbientLight"
+        },
+        {
+          "function": "zEntPickup_Startup__Fv",
+          "offset": 324,
+          "opcode": 35,
+          "target_name": "sPickupDirectionalLight",
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "symbol": "sPickupDirectionalLight"
+        }
+      ],
+      "address_pairs": []
     }
   ]
 }
