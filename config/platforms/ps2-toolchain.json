@@ -9821,6 +9821,2408 @@
         }
       ],
       "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/x/xParEmitterType.cpp",
+      "target_unit": "SB/Core/x/xParEmitterType.cpp",
+      "object": "source/xParEmitterType.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+        "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+        "xParEmitterTransformEntBone__FR5xVec3R5xVec3RC16xParEmitterAssetRC7xMat4x3": "xParEmitterTransformEntBone__FR5xVec3R5xVec3RC16xParEmitterAssetRC7xMat4x3",
+        "xParEmitterTransformEntBone__FR5xVec3R5xVec3RC16xParEmitterAssetRC4xEnt": "xParEmitterTransformEntBone__FR5xVec3R5xVec3RC16xParEmitterAssetRC4xEnt",
+        "xParEmitterEmitOCircle__FP4xParP16xParEmitterAssetf": "xParEmitterEmitOCircle__FP4xParP16xParEmitterAssetf",
+        "xParEmitterEmitOCircleEdge__FP4xParP16xParEmitterAssetf": "xParEmitterEmitOCircleEdge__FP4xParP16xParEmitterAssetf",
+        "xParEmitterEmitVCylEdge__FP4xParP16xParEmitterAssetf": "xParEmitterEmitVCylEdge__FP4xParP16xParEmitterAssetf",
+        "xParEmitterEmitOffsetPoint__FP11xParEmitterP4xParP16xParEmitterAssetfP4xEnt": "xParEmitterEmitOffsetPoint__FP11xParEmitterP4xParP16xParEmitterAssetfP4xEnt",
+        "xParEmitterEmitEntity__FP4xParP16xParEmitterAssetfP4xEnt": "xParEmitterEmitEntity__FP4xParP16xParEmitterAssetfP4xEnt",
+        "xParEmitterEmitVolume__FP4xParP16xParEmitterAssetfP7xVolume": "xParEmitterEmitVolume__FP4xParP16xParEmitterAssetfP7xVolume",
+        "xParEmitterEmitSphereEdge__FP4xParP16xParEmitterAssetfi": "xParEmitterEmitSphereEdge__FP4xParP16xParEmitterAssetfi",
+        "xParEmitterEmitSphere__FP4xParP16xParEmitterAssetf": "xParEmitterEmitSphere__FP4xParP16xParEmitterAssetf",
+        "xParEmitterEmitLine__FP4xParP16xParEmitterAssetf": "xParEmitterEmitLine__FP4xParP16xParEmitterAssetf",
+        "xParEmitterEmitRectEdge__FP4xParP16xParEmitterAssetf": "xParEmitterEmitRectEdge__FP4xParP16xParEmitterAssetf",
+        "xParEmitterEmitRect__FP4xParP16xParEmitterAssetf": "xParEmitterEmitRect__FP4xParP16xParEmitterAssetf",
+        "xParEmitterEmitCircle__FP4xParP16xParEmitterAssetf": "xParEmitterEmitCircle__FP4xParP16xParEmitterAssetf",
+        "xParEmitterEmitCircleEdge__FP4xParP16xParEmitterAssetf": "xParEmitterEmitCircleEdge__FP4xParP16xParEmitterAssetf",
+        "xParEmitterAngleVariation__FP4xParP16xParEmitterAsset": "xParEmitterAngleVariation__FP4xParP16xParEmitterAsset",
+        "xParEmitterEmitPoint__FP4xParP16xParEmitterAssetf": "xParEmitterEmitPoint__FP4xParP16xParEmitterAssetf"
+      },
+      "calls": [
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 312,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 332,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 372,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xsqrt__Ff",
+          "symbol": "xsqrt__Ff"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 380,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 424,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xcos__Ff",
+          "symbol": "xcos__Ff"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 436,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xsin__Ff",
+          "symbol": "xsin__Ff"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 456,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "assign__5xVec3Ffff",
+          "symbol": "assign__5xVec3Ffff"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 480,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__mi__5xVec3CFRC5xVec3",
+          "symbol": "__mi__5xVec3CFRC5xVec3"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 496,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__pl__5xVec3CFf",
+          "symbol": "__pl__5xVec3CFf"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 516,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 560,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 604,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 664,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__pl__5xVec3CFf",
+          "symbol": "__pl__5xVec3CFf"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 684,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 728,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 772,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 848,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 868,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 912,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xsqrt__Ff",
+          "symbol": "xsqrt__Ff"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 924,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xcos__Ff",
+          "symbol": "xcos__Ff"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 936,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xsin__Ff",
+          "symbol": "xsin__Ff"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 956,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "assign__5xVec3Ffff",
+          "symbol": "assign__5xVec3Ffff"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 976,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xrand__Fv",
+          "symbol": "xrand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 1048,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 1080,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 1124,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "assign__5xVec3Ffff",
+          "symbol": "assign__5xVec3Ffff"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 1156,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 1188,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 1232,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "assign__5xVec3Ffff",
+          "symbol": "assign__5xVec3Ffff"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 1248,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 1280,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 1324,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "assign__5xVec3Ffff",
+          "symbol": "assign__5xVec3Ffff"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 1344,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__mi__5xVec3CFRC5xVec3",
+          "symbol": "__mi__5xVec3CFRC5xVec3"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 1360,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__pl__5xVec3CFf",
+          "symbol": "__pl__5xVec3CFf"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 1376,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__ml__5xVec3CFRC5xVec3",
+          "symbol": "__ml__5xVec3CFRC5xVec3"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 1408,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xrand__Fv",
+          "symbol": "xrand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 1480,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 1512,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 1556,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "assign__5xVec3Ffff",
+          "symbol": "assign__5xVec3Ffff"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 1588,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 1620,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 1664,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "assign__5xVec3Ffff",
+          "symbol": "assign__5xVec3Ffff"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 1680,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 1712,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 1756,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "assign__5xVec3Ffff",
+          "symbol": "assign__5xVec3Ffff"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 1776,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__pl__5xVec3CFf",
+          "symbol": "__pl__5xVec3CFf"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 1792,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__ml__5xVec3CFRC5xVec3",
+          "symbol": "__ml__5xVec3CFRC5xVec3"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 2276,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 2308,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 2340,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 2384,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Euler__FP7xMat3x3fff",
+          "symbol": "xMat3x3Euler__FP7xMat3x3fff"
+        },
+        {
+          "function": "xParEmitterEmitEntBound__FP4xParP16xParEmitterAssetfPC4xEnt",
+          "offset": 2400,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 108,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__as__5xVec3Ff",
+          "symbol": "__as__5xVec3Ff"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 128,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 148,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 188,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xsqrt__Ff",
+          "symbol": "xsqrt__Ff"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 196,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 236,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xcos__Ff",
+          "symbol": "xcos__Ff"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 248,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xsin__Ff",
+          "symbol": "xsin__Ff"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 268,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "assign__5xVec3Ffff",
+          "symbol": "assign__5xVec3Ffff"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 288,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 308,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 316,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xsqrt__Ff",
+          "symbol": "xsqrt__Ff"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 332,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xsin__Ff",
+          "symbol": "xsin__Ff"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 344,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xcos__Ff",
+          "symbol": "xcos__Ff"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 364,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "assign__5xVec3Ffff",
+          "symbol": "assign__5xVec3Ffff"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 384,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 404,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 412,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xsqrt__Ff",
+          "symbol": "xsqrt__Ff"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 428,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xsin__Ff",
+          "symbol": "xsin__Ff"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 444,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__ml__5xVec3CFf",
+          "symbol": "__ml__5xVec3CFf"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 452,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xcos__Ff",
+          "symbol": "xcos__Ff"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 468,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__ml__5xVec3CFf",
+          "symbol": "__ml__5xVec3CFf"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 484,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__pl__5xVec3CFRC5xVec3",
+          "symbol": "__pl__5xVec3CFRC5xVec3"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 512,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 532,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 540,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xsqrt__Ff",
+          "symbol": "xsqrt__Ff"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 556,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xsin__Ff",
+          "symbol": "xsin__Ff"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 572,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__ml__5xVec3CFf",
+          "symbol": "__ml__5xVec3CFf"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 580,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xcos__Ff",
+          "symbol": "xcos__Ff"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 596,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__ml__5xVec3CFf",
+          "symbol": "__ml__5xVec3CFf"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 612,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__pl__5xVec3CFRC5xVec3",
+          "symbol": "__pl__5xVec3CFRC5xVec3"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 640,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 660,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 668,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xsqrt__Ff",
+          "symbol": "xsqrt__Ff"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 684,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xsin__Ff",
+          "symbol": "xsin__Ff"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 700,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__ml__5xVec3CFf",
+          "symbol": "__ml__5xVec3CFf"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 708,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xcos__Ff",
+          "symbol": "xcos__Ff"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 724,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__ml__5xVec3CFf",
+          "symbol": "__ml__5xVec3CFf"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 740,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__pl__5xVec3CFRC5xVec3",
+          "symbol": "__pl__5xVec3CFRC5xVec3"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 768,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 788,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 832,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xsqrt__Ff",
+          "symbol": "xsqrt__Ff"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 844,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xcos__Ff",
+          "symbol": "xcos__Ff"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 856,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xsin__Ff",
+          "symbol": "xsin__Ff"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 876,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "assign__5xVec3Ffff",
+          "symbol": "assign__5xVec3Ffff"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 896,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 924,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xsin__Ff",
+          "symbol": "xsin__Ff"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 940,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xcos__Ff",
+          "symbol": "xcos__Ff"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 964,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "assign__5xVec3Ffff",
+          "symbol": "assign__5xVec3Ffff"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 984,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 1012,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xsin__Ff",
+          "symbol": "xsin__Ff"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 1028,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__ml__5xVec3CFf",
+          "symbol": "__ml__5xVec3CFf"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 1036,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xcos__Ff",
+          "symbol": "xcos__Ff"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 1052,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__ml__5xVec3CFf",
+          "symbol": "__ml__5xVec3CFf"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 1068,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__pl__5xVec3CFRC5xVec3",
+          "symbol": "__pl__5xVec3CFRC5xVec3"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 1096,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 1124,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xsin__Ff",
+          "symbol": "xsin__Ff"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 1140,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__ml__5xVec3CFf",
+          "symbol": "__ml__5xVec3CFf"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 1148,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xcos__Ff",
+          "symbol": "xcos__Ff"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 1164,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__ml__5xVec3CFf",
+          "symbol": "__ml__5xVec3CFf"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 1180,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__pl__5xVec3CFRC5xVec3",
+          "symbol": "__pl__5xVec3CFRC5xVec3"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 1208,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 1236,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xsin__Ff",
+          "symbol": "xsin__Ff"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 1252,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__ml__5xVec3CFf",
+          "symbol": "__ml__5xVec3CFf"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 1260,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xcos__Ff",
+          "symbol": "xcos__Ff"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 1276,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__ml__5xVec3CFf",
+          "symbol": "__ml__5xVec3CFf"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 1292,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__pl__5xVec3CFRC5xVec3",
+          "symbol": "__pl__5xVec3CFRC5xVec3"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 1704,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 1736,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 1768,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 1812,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Euler__FP7xMat3x3fff",
+          "symbol": "xMat3x3Euler__FP7xMat3x3fff"
+        },
+        {
+          "function": "xParEmitterEmitEntBone__FP4xParP16xParEmitterAssetfRC7xMat4x3",
+          "offset": 1828,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xParEmitterTransformEntBone__FR5xVec3R5xVec3RC16xParEmitterAssetRC7xMat4x3",
+          "offset": 168,
+          "target_source": "SB/Core/x/xMath3.h",
+          "target_function": "xMat4x3Toworld__FP5xVec3PC7xMat4x3PC5xVec3",
+          "symbol": "xMat4x3Toworld__FP5xVec3PC7xMat4x3PC5xVec3"
+        },
+        {
+          "function": "xParEmitterTransformEntBone__FR5xVec3R5xVec3RC16xParEmitterAssetRC7xMat4x3",
+          "offset": 200,
+          "target_source": "SB/Core/x/xMath3.h",
+          "target_function": "xMat4x3Toworld__FP5xVec3PC7xMat4x3PC5xVec3",
+          "symbol": "xMat4x3Toworld__FP5xVec3PC7xMat4x3PC5xVec3"
+        },
+        {
+          "function": "xParEmitterTransformEntBone__FR5xVec3R5xVec3RC16xParEmitterAssetRC7xMat4x3",
+          "offset": 224,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__pl__5xVec3CFRC5xVec3",
+          "symbol": "__pl__5xVec3CFRC5xVec3"
+        },
+        {
+          "function": "xParEmitterTransformEntBone__FR5xVec3R5xVec3RC16xParEmitterAssetRC4xEnt",
+          "offset": 80,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3",
+          "symbol": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3"
+        },
+        {
+          "function": "xParEmitterTransformEntBone__FR5xVec3R5xVec3RC16xParEmitterAssetRC4xEnt",
+          "offset": 232,
+          "target_source": "SB/Core/x/xMath3.h",
+          "target_function": "xMat4x3Toworld__FP5xVec3PC7xMat4x3PC5xVec3",
+          "symbol": "xMat4x3Toworld__FP5xVec3PC7xMat4x3PC5xVec3"
+        },
+        {
+          "function": "xParEmitterTransformEntBone__FR5xVec3R5xVec3RC16xParEmitterAssetRC4xEnt",
+          "offset": 264,
+          "target_source": "SB/Core/x/xMath3.h",
+          "target_function": "xMat4x3Toworld__FP5xVec3PC7xMat4x3PC5xVec3",
+          "symbol": "xMat4x3Toworld__FP5xVec3PC7xMat4x3PC5xVec3"
+        },
+        {
+          "function": "xParEmitterTransformEntBone__FR5xVec3R5xVec3RC16xParEmitterAssetRC4xEnt",
+          "offset": 288,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__pl__5xVec3CFRC5xVec3",
+          "symbol": "__pl__5xVec3CFRC5xVec3"
+        },
+        {
+          "function": "xParEmitterEmitOCircle__FP4xParP16xParEmitterAssetf",
+          "offset": 36,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitOCircle__FP4xParP16xParEmitterAssetf",
+          "offset": 72,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3LookVec__FP7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3LookVec__FP7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xParEmitterEmitOCircle__FP4xParP16xParEmitterAssetf",
+          "offset": 80,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitOCircle__FP4xParP16xParEmitterAssetf",
+          "offset": 108,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xcos__Ff",
+          "symbol": "xcos__Ff"
+        },
+        {
+          "function": "xParEmitterEmitOCircle__FP4xParP16xParEmitterAssetf",
+          "offset": 120,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xsin__Ff",
+          "symbol": "xsin__Ff"
+        },
+        {
+          "function": "xParEmitterEmitOCircle__FP4xParP16xParEmitterAssetf",
+          "offset": 176,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__amu__5xVec3Ff",
+          "symbol": "__amu__5xVec3Ff"
+        },
+        {
+          "function": "xParEmitterEmitOCircle__FP4xParP16xParEmitterAssetf",
+          "offset": 204,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__apl__5xVec3FRC5xVec3",
+          "symbol": "__apl__5xVec3FRC5xVec3"
+        },
+        {
+          "function": "xParEmitterEmitOCircle__FP4xParP16xParEmitterAssetf",
+          "offset": 220,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__ml__5xVec3CFf",
+          "symbol": "__ml__5xVec3CFf"
+        },
+        {
+          "function": "xParEmitterEmitOCircle__FP4xParP16xParEmitterAssetf",
+          "offset": 244,
+          "target_source": "SB/Core/x/xParEmitterType.cpp",
+          "target_function": "xParEmitterAngleVariation__FP4xParP16xParEmitterAsset",
+          "symbol": "xParEmitterAngleVariation__FP4xParP16xParEmitterAsset"
+        },
+        {
+          "function": "xParEmitterEmitOCircle__FP4xParP16xParEmitterAssetf",
+          "offset": 280,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__ml__5xVec3CFf",
+          "symbol": "__ml__5xVec3CFf"
+        },
+        {
+          "function": "xParEmitterEmitOCircle__FP4xParP16xParEmitterAssetf",
+          "offset": 292,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__apl__5xVec3FRC5xVec3",
+          "symbol": "__apl__5xVec3FRC5xVec3"
+        },
+        {
+          "function": "xParEmitterEmitOCircle__FP4xParP16xParEmitterAssetf",
+          "offset": 308,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__amu__5xVec3Ff",
+          "symbol": "__amu__5xVec3Ff"
+        },
+        {
+          "function": "xParEmitterEmitOCircleEdge__FP4xParP16xParEmitterAssetf",
+          "offset": 48,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3LookVec__FP7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3LookVec__FP7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xParEmitterEmitOCircleEdge__FP4xParP16xParEmitterAssetf",
+          "offset": 56,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitOCircleEdge__FP4xParP16xParEmitterAssetf",
+          "offset": 84,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xcos__Ff",
+          "symbol": "xcos__Ff"
+        },
+        {
+          "function": "xParEmitterEmitOCircleEdge__FP4xParP16xParEmitterAssetf",
+          "offset": 96,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xsin__Ff",
+          "symbol": "xsin__Ff"
+        },
+        {
+          "function": "xParEmitterEmitOCircleEdge__FP4xParP16xParEmitterAssetf",
+          "offset": 152,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__amu__5xVec3Ff",
+          "symbol": "__amu__5xVec3Ff"
+        },
+        {
+          "function": "xParEmitterEmitOCircleEdge__FP4xParP16xParEmitterAssetf",
+          "offset": 180,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__apl__5xVec3FRC5xVec3",
+          "symbol": "__apl__5xVec3FRC5xVec3"
+        },
+        {
+          "function": "xParEmitterEmitOCircleEdge__FP4xParP16xParEmitterAssetf",
+          "offset": 196,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__ml__5xVec3CFf",
+          "symbol": "__ml__5xVec3CFf"
+        },
+        {
+          "function": "xParEmitterEmitOCircleEdge__FP4xParP16xParEmitterAssetf",
+          "offset": 220,
+          "target_source": "SB/Core/x/xParEmitterType.cpp",
+          "target_function": "xParEmitterAngleVariation__FP4xParP16xParEmitterAsset",
+          "symbol": "xParEmitterAngleVariation__FP4xParP16xParEmitterAsset"
+        },
+        {
+          "function": "xParEmitterEmitOCircleEdge__FP4xParP16xParEmitterAssetf",
+          "offset": 256,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__ml__5xVec3CFf",
+          "symbol": "__ml__5xVec3CFf"
+        },
+        {
+          "function": "xParEmitterEmitOCircleEdge__FP4xParP16xParEmitterAssetf",
+          "offset": 268,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__apl__5xVec3FRC5xVec3",
+          "symbol": "__apl__5xVec3FRC5xVec3"
+        },
+        {
+          "function": "xParEmitterEmitOCircleEdge__FP4xParP16xParEmitterAssetf",
+          "offset": 284,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__amu__5xVec3Ff",
+          "symbol": "__amu__5xVec3Ff"
+        },
+        {
+          "function": "xParEmitterEmitVCylEdge__FP4xParP16xParEmitterAssetf",
+          "offset": 72,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitVCylEdge__FP4xParP16xParEmitterAssetf",
+          "offset": 224,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitVCylEdge__FP4xParP16xParEmitterAssetf",
+          "offset": 408,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitVCylEdge__FP4xParP16xParEmitterAssetf",
+          "offset": 440,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitVCylEdge__FP4xParP16xParEmitterAssetf",
+          "offset": 472,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitVCylEdge__FP4xParP16xParEmitterAssetf",
+          "offset": 516,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Euler__FP7xMat3x3fff",
+          "symbol": "xMat3x3Euler__FP7xMat3x3fff"
+        },
+        {
+          "function": "xParEmitterEmitVCylEdge__FP4xParP16xParEmitterAssetf",
+          "offset": 532,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xParEmitterEmitOffsetPoint__FP11xParEmitterP4xParP16xParEmitterAssetfP4xEnt",
+          "offset": 76,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelTagEval__FP8RpAtomicPC9xModelTagP11RwMatrixTagP5xVec3",
+          "symbol": "iModelTagEval__FP8RpAtomicPC9xModelTagP11RwMatrixTagP5xVec3"
+        },
+        {
+          "function": "xParEmitterEmitOffsetPoint__FP11xParEmitterP4xParP16xParEmitterAssetfP4xEnt",
+          "offset": 240,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitOffsetPoint__FP11xParEmitterP4xParP16xParEmitterAssetfP4xEnt",
+          "offset": 272,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitOffsetPoint__FP11xParEmitterP4xParP16xParEmitterAssetfP4xEnt",
+          "offset": 304,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitOffsetPoint__FP11xParEmitterP4xParP16xParEmitterAssetfP4xEnt",
+          "offset": 348,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Euler__FP7xMat3x3fff",
+          "symbol": "xMat3x3Euler__FP7xMat3x3fff"
+        },
+        {
+          "function": "xParEmitterEmitOffsetPoint__FP11xParEmitterP4xParP16xParEmitterAssetfP4xEnt",
+          "offset": 364,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xParEmitterEmitEntity__FP4xParP16xParEmitterAssetfP4xEnt",
+          "offset": 104,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xrand__Fv",
+          "symbol": "xrand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntity__FP4xParP16xParEmitterAssetfP4xEnt",
+          "offset": 196,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelVertEval__FP8RpAtomicUiUiP11RwMatrixTagP5xVec3P5xVec3",
+          "symbol": "iModelVertEval__FP8RpAtomicUiUiP11RwMatrixTagP5xVec3P5xVec3"
+        },
+        {
+          "function": "xParEmitterEmitEntity__FP4xParP16xParEmitterAssetfP4xEnt",
+          "offset": 468,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntity__FP4xParP16xParEmitterAssetfP4xEnt",
+          "offset": 500,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntity__FP4xParP16xParEmitterAssetfP4xEnt",
+          "offset": 532,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitEntity__FP4xParP16xParEmitterAssetfP4xEnt",
+          "offset": 576,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Euler__FP7xMat3x3fff",
+          "symbol": "xMat3x3Euler__FP7xMat3x3fff"
+        },
+        {
+          "function": "xParEmitterEmitEntity__FP4xParP16xParEmitterAssetfP4xEnt",
+          "offset": 592,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xParEmitterEmitVolume__FP4xParP16xParEmitterAssetfP7xVolume",
+          "offset": 104,
+          "target_source": "SB/Core/x/xVolume.cpp",
+          "target_function": "GetBound__7xVolumeFv",
+          "symbol": "GetBound__7xVolumeFv"
+        },
+        {
+          "function": "xParEmitterEmitVolume__FP4xParP16xParEmitterAssetfP7xVolume",
+          "offset": 160,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitVolume__FP4xParP16xParEmitterAssetfP7xVolume",
+          "offset": 168,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitVolume__FP4xParP16xParEmitterAssetfP7xVolume",
+          "offset": 176,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitVolume__FP4xParP16xParEmitterAssetfP7xVolume",
+          "offset": 320,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitVolume__FP4xParP16xParEmitterAssetfP7xVolume",
+          "offset": 352,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitVolume__FP4xParP16xParEmitterAssetfP7xVolume",
+          "offset": 384,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitVolume__FP4xParP16xParEmitterAssetfP7xVolume",
+          "offset": 428,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Euler__FP7xMat3x3fff",
+          "symbol": "xMat3x3Euler__FP7xMat3x3fff"
+        },
+        {
+          "function": "xParEmitterEmitVolume__FP4xParP16xParEmitterAssetfP7xVolume",
+          "offset": 444,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xParEmitterEmitSphereEdge__FP4xParP16xParEmitterAssetfi",
+          "offset": 232,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitSphereEdge__FP4xParP16xParEmitterAssetfi",
+          "offset": 252,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitSphereEdge__FP4xParP16xParEmitterAssetfi",
+          "offset": 272,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitSphereEdge__FP4xParP16xParEmitterAssetfi",
+          "offset": 304,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Euler__FP7xMat3x3fff",
+          "symbol": "xMat3x3Euler__FP7xMat3x3fff"
+        },
+        {
+          "function": "xParEmitterEmitSphereEdge__FP4xParP16xParEmitterAssetfi",
+          "offset": 320,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitSphereEdge__FP4xParP16xParEmitterAssetfi",
+          "offset": 340,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitSphereEdge__FP4xParP16xParEmitterAssetfi",
+          "offset": 376,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Euler__FP7xMat3x3fff",
+          "symbol": "xMat3x3Euler__FP7xMat3x3fff"
+        },
+        {
+          "function": "xParEmitterEmitSphereEdge__FP4xParP16xParEmitterAssetfi",
+          "offset": 392,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitSphereEdge__FP4xParP16xParEmitterAssetfi",
+          "offset": 412,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitSphereEdge__FP4xParP16xParEmitterAssetfi",
+          "offset": 444,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Euler__FP7xMat3x3fff",
+          "symbol": "xMat3x3Euler__FP7xMat3x3fff"
+        },
+        {
+          "function": "xParEmitterEmitSphereEdge__FP4xParP16xParEmitterAssetfi",
+          "offset": 720,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitSphereEdge__FP4xParP16xParEmitterAssetfi",
+          "offset": 752,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitSphereEdge__FP4xParP16xParEmitterAssetfi",
+          "offset": 784,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitSphereEdge__FP4xParP16xParEmitterAssetfi",
+          "offset": 828,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Euler__FP7xMat3x3fff",
+          "symbol": "xMat3x3Euler__FP7xMat3x3fff"
+        },
+        {
+          "function": "xParEmitterEmitSphereEdge__FP4xParP16xParEmitterAssetfi",
+          "offset": 844,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xParEmitterEmitSphere__FP4xParP16xParEmitterAssetf",
+          "offset": 144,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitSphere__FP4xParP16xParEmitterAssetf",
+          "offset": 164,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitSphere__FP4xParP16xParEmitterAssetf",
+          "offset": 288,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitSphere__FP4xParP16xParEmitterAssetf",
+          "offset": 528,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitSphere__FP4xParP16xParEmitterAssetf",
+          "offset": 560,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitSphere__FP4xParP16xParEmitterAssetf",
+          "offset": 592,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitSphere__FP4xParP16xParEmitterAssetf",
+          "offset": 636,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Euler__FP7xMat3x3fff",
+          "symbol": "xMat3x3Euler__FP7xMat3x3fff"
+        },
+        {
+          "function": "xParEmitterEmitSphere__FP4xParP16xParEmitterAssetf",
+          "offset": 652,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xParEmitterEmitLine__FP4xParP16xParEmitterAssetf",
+          "offset": 164,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xParEmitterEmitLine__FP4xParP16xParEmitterAssetf",
+          "offset": 172,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitLine__FP4xParP16xParEmitterAssetf",
+          "offset": 268,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitLine__FP4xParP16xParEmitterAssetf",
+          "offset": 288,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitLine__FP4xParP16xParEmitterAssetf",
+          "offset": 412,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitLine__FP4xParP16xParEmitterAssetf",
+          "offset": 680,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitLine__FP4xParP16xParEmitterAssetf",
+          "offset": 712,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitLine__FP4xParP16xParEmitterAssetf",
+          "offset": 744,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitLine__FP4xParP16xParEmitterAssetf",
+          "offset": 788,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Euler__FP7xMat3x3fff",
+          "symbol": "xMat3x3Euler__FP7xMat3x3fff"
+        },
+        {
+          "function": "xParEmitterEmitLine__FP4xParP16xParEmitterAssetf",
+          "offset": 804,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xParEmitterEmitRectEdge__FP4xParP16xParEmitterAssetf",
+          "offset": 88,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitRectEdge__FP4xParP16xParEmitterAssetf",
+          "offset": 168,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitRectEdge__FP4xParP16xParEmitterAssetf",
+          "offset": 344,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitRectEdge__FP4xParP16xParEmitterAssetf",
+          "offset": 376,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitRectEdge__FP4xParP16xParEmitterAssetf",
+          "offset": 408,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitRectEdge__FP4xParP16xParEmitterAssetf",
+          "offset": 452,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Euler__FP7xMat3x3fff",
+          "symbol": "xMat3x3Euler__FP7xMat3x3fff"
+        },
+        {
+          "function": "xParEmitterEmitRectEdge__FP4xParP16xParEmitterAssetf",
+          "offset": 468,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xParEmitterEmitRect__FP4xParP16xParEmitterAssetf",
+          "offset": 92,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitRect__FP4xParP16xParEmitterAssetf",
+          "offset": 132,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitRect__FP4xParP16xParEmitterAssetf",
+          "offset": 268,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitRect__FP4xParP16xParEmitterAssetf",
+          "offset": 300,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitRect__FP4xParP16xParEmitterAssetf",
+          "offset": 332,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitRect__FP4xParP16xParEmitterAssetf",
+          "offset": 376,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Euler__FP7xMat3x3fff",
+          "symbol": "xMat3x3Euler__FP7xMat3x3fff"
+        },
+        {
+          "function": "xParEmitterEmitRect__FP4xParP16xParEmitterAssetf",
+          "offset": 392,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xParEmitterEmitCircle__FP4xParP16xParEmitterAssetf",
+          "offset": 108,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitCircle__FP4xParP16xParEmitterAssetf",
+          "offset": 204,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitCircle__FP4xParP16xParEmitterAssetf",
+          "offset": 396,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitCircle__FP4xParP16xParEmitterAssetf",
+          "offset": 428,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitCircle__FP4xParP16xParEmitterAssetf",
+          "offset": 460,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitCircle__FP4xParP16xParEmitterAssetf",
+          "offset": 504,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Euler__FP7xMat3x3fff",
+          "symbol": "xMat3x3Euler__FP7xMat3x3fff"
+        },
+        {
+          "function": "xParEmitterEmitCircle__FP4xParP16xParEmitterAssetf",
+          "offset": 520,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xParEmitterEmitCircleEdge__FP4xParP16xParEmitterAssetf",
+          "offset": 108,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitCircleEdge__FP4xParP16xParEmitterAssetf",
+          "offset": 376,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitCircleEdge__FP4xParP16xParEmitterAssetf",
+          "offset": 408,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitCircleEdge__FP4xParP16xParEmitterAssetf",
+          "offset": 440,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitCircleEdge__FP4xParP16xParEmitterAssetf",
+          "offset": 484,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Euler__FP7xMat3x3fff",
+          "symbol": "xMat3x3Euler__FP7xMat3x3fff"
+        },
+        {
+          "function": "xParEmitterEmitCircleEdge__FP4xParP16xParEmitterAssetf",
+          "offset": 500,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xParEmitterAngleVariation__FP4xParP16xParEmitterAsset",
+          "offset": 120,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterAngleVariation__FP4xParP16xParEmitterAsset",
+          "offset": 152,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterAngleVariation__FP4xParP16xParEmitterAsset",
+          "offset": 184,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterAngleVariation__FP4xParP16xParEmitterAsset",
+          "offset": 228,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Euler__FP7xMat3x3fff",
+          "symbol": "xMat3x3Euler__FP7xMat3x3fff"
+        },
+        {
+          "function": "xParEmitterAngleVariation__FP4xParP16xParEmitterAsset",
+          "offset": 244,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xParEmitterEmitPoint__FP4xParP16xParEmitterAssetf",
+          "offset": 180,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitPoint__FP4xParP16xParEmitterAssetf",
+          "offset": 212,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitPoint__FP4xParP16xParEmitterAssetf",
+          "offset": 244,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xParEmitterEmitPoint__FP4xParP16xParEmitterAssetf",
+          "offset": 288,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Euler__FP7xMat3x3fff",
+          "symbol": "xMat3x3Euler__FP7xMat3x3fff"
+        },
+        {
+          "function": "xParEmitterEmitPoint__FP4xParP16xParEmitterAssetf",
+          "offset": 304,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3"
+        }
+      ],
+      "gp_relocations": [],
+      "address_pairs": []
+    },
+    {
+      "source": "src/SB/Core/x/xSnd.cpp",
+      "target_unit": "SB/Core/x/xSnd.cpp",
+      "object": "source/xSnd.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xSndStreamUnlock__FUi": "xSndStreamUnlock__FUi",
+        "xSndStreamReady__FUi": "xSndStreamReady__FUi",
+        "xSndStreamLock__FUi14sound_categoryb": "xSndStreamLock__FUi14sound_categoryb",
+        "xSndStopFade__FUif": "xSndStopFade__FUif",
+        "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff": "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff",
+        "update_faders__Ff": "update_faders__Ff",
+        "xSndSetExternalCallback__FPFUib_v": "xSndSetExternalCallback__FPFUib_v",
+        "xSndLoadExternalData__FUiPCvi": "xSndLoadExternalData__FUiPCvi",
+        "xSndSetPitch__FUif": "xSndSetPitch__FUif",
+        "xSndSetVol__FUif": "xSndSetVol__FUif",
+        "xSndStopChildren__FUi": "xSndStopChildren__FUi",
+        "xSndParentDied__FUi": "xSndParentDied__FUi",
+        "xSndStop__FUi": "xSndStop__FUi",
+        "xSndIDIsPlaying__FUi": "xSndIDIsPlaying__FUi",
+        "xSndStartStereo__FUiUif": "xSndStartStereo__FUiUif",
+        "xSndIsReady__FUi": "xSndIsReady__FUi",
+        "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf": "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf",
+        "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf",
+        "xSndPlay3D__FUiffUiUiP4xEntff14sound_categoryf": "xSndPlay3D__FUiffUiUiP4xEntff14sound_categoryf",
+        "xSndPlay__FUiffUiUiUi14sound_categoryf": "xSndPlay__FUiffUiUiUi14sound_categoryf",
+        "xSndExit__Fv": "xSndExit__Fv",
+        "xSndSelectListenerMode__F24sound_listener_game_mode": "xSndSelectListenerMode__F24sound_listener_game_mode",
+        "xSndSetListenerData__F19sound_listener_typePC7xMat4x3": "xSndSetListenerData__F19sound_listener_typePC7xMat4x3",
+        "xSndUpdate__Fv": "xSndUpdate__Fv",
+        "xSndInternalUpdateVoicePos__FP13xSndVoiceInfo": "xSndInternalUpdateVoicePos__FP13xSndVoiceInfo",
+        "xSndProcessSoundPos__FPC5xVec3P5xVec3": "xSndProcessSoundPos__FPC5xVec3P5xVec3",
+        "xSndCalculateListenerPosition__Fv": "xSndCalculateListenerPosition__Fv",
+        "xSndAddDelayed__FUiffUiUiUiP4xEntP5xVec3ff14sound_categoryf": "xSndAddDelayed__FUiffUiUiUiP4xEntP5xVec3ff14sound_categoryf",
+        "xSndStopAll__FUi": "xSndStopAll__FUi",
+        "xSndSetCategoryVol__F14sound_categoryf": "xSndSetCategoryVol__F14sound_categoryf",
+        "xSndPauseCategory__FUiUi": "xSndPauseCategory__FUiUi",
+        "xSndPauseAll__FUiUi": "xSndPauseAll__FUiUi",
+        "xSndResume__Fv": "xSndResume__Fv",
+        "xSndSuspend__Fv": "xSndSuspend__Fv",
+        "xSndSetEnvironmentalEffect__F12sound_effect": "xSndSetEnvironmentalEffect__F12sound_effect",
+        "xSndSceneInit__Fv": "xSndSceneInit__Fv",
+        "xSndInit__Fv": "xSndInit__Fv"
+      },
+      "calls": [
+        {
+          "function": "xSndStreamLock__FUi14sound_categoryb",
+          "offset": 264,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndStop__FUi",
+          "symbol": "iSndStop__FUi"
+        },
+        {
+          "function": "xSndStreamLock__FUi14sound_categoryb",
+          "offset": 348,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndStop__FUi",
+          "symbol": "iSndStop__FUi"
+        },
+        {
+          "function": "xSndStopFade__FUif",
+          "offset": 64,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndStop__FUi",
+          "symbol": "iSndStop__FUi"
+        },
+        {
+          "function": "xSndStopFade__FUif",
+          "offset": 80,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndGetVol__FUi",
+          "symbol": "iSndGetVol__FUi"
+        },
+        {
+          "function": "xSndStopFade__FUif",
+          "offset": 108,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndStop__FUi",
+          "symbol": "iSndStop__FUi"
+        },
+        {
+          "function": "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff",
+          "offset": 100,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf",
+          "symbol": "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf"
+        },
+        {
+          "function": "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff",
+          "offset": 124,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf",
+          "symbol": "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf"
+        },
+        {
+          "function": "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff",
+          "offset": 164,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf",
+          "symbol": "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf"
+        },
+        {
+          "function": "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff",
+          "offset": 180,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf",
+          "symbol": "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf"
+        },
+        {
+          "function": "update_faders__Ff",
+          "offset": 144,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndSetVol__FUif",
+          "symbol": "iSndSetVol__FUif"
+        },
+        {
+          "function": "update_faders__Ff",
+          "offset": 160,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndStop__FUi",
+          "symbol": "iSndStop__FUi"
+        },
+        {
+          "function": "update_faders__Ff",
+          "offset": 292,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndSetVol__FUif",
+          "symbol": "iSndSetVol__FUif"
+        },
+        {
+          "function": "xSndSetExternalCallback__FPFUib_v",
+          "offset": 0,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndSetExternalCallback__FPFUib_v",
+          "symbol": "iSndSetExternalCallback__FPFUib_v",
+          "opcode": 2
+        },
+        {
+          "function": "xSndLoadExternalData__FUiPCvi",
+          "offset": 0,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndLoadExternalData__FUiPCvi",
+          "symbol": "iSndLoadExternalData__FUiPCvi",
+          "opcode": 2
+        },
+        {
+          "function": "xSndSetPitch__FUif",
+          "offset": 0,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndSetPitch__FUif",
+          "symbol": "iSndSetPitch__FUif",
+          "opcode": 2
+        },
+        {
+          "function": "xSndSetVol__FUif",
+          "offset": 0,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndSetVol__FUif",
+          "symbol": "iSndSetVol__FUif",
+          "opcode": 2
+        },
+        {
+          "function": "xSndStopChildren__FUi",
+          "offset": 68,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndStop__FUi",
+          "symbol": "iSndStop__FUi"
+        },
+        {
+          "function": "xSndStop__FUi",
+          "offset": 0,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndStop__FUi",
+          "symbol": "iSndStop__FUi",
+          "opcode": 2
+        },
+        {
+          "function": "xSndStartStereo__FUiUif",
+          "offset": 0,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndStartStereo__FUiUif",
+          "symbol": "iSndStartStereo__FUiUif",
+          "opcode": 2
+        },
+        {
+          "function": "xSndIsReady__FUi",
+          "offset": 8,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndIsReady__FUi",
+          "symbol": "iSndIsReady__FUi"
+        },
+        {
+          "function": "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf",
+          "offset": 264,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndAddDelayed__FUiffUiUiUiP4xEntP5xVec3ff14sound_categoryf",
+          "symbol": "xSndAddDelayed__FUiffUiUiUiP4xEntP5xVec3ff14sound_categoryf"
+        },
+        {
+          "function": "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf",
+          "offset": 604,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndLookup__FUi",
+          "symbol": "iSndLookup__FUi"
+        },
+        {
+          "function": "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf",
+          "offset": 648,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndLookup__FUi",
+          "symbol": "iSndLookup__FUi"
+        },
+        {
+          "function": "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf",
+          "offset": 752,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndFindFreeVoice__FUiUiUi",
+          "symbol": "iSndFindFreeVoice__FUiUiUi"
+        },
+        {
+          "function": "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf",
+          "offset": 1256,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndInternalUpdateVoicePos__FP13xSndVoiceInfo",
+          "symbol": "xSndInternalUpdateVoicePos__FP13xSndVoiceInfo"
+        },
+        {
+          "function": "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf",
+          "offset": 1264,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndPlay__FP13xSndVoiceInfo",
+          "symbol": "iSndPlay__FP13xSndVoiceInfo"
+        },
+        {
+          "function": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf",
+          "offset": 32,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf",
+          "symbol": "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf"
+        },
+        {
+          "function": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf",
+          "offset": 52,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf",
+          "symbol": "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf"
+        },
+        {
+          "function": "xSndPlay3D__FUiffUiUiP4xEntff14sound_categoryf",
+          "offset": 16,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf",
+          "symbol": "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf",
+          "opcode": 2
+        },
+        {
+          "function": "xSndPlay__FUiffUiUiUi14sound_categoryf",
+          "offset": 20,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf",
+          "symbol": "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf",
+          "opcode": 2
+        },
+        {
+          "function": "xSndExit__Fv",
+          "offset": 8,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndExit__Fv",
+          "symbol": "iSndExit__Fv"
+        },
+        {
+          "function": "xSndUpdate__Fv",
+          "offset": 12,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndCalculateListenerPosition__Fv",
+          "symbol": "xSndCalculateListenerPosition__Fv"
+        },
+        {
+          "function": "xSndUpdate__Fv",
+          "offset": 128,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf",
+          "symbol": "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf"
+        },
+        {
+          "function": "xSndUpdate__Fv",
+          "offset": 152,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "update_faders__Ff",
+          "symbol": "update_faders__Ff"
+        },
+        {
+          "function": "xSndUpdate__Fv",
+          "offset": 160,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndUpdate__Fv",
+          "symbol": "iSndUpdate__Fv"
+        },
+        {
+          "function": "xSndInternalUpdateVoicePos__FP13xSndVoiceInfo",
+          "offset": 260,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndProcessSoundPos__FPC5xVec3P5xVec3",
+          "symbol": "xSndProcessSoundPos__FPC5xVec3P5xVec3"
+        },
+        {
+          "function": "xSndStopAll__FUi",
+          "offset": 80,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndStop__FUi",
+          "symbol": "iSndStop__FUi"
+        },
+        {
+          "function": "xSndPauseCategory__FUiUi",
+          "offset": 92,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndPause__FUiUi",
+          "symbol": "iSndPause__FUiUi"
+        },
+        {
+          "function": "xSndPauseAll__FUiUi",
+          "offset": 76,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndPause__FUiUi",
+          "symbol": "iSndPause__FUiUi"
+        },
+        {
+          "function": "xSndPauseAll__FUiUi",
+          "offset": 112,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndPause__FUiUi",
+          "symbol": "iSndPause__FUiUi"
+        },
+        {
+          "function": "xSndResume__Fv",
+          "offset": 60,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndPause__FUiUi",
+          "symbol": "iSndPause__FUiUi"
+        },
+        {
+          "function": "xSndResume__Fv",
+          "offset": 96,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndPause__FUiUi",
+          "symbol": "iSndPause__FUiUi"
+        },
+        {
+          "function": "xSndSuspend__Fv",
+          "offset": 68,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndPause__FUiUi",
+          "symbol": "iSndPause__FUiUi"
+        },
+        {
+          "function": "xSndSuspend__Fv",
+          "offset": 104,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndPause__FUiUi",
+          "symbol": "iSndPause__FUiUi"
+        },
+        {
+          "function": "xSndSuspend__Fv",
+          "offset": 132,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndUpdate__Fv",
+          "symbol": "xSndUpdate__Fv"
+        },
+        {
+          "function": "xSndSetEnvironmentalEffect__F12sound_effect",
+          "offset": 32,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndSetEnvironmentalEffect__F13isound_effect",
+          "symbol": "iSndSetEnvironmentalEffect__F13isound_effect"
+        },
+        {
+          "function": "xSndSetEnvironmentalEffect__F12sound_effect",
+          "offset": 48,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndSetEnvironmentalEffect__F13isound_effect",
+          "symbol": "iSndSetEnvironmentalEffect__F13isound_effect"
+        },
+        {
+          "function": "xSndSceneInit__Fv",
+          "offset": 204,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndUpdate__Fv",
+          "symbol": "iSndUpdate__Fv",
+          "opcode": 2
+        },
+        {
+          "function": "xSndInit__Fv",
+          "offset": 8,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndInit__Fv",
+          "symbol": "iSndInit__Fv"
+        },
+        {
+          "function": "xSndInit__Fv",
+          "offset": 112,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndSceneInit__Fv",
+          "symbol": "xSndSceneInit__Fv"
+        },
+        {
+          "function": "xSndInit__Fv",
+          "offset": 180,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndSuspendCD__FUi",
+          "symbol": "iSndSuspendCD__FUi"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xSndStopFade__FUif",
+          "offset": 28,
+          "opcode": 35,
+          "target_name": "faders_active",
+          "symbol": "faders_active"
+        },
+        {
+          "function": "xSndStopFade__FUif",
+          "offset": 116,
+          "opcode": 35,
+          "target_name": "faders_active",
+          "symbol": "faders_active"
+        },
+        {
+          "function": "xSndStopFade__FUif",
+          "offset": 164,
+          "opcode": 35,
+          "target_name": "faders_active",
+          "symbol": "faders_active"
+        },
+        {
+          "function": "xSndStopFade__FUif",
+          "offset": 180,
+          "opcode": 43,
+          "target_name": "faders_active",
+          "symbol": "faders_active"
+        },
+        {
+          "function": "xSndStopFade__FUif",
+          "offset": 264,
+          "opcode": 35,
+          "target_name": "faders_active",
+          "symbol": "faders_active"
+        },
+        {
+          "function": "xSndStopFade__FUif",
+          "offset": 336,
+          "opcode": 35,
+          "target_name": "faders_active",
+          "symbol": "faders_active"
+        },
+        {
+          "function": "xSndStopFade__FUif",
+          "offset": 344,
+          "opcode": 43,
+          "target_name": "faders_active",
+          "symbol": "faders_active"
+        },
+        {
+          "function": "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff",
+          "offset": 28,
+          "opcode": 35,
+          "target_name": "faders_active",
+          "symbol": "faders_active"
+        },
+        {
+          "function": "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff",
+          "offset": 208,
+          "opcode": 35,
+          "target_name": "faders_active",
+          "symbol": "faders_active"
+        },
+        {
+          "function": "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff",
+          "offset": 264,
+          "opcode": 35,
+          "target_name": "faders_active",
+          "symbol": "faders_active"
+        },
+        {
+          "function": "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff",
+          "offset": 272,
+          "opcode": 43,
+          "target_name": "faders_active",
+          "symbol": "faders_active"
+        },
+        {
+          "function": "update_faders__Ff",
+          "offset": 28,
+          "opcode": 35,
+          "target_name": "faders_active",
+          "symbol": "faders_active"
+        },
+        {
+          "function": "update_faders__Ff",
+          "offset": 168,
+          "opcode": 35,
+          "target_name": "faders_active",
+          "symbol": "faders_active"
+        },
+        {
+          "function": "update_faders__Ff",
+          "offset": 184,
+          "opcode": 43,
+          "target_name": "faders_active",
+          "symbol": "faders_active"
+        },
+        {
+          "function": "xSndExit__Fv",
+          "offset": 16,
+          "opcode": 43,
+          "target_name": "faders_active",
+          "symbol": "faders_active"
+        },
+        {
+          "function": "xSndUpdate__Fv",
+          "offset": 20,
+          "opcode": 35,
+          "target_name": "sDelayedPaused",
+          "symbol": "sDelayedPaused"
+        },
+        {
+          "function": "xSndUpdate__Fv",
+          "offset": 64,
+          "opcode": 49,
+          "target_name": "sTimeElapsed",
+          "symbol": "sTimeElapsed"
+        },
+        {
+          "function": "xSndUpdate__Fv",
+          "offset": 156,
+          "opcode": 49,
+          "target_name": "sTimeElapsed",
+          "symbol": "sTimeElapsed"
+        },
+        {
+          "function": "xSndStopAll__FUi",
+          "offset": 164,
+          "opcode": 43,
+          "target_name": "sDelayedPaused",
+          "symbol": "sDelayedPaused"
+        },
+        {
+          "function": "xSndPauseAll__FUiUi",
+          "offset": 40,
+          "opcode": 43,
+          "target_name": "sDelayedPaused",
+          "symbol": "sDelayedPaused"
+        },
+        {
+          "function": "xSndResume__Fv",
+          "offset": 24,
+          "opcode": 43,
+          "target_name": "sDelayedPaused",
+          "symbol": "sDelayedPaused"
+        },
+        {
+          "function": "xSndResume__Fv",
+          "offset": 120,
+          "opcode": 43,
+          "target_name": "sDelayedPaused",
+          "symbol": "sDelayedPaused"
+        },
+        {
+          "function": "xSndSuspend__Fv",
+          "offset": 28,
+          "opcode": 43,
+          "target_name": "sDelayedPaused",
+          "symbol": "sDelayedPaused"
+        },
+        {
+          "function": "xSndSuspend__Fv",
+          "offset": 136,
+          "opcode": 43,
+          "target_name": "sDelayedPaused",
+          "symbol": "sDelayedPaused"
+        },
+        {
+          "function": "xSndInit__Fv",
+          "offset": 244,
+          "opcode": 43,
+          "target_name": "sDelayedPaused",
+          "symbol": "sDelayedPaused"
+        },
+        {
+          "function": "xSndInit__Fv",
+          "offset": 248,
+          "opcode": 43,
+          "target_name": "faders_active",
+          "symbol": "faders_active"
+        }
+      ]
     }
   ]
 }
