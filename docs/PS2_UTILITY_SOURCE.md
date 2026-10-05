@@ -14,3 +14,9 @@ Actual standard objdiff reports agree across all three debug releases:
 These are the project's normal code-match measures, which do not prove every external relocation or a complete executable link. Completed-unit status remains false. Target calls and GP references use only independently named original DWARF addresses, with the existing inverse relocation checks. Four serializer calls reuse the already reviewed runtime memset identity, including the original tail-jump opcode in WipeMainBuffer. No new runtime identity or structure layout is inferred from compiled output.
 
 The source profiles cover whole original translation units and are scoped to the three debug executable hashes. No France ownership or progress is inferred by this change.
+
+## Existing French bounds subset
+
+The France-only xBound profile compiles the complete existing source against all three already confirmed original members: xRayHitsBound (208 bytes), xBoundOBBIsectRay (952), and xBoundGetBox (236). Their canonical linkage names agree across all three authenticated reference DWARF originals. The explicit-transfer registry records the corresponding French extents; this change adds no function identities or boundaries. Seven call relocations resolve to existing confirmed French callee symbols and pass the original-instruction inverse checks.
+
+The two nonmatching members remain in the report, and complete-unit/source-link status stays false. The profile is restricted to the French executable SHA-1; every effective debug-region profile is unchanged. This is an extension of the existing partial French comparisons, not a claim that its entire bounds unit is recovered.

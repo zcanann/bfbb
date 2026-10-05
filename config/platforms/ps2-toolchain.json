@@ -3941,6 +3941,141 @@
           ]
         }
       ]
+    },
+    {
+      "source": "src/SB/Core/x/xBound.cpp",
+      "target_unit": "SB/Core/x/xBound.cpp",
+      "object": "source/xBound.o",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "xRayHitsBound": "xRayHitsBound__FPC5xRay3PC6xBoundP7xCollis",
+        "xBoundOBBIsectRay": "xBoundOBBIsectRay__FPC4xBoxPC7xMat4x3PC5xRay3P6xIsect",
+        "xBoundGetBox": "xBoundGetBox__FR4xBoxRC6xBound"
+      },
+      "calls": [
+        {
+          "function": "xRayHitsBound",
+          "offset": 40,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iSphereIsectRay",
+          "symbol": "iSphereIsectRay__FPC7xSpherePC5xRay3P6xIsect"
+        },
+        {
+          "function": "xRayHitsBound",
+          "offset": 80,
+          "target_source": "SB/Core/x/xBound.cpp",
+          "target_function": "xBoundOBBIsectRay",
+          "symbol": "xBoundOBBIsectRay__FPC4xBoxPC7xMat4x3PC5xRay3P6xIsect"
+        },
+        {
+          "function": "xRayHitsBound",
+          "offset": 116,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iBoxIsectRay",
+          "symbol": "iBoxIsectRay__FPC4xBoxPC5xRay3P6xIsect"
+        },
+        {
+          "function": "xBoundOBBIsectRay",
+          "offset": 868,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Tolocal",
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xBoundOBBIsectRay",
+          "offset": 884,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Tolocal",
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xBoundOBBIsectRay",
+          "offset": 924,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iBoxIsectRay",
+          "symbol": "iBoxIsectRay__FPC4xBoxPC5xRay3P6xIsect"
+        },
+        {
+          "function": "xBoundGetBox",
+          "offset": 212,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xBoxInitBoundOBB",
+          "symbol": "xBoxInitBoundOBB__FP4xBoxPC4xBoxPC7xMat4x3"
+        }
+      ],
+      "linkage_provenance": [
+        {
+          "function": "xRayHitsBound",
+          "registry": "relocation-corroborated-functions.json",
+          "france_address": 1838160,
+          "size": 208,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1836784
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1838048
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1834688
+            }
+          ]
+        },
+        {
+          "function": "xBoundOBBIsectRay",
+          "registry": "relocation-corroborated-functions.json",
+          "france_address": 1838368,
+          "size": 952,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1836992
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1838256
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1834896
+            }
+          ]
+        },
+        {
+          "function": "xBoundGetBox",
+          "registry": "relocation-corroborated-functions.json",
+          "france_address": 1840336,
+          "size": 236,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1838960
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1840224
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1836864
+            }
+          ]
+        }
+      ]
     }
   ]
 }
