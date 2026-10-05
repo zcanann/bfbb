@@ -15,8 +15,13 @@
 #undef XMATH3_DEFER_RMULVEC
 #undef XVEC3INLINES_DEFER_LENGTH
 
+#if defined(PS2)
+#include <math.h>
+#include <string.h>
+#else
 #include <PowerPC_EABI_Support\MSL_C\MSL_Common\cmath>
 #include <PowerPC_EABI_Support\MSL_C\MSL_Common\cstring>
+#endif
 
 #if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
 #define CAMERA_FRAME_TIME (1.0f / 50.0f)
@@ -922,7 +927,7 @@ void xCameraUpdate(xCamera* cam, F32 dt)
     }
 }
 
-#ifndef INLINE
+#if !defined(INLINE) && !defined(PS2)
 float std::ceilf(float x)
 {
     return (float)ceil((double)x);
@@ -1462,7 +1467,7 @@ F32 xasin(F32 x)
 }
 #endif
 
-#if !defined(INLINE) && !defined(XBOX)
+#if !defined(INLINE) && !defined(XBOX) && !defined(PS2)
 float std::asinf(float x)
 {
     return (float)asin((double)x);

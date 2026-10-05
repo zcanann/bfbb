@@ -14,7 +14,7 @@ inline F32 xexp(F32 x)
     return std::expf(x);
 }
 
-#ifndef INLINE
+#if !defined(INLINE) && !defined(PS2)
 inline float std::expf(float x)
 {
     return (float)exp((double)x);

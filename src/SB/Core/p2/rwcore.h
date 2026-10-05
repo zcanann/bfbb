@@ -123,6 +123,8 @@ enum RwOpCombineType
 };
 
 struct RwCamera;
+struct RwRaster;
+struct RwTexture;
 struct RwFrame;
 struct RxPipeline;
 struct RwResEntry;

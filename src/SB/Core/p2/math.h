@@ -11,6 +11,10 @@ float atan2f(float y, float x);
 float powf(float base, float exponent);
 float fabsf(float value);
 float floorf(float value);
+float ceilf(float value);
+float acosf(float value);
+float asinf(float value);
+float expf(float value);
 
 #ifdef __cplusplus
 }
@@ -21,6 +25,10 @@ using ::atan2f;
 using ::powf;
 using ::fabsf;
 using ::floorf;
+using ::ceilf;
+using ::acosf;
+using ::asinf;
+using ::expf;
 }
 #endif
 
