@@ -75,9 +75,9 @@ checked, and the standard objdiff parser accepts the result.
 
 | Version | Full code-region bytes | Objdiff code-matched bytes |
 | --- | ---: | ---: |
-| SLUS-20680 | 2,978,560 | 200,716 |
-| SLES-51968 | 2,979,712 | 200,408 |
-| SLES-51970 | 2,976,512 | 200,304 |
+| SLUS-20680 | 2,978,560 | 206,364 |
+| SLES-51968 | 2,979,712 | 206,056 |
+| SLES-51970 | 2,976,512 | 205,952 |
 | SLES-53623 | 2,979,968 | 34,104 |
 | XBOX-US | 1,798,760 | 13,070 |
 | XBOX-EU | 1,798,760 | 13,070 |
@@ -122,10 +122,10 @@ The narrower function-only baselines currently contain:
 
 | PS2 baseline | Functions | Measured function bytes | Source matches |
 | --- | ---: | ---: | ---: |
-| USA | 5,391 | 2,107,460 | 1,374 functions / 200,716 bytes |
-| Europe/Australia | 5,392 | 2,108,700 | 1,373 functions / 200,408 bytes |
-| Germany | 5,394 | 2,105,512 | 1,372 functions / 200,304 bytes |
-| France (reviewed and corroborated bounds) | 597 | 214,848 | 207 functions / 34,104 bytes |
+| USA | 5,391 | 2,107,460 | 1,425 functions / 206,364 bytes |
+| Europe/Australia | 5,392 | 2,108,700 | 1,424 functions / 206,056 bytes |
+| Germany | 5,394 | 2,105,512 | 1,423 functions / 205,952 bytes |
+| France (reviewed and corroborated bounds) | 598 | 216,832 | 207 functions / 34,104 bytes |
 
 The `address-anchors.json` registries also recover over 2,500 named data addresses
 and 628 function declarations in each debug-bearing version. Addresses do not
@@ -152,7 +152,7 @@ load-range validation. Targets retain the exact original instructions. The `xBas
 other target objects are not relocation-restored link inputs. Code outside those function ranges, remaining data,
 and padding remain unclassified; the whole mixed load segment is not counted as
 code. France is stripped; independently reviewed and machine-corroborated
-extents establish its 597-function, 214,848-byte function-only baseline. Its
+extents establish its 598-function, 216,832-byte function-only baseline. Its
 34,104 matched code bytes describe that subset. The published code denominator
 is the full recovered CPU text region, not this function-only subset.
 
@@ -570,3 +570,5 @@ The original PS2 [OOB rendering path](PS2_OOB_SOURCE.md) adds 12 exact functions
 reconstruct the original bytes after relocation. Twelve additional French source
 profiles add six standard matches / 552 bytes while retaining all confirmed
 members and unknown references: [remaining French coverage](PS2_FRANCE_REMAINING_SOURCE.md).
+
+The [ambient/spawner](PS2_AMBIENT_SPAWNER_SOURCE.md) and [NPC support](PS2_NPCSUPPORT_SOURCE.md) comparisons add 51 normal matches / 5,648 bytes per debug PS2 region. The [French grid recovery](PS2_FRANCE_GRID_UI.md) adds one verified 1,984-byte function and enables the three previously known UI members; these improve comparison coverage without new exact matches.
