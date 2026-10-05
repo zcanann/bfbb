@@ -263,8 +263,12 @@ def prepare_functions(functions: list[dict], binary: bytes, segments: list[dict]
                 raise ValueError('GP relocation requires one ELF .reginfo record')
             gp = struct.unpack_from('<I', binary, reginfo[0]['offset'] + 20)[0]
             owner = relocation.get('target_source')
+            data_linkage = relocation.get('target_linkage')
+            if data_linkage is not None and (not isinstance(data_linkage, str) or not data_linkage):
+                raise ValueError('GP data linkage must be a nonempty original identifier')
             addresses = {a['address'] for a in (address_anchors or [])
                          if a['kind'] == 'data_address' and a['name'] == relocation['target_name']
+                         and (data_linkage is None or a.get('linkage_name') == data_linkage)
                          and (owner is None or any(_source_name(reference['source']) == owner
                               for reference in a.get('references', [])))}
             if len(addresses) != 1:

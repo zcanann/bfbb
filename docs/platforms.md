@@ -491,3 +491,7 @@ collision adds 260 bytes; see [curve/collision evidence](XBOX_CURVE_FAST_COLLISI
 
 Complete PS2 effects source comparison adds 3,596 matched bytes per debug
 region; see [effects evidence](PS2_FX.md).
+
+Complete PS2 Robot source comparison adds 23,392 matched bytes per debug
+region. Its corrected original hazard layout also adds 204 bytes in Robo goals;
+see [Robot layout evidence](PS2_ROBOT_LAYOUT.md).
