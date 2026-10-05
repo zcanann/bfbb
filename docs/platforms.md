@@ -75,10 +75,10 @@ checked, and the standard objdiff parser accepts the result.
 
 | Version | Full code-region bytes | Objdiff code-matched bytes |
 | --- | ---: | ---: |
-| SLUS-20680 | 2,978,560 | 27,720 |
-| SLES-51968 | 2,979,712 | 27,720 |
-| SLES-51970 | 2,976,512 | 27,720 |
-| SLES-53623 | 2,979,968 | 6,144 |
+| SLUS-20680 | 2,978,560 | 29,092 |
+| SLES-51968 | 2,979,712 | 29,092 |
+| SLES-51970 | 2,976,512 | 29,092 |
+| SLES-53623 | 2,979,968 | 6,336 |
 | XBOX-US | 1,798,760 | 1,111 |
 | XBOX-EU | 1,798,760 | 1,111 |
 
@@ -108,10 +108,10 @@ The narrower function-only baselines currently contain:
 
 | PS2 baseline | Functions | Measured function bytes | Source matches |
 | --- | ---: | ---: | ---: |
-| USA | 5,391 | 2,107,460 | 256 functions / 27,720 bytes |
-| Europe/Australia | 5,392 | 2,108,700 | 256 functions / 27,720 bytes |
-| Germany | 5,394 | 2,105,512 | 256 functions / 27,720 bytes |
-| France (reviewed and corroborated bounds) | 331 | 90,040 | 46 functions / 6,144 bytes |
+| USA | 5,391 | 2,107,460 | 278 functions / 29,092 bytes |
+| Europe/Australia | 5,392 | 2,108,700 | 278 functions / 29,092 bytes |
+| Germany | 5,394 | 2,105,512 | 278 functions / 29,092 bytes |
+| France (reviewed and corroborated bounds) | 331 | 90,040 | 49 functions / 6,336 bytes |
 
 The `address-anchors.json` registries also recover over 2,500 named data addresses
 and 628 function declarations in each debug-bearing version. Addresses do not
@@ -139,7 +139,7 @@ other target objects are not relocation-restored link inputs. Code outside those
 and padding remain unclassified; the whole mixed load segment is not counted as
 code. France is stripped; independently reviewed and machine-corroborated
 extents establish its 331-function, 90,040-byte function-only baseline. Its
-6,144 matched code bytes describe that subset. The published code denominator
+6,336 matched code bytes describe that subset. The published code denominator
 is the full recovered CPU text region, not this function-only subset.
 
 Both Xbox releases have identical payloads in all 13 sections; their 532 differing
@@ -151,13 +151,21 @@ whole-section function is created to make a progress denominator.
 
 ## Compiled PS2 units
 
+The complete camera-marker unit now matches all four functions / 220 bytes.
+Entity header separation also enables seven exact group functions / 440 bytes
+and eleven particle-effect functions / 712 bytes. The three units retain all
+original functions in their comparisons; their remaining holdouts and unlinked
+status are explicit. See [camera markers](PS2_CAMERA_MARKER.md),
+[groups](PS2_GROUP.md), and [particle effects](PS2_PARTICLE_EFFECTS.md).
+
 The release `xDebug.cpp` matches all six original functions / 80 bytes in each
 debug-bearing version. Its font-only GameCube helper is excluded on PS2; the
 six shipping function bodies are unchanged and independently reproduce every
 original byte. The camera-tweak unit adds 11 exact functions / 1,444 bytes,
 and the particle manager adds two / 76 bytes. Their remaining functions stay
 in the comparison as unmatched code. See [camera evidence](PS2_CAMERA_TWEAK.md)
-and [particle-manager evidence](PS2_PARTICLE_MANAGER.md). France coverage is unchanged.
+and [particle-manager evidence](PS2_PARTICLE_MANAGER.md). France now also compares nine previously verified functions from eight complete
+source units, adding 192 exact bytes. See [French source coverage](FRANCE_ADDITIONAL_SOURCE_PROFILES.md).
 
 The unchanged shared `src/SB/Core/x/xBase.cpp` compiles with the hash-pinned
 `mwcps2-3.0b38-030307` profile under unmodified Wibo 1.2.0. All five functions
