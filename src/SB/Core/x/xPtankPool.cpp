@@ -2,8 +2,14 @@
 
 #include "xMemMgr.h"
 
+#if defined(PS2)
+#include <rwsdk/rpptank.h>
+#include <rwim3d.h>
+#include <stdlib.h>
+#else
 #include <rpptank.h>
 #include <PowerPC_EABI_Support\MSL_C\MSL_Common\stdlib.h>
+#endif
 #include <string.h>
 #include <types.h>
 

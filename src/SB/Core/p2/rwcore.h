@@ -115,6 +115,7 @@ struct RwObjectHasFrame
     RwObjectHasFrame* (*sync)(RwObjectHasFrame*);
 };
 
+// Original PS2 embeddings place matrices on 16-byte boundaries (see PS2_FRAME_PTANK_PICKUP.md).
 struct RwMatrixTag
 {
     RwV3d right;
@@ -125,7 +126,7 @@ struct RwMatrixTag
     RwUInt32 pad2;
     RwV3d pos;
     RwUInt32 pad3;
-};
+} __attribute__((aligned(16)));
 
 typedef RwMatrixTag RwMatrix;
 
@@ -189,6 +190,18 @@ struct RwTexture
     RwInt32 refCount;
 };
 
+struct RwFrame
+{
+    RwObject object;
+    RwLLLink inDirtyListLink;
+    RwMatrix modelling;
+    RwMatrix ltm;
+    RwLinkList objectList;
+    struct RwFrame* child;
+    struct RwFrame* next;
+    struct RwFrame* root;
+};
+
 struct RwCamera;
 struct RwRaster;
 struct RwTexture;
@@ -245,5 +258,21 @@ RwMatrix* RwMatrixInvert(RwMatrix* matrixOut, const RwMatrix* matrixIn);
 
 // RenderWare SDK matrix assignment macro.
 #define RwMatrixCopyMacro(_target, _source) (*(_target) = *(_source))
+
+// RenderWare SDK matrix classifications and geometry API.
+enum RwMatrixType
+{
+    rwMATRIXTYPENORMAL = 0x00000001,
+    rwMATRIXTYPEORTHOGONAL = 0x00000002,
+    rwMATRIXTYPEORTHONORMAL = 0x00000003,
+    rwMATRIXTYPEMASK = 0x00000003,
+    rwMATRIXTYPEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+
+extern "C" {
+RwMatrix* RwMatrixScale(RwMatrix* matrix, const RwV3d* scale, RwOpCombineType combineOp);
+RwV3d* RwV3dTransformPoints(RwV3d* pointsOut, const RwV3d* pointsIn, RwInt32 numPoints,
+                          const RwMatrix* matrix);
+}
 
 #endif
