@@ -75,9 +75,9 @@ checked, and the standard objdiff parser accepts the result.
 
 | Version | Full code-region bytes | Objdiff code-matched bytes |
 | --- | ---: | ---: |
-| SLUS-20680 | 2,978,560 | 213,284 |
-| SLES-51968 | 2,979,712 | 212,976 |
-| SLES-51970 | 2,976,512 | 212,872 |
+| SLUS-20680 | 2,978,560 | 214,768 |
+| SLES-51968 | 2,979,712 | 214,460 |
+| SLES-51970 | 2,976,512 | 214,356 |
 | SLES-53623 | 2,979,968 | 34,104 |
 | XBOX-US | 1,798,760 | 13,501 |
 | XBOX-EU | 1,798,760 | 13,501 |
@@ -122,9 +122,9 @@ The narrower function-only baselines currently contain:
 
 | PS2 baseline | Functions | Measured function bytes | Source matches |
 | --- | ---: | ---: | ---: |
-| USA | 5,391 | 2,107,460 | 1,469 functions / 213,284 bytes |
-| Europe/Australia | 5,392 | 2,108,700 | 1,468 functions / 212,976 bytes |
-| Germany | 5,394 | 2,105,512 | 1,467 functions / 212,872 bytes |
+| USA | 5,391 | 2,107,460 | 1,470 functions / 214,768 bytes |
+| Europe/Australia | 5,392 | 2,108,700 | 1,469 functions / 214,460 bytes |
+| Germany | 5,394 | 2,105,512 | 1,468 functions / 214,356 bytes |
 | France (reviewed and corroborated bounds) | 598 | 216,832 | 207 functions / 34,104 bytes |
 
 The `address-anchors.json` registries also recover over 2,500 named data addresses
@@ -575,4 +575,6 @@ The [ambient/spawner](PS2_AMBIENT_SPAWNER_SOURCE.md) and [NPC support](PS2_NPCSU
 
 The [remaining NPC and Player animation-table comparisons](PS2_REMAINING_NPC_PLAYER_TABLES.md) add 42 normal matches / 6,432 bytes per debug PS2 version. The six animation-table functions retain their original header ownership and are compared using a complete Player source compilation; their symbols do not overlap the existing Player profile.
 
-Restoring the original [four-voice PS2 stream limit](PS2_SOUND.md#original-stream-voice-limit) adds two standard matches / 488 bytes per debug region. StreamUnlock independently reproduces all 72 original bytes; StreamLock still differs at two call destinations and is not claimed as a raw match.
+Restoring the original [four-voice PS2 stream limit](PS2_SOUND.md#original-stream-voice-limit) adds two standard matches / 488 bytes per debug region. After restoring the original direct platform stop calls, StreamUnlock (72 bytes) and StreamLock (416 bytes) both independently reproduce the original bytes in all three debug versions.
+
+The original [update-cull initializer statement order](PS2_RW_ALLOCATORS.md#update-cull-initializer-instruction-order) adds one standard match / 1,484 bytes per debug PS2 version. Only two adjacent instructions change; all other source instructions, relocations and regional function scores remain unchanged.
