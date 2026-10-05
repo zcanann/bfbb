@@ -103,7 +103,7 @@ def validate_interleaved_pair(code: bytes, address: int, hi_offset: int, lo_offs
 def prepare_functions(functions: list[dict], binary: bytes, segments: list[dict],
                       executable_sha1: str, reviewed_targets: Path | None = None, *,
                       metadata: dict | None = None, address_anchors: list[dict] | None = None) -> list[dict]:
-    """Restore only named, independently validated JAL relocations in known units.
+    """Restore named, independently validated direct-transfer relocations in known units.
 
     No source object is consulted when reconstructing the target. Reapplying each
     recovered absolute destination must reproduce the retail instruction exactly.
@@ -158,8 +158,11 @@ def prepare_functions(functions: list[dict], binary: bytes, segments: list[dict]
             original = struct.unpack_from('<I', code, offset)[0]
             address = function['low'] + offset
             decoded = ((address + 4) & 0xf0000000) | ((original & 0x03ffffff) << 2)
-            if original >> 26 != 3 or decoded != destination:
-                raise ValueError('Retail JAL does not call the independently identified target')
+            expected_opcode = call.get('opcode', 3)
+            if expected_opcode not in (2, 3):
+                raise ValueError('Direct-transfer profile requires J or JAL')
+            if original >> 26 != expected_opcode or decoded != destination:
+                raise ValueError('Retail direct transfer does not reach the independently identified target')
             opcode = original & 0xfc000000
             if opcode | ((destination >> 2) & 0x03ffffff) != original:
                 raise ValueError('Restored relocation fails inverse reconstruction')

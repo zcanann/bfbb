@@ -21,9 +21,11 @@
     "unsigned",
     "-nostdinc",
     "-gccinc",
-    "-DPS2=1"
+    "-DPS2=1",
+    "-Cpp_exceptions",
+    "off"
   ],
-  "scope": "Validated xBase, xordarray, xRMemData, xBehaviour and version-scoped xCounter and xBehaveGoalSimple profiles; compiler identity for other units remains unproven",
+  "scope": "Validated xBase, xordarray, xRMemData and xBehaviour profiles, plus debug-region xCounter, xBehaveGoalSimple and xSurface; compiler identity for other units remains unproven",
   "units": [
     {
       "source": "src/SB/Core/x/xBase.cpp",
@@ -424,6 +426,164 @@
           "hi_offset": 176,
           "lo_offset": 192,
           "interleaved": true
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xSurface.cpp",
+      "target_unit": "SB/Core/x/xSurface.cpp",
+      "object": "source/xSurface.o",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xSurfaceGetByIdx": "xSurfaceGetByIdx__FUs",
+        "xSurfaceGetNumSurfaces": "xSurfaceGetNumSurfaces__Fv",
+        "xSurfaceReset": "xSurfaceReset__FP8xSurface",
+        "xSurfaceLoad": "xSurfaceLoad__FP8xSurfaceP7xSerial",
+        "xSurfaceSave": "xSurfaceSave__FP8xSurfaceP7xSerial",
+        "xSurfaceExit": "xSurfaceExit__Fv",
+        "xSurfaceInit": "xSurfaceInit__FUs"
+      },
+      "calls": [
+        {
+          "function": "xSurfaceLoad",
+          "offset": 0,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseLoad",
+          "symbol": "xBaseLoad__FP5xBaseP7xSerial",
+          "opcode": 2
+        },
+        {
+          "function": "xSurfaceSave",
+          "offset": 0,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseSave",
+          "symbol": "xBaseSave__FP5xBaseP7xSerial",
+          "opcode": 2
+        },
+        {
+          "function": "xSurfaceInit",
+          "offset": 36,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc",
+          "symbol": "xMemAlloc__FUiUii"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xSurfaceGetByIdx",
+          "offset": 0,
+          "target_name": "surfs",
+          "symbol": "surfs",
+          "opcode": 35
+        },
+        {
+          "function": "xSurfaceGetNumSurfaces",
+          "offset": 4,
+          "target_name": "nsurfs",
+          "symbol": "nsurfs",
+          "opcode": 37
+        },
+        {
+          "function": "xSurfaceInit",
+          "offset": 12,
+          "target_name": "nsurfs",
+          "symbol": "nsurfs",
+          "opcode": 41
+        },
+        {
+          "function": "xSurfaceInit",
+          "offset": 24,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap",
+          "opcode": 35
+        },
+        {
+          "function": "xSurfaceInit",
+          "offset": 44,
+          "target_name": "nsurfs",
+          "symbol": "nsurfs",
+          "opcode": 37
+        },
+        {
+          "function": "xSurfaceInit",
+          "offset": 60,
+          "target_name": "surfs",
+          "symbol": "surfs",
+          "opcode": 43
+        },
+        {
+          "function": "xSurfaceInit",
+          "offset": 80,
+          "target_name": "surfs",
+          "symbol": "surfs",
+          "opcode": 35
+        },
+        {
+          "function": "xSurfaceInit",
+          "offset": 124,
+          "target_name": "surfs",
+          "symbol": "surfs",
+          "opcode": 35
+        },
+        {
+          "function": "xSurfaceInit",
+          "offset": 168,
+          "target_name": "surfs",
+          "symbol": "surfs",
+          "opcode": 35
+        },
+        {
+          "function": "xSurfaceInit",
+          "offset": 188,
+          "target_name": "surfs",
+          "symbol": "surfs",
+          "opcode": 35
+        },
+        {
+          "function": "xSurfaceInit",
+          "offset": 200,
+          "target_name": "surfs",
+          "symbol": "surfs",
+          "opcode": 35
+        },
+        {
+          "function": "xSurfaceInit",
+          "offset": 212,
+          "target_name": "surfs",
+          "symbol": "surfs",
+          "opcode": 35
+        },
+        {
+          "function": "xSurfaceInit",
+          "offset": 224,
+          "target_name": "surfs",
+          "symbol": "surfs",
+          "opcode": 35
+        },
+        {
+          "function": "xSurfaceInit",
+          "offset": 236,
+          "target_name": "surfs",
+          "symbol": "surfs",
+          "opcode": 35
+        },
+        {
+          "function": "xSurfaceInit",
+          "offset": 288,
+          "target_name": "surfs",
+          "symbol": "surfs",
+          "opcode": 35
+        },
+        {
+          "function": "xSurfaceInit",
+          "offset": 336,
+          "target_name": "surfs",
+          "symbol": "surfs",
+          "opcode": 43
         }
       ]
     }
