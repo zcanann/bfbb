@@ -1,11 +1,7 @@
-"""Prepare a target-only, explicitly partial Xbox objdiff inventory.
+"""Prepare partial Xbox section inventory and independently reviewed functions.
 
-This is not a reconstructed source build or a function-matching baseline.
-No function symbols are invented for the unsplit executable. objdiff therefore
-reports zero discovered functions/code bytes, while retaining the .text section
-record and measuring the two included initialized-data sections. Its empty-code
-percentages default to100%; these diagnostics must not be published as matching
-progress until real function boundaries and a meaningful denominator exist.
+Original function bytes remain private. Only confirmed individual extents enter
+code measures; Ghidra candidates and whole-section inventory remain separate.
 """
 
 from __future__ import annotations
@@ -16,6 +12,8 @@ from pathlib import Path
 import struct
 
 from .xbox import inspect_xbe
+from .coff import function_object
+from collections import defaultdict
 
 
 # XBE flags cannot distinguish code from data in this title: even .rdata and
@@ -54,20 +52,40 @@ def _target_coff(data: bytes, sections: list[dict]) -> bytes:
     return header + b"".join(headers) + b"".join(payloads)
 
 
-def _write_registries(metadata: dict, output_dir: Path) -> None:
+def _write_registries(metadata: dict, output_dir: Path, functions: list[dict] | None = None) -> None:
+    functions = functions or []
     identity = {"schema_version": 1, "executable_sha1": metadata["sha1"]}
     symbols = {**identity, "status": "confirmed", "coverage_complete": False,
-               "provenance": "XBE supplies no original function symbol table; analyzer candidates are separate",
-               "symbols": []}
-    splits = {**identity, "status": "section_only", "symbol_file": "symbols.json",
+               "provenance": "Individually reviewed functions; see reviewed-functions.json; analyzer candidates are separate",
+               "symbols": [{k: f[k] for k in ('name', 'canonical_identifier', 'source', 'address', 'size')}
+                           for f in functions]}
+    splits = {**identity, "status": "partial_function_bounds" if functions else "section_only", "symbol_file": "symbols.json",
               "translation_unit_ownership_recovered": False, "relocations_recovered": False,
               "retail_relink_verified": False, "source_build_available": False,
               "publish_matching_report": False,
-              "notes": ["Authenticated executable sections, not translation-unit splits.",
+              "notes": ["Authenticated executable sections with individually reviewed function extents; incomplete TU splits.",
                         "Analyzer candidates are in symbol-candidates.json and are not confirmed symbols.",
                         "Mixed SDK sections and embedded assets require further classification."],
               "sections": [{**section, "classification": _SECTION_KINDS.get(section["name"], ("unclassified", 0))[0]}
                            for section in metadata["sections"]]}
+    text = next(s for s in metadata['sections'] if s['name'] == '.text')
+    cursor = text['virtual_address']
+    end = cursor + min(text['raw_size'], text['virtual_size'])
+    ranges = []
+    for function in functions:
+        address, size = function['address'], function['size']
+        if size <= 0 or address < cursor or address + size > end:
+            raise ValueError('Reviewed Xbox functions overlap or exceed .text')
+        if cursor < address:
+            ranges.append({'kind': 'unclassified', 'address': cursor, 'size': address - cursor})
+        ranges.append({'kind': 'function', 'address': address, 'size': size,
+                       'canonical_identifier': function['canonical_identifier']})
+        cursor = address + size
+    if cursor < end:
+        ranges.append({'kind': 'unclassified', 'address': cursor, 'size': end - cursor})
+    splits.update({'known_code_bytes': sum(f['size'] for f in functions),
+                   'unclassified_text_bytes': sum(r['size'] for r in ranges if r['kind'] == 'unclassified'),
+                   'text_ranges': ranges})
     output_dir.mkdir(parents=True, exist_ok=True)
     for name, value in (("symbols.json", symbols), ("splits.json", splits)):
         (output_dir / name).write_text(json.dumps(value, indent=2) + "\n", encoding="utf-8", newline="\n")
@@ -141,7 +159,7 @@ def verify_registries(generated_dir: Path, committed_dir: Path) -> None:
         candidates_path.read_text(encoding="utf-8"), encoding="utf-8", newline="\n")
 
 
-def prepare_report(executable: Path, output_dir: Path) -> dict:
+def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path | None = None) -> dict:
     """Write target.obj, objdiff.json and coverage.json; return coverage metadata.
 
     Outputs contain original executable bytes and must remain in an ignored
@@ -159,11 +177,38 @@ def prepare_report(executable: Path, output_dir: Path) -> dict:
     if len(names) != len(_SECTION_KINDS) or set(names) != set(_SECTION_KINDS):
         raise ValueError("Expected exactly one .text, .rdata and .data XBE section")
 
+    functions = []
+    if reviewed_functions is not None:
+        reviewed = json.loads(Path(reviewed_functions).read_text(encoding='utf-8'))
+        if reviewed['executable_sha1'] != metadata['sha1']:
+            raise ValueError('Reviewed Xbox functions identify another executable')
+        identifiers = set()
+        for function in reviewed['functions']:
+            function = dict(function)
+            if not function.get('boundary_confirmation') or not function.get('identity_confirmation'):
+                raise ValueError('Unconfirmed Xbox function')
+            identifier = function['canonical_identifier']
+            if not identifier or identifier in identifiers:
+                raise ValueError('Empty or duplicate Xbox function identifier')
+            identifiers.add(identifier)
+            address, size = function['address'], function['size']
+            owners = [s for s in sections if s['name'] == '.text' and
+                      s['virtual_address'] <= address and address + size <= s['virtual_address'] +
+                      min(s['raw_size'], s['virtual_size'])]
+            if size <= 0 or len(owners) != 1:
+                raise ValueError('Reviewed Xbox function lacks a file-backed .text owner')
+            offset = owners[0]['raw_offset'] + address - owners[0]['virtual_address']
+            raw = data[offset:offset + size]
+            if hashlib.sha256(raw).hexdigest() != function['sha256']:
+                raise ValueError('Reviewed Xbox function bytes differ')
+            function.update({'bytes': raw, 'symbol': identifier})
+            functions.append(function)
+        functions.sort(key=lambda f: f['address'])
     target = _target_coff(data, included)
     coverage = {
         "schema_version": 1,
-        "status": "target_only_unsplit",
-        "report_ready": False,
+        "status": "partial-target-only" if functions else "target_only_unsplit",
+        "report_ready": bool(functions),
         "format": "XBE",
         "architecture": "i386",
         "executable_sha1": metadata["sha1"],
@@ -171,12 +216,14 @@ def prepare_report(executable: Path, output_dir: Path) -> dict:
         "target_object_sha1": hashlib.sha1(target).hexdigest(),
         "source_build_available": False,
         "source_comparison_available": False,
-        "function_boundaries_recovered": False,
+        "function_boundaries_recovered": bool(functions),
+        "known_code_bytes": sum(f["size"] for f in functions),
+        "function_count": len(functions),
         "relocations_recovered": False,
         "retail_relink_verified": False,
         "coverage_complete": False,
         "publish_matching_report": False,
-        "scope": ".text plus initialized .rdata/.data section bytes only",
+        "scope": "Reviewed function bounds plus separate .text/.rdata/.data inventory; not whole-game progress",
         "included_code_section_bytes": sum(
             section["raw_size"] for section in included if section["name"] == ".text"
         ),
@@ -195,7 +242,7 @@ def prepare_report(executable: Path, output_dir: Path) -> dict:
         "report_limitations": [
             "No source objects have been compiled or compared.",
             "No function symbols are synthesized for the unsplit .text section.",
-            "objdiff total_code and total_functions remain zero until function boundaries are supplied.",
+            "Only individually reviewed function extents enter code measures; coverage remains incomplete.",
             "objdiff defaults zero-denominator code/function percentages to100%; this is not measured progress.",
             "Do not publish this diagnostic report as a matching-progress baseline.",
             "Initialized data bytes are inventoried; virtual zero-fill tails are not measured.",
@@ -214,7 +261,17 @@ def prepare_report(executable: Path, output_dir: Path) -> dict:
         }],
     }
     output_dir.mkdir(parents=True, exist_ok=True)
-    _write_registries(metadata, output_dir)
+    groups = defaultdict(list)
+    for function in functions:
+        groups[function['source']].append(function)
+    for index, (source, group) in enumerate(sorted(groups.items())):
+        name = f'functions-{index:04d}.obj'
+        (output_dir / name).write_bytes(function_object(group))
+        config['units'].append({'name': source, 'target_path': name,
+                                'metadata': {'complete': False,
+                                             'progress_categories': ['known_functions']}})
+    config['progress_categories'] = [{'id': 'known_functions', 'name': 'Reviewed functions (partial coverage)'}]
+    _write_registries(metadata, output_dir, functions)
     (output_dir / "target.obj").write_bytes(target)
     (output_dir / "objdiff.json").write_text(json.dumps(config, indent=2) + "\n", encoding="utf-8")
     (output_dir / "coverage.json").write_text(json.dumps(coverage, indent=2) + "\n", encoding="utf-8")

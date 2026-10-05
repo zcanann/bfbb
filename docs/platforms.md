@@ -52,8 +52,9 @@ objects and extraction outputs contain original bytes and stay in ignored direct
 
 The Build workflow has six additional independent platform jobs. Each checks its
 original executable hash, prepares available target objects, runs pinned objdiff
-3.7.1, and uploads `<version>_baseline` with status and coverage metadata. All four PS2 releases also upload `<version>_functions` with an actual objdiff
-report, including the compiled `xBase.cpp` comparison. These artifacts are available on staging.
+3.7.1, and uploads `<version>_baseline` with status and coverage metadata. All six releases also upload `<version>_functions` with an actual objdiff
+report. PS2 includes compiled shared-source comparisons; Xbox currently contains
+three independently reviewed target functions. These artifacts are available on staging.
 
 They are deliberately **not** named `<version>_report` yet. That standard name is
 reserved for reports ready for decomp.dev ingestion. A partial inventory must not
@@ -62,9 +63,9 @@ GameCube's three standard reports and main-only Pages deployment are unchanged.
 
 | PS2 baseline | Functions | Measured function bytes | Source matches |
 | --- | ---: | ---: | ---: |
-| USA | 5,391 | 2,107,460 | 5 functions / 276 bytes |
-| Europe/Australia | 5,392 | 2,108,700 | 5 functions / 276 bytes |
-| Germany | 5,394 | 2,105,512 | 5 functions / 276 bytes |
+| USA | 5,391 | 2,107,460 | 12 functions / 1,276 bytes |
+| Europe/Australia | 5,392 | 2,108,700 | 12 functions / 1,276 bytes |
+| Germany | 5,394 | 2,105,512 | 12 functions / 1,276 bytes |
 | France (reviewed bounds) | 8 | 840 | 5 functions / 276 bytes |
 
 The `address-anchors.json` registries also recover over 2,500 named data addresses
@@ -101,7 +102,7 @@ bytes. Mixed SDK sections require further classification. XBE executable flags
 cannot distinguish code here: `.rdata` and `.data` also have that flag. No fake
 whole-section function is created to make a progress denominator.
 
-## First compiled PS2 unit
+## Compiled PS2 units
 
 The unchanged shared `src/SB/Core/x/xBase.cpp` compiles with the hash-pinned
 `mwcps2-3.0b38-030307` profile under unmodified Wibo 1.2.0. All five functions
@@ -109,10 +110,18 @@ The unchanged shared `src/SB/Core/x/xBase.cpp` compiles with the hash-pinned
 negative control: its Save/Load bodies differ, leaving only three exact functions.
 This establishes a working profile for this TU, not the compiler for every SDK.
 
+The same profile compiles the full shared `xordarray.cpp` for USA, Europe, and
+Germany. Seven of eight functions match (1,000 of 1,368 code bytes). PS2-specific
+MAX expressions and an indexed search loop preserve GameCube's existing build.
+`XOrdSort` remains nonmatching. Its source comparison stays in the report.
+
 `config/platforms/ps2-toolchain.json` records archive/binary hashes, flags, and
 explicit symbol/call mappings. Three `R_MIPS_26` call relocations per version are
 restored only after identifying retail serializer targets independently. Reapplying
-each destination reproduces its original instruction. Source objects are never
+each destination reproduces its original instruction. `xordarray` adds three
+validated calls and one `R_MIPS_GPREL16` access: the retail ELF `.reginfo` supplies
+GP, and DWARF independently identifies `gActiveHeap`. Inverse reconstruction
+checks its signed offset before restoring the relocation. Source objects are never
 used to infer target bytes. Original code stays private.
 
 To run the source comparison on Linux (or inside WSL), with the private image's paths:
@@ -152,10 +161,21 @@ Both region registries keep independent executable identities.
 See the parameterized scripts in `tools/platforms/ghidra/`. No Xbox SDK is required
 for this analysis step.
 
+Three hash functions have been independently reviewed in both Xbox releases:
+`xStrHash(const char*)`, its bounded overload, and `xStrHashCat`, totaling 151
+extent bytes. Their CFG, caller arguments, suffix strings, and signed-byte fold
+support their identities. These bounded functions have explicit i386 COFF symbols
+and sizes; they do not promote the remaining analyzer candidates. Source
+comparison and whole-executable linking remain pending in the committed pipeline.
+
+```sh
+python tools/platforms/verify_xbox_reviewed.py
+```
+
 ## Next implementation work
 
 - PS2: recover remaining code/data and relocation ownership; expand compilation
-  beyond xBase and validate toolchain profiles against additional source objects.
+  beyond xBase/xordarray and validate toolchain profiles against additional source objects.
   The ELF comment identifies the MW MIPS compiler family, but its `2.4.1.01`
   stamp alone does not establish a particular toolchain distribution.
 - PS2 France: recover independent boundaries from its stripped executable.

@@ -16,7 +16,8 @@ def load_profile() -> dict:
 
 
 def prepare_functions(functions: list[dict], binary: bytes, segments: list[dict],
-                      executable_sha1: str, reviewed_targets: Path | None = None) -> list[dict]:
+                      executable_sha1: str, reviewed_targets: Path | None = None, *,
+                      metadata: dict | None = None, address_anchors: list[dict] | None = None) -> list[dict]:
     """Restore only named, independently validated JAL relocations in known units.
 
     No source object is consulted when reconstructing the target. Reapplying each
@@ -77,6 +78,42 @@ def prepare_functions(functions: list[dict], binary: bytes, segments: list[dict]
             restored.append({'function':function['name'], 'address':address,
                              'type':'R_MIPS_26', 'symbol':call['symbol'], 'target_address':destination,
                              'original_instruction':original, 'inverse_reconstruction_verified':True})
+        for relocation in unit.get('gp_relocations', []):
+            # Retail .reginfo establishes GP; DWARF independently establishes
+            # the data address. No source-object field is used to infer either.
+            reginfo = [s for s in (metadata or {}).get('sections', [])
+                       if s['name'] == '.reginfo' and s['size'] == 24]
+            if len(reginfo) != 1:
+                raise ValueError('GP relocation requires one ELF .reginfo record')
+            gp = struct.unpack_from('<I', binary, reginfo[0]['offset'] + 20)[0]
+            addresses = {a['address'] for a in (address_anchors or [])
+                         if a['kind'] == 'data_address' and a['name'] == relocation['target_name']}
+            if len(addresses) != 1:
+                raise ValueError('GP relocation lacks one independently named data address')
+            destination = next(iter(addresses))
+            function = by_name[relocation['function']]
+            offset = relocation['offset']
+            code = bytearray(function['bytes'])
+            if offset < 0 or offset % 4 or offset + 4 > len(code):
+                raise ValueError('GP relocation exceeds its function')
+            original = struct.unpack_from('<I', code, offset)[0]
+            immediate = struct.unpack('<h', struct.pack('<H', original & 0xffff))[0]
+            if (original >> 26 != relocation['opcode'] or (original >> 21) & 31 != 28 or
+                    gp + immediate != destination):
+                raise ValueError('Retail GP access does not reference the independently named data')
+            if not -32768 <= destination - gp < 32768:
+                raise ValueError('Named data lies outside GP-relative signed range')
+            normalized = original & 0xffff0000
+            if normalized | ((destination - gp) & 0xffff) != original:
+                raise ValueError('GP relocation fails inverse reconstruction')
+            struct.pack_into('<I', code, offset, normalized)
+            function['bytes'] = bytes(code)
+            function.setdefault('relocations', []).append(
+                {'offset': offset, 'symbol': relocation['symbol'], 'type': 7})
+            restored.append({'function': function['name'], 'address': function['low'] + offset,
+                             'type': 'R_MIPS_GPREL16', 'symbol': relocation['symbol'],
+                             'target_address': destination, 'gp': gp,
+                             'original_instruction': original, 'inverse_reconstruction_verified': True})
     return restored
 
 

@@ -1,0 +1,354 @@
+{
+  "schema_version": 1,
+  "version": "XBOX-US",
+  "executable_sha1": "983ffc6d84427996ce35d0d204930ae713113370",
+  "scope": "Three individually reviewed xString hash functions only; Ghidra candidates remain separate.",
+  "coverage_complete": false,
+  "source_comparison_available": false,
+  "retail_link_verified": false,
+  "cross_version_proof": {
+    "peer_version": "XBOX-EU",
+    "peer_executable_sha1": "3cc6795aad6a51005b4178ca35d76786eb620cab",
+    "section_count": 13,
+    "method": "All section names, flags, virtual/raw layouts, SHA-1 values and actual payload bytes agree between independently authenticated originals."
+  },
+  "functions": [
+    {
+      "name": "xStrHash",
+      "canonical_identifier": "xStrHash(const char*)",
+      "display_name": "U32 xStrHash(const char* str)",
+      "source": "SB/Core/x/xString.cpp",
+      "linkage_name": null,
+      "address": 1421536,
+      "size": 48,
+      "sha256": "a91248e284361facdd52b3f23daf1d8a266d61c328548a66470a85198ff15b8b",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": false,
+      "retail_link_verified": false,
+      "instruction_bytes": 45,
+      "instruction_count": 21,
+      "observed_calling_convention": {
+        "parameters": [
+          {
+            "name": "str",
+            "location": "eax"
+          }
+        ],
+        "return": "eax",
+        "stack_cleanup": "caller",
+        "saved_registers": [
+          "esi"
+        ],
+        "convention_name": null,
+        "limitation": "Observed whole-program register allocation is not asserted to be ordinary cdecl or fastcall."
+      },
+      "semantics": {
+        "initial_hash": "0",
+        "loop": "Stop before a NUL byte.",
+        "fold": "f = (c - (c & (c >> 1) & 0x20)) modulo 256",
+        "accumulate": "hash = (131 * hash + sign_extend_8(f)) modulo 2^32",
+        "platform_difference": "Xbox sign-extends the folded byte; the GameCube unsigned-byte spelling differs for high-bit bytes. Function identity does not claim the current shared source matches this platform."
+      },
+      "corroboration": {
+        "method": "Individual x86 CFG and instruction data-flow review plus actual caller argument/return use; independent of candidate auto-analysis.",
+        "branches": [
+          {
+            "address": 1421545,
+            "size": 2,
+            "opcode": 116,
+            "target": 1421582
+          },
+          {
+            "address": 1421547,
+            "size": 2,
+            "opcode": 235,
+            "target": 1421552
+          },
+          {
+            "address": 1421580,
+            "size": 2,
+            "opcode": 117,
+            "target": 1421552
+          }
+        ],
+        "return_address": 1421583,
+        "saved_registers": [
+          {
+            "register": "esi",
+            "push_address": 1421536,
+            "pop_address": 1421582
+          }
+        ],
+        "recorded_direct_call_count": 380,
+        "reviewed_call_witnesses": [
+          {
+            "address": 1293722,
+            "target": 1421536,
+            "kind": "x86_call_rel32"
+          },
+          {
+            "address": 110918,
+            "target": 1421536,
+            "kind": "x86_call_rel32"
+          }
+        ],
+        "all_local_branches_within_extent": true,
+        "outgoing_calls": 0,
+        "unresolved_indirect_jumps": 0,
+        "internal_alignment": [
+          {
+            "address": 1421549,
+            "size": 3,
+            "sha256": "53e090edb4fca0626d458dbefa0ae1bcbffc511ed159f1a70641610ad0d9a200",
+            "execution": "skipped by unconditional branch; retained in contiguous function extent"
+          }
+        ],
+        "previous_boundary": {
+          "return_address": 1421528,
+          "padding_address": 1421529,
+          "padding_size": 7,
+          "padding_byte": 204
+        },
+        "next_function_address": 1421584
+      }
+    },
+    {
+      "name": "xStrHash",
+      "canonical_identifier": "xStrHash(const char*,size_t)",
+      "display_name": "U32 xStrHash(const char* str, size_t size)",
+      "source": "SB/Core/x/xString.cpp",
+      "linkage_name": null,
+      "address": 1421584,
+      "size": 55,
+      "sha256": "6bb87c0a3e54616e822ebd7a380b3792ffcf5c5e99c5d09b497c6147a4e083b6",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": false,
+      "retail_link_verified": false,
+      "instruction_bytes": 55,
+      "instruction_count": 28,
+      "observed_calling_convention": {
+        "parameters": [
+          {
+            "name": "str",
+            "location": "eax"
+          },
+          {
+            "name": "size",
+            "location": "entry_esp+4"
+          }
+        ],
+        "return": "eax",
+        "stack_cleanup": "caller",
+        "saved_registers": [
+          "ebp",
+          "esi",
+          "edi"
+        ],
+        "convention_name": null,
+        "limitation": "Observed whole-program register allocation is not asserted to be ordinary cdecl or fastcall."
+      },
+      "semantics": {
+        "initial_hash": "0",
+        "loop": "Stop before a NUL byte or when the unsigned processed count reaches size.",
+        "fold": "f = (c - (c & (c >> 1) & 0x20)) modulo 256",
+        "accumulate": "hash = (131 * hash + sign_extend_8(f)) modulo 2^32",
+        "platform_difference": "Xbox sign-extends the folded byte; the GameCube unsigned-byte spelling differs for high-bit bytes. Function identity does not claim the current shared source matches this platform."
+      },
+      "corroboration": {
+        "method": "Individual x86 CFG and instruction data-flow review plus actual caller argument/return use; independent of candidate auto-analysis.",
+        "branches": [
+          {
+            "address": 1421599,
+            "size": 2,
+            "opcode": 118,
+            "target": 1421635
+          },
+          {
+            "address": 1421605,
+            "size": 2,
+            "opcode": 116,
+            "target": 1421635
+          },
+          {
+            "address": 1421633,
+            "size": 2,
+            "opcode": 114,
+            "target": 1421601
+          }
+        ],
+        "return_address": 1421638,
+        "saved_registers": [
+          {
+            "register": "ebp",
+            "push_address": 1421584,
+            "pop_address": 1421637
+          },
+          {
+            "register": "esi",
+            "push_address": 1421589,
+            "pop_address": 1421636
+          },
+          {
+            "register": "edi",
+            "push_address": 1421590,
+            "pop_address": 1421635
+          }
+        ],
+        "recorded_direct_call_count": 15,
+        "reviewed_call_witnesses": [
+          {
+            "address": 1293736,
+            "target": 1421584,
+            "kind": "x86_call_rel32"
+          },
+          {
+            "address": 1298286,
+            "target": 1421584,
+            "kind": "x86_call_rel32"
+          },
+          {
+            "address": 1298321,
+            "target": 1421584,
+            "kind": "x86_call_rel32"
+          }
+        ],
+        "all_local_branches_within_extent": true,
+        "outgoing_calls": 0,
+        "unresolved_indirect_jumps": 0,
+        "following_padding": {
+          "address": 1421639,
+          "size": 9,
+          "byte": 204
+        },
+        "next_function_address": 1421648,
+        "caller_context": {
+          "address": 1293680,
+          "size": 72,
+          "sha256": "17a5c07e0aa74700043a9d0e9766b64b9c458757932cc1bf0d7e33efde359b58",
+          "identity": "xtextbox::set_text-shaped caller in SB/Core/x/xFont.cpp",
+          "observations": "Reads the string pointer into EAX and pushes its length before the bounded call; adds ESP,4 afterward. Alternate path calls the unbounded function; both results go to the same text_hash field.",
+          "source_identity_not_promoted": true
+        }
+      }
+    },
+    {
+      "name": "xStrHashCat",
+      "canonical_identifier": "xStrHashCat(U32,const char*)",
+      "display_name": "U32 xStrHashCat(U32 prefix, const char* str)",
+      "source": "SB/Core/x/xString.cpp",
+      "linkage_name": null,
+      "address": 1421648,
+      "size": 48,
+      "sha256": "d6abeea48df6c000d5ddd6f98dde9fcc40bd7c789d12c46224b3a1f0a8518b1c",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": false,
+      "retail_link_verified": false,
+      "instruction_bytes": 48,
+      "instruction_count": 20,
+      "observed_calling_convention": {
+        "parameters": [
+          {
+            "name": "prefix",
+            "location": "eax"
+          },
+          {
+            "name": "str",
+            "location": "ecx"
+          }
+        ],
+        "return": "eax",
+        "stack_cleanup": "caller",
+        "saved_registers": [
+          "esi"
+        ],
+        "convention_name": null,
+        "limitation": "Observed whole-program register allocation is not asserted to be ordinary cdecl or fastcall."
+      },
+      "semantics": {
+        "initial_hash": "prefix",
+        "loop": "Stop before a NUL byte.",
+        "fold": "f = (c - (c & (c >> 1) & 0x20)) modulo 256",
+        "accumulate": "hash = (131 * hash + sign_extend_8(f)) modulo 2^32",
+        "platform_difference": "Xbox sign-extends the folded byte; the GameCube unsigned-byte spelling differs for high-bit bytes. Function identity does not claim the current shared source matches this platform."
+      },
+      "corroboration": {
+        "method": "Individual x86 CFG and instruction data-flow review plus actual caller argument/return use; independent of candidate auto-analysis.",
+        "branches": [
+          {
+            "address": 1421655,
+            "size": 2,
+            "opcode": 116,
+            "target": 1421694
+          },
+          {
+            "address": 1421692,
+            "size": 2,
+            "opcode": 117,
+            "target": 1421664
+          }
+        ],
+        "return_address": 1421695,
+        "saved_registers": [
+          {
+            "register": "esi",
+            "push_address": 1421648,
+            "pop_address": 1421694
+          }
+        ],
+        "recorded_direct_call_count": 2,
+        "reviewed_call_witnesses": [
+          {
+            "address": 1313788,
+            "target": 1421648,
+            "kind": "x86_call_rel32"
+          },
+          {
+            "address": 1313847,
+            "target": 1421648,
+            "kind": "x86_call_rel32"
+          }
+        ],
+        "all_local_branches_within_extent": true,
+        "outgoing_calls": 0,
+        "unresolved_indirect_jumps": 0,
+        "executed_alignment": [
+          {
+            "address": 1421657,
+            "size": 7,
+            "sha256": "4fe06c07aad18cb5faea1a925ff71a52931084bbb3f844ffd60bae6a9ce14cce",
+            "semantics": "lea esp,[esp] preserves ESP and aligns the loop."
+          }
+        ],
+        "caller_context": {
+          "address": 1313776,
+          "size": 110,
+          "sha256": "5db5e856fee5557492be68ccb52c8371c2ca704c06950d20cabf78a2c1c1d370",
+          "identity": "Model-loader suffix-hash / asset-lookup / raw-id-fallback pattern",
+          "source_candidates": [
+            "SB/Core/x/xHud.cpp",
+            "SB/Game/zUI.cpp",
+            "SB/Game/zEntCruiseBubble.cpp"
+          ],
+          "unique_definition_owner": false,
+          "string_witnesses": [
+            {
+              "address": 2443400,
+              "value": ".minf",
+              "call_site": 1313788,
+              "argument_register": "ecx"
+            },
+            {
+              "address": 2443392,
+              "value": ".dff",
+              "call_site": 1313847,
+              "argument_register": "ecx"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

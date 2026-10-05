@@ -128,6 +128,10 @@ jobs:
           python tools/platforms/france_candidates.py --check
           cp config/platforms/SLES-53623/symbol-candidates.json build/SLES-53623/symbol-candidates.json
 
+      - name: Verify reviewed Xbox function evidence
+        if: startsWith(matrix.version, 'XBOX-')
+        run: python tools/platforms/verify_xbox_reviewed.py
+
       # Incomplete coverage is deliberately not named <version>_report: decomp.dev
       # must not ingest inventories or empty-denominator percentages as progress.
       - name: Upload platform status and coverage
@@ -145,8 +149,7 @@ jobs:
             build/${{ matrix.version }}/splits.json
             build/${{ matrix.version }}/symbol-candidates.json
 
-      - name: Upload PS2 objdiff comparison
-        if: startsWith(matrix.version, 'SL')
+      - name: Upload reviewed-function objdiff comparison
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.version }}_functions

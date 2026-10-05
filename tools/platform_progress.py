@@ -125,7 +125,7 @@ def report(args, versions: dict) -> None:
             backend = importlib.import_module('platforms.' + version['platform'] + '_report')
             options = {}
             reviewed = ROOT / 'config/platforms' / key / 'reviewed-functions.json'
-            if version['platform'] == 'ps2' and reviewed.is_file():
+            if reviewed.is_file():
                 options['reviewed_functions'] = reviewed
             reviewed_calls = reviewed.with_name('reviewed-call-targets.json')
             if version['platform'] == 'ps2' and reviewed_calls.is_file():

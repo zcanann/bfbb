@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "executable_sha1": "983ffc6d84427996ce35d0d204930ae713113370",
-  "status": "section_only",
+  "status": "partial_function_bounds",
   "symbol_file": "symbols.json",
   "translation_unit_ownership_recovered": false,
   "relocations_recovered": false,
@@ -9,7 +9,7 @@
   "source_build_available": false,
   "publish_matching_report": false,
   "notes": [
-    "Authenticated executable sections, not translation-unit splits.",
+    "Authenticated executable sections with individually reviewed function extents; incomplete TU splits.",
     "Analyzer candidates are in symbol-candidates.json and are not confirmed symbols.",
     "Mixed SDK sections and embedded assets require further classification."
   ],
@@ -143,6 +143,43 @@
       "raw_size": 24936,
       "sha1": "dfb96766eefb6049305cc49c55060a062f944586",
       "classification": "unclassified"
+    }
+  ],
+  "known_code_bytes": 151,
+  "unclassified_text_bytes": 1798609,
+  "text_ranges": [
+    {
+      "kind": "unclassified",
+      "address": 69632,
+      "size": 1351904
+    },
+    {
+      "kind": "function",
+      "address": 1421536,
+      "size": 48,
+      "canonical_identifier": "xStrHash(const char*)"
+    },
+    {
+      "kind": "function",
+      "address": 1421584,
+      "size": 55,
+      "canonical_identifier": "xStrHash(const char*,size_t)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1421639,
+      "size": 9
+    },
+    {
+      "kind": "function",
+      "address": 1421648,
+      "size": 48,
+      "canonical_identifier": "xStrHashCat(U32,const char*)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1421696,
+      "size": 446696
     }
   ]
 }

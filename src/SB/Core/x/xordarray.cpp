@@ -5,11 +5,15 @@
 
 void XOrdInit(st_XORDEREDARRAY* array, S32 size, S32 tempAlloc)
 {
+#if defined(PS2)
+    S32 cnt = (1 > size) ? 1 : size;
+#else
     S32 cnt = 1;
     if (size >= 1)
     {
         cnt = size;
     }
+#endif
     if (tempAlloc)
     {
         array->list = (void**)xMemPushTemp(cnt * sizeof(void*));
@@ -24,7 +28,11 @@ void XOrdInit(st_XORDEREDARRAY* array, S32 size, S32 tempAlloc)
     if (array->warnlvl == array->max)
     {
         cnt = array->max - 1;
+#if defined(PS2)
+        array->warnlvl = (0 > cnt) ? 0 : cnt;
+#else
         array->warnlvl = cnt & ~(cnt >> 0x1f);
+#endif
     }
 }
 
@@ -97,7 +105,11 @@ void* XOrdRemove(st_XORDEREDARRAY* array, void* elt, S32 index)
     {
         index = -1;
         int iVar4 = 0;
+#if defined(PS2)
+        while (iVar4 < array->cnt)
+#else
         for (int i = array->cnt; i > 0; i--)
+#endif
         {
             if (array->list[iVar4] == elt)
             {

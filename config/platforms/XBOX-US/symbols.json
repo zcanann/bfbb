@@ -3,6 +3,28 @@
   "executable_sha1": "983ffc6d84427996ce35d0d204930ae713113370",
   "status": "confirmed",
   "coverage_complete": false,
-  "provenance": "XBE supplies no original function symbol table; analyzer candidates are separate",
-  "symbols": []
+  "provenance": "Individually reviewed functions; see reviewed-functions.json; analyzer candidates are separate",
+  "symbols": [
+    {
+      "name": "xStrHash",
+      "canonical_identifier": "xStrHash(const char*)",
+      "source": "SB/Core/x/xString.cpp",
+      "address": 1421536,
+      "size": 48
+    },
+    {
+      "name": "xStrHash",
+      "canonical_identifier": "xStrHash(const char*,size_t)",
+      "source": "SB/Core/x/xString.cpp",
+      "address": 1421584,
+      "size": 55
+    },
+    {
+      "name": "xStrHashCat",
+      "canonical_identifier": "xStrHashCat(U32,const char*)",
+      "source": "SB/Core/x/xString.cpp",
+      "address": 1421648,
+      "size": 48
+    }
+  ]
 }

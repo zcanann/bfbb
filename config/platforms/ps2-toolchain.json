@@ -23,7 +23,7 @@
     "-gccinc",
     "-DPS2=1"
   ],
-  "scope": "Validated xBase profile; compiler identity for other units remains unproven",
+  "scope": "Validated xBase and xordarray profiles; compiler identity for other units remains unproven",
   "units": [
     {
       "source": "src/SB/Core/x/xBase.cpp",
@@ -57,6 +57,53 @@
           "target_source": "SB/Core/x/xserializer.cpp",
           "target_function": "Read_b1",
           "symbol": "Read_b1__7xSerialFPi"
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xordarray.cpp",
+      "target_unit": "SB/Core/x/xordarray.cpp",
+      "object": "source/xordarray.o",
+      "symbols": {
+        "XOrdInit": "XOrdInit__FP16st_XORDEREDARRAYii",
+        "XOrdReset": "XOrdReset__FP16st_XORDEREDARRAY",
+        "XOrdDone": "XOrdDone__FP16st_XORDEREDARRAYi",
+        "XOrdAppend": "XOrdAppend__FP16st_XORDEREDARRAYPv",
+        "XOrdInsert": "XOrdInsert__FP16st_XORDEREDARRAYPvPFPvPv_i",
+        "XOrdRemove": "XOrdRemove__FP16st_XORDEREDARRAYPvi",
+        "XOrdLookup": "XOrdLookup__FP16st_XORDEREDARRAYPCvPFPCvPv_i",
+        "XOrdSort": "XOrdSort__FP16st_XORDEREDARRAYPFPvPv_i"
+      },
+      "calls": [
+        {
+          "function": "XOrdInit",
+          "offset": 36,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPushTemp",
+          "symbol": "xMemPushTemp__FUi"
+        },
+        {
+          "function": "XOrdInit",
+          "offset": 64,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "XOrdDone",
+          "offset": 32,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPopTemp",
+          "symbol": "xMemPopTemp__FPv"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "XOrdInit",
+          "offset": 56,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap",
+          "opcode": 35
         }
       ]
     }

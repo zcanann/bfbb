@@ -1,9 +1,9 @@
-"""Prepare a partial, target-only PS2 objdiff baseline from retail DWARF1.
+"""Prepare partial PS2 objdiff targets from retail DWARF1 and reviewed extents.
 
 Only explicit function low_pc/high_pc ranges enter code totals. Unclassified
 load-image bytes are recorded separately, never guessed to be code or data.
-These objects retain resolved retail instructions; source comparison/linking
-will require a separate relocation-recovery and compiler integration step.
+Selected shared-source units restore independently verified relocations; other
+objects retain resolved retail instructions. Whole-executable linking is pending.
 """
 
 from __future__ import annotations
@@ -72,7 +72,7 @@ def _target_object(functions: list[dict], elf_flags: int) -> bytes:
                 strings.extend(name.encode("utf-8") + b"\0")
                 symbols.extend(struct.pack("<IIIBBH", name_offset, 0, 0, 0x10, 0, 0))
             relocations.extend(struct.pack("<II", relocation["offset"],
-                                           (external_symbols[name] << 8) | 4))
+                                           (external_symbols[name] << 8) | relocation.get("type", 4)))
         if relocations:
             relocation_sections.append(len(sections))
             sections.append({"name": f".rel.text.{function['low']:08x}", "type": 9,
@@ -288,7 +288,9 @@ def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path 
         function["bytes"] = binary[offset:offset + function["high"] - function["low"]]
         groups[_source_name(function["source"])].append(function)
     from .ps2_source import prepare_functions
-    restored = prepare_functions(functions, binary, loaded, metadata["sha1"], reviewed_call_targets)
+    restored = prepare_functions(functions, binary, loaded, metadata["sha1"], reviewed_call_targets,
+                                 metadata=metadata, address_anchors=json.loads(
+                                     (output_dir / 'address-anchors.json').read_text(encoding='utf-8'))['anchors'])
     (output_dir / "relocations.json").write_text(json.dumps({
         "executable_sha1": metadata["sha1"], "relocations": restored,
         "scope": "Validated calls only; complete relocation recovery remains pending",
