@@ -1455,12 +1455,14 @@ void xCameraRotate(xCamera* cam, const xVec3& v, F32 roll, F32 time, F32 accel, 
     cam->yaw_epv = cam->pitch_epv = cam->roll_epv = 0.0f;
 }
 
+#if !defined(XBOX)
 F32 xasin(F32 x)
 {
     return std::asinf(x);
 }
+#endif
 
-#ifndef INLINE
+#if !defined(INLINE) && !defined(XBOX)
 float std::asinf(float x)
 {
     return (float)asin((double)x);

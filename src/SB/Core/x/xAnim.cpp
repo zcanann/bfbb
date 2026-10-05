@@ -368,7 +368,7 @@ void xAnimTempTransitionInit(U32 count)
                   sizeof(xAnimTransition), count, count / 2);
 }
 
-#if !defined(INLINE) && !defined(PS2)
+#if !defined(INLINE) && !defined(PS2) && !defined(XBOX)
 namespace std
 {
     extern inline float atan2f(float y, float x)
@@ -378,10 +378,12 @@ namespace std
 } // namespace std
 #endif
 
+#if !defined(XBOX)
 F32 xatan2(F32 y, F32 x)
 {
     return xAngleClampFast(std::atan2f(y, x));
 }
+#endif
 
 float CalcRecipBlendMax(U16* arg0)
 {
@@ -693,7 +695,7 @@ void xAnimFileEval(xAnimFile* data, F32 time, F32* bilinear, U32 flags, xVec3* t
         iAnimEval(data->RawData[0], rawTime, flags, tran, quat);
     }
 }
-#if !defined(INLINE) && !defined(PS2)
+#if !defined(INLINE) && !defined(PS2) && !defined(XBOX)
 namespace std
 {
     extern inline float floorf(float x)

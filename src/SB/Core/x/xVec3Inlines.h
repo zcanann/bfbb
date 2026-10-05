@@ -4,7 +4,7 @@
 #include "xVec3.h"
 #include "xMathInlines.h"
 
-#if defined(PS2)
+#if defined(PS2) || defined(XBOX)
 inline void xVec3Sub(xVec3* o, const xVec3* a, const xVec3* b)
 {
     o->x = a->x - b->x;
@@ -14,9 +14,34 @@ inline void xVec3Sub(xVec3* o, const xVec3* a, const xVec3* b)
 #else
 void xVec3Sub(xVec3* o, const xVec3* a, const xVec3* b);
 #endif
+#if defined(XBOX)
+inline void xVec3Cross(xVec3* o, const xVec3* a, const xVec3* b)
+{
+    o->x = a->y * b->z - b->y * a->z;
+    o->y = a->z * b->x - b->z * a->x;
+    o->z = a->x * b->y - b->x * a->y;
+}
+#else
 void xVec3Cross(xVec3* o, const xVec3* a, const xVec3* b);
+#endif
+#if defined(XBOX)
+inline void xVec3Inv(xVec3* o, const xVec3* v)
+{
+    o->x = -v->x;
+    o->y = -v->y;
+    o->z = -v->z;
+}
+#else
 void xVec3Inv(xVec3* o, const xVec3* v);
+#endif
+#if defined(XBOX)
+inline void xVec3Copy(xVec3* o, const xVec3* v)
+{
+    *o = *v;
+}
+#else
 void xVec3Copy(xVec3* o, const xVec3* v);
+#endif
 
 #ifdef XVEC3INLINES_DEFER_LENGTH
 F32 xVec3Length(const xVec3* v);
@@ -27,9 +52,36 @@ inline F32 xVec3Length(const xVec3* v)
 }
 #endif
 
+#if defined(XBOX)
+inline void xVec3SMul(xVec3* o, const xVec3* v, F32 s)
+{
+    o->x = v->x * s;
+    o->y = v->y * s;
+    o->z = v->z * s;
+}
+#else
 void xVec3SMul(xVec3* o, const xVec3* v, F32 s);
+#endif
+#if defined(XBOX)
+inline void xVec3Add(xVec3* o, const xVec3* a, const xVec3* b)
+{
+    o->x = a->x + b->x;
+    o->y = a->y + b->y;
+    o->z = a->z + b->z;
+}
+#else
 void xVec3Add(xVec3* o, const xVec3* a, const xVec3* b);
+#endif
+#if defined(XBOX)
+inline void xVec3Init(xVec3* vec, F32 x, F32 y, F32 z)
+{
+    vec->x = x;
+    vec->y = y;
+    vec->z = z;
+}
+#else
 void xVec3Init(xVec3* v, F32 _x, F32 _y, F32 _z);
+#endif
 void xVec3AddTo(xVec3* o, const xVec3* v);
 void xVec3Lerp(xVec3* o, const xVec3* a, const xVec3* b, F32 t);
 void xVec3ScaleC(xVec3* o, const xVec3* v, F32 x, F32 y, F32 z);
@@ -54,7 +106,14 @@ inline F32 xVec3Dist2(const xVec3* vecA, const xVec3* vecB)
     return dx * dx + dy * dy + dz * dz;
 }
 
+#if defined(XBOX)
+inline F32 xVec3Length2(const xVec3* vec)
+{
+    return vec->x * vec->x + vec->y * vec->y + vec->z * vec->z;
+}
+#else
 F32 xVec3Length2(const xVec3* vec);
+#endif
 
 inline F32 xVec3LengthFast(F32 x, F32 y, F32 z)
 {
@@ -65,7 +124,16 @@ inline F32 xVec3LengthFast(F32 x, F32 y, F32 z)
 
 F32 xVec3LengthFast(const xVec3* vec);
 
+#if defined(XBOX)
+inline void xVec3AddScaled(xVec3* o, const xVec3* v, F32 s)
+{
+    o->x += v->x * s;
+    o->y += v->y * s;
+    o->z += v->z * s;
+}
+#else
 void xVec3AddScaled(xVec3* o, const xVec3* v, F32 s);
+#endif
 
 #define xVec3NormalizeMacro(o, v, len)                                                             \
     MACRO_START                                                                                    \

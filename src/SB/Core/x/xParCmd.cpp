@@ -4,6 +4,9 @@
 #include "xVec3Inlines.h"
 #include "xMath.h"
 #include "xMathInlines.h"
+#if defined(XBOX)
+#include "xMath3.h"
+#endif
 
 struct xCmdInfo
 {

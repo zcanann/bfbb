@@ -62,6 +62,113 @@
       "source": "SB/Core/x/xParGroup.cpp",
       "evidence": "Register uses a 255-DWORD initialization loop and byte slot indices. Animate uses independently checked 0.0 and 255.0 clamp values.",
       "value_hex": "00007f43"
+    },
+    {
+      "name": "rndseed",
+      "address": 3218932,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xParCmd.cpp",
+      "evidence": "Random callbacks repeatedly update this DWORD with multiplier 1103515245 and increment 12345, establishing the shared xrand seed."
+    },
+    {
+      "name": "float:4f800000",
+      "address": 2545044,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xParCmd.cpp",
+      "evidence": "Actual read-only float bytes at decoded particle callback load operands.",
+      "value_hex": "0000804f"
+    },
+    {
+      "name": "float:30000000",
+      "address": 2545384,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xParCmd.cpp",
+      "evidence": "Actual read-only float bytes at decoded particle callback load operands.",
+      "value_hex": "00000030"
+    },
+    {
+      "name": "float:3f000000",
+      "address": 2544868,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xParCmd.cpp",
+      "evidence": "Actual read-only float bytes at decoded particle callback load operands.",
+      "value_hex": "0000003f"
+    },
+    {
+      "name": "float:2f800000",
+      "address": 2541100,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xParCmd.cpp",
+      "evidence": "Actual read-only float bytes at decoded particle callback load operands.",
+      "value_hex": "0000802f"
+    },
+    {
+      "name": "float:3b360b61",
+      "address": 2545344,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xParCmd.cpp",
+      "evidence": "Actual read-only float bytes at decoded particle callback load operands.",
+      "value_hex": "610b363b"
+    },
+    {
+      "name": "float:3c8efa35",
+      "address": 2545172,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xParCmd.cpp",
+      "evidence": "Actual read-only float bytes at decoded particle callback load operands.",
+      "value_hex": "35fa8e3c"
+    },
+    {
+      "name": "float:3f800000",
+      "address": 2544864,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xParCmd.cpp",
+      "evidence": "Actual read-only float bytes at decoded particle callback load operands.",
+      "value_hex": "0000803f"
+    },
+    {
+      "name": "float:40400000",
+      "address": 2544964,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xParCmd.cpp",
+      "evidence": "Actual read-only float bytes at decoded particle callback load operands.",
+      "value_hex": "00004040"
+    },
+    {
+      "name": "float:3eaaaaab",
+      "address": 2545072,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xParCmd.cpp",
+      "evidence": "Actual read-only float bytes at decoded particle callback load operands.",
+      "value_hex": "abaaaa3e"
+    },
+    {
+      "name": "float:3f2aaaab",
+      "address": 2545068,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xParCmd.cpp",
+      "evidence": "Actual read-only float bytes at decoded particle callback load operands.",
+      "value_hex": "abaa2a3f"
+    },
+    {
+      "name": "float:3727c5ac",
+      "address": 2545032,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xParCmd.cpp",
+      "evidence": "Actual read-only float bytes at decoded particle callback load operands.",
+      "value_hex": "acc52737"
     }
   ],
   "pool_loop": {
@@ -208,6 +315,488 @@
         ],
         [
           84,
+          "ret",
+          ""
+        ]
+      ]
+    },
+    {
+      "address": 1352496,
+      "size": 335,
+      "sha256": "7db578fd03c63159d57181e1dd0be19cc8bc0be5b0278284b9e1de9901acecf3",
+      "instructions": [
+        [
+          0,
+          "sub",
+          "esp, 0x3c"
+        ],
+        [
+          3,
+          "mov",
+          "eax, dword ptr [esp + 0x40]"
+        ],
+        [
+          7,
+          "fld",
+          "dword ptr [esp + 0x48]"
+        ],
+        [
+          11,
+          "mov",
+          "eax, dword ptr [eax + 4]"
+        ],
+        [
+          14,
+          "fmul",
+          "dword ptr [eax + 8]"
+        ],
+        [
+          17,
+          "mov",
+          "ecx, dword ptr [esp + 0x44]"
+        ],
+        [
+          21,
+          "mov",
+          "ecx, dword ptr [ecx]"
+        ],
+        [
+          23,
+          "test",
+          "ecx, ecx"
+        ],
+        [
+          25,
+          "fstp",
+          "dword ptr [esp]"
+        ],
+        [
+          28,
+          "fld",
+          "dword ptr [esp + 0x48]"
+        ],
+        [
+          32,
+          "fmul",
+          "dword ptr [eax + 0xc]"
+        ],
+        [
+          35,
+          "fstp",
+          "dword ptr [esp + 4]"
+        ],
+        [
+          39,
+          "fld",
+          "dword ptr [esp + 0x48]"
+        ],
+        [
+          43,
+          "fmul",
+          "dword ptr [eax + 0x10]"
+        ],
+        [
+          46,
+          "fstp",
+          "dword ptr [esp + 8]"
+        ],
+        [
+          50,
+          "je",
+          "0x14a47b"
+        ],
+        [
+          56,
+          "mov",
+          "edx, dword ptr [0x311df4]"
+        ],
+        [
+          62,
+          "mov",
+          "edi, edi"
+        ],
+        [
+          64,
+          "mov",
+          "eax, edx"
+        ],
+        [
+          66,
+          "imul",
+          "eax, eax, 0x41c64e6d"
+        ],
+        [
+          72,
+          "add",
+          "eax, 0x3039"
+        ],
+        [
+          77,
+          "test",
+          "eax, eax"
+        ],
+        [
+          79,
+          "mov",
+          "dword ptr [esp + 0x48], eax"
+        ],
+        [
+          83,
+          "fild",
+          "dword ptr [esp + 0x48]"
+        ],
+        [
+          87,
+          "jge",
+          "0x14a38f"
+        ],
+        [
+          89,
+          "fadd",
+          "dword ptr [0x26d594]"
+        ],
+        [
+          95,
+          "fmul",
+          "dword ptr [esp]"
+        ],
+        [
+          98,
+          "imul",
+          "eax, eax, 0x41c64e6d"
+        ],
+        [
+          104,
+          "fmul",
+          "dword ptr [0x26d6e8]"
+        ],
+        [
+          110,
+          "add",
+          "eax, 0x3039"
+        ],
+        [
+          115,
+          "test",
+          "eax, eax"
+        ],
+        [
+          117,
+          "fsub",
+          "dword ptr [esp]"
+        ],
+        [
+          120,
+          "mov",
+          "dword ptr [esp + 0x40], eax"
+        ],
+        [
+          124,
+          "fstp",
+          "dword ptr [esp + 0x48]"
+        ],
+        [
+          128,
+          "fild",
+          "dword ptr [esp + 0x40]"
+        ],
+        [
+          132,
+          "jge",
+          "0x14a3bc"
+        ],
+        [
+          134,
+          "fadd",
+          "dword ptr [0x26d594]"
+        ],
+        [
+          140,
+          "fmul",
+          "dword ptr [esp + 4]"
+        ],
+        [
+          144,
+          "imul",
+          "eax, eax, 0x41c64e6d"
+        ],
+        [
+          150,
+          "fmul",
+          "dword ptr [0x26d6e8]"
+        ],
+        [
+          156,
+          "add",
+          "eax, 0x3039"
+        ],
+        [
+          161,
+          "mov",
+          "edx, eax"
+        ],
+        [
+          163,
+          "test",
+          "edx, edx"
+        ],
+        [
+          165,
+          "fsub",
+          "dword ptr [esp + 4]"
+        ],
+        [
+          169,
+          "mov",
+          "dword ptr [esp + 0x44], edx"
+        ],
+        [
+          173,
+          "fstp",
+          "dword ptr [esp + 0x40]"
+        ],
+        [
+          177,
+          "fild",
+          "dword ptr [esp + 0x44]"
+        ],
+        [
+          181,
+          "jge",
+          "0x14a3ed"
+        ],
+        [
+          183,
+          "fadd",
+          "dword ptr [0x26d594]"
+        ],
+        [
+          189,
+          "fmul",
+          "dword ptr [esp + 8]"
+        ],
+        [
+          193,
+          "mov",
+          "eax, dword ptr [esp + 0x48]"
+        ],
+        [
+          197,
+          "push",
+          "ecx"
+        ],
+        [
+          198,
+          "fmul",
+          "dword ptr [0x26d6e8]"
+        ],
+        [
+          204,
+          "fsub",
+          "dword ptr [esp + 0xc]"
+        ],
+        [
+          208,
+          "fstp",
+          "dword ptr [esp]"
+        ],
+        [
+          211,
+          "push",
+          "eax"
+        ],
+        [
+          212,
+          "mov",
+          "eax, dword ptr [esp + 0x48]"
+        ],
+        [
+          216,
+          "push",
+          "eax"
+        ],
+        [
+          217,
+          "lea",
+          "eax, [esp + 0x18]"
+        ],
+        [
+          221,
+          "call",
+          "0x1457f0"
+        ],
+        [
+          226,
+          "fld",
+          "dword ptr [esp + 0x2c]"
+        ],
+        [
+          230,
+          "fmul",
+          "dword ptr [ecx + 0x24]"
+        ],
+        [
+          233,
+          "add",
+          "esp, 0xc"
+        ],
+        [
+          236,
+          "fld",
+          "dword ptr [esp + 0x24]"
+        ],
+        [
+          240,
+          "fmul",
+          "dword ptr [ecx + 0x28]"
+        ],
+        [
+          243,
+          "faddp",
+          "st(1)"
+        ],
+        [
+          245,
+          "fld",
+          "dword ptr [esp + 0x1c]"
+        ],
+        [
+          249,
+          "fmul",
+          "dword ptr [ecx + 0x20]"
+        ],
+        [
+          252,
+          "faddp",
+          "st(1)"
+        ],
+        [
+          254,
+          "fld",
+          "dword ptr [esp + 0x30]"
+        ],
+        [
+          258,
+          "fmul",
+          "dword ptr [ecx + 0x24]"
+        ],
+        [
+          261,
+          "fld",
+          "dword ptr [esp + 0x34]"
+        ],
+        [
+          265,
+          "fmul",
+          "dword ptr [ecx + 0x28]"
+        ],
+        [
+          268,
+          "faddp",
+          "st(1)"
+        ],
+        [
+          270,
+          "fld",
+          "dword ptr [esp + 0x2c]"
+        ],
+        [
+          274,
+          "fmul",
+          "dword ptr [ecx + 0x20]"
+        ],
+        [
+          277,
+          "faddp",
+          "st(1)"
+        ],
+        [
+          279,
+          "fld",
+          "dword ptr [esp + 0x10]"
+        ],
+        [
+          283,
+          "fmul",
+          "dword ptr [ecx + 0x24]"
+        ],
+        [
+          286,
+          "fld",
+          "dword ptr [esp + 0x14]"
+        ],
+        [
+          290,
+          "fmul",
+          "dword ptr [ecx + 0x28]"
+        ],
+        [
+          293,
+          "faddp",
+          "st(1)"
+        ],
+        [
+          295,
+          "fld",
+          "dword ptr [esp + 0xc]"
+        ],
+        [
+          299,
+          "fmul",
+          "dword ptr [ecx + 0x20]"
+        ],
+        [
+          302,
+          "faddp",
+          "st(1)"
+        ],
+        [
+          304,
+          "fstp",
+          "dword ptr [ecx + 0x20]"
+        ],
+        [
+          307,
+          "fxch",
+          "st(1)"
+        ],
+        [
+          309,
+          "fstp",
+          "dword ptr [ecx + 0x24]"
+        ],
+        [
+          312,
+          "fstp",
+          "dword ptr [ecx + 0x28]"
+        ],
+        [
+          315,
+          "mov",
+          "ecx, dword ptr [ecx]"
+        ],
+        [
+          317,
+          "test",
+          "ecx, ecx"
+        ],
+        [
+          319,
+          "jne",
+          "0x14a370"
+        ],
+        [
+          325,
+          "mov",
+          "dword ptr [0x311df4], edx"
+        ],
+        [
+          331,
+          "add",
+          "esp, 0x3c"
+        ],
+        [
+          334,
           "ret",
           ""
         ]

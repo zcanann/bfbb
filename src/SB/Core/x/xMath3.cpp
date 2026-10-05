@@ -2,13 +2,13 @@
 #include "iMath3.h"
 
 #include <types.h>
-#if !defined(PS2)
+#if !defined(PS2) && !defined(XBOX)
 #include <intrin.h>
 #endif
 
 #include "iMath.h"
 #include "xMath.h" // icos and isin
-#if !defined(PS2)
+#if !defined(PS2) && !defined(XBOX)
 #include "xClimate.h" // xMat3x3Identity
 #endif
 #include "xMathInlines.h" // xasin, xatan2

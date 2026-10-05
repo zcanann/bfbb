@@ -294,18 +294,21 @@ def compile_units(output: Path, compilers: Path, wine: Path | None = None) -> li
             if hashlib.sha256(library.read_bytes()).hexdigest() != spec['sha256']:
                 raise ValueError('Unexpected static compiler runtime library')
             runtime_libraries.append(tool_path(library))
-        support = profile['host_context']
+        support = {**profile['host_context'], **unit.get('host_context', {})}
         run('cl.exe', [*profile['flags'], *includes, '/Foentry.obj',
                        tool_path(ROOT / unit.get('host_entry', support['entry']))], 'compile-entry')
-        run('cl.exe', [*profile['flags'], *includes, '/MD', '/Foxatof.obj',
-                       tool_path(ROOT / support['xatof'])], 'compile-host-xatof')
+        host_objects = []
+        if support['xatof'] is not None:
+            run('cl.exe', [*profile['flags'], *includes, '/MD', '/Foxatof.obj',
+                           tool_path(ROOT / support['xatof'])], 'compile-host-xatof')
+            host_objects.append('xatof.obj')
         run('cl.exe', ['/nologo', '/c', '/O2', '/Fofltused.obj',
                        tool_path(ROOT / support['float_marker'])], 'compile-host-marker')
         run('lib.exe', ['/nologo', '/machine:x86', '/out:msvcrt.lib',
                         '/def:' + tool_path(ROOT / support['imports'])], 'create-host-imports')
         run('link.exe', ['/nologo', '/LTCG', '/NODEFAULTLIB', '/ENTRY:xbox_source_entry',
                          '/SUBSYSTEM:CONSOLE', '/MAP:source.map', '/FIXED:NO', '/OUT:source.exe',
-                         source_object.name, *dependency_objects, 'entry.obj', 'xatof.obj', 'fltused.obj', 'msvcrt.lib',
+                         source_object.name, *dependency_objects, 'entry.obj', *host_objects, 'fltused.obj', 'msvcrt.lib',
                          *runtime_libraries], 'link-source')
         functions, evidence = _extract_functions(build / 'source.exe', build / 'source.map', unit)
         comparison = output / unit['comparison_object']

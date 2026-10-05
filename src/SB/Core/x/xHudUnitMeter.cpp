@@ -10,6 +10,7 @@
 // NOTE: these two belong in headers (std::fmodf in <math.h>, xfmod in
 // xMathInlines.h). They are inline, so the compiler emits a weak out-of-line
 // copy into every translation unit that calls them.
+#if !defined(XBOX)
 namespace std
 {
     extern inline float fmodf(float x, float y)
@@ -17,11 +18,14 @@ namespace std
         return ::fmod(x, y);
     }
 }
+#endif
 
+#if !defined(XBOX)
 inline F32 xfmod(F32 a, F32 b)
 {
     return std::fmodf(a, b);
 }
+#endif
 
 namespace xhud
 {

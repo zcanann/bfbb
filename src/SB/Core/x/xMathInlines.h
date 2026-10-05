@@ -2,12 +2,45 @@
 #define XMATHINLINES_H
 
 #include <types.h>
+#if defined(XBOX)
+#include <cmath>
+#else
 #include <math.h>
+#endif
 
+#if defined(XBOX)
+inline F32 xfmod(F32 a, F32 b)
+{
+    return std::fmodf(a, b);
+}
+#else
 F32 xfmod(F32 a, F32 b);
+#endif
+#if defined(XBOX)
+F32 xAngleClampFast(F32 a);
+inline F32 xatan2(F32 y, F32 x)
+{
+    return xAngleClampFast(std::atan2f(y, x));
+}
+#else
 F32 xatan2(F32 y, F32 x);
+#endif
+#if defined(XBOX)
+inline F32 xasin(F32 x)
+{
+    return std::asinf(x);
+}
+#else
 F32 xasin(F32 x);
+#endif
+#if defined(XBOX)
+inline F32 xacos(F32 x)
+{
+    return std::acosf(x);
+}
+#else
 F32 xacos(F32 x);
+#endif
 F32 xexp(F32 x);
 
 inline F32 SQ(F32 x)
@@ -45,13 +78,13 @@ inline void xsqrtfast(F32& out, F32 x)
     out = std::sqrtf(x);
 }
 
-#if defined(XMATHINLINES_DEFER_XSQRT) || defined(PS2)
+#if defined(XMATHINLINES_DEFER_XSQRT) || defined(PS2) || defined(XBOX)
 F32 xsqrt(F32 x);
 #endif
 
 #endif // XMATHINLINES_H
 
-#if defined(PS2) && !defined(XMATHINLINES_DEFER_XSQRT) && !defined(XMATHINLINES_XSQRT_H)
+#if (defined(PS2) || defined(XBOX)) && !defined(XMATHINLINES_DEFER_XSQRT) && !defined(XMATHINLINES_XSQRT_H)
 #define XMATHINLINES_XSQRT_H
 
 inline F32 xsqrt(F32 x)
@@ -63,7 +96,7 @@ inline F32 xsqrt(F32 x)
 
 // Keep this implementation in its original header group. iModel defers it
 // until after its stream-reader literals, then emits an explicit weak copy.
-#if !defined(PS2) && !defined(XMATHINLINES_DEFER_XSQRT) && !defined(XMATHINLINES_XSQRT_H)
+#if !defined(PS2) && !defined(XBOX) && !defined(XMATHINLINES_DEFER_XSQRT) && !defined(XMATHINLINES_XSQRT_H)
 #define XMATHINLINES_XSQRT_H
 
 // Inline in retail: every caller's TU emits its own weak copy (and its pool

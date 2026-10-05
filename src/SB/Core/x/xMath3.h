@@ -157,14 +157,30 @@ void xQuatAdd(xQuat* q, const xQuat* a, const xQuat* b);
 void xQuatCopy(xQuat*, const xQuat*);
 void xQuatFlip(xQuat* o1, const xQuat* o2);
 F32 xQuatDot(const xQuat* a, const xQuat* b);
+#if defined(XBOX)
+inline void xMat3x3Copy(xMat3x3* o, const xMat3x3* m)
+{
+    *o = *m;
+}
+#else
 void xMat3x3Copy(xMat3x3* o, const xMat3x3* m);
+#endif
 void xMat4x3Copy(xMat4x3* o, const xMat4x3* m);
 void xMat3x3MulRotC(xMat3x3* o, xMat3x3* m, F32 _x, F32 _y, F32 _z, F32 t);
 void xMat4x3Identity(xMat4x3* m);
 void xMat4x3Tolocal(xVec3* o, const xMat4x3* m, const xVec3* v);
 void xMat4x3OrthoInv(xMat4x3* o, const xMat4x3* m);
 F32 xQuatGetAngle(const xQuat* q);
+#if defined(XBOX)
+inline void xQuatConj(xQuat* o, const xQuat* q)
+{
+    o->s = q->s;
+
+    xVec3Inv(&o->v, &q->v);
+}
+#else
 void xQuatConj(xQuat* o, const xQuat* q);
+#endif
 void xMat3x3LookAt(xMat3x3* m, const xVec3* pos, const xVec3* at);
 F32 xMat3x3LookVec3(xMat3x3& m, const xVec3& at);
 void xMat3x3Scale(xMat3x3* m, const xVec3* s);
@@ -181,7 +197,14 @@ inline void xBoxFromSphere(xBox& box, const xSphere& o)
 #else
 void xBoxFromSphere(xBox& box, const xSphere& o);
 #endif
+#if defined(XBOX)
+inline void xMat3x3Identity(xMat3x3* matrix)
+{
+    xMat3x3Copy(matrix, &g_I3);
+}
+#else
 void xMat3x3Identity(xMat3x3* matrix);
+#endif
 void xMat3x3SMul(xMat3x3*, const xMat3x3*, F32);
 
 inline void xRotCopy(xRot* o, const xRot* r)

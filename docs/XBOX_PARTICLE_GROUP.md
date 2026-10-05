@@ -79,3 +79,76 @@ transform follows the public [ISx format implementation](https://github.com/Cold
 Only metadata and extraction code are public; proprietary binaries stay in the
 private build image. Actual provisioning and both complete production report
 runs validate this path.
+
+## Particle-command callbacks and shared math enablement
+
+The next batch compiles complete `xParCmd.cpp`, `xMath.cpp`, `xMath3.cpp`,
+`xVec3.cpp`, and the existing complete `gc/iMath.cpp`/`gc/iMath3.cpp`
+implementations. Xbox-only guards restore ordinary scalar header inlines from
+existing definitions, select standard compiler math headers, and exclude PPC
+intrinsics. Original `xMat3x3LookVec` calls normalization at `0x15cf00`; the
+normalizer performs an actual x87 `FSQRT` at `0x15cf83`, corroborating the Xbox
+`sqrtf` helper. The new Xbox `iMath3.h` contains genuine shared API declarations
+and an opaque matrix union; no Xbox SDK layout is invented.
+
+The original initializer at `0x149a40` contains 721 bytes of straight-line
+constant stores. It writes command IDs, asset sizes, and callback addresses into
+a 35-slot table at `0x373dc0` (12 bytes per slot). These stores independently
+identify all 21 nonempty registered callbacks. `xbox_particle_commands.py`
+replays the constant register/store dataflow and checks each original entry,
+then follows the callback's closed direct CFG to its recorded terminal return.
+It does not consume a compiled object. The shared empty callback aliases at
+`0x0bcd00` are not counted repeatedly or assigned speculative exclusive ownership.
+
+All 21 callbacks (4771 original bytes) enter normal comparison, including the
+13 partial matches. Eight independently reconstruct the original and actual
+linked source bytes exactly:
+
+| Callback | Original address | Bytes |
+| --- | --- | ---: |
+| Accelerate | 0x14a070 | 119 |
+| Move | 0x14a0f0 | 119 |
+| VelocityApply | 0x14a630 | 50 |
+| CollideFall | 0x14a9f0 | 83 |
+| CollideFallSticky | 0x14aa50 | 118 |
+| SizeInOut | 0x14ab30 | 332 |
+| AlphaInOut | 0x14ac80 | 386 |
+| Shaper | 0x14ae10 | 624 |
+
+Both regions increase **1523 -> 3354 matched bytes (+1831)**. The original
+inventory gains 21 named functions / 4771 bytes, reaching 2543 functions /
+632688 known bytes, while the full **1798760-byte code denominator** and data
+denominator stay unchanged. Existing xString/xPar/xParGroup report units and
+all their normalized source bytes/named relocations are identical. Every new
+source comparison inversely reproduces its actual linked PE bytes. The exact
+eight also reproduce both authenticated originals; only 79 independently
+verified literal operands and three known `__ftol2` call operands are restored.
+Other original math callees retain raw operands rather than inferred identities.
+No compiler flags, scoring policy, TU completion, or executable relink claim changes.
+
+The per-unit host context uses real exports from the already pinned
+`msvcr71.dll` for math calls; `link /dump /exports` verified the `_CI*` and C math
+names in `math_crt.def`. This prevents pulling Windows process startup merely
+to satisfy genuine CRT math dependencies. The actual `xMath.cpp` supplies
+`xatof`, so this unit omits the existing diagnostic duplicate wrapper. Pinned
+`libcmt.lib` still supplies the unchanged exact `__ftol2`; runtime and host
+support bytes are excluded from source gains.
+
+Core out-of-line copies in xBound/xCollide/xClimate/xAnim/xCamera and camera/HUD
+inlines are guarded against duplicate Xbox definitions. GC and PS2 preprocessing
+paths retain their existing definitions. Additional, currently unsupported game
+TUs with private copies of these helpers need the same ownership reconciliation
+when enabled; this batch does not edit parked game targets.
+
+Reproduce the original evidence and normal source reports with:
+
+```sh
+python tools/platforms/verify_xbox_reviewed.py --orig-dir /private/orig
+python tools/platform_progress.py report --version XBOX-US \
+  --orig-dir /private/orig --build-dir build/platforms \
+  --xbox-compilers /xbox-compilers --objdiff /tools/objdiff-cli --wine /usr/bin/wine
+```
+
+Repeat the report for `XBOX-EU`. Local actual-production artifacts and independent
+source/original inverse checks are under `build/xbox172/production` and
+`build/xbox172/validation.json`; no binary artifacts are committed.

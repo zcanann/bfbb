@@ -1,7 +1,7 @@
 #include "xMath.h"
 
 #include <types.h>
-#if defined(PS2)
+#if defined(PS2) || defined(XBOX)
 #include <stdlib.h>
 #else
 #include <PowerPC_EABI_Support\MSL_C\MSL_Common\stdlib.h>
@@ -9,7 +9,7 @@
 
 #include "xMathInlines.h"
 
-#if defined(PS2)
+#if defined(PS2) || defined(XBOX)
 #define xMathAbs iabs
 #else
 #define xMathAbs __fabs

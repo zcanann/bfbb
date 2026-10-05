@@ -1,5 +1,5 @@
 #include "xVec3.h"
-#if !defined(PS2)
+#if !defined(PS2) && !defined(XBOX)
 #include "xCollide.h"
 #endif
 #include "xMathInlines.h"
@@ -7,7 +7,7 @@
 #include "xMath.h"
 
 #include <types.h>
-#if !defined(PS2)
+#if !defined(PS2) && !defined(XBOX)
 #include <fastmath.h>
 #endif
 
@@ -101,7 +101,7 @@ F32 xVec3NormalizeFast(xVec3* o, const xVec3* v)
     return len;
 }
 
-#if !defined(PS2)
+#if !defined(PS2) && !defined(XBOX)
 void xVec3Copy(register xVec3* dst, const register xVec3* src)
 {
     PSVECCopy(dst, src);
