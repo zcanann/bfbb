@@ -12,9 +12,12 @@
 #include <types.h>
 #include <string.h>
 #include <stdlib.h>
+#if defined(PS2)
+#include <math.h>
+#else
 #include <PowerPC_EABI_Support\MSL_C\MSL_Common\cmath>
-
 #include <dolphin.h>
+#endif
 #include <stdio.h>
 
 static xMemPool sxAnimTempTranPool;
@@ -365,7 +368,7 @@ void xAnimTempTransitionInit(U32 count)
                   sizeof(xAnimTransition), count, count / 2);
 }
 
-#ifndef INLINE
+#if !defined(INLINE) && !defined(PS2)
 namespace std
 {
     extern inline float atan2f(float y, float x)
@@ -690,7 +693,7 @@ void xAnimFileEval(xAnimFile* data, F32 time, F32* bilinear, U32 flags, xVec3* t
         iAnimEval(data->RawData[0], rawTime, flags, tran, quat);
     }
 }
-#ifndef INLINE
+#if !defined(INLINE) && !defined(PS2)
 namespace std
 {
     extern inline float floorf(float x)

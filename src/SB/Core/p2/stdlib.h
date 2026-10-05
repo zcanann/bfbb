@@ -8,6 +8,7 @@ extern "C" {
 
 void exit(int status);
 int abs(int value);
+int rand(void);
 int atoi(const char* string);
 
 double atof(const char* string);
