@@ -444,4 +444,6 @@ RwV3d* RwV3dTransformPoints(RwV3d* pointsOut, const RwV3d* pointsIn, RwInt32 num
                           const RwMatrix* matrix);
 }
 
+#define RwFrameGetMatrix(_f) (&(_f)->modelling)
+
 #endif

@@ -234,4 +234,6 @@ RpMaterial* RpMaterialSetTexture(RpMaterial* material, RwTexture* texture);
 #define RpAtomicRenderMacro(_atomic) ((_atomic)->renderCallBack(_atomic))
 #define RpAtomicRender(_atomic) RpAtomicRenderMacro(_atomic)
 
+#define RpAtomicGetGeometryMacro(_atomic) ((_atomic)->geometry)
+
 #endif

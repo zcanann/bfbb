@@ -28,7 +28,9 @@ struct zFXGooInstance
     S32 freezeGroup;
     xVec3* orig_verts;
     RwRGBA* orig_colors;
+#if !defined(PS2)
     RwTexCoords* orig_uvs;
+#endif
     F32 time;
     F32 timer;
     F32 w0;
