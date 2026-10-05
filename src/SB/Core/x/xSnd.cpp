@@ -822,7 +822,11 @@ U8 xSndStreamLock(U32 owner, sound_category kill_cat, bool kill_nonlooping)
         {
             if (v->lock_owner == 0 && v->category == kill_cat)
             {
+#if defined(PS2)
+                iSndStop(v->sndID);
+#else
                 xSndStop(v->sndID);
+#endif
                 v->lock_owner = owner;
                 return 1;
             }
@@ -835,7 +839,11 @@ U8 xSndStreamLock(U32 owner, sound_category kill_cat, bool kill_nonlooping)
         {
             if (v->lock_owner == 0 && !(v->flags & 0x8000))
             {
+#if defined(PS2)
+                iSndStop(v->sndID);
+#else
                 xSndStop(v->sndID);
+#endif
                 v->lock_owner = owner;
                 return 1;
             }

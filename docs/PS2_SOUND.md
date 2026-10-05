@@ -47,15 +47,23 @@ unchanged, and all 37 functions / 6,764 bytes remain in the comparison. France's
 existing three-function / 132-byte subset is unchanged (one / 68 matched).
 All four independently compiled PS2 source objects are byte-identical.
 
-Raw relocation reconstruction independently reproduces StreamUnlock's 72 bytes
-in all three debug originals. StreamLock remains a standard code match only:
-its two source xSndStop calls differ from the original destinations at offsets
-264 and 348. The ordinary project relocation comparison policy is unchanged;
-this change does not claim to reconstruct those original call targets or the
-whole sound unit. The original loop-bound correction is independent of them.
+Raw relocation reconstruction reproduces both StreamLock (416 bytes) and
+StreamUnlock (72 bytes) in all three debug originals. The original StreamLock
+calls at offsets 264 and 348 directly target `iSndStop__FUi`, owned by the PS2
+platform sound unit, rather than the shared `xSndStop` wrapper. PS2 now selects
+those original callees; GameCube retains its wrapper calls. This changes exactly
+two source call relocation identities, with every allocated section byte and
+all regional standard function records unchanged. The comparison policy is
+unchanged, and no whole sound-unit or executable reconstruction is claimed.
 
 An actual GameCube compile preserves all seven ordered allocated sections.
 Private evidence is in build/sound243: original-stream-limits.json,
 source-delta-proof.json, all-region-proof.json, raw/raw-proof.json and
 GC proof gc/proof.json. No additional layout, flags, profile or backend change
 is involved.
+
+The callee follow-up is independently recorded in build/sound245/proof.json,
+raw/raw-proof.json and gc/proof.json; authenticated original callee identities
+are in build/sound243/lock-call-identities.json. All four actual whole-source
+objects remain byte-identical across PS2 versions, and the GC control preserves
+its seven allocated sections.
