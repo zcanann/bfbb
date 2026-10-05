@@ -4,7 +4,11 @@
 #include <types.h>
 
 #include "xMath.h"
+#if defined(PS2)
+#include "xSceneLookup.h"
+#else
 #include "xScene.h"
+#endif
 #include "xMemMgr.h"
 
 inline F32 xVec3Hdng(xVec3* a, const xVec3* b, const xVec3* c);

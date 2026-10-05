@@ -2,6 +2,7 @@
 #define XSCENE_H
 
 #include "xBase.h"
+#include "xSceneLookup.h"
 #include "xEnt.h"
 #include "xEnv.h"
 #include "xMemMgr.h"
@@ -70,8 +71,6 @@ void xSceneSave(xScene* sc, xSerial* s);
 void xSceneLoad(xScene* sc, xSerial* s);
 void xSceneSetup(xScene* sc);
 void xSceneAddEnt(xScene* sc, xEnt* ent);
-xBase* xSceneResolvID(xScene* sc, U32 id);
-const char* xSceneID2Name(xScene* sc, U32 id);
 void xSceneForAllEnts(xScene* sc, xSceneEntCallback func, void* data);
 void xSceneForAllStatics(xScene* sc, xSceneEntCallback func, void* data);
 void xSceneForAllDynamics(xScene* sc, xSceneEntCallback func, void* data);
