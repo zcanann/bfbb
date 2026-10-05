@@ -36,3 +36,24 @@ and `verified-layouts.json`, actual compiler command/object, `profile.json`,
 `raw-proof.json` with original hashes and applied relocations, and
 `gc/comparison.json`. The layout reader follows original DIE child/sibling links
 and does not infer absent members, macros, or alignment attributes.
+
+## Reproducing the type inventory
+
+The read-only reader authenticates each original against `versions.json` and
+exports the selected concrete DWARF types, direct members, original type
+attributes, and displacement expressions. For example, with `tools` on the
+Python module path:
+
+```sh
+PYTHONPATH=tools python -m platforms.ps2_type_layouts \
+  --version SLUS-20680 --version SLES-51968 --version SLES-51970 \
+  --orig-root orig --source SB/Core/x/xEnv.cpp \
+  --type xEnv --type iEnv --type RwV3d --type RwBBox --type RwObject \
+  --type RwLLLink --type RwLinkList --type RpMaterialList --type RpWorld \
+  --output build/ps2-env-layouts.json
+```
+
+A diagnostic `-g` compilation of the actual complete `xEnv.cpp` also emits these
+nine concrete types. Their sizes and all direct member offsets agree with all
+three originals; enabling debug information leaves allocated sections unchanged.
+The reader exports evidence rather than generating speculative C++ declarations.
