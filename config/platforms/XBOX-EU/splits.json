@@ -15468,7 +15468,7 @@
       "kind": "function",
       "address": 1422736,
       "size": 111,
-      "canonical_identifier": "anon_0015b590"
+      "canonical_identifier": "atox(const substr&,size_t&)"
     },
     {
       "kind": "unclassified",

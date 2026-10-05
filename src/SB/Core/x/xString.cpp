@@ -389,10 +389,14 @@ size_t atox(const substr& s, size_t& read_size)
         size = 8;
     }
 
-    for (read_size = 0; read_size < size; read_size++)
+    for (read_size = 0; read_size < size; read_size++, text++)
     {
         U32 digit;
+#ifdef XBOX
+        char c = *text;
+#else
         U8 c = *text;
+#endif
 
         if (c >= '0' && c <= '9')
         {
@@ -412,7 +416,6 @@ size_t atox(const substr& s, size_t& read_size)
         }
 
         value = (value << 4) + digit;
-        text++;
     }
 
     return value;
