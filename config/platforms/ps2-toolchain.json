@@ -175940,6 +175940,3602 @@
           "symbol": "g_noz_ncin"
         }
       ]
+    },
+    {
+      "source": "src/SB/Game/zCamera.cpp",
+      "target_unit": "SB/Game/zCamera.cpp",
+      "object": "source/zCamera.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zCamera_FlyOnly__Fv": "zCamera_FlyOnly__Fv",
+        "zCameraMinTargetHeightClear__Fv": "zCameraMinTargetHeightClear__Fv",
+        "zCameraMinTargetHeightSet__Ff": "zCameraMinTargetHeightSet__Ff",
+        "zCameraSetReward__Fi": "zCameraSetReward__Fi",
+        "zCameraDisableWallJump__FP7xCamera": "zCameraDisableWallJump__FP7xCamera",
+        "zCameraEnableWallJump__FP7xCameraRC5xVec3": "zCameraEnableWallJump__FP7xCameraRC5xVec3",
+        "zCameraTranslate__FP7xCamerafff": "zCameraTranslate__FP7xCamerafff",
+        "zCameraDoTrans__FP9xCamAssetf": "zCameraDoTrans__FP9xCamAssetf",
+        "zCameraSetConvers__Fi": "zCameraSetConvers__Fi",
+        "zCameraGetConvers__Fv": "zCameraGetConvers__Fv",
+        "zCameraGetLassoCamFactor__Fv": "zCameraGetLassoCamFactor__Fv",
+        "zCameraSetLassoCamFactor__Ff": "zCameraSetLassoCamFactor__Ff",
+        "zCameraEnableLassoCam__Fv": "zCameraEnableLassoCam__Fv",
+        "zCameraDisableLassoCam__Fv": "zCameraDisableLassoCam__Fv",
+        "zCameraEnableInput__Fv": "zCameraEnableInput__Fv",
+        "zCameraDisableInput__Fv": "zCameraDisableInput__Fv",
+        "zCameraIsTrackingDisabled__Fv": "zCameraIsTrackingDisabled__Fv",
+        "zCameraEnableTracking__F17camera_owner_enum": "zCameraEnableTracking__F17camera_owner_enum",
+        "zCameraDisableTracking__F17camera_owner_enum": "zCameraDisableTracking__F17camera_owner_enum",
+        "zCameraSetPlayerVel__FP5xVec3": "zCameraSetPlayerVel__FP5xVec3",
+        "zCameraSetHighbounce__Fi": "zCameraSetHighbounce__Fi",
+        "zCameraSetLongbounce__Fi": "zCameraSetLongbounce__Fi",
+        "zCameraSetBbounce__Fi": "zCameraSetBbounce__Fi",
+        "zCameraUpdate__FP7xCameraf": "zCameraUpdate__FP7xCameraf",
+        "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+        "zCameraRewardUpdate__FP7xCameraf": "zCameraRewardUpdate__FP7xCameraf",
+        "zCameraFlyRestoreBackup__FP7xCamera": "zCameraFlyRestoreBackup__FP7xCamera",
+        "zCameraFlyStart__FUi": "zCameraFlyStart__FUi",
+        "zCameraFlyUpdate__FP7xCameraf": "zCameraFlyUpdate__FP7xCameraf",
+        "MatrixSpeed__FP7zFlyKey": "MatrixSpeed__FP7zFlyKey",
+        "zCameraConversUpdate__FP7xCameraf": "zCameraConversUpdate__FP7xCameraf",
+        "zCameraReset__FP7xCamera": "zCameraReset__FP7xCamera"
+      },
+      "calls": [
+        {
+          "function": "zCameraEnableWallJump__FP7xCameraRC5xVec3",
+          "offset": 152,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "zCameraDoTrans__FP9xCamAssetf",
+          "offset": 312,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xQuatFromMat__FP5xQuatPC7xMat3x3",
+          "symbol": "xQuatFromMat__FP5xQuatPC7xMat3x3"
+        },
+        {
+          "function": "zCameraSetConvers__Fi",
+          "offset": 1348,
+          "target_source": "SB/Core/x/iCamera.cpp",
+          "target_function": "iCameraSetFOV__FP8RwCameraf",
+          "symbol": "iCameraSetFOV__FP8RwCameraf"
+        },
+        {
+          "function": "zCameraSetConvers__Fi",
+          "offset": 1376,
+          "target_source": "SB/Game/zCamera.cpp",
+          "target_function": "zCameraFlyRestoreBackup__FP7xCamera",
+          "symbol": "zCameraFlyRestoreBackup__FP7xCamera"
+        },
+        {
+          "function": "zCameraSetConvers__Fi",
+          "offset": 1416,
+          "target_source": "SB/Core/x/xCamera.cpp",
+          "target_function": "xCameraMove__FP7xCameraUiffffff",
+          "symbol": "xCameraMove__FP7xCameraUiffffff"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 184,
+          "target_source": "SB/Game/zCameraTweak.cpp",
+          "target_function": "zCameraTweakGlobal_Update__Ff",
+          "symbol": "zCameraTweakGlobal_Update__Ff"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 292,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayerControlOn__F13zControlOwner",
+          "symbol": "zEntPlayerControlOn__F13zControlOwner"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 300,
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "target_function": "xScrFxLetterbox__Fi",
+          "symbol": "xScrFxLetterbox__Fi"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 312,
+          "target_source": "SB/Game/zCamera.cpp",
+          "target_function": "zCameraFlyRestoreBackup__FP7xCamera",
+          "symbol": "zCameraFlyRestoreBackup__FP7xCamera"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 336,
+          "target_source": "SB/Core/x/iCamera.cpp",
+          "target_function": "iCameraSetFOV__FP8RwCameraf",
+          "symbol": "iCameraSetFOV__FP8RwCameraf"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 1996,
+          "target_source": "SB/Core/x/xCutscene.cpp",
+          "target_function": "xCutscene_SetCamera__FP9xCutsceneP7xCamera",
+          "symbol": "xCutscene_SetCamera__FP9xCutsceneP7xCamera"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 2008,
+          "target_source": "SB/Core/x/iCamera.cpp",
+          "target_function": "iCameraUpdatePos__FP8RwCameraP7xMat4x3",
+          "symbol": "iCameraUpdatePos__FP8RwCameraP7xMat4x3"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 2036,
+          "target_source": "SB/Game/zCamera.cpp",
+          "target_function": "zCameraFlyRestoreBackup__FP7xCamera",
+          "symbol": "zCameraFlyRestoreBackup__FP7xCamera"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 2056,
+          "target_source": "SB/Core/x/iCamera.cpp",
+          "target_function": "iCameraSetFOV__FP8RwCameraf",
+          "symbol": "iCameraSetFOV__FP8RwCameraf"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 2084,
+          "target_source": "SB/Game/zCamera.cpp",
+          "target_function": "zCameraConversUpdate__FP7xCameraf",
+          "symbol": "zCameraConversUpdate__FP7xCameraf"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 2096,
+          "target_source": "SB/Core/x/iCamera.cpp",
+          "target_function": "iCameraUpdatePos__FP8RwCameraP7xMat4x3",
+          "symbol": "iCameraUpdatePos__FP8RwCameraP7xMat4x3"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 2112,
+          "target_source": "SB/Core/x/iCamera.cpp",
+          "target_function": "iCameraSetFOV__FP8RwCameraf",
+          "symbol": "iCameraSetFOV__FP8RwCameraf"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 2224,
+          "target_source": "SB/Game/zCamera.cpp",
+          "target_function": "zCameraRewardUpdate__FP7xCameraf",
+          "symbol": "zCameraRewardUpdate__FP7xCameraf"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 2268,
+          "target_source": "SB/Game/zCamera.cpp",
+          "target_function": "zCameraFlyUpdate__FP7xCameraf",
+          "symbol": "zCameraFlyUpdate__FP7xCameraf"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 2288,
+          "target_source": "SB/Core/x/iCamera.cpp",
+          "target_function": "iCameraUpdatePos__FP8RwCameraP7xMat4x3",
+          "symbol": "iCameraUpdatePos__FP8RwCameraP7xMat4x3"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 2316,
+          "target_source": "SB/Game/zCameraFly.cpp",
+          "target_function": "zCameraFlyProcessStopEvent__Fv",
+          "symbol": "zCameraFlyProcessStopEvent__Fv"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 2356,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayerControlOn__F13zControlOwner",
+          "symbol": "zEntPlayerControlOn__F13zControlOwner"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 2364,
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "target_function": "xScrFxLetterbox__Fi",
+          "symbol": "xScrFxLetterbox__Fi"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 2376,
+          "target_source": "SB/Game/zCamera.cpp",
+          "target_function": "zCameraFlyRestoreBackup__FP7xCamera",
+          "symbol": "zCameraFlyRestoreBackup__FP7xCamera"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 2400,
+          "target_source": "SB/Core/x/iCamera.cpp",
+          "target_function": "iCameraSetFOV__FP8RwCameraf",
+          "symbol": "iCameraSetFOV__FP8RwCameraf"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 2432,
+          "target_source": "SB/Core/x/xCamera.cpp",
+          "target_function": "xCameraUpdate__FP7xCameraf",
+          "symbol": "xCameraUpdate__FP7xCameraf"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 2452,
+          "target_source": "SB/Core/x/iCamera.cpp",
+          "target_function": "iCameraUpdatePos__FP8RwCameraP7xMat4x3",
+          "symbol": "iCameraUpdatePos__FP8RwCameraP7xMat4x3"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3432,
+          "target_source": "SB/Game/zCameraTweak.cpp",
+          "target_function": "zCameraTweakGlobal_GetD__Fv",
+          "symbol": "zCameraTweakGlobal_GetD__Fv"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3504,
+          "target_source": "SB/Game/zCameraTweak.cpp",
+          "target_function": "zCameraTweakGlobal_GetH__Fv",
+          "symbol": "zCameraTweakGlobal_GetH__Fv"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 5728,
+          "target_source": "SB/Game/zCamera.cpp",
+          "target_function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "symbol": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 5944,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xAngleClampFast__Ff",
+          "symbol": "xAngleClampFast__Ff"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 6004,
+          "target_source": "SB/Core/x/xCamera.cpp",
+          "target_function": "xCameraMove__FP7xCameraUiffffff",
+          "symbol": "xCameraMove__FP7xCameraUiffffff"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 6052,
+          "target_source": "SB/Core/x/xCamera.cpp",
+          "target_function": "xCameraMove__FP7xCameraUiffffff",
+          "symbol": "xCameraMove__FP7xCameraUiffffff"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 6092,
+          "target_source": "SB/Core/x/xCamera.cpp",
+          "target_function": "xCameraLookYPR__FP7xCameraUiffffff",
+          "symbol": "xCameraLookYPR__FP7xCameraUiffffff"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 6148,
+          "target_source": "SB/Core/x/xCamera.cpp",
+          "target_function": "xCameraRotate__FP7xCameraRC5xVec3ffff",
+          "symbol": "xCameraRotate__FP7xCameraRC5xVec3ffff"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 6324,
+          "target_source": "SB/Core/x/xCamera.cpp",
+          "target_function": "xCameraMove__FP7xCameraRC5xVec3f",
+          "symbol": "xCameraMove__FP7xCameraRC5xVec3f"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 6396,
+          "target_source": "SB/Core/x/xCamera.cpp",
+          "target_function": "xCameraUpdate__FP7xCameraf",
+          "symbol": "xCameraUpdate__FP7xCameraf"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 136,
+          "target_source": "SB/Game/zCameraTweak.cpp",
+          "target_function": "zCameraTweakGlobal_GetD__Fv",
+          "symbol": "zCameraTweakGlobal_GetD__Fv"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 208,
+          "target_source": "SB/Game/zCameraTweak.cpp",
+          "target_function": "zCameraTweakGlobal_GetH__Fv",
+          "symbol": "zCameraTweakGlobal_GetH__Fv"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 256,
+          "target_source": "SB/Game/zCameraTweak.cpp",
+          "target_function": "zCameraTweakGlobal_GetPitch__Fv",
+          "symbol": "zCameraTweakGlobal_GetPitch__Fv"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 336,
+          "target_source": "SB/Game/zCameraTweak.cpp",
+          "target_function": "zCameraTweakGlobal_GetD__Fv",
+          "symbol": "zCameraTweakGlobal_GetD__Fv"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 440,
+          "target_source": "SB/Game/zCameraTweak.cpp",
+          "target_function": "zCameraTweakGlobal_GetH__Fv",
+          "symbol": "zCameraTweakGlobal_GetH__Fv"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 848,
+          "target_source": "SB/Game/zCameraTweak.cpp",
+          "target_function": "zCameraTweakGlobal_GetD__Fv",
+          "symbol": "zCameraTweakGlobal_GetD__Fv"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 912,
+          "target_source": "SB/Game/zCameraTweak.cpp",
+          "target_function": "zCameraTweakGlobal_GetH__Fv",
+          "symbol": "zCameraTweakGlobal_GetH__Fv"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 952,
+          "target_source": "SB/Game/zCameraTweak.cpp",
+          "target_function": "zCameraTweakGlobal_GetPitch__Fv",
+          "symbol": "zCameraTweakGlobal_GetPitch__Fv"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 20,
+          "target_source": "SB/Core/x/xCamera.cpp",
+          "target_function": "xCameraUpdate__FP7xCameraf",
+          "symbol": "xCameraUpdate__FP7xCameraf"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 708,
+          "target_source": "SB/Core/x/xCamera.cpp",
+          "target_function": "xCameraMove__FP7xCameraRC5xVec3f",
+          "symbol": "xCameraMove__FP7xCameraRC5xVec3f"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 728,
+          "target_source": "SB/Core/x/xCamera.cpp",
+          "target_function": "xCameraFOV__FP7xCamerafff",
+          "symbol": "xCameraFOV__FP7xCamerafff"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 780,
+          "target_source": "SB/Core/x/xCamera.cpp",
+          "target_function": "xCameraLookYPR__FP7xCameraUiffffff",
+          "symbol": "xCameraLookYPR__FP7xCameraUiffffff"
+        },
+        {
+          "function": "zCameraFlyStart__FUi",
+          "offset": 16,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTGetAssetInfo__FUiP20st_PKR_ASSET_TOCINFO",
+          "symbol": "xSTGetAssetInfo__FUiP20st_PKR_ASSET_TOCINFO"
+        },
+        {
+          "function": "zCameraFlyStart__FUi",
+          "offset": 76,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayerControlOff__F13zControlOwner",
+          "symbol": "zEntPlayerControlOff__F13zControlOwner"
+        },
+        {
+          "function": "zCameraFlyStart__FUi",
+          "offset": 84,
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "target_function": "xScrFxLetterbox__Fi",
+          "symbol": "xScrFxLetterbox__Fi"
+        },
+        {
+          "function": "zCameraFlyStart__FUi",
+          "offset": 1860,
+          "target_source": "SB/Game/zMusic.cpp",
+          "target_function": "zMusicSetVolume__Fff",
+          "symbol": "zMusicSetVolume__Fff"
+        },
+        {
+          "function": "zCameraFlyUpdate__FP7xCameraf",
+          "offset": 1176,
+          "target_source": "SB/Game/zCamera.cpp",
+          "target_function": "MatrixSpeed__FP7zFlyKey",
+          "symbol": "MatrixSpeed__FP7zFlyKey"
+        },
+        {
+          "function": "zCameraFlyUpdate__FP7xCameraf",
+          "offset": 1188,
+          "target_source": "SB/Game/zCamera.cpp",
+          "target_function": "MatrixSpeed__FP7zFlyKey",
+          "symbol": "MatrixSpeed__FP7zFlyKey"
+        },
+        {
+          "function": "zCameraFlyUpdate__FP7xCameraf",
+          "offset": 1200,
+          "target_source": "SB/Game/zCamera.cpp",
+          "target_function": "MatrixSpeed__FP7zFlyKey",
+          "symbol": "MatrixSpeed__FP7zFlyKey"
+        },
+        {
+          "function": "zCameraFlyUpdate__FP7xCameraf",
+          "offset": 1424,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xQuatFromMat__FP5xQuatPC7xMat3x3",
+          "symbol": "xQuatFromMat__FP5xQuatPC7xMat3x3"
+        },
+        {
+          "function": "zCameraFlyUpdate__FP7xCameraf",
+          "offset": 1464,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xQuatSlerp__FP5xQuatPC5xQuatPC5xQuatf",
+          "symbol": "xQuatSlerp__FP5xQuatPC5xQuatPC5xQuatf"
+        },
+        {
+          "function": "zCameraFlyUpdate__FP7xCameraf",
+          "offset": 1476,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xQuatToMat__FPC5xQuatP7xMat3x3",
+          "symbol": "xQuatToMat__FPC5xQuatP7xMat3x3"
+        },
+        {
+          "function": "zCameraConversUpdate__FP7xCameraf",
+          "offset": 340,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xQuatFromMat__FP5xQuatPC7xMat3x3",
+          "symbol": "xQuatFromMat__FP5xQuatPC7xMat3x3"
+        },
+        {
+          "function": "zCameraConversUpdate__FP7xCameraf",
+          "offset": 364,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xQuatSlerp__FP5xQuatPC5xQuatPC5xQuatf",
+          "symbol": "xQuatSlerp__FP5xQuatPC5xQuatPC5xQuatf"
+        },
+        {
+          "function": "zCameraConversUpdate__FP7xCameraf",
+          "offset": 376,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xQuatToMat__FPC5xQuatP7xMat3x3",
+          "symbol": "xQuatToMat__FPC5xQuatP7xMat3x3"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 112,
+          "target_source": "SB/Core/x/iCamera.cpp",
+          "target_function": "iCameraSetFOV__FP8RwCameraf",
+          "symbol": "iCameraSetFOV__FP8RwCameraf"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 124,
+          "target_source": "SB/Game/zCameraTweak.cpp",
+          "target_function": "zCameraTweakGlobal_Update__Ff",
+          "symbol": "zCameraTweakGlobal_Update__Ff"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 176,
+          "target_source": "SB/Game/zCameraTweak.cpp",
+          "target_function": "zCameraTweakGlobal_GetD__Fv",
+          "symbol": "zCameraTweakGlobal_GetD__Fv"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 240,
+          "target_source": "SB/Game/zCameraTweak.cpp",
+          "target_function": "zCameraTweakGlobal_GetH__Fv",
+          "symbol": "zCameraTweakGlobal_GetH__Fv"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 280,
+          "target_source": "SB/Game/zCameraTweak.cpp",
+          "target_function": "zCameraTweakGlobal_GetPitch__Fv",
+          "symbol": "zCameraTweakGlobal_GetPitch__Fv"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 300,
+          "target_source": "SB/Core/x/xCamera.cpp",
+          "target_function": "xCameraReset__FP7xCamerafff",
+          "symbol": "xCameraReset__FP7xCamerafff"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "zCameraMinTargetHeightClear__Fv",
+          "offset": 12,
+          "opcode": 43,
+          "target_name": "zcam_mintgtheight",
+          "symbol": "zcam_mintgtheight"
+        },
+        {
+          "function": "zCameraMinTargetHeightSet__Ff",
+          "offset": 4,
+          "opcode": 57,
+          "target_name": "zcam_mintgtheight",
+          "symbol": "zcam_mintgtheight"
+        },
+        {
+          "function": "zCameraSetReward__Fi",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "stop_track",
+          "symbol": "stop_track__21@unnamed@zCamera_cpp@",
+          "target_linkage": "stop_track__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraSetReward__Fi",
+          "offset": 16,
+          "opcode": 43,
+          "target_name": "zcam_reward",
+          "symbol": "zcam_reward"
+        },
+        {
+          "function": "zCameraSetReward__Fi",
+          "offset": 24,
+          "opcode": 43,
+          "target_name": "zcam_reward",
+          "symbol": "zcam_reward"
+        },
+        {
+          "function": "zCameraDisableWallJump__FP7xCamera",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "wall_jump_enabled",
+          "symbol": "wall_jump_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "wall_jump_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraDisableWallJump__FP7xCamera",
+          "offset": 12,
+          "opcode": 43,
+          "target_name": "wall_jump_enabled",
+          "symbol": "wall_jump_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "wall_jump_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraEnableWallJump__FP7xCameraRC5xVec3",
+          "offset": 12,
+          "opcode": 35,
+          "target_name": "wall_jump_enabled",
+          "symbol": "wall_jump_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "wall_jump_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraEnableWallJump__FP7xCameraRC5xVec3",
+          "offset": 24,
+          "opcode": 43,
+          "target_name": "wall_jump_enabled",
+          "symbol": "wall_jump_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "wall_jump_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraDoTrans__FP9xCamAssetf",
+          "offset": 28,
+          "opcode": 43,
+          "target_name": "zcam_dest",
+          "symbol": "zcam_dest"
+        },
+        {
+          "function": "zCameraDoTrans__FP9xCamAssetf",
+          "offset": 48,
+          "opcode": 57,
+          "target_name": "zcam_tmr",
+          "symbol": "zcam_tmr"
+        },
+        {
+          "function": "zCameraDoTrans__FP9xCamAssetf",
+          "offset": 60,
+          "opcode": 57,
+          "target_name": "zcam_ttm",
+          "symbol": "zcam_ttm"
+        },
+        {
+          "function": "zCameraDoTrans__FP9xCamAssetf",
+          "offset": 212,
+          "opcode": 57,
+          "target_name": "zcam_fovcurr",
+          "symbol": "zcam_fovcurr"
+        },
+        {
+          "function": "zCameraDoTrans__FP9xCamAssetf",
+          "offset": 224,
+          "opcode": 57,
+          "target_name": "zcam_fovdest",
+          "symbol": "zcam_fovdest"
+        },
+        {
+          "function": "zCameraDoTrans__FP9xCamAssetf",
+          "offset": 324,
+          "opcode": 57,
+          "target_name": "zcam_fovdest",
+          "symbol": "zcam_fovdest"
+        },
+        {
+          "function": "zCameraSetConvers__Fi",
+          "offset": 16,
+          "opcode": 43,
+          "target_name": "zcam_convers",
+          "symbol": "zcam_convers"
+        },
+        {
+          "function": "zCameraSetConvers__Fi",
+          "offset": 1316,
+          "opcode": 43,
+          "target_name": "zcam_dest",
+          "symbol": "zcam_dest"
+        },
+        {
+          "function": "zCameraSetConvers__Fi",
+          "offset": 1320,
+          "opcode": 40,
+          "target_name": "saved",
+          "symbol": "saved$5859",
+          "target_linkage": "saved$5859"
+        },
+        {
+          "function": "zCameraSetConvers__Fi",
+          "offset": 1328,
+          "opcode": 43,
+          "target_name": "zcam_tmr",
+          "symbol": "zcam_tmr"
+        },
+        {
+          "function": "zCameraSetConvers__Fi",
+          "offset": 1356,
+          "opcode": 36,
+          "target_name": "saved",
+          "symbol": "saved$5859",
+          "target_linkage": "saved$5859"
+        },
+        {
+          "function": "zCameraSetConvers__Fi",
+          "offset": 1368,
+          "opcode": 43,
+          "target_name": "zcam_fovcurr",
+          "symbol": "zcam_fovcurr"
+        },
+        {
+          "function": "zCameraSetConvers__Fi",
+          "offset": 1424,
+          "opcode": 40,
+          "target_name": "saved",
+          "symbol": "saved$5859",
+          "target_linkage": "saved$5859"
+        },
+        {
+          "function": "zCameraGetConvers__Fv",
+          "offset": 4,
+          "opcode": 35,
+          "target_name": "zcam_convers",
+          "symbol": "zcam_convers"
+        },
+        {
+          "function": "zCameraGetLassoCamFactor__Fv",
+          "offset": 4,
+          "opcode": 49,
+          "target_name": "lassocam_factor",
+          "symbol": "lassocam_factor__21@unnamed@zCamera_cpp@",
+          "target_linkage": "lassocam_factor__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraSetLassoCamFactor__Ff",
+          "offset": 4,
+          "opcode": 57,
+          "target_name": "lassocam_factor",
+          "symbol": "lassocam_factor__21@unnamed@zCamera_cpp@",
+          "target_linkage": "lassocam_factor__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraEnableLassoCam__Fv",
+          "offset": 8,
+          "opcode": 40,
+          "target_name": "lassocam_enabled",
+          "symbol": "lassocam_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "lassocam_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraDisableLassoCam__Fv",
+          "offset": 4,
+          "opcode": 40,
+          "target_name": "lassocam_enabled",
+          "symbol": "lassocam_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "lassocam_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraEnableInput__Fv",
+          "offset": 8,
+          "opcode": 40,
+          "target_name": "input_enabled",
+          "symbol": "input_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "input_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraDisableInput__Fv",
+          "offset": 4,
+          "opcode": 40,
+          "target_name": "input_enabled",
+          "symbol": "input_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "input_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraIsTrackingDisabled__Fv",
+          "offset": 4,
+          "opcode": 35,
+          "target_name": "stop_track",
+          "symbol": "stop_track__21@unnamed@zCamera_cpp@",
+          "target_linkage": "stop_track__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraEnableTracking__F17camera_owner_enum",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "stop_track",
+          "symbol": "stop_track__21@unnamed@zCamera_cpp@",
+          "target_linkage": "stop_track__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraEnableTracking__F17camera_owner_enum",
+          "offset": 16,
+          "opcode": 43,
+          "target_name": "stop_track",
+          "symbol": "stop_track__21@unnamed@zCamera_cpp@",
+          "target_linkage": "stop_track__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraDisableTracking__F17camera_owner_enum",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "stop_track",
+          "symbol": "stop_track__21@unnamed@zCamera_cpp@",
+          "target_linkage": "stop_track__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraDisableTracking__F17camera_owner_enum",
+          "offset": 12,
+          "opcode": 43,
+          "target_name": "stop_track",
+          "symbol": "stop_track__21@unnamed@zCamera_cpp@",
+          "target_linkage": "stop_track__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraSetPlayerVel__FP5xVec3",
+          "offset": 4,
+          "opcode": 43,
+          "target_name": "zcam_playervel",
+          "symbol": "zcam_playervel"
+        },
+        {
+          "function": "zCameraSetHighbounce__Fi",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "zcam_longbounce",
+          "symbol": "zcam_longbounce"
+        },
+        {
+          "function": "zCameraSetHighbounce__Fi",
+          "offset": 12,
+          "opcode": 35,
+          "target_name": "zcam_highbounce",
+          "symbol": "zcam_highbounce"
+        },
+        {
+          "function": "zCameraSetHighbounce__Fi",
+          "offset": 24,
+          "opcode": 43,
+          "target_name": "zcam_lbbounce",
+          "symbol": "zcam_lbbounce"
+        },
+        {
+          "function": "zCameraSetHighbounce__Fi",
+          "offset": 32,
+          "opcode": 43,
+          "target_name": "zcam_highbounce",
+          "symbol": "zcam_highbounce"
+        },
+        {
+          "function": "zCameraSetHighbounce__Fi",
+          "offset": 40,
+          "opcode": 43,
+          "target_name": "zcam_longbounce",
+          "symbol": "zcam_longbounce"
+        },
+        {
+          "function": "zCameraSetLongbounce__Fi",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "zcam_highbounce",
+          "symbol": "zcam_highbounce"
+        },
+        {
+          "function": "zCameraSetLongbounce__Fi",
+          "offset": 12,
+          "opcode": 35,
+          "target_name": "zcam_longbounce",
+          "symbol": "zcam_longbounce"
+        },
+        {
+          "function": "zCameraSetLongbounce__Fi",
+          "offset": 24,
+          "opcode": 43,
+          "target_name": "zcam_lbbounce",
+          "symbol": "zcam_lbbounce"
+        },
+        {
+          "function": "zCameraSetLongbounce__Fi",
+          "offset": 32,
+          "opcode": 43,
+          "target_name": "zcam_longbounce",
+          "symbol": "zcam_longbounce"
+        },
+        {
+          "function": "zCameraSetLongbounce__Fi",
+          "offset": 40,
+          "opcode": 43,
+          "target_name": "zcam_highbounce",
+          "symbol": "zcam_highbounce"
+        },
+        {
+          "function": "zCameraSetBbounce__Fi",
+          "offset": 4,
+          "opcode": 43,
+          "target_name": "zcam_bbounce",
+          "symbol": "zcam_bbounce"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 152,
+          "opcode": 35,
+          "target_name": "zcam_near",
+          "symbol": "zcam_near"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 164,
+          "opcode": 43,
+          "target_name": "zcam_near",
+          "symbol": "zcam_near"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 168,
+          "opcode": 35,
+          "target_name": "zcam_near",
+          "symbol": "zcam_near"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 176,
+          "opcode": 43,
+          "target_name": "zcam_near",
+          "symbol": "zcam_near"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 264,
+          "opcode": 35,
+          "target_name": "zcam_fly",
+          "symbol": "zcam_fly"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 276,
+          "opcode": 35,
+          "target_name": "zcam_flypaused",
+          "symbol": "zcam_flypaused"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 288,
+          "opcode": 43,
+          "target_name": "zcam_fly",
+          "symbol": "zcam_fly"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 296,
+          "opcode": 43,
+          "target_name": "zcam_flypaused",
+          "symbol": "zcam_flypaused"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 324,
+          "opcode": 43,
+          "target_name": "zcam_flyasset_current",
+          "symbol": "zcam_flyasset_current"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 344,
+          "opcode": 35,
+          "target_name": "zcam_cutscene",
+          "symbol": "zcam_cutscene"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 1980,
+          "opcode": 43,
+          "target_name": "zcam_cutscene",
+          "symbol": "zcam_cutscene"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 2024,
+          "opcode": 35,
+          "target_name": "zcam_cutscene",
+          "symbol": "zcam_cutscene"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 2064,
+          "opcode": 43,
+          "target_name": "zcam_cutscene",
+          "symbol": "zcam_cutscene"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 2072,
+          "opcode": 35,
+          "target_name": "zcam_convers",
+          "symbol": "zcam_convers"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 2104,
+          "opcode": 49,
+          "target_name": "zcam_fovcurr",
+          "symbol": "zcam_fovcurr"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 2120,
+          "opcode": 35,
+          "target_name": "zcam_convers",
+          "symbol": "zcam_convers"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 2128,
+          "opcode": 43,
+          "target_name": "zcam_lconvers",
+          "symbol": "zcam_lconvers"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 2136,
+          "opcode": 35,
+          "target_name": "zcam_reward",
+          "symbol": "zcam_reward"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 2148,
+          "opcode": 35,
+          "target_name": "zcam_near",
+          "symbol": "zcam_near"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 2192,
+          "opcode": 35,
+          "target_name": "stop_track",
+          "symbol": "stop_track__21@unnamed@zCamera_cpp@",
+          "target_linkage": "stop_track__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 2252,
+          "opcode": 43,
+          "target_name": "stop_track",
+          "symbol": "stop_track__21@unnamed@zCamera_cpp@",
+          "target_linkage": "stop_track__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 2256,
+          "opcode": 35,
+          "target_name": "zcam_fly",
+          "symbol": "zcam_fly"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 2304,
+          "opcode": 35,
+          "target_name": "zcam_flypaused",
+          "symbol": "zcam_flypaused"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 2348,
+          "opcode": 43,
+          "target_name": "zcam_flypaused",
+          "symbol": "zcam_flypaused"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 2360,
+          "opcode": 43,
+          "target_name": "zcam_fly",
+          "symbol": "zcam_fly"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 2388,
+          "opcode": 43,
+          "target_name": "zcam_flyasset_current",
+          "symbol": "zcam_flyasset_current"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 2408,
+          "opcode": 35,
+          "target_name": "stop_track",
+          "symbol": "stop_track__21@unnamed@zCamera_cpp@",
+          "target_linkage": "stop_track__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 2480,
+          "opcode": 49,
+          "target_name": "zcam_mintgtheight",
+          "symbol": "zcam_mintgtheight"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 2516,
+          "opcode": 49,
+          "target_name": "zcam_mintgtheight",
+          "symbol": "zcam_mintgtheight"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3128,
+          "opcode": 35,
+          "target_name": "wall_jump_enabled",
+          "symbol": "wall_jump_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "wall_jump_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3160,
+          "opcode": 35,
+          "target_name": "wall_jump_enabled",
+          "symbol": "wall_jump_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "wall_jump_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3176,
+          "opcode": 43,
+          "target_name": "mvtm",
+          "symbol": "mvtm$5645",
+          "target_linkage": "mvtm$5645"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3184,
+          "opcode": 43,
+          "target_name": "lktm",
+          "symbol": "lktm$5648",
+          "target_linkage": "lktm$5648"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3192,
+          "opcode": 43,
+          "target_name": "wall_jump_enabled",
+          "symbol": "wall_jump_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "wall_jump_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3228,
+          "opcode": 36,
+          "target_name": "input_enabled",
+          "symbol": "input_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "input_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3240,
+          "opcode": 35,
+          "target_name": "zcam_near",
+          "symbol": "zcam_near"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3256,
+          "opcode": 43,
+          "target_name": "pitch_s",
+          "symbol": "pitch_s$5651",
+          "target_linkage": "pitch_s$5651"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3260,
+          "opcode": 43,
+          "target_name": "zcam_near",
+          "symbol": "zcam_near"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3272,
+          "opcode": 43,
+          "target_name": "mvtm",
+          "symbol": "mvtm$5645",
+          "target_linkage": "mvtm$5645"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3280,
+          "opcode": 43,
+          "target_name": "lktm",
+          "symbol": "lktm$5648",
+          "target_linkage": "lktm$5648"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3288,
+          "opcode": 35,
+          "target_name": "zcam_bbounce",
+          "symbol": "zcam_bbounce"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3292,
+          "opcode": 35,
+          "target_name": "zcam_lbbounce",
+          "symbol": "zcam_lbbounce"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3304,
+          "opcode": 43,
+          "target_name": "pitch_s",
+          "symbol": "pitch_s$5651",
+          "target_linkage": "pitch_s$5651"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3312,
+          "opcode": 43,
+          "target_name": "mvtm",
+          "symbol": "mvtm$5645",
+          "target_linkage": "mvtm$5645"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3320,
+          "opcode": 43,
+          "target_name": "lktm",
+          "symbol": "lktm$5648",
+          "target_linkage": "lktm$5648"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3332,
+          "opcode": 49,
+          "target_name": "mvtm",
+          "symbol": "mvtm$5645",
+          "target_linkage": "mvtm$5645"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3372,
+          "opcode": 57,
+          "target_name": "mvtm",
+          "symbol": "mvtm$5645",
+          "target_linkage": "mvtm$5645"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3376,
+          "opcode": 57,
+          "target_name": "mvtm",
+          "symbol": "mvtm$5645",
+          "target_linkage": "mvtm$5645"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3384,
+          "opcode": 35,
+          "target_name": "zcam_highbounce",
+          "symbol": "zcam_highbounce"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3400,
+          "opcode": 49,
+          "target_name": "zcam_highbounce_d",
+          "symbol": "zcam_highbounce_d"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3408,
+          "opcode": 35,
+          "target_name": "wall_jump_enabled",
+          "symbol": "wall_jump_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "wall_jump_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3428,
+          "opcode": 49,
+          "target_name": "zcam_wall_d",
+          "symbol": "zcam_wall_d"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3440,
+          "opcode": 35,
+          "target_name": "zcam_highbounce",
+          "symbol": "zcam_highbounce"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3444,
+          "opcode": 49,
+          "target_name": "dMultiplier",
+          "symbol": "dMultiplier__21@unnamed@zCamera_cpp@",
+          "target_linkage": "dMultiplier__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3448,
+          "opcode": 49,
+          "target_name": "dOffset",
+          "symbol": "dOffset__21@unnamed@zCamera_cpp@",
+          "target_linkage": "dOffset__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3472,
+          "opcode": 49,
+          "target_name": "zcam_highbounce_h",
+          "symbol": "zcam_highbounce_h"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3480,
+          "opcode": 35,
+          "target_name": "wall_jump_enabled",
+          "symbol": "wall_jump_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "wall_jump_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3500,
+          "opcode": 49,
+          "target_name": "zcam_wall_h",
+          "symbol": "zcam_wall_h"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3512,
+          "opcode": 35,
+          "target_name": "zcam_near",
+          "symbol": "zcam_near"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3516,
+          "opcode": 49,
+          "target_name": "dMultiplier",
+          "symbol": "dMultiplier__21@unnamed@zCamera_cpp@",
+          "target_linkage": "dMultiplier__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3520,
+          "opcode": 49,
+          "target_name": "dOffset",
+          "symbol": "dOffset__21@unnamed@zCamera_cpp@",
+          "target_linkage": "dOffset__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3548,
+          "opcode": 49,
+          "target_name": "zcam_near_pitch",
+          "symbol": "zcam_near_pitch"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3552,
+          "opcode": 49,
+          "target_name": "zcam_far_pitch",
+          "symbol": "zcam_far_pitch"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3560,
+          "opcode": 36,
+          "target_name": "lassocam_enabled",
+          "symbol": "lassocam_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "lassocam_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3576,
+          "opcode": 35,
+          "target_name": "stop_track",
+          "symbol": "stop_track__21@unnamed@zCamera_cpp@",
+          "target_linkage": "stop_track__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3592,
+          "opcode": 49,
+          "target_name": "zcam_near_d",
+          "symbol": "zcam_near_d"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3600,
+          "opcode": 49,
+          "target_name": "zcam_near_h",
+          "symbol": "zcam_near_h"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3604,
+          "opcode": 49,
+          "target_name": "lassocam_factor",
+          "symbol": "lassocam_factor__21@unnamed@zCamera_cpp@",
+          "target_linkage": "lassocam_factor__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3640,
+          "opcode": 36,
+          "target_name": "input_enabled",
+          "symbol": "input_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "input_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3652,
+          "opcode": 35,
+          "target_name": "wall_jump_enabled",
+          "symbol": "wall_jump_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "wall_jump_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3788,
+          "opcode": 49,
+          "target_name": "zcam_pad_pyaw_scale",
+          "symbol": "zcam_pad_pyaw_scale"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3800,
+          "opcode": 36,
+          "target_name": "lassocam_enabled",
+          "symbol": "lassocam_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "lassocam_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3820,
+          "opcode": 35,
+          "target_name": "stop_track",
+          "symbol": "stop_track__21@unnamed@zCamera_cpp@",
+          "target_linkage": "stop_track__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3888,
+          "opcode": 49,
+          "target_name": "lktm",
+          "symbol": "lktm$5648",
+          "target_linkage": "lktm$5648"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3916,
+          "opcode": 57,
+          "target_name": "lktm",
+          "symbol": "lktm$5648",
+          "target_linkage": "lktm$5648"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3920,
+          "opcode": 57,
+          "target_name": "lktm",
+          "symbol": "lktm$5648",
+          "target_linkage": "lktm$5648"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3928,
+          "opcode": 49,
+          "target_name": "zcam_overrot_tmanual",
+          "symbol": "zcam_overrot_tmanual"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 3940,
+          "opcode": 57,
+          "target_name": "zcam_overrot_tmr",
+          "symbol": "zcam_overrot_tmr"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 4060,
+          "opcode": 49,
+          "target_name": "zcam_pad_pyaw_scale",
+          "symbol": "zcam_pad_pyaw_scale"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 4072,
+          "opcode": 36,
+          "target_name": "lassocam_enabled",
+          "symbol": "lassocam_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "lassocam_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 4092,
+          "opcode": 35,
+          "target_name": "stop_track",
+          "symbol": "stop_track__21@unnamed@zCamera_cpp@",
+          "target_linkage": "stop_track__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 4160,
+          "opcode": 49,
+          "target_name": "lktm",
+          "symbol": "lktm$5648",
+          "target_linkage": "lktm$5648"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 4188,
+          "opcode": 57,
+          "target_name": "lktm",
+          "symbol": "lktm$5648",
+          "target_linkage": "lktm$5648"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 4192,
+          "opcode": 57,
+          "target_name": "lktm",
+          "symbol": "lktm$5648",
+          "target_linkage": "lktm$5648"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 4200,
+          "opcode": 49,
+          "target_name": "zcam_overrot_tmanual",
+          "symbol": "zcam_overrot_tmanual"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 4208,
+          "opcode": 57,
+          "target_name": "zcam_overrot_tmr",
+          "symbol": "zcam_overrot_tmr"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 4216,
+          "opcode": 36,
+          "target_name": "input_enabled",
+          "symbol": "input_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "input_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 4224,
+          "opcode": 43,
+          "target_name": "pitch_s",
+          "symbol": "pitch_s$5651",
+          "target_linkage": "pitch_s$5651"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 4228,
+          "opcode": 35,
+          "target_name": "wall_jump_enabled",
+          "symbol": "wall_jump_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "wall_jump_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 4240,
+          "opcode": 35,
+          "target_name": "zcam_highbounce",
+          "symbol": "zcam_highbounce"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 4380,
+          "opcode": 49,
+          "target_name": "zcam_pad_pitch_scale",
+          "symbol": "zcam_pad_pitch_scale"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 4424,
+          "opcode": 57,
+          "target_name": "pitch_s",
+          "symbol": "pitch_s$5651",
+          "target_linkage": "pitch_s$5651"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 4428,
+          "opcode": 57,
+          "target_name": "pitch_s",
+          "symbol": "pitch_s$5651",
+          "target_linkage": "pitch_s$5651"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 4432,
+          "opcode": 49,
+          "target_name": "zcam_overrot_tmanual",
+          "symbol": "zcam_overrot_tmanual"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 4444,
+          "opcode": 57,
+          "target_name": "zcam_overrot_tmr",
+          "symbol": "zcam_overrot_tmr"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 4564,
+          "opcode": 49,
+          "target_name": "zcam_pad_pitch_scale",
+          "symbol": "zcam_pad_pitch_scale"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 4608,
+          "opcode": 57,
+          "target_name": "pitch_s",
+          "symbol": "pitch_s$5651",
+          "target_linkage": "pitch_s$5651"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 4612,
+          "opcode": 57,
+          "target_name": "pitch_s",
+          "symbol": "pitch_s$5651",
+          "target_linkage": "pitch_s$5651"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 4616,
+          "opcode": 49,
+          "target_name": "zcam_overrot_tmanual",
+          "symbol": "zcam_overrot_tmanual"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 4624,
+          "opcode": 57,
+          "target_name": "zcam_overrot_tmr",
+          "symbol": "zcam_overrot_tmr"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 4736,
+          "opcode": 49,
+          "target_name": "zcam_overrot_velmin",
+          "symbol": "zcam_overrot_velmin"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 4852,
+          "opcode": 49,
+          "target_name": "zcam_overrot_tmr",
+          "symbol": "zcam_overrot_tmr"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 4880,
+          "opcode": 49,
+          "target_name": "zcam_overrot_tmr",
+          "symbol": "zcam_overrot_tmr"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 4892,
+          "opcode": 57,
+          "target_name": "zcam_overrot_tmr",
+          "symbol": "zcam_overrot_tmr"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 4908,
+          "opcode": 49,
+          "target_name": "zcam_overrot_tend",
+          "symbol": "zcam_overrot_tend"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 4924,
+          "opcode": 57,
+          "target_name": "zcam_overrot_tmr",
+          "symbol": "zcam_overrot_tmr"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 4928,
+          "opcode": 49,
+          "target_name": "zcam_overrot_tmr",
+          "symbol": "zcam_overrot_tmr"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 4952,
+          "opcode": 57,
+          "target_name": "zcam_overrot_tmr",
+          "symbol": "zcam_overrot_tmr"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 4956,
+          "opcode": 57,
+          "target_name": "zcam_overrot_tmr",
+          "symbol": "zcam_overrot_tmr"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 4960,
+          "opcode": 49,
+          "target_name": "zcam_overrot_tmr",
+          "symbol": "zcam_overrot_tmr"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 4964,
+          "opcode": 49,
+          "target_name": "zcam_overrot_tstart",
+          "symbol": "zcam_overrot_tstart"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 5004,
+          "opcode": 49,
+          "target_name": "zcam_overrot_velmin",
+          "symbol": "zcam_overrot_velmin"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 5196,
+          "opcode": 49,
+          "target_name": "zcam_overrot_min",
+          "symbol": "zcam_overrot_min"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 5212,
+          "opcode": 49,
+          "target_name": "zcam_overrot_max",
+          "symbol": "zcam_overrot_max"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 5228,
+          "opcode": 49,
+          "target_name": "zcam_overrot_mid",
+          "symbol": "zcam_overrot_mid"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 5292,
+          "opcode": 49,
+          "target_name": "zcam_overrot_velmin",
+          "symbol": "zcam_overrot_velmin"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 5296,
+          "opcode": 49,
+          "target_name": "zcam_overrot_velmax",
+          "symbol": "zcam_overrot_velmax"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 5428,
+          "opcode": 49,
+          "target_name": "zcam_overrot_tmr",
+          "symbol": "zcam_overrot_tmr"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 5432,
+          "opcode": 49,
+          "target_name": "zcam_overrot_tstart",
+          "symbol": "zcam_overrot_tstart"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 5436,
+          "opcode": 49,
+          "target_name": "zcam_overrot_tend",
+          "symbol": "zcam_overrot_tend"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 5560,
+          "opcode": 36,
+          "target_name": "lassocam_enabled",
+          "symbol": "lassocam_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "lassocam_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 5564,
+          "opcode": 49,
+          "target_name": "zcam_overrot_rate",
+          "symbol": "zcam_overrot_rate"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 5584,
+          "opcode": 35,
+          "target_name": "stop_track",
+          "symbol": "stop_track__21@unnamed@zCamera_cpp@",
+          "target_linkage": "stop_track__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 5708,
+          "opcode": 49,
+          "target_name": "pitch_s",
+          "symbol": "pitch_s$5651",
+          "target_linkage": "pitch_s$5651"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 5724,
+          "opcode": 9,
+          "target_name": "lktm",
+          "symbol": "lktm$5648",
+          "target_linkage": "lktm$5648"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 5952,
+          "opcode": 36,
+          "target_name": "lassocam_enabled",
+          "symbol": "lassocam_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "lassocam_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 5964,
+          "opcode": 35,
+          "target_name": "stop_track",
+          "symbol": "stop_track__21@unnamed@zCamera_cpp@",
+          "target_linkage": "stop_track__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 5992,
+          "opcode": 49,
+          "target_name": "mvtm",
+          "symbol": "mvtm$5645",
+          "target_linkage": "mvtm$5645"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 6040,
+          "opcode": 49,
+          "target_name": "mvtm",
+          "symbol": "mvtm$5645",
+          "target_linkage": "mvtm$5645"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 6076,
+          "opcode": 49,
+          "target_name": "lktm",
+          "symbol": "lktm$5648",
+          "target_linkage": "lktm$5648"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 6100,
+          "opcode": 35,
+          "target_name": "wall_jump_enabled",
+          "symbol": "wall_jump_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "wall_jump_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 6388,
+          "opcode": 43,
+          "target_name": "wall_jump_enabled",
+          "symbol": "wall_jump_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "wall_jump_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 6404,
+          "opcode": 36,
+          "target_name": "lassocam_enabled",
+          "symbol": "lassocam_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "lassocam_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 6416,
+          "opcode": 35,
+          "target_name": "stop_track",
+          "symbol": "stop_track__21@unnamed@zCamera_cpp@",
+          "target_linkage": "stop_track__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 6432,
+          "opcode": 35,
+          "target_name": "zcam_bbounce",
+          "symbol": "zcam_bbounce"
+        },
+        {
+          "function": "zCameraUpdate__FP7xCameraf",
+          "offset": 6436,
+          "opcode": 43,
+          "target_name": "zcam_lbbounce",
+          "symbol": "zcam_lbbounce"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 64,
+          "opcode": 35,
+          "target_name": "zcam_bbounce",
+          "symbol": "zcam_bbounce"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 80,
+          "opcode": 35,
+          "target_name": "zcam_highbounce",
+          "symbol": "zcam_highbounce"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 104,
+          "opcode": 49,
+          "target_name": "zcam_highbounce_d",
+          "symbol": "zcam_highbounce_d"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 112,
+          "opcode": 35,
+          "target_name": "wall_jump_enabled",
+          "symbol": "wall_jump_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "wall_jump_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 132,
+          "opcode": 49,
+          "target_name": "zcam_wall_d",
+          "symbol": "zcam_wall_d"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 144,
+          "opcode": 49,
+          "target_name": "dMultiplier",
+          "symbol": "dMultiplier__21@unnamed@zCamera_cpp@",
+          "target_linkage": "dMultiplier__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 148,
+          "opcode": 49,
+          "target_name": "dOffset",
+          "symbol": "dOffset__21@unnamed@zCamera_cpp@",
+          "target_linkage": "dOffset__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 164,
+          "opcode": 35,
+          "target_name": "zcam_highbounce",
+          "symbol": "zcam_highbounce"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 180,
+          "opcode": 49,
+          "target_name": "zcam_highbounce_h",
+          "symbol": "zcam_highbounce_h"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 184,
+          "opcode": 35,
+          "target_name": "wall_jump_enabled",
+          "symbol": "wall_jump_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "wall_jump_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 204,
+          "opcode": 49,
+          "target_name": "zcam_wall_h",
+          "symbol": "zcam_wall_h"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 216,
+          "opcode": 49,
+          "target_name": "dMultiplier",
+          "symbol": "dMultiplier__21@unnamed@zCamera_cpp@",
+          "target_linkage": "dMultiplier__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 220,
+          "opcode": 49,
+          "target_name": "dOffset",
+          "symbol": "dOffset__21@unnamed@zCamera_cpp@",
+          "target_linkage": "dOffset__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 236,
+          "opcode": 35,
+          "target_name": "zcam_highbounce",
+          "symbol": "zcam_highbounce"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 252,
+          "opcode": 49,
+          "target_name": "zcam_highbounce_pitch",
+          "symbol": "zcam_highbounce_pitch"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 272,
+          "opcode": 35,
+          "target_name": "zcam_near",
+          "symbol": "zcam_near"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 308,
+          "opcode": 49,
+          "target_name": "zcam_highbounce_d",
+          "symbol": "zcam_highbounce_d"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 312,
+          "opcode": 35,
+          "target_name": "wall_jump_enabled",
+          "symbol": "wall_jump_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "wall_jump_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 332,
+          "opcode": 49,
+          "target_name": "zcam_wall_d",
+          "symbol": "zcam_wall_d"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 344,
+          "opcode": 49,
+          "target_name": "dMultiplier",
+          "symbol": "dMultiplier__21@unnamed@zCamera_cpp@",
+          "target_linkage": "dMultiplier__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 348,
+          "opcode": 49,
+          "target_name": "dOffset",
+          "symbol": "dOffset__21@unnamed@zCamera_cpp@",
+          "target_linkage": "dOffset__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 364,
+          "opcode": 35,
+          "target_name": "zcam_near",
+          "symbol": "zcam_near"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 392,
+          "opcode": 35,
+          "target_name": "zcam_highbounce",
+          "symbol": "zcam_highbounce"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 408,
+          "opcode": 49,
+          "target_name": "zcam_highbounce_h",
+          "symbol": "zcam_highbounce_h"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 416,
+          "opcode": 35,
+          "target_name": "wall_jump_enabled",
+          "symbol": "wall_jump_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "wall_jump_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 436,
+          "opcode": 49,
+          "target_name": "zcam_wall_h",
+          "symbol": "zcam_wall_h"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 448,
+          "opcode": 49,
+          "target_name": "dMultiplier",
+          "symbol": "dMultiplier__21@unnamed@zCamera_cpp@",
+          "target_linkage": "dMultiplier__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 452,
+          "opcode": 49,
+          "target_name": "dOffset",
+          "symbol": "dOffset__21@unnamed@zCamera_cpp@",
+          "target_linkage": "dOffset__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 468,
+          "opcode": 35,
+          "target_name": "zcam_longbounce",
+          "symbol": "zcam_longbounce"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 480,
+          "opcode": 35,
+          "target_name": "zcam_playervel",
+          "symbol": "zcam_playervel"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 648,
+          "opcode": 35,
+          "target_name": "zcam_near",
+          "symbol": "zcam_near"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 744,
+          "opcode": 35,
+          "target_name": "zcam_near",
+          "symbol": "zcam_near"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 800,
+          "opcode": 35,
+          "target_name": "zcam_highbounce",
+          "symbol": "zcam_highbounce"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 816,
+          "opcode": 49,
+          "target_name": "zcam_highbounce_d",
+          "symbol": "zcam_highbounce_d"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 824,
+          "opcode": 35,
+          "target_name": "wall_jump_enabled",
+          "symbol": "wall_jump_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "wall_jump_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 844,
+          "opcode": 49,
+          "target_name": "zcam_wall_d",
+          "symbol": "zcam_wall_d"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 856,
+          "opcode": 35,
+          "target_name": "zcam_highbounce",
+          "symbol": "zcam_highbounce"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 860,
+          "opcode": 49,
+          "target_name": "dMultiplier",
+          "symbol": "dMultiplier__21@unnamed@zCamera_cpp@",
+          "target_linkage": "dMultiplier__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 864,
+          "opcode": 49,
+          "target_name": "dOffset",
+          "symbol": "dOffset__21@unnamed@zCamera_cpp@",
+          "target_linkage": "dOffset__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 884,
+          "opcode": 49,
+          "target_name": "zcam_highbounce_h",
+          "symbol": "zcam_highbounce_h"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 888,
+          "opcode": 35,
+          "target_name": "wall_jump_enabled",
+          "symbol": "wall_jump_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "wall_jump_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 908,
+          "opcode": 49,
+          "target_name": "zcam_wall_h",
+          "symbol": "zcam_wall_h"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 920,
+          "opcode": 35,
+          "target_name": "zcam_highbounce",
+          "symbol": "zcam_highbounce"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 924,
+          "opcode": 49,
+          "target_name": "dMultiplier",
+          "symbol": "dMultiplier__21@unnamed@zCamera_cpp@",
+          "target_linkage": "dMultiplier__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 928,
+          "opcode": 49,
+          "target_name": "dOffset",
+          "symbol": "dOffset__21@unnamed@zCamera_cpp@",
+          "target_linkage": "dOffset__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 948,
+          "opcode": 49,
+          "target_name": "zcam_highbounce_pitch",
+          "symbol": "zcam_highbounce_pitch"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 960,
+          "opcode": 36,
+          "target_name": "lassocam_enabled",
+          "symbol": "lassocam_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "lassocam_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 972,
+          "opcode": 35,
+          "target_name": "stop_track",
+          "symbol": "stop_track__21@unnamed@zCamera_cpp@",
+          "target_linkage": "stop_track__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 984,
+          "opcode": 49,
+          "target_name": "zcam_near_d",
+          "symbol": "zcam_near_d"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 988,
+          "opcode": 49,
+          "target_name": "lassocam_factor",
+          "symbol": "lassocam_factor__21@unnamed@zCamera_cpp@",
+          "target_linkage": "lassocam_factor__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 1008,
+          "opcode": 49,
+          "target_name": "zcam_near_h",
+          "symbol": "zcam_near_h"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 1012,
+          "opcode": 49,
+          "target_name": "lassocam_factor",
+          "symbol": "lassocam_factor__21@unnamed@zCamera_cpp@",
+          "target_linkage": "lassocam_factor__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 1032,
+          "opcode": 49,
+          "target_name": "zcam_near_pitch",
+          "symbol": "zcam_near_pitch"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 1036,
+          "opcode": 49,
+          "target_name": "lassocam_factor",
+          "symbol": "lassocam_factor__21@unnamed@zCamera_cpp@",
+          "target_linkage": "lassocam_factor__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 1084,
+          "opcode": 49,
+          "target_name": "zcam_below_d",
+          "symbol": "zcam_below_d"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 1104,
+          "opcode": 49,
+          "target_name": "zcam_below_h",
+          "symbol": "zcam_below_h"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 1124,
+          "opcode": 49,
+          "target_name": "zcam_below_pitch",
+          "symbol": "zcam_below_pitch"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 1160,
+          "opcode": 49,
+          "target_name": "zcam_above_d",
+          "symbol": "zcam_above_d"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 1184,
+          "opcode": 49,
+          "target_name": "zcam_above_h",
+          "symbol": "zcam_above_h"
+        },
+        {
+          "function": "zCameraFreeLookSetGoals__FP7xCamerafRfRfRfRff",
+          "offset": 1204,
+          "opcode": 49,
+          "target_name": "zcam_above_pitch",
+          "symbol": "zcam_above_pitch"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 132,
+          "opcode": 35,
+          "target_name": "zcam_near",
+          "symbol": "zcam_near"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 176,
+          "opcode": 43,
+          "target_name": "rewardMove",
+          "symbol": "rewardMove"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 184,
+          "opcode": 43,
+          "target_name": "rewardMoveSpeed",
+          "symbol": "rewardMoveSpeed"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 192,
+          "opcode": 43,
+          "target_name": "rewardZoomSpeed",
+          "symbol": "rewardZoomSpeed"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 200,
+          "opcode": 43,
+          "target_name": "rewardZoomAmount",
+          "symbol": "rewardZoomAmount"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 208,
+          "opcode": 43,
+          "target_name": "rewardTiltTime",
+          "symbol": "rewardTiltTime"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 224,
+          "opcode": 43,
+          "target_name": "rewardTiltAmount",
+          "symbol": "rewardTiltAmount"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 260,
+          "opcode": 43,
+          "target_name": "rewardMove",
+          "symbol": "rewardMove"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 268,
+          "opcode": 43,
+          "target_name": "rewardMoveSpeed",
+          "symbol": "rewardMoveSpeed"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 276,
+          "opcode": 43,
+          "target_name": "rewardZoomSpeed",
+          "symbol": "rewardZoomSpeed"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 284,
+          "opcode": 43,
+          "target_name": "rewardZoomAmount",
+          "symbol": "rewardZoomAmount"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 292,
+          "opcode": 43,
+          "target_name": "rewardTiltTime",
+          "symbol": "rewardTiltTime"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 304,
+          "opcode": 43,
+          "target_name": "rewardTiltAmount",
+          "symbol": "rewardTiltAmount"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 340,
+          "opcode": 43,
+          "target_name": "rewardMove",
+          "symbol": "rewardMove"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 348,
+          "opcode": 43,
+          "target_name": "rewardMoveSpeed",
+          "symbol": "rewardMoveSpeed"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 356,
+          "opcode": 43,
+          "target_name": "rewardZoomSpeed",
+          "symbol": "rewardZoomSpeed"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 364,
+          "opcode": 43,
+          "target_name": "rewardZoomAmount",
+          "symbol": "rewardZoomAmount"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 372,
+          "opcode": 43,
+          "target_name": "rewardTiltTime",
+          "symbol": "rewardTiltTime"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 388,
+          "opcode": 43,
+          "target_name": "rewardTiltAmount",
+          "symbol": "rewardTiltAmount"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 420,
+          "opcode": 43,
+          "target_name": "rewardMove",
+          "symbol": "rewardMove"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 424,
+          "opcode": 43,
+          "target_name": "rewardMoveSpeed",
+          "symbol": "rewardMoveSpeed"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 432,
+          "opcode": 43,
+          "target_name": "rewardTiltTime",
+          "symbol": "rewardTiltTime"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 440,
+          "opcode": 43,
+          "target_name": "rewardZoomSpeed",
+          "symbol": "rewardZoomSpeed"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 448,
+          "opcode": 43,
+          "target_name": "rewardZoomAmount",
+          "symbol": "rewardZoomAmount"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 464,
+          "opcode": 43,
+          "target_name": "rewardTiltAmount",
+          "symbol": "rewardTiltAmount"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 492,
+          "opcode": 43,
+          "target_name": "rewardMove",
+          "symbol": "rewardMove"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 496,
+          "opcode": 43,
+          "target_name": "rewardMoveSpeed",
+          "symbol": "rewardMoveSpeed"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 504,
+          "opcode": 43,
+          "target_name": "rewardTiltTime",
+          "symbol": "rewardTiltTime"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 512,
+          "opcode": 43,
+          "target_name": "rewardZoomSpeed",
+          "symbol": "rewardZoomSpeed"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 520,
+          "opcode": 43,
+          "target_name": "rewardZoomAmount",
+          "symbol": "rewardZoomAmount"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 536,
+          "opcode": 43,
+          "target_name": "rewardTiltAmount",
+          "symbol": "rewardTiltAmount"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 564,
+          "opcode": 43,
+          "target_name": "rewardMove",
+          "symbol": "rewardMove"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 568,
+          "opcode": 43,
+          "target_name": "rewardMoveSpeed",
+          "symbol": "rewardMoveSpeed"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 576,
+          "opcode": 43,
+          "target_name": "rewardTiltTime",
+          "symbol": "rewardTiltTime"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 584,
+          "opcode": 43,
+          "target_name": "rewardZoomSpeed",
+          "symbol": "rewardZoomSpeed"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 592,
+          "opcode": 43,
+          "target_name": "rewardZoomAmount",
+          "symbol": "rewardZoomAmount"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 604,
+          "opcode": 43,
+          "target_name": "rewardTiltAmount",
+          "symbol": "rewardTiltAmount"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 620,
+          "opcode": 49,
+          "target_name": "rewardMove",
+          "symbol": "rewardMove"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 696,
+          "opcode": 49,
+          "target_name": "rewardMoveSpeed",
+          "symbol": "rewardMoveSpeed"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 716,
+          "opcode": 49,
+          "target_name": "rewardZoomAmount",
+          "symbol": "rewardZoomAmount"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 724,
+          "opcode": 49,
+          "target_name": "rewardZoomSpeed",
+          "symbol": "rewardZoomSpeed"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 764,
+          "opcode": 49,
+          "target_name": "rewardTiltAmount",
+          "symbol": "rewardTiltAmount"
+        },
+        {
+          "function": "zCameraRewardUpdate__FP7xCameraf",
+          "offset": 768,
+          "opcode": 49,
+          "target_name": "rewardTiltTime",
+          "symbol": "rewardTiltTime"
+        },
+        {
+          "function": "zCameraFlyStart__FUi",
+          "offset": 40,
+          "opcode": 43,
+          "target_name": "zcam_fly",
+          "symbol": "zcam_fly"
+        },
+        {
+          "function": "zCameraFlyStart__FUi",
+          "offset": 52,
+          "opcode": 43,
+          "target_name": "zcam_flyasset_current",
+          "symbol": "zcam_flyasset_current"
+        },
+        {
+          "function": "zCameraFlyStart__FUi",
+          "offset": 60,
+          "opcode": 43,
+          "target_name": "zcam_flypaused",
+          "symbol": "zcam_flypaused"
+        },
+        {
+          "function": "zCameraFlyStart__FUi",
+          "offset": 64,
+          "opcode": 43,
+          "target_name": "zcam_flytime",
+          "symbol": "zcam_flytime"
+        },
+        {
+          "function": "zCameraFlyStart__FUi",
+          "offset": 72,
+          "opcode": 43,
+          "target_name": "zcam_flydata",
+          "symbol": "zcam_flydata"
+        },
+        {
+          "function": "zCameraFlyStart__FUi",
+          "offset": 80,
+          "opcode": 43,
+          "target_name": "zcam_flysize",
+          "symbol": "zcam_flysize"
+        },
+        {
+          "function": "zCameraFlyUpdate__FP7xCameraf",
+          "offset": 92,
+          "opcode": 49,
+          "target_name": "zcam_flytime",
+          "symbol": "zcam_flytime"
+        },
+        {
+          "function": "zCameraFlyUpdate__FP7xCameraf",
+          "offset": 96,
+          "opcode": 49,
+          "target_name": "gSkipTimeFlythrough",
+          "symbol": "gSkipTimeFlythrough"
+        },
+        {
+          "function": "zCameraFlyUpdate__FP7xCameraf",
+          "offset": 112,
+          "opcode": 35,
+          "target_name": "zcam_flysize",
+          "symbol": "zcam_flysize"
+        },
+        {
+          "function": "zCameraFlyUpdate__FP7xCameraf",
+          "offset": 180,
+          "opcode": 57,
+          "target_name": "zcam_flytime",
+          "symbol": "zcam_flytime"
+        },
+        {
+          "function": "zCameraFlyUpdate__FP7xCameraf",
+          "offset": 188,
+          "opcode": 49,
+          "target_name": "zcam_flytime",
+          "symbol": "zcam_flytime"
+        },
+        {
+          "function": "zCameraFlyUpdate__FP7xCameraf",
+          "offset": 228,
+          "opcode": 35,
+          "target_name": "zcam_flysize",
+          "symbol": "zcam_flysize"
+        },
+        {
+          "function": "zCameraFlyUpdate__FP7xCameraf",
+          "offset": 280,
+          "opcode": 35,
+          "target_name": "zcam_flydata",
+          "symbol": "zcam_flydata"
+        },
+        {
+          "function": "zCameraFlyUpdate__FP7xCameraf",
+          "offset": 288,
+          "opcode": 35,
+          "target_name": "zcam_flydata",
+          "symbol": "zcam_flydata"
+        },
+        {
+          "function": "zCameraFlyUpdate__FP7xCameraf",
+          "offset": 1568,
+          "opcode": 49,
+          "target_name": "zcam_flytime",
+          "symbol": "zcam_flytime"
+        },
+        {
+          "function": "zCameraFlyUpdate__FP7xCameraf",
+          "offset": 1576,
+          "opcode": 57,
+          "target_name": "zcam_flytime",
+          "symbol": "zcam_flytime"
+        },
+        {
+          "function": "zCameraConversUpdate__FP7xCameraf",
+          "offset": 24,
+          "opcode": 35,
+          "target_name": "zcam_dest",
+          "symbol": "zcam_dest"
+        },
+        {
+          "function": "zCameraConversUpdate__FP7xCameraf",
+          "offset": 36,
+          "opcode": 49,
+          "target_name": "zcam_tmr",
+          "symbol": "zcam_tmr"
+        },
+        {
+          "function": "zCameraConversUpdate__FP7xCameraf",
+          "offset": 64,
+          "opcode": 57,
+          "target_name": "zcam_tmr",
+          "symbol": "zcam_tmr"
+        },
+        {
+          "function": "zCameraConversUpdate__FP7xCameraf",
+          "offset": 128,
+          "opcode": 35,
+          "target_name": "zcam_dest",
+          "symbol": "zcam_dest"
+        },
+        {
+          "function": "zCameraConversUpdate__FP7xCameraf",
+          "offset": 156,
+          "opcode": 35,
+          "target_name": "zcam_dest",
+          "symbol": "zcam_dest"
+        },
+        {
+          "function": "zCameraConversUpdate__FP7xCameraf",
+          "offset": 184,
+          "opcode": 35,
+          "target_name": "zcam_dest",
+          "symbol": "zcam_dest"
+        },
+        {
+          "function": "zCameraConversUpdate__FP7xCameraf",
+          "offset": 212,
+          "opcode": 49,
+          "target_name": "zcam_fovdest",
+          "symbol": "zcam_fovdest"
+        },
+        {
+          "function": "zCameraConversUpdate__FP7xCameraf",
+          "offset": 220,
+          "opcode": 57,
+          "target_name": "zcam_fovcurr",
+          "symbol": "zcam_fovcurr"
+        },
+        {
+          "function": "zCameraConversUpdate__FP7xCameraf",
+          "offset": 228,
+          "opcode": 49,
+          "target_name": "zcam_ttm",
+          "symbol": "zcam_ttm"
+        },
+        {
+          "function": "zCameraConversUpdate__FP7xCameraf",
+          "offset": 388,
+          "opcode": 35,
+          "target_name": "zcam_dest",
+          "symbol": "zcam_dest"
+        },
+        {
+          "function": "zCameraConversUpdate__FP7xCameraf",
+          "offset": 472,
+          "opcode": 49,
+          "target_name": "zcam_fovcurr",
+          "symbol": "zcam_fovcurr"
+        },
+        {
+          "function": "zCameraConversUpdate__FP7xCameraf",
+          "offset": 476,
+          "opcode": 49,
+          "target_name": "zcam_fovdest",
+          "symbol": "zcam_fovdest"
+        },
+        {
+          "function": "zCameraConversUpdate__FP7xCameraf",
+          "offset": 488,
+          "opcode": 57,
+          "target_name": "zcam_fovcurr",
+          "symbol": "zcam_fovcurr"
+        },
+        {
+          "function": "zCameraConversUpdate__FP7xCameraf",
+          "offset": 496,
+          "opcode": 49,
+          "target_name": "zcam_tmr",
+          "symbol": "zcam_tmr"
+        },
+        {
+          "function": "zCameraConversUpdate__FP7xCameraf",
+          "offset": 504,
+          "opcode": 57,
+          "target_name": "zcam_tmr",
+          "symbol": "zcam_tmr"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 36,
+          "opcode": 43,
+          "target_name": "zcam_mode",
+          "symbol": "zcam_mode"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 44,
+          "opcode": 43,
+          "target_name": "zcam_bbounce",
+          "symbol": "zcam_bbounce"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 48,
+          "opcode": 43,
+          "target_name": "zcam_lbbounce",
+          "symbol": "zcam_lbbounce"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 52,
+          "opcode": 43,
+          "target_name": "zcam_lconvers",
+          "symbol": "zcam_lconvers"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 56,
+          "opcode": 43,
+          "target_name": "zcam_longbounce",
+          "symbol": "zcam_longbounce"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 60,
+          "opcode": 43,
+          "target_name": "zcam_highbounce",
+          "symbol": "zcam_highbounce"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 64,
+          "opcode": 43,
+          "target_name": "zcam_mintgtheight",
+          "symbol": "zcam_mintgtheight"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 68,
+          "opcode": 43,
+          "target_name": "zcam_convers",
+          "symbol": "zcam_convers"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 72,
+          "opcode": 43,
+          "target_name": "zcam_fly",
+          "symbol": "zcam_fly"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 76,
+          "opcode": 43,
+          "target_name": "zcam_flypaused",
+          "symbol": "zcam_flypaused"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 80,
+          "opcode": 43,
+          "target_name": "zcam_cutscene",
+          "symbol": "zcam_cutscene"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 84,
+          "opcode": 43,
+          "target_name": "zcam_reward",
+          "symbol": "zcam_reward"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 88,
+          "opcode": 43,
+          "target_name": "zcam_fovcurr",
+          "symbol": "zcam_fovcurr"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 92,
+          "opcode": 43,
+          "target_name": "zcam_overrot_tmr",
+          "symbol": "zcam_overrot_tmr"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 96,
+          "opcode": 43,
+          "target_name": "wall_jump_enabled",
+          "symbol": "wall_jump_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "wall_jump_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 100,
+          "opcode": 40,
+          "target_name": "lassocam_enabled",
+          "symbol": "lassocam_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "lassocam_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 104,
+          "opcode": 43,
+          "target_name": "stop_track",
+          "symbol": "stop_track__21@unnamed@zCamera_cpp@",
+          "target_linkage": "stop_track__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 132,
+          "opcode": 35,
+          "target_name": "zcam_highbounce",
+          "symbol": "zcam_highbounce"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 148,
+          "opcode": 49,
+          "target_name": "zcam_highbounce_d",
+          "symbol": "zcam_highbounce_d"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 152,
+          "opcode": 35,
+          "target_name": "wall_jump_enabled",
+          "symbol": "wall_jump_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "wall_jump_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 172,
+          "opcode": 49,
+          "target_name": "zcam_wall_d",
+          "symbol": "zcam_wall_d"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 184,
+          "opcode": 35,
+          "target_name": "zcam_highbounce",
+          "symbol": "zcam_highbounce"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 188,
+          "opcode": 49,
+          "target_name": "dMultiplier",
+          "symbol": "dMultiplier__21@unnamed@zCamera_cpp@",
+          "target_linkage": "dMultiplier__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 192,
+          "opcode": 49,
+          "target_name": "dOffset",
+          "symbol": "dOffset__21@unnamed@zCamera_cpp@",
+          "target_linkage": "dOffset__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 212,
+          "opcode": 49,
+          "target_name": "zcam_highbounce_h",
+          "symbol": "zcam_highbounce_h"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 216,
+          "opcode": 35,
+          "target_name": "wall_jump_enabled",
+          "symbol": "wall_jump_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "wall_jump_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 236,
+          "opcode": 49,
+          "target_name": "zcam_wall_h",
+          "symbol": "zcam_wall_h"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 248,
+          "opcode": 35,
+          "target_name": "zcam_highbounce",
+          "symbol": "zcam_highbounce"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 252,
+          "opcode": 49,
+          "target_name": "dMultiplier",
+          "symbol": "dMultiplier__21@unnamed@zCamera_cpp@",
+          "target_linkage": "dMultiplier__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 256,
+          "opcode": 49,
+          "target_name": "dOffset",
+          "symbol": "dOffset__21@unnamed@zCamera_cpp@",
+          "target_linkage": "dOffset__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 276,
+          "opcode": 49,
+          "target_name": "zcam_highbounce_pitch",
+          "symbol": "zcam_highbounce_pitch"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 312,
+          "opcode": 43,
+          "target_name": "dOffset",
+          "symbol": "dOffset__21@unnamed@zCamera_cpp@",
+          "target_linkage": "dOffset__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 316,
+          "opcode": 40,
+          "target_name": "input_enabled",
+          "symbol": "input_enabled__21@unnamed@zCamera_cpp@",
+          "target_linkage": "input_enabled__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 324,
+          "opcode": 43,
+          "target_name": "hOffset",
+          "symbol": "hOffset__21@unnamed@zCamera_cpp@",
+          "target_linkage": "hOffset__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 328,
+          "opcode": 43,
+          "target_name": "dMultiplier",
+          "symbol": "dMultiplier__21@unnamed@zCamera_cpp@",
+          "target_linkage": "dMultiplier__21@unnamed@zCamera_cpp@"
+        },
+        {
+          "function": "zCameraReset__FP7xCamera",
+          "offset": 332,
+          "opcode": 43,
+          "target_name": "hMultiplier",
+          "symbol": "hMultiplier__21@unnamed@zCamera_cpp@",
+          "target_linkage": "hMultiplier__21@unnamed@zCamera_cpp@"
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Game/zLasso.cpp",
+      "target_unit": "SB/Game/zLasso.cpp",
+      "object": "source/zLasso.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "bakeMorphAnim__FP10RpGeometryPv": "bakeMorphAnim__FP10RpGeometryPv",
+        "initVertMap__FP11zLassoGuide": "initVertMap__FP11zLassoGuide",
+        "zLasso_scenePrepare__Fv": "zLasso_scenePrepare__Fv",
+        "nonfizzicalHonda__FP6zLassofP5xVec3": "nonfizzicalHonda__FP6zLassofP5xVec3",
+        "fizzicalHonda__FP6zLassofP5xVec3": "fizzicalHonda__FP6zLassofP5xVec3",
+        "zLasso_ResetTimer__FP6zLassof": "zLasso_ResetTimer__FP6zLassof",
+        "zLasso_InitTimer__FP6zLassof": "zLasso_InitTimer__FP6zLassof",
+        "zLasso_Update__FP6zLassoP4xEntf": "zLasso_Update__FP6zLassoP4xEntf",
+        "zLasso_Render__FP6zLasso": "zLasso_Render__FP6zLasso",
+        "zLasso_InterpToGuide__FP6zLasso": "zLasso_InterpToGuide__FP6zLasso",
+        "zLasso_SetGuide__FP4xEntP10xAnimState": "zLasso_SetGuide__FP4xEntP10xAnimState",
+        "zLasso_AddGuide__FP4xEntP10xAnimStateP14xModelInstance": "zLasso_AddGuide__FP4xEntP10xAnimStateP14xModelInstance",
+        "zLasso_Init__FP6zLassoP14xModelInstancefff": "zLasso_Init__FP6zLassoP14xModelInstancefff"
+      },
+      "calls": [
+        {
+          "function": "bakeMorphAnim__FP10RpGeometryPv",
+          "offset": 68,
+          "target_source": "SB/Core/p2/iAnim.cpp",
+          "target_function": "iAnimEval__FPvfUiP5xVec3P5xQuat",
+          "symbol": "iAnimEval__FPvfUiP5xVec3P5xQuat"
+        },
+        {
+          "function": "bakeMorphAnim__FP10RpGeometryPv",
+          "offset": 80,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xQuatToMat__FPC5xQuatP7xMat3x3",
+          "symbol": "xQuatToMat__FPC5xQuatP7xMat3x3"
+        },
+        {
+          "function": "fizzicalHonda__FP6zLassofP5xVec3",
+          "offset": 440,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "fizzicalHonda__FP6zLassofP5xVec3",
+          "offset": 524,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "fizzicalHonda__FP6zLassofP5xVec3",
+          "offset": 584,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf",
+          "symbol": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf"
+        },
+        {
+          "function": "zLasso_InitTimer__FP6zLassof",
+          "offset": 64,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelTagEval__FP8RpAtomicPC9xModelTagP11RwMatrixTagP5xVec3",
+          "symbol": "iModelTagEval__FP8RpAtomicPC9xModelTagP11RwMatrixTagP5xVec3"
+        },
+        {
+          "function": "zLasso_Update__FP6zLassoP4xEntf",
+          "offset": 56,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelTagEval__FP8RpAtomicPC9xModelTagP11RwMatrixTagP5xVec3",
+          "symbol": "iModelTagEval__FP8RpAtomicPC9xModelTagP11RwMatrixTagP5xVec3"
+        },
+        {
+          "function": "zLasso_Update__FP6zLassoP4xEntf",
+          "offset": 912,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "zLasso_Update__FP6zLassoP4xEntf",
+          "offset": 1140,
+          "target_source": "SB/Game/zLasso.cpp",
+          "target_function": "fizzicalHonda__FP6zLassofP5xVec3",
+          "symbol": "fizzicalHonda__FP6zLassofP5xVec3"
+        },
+        {
+          "function": "zLasso_Update__FP6zLassoP4xEntf",
+          "offset": 1168,
+          "target_source": "SB/Game/zLasso.cpp",
+          "target_function": "nonfizzicalHonda__FP6zLassofP5xVec3",
+          "symbol": "nonfizzicalHonda__FP6zLassofP5xVec3"
+        },
+        {
+          "function": "zLasso_Update__FP6zLassoP4xEntf",
+          "offset": 1816,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "zLasso_Update__FP6zLassoP4xEntf",
+          "offset": 1924,
+          "target_source": "SB/Game/zLasso.cpp",
+          "target_function": "fizzicalHonda__FP6zLassofP5xVec3",
+          "symbol": "fizzicalHonda__FP6zLassofP5xVec3"
+        },
+        {
+          "function": "zLasso_Update__FP6zLassoP4xEntf",
+          "offset": 1952,
+          "target_source": "SB/Game/zLasso.cpp",
+          "target_function": "nonfizzicalHonda__FP6zLassofP5xVec3",
+          "symbol": "nonfizzicalHonda__FP6zLassofP5xVec3"
+        },
+        {
+          "function": "zLasso_Render__FP6zLasso",
+          "offset": 932,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "zLasso_Render__FP6zLasso",
+          "offset": 1400,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "zLasso_Render__FP6zLasso",
+          "offset": 1472,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "zLasso_Render__FP6zLasso",
+          "offset": 3556,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "zLasso_Render__FP6zLasso",
+          "offset": 3628,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "zLasso_Render__FP6zLasso",
+          "offset": 3660,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3RotC__FP7xMat3x3ffff",
+          "symbol": "xMat3x3RotC__FP7xMat3x3ffff"
+        },
+        {
+          "function": "zLasso_Render__FP6zLasso",
+          "offset": 3952,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3RotC__FP7xMat3x3ffff",
+          "symbol": "xMat3x3RotC__FP7xMat3x3ffff"
+        },
+        {
+          "function": "zLasso_Render__FP6zLasso",
+          "offset": 5408,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "zLasso_Render__FP6zLasso",
+          "offset": 5468,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "zLasso_Render__FP6zLasso",
+          "offset": 5500,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3RotC__FP7xMat3x3ffff",
+          "symbol": "xMat3x3RotC__FP7xMat3x3ffff"
+        },
+        {
+          "function": "zLasso_Render__FP6zLasso",
+          "offset": 6220,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "zLasso_Render__FP6zLasso",
+          "offset": 6316,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "zLasso_Render__FP6zLasso",
+          "offset": 6356,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3RotC__FP7xMat3x3ffff",
+          "symbol": "xMat3x3RotC__FP7xMat3x3ffff"
+        },
+        {
+          "function": "zLasso_InterpToGuide__FP6zLasso",
+          "offset": 1028,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "zLasso_InterpToGuide__FP6zLasso",
+          "offset": 1112,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "zLasso_AddGuide__FP4xEntP10xAnimStateP14xModelInstance",
+          "offset": 328,
+          "target_source": "SB/Game/zLasso.cpp",
+          "target_function": "initVertMap__FP11zLassoGuide",
+          "symbol": "initVertMap__FP11zLassoGuide"
+        },
+        {
+          "function": "zLasso_AddGuide__FP4xEntP10xAnimStateP14xModelInstance",
+          "offset": 352,
+          "target_source": "SB/Game/zLasso.cpp",
+          "target_function": "bakeMorphAnim__FP10RpGeometryPv",
+          "symbol": "bakeMorphAnim__FP10RpGeometryPv"
+        },
+        {
+          "function": "zLasso_Init__FP6zLassoP14xModelInstancefff",
+          "offset": 60,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "zLasso_Init__FP6zLassoP14xModelInstancefff",
+          "offset": 72,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "zLasso_Init__FP6zLassoP14xModelInstancefff",
+          "offset": 128,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelTagSetup__FP9xModelTagP8RpAtomicfff",
+          "symbol": "iModelTagSetup__FP9xModelTagP8RpAtomicfff"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "zLasso_scenePrepare__Fv",
+          "offset": 0,
+          "opcode": 43,
+          "target_name": "sNumGuideLists",
+          "symbol": "sNumGuideLists"
+        },
+        {
+          "function": "zLasso_scenePrepare__Fv",
+          "offset": 8,
+          "opcode": 43,
+          "target_name": "sCurrentGuide",
+          "symbol": "sCurrentGuide"
+        },
+        {
+          "function": "fizzicalHonda__FP6zLassofP5xVec3",
+          "offset": 488,
+          "opcode": 35,
+          "target_name": "negativeHondaX",
+          "symbol": "negativeHondaX"
+        },
+        {
+          "function": "fizzicalHonda__FP6zLassofP5xVec3",
+          "offset": 592,
+          "opcode": 43,
+          "target_name": "negativeHondaX",
+          "symbol": "negativeHondaX"
+        },
+        {
+          "function": "fizzicalHonda__FP6zLassofP5xVec3",
+          "offset": 624,
+          "opcode": 43,
+          "target_name": "negativeHondaX",
+          "symbol": "negativeHondaX"
+        },
+        {
+          "function": "zLasso_Render__FP6zLasso",
+          "offset": 196,
+          "opcode": 35,
+          "target_name": "sCurrentGuide",
+          "symbol": "sCurrentGuide"
+        },
+        {
+          "function": "zLasso_Render__FP6zLasso",
+          "offset": 1292,
+          "opcode": 35,
+          "target_name": "sLassoRaster",
+          "symbol": "sLassoRaster"
+        },
+        {
+          "function": "zLasso_Render__FP6zLasso",
+          "offset": 2304,
+          "opcode": 35,
+          "target_name": "lnverts",
+          "symbol": "lnverts"
+        },
+        {
+          "function": "zLasso_Render__FP6zLasso",
+          "offset": 7384,
+          "opcode": 35,
+          "target_name": "lnverts",
+          "symbol": "lnverts"
+        },
+        {
+          "function": "zLasso_InterpToGuide__FP6zLasso",
+          "offset": 24,
+          "opcode": 35,
+          "target_name": "sCurrentGuide",
+          "symbol": "sCurrentGuide"
+        },
+        {
+          "function": "zLasso_InterpToGuide__FP6zLasso",
+          "offset": 104,
+          "opcode": 35,
+          "target_name": "sCurrentGuide",
+          "symbol": "sCurrentGuide"
+        },
+        {
+          "function": "zLasso_InterpToGuide__FP6zLasso",
+          "offset": 188,
+          "opcode": 35,
+          "target_name": "sCurrentGuide",
+          "symbol": "sCurrentGuide"
+        },
+        {
+          "function": "zLasso_InterpToGuide__FP6zLasso",
+          "offset": 264,
+          "opcode": 35,
+          "target_name": "sCurrentGuide",
+          "symbol": "sCurrentGuide"
+        },
+        {
+          "function": "zLasso_InterpToGuide__FP6zLasso",
+          "offset": 340,
+          "opcode": 35,
+          "target_name": "sCurrentGuide",
+          "symbol": "sCurrentGuide"
+        },
+        {
+          "function": "zLasso_InterpToGuide__FP6zLasso",
+          "offset": 416,
+          "opcode": 35,
+          "target_name": "sCurrentGuide",
+          "symbol": "sCurrentGuide"
+        },
+        {
+          "function": "zLasso_InterpToGuide__FP6zLasso",
+          "offset": 492,
+          "opcode": 35,
+          "target_name": "sCurrentGuide",
+          "symbol": "sCurrentGuide"
+        },
+        {
+          "function": "zLasso_InterpToGuide__FP6zLasso",
+          "offset": 568,
+          "opcode": 35,
+          "target_name": "sCurrentGuide",
+          "symbol": "sCurrentGuide"
+        },
+        {
+          "function": "zLasso_InterpToGuide__FP6zLasso",
+          "offset": 644,
+          "opcode": 35,
+          "target_name": "sCurrentGuide",
+          "symbol": "sCurrentGuide"
+        },
+        {
+          "function": "zLasso_InterpToGuide__FP6zLasso",
+          "offset": 744,
+          "opcode": 35,
+          "target_name": "sCurrentGuide",
+          "symbol": "sCurrentGuide"
+        },
+        {
+          "function": "zLasso_InterpToGuide__FP6zLasso",
+          "offset": 904,
+          "opcode": 35,
+          "target_name": "sCurrentGuide",
+          "symbol": "sCurrentGuide"
+        },
+        {
+          "function": "zLasso_InterpToGuide__FP6zLasso",
+          "offset": 1184,
+          "opcode": 35,
+          "target_name": "sCurrentGuide",
+          "symbol": "sCurrentGuide"
+        },
+        {
+          "function": "zLasso_SetGuide__FP4xEntP10xAnimState",
+          "offset": 4,
+          "opcode": 43,
+          "target_name": "sCurrentGuide",
+          "symbol": "sCurrentGuide"
+        },
+        {
+          "function": "zLasso_SetGuide__FP4xEntP10xAnimState",
+          "offset": 24,
+          "opcode": 35,
+          "target_name": "sNumGuideLists",
+          "symbol": "sNumGuideLists"
+        },
+        {
+          "function": "zLasso_SetGuide__FP4xEntP10xAnimState",
+          "offset": 220,
+          "opcode": 43,
+          "target_name": "sCurrentGuide",
+          "symbol": "sCurrentGuide"
+        },
+        {
+          "function": "zLasso_SetGuide__FP4xEntP10xAnimState",
+          "offset": 224,
+          "opcode": 35,
+          "target_name": "sCurrentGuide",
+          "symbol": "sCurrentGuide"
+        },
+        {
+          "function": "zLasso_SetGuide__FP4xEntP10xAnimState",
+          "offset": 240,
+          "opcode": 43,
+          "target_name": "sCurrentGuide",
+          "symbol": "sCurrentGuide"
+        },
+        {
+          "function": "zLasso_AddGuide__FP4xEntP10xAnimStateP14xModelInstance",
+          "offset": 16,
+          "opcode": 35,
+          "target_name": "sNumGuideLists",
+          "symbol": "sNumGuideLists"
+        },
+        {
+          "function": "zLasso_AddGuide__FP4xEntP10xAnimStateP14xModelInstance",
+          "offset": 100,
+          "opcode": 35,
+          "target_name": "sNumGuideLists",
+          "symbol": "sNumGuideLists"
+        },
+        {
+          "function": "zLasso_AddGuide__FP4xEntP10xAnimStateP14xModelInstance",
+          "offset": 148,
+          "opcode": 43,
+          "target_name": "sNumGuideLists",
+          "symbol": "sNumGuideLists"
+        },
+        {
+          "function": "zLasso_Init__FP6zLassoP14xModelInstancefff",
+          "offset": 36,
+          "opcode": 35,
+          "target_name": "sLassoRaster",
+          "symbol": "sLassoRaster"
+        },
+        {
+          "function": "zLasso_Init__FP6zLassoP14xModelInstancefff",
+          "offset": 96,
+          "opcode": 43,
+          "target_name": "sLassoRaster",
+          "symbol": "sLassoRaster"
+        },
+        {
+          "function": "zLasso_Init__FP6zLassoP14xModelInstancefff",
+          "offset": 104,
+          "opcode": 43,
+          "target_name": "sLassoRaster",
+          "symbol": "sLassoRaster"
+        },
+        {
+          "function": "zLasso_Init__FP6zLassoP14xModelInstancefff",
+          "offset": 148,
+          "opcode": 43,
+          "target_name": "lnverts",
+          "symbol": "lnverts"
+        }
+      ]
     }
   ]
 }

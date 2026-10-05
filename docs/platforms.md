@@ -75,9 +75,9 @@ checked, and the standard objdiff parser accepts the result.
 
 | Version | Full code-region bytes | Objdiff code-matched bytes |
 | --- | ---: | ---: |
-| SLUS-20680 | 2,978,560 | 187,684 |
-| SLES-51968 | 2,979,712 | 187,376 |
-| SLES-51970 | 2,976,512 | 187,376 |
+| SLUS-20680 | 2,978,560 | 191,156 |
+| SLES-51968 | 2,979,712 | 190,848 |
+| SLES-51970 | 2,976,512 | 190,848 |
 | SLES-53623 | 2,979,968 | 29,500 |
 | XBOX-US | 1,798,760 | 12,020 |
 | XBOX-EU | 1,798,760 | 12,020 |
@@ -122,9 +122,9 @@ The narrower function-only baselines currently contain:
 
 | PS2 baseline | Functions | Measured function bytes | Source matches |
 | --- | ---: | ---: | ---: |
-| USA | 5,391 | 2,107,460 | 1,274 functions / 187,684 bytes |
-| Europe/Australia | 5,392 | 2,108,700 | 1,273 functions / 187,376 bytes |
-| Germany | 5,394 | 2,105,512 | 1,273 functions / 187,376 bytes |
+| USA | 5,391 | 2,107,460 | 1,298 functions / 191,156 bytes |
+| Europe/Australia | 5,392 | 2,108,700 | 1,297 functions / 190,848 bytes |
+| Germany | 5,394 | 2,105,512 | 1,297 functions / 190,848 bytes |
 | France (reviewed and corroborated bounds) | 597 | 214,848 | 175 functions / 29,500 bytes |
 
 The `address-anchors.json` registries also recover over 2,500 named data addresses
@@ -547,3 +547,8 @@ All these matches independently reconstruct the original bytes.
 The complete [cinematic effects comparison](PS2_CINEMATIC_SOURCE.md) adds 2,544
 matched bytes / 21 functions per debug region using only PS2 include selections.
 All 77 original functions retain their extents and partial scores.
+
+The complete PS2 camera and lasso source comparisons add 24 matched functions /
+3,472 bytes in each debug region, all independently verified against original
+bytes after relocation. Unmatched functions remain in both unit totals. See
+[camera and lasso evidence](PS2_CAMERA_LASSO_SOURCE.md).
