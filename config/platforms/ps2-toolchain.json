@@ -4076,6 +4076,76 @@
           ]
         }
       ]
+    },
+    {
+      "source": "src/SB/Core/x/xLightKit.cpp",
+      "target_unit": "SB/Core/x/xLightKit.cpp",
+      "object": "source/xLightKit.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xLightKit_Destroy__FP9xLightKit": "xLightKit_Destroy__FP9xLightKit",
+        "xLightKit_GetCurrent__FP7RpWorld": "xLightKit_GetCurrent__FP7RpWorld",
+        "xLightKit_Enable__FP9xLightKitP7RpWorld": "xLightKit_Enable__FP9xLightKitP7RpWorld",
+        "xLightKit_Prepare__FPv": "xLightKit_Prepare__FPv"
+      },
+      "calls": [
+        {
+          "function": "xLightKit_Enable__FP9xLightKitP7RpWorld",
+          "offset": 216,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModel_SetLightKit__FP9xLightKit",
+          "symbol": "iModel_SetLightKit__FP9xLightKit"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xLightKit_GetCurrent__FP7RpWorld",
+          "offset": 4,
+          "opcode": 35,
+          "target_name": "gLastLightKit",
+          "symbol": "gLastLightKit"
+        },
+        {
+          "function": "xLightKit_Enable__FP9xLightKitP7RpWorld",
+          "offset": 28,
+          "opcode": 35,
+          "target_name": "gLastLightKit",
+          "symbol": "gLastLightKit"
+        },
+        {
+          "function": "xLightKit_Enable__FP9xLightKitP7RpWorld",
+          "offset": 92,
+          "opcode": 35,
+          "target_name": "gLastLightKit",
+          "symbol": "gLastLightKit"
+        },
+        {
+          "function": "xLightKit_Enable__FP9xLightKitP7RpWorld",
+          "offset": 124,
+          "opcode": 43,
+          "target_name": "gLastLightKit",
+          "symbol": "gLastLightKit"
+        },
+        {
+          "function": "xLightKit_Enable__FP9xLightKitP7RpWorld",
+          "offset": 132,
+          "opcode": 43,
+          "target_name": "iModelHack_DisablePrelight",
+          "symbol": "iModelHack_DisablePrelight"
+        },
+        {
+          "function": "xLightKit_Enable__FP9xLightKitP7RpWorld",
+          "offset": 208,
+          "opcode": 43,
+          "target_name": "iModelHack_DisablePrelight",
+          "symbol": "iModelHack_DisablePrelight"
+        }
+      ]
     }
   ]
 }
