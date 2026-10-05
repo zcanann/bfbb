@@ -40,7 +40,7 @@
     "/O2",
     "/Ob1",
     "/GL",
-    "/Gr",
+    "/Gd",
     "/DXBOX=1"
   ],
   "host_context": {
@@ -57,12 +57,14 @@
       "object": "source/xString.obj",
       "comparison_object": "source/xString-functions.obj",
       "symbols": {
-        "xStrHash(const char*)": "?xStrHash@@YIIPBD@Z",
-        "xStrHash(const char*,size_t)": "?xStrHash@@YIIPBDI@Z",
-        "xStrHashCat(U32,const char*)": "?xStrHashCat@@YIIIPBD@Z",
-        "atox(const substr&,size_t&)": "?atox@@YIIABUsubstr@@AAI@Z"
+        "xStrHash(const char*)": "?xStrHash@@YAIPBD@Z",
+        "xStrHash(const char*,size_t)": "?xStrHash@@YAIPBDI@Z",
+        "xStrHashCat(U32,const char*)": "?xStrHashCat@@YAIIPBD@Z",
+        "atox(const substr&,size_t&)": "?atox@@YAIABUsubstr@@AAI@Z",
+        "xStricmp(const char*,const char*)": "?xStricmp@@YAHPBD0@Z",
+        "imemcmp(const void*,const void*,size_t)": "?imemcmp@@YAHPBX0I@Z"
       },
-      "scope": "Four individually reviewed leaf functions from actual full-TU compilation; no TU or executable completion claim"
+      "scope": "Six individually reviewed leaf functions from actual full-TU compilation; no TU or executable completion claim"
     },
     {
       "source": "src/SB/Core/x/xPar.cpp",
@@ -71,9 +73,9 @@
       "comparison_object": "source/xPar-functions.obj",
       "host_entry": "tools/platforms/xbox_support/particle_entry.cpp",
       "symbols": {
-        "xParMemInit()": "?xParMemInit@@YIXXZ",
-        "xParAlloc()": "?xParAlloc@@YIPAUxPar@@XZ",
-        "xParInit(xPar*)": "?xParInit@@YIXPAUxPar@@@Z"
+        "xParMemInit()": "?xParMemInit@@YAXXZ",
+        "xParAlloc()": "?xParAlloc@@YAPAUxPar@@XZ",
+        "xParInit(xPar*)": "?xParInit@@YAXPAUxPar@@@Z"
       },
       "scope": "Three independently reviewed particle leaves from complete source compilation, with six explicit named data-address operands restored from real PE HIGHLOW records; no TU or executable completion claim",
       "globals": {

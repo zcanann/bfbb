@@ -11310,20 +11310,20 @@
       "identity_kind": "anonymous"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0015b380",
-      "source": null,
+      "name": "xStricmp",
+      "canonical_identifier": "xStricmp(const char*,const char*)",
+      "source": "SB/Core/x/xString.cpp",
       "address": 1422208,
       "size": 158,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0015b510",
-      "source": null,
+      "name": "imemcmp",
+      "canonical_identifier": "imemcmp(const void*,const void*,size_t)",
+      "source": "SB/Core/x/xString.cpp",
       "address": 1422608,
       "size": 61,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
       "name": null,

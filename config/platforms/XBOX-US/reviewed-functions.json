@@ -2,7 +2,7 @@
   "schema_version": 1,
   "version": "XBOX-US",
   "executable_sha1": "983ffc6d84427996ce35d0d204930ae713113370",
-  "scope": "Individually reviewed xString hashes/hexadecimal parser and xPar particle leaves; other Ghidra candidates remain separate.",
+  "scope": "Individually reviewed xString hashes, hexadecimal parser and comparison leaves plus xPar particle leaves; other Ghidra candidates remain separate.",
   "coverage_complete": false,
   "source_comparison_available": false,
   "retail_link_verified": false,
@@ -591,6 +591,331 @@
               "argument_register": "ecx"
             }
           ]
+        }
+      }
+    },
+    {
+      "name": "xStricmp",
+      "canonical_identifier": "xStricmp(const char*,const char*)",
+      "display_name": "S32 xStricmp(const char* string1, const char* string2)",
+      "source": "SB/Core/x/xString.cpp",
+      "linkage_name": null,
+      "address": 1422208,
+      "size": 158,
+      "sha256": "c1f765998d6091d3d76228e29a5755324033d39babc247e0671ceb95c819f16b",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": false,
+      "retail_link_verified": false,
+      "instruction_bytes": 158,
+      "instruction_count": 69,
+      "observed_calling_convention": {
+        "parameters": [
+          {
+            "name": "string1",
+            "location": "ecx"
+          },
+          {
+            "name": "string2",
+            "location": "eax"
+          }
+        ],
+        "return": "eax signed comparison result",
+        "stack_cleanup": "caller",
+        "saved_registers": [
+          "ebx",
+          "ebp",
+          "esi",
+          "edi"
+        ],
+        "convention_name": null,
+        "limitation": "Observed whole-program parameter registers are not asserted to be a fixed public calling convention. The original stack argument, when present, is removed by callers."
+      },
+      "semantics": {
+        "identity": "Compare NUL-terminated strings after converting ASCII a-z to uppercase; advance while folded bytes agree, stop at NUL or inequality, and return zero or signed ordering.",
+        "caller_evidence": "Callers pass real string pointers and test the zero result to select game values."
+      },
+      "corroboration": {
+        "method": "Individual original CFG, ASCII folding and loop/return data-flow, independently decoded caller arguments/result use, existing corroborated anonymous extent, and authenticated equivalent regional bytes. Names were investigated before source compilation.",
+        "branches": [
+          {
+            "address": 1422229,
+            "size": 2,
+            "opcode": 124,
+            "target": 1422244
+          },
+          {
+            "address": 1422234,
+            "size": 2,
+            "opcode": 127,
+            "target": 1422244
+          },
+          {
+            "address": 1422242,
+            "size": 2,
+            "opcode": 235,
+            "target": 1422247
+          },
+          {
+            "address": 1422252,
+            "size": 2,
+            "opcode": 124,
+            "target": 1422267
+          },
+          {
+            "address": 1422257,
+            "size": 2,
+            "opcode": 127,
+            "target": 1422267
+          },
+          {
+            "address": 1422265,
+            "size": 2,
+            "opcode": 235,
+            "target": 1422270
+          },
+          {
+            "address": 1422272,
+            "size": 2,
+            "opcode": 117,
+            "target": 1422297
+          },
+          {
+            "address": 1422276,
+            "size": 2,
+            "opcode": 117,
+            "target": 1422297
+          },
+          {
+            "address": 1422280,
+            "size": 2,
+            "opcode": 116,
+            "target": 1422290
+          },
+          {
+            "address": 1422284,
+            "size": 2,
+            "opcode": 116,
+            "target": 1422290
+          },
+          {
+            "address": 1422288,
+            "size": 2,
+            "opcode": 235,
+            "target": 1422224
+          },
+          {
+            "address": 1422295,
+            "size": 2,
+            "opcode": 235,
+            "target": 1422224
+          },
+          {
+            "address": 1422305,
+            "size": 2,
+            "opcode": 116,
+            "target": 1422361
+          },
+          {
+            "address": 1422315,
+            "size": 2,
+            "opcode": 124,
+            "target": 1422330
+          },
+          {
+            "address": 1422320,
+            "size": 2,
+            "opcode": 127,
+            "target": 1422330
+          },
+          {
+            "address": 1422328,
+            "size": 2,
+            "opcode": 235,
+            "target": 1422333
+          },
+          {
+            "address": 1422336,
+            "size": 2,
+            "opcode": 124,
+            "target": 1422351
+          },
+          {
+            "address": 1422341,
+            "size": 2,
+            "opcode": 127,
+            "target": 1422351
+          },
+          {
+            "address": 1422349,
+            "size": 2,
+            "opcode": 235,
+            "target": 1422354
+          },
+          {
+            "address": 1422356,
+            "size": 2,
+            "opcode": 125,
+            "target": 1422361
+          }
+        ],
+        "return_address": 1422365,
+        "saved_registers": [
+          {
+            "register": "ebx",
+            "push_address": 1422208,
+            "pop_address": 1422364
+          },
+          {
+            "register": "ebp",
+            "push_address": 1422209,
+            "pop_address": 1422363
+          },
+          {
+            "register": "esi",
+            "push_address": 1422210,
+            "pop_address": 1422362
+          },
+          {
+            "register": "edi",
+            "push_address": 1422211,
+            "pop_address": 1422361
+          }
+        ],
+        "recorded_direct_call_count": 10,
+        "reviewed_call_witnesses": [
+          {
+            "address": 275817,
+            "target": 1422208,
+            "kind": "x86_call_rel32"
+          },
+          {
+            "address": 317812,
+            "target": 1422208,
+            "kind": "x86_call_rel32"
+          }
+        ],
+        "following_padding": {
+          "address": 1422366,
+          "size": 2,
+          "byte": 204
+        },
+        "next_function_address": 1422368,
+        "caller_context": {
+          "address": 275797,
+          "size": 37,
+          "sha256": "4f52f6b4c80f1ddc95a4f20667ce125cc950c8b792949f044ef9a6eb40cbe037",
+          "description": "Original argument setup, direct comparison call, caller stack cleanup when applicable and result consumption."
+        }
+      }
+    },
+    {
+      "name": "imemcmp",
+      "canonical_identifier": "imemcmp(const void*,const void*,size_t)",
+      "display_name": "S32 imemcmp(const void* d1, const void* d2, size_t size)",
+      "source": "SB/Core/x/xString.cpp",
+      "linkage_name": null,
+      "address": 1422608,
+      "size": 61,
+      "sha256": "a80be96c6ee14609a2de3d77a2b2e2bca925966570d3d27d58be1c2e6df537e1",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": false,
+      "retail_link_verified": false,
+      "instruction_bytes": 61,
+      "instruction_count": 30,
+      "observed_calling_convention": {
+        "parameters": [
+          {
+            "name": "d1",
+            "location": "ebx"
+          },
+          {
+            "name": "d2",
+            "location": "edi"
+          },
+          {
+            "name": "size",
+            "location": "stack [entry esp+4]"
+          }
+        ],
+        "return": "eax signed comparison result",
+        "stack_cleanup": "caller",
+        "saved_registers": [
+          "ebp",
+          "esi"
+        ],
+        "convention_name": null,
+        "limitation": "Observed whole-program parameter registers are not asserted to be a fixed public calling convention. The original stack argument, when present, is removed by callers."
+      },
+      "semantics": {
+        "identity": "Compare exactly size bytes unless a difference occurs. Sign-extend each byte, apply c | ((c >> 1) & 32), and return the first folded difference or zero. This is the existing game helper, not a locale-aware CRT comparison.",
+        "caller_evidence": "Bounded substring comparison callers choose the minimum length, pass pointers in EBX/EDI, PUSH length, CALL, ADD ESP,4 and test the returned difference; the same pattern appears in the adjacent substring comparator."
+      },
+      "corroboration": {
+        "method": "Individual original CFG, ASCII folding and loop/return data-flow, independently decoded caller arguments/result use, existing corroborated anonymous extent, and authenticated equivalent regional bytes. Names were investigated before source compilation.",
+        "branches": [
+          {
+            "address": 1422618,
+            "size": 2,
+            "opcode": 118,
+            "target": 1422659
+          },
+          {
+            "address": 1422652,
+            "size": 2,
+            "opcode": 117,
+            "target": 1422664
+          },
+          {
+            "address": 1422657,
+            "size": 2,
+            "opcode": 114,
+            "target": 1422624
+          }
+        ],
+        "return_address": 1422668,
+        "saved_registers": [
+          {
+            "register": "ebp",
+            "push_address": 1422608,
+            "pop_address": 1422667
+          },
+          {
+            "register": "esi",
+            "push_address": 1422613,
+            "pop_address": 1422664
+          }
+        ],
+        "recorded_direct_call_count": 9,
+        "reviewed_call_witnesses": [
+          {
+            "address": 1104060,
+            "target": 1422608,
+            "kind": "x86_call_rel32"
+          },
+          {
+            "address": 1291717,
+            "target": 1422608,
+            "kind": "x86_call_rel32"
+          },
+          {
+            "address": 1422695,
+            "target": 1422608,
+            "kind": "x86_call_rel32"
+          }
+        ],
+        "following_padding": {
+          "address": 1422669,
+          "size": 3,
+          "byte": 204
+        },
+        "next_function_address": 1422672,
+        "caller_context": {
+          "address": 1422672,
+          "size": 53,
+          "sha256": "c947b0d7e14316b7f117475c8788b74c11c4c3bb3bb68b023452f33723e2abb0",
+          "description": "Original argument setup, direct comparison call, caller stack cleanup when applicable and result consumption."
         }
       }
     },
