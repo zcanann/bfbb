@@ -25516,6 +25516,1138 @@
         }
       ],
       "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zPlatform.cpp",
+      "target_unit": "SB/Game/zPlatform.cpp",
+      "object": "source/zPlatform.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "zPlatFM_EventSetup__FP9zPlatformPCfi": "zPlatFM_EventSetup__FP9zPlatformPCfi",
+        "zPlatformTranslate__FP4xEntP5xVec3P7xMat4x3": "zPlatformTranslate__FP4xEntP5xVec3P7xMat4x3",
+        "zPlatform_Dismount__FP9zPlatform": "zPlatform_Dismount__FP9zPlatform",
+        "zPlatform_Mount__FP9zPlatform": "zPlatform_Mount__FP9zPlatform",
+        "zPlatform_Tremble__FP9zPlatformfff": "zPlatform_Tremble__FP9zPlatformfff",
+        "zPlatform_Shake__FP9zPlatformfff": "zPlatform_Shake__FP9zPlatformfff",
+        "zPlatform_Move__FP4xEntP6xScenefP9xEntFrame": "zPlatform_Move__FP4xEntP6xScenefP9xEntFrame",
+        "zPlatform_Update__FP4xEntP6xScenef": "zPlatform_Update__FP4xEntP6xScenef",
+        "zPlatFM_Update__FP9zPlatformP6xScenef": "zPlatFM_Update__FP9zPlatformP6xScenef",
+        "zPlatform_PaddleCollide__FP7xCollisPC5xVec3PC5xVec3Ui": "zPlatform_PaddleCollide__FP7xCollisPC5xVec3PC5xVec3Ui",
+        "zPlatform_PaddleStartRotate__FP4xEntii": "zPlatform_PaddleStartRotate__FP4xEntii",
+        "SolvePaddleMotion__FP9zPlatformPff": "SolvePaddleMotion__FP9zPlatformPff",
+        "zPlatform_Reset__FP9zPlatformP6xScene": "zPlatform_Reset__FP9zPlatformP6xScene",
+        "zPlatform_Load__FP9zPlatformP7xSerial": "zPlatform_Load__FP9zPlatformP7xSerial",
+        "zPlatform_Save__FP9zPlatformP7xSerial": "zPlatform_Save__FP9zPlatformP7xSerial",
+        "zPlatform_Setup__FP9zPlatformP6xScene": "zPlatform_Setup__FP9zPlatformP6xScene",
+        "zPlatform_Init__FP9zPlatformP9xEntAsset": "zPlatform_Init__FP9zPlatformP9xEntAsset",
+        "zPlatform_Init__FPvPv": "zPlatform_Init__FPvPv",
+        "genericPlatRender__FP4xEnt": "genericPlatRender__FP4xEnt"
+      },
+      "calls": [
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 760,
+          "target_source": "SB/Game/zPlatform.cpp",
+          "target_function": "zPlatform_Tremble__FP9zPlatformfff",
+          "symbol": "zPlatform_Tremble__FP9zPlatformfff"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 940,
+          "target_source": "SB/Game/zPlatform.cpp",
+          "target_function": "zPlatform_PaddleStartRotate__FP4xEntii",
+          "symbol": "zPlatform_PaddleStartRotate__FP4xEntii"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1076,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1104,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1132,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1148,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1172,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1196,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1280,
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "target_function": "xScrFXGlareAdd__FP5xVec3fffffffP8RwRaster",
+          "symbol": "xScrFXGlareAdd__FP5xVec3fffffffP8RwRaster"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1288,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1304,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1324,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1340,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1348,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1356,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1408,
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "target_function": "xScrFXGlareAdd__FP5xVec3fffffffP8RwRaster",
+          "symbol": "xScrFXGlareAdd__FP5xVec3fffffffP8RwRaster"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1432,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1484,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf",
+          "symbol": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1492,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1540,
+          "target_source": "SB/Game/zRumble.cpp",
+          "target_function": "zRumbleStartDistance__Fiff14_tagRumbleTypef",
+          "symbol": "zRumbleStartDistance__Fiff14_tagRumbleTypef"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1600,
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "target_function": "xEntMotionReset__FP10xEntMotionP6xScene",
+          "symbol": "xEntMotionReset__FP10xEntMotionP6xScene"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1692,
+          "target_source": "SB/Game/zPlatform.cpp",
+          "target_function": "zPlatFM_EventSetup__FP9zPlatformPCfi",
+          "symbol": "zPlatFM_EventSetup__FP9zPlatformPCfi"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1732,
+          "target_source": "SB/Game/zPlatform.cpp",
+          "target_function": "zPlatFM_EventSetup__FP9zPlatformPCfi",
+          "symbol": "zPlatFM_EventSetup__FP9zPlatformPCfi"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1772,
+          "target_source": "SB/Game/zPlatform.cpp",
+          "target_function": "zPlatFM_EventSetup__FP9zPlatformPCfi",
+          "symbol": "zPlatFM_EventSetup__FP9zPlatformPCfi"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1812,
+          "target_source": "SB/Game/zPlatform.cpp",
+          "target_function": "zPlatFM_EventSetup__FP9zPlatformPCfi",
+          "symbol": "zPlatFM_EventSetup__FP9zPlatformPCfi"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1852,
+          "target_source": "SB/Game/zPlatform.cpp",
+          "target_function": "zPlatFM_EventSetup__FP9zPlatformPCfi",
+          "symbol": "zPlatFM_EventSetup__FP9zPlatformPCfi"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1892,
+          "target_source": "SB/Game/zPlatform.cpp",
+          "target_function": "zPlatFM_EventSetup__FP9zPlatformPCfi",
+          "symbol": "zPlatFM_EventSetup__FP9zPlatformPCfi"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 2000,
+          "target_source": "SB/Game/zPlatform.cpp",
+          "target_function": "zPlatFM_EventSetup__FP9zPlatformPCfi",
+          "symbol": "zPlatFM_EventSetup__FP9zPlatformPCfi"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 2104,
+          "target_source": "SB/Game/zPlatform.cpp",
+          "target_function": "zPlatFM_EventSetup__FP9zPlatformPCfi",
+          "symbol": "zPlatFM_EventSetup__FP9zPlatformPCfi"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 2208,
+          "target_source": "SB/Game/zPlatform.cpp",
+          "target_function": "zPlatFM_EventSetup__FP9zPlatformPCfi",
+          "symbol": "zPlatFM_EventSetup__FP9zPlatformPCfi"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 2312,
+          "target_source": "SB/Game/zPlatform.cpp",
+          "target_function": "zPlatFM_EventSetup__FP9zPlatformPCfi",
+          "symbol": "zPlatFM_EventSetup__FP9zPlatformPCfi"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 2412,
+          "target_source": "SB/Game/zPlatform.cpp",
+          "target_function": "zPlatFM_EventSetup__FP9zPlatformPCfi",
+          "symbol": "zPlatFM_EventSetup__FP9zPlatformPCfi"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 2520,
+          "target_source": "SB/Game/zPlatform.cpp",
+          "target_function": "zPlatFM_EventSetup__FP9zPlatformPCfi",
+          "symbol": "zPlatFM_EventSetup__FP9zPlatformPCfi"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 2548,
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "target_function": "xEntMechForward__FP10xEntMotion",
+          "symbol": "xEntMechForward__FP10xEntMotion"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 2580,
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "target_function": "xEntMechReverse__FP10xEntMotion",
+          "symbol": "xEntMechReverse__FP10xEntMotion"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 2608,
+          "target_source": "SB/Game/zPlatform.cpp",
+          "target_function": "zPlatform_Reset__FP9zPlatformP6xScene",
+          "symbol": "zPlatform_Reset__FP9zPlatformP6xScene"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 2688,
+          "target_source": "SB/Game/zFX.cpp",
+          "target_function": "zFXPopOn__FR4xEntff",
+          "symbol": "zFXPopOn__FR4xEntff"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 2768,
+          "target_source": "SB/Game/zFX.cpp",
+          "target_function": "zFXPopOff__FR4xEntff",
+          "symbol": "zFXPopOff__FR4xEntff"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 2848,
+          "target_source": "SB/Game/zFX.cpp",
+          "target_function": "zFXPopOn__FR4xEntff",
+          "symbol": "zFXPopOn__FR4xEntff"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 2960,
+          "target_source": "SB/Game/zFX.cpp",
+          "target_function": "zFXPopOff__FR4xEntff",
+          "symbol": "zFXPopOff__FR4xEntff"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 2976,
+          "target_source": "SB/Game/zCollGeom.cpp",
+          "target_function": "zCollGeom_CamEnable__FP4xEnt",
+          "symbol": "zCollGeom_CamEnable__FP4xEnt"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 2992,
+          "target_source": "SB/Game/zCollGeom.cpp",
+          "target_function": "zCollGeom_CamDisable__FP4xEnt",
+          "symbol": "zCollGeom_CamDisable__FP4xEnt"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 3016,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zEntAnimEvent__FP4zEntUiPCf",
+          "symbol": "zEntAnimEvent__FP4zEntUiPCf"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 3176,
+          "target_source": "SB/Core/x/xSkyDome.cpp",
+          "target_function": "xSkyDome_AddEntity__FP4xEntii",
+          "symbol": "xSkyDome_AddEntity__FP4xEntii"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 3208,
+          "target_source": "SB/Game/zGoo.cpp",
+          "target_function": "zGooAdd__FP4xEntfi",
+          "symbol": "zGooAdd__FP4xEntfi"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 3228,
+          "target_source": "SB/Game/zFX.cpp",
+          "target_function": "zFXGooEventSetWarb__FP4xEntPCf",
+          "symbol": "zFXGooEventSetWarb__FP4xEntPCf"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 3252,
+          "target_source": "SB/Game/zFX.cpp",
+          "target_function": "zFXGooEventSetFreezeDuration__FP4xEntf",
+          "symbol": "zFXGooEventSetFreezeDuration__FP4xEntf"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 3272,
+          "target_source": "SB/Game/zFX.cpp",
+          "target_function": "zFXGooEventMelt__FP4xEnt",
+          "symbol": "zFXGooEventMelt__FP4xEnt"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 3344,
+          "target_source": "SB/Core/x/xEntDrive.cpp",
+          "target_function": "xEntDriveMount__FP9xEntDriveP4xEntfPC7xCollis",
+          "symbol": "xEntDriveMount__FP9xEntDriveP4xEntfPC7xCollis"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 3408,
+          "target_source": "SB/Core/x/xEntDrive.cpp",
+          "target_function": "xEntDriveDismount__FP9xEntDrivef",
+          "symbol": "xEntDriveDismount__FP9xEntDrivef"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 3468,
+          "target_source": "SB/Core/x/xUpdateCull.cpp",
+          "target_function": "xUpdateCull_SetCB__FP14xUpdateCullMgrPvPFPvPv_UiPv",
+          "symbol": "xUpdateCull_SetCB__FP14xUpdateCullMgrPvPFPvPv_UiPv"
+        },
+        {
+          "function": "zPlatformEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 3504,
+          "target_source": "SB/Core/x/xUpdateCull.cpp",
+          "target_function": "xUpdateCull_SetCB__FP14xUpdateCullMgrPvPFPvPv_UiPv",
+          "symbol": "xUpdateCull_SetCB__FP14xUpdateCullMgrPvPFPvPv_UiPv"
+        },
+        {
+          "function": "zPlatformTranslate__FP4xEntP5xVec3P7xMat4x3",
+          "offset": 28,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntDefaultTranslate__FP4xEntP5xVec3P7xMat4x3",
+          "symbol": "xEntDefaultTranslate__FP4xEntP5xVec3P7xMat4x3"
+        },
+        {
+          "function": "zPlatformTranslate__FP4xEntP5xVec3P7xMat4x3",
+          "offset": 44,
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "target_function": "xEntMotionTranslate__FP10xEntMotionPC5xVec3P7xMat4x3",
+          "symbol": "xEntMotionTranslate__FP10xEntMotionPC5xVec3P7xMat4x3"
+        },
+        {
+          "function": "zPlatform_Mount__FP9zPlatform",
+          "offset": 64,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_IsSneaking__Fv",
+          "symbol": "zEntPlayer_IsSneaking__Fv"
+        },
+        {
+          "function": "zPlatform_Mount__FP9zPlatform",
+          "offset": 156,
+          "target_source": "SB/Game/zPlatform.cpp",
+          "target_function": "zPlatform_Tremble__FP9zPlatformfff",
+          "symbol": "zPlatform_Tremble__FP9zPlatformfff"
+        },
+        {
+          "function": "zPlatform_Tremble__FP9zPlatformfff",
+          "offset": 40,
+          "target_source": "SB/Core/x/xFFX.cpp",
+          "target_function": "xFFXShakeAlloc__Fv",
+          "symbol": "xFFXShakeAlloc__Fv"
+        },
+        {
+          "function": "zPlatform_Tremble__FP9zPlatformfff",
+          "offset": 60,
+          "target_source": "SB/Core/x/xFFX.cpp",
+          "target_function": "xFFXAlloc__Fv",
+          "symbol": "xFFXAlloc__Fv"
+        },
+        {
+          "function": "zPlatform_Tremble__FP9zPlatformfff",
+          "offset": 76,
+          "target_source": "SB/Core/x/xFFX.cpp",
+          "target_function": "xFFXShakeFree__FP14xFFXShakeState",
+          "symbol": "xFFXShakeFree__FP14xFFXShakeState"
+        },
+        {
+          "function": "zPlatform_Tremble__FP9zPlatformfff",
+          "offset": 192,
+          "target_source": "SB/Core/x/xFFX.cpp",
+          "target_function": "xFFXAddEffect__FP4xEntP4xFFX",
+          "symbol": "xFFXAddEffect__FP4xEntP4xFFX"
+        },
+        {
+          "function": "zPlatform_Tremble__FP9zPlatformfff",
+          "offset": 264,
+          "target_source": "SB/Core/x/xParEmitter.cpp",
+          "target_function": "xParEmitterEmitCustom__FP11xParEmitterfP25xParEmitterCustomSettings",
+          "symbol": "xParEmitterEmitCustom__FP11xParEmitterfP25xParEmitterCustomSettings"
+        },
+        {
+          "function": "zPlatform_Shake__FP9zPlatformfff",
+          "offset": 32,
+          "target_source": "SB/Core/x/xFFX.cpp",
+          "target_function": "xFFXShakeAlloc__Fv",
+          "symbol": "xFFXShakeAlloc__Fv"
+        },
+        {
+          "function": "zPlatform_Shake__FP9zPlatformfff",
+          "offset": 52,
+          "target_source": "SB/Core/x/xFFX.cpp",
+          "target_function": "xFFXAlloc__Fv",
+          "symbol": "xFFXAlloc__Fv"
+        },
+        {
+          "function": "zPlatform_Shake__FP9zPlatformfff",
+          "offset": 68,
+          "target_source": "SB/Core/x/xFFX.cpp",
+          "target_function": "xFFXShakeFree__FP14xFFXShakeState",
+          "symbol": "xFFXShakeFree__FP14xFFXShakeState"
+        },
+        {
+          "function": "zPlatform_Shake__FP9zPlatformfff",
+          "offset": 160,
+          "target_source": "SB/Core/x/xFFX.cpp",
+          "target_function": "xFFXAddEffect__FP4xEntP4xFFX",
+          "symbol": "xFFXAddEffect__FP4xEntP4xFFX"
+        },
+        {
+          "function": "zPlatform_Move__FP4xEntP6xScenefP9xEntFrame",
+          "offset": 32,
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "target_function": "xEntMotionMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "symbol": "xEntMotionMove__FP10xEntMotionP6xScenefP9xEntFrame"
+        },
+        {
+          "function": "zPlatform_Move__FP4xEntP6xScenefP9xEntFrame",
+          "offset": 52,
+          "target_source": "SB/Core/x/xEntDrive.cpp",
+          "target_function": "xEntDriveUpdate__FP9xEntDriveP6xScenefPC7xCollis",
+          "symbol": "xEntDriveUpdate__FP9xEntDriveP6xScenefPC7xCollis"
+        },
+        {
+          "function": "zPlatform_Update__FP4xEntP6xScenef",
+          "offset": 296,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntUpdate__FP4xEntP6xScenef",
+          "symbol": "xEntUpdate__FP4xEntP6xScenef"
+        },
+        {
+          "function": "zPlatform_Update__FP4xEntP6xScenef",
+          "offset": 492,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_IsSneaking__Fv",
+          "symbol": "zEntPlayer_IsSneaking__Fv"
+        },
+        {
+          "function": "zPlatform_Update__FP4xEntP6xScenef",
+          "offset": 572,
+          "target_source": "SB/Game/zPlatform.cpp",
+          "target_function": "zPlatform_Tremble__FP9zPlatformfff",
+          "symbol": "zPlatform_Tremble__FP9zPlatformfff"
+        },
+        {
+          "function": "zPlatform_Update__FP4xEntP6xScenef",
+          "offset": 712,
+          "target_source": "SB/Core/x/xParEmitter.cpp",
+          "target_function": "xParEmitterEmitCustom__FP11xParEmitterfP25xParEmitterCustomSettings",
+          "symbol": "xParEmitterEmitCustom__FP11xParEmitterfP25xParEmitterCustomSettings"
+        },
+        {
+          "function": "zPlatform_Update__FP4xEntP6xScenef",
+          "offset": 844,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseUi"
+        },
+        {
+          "function": "zPlatform_Update__FP4xEntP6xScenef",
+          "offset": 1016,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseUi"
+        },
+        {
+          "function": "zPlatform_Update__FP4xEntP6xScenef",
+          "offset": 1036,
+          "target_source": "SB/Game/zPlatform.cpp",
+          "target_function": "zPlatform_Reset__FP9zPlatformP6xScene",
+          "symbol": "zPlatform_Reset__FP9zPlatformP6xScene"
+        },
+        {
+          "function": "zPlatform_Update__FP4xEntP6xScenef",
+          "offset": 1248,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseUi"
+        },
+        {
+          "function": "zPlatform_Update__FP4xEntP6xScenef",
+          "offset": 1268,
+          "target_source": "SB/Game/zPlatform.cpp",
+          "target_function": "zPlatform_Reset__FP9zPlatformP6xScene",
+          "symbol": "zPlatform_Reset__FP9zPlatformP6xScene"
+        },
+        {
+          "function": "zPlatform_Update__FP4xEntP6xScenef",
+          "offset": 1368,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseUi"
+        },
+        {
+          "function": "zPlatform_Update__FP4xEntP6xScenef",
+          "offset": 1444,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseUi"
+        },
+        {
+          "function": "zPlatform_Update__FP4xEntP6xScenef",
+          "offset": 2060,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Euler__FP7xMat3x3fff",
+          "symbol": "xMat3x3Euler__FP7xMat3x3fff"
+        },
+        {
+          "function": "zPlatform_Update__FP4xEntP6xScenef",
+          "offset": 2324,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "zPlatform_Update__FP4xEntP6xScenef",
+          "offset": 2508,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Euler__FP7xMat3x3fff",
+          "symbol": "xMat3x3Euler__FP7xMat3x3fff"
+        },
+        {
+          "function": "zPlatform_Update__FP4xEntP6xScenef",
+          "offset": 2744,
+          "target_source": "SB/Game/zPlatform.cpp",
+          "target_function": "SolvePaddleMotion__FP9zPlatformPff",
+          "symbol": "SolvePaddleMotion__FP9zPlatformPff"
+        },
+        {
+          "function": "zPlatform_Update__FP4xEntP6xScenef",
+          "offset": 2796,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3RotC__FP7xMat3x3ffff",
+          "symbol": "xMat3x3RotC__FP7xMat3x3ffff"
+        },
+        {
+          "function": "zPlatform_Update__FP4xEntP6xScenef",
+          "offset": 2820,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Euler__FP7xMat3x3fff",
+          "symbol": "xMat3x3Euler__FP7xMat3x3fff"
+        },
+        {
+          "function": "zPlatform_Update__FP4xEntP6xScenef",
+          "offset": 2840,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3",
+          "symbol": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3"
+        },
+        {
+          "function": "zPlatform_Update__FP4xEntP6xScenef",
+          "offset": 3032,
+          "target_source": "SB/Game/zPlatform.cpp",
+          "target_function": "zPlatFM_Update__FP9zPlatformP6xScenef",
+          "symbol": "zPlatFM_Update__FP9zPlatformP6xScenef"
+        },
+        {
+          "function": "zPlatform_Update__FP4xEntP6xScenef",
+          "offset": 3076,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseP5xBaseUi"
+        },
+        {
+          "function": "zPlatform_Update__FP4xEntP6xScenef",
+          "offset": 3412,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseUi"
+        },
+        {
+          "function": "zPlatform_Update__FP4xEntP6xScenef",
+          "offset": 3436,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseUi"
+        },
+        {
+          "function": "zPlatFM_Update__FP9zPlatformP6xScenef",
+          "offset": 1260,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3RotX__FP7xMat3x3f",
+          "symbol": "xMat3x3RotX__FP7xMat3x3f"
+        },
+        {
+          "function": "zPlatFM_Update__FP9zPlatformP6xScenef",
+          "offset": 1276,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3",
+          "symbol": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3"
+        },
+        {
+          "function": "zPlatFM_Update__FP9zPlatformP6xScenef",
+          "offset": 1308,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3RotY__FP7xMat3x3f",
+          "symbol": "xMat3x3RotY__FP7xMat3x3f"
+        },
+        {
+          "function": "zPlatFM_Update__FP9zPlatformP6xScenef",
+          "offset": 1324,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3",
+          "symbol": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3"
+        },
+        {
+          "function": "zPlatFM_Update__FP9zPlatformP6xScenef",
+          "offset": 1356,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3RotZ__FP7xMat3x3f",
+          "symbol": "xMat3x3RotZ__FP7xMat3x3f"
+        },
+        {
+          "function": "zPlatFM_Update__FP9zPlatformP6xScenef",
+          "offset": 1372,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3",
+          "symbol": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3"
+        },
+        {
+          "function": "zPlatFM_Update__FP9zPlatformP6xScenef",
+          "offset": 1404,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3RotX__FP7xMat3x3f",
+          "symbol": "xMat3x3RotX__FP7xMat3x3f"
+        },
+        {
+          "function": "zPlatFM_Update__FP9zPlatformP6xScenef",
+          "offset": 1420,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3",
+          "symbol": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3"
+        },
+        {
+          "function": "zPlatFM_Update__FP9zPlatformP6xScenef",
+          "offset": 1452,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3RotY__FP7xMat3x3f",
+          "symbol": "xMat3x3RotY__FP7xMat3x3f"
+        },
+        {
+          "function": "zPlatFM_Update__FP9zPlatformP6xScenef",
+          "offset": 1468,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3",
+          "symbol": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3"
+        },
+        {
+          "function": "zPlatFM_Update__FP9zPlatformP6xScenef",
+          "offset": 1500,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3RotZ__FP7xMat3x3f",
+          "symbol": "xMat3x3RotZ__FP7xMat3x3f"
+        },
+        {
+          "function": "zPlatFM_Update__FP9zPlatformP6xScenef",
+          "offset": 1516,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3",
+          "symbol": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3"
+        },
+        {
+          "function": "zPlatFM_Update__FP9zPlatformP6xScenef",
+          "offset": 3876,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseP5xBaseUi"
+        },
+        {
+          "function": "zPlatform_PaddleCollide__FP7xCollisPC5xVec3PC5xVec3Ui",
+          "offset": 68,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "zPlatform_PaddleCollide__FP7xCollisPC5xVec3PC5xVec3Ui",
+          "offset": 172,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "zPlatform_PaddleCollide__FP7xCollisPC5xVec3PC5xVec3Ui",
+          "offset": 192,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "zPlatform_PaddleCollide__FP7xCollisPC5xVec3PC5xVec3Ui",
+          "offset": 332,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "zPlatform_PaddleCollide__FP7xCollisPC5xVec3PC5xVec3Ui",
+          "offset": 344,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "zPlatform_PaddleCollide__FP7xCollisPC5xVec3PC5xVec3Ui",
+          "offset": 900,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "zPlatform_PaddleCollide__FP7xCollisPC5xVec3PC5xVec3Ui",
+          "offset": 928,
+          "target_source": "SB/Core/x/xBound.cpp",
+          "target_function": "xRayHitsBound__FPC5xRay3PC6xBoundP7xCollis",
+          "symbol": "xRayHitsBound__FPC5xRay3PC6xBoundP7xCollis"
+        },
+        {
+          "function": "zPlatform_PaddleCollide__FP7xCollisPC5xVec3PC5xVec3Ui",
+          "offset": 1328,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseUi"
+        },
+        {
+          "function": "zPlatform_PaddleCollide__FP7xCollisPC5xVec3PC5xVec3Ui",
+          "offset": 1348,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseUi"
+        },
+        {
+          "function": "zPlatform_PaddleCollide__FP7xCollisPC5xVec3PC5xVec3Ui",
+          "offset": 1368,
+          "target_source": "SB/Game/zPlatform.cpp",
+          "target_function": "zPlatform_PaddleStartRotate__FP4xEntii",
+          "symbol": "zPlatform_PaddleStartRotate__FP4xEntii"
+        },
+        {
+          "function": "zPlatform_PaddleStartRotate__FP4xEntii",
+          "offset": 180,
+          "target_source": "SB/Game/zPlatform.cpp",
+          "target_function": "SolvePaddleMotion__FP9zPlatformPff",
+          "symbol": "SolvePaddleMotion__FP9zPlatformPff"
+        },
+        {
+          "function": "zPlatform_Reset__FP9zPlatformP6xScene",
+          "offset": 48,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zEntReset__FP4zEnt",
+          "symbol": "zEntReset__FP4zEnt"
+        },
+        {
+          "function": "zPlatform_Reset__FP9zPlatformP6xScene",
+          "offset": 68,
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "target_function": "xEntMotionInit__FP10xEntMotionP4xEntP15xEntMotionAsset",
+          "symbol": "xEntMotionInit__FP10xEntMotionP4xEntP15xEntMotionAsset"
+        },
+        {
+          "function": "zPlatform_Reset__FP9zPlatformP6xScene",
+          "offset": 80,
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "target_function": "xEntMotionReset__FP10xEntMotionP6xScene",
+          "symbol": "xEntMotionReset__FP10xEntMotionP6xScene"
+        },
+        {
+          "function": "zPlatform_Reset__FP9zPlatformP6xScene",
+          "offset": 544,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "zPlatform_Reset__FP9zPlatformP6xScene",
+          "offset": 572,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "zPlatform_Load__FP9zPlatformP7xSerial",
+          "offset": 0,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zEntLoad__FP4zEntP7xSerial",
+          "symbol": "zEntLoad__FP4zEntP7xSerial",
+          "opcode": 2
+        },
+        {
+          "function": "zPlatform_Save__FP9zPlatformP7xSerial",
+          "offset": 0,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zEntSave__FP4zEntP7xSerial",
+          "symbol": "zEntSave__FP4zEntP7xSerial",
+          "opcode": 2
+        },
+        {
+          "function": "zPlatform_Setup__FP9zPlatformP6xScene",
+          "offset": 12,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zEntSetup__FP4zEnt",
+          "symbol": "zEntSetup__FP4zEnt"
+        },
+        {
+          "function": "zPlatform_Setup__FP9zPlatformP6xScene",
+          "offset": 24,
+          "target_source": "SB/Game/zParEmitter.cpp",
+          "target_function": "zParEmitterFind__FPCc",
+          "symbol": "zParEmitterFind__FPCc"
+        },
+        {
+          "function": "zPlatform_Setup__FP9zPlatformP6xScene",
+          "offset": 40,
+          "target_source": "SB/Game/zParEmitter.cpp",
+          "target_function": "zParEmitterFind__FPCc",
+          "symbol": "zParEmitterFind__FPCc"
+        },
+        {
+          "function": "zPlatform_Init__FP9zPlatformP9xEntAsset",
+          "offset": 44,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zEntInit__FP4zEntP9xEntAssetUi",
+          "symbol": "zEntInit__FP4zEntP9xEntAssetUi"
+        },
+        {
+          "function": "zPlatform_Init__FP9zPlatformP9xEntAsset",
+          "offset": 212,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "zPlatform_Init__FP9zPlatformP9xEntAsset",
+          "offset": 272,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "zPlatform_Init__FP9zPlatformP9xEntAsset",
+          "offset": 288,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntLoadModel__FP4xEntP8RpAtomic",
+          "symbol": "xEntLoadModel__FP4xEntP8RpAtomic"
+        },
+        {
+          "function": "zPlatform_Init__FP9zPlatformP9xEntAsset",
+          "offset": 360,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "zPlatform_Init__FP9zPlatformP9xEntAsset",
+          "offset": 392,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "zPlatform_Init__FP9zPlatformP9xEntAsset",
+          "offset": 452,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNew__FPCcPP10xAnimTableUi",
+          "symbol": "xAnimTableNew__FPCcPP10xAnimTableUi"
+        },
+        {
+          "function": "zPlatform_Init__FP9zPlatformP9xEntAsset",
+          "offset": 528,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "zPlatform_Init__FP9zPlatformP9xEntAsset",
+          "offset": 604,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "zPlatform_Init__FP9zPlatformP9xEntAsset",
+          "offset": 676,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "zPlatform_Init__FP9zPlatformP9xEntAsset",
+          "offset": 700,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimFileNew__FPvPCcUiPP9xAnimFile",
+          "symbol": "xAnimFileNew__FPvPCcUiPP9xAnimFile"
+        },
+        {
+          "function": "zPlatform_Init__FP9zPlatformP9xEntAsset",
+          "offset": 724,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableAddFile__FP10xAnimTableP9xAnimFilePCc",
+          "symbol": "xAnimTableAddFile__FP10xAnimTableP9xAnimFilePCc"
+        },
+        {
+          "function": "zPlatform_Init__FP9zPlatformP9xEntAsset",
+          "offset": 756,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimFileNew__FPvPCcUiPP9xAnimFile",
+          "symbol": "xAnimFileNew__FPvPCcUiPP9xAnimFile"
+        },
+        {
+          "function": "zPlatform_Init__FP9zPlatformP9xEntAsset",
+          "offset": 776,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableAddFile__FP10xAnimTableP9xAnimFilePCc",
+          "symbol": "xAnimTableAddFile__FP10xAnimTableP9xAnimFilePCc"
+        },
+        {
+          "function": "zPlatform_Init__FP9zPlatformP9xEntAsset",
+          "offset": 804,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableAddFile__FP10xAnimTableP9xAnimFilePCc",
+          "symbol": "xAnimTableAddFile__FP10xAnimTableP9xAnimFilePCc"
+        },
+        {
+          "function": "zPlatform_Init__FP9zPlatformP9xEntAsset",
+          "offset": 848,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimPoolAlloc__FP8xMemPoolPvP10xAnimTableP14xModelInstance",
+          "symbol": "xAnimPoolAlloc__FP8xMemPoolPvP10xAnimTableP14xModelInstance"
+        },
+        {
+          "function": "zPlatform_Init__FP9zPlatformP9xEntAsset",
+          "offset": 884,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "zPlatform_Init__FP9zPlatformP9xEntAsset",
+          "offset": 904,
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "target_function": "xEntMotionInit__FP10xEntMotionP4xEntP15xEntMotionAsset",
+          "symbol": "xEntMotionInit__FP10xEntMotionP4xEntP15xEntMotionAsset"
+        },
+        {
+          "function": "zPlatform_Init__FP9zPlatformP9xEntAsset",
+          "offset": 916,
+          "target_source": "SB/Core/x/xEntDrive.cpp",
+          "target_function": "xEntDriveInit__FP9xEntDriveP4xEnt",
+          "symbol": "xEntDriveInit__FP9xEntDriveP4xEnt"
+        },
+        {
+          "function": "zPlatform_Init__FP9zPlatformP9xEntAsset",
+          "offset": 944,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "zPlatform_Init__FP9zPlatformP9xEntAsset",
+          "offset": 972,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "zPlatform_Init__FPvPv",
+          "offset": 0,
+          "target_source": "SB/Game/zPlatform.cpp",
+          "target_function": "zPlatform_Init__FP9zPlatformP9xEntAsset",
+          "symbol": "zPlatform_Init__FP9zPlatformP9xEntAsset",
+          "opcode": 2
+        },
+        {
+          "function": "genericPlatRender__FP4xEnt",
+          "offset": 56,
+          "target_source": "SB/Core/x/xModel.cpp",
+          "target_function": "xModelRender__FP14xModelInstance",
+          "symbol": "xModelRender__FP14xModelInstance"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "zPlatform_Tremble__FP9zPlatformfff",
+          "offset": 200,
+          "opcode": 35,
+          "target_name": "sEmitTremble",
+          "symbol": "sEmitTremble"
+        },
+        {
+          "function": "zPlatform_Tremble__FP9zPlatformfff",
+          "offset": 248,
+          "opcode": 35,
+          "target_name": "sEmitTremble",
+          "symbol": "sEmitTremble"
+        },
+        {
+          "function": "zPlatform_Update__FP4xEntP6xScenef",
+          "offset": 628,
+          "opcode": 35,
+          "target_name": "sEmitBreakaway",
+          "symbol": "sEmitBreakaway"
+        },
+        {
+          "function": "zPlatform_Update__FP4xEntP6xScenef",
+          "offset": 696,
+          "opcode": 35,
+          "target_name": "sEmitBreakaway",
+          "symbol": "sEmitBreakaway"
+        },
+        {
+          "function": "zPlatform_Setup__FP9zPlatformP6xScene",
+          "offset": 36,
+          "opcode": 43,
+          "target_name": "sEmitTremble",
+          "symbol": "sEmitTremble"
+        },
+        {
+          "function": "zPlatform_Setup__FP9zPlatformP6xScene",
+          "offset": 48,
+          "opcode": 43,
+          "target_name": "sEmitBreakaway",
+          "symbol": "sEmitBreakaway"
+        },
+        {
+          "function": "zPlatform_Init__FP9zPlatformP9xEntAsset",
+          "offset": 204,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "zPlatform_Init__FP9zPlatformP9xEntAsset",
+          "offset": 440,
+          "opcode": 43,
+          "target_name": "gxAnimUseGrowAlloc",
+          "symbol": "gxAnimUseGrowAlloc"
+        },
+        {
+          "function": "zPlatform_Init__FP9zPlatformP9xEntAsset",
+          "offset": 828,
+          "opcode": 43,
+          "target_name": "gxAnimUseGrowAlloc",
+          "symbol": "gxAnimUseGrowAlloc"
+        },
+        {
+          "function": "zPlatform_Init__FP9zPlatformP9xEntAsset",
+          "offset": 876,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap"
+        }
+      ]
     }
   ]
 }
