@@ -5653,6 +5653,380 @@
       },
       "calls": [],
       "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/x/xbinio.cpp",
+      "target_unit": "SB/Core/x/xbinio.cpp",
+      "object": "source/xbinio.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "BFD_AsyncReadStatus__FP15st_FILELOADINFO": "BFD_AsyncReadStatus__FP15st_FILELOADINFO",
+        "BFD_AsyncRead__FP15st_FILELOADINFOiPviii": "BFD_AsyncRead__FP15st_FILELOADINFOiPviii",
+        "BFD_cb_GCP2_readasync__FP9tag_xFile": "BFD_cb_GCP2_readasync__FP9tag_xFile",
+        "BFD_read__FPviiP9tag_xFilePv": "BFD_read__FPviiP9tag_xFilePv",
+        "BFD_open__FPCcPCcUiiPv": "BFD_open__FPCcPCcUiiPv",
+        "Swap8__FPci": "Swap8__FPci",
+        "AsyncReadStatus__FP15st_FILELOADINFO": "AsyncReadStatus__FP15st_FILELOADINFO",
+        "AsyncIRead__FP15st_FILELOADINFOiPcii": "AsyncIRead__FP15st_FILELOADINFOiPcii",
+        "AsyncMRead__FP15st_FILELOADINFOiPcii": "AsyncMRead__FP15st_FILELOADINFOiPcii",
+        "ReadIDoubles__FP15st_FILELOADINFOPdi": "ReadIDoubles__FP15st_FILELOADINFOPdi",
+        "ReadIFloats__FP15st_FILELOADINFOPfi": "ReadIFloats__FP15st_FILELOADINFOPfi",
+        "ReadILongs__FP15st_FILELOADINFOPii": "ReadILongs__FP15st_FILELOADINFOPii",
+        "ReadIShorts__FP15st_FILELOADINFOPsi": "ReadIShorts__FP15st_FILELOADINFOPsi",
+        "ReadMDoubles__FP15st_FILELOADINFOPdi": "ReadMDoubles__FP15st_FILELOADINFOPdi",
+        "ReadMFloats__FP15st_FILELOADINFOPfi": "ReadMFloats__FP15st_FILELOADINFOPfi",
+        "ReadMLongs__FP15st_FILELOADINFOPii": "ReadMLongs__FP15st_FILELOADINFOPii",
+        "ReadMShorts__FP15st_FILELOADINFOPsi": "ReadMShorts__FP15st_FILELOADINFOPsi",
+        "ReadBytes__FP15st_FILELOADINFOPci": "ReadBytes__FP15st_FILELOADINFOPci",
+        "ReadRaw__FP15st_FILELOADINFOPvii": "ReadRaw__FP15st_FILELOADINFOPvii",
+        "DiscardBuffer__FP15st_FILELOADINFO": "DiscardBuffer__FP15st_FILELOADINFO",
+        "SetBuffer__FP15st_FILELOADINFOPci": "SetBuffer__FP15st_FILELOADINFOPci",
+        "ReadSeek__FP15st_FILELOADINFOi": "ReadSeek__FP15st_FILELOADINFOi",
+        "SkipBytes__FP15st_FILELOADINFOi": "SkipBytes__FP15st_FILELOADINFOi",
+        "LoadDestroy__FP15st_FILELOADINFO": "LoadDestroy__FP15st_FILELOADINFO",
+        "xBinioLoadCreate__FPCc": "xBinioLoadCreate__FPCc"
+      },
+      "calls": [
+        {
+          "function": "BFD_AsyncReadStatus__FP15st_FILELOADINFO",
+          "offset": 72,
+          "target_source": "SB/Core/p2/iFile.cpp",
+          "target_function": "iFileReadAsyncStatus__FiPi",
+          "symbol": "iFileReadAsyncStatus__FiPi"
+        },
+        {
+          "function": "BFD_AsyncRead__FP15st_FILELOADINFOiPviii",
+          "offset": 128,
+          "target_source": "SB/Core/p2/iFile.cpp",
+          "target_function": "iFileSeek__FP9tag_xFileii",
+          "symbol": "iFileSeek__FP9tag_xFileii"
+        },
+        {
+          "function": "BFD_AsyncRead__FP15st_FILELOADINFOiPviii",
+          "offset": 160,
+          "target_source": "SB/Core/p2/iFile.cpp",
+          "target_function": "iFileReadAsync__FP9tag_xFilePvUiPFP9tag_xFile_vi",
+          "symbol": "iFileReadAsync__FP9tag_xFilePvUiPFP9tag_xFile_vi"
+        },
+        {
+          "function": "BFD_read__FPviiP9tag_xFilePv",
+          "offset": 128,
+          "target_source": "SB/Core/p2/iFile.cpp",
+          "target_function": "iFileSeek__FP9tag_xFileii",
+          "symbol": "iFileSeek__FP9tag_xFileii"
+        },
+        {
+          "function": "BFD_read__FPviiP9tag_xFilePv",
+          "offset": 144,
+          "target_source": "SB/Core/p2/iFile.cpp",
+          "target_function": "iFileRead__FP9tag_xFilePvUi",
+          "symbol": "iFileRead__FP9tag_xFilePvUi"
+        },
+        {
+          "function": "BFD_read__FPviiP9tag_xFilePv",
+          "offset": 356,
+          "target_source": "SB/Core/p2/iFile.cpp",
+          "target_function": "iFileSeek__FP9tag_xFileii",
+          "symbol": "iFileSeek__FP9tag_xFileii"
+        },
+        {
+          "function": "BFD_read__FPviiP9tag_xFilePv",
+          "offset": 376,
+          "target_source": "SB/Core/p2/iFile.cpp",
+          "target_function": "iFileRead__FP9tag_xFilePvUi",
+          "symbol": "iFileRead__FP9tag_xFilePvUi"
+        },
+        {
+          "function": "BFD_open__FPCcPCcUiiPv",
+          "offset": 176,
+          "target_source": "SB/Core/p2/iFile.cpp",
+          "target_function": "iFileOpen__FPCciP9tag_xFile",
+          "symbol": "iFileOpen__FPCciP9tag_xFile"
+        },
+        {
+          "function": "AsyncReadStatus__FP15st_FILELOADINFO",
+          "offset": 0,
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "target_function": "BFD_AsyncReadStatus__FP15st_FILELOADINFO",
+          "symbol": "BFD_AsyncReadStatus__FP15st_FILELOADINFO",
+          "opcode": 2
+        },
+        {
+          "function": "AsyncIRead__FP15st_FILELOADINFOiPcii",
+          "offset": 0,
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "target_function": "BFD_AsyncRead__FP15st_FILELOADINFOiPviii",
+          "symbol": "BFD_AsyncRead__FP15st_FILELOADINFOiPviii",
+          "opcode": 2
+        },
+        {
+          "function": "AsyncMRead__FP15st_FILELOADINFOiPcii",
+          "offset": 0,
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "target_function": "BFD_AsyncRead__FP15st_FILELOADINFOiPviii",
+          "symbol": "BFD_AsyncRead__FP15st_FILELOADINFOiPviii",
+          "opcode": 2
+        },
+        {
+          "function": "ReadIDoubles__FP15st_FILELOADINFOPdi",
+          "offset": 4,
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "target_function": "ReadRaw__FP15st_FILELOADINFOPvii",
+          "symbol": "ReadRaw__FP15st_FILELOADINFOPvii",
+          "opcode": 2
+        },
+        {
+          "function": "ReadIFloats__FP15st_FILELOADINFOPfi",
+          "offset": 4,
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "target_function": "ReadRaw__FP15st_FILELOADINFOPvii",
+          "symbol": "ReadRaw__FP15st_FILELOADINFOPvii",
+          "opcode": 2
+        },
+        {
+          "function": "ReadILongs__FP15st_FILELOADINFOPii",
+          "offset": 4,
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "target_function": "ReadRaw__FP15st_FILELOADINFOPvii",
+          "symbol": "ReadRaw__FP15st_FILELOADINFOPvii",
+          "opcode": 2
+        },
+        {
+          "function": "ReadIShorts__FP15st_FILELOADINFOPsi",
+          "offset": 4,
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "target_function": "ReadRaw__FP15st_FILELOADINFOPvii",
+          "symbol": "ReadRaw__FP15st_FILELOADINFOPvii",
+          "opcode": 2
+        },
+        {
+          "function": "ReadMDoubles__FP15st_FILELOADINFOPdi",
+          "offset": 20,
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "target_function": "ReadRaw__FP15st_FILELOADINFOPvii",
+          "symbol": "ReadRaw__FP15st_FILELOADINFOPvii"
+        },
+        {
+          "function": "ReadMDoubles__FP15st_FILELOADINFOPdi",
+          "offset": 32,
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "target_function": "Swap8__FPci",
+          "symbol": "Swap8__FPci"
+        },
+        {
+          "function": "ReadMFloats__FP15st_FILELOADINFOPfi",
+          "offset": 20,
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "target_function": "ReadRaw__FP15st_FILELOADINFOPvii",
+          "symbol": "ReadRaw__FP15st_FILELOADINFOPvii"
+        },
+        {
+          "function": "ReadMLongs__FP15st_FILELOADINFOPii",
+          "offset": 20,
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "target_function": "ReadRaw__FP15st_FILELOADINFOPvii",
+          "symbol": "ReadRaw__FP15st_FILELOADINFOPvii"
+        },
+        {
+          "function": "ReadMShorts__FP15st_FILELOADINFOPsi",
+          "offset": 20,
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "target_function": "ReadRaw__FP15st_FILELOADINFOPvii",
+          "symbol": "ReadRaw__FP15st_FILELOADINFOPvii"
+        },
+        {
+          "function": "ReadBytes__FP15st_FILELOADINFOPci",
+          "offset": 4,
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "target_function": "ReadRaw__FP15st_FILELOADINFOPvii",
+          "symbol": "ReadRaw__FP15st_FILELOADINFOPvii",
+          "opcode": 2
+        },
+        {
+          "function": "ReadRaw__FP15st_FILELOADINFOPvii",
+          "offset": 112,
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "target_function": "BFD_read__FPviiP9tag_xFilePv",
+          "symbol": "BFD_read__FPviiP9tag_xFilePv"
+        },
+        {
+          "function": "ReadSeek__FP15st_FILELOADINFOi",
+          "offset": 68,
+          "target_source": "SB/Core/p2/iFile.cpp",
+          "target_function": "iFileSeek__FP9tag_xFileii",
+          "symbol": "iFileSeek__FP9tag_xFileii"
+        },
+        {
+          "function": "SkipBytes__FP15st_FILELOADINFOi",
+          "offset": 104,
+          "target_source": "SB/Core/p2/iFile.cpp",
+          "target_function": "iFileSeek__FP9tag_xFileii",
+          "symbol": "iFileSeek__FP9tag_xFileii"
+        },
+        {
+          "function": "LoadDestroy__FP15st_FILELOADINFO",
+          "offset": 32,
+          "target_source": "SB/Core/p2/iFile.cpp",
+          "target_function": "iFileClose__FP9tag_xFile",
+          "symbol": "iFileClose__FP9tag_xFile"
+        },
+        {
+          "function": "xBinioLoadCreate__FPCc",
+          "offset": 440,
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "target_function": "BFD_open__FPCcPCcUiiPv",
+          "symbol": "BFD_open__FPCcPCcUiiPv"
+        },
+        {
+          "function": "xBinioLoadCreate__FPCc",
+          "offset": 464,
+          "target_source": "SB/Core/p2/iFile.cpp",
+          "target_function": "iFileGetSize__FP9tag_xFile",
+          "symbol": "iFileGetSize__FP9tag_xFile"
+        },
+        {
+          "function": "xBinioLoadCreate__FPCc",
+          "offset": 500,
+          "target_source": "SB/Core/p2/iFile.cpp",
+          "target_function": "iFileClose__FP9tag_xFile",
+          "symbol": "iFileClose__FP9tag_xFile"
+        },
+        {
+          "function": "LoadDestroy__FP15st_FILELOADINFO",
+          "offset": 76,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xBinioLoadCreate__FPCc",
+          "offset": 140,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xBinioLoadCreate__FPCc",
+          "offset": 548,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "BFD_AsyncReadStatus__FP15st_FILELOADINFO",
+          "offset": 12,
+          "opcode": 35,
+          "target_name": "g_async_context",
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "symbol": "g_async_context"
+        },
+        {
+          "function": "BFD_AsyncReadStatus__FP15st_FILELOADINFO",
+          "offset": 188,
+          "opcode": 43,
+          "target_name": "g_async_context",
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "symbol": "g_async_context"
+        },
+        {
+          "function": "BFD_AsyncRead__FP15st_FILELOADINFOiPviii",
+          "offset": 72,
+          "opcode": 35,
+          "target_name": "g_async_context",
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "symbol": "g_async_context"
+        },
+        {
+          "function": "BFD_AsyncRead__FP15st_FILELOADINFOiPviii",
+          "offset": 96,
+          "opcode": 43,
+          "target_name": "g_async_context",
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "symbol": "g_async_context"
+        },
+        {
+          "function": "BFD_AsyncRead__FP15st_FILELOADINFOiPviii",
+          "offset": 200,
+          "opcode": 43,
+          "target_name": "g_async_context",
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "symbol": "g_async_context"
+        },
+        {
+          "function": "LoadDestroy__FP15st_FILELOADINFO",
+          "offset": 84,
+          "opcode": 35,
+          "target_name": "g_loadlock",
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "symbol": "g_loadlock"
+        },
+        {
+          "function": "LoadDestroy__FP15st_FILELOADINFO",
+          "offset": 104,
+          "opcode": 43,
+          "target_name": "g_loadlock",
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "symbol": "g_loadlock"
+        },
+        {
+          "function": "xBinioLoadCreate__FPCc",
+          "offset": 32,
+          "opcode": 35,
+          "target_name": "g_loadlock",
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "symbol": "g_loadlock"
+        },
+        {
+          "function": "xBinioLoadCreate__FPCc",
+          "offset": 64,
+          "opcode": 35,
+          "target_name": "g_loadlock",
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "symbol": "g_loadlock"
+        },
+        {
+          "function": "xBinioLoadCreate__FPCc",
+          "offset": 108,
+          "opcode": 43,
+          "target_name": "g_loadlock",
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "symbol": "g_loadlock"
+        },
+        {
+          "function": "xBinioLoadCreate__FPCc",
+          "offset": 556,
+          "opcode": 35,
+          "target_name": "g_loadlock",
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "symbol": "g_loadlock"
+        },
+        {
+          "function": "xBinioLoadCreate__FPCc",
+          "offset": 580,
+          "opcode": 43,
+          "target_name": "g_loadlock",
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "symbol": "g_loadlock"
+        }
+      ],
+      "address_pairs": [
+        {
+          "function": "BFD_AsyncRead__FP15st_FILELOADINFOiPviii",
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "target_function": "BFD_cb_GCP2_readasync",
+          "symbol": "BFD_cb_GCP2_readasync__FP9tag_xFile",
+          "hi_offset": 140,
+          "lo_offset": 152,
+          "interleaved": true
+        }
+      ]
     }
   ]
 }
