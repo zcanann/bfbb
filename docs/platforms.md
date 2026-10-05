@@ -73,14 +73,19 @@ fake functions, changing function scores, or counting comparison-container paddi
 It removes percentage fields with empty denominators. Unit/category sums are
 checked, and the standard objdiff parser accepts the result.
 
-| Version | Full code-region bytes | Exact source-match bytes |
+| Version | Full code-region bytes | Objdiff code-matched bytes |
 | --- | ---: | ---: |
-| SLUS-20680 | 2,978,560 | 1,616 |
-| SLES-51968 | 2,979,712 | 1,616 |
-| SLES-51970 | 2,976,512 | 1,616 |
-| SLES-53623 | 2,979,968 | 1,276 |
+| SLUS-20680 | 2,978,560 | 9,844 |
+| SLES-51968 | 2,979,712 | 9,844 |
+| SLES-51970 | 2,976,512 | 9,844 |
+| SLES-53623 | 2,979,968 | 1,460 |
 | XBOX-US | 1,798,760 | 48 |
 | XBOX-EU | 1,798,760 | 48 |
+
+This checkpoint includes the first broad core-source compile pass. Reports retain
+standard objdiff `functionRelocDiffs=none`, as on GameCube. Code matches do not
+prove relocated byte equality or a completed link; independent reconstruction
+results are documented separately in the per-unit notes.
 
 PS2 reports partition the original load into CPU text, VU upload packets and
 initialized data, plus independently proven runtime BSS. Original linker/VU
@@ -101,10 +106,10 @@ The narrower function-only baselines currently contain:
 
 | PS2 baseline | Functions | Measured function bytes | Source matches |
 | --- | ---: | ---: | ---: |
-| USA | 5,391 | 2,107,460 | 17 functions / 1,616 bytes |
-| Europe/Australia | 5,392 | 2,108,700 | 17 functions / 1,616 bytes |
-| Germany | 5,394 | 2,105,512 | 17 functions / 1,616 bytes |
-| France (reviewed and corroborated bounds) | 326 | 89,856 | 12 functions / 1,276 bytes |
+| USA | 5,391 | 2,107,460 | 97 functions / 9,844 bytes |
+| Europe/Australia | 5,392 | 2,108,700 | 97 functions / 9,844 bytes |
+| Germany | 5,394 | 2,105,512 | 97 functions / 9,844 bytes |
+| France (reviewed and corroborated bounds) | 331 | 90,040 | 17 functions / 1,460 bytes |
 
 The `address-anchors.json` registries also recover over 2,500 named data addresses
 and 628 function declarations in each debug-bearing version. Addresses do not
@@ -321,7 +326,8 @@ sizes identical to the previous build.
 ## Next implementation work
 
 - PS2: recover remaining code/data and relocation ownership; expand compilation
-  beyond xBase/xordarray/xRMemData and validate toolchain profiles against additional source objects.
+  using the [batch compile inventory](PS2_COMPILE_INVENTORY.md), prioritizing shared
+  RenderWare/platform header blockers and validating additional source objects.
   The ELF comment identifies the MW MIPS compiler family, but its `2.4.1.01`
   stamp alone does not establish a particular toolchain distribution.
 - PS2 France: recover independent boundaries from its stripped executable.
