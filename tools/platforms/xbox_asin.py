@@ -127,4 +127,3 @@ def verify_asin_original(original, function: dict) -> None:
     require(raw[:6] == bytes.fromhex('83ec0cdd1424') and raw[6] == 0xe8 and raw[11] == 0xe8 and
             struct.unpack_from('<i', raw, 12)[0] == 13 and raw[16:20] == bytes.fromhex('83c40cc3'),
             'Original asin wrapper does not return before the alternate stack entry')
-
