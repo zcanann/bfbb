@@ -45,7 +45,8 @@ inline void xsqrtfast(F32& out, F32 x)
     out = std::sqrtf(x);
 }
 
-#ifdef XMATHINLINES_DEFER_XSQRT
+// PS2 keeps the shared API declaration; its implementation is recovered separately.
+#if defined(XMATHINLINES_DEFER_XSQRT) || defined(PS2)
 F32 xsqrt(F32 x);
 #endif
 
@@ -53,7 +54,7 @@ F32 xsqrt(F32 x);
 
 // Keep this implementation in its original header group. iModel defers it
 // until after its stream-reader literals, then emits an explicit weak copy.
-#if !defined(XMATHINLINES_DEFER_XSQRT) && !defined(XMATHINLINES_XSQRT_H)
+#if !defined(PS2) && !defined(XMATHINLINES_DEFER_XSQRT) && !defined(XMATHINLINES_XSQRT_H)
 #define XMATHINLINES_XSQRT_H
 
 // Inline in retail: every caller's TU emits its own weak copy (and its pool

@@ -191,6 +191,16 @@ version remains excluded from this profile pending independent data identities.
 Matching these code bodies does not establish complete RTTI/vtable ownership,
 exception metadata or an executable link, so completion remains false.
 
+`xVolume.cpp` also matches all five functions (128 bytes) in the three
+debug-bearing releases with unchanged source bodies. Its PS2 header path uses
+an `xCollis` forward declaration and standard math API declarations; the existing
+PowerPC-only `xsqrt` implementation remains excluded on PS2, where the shared
+function is declared but not implemented here. This unit emits no math calls:
+its only external references are `xBaseInit`, `xBaseReset`, `xBaseSave` and
+`xBaseLoad`, independently named in retail DWARF. The latter three use verified
+MIPS tail jumps. Original GameCube include paths and inline bodies are unchanged.
+No RenderWare layouts or replacement math implementations are introduced.
+
 `config/platforms/ps2-toolchain.json` records archive/binary hashes, flags, and
 explicit symbol/call mappings. Three `R_MIPS_26` call relocations per version are
 restored only after identifying retail serializer targets independently. Reapplying

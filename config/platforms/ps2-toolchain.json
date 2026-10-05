@@ -25,7 +25,7 @@
     "-Cpp_exceptions",
     "off"
   ],
-  "scope": "Validated xBase, xordarray, xRMemData and xBehaviour profiles, plus debug-region xCounter, xBehaveGoalSimple and xSurface; compiler identity for other units remains unproven",
+  "scope": "Validated xBase, xordarray, xRMemData and xBehaviour profiles, plus debug-region xCounter, xBehaveGoalSimple, xSurface and xVolume; compiler identity for other units remains unproven",
   "units": [
     {
       "source": "src/SB/Core/x/xBase.cpp",
@@ -584,6 +584,57 @@
           "target_name": "surfs",
           "symbol": "surfs",
           "opcode": 43
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xVolume.cpp",
+      "target_unit": "SB/Core/x/xVolume.cpp",
+      "object": "source/xVolume.o",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "GetBound": "GetBound__7xVolumeFv",
+        "Load": "Load__7xVolumeFP7xSerial",
+        "Save": "Save__7xVolumeFP7xSerial",
+        "Reset": "Reset__7xVolumeFv",
+        "Init": "Init__7xVolumeFP12xVolumeAsset"
+      },
+      "calls": [
+        {
+          "function": "Load",
+          "offset": 0,
+          "opcode": 2,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseLoad",
+          "symbol": "xBaseLoad__FP5xBaseP7xSerial"
+        },
+        {
+          "function": "Save",
+          "offset": 0,
+          "opcode": 2,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseSave",
+          "symbol": "xBaseSave__FP5xBaseP7xSerial"
+        },
+        {
+          "function": "Reset",
+          "offset": 0,
+          "opcode": 2,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseReset",
+          "symbol": "xBaseReset__FP5xBaseP10xBaseAsset"
+        },
+        {
+          "function": "Init",
+          "offset": 20,
+          "opcode": 3,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseInit",
+          "symbol": "xBaseInit__FP5xBaseP10xBaseAsset"
         }
       ]
     }

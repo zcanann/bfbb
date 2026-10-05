@@ -3,7 +3,11 @@
 
 #include "xQuickCull.h"
 #include "xMath3.h"
+#if defined(PS2)
+struct xCollis;
+#else
 #include "xCollide.h"
+#endif
 
 // Size: 0x4C
 struct xBound
