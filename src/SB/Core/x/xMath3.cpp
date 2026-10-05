@@ -2,11 +2,15 @@
 #include "iMath3.h"
 
 #include <types.h>
+#if !defined(PS2)
 #include <intrin.h>
+#endif
 
 #include "iMath.h"
 #include "xMath.h" // icos and isin
+#if !defined(PS2)
 #include "xClimate.h" // xMat3x3Identity
+#endif
 #include "xMathInlines.h" // xasin, xatan2
 
 // These structs were used in deadstripped functions.
@@ -231,7 +235,7 @@ F32 xMat3x3LookVec(xMat3x3* m, const xVec3* at)
     F32 vec_len = xVec3Normalize(&m->at, at);
     xVec3Inv(&m->at, &m->at);
 
-    if (FABS(1.0f - m->at.y) < 0.00001f)
+    if (iabs(1.0f - m->at.y) < 0.00001f)
     {
         m->right.x = 1.0f;
         m->right.y = 0.0f;
@@ -244,7 +248,7 @@ F32 xMat3x3LookVec(xMat3x3* m, const xVec3* at)
         m->at.z = 0.0f;
         return vec_len;
     }
-    if (FABS(1.0f + m->at.y) < 0.00001f)
+    if (iabs(1.0f + m->at.y) < 0.00001f)
     {
         m->right.x = -1.0f;
         m->right.y = 0.0f;
@@ -257,7 +261,7 @@ F32 xMat3x3LookVec(xMat3x3* m, const xVec3* at)
         m->at.z = 0.0f;
         return vec_len;
     }
-    if ((FABS(at->z) < 0.00001f) && (FABS(at->x) < 0.00001f))
+    if ((iabs(at->z) < 0.00001f) && (iabs(at->x) < 0.00001f))
     {
         m->right.x = 1.0f;
         m->right.y = 0.0f;
