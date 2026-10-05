@@ -16283,6 +16283,865 @@
         }
       ],
       "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/x/xScene.cpp",
+      "target_unit": "SB/Core/x/xScene.cpp",
+      "object": "source/xScene.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xSceneNearestFloorPoly__FP6xSceneP14xNearFloorPolyUcUc": "xSceneNearestFloorPoly__FP6xSceneP14xNearFloorPolyUcUc",
+        "gridNearestFloorCB__FP4xEntPv": "gridNearestFloorCB__FP4xEntPv",
+        "sectorNearestFloorCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv": "sectorNearestFloorCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv",
+        "boxNearestFloorCB__FP14RpIntersectionP19RpCollisionTrianglefPv": "boxNearestFloorCB__FP14RpIntersectionP19RpCollisionTrianglefPv",
+        "nearestFloorCB__FP14RpIntersectionP19RpCollisionTrianglefPv": "nearestFloorCB__FP14RpIntersectionP19RpCollisionTrianglefPv",
+        "Mgc_TriBoxTest__FP5xVec3P4xBox": "Mgc_TriBoxTest__FP5xVec3P4xBox",
+        "xRayHitsSceneFlags__FP6xSceneP5xRay3P7xCollisUcUc": "xRayHitsSceneFlags__FP6xSceneP5xRay3P7xCollisUcUc",
+        "xRayHitsScene__FP6xSceneP5xRay3P7xCollis": "xRayHitsScene__FP6xSceneP5xRay3P7xCollis",
+        "xRayHitsTikiLandableScene__FP6xSceneP5xRay3P7xCollis": "xRayHitsTikiLandableScene__FP6xSceneP5xRay3P7xCollis",
+        "xRayHitsEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv": "xRayHitsEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv",
+        "xRayHitsTikiLandableEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv": "xRayHitsTikiLandableEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv",
+        "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+        "xSceneForAllNPCs__FP6xScenePFP4xEntP6xScenePv_P4xEntPv": "xSceneForAllNPCs__FP6xScenePFP4xEntP6xScenePv_P4xEntPv",
+        "xSceneForAllDynamics__FP6xScenePFP4xEntP6xScenePv_P4xEntPv": "xSceneForAllDynamics__FP6xScenePFP4xEntP6xScenePv_P4xEntPv",
+        "xSceneForAllStatics__FP6xScenePFP4xEntP6xScenePv_P4xEntPv": "xSceneForAllStatics__FP6xScenePFP4xEntP6xScenePv_P4xEntPv",
+        "xSceneForAllEnts__FP6xScenePFP4xEntP6xScenePv_P4xEntPv": "xSceneForAllEnts__FP6xScenePFP4xEntP6xScenePv_P4xEntPv",
+        "xSceneID2Name__FP6xSceneUi": "xSceneID2Name__FP6xSceneUi",
+        "xSceneResolvID__FP6xSceneUi": "xSceneResolvID__FP6xSceneUi",
+        "xSceneAddEnt__FP6xSceneP4xEnt": "xSceneAddEnt__FP6xSceneP4xEnt",
+        "xSceneSetup__FP6xScene": "xSceneSetup__FP6xScene",
+        "xSceneLoad__FP6xSceneP7xSerial": "xSceneLoad__FP6xSceneP7xSerial",
+        "xSceneSave__FP6xSceneP7xSerial": "xSceneSave__FP6xSceneP7xSerial",
+        "xSceneExit__FP6xScene": "xSceneExit__FP6xScene",
+        "xSceneInit__FP6xSceneUsUsUsUs": "xSceneInit__FP6xSceneUsUsUsUs"
+      },
+      "calls": [
+        {
+          "function": "xSceneNearestFloorPoly__FP6xSceneP14xNearFloorPolyUcUc",
+          "offset": 248,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullForBox__FP10xQCControlP7xQCDataPC4xBox",
+          "symbol": "xQuickCullForBox__FP10xQCControlP7xQCDataPC4xBox"
+        },
+        {
+          "function": "xSceneNearestFloorPoly__FP6xSceneP14xNearFloorPolyUcUc",
+          "offset": 604,
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "target_function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "symbol": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv"
+        },
+        {
+          "function": "xSceneNearestFloorPoly__FP6xSceneP14xNearFloorPolyUcUc",
+          "offset": 644,
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "target_function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "symbol": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv"
+        },
+        {
+          "function": "xSceneNearestFloorPoly__FP6xSceneP14xNearFloorPolyUcUc",
+          "offset": 732,
+          "target_source": "SB/Core/x/xClumpColl.cpp",
+          "target_function": "xClumpColl_ForAllIntersections__FP17xClumpCollBSPTreeP14RpIntersectionPFP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv_P19RpCollisionTrianglePv",
+          "symbol": "xClumpColl_ForAllIntersections__FP17xClumpCollBSPTreeP14RpIntersectionPFP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv_P19RpCollisionTrianglePv"
+        },
+        {
+          "function": "gridNearestFloorCB__FP4xEntPv",
+          "offset": 128,
+          "target_source": "SB/Core/x/xBound.cpp",
+          "target_function": "xBoundHitsBound__FPC6xBoundPC6xBoundP7xCollis",
+          "symbol": "xBoundHitsBound__FPC6xBoundPC6xBoundP7xCollis"
+        },
+        {
+          "function": "sectorNearestFloorCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv",
+          "offset": 4,
+          "target_source": "SB/Core/x/xScene.cpp",
+          "target_function": "nearestFloorCB__FP14RpIntersectionP19RpCollisionTrianglefPv",
+          "symbol": "nearestFloorCB__FP14RpIntersectionP19RpCollisionTrianglefPv",
+          "opcode": 2
+        },
+        {
+          "function": "boxNearestFloorCB__FP14RpIntersectionP19RpCollisionTrianglefPv",
+          "offset": 660,
+          "target_source": "SB/Core/x/xScene.cpp",
+          "target_function": "Mgc_TriBoxTest__FP5xVec3P4xBox",
+          "symbol": "Mgc_TriBoxTest__FP5xVec3P4xBox"
+        },
+        {
+          "function": "boxNearestFloorCB__FP14RpIntersectionP19RpCollisionTrianglefPv",
+          "offset": 684,
+          "target_source": "SB/Core/x/xScene.cpp",
+          "target_function": "nearestFloorCB__FP14RpIntersectionP19RpCollisionTrianglefPv",
+          "symbol": "nearestFloorCB__FP14RpIntersectionP19RpCollisionTrianglefPv"
+        },
+        {
+          "function": "nearestFloorCB__FP14RpIntersectionP19RpCollisionTrianglefPv",
+          "offset": 776,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xRayHitsSceneFlags__FP6xSceneP5xRay3P7xCollisUcUc",
+          "offset": 404,
+          "target_source": "SB/Core/x/xMath3.h",
+          "target_function": "xBoxFromLine__FR4xBoxRC6xLine3",
+          "symbol": "xBoxFromLine__FR4xBoxRC6xLine3"
+        },
+        {
+          "function": "xRayHitsSceneFlags__FP6xSceneP5xRay3P7xCollisUcUc",
+          "offset": 528,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullForRay__FP10xQCControlP7xQCDataPC5xRay3",
+          "symbol": "xQuickCullForRay__FP10xQCControlP7xQCDataPC5xRay3"
+        },
+        {
+          "function": "xRayHitsSceneFlags__FP6xSceneP5xRay3P7xCollisUcUc",
+          "offset": 564,
+          "target_source": "SB/Core/x/xGrid.h",
+          "target_function": "xGridCheckBound<Q220@unnamed@xScene_cpp@15cb_ray_hits_ent>__FR5xGridRC6xBoundRC7xQCDataQ220@unnamed@xScene_cpp@15cb_ray_hits_ent_v",
+          "symbol": "xGridCheckBound<Q220@unnamed@xScene_cpp@15cb_ray_hits_ent>__FR5xGridRC6xBoundRC7xQCDataQ220@unnamed@xScene_cpp@15cb_ray_hits_ent_v"
+        },
+        {
+          "function": "xRayHitsSceneFlags__FP6xSceneP5xRay3P7xCollisUcUc",
+          "offset": 588,
+          "target_source": "SB/Core/x/xGrid.h",
+          "target_function": "xGridCheckBound<Q220@unnamed@xScene_cpp@15cb_ray_hits_ent>__FR5xGridRC6xBoundRC7xQCDataQ220@unnamed@xScene_cpp@15cb_ray_hits_ent_v",
+          "symbol": "xGridCheckBound<Q220@unnamed@xScene_cpp@15cb_ray_hits_ent>__FR5xGridRC6xBoundRC7xQCDataQ220@unnamed@xScene_cpp@15cb_ray_hits_ent_v"
+        },
+        {
+          "function": "xRayHitsSceneFlags__FP6xSceneP5xRay3P7xCollisUcUc",
+          "offset": 624,
+          "target_source": "SB/Core/x/xGrid.h",
+          "target_function": "xGridCheckBound<Q220@unnamed@xScene_cpp@15cb_ray_hits_ent>__FR5xGridRC6xBoundRC7xQCDataQ220@unnamed@xScene_cpp@15cb_ray_hits_ent_v",
+          "symbol": "xGridCheckBound<Q220@unnamed@xScene_cpp@15cb_ray_hits_ent>__FR5xGridRC6xBoundRC7xQCDataQ220@unnamed@xScene_cpp@15cb_ray_hits_ent_v"
+        },
+        {
+          "function": "xRayHitsSceneFlags__FP6xSceneP5xRay3P7xCollisUcUc",
+          "offset": 676,
+          "target_source": "SB/Core/p2/iCollide.cpp",
+          "target_function": "iRayHitsEnv__FPC5xRay3PC4xEnvP7xCollis",
+          "symbol": "iRayHitsEnv__FPC5xRay3PC4xEnvP7xCollis"
+        },
+        {
+          "function": "xRayHitsScene__FP6xSceneP5xRay3P7xCollis",
+          "offset": 56,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullForRay__FP10xQCControlP7xQCDataPC5xRay3",
+          "symbol": "xQuickCullForRay__FP10xQCControlP7xQCDataPC5xRay3"
+        },
+        {
+          "function": "xRayHitsScene__FP6xSceneP5xRay3P7xCollis",
+          "offset": 92,
+          "target_source": "SB/Core/x/xScene.cpp",
+          "target_function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "symbol": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv"
+        },
+        {
+          "function": "xRayHitsScene__FP6xSceneP5xRay3P7xCollis",
+          "offset": 128,
+          "target_source": "SB/Core/x/xScene.cpp",
+          "target_function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "symbol": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv"
+        },
+        {
+          "function": "xRayHitsScene__FP6xSceneP5xRay3P7xCollis",
+          "offset": 164,
+          "target_source": "SB/Core/x/xScene.cpp",
+          "target_function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "symbol": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv"
+        },
+        {
+          "function": "xRayHitsScene__FP6xSceneP5xRay3P7xCollis",
+          "offset": 180,
+          "target_source": "SB/Core/p2/iCollide.cpp",
+          "target_function": "iRayHitsEnv__FPC5xRay3PC4xEnvP7xCollis",
+          "symbol": "iRayHitsEnv__FPC5xRay3PC4xEnvP7xCollis"
+        },
+        {
+          "function": "xRayHitsTikiLandableScene__FP6xSceneP5xRay3P7xCollis",
+          "offset": 56,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullForRay__FP10xQCControlP7xQCDataPC5xRay3",
+          "symbol": "xQuickCullForRay__FP10xQCControlP7xQCDataPC5xRay3"
+        },
+        {
+          "function": "xRayHitsTikiLandableScene__FP6xSceneP5xRay3P7xCollis",
+          "offset": 92,
+          "target_source": "SB/Core/x/xScene.cpp",
+          "target_function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "symbol": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv"
+        },
+        {
+          "function": "xRayHitsTikiLandableScene__FP6xSceneP5xRay3P7xCollis",
+          "offset": 128,
+          "target_source": "SB/Core/x/xScene.cpp",
+          "target_function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "symbol": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv"
+        },
+        {
+          "function": "xRayHitsTikiLandableScene__FP6xSceneP5xRay3P7xCollis",
+          "offset": 164,
+          "target_source": "SB/Core/x/xScene.cpp",
+          "target_function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "symbol": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv"
+        },
+        {
+          "function": "xRayHitsTikiLandableScene__FP6xSceneP5xRay3P7xCollis",
+          "offset": 180,
+          "target_source": "SB/Core/p2/iCollide.cpp",
+          "target_function": "iRayHitsEnv__FPC5xRay3PC4xEnvP7xCollis",
+          "symbol": "iRayHitsEnv__FPC5xRay3PC4xEnvP7xCollis"
+        },
+        {
+          "function": "xRayHitsEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv",
+          "offset": 48,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullIsects__FPC7xQCDataPC7xQCData",
+          "symbol": "xQuickCullIsects__FPC7xQCDataPC7xQCData"
+        },
+        {
+          "function": "xRayHitsEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv",
+          "offset": 72,
+          "target_source": "SB/Core/x/xBound.cpp",
+          "target_function": "xRayHitsBound__FPC5xRay3PC6xBoundP7xCollis",
+          "symbol": "xRayHitsBound__FPC5xRay3PC6xBoundP7xCollis"
+        },
+        {
+          "function": "xRayHitsTikiLandableEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv",
+          "offset": 80,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullIsects__FPC7xQCDataPC7xQCData",
+          "symbol": "xQuickCullIsects__FPC7xQCDataPC7xQCData"
+        },
+        {
+          "function": "xRayHitsTikiLandableEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv",
+          "offset": 104,
+          "target_source": "SB/Core/x/xBound.cpp",
+          "target_function": "xRayHitsBound__FPC5xRay3PC6xBoundP7xCollis",
+          "symbol": "xRayHitsBound__FPC5xRay3PC6xBoundP7xCollis"
+        },
+        {
+          "function": "xRayHitsTikiLandableEnt__FP6xSceneP5xRay3P7xQCDataP4xEntPv",
+          "offset": 152,
+          "target_source": "SB/Core/p2/iCollide.cpp",
+          "target_function": "iRayHitsModel__FPC5xRay3PC14xModelInstanceP7xCollis",
+          "symbol": "iRayHitsModel__FPC5xRay3PC14xModelInstanceP7xCollis"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 580,
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "target_function": "xGridGetCell__FP5xGridfffRiRi",
+          "symbol": "xGridGetCell__FP5xGridfffRiRi"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 608,
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "target_function": "xGridGetCell__FP5xGridfffRiRi",
+          "symbol": "xGridGetCell__FP5xGridfffRiRi"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 932,
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "target_function": "xGridGetCell__FP5xGridfffRiRi",
+          "symbol": "xGridGetCell__FP5xGridfffRiRi"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 960,
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "target_function": "xGridGetCell__FP5xGridfffRiRi",
+          "symbol": "xGridGetCell__FP5xGridfffRiRi"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 1260,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullIsects__FPC7xQCDataPC7xQCData",
+          "symbol": "xQuickCullIsects__FPC7xQCDataPC7xQCData"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 1796,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullIsects__FPC7xQCDataPC7xQCData",
+          "symbol": "xQuickCullIsects__FPC7xQCDataPC7xQCData"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 2380,
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "target_function": "xGridGetCell__FP5xGridfffRiRi",
+          "symbol": "xGridGetCell__FP5xGridfffRiRi"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 2408,
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "target_function": "xGridGetCell__FP5xGridfffRiRi",
+          "symbol": "xGridGetCell__FP5xGridfffRiRi"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 2708,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullIsects__FPC7xQCDataPC7xQCData",
+          "symbol": "xQuickCullIsects__FPC7xQCDataPC7xQCData"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 3244,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullIsects__FPC7xQCDataPC7xQCData",
+          "symbol": "xQuickCullIsects__FPC7xQCDataPC7xQCData"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 3644,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullIsects__FPC7xQCDataPC7xQCData",
+          "symbol": "xQuickCullIsects__FPC7xQCDataPC7xQCData"
+        },
+        {
+          "function": "xSceneSetup__FP6xScene",
+          "offset": 0,
+          "target_source": "SB/Core/x/xEnv.cpp",
+          "target_function": "xEnvSetup__FP4xEnv",
+          "symbol": "xEnvSetup__FP4xEnv",
+          "opcode": 2
+        },
+        {
+          "function": "xSceneInit__FP6xSceneUsUsUsUs",
+          "offset": 68,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xSceneInit__FP6xSceneUsUsUsUs",
+          "offset": 96,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xSceneInit__FP6xSceneUsUsUsUs",
+          "offset": 124,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xSceneInit__FP6xSceneUsUsUsUs",
+          "offset": 152,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xSceneInit__FP6xSceneUsUsUsUs",
+          "offset": 212,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xSceneInit__FP6xSceneUsUsUsUs",
+          "offset": 240,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xSceneInit__FP6xSceneUsUsUsUs",
+          "offset": 272,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimInit__Fv",
+          "symbol": "xAnimInit__Fv"
+        },
+        {
+          "function": "xSceneInit__FP6xSceneUsUsUsUs",
+          "offset": 280,
+          "target_source": "SB/Core/x/xModel.cpp",
+          "target_function": "xModelInit__Fv",
+          "symbol": "xModelInit__Fv"
+        },
+        {
+          "function": "xSceneInit__FP6xSceneUsUsUsUs",
+          "offset": 304,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimPoolInit__FP8xMemPoolUiUiUiUi",
+          "symbol": "xAnimPoolInit__FP8xMemPoolUiUiUiUi"
+        },
+        {
+          "function": "xSceneInit__FP6xSceneUsUsUsUs",
+          "offset": 316,
+          "target_source": "SB/Core/x/xModel.cpp",
+          "target_function": "xModelPoolInit__FUiUi",
+          "symbol": "xModelPoolInit__FUiUi"
+        },
+        {
+          "function": "xSceneInit__FP6xSceneUsUsUsUs",
+          "offset": 328,
+          "target_source": "SB/Core/x/xModel.cpp",
+          "target_function": "xModelPoolInit__FUiUi",
+          "symbol": "xModelPoolInit__FUiUi"
+        },
+        {
+          "function": "xSceneInit__FP6xSceneUsUsUsUs",
+          "offset": 340,
+          "target_source": "SB/Core/x/xModel.cpp",
+          "target_function": "xModelPoolInit__FUiUi",
+          "symbol": "xModelPoolInit__FUiUi"
+        },
+        {
+          "function": "xSceneInit__FP6xSceneUsUsUsUs",
+          "offset": 348,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTempTransitionInit__FUi",
+          "symbol": "xAnimTempTransitionInit__FUi"
+        },
+        {
+          "function": "xSceneInit__FP6xSceneUsUsUsUs",
+          "offset": 356,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xCollideInit__FP6xScene",
+          "symbol": "xCollideInit__FP6xScene"
+        },
+        {
+          "function": "xSceneInit__FP6xSceneUsUsUsUs",
+          "offset": 364,
+          "target_source": "SB/Core/x/xCollideFast.cpp",
+          "target_function": "xCollideFastInit__FP6xScene",
+          "symbol": "xCollideFastInit__FP6xScene"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xSceneNearestFloorPoly__FP6xSceneP14xNearFloorPolyUcUc",
+          "offset": 600,
+          "opcode": 40,
+          "target_name": "sNearestChk",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "sNearestChk"
+        },
+        {
+          "function": "xSceneNearestFloorPoly__FP6xSceneP14xNearFloorPolyUcUc",
+          "offset": 608,
+          "opcode": 40,
+          "target_name": "sNearestCollType",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "sNearestCollType"
+        },
+        {
+          "function": "xSceneNearestFloorPoly__FP6xSceneP14xNearFloorPolyUcUc",
+          "offset": 668,
+          "opcode": 43,
+          "target_name": "sTestOPtr",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "sTestOPtr"
+        },
+        {
+          "function": "xSceneNearestFloorPoly__FP6xSceneP14xNearFloorPolyUcUc",
+          "offset": 672,
+          "opcode": 43,
+          "target_name": "sTestMPtr",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "sTestMPtr"
+        },
+        {
+          "function": "xSceneNearestFloorPoly__FP6xSceneP14xNearFloorPolyUcUc",
+          "offset": 676,
+          "opcode": 43,
+          "target_name": "sBoxTestMat",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "sBoxTestMat"
+        },
+        {
+          "function": "xSceneNearestFloorPoly__FP6xSceneP14xNearFloorPolyUcUc",
+          "offset": 704,
+          "opcode": 40,
+          "target_name": "sUseJSP",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "sUseJSP"
+        },
+        {
+          "function": "xSceneNearestFloorPoly__FP6xSceneP14xNearFloorPolyUcUc",
+          "offset": 744,
+          "opcode": 40,
+          "target_name": "sUseJSP",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "sUseJSP"
+        },
+        {
+          "function": "gridNearestFloorCB__FP4xEntPv",
+          "offset": 52,
+          "opcode": 36,
+          "target_name": "sNearestChk",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "sNearestChk"
+        },
+        {
+          "function": "gridNearestFloorCB__FP4xEntPv",
+          "offset": 84,
+          "opcode": 36,
+          "target_name": "sNearestCollType",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "sNearestCollType"
+        },
+        {
+          "function": "gridNearestFloorCB__FP4xEntPv",
+          "offset": 176,
+          "opcode": 43,
+          "target_name": "sTestOPtr",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "sTestOPtr"
+        },
+        {
+          "function": "gridNearestFloorCB__FP4xEntPv",
+          "offset": 196,
+          "opcode": 43,
+          "target_name": "sTestMPtr",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "sTestMPtr"
+        },
+        {
+          "function": "gridNearestFloorCB__FP4xEntPv",
+          "offset": 204,
+          "opcode": 43,
+          "target_name": "sTestMPtr",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "sTestMPtr"
+        },
+        {
+          "function": "gridNearestFloorCB__FP4xEntPv",
+          "offset": 228,
+          "opcode": 35,
+          "target_name": "sTestMPtr",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "sTestMPtr"
+        },
+        {
+          "function": "gridNearestFloorCB__FP4xEntPv",
+          "offset": 252,
+          "opcode": 43,
+          "target_name": "sBoxTestMat",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "sBoxTestMat"
+        },
+        {
+          "function": "boxNearestFloorCB__FP14RpIntersectionP19RpCollisionTrianglefPv",
+          "offset": 36,
+          "opcode": 35,
+          "target_name": "sBoxTestMat",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "sBoxTestMat"
+        },
+        {
+          "function": "nearestFloorCB__FP14RpIntersectionP19RpCollisionTrianglefPv",
+          "offset": 64,
+          "opcode": 36,
+          "target_name": "sUseJSP",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "sUseJSP"
+        },
+        {
+          "function": "nearestFloorCB__FP14RpIntersectionP19RpCollisionTrianglefPv",
+          "offset": 136,
+          "opcode": 35,
+          "target_name": "sBoxTestMat",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "sBoxTestMat"
+        },
+        {
+          "function": "nearestFloorCB__FP14RpIntersectionP19RpCollisionTrianglefPv",
+          "offset": 1264,
+          "opcode": 35,
+          "target_name": "sTestOPtr",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "sTestOPtr"
+        },
+        {
+          "function": "nearestFloorCB__FP14RpIntersectionP19RpCollisionTrianglefPv",
+          "offset": 1272,
+          "opcode": 35,
+          "target_name": "sTestMPtr",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "sTestMPtr"
+        },
+        {
+          "function": "nearestFloorCB__FP14RpIntersectionP19RpCollisionTrianglefPv",
+          "offset": 1912,
+          "opcode": 35,
+          "target_name": "sTestOPtr",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "sTestOPtr"
+        },
+        {
+          "function": "nearestFloorCB__FP14RpIntersectionP19RpCollisionTrianglefPv",
+          "offset": 1920,
+          "opcode": 35,
+          "target_name": "sTestMPtr",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "sTestMPtr"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 1228,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 1244,
+          "opcode": 43,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 1392,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 1408,
+          "opcode": 43,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 1412,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 1764,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 1780,
+          "opcode": 43,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 1928,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 1944,
+          "opcode": 43,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 1948,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 2676,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 2692,
+          "opcode": 43,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 2840,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 2856,
+          "opcode": 43,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 2860,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 3212,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 3228,
+          "opcode": 43,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 3376,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 3392,
+          "opcode": 43,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 3396,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 3608,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 3624,
+          "opcode": 43,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 3776,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 3792,
+          "opcode": 43,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xRayHitsGrid__FP5xGridP6xSceneP5xRay3PFP6xSceneP5xRay3P7xQCDataP4xEntPv_vP7xQCDataPv",
+          "offset": 3796,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xSceneInit__FP6xSceneUsUsUsUs",
+          "offset": 64,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xSceneInit__FP6xSceneUsUsUsUs",
+          "offset": 92,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xSceneInit__FP6xSceneUsUsUsUs",
+          "offset": 120,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xSceneInit__FP6xSceneUsUsUsUs",
+          "offset": 148,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xSceneInit__FP6xSceneUsUsUsUs",
+          "offset": 208,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xSceneInit__FP6xSceneUsUsUsUs",
+          "offset": 236,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xScene.cpp",
+          "symbol": "gActiveHeap"
+        }
+      ],
+      "address_pairs": []
     }
   ]
 }
