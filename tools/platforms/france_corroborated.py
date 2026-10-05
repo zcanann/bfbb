@@ -106,9 +106,20 @@ class ControlFlow:
             return ([d['target']] if d.get('taken') is not False else []) + ([pc + 8] if d.get('taken') is not True or d.get('link') else [])
         return []
 
-    def bounds(self, start, size):
-        """Check one independently byte-identified function, never discover its size."""
+    def bounds(self, start, size, *, resolved_indirect_jumps=None):
+        """Check independently identified bounds, optionally following proven tables.
+
+        A caller supplying resolved_indirect_jumps must first prove the actual
+        index bound, table address, load/JR dataflow and complete successor set.
+        Ordinary callers still stop at every unresolved indirect jump.
+        """
         end = start + size
+        resolved_indirect_jumps = resolved_indirect_jumps or {}
+        for pc, destinations in resolved_indirect_jumps.items():
+            require(start <= pc < end and self.instruction(pc)['kind'] == 'indirect_jump' and
+                    self.valid_delay(pc) and destinations and
+                    all(start <= target < end and target % 4 == 0 for target in destinations),
+                    'Invalid explicitly resolved local dispatch')
         todo = deque([(start, 0)])
         states = {}
         covered = set()
@@ -158,7 +169,14 @@ class ControlFlow:
                 reasons.add('undecoded_or_trapping_instruction')
                 continue
             if kind == 'indirect_jump':
-                reasons.add('unresolved_indirect_jump')
+                if pc in resolved_indirect_jumps:
+                    covered.add(pc + 4)
+                    after = step(pc + 4, sp)
+                    for target in resolved_indirect_jumps[pc]:
+                        branches.append((pc, target))
+                        todo.append((target, after))
+                else:
+                    reasons.add('unresolved_indirect_jump')
                 continue
             if kind == 'normal':
                 todo.append((pc + 4, step(pc, sp)))

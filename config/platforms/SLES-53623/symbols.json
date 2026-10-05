@@ -915,6 +915,139 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xEntMotionDebugIPad",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1930176,
+      "size": 272,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntMotionDebugDraw",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1930448,
+      "size": 360,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntMotionDebugWrite",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1930816,
+      "size": 2828,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntMotionDebugCB",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1933648,
+      "size": 96,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntMotionDebugExit",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1933744,
+      "size": 24,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntMotionDebugInit",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1933776,
+      "size": 96,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntMotionTranslate",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1933872,
+      "size": 1780,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntMechReverse",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1935664,
+      "size": 288,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntMechForward",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1935952,
+      "size": 288,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntRotMove",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1936240,
+      "size": 752,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntSldMove",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1936992,
+      "size": 568,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntMechMove",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1937568,
+      "size": 816,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntPenMove",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1938384,
+      "size": 312,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntMPMove",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1938704,
+      "size": 2452,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntMPGetNext",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1941168,
+      "size": 348,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntOrbitMove",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1941520,
+      "size": 328,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntERMove",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1941856,
+      "size": 680,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntMotionMove",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1942544,
+      "size": 236,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntMotionReset",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1942784,
+      "size": 1348,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "xEntMotionInit",
       "source": "SB/Core/x/xEntMotion.cpp",
       "address": 1944144,

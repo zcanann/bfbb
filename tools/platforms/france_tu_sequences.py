@@ -129,9 +129,14 @@ def memory_kind(original, address):
     return 'zero_fill'
 
 
-def compare(reference, target, a, b, size, *, allow_return_store=False):
-    """Return explicit exceptions; all other actual instruction bits stay equal."""
+def compare(reference, target, a, b, size, *, allow_return_store=False, address_resolver=None):
+    """Return explicit exceptions; all other actual instruction bits stay equal.
+
+    A scoped address_resolver may prove a specific original reaching-definition
+    pattern; the default remains the strict linear LUI lifetime checker.
+    """
     first, second = reference.read(a, size), target.read(b, size)
+    resolve = address_resolver or address_pair
     pairs, transfers, masks, high_fields = [], [], {}, set()
     for index, (x, y) in enumerate(zip(words(first), words(second))):
         off = index * 4
@@ -153,8 +158,8 @@ def compare(reference, target, a, b, size, *, allow_return_store=False):
             masks[off] = 0xffff0000
         elif x != y:
             require(x >> 16 == y >> 16, 'Non-address instruction bits changed')
-            hi_a, data_a = address_pair(first, a, off, allow_return_store=allow_return_store)
-            hi_b, data_b = address_pair(second, b, off, allow_return_store=allow_return_store)
+            hi_a, data_a = resolve(first, a, off, allow_return_store=allow_return_store)
+            hi_b, data_b = resolve(second, b, off, allow_return_store=allow_return_store)
             require(hi_a == hi_b, 'Address producer position changed')
             kind = memory_kind(reference, data_a)
             require(kind == memory_kind(target, data_b), 'Data storage class changed')
@@ -345,7 +350,7 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
             'status': 'reviewed-original-whole-tu-sequence',
             'original_sha1s': {v: originals[v].sha1 for v in (*REFERENCES, TARGET)},
             'method': 'Unique whole named-DWARF TU sequence in three originals; explicit address-producer and call relationships, unchanged non-address bits, closed local bounds and zero alignment.',
-            'limitations': ['Only the reviewed streaming, particle-command and animation TUs are eligible; this is not an automatic fuzzy-symbol promotion rule.',
+            'limitations': ['Only the reviewed streaming, particle-command, animation and entity-motion TUs are eligible; this is not an automatic fuzzy-symbol promotion rule.',
                            'Names and ownership come from debug-reference DWARF, not a recovered France symbol table.',
                            'External call neighbors corroborate structure but are not independently promoted named relocation anchors.',
                            'Seventeen streaming entries have rooted direct-call witnesses; the remaining overload is reached by its verified tail wrapper, while shutdown also uses the unique complete streaming TU sequence.',
@@ -375,6 +380,16 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     for key, value in animation['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
     document['limitations'].append('Animation uses two explicitly reviewed frame-free leaf tails and three dead copies of executed delay-slot instructions; the shared strict CFG checker is unchanged.')
+    from platforms.france_motion_sequence import generate_unit as generate_motion
+    motion = generate_motion(originals)
+    document['functions'].extend(motion['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(motion['sequence_proofs'])
+    document['call_neighbors'].extend(motion['call_neighbors'])
+    document['motion_data_proofs'] = motion['data_proofs']
+    for key, value in motion['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Motion explicitly validates four original bounded dispatch tables and five string-address diamonds; all other indirect jumps and address patterns remain strict.')
     return document
 
 

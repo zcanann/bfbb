@@ -78,7 +78,7 @@ checked, and the standard objdiff parser accepts the result.
 | SLUS-20680 | 2,978,560 | 40,628 |
 | SLES-51968 | 2,979,712 | 40,628 |
 | SLES-51970 | 2,976,512 | 40,628 |
-| SLES-53623 | 2,979,968 | 14,968 |
+| SLES-53623 | 2,979,968 | 15,924 |
 | XBOX-US | 1,798,760 | 3,354 |
 | XBOX-EU | 1,798,760 | 3,354 |
 
@@ -122,7 +122,7 @@ The narrower function-only baselines currently contain:
 | USA | 5,391 | 2,107,460 | 349 functions / 40,628 bytes |
 | Europe/Australia | 5,392 | 2,108,700 | 349 functions / 40,628 bytes |
 | Germany | 5,394 | 2,105,512 | 349 functions / 40,628 bytes |
-| France (reviewed and corroborated bounds) | 406 | 118,352 | 95 functions / 14,968 bytes |
+| France (reviewed and corroborated bounds) | 425 | 132,224 | 100 functions / 15,924 bytes |
 
 The `address-anchors.json` registries also recover over 2,500 named data addresses
 and 628 function declarations in each debug-bearing version. Addresses do not
@@ -149,8 +149,8 @@ load-range validation. Targets retain the exact original instructions. The `xBas
 other target objects are not relocation-restored link inputs. Code outside those function ranges, remaining data,
 and padding remain unclassified; the whole mixed load segment is not counted as
 code. France is stripped; independently reviewed and machine-corroborated
-extents establish its 406-function, 118,352-byte function-only baseline. Its
-14,968 matched code bytes describe that subset. The published code denominator
+extents establish its 425-function, 132,224-byte function-only baseline. Its
+15,924 matched code bytes describe that subset. The published code denominator
 is the full recovered CPU text region, not this function-only subset.
 
 Both Xbox releases have identical payloads in all 13 sections; their 532 differing
@@ -173,6 +173,8 @@ identified by [original callback-table and sequence evidence](FRANCE_PARTICLE_CO
 adding another 15 exact functions / 2,780 bytes while retaining all 30 functions.
 [Original animation sequence recovery](FRANCE_ANIMATION_RECOVERY.md) now adds
 17 exact functions / 3,032 bytes, retaining all 34 animation functions.
+[Entity-motion sequence and dispatch recovery](FRANCE_MOTION_RECOVERY.md) adds
+five exact functions / 956 bytes while retaining the full 20-function unit.
 
 The complete animation TU now compares all 34 functions / 17,656 bytes,
 matching 17 functions / 3,032 bytes with the unchanged shipping function bodies.
