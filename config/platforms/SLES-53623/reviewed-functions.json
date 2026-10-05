@@ -6,7 +6,7 @@
   "coverage_complete": false,
   "source_comparison_available": false,
   "source_link_verified": false,
-  "scope": "Only the explicitly reviewed dispatcher, xBase and xCurveAsset function extents; other byte-match candidates remain unconfirmed.",
+  "scope": "Explicitly reviewed dispatcher, xBase, xCurveAsset and xBehaviour function extents; other byte-match candidates remain unconfirmed.",
   "functions": [
     {
       "name": "zDispatcher_sceneFinish",
@@ -1693,6 +1693,296 @@
         "next_boundary": {
           "address": 3859840,
           "evidence": "Distinct stack-allocation prologue begins after the four-byte zero padding."
+        }
+      }
+    },
+    {
+      "name": "Process",
+      "source": "SB/Core/x/xBehaviour.cpp",
+      "address": 3088976,
+      "size": 56,
+      "sha256": "e0769ce26a0fad5734ed48ea0151238a716c55e78fef9f0dcc5788c274a0fe8b",
+      "boundary_confirmation": true,
+      "confirmation_method": "Named DWARF1 extents from all three retail references, exact unique 220-byte five-function neighborhood, and individual return/delay-slot/padding review.",
+      "source_equivalent": "Conditionally calls fun_process with this, cbdata, transition pointer, dt and context; returns zero when absent.",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3087568,
+          "name": "Process",
+          "source": "SB/Core/x/xBehaviour.cpp",
+          "reference_sha256": "e0769ce26a0fad5734ed48ea0151238a716c55e78fef9f0dcc5788c274a0fe8b",
+          "evidence": "Complete named DWARF1 range and surrounding five-function neighborhood are byte-identical."
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3088864,
+          "name": "Process",
+          "source": "SB/Core/x/xBehaviour.cpp",
+          "reference_sha256": "e0769ce26a0fad5734ed48ea0151238a716c55e78fef9f0dcc5788c274a0fe8b",
+          "evidence": "Complete named DWARF1 range and surrounding five-function neighborhood are byte-identical."
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3085552,
+          "name": "Process",
+          "source": "SB/Core/x/xBehaviour.cpp",
+          "reference_sha256": "e0769ce26a0fad5734ed48ea0151238a716c55e78fef9f0dcc5788c274a0fe8b",
+          "evidence": "Complete named DWARF1 range and surrounding five-function neighborhood are byte-identical."
+        }
+      ],
+      "corroboration": {
+        "terminal_return": {
+          "address": 3089024,
+          "delay_slot": 3089028,
+          "end_exclusive": 3089032
+        },
+        "following_padding": {
+          "address": 3089032,
+          "size": 8,
+          "all_zero": true
+        },
+        "exact_neighborhood": {
+          "address": 3088976,
+          "size": 220,
+          "sha256": "6b48713681c8448e59efe5e46de33f0ff8c5b8fe5867cd9d5519265aa2a9efa4",
+          "offset_from_start": 0,
+          "loaded_image_exact_occurrences": 1
+        }
+      }
+    },
+    {
+      "name": "EvalRules",
+      "source": "SB/Core/x/xBehaviour.cpp",
+      "address": 3089040,
+      "size": 56,
+      "sha256": "df1b2be6a3bbc2426fcfa5ca42fdaf6913b91347779f42868a213270523caa2e",
+      "boundary_confirmation": true,
+      "confirmation_method": "Named DWARF1 extents from all three retail references, exact unique 220-byte five-function neighborhood, and individual return/delay-slot/padding review.",
+      "source_equivalent": "Conditionally calls fun_chkRule with this, cbdata, transition pointer, dt and context; returns zero when absent.",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3087632,
+          "name": "EvalRules",
+          "source": "SB/Core/x/xBehaviour.cpp",
+          "reference_sha256": "df1b2be6a3bbc2426fcfa5ca42fdaf6913b91347779f42868a213270523caa2e",
+          "evidence": "Complete named DWARF1 range and surrounding five-function neighborhood are byte-identical."
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3088928,
+          "name": "EvalRules",
+          "source": "SB/Core/x/xBehaviour.cpp",
+          "reference_sha256": "df1b2be6a3bbc2426fcfa5ca42fdaf6913b91347779f42868a213270523caa2e",
+          "evidence": "Complete named DWARF1 range and surrounding five-function neighborhood are byte-identical."
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3085616,
+          "name": "EvalRules",
+          "source": "SB/Core/x/xBehaviour.cpp",
+          "reference_sha256": "df1b2be6a3bbc2426fcfa5ca42fdaf6913b91347779f42868a213270523caa2e",
+          "evidence": "Complete named DWARF1 range and surrounding five-function neighborhood are byte-identical."
+        }
+      ],
+      "corroboration": {
+        "terminal_return": {
+          "address": 3089088,
+          "delay_slot": 3089092,
+          "end_exclusive": 3089096
+        },
+        "following_padding": {
+          "address": 3089096,
+          "size": 8,
+          "all_zero": true
+        },
+        "exact_neighborhood": {
+          "address": 3088976,
+          "size": 220,
+          "sha256": "6b48713681c8448e59efe5e46de33f0ff8c5b8fe5867cd9d5519265aa2a9efa4",
+          "offset_from_start": 64,
+          "loaded_image_exact_occurrences": 1
+        }
+      }
+    },
+    {
+      "name": "PreCalc",
+      "source": "SB/Core/x/xBehaviour.cpp",
+      "address": 3089104,
+      "size": 52,
+      "sha256": "db998fc3b1473fb373e1486d8139cf3fc8ae5f8f2f69592a0d2e79a542e90517",
+      "boundary_confirmation": true,
+      "confirmation_method": "Named DWARF1 extents from all three retail references, exact unique 220-byte five-function neighborhood, and individual return/delay-slot/padding review.",
+      "source_equivalent": "Conditionally calls fun_precalc with this, cbdata, dt and context; returns zero when absent.",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3087696,
+          "name": "PreCalc",
+          "source": "SB/Core/x/xBehaviour.cpp",
+          "reference_sha256": "db998fc3b1473fb373e1486d8139cf3fc8ae5f8f2f69592a0d2e79a542e90517",
+          "evidence": "Complete named DWARF1 range and surrounding five-function neighborhood are byte-identical."
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3088992,
+          "name": "PreCalc",
+          "source": "SB/Core/x/xBehaviour.cpp",
+          "reference_sha256": "db998fc3b1473fb373e1486d8139cf3fc8ae5f8f2f69592a0d2e79a542e90517",
+          "evidence": "Complete named DWARF1 range and surrounding five-function neighborhood are byte-identical."
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3085680,
+          "name": "PreCalc",
+          "source": "SB/Core/x/xBehaviour.cpp",
+          "reference_sha256": "db998fc3b1473fb373e1486d8139cf3fc8ae5f8f2f69592a0d2e79a542e90517",
+          "evidence": "Complete named DWARF1 range and surrounding five-function neighborhood are byte-identical."
+        }
+      ],
+      "corroboration": {
+        "terminal_return": {
+          "address": 3089148,
+          "delay_slot": 3089152,
+          "end_exclusive": 3089156
+        },
+        "following_padding": {
+          "address": 3089156,
+          "size": 12,
+          "all_zero": true
+        },
+        "exact_neighborhood": {
+          "address": 3088976,
+          "size": 220,
+          "sha256": "6b48713681c8448e59efe5e46de33f0ff8c5b8fe5867cd9d5519265aa2a9efa4",
+          "offset_from_start": 128,
+          "loaded_image_exact_occurrences": 1
+        }
+      }
+    },
+    {
+      "name": "Clear",
+      "source": "SB/Core/x/xBehaviour.cpp",
+      "address": 3089168,
+      "size": 8,
+      "sha256": "e8420c90da5219d16c894dfa64a024b51b7f05a910fcfd830497fb32e6e29288",
+      "boundary_confirmation": true,
+      "confirmation_method": "Named DWARF1 extents from all three retail references, exact unique 220-byte five-function neighborhood, and individual return/delay-slot/padding review.",
+      "source_equivalent": "Stores GOAL_STAT_UNKNOWN (zero) into stat.",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3087760,
+          "name": "Clear",
+          "source": "SB/Core/x/xBehaviour.cpp",
+          "reference_sha256": "e8420c90da5219d16c894dfa64a024b51b7f05a910fcfd830497fb32e6e29288",
+          "evidence": "Complete named DWARF1 range and surrounding five-function neighborhood are byte-identical."
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3089056,
+          "name": "Clear",
+          "source": "SB/Core/x/xBehaviour.cpp",
+          "reference_sha256": "e8420c90da5219d16c894dfa64a024b51b7f05a910fcfd830497fb32e6e29288",
+          "evidence": "Complete named DWARF1 range and surrounding five-function neighborhood are byte-identical."
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3085744,
+          "name": "Clear",
+          "source": "SB/Core/x/xBehaviour.cpp",
+          "reference_sha256": "e8420c90da5219d16c894dfa64a024b51b7f05a910fcfd830497fb32e6e29288",
+          "evidence": "Complete named DWARF1 range and surrounding five-function neighborhood are byte-identical."
+        }
+      ],
+      "corroboration": {
+        "terminal_return": {
+          "address": 3089168,
+          "delay_slot": 3089172,
+          "end_exclusive": 3089176
+        },
+        "following_padding": {
+          "address": 3089176,
+          "size": 8,
+          "all_zero": true
+        },
+        "exact_neighborhood": {
+          "address": 3088976,
+          "size": 220,
+          "sha256": "6b48713681c8448e59efe5e46de33f0ff8c5b8fe5867cd9d5519265aa2a9efa4",
+          "offset_from_start": 192,
+          "loaded_image_exact_occurrences": 1
+        }
+      }
+    },
+    {
+      "name": "GetOwner",
+      "source": "SB/Core/x/xBehaviour.cpp",
+      "address": 3089184,
+      "size": 12,
+      "sha256": "a952764f47bae0faaa3386da63f7b70bc1ca56377e888487a15d71756e3944ff",
+      "boundary_confirmation": true,
+      "confirmation_method": "Named DWARF1 extents from all three retail references, exact unique 220-byte five-function neighborhood, and individual return/delay-slot/padding review.",
+      "source_equivalent": "Returns psyche->clt_owner through GetClient().",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3087776,
+          "name": "GetOwner",
+          "source": "SB/Core/x/xBehaviour.cpp",
+          "reference_sha256": "a952764f47bae0faaa3386da63f7b70bc1ca56377e888487a15d71756e3944ff",
+          "evidence": "Complete named DWARF1 range and surrounding five-function neighborhood are byte-identical."
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3089072,
+          "name": "GetOwner",
+          "source": "SB/Core/x/xBehaviour.cpp",
+          "reference_sha256": "a952764f47bae0faaa3386da63f7b70bc1ca56377e888487a15d71756e3944ff",
+          "evidence": "Complete named DWARF1 range and surrounding five-function neighborhood are byte-identical."
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3085760,
+          "name": "GetOwner",
+          "source": "SB/Core/x/xBehaviour.cpp",
+          "reference_sha256": "a952764f47bae0faaa3386da63f7b70bc1ca56377e888487a15d71756e3944ff",
+          "evidence": "Complete named DWARF1 range and surrounding five-function neighborhood are byte-identical."
+        }
+      ],
+      "corroboration": {
+        "terminal_return": {
+          "address": 3089188,
+          "delay_slot": 3089192,
+          "end_exclusive": 3089196
+        },
+        "following_padding": {
+          "address": 3089196,
+          "size": 4,
+          "all_zero": true
+        },
+        "exact_neighborhood": {
+          "address": 3088976,
+          "size": 220,
+          "sha256": "6b48713681c8448e59efe5e46de33f0ff8c5b8fe5867cd9d5519265aa2a9efa4",
+          "offset_from_start": 208,
+          "loaded_image_exact_occurrences": 1
         }
       }
     }

@@ -23,7 +23,7 @@
     "-gccinc",
     "-DPS2=1"
   ],
-  "scope": "Validated xBase, xordarray and xRMemData profiles; compiler identity for other units remains unproven",
+  "scope": "Validated xBase, xordarray, xRMemData and xBehaviour profiles; compiler identity for other units remains unproven",
   "units": [
     {
       "source": "src/SB/Core/x/xBase.cpp",
@@ -171,6 +171,19 @@
           "opcode": 35
         }
       ]
+    },
+    {
+      "source": "src/SB/Core/x/xBehaviour.cpp",
+      "target_unit": "SB/Core/x/xBehaviour.cpp",
+      "object": "source/xBehaviour.o",
+      "symbols": {
+        "GetOwner": "GetOwner__5xGoalCFv",
+        "Clear": "Clear__5xGoalFv",
+        "PreCalc": "PreCalc__5xGoalFfPv",
+        "EvalRules": "EvalRules__5xGoalFP11en_trantypefPv",
+        "Process": "Process__5xGoalFP11en_trantypefPvP6xScene"
+      },
+      "calls": []
     }
   ]
 }

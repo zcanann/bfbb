@@ -399,6 +399,28 @@ def verify(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
                 base_proof = next(p for p in provenance(base) if p["version"] == proof["version"])
                 require(proof["source_address"] - base_proof["source_address"] == layout["offset_from_anchor"],
                         f"{entry['name']}: reference TU relative position differs")
+            neighborhood = entry.get("corroboration", {}).get("exact_neighborhood")
+            if neighborhood:
+                offset = neighborhood["offset_from_start"]
+                require(0 <= offset and offset + entry["size"] <= neighborhood["size"] and
+                        entry["address"] - offset == neighborhood["address"],
+                        f"{entry['name']}: invalid exact neighborhood bounds")
+                block = target.read(neighborhood["address"], neighborhood["size"])
+                require(sha256(block) == neighborhood["sha256"] and
+                        reference.read(proof["source_address"] - offset, len(block)) == block,
+                        f"{entry['name']}: original neighborhood differs")
+                # The compound retail witness disambiguates tiny getters/setters;
+                # compiled source bytes do not establish this identity or extent.
+                for original in (target, reference):
+                    occurrences = 0
+                    for segment in original.loaded:
+                        span = original.read(segment["address"], segment["file_size"])
+                        position = span.find(block)
+                        while position >= 0:
+                            occurrences += 1
+                            position = span.find(block, position + 1)
+                    require(occurrences == neighborhood["loaded_image_exact_occurrences"] == 1,
+                            f"{entry['name']}: exact neighborhood is not unique")
             changes = proof.get("call_target_differences", [])
             compare_explicit(entry, body, reference_bytes, [change["offset"] for change in changes])
             for change in changes:

@@ -165,6 +165,17 @@ its authentication span does not add library-function progress.
 python tools/verify_ps2_runtime.py
 ```
 
+The same profile compiles the entire unchanged `xBehaviour.cpp`: `GetOwner`,
+`Clear`, `PreCalc`, `EvalRules` and `Process` match all four releases (184 bytes).
+Only the PS2 header dependency changes: `xScene` is forward-declared because
+this header uses it solely as a pointer. GameCube retains the original include.
+These five code bodies require no relocation restoration. France identities and
+boundaries are independently corroborated by the unique, identical 220-byte
+retail neighborhood in all three DWARF-bearing originals, individual named
+extents, return delay slots and padding. `verify_reviewed.py` rechecks that proof.
+Compiler-created RTTI, vtables and weak bodies remain outside this function
+comparison; the unit is not marked complete or retail-link verified.
+
 `config/platforms/ps2-toolchain.json` records archive/binary hashes, flags, and
 explicit symbol/call mappings. Three `R_MIPS_26` call relocations per version are
 restored only after identifying retail serializer targets independently. Reapplying

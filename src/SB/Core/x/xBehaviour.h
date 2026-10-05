@@ -4,7 +4,11 @@
 #include "xBase.h"
 #include "xListItem.h"
 #include "xFactory.h"
+#if defined(PS2)
+struct xScene;
+#else
 #include "xScene.h"
+#endif
 
 enum en_GOALSTATE
 {
