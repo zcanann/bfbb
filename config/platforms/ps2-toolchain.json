@@ -23,7 +23,7 @@
     "-gccinc",
     "-DPS2=1"
   ],
-  "scope": "Validated xBase, xordarray, xRMemData, xBehaviour and version-scoped xCounter profiles; compiler identity for other units remains unproven",
+  "scope": "Validated xBase, xordarray, xRMemData, xBehaviour and version-scoped xCounter and xBehaveGoalSimple profiles; compiler identity for other units remains unproven",
   "units": [
     {
       "source": "src/SB/Core/x/xBase.cpp",
@@ -297,6 +297,133 @@
           "symbol": "xCounterEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
           "hi_offset": 28,
           "lo_offset": 32
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xBehaveGoalSimple.cpp",
+      "target_unit": "SB/Core/x/xBehaveGoalSimple.cpp",
+      "object": "source/xBehaveGoalSimple.o",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "SysEvent": "SysEvent__12xGoalGenericFP5xBaseP5xBaseUiPCfP5xBasePi",
+        "Resume": "Resume__12xGoalGenericFfPv",
+        "Suspend": "Suspend__12xGoalGenericFfPv",
+        "Exit": "Exit__12xGoalGenericFfPv",
+        "Enter": "Enter__12xGoalGenericFfPv",
+        "GOALDestroy_Generic": "GOALDestroy_Generic__FP12xFactoryInst",
+        "GOALCreate_Generic": "GOALCreate_Generic__FiP10RyzMemGrowPv",
+        "xGoalSimple_RegisterTypes": "xGoalSimple_RegisterTypes__FP8xFactory"
+      },
+      "calls": [
+        {
+          "function": "GOALDestroy_Generic",
+          "offset": 12,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__dl__10RyzMemDataFPv",
+          "symbol": "__dl__10RyzMemDataFPv"
+        },
+        {
+          "function": "GOALCreate_Generic",
+          "offset": 60,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "GOALCreate_Generic",
+          "offset": 148,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "xGoalSimple_RegisterTypes",
+          "offset": 36,
+          "target_source": "SB/Core/x/xFactory.cpp",
+          "target_function": "RegItemType__8xFactoryFiPFiP10RyzMemGrowPv_P12xFactoryInstPFP12xFactoryInst_v",
+          "symbol": "RegItemType__8xFactoryFiPFiP10RyzMemGrowPv_P12xFactoryInstPFP12xFactoryInst_v"
+        },
+        {
+          "function": "xGoalSimple_RegisterTypes",
+          "offset": 68,
+          "target_source": "SB/Core/x/xFactory.cpp",
+          "target_function": "RegItemType__8xFactoryFiPFiP10RyzMemGrowPv_P12xFactoryInstPFP12xFactoryInst_v",
+          "symbol": "RegItemType__8xFactoryFiPFiP10RyzMemGrowPv_P12xFactoryInstPFP12xFactoryInst_v"
+        }
+      ],
+      "address_pairs": [
+        {
+          "function": "xGoalSimple_RegisterTypes",
+          "target_source": "SB/Core/x/xBehaveGoalSimple.cpp",
+          "target_function": "GOALCreate_Generic",
+          "symbol": "GOALCreate_Generic__FiP10RyzMemGrowPv",
+          "hi_offset": 12,
+          "lo_offset": 28,
+          "interleaved": true
+        },
+        {
+          "function": "xGoalSimple_RegisterTypes",
+          "target_source": "SB/Core/x/xBehaveGoalSimple.cpp",
+          "target_function": "GOALDestroy_Generic",
+          "symbol": "GOALDestroy_Generic__FP12xFactoryInst",
+          "hi_offset": 20,
+          "lo_offset": 40,
+          "interleaved": true
+        },
+        {
+          "function": "xGoalSimple_RegisterTypes",
+          "target_source": "SB/Core/x/xBehaveGoalSimple.cpp",
+          "target_function": "GOALCreate_Generic",
+          "symbol": "GOALCreate_Generic__FiP10RyzMemGrowPv",
+          "hi_offset": 48,
+          "lo_offset": 64,
+          "interleaved": true
+        },
+        {
+          "function": "xGoalSimple_RegisterTypes",
+          "target_source": "SB/Core/x/xBehaveGoalSimple.cpp",
+          "target_function": "GOALDestroy_Generic",
+          "symbol": "GOALDestroy_Generic__FP12xFactoryInst",
+          "hi_offset": 52,
+          "lo_offset": 72,
+          "interleaved": true
+        },
+        {
+          "function": "GOALCreate_Generic",
+          "target_data": "__vt__5xGoal",
+          "symbol": "__vt__5xGoal",
+          "hi_offset": 80,
+          "lo_offset": 96,
+          "interleaved": true
+        },
+        {
+          "function": "GOALCreate_Generic",
+          "target_data": "__vt__12xGoalGeneric",
+          "symbol": "__vt__12xGoalGeneric",
+          "hi_offset": 88,
+          "lo_offset": 104,
+          "interleaved": true
+        },
+        {
+          "function": "GOALCreate_Generic",
+          "target_data": "__vt__5xGoal",
+          "symbol": "__vt__5xGoal",
+          "hi_offset": 168,
+          "lo_offset": 184,
+          "interleaved": true
+        },
+        {
+          "function": "GOALCreate_Generic",
+          "target_data": "__vt__10xGoalEmpty",
+          "symbol": "__vt__10xGoalEmpty",
+          "hi_offset": 176,
+          "lo_offset": 192,
+          "interleaved": true
         }
       ]
     }

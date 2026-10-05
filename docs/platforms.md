@@ -176,6 +176,21 @@ extents, return delay slots and padding. `verify_reviewed.py` rechecks that proo
 Compiler-created RTTI, vtables and weak bodies remain outside this function
 comparison; the unit is not marked complete or retail-link verified.
 
+The unchanged `xBehaveGoalSimple.cpp` compiles as a whole unit and matches all
+eight original code bodies (680 bytes) in the three debug-bearing releases.
+Its profile covers the five callbacks, factory constructor/destructor and type
+registration; no nonmatching factory code is omitted. Original DWARF identifies
+all external calls, callback addresses and three vtable addresses. Five call
+relocations and eight HI16/LO16 pairs per version reproduce the retail bytes.
+The opt-in interleaved-pair validator checks each intervening instruction's
+register reads/writes and incoming direct control-flow edges using immutable
+retail bytes. A verified JAL immediately before LO is allowed because LO executes
+in its delay slot; carrying the high half in `$ra` is rejected. Unsupported
+instructions or other control transfers fail validation. The stripped France
+version remains excluded from this profile pending independent data identities.
+Matching these code bodies does not establish complete RTTI/vtable ownership,
+exception metadata or an executable link, so completion remains false.
+
 `config/platforms/ps2-toolchain.json` records archive/binary hashes, flags, and
 explicit symbol/call mappings. Three `R_MIPS_26` call relocations per version are
 restored only after identifying retail serializer targets independently. Reapplying

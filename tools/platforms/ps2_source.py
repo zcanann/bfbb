@@ -47,6 +47,59 @@ def profile_function_key(unit: dict, function: dict, linkages: dict[int, str]) -
     raise ValueError('Canonical profile requires the original DWARF linkage attribute')
 
 
+def validate_interleaved_pair(code: bytes, address: int, hi_offset: int, lo_offset: int,
+                              register: int, validated_calls: set[int]) -> None:
+    """Prove the observed straight-line LUI lifetime, including a call delay slot.
+
+    This is deliberately not a general MIPS instruction decoder. Only the
+    instructions present in the reviewed factory/constructor pairs are allowed;
+    each has explicit GPR reads and writes. Unknown instructions fail closed.
+    """
+    if register == 0:
+        raise ValueError('Address load cannot discard its result in $zero')
+    if hi_offset:
+        previous = struct.unpack_from('<I', code, hi_offset - 4)[0]
+        opcode, rs = previous >> 26, (previous >> 21) & 31
+        if (opcode in (1, 2, 3, 4, 5, 6, 7, 20, 21, 22, 23) or
+                opcode == 0 and previous & 63 in (8, 9) or
+                opcode in (16, 17, 18) and rs == 8):
+            raise ValueError('Address high-half definition cannot be a control-transfer delay slot')
+    for offset in range(hi_offset + 4, lo_offset, 4):
+        word = struct.unpack_from('<I', code, offset)[0]
+        opcode, rs, rt, rd = word >> 26, (word >> 21) & 31, (word >> 16) & 31, (word >> 11) & 31
+        if word == 0:  # NOP
+            reads, writes = set(), set()
+        elif opcode == 15 and rs == 0:  # LUI
+            reads, writes = set(), {rt}
+        elif opcode in (9, 13):  # ADDIU, ORI
+            reads, writes = {rs}, {rt}
+        elif opcode == 0 and word & 63 == 45 and (word >> 6) & 31 == 0:  # DADDU
+            reads, writes = {rs, rt}, {rd}
+        elif opcode in (31, 43, 63):  # SQ, SW, SD
+            reads, writes = {rs, rt}, set()
+        elif opcode == 3 and offset == lo_offset - 4 and offset in validated_calls:
+            # JAL writes $ra immediately; its callee executes after LO's delay slot.
+            reads, writes = set(), {31}
+        else:
+            raise ValueError('Unsupported instruction between address halves')
+        if register in reads or register in writes:
+            raise ValueError('Address high-half register is used or clobbered before LO')
+    # No direct edge may bypass the high-half definition. Reject even an edge
+    # originating within the interval: those shapes require separate CFG proof.
+    for offset in range(0, len(code), 4):
+        word = struct.unpack_from('<I', code, offset)[0]
+        opcode, rs = word >> 26, (word >> 21) & 31
+        destination = None
+        if opcode in (2, 3):
+            destination = ((address + offset + 4) & 0xf0000000) | ((word & 0x03ffffff) << 2)
+        elif (opcode in (1, 4, 5, 6, 7, 20, 21, 22, 23) or
+              opcode in (16, 17, 18) and rs == 8):
+            immediate = struct.unpack('<h', struct.pack('<H', word & 0xffff))[0]
+            destination = address + offset + 4 + immediate * 4
+        if destination is not None and address + hi_offset < destination <= address + lo_offset:
+            raise ValueError('Control flow enters an address pair after its high-half definition')
+
+
 def prepare_functions(functions: list[dict], binary: bytes, segments: list[dict],
                       executable_sha1: str, reviewed_targets: Path | None = None, *,
                       metadata: dict | None = None, address_anchors: list[dict] | None = None) -> list[dict]:
@@ -89,6 +142,7 @@ def prepare_functions(functions: list[dict], binary: bytes, segments: list[dict]
         by_name = {profile_function_key(unit, f, linkages): f for f in members}
         if len(by_name) != len(members) or set(by_name) != set(unit['symbols']):
             raise ValueError('Validated source profile does not cover the target unit exactly')
+        retail_code = {name: bytes(function['bytes']) for name, function in by_name.items()}
         for name, function in by_name.items():
             function['linkage_name'] = unit['symbols'][name]
         for call in unit['calls']:
@@ -117,8 +171,16 @@ def prepare_functions(functions: list[dict], binary: bytes, segments: list[dict]
                              'original_instruction':original, 'inverse_reconstruction_verified':True})
         for pair in unit.get('address_pairs', []):
             function = by_name[pair['function']]
-            key = (pair['target_source'], pair['target_function'])
-            destinations = callees.get(key, set())
+            if 'target_data' in pair:
+                if ('target_source' in pair or 'target_function' in pair or
+                        not any(s['name'] == '.debug' and s['size'] for s in (metadata or {}).get('sections', []))):
+                    raise ValueError('Data address pairs require original DWARF declarations')
+                destinations = {a['address'] for a in (address_anchors or [])
+                                if a['kind'] == 'data_address' and a['name'] == pair['target_data']
+                                and a.get('references')}
+            else:
+                key = (pair['target_source'], pair['target_function'])
+                destinations = callees.get(key, set())
             if len(destinations) != 1:
                 raise ValueError('Address pair lacks one independently named destination')
             destination = next(iter(destinations))
@@ -135,10 +197,13 @@ def prepare_functions(functions: list[dict], binary: bytes, segments: list[dict]
                     (lo >> 21) & 31 != register or (lo >> 16) & 31 != register or
                     (((hi & 0xffff) << 16) + signed_low) & 0xffffffff != destination):
                 raise ValueError('Retail address pair does not load the named destination')
-            # This profile only permits adjacent LUI/ADDIU, so no intervening
-            # instruction can clobber the high-half register.
             if lo_offset != hi_offset + 4:
-                raise ValueError('Nonadjacent address pairs require additional data-flow proof')
+                if pair.get('interleaved') is not True:
+                    raise ValueError('Nonadjacent address pairs require additional data-flow proof')
+                validated_calls = {call['offset'] for call in unit['calls']
+                                   if call['function'] == pair['function']}
+                validate_interleaved_pair(retail_code[pair['function']], function['low'], hi_offset, lo_offset,
+                                          register, validated_calls)
             for offset, word, kind, immediate in (
                     (hi_offset, hi, 5, ((destination + 0x8000) >> 16) & 0xffff),
                     (lo_offset, lo, 6, destination & 0xffff)):
