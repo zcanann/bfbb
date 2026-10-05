@@ -52,3 +52,20 @@ Both full production builds and strict reports pass: 11,936 matched bytes in
 functions retain their scores apart from the two improvements above. Independent
 GameCube compilation of actual xMath.cpp and iMath.cpp preserves every ordered
 allocated section; the shared header changes are Xbox-only.
+
+## Box containment return ownership
+
+A follow-up original comparison found that `xPointInBox` returns integer 1 from
+the successful innermost bound check and integer 0 from the fallback block.
+The Xbox source now uses those ordinary early returns, preserving comparison
+order and the previous GameCube/PS2 body. Merely removing the source's final
+byte cast was insufficient: its early zero value remained live across FNSTSW
+and required a saved register, unlike the original. No compiler flag changed.
+
+The complete shared xMath3 build now reproduces all 84 original function bytes
+literally, with no relocations. Both full production reports pass at 12,020
+matched bytes / 63 functions. Every other report unit and function is unchanged
+from the inline-helper result; code/data denominators and completion claims
+are unchanged. The actual GameCube xMath3 object retains all five ordered
+allocated sections byte for byte. Local evidence is
+`build/xbox222/final-verification.json` and `build/xbox222/gc/proof.json`.

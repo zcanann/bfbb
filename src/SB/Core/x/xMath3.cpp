@@ -82,6 +82,19 @@ void xLine3VecDist2(const xVec3* p1, const xVec3* p2, const xVec3* v, xIsect* is
 
 S32 xPointInBox(const xBox* b, const xVec3* p)
 {
+#if defined(XBOX)
+    if ((p->x >= b->lower.x) && (p->x <= b->upper.x))
+    {
+        if ((p->y >= b->lower.y) && (p->y <= b->upper.y))
+        {
+            if ((p->z >= b->lower.z) && (p->z <= b->upper.z))
+            {
+                return 1;
+            }
+        }
+    }
+    return 0;
+#else
     S32 ret = 0;
     if ((p->x >= b->lower.x) && (p->x <= b->upper.x))
     {
@@ -94,6 +107,7 @@ S32 xPointInBox(const xBox* b, const xVec3* p)
         }
     }
     return (char)ret;
+#endif
 }
 
 void xBoxInitBoundOBB(xBox* o, const xBox* b, const xMat4x3* m)
