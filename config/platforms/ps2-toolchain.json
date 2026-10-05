@@ -4846,6 +4846,40 @@
           "symbol": "gActiveHeap"
         }
       ]
+    },
+    {
+      "source": "src/SB/Core/x/xCollideFast.cpp",
+      "target_unit": "SB/Core/x/xCollideFast.cpp",
+      "object": "source/xCollideFast.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xRayHitsBoxFast__FPC5xRay3PC4xBox": "xRayHitsBoxFast__FPC5xRay3PC4xBox",
+        "xRayHitsSphereFast__FPC5xRay3PC7xSphere": "xRayHitsSphereFast__FPC5xRay3PC7xSphere",
+        "xCollideFastInit__FP6xScene": "xCollideFastInit__FP6xScene"
+      },
+      "calls": [
+        {
+          "function": "xRayHitsBoxFast__FPC5xRay3PC4xBox",
+          "offset": 20,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iBoxIsectRay__FPC4xBoxPC5xRay3P6xIsect",
+          "symbol": "iBoxIsectRay__FPC4xBoxPC5xRay3P6xIsect"
+        },
+        {
+          "function": "xCollideFastInit__FP6xScene",
+          "offset": 0,
+          "target_source": "SB/Core/p2/iCollideFast.cpp",
+          "target_function": "iCollideFastInit__FP6xScene",
+          "symbol": "iCollideFastInit__FP6xScene",
+          "opcode": 2
+        }
+      ],
+      "gp_relocations": []
     }
   ]
 }
