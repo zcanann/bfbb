@@ -108,10 +108,9 @@
       "host_entry": "tools/platforms/xbox_support/particle_entry.cpp",
       "symbols": {
         "xParMemInit()": "?xParMemInit@@YAXXZ",
-        "xParAlloc()": "?xParAlloc@@YAPAUxPar@@XZ",
         "xParInit(xPar*)": "?xParInit@@YAXPAUxPar@@@Z"
       },
-      "scope": "Three independently reviewed particle leaves from complete source compilation, with six explicit named data-address operands restored from real PE HIGHLOW records; no TU or executable completion claim",
+      "scope": "Two independently reviewed particle leaves from complete source compilation; the header-inline allocator is compared exactly once from its actual real particle-group source emission. No TU or executable completion claim.",
       "globals": {
         "gParPool": {
           "linkage_name": "?gParPool@@3PAUxPar@@A",
@@ -148,20 +147,6 @@
             "field": "displacement",
             "prefix": "890d"
           }
-        ],
-        "xParAlloc()": [
-          {
-            "symbol": "gParDead",
-            "addend": 0,
-            "field": "displacement",
-            "prefix": "a1"
-          },
-          {
-            "symbol": "gParDead",
-            "addend": 0,
-            "field": "displacement",
-            "prefix": "890d"
-          }
         ]
       }
     },
@@ -185,9 +170,10 @@
         "xParGroupUnregister(xParGroup*)": "?xParGroupUnregister@@YAXPAUxParGroup@@@Z",
         "xParGroupAnimate(xParGroup*,F32)": "?xParGroupAnimate@@YAXPAUxParGroup@@M@Z",
         "xParGroupAddPar(xParGroup*)": "?xParGroupAddPar@@YAPAUxPar@@PAUxParGroup@@@Z",
-        "xParGroupKillPar(xParGroup*,xPar*)": "?xParGroupKillPar@@YAXPAUxParGroup@@PAUxPar@@@Z"
+        "xParGroupKillPar(xParGroup*,xPar*)": "?xParGroupKillPar@@YAXPAUxParGroup@@PAUxPar@@@Z",
+        "xParAlloc()": "?xParAlloc@@YAPAUxPar@@XZ"
       },
-      "scope": "Five independently reviewed functions from full xParGroup.cpp and real xPar.cpp dependency compilation; all partial routines retained. CRT support excluded from source coverage.",
+      "scope": "Six independently reviewed functions from complete particle-group source compilation, including the actual group.obj header-inline allocator body. Original allocator definition/header TU is unknown; this reconstructed reporting group does not assert retail TU ownership. No TU or executable completion claim.",
       "globals": {
         "sParGroupRegTable": {
           "linkage_name": "?sParGroupRegTable@@3PAPAUxParGroup@@A",
@@ -240,7 +226,8 @@
           "xParGroupKillPar(xParGroup*,xPar*)",
           "xParInit(xPar*)"
         ],
-        "xParGroupKillPar(xParGroup*,xPar*)": []
+        "xParGroupKillPar(xParGroup*,xPar*)": [],
+        "xParAlloc()": []
       },
       "call_symbols": {
         "xParGroupRegisterInit()": {
@@ -253,7 +240,7 @@
         },
         "xParAlloc()": {
           "linkage_name": "?xParAlloc@@YAPAUxPar@@XZ",
-          "object": "particle.obj"
+          "object": "group.obj"
         },
         "xParInit(xPar*)": {
           "linkage_name": "?xParInit@@YAXPAUxPar@@@Z",
@@ -362,9 +349,23 @@
         ],
         "xParGroupAddPar(xParGroup*)": [
           {
+            "symbol": "gParDead",
+            "field": "displacement",
+            "prefix": "a1",
+            "addend": 0,
+            "count": 1
+          },
+          {
+            "symbol": "gParDead",
+            "field": "displacement",
+            "prefix": "890d",
+            "addend": 0,
+            "count": 1
+          },
+          {
             "symbol": "sParGroupRegTable",
             "field": "displacement",
-            "prefix": "8b0c8d",
+            "prefix": "8b0c95",
             "addend": 0,
             "count": 1
           },
@@ -390,6 +391,20 @@
             "prefix": "a3",
             "addend": 0,
             "count": 1
+          }
+        ],
+        "xParAlloc()": [
+          {
+            "symbol": "gParDead",
+            "addend": 0,
+            "field": "displacement",
+            "prefix": "a1"
+          },
+          {
+            "symbol": "gParDead",
+            "addend": 0,
+            "field": "displacement",
+            "prefix": "890d"
           }
         ]
       }

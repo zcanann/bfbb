@@ -5084,7 +5084,7 @@
       "name": "xParAlloc",
       "canonical_identifier": "xParAlloc()",
       "display_name": "xPar* xParAlloc()",
-      "source": "SB/Core/x/xPar.cpp",
+      "source": "SB/Core/x/xParGroup.cpp",
       "linkage_name": null,
       "address": 1350064,
       "size": 37,
@@ -5160,7 +5160,8 @@
           "size": 209,
           "sha256": "2985b56cfc4f295a2e2bbc596616c1b4f841a21931594f8cf4a77622ceef8099",
           "description": "Existing reviewed particle-group allocation caller passes the nonnull result directly to xParInit."
-        }
+        },
+        "source_ownership": "The original definition/header TU is unknown. The shared reference definition was in xPar.cpp; the reconstructed Xbox inline definition is in xPar.h. This reporting group uses the actual emitted group.obj body from complete xParGroup.cpp compilation, naturally called by xParGroupAddPar. It does not assert original TU ownership."
       }
     },
     {

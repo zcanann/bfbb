@@ -10568,7 +10568,7 @@
     {
       "name": "xParAlloc",
       "canonical_identifier": "xParAlloc()",
-      "source": "SB/Core/x/xPar.cpp",
+      "source": "SB/Core/x/xParGroup.cpp",
       "address": 1350064,
       "size": 37,
       "identity_kind": "reviewed"

@@ -201,3 +201,52 @@ The normal report commands above reproduce the result. Ignored local evidence
 is under build/xbox238: final-verification.json, original-store-proof.json,
 gc/proof.json, and both production reports with actual PE/MAP/source extents.
 No original or compiler binary is committed.
+
+
+## Allocator visibility and reconstructed reporting ownership
+
+A separate unchanged-body inline control recovers the remaining AddPar body.
+The original first allocation is embedded directly in AddPar, while its
+reclamation path calls the independently reviewed 37-byte allocator at
+0x1499b0. An ordinary Xbox header-inline xParAlloc reproduces that same choice:
+the actual complete xParGroup.cpp build naturally emits the 37-byte helper in
+group.obj and calls it once from AddPar. No host-entry call, forced emission,
+additional dependency, compiler flag, or implementation stub was added.
+
+The standalone xPar.cpp link no longer emits that inline helper. Its original
+reviewed source=xPar.cpp assignment came from the shared reference definition,
+not Xbox debug metadata. The original linkage name and original definition/header
+TU remain unknown. Following the existing xatan2 reporting precedent, only the
+allocator's reconstructed reporting group changes to xParGroup.cpp. Explicit
+metadata records the reference definition in xPar.cpp, the reconstructed inline
+body in xPar.h, and actual emitted group.obj owner. This is not a claim about
+original TU ownership.
+
+The profile moves the same canonical xParAlloc() comparison and its existing
+two data operands exactly once from the xPar.cpp report to the
+xParGroup.cpp source build. The strict main-source-object check is unchanged:
+all six compared bodies must actually belong to group.obj. Both original
+registries preserve every one of their 114 reviewed identities, addresses,
+sizes, original-byte hashes, call witnesses and operand proofs. The only
+registry change is that documented reporting source/provenance and its derived
+symbol entry/digest. No backend change was needed.
+
+Both complete reports preserve the old exact allocator and raise AddPar from
+72.83132% to **100% / 209 bytes**. Independently reconstructing both authenticated
+originals from the actual linked source proves all 37 allocator bytes after two
+real PE HIGHLOW operands, and all 209 AddPar bytes after four HIGHLOW operands
+and its three named direct calls. The original and source both keep the single
+reclamation-path allocator call. The first pop/clear sequence is inline in both.
+
+Totals become **13,501 matched bytes / 70 functions** per Xbox release. All
+2,556 known functions remain present exactly once and every other function score
+is unchanged. The original 1,798,760-byte code denominator and completion fields
+are unchanged. Regenerated COFF offsets shift only inside the two affected
+reporting units; original executable addresses do not move. All six reviewed
+functions / 880 bytes in the reconstructed group unit match, but this does not
+establish original TU completeness or a full executable relink. Sixteen ordered
+GameCube allocated sections remain byte-identical.
+
+Ignored evidence is under build/xbox240: header-owner-proof.json,
+final-verification.json, gc/proof.json, and both production PE/MAP/extents/reports.
+The earlier build/xbox238 evidence is preserved separately.
