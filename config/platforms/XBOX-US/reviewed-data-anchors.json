@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "version": "XBOX-US",
+  "executable_sha1": "983ffc6d84427996ce35d0d204930ae713113370",
+  "coverage_complete": false,
+  "retail_link_verified": false,
+  "anchors": [
+    {
+      "name": "gParPool",
+      "address": 3221776,
+      "size": 192000,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xPar.cpp",
+      "evidence": "Unique reviewed free-list initialization loop begins here, advances96 bytes, compares the explicit one-past end0x341710, and visits2000 particles. No data-byte progress is inferred."
+    },
+    {
+      "name": "gParDead",
+      "address": 3620284,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xPar.cpp",
+      "evidence": "Same global head read/published by the reviewed pool initialization and popped by the allocator, whose return is passed directly to the reviewed particle initializer."
+    }
+  ],
+  "pool_loop": {
+    "address": 1350000,
+    "size": 49,
+    "sha256": "ea1bb3a324b90a4e3fbdcea40fee479846f5e43eba14bea4c4655b454615947c",
+    "pool": "gParPool",
+    "head": "gParDead",
+    "stride": 96,
+    "count": 2000,
+    "end": 3413776
+  },
+  "scope": "Two manually reviewed writable data identities only; not a complete symbol registry or data-match claim."
+}

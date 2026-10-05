@@ -3,6 +3,7 @@
 
 #include "zEntPlayer.h"
 #include "zGameState.h"
+#include "iTime.h"
 
 extern _CurrentPlayer gPendingPlayer;
 extern U32 gLevelChanged;

@@ -39,9 +39,15 @@ def canonical_linkages(binary: bytes, metadata: dict) -> dict[int, str]:
 
 def profile_function_key(unit: dict, function: dict, linkages: dict[int, str]) -> str:
     """Select overloads explicitly; retain human-name keys for existing profiles."""
+    address = function.get('low', function.get('address'))
+    if unit.get('selector') == 'name_address':
+        # Stripped targets can have verified overloaded names but no DWARF linkage.
+        # Their explicit profile aliases come from recorded reference provenance.
+        if not isinstance(address, int):
+            raise ValueError('Address selector requires a verified function address')
+        return f"{function['name']}@{address:08x}"
     if unit.get('selector') != 'linkage_name':
         return function['name']
-    address = function.get('low', function.get('address'))
     if address in linkages:
         return linkages[address]
     raise ValueError('Canonical profile requires the original DWARF linkage attribute')
@@ -75,6 +81,8 @@ def validate_interleaved_pair(code: bytes, address: int, hi_offset: int, lo_offs
             reads, writes = {rs}, {rt}
         elif opcode == 0 and word & 63 == 45 and (word >> 6) & 31 == 0:  # DADDU
             reads, writes = {rs, rt}, {rd}
+        elif opcode == 35:  # LW
+            reads, writes = {rs}, {rt}
         elif opcode in (31, 43, 63):  # SQ, SW, SD
             reads, writes = {rs, rt}, set()
         elif opcode == 3 and offset == lo_offset - 4 and offset in validated_calls:
@@ -187,6 +195,22 @@ def prepare_functions(functions: list[dict], binary: bytes, segments: list[dict]
             if len(destinations) != 1:
                 raise ValueError('Address pair lacks one independently named destination')
             destination = next(iter(destinations))
+            lo_opcode = pair.get('lo_opcode', 9)
+            addend = pair.get('addend', 0)
+            if (type(lo_opcode) is not int or lo_opcode not in (9, 49, 57) or
+                    type(addend) is not int or addend < 0 or addend > 0x7fff or addend % 4):
+                raise ValueError('Unsupported address-pair opcode or component addend')
+            if lo_opcode == 9 and addend:
+                raise ValueError('ADDIU address pairs require a zero addend')
+            if lo_opcode != 9 and 'target_data' not in pair:
+                raise ValueError('Floating load/store address pairs require named data')
+            symbol_address = destination
+            destination += addend
+            if lo_opcode != 9 and not any(
+                    segment['type'] == 1 and segment['address'] <= destination and
+                    destination + 4 <= segment['address'] + segment['memory_size']
+                    for segment in (metadata or {}).get('segments', [])):
+                raise ValueError('Data component address is outside original memory')
             hi_offset, lo_offset = pair['hi_offset'], pair['lo_offset']
             code = bytearray(function['bytes'])
             if any(offset < 0 or offset % 4 or offset + 4 > len(code)
@@ -196,12 +220,15 @@ def prepare_functions(functions: list[dict], binary: bytes, segments: list[dict]
             lo = struct.unpack_from('<I', code, lo_offset)[0]
             register = (hi >> 16) & 31
             signed_low = struct.unpack('<h', struct.pack('<H', lo & 0xffff))[0]
-            if (hi >> 26 != 15 or (hi >> 21) & 31 or register == 0 or lo >> 26 != 9 or
-                    (lo >> 21) & 31 != register or (lo >> 16) & 31 != register or
+            if (hi >> 26 != 15 or (hi >> 21) & 31 or register == 0 or lo >> 26 != lo_opcode or
+                    (lo >> 21) & 31 != register or
+                    (lo_opcode == 9 and (lo >> 16) & 31 != register) or
                     (((hi & 0xffff) << 16) + signed_low) & 0xffffffff != destination):
                 raise ValueError('Retail address pair does not load the named destination')
-            if lo_offset != hi_offset + 4:
-                if pair.get('interleaved') is not True:
+            if lo_opcode != 9 and lo_offset != hi_offset + 4:
+                raise ValueError('Floating load/store address pairs must be adjacent')
+            if lo_offset != hi_offset + 4 or lo_opcode != 9:
+                if lo_offset != hi_offset + 4 and pair.get('interleaved') is not True:
                     raise ValueError('Nonadjacent address pairs require additional data-flow proof')
                 validated_calls = {call['offset'] for call in unit['calls']
                                    if call['function'] == pair['function']}
@@ -213,13 +240,17 @@ def prepare_functions(functions: list[dict], binary: bytes, segments: list[dict]
                 normalized = word & 0xffff0000
                 if normalized | immediate != word:
                     raise ValueError('Address relocation fails inverse reconstruction')
-                struct.pack_into('<I', code, offset, normalized)
+                # REL addends live in the instruction fields. Preserve the
+                # component displacement while removing the linked symbol base.
+                implicit_addend = ((addend + 0x8000) >> 16) if kind == 5 else addend
+                struct.pack_into('<I', code, offset, normalized | (implicit_addend & 0xffff))
                 function.setdefault('relocations', []).append(
                     {'offset': offset, 'symbol': pair['symbol'], 'type': kind})
                 restored.append({'function': function['name'], 'address': function['low'] + offset,
                                  'type': 'R_MIPS_HI16' if kind == 5 else 'R_MIPS_LO16',
                                  'symbol': pair['symbol'], 'target_address': destination,
-                                 'original_instruction': word, 'inverse_reconstruction_verified': True})
+                                 'original_instruction': word, 'inverse_reconstruction_verified': True,
+                                 **({'symbol_address': symbol_address, 'addend': addend} if addend else {})})
             function['bytes'] = bytes(code)
         for relocation in unit.get('gp_relocations', []):
             # Retail .reginfo establishes GP; DWARF independently establishes
@@ -229,8 +260,11 @@ def prepare_functions(functions: list[dict], binary: bytes, segments: list[dict]
             if len(reginfo) != 1:
                 raise ValueError('GP relocation requires one ELF .reginfo record')
             gp = struct.unpack_from('<I', binary, reginfo[0]['offset'] + 20)[0]
+            owner = relocation.get('target_source')
             addresses = {a['address'] for a in (address_anchors or [])
-                         if a['kind'] == 'data_address' and a['name'] == relocation['target_name']}
+                         if a['kind'] == 'data_address' and a['name'] == relocation['target_name']
+                         and (owner is None or any(_source_name(reference['source']) == owner
+                              for reference in a.get('references', [])))}
             if len(addresses) != 1:
                 raise ValueError('GP relocation lacks one independently named data address')
             destination = next(iter(addresses))

@@ -4,15 +4,25 @@
 
 #define PAR_POOL_SIZE 2000
 
-// volatile is a matching device: the original re-reads gParDead at the top of
-// every pool iteration instead of forwarding the value it just stored, and it
-// keeps the two NULL stores ahead of that read.
+// Outside Xbox, volatile is a matching device: the original re-reads gParDead
+// at the top of every pool iteration instead of forwarding its stored value,
+// and keeps the two NULL stores ahead of that read.
+#if defined(XBOX)
+// Xbox keeps the pool head in a register across initialization iterations.
+xPar gParPool[PAR_POOL_SIZE];
+xPar* gParDead;
+#else
 volatile xPar gParPool[PAR_POOL_SIZE];
 xPar* volatile gParDead;
+#endif
 
 void xParMemInit()
 {
+#if defined(XBOX)
+    xPar* curr;
+#else
     volatile xPar* curr;
+#endif
     xPar* dead;
     S32 i;
 

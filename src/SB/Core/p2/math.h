@@ -9,6 +9,7 @@ extern "C" {
 float sqrtf(float value);
 float powf(float base, float exponent);
 float fabsf(float value);
+float floorf(float value);
 
 #ifdef __cplusplus
 }
@@ -17,6 +18,7 @@ namespace std
 using ::sqrtf;
 using ::powf;
 using ::fabsf;
+using ::floorf;
 }
 #endif
 

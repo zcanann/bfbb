@@ -1,7 +1,8 @@
 """Compile full Xbox source units and compare explicitly reviewed linked leaves.
 
 LTCG objects contain intermediate code. The comparison objects therefore contain
-untouched final PE function bytes, independently bounded through decoded CFGs.
+final PE function bytes, independently bounded through decoded CFGs, with only
+explicitly reviewed address expressions restored from real PE HIGHLOW records.
 Host link support is never included in matching coverage or completion claims.
 """
 from __future__ import annotations
@@ -147,6 +148,9 @@ def _extract_functions(executable: Path, map_path: Path, unit: dict) -> tuple[li
     by_name = {f['name']: f for f in functions}
     addresses = sorted({f['address'] for f in functions if
                         text_address <= f['address'] < text_address + len(text)})
+    from .xbox_relocations import pe_provenance, source_globals, normalize, discover_source_expressions
+    sections, highlow = pe_provenance(executable)
+    anchors = source_globals(map_path, unit, sections)
     output, evidence = [], []
     for canonical, linkage in unit['symbols'].items():
         if linkage not in by_name:
@@ -159,9 +163,15 @@ def _extract_functions(executable: Path, map_path: Path, unit: dict) -> tuple[li
         extent = _leaf_extent(text, text_address, address, bound)
         offset = address - text_address
         body = text[offset:offset + extent['size']]
-        output.append({'symbol': canonical, 'bytes': body})
+        fields = {a - address for a in highlow if address <= a < address + len(body)}
+        expressions = discover_source_expressions(body,
+            unit.get('address_expressions', {}).get(canonical, []), anchors, fields)
+        normalized, relocations = normalize(body, expressions, anchors, fields)
+        output.append({'symbol': canonical, 'bytes': normalized, 'relocations': relocations})
         evidence.append({**extent, 'canonical_identifier': canonical, 'linkage_name': linkage,
-                         'source_object': function['object'], 'sha256': hashlib.sha256(body).hexdigest()})
+                         'source_object': function['object'], 'sha256': hashlib.sha256(body).hexdigest(),
+                         'address_expressions': expressions, 'source_globals': anchors,
+                         'normalized_sha256': hashlib.sha256(normalized).hexdigest()})
     return output, evidence
 
 
@@ -237,7 +247,7 @@ def compile_units(output: Path, compilers: Path, wine: Path | None = None) -> li
                        tool_path(ROOT / unit['source'])], 'compile-source')
         support = profile['host_context']
         run('cl.exe', [*profile['flags'], *includes, '/Foentry.obj',
-                       tool_path(ROOT / support['entry'])], 'compile-entry')
+                       tool_path(ROOT / unit.get('host_entry', support['entry']))], 'compile-entry')
         run('cl.exe', [*profile['flags'], *includes, '/MD', '/Foxatof.obj',
                        tool_path(ROOT / support['xatof'])], 'compile-host-xatof')
         run('cl.exe', ['/nologo', '/c', '/O2', '/Fofltused.obj',

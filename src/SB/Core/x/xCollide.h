@@ -20,37 +20,7 @@
 #define k_HIT_CALC_TRI ((U32)(1 << 13))
 #define k_HIT_0x20000 ((U32)(1 << 17))
 
-struct xModelInstance;
-
-struct xCollis
-{
-    struct tri_data
-    {
-        U32 index;
-        F32 r;
-        F32 d;
-    };
-
-    U32 flags;
-    U32 oid;
-    void* optr;
-    xModelInstance* mptr;
-    F32 dist; // 0x10
-    xVec3 norm;
-    xVec3 tohit;
-    xVec3 depen;
-    xVec3 hdng;
-    union
-    {
-        struct
-        {
-            F32 t;
-            F32 u;
-            F32 v;
-        } tuv;
-        tri_data tri;
-    };
-};
+#include "xCollideGeometry.h"
 
 struct xParabola
 {
@@ -127,11 +97,6 @@ S32 xSweptSphereToNonMoving(xSweptSphere* sws, xScene* sc, xEnt* mover, U8 collT
 S32 xSweptSphereToTriangle(xSweptSphere* sws, xVec3* v0, xVec3* v1, xVec3* v2);
 void xSweptSpherePrepare(xSweptSphere* sws, xVec3* start, xVec3* end, F32 radius);
 void xSweptSphereGetResults(xSweptSphere* sws);
-U32 xSphereHitsOBB_nu(const xSphere* s, const xBox* b, const xMat4x3* m, xCollis* coll);
-U32 xSphereHitsSphere(const xSphere* a, const xSphere* b, xCollis* coll);
-U32 xSphereHitsBox(const xSphere* a, const xBox* b, xCollis* coll);
-U32 xBoxHitsSphere(const xBox* a, const xSphere* b, xCollis* coll);
-U32 xBoxHitsObb(const xBox* a, const xBox* b, const xMat4x3* mat, xCollis* coll);
 bool xSphereHitsOBB(const xSphere&, const xBox&, const xMat4x3&);
 bool xSphereHitsSphere(const xVec3&, F32, const xVec3&, F32);
 bool xSphereHitsVCylinder(const xVec3& sc, F32 sr, const xVec3& cc, F32 cr, F32 ch);

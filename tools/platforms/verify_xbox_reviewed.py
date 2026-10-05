@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Recheck the reviewed Xbox hash extents against both authenticated originals.
+"""Recheck the reviewed Xbox function extents against both authenticated originals.
 
 This read-only evidence check validates region payload equivalence, exact extent
 hashes, recorded short branches/returns, saved-register instructions, direct-call
@@ -62,7 +62,7 @@ class Original:
                 f"{self.version}: CALL rel32 at {address:#x} does not target {target:#x}")
 
 
-def verify_functions(original: Original, document: dict) -> tuple[int, int]:
+def verify_functions(original: Original, document: dict, anchors: dict | None = None) -> tuple[int, int]:
     require(document["version"] == original.version and document["executable_sha1"] == original.sha1,
             "Reviewed metadata targets another executable")
     require(document["coverage_complete"] is False, "Partial reviewed coverage must remain explicit")
@@ -81,6 +81,9 @@ def verify_functions(original: Original, document: dict) -> tuple[int, int]:
                 f"{label}: invalid or unreviewed function")
         require(original.section(start, size)["name"] == ".text", f"{label}: not in .text")
         original.check_hash(function)
+        if function.get('address_expressions'):
+            from platforms.xbox_relocations import normalize
+            normalize(original.read(start, size), function['address_expressions'], anchors or {})
         evidence = function["corroboration"]
         require(evidence["return_address"] == end - 1 and original.read(end - 1, 1) == b"\xc3",
                 f"{label}: terminal RET boundary differs")
@@ -161,7 +164,12 @@ def verify(manifest: Path, orig_dir: Path, registry_root: Path) -> dict:
         peer = originals[proof["peer_version"]]
         require(peer.version != version and peer.sha1 == proof["peer_executable_sha1"] and proof["section_count"] == len(a),
                 "Recorded cross-version identity differs")
-        count, calls = verify_functions(original, document)
+        anchors_path = registry_root / version / 'reviewed-data-anchors.json'
+        anchors = None
+        if anchors_path.is_file():
+            from platforms.xbox_relocations import verify_original_anchors
+            anchors = verify_original_anchors(anchors_path, original)
+        count, calls = verify_functions(original, document, anchors)
         results[version] = {"functions": count, "bytes": sum(f["size"] for f in document["functions"]), "call_witnesses": calls}
         documents[version] = document
     require(documents[VERSIONS[0]]["functions"] == documents[VERSIONS[1]]["functions"],

@@ -66,6 +66,7 @@
 #include "xNPCBasic.h"
 #include "xString.h"
 #include "xstransvc.h"
+#include "xpkrsvc.h"
 #include "xDynAsset.h"
 #include "xParSys.h"
 #include "xParEmitter.h"

@@ -27,7 +27,7 @@
     "-inline",
     "deferred"
   ],
-  "scope": "Validated xBase, xordarray, xRMemData and xBehaviour profiles, plus debug-region xCounter, xBehaveGoalSimple, xSurface, xVolume and xQuickCull; compiler identity for other units remains unproven",
+  "scope": "Validated shared-source code comparison profiles for core units, including debug-region math, geometry and streaming consumers; incomplete units and unresolved runtime references remain explicit; France compiles six additional whole source units against all independently verified members currently available, without claiming complete ownership",
   "units": [
     {
       "source": "src/SB/Core/x/xBase.cpp",
@@ -762,6 +762,3388 @@
           "target_function": "xQuickCullInit__FP10xQCControlffffff",
           "symbol": "xQuickCullInit__FP10xQCControlffffff",
           "opcode": 2
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xPar.cpp",
+      "target_unit": "SB/Core/x/xPar.cpp",
+      "object": "source/xPar.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xParInit__FP4xPar": "xParInit__FP4xPar",
+        "xParFree__FP4xPar": "xParFree__FP4xPar",
+        "xParAlloc__Fv": "xParAlloc__Fv",
+        "xParMemInit__Fv": "xParMemInit__Fv"
+      },
+      "calls": [],
+      "gp_relocations": [
+        {
+          "function": "xParFree__FP4xPar",
+          "offset": 48,
+          "target_name": "gParDead",
+          "symbol": "gParDead",
+          "opcode": 35
+        },
+        {
+          "function": "xParFree__FP4xPar",
+          "offset": 64,
+          "target_name": "gParDead",
+          "symbol": "gParDead",
+          "opcode": 35
+        },
+        {
+          "function": "xParFree__FP4xPar",
+          "offset": 80,
+          "target_name": "gParDead",
+          "symbol": "gParDead",
+          "opcode": 43
+        },
+        {
+          "function": "xParAlloc__Fv",
+          "offset": 0,
+          "target_name": "gParDead",
+          "symbol": "gParDead",
+          "opcode": 35
+        },
+        {
+          "function": "xParAlloc__Fv",
+          "offset": 44,
+          "target_name": "gParDead",
+          "symbol": "gParDead",
+          "opcode": 43
+        },
+        {
+          "function": "xParMemInit__Fv",
+          "offset": 24,
+          "target_name": "gParDead",
+          "symbol": "gParDead",
+          "opcode": 35
+        },
+        {
+          "function": "xParMemInit__Fv",
+          "offset": 40,
+          "target_name": "gParDead",
+          "symbol": "gParDead",
+          "opcode": 35
+        },
+        {
+          "function": "xParMemInit__Fv",
+          "offset": 52,
+          "target_name": "gParDead",
+          "symbol": "gParDead",
+          "opcode": 43
+        }
+      ],
+      "address_pairs": [
+        {
+          "function": "xParMemInit__Fv",
+          "hi_offset": 0,
+          "lo_offset": 8,
+          "symbol": "gParPool",
+          "target_data": "gParPool",
+          "interleaved": true
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xFactory.cpp",
+      "target_unit": "SB/Core/x/xFactory.cpp",
+      "object": "source/xFactory.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "OrdComp_infotype__FPvPv": "OrdComp_infotype__FPvPv",
+        "OrdTest_infotype__FPCvPv": "OrdTest_infotype__FPCvPv",
+        "DestroyItem__8xFactoryFP12xFactoryInst": "DestroyItem__8xFactoryFP12xFactoryInst",
+        "DestroyAll__8xFactoryFv": "DestroyAll__8xFactoryFv",
+        "CreateItem__8xFactoryFiPvP10RyzMemGrow": "CreateItem__8xFactoryFiPvP10RyzMemGrow",
+        "GrowDataDisable__8xFactoryFv": "GrowDataDisable__8xFactoryFv",
+        "GrowDataEnable__8xFactoryFP5xBasei": "GrowDataEnable__8xFactoryFP5xBasei",
+        "RegItemType__8xFactoryFiPFiP10RyzMemGrowPv_P12xFactoryInstPFP12xFactoryInst_v": "RegItemType__8xFactoryFiPFiP10RyzMemGrowPv_P12xFactoryInstPFP12xFactoryInst_v",
+        "RegItemType__8xFactoryFP12XGOFTypeInfo": "RegItemType__8xFactoryFP12XGOFTypeInfo",
+        "__dt__8xFactoryFv": "__dt__8xFactoryFv",
+        "__ct__8xFactoryFi": "__ct__8xFactoryFi"
+      },
+      "calls": [
+        {
+          "function": "DestroyItem__8xFactoryFP12xFactoryInst",
+          "offset": 180,
+          "target_source": "SB/Core/x/xordarray.cpp",
+          "target_function": "XOrdLookup__FP16st_XORDEREDARRAYPCvPFPCvPv_i",
+          "symbol": "XOrdLookup__FP16st_XORDEREDARRAYPCvPFPCvPv_i"
+        },
+        {
+          "function": "DestroyAll__8xFactoryFv",
+          "offset": 24,
+          "target_source": "SB/Core/x/xFactory.cpp",
+          "target_function": "DestroyItem__8xFactoryFP12xFactoryInst",
+          "symbol": "DestroyItem__8xFactoryFP12xFactoryInst"
+        },
+        {
+          "function": "CreateItem__8xFactoryFiPvP10RyzMemGrow",
+          "offset": 92,
+          "target_source": "SB/Core/x/xordarray.cpp",
+          "target_function": "XOrdLookup__FP16st_XORDEREDARRAYPCvPFPCvPv_i",
+          "symbol": "XOrdLookup__FP16st_XORDEREDARRAYPCvPFPCvPv_i"
+        },
+        {
+          "function": "GrowDataDisable__8xFactoryFv",
+          "offset": 0,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "Done__10RyzMemGrowFv",
+          "symbol": "Done__10RyzMemGrowFv",
+          "opcode": 2
+        },
+        {
+          "function": "GrowDataEnable__8xFactoryFP5xBasei",
+          "offset": 12,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "Resume__10RyzMemGrowFP5xBase",
+          "symbol": "Resume__10RyzMemGrowFP5xBase"
+        },
+        {
+          "function": "GrowDataEnable__8xFactoryFP5xBasei",
+          "offset": 32,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "Init__10RyzMemGrowFP5xBase",
+          "symbol": "Init__10RyzMemGrowFP5xBase"
+        },
+        {
+          "function": "RegItemType__8xFactoryFiPFiP10RyzMemGrowPv_P12xFactoryInstPFP12xFactoryInst_v",
+          "offset": 56,
+          "target_source": "SB/Core/x/xFactory.cpp",
+          "target_function": "RegItemType__8xFactoryFP12XGOFTypeInfo",
+          "symbol": "RegItemType__8xFactoryFP12XGOFTypeInfo"
+        },
+        {
+          "function": "RegItemType__8xFactoryFP12XGOFTypeInfo",
+          "offset": 132,
+          "target_source": "SB/Core/x/xordarray.cpp",
+          "target_function": "XOrdLookup__FP16st_XORDEREDARRAYPCvPFPCvPv_i",
+          "symbol": "XOrdLookup__FP16st_XORDEREDARRAYPCvPFPCvPv_i"
+        },
+        {
+          "function": "RegItemType__8xFactoryFP12XGOFTypeInfo",
+          "offset": 216,
+          "target_source": "SB/Core/x/xordarray.cpp",
+          "target_function": "XOrdInsert__FP16st_XORDEREDARRAYPvPFPvPv_i",
+          "symbol": "XOrdInsert__FP16st_XORDEREDARRAYPvPFPvPv_i"
+        },
+        {
+          "function": "__dt__8xFactoryFv",
+          "offset": 36,
+          "target_source": "SB/Core/x/xordarray.cpp",
+          "target_function": "XOrdDone__FP16st_XORDEREDARRAYi",
+          "symbol": "XOrdDone__FP16st_XORDEREDARRAYi"
+        },
+        {
+          "function": "__dt__8xFactoryFv",
+          "offset": 60,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__dl__10RyzMemDataFPv",
+          "symbol": "__dl__10RyzMemDataFPv"
+        },
+        {
+          "function": "__ct__8xFactoryFi",
+          "offset": 48,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "__ct__8xFactoryFi",
+          "offset": 68,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "__ct__8xFactoryFi",
+          "offset": 84,
+          "target_source": "SB/Core/x/xordarray.cpp",
+          "target_function": "XOrdInit__FP16st_XORDEREDARRAYii",
+          "symbol": "XOrdInit__FP16st_XORDEREDARRAYii"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "__ct__8xFactoryFi",
+          "offset": 40,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap",
+          "opcode": 35
+        }
+      ],
+      "address_pairs": [
+        {
+          "function": "DestroyItem__8xFactoryFP12xFactoryInst",
+          "hi_offset": 160,
+          "lo_offset": 176,
+          "symbol": "OrdTest_infotype__FPCvPv",
+          "target_source": "SB/Core/x/xFactory.cpp",
+          "target_function": "OrdTest_infotype__FPCvPv",
+          "interleaved": true
+        },
+        {
+          "function": "RegItemType__8xFactoryFP12XGOFTypeInfo",
+          "hi_offset": 120,
+          "lo_offset": 136,
+          "symbol": "OrdTest_infotype__FPCvPv",
+          "target_source": "SB/Core/x/xFactory.cpp",
+          "target_function": "OrdTest_infotype__FPCvPv",
+          "interleaved": true
+        },
+        {
+          "function": "RegItemType__8xFactoryFP12XGOFTypeInfo",
+          "hi_offset": 164,
+          "lo_offset": 180,
+          "symbol": "OrdComp_infotype__FPvPv",
+          "target_source": "SB/Core/x/xFactory.cpp",
+          "target_function": "OrdComp_infotype__FPvPv",
+          "interleaved": true
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xParGroup.cpp",
+      "target_unit": "SB/Core/x/xParGroup.cpp",
+      "object": "source/xParGroup.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xParGroupKillPar__FP9xParGroupP4xPar": "xParGroupKillPar__FP9xParGroupP4xPar",
+        "xParGroupAddPar__FP9xParGroup": "xParGroupAddPar__FP9xParGroup",
+        "xParGroupAnimate__FP9xParGroupf": "xParGroupAnimate__FP9xParGroupf",
+        "xParGroupKillAllParticles__FP9xParGroup": "xParGroupKillAllParticles__FP9xParGroup",
+        "xParGroupSetActive__FP9xParGroupUi": "xParGroupSetActive__FP9xParGroupUi",
+        "xParGroupUnregister__FP9xParGroup": "xParGroupUnregister__FP9xParGroup",
+        "xParGroupRegister__FP9xParGroup": "xParGroupRegister__FP9xParGroup",
+        "xParGroupSetPriority__FP9xParGroupUc": "xParGroupSetPriority__FP9xParGroupUc",
+        "xParGroupSetVisibility__FP9xParGroupi": "xParGroupSetVisibility__FP9xParGroupi",
+        "xParGroupSetBack2Life__FP9xParGroupi": "xParGroupSetBack2Life__FP9xParGroupi",
+        "xParGroupSetAging__FP9xParGroupi": "xParGroupSetAging__FP9xParGroupi",
+        "xParGroupInit__FP9xParGroup": "xParGroupInit__FP9xParGroup"
+      },
+      "calls": [
+        {
+          "function": "xParGroupKillPar__FP9xParGroupP4xPar",
+          "offset": 148,
+          "target_source": "SB/Core/x/xPar.cpp",
+          "target_function": "xParFree__FP4xPar",
+          "symbol": "xParFree__FP4xPar"
+        },
+        {
+          "function": "xParGroupAddPar__FP9xParGroup",
+          "offset": 32,
+          "target_source": "SB/Core/x/xPar.cpp",
+          "target_function": "xParAlloc__Fv",
+          "symbol": "xParAlloc__Fv"
+        },
+        {
+          "function": "xParGroupAddPar__FP9xParGroup",
+          "offset": 164,
+          "target_source": "SB/Core/x/xParGroup.cpp",
+          "target_function": "xParGroupKillPar__FP9xParGroupP4xPar",
+          "symbol": "xParGroupKillPar__FP9xParGroupP4xPar"
+        },
+        {
+          "function": "xParGroupAddPar__FP9xParGroup",
+          "offset": 172,
+          "target_source": "SB/Core/x/xPar.cpp",
+          "target_function": "xParAlloc__Fv",
+          "symbol": "xParAlloc__Fv"
+        },
+        {
+          "function": "xParGroupAddPar__FP9xParGroup",
+          "offset": 280,
+          "target_source": "SB/Core/x/xPar.cpp",
+          "target_function": "xParInit__FP4xPar",
+          "symbol": "xParInit__FP4xPar"
+        },
+        {
+          "function": "xParGroupAnimate__FP9xParGroupf",
+          "offset": 116,
+          "target_source": "SB/Core/x/xParGroup.cpp",
+          "target_function": "xParGroupKillPar__FP9xParGroupP4xPar",
+          "symbol": "xParGroupKillPar__FP9xParGroupP4xPar"
+        },
+        {
+          "function": "xParGroupKillAllParticles__FP9xParGroup",
+          "offset": 40,
+          "target_source": "SB/Core/x/xParGroup.cpp",
+          "target_function": "xParGroupKillPar__FP9xParGroupP4xPar",
+          "symbol": "xParGroupKillPar__FP9xParGroupP4xPar"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xParGroupRegister__FP9xParGroup",
+          "offset": 0,
+          "target_name": "sParGroupRegTableInit",
+          "symbol": "sParGroupRegTableInit",
+          "opcode": 35
+        },
+        {
+          "function": "xParGroupRegister__FP9xParGroup",
+          "offset": 120,
+          "target_name": "sParGroupRegTableInit",
+          "symbol": "sParGroupRegTableInit",
+          "opcode": 43
+        },
+        {
+          "function": "xParGroupRegister__FP9xParGroup",
+          "offset": 124,
+          "target_name": "sParGroupRegTableCount",
+          "symbol": "sParGroupRegTableCount",
+          "opcode": 43
+        }
+      ],
+      "address_pairs": [
+        {
+          "function": "xParGroupAddPar__FP9xParGroup",
+          "hi_offset": 56,
+          "lo_offset": 64,
+          "symbol": "sParGroupRegTable",
+          "target_data": "sParGroupRegTable",
+          "interleaved": true
+        },
+        {
+          "function": "xParGroupAddPar__FP9xParGroup",
+          "hi_offset": 144,
+          "lo_offset": 148,
+          "symbol": "sParGroupRegTable",
+          "target_data": "sParGroupRegTable"
+        },
+        {
+          "function": "xParGroupUnregister__FP9xParGroup",
+          "hi_offset": 0,
+          "lo_offset": 8,
+          "symbol": "sParGroupRegTable",
+          "target_data": "sParGroupRegTable",
+          "interleaved": true
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xString.cpp",
+      "target_unit": "SB/Core/x/xString.cpp",
+      "object": "source/xString.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "find_char__FRC6substrRC6substr": "find_char__FRC6substrRC6substr",
+        "atox__FRC6substrRUi": "atox__FRC6substrRUi",
+        "icompare__FRC6substrRC6substr": "icompare__FRC6substrRC6substr",
+        "imemcmp__FPCvPCvUi": "imemcmp__FPCvPCvUi",
+        "xStrParseFloatList__FPfPCci": "xStrParseFloatList__FPfPCci",
+        "xStrupr__FPc": "xStrupr__FPc",
+        "xStricmp__FPCcPCc": "xStricmp__FPCcPCc",
+        "xStrTokBuffer__FPCcPCcPv": "xStrTokBuffer__FPCcPCcPv",
+        "xStrTok__FPcPCcPPc": "xStrTok__FPcPCcPPc",
+        "xStrHashCat__FUiPCc": "xStrHashCat__FUiPCc",
+        "xStrHash__FPCcUi": "xStrHash__FPCcUi",
+        "xStrHash__FPCc": "xStrHash__FPCc"
+      },
+      "calls": [
+        {
+          "function": "xStrParseFloatList__FPfPCci",
+          "offset": 400,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xatof__FPCc",
+          "symbol": "xatof__FPCc"
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xMath.cpp",
+      "target_unit": "SB/Core/x/xMath.cpp",
+      "object": "source/xMath.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xFuncPiece_ShiftPiece__FP10xFuncPieceP10xFuncPiecef": "xFuncPiece_ShiftPiece__FP10xFuncPieceP10xFuncPiecef",
+        "xFuncPiece_EndPoints__FP10xFuncPieceffff": "xFuncPiece_EndPoints__FP10xFuncPieceffff",
+        "xFuncPiece_Eval__FP10xFuncPiecefPP10xFuncPiece": "xFuncPiece_Eval__FP10xFuncPiecefPP10xFuncPiece",
+        "xAccelStop__FRfRfff": "xAccelStop__FRfRfff",
+        "xAccelMove__FRfRffff": "xAccelMove__FRfRffff",
+        "xAccelMoveTime__Fffff": "xAccelMoveTime__Fffff",
+        "xAccelMove__FRfRfffff": "xAccelMove__FRfRfffff",
+        "xDangleClamp__Ff": "xDangleClamp__Ff",
+        "xAngleClampFast__Ff": "xAngleClampFast__Ff",
+        "xAngleClamp__Ff": "xAngleClamp__Ff",
+        "xMathSolveCubic__FffffPfPfPf": "xMathSolveCubic__FffffPfPfPf",
+        "xMathSolveQuadratic__FfffPfPf": "xMathSolveQuadratic__FfffPfPf",
+        "xurand__Fv": "xurand__Fv",
+        "xrand__Fv": "xrand__Fv",
+        "xsrand__FUi": "xsrand__FUi",
+        "xatof__FPCc": "xatof__FPCc",
+        "xMathExit__Fv": "xMathExit__Fv",
+        "xMathInit__Fv": "xMathInit__Fv"
+      },
+      "calls": [
+        {
+          "function": "xFuncPiece_EndPoints__FP10xFuncPieceffff",
+          "offset": 52,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xFuncPiece_ShiftPiece__FP10xFuncPieceP10xFuncPiecef",
+          "symbol": "xFuncPiece_ShiftPiece__FP10xFuncPieceP10xFuncPiecef",
+          "opcode": 2
+        },
+        {
+          "function": "xAccelMove__FRfRfffff",
+          "offset": 396,
+          "target_source": "SB/Core/x/xMath.h",
+          "target_function": "range_limit<f>__Ffff_f",
+          "symbol": "range_limit<f>__Ffff_f"
+        },
+        {
+          "function": "xMathSolveCubic__FffffPfPfPf",
+          "offset": 64,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xMathSolveQuadratic__FfffPfPf",
+          "symbol": "xMathSolveQuadratic__FfffPfPf"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xurand__Fv",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "rndseed",
+          "symbol": "rndseed"
+        },
+        {
+          "function": "xurand__Fv",
+          "offset": 28,
+          "opcode": 43,
+          "target_name": "rndseed",
+          "symbol": "rndseed"
+        },
+        {
+          "function": "xurand__Fv",
+          "offset": 32,
+          "opcode": 35,
+          "target_name": "rndseed",
+          "symbol": "rndseed"
+        },
+        {
+          "function": "xrand__Fv",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "rndseed",
+          "symbol": "rndseed"
+        },
+        {
+          "function": "xrand__Fv",
+          "offset": 20,
+          "opcode": 43,
+          "target_name": "rndseed",
+          "symbol": "rndseed"
+        },
+        {
+          "function": "xrand__Fv",
+          "offset": 28,
+          "opcode": 35,
+          "target_name": "rndseed",
+          "symbol": "rndseed"
+        },
+        {
+          "function": "xsrand__FUi",
+          "offset": 4,
+          "opcode": 43,
+          "target_name": "rndseed",
+          "symbol": "rndseed"
+        },
+        {
+          "function": "xMathExit__Fv",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "xmath_exited",
+          "symbol": "xmath_exited"
+        },
+        {
+          "function": "xMathExit__Fv",
+          "offset": 12,
+          "opcode": 43,
+          "target_name": "xmath_exited",
+          "symbol": "xmath_exited"
+        },
+        {
+          "function": "xMathInit__Fv",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "xmath_inited",
+          "symbol": "xmath_inited"
+        },
+        {
+          "function": "xMathInit__Fv",
+          "offset": 12,
+          "opcode": 43,
+          "target_name": "rndseed",
+          "symbol": "rndseed"
+        },
+        {
+          "function": "xMathInit__Fv",
+          "offset": 16,
+          "opcode": 43,
+          "target_name": "xmath_inited",
+          "symbol": "xmath_inited"
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xJaw.cpp",
+      "target_unit": "SB/Core/x/xJaw.cpp",
+      "object": "source/xJaw.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xJaw_EvalData__FPvf": "xJaw_EvalData__FPvf",
+        "xJaw_FindData__FUi": "xJaw_FindData__FUi"
+      },
+      "calls": [
+        {
+          "function": "xJaw_FindData__FUi",
+          "offset": 28,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTAssetCountByType__FUi",
+          "symbol": "xSTAssetCountByType__FUi"
+        },
+        {
+          "function": "xJaw_FindData__FUi",
+          "offset": 68,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAssetByType__FUiiPUi",
+          "symbol": "xSTFindAssetByType__FUiiPUi"
+        },
+        {
+          "function": "xJaw_FindData__FUi",
+          "offset": 192,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTAssetName__FUi",
+          "symbol": "xSTAssetName__FUi"
+        }
+      ],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/x/xVec3.cpp",
+      "target_unit": "SB/Core/x/xVec3.cpp",
+      "object": "source/xVec3.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xVec3NormalizeFast__FP5xVec3PC5xVec3": "xVec3NormalizeFast__FP5xVec3PC5xVec3",
+        "xVec3Normalize__FP5xVec3PC5xVec3": "xVec3Normalize__FP5xVec3PC5xVec3"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Core/x/xMath3.cpp",
+      "target_unit": "SB/Core/x/xMath3.cpp",
+      "object": "source/xMath3.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xQuatDiff__FP5xQuatPC5xQuatPC5xQuat": "xQuatDiff__FP5xQuatPC5xQuatPC5xQuat",
+        "xQuatMul__FP5xQuatPC5xQuatPC5xQuat": "xQuatMul__FP5xQuatPC5xQuatPC5xQuat",
+        "xQuatSlerp__FP5xQuatPC5xQuatPC5xQuatf": "xQuatSlerp__FP5xQuatPC5xQuatPC5xQuatf",
+        "xQuatNormalize__FP5xQuatPC5xQuat": "xQuatNormalize__FP5xQuatPC5xQuat",
+        "xQuatToAxisAngle__FPC5xQuatP5xVec3Pf": "xQuatToAxisAngle__FPC5xQuatP5xVec3Pf",
+        "xQuatToMat__FPC5xQuatP7xMat3x3": "xQuatToMat__FPC5xQuatP7xMat3x3",
+        "xQuatFromAxisAngle__FP5xQuatPC5xVec3f": "xQuatFromAxisAngle__FP5xQuatPC5xVec3f",
+        "xQuatFromMat__FP5xQuatPC7xMat3x3": "xQuatFromMat__FP5xQuatPC7xMat3x3",
+        "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3",
+        "xMat4x3Rot__FP7xMat4x3PC5xVec3fPC5xVec3": "xMat4x3Rot__FP7xMat4x3PC5xVec3fPC5xVec3",
+        "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+        "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3",
+        "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3",
+        "xMat3x3Transpose__FP7xMat3x3PC7xMat3x3": "xMat3x3Transpose__FP7xMat3x3PC7xMat3x3",
+        "xMat3x3RMulRotY__FP7xMat3x3PC7xMat3x3f": "xMat3x3RMulRotY__FP7xMat3x3PC7xMat3x3f",
+        "xMat3x3ScaleC__FP7xMat3x3fff": "xMat3x3ScaleC__FP7xMat3x3fff",
+        "xMat3x3RotZ__FP7xMat3x3f": "xMat3x3RotZ__FP7xMat3x3f",
+        "xMat3x3RotY__FP7xMat3x3f": "xMat3x3RotY__FP7xMat3x3f",
+        "xMat3x3RotX__FP7xMat3x3f": "xMat3x3RotX__FP7xMat3x3f",
+        "xMat3x3RotC__FP7xMat3x3ffff": "xMat3x3RotC__FP7xMat3x3ffff",
+        "xMat3x3Euler__FP7xMat3x3fff": "xMat3x3Euler__FP7xMat3x3fff",
+        "xMat3x3Euler__FP7xMat3x3PC5xVec3": "xMat3x3Euler__FP7xMat3x3PC5xVec3",
+        "xMat3x3LookVec__FP7xMat3x3PC5xVec3": "xMat3x3LookVec__FP7xMat3x3PC5xVec3",
+        "xMat4x3MoveLocalAt__FP7xMat4x3f": "xMat4x3MoveLocalAt__FP7xMat4x3f",
+        "xMat4x3MoveLocalUp__FP7xMat4x3f": "xMat4x3MoveLocalUp__FP7xMat4x3f",
+        "xMat4x3MoveLocalRight__FP7xMat4x3f": "xMat4x3MoveLocalRight__FP7xMat4x3f",
+        "xMat3x3GetEuler__FPC7xMat3x3P5xVec3": "xMat3x3GetEuler__FPC7xMat3x3P5xVec3",
+        "xMat3x3Normalize__FP7xMat3x3PC7xMat3x3": "xMat3x3Normalize__FP7xMat3x3PC7xMat3x3",
+        "xBoxFromCone__FR4xBoxRC5xVec3RC5xVec3fff": "xBoxFromCone__FR4xBoxRC5xVec3RC5xVec3fff",
+        "xBoxInitBoundCapsule__FP4xBoxPC8xCapsule": "xBoxInitBoundCapsule__FP4xBoxPC8xCapsule",
+        "xBoxInitBoundOBB__FP4xBoxPC4xBoxPC7xMat4x3": "xBoxInitBoundOBB__FP4xBoxPC4xBoxPC7xMat4x3",
+        "xPointInBox__FPC4xBoxPC5xVec3": "xPointInBox__FPC4xBoxPC5xVec3",
+        "xLine3VecDist2__FPC5xVec3PC5xVec3PC5xVec3P6xIsect": "xLine3VecDist2__FPC5xVec3PC5xVec3PC5xVec3P6xIsect",
+        "xMath3Exit__Fv": "xMath3Exit__Fv",
+        "xMath3Init__Fv": "xMath3Init__Fv"
+      },
+      "calls": [
+        {
+          "function": "xQuatDiff__FP5xQuatPC5xQuatPC5xQuat",
+          "offset": 60,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xQuatMul__FP5xQuatPC5xQuatPC5xQuat",
+          "symbol": "xQuatMul__FP5xQuatPC5xQuatPC5xQuat"
+        },
+        {
+          "function": "xQuatMul__FP5xQuatPC5xQuatPC5xQuat",
+          "offset": 128,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xQuatNormalize__FP5xQuatPC5xQuat",
+          "symbol": "xQuatNormalize__FP5xQuatPC5xQuat",
+          "opcode": 2
+        },
+        {
+          "function": "xQuatSlerp__FP5xQuatPC5xQuatPC5xQuatf",
+          "offset": 376,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xQuatNormalize__FP5xQuatPC5xQuat",
+          "symbol": "xQuatNormalize__FP5xQuatPC5xQuat"
+        },
+        {
+          "function": "xQuatToAxisAngle__FPC5xQuatP5xVec3Pf",
+          "offset": 60,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3",
+          "offset": 144,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3",
+          "symbol": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3"
+        },
+        {
+          "function": "xMat4x3Rot__FP7xMat4x3PC5xVec3fPC5xVec3",
+          "offset": 48,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3RotC__FP7xMat3x3ffff",
+          "symbol": "xMat3x3RotC__FP7xMat3x3ffff"
+        },
+        {
+          "function": "xMat4x3Rot__FP7xMat4x3PC5xVec3fPC5xVec3",
+          "offset": 264,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3",
+          "symbol": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3"
+        },
+        {
+          "function": "xMat3x3Euler__FP7xMat3x3PC5xVec3",
+          "offset": 8,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Euler__FP7xMat3x3fff",
+          "symbol": "xMat3x3Euler__FP7xMat3x3fff",
+          "opcode": 2
+        },
+        {
+          "function": "xMat3x3LookVec__FP7xMat3x3PC5xVec3",
+          "offset": 28,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xMat3x3LookVec__FP7xMat3x3PC5xVec3",
+          "offset": 404,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xMat3x3GetEuler__FPC7xMat3x3P5xVec3",
+          "offset": 108,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xAngleClampFast__Ff",
+          "symbol": "xAngleClampFast__Ff"
+        },
+        {
+          "function": "xMat3x3GetEuler__FPC7xMat3x3P5xVec3",
+          "offset": 132,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xAngleClampFast__Ff",
+          "symbol": "xAngleClampFast__Ff"
+        },
+        {
+          "function": "xMat3x3GetEuler__FPC7xMat3x3P5xVec3",
+          "offset": 168,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xAngleClampFast__Ff",
+          "symbol": "xAngleClampFast__Ff"
+        },
+        {
+          "function": "xMat3x3GetEuler__FPC7xMat3x3P5xVec3",
+          "offset": 208,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xAngleClampFast__Ff",
+          "symbol": "xAngleClampFast__Ff"
+        },
+        {
+          "function": "xMat3x3Normalize__FP7xMat3x3PC7xMat3x3",
+          "offset": 20,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xMat3x3Normalize__FP7xMat3x3PC7xMat3x3",
+          "offset": 32,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xMat3x3Normalize__FP7xMat3x3PC7xMat3x3",
+          "offset": 44,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xBoxFromCone__FR4xBoxRC5xVec3RC5xVec3fff",
+          "offset": 112,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xsqrt__Ff",
+          "symbol": "xsqrt__Ff"
+        },
+        {
+          "function": "xBoxFromCone__FR4xBoxRC5xVec3RC5xVec3fff",
+          "offset": 148,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xsqrt__Ff",
+          "symbol": "xsqrt__Ff"
+        },
+        {
+          "function": "xBoxFromCone__FR4xBoxRC5xVec3RC5xVec3fff",
+          "offset": 184,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xsqrt__Ff",
+          "symbol": "xsqrt__Ff"
+        },
+        {
+          "function": "xBoxFromCone__FR4xBoxRC5xVec3RC5xVec3fff",
+          "offset": 208,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__pl__5xVec3CFRC5xVec3",
+          "symbol": "__pl__5xVec3CFRC5xVec3"
+        },
+        {
+          "function": "xBoxFromCone__FR4xBoxRC5xVec3RC5xVec3fff",
+          "offset": 236,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__mi__5xVec3CFRC5xVec3",
+          "symbol": "__mi__5xVec3CFRC5xVec3"
+        },
+        {
+          "function": "xBoxFromCone__FR4xBoxRC5xVec3RC5xVec3fff",
+          "offset": 492,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xsqrt__Ff",
+          "symbol": "xsqrt__Ff"
+        },
+        {
+          "function": "xBoxFromCone__FR4xBoxRC5xVec3RC5xVec3fff",
+          "offset": 528,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xsqrt__Ff",
+          "symbol": "xsqrt__Ff"
+        },
+        {
+          "function": "xBoxFromCone__FR4xBoxRC5xVec3RC5xVec3fff",
+          "offset": 564,
+          "target_source": "SB/Core/x/xMathInlines.h",
+          "target_function": "xsqrt__Ff",
+          "symbol": "xsqrt__Ff"
+        },
+        {
+          "function": "xBoxFromCone__FR4xBoxRC5xVec3RC5xVec3fff",
+          "offset": 588,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__pl__5xVec3CFRC5xVec3",
+          "symbol": "__pl__5xVec3CFRC5xVec3"
+        },
+        {
+          "function": "xBoxFromCone__FR4xBoxRC5xVec3RC5xVec3fff",
+          "offset": 616,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__mi__5xVec3CFRC5xVec3",
+          "symbol": "__mi__5xVec3CFRC5xVec3"
+        },
+        {
+          "function": "xMath3Exit__Fv",
+          "offset": 0,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iMath3Exit__Fv",
+          "symbol": "iMath3Exit__Fv",
+          "opcode": 2
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "offset": 8,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iMath3Init__Fv",
+          "symbol": "iMath3Init__Fv"
+        }
+      ],
+      "gp_relocations": [],
+      "address_pairs": [
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_X3",
+          "symbol": "g_X3",
+          "hi_offset": 16,
+          "lo_offset": 20,
+          "lo_opcode": 49,
+          "addend": 0
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_X3",
+          "symbol": "g_X3",
+          "hi_offset": 24,
+          "lo_offset": 28,
+          "lo_opcode": 49,
+          "addend": 4
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_X3",
+          "symbol": "g_X3",
+          "hi_offset": 32,
+          "lo_offset": 36,
+          "lo_opcode": 49,
+          "addend": 8
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_Y3",
+          "symbol": "g_Y3",
+          "hi_offset": 40,
+          "lo_offset": 44,
+          "lo_opcode": 49,
+          "addend": 0
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_Y3",
+          "symbol": "g_Y3",
+          "hi_offset": 48,
+          "lo_offset": 52,
+          "lo_opcode": 49,
+          "addend": 4
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_Y3",
+          "symbol": "g_Y3",
+          "hi_offset": 56,
+          "lo_offset": 60,
+          "lo_opcode": 49,
+          "addend": 8
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_I3",
+          "symbol": "g_I3",
+          "hi_offset": 64,
+          "lo_offset": 68,
+          "lo_opcode": 57,
+          "addend": 0
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_I3",
+          "symbol": "g_I3",
+          "hi_offset": 72,
+          "lo_offset": 76,
+          "lo_opcode": 57,
+          "addend": 4
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_I3",
+          "symbol": "g_I3",
+          "hi_offset": 80,
+          "lo_offset": 84,
+          "lo_opcode": 57,
+          "addend": 8
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_I3",
+          "symbol": "g_I3",
+          "hi_offset": 88,
+          "lo_offset": 92,
+          "lo_opcode": 57,
+          "addend": 16
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_I3",
+          "symbol": "g_I3",
+          "hi_offset": 96,
+          "lo_offset": 100,
+          "lo_opcode": 57,
+          "addend": 20
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_I3",
+          "symbol": "g_I3",
+          "hi_offset": 104,
+          "lo_offset": 108,
+          "lo_opcode": 57,
+          "addend": 24
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_Z3",
+          "symbol": "g_Z3",
+          "hi_offset": 112,
+          "lo_offset": 116,
+          "lo_opcode": 49,
+          "addend": 0
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_Z3",
+          "symbol": "g_Z3",
+          "hi_offset": 120,
+          "lo_offset": 124,
+          "lo_opcode": 49,
+          "addend": 4
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_Z3",
+          "symbol": "g_Z3",
+          "hi_offset": 128,
+          "lo_offset": 132,
+          "lo_opcode": 49,
+          "addend": 8
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_O3",
+          "symbol": "g_O3",
+          "hi_offset": 136,
+          "lo_offset": 140,
+          "lo_opcode": 49,
+          "addend": 0
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_O3",
+          "symbol": "g_O3",
+          "hi_offset": 144,
+          "lo_offset": 148,
+          "lo_opcode": 49,
+          "addend": 4
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_O3",
+          "symbol": "g_O3",
+          "hi_offset": 152,
+          "lo_offset": 156,
+          "lo_opcode": 49,
+          "addend": 8
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_I3",
+          "symbol": "g_I3",
+          "hi_offset": 160,
+          "lo_offset": 164,
+          "lo_opcode": 57,
+          "addend": 32
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_I3",
+          "symbol": "g_I3",
+          "hi_offset": 168,
+          "lo_offset": 172,
+          "lo_opcode": 57,
+          "addend": 36
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_I3",
+          "symbol": "g_I3",
+          "hi_offset": 176,
+          "lo_offset": 180,
+          "lo_opcode": 57,
+          "addend": 40
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_I3",
+          "symbol": "g_I3",
+          "hi_offset": 184,
+          "lo_offset": 188,
+          "lo_opcode": 57,
+          "addend": 48
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_I3",
+          "symbol": "g_I3",
+          "hi_offset": 192,
+          "lo_offset": 196,
+          "lo_opcode": 57,
+          "addend": 52
+        },
+        {
+          "function": "xMath3Init__Fv",
+          "target_data": "g_I3",
+          "symbol": "g_I3",
+          "hi_offset": 200,
+          "lo_offset": 204,
+          "lo_opcode": 57,
+          "addend": 56
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xPar.cpp",
+      "target_unit": "SB/Core/x/xPar.cpp",
+      "object": "source/xPar.o",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "xParInit": "xParInit__FP4xPar",
+        "xParFree": "xParFree__FP4xPar",
+        "xParAlloc": "xParAlloc__Fv"
+      },
+      "calls": [],
+      "linkage_provenance": [
+        {
+          "function": "xParInit",
+          "registry": "corroborated-functions.json",
+          "france_address": 2049872,
+          "size": 128,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2049760
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2046400
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2048512
+            }
+          ]
+        },
+        {
+          "function": "xParFree",
+          "registry": "corroborated-functions.json",
+          "france_address": 2050000,
+          "size": 84,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2049888
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2046528
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2048640
+            }
+          ]
+        },
+        {
+          "function": "xParAlloc",
+          "registry": "corroborated-functions.json",
+          "france_address": 2050096,
+          "size": 64,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2049984
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2046624
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2048736
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xFactory.cpp",
+      "target_unit": "SB/Core/x/xFactory.cpp",
+      "object": "source/xFactory.o",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "__ct": "__ct__8xFactoryFi"
+      },
+      "calls": [
+        {
+          "function": "__ct",
+          "offset": 48,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "__ct",
+          "offset": 84,
+          "target_source": "SB/Core/x/xordarray.cpp",
+          "target_function": "XOrdInit",
+          "symbol": "XOrdInit__FP16st_XORDEREDARRAYii"
+        }
+      ],
+      "linkage_provenance": [
+        {
+          "function": "__ct",
+          "registry": "relocation-corroborated-functions.json",
+          "france_address": 3090528,
+          "size": 120,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3089120
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3090416
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3087104
+            }
+          ]
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "__ct",
+          "offset": 40,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap"
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xParGroup.cpp",
+      "target_unit": "SB/Core/x/xParGroup.cpp",
+      "object": "source/xParGroup.o",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "xParGroupKillPar": "xParGroupKillPar__FP9xParGroupP4xPar",
+        "xParGroupAnimate": "xParGroupAnimate__FP9xParGroupf",
+        "xParGroupKillAllParticles": "xParGroupKillAllParticles__FP9xParGroup"
+      },
+      "calls": [
+        {
+          "function": "xParGroupKillPar",
+          "offset": 148,
+          "target_source": "SB/Core/x/xPar.cpp",
+          "target_function": "xParFree",
+          "symbol": "xParFree__FP4xPar"
+        },
+        {
+          "function": "xParGroupAnimate",
+          "offset": 116,
+          "target_source": "SB/Core/x/xParGroup.cpp",
+          "target_function": "xParGroupKillPar",
+          "symbol": "xParGroupKillPar__FP9xParGroupP4xPar"
+        },
+        {
+          "function": "xParGroupKillAllParticles",
+          "offset": 40,
+          "target_source": "SB/Core/x/xParGroup.cpp",
+          "target_function": "xParGroupKillPar",
+          "symbol": "xParGroupKillPar__FP9xParGroupP4xPar"
+        }
+      ],
+      "linkage_provenance": [
+        {
+          "function": "xParGroupKillPar",
+          "registry": "relocation-corroborated-functions.json",
+          "france_address": 2057936,
+          "size": 212,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2056576
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2057824
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2054464
+            }
+          ]
+        },
+        {
+          "function": "xParGroupAnimate",
+          "registry": "relocation-corroborated-functions.json",
+          "france_address": 2058544,
+          "size": 276,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2057184
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2058432
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2055072
+            }
+          ]
+        },
+        {
+          "function": "xParGroupKillAllParticles",
+          "registry": "relocation-corroborated-functions.json",
+          "france_address": 2058832,
+          "size": 76,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2057472
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2058720
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2055360
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xString.cpp",
+      "target_unit": "SB/Core/x/xString.cpp",
+      "object": "source/xString.o",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "icompare@0020ea60": "icompare__FRC6substrRC6substr",
+        "xStrupr@0020eda0": "xStrupr__FPc",
+        "xStricmp@0020ee00": "xStricmp__FPCcPCc",
+        "xStrTokBuffer@0020ef00": "xStrTokBuffer__FPCcPCcPv",
+        "xStrTok@0020f050": "xStrTok__FPcPCcPPc",
+        "xStrHashCat@0020f190": "xStrHashCat__FUiPCc",
+        "xStrHash@0020f1f0": "xStrHash__FPCcUi",
+        "xStrHash@0020f260": "xStrHash__FPCc"
+      },
+      "calls": [],
+      "linkage_provenance": [
+        {
+          "function": "icompare@0020ea60",
+          "registry": "corroborated-functions.json",
+          "france_address": 2157152,
+          "size": 192,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2157040
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2153696
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2155744
+            }
+          ]
+        },
+        {
+          "function": "xStrupr@0020eda0",
+          "registry": "corroborated-functions.json",
+          "france_address": 2157984,
+          "size": 88,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2157872
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2154528
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2156576
+            }
+          ]
+        },
+        {
+          "function": "xStricmp@0020ee00",
+          "registry": "corroborated-functions.json",
+          "france_address": 2158080,
+          "size": 256,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2157968
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2154624
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2156672
+            }
+          ]
+        },
+        {
+          "function": "xStrTokBuffer@0020ef00",
+          "registry": "corroborated-functions.json",
+          "france_address": 2158336,
+          "size": 336,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2158224
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2154880
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2156928
+            }
+          ]
+        },
+        {
+          "function": "xStrTok@0020f050",
+          "registry": "corroborated-functions.json",
+          "france_address": 2158672,
+          "size": 320,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2158560
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2155216
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2157264
+            }
+          ]
+        },
+        {
+          "function": "xStrHashCat@0020f190",
+          "registry": "corroborated-functions.json",
+          "france_address": 2158992,
+          "size": 88,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2158880
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2155536
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2157584
+            }
+          ]
+        },
+        {
+          "function": "xStrHash@0020f1f0",
+          "registry": "corroborated-functions.json",
+          "france_address": 2159088,
+          "size": 104,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2158976
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2155632
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2157680
+            }
+          ]
+        },
+        {
+          "function": "xStrHash@0020f260",
+          "registry": "corroborated-functions.json",
+          "france_address": 2159200,
+          "size": 88,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2159088
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2155744
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2157792
+            }
+          ]
+        }
+      ],
+      "selector": "name_address"
+    },
+    {
+      "source": "src/SB/Core/x/xMath.cpp",
+      "target_unit": "SB/Core/x/xMath.cpp",
+      "object": "source/xMath.o",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "xFuncPiece_Eval": "xFuncPiece_Eval__FP10xFuncPiecefPP10xFuncPiece",
+        "xDangleClamp": "xDangleClamp__Ff",
+        "xAngleClampFast": "xAngleClampFast__Ff",
+        "xAngleClamp": "xAngleClamp__Ff",
+        "xMathSolveCubic": "xMathSolveCubic__FffffPfPfPf",
+        "xMathSolveQuadratic": "xMathSolveQuadratic__FfffPfPf",
+        "xurand": "xurand__Fv",
+        "xrand": "xrand__Fv",
+        "xMathInit": "xMathInit__Fv"
+      },
+      "calls": [
+        {
+          "function": "xMathSolveCubic",
+          "offset": 64,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xMathSolveQuadratic",
+          "symbol": "xMathSolveQuadratic__FfffPfPf"
+        }
+      ],
+      "linkage_provenance": [
+        {
+          "function": "xFuncPiece_Eval",
+          "registry": "corroborated-functions.json",
+          "france_address": 2021440,
+          "size": 168,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2021328
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2017968
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2020080
+            }
+          ]
+        },
+        {
+          "function": "xDangleClamp",
+          "registry": "corroborated-functions.json",
+          "france_address": 2023152,
+          "size": 132,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2023040
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2019680
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2021792
+            }
+          ]
+        },
+        {
+          "function": "xAngleClampFast",
+          "registry": "corroborated-functions.json",
+          "france_address": 2023296,
+          "size": 80,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2023184
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2019824
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2021936
+            }
+          ]
+        },
+        {
+          "function": "xAngleClamp",
+          "registry": "corroborated-functions.json",
+          "france_address": 2023376,
+          "size": 76,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2023264
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2019904
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2022016
+            }
+          ]
+        },
+        {
+          "function": "xMathSolveCubic",
+          "registry": "relocation-corroborated-functions.json",
+          "france_address": 2023456,
+          "size": 932,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2022096
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2023344
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2019984
+            }
+          ]
+        },
+        {
+          "function": "xMathSolveQuadratic",
+          "registry": "corroborated-functions.json",
+          "france_address": 2024400,
+          "size": 264,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2024288
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2020928
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2023040
+            }
+          ]
+        },
+        {
+          "function": "xurand",
+          "registry": "corroborated-functions.json",
+          "france_address": 2024672,
+          "size": 88,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2024560
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2021200
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2023312
+            }
+          ]
+        },
+        {
+          "function": "xrand",
+          "registry": "corroborated-functions.json",
+          "france_address": 2024768,
+          "size": 32,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2024656
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2021296
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2023408
+            }
+          ]
+        },
+        {
+          "function": "xMathInit",
+          "registry": "corroborated-functions.json",
+          "france_address": 2024864,
+          "size": 32,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2024752
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2021392
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2023504
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xMath3.cpp",
+      "target_unit": "SB/Core/x/xMath3.cpp",
+      "object": "source/xMath3.o",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "xQuatToMat": "xQuatToMat__FPC5xQuatP7xMat3x3",
+        "xMat4x3Mul": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3",
+        "xMat3x3Tolocal": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+        "xMat3x3LMulVec": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3",
+        "xMat3x3Mul": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3",
+        "xMat3x3Transpose": "xMat3x3Transpose__FP7xMat3x3PC7xMat3x3",
+        "xMat3x3RMulRotY": "xMat3x3RMulRotY__FP7xMat3x3PC7xMat3x3f",
+        "xMat3x3ScaleC": "xMat3x3ScaleC__FP7xMat3x3fff",
+        "xMat3x3Euler": "xMat3x3Euler__FP7xMat3x3fff",
+        "xMat3x3GetEuler": "xMat3x3GetEuler__FPC7xMat3x3P5xVec3",
+        "xBoxInitBoundCapsule": "xBoxInitBoundCapsule__FP4xBoxPC8xCapsule",
+        "xBoxInitBoundOBB": "xBoxInitBoundOBB__FP4xBoxPC4xBoxPC7xMat4x3"
+      },
+      "calls": [
+        {
+          "function": "xMat4x3Mul",
+          "offset": 144,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Mul",
+          "symbol": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3"
+        },
+        {
+          "function": "xMat3x3GetEuler",
+          "offset": 108,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xAngleClampFast",
+          "symbol": "xAngleClampFast__Ff"
+        },
+        {
+          "function": "xMat3x3GetEuler",
+          "offset": 132,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xAngleClampFast",
+          "symbol": "xAngleClampFast__Ff"
+        },
+        {
+          "function": "xMat3x3GetEuler",
+          "offset": 168,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xAngleClampFast",
+          "symbol": "xAngleClampFast__Ff"
+        },
+        {
+          "function": "xMat3x3GetEuler",
+          "offset": 208,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xAngleClampFast",
+          "symbol": "xAngleClampFast__Ff"
+        }
+      ],
+      "linkage_provenance": [
+        {
+          "function": "xQuatToMat",
+          "registry": "corroborated-functions.json",
+          "france_address": 2026000,
+          "size": 172,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2025888
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2022528
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2024640
+            }
+          ]
+        },
+        {
+          "function": "xMat4x3Mul",
+          "registry": "relocation-corroborated-functions.json",
+          "france_address": 2027024,
+          "size": 192,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2025664
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2026912
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2023552
+            }
+          ]
+        },
+        {
+          "function": "xMat3x3Tolocal",
+          "registry": "corroborated-functions.json",
+          "france_address": 2027536,
+          "size": 204,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2027424
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2024064
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2026176
+            }
+          ]
+        },
+        {
+          "function": "xMat3x3LMulVec",
+          "registry": "corroborated-functions.json",
+          "france_address": 2027744,
+          "size": 112,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2027632
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2024272
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2026384
+            }
+          ]
+        },
+        {
+          "function": "xMat3x3Mul",
+          "registry": "corroborated-functions.json",
+          "france_address": 2027856,
+          "size": 476,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2027744
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2024384
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2026496
+            }
+          ]
+        },
+        {
+          "function": "xMat3x3Transpose",
+          "registry": "corroborated-functions.json",
+          "france_address": 2028336,
+          "size": 152,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2028224
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2024864
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2026976
+            }
+          ]
+        },
+        {
+          "function": "xMat3x3RMulRotY",
+          "registry": "corroborated-functions.json",
+          "france_address": 2028496,
+          "size": 336,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2028384
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2025024
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2027136
+            }
+          ]
+        },
+        {
+          "function": "xMat3x3ScaleC",
+          "registry": "corroborated-functions.json",
+          "france_address": 2028832,
+          "size": 44,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2028720
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2025360
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2027472
+            }
+          ]
+        },
+        {
+          "function": "xMat3x3Euler",
+          "registry": "corroborated-functions.json",
+          "france_address": 2029568,
+          "size": 256,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2029456
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2026096
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2028208
+            }
+          ]
+        },
+        {
+          "function": "xMat3x3GetEuler",
+          "registry": "relocation-corroborated-functions.json",
+          "france_address": 2030656,
+          "size": 264,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2029296
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2030544
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2027184
+            }
+          ]
+        },
+        {
+          "function": "xBoxInitBoundCapsule",
+          "registry": "corroborated-functions.json",
+          "france_address": 2032016,
+          "size": 272,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2031904
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2028544
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2030656
+            }
+          ]
+        },
+        {
+          "function": "xBoxInitBoundOBB",
+          "registry": "corroborated-functions.json",
+          "france_address": 2032288,
+          "size": 712,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2032176
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2028816
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2030928
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xutil.cpp",
+      "target_unit": "SB/Core/x/xutil.cpp",
+      "object": "source/xutil.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xUtil_wtadjust__FPfif": "xUtil_wtadjust__FPfif",
+        "xUtil_yesno__Ff": "xUtil_yesno__Ff",
+        "itoBCD__FUs": "itoBCD__FUs",
+        "itoBCD__FUc": "itoBCD__FUc",
+        "BCDtoi__FUc": "BCDtoi__FUc",
+        "strtosjis__FPUcPUc": "strtosjis__FPUcPUc",
+        "xUtil_crc_update__FUiPci": "xUtil_crc_update__FUiPci",
+        "xUtil_crc_init__Fv": "xUtil_crc_init__Fv",
+        "xUtil_idtag2string__FUii": "xUtil_idtag2string__FUii",
+        "xUtilShutdown__Fv": "xUtilShutdown__Fv",
+        "xUtilStartup__Fv": "xUtilStartup__Fv"
+      },
+      "calls": [
+        {
+          "function": "xUtil_yesno__Ff",
+          "offset": 72,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xUtil_crc_update__FUiPci",
+          "offset": 40,
+          "target_source": "SB/Core/x/xutil.cpp",
+          "target_function": "xUtil_crc_init__Fv",
+          "symbol": "xUtil_crc_init__Fv"
+        },
+        {
+          "function": "xUtilStartup__Fv",
+          "offset": 24,
+          "target_source": "SB/Core/x/xutil.cpp",
+          "target_function": "xUtil_crc_init__Fv",
+          "symbol": "xUtil_crc_init__Fv"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xUtil_crc_update__FUiPci",
+          "offset": 28,
+          "opcode": 35,
+          "target_name": "g_crc_needinit",
+          "symbol": "g_crc_needinit"
+        },
+        {
+          "function": "xUtil_crc_init__Fv",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "g_crc_needinit",
+          "symbol": "g_crc_needinit"
+        },
+        {
+          "function": "xUtil_crc_init__Fv",
+          "offset": 124,
+          "opcode": 43,
+          "target_name": "g_crc_needinit",
+          "symbol": "g_crc_needinit"
+        },
+        {
+          "function": "xUtilShutdown__Fv",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "g_xutilinit",
+          "symbol": "g_xutilinit"
+        },
+        {
+          "function": "xUtilShutdown__Fv",
+          "offset": 8,
+          "opcode": 43,
+          "target_name": "g_xutilinit",
+          "symbol": "g_xutilinit"
+        },
+        {
+          "function": "xUtilShutdown__Fv",
+          "offset": 16,
+          "opcode": 35,
+          "target_name": "g_xutilinit",
+          "symbol": "g_xutilinit"
+        },
+        {
+          "function": "xUtilStartup__Fv",
+          "offset": 8,
+          "opcode": 35,
+          "target_name": "g_xutilinit",
+          "symbol": "g_xutilinit"
+        },
+        {
+          "function": "xUtilStartup__Fv",
+          "offset": 20,
+          "opcode": 43,
+          "target_name": "g_xutilinit",
+          "symbol": "g_xutilinit"
+        },
+        {
+          "function": "xUtilStartup__Fv",
+          "offset": 36,
+          "opcode": 35,
+          "target_name": "g_xutilinit",
+          "symbol": "g_xutilinit"
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xserializer.cpp",
+      "target_unit": "SB/Core/x/xserializer.cpp",
+      "object": "source/xserializer.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xSER_xsgclt_ldproc_fill__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii": "xSER_xsgclt_ldproc_fill__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii",
+        "xSER_xsgclt_svproc_fill__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT": "xSER_xsgclt_svproc_fill__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT",
+        "xSER_xsgclt_svinfo_fill__FPvP17st_XSAVEGAME_DATAPiPi": "xSER_xsgclt_svinfo_fill__FPvP17st_XSAVEGAME_DATAPiPi",
+        "xSER_xsgclt_ldproc_clt__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii": "xSER_xsgclt_ldproc_clt__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii",
+        "xSER_xsgclt_svproc_clt__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT": "xSER_xsgclt_svproc_clt__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT",
+        "xSER_xsgclt_svinfo_clt__FPvP17st_XSAVEGAME_DATAPiPi": "xSER_xsgclt_svinfo_clt__FPvP17st_XSAVEGAME_DATAPiPi",
+        "xSER_xsgclt_ldproc_ver__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii": "xSER_xsgclt_ldproc_ver__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii",
+        "xSER_xsgclt_svproc_ver__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT": "xSER_xsgclt_svproc_ver__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT",
+        "xSER_xsgclt_svinfo_ver__FPvP17st_XSAVEGAME_DATAPiPi": "xSER_xsgclt_svinfo_ver__FPvP17st_XSAVEGAME_DATAPiPi",
+        "xSerial_svgame_register__FP17st_XSAVEGAME_DATA16en_SAVEGAME_MODE": "xSerial_svgame_register__FP17st_XSAVEGAME_DATA16en_SAVEGAME_MODE",
+        "XSER_get_client__FUi": "XSER_get_client__FUi",
+        "xSER_ord_test__FPCvPv": "xSER_ord_test__FPCvPv",
+        "xSER_ord_compare__FPvPv": "xSER_ord_compare__FPvPv",
+        "xSER_init_buffers__FiP21st_SERIAL_PERCID_SIZE": "xSER_init_buffers__FiP21st_SERIAL_PERCID_SIZE",
+        "xSerialWipeMainBuffer__Fv": "xSerialWipeMainBuffer__Fv",
+        "rdbit__7xSerialFv": "rdbit__7xSerialFv",
+        "wrbit__7xSerialFi": "wrbit__7xSerialFi",
+        "Read__7xSerialFPf": "Read__7xSerialFPf",
+        "Read__7xSerialFPUi": "Read__7xSerialFPUi",
+        "Read__7xSerialFPi": "Read__7xSerialFPi",
+        "Read__7xSerialFPs": "Read__7xSerialFPs",
+        "Read__7xSerialFPUc": "Read__7xSerialFPUc",
+        "Read_b7__7xSerialFPUi": "Read_b7__7xSerialFPUi",
+        "Read_b1__7xSerialFPi": "Read_b1__7xSerialFPi",
+        "Read__7xSerialFPcii": "Read__7xSerialFPcii",
+        "Write__7xSerialFf": "Write__7xSerialFf",
+        "Write__7xSerialFUi": "Write__7xSerialFUi",
+        "Write__7xSerialFi": "Write__7xSerialFi",
+        "Write__7xSerialFs": "Write__7xSerialFs",
+        "Write__7xSerialFUc": "Write__7xSerialFUc",
+        "Write_b7__7xSerialFUi": "Write_b7__7xSerialFUi",
+        "Write_b1__7xSerialFi": "Write_b1__7xSerialFi",
+        "Write__7xSerialFPcii": "Write__7xSerialFPcii",
+        "setClient__7xSerialFUi": "setClient__7xSerialFUi",
+        "__dt__7xSerialFv": "__dt__7xSerialFv",
+        "__ct__7xSerialFv": "__ct__7xSerialFv",
+        "xSerialTraverse__FPFUiP7xSerial_i": "xSerialTraverse__FPFUiP7xSerial_i",
+        "xSerialShutdown__Fv": "xSerialShutdown__Fv",
+        "xSerialStartup__FiP21st_SERIAL_PERCID_SIZE": "xSerialStartup__FiP21st_SERIAL_PERCID_SIZE"
+      },
+      "calls": [
+        {
+          "function": "xSER_xsgclt_ldproc_fill__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii",
+          "offset": 84,
+          "target_source": "SB/Core/x/xsavegame.cpp",
+          "target_function": "xSGReadData__FP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTPci",
+          "symbol": "xSGReadData__FP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTPci"
+        },
+        {
+          "function": "xSER_xsgclt_svproc_fill__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT",
+          "offset": 48,
+          "target_source": "SB/Core/x/xsavegame.cpp",
+          "target_function": "xSGWriteData__FP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXTPci",
+          "symbol": "xSGWriteData__FP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXTPci"
+        },
+        {
+          "function": "xSER_xsgclt_ldproc_clt__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii",
+          "offset": 48,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "XSER_get_client__FUi",
+          "symbol": "XSER_get_client__FUi"
+        },
+        {
+          "function": "xSER_xsgclt_ldproc_clt__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii",
+          "offset": 68,
+          "target_source": "SB/Core/x/xsavegame.cpp",
+          "target_function": "xSGReadData__FP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTPci",
+          "symbol": "xSGReadData__FP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTPci"
+        },
+        {
+          "function": "xSER_xsgclt_svproc_clt__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT",
+          "offset": 24,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "XSER_get_client__FUi",
+          "symbol": "XSER_get_client__FUi"
+        },
+        {
+          "function": "xSER_xsgclt_svproc_clt__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT",
+          "offset": 44,
+          "target_source": "SB/Core/x/xsavegame.cpp",
+          "target_function": "xSGWriteData__FP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXTPci",
+          "symbol": "xSGWriteData__FP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXTPci"
+        },
+        {
+          "function": "xSER_xsgclt_ldproc_ver__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii",
+          "offset": 36,
+          "target_source": "SB/Core/x/xsavegame.cpp",
+          "target_function": "xSGReadData__FP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTPii",
+          "symbol": "xSGReadData__FP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTPii"
+        },
+        {
+          "function": "xSER_xsgclt_svproc_ver__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT",
+          "offset": 24,
+          "target_source": "SB/Core/x/xsavegame.cpp",
+          "target_function": "xSGWriteData__FP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXTPii",
+          "symbol": "xSGWriteData__FP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXTPii"
+        },
+        {
+          "function": "xSerial_svgame_register__FP17st_XSAVEGAME_DATA16en_SAVEGAME_MODE",
+          "offset": 92,
+          "target_source": "SB/Core/x/xsavegame.cpp",
+          "target_function": "xSGAddSaveClient__FP17st_XSAVEGAME_DATAUiPvPFPvP17st_XSAVEGAME_DATAPiPi_iPFPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT_i",
+          "symbol": "xSGAddSaveClient__FP17st_XSAVEGAME_DATAUiPvPFPvP17st_XSAVEGAME_DATAPiPi_iPFPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT_i"
+        },
+        {
+          "function": "xSerial_svgame_register__FP17st_XSAVEGAME_DATA16en_SAVEGAME_MODE",
+          "offset": 152,
+          "target_source": "SB/Core/x/xsavegame.cpp",
+          "target_function": "xSGAddSaveClient__FP17st_XSAVEGAME_DATAUiPvPFPvP17st_XSAVEGAME_DATAPiPi_iPFPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT_i",
+          "symbol": "xSGAddSaveClient__FP17st_XSAVEGAME_DATAUiPvPFPvP17st_XSAVEGAME_DATAPiPi_iPFPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT_i"
+        },
+        {
+          "function": "xSerial_svgame_register__FP17st_XSAVEGAME_DATA16en_SAVEGAME_MODE",
+          "offset": 216,
+          "target_source": "SB/Core/x/xsavegame.cpp",
+          "target_function": "xSGAddSaveClient__FP17st_XSAVEGAME_DATAUiPvPFPvP17st_XSAVEGAME_DATAPiPi_iPFPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT_i",
+          "symbol": "xSGAddSaveClient__FP17st_XSAVEGAME_DATAUiPvPFPvP17st_XSAVEGAME_DATAPiPi_iPFPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT_i"
+        },
+        {
+          "function": "xSerial_svgame_register__FP17st_XSAVEGAME_DATA16en_SAVEGAME_MODE",
+          "offset": 256,
+          "target_source": "SB/Core/x/xsavegame.cpp",
+          "target_function": "xSGAddLoadClient__FP17st_XSAVEGAME_DATAUiPvPFPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii_i",
+          "symbol": "xSGAddLoadClient__FP17st_XSAVEGAME_DATAUiPvPFPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii_i"
+        },
+        {
+          "function": "xSerial_svgame_register__FP17st_XSAVEGAME_DATA16en_SAVEGAME_MODE",
+          "offset": 280,
+          "target_source": "SB/Core/x/xsavegame.cpp",
+          "target_function": "xSGAddLoadClient__FP17st_XSAVEGAME_DATAUiPvPFPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii_i",
+          "symbol": "xSGAddLoadClient__FP17st_XSAVEGAME_DATAUiPvPFPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii_i"
+        },
+        {
+          "function": "xSerial_svgame_register__FP17st_XSAVEGAME_DATA16en_SAVEGAME_MODE",
+          "offset": 308,
+          "target_source": "SB/Core/x/xsavegame.cpp",
+          "target_function": "xSGAddLoadClient__FP17st_XSAVEGAME_DATAUiPvPFPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii_i",
+          "symbol": "xSGAddLoadClient__FP17st_XSAVEGAME_DATAUiPvPFPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii_i"
+        },
+        {
+          "function": "XSER_get_client__FUi",
+          "offset": 48,
+          "target_source": "SB/Core/x/xordarray.cpp",
+          "target_function": "XOrdLookup__FP16st_XORDEREDARRAYPCvPFPCvPv_i",
+          "symbol": "XOrdLookup__FP16st_XORDEREDARRAYPCvPFPCvPv_i"
+        },
+        {
+          "function": "XSER_get_client__FUi",
+          "offset": 92,
+          "target_source": "SB/Core/x/xordarray.cpp",
+          "target_function": "XOrdInsert__FP16st_XORDEREDARRAYPvPFPvPv_i",
+          "symbol": "XOrdInsert__FP16st_XORDEREDARRAYPvPFPvPv_i"
+        },
+        {
+          "function": "xSER_init_buffers__FiP21st_SERIAL_PERCID_SIZE",
+          "offset": 68,
+          "target_source": "SB/Core/x/xordarray.cpp",
+          "target_function": "XOrdInit__FP16st_XORDEREDARRAYii",
+          "symbol": "XOrdInit__FP16st_XORDEREDARRAYii"
+        },
+        {
+          "function": "xSER_init_buffers__FiP21st_SERIAL_PERCID_SIZE",
+          "offset": 84,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xSER_init_buffers__FiP21st_SERIAL_PERCID_SIZE",
+          "offset": 220,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xSER_init_buffers__FiP21st_SERIAL_PERCID_SIZE",
+          "offset": 340,
+          "target_source": "SB/Core/x/xordarray.cpp",
+          "target_function": "XOrdAppend__FP16st_XORDEREDARRAYPv",
+          "symbol": "XOrdAppend__FP16st_XORDEREDARRAYPv"
+        },
+        {
+          "function": "xSER_init_buffers__FiP21st_SERIAL_PERCID_SIZE",
+          "offset": 384,
+          "target_source": "SB/Core/x/xordarray.cpp",
+          "target_function": "XOrdSort__FP16st_XORDEREDARRAYPFPvPv_i",
+          "symbol": "XOrdSort__FP16st_XORDEREDARRAYPFPvPv_i"
+        },
+        {
+          "function": "Read__7xSerialFPf",
+          "offset": 4,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Read__7xSerialFPcii",
+          "symbol": "Read__7xSerialFPcii",
+          "opcode": 2
+        },
+        {
+          "function": "Read__7xSerialFPUi",
+          "offset": 4,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Read__7xSerialFPcii",
+          "symbol": "Read__7xSerialFPcii",
+          "opcode": 2
+        },
+        {
+          "function": "Read__7xSerialFPi",
+          "offset": 4,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Read__7xSerialFPcii",
+          "symbol": "Read__7xSerialFPcii",
+          "opcode": 2
+        },
+        {
+          "function": "Read__7xSerialFPs",
+          "offset": 4,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Read__7xSerialFPcii",
+          "symbol": "Read__7xSerialFPcii",
+          "opcode": 2
+        },
+        {
+          "function": "Read__7xSerialFPUc",
+          "offset": 4,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Read__7xSerialFPcii",
+          "symbol": "Read__7xSerialFPcii",
+          "opcode": 2
+        },
+        {
+          "function": "Read_b7__7xSerialFPUi",
+          "offset": 4,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Read__7xSerialFPcii",
+          "symbol": "Read__7xSerialFPcii",
+          "opcode": 2
+        },
+        {
+          "function": "Read_b1__7xSerialFPi",
+          "offset": 4,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Read__7xSerialFPcii",
+          "symbol": "Read__7xSerialFPcii",
+          "opcode": 2
+        },
+        {
+          "function": "Read__7xSerialFPcii",
+          "offset": 80,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "rdbit__7xSerialFv",
+          "symbol": "rdbit__7xSerialFv"
+        },
+        {
+          "function": "Read__7xSerialFPcii",
+          "offset": 240,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "rdbit__7xSerialFv",
+          "symbol": "rdbit__7xSerialFv"
+        },
+        {
+          "function": "Write__7xSerialFf",
+          "offset": 20,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Write__7xSerialFPcii",
+          "symbol": "Write__7xSerialFPcii"
+        },
+        {
+          "function": "Write__7xSerialFUi",
+          "offset": 20,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Write__7xSerialFPcii",
+          "symbol": "Write__7xSerialFPcii"
+        },
+        {
+          "function": "Write__7xSerialFi",
+          "offset": 20,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Write__7xSerialFPcii",
+          "symbol": "Write__7xSerialFPcii"
+        },
+        {
+          "function": "Write__7xSerialFs",
+          "offset": 20,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Write__7xSerialFPcii",
+          "symbol": "Write__7xSerialFPcii"
+        },
+        {
+          "function": "Write__7xSerialFUc",
+          "offset": 20,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Write__7xSerialFPcii",
+          "symbol": "Write__7xSerialFPcii"
+        },
+        {
+          "function": "Write_b7__7xSerialFUi",
+          "offset": 20,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Write__7xSerialFPcii",
+          "symbol": "Write__7xSerialFPcii"
+        },
+        {
+          "function": "Write_b1__7xSerialFi",
+          "offset": 20,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Write__7xSerialFPcii",
+          "symbol": "Write__7xSerialFPcii"
+        },
+        {
+          "function": "Write__7xSerialFPcii",
+          "offset": 116,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "wrbit__7xSerialFi",
+          "symbol": "wrbit__7xSerialFi"
+        },
+        {
+          "function": "Write__7xSerialFPcii",
+          "offset": 228,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "wrbit__7xSerialFi",
+          "symbol": "wrbit__7xSerialFi"
+        },
+        {
+          "function": "setClient__7xSerialFUi",
+          "offset": 16,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "XSER_get_client__FUi",
+          "symbol": "XSER_get_client__FUi"
+        },
+        {
+          "function": "__dt__7xSerialFv",
+          "offset": 40,
+          "target_source": "SB/Core/x/xutil.cpp",
+          "target_function": "xUtil_idtag2string__FUii",
+          "symbol": "xUtil_idtag2string__FUii"
+        },
+        {
+          "function": "xSerialTraverse__FPFUiP7xSerial_i",
+          "offset": 108,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "XSER_get_client__FUi",
+          "symbol": "XSER_get_client__FUi"
+        },
+        {
+          "function": "xSerialTraverse__FPFUiP7xSerial_i",
+          "offset": 216,
+          "target_source": "SB/Core/x/xutil.cpp",
+          "target_function": "xUtil_idtag2string__FUii",
+          "symbol": "xUtil_idtag2string__FUii"
+        },
+        {
+          "function": "xSerialStartup__FiP21st_SERIAL_PERCID_SIZE",
+          "offset": 264,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "xSER_init_buffers__FiP21st_SERIAL_PERCID_SIZE",
+          "symbol": "xSER_init_buffers__FiP21st_SERIAL_PERCID_SIZE"
+        },
+        {
+          "function": "xSER_init_buffers__FiP21st_SERIAL_PERCID_SIZE",
+          "offset": 112,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xSER_init_buffers__FiP21st_SERIAL_PERCID_SIZE",
+          "offset": 240,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xSerialWipeMainBuffer__Fv",
+          "offset": 16,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset",
+          "opcode": 2
+        },
+        {
+          "function": "xSerialStartup__FiP21st_SERIAL_PERCID_SIZE",
+          "offset": 52,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xSER_init_buffers__FiP21st_SERIAL_PERCID_SIZE",
+          "offset": 76,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xSER_init_buffers__FiP21st_SERIAL_PERCID_SIZE",
+          "offset": 192,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xSerialShutdown__Fv",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "g_serinit",
+          "symbol": "g_serinit"
+        },
+        {
+          "function": "xSerialShutdown__Fv",
+          "offset": 8,
+          "opcode": 43,
+          "target_name": "g_serinit",
+          "symbol": "g_serinit"
+        },
+        {
+          "function": "xSerialShutdown__Fv",
+          "offset": 16,
+          "opcode": 35,
+          "target_name": "g_serinit",
+          "symbol": "g_serinit"
+        },
+        {
+          "function": "xSerialStartup__FiP21st_SERIAL_PERCID_SIZE",
+          "offset": 20,
+          "opcode": 35,
+          "target_name": "g_serinit",
+          "symbol": "g_serinit"
+        },
+        {
+          "function": "xSerialStartup__FiP21st_SERIAL_PERCID_SIZE",
+          "offset": 36,
+          "opcode": 43,
+          "target_name": "g_serinit",
+          "symbol": "g_serinit"
+        },
+        {
+          "function": "xSerialStartup__FiP21st_SERIAL_PERCID_SIZE",
+          "offset": 284,
+          "opcode": 35,
+          "target_name": "g_serinit",
+          "symbol": "g_serinit"
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xBound.cpp",
+      "target_unit": "SB/Core/x/xBound.cpp",
+      "object": "source/xBound.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xBoundDraw__FPC6xBound": "xBoundDraw__FPC6xBound",
+        "xVecHitsBound__FPC5xVec3PC6xBoundP7xCollis": "xVecHitsBound__FPC5xVec3PC6xBoundP7xCollis",
+        "xSphereHitsBound__FPC7xSpherePC6xBoundP7xCollis": "xSphereHitsBound__FPC7xSpherePC6xBoundP7xCollis",
+        "xRayHitsBound__FPC5xRay3PC6xBoundP7xCollis": "xRayHitsBound__FPC5xRay3PC6xBoundP7xCollis",
+        "xBoundOBBIsectRay__FPC4xBoxPC7xMat4x3PC5xRay3P6xIsect": "xBoundOBBIsectRay__FPC4xBoxPC7xMat4x3PC5xRay3P6xIsect",
+        "xBoundHitsBound__FPC6xBoundPC6xBoundP7xCollis": "xBoundHitsBound__FPC6xBoundPC6xBoundP7xCollis",
+        "xBoundGetSphere__FR7xSphereRC6xBound": "xBoundGetSphere__FR7xSphereRC6xBound",
+        "xBoundGetBox__FR4xBoxRC6xBound": "xBoundGetBox__FR4xBoxRC6xBound",
+        "xBoundUpdate__FP6xBound": "xBoundUpdate__FP6xBound"
+      },
+      "calls": [
+        {
+          "function": "xVecHitsBound__FPC5xVec3PC6xBoundP7xCollis",
+          "offset": 48,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iSphereIsectVec__FPC7xSpherePC5xVec3P6xIsect",
+          "symbol": "iSphereIsectVec__FPC7xSpherePC5xVec3P6xIsect"
+        },
+        {
+          "function": "xVecHitsBound__FPC5xVec3PC6xBoundP7xCollis",
+          "offset": 132,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xVecHitsBound__FPC5xVec3PC6xBoundP7xCollis",
+          "offset": 148,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iBoxIsectVec__FPC4xBoxPC5xVec3P6xIsect",
+          "symbol": "iBoxIsectVec__FPC4xBoxPC5xVec3P6xIsect"
+        },
+        {
+          "function": "xVecHitsBound__FPC5xVec3PC6xBoundP7xCollis",
+          "offset": 188,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iBoxIsectVec__FPC4xBoxPC5xVec3P6xIsect",
+          "symbol": "iBoxIsectVec__FPC4xBoxPC5xVec3P6xIsect"
+        },
+        {
+          "function": "xSphereHitsBound__FPC7xSpherePC6xBoundP7xCollis",
+          "offset": 72,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xSphereHitsSphere__FPC7xSpherePC7xSphereP7xCollis",
+          "symbol": "xSphereHitsSphere__FPC7xSpherePC7xSphereP7xCollis"
+        },
+        {
+          "function": "xSphereHitsBound__FPC7xSpherePC6xBoundP7xCollis",
+          "offset": 92,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xSphereHitsOBB_nu__FPC7xSpherePC4xBoxPC7xMat4x3P7xCollis",
+          "symbol": "xSphereHitsOBB_nu__FPC7xSpherePC4xBoxPC7xMat4x3P7xCollis"
+        },
+        {
+          "function": "xSphereHitsBound__FPC7xSpherePC6xBoundP7xCollis",
+          "offset": 112,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xSphereHitsBox__FPC7xSpherePC4xBoxP7xCollis",
+          "symbol": "xSphereHitsBox__FPC7xSpherePC4xBoxP7xCollis"
+        },
+        {
+          "function": "xRayHitsBound__FPC5xRay3PC6xBoundP7xCollis",
+          "offset": 40,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iSphereIsectRay__FPC7xSpherePC5xRay3P6xIsect",
+          "symbol": "iSphereIsectRay__FPC7xSpherePC5xRay3P6xIsect"
+        },
+        {
+          "function": "xRayHitsBound__FPC5xRay3PC6xBoundP7xCollis",
+          "offset": 80,
+          "target_source": "SB/Core/x/xBound.cpp",
+          "target_function": "xBoundOBBIsectRay__FPC4xBoxPC7xMat4x3PC5xRay3P6xIsect",
+          "symbol": "xBoundOBBIsectRay__FPC4xBoxPC7xMat4x3PC5xRay3P6xIsect"
+        },
+        {
+          "function": "xRayHitsBound__FPC5xRay3PC6xBoundP7xCollis",
+          "offset": 116,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iBoxIsectRay__FPC4xBoxPC5xRay3P6xIsect",
+          "symbol": "iBoxIsectRay__FPC4xBoxPC5xRay3P6xIsect"
+        },
+        {
+          "function": "xBoundOBBIsectRay__FPC4xBoxPC7xMat4x3PC5xRay3P6xIsect",
+          "offset": 868,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xBoundOBBIsectRay__FPC4xBoxPC7xMat4x3PC5xRay3P6xIsect",
+          "offset": 884,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xBoundOBBIsectRay__FPC4xBoxPC7xMat4x3PC5xRay3P6xIsect",
+          "offset": 924,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iBoxIsectRay__FPC4xBoxPC5xRay3P6xIsect",
+          "symbol": "iBoxIsectRay__FPC4xBoxPC5xRay3P6xIsect"
+        },
+        {
+          "function": "xBoundHitsBound__FPC6xBoundPC6xBoundP7xCollis",
+          "offset": 28,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullIsects__FPC7xQCDataPC7xQCData",
+          "symbol": "xQuickCullIsects__FPC7xQCDataPC7xQCData"
+        },
+        {
+          "function": "xBoundHitsBound__FPC6xBoundPC6xBoundP7xCollis",
+          "offset": 256,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xSphereHitsSphere__FPC7xSpherePC7xSphereP7xCollis",
+          "symbol": "xSphereHitsSphere__FPC7xSpherePC7xSphereP7xCollis"
+        },
+        {
+          "function": "xBoundHitsBound__FPC6xBoundPC6xBoundP7xCollis",
+          "offset": 284,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xSphereHitsOBB_nu__FPC7xSpherePC4xBoxPC7xMat4x3P7xCollis",
+          "symbol": "xSphereHitsOBB_nu__FPC7xSpherePC4xBoxPC7xMat4x3P7xCollis"
+        },
+        {
+          "function": "xBoundHitsBound__FPC6xBoundPC6xBoundP7xCollis",
+          "offset": 312,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xSphereHitsBox__FPC7xSpherePC4xBoxP7xCollis",
+          "symbol": "xSphereHitsBox__FPC7xSpherePC4xBoxP7xCollis"
+        },
+        {
+          "function": "xBoundHitsBound__FPC6xBoundPC6xBoundP7xCollis",
+          "offset": 336,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xBoxHitsSphere__FPC4xBoxPC7xSphereP7xCollis",
+          "symbol": "xBoxHitsSphere__FPC4xBoxPC7xSphereP7xCollis"
+        },
+        {
+          "function": "xBoundHitsBound__FPC6xBoundPC6xBoundP7xCollis",
+          "offset": 364,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xBoxHitsObb__FPC4xBoxPC4xBoxPC7xMat4x3P7xCollis",
+          "symbol": "xBoxHitsObb__FPC4xBoxPC4xBoxPC7xMat4x3P7xCollis"
+        },
+        {
+          "function": "xBoundGetBox__FR4xBoxRC6xBound",
+          "offset": 212,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xBoxInitBoundOBB__FP4xBoxPC4xBoxPC7xMat4x3",
+          "symbol": "xBoxInitBoundOBB__FP4xBoxPC4xBoxPC7xMat4x3"
+        },
+        {
+          "function": "xBoundUpdate__FP6xBound",
+          "offset": 416,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullForBound__FP10xQCControlP7xQCDataPC6xBound",
+          "symbol": "xQuickCullForBound__FP10xQCControlP7xQCDataPC6xBound"
+        }
+      ],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/x/xhipio.cpp",
+      "target_unit": "SB/Core/x/xhipio.cpp",
+      "object": "source/xhipio.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "HIPLReadString__FP14st_HIPLOADDATAPc": "HIPLReadString__FP14st_HIPLOADDATAPc",
+        "HIPLReadFloats__FP14st_HIPLOADDATAPfi": "HIPLReadFloats__FP14st_HIPLOADDATAPfi",
+        "HIPLReadLongs__FP14st_HIPLOADDATAPii": "HIPLReadLongs__FP14st_HIPLOADDATAPii",
+        "HIPLReadShorts__FP14st_HIPLOADDATAPsi": "HIPLReadShorts__FP14st_HIPLOADDATAPsi",
+        "HIPLReadBytes__FP14st_HIPLOADDATAPci": "HIPLReadBytes__FP14st_HIPLOADDATAPci",
+        "HIPLPollRead__FP14st_HIPLOADDATA": "HIPLPollRead__FP14st_HIPLOADDATA",
+        "HIPLBypassRead__FP14st_HIPLOADDATAPvii": "HIPLBypassRead__FP14st_HIPLOADDATAPvii",
+        "HIPLBlockRead__FP14st_HIPLOADDATAPvii": "HIPLBlockRead__FP14st_HIPLOADDATAPvii",
+        "HIPLBlockExit__FP14st_HIPLOADDATA": "HIPLBlockExit__FP14st_HIPLOADDATA",
+        "HIPLBlockEnter__FP14st_HIPLOADDATA": "HIPLBlockEnter__FP14st_HIPLOADDATA",
+        "HIPLSetSpot__FP14st_HIPLOADDATAi": "HIPLSetSpot__FP14st_HIPLOADDATAi",
+        "HIPLSetBypass__FP14st_HIPLOADDATAii": "HIPLSetBypass__FP14st_HIPLOADDATAii",
+        "HIPLBaseSector__FP14st_HIPLOADDATA": "HIPLBaseSector__FP14st_HIPLOADDATA",
+        "HIPLDestroy__FP14st_HIPLOADDATA": "HIPLDestroy__FP14st_HIPLOADDATA",
+        "HIPLCreate__FPCcPci": "HIPLCreate__FPCcPci",
+        "get_HIPLFuncs__Fv": "get_HIPLFuncs__Fv"
+      },
+      "calls": [
+        {
+          "function": "HIPLReadString__FP14st_HIPLOADDATAPc",
+          "offset": 52,
+          "target_source": "SB/Core/x/xhipio.cpp",
+          "target_function": "HIPLBypassRead__FP14st_HIPLOADDATAPvii",
+          "symbol": "HIPLBypassRead__FP14st_HIPLOADDATAPvii"
+        },
+        {
+          "function": "HIPLReadString__FP14st_HIPLOADDATAPc",
+          "offset": 104,
+          "target_source": "SB/Core/x/xhipio.cpp",
+          "target_function": "HIPLBypassRead__FP14st_HIPLOADDATAPvii",
+          "symbol": "HIPLBypassRead__FP14st_HIPLOADDATAPvii"
+        },
+        {
+          "function": "HIPLReadString__FP14st_HIPLOADDATAPc",
+          "offset": 136,
+          "target_source": "SB/Core/x/xhipio.cpp",
+          "target_function": "HIPLBypassRead__FP14st_HIPLOADDATAPvii",
+          "symbol": "HIPLBypassRead__FP14st_HIPLOADDATAPvii"
+        },
+        {
+          "function": "HIPLReadString__FP14st_HIPLOADDATAPc",
+          "offset": 188,
+          "target_source": "SB/Core/x/xhipio.cpp",
+          "target_function": "HIPLBlockRead__FP14st_HIPLOADDATAPvii",
+          "symbol": "HIPLBlockRead__FP14st_HIPLOADDATAPvii"
+        },
+        {
+          "function": "HIPLReadString__FP14st_HIPLOADDATAPc",
+          "offset": 232,
+          "target_source": "SB/Core/x/xhipio.cpp",
+          "target_function": "HIPLBlockRead__FP14st_HIPLOADDATAPvii",
+          "symbol": "HIPLBlockRead__FP14st_HIPLOADDATAPvii"
+        },
+        {
+          "function": "HIPLReadFloats__FP14st_HIPLOADDATAPfi",
+          "offset": 20,
+          "target_source": "SB/Core/x/xhipio.cpp",
+          "target_function": "HIPLBypassRead__FP14st_HIPLOADDATAPvii",
+          "symbol": "HIPLBypassRead__FP14st_HIPLOADDATAPvii"
+        },
+        {
+          "function": "HIPLReadFloats__FP14st_HIPLOADDATAPfi",
+          "offset": 36,
+          "target_source": "SB/Core/x/xhipio.cpp",
+          "target_function": "HIPLBlockRead__FP14st_HIPLOADDATAPvii",
+          "symbol": "HIPLBlockRead__FP14st_HIPLOADDATAPvii"
+        },
+        {
+          "function": "HIPLReadLongs__FP14st_HIPLOADDATAPii",
+          "offset": 20,
+          "target_source": "SB/Core/x/xhipio.cpp",
+          "target_function": "HIPLBypassRead__FP14st_HIPLOADDATAPvii",
+          "symbol": "HIPLBypassRead__FP14st_HIPLOADDATAPvii"
+        },
+        {
+          "function": "HIPLReadLongs__FP14st_HIPLOADDATAPii",
+          "offset": 36,
+          "target_source": "SB/Core/x/xhipio.cpp",
+          "target_function": "HIPLBlockRead__FP14st_HIPLOADDATAPvii",
+          "symbol": "HIPLBlockRead__FP14st_HIPLOADDATAPvii"
+        },
+        {
+          "function": "HIPLReadShorts__FP14st_HIPLOADDATAPsi",
+          "offset": 20,
+          "target_source": "SB/Core/x/xhipio.cpp",
+          "target_function": "HIPLBypassRead__FP14st_HIPLOADDATAPvii",
+          "symbol": "HIPLBypassRead__FP14st_HIPLOADDATAPvii"
+        },
+        {
+          "function": "HIPLReadShorts__FP14st_HIPLOADDATAPsi",
+          "offset": 36,
+          "target_source": "SB/Core/x/xhipio.cpp",
+          "target_function": "HIPLBlockRead__FP14st_HIPLOADDATAPvii",
+          "symbol": "HIPLBlockRead__FP14st_HIPLOADDATAPvii"
+        },
+        {
+          "function": "HIPLReadBytes__FP14st_HIPLOADDATAPci",
+          "offset": 20,
+          "target_source": "SB/Core/x/xhipio.cpp",
+          "target_function": "HIPLBypassRead__FP14st_HIPLOADDATAPvii",
+          "symbol": "HIPLBypassRead__FP14st_HIPLOADDATAPvii"
+        },
+        {
+          "function": "HIPLReadBytes__FP14st_HIPLOADDATAPci",
+          "offset": 36,
+          "target_source": "SB/Core/x/xhipio.cpp",
+          "target_function": "HIPLBlockRead__FP14st_HIPLOADDATAPvii",
+          "symbol": "HIPLBlockRead__FP14st_HIPLOADDATAPvii"
+        },
+        {
+          "function": "HIPLBlockEnter__FP14st_HIPLOADDATA",
+          "offset": 100,
+          "target_source": "SB/Core/x/xhipio.cpp",
+          "target_function": "HIPLBypassRead__FP14st_HIPLOADDATAPvii",
+          "symbol": "HIPLBypassRead__FP14st_HIPLOADDATAPvii"
+        },
+        {
+          "function": "HIPLBlockEnter__FP14st_HIPLOADDATA",
+          "offset": 124,
+          "target_source": "SB/Core/x/xhipio.cpp",
+          "target_function": "HIPLBlockRead__FP14st_HIPLOADDATAPvii",
+          "symbol": "HIPLBlockRead__FP14st_HIPLOADDATAPvii"
+        },
+        {
+          "function": "HIPLBlockEnter__FP14st_HIPLOADDATA",
+          "offset": 188,
+          "target_source": "SB/Core/x/xhipio.cpp",
+          "target_function": "HIPLBypassRead__FP14st_HIPLOADDATAPvii",
+          "symbol": "HIPLBypassRead__FP14st_HIPLOADDATAPvii"
+        },
+        {
+          "function": "HIPLBlockEnter__FP14st_HIPLOADDATA",
+          "offset": 220,
+          "target_source": "SB/Core/x/xhipio.cpp",
+          "target_function": "HIPLBlockRead__FP14st_HIPLOADDATAPvii",
+          "symbol": "HIPLBlockRead__FP14st_HIPLOADDATAPvii"
+        },
+        {
+          "function": "HIPLCreate__FPCcPci",
+          "offset": 332,
+          "target_source": "SB/Core/x/xbinio.cpp",
+          "target_function": "xBinioLoadCreate__FPCc",
+          "symbol": "xBinioLoadCreate__FPCc"
+        },
+        {
+          "function": "HIPLDestroy__FP14st_HIPLOADDATA",
+          "offset": 60,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "HIPLCreate__FPCcPci",
+          "offset": 156,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "HIPLCreate__FPCcPci",
+          "offset": 444,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "HIPLDestroy__FP14st_HIPLOADDATA",
+          "offset": 68,
+          "opcode": 35,
+          "target_name": "g_loadlock",
+          "symbol": "g_loadlock",
+          "target_source": "SB/Core/x/xhipio.cpp"
+        },
+        {
+          "function": "HIPLDestroy__FP14st_HIPLOADDATA",
+          "offset": 88,
+          "opcode": 43,
+          "target_name": "g_loadlock",
+          "symbol": "g_loadlock",
+          "target_source": "SB/Core/x/xhipio.cpp"
+        },
+        {
+          "function": "HIPLCreate__FPCcPci",
+          "offset": 48,
+          "opcode": 35,
+          "target_name": "g_loadlock",
+          "symbol": "g_loadlock",
+          "target_source": "SB/Core/x/xhipio.cpp"
+        },
+        {
+          "function": "HIPLCreate__FPCcPci",
+          "offset": 80,
+          "opcode": 35,
+          "target_name": "g_loadlock",
+          "symbol": "g_loadlock",
+          "target_source": "SB/Core/x/xhipio.cpp"
+        },
+        {
+          "function": "HIPLCreate__FPCcPci",
+          "offset": 124,
+          "opcode": 43,
+          "target_name": "g_loadlock",
+          "symbol": "g_loadlock",
+          "target_source": "SB/Core/x/xhipio.cpp"
+        },
+        {
+          "function": "HIPLCreate__FPCcPci",
+          "offset": 452,
+          "opcode": 35,
+          "target_name": "g_loadlock",
+          "symbol": "g_loadlock",
+          "target_source": "SB/Core/x/xhipio.cpp"
+        },
+        {
+          "function": "HIPLCreate__FPCcPci",
+          "offset": 472,
+          "opcode": 43,
+          "target_name": "g_loadlock",
+          "symbol": "g_loadlock",
+          "target_source": "SB/Core/x/xhipio.cpp"
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xEnv.cpp",
+      "target_unit": "SB/Core/x/xEnv.cpp",
+      "object": "source/xEnv.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xEnvRender__FP4xEnv": "xEnvRender__FP4xEnv",
+        "xEnvFree__FP4xEnv": "xEnvFree__FP4xEnv",
+        "xEnvSetup__FP4xEnv": "xEnvSetup__FP4xEnv",
+        "xEnvLoadBsp__FP4xEnvPCvUii": "xEnvLoadBsp__FP4xEnvPCvUii"
+      },
+      "calls": [
+        {
+          "function": "xEnvRender__FP4xEnv",
+          "offset": 20,
+          "target_source": "SB/Core/p2/iEnv.cpp",
+          "target_function": "iEnvRender__FP4iEnv",
+          "symbol": "iEnvRender__FP4iEnv"
+        },
+        {
+          "function": "xEnvFree__FP4xEnv",
+          "offset": 28,
+          "target_source": "SB/Core/p2/iEnv.cpp",
+          "target_function": "iEnvFree__FP4iEnv",
+          "symbol": "iEnvFree__FP4iEnv"
+        },
+        {
+          "function": "xEnvSetup__FP4xEnv",
+          "offset": 16,
+          "target_source": "SB/Core/p2/iEnv.cpp",
+          "target_function": "iEnvDefaultLighting__FP4iEnv",
+          "symbol": "iEnvDefaultLighting__FP4iEnv"
+        },
+        {
+          "function": "xEnvLoadBsp__FP4xEnvPCvUii",
+          "offset": 32,
+          "target_source": "SB/Core/p2/iEnv.cpp",
+          "target_function": "iEnvLoad__FP4iEnvPCvUii",
+          "symbol": "iEnvLoad__FP4iEnvPCvUii"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xEnvSetup__FP4xEnv",
+          "offset": 28,
+          "opcode": 43,
+          "target_name": "gCurXEnv",
+          "symbol": "gCurXEnv"
+        },
+        {
+          "function": "xEnvLoadBsp__FP4xEnvPCvUii",
+          "offset": 40,
+          "opcode": 43,
+          "target_name": "gCurXEnv",
+          "symbol": "gCurXEnv"
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xEnv.cpp",
+      "target_unit": "SB/Core/x/xEnv.cpp",
+      "object": "source/xEnv.o",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "xEnvRender": "xEnvRender__FP4xEnv"
+      },
+      "calls": [],
+      "linkage_provenance": [
+        {
+          "function": "xEnvRender",
+          "registry": "corroborated-functions.json",
+          "france_address": 1944896,
+          "size": 44,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1944784
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xBound.cpp",
+      "target_unit": "SB/Core/x/xBound.cpp",
+      "object": "source/xBound.o",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "xRayHitsBound": "xRayHitsBound__FPC5xRay3PC6xBoundP7xCollis",
+        "xBoundOBBIsectRay": "xBoundOBBIsectRay__FPC4xBoxPC7xMat4x3PC5xRay3P6xIsect",
+        "xBoundGetBox": "xBoundGetBox__FR4xBoxRC6xBound"
+      },
+      "calls": [
+        {
+          "function": "xRayHitsBound",
+          "offset": 40,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iSphereIsectRay",
+          "symbol": "iSphereIsectRay__FPC7xSpherePC5xRay3P6xIsect"
+        },
+        {
+          "function": "xRayHitsBound",
+          "offset": 80,
+          "target_source": "SB/Core/x/xBound.cpp",
+          "target_function": "xBoundOBBIsectRay",
+          "symbol": "xBoundOBBIsectRay__FPC4xBoxPC7xMat4x3PC5xRay3P6xIsect"
+        },
+        {
+          "function": "xRayHitsBound",
+          "offset": 116,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iBoxIsectRay",
+          "symbol": "iBoxIsectRay__FPC4xBoxPC5xRay3P6xIsect"
+        },
+        {
+          "function": "xBoundOBBIsectRay",
+          "offset": 868,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Tolocal",
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xBoundOBBIsectRay",
+          "offset": 884,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Tolocal",
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xBoundOBBIsectRay",
+          "offset": 924,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iBoxIsectRay",
+          "symbol": "iBoxIsectRay__FPC4xBoxPC5xRay3P6xIsect"
+        },
+        {
+          "function": "xBoundGetBox",
+          "offset": 212,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xBoxInitBoundOBB",
+          "symbol": "xBoxInitBoundOBB__FP4xBoxPC4xBoxPC7xMat4x3"
+        }
+      ],
+      "linkage_provenance": [
+        {
+          "function": "xRayHitsBound",
+          "registry": "relocation-corroborated-functions.json",
+          "france_address": 1838160,
+          "size": 208,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1836784
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1838048
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1834688
+            }
+          ]
+        },
+        {
+          "function": "xBoundOBBIsectRay",
+          "registry": "relocation-corroborated-functions.json",
+          "france_address": 1838368,
+          "size": 952,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1836992
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1838256
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1834896
+            }
+          ]
+        },
+        {
+          "function": "xBoundGetBox",
+          "registry": "relocation-corroborated-functions.json",
+          "france_address": 1840336,
+          "size": 236,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1838960
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1840224
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1836864
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xLightKit.cpp",
+      "target_unit": "SB/Core/x/xLightKit.cpp",
+      "object": "source/xLightKit.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xLightKit_Destroy__FP9xLightKit": "xLightKit_Destroy__FP9xLightKit",
+        "xLightKit_GetCurrent__FP7RpWorld": "xLightKit_GetCurrent__FP7RpWorld",
+        "xLightKit_Enable__FP9xLightKitP7RpWorld": "xLightKit_Enable__FP9xLightKitP7RpWorld",
+        "xLightKit_Prepare__FPv": "xLightKit_Prepare__FPv"
+      },
+      "calls": [
+        {
+          "function": "xLightKit_Enable__FP9xLightKitP7RpWorld",
+          "offset": 216,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModel_SetLightKit__FP9xLightKit",
+          "symbol": "iModel_SetLightKit__FP9xLightKit"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xLightKit_GetCurrent__FP7RpWorld",
+          "offset": 4,
+          "opcode": 35,
+          "target_name": "gLastLightKit",
+          "symbol": "gLastLightKit"
+        },
+        {
+          "function": "xLightKit_Enable__FP9xLightKitP7RpWorld",
+          "offset": 28,
+          "opcode": 35,
+          "target_name": "gLastLightKit",
+          "symbol": "gLastLightKit"
+        },
+        {
+          "function": "xLightKit_Enable__FP9xLightKitP7RpWorld",
+          "offset": 92,
+          "opcode": 35,
+          "target_name": "gLastLightKit",
+          "symbol": "gLastLightKit"
+        },
+        {
+          "function": "xLightKit_Enable__FP9xLightKitP7RpWorld",
+          "offset": 124,
+          "opcode": 43,
+          "target_name": "gLastLightKit",
+          "symbol": "gLastLightKit"
+        },
+        {
+          "function": "xLightKit_Enable__FP9xLightKitP7RpWorld",
+          "offset": 132,
+          "opcode": 43,
+          "target_name": "iModelHack_DisablePrelight",
+          "symbol": "iModelHack_DisablePrelight"
+        },
+        {
+          "function": "xLightKit_Enable__FP9xLightKitP7RpWorld",
+          "offset": 208,
+          "opcode": 43,
+          "target_name": "iModelHack_DisablePrelight",
+          "symbol": "iModelHack_DisablePrelight"
         }
       ]
     }

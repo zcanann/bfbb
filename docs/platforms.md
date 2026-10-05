@@ -73,14 +73,21 @@ fake functions, changing function scores, or counting comparison-container paddi
 It removes percentage fields with empty denominators. Unit/category sums are
 checked, and the standard objdiff parser accepts the result.
 
-| Version | Full code-region bytes | Exact source-match bytes |
+| Version | Full code-region bytes | Objdiff code-matched bytes |
 | --- | ---: | ---: |
-| SLUS-20680 | 2,978,560 | 1,616 |
-| SLES-51968 | 2,979,712 | 1,616 |
-| SLES-51970 | 2,976,512 | 1,616 |
-| SLES-53623 | 2,979,968 | 1,276 |
-| XBOX-US | 1,798,760 | 48 |
-| XBOX-EU | 1,798,760 | 48 |
+| SLUS-20680 | 2,978,560 | 16,652 |
+| SLES-51968 | 2,979,712 | 16,652 |
+| SLES-51970 | 2,976,512 | 16,652 |
+| SLES-53623 | 2,979,968 | 3,900 |
+| XBOX-US | 1,798,760 | 134 |
+| XBOX-EU | 1,798,760 | 134 |
+
+This checkpoint includes utility, serializer, bounds, streaming, environment and light-kit
+header work, plus source comparisons for independently verified French function
+subsets. Reports retain
+standard objdiff `functionRelocDiffs=none`, as on GameCube. Code matches do not
+prove relocated byte equality or a completed link; independent reconstruction
+results are documented separately in the per-unit notes.
 
 PS2 reports partition the original load into CPU text, VU upload packets and
 initialized data, plus independently proven runtime BSS. Original linker/VU
@@ -101,10 +108,10 @@ The narrower function-only baselines currently contain:
 
 | PS2 baseline | Functions | Measured function bytes | Source matches |
 | --- | ---: | ---: | ---: |
-| USA | 5,391 | 2,107,460 | 17 functions / 1,616 bytes |
-| Europe/Australia | 5,392 | 2,108,700 | 17 functions / 1,616 bytes |
-| Germany | 5,394 | 2,105,512 | 17 functions / 1,616 bytes |
-| France (reviewed and corroborated bounds) | 326 | 89,856 | 12 functions / 1,276 bytes |
+| USA | 5,391 | 2,107,460 | 153 functions / 16,652 bytes |
+| Europe/Australia | 5,392 | 2,108,700 | 153 functions / 16,652 bytes |
+| Germany | 5,394 | 2,105,512 | 153 functions / 16,652 bytes |
+| France (reviewed and corroborated bounds) | 331 | 90,040 | 34 functions / 3,900 bytes |
 
 The `address-anchors.json` registries also recover over 2,500 named data addresses
 and 628 function declarations in each debug-bearing version. Addresses do not
@@ -130,9 +137,9 @@ These counts come from explicit retail DWARF1 function bounds, with overlap and
 load-range validation. Targets retain the exact original instructions. The `xBase` call relocations are restored and verified by inverse reconstruction;
 other target objects are not relocation-restored link inputs. Code outside those function ranges, remaining data,
 and padding remain unclassified; the whole mixed load segment is not counted as
-code. France is stripped; sixteen individually reviewed extents and 310
-machine-corroborated extents establish its function-only baseline. Its
-1,276/89,856 matched bytes describe that subset. The published code denominator
+code. France is stripped; independently reviewed and machine-corroborated
+extents establish its 331-function, 90,040-byte function-only baseline. Its
+3,900 matched code bytes describe that subset. The published code denominator
 is the full recovered CPU text region, not this function-only subset.
 
 Both Xbox releases have identical payloads in all 13 sections; their 532 differing
@@ -262,15 +269,15 @@ Both region registries keep independent executable identities.
 See the parameterized scripts in `tools/platforms/ghidra/`. No Xbox SDK is required
 for this analysis step.
 
-`verified-anonymous-functions.json` promotes 2,515 disjoint extents (627,372
+`verified-anonymous-functions.json` promotes 2,513 disjoint extents (627,239
 bytes) per release after Capstone 5.0.7 re-decodes closed control flow, verifies
 all body bytes are reachable, checks an incoming direct call from another
 closed function, and excludes foreign interior transfers across the candidate
 inventory. Reviewed extents take precedence. CI regenerates this registry from
 the original; the remaining candidates stay excluded. Anonymous identifiers
 establish neither original symbols nor source ownership. Together with the
-three reviewed functions, measured coverage is 2,518 functions / 627,523 bytes;
-only 48 bytes match source. This is still partial coverage.
+six reviewed functions, measured coverage is 2,519 functions / 627,572 bytes;
+134 bytes match source. This is still partial coverage.
 
 Three hash functions have been independently reviewed in both Xbox releases:
 `xStrHash(const char*)`, its bounded overload, and `xStrHashCat`, totaling 151
@@ -282,6 +289,20 @@ all 48 bytes in both Xbox releases; the other two functions remain nonmatching.
 The same leaf also matches with MSVC 7.0, so exact retail compiler identity is
 not established. Xbox's signed-byte fold is platform-scoped; GameCube retains
 its existing unsigned-byte behavior.
+
+The complete `xPar.cpp` also compiles and links in its own host context after
+using its direct vector-header dependency on Xbox. Its independently reviewed
+96-byte initializer compares at 88.030304% in both releases. This replaces an
+existing anonymous identity without changing recovered coverage or adding an
+exact function. See [particle evidence](XBOX_PARTICLE_INIT.md).
+
+The Xbox pool initializer and allocator add two exact functions / 86 bytes.
+Their actual PE base relocations and named source globals establish six DIR32
+operands; reapplying independently reviewed original global addresses reproduces
+every retail byte in both releases. The pool initializer was newly recovered;
+the allocator replaces an anonymous identity. The GameCube-specific volatile
+workaround remains enabled on GameCube and PS2. See
+[relocation evidence](XBOX_PARTICLE_RELOCATIONS.md).
 
 Source boundaries come from reachable decoded control flow in the linked PE,
 starting at the compiler's MAP symbols. Original target sizes are not used to
@@ -301,10 +322,28 @@ On Windows, use the same compiler directory without `--wine`.
 python tools/platforms/verify_xbox_reviewed.py
 ```
 
+### Xbox shared-source compile coverage
+
+A native MSVC 7.1 inventory of the 62 core C++ files smaller than 16 KB
+compiles eight complete translation units with the existing Xbox headers:
+`xMath2`, `xString`, `xCurveAsset`, `xordarray`, `xBase`, `xSurface`,
+`xRMemData`, and `xFactory`. The last four became compilable after separating
+save-game API types from platform-dependent save-game storage, using the
+compiler's standard `<new>` header on Xbox, and spelling one binary mask in
+hexadecimal for this older compiler. No Xbox timer or save-game ABI is assumed.
+
+These additional objects are compile coverage, not newly matched code. Actual
+LTCG link attempts still require the real serializer and memory-manager
+implementations: `xSerial::Read_b1`/`Write_b1`, `gActiveHeap`, and allocation
+routines. They are not replaced with stubs. All 224 GameCube game/engine source
+objects compile after the include cleanup, with allocated section bytes and
+sizes identical to the previous build.
+
 ## Next implementation work
 
 - PS2: recover remaining code/data and relocation ownership; expand compilation
-  beyond xBase/xordarray/xRMemData and validate toolchain profiles against additional source objects.
+  using the [batch compile inventory](PS2_COMPILE_INVENTORY.md), prioritizing shared
+  RenderWare/platform header blockers and validating additional source objects.
   The ELF comment identifies the MW MIPS compiler family, but its `2.4.1.01`
   stamp alone does not establish a particular toolchain distribution.
 - PS2 France: recover independent boundaries from its stripped executable.
