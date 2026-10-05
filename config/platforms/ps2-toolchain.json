@@ -2875,6 +2875,746 @@
           ]
         }
       ]
+    },
+    {
+      "source": "src/SB/Core/x/xutil.cpp",
+      "target_unit": "SB/Core/x/xutil.cpp",
+      "object": "source/xutil.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xUtil_wtadjust__FPfif": "xUtil_wtadjust__FPfif",
+        "xUtil_yesno__Ff": "xUtil_yesno__Ff",
+        "itoBCD__FUs": "itoBCD__FUs",
+        "itoBCD__FUc": "itoBCD__FUc",
+        "BCDtoi__FUc": "BCDtoi__FUc",
+        "strtosjis__FPUcPUc": "strtosjis__FPUcPUc",
+        "xUtil_crc_update__FUiPci": "xUtil_crc_update__FUiPci",
+        "xUtil_crc_init__Fv": "xUtil_crc_init__Fv",
+        "xUtil_idtag2string__FUii": "xUtil_idtag2string__FUii",
+        "xUtilShutdown__Fv": "xUtilShutdown__Fv",
+        "xUtilStartup__Fv": "xUtilStartup__Fv"
+      },
+      "calls": [
+        {
+          "function": "xUtil_yesno__Ff",
+          "offset": 72,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xUtil_crc_update__FUiPci",
+          "offset": 40,
+          "target_source": "SB/Core/x/xutil.cpp",
+          "target_function": "xUtil_crc_init__Fv",
+          "symbol": "xUtil_crc_init__Fv"
+        },
+        {
+          "function": "xUtilStartup__Fv",
+          "offset": 24,
+          "target_source": "SB/Core/x/xutil.cpp",
+          "target_function": "xUtil_crc_init__Fv",
+          "symbol": "xUtil_crc_init__Fv"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xUtil_crc_update__FUiPci",
+          "offset": 28,
+          "opcode": 35,
+          "target_name": "g_crc_needinit",
+          "symbol": "g_crc_needinit"
+        },
+        {
+          "function": "xUtil_crc_init__Fv",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "g_crc_needinit",
+          "symbol": "g_crc_needinit"
+        },
+        {
+          "function": "xUtil_crc_init__Fv",
+          "offset": 124,
+          "opcode": 43,
+          "target_name": "g_crc_needinit",
+          "symbol": "g_crc_needinit"
+        },
+        {
+          "function": "xUtilShutdown__Fv",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "g_xutilinit",
+          "symbol": "g_xutilinit"
+        },
+        {
+          "function": "xUtilShutdown__Fv",
+          "offset": 8,
+          "opcode": 43,
+          "target_name": "g_xutilinit",
+          "symbol": "g_xutilinit"
+        },
+        {
+          "function": "xUtilShutdown__Fv",
+          "offset": 16,
+          "opcode": 35,
+          "target_name": "g_xutilinit",
+          "symbol": "g_xutilinit"
+        },
+        {
+          "function": "xUtilStartup__Fv",
+          "offset": 8,
+          "opcode": 35,
+          "target_name": "g_xutilinit",
+          "symbol": "g_xutilinit"
+        },
+        {
+          "function": "xUtilStartup__Fv",
+          "offset": 20,
+          "opcode": 43,
+          "target_name": "g_xutilinit",
+          "symbol": "g_xutilinit"
+        },
+        {
+          "function": "xUtilStartup__Fv",
+          "offset": 36,
+          "opcode": 35,
+          "target_name": "g_xutilinit",
+          "symbol": "g_xutilinit"
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xserializer.cpp",
+      "target_unit": "SB/Core/x/xserializer.cpp",
+      "object": "source/xserializer.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xSER_xsgclt_ldproc_fill__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii": "xSER_xsgclt_ldproc_fill__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii",
+        "xSER_xsgclt_svproc_fill__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT": "xSER_xsgclt_svproc_fill__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT",
+        "xSER_xsgclt_svinfo_fill__FPvP17st_XSAVEGAME_DATAPiPi": "xSER_xsgclt_svinfo_fill__FPvP17st_XSAVEGAME_DATAPiPi",
+        "xSER_xsgclt_ldproc_clt__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii": "xSER_xsgclt_ldproc_clt__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii",
+        "xSER_xsgclt_svproc_clt__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT": "xSER_xsgclt_svproc_clt__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT",
+        "xSER_xsgclt_svinfo_clt__FPvP17st_XSAVEGAME_DATAPiPi": "xSER_xsgclt_svinfo_clt__FPvP17st_XSAVEGAME_DATAPiPi",
+        "xSER_xsgclt_ldproc_ver__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii": "xSER_xsgclt_ldproc_ver__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii",
+        "xSER_xsgclt_svproc_ver__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT": "xSER_xsgclt_svproc_ver__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT",
+        "xSER_xsgclt_svinfo_ver__FPvP17st_XSAVEGAME_DATAPiPi": "xSER_xsgclt_svinfo_ver__FPvP17st_XSAVEGAME_DATAPiPi",
+        "xSerial_svgame_register__FP17st_XSAVEGAME_DATA16en_SAVEGAME_MODE": "xSerial_svgame_register__FP17st_XSAVEGAME_DATA16en_SAVEGAME_MODE",
+        "XSER_get_client__FUi": "XSER_get_client__FUi",
+        "xSER_ord_test__FPCvPv": "xSER_ord_test__FPCvPv",
+        "xSER_ord_compare__FPvPv": "xSER_ord_compare__FPvPv",
+        "xSER_init_buffers__FiP21st_SERIAL_PERCID_SIZE": "xSER_init_buffers__FiP21st_SERIAL_PERCID_SIZE",
+        "xSerialWipeMainBuffer__Fv": "xSerialWipeMainBuffer__Fv",
+        "rdbit__7xSerialFv": "rdbit__7xSerialFv",
+        "wrbit__7xSerialFi": "wrbit__7xSerialFi",
+        "Read__7xSerialFPf": "Read__7xSerialFPf",
+        "Read__7xSerialFPUi": "Read__7xSerialFPUi",
+        "Read__7xSerialFPi": "Read__7xSerialFPi",
+        "Read__7xSerialFPs": "Read__7xSerialFPs",
+        "Read__7xSerialFPUc": "Read__7xSerialFPUc",
+        "Read_b7__7xSerialFPUi": "Read_b7__7xSerialFPUi",
+        "Read_b1__7xSerialFPi": "Read_b1__7xSerialFPi",
+        "Read__7xSerialFPcii": "Read__7xSerialFPcii",
+        "Write__7xSerialFf": "Write__7xSerialFf",
+        "Write__7xSerialFUi": "Write__7xSerialFUi",
+        "Write__7xSerialFi": "Write__7xSerialFi",
+        "Write__7xSerialFs": "Write__7xSerialFs",
+        "Write__7xSerialFUc": "Write__7xSerialFUc",
+        "Write_b7__7xSerialFUi": "Write_b7__7xSerialFUi",
+        "Write_b1__7xSerialFi": "Write_b1__7xSerialFi",
+        "Write__7xSerialFPcii": "Write__7xSerialFPcii",
+        "setClient__7xSerialFUi": "setClient__7xSerialFUi",
+        "__dt__7xSerialFv": "__dt__7xSerialFv",
+        "__ct__7xSerialFv": "__ct__7xSerialFv",
+        "xSerialTraverse__FPFUiP7xSerial_i": "xSerialTraverse__FPFUiP7xSerial_i",
+        "xSerialShutdown__Fv": "xSerialShutdown__Fv",
+        "xSerialStartup__FiP21st_SERIAL_PERCID_SIZE": "xSerialStartup__FiP21st_SERIAL_PERCID_SIZE"
+      },
+      "calls": [
+        {
+          "function": "xSER_xsgclt_ldproc_fill__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii",
+          "offset": 84,
+          "target_source": "SB/Core/x/xsavegame.cpp",
+          "target_function": "xSGReadData__FP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTPci",
+          "symbol": "xSGReadData__FP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTPci"
+        },
+        {
+          "function": "xSER_xsgclt_svproc_fill__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT",
+          "offset": 48,
+          "target_source": "SB/Core/x/xsavegame.cpp",
+          "target_function": "xSGWriteData__FP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXTPci",
+          "symbol": "xSGWriteData__FP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXTPci"
+        },
+        {
+          "function": "xSER_xsgclt_ldproc_clt__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii",
+          "offset": 48,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "XSER_get_client__FUi",
+          "symbol": "XSER_get_client__FUi"
+        },
+        {
+          "function": "xSER_xsgclt_ldproc_clt__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii",
+          "offset": 68,
+          "target_source": "SB/Core/x/xsavegame.cpp",
+          "target_function": "xSGReadData__FP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTPci",
+          "symbol": "xSGReadData__FP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTPci"
+        },
+        {
+          "function": "xSER_xsgclt_svproc_clt__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT",
+          "offset": 24,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "XSER_get_client__FUi",
+          "symbol": "XSER_get_client__FUi"
+        },
+        {
+          "function": "xSER_xsgclt_svproc_clt__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT",
+          "offset": 44,
+          "target_source": "SB/Core/x/xsavegame.cpp",
+          "target_function": "xSGWriteData__FP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXTPci",
+          "symbol": "xSGWriteData__FP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXTPci"
+        },
+        {
+          "function": "xSER_xsgclt_ldproc_ver__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii",
+          "offset": 36,
+          "target_source": "SB/Core/x/xsavegame.cpp",
+          "target_function": "xSGReadData__FP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTPii",
+          "symbol": "xSGReadData__FP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTPii"
+        },
+        {
+          "function": "xSER_xsgclt_svproc_ver__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT",
+          "offset": 24,
+          "target_source": "SB/Core/x/xsavegame.cpp",
+          "target_function": "xSGWriteData__FP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXTPii",
+          "symbol": "xSGWriteData__FP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXTPii"
+        },
+        {
+          "function": "xSerial_svgame_register__FP17st_XSAVEGAME_DATA16en_SAVEGAME_MODE",
+          "offset": 92,
+          "target_source": "SB/Core/x/xsavegame.cpp",
+          "target_function": "xSGAddSaveClient__FP17st_XSAVEGAME_DATAUiPvPFPvP17st_XSAVEGAME_DATAPiPi_iPFPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT_i",
+          "symbol": "xSGAddSaveClient__FP17st_XSAVEGAME_DATAUiPvPFPvP17st_XSAVEGAME_DATAPiPi_iPFPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT_i"
+        },
+        {
+          "function": "xSerial_svgame_register__FP17st_XSAVEGAME_DATA16en_SAVEGAME_MODE",
+          "offset": 152,
+          "target_source": "SB/Core/x/xsavegame.cpp",
+          "target_function": "xSGAddSaveClient__FP17st_XSAVEGAME_DATAUiPvPFPvP17st_XSAVEGAME_DATAPiPi_iPFPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT_i",
+          "symbol": "xSGAddSaveClient__FP17st_XSAVEGAME_DATAUiPvPFPvP17st_XSAVEGAME_DATAPiPi_iPFPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT_i"
+        },
+        {
+          "function": "xSerial_svgame_register__FP17st_XSAVEGAME_DATA16en_SAVEGAME_MODE",
+          "offset": 216,
+          "target_source": "SB/Core/x/xsavegame.cpp",
+          "target_function": "xSGAddSaveClient__FP17st_XSAVEGAME_DATAUiPvPFPvP17st_XSAVEGAME_DATAPiPi_iPFPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT_i",
+          "symbol": "xSGAddSaveClient__FP17st_XSAVEGAME_DATAUiPvPFPvP17st_XSAVEGAME_DATAPiPi_iPFPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT_i"
+        },
+        {
+          "function": "xSerial_svgame_register__FP17st_XSAVEGAME_DATA16en_SAVEGAME_MODE",
+          "offset": 256,
+          "target_source": "SB/Core/x/xsavegame.cpp",
+          "target_function": "xSGAddLoadClient__FP17st_XSAVEGAME_DATAUiPvPFPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii_i",
+          "symbol": "xSGAddLoadClient__FP17st_XSAVEGAME_DATAUiPvPFPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii_i"
+        },
+        {
+          "function": "xSerial_svgame_register__FP17st_XSAVEGAME_DATA16en_SAVEGAME_MODE",
+          "offset": 280,
+          "target_source": "SB/Core/x/xsavegame.cpp",
+          "target_function": "xSGAddLoadClient__FP17st_XSAVEGAME_DATAUiPvPFPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii_i",
+          "symbol": "xSGAddLoadClient__FP17st_XSAVEGAME_DATAUiPvPFPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii_i"
+        },
+        {
+          "function": "xSerial_svgame_register__FP17st_XSAVEGAME_DATA16en_SAVEGAME_MODE",
+          "offset": 308,
+          "target_source": "SB/Core/x/xsavegame.cpp",
+          "target_function": "xSGAddLoadClient__FP17st_XSAVEGAME_DATAUiPvPFPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii_i",
+          "symbol": "xSGAddLoadClient__FP17st_XSAVEGAME_DATAUiPvPFPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii_i"
+        },
+        {
+          "function": "XSER_get_client__FUi",
+          "offset": 48,
+          "target_source": "SB/Core/x/xordarray.cpp",
+          "target_function": "XOrdLookup__FP16st_XORDEREDARRAYPCvPFPCvPv_i",
+          "symbol": "XOrdLookup__FP16st_XORDEREDARRAYPCvPFPCvPv_i"
+        },
+        {
+          "function": "XSER_get_client__FUi",
+          "offset": 92,
+          "target_source": "SB/Core/x/xordarray.cpp",
+          "target_function": "XOrdInsert__FP16st_XORDEREDARRAYPvPFPvPv_i",
+          "symbol": "XOrdInsert__FP16st_XORDEREDARRAYPvPFPvPv_i"
+        },
+        {
+          "function": "xSER_init_buffers__FiP21st_SERIAL_PERCID_SIZE",
+          "offset": 68,
+          "target_source": "SB/Core/x/xordarray.cpp",
+          "target_function": "XOrdInit__FP16st_XORDEREDARRAYii",
+          "symbol": "XOrdInit__FP16st_XORDEREDARRAYii"
+        },
+        {
+          "function": "xSER_init_buffers__FiP21st_SERIAL_PERCID_SIZE",
+          "offset": 84,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xSER_init_buffers__FiP21st_SERIAL_PERCID_SIZE",
+          "offset": 220,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xSER_init_buffers__FiP21st_SERIAL_PERCID_SIZE",
+          "offset": 340,
+          "target_source": "SB/Core/x/xordarray.cpp",
+          "target_function": "XOrdAppend__FP16st_XORDEREDARRAYPv",
+          "symbol": "XOrdAppend__FP16st_XORDEREDARRAYPv"
+        },
+        {
+          "function": "xSER_init_buffers__FiP21st_SERIAL_PERCID_SIZE",
+          "offset": 384,
+          "target_source": "SB/Core/x/xordarray.cpp",
+          "target_function": "XOrdSort__FP16st_XORDEREDARRAYPFPvPv_i",
+          "symbol": "XOrdSort__FP16st_XORDEREDARRAYPFPvPv_i"
+        },
+        {
+          "function": "Read__7xSerialFPf",
+          "offset": 4,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Read__7xSerialFPcii",
+          "symbol": "Read__7xSerialFPcii",
+          "opcode": 2
+        },
+        {
+          "function": "Read__7xSerialFPUi",
+          "offset": 4,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Read__7xSerialFPcii",
+          "symbol": "Read__7xSerialFPcii",
+          "opcode": 2
+        },
+        {
+          "function": "Read__7xSerialFPi",
+          "offset": 4,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Read__7xSerialFPcii",
+          "symbol": "Read__7xSerialFPcii",
+          "opcode": 2
+        },
+        {
+          "function": "Read__7xSerialFPs",
+          "offset": 4,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Read__7xSerialFPcii",
+          "symbol": "Read__7xSerialFPcii",
+          "opcode": 2
+        },
+        {
+          "function": "Read__7xSerialFPUc",
+          "offset": 4,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Read__7xSerialFPcii",
+          "symbol": "Read__7xSerialFPcii",
+          "opcode": 2
+        },
+        {
+          "function": "Read_b7__7xSerialFPUi",
+          "offset": 4,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Read__7xSerialFPcii",
+          "symbol": "Read__7xSerialFPcii",
+          "opcode": 2
+        },
+        {
+          "function": "Read_b1__7xSerialFPi",
+          "offset": 4,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Read__7xSerialFPcii",
+          "symbol": "Read__7xSerialFPcii",
+          "opcode": 2
+        },
+        {
+          "function": "Read__7xSerialFPcii",
+          "offset": 80,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "rdbit__7xSerialFv",
+          "symbol": "rdbit__7xSerialFv"
+        },
+        {
+          "function": "Read__7xSerialFPcii",
+          "offset": 240,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "rdbit__7xSerialFv",
+          "symbol": "rdbit__7xSerialFv"
+        },
+        {
+          "function": "Write__7xSerialFf",
+          "offset": 20,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Write__7xSerialFPcii",
+          "symbol": "Write__7xSerialFPcii"
+        },
+        {
+          "function": "Write__7xSerialFUi",
+          "offset": 20,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Write__7xSerialFPcii",
+          "symbol": "Write__7xSerialFPcii"
+        },
+        {
+          "function": "Write__7xSerialFi",
+          "offset": 20,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Write__7xSerialFPcii",
+          "symbol": "Write__7xSerialFPcii"
+        },
+        {
+          "function": "Write__7xSerialFs",
+          "offset": 20,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Write__7xSerialFPcii",
+          "symbol": "Write__7xSerialFPcii"
+        },
+        {
+          "function": "Write__7xSerialFUc",
+          "offset": 20,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Write__7xSerialFPcii",
+          "symbol": "Write__7xSerialFPcii"
+        },
+        {
+          "function": "Write_b7__7xSerialFUi",
+          "offset": 20,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Write__7xSerialFPcii",
+          "symbol": "Write__7xSerialFPcii"
+        },
+        {
+          "function": "Write_b1__7xSerialFi",
+          "offset": 20,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Write__7xSerialFPcii",
+          "symbol": "Write__7xSerialFPcii"
+        },
+        {
+          "function": "Write__7xSerialFPcii",
+          "offset": 116,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "wrbit__7xSerialFi",
+          "symbol": "wrbit__7xSerialFi"
+        },
+        {
+          "function": "Write__7xSerialFPcii",
+          "offset": 228,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "wrbit__7xSerialFi",
+          "symbol": "wrbit__7xSerialFi"
+        },
+        {
+          "function": "setClient__7xSerialFUi",
+          "offset": 16,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "XSER_get_client__FUi",
+          "symbol": "XSER_get_client__FUi"
+        },
+        {
+          "function": "__dt__7xSerialFv",
+          "offset": 40,
+          "target_source": "SB/Core/x/xutil.cpp",
+          "target_function": "xUtil_idtag2string__FUii",
+          "symbol": "xUtil_idtag2string__FUii"
+        },
+        {
+          "function": "xSerialTraverse__FPFUiP7xSerial_i",
+          "offset": 108,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "XSER_get_client__FUi",
+          "symbol": "XSER_get_client__FUi"
+        },
+        {
+          "function": "xSerialTraverse__FPFUiP7xSerial_i",
+          "offset": 216,
+          "target_source": "SB/Core/x/xutil.cpp",
+          "target_function": "xUtil_idtag2string__FUii",
+          "symbol": "xUtil_idtag2string__FUii"
+        },
+        {
+          "function": "xSerialStartup__FiP21st_SERIAL_PERCID_SIZE",
+          "offset": 264,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "xSER_init_buffers__FiP21st_SERIAL_PERCID_SIZE",
+          "symbol": "xSER_init_buffers__FiP21st_SERIAL_PERCID_SIZE"
+        },
+        {
+          "function": "xSER_init_buffers__FiP21st_SERIAL_PERCID_SIZE",
+          "offset": 112,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xSER_init_buffers__FiP21st_SERIAL_PERCID_SIZE",
+          "offset": 240,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xSerialWipeMainBuffer__Fv",
+          "offset": 16,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset",
+          "opcode": 2
+        },
+        {
+          "function": "xSerialStartup__FiP21st_SERIAL_PERCID_SIZE",
+          "offset": 52,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xSER_init_buffers__FiP21st_SERIAL_PERCID_SIZE",
+          "offset": 76,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xSER_init_buffers__FiP21st_SERIAL_PERCID_SIZE",
+          "offset": 192,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xSerialShutdown__Fv",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "g_serinit",
+          "symbol": "g_serinit"
+        },
+        {
+          "function": "xSerialShutdown__Fv",
+          "offset": 8,
+          "opcode": 43,
+          "target_name": "g_serinit",
+          "symbol": "g_serinit"
+        },
+        {
+          "function": "xSerialShutdown__Fv",
+          "offset": 16,
+          "opcode": 35,
+          "target_name": "g_serinit",
+          "symbol": "g_serinit"
+        },
+        {
+          "function": "xSerialStartup__FiP21st_SERIAL_PERCID_SIZE",
+          "offset": 20,
+          "opcode": 35,
+          "target_name": "g_serinit",
+          "symbol": "g_serinit"
+        },
+        {
+          "function": "xSerialStartup__FiP21st_SERIAL_PERCID_SIZE",
+          "offset": 36,
+          "opcode": 43,
+          "target_name": "g_serinit",
+          "symbol": "g_serinit"
+        },
+        {
+          "function": "xSerialStartup__FiP21st_SERIAL_PERCID_SIZE",
+          "offset": 284,
+          "opcode": 35,
+          "target_name": "g_serinit",
+          "symbol": "g_serinit"
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xBound.cpp",
+      "target_unit": "SB/Core/x/xBound.cpp",
+      "object": "source/xBound.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xBoundDraw__FPC6xBound": "xBoundDraw__FPC6xBound",
+        "xVecHitsBound__FPC5xVec3PC6xBoundP7xCollis": "xVecHitsBound__FPC5xVec3PC6xBoundP7xCollis",
+        "xSphereHitsBound__FPC7xSpherePC6xBoundP7xCollis": "xSphereHitsBound__FPC7xSpherePC6xBoundP7xCollis",
+        "xRayHitsBound__FPC5xRay3PC6xBoundP7xCollis": "xRayHitsBound__FPC5xRay3PC6xBoundP7xCollis",
+        "xBoundOBBIsectRay__FPC4xBoxPC7xMat4x3PC5xRay3P6xIsect": "xBoundOBBIsectRay__FPC4xBoxPC7xMat4x3PC5xRay3P6xIsect",
+        "xBoundHitsBound__FPC6xBoundPC6xBoundP7xCollis": "xBoundHitsBound__FPC6xBoundPC6xBoundP7xCollis",
+        "xBoundGetSphere__FR7xSphereRC6xBound": "xBoundGetSphere__FR7xSphereRC6xBound",
+        "xBoundGetBox__FR4xBoxRC6xBound": "xBoundGetBox__FR4xBoxRC6xBound",
+        "xBoundUpdate__FP6xBound": "xBoundUpdate__FP6xBound"
+      },
+      "calls": [
+        {
+          "function": "xVecHitsBound__FPC5xVec3PC6xBoundP7xCollis",
+          "offset": 48,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iSphereIsectVec__FPC7xSpherePC5xVec3P6xIsect",
+          "symbol": "iSphereIsectVec__FPC7xSpherePC5xVec3P6xIsect"
+        },
+        {
+          "function": "xVecHitsBound__FPC5xVec3PC6xBoundP7xCollis",
+          "offset": 132,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xVecHitsBound__FPC5xVec3PC6xBoundP7xCollis",
+          "offset": 148,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iBoxIsectVec__FPC4xBoxPC5xVec3P6xIsect",
+          "symbol": "iBoxIsectVec__FPC4xBoxPC5xVec3P6xIsect"
+        },
+        {
+          "function": "xVecHitsBound__FPC5xVec3PC6xBoundP7xCollis",
+          "offset": 188,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iBoxIsectVec__FPC4xBoxPC5xVec3P6xIsect",
+          "symbol": "iBoxIsectVec__FPC4xBoxPC5xVec3P6xIsect"
+        },
+        {
+          "function": "xSphereHitsBound__FPC7xSpherePC6xBoundP7xCollis",
+          "offset": 72,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xSphereHitsSphere__FPC7xSpherePC7xSphereP7xCollis",
+          "symbol": "xSphereHitsSphere__FPC7xSpherePC7xSphereP7xCollis"
+        },
+        {
+          "function": "xSphereHitsBound__FPC7xSpherePC6xBoundP7xCollis",
+          "offset": 92,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xSphereHitsOBB_nu__FPC7xSpherePC4xBoxPC7xMat4x3P7xCollis",
+          "symbol": "xSphereHitsOBB_nu__FPC7xSpherePC4xBoxPC7xMat4x3P7xCollis"
+        },
+        {
+          "function": "xSphereHitsBound__FPC7xSpherePC6xBoundP7xCollis",
+          "offset": 112,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xSphereHitsBox__FPC7xSpherePC4xBoxP7xCollis",
+          "symbol": "xSphereHitsBox__FPC7xSpherePC4xBoxP7xCollis"
+        },
+        {
+          "function": "xRayHitsBound__FPC5xRay3PC6xBoundP7xCollis",
+          "offset": 40,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iSphereIsectRay__FPC7xSpherePC5xRay3P6xIsect",
+          "symbol": "iSphereIsectRay__FPC7xSpherePC5xRay3P6xIsect"
+        },
+        {
+          "function": "xRayHitsBound__FPC5xRay3PC6xBoundP7xCollis",
+          "offset": 80,
+          "target_source": "SB/Core/x/xBound.cpp",
+          "target_function": "xBoundOBBIsectRay__FPC4xBoxPC7xMat4x3PC5xRay3P6xIsect",
+          "symbol": "xBoundOBBIsectRay__FPC4xBoxPC7xMat4x3PC5xRay3P6xIsect"
+        },
+        {
+          "function": "xRayHitsBound__FPC5xRay3PC6xBoundP7xCollis",
+          "offset": 116,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iBoxIsectRay__FPC4xBoxPC5xRay3P6xIsect",
+          "symbol": "iBoxIsectRay__FPC4xBoxPC5xRay3P6xIsect"
+        },
+        {
+          "function": "xBoundOBBIsectRay__FPC4xBoxPC7xMat4x3PC5xRay3P6xIsect",
+          "offset": 868,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xBoundOBBIsectRay__FPC4xBoxPC7xMat4x3PC5xRay3P6xIsect",
+          "offset": 884,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xBoundOBBIsectRay__FPC4xBoxPC7xMat4x3PC5xRay3P6xIsect",
+          "offset": 924,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iBoxIsectRay__FPC4xBoxPC5xRay3P6xIsect",
+          "symbol": "iBoxIsectRay__FPC4xBoxPC5xRay3P6xIsect"
+        },
+        {
+          "function": "xBoundHitsBound__FPC6xBoundPC6xBoundP7xCollis",
+          "offset": 28,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullIsects__FPC7xQCDataPC7xQCData",
+          "symbol": "xQuickCullIsects__FPC7xQCDataPC7xQCData"
+        },
+        {
+          "function": "xBoundHitsBound__FPC6xBoundPC6xBoundP7xCollis",
+          "offset": 256,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xSphereHitsSphere__FPC7xSpherePC7xSphereP7xCollis",
+          "symbol": "xSphereHitsSphere__FPC7xSpherePC7xSphereP7xCollis"
+        },
+        {
+          "function": "xBoundHitsBound__FPC6xBoundPC6xBoundP7xCollis",
+          "offset": 284,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xSphereHitsOBB_nu__FPC7xSpherePC4xBoxPC7xMat4x3P7xCollis",
+          "symbol": "xSphereHitsOBB_nu__FPC7xSpherePC4xBoxPC7xMat4x3P7xCollis"
+        },
+        {
+          "function": "xBoundHitsBound__FPC6xBoundPC6xBoundP7xCollis",
+          "offset": 312,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xSphereHitsBox__FPC7xSpherePC4xBoxP7xCollis",
+          "symbol": "xSphereHitsBox__FPC7xSpherePC4xBoxP7xCollis"
+        },
+        {
+          "function": "xBoundHitsBound__FPC6xBoundPC6xBoundP7xCollis",
+          "offset": 336,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xBoxHitsSphere__FPC4xBoxPC7xSphereP7xCollis",
+          "symbol": "xBoxHitsSphere__FPC4xBoxPC7xSphereP7xCollis"
+        },
+        {
+          "function": "xBoundHitsBound__FPC6xBoundPC6xBoundP7xCollis",
+          "offset": 364,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xBoxHitsObb__FPC4xBoxPC4xBoxPC7xMat4x3P7xCollis",
+          "symbol": "xBoxHitsObb__FPC4xBoxPC4xBoxPC7xMat4x3P7xCollis"
+        },
+        {
+          "function": "xBoundGetBox__FR4xBoxRC6xBound",
+          "offset": 212,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xBoxInitBoundOBB__FP4xBoxPC4xBoxPC7xMat4x3",
+          "symbol": "xBoxInitBoundOBB__FP4xBoxPC4xBoxPC7xMat4x3"
+        },
+        {
+          "function": "xBoundUpdate__FP6xBound",
+          "offset": 416,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullForBound__FP10xQCControlP7xQCDataPC6xBound",
+          "symbol": "xQuickCullForBound__FP10xQCControlP7xQCDataPC6xBound"
+        }
+      ],
+      "gp_relocations": []
     }
   ]
 }
