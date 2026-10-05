@@ -75,9 +75,9 @@ checked, and the standard objdiff parser accepts the result.
 
 | Version | Full code-region bytes | Objdiff code-matched bytes |
 | --- | ---: | ---: |
-| SLUS-20680 | 2,978,560 | 160,992 |
-| SLES-51968 | 2,979,712 | 160,684 |
-| SLES-51970 | 2,976,512 | 160,684 |
+| SLUS-20680 | 2,978,560 | 170,280 |
+| SLES-51968 | 2,979,712 | 169,972 |
+| SLES-51970 | 2,976,512 | 169,972 |
 | SLES-53623 | 2,979,968 | 29,500 |
 | XBOX-US | 1,798,760 | 11,548 |
 | XBOX-EU | 1,798,760 | 11,548 |
@@ -122,9 +122,9 @@ The narrower function-only baselines currently contain:
 
 | PS2 baseline | Functions | Measured function bytes | Source matches |
 | --- | ---: | ---: | ---: |
-| USA | 5,391 | 2,107,460 | 1,116 functions / 160,992 bytes |
-| Europe/Australia | 5,392 | 2,108,700 | 1,115 functions / 160,684 bytes |
-| Germany | 5,394 | 2,105,512 | 1,115 functions / 160,684 bytes |
+| USA | 5,391 | 2,107,460 | 1,181 functions / 170,280 bytes |
+| Europe/Australia | 5,392 | 2,108,700 | 1,180 functions / 169,972 bytes |
+| Germany | 5,394 | 2,105,512 | 1,180 functions / 169,972 bytes |
 | France (reviewed and corroborated bounds) | 597 | 214,848 | 175 functions / 29,500 bytes |
 
 The `address-anchors.json` registries also recover over 2,500 named data addresses
@@ -526,3 +526,7 @@ Germany retains its larger original player function extents.
 The complete [King Jelly comparison](PS2_KING_JELLY_SOURCE.md) adds 4,976 matched
 bytes / 17 functions per debug region with unchanged source. All 69 original
 functions retain their regional extents and partial scores.
+
+Complete PS2 [Villager, Villager goals and Hazard comparisons](PS2_VILLAGER_HAZARD_SOURCE.md)
+add 9,288 matched bytes / 65 functions per debug region. All 191 original
+functions remain in the comparison; Germany keeps its distinct goal extents.
