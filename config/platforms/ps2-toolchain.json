@@ -56388,6 +56388,3095 @@
         }
       ],
       "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zNPCTypeBossSB2.cpp",
+      "target_unit": "SB/Game/zNPCTypeBossSB2.cpp",
+      "object": "source/zNPCTypeBossSB2.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "Process__20zNPCGoalBossSB2DeathFP11en_trantypefPvP6xScene": "Process__20zNPCGoalBossSB2DeathFP11en_trantypefPvP6xScene",
+        "Exit__20zNPCGoalBossSB2DeathFfPv": "Exit__20zNPCGoalBossSB2DeathFfPv",
+        "Enter__20zNPCGoalBossSB2DeathFfPv": "Enter__20zNPCGoalBossSB2DeathFfPv",
+        "create__20zNPCGoalBossSB2DeathFiP10RyzMemGrowPv": "create__20zNPCGoalBossSB2DeathFiP10RyzMemGrowPv",
+        "Process__21zNPCGoalBossSB2KarateFP11en_trantypefPvP6xScene": "Process__21zNPCGoalBossSB2KarateFP11en_trantypefPvP6xScene",
+        "Exit__21zNPCGoalBossSB2KarateFfPv": "Exit__21zNPCGoalBossSB2KarateFfPv",
+        "Enter__21zNPCGoalBossSB2KarateFfPv": "Enter__21zNPCGoalBossSB2KarateFfPv",
+        "create__21zNPCGoalBossSB2KarateFiP10RyzMemGrowPv": "create__21zNPCGoalBossSB2KarateFiP10RyzMemGrowPv",
+        "can_start__19zNPCGoalBossSB2ChopCFv": "can_start__19zNPCGoalBossSB2ChopCFv",
+        "Process__19zNPCGoalBossSB2ChopFP11en_trantypefPvP6xScene": "Process__19zNPCGoalBossSB2ChopFP11en_trantypefPvP6xScene",
+        "Exit__19zNPCGoalBossSB2ChopFfPv": "Exit__19zNPCGoalBossSB2ChopFfPv",
+        "Enter__19zNPCGoalBossSB2ChopFfPv": "Enter__19zNPCGoalBossSB2ChopFfPv",
+        "create__19zNPCGoalBossSB2ChopFiP10RyzMemGrowPv": "create__19zNPCGoalBossSB2ChopFiP10RyzMemGrowPv",
+        "Process__20zNPCGoalBossSB2SwipeFP11en_trantypefPvP6xScene": "Process__20zNPCGoalBossSB2SwipeFP11en_trantypefPvP6xScene",
+        "Exit__20zNPCGoalBossSB2SwipeFfPv": "Exit__20zNPCGoalBossSB2SwipeFfPv",
+        "Enter__20zNPCGoalBossSB2SwipeFfPv": "Enter__20zNPCGoalBossSB2SwipeFfPv",
+        "create__20zNPCGoalBossSB2SwipeFiP10RyzMemGrowPv": "create__20zNPCGoalBossSB2SwipeFiP10RyzMemGrowPv",
+        "Process__19zNPCGoalBossSB2HuntFP11en_trantypefPvP6xScene": "Process__19zNPCGoalBossSB2HuntFP11en_trantypefPvP6xScene",
+        "Exit__19zNPCGoalBossSB2HuntFfPv": "Exit__19zNPCGoalBossSB2HuntFfPv",
+        "Enter__19zNPCGoalBossSB2HuntFfPv": "Enter__19zNPCGoalBossSB2HuntFfPv",
+        "create__19zNPCGoalBossSB2HuntFiP10RyzMemGrowPv": "create__19zNPCGoalBossSB2HuntFiP10RyzMemGrowPv",
+        "Process__18zNPCGoalBossSB2HitFP11en_trantypefPvP6xScene": "Process__18zNPCGoalBossSB2HitFP11en_trantypefPvP6xScene",
+        "Exit__18zNPCGoalBossSB2HitFfPv": "Exit__18zNPCGoalBossSB2HitFfPv",
+        "Enter__18zNPCGoalBossSB2HitFfPv": "Enter__18zNPCGoalBossSB2HitFfPv",
+        "create__18zNPCGoalBossSB2HitFiP10RyzMemGrowPv": "create__18zNPCGoalBossSB2HitFiP10RyzMemGrowPv",
+        "Process__20zNPCGoalBossSB2DizzyFP11en_trantypefPvP6xScene": "Process__20zNPCGoalBossSB2DizzyFP11en_trantypefPvP6xScene",
+        "Exit__20zNPCGoalBossSB2DizzyFfPv": "Exit__20zNPCGoalBossSB2DizzyFfPv",
+        "Enter__20zNPCGoalBossSB2DizzyFfPv": "Enter__20zNPCGoalBossSB2DizzyFfPv",
+        "create__20zNPCGoalBossSB2DizzyFiP10RyzMemGrowPv": "create__20zNPCGoalBossSB2DizzyFiP10RyzMemGrowPv",
+        "Process__20zNPCGoalBossSB2TauntFP11en_trantypefPvP6xScene": "Process__20zNPCGoalBossSB2TauntFP11en_trantypefPvP6xScene",
+        "Exit__20zNPCGoalBossSB2TauntFfPv": "Exit__20zNPCGoalBossSB2TauntFfPv",
+        "Enter__20zNPCGoalBossSB2TauntFfPv": "Enter__20zNPCGoalBossSB2TauntFfPv",
+        "create__20zNPCGoalBossSB2TauntFiP10RyzMemGrowPv": "create__20zNPCGoalBossSB2TauntFiP10RyzMemGrowPv",
+        "Process__19zNPCGoalBossSB2IdleFP11en_trantypefPvP6xScene": "Process__19zNPCGoalBossSB2IdleFP11en_trantypefPvP6xScene",
+        "Exit__19zNPCGoalBossSB2IdleFfPv": "Exit__19zNPCGoalBossSB2IdleFfPv",
+        "Enter__19zNPCGoalBossSB2IdleFfPv": "Enter__19zNPCGoalBossSB2IdleFfPv",
+        "create__19zNPCGoalBossSB2IdleFiP10RyzMemGrowPv": "create__19zNPCGoalBossSB2IdleFiP10RyzMemGrowPv",
+        "Process__20zNPCGoalBossSB2IntroFP11en_trantypefPvP6xScene": "Process__20zNPCGoalBossSB2IntroFP11en_trantypefPvP6xScene",
+        "Exit__20zNPCGoalBossSB2IntroFfPv": "Exit__20zNPCGoalBossSB2IntroFfPv",
+        "Enter__20zNPCGoalBossSB2IntroFfPv": "Enter__20zNPCGoalBossSB2IntroFfPv",
+        "create__20zNPCGoalBossSB2IntroFiP10RyzMemGrowPv": "create__20zNPCGoalBossSB2IntroFiP10RyzMemGrowPv",
+        "create_glow_light__9zNPCB_SB2Fv": "create_glow_light__9zNPCB_SB2Fv",
+        "check_hit_fail__9zNPCB_SB2Fv": "check_hit_fail__9zNPCB_SB2Fv",
+        "update_slugs__9zNPCB_SB2Ff": "update_slugs__9zNPCB_SB2Ff",
+        "slug_interp__9zNPCB_SB2FfRf": "slug_interp__9zNPCB_SB2FfRf",
+        "find_active_node__Q229@unnamed@zNPCTypeBossSB2_cpp@14response_curveFf": "find_active_node__Q229@unnamed@zNPCTypeBossSB2_cpp@14response_curveFf",
+        "eval_linear__Q229@unnamed@zNPCTypeBossSB2_cpp@14response_curveFfPf": "eval_linear__Q229@unnamed@zNPCTypeBossSB2_cpp@14response_curveFfPf",
+        "update_fire_slug__9zNPCB_SB2FRQ29zNPCB_SB29slug_dataf": "update_fire_slug__9zNPCB_SB2FRQ29zNPCB_SB29slug_dataf",
+        "update_aim_slug__9zNPCB_SB2FRQ29zNPCB_SB29slug_dataf": "update_aim_slug__9zNPCB_SB2FRQ29zNPCB_SB29slug_dataf",
+        "init_slugs__9zNPCB_SB2Fv": "init_slugs__9zNPCB_SB2Fv",
+        "update_bounds__9zNPCB_SB2Fv": "update_bounds__9zNPCB_SB2Fv",
+        "reset_bounds__9zNPCB_SB2Fv": "reset_bounds__9zNPCB_SB2Fv",
+        "update_platforms__9zNPCB_SB2Ff": "update_platforms__9zNPCB_SB2Ff",
+        "check_platform_smack__9zNPCB_SB2FRQ29zNPCB_SB29hand_data": "check_platform_smack__9zNPCB_SB2FRQ29zNPCB_SB29hand_data",
+        "move_hand__9zNPCB_SB2FRQ29zNPCB_SB29hand_dataf": "move_hand__9zNPCB_SB2FRQ29zNPCB_SB29hand_dataf",
+        "init_hands__9zNPCB_SB2Fv": "init_hands__9zNPCB_SB2Fv",
+        "create_surface__9zNPCB_SB2Fv": "create_surface__9zNPCB_SB2Fv",
+        "check_life__9zNPCB_SB2Fv": "check_life__9zNPCB_SB2Fv",
+        "setup_node_tags__9zNPCB_SB2Fv": "setup_node_tags__9zNPCB_SB2Fv",
+        "rebind_nodes__9zNPCB_SB2FP8RpAtomicP11RwMatrixTag": "rebind_nodes__9zNPCB_SB2FP8RpAtomicP11RwMatrixTag",
+        "bind_nodes__9zNPCB_SB2Fv": "bind_nodes__9zNPCB_SB2Fv",
+        "render_nodes__9zNPCB_SB2Fv": "render_nodes__9zNPCB_SB2Fv",
+        "move_nodes__9zNPCB_SB2Fv": "move_nodes__9zNPCB_SB2Fv",
+        "update_nodes__9zNPCB_SB2Ff": "update_nodes__9zNPCB_SB2Ff",
+        "update_move__9zNPCB_SB2Ff": "update_move__9zNPCB_SB2Ff",
+        "update_follow__9zNPCB_SB2Ff": "update_follow__9zNPCB_SB2Ff",
+        "update_halt__9zNPCB_SB2Ff": "update_halt__9zNPCB_SB2Ff",
+        "update_turn__9zNPCB_SB2Ff": "update_turn__9zNPCB_SB2Ff",
+        "next_goal__9zNPCB_SB2Fv": "next_goal__9zNPCB_SB2Fv",
+        "fire_slug__9zNPCB_SB2FQ29zNPCB_SB29slug_enumRQ29zNPCB_SB213platform_data": "fire_slug__9zNPCB_SB2FQ29zNPCB_SB29slug_enumRQ29zNPCB_SB213platform_data",
+        "emit_slug__9zNPCB_SB2FQ29zNPCB_SB29slug_enum": "emit_slug__9zNPCB_SB2FQ29zNPCB_SB29slug_enum",
+        "ThanksImDone__9zNPCB_SB2Fv": "ThanksImDone__9zNPCB_SB2Fv",
+        "HoldUpDude__9zNPCB_SB2Fv": "HoldUpDude__9zNPCB_SB2Fv",
+        "AttackTimeLeft__9zNPCB_SB2Fv": "AttackTimeLeft__9zNPCB_SB2Fv",
+        "Render__9zNPCB_SB2Fv": "Render__9zNPCB_SB2Fv",
+        "NewTime__9zNPCB_SB2FP6xScenef": "NewTime__9zNPCB_SB2FP6xScenef",
+        "Process__9zNPCB_SB2FP6xScenef": "Process__9zNPCB_SB2FP6xScenef",
+        "AnimPick__9zNPCB_SB2Fi16en_NPC_GOAL_SPOTP5xGoal": "AnimPick__9zNPCB_SB2Fi16en_NPC_GOAL_SPOTP5xGoal",
+        "Destroy__9zNPCB_SB2Fv": "Destroy__9zNPCB_SB2Fv",
+        "Reset__9zNPCB_SB2Fv": "Reset__9zNPCB_SB2Fv",
+        "SelfSetup__9zNPCB_SB2Fv": "SelfSetup__9zNPCB_SB2Fv",
+        "Setup__9zNPCB_SB2Fv": "Setup__9zNPCB_SB2Fv",
+        "ParseINI__9zNPCB_SB2Fv": "ParseINI__9zNPCB_SB2Fv",
+        "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+        "Init__9zNPCB_SB2FP9xEntAsset": "Init__9zNPCB_SB2FP9xEntAsset",
+        "ZNPC_AnimTable_BossSB2__Fv": "ZNPC_AnimTable_BossSB2__Fv",
+        "parallelepiped_to_obb__29@unnamed@zNPCTypeBossSB2_cpp@FR6xBoundP5xVec3": "parallelepiped_to_obb__29@unnamed@zNPCTypeBossSB2_cpp@FR6xBoundP5xVec3",
+        "init_sound__29@unnamed@zNPCTypeBossSB2_cpp@Fv": "init_sound__29@unnamed@zNPCTypeBossSB2_cpp@Fv"
+      },
+      "calls": [
+        {
+          "function": "Enter__20zNPCGoalBossSB2DeathFfPv",
+          "offset": 0,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "Enter__14zNPCGoalCommonFfPv",
+          "symbol": "Enter__14zNPCGoalCommonFfPv",
+          "opcode": 2
+        },
+        {
+          "function": "create__20zNPCGoalBossSB2DeathFiP10RyzMemGrowPv",
+          "offset": 32,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "Process__21zNPCGoalBossSB2KarateFP11en_trantypefPvP6xScene",
+          "offset": 204,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "AnimCurStateID__10zNPCCommonFv",
+          "symbol": "AnimCurStateID__10zNPCCommonFv"
+        },
+        {
+          "function": "Process__21zNPCGoalBossSB2KarateFP11en_trantypefPvP6xScene",
+          "offset": 228,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "AnimStart__10zNPCCommonFUii",
+          "symbol": "AnimStart__10zNPCCommonFUii"
+        },
+        {
+          "function": "Process__21zNPCGoalBossSB2KarateFP11en_trantypefPvP6xScene",
+          "offset": 588,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "emit_slug__9zNPCB_SB2FQ29zNPCB_SB29slug_enum",
+          "symbol": "emit_slug__9zNPCB_SB2FQ29zNPCB_SB29slug_enum"
+        },
+        {
+          "function": "Process__21zNPCGoalBossSB2KarateFP11en_trantypefPvP6xScene",
+          "offset": 952,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "fire_slug__9zNPCB_SB2FQ29zNPCB_SB29slug_enumRQ29zNPCB_SB213platform_data",
+          "symbol": "fire_slug__9zNPCB_SB2FQ29zNPCB_SB29slug_enumRQ29zNPCB_SB213platform_data"
+        },
+        {
+          "function": "Process__21zNPCGoalBossSB2KarateFP11en_trantypefPvP6xScene",
+          "offset": 992,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "fire_slug__9zNPCB_SB2FQ29zNPCB_SB29slug_enumRQ29zNPCB_SB213platform_data",
+          "symbol": "fire_slug__9zNPCB_SB2FQ29zNPCB_SB29slug_enumRQ29zNPCB_SB213platform_data"
+        },
+        {
+          "function": "Process__21zNPCGoalBossSB2KarateFP11en_trantypefPvP6xScene",
+          "offset": 1040,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "fire_slug__9zNPCB_SB2FQ29zNPCB_SB29slug_enumRQ29zNPCB_SB213platform_data",
+          "symbol": "fire_slug__9zNPCB_SB2FQ29zNPCB_SB29slug_enumRQ29zNPCB_SB213platform_data"
+        },
+        {
+          "function": "Process__21zNPCGoalBossSB2KarateFP11en_trantypefPvP6xScene",
+          "offset": 1416,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "next_goal__9zNPCB_SB2Fv",
+          "symbol": "next_goal__9zNPCB_SB2Fv"
+        },
+        {
+          "function": "Enter__21zNPCGoalBossSB2KarateFfPv",
+          "offset": 56,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "Enter__14zNPCGoalCommonFfPv",
+          "symbol": "Enter__14zNPCGoalCommonFfPv",
+          "opcode": 2
+        },
+        {
+          "function": "create__21zNPCGoalBossSB2KarateFiP10RyzMemGrowPv",
+          "offset": 32,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "can_start__19zNPCGoalBossSB2ChopCFv",
+          "offset": 328,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xAngleClampFast__Ff",
+          "symbol": "xAngleClampFast__Ff"
+        },
+        {
+          "function": "can_start__19zNPCGoalBossSB2ChopCFv",
+          "offset": 352,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xAngleClampFast__Ff",
+          "symbol": "xAngleClampFast__Ff"
+        },
+        {
+          "function": "Process__19zNPCGoalBossSB2ChopFP11en_trantypefPvP6xScene",
+          "offset": 376,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "AnimStart__10zNPCCommonFUii",
+          "symbol": "AnimStart__10zNPCCommonFUii"
+        },
+        {
+          "function": "Process__19zNPCGoalBossSB2ChopFP11en_trantypefPvP6xScene",
+          "offset": 536,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff",
+          "symbol": "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff"
+        },
+        {
+          "function": "Process__19zNPCGoalBossSB2ChopFP11en_trantypefPvP6xScene",
+          "offset": 600,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf",
+          "symbol": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf"
+        },
+        {
+          "function": "Process__19zNPCGoalBossSB2ChopFP11en_trantypefPvP6xScene",
+          "offset": 632,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "can_start__19zNPCGoalBossSB2ChopCFv",
+          "symbol": "can_start__19zNPCGoalBossSB2ChopCFv"
+        },
+        {
+          "function": "Process__19zNPCGoalBossSB2ChopFP11en_trantypefPvP6xScene",
+          "offset": 664,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "AnimCurStateID__10zNPCCommonFv",
+          "symbol": "AnimCurStateID__10zNPCCommonFv"
+        },
+        {
+          "function": "Process__19zNPCGoalBossSB2ChopFP11en_trantypefPvP6xScene",
+          "offset": 696,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "AnimStart__10zNPCCommonFUii",
+          "symbol": "AnimStart__10zNPCCommonFUii"
+        },
+        {
+          "function": "Process__19zNPCGoalBossSB2ChopFP11en_trantypefPvP6xScene",
+          "offset": 856,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff",
+          "symbol": "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff"
+        },
+        {
+          "function": "Process__19zNPCGoalBossSB2ChopFP11en_trantypefPvP6xScene",
+          "offset": 920,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf",
+          "symbol": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf"
+        },
+        {
+          "function": "Process__19zNPCGoalBossSB2ChopFP11en_trantypefPvP6xScene",
+          "offset": 980,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "AnimCurStateID__10zNPCCommonFv",
+          "symbol": "AnimCurStateID__10zNPCCommonFv"
+        },
+        {
+          "function": "Process__19zNPCGoalBossSB2ChopFP11en_trantypefPvP6xScene",
+          "offset": 1000,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "AnimTimeRemain__10zNPCCommonFP10xAnimState",
+          "symbol": "AnimTimeRemain__10zNPCCommonFP10xAnimState"
+        },
+        {
+          "function": "Process__19zNPCGoalBossSB2ChopFP11en_trantypefPvP6xScene",
+          "offset": 1040,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "next_goal__9zNPCB_SB2Fv",
+          "symbol": "next_goal__9zNPCB_SB2Fv"
+        },
+        {
+          "function": "Enter__19zNPCGoalBossSB2ChopFfPv",
+          "offset": 56,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xrand__Fv",
+          "symbol": "xrand__Fv"
+        },
+        {
+          "function": "Enter__19zNPCGoalBossSB2ChopFfPv",
+          "offset": 232,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "Enter__14zNPCGoalCommonFfPv",
+          "symbol": "Enter__14zNPCGoalCommonFfPv"
+        },
+        {
+          "function": "create__19zNPCGoalBossSB2ChopFiP10RyzMemGrowPv",
+          "offset": 32,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "Process__20zNPCGoalBossSB2SwipeFP11en_trantypefPvP6xScene",
+          "offset": 256,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "AnimStart__10zNPCCommonFUii",
+          "symbol": "AnimStart__10zNPCCommonFUii"
+        },
+        {
+          "function": "Process__20zNPCGoalBossSB2SwipeFP11en_trantypefPvP6xScene",
+          "offset": 416,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff",
+          "symbol": "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff"
+        },
+        {
+          "function": "Process__20zNPCGoalBossSB2SwipeFP11en_trantypefPvP6xScene",
+          "offset": 480,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf",
+          "symbol": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf"
+        },
+        {
+          "function": "Process__20zNPCGoalBossSB2SwipeFP11en_trantypefPvP6xScene",
+          "offset": 768,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "AnimCurStateID__10zNPCCommonFv",
+          "symbol": "AnimCurStateID__10zNPCCommonFv"
+        },
+        {
+          "function": "Process__20zNPCGoalBossSB2SwipeFP11en_trantypefPvP6xScene",
+          "offset": 788,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "AnimTimeRemain__10zNPCCommonFP10xAnimState",
+          "symbol": "AnimTimeRemain__10zNPCCommonFP10xAnimState"
+        },
+        {
+          "function": "Process__20zNPCGoalBossSB2SwipeFP11en_trantypefPvP6xScene",
+          "offset": 900,
+          "target_source": "SB/Game/zEntCruiseBubble.cpp",
+          "target_function": "active__13cruise_bubbleFv",
+          "symbol": "active__13cruise_bubbleFv"
+        },
+        {
+          "function": "Process__20zNPCGoalBossSB2SwipeFP11en_trantypefPvP6xScene",
+          "offset": 948,
+          "target_source": "SB/Game/zNPCTypeVillager.cpp",
+          "target_function": "say__12zNPCNewsFishFPCQ212zNPCNewsFish8say_enumUiii",
+          "symbol": "say__12zNPCNewsFishFPCQ212zNPCNewsFish8say_enumUiii"
+        },
+        {
+          "function": "Process__20zNPCGoalBossSB2SwipeFP11en_trantypefPvP6xScene",
+          "offset": 1260,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "next_goal__9zNPCB_SB2Fv",
+          "symbol": "next_goal__9zNPCB_SB2Fv"
+        },
+        {
+          "function": "Enter__20zNPCGoalBossSB2SwipeFfPv",
+          "offset": 60,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xrand__Fv",
+          "symbol": "xrand__Fv"
+        },
+        {
+          "function": "Enter__20zNPCGoalBossSB2SwipeFfPv",
+          "offset": 184,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "Enter__14zNPCGoalCommonFfPv",
+          "symbol": "Enter__14zNPCGoalCommonFfPv"
+        },
+        {
+          "function": "create__20zNPCGoalBossSB2SwipeFiP10RyzMemGrowPv",
+          "offset": 32,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "Process__19zNPCGoalBossSB2HuntFP11en_trantypefPvP6xScene",
+          "offset": 352,
+          "target_source": "SB/Game/zNPCTypeBossPlankton.cpp",
+          "target_function": "sickum__13zNPCBPlanktonFv",
+          "symbol": "sickum__13zNPCBPlanktonFv"
+        },
+        {
+          "function": "Process__19zNPCGoalBossSB2HuntFP11en_trantypefPvP6xScene",
+          "offset": 400,
+          "target_source": "SB/Game/zNPCTypeVillager.cpp",
+          "target_function": "say__12zNPCNewsFishFPCQ212zNPCNewsFish8say_enumUiii",
+          "symbol": "say__12zNPCNewsFishFPCQ212zNPCNewsFish8say_enumUiii"
+        },
+        {
+          "function": "Process__19zNPCGoalBossSB2HuntFP11en_trantypefPvP6xScene",
+          "offset": 424,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "next_goal__9zNPCB_SB2Fv",
+          "symbol": "next_goal__9zNPCB_SB2Fv"
+        },
+        {
+          "function": "Process__19zNPCGoalBossSB2HuntFP11en_trantypefPvP6xScene",
+          "offset": 476,
+          "target_source": "SB/Game/zNPCTypeBossPlankton.cpp",
+          "target_function": "here_boy__13zNPCBPlanktonFv",
+          "symbol": "here_boy__13zNPCBPlanktonFv"
+        },
+        {
+          "function": "Process__19zNPCGoalBossSB2HuntFP11en_trantypefPvP6xScene",
+          "offset": 492,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "next_goal__9zNPCB_SB2Fv",
+          "symbol": "next_goal__9zNPCB_SB2Fv"
+        },
+        {
+          "function": "Exit__19zNPCGoalBossSB2HuntFfPv",
+          "offset": 112,
+          "target_source": "SB/Core/x/xMath.h",
+          "target_function": "range_limit<f>__Ffff_f",
+          "symbol": "range_limit<f>__Ffff_f"
+        },
+        {
+          "function": "Exit__19zNPCGoalBossSB2HuntFfPv",
+          "offset": 264,
+          "target_source": "SB/Game/zNPCTypeBossPlankton.cpp",
+          "target_function": "here_boy__13zNPCBPlanktonFv",
+          "symbol": "here_boy__13zNPCBPlanktonFv"
+        },
+        {
+          "function": "Exit__19zNPCGoalBossSB2HuntFfPv",
+          "offset": 304,
+          "target_source": "SB/Game/zNPCTypeVillager.cpp",
+          "target_function": "say__12zNPCNewsFishFPCQ212zNPCNewsFish8say_enumUiii",
+          "symbol": "say__12zNPCNewsFishFPCQ212zNPCNewsFish8say_enumUiii"
+        },
+        {
+          "function": "Enter__19zNPCGoalBossSB2HuntFfPv",
+          "offset": 168,
+          "target_source": "SB/Core/x/xMath.h",
+          "target_function": "range_limit<f>__Ffff_f",
+          "symbol": "range_limit<f>__Ffff_f"
+        },
+        {
+          "function": "Enter__19zNPCGoalBossSB2HuntFfPv",
+          "offset": 324,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "Enter__14zNPCGoalCommonFfPv",
+          "symbol": "Enter__14zNPCGoalCommonFfPv"
+        },
+        {
+          "function": "create__19zNPCGoalBossSB2HuntFiP10RyzMemGrowPv",
+          "offset": 32,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "Process__18zNPCGoalBossSB2HitFP11en_trantypefPvP6xScene",
+          "offset": 36,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "AnimTimeRemain__10zNPCCommonFP10xAnimState",
+          "symbol": "AnimTimeRemain__10zNPCCommonFP10xAnimState"
+        },
+        {
+          "function": "Process__18zNPCGoalBossSB2HitFP11en_trantypefPvP6xScene",
+          "offset": 152,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "next_goal__9zNPCB_SB2Fv",
+          "symbol": "next_goal__9zNPCB_SB2Fv"
+        },
+        {
+          "function": "Enter__18zNPCGoalBossSB2HitFfPv",
+          "offset": 148,
+          "target_source": "SB/Game/zNPCTypeVillager.cpp",
+          "target_function": "say__12zNPCNewsFishFPCQ212zNPCNewsFish8say_enumUiii",
+          "symbol": "say__12zNPCNewsFishFPCQ212zNPCNewsFish8say_enumUiii"
+        },
+        {
+          "function": "Enter__18zNPCGoalBossSB2HitFfPv",
+          "offset": 212,
+          "target_source": "SB/Game/zNPCTypeVillager.cpp",
+          "target_function": "say__12zNPCNewsFishFPCQ212zNPCNewsFish8say_enumUiii",
+          "symbol": "say__12zNPCNewsFishFPCQ212zNPCNewsFish8say_enumUiii"
+        },
+        {
+          "function": "Enter__18zNPCGoalBossSB2HitFfPv",
+          "offset": 272,
+          "target_source": "SB/Game/zNPCTypeVillager.cpp",
+          "target_function": "say__12zNPCNewsFishFPCQ212zNPCNewsFish8say_enumUiii",
+          "symbol": "say__12zNPCNewsFishFPCQ212zNPCNewsFish8say_enumUiii"
+        },
+        {
+          "function": "Enter__18zNPCGoalBossSB2HitFfPv",
+          "offset": 324,
+          "target_source": "SB/Game/zNPCTypeVillager.cpp",
+          "target_function": "say__12zNPCNewsFishFPCQ212zNPCNewsFish8say_enumUiii",
+          "symbol": "say__12zNPCNewsFishFPCQ212zNPCNewsFish8say_enumUiii"
+        },
+        {
+          "function": "Enter__18zNPCGoalBossSB2HitFfPv",
+          "offset": 344,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "Enter__14zNPCGoalCommonFfPv",
+          "symbol": "Enter__14zNPCGoalCommonFfPv"
+        },
+        {
+          "function": "create__18zNPCGoalBossSB2HitFiP10RyzMemGrowPv",
+          "offset": 32,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "Process__20zNPCGoalBossSB2DizzyFP11en_trantypefPvP6xScene",
+          "offset": 28,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "next_goal__9zNPCB_SB2Fv",
+          "symbol": "next_goal__9zNPCB_SB2Fv"
+        },
+        {
+          "function": "Exit__20zNPCGoalBossSB2DizzyFfPv",
+          "offset": 324,
+          "target_source": "SB/Game/zNPCTypeBossPlankton.cpp",
+          "target_function": "here_boy__13zNPCBPlanktonFv",
+          "symbol": "here_boy__13zNPCBPlanktonFv"
+        },
+        {
+          "function": "Exit__20zNPCGoalBossSB2DizzyFfPv",
+          "offset": 384,
+          "target_source": "SB/Game/zNPCTypeVillager.cpp",
+          "target_function": "say__12zNPCNewsFishFPCQ212zNPCNewsFish8say_enumUiii",
+          "symbol": "say__12zNPCNewsFishFPCQ212zNPCNewsFish8say_enumUiii"
+        },
+        {
+          "function": "Exit__20zNPCGoalBossSB2DizzyFfPv",
+          "offset": 440,
+          "target_source": "SB/Game/zNPCTypeVillager.cpp",
+          "target_function": "say__12zNPCNewsFishFPCQ212zNPCNewsFish8say_enumUiii",
+          "symbol": "say__12zNPCNewsFishFPCQ212zNPCNewsFish8say_enumUiii"
+        },
+        {
+          "function": "Enter__20zNPCGoalBossSB2DizzyFfPv",
+          "offset": 80,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "Enter__14zNPCGoalCommonFfPv",
+          "symbol": "Enter__14zNPCGoalCommonFfPv",
+          "opcode": 2
+        },
+        {
+          "function": "create__20zNPCGoalBossSB2DizzyFiP10RyzMemGrowPv",
+          "offset": 32,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "Process__20zNPCGoalBossSB2TauntFP11en_trantypefPvP6xScene",
+          "offset": 36,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "AnimTimeRemain__10zNPCCommonFP10xAnimState",
+          "symbol": "AnimTimeRemain__10zNPCCommonFP10xAnimState"
+        },
+        {
+          "function": "Process__20zNPCGoalBossSB2TauntFP11en_trantypefPvP6xScene",
+          "offset": 80,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "next_goal__9zNPCB_SB2Fv",
+          "symbol": "next_goal__9zNPCB_SB2Fv"
+        },
+        {
+          "function": "Enter__20zNPCGoalBossSB2TauntFfPv",
+          "offset": 176,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff",
+          "symbol": "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff"
+        },
+        {
+          "function": "Enter__20zNPCGoalBossSB2TauntFfPv",
+          "offset": 240,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf",
+          "symbol": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf"
+        },
+        {
+          "function": "Enter__20zNPCGoalBossSB2TauntFfPv",
+          "offset": 284,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "Enter__14zNPCGoalCommonFfPv",
+          "symbol": "Enter__14zNPCGoalCommonFfPv"
+        },
+        {
+          "function": "create__20zNPCGoalBossSB2TauntFiP10RyzMemGrowPv",
+          "offset": 32,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "Process__19zNPCGoalBossSB2IdleFP11en_trantypefPvP6xScene",
+          "offset": 44,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "AnimCurStateID__10zNPCCommonFv",
+          "symbol": "AnimCurStateID__10zNPCCommonFv"
+        },
+        {
+          "function": "Process__19zNPCGoalBossSB2IdleFP11en_trantypefPvP6xScene",
+          "offset": 372,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "next_goal__9zNPCB_SB2Fv",
+          "symbol": "next_goal__9zNPCB_SB2Fv"
+        },
+        {
+          "function": "Enter__19zNPCGoalBossSB2IdleFfPv",
+          "offset": 4,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "Enter__14zNPCGoalCommonFfPv",
+          "symbol": "Enter__14zNPCGoalCommonFfPv",
+          "opcode": 2
+        },
+        {
+          "function": "create__19zNPCGoalBossSB2IdleFiP10RyzMemGrowPv",
+          "offset": 32,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "Exit__20zNPCGoalBossSB2IntroFfPv",
+          "offset": 8,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayerControlOn__F13zControlOwner",
+          "symbol": "zEntPlayerControlOn__F13zControlOwner"
+        },
+        {
+          "function": "Enter__20zNPCGoalBossSB2IntroFfPv",
+          "offset": 72,
+          "target_source": "SB/Game/zNPCTypeVillager.cpp",
+          "target_function": "say__12zNPCNewsFishFPCQ212zNPCNewsFish8say_enumUiii",
+          "symbol": "say__12zNPCNewsFishFPCQ212zNPCNewsFish8say_enumUiii"
+        },
+        {
+          "function": "Enter__20zNPCGoalBossSB2IntroFfPv",
+          "offset": 104,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayerControlOff__F13zControlOwner",
+          "symbol": "zEntPlayerControlOff__F13zControlOwner"
+        },
+        {
+          "function": "Enter__20zNPCGoalBossSB2IntroFfPv",
+          "offset": 120,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "Enter__14zNPCGoalCommonFfPv",
+          "symbol": "Enter__14zNPCGoalCommonFfPv"
+        },
+        {
+          "function": "create__20zNPCGoalBossSB2IntroFiP10RyzMemGrowPv",
+          "offset": 32,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "create_glow_light__9zNPCB_SB2Fv",
+          "offset": 60,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "create_glow_light__9zNPCB_SB2Fv",
+          "offset": 344,
+          "target_source": "SB/Core/x/xLightKit.cpp",
+          "target_function": "xLightKit_Prepare__FPv",
+          "symbol": "xLightKit_Prepare__FPv"
+        },
+        {
+          "function": "check_hit_fail__9zNPCB_SB2Fv",
+          "offset": 20,
+          "target_source": "SB/Game/zEntCruiseBubble.cpp",
+          "target_function": "exploding__13cruise_bubbleFv",
+          "symbol": "exploding__13cruise_bubbleFv"
+        },
+        {
+          "function": "check_hit_fail__9zNPCB_SB2Fv",
+          "offset": 160,
+          "target_source": "SB/Game/zNPCTypeVillager.cpp",
+          "target_function": "say__12zNPCNewsFishFPCQ212zNPCNewsFish8say_enumUiii",
+          "symbol": "say__12zNPCNewsFishFPCQ212zNPCNewsFish8say_enumUiii"
+        },
+        {
+          "function": "check_hit_fail__9zNPCB_SB2Fv",
+          "offset": 200,
+          "target_source": "SB/Game/zEntCruiseBubble.cpp",
+          "target_function": "get_explode_hits__13cruise_bubbleFRi",
+          "symbol": "get_explode_hits__13cruise_bubbleFRi"
+        },
+        {
+          "function": "check_hit_fail__9zNPCB_SB2Fv",
+          "offset": 360,
+          "target_source": "SB/Game/zEntCruiseBubble.cpp",
+          "target_function": "get_explode_sphere__13cruise_bubbleFR5xVec3Rf",
+          "symbol": "get_explode_sphere__13cruise_bubbleFR5xVec3Rf"
+        },
+        {
+          "function": "check_hit_fail__9zNPCB_SB2Fv",
+          "offset": 388,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xSphereHitsBound__FRC7xSphereRC6xBound",
+          "symbol": "xSphereHitsBound__FRC7xSphereRC6xBound"
+        },
+        {
+          "function": "update_slugs__9zNPCB_SB2Ff",
+          "offset": 128,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "update_aim_slug__9zNPCB_SB2FRQ29zNPCB_SB29slug_dataf",
+          "symbol": "update_aim_slug__9zNPCB_SB2FRQ29zNPCB_SB29slug_dataf"
+        },
+        {
+          "function": "update_slugs__9zNPCB_SB2Ff",
+          "offset": 208,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndStopFade__FUif",
+          "symbol": "xSndStopFade__FUif"
+        },
+        {
+          "function": "update_slugs__9zNPCB_SB2Ff",
+          "offset": 224,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndStop__FUi",
+          "symbol": "xSndStop__FUi"
+        },
+        {
+          "function": "update_slugs__9zNPCB_SB2Ff",
+          "offset": 436,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndStopFade__FUif",
+          "symbol": "xSndStopFade__FUif"
+        },
+        {
+          "function": "update_slugs__9zNPCB_SB2Ff",
+          "offset": 456,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndStop__FUi",
+          "symbol": "xSndStop__FUi"
+        },
+        {
+          "function": "update_slugs__9zNPCB_SB2Ff",
+          "offset": 488,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "update_fire_slug__9zNPCB_SB2FRQ29zNPCB_SB29slug_dataf",
+          "symbol": "update_fire_slug__9zNPCB_SB2FRQ29zNPCB_SB29slug_dataf"
+        },
+        {
+          "function": "update_slugs__9zNPCB_SB2Ff",
+          "offset": 516,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "slug_interp__9zNPCB_SB2FfRf",
+          "symbol": "slug_interp__9zNPCB_SB2FfRf"
+        },
+        {
+          "function": "update_slugs__9zNPCB_SB2Ff",
+          "offset": 640,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntReposition__FR4xEntRC7xMat4x3",
+          "symbol": "xEntReposition__FR4xEntRC7xMat4x3"
+        },
+        {
+          "function": "slug_interp__9zNPCB_SB2FfRf",
+          "offset": 72,
+          "target_source": "SB/Core/x/xMath.h",
+          "target_function": "range_limit<f>__Ffff_f",
+          "symbol": "range_limit<f>__Ffff_f"
+        },
+        {
+          "function": "slug_interp__9zNPCB_SB2FfRf",
+          "offset": 120,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "eval_linear__Q229@unnamed@zNPCTypeBossSB2_cpp@14response_curveFfPf",
+          "symbol": "eval_linear__Q229@unnamed@zNPCTypeBossSB2_cpp@14response_curveFfPf"
+        },
+        {
+          "function": "slug_interp__9zNPCB_SB2FfRf",
+          "offset": 160,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "find_active_node__Q229@unnamed@zNPCTypeBossSB2_cpp@14response_curveFf",
+          "symbol": "find_active_node__Q229@unnamed@zNPCTypeBossSB2_cpp@14response_curveFf"
+        },
+        {
+          "function": "slug_interp__9zNPCB_SB2FfRf",
+          "offset": 800,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "find_active_node__Q229@unnamed@zNPCTypeBossSB2_cpp@14response_curveFf",
+          "symbol": "find_active_node__Q229@unnamed@zNPCTypeBossSB2_cpp@14response_curveFf"
+        },
+        {
+          "function": "update_fire_slug__9zNPCB_SB2FRQ29zNPCB_SB29slug_dataf",
+          "offset": 60,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xAccelMove__FRfRffff",
+          "symbol": "xAccelMove__FRfRffff"
+        },
+        {
+          "function": "update_fire_slug__9zNPCB_SB2FRQ29zNPCB_SB29slug_dataf",
+          "offset": 96,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xAccelMove__FRfRfffff",
+          "symbol": "xAccelMove__FRfRfffff"
+        },
+        {
+          "function": "update_fire_slug__9zNPCB_SB2FRQ29zNPCB_SB29slug_dataf",
+          "offset": 612,
+          "target_source": "SB/Game/zNPCTypeVillager.cpp",
+          "target_function": "say__12zNPCNewsFishFPCQ212zNPCNewsFish8say_enumUiii",
+          "symbol": "say__12zNPCNewsFishFPCQ212zNPCNewsFish8say_enumUiii"
+        },
+        {
+          "function": "update_fire_slug__9zNPCB_SB2FRQ29zNPCB_SB29slug_dataf",
+          "offset": 768,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff",
+          "symbol": "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff"
+        },
+        {
+          "function": "update_fire_slug__9zNPCB_SB2FRQ29zNPCB_SB29slug_dataf",
+          "offset": 832,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf",
+          "symbol": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf"
+        },
+        {
+          "function": "update_fire_slug__9zNPCB_SB2FRQ29zNPCB_SB29slug_dataf",
+          "offset": 976,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndStopFade__FUif",
+          "symbol": "xSndStopFade__FUif"
+        },
+        {
+          "function": "update_fire_slug__9zNPCB_SB2FRQ29zNPCB_SB29slug_dataf",
+          "offset": 992,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndStop__FUi",
+          "symbol": "xSndStop__FUi"
+        },
+        {
+          "function": "update_aim_slug__9zNPCB_SB2FRQ29zNPCB_SB29slug_dataf",
+          "offset": 40,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3",
+          "symbol": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3"
+        },
+        {
+          "function": "update_aim_slug__9zNPCB_SB2FRQ29zNPCB_SB29slug_dataf",
+          "offset": 532,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndStopFade__FUif",
+          "symbol": "xSndStopFade__FUif"
+        },
+        {
+          "function": "update_aim_slug__9zNPCB_SB2FRQ29zNPCB_SB29slug_dataf",
+          "offset": 552,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndStop__FUi",
+          "symbol": "xSndStop__FUi"
+        },
+        {
+          "function": "update_aim_slug__9zNPCB_SB2FRQ29zNPCB_SB29slug_dataf",
+          "offset": 608,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xAccelMove__FRfRfffff",
+          "symbol": "xAccelMove__FRfRfffff"
+        },
+        {
+          "function": "init_slugs__9zNPCB_SB2Fv",
+          "offset": 72,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "init_slugs__9zNPCB_SB2Fv",
+          "offset": 80,
+          "target_source": "SB/Game/zScene.cpp",
+          "target_function": "zSceneFindObject__FUi",
+          "symbol": "zSceneFindObject__FUi"
+        },
+        {
+          "function": "init_slugs__9zNPCB_SB2Fv",
+          "offset": 100,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntValidType__FUc",
+          "symbol": "xEntValidType__FUc"
+        },
+        {
+          "function": "init_slugs__9zNPCB_SB2Fv",
+          "offset": 196,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "create_surface__9zNPCB_SB2Fv",
+          "symbol": "create_surface__9zNPCB_SB2Fv"
+        },
+        {
+          "function": "update_bounds__9zNPCB_SB2Fv",
+          "offset": 124,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3",
+          "symbol": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3"
+        },
+        {
+          "function": "update_bounds__9zNPCB_SB2Fv",
+          "offset": 364,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3",
+          "symbol": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3"
+        },
+        {
+          "function": "update_bounds__9zNPCB_SB2Fv",
+          "offset": 500,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullForBound__FP10xQCControlP7xQCDataPC6xBound",
+          "symbol": "xQuickCullForBound__FP10xQCControlP7xQCDataPC6xBound"
+        },
+        {
+          "function": "update_bounds__9zNPCB_SB2Fv",
+          "offset": 508,
+          "target_source": "SB/Game/zGrid.cpp",
+          "target_function": "zGridUpdateEnt__FP4xEnt",
+          "symbol": "zGridUpdateEnt__FP4xEnt"
+        },
+        {
+          "function": "reset_bounds__9zNPCB_SB2Fv",
+          "offset": 308,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Euler__FP7xMat3x3fff",
+          "symbol": "xMat3x3Euler__FP7xMat3x3fff"
+        },
+        {
+          "function": "update_platforms__9zNPCB_SB2Ff",
+          "offset": 92,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xAccelMove__FRfRfffff",
+          "symbol": "xAccelMove__FRfRfffff"
+        },
+        {
+          "function": "update_platforms__9zNPCB_SB2Ff",
+          "offset": 512,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3RotC__FP7xMat3x3ffff",
+          "symbol": "xMat3x3RotC__FP7xMat3x3ffff"
+        },
+        {
+          "function": "update_platforms__9zNPCB_SB2Ff",
+          "offset": 528,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3",
+          "symbol": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3"
+        },
+        {
+          "function": "check_platform_smack__9zNPCB_SB2FRQ29zNPCB_SB29hand_data",
+          "offset": 316,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xOBBHitsOBB__FRC4xBoxRC7xMat4x3RC4xBoxRC7xMat4x3",
+          "symbol": "xOBBHitsOBB__FRC4xBoxRC7xMat4x3RC4xBoxRC7xMat4x3"
+        },
+        {
+          "function": "check_platform_smack__9zNPCB_SB2FRQ29zNPCB_SB29hand_data",
+          "offset": 876,
+          "target_source": "SB/Game/zNPCTypeVillager.cpp",
+          "target_function": "say__12zNPCNewsFishFPCQ212zNPCNewsFish8say_enumUiii",
+          "symbol": "say__12zNPCNewsFishFPCQ212zNPCNewsFish8say_enumUiii"
+        },
+        {
+          "function": "check_platform_smack__9zNPCB_SB2FRQ29zNPCB_SB29hand_data",
+          "offset": 1020,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff",
+          "symbol": "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff"
+        },
+        {
+          "function": "check_platform_smack__9zNPCB_SB2FRQ29zNPCB_SB29hand_data",
+          "offset": 1084,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf",
+          "symbol": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf"
+        },
+        {
+          "function": "move_hand__9zNPCB_SB2FRQ29zNPCB_SB29hand_dataf",
+          "offset": 92,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelTagEval__FP8RpAtomicPC9xModelTagP11RwMatrixTagP5xVec3",
+          "symbol": "iModelTagEval__FP8RpAtomicPC9xModelTagP11RwMatrixTagP5xVec3"
+        },
+        {
+          "function": "move_hand__9zNPCB_SB2FRQ29zNPCB_SB29hand_dataf",
+          "offset": 112,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelTagEval__FP8RpAtomicPC9xModelTagP11RwMatrixTagP5xVec3",
+          "symbol": "iModelTagEval__FP8RpAtomicPC9xModelTagP11RwMatrixTagP5xVec3"
+        },
+        {
+          "function": "move_hand__9zNPCB_SB2FRQ29zNPCB_SB29hand_dataf",
+          "offset": 188,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "parallelepiped_to_obb__29@unnamed@zNPCTypeBossSB2_cpp@FR6xBoundP5xVec3",
+          "symbol": "parallelepiped_to_obb__29@unnamed@zNPCTypeBossSB2_cpp@FR6xBoundP5xVec3"
+        },
+        {
+          "function": "move_hand__9zNPCB_SB2FRQ29zNPCB_SB29hand_dataf",
+          "offset": 208,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullForBound__FP10xQCControlP7xQCDataPC6xBound",
+          "symbol": "xQuickCullForBound__FP10xQCControlP7xQCDataPC6xBound"
+        },
+        {
+          "function": "move_hand__9zNPCB_SB2FRQ29zNPCB_SB29hand_dataf",
+          "offset": 216,
+          "target_source": "SB/Game/zGrid.cpp",
+          "target_function": "zGridUpdateEnt__FP4xEnt",
+          "symbol": "zGridUpdateEnt__FP4xEnt"
+        },
+        {
+          "function": "move_hand__9zNPCB_SB2FRQ29zNPCB_SB29hand_dataf",
+          "offset": 656,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "check_platform_smack__9zNPCB_SB2FRQ29zNPCB_SB29hand_data",
+          "symbol": "check_platform_smack__9zNPCB_SB2FRQ29zNPCB_SB29hand_data"
+        },
+        {
+          "function": "init_hands__9zNPCB_SB2Fv",
+          "offset": 132,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "init_hands__9zNPCB_SB2Fv",
+          "offset": 252,
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "target_function": "xGridBoundInit__FP10xGridBoundPv",
+          "symbol": "xGridBoundInit__FP10xGridBoundPv"
+        },
+        {
+          "function": "init_hands__9zNPCB_SB2Fv",
+          "offset": 396,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelTagSetup__FP9xModelTagP8RpAtomicfff",
+          "symbol": "iModelTagSetup__FP9xModelTagP8RpAtomicfff"
+        },
+        {
+          "function": "init_hands__9zNPCB_SB2Fv",
+          "offset": 428,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelTagSetup__FP9xModelTagP8RpAtomicfff",
+          "symbol": "iModelTagSetup__FP9xModelTagP8RpAtomicfff"
+        },
+        {
+          "function": "init_hands__9zNPCB_SB2Fv",
+          "offset": 480,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "create_surface__9zNPCB_SB2Fv",
+          "symbol": "create_surface__9zNPCB_SB2Fv"
+        },
+        {
+          "function": "create_surface__9zNPCB_SB2Fv",
+          "offset": 32,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "create_surface__9zNPCB_SB2Fv",
+          "offset": 52,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "create_surface__9zNPCB_SB2Fv",
+          "offset": 72,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "create_surface__9zNPCB_SB2Fv",
+          "offset": 80,
+          "target_source": "SB/Game/zSurface.cpp",
+          "target_function": "zSurfaceGetDefault__Fv",
+          "symbol": "zSurfaceGetDefault__Fv"
+        },
+        {
+          "function": "check_life__9zNPCB_SB2Fv",
+          "offset": 60,
+          "target_source": "SB/Game/zEntDestructObj.cpp",
+          "target_function": "zEntDestructObj_isDestroyed__FP15zEntDestructObj",
+          "symbol": "zEntDestructObj_isDestroyed__FP15zEntDestructObj"
+        },
+        {
+          "function": "check_life__9zNPCB_SB2Fv",
+          "offset": 192,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "GIDOfActive__7xPsycheCFv",
+          "symbol": "GIDOfActive__7xPsycheCFv"
+        },
+        {
+          "function": "check_life__9zNPCB_SB2Fv",
+          "offset": 276,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "GoalSet__7xPsycheFii",
+          "symbol": "GoalSet__7xPsycheFii"
+        },
+        {
+          "function": "check_life__9zNPCB_SB2Fv",
+          "offset": 312,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseP5xBaseUi"
+        },
+        {
+          "function": "check_life__9zNPCB_SB2Fv",
+          "offset": 352,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseP5xBaseUi"
+        },
+        {
+          "function": "setup_node_tags__9zNPCB_SB2Fv",
+          "offset": 128,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelTagSetup__FP9xModelTagP8RpAtomicfff",
+          "symbol": "iModelTagSetup__FP9xModelTagP8RpAtomicfff"
+        },
+        {
+          "function": "setup_node_tags__9zNPCB_SB2Fv",
+          "offset": 212,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelTagSetup__FP19xModelTagWithNormalP8RpAtomicfff",
+          "symbol": "iModelTagSetup__FP19xModelTagWithNormalP8RpAtomicfff"
+        },
+        {
+          "function": "setup_node_tags__9zNPCB_SB2Fv",
+          "offset": 240,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelTagSetup__FP9xModelTagP8RpAtomicfff",
+          "symbol": "iModelTagSetup__FP9xModelTagP8RpAtomicfff"
+        },
+        {
+          "function": "rebind_nodes__9zNPCB_SB2FP8RpAtomicP11RwMatrixTag",
+          "offset": 48,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelFile_RWMultiAtomic__FP8RpAtomic",
+          "symbol": "iModelFile_RWMultiAtomic__FP8RpAtomic"
+        },
+        {
+          "function": "rebind_nodes__9zNPCB_SB2FP8RpAtomicP11RwMatrixTag",
+          "offset": 196,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "setup_node_tags__9zNPCB_SB2Fv",
+          "symbol": "setup_node_tags__9zNPCB_SB2Fv"
+        },
+        {
+          "function": "bind_nodes__9zNPCB_SB2Fv",
+          "offset": 132,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "setup_node_tags__9zNPCB_SB2Fv",
+          "symbol": "setup_node_tags__9zNPCB_SB2Fv",
+          "opcode": 2
+        },
+        {
+          "function": "render_nodes__9zNPCB_SB2Fv",
+          "offset": 32,
+          "target_source": "SB/Core/x/xLightKit.cpp",
+          "target_function": "xLightKit_GetCurrent__FP7RpWorld",
+          "symbol": "xLightKit_GetCurrent__FP7RpWorld"
+        },
+        {
+          "function": "render_nodes__9zNPCB_SB2Fv",
+          "offset": 52,
+          "target_source": "SB/Core/x/xLightKit.cpp",
+          "target_function": "xLightKit_Enable__FP9xLightKitP7RpWorld",
+          "symbol": "xLightKit_Enable__FP9xLightKitP7RpWorld"
+        },
+        {
+          "function": "render_nodes__9zNPCB_SB2Fv",
+          "offset": 84,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelCull__FP8RpAtomicP11RwMatrixTag",
+          "symbol": "iModelCull__FP8RpAtomicP11RwMatrixTag"
+        },
+        {
+          "function": "render_nodes__9zNPCB_SB2Fv",
+          "offset": 108,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelRender__FP8RpAtomicP11RwMatrixTag",
+          "symbol": "iModelRender__FP8RpAtomicP11RwMatrixTag"
+        },
+        {
+          "function": "render_nodes__9zNPCB_SB2Fv",
+          "offset": 144,
+          "target_source": "SB/Core/x/xLightKit.cpp",
+          "target_function": "xLightKit_Enable__FP9xLightKitP7RpWorld",
+          "symbol": "xLightKit_Enable__FP9xLightKitP7RpWorld"
+        },
+        {
+          "function": "move_nodes__9zNPCB_SB2Fv",
+          "offset": 124,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelTagEval__FP8RpAtomicPC9xModelTagP11RwMatrixTagP5xVec3",
+          "symbol": "iModelTagEval__FP8RpAtomicPC9xModelTagP11RwMatrixTagP5xVec3"
+        },
+        {
+          "function": "move_nodes__9zNPCB_SB2Fv",
+          "offset": 144,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelTagEval__FP8RpAtomicPC9xModelTagP11RwMatrixTagP5xVec3",
+          "symbol": "iModelTagEval__FP8RpAtomicPC9xModelTagP11RwMatrixTagP5xVec3"
+        },
+        {
+          "function": "move_nodes__9zNPCB_SB2Fv",
+          "offset": 164,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelTagEval__FP8RpAtomicPC9xModelTagP11RwMatrixTagP5xVec3",
+          "symbol": "iModelTagEval__FP8RpAtomicPC9xModelTagP11RwMatrixTagP5xVec3"
+        },
+        {
+          "function": "move_nodes__9zNPCB_SB2Fv",
+          "offset": 776,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelTagEval__FP8RpAtomicPC19xModelTagWithNormalP11RwMatrixTagP5xVec3P5xVec3",
+          "symbol": "iModelTagEval__FP8RpAtomicPC19xModelTagWithNormalP11RwMatrixTagP5xVec3P5xVec3"
+        },
+        {
+          "function": "move_nodes__9zNPCB_SB2Fv",
+          "offset": 796,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelTagEval__FP8RpAtomicPC9xModelTagP11RwMatrixTagP5xVec3",
+          "symbol": "iModelTagEval__FP8RpAtomicPC9xModelTagP11RwMatrixTagP5xVec3"
+        },
+        {
+          "function": "move_nodes__9zNPCB_SB2Fv",
+          "offset": 1876,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntReposition__FR4xEntRC7xMat4x3",
+          "symbol": "xEntReposition__FR4xEntRC7xMat4x3"
+        },
+        {
+          "function": "update_nodes__9zNPCB_SB2Ff",
+          "offset": 292,
+          "target_source": "SB/Game/zEntDestructObj.cpp",
+          "target_function": "zEntDestructObj_isDestroyed__FP15zEntDestructObj",
+          "symbol": "zEntDestructObj_isDestroyed__FP15zEntDestructObj"
+        },
+        {
+          "function": "update_move__9zNPCB_SB2Ff",
+          "offset": 56,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "update_halt__9zNPCB_SB2Ff",
+          "symbol": "update_halt__9zNPCB_SB2Ff"
+        },
+        {
+          "function": "update_move__9zNPCB_SB2Ff",
+          "offset": 72,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "update_follow__9zNPCB_SB2Ff",
+          "symbol": "update_follow__9zNPCB_SB2Ff"
+        },
+        {
+          "function": "update_follow__9zNPCB_SB2Ff",
+          "offset": 476,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xAngleClampFast__Ff",
+          "symbol": "xAngleClampFast__Ff"
+        },
+        {
+          "function": "update_follow__9zNPCB_SB2Ff",
+          "offset": 604,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xAccelMove__FRfRfffff",
+          "symbol": "xAccelMove__FRfRfffff"
+        },
+        {
+          "function": "update_follow__9zNPCB_SB2Ff",
+          "offset": 900,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xAccelMove__FRfRfffff",
+          "symbol": "xAccelMove__FRfRfffff"
+        },
+        {
+          "function": "update_halt__9zNPCB_SB2Ff",
+          "offset": 144,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xAccelStop__FRfRfff",
+          "symbol": "xAccelStop__FRfRfff"
+        },
+        {
+          "function": "update_halt__9zNPCB_SB2Ff",
+          "offset": 164,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xAccelStop__FRfRfff",
+          "symbol": "xAccelStop__FRfRfff"
+        },
+        {
+          "function": "update_turn__9zNPCB_SB2Ff",
+          "offset": 804,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xAngleClampFast__Ff",
+          "symbol": "xAngleClampFast__Ff"
+        },
+        {
+          "function": "update_turn__9zNPCB_SB2Ff",
+          "offset": 828,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xAngleClampFast__Ff",
+          "symbol": "xAngleClampFast__Ff"
+        },
+        {
+          "function": "update_turn__9zNPCB_SB2Ff",
+          "offset": 960,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xAccelMove__FRfRfffff",
+          "symbol": "xAccelMove__FRfRfffff"
+        },
+        {
+          "function": "emit_slug__9zNPCB_SB2FQ29zNPCB_SB29slug_enum",
+          "offset": 116,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3",
+          "symbol": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3"
+        },
+        {
+          "function": "emit_slug__9zNPCB_SB2FQ29zNPCB_SB29slug_enum",
+          "offset": 564,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff",
+          "symbol": "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff"
+        },
+        {
+          "function": "emit_slug__9zNPCB_SB2FQ29zNPCB_SB29slug_enum",
+          "offset": 628,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf",
+          "symbol": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf"
+        },
+        {
+          "function": "emit_slug__9zNPCB_SB2FQ29zNPCB_SB29slug_enum",
+          "offset": 712,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndStopFade__FUif",
+          "symbol": "xSndStopFade__FUif"
+        },
+        {
+          "function": "emit_slug__9zNPCB_SB2FQ29zNPCB_SB29slug_enum",
+          "offset": 728,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndStop__FUi",
+          "symbol": "xSndStop__FUi"
+        },
+        {
+          "function": "emit_slug__9zNPCB_SB2FQ29zNPCB_SB29slug_enum",
+          "offset": 876,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff",
+          "symbol": "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff"
+        },
+        {
+          "function": "emit_slug__9zNPCB_SB2FQ29zNPCB_SB29slug_enum",
+          "offset": 940,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf",
+          "symbol": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf"
+        },
+        {
+          "function": "Render__9zNPCB_SB2Fv",
+          "offset": 0,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntRender__FP4xEnt",
+          "symbol": "xEntRender__FP4xEnt",
+          "opcode": 2
+        },
+        {
+          "function": "NewTime__9zNPCB_SB2FP6xScenef",
+          "offset": 48,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "move_nodes__9zNPCB_SB2Fv",
+          "symbol": "move_nodes__9zNPCB_SB2Fv"
+        },
+        {
+          "function": "NewTime__9zNPCB_SB2FP6xScenef",
+          "offset": 72,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "move_hand__9zNPCB_SB2FRQ29zNPCB_SB29hand_dataf",
+          "symbol": "move_hand__9zNPCB_SB2FRQ29zNPCB_SB29hand_dataf"
+        },
+        {
+          "function": "NewTime__9zNPCB_SB2FP6xScenef",
+          "offset": 96,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "update_bounds__9zNPCB_SB2Fv",
+          "symbol": "update_bounds__9zNPCB_SB2Fv"
+        },
+        {
+          "function": "NewTime__9zNPCB_SB2FP6xScenef",
+          "offset": 108,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "update_platforms__9zNPCB_SB2Ff",
+          "symbol": "update_platforms__9zNPCB_SB2Ff"
+        },
+        {
+          "function": "NewTime__9zNPCB_SB2FP6xScenef",
+          "offset": 120,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "update_slugs__9zNPCB_SB2Ff",
+          "symbol": "update_slugs__9zNPCB_SB2Ff"
+        },
+        {
+          "function": "NewTime__9zNPCB_SB2FP6xScenef",
+          "offset": 168,
+          "target_source": "SB/Core/x/xModel.cpp",
+          "target_function": "xModelGetBoneLocation__FRC14xModelInstanceUi",
+          "symbol": "xModelGetBoneLocation__FRC14xModelInstanceUi"
+        },
+        {
+          "function": "NewTime__9zNPCB_SB2FP6xScenef",
+          "offset": 232,
+          "target_source": "SB/Core/x/xModel.cpp",
+          "target_function": "xModelGetBoneLocation__FRC14xModelInstanceUi",
+          "symbol": "xModelGetBoneLocation__FRC14xModelInstanceUi"
+        },
+        {
+          "function": "NewTime__9zNPCB_SB2FP6xScenef",
+          "offset": 272,
+          "target_source": "SB/Core/x/xModel.cpp",
+          "target_function": "xModelGetBoneLocation__FRC14xModelInstanceUi",
+          "symbol": "xModelGetBoneLocation__FRC14xModelInstanceUi"
+        },
+        {
+          "function": "NewTime__9zNPCB_SB2FP6xScenef",
+          "offset": 312,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "NewTime__10zNPCCommonFP6xScenef",
+          "symbol": "NewTime__10zNPCCommonFP6xScenef"
+        },
+        {
+          "function": "Process__9zNPCB_SB2FP6xScenef",
+          "offset": 104,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "check_life__9zNPCB_SB2Fv",
+          "symbol": "check_life__9zNPCB_SB2Fv"
+        },
+        {
+          "function": "Process__9zNPCB_SB2FP6xScenef",
+          "offset": 196,
+          "target_source": "SB/Game/zNPCTypeVillager.cpp",
+          "target_function": "say__12zNPCNewsFishFPCQ212zNPCNewsFish8say_enumUiii",
+          "symbol": "say__12zNPCNewsFishFPCQ212zNPCNewsFish8say_enumUiii"
+        },
+        {
+          "function": "Process__9zNPCB_SB2FP6xScenef",
+          "offset": 220,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "SomethingWonderful__10zNPCCommonFv",
+          "symbol": "SomethingWonderful__10zNPCCommonFv"
+        },
+        {
+          "function": "Process__9zNPCB_SB2FP6xScenef",
+          "offset": 260,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "Timestep__7xPsycheFfPv",
+          "symbol": "Timestep__7xPsycheFfPv"
+        },
+        {
+          "function": "Process__9zNPCB_SB2FP6xScenef",
+          "offset": 276,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "update_nodes__9zNPCB_SB2Ff",
+          "symbol": "update_nodes__9zNPCB_SB2Ff"
+        },
+        {
+          "function": "Process__9zNPCB_SB2FP6xScenef",
+          "offset": 288,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "update_slugs__9zNPCB_SB2Ff",
+          "symbol": "update_slugs__9zNPCB_SB2Ff"
+        },
+        {
+          "function": "Process__9zNPCB_SB2FP6xScenef",
+          "offset": 300,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "update_move__9zNPCB_SB2Ff",
+          "symbol": "update_move__9zNPCB_SB2Ff"
+        },
+        {
+          "function": "Process__9zNPCB_SB2FP6xScenef",
+          "offset": 312,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "update_turn__9zNPCB_SB2Ff",
+          "symbol": "update_turn__9zNPCB_SB2Ff"
+        },
+        {
+          "function": "Process__9zNPCB_SB2FP6xScenef",
+          "offset": 320,
+          "target_source": "SB/Game/zCamera.cpp",
+          "target_function": "zCameraDisableTracking__F17camera_owner_enum",
+          "symbol": "zCameraDisableTracking__F17camera_owner_enum"
+        },
+        {
+          "function": "Process__9zNPCB_SB2FP6xScenef",
+          "offset": 328,
+          "target_source": "SB/Game/zCamera.cpp",
+          "target_function": "zCameraIsTrackingDisabled__Fv",
+          "symbol": "zCameraIsTrackingDisabled__Fv"
+        },
+        {
+          "function": "Process__9zNPCB_SB2FP6xScenef",
+          "offset": 356,
+          "target_source": "SB/Core/x/xCamera.cpp",
+          "target_function": "update__13xBinaryCameraFf",
+          "symbol": "update__13xBinaryCameraFf"
+        },
+        {
+          "function": "Process__9zNPCB_SB2FP6xScenef",
+          "offset": 368,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "check_hit_fail__9zNPCB_SB2Fv",
+          "symbol": "check_hit_fail__9zNPCB_SB2Fv"
+        },
+        {
+          "function": "Process__9zNPCB_SB2FP6xScenef",
+          "offset": 384,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "Process__10zNPCCommonFP6xScenef",
+          "symbol": "Process__10zNPCCommonFP6xScenef"
+        },
+        {
+          "function": "AnimPick__9zNPCB_SB2Fi16en_NPC_GOAL_SPOTP5xGoal",
+          "offset": 128,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "AnimCurStateID__10zNPCCommonFv",
+          "symbol": "AnimCurStateID__10zNPCCommonFv"
+        },
+        {
+          "function": "AnimPick__9zNPCB_SB2Fi16en_NPC_GOAL_SPOTP5xGoal",
+          "offset": 264,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "AnimCurStateID__10zNPCCommonFv",
+          "symbol": "AnimCurStateID__10zNPCCommonFv"
+        },
+        {
+          "function": "AnimPick__9zNPCB_SB2Fi16en_NPC_GOAL_SPOTP5xGoal",
+          "offset": 488,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff",
+          "symbol": "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff"
+        },
+        {
+          "function": "AnimPick__9zNPCB_SB2Fi16en_NPC_GOAL_SPOTP5xGoal",
+          "offset": 552,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf",
+          "symbol": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf"
+        },
+        {
+          "function": "AnimPick__9zNPCB_SB2Fi16en_NPC_GOAL_SPOTP5xGoal",
+          "offset": 588,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "AnimCurStateID__10zNPCCommonFv",
+          "symbol": "AnimCurStateID__10zNPCCommonFv"
+        },
+        {
+          "function": "AnimPick__9zNPCB_SB2Fi16en_NPC_GOAL_SPOTP5xGoal",
+          "offset": 728,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff",
+          "symbol": "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff"
+        },
+        {
+          "function": "AnimPick__9zNPCB_SB2Fi16en_NPC_GOAL_SPOTP5xGoal",
+          "offset": 792,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf",
+          "symbol": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf"
+        },
+        {
+          "function": "AnimPick__9zNPCB_SB2Fi16en_NPC_GOAL_SPOTP5xGoal",
+          "offset": 832,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "AnimCurStateID__10zNPCCommonFv",
+          "symbol": "AnimCurStateID__10zNPCCommonFv"
+        },
+        {
+          "function": "AnimPick__9zNPCB_SB2Fi16en_NPC_GOAL_SPOTP5xGoal",
+          "offset": 976,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff",
+          "symbol": "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff"
+        },
+        {
+          "function": "AnimPick__9zNPCB_SB2Fi16en_NPC_GOAL_SPOTP5xGoal",
+          "offset": 1040,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf",
+          "symbol": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf"
+        },
+        {
+          "function": "AnimPick__9zNPCB_SB2Fi16en_NPC_GOAL_SPOTP5xGoal",
+          "offset": 1200,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff",
+          "symbol": "xSndPlay3DFade__FUiffUiUiPC5xVec3ff14sound_categoryff"
+        },
+        {
+          "function": "AnimPick__9zNPCB_SB2Fi16en_NPC_GOAL_SPOTP5xGoal",
+          "offset": 1264,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf",
+          "symbol": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf"
+        },
+        {
+          "function": "Destroy__9zNPCB_SB2Fv",
+          "offset": 16,
+          "target_source": "SB/Core/x/xLightKit.cpp",
+          "target_function": "xLightKit_Destroy__FP9xLightKit",
+          "symbol": "xLightKit_Destroy__FP9xLightKit"
+        },
+        {
+          "function": "Destroy__9zNPCB_SB2Fv",
+          "offset": 24,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "Destroy__10zNPCCommonFv",
+          "symbol": "Destroy__10zNPCCommonFv"
+        },
+        {
+          "function": "Reset__9zNPCB_SB2Fv",
+          "offset": 104,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "Reset__10zNPCCommonFv",
+          "symbol": "Reset__10zNPCCommonFv"
+        },
+        {
+          "function": "Reset__9zNPCB_SB2Fv",
+          "offset": 148,
+          "target_source": "SB/Game/zEntDestructObj.cpp",
+          "target_function": "zEntDestructObj_Reset__FP15zEntDestructObjP6xScene",
+          "symbol": "zEntDestructObj_Reset__FP15zEntDestructObjP6xScene"
+        },
+        {
+          "function": "Reset__9zNPCB_SB2Fv",
+          "offset": 212,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseP5xBaseUi"
+        },
+        {
+          "function": "Reset__9zNPCB_SB2Fv",
+          "offset": 248,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "check_life__9zNPCB_SB2Fv",
+          "symbol": "check_life__9zNPCB_SB2Fv"
+        },
+        {
+          "function": "Reset__9zNPCB_SB2Fv",
+          "offset": 256,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xrand__Fv",
+          "symbol": "xrand__Fv"
+        },
+        {
+          "function": "Reset__9zNPCB_SB2Fv",
+          "offset": 448,
+          "target_source": "SB/Game/zCamera.cpp",
+          "target_function": "zCameraDisableTracking__F17camera_owner_enum",
+          "symbol": "zCameraDisableTracking__F17camera_owner_enum"
+        },
+        {
+          "function": "Reset__9zNPCB_SB2Fv",
+          "offset": 468,
+          "target_source": "SB/Core/x/xCamera.cpp",
+          "target_function": "start__13xBinaryCameraFR7xCamera",
+          "symbol": "start__13xBinaryCameraFR7xCamera"
+        },
+        {
+          "function": "Reset__9zNPCB_SB2Fv",
+          "offset": 488,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "GoalSet__7xPsycheFii",
+          "symbol": "GoalSet__7xPsycheFii"
+        },
+        {
+          "function": "SelfSetup__9zNPCB_SB2Fv",
+          "offset": 16,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "xBehaveMgr_GetSelf__Fv",
+          "symbol": "xBehaveMgr_GetSelf__Fv"
+        },
+        {
+          "function": "SelfSetup__9zNPCB_SB2Fv",
+          "offset": 32,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "Subscribe__10xBehaveMgrFP5xBasei",
+          "symbol": "Subscribe__10xBehaveMgrFP5xBasei"
+        },
+        {
+          "function": "SelfSetup__9zNPCB_SB2Fv",
+          "offset": 44,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "BrainBegin__7xPsycheFv",
+          "symbol": "BrainBegin__7xPsycheFv"
+        },
+        {
+          "function": "SelfSetup__9zNPCB_SB2Fv",
+          "offset": 72,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "AddGoal__7xPsycheFiPv",
+          "symbol": "AddGoal__7xPsycheFiPv"
+        },
+        {
+          "function": "SelfSetup__9zNPCB_SB2Fv",
+          "offset": 116,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "AddGoal__7xPsycheFiPv",
+          "symbol": "AddGoal__7xPsycheFiPv"
+        },
+        {
+          "function": "SelfSetup__9zNPCB_SB2Fv",
+          "offset": 124,
+          "target_source": "SB/Core/x/xBehaveMgr.cpp",
+          "target_function": "BrainEnd__7xPsycheFv",
+          "symbol": "BrainEnd__7xPsycheFv"
+        },
+        {
+          "function": "Setup__9zNPCB_SB2Fv",
+          "offset": 32,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "create_glow_light__9zNPCB_SB2Fv",
+          "symbol": "create_glow_light__9zNPCB_SB2Fv"
+        },
+        {
+          "function": "Setup__9zNPCB_SB2Fv",
+          "offset": 56,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "Setup__9zNPCB_SB2Fv",
+          "offset": 64,
+          "target_source": "SB/Game/zScene.cpp",
+          "target_function": "zSceneFindObject__FUi",
+          "symbol": "zSceneFindObject__FUi"
+        },
+        {
+          "function": "Setup__9zNPCB_SB2Fv",
+          "offset": 276,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "setup_node_tags__9zNPCB_SB2Fv",
+          "symbol": "setup_node_tags__9zNPCB_SB2Fv"
+        },
+        {
+          "function": "Setup__9zNPCB_SB2Fv",
+          "offset": 284,
+          "target_source": "SB/Game/zNPCTypeBoss.cpp",
+          "target_function": "Setup__8zNPCBossFv",
+          "symbol": "Setup__8zNPCBossFv"
+        },
+        {
+          "function": "Setup__9zNPCB_SB2Fv",
+          "offset": 316,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "Setup__9zNPCB_SB2Fv",
+          "offset": 324,
+          "target_source": "SB/Game/zScene.cpp",
+          "target_function": "zSceneFindObject__FUi",
+          "symbol": "zSceneFindObject__FUi"
+        },
+        {
+          "function": "Setup__9zNPCB_SB2Fv",
+          "offset": 344,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntValidType__FUc",
+          "symbol": "xEntValidType__FUc"
+        },
+        {
+          "function": "Setup__9zNPCB_SB2Fv",
+          "offset": 472,
+          "target_source": "SB/Core/x/xBound.cpp",
+          "target_function": "xBoundGetSphere__FR7xSphereRC6xBound",
+          "symbol": "xBoundGetSphere__FR7xSphereRC6xBound"
+        },
+        {
+          "function": "Setup__9zNPCB_SB2Fv",
+          "offset": 524,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "create_surface__9zNPCB_SB2Fv",
+          "symbol": "create_surface__9zNPCB_SB2Fv"
+        },
+        {
+          "function": "Setup__9zNPCB_SB2Fv",
+          "offset": 560,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "create_surface__9zNPCB_SB2Fv",
+          "symbol": "create_surface__9zNPCB_SB2Fv"
+        },
+        {
+          "function": "Setup__9zNPCB_SB2Fv",
+          "offset": 616,
+          "target_source": "SB/Game/zNPCMgr.cpp",
+          "target_function": "zNPCMgr_GetNPCList__Fv",
+          "symbol": "zNPCMgr_GetNPCList__Fv"
+        },
+        {
+          "function": "Setup__9zNPCB_SB2Fv",
+          "offset": 700,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "Setup__9zNPCB_SB2Fv",
+          "offset": 708,
+          "target_source": "SB/Game/zScene.cpp",
+          "target_function": "zSceneFindObject__FUi",
+          "symbol": "zSceneFindObject__FUi"
+        },
+        {
+          "function": "Setup__9zNPCB_SB2Fv",
+          "offset": 732,
+          "target_source": "SB/Game/zNPCTypeVillager.cpp",
+          "target_function": "TalkOnScreen__12zNPCNewsFishFi",
+          "symbol": "TalkOnScreen__12zNPCNewsFishFi"
+        },
+        {
+          "function": "ParseINI__9zNPCB_SB2Fv",
+          "offset": 12,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "ParseINI__10zNPCCommonFv",
+          "symbol": "ParseINI__10zNPCCommonFv"
+        },
+        {
+          "function": "ParseINI__9zNPCB_SB2Fv",
+          "offset": 40,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "symbol": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 108,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 232,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 360,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 504,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 648,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 772,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 904,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 1032,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 1160,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 1288,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 1416,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 1540,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 1664,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 1788,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 1912,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 2040,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 2168,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 2296,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 2424,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 2552,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 2680,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 2812,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 2936,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 3160,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetVector__FP16xModelAssetParamUiPCc5xVec3P5xVec3",
+          "symbol": "zParamGetVector__FP16xModelAssetParamUiPCc5xVec3P5xVec3"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 3200,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 3344,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 3480,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 3620,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 3752,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 3888,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 4024,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 4160,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 4296,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 4432,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 4568,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 4708,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 4844,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 4980,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 5112,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 5244,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 5376,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 5512,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 5640,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 5768,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 5896,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 6028,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetInt__FP16xModelAssetParamUiPCci",
+          "symbol": "zParamGetInt__FP16xModelAssetParamUiPCci"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 6076,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetInt__FP16xModelAssetParamUiPCci",
+          "symbol": "zParamGetInt__FP16xModelAssetParamUiPCci"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 6128,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetInt__FP16xModelAssetParamUiPCci",
+          "symbol": "zParamGetInt__FP16xModelAssetParamUiPCci"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 6308,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetVector__FP16xModelAssetParamUiPCc5xVec3P5xVec3",
+          "symbol": "zParamGetVector__FP16xModelAssetParamUiPCc5xVec3P5xVec3"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 6352,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 6580,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetVector__FP16xModelAssetParamUiPCc5xVec3P5xVec3",
+          "symbol": "zParamGetVector__FP16xModelAssetParamUiPCc5xVec3P5xVec3"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 6620,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 6756,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 6892,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 7028,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetInt__FP16xModelAssetParamUiPCci",
+          "symbol": "zParamGetInt__FP16xModelAssetParamUiPCci"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 7076,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetInt__FP16xModelAssetParamUiPCci",
+          "symbol": "zParamGetInt__FP16xModelAssetParamUiPCci"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 7128,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetInt__FP16xModelAssetParamUiPCci",
+          "symbol": "zParamGetInt__FP16xModelAssetParamUiPCci"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 7316,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetVector__FP16xModelAssetParamUiPCc5xVec3P5xVec3",
+          "symbol": "zParamGetVector__FP16xModelAssetParamUiPCc5xVec3P5xVec3"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 7360,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 7592,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetVector__FP16xModelAssetParamUiPCc5xVec3P5xVec3",
+          "symbol": "zParamGetVector__FP16xModelAssetParamUiPCc5xVec3P5xVec3"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 7628,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 7764,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 7900,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 8036,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetInt__FP16xModelAssetParamUiPCci",
+          "symbol": "zParamGetInt__FP16xModelAssetParamUiPCci"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 8088,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetInt__FP16xModelAssetParamUiPCci",
+          "symbol": "zParamGetInt__FP16xModelAssetParamUiPCci"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 8136,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetInt__FP16xModelAssetParamUiPCci",
+          "symbol": "zParamGetInt__FP16xModelAssetParamUiPCci"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 8324,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetVector__FP16xModelAssetParamUiPCc5xVec3P5xVec3",
+          "symbol": "zParamGetVector__FP16xModelAssetParamUiPCc5xVec3P5xVec3"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 8368,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 8596,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetVector__FP16xModelAssetParamUiPCc5xVec3P5xVec3",
+          "symbol": "zParamGetVector__FP16xModelAssetParamUiPCc5xVec3P5xVec3"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 8636,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 8772,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 8908,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 9048,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 9176,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 9304,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 9428,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 9552,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 9680,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 9808,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 9932,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 10056,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 10184,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 10312,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 10444,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 10568,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 10696,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 10824,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 10948,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 11072,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 11200,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 11328,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 11452,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 11576,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 11700,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 11824,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 11948,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 12068,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 12192,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 12320,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 12448,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 12572,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 12696,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 12824,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 12952,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 13076,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 13200,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 13328,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 13456,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 13580,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 13704,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 13832,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 13960,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 14084,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 14212,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 14268,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 14324,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 14380,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 14436,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 14492,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 14548,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 14604,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 14660,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "register_tweaks__Q229@unnamed@zNPCTypeBossSB2_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "offset": 14716,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "Init__9zNPCB_SB2FP9xEntAsset",
+          "offset": 44,
+          "target_source": "SB/Core/x/xCamera.cpp",
+          "target_function": "init__13xBinaryCameraFv",
+          "symbol": "init__13xBinaryCameraFv"
+        },
+        {
+          "function": "Init__9zNPCB_SB2FP9xEntAsset",
+          "offset": 52,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "init_sound__29@unnamed@zNPCTypeBossSB2_cpp@Fv",
+          "symbol": "init_sound__29@unnamed@zNPCTypeBossSB2_cpp@Fv"
+        },
+        {
+          "function": "Init__9zNPCB_SB2FP9xEntAsset",
+          "offset": 64,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "Init__10zNPCCommonFP9xEntAsset",
+          "symbol": "Init__10zNPCCommonFP9xEntAsset"
+        },
+        {
+          "function": "Init__9zNPCB_SB2FP9xEntAsset",
+          "offset": 224,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "init_hands__9zNPCB_SB2Fv",
+          "symbol": "init_hands__9zNPCB_SB2Fv"
+        },
+        {
+          "function": "Init__9zNPCB_SB2FP9xEntAsset",
+          "offset": 336,
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "target_function": "xGridBoundInit__FP10xGridBoundPv",
+          "symbol": "xGridBoundInit__FP10xGridBoundPv"
+        },
+        {
+          "function": "Init__9zNPCB_SB2FP9xEntAsset",
+          "offset": 360,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "reset_bounds__9zNPCB_SB2Fv",
+          "symbol": "reset_bounds__9zNPCB_SB2Fv"
+        },
+        {
+          "function": "Init__9zNPCB_SB2FP9xEntAsset",
+          "offset": 444,
+          "target_source": "SB/Game/zNPCTypeBossSB2.cpp",
+          "target_function": "init_slugs__9zNPCB_SB2Fv",
+          "symbol": "init_slugs__9zNPCB_SB2Fv"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 24,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNew__FPCcPP10xAnimTableUi",
+          "symbol": "xAnimTableNew__FPCcPP10xAnimTableUi"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 108,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 188,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 268,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 348,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 428,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 508,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 588,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 668,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 748,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 828,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 908,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 988,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 1068,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 1148,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 1228,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 1308,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 1388,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 1468,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 1548,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 1628,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 1708,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 1788,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 1868,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 1948,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 1988,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "NPCC_BuildStandardAnimTran__FP10xAnimTablePPcPiif",
+          "symbol": "NPCC_BuildStandardAnimTran__FP10xAnimTablePPcPiif"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 2060,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 2132,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 2204,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 2276,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 2348,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 2420,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 2492,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 2564,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 2636,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 2708,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 2780,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 2852,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 2924,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 2996,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB2__Fv",
+          "offset": 3068,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "update_slugs__9zNPCB_SB2Ff",
+          "offset": 300,
+          "opcode": 49,
+          "target_name": "fade_time",
+          "symbol": "fade_time$9157",
+          "target_linkage": "fade_time$9157"
+        },
+        {
+          "function": "slug_interp__9zNPCB_SB2FfRf",
+          "offset": 80,
+          "opcode": 36,
+          "target_name": "use_smooth",
+          "symbol": "use_smooth$9188",
+          "target_linkage": "use_smooth$9188"
+        },
+        {
+          "function": "init_hands__9zNPCB_SB2Fv",
+          "offset": 128,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "create_surface__9zNPCB_SB2Fv",
+          "offset": 28,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "create_surface__9zNPCB_SB2Fv",
+          "offset": 40,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "create_surface__9zNPCB_SB2Fv",
+          "offset": 60,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "Init__9zNPCB_SB2FP9xEntAsset",
+          "offset": 48,
+          "opcode": 43,
+          "target_name": "_singleton",
+          "symbol": "_singleton__9zNPCB_SB2",
+          "target_linkage": "_singleton__9zNPCB_SB2"
+        }
+      ]
     }
   ]
 }

@@ -507,3 +507,6 @@ region using original Sky2 vertices; see [screen-effects evidence](PS2_SCREEN_EF
 
 Complete PS2 Tiki goals add 424 matched bytes per debug region; the complete
 boss-goal factory is also retained as a partial source comparison.
+
+Complete PS2 SB2 source comparison adds 5,008 matched bytes per debug region;
+see [SB2 evidence](PS2_SB2_SOURCE.md).
