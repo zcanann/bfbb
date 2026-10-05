@@ -54231,6 +54231,1770 @@
           "symbol": "g_hash_tikianim"
         }
       ]
+    },
+    {
+      "source": "src/SB/Core/x/xScrFx.cpp",
+      "target_unit": "SB/Core/x/xScrFx.cpp",
+      "object": "source/xScrFx.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df"
+      ],
+      "symbols": {
+        "xScrFxDrawBox__FffffUcUcUcUcff": "xScrFxDrawBox__FffffUcUcUcUcff",
+        "xScrFXGlareRender__FP7xCamera": "xScrFXGlareRender__FP7xCamera",
+        "xScrFXFullScreenGlareRender__Fv": "xScrFXFullScreenGlareRender__Fv",
+        "xScrFXGlareAdd__FP5xVec3fffffffP8RwRaster": "xScrFXGlareAdd__FP5xVec3fffffffP8RwRaster",
+        "xScrFxDistortionUpdate__Ff": "xScrFxDistortionUpdate__Ff",
+        "xScrFxDistortionAdd__FP5xVec3P5xVec3i": "xScrFxDistortionAdd__FP5xVec3P5xVec3i",
+        "xScrFxDrawSafeArea__Fv": "xScrFxDrawSafeArea__Fv",
+        "xScrFxIsLetterbox__Fv": "xScrFxIsLetterbox__Fv",
+        "xScrFxUpdateLetterBox__FP8RwCameraf": "xScrFxUpdateLetterBox__FP8RwCameraf",
+        "xScrFxLetterbox__Fi": "xScrFxLetterbox__Fi",
+        "xScrFxLetterBoxSetAlpha__FUc": "xScrFxLetterBoxSetAlpha__FUc",
+        "xScrFxLetterBoxSetSize__Ff": "xScrFxLetterBoxSetSize__Ff",
+        "xScrFxLetterboxReset__Fv": "xScrFxLetterboxReset__Fv",
+        "xScrFxUpdateFade__FP8RwCameraf": "xScrFxUpdateFade__FP8RwCameraf",
+        "xScrFxIsFading__Fv": "xScrFxIsFading__Fv",
+        "xScrFxStopFade__Fv": "xScrFxStopFade__Fv",
+        "xScrFxFade__FP10iColor_tagP10iColor_tagfPFv_vi": "xScrFxFade__FP10iColor_tagP10iColor_tagfPFv_vi",
+        "xScrFxDrawScreenSizeRectangle__Fv": "xScrFxDrawScreenSizeRectangle__Fv",
+        "xScrFxRender__FP8RwCamera": "xScrFxRender__FP8RwCamera",
+        "xScrFxUpdate__FP8RwCameraf": "xScrFxUpdate__FP8RwCameraf",
+        "xScrFxReset__Fv": "xScrFxReset__Fv",
+        "xScrFxInit__Fv": "xScrFxInit__Fv"
+      },
+      "calls": [
+        {
+          "function": "xScrFXGlareRender__FP7xCamera",
+          "offset": 152,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xScrFXGlareRender__FP7xCamera",
+          "offset": 164,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xScrFXGlareRender__FP7xCamera",
+          "offset": 304,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xScrFXGlareRender__FP7xCamera",
+          "offset": 364,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 48,
+          "target_source": "SB/Core/x/iCamera.cpp",
+          "target_function": "iCamGetViewMatrix__FP8RwCameraP7xMat4x3",
+          "symbol": "iCamGetViewMatrix__FP8RwCameraP7xMat4x3"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 84,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 100,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 376,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 508,
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "target_function": "xScrFxDrawBox__FffffUcUcUcUcff",
+          "symbol": "xScrFxDrawBox__FffffUcUcUcUcff"
+        },
+        {
+          "function": "xScrFXGlareAdd__FP5xVec3fffffffP8RwRaster",
+          "offset": 296,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xScrFXGlareAdd__FP5xVec3fffffffP8RwRaster",
+          "offset": 308,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "xScrFxDistortionUpdate__Ff",
+          "offset": 24,
+          "target_source": "SB/Game/zGame.cpp",
+          "target_function": "zGameIsPaused__Fv",
+          "symbol": "zGameIsPaused__Fv"
+        },
+        {
+          "function": "xScrFxDistortionUpdate__Ff",
+          "offset": 392,
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "target_function": "xScrFxDistortionAdd__FP5xVec3P5xVec3i",
+          "symbol": "xScrFxDistortionAdd__FP5xVec3P5xVec3i"
+        },
+        {
+          "function": "xScrFxDrawSafeArea__Fv",
+          "offset": 392,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxDrawBox__FffffUcUcUcUc",
+          "symbol": "iScrFxDrawBox__FffffUcUcUcUc"
+        },
+        {
+          "function": "xScrFxDrawSafeArea__Fv",
+          "offset": 440,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxDrawBox__FffffUcUcUcUc",
+          "symbol": "iScrFxDrawBox__FffffUcUcUcUc"
+        },
+        {
+          "function": "xScrFxDrawSafeArea__Fv",
+          "offset": 492,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxDrawBox__FffffUcUcUcUc",
+          "symbol": "iScrFxDrawBox__FffffUcUcUcUc"
+        },
+        {
+          "function": "xScrFxDrawSafeArea__Fv",
+          "offset": 544,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxDrawBox__FffffUcUcUcUc",
+          "symbol": "iScrFxDrawBox__FffffUcUcUcUc"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 12,
+          "target_source": "SB/Game/zGame.cpp",
+          "target_function": "zGameIsPaused__Fv",
+          "symbol": "zGameIsPaused__Fv"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 212,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxDrawBox__FffffUcUcUcUc",
+          "symbol": "iScrFxDrawBox__FffffUcUcUcUc"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 256,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxDrawBox__FffffUcUcUcUc",
+          "symbol": "iScrFxDrawBox__FffffUcUcUcUc"
+        },
+        {
+          "function": "xScrFxLetterbox__Fi",
+          "offset": 12,
+          "target_source": "SB/Game/zMenu.cpp",
+          "target_function": "zMenuRunning__Fv",
+          "symbol": "zMenuRunning__Fv"
+        },
+        {
+          "function": "xScrFxUpdateFade__FP8RwCameraf",
+          "offset": 28,
+          "target_source": "SB/Game/zGame.cpp",
+          "target_function": "zGameIsPaused__Fv",
+          "symbol": "zGameIsPaused__Fv"
+        },
+        {
+          "function": "xScrFxUpdateFade__FP8RwCameraf",
+          "offset": 936,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxDrawBox__FffffUcUcUcUc",
+          "symbol": "iScrFxDrawBox__FffffUcUcUcUc"
+        },
+        {
+          "function": "xScrFxDrawScreenSizeRectangle__Fv",
+          "offset": 64,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxDrawBox__FffffUcUcUcUc",
+          "symbol": "iScrFxDrawBox__FffffUcUcUcUc"
+        },
+        {
+          "function": "xScrFxRender__FP8RwCamera",
+          "offset": 8,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxBegin__Fv",
+          "symbol": "iScrFxBegin__Fv"
+        },
+        {
+          "function": "xScrFxRender__FP8RwCamera",
+          "offset": 20,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxDistortionRender__FP8RwCamera",
+          "symbol": "iScrFxDistortionRender__FP8RwCamera"
+        },
+        {
+          "function": "xScrFxRender__FP8RwCamera",
+          "offset": 40,
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "target_function": "xScrFxDrawSafeArea__Fv",
+          "symbol": "xScrFxDrawSafeArea__Fv"
+        },
+        {
+          "function": "xScrFxRender__FP8RwCamera",
+          "offset": 48,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxEnd__Fv",
+          "symbol": "iScrFxEnd__Fv"
+        },
+        {
+          "function": "xScrFxUpdate__FP8RwCameraf",
+          "offset": 20,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxBegin__Fv",
+          "symbol": "iScrFxBegin__Fv"
+        },
+        {
+          "function": "xScrFxUpdate__FP8RwCameraf",
+          "offset": 32,
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "target_function": "xScrFxUpdateFade__FP8RwCameraf",
+          "symbol": "xScrFxUpdateFade__FP8RwCameraf"
+        },
+        {
+          "function": "xScrFxUpdate__FP8RwCameraf",
+          "offset": 44,
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "target_function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "symbol": "xScrFxUpdateLetterBox__FP8RwCameraf"
+        },
+        {
+          "function": "xScrFxUpdate__FP8RwCameraf",
+          "offset": 152,
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "target_function": "xScrFxDistortionUpdate__Ff",
+          "symbol": "xScrFxDistortionUpdate__Ff"
+        },
+        {
+          "function": "xScrFxInit__Fv",
+          "offset": 80,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxInit__Fv",
+          "symbol": "iScrFxInit__Fv"
+        },
+        {
+          "function": "xScrFxInit__Fv",
+          "offset": 20,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xScrFxDrawBox__FffffUcUcUcUcff",
+          "offset": 1064,
+          "opcode": 9,
+          "target_name": "indices",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "indices"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 28,
+          "opcode": 35,
+          "target_name": "sFullScreenGlareEnabled",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sFullScreenGlareEnabled"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 40,
+          "opcode": 35,
+          "target_name": "xglobals",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "xglobals"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 168,
+          "opcode": 49,
+          "target_name": "sFullScreenGlareIntensity",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sFullScreenGlareIntensity"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 216,
+          "opcode": 36,
+          "target_name": "sFullScreenGlareColor",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sFullScreenGlareColor"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 332,
+          "opcode": 35,
+          "target_name": "sFullScreenGlareTexturePtr",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sFullScreenGlareTexturePtr"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 360,
+          "opcode": 35,
+          "target_name": "sFullScreenGlareTexturePtr",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sFullScreenGlareTexturePtr"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 372,
+          "opcode": 35,
+          "target_name": "sFullScreenGlareTextureID",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sFullScreenGlareTextureID"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 384,
+          "opcode": 43,
+          "target_name": "sFullScreenGlareTexturePtr",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sFullScreenGlareTexturePtr"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 392,
+          "opcode": 35,
+          "target_name": "sFullScreenGlareTexturePtr",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sFullScreenGlareTexturePtr"
+        },
+        {
+          "function": "xScrFxDistortionUpdate__Ff",
+          "offset": 40,
+          "opcode": 49,
+          "target_name": "sNoGlobalTime",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sNoGlobalTime"
+        },
+        {
+          "function": "xScrFxDistortionUpdate__Ff",
+          "offset": 44,
+          "opcode": 35,
+          "target_name": "gNumDistortionParticles",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "gNumDistortionParticles"
+        },
+        {
+          "function": "xScrFxDistortionUpdate__Ff",
+          "offset": 64,
+          "opcode": 57,
+          "target_name": "sNoGlobalTime",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sNoGlobalTime"
+        },
+        {
+          "function": "xScrFxDistortionUpdate__Ff",
+          "offset": 124,
+          "opcode": 35,
+          "target_name": "gNumDistortionParticles",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "gNumDistortionParticles"
+        },
+        {
+          "function": "xScrFxDistortionUpdate__Ff",
+          "offset": 248,
+          "opcode": 35,
+          "target_name": "gNumDistortionParticles",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "gNumDistortionParticles"
+        },
+        {
+          "function": "xScrFxDistortionUpdate__Ff",
+          "offset": 276,
+          "opcode": 35,
+          "target_name": "gNumDistortionParticles",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "gNumDistortionParticles"
+        },
+        {
+          "function": "xScrFxDistortionUpdate__Ff",
+          "offset": 284,
+          "opcode": 43,
+          "target_name": "gNumDistortionParticles",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "gNumDistortionParticles"
+        },
+        {
+          "function": "xScrFxDistortionUpdate__Ff",
+          "offset": 288,
+          "opcode": 35,
+          "target_name": "gNumDistortionParticles",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "gNumDistortionParticles"
+        },
+        {
+          "function": "xScrFxDistortionUpdate__Ff",
+          "offset": 312,
+          "opcode": 35,
+          "target_name": "gFrameCount",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "gFrameCount"
+        },
+        {
+          "function": "xScrFxIsLetterbox__Fv",
+          "offset": 0,
+          "opcode": 49,
+          "target_name": "mLetterboxTO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxTO"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 28,
+          "opcode": 49,
+          "target_name": "mLetterboxTO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxTO"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 32,
+          "opcode": 49,
+          "target_name": "mLetterboxO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxO"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 72,
+          "opcode": 57,
+          "target_name": "mLetterboxO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxO"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 80,
+          "opcode": 57,
+          "target_name": "mLetterboxO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxO"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 124,
+          "opcode": 57,
+          "target_name": "mLetterboxO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxO"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 128,
+          "opcode": 57,
+          "target_name": "mLetterboxO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxO"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 136,
+          "opcode": 49,
+          "target_name": "mLetterboxO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxO"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 184,
+          "opcode": 36,
+          "target_name": "sLetterBoxAlpha",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sLetterBoxAlpha"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 224,
+          "opcode": 36,
+          "target_name": "sLetterBoxAlpha",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sLetterBoxAlpha"
+        },
+        {
+          "function": "xScrFxLetterbox__Fi",
+          "offset": 40,
+          "opcode": 49,
+          "target_name": "sLetterBoxSize",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sLetterBoxSize"
+        },
+        {
+          "function": "xScrFxLetterbox__Fi",
+          "offset": 48,
+          "opcode": 57,
+          "target_name": "mLetterboxTO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxTO"
+        },
+        {
+          "function": "xScrFxLetterbox__Fi",
+          "offset": 56,
+          "opcode": 43,
+          "target_name": "mLetterboxTO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxTO"
+        },
+        {
+          "function": "xScrFxLetterBoxSetAlpha__FUc",
+          "offset": 4,
+          "opcode": 40,
+          "target_name": "sLetterBoxAlpha",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sLetterBoxAlpha"
+        },
+        {
+          "function": "xScrFxLetterBoxSetSize__Ff",
+          "offset": 4,
+          "opcode": 57,
+          "target_name": "sLetterBoxSize",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sLetterBoxSize"
+        },
+        {
+          "function": "xScrFxLetterboxReset__Fv",
+          "offset": 0,
+          "opcode": 43,
+          "target_name": "mLetterboxO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxO"
+        },
+        {
+          "function": "xScrFxLetterboxReset__Fv",
+          "offset": 8,
+          "opcode": 43,
+          "target_name": "mLetterboxTO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxTO"
+        },
+        {
+          "function": "xScrFxRender__FP8RwCamera",
+          "offset": 28,
+          "opcode": 36,
+          "target_name": "g_debugRenderSafeArea",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "g_debugRenderSafeArea"
+        },
+        {
+          "function": "xScrFxInit__Fv",
+          "offset": 32,
+          "opcode": 43,
+          "target_name": "mLetterboxO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxO"
+        },
+        {
+          "function": "xScrFxInit__Fv",
+          "offset": 40,
+          "opcode": 43,
+          "target_name": "mLetterboxTO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxTO"
+        }
+      ],
+      "address_pairs": []
+    },
+    {
+      "source": "src/SB/Core/x/xScrFx.cpp",
+      "target_unit": "SB/Core/x/xScrFx.cpp",
+      "object": "source/xScrFx.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597"
+      ],
+      "symbols": {
+        "xScrFxDrawBox__FffffUcUcUcUcff": "xScrFxDrawBox__FffffUcUcUcUcff",
+        "xScrFXGlareRender__FP7xCamera": "xScrFXGlareRender__FP7xCamera",
+        "xScrFXFullScreenGlareRender__Fv": "xScrFXFullScreenGlareRender__Fv",
+        "xScrFXGlareAdd__FP5xVec3fffffffP8RwRaster": "xScrFXGlareAdd__FP5xVec3fffffffP8RwRaster",
+        "xScrFxDistortionUpdate__Ff": "xScrFxDistortionUpdate__Ff",
+        "xScrFxDistortionAdd__FP5xVec3P5xVec3i": "xScrFxDistortionAdd__FP5xVec3P5xVec3i",
+        "xScrFxDrawSafeArea__Fv": "xScrFxDrawSafeArea__Fv",
+        "xScrFxIsLetterbox__Fv": "xScrFxIsLetterbox__Fv",
+        "xScrFxUpdateLetterBox__FP8RwCameraf": "xScrFxUpdateLetterBox__FP8RwCameraf",
+        "xScrFxLetterbox__Fi": "xScrFxLetterbox__Fi",
+        "xScrFxLetterBoxSetAlpha__FUc": "xScrFxLetterBoxSetAlpha__FUc",
+        "xScrFxLetterBoxSetSize__Ff": "xScrFxLetterBoxSetSize__Ff",
+        "xScrFxLetterboxReset__Fv": "xScrFxLetterboxReset__Fv",
+        "xScrFxUpdateFade__FP8RwCameraf": "xScrFxUpdateFade__FP8RwCameraf",
+        "xScrFxIsFading__Fv": "xScrFxIsFading__Fv",
+        "xScrFxStopFade__Fv": "xScrFxStopFade__Fv",
+        "xScrFxFade__FP10iColor_tagP10iColor_tagfPFv_vi": "xScrFxFade__FP10iColor_tagP10iColor_tagfPFv_vi",
+        "xScrFxDrawScreenSizeRectangle__Fv": "xScrFxDrawScreenSizeRectangle__Fv",
+        "xScrFxRender__FP8RwCamera": "xScrFxRender__FP8RwCamera",
+        "xScrFxUpdate__FP8RwCameraf": "xScrFxUpdate__FP8RwCameraf",
+        "xScrFxReset__Fv": "xScrFxReset__Fv",
+        "xScrFxInit__Fv": "xScrFxInit__Fv"
+      },
+      "calls": [
+        {
+          "function": "xScrFXGlareRender__FP7xCamera",
+          "offset": 152,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xScrFXGlareRender__FP7xCamera",
+          "offset": 164,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xScrFXGlareRender__FP7xCamera",
+          "offset": 304,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xScrFXGlareRender__FP7xCamera",
+          "offset": 364,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 48,
+          "target_source": "SB/Core/x/iCamera.cpp",
+          "target_function": "iCamGetViewMatrix__FP8RwCameraP7xMat4x3",
+          "symbol": "iCamGetViewMatrix__FP8RwCameraP7xMat4x3"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 84,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 100,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 376,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 504,
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "target_function": "xScrFxDrawBox__FffffUcUcUcUcff",
+          "symbol": "xScrFxDrawBox__FffffUcUcUcUcff"
+        },
+        {
+          "function": "xScrFXGlareAdd__FP5xVec3fffffffP8RwRaster",
+          "offset": 296,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xScrFXGlareAdd__FP5xVec3fffffffP8RwRaster",
+          "offset": 308,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "xScrFxDistortionUpdate__Ff",
+          "offset": 24,
+          "target_source": "SB/Game/zGame.cpp",
+          "target_function": "zGameIsPaused__Fv",
+          "symbol": "zGameIsPaused__Fv"
+        },
+        {
+          "function": "xScrFxDistortionUpdate__Ff",
+          "offset": 392,
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "target_function": "xScrFxDistortionAdd__FP5xVec3P5xVec3i",
+          "symbol": "xScrFxDistortionAdd__FP5xVec3P5xVec3i"
+        },
+        {
+          "function": "xScrFxDrawSafeArea__Fv",
+          "offset": 392,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxDrawBox__FffffUcUcUcUc",
+          "symbol": "iScrFxDrawBox__FffffUcUcUcUc"
+        },
+        {
+          "function": "xScrFxDrawSafeArea__Fv",
+          "offset": 440,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxDrawBox__FffffUcUcUcUc",
+          "symbol": "iScrFxDrawBox__FffffUcUcUcUc"
+        },
+        {
+          "function": "xScrFxDrawSafeArea__Fv",
+          "offset": 492,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxDrawBox__FffffUcUcUcUc",
+          "symbol": "iScrFxDrawBox__FffffUcUcUcUc"
+        },
+        {
+          "function": "xScrFxDrawSafeArea__Fv",
+          "offset": 544,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxDrawBox__FffffUcUcUcUc",
+          "symbol": "iScrFxDrawBox__FffffUcUcUcUc"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 12,
+          "target_source": "SB/Game/zGame.cpp",
+          "target_function": "zGameIsPaused__Fv",
+          "symbol": "zGameIsPaused__Fv"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 212,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxDrawBox__FffffUcUcUcUc",
+          "symbol": "iScrFxDrawBox__FffffUcUcUcUc"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 256,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxDrawBox__FffffUcUcUcUc",
+          "symbol": "iScrFxDrawBox__FffffUcUcUcUc"
+        },
+        {
+          "function": "xScrFxLetterbox__Fi",
+          "offset": 12,
+          "target_source": "SB/Game/zMenu.cpp",
+          "target_function": "zMenuRunning__Fv",
+          "symbol": "zMenuRunning__Fv"
+        },
+        {
+          "function": "xScrFxUpdateFade__FP8RwCameraf",
+          "offset": 28,
+          "target_source": "SB/Game/zGame.cpp",
+          "target_function": "zGameIsPaused__Fv",
+          "symbol": "zGameIsPaused__Fv"
+        },
+        {
+          "function": "xScrFxUpdateFade__FP8RwCameraf",
+          "offset": 936,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxDrawBox__FffffUcUcUcUc",
+          "symbol": "iScrFxDrawBox__FffffUcUcUcUc"
+        },
+        {
+          "function": "xScrFxDrawScreenSizeRectangle__Fv",
+          "offset": 64,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxDrawBox__FffffUcUcUcUc",
+          "symbol": "iScrFxDrawBox__FffffUcUcUcUc"
+        },
+        {
+          "function": "xScrFxRender__FP8RwCamera",
+          "offset": 8,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxBegin__Fv",
+          "symbol": "iScrFxBegin__Fv"
+        },
+        {
+          "function": "xScrFxRender__FP8RwCamera",
+          "offset": 20,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxDistortionRender__FP8RwCamera",
+          "symbol": "iScrFxDistortionRender__FP8RwCamera"
+        },
+        {
+          "function": "xScrFxRender__FP8RwCamera",
+          "offset": 40,
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "target_function": "xScrFxDrawSafeArea__Fv",
+          "symbol": "xScrFxDrawSafeArea__Fv"
+        },
+        {
+          "function": "xScrFxRender__FP8RwCamera",
+          "offset": 48,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxEnd__Fv",
+          "symbol": "iScrFxEnd__Fv"
+        },
+        {
+          "function": "xScrFxUpdate__FP8RwCameraf",
+          "offset": 20,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxBegin__Fv",
+          "symbol": "iScrFxBegin__Fv"
+        },
+        {
+          "function": "xScrFxUpdate__FP8RwCameraf",
+          "offset": 32,
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "target_function": "xScrFxUpdateFade__FP8RwCameraf",
+          "symbol": "xScrFxUpdateFade__FP8RwCameraf"
+        },
+        {
+          "function": "xScrFxUpdate__FP8RwCameraf",
+          "offset": 44,
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "target_function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "symbol": "xScrFxUpdateLetterBox__FP8RwCameraf"
+        },
+        {
+          "function": "xScrFxUpdate__FP8RwCameraf",
+          "offset": 152,
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "target_function": "xScrFxDistortionUpdate__Ff",
+          "symbol": "xScrFxDistortionUpdate__Ff"
+        },
+        {
+          "function": "xScrFxInit__Fv",
+          "offset": 80,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxInit__Fv",
+          "symbol": "iScrFxInit__Fv"
+        },
+        {
+          "function": "xScrFxInit__Fv",
+          "offset": 20,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xScrFxDrawBox__FffffUcUcUcUcff",
+          "offset": 1064,
+          "opcode": 9,
+          "target_name": "indices",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "indices"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 28,
+          "opcode": 35,
+          "target_name": "sFullScreenGlareEnabled",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sFullScreenGlareEnabled"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 40,
+          "opcode": 35,
+          "target_name": "xglobals",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "xglobals"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 168,
+          "opcode": 49,
+          "target_name": "sFullScreenGlareIntensity",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sFullScreenGlareIntensity"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 216,
+          "opcode": 36,
+          "target_name": "sFullScreenGlareColor",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sFullScreenGlareColor"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 332,
+          "opcode": 35,
+          "target_name": "sFullScreenGlareTexturePtr",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sFullScreenGlareTexturePtr"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 360,
+          "opcode": 35,
+          "target_name": "sFullScreenGlareTexturePtr",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sFullScreenGlareTexturePtr"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 372,
+          "opcode": 35,
+          "target_name": "sFullScreenGlareTextureID",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sFullScreenGlareTextureID"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 384,
+          "opcode": 43,
+          "target_name": "sFullScreenGlareTexturePtr",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sFullScreenGlareTexturePtr"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 392,
+          "opcode": 35,
+          "target_name": "sFullScreenGlareTexturePtr",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sFullScreenGlareTexturePtr"
+        },
+        {
+          "function": "xScrFxDistortionUpdate__Ff",
+          "offset": 40,
+          "opcode": 49,
+          "target_name": "sNoGlobalTime",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sNoGlobalTime"
+        },
+        {
+          "function": "xScrFxDistortionUpdate__Ff",
+          "offset": 44,
+          "opcode": 35,
+          "target_name": "gNumDistortionParticles",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "gNumDistortionParticles"
+        },
+        {
+          "function": "xScrFxDistortionUpdate__Ff",
+          "offset": 64,
+          "opcode": 57,
+          "target_name": "sNoGlobalTime",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sNoGlobalTime"
+        },
+        {
+          "function": "xScrFxDistortionUpdate__Ff",
+          "offset": 124,
+          "opcode": 35,
+          "target_name": "gNumDistortionParticles",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "gNumDistortionParticles"
+        },
+        {
+          "function": "xScrFxDistortionUpdate__Ff",
+          "offset": 248,
+          "opcode": 35,
+          "target_name": "gNumDistortionParticles",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "gNumDistortionParticles"
+        },
+        {
+          "function": "xScrFxDistortionUpdate__Ff",
+          "offset": 276,
+          "opcode": 35,
+          "target_name": "gNumDistortionParticles",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "gNumDistortionParticles"
+        },
+        {
+          "function": "xScrFxDistortionUpdate__Ff",
+          "offset": 284,
+          "opcode": 43,
+          "target_name": "gNumDistortionParticles",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "gNumDistortionParticles"
+        },
+        {
+          "function": "xScrFxDistortionUpdate__Ff",
+          "offset": 288,
+          "opcode": 35,
+          "target_name": "gNumDistortionParticles",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "gNumDistortionParticles"
+        },
+        {
+          "function": "xScrFxDistortionUpdate__Ff",
+          "offset": 312,
+          "opcode": 35,
+          "target_name": "gFrameCount",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "gFrameCount"
+        },
+        {
+          "function": "xScrFxIsLetterbox__Fv",
+          "offset": 0,
+          "opcode": 49,
+          "target_name": "mLetterboxTO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxTO"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 28,
+          "opcode": 49,
+          "target_name": "mLetterboxTO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxTO"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 32,
+          "opcode": 49,
+          "target_name": "mLetterboxO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxO"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 72,
+          "opcode": 57,
+          "target_name": "mLetterboxO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxO"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 80,
+          "opcode": 57,
+          "target_name": "mLetterboxO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxO"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 124,
+          "opcode": 57,
+          "target_name": "mLetterboxO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxO"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 128,
+          "opcode": 57,
+          "target_name": "mLetterboxO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxO"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 136,
+          "opcode": 49,
+          "target_name": "mLetterboxO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxO"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 184,
+          "opcode": 36,
+          "target_name": "sLetterBoxAlpha",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sLetterBoxAlpha"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 224,
+          "opcode": 36,
+          "target_name": "sLetterBoxAlpha",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sLetterBoxAlpha"
+        },
+        {
+          "function": "xScrFxLetterbox__Fi",
+          "offset": 40,
+          "opcode": 49,
+          "target_name": "sLetterBoxSize",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sLetterBoxSize"
+        },
+        {
+          "function": "xScrFxLetterbox__Fi",
+          "offset": 48,
+          "opcode": 57,
+          "target_name": "mLetterboxTO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxTO"
+        },
+        {
+          "function": "xScrFxLetterbox__Fi",
+          "offset": 56,
+          "opcode": 43,
+          "target_name": "mLetterboxTO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxTO"
+        },
+        {
+          "function": "xScrFxLetterBoxSetAlpha__FUc",
+          "offset": 4,
+          "opcode": 40,
+          "target_name": "sLetterBoxAlpha",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sLetterBoxAlpha"
+        },
+        {
+          "function": "xScrFxLetterBoxSetSize__Ff",
+          "offset": 4,
+          "opcode": 57,
+          "target_name": "sLetterBoxSize",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sLetterBoxSize"
+        },
+        {
+          "function": "xScrFxLetterboxReset__Fv",
+          "offset": 0,
+          "opcode": 43,
+          "target_name": "mLetterboxO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxO"
+        },
+        {
+          "function": "xScrFxLetterboxReset__Fv",
+          "offset": 8,
+          "opcode": 43,
+          "target_name": "mLetterboxTO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxTO"
+        },
+        {
+          "function": "xScrFxRender__FP8RwCamera",
+          "offset": 28,
+          "opcode": 36,
+          "target_name": "g_debugRenderSafeArea",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "g_debugRenderSafeArea"
+        },
+        {
+          "function": "xScrFxInit__Fv",
+          "offset": 32,
+          "opcode": 43,
+          "target_name": "mLetterboxO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxO"
+        },
+        {
+          "function": "xScrFxInit__Fv",
+          "offset": 40,
+          "opcode": 43,
+          "target_name": "mLetterboxTO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxTO"
+        }
+      ],
+      "address_pairs": []
+    },
+    {
+      "source": "src/SB/Core/x/xScrFx.cpp",
+      "target_unit": "SB/Core/x/xScrFx.cpp",
+      "object": "source/xScrFx.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xScrFxDrawBox__FffffUcUcUcUcff": "xScrFxDrawBox__FffffUcUcUcUcff",
+        "xScrFXGlareRender__FP7xCamera": "xScrFXGlareRender__FP7xCamera",
+        "xScrFXFullScreenGlareRender__Fv": "xScrFXFullScreenGlareRender__Fv",
+        "xScrFXGlareAdd__FP5xVec3fffffffP8RwRaster": "xScrFXGlareAdd__FP5xVec3fffffffP8RwRaster",
+        "xScrFxDistortionUpdate__Ff": "xScrFxDistortionUpdate__Ff",
+        "xScrFxDistortionAdd__FP5xVec3P5xVec3i": "xScrFxDistortionAdd__FP5xVec3P5xVec3i",
+        "xScrFxDrawSafeArea__Fv": "xScrFxDrawSafeArea__Fv",
+        "xScrFxIsLetterbox__Fv": "xScrFxIsLetterbox__Fv",
+        "xScrFxUpdateLetterBox__FP8RwCameraf": "xScrFxUpdateLetterBox__FP8RwCameraf",
+        "xScrFxLetterbox__Fi": "xScrFxLetterbox__Fi",
+        "xScrFxLetterBoxSetAlpha__FUc": "xScrFxLetterBoxSetAlpha__FUc",
+        "xScrFxLetterBoxSetSize__Ff": "xScrFxLetterBoxSetSize__Ff",
+        "xScrFxLetterboxReset__Fv": "xScrFxLetterboxReset__Fv",
+        "xScrFxUpdateFade__FP8RwCameraf": "xScrFxUpdateFade__FP8RwCameraf",
+        "xScrFxIsFading__Fv": "xScrFxIsFading__Fv",
+        "xScrFxStopFade__Fv": "xScrFxStopFade__Fv",
+        "xScrFxFade__FP10iColor_tagP10iColor_tagfPFv_vi": "xScrFxFade__FP10iColor_tagP10iColor_tagfPFv_vi",
+        "xScrFxDrawScreenSizeRectangle__Fv": "xScrFxDrawScreenSizeRectangle__Fv",
+        "xScrFxRender__FP8RwCamera": "xScrFxRender__FP8RwCamera",
+        "xScrFxUpdate__FP8RwCameraf": "xScrFxUpdate__FP8RwCameraf",
+        "xScrFxReset__Fv": "xScrFxReset__Fv",
+        "xScrFxInit__Fv": "xScrFxInit__Fv"
+      },
+      "calls": [
+        {
+          "function": "xScrFXGlareRender__FP7xCamera",
+          "offset": 152,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xScrFXGlareRender__FP7xCamera",
+          "offset": 164,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xScrFXGlareRender__FP7xCamera",
+          "offset": 304,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xScrFXGlareRender__FP7xCamera",
+          "offset": 364,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 48,
+          "target_source": "SB/Core/x/iCamera.cpp",
+          "target_function": "iCamGetViewMatrix__FP8RwCameraP7xMat4x3",
+          "symbol": "iCamGetViewMatrix__FP8RwCameraP7xMat4x3"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 84,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 100,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 376,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 504,
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "target_function": "xScrFxDrawBox__FffffUcUcUcUcff",
+          "symbol": "xScrFxDrawBox__FffffUcUcUcUcff"
+        },
+        {
+          "function": "xScrFXGlareAdd__FP5xVec3fffffffP8RwRaster",
+          "offset": 296,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xScrFXGlareAdd__FP5xVec3fffffffP8RwRaster",
+          "offset": 308,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "xScrFxDistortionUpdate__Ff",
+          "offset": 24,
+          "target_source": "SB/Game/zGame.cpp",
+          "target_function": "zGameIsPaused__Fv",
+          "symbol": "zGameIsPaused__Fv"
+        },
+        {
+          "function": "xScrFxDistortionUpdate__Ff",
+          "offset": 392,
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "target_function": "xScrFxDistortionAdd__FP5xVec3P5xVec3i",
+          "symbol": "xScrFxDistortionAdd__FP5xVec3P5xVec3i"
+        },
+        {
+          "function": "xScrFxDrawSafeArea__Fv",
+          "offset": 392,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxDrawBox__FffffUcUcUcUc",
+          "symbol": "iScrFxDrawBox__FffffUcUcUcUc"
+        },
+        {
+          "function": "xScrFxDrawSafeArea__Fv",
+          "offset": 440,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxDrawBox__FffffUcUcUcUc",
+          "symbol": "iScrFxDrawBox__FffffUcUcUcUc"
+        },
+        {
+          "function": "xScrFxDrawSafeArea__Fv",
+          "offset": 492,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxDrawBox__FffffUcUcUcUc",
+          "symbol": "iScrFxDrawBox__FffffUcUcUcUc"
+        },
+        {
+          "function": "xScrFxDrawSafeArea__Fv",
+          "offset": 544,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxDrawBox__FffffUcUcUcUc",
+          "symbol": "iScrFxDrawBox__FffffUcUcUcUc"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 12,
+          "target_source": "SB/Game/zGame.cpp",
+          "target_function": "zGameIsPaused__Fv",
+          "symbol": "zGameIsPaused__Fv"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 212,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxDrawBox__FffffUcUcUcUc",
+          "symbol": "iScrFxDrawBox__FffffUcUcUcUc"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 256,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxDrawBox__FffffUcUcUcUc",
+          "symbol": "iScrFxDrawBox__FffffUcUcUcUc"
+        },
+        {
+          "function": "xScrFxLetterbox__Fi",
+          "offset": 12,
+          "target_source": "SB/Game/zMenu.cpp",
+          "target_function": "zMenuRunning__Fv",
+          "symbol": "zMenuRunning__Fv"
+        },
+        {
+          "function": "xScrFxUpdateFade__FP8RwCameraf",
+          "offset": 28,
+          "target_source": "SB/Game/zGame.cpp",
+          "target_function": "zGameIsPaused__Fv",
+          "symbol": "zGameIsPaused__Fv"
+        },
+        {
+          "function": "xScrFxUpdateFade__FP8RwCameraf",
+          "offset": 936,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxDrawBox__FffffUcUcUcUc",
+          "symbol": "iScrFxDrawBox__FffffUcUcUcUc"
+        },
+        {
+          "function": "xScrFxDrawScreenSizeRectangle__Fv",
+          "offset": 64,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxDrawBox__FffffUcUcUcUc",
+          "symbol": "iScrFxDrawBox__FffffUcUcUcUc"
+        },
+        {
+          "function": "xScrFxRender__FP8RwCamera",
+          "offset": 8,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxBegin__Fv",
+          "symbol": "iScrFxBegin__Fv"
+        },
+        {
+          "function": "xScrFxRender__FP8RwCamera",
+          "offset": 20,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxDistortionRender__FP8RwCamera",
+          "symbol": "iScrFxDistortionRender__FP8RwCamera"
+        },
+        {
+          "function": "xScrFxRender__FP8RwCamera",
+          "offset": 40,
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "target_function": "xScrFxDrawSafeArea__Fv",
+          "symbol": "xScrFxDrawSafeArea__Fv"
+        },
+        {
+          "function": "xScrFxRender__FP8RwCamera",
+          "offset": 48,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxEnd__Fv",
+          "symbol": "iScrFxEnd__Fv"
+        },
+        {
+          "function": "xScrFxUpdate__FP8RwCameraf",
+          "offset": 20,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxBegin__Fv",
+          "symbol": "iScrFxBegin__Fv"
+        },
+        {
+          "function": "xScrFxUpdate__FP8RwCameraf",
+          "offset": 32,
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "target_function": "xScrFxUpdateFade__FP8RwCameraf",
+          "symbol": "xScrFxUpdateFade__FP8RwCameraf"
+        },
+        {
+          "function": "xScrFxUpdate__FP8RwCameraf",
+          "offset": 44,
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "target_function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "symbol": "xScrFxUpdateLetterBox__FP8RwCameraf"
+        },
+        {
+          "function": "xScrFxUpdate__FP8RwCameraf",
+          "offset": 152,
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "target_function": "xScrFxDistortionUpdate__Ff",
+          "symbol": "xScrFxDistortionUpdate__Ff"
+        },
+        {
+          "function": "xScrFxInit__Fv",
+          "offset": 80,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxInit__Fv",
+          "symbol": "iScrFxInit__Fv"
+        },
+        {
+          "function": "xScrFxInit__Fv",
+          "offset": 20,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xScrFxDrawBox__FffffUcUcUcUcff",
+          "offset": 1064,
+          "opcode": 9,
+          "target_name": "indices",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "indices"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 28,
+          "opcode": 35,
+          "target_name": "sFullScreenGlareEnabled",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sFullScreenGlareEnabled"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 40,
+          "opcode": 35,
+          "target_name": "xglobals",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "xglobals"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 168,
+          "opcode": 49,
+          "target_name": "sFullScreenGlareIntensity",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sFullScreenGlareIntensity"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 216,
+          "opcode": 36,
+          "target_name": "sFullScreenGlareColor",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sFullScreenGlareColor"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 332,
+          "opcode": 35,
+          "target_name": "sFullScreenGlareTexturePtr",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sFullScreenGlareTexturePtr"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 360,
+          "opcode": 35,
+          "target_name": "sFullScreenGlareTexturePtr",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sFullScreenGlareTexturePtr"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 372,
+          "opcode": 35,
+          "target_name": "sFullScreenGlareTextureID",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sFullScreenGlareTextureID"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 384,
+          "opcode": 43,
+          "target_name": "sFullScreenGlareTexturePtr",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sFullScreenGlareTexturePtr"
+        },
+        {
+          "function": "xScrFXFullScreenGlareRender__Fv",
+          "offset": 392,
+          "opcode": 35,
+          "target_name": "sFullScreenGlareTexturePtr",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sFullScreenGlareTexturePtr"
+        },
+        {
+          "function": "xScrFxDistortionUpdate__Ff",
+          "offset": 40,
+          "opcode": 49,
+          "target_name": "sNoGlobalTime",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sNoGlobalTime"
+        },
+        {
+          "function": "xScrFxDistortionUpdate__Ff",
+          "offset": 44,
+          "opcode": 35,
+          "target_name": "gNumDistortionParticles",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "gNumDistortionParticles"
+        },
+        {
+          "function": "xScrFxDistortionUpdate__Ff",
+          "offset": 64,
+          "opcode": 57,
+          "target_name": "sNoGlobalTime",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sNoGlobalTime"
+        },
+        {
+          "function": "xScrFxDistortionUpdate__Ff",
+          "offset": 124,
+          "opcode": 35,
+          "target_name": "gNumDistortionParticles",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "gNumDistortionParticles"
+        },
+        {
+          "function": "xScrFxDistortionUpdate__Ff",
+          "offset": 248,
+          "opcode": 35,
+          "target_name": "gNumDistortionParticles",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "gNumDistortionParticles"
+        },
+        {
+          "function": "xScrFxDistortionUpdate__Ff",
+          "offset": 276,
+          "opcode": 35,
+          "target_name": "gNumDistortionParticles",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "gNumDistortionParticles"
+        },
+        {
+          "function": "xScrFxDistortionUpdate__Ff",
+          "offset": 284,
+          "opcode": 43,
+          "target_name": "gNumDistortionParticles",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "gNumDistortionParticles"
+        },
+        {
+          "function": "xScrFxDistortionUpdate__Ff",
+          "offset": 288,
+          "opcode": 35,
+          "target_name": "gNumDistortionParticles",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "gNumDistortionParticles"
+        },
+        {
+          "function": "xScrFxDistortionUpdate__Ff",
+          "offset": 312,
+          "opcode": 35,
+          "target_name": "gFrameCount",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "gFrameCount"
+        },
+        {
+          "function": "xScrFxIsLetterbox__Fv",
+          "offset": 0,
+          "opcode": 49,
+          "target_name": "mLetterboxTO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxTO"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 28,
+          "opcode": 49,
+          "target_name": "mLetterboxTO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxTO"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 32,
+          "opcode": 49,
+          "target_name": "mLetterboxO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxO"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 72,
+          "opcode": 57,
+          "target_name": "mLetterboxO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxO"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 80,
+          "opcode": 57,
+          "target_name": "mLetterboxO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxO"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 124,
+          "opcode": 57,
+          "target_name": "mLetterboxO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxO"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 128,
+          "opcode": 57,
+          "target_name": "mLetterboxO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxO"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 136,
+          "opcode": 49,
+          "target_name": "mLetterboxO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxO"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 184,
+          "opcode": 36,
+          "target_name": "sLetterBoxAlpha",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sLetterBoxAlpha"
+        },
+        {
+          "function": "xScrFxUpdateLetterBox__FP8RwCameraf",
+          "offset": 224,
+          "opcode": 36,
+          "target_name": "sLetterBoxAlpha",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sLetterBoxAlpha"
+        },
+        {
+          "function": "xScrFxLetterbox__Fi",
+          "offset": 40,
+          "opcode": 49,
+          "target_name": "sLetterBoxSize",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sLetterBoxSize"
+        },
+        {
+          "function": "xScrFxLetterbox__Fi",
+          "offset": 48,
+          "opcode": 57,
+          "target_name": "mLetterboxTO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxTO"
+        },
+        {
+          "function": "xScrFxLetterbox__Fi",
+          "offset": 56,
+          "opcode": 43,
+          "target_name": "mLetterboxTO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxTO"
+        },
+        {
+          "function": "xScrFxLetterBoxSetAlpha__FUc",
+          "offset": 4,
+          "opcode": 40,
+          "target_name": "sLetterBoxAlpha",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sLetterBoxAlpha"
+        },
+        {
+          "function": "xScrFxLetterBoxSetSize__Ff",
+          "offset": 4,
+          "opcode": 57,
+          "target_name": "sLetterBoxSize",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "sLetterBoxSize"
+        },
+        {
+          "function": "xScrFxLetterboxReset__Fv",
+          "offset": 0,
+          "opcode": 43,
+          "target_name": "mLetterboxO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxO"
+        },
+        {
+          "function": "xScrFxLetterboxReset__Fv",
+          "offset": 8,
+          "opcode": 43,
+          "target_name": "mLetterboxTO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxTO"
+        },
+        {
+          "function": "xScrFxRender__FP8RwCamera",
+          "offset": 28,
+          "opcode": 36,
+          "target_name": "g_debugRenderSafeArea",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "g_debugRenderSafeArea"
+        },
+        {
+          "function": "xScrFxInit__Fv",
+          "offset": 32,
+          "opcode": 43,
+          "target_name": "mLetterboxO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxO"
+        },
+        {
+          "function": "xScrFxInit__Fv",
+          "offset": 40,
+          "opcode": 43,
+          "target_name": "mLetterboxTO",
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "symbol": "mLetterboxTO"
+        }
+      ],
+      "address_pairs": []
     }
   ]
 }

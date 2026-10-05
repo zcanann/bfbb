@@ -501,3 +501,6 @@ region; see [Plankton evidence](PS2_PLANKTON_SOURCE.md).
 
 Complete PS2 Tiki source comparison adds 768 matched bytes per debug region;
 see [Tiki evidence](PS2_TIKI_SOURCE.md).
+
+Complete PS2 screen-effects comparison adds 3,416 matched bytes per debug
+region using original Sky2 vertices; see [screen-effects evidence](PS2_SCREEN_EFFECTS.md).
