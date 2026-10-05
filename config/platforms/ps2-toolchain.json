@@ -42880,6 +42880,656 @@
         }
       ],
       "address_pairs": []
+    },
+    {
+      "source": "src/SB/Game/zNPCGoalCommon.cpp",
+      "target_unit": "SB/Game/zNPCGoalCommon.cpp",
+      "object": "source/zNPCGoalCommon.o",
+      "selector": "name_address",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "DoExplicitAnim@002cb190": "DoExplicitAnim__14zNPCGoalCommonFUii",
+        "DoAutoAnim@002cb210": "DoAutoAnim__14zNPCGoalCommonF16en_NPC_GOAL_SPOTi",
+        "PreCalc@002cb2d0": "PreCalc__14zNPCGoalCommonFfPv",
+        "Resume@002cb3b0": "Resume__14zNPCGoalCommonFfPv",
+        "Enter@002cb490": "Enter__14zNPCGoalCommonFfPv"
+      },
+      "calls": [
+        {
+          "function": "PreCalc@002cb2d0",
+          "offset": 168,
+          "target_source": "SB/Core/x/xBehaviour.cpp",
+          "target_function": "PreCalc",
+          "symbol": "PreCalc__5xGoalFfPv"
+        }
+      ],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zNPCGoalStd.cpp",
+      "target_unit": "SB/Game/zNPCGoalStd.cpp",
+      "object": "source/zNPCGoalStd.o",
+      "selector": "name_address",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "NPCMessage@002c62c0": "NPCMessage__15zNPCGoalDEVHeroFP6NPCMsg",
+        "Process@002c6380": "Process__15zNPCGoalDEVHeroFP11en_trantypefPvP6xScene",
+        "Exit@002c6410": "Exit__15zNPCGoalDEVHeroFfPv",
+        "Enter@002c6420": "Enter__15zNPCGoalDEVHeroFfPv",
+        "NPCMessage@002c6430": "NPCMessage__19zNPCGoalDEVAnimSpinFP6NPCMsg",
+        "Process@002c64f0": "Process__19zNPCGoalDEVAnimSpinFP11en_trantypefPvP6xScene",
+        "Exit@002c6590": "Exit__19zNPCGoalDEVAnimSpinFfPv",
+        "Enter@002c65e0": "Enter__19zNPCGoalDEVAnimSpinFfPv",
+        "NPCMessage@002c66b0": "NPCMessage__20zNPCGoalDEVAnimCycleFP6NPCMsg",
+        "Process@002c6770": "Process__20zNPCGoalDEVAnimCycleFP11en_trantypefPvP6xScene",
+        "Exit@002c6890": "Exit__20zNPCGoalDEVAnimCycleFfPv",
+        "Enter@002c68a0": "Enter__20zNPCGoalDEVAnimCycleFfPv",
+        "NPCMessage@002c6910": "NPCMessage__13zNPCGoalLimboFP6NPCMsg",
+        "Enter@002c69b0": "Enter__13zNPCGoalLimboFfPv",
+        "Exit@002c6a90": "Exit__12zNPCGoalDeadFfPv",
+        "Enter@002c6b70": "Enter__12zNPCGoalDeadFfPv",
+        "Process@002c6c30": "Process__15zNPCGoalWaitingFP11en_trantypefPvP6xScene",
+        "Exit@002c6db0": "Exit__15zNPCGoalWaitingFfPv",
+        "Resume@002c6e50": "Resume__15zNPCGoalWaitingFfPv",
+        "Enter@002c6f20": "Enter__15zNPCGoalWaitingFfPv",
+        "CalcNewDir@002c70a0": "CalcNewDir__14zNPCGoalWanderFv",
+        "VerticalWander@002c7310": "VerticalWander__14zNPCGoalWanderFfPC5xVec3",
+        "Process@002c7700": "Process__14zNPCGoalWanderFP11en_trantypefPvP6xScene",
+        "Resume@002c7bd0": "Resume__14zNPCGoalWanderFfPv",
+        "Enter@002c7c70": "Enter__14zNPCGoalWanderFfPv",
+        "Exit@002c7fc0": "Exit__14zNPCGoalFidgetFfPv",
+        "Enter@002c80a0": "Enter__14zNPCGoalFidgetFfPv",
+        "MoveAutoSmooth@002c8160": "MoveAutoSmooth__14zNPCGoalPatrolFf",
+        "Chk_AutoSmooth@002c8910": "Chk_AutoSmooth__14zNPCGoalPatrolFv",
+        "MoveSpline@002c8a20": "MoveSpline__14zNPCGoalPatrolFf",
+        "MoveNormal@002c8e50": "MoveNormal__14zNPCGoalPatrolFf",
+        "DoOnArriveStuff@002c9250": "DoOnArriveStuff__14zNPCGoalPatrolFv",
+        "Process@002c9330": "Process__14zNPCGoalPatrolFP11en_trantypefPvP6xScene",
+        "Resume@002c95e0": "Resume__14zNPCGoalPatrolFfPv",
+        "Exit@002c9660": "Exit__14zNPCGoalPatrolFfPv",
+        "Enter@002c96f0": "Enter__14zNPCGoalPatrolFfPv",
+        "NPCMessage@002c9770": "NPCMessage__12zNPCGoalIdleFP6NPCMsg",
+        "Process@002c97e0": "Process__12zNPCGoalIdleFP11en_trantypefPvP6xScene",
+        "Resume@002c9990": "Resume__12zNPCGoalIdleFfPv",
+        "Suspend@002c9a80": "Suspend__12zNPCGoalIdleFfPv",
+        "Exit@002c9b20": "Exit__12zNPCGoalIdleFfPv",
+        "Enter@002c9bc0": "Enter__12zNPCGoalIdleFfPv",
+        "ValidateStages@002c9ca0": "ValidateStages__16zNPCGoalLoopAnimFv",
+        "UseDefaultAnims@002c9d50": "UseDefaultAnims__16zNPCGoalLoopAnimFv",
+        "LoopCountSet@002c9e40": "LoopCountSet__16zNPCGoalLoopAnimFi",
+        "Process@002c9e60": "Process__16zNPCGoalLoopAnimFP11en_trantypefPvP6xScene",
+        "Exit@002ca030": "Exit__16zNPCGoalLoopAnimFfPv",
+        "Enter@002ca080": "Enter__16zNPCGoalLoopAnimFfPv",
+        "Process@002ca1d0": "Process__16zNPCGoalPushAnimFP11en_trantypefPvP6xScene",
+        "Resume@002ca380": "Resume__16zNPCGoalPushAnimFfPv",
+        "Exit@002ca390": "Exit__16zNPCGoalPushAnimFfPv",
+        "Enter@002ca3a0": "Enter__16zNPCGoalPushAnimFfPv",
+        "GOALDestroy_Goal@002ca3c0": "GOALDestroy_Goal__FP12xFactoryInst",
+        "GOALCreate_Standard@002ca3f0": "GOALCreate_Standard__FiP10RyzMemGrowPv"
+      },
+      "calls": [
+        {
+          "function": "Process@002c6380",
+          "offset": 104,
+          "target_source": "SB/Core/x/xBehaviour.cpp",
+          "target_function": "Process",
+          "symbol": "Process__5xGoalFP11en_trantypefPvP6xScene"
+        },
+        {
+          "function": "Enter@002c6420",
+          "offset": 0,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "Enter",
+          "symbol": "Enter__14zNPCGoalCommonFfPv",
+          "opcode": 2
+        },
+        {
+          "function": "Process@002c64f0",
+          "offset": 116,
+          "target_source": "SB/Core/x/xBehaviour.cpp",
+          "target_function": "Process",
+          "symbol": "Process__5xGoalFP11en_trantypefPvP6xScene"
+        },
+        {
+          "function": "Enter@002c65e0",
+          "offset": 148,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "DoExplicitAnim",
+          "symbol": "DoExplicitAnim__14zNPCGoalCommonFUii"
+        },
+        {
+          "function": "Enter@002c65e0",
+          "offset": 164,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "Enter",
+          "symbol": "Enter__14zNPCGoalCommonFfPv"
+        },
+        {
+          "function": "Process@002c6770",
+          "offset": 216,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "DoExplicitAnim",
+          "symbol": "DoExplicitAnim__14zNPCGoalCommonFUii"
+        },
+        {
+          "function": "Process@002c6770",
+          "offset": 248,
+          "target_source": "SB/Core/x/xBehaviour.cpp",
+          "target_function": "Process",
+          "symbol": "Process__5xGoalFP11en_trantypefPvP6xScene"
+        },
+        {
+          "function": "Enter@002c68a0",
+          "offset": 60,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "DoExplicitAnim",
+          "symbol": "DoExplicitAnim__14zNPCGoalCommonFUii"
+        },
+        {
+          "function": "Enter@002c68a0",
+          "offset": 76,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "Enter",
+          "symbol": "Enter__14zNPCGoalCommonFfPv"
+        },
+        {
+          "function": "Enter@002c69b0",
+          "offset": 180,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "Enter",
+          "symbol": "Enter__14zNPCGoalCommonFfPv"
+        },
+        {
+          "function": "Enter@002c6b70",
+          "offset": 148,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "Enter",
+          "symbol": "Enter__14zNPCGoalCommonFfPv"
+        },
+        {
+          "function": "Process@002c6c30",
+          "offset": 336,
+          "target_source": "SB/Core/x/xBehaviour.cpp",
+          "target_function": "Process",
+          "symbol": "Process__5xGoalFP11en_trantypefPvP6xScene"
+        },
+        {
+          "function": "Resume@002c6e50",
+          "offset": 104,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "Resume@002c6e50",
+          "offset": 160,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "Resume",
+          "symbol": "Resume__14zNPCGoalCommonFfPv"
+        },
+        {
+          "function": "Enter@002c6f20",
+          "offset": 104,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "Enter@002c6f20",
+          "offset": 160,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "Enter@002c6f20",
+          "offset": 288,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "Enter@002c6f20",
+          "offset": 344,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "Enter",
+          "symbol": "Enter__14zNPCGoalCommonFfPv"
+        },
+        {
+          "function": "CalcNewDir@002c70a0",
+          "offset": 244,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xrand",
+          "symbol": "xrand__Fv"
+        },
+        {
+          "function": "CalcNewDir@002c70a0",
+          "offset": 488,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "Process@002c7700",
+          "offset": 456,
+          "target_source": "SB/Game/zNPCGoalStd.cpp",
+          "target_function": "CalcNewDir",
+          "symbol": "CalcNewDir__14zNPCGoalWanderFv"
+        },
+        {
+          "function": "Process@002c7700",
+          "offset": 1004,
+          "target_source": "SB/Game/zNPCGoalStd.cpp",
+          "target_function": "VerticalWander",
+          "symbol": "VerticalWander__14zNPCGoalWanderFfPC5xVec3"
+        },
+        {
+          "function": "Process@002c7700",
+          "offset": 1172,
+          "target_source": "SB/Core/x/xBehaviour.cpp",
+          "target_function": "Process",
+          "symbol": "Process__5xGoalFP11en_trantypefPvP6xScene"
+        },
+        {
+          "function": "Resume@002c7bd0",
+          "offset": 52,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "Resume@002c7bd0",
+          "offset": 108,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "Resume",
+          "symbol": "Resume__14zNPCGoalCommonFfPv"
+        },
+        {
+          "function": "Enter@002c7c70",
+          "offset": 92,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "Enter@002c7c70",
+          "offset": 248,
+          "target_source": "SB/Core/x/xScene.cpp",
+          "target_function": "xSceneID2Name",
+          "symbol": "xSceneID2Name__FP6xSceneUi"
+        },
+        {
+          "function": "Enter@002c7c70",
+          "offset": 264,
+          "target_source": "SB/Core/x/xScene.cpp",
+          "target_function": "xSceneID2Name",
+          "symbol": "xSceneID2Name__FP6xSceneUi"
+        },
+        {
+          "function": "Enter@002c7c70",
+          "offset": 392,
+          "target_source": "SB/Core/x/xScene.cpp",
+          "target_function": "xSceneID2Name",
+          "symbol": "xSceneID2Name__FP6xSceneUi"
+        },
+        {
+          "function": "Enter@002c7c70",
+          "offset": 440,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "Enter@002c7c70",
+          "offset": 532,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "Enter@002c7c70",
+          "offset": 792,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "Enter",
+          "symbol": "Enter__14zNPCGoalCommonFfPv"
+        },
+        {
+          "function": "Exit@002c7fc0",
+          "offset": 188,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "Enter",
+          "symbol": "Enter__14zNPCGoalCommonFfPv"
+        },
+        {
+          "function": "Enter@002c80a0",
+          "offset": 148,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "Enter",
+          "symbol": "Enter__14zNPCGoalCommonFfPv"
+        },
+        {
+          "function": "MoveAutoSmooth@002c8160",
+          "offset": 92,
+          "target_source": "SB/Game/zNPCGoalStd.cpp",
+          "target_function": "MoveNormal",
+          "symbol": "MoveNormal__14zNPCGoalPatrolFf"
+        },
+        {
+          "function": "MoveAutoSmooth@002c8160",
+          "offset": 864,
+          "target_source": "SB/Game/zNPCGoalStd.cpp",
+          "target_function": "DoOnArriveStuff",
+          "symbol": "DoOnArriveStuff__14zNPCGoalPatrolFv"
+        },
+        {
+          "function": "MoveSpline@002c8a20",
+          "offset": 56,
+          "target_source": "SB/Game/zNPCGoalStd.cpp",
+          "target_function": "MoveNormal",
+          "symbol": "MoveNormal__14zNPCGoalPatrolFf"
+        },
+        {
+          "function": "MoveSpline@002c8a20",
+          "offset": 220,
+          "target_source": "SB/Game/zNPCGoalStd.cpp",
+          "target_function": "DoOnArriveStuff",
+          "symbol": "DoOnArriveStuff__14zNPCGoalPatrolFv"
+        },
+        {
+          "function": "MoveSpline@002c8a20",
+          "offset": 252,
+          "target_source": "SB/Core/x/xSpline.cpp",
+          "target_function": "xSpline3_EvalArcApprox",
+          "symbol": "xSpline3_EvalArcApprox__FP8xSpline3fUiP5xVec3"
+        },
+        {
+          "function": "MoveSpline@002c8a20",
+          "offset": 276,
+          "target_source": "SB/Core/x/xSpline.cpp",
+          "target_function": "xSpline3_EvalSeg",
+          "symbol": "xSpline3_EvalSeg__FP8xSpline3fUiP5xVec3"
+        },
+        {
+          "function": "MoveSpline@002c8a20",
+          "offset": 428,
+          "target_source": "SB/Core/x/xSpline.cpp",
+          "target_function": "xSpline3_EvalSeg",
+          "symbol": "xSpline3_EvalSeg__FP8xSpline3fUiP5xVec3"
+        },
+        {
+          "function": "MoveSpline@002c8a20",
+          "offset": 480,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3LookVec",
+          "symbol": "xMat3x3LookVec__FP7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "MoveSpline@002c8a20",
+          "offset": 492,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xQuatFromMat",
+          "symbol": "xQuatFromMat__FP5xQuatPC7xMat3x3"
+        },
+        {
+          "function": "MoveSpline@002c8a20",
+          "offset": 504,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xQuatFromMat",
+          "symbol": "xQuatFromMat__FP5xQuatPC7xMat3x3"
+        },
+        {
+          "function": "MoveSpline@002c8a20",
+          "offset": 864,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xQuatSlerp",
+          "symbol": "xQuatSlerp__FP5xQuatPC5xQuatPC5xQuatf"
+        },
+        {
+          "function": "MoveSpline@002c8a20",
+          "offset": 876,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xQuatNormalize",
+          "symbol": "xQuatNormalize__FP5xQuatPC5xQuat"
+        },
+        {
+          "function": "MoveSpline@002c8a20",
+          "offset": 888,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xQuatToMat",
+          "symbol": "xQuatToMat__FPC5xQuatP7xMat3x3"
+        },
+        {
+          "function": "MoveNormal@002c8e50",
+          "offset": 360,
+          "target_source": "SB/Game/zNPCGoalStd.cpp",
+          "target_function": "DoOnArriveStuff",
+          "symbol": "DoOnArriveStuff__14zNPCGoalPatrolFv"
+        },
+        {
+          "function": "MoveNormal@002c8e50",
+          "offset": 760,
+          "target_source": "SB/Game/zNPCGoalStd.cpp",
+          "target_function": "DoOnArriveStuff",
+          "symbol": "DoOnArriveStuff__14zNPCGoalPatrolFv"
+        },
+        {
+          "function": "DoOnArriveStuff@002c9250",
+          "offset": 172,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "DoAutoAnim",
+          "symbol": "DoAutoAnim__14zNPCGoalCommonF16en_NPC_GOAL_SPOTi"
+        },
+        {
+          "function": "DoOnArriveStuff@002c9250",
+          "offset": 192,
+          "target_source": "SB/Game/zNPCGoalStd.cpp",
+          "target_function": "Chk_AutoSmooth",
+          "symbol": "Chk_AutoSmooth__14zNPCGoalPatrolFv"
+        },
+        {
+          "function": "Process@002c9330",
+          "offset": 296,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "DoAutoAnim",
+          "symbol": "DoAutoAnim__14zNPCGoalCommonF16en_NPC_GOAL_SPOTi"
+        },
+        {
+          "function": "Process@002c9330",
+          "offset": 540,
+          "target_source": "SB/Game/zNPCGoalStd.cpp",
+          "target_function": "MoveSpline",
+          "symbol": "MoveSpline__14zNPCGoalPatrolFf"
+        },
+        {
+          "function": "Process@002c9330",
+          "offset": 572,
+          "target_source": "SB/Game/zNPCGoalStd.cpp",
+          "target_function": "MoveAutoSmooth",
+          "symbol": "MoveAutoSmooth__14zNPCGoalPatrolFf"
+        },
+        {
+          "function": "Process@002c9330",
+          "offset": 604,
+          "target_source": "SB/Game/zNPCGoalStd.cpp",
+          "target_function": "MoveNormal",
+          "symbol": "MoveNormal__14zNPCGoalPatrolFf"
+        },
+        {
+          "function": "Process@002c9330",
+          "offset": 632,
+          "target_source": "SB/Core/x/xBehaviour.cpp",
+          "target_function": "Process",
+          "symbol": "Process__5xGoalFP11en_trantypefPvP6xScene"
+        },
+        {
+          "function": "Resume@002c95e0",
+          "offset": 64,
+          "target_source": "SB/Game/zNPCGoalStd.cpp",
+          "target_function": "Chk_AutoSmooth",
+          "symbol": "Chk_AutoSmooth__14zNPCGoalPatrolFv"
+        },
+        {
+          "function": "Resume@002c95e0",
+          "offset": 96,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "Resume",
+          "symbol": "Resume__14zNPCGoalCommonFfPv"
+        },
+        {
+          "function": "Exit@002c9660",
+          "offset": 92,
+          "target_source": "SB/Game/zNPCGoalStd.cpp",
+          "target_function": "Chk_AutoSmooth",
+          "symbol": "Chk_AutoSmooth__14zNPCGoalPatrolFv"
+        },
+        {
+          "function": "Enter@002c96f0",
+          "offset": 52,
+          "target_source": "SB/Game/zNPCGoalStd.cpp",
+          "target_function": "DoOnArriveStuff",
+          "symbol": "DoOnArriveStuff__14zNPCGoalPatrolFv"
+        },
+        {
+          "function": "Enter@002c96f0",
+          "offset": 72,
+          "target_source": "SB/Game/zNPCGoalStd.cpp",
+          "target_function": "Chk_AutoSmooth",
+          "symbol": "Chk_AutoSmooth__14zNPCGoalPatrolFv"
+        },
+        {
+          "function": "Enter@002c96f0",
+          "offset": 88,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "Enter",
+          "symbol": "Enter__14zNPCGoalCommonFfPv"
+        },
+        {
+          "function": "NPCMessage@002c9770",
+          "offset": 68,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "DoAutoAnim",
+          "symbol": "DoAutoAnim__14zNPCGoalCommonF16en_NPC_GOAL_SPOTi"
+        },
+        {
+          "function": "Process@002c97e0",
+          "offset": 304,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "DoAutoAnim",
+          "symbol": "DoAutoAnim__14zNPCGoalCommonF16en_NPC_GOAL_SPOTi"
+        },
+        {
+          "function": "Process@002c97e0",
+          "offset": 376,
+          "target_source": "SB/Core/x/xBehaviour.cpp",
+          "target_function": "Process",
+          "symbol": "Process__5xGoalFP11en_trantypefPvP6xScene"
+        },
+        {
+          "function": "Resume@002c9990",
+          "offset": 52,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "Resume@002c9990",
+          "offset": 200,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "Resume",
+          "symbol": "Resume__14zNPCGoalCommonFfPv"
+        },
+        {
+          "function": "Enter@002c9bc0",
+          "offset": 52,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "Enter@002c9bc0",
+          "offset": 184,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "Enter",
+          "symbol": "Enter__14zNPCGoalCommonFfPv"
+        },
+        {
+          "function": "Process@002c9e60",
+          "offset": 232,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "DoExplicitAnim",
+          "symbol": "DoExplicitAnim__14zNPCGoalCommonFUii"
+        },
+        {
+          "function": "Process@002c9e60",
+          "offset": 388,
+          "target_source": "SB/Core/x/xBehaviour.cpp",
+          "target_function": "Process",
+          "symbol": "Process__5xGoalFP11en_trantypefPvP6xScene"
+        },
+        {
+          "function": "Enter@002ca080",
+          "offset": 140,
+          "target_source": "SB/Game/zNPCGoalStd.cpp",
+          "target_function": "UseDefaultAnims",
+          "symbol": "UseDefaultAnims__16zNPCGoalLoopAnimFv"
+        },
+        {
+          "function": "Enter@002ca080",
+          "offset": 152,
+          "target_source": "SB/Game/zNPCGoalStd.cpp",
+          "target_function": "ValidateStages",
+          "symbol": "ValidateStages__16zNPCGoalLoopAnimFv"
+        },
+        {
+          "function": "Enter@002ca080",
+          "offset": 248,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "DoExplicitAnim",
+          "symbol": "DoExplicitAnim__14zNPCGoalCommonFUii"
+        },
+        {
+          "function": "Enter@002ca080",
+          "offset": 272,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "DoExplicitAnim",
+          "symbol": "DoExplicitAnim__14zNPCGoalCommonFUii"
+        },
+        {
+          "function": "Enter@002ca080",
+          "offset": 300,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "Enter",
+          "symbol": "Enter__14zNPCGoalCommonFfPv"
+        },
+        {
+          "function": "Process@002ca1d0",
+          "offset": 356,
+          "target_source": "SB/Core/x/xBehaviour.cpp",
+          "target_function": "Process",
+          "symbol": "Process__5xGoalFP11en_trantypefPvP6xScene"
+        },
+        {
+          "function": "Resume@002ca380",
+          "offset": 8,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "Resume",
+          "symbol": "Resume__14zNPCGoalCommonFfPv",
+          "opcode": 2
+        },
+        {
+          "function": "Enter@002ca3a0",
+          "offset": 24,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "Enter",
+          "symbol": "Enter__14zNPCGoalCommonFfPv",
+          "opcode": 2
+        }
+      ],
+      "gp_relocations": []
     }
   ]
 }

@@ -3274,6 +3274,419 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "NPCMessage",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2908864,
+      "size": 180,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Process",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2909056,
+      "size": 144,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Exit",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2909200,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2909216,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "NPCMessage",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2909232,
+      "size": 180,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Process",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2909424,
+      "size": 156,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Exit",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2909584,
+      "size": 76,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2909664,
+      "size": 200,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "NPCMessage",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2909872,
+      "size": 180,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Process",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2910064,
+      "size": 288,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Exit",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2910352,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2910368,
+      "size": 108,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "NPCMessage",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2910480,
+      "size": 156,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2910640,
+      "size": 212,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Exit",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2910864,
+      "size": 212,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2911088,
+      "size": 180,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Process",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2911280,
+      "size": 380,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Exit",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2911664,
+      "size": 148,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Resume",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2911824,
+      "size": 200,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2912032,
+      "size": 384,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "CalcNewDir",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2912416,
+      "size": 624,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "VerticalWander",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2913040,
+      "size": 1000,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Process",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2914048,
+      "size": 1224,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Resume",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2915280,
+      "size": 148,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2915440,
+      "size": 836,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Exit",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2916288,
+      "size": 224,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2916512,
+      "size": 184,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "MoveAutoSmooth",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2916704,
+      "size": 1956,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Chk_AutoSmooth",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2918672,
+      "size": 264,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "MoveSpline",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2918944,
+      "size": 1064,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "MoveNormal",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2920016,
+      "size": 1012,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "DoOnArriveStuff",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2921040,
+      "size": 220,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Process",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2921264,
+      "size": 676,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Resume",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2921952,
+      "size": 128,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Exit",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2922080,
+      "size": 140,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2922224,
+      "size": 120,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "NPCMessage",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2922352,
+      "size": 100,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Process",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2922464,
+      "size": 420,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Resume",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2922896,
+      "size": 240,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Suspend",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2923136,
+      "size": 148,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Exit",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2923296,
+      "size": 148,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2923456,
+      "size": 224,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "ValidateStages",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2923680,
+      "size": 168,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "UseDefaultAnims",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2923856,
+      "size": 220,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "LoopCountSet",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2924096,
+      "size": 32,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Process",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2924128,
+      "size": 452,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Exit",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2924592,
+      "size": 76,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2924672,
+      "size": 332,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Process",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2925008,
+      "size": 420,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Resume",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2925440,
+      "size": 16,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Exit",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2925456,
+      "size": 12,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2925472,
+      "size": 32,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "GOALDestroy_Goal",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2925504,
+      "size": 36,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "GOALCreate_Standard",
+      "source": "SB/Game/zNPCGoalStd.cpp",
+      "address": 2925552,
+      "size": 1640,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "DoExplicitAnim",
+      "source": "SB/Game/zNPCGoalCommon.cpp",
+      "address": 2929040,
+      "size": 120,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "DoAutoAnim",
+      "source": "SB/Game/zNPCGoalCommon.cpp",
+      "address": 2929168,
+      "size": 180,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "PreCalc",
+      "source": "SB/Game/zNPCGoalCommon.cpp",
+      "address": 2929360,
+      "size": 200,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Resume",
+      "source": "SB/Game/zNPCGoalCommon.cpp",
+      "address": 2929584,
+      "size": 224,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCGoalCommon.cpp",
+      "address": 2929808,
+      "size": 216,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "zNPCMgr_scenePostSetup",
       "source": "SB/Game/zNPCMgr.cpp",
       "address": 2937696,

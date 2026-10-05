@@ -78,7 +78,7 @@ checked, and the standard objdiff parser accepts the result.
 | SLUS-20680 | 2,978,560 | 82,876 |
 | SLES-51968 | 2,979,712 | 82,568 |
 | SLES-51970 | 2,976,512 | 82,568 |
-| SLES-53623 | 2,979,968 | 25,180 |
+| SLES-53623 | 2,979,968 | 29,500 |
 | XBOX-US | 1,798,760 | 11,445 |
 | XBOX-EU | 1,798,760 | 11,445 |
 
@@ -125,7 +125,7 @@ The narrower function-only baselines currently contain:
 | USA | 5,391 | 2,107,460 | 639 functions / 82,876 bytes |
 | Europe/Australia | 5,392 | 2,108,700 | 638 functions / 82,568 bytes |
 | Germany | 5,394 | 2,105,512 | 638 functions / 82,568 bytes |
-| France (reviewed and corroborated bounds) | 538 | 195,964 | 146 functions / 25,180 bytes |
+| France (reviewed and corroborated bounds) | 597 | 214,848 | 175 functions / 29,500 bytes |
 
 The `address-anchors.json` registries also recover over 2,500 named data addresses
 and 628 function declarations in each debug-bearing version. Addresses do not
@@ -152,8 +152,8 @@ load-range validation. Targets retain the exact original instructions. The `xBas
 other target objects are not relocation-restored link inputs. Code outside those function ranges, remaining data,
 and padding remain unclassified; the whole mixed load segment is not counted as
 code. France is stripped; independently reviewed and machine-corroborated
-extents establish its 538-function, 195,964-byte function-only baseline. Its
-25,180 matched code bytes describe that subset. The published code denominator
+extents establish its 597-function, 214,848-byte function-only baseline. Its
+29,500 matched code bytes describe that subset. The published code denominator
 is the full recovered CPU text region, not this function-only subset.
 
 Both Xbox releases have identical payloads in all 13 sections; their 532 differing
@@ -186,6 +186,10 @@ adds eight matches / 2,236 bytes while retaining all 36 functions / 36,648 bytes
 23 matches / 3,580 bytes while retaining all 48 entity functions / 19,036 bytes.
 [Clump-collision and spline sequence recovery](FRANCE_GEOMETRY_RECOVERY.md) adds
 seven matches / 2,712 bytes across both complete units, retaining 24 functions / 17,412 bytes.
+[Common and Standard NPC goal sequence recovery](FRANCE_NPC_GOAL_RECOVERY.md) adds
+29 matches / 4,320 bytes while retaining all 59 functions / 18,884 bytes. Their
+identities rely on unique original sequences and complete vtable/global evidence;
+no rooted execution claim or missing NoManLand class layout is inferred.
 
 The complete animation TU now compares all 34 functions / 17,656 bytes,
 matching 17 functions / 3,032 bytes with the unchanged shipping function bodies.
