@@ -13925,6 +13925,541 @@
         }
       ],
       "address_pairs": []
+    },
+    {
+      "source": "src/SB/Core/x/xGrid.cpp",
+      "target_unit": "SB/Core/x/xGrid.cpp",
+      "object": "source/xGrid.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+        "xGridEntIsTooBig__FP5xGridPC4xEnt": "xGridEntIsTooBig__FP5xGridPC4xEnt",
+        "xGridIterFirstCell__FP5xGridfffRiRiR13xGridIterator": "xGridIterFirstCell__FP5xGridfffRiRiR13xGridIterator",
+        "xGridGetCell__FP5xGridfffRiRi": "xGridGetCell__FP5xGridfffRiRi",
+        "xGridGetCell__FP5xGridPC4xEntRiRi": "xGridGetCell__FP5xGridPC4xEntRiRi",
+        "xGridUpdate__FP5xGridP4xEnt": "xGridUpdate__FP5xGridP4xEnt",
+        "xGridRemove__FP10xGridBound": "xGridRemove__FP10xGridBound",
+        "xGridAdd__FP5xGridP4xEnt": "xGridAdd__FP5xGridP4xEnt",
+        "xGridEmpty__FP5xGrid": "xGridEmpty__FP5xGrid",
+        "xGridKill__FP5xGrid": "xGridKill__FP5xGrid",
+        "xGridInit__FP5xGridPC4xBoxUsUsUc": "xGridInit__FP5xGridPC4xBoxUsUsUc",
+        "xGridBoundInit__FP10xGridBoundPv": "xGridBoundInit__FP10xGridBoundPv"
+      },
+      "calls": [
+        {
+          "function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "offset": 84,
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "target_function": "xGridIterFirstCell__FP5xGridfffRiRiR13xGridIterator",
+          "symbol": "xGridIterFirstCell__FP5xGridfffRiRiR13xGridIterator"
+        },
+        {
+          "function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "offset": 116,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullIsects__FPC7xQCDataPC7xQCData",
+          "symbol": "xQuickCullIsects__FPC7xQCDataPC7xQCData"
+        },
+        {
+          "function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "offset": 964,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullIsects__FPC7xQCDataPC7xQCData",
+          "symbol": "xQuickCullIsects__FPC7xQCDataPC7xQCData"
+        },
+        {
+          "function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "offset": 1492,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullIsects__FPC7xQCDataPC7xQCData",
+          "symbol": "xQuickCullIsects__FPC7xQCDataPC7xQCData"
+        },
+        {
+          "function": "xGridUpdate__FP5xGridP4xEnt",
+          "offset": 28,
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "target_function": "xGridGetCell__FP5xGridPC4xEntRiRi",
+          "symbol": "xGridGetCell__FP5xGridPC4xEntRiRi"
+        },
+        {
+          "function": "xGridUpdate__FP5xGridP4xEnt",
+          "offset": 72,
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "target_function": "xGridRemove__FP10xGridBound",
+          "symbol": "xGridRemove__FP10xGridBound"
+        },
+        {
+          "function": "xGridUpdate__FP5xGridP4xEnt",
+          "offset": 144,
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "target_function": "xGridRemove__FP10xGridBound",
+          "symbol": "xGridRemove__FP10xGridBound"
+        },
+        {
+          "function": "xGridAdd__FP5xGridP4xEnt",
+          "offset": 96,
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "target_function": "xGridRemove__FP10xGridBound",
+          "symbol": "xGridRemove__FP10xGridBound"
+        },
+        {
+          "function": "xGridAdd__FP5xGridP4xEnt",
+          "offset": 400,
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "target_function": "xGridRemove__FP10xGridBound",
+          "symbol": "xGridRemove__FP10xGridBound"
+        },
+        {
+          "function": "xGridAdd__FP5xGridP4xEnt",
+          "offset": 580,
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "target_function": "xGridRemove__FP10xGridBound",
+          "symbol": "xGridRemove__FP10xGridBound"
+        },
+        {
+          "function": "xGridAdd__FP5xGridP4xEnt",
+          "offset": 976,
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "target_function": "xGridRemove__FP10xGridBound",
+          "symbol": "xGridRemove__FP10xGridBound"
+        },
+        {
+          "function": "xGridKill__FP5xGrid",
+          "offset": 12,
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "target_function": "xGridEmpty__FP5xGrid",
+          "symbol": "xGridEmpty__FP5xGrid"
+        },
+        {
+          "function": "xGridInit__FP5xGridPC4xBoxUsUsUc",
+          "offset": 524,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xGridInit__FP5xGridPC4xBoxUsUsUc",
+          "offset": 556,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "offset": 164,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "offset": 172,
+          "opcode": 43,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "offset": 188,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "offset": 408,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "offset": 416,
+          "opcode": 43,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "offset": 432,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "offset": 660,
+          "opcode": 43,
+          "target_name": "k",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "k"
+        },
+        {
+          "function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "offset": 672,
+          "opcode": 43,
+          "target_name": "k",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "k"
+        },
+        {
+          "function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "offset": 700,
+          "opcode": 43,
+          "target_name": "k",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "k"
+        },
+        {
+          "function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "offset": 708,
+          "opcode": 43,
+          "target_name": "k",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "k"
+        },
+        {
+          "function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "offset": 728,
+          "opcode": 35,
+          "target_name": "k",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "k"
+        },
+        {
+          "function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "offset": 940,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "offset": 948,
+          "opcode": 43,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "offset": 1012,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "offset": 1020,
+          "opcode": 43,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "offset": 1036,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "offset": 1256,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "offset": 1264,
+          "opcode": 43,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "offset": 1280,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "offset": 1464,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "offset": 1472,
+          "opcode": 43,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "offset": 1540,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "offset": 1548,
+          "opcode": 43,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "offset": 1564,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "offset": 1784,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "offset": 1792,
+          "opcode": 43,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "offset": 1808,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xGridIterFirstCell__FP5xGridfffRiRiR13xGridIterator",
+          "offset": 380,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xGridIterFirstCell__FP5xGridfffRiRiR13xGridIterator",
+          "offset": 388,
+          "opcode": 43,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xGridUpdate__FP5xGridP4xEnt",
+          "offset": 132,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xGridRemove__FP10xGridBound",
+          "offset": 12,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xGridAdd__FP5xGridP4xEnt",
+          "offset": 84,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xGridAdd__FP5xGridP4xEnt",
+          "offset": 388,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xGridAdd__FP5xGridP4xEnt",
+          "offset": 568,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xGridAdd__FP5xGridP4xEnt",
+          "offset": 964,
+          "opcode": 35,
+          "target_name": "gGridIterActive",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "gGridIterActive"
+        },
+        {
+          "function": "xGridInit__FP5xGridPC4xBoxUsUsUc",
+          "offset": 520,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "symbol": "gActiveHeap"
+        }
+      ],
+      "address_pairs": []
+    },
+    {
+      "source": "src/SB/Core/x/xEntDrive.cpp",
+      "target_unit": "SB/Core/x/xEntDrive.cpp",
+      "object": "source/xEntDrive.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xEntDriveUpdate__FP9xEntDriveP6xScenefPC7xCollis": "xEntDriveUpdate__FP9xEntDriveP6xScenefPC7xCollis",
+        "xEntDriveDismount__FP9xEntDrivef": "xEntDriveDismount__FP9xEntDrivef",
+        "xEntDriveMount__FP9xEntDriveP4xEntfPC7xCollis": "xEntDriveMount__FP9xEntDriveP4xEntfPC7xCollis",
+        "xEntDriveInit__FP9xEntDriveP4xEnt": "xEntDriveInit__FP9xEntDriveP4xEnt"
+      },
+      "calls": [
+        {
+          "function": "xEntDriveUpdate__FP9xEntDriveP6xScenefPC7xCollis",
+          "offset": 1324,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3GetEuler__FPC7xMat3x3P5xVec3",
+          "symbol": "xMat3x3GetEuler__FPC7xMat3x3P5xVec3"
+        },
+        {
+          "function": "xEntDriveUpdate__FP9xEntDriveP6xScenefPC7xCollis",
+          "offset": 1352,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3RotY__FP7xMat3x3f",
+          "symbol": "xMat3x3RotY__FP7xMat3x3f"
+        },
+        {
+          "function": "xEntDriveUpdate__FP9xEntDriveP6xScenefPC7xCollis",
+          "offset": 1372,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3",
+          "symbol": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3"
+        },
+        {
+          "function": "xEntDriveUpdate__FP9xEntDriveP6xScenefPC7xCollis",
+          "offset": 2024,
+          "target_source": "SB/Core/x/xModel.cpp",
+          "target_function": "xModelAnimCollRefresh__FRC14xModelInstance",
+          "symbol": "xModelAnimCollRefresh__FRC14xModelInstance"
+        },
+        {
+          "function": "xEntDriveUpdate__FP9xEntDriveP6xScenefPC7xCollis",
+          "offset": 2204,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xCollisTriHit__FRCQ27xCollis8tri_dataRC14xModelInstance",
+          "symbol": "xCollisTriHit__FRCQ27xCollis8tri_dataRC14xModelInstance"
+        },
+        {
+          "function": "xEntDriveUpdate__FP9xEntDriveP6xScenefPC7xCollis",
+          "offset": 2700,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xCollisTriHit__FRCQ27xCollis8tri_dataRC14xModelInstance",
+          "symbol": "xCollisTriHit__FRCQ27xCollis8tri_dataRC14xModelInstance"
+        },
+        {
+          "function": "xEntDriveUpdate__FP9xEntDriveP6xScenefPC7xCollis",
+          "offset": 2792,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xEntDriveUpdate__FP9xEntDriveP6xScenefPC7xCollis",
+          "offset": 3564,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xEntDriveUpdate__FP9xEntDriveP6xScenefPC7xCollis",
+          "offset": 3732,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xEntDriveDismount__FP9xEntDrivef",
+          "offset": 300,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xEntDriveMount__FP9xEntDriveP4xEntfPC7xCollis",
+          "offset": 1212,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3GetEuler__FPC7xMat3x3P5xVec3",
+          "symbol": "xMat3x3GetEuler__FPC7xMat3x3P5xVec3"
+        },
+        {
+          "function": "xEntDriveMount__FP9xEntDriveP4xEntfPC7xCollis",
+          "offset": 1300,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xCollisTriHit__FRCQ27xCollis8tri_dataRC14xModelInstance",
+          "symbol": "xCollisTriHit__FRCQ27xCollis8tri_dataRC14xModelInstance"
+        },
+        {
+          "function": "xEntDriveMount__FP9xEntDriveP4xEntfPC7xCollis",
+          "offset": 1392,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xEntDriveMount__FP9xEntDriveP4xEntfPC7xCollis",
+          "offset": 1500,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3"
+        }
+      ],
+      "gp_relocations": [],
+      "address_pairs": []
     }
   ]
 }
