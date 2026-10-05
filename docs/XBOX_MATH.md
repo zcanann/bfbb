@@ -71,3 +71,35 @@ python tools/platform_progress.py report --version XBOX-US \
 Repeat for `XBOX-EU`. Local production artifacts and source/original inverse
 checks are in `build/xbox184/final` and `build/xbox184/validation.json`.
 This is partial function comparison, with no complete-TU or retail-relink claim.
+
+
+## Acceleration timing lifetime
+
+The original 83-byte `xAccelMoveTime` starts by halving the requested distance,
+then computes reciprocal acceleration and acceleration time/distance. Keeping
+that half-distance live lets the generated code reuse dead argument slots and
+avoid a local stack frame. The former source calculated acceleration time
+first, producing 96 bytes and an 8-byte frame.
+
+For Xbox only, the existing `dx *= 0.5f` statement now precedes the existing
+`atime = maxv / time` calculation. Every arithmetic tree, branch predicate,
+parameter and return expression is unchanged. This was one control grounded in
+the original first operation, with no additional locals, compiler flags or
+permutation search. Non-Xbox source order remains unchanged.
+
+Both complete reports improve the function from 36.076923% to 100%. Its actual
+83-byte source extent is independently decoded and owned by `xMath.obj`.
+All original bytes reconstruct in both authenticated executables after only
+three actual PE HIGHLOW fields at +6, +12 and +40 are assigned the reviewed
+constant addresses. Actual source/original 0.5 and 1.0 payloads are identical;
+there are no calls or other ignored fields.
+
+The totals become 13,935 exact bytes / 76 functions. Every other function record,
+all denominator/completion fields and all 33 ordered GameCube consumer sections
+remain unchanged apart from generated COFF offsets. Full code-weighted fuzzy
+progress rises from 1.1555546631813025% to 1.1585042592313592%. No profile,
+original metadata, source ownership or backend changes were needed.
+
+Ignored reproducible evidence: `build/xbox262/{residual-disasm.txt,compile.py,
+compare.py,deltas.json,gc/proof.json,production,verify_final.py,
+final-verification.json}`. Full executable relinking remains pending.

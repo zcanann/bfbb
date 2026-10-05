@@ -423,8 +423,13 @@ void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 endx, F32 maxv)
 F32 xAccelMoveTime(F32 dx, F32 a, F32, F32 maxv)
 {
     float time = a;
+#if defined(XBOX)
+    dx *= 0.5f;
+    float atime = maxv / time;
+#else
     float atime = maxv / time;
     dx *= 0.5f;
+#endif
     float adist = 0.5f * time * atime * atime;
 
     dx = (adist < dx) ? xsqrt(2.0f * dx / time) : (atime + (dx - adist) / maxv);
