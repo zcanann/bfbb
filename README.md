@@ -36,7 +36,8 @@ An existing copy of the corresponding release is required.
 Four PS2 releases and two Xbox releases also have [verified-input CI, symbol
 registries, and analysis tooling](docs/platforms.md). All four PS2 releases have
 a matching compiled xBase unit, with additional PS2 matches and an initial
-Xbox source comparison. Full executable builds remain in progress. The badges
+Xbox source comparison. CI publishes decomp.dev reports using verified code-region
+sizes; unresolved ranges remain unmatched. Full executable builds remain in progress. The badges
 above measure GameCube progress.
 
 # Dependencies

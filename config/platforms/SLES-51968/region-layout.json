@@ -1,0 +1,381 @@
+{
+  "schema_version": 1,
+  "version": "SLES-51968",
+  "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+  "classification_complete": true,
+  "original_section_names_preserved": false,
+  "source_and_link_complete": false,
+  "regions": [
+    {
+      "name": "cpu_text",
+      "address": 1048576,
+      "size": 2979712,
+      "classification": "code",
+      "file_offset": 128
+    },
+    {
+      "name": "vu_packets",
+      "address": 4028288,
+      "size": 173504,
+      "classification": "data",
+      "file_offset": 2979840
+    },
+    {
+      "name": "initialized_data",
+      "address": 4201792,
+      "size": 1101760,
+      "classification": "data",
+      "file_offset": 3153344
+    },
+    {
+      "name": "runtime_bss",
+      "address": 5303552,
+      "size": 1109120,
+      "classification": "bss",
+      "file_offset": null
+    }
+  ],
+  "evidence": {
+    "boundaries": {
+      "kind": "original_DWARF_declarations",
+      "anchors": [
+        {
+          "name": "FXanimUVPRS",
+          "address": 4028288,
+          "die_offset": 3705767,
+          "declaration_source": "C:\\SB\\Core\\p2\\iFX.cpp"
+        },
+        {
+          "name": "FXgooPRS",
+          "address": 4171280,
+          "die_offset": 10055937,
+          "declaration_source": "C:\\SB\\Core\\p2\\iFXgoo.cpp"
+        },
+        {
+          "name": "__data_start",
+          "address": 4201792,
+          "die_offset": 3768996,
+          "declaration_source": "C:\\SB\\Core\\p2\\iMemMgr.cpp"
+        }
+      ],
+      "last_dwarf_function_end": 4028280,
+      "zero_alignment_bytes": 8
+    },
+    "vu_packets": {
+      "packet_count": 41,
+      "microcode_payload_bytes": 172312,
+      "storage_bytes": 173504,
+      "sha256": "e3411c10d3dac47a863ca33392484d92dd4d66854a6d763fe7e4d461af0caf2f",
+      "packets": [
+        {
+          "address": 4028288,
+          "size": 13536,
+          "microinstruction_count": 1684,
+          "mpg_commands": 7,
+          "nop_words": 7
+        },
+        {
+          "address": 4041824,
+          "size": 48,
+          "microinstruction_count": 4,
+          "mpg_commands": 1,
+          "nop_words": 1
+        },
+        {
+          "address": 4041872,
+          "size": 512,
+          "microinstruction_count": 62,
+          "mpg_commands": 1,
+          "nop_words": 1
+        },
+        {
+          "address": 4042384,
+          "size": 624,
+          "microinstruction_count": 76,
+          "mpg_commands": 1,
+          "nop_words": 1
+        },
+        {
+          "address": 4043008,
+          "size": 352,
+          "microinstruction_count": 41,
+          "mpg_commands": 1,
+          "nop_words": 3
+        },
+        {
+          "address": 4043360,
+          "size": 400,
+          "microinstruction_count": 47,
+          "mpg_commands": 1,
+          "nop_words": 3
+        },
+        {
+          "address": 4043760,
+          "size": 48,
+          "microinstruction_count": 4,
+          "mpg_commands": 1,
+          "nop_words": 1
+        },
+        {
+          "address": 4043808,
+          "size": 1024,
+          "microinstruction_count": 126,
+          "mpg_commands": 1,
+          "nop_words": 1
+        },
+        {
+          "address": 4044832,
+          "size": 1216,
+          "microinstruction_count": 150,
+          "mpg_commands": 1,
+          "nop_words": 1
+        },
+        {
+          "address": 4046048,
+          "size": 1184,
+          "microinstruction_count": 146,
+          "mpg_commands": 1,
+          "nop_words": 1
+        },
+        {
+          "address": 4047232,
+          "size": 1344,
+          "microinstruction_count": 166,
+          "mpg_commands": 1,
+          "nop_words": 1
+        },
+        {
+          "address": 4048576,
+          "size": 1360,
+          "microinstruction_count": 168,
+          "mpg_commands": 1,
+          "nop_words": 1
+        },
+        {
+          "address": 4049936,
+          "size": 1648,
+          "microinstruction_count": 204,
+          "mpg_commands": 1,
+          "nop_words": 1
+        },
+        {
+          "address": 4051584,
+          "size": 2752,
+          "microinstruction_count": 341,
+          "mpg_commands": 2,
+          "nop_words": 2
+        },
+        {
+          "address": 4054336,
+          "size": 2032,
+          "microinstruction_count": 252,
+          "mpg_commands": 1,
+          "nop_words": 1
+        },
+        {
+          "address": 4056368,
+          "size": 1408,
+          "microinstruction_count": 174,
+          "mpg_commands": 1,
+          "nop_words": 1
+        },
+        {
+          "address": 4057776,
+          "size": 1648,
+          "microinstruction_count": 204,
+          "mpg_commands": 1,
+          "nop_words": 1
+        },
+        {
+          "address": 4059424,
+          "size": 1856,
+          "microinstruction_count": 230,
+          "mpg_commands": 1,
+          "nop_words": 1
+        },
+        {
+          "address": 4061280,
+          "size": 2432,
+          "microinstruction_count": 301,
+          "mpg_commands": 2,
+          "nop_words": 2
+        },
+        {
+          "address": 4063712,
+          "size": 2304,
+          "microinstruction_count": 285,
+          "mpg_commands": 2,
+          "nop_words": 2
+        },
+        {
+          "address": 4066016,
+          "size": 2464,
+          "microinstruction_count": 305,
+          "mpg_commands": 2,
+          "nop_words": 2
+        },
+        {
+          "address": 4068480,
+          "size": 3376,
+          "microinstruction_count": 419,
+          "mpg_commands": 2,
+          "nop_words": 2
+        },
+        {
+          "address": 4071856,
+          "size": 3168,
+          "microinstruction_count": 393,
+          "mpg_commands": 2,
+          "nop_words": 2
+        },
+        {
+          "address": 4075024,
+          "size": 11760,
+          "microinstruction_count": 1463,
+          "mpg_commands": 6,
+          "nop_words": 6
+        },
+        {
+          "address": 4086784,
+          "size": 12176,
+          "microinstruction_count": 1515,
+          "mpg_commands": 6,
+          "nop_words": 6
+        },
+        {
+          "address": 4098960,
+          "size": 11824,
+          "microinstruction_count": 1471,
+          "mpg_commands": 6,
+          "nop_words": 6
+        },
+        {
+          "address": 4110784,
+          "size": 12096,
+          "microinstruction_count": 1505,
+          "mpg_commands": 6,
+          "nop_words": 6
+        },
+        {
+          "address": 4122880,
+          "size": 11904,
+          "microinstruction_count": 1481,
+          "mpg_commands": 6,
+          "nop_words": 6
+        },
+        {
+          "address": 4134784,
+          "size": 12320,
+          "microinstruction_count": 1533,
+          "mpg_commands": 6,
+          "nop_words": 6
+        },
+        {
+          "address": 4147104,
+          "size": 11952,
+          "microinstruction_count": 1487,
+          "mpg_commands": 6,
+          "nop_words": 6
+        },
+        {
+          "address": 4159056,
+          "size": 12224,
+          "microinstruction_count": 1521,
+          "mpg_commands": 6,
+          "nop_words": 6
+        },
+        {
+          "address": 4171280,
+          "size": 13696,
+          "microinstruction_count": 1703,
+          "mpg_commands": 7,
+          "nop_words": 9
+        },
+        {
+          "address": 4184976,
+          "size": 3376,
+          "microinstruction_count": 418,
+          "mpg_commands": 2,
+          "nop_words": 4
+        },
+        {
+          "address": 4188352,
+          "size": 1072,
+          "microinstruction_count": 132,
+          "mpg_commands": 1,
+          "nop_words": 1
+        },
+        {
+          "address": 4189424,
+          "size": 960,
+          "microinstruction_count": 118,
+          "mpg_commands": 1,
+          "nop_words": 1
+        },
+        {
+          "address": 4190384,
+          "size": 992,
+          "microinstruction_count": 122,
+          "mpg_commands": 1,
+          "nop_words": 1
+        },
+        {
+          "address": 4191376,
+          "size": 864,
+          "microinstruction_count": 106,
+          "mpg_commands": 1,
+          "nop_words": 1
+        },
+        {
+          "address": 4192240,
+          "size": 2688,
+          "microinstruction_count": 333,
+          "mpg_commands": 2,
+          "nop_words": 2
+        },
+        {
+          "address": 4194928,
+          "size": 2224,
+          "microinstruction_count": 275,
+          "mpg_commands": 2,
+          "nop_words": 2
+        },
+        {
+          "address": 4197152,
+          "size": 2512,
+          "microinstruction_count": 311,
+          "mpg_commands": 2,
+          "nop_words": 2
+        },
+        {
+          "address": 4199664,
+          "size": 2128,
+          "microinstruction_count": 263,
+          "mpg_commands": 2,
+          "nop_words": 2
+        }
+      ]
+    },
+    "runtime_bss": {
+      "address": 5303552,
+      "end": 6412672,
+      "startup_loop_address": 1048876,
+      "elf_memory_end": 6412672,
+      "empty_writable_section_address": 6412672,
+      "loop_note": "The original loop also clears one 16-byte word at _end; that heap word is not counted as BSS."
+    },
+    "anchor_checks": {
+      "dwarf_functions": 5392,
+      "function_entries": 628,
+      "data_anchors": 1115,
+      "data_extents": 470
+    }
+  },
+  "limitations": [
+    "Coarse regions recover link layout; the original ELF merged section names and permissions.",
+    "CPU text includes alignment and possible inline literals or jump tables; function ownership remains partial.",
+    "VU packets are host storage classified as data, not matched R5900 instructions or compiled microcode.",
+    "Initialized data can contain further VU programs stored as data; data subsection boundaries remain unresolved.",
+    "Region classification does not establish source matching, relocations, or a complete retail link."
+  ]
+}

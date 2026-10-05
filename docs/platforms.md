@@ -1,10 +1,10 @@
-# PS2 and Xbox bootstrap
+# PS2 and Xbox builds and progress
 
 GameCube matching builds remain on `configure.py`. PS2 and Xbox use
 `tools/platform_progress.py` because their executable formats, compilers, and
 relocations differ. This includes verified inputs, analysis infrastructure, and compiled PS2/Xbox
-source comparisons. Whole-program matching coverage and retail source links are
-not established yet.
+source comparisons. Function recovery and retail executable links remain incomplete. The reporting
+scope is described below.
 
 ## Verified originals
 
@@ -52,23 +52,59 @@ objects and extraction outputs contain original bytes and stay in ignored direct
 
 ## CI and reporting
 
-The Build workflow has six additional independent platform jobs. Each checks its
-original executable hash, prepares available target objects, runs pinned objdiff
-3.7.1, and uploads `<version>_baseline` with status and coverage metadata. All six releases also upload `<version>_functions` with an actual objdiff
-report. All six include compiled shared-source comparisons against independently
-identified target functions; measured coverage remains partial. These artifacts are available on staging.
+The Build workflow checks all nine releases. Each PS2/Xbox job authenticates its
+original, builds the supported shared-source units, runs pinned objdiff 3.7.1,
+and uploads `<version>_report/report.json` for decomp.dev. The private images
+supply original executables and compilers; public artifacts contain JSON only.
 
-They are deliberately **not** named `<version>_report` yet. That standard name is
-reserved for reports ready for decomp.dev ingestion. A partial inventory must not
-look like whole-game progress, and objdiff assigns 100% to some empty denominators.
-GameCube's three standard reports and main-only Pages deployment are unchanged.
+The standard reports use full verified **code-region byte denominators**, including
+unresolved function ranges and original alignment. Actual objdiff function scores
+supply every match; unresolved bytes contribute zero. Function counts still cover
+only recovered bounds, clearly identified by the "Known functions only" category.
+No translation unit or retail link is marked complete on these platforms yet.
+
+`<version>_functions` retains the original function-only objdiff baseline for
+analysis. `<version>_baseline` contains original verification, symbols, splits,
+region/proof metadata and `section-coverage.json`, which explains the aggregation.
+The standard report is a schema-v2 aggregation adapter: objdiff 3.7.1's generator
+counts only symbol-covered code bytes, so it cannot include symbol-free gaps in
+its denominator. The adapter includes those authenticated bytes without creating
+fake functions, changing function scores, or counting comparison-container padding.
+It removes percentage fields with empty denominators. Unit/category sums are
+checked, and the standard objdiff parser accepts the result.
+
+| Version | Full code-region bytes | Exact source-match bytes |
+| --- | ---: | ---: |
+| SLUS-20680 | 2,978,560 | 1,616 |
+| SLES-51968 | 2,979,712 | 1,616 |
+| SLES-51970 | 2,976,512 | 1,616 |
+| SLES-53623 | 2,979,968 | 1,276 |
+| XBOX-US | 1,798,760 | 48 |
+| XBOX-EU | 1,798,760 | 48 |
+
+PS2 reports partition the original load into CPU text, VU upload packets and
+initialized data, plus independently proven runtime BSS. Original linker/VU
+DWARF anchors, every known function/data anchor, all 41 DMA/VIF packets and the
+startup zeroing loop corroborate this layout. The complete VU packet block is
+unique and byte-identical in France, establishing its stripped boundaries too.
+The 173,504 packet-storage bytes are data in the CPU executable; they do not count
+as matching R5900 code. Each release has 1,109,120 runtime BSS bytes. The original
+load's virtual end equals BSS start; file offsets include the ELF header and must
+not be mistaken for virtual addresses.
+
+Xbox reports cover the authentic `.text` section and initialized `.rdata`/`.data`.
+Mixed XDK sections, embedded images/audio and virtual zero-fill remain explicitly
+outside this report's scope. Category names identify that exclusion.
+GameCube's three reports, badges and main-only Pages deployment are unchanged.
+
+The narrower function-only baselines currently contain:
 
 | PS2 baseline | Functions | Measured function bytes | Source matches |
 | --- | ---: | ---: | ---: |
 | USA | 5,391 | 2,107,460 | 17 functions / 1,616 bytes |
 | Europe/Australia | 5,392 | 2,108,700 | 17 functions / 1,616 bytes |
 | Germany | 5,394 | 2,105,512 | 17 functions / 1,616 bytes |
-| France (reviewed and corroborated bounds) | 253 | 62,236 | 12 functions / 1,276 bytes |
+| France (reviewed and corroborated bounds) | 326 | 89,856 | 12 functions / 1,276 bytes |
 
 The `address-anchors.json` registries also recover over 2,500 named data addresses
 and 628 function declarations in each debug-bearing version. Addresses do not
@@ -94,9 +130,10 @@ These counts come from explicit retail DWARF1 function bounds, with overlap and
 load-range validation. Targets retain the exact original instructions. The `xBase` call relocations are restored and verified by inverse reconstruction;
 other target objects are not relocation-restored link inputs. Code outside those function ranges, remaining data,
 and padding remain unclassified; the whole mixed load segment is not counted as
-code. France is stripped; sixteen individually reviewed extents and 237
-machine-corroborated extents establish its partial baseline. Its 1,276/62,236
-matched bytes describe only these recovered functions, never whole-game progress.
+code. France is stripped; sixteen individually reviewed extents and 310
+machine-corroborated extents establish its function-only baseline. Its
+1,276/89,856 matched bytes describe that subset. The published code denominator
+is the full recovered CPU text region, not this function-only subset.
 
 Both Xbox releases have identical payloads in all 13 sections; their 532 differing
 bytes are in headers/certificates. Each retains its own full-executable hash.
@@ -143,6 +180,8 @@ To run the source comparison on Linux (or inside WSL), with the private image's 
 python tools/platform_progress.py report --ps2-compilers /ps2-compilers --wibo /usr/local/bin/wibo-ps2
 ```
 
+PS2 region verification authenticates all four originals; keep all four boot
+executables under `orig/` when generating a standard report outside CI.
 Use local compiler/runtime paths when outside the image. Windows native compiler
 invocation is not the validated runtime; Wibo avoids requiring a separate native
 license configuration. Without these options, the command produces target-only
@@ -161,7 +200,11 @@ has an authenticated, uniquely occurring named reference body, a direct JAL
 entry witness reached by static control flow from the stripped executable entry,
 and closed local control flow with balanced stack and return-address handling.
 CI regenerates these proofs from the originals; static reachability is not a
-claim that a path executes in game. Both sets enter the partial France baseline. Serializer entry
+claim that a path executes in game. Both sets enter the partial France baseline. A further 73 functions (27,620
+bytes) in `relocation-corroborated-functions.json` preserve every non-transfer
+bit and prove each changed J/JAL destination using internal offsets or an
+acyclic chain to already identified callees. These are boundary/identity proofs,
+not compiled-source matches. Serializer entry
 and allocator identities used for call relocations are in `reviewed-call-targets.json`.
 France's `reviewed-data-anchors.json` records the `gActiveHeap` address from named
 reference declarations and actual GP-relative accesses. Startup code proves its
@@ -233,12 +276,12 @@ python tools/platforms/verify_xbox_reviewed.py
 - Xbox: recover function/data boundaries, restore i386 COFF relocations, and
   identify the retail compiler. Linked XDK libraries report 5558 QFE 1; this does
   not prove an exact MSVC compiler version.
-- Promote a platform to standard decomp.dev reports once its measured scope is
-  established, and only mark linked source complete after retail reconstruction
-  has actually been verified.
+- Expand Xbox reporting to mixed SDK sections once their code/data ownership is
+  established. Only mark source linked after retail reconstruction is verified.
 
 Useful established references: [PS2 split/build/report pipeline](https://github.com/denzi-gh/crashwoc-decomp-ps2/blob/main/docs/pipeline.md),
 [MW PS2 build rules](https://github.com/crowded-street/3s-decomp/blob/main/Makefile),
 [objdiff MIPS support](https://github.com/encounter/objdiff/blob/v3.7.1/objdiff-core/src/arch/mips.rs),
 [objdiff i386 COFF support](https://github.com/encounter/objdiff/blob/v3.7.1/objdiff-core/src/arch/x86.rs),
+[objdiff symbol-based report accounting](https://github.com/encounter/objdiff/blob/3cebee67667d440fa0fe1b64026c35db53ac40d6/objdiff-cli/src/cmd/report.rs#L288),
 and [decomp.dev multi-platform versions](https://github.com/encounter/decomp.dev/issues/31).

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "executable_sha1": "ef675520304c2ce0df9cbfa03222e42fb2e7a09e",
-  "provenance": "Manual-reviewed and machine-corroborated function ranges; see reviewed-functions.json and corroborated-functions.json",
+  "provenance": "Manual-reviewed and machine-corroborated function ranges; see reviewed-functions.json and corroborated-functions.json; explicit-transfer corroboration: relocation-corroborated-functions.json",
   "coverage_complete": false,
   "symbols": [
     {
@@ -61,11 +61,39 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "zEntButton_Load",
+      "source": "SB/Game/zEntButton.cpp",
+      "address": 1268368,
+      "size": 116,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "zEntButton_Save",
+      "source": "SB/Game/zEntButton.cpp",
+      "address": 1268496,
+      "size": 148,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "HangableSetup",
+      "source": "SB/Game/zEntHangable.cpp",
+      "address": 1278160,
+      "size": 252,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
       "name": "zEntPickup_SpawnNRewards",
       "source": "SB/Game/zEntPickup.cpp",
       "address": 1278832,
       "size": 60,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "CalcJumpImpulse_Smooth",
+      "source": "SB/Game/zEntPlayer.cpp",
+      "address": 1362816,
+      "size": 660,
+      "provenance": "machine-corroborated-explicit-transfers"
     },
     {
       "name": "__apl",
@@ -159,6 +187,13 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "zMainOutputMgrSetup",
+      "source": "SB/Game/zMain.cpp",
+      "address": 1612816,
+      "size": 44,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
       "name": "zMusicReset",
       "source": "SB/Game/zMusic.cpp",
       "address": 1618416,
@@ -201,6 +236,13 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "Setup",
+      "source": "SB/Game/zUI.cpp",
+      "address": 1710624,
+      "size": 416,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
       "name": "Update",
       "source": "SB/Game/zUI.cpp",
       "address": 1711040,
@@ -213,6 +255,13 @@
       "address": 1711216,
       "size": 172,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "zVolumeSetup",
+      "source": "SB/Game/zVolume.cpp",
+      "address": 1721248,
+      "size": 100,
+      "provenance": "machine-corroborated-explicit-transfers"
     },
     {
       "name": "_iAnimSKBExtractTranslate",
@@ -276,6 +325,13 @@
       "address": 1755776,
       "size": 128,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iSphereIsectRay",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1756400,
+      "size": 492,
+      "provenance": "machine-corroborated-explicit-transfers"
     },
     {
       "name": "FastS16weight4",
@@ -607,6 +663,27 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "viBufCreate",
+      "source": "SB/Core/p2/ps2_mpeg/vibuf.c",
+      "address": 1831264,
+      "size": 116,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "videoDecIsFlushed",
+      "source": "SB/Core/p2/ps2_mpeg/videodec.c",
+      "address": 1832224,
+      "size": 88,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "videoDecDelete",
+      "source": "SB/Core/p2/ps2_mpeg/videodec.c",
+      "address": 1832848,
+      "size": 52,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
       "name": "videoDecSetStream",
       "source": "SB/Core/p2/ps2_mpeg/videodec.c",
       "address": 1832944,
@@ -656,6 +733,41 @@
       "provenance": "manual-reviewed"
     },
     {
+      "name": "xRayHitsBound",
+      "source": "SB/Core/x/xBound.cpp",
+      "address": 1838160,
+      "size": 208,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "xBoundOBBIsectRay",
+      "source": "SB/Core/x/xBound.cpp",
+      "address": 1838368,
+      "size": 952,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "xBoundGetBox",
+      "source": "SB/Core/x/xBound.cpp",
+      "address": 1840336,
+      "size": 236,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "xCameraRotate",
+      "source": "SB/Core/x/xCamera.cpp",
+      "address": 1843728,
+      "size": 408,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "xCameraLookYPR",
+      "source": "SB/Core/x/xCamera.cpp",
+      "address": 1844624,
+      "size": 380,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
       "name": "xCameraMove",
       "source": "SB/Core/x/xCamera.cpp",
       "address": 1845616,
@@ -670,11 +782,25 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xCameraMove",
+      "source": "SB/Core/x/xCamera.cpp",
+      "address": 1845920,
+      "size": 544,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
       "name": "xCameraDoCollisions",
       "source": "SB/Core/x/xCamera.cpp",
       "address": 1846464,
       "size": 76,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xCam_worldtocyl",
+      "source": "SB/Core/x/xCamera.cpp",
+      "address": 1854896,
+      "size": 336,
+      "provenance": "machine-corroborated-explicit-transfers"
     },
     {
       "name": "xCam_buildbasis",
@@ -810,11 +936,60 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xFFXRotMatchPoolInit",
+      "source": "SB/Core/x/xFFX.cpp",
+      "address": 1945168,
+      "size": 152,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "xFFXShakePoolInit",
+      "source": "SB/Core/x/xFFX.cpp",
+      "address": 1945392,
+      "size": 152,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "xFFXApply",
+      "source": "SB/Core/x/xFFX.cpp",
+      "address": 1945904,
+      "size": 52,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "xFFXApplyOne",
+      "source": "SB/Core/x/xFFX.cpp",
+      "address": 1945968,
+      "size": 424,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
       "name": "xFFXAddEffect",
       "source": "SB/Core/x/xFFX.cpp",
       "address": 1946400,
       "size": 104,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xFFXPoolInit",
+      "source": "SB/Core/x/xFFX.cpp",
+      "address": 1946656,
+      "size": 144,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "find_format_tag",
+      "source": "SB/Core/x/xFont.cpp",
+      "address": 1947664,
+      "size": 216,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "fit_line",
+      "source": "SB/Core/x/xFont.cpp",
+      "address": 1963792,
+      "size": 372,
+      "provenance": "machine-corroborated-explicit-transfers"
     },
     {
       "name": "bound_line",
@@ -836,6 +1011,20 @@
       "address": 1965200,
       "size": 640,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "set_text",
+      "source": "SB/Core/x/xFont.cpp",
+      "address": 1969856,
+      "size": 264,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "set_text",
+      "source": "SB/Core/x/xFont.cpp",
+      "address": 1970144,
+      "size": 68,
+      "provenance": "machine-corroborated-explicit-transfers"
     },
     {
       "name": "find_bounds",
@@ -871,6 +1060,13 @@
       "address": 1989328,
       "size": 1204,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "refresh_joint",
+      "source": "SB/Core/x/xFX.cpp",
+      "address": 1990544,
+      "size": 864,
+      "provenance": "machine-corroborated-explicit-transfers"
     },
     {
       "name": "get_normal",
@@ -929,6 +1125,20 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xIniGetString",
+      "source": "SB/Core/x/xIni.cpp",
+      "address": 2018944,
+      "size": 208,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "xIniGetInt",
+      "source": "SB/Core/x/xIni.cpp",
+      "address": 2019376,
+      "size": 216,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
       "name": "xFuncPiece_Eval",
       "source": "SB/Core/x/xMath.cpp",
       "address": 2021440,
@@ -955,6 +1165,13 @@
       "address": 2023376,
       "size": 76,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xMathSolveCubic",
+      "source": "SB/Core/x/xMath.cpp",
+      "address": 2023456,
+      "size": 932,
+      "provenance": "machine-corroborated-explicit-transfers"
     },
     {
       "name": "xMathSolveQuadratic",
@@ -990,6 +1207,13 @@
       "address": 2026000,
       "size": 172,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xMat4x3Mul",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2027024,
+      "size": 192,
+      "provenance": "machine-corroborated-explicit-transfers"
     },
     {
       "name": "xMat3x3Tolocal",
@@ -1041,6 +1265,13 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xMat3x3GetEuler",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2030656,
+      "size": 264,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
       "name": "xBoxInitBoundCapsule",
       "source": "SB/Core/x/xMath3.cpp",
       "address": 2032016,
@@ -1060,6 +1291,13 @@
       "address": 2033744,
       "size": 112,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xMemPoolAlloc",
+      "source": "SB/Core/x/xMemMgr.cpp",
+      "address": 2033856,
+      "size": 148,
+      "provenance": "machine-corroborated-explicit-transfers"
     },
     {
       "name": "xMemPoolAddElements",
@@ -1083,6 +1321,13 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xModelGetBoneMat",
+      "source": "SB/Core/x/xModel.cpp",
+      "address": 2036016,
+      "size": 180,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
       "name": "xModelInstanceAttach",
       "source": "SB/Core/x/xModel.cpp",
       "address": 2040080,
@@ -1090,11 +1335,32 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xModelInstanceFree",
+      "source": "SB/Core/x/xModel.cpp",
+      "address": 2040160,
+      "size": 240,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "xModelPoolInit",
+      "source": "SB/Core/x/xModel.cpp",
+      "address": 2041200,
+      "size": 692,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
       "name": "xMorphRender",
       "source": "SB/Core/x/xMorph.cpp",
       "address": 2042224,
       "size": 508,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xMovePointGetNext",
+      "source": "SB/Core/x/xMovePoint.cpp",
+      "address": 2043344,
+      "size": 560,
+      "provenance": "machine-corroborated-explicit-transfers"
     },
     {
       "name": "XOrdSort",
@@ -1153,6 +1419,13 @@
       "provenance": "manual-reviewed"
     },
     {
+      "name": "xPadNormalizeAnalog",
+      "source": "SB/Core/x/xPad.cpp",
+      "address": 2046896,
+      "size": 688,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
       "name": "xParInit",
       "source": "SB/Core/x/xPar.cpp",
       "address": 2049872,
@@ -1174,6 +1447,27 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xParGroupKillPar",
+      "source": "SB/Core/x/xParGroup.cpp",
+      "address": 2057936,
+      "size": 212,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "xParGroupAnimate",
+      "source": "SB/Core/x/xParGroup.cpp",
+      "address": 2058544,
+      "size": 276,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "xParGroupKillAllParticles",
+      "source": "SB/Core/x/xParGroup.cpp",
+      "address": 2058832,
+      "size": 76,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
       "name": "xParMgrUpdate",
       "source": "SB/Core/x/xParMgr.cpp",
       "address": 2059520,
@@ -1186,6 +1480,13 @@
       "address": 2059744,
       "size": 128,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xPartitionUpdate",
+      "source": "SB/Core/x/xPartition.cpp",
+      "address": 2059872,
+      "size": 352,
+      "provenance": "machine-corroborated-explicit-transfers"
     },
     {
       "name": "PKR_updateLayerAssets",
@@ -1202,11 +1503,53 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xQuickCullForOBB",
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "address": 2074864,
+      "size": 76,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "xQuickCullForBox",
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "address": 2074944,
+      "size": 228,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "xQuickCullForSphere",
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "address": 2075184,
+      "size": 376,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "xQuickCullForRay",
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "address": 2075568,
+      "size": 532,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "xQuickCullForLine",
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "address": 2076112,
+      "size": 224,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
       "name": "xQuickCullCellForVec",
       "source": "SB/Core/x/xQuickCull.cpp",
       "address": 2076336,
       "size": 320,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xQuickCullForBound",
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "address": 2076656,
+      "size": 116,
+      "provenance": "machine-corroborated-explicit-transfers"
     },
     {
       "name": "xQuickCullIsects",
@@ -1228,6 +1571,13 @@
       "address": 2077504,
       "size": 88,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xSG_smem_blkclose",
+      "source": "SB/Core/x/xsavegame.cpp",
+      "address": 2079376,
+      "size": 128,
+      "provenance": "machine-corroborated-explicit-transfers"
     },
     {
       "name": "xSGWriteData",
@@ -1277,6 +1627,13 @@
       "address": 2093472,
       "size": 224,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xRayHitsGrid",
+      "source": "SB/Core/x/xScene.cpp",
+      "address": 2094768,
+      "size": 4012,
+      "provenance": "machine-corroborated-explicit-transfers"
     },
     {
       "name": "xSceneForAllEnts",
@@ -1340,6 +1697,13 @@
       "address": 2141760,
       "size": 68,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "AllocSpline3",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2142672,
+      "size": 332,
+      "provenance": "machine-corroborated-explicit-transfers"
     },
     {
       "name": "BasisBspline",
@@ -1419,6 +1783,20 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xSurfaceInit",
+      "source": "SB/Core/x/xSurface.cpp",
+      "address": 2159424,
+      "size": 356,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "xUtil_yesno",
+      "source": "SB/Core/x/xutil.cpp",
+      "address": 2163360,
+      "size": 120,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
       "name": "itoBCD",
       "source": "SB/Core/x/xutil.cpp",
       "address": 2163488,
@@ -1433,11 +1811,25 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xAnimPoolFree",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2166256,
+      "size": 148,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
       "name": "EffectSingleStop",
       "source": "SB/Core/x/xAnim.cpp",
       "address": 2172640,
       "size": 352,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "EffectSingleLoop",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2172992,
+      "size": 312,
+      "provenance": "machine-corroborated-explicit-transfers"
     },
     {
       "name": "EffectSingleRun",
@@ -1461,6 +1853,27 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xAnimTableGetState",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2174752,
+      "size": 108,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "xAnimTableNew",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2179184,
+      "size": 128,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "xCounterReset",
+      "source": "SB/Core/x/xCounter.cpp",
+      "address": 2747840,
+      "size": 96,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
       "name": "xGroupGetItemPtr",
       "source": "SB/Core/x/xGroup.cpp",
       "address": 2752720,
@@ -1482,11 +1895,32 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "ZNPC_Tiki_Startup",
+      "source": "SB/Game/zNPCTypeTiki.cpp",
+      "address": 3060640,
+      "size": 88,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "zNPCVillager_SceneTimestep",
+      "source": "SB/Game/zNPCTypeVillager.cpp",
+      "address": 3081440,
+      "size": 280,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
       "name": "xBehaveMgr_SceneReset",
       "source": "SB/Core/x/xBehaveMgr.cpp",
       "address": 3088160,
       "size": 248,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "__ct",
+      "source": "SB/Core/x/xFactory.cpp",
+      "address": 3090528,
+      "size": 120,
+      "provenance": "machine-corroborated-explicit-transfers"
     },
     {
       "name": "xClumpColl_ForAllCapsuleLeafNodeIntersections",
@@ -1538,6 +1972,13 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xGridUpdate",
+      "source": "SB/Core/x/xGrid.cpp",
+      "address": 3168048,
+      "size": 204,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
       "name": "xGridRemove",
       "source": "SB/Core/x/xGrid.cpp",
       "address": 3168256,
@@ -1545,11 +1986,32 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xGridAdd",
+      "source": "SB/Core/x/xGrid.cpp",
+      "address": 3168400,
+      "size": 1104,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
       "name": "xGridEmpty",
       "source": "SB/Core/x/xGrid.cpp",
       "address": 3169504,
       "size": 248,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xGridKill",
+      "source": "SB/Core/x/xGrid.cpp",
+      "address": 3169760,
+      "size": 40,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "xGridInit",
+      "source": "SB/Core/x/xGrid.cpp",
+      "address": 3169808,
+      "size": 588,
+      "provenance": "machine-corroborated-explicit-transfers"
     },
     {
       "name": "xGridBoundInit",
@@ -1564,6 +2026,13 @@
       "address": 3211616,
       "size": 204,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "zGooInit",
+      "source": "SB/Game/zGoo.cpp",
+      "address": 3212032,
+      "size": 64,
+      "provenance": "machine-corroborated-explicit-transfers"
     },
     {
       "name": "xModelBucket_Add",
@@ -1636,11 +2105,25 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xUpdateCull_Reset",
+      "source": "SB/Core/x/xUpdateCull.cpp",
+      "address": 3314512,
+      "size": 204,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
       "name": "xUpdateCull_SetCB",
       "source": "SB/Core/x/xUpdateCull.cpp",
       "address": 3314720,
       "size": 112,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xUpdateCull_Update",
+      "source": "SB/Core/x/xUpdateCull.cpp",
+      "address": 3314832,
+      "size": 940,
+      "provenance": "machine-corroborated-explicit-transfers"
     },
     {
       "name": "xUpdateCull_Swap",
@@ -1727,6 +2210,13 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "iCameraUpdateFog",
+      "source": "SB/Core/x/iCamera.cpp",
+      "address": 3524912,
+      "size": 1672,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
       "name": "iCameraSetNearFarClip",
       "source": "SB/Core/x/iCamera.cpp",
       "address": 3527216,
@@ -1748,11 +2238,25 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "zParPTankSpawnSnow",
+      "source": "SB/Game/zParPTank.cpp",
+      "address": 3779424,
+      "size": 364,
+      "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
       "name": "xCurveAssetEvaluate",
       "source": "SB/Core/x/xCurveAsset.cpp",
       "address": 3859376,
       "size": 460,
       "provenance": "manual-reviewed"
+    },
+    {
+      "name": "refresh_config",
+      "source": "SB/Core/x/xDecal.cpp",
+      "address": 3866016,
+      "size": 468,
+      "provenance": "machine-corroborated-explicit-transfers"
     },
     {
       "name": "sort_buckets",
@@ -1767,6 +2271,13 @@
       "address": 3881856,
       "size": 52,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "Init",
+      "source": "SB/Game/zNPCHazard.cpp",
+      "address": 3931376,
+      "size": 700,
+      "provenance": "machine-corroborated-explicit-transfers"
     },
     {
       "name": "xCMprep",

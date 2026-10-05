@@ -141,8 +141,8 @@ jobs:
         if: startsWith(matrix.version, 'XBOX-')
         run: python tools/platforms/verify_xbox_reviewed.py
 
-      # Incomplete coverage is deliberately not named <version>_report: decomp.dev
-      # must not ingest inventories or empty-denominator percentages as progress.
+      # Function-only baselines remain diagnostics. Standard reports use verified
+      # complete code-region denominators and unchanged compiled-function scores.
       - name: Upload platform status and coverage
         uses: actions/upload-artifact@v4
         with:
@@ -159,6 +159,9 @@ jobs:
             build/${{ matrix.version }}/symbol-candidates.json
             build/${{ matrix.version }}/verified-anonymous-functions.json
             build/${{ matrix.version }}/corroborated-functions.json
+            build/${{ matrix.version }}/relocation-corroborated-functions.json
+            build/${{ matrix.version }}/region-layout.json
+            build/${{ matrix.version }}/section-coverage.json
 
       - name: Upload partial-function objdiff comparison
         uses: actions/upload-artifact@v4
@@ -166,6 +169,16 @@ jobs:
           name: ${{ matrix.version }}_functions
           if-no-files-found: error
           path: build/${{ matrix.version }}/baseline-report.json
+
+      - name: Verify standard report schema
+        run: build/tools/objdiff-cli report changes -o build/${{ matrix.version }}/schema-check.json build/${{ matrix.version }}/report.json build/${{ matrix.version }}/report.json
+
+      - name: Upload platform progress report
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.version }}_report
+          if-no-files-found: error
+          path: build/${{ matrix.version }}/report.json
 
   deploy:
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'

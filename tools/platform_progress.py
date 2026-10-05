@@ -114,7 +114,8 @@ def report(args, versions: dict) -> None:
         output = args.build_dir / key
         output.mkdir(parents=True, exist_ok=True)
         # Do not retain a previously successful report after a failed refresh.
-        for name in ('report.json', 'baseline-report.json', 'progress.json', 'coverage.json', 'objdiff.json'):
+        for name in ('report.json', 'baseline-report.json', 'section-report.json', 'section-coverage.json',
+                     'progress.json', 'coverage.json', 'objdiff.json'):
             (output / name).unlink(missing_ok=True)
         metadata = verify_executable(path, version)
         metadata.pop('path', None)
@@ -139,6 +140,9 @@ def report(args, versions: dict) -> None:
             corroborated = reviewed.with_name('corroborated-functions.json')
             if version['platform'] == 'ps2' and corroborated.is_file():
                 options['corroborated_functions'] = corroborated
+            transfer_proofs = reviewed.with_name('relocation-corroborated-functions.json')
+            if version['platform'] == 'ps2' and transfer_proofs.is_file():
+                options['relocation_corroborated_functions'] = transfer_proofs
             coverage = backend.prepare_report(path, output, **options)
             status['coverage'] = coverage
             if hasattr(backend, 'verify_registries'):
@@ -170,6 +174,14 @@ def report(args, versions: dict) -> None:
                 status['publish_matching_report'] = False
                 if int(measured['measures'].get('total_code', 0)):
                     status['measures'] = measured['measures']
+        if args.command == 'report' and status.get('compiled_units'):
+            exporter = importlib.import_module('platforms.' + version['platform'] + '_section_report')
+            section_coverage = (exporter.export_report(output, path) if version['platform'] == 'ps2'
+                                else exporter.export_report(output))
+            published = json.loads((output / 'section-report.json').read_text(encoding='utf-8'))
+            write_json(output / 'report.json', published)
+            status.update(publish_matching_report=True, published_report='report.json',
+                          published_measures=published['measures'], section_coverage=section_coverage)
         write_json(output / 'progress.json', status)
         summary = f"{key}: original verified; {status['report_status']}; full executable build pending"
         coverage = status.get('coverage', {})
@@ -177,6 +189,8 @@ def report(args, versions: dict) -> None:
             summary += f"; {coverage['function_count']:,} recovered functions / {coverage['known_code_bytes']:,} code bytes (partial coverage)"
         if status.get('compiled_units'):
             summary += f"; {len(status['compiled_units'])} source TU compiled, {status['measures'].get('matched_code', 0)} code bytes matched"
+        if status.get('publish_matching_report'):
+            summary += f"; section report covers {int(status['published_measures']['total_code']):,} code bytes"
         print(summary, flush=True)
         if os.environ.get('GITHUB_STEP_SUMMARY'):
             with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as stream:

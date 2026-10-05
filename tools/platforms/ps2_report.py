@@ -204,10 +204,43 @@ def verify_registries(generated_dir: Path, committed_dir: Path) -> None:
             raise ValueError(f"Generated PS2 registry differs from {Path(committed_dir) / filename}")
 
 
+def _merge_corroborated(functions: list[dict], registry: dict, expected: dict,
+                       metadata: dict, binary: bytes, loaded: list[dict], kind: str) -> int:
+    """Merge regenerated extents through shared identity, byte and overlap checks."""
+    if registry != expected:
+        raise ValueError("Corroborated registry differs from regenerated original evidence")
+    if registry["executable_sha1"] != metadata["sha1"] or registry.get("coverage_complete") is not False:
+        raise ValueError("Corroborated registry identity or partial scope differs")
+    count = 0
+    for entry in registry["functions"]:
+        low, size = entry["address"], entry["size"]
+        spans = [segment for segment in loaded if segment["address"] <= low and
+                 low + size <= segment["address"] + segment["file_size"]]
+        if (entry.get("boundary_confirmation") is not True or size <= 0 or low % 4 or size % 4 or
+                entry.get("confirmation_kind") != kind or len(spans) != 1):
+            raise ValueError("Invalid corroborated function bounds")
+        offset = spans[0]["offset"] + low - spans[0]["address"]
+        if hashlib.sha256(binary[offset:offset + size]).hexdigest() != entry["sha256"]:
+            raise ValueError("Corroborated function bytes differ from the input original")
+        overlaps = [function for function in functions
+                    if low < function["high"] and function["low"] < low + size]
+        if overlaps:
+            if (len(overlaps) != 1 or overlaps[0]["low"] != low or overlaps[0]["high"] != low + size or
+                    overlaps[0]["name"] != entry["name"] or
+                    _source_name(overlaps[0]["source"]) != _source_name(entry["source"])):
+                raise ValueError("Corroborated and existing function extents conflict")
+            continue
+        functions.append({"name": entry["name"], "source": entry["source"],
+                          "low": low, "high": low + size, "provenance": kind})
+        count += 1
+    return count
+
+
 def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path | None = None,
                    reviewed_call_targets: Path | None = None,
                    reviewed_data_anchors: Path | None = None,
-                   corroborated_functions: Path | None = None) -> dict:
+                   corroborated_functions: Path | None = None,
+                   relocation_corroborated_functions: Path | None = None) -> dict:
     """Write genuine target objects/config, or pending metadata for stripped ELF.
 
     The returned coverage is partial, even for debug-bearing executables. Call
@@ -260,50 +293,39 @@ def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path 
             functions.append({"name": entry["name"], "source": entry["source"],
                               "low": low, "high": low + size, "provenance": "manual-reviewed"})
             reviewed_count += 1
-    corroborated_count = 0
+    corroborated_count = relocation_corroborated_count = 0
+    checked_registries = []
+    manifest = Path(__file__).resolve().parents[2] / "config/platforms/versions.json"
+    orig_dir = executable.resolve().parent.parent
     if corroborated_functions is not None:
         if reviewed_functions is None:
             raise ValueError("Machine-corroborated bounds require their manual deduplication registry")
         from .france_corroborated import generate
         registry_path = Path(corroborated_functions)
-        corroborated = json.loads(registry_path.read_text(encoding="utf-8"))
-        manifest = Path(__file__).resolve().parents[2] / "config/platforms/versions.json"
-        regenerated = generate(manifest, executable.resolve().parent.parent,
-                               registry_path.with_name("symbol-candidates.json"),
+        registry = json.loads(registry_path.read_text(encoding="utf-8"))
+        regenerated = generate(manifest, orig_dir, registry_path.with_name("symbol-candidates.json"),
                                Path(reviewed_functions))
-        if regenerated != corroborated:
-            raise ValueError("Machine-corroborated registry differs from regenerated original evidence")
-        if (corroborated["executable_sha1"] != metadata["sha1"] or
-                corroborated.get("coverage_complete") is not False):
-            raise ValueError("Machine-corroborated registry identity or partial scope differs")
-        for entry in corroborated["functions"]:
-            low, size = entry["address"], entry["size"]
-            spans = [segment for segment in loaded if segment["address"] <= low and
-                     low + size <= segment["address"] + segment["file_size"]]
-            if (entry.get("boundary_confirmation") is not True or size <= 0 or low % 4 or size % 4 or
-                    entry.get("confirmation_kind") != "machine-corroborated-static-cfg" or len(spans) != 1):
-                raise ValueError("Invalid machine-corroborated function bounds")
-            offset = spans[0]["offset"] + low - spans[0]["address"]
-            if hashlib.sha256(binary[offset:offset + size]).hexdigest() != entry["sha256"]:
-                raise ValueError("Machine-corroborated function bytes differ from the input original")
-            overlaps = [function for function in functions
-                        if low < function["high"] and function["low"] < low + size]
-            if overlaps:
-                if (len(overlaps) != 1 or overlaps[0]["low"] != low or overlaps[0]["high"] != low + size or
-                        overlaps[0]["name"] != entry["name"] or
-                        _source_name(overlaps[0]["source"]) != _source_name(entry["source"])):
-                    raise ValueError("Machine-corroborated and existing function extents conflict")
-                continue
-            functions.append({"name": entry["name"], "source": entry["source"],
-                              "low": low, "high": low + size,
-                              "provenance": "machine-corroborated-static-cfg"})
-            corroborated_count += 1
+        corroborated_count = _merge_corroborated(functions, registry, regenerated, metadata, binary,
+                                                loaded, "machine-corroborated-static-cfg")
+        checked_registries.append(("corroborated-functions.json", regenerated))
+    if relocation_corroborated_functions is not None:
+        if reviewed_functions is None or corroborated_functions is None:
+            raise ValueError("Relocation corroboration requires both starting extent registries")
+        from .france_relocations import generate
+        registry_path = Path(relocation_corroborated_functions)
+        if (Path(reviewed_functions).resolve() != registry_path.with_name("reviewed-functions.json").resolve() or
+                Path(corroborated_functions).resolve() != registry_path.with_name("corroborated-functions.json").resolve()):
+            raise ValueError("Relocation corroboration must use its verified starting registries")
+        registry = json.loads(registry_path.read_text(encoding="utf-8"))
+        regenerated = generate(manifest, orig_dir, registry_path.parent)
+        relocation_corroborated_count = _merge_corroborated(
+            functions, registry, regenerated, metadata, binary, loaded, "machine-corroborated-explicit-transfers")
+        checked_registries.append(("relocation-corroborated-functions.json", regenerated))
     functions.sort(key=lambda f: f["low"])
     if any(right["low"] < left["high"] for left, right in zip(functions, functions[1:])):
         raise ValueError("Reviewed, corroborated and debug function extents overlap")
-    if corroborated_functions is not None:
-        (output_dir / "corroborated-functions.json").write_text(
-            json.dumps(regenerated, indent=2) + "\n", encoding="utf-8", newline="\n")
+    for filename, registry in checked_registries:
+        (output_dir / filename).write_text(json.dumps(registry, indent=2) + "\n", encoding="utf-8", newline="\n")
     provenance = "retail DWARF1 function ranges"
     category_id, category_name = "debug_functions", "Debug-backed functions (partial coverage)"
     if reviewed_count:
@@ -320,6 +342,9 @@ def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path 
         category_id, category_name = "known_functions", "Known function bounds (partial coverage)"
         coverage["scope"] = "Known function ranges only; not whole-executable progress"
         coverage["corroborated_function_count"] = corroborated_count
+    if relocation_corroborated_count:
+        provenance += "; explicit-transfer corroboration: relocation-corroborated-functions.json"
+        coverage["relocation_corroborated_function_count"] = relocation_corroborated_count
     data_registry = write_anchors(binary, metadata, functions, output_dir / 'address-anchors.json')
     _write_registries(metadata, functions, output_dir, provenance, data_registry['extents'])
     data_bytes = data_registry['counts']['file_backed_bytes']
