@@ -78,7 +78,7 @@ checked, and the standard objdiff parser accepts the result.
 | SLUS-20680 | 2,978,560 | 73,712 |
 | SLES-51968 | 2,979,712 | 73,712 |
 | SLES-51970 | 2,976,512 | 73,712 |
-| SLES-53623 | 2,979,968 | 22,468 |
+| SLES-53623 | 2,979,968 | 25,180 |
 | XBOX-US | 1,798,760 | 11,185 |
 | XBOX-EU | 1,798,760 | 11,185 |
 
@@ -125,7 +125,7 @@ The narrower function-only baselines currently contain:
 | USA | 5,391 | 2,107,460 | 586 functions / 73,712 bytes |
 | Europe/Australia | 5,392 | 2,108,700 | 586 functions / 73,712 bytes |
 | Germany | 5,394 | 2,105,512 | 586 functions / 73,712 bytes |
-| France (reviewed and corroborated bounds) | 520 | 185,308 | 139 functions / 22,468 bytes |
+| France (reviewed and corroborated bounds) | 538 | 195,964 | 146 functions / 25,180 bytes |
 
 The `address-anchors.json` registries also recover over 2,500 named data addresses
 and 628 function declarations in each debug-bearing version. Addresses do not
@@ -152,8 +152,8 @@ load-range validation. Targets retain the exact original instructions. The `xBas
 other target objects are not relocation-restored link inputs. Code outside those function ranges, remaining data,
 and padding remain unclassified; the whole mixed load segment is not counted as
 code. France is stripped; independently reviewed and machine-corroborated
-extents establish its 520-function, 185,308-byte function-only baseline. Its
-22,468 matched code bytes describe that subset. The published code denominator
+extents establish its 538-function, 195,964-byte function-only baseline. Its
+25,180 matched code bytes describe that subset. The published code denominator
 is the full recovered CPU text region, not this function-only subset.
 
 Both Xbox releases have identical payloads in all 13 sections; their 532 differing
@@ -184,6 +184,8 @@ France's math comparison from 12 to all 35 functions, adding eight matches / 728
 adds eight matches / 2,236 bytes while retaining all 36 functions / 36,648 bytes.
 [Entity sequence and typed-array recovery](FRANCE_ENTITY_RECOVERY.md) adds
 23 matches / 3,580 bytes while retaining all 48 entity functions / 19,036 bytes.
+[Clump-collision and spline sequence recovery](FRANCE_GEOMETRY_RECOVERY.md) adds
+seven matches / 2,712 bytes across both complete units, retaining 24 functions / 17,412 bytes.
 
 The complete animation TU now compares all 34 functions / 17,656 bytes,
 matching 17 functions / 3,032 bytes with the unchanged shipping function bodies.

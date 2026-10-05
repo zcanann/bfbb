@@ -37820,6 +37820,226 @@
           "symbol": "@6133"
         }
       ]
+    },
+    {
+      "source": "src/SB/Core/x/xClumpColl.cpp",
+      "target_unit": "SB/Core/x/xClumpColl.cpp",
+      "object": "source/xClumpColl.o",
+      "selector": "name_address",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "FastIntersectSphereTriangle@003021c0": "FastIntersectSphereTriangle__FP8RwSphereP5RwV3dP5RwV3dP5RwV3dP5RwV3dPfP5RwV3d",
+        "xClumpColl_ForAllIntersections@00302670": "xClumpColl_ForAllIntersections__FP17xClumpCollBSPTreeP14RpIntersectionPFP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv_P19RpCollisionTrianglePv",
+        "LeafNodeBoxPolyIntersect@003029b0": "LeafNodeBoxPolyIntersect__FP21xClumpCollBSPTrianglePv",
+        "LeafNodeSpherePolyIntersect@00302be0": "LeafNodeSpherePolyIntersect__FP21xClumpCollBSPTrianglePv",
+        "LeafNodeLinePolyIntersect@00302de0": "LeafNodeLinePolyIntersect__FP21xClumpCollBSPTrianglePv",
+        "xClumpColl_ForAllCapsuleLeafNodeIntersections@00303180": "xClumpColl_ForAllCapsuleLeafNodeIntersections__FP17xClumpCollBSPTreeP6RwLinefP21xClumpCollV3dGradientPFP21xClumpCollBSPTrianglePv_iPv",
+        "xClumpColl_ForAllLineLeafNodeIntersections@00303b90": "xClumpColl_ForAllLineLeafNodeIntersections__FP17xClumpCollBSPTreeP6RwLineP21xClumpCollV3dGradientPFP21xClumpCollBSPTrianglePv_iPv",
+        "xClumpColl_ForAllBoxLeafNodeIntersections@00304590": "xClumpColl_ForAllBoxLeafNodeIntersections__FP17xClumpCollBSPTreeP6RwBBoxPFP21xClumpCollBSPTrianglePv_iPv",
+        "xClumpColl_InstancePointers@003046d0": "xClumpColl_InstancePointers__FP17xClumpCollBSPTreeP7RpClump",
+        "AddAtomicCB@00304840": "AddAtomicCB__FP8RpAtomicPv",
+        "xClumpColl_StaticBufferInit@00304980": "xClumpColl_StaticBufferInit__FPvUi"
+      },
+      "calls": [
+        {
+          "function": "xClumpColl_ForAllIntersections@00302670",
+          "offset": 460,
+          "target_source": "SB/Core/x/xClumpColl.cpp",
+          "target_function": "xClumpColl_ForAllLineLeafNodeIntersections",
+          "symbol": "xClumpColl_ForAllLineLeafNodeIntersections__FP17xClumpCollBSPTreeP6RwLineP21xClumpCollV3dGradientPFP21xClumpCollBSPTrianglePv_iPv"
+        },
+        {
+          "function": "xClumpColl_ForAllIntersections@00302670",
+          "offset": 700,
+          "target_source": "SB/Core/x/xClumpColl.cpp",
+          "target_function": "xClumpColl_ForAllBoxLeafNodeIntersections",
+          "symbol": "xClumpColl_ForAllBoxLeafNodeIntersections__FP17xClumpCollBSPTreeP6RwBBoxPFP21xClumpCollBSPTrianglePv_iPv"
+        },
+        {
+          "function": "xClumpColl_ForAllIntersections@00302670",
+          "offset": 792,
+          "target_source": "SB/Core/x/xClumpColl.cpp",
+          "target_function": "xClumpColl_ForAllBoxLeafNodeIntersections",
+          "symbol": "xClumpColl_ForAllBoxLeafNodeIntersections__FP17xClumpCollBSPTreeP6RwBBoxPFP21xClumpCollBSPTrianglePv_iPv"
+        },
+        {
+          "function": "LeafNodeSpherePolyIntersect@00302be0",
+          "offset": 348,
+          "target_source": "SB/Core/x/xClumpColl.cpp",
+          "target_function": "FastIntersectSphereTriangle",
+          "symbol": "FastIntersectSphereTriangle__FP8RwSphereP5RwV3dP5RwV3dP5RwV3dP5RwV3dPfP5RwV3d"
+        }
+      ],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/x/xSpline.cpp",
+      "target_unit": "SB/Core/x/xSpline.cpp",
+      "object": "source/xSpline.o",
+      "selector": "name_address",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "xSpline3_Bezier@0020b080": "xSpline3_Bezier__FP5xVec3PfUiUiP5xVec3P5xVec3",
+        "AllocSpline3@0020b1d0": "AllocSpline3__FP5xVec3PfUiUiUiUi",
+        "xSpline3_ArcInit@0020b320": "xSpline3_ArcInit__FP8xSpline3Ui",
+        "xSpline3_EvalArcApprox@0020b4d0": "xSpline3_EvalArcApprox__FP8xSpline3fUiP5xVec3",
+        "ArcEvalIterate@0020b520": "ArcEvalIterate__FP8xSpline3fUiP5xVec3Ui",
+        "xSpline3_EvalSeg@0020b870": "xSpline3_EvalSeg__FP8xSpline3fUiP5xVec3",
+        "CoefSeg3@0020bbe0": "CoefSeg3__FP8xSpline3UiP6xCoef3",
+        "EvalBspline3@0020c040": "EvalBspline3__FP8xSpline3fUiP5xVec3",
+        "BasisBspline@0020c230": "BasisBspline__FPA4_fPf",
+        "EvalCoef3@0020c440": "EvalCoef3__FP6xCoef3fUiP5xVec3",
+        "ArcLength3@0020c630": "ArcLength3__FP6xCoef3ff",
+        "Interpolate_Bspline@0020c810": "Interpolate_Bspline__FP5xVec3P5xVec3PfUi",
+        "Tridiag_Solve@0020ca30": "Tridiag_Solve__FPfPfPfP5xVec3P5xVec3i"
+      },
+      "calls": [
+        {
+          "function": "xSpline3_Bezier@0020b080",
+          "offset": 32,
+          "target_source": "SB/Core/x/xSpline.cpp",
+          "target_function": "AllocSpline3",
+          "symbol": "AllocSpline3__FP5xVec3PfUiUiUiUi"
+        },
+        {
+          "function": "xSpline3_Bezier@0020b080",
+          "offset": 120,
+          "target_source": "SB/Core/x/xSpline.cpp",
+          "target_function": "Interpolate_Bspline",
+          "symbol": "Interpolate_Bspline__FP5xVec3P5xVec3PfUi"
+        },
+        {
+          "function": "xSpline3_Bezier@0020b080",
+          "offset": 144,
+          "target_source": "SB/Core/x/xSpline.cpp",
+          "target_function": "xSpline3_ArcInit",
+          "symbol": "xSpline3_ArcInit__FP8xSpline3Ui"
+        },
+        {
+          "function": "xSpline3_ArcInit@0020b320",
+          "offset": 176,
+          "target_source": "SB/Core/x/xSpline.cpp",
+          "target_function": "CoefSeg3",
+          "symbol": "CoefSeg3__FP8xSpline3UiP6xCoef3"
+        },
+        {
+          "function": "xSpline3_ArcInit@0020b320",
+          "offset": 312,
+          "target_source": "SB/Core/x/xSpline.cpp",
+          "target_function": "ArcLength3",
+          "symbol": "ArcLength3__FP6xCoef3ff"
+        },
+        {
+          "function": "xSpline3_EvalArcApprox@0020b4d0",
+          "offset": 24,
+          "target_source": "SB/Core/x/xSpline.cpp",
+          "target_function": "ArcEvalIterate",
+          "symbol": "ArcEvalIterate__FP8xSpline3fUiP5xVec3Ui"
+        },
+        {
+          "function": "xSpline3_EvalArcApprox@0020b4d0",
+          "offset": 40,
+          "target_source": "SB/Core/x/xSpline.cpp",
+          "target_function": "xSpline3_EvalSeg",
+          "symbol": "xSpline3_EvalSeg__FP8xSpline3fUiP5xVec3"
+        },
+        {
+          "function": "ArcEvalIterate@0020b520",
+          "offset": 420,
+          "target_source": "SB/Core/x/xSpline.cpp",
+          "target_function": "CoefSeg3",
+          "symbol": "CoefSeg3__FP8xSpline3UiP6xCoef3"
+        },
+        {
+          "function": "ArcEvalIterate@0020b520",
+          "offset": 452,
+          "target_source": "SB/Core/x/xSpline.cpp",
+          "target_function": "EvalCoef3",
+          "symbol": "EvalCoef3__FP6xCoef3fUiP5xVec3"
+        },
+        {
+          "function": "ArcEvalIterate@0020b520",
+          "offset": 500,
+          "target_source": "SB/Core/x/xSpline.cpp",
+          "target_function": "EvalCoef3",
+          "symbol": "EvalCoef3__FP6xCoef3fUiP5xVec3"
+        },
+        {
+          "function": "ArcEvalIterate@0020b520",
+          "offset": 572,
+          "target_source": "SB/Core/x/xSpline.cpp",
+          "target_function": "ArcLength3",
+          "symbol": "ArcLength3__FP6xCoef3ff"
+        },
+        {
+          "function": "ArcEvalIterate@0020b520",
+          "offset": 756,
+          "target_source": "SB/Core/x/xSpline.cpp",
+          "target_function": "EvalCoef3",
+          "symbol": "EvalCoef3__FP6xCoef3fUiP5xVec3"
+        },
+        {
+          "function": "xSpline3_EvalSeg@0020b870",
+          "offset": 52,
+          "target_source": "SB/Core/x/xSpline.cpp",
+          "target_function": "EvalBspline3",
+          "symbol": "EvalBspline3__FP8xSpline3fUiP5xVec3"
+        },
+        {
+          "function": "xSpline3_EvalSeg@0020b870",
+          "offset": 284,
+          "target_source": "SB/Core/x/xSpline.cpp",
+          "target_function": "EvalCoef3",
+          "symbol": "EvalCoef3__FP6xCoef3fUiP5xVec3"
+        },
+        {
+          "function": "xSpline3_EvalSeg@0020b870",
+          "offset": 560,
+          "target_source": "SB/Core/x/xSpline.cpp",
+          "target_function": "EvalCoef3",
+          "symbol": "EvalCoef3__FP6xCoef3fUiP5xVec3"
+        },
+        {
+          "function": "xSpline3_EvalSeg@0020b870",
+          "offset": 832,
+          "target_source": "SB/Core/x/xSpline.cpp",
+          "target_function": "EvalCoef3",
+          "symbol": "EvalCoef3__FP6xCoef3fUiP5xVec3"
+        },
+        {
+          "function": "CoefSeg3@0020bbe0",
+          "offset": 636,
+          "target_source": "SB/Core/x/xSpline.cpp",
+          "target_function": "BasisBspline",
+          "symbol": "BasisBspline__FPA4_fPf"
+        },
+        {
+          "function": "EvalBspline3@0020c040",
+          "offset": 204,
+          "target_source": "SB/Core/x/xSpline.cpp",
+          "target_function": "BasisBspline",
+          "symbol": "BasisBspline__FPA4_fPf"
+        },
+        {
+          "function": "EvalBspline3@0020c040",
+          "offset": 456,
+          "target_source": "SB/Core/x/xSpline.cpp",
+          "target_function": "EvalCoef3",
+          "symbol": "EvalCoef3__FP6xCoef3fUiP5xVec3"
+        },
+        {
+          "function": "Interpolate_Bspline@0020c810",
+          "offset": 380,
+          "target_source": "SB/Core/x/xSpline.cpp",
+          "target_function": "Tridiag_Solve",
+          "symbol": "Tridiag_Solve__FPfPfPfP5xVec3P5xVec3i"
+        }
+      ],
+      "gp_relocations": []
     }
   ]
 }

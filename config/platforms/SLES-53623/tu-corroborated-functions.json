@@ -14,7 +14,7 @@
   },
   "method": "Unique whole named-DWARF TU sequence in three originals; explicit address-producer and call relationships, unchanged non-address bits, closed local bounds and zero alignment.",
   "limitations": [
-    "Only the reviewed streaming, particle-command, animation, entity-motion, math, collision and entity TUs are eligible; this is not an automatic fuzzy-symbol promotion rule.",
+    "Only the reviewed streaming, particle-command, animation, entity-motion, math, collision, entity, clump-collision and spline TUs are eligible; this is not an automatic fuzzy-symbol promotion rule.",
     "Names and ownership come from debug-reference DWARF, not a recovered France symbol table.",
     "External call neighbors corroborate structure but are not independently promoted named relocation anchors.",
     "Seventeen streaming entries have rooted direct-call witnesses; the remaining overload is reached by its verified tail wrapper, while shutdown also uses the unique complete streaming TU sequence.",
@@ -25,14 +25,15 @@
     "Motion explicitly validates four original bounded dispatch tables and five string-address diamonds; all other indirect jumps and address patterns remain strict.",
     "Math uses three reviewed leaf tails and explicit float-memory addresses for six original DWARF-named aggregates; unknown COP1 operations are not assumed harmless.",
     "Collision uses two explicitly closed platform leaf-tail callees, six complete callback entries and original DWARF-typed global components; external entry prefixes are not promoted.",
-    "Entity verifies one exact pointer-return leaf, original typed arrays and one unnamed immutable interleaved leaf as context only; that context is not assigned source ownership or promoted."
+    "Entity verifies one exact pointer-return leaf, original typed arrays and one unnamed immutable interleaved leaf as context only; that context is not assigned source ownership or promoted.",
+    "Clump collision and splines retain strict CFG checks; original array descriptors prove two coefficient matrices and observed allocator-array slots without inferring a RenderWare struct layout."
   ],
   "counts": {
-    "functions": 222,
-    "code_bytes": 109684,
-    "source_units": 7,
-    "rooted_direct_call_entries": 117,
-    "closed_return_bodies": 213,
+    "functions": 246,
+    "code_bytes": 127096,
+    "source_units": 9,
+    "rooted_direct_call_entries": 129,
+    "closed_return_bodies": 237,
     "reviewed_tail_wrappers": 1,
     "registered_callback_entries": 26,
     "reviewed_leaf_tail_functions": 8,
@@ -41,7 +42,9 @@
     "reviewed_string_diamonds": 5,
     "reviewed_named_math_globals": 6,
     "reviewed_collision_callbacks": 6,
-    "reviewed_entity_callbacks": 6
+    "reviewed_entity_callbacks": 6,
+    "reviewed_geometry_callbacks": 4,
+    "reviewed_spline_matrices": 2
   },
   "sequence_proofs": [
     {
@@ -466,6 +469,108 @@
         "promoted_as_named_anchor": false,
         "included_in_source_unit": false
       }
+    },
+    {
+      "version": "SLUS-20680",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "source_start": 3152960,
+      "target_start": 3154368,
+      "sequence_bytes_with_alignment": 10304,
+      "uniqueness": {
+        "matching_addresses": [
+          3154368
+        ],
+        "unchanged_anchor_offset": 2944,
+        "unchanged_anchor_bytes": 6572,
+        "masked_instruction_count": 16
+      },
+      "data_address_count": 5,
+      "direct_callee_count": 9
+    },
+    {
+      "version": "SLES-51968",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "source_start": 3154256,
+      "target_start": 3154368,
+      "sequence_bytes_with_alignment": 10304,
+      "uniqueness": {
+        "matching_addresses": [
+          3154368
+        ],
+        "unchanged_anchor_offset": 2944,
+        "unchanged_anchor_bytes": 6572,
+        "masked_instruction_count": 16
+      },
+      "data_address_count": 5,
+      "direct_callee_count": 9
+    },
+    {
+      "version": "SLES-51970",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "source_start": 3150944,
+      "target_start": 3154368,
+      "sequence_bytes_with_alignment": 10304,
+      "uniqueness": {
+        "matching_addresses": [
+          3154368
+        ],
+        "unchanged_anchor_offset": 2944,
+        "unchanged_anchor_bytes": 6572,
+        "masked_instruction_count": 16
+      },
+      "data_address_count": 5,
+      "direct_callee_count": 9
+    },
+    {
+      "version": "SLUS-20680",
+      "source": "SB/Core/x/xSpline.cpp",
+      "source_start": 2140928,
+      "target_start": 2142336,
+      "sequence_bytes_with_alignment": 7240,
+      "uniqueness": {
+        "matching_addresses": [
+          2142336
+        ],
+        "unchanged_anchor_offset": 4492,
+        "unchanged_anchor_bytes": 1600,
+        "masked_instruction_count": 36
+      },
+      "data_address_count": 4,
+      "direct_callee_count": 14
+    },
+    {
+      "version": "SLES-51968",
+      "source": "SB/Core/x/xSpline.cpp",
+      "source_start": 2142224,
+      "target_start": 2142336,
+      "sequence_bytes_with_alignment": 7240,
+      "uniqueness": {
+        "matching_addresses": [
+          2142336
+        ],
+        "unchanged_anchor_offset": 4492,
+        "unchanged_anchor_bytes": 1600,
+        "masked_instruction_count": 36
+      },
+      "data_address_count": 4,
+      "direct_callee_count": 14
+    },
+    {
+      "version": "SLES-51970",
+      "source": "SB/Core/x/xSpline.cpp",
+      "source_start": 2138880,
+      "target_start": 2142336,
+      "sequence_bytes_with_alignment": 7240,
+      "uniqueness": {
+        "matching_addresses": [
+          2142336
+        ],
+        "unchanged_anchor_offset": 4492,
+        "unchanged_anchor_bytes": 1600,
+        "masked_instruction_count": 36
+      },
+      "data_address_count": 4,
+      "direct_callee_count": 14
     }
   ],
   "call_neighbors": [
@@ -7498,6 +7603,486 @@
       "reference_sha256": "36492a46647c764d0b186703eff512acb4c2f1433440c6d413db2b6c74f38e3d",
       "target_sha256": "36492a46647c764d0b186703eff512acb4c2f1433440c6d413db2b6c74f38e3d",
       "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "reference_address": 2033264,
+      "target_address": 2034624,
+      "reference_name": "xMemPopTemp",
+      "reference_source": "SB/Core/x/xMemMgr.cpp",
+      "compared_entry_prefix_bytes": 16,
+      "reference_sha256": "a7d59b2b65aebb276187fae12b75de0a36420ab52527eea90519e9d023cad40c",
+      "target_sha256": "2155a6ac88043457946e7d794894204a52541d954b833042e8467e2b6819ab2b",
+      "data_address_operands": [
+        {
+          "hi_offset": 0,
+          "lo_offset": 4,
+          "opcode": 35,
+          "reference_address": 6011488,
+          "target_address": 6010464,
+          "storage": "zero_fill"
+        }
+      ],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "reference_address": 2033280,
+      "target_address": 2034640,
+      "reference_name": "xMemPushTemp",
+      "reference_source": "SB/Core/x/xMemMgr.cpp",
+      "compared_entry_prefix_bytes": 16,
+      "reference_sha256": "e4e1d59bbff4d1bb569da868896d18a6c6364c5571e09926db8cd6fe829e681c",
+      "target_sha256": "186e65d4f659a8369261d1250257b8634387fa17be8440d422d402bf3fca38bb",
+      "data_address_operands": [
+        {
+          "hi_offset": 0,
+          "lo_offset": 4,
+          "opcode": 35,
+          "reference_address": 6011484,
+          "target_address": 6010460,
+          "storage": "zero_fill"
+        }
+      ],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "reference_address": 2225424,
+      "target_address": 2226832,
+      "reference_name": null,
+      "reference_source": null,
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "2dbb5db56f87226253cbbd6e14483379540a1f8fbd3bfd3e67fdc410e570f7e0",
+      "target_sha256": "2dbb5db56f87226253cbbd6e14483379540a1f8fbd3bfd3e67fdc410e570f7e0",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "reference_address": 2227776,
+      "target_address": 2229184,
+      "reference_name": null,
+      "reference_source": null,
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "09167a62b9abd34dea351bbf9f4ef25100d36dbbdb0003c2083b583ce4e3db4b",
+      "target_sha256": "09ec109654111381d55fd3e5ef7f8d95911ad810b3fbd786ebf103d91b031955",
+      "data_address_operands": [
+        {
+          "hi_offset": 4,
+          "lo_offset": 12,
+          "opcode": 9,
+          "reference_address": 2228976,
+          "target_address": 2230384,
+          "storage": "file_backed"
+        }
+      ],
+      "direct_transfers": [
+        {
+          "offset": 20,
+          "opcode": 3,
+          "reference_address": 2225424,
+          "target_address": 2226832
+        }
+      ],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "reference_address": 2316816,
+      "target_address": 2318224,
+      "reference_name": null,
+      "reference_source": null,
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "e81aae63f32db692d490f093410cd69a60af5af3d6ac74edde16343814e8db13",
+      "target_sha256": "e81aae63f32db692d490f093410cd69a60af5af3d6ac74edde16343814e8db13",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "reference_address": 2670408,
+      "target_address": 2671816,
+      "reference_name": null,
+      "reference_source": null,
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "c21a40a9d7ababa3f92c4e086b5170753604000074a4a609ae3bd1f98c38c35a",
+      "target_sha256": "c21a40a9d7ababa3f92c4e086b5170753604000074a4a609ae3bd1f98c38c35a",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "reference_address": 2034512,
+      "target_address": 2034624,
+      "reference_name": "xMemPopTemp",
+      "reference_source": "SB/Core/x/xMemMgr.cpp",
+      "compared_entry_prefix_bytes": 16,
+      "reference_sha256": "025bb9309d1e836ba4aa32020b94b8e1d8c4e168ce88c5df20c7fa5a74370a93",
+      "target_sha256": "2155a6ac88043457946e7d794894204a52541d954b833042e8467e2b6819ab2b",
+      "data_address_operands": [
+        {
+          "hi_offset": 0,
+          "lo_offset": 4,
+          "opcode": 35,
+          "reference_address": 6010208,
+          "target_address": 6010464,
+          "storage": "zero_fill"
+        }
+      ],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "reference_address": 2034528,
+      "target_address": 2034640,
+      "reference_name": "xMemPushTemp",
+      "reference_source": "SB/Core/x/xMemMgr.cpp",
+      "compared_entry_prefix_bytes": 16,
+      "reference_sha256": "d65832f676f46dda81b23fb169fd2be61eb1f5af68e86372aa06fcdd0fa2d49f",
+      "target_sha256": "186e65d4f659a8369261d1250257b8634387fa17be8440d422d402bf3fca38bb",
+      "data_address_operands": [
+        {
+          "hi_offset": 0,
+          "lo_offset": 4,
+          "opcode": 35,
+          "reference_address": 6010204,
+          "target_address": 6010460,
+          "storage": "zero_fill"
+        }
+      ],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "reference_address": 2226720,
+      "target_address": 2226832,
+      "reference_name": null,
+      "reference_source": null,
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "2dbb5db56f87226253cbbd6e14483379540a1f8fbd3bfd3e67fdc410e570f7e0",
+      "target_sha256": "2dbb5db56f87226253cbbd6e14483379540a1f8fbd3bfd3e67fdc410e570f7e0",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "reference_address": 2229072,
+      "target_address": 2229184,
+      "reference_name": null,
+      "reference_source": null,
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "4977fc0116e58a4a1da2c0918822560d74c1fb4a01b3cc3755f71e13612e5f01",
+      "target_sha256": "09ec109654111381d55fd3e5ef7f8d95911ad810b3fbd786ebf103d91b031955",
+      "data_address_operands": [
+        {
+          "hi_offset": 4,
+          "lo_offset": 12,
+          "opcode": 9,
+          "reference_address": 2230272,
+          "target_address": 2230384,
+          "storage": "file_backed"
+        }
+      ],
+      "direct_transfers": [
+        {
+          "offset": 20,
+          "opcode": 3,
+          "reference_address": 2226720,
+          "target_address": 2226832
+        }
+      ],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "reference_address": 2318112,
+      "target_address": 2318224,
+      "reference_name": null,
+      "reference_source": null,
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "e81aae63f32db692d490f093410cd69a60af5af3d6ac74edde16343814e8db13",
+      "target_sha256": "e81aae63f32db692d490f093410cd69a60af5af3d6ac74edde16343814e8db13",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "reference_address": 2671704,
+      "target_address": 2671816,
+      "reference_name": null,
+      "reference_source": null,
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "c21a40a9d7ababa3f92c4e086b5170753604000074a4a609ae3bd1f98c38c35a",
+      "target_sha256": "c21a40a9d7ababa3f92c4e086b5170753604000074a4a609ae3bd1f98c38c35a",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "reference_address": 2031152,
+      "target_address": 2034624,
+      "reference_name": "xMemPopTemp",
+      "reference_source": "SB/Core/x/xMemMgr.cpp",
+      "compared_entry_prefix_bytes": 16,
+      "reference_sha256": "e590bedba490daac555cbf1ff1e0bbafb2143d29e84c4705174e23e532317f14",
+      "target_sha256": "2155a6ac88043457946e7d794894204a52541d954b833042e8467e2b6819ab2b",
+      "data_address_operands": [
+        {
+          "hi_offset": 0,
+          "lo_offset": 4,
+          "opcode": 35,
+          "reference_address": 6008672,
+          "target_address": 6010464,
+          "storage": "zero_fill"
+        }
+      ],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "reference_address": 2031168,
+      "target_address": 2034640,
+      "reference_name": "xMemPushTemp",
+      "reference_source": "SB/Core/x/xMemMgr.cpp",
+      "compared_entry_prefix_bytes": 16,
+      "reference_sha256": "cb09d95d2283527f5f5bf50ce97784ed2d183a8f52b902571a5c6d0826f10451",
+      "target_sha256": "186e65d4f659a8369261d1250257b8634387fa17be8440d422d402bf3fca38bb",
+      "data_address_operands": [
+        {
+          "hi_offset": 0,
+          "lo_offset": 4,
+          "opcode": 35,
+          "reference_address": 6008668,
+          "target_address": 6010460,
+          "storage": "zero_fill"
+        }
+      ],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "reference_address": 2223408,
+      "target_address": 2226832,
+      "reference_name": null,
+      "reference_source": null,
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "2dbb5db56f87226253cbbd6e14483379540a1f8fbd3bfd3e67fdc410e570f7e0",
+      "target_sha256": "2dbb5db56f87226253cbbd6e14483379540a1f8fbd3bfd3e67fdc410e570f7e0",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "reference_address": 2225760,
+      "target_address": 2229184,
+      "reference_name": null,
+      "reference_source": null,
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "364a8ff91f92338abbbb0e0b7f25c4fb853b45741f25b64fd02b758361d540f1",
+      "target_sha256": "09ec109654111381d55fd3e5ef7f8d95911ad810b3fbd786ebf103d91b031955",
+      "data_address_operands": [
+        {
+          "hi_offset": 4,
+          "lo_offset": 12,
+          "opcode": 9,
+          "reference_address": 2226960,
+          "target_address": 2230384,
+          "storage": "file_backed"
+        }
+      ],
+      "direct_transfers": [
+        {
+          "offset": 20,
+          "opcode": 3,
+          "reference_address": 2223408,
+          "target_address": 2226832
+        }
+      ],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "reference_address": 2314800,
+      "target_address": 2318224,
+      "reference_name": null,
+      "reference_source": null,
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "e81aae63f32db692d490f093410cd69a60af5af3d6ac74edde16343814e8db13",
+      "target_sha256": "e81aae63f32db692d490f093410cd69a60af5af3d6ac74edde16343814e8db13",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "reference_address": 2668392,
+      "target_address": 2671816,
+      "reference_name": null,
+      "reference_source": null,
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "c21a40a9d7ababa3f92c4e086b5170753604000074a4a609ae3bd1f98c38c35a",
+      "target_sha256": "c21a40a9d7ababa3f92c4e086b5170753604000074a4a609ae3bd1f98c38c35a",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "reference_address": 1132432,
+      "target_address": 1132432,
+      "reference_name": null,
+      "reference_source": null,
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "4c919785c54bafbebeabe49a2483c7945ba30f466fbb496e9ecb0b28ee49cbec",
+      "target_sha256": "4c919785c54bafbebeabe49a2483c7945ba30f466fbb496e9ecb0b28ee49cbec",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "reference_address": 1149520,
+      "target_address": 1149520,
+      "reference_name": null,
+      "reference_source": null,
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "e7d8d64418bd30bb0d47070db09e0548405054adae25a0fb09881f21eb58508a",
+      "target_sha256": "e7d8d64418bd30bb0d47070db09e0548405054adae25a0fb09881f21eb58508a",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "reference_address": 2033296,
+      "target_address": 2034656,
+      "reference_name": "xMemAlloc",
+      "reference_source": "SB/Core/x/xMemMgr.cpp",
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "bc7ada52c9345012cd2db35dfbff560dccec9bb2ea7bc1f843a04e7a9a50c0c7",
+      "target_sha256": "93b45deb7826095a9d3faecdf7a621d051378f267fed2a2520a17088247eccc6",
+      "data_address_operands": [
+        {
+          "hi_offset": 4,
+          "lo_offset": 20,
+          "opcode": 9,
+          "reference_address": 5671216,
+          "target_address": 5670192,
+          "storage": "zero_fill"
+        }
+      ],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "reference_address": 1132432,
+      "target_address": 1132432,
+      "reference_name": null,
+      "reference_source": null,
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "4c919785c54bafbebeabe49a2483c7945ba30f466fbb496e9ecb0b28ee49cbec",
+      "target_sha256": "4c919785c54bafbebeabe49a2483c7945ba30f466fbb496e9ecb0b28ee49cbec",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "reference_address": 1149520,
+      "target_address": 1149520,
+      "reference_name": null,
+      "reference_source": null,
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "e7d8d64418bd30bb0d47070db09e0548405054adae25a0fb09881f21eb58508a",
+      "target_sha256": "e7d8d64418bd30bb0d47070db09e0548405054adae25a0fb09881f21eb58508a",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "reference_address": 2034544,
+      "target_address": 2034656,
+      "reference_name": "xMemAlloc",
+      "reference_source": "SB/Core/x/xMemMgr.cpp",
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "eb2932a02d5f63718f41346f2744d27135b30f0a6463134a86e4bbdf56bcd1bc",
+      "target_sha256": "93b45deb7826095a9d3faecdf7a621d051378f267fed2a2520a17088247eccc6",
+      "data_address_operands": [
+        {
+          "hi_offset": 4,
+          "lo_offset": 20,
+          "opcode": 9,
+          "reference_address": 5669936,
+          "target_address": 5670192,
+          "storage": "zero_fill"
+        }
+      ],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "reference_address": 1132432,
+      "target_address": 1132432,
+      "reference_name": null,
+      "reference_source": null,
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "4c919785c54bafbebeabe49a2483c7945ba30f466fbb496e9ecb0b28ee49cbec",
+      "target_sha256": "4c919785c54bafbebeabe49a2483c7945ba30f466fbb496e9ecb0b28ee49cbec",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "reference_address": 1149520,
+      "target_address": 1149520,
+      "reference_name": null,
+      "reference_source": null,
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "e7d8d64418bd30bb0d47070db09e0548405054adae25a0fb09881f21eb58508a",
+      "target_sha256": "e7d8d64418bd30bb0d47070db09e0548405054adae25a0fb09881f21eb58508a",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "reference_address": 2031184,
+      "target_address": 2034656,
+      "reference_name": "xMemAlloc",
+      "reference_source": "SB/Core/x/xMemMgr.cpp",
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "cf79affd6a789b2f9e8c95d1f5ede0b68efb61061e201810e42fc19b8925e859",
+      "target_sha256": "93b45deb7826095a9d3faecdf7a621d051378f267fed2a2520a17088247eccc6",
+      "data_address_operands": [
+        {
+          "hi_offset": 4,
+          "lo_offset": 20,
+          "opcode": 9,
+          "reference_address": 5668400,
+          "target_address": 5670192,
+          "storage": "zero_fill"
+        }
+      ],
       "direct_transfers": [],
       "promoted_as_named_anchor": false
     }
@@ -47799,6 +48384,2263 @@
       }
     },
     {
+      "name": "xSpline3_Bezier",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2142336,
+      "size": 324,
+      "sha256": "c8bd2b4e270014dde96b8813a383e5541c27de4dfab917c0ea08bdc4365364ba",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2140928,
+          "name": "xSpline3_Bezier",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "xSpline3_Bezier__FP5xVec3PfUiUiP5xVec3P5xVec3",
+          "reference_sha256": "6786c2651448e1089ab249b2d10078e6c84ff00858c02bfa881e24b4c5e99df1",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 32,
+              "opcode": 3,
+              "reference_address": 2141264,
+              "target_address": 2142672
+            },
+            {
+              "offset": 64,
+              "opcode": 3,
+              "reference_address": 2033296,
+              "target_address": 2034656
+            },
+            {
+              "offset": 120,
+              "opcode": 3,
+              "reference_address": 2146960,
+              "target_address": 2148368
+            },
+            {
+              "offset": 144,
+              "opcode": 3,
+              "reference_address": 2141600,
+              "target_address": 2143008
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2142224,
+          "name": "xSpline3_Bezier",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "xSpline3_Bezier__FP5xVec3PfUiUiP5xVec3P5xVec3",
+          "reference_sha256": "5f9d453eda42214a04039b158bc94bd90542a1dd56434cb8e5d20c1687bbdf8e",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 32,
+              "opcode": 3,
+              "reference_address": 2142560,
+              "target_address": 2142672
+            },
+            {
+              "offset": 64,
+              "opcode": 3,
+              "reference_address": 2034544,
+              "target_address": 2034656
+            },
+            {
+              "offset": 120,
+              "opcode": 3,
+              "reference_address": 2148256,
+              "target_address": 2148368
+            },
+            {
+              "offset": 144,
+              "opcode": 3,
+              "reference_address": 2142896,
+              "target_address": 2143008
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2138880,
+          "name": "xSpline3_Bezier",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "xSpline3_Bezier__FP5xVec3PfUiUiP5xVec3P5xVec3",
+          "reference_sha256": "3fe096defeb85e1a8091b4a471cc66a5b3582401b154e2eddde04e44ed92673e",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 32,
+              "opcode": 3,
+              "reference_address": 2139216,
+              "target_address": 2142672
+            },
+            {
+              "offset": 64,
+              "opcode": 3,
+              "reference_address": 2031184,
+              "target_address": 2034656
+            },
+            {
+              "offset": 120,
+              "opcode": 3,
+              "reference_address": 2144912,
+              "target_address": 2148368
+            },
+            {
+              "offset": 144,
+              "opcode": 3,
+              "reference_address": 2139552,
+              "target_address": 2143008
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2142652
+          ],
+          "direct_or_indirect_calls": [
+            2142368,
+            2142400,
+            2142456,
+            2142480
+          ],
+          "branches": [
+            [
+              2142408,
+              2142424
+            ],
+            [
+              2142416,
+              2142496
+            ],
+            [
+              2142432,
+              2142464
+            ],
+            [
+              2142468,
+              2142632
+            ],
+            [
+              2142488,
+              2142632
+            ],
+            [
+              2142504,
+              2142632
+            ],
+            [
+              2142620,
+              2142520
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              2142336,
+              -64
+            ],
+            [
+              2142656,
+              64
+            ]
+          ],
+          "ra_saves": [
+            [
+              2142340,
+              -16
+            ]
+          ],
+          "ra_loads": [
+            [
+              2142636,
+              -16
+            ]
+          ],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 12
+        },
+        "direct_rooted_call_sites": [
+          2044380
+        ]
+      }
+    },
+    {
+      "name": "AllocSpline3",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2142672,
+      "size": 332,
+      "sha256": "783eefbfcebbbf7a2c2dd9fd1b098525e6671710712545d6250fdf1b16eefeb2",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2141264,
+          "name": "AllocSpline3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "AllocSpline3__FP5xVec3PfUiUiUiUi",
+          "reference_sha256": "3596bf16d71a9432245ea221a425d0ab38c549094d7a716522962d721f4ac700",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 68,
+              "opcode": 3,
+              "reference_address": 2033296,
+              "target_address": 2034656
+            },
+            {
+              "offset": 168,
+              "opcode": 3,
+              "reference_address": 2033296,
+              "target_address": 2034656
+            },
+            {
+              "offset": 204,
+              "opcode": 3,
+              "reference_address": 1149520,
+              "target_address": 1149520
+            },
+            {
+              "offset": 236,
+              "opcode": 3,
+              "reference_address": 2033296,
+              "target_address": 2034656
+            },
+            {
+              "offset": 264,
+              "opcode": 3,
+              "reference_address": 1149520,
+              "target_address": 1149520
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2142560,
+          "name": "AllocSpline3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "AllocSpline3__FP5xVec3PfUiUiUiUi",
+          "reference_sha256": "e4c9a6b75838acc16cc81775f72aa688a4a4d4a3b1684ed1571559484de58044",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 68,
+              "opcode": 3,
+              "reference_address": 2034544,
+              "target_address": 2034656
+            },
+            {
+              "offset": 168,
+              "opcode": 3,
+              "reference_address": 2034544,
+              "target_address": 2034656
+            },
+            {
+              "offset": 204,
+              "opcode": 3,
+              "reference_address": 1149520,
+              "target_address": 1149520
+            },
+            {
+              "offset": 236,
+              "opcode": 3,
+              "reference_address": 2034544,
+              "target_address": 2034656
+            },
+            {
+              "offset": 264,
+              "opcode": 3,
+              "reference_address": 1149520,
+              "target_address": 1149520
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2139216,
+          "name": "AllocSpline3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "AllocSpline3__FP5xVec3PfUiUiUiUi",
+          "reference_sha256": "8e0c0265a37063cfdd8457cb18456ad730a77e53398de56f2589130e555b37e2",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 68,
+              "opcode": 3,
+              "reference_address": 2031184,
+              "target_address": 2034656
+            },
+            {
+              "offset": 168,
+              "opcode": 3,
+              "reference_address": 2031184,
+              "target_address": 2034656
+            },
+            {
+              "offset": 204,
+              "opcode": 3,
+              "reference_address": 1149520,
+              "target_address": 1149520
+            },
+            {
+              "offset": 236,
+              "opcode": 3,
+              "reference_address": 2031184,
+              "target_address": 2034656
+            },
+            {
+              "offset": 264,
+              "opcode": 3,
+              "reference_address": 1149520,
+              "target_address": 1149520
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2142996
+          ],
+          "direct_or_indirect_calls": [
+            2142740,
+            2142840,
+            2142876,
+            2142908,
+            2142936
+          ],
+          "branches": [
+            [
+              2142752,
+              2142768
+            ],
+            [
+              2142884,
+              2142952
+            ],
+            [
+              2142944,
+              2142960
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              2142672,
+              -128
+            ],
+            [
+              2143000,
+              128
+            ]
+          ],
+          "ra_saves": [
+            [
+              2142676,
+              -16
+            ]
+          ],
+          "ra_loads": [
+            [
+              2142964,
+              -16
+            ]
+          ],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 4
+        },
+        "direct_rooted_call_sites": [
+          2142368
+        ]
+      }
+    },
+    {
+      "name": "xSpline3_ArcInit",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2143008,
+      "size": 428,
+      "sha256": "377222dadfd43884654293792eef9fa7764f6968176ad2ec664265fcf9b063e9",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2141600,
+          "name": "xSpline3_ArcInit",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "xSpline3_ArcInit__FP8xSpline3Ui",
+          "reference_sha256": "33233339cb6febbe3597a7b332a5d330e003ca88007e917d393980cd78c357bd",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 132,
+              "opcode": 3,
+              "reference_address": 2033296,
+              "target_address": 2034656
+            },
+            {
+              "offset": 176,
+              "opcode": 3,
+              "reference_address": 2143840,
+              "target_address": 2145248
+            },
+            {
+              "offset": 312,
+              "opcode": 3,
+              "reference_address": 2146480,
+              "target_address": 2147888
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2142896,
+          "name": "xSpline3_ArcInit",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "xSpline3_ArcInit__FP8xSpline3Ui",
+          "reference_sha256": "cfde7c3bc7d1b2d2db69b1e26e5c06ee94e630f1791209d567ef795c1cc935b6",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 132,
+              "opcode": 3,
+              "reference_address": 2034544,
+              "target_address": 2034656
+            },
+            {
+              "offset": 176,
+              "opcode": 3,
+              "reference_address": 2145136,
+              "target_address": 2145248
+            },
+            {
+              "offset": 312,
+              "opcode": 3,
+              "reference_address": 2147776,
+              "target_address": 2147888
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2139552,
+          "name": "xSpline3_ArcInit",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "xSpline3_ArcInit__FP8xSpline3Ui",
+          "reference_sha256": "b9651e3603c4695ea0ce161e2f92fe5b9684c1df42d1f1c138ae139a57246ae8",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 132,
+              "opcode": 3,
+              "reference_address": 2031184,
+              "target_address": 2034656
+            },
+            {
+              "offset": 176,
+              "opcode": 3,
+              "reference_address": 2141792,
+              "target_address": 2145248
+            },
+            {
+              "offset": 312,
+              "opcode": 3,
+              "reference_address": 2144432,
+              "target_address": 2147888
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2143428
+          ],
+          "direct_or_indirect_calls": [
+            2143140,
+            2143184,
+            2143320
+          ],
+          "branches": [
+            [
+              2143056,
+              2143072
+            ],
+            [
+              2143080,
+              2143100
+            ],
+            [
+              2143112,
+              2143152
+            ],
+            [
+              2143164,
+              2143392
+            ],
+            [
+              2143200,
+              2143368
+            ],
+            [
+              2143212,
+              2143232
+            ],
+            [
+              2143224,
+              2143256
+            ],
+            [
+              2143256,
+              2143276
+            ],
+            [
+              2143268,
+              2143300
+            ],
+            [
+              2143360,
+              2143208
+            ],
+            [
+              2143384,
+              2143176
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              2143008,
+              -176
+            ],
+            [
+              2143432,
+              176
+            ]
+          ],
+          "ra_saves": [
+            [
+              2143012,
+              -64
+            ]
+          ],
+          "ra_loads": [
+            [
+              2143392,
+              -64
+            ]
+          ],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 4
+        },
+        "direct_rooted_call_sites": [
+          2044396,
+          2142480
+        ]
+      }
+    },
+    {
+      "name": "xSpline3_EvalArcApprox",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2143440,
+      "size": 72,
+      "sha256": "c5480646b3b49025697b4912d7764ac83265fb9d38092dd6d8ce3299bd3793e4",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2142032,
+          "name": "xSpline3_EvalArcApprox",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "xSpline3_EvalArcApprox__FP8xSpline3fUiP5xVec3",
+          "reference_sha256": "51ef85d9b22fb9b6f217e67f10b955b14503e2a890020326c3cb48073a2f786d",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 24,
+              "opcode": 3,
+              "reference_address": 2142112,
+              "target_address": 2143520
+            },
+            {
+              "offset": 40,
+              "opcode": 3,
+              "reference_address": 2142960,
+              "target_address": 2144368
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2143328,
+          "name": "xSpline3_EvalArcApprox",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "xSpline3_EvalArcApprox__FP8xSpline3fUiP5xVec3",
+          "reference_sha256": "e11866e4e287f4af830fe7303170bbfeeb17feade4c3310b68aa54f68601136d",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 24,
+              "opcode": 3,
+              "reference_address": 2143408,
+              "target_address": 2143520
+            },
+            {
+              "offset": 40,
+              "opcode": 3,
+              "reference_address": 2144256,
+              "target_address": 2144368
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2139984,
+          "name": "xSpline3_EvalArcApprox",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "xSpline3_EvalArcApprox__FP8xSpline3fUiP5xVec3",
+          "reference_sha256": "09f0041ac4a9ba2a6a146cd64d6a7f658d4859eb373df037b4a215fe68b5978a",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 24,
+              "opcode": 3,
+              "reference_address": 2140064,
+              "target_address": 2143520
+            },
+            {
+              "offset": 40,
+              "opcode": 3,
+              "reference_address": 2140912,
+              "target_address": 2144368
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2143504
+          ],
+          "direct_or_indirect_calls": [
+            2143464,
+            2143480
+          ],
+          "branches": [
+            [
+              2143456,
+              2143480
+            ],
+            [
+              2143472,
+              2143496
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              2143440,
+              -32
+            ],
+            [
+              2143508,
+              32
+            ]
+          ],
+          "ra_saves": [
+            [
+              2143444,
+              -16
+            ]
+          ],
+          "ra_loads": [
+            [
+              2143496,
+              -16
+            ]
+          ],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 8
+        },
+        "direct_rooted_call_sites": []
+      }
+    },
+    {
+      "name": "ArcEvalIterate",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2143520,
+      "size": 840,
+      "sha256": "be2f085e6303c62b0a5ce7acde0802fe1e783feb604ee668dda209032438ae00",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2142112,
+          "name": "ArcEvalIterate",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "ArcEvalIterate__FP8xSpline3fUiP5xVec3Ui",
+          "reference_sha256": "b71e9a5c6245319de34923d86c125c76e72a0628831e24c5e06756fa16078849",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 420,
+              "opcode": 3,
+              "reference_address": 2143840,
+              "target_address": 2145248
+            },
+            {
+              "offset": 452,
+              "opcode": 3,
+              "reference_address": 2145984,
+              "target_address": 2147392
+            },
+            {
+              "offset": 500,
+              "opcode": 3,
+              "reference_address": 2145984,
+              "target_address": 2147392
+            },
+            {
+              "offset": 572,
+              "opcode": 3,
+              "reference_address": 2146480,
+              "target_address": 2147888
+            },
+            {
+              "offset": 756,
+              "opcode": 3,
+              "reference_address": 2145984,
+              "target_address": 2147392
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2143408,
+          "name": "ArcEvalIterate",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "ArcEvalIterate__FP8xSpline3fUiP5xVec3Ui",
+          "reference_sha256": "1a2af1870604572f96ebf4279d198f3631c667dfb3871dadb72019645f13ff08",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 420,
+              "opcode": 3,
+              "reference_address": 2145136,
+              "target_address": 2145248
+            },
+            {
+              "offset": 452,
+              "opcode": 3,
+              "reference_address": 2147280,
+              "target_address": 2147392
+            },
+            {
+              "offset": 500,
+              "opcode": 3,
+              "reference_address": 2147280,
+              "target_address": 2147392
+            },
+            {
+              "offset": 572,
+              "opcode": 3,
+              "reference_address": 2147776,
+              "target_address": 2147888
+            },
+            {
+              "offset": 756,
+              "opcode": 3,
+              "reference_address": 2147280,
+              "target_address": 2147392
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2140064,
+          "name": "ArcEvalIterate",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "ArcEvalIterate__FP8xSpline3fUiP5xVec3Ui",
+          "reference_sha256": "15cae04b762ed738c193856790f2eae5df939469f947fbf2d19a0c4089878a6f",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 420,
+              "opcode": 3,
+              "reference_address": 2141792,
+              "target_address": 2145248
+            },
+            {
+              "offset": 452,
+              "opcode": 3,
+              "reference_address": 2143936,
+              "target_address": 2147392
+            },
+            {
+              "offset": 500,
+              "opcode": 3,
+              "reference_address": 2143936,
+              "target_address": 2147392
+            },
+            {
+              "offset": 572,
+              "opcode": 3,
+              "reference_address": 2144432,
+              "target_address": 2147888
+            },
+            {
+              "offset": 756,
+              "opcode": 3,
+              "reference_address": 2143936,
+              "target_address": 2147392
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2144352
+          ],
+          "direct_or_indirect_calls": [
+            2143940,
+            2143972,
+            2144020,
+            2144092,
+            2144276
+          ],
+          "branches": [
+            [
+              2143604,
+              2143680
+            ],
+            [
+              2143640,
+              2143656
+            ],
+            [
+              2143648,
+              2143664
+            ],
+            [
+              2143668,
+              2143616
+            ],
+            [
+              2143708,
+              2143728
+            ],
+            [
+              2143720,
+              2143756
+            ],
+            [
+              2143780,
+              2143800
+            ],
+            [
+              2143792,
+              2143828
+            ],
+            [
+              2143852,
+              2143880
+            ],
+            [
+              2143872,
+              2143884
+            ],
+            [
+              2143900,
+              2143928
+            ],
+            [
+              2143916,
+              2143936
+            ],
+            [
+              2143952,
+              2144000
+            ],
+            [
+              2143992,
+              2144304
+            ],
+            [
+              2144004,
+              2144048
+            ],
+            [
+              2144040,
+              2144304
+            ],
+            [
+              2144056,
+              2144152
+            ],
+            [
+              2144104,
+              2144128
+            ],
+            [
+              2144116,
+              2144136
+            ],
+            [
+              2144140,
+              2144064
+            ],
+            [
+              2144168,
+              2144184
+            ],
+            [
+              2144176,
+              2144264
+            ],
+            [
+              2144212,
+              2144232
+            ],
+            [
+              2144220,
+              2144264
+            ],
+            [
+              2144248,
+              2144264
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              2143520,
+              -176
+            ],
+            [
+              2144356,
+              176
+            ]
+          ],
+          "ra_saves": [
+            [
+              2143528,
+              -64
+            ]
+          ],
+          "ra_loads": [
+            [
+              2144304,
+              -64
+            ]
+          ],
+          "unreachable_zero_words": [
+            2143924,
+            2144124,
+            2144228
+          ],
+          "following_zero_alignment": 8
+        },
+        "direct_rooted_call_sites": []
+      }
+    },
+    {
+      "name": "xSpline3_EvalSeg",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2144368,
+      "size": 868,
+      "sha256": "0c4a812a85c0969031f07f8fc9f8d848b8dddc3130ddcd4fa0c1ba0783713067",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2142960,
+          "name": "xSpline3_EvalSeg",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "xSpline3_EvalSeg__FP8xSpline3fUiP5xVec3",
+          "reference_sha256": "632ae67744aee55c31659b738ca562676da9c3b227c058e934a40abd1a76fa2d",
+          "data_address_operands": [
+            {
+              "hi_offset": 324,
+              "lo_offset": 336,
+              "opcode": 9,
+              "reference_address": 4296016,
+              "target_address": 4294992,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 596,
+              "lo_offset": 608,
+              "opcode": 9,
+              "reference_address": 4295952,
+              "target_address": 4294928,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 52,
+              "opcode": 3,
+              "reference_address": 2144960,
+              "target_address": 2146368
+            },
+            {
+              "offset": 96,
+              "opcode": 3,
+              "reference_address": 1132432,
+              "target_address": 1132432
+            },
+            {
+              "offset": 284,
+              "opcode": 3,
+              "reference_address": 2145984,
+              "target_address": 2147392
+            },
+            {
+              "offset": 560,
+              "opcode": 3,
+              "reference_address": 2145984,
+              "target_address": 2147392
+            },
+            {
+              "offset": 832,
+              "opcode": 3,
+              "reference_address": 2145984,
+              "target_address": 2147392
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2144256,
+          "name": "xSpline3_EvalSeg",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "xSpline3_EvalSeg__FP8xSpline3fUiP5xVec3",
+          "reference_sha256": "2f9b2f364d35fe700678da231d8b142654a4db70108c41c2e0cdb678142f227c",
+          "data_address_operands": [
+            {
+              "hi_offset": 324,
+              "lo_offset": 336,
+              "opcode": 9,
+              "reference_address": 4294736,
+              "target_address": 4294992,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 596,
+              "lo_offset": 608,
+              "opcode": 9,
+              "reference_address": 4294672,
+              "target_address": 4294928,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 52,
+              "opcode": 3,
+              "reference_address": 2146256,
+              "target_address": 2146368
+            },
+            {
+              "offset": 96,
+              "opcode": 3,
+              "reference_address": 1132432,
+              "target_address": 1132432
+            },
+            {
+              "offset": 284,
+              "opcode": 3,
+              "reference_address": 2147280,
+              "target_address": 2147392
+            },
+            {
+              "offset": 560,
+              "opcode": 3,
+              "reference_address": 2147280,
+              "target_address": 2147392
+            },
+            {
+              "offset": 832,
+              "opcode": 3,
+              "reference_address": 2147280,
+              "target_address": 2147392
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2140912,
+          "name": "xSpline3_EvalSeg",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "xSpline3_EvalSeg__FP8xSpline3fUiP5xVec3",
+          "reference_sha256": "2ac86c4aa7b6383d0595433cfbf146a70ba868c6b98e24159cf1c32fc59e2257",
+          "data_address_operands": [
+            {
+              "hi_offset": 324,
+              "lo_offset": 336,
+              "opcode": 9,
+              "reference_address": 4293168,
+              "target_address": 4294992,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 596,
+              "lo_offset": 608,
+              "opcode": 9,
+              "reference_address": 4293104,
+              "target_address": 4294928,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 52,
+              "opcode": 3,
+              "reference_address": 2142912,
+              "target_address": 2146368
+            },
+            {
+              "offset": 96,
+              "opcode": 3,
+              "reference_address": 1132432,
+              "target_address": 1132432
+            },
+            {
+              "offset": 284,
+              "opcode": 3,
+              "reference_address": 2143936,
+              "target_address": 2147392
+            },
+            {
+              "offset": 560,
+              "opcode": 3,
+              "reference_address": 2143936,
+              "target_address": 2147392
+            },
+            {
+              "offset": 832,
+              "opcode": 3,
+              "reference_address": 2143936,
+              "target_address": 2147392
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2145228
+          ],
+          "direct_or_indirect_calls": [
+            2144420,
+            2144464,
+            2144652,
+            2144928,
+            2145200
+          ],
+          "branches": [
+            [
+              2144412,
+              2144440
+            ],
+            [
+              2144428,
+              2145208
+            ],
+            [
+              2144452,
+              2144464
+            ],
+            [
+              2144488,
+              2144512
+            ],
+            [
+              2144504,
+              2144540
+            ],
+            [
+              2144544,
+              2144568
+            ],
+            [
+              2144556,
+              2144576
+            ],
+            [
+              2144584,
+              2144944
+            ],
+            [
+              2144592,
+              2144672
+            ],
+            [
+              2144604,
+              2144624
+            ],
+            [
+              2144612,
+              2145208
+            ],
+            [
+              2144660,
+              2145208
+            ],
+            [
+              2144908,
+              2144728
+            ],
+            [
+              2144936,
+              2145208
+            ],
+            [
+              2145180,
+              2145000
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              2144368,
+              -128
+            ],
+            [
+              2145232,
+              128
+            ]
+          ],
+          "ra_saves": [
+            [
+              2144376,
+              -64
+            ]
+          ],
+          "ra_loads": [
+            [
+              2145208,
+              -64
+            ]
+          ],
+          "unreachable_zero_words": [
+            2144436,
+            2144564,
+            2144620,
+            2144668
+          ],
+          "following_zero_alignment": 12
+        },
+        "direct_rooted_call_sites": []
+      }
+    },
+    {
+      "name": "CoefSeg3",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2145248,
+      "size": 1116,
+      "sha256": "b3e4a0b534bb3453c513c9b7e160dea13a7ed78ecc239700f043c1ac43cfb03a",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2143840,
+          "name": "CoefSeg3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "CoefSeg3__FP8xSpline3UiP6xCoef3",
+          "reference_sha256": "34d17fe1c6fa2720315ec0931bf97b4bfb241287d421b68df1367b7cb09a2fce",
+          "data_address_operands": [
+            {
+              "hi_offset": 132,
+              "lo_offset": 144,
+              "opcode": 9,
+              "reference_address": 4296016,
+              "target_address": 4294992,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 388,
+              "lo_offset": 400,
+              "opcode": 9,
+              "reference_address": 4295952,
+              "target_address": 4294928,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 636,
+              "opcode": 3,
+              "reference_address": 2145456,
+              "target_address": 2146864
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2145136,
+          "name": "CoefSeg3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "CoefSeg3__FP8xSpline3UiP6xCoef3",
+          "reference_sha256": "22a678ebf437554392a42f59662fade9d8bd27d6126549a1dff06d83ca85f5b5",
+          "data_address_operands": [
+            {
+              "hi_offset": 132,
+              "lo_offset": 144,
+              "opcode": 9,
+              "reference_address": 4294736,
+              "target_address": 4294992,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 388,
+              "lo_offset": 400,
+              "opcode": 9,
+              "reference_address": 4294672,
+              "target_address": 4294928,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 636,
+              "opcode": 3,
+              "reference_address": 2146752,
+              "target_address": 2146864
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2141792,
+          "name": "CoefSeg3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "CoefSeg3__FP8xSpline3UiP6xCoef3",
+          "reference_sha256": "f37984fb26cb74bd2e671de39fe816bdfcc362537cc78c4cc949752394da48a7",
+          "data_address_operands": [
+            {
+              "hi_offset": 132,
+              "lo_offset": 144,
+              "opcode": 9,
+              "reference_address": 4293168,
+              "target_address": 4294992,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 388,
+              "lo_offset": 400,
+              "opcode": 9,
+              "reference_address": 4293104,
+              "target_address": 4294928,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 636,
+              "opcode": 3,
+              "reference_address": 2143408,
+              "target_address": 2146864
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2146356
+          ],
+          "direct_or_indirect_calls": [
+            2145884
+          ],
+          "branches": [
+            [
+              2145288,
+              2145872
+            ],
+            [
+              2145300,
+              2145616
+            ],
+            [
+              2145308,
+              2145360
+            ],
+            [
+              2145320,
+              2145336
+            ],
+            [
+              2145328,
+              2146328
+            ],
+            [
+              2145352,
+              2146336
+            ],
+            [
+              2145596,
+              2145416
+            ],
+            [
+              2145604,
+              2146328
+            ],
+            [
+              2145852,
+              2145672
+            ],
+            [
+              2145860,
+              2146328
+            ],
+            [
+              2146116,
+              2145936
+            ],
+            [
+              2146316,
+              2146176
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              2145248,
+              -192
+            ],
+            [
+              2146360,
+              192
+            ]
+          ],
+          "ra_saves": [
+            [
+              2145256,
+              -128
+            ]
+          ],
+          "ra_loads": [
+            [
+              2146336,
+              -128
+            ]
+          ],
+          "unreachable_zero_words": [
+            2145612,
+            2145868
+          ],
+          "following_zero_alignment": 4
+        },
+        "direct_rooted_call_sites": [
+          2143184
+        ]
+      }
+    },
+    {
+      "name": "EvalBspline3",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2146368,
+      "size": 496,
+      "sha256": "de3a629f3bedd4eaa0e230b05b12f0e3d02934455a27100ee398c2eab893bbd6",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2144960,
+          "name": "EvalBspline3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "EvalBspline3__FP8xSpline3fUiP5xVec3",
+          "reference_sha256": "9414088fa83db3519a768b2aab17f43558311b631936ec3f6b35390394508ba6",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 204,
+              "opcode": 3,
+              "reference_address": 2145456,
+              "target_address": 2146864
+            },
+            {
+              "offset": 456,
+              "opcode": 3,
+              "reference_address": 2145984,
+              "target_address": 2147392
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2146256,
+          "name": "EvalBspline3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "EvalBspline3__FP8xSpline3fUiP5xVec3",
+          "reference_sha256": "90ffa156c0610bbff12c24dd120a1612cbfd0265624ecca46b9c8ee01f9b2b11",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 204,
+              "opcode": 3,
+              "reference_address": 2146752,
+              "target_address": 2146864
+            },
+            {
+              "offset": 456,
+              "opcode": 3,
+              "reference_address": 2147280,
+              "target_address": 2147392
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2142912,
+          "name": "EvalBspline3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "EvalBspline3__FP8xSpline3fUiP5xVec3",
+          "reference_sha256": "17121e6003187aa138711ba9fb0cba3aa16b6a2c6136e846c87b43de6dc01094",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 204,
+              "opcode": 3,
+              "reference_address": 2143408,
+              "target_address": 2146864
+            },
+            {
+              "offset": 456,
+              "opcode": 3,
+              "reference_address": 2143936,
+              "target_address": 2147392
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2146856
+          ],
+          "direct_or_indirect_calls": [
+            2146572,
+            2146824
+          ],
+          "branches": [
+            [
+              2146416,
+              2146432
+            ],
+            [
+              2146456,
+              2146472
+            ],
+            [
+              2146484,
+              2146560
+            ],
+            [
+              2146520,
+              2146536
+            ],
+            [
+              2146528,
+              2146544
+            ],
+            [
+              2146548,
+              2146496
+            ],
+            [
+              2146804,
+              2146624
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              2146368,
+              -256
+            ],
+            [
+              2146860,
+              256
+            ]
+          ],
+          "ra_saves": [
+            [
+              2146372,
+              -176
+            ]
+          ],
+          "ra_loads": [
+            [
+              2146832,
+              -176
+            ]
+          ],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 0
+        },
+        "direct_rooted_call_sites": []
+      }
+    },
+    {
+      "name": "BasisBspline",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2146864,
+      "size": 516,
+      "sha256": "432a9b4d5cc223113014c62c0ceeca936d2273a6ec4177b4cb92e4e90b97dd73",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2145456,
+          "name": "BasisBspline",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "BasisBspline__FPA4_fPf",
+          "reference_sha256": "432a9b4d5cc223113014c62c0ceeca936d2273a6ec4177b4cb92e4e90b97dd73",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2146752,
+          "name": "BasisBspline",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "BasisBspline__FPA4_fPf",
+          "reference_sha256": "432a9b4d5cc223113014c62c0ceeca936d2273a6ec4177b4cb92e4e90b97dd73",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2143408,
+          "name": "BasisBspline",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "BasisBspline__FPA4_fPf",
+          "reference_sha256": "432a9b4d5cc223113014c62c0ceeca936d2273a6ec4177b4cb92e4e90b97dd73",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2147372
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              2146976,
+              2147328
+            ],
+            [
+              2147012,
+              2147044
+            ],
+            [
+              2147036,
+              2147020
+            ],
+            [
+              2147072,
+              2147096
+            ],
+            [
+              2147116,
+              2147136
+            ],
+            [
+              2147140,
+              2147272
+            ],
+            [
+              2147260,
+              2147168
+            ],
+            [
+              2147316,
+              2147008
+            ],
+            [
+              2147336,
+              2146968
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              2146864,
+              -128
+            ],
+            [
+              2147376,
+              128
+            ]
+          ],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 12
+        },
+        "direct_rooted_call_sites": [
+          2145884
+        ]
+      }
+    },
+    {
+      "name": "EvalCoef3",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2147392,
+      "size": 488,
+      "sha256": "bbcec28d7337611633de26cac57426d108422a40fcc782f1fdd56c7e0c4dd321",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2145984,
+          "name": "EvalCoef3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "EvalCoef3__FP6xCoef3fUiP5xVec3",
+          "reference_sha256": "bbcec28d7337611633de26cac57426d108422a40fcc782f1fdd56c7e0c4dd321",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2147280,
+          "name": "EvalCoef3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "EvalCoef3__FP6xCoef3fUiP5xVec3",
+          "reference_sha256": "bbcec28d7337611633de26cac57426d108422a40fcc782f1fdd56c7e0c4dd321",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2143936,
+          "name": "EvalCoef3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "EvalCoef3__FP6xCoef3fUiP5xVec3",
+          "reference_sha256": "bbcec28d7337611633de26cac57426d108422a40fcc782f1fdd56c7e0c4dd321",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2147872
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              2147396,
+              2147800
+            ],
+            [
+              2147404,
+              2147704
+            ],
+            [
+              2147416,
+              2147576
+            ],
+            [
+              2147424,
+              2147440
+            ],
+            [
+              2147432,
+              2147856
+            ],
+            [
+              2147568,
+              2147872
+            ],
+            [
+              2147696,
+              2147872
+            ],
+            [
+              2147792,
+              2147872
+            ],
+            [
+              2147844,
+              2147872
+            ]
+          ],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [
+            2147852
+          ],
+          "following_zero_alignment": 8
+        },
+        "direct_rooted_call_sites": []
+      }
+    },
+    {
+      "name": "ArcLength3",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2147888,
+      "size": 468,
+      "sha256": "76ec45f64ea1fc541a0fda290fdf020a6fc150acf1b89a50b515753db35a6624",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2146480,
+          "name": "ArcLength3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "ArcLength3__FP6xCoef3ff",
+          "reference_sha256": "76ec45f64ea1fc541a0fda290fdf020a6fc150acf1b89a50b515753db35a6624",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2147776,
+          "name": "ArcLength3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "ArcLength3__FP6xCoef3ff",
+          "reference_sha256": "76ec45f64ea1fc541a0fda290fdf020a6fc150acf1b89a50b515753db35a6624",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2144432,
+          "name": "ArcLength3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "ArcLength3__FP6xCoef3ff",
+          "reference_sha256": "76ec45f64ea1fc541a0fda290fdf020a6fc150acf1b89a50b515753db35a6624",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2148348
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              2148116,
+              2148176
+            ],
+            [
+              2148164,
+              2148224
+            ],
+            [
+              2148232,
+              2148112
+            ]
+          ],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [
+            2148172
+          ],
+          "following_zero_alignment": 12
+        },
+        "direct_rooted_call_sites": [
+          2143320
+        ]
+      }
+    },
+    {
+      "name": "Interpolate_Bspline",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2148368,
+      "size": 540,
+      "sha256": "8e81ced734338a02dd7f568a805d1cf2995ebae73b2fb82e48aee5707100b7a9",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2146960,
+          "name": "Interpolate_Bspline",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "Interpolate_Bspline__FP5xVec3P5xVec3PfUi",
+          "reference_sha256": "3c5658c0793df44f23d3a4068c82b1676bbe15418c820f45586e4343d826181e",
+          "data_address_operands": [
+            {
+              "hi_offset": 52,
+              "lo_offset": 60,
+              "opcode": 9,
+              "reference_address": 6011484,
+              "target_address": 6010460,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 400,
+              "lo_offset": 408,
+              "opcode": 9,
+              "reference_address": 6011488,
+              "target_address": 6010464,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 380,
+              "opcode": 3,
+              "reference_address": 2147504,
+              "target_address": 2148912
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2148256,
+          "name": "Interpolate_Bspline",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "Interpolate_Bspline__FP5xVec3P5xVec3PfUi",
+          "reference_sha256": "7ff9c905b87dff02e141c3ddc79b9d16f89988b04121d9b55654c422a909b8d0",
+          "data_address_operands": [
+            {
+              "hi_offset": 52,
+              "lo_offset": 60,
+              "opcode": 9,
+              "reference_address": 6010204,
+              "target_address": 6010460,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 400,
+              "lo_offset": 408,
+              "opcode": 9,
+              "reference_address": 6010208,
+              "target_address": 6010464,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 380,
+              "opcode": 3,
+              "reference_address": 2148800,
+              "target_address": 2148912
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2144912,
+          "name": "Interpolate_Bspline",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "Interpolate_Bspline__FP5xVec3P5xVec3PfUi",
+          "reference_sha256": "198ca66a5456f3fd148130287760eeefd91607b0760597b13c2d582f21eb52dd",
+          "data_address_operands": [
+            {
+              "hi_offset": 52,
+              "lo_offset": 60,
+              "opcode": 9,
+              "reference_address": 6008668,
+              "target_address": 6010460,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 400,
+              "lo_offset": 408,
+              "opcode": 9,
+              "reference_address": 6008672,
+              "target_address": 6010464,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 380,
+              "opcode": 3,
+              "reference_address": 2145456,
+              "target_address": 2148912
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2148900
+          ],
+          "direct_or_indirect_calls": [
+            2148440,
+            2148456,
+            2148472,
+            2148748,
+            2148832,
+            2148844,
+            2148856
+          ],
+          "branches": [
+            [
+              2148532,
+              2148728
+            ],
+            [
+              2148716,
+              2148560
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              2148368,
+              -144
+            ],
+            [
+              2148904,
+              144
+            ]
+          ],
+          "ra_saves": [
+            [
+              2148372,
+              -16
+            ]
+          ],
+          "ra_loads": [
+            [
+              2148864,
+              -16
+            ]
+          ],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 4
+        },
+        "direct_rooted_call_sites": [
+          2142456
+        ]
+      }
+    },
+    {
+      "name": "Tridiag_Solve",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2148912,
+      "size": 664,
+      "sha256": "3d160058a10f081fa4888511879df9f921e9f40e49b71fd6d809f0702174cacc",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2147504,
+          "name": "Tridiag_Solve",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "Tridiag_Solve__FPfPfPfP5xVec3P5xVec3i",
+          "reference_sha256": "16f6ba0d9453f3ed83ba09e9cffcecf2e67e3397bdf156b21919d3661c10187e",
+          "data_address_operands": [
+            {
+              "hi_offset": 64,
+              "lo_offset": 68,
+              "opcode": 9,
+              "reference_address": 6011484,
+              "target_address": 6010460,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 588,
+              "lo_offset": 592,
+              "opcode": 9,
+              "reference_address": 6011488,
+              "target_address": 6010464,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2148800,
+          "name": "Tridiag_Solve",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "Tridiag_Solve__FPfPfPfP5xVec3P5xVec3i",
+          "reference_sha256": "a1f5dff951598565c4f4c7db20f989022a5a13cfe97f9ea4fbab40d3c28c4ab0",
+          "data_address_operands": [
+            {
+              "hi_offset": 64,
+              "lo_offset": 68,
+              "opcode": 9,
+              "reference_address": 6010204,
+              "target_address": 6010460,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 588,
+              "lo_offset": 592,
+              "opcode": 9,
+              "reference_address": 6010208,
+              "target_address": 6010464,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2145456,
+          "name": "Tridiag_Solve",
+          "source": "SB/Core/x/xSpline.cpp",
+          "linkage_name": "Tridiag_Solve__FPfPfPfP5xVec3P5xVec3i",
+          "reference_sha256": "cabd88201a209bfbc10e356b22574e7b81eb54814f1a86f64299783e978fe570",
+          "data_address_operands": [
+            {
+              "hi_offset": 64,
+              "lo_offset": 68,
+              "opcode": 9,
+              "reference_address": 6008668,
+              "target_address": 6010460,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 588,
+              "lo_offset": 592,
+              "opcode": 9,
+              "reference_address": 6008672,
+              "target_address": 6010464,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2149568
+          ],
+          "direct_or_indirect_calls": [
+            2148988,
+            2149012,
+            2149512,
+            2149524
+          ],
+          "branches": [
+            [
+              2149096,
+              2149304
+            ],
+            [
+              2149296,
+              2149136
+            ],
+            [
+              2149352,
+              2149496
+            ],
+            [
+              2149488,
+              2149392
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              2148912,
+              -144
+            ],
+            [
+              2149572,
+              144
+            ]
+          ],
+          "ra_saves": [
+            [
+              2148916,
+              -16
+            ]
+          ],
+          "ra_loads": [
+            [
+              2149532,
+              -16
+            ]
+          ],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 8
+        },
+        "direct_rooted_call_sites": [
+          2148748
+        ]
+      }
+    },
+    {
       "name": "XST_find_bySID",
       "source": "SB/Core/x/xstransvc.cpp",
       "address": 2149584,
@@ -61528,6 +64370,2180 @@
           2183848
         ]
       }
+    },
+    {
+      "name": "FastIntersectSphereTriangle",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "address": 3154368,
+      "size": 1200,
+      "sha256": "945e68faac4da6fb586a12b1881dcafcd1af0757b9654327ffc2c4e4ab675a7a",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3152960,
+          "name": "FastIntersectSphereTriangle",
+          "source": "SB/Core/x/xClumpColl.cpp",
+          "linkage_name": "FastIntersectSphereTriangle__FP8RwSphereP5RwV3dP5RwV3dP5RwV3dP5RwV3dPfP5RwV3d",
+          "reference_sha256": "945e68faac4da6fb586a12b1881dcafcd1af0757b9654327ffc2c4e4ab675a7a",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3154256,
+          "name": "FastIntersectSphereTriangle",
+          "source": "SB/Core/x/xClumpColl.cpp",
+          "linkage_name": "FastIntersectSphereTriangle__FP8RwSphereP5RwV3dP5RwV3dP5RwV3dP5RwV3dPfP5RwV3d",
+          "reference_sha256": "945e68faac4da6fb586a12b1881dcafcd1af0757b9654327ffc2c4e4ab675a7a",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3150944,
+          "name": "FastIntersectSphereTriangle",
+          "source": "SB/Core/x/xClumpColl.cpp",
+          "linkage_name": "FastIntersectSphereTriangle__FP8RwSphereP5RwV3dP5RwV3dP5RwV3dP5RwV3dPfP5RwV3d",
+          "reference_sha256": "945e68faac4da6fb586a12b1881dcafcd1af0757b9654327ffc2c4e4ab675a7a",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            3155560
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              3154504,
+              3154520
+            ],
+            [
+              3154512,
+              3155560
+            ],
+            [
+              3154540,
+              3154576
+            ],
+            [
+              3154568,
+              3154576
+            ],
+            [
+              3154664,
+              3154688
+            ],
+            [
+              3154676,
+              3154696
+            ],
+            [
+              3154688,
+              3155560
+            ],
+            [
+              3154744,
+              3154760
+            ],
+            [
+              3154752,
+              3155560
+            ],
+            [
+              3154792,
+              3154808
+            ],
+            [
+              3154800,
+              3155560
+            ],
+            [
+              3154840,
+              3154856
+            ],
+            [
+              3154848,
+              3155560
+            ],
+            [
+              3154860,
+              3155008
+            ],
+            [
+              3154872,
+              3154944
+            ],
+            [
+              3154896,
+              3155144
+            ],
+            [
+              3154924,
+              3155144
+            ],
+            [
+              3154932,
+              3155560
+            ],
+            [
+              3154964,
+              3155144
+            ],
+            [
+              3154988,
+              3155144
+            ],
+            [
+              3154996,
+              3155560
+            ],
+            [
+              3155012,
+              3155080
+            ],
+            [
+              3155036,
+              3155144
+            ],
+            [
+              3155064,
+              3155144
+            ],
+            [
+              3155072,
+              3155560
+            ],
+            [
+              3155100,
+              3155144
+            ],
+            [
+              3155124,
+              3155144
+            ],
+            [
+              3155132,
+              3155560
+            ],
+            [
+              3155236,
+              3155280
+            ],
+            [
+              3155260,
+              3155280
+            ],
+            [
+              3155268,
+              3155560
+            ],
+            [
+              3155372,
+              3155416
+            ],
+            [
+              3155396,
+              3155416
+            ],
+            [
+              3155404,
+              3155560
+            ],
+            [
+              3155508,
+              3155552
+            ],
+            [
+              3155536,
+              3155552
+            ],
+            [
+              3155544,
+              3155560
+            ]
+          ],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [
+            3154940,
+            3155004,
+            3155140,
+            3155276,
+            3155412
+          ],
+          "following_zero_alignment": 0
+        },
+        "direct_rooted_call_sites": []
+      }
+    },
+    {
+      "name": "xClumpColl_ForAllIntersections",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "address": 3155568,
+      "size": 832,
+      "sha256": "58ce76eb8733eba24332119218954a90fd431c6762e466c80f04d9d8343e9716",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3154160,
+          "name": "xClumpColl_ForAllIntersections",
+          "source": "SB/Core/x/xClumpColl.cpp",
+          "linkage_name": "xClumpColl_ForAllIntersections__FP17xClumpCollBSPTreeP14RpIntersectionPFP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv_P19RpCollisionTrianglePv",
+          "reference_sha256": "079368e4b485015be97e6c3f3114269e70afb3c94e22fefa9d6347e37b599226",
+          "data_address_operands": [
+            {
+              "hi_offset": 428,
+              "lo_offset": 436,
+              "opcode": 9,
+              "reference_address": 3156064,
+              "target_address": 3157472,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 488,
+              "lo_offset": 524,
+              "opcode": 9,
+              "reference_address": 3155552,
+              "target_address": 3156960,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 720,
+              "lo_offset": 748,
+              "opcode": 9,
+              "reference_address": 3154992,
+              "target_address": 3156400,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 460,
+              "opcode": 3,
+              "reference_address": 3159568,
+              "target_address": 3160976
+            },
+            {
+              "offset": 700,
+              "opcode": 3,
+              "reference_address": 3162128,
+              "target_address": 3163536
+            },
+            {
+              "offset": 792,
+              "opcode": 3,
+              "reference_address": 3162128,
+              "target_address": 3163536
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3155456,
+          "name": "xClumpColl_ForAllIntersections",
+          "source": "SB/Core/x/xClumpColl.cpp",
+          "linkage_name": "xClumpColl_ForAllIntersections__FP17xClumpCollBSPTreeP14RpIntersectionPFP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv_P19RpCollisionTrianglePv",
+          "reference_sha256": "95b56197a5352653528fe74ae31a3b472e1c0b7bbc0fffa6250144a15f611ec7",
+          "data_address_operands": [
+            {
+              "hi_offset": 428,
+              "lo_offset": 436,
+              "opcode": 9,
+              "reference_address": 3157360,
+              "target_address": 3157472,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 488,
+              "lo_offset": 524,
+              "opcode": 9,
+              "reference_address": 3156848,
+              "target_address": 3156960,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 720,
+              "lo_offset": 748,
+              "opcode": 9,
+              "reference_address": 3156288,
+              "target_address": 3156400,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 460,
+              "opcode": 3,
+              "reference_address": 3160864,
+              "target_address": 3160976
+            },
+            {
+              "offset": 700,
+              "opcode": 3,
+              "reference_address": 3163424,
+              "target_address": 3163536
+            },
+            {
+              "offset": 792,
+              "opcode": 3,
+              "reference_address": 3163424,
+              "target_address": 3163536
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3152144,
+          "name": "xClumpColl_ForAllIntersections",
+          "source": "SB/Core/x/xClumpColl.cpp",
+          "linkage_name": "xClumpColl_ForAllIntersections__FP17xClumpCollBSPTreeP14RpIntersectionPFP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv_P19RpCollisionTrianglePv",
+          "reference_sha256": "357a5041b893143bc06439986f7f0008e9244c6760e0e79576be2e80f87710ea",
+          "data_address_operands": [
+            {
+              "hi_offset": 428,
+              "lo_offset": 436,
+              "opcode": 9,
+              "reference_address": 3154048,
+              "target_address": 3157472,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 488,
+              "lo_offset": 524,
+              "opcode": 9,
+              "reference_address": 3153536,
+              "target_address": 3156960,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 720,
+              "lo_offset": 748,
+              "opcode": 9,
+              "reference_address": 3152976,
+              "target_address": 3156400,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 460,
+              "opcode": 3,
+              "reference_address": 3157552,
+              "target_address": 3160976
+            },
+            {
+              "offset": 700,
+              "opcode": 3,
+              "reference_address": 3160112,
+              "target_address": 3163536
+            },
+            {
+              "offset": 792,
+              "opcode": 3,
+              "reference_address": 3160112,
+              "target_address": 3163536
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            3156392
+          ],
+          "direct_or_indirect_calls": [
+            3156028,
+            3156268,
+            3156360
+          ],
+          "branches": [
+            [
+              3155600,
+              3156288
+            ],
+            [
+              3155612,
+              3156048
+            ],
+            [
+              3155620,
+              3155656
+            ],
+            [
+              3155632,
+              3155648
+            ],
+            [
+              3155640,
+              3156376
+            ],
+            [
+              3155648,
+              3156384
+            ],
+            [
+              3155816,
+              3155848
+            ],
+            [
+              3155888,
+              3155920
+            ],
+            [
+              3155960,
+              3155992
+            ],
+            [
+              3156036,
+              3156384
+            ],
+            [
+              3156276,
+              3156384
+            ],
+            [
+              3156368,
+              3156384
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              3155568,
+              -240
+            ],
+            [
+              3156396,
+              240
+            ]
+          ],
+          "ra_saves": [
+            [
+              3155576,
+              -224
+            ]
+          ],
+          "ra_loads": [
+            [
+              3156384,
+              -224
+            ]
+          ],
+          "unreachable_zero_words": [
+            3156044,
+            3156284
+          ],
+          "following_zero_alignment": 0
+        },
+        "direct_rooted_call_sites": [
+          1728836,
+          1731632,
+          2120372,
+          3326092
+        ]
+      }
+    },
+    {
+      "name": "LeafNodeBoxPolyIntersect",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "address": 3156400,
+      "size": 560,
+      "sha256": "f2f003d2e89c494750ee42cd82006b88966ac21d9a1bfc50c3889e2143abb2f2",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3154992,
+          "name": "LeafNodeBoxPolyIntersect",
+          "source": "SB/Core/x/xClumpColl.cpp",
+          "linkage_name": "LeafNodeBoxPolyIntersect__FP21xClumpCollBSPTrianglePv",
+          "reference_sha256": "5bd161e7ff80584ca149e11e1b0631e9ac4ada39f33f807dea3fc68877d32149",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 140,
+              "opcode": 3,
+              "reference_address": 2670408,
+              "target_address": 2671816
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3156288,
+          "name": "LeafNodeBoxPolyIntersect",
+          "source": "SB/Core/x/xClumpColl.cpp",
+          "linkage_name": "LeafNodeBoxPolyIntersect__FP21xClumpCollBSPTrianglePv",
+          "reference_sha256": "bf07c1169d0f766d0c26c32bf6135346a000d35bd014f35c165783e28bf3e44a",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 140,
+              "opcode": 3,
+              "reference_address": 2671704,
+              "target_address": 2671816
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3152976,
+          "name": "LeafNodeBoxPolyIntersect",
+          "source": "SB/Core/x/xClumpColl.cpp",
+          "linkage_name": "LeafNodeBoxPolyIntersect__FP21xClumpCollBSPTrianglePv",
+          "reference_sha256": "d258a5db6db60203ea21aca9da2da33b8ba5c3d844d4fd53043b8037a52b28d5",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 140,
+              "opcode": 3,
+              "reference_address": 2668392,
+              "target_address": 2671816
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            3156952
+          ],
+          "direct_or_indirect_calls": [
+            3156540,
+            3156864
+          ],
+          "branches": [
+            [
+              3156484,
+              3156888
+            ],
+            [
+              3156496,
+              3156520
+            ],
+            [
+              3156508,
+              3156528
+            ],
+            [
+              3156548,
+              3156888
+            ],
+            [
+              3156744,
+              3156784
+            ],
+            [
+              3156772,
+              3156784
+            ],
+            [
+              3156872,
+              3156888
+            ],
+            [
+              3156880,
+              3156912
+            ],
+            [
+              3156900,
+              3156472
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              3156400,
+              -208
+            ],
+            [
+              3156956,
+              208
+            ]
+          ],
+          "ra_saves": [
+            [
+              3156404,
+              -64
+            ]
+          ],
+          "ra_loads": [
+            [
+              3156912,
+              -64
+            ]
+          ],
+          "unreachable_zero_words": [
+            3156516,
+            3156780
+          ],
+          "following_zero_alignment": 0
+        },
+        "direct_rooted_call_sites": []
+      }
+    },
+    {
+      "name": "LeafNodeSpherePolyIntersect",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "address": 3156960,
+      "size": 512,
+      "sha256": "e7a95ba8f6c3e5249187c850183c09122d45f28c3dd7d697fa56bf9caf147e04",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3155552,
+          "name": "LeafNodeSpherePolyIntersect",
+          "source": "SB/Core/x/xClumpColl.cpp",
+          "linkage_name": "LeafNodeSpherePolyIntersect__FP21xClumpCollBSPTrianglePv",
+          "reference_sha256": "249320b813f285f9b5bba9bf6ec70efb69ca2b807816efea9a48fe5487222db5",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 348,
+              "opcode": 3,
+              "reference_address": 3152960,
+              "target_address": 3154368
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3156848,
+          "name": "LeafNodeSpherePolyIntersect",
+          "source": "SB/Core/x/xClumpColl.cpp",
+          "linkage_name": "LeafNodeSpherePolyIntersect__FP21xClumpCollBSPTrianglePv",
+          "reference_sha256": "ae82b5c3ca8ad3e211ec3c0dcc2ca49cedfd5a5d776e93c6c00a7d0651cd1f71",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 348,
+              "opcode": 3,
+              "reference_address": 3154256,
+              "target_address": 3154368
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3153536,
+          "name": "LeafNodeSpherePolyIntersect",
+          "source": "SB/Core/x/xClumpColl.cpp",
+          "linkage_name": "LeafNodeSpherePolyIntersect__FP21xClumpCollBSPTrianglePv",
+          "reference_sha256": "790c328b2453007dfbe77689fb902137696acfa62dbcb1189f672aaf78af0eaf",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 348,
+              "opcode": 3,
+              "reference_address": 3150944,
+              "target_address": 3154368
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            3157464
+          ],
+          "direct_or_indirect_calls": [
+            3157308,
+            3157400
+          ],
+          "branches": [
+            [
+              3157004,
+              3157424
+            ],
+            [
+              3157016,
+              3157040
+            ],
+            [
+              3157028,
+              3157048
+            ],
+            [
+              3157104,
+              3157424
+            ],
+            [
+              3157112,
+              3157424
+            ],
+            [
+              3157172,
+              3157424
+            ],
+            [
+              3157180,
+              3157424
+            ],
+            [
+              3157264,
+              3157424
+            ],
+            [
+              3157272,
+              3157424
+            ],
+            [
+              3157316,
+              3157424
+            ],
+            [
+              3157408,
+              3157424
+            ],
+            [
+              3157416,
+              3157448
+            ],
+            [
+              3157436,
+              3156992
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              3156960,
+              -160
+            ],
+            [
+              3157468,
+              160
+            ]
+          ],
+          "ra_saves": [
+            [
+              3156964,
+              -112
+            ]
+          ],
+          "ra_loads": [
+            [
+              3157448,
+              -112
+            ]
+          ],
+          "unreachable_zero_words": [
+            3157036
+          ],
+          "following_zero_alignment": 0
+        },
+        "direct_rooted_call_sites": []
+      }
+    },
+    {
+      "name": "LeafNodeLinePolyIntersect",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "address": 3157472,
+      "size": 920,
+      "sha256": "966e2f6d9ee255213bdd698c1490fce14b3c14dc37738c052495c6eb219837be",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3156064,
+          "name": "LeafNodeLinePolyIntersect",
+          "source": "SB/Core/x/xClumpColl.cpp",
+          "linkage_name": "LeafNodeLinePolyIntersect__FP21xClumpCollBSPTrianglePv",
+          "reference_sha256": "966e2f6d9ee255213bdd698c1490fce14b3c14dc37738c052495c6eb219837be",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3157360,
+          "name": "LeafNodeLinePolyIntersect",
+          "source": "SB/Core/x/xClumpColl.cpp",
+          "linkage_name": "LeafNodeLinePolyIntersect__FP21xClumpCollBSPTrianglePv",
+          "reference_sha256": "966e2f6d9ee255213bdd698c1490fce14b3c14dc37738c052495c6eb219837be",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3154048,
+          "name": "LeafNodeLinePolyIntersect",
+          "source": "SB/Core/x/xClumpColl.cpp",
+          "linkage_name": "LeafNodeLinePolyIntersect__FP21xClumpCollBSPTrianglePv",
+          "reference_sha256": "966e2f6d9ee255213bdd698c1490fce14b3c14dc37738c052495c6eb219837be",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            3158384
+          ],
+          "direct_or_indirect_calls": [
+            3158320
+          ],
+          "branches": [
+            [
+              3157516,
+              3158344
+            ],
+            [
+              3157528,
+              3157552
+            ],
+            [
+              3157540,
+              3157560
+            ],
+            [
+              3157724,
+              3157776
+            ],
+            [
+              3157780,
+              3158344
+            ],
+            [
+              3157824,
+              3158344
+            ],
+            [
+              3157836,
+              3158344
+            ],
+            [
+              3157884,
+              3158344
+            ],
+            [
+              3157896,
+              3158344
+            ],
+            [
+              3157936,
+              3158344
+            ],
+            [
+              3157948,
+              3158344
+            ],
+            [
+              3158224,
+              3158264
+            ],
+            [
+              3158252,
+              3158264
+            ],
+            [
+              3158328,
+              3158344
+            ],
+            [
+              3158336,
+              3158368
+            ],
+            [
+              3158356,
+              3157504
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              3157472,
+              -144
+            ],
+            [
+              3158388,
+              144
+            ]
+          ],
+          "ra_saves": [
+            [
+              3157476,
+              -96
+            ]
+          ],
+          "ra_loads": [
+            [
+              3158368,
+              -96
+            ]
+          ],
+          "unreachable_zero_words": [
+            3157548,
+            3158260
+          ],
+          "following_zero_alignment": 8
+        },
+        "direct_rooted_call_sites": []
+      }
+    },
+    {
+      "name": "xClumpColl_ForAllCapsuleLeafNodeIntersections",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "address": 3158400,
+      "size": 2568,
+      "sha256": "97e7c1fa97070411ddfd03ba34a94a089f6d65bd528d9f42f1acc20160df6155",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3156992,
+          "name": "xClumpColl_ForAllCapsuleLeafNodeIntersections",
+          "source": "SB/Core/x/xClumpColl.cpp",
+          "linkage_name": "xClumpColl_ForAllCapsuleLeafNodeIntersections__FP17xClumpCollBSPTreeP6RwLinefP21xClumpCollV3dGradientPFP21xClumpCollBSPTrianglePv_iPv",
+          "reference_sha256": "97e7c1fa97070411ddfd03ba34a94a089f6d65bd528d9f42f1acc20160df6155",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3158288,
+          "name": "xClumpColl_ForAllCapsuleLeafNodeIntersections",
+          "source": "SB/Core/x/xClumpColl.cpp",
+          "linkage_name": "xClumpColl_ForAllCapsuleLeafNodeIntersections__FP17xClumpCollBSPTreeP6RwLinefP21xClumpCollV3dGradientPFP21xClumpCollBSPTrianglePv_iPv",
+          "reference_sha256": "97e7c1fa97070411ddfd03ba34a94a089f6d65bd528d9f42f1acc20160df6155",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3154976,
+          "name": "xClumpColl_ForAllCapsuleLeafNodeIntersections",
+          "source": "SB/Core/x/xClumpColl.cpp",
+          "linkage_name": "xClumpColl_ForAllCapsuleLeafNodeIntersections__FP17xClumpCollBSPTreeP6RwLinefP21xClumpCollV3dGradientPFP21xClumpCollBSPTrianglePv_iPv",
+          "reference_sha256": "97e7c1fa97070411ddfd03ba34a94a089f6d65bd528d9f42f1acc20160df6155",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            3160960
+          ],
+          "direct_or_indirect_calls": [
+            3158632
+          ],
+          "branches": [
+            [
+              3158612,
+              3158760
+            ],
+            [
+              3158640,
+              3158656
+            ],
+            [
+              3158648,
+              3160872
+            ],
+            [
+              3158748,
+              3160864
+            ],
+            [
+              3158852,
+              3158888
+            ],
+            [
+              3158864,
+              3158888
+            ],
+            [
+              3158876,
+              3160864
+            ],
+            [
+              3158892,
+              3158928
+            ],
+            [
+              3158904,
+              3158928
+            ],
+            [
+              3158920,
+              3160864
+            ],
+            [
+              3158948,
+              3159248
+            ],
+            [
+              3158972,
+              3159248
+            ],
+            [
+              3158992,
+              3159128
+            ],
+            [
+              3159116,
+              3160864
+            ],
+            [
+              3159240,
+              3160864
+            ],
+            [
+              3159268,
+              3159744
+            ],
+            [
+              3159280,
+              3159744
+            ],
+            [
+              3159292,
+              3159744
+            ],
+            [
+              3159300,
+              3159432
+            ],
+            [
+              3159312,
+              3159384
+            ],
+            [
+              3159320,
+              3159336
+            ],
+            [
+              3159328,
+              3159480
+            ],
+            [
+              3159376,
+              3159480
+            ],
+            [
+              3159424,
+              3159480
+            ],
+            [
+              3159484,
+              3159632
+            ],
+            [
+              3159620,
+              3160864
+            ],
+            [
+              3159732,
+              3160864
+            ],
+            [
+              3159764,
+              3160240
+            ],
+            [
+              3159776,
+              3160240
+            ],
+            [
+              3159788,
+              3160240
+            ],
+            [
+              3159796,
+              3159928
+            ],
+            [
+              3159808,
+              3159880
+            ],
+            [
+              3159816,
+              3159832
+            ],
+            [
+              3159824,
+              3159976
+            ],
+            [
+              3159872,
+              3159976
+            ],
+            [
+              3159920,
+              3159976
+            ],
+            [
+              3159980,
+              3160104
+            ],
+            [
+              3160092,
+              3160864
+            ],
+            [
+              3160228,
+              3160864
+            ],
+            [
+              3160244,
+              3160376
+            ],
+            [
+              3160252,
+              3160328
+            ],
+            [
+              3160260,
+              3160280
+            ],
+            [
+              3160268,
+              3160424
+            ],
+            [
+              3160320,
+              3160424
+            ],
+            [
+              3160368,
+              3160424
+            ],
+            [
+              3160428,
+              3160560
+            ],
+            [
+              3160436,
+              3160512
+            ],
+            [
+              3160444,
+              3160464
+            ],
+            [
+              3160452,
+              3160608
+            ],
+            [
+              3160504,
+              3160608
+            ],
+            [
+              3160552,
+              3160608
+            ],
+            [
+              3160612,
+              3160744
+            ],
+            [
+              3160736,
+              3160864
+            ],
+            [
+              3160864,
+              3158608
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              3158400,
+              -1344
+            ],
+            [
+              3160964,
+              1344
+            ]
+          ],
+          "ra_saves": [
+            [
+              3158408,
+              -1152
+            ]
+          ],
+          "ra_loads": [
+            [
+              3160872,
+              -1152
+            ]
+          ],
+          "unreachable_zero_words": [
+            3158756,
+            3158884,
+            3159124,
+            3159628,
+            3159740,
+            3160100,
+            3160236,
+            3160276,
+            3160460
+          ],
+          "following_zero_alignment": 8
+        },
+        "direct_rooted_call_sites": [
+          1868156
+        ]
+      }
+    },
+    {
+      "name": "xClumpColl_ForAllLineLeafNodeIntersections",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "address": 3160976,
+      "size": 2552,
+      "sha256": "0a94c12c3517fa5923e5f3b938d68e2c55930f732f1f786441ceb035d801c962",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3159568,
+          "name": "xClumpColl_ForAllLineLeafNodeIntersections",
+          "source": "SB/Core/x/xClumpColl.cpp",
+          "linkage_name": "xClumpColl_ForAllLineLeafNodeIntersections__FP17xClumpCollBSPTreeP6RwLineP21xClumpCollV3dGradientPFP21xClumpCollBSPTrianglePv_iPv",
+          "reference_sha256": "0a94c12c3517fa5923e5f3b938d68e2c55930f732f1f786441ceb035d801c962",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3160864,
+          "name": "xClumpColl_ForAllLineLeafNodeIntersections",
+          "source": "SB/Core/x/xClumpColl.cpp",
+          "linkage_name": "xClumpColl_ForAllLineLeafNodeIntersections__FP17xClumpCollBSPTreeP6RwLineP21xClumpCollV3dGradientPFP21xClumpCollBSPTrianglePv_iPv",
+          "reference_sha256": "0a94c12c3517fa5923e5f3b938d68e2c55930f732f1f786441ceb035d801c962",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3157552,
+          "name": "xClumpColl_ForAllLineLeafNodeIntersections",
+          "source": "SB/Core/x/xClumpColl.cpp",
+          "linkage_name": "xClumpColl_ForAllLineLeafNodeIntersections__FP17xClumpCollBSPTreeP6RwLineP21xClumpCollV3dGradientPFP21xClumpCollBSPTrianglePv_iPv",
+          "reference_sha256": "0a94c12c3517fa5923e5f3b938d68e2c55930f732f1f786441ceb035d801c962",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            3163520
+          ],
+          "direct_or_indirect_calls": [
+            3161208
+          ],
+          "branches": [
+            [
+              3161188,
+              3161336
+            ],
+            [
+              3161216,
+              3161232
+            ],
+            [
+              3161224,
+              3163432
+            ],
+            [
+              3161324,
+              3163424
+            ],
+            [
+              3161412,
+              3161448
+            ],
+            [
+              3161424,
+              3161448
+            ],
+            [
+              3161436,
+              3163424
+            ],
+            [
+              3161452,
+              3161488
+            ],
+            [
+              3161464,
+              3161488
+            ],
+            [
+              3161480,
+              3163424
+            ],
+            [
+              3161508,
+              3161808
+            ],
+            [
+              3161532,
+              3161808
+            ],
+            [
+              3161552,
+              3161688
+            ],
+            [
+              3161676,
+              3163424
+            ],
+            [
+              3161800,
+              3163424
+            ],
+            [
+              3161828,
+              3162304
+            ],
+            [
+              3161840,
+              3162304
+            ],
+            [
+              3161852,
+              3162304
+            ],
+            [
+              3161860,
+              3161992
+            ],
+            [
+              3161872,
+              3161944
+            ],
+            [
+              3161880,
+              3161896
+            ],
+            [
+              3161888,
+              3162040
+            ],
+            [
+              3161936,
+              3162040
+            ],
+            [
+              3161984,
+              3162040
+            ],
+            [
+              3162044,
+              3162192
+            ],
+            [
+              3162180,
+              3163424
+            ],
+            [
+              3162292,
+              3163424
+            ],
+            [
+              3162324,
+              3162800
+            ],
+            [
+              3162336,
+              3162800
+            ],
+            [
+              3162348,
+              3162800
+            ],
+            [
+              3162356,
+              3162488
+            ],
+            [
+              3162368,
+              3162440
+            ],
+            [
+              3162376,
+              3162392
+            ],
+            [
+              3162384,
+              3162536
+            ],
+            [
+              3162432,
+              3162536
+            ],
+            [
+              3162480,
+              3162536
+            ],
+            [
+              3162540,
+              3162664
+            ],
+            [
+              3162652,
+              3163424
+            ],
+            [
+              3162788,
+              3163424
+            ],
+            [
+              3162804,
+              3162936
+            ],
+            [
+              3162812,
+              3162888
+            ],
+            [
+              3162820,
+              3162840
+            ],
+            [
+              3162828,
+              3162984
+            ],
+            [
+              3162880,
+              3162984
+            ],
+            [
+              3162928,
+              3162984
+            ],
+            [
+              3162988,
+              3163120
+            ],
+            [
+              3162996,
+              3163072
+            ],
+            [
+              3163004,
+              3163024
+            ],
+            [
+              3163012,
+              3163168
+            ],
+            [
+              3163064,
+              3163168
+            ],
+            [
+              3163112,
+              3163168
+            ],
+            [
+              3163172,
+              3163304
+            ],
+            [
+              3163296,
+              3163424
+            ],
+            [
+              3163424,
+              3161184
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              3160976,
+              -1344
+            ],
+            [
+              3163524,
+              1344
+            ]
+          ],
+          "ra_saves": [
+            [
+              3160984,
+              -1152
+            ]
+          ],
+          "ra_loads": [
+            [
+              3163432,
+              -1152
+            ]
+          ],
+          "unreachable_zero_words": [
+            3161332,
+            3161444,
+            3161684,
+            3162188,
+            3162300,
+            3162660,
+            3162796,
+            3162836,
+            3163020
+          ],
+          "following_zero_alignment": 8
+        },
+        "direct_rooted_call_sites": [
+          3156028
+        ]
+      }
+    },
+    {
+      "name": "xClumpColl_ForAllBoxLeafNodeIntersections",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "address": 3163536,
+      "size": 320,
+      "sha256": "1a12d14da731cf05a62d2f28e2dc757f5a8e7eb33b4946792ef3037988b7237d",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3162128,
+          "name": "xClumpColl_ForAllBoxLeafNodeIntersections",
+          "source": "SB/Core/x/xClumpColl.cpp",
+          "linkage_name": "xClumpColl_ForAllBoxLeafNodeIntersections__FP17xClumpCollBSPTreeP6RwBBoxPFP21xClumpCollBSPTrianglePv_iPv",
+          "reference_sha256": "1a12d14da731cf05a62d2f28e2dc757f5a8e7eb33b4946792ef3037988b7237d",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3163424,
+          "name": "xClumpColl_ForAllBoxLeafNodeIntersections",
+          "source": "SB/Core/x/xClumpColl.cpp",
+          "linkage_name": "xClumpColl_ForAllBoxLeafNodeIntersections__FP17xClumpCollBSPTreeP6RwBBoxPFP21xClumpCollBSPTrianglePv_iPv",
+          "reference_sha256": "1a12d14da731cf05a62d2f28e2dc757f5a8e7eb33b4946792ef3037988b7237d",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3160112,
+          "name": "xClumpColl_ForAllBoxLeafNodeIntersections",
+          "source": "SB/Core/x/xClumpColl.cpp",
+          "linkage_name": "xClumpColl_ForAllBoxLeafNodeIntersections__FP17xClumpCollBSPTreeP6RwBBoxPFP21xClumpCollBSPTrianglePv_iPv",
+          "reference_sha256": "1a12d14da731cf05a62d2f28e2dc757f5a8e7eb33b4946792ef3037988b7237d",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            3163848
+          ],
+          "direct_or_indirect_calls": [
+            3163632
+          ],
+          "branches": [
+            [
+              3163612,
+              3163688
+            ],
+            [
+              3163640,
+              3163656
+            ],
+            [
+              3163648,
+              3163824
+            ],
+            [
+              3163676,
+              3163816
+            ],
+            [
+              3163724,
+              3163800
+            ],
+            [
+              3163748,
+              3163816
+            ],
+            [
+              3163792,
+              3163816
+            ],
+            [
+              3163816,
+              3163608
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              3163536,
+              -368
+            ],
+            [
+              3163852,
+              368
+            ]
+          ],
+          "ra_saves": [
+            [
+              3163544,
+              -288
+            ]
+          ],
+          "ra_loads": [
+            [
+              3163824,
+              -288
+            ]
+          ],
+          "unreachable_zero_words": [
+            3163684
+          ],
+          "following_zero_alignment": 0
+        },
+        "direct_rooted_call_sites": [
+          1889856,
+          3156268,
+          3156360
+        ]
+      }
+    },
+    {
+      "name": "xClumpColl_InstancePointers",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "address": 3163856,
+      "size": 360,
+      "sha256": "6ff8c857f5721f0b367153d577c40ffca954b793df5f060dc2c95d1e82c17f0b",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3162448,
+          "name": "xClumpColl_InstancePointers",
+          "source": "SB/Core/x/xClumpColl.cpp",
+          "linkage_name": "xClumpColl_InstancePointers__FP17xClumpCollBSPTreeP7RpClump",
+          "reference_sha256": "96b632e8f04862ca2a83445d963a447183f0b30fa3f326b26d545e71b05128db",
+          "data_address_operands": [
+            {
+              "hi_offset": 52,
+              "lo_offset": 72,
+              "opcode": 9,
+              "reference_address": 3162816,
+              "target_address": 3164224,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 28,
+              "opcode": 3,
+              "reference_address": 2227776,
+              "target_address": 2229184
+            },
+            {
+              "offset": 40,
+              "opcode": 3,
+              "reference_address": 2033280,
+              "target_address": 2034640
+            },
+            {
+              "offset": 80,
+              "opcode": 3,
+              "reference_address": 2225424,
+              "target_address": 2226832
+            },
+            {
+              "offset": 328,
+              "opcode": 3,
+              "reference_address": 2033264,
+              "target_address": 2034624
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3163744,
+          "name": "xClumpColl_InstancePointers",
+          "source": "SB/Core/x/xClumpColl.cpp",
+          "linkage_name": "xClumpColl_InstancePointers__FP17xClumpCollBSPTreeP7RpClump",
+          "reference_sha256": "929bbab2a1dacbf96a678e29795b5e539712169ac4fcb1d9ce146f6585c01a42",
+          "data_address_operands": [
+            {
+              "hi_offset": 52,
+              "lo_offset": 72,
+              "opcode": 9,
+              "reference_address": 3164112,
+              "target_address": 3164224,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 28,
+              "opcode": 3,
+              "reference_address": 2229072,
+              "target_address": 2229184
+            },
+            {
+              "offset": 40,
+              "opcode": 3,
+              "reference_address": 2034528,
+              "target_address": 2034640
+            },
+            {
+              "offset": 80,
+              "opcode": 3,
+              "reference_address": 2226720,
+              "target_address": 2226832
+            },
+            {
+              "offset": 328,
+              "opcode": 3,
+              "reference_address": 2034512,
+              "target_address": 2034624
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3160432,
+          "name": "xClumpColl_InstancePointers",
+          "source": "SB/Core/x/xClumpColl.cpp",
+          "linkage_name": "xClumpColl_InstancePointers__FP17xClumpCollBSPTreeP7RpClump",
+          "reference_sha256": "7b0f28f1f916ebd48afb5dd4d4f0318da12fe1eba4eda470fecdb45eff1892d5",
+          "data_address_operands": [
+            {
+              "hi_offset": 52,
+              "lo_offset": 72,
+              "opcode": 9,
+              "reference_address": 3160800,
+              "target_address": 3164224,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 28,
+              "opcode": 3,
+              "reference_address": 2225760,
+              "target_address": 2229184
+            },
+            {
+              "offset": 40,
+              "opcode": 3,
+              "reference_address": 2031168,
+              "target_address": 2034640
+            },
+            {
+              "offset": 80,
+              "opcode": 3,
+              "reference_address": 2223408,
+              "target_address": 2226832
+            },
+            {
+              "offset": 328,
+              "opcode": 3,
+              "reference_address": 2031152,
+              "target_address": 2034624
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            3164208
+          ],
+          "direct_or_indirect_calls": [
+            3163884,
+            3163896,
+            3163936,
+            3164184
+          ],
+          "branches": [
+            [
+              3163952,
+              3164184
+            ],
+            [
+              3164024,
+              3164072
+            ],
+            [
+              3164040,
+              3164072
+            ],
+            [
+              3164060,
+              3164032
+            ],
+            [
+              3164176,
+              3163976
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              3163856,
+              -80
+            ],
+            [
+              3164212,
+              80
+            ]
+          ],
+          "ra_saves": [
+            [
+              3163860,
+              -32
+            ]
+          ],
+          "ra_loads": [
+            [
+              3164192,
+              -32
+            ]
+          ],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 8
+        },
+        "direct_rooted_call_sites": []
+      }
+    },
+    {
+      "name": "AddAtomicCB",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "address": 3164224,
+      "size": 308,
+      "sha256": "16d05d2c577c0c967cd5da8a0c265f7a840c41f0c2218d4c4b6731e73b5fbe8f",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3162816,
+          "name": "AddAtomicCB",
+          "source": "SB/Core/x/xClumpColl.cpp",
+          "linkage_name": "AddAtomicCB__FP8RpAtomicPv",
+          "reference_sha256": "ab752b1cc46b64f91e4f22c80200d8d5230b99d85e1ae2eb30c53e59682c79e1",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 148,
+              "opcode": 3,
+              "reference_address": 2316816,
+              "target_address": 2318224
+            },
+            {
+              "offset": 244,
+              "opcode": 3,
+              "reference_address": 2316816,
+              "target_address": 2318224
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3164112,
+          "name": "AddAtomicCB",
+          "source": "SB/Core/x/xClumpColl.cpp",
+          "linkage_name": "AddAtomicCB__FP8RpAtomicPv",
+          "reference_sha256": "aee2e8d2e217099c024e0c3634a57989ee5400b748a26688ddd2b586477723f2",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 148,
+              "opcode": 3,
+              "reference_address": 2318112,
+              "target_address": 2318224
+            },
+            {
+              "offset": 244,
+              "opcode": 3,
+              "reference_address": 2318112,
+              "target_address": 2318224
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3160800,
+          "name": "AddAtomicCB",
+          "source": "SB/Core/x/xClumpColl.cpp",
+          "linkage_name": "AddAtomicCB__FP8RpAtomicPv",
+          "reference_sha256": "1ece67f39a4161f27bd91d784d08b2a719e334d93c8477cdf0310ba6cd62a2c2",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 148,
+              "opcode": 3,
+              "reference_address": 2314800,
+              "target_address": 2318224
+            },
+            {
+              "offset": 244,
+              "opcode": 3,
+              "reference_address": 2314800,
+              "target_address": 2318224
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            3164524
+          ],
+          "direct_or_indirect_calls": [
+            3164372,
+            3164468
+          ],
+          "branches": [
+            [
+              3164300,
+              3164400
+            ],
+            [
+              3164320,
+              3164352
+            ],
+            [
+              3164340,
+              3164352
+            ],
+            [
+              3164352,
+              3164368
+            ],
+            [
+              3164360,
+              3164388
+            ],
+            [
+              3164392,
+              3164496
+            ],
+            [
+              3164412,
+              3164448
+            ],
+            [
+              3164432,
+              3164448
+            ],
+            [
+              3164448,
+              3164464
+            ],
+            [
+              3164456,
+              3164484
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              3164224,
+              -48
+            ],
+            [
+              3164528,
+              48
+            ]
+          ],
+          "ra_saves": [
+            [
+              3164232,
+              -16
+            ]
+          ],
+          "ra_loads": [
+            [
+              3164512,
+              -16
+            ]
+          ],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 12
+        },
+        "direct_rooted_call_sites": []
+      }
+    },
+    {
+      "name": "xClumpColl_StaticBufferInit",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "address": 3164544,
+      "size": 128,
+      "sha256": "c92f6f46f3d430dcc1cf8369dcc5e675f858a783107e1febfa587b03e3cf9135",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3163136,
+          "name": "xClumpColl_StaticBufferInit",
+          "source": "SB/Core/x/xClumpColl.cpp",
+          "linkage_name": "xClumpColl_StaticBufferInit__FPvUi",
+          "reference_sha256": "1b8d5573e8955a1d13343f8cc9e2c18bf6e238acc79e53a27f6b18f4792c06bb",
+          "data_address_operands": [
+            {
+              "hi_offset": 4,
+              "lo_offset": 36,
+              "opcode": 35,
+              "reference_address": 6011484,
+              "target_address": 6010460,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3164432,
+          "name": "xClumpColl_StaticBufferInit",
+          "source": "SB/Core/x/xClumpColl.cpp",
+          "linkage_name": "xClumpColl_StaticBufferInit__FPvUi",
+          "reference_sha256": "4e8d5e9b8bf65f08b09098bdceaffb6a992619800100438ee4d52fbdd6d9c9a4",
+          "data_address_operands": [
+            {
+              "hi_offset": 4,
+              "lo_offset": 36,
+              "opcode": 35,
+              "reference_address": 6010204,
+              "target_address": 6010460,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3161120,
+          "name": "xClumpColl_StaticBufferInit",
+          "source": "SB/Core/x/xClumpColl.cpp",
+          "linkage_name": "xClumpColl_StaticBufferInit__FPvUi",
+          "reference_sha256": "9225184054f8df7ec249e55ab5525986555cfbe3891c951caccf1f4633b8efb8",
+          "data_address_operands": [
+            {
+              "hi_offset": 4,
+              "lo_offset": 36,
+              "opcode": 35,
+              "reference_address": 6008668,
+              "target_address": 6010460,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            3164664
+          ],
+          "direct_or_indirect_calls": [
+            3164584
+          ],
+          "branches": [
+            [
+              3164592,
+              3164624
+            ],
+            [
+              3164616,
+              3164640
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              3164544,
+              -64
+            ],
+            [
+              3164668,
+              64
+            ]
+          ],
+          "ra_saves": [
+            [
+              3164552,
+              -16
+            ]
+          ],
+          "ra_loads": [
+            [
+              3164648,
+              -16
+            ]
+          ],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 0
+        },
+        "direct_rooted_call_sites": []
+      }
     }
   ],
   "particle_registration_proofs": [
@@ -66727,6 +71743,404 @@
           "sha256": "311a95036c791e4ea461c00826fbb7750477cb290781e6bea447a8206b26c50d"
         }
       ]
+    }
+  ],
+  "geometry_data_proofs": [
+    {
+      "version": "SLUS-20680",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "typed_arrays": [
+        {
+          "name": "ourGlobals",
+          "reference_address": 6011176,
+          "size": 16384,
+          "dimensions": [
+            4096
+          ],
+          "element_fundamental_type": 9,
+          "declaration_die": 8323073,
+          "type_chain": [
+            {
+              "die": 8339886,
+              "subscript_descriptor": "000a0000000000ff0f00000855000900"
+            }
+          ],
+          "target_address": 6010152,
+          "component_offsets": [
+            308
+          ]
+        }
+      ],
+      "complete_callback_entries": [
+        {
+          "name": "LeafNodeBoxPolyIntersect",
+          "reference_address": 3154992,
+          "target_address": 3156400,
+          "size": 560
+        },
+        {
+          "name": "LeafNodeSpherePolyIntersect",
+          "reference_address": 3155552,
+          "target_address": 3156960,
+          "size": 512
+        },
+        {
+          "name": "LeafNodeLinePolyIntersect",
+          "reference_address": 3156064,
+          "target_address": 3157472,
+          "size": 920
+        },
+        {
+          "name": "AddAtomicCB",
+          "reference_address": 3162816,
+          "target_address": 3164224,
+          "size": 308
+        }
+      ]
+    },
+    {
+      "version": "SLES-51968",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "typed_arrays": [
+        {
+          "name": "ourGlobals",
+          "reference_address": 6009896,
+          "size": 16384,
+          "dimensions": [
+            4096
+          ],
+          "element_fundamental_type": 9,
+          "declaration_die": 8323531,
+          "type_chain": [
+            {
+              "die": 8339695,
+              "subscript_descriptor": "000a0000000000ff0f00000855000900"
+            }
+          ],
+          "target_address": 6010152,
+          "component_offsets": [
+            308
+          ]
+        }
+      ],
+      "complete_callback_entries": [
+        {
+          "name": "LeafNodeBoxPolyIntersect",
+          "reference_address": 3156288,
+          "target_address": 3156400,
+          "size": 560
+        },
+        {
+          "name": "LeafNodeSpherePolyIntersect",
+          "reference_address": 3156848,
+          "target_address": 3156960,
+          "size": 512
+        },
+        {
+          "name": "LeafNodeLinePolyIntersect",
+          "reference_address": 3157360,
+          "target_address": 3157472,
+          "size": 920
+        },
+        {
+          "name": "AddAtomicCB",
+          "reference_address": 3164112,
+          "target_address": 3164224,
+          "size": 308
+        }
+      ]
+    },
+    {
+      "version": "SLES-51970",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "typed_arrays": [
+        {
+          "name": "ourGlobals",
+          "reference_address": 6008360,
+          "size": 16384,
+          "dimensions": [
+            4096
+          ],
+          "element_fundamental_type": 9,
+          "declaration_die": 8324377,
+          "type_chain": [
+            {
+              "die": 8340541,
+              "subscript_descriptor": "000a0000000000ff0f00000855000900"
+            }
+          ],
+          "target_address": 6010152,
+          "component_offsets": [
+            308
+          ]
+        }
+      ],
+      "complete_callback_entries": [
+        {
+          "name": "LeafNodeBoxPolyIntersect",
+          "reference_address": 3152976,
+          "target_address": 3156400,
+          "size": 560
+        },
+        {
+          "name": "LeafNodeSpherePolyIntersect",
+          "reference_address": 3153536,
+          "target_address": 3156960,
+          "size": 512
+        },
+        {
+          "name": "LeafNodeLinePolyIntersect",
+          "reference_address": 3154048,
+          "target_address": 3157472,
+          "size": 920
+        },
+        {
+          "name": "AddAtomicCB",
+          "reference_address": 3160800,
+          "target_address": 3164224,
+          "size": 308
+        }
+      ]
+    },
+    {
+      "version": "SLUS-20680",
+      "source": "SB/Core/x/xSpline.cpp",
+      "typed_arrays": [
+        {
+          "name": "ourGlobals",
+          "reference_address": 6011176,
+          "size": 16384,
+          "dimensions": [
+            4096
+          ],
+          "element_fundamental_type": 9,
+          "declaration_die": 5493642,
+          "type_chain": [
+            {
+              "die": 5494731,
+              "subscript_descriptor": "000a0000000000ff0f00000855000900"
+            }
+          ],
+          "target_address": 6010152,
+          "component_offsets": [
+            308,
+            312
+          ]
+        },
+        {
+          "name": "sBasisBezier",
+          "reference_address": 4295952,
+          "size": 64,
+          "dimensions": [
+            4,
+            4
+          ],
+          "element_fundamental_type": 14,
+          "declaration_die": 5493518,
+          "type_chain": [
+            {
+              "die": 5494547,
+              "subscript_descriptor": "000a000000000003000000087200efd65300"
+            },
+            {
+              "die": 5494511,
+              "subscript_descriptor": "000a0000000000030000000855000e00"
+            }
+          ],
+          "target_address": 4294928,
+          "component_offsets": [
+            0
+          ],
+          "sha256": "42be81ef4827221f06804d32e5cce275cb1994693e8e08cba80e42b76447a2f7"
+        },
+        {
+          "name": "sBasisHermite",
+          "reference_address": 4296016,
+          "size": 64,
+          "dimensions": [
+            4,
+            4
+          ],
+          "element_fundamental_type": 14,
+          "declaration_die": 5493560,
+          "type_chain": [
+            {
+              "die": 5494913,
+              "subscript_descriptor": "000a0000000000030000000872005dd85300"
+            },
+            {
+              "die": 5494877,
+              "subscript_descriptor": "000a0000000000030000000855000e00"
+            }
+          ],
+          "target_address": 4294992,
+          "component_offsets": [
+            0
+          ],
+          "sha256": "2376a960120691cbc10d6de91c8c680f8f3307715cf8255463f56d10f381c3c7"
+        }
+      ],
+      "complete_callback_entries": []
+    },
+    {
+      "version": "SLES-51968",
+      "source": "SB/Core/x/xSpline.cpp",
+      "typed_arrays": [
+        {
+          "name": "ourGlobals",
+          "reference_address": 6009896,
+          "size": 16384,
+          "dimensions": [
+            4096
+          ],
+          "element_fundamental_type": 9,
+          "declaration_die": 5494100,
+          "type_chain": [
+            {
+              "die": 5495189,
+              "subscript_descriptor": "000a0000000000ff0f00000855000900"
+            }
+          ],
+          "target_address": 6010152,
+          "component_offsets": [
+            308,
+            312
+          ]
+        },
+        {
+          "name": "sBasisBezier",
+          "reference_address": 4294672,
+          "size": 64,
+          "dimensions": [
+            4,
+            4
+          ],
+          "element_fundamental_type": 14,
+          "declaration_die": 5493976,
+          "type_chain": [
+            {
+              "die": 5495005,
+              "subscript_descriptor": "000a000000000003000000087200b9d85300"
+            },
+            {
+              "die": 5494969,
+              "subscript_descriptor": "000a0000000000030000000855000e00"
+            }
+          ],
+          "target_address": 4294928,
+          "component_offsets": [
+            0
+          ],
+          "sha256": "42be81ef4827221f06804d32e5cce275cb1994693e8e08cba80e42b76447a2f7"
+        },
+        {
+          "name": "sBasisHermite",
+          "reference_address": 4294736,
+          "size": 64,
+          "dimensions": [
+            4,
+            4
+          ],
+          "element_fundamental_type": 14,
+          "declaration_die": 5494018,
+          "type_chain": [
+            {
+              "die": 5495371,
+              "subscript_descriptor": "000a00000000000300000008720027da5300"
+            },
+            {
+              "die": 5495335,
+              "subscript_descriptor": "000a0000000000030000000855000e00"
+            }
+          ],
+          "target_address": 4294992,
+          "component_offsets": [
+            0
+          ],
+          "sha256": "2376a960120691cbc10d6de91c8c680f8f3307715cf8255463f56d10f381c3c7"
+        }
+      ],
+      "complete_callback_entries": []
+    },
+    {
+      "version": "SLES-51970",
+      "source": "SB/Core/x/xSpline.cpp",
+      "typed_arrays": [
+        {
+          "name": "ourGlobals",
+          "reference_address": 6008360,
+          "size": 16384,
+          "dimensions": [
+            4096
+          ],
+          "element_fundamental_type": 9,
+          "declaration_die": 5494946,
+          "type_chain": [
+            {
+              "die": 5496035,
+              "subscript_descriptor": "000a0000000000ff0f00000855000900"
+            }
+          ],
+          "target_address": 6010152,
+          "component_offsets": [
+            308,
+            312
+          ]
+        },
+        {
+          "name": "sBasisBezier",
+          "reference_address": 4293104,
+          "size": 64,
+          "dimensions": [
+            4,
+            4
+          ],
+          "element_fundamental_type": 14,
+          "declaration_die": 5494822,
+          "type_chain": [
+            {
+              "die": 5495851,
+              "subscript_descriptor": "000a00000000000300000008720007dc5300"
+            },
+            {
+              "die": 5495815,
+              "subscript_descriptor": "000a0000000000030000000855000e00"
+            }
+          ],
+          "target_address": 4294928,
+          "component_offsets": [
+            0
+          ],
+          "sha256": "42be81ef4827221f06804d32e5cce275cb1994693e8e08cba80e42b76447a2f7"
+        },
+        {
+          "name": "sBasisHermite",
+          "reference_address": 4293168,
+          "size": 64,
+          "dimensions": [
+            4,
+            4
+          ],
+          "element_fundamental_type": 14,
+          "declaration_die": 5494864,
+          "type_chain": [
+            {
+              "die": 5496217,
+              "subscript_descriptor": "000a00000000000300000008720075dd5300"
+            },
+            {
+              "die": 5496181,
+              "subscript_descriptor": "000a0000000000030000000855000e00"
+            }
+          ],
+          "target_address": 4294992,
+          "component_offsets": [
+            0
+          ],
+          "sha256": "2376a960120691cbc10d6de91c8c680f8f3307715cf8255463f56d10f381c3c7"
+        }
+      ],
+      "complete_callback_entries": []
     }
   ]
 }

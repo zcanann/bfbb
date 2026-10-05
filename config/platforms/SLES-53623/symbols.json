@@ -2707,11 +2707,60 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xSpline3_Bezier",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2142336,
+      "size": 324,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "AllocSpline3",
       "source": "SB/Core/x/xSpline.cpp",
       "address": 2142672,
       "size": 332,
       "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "xSpline3_ArcInit",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2143008,
+      "size": 428,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSpline3_EvalArcApprox",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2143440,
+      "size": 72,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "ArcEvalIterate",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2143520,
+      "size": 840,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSpline3_EvalSeg",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2144368,
+      "size": 868,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "CoefSeg3",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2145248,
+      "size": 1116,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "EvalBspline3",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2146368,
+      "size": 496,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "BasisBspline",
@@ -2721,11 +2770,32 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "EvalCoef3",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2147392,
+      "size": 488,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "ArcLength3",
       "source": "SB/Core/x/xSpline.cpp",
       "address": 2147888,
       "size": 468,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "Interpolate_Bspline",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2148368,
+      "size": 540,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Tridiag_Solve",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2148912,
+      "size": 664,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "XST_find_bySID",
@@ -3281,6 +3351,41 @@
       "provenance": "machine-corroborated-explicit-transfers"
     },
     {
+      "name": "FastIntersectSphereTriangle",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "address": 3154368,
+      "size": 1200,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xClumpColl_ForAllIntersections",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "address": 3155568,
+      "size": 832,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "LeafNodeBoxPolyIntersect",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "address": 3156400,
+      "size": 560,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "LeafNodeSpherePolyIntersect",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "address": 3156960,
+      "size": 512,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "LeafNodeLinePolyIntersect",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "address": 3157472,
+      "size": 920,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "xClumpColl_ForAllCapsuleLeafNodeIntersections",
       "source": "SB/Core/x/xClumpColl.cpp",
       "address": 3158400,
@@ -3300,6 +3405,27 @@
       "address": 3163536,
       "size": 320,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xClumpColl_InstancePointers",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "address": 3163856,
+      "size": 360,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "AddAtomicCB",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "address": 3164224,
+      "size": 308,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xClumpColl_StaticBufferInit",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "address": 3164544,
+      "size": 128,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "xGridEntIsTooBig",
