@@ -24795,6 +24795,727 @@
         }
       ],
       "address_pairs": []
+    },
+    {
+      "source": "src/SB/Core/x/xEnt.cpp",
+      "target_unit": "SB/Core/x/xEnt.cpp",
+      "object": "source/xEnt.o",
+      "selector": "name_address",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "xEntInitShadow@001d1190": "xEntInitShadow__FR4xEntR10xEntShadow",
+        "xEntReposition@001d11e0": "xEntReposition__FR4xEntRC7xMat4x3",
+        "xEntValidType@001d1480": "xEntValidType__FUc",
+        "xEntAnimateCollision@001d14d0": "xEntAnimateCollision__FR4xEntb",
+        "xEntGetAllEntsBox@001d1570": "xEntGetAllEntsBox__Fv",
+        "xEntSetNostepNormAngle@001d1580": "xEntSetNostepNormAngle__Ff",
+        "xEntCollideWalls@001d1590": "xEntCollideWalls__FP4xEntP6xScenef",
+        "xEntCollideCeiling@001d19d0": "xEntCollideCeiling__FP4xEntP6xScenef",
+        "xEntCollideFloor@001d1c90": "xEntCollideFloor__FP4xEntP6xScenef",
+        "xEntCollCheckOneEntNoDepen@001d2150": "xEntCollCheckOneEntNoDepen__FP4xEntP6xScenePv",
+        "xEntCollCheckNPCs@001d2680": "xEntCollCheckNPCs__FP4xEntP6xScenePFP4xEntP6xScenePv_P4xEnt",
+        "xEntCollCheckDyns@001d26d0": "xEntCollCheckDyns__FP4xEntP6xScenePFP4xEntP6xScenePv_P4xEnt",
+        "xEntCollCheckStats@001d2720": "xEntCollCheckStats__FP4xEntP6xScenePFP4xEntP6xScenePv_P4xEnt",
+        "xEntCollCheckNPCsByGrid@001d2770": "xEntCollCheckNPCsByGrid__FP4xEntP6xScenePFP4xEntP6xScenePv_P4xEnt",
+        "xEntCollCheckByGrid@001d27c0": "xEntCollCheckByGrid__FP4xEntP6xScenePFP4xEntP6xScenePv_P4xEnt",
+        "xEntCollCheckOneGrid@001d2850": "xEntCollCheckOneGrid__FP4xEntP6xScenePFP4xEntP6xScenePv_P4xEntP5xGrid",
+        "xEntCollCheckEnv@001d2e10": "xEntCollCheckEnv__FP4xEntP6xScene",
+        "xEntEndCollide@001d2eb0": "xEntEndCollide__FP4xEntP6xScenef",
+        "xEntBeginCollide@001d2ee0": "xEntBeginCollide__FP4xEntP6xScenef",
+        "xEntCollide@001d3020": "xEntCollide__FP4xEntP6xScenef",
+        "xEntApplyPhysics@001d3390": "xEntApplyPhysics__FP4xEntP6xScenef",
+        "xEntMove@001d3650": "xEntMove__FP4xEntP6xScenef",
+        "xEntMotionToMatrix@001d3870": "xEntMotionToMatrix__FP4xEntP9xEntFrame",
+        "xEntDefaultTranslate@001d3b60": "xEntDefaultTranslate__FP4xEntP5xVec3P7xMat4x3",
+        "xEntDefaultBoundUpdate@001d3d20": "xEntDefaultBoundUpdate__FP4xEntP5xVec3",
+        "xEntEndUpdate@001d3da0": "xEntEndUpdate__FP4xEntP6xScenef",
+        "xEntBeginUpdate@001d3eb0": "xEntBeginUpdate__FP4xEntP6xScenef",
+        "xEntUpdate@001d3fd0": "xEntUpdate__FP4xEntP6xScenef",
+        "xEntRender@001d4170": "xEntRender__FP4xEnt",
+        "xEntRestorePipeline@001d42e0": "xEntRestorePipeline__FP8xSurfaceP8RpAtomic",
+        "xEntRestorePipeline@001d4330": "xEntRestorePipeline__FP14xModelInstance",
+        "xEntSetupPipeline@001d4380": "xEntSetupPipeline__FP8xSurfaceP8RpAtomic",
+        "xEntSetupPipeline@001d4580": "xEntSetupPipeline__FP14xModelInstance",
+        "xEntLoadModel@001d4590": "xEntLoadModel__FP4xEntP8RpAtomic",
+        "xEntReset@001d4640": "xEntReset__FP4xEnt",
+        "xEntLoad@001d4c40": "xEntLoad__FP4xEntP7xSerial",
+        "xEntSave@001d4cb0": "xEntSave__FP4xEntP7xSerial",
+        "xEntSetup@001d4d20": "xEntSetup__FP4xEnt",
+        "stacked_owner_destroyed@001d5150": "stacked_owner_destroyed__18@unnamed@xEnt_cpp@FR15zEntDestructObjPv",
+        "collide_downward@001d5190": "collide_downward__18@unnamed@xEnt_cpp@FR5xVec3RP4xEntR6xSceneR4xEntf",
+        "xEntInitForType@001d53b0": "xEntInitForType__FP4xEnt",
+        "xEntInit@001d55d0": "xEntInit__FP4xEntP9xEntAsset",
+        "xEntAddHittableFlag@001d56e0": "xEntAddHittableFlag__FP4xEnt",
+        "xEntSceneExit@001d57c0": "xEntSceneExit__Fv",
+        "xEntSceneInit@001d57d0": "xEntSceneInit__Fv",
+        "xEntSetTimePassed@001d57e0": "xEntSetTimePassed__Ff",
+        "refresh@001d57f0": "refresh__Q218@unnamed@xEnt_cpp@9anim_collFR4xEnt",
+        "reset@001d5960": "reset__Q218@unnamed@xEnt_cpp@9anim_collFR4xEnt"
+      },
+      "calls": [
+        {
+          "function": "xEntAnimateCollision@001d14d0",
+          "offset": 96,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "reset",
+          "symbol": "reset__Q218@unnamed@xEnt_cpp@9anim_collFR4xEnt"
+        },
+        {
+          "function": "xEntCollCheckNPCsByGrid@001d2770",
+          "offset": 32,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntCollCheckOneGrid",
+          "symbol": "xEntCollCheckOneGrid__FP4xEntP6xScenePFP4xEntP6xScenePv_P4xEntP5xGrid"
+        },
+        {
+          "function": "xEntCollCheckByGrid@001d27c0",
+          "offset": 60,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntCollCheckOneGrid",
+          "symbol": "xEntCollCheckOneGrid__FP4xEntP6xScenePFP4xEntP6xScenePv_P4xEntP5xGrid"
+        },
+        {
+          "function": "xEntCollCheckByGrid@001d27c0",
+          "offset": 84,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntCollCheckOneGrid",
+          "symbol": "xEntCollCheckOneGrid__FP4xEntP6xScenePFP4xEntP6xScenePv_P4xEntP5xGrid"
+        },
+        {
+          "function": "xEntCollCheckOneGrid@001d2850",
+          "offset": 88,
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "target_function": "xGridIterFirstCell",
+          "symbol": "xGridIterFirstCell__FP5xGridfffRiRiR13xGridIterator"
+        },
+        {
+          "function": "xEntCollCheckOneGrid@001d2850",
+          "offset": 116,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullIsects",
+          "symbol": "xQuickCullIsects__FPC7xQCDataPC7xQCData"
+        },
+        {
+          "function": "xEntCollCheckOneGrid@001d2850",
+          "offset": 772,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullIsects",
+          "symbol": "xQuickCullIsects__FPC7xQCDataPC7xQCData"
+        },
+        {
+          "function": "xEntCollCheckOneGrid@001d2850",
+          "offset": 1140,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullIsects",
+          "symbol": "xQuickCullIsects__FPC7xQCDataPC7xQCData"
+        },
+        {
+          "function": "xEntCollide@001d3020",
+          "offset": 60,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntBeginCollide",
+          "symbol": "xEntBeginCollide__FP4xEntP6xScenef"
+        },
+        {
+          "function": "xEntCollide@001d3020",
+          "offset": 120,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntCollCheckOneGrid",
+          "symbol": "xEntCollCheckOneGrid__FP4xEntP6xScenePFP4xEntP6xScenePv_P4xEntP5xGrid"
+        },
+        {
+          "function": "xEntCollide@001d3020",
+          "offset": 204,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntCollCheckOneGrid",
+          "symbol": "xEntCollCheckOneGrid__FP4xEntP6xScenePFP4xEntP6xScenePv_P4xEntP5xGrid"
+        },
+        {
+          "function": "xEntCollide@001d3020",
+          "offset": 232,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntCollCheckOneGrid",
+          "symbol": "xEntCollCheckOneGrid__FP4xEntP6xScenePFP4xEntP6xScenePv_P4xEntP5xGrid"
+        },
+        {
+          "function": "xEntCollide@001d3020",
+          "offset": 772,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntCollideFloor",
+          "symbol": "xEntCollideFloor__FP4xEntP6xScenef"
+        },
+        {
+          "function": "xEntCollide@001d3020",
+          "offset": 800,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntCollideCeiling",
+          "symbol": "xEntCollideCeiling__FP4xEntP6xScenef"
+        },
+        {
+          "function": "xEntCollide@001d3020",
+          "offset": 816,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntCollideWalls",
+          "symbol": "xEntCollideWalls__FP4xEntP6xScenef"
+        },
+        {
+          "function": "xEntMove@001d3650",
+          "offset": 108,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntMotionToMatrix",
+          "symbol": "xEntMotionToMatrix__FP4xEntP9xEntFrame"
+        },
+        {
+          "function": "xEntMove@001d3650",
+          "offset": 256,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat4x3Mul",
+          "symbol": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3"
+        },
+        {
+          "function": "xEntMove@001d3650",
+          "offset": 336,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat4x3Mul",
+          "symbol": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3"
+        },
+        {
+          "function": "xEntMotionToMatrix@001d3870",
+          "offset": 120,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Euler@001ef800",
+          "symbol": "xMat3x3Euler__FP7xMat3x3fff"
+        },
+        {
+          "function": "xEntMotionToMatrix@001d3870",
+          "offset": 144,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xAngleClamp",
+          "symbol": "xAngleClamp__Ff"
+        },
+        {
+          "function": "xEntMotionToMatrix@001d3870",
+          "offset": 172,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3RotC",
+          "symbol": "xMat3x3RotC__FP7xMat3x3ffff"
+        },
+        {
+          "function": "xEntMotionToMatrix@001d3870",
+          "offset": 656,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Euler@001ef800",
+          "symbol": "xMat3x3Euler__FP7xMat3x3fff"
+        },
+        {
+          "function": "xEntMotionToMatrix@001d3870",
+          "offset": 680,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xAngleClamp",
+          "symbol": "xAngleClamp__Ff"
+        },
+        {
+          "function": "xEntMotionToMatrix@001d3870",
+          "offset": 708,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3RotC",
+          "symbol": "xMat3x3RotC__FP7xMat3x3ffff"
+        },
+        {
+          "function": "xEntDefaultTranslate@001d3b60",
+          "offset": 44,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat4x3Mul",
+          "symbol": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3"
+        },
+        {
+          "function": "xEntDefaultTranslate@001d3b60",
+          "offset": 68,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat4x3Mul",
+          "symbol": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3"
+        },
+        {
+          "function": "xEntEndUpdate@001d3da0",
+          "offset": 208,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "refresh",
+          "symbol": "refresh__Q218@unnamed@xEnt_cpp@9anim_collFR4xEnt"
+        },
+        {
+          "function": "xEntUpdate@001d3fd0",
+          "offset": 28,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntBeginUpdate",
+          "symbol": "xEntBeginUpdate__FP4xEntP6xScenef"
+        },
+        {
+          "function": "xEntUpdate@001d3fd0",
+          "offset": 56,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntApplyPhysics",
+          "symbol": "xEntApplyPhysics__FP4xEntP6xScenef"
+        },
+        {
+          "function": "xEntUpdate@001d3fd0",
+          "offset": 84,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntMove",
+          "symbol": "xEntMove__FP4xEntP6xScenef"
+        },
+        {
+          "function": "xEntUpdate@001d3fd0",
+          "offset": 104,
+          "target_source": "SB/Core/x/xFFX.cpp",
+          "target_function": "xFFXApply",
+          "symbol": "xFFXApply__FP4xEntP6xScenef"
+        },
+        {
+          "function": "xEntUpdate@001d3fd0",
+          "offset": 128,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntCollide",
+          "symbol": "xEntCollide__FP4xEntP6xScenef"
+        },
+        {
+          "function": "xEntUpdate@001d3fd0",
+          "offset": 172,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntApplyPhysics",
+          "symbol": "xEntApplyPhysics__FP4xEntP6xScenef"
+        },
+        {
+          "function": "xEntUpdate@001d3fd0",
+          "offset": 188,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntMove",
+          "symbol": "xEntMove__FP4xEntP6xScenef"
+        },
+        {
+          "function": "xEntUpdate@001d3fd0",
+          "offset": 244,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "collide_downward",
+          "symbol": "collide_downward__18@unnamed@xEnt_cpp@FR5xVec3RP4xEntR6xSceneR4xEntf"
+        },
+        {
+          "function": "xEntUpdate@001d3fd0",
+          "offset": 384,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntEndUpdate",
+          "symbol": "xEntEndUpdate__FP4xEntP6xScenef"
+        },
+        {
+          "function": "xEntSetupPipeline@001d4380",
+          "offset": 60,
+          "target_source": "SB/Game/zScene.cpp",
+          "target_function": "zSceneFindObject",
+          "symbol": "zSceneFindObject__FUi"
+        },
+        {
+          "function": "xEntSetupPipeline@001d4380",
+          "offset": 92,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "xEntSetupPipeline@001d4380",
+          "offset": 144,
+          "target_source": "SB/Game/zScene.cpp",
+          "target_function": "zSceneFindObject",
+          "symbol": "zSceneFindObject__FUi"
+        },
+        {
+          "function": "xEntSetupPipeline@001d4380",
+          "offset": 176,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "xEntSetupPipeline@001d4380",
+          "offset": 240,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "xEntSetupPipeline@001d4380",
+          "offset": 360,
+          "target_source": "SB/Core/x/xFX.cpp",
+          "target_function": "xFXanimUVSetAngle",
+          "symbol": "xFXanimUVSetAngle__Ff"
+        },
+        {
+          "function": "xEntSetupPipeline@001d4380",
+          "offset": 384,
+          "target_source": "SB/Core/x/xFX.cpp",
+          "target_function": "xFXanimUV2PSetAngle",
+          "symbol": "xFXanimUV2PSetAngle__Ff"
+        },
+        {
+          "function": "xEntSetupPipeline@001d4380",
+          "offset": 472,
+          "target_source": "SB/Core/x/xFX.cpp",
+          "target_function": "xFXanimUVAtomicSetup",
+          "symbol": "xFXanimUVAtomicSetup__FP8RpAtomic"
+        },
+        {
+          "function": "xEntSetupPipeline@001d4580",
+          "offset": 4,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntSetupPipeline@001d4380",
+          "symbol": "xEntSetupPipeline__FP8xSurfaceP8RpAtomic",
+          "opcode": 2
+        },
+        {
+          "function": "xEntLoadModel@001d4590",
+          "offset": 100,
+          "target_source": "SB/Core/x/xModel.cpp",
+          "target_function": "xModelInstanceAttach",
+          "symbol": "xModelInstanceAttach__FP14xModelInstanceP14xModelInstance"
+        },
+        {
+          "function": "xEntReset@001d4640",
+          "offset": 16,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseReset",
+          "symbol": "xBaseReset__FP5xBaseP10xBaseAsset"
+        },
+        {
+          "function": "xEntReset@001d4640",
+          "offset": 64,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntAddHittableFlag",
+          "symbol": "xEntAddHittableFlag__FP4xEnt"
+        },
+        {
+          "function": "xEntReset@001d4640",
+          "offset": 212,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xEntReset@001d4640",
+          "offset": 232,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xEntReset@001d4640",
+          "offset": 252,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xEntReset@001d4640",
+          "offset": 272,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xEntReset@001d4640",
+          "offset": 292,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xEntReset@001d4640",
+          "offset": 312,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xEntReset@001d4640",
+          "offset": 332,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xEntReset@001d4640",
+          "offset": 352,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xEntReset@001d4640",
+          "offset": 372,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xEntReset@001d4640",
+          "offset": 392,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xEntReset@001d4640",
+          "offset": 412,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xEntReset@001d4640",
+          "offset": 432,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xEntReset@001d4640",
+          "offset": 452,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xEntReset@001d4640",
+          "offset": 472,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xEntReset@001d4640",
+          "offset": 492,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xEntReset@001d4640",
+          "offset": 632,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Euler@001ef800",
+          "symbol": "xMat3x3Euler__FP7xMat3x3fff"
+        },
+        {
+          "function": "xEntReset@001d4640",
+          "offset": 880,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "reset",
+          "symbol": "reset__Q218@unnamed@xEnt_cpp@9anim_collFR4xEnt"
+        },
+        {
+          "function": "xEntReset@001d4640",
+          "offset": 1480,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xrand",
+          "symbol": "xrand__Fv"
+        },
+        {
+          "function": "xEntLoad@001d4c40",
+          "offset": 20,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseLoad",
+          "symbol": "xBaseLoad__FP5xBaseP7xSerial"
+        },
+        {
+          "function": "xEntSave@001d4cb0",
+          "offset": 20,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseSave",
+          "symbol": "xBaseSave__FP5xBaseP7xSerial"
+        },
+        {
+          "function": "xEntSetup@001d4d20",
+          "offset": 24,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseSetup",
+          "symbol": "xBaseSetup__FP5xBase"
+        },
+        {
+          "function": "xEntSetup@001d4d20",
+          "offset": 60,
+          "target_source": "SB/Core/x/xScene.cpp",
+          "target_function": "xSceneResolvID",
+          "symbol": "xSceneResolvID__FP6xSceneUi"
+        },
+        {
+          "function": "xEntSetup@001d4d20",
+          "offset": 172,
+          "target_source": "SB/Core/x/xScene.cpp",
+          "target_function": "xSceneResolvID",
+          "symbol": "xSceneResolvID__FP6xSceneUi"
+        },
+        {
+          "function": "xEntSetup@001d4d20",
+          "offset": 312,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntAddHittableFlag",
+          "symbol": "xEntAddHittableFlag__FP4xEnt"
+        },
+        {
+          "function": "xEntSetup@001d4d20",
+          "offset": 460,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xEntSetup@001d4d20",
+          "offset": 480,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xEntSetup@001d4d20",
+          "offset": 500,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xEntSetup@001d4d20",
+          "offset": 520,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xEntSetup@001d4d20",
+          "offset": 540,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xEntSetup@001d4d20",
+          "offset": 560,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xEntSetup@001d4d20",
+          "offset": 580,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xEntSetup@001d4d20",
+          "offset": 600,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xEntSetup@001d4d20",
+          "offset": 620,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xEntSetup@001d4d20",
+          "offset": 640,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xEntSetup@001d4d20",
+          "offset": 660,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xEntSetup@001d4d20",
+          "offset": 680,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xEntSetup@001d4d20",
+          "offset": 700,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xEntSetup@001d4d20",
+          "offset": 720,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xEntSetup@001d4d20",
+          "offset": 740,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xEntSetup@001d4d20",
+          "offset": 1008,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "reset",
+          "symbol": "reset__Q218@unnamed@xEnt_cpp@9anim_collFR4xEnt"
+        },
+        {
+          "function": "collide_downward@001d5190",
+          "offset": 212,
+          "target_source": "SB/Core/x/xBound.cpp",
+          "target_function": "xBoundGetBox",
+          "symbol": "xBoundGetBox__FR4xBoxRC6xBound"
+        },
+        {
+          "function": "xEntInit@001d55d0",
+          "offset": 20,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseInit",
+          "symbol": "xBaseInit__FP5xBaseP10xBaseAsset"
+        },
+        {
+          "function": "xEntInit@001d55d0",
+          "offset": 180,
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "target_function": "xGridBoundInit",
+          "symbol": "xGridBoundInit__FP10xGridBoundPv"
+        },
+        {
+          "function": "xEntInit@001d55d0",
+          "offset": 208,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iBoxInitBoundVec",
+          "symbol": "iBoxInitBoundVec__FP4xBoxPC5xVec3"
+        },
+        {
+          "function": "xEntInit@001d55d0",
+          "offset": 236,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iBoxBoundVec",
+          "symbol": "iBoxBoundVec__FP4xBoxPC4xBoxPC5xVec3"
+        },
+        {
+          "function": "refresh@001d57f0",
+          "offset": 36,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat4x3Mul",
+          "symbol": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3"
+        }
+      ],
+      "gp_relocations": []
     }
   ]
 }

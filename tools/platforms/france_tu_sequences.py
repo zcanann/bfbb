@@ -350,7 +350,7 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
             'status': 'reviewed-original-whole-tu-sequence',
             'original_sha1s': {v: originals[v].sha1 for v in (*REFERENCES, TARGET)},
             'method': 'Unique whole named-DWARF TU sequence in three originals; explicit address-producer and call relationships, unchanged non-address bits, closed local bounds and zero alignment.',
-            'limitations': ['Only the reviewed streaming, particle-command, animation, entity-motion, math and collision TUs are eligible; this is not an automatic fuzzy-symbol promotion rule.',
+            'limitations': ['Only the reviewed streaming, particle-command, animation, entity-motion, math, collision and entity TUs are eligible; this is not an automatic fuzzy-symbol promotion rule.',
                            'Names and ownership come from debug-reference DWARF, not a recovered France symbol table.',
                            'External call neighbors corroborate structure but are not independently promoted named relocation anchors.',
                            'Seventeen streaming entries have rooted direct-call witnesses; the remaining overload is reached by its verified tail wrapper, while shutdown also uses the unique complete streaming TU sequence.',
@@ -410,6 +410,16 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     for key, value in collision['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
     document['limitations'].append('Collision uses two explicitly closed platform leaf-tail callees, six complete callback entries and original DWARF-typed global components; external entry prefixes are not promoted.')
+    from platforms.france_entity_sequence import generate_unit as generate_entity
+    entity = generate_entity(originals)
+    document['functions'].extend(entity['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(entity['sequence_proofs'])
+    document['call_neighbors'].extend(entity['call_neighbors'])
+    document['entity_data_proofs'] = entity['data_proofs']
+    for key, value in entity['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Entity verifies one exact pointer-return leaf, original typed arrays and one unnamed immutable interleaved leaf as context only; that context is not assigned source ownership or promoted.')
     return document
 
 
