@@ -18,6 +18,15 @@ typedef signed int RwInt32;
 typedef float RwReal;
 typedef RwInt32 RwBool;
 
+struct RxObjSpace3DVertex;
+
+struct RwSurfaceProperties
+{
+    RwReal ambient;
+    RwReal specular;
+    RwReal diffuse;
+};
+
 struct RwV3d
 {
     RwReal x, y, z;
@@ -169,6 +178,11 @@ RwBool RwFrameDestroy(RwFrame* frame);
 RwFrame* RwFrameTransform(RwFrame* frame, const RwMatrix* matrix, RwOpCombineType combine);
 RwBool _rwFrameSyncDirty(void);
 void _rwObjectHasFrameSetFrame(void* object, RwFrame* frame);
+}
+
+extern "C" {
+RwMatrix* RwMatrixUpdate(RwMatrix* matrix);
+RwMatrix* RwMatrixInvert(RwMatrix* matrixOut, const RwMatrix* matrixIn);
 }
 
 #endif

@@ -3,7 +3,15 @@
 
 #include <rwcore.h>
 
-struct RpMaterial;
+struct RpMaterial
+{
+    RwTexture* texture;
+    RwRGBA color;
+    RxPipeline* pipeline;
+    RwSurfaceProperties surfaceProps;
+    RwInt16 refCount;
+    RwInt16 pad;
+};
 struct RpSector;
 struct RpWorldSector;
 struct RpLight
