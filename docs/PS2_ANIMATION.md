@@ -18,3 +18,26 @@ The retained `fprintf(stderr, ...)` diagnostic uses the PS2 newlib runtime. `ree
 - All 224 shared/game GameCube translation units compile with identical ordered allocated-section names, sizes and bytes. Duplicate section names are retained in the comparison.
 
 Private reproducible evidence is in `build/ps2model170/`: the initial seven-unit compiler inventory, original API/scratch witnesses, original layouts, and the `xAnim/` compile command, source object, three-region reports, compiled layout comparison and inverse-relocation proof. Original layout extraction uses `python -m platforms.ps2_type_layouts` with source `SB/Core/x/xAnim.cpp` and the named model, animation and newlib types. No original executable or compiled object is included in the repository.
+
+## File-evaluation bone-count expression
+
+Original xAnimFileEval keeps numBones as an unsigned32 local at stack offset
+208. Expressing its one-bone/default-bone selection as one conditional assignment
+recovers the original branch join. This retains the same tests, values and
+subsequent decrement; no types, helper calls or mathematical expressions change.
+Actual code differences are confined to the branch/NOP scheduling at offsets
+240 through292. Every other allocated byte and all relocation destinations stay
+identical; compiler-generated local label numbers are renumbered without changing
+their section, offset, size, type or binding. Actual GameCube compilation preserves all seven allocated sections.
+
+All four PS2 versions gain the 1,616-byte function as a normal code match. Their
+full34-function /17,656-byte inventory now matches18 /4,648, fuzzy78.01155%,
+with every other function record unchanged. All four independently compiled
+whole-source objects are byte-identical. French comparison reuses its existing
+verified full-unit extents and names; no boundary or profile is added.
+
+Raw original reconstruction differs only at the unresolved floorf call at offset
+468 in each debug original. This is documented as a standard code match, without
+a raw-function or executable-link claim. Private evidence: build/near248/proof.json,
+raw/raw-proof.json, gc/proof.json and candidate/<version>/report.json. No scoring,
+compiler-flag, header or backend changes accompany the source simplification.

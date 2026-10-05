@@ -618,14 +618,7 @@ void xAnimFileEval(xAnimFile* data, F32 time, F32* bilinear, U32 flags, xVec3* t
         return;
     }
 
-    if (flags & 0x1)
-    {
-        numBones = 1;
-    }
-    else
-    {
-        numBones = data->BoneCount;
-    }
+    numBones = (flags & 0x1) ? 1 : data->BoneCount;
 
     if (flags & 0x2)
     {
