@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "executable_sha1": "ef675520304c2ce0df9cbfa03222e42fb2e7a09e",
+  "provenance": "Absolute DWARF declarations referencing concrete types with explicit AT_byte_size",
+  "coverage_complete": false,
+  "eligible_for_progress": false,
+  "definition_ownership_recovered": false,
+  "limitations": [
+    "References establish declared object extents, not definition TU ownership.",
+    "Fundamental, modified, pointer and array sizes are not inferred.",
+    "Conflicting declarations remain unresolved and excluded from measured extents.",
+    "Counts describe recovered layout; no source data matching or link is claimed."
+  ],
+  "counts": {
+    "symbols": 0,
+    "unique_ranges": 0,
+    "file_backed_bytes": 0,
+    "zero_fill_bytes": 0,
+    "conflicting_symbols": 0
+  },
+  "skipped": {},
+  "extents": [],
+  "conflicts": []
+}

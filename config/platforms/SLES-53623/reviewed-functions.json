@@ -6,7 +6,7 @@
   "coverage_complete": false,
   "source_comparison_available": false,
   "source_link_verified": false,
-  "scope": "Only the explicitly reviewed dispatcher and xBase function extents; other byte-match candidates remain unconfirmed.",
+  "scope": "Only the explicitly reviewed dispatcher, xBase and xCurveAsset function extents; other byte-match candidates remain unconfirmed.",
   "functions": [
     {
       "name": "zDispatcher_sceneFinish",
@@ -654,6 +654,172 @@
           "all_zero": true
         },
         "local_control_flow": "Direct conditional branches stay inside the reviewed extent; only calls leave it; the terminal transfer is jr ra."
+      }
+    },
+    {
+      "name": "xCurveAssetEvaluate",
+      "source": "SB/Core/x/xCurveAsset.cpp",
+      "address": 3859376,
+      "size": 460,
+      "sha256": "1da5f60cab9e1f8de2020400ad6752ca037f3220034077d2dd54b5eabb47ea39",
+      "boundary_confirmation": true,
+      "confirmation_method": "Individual France control-flow/frame/return review, actual direct entry calls, and complete identical named DWARF1 extents in all three reference versions.",
+      "source_signature": "F32 xCurveAssetEvaluate(const xCurveAsset* curve_asset, F32 t)",
+      "provenance": [
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3859264,
+          "name": "xCurveAssetEvaluate",
+          "source": "SB/Core/x/xCurveAsset.cpp",
+          "reference_sha256": "1da5f60cab9e1f8de2020400ad6752ca037f3220034077d2dd54b5eabb47ea39",
+          "evidence": "Complete named DWARF1 function range has identical bytes, including branch and direct-call instructions."
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3856016,
+          "name": "xCurveAssetEvaluate",
+          "source": "SB/Core/x/xCurveAsset.cpp",
+          "reference_sha256": "1da5f60cab9e1f8de2020400ad6752ca037f3220034077d2dd54b5eabb47ea39",
+          "evidence": "Complete named DWARF1 function range has identical bytes, including branch and direct-call instructions."
+        },
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3858000,
+          "name": "xCurveAssetEvaluate",
+          "source": "SB/Core/x/xCurveAsset.cpp",
+          "reference_sha256": "1da5f60cab9e1f8de2020400ad6752ca037f3220034077d2dd54b5eabb47ea39",
+          "evidence": "Complete named DWARF1 function range has identical bytes, including branch and direct-call instructions."
+        }
+      ],
+      "corroboration": {
+        "direct_entry_calls": [
+          3228624,
+          3228640,
+          3232900
+        ],
+        "entry_cfg_callers_verified": [
+          3228624,
+          3228640
+        ],
+        "entry_cfg_scope": "The prior direct-only ELF-entry graph reaches both listed caller instructions and all115 function instructions; this is static structural reachability, not a runtime execution claim.",
+        "stack_frame": {
+          "allocation_address": 3859376,
+          "allocation_bytes": 48,
+          "return_address_save": 3859380,
+          "return_address_restore": 3859776,
+          "return_address_stack_offset": 32,
+          "deallocation_address": 3859832,
+          "deallocation_bytes": 48
+        },
+        "terminal_return": {
+          "address": 3859828,
+          "delay_slot": 3859832,
+          "end_exclusive": 3859836
+        },
+        "local_control_flow": "Every conditional/unconditional local branch target is within the reviewed extent; there is one direct helper call and no unresolved indirect jump other than terminal jr ra.",
+        "reviewed_branch_targets": [
+          {
+            "address": 3859432,
+            "target": 3859504,
+            "delay_slot": 3859436
+          },
+          {
+            "address": 3859444,
+            "target": 3859460,
+            "delay_slot": 3859448
+          },
+          {
+            "address": 3859452,
+            "target": 3859464,
+            "delay_slot": 3859456
+          },
+          {
+            "address": 3859476,
+            "target": 3859492,
+            "delay_slot": 3859480
+          },
+          {
+            "address": 3859484,
+            "target": 3859496,
+            "delay_slot": 3859488
+          },
+          {
+            "address": 3859496,
+            "target": 3859640,
+            "delay_slot": 3859500
+          },
+          {
+            "address": 3859540,
+            "target": 3859552,
+            "delay_slot": 3859544
+          },
+          {
+            "address": 3859572,
+            "target": 3859640,
+            "delay_slot": 3859576
+          },
+          {
+            "address": 3859580,
+            "target": 3859600,
+            "delay_slot": 3859584
+          },
+          {
+            "address": 3859588,
+            "target": 3859600,
+            "delay_slot": 3859592
+          },
+          {
+            "address": 3859612,
+            "target": 3859640,
+            "delay_slot": 3859616
+          },
+          {
+            "address": 3859668,
+            "target": 3859692,
+            "delay_slot": 3859672
+          },
+          {
+            "address": 3859684,
+            "target": 3859716,
+            "delay_slot": 3859688
+          },
+          {
+            "address": 3859716,
+            "target": 3859736,
+            "delay_slot": 3859720
+          },
+          {
+            "address": 3859728,
+            "target": 3859760,
+            "delay_slot": 3859732
+          }
+        ],
+        "external_calls": [
+          {
+            "address": 3859600,
+            "target": 1133392,
+            "name": null,
+            "identity_status": "No named DWARF1 range at this helper in the three reference versions; no relocation-name inference claimed."
+          }
+        ],
+        "following_padding": {
+          "address": 3859836,
+          "size": 4,
+          "all_zero": true
+        },
+        "previous_boundary": {
+          "return_instruction": 3859364,
+          "delay_slot": 3859368,
+          "padding_address": 3859372,
+          "padding_size": 4
+        },
+        "next_boundary": {
+          "address": 3859840,
+          "evidence": "Distinct stack-allocation prologue begins after the four-byte zero padding."
+        }
       }
     }
   ]

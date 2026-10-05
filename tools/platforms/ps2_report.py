@@ -124,7 +124,8 @@ def _source_name(path: str) -> str:
 
 
 def _write_registries(metadata: dict, functions: list[dict], output_dir: Path,
-                      provenance: str = "retail DWARF1 function ranges") -> None:
+                      provenance: str = "retail DWARF1 function ranges",
+                      data_extents: list[dict] | None = None) -> None:
     """Export symbol names and exhaustive file-backed load splits, without bytes."""
     symbols = [{"name": function["name"], "source": _source_name(function["source"]),
                 "address": function["low"], "size": function["high"] - function["low"]}
@@ -132,6 +133,12 @@ def _write_registries(metadata: dict, functions: list[dict], output_dir: Path,
     segments = sorted((segment for segment in metadata["segments"]
                        if segment["type"] == 1 and segment["file_size"]),
                       key=lambda segment: segment["address"])
+    data_ranges = {(e['address'], e['size']) for e in (data_extents or [])
+                   if e['storage'] == 'file_backed'}
+    classified = sorted([{'address': s['address'], 'size': s['size'], 'kind': 'function'}
+                         for s in symbols] +
+                        [{'address': a, 'size': size, 'kind': 'data'} for a, size in data_ranges],
+                        key=lambda item: item['address'])
     ranges = []
     assigned = 0
     previous_end = None
@@ -141,16 +148,16 @@ def _write_registries(metadata: dict, functions: list[dict], output_dir: Path,
             raise ValueError("Overlapping load segments cannot produce exhaustive splits")
         previous_end = end
         cursor = begin
-        owned = [symbol for symbol in symbols if begin <= symbol["address"] < end]
+        owned = [symbol for symbol in classified if begin <= symbol["address"] < end]
         for symbol in owned:
             address, size = symbol["address"], symbol["size"]
             if size <= 0 or address < cursor or address + size > end:
-                raise ValueError("Function splits overlap or exceed their load segment")
+                raise ValueError("Classified splits overlap or exceed their load segment")
             if cursor < address:
                 ranges.append({"segment": segment_index, "kind": "unclassified",
                                "address": cursor, "size": address - cursor,
                                "file_offset": segment["offset"] + cursor - begin})
-            ranges.append({"segment": segment_index, "kind": "function",
+            ranges.append({"segment": segment_index, "kind": symbol["kind"],
                            "address": address, "size": size,
                            "file_offset": segment["offset"] + address - begin})
             cursor = address + size
@@ -159,10 +166,11 @@ def _write_registries(metadata: dict, functions: list[dict], output_dir: Path,
             ranges.append({"segment": segment_index, "kind": "unclassified",
                            "address": cursor, "size": end - cursor,
                            "file_offset": segment["offset"] + cursor - begin})
-    if assigned != len(symbols):
-        raise ValueError("A function lacks a file-backed load segment")
+    if assigned != len(classified):
+        raise ValueError("A classified extent lacks a file-backed load segment")
     loaded_bytes = sum(segment["file_size"] for segment in segments)
     code_bytes = sum(symbol["size"] for symbol in symbols)
+    data_bytes = sum(size for _, size in data_ranges)
     if sum(split["size"] for split in ranges) != loaded_bytes:
         raise ValueError("Splits do not exhaust file-backed load ranges")
     identity = {"schema_version": 1, "executable_sha1": metadata["sha1"]}
@@ -174,7 +182,8 @@ def _write_registries(metadata: dict, functions: list[dict], output_dir: Path,
         "scope": "All file-backed PT_LOAD bytes; zero-fill memory and non-loadable ELF metadata excluded",
         "code_classification_complete": False,
         "loaded_file_bytes": loaded_bytes, "known_code_bytes": code_bytes,
-        "unclassified_loaded_bytes": loaded_bytes - code_bytes,
+        "known_data_bytes": data_bytes,
+        "unclassified_loaded_bytes": loaded_bytes - code_bytes - data_bytes,
         "segments": [{"address": segment["address"], "file_offset": segment["offset"],
                       "file_size": segment["file_size"], "memory_size": segment["memory_size"],
                       "flags": segment["flags"]} for segment in segments],
@@ -187,7 +196,7 @@ def _write_registries(metadata: dict, functions: list[dict], output_dir: Path,
 
 def verify_registries(generated_dir: Path, committed_dir: Path) -> None:
     """Fail when freshly extracted symbol/split metadata differs from the registry."""
-    for filename in ("symbols.json", "splits.json", "address-anchors.json"):
+    for filename in ("symbols.json", "splits.json", "address-anchors.json", "data-extents.json"):
         actual = json.loads((Path(generated_dir) / filename).read_text(encoding="utf-8"))
         expected = json.loads((Path(committed_dir) / filename).read_text(encoding="utf-8"))
         if actual != expected:
@@ -258,8 +267,11 @@ def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path 
         category_id, category_name = "known_functions", "Known function bounds (partial coverage)"
         coverage["scope"] = "Known function ranges only; not whole-executable progress"
         coverage["reviewed_function_count"] = reviewed_count
-    write_anchors(binary, metadata, functions, output_dir / 'address-anchors.json')
-    _write_registries(metadata, functions, output_dir, provenance)
+    data_registry = write_anchors(binary, metadata, functions, output_dir / 'address-anchors.json')
+    _write_registries(metadata, functions, output_dir, provenance, data_registry['extents'])
+    data_bytes = data_registry['counts']['file_backed_bytes']
+    coverage['known_data_bytes'] = data_bytes
+    coverage['unclassified_loaded_bytes'] = loaded_bytes - data_bytes
     if not functions:
         for name in ("objdiff.json", "report.json"):
             (output_dir / name).unlink(missing_ok=True)
@@ -299,7 +311,7 @@ def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path 
     code_bytes = sum(function["high"] - function["low"] for function in functions)
     coverage.update({"report_ready": True, "status": "partial-target-only",
                      "known_code_bytes": code_bytes,
-                     "unclassified_loaded_bytes": loaded_bytes - code_bytes,
+                     "unclassified_loaded_bytes": loaded_bytes - code_bytes - data_bytes,
                      "function_count": len(functions), "unit_count": len(units)})
     (output_dir / "coverage.json").write_text(json.dumps(coverage, indent=2) + "\n", encoding="utf-8")
     return coverage

@@ -141,6 +141,7 @@ jobs:
             build/${{ matrix.version }}/relocations.json
             build/${{ matrix.version }}/symbols.json
             build/${{ matrix.version }}/address-anchors.json
+            build/${{ matrix.version }}/data-extents.json
             build/${{ matrix.version }}/splits.json
             build/${{ matrix.version }}/symbol-candidates.json
 

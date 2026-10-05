@@ -21,16 +21,17 @@ def _source(path: str) -> str:
     return path.lstrip('/')
 
 
-def write_anchors(binary: bytes, metadata: dict, functions: list[dict], output: Path) -> None:
+def write_anchors(binary: bytes, metadata: dict, functions: list[dict], output: Path) -> dict:
     debug_sections = [s for s in metadata['sections'] if s['name'] == '.debug' and s['size']]
     if len(debug_sections) > 1:
         raise ValueError('Ambiguous PS2 debug section')
-    type_tags, declarations = {}, []
+    type_tags, type_sizes, declarations = {}, {}, []
     if debug_sections:
         section = debug_sections[0]
         debug = binary[section['offset']:section['offset'] + section['size']]
         for offset, tag, source, attrs in iter_dies(debug):
             type_tags[offset] = tag
+            type_sizes[offset] = (tag, attrs.get(11))
             if tag in (0x07, 0x0c):
                 declarations.append((offset, tag, source, attrs))
     starts = [f['low'] for f in functions]
@@ -99,3 +100,7 @@ def write_anchors(binary: bytes, metadata: dict, functions: list[dict], output: 
         'anchors': values,
     }
     output.write_text(json.dumps(document, indent=2) + '\n', encoding='utf-8')
+
+    from .ps2_data import write_extents
+    return write_extents(values, {offset: attrs for offset, _, _, attrs in declarations},
+                  type_sizes, metadata, functions, output.with_name('data-extents.json'))

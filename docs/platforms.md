@@ -65,7 +65,7 @@ GameCube's three standard reports and main-only Pages deployment are unchanged.
 | USA | 5,391 | 2,107,460 | 5 functions / 276 bytes |
 | Europe/Australia | 5,392 | 2,108,700 | 5 functions / 276 bytes |
 | Germany | 5,394 | 2,105,512 | 5 functions / 276 bytes |
-| France (reviewed bounds) | 7 | 380 | 5 functions / 276 bytes |
+| France (reviewed bounds) | 8 | 840 | 5 functions / 276 bytes |
 
 The `address-anchors.json` registries also recover over 2,500 named data addresses
 and 628 function declarations in each debug-bearing version. Addresses do not
@@ -73,17 +73,25 @@ imply object sizes, and declaring source files do not establish definition owner
 Function declarations are distinguished from data even when MW encodes them with
 a global-variable tag.
 
+The adjacent `data-extents.json` registries recover 733 nonoverlapping object
+ranges per debug-bearing release using explicit concrete-type `AT_byte_size`
+attributes: 26,208 file-backed bytes and 120,832 zero-fill bytes. Primitive,
+pointer, and array sizes are not inferred. `_rwDMAFlipData` has conflicting
+976-byte and 816-byte declarations and remains unresolved. These are partial
+layout records, with no definition-TU ownership or matched-data claim.
+
 The committed `config/platforms/<version>/symbols.json` files contain names,
 source ownership, addresses, and sizes. Adjacent `splits.json` files partition
-every file-backed load range into known functions and unclassified gaps. CI
+every file-backed load range into known functions, explicitly sized data, and
+unclassified gaps. CI
 regenerates and compares these registries before accepting a baseline.
 
 These counts come from explicit retail DWARF1 function bounds, with overlap and
 load-range validation. Targets retain the exact original instructions. The `xBase` call relocations are restored and verified by inverse reconstruction;
-other target objects are not relocation-restored link inputs. Code outside those function ranges, data,
+other target objects are not relocation-restored link inputs. Code outside those function ranges, remaining data,
 and padding remain unclassified; the whole mixed load segment is not counted as
-code. France is stripped; seven individually reviewed function extents establish its
-small initial baseline. Its 276/380 matched bytes describe only these recovered
+code. France is stripped; eight individually reviewed function extents establish its
+small initial baseline. Its 276/840 matched bytes describe only these recovered
 functions, never whole-game progress.
 
 Both Xbox releases have identical payloads in all 13 sections; their 532 differing
@@ -125,7 +133,7 @@ France's `symbol-candidates.json` contains 694 unique, aligned full-function byt
 matches (164,824 bytes) against the debug-bearing PS2 releases. 565 have support
 from all three references. These inherited names/ranges need boundary confirmation;
 they are separate from the confirmed symbol registry and excluded from progress.
-Seven function extents have since been reviewed independently and recorded in
+Eight function extents have since been reviewed independently and recorded in
 `reviewed-functions.json`; only those enter the France baseline. Serializer entry
 identities used for call relocations are in `reviewed-call-targets.json`.
 CI rechecks reviewed evidence and regenerates candidates using all four authenticated originals:

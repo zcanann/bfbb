@@ -45,6 +45,12 @@
       "source": "SB/Core/x/xBase.cpp",
       "address": 1834208,
       "size": 52
+    },
+    {
+      "name": "xCurveAssetEvaluate",
+      "source": "SB/Core/x/xCurveAsset.cpp",
+      "address": 3859376,
+      "size": 460
     }
   ]
 }
