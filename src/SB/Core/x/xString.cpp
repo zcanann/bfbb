@@ -38,10 +38,16 @@ U32 xStrHash(const char* str, size_t size)
     U32 c;
 #endif
 
+#ifdef XBOX
+    for (; i < size && (c = *str, c != NULL); i++, str++)
+#else
     while (i < size && (c = *str, c != NULL))
+#endif
     {
+#ifndef XBOX
         i++;
         str++;
+#endif
 #ifdef XBOX
         hash = (char)(c - (c & c >> 1 & 0x20)) + hash * 0x83;
 #else
@@ -65,9 +71,15 @@ U32 xStrHashCat(U32 prefix, const char* str)
     U32 i;
 #endif
 
+#ifdef XBOX
+    for (; i = *str, i != NULL; str++)
+#else
     while (i = *str, i != NULL)
+#endif
     {
+#ifndef XBOX
         str++;
+#endif
 #ifdef XBOX
         hash = (char)(i - (i & i >> 1 & 0x20)) + hash * 0x83;
 #else
