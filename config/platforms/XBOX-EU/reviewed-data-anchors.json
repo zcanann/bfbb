@@ -20,6 +20,48 @@
       "identity_confirmation": true,
       "source": "SB/Core/x/xPar.cpp",
       "evidence": "Same global head read/published by the reviewed pool initialization and popped by the allocator, whose return is passed directly to the reviewed particle initializer."
+    },
+    {
+      "name": "sParGroupRegTable",
+      "address": 3414488,
+      "size": 1020,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xParGroup.cpp",
+      "evidence": "Register uses a 255-DWORD initialization loop and byte slot indices. Animate uses independently checked 0.0 and 255.0 clamp values."
+    },
+    {
+      "name": "sParGroupRegTableInit",
+      "address": 3620708,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xParGroup.cpp",
+      "evidence": "Register uses a 255-DWORD initialization loop and byte slot indices. Animate uses independently checked 0.0 and 255.0 clamp values."
+    },
+    {
+      "name": "sParGroupRegTableCount",
+      "address": 3620712,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xParGroup.cpp",
+      "evidence": "Register uses a 255-DWORD initialization loop and byte slot indices. Animate uses independently checked 0.0 and 255.0 clamp values."
+    },
+    {
+      "name": "float:00000000",
+      "address": 2544860,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xParGroup.cpp",
+      "evidence": "Register uses a 255-DWORD initialization loop and byte slot indices. Animate uses independently checked 0.0 and 255.0 clamp values.",
+      "value_hex": "00000000"
+    },
+    {
+      "name": "float:437f0000",
+      "address": 2544876,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xParGroup.cpp",
+      "evidence": "Register uses a 255-DWORD initialization loop and byte slot indices. Animate uses independently checked 0.0 and 255.0 clamp values.",
+      "value_hex": "00007f43"
     }
   ],
   "pool_loop": {
@@ -32,5 +74,144 @@
     "count": 2000,
     "end": 3413776
   },
-  "scope": "Two manually reviewed writable data identities only; not a complete symbol registry or data-match claim."
+  "scope": "Reviewed particle pool/head, group table/init/count and two exact float literals; no data-progress claim.",
+  "instruction_witnesses": [
+    {
+      "address": 1368288,
+      "size": 85,
+      "sha256": "6c9dce71d6b5ac48c3ac02720118337d2a6a0f7b20a8d7775c7eb16ce97cdebc",
+      "instructions": [
+        [
+          0,
+          "mov",
+          "eax, dword ptr [0x373f64]"
+        ],
+        [
+          5,
+          "test",
+          "eax, eax"
+        ],
+        [
+          7,
+          "push",
+          "edi"
+        ],
+        [
+          8,
+          "jne",
+          "0x14e107"
+        ],
+        [
+          10,
+          "xor",
+          "eax, eax"
+        ],
+        [
+          12,
+          "mov",
+          "ecx, 0xff"
+        ],
+        [
+          17,
+          "mov",
+          "edi, 0x3419d8"
+        ],
+        [
+          22,
+          "rep stosd",
+          "dword ptr es:[edi], eax"
+        ],
+        [
+          24,
+          "mov",
+          "dword ptr [0x373f64], 1"
+        ],
+        [
+          34,
+          "mov",
+          "dword ptr [0x373f68], eax"
+        ],
+        [
+          39,
+          "xor",
+          "al, al"
+        ],
+        [
+          41,
+          "lea",
+          "esp, [esp]"
+        ],
+        [
+          48,
+          "movzx",
+          "ecx, al"
+        ],
+        [
+          51,
+          "mov",
+          "edi, dword ptr [ecx*4 + 0x3419d8]"
+        ],
+        [
+          58,
+          "test",
+          "edi, edi"
+        ],
+        [
+          60,
+          "je",
+          "0x14e126"
+        ],
+        [
+          62,
+          "inc",
+          "al"
+        ],
+        [
+          64,
+          "cmp",
+          "al, 0xff"
+        ],
+        [
+          66,
+          "jb",
+          "0x14e110"
+        ],
+        [
+          68,
+          "pop",
+          "edi"
+        ],
+        [
+          69,
+          "ret",
+          ""
+        ],
+        [
+          70,
+          "movzx",
+          "ecx, al"
+        ],
+        [
+          73,
+          "mov",
+          "dword ptr [ecx*4 + 0x3419d8], edx"
+        ],
+        [
+          80,
+          "mov",
+          "byte ptr [edx + 0x13], al"
+        ],
+        [
+          83,
+          "pop",
+          "edi"
+        ],
+        [
+          84,
+          "ret",
+          ""
+        ]
+      ]
+    }
+  ]
 }

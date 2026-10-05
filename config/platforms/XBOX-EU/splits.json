@@ -145,8 +145,8 @@
       "classification": "unclassified"
     }
   ],
-  "known_code_bytes": 627572,
-  "unclassified_text_bytes": 1171188,
+  "known_code_bytes": 627917,
+  "unclassified_text_bytes": 1170843,
   "text_ranges": [
     {
       "kind": "function",
@@ -14426,24 +14426,57 @@
     {
       "kind": "unclassified",
       "address": 1367456,
-      "size": 992
+      "size": 832
+    },
+    {
+      "kind": "function",
+      "address": 1368288,
+      "size": 85,
+      "canonical_identifier": "xParGroupRegister(xParGroup*)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1368373,
+      "size": 11
+    },
+    {
+      "kind": "function",
+      "address": 1368384,
+      "size": 51,
+      "canonical_identifier": "xParGroupUnregister(xParGroup*)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1368435,
+      "size": 13
     },
     {
       "kind": "function",
       "address": 1368448,
       "size": 361,
-      "canonical_identifier": "anon_0014e180"
+      "canonical_identifier": "xParGroupAnimate(xParGroup*,F32)"
     },
     {
       "kind": "unclassified",
       "address": 1368809,
-      "size": 231
+      "size": 7
+    },
+    {
+      "kind": "function",
+      "address": 1368816,
+      "size": 209,
+      "canonical_identifier": "xParGroupAddPar(xParGroup*)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1369025,
+      "size": 15
     },
     {
       "kind": "function",
       "address": 1369040,
       "size": 137,
-      "canonical_identifier": "anon_0014e3d0"
+      "canonical_identifier": "xParGroupKillPar(xParGroup*,xPar*)"
     },
     {
       "kind": "unclassified",
@@ -24874,7 +24907,7 @@
       "kind": "function",
       "address": 1824368,
       "size": 117,
-      "canonical_identifier": "anon_001bd670"
+      "canonical_identifier": "__ftol2"
     },
     {
       "kind": "unclassified",

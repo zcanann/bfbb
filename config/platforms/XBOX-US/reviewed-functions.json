@@ -2,7 +2,7 @@
   "schema_version": 1,
   "version": "XBOX-US",
   "executable_sha1": "983ffc6d84427996ce35d0d204930ae713113370",
-  "scope": "Individually reviewed xString hashes, tokenizers, parser and comparisons plus xPar particle routines; other Ghidra candidates remain separate.",
+  "scope": "Individually reviewed string, particle and particle-group functions plus a byte-identified CRT callee; other candidates remain separate.",
   "coverage_complete": false,
   "source_comparison_available": false,
   "retail_link_verified": false,
@@ -255,6 +255,792 @@
           "sha256": "2985b56cfc4f295a2e2bbc596616c1b4f841a21931594f8cf4a77622ceef8099",
           "description": "Closed two-range particle-group allocation CFG (including its alignment gap in this hash): CALL allocator at 0x14e377, null check, CALL initializer at 0x14e380, update count/live flag and doubly linked list from preserved EAX particle pointer."
         }
+      }
+    },
+    {
+      "name": "xParGroupRegister",
+      "canonical_identifier": "xParGroupRegister(xParGroup*)",
+      "display_name": "xParGroupRegister(xParGroup*)",
+      "source": "SB/Core/x/xParGroup.cpp",
+      "linkage_name": null,
+      "address": 1368288,
+      "size": 85,
+      "sha256": "6c9dce71d6b5ac48c3ac02720118337d2a6a0f7b20a8d7775c7eb16ce97cdebc",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": false,
+      "retail_link_verified": false,
+      "instruction_bytes": 85,
+      "instruction_count": 26,
+      "semantics": {
+        "identity": "Lazy initialization of 255 group slots, then first-free-slot registration and byte registration index."
+      },
+      "address_expressions": [
+        {
+          "offset": 1,
+          "symbol": "sParGroupRegTableInit",
+          "addend": 0,
+          "instruction_offset": 0,
+          "field": "displacement",
+          "prefix": "a1"
+        },
+        {
+          "offset": 18,
+          "symbol": "sParGroupRegTable",
+          "addend": 0,
+          "instruction_offset": 17,
+          "field": "immediate",
+          "prefix": "bf"
+        },
+        {
+          "offset": 35,
+          "symbol": "sParGroupRegTableCount",
+          "addend": 0,
+          "instruction_offset": 34,
+          "field": "displacement",
+          "prefix": "a3"
+        },
+        {
+          "offset": 54,
+          "symbol": "sParGroupRegTable",
+          "addend": 0,
+          "instruction_offset": 51,
+          "field": "displacement",
+          "prefix": "8b3c8d"
+        },
+        {
+          "offset": 76,
+          "symbol": "sParGroupRegTable",
+          "addend": 0,
+          "instruction_offset": 73,
+          "field": "displacement",
+          "prefix": "89148d"
+        }
+      ],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1368372,
+        "branches": [
+          {
+            "address": 1368296,
+            "size": 2,
+            "opcode": 117,
+            "target": 1368327
+          },
+          {
+            "address": 1368348,
+            "size": 2,
+            "opcode": 116,
+            "target": 1368358
+          },
+          {
+            "address": 1368354,
+            "size": 2,
+            "opcode": 114,
+            "target": 1368336
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1370649,
+            "target": 1368288
+          }
+        ],
+        "internal_alignment": [],
+        "following_padding": {
+          "address": 1368373,
+          "size": 11,
+          "byte": 204
+        },
+        "next_function_address": 1368384
+      }
+    },
+    {
+      "name": "xParGroupUnregister",
+      "canonical_identifier": "xParGroupUnregister(xParGroup*)",
+      "display_name": "xParGroupUnregister(xParGroup*)",
+      "source": "SB/Core/x/xParGroup.cpp",
+      "linkage_name": null,
+      "address": 1368384,
+      "size": 51,
+      "sha256": "d33fc85e0d2be590bf1af6660a3e3f63ca189182ca9a02b82080d0b4933b2a23",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": false,
+      "retail_link_verified": false,
+      "instruction_bytes": 42,
+      "instruction_count": 19,
+      "semantics": {
+        "identity": "Search 255 slots for the supplied group pointer, clear its slot and byte registration index."
+      },
+      "address_expressions": [
+        {
+          "offset": 22,
+          "symbol": "sParGroupRegTable",
+          "addend": 0,
+          "instruction_offset": 19,
+          "field": "displacement",
+          "prefix": "390cb5"
+        },
+        {
+          "offset": 42,
+          "symbol": "sParGroupRegTable",
+          "addend": 0,
+          "instruction_offset": 39,
+          "field": "displacement",
+          "prefix": "891485"
+        }
+      ],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1368434,
+        "branches": [
+          {
+            "address": 1368389,
+            "size": 2,
+            "opcode": 235,
+            "target": 1368400
+          },
+          {
+            "address": 1368410,
+            "size": 2,
+            "opcode": 116,
+            "target": 1368420
+          },
+          {
+            "address": 1368416,
+            "size": 2,
+            "opcode": 114,
+            "target": 1368400
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1071586,
+            "target": 1368384
+          }
+        ],
+        "internal_alignment": [
+          {
+            "address": 1368391,
+            "size": 9,
+            "sha256": "6459fd2f45d34e666a89a2e00fd1a87a546358d47dfcb9ac22a2b4965690c28e"
+          }
+        ],
+        "following_padding": {
+          "address": 1368435,
+          "size": 13,
+          "byte": 204
+        },
+        "next_function_address": 1368448
+      }
+    },
+    {
+      "name": "xParGroupAnimate",
+      "canonical_identifier": "xParGroupAnimate(xParGroup*,F32)",
+      "display_name": "xParGroupAnimate(xParGroup*,F32)",
+      "source": "SB/Core/x/xParGroup.cpp",
+      "linkage_name": null,
+      "address": 1368448,
+      "size": 361,
+      "sha256": "111ad171f723edc929f8c8a5c92755db3ff84a78ef289feb591d4e0ec78e3189",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": false,
+      "retail_link_verified": false,
+      "instruction_bytes": 361,
+      "instruction_count": 113,
+      "semantics": {
+        "identity": "Traverse live particles; kill negative lifetimes; integrate/clamp four float color channels to bytes, size velocity, and aging with NOAGING flag."
+      },
+      "address_expressions": [
+        {
+          "offset": 18,
+          "symbol": "float:00000000",
+          "addend": 0,
+          "instruction_offset": 16,
+          "field": "displacement",
+          "prefix": "d905"
+        },
+        {
+          "offset": 39,
+          "symbol": "float:00000000",
+          "addend": 0,
+          "instruction_offset": 37,
+          "field": "displacement",
+          "prefix": "d81d"
+        },
+        {
+          "offset": 78,
+          "symbol": "float:00000000",
+          "addend": 0,
+          "instruction_offset": 76,
+          "field": "displacement",
+          "prefix": "d815"
+        },
+        {
+          "offset": 93,
+          "symbol": "float:00000000",
+          "addend": 0,
+          "instruction_offset": 91,
+          "field": "displacement",
+          "prefix": "d905"
+        },
+        {
+          "offset": 101,
+          "symbol": "float:437f0000",
+          "addend": 0,
+          "instruction_offset": 99,
+          "field": "displacement",
+          "prefix": "d815"
+        },
+        {
+          "offset": 116,
+          "symbol": "float:437f0000",
+          "addend": 0,
+          "instruction_offset": 114,
+          "field": "displacement",
+          "prefix": "d905"
+        },
+        {
+          "offset": 143,
+          "symbol": "float:00000000",
+          "addend": 0,
+          "instruction_offset": 141,
+          "field": "displacement",
+          "prefix": "d815"
+        },
+        {
+          "offset": 158,
+          "symbol": "float:00000000",
+          "addend": 0,
+          "instruction_offset": 156,
+          "field": "displacement",
+          "prefix": "d905"
+        },
+        {
+          "offset": 166,
+          "symbol": "float:437f0000",
+          "addend": 0,
+          "instruction_offset": 164,
+          "field": "displacement",
+          "prefix": "d815"
+        },
+        {
+          "offset": 181,
+          "symbol": "float:437f0000",
+          "addend": 0,
+          "instruction_offset": 179,
+          "field": "displacement",
+          "prefix": "d905"
+        },
+        {
+          "offset": 208,
+          "symbol": "float:00000000",
+          "addend": 0,
+          "instruction_offset": 206,
+          "field": "displacement",
+          "prefix": "d815"
+        },
+        {
+          "offset": 223,
+          "symbol": "float:00000000",
+          "addend": 0,
+          "instruction_offset": 221,
+          "field": "displacement",
+          "prefix": "d905"
+        },
+        {
+          "offset": 231,
+          "symbol": "float:437f0000",
+          "addend": 0,
+          "instruction_offset": 229,
+          "field": "displacement",
+          "prefix": "d815"
+        },
+        {
+          "offset": 246,
+          "symbol": "float:437f0000",
+          "addend": 0,
+          "instruction_offset": 244,
+          "field": "displacement",
+          "prefix": "d905"
+        },
+        {
+          "offset": 273,
+          "symbol": "float:00000000",
+          "addend": 0,
+          "instruction_offset": 271,
+          "field": "displacement",
+          "prefix": "d815"
+        },
+        {
+          "offset": 288,
+          "symbol": "float:00000000",
+          "addend": 0,
+          "instruction_offset": 286,
+          "field": "displacement",
+          "prefix": "d905"
+        },
+        {
+          "offset": 296,
+          "symbol": "float:437f0000",
+          "addend": 0,
+          "instruction_offset": 294,
+          "field": "displacement",
+          "prefix": "d815"
+        },
+        {
+          "offset": 311,
+          "symbol": "float:437f0000",
+          "addend": 0,
+          "instruction_offset": 309,
+          "field": "displacement",
+          "prefix": "d905"
+        }
+      ],
+      "direct_calls": [
+        {
+          "offset": 57,
+          "symbol": "xParGroupKillPar(xParGroup*,xPar*)"
+        },
+        {
+          "offset": 124,
+          "symbol": "__ftol2"
+        },
+        {
+          "offset": 189,
+          "symbol": "__ftol2"
+        },
+        {
+          "offset": 254,
+          "symbol": "__ftol2"
+        },
+        {
+          "offset": 319,
+          "symbol": "__ftol2"
+        }
+      ],
+      "corroboration": {
+        "return_address": 1368808,
+        "branches": [
+          {
+            "address": 1368460,
+            "size": 2,
+            "opcode": 116,
+            "target": 1368470
+          },
+          {
+            "address": 1368472,
+            "size": 2,
+            "opcode": 117,
+            "target": 1368482
+          },
+          {
+            "address": 1368496,
+            "size": 2,
+            "opcode": 122,
+            "target": 1368514
+          },
+          {
+            "address": 1368535,
+            "size": 2,
+            "opcode": 122,
+            "target": 1368547
+          },
+          {
+            "address": 1368545,
+            "size": 2,
+            "opcode": 235,
+            "target": 1368568
+          },
+          {
+            "address": 1368558,
+            "size": 2,
+            "opcode": 117,
+            "target": 1368568
+          },
+          {
+            "address": 1368600,
+            "size": 2,
+            "opcode": 122,
+            "target": 1368612
+          },
+          {
+            "address": 1368610,
+            "size": 2,
+            "opcode": 235,
+            "target": 1368633
+          },
+          {
+            "address": 1368623,
+            "size": 2,
+            "opcode": 117,
+            "target": 1368633
+          },
+          {
+            "address": 1368665,
+            "size": 2,
+            "opcode": 122,
+            "target": 1368677
+          },
+          {
+            "address": 1368675,
+            "size": 2,
+            "opcode": 235,
+            "target": 1368698
+          },
+          {
+            "address": 1368688,
+            "size": 2,
+            "opcode": 117,
+            "target": 1368698
+          },
+          {
+            "address": 1368730,
+            "size": 2,
+            "opcode": 122,
+            "target": 1368742
+          },
+          {
+            "address": 1368740,
+            "size": 2,
+            "opcode": 235,
+            "target": 1368763
+          },
+          {
+            "address": 1368753,
+            "size": 2,
+            "opcode": 117,
+            "target": 1368763
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1371419,
+            "target": 1368448
+          }
+        ],
+        "internal_alignment": [],
+        "following_padding": {
+          "address": 1368809,
+          "size": 7,
+          "byte": 204
+        },
+        "next_function_address": 1368816
+      }
+    },
+    {
+      "name": "xParGroupAddPar",
+      "canonical_identifier": "xParGroupAddPar(xParGroup*)",
+      "display_name": "xParGroupAddPar(xParGroup*)",
+      "source": "SB/Core/x/xParGroup.cpp",
+      "linkage_name": null,
+      "address": 1368816,
+      "size": 209,
+      "sha256": "2985b56cfc4f295a2e2bbc596616c1b4f841a21931594f8cf4a77622ceef8099",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": false,
+      "retail_link_verified": false,
+      "instruction_bytes": 201,
+      "instruction_count": 83,
+      "semantics": {
+        "identity": "Allocate from reviewed global particle free list or local dead list; reclaim a lower-priority group particle on exhaustion; initialize and link to live root."
+      },
+      "address_expressions": [
+        {
+          "offset": 16,
+          "symbol": "gParDead",
+          "addend": 0,
+          "instruction_offset": 15,
+          "field": "displacement",
+          "prefix": "a1"
+        },
+        {
+          "offset": 37,
+          "symbol": "gParDead",
+          "addend": 0,
+          "instruction_offset": 35,
+          "field": "displacement",
+          "prefix": "890d"
+        },
+        {
+          "offset": 70,
+          "symbol": "sParGroupRegTable",
+          "addend": 0,
+          "instruction_offset": 67,
+          "field": "displacement",
+          "prefix": "8b0c95"
+        },
+        {
+          "offset": 124,
+          "symbol": "sParGroupRegTable",
+          "addend": 0,
+          "instruction_offset": 121,
+          "field": "displacement",
+          "prefix": "8b1485"
+        }
+      ],
+      "direct_calls": [
+        {
+          "offset": 131,
+          "symbol": "xParGroupKillPar(xParGroup*,xPar*)"
+        },
+        {
+          "offset": 136,
+          "symbol": "xParAlloc()"
+        },
+        {
+          "offset": 145,
+          "symbol": "xParInit(xPar*)"
+        }
+      ],
+      "corroboration": {
+        "return_address": 1369024,
+        "branches": [
+          {
+            "address": 1368838,
+            "size": 2,
+            "opcode": 116,
+            "target": 1368864
+          },
+          {
+            "address": 1368844,
+            "size": 2,
+            "opcode": 116,
+            "target": 1368849
+          },
+          {
+            "address": 1368862,
+            "size": 2,
+            "opcode": 235,
+            "target": 1368960
+          },
+          {
+            "address": 1368870,
+            "size": 2,
+            "opcode": 235,
+            "target": 1368880
+          },
+          {
+            "address": 1368892,
+            "size": 2,
+            "opcode": 116,
+            "target": 1368923
+          },
+          {
+            "address": 1368896,
+            "size": 2,
+            "opcode": 116,
+            "target": 1368923
+          },
+          {
+            "address": 1368904,
+            "size": 2,
+            "opcode": 116,
+            "target": 1368923
+          },
+          {
+            "address": 1368909,
+            "size": 2,
+            "opcode": 117,
+            "target": 1368923
+          },
+          {
+            "address": 1368917,
+            "size": 2,
+            "opcode": 125,
+            "target": 1368923
+          },
+          {
+            "address": 1368921,
+            "size": 2,
+            "opcode": 117,
+            "target": 1368934
+          },
+          {
+            "address": 1368927,
+            "size": 2,
+            "opcode": 114,
+            "target": 1368880
+          },
+          {
+            "address": 1368958,
+            "size": 2,
+            "opcode": 116,
+            "target": 1368996
+          },
+          {
+            "address": 1368985,
+            "size": 2,
+            "opcode": 116,
+            "target": 1368994
+          },
+          {
+            "address": 1369004,
+            "size": 2,
+            "opcode": 116,
+            "target": 1369020
+          },
+          {
+            "address": 1369013,
+            "size": 2,
+            "opcode": 116,
+            "target": 1368956
+          },
+          {
+            "address": 1369018,
+            "size": 2,
+            "opcode": 235,
+            "target": 1368956
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1359543,
+            "target": 1368816
+          }
+        ],
+        "internal_alignment": [
+          {
+            "address": 1368872,
+            "size": 8,
+            "sha256": "c6c5e53a181580333c3d9b6dfd57f37f0ecde9b739c5bd8887704cf87dad1e17"
+          }
+        ],
+        "following_padding": {
+          "address": 1369025,
+          "size": 15,
+          "byte": 204
+        },
+        "next_function_address": 1369040
+      }
+    },
+    {
+      "name": "xParGroupKillPar",
+      "canonical_identifier": "xParGroupKillPar(xParGroup*,xPar*)",
+      "display_name": "xParGroupKillPar(xParGroup*,xPar*)",
+      "source": "SB/Core/x/xParGroup.cpp",
+      "linkage_name": null,
+      "address": 1369040,
+      "size": 137,
+      "sha256": "8e3917ef4684fcfb722c6793bfdde64754d7866b3c113ba510dbde76845c47bb",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": false,
+      "retail_link_verified": false,
+      "instruction_bytes": 137,
+      "instruction_count": 60,
+      "semantics": {
+        "identity": "Unlink particle from group live list, decrement count, return to reviewed global free list or local dead list according to allocation flag."
+      },
+      "address_expressions": [
+        {
+          "offset": 89,
+          "symbol": "gParDead",
+          "addend": 0,
+          "instruction_offset": 87,
+          "field": "displacement",
+          "prefix": "8b0d"
+        },
+        {
+          "offset": 107,
+          "symbol": "gParDead",
+          "addend": 0,
+          "instruction_offset": 106,
+          "field": "displacement",
+          "prefix": "a3"
+        }
+      ],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1369176,
+        "branches": [
+          {
+            "address": 1369050,
+            "size": 2,
+            "opcode": 117,
+            "target": 1369063
+          },
+          {
+            "address": 1369056,
+            "size": 2,
+            "opcode": 116,
+            "target": 1369084
+          },
+          {
+            "address": 1369061,
+            "size": 2,
+            "opcode": 235,
+            "target": 1369084
+          },
+          {
+            "address": 1369065,
+            "size": 2,
+            "opcode": 116,
+            "target": 1369073
+          },
+          {
+            "address": 1369078,
+            "size": 2,
+            "opcode": 116,
+            "target": 1369084
+          },
+          {
+            "address": 1369102,
+            "size": 2,
+            "opcode": 116,
+            "target": 1369153
+          },
+          {
+            "address": 1369108,
+            "size": 2,
+            "opcode": 116,
+            "target": 1369116
+          },
+          {
+            "address": 1369121,
+            "size": 2,
+            "opcode": 116,
+            "target": 1369127
+          },
+          {
+            "address": 1369135,
+            "size": 2,
+            "opcode": 116,
+            "target": 1369140
+          },
+          {
+            "address": 1369158,
+            "size": 2,
+            "opcode": 116,
+            "target": 1369163
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1368946,
+            "target": 1369040
+          }
+        ],
+        "internal_alignment": [],
+        "following_padding": {
+          "address": 1369177,
+          "size": 7,
+          "byte": 204
+        },
+        "next_function_address": 1369184
       }
     },
     {
@@ -1506,6 +2292,71 @@
           "sha256": "4e908ddd23de93da9f9edd5660197715aa4fcc563721b419805be28794dc5b46",
           "description": "Hex-prefix substring branch and alternate bounded-hash identifier branch in the actual caller."
         }
+      }
+    },
+    {
+      "name": "__ftol2",
+      "canonical_identifier": "__ftol2",
+      "display_name": "__ftol2",
+      "source": "Runtime/MSVC/ftol2.obj",
+      "linkage_name": null,
+      "address": 1824368,
+      "size": 117,
+      "sha256": "5333b186c02836974c6f792303aeb2c00d856316b93ccbbe65f51def6ae661b4",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": false,
+      "retail_link_verified": false,
+      "instruction_bytes": 117,
+      "instruction_count": 37,
+      "semantics": {
+        "identity": "Microsoft CRT float-to-integer helper, exact full body equal to ftol2.obj from the Microsoft-signed Toolkit 2003 libcmt.lib; returns EDX:EAX from x87 ST0."
+      },
+      "address_expressions": [],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1824484,
+        "branches": [
+          {
+            "address": 1824401,
+            "size": 2,
+            "opcode": 116,
+            "target": 1824463
+          },
+          {
+            "address": 1824407,
+            "size": 2,
+            "opcode": 121,
+            "target": 1824439
+          },
+          {
+            "address": 1824437,
+            "size": 2,
+            "opcode": 235,
+            "target": 1824483
+          },
+          {
+            "address": 1824461,
+            "size": 2,
+            "opcode": 235,
+            "target": 1824483
+          },
+          {
+            "address": 1824473,
+            "size": 2,
+            "opcode": 117,
+            "target": 1824403
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1368571,
+            "target": 1824368
+          }
+        ],
+        "internal_alignment": []
       }
     }
   ]

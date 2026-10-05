@@ -10566,20 +10566,44 @@
       "identity_kind": "anonymous"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0014e180",
-      "source": null,
-      "address": 1368448,
-      "size": 361,
-      "identity_kind": "anonymous"
+      "name": "xParGroupRegister",
+      "canonical_identifier": "xParGroupRegister(xParGroup*)",
+      "source": "SB/Core/x/xParGroup.cpp",
+      "address": 1368288,
+      "size": 85,
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0014e3d0",
-      "source": null,
+      "name": "xParGroupUnregister",
+      "canonical_identifier": "xParGroupUnregister(xParGroup*)",
+      "source": "SB/Core/x/xParGroup.cpp",
+      "address": 1368384,
+      "size": 51,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xParGroupAnimate",
+      "canonical_identifier": "xParGroupAnimate(xParGroup*,F32)",
+      "source": "SB/Core/x/xParGroup.cpp",
+      "address": 1368448,
+      "size": 361,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xParGroupAddPar",
+      "canonical_identifier": "xParGroupAddPar(xParGroup*)",
+      "source": "SB/Core/x/xParGroup.cpp",
+      "address": 1368816,
+      "size": 209,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xParGroupKillPar",
+      "canonical_identifier": "xParGroupKillPar(xParGroup*,xPar*)",
+      "source": "SB/Core/x/xParGroup.cpp",
       "address": 1369040,
       "size": 137,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
       "name": null,
@@ -18782,12 +18806,12 @@
       "identity_kind": "anonymous"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_001bd670",
-      "source": null,
+      "name": "__ftol2",
+      "canonical_identifier": "__ftol2",
+      "source": "Runtime/MSVC/ftol2.obj",
       "address": 1824368,
       "size": 117,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
       "name": null,

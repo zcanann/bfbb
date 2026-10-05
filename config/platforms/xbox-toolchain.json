@@ -32,7 +32,7 @@
   },
   "analysis": {
     "capstone_version": "5.0.7",
-    "method": "Reachable direct CFG bounded by MAP symbols; calls opt in to named same-TU MAP entries; no target lengths used"
+    "method": "Reachable direct CFG bounded by MAP symbols; E8/E9 transfers opt in to named source/dependency/runtime MAP entries; no target lengths used"
   },
   "flags": [
     "/nologo",
@@ -138,6 +138,198 @@
           }
         ]
       }
+    },
+    {
+      "source": "src/SB/Core/x/xParGroup.cpp",
+      "target_unit": "SB/Core/x/xParGroup.cpp",
+      "object": "source/xParGroup/group.obj",
+      "comparison_object": "source/xParGroup-functions.obj",
+      "host_entry": "tools/platforms/xbox_support/particle_group_entry.cpp",
+      "source_dependencies": [
+        {
+          "source": "src/SB/Core/x/xPar.cpp",
+          "object": "particle.obj"
+        }
+      ],
+      "runtime_libraries": [
+        "libcmt"
+      ],
+      "symbols": {
+        "xParGroupRegister(xParGroup*)": "?xParGroupRegister@@YAXPAUxParGroup@@@Z",
+        "xParGroupUnregister(xParGroup*)": "?xParGroupUnregister@@YAXPAUxParGroup@@@Z",
+        "xParGroupAnimate(xParGroup*,F32)": "?xParGroupAnimate@@YAXPAUxParGroup@@M@Z",
+        "xParGroupAddPar(xParGroup*)": "?xParGroupAddPar@@YAPAUxPar@@PAUxParGroup@@@Z",
+        "xParGroupKillPar(xParGroup*,xPar*)": "?xParGroupKillPar@@YAXPAUxParGroup@@PAUxPar@@@Z"
+      },
+      "scope": "Five independently reviewed functions from full xParGroup.cpp and real xPar.cpp dependency compilation; all partial routines retained. CRT support excluded from source coverage.",
+      "globals": {
+        "sParGroupRegTable": {
+          "linkage_name": "?sParGroupRegTable@@3PAPAUxParGroup@@A",
+          "size": 1020,
+          "object": "group.obj"
+        },
+        "gParDead": {
+          "linkage_name": "?gParDead@@3PAUxPar@@A",
+          "size": 4,
+          "object": "particle.obj"
+        },
+        "float:00000000": {
+          "linkage_name": "__real@00000000",
+          "size": 4,
+          "object": "group.obj",
+          "value_hex": "00000000"
+        },
+        "float:437f0000": {
+          "linkage_name": "__real@437f0000",
+          "size": 4,
+          "object": "group.obj",
+          "value_hex": "00007f43"
+        },
+        "sParGroupRegTableInit": {
+          "size": 4,
+          "object": "group.obj",
+          "definition_use": {
+            "function": "?xParGroupRegister@@YAXPAUxParGroup@@@Z",
+            "prefix": "a1"
+          }
+        }
+      },
+      "direct_calls": {
+        "xParGroupRegister(xParGroup*)": [
+          "xParGroupRegisterInit()"
+        ],
+        "xParGroupUnregister(xParGroup*)": [],
+        "xParGroupAnimate(xParGroup*,F32)": [
+          "__ftol2",
+          "xParGroupKillPar(xParGroup*,xPar*)"
+        ],
+        "xParGroupAddPar(xParGroup*)": [
+          "xParAlloc()",
+          "xParGroupAddParP(xParGroup*,xPar*)",
+          "xParGroupKillPar(xParGroup*,xPar*)",
+          "xParInit(xPar*)"
+        ],
+        "xParGroupKillPar(xParGroup*,xPar*)": [
+          "xParFree(xPar*)",
+          "xParGroupAddParToDeadList(xParGroup*,xPar*)"
+        ]
+      },
+      "call_symbols": {
+        "xParGroupRegisterInit()": {
+          "linkage_name": "?xParGroupRegisterInit@@YAXXZ",
+          "object": "group.obj"
+        },
+        "__ftol2": {
+          "linkage_name": "__ftol2",
+          "object": "libcmt:ftol2.obj"
+        },
+        "xParAlloc()": {
+          "linkage_name": "?xParAlloc@@YAPAUxPar@@XZ",
+          "object": "particle.obj"
+        },
+        "xParInit(xPar*)": {
+          "linkage_name": "?xParInit@@YAXPAUxPar@@@Z",
+          "object": "particle.obj"
+        },
+        "xParGroupAddParP(xParGroup*,xPar*)": {
+          "linkage_name": "?xParGroupAddParP@@YAXPAUxParGroup@@PAUxPar@@@Z",
+          "object": "group.obj"
+        },
+        "xParFree(xPar*)": {
+          "linkage_name": "?xParFree@@YAXPAUxPar@@@Z",
+          "object": "particle.obj"
+        },
+        "xParGroupAddParToDeadList(xParGroup*,xPar*)": {
+          "linkage_name": "?xParGroupAddParToDeadList@@YAXPAUxParGroup@@PAUxPar@@@Z",
+          "object": "group.obj"
+        }
+      },
+      "address_expressions": {
+        "xParGroupRegister(xParGroup*)": [
+          {
+            "symbol": "sParGroupRegTableInit",
+            "field": "displacement",
+            "prefix": "a1"
+          },
+          {
+            "symbol": "sParGroupRegTable",
+            "field": "displacement",
+            "prefix": "8b348d"
+          },
+          {
+            "symbol": "sParGroupRegTable",
+            "field": "displacement",
+            "prefix": "89148d"
+          }
+        ],
+        "xParGroupUnregister(xParGroup*)": [
+          {
+            "symbol": "sParGroupRegTable",
+            "field": "displacement",
+            "prefix": "390cb5"
+          },
+          {
+            "symbol": "sParGroupRegTable",
+            "field": "displacement",
+            "prefix": "891485"
+          }
+        ],
+        "xParGroupAnimate(xParGroup*,F32)": [
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d905",
+            "count": 5
+          },
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d81d"
+          },
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d815",
+            "count": 4
+          },
+          {
+            "symbol": "float:437f0000",
+            "field": "displacement",
+            "prefix": "d815",
+            "count": 4
+          },
+          {
+            "symbol": "float:437f0000",
+            "field": "displacement",
+            "prefix": "d905",
+            "count": 4
+          }
+        ],
+        "xParGroupAddPar(xParGroup*)": [
+          {
+            "symbol": "sParGroupRegTable",
+            "field": "displacement",
+            "prefix": "8b0485"
+          },
+          {
+            "symbol": "sParGroupRegTable",
+            "field": "displacement",
+            "prefix": "8b1495"
+          }
+        ],
+        "xParGroupKillPar(xParGroup*,xPar*)": []
+      }
     }
-  ]
+  ],
+  "static_runtime": {
+    "archive_url": "https://archive.org/download/microsoft-visual-c-toolkit-2003/VCToolkitSetup.exe",
+    "archive_sha256": "03aad135c22e953e0928b118705338afdbd08abf8e4039038ef77945504e65fa",
+    "provenance": "Microsoft-signed public Visual C++ Toolkit 2003, Authenticode validated; extract only. Runtime library supplies actual compiler-generated helpers, never counted as reconstructed source.",
+    "libraries": {
+      "libcmt": {
+        "path": "Lib/libcmt.lib",
+        "sha256": "780aa4cbe614efeeb72e3bb9538230f5cd37caeb0adc5d70c346b0dda19ba3a5"
+      }
+    }
+  }
 }

@@ -3,7 +3,8 @@
 LTCG objects contain intermediate code. The comparison objects therefore contain
 final PE function bytes, independently bounded through decoded CFGs, with only
 explicitly reviewed address expressions restored from real PE HIGHLOW records
-and direct calls resolved against independently named same-TU MAP functions.
+and direct transfers resolved against named functions in actual source/dependency
+objects or a pinned runtime library.
 Host link support is never included in matching coverage or completion claims.
 """
 from __future__ import annotations
@@ -91,7 +92,8 @@ def _leaf_extent(text: bytes, text_address: int, entry: int, bound: int,
                  call_targets: dict[int, str] | None = None) -> dict:
     """Follow actual source CFG; a neighboring MAP symbol is only a rejection bound.
 
-    Calls default to rejected; opt-in E8 calls must resolve to named MAP entries.
+    Calls default to rejected; opt-in E8 calls and E9 tail transfers must resolve
+    to named MAP entries.
     Only their fallthrough is followed. Branches must be
     direct and local. Include interior alignment in the contiguous span, while
     excluding bytes following the last reachable instruction. No target is read.
@@ -104,6 +106,7 @@ def _leaf_extent(text: bytes, text_address: int, entry: int, bound: int,
     decoder = Cs(CS_ARCH_X86, CS_MODE_32)
     decoder.detail = True
     pending, decoded, edges, calls = [entry], {}, [], []
+    tail_returns = 0
     while pending:
         address = pending.pop()
         if address in decoded:
@@ -131,6 +134,10 @@ def _leaf_extent(text: bytes, text_address: int, entry: int, bound: int,
             if len(instruction.operands) != 1 or instruction.operands[0].type != X86_OP_IMM:
                 raise ValueError('Indirect source branches need explicit recovery')
             destination = instruction.operands[0].imm
+            if not entry <= destination < bound and instruction.bytes[0] == 0xe9 and destination in (call_targets or {}):
+                calls.append({'offset': address - entry + 1, 'symbol': call_targets[destination], 'opcode': 0xe9})
+                tail_returns += 1
+                continue
             pending.append(destination)
             edges.append([address, destination])
             if instruction.mnemonic == 'jmp':
@@ -140,7 +147,7 @@ def _leaf_extent(text: bytes, text_address: int, entry: int, bound: int,
     ranges = sorted((i.address, i.address + i.size) for i in decoded.values())
     if any(left[1] > right[0] for left, right in zip(ranges, ranges[1:])):
         raise ValueError('Overlapping source instruction starts')
-    if not any(i.group(CS_GRP_RET) for i in decoded.values()):
+    if not tail_returns and not any(i.group(CS_GRP_RET) for i in decoded.values()):
         raise ValueError('Source leaf has no reachable return')
     end = max(high for _, high in ranges)
     return {'address': entry, 'size': end - entry,
@@ -158,7 +165,7 @@ def _extract_functions(executable: Path, map_path: Path, unit: dict) -> tuple[li
                         text_address <= f['address'] < text_address + len(text)})
     from .xbox_relocations import pe_provenance, source_globals, normalize, discover_source_expressions
     sections, highlow = pe_provenance(executable)
-    anchors = source_globals(map_path, unit, sections)
+    anchors = source_globals(map_path, unit, sections, executable)
     output, evidence = [], []
     for canonical, linkage in unit['symbols'].items():
         if linkage not in by_name:
@@ -170,8 +177,11 @@ def _extract_functions(executable: Path, map_path: Path, unit: dict) -> tuple[li
         bound = next((a for a in addresses if a > address), text_address + len(text))
         call_targets = {}
         for callee in unit.get('direct_calls', {}).get(canonical, []):
-            target = by_name[unit['symbols'][callee]]
-            if (target['object'].lower() != Path(unit['object']).name.lower() or
+            dependency = unit.get('call_symbols', {}).get(callee)
+            linkage = dependency['linkage_name'] if dependency else unit['symbols'][callee]
+            owner = dependency['object'] if dependency else Path(unit['object']).name
+            target = by_name[linkage]
+            if (target['object'].lower() != owner.lower() or
                     target['address'] in call_targets or not text_address <= target['address'] < text_address + len(text)):
                 raise ValueError('Ambiguous or foreign source call target')
             call_targets[target['address']] = callee
@@ -266,6 +276,24 @@ def compile_units(output: Path, compilers: Path, wine: Path | None = None) -> li
         includes.append('/I' + tool_path(compiler / 'Include'))
         run('cl.exe', [*profile['flags'], *includes, '/Fo' + source_object.name,
                        tool_path(ROOT / unit['source'])], 'compile-source')
+        dependency_objects, dependency_records = [], []
+        for index, dependency in enumerate(unit.get('source_dependencies', [])):
+            dependency_object = dependency['object']
+            if Path(dependency_object).name != dependency_object or dependency_object in dependency_objects + [source_object.name]:
+                raise ValueError('Invalid or repeated source dependency object name')
+            run('cl.exe', [*profile['flags'], *includes, '/Fo' + dependency_object,
+                           tool_path(ROOT / dependency['source'])], f'compile-dependency-{index}')
+            dependency_objects.append(dependency_object)
+            dependency_records.append({'source': dependency['source'],
+                'source_sha256': hashlib.sha256((ROOT / dependency['source']).read_bytes()).hexdigest(),
+                'object_sha256': hashlib.sha256((build / dependency_object).read_bytes()).hexdigest()})
+        runtime_libraries = []
+        for name in unit.get('runtime_libraries', []):
+            spec = profile['static_runtime']['libraries'][name]
+            library = compiler / spec['path']
+            if hashlib.sha256(library.read_bytes()).hexdigest() != spec['sha256']:
+                raise ValueError('Unexpected static compiler runtime library')
+            runtime_libraries.append(tool_path(library))
         support = profile['host_context']
         run('cl.exe', [*profile['flags'], *includes, '/Foentry.obj',
                        tool_path(ROOT / unit.get('host_entry', support['entry']))], 'compile-entry')
@@ -277,7 +305,8 @@ def compile_units(output: Path, compilers: Path, wine: Path | None = None) -> li
                         '/def:' + tool_path(ROOT / support['imports'])], 'create-host-imports')
         run('link.exe', ['/nologo', '/LTCG', '/NODEFAULTLIB', '/ENTRY:xbox_source_entry',
                          '/SUBSYSTEM:CONSOLE', '/MAP:source.map', '/FIXED:NO', '/OUT:source.exe',
-                         source_object.name, 'entry.obj', 'xatof.obj', 'fltused.obj', 'msvcrt.lib'], 'link-source')
+                         source_object.name, *dependency_objects, 'entry.obj', 'xatof.obj', 'fltused.obj', 'msvcrt.lib',
+                         *runtime_libraries], 'link-source')
         functions, evidence = _extract_functions(build / 'source.exe', build / 'source.map', unit)
         comparison = output / unit['comparison_object']
         comparison.write_bytes(function_object(functions))
@@ -293,6 +322,9 @@ def compile_units(output: Path, compilers: Path, wine: Path | None = None) -> li
                         'linked_pe_sha256': hashlib.sha256((build / 'source.exe').read_bytes()).hexdigest(),
                         'comparison_object_sha256': hashlib.sha256(comparison.read_bytes()).hexdigest(),
                         'compared_function_count': len(functions), 'source_link_verified': False,
-                        'complete_translation_unit': False, 'host_support_excluded': True})
+                        'complete_translation_unit': False, 'host_support_excluded': True,
+                        **({'source_dependencies': dependency_records} if dependency_records else {}),
+                        **({'runtime_libraries': {name: profile['static_runtime']['libraries'][name]
+                            for name in unit['runtime_libraries']}} if runtime_libraries else {})})
     config_path.write_text(json.dumps(config, indent=2) + '\n', encoding='utf-8')
     return records
