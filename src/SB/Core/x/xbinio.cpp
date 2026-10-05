@@ -37,9 +37,15 @@ static tag_xFile g_xfload[8] = {};
 static st_BINIO_XTRADATA g_xtraload[8] = {};
 static st_BINIO_XTRADATA* g_async_context = NULL;
 
+#if defined(PS2)
+inline
+#endif
 static void LoadDestroy(st_FILELOADINFO* fli);
 static S32 SkipBytes(st_FILELOADINFO* fli, S32 fwd);
 static S32 ReadSeek(st_FILELOADINFO* fli, S32 pos);
+#if defined(PS2)
+inline
+#endif
 static void SetBuffer(st_FILELOADINFO* fli, char* dblbuffer, S32 bufsize);
 static void DiscardBuffer(st_FILELOADINFO* fli);
 static S32 ReadRaw(st_FILELOADINFO* fli, void* data, S32 size, S32 count);
@@ -55,15 +61,32 @@ static S32 ReadIDoubles(st_FILELOADINFO* fli, F64* data, S32 count);
 static S32 AsyncMRead(st_FILELOADINFO* fli, S32 offset, char* data, S32 size, S32 n);
 static S32 AsyncIRead(st_FILELOADINFO* fli, S32 offset, char* data, S32 size, S32 n);
 static en_BIO_ASYNC_ERRCODES AsyncReadStatus(st_FILELOADINFO* fli);
+#if defined(PS2)
+inline
+#endif
 static void Swap2(char* d, S32 n);
+#if defined(PS2)
+inline
+#endif
 static void Swap4(char* d, S32 n);
 static void Swap8(char* d, S32 n);
 static tag_xFile* BFD_open(const char* filename, const char* mode, U32 lockid, S32, void* xtradata);
+#if defined(PS2)
+inline
+#endif
 static void BFD_close(tag_xFile* bffp, void* xtradata);
 static S32 BFD_read(void* data, S32 elesize, S32 elecnt, tag_xFile* bffp, void* xtradata);
+#if defined(PS2)
+inline
+#endif
 static S32 BFD_seek(tag_xFile* bffp, S32 offset, S32 whence, void* xtradata);
+#if defined(PS2)
+inline
+#endif
 static S32 BFD_getLength(tag_xFile* bffp, void* xtradata);
+#if !defined(PS2)
 static S32 BFD_startSector(const char* filename);
+#endif
 static void BFD_cb_GCP2_readasync(tag_xFile* bffp);
 static S32 BFD_AsyncRead(st_FILELOADINFO* fli, S32 pos, void* data, S32 size, S32 n, S32 endian);
 static en_BIO_ASYNC_ERRCODES BFD_AsyncReadStatus(st_FILELOADINFO* fli);
@@ -121,7 +144,9 @@ st_FILELOADINFO* xBinioLoadCreate(const char* filename)
 
         if (tmp_fp)
         {
+#if !defined(PS2)
             fli->basesector = BFD_startSector(filename);
+#endif
             fli->privdata = tmp_fp;
             fli->filesize = BFD_getLength(tmp_fp, fli->xtradata);
             fli->remain = fli->filesize;
@@ -594,6 +619,7 @@ static S32 BFD_getLength(tag_xFile* bffp, void* xtradata)
     return iFileGetSize(bffp);
 }
 
+#if !defined(PS2)
 static S32 BFD_startSector(const char* filename)
 {
     tag_xFile file = {};
@@ -609,6 +635,7 @@ static S32 BFD_startSector(const char* filename)
 
     return addr;
 }
+#endif
 
 static void BFD_cb_GCP2_readasync(tag_xFile* bffp)
 {
@@ -640,7 +667,12 @@ static S32 BFD_AsyncRead(st_FILELOADINFO* fli, S32 pos, void* data, S32 size, S3
     iFileSeek(file, pos, IFILE_SEEK_SET);
     xFileSetUserData(file, fli);
 
-    S32 result = iFileReadAsync(file, data, size * n, BFD_cb_GCP2_readasync, 0);
+#if defined(PS2)
+    const S32 readPriority = 0x100;
+#else
+    const S32 readPriority = 0;
+#endif
+    S32 result = iFileReadAsync(file, data, size * n, BFD_cb_GCP2_readasync, readPriority);
     S32 rc;
 
     if (result < 0)
@@ -699,6 +731,9 @@ static en_BIO_ASYNC_ERRCODES BFD_AsyncReadStatus(st_FILELOADINFO* fli)
             }
             case XFILE_RDSTAT_FAIL:
             case XFILE_RDSTAT_EXPIRED:
+#if defined(PS2)
+            case XFILE_RDSTAT_NOOP:
+#endif
             default:
             {
                 xtra->asyn_status = BINIO_ASYNC_FAIL;
