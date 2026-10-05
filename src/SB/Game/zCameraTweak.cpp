@@ -3,7 +3,11 @@
 #include "xMath.h"
 #include "xMathInlines.h"
 #include "iMath.h"
+#if defined(PS2)
+#include "zCameraTuning.h"
+#else
 #include "zCamera.h"
+#endif
 #include <types.h>
 
 static S32 sCamTweakCount;
@@ -20,6 +24,10 @@ static F32 sCamPitch;
 static zCamTweakLook zcam_neartweak;
 static zCamTweakLook zcam_fartweak;
 
+
+#if defined(PS2)
+inline
+#endif
 static void zCameraTweak_LookPreCalc(zCamTweakLook* tlook, F32 d, F32 h, F32 pitch)
 {
     F32 tan = itan(pitch);
@@ -187,7 +195,7 @@ void zCameraTweak_Init(zCameraTweak* tweak, CameraTweak_asset* asset)
     tweak->casset = asset;
     tweak->eventFunc = zCameraTweak_EventCB;
 
-    if (tweak->linkCount != 0)
+    if (tweak->linkCount > 0)
     {
         tweak->link = (xLinkAsset*)(asset + 1);
     }

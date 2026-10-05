@@ -6961,6 +6961,524 @@
         }
       ],
       "address_pairs": []
+    },
+    {
+      "source": "src/SB/Game/zCameraTweak.cpp",
+      "target_unit": "SB/Game/zCameraTweak.cpp",
+      "object": "source/zCameraTweak.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zCameraTweak_EventCB__FP5xBaseP5xBaseUiPCfP5xBase": "zCameraTweak_EventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "zCameraTweak_Load__FP12zCameraTweakP7xSerial": "zCameraTweak_Load__FP12zCameraTweakP7xSerial",
+        "zCameraTweak_Save__FP12zCameraTweakP7xSerial": "zCameraTweak_Save__FP12zCameraTweakP7xSerial",
+        "zCameraTweak_Init__FR5xBaseR9xDynAssetUi": "zCameraTweak_Init__FR5xBaseR9xDynAssetUi",
+        "zCameraTweakGlobal_GetPitch__Fv": "zCameraTweakGlobal_GetPitch__Fv",
+        "zCameraTweakGlobal_GetH__Fv": "zCameraTweakGlobal_GetH__Fv",
+        "zCameraTweakGlobal_GetD__Fv": "zCameraTweakGlobal_GetD__Fv",
+        "zCameraTweakGlobal_Update__Ff": "zCameraTweakGlobal_Update__Ff",
+        "zCameraTweakGlobal_Reset__Fv": "zCameraTweakGlobal_Reset__Fv",
+        "zCameraTweakGlobal_Remove__FUi": "zCameraTweakGlobal_Remove__FUi",
+        "zCameraTweakGlobal_Add__FUiffff": "zCameraTweakGlobal_Add__FUiffff",
+        "zCameraTweakGlobal_Init__Fv": "zCameraTweakGlobal_Init__Fv"
+      },
+      "calls": [
+        {
+          "function": "zCameraTweak_EventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 128,
+          "target_source": "SB/Game/zCameraTweak.cpp",
+          "target_function": "zCameraTweakGlobal_Add__FUiffff",
+          "symbol": "zCameraTweakGlobal_Add__FUiffff"
+        },
+        {
+          "function": "zCameraTweak_EventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 160,
+          "target_source": "SB/Game/zCameraTweak.cpp",
+          "target_function": "zCameraTweakGlobal_Remove__FUi",
+          "symbol": "zCameraTweakGlobal_Remove__FUi"
+        },
+        {
+          "function": "zCameraTweak_Load__FP12zCameraTweakP7xSerial",
+          "offset": 0,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseLoad__FP5xBaseP7xSerial",
+          "symbol": "xBaseLoad__FP5xBaseP7xSerial",
+          "opcode": 2
+        },
+        {
+          "function": "zCameraTweak_Save__FP12zCameraTweakP7xSerial",
+          "offset": 0,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseSave__FP5xBaseP7xSerial",
+          "symbol": "xBaseSave__FP5xBaseP7xSerial",
+          "opcode": 2
+        },
+        {
+          "function": "zCameraTweak_Init__FR5xBaseR9xDynAssetUi",
+          "offset": 20,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseInit__FP5xBaseP10xBaseAsset",
+          "symbol": "xBaseInit__FP5xBaseP10xBaseAsset"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "zCameraTweakGlobal_GetPitch__Fv",
+          "offset": 4,
+          "opcode": 49,
+          "target_name": "sCamPitch",
+          "symbol": "sCamPitch"
+        },
+        {
+          "function": "zCameraTweakGlobal_GetH__Fv",
+          "offset": 4,
+          "opcode": 49,
+          "target_name": "sCamH",
+          "symbol": "sCamH"
+        },
+        {
+          "function": "zCameraTweakGlobal_GetD__Fv",
+          "offset": 4,
+          "opcode": 49,
+          "target_name": "sCamD",
+          "symbol": "sCamD"
+        },
+        {
+          "function": "zCameraTweakGlobal_Update__Ff",
+          "offset": 16,
+          "opcode": 49,
+          "target_name": "sCamTweakTime",
+          "symbol": "sCamTweakTime"
+        },
+        {
+          "function": "zCameraTweakGlobal_Update__Ff",
+          "offset": 20,
+          "opcode": 49,
+          "target_name": "sCamTweakLerp",
+          "symbol": "sCamTweakLerp"
+        },
+        {
+          "function": "zCameraTweakGlobal_Update__Ff",
+          "offset": 40,
+          "opcode": 57,
+          "target_name": "sCamTweakLerp",
+          "symbol": "sCamTweakLerp"
+        },
+        {
+          "function": "zCameraTweakGlobal_Update__Ff",
+          "offset": 44,
+          "opcode": 57,
+          "target_name": "sCamTweakLerp",
+          "symbol": "sCamTweakLerp"
+        },
+        {
+          "function": "zCameraTweakGlobal_Update__Ff",
+          "offset": 52,
+          "opcode": 49,
+          "target_name": "sCamTweakLerp",
+          "symbol": "sCamTweakLerp"
+        },
+        {
+          "function": "zCameraTweakGlobal_Update__Ff",
+          "offset": 64,
+          "opcode": 49,
+          "target_name": "sCamTweakPitch",
+          "symbol": "sCamTweakPitch"
+        },
+        {
+          "function": "zCameraTweakGlobal_Update__Ff",
+          "offset": 68,
+          "opcode": 35,
+          "target_name": "zcam_near",
+          "symbol": "zcam_near"
+        },
+        {
+          "function": "zCameraTweakGlobal_Update__Ff",
+          "offset": 76,
+          "opcode": 49,
+          "target_name": "sCamTweakDistMult",
+          "symbol": "sCamTweakDistMult"
+        },
+        {
+          "function": "zCameraTweakGlobal_Update__Ff",
+          "offset": 100,
+          "opcode": 57,
+          "target_name": "sCamTweakPitchCur",
+          "symbol": "sCamTweakPitchCur"
+        },
+        {
+          "function": "zCameraTweakGlobal_Update__Ff",
+          "offset": 108,
+          "opcode": 57,
+          "target_name": "sCamTweakDistMultCur",
+          "symbol": "sCamTweakDistMultCur"
+        },
+        {
+          "function": "zCameraTweakGlobal_Update__Ff",
+          "offset": 136,
+          "opcode": 49,
+          "target_name": "sCamTweakPitchCur",
+          "symbol": "sCamTweakPitchCur"
+        },
+        {
+          "function": "zCameraTweakGlobal_Update__Ff",
+          "offset": 148,
+          "opcode": 49,
+          "target_name": "sCamTweakDistMultCur",
+          "symbol": "sCamTweakDistMultCur"
+        },
+        {
+          "function": "zCameraTweakGlobal_Update__Ff",
+          "offset": 156,
+          "opcode": 49,
+          "target_name": "sCamTweakPitchCur",
+          "symbol": "sCamTweakPitchCur"
+        },
+        {
+          "function": "zCameraTweakGlobal_Update__Ff",
+          "offset": 168,
+          "opcode": 57,
+          "target_name": "sCamD",
+          "symbol": "sCamD"
+        },
+        {
+          "function": "zCameraTweakGlobal_Update__Ff",
+          "offset": 184,
+          "opcode": 49,
+          "target_name": "sCamTweakDistMultCur",
+          "symbol": "sCamTweakDistMultCur"
+        },
+        {
+          "function": "zCameraTweakGlobal_Update__Ff",
+          "offset": 196,
+          "opcode": 49,
+          "target_name": "sCamTweakPitchCur",
+          "symbol": "sCamTweakPitchCur"
+        },
+        {
+          "function": "zCameraTweakGlobal_Update__Ff",
+          "offset": 212,
+          "opcode": 57,
+          "target_name": "sCamH",
+          "symbol": "sCamH"
+        },
+        {
+          "function": "zCameraTweakGlobal_Update__Ff",
+          "offset": 224,
+          "opcode": 57,
+          "target_name": "sCamPitch",
+          "symbol": "sCamPitch"
+        },
+        {
+          "function": "zCameraTweakGlobal_Reset__Fv",
+          "offset": 12,
+          "opcode": 43,
+          "target_name": "sCamTweakCount",
+          "symbol": "sCamTweakCount"
+        },
+        {
+          "function": "zCameraTweakGlobal_Reset__Fv",
+          "offset": 16,
+          "opcode": 43,
+          "target_name": "sCamTweakPitch",
+          "symbol": "sCamTweakPitch"
+        },
+        {
+          "function": "zCameraTweakGlobal_Reset__Fv",
+          "offset": 24,
+          "opcode": 43,
+          "target_name": "sCamTweakDistMult",
+          "symbol": "sCamTweakDistMult"
+        },
+        {
+          "function": "zCameraTweakGlobal_Reset__Fv",
+          "offset": 28,
+          "opcode": 43,
+          "target_name": "sCamTweakTime",
+          "symbol": "sCamTweakTime"
+        },
+        {
+          "function": "zCameraTweakGlobal_Reset__Fv",
+          "offset": 36,
+          "opcode": 43,
+          "target_name": "sCamTweakDistMultCur",
+          "symbol": "sCamTweakDistMultCur"
+        },
+        {
+          "function": "zCameraTweakGlobal_Reset__Fv",
+          "offset": 40,
+          "opcode": 43,
+          "target_name": "sCamTweakLerp",
+          "symbol": "sCamTweakLerp"
+        },
+        {
+          "function": "zCameraTweakGlobal_Reset__Fv",
+          "offset": 48,
+          "opcode": 43,
+          "target_name": "sCamTweakPitchCur",
+          "symbol": "sCamTweakPitchCur"
+        },
+        {
+          "function": "zCameraTweakGlobal_Remove__FUi",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "sCamTweakCount",
+          "symbol": "sCamTweakCount"
+        },
+        {
+          "function": "zCameraTweakGlobal_Remove__FUi",
+          "offset": 44,
+          "opcode": 49,
+          "target_name": "sCamTweakLerp",
+          "symbol": "sCamTweakLerp"
+        },
+        {
+          "function": "zCameraTweakGlobal_Remove__FUi",
+          "offset": 68,
+          "opcode": 49,
+          "target_name": "sCamTweakPitch",
+          "symbol": "sCamTweakPitch"
+        },
+        {
+          "function": "zCameraTweakGlobal_Remove__FUi",
+          "offset": 76,
+          "opcode": 43,
+          "target_name": "sCamTweakLerp",
+          "symbol": "sCamTweakLerp"
+        },
+        {
+          "function": "zCameraTweakGlobal_Remove__FUi",
+          "offset": 80,
+          "opcode": 49,
+          "target_name": "sCamTweakDistMult",
+          "symbol": "sCamTweakDistMult"
+        },
+        {
+          "function": "zCameraTweakGlobal_Remove__FUi",
+          "offset": 96,
+          "opcode": 57,
+          "target_name": "sCamTweakTime",
+          "symbol": "sCamTweakTime"
+        },
+        {
+          "function": "zCameraTweakGlobal_Remove__FUi",
+          "offset": 140,
+          "opcode": 57,
+          "target_name": "sCamTweakPitch",
+          "symbol": "sCamTweakPitch"
+        },
+        {
+          "function": "zCameraTweakGlobal_Remove__FUi",
+          "offset": 148,
+          "opcode": 57,
+          "target_name": "sCamTweakDistMult",
+          "symbol": "sCamTweakDistMult"
+        },
+        {
+          "function": "zCameraTweakGlobal_Remove__FUi",
+          "offset": 152,
+          "opcode": 43,
+          "target_name": "sCamTweakPitch",
+          "symbol": "sCamTweakPitch"
+        },
+        {
+          "function": "zCameraTweakGlobal_Remove__FUi",
+          "offset": 156,
+          "opcode": 57,
+          "target_name": "sCamTweakDistMult",
+          "symbol": "sCamTweakDistMult"
+        },
+        {
+          "function": "zCameraTweakGlobal_Remove__FUi",
+          "offset": 256,
+          "opcode": 35,
+          "target_name": "sCamTweakCount",
+          "symbol": "sCamTweakCount"
+        },
+        {
+          "function": "zCameraTweakGlobal_Remove__FUi",
+          "offset": 268,
+          "opcode": 43,
+          "target_name": "sCamTweakCount",
+          "symbol": "sCamTweakCount"
+        },
+        {
+          "function": "zCameraTweakGlobal_Add__FUiffff",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "sCamTweakCount",
+          "symbol": "sCamTweakCount"
+        },
+        {
+          "function": "zCameraTweakGlobal_Add__FUiffff",
+          "offset": 416,
+          "opcode": 35,
+          "target_name": "sCamTweakCount",
+          "symbol": "sCamTweakCount"
+        },
+        {
+          "function": "zCameraTweakGlobal_Add__FUiffff",
+          "offset": 428,
+          "opcode": 43,
+          "target_name": "sCamTweakCount",
+          "symbol": "sCamTweakCount"
+        },
+        {
+          "function": "zCameraTweakGlobal_Add__FUiffff",
+          "offset": 444,
+          "opcode": 49,
+          "target_name": "sCamTweakLerp",
+          "symbol": "sCamTweakLerp"
+        },
+        {
+          "function": "zCameraTweakGlobal_Add__FUiffff",
+          "offset": 456,
+          "opcode": 49,
+          "target_name": "sCamTweakPitch",
+          "symbol": "sCamTweakPitch"
+        },
+        {
+          "function": "zCameraTweakGlobal_Add__FUiffff",
+          "offset": 472,
+          "opcode": 43,
+          "target_name": "sCamTweakLerp",
+          "symbol": "sCamTweakLerp"
+        },
+        {
+          "function": "zCameraTweakGlobal_Add__FUiffff",
+          "offset": 480,
+          "opcode": 49,
+          "target_name": "sCamTweakDistMult",
+          "symbol": "sCamTweakDistMult"
+        },
+        {
+          "function": "zCameraTweakGlobal_Add__FUiffff",
+          "offset": 496,
+          "opcode": 57,
+          "target_name": "sCamTweakTime",
+          "symbol": "sCamTweakTime"
+        },
+        {
+          "function": "zCameraTweakGlobal_Add__FUiffff",
+          "offset": 516,
+          "opcode": 57,
+          "target_name": "sCamTweakPitch",
+          "symbol": "sCamTweakPitch"
+        },
+        {
+          "function": "zCameraTweakGlobal_Add__FUiffff",
+          "offset": 524,
+          "opcode": 57,
+          "target_name": "sCamTweakDistMult",
+          "symbol": "sCamTweakDistMult"
+        },
+        {
+          "function": "zCameraTweakGlobal_Init__Fv",
+          "offset": 28,
+          "opcode": 49,
+          "target_name": "zcam_near_pitch",
+          "symbol": "zcam_near_pitch"
+        },
+        {
+          "function": "zCameraTweakGlobal_Init__Fv",
+          "offset": 32,
+          "opcode": 49,
+          "target_name": "zcam_near_h",
+          "symbol": "zcam_near_h"
+        },
+        {
+          "function": "zCameraTweakGlobal_Init__Fv",
+          "offset": 36,
+          "opcode": 49,
+          "target_name": "zcam_near_d",
+          "symbol": "zcam_near_d"
+        },
+        {
+          "function": "zCameraTweakGlobal_Init__Fv",
+          "offset": 84,
+          "opcode": 49,
+          "target_name": "zcam_far_pitch",
+          "symbol": "zcam_far_pitch"
+        },
+        {
+          "function": "zCameraTweakGlobal_Init__Fv",
+          "offset": 88,
+          "opcode": 49,
+          "target_name": "zcam_far_h",
+          "symbol": "zcam_far_h"
+        },
+        {
+          "function": "zCameraTweakGlobal_Init__Fv",
+          "offset": 92,
+          "opcode": 49,
+          "target_name": "zcam_far_d",
+          "symbol": "zcam_far_d"
+        },
+        {
+          "function": "zCameraTweakGlobal_Init__Fv",
+          "offset": 136,
+          "opcode": 43,
+          "target_name": "sCamTweakCount",
+          "symbol": "sCamTweakCount"
+        },
+        {
+          "function": "zCameraTweakGlobal_Init__Fv",
+          "offset": 140,
+          "opcode": 43,
+          "target_name": "sCamTweakPitch",
+          "symbol": "sCamTweakPitch"
+        },
+        {
+          "function": "zCameraTweakGlobal_Init__Fv",
+          "offset": 152,
+          "opcode": 43,
+          "target_name": "sCamTweakTime",
+          "symbol": "sCamTweakTime"
+        },
+        {
+          "function": "zCameraTweakGlobal_Init__Fv",
+          "offset": 156,
+          "opcode": 43,
+          "target_name": "sCamTweakDistMult",
+          "symbol": "sCamTweakDistMult"
+        },
+        {
+          "function": "zCameraTweakGlobal_Init__Fv",
+          "offset": 164,
+          "opcode": 43,
+          "target_name": "sCamTweakDistMultCur",
+          "symbol": "sCamTweakDistMultCur"
+        },
+        {
+          "function": "zCameraTweakGlobal_Init__Fv",
+          "offset": 172,
+          "opcode": 43,
+          "target_name": "sCamTweakLerp",
+          "symbol": "sCamTweakLerp"
+        },
+        {
+          "function": "zCameraTweakGlobal_Init__Fv",
+          "offset": 180,
+          "opcode": 43,
+          "target_name": "sCamTweakPitchCur",
+          "symbol": "sCamTweakPitchCur"
+        }
+      ],
+      "address_pairs": [
+        {
+          "function": "zCameraTweak_Init__FR5xBaseR9xDynAssetUi",
+          "hi_offset": 28,
+          "lo_offset": 36,
+          "interleaved": true,
+          "target_source": "SB/Game/zCameraTweak.cpp",
+          "target_function": "zCameraTweak_EventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "symbol": "zCameraTweak_EventCB__FP5xBaseP5xBaseUiPCfP5xBase"
+        }
+      ]
     }
   ]
 }
