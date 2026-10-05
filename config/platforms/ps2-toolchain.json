@@ -12358,6 +12358,1573 @@
         }
       ],
       "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/x/xEntMotion.cpp",
+      "target_unit": "SB/Core/x/xEntMotion.cpp",
+      "object": "source/xEntMotion.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xEntMotionDebugIPad__FP10xEntMotion": "xEntMotionDebugIPad__FP10xEntMotion",
+        "xEntMotionDebugDraw__FPC10xEntMotion": "xEntMotionDebugDraw__FPC10xEntMotion",
+        "xEntMotionDebugWrite__FPC10xEntMotion": "xEntMotionDebugWrite__FPC10xEntMotion",
+        "xEntMotionDebugCB__Fv": "xEntMotionDebugCB__Fv",
+        "xEntMotionDebugExit__Fv": "xEntMotionDebugExit__Fv",
+        "xEntMotionDebugInit__FUs": "xEntMotionDebugInit__FUs",
+        "xEntMotionTranslate__FP10xEntMotionPC5xVec3P7xMat4x3": "xEntMotionTranslate__FP10xEntMotionPC5xVec3P7xMat4x3",
+        "xEntMechReverse__FP10xEntMotion": "xEntMechReverse__FP10xEntMotion",
+        "xEntMechForward__FP10xEntMotion": "xEntMechForward__FP10xEntMotion",
+        "xEntRotMove__FP10xEntMotionP6xScenefP9xEntFrame": "xEntRotMove__FP10xEntMotionP6xScenefP9xEntFrame",
+        "xEntSldMove__FP10xEntMotionP6xScenefP9xEntFrame": "xEntSldMove__FP10xEntMotionP6xScenefP9xEntFrame",
+        "xEntMechMove__FP10xEntMotionP6xScenefP9xEntFrame": "xEntMechMove__FP10xEntMotionP6xScenefP9xEntFrame",
+        "xEntPenMove__FP10xEntMotionP6xScenefP9xEntFrame": "xEntPenMove__FP10xEntMotionP6xScenefP9xEntFrame",
+        "xEntMPMove__FP10xEntMotionP6xScenefP9xEntFrame": "xEntMPMove__FP10xEntMotionP6xScenefP9xEntFrame",
+        "xEntMPGetNext__FP10xEntMotionP10xMovePointP6xScene": "xEntMPGetNext__FP10xEntMotionP10xMovePointP6xScene",
+        "xEntOrbitMove__FP10xEntMotionP6xScenefP9xEntFrame": "xEntOrbitMove__FP10xEntMotionP6xScenefP9xEntFrame",
+        "xEntERMove__FP10xEntMotionP6xScenefP9xEntFrame": "xEntERMove__FP10xEntMotionP6xScenefP9xEntFrame",
+        "xEntMotionMove__FP10xEntMotionP6xScenefP9xEntFrame": "xEntMotionMove__FP10xEntMotionP6xScenefP9xEntFrame",
+        "xEntMotionReset__FP10xEntMotionP6xScene": "xEntMotionReset__FP10xEntMotionP6xScene",
+        "xEntMotionInit__FP10xEntMotionP4xEntP15xEntMotionAsset": "xEntMotionInit__FP10xEntMotionP4xEntP15xEntMotionAsset"
+      },
+      "calls": [
+        {
+          "function": "xEntMotionDebugIPad__FP10xEntMotion",
+          "offset": 160,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntReset__FP4xEnt",
+          "symbol": "xEntReset__FP4xEnt"
+        },
+        {
+          "function": "xEntMotionDebugIPad__FP10xEntMotion",
+          "offset": 172,
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "target_function": "xEntMotionReset__FP10xEntMotionP6xScene",
+          "symbol": "xEntMotionReset__FP10xEntMotionP6xScene"
+        },
+        {
+          "function": "xEntMotionDebugDraw__FPC10xEntMotion",
+          "offset": 152,
+          "target_source": "SB/Core/x/xMovePoint.cpp",
+          "target_function": "xMovePointGetPos__FPC10xMovePoint",
+          "symbol": "xMovePointGetPos__FPC10xMovePoint"
+        },
+        {
+          "function": "xEntMotionDebugDraw__FPC10xEntMotion",
+          "offset": 160,
+          "target_source": "SB/Core/x/xMovePoint.cpp",
+          "target_function": "xMovePointGetPos__FPC10xMovePoint",
+          "symbol": "xMovePointGetPos__FPC10xMovePoint"
+        },
+        {
+          "function": "xEntMotionDebugDraw__FPC10xEntMotion",
+          "offset": 200,
+          "target_source": "SB/Core/x/xMovePoint.cpp",
+          "target_function": "xMovePointGetPos__FPC10xMovePoint",
+          "symbol": "xMovePointGetPos__FPC10xMovePoint"
+        },
+        {
+          "function": "xEntMotionDebugDraw__FPC10xEntMotion",
+          "offset": 208,
+          "target_source": "SB/Core/x/xMovePoint.cpp",
+          "target_function": "xMovePointGetPos__FPC10xMovePoint",
+          "symbol": "xMovePointGetPos__FPC10xMovePoint"
+        },
+        {
+          "function": "xEntMotionDebugDraw__FPC10xEntMotion",
+          "offset": 304,
+          "target_source": "SB/Core/x/xMovePoint.cpp",
+          "target_function": "xMovePointGetPos__FPC10xMovePoint",
+          "symbol": "xMovePointGetPos__FPC10xMovePoint"
+        },
+        {
+          "function": "xEntMotionDebugDraw__FPC10xEntMotion",
+          "offset": 312,
+          "target_source": "SB/Core/x/xMovePoint.cpp",
+          "target_function": "xMovePointGetPos__FPC10xMovePoint",
+          "symbol": "xMovePointGetPos__FPC10xMovePoint"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 184,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 228,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 252,
+          "target_source": "SB/Core/x/xScene.cpp",
+          "target_function": "xSceneID2Name__FP6xSceneUi",
+          "symbol": "xSceneID2Name__FP6xSceneUi"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 284,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 340,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 440,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 496,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 556,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 580,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 604,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 628,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 652,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 676,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 744,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 768,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 792,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 816,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 840,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 872,
+          "target_source": "SB/Core/x/xScene.cpp",
+          "target_function": "xSceneID2Name__FP6xSceneUi",
+          "symbol": "xSceneID2Name__FP6xSceneUi"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 904,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 928,
+          "target_source": "SB/Core/x/xScene.cpp",
+          "target_function": "xSceneID2Name__FP6xSceneUi",
+          "symbol": "xSceneID2Name__FP6xSceneUi"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 960,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 984,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 1008,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 1168,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 1216,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 1260,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 1276,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 1336,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 1380,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 1396,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 1640,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 1720,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 1748,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 1776,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 1800,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 1828,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 1856,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 1880,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 1904,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 1960,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 2016,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 2072,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 2148,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 2176,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 2204,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 2272,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 2300,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 2328,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 2352,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 2376,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 2444,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 2512,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 2576,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 2604,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 2632,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 2700,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 2768,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 2792,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf__FPCce",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "xEntMotionDebugCB__Fv",
+          "offset": 56,
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "target_function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "symbol": "xEntMotionDebugWrite__FPC10xEntMotion"
+        },
+        {
+          "function": "xEntMotionDebugCB__Fv",
+          "offset": 64,
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "target_function": "xEntMotionDebugDraw__FPC10xEntMotion",
+          "symbol": "xEntMotionDebugDraw__FPC10xEntMotion"
+        },
+        {
+          "function": "xEntMotionDebugCB__Fv",
+          "offset": 72,
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "target_function": "xEntMotionDebugIPad__FP10xEntMotion",
+          "symbol": "xEntMotionDebugIPad__FP10xEntMotion"
+        },
+        {
+          "function": "xEntMotionDebugInit__FUs",
+          "offset": 36,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xDebugModeAdd__FPCcPFv_v",
+          "symbol": "xDebugModeAdd__FPCcPFv_v"
+        },
+        {
+          "function": "xEntMotionDebugInit__FUs",
+          "offset": 60,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xEntMotionTranslate__FP10xEntMotionPC5xVec3P7xMat4x3",
+          "offset": 852,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3",
+          "symbol": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3"
+        },
+        {
+          "function": "xEntRotMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "offset": 532,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xAngleClamp__Ff",
+          "symbol": "xAngleClamp__Ff"
+        },
+        {
+          "function": "xEntRotMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "offset": 564,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Euler__FP7xMat3x3fff",
+          "symbol": "xMat3x3Euler__FP7xMat3x3fff"
+        },
+        {
+          "function": "xEntMechMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "offset": 68,
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "target_function": "xEntSldMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "symbol": "xEntSldMove__FP10xEntMotionP6xScenefP9xEntFrame"
+        },
+        {
+          "function": "xEntMechMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "offset": 96,
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "target_function": "xEntRotMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "symbol": "xEntRotMove__FP10xEntMotionP6xScenefP9xEntFrame"
+        },
+        {
+          "function": "xEntMechMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "offset": 236,
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "target_function": "xEntRotMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "symbol": "xEntRotMove__FP10xEntMotionP6xScenefP9xEntFrame"
+        },
+        {
+          "function": "xEntMechMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "offset": 492,
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "target_function": "xEntSldMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "symbol": "xEntSldMove__FP10xEntMotionP6xScenefP9xEntFrame"
+        },
+        {
+          "function": "xEntMechMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "offset": 520,
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "target_function": "xEntRotMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "symbol": "xEntRotMove__FP10xEntMotionP6xScenefP9xEntFrame"
+        },
+        {
+          "function": "xEntMechMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "offset": 612,
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "target_function": "xEntRotMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "symbol": "xEntRotMove__FP10xEntMotionP6xScenefP9xEntFrame"
+        },
+        {
+          "function": "xEntMechMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "offset": 728,
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "target_function": "xEntMotionReset__FP10xEntMotionP6xScene",
+          "symbol": "xEntMotionReset__FP10xEntMotionP6xScene"
+        },
+        {
+          "function": "xEntPenMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "offset": 240,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat4x3Rot__FP7xMat4x3PC5xVec3fPC5xVec3",
+          "symbol": "xMat4x3Rot__FP7xMat4x3PC5xVec3fPC5xVec3"
+        },
+        {
+          "function": "xEntPenMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "offset": 256,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3",
+          "symbol": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3"
+        },
+        {
+          "function": "xEntMPMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "offset": 272,
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "target_function": "xEntMPGetNext__FP10xEntMotionP10xMovePointP6xScene",
+          "symbol": "xEntMPGetNext__FP10xEntMotionP10xMovePointP6xScene"
+        },
+        {
+          "function": "xEntMPMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "offset": 320,
+          "target_source": "SB/Core/x/xSpline.cpp",
+          "target_function": "xSpline3_EvalArcApprox__FP8xSpline3fUiP5xVec3",
+          "symbol": "xSpline3_EvalArcApprox__FP8xSpline3fUiP5xVec3"
+        },
+        {
+          "function": "xEntMPMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "offset": 360,
+          "target_source": "SB/Core/x/xSpline.cpp",
+          "target_function": "xSpline3_EvalSeg__FP8xSpline3fUiP5xVec3",
+          "symbol": "xSpline3_EvalSeg__FP8xSpline3fUiP5xVec3"
+        },
+        {
+          "function": "xEntMPMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "offset": 400,
+          "target_source": "SB/Core/x/xSpline.cpp",
+          "target_function": "xSpline3_EvalSeg__FP8xSpline3fUiP5xVec3",
+          "symbol": "xSpline3_EvalSeg__FP8xSpline3fUiP5xVec3"
+        },
+        {
+          "function": "xEntMPMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "offset": 540,
+          "target_source": "SB/Core/x/xSpline.cpp",
+          "target_function": "xSpline3_EvalSeg__FP8xSpline3fUiP5xVec3",
+          "symbol": "xSpline3_EvalSeg__FP8xSpline3fUiP5xVec3"
+        },
+        {
+          "function": "xEntMPMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "offset": 580,
+          "target_source": "SB/Core/x/xSpline.cpp",
+          "target_function": "xSpline3_EvalSeg__FP8xSpline3fUiP5xVec3",
+          "symbol": "xSpline3_EvalSeg__FP8xSpline3fUiP5xVec3"
+        },
+        {
+          "function": "xEntMPMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "offset": 652,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3LookVec__FP7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3LookVec__FP7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xEntMPMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "offset": 1540,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xQuatFromMat__FP5xQuatPC7xMat3x3",
+          "symbol": "xQuatFromMat__FP5xQuatPC7xMat3x3"
+        },
+        {
+          "function": "xEntMPMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "offset": 1552,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xQuatFromMat__FP5xQuatPC7xMat3x3",
+          "symbol": "xQuatFromMat__FP5xQuatPC7xMat3x3"
+        },
+        {
+          "function": "xEntMPMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "offset": 1888,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xQuatSlerp__FP5xQuatPC5xQuatPC5xQuatf",
+          "symbol": "xQuatSlerp__FP5xQuatPC5xQuatPC5xQuatf"
+        },
+        {
+          "function": "xEntMPMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "offset": 1900,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xQuatNormalize__FP5xQuatPC5xQuat",
+          "symbol": "xQuatNormalize__FP5xQuatPC5xQuat"
+        },
+        {
+          "function": "xEntMPMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "offset": 1912,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xQuatToMat__FPC5xQuatP7xMat3x3",
+          "symbol": "xQuatToMat__FPC5xQuatP7xMat3x3"
+        },
+        {
+          "function": "xEntMPMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "offset": 2336,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xQuatSlerp__FP5xQuatPC5xQuatPC5xQuatf",
+          "symbol": "xQuatSlerp__FP5xQuatPC5xQuatPC5xQuatf"
+        },
+        {
+          "function": "xEntMPMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "offset": 2348,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xQuatToMat__FPC5xQuatP7xMat3x3",
+          "symbol": "xQuatToMat__FPC5xQuatP7xMat3x3"
+        },
+        {
+          "function": "xEntMPGetNext__FP10xEntMotionP10xMovePointP6xScene",
+          "offset": 40,
+          "target_source": "SB/Core/x/xMovePoint.cpp",
+          "target_function": "xMovePointGetNext__FPC10xMovePointPC10xMovePointPP10xMovePointP5xVec3",
+          "symbol": "xMovePointGetNext__FPC10xMovePointPC10xMovePointPP10xMovePointP5xVec3"
+        },
+        {
+          "function": "xEntMPGetNext__FP10xEntMotionP10xMovePointP6xScene",
+          "offset": 144,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xQuatFromMat__FP5xQuatPC7xMat3x3",
+          "symbol": "xQuatFromMat__FP5xQuatPC7xMat3x3"
+        },
+        {
+          "function": "xEntMPGetNext__FP10xEntMotionP10xMovePointP6xScene",
+          "offset": 192,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3LookVec__FP7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3LookVec__FP7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xEntMPGetNext__FP10xEntMotionP10xMovePointP6xScene",
+          "offset": 204,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xQuatFromMat__FP5xQuatPC7xMat3x3",
+          "symbol": "xQuatFromMat__FP5xQuatPC7xMat3x3"
+        },
+        {
+          "function": "xEntMotionMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "offset": 48,
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "target_function": "xEntERMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "symbol": "xEntERMove__FP10xEntMotionP6xScenefP9xEntFrame"
+        },
+        {
+          "function": "xEntMotionMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "offset": 76,
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "target_function": "xEntOrbitMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "symbol": "xEntOrbitMove__FP10xEntMotionP6xScenefP9xEntFrame"
+        },
+        {
+          "function": "xEntMotionMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "offset": 108,
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "target_function": "xEntMPMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "symbol": "xEntMPMove__FP10xEntMotionP6xScenefP9xEntFrame"
+        },
+        {
+          "function": "xEntMotionMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "offset": 140,
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "target_function": "xEntPenMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "symbol": "xEntPenMove__FP10xEntMotionP6xScenefP9xEntFrame"
+        },
+        {
+          "function": "xEntMotionMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "offset": 172,
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "target_function": "xEntMechMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "symbol": "xEntMechMove__FP10xEntMotionP6xScenefP9xEntFrame"
+        },
+        {
+          "function": "xEntMotionReset__FP10xEntMotionP6xScene",
+          "offset": 100,
+          "target_source": "SB/Core/x/xScene.cpp",
+          "target_function": "xSceneResolvID__FP6xSceneUi",
+          "symbol": "xSceneResolvID__FP6xSceneUi"
+        },
+        {
+          "function": "xEntMotionReset__FP10xEntMotionP6xScene",
+          "offset": 152,
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "target_function": "xEntMPGetNext__FP10xEntMotionP10xMovePointP6xScene",
+          "symbol": "xEntMPGetNext__FP10xEntMotionP10xMovePointP6xScene"
+        },
+        {
+          "function": "xEntMotionReset__FP10xEntMotionP6xScene",
+          "offset": 160,
+          "target_source": "SB/Core/x/xMovePoint.cpp",
+          "target_function": "xMovePointGetPos__FPC10xMovePoint",
+          "symbol": "xMovePointGetPos__FPC10xMovePoint"
+        },
+        {
+          "function": "xEntMotionReset__FP10xEntMotionP6xScene",
+          "offset": 328,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3RotC__FP7xMat3x3ffff",
+          "symbol": "xMat3x3RotC__FP7xMat3x3ffff"
+        },
+        {
+          "function": "xEntMotionReset__FP10xEntMotionP6xScene",
+          "offset": 436,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3",
+          "symbol": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3"
+        },
+        {
+          "function": "xEntMotionReset__FP10xEntMotionP6xScene",
+          "offset": 600,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xQuatFromMat__FP5xQuatPC7xMat3x3",
+          "symbol": "xQuatFromMat__FP5xQuatPC7xMat3x3"
+        },
+        {
+          "function": "xEntMotionReset__FP10xEntMotionP6xScene",
+          "offset": 1160,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xAngleClamp__Ff",
+          "symbol": "xAngleClamp__Ff"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xEntMotionDebugIPad__FP10xEntMotion",
+          "offset": 12,
+          "opcode": 35,
+          "target_name": "gDebugPad",
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "symbol": "gDebugPad"
+        },
+        {
+          "function": "xEntMotionDebugIPad__FP10xEntMotion",
+          "offset": 36,
+          "opcode": 33,
+          "target_name": "dbg_idx",
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "symbol": "dbg_idx"
+        },
+        {
+          "function": "xEntMotionDebugIPad__FP10xEntMotion",
+          "offset": 40,
+          "opcode": 37,
+          "target_name": "dbg_num",
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "symbol": "dbg_num"
+        },
+        {
+          "function": "xEntMotionDebugIPad__FP10xEntMotion",
+          "offset": 48,
+          "opcode": 41,
+          "target_name": "dbg_idx",
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "symbol": "dbg_idx"
+        },
+        {
+          "function": "xEntMotionDebugIPad__FP10xEntMotion",
+          "offset": 52,
+          "opcode": 33,
+          "target_name": "dbg_idx",
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "symbol": "dbg_idx"
+        },
+        {
+          "function": "xEntMotionDebugIPad__FP10xEntMotion",
+          "offset": 68,
+          "opcode": 41,
+          "target_name": "dbg_idx",
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "symbol": "dbg_idx"
+        },
+        {
+          "function": "xEntMotionDebugIPad__FP10xEntMotion",
+          "offset": 88,
+          "opcode": 33,
+          "target_name": "dbg_idx",
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "symbol": "dbg_idx"
+        },
+        {
+          "function": "xEntMotionDebugIPad__FP10xEntMotion",
+          "offset": 96,
+          "opcode": 41,
+          "target_name": "dbg_idx",
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "symbol": "dbg_idx"
+        },
+        {
+          "function": "xEntMotionDebugIPad__FP10xEntMotion",
+          "offset": 100,
+          "opcode": 33,
+          "target_name": "dbg_idx",
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "symbol": "dbg_idx"
+        },
+        {
+          "function": "xEntMotionDebugIPad__FP10xEntMotion",
+          "offset": 112,
+          "opcode": 37,
+          "target_name": "dbg_num",
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "symbol": "dbg_num"
+        },
+        {
+          "function": "xEntMotionDebugIPad__FP10xEntMotion",
+          "offset": 120,
+          "opcode": 41,
+          "target_name": "dbg_idx",
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "symbol": "dbg_idx"
+        },
+        {
+          "function": "xEntMotionDebugIPad__FP10xEntMotion",
+          "offset": 168,
+          "opcode": 35,
+          "target_name": "g_xSceneCur",
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "symbol": "g_xSceneCur"
+        },
+        {
+          "function": "xEntMotionDebugIPad__FP10xEntMotion",
+          "offset": 184,
+          "opcode": 35,
+          "target_name": "gDebugPad",
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "symbol": "gDebugPad"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 248,
+          "opcode": 35,
+          "target_name": "g_xSceneCur",
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "symbol": "g_xSceneCur"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 868,
+          "opcode": 35,
+          "target_name": "g_xSceneCur",
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "symbol": "g_xSceneCur"
+        },
+        {
+          "function": "xEntMotionDebugWrite__FPC10xEntMotion",
+          "offset": 924,
+          "opcode": 35,
+          "target_name": "g_xSceneCur",
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "symbol": "g_xSceneCur"
+        },
+        {
+          "function": "xEntMotionDebugCB__Fv",
+          "offset": 16,
+          "opcode": 33,
+          "target_name": "dbg_idx",
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "symbol": "dbg_idx"
+        },
+        {
+          "function": "xEntMotionDebugCB__Fv",
+          "offset": 28,
+          "opcode": 37,
+          "target_name": "dbg_num",
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "symbol": "dbg_num"
+        },
+        {
+          "function": "xEntMotionDebugCB__Fv",
+          "offset": 40,
+          "opcode": 35,
+          "target_name": "dbg_xems",
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "symbol": "dbg_xems"
+        },
+        {
+          "function": "xEntMotionDebugExit__Fv",
+          "offset": 4,
+          "opcode": 41,
+          "target_name": "dbg_num",
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "symbol": "dbg_num"
+        },
+        {
+          "function": "xEntMotionDebugExit__Fv",
+          "offset": 8,
+          "opcode": 43,
+          "target_name": "dbg_xems",
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "symbol": "dbg_xems"
+        },
+        {
+          "function": "xEntMotionDebugExit__Fv",
+          "offset": 12,
+          "opcode": 41,
+          "target_name": "dbg_idx",
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "symbol": "dbg_idx"
+        },
+        {
+          "function": "xEntMotionDebugExit__Fv",
+          "offset": 20,
+          "opcode": 41,
+          "target_name": "dbg_num_allocd",
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "symbol": "dbg_num_allocd"
+        },
+        {
+          "function": "xEntMotionDebugInit__FUs",
+          "offset": 44,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xEntMotionDebugInit__FUs",
+          "offset": 64,
+          "opcode": 41,
+          "target_name": "dbg_num",
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "symbol": "dbg_num"
+        },
+        {
+          "function": "xEntMotionDebugInit__FUs",
+          "offset": 68,
+          "opcode": 41,
+          "target_name": "dbg_num_allocd",
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "symbol": "dbg_num_allocd"
+        },
+        {
+          "function": "xEntMotionDebugInit__FUs",
+          "offset": 72,
+          "opcode": 43,
+          "target_name": "dbg_xems",
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "symbol": "dbg_xems"
+        },
+        {
+          "function": "xEntMotionDebugInit__FUs",
+          "offset": 76,
+          "opcode": 41,
+          "target_name": "dbg_idx",
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "symbol": "dbg_idx"
+        },
+        {
+          "function": "xEntMotionInit__FP10xEntMotionP4xEntP15xEntMotionAsset",
+          "offset": 688,
+          "opcode": 37,
+          "target_name": "dbg_num",
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "symbol": "dbg_num"
+        },
+        {
+          "function": "xEntMotionInit__FP10xEntMotionP4xEntP15xEntMotionAsset",
+          "offset": 692,
+          "opcode": 37,
+          "target_name": "dbg_num_allocd",
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "symbol": "dbg_num_allocd"
+        },
+        {
+          "function": "xEntMotionInit__FP10xEntMotionP4xEntP15xEntMotionAsset",
+          "offset": 708,
+          "opcode": 35,
+          "target_name": "dbg_xems",
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "symbol": "dbg_xems"
+        },
+        {
+          "function": "xEntMotionInit__FP10xEntMotionP4xEntP15xEntMotionAsset",
+          "offset": 724,
+          "opcode": 37,
+          "target_name": "dbg_num",
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "symbol": "dbg_num"
+        },
+        {
+          "function": "xEntMotionInit__FP10xEntMotionP4xEntP15xEntMotionAsset",
+          "offset": 732,
+          "opcode": 41,
+          "target_name": "dbg_num",
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "symbol": "dbg_num"
+        }
+      ],
+      "address_pairs": []
+    },
+    {
+      "source": "src/SB/Core/x/xPad.cpp",
+      "target_unit": "SB/Core/x/xPad.cpp",
+      "object": "source/xPad.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xPadAddRumble__Fi14_tagRumbleTypefiUi": "xPadAddRumble__Fi14_tagRumbleTypefiUi",
+        "xPadDestroyRumbleChain__Fi": "xPadDestroyRumbleChain__Fi",
+        "xPadKill__Fv": "xPadKill__Fv",
+        "xPadNormalizeAnalog__FR8_tagxPadii": "xPadNormalizeAnalog__FR8_tagxPadii",
+        "xPadUpdate__Fif": "xPadUpdate__Fif",
+        "xPadRumbleEnable__Fii": "xPadRumbleEnable__Fii",
+        "xPadEnable__Fi": "xPadEnable__Fi",
+        "xPadInit__Fv": "xPadInit__Fv"
+      },
+      "calls": [
+        {
+          "function": "xPadAddRumble__Fi14_tagRumbleTypefiUi",
+          "offset": 136,
+          "target_source": "SB/Core/p2/iPad.cpp",
+          "target_function": "iPadStopRumble__FP8_tagxPad",
+          "symbol": "iPadStopRumble__FP8_tagxPad"
+        },
+        {
+          "function": "xPadAddRumble__Fi14_tagRumbleTypefiUi",
+          "offset": 392,
+          "target_source": "SB/Core/p2/iPad.cpp",
+          "target_function": "iPadStartRumble__FP8_tagxPadP11_tagxRumble",
+          "symbol": "iPadStartRumble__FP8_tagxPadP11_tagxRumble"
+        },
+        {
+          "function": "xPadDestroyRumbleChain__Fi",
+          "offset": 44,
+          "target_source": "SB/Core/p2/iPad.cpp",
+          "target_function": "iPadStopRumble__FP8_tagxPad",
+          "symbol": "iPadStopRumble__FP8_tagxPad"
+        },
+        {
+          "function": "xPadKill__Fv",
+          "offset": 0,
+          "target_source": "SB/Core/p2/iPad.cpp",
+          "target_function": "iPadKill__Fv",
+          "symbol": "iPadKill__Fv",
+          "opcode": 2
+        },
+        {
+          "function": "xPadNormalizeAnalog__FR8_tagxPadii",
+          "offset": 608,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xAngleClampFast__Ff",
+          "symbol": "xAngleClampFast__Ff"
+        },
+        {
+          "function": "xPadUpdate__Fif",
+          "offset": 40,
+          "target_source": "SB/Game/zScene.cpp",
+          "target_function": "zScene_ScreenAdjustMode__Fv",
+          "symbol": "zScene_ScreenAdjustMode__Fv"
+        },
+        {
+          "function": "xPadUpdate__Fif",
+          "offset": 224,
+          "target_source": "SB/Game/zMenu.cpp",
+          "target_function": "zMenuRunning__Fv",
+          "symbol": "zMenuRunning__Fv"
+        },
+        {
+          "function": "xPadUpdate__Fif",
+          "offset": 240,
+          "target_source": "SB/Game/zGame.cpp",
+          "target_function": "zGameIsPaused__Fv",
+          "symbol": "zGameIsPaused__Fv"
+        },
+        {
+          "function": "xPadUpdate__Fif",
+          "offset": 256,
+          "target_source": "SB/Game/zGameExtras.cpp",
+          "target_function": "zGame_HackIsGallery__Fv",
+          "symbol": "zGame_HackIsGallery__Fv"
+        },
+        {
+          "function": "xPadUpdate__Fif",
+          "offset": 720,
+          "target_source": "SB/Core/p2/iPad.cpp",
+          "target_function": "iPadStopRumble__FP8_tagxPad",
+          "symbol": "iPadStopRumble__FP8_tagxPad"
+        },
+        {
+          "function": "xPadUpdate__Fif",
+          "offset": 748,
+          "target_source": "SB/Core/p2/iPad.cpp",
+          "target_function": "iPadStartRumble__FP8_tagxPadP11_tagxRumble",
+          "symbol": "iPadStartRumble__FP8_tagxPadP11_tagxRumble"
+        },
+        {
+          "function": "xPadUpdate__Fif",
+          "offset": 776,
+          "target_source": "SB/Core/p2/iPad.cpp",
+          "target_function": "iPadRumbleFx__FP8_tagxPadP11_tagxRumblef",
+          "symbol": "iPadRumbleFx__FP8_tagxPadP11_tagxRumblef"
+        },
+        {
+          "function": "xPadUpdate__Fif",
+          "offset": 804,
+          "target_source": "SB/Core/p2/iPad.cpp",
+          "target_function": "iPadUpdate__FP8_tagxPadPUi",
+          "symbol": "iPadUpdate__FP8_tagxPadPUi"
+        },
+        {
+          "function": "xPadRumbleEnable__Fii",
+          "offset": 128,
+          "target_source": "SB/Core/p2/iPad.cpp",
+          "target_function": "iPadStopRumble__FP8_tagxPad",
+          "symbol": "iPadStopRumble__FP8_tagxPad"
+        },
+        {
+          "function": "xPadEnable__Fi",
+          "offset": 96,
+          "target_source": "SB/Core/p2/iPad.cpp",
+          "target_function": "iPadEnable__FP8_tagxPads",
+          "symbol": "iPadEnable__FP8_tagxPads"
+        },
+        {
+          "function": "xPadEnable__Fi",
+          "offset": 180,
+          "target_source": "SB/Core/p2/iPad.cpp",
+          "target_function": "iPadStopRumble__FP8_tagxPad",
+          "symbol": "iPadStopRumble__FP8_tagxPad"
+        },
+        {
+          "function": "xPadInit__Fv",
+          "offset": 48,
+          "target_source": "SB/Core/p2/iPad.cpp",
+          "target_function": "iPadInit__Fv",
+          "symbol": "iPadInit__Fv"
+        },
+        {
+          "function": "xPadAddRumble__Fi14_tagRumbleTypefiUi",
+          "offset": 168,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xPadAddRumble__Fi14_tagRumbleTypefiUi",
+          "offset": 296,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xPadDestroyRumbleChain__Fi",
+          "offset": 88,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xPadRumbleEnable__Fii",
+          "offset": 160,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xPadEnable__Fi",
+          "offset": 208,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xPadInit__Fv",
+          "offset": 20,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xPadInit__Fv",
+          "offset": 40,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xPadInit__Fv",
+          "offset": 80,
+          "opcode": 43,
+          "target_name": "gPlayerPad",
+          "target_source": "SB/Core/x/xPad.cpp",
+          "symbol": "gPlayerPad"
+        }
+      ],
+      "address_pairs": []
+    },
+    {
+      "source": "src/SB/Core/x/xClimate.cpp",
+      "target_unit": "SB/Core/x/xClimate.cpp",
+      "object": "source/xClimate.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xClimateUpdate__FP11_tagClimatef": "xClimateUpdate__FP11_tagClimatef",
+        "UpdateRain__FP11_tagClimatef": "UpdateRain__FP11_tagClimatef",
+        "xClimateSetRain__Ff": "xClimateSetRain__Ff",
+        "xClimateSetSnow__Ff": "xClimateSetSnow__Ff",
+        "xClimateInitAsset__FP11_tagClimateP9xEnvAsset": "xClimateInitAsset__FP11_tagClimateP9xEnvAsset",
+        "xClimateInit__FP11_tagClimate": "xClimateInit__FP11_tagClimate"
+      },
+      "calls": [
+        {
+          "function": "xClimateUpdate__FP11_tagClimatef",
+          "offset": 0,
+          "target_source": "SB/Core/x/xClimate.cpp",
+          "target_function": "UpdateRain__FP11_tagClimatef",
+          "symbol": "UpdateRain__FP11_tagClimatef",
+          "opcode": 2
+        },
+        {
+          "function": "UpdateRain__FP11_tagClimatef",
+          "offset": 236,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "UpdateRain__FP11_tagClimatef",
+          "offset": 304,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "UpdateRain__FP11_tagClimatef",
+          "offset": 360,
+          "target_source": "SB/Core/x/xParEmitter.cpp",
+          "target_function": "xParEmitterEmitCustom__FP11xParEmitterfP25xParEmitterCustomSettings",
+          "symbol": "xParEmitterEmitCustom__FP11xParEmitterfP25xParEmitterCustomSettings"
+        },
+        {
+          "function": "UpdateRain__FP11_tagClimatef",
+          "offset": 544,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "UpdateRain__FP11_tagClimatef",
+          "offset": 588,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "UpdateRain__FP11_tagClimatef",
+          "offset": 688,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "UpdateRain__FP11_tagClimatef",
+          "offset": 720,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "UpdateRain__FP11_tagClimatef",
+          "offset": 752,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "UpdateRain__FP11_tagClimatef",
+          "offset": 848,
+          "target_source": "SB/Core/x/xParEmitter.cpp",
+          "target_function": "xParEmitterEmitCustom__FP11xParEmitterfP25xParEmitterCustomSettings",
+          "symbol": "xParEmitterEmitCustom__FP11xParEmitterfP25xParEmitterCustomSettings"
+        },
+        {
+          "function": "UpdateRain__FP11_tagClimatef",
+          "offset": 936,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPushTemp__FUi",
+          "symbol": "xMemPushTemp__FUi"
+        },
+        {
+          "function": "UpdateRain__FP11_tagClimatef",
+          "offset": 1000,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "UpdateRain__FP11_tagClimatef",
+          "offset": 1044,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "UpdateRain__FP11_tagClimatef",
+          "offset": 1168,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "UpdateRain__FP11_tagClimatef",
+          "offset": 1200,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "UpdateRain__FP11_tagClimatef",
+          "offset": 1232,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "UpdateRain__FP11_tagClimatef",
+          "offset": 1296,
+          "target_source": "SB/Game/zParPTank.cpp",
+          "target_function": "zParPTankSpawnSnow__FP5xVec3P5xVec3Ui",
+          "symbol": "zParPTankSpawnSnow__FP5xVec3P5xVec3Ui"
+        },
+        {
+          "function": "UpdateRain__FP11_tagClimatef",
+          "offset": 1304,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPopTemp__FPv",
+          "symbol": "xMemPopTemp__FPv"
+        },
+        {
+          "function": "xClimateInitAsset__FP11_tagClimateP9xEnvAsset",
+          "offset": 112,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Euler__FP7xMat3x3fff",
+          "symbol": "xMat3x3Euler__FP7xMat3x3fff"
+        },
+        {
+          "function": "xClimateInitAsset__FP11_tagClimateP9xEnvAsset",
+          "offset": 144,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xClimateInit__FP11_tagClimate",
+          "offset": 24,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xClimateInit__FP11_tagClimate",
+          "offset": 32,
+          "target_source": "SB/Game/zParEmitter.cpp",
+          "target_function": "zParEmitterFind__FUi",
+          "symbol": "zParEmitterFind__FUi"
+        },
+        {
+          "function": "xClimateInit__FP11_tagClimate",
+          "offset": 64,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xClimateInit__FP11_tagClimate",
+          "offset": 72,
+          "target_source": "SB/Game/zParEmitter.cpp",
+          "target_function": "zParEmitterFind__FUi",
+          "symbol": "zParEmitterFind__FUi"
+        },
+        {
+          "function": "UpdateRain__FP11_tagClimatef",
+          "offset": 80,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "UpdateRain__FP11_tagClimatef",
+          "offset": 168,
+          "opcode": 35,
+          "target_name": "xglobals",
+          "target_source": "SB/Core/x/xClimate.cpp",
+          "symbol": "xglobals"
+        },
+        {
+          "function": "UpdateRain__FP11_tagClimatef",
+          "offset": 432,
+          "opcode": 35,
+          "target_name": "xglobals",
+          "target_source": "SB/Core/x/xClimate.cpp",
+          "symbol": "xglobals"
+        },
+        {
+          "function": "UpdateRain__FP11_tagClimatef",
+          "offset": 828,
+          "opcode": 49,
+          "target_name": "snow_life",
+          "target_source": "SB/Core/x/xClimate.cpp",
+          "symbol": "snow_life"
+        },
+        {
+          "function": "xClimateSetRain__Ff",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "sClimate",
+          "target_source": "SB/Core/x/xClimate.cpp",
+          "symbol": "sClimate"
+        },
+        {
+          "function": "xClimateSetRain__Ff",
+          "offset": 12,
+          "opcode": 35,
+          "target_name": "sClimate",
+          "target_source": "SB/Core/x/xClimate.cpp",
+          "symbol": "sClimate"
+        },
+        {
+          "function": "xClimateSetSnow__Ff",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "sClimate",
+          "target_source": "SB/Core/x/xClimate.cpp",
+          "symbol": "sClimate"
+        },
+        {
+          "function": "xClimateSetSnow__Ff",
+          "offset": 8,
+          "opcode": 35,
+          "target_name": "sClimate",
+          "target_source": "SB/Core/x/xClimate.cpp",
+          "symbol": "sClimate"
+        },
+        {
+          "function": "xClimateInitAsset__FP11_tagClimateP9xEnvAsset",
+          "offset": 40,
+          "opcode": 43,
+          "target_name": "sClimate",
+          "target_source": "SB/Core/x/xClimate.cpp",
+          "symbol": "sClimate"
+        }
+      ],
+      "address_pairs": []
     }
   ]
 }

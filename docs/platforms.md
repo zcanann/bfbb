@@ -75,12 +75,16 @@ checked, and the standard objdiff parser accepts the result.
 
 | Version | Full code-region bytes | Objdiff code-matched bytes |
 | --- | ---: | ---: |
-| SLUS-20680 | 2,978,560 | 36,292 |
-| SLES-51968 | 2,979,712 | 36,292 |
-| SLES-51970 | 2,976,512 | 36,292 |
+| SLUS-20680 | 2,978,560 | 37,516 |
+| SLES-51968 | 2,979,712 | 37,516 |
+| SLES-51970 | 2,976,512 | 37,516 |
 | SLES-53623 | 2,979,968 | 11,936 |
 | XBOX-US | 1,798,760 | 1,523 |
 | XBOX-EU | 1,798,760 | 1,523 |
+
+The PS2 [math alignment restoration](PS2_MATH_ALIGNMENT.md) enables complete
+`xEntMotion`, `xPad`, and `xClimate` source comparisons: 34 functions / 20,040
+original bytes, adding 1,224 code-matched bytes per debug version.
 
 This checkpoint includes utility, serializer, bounds, streaming, environment, light-kit,
 move-point, fog, behavior-manager, binary-reader, event, volume and conditional source comparisons, plus comparisons for independently verified French function
@@ -108,9 +112,9 @@ The narrower function-only baselines currently contain:
 
 | PS2 baseline | Functions | Measured function bytes | Source matches |
 | --- | ---: | ---: | ---: |
-| USA | 5,391 | 2,107,460 | 325 functions / 36,292 bytes |
-| Europe/Australia | 5,392 | 2,108,700 | 325 functions / 36,292 bytes |
-| Germany | 5,394 | 2,105,512 | 325 functions / 36,292 bytes |
+| USA | 5,391 | 2,107,460 | 335 functions / 37,516 bytes |
+| Europe/Australia | 5,392 | 2,108,700 | 335 functions / 37,516 bytes |
+| Germany | 5,394 | 2,105,512 | 335 functions / 37,516 bytes |
 | France (reviewed and corroborated bounds) | 380 | 103,168 | 78 functions / 11,936 bytes |
 
 The `address-anchors.json` registries also recover over 2,500 named data addresses
