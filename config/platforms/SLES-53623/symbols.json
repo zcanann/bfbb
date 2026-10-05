@@ -1916,6 +1916,41 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "Process",
+      "source": "SB/Core/x/xBehaviour.cpp",
+      "address": 3088976,
+      "size": 56,
+      "provenance": "manual-reviewed"
+    },
+    {
+      "name": "EvalRules",
+      "source": "SB/Core/x/xBehaviour.cpp",
+      "address": 3089040,
+      "size": 56,
+      "provenance": "manual-reviewed"
+    },
+    {
+      "name": "PreCalc",
+      "source": "SB/Core/x/xBehaviour.cpp",
+      "address": 3089104,
+      "size": 52,
+      "provenance": "manual-reviewed"
+    },
+    {
+      "name": "Clear",
+      "source": "SB/Core/x/xBehaviour.cpp",
+      "address": 3089168,
+      "size": 8,
+      "provenance": "manual-reviewed"
+    },
+    {
+      "name": "GetOwner",
+      "source": "SB/Core/x/xBehaviour.cpp",
+      "address": 3089184,
+      "size": 12,
+      "provenance": "manual-reviewed"
+    },
+    {
       "name": "__ct",
       "source": "SB/Core/x/xFactory.cpp",
       "address": 3090528,

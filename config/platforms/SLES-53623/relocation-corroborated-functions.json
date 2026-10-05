@@ -20,7 +20,7 @@
     "SLES-51970": "83bf81a139ea24fdb015f1419377de85b643828a"
   },
   "counts": {
-    "starting_named_anchors": 258,
+    "starting_named_anchors": 263,
     "unambiguous_template_matches": 1261,
     "ambiguous_identities": 0,
     "rooted_bounded_candidates": 329,
