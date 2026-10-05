@@ -131,3 +131,27 @@ identity-matrix global) at actual PE HIGHLOW fields reconstructs every original
 byte in both releases. Actual GameCube xMath3 compilation preserves all five
 ordered allocated sections. Evidence is `build/xbox230/final-verification.json`
 and `gc/proof.json`; no profile, metadata or backend changes were needed.
+
+## Point-to-segment distance partial reconstruction
+
+The original interior-distance calculation divides the dot product by the
+segment's squared length before multiplying by that dot product again. The
+Xbox source now uses that operation order instead of squaring before division.
+This first bounded change raises xLine3VecDist2 from 83.42105% to 85.17544%.
+
+The two original endpoint return paths separately evaluate squared distance;
+the current shared source used the same Length2 helper twice and merged their
+tails. Using the existing two-input Dot helper with the same norm vector at
+the second endpoint preserves a distinct return path and raises the score to
+91.57895%. This is a partial source reconstruction: original helper spelling is
+unknown, and that endpoint still differs in component load/arithmetic order.
+The source function is 255 bytes against the original 264. No redundant
+algorithm, barrier, compiler flag or operand permutation was introduced.
+
+Both full production reports preserve all other functions and units. Exact
+counts remain 12,409 bytes / 65 functions; all integer measures and completion
+claims are unchanged. The seven consumer builds have no other score changes.
+GameCube xMath3 retains its five ordered allocated sections byte for byte, and
+PS2 retains its previous source expressions. Evidence is
+`build/xbox232/final-verification.json`, `dot/xLine3VecDist2.txt`, and
+`gc/proof.json`.

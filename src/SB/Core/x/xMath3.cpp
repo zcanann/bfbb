@@ -72,12 +72,20 @@ void xLine3VecDist2(const xVec3* p1, const xVec3* p2, const xVec3* v, xIsect* is
     if (ldirdotlv >= ldirlen2)
     {
         xVec3Sub(&isx->norm, v, p2);
+#if defined(XBOX)
+        isx->dist = xVec3Dot(&isx->norm, &isx->norm);
+#else
         isx->dist = xVec3Length2(&isx->norm);
+#endif
         return;
     }
 
     F32 lvlen2 = xVec3Length2(&isx->norm);
+#if defined(XBOX)
+    isx->dist = lvlen2 - (ldirdotlv / ldirlen2) * ldirdotlv;
+#else
     isx->dist = lvlen2 - (ldirdotlv * ldirdotlv) / ldirlen2;
+#endif
 }
 
 S32 xPointInBox(const xBox* b, const xVec3* p)
