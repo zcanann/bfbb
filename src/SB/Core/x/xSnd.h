@@ -5,7 +5,18 @@
 #include "xVec3.h"
 #include "xMath3.h"
 #include "iSnd.h"
+#if defined(PS2)
+#include "xEntTypes.h"
+#include "xModelTypes.h"
+#else
 #include "xEnt.h"
+#endif
+
+#if defined(PS2)
+enum { XSND_VOICE_COUNT = 48 };
+#else
+enum { XSND_VOICE_COUNT = 64 };
+#endif
 
 enum sound_category
 {
@@ -52,9 +63,13 @@ struct xSndGlobals
     U32 stereo;
     U32 SndCount;
     F32 categoryVolFader[5];
-    // Evidence from iSndUpdateSounds() and xSndInit() show that this array is size 64 instead of 48
-    xSndVoiceInfo voice[64];
-    xMat4x3 listenerMat[2];
+    // PS2 has 48 voices; GameCube has 64.
+    xSndVoiceInfo voice[XSND_VOICE_COUNT];
+    xMat4x3 listenerMat[2]
+#if defined(PS2)
+        __attribute__((aligned(16)))
+#endif
+        ;
     sound_listener_game_mode listenerMode;
     U32 suspendCD;
     xVec3 right;
@@ -226,7 +241,7 @@ void xSndStopChildren(U32 pid);
 void xSndSetVol(U32 snd, F32 vol);
 void xSndSetPitch(U32 snd, F32 pitch);
 void xSndSetCategoryVol(sound_category category, F32 vol);
-void xSndSetExternalCallback(void (*callback)(U32));
+void xSndSetExternalCallback(iSndExternalCallback callback);
 
 inline U32 xSndPlay3D(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, xEnt* ent, F32 radius,
                       sound_category category, F32 delay)

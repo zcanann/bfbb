@@ -5,6 +5,10 @@
 #include "iSnd.h"
 #include "xVec3.h"
 
+#if defined(PS2)
+#include "xEntPosition.h"
+#endif
+
 extern F32 sTimeElapsed;
 
 static _xSndDelayed sDelayedSnd[16] = { 0 };
@@ -34,7 +38,7 @@ void xSndInit()
 {
     iSndInit();
     xSndVoiceInfo* voice = gSnd.voice;
-    for (S32 i = 0; i < 64; i++, voice++)
+    for (S32 i = 0; i < XSND_VOICE_COUNT; i++, voice++)
     {
         voice->flags = 0;
         voice->lock_owner = 0;
@@ -370,6 +374,9 @@ U32 xSndPlay3D(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, const xVec3*
 // id. src/SB/Core/gc/iSnd.h still describes iSndFileInfo with the PS2 layout
 // (sample_rate is a U16 at 0x8 there, and there is nothing at 0x64), so the
 // two fields this function needs are reached through the real layout instead.
+#if defined(PS2)
+typedef iSndFileInfo iSndLookupInfo;
+#else
 struct iSndLookupInfo
 {
     U32 num_samples; // 0x00
@@ -378,6 +385,7 @@ struct iSndLookupInfo
     U8 pad0C[0x58]; // 0x0C
     S32 ID; // 0x64
 };
+#endif
 
 bool xSndCategoryGetsEffects(sound_category category);
 
@@ -405,7 +413,7 @@ U32 xSndPlayInternal(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, U32 pa
     {
         if (parentID != 0 || parentEnt != NULL)
         {
-            for (U32 i = 0; i < 64; i++)
+            for (U32 i = 0; i < XSND_VOICE_COUNT; i++)
             {
                 if (gSnd.voice[i].assetID == id &&
                     (gSnd.voice[i].parentID == parentID ||
@@ -418,7 +426,7 @@ U32 xSndPlayInternal(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, U32 pa
         }
         else if (pos != NULL)
         {
-            for (U32 i = 0; i < 64; i++)
+            for (U32 i = 0; i < XSND_VOICE_COUNT; i++)
             {
                 if (gSnd.voice[i].assetID == id && gSnd.voice[i].parentPos == pos &&
                     (gSnd.voice[i].flags & 1))
@@ -429,7 +437,7 @@ U32 xSndPlayInternal(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, U32 pa
         }
         else
         {
-            for (U32 i = 0; i < 64; i++)
+            for (U32 i = 0; i < XSND_VOICE_COUNT; i++)
             {
                 if (gSnd.voice[i].assetID == id && gSnd.voice[i].parentPos == NULL &&
                     gSnd.voice[i].parentID == 0 && (gSnd.voice[i].flags & 1))
@@ -559,7 +567,7 @@ void xSndStartStereo(U32 id1, U32 id2, F32 pitch)
 U32 xSndIDIsPlaying(U32 sndID)
 {
     xSndVoiceInfo* voice = gSnd.voice;
-    for (int i = 0; i < 64; i++, voice++)
+    for (int i = 0; i < XSND_VOICE_COUNT; i++, voice++)
     {
         if (voice->flags & 1 && voice->sndID == sndID)
         {
@@ -577,7 +585,7 @@ void xSndStop(U32 snd)
 void xSndParentDied(U32 pid)
 {
     xSndVoiceInfo* voice = gSnd.voice;
-    for (S32 i = 0; i < 64; i++, voice++)
+    for (S32 i = 0; i < XSND_VOICE_COUNT; i++, voice++)
     {
         if (voice->parentID == pid)
         {
@@ -590,7 +598,7 @@ void xSndStopChildren(U32 pid)
 {
     U32 i = 0;
     xSndVoiceInfo* voice = gSnd.voice;
-    for (; i < 64; i++, voice++)
+    for (; i < XSND_VOICE_COUNT; i++, voice++)
     {
         if ((voice->flags & 1) != 0 && voice->parentID == pid)
         {
@@ -610,7 +618,7 @@ void xSndSetPitch(U32 snd, F32 pitch)
     iSndSetPitch(snd, pitch);
 }
 
-void xSndSetExternalCallback(void (*callback)(U32))
+void xSndSetExternalCallback(iSndExternalCallback callback)
 {
     iSndSetExternalCallback(callback);
 }

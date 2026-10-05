@@ -200,10 +200,14 @@ inline void xEntShow(xEnt* ent)
 
 #endif
 
+#if defined(PS2)
+#include "xEntPosition.h"
+#else
 inline xVec3* xEntGetPos(const xEnt* ent)
 {
     return &xModelGetFrame(ent->model)->pos;
 }
+#endif
 
 inline xVec3* xEntGetCenter(const xEnt* ent)
 {
