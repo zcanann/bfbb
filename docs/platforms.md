@@ -75,10 +75,10 @@ checked, and the standard objdiff parser accepts the result.
 
 | Version | Full code-region bytes | Objdiff code-matched bytes |
 | --- | ---: | ---: |
-| SLUS-20680 | 2,978,560 | 199,704 |
-| SLES-51968 | 2,979,712 | 199,396 |
-| SLES-51970 | 2,976,512 | 199,396 |
-| SLES-53623 | 2,979,968 | 33,552 |
+| SLUS-20680 | 2,978,560 | 200,716 |
+| SLES-51968 | 2,979,712 | 200,408 |
+| SLES-51970 | 2,976,512 | 200,304 |
+| SLES-53623 | 2,979,968 | 34,104 |
 | XBOX-US | 1,798,760 | 12,409 |
 | XBOX-EU | 1,798,760 | 12,409 |
 
@@ -122,10 +122,10 @@ The narrower function-only baselines currently contain:
 
 | PS2 baseline | Functions | Measured function bytes | Source matches |
 | --- | ---: | ---: | ---: |
-| USA | 5,391 | 2,107,460 | 1,362 functions / 199,704 bytes |
-| Europe/Australia | 5,392 | 2,108,700 | 1,361 functions / 199,396 bytes |
-| Germany | 5,394 | 2,105,512 | 1,361 functions / 199,396 bytes |
-| France (reviewed and corroborated bounds) | 597 | 214,848 | 201 functions / 33,552 bytes |
+| USA | 5,391 | 2,107,460 | 1,374 functions / 200,716 bytes |
+| Europe/Australia | 5,392 | 2,108,700 | 1,373 functions / 200,408 bytes |
+| Germany | 5,394 | 2,105,512 | 1,372 functions / 200,304 bytes |
+| France (reviewed and corroborated bounds) | 597 | 214,848 | 207 functions / 34,104 bytes |
 
 The `address-anchors.json` registries also recover over 2,500 named data addresses
 and 628 function declarations in each debug-bearing version. Addresses do not
@@ -153,7 +153,7 @@ other target objects are not relocation-restored link inputs. Code outside those
 and padding remain unclassified; the whole mixed load segment is not counted as
 code. France is stripped; independently reviewed and machine-corroborated
 extents establish its 597-function, 214,848-byte function-only baseline. Its
-33,552 matched code bytes describe that subset. The published code denominator
+34,104 matched code bytes describe that subset. The published code denominator
 is the full recovered CPU text region, not this function-only subset.
 
 Both Xbox releases have identical payloads in all 13 sections; their 532 differing
@@ -564,3 +564,9 @@ The complete debug-region [UI source comparison](PS2_ZUI_SOURCE.md) adds 11
 matched functions / 2,144 bytes per version. Eight further French source
 comparisons add nine matches / 1,236 bytes, keeping all 26 confirmed members
 and unknown references: [French effects and camera coverage](PS2_FRANCE_EFFECTS_CAMERA_SOURCE.md).
+
+The original PS2 [OOB rendering path](PS2_OOB_SOURCE.md) adds 12 exact functions /
+1,012 bytes for USA and Europe, and 11 / 908 for Germany. All these matches also
+reconstruct the original bytes after relocation. Twelve additional French source
+profiles add six standard matches / 552 bytes while retaining all confirmed
+members and unknown references: [remaining French coverage](PS2_FRANCE_REMAINING_SOURCE.md).
