@@ -3,6 +3,7 @@
 
 #include "xCamera.h"
 #include "zCameraTuning.h"
+#include "zCameraControl.h"
 
 #include <PowerPC_EABI_Support\MSL_C\MSL_Common\cmath>
 
@@ -93,8 +94,6 @@ void zCameraSetBbounce(S32 bbouncing);
 void zCameraSetHighbounce(S32 hbounce);
 void zCameraSetLongbounce(S32 hbounce);
 void zCameraSetPlayerVel(xVec3* vel);
-void zCameraSetConvers(int on);
-void zCameraDoTrans(xCamAsset* asset, float ttime);
 U32 zCamera_FlyOnly();
 void zCameraTranslate(xCamera* camera, F32 dposx, F32 dposy, F32 dposz);
 void zCameraTranslate(xCamera* camera, xVec3* v);
