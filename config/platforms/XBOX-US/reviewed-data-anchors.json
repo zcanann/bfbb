@@ -222,6 +222,15 @@
       "source": "SB/Core/x/xMath3.cpp",
       "evidence": "Actual decoded component loads and independent scalar bytes.",
       "value_hex": "77be7f3f"
+    },
+    {
+      "name": "float:bf000000",
+      "address": 2545328,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/xbox/iMath3.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "000000bf"
     }
   ],
   "pool_loop": {

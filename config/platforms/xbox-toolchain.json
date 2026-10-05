@@ -1471,6 +1471,171 @@
           }
         ]
       }
+    },
+    {
+      "source": "src/SB/Core/gc/iMath3.cpp",
+      "target_unit": "SB/Core/xbox/iMath3.cpp",
+      "object": "source/iMath3/iMath3.obj",
+      "comparison_object": "source/iMath3-functions.obj",
+      "host_entry": "tools/platforms/xbox_support/geometry_entry.cpp",
+      "host_context": {
+        "xatof": null,
+        "imports": "tools/platforms/xbox_support/math_crt.def"
+      },
+      "source_dependencies": [
+        {
+          "source": "src/SB/Core/x/xMath.cpp",
+          "object": "xMath.obj"
+        },
+        {
+          "source": "src/SB/Core/x/xMath3.cpp",
+          "object": "xMath3.obj"
+        },
+        {
+          "source": "src/SB/Core/x/xVec3.cpp",
+          "object": "xVec3.obj"
+        },
+        {
+          "source": "src/SB/Core/gc/iMath.cpp",
+          "object": "iMath.obj"
+        }
+      ],
+      "runtime_libraries": [
+        "libcmt"
+      ],
+      "symbols": {
+        "iSphereIsectVec(const xSphere*,const xVec3*,xIsect*)": "?iSphereIsectVec@@YAXPBUxSphere@@PBUxVec3@@PAUxIsect@@@Z",
+        "iSphereIsectRay(const xSphere*,const xRay3*,xIsect*)": "?iSphereIsectRay@@YAXPBUxSphere@@PBUxRay3@@PAUxIsect@@@Z",
+        "iSphereBoundVec(xSphere*,const xSphere*,const xVec3*)": "?iSphereBoundVec@@YAXPAUxSphere@@PBU1@PBUxVec3@@@Z",
+        "iCylinderIsectVec(const xCylinder*,const xVec3*,xIsect*)": "?iCylinderIsectVec@@YAXPBUxCylinder@@PBUxVec3@@PAUxIsect@@@Z",
+        "iBoxVecDist(const xBox*,const xVec3*,xIsect*)": "?iBoxVecDist@@YAXPBUxBox@@PBUxVec3@@PAUxIsect@@@Z",
+        "iBoxIsectVec(const xBox*,const xVec3*,xIsect*)": "?iBoxIsectVec@@YAXPBUxBox@@PBUxVec3@@PAUxIsect@@@Z",
+        "ClipPlane(F32,F32,F32*,F32*)": "?ClipPlane@@YAIMMPAM0@Z",
+        "ClipBox(const xVec3*,const xVec3*,const xVec3*,F32*,F32*)": "?ClipBox@@YAIPBUxVec3@@00PAM1@Z",
+        "iBoxIsectRay(const xBox*,const xRay3*,xIsect*)": "?iBoxIsectRay@@YAXPBUxBox@@PBUxRay3@@PAUxIsect@@@Z",
+        "iBoxIsectSphere(const xBox*,const xSphere*,xIsect*)": "?iBoxIsectSphere@@YAXPBUxBox@@PBUxSphere@@PAUxIsect@@@Z",
+        "iBoxBoundVec(xBox*,const xBox*,const xVec3*)": "?iBoxBoundVec@@YAXPAUxBox@@PBU1@PBUxVec3@@@Z"
+      },
+      "scope": "Eleven independently reviewed geometry functions from complete real iMath3 shared implementation plus four complete math dependencies. Other source functions lacking reviewed original extents remain unassigned. Platform label identifies Xbox geometry; actual implementation is reused from gc/iMath3.cpp. No TU or executable completion claim.",
+      "globals": {
+        "float:00000000": {
+          "linkage_name": "__real@00000000",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "00000000"
+        },
+        "float:3f000000": {
+          "linkage_name": "__real@3f000000",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "0000003f"
+        },
+        "float:bf000000": {
+          "linkage_name": "__real@bf000000",
+          "size": 4,
+          "object": "iMath3.obj",
+          "value_hex": "000000bf"
+        }
+      },
+      "direct_calls": {
+        "iSphereIsectVec(const xSphere*,const xVec3*,xIsect*)": [],
+        "iSphereIsectRay(const xSphere*,const xRay3*,xIsect*)": [
+          "xMathSolveQuadratic(F32,F32,F32,F32*,F32*)"
+        ],
+        "iSphereBoundVec(xSphere*,const xSphere*,const xVec3*)": [
+          "iSphereIsectVec(const xSphere*,const xVec3*,xIsect*)"
+        ],
+        "iCylinderIsectVec(const xCylinder*,const xVec3*,xIsect*)": [
+          "?xVec2Dist@@YAMMMMM@Z"
+        ],
+        "iBoxVecDist(const xBox*,const xVec3*,xIsect*)": [],
+        "iBoxIsectVec(const xBox*,const xVec3*,xIsect*)": [],
+        "ClipPlane(F32,F32,F32*,F32*)": [],
+        "ClipBox(const xVec3*,const xVec3*,const xVec3*,F32*,F32*)": [
+          "ClipPlane(F32,F32,F32*,F32*)"
+        ],
+        "iBoxIsectRay(const xBox*,const xRay3*,xIsect*)": [
+          "ClipBox(const xVec3*,const xVec3*,const xVec3*,F32*,F32*)"
+        ],
+        "iBoxIsectSphere(const xBox*,const xSphere*,xIsect*)": [
+          "iBoxIsectVec(const xBox*,const xVec3*,xIsect*)",
+          "iBoxVecDist(const xBox*,const xVec3*,xIsect*)"
+        ],
+        "iBoxBoundVec(xBox*,const xBox*,const xVec3*)": []
+      },
+      "call_symbols": {
+        "xMathSolveQuadratic(F32,F32,F32,F32*,F32*)": {
+          "linkage_name": "?xMathSolveQuadratic@@YAIMMMPAM0@Z",
+          "object": "xMath.obj"
+        },
+        "?xVec2Dist@@YAMMMMM@Z": {
+          "linkage_name": "?xVec2Dist@@YAMMMMM@Z",
+          "object": "iMath3.obj"
+        }
+      },
+      "address_expressions": {
+        "iSphereIsectVec(const xSphere*,const xVec3*,xIsect*)": [],
+        "iSphereIsectRay(const xSphere*,const xRay3*,xIsect*)": [],
+        "iSphereBoundVec(xSphere*,const xSphere*,const xVec3*)": [
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d81d",
+            "addend": 0
+          },
+          {
+            "symbol": "float:3f000000",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0
+          }
+        ],
+        "iCylinderIsectVec(const xCylinder*,const xVec3*,xIsect*)": [],
+        "iBoxVecDist(const xBox*,const xVec3*,xIsect*)": [],
+        "iBoxIsectVec(const xBox*,const xVec3*,xIsect*)": [],
+        "ClipPlane(F32,F32,F32*,F32*)": [
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d81d",
+            "addend": 0,
+            "count": 3
+          }
+        ],
+        "ClipBox(const xVec3*,const xVec3*,const xVec3*,F32*,F32*)": [],
+        "iBoxIsectRay(const xBox*,const xRay3*,xIsect*)": [
+          {
+            "symbol": "float:3f000000",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0,
+            "count": 3
+          },
+          {
+            "symbol": "float:bf000000",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0,
+            "count": 3
+          }
+        ],
+        "iBoxIsectSphere(const xBox*,const xSphere*,xIsect*)": [
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d81d",
+            "addend": 0
+          },
+          {
+            "symbol": "float:3f000000",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0,
+            "count": 3
+          }
+        ],
+        "iBoxBoundVec(xBox*,const xBox*,const xVec3*)": []
+      }
     }
   ],
   "static_runtime": {

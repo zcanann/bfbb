@@ -145,8 +145,8 @@
       "classification": "unclassified"
     }
   ],
-  "known_code_bytes": 633159,
-  "unclassified_text_bytes": 1165601,
+  "known_code_bytes": 633316,
+  "unclassified_text_bytes": 1165444,
   "text_ranges": [
     {
       "kind": "function",
@@ -13611,7 +13611,7 @@
       "kind": "function",
       "address": 1328480,
       "size": 217,
-      "canonical_identifier": "anon_00144560"
+      "canonical_identifier": "xMathSolveQuadratic(F32,F32,F32,F32*,F32*)"
     },
     {
       "kind": "unclassified",
@@ -17341,13 +17341,24 @@
     {
       "kind": "unclassified",
       "address": 1487534,
-      "size": 258
+      "size": 178
+    },
+    {
+      "kind": "function",
+      "address": 1487712,
+      "size": 73,
+      "canonical_identifier": "iSphereIsectVec(const xSphere*,const xVec3*,xIsect*)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1487785,
+      "size": 7
     },
     {
       "kind": "function",
       "address": 1487792,
       "size": 332,
-      "canonical_identifier": "anon_0016b3b0"
+      "canonical_identifier": "iSphereIsectRay(const xSphere*,const xRay3*,xIsect*)"
     },
     {
       "kind": "unclassified",
@@ -17358,18 +17369,29 @@
       "kind": "function",
       "address": 1488128,
       "size": 271,
-      "canonical_identifier": "anon_0016b500"
+      "canonical_identifier": "iSphereBoundVec(xSphere*,const xSphere*,const xVec3*)"
     },
     {
       "kind": "unclassified",
       "address": 1488399,
-      "size": 97
+      "size": 1
+    },
+    {
+      "kind": "function",
+      "address": 1488400,
+      "size": 84,
+      "canonical_identifier": "iCylinderIsectVec(const xCylinder*,const xVec3*,xIsect*)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1488484,
+      "size": 12
     },
     {
       "kind": "function",
       "address": 1488496,
       "size": 1313,
-      "canonical_identifier": "anon_0016b670"
+      "canonical_identifier": "iBoxVecDist(const xBox*,const xVec3*,xIsect*)"
     },
     {
       "kind": "unclassified",
@@ -17380,7 +17402,7 @@
       "kind": "function",
       "address": 1489824,
       "size": 91,
-      "canonical_identifier": "anon_0016bba0"
+      "canonical_identifier": "iBoxIsectVec(const xBox*,const xVec3*,xIsect*)"
     },
     {
       "kind": "unclassified",
@@ -17391,7 +17413,7 @@
       "kind": "function",
       "address": 1489920,
       "size": 150,
-      "canonical_identifier": "anon_0016bc00"
+      "canonical_identifier": "ClipPlane(F32,F32,F32*,F32*)"
     },
     {
       "kind": "unclassified",
@@ -17402,7 +17424,7 @@
       "kind": "function",
       "address": 1490080,
       "size": 201,
-      "canonical_identifier": "anon_0016bca0"
+      "canonical_identifier": "ClipBox(const xVec3*,const xVec3*,const xVec3*,F32*,F32*)"
     },
     {
       "kind": "unclassified",
@@ -17413,7 +17435,7 @@
       "kind": "function",
       "address": 1490288,
       "size": 330,
-      "canonical_identifier": "anon_0016bd70"
+      "canonical_identifier": "iBoxIsectRay(const xBox*,const xRay3*,xIsect*)"
     },
     {
       "kind": "unclassified",
@@ -17424,7 +17446,7 @@
       "kind": "function",
       "address": 1490624,
       "size": 678,
-      "canonical_identifier": "anon_0016bec0"
+      "canonical_identifier": "iBoxIsectSphere(const xBox*,const xSphere*,xIsect*)"
     },
     {
       "kind": "unclassified",
@@ -17435,7 +17457,7 @@
       "kind": "function",
       "address": 1491312,
       "size": 145,
-      "canonical_identifier": "anon_0016c170"
+      "canonical_identifier": "iBoxBoundVec(xBox*,const xBox*,const xVec3*)"
     },
     {
       "kind": "unclassified",

@@ -9958,12 +9958,12 @@
       "identity_kind": "anonymous"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00144560",
-      "source": null,
+      "name": "xMathSolveQuadratic",
+      "canonical_identifier": "xMathSolveQuadratic(F32,F32,F32,F32*,F32*)",
+      "source": "SB/Core/x/xMath.cpp",
       "address": 1328480,
       "size": 217,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
       "name": null,
@@ -12726,76 +12726,92 @@
       "identity_kind": "anonymous"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0016b3b0",
-      "source": null,
+      "name": "iSphereIsectVec",
+      "canonical_identifier": "iSphereIsectVec(const xSphere*,const xVec3*,xIsect*)",
+      "source": "SB/Core/xbox/iMath3.cpp",
+      "address": 1487712,
+      "size": 73,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "iSphereIsectRay",
+      "canonical_identifier": "iSphereIsectRay(const xSphere*,const xRay3*,xIsect*)",
+      "source": "SB/Core/xbox/iMath3.cpp",
       "address": 1487792,
       "size": 332,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0016b500",
-      "source": null,
+      "name": "iSphereBoundVec",
+      "canonical_identifier": "iSphereBoundVec(xSphere*,const xSphere*,const xVec3*)",
+      "source": "SB/Core/xbox/iMath3.cpp",
       "address": 1488128,
       "size": 271,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0016b670",
-      "source": null,
+      "name": "iCylinderIsectVec",
+      "canonical_identifier": "iCylinderIsectVec(const xCylinder*,const xVec3*,xIsect*)",
+      "source": "SB/Core/xbox/iMath3.cpp",
+      "address": 1488400,
+      "size": 84,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "iBoxVecDist",
+      "canonical_identifier": "iBoxVecDist(const xBox*,const xVec3*,xIsect*)",
+      "source": "SB/Core/xbox/iMath3.cpp",
       "address": 1488496,
       "size": 1313,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0016bba0",
-      "source": null,
+      "name": "iBoxIsectVec",
+      "canonical_identifier": "iBoxIsectVec(const xBox*,const xVec3*,xIsect*)",
+      "source": "SB/Core/xbox/iMath3.cpp",
       "address": 1489824,
       "size": 91,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0016bc00",
-      "source": null,
+      "name": "ClipPlane",
+      "canonical_identifier": "ClipPlane(F32,F32,F32*,F32*)",
+      "source": "SB/Core/xbox/iMath3.cpp",
       "address": 1489920,
       "size": 150,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0016bca0",
-      "source": null,
+      "name": "ClipBox",
+      "canonical_identifier": "ClipBox(const xVec3*,const xVec3*,const xVec3*,F32*,F32*)",
+      "source": "SB/Core/xbox/iMath3.cpp",
       "address": 1490080,
       "size": 201,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0016bd70",
-      "source": null,
+      "name": "iBoxIsectRay",
+      "canonical_identifier": "iBoxIsectRay(const xBox*,const xRay3*,xIsect*)",
+      "source": "SB/Core/xbox/iMath3.cpp",
       "address": 1490288,
       "size": 330,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0016bec0",
-      "source": null,
+      "name": "iBoxIsectSphere",
+      "canonical_identifier": "iBoxIsectSphere(const xBox*,const xSphere*,xIsect*)",
+      "source": "SB/Core/xbox/iMath3.cpp",
       "address": 1490624,
       "size": 678,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0016c170",
-      "source": null,
+      "name": "iBoxBoundVec",
+      "canonical_identifier": "iBoxBoundVec(xBox*,const xBox*,const xVec3*)",
+      "source": "SB/Core/xbox/iMath3.cpp",
       "address": 1491312,
       "size": 145,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
       "name": null,

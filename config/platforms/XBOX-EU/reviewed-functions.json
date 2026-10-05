@@ -138,6 +138,91 @@
       }
     },
     {
+      "name": "xMathSolveQuadratic",
+      "canonical_identifier": "xMathSolveQuadratic(F32,F32,F32,F32*,F32*)",
+      "display_name": "xMathSolveQuadratic(F32,F32,F32,F32*,F32*)",
+      "source": "SB/Core/x/xMath.cpp",
+      "linkage_name": null,
+      "address": 1328480,
+      "size": 217,
+      "sha256": "5f25548f32b9e2ca49150d3b6e598d4dcfb4b151a5acdd9563b6ffd153af8a06",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": false,
+      "retail_link_verified": false,
+      "instruction_bytes": 217,
+      "instruction_count": 79,
+      "semantics": {
+        "identity": "Quadratic solver handles zero leading coefficient and discriminant negative/zero/positive; hardware FSQRT and coefficient sign select cancellation-resistant root formula, then roots sorted and count returned.",
+        "entry_evidence": "Original decoded direct-call witnesses and closed CFG; instruction-pattern source search proposed candidates only, and does not establish their boundaries."
+      },
+      "corroboration": {
+        "return_address": 1328696,
+        "branches": [
+          {
+            "address": 1328498,
+            "size": 2,
+            "opcode": 122,
+            "target": 1328538
+          },
+          {
+            "address": 1328517,
+            "size": 2,
+            "opcode": 123,
+            "target": 1328578
+          },
+          {
+            "address": 1328576,
+            "size": 2,
+            "opcode": 122,
+            "target": 1328582
+          },
+          {
+            "address": 1328620,
+            "size": 2,
+            "opcode": 122,
+            "target": 1328633
+          },
+          {
+            "address": 1328657,
+            "size": 2,
+            "opcode": 117,
+            "target": 1328676
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 168037,
+            "target": 1328480
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 1328745,
+            "target": 1328480
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 217,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
+        },
+        "previous_boundary": {
+          "return_address": 1328477,
+          "padding_address": 1328478,
+          "padding_size": 2,
+          "padding_byte": 204
+        },
+        "next_function_address": 1328704,
+        "following_padding": {
+          "address": 1328697,
+          "size": 7,
+          "byte": 204
+        }
+      }
+    },
+    {
       "name": "xBoxFromCircle",
       "canonical_identifier": "xBoxFromCircle(xBox&,const xVec3&,const xVec3&,F32)",
       "display_name": "xBoxFromCircle(xBox&,const xVec3&,const xVec3&,F32)",
@@ -7949,6 +8034,1373 @@
           "direct_call_targets": []
         }
       }
+    },
+    {
+      "name": "iSphereIsectVec",
+      "canonical_identifier": "iSphereIsectVec(const xSphere*,const xVec3*,xIsect*)",
+      "display_name": "iSphereIsectVec(const xSphere*,const xVec3*,xIsect*)",
+      "source": "SB/Core/xbox/iMath3.cpp",
+      "linkage_name": null,
+      "address": 1487712,
+      "size": 73,
+      "sha256": "62f7f799c5abc49845a81f25b77b1d5ca3ecb702553f7c58063c950fe70f35f0",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 73,
+      "instruction_count": 30,
+      "semantics": {
+        "identity": "Point-minus-sphere-center stored in xIsect norm, squared length and hardware FSQRT, then radius subtraction into penetration.",
+        "entry_evidence": "Original decoded direct-call witnesses and closed CFG; instruction-pattern source search proposed candidates only, and does not establish their boundaries."
+      },
+      "corroboration": {
+        "return_address": 1487784,
+        "branches": [],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 290187,
+            "target": 1487712
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 290311,
+            "target": 1487712
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 73,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
+        },
+        "previous_boundary": {
+          "return_address": 1487702,
+          "padding_address": 1487703,
+          "padding_size": 9,
+          "padding_byte": 204
+        },
+        "next_function_address": 1487792,
+        "following_padding": {
+          "address": 1487785,
+          "size": 7,
+          "byte": 204
+        }
+      },
+      "address_expressions": [],
+      "direct_calls": []
+    },
+    {
+      "name": "iSphereIsectRay",
+      "canonical_identifier": "iSphereIsectRay(const xSphere*,const xRay3*,xIsect*)",
+      "display_name": "iSphereIsectRay(const xSphere*,const xRay3*,xIsect*)",
+      "source": "SB/Core/xbox/iMath3.cpp",
+      "linkage_name": null,
+      "address": 1487792,
+      "size": 332,
+      "sha256": "5ff688e548accfd6c024e450aa3aa0eb1828a2d7aa5e49bf4da549ad642c20e3",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 332,
+      "instruction_count": 117,
+      "semantics": {
+        "identity": "Ray flag bits0x400/0x800 supply default parameter limits; squared direction, twice direction/origin dot, origin length minus radius squared feed the quadratic solver; roots classified against the interval.",
+        "entry_evidence": "Original decoded direct-call witnesses and closed CFG; instruction-pattern source search proposed candidates only, and does not establish their boundaries."
+      },
+      "corroboration": {
+        "return_address": 1488123,
+        "branches": [
+          {
+            "address": 1487801,
+            "size": 2,
+            "opcode": 117,
+            "target": 1487810
+          },
+          {
+            "address": 1487819,
+            "size": 2,
+            "opcode": 117,
+            "target": 1487824
+          },
+          {
+            "address": 1487973,
+            "size": 2,
+            "opcode": 117,
+            "target": 1488027
+          },
+          {
+            "address": 1487983,
+            "size": 2,
+            "opcode": 123,
+            "target": 1488013
+          },
+          {
+            "address": 1487993,
+            "size": 2,
+            "opcode": 116,
+            "target": 1488013
+          },
+          {
+            "address": 1488035,
+            "size": 2,
+            "opcode": 122,
+            "target": 1488070
+          },
+          {
+            "address": 1488052,
+            "size": 2,
+            "opcode": 123,
+            "target": 1488113
+          },
+          {
+            "address": 1488082,
+            "size": 2,
+            "opcode": 122,
+            "target": 1488106
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1168603,
+            "target": 1487792
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 332,
+          "internal_gap_ranges": [],
+          "direct_call_targets": [
+            1328480
+          ]
+        },
+        "previous_boundary": {
+          "return_address": 1487784,
+          "padding_address": 1487785,
+          "padding_size": 7,
+          "padding_byte": 204
+        },
+        "next_function_address": 1488128,
+        "following_padding": {
+          "address": 1488124,
+          "size": 4,
+          "byte": 204
+        }
+      },
+      "address_expressions": [],
+      "direct_calls": [
+        {
+          "offset": 159,
+          "symbol": "xMathSolveQuadratic(F32,F32,F32,F32*,F32*)"
+        }
+      ]
+    },
+    {
+      "name": "iSphereBoundVec",
+      "canonical_identifier": "iSphereBoundVec(xSphere*,const xSphere*,const xVec3*)",
+      "display_name": "iSphereBoundVec(xSphere*,const xSphere*,const xVec3*)",
+      "source": "SB/Core/xbox/iMath3.cpp",
+      "linkage_name": null,
+      "address": 1488128,
+      "size": 271,
+      "sha256": "b82bd158c90880f8c033627ba1d8cc999f2ac663a9c732d95c355ef087962cc2",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 271,
+      "instruction_count": 98,
+      "semantics": {
+        "identity": "Alias-aware sphere expansion toward a point: center delta length minus radius, unchanged copy if contained, otherwise half-growth center adjustment and radius update.",
+        "entry_evidence": "Original decoded direct-call witnesses and closed CFG; instruction-pattern source search proposed candidates only, and does not establish their boundaries."
+      },
+      "corroboration": {
+        "return_address": 1488398,
+        "branches": [
+          {
+            "address": 1488214,
+            "size": 2,
+            "opcode": 122,
+            "target": 1488254
+          },
+          {
+            "address": 1488260,
+            "size": 2,
+            "opcode": 117,
+            "target": 1488264
+          },
+          {
+            "address": 1488369,
+            "size": 2,
+            "opcode": 116,
+            "target": 1488393
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1478411,
+            "target": 1488128
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 271,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
+        },
+        "previous_boundary": {
+          "return_address": 1488123,
+          "padding_address": 1488124,
+          "padding_size": 4,
+          "padding_byte": 204
+        },
+        "next_function_address": 1488400,
+        "following_padding": {
+          "address": 1488399,
+          "size": 1,
+          "byte": 204
+        }
+      },
+      "address_expressions": [
+        {
+          "offset": 77,
+          "instruction_offset": 75,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        },
+        {
+          "offset": 234,
+          "instruction_offset": 232,
+          "symbol": "float:3f000000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        }
+      ],
+      "direct_calls": []
+    },
+    {
+      "name": "iCylinderIsectVec",
+      "canonical_identifier": "iCylinderIsectVec(const xCylinder*,const xVec3*,xIsect*)",
+      "display_name": "iCylinderIsectVec(const xCylinder*,const xVec3*,xIsect*)",
+      "source": "SB/Core/xbox/iMath3.cpp",
+      "linkage_name": null,
+      "address": 1488400,
+      "size": 84,
+      "sha256": "f6b510c1a9c627d396d96f7c447969d2657e8d37a00de5e56f84c27f1a2001b9",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 84,
+      "instruction_count": 32,
+      "semantics": {
+        "identity": "Tests point height against center.y plus/minus cylinder.h then radial XZ distance against radius; stores penetration sign.",
+        "entry_evidence": "Original decoded direct-call witnesses and closed CFG; instruction-pattern source search proposed candidates only, and does not establish their boundaries."
+      },
+      "corroboration": {
+        "return_address": 1488483,
+        "branches": [
+          {
+            "address": 1488414,
+            "size": 2,
+            "opcode": 122,
+            "target": 1488476
+          },
+          {
+            "address": 1488430,
+            "size": 2,
+            "opcode": 117,
+            "target": 1488476
+          },
+          {
+            "address": 1488466,
+            "size": 2,
+            "opcode": 122,
+            "target": 1488476
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 290251,
+            "target": 1488400
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 1115217,
+            "target": 1488400
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 84,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
+        },
+        "previous_boundary": {
+          "return_address": 1488398,
+          "padding_address": 1488399,
+          "padding_size": 1,
+          "padding_byte": 204
+        },
+        "next_function_address": 1488496,
+        "following_padding": {
+          "address": 1488484,
+          "size": 12,
+          "byte": 204
+        }
+      },
+      "address_expressions": [],
+      "direct_calls": []
+    },
+    {
+      "name": "iBoxVecDist",
+      "canonical_identifier": "iBoxVecDist(const xBox*,const xVec3*,xIsect*)",
+      "display_name": "iBoxVecDist(const xBox*,const xVec3*,xIsect*)",
+      "source": "SB/Core/xbox/iMath3.cpp",
+      "linkage_name": null,
+      "address": 1488496,
+      "size": 1313,
+      "sha256": "74aac9c168de42a8ca470601dfb771d07cfbaf1be29fbf724cd231b7cb6b29b1",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 1313,
+      "instruction_count": 401,
+      "semantics": {
+        "identity": "Axis-aligned box point distance, partitioning all outside face/edge/corner regions and filling xIsect distance/normal through component bounds and FSQRT.",
+        "entry_evidence": "Original decoded direct-call witnesses and closed CFG; instruction-pattern source search proposed candidates only, and does not establish their boundaries."
+      },
+      "corroboration": {
+        "return_address": 1489808,
+        "branches": [
+          {
+            "address": 1488540,
+            "size": 2,
+            "opcode": 122,
+            "target": 1488584
+          },
+          {
+            "address": 1488612,
+            "size": 2,
+            "opcode": 122,
+            "target": 1488642
+          },
+          {
+            "address": 1488686,
+            "size": 2,
+            "opcode": 122,
+            "target": 1488813
+          },
+          {
+            "address": 1488691,
+            "size": 2,
+            "opcode": 122,
+            "target": 1488733
+          },
+          {
+            "address": 1488752,
+            "size": 2,
+            "opcode": 122,
+            "target": 1488781
+          },
+          {
+            "address": 1488816,
+            "size": 2,
+            "opcode": 122,
+            "target": 1488860
+          },
+          {
+            "address": 1488888,
+            "size": 2,
+            "opcode": 122,
+            "target": 1488918
+          },
+          {
+            "address": 1488986,
+            "size": 2,
+            "opcode": 122,
+            "target": 1489029
+          },
+          {
+            "address": 1489040,
+            "size": 2,
+            "opcode": 122,
+            "target": 1489078
+          },
+          {
+            "address": 1489138,
+            "size": 2,
+            "opcode": 122,
+            "target": 1489228
+          },
+          {
+            "address": 1489143,
+            "size": 2,
+            "opcode": 122,
+            "target": 1489178
+          },
+          {
+            "address": 1489231,
+            "size": 2,
+            "opcode": 122,
+            "target": 1489274
+          },
+          {
+            "address": 1489285,
+            "size": 2,
+            "opcode": 122,
+            "target": 1489325
+          },
+          {
+            "address": 1489386,
+            "size": 2,
+            "opcode": 122,
+            "target": 1489429
+          },
+          {
+            "address": 1489456,
+            "size": 2,
+            "opcode": 122,
+            "target": 1489484
+          },
+          {
+            "address": 1489528,
+            "size": 2,
+            "opcode": 122,
+            "target": 1489652
+          },
+          {
+            "address": 1489533,
+            "size": 2,
+            "opcode": 122,
+            "target": 1489574
+          },
+          {
+            "address": 1489592,
+            "size": 2,
+            "opcode": 122,
+            "target": 1489623
+          },
+          {
+            "address": 1489650,
+            "size": 2,
+            "opcode": 235,
+            "target": 1489769
+          },
+          {
+            "address": 1489655,
+            "size": 2,
+            "opcode": 122,
+            "target": 1489695
+          },
+          {
+            "address": 1489693,
+            "size": 2,
+            "opcode": 235,
+            "target": 1489767
+          },
+          {
+            "address": 1489722,
+            "size": 2,
+            "opcode": 122,
+            "target": 1489747
+          },
+          {
+            "address": 1489745,
+            "size": 2,
+            "opcode": 235,
+            "target": 1489772
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1491274,
+            "target": 1488496
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 1313,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
+        },
+        "previous_boundary": {
+          "return_address": 1488483,
+          "padding_address": 1488484,
+          "padding_size": 12,
+          "padding_byte": 204
+        },
+        "next_function_address": 1489824,
+        "following_padding": {
+          "address": 1489809,
+          "size": 15,
+          "byte": 204
+        }
+      },
+      "address_expressions": [],
+      "direct_calls": []
+    },
+    {
+      "name": "iBoxIsectVec",
+      "canonical_identifier": "iBoxIsectVec(const xBox*,const xVec3*,xIsect*)",
+      "display_name": "iBoxIsectVec(const xBox*,const xVec3*,xIsect*)",
+      "source": "SB/Core/xbox/iMath3.cpp",
+      "linkage_name": null,
+      "address": 1489824,
+      "size": 91,
+      "sha256": "c0b19536b89c0f234b8f8bda1d1e6fbfe6098d20b7e029da103904bf2cb935f2",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 91,
+      "instruction_count": 34,
+      "semantics": {
+        "identity": "Three inclusive coordinate comparisons against box upper/lower vectors, storing penetration sign.",
+        "entry_evidence": "Original decoded direct-call witnesses and closed CFG; instruction-pattern source search proposed candidates only, and does not establish their boundaries."
+      },
+      "corroboration": {
+        "return_address": 1489914,
+        "branches": [
+          {
+            "address": 1489834,
+            "size": 2,
+            "opcode": 117,
+            "target": 1489907
+          },
+          {
+            "address": 1489845,
+            "size": 2,
+            "opcode": 122,
+            "target": 1489907
+          },
+          {
+            "address": 1489858,
+            "size": 2,
+            "opcode": 117,
+            "target": 1489907
+          },
+          {
+            "address": 1489871,
+            "size": 2,
+            "opcode": 122,
+            "target": 1489907
+          },
+          {
+            "address": 1489884,
+            "size": 2,
+            "opcode": 117,
+            "target": 1489907
+          },
+          {
+            "address": 1489897,
+            "size": 2,
+            "opcode": 122,
+            "target": 1489907
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1168923,
+            "target": 1489824
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 1491090,
+            "target": 1489824
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 91,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
+        },
+        "previous_boundary": {
+          "return_address": 1489808,
+          "padding_address": 1489809,
+          "padding_size": 15,
+          "padding_byte": 204
+        },
+        "next_function_address": 1489920,
+        "following_padding": {
+          "address": 1489915,
+          "size": 5,
+          "byte": 204
+        }
+      },
+      "address_expressions": [],
+      "direct_calls": []
+    },
+    {
+      "name": "ClipPlane",
+      "canonical_identifier": "ClipPlane(F32,F32,F32*,F32*)",
+      "display_name": "ClipPlane(F32,F32,F32*,F32*)",
+      "source": "SB/Core/xbox/iMath3.cpp",
+      "linkage_name": null,
+      "address": 1489920,
+      "size": 150,
+      "sha256": "6d4e29e98cd504a5566f8ebd4e88e84599f1ce27f58adb3371bdfd902d51f0e0",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 150,
+      "instruction_count": 50,
+      "semantics": {
+        "identity": "One-dimensional clipping: denominator sign determines entering/exiting interval updates; zero denominator accepts nonpositive numerator.",
+        "entry_evidence": "Original decoded direct-call witnesses and closed CFG; instruction-pattern source search proposed candidates only, and does not establish their boundaries."
+      },
+      "corroboration": {
+        "return_address": 1490069,
+        "branches": [
+          {
+            "address": 1489939,
+            "size": 2,
+            "opcode": 117,
+            "target": 1489987
+          },
+          {
+            "address": 1489952,
+            "size": 2,
+            "opcode": 123,
+            "target": 1490067
+          },
+          {
+            "address": 1489969,
+            "size": 2,
+            "opcode": 122,
+            "target": 1489981
+          },
+          {
+            "address": 1489998,
+            "size": 2,
+            "opcode": 122,
+            "target": 1490050
+          },
+          {
+            "address": 1490015,
+            "size": 2,
+            "opcode": 123,
+            "target": 1490067
+          },
+          {
+            "address": 1490032,
+            "size": 2,
+            "opcode": 122,
+            "target": 1490044
+          },
+          {
+            "address": 1490065,
+            "size": 2,
+            "opcode": 123,
+            "target": 1489981
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1490098,
+            "target": 1489920
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 150,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
+        },
+        "previous_boundary": {
+          "return_address": 1489914,
+          "padding_address": 1489915,
+          "padding_size": 5,
+          "padding_byte": 204
+        },
+        "next_function_address": 1490080,
+        "following_padding": {
+          "address": 1490070,
+          "size": 10,
+          "byte": 204
+        }
+      },
+      "address_expressions": [
+        {
+          "offset": 6,
+          "instruction_offset": 4,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        },
+        {
+          "offset": 69,
+          "instruction_offset": 67,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        },
+        {
+          "offset": 136,
+          "instruction_offset": 134,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        }
+      ],
+      "direct_calls": []
+    },
+    {
+      "name": "ClipBox",
+      "canonical_identifier": "ClipBox(const xVec3*,const xVec3*,const xVec3*,F32*,F32*)",
+      "display_name": "ClipBox(const xVec3*,const xVec3*,const xVec3*,F32*,F32*)",
+      "source": "SB/Core/xbox/iMath3.cpp",
+      "linkage_name": null,
+      "address": 1490080,
+      "size": 201,
+      "sha256": "f0476f39c342248dff88e20564cf44b28283a0d1e9c27220cadc5f0ce77b3a26",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 201,
+      "instruction_count": 74,
+      "semantics": {
+        "identity": "Six ordered ClipPlane calls for paired signs of each box-axis half extent and ray direction; early rejection on a failed plane.",
+        "entry_evidence": "Original decoded direct-call witnesses and closed CFG; instruction-pattern source search proposed candidates only, and does not establish their boundaries."
+      },
+      "corroboration": {
+        "return_address": 1490280,
+        "branches": [
+          {
+            "address": 1490174,
+            "size": 2,
+            "opcode": 116,
+            "target": 1490277
+          },
+          {
+            "address": 1490207,
+            "size": 2,
+            "opcode": 116,
+            "target": 1490277
+          },
+          {
+            "address": 1490235,
+            "size": 2,
+            "opcode": 116,
+            "target": 1490277
+          },
+          {
+            "address": 1490268,
+            "size": 2,
+            "opcode": 116,
+            "target": 1490277
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1490494,
+            "target": 1490080
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 201,
+          "internal_gap_ranges": [],
+          "direct_call_targets": [
+            1489920
+          ]
+        },
+        "previous_boundary": {
+          "return_address": 1490069,
+          "padding_address": 1490070,
+          "padding_size": 10,
+          "padding_byte": 204
+        },
+        "next_function_address": 1490288,
+        "following_padding": {
+          "address": 1490281,
+          "size": 7,
+          "byte": 204
+        }
+      },
+      "address_expressions": [],
+      "direct_calls": [
+        {
+          "offset": 19,
+          "symbol": "ClipPlane(F32,F32,F32*,F32*)"
+        },
+        {
+          "offset": 53,
+          "symbol": "ClipPlane(F32,F32,F32*,F32*)"
+        },
+        {
+          "offset": 85,
+          "symbol": "ClipPlane(F32,F32,F32*,F32*)"
+        },
+        {
+          "offset": 118,
+          "symbol": "ClipPlane(F32,F32,F32*,F32*)"
+        },
+        {
+          "offset": 146,
+          "symbol": "ClipPlane(F32,F32,F32*,F32*)"
+        },
+        {
+          "offset": 179,
+          "symbol": "ClipPlane(F32,F32,F32*,F32*)"
+        }
+      ]
+    },
+    {
+      "name": "iBoxIsectRay",
+      "canonical_identifier": "iBoxIsectRay(const xBox*,const xRay3*,xIsect*)",
+      "display_name": "iBoxIsectRay(const xBox*,const xRay3*,xIsect*)",
+      "source": "SB/Core/xbox/iMath3.cpp",
+      "linkage_name": null,
+      "address": 1490288,
+      "size": 330,
+      "sha256": "e223765c8ef8ee116781b7196f6a66c65c90f6e755c3e40243e61c4febe01ca3",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 330,
+      "instruction_count": 99,
+      "semantics": {
+        "identity": "Ray flag defaults, box midpoint/half extents, ClipBox interval clipping and intersection classification against the original parameter range.",
+        "entry_evidence": "Original decoded direct-call witnesses and closed CFG; instruction-pattern source search proposed candidates only, and does not establish their boundaries."
+      },
+      "corroboration": {
+        "return_address": 1490617,
+        "branches": [
+          {
+            "address": 1490302,
+            "size": 2,
+            "opcode": 117,
+            "target": 1490311
+          },
+          {
+            "address": 1490314,
+            "size": 2,
+            "opcode": 117,
+            "target": 1490323
+          },
+          {
+            "address": 1490506,
+            "size": 2,
+            "opcode": 116,
+            "target": 1490602
+          },
+          {
+            "address": 1490520,
+            "size": 2,
+            "opcode": 122,
+            "target": 1490555
+          },
+          {
+            "address": 1490537,
+            "size": 2,
+            "opcode": 123,
+            "target": 1490602
+          },
+          {
+            "address": 1490567,
+            "size": 2,
+            "opcode": 122,
+            "target": 1490595
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1168561,
+            "target": 1490288
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 1168648,
+            "target": 1490288
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 330,
+          "internal_gap_ranges": [],
+          "direct_call_targets": [
+            1490080
+          ]
+        },
+        "previous_boundary": {
+          "return_address": 1490280,
+          "padding_address": 1490281,
+          "padding_size": 7,
+          "padding_byte": 204
+        },
+        "next_function_address": 1490624,
+        "following_padding": {
+          "address": 1490618,
+          "size": 6,
+          "byte": 204
+        }
+      },
+      "address_expressions": [
+        {
+          "offset": 93,
+          "instruction_offset": 91,
+          "symbol": "float:3f000000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 103,
+          "instruction_offset": 101,
+          "symbol": "float:3f000000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 117,
+          "instruction_offset": 115,
+          "symbol": "float:3f000000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 155,
+          "instruction_offset": 153,
+          "symbol": "float:bf000000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 165,
+          "instruction_offset": 163,
+          "symbol": "float:bf000000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 175,
+          "instruction_offset": 173,
+          "symbol": "float:bf000000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        }
+      ],
+      "direct_calls": [
+        {
+          "offset": 207,
+          "symbol": "ClipBox(const xVec3*,const xVec3*,const xVec3*,F32*,F32*)"
+        }
+      ]
+    },
+    {
+      "name": "iBoxIsectSphere",
+      "canonical_identifier": "iBoxIsectSphere(const xBox*,const xSphere*,xIsect*)",
+      "display_name": "iBoxIsectSphere(const xBox*,const xSphere*,xIsect*)",
+      "source": "SB/Core/xbox/iMath3.cpp",
+      "linkage_name": null,
+      "address": 1490624,
+      "size": 678,
+      "sha256": "2933dce5aa2de7b76fa186924f811d87a103c15fbfaf167bef129056133855bd",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 678,
+      "instruction_count": 223,
+      "semantics": {
+        "identity": "Sphere-versus-box center-side classification, point inclusion/distance helpers, radius subtraction, and contained/penetration/normal fields.",
+        "entry_evidence": "Original decoded direct-call witnesses and closed CFG; instruction-pattern source search proposed candidates only, and does not establish their boundaries."
+      },
+      "corroboration": {
+        "return_address": 1491301,
+        "branches": [
+          {
+            "address": 1490667,
+            "size": 2,
+            "opcode": 122,
+            "target": 1490728
+          },
+          {
+            "address": 1490683,
+            "size": 2,
+            "opcode": 122,
+            "target": 1490695
+          },
+          {
+            "address": 1490693,
+            "size": 2,
+            "opcode": 235,
+            "target": 1490772
+          },
+          {
+            "address": 1490706,
+            "size": 2,
+            "opcode": 117,
+            "target": 1490718
+          },
+          {
+            "address": 1490716,
+            "size": 2,
+            "opcode": 235,
+            "target": 1490772
+          },
+          {
+            "address": 1490726,
+            "size": 2,
+            "opcode": 235,
+            "target": 1490772
+          },
+          {
+            "address": 1490735,
+            "size": 2,
+            "opcode": 117,
+            "target": 1490743
+          },
+          {
+            "address": 1490741,
+            "size": 2,
+            "opcode": 235,
+            "target": 1490772
+          },
+          {
+            "address": 1490762,
+            "size": 2,
+            "opcode": 116,
+            "target": 1490772
+          },
+          {
+            "address": 1490818,
+            "size": 2,
+            "opcode": 122,
+            "target": 1490880
+          },
+          {
+            "address": 1490834,
+            "size": 2,
+            "opcode": 122,
+            "target": 1490846
+          },
+          {
+            "address": 1490844,
+            "size": 2,
+            "opcode": 235,
+            "target": 1490926
+          },
+          {
+            "address": 1490858,
+            "size": 2,
+            "opcode": 117,
+            "target": 1490870
+          },
+          {
+            "address": 1490868,
+            "size": 2,
+            "opcode": 235,
+            "target": 1490926
+          },
+          {
+            "address": 1490878,
+            "size": 2,
+            "opcode": 235,
+            "target": 1490926
+          },
+          {
+            "address": 1490888,
+            "size": 2,
+            "opcode": 117,
+            "target": 1490896
+          },
+          {
+            "address": 1490894,
+            "size": 2,
+            "opcode": 235,
+            "target": 1490926
+          },
+          {
+            "address": 1490916,
+            "size": 2,
+            "opcode": 116,
+            "target": 1490926
+          },
+          {
+            "address": 1490942,
+            "size": 2,
+            "opcode": 116,
+            "target": 1491068
+          },
+          {
+            "address": 1490968,
+            "size": 2,
+            "opcode": 122,
+            "target": 1491018
+          },
+          {
+            "address": 1490984,
+            "size": 2,
+            "opcode": 122,
+            "target": 1490993
+          },
+          {
+            "address": 1490991,
+            "size": 2,
+            "opcode": 235,
+            "target": 1491052
+          },
+          {
+            "address": 1491005,
+            "size": 2,
+            "opcode": 117,
+            "target": 1491011
+          },
+          {
+            "address": 1491009,
+            "size": 2,
+            "opcode": 235,
+            "target": 1491052
+          },
+          {
+            "address": 1491016,
+            "size": 2,
+            "opcode": 235,
+            "target": 1491052
+          },
+          {
+            "address": 1491026,
+            "size": 2,
+            "opcode": 116,
+            "target": 1491052
+          },
+          {
+            "address": 1491045,
+            "size": 2,
+            "opcode": 116,
+            "target": 1491052
+          },
+          {
+            "address": 1491066,
+            "size": 2,
+            "opcode": 117,
+            "target": 1491082
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1196558,
+            "target": 1490624
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 678,
+          "internal_gap_ranges": [],
+          "direct_call_targets": [
+            1488496,
+            1489824
+          ]
+        },
+        "previous_boundary": {
+          "return_address": 1490617,
+          "padding_address": 1490618,
+          "padding_size": 6,
+          "padding_byte": 204
+        },
+        "next_function_address": 1491312,
+        "following_padding": {
+          "address": 1491302,
+          "size": 10,
+          "byte": 204
+        }
+      },
+      "address_expressions": [
+        {
+          "offset": 476,
+          "instruction_offset": 474,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        },
+        {
+          "offset": 520,
+          "instruction_offset": 518,
+          "symbol": "float:3f000000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 530,
+          "instruction_offset": 528,
+          "symbol": "float:3f000000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 540,
+          "instruction_offset": 538,
+          "symbol": "float:3f000000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        }
+      ],
+      "direct_calls": [
+        {
+          "offset": 467,
+          "symbol": "iBoxIsectVec(const xBox*,const xVec3*,xIsect*)"
+        },
+        {
+          "offset": 651,
+          "symbol": "iBoxVecDist(const xBox*,const xVec3*,xIsect*)"
+        }
+      ]
+    },
+    {
+      "name": "iBoxBoundVec",
+      "canonical_identifier": "iBoxBoundVec(xBox*,const xBox*,const xVec3*)",
+      "display_name": "iBoxBoundVec(xBox*,const xBox*,const xVec3*)",
+      "source": "SB/Core/xbox/iMath3.cpp",
+      "linkage_name": null,
+      "address": 1491312,
+      "size": 145,
+      "sha256": "c601cb2bea8d31e1b2fa1f1f7b810e672585ea2ce2d6bf9284ea879d97949cee",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 145,
+      "instruction_count": 58,
+      "semantics": {
+        "identity": "Alias-safe componentwise expansion of box upper maxima and lower minima against one point.",
+        "entry_evidence": "Original decoded direct-call witnesses and closed CFG; instruction-pattern source search proposed candidates only, and does not establish their boundaries."
+      },
+      "corroboration": {
+        "return_address": 1491456,
+        "branches": [
+          {
+            "address": 1491323,
+            "size": 2,
+            "opcode": 122,
+            "target": 1491330
+          },
+          {
+            "address": 1491328,
+            "size": 2,
+            "opcode": 235,
+            "target": 1491333
+          },
+          {
+            "address": 1491344,
+            "size": 2,
+            "opcode": 122,
+            "target": 1491351
+          },
+          {
+            "address": 1491349,
+            "size": 2,
+            "opcode": 235,
+            "target": 1491354
+          },
+          {
+            "address": 1491364,
+            "size": 2,
+            "opcode": 122,
+            "target": 1491370
+          },
+          {
+            "address": 1491368,
+            "size": 2,
+            "opcode": 235,
+            "target": 1491373
+          },
+          {
+            "address": 1491393,
+            "size": 2,
+            "opcode": 117,
+            "target": 1491400
+          },
+          {
+            "address": 1491398,
+            "size": 2,
+            "opcode": 235,
+            "target": 1491403
+          },
+          {
+            "address": 1491414,
+            "size": 2,
+            "opcode": 117,
+            "target": 1491421
+          },
+          {
+            "address": 1491419,
+            "size": 2,
+            "opcode": 235,
+            "target": 1491424
+          },
+          {
+            "address": 1491433,
+            "size": 2,
+            "opcode": 117,
+            "target": 1491446
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1231197,
+            "target": 1491312
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 1478655,
+            "target": 1491312
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 145,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
+        },
+        "previous_boundary": {
+          "return_address": 1491301,
+          "padding_address": 1491302,
+          "padding_size": 10,
+          "padding_byte": 204
+        },
+        "next_function_address": 1491472,
+        "following_padding": {
+          "address": 1491457,
+          "size": 15,
+          "byte": 204
+        }
+      },
+      "address_expressions": [],
+      "direct_calls": []
     },
     {
       "name": "__ftol2",
