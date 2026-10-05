@@ -32,7 +32,7 @@
   },
   "analysis": {
     "capstone_version": "5.0.7",
-    "method": "Reachable direct CFG bounded by MAP symbols; calls opt in to named same-TU MAP entries; no target lengths used"
+    "method": "Reachable direct CFG bounded by MAP symbols; E8/E9 transfers opt in to named source/dependency/runtime MAP entries; no target lengths used"
   },
   "flags": [
     "/nologo",
@@ -138,6 +138,731 @@
           }
         ]
       }
+    },
+    {
+      "source": "src/SB/Core/x/xParGroup.cpp",
+      "target_unit": "SB/Core/x/xParGroup.cpp",
+      "object": "source/xParGroup/group.obj",
+      "comparison_object": "source/xParGroup-functions.obj",
+      "host_entry": "tools/platforms/xbox_support/particle_group_entry.cpp",
+      "source_dependencies": [
+        {
+          "source": "src/SB/Core/x/xPar.cpp",
+          "object": "particle.obj"
+        }
+      ],
+      "runtime_libraries": [
+        "libcmt"
+      ],
+      "symbols": {
+        "xParGroupRegister(xParGroup*)": "?xParGroupRegister@@YAXPAUxParGroup@@@Z",
+        "xParGroupUnregister(xParGroup*)": "?xParGroupUnregister@@YAXPAUxParGroup@@@Z",
+        "xParGroupAnimate(xParGroup*,F32)": "?xParGroupAnimate@@YAXPAUxParGroup@@M@Z",
+        "xParGroupAddPar(xParGroup*)": "?xParGroupAddPar@@YAPAUxPar@@PAUxParGroup@@@Z",
+        "xParGroupKillPar(xParGroup*,xPar*)": "?xParGroupKillPar@@YAXPAUxParGroup@@PAUxPar@@@Z"
+      },
+      "scope": "Five independently reviewed functions from full xParGroup.cpp and real xPar.cpp dependency compilation; all partial routines retained. CRT support excluded from source coverage.",
+      "globals": {
+        "sParGroupRegTable": {
+          "linkage_name": "?sParGroupRegTable@@3PAPAUxParGroup@@A",
+          "size": 1020,
+          "object": "group.obj"
+        },
+        "gParDead": {
+          "linkage_name": "?gParDead@@3PAUxPar@@A",
+          "size": 4,
+          "object": "particle.obj"
+        },
+        "float:00000000": {
+          "linkage_name": "__real@00000000",
+          "size": 4,
+          "object": "group.obj",
+          "value_hex": "00000000"
+        },
+        "float:437f0000": {
+          "linkage_name": "__real@437f0000",
+          "size": 4,
+          "object": "group.obj",
+          "value_hex": "00007f43"
+        },
+        "sParGroupRegTableInit": {
+          "size": 4,
+          "object": "group.obj",
+          "definition_use": {
+            "function": "?xParGroupRegister@@YAXPAUxParGroup@@@Z",
+            "prefix": "a1"
+          }
+        }
+      },
+      "direct_calls": {
+        "xParGroupRegister(xParGroup*)": [
+          "xParGroupRegisterInit()"
+        ],
+        "xParGroupUnregister(xParGroup*)": [],
+        "xParGroupAnimate(xParGroup*,F32)": [
+          "__ftol2",
+          "xParGroupKillPar(xParGroup*,xPar*)"
+        ],
+        "xParGroupAddPar(xParGroup*)": [
+          "xParAlloc()",
+          "xParGroupAddParP(xParGroup*,xPar*)",
+          "xParGroupKillPar(xParGroup*,xPar*)",
+          "xParInit(xPar*)"
+        ],
+        "xParGroupKillPar(xParGroup*,xPar*)": [
+          "xParFree(xPar*)",
+          "xParGroupAddParToDeadList(xParGroup*,xPar*)"
+        ]
+      },
+      "call_symbols": {
+        "xParGroupRegisterInit()": {
+          "linkage_name": "?xParGroupRegisterInit@@YAXXZ",
+          "object": "group.obj"
+        },
+        "__ftol2": {
+          "linkage_name": "__ftol2",
+          "object": "libcmt:ftol2.obj"
+        },
+        "xParAlloc()": {
+          "linkage_name": "?xParAlloc@@YAPAUxPar@@XZ",
+          "object": "particle.obj"
+        },
+        "xParInit(xPar*)": {
+          "linkage_name": "?xParInit@@YAXPAUxPar@@@Z",
+          "object": "particle.obj"
+        },
+        "xParGroupAddParP(xParGroup*,xPar*)": {
+          "linkage_name": "?xParGroupAddParP@@YAXPAUxParGroup@@PAUxPar@@@Z",
+          "object": "group.obj"
+        },
+        "xParFree(xPar*)": {
+          "linkage_name": "?xParFree@@YAXPAUxPar@@@Z",
+          "object": "particle.obj"
+        },
+        "xParGroupAddParToDeadList(xParGroup*,xPar*)": {
+          "linkage_name": "?xParGroupAddParToDeadList@@YAXPAUxParGroup@@PAUxPar@@@Z",
+          "object": "group.obj"
+        }
+      },
+      "address_expressions": {
+        "xParGroupRegister(xParGroup*)": [
+          {
+            "symbol": "sParGroupRegTableInit",
+            "field": "displacement",
+            "prefix": "a1"
+          },
+          {
+            "symbol": "sParGroupRegTable",
+            "field": "displacement",
+            "prefix": "8b348d"
+          },
+          {
+            "symbol": "sParGroupRegTable",
+            "field": "displacement",
+            "prefix": "89148d"
+          }
+        ],
+        "xParGroupUnregister(xParGroup*)": [
+          {
+            "symbol": "sParGroupRegTable",
+            "field": "displacement",
+            "prefix": "390cb5"
+          },
+          {
+            "symbol": "sParGroupRegTable",
+            "field": "displacement",
+            "prefix": "891485"
+          }
+        ],
+        "xParGroupAnimate(xParGroup*,F32)": [
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d905",
+            "count": 5
+          },
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d81d"
+          },
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d815",
+            "count": 4
+          },
+          {
+            "symbol": "float:437f0000",
+            "field": "displacement",
+            "prefix": "d815",
+            "count": 4
+          },
+          {
+            "symbol": "float:437f0000",
+            "field": "displacement",
+            "prefix": "d905",
+            "count": 4
+          }
+        ],
+        "xParGroupAddPar(xParGroup*)": [
+          {
+            "symbol": "sParGroupRegTable",
+            "field": "displacement",
+            "prefix": "8b0485"
+          },
+          {
+            "symbol": "sParGroupRegTable",
+            "field": "displacement",
+            "prefix": "8b1495"
+          }
+        ],
+        "xParGroupKillPar(xParGroup*,xPar*)": []
+      }
+    },
+    {
+      "source": "src/SB/Core/x/xParCmd.cpp",
+      "target_unit": "SB/Core/x/xParCmd.cpp",
+      "object": "source/xParCmd/xParCmd.obj",
+      "comparison_object": "source/xParCmd-functions.obj",
+      "host_entry": "tools/platforms/xbox_support/particle_commands_entry.cpp",
+      "host_context": {
+        "xatof": null,
+        "imports": "tools/platforms/xbox_support/math_crt.def"
+      },
+      "source_dependencies": [
+        {
+          "source": "src/SB/Core/x/xMath.cpp",
+          "object": "xMath.obj"
+        },
+        {
+          "source": "src/SB/Core/x/xMath3.cpp",
+          "object": "xMath3.obj"
+        },
+        {
+          "source": "src/SB/Core/x/xVec3.cpp",
+          "object": "xVec3.obj"
+        },
+        {
+          "source": "src/SB/Core/gc/iMath.cpp",
+          "object": "iMath.obj"
+        },
+        {
+          "source": "src/SB/Core/gc/iMath3.cpp",
+          "object": "iMath3.obj"
+        }
+      ],
+      "runtime_libraries": [
+        "libcmt"
+      ],
+      "symbols": {
+        "xParCmdKillSlow_Update(xParCmd*,xParGroup*,F32)": "?xParCmdKillSlow_Update@@YAXPAUxParCmd@@PAUxParGroup@@M@Z",
+        "xParCmdAge_Update(xParCmd*,xParGroup*,F32)": "?xParCmdAge_Update@@YAXPAUxParCmd@@PAUxParGroup@@M@Z",
+        "xParCmdFollow_Update(xParCmd*,xParGroup*,F32)": "?xParCmdFollow_Update@@YAXPAUxParCmd@@PAUxParGroup@@M@Z",
+        "xParCmdOrbitPoint_Update(xParCmd*,xParGroup*,F32)": "?xParCmdOrbitPoint_Update@@YAXPAUxParCmd@@PAUxParGroup@@M@Z",
+        "xParCmdOrbitLine_Update(xParCmd*,xParGroup*,F32)": "?xParCmdOrbitLine_Update@@YAXPAUxParCmd@@PAUxParGroup@@M@Z",
+        "xParCmdAccelerate_Update(xParCmd*,xParGroup*,F32)": "?xParCmdAccelerate_Update@@YAXPAUxParCmd@@PAUxParGroup@@M@Z",
+        "xParCmdMove_Update(xParCmd*,xParGroup*,F32)": "?xParCmdMove_Update@@YAXPAUxParCmd@@PAUxParGroup@@M@Z",
+        "xParCmdMoveRandom_Update(xParCmd*,xParGroup*,F32)": "?xParCmdMoveRandom_Update@@YAXPAUxParCmd@@PAUxParGroup@@M@Z",
+        "xParCmdMoveRandomPar_Update(xParCmd*,xParGroup*,F32)": "?xParCmdMoveRandomPar_Update@@YAXPAUxParCmd@@PAUxParGroup@@M@Z",
+        "xParCmdRandomVelocityPar_Update(xParCmd*,xParGroup*,F32)": "?xParCmdRandomVelocityPar_Update@@YAXPAUxParCmd@@PAUxParGroup@@M@Z",
+        "xParCmdApplyWind_Update(xParCmd*,xParGroup*,F32)": "?xParCmdApplyWind_Update@@YAXPAUxParCmd@@PAUxParGroup@@M@Z",
+        "xParCmdRotPar_Update(xParCmd*,xParGroup*,F32)": "?xParCmdRotPar_Update@@YAXPAUxParCmd@@PAUxParGroup@@M@Z",
+        "xParCmdVelocityApply_Update(xParCmd*,xParGroup*,F32)": "?xParCmdVelocityApply_Update@@YAXPAUxParCmd@@PAUxParGroup@@M@Z",
+        "xParCmdRotateAround_Update(xParCmd*,xParGroup*,F32)": "?xParCmdRotateAround_Update@@YAXPAUxParCmd@@PAUxParGroup@@M@Z",
+        "xParCmdTexAnim_Update(xParCmd*,xParGroup*,F32)": "?xParCmdTexAnim_Update@@YAXPAUxParCmd@@PAUxParGroup@@M@Z",
+        "xParCmdCollideFall_Update(xParCmd*,xParGroup*,F32)": "?xParCmdCollideFall_Update@@YAXPAUxParCmd@@PAUxParGroup@@M@Z",
+        "xParCmdCollideFallSticky_Update(xParCmd*,xParGroup*,F32)": "?xParCmdCollideFallSticky_Update@@YAXPAUxParCmd@@PAUxParGroup@@M@Z",
+        "xParCmd_DampenSpeed_Update(xParCmd*,xParGroup*,F32)": "?xParCmd_DampenSpeed_Update@@YAXPAUxParCmd@@PAUxParGroup@@M@Z",
+        "xParCmd_SizeInOut_Update(xParCmd*,xParGroup*,F32)": "?xParCmd_SizeInOut_Update@@YAXPAUxParCmd@@PAUxParGroup@@M@Z",
+        "xParCmd_AlphaInOut_Update(xParCmd*,xParGroup*,F32)": "?xParCmd_AlphaInOut_Update@@YAXPAUxParCmd@@PAUxParGroup@@M@Z",
+        "xParCmd_Shaper_Update(xParCmd*,xParGroup*,F32)": "?xParCmd_Shaper_Update@@YAXPAUxParCmd@@PAUxParGroup@@M@Z"
+      },
+      "scope": "All 21 independently bounded nonempty registered callbacks from actual complete xParCmd and five complete math dependencies. Shared empty aliases, initializer and remaining helpers are not assigned fabricated extents; no TU or executable completion claim. Unknown original callee operands remain raw.",
+      "globals": {
+        "float:00000000": {
+          "linkage_name": "__real@00000000",
+          "size": 4,
+          "object": "iMath3.obj",
+          "value_hex": "00000000"
+        },
+        "float:3f800000": {
+          "linkage_name": "__real@3f800000",
+          "size": 4,
+          "object": "xMath3.obj",
+          "value_hex": "0000803f"
+        },
+        "float:3727c5ac": {
+          "linkage_name": "__real@3727c5ac",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "acc52737"
+        },
+        "float:3f000000": {
+          "linkage_name": "__real@3f000000",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "0000003f"
+        },
+        "float:40c90fdb": {
+          "linkage_name": "__real@40c90fdb",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "db0fc940"
+        },
+        "float:437f0000": {
+          "linkage_name": "__real@437f0000",
+          "size": 4,
+          "object": "xParCmd.obj",
+          "value_hex": "00007f43"
+        },
+        "float:3f2aaaab": {
+          "linkage_name": "__real@3f2aaaab",
+          "size": 4,
+          "object": "xParCmd.obj",
+          "value_hex": "abaa2a3f"
+        },
+        "float:3eaaaaab": {
+          "linkage_name": "__real@3eaaaaab",
+          "size": 4,
+          "object": "xParCmd.obj",
+          "value_hex": "abaaaa3e"
+        },
+        "float:40400000": {
+          "linkage_name": "__real@40400000",
+          "size": 4,
+          "object": "xParCmd.obj",
+          "value_hex": "00004040"
+        },
+        "float:2f800000": {
+          "linkage_name": "__real@2f800000",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "0000802f"
+        },
+        "float:4f800000": {
+          "linkage_name": "__real@4f800000",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "0000804f"
+        },
+        "float:3b360b61": {
+          "linkage_name": "__real@3b360b61",
+          "size": 4,
+          "object": "xParCmd.obj",
+          "value_hex": "610b363b"
+        },
+        "float:bfc90fdb": {
+          "linkage_name": "__real@bfc90fdb",
+          "size": 4,
+          "object": "xMath3.obj",
+          "value_hex": "db0fc9bf"
+        },
+        "float:3fc90fdb": {
+          "linkage_name": "__real@3fc90fdb",
+          "size": 4,
+          "object": "xMath3.obj",
+          "value_hex": "db0fc93f"
+        },
+        "float:3c8efa35": {
+          "linkage_name": "__real@3c8efa35",
+          "size": 4,
+          "object": "xParCmd.obj",
+          "value_hex": "35fa8e3c"
+        },
+        "rndseed": {
+          "linkage_name": "?rndseed@@3IA",
+          "size": 4,
+          "object": "xMath.obj"
+        }
+      },
+      "direct_calls": {
+        "xParCmdKillSlow_Update(xParCmd*,xParGroup*,F32)": [],
+        "xParCmdAge_Update(xParCmd*,xParGroup*,F32)": [],
+        "xParCmdFollow_Update(xParCmd*,xParGroup*,F32)": [],
+        "xParCmdOrbitPoint_Update(xParCmd*,xParGroup*,F32)": [],
+        "xParCmdOrbitLine_Update(xParCmd*,xParGroup*,F32)": [],
+        "xParCmdAccelerate_Update(xParCmd*,xParGroup*,F32)": [],
+        "xParCmdMove_Update(xParCmd*,xParGroup*,F32)": [],
+        "xParCmdMoveRandom_Update(xParCmd*,xParGroup*,F32)": [
+          "?xurand@@YAMXZ"
+        ],
+        "xParCmdMoveRandomPar_Update(xParCmd*,xParGroup*,F32)": [
+          "?xurand@@YAMXZ"
+        ],
+        "xParCmdRandomVelocityPar_Update(xParCmd*,xParGroup*,F32)": [
+          "?xMat3x3Euler@@YAXPAUxMat3x3@@MMM@Z",
+          "?xMat3x3LMulVec@@YAXPAUxVec3@@PBUxMat3x3@@PBU1@@Z",
+          "?xurand@@YAMXZ"
+        ],
+        "xParCmdApplyWind_Update(xParCmd*,xParGroup*,F32)": [],
+        "xParCmdRotPar_Update(xParCmd*,xParGroup*,F32)": [
+          "?xurand@@YAMXZ",
+          "__ftol2"
+        ],
+        "xParCmdVelocityApply_Update(xParCmd*,xParGroup*,F32)": [],
+        "xParCmdRotateAround_Update(xParCmd*,xParGroup*,F32)": [
+          "?xMat3x3Euler@@YAXPAUxMat3x3@@MMM@Z",
+          "?xMat3x3GetEuler@@YAXPBUxMat3x3@@PAUxVec3@@@Z",
+          "?xMat3x3LookVec@@YAMPAUxMat3x3@@PBUxVec3@@@Z"
+        ],
+        "xParCmdTexAnim_Update(xParCmd*,xParGroup*,F32)": [
+          "?xrand@@YAIXZ"
+        ],
+        "xParCmdCollideFall_Update(xParCmd*,xParGroup*,F32)": [],
+        "xParCmdCollideFallSticky_Update(xParCmd*,xParGroup*,F32)": [],
+        "xParCmd_DampenSpeed_Update(xParCmd*,xParGroup*,F32)": [],
+        "xParCmd_SizeInOut_Update(xParCmd*,xParGroup*,F32)": [],
+        "xParCmd_AlphaInOut_Update(xParCmd*,xParGroup*,F32)": [
+          "__ftol2"
+        ],
+        "xParCmd_Shaper_Update(xParCmd*,xParGroup*,F32)": [
+          "__ftol2"
+        ]
+      },
+      "call_symbols": {
+        "?xurand@@YAMXZ": {
+          "linkage_name": "?xurand@@YAMXZ",
+          "object": "xMath.obj"
+        },
+        "?xMat3x3Euler@@YAXPAUxMat3x3@@MMM@Z": {
+          "linkage_name": "?xMat3x3Euler@@YAXPAUxMat3x3@@MMM@Z",
+          "object": "xMath3.obj"
+        },
+        "?xMat3x3LMulVec@@YAXPAUxVec3@@PBUxMat3x3@@PBU1@@Z": {
+          "linkage_name": "?xMat3x3LMulVec@@YAXPAUxVec3@@PBUxMat3x3@@PBU1@@Z",
+          "object": "xMath3.obj"
+        },
+        "__ftol2": {
+          "linkage_name": "__ftol2",
+          "object": "libcmt:ftol2.obj"
+        },
+        "?xMat3x3LookVec@@YAMPAUxMat3x3@@PBUxVec3@@@Z": {
+          "linkage_name": "?xMat3x3LookVec@@YAMPAUxMat3x3@@PBUxVec3@@@Z",
+          "object": "xMath3.obj"
+        },
+        "?xMat3x3GetEuler@@YAXPBUxMat3x3@@PAUxVec3@@@Z": {
+          "linkage_name": "?xMat3x3GetEuler@@YAXPBUxMat3x3@@PAUxVec3@@@Z",
+          "object": "xMath3.obj"
+        },
+        "?xrand@@YAIXZ": {
+          "linkage_name": "?xrand@@YAIXZ",
+          "object": "xMath.obj"
+        }
+      },
+      "address_expressions": {
+        "xParCmdKillSlow_Update(xParCmd*,xParGroup*,F32)": [],
+        "xParCmdAge_Update(xParCmd*,xParGroup*,F32)": [],
+        "xParCmdFollow_Update(xParCmd*,xParGroup*,F32)": [],
+        "xParCmdOrbitPoint_Update(xParCmd*,xParGroup*,F32)": [],
+        "xParCmdOrbitLine_Update(xParCmd*,xParGroup*,F32)": [],
+        "xParCmdAccelerate_Update(xParCmd*,xParGroup*,F32)": [],
+        "xParCmdMove_Update(xParCmd*,xParGroup*,F32)": [],
+        "xParCmdMoveRandom_Update(xParCmd*,xParGroup*,F32)": [],
+        "xParCmdMoveRandomPar_Update(xParCmd*,xParGroup*,F32)": [
+          {
+            "symbol": "float:3f000000",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0
+          },
+          {
+            "symbol": "float:3f000000",
+            "field": "displacement",
+            "prefix": "d825",
+            "addend": 0,
+            "count": 2
+          }
+        ],
+        "xParCmdRandomVelocityPar_Update(xParCmd*,xParGroup*,F32)": [],
+        "xParCmdApplyWind_Update(xParCmd*,xParGroup*,F32)": [],
+        "xParCmdRotPar_Update(xParCmd*,xParGroup*,F32)": [
+          {
+            "symbol": "float:3b360b61",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0,
+            "count": 6
+          },
+          {
+            "symbol": "float:437f0000",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0,
+            "count": 6
+          }
+        ],
+        "xParCmdVelocityApply_Update(xParCmd*,xParGroup*,F32)": [],
+        "xParCmdRotateAround_Update(xParCmd*,xParGroup*,F32)": [
+          {
+            "symbol": "float:3c8efa35",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0
+          },
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0,
+            "count": 2
+          }
+        ],
+        "xParCmdTexAnim_Update(xParCmd*,xParGroup*,F32)": [
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d81d",
+            "addend": 0,
+            "count": 2
+          }
+        ],
+        "xParCmdCollideFall_Update(xParCmd*,xParGroup*,F32)": [
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d815",
+            "addend": 0
+          },
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d81d",
+            "addend": 0
+          }
+        ],
+        "xParCmdCollideFallSticky_Update(xParCmd*,xParGroup*,F32)": [
+          {
+            "symbol": "float:3f800000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0
+          },
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d815",
+            "addend": 0
+          },
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d81d",
+            "addend": 0
+          }
+        ],
+        "xParCmd_DampenSpeed_Update(xParCmd*,xParGroup*,F32)": [],
+        "xParCmd_SizeInOut_Update(xParCmd*,xParGroup*,F32)": [
+          {
+            "symbol": "float:40400000",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0,
+            "count": 3
+          },
+          {
+            "symbol": "float:3f800000",
+            "field": "displacement",
+            "prefix": "d82d",
+            "addend": 0
+          },
+          {
+            "symbol": "float:3f800000",
+            "field": "displacement",
+            "prefix": "d815",
+            "addend": 0,
+            "count": 2
+          },
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0,
+            "count": 2
+          },
+          {
+            "symbol": "float:3f800000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0
+          },
+          {
+            "symbol": "float:3eaaaaab",
+            "field": "displacement",
+            "prefix": "d815",
+            "addend": 0
+          },
+          {
+            "symbol": "float:3f2aaaab",
+            "field": "displacement",
+            "prefix": "d815",
+            "addend": 0
+          },
+          {
+            "symbol": "float:3eaaaaab",
+            "field": "displacement",
+            "prefix": "d825",
+            "addend": 0,
+            "count": 9
+          }
+        ],
+        "xParCmd_AlphaInOut_Update(xParCmd*,xParGroup*,F32)": [
+          {
+            "symbol": "float:40400000",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0,
+            "count": 3
+          },
+          {
+            "symbol": "float:3f800000",
+            "field": "displacement",
+            "prefix": "d82d",
+            "addend": 0
+          },
+          {
+            "symbol": "float:3f800000",
+            "field": "displacement",
+            "prefix": "d815",
+            "addend": 0,
+            "count": 2
+          },
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0,
+            "count": 4
+          },
+          {
+            "symbol": "float:3f800000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0
+          },
+          {
+            "symbol": "float:3eaaaaab",
+            "field": "displacement",
+            "prefix": "d815",
+            "addend": 0
+          },
+          {
+            "symbol": "float:3f2aaaab",
+            "field": "displacement",
+            "prefix": "d815",
+            "addend": 0
+          },
+          {
+            "symbol": "float:3eaaaaab",
+            "field": "displacement",
+            "prefix": "d825",
+            "addend": 0,
+            "count": 9
+          },
+          {
+            "symbol": "float:437f0000",
+            "field": "displacement",
+            "prefix": "d815",
+            "addend": 0
+          },
+          {
+            "symbol": "float:437f0000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0
+          }
+        ],
+        "xParCmd_Shaper_Update(xParCmd*,xParGroup*,F32)": [
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d81d",
+            "addend": 0,
+            "count": 2
+          },
+          {
+            "symbol": "float:40400000",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0,
+            "count": 6
+          },
+          {
+            "symbol": "float:3727c5ac",
+            "field": "displacement",
+            "prefix": "d81d",
+            "addend": 0
+          },
+          {
+            "symbol": "float:3f800000",
+            "field": "displacement",
+            "prefix": "d82d",
+            "addend": 0
+          },
+          {
+            "symbol": "float:3f800000",
+            "field": "displacement",
+            "prefix": "d815",
+            "addend": 0,
+            "count": 2
+          },
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0,
+            "count": 4
+          },
+          {
+            "symbol": "float:3f800000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0
+          },
+          {
+            "symbol": "float:3eaaaaab",
+            "field": "displacement",
+            "prefix": "d815",
+            "addend": 0
+          },
+          {
+            "symbol": "float:3f2aaaab",
+            "field": "displacement",
+            "prefix": "d815",
+            "addend": 0
+          },
+          {
+            "symbol": "float:3eaaaaab",
+            "field": "displacement",
+            "prefix": "d825",
+            "addend": 0,
+            "count": 9
+          },
+          {
+            "symbol": "float:437f0000",
+            "field": "displacement",
+            "prefix": "d815",
+            "addend": 0
+          },
+          {
+            "symbol": "float:437f0000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0
+          }
+        ]
+      }
     }
-  ]
+  ],
+  "static_runtime": {
+    "archive_url": "https://archive.org/download/microsoft-visual-c-toolkit-2003/VCToolkitSetup.exe",
+    "archive_sha256": "03aad135c22e953e0928b118705338afdbd08abf8e4039038ef77945504e65fa",
+    "provenance": "Microsoft-signed public Visual C++ Toolkit 2003, Authenticode validated; extract only. Runtime library supplies actual compiler-generated helpers, never counted as reconstructed source.",
+    "libraries": {
+      "libcmt": {
+        "path": "Lib/libcmt.lib",
+        "sha256": "780aa4cbe614efeeb72e3bb9538230f5cd37caeb0adc5d70c346b0dda19ba3a5"
+      }
+    }
+  }
 }

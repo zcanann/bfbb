@@ -9,60 +9,10 @@
 #include "xSurface.h"
 #include "xMath3.h"
 #include "xMath2.h"
+#include "xModelTypes.h"
 #include "xModelBucket.h"
 
 struct xModelBucket;
-
-struct xModelPool
-{
-    xModelPool* Next;
-    U32 NumMatrices;
-    xModelInstance* List;
-};
-
-struct xModelInstance
-{
-    xModelInstance* Next;
-    xModelInstance* Parent;
-    xModelPool* Pool;
-    xAnimPlay* Anim; // 0xC
-
-    // Offset: 0x10
-    RpAtomic* Data;
-    U32 PipeFlags;
-    F32 RedMultiplier;
-    F32 GreenMultiplier;
-
-    // Offset: 0x20
-    F32 BlueMultiplier;
-    F32 Alpha;
-    F32 FadeStart;
-    F32 FadeEnd;
-
-    // Offset: 0x30
-    xSurface* Surf;
-    xModelBucket** Bucket;
-    xModelInstance* BucketNext;
-    xLightKit* LightKit;
-
-    // Offset: 0x40
-    void* Object;
-    U16 Flags; // 0x44
-    U8 BoneCount; // 0x46
-    U8 BoneIndex; // 0x47
-    U8* BoneRemap; // 0x48
-    RwMatrix* Mat; // 0x4C
-
-    // Offset: 0x50
-    xVec3 Scale;
-    U32 modelID;
-    U32 shadowID;
-    RpAtomic* shadowmapAtomic;
-    struct
-    {
-        xVec3* verts;
-    } anim_coll;
-};
 
 // NOTE (Square): Theses are based on the access pattern found in zUI_Render.
 // I doubt they wrote this out by hand every time, but I'm just guessing on the macro here.

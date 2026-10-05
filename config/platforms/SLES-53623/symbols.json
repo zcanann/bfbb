@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "executable_sha1": "ef675520304c2ce0df9cbfa03222e42fb2e7a09e",
-  "provenance": "Manual-reviewed and machine-corroborated function ranges; see reviewed-functions.json and corroborated-functions.json; explicit-transfer corroboration: relocation-corroborated-functions.json",
+  "provenance": "Manual-reviewed and machine-corroborated function ranges; see reviewed-functions.json and corroborated-functions.json; explicit-transfer corroboration: relocation-corroborated-functions.json; whole-TU sequence corroboration: tu-corroborated-functions.json",
   "coverage_complete": false,
   "symbols": [
     {
@@ -915,6 +915,139 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xEntMotionDebugIPad",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1930176,
+      "size": 272,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntMotionDebugDraw",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1930448,
+      "size": 360,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntMotionDebugWrite",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1930816,
+      "size": 2828,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntMotionDebugCB",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1933648,
+      "size": 96,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntMotionDebugExit",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1933744,
+      "size": 24,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntMotionDebugInit",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1933776,
+      "size": 96,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntMotionTranslate",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1933872,
+      "size": 1780,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntMechReverse",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1935664,
+      "size": 288,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntMechForward",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1935952,
+      "size": 288,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntRotMove",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1936240,
+      "size": 752,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntSldMove",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1936992,
+      "size": 568,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntMechMove",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1937568,
+      "size": 816,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntPenMove",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1938384,
+      "size": 312,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntMPMove",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1938704,
+      "size": 2452,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntMPGetNext",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1941168,
+      "size": 348,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntOrbitMove",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1941520,
+      "size": 328,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntERMove",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1941856,
+      "size": 680,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntMotionMove",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1942544,
+      "size": 236,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xEntMotionReset",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1942784,
+      "size": 1348,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "xEntMotionInit",
       "source": "SB/Core/x/xEntMotion.cpp",
       "address": 1944144,
@@ -1447,6 +1580,216 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xParCmd_Shaper_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2050240,
+      "size": 768,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmd_AlphaInOut_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2051008,
+      "size": 472,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmd_SizeInOut_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2051488,
+      "size": 352,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmd_DampenSpeed_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2051840,
+      "size": 112,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdCollideFallSticky_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2051952,
+      "size": 160,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdCollideFall_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2052112,
+      "size": 120,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdTexAnim_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2052240,
+      "size": 1076,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdTex_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2053328,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdRotateAround_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2053344,
+      "size": 436,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdVelocityApply_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2053792,
+      "size": 88,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdRotPar_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2053888,
+      "size": 500,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdApplyWind_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2054400,
+      "size": 96,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdRandomVelocityPar_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2054496,
+      "size": 580,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdAlpha3rdPolyReg_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2055088,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdScale_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2055104,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdSmokeAlpha_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2055120,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdScale3rdPolyReg_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2055136,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdMoveRandomPar_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2055152,
+      "size": 168,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdMoveRandom_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2055328,
+      "size": 252,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdMove_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2055584,
+      "size": 96,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdAccelerate_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2055680,
+      "size": 96,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdOrbitLine_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2055776,
+      "size": 272,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdOrbitPoint_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2056048,
+      "size": 200,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdFollow_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2056256,
+      "size": 192,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdAge_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2056448,
+      "size": 56,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdKillSlow_Update",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2056512,
+      "size": 176,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdGetUpdateFunc",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2056688,
+      "size": 96,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdGetSize",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2056784,
+      "size": 96,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdRegister",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2056880,
+      "size": 64,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParCmdInit",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 2056944,
+      "size": 980,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "xParGroupKillPar",
       "source": "SB/Core/x/xParGroup.cpp",
       "address": 2057936,
@@ -1720,6 +2063,139 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "XST_find_bySID",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2149584,
+      "size": 136,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "XST_lock_next",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2149728,
+      "size": 184,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xST_xAssetID_HIPFullPath",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2149920,
+      "size": 328,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xST_xAssetID_HIPFullPath",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2150256,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSTGetAssetInfoByType",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2150272,
+      "size": 516,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSTGetAssetInfo",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2150800,
+      "size": 408,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSTFindAssetByType",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2151216,
+      "size": 392,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSTAssetCountByType",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2151616,
+      "size": 288,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSTFindAsset",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2151904,
+      "size": 444,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSTAssetName",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2152352,
+      "size": 300,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSTAssetName",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2152656,
+      "size": 288,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSTSwitchScene",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2152944,
+      "size": 200,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSTDisconnect",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2153152,
+      "size": 68,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSTLoadStep",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2153232,
+      "size": 80,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSTUnLoadScene",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2153312,
+      "size": 552,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSTQueueSceneAssets",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2153872,
+      "size": 100,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSTPreLoadScene",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2153984,
+      "size": 1004,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSTShutdown",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2154992,
+      "size": 200,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSTStartup",
+      "source": "SB/Core/x/xstransvc.cpp",
+      "address": 2155200,
+      "size": 88,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "icompare",
       "source": "SB/Core/x/xString.cpp",
       "address": 2157152,
@@ -1818,6 +2294,76 @@
       "provenance": "machine-corroborated-explicit-transfers"
     },
     {
+      "name": "xAnimPoolAlloc",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2166416,
+      "size": 96,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimPoolInit",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2166512,
+      "size": 620,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimPoolCB",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2167136,
+      "size": 296,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimPlayEval",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2167440,
+      "size": 1196,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimPlayUpdate",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2168640,
+      "size": 160,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimPlayStartTransition",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2168800,
+      "size": 708,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimPlayChooseTransition",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2169520,
+      "size": 420,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimPlaySetup",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2169952,
+      "size": 212,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "SingleUpdate",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2170176,
+      "size": 2184,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimPlaySetState",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2172368,
+      "size": 264,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "EffectSingleStop",
       "source": "SB/Core/x/xAnim.cpp",
       "address": 2172640,
@@ -1860,11 +2406,123 @@
       "provenance": "machine-corroborated-explicit-transfers"
     },
     {
+      "name": "xAnimTableGetStateID",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2174864,
+      "size": 72,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimTableAddFileID",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2174944,
+      "size": 360,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimTableAddFile",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2175312,
+      "size": 152,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimTableNewTransition",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2175472,
+      "size": 824,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimTableAddTransition",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2176304,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "_xAnimTableAddTransition",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2176320,
+      "size": 2144,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimTableNewState",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2178464,
+      "size": 612,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimDefaultBeforeEnter",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2179088,
+      "size": 92,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "xAnimTableNew",
       "source": "SB/Core/x/xAnim.cpp",
       "address": 2179184,
       "size": 128,
       "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "xAnimStateNewEffect",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2179312,
+      "size": 200,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimFileEval",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2179520,
+      "size": 1616,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimFileSetTime",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2181136,
+      "size": 192,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimFileNew",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2181328,
+      "size": 40,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimFileNewBilinear",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2181376,
+      "size": 708,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimTempTransitionInit",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2182096,
+      "size": 104,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimInit",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2182208,
+      "size": 48,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "_xCheckAnimNameInner",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2182256,
+      "size": 1856,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "xCounterReset",

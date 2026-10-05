@@ -61,22 +61,55 @@ def pe_provenance(path: Path) -> tuple[list[dict], set[int]]:
     return sections, addresses
 
 
-def source_globals(map_path: Path, unit: dict, sections: list[dict]) -> dict:
+def source_globals(map_path: Path, unit: dict, sections: list[dict], executable: Path | None = None) -> dict:
     pattern = re.compile(r'^\s*[0-9a-fA-F]{4}:[0-9a-fA-F]{8}\s+(\S+)\s+'
                          r'([0-9a-fA-F]{8})\s+(\S+)\s*$', re.MULTILINE)
     rows = [(name, int(address, 16), owner) for name, address, owner in
             pattern.findall(map_path.read_text(encoding='utf-8'))]
     result = {}
     for name, spec in unit.get('globals', {}).items():
-        selected = [row for row in rows if row[0] == spec['linkage_name']]
-        require(len(selected) == 1, f'Missing or ambiguous source global {name}')
-        _, address, owner = selected[0]
+        if 'definition_use' in spec:
+            # LTCG omits file-static data from MAP. Resolve only a declared use
+            # in its actual named source function, backed by PE HIGHLOW.
+            from .xbox_source import _map_functions, _pe_text
+            import capstone as cs
+            require(executable is not None, 'Static source data requires linked PE')
+            use = spec['definition_use']
+            functions = _map_functions(map_path)
+            selected = [f for f in functions if f['name'] == use['function']]
+            require(len(selected) == 1, 'Missing static-data source function')
+            function = selected[0]
+            text, base = _pe_text(executable)
+            bound = min([f['address'] for f in functions if f['address'] > function['address']] + [base + len(text)])
+            decoder = cs.Cs(cs.CS_ARCH_X86, cs.CS_MODE_32)
+            decoder.detail = True
+            _, highlow = pe_provenance(executable)
+            matches = []
+            for instruction in decoder.disasm(text[function['address'] - base:bound - base], function['address']):
+                field = instruction.disp_offset
+                if (instruction.disp_size == 4 and field + 4 == instruction.size and
+                        instruction.bytes[:field].hex() == use['prefix'] and instruction.address + field in highlow):
+                    matches.append(struct.unpack_from('<I', instruction.bytes, field)[0])
+            require(len(matches) == 1, 'Ambiguous source static-data operand')
+            address, owner = matches[0], function['object']
+        else:
+            selected = [row for row in rows if row[0] == spec['linkage_name']]
+            require(len(selected) == 1, f'Missing or ambiguous source global {name}')
+            _, address, owner = selected[0]
         size = spec['size']
-        require(owner.lower() == Path(unit['object']).name.lower() and isinstance(size, int) and size > 0,
+        require(owner.lower() == spec.get('object', Path(unit['object']).name).lower() and isinstance(size, int) and size > 0,
                 'Source global has wrong object ownership or size')
-        require(sum(s['address'] <= address and address + size <= s['address'] + s['size'] and
-                    bool(s['flags'] & 0x80000000) and not s['flags'] & 0x20000000 for s in sections) == 1,
-                'Source global range is not uniquely owned writable data')
+        owners = [s for s in sections if s['address'] <= address and address + size <= s['address'] + s['size']
+                  and not s['flags'] & 0x20000000 and
+                  (bool(s['flags'] & 0x80000000) if 'value_hex' not in spec else not s['flags'] & 0x80000000)]
+        require(len(owners) == 1, 'Source global range has incorrect data ownership')
+        if 'value_hex' in spec:
+            section = owners[0]
+            offset = section['offset'] + address - section['address']
+            require(executable is not None and address + size <= section['address'] + section['raw_size'] and
+                    len(bytes.fromhex(spec['value_hex'])) == size and
+                    executable.read_bytes()[offset:offset + size] == bytes.fromhex(spec['value_hex']),
+                    'Source literal differs from independently reviewed value')
         require(not any(address < other < address + size for _, other, _ in rows),
                 'Another MAP global lies inside the reviewed source range')
         result[name] = {'address': address, 'size': size}
@@ -147,8 +180,8 @@ def discover_source_expressions(body: bytes, templates: list[dict], anchors: dic
                     instruction.bytes[:at].hex() == template['prefix'] and
                     struct.unpack_from('<I', body, offset)[0] == anchors[symbol]['address'] + addend):
                 matches.append({**template, 'offset': offset, 'instruction_offset': instruction.address})
-        require(len(matches) == 1, 'Source address expression is missing or ambiguous')
-        result.append(matches[0])
+        require(len(matches) == template.get('count', 1), 'Source address expression is missing or ambiguous')
+        result.extend(matches)
     require(len({e['offset'] for e in result}) == len(result) and {e['offset'] for e in result} == highlow,
             'Source expressions do not uniquely cover actual PE HIGHLOW fields')
     return sorted(result, key=lambda e: e['offset'])
@@ -164,7 +197,7 @@ def original_anchors(path: Path, executable_sha1: str, sections: list[dict]) -> 
         require(name and name not in result and size > 0 and anchor['identity_confirmation'] is True,
                 'Duplicate or unreviewed data anchor')
         require(sum(s['virtual_address'] <= address and address + size <= s['virtual_address'] + s['virtual_size']
-                    and s['flags'] & 1 for s in sections) == 1, 'Original anchor lacks unique writable mapped ownership')
+                    and (bool(s['flags'] & 1) if 'value_hex' not in anchor else s['name'] == '.rdata') for s in sections) == 1, 'Original anchor lacks unique writable mapped ownership')
         result[name] = {'address': address, 'size': size}
     return result
 
@@ -208,4 +241,14 @@ def verify_original_anchors(path: Path, original) -> dict:
                 (40, 'jl', f'{start + 16:#x}'),
                 (42, 'mov', f"dword ptr [{head['address']:#x}], ecx"), (48, 'ret', '')]
     require(instructions == expected, 'Original loop no longer establishes the reviewed particle data anchors')
+    for proof in document.get('instruction_witnesses', []):
+        original.check_hash(proof)
+        actual = [(i.address - proof['address'], i.mnemonic, i.op_str)
+                  for i in decoder.disasm(original.read(proof['address'], proof['size']), proof['address'])]
+        require(actual == [tuple(i) for i in proof['instructions']], 'Reviewed data-anchor instruction witness differs')
+    for anchor in document['anchors']:
+        if 'value_hex' in anchor:
+            value = bytes.fromhex(anchor['value_hex'])
+            require(len(value) == anchor['size'] and original.read(anchor['address'], anchor['size']) == value,
+                    'Original literal value differs')
     return anchors

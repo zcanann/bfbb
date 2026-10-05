@@ -5,8 +5,14 @@
 #include "xIsect.h"
 #include "xRay3.h"
 
-// APIs are recorded by the PS2 retail DWARF. Matrix storage is opaque here.
-union xiMat4x3Union;
+#include <rwcore.h>
+
+// Original PS2 matrix union: both complete 64-byte views start at offset zero.
+union xiMat4x3Union
+{
+    xMat4x3 xm;
+    RwMatrix im;
+};
 
 void iMath3Init();
 void iMath3Exit();

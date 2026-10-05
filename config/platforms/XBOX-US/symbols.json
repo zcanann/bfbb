@@ -10542,6 +10542,174 @@
       "identity_kind": "anonymous"
     },
     {
+      "name": "xParCmdKillSlow_Update",
+      "canonical_identifier": "xParCmdKillSlow_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 1350944,
+      "size": 164,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xParCmdAge_Update",
+      "canonical_identifier": "xParCmdAge_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 1351120,
+      "size": 49,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xParCmdFollow_Update",
+      "canonical_identifier": "xParCmdFollow_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 1351184,
+      "size": 147,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xParCmdOrbitPoint_Update",
+      "canonical_identifier": "xParCmdOrbitPoint_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 1351344,
+      "size": 153,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xParCmdOrbitLine_Update",
+      "canonical_identifier": "xParCmdOrbitLine_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 1351504,
+      "size": 284,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xParCmdAccelerate_Update",
+      "canonical_identifier": "xParCmdAccelerate_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 1351792,
+      "size": 119,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xParCmdMove_Update",
+      "canonical_identifier": "xParCmdMove_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 1351920,
+      "size": 119,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xParCmdMoveRandom_Update",
+      "canonical_identifier": "xParCmdMoveRandom_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 1352048,
+      "size": 263,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xParCmdMoveRandomPar_Update",
+      "canonical_identifier": "xParCmdMoveRandomPar_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 1352320,
+      "size": 166,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xParCmdRandomVelocityPar_Update",
+      "canonical_identifier": "xParCmdRandomVelocityPar_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 1352496,
+      "size": 335,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xParCmdApplyWind_Update",
+      "canonical_identifier": "xParCmdApplyWind_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 1352832,
+      "size": 63,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xParCmdRotPar_Update",
+      "canonical_identifier": "xParCmdRotPar_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 1352896,
+      "size": 360,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xParCmdVelocityApply_Update",
+      "canonical_identifier": "xParCmdVelocityApply_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 1353264,
+      "size": 50,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xParCmdRotateAround_Update",
+      "canonical_identifier": "xParCmdRotateAround_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 1353328,
+      "size": 260,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xParCmdTexAnim_Update",
+      "canonical_identifier": "xParCmdTexAnim_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 1353600,
+      "size": 615,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xParCmdCollideFall_Update",
+      "canonical_identifier": "xParCmdCollideFall_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 1354224,
+      "size": 83,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xParCmdCollideFallSticky_Update",
+      "canonical_identifier": "xParCmdCollideFallSticky_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 1354320,
+      "size": 118,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xParCmd_DampenSpeed_Update",
+      "canonical_identifier": "xParCmd_DampenSpeed_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 1354448,
+      "size": 81,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xParCmd_SizeInOut_Update",
+      "canonical_identifier": "xParCmd_SizeInOut_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 1354544,
+      "size": 332,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xParCmd_AlphaInOut_Update",
+      "canonical_identifier": "xParCmd_AlphaInOut_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 1354880,
+      "size": 386,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xParCmd_Shaper_Update",
+      "canonical_identifier": "xParCmd_Shaper_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "address": 1355280,
+      "size": 624,
+      "identity_kind": "reviewed"
+    },
+    {
       "name": null,
       "canonical_identifier": "anon_0014c3f0",
       "source": null,
@@ -10566,20 +10734,44 @@
       "identity_kind": "anonymous"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0014e180",
-      "source": null,
-      "address": 1368448,
-      "size": 361,
-      "identity_kind": "anonymous"
+      "name": "xParGroupRegister",
+      "canonical_identifier": "xParGroupRegister(xParGroup*)",
+      "source": "SB/Core/x/xParGroup.cpp",
+      "address": 1368288,
+      "size": 85,
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0014e3d0",
-      "source": null,
+      "name": "xParGroupUnregister",
+      "canonical_identifier": "xParGroupUnregister(xParGroup*)",
+      "source": "SB/Core/x/xParGroup.cpp",
+      "address": 1368384,
+      "size": 51,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xParGroupAnimate",
+      "canonical_identifier": "xParGroupAnimate(xParGroup*,F32)",
+      "source": "SB/Core/x/xParGroup.cpp",
+      "address": 1368448,
+      "size": 361,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xParGroupAddPar",
+      "canonical_identifier": "xParGroupAddPar(xParGroup*)",
+      "source": "SB/Core/x/xParGroup.cpp",
+      "address": 1368816,
+      "size": 209,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xParGroupKillPar",
+      "canonical_identifier": "xParGroupKillPar(xParGroup*,xPar*)",
+      "source": "SB/Core/x/xParGroup.cpp",
       "address": 1369040,
       "size": 137,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
       "name": null,
@@ -18782,12 +18974,12 @@
       "identity_kind": "anonymous"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_001bd670",
-      "source": null,
+      "name": "__ftol2",
+      "canonical_identifier": "__ftol2",
+      "source": "Runtime/MSVC/ftol2.obj",
       "address": 1824368,
       "size": 117,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
       "name": null,

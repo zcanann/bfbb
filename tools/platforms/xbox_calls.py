@@ -1,8 +1,8 @@
-"""Restore only reviewed x86 E8 calls using independently named function entries.
+"""Restore only reviewed x86 E8 calls and E9 tail transfers using independently named function entries.
 
 Unlike absolute addresses, relative calls have no PE HIGHLOW record. Their
 provenance is the decoded instruction and its actual destination, resolved against
-original reviewed entries or actual same-TU source MAP symbols. Unknown/indirect
+original reviewed entries or actual source/dependency/runtime MAP symbols. Unknown/indirect
 calls are rejected. Only the four displacement bytes enter COFF REL32 records.
 """
 import struct
@@ -15,7 +15,9 @@ def normalize_calls(body: bytes, address: int, calls: list[dict], targets: dict[
     instructions = list(decoder.disasm(body, address))
     if sum(i.size for i in instructions) != len(body):
         raise ValueError('Incomplete direct-call body decode')
-    actual = {i.address - address + 1: i for i in instructions if i.group(cs.CS_GRP_CALL)}
+    actual = {i.address - address + 1: i for i in instructions if i.group(cs.CS_GRP_CALL) or
+              (i.mnemonic == 'jmp' and i.bytes[0] == 0xe9 and
+               not address <= i.operands[0].imm < address + len(body))}
     expected = {call['offset']: call for call in calls}
     if len(expected) != len(calls) or set(expected) != set(actual):
         raise ValueError('Missing, repeated or unexpected direct call')
@@ -23,9 +25,10 @@ def normalize_calls(body: bytes, address: int, calls: list[dict], targets: dict[
     for offset, call in sorted(expected.items()):
         instruction = actual[offset]
         name = call['symbol']
-        if (name not in targets or instruction.size != 5 or instruction.bytes[0] != 0xe8 or
+        if (name not in targets or instruction.size != 5 or instruction.bytes[0] != call.get('opcode', 0xe8) or
+                call.get('opcode', 0xe8) not in (0xe8, 0xe9) or
                 len(instruction.operands) != 1 or instruction.operands[0].type != cs.x86.X86_OP_IMM):
-            raise ValueError('Call is not E8 rel32 to an independently named function')
+            raise ValueError('Transfer is not an allowed E8/E9 rel32 to an independently named function')
         destination = (address + offset + 4 + struct.unpack_from('<i', body, offset)[0]) & 0xffffffff
         if destination != targets[name] or instruction.operands[0].imm != destination:
             raise ValueError('Original/source call destination differs from named function')
@@ -44,7 +47,7 @@ def reconstruct_calls(body: bytes, address: int, relocations: list[dict], target
     for relocation in sorted(relocations, key=lambda r: r['offset']):
         offset, name = relocation['offset'], relocation['symbol']
         if (relocation.get('type') != 20 or relocation.get('addend') != 0 or name not in targets or
-                not previous + 4 <= offset <= len(body) - 4 or offset < 1 or body[offset - 1] != 0xe8 or
+                not previous + 4 <= offset <= len(body) - 4 or offset < 1 or body[offset - 1] not in (0xe8, 0xe9) or
                 struct.unpack_from('<I', body, offset)[0] != 0):
             raise ValueError('Invalid reviewed COFF REL32 call')
         previous = offset

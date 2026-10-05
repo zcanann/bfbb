@@ -1,9 +1,18 @@
 #ifndef PS2_RWCORE_H
 #define PS2_RWCORE_H
 
+// Statement macros shared by the RenderWare SDK headers.
+#ifndef MACRO_START
+#define MACRO_START do
+#endif
+#ifndef MACRO_STOP
+#define MACRO_STOP while (0)
+#endif
+
 // Minimal PS2 RenderWare geometry declarations recovered from retail DWARF.
 typedef unsigned char RwUInt8;
 typedef unsigned short RwUInt16;
+typedef signed short RwInt16;
 typedef unsigned int RwUInt32;
 typedef signed int RwInt32;
 typedef float RwReal;
@@ -12,6 +21,31 @@ typedef RwInt32 RwBool;
 struct RwV3d
 {
     RwReal x, y, z;
+};
+
+struct RwLine
+{
+    RwV3d start;
+    RwV3d end;
+};
+
+union RwSplitBits
+{
+    RwReal nReal;
+    RwInt32 nInt;
+    RwUInt32 nUInt;
+};
+
+struct RwSphere
+{
+    RwV3d center;
+    float radius;
+};
+
+struct RwTexCoords
+{
+    float u;
+    float v;
 };
 
 struct RwBBox
@@ -91,6 +125,40 @@ enum RwOpCombineType
 struct RwCamera;
 struct RwFrame;
 struct RxPipeline;
+struct RwResEntry;
+
+#define RWFORCEENUMSIZEINT ((RwInt32)((~((RwUInt32)0)) >> 1))
+#define RWPLUGINOFFSET(_type, _base, _offset) ((_type*)((RwUInt8*)(_base) + (_offset)))
+
+#define RwV3dSubMacro(o, a, b)                                                                     \
+    MACRO_START                                                                                    \
+    {                                                                                              \
+        (o)->x = (((a)->x) - ((b)->x));                                                            \
+        (o)->y = (((a)->y) - ((b)->y));                                                            \
+        (o)->z = (((a)->z) - ((b)->z));                                                            \
+    }                                                                                              \
+    MACRO_STOP
+
+#define RwV3dScaleMacro(o, a, s)                                                                   \
+    MACRO_START                                                                                    \
+    {                                                                                              \
+        (o)->x = (((a)->x) * ((s)));                                                               \
+        (o)->y = (((a)->y) * ((s)));                                                               \
+        (o)->z = (((a)->z) * ((s)));                                                               \
+    }                                                                                              \
+    MACRO_STOP
+
+#define RwV3dDotProductMacro(a, b)                                                                 \
+    ((((((((a)->x) * ((b)->x))) + ((((a)->y) * ((b)->y))))) + ((((a)->z) * ((b)->z)))))
+
+#define RwV3dCrossProductMacro(o, a, b)                                                            \
+    MACRO_START                                                                                    \
+    {                                                                                              \
+        (o)->x = (((((a)->y) * ((b)->z))) - ((((a)->z) * ((b)->y))));                              \
+        (o)->y = (((((a)->z) * ((b)->x))) - ((((a)->x) * ((b)->z))));                              \
+        (o)->z = (((((a)->x) * ((b)->y))) - ((((a)->y) * ((b)->x))));                              \
+    }                                                                                              \
+    MACRO_STOP
 
 extern "C" {
 RwReal RwV3dNormalize(RwV3d* out, const RwV3d* in);

@@ -1,4 +1,8 @@
+#if defined(XBOX)
+#include <iMath3.h>
+#else
 #include "iMath3.h"
+#endif
 
 #include "xMath.h"
 #include "xMath2.h"

@@ -75,7 +75,24 @@ template <class T> T range_limit(T v, T minv, T maxv);
 
 // The primary has no definition; each of these is defined in the unit that uses it.
 // Declared here so a use sees the specialization.
+#if defined(XBOX)
+template <> inline F32 range_limit<F32>(F32 v, F32 minv, F32 maxv)
+{
+    if (v <= minv)
+    {
+        return minv;
+    }
+
+    if (v >= maxv)
+    {
+        return maxv;
+    }
+
+    return v;
+}
+#else
 template <> F32 range_limit<F32>(F32 v, F32 minv, F32 maxv);
+#endif
 template <> U16 range_limit<U16>(U16 v, U16 minv, U16 maxv);
 template <> S32 range_limit<S32>(S32 v, S32 minv, S32 maxv);
 template <> size_t range_limit<size_t>(size_t v, size_t minv, size_t maxv);

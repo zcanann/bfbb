@@ -75,12 +75,26 @@ checked, and the standard objdiff parser accepts the result.
 
 | Version | Full code-region bytes | Objdiff code-matched bytes |
 | --- | ---: | ---: |
-| SLUS-20680 | 2,978,560 | 26,120 |
-| SLES-51968 | 2,979,712 | 26,120 |
-| SLES-51970 | 2,976,512 | 26,120 |
-| SLES-53623 | 2,979,968 | 6,144 |
-| XBOX-US | 1,798,760 | 1,008 |
-| XBOX-EU | 1,798,760 | 1,008 |
+| SLUS-20680 | 2,978,560 | 42,720 |
+| SLES-51968 | 2,979,712 | 42,720 |
+| SLES-51970 | 2,976,512 | 42,720 |
+| SLES-53623 | 2,979,968 | 15,924 |
+| XBOX-US | 1,798,760 | 3,354 |
+| XBOX-EU | 1,798,760 | 3,354 |
+
+The PS2 [math alignment restoration](PS2_MATH_ALIGNMENT.md) enables complete
+`xEntMotion`, `xPad`, and `xClimate` source comparisons: 34 functions / 20,040
+original bytes, adding 1,224 code-matched bytes per debug version.
+
+The subsequent [grid and drive comparisons](PS2_GRID_DRIVE.md) add 16 functions /
+11,412 original bytes, including 876 independently reconstructed code bytes.
+
+The [collision SDK foundation](PS2_COLLISION_SOURCE.md) adds the complete
+36-function / 36,648-byte collision TU, with 2,236 code-matched bytes per debug
+version. Its remaining functions retain their partial scores.
+
+The complete [scene source comparison](PS2_SCENE.md) adds 24 functions / 12,384
+original bytes, with 2,092 code-matched bytes per debug version.
 
 This checkpoint includes utility, serializer, bounds, streaming, environment, light-kit,
 move-point, fog, behavior-manager, binary-reader, event, volume and conditional source comparisons, plus comparisons for independently verified French function
@@ -108,10 +122,10 @@ The narrower function-only baselines currently contain:
 
 | PS2 baseline | Functions | Measured function bytes | Source matches |
 | --- | ---: | ---: | ---: |
-| USA | 5,391 | 2,107,460 | 237 functions / 26,120 bytes |
-| Europe/Australia | 5,392 | 2,108,700 | 237 functions / 26,120 bytes |
-| Germany | 5,394 | 2,105,512 | 237 functions / 26,120 bytes |
-| France (reviewed and corroborated bounds) | 331 | 90,040 | 46 functions / 6,144 bytes |
+| USA | 5,391 | 2,107,460 | 365 functions / 42,720 bytes |
+| Europe/Australia | 5,392 | 2,108,700 | 365 functions / 42,720 bytes |
+| Germany | 5,394 | 2,105,512 | 365 functions / 42,720 bytes |
+| France (reviewed and corroborated bounds) | 425 | 132,224 | 100 functions / 15,924 bytes |
 
 The `address-anchors.json` registries also recover over 2,500 named data addresses
 and 628 function declarations in each debug-bearing version. Addresses do not
@@ -138,8 +152,8 @@ load-range validation. Targets retain the exact original instructions. The `xBas
 other target objects are not relocation-restored link inputs. Code outside those function ranges, remaining data,
 and padding remain unclassified; the whole mixed load segment is not counted as
 code. France is stripped; independently reviewed and machine-corroborated
-extents establish its 331-function, 90,040-byte function-only baseline. Its
-6,144 matched code bytes describe that subset. The published code denominator
+extents establish its 425-function, 132,224-byte function-only baseline. Its
+15,924 matched code bytes describe that subset. The published code denominator
 is the full recovered CPU text region, not this function-only subset.
 
 Both Xbox releases have identical payloads in all 13 sections; their 532 differing
@@ -150,6 +164,44 @@ cannot distinguish code here: `.rdata` and `.data` also have that flag. No fake
 whole-section function is created to make a progress denominator.
 
 ## Compiled PS2 units
+
+The full sound TU now compares 37 functions / 6,764 bytes, adding 15 exact
+functions / 1,388 bytes after restoring the original PS2 platform types. The
+19-function / 13,116-byte emitter TU also has a complete partial comparison
+(50.90% fuzzy matching, no exact functions yet). See [sound](PS2_SOUND.md) and
+[particle geometry](PS2_PARTICLE_GEOMETRY.md). France now compares the full
+streaming-service TU through [original-only sequence recovery](FRANCE_STREAMING_RECOVERY.md),
+adding 14 exact functions / 2,820 bytes. Its complete particle-command TU is also
+identified by [original callback-table and sequence evidence](FRANCE_PARTICLE_COMMAND_RECOVERY.md),
+adding another 15 exact functions / 2,780 bytes while retaining all 30 functions.
+[Original animation sequence recovery](FRANCE_ANIMATION_RECOVERY.md) now adds
+17 exact functions / 3,032 bytes, retaining all 34 animation functions.
+[Entity-motion sequence and dispatch recovery](FRANCE_MOTION_RECOVERY.md) adds
+five exact functions / 956 bytes while retaining the full 20-function unit.
+
+The complete animation TU now compares all 34 functions / 17,656 bytes,
+matching 17 functions / 3,032 bytes with the unchanged shipping function bodies.
+See [animation and runtime-header evidence](PS2_ANIMATION.md).
+
+The unchanged 30-function particle-command unit now has a complete source
+comparison, initially matching 15 functions / 2,780 bytes. Its remaining
+functions retain partial scores. See [particle commands](PS2_PARTICLE_COMMANDS.md).
+
+The complete camera-marker unit now matches all four functions / 220 bytes.
+Entity header separation also enables seven exact group functions / 440 bytes
+and eleven particle-effect functions / 712 bytes. The three units retain all
+original functions in their comparisons; their remaining holdouts and unlinked
+status are explicit. See [camera markers](PS2_CAMERA_MARKER.md),
+[groups](PS2_GROUP.md), and [particle effects](PS2_PARTICLE_EFFECTS.md).
+
+The release `xDebug.cpp` matches all six original functions / 80 bytes in each
+debug-bearing version. Its font-only GameCube helper is excluded on PS2; the
+six shipping function bodies are unchanged and independently reproduce every
+original byte. The camera-tweak unit adds 11 exact functions / 1,444 bytes,
+and the particle manager adds two / 76 bytes. Their remaining functions stay
+in the comparison as unmatched code. See [camera evidence](PS2_CAMERA_TWEAK.md)
+and [particle-manager evidence](PS2_PARTICLE_MANAGER.md). France now also compares nine previously verified functions from eight complete
+source units, adding 192 exact bytes. See [French source coverage](FRANCE_ADDITIONAL_SOURCE_PROFILES.md).
 
 The unchanged shared `src/SB/Core/x/xBase.cpp` compiles with the hash-pinned
 `mwcps2-3.0b38-030307` profile under unmodified Wibo 1.2.0. All five functions
@@ -269,15 +321,25 @@ Both region registries keep independent executable identities.
 See the parameterized scripts in `tools/platforms/ghidra/`. No Xbox SDK is required
 for this analysis step.
 
-`verified-anonymous-functions.json` promotes 2,507 disjoint extents (626,365
+`verified-anonymous-functions.json` promotes 2,504 disjoint extents (625,750
 bytes) per release after Capstone 5.0.7 re-decodes closed control flow, verifies
 all body bytes are reachable, checks an incoming direct call from another
 closed function, and excludes foreign interior transfers across the candidate
 inventory. Reviewed extents take precedence. CI regenerates this registry from
 the original; the remaining candidates stay excluded. Anonymous identifiers
 establish neither original symbols nor source ownership. Together with the
-twelve reviewed functions, measured coverage is 2,519 functions / 627,572 bytes;
-1,008 bytes match source. This is still partial coverage.
+39 reviewed extents, measured coverage is 2,543 functions / 632,688 bytes;
+3,354 bytes match source. This is still partial coverage.
+
+The complete particle-group source now compiles with its real particle dependency
+and a hash-pinned Microsoft static runtime library. Five independently reviewed
+group functions are compared; two add 412 exact bytes. The runtime helper is
+excluded from reconstructed-source gains. See [particle groups and runtime
+provisioning](XBOX_PARTICLE_GROUP.md).
+The complete particle-command TU also compiles with five real math dependencies.
+Its original registration table identifies 21 nonempty callbacks / 4,771 bytes;
+eight add 1,831 independently reconstructed bytes in both releases. All partial
+callbacks remain compared, and existing source matches remain unchanged.
 
 Three hash functions have been independently reviewed in both Xbox releases:
 `xStrHash(const char*)`, its bounded overload, and `xStrHashCat`, totaling 151
@@ -285,7 +347,8 @@ extent bytes. Their CFG, caller arguments, suffix strings, and signed-byte fold
 support their identities. These bounded functions have explicit i386 COFF symbols
 and sizes; they do not promote the remaining analyzer candidates. The actual full shared `xString.cpp` compiles with a pinned MSVC 7.1 candidate
 profile under Wine, followed by LTCG linking. Its plain hash function matches
-all 48 bytes in both Xbox releases; the other two functions remain nonmatching.
+all 48 bytes in both Xbox releases; the bounded hash and concatenating hash now
+match their 55 and 48 bytes as well. See [hash loop evidence](XBOX_HASH_LOOPS.md).
 The same leaf also matches with MSVC 7.0, so exact retail compiler identity is
 not established. Xbox's signed-byte fold is platform-scoped; GameCube retains
 its existing unsigned-byte behavior.

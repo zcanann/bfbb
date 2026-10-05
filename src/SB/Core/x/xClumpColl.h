@@ -5,8 +5,12 @@
 
 #include <rwcore.h>
 #include <rpworld.h>
+#if defined(PS2)
+#include <rwsdk/rpcollis.h>
+#else
 #include <rpcollis.h>
 #include <rtintsec.h>
+#endif
 
 struct xClumpCollBSPBranchNode
 {

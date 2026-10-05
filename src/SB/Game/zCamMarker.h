@@ -2,9 +2,16 @@
 #define ZCAMMARKER_H
 
 #include <types.h>
+#if defined(PS2)
+#include "zCameraControl.h"
+#include "xCamAsset.h"
+#else
 #include "zCamera.h"
+#endif
 #include "xBase.h"
+#if !defined(PS2)
 #include "xCamera.h"
+#endif
 #include "xEvent.h"
 
 struct zCamMarker : xBase

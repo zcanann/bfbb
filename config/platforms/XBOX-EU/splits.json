@@ -145,8 +145,8 @@
       "classification": "unclassified"
     }
   ],
-  "known_code_bytes": 627572,
-  "unclassified_text_bytes": 1171188,
+  "known_code_bytes": 632688,
+  "unclassified_text_bytes": 1166072,
   "text_ranges": [
     {
       "kind": "function",
@@ -14393,7 +14393,238 @@
     {
       "kind": "unclassified",
       "address": 1350929,
-      "size": 9951
+      "size": 15
+    },
+    {
+      "kind": "function",
+      "address": 1350944,
+      "size": 164,
+      "canonical_identifier": "xParCmdKillSlow_Update(xParCmd*,xParGroup*,F32)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1351108,
+      "size": 12
+    },
+    {
+      "kind": "function",
+      "address": 1351120,
+      "size": 49,
+      "canonical_identifier": "xParCmdAge_Update(xParCmd*,xParGroup*,F32)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1351169,
+      "size": 15
+    },
+    {
+      "kind": "function",
+      "address": 1351184,
+      "size": 147,
+      "canonical_identifier": "xParCmdFollow_Update(xParCmd*,xParGroup*,F32)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1351331,
+      "size": 13
+    },
+    {
+      "kind": "function",
+      "address": 1351344,
+      "size": 153,
+      "canonical_identifier": "xParCmdOrbitPoint_Update(xParCmd*,xParGroup*,F32)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1351497,
+      "size": 7
+    },
+    {
+      "kind": "function",
+      "address": 1351504,
+      "size": 284,
+      "canonical_identifier": "xParCmdOrbitLine_Update(xParCmd*,xParGroup*,F32)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1351788,
+      "size": 4
+    },
+    {
+      "kind": "function",
+      "address": 1351792,
+      "size": 119,
+      "canonical_identifier": "xParCmdAccelerate_Update(xParCmd*,xParGroup*,F32)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1351911,
+      "size": 9
+    },
+    {
+      "kind": "function",
+      "address": 1351920,
+      "size": 119,
+      "canonical_identifier": "xParCmdMove_Update(xParCmd*,xParGroup*,F32)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1352039,
+      "size": 9
+    },
+    {
+      "kind": "function",
+      "address": 1352048,
+      "size": 263,
+      "canonical_identifier": "xParCmdMoveRandom_Update(xParCmd*,xParGroup*,F32)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1352311,
+      "size": 9
+    },
+    {
+      "kind": "function",
+      "address": 1352320,
+      "size": 166,
+      "canonical_identifier": "xParCmdMoveRandomPar_Update(xParCmd*,xParGroup*,F32)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1352486,
+      "size": 10
+    },
+    {
+      "kind": "function",
+      "address": 1352496,
+      "size": 335,
+      "canonical_identifier": "xParCmdRandomVelocityPar_Update(xParCmd*,xParGroup*,F32)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1352831,
+      "size": 1
+    },
+    {
+      "kind": "function",
+      "address": 1352832,
+      "size": 63,
+      "canonical_identifier": "xParCmdApplyWind_Update(xParCmd*,xParGroup*,F32)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1352895,
+      "size": 1
+    },
+    {
+      "kind": "function",
+      "address": 1352896,
+      "size": 360,
+      "canonical_identifier": "xParCmdRotPar_Update(xParCmd*,xParGroup*,F32)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1353256,
+      "size": 8
+    },
+    {
+      "kind": "function",
+      "address": 1353264,
+      "size": 50,
+      "canonical_identifier": "xParCmdVelocityApply_Update(xParCmd*,xParGroup*,F32)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1353314,
+      "size": 14
+    },
+    {
+      "kind": "function",
+      "address": 1353328,
+      "size": 260,
+      "canonical_identifier": "xParCmdRotateAround_Update(xParCmd*,xParGroup*,F32)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1353588,
+      "size": 12
+    },
+    {
+      "kind": "function",
+      "address": 1353600,
+      "size": 615,
+      "canonical_identifier": "xParCmdTexAnim_Update(xParCmd*,xParGroup*,F32)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1354215,
+      "size": 9
+    },
+    {
+      "kind": "function",
+      "address": 1354224,
+      "size": 83,
+      "canonical_identifier": "xParCmdCollideFall_Update(xParCmd*,xParGroup*,F32)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1354307,
+      "size": 13
+    },
+    {
+      "kind": "function",
+      "address": 1354320,
+      "size": 118,
+      "canonical_identifier": "xParCmdCollideFallSticky_Update(xParCmd*,xParGroup*,F32)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1354438,
+      "size": 10
+    },
+    {
+      "kind": "function",
+      "address": 1354448,
+      "size": 81,
+      "canonical_identifier": "xParCmd_DampenSpeed_Update(xParCmd*,xParGroup*,F32)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1354529,
+      "size": 15
+    },
+    {
+      "kind": "function",
+      "address": 1354544,
+      "size": 332,
+      "canonical_identifier": "xParCmd_SizeInOut_Update(xParCmd*,xParGroup*,F32)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1354876,
+      "size": 4
+    },
+    {
+      "kind": "function",
+      "address": 1354880,
+      "size": 386,
+      "canonical_identifier": "xParCmd_AlphaInOut_Update(xParCmd*,xParGroup*,F32)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1355266,
+      "size": 14
+    },
+    {
+      "kind": "function",
+      "address": 1355280,
+      "size": 624,
+      "canonical_identifier": "xParCmd_Shaper_Update(xParCmd*,xParGroup*,F32)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1355904,
+      "size": 4976
     },
     {
       "kind": "function",
@@ -14426,24 +14657,57 @@
     {
       "kind": "unclassified",
       "address": 1367456,
-      "size": 992
+      "size": 832
+    },
+    {
+      "kind": "function",
+      "address": 1368288,
+      "size": 85,
+      "canonical_identifier": "xParGroupRegister(xParGroup*)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1368373,
+      "size": 11
+    },
+    {
+      "kind": "function",
+      "address": 1368384,
+      "size": 51,
+      "canonical_identifier": "xParGroupUnregister(xParGroup*)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1368435,
+      "size": 13
     },
     {
       "kind": "function",
       "address": 1368448,
       "size": 361,
-      "canonical_identifier": "anon_0014e180"
+      "canonical_identifier": "xParGroupAnimate(xParGroup*,F32)"
     },
     {
       "kind": "unclassified",
       "address": 1368809,
-      "size": 231
+      "size": 7
+    },
+    {
+      "kind": "function",
+      "address": 1368816,
+      "size": 209,
+      "canonical_identifier": "xParGroupAddPar(xParGroup*)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1369025,
+      "size": 15
     },
     {
       "kind": "function",
       "address": 1369040,
       "size": 137,
-      "canonical_identifier": "anon_0014e3d0"
+      "canonical_identifier": "xParGroupKillPar(xParGroup*,xPar*)"
     },
     {
       "kind": "unclassified",
@@ -24874,7 +25138,7 @@
       "kind": "function",
       "address": 1824368,
       "size": 117,
-      "canonical_identifier": "anon_001bd670"
+      "canonical_identifier": "__ftol2"
     },
     {
       "kind": "unclassified",

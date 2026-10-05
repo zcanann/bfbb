@@ -2,7 +2,13 @@
 
 #include "xMath.h"
 #include "xMemMgr.h"
+#if defined(PS2)
+#include "xEntTypes.h"
+#include "xEvent.h"
+#include "zSceneLookup.h"
+#else
 #include "zScene.h"
+#endif
 
 #include <types.h>
 
@@ -11,6 +17,9 @@ void xGroupInit(void* b, void* asset)
     xGroupInit((xBase*)b, (xGroupAsset*)asset);
 }
 
+#if defined(PS2)
+inline
+#endif
 void xGroupInit(xBase* b, xGroupAsset* asset)
 {
     xGroup* t = (xGroup*)b;
@@ -28,7 +37,11 @@ void xGroupInit(xBase* b, xGroupAsset* asset)
     {
         b->link = NULL;
     }
+#if defined(PS2)
+    U32 numItems = t->asset->itemCount;
+#else
     U32 numItems = xGroupGetCount(t);
+#endif
     xBase** item;
     if (numItems != 0)
     {
@@ -47,6 +60,14 @@ void xGroupSetup(xGroup* g)
 {
     if ((g->flg_group & 1) == 0)
     {
+#if defined(PS2)
+        U32 numItems = g->asset->itemCount;
+        for (U32 i = 0; i < numItems; i++)
+        {
+            xBase* item = xGroupFindItemPtr(g, i);
+            g->item[i] = item;
+        }
+#else
         U32 numItems = xGroupGetCount(g);
         U32 i = 0;
         U32 ind = 0;
@@ -57,6 +78,7 @@ void xGroupSetup(xGroup* g)
             *(g->item + ind) = item;
             ind++;
         }
+#endif
         g->flg_group |= 1;
     }
 }
@@ -71,6 +93,9 @@ void xGroupLoad(xGroup* ent, xSerial* s)
     xBaseLoad((xBase*)ent, s);
 }
 
+#if defined(PS2)
+inline
+#endif
 void xGroupReset(xGroup* ent)
 {
     xBaseReset((xBase*)ent, (xBaseAsset*)ent->asset);
@@ -190,6 +215,9 @@ xBase* xGroupGetItemPtr(xGroup* g, U32 index)
     return g->item != NULL ? g->item[index] : NULL;
 }
 
+#if defined(PS2)
+inline
+#endif
 xBase* xGroupFindItemPtr(xGroup* g, U32 index)
 {
     return (xBase*)zSceneFindObject((U32)((U32*)(g->asset + 1))[index]);
@@ -203,7 +231,7 @@ U32 xGroupGetItem(xGroup* g, U32 index)
 U32 xGroup::get_any()
 {
     U16 numItems = this->asset->itemCount;
-    if (numItems == 0)
+    if (numItems <= 0)
     {
         return NULL;
     }

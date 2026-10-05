@@ -1,7 +1,12 @@
 #ifndef XDEBUG_H
 #define XDEBUG_H
 
+#if defined(PS2)
+#include "xString.h"
+struct xVec3;
+#else
 #include "xFont.h"
+#endif
 #include "xDebugTweak.h"
 
 #include <types.h>

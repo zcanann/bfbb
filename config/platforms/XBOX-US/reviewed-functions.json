@@ -2,7 +2,7 @@
   "schema_version": 1,
   "version": "XBOX-US",
   "executable_sha1": "983ffc6d84427996ce35d0d204930ae713113370",
-  "scope": "Individually reviewed xString hashes, tokenizers, parser and comparisons plus xPar particle routines; other Ghidra candidates remain separate.",
+  "scope": "Individually reviewed string, particle and particle-group functions plus a byte-identified CRT callee; other candidates remain separate.",
   "coverage_complete": false,
   "source_comparison_available": false,
   "retail_link_verified": false,
@@ -255,6 +255,3722 @@
           "sha256": "2985b56cfc4f295a2e2bbc596616c1b4f841a21931594f8cf4a77622ceef8099",
           "description": "Closed two-range particle-group allocation CFG (including its alignment gap in this hash): CALL allocator at 0x14e377, null check, CALL initializer at 0x14e380, update count/live flag and doubly linked list from preserved EAX particle pointer."
         }
+      }
+    },
+    {
+      "name": "xParCmdKillSlow_Update",
+      "canonical_identifier": "xParCmdKillSlow_Update(xParCmd*,xParGroup*,F32)",
+      "display_name": "xParCmdKillSlow_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "linkage_name": null,
+      "address": 1350944,
+      "size": 164,
+      "sha256": "1087902165d1438d2a3565581eab891d24be4b2514d6975998939b9984411d6f",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 164,
+      "instruction_count": 64,
+      "semantics": {
+        "identity": "Original xParCmdInit stores this callback with independently decoded command type 6 and asset size 16. Shared game source implements the corresponding particle update; source compilation is separate from entry/extent proof."
+      },
+      "address_expressions": [],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1351107,
+        "branches": [
+          {
+            "address": 1350973,
+            "size": 2,
+            "opcode": 116,
+            "target": 1351044
+          },
+          {
+            "address": 1351032,
+            "size": 2,
+            "opcode": 122,
+            "target": 1351037
+          },
+          {
+            "address": 1351041,
+            "size": 2,
+            "opcode": 117,
+            "target": 1350992
+          },
+          {
+            "address": 1351046,
+            "size": 2,
+            "opcode": 116,
+            "target": 1351107
+          },
+          {
+            "address": 1351096,
+            "size": 2,
+            "opcode": 117,
+            "target": 1351101
+          },
+          {
+            "address": 1351105,
+            "size": 2,
+            "opcode": 117,
+            "target": 1351056
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [],
+        "callback_registration": {
+          "initializer": {
+            "address": 1350208,
+            "size": 721,
+            "sha256": "f08121e9ac8b7a19886d0f4284366926552fc80883aff857eca0bf1c0f08dc8c"
+          },
+          "table_address": 3620288,
+          "slot_count": 35,
+          "slot_stride": 12,
+          "command_type": 6,
+          "asset_size": 16,
+          "callback_store_address": 1350383,
+          "direct_call_targets": [],
+          "internal_gap_ranges": []
+        }
+      }
+    },
+    {
+      "name": "xParCmdAge_Update",
+      "canonical_identifier": "xParCmdAge_Update(xParCmd*,xParGroup*,F32)",
+      "display_name": "xParCmdAge_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "linkage_name": null,
+      "address": 1351120,
+      "size": 49,
+      "sha256": "e2147f2cea0f6729facff0b7b6358d0eb44951ec1d1900a53f869c23fc169a61",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 49,
+      "instruction_count": 17,
+      "semantics": {
+        "identity": "Original xParCmdInit stores this callback with independently decoded command type 18 and asset size 12. Shared game source implements the corresponding particle update; source compilation is separate from entry/extent proof."
+      },
+      "address_expressions": [],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1351168,
+        "branches": [
+          {
+            "address": 1351146,
+            "size": 2,
+            "opcode": 116,
+            "target": 1351168
+          },
+          {
+            "address": 1351166,
+            "size": 2,
+            "opcode": 117,
+            "target": 1351152
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [],
+        "callback_registration": {
+          "initializer": {
+            "address": 1350208,
+            "size": 721,
+            "sha256": "f08121e9ac8b7a19886d0f4284366926552fc80883aff857eca0bf1c0f08dc8c"
+          },
+          "table_address": 3620288,
+          "slot_count": 35,
+          "slot_stride": 12,
+          "command_type": 18,
+          "asset_size": 12,
+          "callback_store_address": 1350613,
+          "direct_call_targets": [],
+          "internal_gap_ranges": []
+        }
+      }
+    },
+    {
+      "name": "xParCmdFollow_Update",
+      "canonical_identifier": "xParCmdFollow_Update(xParCmd*,xParGroup*,F32)",
+      "display_name": "xParCmdFollow_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "linkage_name": null,
+      "address": 1351184,
+      "size": 147,
+      "sha256": "3565e87e0c3630468c746ec2a596fc052372822c990fb7883db9e9f75a0a7751",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 147,
+      "instruction_count": 54,
+      "semantics": {
+        "identity": "Original xParCmdInit stores this callback with independently decoded command type 7 and asset size 16. Shared game source implements the corresponding particle update; source compilation is separate from entry/extent proof."
+      },
+      "address_expressions": [],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1351330,
+        "branches": [
+          {
+            "address": 1351213,
+            "size": 2,
+            "opcode": 116,
+            "target": 1351327
+          },
+          {
+            "address": 1351220,
+            "size": 2,
+            "opcode": 116,
+            "target": 1351327
+          },
+          {
+            "address": 1351325,
+            "size": 2,
+            "opcode": 117,
+            "target": 1351216
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [],
+        "callback_registration": {
+          "initializer": {
+            "address": 1350208,
+            "size": 721,
+            "sha256": "f08121e9ac8b7a19886d0f4284366926552fc80883aff857eca0bf1c0f08dc8c"
+          },
+          "table_address": 3620288,
+          "slot_count": 35,
+          "slot_stride": 12,
+          "command_type": 7,
+          "asset_size": 16,
+          "callback_store_address": 1350413,
+          "direct_call_targets": [],
+          "internal_gap_ranges": []
+        }
+      }
+    },
+    {
+      "name": "xParCmdOrbitPoint_Update",
+      "canonical_identifier": "xParCmdOrbitPoint_Update(xParCmd*,xParGroup*,F32)",
+      "display_name": "xParCmdOrbitPoint_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "linkage_name": null,
+      "address": 1351344,
+      "size": 153,
+      "sha256": "ffbda89a885a834502abacc84e34895127ff9ccceddc8a67d9e4dc0332039a5d",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 153,
+      "instruction_count": 57,
+      "semantics": {
+        "identity": "Original xParCmdInit stores this callback with independently decoded command type 8 and asset size 32. Shared game source implements the corresponding particle update; source compilation is separate from entry/extent proof."
+      },
+      "address_expressions": [],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1351496,
+        "branches": [
+          {
+            "address": 1351373,
+            "size": 2,
+            "opcode": 116,
+            "target": 1351493
+          },
+          {
+            "address": 1351432,
+            "size": 2,
+            "opcode": 122,
+            "target": 1351481
+          },
+          {
+            "address": 1351479,
+            "size": 2,
+            "opcode": 235,
+            "target": 1351483
+          },
+          {
+            "address": 1351491,
+            "size": 2,
+            "opcode": 117,
+            "target": 1351376
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [],
+        "callback_registration": {
+          "initializer": {
+            "address": 1350208,
+            "size": 721,
+            "sha256": "f08121e9ac8b7a19886d0f4284366926552fc80883aff857eca0bf1c0f08dc8c"
+          },
+          "table_address": 3620288,
+          "slot_count": 35,
+          "slot_stride": 12,
+          "command_type": 8,
+          "asset_size": 32,
+          "callback_store_address": 1350429,
+          "direct_call_targets": [],
+          "internal_gap_ranges": []
+        }
+      }
+    },
+    {
+      "name": "xParCmdOrbitLine_Update",
+      "canonical_identifier": "xParCmdOrbitLine_Update(xParCmd*,xParGroup*,F32)",
+      "display_name": "xParCmdOrbitLine_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "linkage_name": null,
+      "address": 1351504,
+      "size": 284,
+      "sha256": "8a5ab29249597e2f5efa23a68d9fdce4380611798a5cce66f029ae0d97572bdc",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 284,
+      "instruction_count": 103,
+      "semantics": {
+        "identity": "Original xParCmdInit stores this callback with independently decoded command type 9 and asset size 44. Shared game source implements the corresponding particle update; source compilation is separate from entry/extent proof."
+      },
+      "address_expressions": [],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1351787,
+        "branches": [
+          {
+            "address": 1351707,
+            "size": 2,
+            "opcode": 122,
+            "target": 1351764
+          },
+          {
+            "address": 1351762,
+            "size": 2,
+            "opcode": 235,
+            "target": 1351770
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [],
+        "callback_registration": {
+          "initializer": {
+            "address": 1350208,
+            "size": 721,
+            "sha256": "f08121e9ac8b7a19886d0f4284366926552fc80883aff857eca0bf1c0f08dc8c"
+          },
+          "table_address": 3620288,
+          "slot_count": 35,
+          "slot_stride": 12,
+          "command_type": 9,
+          "asset_size": 44,
+          "callback_store_address": 1350459,
+          "direct_call_targets": [],
+          "internal_gap_ranges": []
+        }
+      }
+    },
+    {
+      "name": "xParCmdAccelerate_Update",
+      "canonical_identifier": "xParCmdAccelerate_Update(xParCmd*,xParGroup*,F32)",
+      "display_name": "xParCmdAccelerate_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "linkage_name": null,
+      "address": 1351792,
+      "size": 119,
+      "sha256": "789b7730c7e197046aaed2cd6e8648d622bac57d757088da5bf6dcb24cfa5faf",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 119,
+      "instruction_count": 38,
+      "semantics": {
+        "identity": "Original xParCmdInit stores this callback with independently decoded command type 2 and asset size 20. Shared game source implements the corresponding particle update; source compilation is separate from entry/extent proof."
+      },
+      "address_expressions": [],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1351910,
+        "branches": [
+          {
+            "address": 1351866,
+            "size": 2,
+            "opcode": 116,
+            "target": 1351907
+          },
+          {
+            "address": 1351905,
+            "size": 2,
+            "opcode": 117,
+            "target": 1351872
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [],
+        "callback_registration": {
+          "initializer": {
+            "address": 1350208,
+            "size": 721,
+            "sha256": "f08121e9ac8b7a19886d0f4284366926552fc80883aff857eca0bf1c0f08dc8c"
+          },
+          "table_address": 3620288,
+          "slot_count": 35,
+          "slot_stride": 12,
+          "command_type": 2,
+          "asset_size": 20,
+          "callback_store_address": 1350318,
+          "direct_call_targets": [],
+          "internal_gap_ranges": []
+        }
+      }
+    },
+    {
+      "name": "xParCmdMove_Update",
+      "canonical_identifier": "xParCmdMove_Update(xParCmd*,xParGroup*,F32)",
+      "display_name": "xParCmdMove_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "linkage_name": null,
+      "address": 1351920,
+      "size": 119,
+      "sha256": "6b9e7255dd9b85667cd2690abb4ed3881463b2ece15c7af3c10213c9280f08ad",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 119,
+      "instruction_count": 38,
+      "semantics": {
+        "identity": "Original xParCmdInit stores this callback with independently decoded command type 0 and asset size 20. Shared game source implements the corresponding particle update; source compilation is separate from entry/extent proof."
+      },
+      "address_expressions": [],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1352038,
+        "branches": [
+          {
+            "address": 1351994,
+            "size": 2,
+            "opcode": 116,
+            "target": 1352035
+          },
+          {
+            "address": 1352033,
+            "size": 2,
+            "opcode": 117,
+            "target": 1352000
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [],
+        "callback_registration": {
+          "initializer": {
+            "address": 1350208,
+            "size": 721,
+            "sha256": "f08121e9ac8b7a19886d0f4284366926552fc80883aff857eca0bf1c0f08dc8c"
+          },
+          "table_address": 3620288,
+          "slot_count": 35,
+          "slot_stride": 12,
+          "command_type": 0,
+          "asset_size": 20,
+          "callback_store_address": 1350266,
+          "direct_call_targets": [],
+          "internal_gap_ranges": []
+        }
+      }
+    },
+    {
+      "name": "xParCmdMoveRandom_Update",
+      "canonical_identifier": "xParCmdMoveRandom_Update(xParCmd*,xParGroup*,F32)",
+      "display_name": "xParCmdMoveRandom_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "linkage_name": null,
+      "address": 1352048,
+      "size": 263,
+      "sha256": "21eb8f24e37c1ae219d217a1742569ac5d8b3c4f6ca8db99e547c5d1c9a0cee8",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 260,
+      "instruction_count": 75,
+      "semantics": {
+        "identity": "Original xParCmdInit stores this callback with independently decoded command type 1 and asset size 20. Shared game source implements the corresponding particle update; source compilation is separate from entry/extent proof."
+      },
+      "address_expressions": [
+        {
+          "offset": 31,
+          "instruction_offset": 30,
+          "symbol": "rndseed",
+          "field": "displacement",
+          "prefix": "a1",
+          "addend": 0
+        },
+        {
+          "offset": 64,
+          "instruction_offset": 62,
+          "symbol": "float:4f800000",
+          "field": "displacement",
+          "prefix": "d805",
+          "addend": 0
+        },
+        {
+          "offset": 79,
+          "instruction_offset": 77,
+          "symbol": "float:30000000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 102,
+          "instruction_offset": 100,
+          "symbol": "float:4f800000",
+          "field": "displacement",
+          "prefix": "d805",
+          "addend": 0
+        },
+        {
+          "offset": 118,
+          "instruction_offset": 116,
+          "symbol": "float:30000000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 134,
+          "instruction_offset": 133,
+          "symbol": "rndseed",
+          "field": "displacement",
+          "prefix": "a3",
+          "addend": 0
+        },
+        {
+          "offset": 146,
+          "instruction_offset": 144,
+          "symbol": "float:4f800000",
+          "field": "displacement",
+          "prefix": "d805",
+          "addend": 0
+        },
+        {
+          "offset": 164,
+          "instruction_offset": 162,
+          "symbol": "float:30000000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        }
+      ],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1352310,
+        "branches": [
+          {
+            "address": 1352108,
+            "size": 2,
+            "opcode": 125,
+            "target": 1352116
+          },
+          {
+            "address": 1352146,
+            "size": 2,
+            "opcode": 125,
+            "target": 1352154
+          },
+          {
+            "address": 1352190,
+            "size": 2,
+            "opcode": 125,
+            "target": 1352198
+          },
+          {
+            "address": 1352265,
+            "size": 2,
+            "opcode": 116,
+            "target": 1352307
+          },
+          {
+            "address": 1352267,
+            "size": 2,
+            "opcode": 235,
+            "target": 1352272
+          },
+          {
+            "address": 1352305,
+            "size": 2,
+            "opcode": 117,
+            "target": 1352272
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [],
+        "callback_registration": {
+          "initializer": {
+            "address": 1350208,
+            "size": 721,
+            "sha256": "f08121e9ac8b7a19886d0f4284366926552fc80883aff857eca0bf1c0f08dc8c"
+          },
+          "table_address": 3620288,
+          "slot_count": 35,
+          "slot_stride": 12,
+          "command_type": 1,
+          "asset_size": 20,
+          "callback_store_address": 1350292,
+          "direct_call_targets": [],
+          "internal_gap_ranges": [
+            [
+              1352269,
+              1352272
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "name": "xParCmdMoveRandomPar_Update",
+      "canonical_identifier": "xParCmdMoveRandomPar_Update(xParCmd*,xParGroup*,F32)",
+      "display_name": "xParCmdMoveRandomPar_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "linkage_name": null,
+      "address": 1352320,
+      "size": 166,
+      "sha256": "becbb4b889dc189e82bf996b2d47c7a3c1f618ca11f69a5326e0a08853b936c3",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 166,
+      "instruction_count": 45,
+      "semantics": {
+        "identity": "Original xParCmdInit stores this callback with independently decoded command type 10 and asset size 20. Shared game source implements the corresponding particle update; source compilation is separate from entry/extent proof."
+      },
+      "address_expressions": [
+        {
+          "offset": 13,
+          "instruction_offset": 11,
+          "symbol": "float:3f000000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 46,
+          "instruction_offset": 45,
+          "symbol": "rndseed",
+          "field": "displacement",
+          "prefix": "a1",
+          "addend": 0
+        },
+        {
+          "offset": 75,
+          "instruction_offset": 73,
+          "symbol": "float:4f800000",
+          "field": "displacement",
+          "prefix": "d805",
+          "addend": 0
+        },
+        {
+          "offset": 81,
+          "instruction_offset": 79,
+          "symbol": "float:2f800000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 93,
+          "instruction_offset": 91,
+          "symbol": "float:3f000000",
+          "field": "displacement",
+          "prefix": "d825",
+          "addend": 0
+        },
+        {
+          "offset": 125,
+          "instruction_offset": 123,
+          "symbol": "float:4f800000",
+          "field": "displacement",
+          "prefix": "d805",
+          "addend": 0
+        },
+        {
+          "offset": 131,
+          "instruction_offset": 129,
+          "symbol": "float:2f800000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 137,
+          "instruction_offset": 135,
+          "symbol": "float:3f000000",
+          "field": "displacement",
+          "prefix": "d825",
+          "addend": 0
+        },
+        {
+          "offset": 158,
+          "instruction_offset": 157,
+          "symbol": "rndseed",
+          "field": "displacement",
+          "prefix": "a3",
+          "addend": 0
+        }
+      ],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1352485,
+        "branches": [
+          {
+            "address": 1352363,
+            "size": 2,
+            "opcode": 116,
+            "target": 1352482
+          },
+          {
+            "address": 1352391,
+            "size": 2,
+            "opcode": 125,
+            "target": 1352399
+          },
+          {
+            "address": 1352441,
+            "size": 2,
+            "opcode": 125,
+            "target": 1352449
+          },
+          {
+            "address": 1352475,
+            "size": 2,
+            "opcode": 117,
+            "target": 1352370
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [],
+        "callback_registration": {
+          "initializer": {
+            "address": 1350208,
+            "size": 721,
+            "sha256": "f08121e9ac8b7a19886d0f4284366926552fc80883aff857eca0bf1c0f08dc8c"
+          },
+          "table_address": 3620288,
+          "slot_count": 35,
+          "slot_stride": 12,
+          "command_type": 10,
+          "asset_size": 20,
+          "callback_store_address": 1350485,
+          "direct_call_targets": [],
+          "internal_gap_ranges": []
+        }
+      }
+    },
+    {
+      "name": "xParCmdRandomVelocityPar_Update",
+      "canonical_identifier": "xParCmdRandomVelocityPar_Update(xParCmd*,xParGroup*,F32)",
+      "display_name": "xParCmdRandomVelocityPar_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "linkage_name": null,
+      "address": 1352496,
+      "size": 335,
+      "sha256": "7db578fd03c63159d57181e1dd0be19cc8bc0be5b0278284b9e1de9901acecf3",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 335,
+      "instruction_count": 95,
+      "semantics": {
+        "identity": "Original xParCmdInit stores this callback with independently decoded command type 15 and asset size 20. Shared game source implements the corresponding particle update; source compilation is separate from entry/extent proof."
+      },
+      "address_expressions": [
+        {
+          "offset": 58,
+          "instruction_offset": 56,
+          "symbol": "rndseed",
+          "field": "displacement",
+          "prefix": "8b15",
+          "addend": 0
+        },
+        {
+          "offset": 91,
+          "instruction_offset": 89,
+          "symbol": "float:4f800000",
+          "field": "displacement",
+          "prefix": "d805",
+          "addend": 0
+        },
+        {
+          "offset": 106,
+          "instruction_offset": 104,
+          "symbol": "float:30000000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 136,
+          "instruction_offset": 134,
+          "symbol": "float:4f800000",
+          "field": "displacement",
+          "prefix": "d805",
+          "addend": 0
+        },
+        {
+          "offset": 152,
+          "instruction_offset": 150,
+          "symbol": "float:30000000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 185,
+          "instruction_offset": 183,
+          "symbol": "float:4f800000",
+          "field": "displacement",
+          "prefix": "d805",
+          "addend": 0
+        },
+        {
+          "offset": 200,
+          "instruction_offset": 198,
+          "symbol": "float:30000000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 327,
+          "instruction_offset": 325,
+          "symbol": "rndseed",
+          "field": "displacement",
+          "prefix": "8915",
+          "addend": 0
+        }
+      ],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1352830,
+        "branches": [
+          {
+            "address": 1352583,
+            "size": 2,
+            "opcode": 125,
+            "target": 1352591
+          },
+          {
+            "address": 1352628,
+            "size": 2,
+            "opcode": 125,
+            "target": 1352636
+          },
+          {
+            "address": 1352677,
+            "size": 2,
+            "opcode": 125,
+            "target": 1352685
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [],
+        "callback_registration": {
+          "initializer": {
+            "address": 1350208,
+            "size": 721,
+            "sha256": "f08121e9ac8b7a19886d0f4284366926552fc80883aff857eca0bf1c0f08dc8c"
+          },
+          "table_address": 3620288,
+          "slot_count": 35,
+          "slot_stride": 12,
+          "command_type": 15,
+          "asset_size": 20,
+          "callback_store_address": 1350588,
+          "direct_call_targets": [
+            1333232
+          ],
+          "internal_gap_ranges": []
+        }
+      }
+    },
+    {
+      "name": "xParCmdApplyWind_Update",
+      "canonical_identifier": "xParCmdApplyWind_Update(xParCmd*,xParGroup*,F32)",
+      "display_name": "xParCmdApplyWind_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "linkage_name": null,
+      "address": 1352832,
+      "size": 63,
+      "sha256": "b0fa64d5d4007e0c432880f4a9c9db1f75e0d9eb3c34a97a0913bcfe4c92d190",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 63,
+      "instruction_count": 22,
+      "semantics": {
+        "identity": "Original xParCmdInit stores this callback with independently decoded command type 20 and asset size 12. Shared game source implements the corresponding particle update; source compilation is separate from entry/extent proof."
+      },
+      "address_expressions": [],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1352894,
+        "branches": [
+          {
+            "address": 1352864,
+            "size": 2,
+            "opcode": 116,
+            "target": 1352891
+          },
+          {
+            "address": 1352889,
+            "size": 2,
+            "opcode": 117,
+            "target": 1352866
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [],
+        "callback_registration": {
+          "initializer": {
+            "address": 1350208,
+            "size": 721,
+            "sha256": "f08121e9ac8b7a19886d0f4284366926552fc80883aff857eca0bf1c0f08dc8c"
+          },
+          "table_address": 3620288,
+          "slot_count": 35,
+          "slot_stride": 12,
+          "command_type": 20,
+          "asset_size": 12,
+          "callback_store_address": 1350660,
+          "direct_call_targets": [],
+          "internal_gap_ranges": []
+        }
+      }
+    },
+    {
+      "name": "xParCmdRotPar_Update",
+      "canonical_identifier": "xParCmdRotPar_Update(xParCmd*,xParGroup*,F32)",
+      "display_name": "xParCmdRotPar_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "linkage_name": null,
+      "address": 1352896,
+      "size": 360,
+      "sha256": "8794a5fb9e2f040bf841dc19b407eaed35441f64f30060a8d213010cffe1cb6d",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 357,
+      "instruction_count": 90,
+      "semantics": {
+        "identity": "Original xParCmdInit stores this callback with independently decoded command type 21 and asset size 32. Shared game source implements the corresponding particle update; source compilation is separate from entry/extent proof."
+      },
+      "address_expressions": [
+        {
+          "offset": 27,
+          "instruction_offset": 25,
+          "symbol": "float:3b360b61",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 33,
+          "instruction_offset": 31,
+          "symbol": "float:437f0000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 49,
+          "instruction_offset": 47,
+          "symbol": "float:3b360b61",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 55,
+          "instruction_offset": 53,
+          "symbol": "float:437f0000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 71,
+          "instruction_offset": 69,
+          "symbol": "float:3b360b61",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 77,
+          "instruction_offset": 75,
+          "symbol": "float:437f0000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 90,
+          "instruction_offset": 88,
+          "symbol": "float:3b360b61",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 96,
+          "instruction_offset": 94,
+          "symbol": "float:437f0000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 109,
+          "instruction_offset": 107,
+          "symbol": "float:3b360b61",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 115,
+          "instruction_offset": 113,
+          "symbol": "float:437f0000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 128,
+          "instruction_offset": 126,
+          "symbol": "float:3b360b61",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 134,
+          "instruction_offset": 132,
+          "symbol": "float:437f0000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 151,
+          "instruction_offset": 149,
+          "symbol": "rndseed",
+          "field": "displacement",
+          "prefix": "8b35",
+          "addend": 0
+        },
+        {
+          "offset": 186,
+          "instruction_offset": 184,
+          "symbol": "float:4f800000",
+          "field": "displacement",
+          "prefix": "d805",
+          "addend": 0
+        },
+        {
+          "offset": 196,
+          "instruction_offset": 194,
+          "symbol": "float:2f800000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 247,
+          "instruction_offset": 245,
+          "symbol": "float:4f800000",
+          "field": "displacement",
+          "prefix": "d805",
+          "addend": 0
+        },
+        {
+          "offset": 257,
+          "instruction_offset": 255,
+          "symbol": "float:2f800000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 308,
+          "instruction_offset": 306,
+          "symbol": "float:4f800000",
+          "field": "displacement",
+          "prefix": "d805",
+          "addend": 0
+        },
+        {
+          "offset": 318,
+          "instruction_offset": 316,
+          "symbol": "float:2f800000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 350,
+          "instruction_offset": 348,
+          "symbol": "rndseed",
+          "field": "displacement",
+          "prefix": "8935",
+          "addend": 0
+        }
+      ],
+      "direct_calls": [
+        {
+          "offset": 209,
+          "symbol": "__ftol2"
+        },
+        {
+          "offset": 270,
+          "symbol": "__ftol2"
+        },
+        {
+          "offset": 331,
+          "symbol": "__ftol2"
+        }
+      ],
+      "corroboration": {
+        "return_address": 1353255,
+        "branches": [
+          {
+            "address": 1353051,
+            "size": 2,
+            "opcode": 235,
+            "target": 1353056
+          },
+          {
+            "address": 1353078,
+            "size": 2,
+            "opcode": 125,
+            "target": 1353086
+          },
+          {
+            "address": 1353139,
+            "size": 2,
+            "opcode": 125,
+            "target": 1353147
+          },
+          {
+            "address": 1353200,
+            "size": 2,
+            "opcode": 125,
+            "target": 1353208
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [],
+        "callback_registration": {
+          "initializer": {
+            "address": 1350208,
+            "size": 721,
+            "sha256": "f08121e9ac8b7a19886d0f4284366926552fc80883aff857eca0bf1c0f08dc8c"
+          },
+          "table_address": 3620288,
+          "slot_count": 35,
+          "slot_stride": 12,
+          "command_type": 21,
+          "asset_size": 32,
+          "callback_store_address": 1350686,
+          "direct_call_targets": [
+            1824368
+          ],
+          "internal_gap_ranges": [
+            [
+              1353053,
+              1353056
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "name": "xParCmdVelocityApply_Update",
+      "canonical_identifier": "xParCmdVelocityApply_Update(xParCmd*,xParGroup*,F32)",
+      "display_name": "xParCmdVelocityApply_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "linkage_name": null,
+      "address": 1353264,
+      "size": 50,
+      "sha256": "310bdb1870ef3bf43b50b7e75e8d02b43d0360314a7cc9e084e01574b217364b",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 50,
+      "instruction_count": 18,
+      "semantics": {
+        "identity": "Original xParCmdInit stores this callback with independently decoded command type 3 and asset size 8. Shared game source implements the corresponding particle update; source compilation is separate from entry/extent proof."
+      },
+      "address_expressions": [],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1353313,
+        "branches": [
+          {
+            "address": 1353272,
+            "size": 2,
+            "opcode": 116,
+            "target": 1353313
+          },
+          {
+            "address": 1353311,
+            "size": 2,
+            "opcode": 117,
+            "target": 1353280
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [],
+        "callback_registration": {
+          "initializer": {
+            "address": 1350208,
+            "size": 721,
+            "sha256": "f08121e9ac8b7a19886d0f4284366926552fc80883aff857eca0bf1c0f08dc8c"
+          },
+          "table_address": 3620288,
+          "slot_count": 35,
+          "slot_stride": 12,
+          "command_type": 3,
+          "asset_size": 8,
+          "callback_store_address": 1350338,
+          "direct_call_targets": [],
+          "internal_gap_ranges": []
+        }
+      }
+    },
+    {
+      "name": "xParCmdRotateAround_Update",
+      "canonical_identifier": "xParCmdRotateAround_Update(xParCmd*,xParGroup*,F32)",
+      "display_name": "xParCmdRotateAround_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "linkage_name": null,
+      "address": 1353328,
+      "size": 260,
+      "sha256": "0b648a62c748ad90856e68d9c722060e1deeea56dbd96e60d1c4e8dddb6d9927",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 260,
+      "instruction_count": 74,
+      "semantics": {
+        "identity": "Original xParCmdInit stores this callback with independently decoded command type 23 and asset size 32. Shared game source implements the corresponding particle update; source compilation is separate from entry/extent proof."
+      },
+      "address_expressions": [
+        {
+          "offset": 41,
+          "instruction_offset": 39,
+          "symbol": "float:3c8efa35",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 183,
+          "instruction_offset": 181,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 205,
+          "instruction_offset": 203,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        }
+      ],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1353587,
+        "branches": [],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [],
+        "callback_registration": {
+          "initializer": {
+            "address": 1350208,
+            "size": 721,
+            "sha256": "f08121e9ac8b7a19886d0f4284366926552fc80883aff857eca0bf1c0f08dc8c"
+          },
+          "table_address": 3620288,
+          "slot_count": 35,
+          "slot_stride": 12,
+          "command_type": 23,
+          "asset_size": 32,
+          "callback_store_address": 1350712,
+          "direct_call_targets": [
+            1332448,
+            1332800,
+            1333232
+          ],
+          "internal_gap_ranges": []
+        }
+      }
+    },
+    {
+      "name": "xParCmdTexAnim_Update",
+      "canonical_identifier": "xParCmdTexAnim_Update(xParCmd*,xParGroup*,F32)",
+      "display_name": "xParCmdTexAnim_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "linkage_name": null,
+      "address": 1353600,
+      "size": 615,
+      "sha256": "593903dfb6e8e5d3ae85846fa8d58c25cf0b2a64634a28966619ea6fcfd9e281",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 605,
+      "instruction_count": 235,
+      "semantics": {
+        "identity": "Original xParCmdInit stores this callback with independently decoded command type 13 and asset size 24. Shared game source implements the corresponding particle update; source compilation is separate from entry/extent proof."
+      },
+      "address_expressions": [
+        {
+          "offset": 32,
+          "instruction_offset": 30,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        },
+        {
+          "offset": 55,
+          "instruction_offset": 53,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        },
+        {
+          "offset": 95,
+          "instruction_offset": 93,
+          "symbol": "rndseed",
+          "field": "displacement",
+          "prefix": "8b35",
+          "addend": 0
+        },
+        {
+          "offset": 172,
+          "instruction_offset": 170,
+          "symbol": "rndseed",
+          "field": "displacement",
+          "prefix": "8935",
+          "addend": 0
+        }
+      ],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1354214,
+        "branches": [
+          {
+            "address": 1353641,
+            "size": 2,
+            "opcode": 117,
+            "target": 1353676
+          },
+          {
+            "address": 1353683,
+            "size": 2,
+            "opcode": 117,
+            "target": 1353779
+          },
+          {
+            "address": 1353700,
+            "size": 2,
+            "opcode": 235,
+            "target": 1353712
+          },
+          {
+            "address": 1353766,
+            "size": 2,
+            "opcode": 117,
+            "target": 1353712
+          },
+          {
+            "address": 1353819,
+            "size": 2,
+            "opcode": 114,
+            "target": 1353904
+          },
+          {
+            "address": 1353829,
+            "size": 2,
+            "opcode": 117,
+            "target": 1353849
+          },
+          {
+            "address": 1353842,
+            "size": 2,
+            "opcode": 114,
+            "target": 1353904
+          },
+          {
+            "address": 1353847,
+            "size": 2,
+            "opcode": 235,
+            "target": 1353904
+          },
+          {
+            "address": 1353851,
+            "size": 2,
+            "opcode": 117,
+            "target": 1353870
+          },
+          {
+            "address": 1353858,
+            "size": 2,
+            "opcode": 117,
+            "target": 1353863
+          },
+          {
+            "address": 1353868,
+            "size": 2,
+            "opcode": 235,
+            "target": 1353904
+          },
+          {
+            "address": 1353872,
+            "size": 2,
+            "opcode": 117,
+            "target": 1353904
+          },
+          {
+            "address": 1353889,
+            "size": 2,
+            "opcode": 114,
+            "target": 1353904
+          },
+          {
+            "address": 1353908,
+            "size": 2,
+            "opcode": 117,
+            "target": 1353808
+          },
+          {
+            "address": 1353916,
+            "size": 2,
+            "opcode": 117,
+            "target": 1354019
+          },
+          {
+            "address": 1353941,
+            "size": 2,
+            "opcode": 117,
+            "target": 1354004
+          },
+          {
+            "address": 1353956,
+            "size": 2,
+            "opcode": 117,
+            "target": 1353976
+          },
+          {
+            "address": 1353969,
+            "size": 2,
+            "opcode": 114,
+            "target": 1354009
+          },
+          {
+            "address": 1353974,
+            "size": 2,
+            "opcode": 235,
+            "target": 1354009
+          },
+          {
+            "address": 1353978,
+            "size": 2,
+            "opcode": 117,
+            "target": 1354009
+          },
+          {
+            "address": 1353985,
+            "size": 2,
+            "opcode": 117,
+            "target": 1353997
+          },
+          {
+            "address": 1353995,
+            "size": 2,
+            "opcode": 235,
+            "target": 1354009
+          },
+          {
+            "address": 1354002,
+            "size": 2,
+            "opcode": 235,
+            "target": 1354009
+          },
+          {
+            "address": 1354013,
+            "size": 2,
+            "opcode": 117,
+            "target": 1353936
+          },
+          {
+            "address": 1354021,
+            "size": 2,
+            "opcode": 117,
+            "target": 1354131
+          },
+          {
+            "address": 1354053,
+            "size": 2,
+            "opcode": 117,
+            "target": 1354116
+          },
+          {
+            "address": 1354068,
+            "size": 2,
+            "opcode": 117,
+            "target": 1354088
+          },
+          {
+            "address": 1354081,
+            "size": 2,
+            "opcode": 114,
+            "target": 1354121
+          },
+          {
+            "address": 1354086,
+            "size": 2,
+            "opcode": 235,
+            "target": 1354121
+          },
+          {
+            "address": 1354090,
+            "size": 2,
+            "opcode": 117,
+            "target": 1354121
+          },
+          {
+            "address": 1354097,
+            "size": 2,
+            "opcode": 117,
+            "target": 1354109
+          },
+          {
+            "address": 1354107,
+            "size": 2,
+            "opcode": 235,
+            "target": 1354121
+          },
+          {
+            "address": 1354114,
+            "size": 2,
+            "opcode": 235,
+            "target": 1354121
+          },
+          {
+            "address": 1354125,
+            "size": 2,
+            "opcode": 117,
+            "target": 1354048
+          },
+          {
+            "address": 1354133,
+            "size": 2,
+            "opcode": 117,
+            "target": 1354211
+          },
+          {
+            "address": 1354139,
+            "size": 2,
+            "opcode": 118,
+            "target": 1354211
+          },
+          {
+            "address": 1354143,
+            "size": 2,
+            "opcode": 116,
+            "target": 1354211
+          },
+          {
+            "address": 1354156,
+            "size": 2,
+            "opcode": 114,
+            "target": 1354205
+          },
+          {
+            "address": 1354166,
+            "size": 2,
+            "opcode": 117,
+            "target": 1354186
+          },
+          {
+            "address": 1354179,
+            "size": 2,
+            "opcode": 114,
+            "target": 1354205
+          },
+          {
+            "address": 1354184,
+            "size": 2,
+            "opcode": 235,
+            "target": 1354205
+          },
+          {
+            "address": 1354188,
+            "size": 2,
+            "opcode": 117,
+            "target": 1354205
+          },
+          {
+            "address": 1354195,
+            "size": 2,
+            "opcode": 117,
+            "target": 1354200
+          },
+          {
+            "address": 1354209,
+            "size": 2,
+            "opcode": 117,
+            "target": 1354145
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [],
+        "callback_registration": {
+          "initializer": {
+            "address": 1350208,
+            "size": 721,
+            "sha256": "f08121e9ac8b7a19886d0f4284366926552fc80883aff857eca0bf1c0f08dc8c"
+          },
+          "table_address": 3620288,
+          "slot_count": 35,
+          "slot_stride": 12,
+          "command_type": 13,
+          "asset_size": 24,
+          "callback_store_address": 1350562,
+          "direct_call_targets": [],
+          "internal_gap_ranges": [
+            [
+              1353702,
+              1353712
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "name": "xParCmdCollideFall_Update",
+      "canonical_identifier": "xParCmdCollideFall_Update(xParCmd*,xParGroup*,F32)",
+      "display_name": "xParCmdCollideFall_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "linkage_name": null,
+      "address": 1354224,
+      "size": 83,
+      "sha256": "61a8d25d89db7f1e79a35721deacee70f34305c1712ce1a5db83f43400f084fb",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 83,
+      "instruction_count": 30,
+      "semantics": {
+        "identity": "Original xParCmdInit stores this callback with independently decoded command type 29 and asset size 16. Shared game source implements the corresponding particle update; source compilation is separate from entry/extent proof."
+      },
+      "address_expressions": [
+        {
+          "offset": 25,
+          "instruction_offset": 23,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d815",
+          "addend": 0
+        },
+        {
+          "offset": 50,
+          "instruction_offset": 48,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        }
+      ],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1354306,
+        "branches": [
+          {
+            "address": 1354239,
+            "size": 2,
+            "opcode": 116,
+            "target": 1354306
+          },
+          {
+            "address": 1354258,
+            "size": 2,
+            "opcode": 123,
+            "target": 1354298
+          },
+          {
+            "address": 1354283,
+            "size": 2,
+            "opcode": 122,
+            "target": 1354300
+          },
+          {
+            "address": 1354296,
+            "size": 2,
+            "opcode": 235,
+            "target": 1354300
+          },
+          {
+            "address": 1354304,
+            "size": 2,
+            "opcode": 117,
+            "target": 1354241
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [],
+        "callback_registration": {
+          "initializer": {
+            "address": 1350208,
+            "size": 721,
+            "sha256": "f08121e9ac8b7a19886d0f4284366926552fc80883aff857eca0bf1c0f08dc8c"
+          },
+          "table_address": 3620288,
+          "slot_count": 35,
+          "slot_stride": 12,
+          "command_type": 29,
+          "asset_size": 16,
+          "callback_store_address": 1350788,
+          "direct_call_targets": [],
+          "internal_gap_ranges": []
+        }
+      }
+    },
+    {
+      "name": "xParCmdCollideFallSticky_Update",
+      "canonical_identifier": "xParCmdCollideFallSticky_Update(xParCmd*,xParGroup*,F32)",
+      "display_name": "xParCmdCollideFallSticky_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "linkage_name": null,
+      "address": 1354320,
+      "size": 118,
+      "sha256": "fdb4176a65ee3e53eb7a5d49389de9f81f09f60c4f05bbc6f807cf08052940d4",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 118,
+      "instruction_count": 40,
+      "semantics": {
+        "identity": "Original xParCmdInit stores this callback with independently decoded command type 34 and asset size 20. Shared game source implements the corresponding particle update; source compilation is separate from entry/extent proof."
+      },
+      "address_expressions": [
+        {
+          "offset": 6,
+          "instruction_offset": 4,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 40,
+          "instruction_offset": 38,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d815",
+          "addend": 0
+        },
+        {
+          "offset": 65,
+          "instruction_offset": 63,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        }
+      ],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1354437,
+        "branches": [
+          {
+            "address": 1354348,
+            "size": 2,
+            "opcode": 116,
+            "target": 1354437
+          },
+          {
+            "address": 1354369,
+            "size": 2,
+            "opcode": 123,
+            "target": 1354429
+          },
+          {
+            "address": 1354394,
+            "size": 2,
+            "opcode": 122,
+            "target": 1354407
+          },
+          {
+            "address": 1354427,
+            "size": 2,
+            "opcode": 235,
+            "target": 1354431
+          },
+          {
+            "address": 1354435,
+            "size": 2,
+            "opcode": 117,
+            "target": 1354352
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [],
+        "callback_registration": {
+          "initializer": {
+            "address": 1350208,
+            "size": 721,
+            "sha256": "f08121e9ac8b7a19886d0f4284366926552fc80883aff857eca0bf1c0f08dc8c"
+          },
+          "table_address": 3620288,
+          "slot_count": 35,
+          "slot_stride": 12,
+          "command_type": 34,
+          "asset_size": 20,
+          "callback_store_address": 1350814,
+          "direct_call_targets": [],
+          "internal_gap_ranges": []
+        }
+      }
+    },
+    {
+      "name": "xParCmd_DampenSpeed_Update",
+      "canonical_identifier": "xParCmd_DampenSpeed_Update(xParCmd*,xParGroup*,F32)",
+      "display_name": "xParCmd_DampenSpeed_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "linkage_name": null,
+      "address": 1354448,
+      "size": 81,
+      "sha256": "2dc59b591b7850d76d186f3b0107cc051b3c2183a3cbc2dbebd955f8666ceef4",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 81,
+      "instruction_count": 28,
+      "semantics": {
+        "identity": "Original xParCmdInit stores this callback with independently decoded command type 33 and asset size 12. Shared game source implements the corresponding particle update; source compilation is separate from entry/extent proof."
+      },
+      "address_expressions": [],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1354528,
+        "branches": [
+          {
+            "address": 1354460,
+            "size": 2,
+            "opcode": 116,
+            "target": 1354528
+          },
+          {
+            "address": 1354481,
+            "size": 2,
+            "opcode": 116,
+            "target": 1354528
+          },
+          {
+            "address": 1354526,
+            "size": 2,
+            "opcode": 117,
+            "target": 1354483
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [],
+        "callback_registration": {
+          "initializer": {
+            "address": 1350208,
+            "size": 721,
+            "sha256": "f08121e9ac8b7a19886d0f4284366926552fc80883aff857eca0bf1c0f08dc8c"
+          },
+          "table_address": 3620288,
+          "slot_count": 35,
+          "slot_stride": 12,
+          "command_type": 33,
+          "asset_size": 12,
+          "callback_store_address": 1350917,
+          "direct_call_targets": [],
+          "internal_gap_ranges": []
+        }
+      }
+    },
+    {
+      "name": "xParCmd_SizeInOut_Update",
+      "canonical_identifier": "xParCmd_SizeInOut_Update(xParCmd*,xParGroup*,F32)",
+      "display_name": "xParCmd_SizeInOut_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "linkage_name": null,
+      "address": 1354544,
+      "size": 332,
+      "sha256": "ab05462b056c2a1ad371ece524aff31bdadc1194de5a8e30713476cfdf30bb49",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 324,
+      "instruction_count": 100,
+      "semantics": {
+        "identity": "Original xParCmdInit stores this callback with independently decoded command type 32 and asset size 24. Shared game source implements the corresponding particle update; source compilation is separate from entry/extent proof."
+      },
+      "address_expressions": [
+        {
+          "offset": 39,
+          "instruction_offset": 37,
+          "symbol": "float:40400000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 55,
+          "instruction_offset": 53,
+          "symbol": "float:40400000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 71,
+          "instruction_offset": 69,
+          "symbol": "float:40400000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 104,
+          "instruction_offset": 102,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d82d",
+          "addend": 0
+        },
+        {
+          "offset": 110,
+          "instruction_offset": 108,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d815",
+          "addend": 0
+        },
+        {
+          "offset": 123,
+          "instruction_offset": 121,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 142,
+          "instruction_offset": 140,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 150,
+          "instruction_offset": 148,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d815",
+          "addend": 0
+        },
+        {
+          "offset": 165,
+          "instruction_offset": 163,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 173,
+          "instruction_offset": 171,
+          "symbol": "float:3eaaaaab",
+          "field": "displacement",
+          "prefix": "d815",
+          "addend": 0
+        },
+        {
+          "offset": 190,
+          "instruction_offset": 188,
+          "symbol": "float:3f2aaaab",
+          "field": "displacement",
+          "prefix": "d815",
+          "addend": 0
+        },
+        {
+          "offset": 243,
+          "instruction_offset": 241,
+          "symbol": "float:3eaaaaab",
+          "field": "displacement",
+          "prefix": "d825",
+          "addend": 0
+        },
+        {
+          "offset": 249,
+          "instruction_offset": 247,
+          "symbol": "float:3eaaaaab",
+          "field": "displacement",
+          "prefix": "d825",
+          "addend": 0
+        },
+        {
+          "offset": 255,
+          "instruction_offset": 253,
+          "symbol": "float:3eaaaaab",
+          "field": "displacement",
+          "prefix": "d825",
+          "addend": 0
+        },
+        {
+          "offset": 261,
+          "instruction_offset": 259,
+          "symbol": "float:3eaaaaab",
+          "field": "displacement",
+          "prefix": "d825",
+          "addend": 0
+        },
+        {
+          "offset": 267,
+          "instruction_offset": 265,
+          "symbol": "float:3eaaaaab",
+          "field": "displacement",
+          "prefix": "d825",
+          "addend": 0
+        },
+        {
+          "offset": 273,
+          "instruction_offset": 271,
+          "symbol": "float:3eaaaaab",
+          "field": "displacement",
+          "prefix": "d825",
+          "addend": 0
+        },
+        {
+          "offset": 279,
+          "instruction_offset": 277,
+          "symbol": "float:3eaaaaab",
+          "field": "displacement",
+          "prefix": "d825",
+          "addend": 0
+        },
+        {
+          "offset": 285,
+          "instruction_offset": 283,
+          "symbol": "float:3eaaaaab",
+          "field": "displacement",
+          "prefix": "d825",
+          "addend": 0
+        },
+        {
+          "offset": 298,
+          "instruction_offset": 296,
+          "symbol": "float:3eaaaaab",
+          "field": "displacement",
+          "prefix": "d825",
+          "addend": 0
+        }
+      ],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1354875,
+        "branches": [
+          {
+            "address": 1354630,
+            "size": 2,
+            "opcode": 235,
+            "target": 1354640
+          },
+          {
+            "address": 1354663,
+            "size": 2,
+            "opcode": 122,
+            "target": 1354692
+          },
+          {
+            "address": 1354678,
+            "size": 2,
+            "opcode": 117,
+            "target": 1354692
+          },
+          {
+            "address": 1354690,
+            "size": 2,
+            "opcode": 235,
+            "target": 1354755
+          },
+          {
+            "address": 1354703,
+            "size": 2,
+            "opcode": 123,
+            "target": 1354715
+          },
+          {
+            "address": 1354713,
+            "size": 2,
+            "opcode": 235,
+            "target": 1354750
+          },
+          {
+            "address": 1354726,
+            "size": 2,
+            "opcode": 122,
+            "target": 1354732
+          },
+          {
+            "address": 1354730,
+            "size": 2,
+            "opcode": 235,
+            "target": 1354755
+          },
+          {
+            "address": 1354748,
+            "size": 2,
+            "opcode": 123,
+            "target": 1354755
+          },
+          {
+            "address": 1354760,
+            "size": 2,
+            "opcode": 124,
+            "target": 1354835
+          },
+          {
+            "address": 1354833,
+            "size": 2,
+            "opcode": 117,
+            "target": 1354784
+          },
+          {
+            "address": 1354837,
+            "size": 2,
+            "opcode": 126,
+            "target": 1354848
+          },
+          {
+            "address": 1354846,
+            "size": 2,
+            "opcode": 117,
+            "target": 1354839
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [],
+        "callback_registration": {
+          "initializer": {
+            "address": 1350208,
+            "size": 721,
+            "sha256": "f08121e9ac8b7a19886d0f4284366926552fc80883aff857eca0bf1c0f08dc8c"
+          },
+          "table_address": 3620288,
+          "slot_count": 35,
+          "slot_stride": 12,
+          "command_type": 32,
+          "asset_size": 24,
+          "callback_store_address": 1350892,
+          "direct_call_targets": [],
+          "internal_gap_ranges": [
+            [
+              1354632,
+              1354640
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "name": "xParCmd_AlphaInOut_Update",
+      "canonical_identifier": "xParCmd_AlphaInOut_Update(xParCmd*,xParGroup*,F32)",
+      "display_name": "xParCmd_AlphaInOut_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "linkage_name": null,
+      "address": 1354880,
+      "size": 386,
+      "sha256": "967b7f3863b037a8857d155c11e2fe43aa35d3ead89fba022a64a3c185c80a40",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 378,
+      "instruction_count": 116,
+      "semantics": {
+        "identity": "Original xParCmdInit stores this callback with independently decoded command type 31 and asset size 24. Shared game source implements the corresponding particle update; source compilation is separate from entry/extent proof."
+      },
+      "address_expressions": [
+        {
+          "offset": 39,
+          "instruction_offset": 37,
+          "symbol": "float:40400000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 55,
+          "instruction_offset": 53,
+          "symbol": "float:40400000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 71,
+          "instruction_offset": 69,
+          "symbol": "float:40400000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 104,
+          "instruction_offset": 102,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d82d",
+          "addend": 0
+        },
+        {
+          "offset": 110,
+          "instruction_offset": 108,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d815",
+          "addend": 0
+        },
+        {
+          "offset": 123,
+          "instruction_offset": 121,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 142,
+          "instruction_offset": 140,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 150,
+          "instruction_offset": 148,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d815",
+          "addend": 0
+        },
+        {
+          "offset": 165,
+          "instruction_offset": 163,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 173,
+          "instruction_offset": 171,
+          "symbol": "float:3eaaaaab",
+          "field": "displacement",
+          "prefix": "d815",
+          "addend": 0
+        },
+        {
+          "offset": 190,
+          "instruction_offset": 188,
+          "symbol": "float:3f2aaaab",
+          "field": "displacement",
+          "prefix": "d815",
+          "addend": 0
+        },
+        {
+          "offset": 243,
+          "instruction_offset": 241,
+          "symbol": "float:3eaaaaab",
+          "field": "displacement",
+          "prefix": "d825",
+          "addend": 0
+        },
+        {
+          "offset": 249,
+          "instruction_offset": 247,
+          "symbol": "float:3eaaaaab",
+          "field": "displacement",
+          "prefix": "d825",
+          "addend": 0
+        },
+        {
+          "offset": 255,
+          "instruction_offset": 253,
+          "symbol": "float:3eaaaaab",
+          "field": "displacement",
+          "prefix": "d825",
+          "addend": 0
+        },
+        {
+          "offset": 261,
+          "instruction_offset": 259,
+          "symbol": "float:3eaaaaab",
+          "field": "displacement",
+          "prefix": "d825",
+          "addend": 0
+        },
+        {
+          "offset": 267,
+          "instruction_offset": 265,
+          "symbol": "float:3eaaaaab",
+          "field": "displacement",
+          "prefix": "d825",
+          "addend": 0
+        },
+        {
+          "offset": 273,
+          "instruction_offset": 271,
+          "symbol": "float:3eaaaaab",
+          "field": "displacement",
+          "prefix": "d825",
+          "addend": 0
+        },
+        {
+          "offset": 279,
+          "instruction_offset": 277,
+          "symbol": "float:3eaaaaab",
+          "field": "displacement",
+          "prefix": "d825",
+          "addend": 0
+        },
+        {
+          "offset": 285,
+          "instruction_offset": 283,
+          "symbol": "float:3eaaaaab",
+          "field": "displacement",
+          "prefix": "d825",
+          "addend": 0
+        },
+        {
+          "offset": 298,
+          "instruction_offset": 296,
+          "symbol": "float:3eaaaaab",
+          "field": "displacement",
+          "prefix": "d825",
+          "addend": 0
+        },
+        {
+          "offset": 314,
+          "instruction_offset": 312,
+          "symbol": "float:437f0000",
+          "field": "displacement",
+          "prefix": "d815",
+          "addend": 0
+        },
+        {
+          "offset": 327,
+          "instruction_offset": 325,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 344,
+          "instruction_offset": 342,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 354,
+          "instruction_offset": 352,
+          "symbol": "float:437f0000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        }
+      ],
+      "direct_calls": [
+        {
+          "offset": 362,
+          "symbol": "__ftol2"
+        }
+      ],
+      "corroboration": {
+        "return_address": 1355265,
+        "branches": [
+          {
+            "address": 1354966,
+            "size": 2,
+            "opcode": 235,
+            "target": 1354976
+          },
+          {
+            "address": 1354999,
+            "size": 2,
+            "opcode": 122,
+            "target": 1355028
+          },
+          {
+            "address": 1355014,
+            "size": 2,
+            "opcode": 117,
+            "target": 1355028
+          },
+          {
+            "address": 1355026,
+            "size": 2,
+            "opcode": 235,
+            "target": 1355091
+          },
+          {
+            "address": 1355039,
+            "size": 2,
+            "opcode": 123,
+            "target": 1355051
+          },
+          {
+            "address": 1355049,
+            "size": 2,
+            "opcode": 235,
+            "target": 1355086
+          },
+          {
+            "address": 1355062,
+            "size": 2,
+            "opcode": 122,
+            "target": 1355068
+          },
+          {
+            "address": 1355066,
+            "size": 2,
+            "opcode": 235,
+            "target": 1355091
+          },
+          {
+            "address": 1355084,
+            "size": 2,
+            "opcode": 123,
+            "target": 1355091
+          },
+          {
+            "address": 1355096,
+            "size": 2,
+            "opcode": 124,
+            "target": 1355171
+          },
+          {
+            "address": 1355169,
+            "size": 2,
+            "opcode": 117,
+            "target": 1355120
+          },
+          {
+            "address": 1355173,
+            "size": 2,
+            "opcode": 126,
+            "target": 1355184
+          },
+          {
+            "address": 1355182,
+            "size": 2,
+            "opcode": 117,
+            "target": 1355175
+          },
+          {
+            "address": 1355203,
+            "size": 2,
+            "opcode": 122,
+            "target": 1355230
+          },
+          {
+            "address": 1355218,
+            "size": 2,
+            "opcode": 117,
+            "target": 1355238
+          },
+          {
+            "address": 1355228,
+            "size": 2,
+            "opcode": 235,
+            "target": 1355238
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [],
+        "callback_registration": {
+          "initializer": {
+            "address": 1350208,
+            "size": 721,
+            "sha256": "f08121e9ac8b7a19886d0f4284366926552fc80883aff857eca0bf1c0f08dc8c"
+          },
+          "table_address": 3620288,
+          "slot_count": 35,
+          "slot_stride": 12,
+          "command_type": 31,
+          "asset_size": 24,
+          "callback_store_address": 1350876,
+          "direct_call_targets": [
+            1824368
+          ],
+          "internal_gap_ranges": [
+            [
+              1354968,
+              1354976
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "name": "xParCmd_Shaper_Update",
+      "canonical_identifier": "xParCmd_Shaper_Update(xParCmd*,xParGroup*,F32)",
+      "display_name": "xParCmd_Shaper_Update(xParCmd*,xParGroup*,F32)",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "linkage_name": null,
+      "address": 1355280,
+      "size": 624,
+      "sha256": "213056f77def579548f4a96d80b0ff5f26e2e9b53617c745d412af2a97263ed9",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 621,
+      "instruction_count": 189,
+      "semantics": {
+        "identity": "Original xParCmdInit stores this callback with independently decoded command type 30 and asset size 48. Shared game source implements the corresponding particle update; source compilation is separate from entry/extent proof."
+      },
+      "address_expressions": [
+        {
+          "offset": 62,
+          "instruction_offset": 60,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        },
+        {
+          "offset": 84,
+          "instruction_offset": 82,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        },
+        {
+          "offset": 114,
+          "instruction_offset": 112,
+          "symbol": "float:40400000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 130,
+          "instruction_offset": 128,
+          "symbol": "float:40400000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 146,
+          "instruction_offset": 144,
+          "symbol": "float:40400000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 162,
+          "instruction_offset": 160,
+          "symbol": "float:40400000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 178,
+          "instruction_offset": 176,
+          "symbol": "float:40400000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 194,
+          "instruction_offset": 192,
+          "symbol": "float:40400000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 262,
+          "instruction_offset": 260,
+          "symbol": "float:3727c5ac",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        },
+        {
+          "offset": 297,
+          "instruction_offset": 295,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d82d",
+          "addend": 0
+        },
+        {
+          "offset": 303,
+          "instruction_offset": 301,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d815",
+          "addend": 0
+        },
+        {
+          "offset": 316,
+          "instruction_offset": 314,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 335,
+          "instruction_offset": 333,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 343,
+          "instruction_offset": 341,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d815",
+          "addend": 0
+        },
+        {
+          "offset": 358,
+          "instruction_offset": 356,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 366,
+          "instruction_offset": 364,
+          "symbol": "float:3eaaaaab",
+          "field": "displacement",
+          "prefix": "d815",
+          "addend": 0
+        },
+        {
+          "offset": 383,
+          "instruction_offset": 381,
+          "symbol": "float:3f2aaaab",
+          "field": "displacement",
+          "prefix": "d815",
+          "addend": 0
+        },
+        {
+          "offset": 435,
+          "instruction_offset": 433,
+          "symbol": "float:3eaaaaab",
+          "field": "displacement",
+          "prefix": "d825",
+          "addend": 0
+        },
+        {
+          "offset": 441,
+          "instruction_offset": 439,
+          "symbol": "float:3eaaaaab",
+          "field": "displacement",
+          "prefix": "d825",
+          "addend": 0
+        },
+        {
+          "offset": 447,
+          "instruction_offset": 445,
+          "symbol": "float:3eaaaaab",
+          "field": "displacement",
+          "prefix": "d825",
+          "addend": 0
+        },
+        {
+          "offset": 453,
+          "instruction_offset": 451,
+          "symbol": "float:3eaaaaab",
+          "field": "displacement",
+          "prefix": "d825",
+          "addend": 0
+        },
+        {
+          "offset": 459,
+          "instruction_offset": 457,
+          "symbol": "float:3eaaaaab",
+          "field": "displacement",
+          "prefix": "d825",
+          "addend": 0
+        },
+        {
+          "offset": 465,
+          "instruction_offset": 463,
+          "symbol": "float:3eaaaaab",
+          "field": "displacement",
+          "prefix": "d825",
+          "addend": 0
+        },
+        {
+          "offset": 471,
+          "instruction_offset": 469,
+          "symbol": "float:3eaaaaab",
+          "field": "displacement",
+          "prefix": "d825",
+          "addend": 0
+        },
+        {
+          "offset": 477,
+          "instruction_offset": 475,
+          "symbol": "float:3eaaaaab",
+          "field": "displacement",
+          "prefix": "d825",
+          "addend": 0
+        },
+        {
+          "offset": 499,
+          "instruction_offset": 497,
+          "symbol": "float:3eaaaaab",
+          "field": "displacement",
+          "prefix": "d825",
+          "addend": 0
+        },
+        {
+          "offset": 536,
+          "instruction_offset": 534,
+          "symbol": "float:437f0000",
+          "field": "displacement",
+          "prefix": "d815",
+          "addend": 0
+        },
+        {
+          "offset": 549,
+          "instruction_offset": 547,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 566,
+          "instruction_offset": 564,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 587,
+          "instruction_offset": 585,
+          "symbol": "float:437f0000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        }
+      ],
+      "direct_calls": [
+        {
+          "offset": 574,
+          "symbol": "__ftol2"
+        },
+        {
+          "offset": 595,
+          "symbol": "__ftol2"
+        }
+      ],
+      "corroboration": {
+        "return_address": 1355903,
+        "branches": [
+          {
+            "address": 1355351,
+            "size": 2,
+            "opcode": 122,
+            "target": 1355359
+          },
+          {
+            "address": 1355373,
+            "size": 2,
+            "opcode": 122,
+            "target": 1355377
+          },
+          {
+            "address": 1355559,
+            "size": 2,
+            "opcode": 117,
+            "target": 1355569
+          },
+          {
+            "address": 1355592,
+            "size": 2,
+            "opcode": 122,
+            "target": 1355621
+          },
+          {
+            "address": 1355607,
+            "size": 2,
+            "opcode": 117,
+            "target": 1355621
+          },
+          {
+            "address": 1355619,
+            "size": 2,
+            "opcode": 235,
+            "target": 1355684
+          },
+          {
+            "address": 1355632,
+            "size": 2,
+            "opcode": 123,
+            "target": 1355644
+          },
+          {
+            "address": 1355642,
+            "size": 2,
+            "opcode": 235,
+            "target": 1355679
+          },
+          {
+            "address": 1355655,
+            "size": 2,
+            "opcode": 122,
+            "target": 1355661
+          },
+          {
+            "address": 1355659,
+            "size": 2,
+            "opcode": 235,
+            "target": 1355684
+          },
+          {
+            "address": 1355677,
+            "size": 2,
+            "opcode": 123,
+            "target": 1355684
+          },
+          {
+            "address": 1355689,
+            "size": 2,
+            "opcode": 124,
+            "target": 1355767
+          },
+          {
+            "address": 1355761,
+            "size": 2,
+            "opcode": 117,
+            "target": 1355712
+          },
+          {
+            "address": 1355769,
+            "size": 2,
+            "opcode": 126,
+            "target": 1355785
+          },
+          {
+            "address": 1355771,
+            "size": 2,
+            "opcode": 235,
+            "target": 1355776
+          },
+          {
+            "address": 1355783,
+            "size": 2,
+            "opcode": 117,
+            "target": 1355776
+          },
+          {
+            "address": 1355787,
+            "size": 2,
+            "opcode": 116,
+            "target": 1355802
+          },
+          {
+            "address": 1355804,
+            "size": 2,
+            "opcode": 116,
+            "target": 1355884
+          },
+          {
+            "address": 1355825,
+            "size": 2,
+            "opcode": 122,
+            "target": 1355863
+          },
+          {
+            "address": 1355840,
+            "size": 2,
+            "opcode": 117,
+            "target": 1355871
+          },
+          {
+            "address": 1355861,
+            "size": 2,
+            "opcode": 235,
+            "target": 1355886
+          },
+          {
+            "address": 1355882,
+            "size": 2,
+            "opcode": 235,
+            "target": 1355886
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [],
+        "callback_registration": {
+          "initializer": {
+            "address": 1350208,
+            "size": 721,
+            "sha256": "f08121e9ac8b7a19886d0f4284366926552fc80883aff857eca0bf1c0f08dc8c"
+          },
+          "table_address": 3620288,
+          "slot_count": 35,
+          "slot_stride": 12,
+          "command_type": 30,
+          "asset_size": 48,
+          "callback_store_address": 1350844,
+          "direct_call_targets": [
+            1824368
+          ],
+          "internal_gap_ranges": [
+            [
+              1355773,
+              1355776
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "name": "xParGroupRegister",
+      "canonical_identifier": "xParGroupRegister(xParGroup*)",
+      "display_name": "xParGroupRegister(xParGroup*)",
+      "source": "SB/Core/x/xParGroup.cpp",
+      "linkage_name": null,
+      "address": 1368288,
+      "size": 85,
+      "sha256": "6c9dce71d6b5ac48c3ac02720118337d2a6a0f7b20a8d7775c7eb16ce97cdebc",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": false,
+      "retail_link_verified": false,
+      "instruction_bytes": 85,
+      "instruction_count": 26,
+      "semantics": {
+        "identity": "Lazy initialization of 255 group slots, then first-free-slot registration and byte registration index."
+      },
+      "address_expressions": [
+        {
+          "offset": 1,
+          "symbol": "sParGroupRegTableInit",
+          "addend": 0,
+          "instruction_offset": 0,
+          "field": "displacement",
+          "prefix": "a1"
+        },
+        {
+          "offset": 18,
+          "symbol": "sParGroupRegTable",
+          "addend": 0,
+          "instruction_offset": 17,
+          "field": "immediate",
+          "prefix": "bf"
+        },
+        {
+          "offset": 35,
+          "symbol": "sParGroupRegTableCount",
+          "addend": 0,
+          "instruction_offset": 34,
+          "field": "displacement",
+          "prefix": "a3"
+        },
+        {
+          "offset": 54,
+          "symbol": "sParGroupRegTable",
+          "addend": 0,
+          "instruction_offset": 51,
+          "field": "displacement",
+          "prefix": "8b3c8d"
+        },
+        {
+          "offset": 76,
+          "symbol": "sParGroupRegTable",
+          "addend": 0,
+          "instruction_offset": 73,
+          "field": "displacement",
+          "prefix": "89148d"
+        }
+      ],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1368372,
+        "branches": [
+          {
+            "address": 1368296,
+            "size": 2,
+            "opcode": 117,
+            "target": 1368327
+          },
+          {
+            "address": 1368348,
+            "size": 2,
+            "opcode": 116,
+            "target": 1368358
+          },
+          {
+            "address": 1368354,
+            "size": 2,
+            "opcode": 114,
+            "target": 1368336
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1370649,
+            "target": 1368288
+          }
+        ],
+        "internal_alignment": [],
+        "following_padding": {
+          "address": 1368373,
+          "size": 11,
+          "byte": 204
+        },
+        "next_function_address": 1368384
+      }
+    },
+    {
+      "name": "xParGroupUnregister",
+      "canonical_identifier": "xParGroupUnregister(xParGroup*)",
+      "display_name": "xParGroupUnregister(xParGroup*)",
+      "source": "SB/Core/x/xParGroup.cpp",
+      "linkage_name": null,
+      "address": 1368384,
+      "size": 51,
+      "sha256": "d33fc85e0d2be590bf1af6660a3e3f63ca189182ca9a02b82080d0b4933b2a23",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": false,
+      "retail_link_verified": false,
+      "instruction_bytes": 42,
+      "instruction_count": 19,
+      "semantics": {
+        "identity": "Search 255 slots for the supplied group pointer, clear its slot and byte registration index."
+      },
+      "address_expressions": [
+        {
+          "offset": 22,
+          "symbol": "sParGroupRegTable",
+          "addend": 0,
+          "instruction_offset": 19,
+          "field": "displacement",
+          "prefix": "390cb5"
+        },
+        {
+          "offset": 42,
+          "symbol": "sParGroupRegTable",
+          "addend": 0,
+          "instruction_offset": 39,
+          "field": "displacement",
+          "prefix": "891485"
+        }
+      ],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1368434,
+        "branches": [
+          {
+            "address": 1368389,
+            "size": 2,
+            "opcode": 235,
+            "target": 1368400
+          },
+          {
+            "address": 1368410,
+            "size": 2,
+            "opcode": 116,
+            "target": 1368420
+          },
+          {
+            "address": 1368416,
+            "size": 2,
+            "opcode": 114,
+            "target": 1368400
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1071586,
+            "target": 1368384
+          }
+        ],
+        "internal_alignment": [
+          {
+            "address": 1368391,
+            "size": 9,
+            "sha256": "6459fd2f45d34e666a89a2e00fd1a87a546358d47dfcb9ac22a2b4965690c28e"
+          }
+        ],
+        "following_padding": {
+          "address": 1368435,
+          "size": 13,
+          "byte": 204
+        },
+        "next_function_address": 1368448
+      }
+    },
+    {
+      "name": "xParGroupAnimate",
+      "canonical_identifier": "xParGroupAnimate(xParGroup*,F32)",
+      "display_name": "xParGroupAnimate(xParGroup*,F32)",
+      "source": "SB/Core/x/xParGroup.cpp",
+      "linkage_name": null,
+      "address": 1368448,
+      "size": 361,
+      "sha256": "111ad171f723edc929f8c8a5c92755db3ff84a78ef289feb591d4e0ec78e3189",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": false,
+      "retail_link_verified": false,
+      "instruction_bytes": 361,
+      "instruction_count": 113,
+      "semantics": {
+        "identity": "Traverse live particles; kill negative lifetimes; integrate/clamp four float color channels to bytes, size velocity, and aging with NOAGING flag."
+      },
+      "address_expressions": [
+        {
+          "offset": 18,
+          "symbol": "float:00000000",
+          "addend": 0,
+          "instruction_offset": 16,
+          "field": "displacement",
+          "prefix": "d905"
+        },
+        {
+          "offset": 39,
+          "symbol": "float:00000000",
+          "addend": 0,
+          "instruction_offset": 37,
+          "field": "displacement",
+          "prefix": "d81d"
+        },
+        {
+          "offset": 78,
+          "symbol": "float:00000000",
+          "addend": 0,
+          "instruction_offset": 76,
+          "field": "displacement",
+          "prefix": "d815"
+        },
+        {
+          "offset": 93,
+          "symbol": "float:00000000",
+          "addend": 0,
+          "instruction_offset": 91,
+          "field": "displacement",
+          "prefix": "d905"
+        },
+        {
+          "offset": 101,
+          "symbol": "float:437f0000",
+          "addend": 0,
+          "instruction_offset": 99,
+          "field": "displacement",
+          "prefix": "d815"
+        },
+        {
+          "offset": 116,
+          "symbol": "float:437f0000",
+          "addend": 0,
+          "instruction_offset": 114,
+          "field": "displacement",
+          "prefix": "d905"
+        },
+        {
+          "offset": 143,
+          "symbol": "float:00000000",
+          "addend": 0,
+          "instruction_offset": 141,
+          "field": "displacement",
+          "prefix": "d815"
+        },
+        {
+          "offset": 158,
+          "symbol": "float:00000000",
+          "addend": 0,
+          "instruction_offset": 156,
+          "field": "displacement",
+          "prefix": "d905"
+        },
+        {
+          "offset": 166,
+          "symbol": "float:437f0000",
+          "addend": 0,
+          "instruction_offset": 164,
+          "field": "displacement",
+          "prefix": "d815"
+        },
+        {
+          "offset": 181,
+          "symbol": "float:437f0000",
+          "addend": 0,
+          "instruction_offset": 179,
+          "field": "displacement",
+          "prefix": "d905"
+        },
+        {
+          "offset": 208,
+          "symbol": "float:00000000",
+          "addend": 0,
+          "instruction_offset": 206,
+          "field": "displacement",
+          "prefix": "d815"
+        },
+        {
+          "offset": 223,
+          "symbol": "float:00000000",
+          "addend": 0,
+          "instruction_offset": 221,
+          "field": "displacement",
+          "prefix": "d905"
+        },
+        {
+          "offset": 231,
+          "symbol": "float:437f0000",
+          "addend": 0,
+          "instruction_offset": 229,
+          "field": "displacement",
+          "prefix": "d815"
+        },
+        {
+          "offset": 246,
+          "symbol": "float:437f0000",
+          "addend": 0,
+          "instruction_offset": 244,
+          "field": "displacement",
+          "prefix": "d905"
+        },
+        {
+          "offset": 273,
+          "symbol": "float:00000000",
+          "addend": 0,
+          "instruction_offset": 271,
+          "field": "displacement",
+          "prefix": "d815"
+        },
+        {
+          "offset": 288,
+          "symbol": "float:00000000",
+          "addend": 0,
+          "instruction_offset": 286,
+          "field": "displacement",
+          "prefix": "d905"
+        },
+        {
+          "offset": 296,
+          "symbol": "float:437f0000",
+          "addend": 0,
+          "instruction_offset": 294,
+          "field": "displacement",
+          "prefix": "d815"
+        },
+        {
+          "offset": 311,
+          "symbol": "float:437f0000",
+          "addend": 0,
+          "instruction_offset": 309,
+          "field": "displacement",
+          "prefix": "d905"
+        }
+      ],
+      "direct_calls": [
+        {
+          "offset": 57,
+          "symbol": "xParGroupKillPar(xParGroup*,xPar*)"
+        },
+        {
+          "offset": 124,
+          "symbol": "__ftol2"
+        },
+        {
+          "offset": 189,
+          "symbol": "__ftol2"
+        },
+        {
+          "offset": 254,
+          "symbol": "__ftol2"
+        },
+        {
+          "offset": 319,
+          "symbol": "__ftol2"
+        }
+      ],
+      "corroboration": {
+        "return_address": 1368808,
+        "branches": [
+          {
+            "address": 1368460,
+            "size": 2,
+            "opcode": 116,
+            "target": 1368470
+          },
+          {
+            "address": 1368472,
+            "size": 2,
+            "opcode": 117,
+            "target": 1368482
+          },
+          {
+            "address": 1368496,
+            "size": 2,
+            "opcode": 122,
+            "target": 1368514
+          },
+          {
+            "address": 1368535,
+            "size": 2,
+            "opcode": 122,
+            "target": 1368547
+          },
+          {
+            "address": 1368545,
+            "size": 2,
+            "opcode": 235,
+            "target": 1368568
+          },
+          {
+            "address": 1368558,
+            "size": 2,
+            "opcode": 117,
+            "target": 1368568
+          },
+          {
+            "address": 1368600,
+            "size": 2,
+            "opcode": 122,
+            "target": 1368612
+          },
+          {
+            "address": 1368610,
+            "size": 2,
+            "opcode": 235,
+            "target": 1368633
+          },
+          {
+            "address": 1368623,
+            "size": 2,
+            "opcode": 117,
+            "target": 1368633
+          },
+          {
+            "address": 1368665,
+            "size": 2,
+            "opcode": 122,
+            "target": 1368677
+          },
+          {
+            "address": 1368675,
+            "size": 2,
+            "opcode": 235,
+            "target": 1368698
+          },
+          {
+            "address": 1368688,
+            "size": 2,
+            "opcode": 117,
+            "target": 1368698
+          },
+          {
+            "address": 1368730,
+            "size": 2,
+            "opcode": 122,
+            "target": 1368742
+          },
+          {
+            "address": 1368740,
+            "size": 2,
+            "opcode": 235,
+            "target": 1368763
+          },
+          {
+            "address": 1368753,
+            "size": 2,
+            "opcode": 117,
+            "target": 1368763
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1371419,
+            "target": 1368448
+          }
+        ],
+        "internal_alignment": [],
+        "following_padding": {
+          "address": 1368809,
+          "size": 7,
+          "byte": 204
+        },
+        "next_function_address": 1368816
+      }
+    },
+    {
+      "name": "xParGroupAddPar",
+      "canonical_identifier": "xParGroupAddPar(xParGroup*)",
+      "display_name": "xParGroupAddPar(xParGroup*)",
+      "source": "SB/Core/x/xParGroup.cpp",
+      "linkage_name": null,
+      "address": 1368816,
+      "size": 209,
+      "sha256": "2985b56cfc4f295a2e2bbc596616c1b4f841a21931594f8cf4a77622ceef8099",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": false,
+      "retail_link_verified": false,
+      "instruction_bytes": 201,
+      "instruction_count": 83,
+      "semantics": {
+        "identity": "Allocate from reviewed global particle free list or local dead list; reclaim a lower-priority group particle on exhaustion; initialize and link to live root."
+      },
+      "address_expressions": [
+        {
+          "offset": 16,
+          "symbol": "gParDead",
+          "addend": 0,
+          "instruction_offset": 15,
+          "field": "displacement",
+          "prefix": "a1"
+        },
+        {
+          "offset": 37,
+          "symbol": "gParDead",
+          "addend": 0,
+          "instruction_offset": 35,
+          "field": "displacement",
+          "prefix": "890d"
+        },
+        {
+          "offset": 70,
+          "symbol": "sParGroupRegTable",
+          "addend": 0,
+          "instruction_offset": 67,
+          "field": "displacement",
+          "prefix": "8b0c95"
+        },
+        {
+          "offset": 124,
+          "symbol": "sParGroupRegTable",
+          "addend": 0,
+          "instruction_offset": 121,
+          "field": "displacement",
+          "prefix": "8b1485"
+        }
+      ],
+      "direct_calls": [
+        {
+          "offset": 131,
+          "symbol": "xParGroupKillPar(xParGroup*,xPar*)"
+        },
+        {
+          "offset": 136,
+          "symbol": "xParAlloc()"
+        },
+        {
+          "offset": 145,
+          "symbol": "xParInit(xPar*)"
+        }
+      ],
+      "corroboration": {
+        "return_address": 1369024,
+        "branches": [
+          {
+            "address": 1368838,
+            "size": 2,
+            "opcode": 116,
+            "target": 1368864
+          },
+          {
+            "address": 1368844,
+            "size": 2,
+            "opcode": 116,
+            "target": 1368849
+          },
+          {
+            "address": 1368862,
+            "size": 2,
+            "opcode": 235,
+            "target": 1368960
+          },
+          {
+            "address": 1368870,
+            "size": 2,
+            "opcode": 235,
+            "target": 1368880
+          },
+          {
+            "address": 1368892,
+            "size": 2,
+            "opcode": 116,
+            "target": 1368923
+          },
+          {
+            "address": 1368896,
+            "size": 2,
+            "opcode": 116,
+            "target": 1368923
+          },
+          {
+            "address": 1368904,
+            "size": 2,
+            "opcode": 116,
+            "target": 1368923
+          },
+          {
+            "address": 1368909,
+            "size": 2,
+            "opcode": 117,
+            "target": 1368923
+          },
+          {
+            "address": 1368917,
+            "size": 2,
+            "opcode": 125,
+            "target": 1368923
+          },
+          {
+            "address": 1368921,
+            "size": 2,
+            "opcode": 117,
+            "target": 1368934
+          },
+          {
+            "address": 1368927,
+            "size": 2,
+            "opcode": 114,
+            "target": 1368880
+          },
+          {
+            "address": 1368958,
+            "size": 2,
+            "opcode": 116,
+            "target": 1368996
+          },
+          {
+            "address": 1368985,
+            "size": 2,
+            "opcode": 116,
+            "target": 1368994
+          },
+          {
+            "address": 1369004,
+            "size": 2,
+            "opcode": 116,
+            "target": 1369020
+          },
+          {
+            "address": 1369013,
+            "size": 2,
+            "opcode": 116,
+            "target": 1368956
+          },
+          {
+            "address": 1369018,
+            "size": 2,
+            "opcode": 235,
+            "target": 1368956
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1359543,
+            "target": 1368816
+          }
+        ],
+        "internal_alignment": [
+          {
+            "address": 1368872,
+            "size": 8,
+            "sha256": "c6c5e53a181580333c3d9b6dfd57f37f0ecde9b739c5bd8887704cf87dad1e17"
+          }
+        ],
+        "following_padding": {
+          "address": 1369025,
+          "size": 15,
+          "byte": 204
+        },
+        "next_function_address": 1369040
+      }
+    },
+    {
+      "name": "xParGroupKillPar",
+      "canonical_identifier": "xParGroupKillPar(xParGroup*,xPar*)",
+      "display_name": "xParGroupKillPar(xParGroup*,xPar*)",
+      "source": "SB/Core/x/xParGroup.cpp",
+      "linkage_name": null,
+      "address": 1369040,
+      "size": 137,
+      "sha256": "8e3917ef4684fcfb722c6793bfdde64754d7866b3c113ba510dbde76845c47bb",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": false,
+      "retail_link_verified": false,
+      "instruction_bytes": 137,
+      "instruction_count": 60,
+      "semantics": {
+        "identity": "Unlink particle from group live list, decrement count, return to reviewed global free list or local dead list according to allocation flag."
+      },
+      "address_expressions": [
+        {
+          "offset": 89,
+          "symbol": "gParDead",
+          "addend": 0,
+          "instruction_offset": 87,
+          "field": "displacement",
+          "prefix": "8b0d"
+        },
+        {
+          "offset": 107,
+          "symbol": "gParDead",
+          "addend": 0,
+          "instruction_offset": 106,
+          "field": "displacement",
+          "prefix": "a3"
+        }
+      ],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1369176,
+        "branches": [
+          {
+            "address": 1369050,
+            "size": 2,
+            "opcode": 117,
+            "target": 1369063
+          },
+          {
+            "address": 1369056,
+            "size": 2,
+            "opcode": 116,
+            "target": 1369084
+          },
+          {
+            "address": 1369061,
+            "size": 2,
+            "opcode": 235,
+            "target": 1369084
+          },
+          {
+            "address": 1369065,
+            "size": 2,
+            "opcode": 116,
+            "target": 1369073
+          },
+          {
+            "address": 1369078,
+            "size": 2,
+            "opcode": 116,
+            "target": 1369084
+          },
+          {
+            "address": 1369102,
+            "size": 2,
+            "opcode": 116,
+            "target": 1369153
+          },
+          {
+            "address": 1369108,
+            "size": 2,
+            "opcode": 116,
+            "target": 1369116
+          },
+          {
+            "address": 1369121,
+            "size": 2,
+            "opcode": 116,
+            "target": 1369127
+          },
+          {
+            "address": 1369135,
+            "size": 2,
+            "opcode": 116,
+            "target": 1369140
+          },
+          {
+            "address": 1369158,
+            "size": 2,
+            "opcode": 116,
+            "target": 1369163
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1368946,
+            "target": 1369040
+          }
+        ],
+        "internal_alignment": [],
+        "following_padding": {
+          "address": 1369177,
+          "size": 7,
+          "byte": 204
+        },
+        "next_function_address": 1369184
       }
     },
     {
@@ -1506,6 +5222,71 @@
           "sha256": "4e908ddd23de93da9f9edd5660197715aa4fcc563721b419805be28794dc5b46",
           "description": "Hex-prefix substring branch and alternate bounded-hash identifier branch in the actual caller."
         }
+      }
+    },
+    {
+      "name": "__ftol2",
+      "canonical_identifier": "__ftol2",
+      "display_name": "__ftol2",
+      "source": "Runtime/MSVC/ftol2.obj",
+      "linkage_name": null,
+      "address": 1824368,
+      "size": 117,
+      "sha256": "5333b186c02836974c6f792303aeb2c00d856316b93ccbbe65f51def6ae661b4",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": false,
+      "retail_link_verified": false,
+      "instruction_bytes": 117,
+      "instruction_count": 37,
+      "semantics": {
+        "identity": "Microsoft CRT float-to-integer helper, exact full body equal to ftol2.obj from the Microsoft-signed Toolkit 2003 libcmt.lib; returns EDX:EAX from x87 ST0."
+      },
+      "address_expressions": [],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1824484,
+        "branches": [
+          {
+            "address": 1824401,
+            "size": 2,
+            "opcode": 116,
+            "target": 1824463
+          },
+          {
+            "address": 1824407,
+            "size": 2,
+            "opcode": 121,
+            "target": 1824439
+          },
+          {
+            "address": 1824437,
+            "size": 2,
+            "opcode": 235,
+            "target": 1824483
+          },
+          {
+            "address": 1824461,
+            "size": 2,
+            "opcode": 235,
+            "target": 1824483
+          },
+          {
+            "address": 1824473,
+            "size": 2,
+            "opcode": 117,
+            "target": 1824403
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1368571,
+            "target": 1824368
+          }
+        ],
+        "internal_alignment": []
       }
     }
   ]

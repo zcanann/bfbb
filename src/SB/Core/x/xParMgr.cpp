@@ -23,6 +23,9 @@ void xParMgrInit()
     }
 }
 
+#if defined(PS2)
+inline
+#endif
 void xParMgrKillAllParticles()
 {
 }

@@ -10,12 +10,14 @@ inline void xMat4x3Copy(xMat4x3* o, const xMat4x3* m)
     memcpy(o, m, sizeof(xMat4x3));
 }
 
+#if !defined(XBOX)
 inline void xQuatConj(xQuat* o, const xQuat* q)
 {
     o->s = q->s;
 
     xVec3Inv(&o->v, &q->v);
 }
+#endif
 
 inline void xMat3x3LookAt(xMat3x3* m, const xVec3* pos, const xVec3* at)
 {

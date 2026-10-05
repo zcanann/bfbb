@@ -134,7 +134,7 @@ struct xVec3
 F32 xVec3Normalize(xVec3* o, const xVec3* v);
 F32 xVec3NormalizeFast(xVec3* o, const xVec3* v);
 void xVec3Copy(xVec3* dst, const xVec3* src);
-#if defined(PS2)
+#if defined(PS2) || defined(XBOX)
 inline F32 xVec3Dot(const xVec3* a, const xVec3* b)
 {
     return a->x * b->x + a->y * b->y + a->z * b->z;
@@ -151,7 +151,7 @@ inline xVec3& xVec3::assign(float dt)
 // Retail has these as weak header inlines (xBound/xCollide own the copies).
 // zParPTank opts in so its emitted copies form the inline group that the
 // snow_particle_data assignment joins, as in the retail object.
-#ifdef XVEC3_SCALE_ADD_INLINE
+#if defined(XVEC3_SCALE_ADD_INLINE) || defined(XBOX)
 inline xVec3 xVec3::operator*(F32 f) const
 {
     xVec3 temp = *this;
@@ -191,6 +191,41 @@ static inline void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
     o->x = x;
     o->y = y;
     o->z = z;
+}
+#endif
+
+#if defined(XBOX)
+inline xVec3 xVec3::operator+(const xVec3& v) const
+{
+    xVec3 vec = *this;
+    vec += v;
+    return vec;
+}
+
+inline xVec3 xVec3::operator-(const xVec3& v) const
+{
+    xVec3 temp = *this;
+    temp -= v;
+
+    return temp;
+}
+
+inline xVec3& xVec3::operator-=(const xVec3& v)
+{
+    this->x -= v.x;
+    this->y -= v.y;
+    this->z -= v.z;
+
+    return *this;
+}
+
+inline xVec3& xVec3::operator*=(F32 f)
+{
+    this->x *= f;
+    this->y *= f;
+    this->z *= f;
+
+    return *this;
 }
 #endif
 

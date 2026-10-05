@@ -90,6 +90,9 @@ def verify_functions(original: Original, document: dict, anchors: dict | None = 
             from platforms.xbox_calls import normalize_calls
             normalize_calls(original.read(start, size), start, function['direct_calls'], call_targets)
         evidence = function["corroboration"]
+        if "callback_registration" in evidence:
+            from platforms.xbox_particle_commands import verify_callback
+            verify_callback(original, function)
         require(evidence["return_address"] == end - 1 and original.read(end - 1, 1) == b"\xc3",
                 f"{label}: terminal RET boundary differs")
         for branch in evidence["branches"]:

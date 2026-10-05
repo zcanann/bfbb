@@ -1,0 +1,25 @@
+#ifndef ICOLLIDE_H
+#define ICOLLIDE_H
+
+#include "xMath3.h"
+#include "xModel.h"
+#include "xEnv.h"
+#include "xCollide.h"
+#include <rwsdk/rpcollis.h>
+
+// Platform API signatures agree with all three debug PS2 originals.
+void iBoxForModelLocal(xBox* o, const xModelInstance* m);
+void iBoxForModel(xBox* o, const xModelInstance* m);
+RpCollisionTriangle* sphereHitsEnvCB(RpIntersection* isx, RpWorldSector* sector,
+                                     RpCollisionTriangle* tri, F32 dist, void* data);
+U32 iSphereHitsEnv(const xSphere* b, const xEnv* env, xCollis* coll);
+S32 iSphereHitsEnv3(const xSphere* b, const xEnv* env, xCollis* colls, U8 ncolls, F32 sth);
+S32 iSphereHitsEnv4(const xSphere* b, const xEnv* env, const xMat3x3* mat, xCollis* colls);
+S32 iSphereHitsModel3(const xSphere* b, const xModelInstance* m, xCollis* colls, U8 ncolls,
+                      F32 sth);
+U32 iRayHitsEnv(const xRay3* r, const xEnv* env, xCollis* coll);
+U32 iRayHitsModel(const xRay3* r, const xModelInstance* m, xCollis* coll);
+void iSphereForModel(xSphere* o, const xModelInstance* m);
+void iCollideInit(xScene* sc);
+
+#endif
