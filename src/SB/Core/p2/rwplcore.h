@@ -6,13 +6,43 @@
 #include <stdarg.h>
 
 // Complete RenderWare 3.5 engine declarations, from include/rwsdk/rwplcore.h.
-// The PS2 immediate vertex is pointer-only here; its original name is RwSky2DVertex.
+// RwSky2DVertex is complete in rwim2d.h; engine callbacks only need its pointer.
 typedef char RwChar;
 struct RwSky2DVertex;
 typedef RwSky2DVertex RwIm2DVertex;
 typedef RwUInt16 RxVertexIndex;
 typedef RxVertexIndex RwImVertexIndex;
 
+
+// RenderWare 3.5 video-mode declaration, verified in the PS2 originals.
+enum RwVideoModeFlag
+{
+    rwVIDEOMODEEXCLUSIVE = 0x0001,
+    rwVIDEOMODEINTERLACE = 0x0002,
+    rwVIDEOMODEFFINTERLACE = 0x0004,
+    rwVIDEOMODE_PS2_FSAASHRINKBLIT = 0x0100,
+    rwVIDEOMODE_PS2_FSAAREADCIRCUIT = 0x0200,
+    rwVIDEOMODE_XBOX_WIDESCREEN = 0x0100,
+    rwVIDEOMODE_XBOX_PROGRESSIVE = 0x0200,
+    rwVIDEOMODE_XBOX_FIELD = 0x0400,
+    rwVIDEOMODE_XBOX_10X11PIXELASPECT = 0x0800,
+    rwVIDEOMODEFLAGFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+
+struct RwVideoMode
+{
+    RwInt32 width;
+    RwInt32 height;
+    RwInt32 depth;
+    RwVideoModeFlag flags;
+    RwInt32 refRate;
+    RwInt32 format;
+};
+
+extern "C" {
+RwVideoMode* RwEngineGetVideoModeInfo(RwVideoMode* modeInfo, RwInt32 modeIndex);
+RwInt32 RwEngineGetCurrentVideoMode(void);
+}
 
 enum RwRenderState
 {

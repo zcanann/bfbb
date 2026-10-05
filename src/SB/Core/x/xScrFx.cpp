@@ -1,5 +1,10 @@
 #include "xScrFx.h"
 
+#if defined(PS2)
+#include <rwim2d.h>
+#include <rwim3d.h>
+#endif
+
 #include "zGame.h"
 #include "zMenu.h"
 #include "xDebug.h"
