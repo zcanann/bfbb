@@ -6266,6 +6266,701 @@
           "symbol": "vols"
         }
       ]
+    },
+    {
+      "source": "src/SB/Core/x/xEvent.cpp",
+      "target_unit": "SB/Core/x/xEvent.cpp",
+      "object": "source/xEvent.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+        "zEntEvent__FP5xBaseP5xBaseUiPCf": "zEntEvent__FP5xBaseP5xBaseUiPCf",
+        "zEntEvent__FP5xBaseP5xBaseUi": "zEntEvent__FP5xBaseP5xBaseUi",
+        "zEntEvent__FP5xBaseUiPCfP5xBase": "zEntEvent__FP5xBaseUiPCfP5xBase",
+        "zEntEvent__FP5xBaseUiPCf": "zEntEvent__FP5xBaseUiPCf",
+        "zEntEvent__FP5xBaseUiffff": "zEntEvent__FP5xBaseUiffff",
+        "zEntEvent__FP5xBaseUi": "zEntEvent__FP5xBaseUi",
+        "zEntEvent__FUiUiffff": "zEntEvent__FUiUiffff",
+        "zEntEvent__FUiUi": "zEntEvent__FUiUi",
+        "zEntEvent__FPcUi": "zEntEvent__FPcUi"
+      },
+      "calls": [
+        {
+          "function": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "offset": 256,
+          "target_source": "SB/Game/zScene.cpp",
+          "target_function": "zSceneFindObject__FUi",
+          "symbol": "zSceneFindObject__FUi"
+        },
+        {
+          "function": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "offset": 288,
+          "target_source": "SB/Game/zScene.cpp",
+          "target_function": "zSceneFindObject__FUi",
+          "symbol": "zSceneFindObject__FUi"
+        },
+        {
+          "function": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "offset": 308,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "offset": 344,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "symbol": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei"
+        },
+        {
+          "function": "zEntEvent__FP5xBaseP5xBaseUiPCf",
+          "offset": 24,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "symbol": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "opcode": 2
+        },
+        {
+          "function": "zEntEvent__FP5xBaseP5xBaseUi",
+          "offset": 24,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "symbol": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "opcode": 2
+        },
+        {
+          "function": "zEntEvent__FP5xBaseUiPCfP5xBase",
+          "offset": 24,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "symbol": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "opcode": 2
+        },
+        {
+          "function": "zEntEvent__FP5xBaseUiPCf",
+          "offset": 24,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "symbol": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "opcode": 2
+        },
+        {
+          "function": "zEntEvent__FP5xBaseUiffff",
+          "offset": 48,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "symbol": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei"
+        },
+        {
+          "function": "zEntEvent__FP5xBaseUi",
+          "offset": 24,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "symbol": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "opcode": 2
+        },
+        {
+          "function": "zEntEvent__FUiUiffff",
+          "offset": 28,
+          "target_source": "SB/Game/zScene.cpp",
+          "target_function": "zSceneFindObject__FUi",
+          "symbol": "zSceneFindObject__FUi"
+        },
+        {
+          "function": "zEntEvent__FUiUiffff",
+          "offset": 64,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "symbol": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei"
+        },
+        {
+          "function": "zEntEvent__FUiUi",
+          "offset": 12,
+          "target_source": "SB/Game/zScene.cpp",
+          "target_function": "zSceneFindObject__FUi",
+          "symbol": "zSceneFindObject__FUi"
+        },
+        {
+          "function": "zEntEvent__FUiUi",
+          "offset": 48,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "symbol": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei"
+        },
+        {
+          "function": "zEntEvent__FPcUi",
+          "offset": 12,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "zEntEvent__FPcUi",
+          "offset": 20,
+          "target_source": "SB/Game/zScene.cpp",
+          "target_function": "zSceneFindObject__FUi",
+          "symbol": "zSceneFindObject__FUi"
+        },
+        {
+          "function": "zEntEvent__FPcUi",
+          "offset": 56,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "symbol": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei"
+        }
+      ],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/x/xstransvc.cpp",
+      "target_unit": "SB/Core/x/xstransvc.cpp",
+      "object": "source/xstransvc.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "XST_find_bySID__FUii": "XST_find_bySID__FUii",
+        "XST_lock_next__Fv": "XST_lock_next__Fv",
+        "xST_xAssetID_HIPFullPath__FUiPUi": "xST_xAssetID_HIPFullPath__FUiPUi",
+        "xST_xAssetID_HIPFullPath__FUi": "xST_xAssetID_HIPFullPath__FUi",
+        "xSTGetAssetInfoByType__FUiiP20st_PKR_ASSET_TOCINFO": "xSTGetAssetInfoByType__FUiiP20st_PKR_ASSET_TOCINFO",
+        "xSTGetAssetInfo__FUiP20st_PKR_ASSET_TOCINFO": "xSTGetAssetInfo__FUiP20st_PKR_ASSET_TOCINFO",
+        "xSTFindAssetByType__FUiiPUi": "xSTFindAssetByType__FUiiPUi",
+        "xSTAssetCountByType__FUi": "xSTAssetCountByType__FUi",
+        "xSTFindAsset__FUiPUi": "xSTFindAsset__FUiPUi",
+        "xSTAssetName__FPv": "xSTAssetName__FPv",
+        "xSTAssetName__FUi": "xSTAssetName__FUi",
+        "xSTSwitchScene__FUiPvPFPvf_i": "xSTSwitchScene__FUiPvPFPvf_i",
+        "xSTDisconnect__FUii": "xSTDisconnect__FUii",
+        "xSTLoadStep__FUi": "xSTLoadStep__FUi",
+        "xSTUnLoadScene__FUii": "xSTUnLoadScene__FUii",
+        "xSTQueueSceneAssets__FUii": "xSTQueueSceneAssets__FUii",
+        "xSTPreLoadScene__FUiPvi": "xSTPreLoadScene__FUiPvi",
+        "xSTShutdown__Fv": "xSTShutdown__Fv",
+        "xSTStartup__FP19st_PACKER_ASSETTYPE": "xSTStartup__FP19st_PACKER_ASSETTYPE"
+      },
+      "calls": [
+        {
+          "function": "xST_xAssetID_HIPFullPath__FUi",
+          "offset": 0,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xST_xAssetID_HIPFullPath__FUiPUi",
+          "symbol": "xST_xAssetID_HIPFullPath__FUiPUi",
+          "opcode": 2
+        },
+        {
+          "function": "xSTAssetName__FPv",
+          "offset": 216,
+          "target_source": "SB/Core/x/xpkrsvc.cpp",
+          "target_function": "PKRAssetIDFromInst__FPv",
+          "symbol": "PKRAssetIDFromInst__FPv"
+        },
+        {
+          "function": "xSTSwitchScene__FUiPvPFPvf_i",
+          "offset": 60,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "XST_find_bySID__FUii",
+          "symbol": "XST_find_bySID__FUii"
+        },
+        {
+          "function": "xSTDisconnect__FUii",
+          "offset": 16,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "XST_find_bySID__FUii",
+          "symbol": "XST_find_bySID__FUii"
+        },
+        {
+          "function": "xSTLoadStep__FUi",
+          "offset": 12,
+          "target_source": "SB/Core/x/xpkrsvc.cpp",
+          "target_function": "PKRLoadStep__Fi",
+          "symbol": "PKRLoadStep__Fi"
+        },
+        {
+          "function": "xSTLoadStep__FUi",
+          "offset": 52,
+          "target_source": "SB/Core/p2/iFile.cpp",
+          "target_function": "iFileAsyncService__Fv",
+          "symbol": "iFileAsyncService__Fv"
+        },
+        {
+          "function": "xSTUnLoadScene__FUii",
+          "offset": 400,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "XST_find_bySID__FUii",
+          "symbol": "XST_find_bySID__FUii"
+        },
+        {
+          "function": "xSTQueueSceneAssets__FUii",
+          "offset": 24,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "XST_find_bySID__FUii",
+          "symbol": "XST_find_bySID__FUii"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 56,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "XST_lock_next__Fv",
+          "symbol": "XST_lock_next__Fv"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 100,
+          "target_source": "SB/Core/x/xutil.cpp",
+          "target_function": "xUtil_idtag2string__FUii",
+          "symbol": "xUtil_idtag2string__FUii"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 116,
+          "target_source": "SB/Core/x/xutil.cpp",
+          "target_function": "xUtil_idtag2string__FUii",
+          "symbol": "xUtil_idtag2string__FUii"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 132,
+          "target_source": "SB/Core/x/xutil.cpp",
+          "target_function": "xUtil_idtag2string__FUii",
+          "symbol": "xUtil_idtag2string__FUii"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 280,
+          "target_source": "SB/Core/x/xutil.cpp",
+          "target_function": "xUtil_idtag2string__FUii",
+          "symbol": "xUtil_idtag2string__FUii"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 496,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "XST_lock_next__Fv",
+          "symbol": "XST_lock_next__Fv"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 568,
+          "target_source": "SB/Core/x/xutil.cpp",
+          "target_function": "xUtil_idtag2string__FUii",
+          "symbol": "xUtil_idtag2string__FUii"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 584,
+          "target_source": "SB/Core/x/xutil.cpp",
+          "target_function": "xUtil_idtag2string__FUii",
+          "symbol": "xUtil_idtag2string__FUii"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 600,
+          "target_source": "SB/Core/x/xutil.cpp",
+          "target_function": "xUtil_idtag2string__FUii",
+          "symbol": "xUtil_idtag2string__FUii"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 744,
+          "target_source": "SB/Core/x/xutil.cpp",
+          "target_function": "xUtil_idtag2string__FUii",
+          "symbol": "xUtil_idtag2string__FUii"
+        },
+        {
+          "function": "xSTShutdown__Fv",
+          "offset": 168,
+          "target_source": "SB/Core/x/xpkrsvc.cpp",
+          "target_function": "PKRShutdown__Fv",
+          "symbol": "PKRShutdown__Fv"
+        },
+        {
+          "function": "xSTStartup__FP19st_PACKER_ASSETTYPE",
+          "offset": 48,
+          "target_source": "SB/Core/x/xpkrsvc.cpp",
+          "target_function": "PKRStartup__Fv",
+          "symbol": "PKRStartup__Fv"
+        },
+        {
+          "function": "xSTStartup__FP19st_PACKER_ASSETTYPE",
+          "offset": 56,
+          "target_source": "SB/Core/x/xpkrsvc.cpp",
+          "target_function": "PKRGetReadFuncs__Fi",
+          "symbol": "PKRGetReadFuncs__Fi"
+        },
+        {
+          "function": "XST_lock_next__Fv",
+          "offset": 112,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xSTGetAssetInfoByType__FUiiP20st_PKR_ASSET_TOCINFO",
+          "offset": 108,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xSTUnLoadScene__FUii",
+          "offset": 360,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xSTUnLoadScene__FUii",
+          "offset": 516,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 472,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 936,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xSTShutdown__Fv",
+          "offset": 140,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xSTStartup__FP19st_PACKER_ASSETTYPE",
+          "offset": 40,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xST_xAssetID_HIPFullPath__FUiPUi",
+          "offset": 224,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTGetAssetInfoByType__FUiiP20st_PKR_ASSET_TOCINFO",
+          "offset": 296,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTGetAssetInfoByType__FUiiP20st_PKR_ASSET_TOCINFO",
+          "offset": 348,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTGetAssetInfoByType__FUiiP20st_PKR_ASSET_TOCINFO",
+          "offset": 364,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTGetAssetInfo__FUiP20st_PKR_ASSET_TOCINFO",
+          "offset": 264,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTGetAssetInfo__FUiP20st_PKR_ASSET_TOCINFO",
+          "offset": 292,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTGetAssetInfo__FUiP20st_PKR_ASSET_TOCINFO",
+          "offset": 308,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTFindAssetByType__FUiiPUi",
+          "offset": 240,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTFindAssetByType__FUiiPUi",
+          "offset": 284,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTAssetCountByType__FUi",
+          "offset": 216,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTFindAsset__FUiPUi",
+          "offset": 240,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTFindAsset__FUiPUi",
+          "offset": 268,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTFindAsset__FUiPUi",
+          "offset": 304,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTFindAsset__FUiPUi",
+          "offset": 352,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTAssetName__FPv",
+          "offset": 228,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTAssetName__FUi",
+          "offset": 220,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTSwitchScene__FUiPvPFPvf_i",
+          "offset": 104,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTDisconnect__FUii",
+          "offset": 36,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTUnLoadScene__FUii",
+          "offset": 220,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTUnLoadScene__FUii",
+          "offset": 432,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTQueueSceneAssets__FUii",
+          "offset": 60,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 208,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 228,
+          "opcode": 35,
+          "target_name": "g_typeHandlers",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_typeHandlers"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 344,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 364,
+          "opcode": 35,
+          "target_name": "g_typeHandlers",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_typeHandlers"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 676,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 696,
+          "opcode": 35,
+          "target_name": "g_typeHandlers",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_typeHandlers"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 808,
+          "opcode": 35,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTPreLoadScene__FUiPvi",
+          "offset": 828,
+          "opcode": 35,
+          "target_name": "g_typeHandlers",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_typeHandlers"
+        },
+        {
+          "function": "xSTShutdown__Fv",
+          "offset": 16,
+          "opcode": 35,
+          "target_name": "g_straninit",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_straninit"
+        },
+        {
+          "function": "xSTShutdown__Fv",
+          "offset": 28,
+          "opcode": 43,
+          "target_name": "g_straninit",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_straninit"
+        },
+        {
+          "function": "xSTShutdown__Fv",
+          "offset": 44,
+          "opcode": 43,
+          "target_name": "g_typeHandlers",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_typeHandlers"
+        },
+        {
+          "function": "xSTShutdown__Fv",
+          "offset": 188,
+          "opcode": 35,
+          "target_name": "g_straninit",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_straninit"
+        },
+        {
+          "function": "xSTStartup__FP19st_PACKER_ASSETTYPE",
+          "offset": 8,
+          "opcode": 35,
+          "target_name": "g_straninit",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_straninit"
+        },
+        {
+          "function": "xSTStartup__FP19st_PACKER_ASSETTYPE",
+          "offset": 20,
+          "opcode": 43,
+          "target_name": "g_straninit",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_straninit"
+        },
+        {
+          "function": "xSTStartup__FP19st_PACKER_ASSETTYPE",
+          "offset": 24,
+          "opcode": 43,
+          "target_name": "g_typeHandlers",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_typeHandlers"
+        },
+        {
+          "function": "xSTStartup__FP19st_PACKER_ASSETTYPE",
+          "offset": 64,
+          "opcode": 43,
+          "target_name": "g_pkrf",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_pkrf"
+        },
+        {
+          "function": "xSTStartup__FP19st_PACKER_ASSETTYPE",
+          "offset": 76,
+          "opcode": 35,
+          "target_name": "g_straninit",
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "symbol": "g_straninit"
+        }
+      ],
+      "address_pairs": []
     }
   ]
 }
