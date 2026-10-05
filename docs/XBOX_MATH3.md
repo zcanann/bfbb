@@ -205,3 +205,37 @@ investigation in the same directory remains negative: the available complete
 RenderWare headers select GameCube big-endian definitions and do not establish
 Xbox world/geometry layouts. No substitute SDK structures or link stubs were
 introduced to bypass that limitation.
+
+
+## Matrix product component lifetimes
+
+Original Xbox `xMat3x3Mul` at `0x145bc0` computes and stores each result component
+before starting the next, then clears matrix flags. Its alias checks select a
+48-byte temporary when output equals either input. The shared source's nine
+phased scalar temporaries delayed all component stores and produced a 333-byte
+function with a 72-byte frame, versus the original 283 bytes / 48-byte frame.
+
+The Xbox branch now writes the nine components directly. Each expression keeps
+the existing tree `third + (first + middle)` from the phased temporaries; this
+was one lifetime correction, not an arithmetic reassociation search. The same
+alias temporary/pointer choice and final matrix copy remain. Flags are cleared
+after the nine assignments in source. All non-Xbox source remains unchanged.
+
+Both complete reports improve this one function from 50.271843% to 76.05825%.
+Actual source size/frame now equal the original. The first 27 bytes of alias
+checks and the copy/alternate-temporary tail at +254..+283 are byte-identical.
+Both paths write component offsets 0,4,8,16,20,24,32,36,40 in that order. The
+compiler still schedules the flags store before the last component store,
+whereas original flags follow it; operand/arithmetic scheduling also differs.
+Those differences remain compared, with no claim of exact reconstruction.
+
+All prior 13,694 exact bytes / 72 exact functions, every other function record,
+all denominator/completion fields and all 33 ordered GameCube consumer sections
+are unchanged (apart from generated COFF offsets). Full code-weighted fuzzy
+progress increases from 1.147064423172074% to 1.151121414199782% in both regions.
+No profile, original metadata, backend or compiler flag changes were needed.
+
+Ignored evidence: `build/xbox258/{matrix-disasm.txt,compile.py,compare.py,
+deltas.json,gc/proof.json,production,prove_alias.py,alias-proof.json,
+verify_final.py,final-verification.json}`. The alias proof reads both final
+production PEs and both authenticated originals.

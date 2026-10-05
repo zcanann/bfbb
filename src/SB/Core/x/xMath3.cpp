@@ -508,6 +508,27 @@ void xMat3x3Mul(xMat3x3* o, const xMat3x3* a, const xMat3x3* b)
         tp = o;
     }
 
+#if defined(XBOX)
+    tp->right.x = a->right.z * b->at.x +
+                  (a->right.x * b->right.x + a->right.y * b->up.x);
+    tp->right.y = a->right.z * b->at.y +
+                  (a->right.x * b->right.y + a->right.y * b->up.y);
+    tp->right.z = a->right.z * b->at.z +
+                  (a->right.x * b->right.z + a->right.y * b->up.z);
+    tp->up.x = a->up.z * b->at.x +
+                  (a->up.x * b->right.x + a->up.y * b->up.x);
+    tp->up.y = a->up.z * b->at.y +
+                  (a->up.x * b->right.y + a->up.y * b->up.y);
+    tp->up.z = a->up.z * b->at.z +
+                  (a->up.x * b->right.z + a->up.y * b->up.z);
+    tp->at.x = a->at.z * b->at.x +
+                  (a->at.x * b->right.x + a->at.y * b->up.x);
+    tp->at.y = a->at.z * b->at.y +
+                  (a->at.x * b->right.y + a->at.y * b->up.y);
+    tp->at.z = a->at.z * b->at.z +
+                  (a->at.x * b->right.z + a->at.y * b->up.z);
+    tp->flags = 0;
+#else
     // Form the middle products, then accumulate the first and third terms.
     F32 out_right_x = a->right.y * b->up.x;
     F32 out_right_y = a->right.y * b->up.y;
@@ -549,6 +570,7 @@ void xMat3x3Mul(xMat3x3* o, const xMat3x3* a, const xMat3x3* b)
     tp->at.x = out_at_x;
     tp->at.y = out_at_y;
     tp->at.z = out_at_z;
+#endif
     if (usetemp != 0)
     {
         xMat3x3Copy(o, tp);
