@@ -18,13 +18,22 @@ struct PreCalcOcclude
 char buffer[16];
 
 static zVolume* vols;
+#if defined(PS2)
+static U16 nvols;
+S32 gOccludeCount;
+zVolume* gOccludeList[10];
+#else
 static volatile U16 nvols;
 
 volatile S32 gOccludeCount;
 zVolume* volatile gOccludeList[10];
+#endif
 S32 gOccludeCalcCount;
 PreCalcOcclude gOccludeCalc[10];
 
+#if defined(PS2)
+inline
+#endif
 static void zVolumeInit(zVolume* vol, xVolumeAsset* asset)
 {
     vol->Init(asset);

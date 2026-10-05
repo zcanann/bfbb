@@ -6027,6 +6027,245 @@
           "interleaved": true
         }
       ]
+    },
+    {
+      "source": "src/SB/Game/zVolume.cpp",
+      "target_unit": "SB/Game/zVolume.cpp",
+      "object": "source/zVolume.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zVolumeEventCB__FP5xBaseP5xBaseUiPCfP5xBase": "zVolumeEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "zVolume_OccludePrecalc__FP5xVec3": "zVolume_OccludePrecalc__FP5xVec3",
+        "zVolumeGetVolume__FUs": "zVolumeGetVolume__FUs",
+        "zVolumeSetup__Fv": "zVolumeSetup__Fv",
+        "zVolumeInit__Fv": "zVolumeInit__Fv"
+      },
+      "calls": [
+        {
+          "function": "zVolumeEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 48,
+          "target_source": "SB/Core/x/xVolume.cpp",
+          "target_function": "Reset__7xVolumeFv",
+          "symbol": "Reset__7xVolumeFv"
+        },
+        {
+          "function": "zVolume_OccludePrecalc__FP5xVec3",
+          "offset": 544,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "zVolume_OccludePrecalc__FP5xVec3",
+          "offset": 928,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "zVolumeSetup__Fv",
+          "offset": 52,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullForEverything__FP7xQCData",
+          "symbol": "xQuickCullForEverything__FP7xQCData"
+        },
+        {
+          "function": "zVolumeInit__Fv",
+          "offset": 24,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTAssetCountByType__FUi",
+          "symbol": "xSTAssetCountByType__FUi"
+        },
+        {
+          "function": "zVolumeInit__Fv",
+          "offset": 68,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "zVolumeInit__Fv",
+          "offset": 116,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAssetByType__FUiiPUi",
+          "symbol": "xSTFindAssetByType__FUiiPUi"
+        },
+        {
+          "function": "zVolumeInit__Fv",
+          "offset": 136,
+          "target_source": "SB/Core/x/xVolume.cpp",
+          "target_function": "Init__7xVolumeFP12xVolumeAsset",
+          "symbol": "Init__7xVolumeFP12xVolumeAsset"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "zVolumeEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 64,
+          "opcode": 35,
+          "target_name": "gOccludeCount",
+          "symbol": "gOccludeCount"
+        },
+        {
+          "function": "zVolumeEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 172,
+          "opcode": 35,
+          "target_name": "gOccludeCount",
+          "symbol": "gOccludeCount"
+        },
+        {
+          "function": "zVolumeEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 184,
+          "opcode": 43,
+          "target_name": "gOccludeCount",
+          "symbol": "gOccludeCount"
+        },
+        {
+          "function": "zVolumeEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 192,
+          "opcode": 35,
+          "target_name": "gOccludeCount",
+          "symbol": "gOccludeCount"
+        },
+        {
+          "function": "zVolumeEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 264,
+          "opcode": 35,
+          "target_name": "gOccludeCount",
+          "symbol": "gOccludeCount"
+        },
+        {
+          "function": "zVolumeEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 276,
+          "opcode": 43,
+          "target_name": "gOccludeCount",
+          "symbol": "gOccludeCount"
+        },
+        {
+          "function": "zVolume_OccludePrecalc__FP5xVec3",
+          "offset": 40,
+          "opcode": 43,
+          "target_name": "gOccludeCalcCount",
+          "symbol": "gOccludeCalcCount"
+        },
+        {
+          "function": "zVolume_OccludePrecalc__FP5xVec3",
+          "offset": 96,
+          "opcode": 35,
+          "target_name": "gOccludeCalcCount",
+          "symbol": "gOccludeCalcCount"
+        },
+        {
+          "function": "zVolume_OccludePrecalc__FP5xVec3",
+          "offset": 1332,
+          "opcode": 35,
+          "target_name": "gOccludeCalcCount",
+          "symbol": "gOccludeCalcCount"
+        },
+        {
+          "function": "zVolume_OccludePrecalc__FP5xVec3",
+          "offset": 1340,
+          "opcode": 43,
+          "target_name": "gOccludeCalcCount",
+          "symbol": "gOccludeCalcCount"
+        },
+        {
+          "function": "zVolume_OccludePrecalc__FP5xVec3",
+          "offset": 1352,
+          "opcode": 35,
+          "target_name": "gOccludeCount",
+          "symbol": "gOccludeCount"
+        },
+        {
+          "function": "zVolumeGetVolume__FUs",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "vols",
+          "symbol": "vols"
+        },
+        {
+          "function": "zVolumeSetup__Fv",
+          "offset": 16,
+          "opcode": 37,
+          "target_name": "nvols",
+          "symbol": "nvols"
+        },
+        {
+          "function": "zVolumeSetup__Fv",
+          "offset": 40,
+          "opcode": 35,
+          "target_name": "vols",
+          "symbol": "vols"
+        },
+        {
+          "function": "zVolumeSetup__Fv",
+          "offset": 60,
+          "opcode": 37,
+          "target_name": "nvols",
+          "symbol": "nvols"
+        },
+        {
+          "function": "zVolumeInit__Fv",
+          "offset": 32,
+          "opcode": 41,
+          "target_name": "nvols",
+          "symbol": "nvols"
+        },
+        {
+          "function": "zVolumeInit__Fv",
+          "offset": 36,
+          "opcode": 37,
+          "target_name": "nvols",
+          "symbol": "nvols"
+        },
+        {
+          "function": "zVolumeInit__Fv",
+          "offset": 48,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "zVolumeInit__Fv",
+          "offset": 76,
+          "opcode": 37,
+          "target_name": "nvols",
+          "symbol": "nvols"
+        },
+        {
+          "function": "zVolumeInit__Fv",
+          "offset": 92,
+          "opcode": 43,
+          "target_name": "vols",
+          "symbol": "vols"
+        },
+        {
+          "function": "zVolumeInit__Fv",
+          "offset": 124,
+          "opcode": 35,
+          "target_name": "vols",
+          "symbol": "vols"
+        },
+        {
+          "function": "zVolumeInit__Fv",
+          "offset": 164,
+          "opcode": 37,
+          "target_name": "nvols",
+          "symbol": "nvols"
+        },
+        {
+          "function": "zVolumeInit__Fv",
+          "offset": 192,
+          "opcode": 43,
+          "target_name": "vols",
+          "symbol": "vols"
+        }
+      ]
     }
   ]
 }
