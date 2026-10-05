@@ -1,5 +1,10 @@
 #include "xBound.h"
 
+#if defined(PS2)
+#include "xCollideGeometry.h"
+#include "iMath3.h"
+#endif
+
 #include "xMath.h"
 #include "xMathInlines.h"
 #include "xDraw.h"
