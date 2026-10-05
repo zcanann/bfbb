@@ -581,7 +581,6 @@
         ],
         "xParCmdRandomVelocityPar_Update(xParCmd*,xParGroup*,F32)": [
           "?xMat3x3Euler@@YAXPAUxMat3x3@@MMM@Z",
-          "?xMat3x3LMulVec@@YAXPAUxVec3@@PBUxMat3x3@@PBU1@@Z",
           "?xurand@@YAMXZ"
         ],
         "xParCmdApplyWind_Update(xParCmd*,xParGroup*,F32)": [],
@@ -614,10 +613,6 @@
         },
         "?xMat3x3Euler@@YAXPAUxMat3x3@@MMM@Z": {
           "linkage_name": "?xMat3x3Euler@@YAXPAUxMat3x3@@MMM@Z",
-          "object": "xMath3.obj"
-        },
-        "?xMat3x3LMulVec@@YAXPAUxVec3@@PBUxMat3x3@@PBU1@@Z": {
-          "linkage_name": "?xMat3x3LMulVec@@YAXPAUxVec3@@PBUxMat3x3@@PBU1@@Z",
           "object": "xMath3.obj"
         },
         "__ftol2": {
@@ -1137,9 +1132,7 @@
         "xMat3x3RMulRotY(xMat3x3*,const xMat3x3*,F32)": [],
         "xMat3x3Transpose(xMat3x3*,const xMat3x3*)": [],
         "xMat3x3Mul(xMat3x3*,const xMat3x3*,const xMat3x3*)": [],
-        "xMat3x3Tolocal(xVec3*,const xMat3x3*,const xVec3*)": [
-          "?xMat3x3LMulVec@@YAXPAUxVec3@@PBUxMat3x3@@PBU1@@Z"
-        ],
+        "xMat3x3Tolocal(xVec3*,const xMat3x3*,const xVec3*)": [],
         "xMat4x3Rot(xMat4x3*,const xVec3*,F32,const xVec3*)": [
           "xMat3x3RotC(xMat3x3*,F32,F32,F32,F32)",
           "xMat4x3Mul(xMat4x3*,const xMat4x3*,const xMat4x3*)"
@@ -1183,10 +1176,6 @@
         "?xAngleClampFast@@YAMM@Z": {
           "linkage_name": "?xAngleClampFast@@YAMM@Z",
           "object": "xMath.obj"
-        },
-        "?xMat3x3LMulVec@@YAXPAUxVec3@@PBUxMat3x3@@PBU1@@Z": {
-          "linkage_name": "?xMat3x3LMulVec@@YAXPAUxVec3@@PBUxMat3x3@@PBU1@@Z",
-          "object": "xMath3.obj"
         },
         "?xQuatLength2@@YAMPBUxQuat@@@Z": {
           "linkage_name": "?xQuatLength2@@YAMPBUxQuat@@@Z",

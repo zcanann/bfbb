@@ -556,6 +556,7 @@ void xMat3x3Mul(xMat3x3* o, const xMat3x3* a, const xMat3x3* b)
     return;
 }
 
+#if !defined(XBOX)
 void xMat3x3LMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 {
     F32 y = (m->up.x * v->x) + (m->up.y * v->y) + (m->up.z * v->z);
@@ -565,6 +566,7 @@ void xMat3x3LMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
     o->y = y;
     o->z = z;
 }
+#endif
 
 void xMat3x3Tolocal(xVec3* o, const xMat3x3* m, const xVec3* v)
 {

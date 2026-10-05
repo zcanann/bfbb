@@ -165,3 +165,43 @@ Ignored evidence: build/xbox242/{original-helper-proof.json,proposed-helper.json
 original-complete-calls.json,helper-abi-difference.json,consumer-deltas.json,
 gc/proof.json,production,final-verification.json}. The normal reviewed-original
 verifier and full report commands reproduce the production checks.
+
+
+## Left-multiply helper visibility
+
+The complete original `xMat3x3Tolocal` at `0x145ce0` is a closed 191-byte
+function with no calls in either authenticated Xbox executable. It includes
+all vector-left-multiply arithmetic between the squared basis lengths and the
+three divisions. The prior complete source build instead emitted a 142-byte
+caller with an out-of-line `xMat3x3LMulVec` call at +106, spilling all three
+lengths before that call.
+
+For Xbox, the existing unchanged helper body is now an ordinary inline header
+definition. The non-Xbox definition remains unchanged. This is a source boundary
+reconstruction supported by the original caller; it does not establish the
+original definition/header TU. No calling convention, compiler flags, forced
+emission, target metadata or backend rules change. The source profile removes
+only the two obsolete direct-call expectations for the helper, which no longer
+appears in those actual linked source call paths.
+
+Both complete production reports retain the real partial differences:
+
+| Function | Original bytes | Before | After |
+| --- | ---: | ---: | ---: |
+| xMat3x3Tolocal | 191 | 60.075% | 94.775% |
+| xParCmdRandomVelocityPar_Update | 335 | 34.189472% | 61.210526% |
+
+The new actual Tolocal body is 191 bytes with no calls; it is not byte-exact.
+The full code-weighted fuzzy measure rises from 1.1265316152705196% to
+1.1352485942393649%. All 13,501 exact code bytes / 70 exact functions remain.
+Every other function record, all denominator fields and all completion fields
+are unchanged, apart from generated COFF offsets. Seven actual consumer builds
+and 33 ordered GameCube allocated sections also pass without regressions.
+
+Ignored reproducible evidence: `build/xbox250/{compile.py,compare.py,
+prove_boundary.py,boundary-proof.json,consumer-deltas.json,gc/proof.json,
+production,verify_final.py,final-verification.json}`. The collision dependency
+investigation in the same directory remains negative: the available complete
+RenderWare headers select GameCube big-endian definitions and do not establish
+Xbox world/geometry layouts. No substitute SDK structures or link stubs were
+introduced to bypass that limitation.

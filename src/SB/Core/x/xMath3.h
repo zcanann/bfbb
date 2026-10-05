@@ -134,7 +134,19 @@ void xMat3x3ScaleC(xMat3x3* m, F32 x, F32 y, F32 z);
 void xMat3x3RMulRotY(xMat3x3* o, const xMat3x3* m, F32 t);
 void xMat3x3Transpose(xMat3x3* o, const xMat3x3* m);
 void xMat3x3Mul(xMat3x3* o, const xMat3x3* a, const xMat3x3* b);
+#if defined(XBOX)
+inline void xMat3x3LMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
+{
+    F32 y = (m->up.x * v->x) + (m->up.y * v->y) + (m->up.z * v->z);
+    F32 z = (m->at.x * v->x) + (m->at.y * v->y) + (m->at.z * v->z);
+
+    o->x = (m->right.x * v->x) + (m->right.y * v->y) + (m->right.z * v->z);
+    o->y = y;
+    o->z = z;
+}
+#else
 void xMat3x3LMulVec(xVec3* o, const xMat3x3* m, const xVec3* v);
+#endif
 void xMat3x3Tolocal(xVec3* o, const xMat3x3* m, const xVec3* v);
 void xMat4x3Rot(xMat4x3* m, const xVec3* a, F32 t, const xVec3* p);
 void xMat4x3Mul(xMat4x3* o, const xMat4x3* a, const xMat4x3* b);
