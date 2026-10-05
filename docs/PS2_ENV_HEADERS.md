@@ -57,3 +57,6 @@ A diagnostic `-g` compilation of the actual complete `xEnv.cpp` also emits these
 nine concrete types. Their sizes and all direct member offsets agree with all
 three originals; enabling debug information leaves allocated sections unchanged.
 The reader exports evidence rather than generating speculative C++ declarations.
+## Existing French subset
+
+France already has one confirmed xEnv member, xEnvRender (44 bytes). The new France-only source profile includes exactly that existing verified subset while compiling the complete ordinary translation unit. Its canonical linkage is established by the recorded original European DWARF reference; no source object is used to infer its identity. The other three environment routines remain excluded candidates and are not promoted. The render callee remains unconfirmed in France, so no named relocation is invented. Standard code matching and incomplete-link status remain unchanged.

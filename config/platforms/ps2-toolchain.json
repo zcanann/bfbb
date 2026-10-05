@@ -3851,6 +3851,96 @@
           "target_source": "SB/Core/x/xhipio.cpp"
         }
       ]
+    },
+    {
+      "source": "src/SB/Core/x/xEnv.cpp",
+      "target_unit": "SB/Core/x/xEnv.cpp",
+      "object": "source/xEnv.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xEnvRender__FP4xEnv": "xEnvRender__FP4xEnv",
+        "xEnvFree__FP4xEnv": "xEnvFree__FP4xEnv",
+        "xEnvSetup__FP4xEnv": "xEnvSetup__FP4xEnv",
+        "xEnvLoadBsp__FP4xEnvPCvUii": "xEnvLoadBsp__FP4xEnvPCvUii"
+      },
+      "calls": [
+        {
+          "function": "xEnvRender__FP4xEnv",
+          "offset": 20,
+          "target_source": "SB/Core/p2/iEnv.cpp",
+          "target_function": "iEnvRender__FP4iEnv",
+          "symbol": "iEnvRender__FP4iEnv"
+        },
+        {
+          "function": "xEnvFree__FP4xEnv",
+          "offset": 28,
+          "target_source": "SB/Core/p2/iEnv.cpp",
+          "target_function": "iEnvFree__FP4iEnv",
+          "symbol": "iEnvFree__FP4iEnv"
+        },
+        {
+          "function": "xEnvSetup__FP4xEnv",
+          "offset": 16,
+          "target_source": "SB/Core/p2/iEnv.cpp",
+          "target_function": "iEnvDefaultLighting__FP4iEnv",
+          "symbol": "iEnvDefaultLighting__FP4iEnv"
+        },
+        {
+          "function": "xEnvLoadBsp__FP4xEnvPCvUii",
+          "offset": 32,
+          "target_source": "SB/Core/p2/iEnv.cpp",
+          "target_function": "iEnvLoad__FP4iEnvPCvUii",
+          "symbol": "iEnvLoad__FP4iEnvPCvUii"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xEnvSetup__FP4xEnv",
+          "offset": 28,
+          "opcode": 43,
+          "target_name": "gCurXEnv",
+          "symbol": "gCurXEnv"
+        },
+        {
+          "function": "xEnvLoadBsp__FP4xEnvPCvUii",
+          "offset": 40,
+          "opcode": 43,
+          "target_name": "gCurXEnv",
+          "symbol": "gCurXEnv"
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xEnv.cpp",
+      "target_unit": "SB/Core/x/xEnv.cpp",
+      "object": "source/xEnv.o",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "xEnvRender": "xEnvRender__FP4xEnv"
+      },
+      "calls": [],
+      "linkage_provenance": [
+        {
+          "function": "xEnvRender",
+          "registry": "corroborated-functions.json",
+          "france_address": 1944896,
+          "size": 44,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1944784
+            }
+          ]
+        }
+      ]
     }
   ]
 }
