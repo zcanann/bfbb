@@ -196,7 +196,7 @@
       "kind": "function",
       "address": 75536,
       "size": 50,
-      "canonical_identifier": "anon_00012710"
+      "canonical_identifier": "xatan2(F32,F32)"
     },
     {
       "kind": "unclassified",
@@ -17534,7 +17534,7 @@
       "kind": "function",
       "address": 1491472,
       "size": 103,
-      "canonical_identifier": "anon_0016c210"
+      "canonical_identifier": "iMemInit()"
     },
     {
       "kind": "unclassified",
@@ -25140,7 +25140,7 @@
       "kind": "function",
       "address": 1823398,
       "size": 18,
-      "canonical_identifier": "anon_001bd2a6"
+      "canonical_identifier": "malloc(size_t)"
     },
     {
       "kind": "function",
@@ -26662,7 +26662,7 @@
       "kind": "function",
       "address": 1863844,
       "size": 20,
-      "canonical_identifier": "anon_001c70a4"
+      "canonical_identifier": "__CIasin"
     },
     {
       "kind": "unclassified",

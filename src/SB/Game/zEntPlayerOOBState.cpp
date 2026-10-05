@@ -13,6 +13,11 @@
 
 #include <types.h>
 #include <rwplcore.h>
+#if defined(PS2)
+#include <rwim2d.h>
+#include <rwim3d.h>
+#include "xstransvc.h"
+#endif
 
 bool oob_player_teleported;
 
@@ -44,10 +49,21 @@ void __deadstripped_zEntPlayerOOBState2()
 }
 
 
+#if defined(PS2)
+#if defined(VERSION_SLES_51968) || defined(VERSION_SLES_51970)
+#define OOB_SCREEN_WIDTH 512.0f
+#define OOB_SCREEN_HEIGHT 512.0f
+#else
+#define OOB_SCREEN_WIDTH 640.0f
+#define OOB_SCREEN_HEIGHT 448.0f
+#endif
+#else
+#define OOB_SCREEN_WIDTH 640.0f
 #if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
 #define OOB_SCREEN_HEIGHT 528.0f
 #else
 #define OOB_SCREEN_HEIGHT 480.0f
+#endif
 #endif
 
 namespace oob_state
@@ -197,7 +213,7 @@ namespace oob_state
             xVec3 localCoords;
             xMat4x3Tolocal(&localCoords, &camMat, &loc);
 
-            loc += camMat.right * x * localCoords.z * (640.0f / OOB_SCREEN_HEIGHT);
+            loc += camMat.right * x * localCoords.z * (OOB_SCREEN_WIDTH / OOB_SCREEN_HEIGHT);
         }
 
         static void update_max_out_time(const xSurface& surface)
@@ -246,9 +262,9 @@ namespace oob_state
             shared.loc += shared.dir * dd;
         }
 
-        static void set_rect_verts(rwGameCube2DVertex*, F32, F32, F32, F32, iColor_tag c, F32 nsz,
+        static void set_rect_verts(RwIm2DVertex*, F32, F32, F32, F32, iColor_tag c, F32 nsz,
                                    F32 rcz);
-        static void set_rect_vert(rwGameCube2DVertex&, F32 x, F32 y, F32 z, iColor_tag c, F32 rcz);
+        static void set_rect_vert(RwIm2DVertex&, F32 x, F32 y, F32 z, iColor_tag c, F32 rcz);
         static void render_fade()
         {
             iColor_tag color = {};
@@ -260,11 +276,11 @@ namespace oob_state
             F32 rcz = RwIm2DGetFarScreenZ();
 
             RwIm2DVertex vert[4];
-            set_rect_verts((rwGameCube2DVertex*)vert, 0.0f, 0.0f, 640.0f, OOB_SCREEN_HEIGHT, color, rcz, nsz);
+            set_rect_verts((RwIm2DVertex*)vert, 0.0f, 0.0f, OOB_SCREEN_WIDTH, OOB_SCREEN_HEIGHT, color, rcz, nsz);
             RwIm2DRenderPrimitive(rwPRIMTYPETRISTRIP, (RwIm2DVertex*)vert, 4);
         }
 
-        static void set_rect_verts(rwGameCube2DVertex* verts, F32 x, F32 y, F32 w, F32 h,
+        static void set_rect_verts(RwIm2DVertex* verts, F32 x, F32 y, F32 w, F32 h,
                                    iColor_tag c, F32 rcz, F32 nsz)
         {
             set_rect_vert(verts[0], x, y, rcz, c, nsz);
@@ -273,9 +289,16 @@ namespace oob_state
             set_rect_vert(verts[3], x + w, y + h, rcz, c, nsz);
         }
 
-        static void set_rect_vert(rwGameCube2DVertex& vert, F32 x, F32 y, F32 z, iColor_tag c,
+        static void set_rect_vert(RwIm2DVertex& vert, F32 x, F32 y, F32 z, iColor_tag c,
                                   F32 rcz)
         {
+#if defined(PS2)
+            RwIm2DVertexSetScreenX(&vert, x);
+            RwIm2DVertexSetScreenY(&vert, y);
+            RwIm2DVertexSetScreenZ(&vert, z);
+            RwIm2DVertexSetRecipCameraZ(&vert, rcz);
+            RwIm2DVertexSetIntRGBA(&vert, c.r, c.g, c.b, c.a);
+#else
             vert.x = x;
             vert.y = y;
             vert.z = z;
@@ -283,6 +306,7 @@ namespace oob_state
             vert.emissiveColor.green = c.g;
             vert.emissiveColor.blue = c.b;
             vert.emissiveColor.alpha = c.a;
+#endif
         }
 
         static void render_ghost()
@@ -1116,7 +1140,11 @@ namespace oob_state
             cruise_bubble::reset();
 
             shared.flags |= 0x4;
+#if defined(PS2)
+            shared.vertical = xabs(fixed.in_loc.y - fixed.out_loc.y) > 0.01f;
+#else
             shared.vertical = FABS(fixed.in_loc.y - fixed.out_loc.y) > 0.01f;
+#endif
             shared.control = TRUE;
             
             this->move_substate = shared.model != NULL ? SS_REORIENT : SS_INVALID;

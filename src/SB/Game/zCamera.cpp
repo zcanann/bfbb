@@ -11,7 +11,11 @@
 #include "xVec3Inlines.h"
 #include "xScrFx.h"
 #include "xstransvc.h"
+#if defined(PS2)
+#include "xpkrsvc_api.h"
+#else
 #include "xpkrsvc.h"
+#endif
 
 // The stripped first common appears in the debug symbols. It prevents mwld
 // from inflating the first camera backup to the entire common block.

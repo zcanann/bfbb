@@ -410,6 +410,31 @@
       "identity_confirmation": true,
       "source": "SB/Core/x/xutil.cpp",
       "evidence": "One-time CRC-32 table generation: 256 values initialized from index shifted24; eight high-bit tests shift/XOR polynomial0x04c11db7, then store a DWORD by index. Shared need-init flag starts1, clears0; return0xffffffff. The update function independently uses exactly the same flag and table."
+    },
+    {
+      "name": "gMemInfo",
+      "address": 3219000,
+      "size": 48,
+      "source": "SB/Core/x/xMemMgr.cpp",
+      "identity_confirmation": true,
+      "external_binding_allowed": true,
+      "evidence": "The original initializer writes exactly12 DWORD fields: four12-byte xMemArea records. The heap setup caller reads DRAM.addr/size at+24/+28 to initialize3 contiguous220-byte heaps with shared flag/opposite-index protocol. Object remains original storage with zero reconstructed-data credit."
+    },
+    {
+      "name": "mem_base_alloc",
+      "address": 3581896,
+      "size": 4,
+      "source": "SB/Core/xbox/iMemMgr.cpp",
+      "identity_confirmation": true,
+      "evidence": "Original platform initializer saves the same allocation return value used for gMemInfo.DRAM.addr."
+    },
+    {
+      "name": "mem_top_alloc",
+      "address": 3581900,
+      "size": 4,
+      "source": "SB/Core/xbox/iMemMgr.cpp",
+      "identity_confirmation": true,
+      "evidence": "Original initializer stores allocation base+0x384000, the exact allocation size."
     }
   ],
   "pool_loop": {
@@ -2152,6 +2177,295 @@
         ]
       ],
       "identity": "xUtil_crc_update(U32,char*,S32)"
+    },
+    {
+      "address": 1491472,
+      "size": 103,
+      "sha256": "a9790b99e4e83c7fd51035e5fa891e0e663b95ac3b72d6159a847f66ca451bbf",
+      "instructions": [
+        [
+          0,
+          "push",
+          "0x384000"
+        ],
+        [
+          5,
+          "call",
+          "0x1bd2a6"
+        ],
+        [
+          10,
+          "lea",
+          "ecx, [eax + 0x384000]"
+        ],
+        [
+          16,
+          "mov",
+          "dword ptr [0x36a7c8], eax"
+        ],
+        [
+          21,
+          "mov",
+          "dword ptr [0x311e50], eax"
+        ],
+        [
+          26,
+          "xor",
+          "eax, eax"
+        ],
+        [
+          28,
+          "add",
+          "esp, 4"
+        ],
+        [
+          31,
+          "mov",
+          "dword ptr [0x36a7cc], ecx"
+        ],
+        [
+          37,
+          "mov",
+          "dword ptr [0x311e54], 0x384000"
+        ],
+        [
+          47,
+          "mov",
+          "dword ptr [0x311e58], 0x820"
+        ],
+        [
+          57,
+          "mov",
+          "dword ptr [0x311e38], eax"
+        ],
+        [
+          62,
+          "mov",
+          "dword ptr [0x311e3c], eax"
+        ],
+        [
+          67,
+          "mov",
+          "dword ptr [0x311e40], eax"
+        ],
+        [
+          72,
+          "mov",
+          "dword ptr [0x311e44], eax"
+        ],
+        [
+          77,
+          "mov",
+          "dword ptr [0x311e48], eax"
+        ],
+        [
+          82,
+          "mov",
+          "dword ptr [0x311e4c], eax"
+        ],
+        [
+          87,
+          "mov",
+          "dword ptr [0x311e5c], eax"
+        ],
+        [
+          92,
+          "mov",
+          "dword ptr [0x311e60], eax"
+        ],
+        [
+          97,
+          "mov",
+          "dword ptr [0x311e64], eax"
+        ],
+        [
+          102,
+          "ret",
+          ""
+        ]
+      ]
+    },
+    {
+      "address": 1336288,
+      "size": 154,
+      "sha256": "b8b3af9d853d24b8fffc692e0ccdc2a5b2a65a835efb6858166a5a791b12be71",
+      "instructions": [
+        [
+          0,
+          "push",
+          "esi"
+        ],
+        [
+          1,
+          "call",
+          "0x16c210"
+        ],
+        [
+          6,
+          "mov",
+          "eax, dword ptr [0x311e54]"
+        ],
+        [
+          11,
+          "mov",
+          "edx, dword ptr [0x311e50]"
+        ],
+        [
+          17,
+          "push",
+          "eax"
+        ],
+        [
+          18,
+          "mov",
+          "eax, 0x8826"
+        ],
+        [
+          23,
+          "mov",
+          "esi, 0x311e70"
+        ],
+        [
+          28,
+          "call",
+          "0x146480"
+        ],
+        [
+          33,
+          "mov",
+          "eax, dword ptr [0x311e54]"
+        ],
+        [
+          38,
+          "mov",
+          "ecx, dword ptr [0x311e50]"
+        ],
+        [
+          44,
+          "push",
+          "eax"
+        ],
+        [
+          45,
+          "lea",
+          "edx, [ecx + eax]"
+        ],
+        [
+          48,
+          "mov",
+          "eax, 0x8925"
+        ],
+        [
+          53,
+          "mov",
+          "esi, 0x311f4c"
+        ],
+        [
+          58,
+          "call",
+          "0x146480"
+        ],
+        [
+          63,
+          "mov",
+          "eax, dword ptr [0x311e54]"
+        ],
+        [
+          68,
+          "mov",
+          "edx, dword ptr [0x311e50]"
+        ],
+        [
+          74,
+          "push",
+          "eax"
+        ],
+        [
+          75,
+          "add",
+          "edx, eax"
+        ],
+        [
+          77,
+          "mov",
+          "eax, 0x892a"
+        ],
+        [
+          82,
+          "mov",
+          "esi, 0x312028"
+        ],
+        [
+          87,
+          "call",
+          "0x146480"
+        ],
+        [
+          92,
+          "xor",
+          "eax, eax"
+        ],
+        [
+          94,
+          "mov",
+          "edx, 1"
+        ],
+        [
+          99,
+          "mov",
+          "ecx, 2"
+        ],
+        [
+          104,
+          "add",
+          "esp, 0xc"
+        ],
+        [
+          107,
+          "mov",
+          "word ptr [0x311e7c], dx"
+        ],
+        [
+          114,
+          "mov",
+          "word ptr [0x311e7e], cx"
+        ],
+        [
+          121,
+          "mov",
+          "word ptr [0x311f58], ax"
+        ],
+        [
+          127,
+          "mov",
+          "word ptr [0x311f5a], cx"
+        ],
+        [
+          134,
+          "mov",
+          "word ptr [0x312034], ax"
+        ],
+        [
+          140,
+          "mov",
+          "word ptr [0x312036], dx"
+        ],
+        [
+          147,
+          "mov",
+          "dword ptr [0x311e6c], eax"
+        ],
+        [
+          152,
+          "pop",
+          "esi"
+        ],
+        [
+          153,
+          "ret",
+          ""
+        ]
+      ]
     }
   ]
 }

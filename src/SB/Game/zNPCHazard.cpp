@@ -20,6 +20,12 @@
 #include "xordarray.h"
 #include "zRenderState.h"
 
+#if defined(PS2)
+#include "xstransvc.h"
+#include <rwim3d.h>
+#define FABS(x) xabs(x)
+#endif
+
 extern const xVec3 g_O3;
 
 // These structs were used in deadstripped functions.

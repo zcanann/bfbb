@@ -1,5 +1,9 @@
 #include "zNPCTypeVillager.h"
 
+#if defined(PS2)
+#include <rwim3d.h>
+#endif
+
 #include "xBehaveMgr.h"
 #include "xJaw.h"
 #include "xMathInlines.h"

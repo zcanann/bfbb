@@ -23,6 +23,7 @@ import time
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'tools'))
 from platforms.verify_reviewed import Original
+from platforms.ps2_source import version_define
 
 
 def emitted_functions(path: Path) -> list[dict]:
@@ -93,6 +94,7 @@ def main() -> None:
     if args.version not in manifest:
         parser.error('Unknown version')
     original = Original(args.version, manifest[args.version], args.orig_dir.resolve())
+    define = version_define(original.sha1)
     if not any(s['name'] == '.debug' and s['size'] for s in original.metadata['sections']):
         parser.error('This inventory requires an original with DWARF source ownership')
     compiler = args.compilers.resolve() / profile['compiler']['id'] / 'mwccps2.exe'
@@ -135,6 +137,7 @@ def main() -> None:
     document = {'schema_version': 1, 'version': args.version, 'executable_sha1': original.sha1,
                 'compiler_sha256': profile['compiler']['compiler_sha256'],
                 'runtime_sha256': profile['runtime']['sha256'], 'flags': profile['flags'],
+                'version_define': define,
                 'includes': [p.relative_to(ROOT).as_posix() for p in includes],
                 'eligible_for_progress': False, 'source_match_verified': False,
                 'scope': 'Whole-source compilation only; no score, symbol or profile changes',
@@ -148,7 +151,7 @@ def main() -> None:
         obj.parent.mkdir(parents=True, exist_ok=True)
         log.parent.mkdir(parents=True, exist_ok=True)
         obj.unlink(missing_ok=True)
-        command = [str(wibo), '-C', str(ROOT), str(compiler), *profile['flags']]
+        command = [str(wibo), '-C', str(ROOT), str(compiler), *profile['flags'], '-D' + define + '=1']
         for include in includes:
             command += ['-i', str(include)]
         command += ['-o', str(obj), str(ROOT / unit['source'])]

@@ -15,17 +15,20 @@
 #include <types.h>
 #include <rwplcore.h>
 
-#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78) || defined(VERSION_SLES_51968) || \
+    defined(VERSION_SLES_51970)
 #define NPC_FRAME_TIME (1.0f / 50.0f)
 #else
 #define NPC_FRAME_TIME (1.0f / 60.0f)
 #endif
 
+#if !defined(PS2)
 // MSL's <cmath> is not reachable from here; the target calls floorf__3stdFf.
 namespace std
 {
     float floorf(float x);
 }
+#endif
 
 U32 xShadowReceiveShadowSetup(xEnt* ent);
 void xShadowReceiveShadow(xEnt* ent, F32 factor, S32 flags, RwMatrixTag* mat, RwRaster* rast);

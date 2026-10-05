@@ -1,7 +1,13 @@
 #include "zFX.h"
 
 #include "rpworld.h"
+#if defined(PS2)
+#include <rwsdk/rpskin.h>
+#include "xstransvc.h"
+#include "iFX.h"
+#else
 #include "rpskin.h"
+#endif
 #include "rwplcore.h"
 #include "iAnim.h"
 #include "xDebug.h"
@@ -23,7 +29,11 @@
 #include <types.h>
 #include <string.h>
 #include <stdlib.h>
+#if defined(PS2)
+#include <math.h>
+#else
 #include <PowerPC_EABI_Support\MSL_C\MSL_Common\cmath>
+#endif
 
 void zParPTankSpawnBubbles(xVec3* pos, xVec3* vel, U32 count, F32 scale);
 void zParPTankSpawnMenuBubbles(xVec3* pos, xVec3* vel, U32 count);
@@ -251,7 +261,9 @@ void zFXGooEnable(RpAtomic* atomic, S32 freezeGroup)
 {
     S32 i;
     zFXGooInstance* goo = zFXGooInstances;
+#if !defined(PS2)
     g_txtr_gooFrozen = NULL;
+#endif
     for (i = 0; i < 24; i++, goo++)
     {
         if (goo->state == zFXGooStateInactive)
@@ -271,6 +283,7 @@ void zFXGooEnable(RpAtomic* atomic, S32 freezeGroup)
     goo->freezeGroup = freezeGroup;
     RpGeometry* geom = RpAtomicGetGeometry(atomic);
     S32 numVertices = geom->numVertices;
+#if !defined(PS2)
     S32 numTriangles = geom->numTriangles;
     if (geom->preLitLum == NULL)
     {
@@ -317,17 +330,23 @@ void zFXGooEnable(RpAtomic* atomic, S32 freezeGroup)
         geom = new_geom;
     }
 
+#endif
+
     xVec3* orig_verts = (xVec3*)xMemAllocSize(sizeof(xVec3) * numVertices);
     RwRGBA* orig_colors = (RwRGBA*)xMemAllocSize(sizeof(RwRGBA) * numVertices);
+#if !defined(PS2)
     RwTexCoords* orig_uvs = (RwTexCoords*)xMemAllocSize(sizeof(RwTexCoords) * numVertices);
     memcpy(orig_verts, geom->morphTarget->verts, (S32)sizeof(xVec3) * numVertices);
     memcpy(orig_colors, geom->preLitLum, (S32)sizeof(RwRGBA) * numVertices);
     memcpy(orig_uvs, geom->texCoords[0], (S32)sizeof(RwTexCoords) * numVertices);
+#endif
     RpAtomicSetRenderCallBack(atomic, &zFXGooRenderAtomic);
     goo->atomic = atomic;
     goo->orig_verts = orig_verts;
     goo->orig_colors = orig_colors;
+#if !defined(PS2)
     goo->orig_uvs = orig_uvs;
+#endif
     memcpy(goo->warbc, defaultGooWarbc, sizeof(defaultGooWarbc));
     goo->w0 = goo->warbc[0];
     goo->w2 = goo->warbc[2];
@@ -522,6 +541,39 @@ void zFXGooUpdate(F32 dt)
     }
 }
 
+#if defined(PS2)
+RpAtomic* zFXGooRenderAtomic(class RpAtomic* atomic)
+{
+    atomic->pipeline = xFXgooPipeline;
+    S32 i;
+    zFXGooInstance* goo = zFXGooInstances;
+    for (i = 0; i < 24; i++, goo++)
+    {
+        if (goo->state == zFXGooStateInactive)
+        {
+            continue;
+        }
+        if (goo->atomic == atomic)
+        {
+            break;
+        }
+    }
+
+    if (i == 24)
+    {
+        // Retail passes these addresses even when goo is one past the array.
+        // iFXgooSetParams reads the center; preserve the original PS2 bug.
+        iFXgooSetParams(&goo->center, zFXGooStateInactive, 0.0f, 0.0f, 0.0f, 0.0f, goo->warbc);
+    }
+    else
+    {
+        iFXgooSetParams(&goo->center, goo->state, goo->warb_time, goo->alpha, goo->min,
+                       goo->max, goo->warbc);
+    }
+    (*gAtomicRenderCallBack)(atomic);
+    return atomic;
+}
+#else
 RpAtomic* zFXGooRenderAtomic(class RpAtomic* atomic)
 {
     if (g_txtr_gooFrozen == NULL)
@@ -651,6 +703,7 @@ RpAtomic* zFXGooRenderAtomic(class RpAtomic* atomic)
 
     return atomic;
 }
+#endif
 
 void zFXUpdate(F32 dt)
 {

@@ -1,3 +1,7 @@
+#if defined(PS2)
+#include <rwim3d.h>
+#endif
+
 #include "xVec3Inlines.h"
 #include <types.h>
 

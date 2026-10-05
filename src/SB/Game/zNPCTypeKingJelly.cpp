@@ -17,7 +17,8 @@ typedef void (*tweak_change_cb)(tweak_info&);
 #include "string.h"
 #include "stdlib.h"
 
-#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78) || defined(VERSION_SLES_51968) || \
+    defined(VERSION_SLES_51970)
 #define NPC_FRAME_TIME (1.0f / 50.0f)
 #else
 #define NPC_FRAME_TIME (1.0f / 60.0f)

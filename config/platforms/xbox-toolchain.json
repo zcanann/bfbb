@@ -1021,6 +1021,12 @@
           "size": 12,
           "object": "xMath3.obj",
           "initial_value_hex": "010000000200000000000000"
+        },
+        "float:40c90fdb": {
+          "linkage_name": "__real@40c90fdb",
+          "object": "xMath3.obj",
+          "size": 4,
+          "value_hex": "db0fc940"
         }
       },
       "direct_calls": {
@@ -1037,7 +1043,6 @@
           "xVec3Normalize(xVec3*,const xVec3*)"
         ],
         "xMat3x3GetEuler(const xMat3x3*,xVec3*)": [
-          "?xAngleClampFast@@YAMM@Z",
           "__CIasin"
         ],
         "xMat3x3LookVec(xMat3x3*,const xVec3*)": [
@@ -1220,20 +1225,51 @@
           {
             "symbol": "float:3fc90fdb",
             "field": "displacement",
-            "prefix": "d81d",
-            "addend": 0
+            "prefix": "d815",
+            "addend": 0,
+            "count": 1
           },
           {
             "symbol": "float:bfc90fdb",
             "field": "displacement",
-            "prefix": "d81d",
-            "addend": 0
+            "prefix": "d815",
+            "addend": 0,
+            "count": 1
+          },
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d815",
+            "addend": 0,
+            "count": 4
+          },
+          {
+            "symbol": "float:40c90fdb",
+            "field": "displacement",
+            "prefix": "d805",
+            "addend": 0,
+            "count": 4
+          },
+          {
+            "symbol": "float:40c90fdb",
+            "field": "displacement",
+            "prefix": "d815",
+            "addend": 0,
+            "count": 4
+          },
+          {
+            "symbol": "float:40c90fdb",
+            "field": "displacement",
+            "prefix": "d825",
+            "addend": 0,
+            "count": 4
           },
           {
             "symbol": "float:00000000",
             "field": "displacement",
             "prefix": "d905",
-            "addend": 0
+            "addend": 0,
+            "count": 4
           }
         ],
         "xMat3x3LookVec(xMat3x3*,const xVec3*)": [
@@ -1846,9 +1882,10 @@
         "xAccelMove(F32&,F32&,F32,F32,F32)": "?xAccelMove@@YAXAAM0MMM@Z",
         "xAccelStop(F32&,F32&,F32,F32)": "?xAccelStop@@YAXAAM0MM@Z",
         "xFuncPiece_Eval(xFuncPiece*,F32,xFuncPiece**)": "?xFuncPiece_Eval@@YAMPAUxFuncPiece@@MPAPAU1@@Z",
-        "xFuncPiece_ShiftPiece(xFuncPiece*,xFuncPiece*,F32)": "?xFuncPiece_ShiftPiece@@YAXPAUxFuncPiece@@0M@Z"
+        "xFuncPiece_ShiftPiece(xFuncPiece*,xFuncPiece*,F32)": "?xFuncPiece_ShiftPiece@@YAXPAUxFuncPiece@@0M@Z",
+        "xatan2(F32,F32)": "?xatan2@@YAMMM@Z"
       },
-      "scope": "Eleven independently reviewed math functions from the complete real xMath source and genuine runtime. Seven further public APIs without verified original entries remain unassigned. Original unknown cubic callees remain raw. No TU or executable completion claim.",
+      "scope": "Twelve independently reviewed math functions, including the actual emitted inline xatan2 body, from the complete real xMath source and genuine runtime. The helper reporting group follows generated xMath.obj ownership; its original definition/header TU is unknown. Other public APIs without verified original entries remain unassigned. Original unknown cubic callees remain raw. No TU or executable completion claim.",
       "globals": {
         "float:3f800000": {
           "linkage_name": "__real@3f800000",
@@ -2007,7 +2044,7 @@
         ],
         "xMathSolveQuadratic(F32,F32,F32,F32*,F32*)": [],
         "xMathSolveCubic(F32,F32,F32,F32,F32*,F32*,F32*)": [
-          "?xAngleClampFast@@YAMM@Z",
+          "xatan2(F32,F32)",
           "__CIpow",
           "xMathSolveQuadratic(F32,F32,F32,F32*,F32*)"
         ],
@@ -2040,6 +2077,10 @@
         "_CIfmod": {
           "linkage_name": "__CIfmod",
           "object": "msvcrt:msvcr71.dll"
+        },
+        "xatan2(F32,F32)": {
+          "linkage_name": "?xatan2@@YAMMM@Z",
+          "object": "xMath.obj"
         }
       },
       "address_expressions": {
@@ -2374,7 +2415,33 @@
             "addend": 0
           }
         ],
-        "xFuncPiece_ShiftPiece(xFuncPiece*,xFuncPiece*,F32)": []
+        "xFuncPiece_ShiftPiece(xFuncPiece*,xFuncPiece*,F32)": [],
+        "xatan2(F32,F32)": [
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d815",
+            "addend": 0
+          },
+          {
+            "symbol": "float:40c90fdb",
+            "field": "displacement",
+            "prefix": "d805",
+            "addend": 0
+          },
+          {
+            "symbol": "float:40c90fdb",
+            "field": "displacement",
+            "prefix": "d815",
+            "addend": 0
+          },
+          {
+            "symbol": "float:40c90fdb",
+            "field": "displacement",
+            "prefix": "d825",
+            "addend": 0
+          }
+        ]
       }
     },
     {
@@ -2687,6 +2754,235 @@
             "prefix": "d81d",
             "addend": 0,
             "count": 2
+          }
+        ]
+      }
+    },
+    {
+      "source": "src/SB/Core/xbox/iMemMgr.cpp",
+      "target_unit": "SB/Core/xbox/iMemMgr.cpp",
+      "object": "source/iMemMgr/iMemMgr.obj",
+      "comparison_object": "source/iMemMgr-functions.obj",
+      "host_entry": "tools/platforms/xbox_support/memory_entry.cpp",
+      "host_context": {
+        "xatof": null,
+        "imports": "tools/platforms/xbox_support/memory_crt.def"
+      },
+      "symbols": {
+        "iMemInit()": "?iMemInit@@YAXXZ"
+      },
+      "scope": "Reconstructed original103-byte Xbox initializer. The complete current platform source file is compiled; unobserved shutdown remains unimplemented. Shared allocator gMemInfo remains original48-byte storage via explicitly verified data-only link assignment, receives no source-data credit, and is not an executable relink.",
+      "globals": {
+        "mem_base_alloc": {
+          "linkage_name": "?mem_base_alloc@@3IA",
+          "size": 4
+        },
+        "mem_top_alloc": {
+          "linkage_name": "?mem_top_alloc@@3IA",
+          "size": 4
+        }
+      },
+      "original_data_bindings": {
+        "gMemInfo": {
+          "linkage_name": "?gMemInfo@@3UxMemInfo_tag@@A",
+          "size": 48,
+          "source": "SB/Core/x/xMemMgr.cpp"
+        }
+      },
+      "address_expressions": {
+        "iMemInit()": [
+          {
+            "symbol": "mem_base_alloc",
+            "addend": 0,
+            "field": "displacement",
+            "prefix": "a3"
+          },
+          {
+            "symbol": "mem_top_alloc",
+            "addend": 0,
+            "field": "displacement",
+            "prefix": "890d"
+          }
+        ]
+      },
+      "original_data_expressions": {
+        "iMemInit()": [
+          {
+            "symbol": "gMemInfo",
+            "addend": 24,
+            "field": "displacement",
+            "prefix": "a3"
+          },
+          {
+            "symbol": "gMemInfo",
+            "addend": 28,
+            "field": "displacement",
+            "prefix": "c705"
+          },
+          {
+            "symbol": "gMemInfo",
+            "addend": 32,
+            "field": "displacement",
+            "prefix": "c705"
+          },
+          {
+            "symbol": "gMemInfo",
+            "addend": 0,
+            "field": "displacement",
+            "prefix": "a3"
+          },
+          {
+            "symbol": "gMemInfo",
+            "addend": 4,
+            "field": "displacement",
+            "prefix": "a3"
+          },
+          {
+            "symbol": "gMemInfo",
+            "addend": 8,
+            "field": "displacement",
+            "prefix": "a3"
+          },
+          {
+            "symbol": "gMemInfo",
+            "addend": 12,
+            "field": "displacement",
+            "prefix": "a3"
+          },
+          {
+            "symbol": "gMemInfo",
+            "addend": 16,
+            "field": "displacement",
+            "prefix": "a3"
+          },
+          {
+            "symbol": "gMemInfo",
+            "addend": 20,
+            "field": "displacement",
+            "prefix": "a3"
+          },
+          {
+            "symbol": "gMemInfo",
+            "addend": 36,
+            "field": "displacement",
+            "prefix": "a3"
+          },
+          {
+            "symbol": "gMemInfo",
+            "addend": 40,
+            "field": "displacement",
+            "prefix": "a3"
+          },
+          {
+            "symbol": "gMemInfo",
+            "addend": 44,
+            "field": "displacement",
+            "prefix": "a3"
+          }
+        ]
+      },
+      "direct_calls": {
+        "iMemInit()": [
+          "malloc(size_t)"
+        ]
+      },
+      "call_symbols": {
+        "malloc(size_t)": {
+          "linkage_name": "_malloc",
+          "object": "msvcrt:msvcrt.dll"
+        }
+      }
+    },
+    {
+      "source": "src/SB/Core/x/xVec3.cpp",
+      "target_unit": "SB/Core/x/xVec3.cpp",
+      "object": "source/xVec3/xVec3.obj",
+      "comparison_object": "source/xVec3-functions.obj",
+      "host_entry": "tools/platforms/xbox_support/matrix_entry.cpp",
+      "host_context": {
+        "xatof": null,
+        "imports": "tools/platforms/xbox_support/math_crt.def"
+      },
+      "source_dependencies": [
+        {
+          "source": "src/SB/Core/x/xMath.cpp",
+          "object": "xMath.obj"
+        },
+        {
+          "source": "src/SB/Core/x/xMath3.cpp",
+          "object": "xMath3.obj"
+        },
+        {
+          "source": "src/SB/Core/gc/iMath.cpp",
+          "object": "iMath.obj"
+        },
+        {
+          "source": "src/SB/Core/gc/iMath3.cpp",
+          "object": "iMath3.obj"
+        },
+        {
+          "source": "src/SB/Core/x/xParCmd.cpp",
+          "object": "xParCmd.obj"
+        }
+      ],
+      "runtime_libraries": [
+        "libcmt"
+      ],
+      "symbols": {
+        "xVec3Normalize(xVec3*,const xVec3*)": "?xVec3Normalize@@YAMPAUxVec3@@PBU1@@Z"
+      },
+      "scope": "One independently reviewed normalizer from complete real xVec3.cpp, linked with the established genuine matrix callers and existing diagnostic matrix entry. NormalizeFast remains without reviewed original identity and receives no credit. No whole-TU or executable completion claim.",
+      "globals": {
+        "float:3f800000": {
+          "linkage_name": "__real@3f800000",
+          "size": 4,
+          "object": "xParCmd.obj",
+          "value_hex": "0000803f"
+        },
+        "float:3727c5ac": {
+          "linkage_name": "__real@3727c5ac",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "acc52737"
+        },
+        "float:00000000": {
+          "linkage_name": "__real@00000000",
+          "size": 4,
+          "object": "xParCmd.obj",
+          "value_hex": "00000000"
+        }
+      },
+      "direct_calls": {},
+      "call_symbols": {},
+      "address_expressions": {
+        "xVec3Normalize(xVec3*,const xVec3*)": [
+          {
+            "symbol": "float:3f800000",
+            "field": "displacement",
+            "prefix": "d825",
+            "addend": 0,
+            "count": 1
+          },
+          {
+            "symbol": "float:3727c5ac",
+            "field": "displacement",
+            "prefix": "d81d",
+            "addend": 0,
+            "count": 2
+          },
+          {
+            "symbol": "float:3f800000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0,
+            "count": 2
+          },
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0,
+            "count": 1
           }
         ]
       }

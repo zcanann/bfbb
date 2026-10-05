@@ -25,6 +25,10 @@
 #include "xMarkerAsset.h"
 #include <xMathInlines.h>
 
+#if defined(PS2)
+#include <rwim3d.h>
+#endif
+
 // zEntPlayerDyingInGoo() is DEFINED as S32 in zEntPlayer.cpp and declared U8 here.
 // That looks like something to clean up and is not: retail had the same split, and
 // both halves are load-bearing.

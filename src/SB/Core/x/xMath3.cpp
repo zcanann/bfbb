@@ -72,16 +72,37 @@ void xLine3VecDist2(const xVec3* p1, const xVec3* p2, const xVec3* v, xIsect* is
     if (ldirdotlv >= ldirlen2)
     {
         xVec3Sub(&isx->norm, v, p2);
+#if defined(XBOX)
+        isx->dist = xVec3Dot(&isx->norm, &isx->norm);
+#else
         isx->dist = xVec3Length2(&isx->norm);
+#endif
         return;
     }
 
     F32 lvlen2 = xVec3Length2(&isx->norm);
+#if defined(XBOX)
+    isx->dist = lvlen2 - (ldirdotlv / ldirlen2) * ldirdotlv;
+#else
     isx->dist = lvlen2 - (ldirdotlv * ldirdotlv) / ldirlen2;
+#endif
 }
 
 S32 xPointInBox(const xBox* b, const xVec3* p)
 {
+#if defined(XBOX)
+    if ((p->x >= b->lower.x) && (p->x <= b->upper.x))
+    {
+        if ((p->y >= b->lower.y) && (p->y <= b->upper.y))
+        {
+            if ((p->z >= b->lower.z) && (p->z <= b->upper.z))
+            {
+                return 1;
+            }
+        }
+    }
+    return 0;
+#else
     S32 ret = 0;
     if ((p->x >= b->lower.x) && (p->x <= b->upper.x))
     {
@@ -94,6 +115,7 @@ S32 xPointInBox(const xBox* b, const xVec3* p)
         }
     }
     return (char)ret;
+#endif
 }
 
 void xBoxInitBoundOBB(xBox* o, const xBox* b, const xMat4x3* m)
@@ -331,14 +353,26 @@ void xMat3x3RotC(xMat3x3* m, F32 _x, F32 _y, F32 _z, F32 t)
 
     m->right.x = (c * _x * _x) + cos;
     m->right.y = (sin * _z) + (c * _x * _y);
+#if defined(XBOX)
+    m->right.z = (c * _z * _x) - (sin * _y);
+#else
     m->right.z = (-sin * _y) + (c * _z * _x);
+#endif
 
+#if defined(XBOX)
+    m->up.x = (c * _x * _y) - (sin * _z);
+#else
     m->up.x = (-sin * _z) + (c * _x * _y);
+#endif
     m->up.y = (c * _y * _y) + cos;
     m->up.z = (sin * _x) + (c * _y * _z);
 
     m->at.x = (sin * _y) + (c * _z * _x);
+#if defined(XBOX)
+    m->at.y = (c * _y * _z) - (sin * _x);
+#else
     m->at.y = (-sin * _x) + (c * _y * _z);
+#endif
     m->at.z = (c * _z * _z) + cos;
 
     m->flags = 0;
@@ -782,6 +816,7 @@ void xBoxFromCircle(xBox& box, const xVec3& center, const xVec3& dir, F32 r)
     box.lower = center - ext;
 }
 
+#if !defined(XBOX)
 void xQuatSMul(xQuat* q, const xQuat* a, F32 t)
 {
     q->s = a->s * t;
@@ -798,3 +833,4 @@ void xQuatAdd(xQuat* q, const xQuat* a, const xQuat* b)
     q->s = a->s + b->s;
     xVec3Add((xVec3*)q, (xVec3*)a, (xVec3*)b);
 }
+#endif

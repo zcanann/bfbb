@@ -11,6 +11,9 @@
 #include "iModel.h"
 #include "xstransvc.h"
 #include "iParMgr.h"
+#if defined(PS2)
+#include <rwim3d.h>
+#endif
 
 #include <types.h>
 

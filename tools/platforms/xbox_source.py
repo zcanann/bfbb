@@ -79,8 +79,10 @@ def _pe_text(path: Path) -> tuple[bytes, int]:
 
 
 def _map_functions(path: Path) -> list[dict]:
+    # MSVC also marks emitted inline functions `f i`; keep their actual object
+    # owner and subject them to the same unique-name and decoded-CFG checks.
     pattern = re.compile(r'^\s*[0-9a-fA-F]{4}:[0-9a-fA-F]{8}\s+(\S+)\s+'
-                         r'([0-9a-fA-F]{8})\s+f\s+(\S+)\s*$', re.MULTILINE)
+                         r'([0-9a-fA-F]{8})\s+f\s+(?:i\s+)?(\S+)\s*$', re.MULTILINE)
     functions = [{'name': name, 'address': int(address, 16), 'object': owner}
                  for name, address, owner in pattern.findall(path.read_text(encoding='utf-8'))]
     if not functions or len({f['name'] for f in functions}) != len(functions):
@@ -171,7 +173,8 @@ def _leaf_extent(text: bytes, text_address: int, entry: int, bound: int,
 
 
 def _extract_functions(executable: Path, map_path: Path, unit: dict,
-                       target_switches: dict | None = None) -> tuple[list[dict], list[dict]]:
+                       target_switches: dict | None = None,
+                       original_data: dict | None = None) -> tuple[list[dict], list[dict]]:
     text, text_address = _pe_text(executable)
     functions = _map_functions(map_path)
     by_name = {f['name']: f for f in functions}
@@ -180,6 +183,10 @@ def _extract_functions(executable: Path, map_path: Path, unit: dict,
     from .xbox_relocations import pe_provenance, source_globals, normalize, discover_source_expressions
     sections, highlow = pe_provenance(executable)
     anchors = source_globals(map_path, unit, sections, executable)
+    from .xbox_external_data import verify_map, expressions as external_expressions
+    if bool(unit.get('original_data_bindings')) != bool(original_data):
+        raise ValueError('Original data bindings lack authenticated target preparation')
+    external_anchors = verify_map(map_path, sections, original_data or {})
     output, evidence = [], []
     for canonical, linkage in unit['symbols'].items():
         if linkage not in by_name:
@@ -214,6 +221,15 @@ def _extract_functions(executable: Path, map_path: Path, unit: dict,
         expressions = discover_source_expressions(body,
             unit.get('address_expressions', {}).get(canonical, []), function_anchors, fields)
         normalized, relocations = normalize(body, expressions, function_anchors, fields)
+        if original_data:
+            if set(function_anchors) & set(external_anchors):
+                raise ValueError('Original data binding aliases a source or switch anchor')
+            bound_expressions = external_expressions(body,
+                unit.get('original_data_expressions', {}).get(canonical, []), external_anchors, fields)
+            normalized, bound_relocations = normalize(normalized, bound_expressions, external_anchors)
+            relocations = sorted(relocations + bound_relocations, key=lambda r: r['offset'])
+            expressions += bound_expressions
+            function_anchors = {**function_anchors, **external_anchors}
         if extent['direct_calls']:
             from .xbox_calls import normalize_calls
             normalized, call_relocations = normalize_calls(normalized, address, extent['direct_calls'],
@@ -253,6 +269,12 @@ def compile_units(output: Path, compilers: Path, wine: Path | None = None) -> li
     if any('_CIfmod' in unit.get('call_symbols', {}) for unit in units):
         from .xbox_runtime import verify_cifmod_vendor
         verify_cifmod_vendor(compiler / profile['static_runtime']['libraries']['libcmt']['path'])
+    if any('__CIasin' in unit.get('call_symbols', {}) for unit in units):
+        from .xbox_asin import verify_asin_vendor
+        verify_asin_vendor(compiler / profile['static_runtime']['libraries']['libcmt']['path'])
+    if any('malloc(size_t)' in unit.get('call_symbols', {}) for unit in units):
+        from .xbox_malloc import verify_malloc_vendor
+        verify_malloc_vendor(compiler / profile['static_runtime']['libraries']['libcmt']['path'])
     # A failed refresh must not leave an older source object attached.
     for unit in units:
         available[unit['target_unit']].pop('base_path', None)
@@ -285,12 +307,14 @@ def compile_units(output: Path, compilers: Path, wine: Path | None = None) -> li
 
     records = []
     for unit in units:
+        from .xbox_external_data import load_bindings, binding_object, verify_undefined
+        original_data = load_bindings(output, unit, output / available[unit['target_unit']]['target_path'])
         source_object = output / unit['object']
         build = source_object.parent
         build.mkdir(parents=True, exist_ok=True)
         commands = []
 
-        def run(tool: str, args: list[str], label: str) -> None:
+        def run(tool: str, args: list[str], label: str, prove_undefined: bool = False) -> None:
             executable = compiler / 'Bin' / tool
             command = ([str(Path(wine).resolve()), tool_path(executable)] if wine is not None
                        else [str(executable)]) + args
@@ -301,6 +325,10 @@ def compile_units(output: Path, compilers: Path, wine: Path | None = None) -> li
                 result = subprocess.run(command, cwd=build, env=environment, stdout=log,
                                         stderr=subprocess.STDOUT)
             (build / 'commands.json').write_text(json.dumps(commands, indent=2) + '\n', encoding='utf-8')
+            if prove_undefined:
+                verify_undefined((build / f'{label}.log').read_text(encoding='utf-8', errors='replace'),
+                                 result.returncode, source_object.name, original_data)
+                return
             if result.returncode:
                 tail = (build / f'{label}.log').read_text(encoding='utf-8', errors='replace')[-8000:]
                 raise RuntimeError(f'Xbox {label} failed ({result.returncode}); see '
@@ -341,10 +369,15 @@ def compile_units(output: Path, compilers: Path, wine: Path | None = None) -> li
                        tool_path(ROOT / support['float_marker'])], 'compile-host-marker')
         run('lib.exe', ['/nologo', '/machine:x86', '/out:msvcrt.lib',
                         '/def:' + tool_path(ROOT / support['imports'])], 'create-host-imports')
-        run('link.exe', ['/nologo', '/LTCG', '/NODEFAULTLIB', '/ENTRY:xbox_source_entry',
-                         '/SUBSYSTEM:CONSOLE', '/MAP:source.map', '/FIXED:NO', '/OUT:source.exe',
-                         source_object.name, *dependency_objects, 'entry.obj', *host_objects, 'fltused.obj', 'msvcrt.lib',
-                         *runtime_libraries], 'link-source')
+        link_args = ['/nologo', '/LTCG', '/NODEFAULTLIB', '/ENTRY:xbox_source_entry',
+                     '/SUBSYSTEM:CONSOLE', '/MAP:source.map', '/FIXED:NO', '/OUT:source.exe',
+                     source_object.name, *dependency_objects, 'entry.obj', *host_objects, 'fltused.obj',
+                     'msvcrt.lib', *runtime_libraries]
+        if original_data:
+            run('link.exe', link_args, 'verify-undefined-data', prove_undefined=True)
+            (build / 'original-data.obj').write_bytes(binding_object(original_data))
+            link_args.append('original-data.obj')
+        run('link.exe', link_args, 'link-source')
         target_switches = None
         if unit.get('switch_tables'):
             checked = checked_switches['units'][unit['target_unit']]
@@ -355,7 +388,7 @@ def compile_units(output: Path, compilers: Path, wine: Path | None = None) -> li
             if set(target_switches) != set(unit['switch_tables']):
                 raise ValueError('Source and original switch function inventories differ')
         functions, evidence = _extract_functions(build / 'source.exe', build / 'source.map', unit,
-                                                 target_switches)
+                                                 target_switches, original_data or None)
         comparison = output / unit['comparison_object']
         comparison.write_bytes(function_object(functions))
         (build / 'function-extents.json').write_text(json.dumps({
@@ -371,6 +404,9 @@ def compile_units(output: Path, compilers: Path, wine: Path | None = None) -> li
                         'comparison_object_sha256': hashlib.sha256(comparison.read_bytes()).hexdigest(),
                         'compared_function_count': len(functions), 'source_link_verified': False,
                         'complete_translation_unit': False, 'host_support_excluded': True,
+                        **({'original_data_bindings': original_data, 'bound_storage_bytes_credited': 0,
+                            'original_data_provenance': 'Fixed original addresses; no PE HIGHLOW; undefined-symbol and decoded-memory-operand proof'}
+                           if original_data else {}),
                         **({'source_dependencies': dependency_records} if dependency_records else {}),
                         **({'runtime_libraries': {name: profile['static_runtime']['libraries'][name]
                             for name in unit['runtime_libraries']}} if runtime_libraries else {})})

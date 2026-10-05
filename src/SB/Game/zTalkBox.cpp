@@ -1,5 +1,9 @@
 #include "xstransvc.h"
+#if defined(PS2)
+#include "xpkrsvc_api.h"
+#else
 #include "xpkrsvc.h"
+#endif
 #include "zTalkBox.h"
 #include "xDebug.h"
 #include "zEntPlayer.h"

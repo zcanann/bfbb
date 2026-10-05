@@ -13,6 +13,10 @@ namespace auto_tweak
 
 #include "auto_tweak.h"
 #include "rwcore.h"
+#if defined(PS2)
+#include <rwim2d.h>
+#include <rwim3d.h>
+#endif
 #include "xDebug.h"
 
 #include "xMemMgr.h"
@@ -319,7 +323,7 @@ bool aqua_beam::hits_sphere(const xSphere& o) const
         F32 maxdist = hit_radius * (grow * ring.dist + 1.0f) + radius;
         xVec3 delta = center - *(xVec3*)&ring.model->Mat->pos;
 
-        if (!(delta.length2() > maxdist * maxdist) && FABS(delta.dot(ring.mat.at)) < maxdist)
+        if (!(delta.length2() > maxdist * maxdist) && xabs(delta.dot(ring.mat.at)) < maxdist)
         {
             return true;
         }
@@ -349,7 +353,7 @@ void aqua_beam::update_rings(F32 dt)
             ++it;
         }
 
-        while (!ring.queue.empty() && FABS(ring.queue.back().dist) >= cfg.ring.kill_dist)
+        while (!ring.queue.empty() && xabs(ring.queue.back().dist) >= cfg.ring.kill_dist)
         {
             kill_ring();
         }
@@ -420,7 +424,7 @@ void aqua_beam::render_ring(aqua_beam::ring_segment& r)
     xModelInstance* model = r.model;
     model->Alpha = cfg.ring.alpha;
 
-    F32 fade_dist = FABS(r.dist) - cfg.ring.fade_dist;
+    F32 fade_dist = xabs(r.dist) - cfg.ring.fade_dist;
     if (fade_dist > 0.0f)
     {
         F32 max_fade_dist = cfg.ring.kill_dist - cfg.ring.fade_dist;
@@ -499,7 +503,7 @@ namespace
             }
 
             raster =
-                RwRasterCreate(width, height, 32, rwRASTERGAMMACORRECTED | rwRASTERPIXELLOCKEDWRITE);
+                RwRasterCreate(width, height, 32, rwRASTERTYPECAMERATEXTURE);
             if (raster == NULL)
             {
                 destroy();
@@ -527,11 +531,23 @@ namespace
 
         void destroy();
         void set_background(iColor_tag);
+#if defined(PS2)
+        inline
+#endif
         void set_model_texture(xModelInstance&);
+#if defined(PS2)
+        inline
+#endif
         void update(xModelInstance&, xLightKit*);
         void render_static();
         void render_background();
-        void set_vert(rwGameCube2DVertex&, F32, F32, F32, F32);
+#if defined(PS2)
+        inline
+#endif
+        void set_vert(RwIm2DVertex&, F32, F32, F32, F32);
+#if defined(PS2)
+        inline
+#endif
         void move(const xVec3&, const xVec3&);
     };
 } // namespace
@@ -1401,7 +1417,7 @@ void zNPCPrawn::update_turn(F32 dt)
         diff += 6.2831855f;
     }
 
-    bool decel = FABS(this->turn.vel) < 0.001f ||
+    bool decel = xabs(this->turn.vel) < 0.001f ||
                  (diff < 0.0f ? 1 : 0) != (this->turn.vel < 0.0f ? 1 : 0);
 
     if (decel)
@@ -1413,7 +1429,7 @@ void zNPCPrawn::update_turn(F32 dt)
         time_to_target = diff / this->turn.vel;
     }
 
-    F32 time_to_stop = FABS(this->turn.vel / this->turn.accel);
+    F32 time_to_stop = xabs(this->turn.vel / this->turn.accel);
 
     F32 dir = (time_to_target > time_to_stop) ? 1.0f : -1.0f;
     F32 sign = (diff >= 0.0f) ? 1.0f : -1.0f;
@@ -1423,11 +1439,11 @@ void zNPCPrawn::update_turn(F32 dt)
     F32 vel = this->turn.vel + dvel;
     F32 max_vel = this->turn.max_vel;
 
-    if (FABS(vel) <= max_vel)
+    if (xabs(vel) <= max_vel)
     {
         this->turn.vel = vel;
     }
-    else if (FABS(this->turn.vel) <= max_vel)
+    else if (xabs(this->turn.vel) <= max_vel)
     {
         this->turn.vel = range_limit<F32>(vel, -max_vel, max_vel);
     }
@@ -1439,7 +1455,7 @@ void zNPCPrawn::update_turn(F32 dt)
     F32 step = this->turn.vel * dt;
     if (time_to_target > time_to_stop)
     {
-        if ((step < 0.0f ? 1 : 0) == (diff < 0.0f ? 1 : 0) && FABS(step) > FABS(diff))
+        if ((step < 0.0f ? 1 : 0) == (diff < 0.0f ? 1 : 0) && xabs(step) > xabs(diff))
         {
             this->turn.vel = 0.0f;
             step = diff;
@@ -1742,7 +1758,9 @@ namespace
         if (globalCamera != NULL)
         {
             RwCameraEndUpdate(globalCamera);
+#if !defined(PS2)
             RwGameCubeCameraTextureFlush(globalCamera->frameBuffer, 0);
+#endif
         }
         if (this->bgraster == NULL)
         {
@@ -1782,7 +1800,9 @@ namespace
         }
         render_static();
         RwCameraEndUpdate(this->cam);
+#if !defined(PS2)
         RwGameCubeCameraTextureFlush(this->cam->frameBuffer, 0);
+#endif
         if (globalCamera != NULL)
         {
             RwCameraBeginUpdate(globalCamera);
@@ -1798,7 +1818,7 @@ namespace
         zRenderState(SDRS_Fill);
         RwRenderStateSet(rwRENDERSTATETEXTURERASTER, this->bgraster);
 
-        rwGameCube2DVertex* vert = (rwGameCube2DVertex*)xMemPushTemp(6 * sizeof(*vert));
+        RwIm2DVertex* vert = (RwIm2DVertex*)xMemPushTemp(6 * sizeof(*vert));
 
         set_vert(vert[0], 0.0f, 0.0f, 0.0f, 0.0f);
         set_vert(vert[1], 0.0f, this->h, 0.0f, 1.0f);
@@ -1811,8 +1831,17 @@ namespace
         xMemPopTemp(vert);
     }
 
-    void television::set_vert(rwGameCube2DVertex& vert, F32 x, F32 y, F32 u, F32 v)
+    void television::set_vert(RwIm2DVertex& vert, F32 x, F32 y, F32 u, F32 v)
     {
+#if defined(PS2)
+        RwIm2DVertexSetScreenX(&vert, x);
+        RwIm2DVertexSetScreenY(&vert, y);
+        RwIm2DVertexSetScreenZ(&vert, 1.0f);
+        RwIm2DVertexSetRecipCameraZ(&vert, 1.0f / 0.3f);
+        RwIm2DVertexSetU(&vert, u, 0);
+        RwIm2DVertexSetV(&vert, v, 0);
+        RwIm2DVertexSetIntRGBA(&vert, 255, 255, 255, 255);
+#else
         vert.x = x;
         vert.y = y;
         vert.z = 1.0f;
@@ -1822,6 +1851,7 @@ namespace
         vert.emissiveColor.green = 0xff;
         vert.emissiveColor.blue = 0xff;
         vert.emissiveColor.alpha = 0xff;
+#endif
     }
 
     void television::move(const xVec3& v1, const xVec3& v2)

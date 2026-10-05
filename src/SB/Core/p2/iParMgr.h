@@ -5,6 +5,14 @@
 #include "xMath3.h"
 #include <rwcore.h>
 
+// Original PS2 render arrays shared by the immediate-mode consumers.
+struct tagiRenderArrays
+{
+    U16 m_index[960];
+    RxObjSpace3DVertex m_vertex[480];
+    F32 m_vertexTZ[480];
+};
+
 struct tagiRenderInput
 {
     // total size: 0x80
@@ -21,6 +29,7 @@ struct tagiRenderInput
     xVec4 m_camViewU; // offset 0x70, size 0x10
 };
 
+extern tagiRenderArrays gRenderArr;
 extern tagiRenderInput gRenderBuffer;
 
 void iParMgrInit();

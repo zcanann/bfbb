@@ -75,12 +75,12 @@ checked, and the standard objdiff parser accepts the result.
 
 | Version | Full code-region bytes | Objdiff code-matched bytes |
 | --- | ---: | ---: |
-| SLUS-20680 | 2,978,560 | 82,876 |
-| SLES-51968 | 2,979,712 | 82,568 |
-| SLES-51970 | 2,976,512 | 82,568 |
-| SLES-53623 | 2,979,968 | 29,500 |
-| XBOX-US | 1,798,760 | 11,445 |
-| XBOX-EU | 1,798,760 | 11,445 |
+| SLUS-20680 | 2,978,560 | 200,716 |
+| SLES-51968 | 2,979,712 | 200,408 |
+| SLES-51970 | 2,976,512 | 200,304 |
+| SLES-53623 | 2,979,968 | 34,104 |
+| XBOX-US | 1,798,760 | 12,409 |
+| XBOX-EU | 1,798,760 | 12,409 |
 
 The PS2 [math alignment restoration](PS2_MATH_ALIGNMENT.md) enables complete
 `xEntMotion`, `xPad`, and `xClimate` source comparisons: 34 functions / 20,040
@@ -122,10 +122,10 @@ The narrower function-only baselines currently contain:
 
 | PS2 baseline | Functions | Measured function bytes | Source matches |
 | --- | ---: | ---: | ---: |
-| USA | 5,391 | 2,107,460 | 639 functions / 82,876 bytes |
-| Europe/Australia | 5,392 | 2,108,700 | 638 functions / 82,568 bytes |
-| Germany | 5,394 | 2,105,512 | 638 functions / 82,568 bytes |
-| France (reviewed and corroborated bounds) | 597 | 214,848 | 175 functions / 29,500 bytes |
+| USA | 5,391 | 2,107,460 | 1,374 functions / 200,716 bytes |
+| Europe/Australia | 5,392 | 2,108,700 | 1,373 functions / 200,408 bytes |
+| Germany | 5,394 | 2,105,512 | 1,372 functions / 200,304 bytes |
+| France (reviewed and corroborated bounds) | 597 | 214,848 | 207 functions / 34,104 bytes |
 
 The `address-anchors.json` registries also recover over 2,500 named data addresses
 and 628 function declarations in each debug-bearing version. Addresses do not
@@ -153,7 +153,7 @@ other target objects are not relocation-restored link inputs. Code outside those
 and padding remain unclassified; the whole mixed load segment is not counted as
 code. France is stripped; independently reviewed and machine-corroborated
 extents establish its 597-function, 214,848-byte function-only baseline. Its
-29,500 matched code bytes describe that subset. The published code denominator
+34,104 matched code bytes describe that subset. The published code denominator
 is the full recovered CPU text region, not this function-only subset.
 
 Both Xbox releases have identical payloads in all 13 sections; their 532 differing
@@ -333,15 +333,15 @@ Both region registries keep independent executable identities.
 See the parameterized scripts in `tools/platforms/ghidra/`. No Xbox SDK is required
 for this analysis step.
 
-`verified-anonymous-functions.json` promotes 2,446 disjoint extents (613,399
+`verified-anonymous-functions.json` promotes 2,442 disjoint extents (613,208
 bytes) per release after Capstone 5.0.7 re-decodes closed control flow, verifies
 all body bytes are reachable, checks an incoming direct call from another
 closed function, and excludes foreign interior transfers across the candidate
 inventory. Reviewed extents take precedence. CI regenerates this registry from
 the original; the remaining candidates stay excluded. Anonymous identifiers
 establish neither original symbols nor source ownership. Together with the
-110 reviewed extents, measured coverage is 2,556 functions / 635,415 bytes;
-11,445 bytes match source. This is still partial coverage.
+114 reviewed extents, measured coverage is 2,556 functions / 635,415 bytes;
+12,409 bytes match source. This is still partial coverage. The [Xbox memory initializer](XBOX_MEMORY_INITIALIZER.md) adds 103 exact source bytes using an explicitly verified data-only original binding; its recovered runtime allocator remains target-only. The [inline math boundary](XBOX_MATH_INLINE_BOUNDARY.md) adds 388 exact source bytes from Euler and the emitted xatan2 helper without changing the original denominator. The original-backed box-containment return structure adds another 84 bytes, the vector normalizer adds 163 bytes by preserving the original input-field reloads, and direct axis-rotation subtraction adds 226 bytes.
 
 The complete particle-group source now compiles with its real particle dependency
 and a hash-pinned Microsoft static runtime library. Five independently reviewed
@@ -513,3 +513,60 @@ see [SB2 evidence](PS2_SB2_SOURCE.md).
 
 Complete PS2 Dutchman source comparison adds 2,624 matched bytes per debug
 region, with separately verified USA and PAL original profiles.
+
+Complete PS2 Sandy and Prawn comparisons add 10,652 matched bytes per debug
+region; see [Sandy render-array evidence](PS2_SANDY_RENDER_ARRAY.md) and
+[Prawn platform evidence](PS2_PRAWN_SOURCE.md).
+
+Complete PS2 [player source](PS2_PLAYER_SOURCE.md) and
+[Bungee/CruiseBubble states](PS2_PLAYER_STATES.md) add 17,636 matched bytes /
+166 functions per debug region. All 429 original functions remain represented;
+Germany retains its larger original player function extents.
+
+The complete [King Jelly comparison](PS2_KING_JELLY_SOURCE.md) adds 4,976 matched
+bytes / 17 functions per debug region with unchanged source. All 69 original
+functions retain their regional extents and partial scores.
+
+Complete PS2 [Villager, Villager goals and Hazard comparisons](PS2_VILLAGER_HAZARD_SOURCE.md)
+add 9,288 matched bytes / 65 functions per debug region. All 191 original
+functions remain in the comparison; Germany keeps its distinct goal extents.
+
+The complete [Patrick comparison](PS2_BOSS_PATRICK_SOURCE.md) adds 8,300 matched bytes /
+35 functions per debug region with only a PS2 render-header include. All 63
+original functions remain represented.
+
+Complete [PS2 Supplement comparison](PS2_SUPPLEMENT_SOURCE.md) adds 3,808 matched
+bytes / 13 functions per debug region. Authenticated version defines select the
+original 50 Hz timing in Europe/Germany; USA retains 60 Hz. The remaining source
+profiles and compiler settings are preserved.
+
+The complete [thrown-object, boulder and shrapnel comparisons](PS2_THROWN_BOULDER_SHRAPNEL_SOURCE.md)
+add 2,752 matched bytes / 24 functions per debug region without source changes.
+All these matches independently reconstruct the original bytes.
+
+The complete [cinematic effects comparison](PS2_CINEMATIC_SOURCE.md) adds 2,544
+matched bytes / 21 functions per debug region using only PS2 include selections.
+All 77 original functions retain their extents and partial scores.
+
+The complete PS2 camera and lasso source comparisons add 24 matched functions /
+3,472 bytes in each debug region, all independently verified against original
+bytes after relocation. Unmatched functions remain in both unit totals. See
+[camera and lasso evidence](PS2_CAMERA_LASSO_SOURCE.md).
+
+The PS2 TalkBox, DiscoFloor and original goo-rendering paths add another 53
+standard matched functions / 6,404 bytes per debug region. See [TalkBox and
+DiscoFloor](PS2_TALKBOX_DISCOFLOOR_SOURCE.md), [PS2 goo](PS2_ZFX_SOURCE.md), and
+[regional timing](PS2_LASER_KING_REGIONAL_TIMING.md). French comparisons add
+17 matched functions / 2,816 bytes using already-confirmed identities; see
+[French source coverage](FRANCE_ADDITIONAL_CORE_PROFILES.md).
+
+The complete debug-region [UI source comparison](PS2_ZUI_SOURCE.md) adds 11
+matched functions / 2,144 bytes per version. Eight further French source
+comparisons add nine matches / 1,236 bytes, keeping all 26 confirmed members
+and unknown references: [French effects and camera coverage](PS2_FRANCE_EFFECTS_CAMERA_SOURCE.md).
+
+The original PS2 [OOB rendering path](PS2_OOB_SOURCE.md) adds 12 exact functions /
+1,012 bytes for USA and Europe, and 11 / 908 for Germany. All these matches also
+reconstruct the original bytes after relocation. Twelve additional French source
+profiles add six standard matches / 552 bytes while retaining all confirmed
+members and unknown references: [remaining French coverage](PS2_FRANCE_REMAINING_SOURCE.md).

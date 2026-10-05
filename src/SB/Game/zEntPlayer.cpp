@@ -11,6 +11,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#if defined(PS2)
+#include <rwim3d.h>
+#endif
 
 #include "iAnim.h"
 #include "iAnimSKB.h"
@@ -14155,7 +14158,9 @@ static void player_sound_hop_load(U32 hopid, S32 hip_or_hop)
     iTimeDiffSec(t);
     while (xSTLoadStep(hopid) < 1.0f)
     {
+#if !defined(PS2)
         iTRCDisk::CheckDVDAndResetState();
+#endif
     }
     xSTDisconnect(hopid, hip_or_hop);
     t = iTimeGet();
@@ -14202,7 +14207,9 @@ void zEntPlayer_UnloadSounds()
     if (g_flg_loaded & 0x20)
     {
         xSTUnLoadScene('SPSC', 2);
+#if !defined(PS2)
         iSndSceneExit();
+#endif
     }
     if (g_flg_loaded & 0x04)
     {
@@ -14211,7 +14218,9 @@ void zEntPlayer_UnloadSounds()
     if (g_flg_loaded & 0x08)
     {
         xSTUnLoadScene('SPPA', 2);
+#if !defined(PS2)
         iSndSceneExit();
+#endif
     }
     if (g_flg_loaded & 0x01)
     {
@@ -14220,7 +14229,9 @@ void zEntPlayer_UnloadSounds()
     if (g_flg_loaded & 0x02)
     {
         xSTUnLoadScene('SPSB', 2);
+#if !defined(PS2)
         iSndSceneExit();
+#endif
     }
     g_flg_loaded = 0;
 }

@@ -39,7 +39,11 @@
 #include "zSurface.h"
 #include "zTextBox.h"
 #include "zEntButton.h"
+#if defined(PS2)
+#include <string.h>
+#else
 #include <PowerPC_EABI_Support\MSL_C\MSL_Common\cstring>
+#endif
 #include <types.h>
 
 // These structs were used in deadstripped functions.
@@ -1002,7 +1006,7 @@ namespace bungee_state
                 xQuatFromMat(&detach.end_dir, &mat);
 
                 detach.time = 0.0f;
-                detach.end_time = xsqrt(__fabs(loc.length() / h.detach.accel));
+                detach.end_time = xsqrt(xabs(loc.length() / h.detach.accel));
                 if (detach.end_time >= -1e-5f && detach.end_time <= 1e-5f)
                 {
                     detach.end_time = 0.01f;

@@ -1,5 +1,11 @@
+#if defined(PS2)
+#include <math.h>
+#include <rwsdk/rpskin.h>
+#include <rwim3d.h>
+#else
 #include <PowerPC_EABI_Support\MSL_C\MSL_Common\cmath>
 #include <rpskin.h>
+#endif
 #include <stdio.h>
 #include <string.h>
 
