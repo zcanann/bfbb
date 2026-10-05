@@ -601,6 +601,9 @@ void xMat4x3Toworld(xVec3* o, const xMat4x3* m, const xVec3* v)
 }
 #endif
 
+#if defined(XBOX)
+inline
+#endif
 void xMat4x3Mul(xMat4x3* o, const xMat4x3* a, const xMat4x3* b)
 {
     xVec3 v;

@@ -115,3 +115,45 @@ original TU-completion claim is added.
 Ignored evidence: `build/xbox254/{compile.py,compare.py,sphere-deltas.json,
 compile-pair.py,compare-pair.py,pair-deltas.json,consumers,pair-consumers,
 gc/proof.json,production,verify_final.py,final-verification.json}`.
+
+
+## Quick-cull and matrix composition boundaries
+
+The original `xQuickCullForOBB` and the box branch of `xQuickCullForBound`
+contain the two cell calculations and merge directly. The prior source called
+`xQuickCullForBox` instead. Likewise, original `xMat4x3Rot` calls RotC, Toworld
+and Mat3Mul, while the prior source called RotC and Mat4x3Mul.
+
+The existing definitions of `xQuickCullForBox` and `xMat4x3Mul` are now ordinary
+inline functions for Xbox only, within their existing complete source TUs.
+Their bodies and all non-Xbox code are unchanged. The source profile records
+the actual newly exposed calls to existing reviewed helpers. Original symbols,
+bounds, target relocations, compiler flags and backend rules are unchanged.
+Standalone source definitions retain their real owners and prior scores; no
+artificial caller or forced emission was introduced.
+
+| Function | Original bytes | Before | After |
+| --- | ---: | ---: | ---: |
+| xQuickCullForBound | 125 | 45.792454% | 100% |
+| xQuickCullForOBB | 68 | 52.260868% | 100% |
+| xMat4x3Rot | 146 | 72.48077% | 79.15385% |
+
+All 193 newly matched bytes independently reconstruct both authenticated
+originals after only the nine actual source E8 operands are assigned their
+already reviewed original callee addresses. Source CFG extents are decoded
+independently and both functions are owned by actual `xQuickCull.obj`. No
+constant or instruction bytes are excluded. Matrix rotation remains partial.
+
+Both full reports contain 13,694 exact bytes / 72 exact functions. All eight
+reviewed QuickCull functions now match, totaling 1,167 bytes; original TU
+coverage and full executable relinking remain unproven, so completion stays
+false. Every prior function record, denominator and completion field is
+unchanged except the three listed scores and generated COFF offsets. Full
+code-weighted fuzzy progress increases from 1.1409510595738175% to
+1.147064423172074%. Seven actual consumer builds and 33 ordered GameCube
+allocated sections pass without regressions.
+
+Ignored evidence: `build/xbox256/{compile.py,compare.py,matrix-deltas.json,
+compile-pair.py,compare-pair.py,pair-deltas.json,gc/proof.json,production,
+verify_final.py,final-verification.json}`. The final verifier independently
+replays the actual named call destinations and all complete report invariants.

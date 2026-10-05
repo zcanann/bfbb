@@ -1135,7 +1135,8 @@
         "xMat3x3Tolocal(xVec3*,const xMat3x3*,const xVec3*)": [],
         "xMat4x3Rot(xMat4x3*,const xVec3*,F32,const xVec3*)": [
           "xMat3x3RotC(xMat3x3*,F32,F32,F32,F32)",
-          "xMat4x3Mul(xMat4x3*,const xMat4x3*,const xMat4x3*)"
+          "xMat4x3Toworld(xVec3*,const xMat4x3*,const xVec3*)",
+          "xMat3x3Mul(xMat3x3*,const xMat3x3*,const xMat3x3*)"
         ],
         "xMat4x3Mul(xMat4x3*,const xMat4x3*,const xMat4x3*)": [
           "xMat3x3Mul(xMat3x3*,const xMat3x3*,const xMat3x3*)",
@@ -1846,7 +1847,9 @@
         "xQuickCullForBound(xQCControl*,xQCData*,const xBound*)": [
           "?xQuickCullForBox@@YAXPAUxQCControl@@PAUxQCData@@PBUxBox@@@Z",
           "xQuickCullForOBB(xQCControl*,xQCData*,const xBox*,const xMat4x3*)",
-          "xQuickCullForSphere(xQCControl*,xQCData*,const xSphere*)"
+          "xQuickCullForSphere(xQCControl*,xQCData*,const xSphere*)",
+          "xQuickCullCellForVec(xQCControl*,xQCData*,const xVec3*)",
+          "xQuickCullCellMerge(xQCData*,const xQCData*,const xQCData*)"
         ],
         "xQuickCullCellForVec(xQCControl*,xQCData*,const xVec3*)": [
           "__ftol2"
@@ -1862,7 +1865,9 @@
         ],
         "xQuickCullForOBB(xQCControl*,xQCData*,const xBox*,const xMat4x3*)": [
           "?xQuickCullForBox@@YAXPAUxQCControl@@PAUxQCData@@PBUxBox@@@Z",
-          "xBoxInitBoundOBB(xBox*,const xBox*,const xMat4x3*)"
+          "xBoxInitBoundOBB(xBox*,const xBox*,const xMat4x3*)",
+          "xQuickCullCellForVec(xQCControl*,xQCData*,const xVec3*)",
+          "xQuickCullCellMerge(xQCData*,const xQCData*,const xQCData*)"
         ]
       },
       "call_symbols": {

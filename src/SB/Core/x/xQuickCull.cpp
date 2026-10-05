@@ -161,6 +161,9 @@ void xQuickCullForSphere(xQCControl* ctrl, xQCData* q, const xSphere* s)
     xQuickCullCellMerge(q, &a, &b);
 }
 
+#if defined(XBOX)
+inline
+#endif
 void xQuickCullForBox(xQCControl* ctrl, xQCData* q, const xBox* box)
 {
     xQCData a;
