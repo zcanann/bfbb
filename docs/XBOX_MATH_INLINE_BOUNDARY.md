@@ -155,3 +155,32 @@ GameCube xMath3 retains its five ordered allocated sections byte for byte, and
 PS2 retains its previous source expressions. Evidence is
 `build/xbox232/final-verification.json`, `dot/xLine3VecDist2.txt`, and
 `gc/proof.json`.
+
+## Random generator visibility
+
+The original xurand body and particle texture animation contain the complete
+linear-congruential generator, including the shared seed update. Xbox now sees
+the existing, unchanged xrand body as an ordinary header inline and declares
+its genuine external rndseed. Other platforms retain the out-of-line body;
+xurand itself remains out of line on all platforms. The caller arithmetic,
+seed type, constants and update sequence are unchanged.
+
+This makes xurand (46 bytes) and xParCmdTexAnim_Update (615 bytes) exact. The
+profiles record their now-inlined seed operands through actual PE HIGHLOW
+fields and the existing independently reviewed rndseed identity. Both complete
+source TUs retain their ordinary object ownership, with no reporting/backend
+change. Each new exact body has four address fields; reapplying the original
+addresses reproduces every original byte in both releases.
+
+Both full production reports pass at 13,070 exact bytes / 67 functions, adding
+661 bytes and two functions. All other function/unit records, denominators and
+completion claims are unchanged. Seven consumer builds preserve their other
+86 function scores. Actual GameCube xMath, xParCmd and xutil compilation keeps
+all 16 ordered allocated sections identical. Evidence is
+`build/xbox236/final-verification.json` and `gc/proof.json`.
+
+A broader private xurand-inline experiment is not retained: its emitted
+standalone copy belonged to the diagnostic entry object, outside the current
+source ownership policy. No forced emission, artificial caller or ownership
+relaxation was added. The independent pow vendor investigation likewise stays
+private because authentic call normalization did not change Cubic's score.

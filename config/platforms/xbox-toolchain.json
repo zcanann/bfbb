@@ -532,9 +532,7 @@
           "?xMat3x3GetEuler@@YAXPBUxMat3x3@@PAUxVec3@@@Z",
           "?xMat3x3LookVec@@YAMPAUxMat3x3@@PBUxVec3@@@Z"
         ],
-        "xParCmdTexAnim_Update(xParCmd*,xParGroup*,F32)": [
-          "?xrand@@YAIXZ"
-        ],
+        "xParCmdTexAnim_Update(xParCmd*,xParGroup*,F32)": [],
         "xParCmdCollideFall_Update(xParCmd*,xParGroup*,F32)": [],
         "xParCmdCollideFallSticky_Update(xParCmd*,xParGroup*,F32)": [],
         "xParCmd_DampenSpeed_Update(xParCmd*,xParGroup*,F32)": [],
@@ -641,6 +639,20 @@
             "prefix": "d81d",
             "addend": 0,
             "count": 2
+          },
+          {
+            "symbol": "rndseed",
+            "field": "displacement",
+            "prefix": "8b35",
+            "addend": 0,
+            "count": 1
+          },
+          {
+            "symbol": "rndseed",
+            "field": "displacement",
+            "prefix": "8935",
+            "addend": 0,
+            "count": 1
           }
         ],
         "xParCmdCollideFall_Update(xParCmd*,xParGroup*,F32)": [
@@ -2036,12 +2048,15 @@
           "size": 4,
           "object": "xMath.obj",
           "value_hex": "00004040"
+        },
+        "rndseed": {
+          "linkage_name": "?rndseed@@3IA",
+          "size": 4,
+          "object": "xMath.obj"
         }
       },
       "direct_calls": {
-        "xurand()": [
-          "?xrand@@YAIXZ"
-        ],
+        "xurand()": [],
         "xMathSolveQuadratic(F32,F32,F32,F32*,F32*)": [],
         "xMathSolveCubic(F32,F32,F32,F32,F32*,F32*,F32*)": [
           "xatan2(F32,F32)",
@@ -2086,16 +2101,32 @@
       "address_expressions": {
         "xurand()": [
           {
+            "symbol": "rndseed",
+            "field": "displacement",
+            "prefix": "a1",
+            "addend": 0,
+            "count": 1
+          },
+          {
+            "symbol": "rndseed",
+            "field": "displacement",
+            "prefix": "a3",
+            "addend": 0,
+            "count": 1
+          },
+          {
             "symbol": "float:4f800000",
             "field": "displacement",
             "prefix": "d805",
-            "addend": 0
+            "addend": 0,
+            "count": 1
           },
           {
             "symbol": "float:2f800000",
             "field": "displacement",
             "prefix": "d80d",
-            "addend": 0
+            "addend": 0,
+            "count": 1
           }
         ],
         "xMathSolveQuadratic(F32,F32,F32,F32*,F32*)": [
