@@ -67,3 +67,25 @@ bytes. `regression-final-diff.json` is empty. All 224 actual GameCube source
 compilations preserve every allocated section's name, size, and bytes in order,
 including repeated section names. Root integration performs the normal executable
 build and multi-version CI checks before publication.
+
+## Extend/retract motion expression
+
+The PS2 original xEntERMove loads motion time before the extend/retract period,
+then subtracts period from time. Its direct `motion->t - motion->er.p`
+initialization now preserves that original expression boundary. GameCube keeps
+the existing captured-period form, which its actual compiler requires for the
+unchanged output. The mathematical operand order is identical in both forms.
+
+Actual complete-unit compilation changes only the first two loads and their
+subtraction operands (offsets 0, 4 and 16); every other allocated byte and every
+source relocation remains identical. The 680-byte function is now raw-byte
+exact in all four authenticated PS2 originals, without relocation masking.
+The French identity/extent comes from the existing whole-unit reviewed sequence;
+no new boundary or profile is introduced.
+
+All four regional comparisons gain one / 680 and retain the full 20-function /
+14,616-byte inventory, now six / 1,636 matched at 81.83251% fuzzy. Every other
+function record is unchanged. All four independently compiled whole-source
+objects are byte-identical. Actual GC compilation preserves all 16 allocated
+sections. Private evidence: build/near247/proof.json, raw/raw-proof.json,
+gc/proof.json and candidate/<version>/report.json.
