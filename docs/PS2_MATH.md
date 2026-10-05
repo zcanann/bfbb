@@ -17,7 +17,7 @@ xVec3 retains the two functions owned by its original PS2 translation unit. The 
 The compiler output was compared against independently named original functions. Call and GP relocations are restored only when original DWARF function/data identities prove the destination, using the existing inverse-reconstruction checks. Unidentified runtime destinations remain unresolved in the target comparison; no source-derived target identity is introduced.
 
 - xMath: all 18 original functions represented, 8 code-matched functions / 616 bytes under the standard objdiff report settings. Seven functions independently reproduce all 540 original bytes after relocation application: EndPoints (60), AccelMoveTime (120), SolveQuadratic (264), xrand (32), xsrand (8), MathExit (24), and MathInit (32).
-- xJaw: both original functions represented; FindData matches all 232 bytes. EvalData remains nonmatching.
+- xJaw: both original functions represented; FindData matches all 232 bytes. EvalData was initially nonmatching; the endian correction below closes its code match.
 - xVec3: both original functions represented and nonmatching, each 66.60714% versus 65.41071% before the supported field-read change; 200 source bytes versus 224 original bytes. These fuzzy comparisons do not count as exact matched bytes.
 
 Raw source relocation reapplication against all three original releases independently confirms 772 bytes across xMath and xJaw. Standard objdiff additionally counts the 76-byte AngleClamp code body: its external xfmod destination remains unidentified, so those bytes are not claimed as independently reconstructed. The project uses standard objdiff code scoring, which ignores function relocation identity; the report is not manually rewritten or switched to a stricter metric. Both the standard code score (848 bytes) and the independent reconstruction result (772 bytes) are recorded explicitly. Complete/link status remains false.
@@ -25,3 +25,28 @@ Raw source relocation reapplication against all three original releases independ
 The four PS2 production configurations passed after the header changes with their prior matched-byte totals unchanged (5696 for each debug release, 1460 for France). New comparison profiles are restricted to the three debug executable hashes; no stripped France function identities are inferred. All 224 GameCube game translation units compile with identical allocated sections after direct packer/file header dependencies are supplied to their actual users. The normal GameCube all-source build, retail executable hash check, and full report comparison also pass without changes to the previous report.
 
 One unresolved ABI observation is retained without changing the standard API: original xatof is an eight-byte tail jump, whereas the standard double atof declaration emits an additional conversion in the current configuration. Original DWARF does not identify atof or its return type. This is insufficient evidence to alter its declaration or choose a different double-width setting.
+
+
+## Jaw evaluation endian handling
+
+The complete original xJaw_EvalData is308 bytes in all three debug releases.
+It reads numdata directly, then scales time by60 and evaluates the two floorf
+calls. It contains neither the shared source's count-threshold branch nor its
+eight byte loads/stores that conditionally reverse the count. The PS2 source
+now excludes only that byte-swap block; GameCube and Xbox retain their previous
+paths. Interpolation, count use, boundary checks and call order are unchanged.
+
+All three genuine complete source builds now match both original functions:
+2/2 and540/540 code bytes under normal objdiff, a gain of308 bytes/one function.
+Only EvalData changes from356 to308 source bytes; every other allocated section
+is identical. Actual GameCube compilation preserves both ordered allocated
+sections. There are no reviewed French xJaw functions/profile, so no French
+identity, denominator, or code comparison is added.
+
+Raw original reconstruction still proves FindData's232 bytes. EvalData differs
+only at its unresolved floorf call fields at+48/+64 in each debug original.
+This is a full code-match result without an executable-link, data completion,
+or raw540-byte claim. Original instruction windows and whole-body comparison
+are preserved under build/near255/jaw-alignment.json; final regional reports,
+raw/raw-proof.json, gc/proof.json and proof.json are under build/near257.
+No compiler, flags, shared headers, profiles or scoring changes accompany it.
