@@ -26,7 +26,11 @@ struct xMat4x3 : xMat3x3
 {
     xVec3 pos;
     U32 pad3;
-};
+}
+#if defined(PS2)
+__attribute__((aligned(16)))
+#endif
+;
 
 struct xSphere
 {
@@ -65,7 +69,11 @@ struct xQuat
 {
     xVec3 v;
     F32 s;
-};
+}
+#if defined(PS2)
+__attribute__((aligned(16)))
+#endif
+;
 
 struct xVec4
 {
@@ -73,7 +81,11 @@ struct xVec4
     F32 y;
     F32 z;
     F32 w;
-};
+}
+#if defined(PS2)
+__attribute__((aligned(16)))
+#endif
+;
 
 struct xRot
 {
