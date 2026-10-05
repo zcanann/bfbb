@@ -5551,6 +5551,108 @@
           "symbol": "gActiveHeap"
         }
       ]
+    },
+    {
+      "source": "src/SB/Game/zConditional.cpp",
+      "target_unit": "SB/Game/zConditional.cpp",
+      "object": "source/zConditional.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zConditionalEventCB__FP5xBaseP5xBaseUiPCfP5xBase": "zConditionalEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "zConditional_Evaluate__FP13_zConditional": "zConditional_Evaluate__FP13_zConditional",
+        "zConditionalLoad__FP13_zConditionalP7xSerial": "zConditionalLoad__FP13_zConditionalP7xSerial",
+        "zConditionalSave__FP13_zConditionalP7xSerial": "zConditionalSave__FP13_zConditionalP7xSerial",
+        "zConditionalInit__FPvPv": "zConditionalInit__FPvPv"
+      },
+      "calls": [
+        {
+          "function": "zConditionalEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 64,
+          "target_source": "SB/Game/zConditional.cpp",
+          "target_function": "zConditional_Evaluate__FP13_zConditional",
+          "symbol": "zConditional_Evaluate__FP13_zConditional"
+        },
+        {
+          "function": "zConditionalEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 84,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseP5xBaseUi"
+        },
+        {
+          "function": "zConditionalEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 112,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseP5xBaseUi"
+        },
+        {
+          "function": "zConditionalEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 132,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseReset__FP5xBaseP10xBaseAsset",
+          "symbol": "xBaseReset__FP5xBaseP10xBaseAsset"
+        },
+        {
+          "function": "zConditional_Evaluate__FP13_zConditional",
+          "offset": 108,
+          "target_source": "SB/Game/zScene.cpp",
+          "target_function": "zSceneFindObject__FUi",
+          "symbol": "zSceneFindObject__FUi"
+        },
+        {
+          "function": "zConditionalLoad__FP13_zConditionalP7xSerial",
+          "offset": 0,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseLoad__FP5xBaseP7xSerial",
+          "symbol": "xBaseLoad__FP5xBaseP7xSerial",
+          "opcode": 2
+        },
+        {
+          "function": "zConditionalSave__FP13_zConditionalP7xSerial",
+          "offset": 0,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseSave__FP5xBaseP7xSerial",
+          "symbol": "xBaseSave__FP5xBaseP7xSerial",
+          "opcode": 2
+        },
+        {
+          "function": "zConditionalInit__FPvPv",
+          "offset": 20,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseInit__FP5xBaseP10xBaseAsset",
+          "symbol": "xBaseInit__FP5xBaseP10xBaseAsset"
+        },
+        {
+          "function": "zConditionalInit__FPvPv",
+          "offset": 84,
+          "target_source": "SB/Game/zVar.cpp",
+          "target_function": "zVarInit__FP9zVarEntry",
+          "symbol": "zVarInit__FP9zVarEntry"
+        }
+      ],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/x/xCurveAsset.cpp",
+      "target_unit": "SB/Core/x/xCurveAsset.cpp",
+      "object": "source/xCurveAsset.o",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a",
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "xCurveAssetEvaluate": "xCurveAssetEvaluate__FPC11xCurveAssetf"
+      },
+      "calls": [],
+      "gp_relocations": []
     }
   ]
 }
