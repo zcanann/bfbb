@@ -406,6 +406,7 @@ RwCamera* RwCameraSetViewWindow(RwCamera* camera, const RwV2d* viewWindow);
 RwCamera* RwCameraSetProjection(RwCamera* camera, RwCameraProjection projection);
 RwCamera* RwCameraSetNearClipPlane(RwCamera* camera, RwReal nearClip);
 RwCamera* RwCameraSetFarClipPlane(RwCamera* camera, RwReal farClip);
+RwFrustumTestResult RwCameraFrustumTestSphere(const RwCamera* camera, const RwSphere* sphere);
 RwTexture* RwTextureCreate(RwRaster* raster);
 RwBool RwTextureDestroy(RwTexture* texture);
 RwBool RwCameraDestroy(RwCamera* camera);

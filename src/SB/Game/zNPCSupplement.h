@@ -103,11 +103,17 @@ struct NPARData
     F32 tym_exist;
     F32 fac_abuse;
     xVec3 vel;
+#if defined(PS2)
+    // b38 drops this anonymous wrapper; retail stores both fields at byte 64.
+    S32 flg_popts : 24;
+    S32 nparmode : 8;
+#else
     struct
     {
         S32 flg_popts : 24;
         S32 nparmode : 8;
     };
+#endif
     F32 unused[3];
 };
 
