@@ -30,3 +30,32 @@ retail executable hash and complete progress report remain unchanged.
 
 Private evidence: build/sound172/compile.py, compare.py, type_proof.py,
 type-proof.json and pad-original-types.json.
+
+## Original stream-voice limit
+
+The PS2 stream lock, ready and unlock loops use four voices. All three
+original debug executables calculate their end pointer with `+0x190`; original
+DWARF gives each voice a 100-byte extent. The previous shared six-voice bound
+compiled as `+0x258`. A platform constant now selects four for PS2 and preserves
+six for GameCube, changing exactly these three instruction immediates.
+
+Actual complete-source comparisons in USA, Europe and Germany each improve
+from 15 / 1,388 to 17 / 1,876 code-matched functions / bytes: StreamLock (416)
+and StreamUnlock (72) become standard objdiff matches. StreamReady improves
+81.77273% to 81.818184% and remains unmatched. All other function records are
+unchanged, and all 37 functions / 6,764 bytes remain in the comparison. France's
+existing three-function / 132-byte subset is unchanged (one / 68 matched).
+All four independently compiled PS2 source objects are byte-identical.
+
+Raw relocation reconstruction independently reproduces StreamUnlock's 72 bytes
+in all three debug originals. StreamLock remains a standard code match only:
+its two source xSndStop calls differ from the original destinations at offsets
+264 and 348. The ordinary project relocation comparison policy is unchanged;
+this change does not claim to reconstruct those original call targets or the
+whole sound unit. The original loop-bound correction is independent of them.
+
+An actual GameCube compile preserves all seven ordered allocated sections.
+Private evidence is in build/sound243: original-stream-limits.json,
+source-delta-proof.json, all-region-proof.json, raw/raw-proof.json and
+GC proof gc/proof.json. No additional layout, flags, profile or backend change
+is involved.
