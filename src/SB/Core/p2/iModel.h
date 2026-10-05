@@ -10,6 +10,11 @@ struct xVec3;
 struct xSphere;
 struct xModelTag;
 
+void iModelInit();
+void iModelSetMaterialAlpha(RpAtomic* model, unsigned char alpha);
+unsigned int iModelVertCount(RpAtomic* model);
+void iModelMaterialMul(RpAtomic* model, float rm, float gm, float bm);
+
 void iModel_SetLightKit(xLightKit* lightKit);
 void iModelRender(RpAtomic* model, RwMatrix* mat);
 

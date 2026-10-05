@@ -8,7 +8,13 @@
 
 #include "xShadowSimple.h"
 
+#if defined(PS2)
+#include "xJSP.h"
+#include <rwsdk/rpcollis.h>
+#include <rwim3d.h>
+#else
 #include "rpcollis.h"
+#endif
 #include "xMath3.h"
 #include "xQuickCull.h"
 #include "zGlobals.h"

@@ -167,6 +167,8 @@ RwBool RpLightDestroy(RpLight* light);
 RpLight* RpLightSetColor(RpLight* light, const RwRGBAReal* color);
 RpLight* RpLightSetRadius(RpLight* light, RwReal radius);
 RpLight* RpLightSetConeAngle(RpLight* light, RwReal angle);
+RpWorld* RpWorldAddCamera(RpWorld* world, RwCamera* camera);
+RpWorld* RpWorldRemoveCamera(RpWorld* world, RwCamera* camera);
 RpWorld* RpWorldAddLight(RpWorld* world, RpLight* light);
 RpWorld* RpWorldRemoveLight(RpWorld* world, RpLight* light);
 }
