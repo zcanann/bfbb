@@ -510,3 +510,6 @@ boss-goal factory is also retained as a partial source comparison.
 
 Complete PS2 SB2 source comparison adds 5,008 matched bytes per debug region;
 see [SB2 evidence](PS2_SB2_SOURCE.md).
+
+Complete PS2 Dutchman source comparison adds 2,624 matched bytes per debug
+region, with separately verified USA and PAL original profiles.
