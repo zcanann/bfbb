@@ -23,9 +23,11 @@
     "-gccinc",
     "-DPS2=1",
     "-Cpp_exceptions",
-    "off"
+    "off",
+    "-inline",
+    "deferred"
   ],
-  "scope": "Validated xBase, xordarray, xRMemData and xBehaviour profiles, plus debug-region xCounter, xBehaveGoalSimple, xSurface and xVolume; compiler identity for other units remains unproven",
+  "scope": "Validated xBase, xordarray, xRMemData and xBehaviour profiles, plus debug-region xCounter, xBehaveGoalSimple, xSurface, xVolume and xQuickCull; compiler identity for other units remains unproven",
   "units": [
     {
       "source": "src/SB/Core/x/xBase.cpp",
@@ -635,6 +637,131 @@
           "target_source": "SB/Core/x/xBase.cpp",
           "target_function": "xBaseInit",
           "symbol": "xBaseInit__FP5xBaseP10xBaseAsset"
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xQuickCull.cpp",
+      "target_unit": "SB/Core/x/xQuickCull.cpp",
+      "object": "source/xQuickCull.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xQuickCullForEverything__FP7xQCData": "xQuickCullForEverything__FP7xQCData",
+        "xQuickCullForOBB__FP10xQCControlP7xQCDataPC4xBoxPC7xMat4x3": "xQuickCullForOBB__FP10xQCControlP7xQCDataPC4xBoxPC7xMat4x3",
+        "xQuickCullForBox__FP10xQCControlP7xQCDataPC4xBox": "xQuickCullForBox__FP10xQCControlP7xQCDataPC4xBox",
+        "xQuickCullForSphere__FP10xQCControlP7xQCDataPC7xSphere": "xQuickCullForSphere__FP10xQCControlP7xQCDataPC7xSphere",
+        "xQuickCullForRay__FP10xQCControlP7xQCDataPC5xRay3": "xQuickCullForRay__FP10xQCControlP7xQCDataPC5xRay3",
+        "xQuickCullForLine__FP10xQCControlP7xQCDataPC6xLine3": "xQuickCullForLine__FP10xQCControlP7xQCDataPC6xLine3",
+        "xQuickCullCellForVec__FP10xQCControlP7xQCDataPC5xVec3": "xQuickCullCellForVec__FP10xQCControlP7xQCDataPC5xVec3",
+        "xQuickCullForBound__FP10xQCControlP7xQCDataPC6xBound": "xQuickCullForBound__FP10xQCControlP7xQCDataPC6xBound",
+        "xQuickCullIsects__FPC7xQCDataPC7xQCData": "xQuickCullIsects__FPC7xQCDataPC7xQCData",
+        "xQuickCullInit__FP10xQCControlPC4xBox": "xQuickCullInit__FP10xQCControlPC4xBox",
+        "xQuickCullInit__FP10xQCControlffffff": "xQuickCullInit__FP10xQCControlffffff"
+      },
+      "calls": [
+        {
+          "function": "xQuickCullForOBB__FP10xQCControlP7xQCDataPC4xBoxPC7xMat4x3",
+          "offset": 32,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xBoxInitBoundOBB__FP4xBoxPC4xBoxPC7xMat4x3",
+          "symbol": "xBoxInitBoundOBB__FP4xBoxPC4xBoxPC7xMat4x3"
+        },
+        {
+          "function": "xQuickCullForOBB__FP10xQCControlP7xQCDataPC4xBoxPC7xMat4x3",
+          "offset": 48,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullForBox__FP10xQCControlP7xQCDataPC4xBox",
+          "symbol": "xQuickCullForBox__FP10xQCControlP7xQCDataPC4xBox"
+        },
+        {
+          "function": "xQuickCullForBox__FP10xQCControlP7xQCDataPC4xBox",
+          "offset": 36,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullCellForVec__FP10xQCControlP7xQCDataPC5xVec3",
+          "symbol": "xQuickCullCellForVec__FP10xQCControlP7xQCDataPC5xVec3"
+        },
+        {
+          "function": "xQuickCullForBox__FP10xQCControlP7xQCDataPC4xBox",
+          "offset": 52,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullCellForVec__FP10xQCControlP7xQCDataPC5xVec3",
+          "symbol": "xQuickCullCellForVec__FP10xQCControlP7xQCDataPC5xVec3"
+        },
+        {
+          "function": "xQuickCullForSphere__FP10xQCControlP7xQCDataPC7xSphere",
+          "offset": 188,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullCellForVec__FP10xQCControlP7xQCDataPC5xVec3",
+          "symbol": "xQuickCullCellForVec__FP10xQCControlP7xQCDataPC5xVec3"
+        },
+        {
+          "function": "xQuickCullForSphere__FP10xQCControlP7xQCDataPC7xSphere",
+          "offset": 204,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullCellForVec__FP10xQCControlP7xQCDataPC5xVec3",
+          "symbol": "xQuickCullCellForVec__FP10xQCControlP7xQCDataPC5xVec3"
+        },
+        {
+          "function": "xQuickCullForRay__FP10xQCControlP7xQCDataPC5xRay3",
+          "offset": 344,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullCellForVec__FP10xQCControlP7xQCDataPC5xVec3",
+          "symbol": "xQuickCullCellForVec__FP10xQCControlP7xQCDataPC5xVec3"
+        },
+        {
+          "function": "xQuickCullForRay__FP10xQCControlP7xQCDataPC5xRay3",
+          "offset": 360,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullCellForVec__FP10xQCControlP7xQCDataPC5xVec3",
+          "symbol": "xQuickCullCellForVec__FP10xQCControlP7xQCDataPC5xVec3"
+        },
+        {
+          "function": "xQuickCullForLine__FP10xQCControlP7xQCDataPC6xLine3",
+          "offset": 32,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullCellForVec__FP10xQCControlP7xQCDataPC5xVec3",
+          "symbol": "xQuickCullCellForVec__FP10xQCControlP7xQCDataPC5xVec3"
+        },
+        {
+          "function": "xQuickCullForLine__FP10xQCControlP7xQCDataPC6xLine3",
+          "offset": 48,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullCellForVec__FP10xQCControlP7xQCDataPC5xVec3",
+          "symbol": "xQuickCullCellForVec__FP10xQCControlP7xQCDataPC5xVec3"
+        },
+        {
+          "function": "xQuickCullForBound__FP10xQCControlP7xQCDataPC6xBound",
+          "offset": 28,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullForSphere__FP10xQCControlP7xQCDataPC7xSphere",
+          "symbol": "xQuickCullForSphere__FP10xQCControlP7xQCDataPC7xSphere"
+        },
+        {
+          "function": "xQuickCullForBound__FP10xQCControlP7xQCDataPC6xBound",
+          "offset": 60,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullForBox__FP10xQCControlP7xQCDataPC4xBox",
+          "symbol": "xQuickCullForBox__FP10xQCControlP7xQCDataPC4xBox"
+        },
+        {
+          "function": "xQuickCullForBound__FP10xQCControlP7xQCDataPC6xBound",
+          "offset": 96,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullForOBB__FP10xQCControlP7xQCDataPC4xBoxPC7xMat4x3",
+          "symbol": "xQuickCullForOBB__FP10xQCControlP7xQCDataPC4xBoxPC7xMat4x3"
+        },
+        {
+          "function": "xQuickCullInit__FP10xQCControlPC4xBox",
+          "offset": 20,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullInit__FP10xQCControlffffff",
+          "symbol": "xQuickCullInit__FP10xQCControlffffff",
+          "opcode": 2
         }
       ]
     }

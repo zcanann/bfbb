@@ -69,6 +69,9 @@ static void xQuickCullCellForVec(xQCControl* ctrl, xQCData* c, const xVec3* v)
     c->zmax_dup = c->zmin_dup;
 }
 
+#if defined(PS2)
+inline
+#endif
 static void xQuickCullCellMerge(xQCData* o, const xQCData* a, const xQCData* b)
 {
     o->xmin = MIN(a->xmin, b->xmin);
