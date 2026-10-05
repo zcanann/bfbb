@@ -1,4 +1,4 @@
-#if defined(XBOX)
+#if defined(XBOX) || defined(PS2)
 #include <iMath3.h>
 #else
 #include "iMath3.h"
@@ -13,6 +13,12 @@
 void iMath3Init()
 {
 }
+
+#ifdef PS2
+void iMath3Exit()
+{
+}
+#endif
 
 #if defined(XBOX)
 inline

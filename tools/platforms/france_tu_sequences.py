@@ -477,6 +477,15 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     for key, value in ffx['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
     document['limitations'].append('FFX adds seven members using all fourteen original functions and seven independently confirmed neighbors. Allocator context decodes original JALs from at least two other source units; unchanged opaque math calls remain unmasked and unnamed. Strict CFG checks remain unchanged.')
+    from platforms.france_imath3_sequence import generate_unit as generate_imath3
+    imath3 = generate_imath3(originals, registry_dir)
+    document['functions'].extend(imath3['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(imath3['sequence_proofs'])
+    document['call_neighbors'].extend(imath3['call_neighbors'])
+    for key, value in imath3['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Platform geometry adds nine members using all fifteen original functions and six independently confirmed neighbors. Two opaque runtime calls retain literal unmasked JAL words and identical context only; no new callee identity, extent, or CFG exception is introduced.')
     return document
 
 

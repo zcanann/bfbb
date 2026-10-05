@@ -320,6 +320,13 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "iBoxIsectSphere",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1751280,
+      "size": 884,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "iBoxIsectRay",
       "source": "SB/Core/p2/iMath3.cpp",
       "address": 1752176,
@@ -334,6 +341,20 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "iBoxIsectVec",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1753056,
+      "size": 136,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "iBoxVecDist",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1753200,
+      "size": 2568,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "iCylinderIsectVec",
       "source": "SB/Core/p2/iMath3.cpp",
       "address": 1755776,
@@ -341,11 +362,53 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "iSphereBoundVec",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1755904,
+      "size": 316,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "iSphereInitBoundVec",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1756224,
+      "size": 40,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "iSphereIsectSphere",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1756272,
+      "size": 124,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "iSphereIsectRay",
       "source": "SB/Core/p2/iMath3.cpp",
       "address": 1756400,
       "size": 492,
       "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "iSphereIsectVec",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1756896,
+      "size": 100,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "iMath3Exit",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1757008,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "iMath3Init",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1757024,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "FastS16weight4",

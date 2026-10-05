@@ -31,14 +31,15 @@
     "Grid adds only xGridCheckPosition. Its eleven previously confirmed neighbors remain unchanged; all twelve original members form a unique sequence. The complete signed-int offs[4][3][2] array and four named calls are independently checked; external entry prefixes remain context only.",
     "QuickCull adds only two Init overloads using all eleven original members and nine independently confirmed neighbors. The 28-byte wrapper is exactly six argument loads and a terminal J to the adjacent strictly closed initializer; generic CFG checks remain strict.",
     "SKB adds Duration and Eval using the complete four-member sequence and two independently confirmed neighbors. All bodies satisfy the unchanged strict CFG checks; original DWARF and all 96 bytes prove the sole changed slerpPolynomial address.",
-    "FFX adds seven members using all fourteen original functions and seven independently confirmed neighbors. Allocator context decodes original JALs from at least two other source units; unchanged opaque math calls remain unmasked and unnamed. Strict CFG checks remain unchanged."
+    "FFX adds seven members using all fourteen original functions and seven independently confirmed neighbors. Allocator context decodes original JALs from at least two other source units; unchanged opaque math calls remain unmasked and unnamed. Strict CFG checks remain unchanged.",
+    "Platform geometry adds nine members using all fifteen original functions and six independently confirmed neighbors. Two opaque runtime calls retain literal unmasked JAL words and identical context only; no new callee identity, extent, or CFG exception is introduced."
   ],
   "counts": {
-    "functions": 317,
-    "code_bytes": 150276,
-    "source_units": 15,
+    "functions": 326,
+    "code_bytes": 154460,
+    "source_units": 16,
     "rooted_direct_call_entries": 129,
-    "closed_return_bodies": 303,
+    "closed_return_bodies": 312,
     "reviewed_tail_wrappers": 2,
     "registered_callback_entries": 26,
     "reviewed_leaf_tail_functions": 11,
@@ -965,6 +966,57 @@
         "unchanged_anchor_offset": 980,
         "unchanged_anchor_bytes": 576,
         "masked_instruction_count": 5
+      }
+    },
+    {
+      "version": "SLUS-20680",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "source_start": 1749696,
+      "target_start": 1750992,
+      "complete_original_members": 15,
+      "previously_confirmed_members": 6,
+      "sequence_bytes_with_alignment": 6040,
+      "uniqueness": {
+        "matching_addresses": [
+          1750992
+        ],
+        "unchanged_anchor_offset": 1608,
+        "unchanged_anchor_bytes": 4012,
+        "masked_instruction_count": 8
+      }
+    },
+    {
+      "version": "SLES-51968",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "source_start": 1750992,
+      "target_start": 1750992,
+      "complete_original_members": 15,
+      "previously_confirmed_members": 6,
+      "sequence_bytes_with_alignment": 6040,
+      "uniqueness": {
+        "matching_addresses": [
+          1750992
+        ],
+        "unchanged_anchor_offset": 1608,
+        "unchanged_anchor_bytes": 4012,
+        "masked_instruction_count": 8
+      }
+    },
+    {
+      "version": "SLES-51970",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "source_start": 1747632,
+      "target_start": 1750992,
+      "complete_original_members": 15,
+      "previously_confirmed_members": 6,
+      "sequence_bytes_with_alignment": 6040,
+      "uniqueness": {
+        "matching_addresses": [
+          1750992
+        ],
+        "unchanged_anchor_offset": 1608,
+        "unchanged_anchor_bytes": 4012,
+        "masked_instruction_count": 8
       }
     }
   ],
@@ -11744,6 +11796,111 @@
       ],
       "context_only": true,
       "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 1755904,
+      "offset": 108,
+      "opcode": 3,
+      "reference_address": 1149520,
+      "target_address": 1149520,
+      "opaque_context_prefix_sha256": "b11c4bfe9af6ebb2c9f043298f159983de6f70d9d33c4e11dd2158f565a4d55b",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 1755904,
+      "offset": 296,
+      "opcode": 3,
+      "reference_address": 1149520,
+      "target_address": 1149520,
+      "opaque_context_prefix_sha256": "b11c4bfe9af6ebb2c9f043298f159983de6f70d9d33c4e11dd2158f565a4d55b",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 1756400,
+      "offset": 212,
+      "opcode": 3,
+      "reference_address": 2023040,
+      "target_address": 2024400,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 1755904,
+      "offset": 108,
+      "opcode": 3,
+      "reference_address": 1149520,
+      "target_address": 1149520,
+      "opaque_context_prefix_sha256": "b11c4bfe9af6ebb2c9f043298f159983de6f70d9d33c4e11dd2158f565a4d55b",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 1755904,
+      "offset": 296,
+      "opcode": 3,
+      "reference_address": 1149520,
+      "target_address": 1149520,
+      "opaque_context_prefix_sha256": "b11c4bfe9af6ebb2c9f043298f159983de6f70d9d33c4e11dd2158f565a4d55b",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 1756400,
+      "offset": 212,
+      "opcode": 3,
+      "reference_address": 2024288,
+      "target_address": 2024400,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 1755904,
+      "offset": 108,
+      "opcode": 3,
+      "reference_address": 1149520,
+      "target_address": 1149520,
+      "opaque_context_prefix_sha256": "b11c4bfe9af6ebb2c9f043298f159983de6f70d9d33c4e11dd2158f565a4d55b",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 1755904,
+      "offset": 296,
+      "opcode": 3,
+      "reference_address": 1149520,
+      "target_address": 1149520,
+      "opaque_context_prefix_sha256": "b11c4bfe9af6ebb2c9f043298f159983de6f70d9d33c4e11dd2158f565a4d55b",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 1756400,
+      "offset": 212,
+      "opcode": 3,
+      "reference_address": 2020928,
+      "target_address": 2024400,
+      "promoted_as_named_anchor": false
     }
   ],
   "functions": [
@@ -12015,6 +12172,1188 @@
         "previously_confirmed_neighbor_entries": [
           1722160,
           1723632
+        ]
+      }
+    },
+    {
+      "name": "iBoxIsectSphere",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1751280,
+      "size": 884,
+      "sha256": "0b45537d5d3606eb0857a66d55cb4c5bb9970fe51e6833b480c2af5bcbbeaf3c",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1749984,
+          "name": "iBoxIsectSphere",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iBoxIsectSphere__FPC4xBoxPC7xSphereP6xIsect",
+          "reference_sha256": "374cab96381c14b382bccc8568d3aacf597ef546c03bcf8fb1a1662e53cde0b5",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 832,
+              "opcode": 3,
+              "reference_address": 1751904,
+              "target_address": 1753200
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1751280,
+          "name": "iBoxIsectSphere",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iBoxIsectSphere__FPC4xBoxPC7xSphereP6xIsect",
+          "reference_sha256": "0b45537d5d3606eb0857a66d55cb4c5bb9970fe51e6833b480c2af5bcbbeaf3c",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 832,
+              "opcode": 3,
+              "reference_address": 1753200,
+              "target_address": 1753200
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1747920,
+          "name": "iBoxIsectSphere",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iBoxIsectSphere__FPC4xBoxPC7xSphereP6xIsect",
+          "reference_sha256": "be7399073ded0d758fa3ae99a4c7942e49126d202b6b92585ee7a08c38311790",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 832,
+              "opcode": 3,
+              "reference_address": 1749840,
+              "target_address": 1753200
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1752156
+          ],
+          "direct_or_indirect_calls": [
+            1752112
+          ],
+          "branches": [
+            [
+              1751324,
+              1751392
+            ],
+            [
+              1751336,
+              1751352
+            ],
+            [
+              1751344,
+              1751380
+            ],
+            [
+              1751360,
+              1751372
+            ],
+            [
+              1751380,
+              1751440
+            ],
+            [
+              1751400,
+              1751416
+            ],
+            [
+              1751408,
+              1751436
+            ],
+            [
+              1751420,
+              1751436
+            ],
+            [
+              1751428,
+              1751436
+            ],
+            [
+              1751460,
+              1751480
+            ],
+            [
+              1751468,
+              1752144
+            ],
+            [
+              1751496,
+              1751560
+            ],
+            [
+              1751508,
+              1751524
+            ],
+            [
+              1751516,
+              1751552
+            ],
+            [
+              1751532,
+              1751544
+            ],
+            [
+              1751552,
+              1751608
+            ],
+            [
+              1751568,
+              1751584
+            ],
+            [
+              1751576,
+              1751604
+            ],
+            [
+              1751588,
+              1751604
+            ],
+            [
+              1751596,
+              1751604
+            ],
+            [
+              1751628,
+              1751648
+            ],
+            [
+              1751636,
+              1752144
+            ],
+            [
+              1751664,
+              1751728
+            ],
+            [
+              1751676,
+              1751692
+            ],
+            [
+              1751684,
+              1751720
+            ],
+            [
+              1751700,
+              1751712
+            ],
+            [
+              1751720,
+              1751776
+            ],
+            [
+              1751736,
+              1751752
+            ],
+            [
+              1751744,
+              1751772
+            ],
+            [
+              1751756,
+              1751772
+            ],
+            [
+              1751764,
+              1751772
+            ],
+            [
+              1751800,
+              1751816
+            ],
+            [
+              1751808,
+              1752144
+            ],
+            [
+              1751820,
+              1751912
+            ],
+            [
+              1751836,
+              1751912
+            ],
+            [
+              1751848,
+              1751912
+            ],
+            [
+              1751864,
+              1751912
+            ],
+            [
+              1751876,
+              1751912
+            ],
+            [
+              1751892,
+              1751912
+            ],
+            [
+              1751900,
+              1751920
+            ],
+            [
+              1751936,
+              1752088
+            ],
+            [
+              1752080,
+              1752144
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              1751280,
+              -48
+            ],
+            [
+              1752160,
+              48
+            ]
+          ],
+          "ra_saves": [
+            [
+              1751284,
+              -16
+            ]
+          ],
+          "ra_loads": [
+            [
+              1752144,
+              -16
+            ]
+          ],
+          "unreachable_zero_words": [
+            1751388,
+            1751476,
+            1751644,
+            1751908
+          ],
+          "following_zero_alignment": 12
+        },
+        "previously_confirmed_neighbor_entries": [
+          1750992,
+          1751216,
+          1752176,
+          1752832,
+          1755776,
+          1756400
+        ]
+      }
+    },
+    {
+      "name": "iBoxIsectVec",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1753056,
+      "size": 136,
+      "sha256": "14e9de9c41eb9f93fb7f78a957cbaa2a2d62379d768ca9fbf2303fb1647187f5",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1751760,
+          "name": "iBoxIsectVec",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iBoxIsectVec__FPC4xBoxPC5xVec3P6xIsect",
+          "reference_sha256": "14e9de9c41eb9f93fb7f78a957cbaa2a2d62379d768ca9fbf2303fb1647187f5",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1753056,
+          "name": "iBoxIsectVec",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iBoxIsectVec__FPC4xBoxPC5xVec3P6xIsect",
+          "reference_sha256": "14e9de9c41eb9f93fb7f78a957cbaa2a2d62379d768ca9fbf2303fb1647187f5",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1749696,
+          "name": "iBoxIsectVec",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iBoxIsectVec__FPC4xBoxPC5xVec3P6xIsect",
+          "reference_sha256": "14e9de9c41eb9f93fb7f78a957cbaa2a2d62379d768ca9fbf2303fb1647187f5",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1753184
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              1753068,
+              1753176
+            ],
+            [
+              1753084,
+              1753176
+            ],
+            [
+              1753104,
+              1753176
+            ],
+            [
+              1753120,
+              1753176
+            ],
+            [
+              1753140,
+              1753176
+            ],
+            [
+              1753156,
+              1753176
+            ],
+            [
+              1753164,
+              1753184
+            ]
+          ],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [
+            1753172
+          ],
+          "following_zero_alignment": 8
+        },
+        "previously_confirmed_neighbor_entries": [
+          1750992,
+          1751216,
+          1752176,
+          1752832,
+          1755776,
+          1756400
+        ]
+      }
+    },
+    {
+      "name": "iBoxVecDist",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1753200,
+      "size": 2568,
+      "sha256": "558eb4a2c089fc8fe60bab6b96d508764fad16469e57adfd7d04451cf2578bf8",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1751904,
+          "name": "iBoxVecDist",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iBoxVecDist__FPC4xBoxPC5xVec3P6xIsect",
+          "reference_sha256": "558eb4a2c089fc8fe60bab6b96d508764fad16469e57adfd7d04451cf2578bf8",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1753200,
+          "name": "iBoxVecDist",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iBoxVecDist__FPC4xBoxPC5xVec3P6xIsect",
+          "reference_sha256": "558eb4a2c089fc8fe60bab6b96d508764fad16469e57adfd7d04451cf2578bf8",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1749840,
+          "name": "iBoxVecDist",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iBoxVecDist__FPC4xBoxPC5xVec3P6xIsect",
+          "reference_sha256": "558eb4a2c089fc8fe60bab6b96d508764fad16469e57adfd7d04451cf2578bf8",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1755760
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              1753212,
+              1754064
+            ],
+            [
+              1753232,
+              1753512
+            ],
+            [
+              1753252,
+              1753336
+            ],
+            [
+              1753328,
+              1755720
+            ],
+            [
+              1753344,
+              1753424
+            ],
+            [
+              1753416,
+              1755720
+            ],
+            [
+              1753504,
+              1755720
+            ],
+            [
+              1753520,
+              1753784
+            ],
+            [
+              1753540,
+              1753624
+            ],
+            [
+              1753612,
+              1755720
+            ],
+            [
+              1753632,
+              1753704
+            ],
+            [
+              1753692,
+              1755720
+            ],
+            [
+              1753772,
+              1755720
+            ],
+            [
+              1753796,
+              1753888
+            ],
+            [
+              1753880,
+              1755720
+            ],
+            [
+              1753896,
+              1753976
+            ],
+            [
+              1753968,
+              1755720
+            ],
+            [
+              1754056,
+              1755720
+            ],
+            [
+              1754072,
+              1754864
+            ],
+            [
+              1754092,
+              1754384
+            ],
+            [
+              1754112,
+              1754208
+            ],
+            [
+              1754196,
+              1755720
+            ],
+            [
+              1754216,
+              1754296
+            ],
+            [
+              1754288,
+              1755720
+            ],
+            [
+              1754372,
+              1755720
+            ],
+            [
+              1754392,
+              1754584
+            ],
+            [
+              1754412,
+              1754496
+            ],
+            [
+              1754484,
+              1755720
+            ],
+            [
+              1754504,
+              1755720
+            ],
+            [
+              1754576,
+              1755720
+            ],
+            [
+              1754596,
+              1754688
+            ],
+            [
+              1754680,
+              1755720
+            ],
+            [
+              1754696,
+              1754776
+            ],
+            [
+              1754768,
+              1755720
+            ],
+            [
+              1754852,
+              1755720
+            ],
+            [
+              1754876,
+              1755168
+            ],
+            [
+              1754896,
+              1754992
+            ],
+            [
+              1754980,
+              1755720
+            ],
+            [
+              1755000,
+              1755080
+            ],
+            [
+              1755072,
+              1755720
+            ],
+            [
+              1755160,
+              1755720
+            ],
+            [
+              1755176,
+              1755440
+            ],
+            [
+              1755196,
+              1755280
+            ],
+            [
+              1755268,
+              1755720
+            ],
+            [
+              1755288,
+              1755360
+            ],
+            [
+              1755348,
+              1755720
+            ],
+            [
+              1755428,
+              1755720
+            ],
+            [
+              1755452,
+              1755544
+            ],
+            [
+              1755536,
+              1755720
+            ],
+            [
+              1755552,
+              1755632
+            ],
+            [
+              1755624,
+              1755720
+            ]
+          ],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [
+            1753620,
+            1753700,
+            1753780,
+            1754204,
+            1754380,
+            1754492,
+            1754860,
+            1754988,
+            1755276,
+            1755356,
+            1755436
+          ],
+          "following_zero_alignment": 8
+        },
+        "previously_confirmed_neighbor_entries": [
+          1750992,
+          1751216,
+          1752176,
+          1752832,
+          1755776,
+          1756400
+        ]
+      }
+    },
+    {
+      "name": "iSphereBoundVec",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1755904,
+      "size": 316,
+      "sha256": "7f97375aba3d7bd778c2970755129c38fac16c002c480cc6950703a26c0e6309",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1754608,
+          "name": "iSphereBoundVec",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iSphereBoundVec__FP7xSpherePC7xSpherePC5xVec3",
+          "reference_sha256": "7f97375aba3d7bd778c2970755129c38fac16c002c480cc6950703a26c0e6309",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 108,
+              "opcode": 3,
+              "reference_address": 1149520,
+              "target_address": 1149520,
+              "opaque_context_prefix_sha256": "b11c4bfe9af6ebb2c9f043298f159983de6f70d9d33c4e11dd2158f565a4d55b",
+              "opaque_context_bytes": 64,
+              "no_identity_or_extent_claim": true,
+              "transfer_word_unmasked": true
+            },
+            {
+              "offset": 296,
+              "opcode": 3,
+              "reference_address": 1149520,
+              "target_address": 1149520,
+              "opaque_context_prefix_sha256": "b11c4bfe9af6ebb2c9f043298f159983de6f70d9d33c4e11dd2158f565a4d55b",
+              "opaque_context_bytes": 64,
+              "no_identity_or_extent_claim": true,
+              "transfer_word_unmasked": true
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1755904,
+          "name": "iSphereBoundVec",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iSphereBoundVec__FP7xSpherePC7xSpherePC5xVec3",
+          "reference_sha256": "7f97375aba3d7bd778c2970755129c38fac16c002c480cc6950703a26c0e6309",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 108,
+              "opcode": 3,
+              "reference_address": 1149520,
+              "target_address": 1149520,
+              "opaque_context_prefix_sha256": "b11c4bfe9af6ebb2c9f043298f159983de6f70d9d33c4e11dd2158f565a4d55b",
+              "opaque_context_bytes": 64,
+              "no_identity_or_extent_claim": true,
+              "transfer_word_unmasked": true
+            },
+            {
+              "offset": 296,
+              "opcode": 3,
+              "reference_address": 1149520,
+              "target_address": 1149520,
+              "opaque_context_prefix_sha256": "b11c4bfe9af6ebb2c9f043298f159983de6f70d9d33c4e11dd2158f565a4d55b",
+              "opaque_context_bytes": 64,
+              "no_identity_or_extent_claim": true,
+              "transfer_word_unmasked": true
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1752544,
+          "name": "iSphereBoundVec",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iSphereBoundVec__FP7xSpherePC7xSpherePC5xVec3",
+          "reference_sha256": "7f97375aba3d7bd778c2970755129c38fac16c002c480cc6950703a26c0e6309",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 108,
+              "opcode": 3,
+              "reference_address": 1149520,
+              "target_address": 1149520,
+              "opaque_context_prefix_sha256": "b11c4bfe9af6ebb2c9f043298f159983de6f70d9d33c4e11dd2158f565a4d55b",
+              "opaque_context_bytes": 64,
+              "no_identity_or_extent_claim": true,
+              "transfer_word_unmasked": true
+            },
+            {
+              "offset": 296,
+              "opcode": 3,
+              "reference_address": 1149520,
+              "target_address": 1149520,
+              "opaque_context_prefix_sha256": "b11c4bfe9af6ebb2c9f043298f159983de6f70d9d33c4e11dd2158f565a4d55b",
+              "opaque_context_bytes": 64,
+              "no_identity_or_extent_claim": true,
+              "transfer_word_unmasked": true
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1756212
+          ],
+          "direct_or_indirect_calls": [
+            1756012,
+            1756200
+          ],
+          "branches": [
+            [
+              1755996,
+              1756032
+            ],
+            [
+              1756004,
+              1756024
+            ],
+            [
+              1756024,
+              1756208
+            ],
+            [
+              1756032,
+              1756044
+            ],
+            [
+              1756188,
+              1756208
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              1755904,
+              -32
+            ],
+            [
+              1756216,
+              32
+            ]
+          ],
+          "ra_saves": [
+            [
+              1755912,
+              -32
+            ]
+          ],
+          "ra_loads": [
+            [
+              1756208,
+              -32
+            ]
+          ],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 4
+        },
+        "previously_confirmed_neighbor_entries": [
+          1750992,
+          1751216,
+          1752176,
+          1752832,
+          1755776,
+          1756400
+        ]
+      }
+    },
+    {
+      "name": "iSphereInitBoundVec",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1756224,
+      "size": 40,
+      "sha256": "b822fd7a53c1882c719438c389385c4e2bdcc1d821dd621672c4f361ce7bce30",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1754928,
+          "name": "iSphereInitBoundVec",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iSphereInitBoundVec__FP7xSpherePC5xVec3",
+          "reference_sha256": "b822fd7a53c1882c719438c389385c4e2bdcc1d821dd621672c4f361ce7bce30",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1756224,
+          "name": "iSphereInitBoundVec",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iSphereInitBoundVec__FP7xSpherePC5xVec3",
+          "reference_sha256": "b822fd7a53c1882c719438c389385c4e2bdcc1d821dd621672c4f361ce7bce30",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1752864,
+          "name": "iSphereInitBoundVec",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iSphereInitBoundVec__FP7xSpherePC5xVec3",
+          "reference_sha256": "b822fd7a53c1882c719438c389385c4e2bdcc1d821dd621672c4f361ce7bce30",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1756256
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 8
+        },
+        "previously_confirmed_neighbor_entries": [
+          1750992,
+          1751216,
+          1752176,
+          1752832,
+          1755776,
+          1756400
+        ]
+      }
+    },
+    {
+      "name": "iSphereIsectSphere",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1756272,
+      "size": 124,
+      "sha256": "184e88b47ba43283945bc40cd3a8b54dbf52ff4eacae771c775b1d876e02b676",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1754976,
+          "name": "iSphereIsectSphere",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iSphereIsectSphere__FPC7xSpherePC7xSphereP6xIsect",
+          "reference_sha256": "184e88b47ba43283945bc40cd3a8b54dbf52ff4eacae771c775b1d876e02b676",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1756272,
+          "name": "iSphereIsectSphere",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iSphereIsectSphere__FPC7xSpherePC7xSphereP6xIsect",
+          "reference_sha256": "184e88b47ba43283945bc40cd3a8b54dbf52ff4eacae771c775b1d876e02b676",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1752912,
+          "name": "iSphereIsectSphere",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iSphereIsectSphere__FPC7xSpherePC7xSphereP6xIsect",
+          "reference_sha256": "184e88b47ba43283945bc40cd3a8b54dbf52ff4eacae771c775b1d876e02b676",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1756388
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 4
+        },
+        "previously_confirmed_neighbor_entries": [
+          1750992,
+          1751216,
+          1752176,
+          1752832,
+          1755776,
+          1756400
+        ]
+      }
+    },
+    {
+      "name": "iSphereIsectVec",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1756896,
+      "size": 100,
+      "sha256": "5b9a84694a9b19c955f620dcafdbd3d6604f7192d6b9f5da8becbbea1841d387",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1755600,
+          "name": "iSphereIsectVec",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iSphereIsectVec__FPC7xSpherePC5xVec3P6xIsect",
+          "reference_sha256": "5b9a84694a9b19c955f620dcafdbd3d6604f7192d6b9f5da8becbbea1841d387",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1756896,
+          "name": "iSphereIsectVec",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iSphereIsectVec__FPC7xSpherePC5xVec3P6xIsect",
+          "reference_sha256": "5b9a84694a9b19c955f620dcafdbd3d6604f7192d6b9f5da8becbbea1841d387",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1753536,
+          "name": "iSphereIsectVec",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iSphereIsectVec__FPC7xSpherePC5xVec3P6xIsect",
+          "reference_sha256": "5b9a84694a9b19c955f620dcafdbd3d6604f7192d6b9f5da8becbbea1841d387",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1756988
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 12
+        },
+        "previously_confirmed_neighbor_entries": [
+          1750992,
+          1751216,
+          1752176,
+          1752832,
+          1755776,
+          1756400
+        ]
+      }
+    },
+    {
+      "name": "iMath3Exit",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1757008,
+      "size": 8,
+      "sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1755712,
+          "name": "iMath3Exit",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iMath3Exit__Fv",
+          "reference_sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1757008,
+          "name": "iMath3Exit",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iMath3Exit__Fv",
+          "reference_sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1753648,
+          "name": "iMath3Exit",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iMath3Exit__Fv",
+          "reference_sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1757008
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 8
+        },
+        "previously_confirmed_neighbor_entries": [
+          1750992,
+          1751216,
+          1752176,
+          1752832,
+          1755776,
+          1756400
+        ]
+      }
+    },
+    {
+      "name": "iMath3Init",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1757024,
+      "size": 8,
+      "sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1755728,
+          "name": "iMath3Init",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iMath3Init__Fv",
+          "reference_sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1757024,
+          "name": "iMath3Init",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iMath3Init__Fv",
+          "reference_sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1753664,
+          "name": "iMath3Init",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iMath3Init__Fv",
+          "reference_sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1757024
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 8
+        },
+        "previously_confirmed_neighbor_entries": [
+          1750992,
+          1751216,
+          1752176,
+          1752832,
+          1755776,
+          1756400
         ]
       }
     },
