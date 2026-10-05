@@ -113,3 +113,21 @@ compilation preserves all four ordered allocated sections. This is partial
 source comparison, with no TU or executable relink claim. Evidence is
 `build/xbox228/final-verification.json`, `original-literal-proof.json`, and
 `gc/proof.json`.
+
+## Axis-rotation subtraction expressions
+
+The original `xMat3x3RotC` uses direct subtraction for the three negative
+off-diagonal terms. The former shared spelling negated the sine product and
+added the other product, producing FCHS/FADD instead of the original FSUB.
+Xbox now spells those same three terms as product differences; all other
+platform source bodies and all multiplication/other store expressions remain
+unchanged. The first bounded control reproduces the original 226-byte body,
+up from 90.83117%.
+
+Both production reports pass at 12,409 exact bytes / 65 functions, up 226 bytes
+and one function. Every other function/unit, denominator and completion field
+is unchanged. Reapplying the three existing original addresses (0, 1 and the
+identity-matrix global) at actual PE HIGHLOW fields reconstructs every original
+byte in both releases. Actual GameCube xMath3 compilation preserves all five
+ordered allocated sections. Evidence is `build/xbox230/final-verification.json`
+and `gc/proof.json`; no profile, metadata or backend changes were needed.

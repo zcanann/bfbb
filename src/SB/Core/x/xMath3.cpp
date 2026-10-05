@@ -345,14 +345,26 @@ void xMat3x3RotC(xMat3x3* m, F32 _x, F32 _y, F32 _z, F32 t)
 
     m->right.x = (c * _x * _x) + cos;
     m->right.y = (sin * _z) + (c * _x * _y);
+#if defined(XBOX)
+    m->right.z = (c * _z * _x) - (sin * _y);
+#else
     m->right.z = (-sin * _y) + (c * _z * _x);
+#endif
 
+#if defined(XBOX)
+    m->up.x = (c * _x * _y) - (sin * _z);
+#else
     m->up.x = (-sin * _z) + (c * _x * _y);
+#endif
     m->up.y = (c * _y * _y) + cos;
     m->up.z = (sin * _x) + (c * _y * _z);
 
     m->at.x = (sin * _y) + (c * _z * _x);
+#if defined(XBOX)
+    m->at.y = (c * _y * _z) - (sin * _x);
+#else
     m->at.y = (-sin * _x) + (c * _y * _z);
+#endif
     m->at.z = (c * _z * _z) + cos;
 
     m->flags = 0;
