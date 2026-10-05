@@ -205,6 +205,8 @@ extern "C" {
 RpAtomic* AtomicDefaultRenderCallBack(RpAtomic* atomic);
 RpClump* RpClumpForAllAtomics(RpClump* clump, RpAtomicCallBack callback, void* data);
 RpGeometry* RpGeometryForAllMaterials(RpGeometry* geometry, RpMaterialCallBack callback, void* data);
+RpGeometry* RpGeometryLock(RpGeometry* geometry, RwInt32 lockMode);
+RpGeometry* RpGeometryUnlock(RpGeometry* geometry);
 }
 
 #define RpAtomicGetFrame(_atomic) ((RwFrame*)((_atomic)->object.object.parent))
@@ -216,6 +218,8 @@ RwBool RpLightDestroy(RpLight* light);
 RpLight* RpLightSetColor(RpLight* light, const RwRGBAReal* color);
 RpLight* RpLightSetRadius(RpLight* light, RwReal radius);
 RpLight* RpLightSetConeAngle(RpLight* light, RwReal angle);
+RpWorld* RpWorldCreate(RwBBox* boundingBox);
+RwBool RpWorldDestroy(RpWorld* world);
 RpWorld* RpWorldAddCamera(RpWorld* world, RwCamera* camera);
 RpWorld* RpWorldRemoveCamera(RpWorld* world, RwCamera* camera);
 RpWorld* RpWorldAddLight(RpWorld* world, RpLight* light);

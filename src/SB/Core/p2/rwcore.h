@@ -161,6 +161,7 @@ typedef RxObjSpace3DVertex RxObjSpace3DLitVertex;
 typedef RxObjSpace3DLitVertex RwIm3DVertex;
 
 struct RwTexDictionary;
+
 struct RwRaster
 {
     RwRaster* parent;
@@ -213,6 +214,19 @@ struct RwResEntry;
 #define RWPLUGINOFFSET(_type, _base, _offset) ((_type*)((RwUInt8*)(_base) + (_offset)))
 
 // Complete SDK rendering-state declarations.
+enum RwRasterType
+{
+    rwRASTERTYPENORMAL = 0x00,
+    rwRASTERTYPEZBUFFER = 0x01,
+    rwRASTERTYPECAMERA = 0x02,
+    rwRASTERTYPETEXTURE = 0x04,
+    rwRASTERTYPECAMERATEXTURE = 0x05,
+    rwRASTERTYPEMASK = 0x07,
+    rwRASTERDONTALLOCATE = 0x80,
+    rwRASTERTYPEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+
+
 enum RwShadeMode
 {
     rwSHADEMODENASHADEMODE = 0,
@@ -280,6 +294,14 @@ struct RwPlane
 {
     RwV3d normal;
     RwReal distance;
+};
+
+enum RwCameraClearMode
+{
+    rwCAMERACLEARIMAGE = 0x1,
+    rwCAMERACLEARZ = 0x2,
+    rwCAMERACLEARSTENCIL = 0x4,
+    rwCAMERACLEARMODEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
 
 enum RwCameraProjection
@@ -377,11 +399,21 @@ RwReal RwV3dNormalize(RwV3d* out, const RwV3d* in);
 RwFrame* RwFrameCreate(void);
 RwMatrix* RwFrameGetLTM(RwFrame* frame);
 RwCamera* RwCameraCreate(void);
+RwCamera* RwCameraEndUpdate(RwCamera* camera);
+RwCamera* RwCameraBeginUpdate(RwCamera* camera);
+RwCamera* RwCameraClear(RwCamera* camera, RwRGBA* colour, RwInt32 clearMode);
+RwCamera* RwCameraSetViewWindow(RwCamera* camera, const RwV2d* viewWindow);
+RwCamera* RwCameraSetProjection(RwCamera* camera, RwCameraProjection projection);
+RwCamera* RwCameraSetNearClipPlane(RwCamera* camera, RwReal nearClip);
+RwCamera* RwCameraSetFarClipPlane(RwCamera* camera, RwReal farClip);
+RwTexture* RwTextureCreate(RwRaster* raster);
+RwBool RwTextureDestroy(RwTexture* texture);
 RwBool RwCameraDestroy(RwCamera* camera);
 RwRaster* RwRasterCreate(RwInt32 width, RwInt32 height, RwInt32 depth, RwInt32 flags);
 RwBool RwRasterDestroy(RwRaster* raster);
 RwBool RwFrameDestroy(RwFrame* frame);
 RwFrame* RwFrameRotate(RwFrame* frame, const RwV3d* axis, RwReal angle, RwOpCombineType combine);
+RwFrame* RwFrameTranslate(RwFrame* frame, const RwV3d* v, RwOpCombineType combine);
 RwFrame* RwFrameTransform(RwFrame* frame, const RwMatrix* matrix, RwOpCombineType combine);
 RwBool _rwFrameSyncDirty(void);
 void _rwObjectHasFrameSetFrame(void* object, RwFrame* frame);
