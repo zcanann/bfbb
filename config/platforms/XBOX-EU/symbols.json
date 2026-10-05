@@ -10926,60 +10926,68 @@
       "identity_kind": "anonymous"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0014fbc0",
-      "source": null,
+      "name": "xQuickCullInit",
+      "canonical_identifier": "xQuickCullInit(xQCControl*,F32,F32,F32,F32,F32,F32)",
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "address": 1374880,
+      "size": 275,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xQuickCullIsects",
+      "canonical_identifier": "xQuickCullIsects(const xQCData*,const xQCData*)",
+      "source": "SB/Core/x/xQuickCull.cpp",
       "address": 1375168,
       "size": 55,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0014fc00",
-      "source": null,
+      "name": "xQuickCullForBound",
+      "canonical_identifier": "xQuickCullForBound(xQCControl*,xQCData*,const xBound*)",
+      "source": "SB/Core/x/xQuickCull.cpp",
       "address": 1375232,
       "size": 125,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0014fc80",
-      "source": null,
+      "name": "xQuickCullCellForVec",
+      "canonical_identifier": "xQuickCullCellForVec(xQCControl*,xQCData*,const xVec3*)",
+      "source": "SB/Core/x/xQuickCull.cpp",
       "address": 1375360,
       "size": 167,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0014fd30",
-      "source": null,
+      "name": "xQuickCullCellMerge",
+      "canonical_identifier": "xQuickCullCellMerge(xQCData*,const xQCData*,const xQCData*)",
+      "source": "SB/Core/x/xQuickCull.cpp",
       "address": 1375536,
       "size": 99,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0014fda0",
-      "source": null,
+      "name": "xQuickCullForRay",
+      "canonical_identifier": "xQuickCullForRay(xQCControl*,xQCData*,const xRay3*)",
+      "source": "SB/Core/x/xQuickCull.cpp",
       "address": 1375648,
       "size": 240,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0014fe90",
-      "source": null,
+      "name": "xQuickCullForSphere",
+      "canonical_identifier": "xQuickCullForSphere(xQCControl*,xQCData*,const xSphere*)",
+      "source": "SB/Core/x/xQuickCull.cpp",
       "address": 1375888,
       "size": 138,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0014ff20",
-      "source": null,
+      "name": "xQuickCullForOBB",
+      "canonical_identifier": "xQuickCullForOBB(xQCControl*,xQCData*,const xBox*,const xMat4x3*)",
+      "source": "SB/Core/x/xQuickCull.cpp",
       "address": 1376032,
       "size": 68,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
       "name": null,

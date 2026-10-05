@@ -231,6 +231,24 @@
       "source": "SB/Core/xbox/iMath3.cpp",
       "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
       "value_hex": "000000bf"
+    },
+    {
+      "name": "float:42fe0000",
+      "address": 2544892,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "0000fe42"
+    },
+    {
+      "name": "float:3d4ccccd",
+      "address": 2545324,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "cdcc4c3d"
     }
   ],
   "pool_loop": {

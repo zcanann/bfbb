@@ -1636,6 +1636,164 @@
         ],
         "iBoxBoundVec(xBox*,const xBox*,const xVec3*)": []
       }
+    },
+    {
+      "source": "src/SB/Core/x/xQuickCull.cpp",
+      "target_unit": "SB/Core/x/xQuickCull.cpp",
+      "object": "source/xQuickCull/xQuickCull.obj",
+      "comparison_object": "source/xQuickCull-functions.obj",
+      "host_entry": "tools/platforms/xbox_support/quick_cull_entry.cpp",
+      "host_context": {
+        "xatof": null,
+        "imports": "tools/platforms/xbox_support/math_crt.def"
+      },
+      "source_dependencies": [
+        {
+          "source": "src/SB/Core/x/xMath.cpp",
+          "object": "xMath.obj"
+        },
+        {
+          "source": "src/SB/Core/x/xMath3.cpp",
+          "object": "xMath3.obj"
+        },
+        {
+          "source": "src/SB/Core/x/xVec3.cpp",
+          "object": "xVec3.obj"
+        },
+        {
+          "source": "src/SB/Core/gc/iMath.cpp",
+          "object": "iMath.obj"
+        },
+        {
+          "source": "src/SB/Core/gc/iMath3.cpp",
+          "object": "iMath3.obj"
+        }
+      ],
+      "runtime_libraries": [
+        "libcmt"
+      ],
+      "symbols": {
+        "xQuickCullInit(xQCControl*,F32,F32,F32,F32,F32,F32)": "?xQuickCullInit@@YAXPAUxQCControl@@MMMMMM@Z",
+        "xQuickCullIsects(const xQCData*,const xQCData*)": "?xQuickCullIsects@@YAHPBUxQCData@@0@Z",
+        "xQuickCullForBound(xQCControl*,xQCData*,const xBound*)": "?xQuickCullForBound@@YAXPAUxQCControl@@PAUxQCData@@PBUxBound@@@Z",
+        "xQuickCullCellForVec(xQCControl*,xQCData*,const xVec3*)": "?xQuickCullCellForVec@@YAXPAUxQCControl@@PAUxQCData@@PBUxVec3@@@Z",
+        "xQuickCullCellMerge(xQCData*,const xQCData*,const xQCData*)": "?xQuickCullCellMerge@@YAXPAUxQCData@@PBU1@1@Z",
+        "xQuickCullForRay(xQCControl*,xQCData*,const xRay3*)": "?xQuickCullForRay@@YAXPAUxQCControl@@PAUxQCData@@PBUxRay3@@@Z",
+        "xQuickCullForSphere(xQCControl*,xQCData*,const xSphere*)": "?xQuickCullForSphere@@YAXPAUxQCControl@@PAUxQCData@@PBUxSphere@@@Z",
+        "xQuickCullForOBB(xQCControl*,xQCData*,const xBox*,const xMat4x3*)": "?xQuickCullForOBB@@YAXPAUxQCControl@@PAUxQCData@@PBUxBox@@PBUxMat4x3@@@Z"
+      },
+      "scope": "Eight independently reviewed quick-cull functions from complete real source plus five complete math dependencies. Four public source APIs lacking reviewed original extents remain unassigned; actual source host retains them. No TU or executable completion claim.",
+      "globals": {
+        "float:00000000": {
+          "linkage_name": "__real@00000000",
+          "size": 4,
+          "object": "iMath3.obj",
+          "value_hex": "00000000"
+        },
+        "float:3f000000": {
+          "linkage_name": "__real@3f000000",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "0000003f"
+        },
+        "float:42fe0000": {
+          "linkage_name": "__real@42fe0000",
+          "size": 4,
+          "object": "xQuickCull.obj",
+          "value_hex": "0000fe42"
+        },
+        "float:3d4ccccd": {
+          "linkage_name": "__real@3d4ccccd",
+          "size": 4,
+          "object": "xQuickCull.obj",
+          "value_hex": "cdcc4c3d"
+        }
+      },
+      "direct_calls": {
+        "xQuickCullInit(xQCControl*,F32,F32,F32,F32,F32,F32)": [],
+        "xQuickCullIsects(const xQCData*,const xQCData*)": [],
+        "xQuickCullForBound(xQCControl*,xQCData*,const xBound*)": [
+          "?xQuickCullForBox@@YAXPAUxQCControl@@PAUxQCData@@PBUxBox@@@Z",
+          "xQuickCullForOBB(xQCControl*,xQCData*,const xBox*,const xMat4x3*)",
+          "xQuickCullForSphere(xQCControl*,xQCData*,const xSphere*)"
+        ],
+        "xQuickCullCellForVec(xQCControl*,xQCData*,const xVec3*)": [
+          "__ftol2"
+        ],
+        "xQuickCullCellMerge(xQCData*,const xQCData*,const xQCData*)": [],
+        "xQuickCullForRay(xQCControl*,xQCData*,const xRay3*)": [
+          "xQuickCullCellForVec(xQCControl*,xQCData*,const xVec3*)",
+          "xQuickCullCellMerge(xQCData*,const xQCData*,const xQCData*)"
+        ],
+        "xQuickCullForSphere(xQCControl*,xQCData*,const xSphere*)": [
+          "xQuickCullCellForVec(xQCControl*,xQCData*,const xVec3*)",
+          "xQuickCullCellMerge(xQCData*,const xQCData*,const xQCData*)"
+        ],
+        "xQuickCullForOBB(xQCControl*,xQCData*,const xBox*,const xMat4x3*)": [
+          "?xQuickCullForBox@@YAXPAUxQCControl@@PAUxQCData@@PBUxBox@@@Z",
+          "xBoxInitBoundOBB(xBox*,const xBox*,const xMat4x3*)"
+        ]
+      },
+      "call_symbols": {
+        "?xQuickCullForBox@@YAXPAUxQCControl@@PAUxQCData@@PBUxBox@@@Z": {
+          "linkage_name": "?xQuickCullForBox@@YAXPAUxQCControl@@PAUxQCData@@PBUxBox@@@Z",
+          "object": "xQuickCull.obj"
+        },
+        "__ftol2": {
+          "linkage_name": "__ftol2",
+          "object": "libcmt:ftol2.obj"
+        },
+        "xBoxInitBoundOBB(xBox*,const xBox*,const xMat4x3*)": {
+          "linkage_name": "?xBoxInitBoundOBB@@YAXPAUxBox@@PBU1@PBUxMat4x3@@@Z",
+          "object": "xMath3.obj"
+        }
+      },
+      "address_expressions": {
+        "xQuickCullInit(xQCControl*,F32,F32,F32,F32,F32,F32)": [
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d81d",
+            "addend": 0,
+            "count": 3
+          },
+          {
+            "symbol": "float:42fe0000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0,
+            "count": 3
+          },
+          {
+            "symbol": "float:3f000000",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0,
+            "count": 3
+          },
+          {
+            "symbol": "float:3f000000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0,
+            "count": 3
+          }
+        ],
+        "xQuickCullIsects(const xQCData*,const xQCData*)": [],
+        "xQuickCullForBound(xQCControl*,xQCData*,const xBound*)": [],
+        "xQuickCullCellForVec(xQCControl*,xQCData*,const xVec3*)": [],
+        "xQuickCullCellMerge(xQCData*,const xQCData*,const xQCData*)": [],
+        "xQuickCullForRay(xQCControl*,xQCData*,const xRay3*)": [],
+        "xQuickCullForSphere(xQCControl*,xQCData*,const xSphere*)": [
+          {
+            "symbol": "float:3d4ccccd",
+            "field": "displacement",
+            "prefix": "d805",
+            "addend": 0
+          }
+        ],
+        "xQuickCullForOBB(xQCControl*,xQCData*,const xBox*,const xMat4x3*)": []
+      }
     }
   ],
   "static_runtime": {

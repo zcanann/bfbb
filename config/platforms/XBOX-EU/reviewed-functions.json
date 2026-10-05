@@ -6732,6 +6732,854 @@
       }
     },
     {
+      "name": "xQuickCullInit",
+      "canonical_identifier": "xQuickCullInit(xQCControl*,F32,F32,F32,F32,F32,F32)",
+      "display_name": "xQuickCullInit(xQCControl*,F32,F32,F32,F32,F32,F32)",
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "linkage_name": null,
+      "address": 1374880,
+      "size": 275,
+      "sha256": "b366145ebdb61c315cb302cf7bba5c61475ccdf9daff86f4f3a920ac9c957577",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 275,
+      "instruction_count": 77,
+      "semantics": {
+        "identity": "Fifteen xQCControl float fields: six world bounds, three dimensions with zero/negative fallback, 127/dimension scales, and midpoint plus half-cell centers.",
+        "entry_evidence": "Original decoded direct-call witnesses and closed CFG; instruction-pattern source search proposed candidates only, and does not establish their boundaries."
+      },
+      "corroboration": {
+        "return_address": 1375154,
+        "branches": [
+          {
+            "address": 1374975,
+            "size": 2,
+            "opcode": 123,
+            "target": 1375010
+          },
+          {
+            "address": 1374991,
+            "size": 2,
+            "opcode": 123,
+            "target": 1375010
+          },
+          {
+            "address": 1375008,
+            "size": 2,
+            "opcode": 122,
+            "target": 1375024
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1078434,
+            "target": 1374880
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 275,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
+        },
+        "previous_boundary": {
+          "return_address": 1374871,
+          "padding_address": 1374872,
+          "padding_size": 8,
+          "padding_byte": 204
+        },
+        "next_function_address": 1375168,
+        "following_padding": {
+          "address": 1375155,
+          "size": 13,
+          "byte": 204
+        }
+      },
+      "address_expressions": [
+        {
+          "offset": 86,
+          "instruction_offset": 84,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        },
+        {
+          "offset": 102,
+          "instruction_offset": 100,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        },
+        {
+          "offset": 119,
+          "instruction_offset": 117,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        },
+        {
+          "offset": 146,
+          "instruction_offset": 144,
+          "symbol": "float:42fe0000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 158,
+          "instruction_offset": 156,
+          "symbol": "float:42fe0000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 170,
+          "instruction_offset": 168,
+          "symbol": "float:42fe0000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 194,
+          "instruction_offset": 192,
+          "symbol": "float:3f000000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 200,
+          "instruction_offset": 198,
+          "symbol": "float:3f000000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 221,
+          "instruction_offset": 219,
+          "symbol": "float:3f000000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 227,
+          "instruction_offset": 225,
+          "symbol": "float:3f000000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 252,
+          "instruction_offset": 250,
+          "symbol": "float:3f000000",
+          "field": "displacement",
+          "prefix": "d80d",
+          "addend": 0
+        },
+        {
+          "offset": 258,
+          "instruction_offset": 256,
+          "symbol": "float:3f000000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        }
+      ],
+      "direct_calls": []
+    },
+    {
+      "name": "xQuickCullIsects",
+      "canonical_identifier": "xQuickCullIsects(const xQCData*,const xQCData*)",
+      "display_name": "xQuickCullIsects(const xQCData*,const xQCData*)",
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "linkage_name": null,
+      "address": 1375168,
+      "size": 55,
+      "sha256": "eafeaba3f2dc203365dd403ccc634d59e184a6f10924d8c56b889a77c718e527",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 55,
+      "instruction_count": 22,
+      "semantics": {
+        "identity": "Six signed-byte interval overlap comparisons between quantized minima and maxima at offsets0,1,2 and4,5,6.",
+        "entry_evidence": "Original decoded direct-call witnesses and closed CFG; instruction-pattern source search proposed candidates only, and does not establish their boundaries."
+      },
+      "corroboration": {
+        "return_address": 1375222,
+        "branches": [
+          {
+            "address": 1375173,
+            "size": 2,
+            "opcode": 127,
+            "target": 1375220
+          },
+          {
+            "address": 1375181,
+            "size": 2,
+            "opcode": 127,
+            "target": 1375220
+          },
+          {
+            "address": 1375189,
+            "size": 2,
+            "opcode": 127,
+            "target": 1375220
+          },
+          {
+            "address": 1375196,
+            "size": 2,
+            "opcode": 127,
+            "target": 1375220
+          },
+          {
+            "address": 1375204,
+            "size": 2,
+            "opcode": 127,
+            "target": 1375220
+          },
+          {
+            "address": 1375212,
+            "size": 2,
+            "opcode": 127,
+            "target": 1375220
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1381646,
+            "target": 1375168
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 1381802,
+            "target": 1375168
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 55,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
+        },
+        "previous_boundary": {
+          "return_address": 1375154,
+          "padding_address": 1375155,
+          "padding_size": 13,
+          "padding_byte": 204
+        },
+        "next_function_address": 1375232,
+        "following_padding": {
+          "address": 1375223,
+          "size": 9,
+          "byte": 204
+        }
+      },
+      "address_expressions": [],
+      "direct_calls": []
+    },
+    {
+      "name": "xQuickCullForBound",
+      "canonical_identifier": "xQuickCullForBound(xQCControl*,xQCData*,const xBound*)",
+      "display_name": "xQuickCullForBound(xQCControl*,xQCData*,const xBound*)",
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "linkage_name": null,
+      "address": 1375232,
+      "size": 125,
+      "sha256": "dcc73d0a9a097604c7280ba6e29c5522490daa370fd4a7a8435e92834f4c516f",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 125,
+      "instruction_count": 53,
+      "semantics": {
+        "identity": "Bound type dispatch reads byte+0x20, sphere+0x24, box+0x30 and matrix pointer+0x48; delegates sphere or oriented-box conversion and inlines axis-aligned box conversion.",
+        "entry_evidence": "Original decoded direct-call witnesses and closed CFG; instruction-pattern source search proposed candidates only, and does not establish their boundaries."
+      },
+      "corroboration": {
+        "return_address": 1375356,
+        "branches": [
+          {
+            "address": 1375249,
+            "size": 2,
+            "opcode": 117,
+            "target": 1375271
+          },
+          {
+            "address": 1375275,
+            "size": 2,
+            "opcode": 117,
+            "target": 1375328
+          },
+          {
+            "address": 1375331,
+            "size": 2,
+            "opcode": 117,
+            "target": 1375350
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 240546,
+            "target": 1375232
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 652359,
+            "target": 1375232
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 125,
+          "internal_gap_ranges": [],
+          "direct_call_targets": [
+            1375360,
+            1375536,
+            1375888,
+            1376032
+          ]
+        },
+        "previous_boundary": {
+          "return_address": 1375222,
+          "padding_address": 1375223,
+          "padding_size": 9,
+          "padding_byte": 204
+        },
+        "next_function_address": 1375360,
+        "following_padding": {
+          "address": 1375357,
+          "size": 3,
+          "byte": 204
+        }
+      },
+      "address_expressions": [],
+      "direct_calls": [
+        {
+          "offset": 26,
+          "symbol": "xQuickCullForSphere(xQCControl*,xQCData*,const xSphere*)"
+        },
+        {
+          "offset": 58,
+          "symbol": "xQuickCullCellForVec(xQCControl*,xQCData*,const xVec3*)"
+        },
+        {
+          "offset": 68,
+          "symbol": "xQuickCullCellForVec(xQCControl*,xQCData*,const xVec3*)"
+        },
+        {
+          "offset": 84,
+          "symbol": "xQuickCullCellMerge(xQCData*,const xQCData*,const xQCData*)"
+        },
+        {
+          "offset": 111,
+          "symbol": "xQuickCullForOBB(xQCControl*,xQCData*,const xBox*,const xMat4x3*)"
+        }
+      ]
+    },
+    {
+      "name": "xQuickCullCellForVec",
+      "canonical_identifier": "xQuickCullCellForVec(xQCControl*,xQCData*,const xVec3*)",
+      "display_name": "xQuickCullCellForVec(xQCControl*,xQCData*,const xVec3*)",
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "linkage_name": null,
+      "address": 1375360,
+      "size": 167,
+      "sha256": "0d7b6005e61031ef0d2705dbc784d6646b68211c3e966f184135d40d44628cdc",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 167,
+      "instruction_count": 57,
+      "semantics": {
+        "identity": "Three coordinates subtract control centers at+0x30/+0x34/+0x38 and multiply scales+0x24/+0x28/+0x2c; known ftol2 conversions are clamped to[-127,127] and stored into duplicated signed-byte bound fields.",
+        "entry_evidence": "Original decoded direct-call witnesses and closed CFG; instruction-pattern source search proposed candidates only, and does not establish their boundaries."
+      },
+      "corroboration": {
+        "return_address": 1375526,
+        "branches": [
+          {
+            "address": 1375387,
+            "size": 2,
+            "opcode": 125,
+            "target": 1375412
+          },
+          {
+            "address": 1375392,
+            "size": 2,
+            "opcode": 125,
+            "target": 1375404
+          },
+          {
+            "address": 1375402,
+            "size": 2,
+            "opcode": 235,
+            "target": 1375416
+          },
+          {
+            "address": 1375410,
+            "size": 2,
+            "opcode": 124,
+            "target": 1375416
+          },
+          {
+            "address": 1375438,
+            "size": 2,
+            "opcode": 125,
+            "target": 1375458
+          },
+          {
+            "address": 1375443,
+            "size": 2,
+            "opcode": 125,
+            "target": 1375452
+          },
+          {
+            "address": 1375450,
+            "size": 2,
+            "opcode": 235,
+            "target": 1375458
+          },
+          {
+            "address": 1375454,
+            "size": 2,
+            "opcode": 125,
+            "target": 1375458
+          },
+          {
+            "address": 1375478,
+            "size": 2,
+            "opcode": 125,
+            "target": 1375497
+          },
+          {
+            "address": 1375483,
+            "size": 2,
+            "opcode": 125,
+            "target": 1375492
+          },
+          {
+            "address": 1375490,
+            "size": 2,
+            "opcode": 235,
+            "target": 1375502
+          },
+          {
+            "address": 1375495,
+            "size": 2,
+            "opcode": 124,
+            "target": 1375502
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 138106,
+            "target": 1375360
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 335000,
+            "target": 1375360
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 167,
+          "internal_gap_ranges": [],
+          "direct_call_targets": [
+            1824368
+          ]
+        },
+        "previous_boundary": {
+          "return_address": 1375356,
+          "padding_address": 1375357,
+          "padding_size": 3,
+          "padding_byte": 204
+        },
+        "next_function_address": 1375536,
+        "following_padding": {
+          "address": 1375527,
+          "size": 9,
+          "byte": 204
+        }
+      },
+      "address_expressions": [],
+      "direct_calls": [
+        {
+          "offset": 16,
+          "symbol": "__ftol2"
+        },
+        {
+          "offset": 72,
+          "symbol": "__ftol2"
+        },
+        {
+          "offset": 111,
+          "symbol": "__ftol2"
+        }
+      ]
+    },
+    {
+      "name": "xQuickCullCellMerge",
+      "canonical_identifier": "xQuickCullCellMerge(xQCData*,const xQCData*,const xQCData*)",
+      "display_name": "xQuickCullCellMerge(xQCData*,const xQCData*,const xQCData*)",
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "linkage_name": null,
+      "address": 1375536,
+      "size": 99,
+      "sha256": "0af2d9511a88e8e66f3878ec298f386295cda2302c30a408a4eb7da93cd38137",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 99,
+      "instruction_count": 41,
+      "semantics": {
+        "identity": "Signed minima/maxima merge over quantized XYZ intervals, including duplicated Z bytes at3 and7.",
+        "entry_evidence": "Original decoded direct-call witnesses and closed CFG; instruction-pattern source search proposed candidates only, and does not establish their boundaries."
+      },
+      "corroboration": {
+        "return_address": 1375634,
+        "branches": [
+          {
+            "address": 1375542,
+            "size": 2,
+            "opcode": 124,
+            "target": 1375546
+          },
+          {
+            "address": 1375556,
+            "size": 2,
+            "opcode": 124,
+            "target": 1375560
+          },
+          {
+            "address": 1375571,
+            "size": 2,
+            "opcode": 124,
+            "target": 1375575
+          },
+          {
+            "address": 1375589,
+            "size": 2,
+            "opcode": 127,
+            "target": 1375593
+          },
+          {
+            "address": 1375604,
+            "size": 2,
+            "opcode": 127,
+            "target": 1375608
+          },
+          {
+            "address": 1375619,
+            "size": 2,
+            "opcode": 126,
+            "target": 1375628
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 138135,
+            "target": 1375536
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 335035,
+            "target": 1375536
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 99,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
+        },
+        "previous_boundary": {
+          "return_address": 1375526,
+          "padding_address": 1375527,
+          "padding_size": 9,
+          "padding_byte": 204
+        },
+        "next_function_address": 1375648,
+        "following_padding": {
+          "address": 1375635,
+          "size": 13,
+          "byte": 204
+        }
+      },
+      "address_expressions": [],
+      "direct_calls": []
+    },
+    {
+      "name": "xQuickCullForRay",
+      "canonical_identifier": "xQuickCullForRay(xQCControl*,xQCData*,const xRay3*)",
+      "display_name": "xQuickCullForRay(xQCControl*,xQCData*,const xRay3*)",
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "linkage_name": null,
+      "address": 1375648,
+      "size": 240,
+      "sha256": "6f46c0daf6fb540e5d46dcf126d9d457127000e62e7fc9dcb54e2691fd706bab",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 240,
+      "instruction_count": 77,
+      "semantics": {
+        "identity": "Ray flags0x400/0x800 construct endpoints from optional min/max parameters; two reviewed cell conversions followed by reviewed cell merge.",
+        "entry_evidence": "Original decoded direct-call witnesses and closed CFG; instruction-pattern source search proposed candidates only, and does not establish their boundaries."
+      },
+      "corroboration": {
+        "return_address": 1375887,
+        "branches": [
+          {
+            "address": 1375666,
+            "size": 2,
+            "opcode": 116,
+            "target": 1375718
+          },
+          {
+            "address": 1375716,
+            "size": 2,
+            "opcode": 235,
+            "target": 1375738
+          },
+          {
+            "address": 1375741,
+            "size": 2,
+            "opcode": 116,
+            "target": 1375793
+          },
+          {
+            "address": 1375745,
+            "size": 2,
+            "opcode": 116,
+            "target": 1375759
+          },
+          {
+            "address": 1375757,
+            "size": 2,
+            "opcode": 235,
+            "target": 1375766
+          },
+          {
+            "address": 1375791,
+            "size": 2,
+            "opcode": 235,
+            "target": 1375806
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1381910,
+            "target": 1375648
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 1382102,
+            "target": 1375648
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 240,
+          "internal_gap_ranges": [],
+          "direct_call_targets": [
+            1375360,
+            1375536
+          ]
+        },
+        "previous_boundary": {
+          "return_address": 1375634,
+          "padding_address": 1375635,
+          "padding_size": 13,
+          "padding_byte": 204
+        }
+      },
+      "address_expressions": [],
+      "direct_calls": [
+        {
+          "offset": 198,
+          "symbol": "xQuickCullCellForVec(xQCControl*,xQCData*,const xVec3*)"
+        },
+        {
+          "offset": 212,
+          "symbol": "xQuickCullCellForVec(xQCControl*,xQCData*,const xVec3*)"
+        },
+        {
+          "offset": 230,
+          "symbol": "xQuickCullCellMerge(xQCData*,const xQCData*,const xQCData*)"
+        }
+      ]
+    },
+    {
+      "name": "xQuickCullForSphere",
+      "canonical_identifier": "xQuickCullForSphere(xQCControl*,xQCData*,const xSphere*)",
+      "display_name": "xQuickCullForSphere(xQCControl*,xQCData*,const xSphere*)",
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "linkage_name": null,
+      "address": 1375888,
+      "size": 138,
+      "sha256": "36842383c2264a0b4a8013a2725cbb89645bfe2d2e189cb7147cf335a4138b52",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 138,
+      "instruction_count": 46,
+      "semantics": {
+        "identity": "Sphere bounds expand radius by0.05, form center plus/minus extents, convert both corners with the reviewed cell helper, and merge.",
+        "entry_evidence": "Original decoded direct-call witnesses and closed CFG; instruction-pattern source search proposed candidates only, and does not establish their boundaries."
+      },
+      "corroboration": {
+        "return_address": 1376025,
+        "branches": [],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 131726,
+            "target": 1375888
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 272526,
+            "target": 1375888
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 138,
+          "internal_gap_ranges": [],
+          "direct_call_targets": [
+            1375360,
+            1375536
+          ]
+        },
+        "next_function_address": 1376032,
+        "following_padding": {
+          "address": 1376026,
+          "size": 6,
+          "byte": 204
+        }
+      },
+      "address_expressions": [
+        {
+          "offset": 9,
+          "instruction_offset": 7,
+          "symbol": "float:3d4ccccd",
+          "field": "displacement",
+          "prefix": "d805",
+          "addend": 0
+        }
+      ],
+      "direct_calls": [
+        {
+          "offset": 96,
+          "symbol": "xQuickCullCellForVec(xQCControl*,xQCData*,const xVec3*)"
+        },
+        {
+          "offset": 110,
+          "symbol": "xQuickCullCellForVec(xQCControl*,xQCData*,const xVec3*)"
+        },
+        {
+          "offset": 128,
+          "symbol": "xQuickCullCellMerge(xQCData*,const xQCData*,const xQCData*)"
+        }
+      ]
+    },
+    {
+      "name": "xQuickCullForOBB",
+      "canonical_identifier": "xQuickCullForOBB(xQCControl*,xQCData*,const xBox*,const xMat4x3*)",
+      "display_name": "xQuickCullForOBB(xQCControl*,xQCData*,const xBox*,const xMat4x3*)",
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "linkage_name": null,
+      "address": 1376032,
+      "size": 68,
+      "sha256": "45d7be200c8f241c4c6c02743ed09c718354de74b659140d5fa7b8732c29d4f1",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 68,
+      "instruction_count": 23,
+      "semantics": {
+        "identity": "Calls the independently reviewed xBoxInitBoundOBB to construct world extents, then converts its two corners and merges the quantized bounds.",
+        "entry_evidence": "Original decoded direct-call witnesses and closed CFG; instruction-pattern source search proposed candidates only, and does not establish their boundaries."
+      },
+      "corroboration": {
+        "return_address": 1376099,
+        "branches": [],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1375342,
+            "target": 1376032
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 68,
+          "internal_gap_ranges": [],
+          "direct_call_targets": [
+            1331760,
+            1375360,
+            1375536
+          ]
+        },
+        "previous_boundary": {
+          "return_address": 1376025,
+          "padding_address": 1376026,
+          "padding_size": 6,
+          "padding_byte": 204
+        },
+        "next_function_address": 1376112,
+        "following_padding": {
+          "address": 1376100,
+          "size": 12,
+          "byte": 204
+        }
+      },
+      "address_expressions": [],
+      "direct_calls": [
+        {
+          "offset": 10,
+          "symbol": "xBoxInitBoundOBB(xBox*,const xBox*,const xMat4x3*)"
+        },
+        {
+          "offset": 26,
+          "symbol": "xQuickCullCellForVec(xQCControl*,xQCData*,const xVec3*)"
+        },
+        {
+          "offset": 40,
+          "symbol": "xQuickCullCellForVec(xQCControl*,xQCData*,const xVec3*)"
+        },
+        {
+          "offset": 58,
+          "symbol": "xQuickCullCellMerge(xQCData*,const xQCData*,const xQCData*)"
+        }
+      ]
+    },
+    {
       "name": "xStrHash",
       "canonical_identifier": "xStrHash(const char*)",
       "display_name": "U32 xStrHash(const char* str)",
