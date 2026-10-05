@@ -1,3 +1,8 @@
+#if defined(PS2)
+#include "xstransvc.h"
+#include <rwim3d.h>
+#endif
+
 #if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
 #define NPC_FRAME_TIME (1.0f / 50.0f)
 #else

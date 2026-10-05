@@ -7,6 +7,7 @@
 extern "C" {
 #endif
 
+void* memmove(void* destination, const void* source, size_t size);
 void* memcpy(void* destination, const void* source, size_t size);
 void* memset(void* destination, int value, size_t size);
 int strcmp(const char* lhs, const char* rhs);

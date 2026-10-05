@@ -32,6 +32,10 @@
 #include "zParEmitter.h"
 #include "xParEmitter.h"
 
+#if defined(PS2)
+#include <rwim3d.h>
+#endif
+
 #include <string.h>
 
 // These structs were used in deadstripped functions.

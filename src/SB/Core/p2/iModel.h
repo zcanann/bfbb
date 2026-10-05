@@ -22,6 +22,8 @@ void iModelAnimMatrices(RpAtomic* model, xQuat* quat, xVec3* tran, RwMatrix* mat
 
 unsigned int iModelVertEval(RpAtomic* model, unsigned int index, unsigned int count,
                             RwMatrix* mat, xVec3* vert, xVec3* dest);
+unsigned int iModelNormalEval(xVec3* out, const RpAtomic& model, const RwMatrixTag* mat,
+                               unsigned int index, signed int size, const xVec3* in);
 void iModelTagEval(RpAtomic* model, const xModelTag* tag, RwMatrix* mat, xVec3* dest);
 unsigned int iModelTagSetup(xModelTag* tag, RpAtomic* model, float x, float y, float z);
 

@@ -158,6 +158,55 @@ struct RpWorld
     RxPipeline* pipeline;
 };
 
+#define rpLIGHTPOSITIONINGSTART 0x80
+
+enum RpLightType
+{
+    rpNALIGHTTYPE = 0,
+    rpLIGHTDIRECTIONAL,
+    rpLIGHTAMBIENT,
+    rpLIGHTPOINT = rpLIGHTPOSITIONINGSTART,
+    rpLIGHTSPOT,
+    rpLIGHTSPOTSOFT,
+    rpLIGHTTYPEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+typedef enum RpLightType RpLightType;
+
+#define RpAtomicSetRenderCallBackMacro(_atomic, _callback)                                         \
+    MACRO_START                                                                                    \
+    {                                                                                              \
+        (_atomic)->renderCallBack = (_callback);                                                   \
+        if (!(_atomic)->renderCallBack)                                                            \
+        {                                                                                          \
+            (_atomic)->renderCallBack = AtomicDefaultRenderCallBack;                               \
+        }                                                                                          \
+    }                                                                                              \
+    MACRO_STOP
+
+#define RpAtomicGetRenderCallBackMacro(_atomic) ((_atomic)->renderCallBack)
+
+#define RpAtomicSetRenderCallBack(_atomic, _callback) RpAtomicSetRenderCallBackMacro(_atomic, _callback)
+#define RpAtomicGetRenderCallBack(_atomic) RpAtomicGetRenderCallBackMacro(_atomic)
+#define RpMaterialGetTextureMacro(_material) ((_material)->texture)
+#define RpMaterialGetTexture(_material) RpMaterialGetTextureMacro(_material)
+#define RpWorldGetNumMaterialsMacro(_world) ((_world)->matList.numMaterials)
+#define RpWorldGetMaterialMacro(_world, _num) (((_world)->matList.materials)[(_num)])
+#define RpWorldGetNumMaterials(_world) RpWorldGetNumMaterialsMacro(_world)
+#define RpWorldGetMaterial(_world, _num) RpWorldGetMaterialMacro(_world, _num)
+#define RpLightSetFrameMacro(_light, _frame) (rwObjectHasFrameSetFrame((_light), (_frame)), (_light))
+#define RpLightGetFrameMacro(_light) ((RwFrame*)rwObjectGetParent((_light)))
+#define RpLightSetFrame(_light, _frame) RpLightSetFrameMacro(_light, _frame)
+#define RpLightGetFrame(_light) RpLightGetFrameMacro(_light)
+
+typedef RpAtomic* (*RpAtomicCallBack)(RpAtomic* atomic, void* data);
+typedef RpMaterial* (*RpMaterialCallBack)(RpMaterial* material, void* data);
+
+extern "C" {
+RpAtomic* AtomicDefaultRenderCallBack(RpAtomic* atomic);
+RpClump* RpClumpForAllAtomics(RpClump* clump, RpAtomicCallBack callback, void* data);
+RpGeometry* RpGeometryForAllMaterials(RpGeometry* geometry, RpMaterialCallBack callback, void* data);
+}
+
 #define RpAtomicGetFrame(_atomic) ((RwFrame*)((_atomic)->object.object.parent))
 #define RpAtomicGetGeometry(_atomic) ((_atomic)->geometry)
 

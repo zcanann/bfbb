@@ -5,6 +5,9 @@
 #include "xScrFx.h"
 #include "xVec3.h"
 #include "xutil.h"
+#if defined(PS2)
+#include "xstransvc.h"
+#endif
 
 #include "zEntButton.h"
 #include "zGlobals.h"

@@ -94,12 +94,19 @@ struct HAZCollide : HAZTypical
     xVec3 pos_collide;
     xVec3 dir_normal;
     xParabola parabinfo;
+#if defined(PS2)
+    // MW PS2 omits storage for this anonymous struct extension.
+    S32 flg_collide : 8;
+    S32 flg_result : 8;
+    S32 flg_unused : 16;
+#else
     struct
     {
         S32 flg_collide : 8;
         S32 flg_result : 8;
         S32 flg_unused : 16;
     };
+#endif
     S32 cnt_skipcol;
     en_hazcol idx_rotateCol;
 };
