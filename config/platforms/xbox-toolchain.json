@@ -1395,66 +1395,9 @@
             "addend": 0
           }
         ],
-        "xMat3x3RotX(xMat3x3*,F32)": [
-          {
-            "symbol": "g_X3",
-            "field": "displacement",
-            "prefix": "8b15",
-            "addend": 0
-          },
-          {
-            "symbol": "g_X3",
-            "field": "displacement",
-            "prefix": "8b15",
-            "addend": 4
-          },
-          {
-            "symbol": "g_X3",
-            "field": "displacement",
-            "prefix": "8b15",
-            "addend": 8
-          }
-        ],
-        "xMat3x3RotY(xMat3x3*,F32)": [
-          {
-            "symbol": "g_Y3",
-            "field": "displacement",
-            "prefix": "8b35",
-            "addend": 0
-          },
-          {
-            "symbol": "g_Y3",
-            "field": "displacement",
-            "prefix": "8b35",
-            "addend": 4
-          },
-          {
-            "symbol": "g_Y3",
-            "field": "displacement",
-            "prefix": "8b35",
-            "addend": 8
-          }
-        ],
-        "xMat3x3RotZ(xMat3x3*,F32)": [
-          {
-            "symbol": "g_Z3",
-            "field": "displacement",
-            "prefix": "8b35",
-            "addend": 0
-          },
-          {
-            "symbol": "g_Z3",
-            "field": "displacement",
-            "prefix": "8b35",
-            "addend": 4
-          },
-          {
-            "symbol": "g_Z3",
-            "field": "displacement",
-            "prefix": "8b35",
-            "addend": 8
-          }
-        ],
+        "xMat3x3RotX(xMat3x3*,F32)": [],
+        "xMat3x3RotY(xMat3x3*,F32)": [],
+        "xMat3x3RotZ(xMat3x3*,F32)": [],
         "xMat3x3RMulRotY(xMat3x3*,const xMat3x3*,F32)": [],
         "xMat3x3Transpose(xMat3x3*,const xMat3x3*)": [],
         "xMat3x3Mul(xMat3x3*,const xMat3x3*,const xMat3x3*)": [],

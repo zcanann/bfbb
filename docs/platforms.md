@@ -79,8 +79,8 @@ checked, and the standard objdiff parser accepts the result.
 | SLES-51968 | 2,979,712 | 221,972 |
 | SLES-51970 | 2,976,512 | 221,868 |
 | SLES-53623 | 2,979,968 | 40,504 |
-| XBOX-US | 1,798,760 | 13,694 |
-| XBOX-EU | 1,798,760 | 13,694 |
+| XBOX-US | 1,798,760 | 13,852 |
+| XBOX-EU | 1,798,760 | 13,852 |
 
 The PS2 [math alignment restoration](PS2_MATH_ALIGNMENT.md) enables complete
 `xEntMotion`, `xPad`, and `xClimate` source comparisons: 34 functions / 20,040
@@ -341,7 +341,7 @@ inventory. Reviewed extents take precedence. CI regenerates this registry from
 the original; the remaining candidates stay excluded. Anonymous identifiers
 establish neither original symbols nor source ownership. Together with the
 115 reviewed extents, measured coverage is 2,556 functions / 635,415 bytes;
-13,694 bytes match source. This is still partial coverage. The [Xbox memory initializer](XBOX_MEMORY_INITIALIZER.md) adds 103 exact source bytes using an explicitly verified data-only original binding; its recovered runtime allocator remains target-only. The [inline math boundary](XBOX_MATH_INLINE_BOUNDARY.md) adds 388 exact source bytes from Euler and the emitted xatan2 helper without changing the original denominator. The original-backed box-containment return structure adds another 84 bytes, the vector normalizer adds 163 bytes by preserving the original input-field reloads, direct axis-rotation subtraction adds 226 bytes, and ordinary random-generator inlining adds 661 bytes, and unchanged particle-list helper inlining adds 222 bytes. Ordinary allocator inlining adds another 209 bytes while preserving its existing standalone comparison in the actual particle-group source emission; that reporting group is explicitly reconstructed, not original TU ownership. Ordinary quick-cull wrapper inlining adds 193 exact bytes; all eight reviewed QuickCull functions now match, without claiming complete original TU coverage.
+13,852 bytes match source. This is still partial coverage. The [Xbox memory initializer](XBOX_MEMORY_INITIALIZER.md) adds 103 exact source bytes using an explicitly verified data-only original binding; its recovered runtime allocator remains target-only. The [inline math boundary](XBOX_MATH_INLINE_BOUNDARY.md) adds 388 exact source bytes from Euler and the emitted xatan2 helper without changing the original denominator. The original-backed box-containment return structure adds another 84 bytes, the vector normalizer adds 163 bytes by preserving the original input-field reloads, direct axis-rotation subtraction adds 226 bytes, and ordinary random-generator inlining adds 661 bytes, and unchanged particle-list helper inlining adds 222 bytes. Ordinary allocator inlining adds another 209 bytes while preserving its existing standalone comparison in the actual particle-group source emission; that reporting group is explicitly reconstructed, not original TU ownership. Ordinary quick-cull wrapper inlining adds 193 exact bytes; all eight reviewed QuickCull functions now match, without claiming complete original TU coverage. Literal fixed-axis initialization adds 158 byte-exact X/Y/Z rotation bytes.
 
 The complete particle-group source now compiles with its real particle dependency
 and a hash-pinned Microsoft static runtime library. Six independently reviewed

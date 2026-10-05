@@ -383,7 +383,11 @@ void xMat3x3RotX(xMat3x3* m, F32 t)
     F32 cos = icos(t);
     F32 sin = isin(t);
 
+#if defined(XBOX)
+    xVec3Init(&m->right, 1.0f, 0.0f, 0.0f);
+#else
     xVec3Copy(&m->right, &g_X3);
+#endif
     xVec3Init(&m->up, 0.0f, cos, sin);
     xVec3Init(&m->at, 0.0f, -sin, cos);
     m->flags = 0;
@@ -395,7 +399,11 @@ void xMat3x3RotY(xMat3x3* m, F32 t)
     F32 sin = isin(t);
 
     xVec3Init((xVec3*)m, cos, 0.0f, -sin);
+#if defined(XBOX)
+    xVec3Init(&m->up, 0.0f, 1.0f, 0.0f);
+#else
     xVec3Copy(&m->up, &g_Y3);
+#endif
     xVec3Init(&m->at, sin, 0.0f, cos);
     m->flags = 0;
 }
@@ -407,7 +415,11 @@ void xMat3x3RotZ(xMat3x3* m, F32 t)
 
     xVec3Init(&m->right, cos, sin, 0.0f);
     xVec3Init(&m->up, -sin, cos, 0.0f);
+#if defined(XBOX)
+    xVec3Init(&m->at, 0.0f, 0.0f, 1.0f);
+#else
     xVec3Copy(&m->at, &g_Z3);
+#endif
     m->flags = 0;
 }
 

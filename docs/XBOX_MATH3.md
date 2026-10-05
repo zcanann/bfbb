@@ -239,3 +239,39 @@ Ignored evidence: `build/xbox258/{matrix-disasm.txt,compile.py,compare.py,
 deltas.json,gc/proof.json,production,prove_alias.py,alias-proof.json,
 verify_final.py,final-verification.json}`. The alias proof reads both final
 production PEs and both authenticated originals.
+
+
+## Fixed basis axes in X/Y/Z rotations
+
+Original RotX/RotY/RotZ store their fixed basis axis as literal zero/one values.
+The prior source copied g_X3/g_Y3/g_Z3 instead, introducing three global loads
+per function and extra register preservation in Y/Z. The actual old linked
+read-only vectors contain exactly (1,0,0), (0,1,0), (0,0,1), respectively.
+
+Xbox now uses the existing xVec3Init with those literal components for the fixed
+axis only. The trigonometric work, other matrix fields, flags and all non-Xbox
+source remain unchanged. These immutable axis values cannot validly be modified
+or aliased by the output matrix. No global qualifier, source helper, compiler
+flag, original identity or backend rule changes. The source profile removes
+only the nine global operand expectations absent from the new instructions.
+
+| Function | Original bytes | Before | After |
+| --- | ---: | ---: | ---: |
+| xMat3x3RotX | 52 | 33.333332% | 100% |
+| xMat3x3RotY | 54 | 58.894737% | 100% |
+| xMat3x3RotZ | 52 | 56% | 100% |
+
+All 158 bytes of the actual xMath3.obj-owned source functions are directly
+identical to both authenticated originals, with no relocations, calls or byte
+rewrites. Source CFG extents are independently decoded. Both complete reports
+now contain 13,852 exact bytes / 75 exact functions; every other function record,
+denominator and completion field is unchanged except generated COFF offsets.
+Full code-weighted fuzzy progress rises from 1.151121414199782% to
+1.1555546631813025%. Seven actual source-consumer builds and 33 ordered
+GameCube allocated sections also pass without regressions.
+
+Ignored evidence: `build/xbox260/{axis-disasm.txt,compile.py,compare.py,
+deltas.json,gc/proof.json,production,verify_final.py,final-verification.json}`.
+The final verifier reads both actual production PEs, both originals and the
+prior linked constant values. No complete original TU or executable link claim
+is added.
