@@ -388,11 +388,15 @@ S32 icompare(const substr& s1, const substr& s2)
         }
         else
         {
+#ifdef XBOX
+            result = s1.size < s2.size ? -1 : 1;
+#else
             result = 1;
             if (s1.size < s2.size)
             {
                 result = -1;
             }
+#endif
         }
         break;
     }

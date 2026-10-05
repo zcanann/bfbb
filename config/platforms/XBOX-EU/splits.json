@@ -15457,7 +15457,7 @@
       "kind": "function",
       "address": 1422672,
       "size": 53,
-      "canonical_identifier": "anon_0015b550"
+      "canonical_identifier": "icompare(const substr&,const substr&)"
     },
     {
       "kind": "unclassified",

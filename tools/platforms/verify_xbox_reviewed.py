@@ -73,6 +73,8 @@ def verify_functions(original: Original, document: dict, anchors: dict | None = 
     require(all(a["address"] + a["size"] <= b["address"] for a, b in zip(ordered, ordered[1:])),
             "Reviewed function extents overlap")
     calls_checked = 0
+    call_targets = {f['canonical_identifier']: f['address'] for f in functions
+                    if f.get('boundary_confirmation') and f.get('identity_confirmation')}
     for function in functions:
         label = function["canonical_identifier"]
         start, size = function["address"], function["size"]
@@ -84,6 +86,9 @@ def verify_functions(original: Original, document: dict, anchors: dict | None = 
         if function.get('address_expressions'):
             from platforms.xbox_relocations import normalize
             normalize(original.read(start, size), function['address_expressions'], anchors or {})
+        if function.get('direct_calls'):
+            from platforms.xbox_calls import normalize_calls
+            normalize_calls(original.read(start, size), start, function['direct_calls'], call_targets)
         evidence = function["corroboration"]
         require(evidence["return_address"] == end - 1 and original.read(end - 1, 1) == b"\xc3",
                 f"{label}: terminal RET boundary differs")

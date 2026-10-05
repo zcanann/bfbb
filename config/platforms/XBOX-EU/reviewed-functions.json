@@ -2,7 +2,7 @@
   "schema_version": 1,
   "version": "XBOX-EU",
   "executable_sha1": "3cc6795aad6a51005b4178ca35d76786eb620cab",
-  "scope": "Individually reviewed xString hashes, tokenizers, hexadecimal parser and comparison leaves plus xPar particle leaves; other Ghidra candidates remain separate.",
+  "scope": "Individually reviewed xString hashes, tokenizers, parser and comparisons plus xPar particle routines; other Ghidra candidates remain separate.",
   "coverage_complete": false,
   "source_comparison_available": false,
   "retail_link_verified": false,
@@ -1228,6 +1228,125 @@
           "size": 53,
           "sha256": "c947b0d7e14316b7f117475c8788b74c11c4c3bb3bb68b023452f33723e2abb0",
           "description": "Original argument setup, direct comparison call, caller stack cleanup when applicable and result consumption."
+        }
+      }
+    },
+    {
+      "name": "icompare",
+      "canonical_identifier": "icompare(const substr&,const substr&)",
+      "display_name": "S32 icompare(const substr& s1, const substr& s2)",
+      "source": "SB/Core/x/xString.cpp",
+      "linkage_name": null,
+      "address": 1422672,
+      "size": 53,
+      "sha256": "c947b0d7e14316b7f117475c8788b74c11c4c3bb3bb68b023452f33723e2abb0",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": false,
+      "retail_link_verified": false,
+      "instruction_bytes": 53,
+      "instruction_count": 30,
+      "direct_calls": [
+        {
+          "offset": 24,
+          "symbol": "imemcmp(const void*,const void*,size_t)"
+        }
+      ],
+      "observed_calling_convention": {
+        "parameters": [
+          {
+            "name": "s1",
+            "location": "edx"
+          },
+          {
+            "name": "s2",
+            "location": "ecx"
+          }
+        ],
+        "return": "eax signed comparison result",
+        "stack_cleanup": "caller",
+        "saved_registers": [
+          "ebp",
+          "esi",
+          "ebx",
+          "edi"
+        ],
+        "convention_name": null,
+        "limitation": "Observed whole-program parameter registers, not a public ABI declaration."
+      },
+      "semantics": {
+        "identity": "Compare substring data using the independently reviewed imemcmp over the smaller length. Preserve a nonzero byte comparison; otherwise compare the original lengths, returning zero for equality or -1/+1 for shorter/longer input.",
+        "caller_evidence": "Original 0x10da67 constructs a pointer/length substring of length5 at 0x26b580, passes another real substring at 0x10da79, calls at 0x10da80, and tests equality to select a game value. Other callers similarly construct constant substring pairs and test equality."
+      },
+      "corroboration": {
+        "method": "Existing anonymous closed-CFG extent and decoded callers, independently reviewed imemcmp destination, actual substring data/length ownership, all return paths and following INT3 alignment. Compiler equality is separate.",
+        "branches": [
+          {
+            "address": 1422684,
+            "size": 2,
+            "opcode": 114,
+            "target": 1422688
+          },
+          {
+            "address": 1422707,
+            "size": 2,
+            "opcode": 117,
+            "target": 1422722
+          },
+          {
+            "address": 1422711,
+            "size": 2,
+            "opcode": 117,
+            "target": 1422716
+          }
+        ],
+        "return_address": 1422724,
+        "saved_registers": [
+          {
+            "register": "ebp",
+            "push_address": 1422672,
+            "pop_address": 1422723
+          },
+          {
+            "register": "esi",
+            "push_address": 1422676,
+            "pop_address": 1422722
+          },
+          {
+            "register": "ebx",
+            "push_address": 1422688,
+            "pop_address": 1422706
+          },
+          {
+            "register": "edi",
+            "push_address": 1422691,
+            "pop_address": 1422705
+          }
+        ],
+        "recorded_direct_call_count": 13,
+        "reviewed_call_witnesses": [
+          {
+            "address": 1104512,
+            "target": 1422672,
+            "kind": "x86_call_rel32"
+          },
+          {
+            "address": 1292848,
+            "target": 1422672,
+            "kind": "x86_call_rel32"
+          }
+        ],
+        "following_padding": {
+          "address": 1422725,
+          "size": 11,
+          "byte": 204
+        },
+        "next_function_address": 1422736,
+        "caller_context": {
+          "address": 1104487,
+          "size": 39,
+          "sha256": "f0817a65622fecb61111b20ae8e1762cdeb30aa57aef741399dd1d346276b399",
+          "description": "Constructed five-byte substring, real second substring pointer, direct call and equality consumption."
         }
       }
     },

@@ -11326,12 +11326,12 @@
       "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0015b550",
-      "source": null,
+      "name": "icompare",
+      "canonical_identifier": "icompare(const substr&,const substr&)",
+      "source": "SB/Core/x/xString.cpp",
       "address": 1422672,
       "size": 53,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
       "name": "atox",
