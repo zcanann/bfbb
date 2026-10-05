@@ -75,14 +75,17 @@ checked, and the standard objdiff parser accepts the result.
 
 | Version | Full code-region bytes | Objdiff code-matched bytes |
 | --- | ---: | ---: |
-| SLUS-20680 | 2,978,560 | 9,844 |
-| SLES-51968 | 2,979,712 | 9,844 |
-| SLES-51970 | 2,976,512 | 9,844 |
-| SLES-53623 | 2,979,968 | 1,460 |
+| SLUS-20680 | 2,978,560 | 13,488 |
+| SLES-51968 | 2,979,712 | 13,488 |
+| SLES-51970 | 2,976,512 | 13,488 |
+| SLES-53623 | 2,979,968 | 3,528 |
 | XBOX-US | 1,798,760 | 48 |
 | XBOX-EU | 1,798,760 | 48 |
 
-This checkpoint includes the first broad core-source compile pass. Reports retain
+This checkpoint includes the utility, serializer and bounds header pass, plus
+source comparisons for independently verified French function subsets. All nine
+version jobs passed in [staging CI](https://github.com/zcanann/bfbb/actions/runs/37261702464);
+the downloaded reports confirm these counts. Reports retain
 standard objdiff `functionRelocDiffs=none`, as on GameCube. Code matches do not
 prove relocated byte equality or a completed link; independent reconstruction
 results are documented separately in the per-unit notes.
@@ -106,10 +109,10 @@ The narrower function-only baselines currently contain:
 
 | PS2 baseline | Functions | Measured function bytes | Source matches |
 | --- | ---: | ---: | ---: |
-| USA | 5,391 | 2,107,460 | 97 functions / 9,844 bytes |
-| Europe/Australia | 5,392 | 2,108,700 | 97 functions / 9,844 bytes |
-| Germany | 5,394 | 2,105,512 | 97 functions / 9,844 bytes |
-| France (reviewed and corroborated bounds) | 331 | 90,040 | 17 functions / 1,460 bytes |
+| USA | 5,391 | 2,107,460 | 132 functions / 13,488 bytes |
+| Europe/Australia | 5,392 | 2,108,700 | 132 functions / 13,488 bytes |
+| Germany | 5,394 | 2,105,512 | 132 functions / 13,488 bytes |
+| France (reviewed and corroborated bounds) | 331 | 90,040 | 31 functions / 3,528 bytes |
 
 The `address-anchors.json` registries also recover over 2,500 named data addresses
 and 628 function declarations in each debug-bearing version. Addresses do not
@@ -135,9 +138,9 @@ These counts come from explicit retail DWARF1 function bounds, with overlap and
 load-range validation. Targets retain the exact original instructions. The `xBase` call relocations are restored and verified by inverse reconstruction;
 other target objects are not relocation-restored link inputs. Code outside those function ranges, remaining data,
 and padding remain unclassified; the whole mixed load segment is not counted as
-code. France is stripped; sixteen individually reviewed extents and 310
-machine-corroborated extents establish its function-only baseline. Its
-1,276/89,856 matched bytes describe that subset. The published code denominator
+code. France is stripped; independently reviewed and machine-corroborated
+extents establish its 331-function, 90,040-byte function-only baseline. Its
+3,528 matched code bytes describe that subset. The published code denominator
 is the full recovered CPU text region, not this function-only subset.
 
 Both Xbox releases have identical payloads in all 13 sections; their 532 differing
