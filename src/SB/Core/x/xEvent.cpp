@@ -4,7 +4,11 @@
 #include "xString.h"
 #include "xstransvc.h"
 
+#if defined(PS2)
+#include "zSceneLookup.h"
+#else
 #include "zScene.h"
+#endif
 
 char zEventLogBuf[20][256];
 
@@ -15,7 +19,11 @@ void zEntEvent(char* to, U32 toEvent)
 
     if (sendTo)
     {
+#if defined(PS2)
+        zEntEvent(NULL, 0, sendTo, toEvent, NULL, NULL, 0);
+#else
         zEntEvent(sendTo, toEvent);
+#endif
     }
 }
 
@@ -25,7 +33,11 @@ void zEntEvent(U32 toID, U32 toEvent)
 
     if (sendTo)
     {
+#if defined(PS2)
+        zEntEvent(NULL, 0, sendTo, toEvent, NULL, NULL, 0);
+#else
         zEntEvent(sendTo, toEvent);
+#endif
     }
 }
 
@@ -44,7 +56,11 @@ void zEntEvent(U32 toID, U32 toEvent, F32 toParam0, F32 toParam1, F32 toParam2,
 
     if (sendTo)
     {
+#if defined(PS2)
+        zEntEvent(NULL, 0, sendTo, toEvent, toParam, NULL, 0);
+#else
         zEntEvent(sendTo, toEvent, toParam);
+#endif
     }
 }
 
@@ -63,7 +79,11 @@ void zEntEvent(xBase* to, U32 toEvent, F32 toParam0, F32 toParam1, F32 toParam2,
     toParam[2] = toParam2;
     toParam[3] = toParam3;
 
+#if defined(PS2)
+    zEntEvent(NULL, 0, to, toEvent, toParam, NULL, 0);
+#else
     zEntEvent(to, toEvent, toParam, NULL);
+#endif
 }
 
 void zEntEvent(xBase* to, U32 toEvent, const F32* toParam)
@@ -103,7 +123,7 @@ void zEntEvent(xBase* from, U32 fromEvent, xBase* to, U32 toEvent, const F32* to
         to->eventFunc(from, to, toEvent, toParam, toParamWidget);
     }
 
-    if (xBaseIsEnabled(to) && to->linkCount)
+    if (xBaseIsEnabled(to) && to->linkCount > 0)
     {
         xLinkAsset* idx = to->link;
 

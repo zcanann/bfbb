@@ -315,7 +315,7 @@ def compile_units(output: Path, compilers: Path, wibo: Path) -> list[dict]:
         target.parent.mkdir(parents=True, exist_ok=True)
         target.unlink(missing_ok=True)
         command = [str(wibo.resolve()), '-C', str(ROOT), str(compiler.resolve()), *profile['flags']]
-        for include in ('include', 'src/SB/Core/p2', 'src/SB/Core/x'):
+        for include in ('include', 'src/SB/Core/p2', 'src/SB/Core/x', 'src/SB/Game'):
             command.extend(['-i', str(ROOT / include)])
         command.extend(['-o', str(target.resolve()), str(ROOT / unit['source'])])
         subprocess.run(command, cwd=ROOT, check=True)

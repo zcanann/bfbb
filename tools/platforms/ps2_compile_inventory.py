@@ -102,7 +102,7 @@ def main() -> None:
         if hashlib.sha256(path.read_bytes()).hexdigest() != expected:
             raise ValueError(f'Unexpected tool binary: {path.name}')
     includes = []
-    for directory in ['include', 'src/SB/Core/p2', 'src/SB/Core/x', *args.include]:
+    for directory in ['include', 'src/SB/Core/p2', 'src/SB/Core/x', 'src/SB/Game', *args.include]:
         path = (ROOT / directory).resolve()
         path.relative_to(ROOT)
         if not path.is_dir():
