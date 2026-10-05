@@ -8653,6 +8653,1099 @@
         }
       ],
       "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/x/xAnim.cpp",
+      "target_unit": "SB/Core/x/xAnim.cpp",
+      "object": "source/xAnim.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xAnimPoolFree__FP9xAnimPlay": "xAnimPoolFree__FP9xAnimPlay",
+        "xAnimPoolAlloc__FP8xMemPoolPvP10xAnimTableP14xModelInstance": "xAnimPoolAlloc__FP8xMemPoolPvP10xAnimTableP14xModelInstance",
+        "xAnimPoolInit__FP8xMemPoolUiUiUiUi": "xAnimPoolInit__FP8xMemPoolUiUiUiUi",
+        "xAnimPoolCB__FP8xMemPoolPv": "xAnimPoolCB__FP8xMemPoolPv",
+        "xAnimPlayEval__FP9xAnimPlay": "xAnimPlayEval__FP9xAnimPlay",
+        "xAnimPlayUpdate__FP9xAnimPlayf": "xAnimPlayUpdate__FP9xAnimPlayf",
+        "xAnimPlayStartTransition__FP9xAnimPlayP15xAnimTransition": "xAnimPlayStartTransition__FP9xAnimPlayP15xAnimTransition",
+        "xAnimPlayChooseTransition__FP9xAnimPlay": "xAnimPlayChooseTransition__FP9xAnimPlay",
+        "xAnimPlaySetup__FP9xAnimPlayPvP10xAnimTableP14xModelInstance": "xAnimPlaySetup__FP9xAnimPlayPvP10xAnimTableP14xModelInstance",
+        "SingleUpdate__FP11xAnimSinglef": "SingleUpdate__FP11xAnimSinglef",
+        "xAnimPlaySetState__FP11xAnimSingleP10xAnimStatef": "xAnimPlaySetState__FP11xAnimSingleP10xAnimStatef",
+        "EffectSingleStop__FP11xAnimSingle": "EffectSingleStop__FP11xAnimSingle",
+        "EffectSingleLoop__FP11xAnimSingle": "EffectSingleLoop__FP11xAnimSingle",
+        "EffectSingleRun__FP11xAnimSingle": "EffectSingleRun__FP11xAnimSingle",
+        "EffectSingleDuration__FP11xAnimSingle": "EffectSingleDuration__FP11xAnimSingle",
+        "EffectSingleStart__FP11xAnimSingle": "EffectSingleStart__FP11xAnimSingle",
+        "xAnimTableGetState__FP10xAnimTablePCc": "xAnimTableGetState__FP10xAnimTablePCc",
+        "xAnimTableGetStateID__FP10xAnimTableUi": "xAnimTableGetStateID__FP10xAnimTableUi",
+        "xAnimTableAddFileID__FP10xAnimTableP9xAnimFileUiUiUi": "xAnimTableAddFileID__FP10xAnimTableP9xAnimFileUiUiUi",
+        "xAnimTableAddFile__FP10xAnimTableP9xAnimFilePCc": "xAnimTableAddFile__FP10xAnimTableP9xAnimFilePCc",
+        "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs",
+        "xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCc": "xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCc",
+        "_xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCcPCc": "_xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCcPCc",
+        "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v",
+        "xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState": "xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState",
+        "xAnimTableNew__FPCcPP10xAnimTableUi": "xAnimTableNew__FPCcPP10xAnimTableUi",
+        "xAnimStateNewEffect__FP10xAnimStateUiffPFUiP17xAnimActiveEffectP11xAnimSinglePv_UiUi": "xAnimStateNewEffect__FP10xAnimStateUiffPFUiP17xAnimActiveEffectP11xAnimSinglePv_UiUi",
+        "xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf": "xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf",
+        "xAnimFileSetTime__FP9xAnimFileff": "xAnimFileSetTime__FP9xAnimFileff",
+        "xAnimFileNew__FPvPCcUiPP9xAnimFile": "xAnimFileNew__FPvPCcUiPP9xAnimFile",
+        "xAnimFileNewBilinear__FPPvPCcUiPP9xAnimFileUiUi": "xAnimFileNewBilinear__FPPvPCcUiPP9xAnimFileUiUi",
+        "xAnimTempTransitionInit__FUi": "xAnimTempTransitionInit__FUi",
+        "xAnimInit__Fv": "xAnimInit__Fv",
+        "_xCheckAnimNameInner__FPCcPCciPcPiPi": "_xCheckAnimNameInner__FPCcPCciPcPiPi"
+      },
+      "calls": [
+        {
+          "function": "xAnimPoolFree__FP9xAnimPlay",
+          "offset": 52,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleStop__FP11xAnimSingle",
+          "symbol": "EffectSingleStop__FP11xAnimSingle"
+        },
+        {
+          "function": "xAnimPoolFree__FP9xAnimPlay",
+          "offset": 80,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleStop__FP11xAnimSingle",
+          "symbol": "EffectSingleStop__FP11xAnimSingle"
+        },
+        {
+          "function": "xAnimPoolFree__FP9xAnimPlay",
+          "offset": 116,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPoolFree__FP8xMemPoolPv",
+          "symbol": "xMemPoolFree__FP8xMemPoolPv"
+        },
+        {
+          "function": "xAnimPoolAlloc__FP8xMemPoolPvP10xAnimTableP14xModelInstance",
+          "offset": 32,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPoolAlloc__FP8xMemPool",
+          "symbol": "xMemPoolAlloc__FP8xMemPool"
+        },
+        {
+          "function": "xAnimPoolAlloc__FP8xMemPoolPvP10xAnimTableP14xModelInstance",
+          "offset": 56,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimPlaySetup__FP9xAnimPlayPvP10xAnimTableP14xModelInstance",
+          "symbol": "xAnimPlaySetup__FP9xAnimPlayPvP10xAnimTableP14xModelInstance"
+        },
+        {
+          "function": "xAnimPoolInit__FP8xMemPoolUiUiUiUi",
+          "offset": 304,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xAnimPoolInit__FP8xMemPoolUiUiUiUi",
+          "offset": 572,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPoolSetup__FP8xMemPoolPvUiUiPFP8xMemPoolPv_vUiUiUi",
+          "symbol": "xMemPoolSetup__FP8xMemPoolPvUiUiPFP8xMemPoolPv_vUiUiUi"
+        },
+        {
+          "function": "xAnimPlayEval__FP9xAnimPlay",
+          "offset": 156,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf",
+          "symbol": "xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf"
+        },
+        {
+          "function": "xAnimPlayEval__FP9xAnimPlay",
+          "offset": 224,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf",
+          "symbol": "xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf"
+        },
+        {
+          "function": "xAnimPlayEval__FP9xAnimPlay",
+          "offset": 292,
+          "target_source": "SB/Core/p2/iAnim.cpp",
+          "target_function": "iAnimBlend__FffPUsPfUiP5xVec3P5xQuatP5xVec3P5xQuatP5xVec3P5xQuat",
+          "symbol": "iAnimBlend__FffPUsPfUiP5xVec3P5xQuatP5xVec3P5xQuatP5xVec3P5xQuat"
+        },
+        {
+          "function": "xAnimPlayEval__FP9xAnimPlay",
+          "offset": 428,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf",
+          "symbol": "xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf"
+        },
+        {
+          "function": "xAnimPlayEval__FP9xAnimPlay",
+          "offset": 496,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf",
+          "symbol": "xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf"
+        },
+        {
+          "function": "xAnimPlayEval__FP9xAnimPlay",
+          "offset": 556,
+          "target_source": "SB/Core/p2/iAnim.cpp",
+          "target_function": "iAnimBlend__FffPUsPfUiP5xVec3P5xQuatP5xVec3P5xQuatP5xVec3P5xQuat",
+          "symbol": "iAnimBlend__FffPUsPfUiP5xVec3P5xQuatP5xVec3P5xQuatP5xVec3P5xQuat"
+        },
+        {
+          "function": "xAnimPlayEval__FP9xAnimPlay",
+          "offset": 728,
+          "target_source": "SB/Core/p2/iAnim.cpp",
+          "target_function": "iAnimBlend__FffPUsPfUiP5xVec3P5xQuatP5xVec3P5xQuatP5xVec3P5xQuat",
+          "symbol": "iAnimBlend__FffPUsPfUiP5xVec3P5xQuatP5xVec3P5xQuatP5xVec3P5xQuat"
+        },
+        {
+          "function": "xAnimPlayEval__FP9xAnimPlay",
+          "offset": 840,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xQuatMul__FP5xQuatPC5xQuatPC5xQuat",
+          "symbol": "xQuatMul__FP5xQuatPC5xQuatPC5xQuat"
+        },
+        {
+          "function": "xAnimPlayEval__FP9xAnimPlay",
+          "offset": 952,
+          "target_source": "SB/Core/p2/iAnim.cpp",
+          "target_function": "iAnimBlend__FffPUsPfUiP5xVec3P5xQuatP5xVec3P5xQuatP5xVec3P5xQuat",
+          "symbol": "iAnimBlend__FffPUsPfUiP5xVec3P5xQuatP5xVec3P5xQuatP5xVec3P5xQuat"
+        },
+        {
+          "function": "xAnimPlayEval__FP9xAnimPlay",
+          "offset": 1132,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelAnimMatrices__FP8RpAtomicP5xQuatP5xVec3P11RwMatrixTag",
+          "symbol": "iModelAnimMatrices__FP8RpAtomicP5xQuatP5xVec3P11RwMatrixTag"
+        },
+        {
+          "function": "xAnimPlayUpdate__FP9xAnimPlayf",
+          "offset": 68,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "SingleUpdate__FP11xAnimSinglef",
+          "symbol": "SingleUpdate__FP11xAnimSinglef"
+        },
+        {
+          "function": "xAnimPlayStartTransition__FP9xAnimPlayP15xAnimTransition",
+          "offset": 140,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleStop__FP11xAnimSingle",
+          "symbol": "EffectSingleStop__FP11xAnimSingle"
+        },
+        {
+          "function": "xAnimPlayStartTransition__FP9xAnimPlayP15xAnimTransition",
+          "offset": 200,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleStop__FP11xAnimSingle",
+          "symbol": "EffectSingleStop__FP11xAnimSingle"
+        },
+        {
+          "function": "xAnimPlayStartTransition__FP9xAnimPlayP15xAnimTransition",
+          "offset": 236,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPoolFree__FP8xMemPoolPv",
+          "symbol": "xMemPoolFree__FP8xMemPoolPv"
+        },
+        {
+          "function": "xAnimPlayStartTransition__FP9xAnimPlayP15xAnimTransition",
+          "offset": 380,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPoolFree__FP8xMemPoolPv",
+          "symbol": "xMemPoolFree__FP8xMemPoolPv"
+        },
+        {
+          "function": "xAnimPlayStartTransition__FP9xAnimPlayP15xAnimTransition",
+          "offset": 544,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xAnimPlayStartTransition__FP9xAnimPlayP15xAnimTransition",
+          "offset": 616,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleStart__FP11xAnimSingle",
+          "symbol": "EffectSingleStart__FP11xAnimSingle"
+        },
+        {
+          "function": "xAnimPlayChooseTransition__FP9xAnimPlay",
+          "offset": 352,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimPlayStartTransition__FP9xAnimPlayP15xAnimTransition",
+          "symbol": "xAnimPlayStartTransition__FP9xAnimPlayP15xAnimTransition"
+        },
+        {
+          "function": "xAnimPlaySetup__FP9xAnimPlayPvP10xAnimTableP14xModelInstance",
+          "offset": 204,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimPlaySetState__FP11xAnimSingleP10xAnimStatef",
+          "symbol": "xAnimPlaySetState__FP11xAnimSingleP10xAnimStatef",
+          "opcode": 2
+        },
+        {
+          "function": "SingleUpdate__FP11xAnimSinglef",
+          "offset": 132,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleStart__FP11xAnimSingle",
+          "symbol": "EffectSingleStart__FP11xAnimSingle"
+        },
+        {
+          "function": "SingleUpdate__FP11xAnimSinglef",
+          "offset": 216,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleStart__FP11xAnimSingle",
+          "symbol": "EffectSingleStart__FP11xAnimSingle"
+        },
+        {
+          "function": "SingleUpdate__FP11xAnimSinglef",
+          "offset": 960,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleStop__FP11xAnimSingle",
+          "symbol": "EffectSingleStop__FP11xAnimSingle"
+        },
+        {
+          "function": "SingleUpdate__FP11xAnimSinglef",
+          "offset": 1000,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPoolFree__FP8xMemPoolPv",
+          "symbol": "xMemPoolFree__FP8xMemPoolPv"
+        },
+        {
+          "function": "SingleUpdate__FP11xAnimSinglef",
+          "offset": 1052,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPoolFree__FP8xMemPoolPv",
+          "symbol": "xMemPoolFree__FP8xMemPoolPv"
+        },
+        {
+          "function": "SingleUpdate__FP11xAnimSinglef",
+          "offset": 1072,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleStop__FP11xAnimSingle",
+          "symbol": "EffectSingleStop__FP11xAnimSingle"
+        },
+        {
+          "function": "SingleUpdate__FP11xAnimSinglef",
+          "offset": 1112,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleStop__FP11xAnimSingle",
+          "symbol": "EffectSingleStop__FP11xAnimSingle"
+        },
+        {
+          "function": "SingleUpdate__FP11xAnimSinglef",
+          "offset": 1176,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleStop__FP11xAnimSingle",
+          "symbol": "EffectSingleStop__FP11xAnimSingle"
+        },
+        {
+          "function": "SingleUpdate__FP11xAnimSinglef",
+          "offset": 1212,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPoolFree__FP8xMemPoolPv",
+          "symbol": "xMemPoolFree__FP8xMemPoolPv"
+        },
+        {
+          "function": "SingleUpdate__FP11xAnimSinglef",
+          "offset": 1348,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPoolFree__FP8xMemPoolPv",
+          "symbol": "xMemPoolFree__FP8xMemPoolPv"
+        },
+        {
+          "function": "SingleUpdate__FP11xAnimSinglef",
+          "offset": 1512,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "SingleUpdate__FP11xAnimSinglef",
+          "offset": 1584,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleStart__FP11xAnimSingle",
+          "symbol": "EffectSingleStart__FP11xAnimSingle"
+        },
+        {
+          "function": "SingleUpdate__FP11xAnimSinglef",
+          "offset": 1756,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleLoop__FP11xAnimSingle",
+          "symbol": "EffectSingleLoop__FP11xAnimSingle"
+        },
+        {
+          "function": "SingleUpdate__FP11xAnimSinglef",
+          "offset": 1808,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleRun__FP11xAnimSingle",
+          "symbol": "EffectSingleRun__FP11xAnimSingle"
+        },
+        {
+          "function": "SingleUpdate__FP11xAnimSinglef",
+          "offset": 1876,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleLoop__FP11xAnimSingle",
+          "symbol": "EffectSingleLoop__FP11xAnimSingle"
+        },
+        {
+          "function": "SingleUpdate__FP11xAnimSinglef",
+          "offset": 1928,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleRun__FP11xAnimSingle",
+          "symbol": "EffectSingleRun__FP11xAnimSingle"
+        },
+        {
+          "function": "SingleUpdate__FP11xAnimSinglef",
+          "offset": 2096,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleDuration__FP11xAnimSingle",
+          "symbol": "EffectSingleDuration__FP11xAnimSingle"
+        },
+        {
+          "function": "SingleUpdate__FP11xAnimSinglef",
+          "offset": 2112,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleDuration__FP11xAnimSingle",
+          "symbol": "EffectSingleDuration__FP11xAnimSingle"
+        },
+        {
+          "function": "xAnimPlaySetState__FP11xAnimSingleP10xAnimStatef",
+          "offset": 28,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleStop__FP11xAnimSingle",
+          "symbol": "EffectSingleStop__FP11xAnimSingle"
+        },
+        {
+          "function": "xAnimPlaySetState__FP11xAnimSingleP10xAnimStatef",
+          "offset": 48,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleStop__FP11xAnimSingle",
+          "symbol": "EffectSingleStop__FP11xAnimSingle"
+        },
+        {
+          "function": "xAnimPlaySetState__FP11xAnimSingleP10xAnimStatef",
+          "offset": 116,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xAnimPlaySetState__FP11xAnimSingleP10xAnimStatef",
+          "offset": 220,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPoolFree__FP8xMemPoolPv",
+          "symbol": "xMemPoolFree__FP8xMemPoolPv"
+        },
+        {
+          "function": "EffectSingleLoop__FP11xAnimSingle",
+          "offset": 24,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleRun__FP11xAnimSingle",
+          "symbol": "EffectSingleRun__FP11xAnimSingle"
+        },
+        {
+          "function": "xAnimTableGetState__FP10xAnimTablePCc",
+          "offset": 16,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xAnimTableAddFileID__FP10xAnimTableP9xAnimFileUiUiUi",
+          "offset": 144,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemGrowAlloc__FUiUi",
+          "symbol": "xMemGrowAlloc__FUiUi"
+        },
+        {
+          "function": "xAnimTableAddFileID__FP10xAnimTableP9xAnimFileUiUiUi",
+          "offset": 172,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xAnimTableAddFile__FP10xAnimTableP9xAnimFilePCc",
+          "offset": 44,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrTokBuffer__FPCcPCcPv",
+          "symbol": "xStrTokBuffer__FPCcPCcPv"
+        },
+        {
+          "function": "xAnimTableAddFile__FP10xAnimTableP9xAnimFilePCc",
+          "offset": 64,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xAnimTableAddFile__FP10xAnimTableP9xAnimFilePCc",
+          "offset": 88,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableAddFileID__FP10xAnimTableP9xAnimFileUiUiUi",
+          "symbol": "xAnimTableAddFileID__FP10xAnimTableP9xAnimFileUiUiUi"
+        },
+        {
+          "function": "xAnimTableAddFile__FP10xAnimTableP9xAnimFilePCc",
+          "offset": 108,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrTokBuffer__FPCcPCcPv",
+          "symbol": "xStrTokBuffer__FPCcPCcPv"
+        },
+        {
+          "function": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs",
+          "offset": 116,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemGrowAlloc__FUiUi",
+          "symbol": "xMemGrowAlloc__FUiUi"
+        },
+        {
+          "function": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs",
+          "offset": 140,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs",
+          "offset": 312,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs",
+          "offset": 752,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "_xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCcPCc",
+          "symbol": "_xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCcPCc"
+        },
+        {
+          "function": "xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCc",
+          "offset": 0,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "_xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCcPCc",
+          "symbol": "_xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCcPCc",
+          "opcode": 2
+        },
+        {
+          "function": "_xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCcPCc",
+          "offset": 196,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrTokBuffer__FPCcPCcPv",
+          "symbol": "xStrTokBuffer__FPCcPCcPv"
+        },
+        {
+          "function": "_xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCcPCc",
+          "offset": 440,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "_xCheckAnimNameInner__FPCcPCciPcPiPi",
+          "symbol": "_xCheckAnimNameInner__FPCcPCciPcPiPi"
+        },
+        {
+          "function": "_xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCcPCc",
+          "offset": 652,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "_xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCcPCc",
+          "offset": 780,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemGrowAlloc__FUiUi",
+          "symbol": "xMemGrowAlloc__FUiUi"
+        },
+        {
+          "function": "_xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCcPCc",
+          "offset": 804,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "_xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCcPCc",
+          "offset": 1160,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "_xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCcPCc",
+          "offset": 1508,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrTokBuffer__FPCcPCcPv",
+          "symbol": "xStrTokBuffer__FPCcPCcPv"
+        },
+        {
+          "function": "_xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCcPCc",
+          "offset": 1560,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemGrowAlloc__FUiUi",
+          "symbol": "xMemGrowAlloc__FUiUi"
+        },
+        {
+          "function": "_xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCcPCc",
+          "offset": 1584,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v",
+          "offset": 104,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemGrowAlloc__FUiUi",
+          "symbol": "xMemGrowAlloc__FUiUi"
+        },
+        {
+          "function": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v",
+          "offset": 128,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v",
+          "offset": 188,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xAnimTableNew__FPCcPP10xAnimTableUi",
+          "offset": 40,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xAnimStateNewEffect__FP10xAnimStateUiffPFUiP17xAnimActiveEffectP11xAnimSinglePv_UiUi",
+          "offset": 60,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemGrowAlloc__FUiUi",
+          "symbol": "xMemGrowAlloc__FUiUi"
+        },
+        {
+          "function": "xAnimStateNewEffect__FP10xAnimStateUiffPFUiP17xAnimActiveEffectP11xAnimSinglePv_UiUi",
+          "offset": 84,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf",
+          "offset": 720,
+          "target_source": "SB/Core/p2/iAnim.cpp",
+          "target_function": "iAnimEval__FPvfUiP5xVec3P5xQuat",
+          "symbol": "iAnimEval__FPvfUiP5xVec3P5xQuat"
+        },
+        {
+          "function": "xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf",
+          "offset": 776,
+          "target_source": "SB/Core/p2/iAnim.cpp",
+          "target_function": "iAnimEval__FPvfUiP5xVec3P5xQuat",
+          "symbol": "iAnimEval__FPvfUiP5xVec3P5xQuat"
+        },
+        {
+          "function": "xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf",
+          "offset": 828,
+          "target_source": "SB/Core/p2/iAnim.cpp",
+          "target_function": "iAnimBlend__FffPUsPfUiP5xVec3P5xQuatP5xVec3P5xQuatP5xVec3P5xQuat",
+          "symbol": "iAnimBlend__FffPUsPfUiP5xVec3P5xQuatP5xVec3P5xQuatP5xVec3P5xQuat"
+        },
+        {
+          "function": "xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf",
+          "offset": 888,
+          "target_source": "SB/Core/p2/iAnim.cpp",
+          "target_function": "iAnimEval__FPvfUiP5xVec3P5xQuat",
+          "symbol": "iAnimEval__FPvfUiP5xVec3P5xQuat"
+        },
+        {
+          "function": "xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf",
+          "offset": 944,
+          "target_source": "SB/Core/p2/iAnim.cpp",
+          "target_function": "iAnimEval__FPvfUiP5xVec3P5xQuat",
+          "symbol": "iAnimEval__FPvfUiP5xVec3P5xQuat"
+        },
+        {
+          "function": "xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf",
+          "offset": 996,
+          "target_source": "SB/Core/p2/iAnim.cpp",
+          "target_function": "iAnimBlend__FffPUsPfUiP5xVec3P5xQuatP5xVec3P5xQuatP5xVec3P5xQuat",
+          "symbol": "iAnimBlend__FffPUsPfUiP5xVec3P5xQuatP5xVec3P5xQuatP5xVec3P5xQuat"
+        },
+        {
+          "function": "xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf",
+          "offset": 1052,
+          "target_source": "SB/Core/p2/iAnim.cpp",
+          "target_function": "iAnimBlend__FffPUsPfUiP5xVec3P5xQuatP5xVec3P5xQuatP5xVec3P5xQuat",
+          "symbol": "iAnimBlend__FffPUsPfUiP5xVec3P5xQuatP5xVec3P5xQuatP5xVec3P5xQuat"
+        },
+        {
+          "function": "xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf",
+          "offset": 1144,
+          "target_source": "SB/Core/p2/iAnim.cpp",
+          "target_function": "iAnimEval__FPvfUiP5xVec3P5xQuat",
+          "symbol": "iAnimEval__FPvfUiP5xVec3P5xQuat"
+        },
+        {
+          "function": "xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf",
+          "offset": 1200,
+          "target_source": "SB/Core/p2/iAnim.cpp",
+          "target_function": "iAnimEval__FPvfUiP5xVec3P5xQuat",
+          "symbol": "iAnimEval__FPvfUiP5xVec3P5xQuat"
+        },
+        {
+          "function": "xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf",
+          "offset": 1252,
+          "target_source": "SB/Core/p2/iAnim.cpp",
+          "target_function": "iAnimBlend__FffPUsPfUiP5xVec3P5xQuatP5xVec3P5xQuatP5xVec3P5xQuat",
+          "symbol": "iAnimBlend__FffPUsPfUiP5xVec3P5xQuatP5xVec3P5xQuatP5xVec3P5xQuat"
+        },
+        {
+          "function": "xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf",
+          "offset": 1336,
+          "target_source": "SB/Core/p2/iAnim.cpp",
+          "target_function": "iAnimEval__FPvfUiP5xVec3P5xQuat",
+          "symbol": "iAnimEval__FPvfUiP5xVec3P5xQuat"
+        },
+        {
+          "function": "xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf",
+          "offset": 1392,
+          "target_source": "SB/Core/p2/iAnim.cpp",
+          "target_function": "iAnimEval__FPvfUiP5xVec3P5xQuat",
+          "symbol": "iAnimEval__FPvfUiP5xVec3P5xQuat"
+        },
+        {
+          "function": "xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf",
+          "offset": 1444,
+          "target_source": "SB/Core/p2/iAnim.cpp",
+          "target_function": "iAnimBlend__FffPUsPfUiP5xVec3P5xQuatP5xVec3P5xQuatP5xVec3P5xQuat",
+          "symbol": "iAnimBlend__FffPUsPfUiP5xVec3P5xQuatP5xVec3P5xQuatP5xVec3P5xQuat"
+        },
+        {
+          "function": "xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf",
+          "offset": 1512,
+          "target_source": "SB/Core/p2/iAnim.cpp",
+          "target_function": "iAnimEval__FPvfUiP5xVec3P5xQuat",
+          "symbol": "iAnimEval__FPvfUiP5xVec3P5xQuat"
+        },
+        {
+          "function": "xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf",
+          "offset": 1548,
+          "target_source": "SB/Core/p2/iAnim.cpp",
+          "target_function": "iAnimEval__FPvfUiP5xVec3P5xQuat",
+          "symbol": "iAnimEval__FPvfUiP5xVec3P5xQuat"
+        },
+        {
+          "function": "xAnimFileSetTime__FP9xAnimFileff",
+          "offset": 48,
+          "target_source": "SB/Core/x/xMorph.cpp",
+          "target_function": "xMorphSeqDuration__FP13xMorphSeqFile",
+          "symbol": "xMorphSeqDuration__FP13xMorphSeqFile"
+        },
+        {
+          "function": "xAnimFileSetTime__FP9xAnimFileff",
+          "offset": 68,
+          "target_source": "SB/Core/p2/iAnim.cpp",
+          "target_function": "iAnimDuration__FPv",
+          "symbol": "iAnimDuration__FPv"
+        },
+        {
+          "function": "xAnimFileNew__FPvPCcUiPP9xAnimFile",
+          "offset": 20,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimFileNewBilinear__FPPvPCcUiPP9xAnimFileUiUi",
+          "symbol": "xAnimFileNewBilinear__FPPvPCcUiPP9xAnimFileUiUi"
+        },
+        {
+          "function": "xAnimFileNewBilinear__FPPvPCcUiPP9xAnimFileUiUi",
+          "offset": 84,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemGrowAlloc__FUiUi",
+          "symbol": "xMemGrowAlloc__FUiUi"
+        },
+        {
+          "function": "xAnimFileNewBilinear__FPPvPCcUiPP9xAnimFileUiUi",
+          "offset": 120,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xAnimFileNewBilinear__FPPvPCcUiPP9xAnimFileUiUi",
+          "offset": 476,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xAnimFileNewBilinear__FPPvPCcUiPP9xAnimFileUiUi",
+          "offset": 524,
+          "target_source": "SB/Core/x/xMorph.cpp",
+          "target_function": "xMorphSeqDuration__FP13xMorphSeqFile",
+          "symbol": "xMorphSeqDuration__FP13xMorphSeqFile"
+        },
+        {
+          "function": "xAnimFileNewBilinear__FPPvPCcUiPP9xAnimFileUiUi",
+          "offset": 544,
+          "target_source": "SB/Core/p2/iAnim.cpp",
+          "target_function": "iAnimDuration__FPv",
+          "symbol": "iAnimDuration__FPv"
+        },
+        {
+          "function": "xAnimFileNewBilinear__FPPvPCcUiPP9xAnimFileUiUi",
+          "offset": 584,
+          "target_source": "SB/Core/x/xMorph.cpp",
+          "target_function": "xMorphSeqDuration__FP13xMorphSeqFile",
+          "symbol": "xMorphSeqDuration__FP13xMorphSeqFile"
+        },
+        {
+          "function": "xAnimFileNewBilinear__FPPvPCcUiPP9xAnimFileUiUi",
+          "offset": 604,
+          "target_source": "SB/Core/p2/iAnim.cpp",
+          "target_function": "iAnimDuration__FPv",
+          "symbol": "iAnimDuration__FPv"
+        },
+        {
+          "function": "xAnimFileNewBilinear__FPPvPCcUiPP9xAnimFileUiUi",
+          "offset": 640,
+          "target_source": "SB/Core/p2/iAnim.cpp",
+          "target_function": "iAnimBoneCount__FPv",
+          "symbol": "iAnimBoneCount__FPv"
+        },
+        {
+          "function": "xAnimTempTransitionInit__FUi",
+          "offset": 40,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xAnimTempTransitionInit__FUi",
+          "offset": 80,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPoolSetup__FP8xMemPoolPvUiUiPFP8xMemPoolPv_vUiUiUi",
+          "symbol": "xMemPoolSetup__FP8xMemPoolPvUiUiPFP8xMemPoolPv_vUiUiUi"
+        },
+        {
+          "function": "xAnimInit__Fv",
+          "offset": 8,
+          "target_source": "SB/Core/p2/iAnim.cpp",
+          "target_function": "iAnimInit__Fv",
+          "symbol": "iAnimInit__Fv"
+        },
+        {
+          "function": "_xCheckAnimNameInner__FPCcPCciPcPiPi",
+          "offset": 1216,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "_xCheckAnimNameInner__FPCcPCciPcPiPi",
+          "symbol": "_xCheckAnimNameInner__FPCcPCciPcPiPi"
+        },
+        {
+          "function": "_xCheckAnimNameInner__FPCcPCciPcPiPi",
+          "offset": 1540,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "_xCheckAnimNameInner__FPCcPCciPcPiPi",
+          "symbol": "_xCheckAnimNameInner__FPCcPCciPcPiPi"
+        },
+        {
+          "function": "_xCheckAnimNameInner__FPCcPCciPcPiPi",
+          "offset": 1592,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "_xCheckAnimNameInner__FPCcPCciPcPiPi",
+          "symbol": "_xCheckAnimNameInner__FPCcPCciPcPiPi"
+        },
+        {
+          "function": "xAnimPlayEval__FP9xAnimPlay",
+          "offset": 1016,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xAnimPlayEval__FP9xAnimPlay",
+          "offset": 1032,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xAnimPlayChooseTransition__FP9xAnimPlay",
+          "offset": 56,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xAnimPlaySetState__FP11xAnimSingleP10xAnimStatef",
+          "offset": 172,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xAnimInit__Fv",
+          "offset": 28,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xAnimPoolInit__FP8xMemPoolUiUiUiUi",
+          "offset": 276,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xAnimPlayEval__FP9xAnimPlay",
+          "offset": 60,
+          "opcode": 35,
+          "target_name": "giAnimScratch",
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "symbol": "giAnimScratch"
+        },
+        {
+          "function": "xAnimPlayEval__FP9xAnimPlay",
+          "offset": 208,
+          "opcode": 35,
+          "target_name": "giAnimScratch",
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "symbol": "giAnimScratch"
+        },
+        {
+          "function": "xAnimPlayEval__FP9xAnimPlay",
+          "offset": 480,
+          "opcode": 35,
+          "target_name": "giAnimScratch",
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "symbol": "giAnimScratch"
+        },
+        {
+          "function": "xAnimPlayChooseTransition__FP9xAnimPlay",
+          "offset": 48,
+          "opcode": 35,
+          "target_name": "giAnimScratch",
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "symbol": "giAnimScratch"
+        },
+        {
+          "function": "xAnimTableAddFileID__FP10xAnimTableP9xAnimFileUiUiUi",
+          "offset": 124,
+          "opcode": 35,
+          "target_name": "gxAnimUseGrowAlloc",
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "symbol": "gxAnimUseGrowAlloc"
+        },
+        {
+          "function": "xAnimTableAddFileID__FP10xAnimTableP9xAnimFileUiUiUi",
+          "offset": 136,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xAnimTableAddFileID__FP10xAnimTableP9xAnimFileUiUiUi",
+          "offset": 160,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xAnimTableAddFile__FP10xAnimTableP9xAnimFilePCc",
+          "offset": 28,
+          "opcode": 35,
+          "target_name": "giAnimScratch",
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "symbol": "giAnimScratch"
+        },
+        {
+          "function": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs",
+          "offset": 80,
+          "opcode": 35,
+          "target_name": "gxAnimUseGrowAlloc",
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "symbol": "gxAnimUseGrowAlloc"
+        },
+        {
+          "function": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs",
+          "offset": 112,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs",
+          "offset": 132,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "_xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCcPCc",
+          "offset": 60,
+          "opcode": 35,
+          "target_name": "giAnimScratch",
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "symbol": "giAnimScratch"
+        },
+        {
+          "function": "_xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCcPCc",
+          "offset": 764,
+          "opcode": 35,
+          "target_name": "gxAnimUseGrowAlloc",
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "symbol": "gxAnimUseGrowAlloc"
+        },
+        {
+          "function": "_xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCcPCc",
+          "offset": 776,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "_xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCcPCc",
+          "offset": 796,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "_xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCcPCc",
+          "offset": 1544,
+          "opcode": 35,
+          "target_name": "gxAnimUseGrowAlloc",
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "symbol": "gxAnimUseGrowAlloc"
+        },
+        {
+          "function": "_xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCcPCc",
+          "offset": 1556,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "_xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCcPCc",
+          "offset": 1576,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v",
+          "offset": 84,
+          "opcode": 35,
+          "target_name": "gxAnimUseGrowAlloc",
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "symbol": "gxAnimUseGrowAlloc"
+        },
+        {
+          "function": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v",
+          "offset": 100,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v",
+          "offset": 120,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xAnimTableNew__FPCcPP10xAnimTableUi",
+          "offset": 28,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xAnimStateNewEffect__FP10xAnimStateUiffPFUiP17xAnimActiveEffectP11xAnimSinglePv_UiUi",
+          "offset": 40,
+          "opcode": 35,
+          "target_name": "gxAnimUseGrowAlloc",
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "symbol": "gxAnimUseGrowAlloc"
+        },
+        {
+          "function": "xAnimStateNewEffect__FP10xAnimStateUiffPFUiP17xAnimActiveEffectP11xAnimSinglePv_UiUi",
+          "offset": 56,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xAnimStateNewEffect__FP10xAnimStateUiffPFUiP17xAnimActiveEffectP11xAnimSinglePv_UiUi",
+          "offset": 76,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf",
+          "offset": 612,
+          "opcode": 35,
+          "target_name": "giAnimScratch",
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "symbol": "giAnimScratch"
+        },
+        {
+          "function": "xAnimFileNewBilinear__FPPvPCcUiPP9xAnimFileUiUi",
+          "offset": 60,
+          "opcode": 35,
+          "target_name": "gxAnimUseGrowAlloc",
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "symbol": "gxAnimUseGrowAlloc"
+        },
+        {
+          "function": "xAnimFileNewBilinear__FPPvPCcUiPP9xAnimFileUiUi",
+          "offset": 76,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xAnimFileNewBilinear__FPPvPCcUiPP9xAnimFileUiUi",
+          "offset": 104,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xAnimTempTransitionInit__FUi",
+          "offset": 32,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "symbol": "gActiveHeap"
+        }
+      ],
+      "address_pairs": []
     }
   ]
 }
