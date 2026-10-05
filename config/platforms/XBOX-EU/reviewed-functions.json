@@ -11599,7 +11599,7 @@
       "sha256": "3ed7d2412fd828c349746460aa47c761fc9a1d6fda6be715ade92630d59195a1",
       "boundary_confirmation": true,
       "identity_confirmation": true,
-      "source_comparison_available": false,
+      "source_comparison_available": true,
       "retail_link_verified": false,
       "instruction_bytes": 163,
       "semantics": {
@@ -11639,7 +11639,57 @@
           "internal_gap_ranges": [],
           "direct_call_targets": []
         }
-      }
+      },
+      "address_expressions": [
+        {
+          "offset": 39,
+          "instruction_offset": 37,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d825",
+          "addend": 0
+        },
+        {
+          "offset": 47,
+          "instruction_offset": 45,
+          "symbol": "float:3727c5ac",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        },
+        {
+          "offset": 62,
+          "instruction_offset": 60,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 89,
+          "instruction_offset": 87,
+          "symbol": "float:3727c5ac",
+          "field": "displacement",
+          "prefix": "d81d",
+          "addend": 0
+        },
+        {
+          "offset": 102,
+          "instruction_offset": 100,
+          "symbol": "float:00000000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        },
+        {
+          "offset": 135,
+          "instruction_offset": 133,
+          "symbol": "float:3f800000",
+          "field": "displacement",
+          "prefix": "d905",
+          "addend": 0
+        }
+      ]
     },
     {
       "name": "xUtil_crc_init",

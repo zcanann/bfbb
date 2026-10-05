@@ -29,7 +29,7 @@ F32 xVec3Normalize(xVec3* o, const xVec3* v)
 
     if ((F32)iabs(len2 - 1.0f) <= 0.00001f)
     {
-#if defined(PS2)
+#if defined(PS2) || defined(XBOX)
         o->x = v->x;
         o->y = v->y;
         o->z = v->z;

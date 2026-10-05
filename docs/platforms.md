@@ -79,8 +79,8 @@ checked, and the standard objdiff parser accepts the result.
 | SLES-51968 | 2,979,712 | 190,848 |
 | SLES-51970 | 2,976,512 | 190,848 |
 | SLES-53623 | 2,979,968 | 29,500 |
-| XBOX-US | 1,798,760 | 12,020 |
-| XBOX-EU | 1,798,760 | 12,020 |
+| XBOX-US | 1,798,760 | 12,183 |
+| XBOX-EU | 1,798,760 | 12,183 |
 
 The PS2 [math alignment restoration](PS2_MATH_ALIGNMENT.md) enables complete
 `xEntMotion`, `xPad`, and `xClimate` source comparisons: 34 functions / 20,040
@@ -341,7 +341,7 @@ inventory. Reviewed extents take precedence. CI regenerates this registry from
 the original; the remaining candidates stay excluded. Anonymous identifiers
 establish neither original symbols nor source ownership. Together with the
 114 reviewed extents, measured coverage is 2,556 functions / 635,415 bytes;
-12,020 bytes match source. This is still partial coverage. The [Xbox memory initializer](XBOX_MEMORY_INITIALIZER.md) adds 103 exact source bytes using an explicitly verified data-only original binding; its recovered runtime allocator remains target-only. The [inline math boundary](XBOX_MATH_INLINE_BOUNDARY.md) adds 388 exact source bytes from Euler and the emitted xatan2 helper without changing the original denominator. The original-backed box-containment return structure adds another 84 bytes.
+12,183 bytes match source. This is still partial coverage. The [Xbox memory initializer](XBOX_MEMORY_INITIALIZER.md) adds 103 exact source bytes using an explicitly verified data-only original binding; its recovered runtime allocator remains target-only. The [inline math boundary](XBOX_MATH_INLINE_BOUNDARY.md) adds 388 exact source bytes from Euler and the emitted xatan2 helper without changing the original denominator. The original-backed box-containment return structure adds another 84 bytes, and the vector normalizer adds 163 bytes by preserving the original input-field reloads.
 
 The complete particle-group source now compiles with its real particle dependency
 and a hash-pinned Microsoft static runtime library. Five independently reviewed

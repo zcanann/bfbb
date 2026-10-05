@@ -87,3 +87,29 @@ functions; the standard overall fuzzy score rises from 1.071856459597167% to
 Actual GameCube compilation preserves all five ordered xMath3 allocated
 sections. Evidence is `build/xbox226/final-verification.json` and
 `build/xbox226/gc/proof.json`; remaining operand differences are left unresolved.
+
+## Vector normalization input ownership
+
+The reviewed Xbox `xVec3Normalize` reloads each input field after the preceding
+output store in its unit-length branch. The shared source already expresses
+this behavior for PS2. Extending that branch to Xbox removes the unnecessary
+captured y/z lifetimes, including a stack spill; the actual linked function
+shrinks from 181 to the original 163 bytes. Arithmetic and branch comparisons
+are unchanged, and the GameCube body is preserved.
+
+A new profile compiles complete xVec3.cpp with the established real matrix
+caller/dependency context and unchanged diagnostic matrix entry. Its only
+reviewed original function is compared; NormalizeFast remains unassigned.
+The six original constant operands refer to existing verified 0, 1 and epsilon
+anchors. Real PE HIGHLOW records identify the corresponding source operands;
+reapplying those original addresses reproduces all 163 original bytes in both
+releases. No function boundary, original data value, denominator, compiler flag,
+or backend rule changes.
+
+Both full production reports pass at 12,183 exact bytes / 64 functions, up
+163 bytes / one function. Every previous report unit is unchanged. Seven real
+consumer builds retain all 88 prior function scores, and actual GameCube xVec3
+compilation preserves all four ordered allocated sections. This is partial
+source comparison, with no TU or executable relink claim. Evidence is
+`build/xbox228/final-verification.json`, `original-literal-proof.json`, and
+`gc/proof.json`.

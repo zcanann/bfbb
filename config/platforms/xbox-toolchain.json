@@ -2892,6 +2892,100 @@
           "object": "msvcrt:msvcrt.dll"
         }
       }
+    },
+    {
+      "source": "src/SB/Core/x/xVec3.cpp",
+      "target_unit": "SB/Core/x/xVec3.cpp",
+      "object": "source/xVec3/xVec3.obj",
+      "comparison_object": "source/xVec3-functions.obj",
+      "host_entry": "tools/platforms/xbox_support/matrix_entry.cpp",
+      "host_context": {
+        "xatof": null,
+        "imports": "tools/platforms/xbox_support/math_crt.def"
+      },
+      "source_dependencies": [
+        {
+          "source": "src/SB/Core/x/xMath.cpp",
+          "object": "xMath.obj"
+        },
+        {
+          "source": "src/SB/Core/x/xMath3.cpp",
+          "object": "xMath3.obj"
+        },
+        {
+          "source": "src/SB/Core/gc/iMath.cpp",
+          "object": "iMath.obj"
+        },
+        {
+          "source": "src/SB/Core/gc/iMath3.cpp",
+          "object": "iMath3.obj"
+        },
+        {
+          "source": "src/SB/Core/x/xParCmd.cpp",
+          "object": "xParCmd.obj"
+        }
+      ],
+      "runtime_libraries": [
+        "libcmt"
+      ],
+      "symbols": {
+        "xVec3Normalize(xVec3*,const xVec3*)": "?xVec3Normalize@@YAMPAUxVec3@@PBU1@@Z"
+      },
+      "scope": "One independently reviewed normalizer from complete real xVec3.cpp, linked with the established genuine matrix callers and existing diagnostic matrix entry. NormalizeFast remains without reviewed original identity and receives no credit. No whole-TU or executable completion claim.",
+      "globals": {
+        "float:3f800000": {
+          "linkage_name": "__real@3f800000",
+          "size": 4,
+          "object": "xParCmd.obj",
+          "value_hex": "0000803f"
+        },
+        "float:3727c5ac": {
+          "linkage_name": "__real@3727c5ac",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "acc52737"
+        },
+        "float:00000000": {
+          "linkage_name": "__real@00000000",
+          "size": 4,
+          "object": "xParCmd.obj",
+          "value_hex": "00000000"
+        }
+      },
+      "direct_calls": {},
+      "call_symbols": {},
+      "address_expressions": {
+        "xVec3Normalize(xVec3*,const xVec3*)": [
+          {
+            "symbol": "float:3f800000",
+            "field": "displacement",
+            "prefix": "d825",
+            "addend": 0,
+            "count": 1
+          },
+          {
+            "symbol": "float:3727c5ac",
+            "field": "displacement",
+            "prefix": "d81d",
+            "addend": 0,
+            "count": 2
+          },
+          {
+            "symbol": "float:3f800000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0,
+            "count": 2
+          },
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d905",
+            "addend": 0,
+            "count": 1
+          }
+        ]
+      }
     }
   ],
   "static_runtime": {
