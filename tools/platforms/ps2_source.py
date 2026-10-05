@@ -4,6 +4,7 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
+import re
 import struct
 import subprocess
 
@@ -13,6 +14,17 @@ PROFILE_PATH = ROOT / 'config/platforms/ps2-toolchain.json'
 
 def load_profile() -> dict:
     return json.loads(PROFILE_PATH.read_text(encoding='utf-8'))
+
+
+def version_define(executable_sha1: str) -> str:
+    """Select one ordinary version macro from an authenticated original identity."""
+    manifest = json.loads((ROOT / 'config/platforms/versions.json').read_text(encoding='utf-8'))
+    versions = [version for version, record in manifest['versions'].items()
+                if record.get('platform') == 'ps2'
+                and record['executable']['sha1'] == executable_sha1]
+    if len(versions) != 1 or not re.fullmatch(r'(?:SLUS|SLES)-[0-9]{5}', versions[0]):
+        raise ValueError('Expected one known PS2 executable version for compilation')
+    return 'VERSION_' + versions[0].replace('-', '_')
 
 
 def profile_enabled(unit: dict, executable_sha1: str) -> bool:
@@ -313,6 +325,7 @@ def compile_units(output: Path, compilers: Path, wibo: Path) -> list[dict]:
     config = json.loads(config_path.read_text(encoding='utf-8'))
     available = {unit['name']:unit for unit in config['units']}
     executable_sha1 = json.loads((output / 'coverage.json').read_text(encoding='utf-8'))['executable_sha1']
+    define = version_define(executable_sha1)
     results = []
     for unit in profile['units']:
         if not profile_enabled(unit, executable_sha1) or unit['target_unit'] not in available:
@@ -320,7 +333,8 @@ def compile_units(output: Path, compilers: Path, wibo: Path) -> list[dict]:
         target = output / unit['object']
         target.parent.mkdir(parents=True, exist_ok=True)
         target.unlink(missing_ok=True)
-        command = [str(wibo.resolve()), '-C', str(ROOT), str(compiler.resolve()), *profile['flags']]
+        command = [str(wibo.resolve()), '-C', str(ROOT), str(compiler.resolve()), *profile['flags'],
+                   '-D' + define + '=1']
         for include in ('include', 'src/SB/Core/p2', 'src/SB/Core/x', 'src/SB/Game'):
             command.extend(['-i', str(ROOT / include)])
         command.extend(['-o', str(target.resolve()), str(ROOT / unit['source'])])
@@ -331,6 +345,7 @@ def compile_units(output: Path, compilers: Path, wibo: Path) -> list[dict]:
         # Exact function comparison is not proof of whole-executable linking.
         record['metadata']['complete'] = False
         results.append({'source':unit['source'], 'compiler_profile':profile['compiler']['id'],
+                        'version_define':define,
                         'object_sha256':hashlib.sha256(target.read_bytes()).hexdigest(),
                         'source_link_verified':False})
     config_path.write_text(json.dumps(config, indent=2) + '\n', encoding='utf-8')
