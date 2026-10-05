@@ -10,6 +10,9 @@
 #include "xVec3.h"
 
 #include <rwcore.h>
+#if defined(PS2)
+#include <rwim3d.h>
+#endif
 #include <types.h>
 
 // Defined in xLaserBolt.inl only for units that retain the zero initializer.

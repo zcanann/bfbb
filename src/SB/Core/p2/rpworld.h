@@ -3,6 +3,9 @@
 
 #include <rwcore.h>
 
+struct RpAtomic;
+typedef RpAtomic* (*RpAtomicCallBackRender)(RpAtomic* atomic);
+
 struct RpMaterial
 {
     RwTexture* texture;

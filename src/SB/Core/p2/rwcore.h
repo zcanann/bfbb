@@ -16,6 +16,12 @@ typedef signed short RwInt16;
 typedef unsigned int RwUInt32;
 typedef signed int RwInt32;
 typedef float RwReal;
+typedef char RwChar;
+
+struct RwV2d
+{
+    RwReal x, y;
+};
 typedef RwInt32 RwBool;
 
 struct RxObjSpace3DVertex;
@@ -129,6 +135,58 @@ enum RwOpCombineType
     rwCOMBINEPRECONCAT = 1,
     rwCOMBINEPOSTCONCAT = 2,
     rwOPCOMBINETYPEFORCEENUMSIZEINT = 0x7fffffff
+};
+
+// Complete original PS2 immediate-mode vertex and texture storage.
+struct RxColorUnion
+{
+    union
+    {
+        RwRGBA preLitColor;
+        RwRGBA color;
+    };
+};
+
+struct RxObjSpace3DVertex
+{
+    RwV3d objVertex;
+    RxColorUnion c;
+    RwV3d objNormal;
+    RwReal u;
+    RwReal v;
+};
+
+typedef RxObjSpace3DVertex RxObjSpace3DLitVertex;
+typedef RxObjSpace3DLitVertex RwIm3DVertex;
+
+struct RwTexDictionary;
+struct RwRaster
+{
+    RwRaster* parent;
+    RwUInt8* cpPixels;
+    RwUInt8* palette;
+    RwInt32 width, height, depth;
+    RwInt32 stride;
+    RwInt16 nOffsetX, nOffsetY;
+    RwUInt8 cType;
+    RwUInt8 cFlags;
+    RwUInt8 privateFlags;
+    RwUInt8 cFormat;
+    RwUInt8* originalPixels;
+    RwInt32 originalWidth;
+    RwInt32 originalHeight;
+    RwInt32 originalStride;
+};
+
+struct RwTexture
+{
+    RwRaster* raster;
+    RwTexDictionary* dict;
+    RwLLLink lInDictionary;
+    RwChar name[32];
+    RwChar mask[32];
+    RwUInt32 filterAddressing;
+    RwInt32 refCount;
 };
 
 struct RwCamera;
