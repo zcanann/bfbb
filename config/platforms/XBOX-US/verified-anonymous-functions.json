@@ -13,7 +13,7 @@
     "candidate_analyzer": "Ghidra 11.0.1_PUBLIC",
     "registry_hash_format": "SHA256 of UTF-8 JSON with sorted keys and compact separators",
     "candidate_registry_sha256": "bcf6082a12fbd813f72cd8a854ade56c01ef86ec81621131fd4620b1e619f130",
-    "manual_registry_sha256": "7be25a6d6e8815fc8c39041b19cab398d90ff5148fc41dbdefca166dff57b9a0",
+    "manual_registry_sha256": "8dc3f307830ae2d7515ceb32a4a23481fba37a6c899cea027230f3431fb3a739",
     "validation_command": "python tools/platforms/xbox_boundaries.py --version XBOX-US",
     "constraints": [
       "Contiguous body with independently decoded closed direct-branch CFG and at least one RET.",
@@ -40,8 +40,8 @@
       "trap_or_privileged_exit": 3
     },
     "direct_transfers_checked": 58850,
-    "function_count": 2447,
-    "code_bytes": 613640,
+    "function_count": 2446,
+    "code_bytes": 613399,
     "text_raw_bytes": 1798760
   },
   "excluded_examples": [
@@ -76,6 +76,11 @@
     {
       "address": 93232,
       "size": 142,
+      "reason": "manual_extent_precedence"
+    },
+    {
+      "address": 1218928,
+      "size": 241,
       "reason": "manual_extent_precedence"
     },
     {
@@ -1496,7 +1501,6 @@
     {"address":1215312,"size":430,"canonical_identifier":"anon_00128b50","original_name":null,"source":null,"sha256":"919289c7cbd31b2a3414ef37a17e70c6ddf6739ab8233874f250b14c4724297a","instruction_count":132,"returns":[1215615,1215722,1215741,1215733],"direct_call_count":1,"distinct_caller_count":1,"direct_call_witnesses":[{"caller_entry":873920,"call_address":874054}]},
     {"address":1215744,"size":76,"canonical_identifier":"anon_00128d00","original_name":null,"source":null,"sha256":"a8ae27f0935b1000b139815d40b47fa9a9422424179ba26a2e36e3124878bef3","instruction_count":33,"returns":[1215761,1215781,1215797,1215819],"direct_call_count":1,"distinct_caller_count":1,"direct_call_witnesses":[{"caller_entry":131840,"call_address":131951}]},
     {"address":1215824,"size":1760,"canonical_identifier":"anon_00128d50","original_name":null,"source":null,"sha256":"be234e4aa54ea600d289498bbdfae298f18cf698aa41f5e16245df2a9bcc8505","instruction_count":549,"returns":[1217574,1217583],"direct_call_count":1,"distinct_caller_count":1,"direct_call_witnesses":[{"caller_entry":781632,"call_address":781893}]},
-    {"address":1218928,"size":241,"canonical_identifier":"anon_00129970","original_name":null,"source":null,"sha256":"b584c8a723211d72417190bc14d0798cc97f279e4a405aea38c2705756e203c0","instruction_count":81,"returns":[1219168],"direct_call_count":1,"distinct_caller_count":1,"direct_call_witnesses":[{"caller_entry":1093616,"call_address":1094408}]},
     {"address":1219568,"size":390,"canonical_identifier":"anon_00129bf0","original_name":null,"source":null,"sha256":"d9faa798c37491f9ca3467fba604c3e342dd45183881407ae5b0880d9d69de62","instruction_count":120,"returns":[1219957],"direct_call_count":4,"distinct_caller_count":3,"direct_call_witnesses":[{"caller_entry":90048,"call_address":90085},{"caller_entry":91552,"call_address":91685}]},
     {"address":1220000,"size":67,"canonical_identifier":"anon_00129da0","original_name":null,"source":null,"sha256":"765528690682876eb10e85f581def7074153e2a8639cddced919c7187c221241","instruction_count":24,"returns":[1220054,1220066],"direct_call_count":3,"distinct_caller_count":2,"direct_call_witnesses":[{"caller_entry":1220080,"call_address":1220271},{"caller_entry":1224192,"call_address":1224313}]},
     {"address":1220080,"size":470,"canonical_identifier":"anon_00129df0","original_name":null,"source":null,"sha256":"37b9feee5ea4830d2c9463d2f803f264c609b4615d8db76770cf435c17410625","instruction_count":159,"returns":[1220334,1220474,1220549],"direct_call_count":1,"distinct_caller_count":1,"direct_call_witnesses":[{"caller_entry":92032,"call_address":92187}]},

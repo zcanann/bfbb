@@ -3,7 +3,7 @@
 
 #include "xMath3.h"
 #include "xRay3.h"
-#if defined(PS2)
+#if defined(PS2) || defined(XBOX)
 struct xScene;
 #else
 #include "xScene.h"

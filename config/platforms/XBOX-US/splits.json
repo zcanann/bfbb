@@ -145,8 +145,8 @@
       "classification": "unclassified"
     }
   ],
-  "known_code_bytes": 635155,
-  "unclassified_text_bytes": 1163605,
+  "known_code_bytes": 635415,
+  "unclassified_text_bytes": 1163345,
   "text_ranges": [
     {
       "kind": "function",
@@ -11753,13 +11753,35 @@
     {
       "kind": "unclassified",
       "address": 1217584,
-      "size": 1344
+      "size": 432
+    },
+    {
+      "kind": "function",
+      "address": 1218016,
+      "size": 189,
+      "canonical_identifier": "xRayHitsSphereFast(const xRay3*,const xSphere*)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1218205,
+      "size": 3
+    },
+    {
+      "kind": "function",
+      "address": 1218208,
+      "size": 71,
+      "canonical_identifier": "xRayHitsBoxFast(const xRay3*,const xBox*)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1218279,
+      "size": 649
     },
     {
       "kind": "function",
       "address": 1218928,
       "size": 241,
-      "canonical_identifier": "anon_00129970"
+      "canonical_identifier": "xCurveAssetEvaluate(const xCurveAsset*,F32)"
     },
     {
       "kind": "unclassified",

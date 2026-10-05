@@ -3,6 +3,16 @@
 
 #include <rwplcore.h>
 
+enum RwIm3DTransformFlags
+{
+    rwIM3D_VERTEXUV = 1,
+    rwIM3D_ALLOPAQUE = 2,
+    rwIM3D_NOCLIP = 4,
+    rwIM3D_VERTEXXYZ = 8,
+    rwIM3D_VERTEXRGBA = 16,
+    rwIM3DTRANSFORMFLAGSFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+
 // SDK vertex setters using the original PS2 aggregate member layout.
 #define RxObjSpace3DVertexSetPos(_vert, _pos) ((_vert)->objVertex = *(_pos))
 

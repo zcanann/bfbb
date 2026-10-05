@@ -8582,12 +8582,28 @@
       "identity_kind": "anonymous"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00129970",
-      "source": null,
+      "name": "xRayHitsSphereFast",
+      "canonical_identifier": "xRayHitsSphereFast(const xRay3*,const xSphere*)",
+      "source": "SB/Core/x/xCollideFast.cpp",
+      "address": 1218016,
+      "size": 189,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xRayHitsBoxFast",
+      "canonical_identifier": "xRayHitsBoxFast(const xRay3*,const xBox*)",
+      "source": "SB/Core/x/xCollideFast.cpp",
+      "address": 1218208,
+      "size": 71,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xCurveAssetEvaluate",
+      "canonical_identifier": "xCurveAssetEvaluate(const xCurveAsset*,F32)",
+      "source": "SB/Core/x/xCurveAsset.cpp",
       "address": 1218928,
       "size": 241,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
       "name": null,

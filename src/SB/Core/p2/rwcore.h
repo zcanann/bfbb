@@ -212,6 +212,132 @@ struct RwResEntry;
 #define RWFORCEENUMSIZEINT ((RwInt32)((~((RwUInt32)0)) >> 1))
 #define RWPLUGINOFFSET(_type, _base, _offset) ((_type*)((RwUInt8*)(_base) + (_offset)))
 
+// Complete SDK rendering-state declarations.
+enum RwShadeMode
+{
+    rwSHADEMODENASHADEMODE = 0,
+    rwSHADEMODEFLAT,
+    rwSHADEMODEGOURAUD,
+    rwSHADEMODEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+
+enum RwTextureFilterMode
+{
+    rwFILTERNAFILTERMODE = 0,
+    rwFILTERNEAREST,
+    rwFILTERLINEAR,
+    rwFILTERMIPNEAREST,
+    rwFILTERMIPLINEAR,
+    rwFILTERLINEARMIPNEAREST,
+    rwFILTERLINEARMIPLINEAR,
+    rwTEXTUREFILTERMODEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+
+enum RwBlendFunction
+{
+    rwBLENDNABLEND = 0,
+    rwBLENDZERO,
+    rwBLENDONE,
+    rwBLENDSRCCOLOR,
+    rwBLENDINVSRCCOLOR,
+    rwBLENDSRCALPHA,
+    rwBLENDINVSRCALPHA,
+    rwBLENDDESTALPHA,
+    rwBLENDINVDESTALPHA,
+    rwBLENDDESTCOLOR,
+    rwBLENDINVDESTCOLOR,
+    rwBLENDSRCALPHASAT,
+    rwBLENDFUNCTIONFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+
+enum RwTextureAddressMode
+{
+    rwTEXTUREADDRESSNATEXTUREADDRESS = 0,
+    rwTEXTUREADDRESSWRAP,
+    rwTEXTUREADDRESSMIRROR,
+    rwTEXTUREADDRESSCLAMP,
+    rwTEXTUREADDRESSBORDER,
+    rwTEXTUREADDRESSMODEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+
+struct RxRenderStateVector
+{
+    RwUInt32 Flags;
+    RwShadeMode ShadeMode;
+    RwBlendFunction SrcBlend;
+    RwBlendFunction DestBlend;
+    RwRaster* TextureRaster;
+    RwTextureAddressMode AddressModeU;
+    RwTextureAddressMode AddressModeV;
+    RwTextureFilterMode FilterMode;
+    RwRGBA BorderColor;
+    RwFogType FogType;
+    RwRGBA FogColor;
+};
+
+// Complete SDK camera types; original PS2 layouts are verified in all debug regions.
+struct RwPlane
+{
+    RwV3d normal;
+    RwReal distance;
+};
+
+enum RwCameraProjection
+{
+    rwNACAMERAPROJECTION = 0,
+    rwPERSPECTIVE = 1,
+    rwPARALLEL = 2,
+    rwCAMERAPROJECTIONFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+typedef enum RwCameraProjection RwCameraProjection;
+
+enum RwFrustumTestResult
+{
+    rwSPHEREOUTSIDE = 0,
+    rwSPHEREBOUNDARY = 1,
+    rwSPHEREINSIDE = 2,
+    rwFRUSTUMTESTRESULTFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+typedef enum RwFrustumTestResult RwFrustumTestResult;
+
+struct RwFrustumPlane
+{
+    RwPlane plane;
+    RwUInt8 closestX;
+    RwUInt8 closestY;
+    RwUInt8 closestZ;
+    RwUInt8 pad;
+};
+
+typedef RwCamera* (*RwCameraBeginUpdateFunc)(RwCamera* camera);
+typedef RwCamera* (*RwCameraEndUpdateFunc)(RwCamera* camera);
+
+struct RwCamera
+{
+    RwObjectHasFrame object;
+    RwCameraProjection projectionType;
+    RwCameraBeginUpdateFunc beginUpdate;
+    RwCameraEndUpdateFunc endUpdate;
+    RwMatrix viewMatrix;
+    RwRaster* frameBuffer;
+    RwRaster* zBuffer;
+    RwV2d viewWindow;
+    RwV2d recipViewWindow;
+    RwV2d viewOffset;
+    RwReal nearPlane;
+    RwReal farPlane;
+    RwReal fogPlane;
+    RwReal zScale, zShift;
+    RwFrustumPlane frustumPlanes[6];
+    RwBBox frustumBoundBox;
+    RwV3d frustumCorners[8];
+};
+
+#define rwObjectGetParent(object) (((const RwObject*)(object))->parent)
+#define RwCameraGetCurrentCamera() ((RwCamera*)RWSRCGLOBAL(curCamera))
+#define RwCameraGetFrame(_camera) ((RwFrame*)rwObjectGetParent((_camera)))
+#define RwCameraGetViewWindow(_camera) (&((_camera)->viewWindow))
+
 #define RwV3dSubMacro(o, a, b)                                                                     \
     MACRO_START                                                                                    \
     {                                                                                              \
@@ -243,8 +369,14 @@ struct RwResEntry;
     MACRO_STOP
 
 extern "C" {
+RxRenderStateVector* RxRenderStateVectorLoadDriverState(RxRenderStateVector* rsvp);
 RwReal RwV3dNormalize(RwV3d* out, const RwV3d* in);
 RwFrame* RwFrameCreate(void);
+RwMatrix* RwFrameGetLTM(RwFrame* frame);
+RwCamera* RwCameraCreate(void);
+RwBool RwCameraDestroy(RwCamera* camera);
+RwRaster* RwRasterCreate(RwInt32 width, RwInt32 height, RwInt32 depth, RwInt32 flags);
+RwBool RwRasterDestroy(RwRaster* raster);
 RwBool RwFrameDestroy(RwFrame* frame);
 RwFrame* RwFrameTransform(RwFrame* frame, const RwMatrix* matrix, RwOpCombineType combine);
 RwBool _rwFrameSyncDirty(void);
