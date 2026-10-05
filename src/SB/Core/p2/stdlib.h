@@ -7,6 +7,7 @@ extern "C" {
 #endif
 
 void exit(int status);
+int abs(int value);
 int atoi(const char* string);
 
 double atof(const char* string);

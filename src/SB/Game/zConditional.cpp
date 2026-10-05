@@ -3,7 +3,11 @@
 #include <types.h>
 
 #include "zVar.h"
+#if defined(PS2)
+#include "zSceneLookup.h"
+#else
 #include "zScene.h"
+#endif
 #include "xEvent.h"
 
 S32 zConditionalEventCB(xBase*, xBase*, U32, const F32*, xBase*);
@@ -14,6 +18,9 @@ void zConditionalInit(void* b, void* asset)
     zVarInit(zVarEntryTable);
 }
 
+#if defined(PS2)
+inline
+#endif
 void zConditionalInit(xBase* b, zCondAsset* asset)
 {
     _zConditional* cond = (_zConditional*)b;
@@ -32,6 +39,9 @@ void zConditionalInit(xBase* b, zCondAsset* asset)
     }
 }
 
+#if defined(PS2)
+inline
+#endif
 void zConditionalReset(_zConditional* ent)
 {
     xBaseReset(ent, ent->asset);
@@ -112,6 +122,9 @@ S32 zConditionalEventCB(xBase* arg1, xBase* arg2, U32 toEvent, const F32* fp, xB
         break;
 
     case eEventTrue:
+#if defined(PS2)
+    case eEventFalse:
+#endif
         break;
 
     case eEventReset:

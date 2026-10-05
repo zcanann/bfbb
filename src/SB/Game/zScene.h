@@ -2,6 +2,7 @@
 #define ZSCENE_H
 
 #include "xScene.h"
+#include "zSceneLookup.h"
 #include "xClimate.h"
 
 #include "zPortal.h"
@@ -48,10 +49,7 @@ void zSceneReset();
 void zSceneSetup();
 void zSceneUpdate(F32 elapsedSec);
 void zSceneRender();
-xBase* zSceneFindObject(U32 gameID);
 xBase* zSceneGetObject(S32 type, S32 idx);
-const char* zSceneGetName(U32 gameID);
-const char* zSceneGetName(xBase* b);
 void zSceneForAllBase(xBase* (*func)(xBase*, zScene*, void*), void* data);
 void zSceneForAllBase(xBase* (*func)(xBase*, zScene*, void*), S32 baseType, void* data);
 void zSceneMemLvlChkCB();
