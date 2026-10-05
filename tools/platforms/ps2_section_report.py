@@ -47,7 +47,11 @@ def export_report(build_dir: Path, executable: Path) -> dict:
     cpu = regions['cpu_text']
     require(cpu['classification'] == 'code', 'CPU region is not code')
     profile = read_json(ROOT / 'config/platforms/ps2-toolchain.json')
-    profiles = {u['target_unit']: u for u in profile['units']}
+    from .ps2 import inspect_elf
+    from .ps2_source import canonical_linkages, profile_function_key, profile_enabled
+    linkages = canonical_linkages(Path(executable).read_bytes(), inspect_elf(Path(executable)))
+    profiles = {u['target_unit']: u for u in profile['units']
+                if profile_enabled(u, coverage['executable_sha1'])}
     expected, gaps = {}, []
     cursor = cpu['address']
     for row in sorted(symbols['symbols'], key=lambda r: r['address']):
@@ -57,7 +61,9 @@ def export_report(build_dir: Path, executable: Path) -> dict:
             gaps.append((cursor, start))
         cursor = end
         source = row['source']
-        name = profiles.get(source, {}).get('symbols', {}).get(row['name'], f"{row['name']}@{start:08x}")
+        unit_profile = profiles.get(source, {})
+        selector = profile_function_key(unit_profile, row, linkages)
+        name = unit_profile.get('symbols', {}).get(selector, f"{row['name']}@{start:08x}")
         require((source, name) not in expected, 'Duplicate original PS2 function identity')
         expected[(source, name)] = row
     if cursor < cpu['address'] + cpu['size']:

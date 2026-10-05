@@ -1,10 +1,17 @@
 #include "xCounter.h"
 
+#if defined(PS2)
+#include "xDebugTweak.h"
+#else
 #include "xDebug.h"
+#endif
 #include "xEvent.h"
 
 namespace
 {
+#if defined(PS2)
+    inline
+#endif
     void add_tweaks(_xCounter&)
     {
         return;
@@ -16,6 +23,12 @@ void xCounterInit()
     xDebugRemoveTweak("Widgets|Counters");
 }
 
+#if defined(PS2)
+// The PS2 retail entry owns the initialization body directly.
+void xCounterInit(void* b, void* counterAsset)
+{
+    xCounterAsset* asset = (xCounterAsset*)counterAsset;
+#else
 void xCounterInit(void* b, void* asset)
 {
     xCounterInit((xBase*)b, (xCounterAsset*)asset);
@@ -23,6 +36,7 @@ void xCounterInit(void* b, void* asset)
 
 void xCounterInit(xBase* b, xCounterAsset* asset)
 {
+#endif
     _xCounter* t = (_xCounter*)b;
 
     xBaseInit(t, asset);
@@ -99,7 +113,7 @@ int xCounterEventCB(xBase*, xBase* to, U32 toEvent, const F32*, xBase*)
             }
             else if (t->count > 0 && t->count <= 20)
             {
-                zEntEvent(t, t, t->count + (eEventCount1 - 1));
+                zEntEvent(t, t, (U32)(t->count - 1) + eEventCount1);
             }
         }
         break;
@@ -116,7 +130,7 @@ int xCounterEventCB(xBase*, xBase* to, U32 toEvent, const F32*, xBase*)
             }
             else if (t->count > 0 && t->count <= 20)
             {
-                zEntEvent(t, t, t->count + (eEventCount1 - 1));
+                zEntEvent(t, t, (U32)(t->count - 1) + eEventCount1);
             }
         }
         break;

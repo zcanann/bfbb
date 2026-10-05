@@ -2,6 +2,7 @@
 #define XDEBUG_H
 
 #include "xFont.h"
+#include "xDebugTweak.h"
 
 #include <types.h>
 
@@ -96,10 +97,6 @@ void xDebugInit();
 void xDebugUpdate();
 void xDebugExit();
 void xDebugTimestampScreen();
-
-inline void xDebugRemoveTweak(const char*)
-{
-}
 
 void xDebugUpdate();
 

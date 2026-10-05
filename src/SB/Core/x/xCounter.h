@@ -20,7 +20,9 @@ struct _xCounter : xBase
 
 void xCounterInit();
 void xCounterInit(void* b, void* asset);
+#if !defined(PS2)
 void xCounterInit(xBase* b, xCounterAsset* asset);
+#endif
 void xCounterReset(xBase* b);
 void xCounterSave(_xCounter* ent, xSerial* s);
 void xCounterLoad(_xCounter* ent, xSerial* s);

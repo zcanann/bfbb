@@ -15,6 +15,38 @@ def load_profile() -> dict:
     return json.loads(PROFILE_PATH.read_text(encoding='utf-8'))
 
 
+def profile_enabled(unit: dict, executable_sha1: str) -> bool:
+    """Restrict profiles whose overload/relocation evidence is version-specific."""
+    return executable_sha1 in unit.get('executable_sha1s', [executable_sha1])
+
+
+def canonical_linkages(binary: bytes, metadata: dict) -> dict[int, str]:
+    """Read MW's canonical linkage attribute without renaming ordinary targets."""
+    from .dwarf1 import iter_dies
+    result = {}
+    for section in metadata.get('sections', []):
+        if section['name'] != '.debug':
+            continue
+        data = binary[section['offset']:section['offset'] + section['size']]
+        for _, tag, _, attrs in iter_dies(data):
+            if tag in (6, 20) and attrs.get(18, 0) > attrs.get(17, 0) and 512 in attrs:
+                address, linkage = attrs[17], attrs[512]
+                if not isinstance(linkage, str) or (address in result and result[address] != linkage):
+                    raise ValueError('Conflicting retail DWARF linkage identity')
+                result[address] = linkage
+    return result
+
+
+def profile_function_key(unit: dict, function: dict, linkages: dict[int, str]) -> str:
+    """Select overloads explicitly; retain human-name keys for existing profiles."""
+    if unit.get('selector') != 'linkage_name':
+        return function['name']
+    address = function.get('low', function.get('address'))
+    if address in linkages:
+        return linkages[address]
+    raise ValueError('Canonical profile requires the original DWARF linkage attribute')
+
+
 def prepare_functions(functions: list[dict], binary: bytes, segments: list[dict],
                       executable_sha1: str, reviewed_targets: Path | None = None, *,
                       metadata: dict | None = None, address_anchors: list[dict] | None = None) -> list[dict]:
@@ -25,10 +57,13 @@ def prepare_functions(functions: list[dict], binary: bytes, segments: list[dict]
     """
     profile = load_profile()
     from .ps2_report import _source_name
+    linkages = canonical_linkages(binary, metadata or {})
     callees = {}
     for function in functions:
         key = (_source_name(function['source']), function['name'])
         callees.setdefault(key, set()).add(function['low'])
+        if function['low'] in linkages:
+            callees.setdefault((key[0], linkages[function['low']]), set()).add(function['low'])
     if reviewed_targets is not None:
         document = json.loads(Path(reviewed_targets).read_text(encoding='utf-8'))
         if document['executable_sha1'] != executable_sha1:
@@ -46,14 +81,16 @@ def prepare_functions(functions: list[dict], binary: bytes, segments: list[dict]
             callees.setdefault((anchor['source'], anchor['name']), set()).add(address)
     restored = []
     for unit in profile['units']:
+        if not profile_enabled(unit, executable_sha1):
+            continue
         members = [f for f in functions if _source_name(f['source']) == unit['target_unit']]
         if not members:
             continue
-        by_name = {f['name']: f for f in members}
+        by_name = {profile_function_key(unit, f, linkages): f for f in members}
         if len(by_name) != len(members) or set(by_name) != set(unit['symbols']):
             raise ValueError('Validated source profile does not cover the target unit exactly')
-        for name, linkage in unit['symbols'].items():
-            by_name[name]['linkage_name'] = linkage
+        for name, function in by_name.items():
+            function['linkage_name'] = unit['symbols'][name]
         for call in unit['calls']:
             function = by_name[call['function']]
             key = (call['target_source'], call['target_function'])
@@ -78,6 +115,44 @@ def prepare_functions(functions: list[dict], binary: bytes, segments: list[dict]
             restored.append({'function':function['name'], 'address':address,
                              'type':'R_MIPS_26', 'symbol':call['symbol'], 'target_address':destination,
                              'original_instruction':original, 'inverse_reconstruction_verified':True})
+        for pair in unit.get('address_pairs', []):
+            function = by_name[pair['function']]
+            key = (pair['target_source'], pair['target_function'])
+            destinations = callees.get(key, set())
+            if len(destinations) != 1:
+                raise ValueError('Address pair lacks one independently named destination')
+            destination = next(iter(destinations))
+            hi_offset, lo_offset = pair['hi_offset'], pair['lo_offset']
+            code = bytearray(function['bytes'])
+            if any(offset < 0 or offset % 4 or offset + 4 > len(code)
+                   for offset in (hi_offset, lo_offset)) or hi_offset >= lo_offset:
+                raise ValueError('Address pair exceeds its function')
+            hi = struct.unpack_from('<I', code, hi_offset)[0]
+            lo = struct.unpack_from('<I', code, lo_offset)[0]
+            register = (hi >> 16) & 31
+            signed_low = struct.unpack('<h', struct.pack('<H', lo & 0xffff))[0]
+            if (hi >> 26 != 15 or (hi >> 21) & 31 or register == 0 or lo >> 26 != 9 or
+                    (lo >> 21) & 31 != register or (lo >> 16) & 31 != register or
+                    (((hi & 0xffff) << 16) + signed_low) & 0xffffffff != destination):
+                raise ValueError('Retail address pair does not load the named destination')
+            # This profile only permits adjacent LUI/ADDIU, so no intervening
+            # instruction can clobber the high-half register.
+            if lo_offset != hi_offset + 4:
+                raise ValueError('Nonadjacent address pairs require additional data-flow proof')
+            for offset, word, kind, immediate in (
+                    (hi_offset, hi, 5, ((destination + 0x8000) >> 16) & 0xffff),
+                    (lo_offset, lo, 6, destination & 0xffff)):
+                normalized = word & 0xffff0000
+                if normalized | immediate != word:
+                    raise ValueError('Address relocation fails inverse reconstruction')
+                struct.pack_into('<I', code, offset, normalized)
+                function.setdefault('relocations', []).append(
+                    {'offset': offset, 'symbol': pair['symbol'], 'type': kind})
+                restored.append({'function': function['name'], 'address': function['low'] + offset,
+                                 'type': 'R_MIPS_HI16' if kind == 5 else 'R_MIPS_LO16',
+                                 'symbol': pair['symbol'], 'target_address': destination,
+                                 'original_instruction': word, 'inverse_reconstruction_verified': True})
+            function['bytes'] = bytes(code)
         for relocation in unit.get('gp_relocations', []):
             # Retail .reginfo establishes GP; DWARF independently establishes
             # the data address. No source-object field is used to infer either.
@@ -129,9 +204,10 @@ def compile_units(output: Path, compilers: Path, wibo: Path) -> list[dict]:
         return []
     config = json.loads(config_path.read_text(encoding='utf-8'))
     available = {unit['name']:unit for unit in config['units']}
+    executable_sha1 = json.loads((output / 'coverage.json').read_text(encoding='utf-8'))['executable_sha1']
     results = []
     for unit in profile['units']:
-        if unit['target_unit'] not in available:
+        if not profile_enabled(unit, executable_sha1) or unit['target_unit'] not in available:
             continue
         target = output / unit['object']
         target.parent.mkdir(parents=True, exist_ok=True)

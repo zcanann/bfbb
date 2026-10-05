@@ -23,7 +23,7 @@
     "-gccinc",
     "-DPS2=1"
   ],
-  "scope": "Validated xBase, xordarray, xRMemData and xBehaviour profiles; compiler identity for other units remains unproven",
+  "scope": "Validated xBase, xordarray, xRMemData, xBehaviour and version-scoped xCounter profiles; compiler identity for other units remains unproven",
   "units": [
     {
       "source": "src/SB/Core/x/xBase.cpp",
@@ -184,6 +184,121 @@
         "Process": "Process__5xGoalFP11en_trantypefPvP6xScene"
       },
       "calls": []
+    },
+    {
+      "source": "src/SB/Core/x/xCounter.cpp",
+      "target_unit": "SB/Core/x/xCounter.cpp",
+      "object": "source/xCounter.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xCounterEventCB__FP5xBaseP5xBaseUiPCfP5xBase": "xCounterEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "xCounterLoad__FP9_xCounterP7xSerial": "xCounterLoad__FP9_xCounterP7xSerial",
+        "xCounterSave__FP9_xCounterP7xSerial": "xCounterSave__FP9_xCounterP7xSerial",
+        "xCounterReset__FP5xBase": "xCounterReset__FP5xBase",
+        "xCounterInit__FPvPv": "xCounterInit__FPvPv",
+        "xCounterInit__Fv": "xCounterInit__Fv"
+      },
+      "calls": [
+        {
+          "function": "xCounterEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseP5xBaseUi",
+          "offset": 128
+        },
+        {
+          "function": "xCounterEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseP5xBaseUi",
+          "offset": 168
+        },
+        {
+          "function": "xCounterEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseP5xBaseUi",
+          "offset": 224
+        },
+        {
+          "function": "xCounterEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseP5xBaseUi",
+          "offset": 264
+        },
+        {
+          "function": "xCounterLoad__FP9_xCounterP7xSerial",
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseLoad",
+          "symbol": "xBaseLoad__FP5xBaseP7xSerial",
+          "offset": 20
+        },
+        {
+          "function": "xCounterLoad__FP9_xCounterP7xSerial",
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Read__7xSerialFPUc",
+          "symbol": "Read__7xSerialFPUc",
+          "offset": 32
+        },
+        {
+          "function": "xCounterLoad__FP9_xCounterP7xSerial",
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Read__7xSerialFPs",
+          "symbol": "Read__7xSerialFPs",
+          "offset": 44
+        },
+        {
+          "function": "xCounterSave__FP9_xCounterP7xSerial",
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseSave",
+          "symbol": "xBaseSave__FP5xBaseP7xSerial",
+          "offset": 20
+        },
+        {
+          "function": "xCounterSave__FP9_xCounterP7xSerial",
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Write__7xSerialFUc",
+          "symbol": "Write__7xSerialFUc",
+          "offset": 32
+        },
+        {
+          "function": "xCounterSave__FP9_xCounterP7xSerial",
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Write__7xSerialFs",
+          "symbol": "Write__7xSerialFs",
+          "offset": 44
+        },
+        {
+          "function": "xCounterReset__FP5xBase",
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseInit",
+          "symbol": "xBaseInit__FP5xBaseP10xBaseAsset",
+          "offset": 16
+        },
+        {
+          "function": "xCounterInit__FPvPv",
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseInit",
+          "symbol": "xBaseInit__FP5xBaseP10xBaseAsset",
+          "offset": 20
+        }
+      ],
+      "address_pairs": [
+        {
+          "function": "xCounterInit__FPvPv",
+          "target_source": "SB/Core/x/xCounter.cpp",
+          "target_function": "xCounterEventCB",
+          "symbol": "xCounterEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "hi_offset": 28,
+          "lo_offset": 32
+        }
+      ]
     }
   ]
 }
