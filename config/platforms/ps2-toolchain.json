@@ -55995,6 +55995,399 @@
         }
       ],
       "address_pairs": []
+    },
+    {
+      "source": "src/SB/Game/zNPCGoalTiki.cpp",
+      "target_unit": "SB/Game/zNPCGoalTiki.cpp",
+      "object": "source/zNPCGoalTiki.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "Exit__16zNPCGoalTikiDeadFfPv": "Exit__16zNPCGoalTikiDeadFfPv",
+        "Enter__16zNPCGoalTikiDeadFfPv": "Enter__16zNPCGoalTikiDeadFfPv",
+        "Exit__17zNPCGoalTikiDyingFfPv": "Exit__17zNPCGoalTikiDyingFfPv",
+        "Enter__17zNPCGoalTikiDyingFfPv": "Enter__17zNPCGoalTikiDyingFfPv",
+        "Enter__17zNPCGoalTikiCountFfPv": "Enter__17zNPCGoalTikiCountFfPv",
+        "Exit__16zNPCGoalTikiHideFfPv": "Exit__16zNPCGoalTikiHideFfPv",
+        "Enter__16zNPCGoalTikiHideFfPv": "Enter__16zNPCGoalTikiHideFfPv",
+        "Enter__18zNPCGoalTikiPatrolFfPv": "Enter__18zNPCGoalTikiPatrolFfPv",
+        "Enter__16zNPCGoalTikiIdleFfPv": "Enter__16zNPCGoalTikiIdleFfPv",
+        "GOALCreate_Tiki__FiP10RyzMemGrowPv": "GOALCreate_Tiki__FiP10RyzMemGrowPv"
+      },
+      "calls": [
+        {
+          "function": "Exit__16zNPCGoalTikiDeadFfPv",
+          "offset": 8,
+          "target_source": "SB/Core/x/xBehaviour.cpp",
+          "target_function": "GetOwner__5xGoalCFv",
+          "symbol": "GetOwner__5xGoalCFv"
+        },
+        {
+          "function": "Enter__16zNPCGoalTikiDeadFfPv",
+          "offset": 8,
+          "target_source": "SB/Core/x/xBehaviour.cpp",
+          "target_function": "GetOwner__5xGoalCFv",
+          "symbol": "GetOwner__5xGoalCFv"
+        },
+        {
+          "function": "Enter__16zNPCGoalTikiDeadFfPv",
+          "offset": 68,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "GiveReward__10zNPCCommonFv",
+          "symbol": "GiveReward__10zNPCCommonFv"
+        },
+        {
+          "function": "Enter__16zNPCGoalTikiDeadFfPv",
+          "offset": 80,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FUiUi",
+          "symbol": "zEntEvent__FUiUi"
+        },
+        {
+          "function": "Exit__17zNPCGoalTikiDyingFfPv",
+          "offset": 8,
+          "target_source": "SB/Core/x/xBehaviour.cpp",
+          "target_function": "GetOwner__5xGoalCFv",
+          "symbol": "GetOwner__5xGoalCFv"
+        },
+        {
+          "function": "Exit__17zNPCGoalTikiDyingFfPv",
+          "offset": 20,
+          "target_source": "SB/Game/zNPCTypeTiki.cpp",
+          "target_function": "zNPCTiki_ExplodeFX__FP8zNPCTiki",
+          "symbol": "zNPCTiki_ExplodeFX__FP8zNPCTiki"
+        },
+        {
+          "function": "Exit__17zNPCGoalTikiDyingFfPv",
+          "offset": 32,
+          "target_source": "SB/Game/zRumble.cpp",
+          "target_function": "zRumbleStart__F16_tagSDRumbleTypeP4xEnt",
+          "symbol": "zRumbleStart__F16_tagSDRumbleTypeP4xEnt"
+        },
+        {
+          "function": "Enter__17zNPCGoalTikiDyingFfPv",
+          "offset": 12,
+          "target_source": "SB/Core/x/xBehaviour.cpp",
+          "target_function": "GetOwner__5xGoalCFv",
+          "symbol": "GetOwner__5xGoalCFv"
+        },
+        {
+          "function": "Enter__17zNPCGoalTikiCountFfPv",
+          "offset": 12,
+          "target_source": "SB/Core/x/xBehaviour.cpp",
+          "target_function": "GetOwner__5xGoalCFv",
+          "symbol": "GetOwner__5xGoalCFv"
+        },
+        {
+          "function": "Exit__16zNPCGoalTikiHideFfPv",
+          "offset": 8,
+          "target_source": "SB/Core/x/xBehaviour.cpp",
+          "target_function": "GetOwner__5xGoalCFv",
+          "symbol": "GetOwner__5xGoalCFv"
+        },
+        {
+          "function": "Enter__16zNPCGoalTikiHideFfPv",
+          "offset": 8,
+          "target_source": "SB/Core/x/xBehaviour.cpp",
+          "target_function": "GetOwner__5xGoalCFv",
+          "symbol": "GetOwner__5xGoalCFv"
+        },
+        {
+          "function": "Enter__18zNPCGoalTikiPatrolFfPv",
+          "offset": 16,
+          "target_source": "SB/Core/x/xBehaviour.cpp",
+          "target_function": "GetOwner__5xGoalCFv",
+          "symbol": "GetOwner__5xGoalCFv"
+        },
+        {
+          "function": "Enter__18zNPCGoalTikiPatrolFfPv",
+          "offset": 28,
+          "target_source": "SB/Game/zMovePoint.cpp",
+          "target_function": "zMovePointGetPos__FPC10zMovePoint",
+          "symbol": "zMovePointGetPos__FPC10zMovePoint"
+        },
+        {
+          "function": "Enter__18zNPCGoalTikiPatrolFfPv",
+          "offset": 112,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "Enter__16zNPCGoalTikiIdleFfPv",
+          "offset": 12,
+          "target_source": "SB/Core/x/xBehaviour.cpp",
+          "target_function": "GetOwner__5xGoalCFv",
+          "symbol": "GetOwner__5xGoalCFv"
+        },
+        {
+          "function": "Enter__16zNPCGoalTikiIdleFfPv",
+          "offset": 80,
+          "target_source": "SB/Game/zMovePoint.cpp",
+          "target_function": "zMovePointGetDelay__FPC10zMovePoint",
+          "symbol": "zMovePointGetDelay__FPC10zMovePoint"
+        },
+        {
+          "function": "GOALCreate_Tiki__FiP10RyzMemGrowPv",
+          "offset": 76,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "GOALCreate_Tiki__FiP10RyzMemGrowPv",
+          "offset": 196,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "GOALCreate_Tiki__FiP10RyzMemGrowPv",
+          "offset": 316,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "GOALCreate_Tiki__FiP10RyzMemGrowPv",
+          "offset": 436,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "GOALCreate_Tiki__FiP10RyzMemGrowPv",
+          "offset": 556,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "GOALCreate_Tiki__FiP10RyzMemGrowPv",
+          "offset": 676,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "GOALCreate_Tiki__FiP10RyzMemGrowPv",
+          "offset": 796,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        }
+      ],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zNPCGoalBoss.cpp",
+      "target_unit": "SB/Game/zNPCGoalBoss.cpp",
+      "object": "source/zNPCGoalBoss.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "GOALCreate_Boss__FiP10RyzMemGrowPv": "GOALCreate_Boss__FiP10RyzMemGrowPv"
+      },
+      "calls": [
+        {
+          "function": "GOALCreate_Boss__FiP10RyzMemGrowPv",
+          "offset": 316,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "GOALCreate_Boss__FiP10RyzMemGrowPv",
+          "offset": 436,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "GOALCreate_Boss__FiP10RyzMemGrowPv",
+          "offset": 556,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "GOALCreate_Boss__FiP10RyzMemGrowPv",
+          "offset": 676,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "GOALCreate_Boss__FiP10RyzMemGrowPv",
+          "offset": 796,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "GOALCreate_Boss__FiP10RyzMemGrowPv",
+          "offset": 916,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "GOALCreate_Boss__FiP10RyzMemGrowPv",
+          "offset": 1036,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "GOALCreate_Boss__FiP10RyzMemGrowPv",
+          "offset": 1156,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "GOALCreate_Boss__FiP10RyzMemGrowPv",
+          "offset": 1276,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "GOALCreate_Boss__FiP10RyzMemGrowPv",
+          "offset": 1396,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "GOALCreate_Boss__FiP10RyzMemGrowPv",
+          "offset": 1516,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "GOALCreate_Boss__FiP10RyzMemGrowPv",
+          "offset": 1636,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "GOALCreate_Boss__FiP10RyzMemGrowPv",
+          "offset": 1756,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "GOALCreate_Boss__FiP10RyzMemGrowPv",
+          "offset": 1876,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "GOALCreate_Boss__FiP10RyzMemGrowPv",
+          "offset": 1996,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "GOALCreate_Boss__FiP10RyzMemGrowPv",
+          "offset": 2116,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "GOALCreate_Boss__FiP10RyzMemGrowPv",
+          "offset": 2236,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "GOALCreate_Boss__FiP10RyzMemGrowPv",
+          "offset": 2356,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "GOALCreate_Boss__FiP10RyzMemGrowPv",
+          "offset": 2476,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "GOALCreate_Boss__FiP10RyzMemGrowPv",
+          "offset": 2596,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "GOALCreate_Boss__FiP10RyzMemGrowPv",
+          "offset": 2716,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "GOALCreate_Boss__FiP10RyzMemGrowPv",
+          "offset": 2836,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "GOALCreate_Boss__FiP10RyzMemGrowPv",
+          "offset": 2956,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "GOALCreate_Boss__FiP10RyzMemGrowPv",
+          "offset": 3076,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "GOALCreate_Boss__FiP10RyzMemGrowPv",
+          "offset": 3196,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "GOALCreate_Boss__FiP10RyzMemGrowPv",
+          "offset": 3316,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        },
+        {
+          "function": "GOALCreate_Boss__FiP10RyzMemGrowPv",
+          "offset": 3436,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+          "symbol": "__nw__10RyzMemDataFUiiP10RyzMemGrow"
+        }
+      ],
+      "gp_relocations": []
     }
   ]
 }

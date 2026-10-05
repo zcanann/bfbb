@@ -504,3 +504,6 @@ see [Tiki evidence](PS2_TIKI_SOURCE.md).
 
 Complete PS2 screen-effects comparison adds 3,416 matched bytes per debug
 region using original Sky2 vertices; see [screen-effects evidence](PS2_SCREEN_EFFECTS.md).
+
+Complete PS2 Tiki goals add 424 matched bytes per debug region; the complete
+boss-goal factory is also retained as a partial source comparison.
