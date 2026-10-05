@@ -112,6 +112,9 @@ def verify_functions(original: Original, document: dict, anchors: dict | None = 
             require(actual['size'] == size and actual['instruction_bytes'] == cfg['instruction_bytes'] and
                     actual['internal_gap_ranges'] == cfg['internal_gap_ranges'],
                     f'{label}: original closed CFG or extent differs')
+        if "runtime_asin" in evidence:
+            from platforms.xbox_asin import verify_asin_original
+            verify_asin_original(original, function)
         if "runtime_malloc" in evidence:
             from platforms.xbox_malloc import verify_malloc_original
             verify_malloc_original(original, function)

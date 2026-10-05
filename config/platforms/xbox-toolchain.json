@@ -1021,6 +1021,12 @@
           "size": 12,
           "object": "xMath3.obj",
           "initial_value_hex": "010000000200000000000000"
+        },
+        "float:40c90fdb": {
+          "linkage_name": "__real@40c90fdb",
+          "object": "xMath3.obj",
+          "size": 4,
+          "value_hex": "db0fc940"
         }
       },
       "direct_calls": {
@@ -1037,7 +1043,6 @@
           "xVec3Normalize(xVec3*,const xVec3*)"
         ],
         "xMat3x3GetEuler(const xMat3x3*,xVec3*)": [
-          "?xAngleClampFast@@YAMM@Z",
           "__CIasin"
         ],
         "xMat3x3LookVec(xMat3x3*,const xVec3*)": [
@@ -1220,20 +1225,51 @@
           {
             "symbol": "float:3fc90fdb",
             "field": "displacement",
-            "prefix": "d81d",
-            "addend": 0
+            "prefix": "d815",
+            "addend": 0,
+            "count": 1
           },
           {
             "symbol": "float:bfc90fdb",
             "field": "displacement",
-            "prefix": "d81d",
-            "addend": 0
+            "prefix": "d815",
+            "addend": 0,
+            "count": 1
+          },
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d815",
+            "addend": 0,
+            "count": 4
+          },
+          {
+            "symbol": "float:40c90fdb",
+            "field": "displacement",
+            "prefix": "d805",
+            "addend": 0,
+            "count": 4
+          },
+          {
+            "symbol": "float:40c90fdb",
+            "field": "displacement",
+            "prefix": "d815",
+            "addend": 0,
+            "count": 4
+          },
+          {
+            "symbol": "float:40c90fdb",
+            "field": "displacement",
+            "prefix": "d825",
+            "addend": 0,
+            "count": 4
           },
           {
             "symbol": "float:00000000",
             "field": "displacement",
             "prefix": "d905",
-            "addend": 0
+            "addend": 0,
+            "count": 4
           }
         ],
         "xMat3x3LookVec(xMat3x3*,const xVec3*)": [
@@ -1846,9 +1882,10 @@
         "xAccelMove(F32&,F32&,F32,F32,F32)": "?xAccelMove@@YAXAAM0MMM@Z",
         "xAccelStop(F32&,F32&,F32,F32)": "?xAccelStop@@YAXAAM0MM@Z",
         "xFuncPiece_Eval(xFuncPiece*,F32,xFuncPiece**)": "?xFuncPiece_Eval@@YAMPAUxFuncPiece@@MPAPAU1@@Z",
-        "xFuncPiece_ShiftPiece(xFuncPiece*,xFuncPiece*,F32)": "?xFuncPiece_ShiftPiece@@YAXPAUxFuncPiece@@0M@Z"
+        "xFuncPiece_ShiftPiece(xFuncPiece*,xFuncPiece*,F32)": "?xFuncPiece_ShiftPiece@@YAXPAUxFuncPiece@@0M@Z",
+        "xatan2(F32,F32)": "?xatan2@@YAMMM@Z"
       },
-      "scope": "Eleven independently reviewed math functions from the complete real xMath source and genuine runtime. Seven further public APIs without verified original entries remain unassigned. Original unknown cubic callees remain raw. No TU or executable completion claim.",
+      "scope": "Twelve independently reviewed math functions, including the actual emitted inline xatan2 body, from the complete real xMath source and genuine runtime. The helper reporting group follows generated xMath.obj ownership; its original definition/header TU is unknown. Other public APIs without verified original entries remain unassigned. Original unknown cubic callees remain raw. No TU or executable completion claim.",
       "globals": {
         "float:3f800000": {
           "linkage_name": "__real@3f800000",
@@ -2007,7 +2044,7 @@
         ],
         "xMathSolveQuadratic(F32,F32,F32,F32*,F32*)": [],
         "xMathSolveCubic(F32,F32,F32,F32,F32*,F32*,F32*)": [
-          "?xAngleClampFast@@YAMM@Z",
+          "xatan2(F32,F32)",
           "__CIpow",
           "xMathSolveQuadratic(F32,F32,F32,F32*,F32*)"
         ],
@@ -2040,6 +2077,10 @@
         "_CIfmod": {
           "linkage_name": "__CIfmod",
           "object": "msvcrt:msvcr71.dll"
+        },
+        "xatan2(F32,F32)": {
+          "linkage_name": "?xatan2@@YAMMM@Z",
+          "object": "xMath.obj"
         }
       },
       "address_expressions": {
@@ -2374,7 +2415,33 @@
             "addend": 0
           }
         ],
-        "xFuncPiece_ShiftPiece(xFuncPiece*,xFuncPiece*,F32)": []
+        "xFuncPiece_ShiftPiece(xFuncPiece*,xFuncPiece*,F32)": [],
+        "xatan2(F32,F32)": [
+          {
+            "symbol": "float:00000000",
+            "field": "displacement",
+            "prefix": "d815",
+            "addend": 0
+          },
+          {
+            "symbol": "float:40c90fdb",
+            "field": "displacement",
+            "prefix": "d805",
+            "addend": 0
+          },
+          {
+            "symbol": "float:40c90fdb",
+            "field": "displacement",
+            "prefix": "d815",
+            "addend": 0
+          },
+          {
+            "symbol": "float:40c90fdb",
+            "field": "displacement",
+            "prefix": "d825",
+            "addend": 0
+          }
+        ]
       }
     },
     {

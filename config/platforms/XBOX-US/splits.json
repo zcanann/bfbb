@@ -196,7 +196,7 @@
       "kind": "function",
       "address": 75536,
       "size": 50,
-      "canonical_identifier": "anon_00012710"
+      "canonical_identifier": "xatan2(F32,F32)"
     },
     {
       "kind": "unclassified",
@@ -26662,7 +26662,7 @@
       "kind": "function",
       "address": 1863844,
       "size": 20,
-      "canonical_identifier": "anon_001c70a4"
+      "canonical_identifier": "__CIasin"
     },
     {
       "kind": "unclassified",

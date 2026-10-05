@@ -79,8 +79,10 @@ def _pe_text(path: Path) -> tuple[bytes, int]:
 
 
 def _map_functions(path: Path) -> list[dict]:
+    # MSVC also marks emitted inline functions `f i`; keep their actual object
+    # owner and subject them to the same unique-name and decoded-CFG checks.
     pattern = re.compile(r'^\s*[0-9a-fA-F]{4}:[0-9a-fA-F]{8}\s+(\S+)\s+'
-                         r'([0-9a-fA-F]{8})\s+f\s+(\S+)\s*$', re.MULTILINE)
+                         r'([0-9a-fA-F]{8})\s+f\s+(?:i\s+)?(\S+)\s*$', re.MULTILINE)
     functions = [{'name': name, 'address': int(address, 16), 'object': owner}
                  for name, address, owner in pattern.findall(path.read_text(encoding='utf-8'))]
     if not functions or len({f['name'] for f in functions}) != len(functions):
@@ -267,6 +269,9 @@ def compile_units(output: Path, compilers: Path, wine: Path | None = None) -> li
     if any('_CIfmod' in unit.get('call_symbols', {}) for unit in units):
         from .xbox_runtime import verify_cifmod_vendor
         verify_cifmod_vendor(compiler / profile['static_runtime']['libraries']['libcmt']['path'])
+    if any('__CIasin' in unit.get('call_symbols', {}) for unit in units):
+        from .xbox_asin import verify_asin_vendor
+        verify_asin_vendor(compiler / profile['static_runtime']['libraries']['libcmt']['path'])
     if any('malloc(size_t)' in unit.get('call_symbols', {}) for unit in units):
         from .xbox_malloc import verify_malloc_vendor
         verify_malloc_vendor(compiler / profile['static_runtime']['libraries']['libcmt']['path'])

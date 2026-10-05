@@ -56,7 +56,26 @@ F32 xurand();
 U32 xMathSolveQuadratic(F32 a, F32 b, F32 c, F32* x1, F32* x2);
 U32 xMathSolveCubic(F32 a, F32 b, F32 c, F32 d, F32* x1, F32* x2, F32* x3);
 F32 xAngleClamp(F32 a);
+#if defined(XBOX)
+inline F32 xAngleClampFast(F32 a)
+{
+    F32 rad360 = (2 * PI);
+
+    if (a < 0.0f)
+    {
+        return a + rad360;
+    }
+
+    if (a >= rad360)
+    {
+        return a - rad360;
+    }
+
+    return a;
+}
+#else
 F32 xAngleClampFast(F32 a);
+#endif
 F32 xDangleClamp(F32 a);
 void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 endx, F32 maxv);
 F32 xAccelMoveTime(F32 dx, F32 a, F32, F32 maxv);

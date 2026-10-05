@@ -229,6 +229,7 @@ F32 xAngleClamp(F32 a)
     return rem;
 }
 
+#if !defined(XBOX)
 F32 xAngleClampFast(F32 a)
 {
     F32 rad360 = (2 * PI);
@@ -245,6 +246,7 @@ F32 xAngleClampFast(F32 a)
 
     return a;
 }
+#endif
 
 F32 xDangleClamp(F32 a)
 {

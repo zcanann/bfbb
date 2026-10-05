@@ -38,12 +38,12 @@
       "identity_kind": "anonymous"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00012710",
-      "source": null,
+      "name": "xatan2",
+      "canonical_identifier": "xatan2(F32,F32)",
+      "source": "SB/Core/x/xMath.cpp",
       "address": 75536,
       "size": 50,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
       "name": null,
@@ -20446,12 +20446,12 @@
       "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_001c70a4",
-      "source": null,
+      "name": "__CIasin",
+      "canonical_identifier": "__CIasin",
+      "source": "Runtime/MSVC/asin.obj",
       "address": 1863844,
       "size": 20,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     }
   ]
 }
