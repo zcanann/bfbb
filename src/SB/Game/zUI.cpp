@@ -20,7 +20,13 @@
 
 #include "iMath.h"
 
+#if defined(PS2)
+#include <stdlib.h>
+#include <rwim2d.h>
+#include <rwim3d.h>
+#else
 #include <PowerPC_EABI_Support\MSL_C\MSL_Common\stdlib.h>
+#endif
 #include <string.h>
 #include <stdio.h>
 
