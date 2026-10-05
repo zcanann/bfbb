@@ -1,5 +1,5 @@
 #include "xString.h"
-#ifndef XBOX
+#if !defined(XBOX) && !defined(PS2)
 #include "rwplcore.h"
 #endif
 #include "xMath.h"

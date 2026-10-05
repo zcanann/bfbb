@@ -27,7 +27,7 @@
     "-inline",
     "deferred"
   ],
-  "scope": "Validated xBase, xordarray, xRMemData and xBehaviour profiles, plus debug-region xCounter, xBehaveGoalSimple, xSurface, xVolume and xQuickCull; compiler identity for other units remains unproven",
+  "scope": "Validated xBase, xordarray, xRMemData and xBehaviour profiles, plus debug-region xCounter, xBehaveGoalSimple, xSurface, xVolume and xQuickCull; compiler identity for other units remains unproven; debug-region whole-source comparisons also include xPar, xFactory, xParGroup and xString with partial matches",
   "units": [
     {
       "source": "src/SB/Core/x/xBase.cpp",
@@ -762,6 +762,413 @@
           "target_function": "xQuickCullInit__FP10xQCControlffffff",
           "symbol": "xQuickCullInit__FP10xQCControlffffff",
           "opcode": 2
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xPar.cpp",
+      "target_unit": "SB/Core/x/xPar.cpp",
+      "object": "source/xPar.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xParInit__FP4xPar": "xParInit__FP4xPar",
+        "xParFree__FP4xPar": "xParFree__FP4xPar",
+        "xParAlloc__Fv": "xParAlloc__Fv",
+        "xParMemInit__Fv": "xParMemInit__Fv"
+      },
+      "calls": [],
+      "gp_relocations": [
+        {
+          "function": "xParFree__FP4xPar",
+          "offset": 48,
+          "target_name": "gParDead",
+          "symbol": "gParDead",
+          "opcode": 35
+        },
+        {
+          "function": "xParFree__FP4xPar",
+          "offset": 64,
+          "target_name": "gParDead",
+          "symbol": "gParDead",
+          "opcode": 35
+        },
+        {
+          "function": "xParFree__FP4xPar",
+          "offset": 80,
+          "target_name": "gParDead",
+          "symbol": "gParDead",
+          "opcode": 43
+        },
+        {
+          "function": "xParAlloc__Fv",
+          "offset": 0,
+          "target_name": "gParDead",
+          "symbol": "gParDead",
+          "opcode": 35
+        },
+        {
+          "function": "xParAlloc__Fv",
+          "offset": 44,
+          "target_name": "gParDead",
+          "symbol": "gParDead",
+          "opcode": 43
+        },
+        {
+          "function": "xParMemInit__Fv",
+          "offset": 24,
+          "target_name": "gParDead",
+          "symbol": "gParDead",
+          "opcode": 35
+        },
+        {
+          "function": "xParMemInit__Fv",
+          "offset": 40,
+          "target_name": "gParDead",
+          "symbol": "gParDead",
+          "opcode": 35
+        },
+        {
+          "function": "xParMemInit__Fv",
+          "offset": 52,
+          "target_name": "gParDead",
+          "symbol": "gParDead",
+          "opcode": 43
+        }
+      ],
+      "address_pairs": [
+        {
+          "function": "xParMemInit__Fv",
+          "hi_offset": 0,
+          "lo_offset": 8,
+          "symbol": "gParPool",
+          "target_data": "gParPool",
+          "interleaved": true
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xFactory.cpp",
+      "target_unit": "SB/Core/x/xFactory.cpp",
+      "object": "source/xFactory.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "OrdComp_infotype__FPvPv": "OrdComp_infotype__FPvPv",
+        "OrdTest_infotype__FPCvPv": "OrdTest_infotype__FPCvPv",
+        "DestroyItem__8xFactoryFP12xFactoryInst": "DestroyItem__8xFactoryFP12xFactoryInst",
+        "DestroyAll__8xFactoryFv": "DestroyAll__8xFactoryFv",
+        "CreateItem__8xFactoryFiPvP10RyzMemGrow": "CreateItem__8xFactoryFiPvP10RyzMemGrow",
+        "GrowDataDisable__8xFactoryFv": "GrowDataDisable__8xFactoryFv",
+        "GrowDataEnable__8xFactoryFP5xBasei": "GrowDataEnable__8xFactoryFP5xBasei",
+        "RegItemType__8xFactoryFiPFiP10RyzMemGrowPv_P12xFactoryInstPFP12xFactoryInst_v": "RegItemType__8xFactoryFiPFiP10RyzMemGrowPv_P12xFactoryInstPFP12xFactoryInst_v",
+        "RegItemType__8xFactoryFP12XGOFTypeInfo": "RegItemType__8xFactoryFP12XGOFTypeInfo",
+        "__dt__8xFactoryFv": "__dt__8xFactoryFv",
+        "__ct__8xFactoryFi": "__ct__8xFactoryFi"
+      },
+      "calls": [
+        {
+          "function": "DestroyItem__8xFactoryFP12xFactoryInst",
+          "offset": 180,
+          "target_source": "SB/Core/x/xordarray.cpp",
+          "target_function": "XOrdLookup__FP16st_XORDEREDARRAYPCvPFPCvPv_i",
+          "symbol": "XOrdLookup__FP16st_XORDEREDARRAYPCvPFPCvPv_i"
+        },
+        {
+          "function": "DestroyAll__8xFactoryFv",
+          "offset": 24,
+          "target_source": "SB/Core/x/xFactory.cpp",
+          "target_function": "DestroyItem__8xFactoryFP12xFactoryInst",
+          "symbol": "DestroyItem__8xFactoryFP12xFactoryInst"
+        },
+        {
+          "function": "CreateItem__8xFactoryFiPvP10RyzMemGrow",
+          "offset": 92,
+          "target_source": "SB/Core/x/xordarray.cpp",
+          "target_function": "XOrdLookup__FP16st_XORDEREDARRAYPCvPFPCvPv_i",
+          "symbol": "XOrdLookup__FP16st_XORDEREDARRAYPCvPFPCvPv_i"
+        },
+        {
+          "function": "GrowDataDisable__8xFactoryFv",
+          "offset": 0,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "Done__10RyzMemGrowFv",
+          "symbol": "Done__10RyzMemGrowFv",
+          "opcode": 2
+        },
+        {
+          "function": "GrowDataEnable__8xFactoryFP5xBasei",
+          "offset": 12,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "Resume__10RyzMemGrowFP5xBase",
+          "symbol": "Resume__10RyzMemGrowFP5xBase"
+        },
+        {
+          "function": "GrowDataEnable__8xFactoryFP5xBasei",
+          "offset": 32,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "Init__10RyzMemGrowFP5xBase",
+          "symbol": "Init__10RyzMemGrowFP5xBase"
+        },
+        {
+          "function": "RegItemType__8xFactoryFiPFiP10RyzMemGrowPv_P12xFactoryInstPFP12xFactoryInst_v",
+          "offset": 56,
+          "target_source": "SB/Core/x/xFactory.cpp",
+          "target_function": "RegItemType__8xFactoryFP12XGOFTypeInfo",
+          "symbol": "RegItemType__8xFactoryFP12XGOFTypeInfo"
+        },
+        {
+          "function": "RegItemType__8xFactoryFP12XGOFTypeInfo",
+          "offset": 132,
+          "target_source": "SB/Core/x/xordarray.cpp",
+          "target_function": "XOrdLookup__FP16st_XORDEREDARRAYPCvPFPCvPv_i",
+          "symbol": "XOrdLookup__FP16st_XORDEREDARRAYPCvPFPCvPv_i"
+        },
+        {
+          "function": "RegItemType__8xFactoryFP12XGOFTypeInfo",
+          "offset": 216,
+          "target_source": "SB/Core/x/xordarray.cpp",
+          "target_function": "XOrdInsert__FP16st_XORDEREDARRAYPvPFPvPv_i",
+          "symbol": "XOrdInsert__FP16st_XORDEREDARRAYPvPFPvPv_i"
+        },
+        {
+          "function": "__dt__8xFactoryFv",
+          "offset": 36,
+          "target_source": "SB/Core/x/xordarray.cpp",
+          "target_function": "XOrdDone__FP16st_XORDEREDARRAYi",
+          "symbol": "XOrdDone__FP16st_XORDEREDARRAYi"
+        },
+        {
+          "function": "__dt__8xFactoryFv",
+          "offset": 60,
+          "target_source": "SB/Core/x/xRMemData.cpp",
+          "target_function": "__dl__10RyzMemDataFPv",
+          "symbol": "__dl__10RyzMemDataFPv"
+        },
+        {
+          "function": "__ct__8xFactoryFi",
+          "offset": 48,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "__ct__8xFactoryFi",
+          "offset": 68,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "__ct__8xFactoryFi",
+          "offset": 84,
+          "target_source": "SB/Core/x/xordarray.cpp",
+          "target_function": "XOrdInit__FP16st_XORDEREDARRAYii",
+          "symbol": "XOrdInit__FP16st_XORDEREDARRAYii"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "__ct__8xFactoryFi",
+          "offset": 40,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap",
+          "opcode": 35
+        }
+      ],
+      "address_pairs": [
+        {
+          "function": "DestroyItem__8xFactoryFP12xFactoryInst",
+          "hi_offset": 160,
+          "lo_offset": 176,
+          "symbol": "OrdTest_infotype__FPCvPv",
+          "target_source": "SB/Core/x/xFactory.cpp",
+          "target_function": "OrdTest_infotype__FPCvPv",
+          "interleaved": true
+        },
+        {
+          "function": "RegItemType__8xFactoryFP12XGOFTypeInfo",
+          "hi_offset": 120,
+          "lo_offset": 136,
+          "symbol": "OrdTest_infotype__FPCvPv",
+          "target_source": "SB/Core/x/xFactory.cpp",
+          "target_function": "OrdTest_infotype__FPCvPv",
+          "interleaved": true
+        },
+        {
+          "function": "RegItemType__8xFactoryFP12XGOFTypeInfo",
+          "hi_offset": 164,
+          "lo_offset": 180,
+          "symbol": "OrdComp_infotype__FPvPv",
+          "target_source": "SB/Core/x/xFactory.cpp",
+          "target_function": "OrdComp_infotype__FPvPv",
+          "interleaved": true
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xParGroup.cpp",
+      "target_unit": "SB/Core/x/xParGroup.cpp",
+      "object": "source/xParGroup.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xParGroupKillPar__FP9xParGroupP4xPar": "xParGroupKillPar__FP9xParGroupP4xPar",
+        "xParGroupAddPar__FP9xParGroup": "xParGroupAddPar__FP9xParGroup",
+        "xParGroupAnimate__FP9xParGroupf": "xParGroupAnimate__FP9xParGroupf",
+        "xParGroupKillAllParticles__FP9xParGroup": "xParGroupKillAllParticles__FP9xParGroup",
+        "xParGroupSetActive__FP9xParGroupUi": "xParGroupSetActive__FP9xParGroupUi",
+        "xParGroupUnregister__FP9xParGroup": "xParGroupUnregister__FP9xParGroup",
+        "xParGroupRegister__FP9xParGroup": "xParGroupRegister__FP9xParGroup",
+        "xParGroupSetPriority__FP9xParGroupUc": "xParGroupSetPriority__FP9xParGroupUc",
+        "xParGroupSetVisibility__FP9xParGroupi": "xParGroupSetVisibility__FP9xParGroupi",
+        "xParGroupSetBack2Life__FP9xParGroupi": "xParGroupSetBack2Life__FP9xParGroupi",
+        "xParGroupSetAging__FP9xParGroupi": "xParGroupSetAging__FP9xParGroupi",
+        "xParGroupInit__FP9xParGroup": "xParGroupInit__FP9xParGroup"
+      },
+      "calls": [
+        {
+          "function": "xParGroupKillPar__FP9xParGroupP4xPar",
+          "offset": 148,
+          "target_source": "SB/Core/x/xPar.cpp",
+          "target_function": "xParFree__FP4xPar",
+          "symbol": "xParFree__FP4xPar"
+        },
+        {
+          "function": "xParGroupAddPar__FP9xParGroup",
+          "offset": 32,
+          "target_source": "SB/Core/x/xPar.cpp",
+          "target_function": "xParAlloc__Fv",
+          "symbol": "xParAlloc__Fv"
+        },
+        {
+          "function": "xParGroupAddPar__FP9xParGroup",
+          "offset": 164,
+          "target_source": "SB/Core/x/xParGroup.cpp",
+          "target_function": "xParGroupKillPar__FP9xParGroupP4xPar",
+          "symbol": "xParGroupKillPar__FP9xParGroupP4xPar"
+        },
+        {
+          "function": "xParGroupAddPar__FP9xParGroup",
+          "offset": 172,
+          "target_source": "SB/Core/x/xPar.cpp",
+          "target_function": "xParAlloc__Fv",
+          "symbol": "xParAlloc__Fv"
+        },
+        {
+          "function": "xParGroupAddPar__FP9xParGroup",
+          "offset": 280,
+          "target_source": "SB/Core/x/xPar.cpp",
+          "target_function": "xParInit__FP4xPar",
+          "symbol": "xParInit__FP4xPar"
+        },
+        {
+          "function": "xParGroupAnimate__FP9xParGroupf",
+          "offset": 116,
+          "target_source": "SB/Core/x/xParGroup.cpp",
+          "target_function": "xParGroupKillPar__FP9xParGroupP4xPar",
+          "symbol": "xParGroupKillPar__FP9xParGroupP4xPar"
+        },
+        {
+          "function": "xParGroupKillAllParticles__FP9xParGroup",
+          "offset": 40,
+          "target_source": "SB/Core/x/xParGroup.cpp",
+          "target_function": "xParGroupKillPar__FP9xParGroupP4xPar",
+          "symbol": "xParGroupKillPar__FP9xParGroupP4xPar"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xParGroupRegister__FP9xParGroup",
+          "offset": 0,
+          "target_name": "sParGroupRegTableInit",
+          "symbol": "sParGroupRegTableInit",
+          "opcode": 35
+        },
+        {
+          "function": "xParGroupRegister__FP9xParGroup",
+          "offset": 120,
+          "target_name": "sParGroupRegTableInit",
+          "symbol": "sParGroupRegTableInit",
+          "opcode": 43
+        },
+        {
+          "function": "xParGroupRegister__FP9xParGroup",
+          "offset": 124,
+          "target_name": "sParGroupRegTableCount",
+          "symbol": "sParGroupRegTableCount",
+          "opcode": 43
+        }
+      ],
+      "address_pairs": [
+        {
+          "function": "xParGroupAddPar__FP9xParGroup",
+          "hi_offset": 56,
+          "lo_offset": 64,
+          "symbol": "sParGroupRegTable",
+          "target_data": "sParGroupRegTable",
+          "interleaved": true
+        },
+        {
+          "function": "xParGroupAddPar__FP9xParGroup",
+          "hi_offset": 144,
+          "lo_offset": 148,
+          "symbol": "sParGroupRegTable",
+          "target_data": "sParGroupRegTable"
+        },
+        {
+          "function": "xParGroupUnregister__FP9xParGroup",
+          "hi_offset": 0,
+          "lo_offset": 8,
+          "symbol": "sParGroupRegTable",
+          "target_data": "sParGroupRegTable",
+          "interleaved": true
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xString.cpp",
+      "target_unit": "SB/Core/x/xString.cpp",
+      "object": "source/xString.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "find_char__FRC6substrRC6substr": "find_char__FRC6substrRC6substr",
+        "atox__FRC6substrRUi": "atox__FRC6substrRUi",
+        "icompare__FRC6substrRC6substr": "icompare__FRC6substrRC6substr",
+        "imemcmp__FPCvPCvUi": "imemcmp__FPCvPCvUi",
+        "xStrParseFloatList__FPfPCci": "xStrParseFloatList__FPfPCci",
+        "xStrupr__FPc": "xStrupr__FPc",
+        "xStricmp__FPCcPCc": "xStricmp__FPCcPCc",
+        "xStrTokBuffer__FPCcPCcPv": "xStrTokBuffer__FPCcPCcPv",
+        "xStrTok__FPcPCcPPc": "xStrTok__FPcPCcPPc",
+        "xStrHashCat__FUiPCc": "xStrHashCat__FUiPCc",
+        "xStrHash__FPCcUi": "xStrHash__FPCcUi",
+        "xStrHash__FPCc": "xStrHash__FPCc"
+      },
+      "calls": [
+        {
+          "function": "xStrParseFloatList__FPfPCci",
+          "offset": 400,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xatof__FPCc",
+          "symbol": "xatof__FPCc"
         }
       ]
     }

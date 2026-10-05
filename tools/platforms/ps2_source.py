@@ -75,6 +75,8 @@ def validate_interleaved_pair(code: bytes, address: int, hi_offset: int, lo_offs
             reads, writes = {rs}, {rt}
         elif opcode == 0 and word & 63 == 45 and (word >> 6) & 31 == 0:  # DADDU
             reads, writes = {rs, rt}, {rd}
+        elif opcode == 35:  # LW
+            reads, writes = {rs}, {rt}
         elif opcode in (31, 43, 63):  # SQ, SW, SD
             reads, writes = {rs, rt}, set()
         elif opcode == 3 and offset == lo_offset - 4 and offset in validated_calls:
