@@ -185,4 +185,7 @@ RwMatrix* RwMatrixUpdate(RwMatrix* matrix);
 RwMatrix* RwMatrixInvert(RwMatrix* matrixOut, const RwMatrix* matrixIn);
 }
 
+// RenderWare SDK matrix assignment macro.
+#define RwMatrixCopyMacro(_target, _source) (*(_target) = *(_source))
+
 #endif

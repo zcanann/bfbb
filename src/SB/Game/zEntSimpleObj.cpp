@@ -1,6 +1,9 @@
 #include "zEntSimpleObj.h"
 
 #include <types.h>
+#if defined(PS2)
+#include <rwplcore.h>
+#endif
 
 struct zSimpleMgr
 {
@@ -72,7 +75,7 @@ void zEntSimpleObj_MgrInit(zEntSimpleObj** entList, U32 entCount)
                         ent2->move = zEntSimpleObj_Move;
                         ent3 = entList[i];
                         ent3->pflags |= 1;
-                        entList[i]->frame = (xEntFrame*)xMemAlloc(gActiveHeap, 0xE4U, 0);
+                        entList[i]->frame = (xEntFrame*)xMemAlloc(gActiveHeap, sizeof(xEntFrame), 0);
                     }
                 }
                 else

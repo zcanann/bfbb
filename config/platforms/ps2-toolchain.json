@@ -22045,6 +22045,1865 @@
         "xSweptSphereToTriangle@001c90b0": "xSweptSphereToTriangle__FP12xSweptSphereP5xVec3P5xVec3P5xVec3"
       },
       "target_unit": "SB/Core/x/xCollide.cpp"
+    },
+    {
+      "source": "src/SB/Game/zEntTrigger.cpp",
+      "target_unit": "SB/Game/zEntTrigger.cpp",
+      "object": "source/zEntTrigger.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zEntTriggerHitsSphere__FRC11zEntTriggerRC7xSphereRC5xVec3": "zEntTriggerHitsSphere__FRC11zEntTriggerRC7xSphereRC5xVec3",
+        "zEntTriggerLoad__FP11zEntTriggerP7xSerial": "zEntTriggerLoad__FP11zEntTriggerP7xSerial",
+        "zEntTriggerSave__FP11zEntTriggerP7xSerial": "zEntTriggerSave__FP11zEntTriggerP7xSerial",
+        "zEntTriggerEventCB__FP5xBaseP5xBaseUiPCfP5xBase": "zEntTriggerEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "zEntTriggerUpdate__FP11zEntTriggerP6xScenef": "zEntTriggerUpdate__FP11zEntTriggerP6xScenef",
+        "zEntTriggerInit__FP11zEntTriggerP9xEntAsset": "zEntTriggerInit__FP11zEntTriggerP9xEntAsset",
+        "zEntTriggerInit__FPvPv": "zEntTriggerInit__FPvPv"
+      },
+      "calls": [
+        {
+          "function": "zEntTriggerHitsSphere__FRC11zEntTriggerRC7xSphereRC5xVec3",
+          "offset": 244,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "zEntTriggerHitsSphere__FRC11zEntTriggerRC7xSphereRC5xVec3",
+          "offset": 672,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xSphereHitsVCylinder__FRC5xVec3fRC5xVec3ff",
+          "symbol": "xSphereHitsVCylinder__FRC5xVec3fRC5xVec3ff"
+        },
+        {
+          "function": "zEntTriggerHitsSphere__FRC11zEntTriggerRC7xSphereRC5xVec3",
+          "offset": 700,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xSphereHitsVCircle__FRC5xVec3fRC5xVec3f",
+          "symbol": "xSphereHitsVCircle__FRC5xVec3fRC5xVec3f"
+        },
+        {
+          "function": "zEntTriggerLoad__FP11zEntTriggerP7xSerial",
+          "offset": 0,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zEntLoad__FP4zEntP7xSerial",
+          "symbol": "zEntLoad__FP4zEntP7xSerial",
+          "opcode": 2
+        },
+        {
+          "function": "zEntTriggerSave__FP11zEntTriggerP7xSerial",
+          "offset": 0,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zEntSave__FP4zEntP7xSerial",
+          "symbol": "zEntSave__FP4zEntP7xSerial",
+          "opcode": 2
+        },
+        {
+          "function": "zEntTriggerEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 28,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zEntReset__FP4zEnt",
+          "symbol": "zEntReset__FP4zEnt"
+        },
+        {
+          "function": "zEntTriggerUpdate__FP11zEntTriggerP6xScenef",
+          "offset": 148,
+          "target_source": "SB/Game/zScene.cpp",
+          "target_function": "zSceneFindObject__FUi",
+          "symbol": "zSceneFindObject__FUi"
+        },
+        {
+          "function": "zEntTriggerUpdate__FP11zEntTriggerP6xScenef",
+          "offset": 296,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "zEntTriggerUpdate__FP11zEntTriggerP6xScenef",
+          "offset": 312,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iBoxIsectVec__FPC4xBoxPC5xVec3P6xIsect",
+          "symbol": "iBoxIsectVec__FPC4xBoxPC5xVec3P6xIsect"
+        },
+        {
+          "function": "zEntTriggerUpdate__FP11zEntTriggerP6xScenef",
+          "offset": 404,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iSphereIsectVec__FPC7xSpherePC5xVec3P6xIsect",
+          "symbol": "iSphereIsectVec__FPC7xSpherePC5xVec3P6xIsect"
+        },
+        {
+          "function": "zEntTriggerUpdate__FP11zEntTriggerP6xScenef",
+          "offset": 516,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iCylinderIsectVec__FPC9xCylinderPC5xVec3P6xIsect",
+          "symbol": "iCylinderIsectVec__FPC9xCylinderPC5xVec3P6xIsect"
+        },
+        {
+          "function": "zEntTriggerUpdate__FP11zEntTriggerP6xScenef",
+          "offset": 616,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iSphereIsectVec__FPC7xSpherePC5xVec3P6xIsect",
+          "symbol": "iSphereIsectVec__FPC7xSpherePC5xVec3P6xIsect"
+        },
+        {
+          "function": "zEntTriggerUpdate__FP11zEntTriggerP6xScenef",
+          "offset": 696,
+          "target_source": "SB/Game/zScene.cpp",
+          "target_function": "zSceneFindObject__FUi",
+          "symbol": "zSceneFindObject__FUi"
+        },
+        {
+          "function": "zEntTriggerUpdate__FP11zEntTriggerP6xScenef",
+          "offset": 708,
+          "target_source": "SB/Game/zScene.cpp",
+          "target_function": "zSceneFindObject__FUi",
+          "symbol": "zSceneFindObject__FUi"
+        },
+        {
+          "function": "zEntTriggerUpdate__FP11zEntTriggerP6xScenef",
+          "offset": 740,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "symbol": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei"
+        },
+        {
+          "function": "zEntTriggerUpdate__FP11zEntTriggerP6xScenef",
+          "offset": 800,
+          "target_source": "SB/Game/zScene.cpp",
+          "target_function": "zSceneFindObject__FUi",
+          "symbol": "zSceneFindObject__FUi"
+        },
+        {
+          "function": "zEntTriggerUpdate__FP11zEntTriggerP6xScenef",
+          "offset": 812,
+          "target_source": "SB/Game/zScene.cpp",
+          "target_function": "zSceneFindObject__FUi",
+          "symbol": "zSceneFindObject__FUi"
+        },
+        {
+          "function": "zEntTriggerUpdate__FP11zEntTriggerP6xScenef",
+          "offset": 844,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei",
+          "symbol": "zEntEvent__FP5xBaseUiP5xBaseUiPCfP5xBasei"
+        },
+        {
+          "function": "zEntTriggerInit__FP11zEntTriggerP9xEntAsset",
+          "offset": 28,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zEntInit__FP4zEntP9xEntAssetUi",
+          "symbol": "zEntInit__FP4zEntP9xEntAssetUi"
+        },
+        {
+          "function": "zEntTriggerInit__FP11zEntTriggerP9xEntAsset",
+          "offset": 48,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Euler__FP7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3Euler__FP7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "zEntTriggerInit__FPvPv",
+          "offset": 0,
+          "target_source": "SB/Game/zEntTrigger.cpp",
+          "target_function": "zEntTriggerInit__FP11zEntTriggerP9xEntAsset",
+          "symbol": "zEntTriggerInit__FP11zEntTriggerP9xEntAsset",
+          "opcode": 2
+        }
+      ],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zEntButton.cpp",
+      "target_unit": "SB/Game/zEntButton.cpp",
+      "object": "source/zEntButton.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zEntButtonEventCB__FP5xBaseP5xBaseUiPCfP5xBase": "zEntButtonEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "zEntButton_SceneUpdate__Ff": "zEntButton_SceneUpdate__Ff",
+        "zEntButton_Hold__FP11_zEntButtonUi": "zEntButton_Hold__FP11_zEntButtonUi",
+        "zEntButton_Press__FP11_zEntButtonUi": "zEntButton_Press__FP11_zEntButtonUi",
+        "zEntButton_Render__FP11_zEntButton": "zEntButton_Render__FP11_zEntButton",
+        "zEntButton_Update__FP11_zEntButtonP6xScenef": "zEntButton_Update__FP11_zEntButtonP6xScenef",
+        "zEntButton_Reset__FP11_zEntButtonP6xScene": "zEntButton_Reset__FP11_zEntButtonP6xScene",
+        "zEntButton_Load__FP11_zEntButtonP7xSerial": "zEntButton_Load__FP11_zEntButtonP7xSerial",
+        "zEntButton_Save__FP11_zEntButtonP7xSerial": "zEntButton_Save__FP11_zEntButtonP7xSerial",
+        "zEntButton_Setup__FP11_zEntButtonP6xScene": "zEntButton_Setup__FP11_zEntButtonP6xScene",
+        "zEntButton_Move__FP11_zEntButtonP6xScenefP9xEntFrame": "zEntButton_Move__FP11_zEntButtonP6xScenefP9xEntFrame",
+        "zEntButton_Init__FP11_zEntButtonP9xEntAsset": "zEntButton_Init__FP11_zEntButtonP9xEntAsset",
+        "zEntButton_Init__FPvPv": "zEntButton_Init__FPvPv"
+      },
+      "calls": [
+        {
+          "function": "zEntButtonEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 360,
+          "target_source": "SB/Game/zFX.cpp",
+          "target_function": "zFXPopOn__FR4xEntff",
+          "symbol": "zFXPopOn__FR4xEntff"
+        },
+        {
+          "function": "zEntButtonEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 452,
+          "target_source": "SB/Game/zFX.cpp",
+          "target_function": "zFXPopOff__FR4xEntff",
+          "symbol": "zFXPopOff__FR4xEntff"
+        },
+        {
+          "function": "zEntButtonEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 472,
+          "target_source": "SB/Game/zCollGeom.cpp",
+          "target_function": "zCollGeom_CamEnable__FP4xEnt",
+          "symbol": "zCollGeom_CamEnable__FP4xEnt"
+        },
+        {
+          "function": "zEntButtonEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 488,
+          "target_source": "SB/Game/zCollGeom.cpp",
+          "target_function": "zCollGeom_CamDisable__FP4xEnt",
+          "symbol": "zCollGeom_CamDisable__FP4xEnt"
+        },
+        {
+          "function": "zEntButtonEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 512,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntReset__FP4xEnt",
+          "symbol": "xEntReset__FP4xEnt"
+        },
+        {
+          "function": "zEntButtonEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 532,
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "target_function": "xEntMotionInit__FP10xEntMotionP4xEntP15xEntMotionAsset",
+          "symbol": "xEntMotionInit__FP10xEntMotionP4xEntP15xEntMotionAsset"
+        },
+        {
+          "function": "zEntButtonEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 544,
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "target_function": "xEntMotionReset__FP10xEntMotionP6xScene",
+          "symbol": "xEntMotionReset__FP10xEntMotionP6xScene"
+        },
+        {
+          "function": "zEntButtonEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 684,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "zEntButtonEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 752,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf",
+          "symbol": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf"
+        },
+        {
+          "function": "zEntButtonEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 796,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "zEntButtonEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 864,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf",
+          "symbol": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf"
+        },
+        {
+          "function": "zEntButtonEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 908,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseP5xBaseUi"
+        },
+        {
+          "function": "zEntButtonEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 932,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseP5xBaseUi"
+        },
+        {
+          "function": "zEntButtonEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 960,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zEntAnimEvent__FP4zEntUiPCf",
+          "symbol": "zEntAnimEvent__FP4zEntUiPCf"
+        },
+        {
+          "function": "zEntButtonEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1020,
+          "target_source": "SB/Core/x/xUpdateCull.cpp",
+          "target_function": "xUpdateCull_SetCB__FP14xUpdateCullMgrPvPFPvPv_UiPv",
+          "symbol": "xUpdateCull_SetCB__FP14xUpdateCullMgrPvPFPvPv_UiPv"
+        },
+        {
+          "function": "zEntButtonEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1056,
+          "target_source": "SB/Core/x/xUpdateCull.cpp",
+          "target_function": "xUpdateCull_SetCB__FP14xUpdateCullMgrPvPFPvPv_UiPv",
+          "symbol": "xUpdateCull_SetCB__FP14xUpdateCullMgrPvPFPvPv_UiPv"
+        },
+        {
+          "function": "zEntButton_Hold__FP11_zEntButtonUi",
+          "offset": 180,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "zEntButton_Hold__FP11_zEntButtonUi",
+          "offset": 196,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xPointInBox__FPC4xBoxPC5xVec3",
+          "symbol": "xPointInBox__FPC4xBoxPC5xVec3"
+        },
+        {
+          "function": "zEntButton_Hold__FP11_zEntButtonUi",
+          "offset": 228,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseUi"
+        },
+        {
+          "function": "zEntButton_Hold__FP11_zEntButtonUi",
+          "offset": 236,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xrand__Fv",
+          "symbol": "xrand__Fv"
+        },
+        {
+          "function": "zEntButton_Hold__FP11_zEntButtonUi",
+          "offset": 276,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_SNDPlayStreamRandom__F20_tagePlayerStreamSnd20_tagePlayerStreamSndf",
+          "symbol": "zEntPlayer_SNDPlayStreamRandom__F20_tagePlayerStreamSnd20_tagePlayerStreamSndf"
+        },
+        {
+          "function": "zEntButton_Press__FP11_zEntButtonUi",
+          "offset": 48,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseUi"
+        },
+        {
+          "function": "zEntButton_Press__FP11_zEntButtonUi",
+          "offset": 92,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_SNDPlayStreamRandom__FUiUi20_tagePlayerStreamSnd20_tagePlayerStreamSndf",
+          "symbol": "zEntPlayer_SNDPlayStreamRandom__FUiUi20_tagePlayerStreamSnd20_tagePlayerStreamSndf"
+        },
+        {
+          "function": "zEntButton_Press__FP11_zEntButtonUi",
+          "offset": 124,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_SNDPlayStreamRandom__FUiUi20_tagePlayerStreamSnd20_tagePlayerStreamSndf",
+          "symbol": "zEntPlayer_SNDPlayStreamRandom__FUiUi20_tagePlayerStreamSnd20_tagePlayerStreamSndf"
+        },
+        {
+          "function": "zEntButton_Press__FP11_zEntButtonUi",
+          "offset": 156,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_SNDPlayStreamRandom__FUiUi20_tagePlayerStreamSnd20_tagePlayerStreamSndf",
+          "symbol": "zEntPlayer_SNDPlayStreamRandom__FUiUi20_tagePlayerStreamSnd20_tagePlayerStreamSndf"
+        },
+        {
+          "function": "zEntButton_Press__FP11_zEntButtonUi",
+          "offset": 188,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xrand__Fv",
+          "symbol": "xrand__Fv"
+        },
+        {
+          "function": "zEntButton_Press__FP11_zEntButtonUi",
+          "offset": 228,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_SNDPlayStreamRandom__F20_tagePlayerStreamSnd20_tagePlayerStreamSndf",
+          "symbol": "zEntPlayer_SNDPlayStreamRandom__F20_tagePlayerStreamSnd20_tagePlayerStreamSndf"
+        },
+        {
+          "function": "zEntButton_Render__FP11_zEntButton",
+          "offset": 120,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntRender__FP4xEnt",
+          "symbol": "xEntRender__FP4xEnt"
+        },
+        {
+          "function": "zEntButton_Update__FP11_zEntButtonP6xScenef",
+          "offset": 52,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntUpdate__FP4xEntP6xScenef",
+          "symbol": "xEntUpdate__FP4xEntP6xScenef"
+        },
+        {
+          "function": "zEntButton_Update__FP11_zEntButtonP6xScenef",
+          "offset": 344,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseP5xBaseUi"
+        },
+        {
+          "function": "zEntButton_Update__FP11_zEntButtonP6xScenef",
+          "offset": 460,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseP5xBaseUi"
+        },
+        {
+          "function": "zEntButton_Reset__FP11_zEntButtonP6xScene",
+          "offset": 20,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntReset__FP4xEnt",
+          "symbol": "xEntReset__FP4xEnt"
+        },
+        {
+          "function": "zEntButton_Reset__FP11_zEntButtonP6xScene",
+          "offset": 40,
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "target_function": "xEntMotionInit__FP10xEntMotionP4xEntP15xEntMotionAsset",
+          "symbol": "xEntMotionInit__FP10xEntMotionP4xEntP15xEntMotionAsset"
+        },
+        {
+          "function": "zEntButton_Reset__FP11_zEntButtonP6xScene",
+          "offset": 52,
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "target_function": "xEntMotionReset__FP10xEntMotionP6xScene",
+          "symbol": "xEntMotionReset__FP10xEntMotionP6xScene"
+        },
+        {
+          "function": "zEntButton_Load__FP11_zEntButtonP7xSerial",
+          "offset": 20,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zEntLoad__FP4zEntP7xSerial",
+          "symbol": "zEntLoad__FP4zEntP7xSerial"
+        },
+        {
+          "function": "zEntButton_Load__FP11_zEntButtonP7xSerial",
+          "offset": 40,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Read_b1__7xSerialFPi",
+          "symbol": "Read_b1__7xSerialFPi"
+        },
+        {
+          "function": "zEntButton_Load__FP11_zEntButtonP7xSerial",
+          "offset": 68,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Read_b1__7xSerialFPi",
+          "symbol": "Read_b1__7xSerialFPi"
+        },
+        {
+          "function": "zEntButton_Save__FP11_zEntButtonP7xSerial",
+          "offset": 20,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zEntSave__FP4zEntP7xSerial",
+          "symbol": "zEntSave__FP4zEntP7xSerial"
+        },
+        {
+          "function": "zEntButton_Save__FP11_zEntButtonP7xSerial",
+          "offset": 44,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Write_b1__7xSerialFi",
+          "symbol": "Write_b1__7xSerialFi"
+        },
+        {
+          "function": "zEntButton_Save__FP11_zEntButtonP7xSerial",
+          "offset": 68,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Write_b1__7xSerialFi",
+          "symbol": "Write_b1__7xSerialFi"
+        },
+        {
+          "function": "zEntButton_Save__FP11_zEntButtonP7xSerial",
+          "offset": 96,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Write_b1__7xSerialFi",
+          "symbol": "Write_b1__7xSerialFi"
+        },
+        {
+          "function": "zEntButton_Save__FP11_zEntButtonP7xSerial",
+          "offset": 116,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Write_b1__7xSerialFi",
+          "symbol": "Write_b1__7xSerialFi"
+        },
+        {
+          "function": "zEntButton_Setup__FP11_zEntButtonP6xScene",
+          "offset": 0,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zEntSetup__FP4zEnt",
+          "symbol": "zEntSetup__FP4zEnt",
+          "opcode": 2
+        },
+        {
+          "function": "zEntButton_Move__FP11_zEntButtonP6xScenefP9xEntFrame",
+          "offset": 136,
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "target_function": "xEntMotionMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "symbol": "xEntMotionMove__FP10xEntMotionP6xScenefP9xEntFrame",
+          "opcode": 2
+        },
+        {
+          "function": "zEntButton_Init__FP11_zEntButtonP9xEntAsset",
+          "offset": 36,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zEntInit__FP4zEntP9xEntAssetUi",
+          "symbol": "zEntInit__FP4zEntP9xEntAssetUi"
+        },
+        {
+          "function": "zEntButton_Init__FP11_zEntButtonP9xEntAsset",
+          "offset": 60,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "zEntButton_Init__FP11_zEntButtonP9xEntAsset",
+          "offset": 76,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntLoadModel__FP4xEntP8RpAtomic",
+          "symbol": "xEntLoadModel__FP4xEntP8RpAtomic"
+        },
+        {
+          "function": "zEntButton_Init__FP11_zEntButtonP9xEntAsset",
+          "offset": 112,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "zEntButton_Init__FP11_zEntButtonP9xEntAsset",
+          "offset": 152,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "zEntButton_Init__FP11_zEntButtonP9xEntAsset",
+          "offset": 344,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntReset__FP4xEnt",
+          "symbol": "xEntReset__FP4xEnt"
+        },
+        {
+          "function": "zEntButton_Init__FP11_zEntButtonP9xEntAsset",
+          "offset": 360,
+          "target_source": "SB/Core/x/xEntMotion.cpp",
+          "target_function": "xEntMotionInit__FP10xEntMotionP4xEntP15xEntMotionAsset",
+          "symbol": "xEntMotionInit__FP10xEntMotionP4xEntP15xEntMotionAsset"
+        },
+        {
+          "function": "zEntButton_Init__FPvPv",
+          "offset": 0,
+          "target_source": "SB/Game/zEntButton.cpp",
+          "target_function": "zEntButton_Init__FP11_zEntButtonP9xEntAsset",
+          "symbol": "zEntButton_Init__FP11_zEntButtonP9xEntAsset",
+          "opcode": 2
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "zEntButton_SceneUpdate__Ff",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "sColorMultiplierSign",
+          "symbol": "sColorMultiplierSign"
+        },
+        {
+          "function": "zEntButton_SceneUpdate__Ff",
+          "offset": 12,
+          "opcode": 49,
+          "target_name": "sColorMultiplier",
+          "symbol": "sColorMultiplier"
+        },
+        {
+          "function": "zEntButton_SceneUpdate__Ff",
+          "offset": 56,
+          "opcode": 57,
+          "target_name": "sColorMultiplier",
+          "symbol": "sColorMultiplier"
+        },
+        {
+          "function": "zEntButton_SceneUpdate__Ff",
+          "offset": 64,
+          "opcode": 57,
+          "target_name": "sColorMultiplier",
+          "symbol": "sColorMultiplier"
+        },
+        {
+          "function": "zEntButton_SceneUpdate__Ff",
+          "offset": 68,
+          "opcode": 43,
+          "target_name": "sColorMultiplierSign",
+          "symbol": "sColorMultiplierSign"
+        },
+        {
+          "function": "zEntButton_SceneUpdate__Ff",
+          "offset": 72,
+          "opcode": 49,
+          "target_name": "sColorMultiplier",
+          "symbol": "sColorMultiplier"
+        },
+        {
+          "function": "zEntButton_SceneUpdate__Ff",
+          "offset": 96,
+          "opcode": 35,
+          "target_name": "sColorMultiplierSign",
+          "symbol": "sColorMultiplierSign"
+        },
+        {
+          "function": "zEntButton_SceneUpdate__Ff",
+          "offset": 100,
+          "opcode": 57,
+          "target_name": "sColorMultiplier",
+          "symbol": "sColorMultiplier"
+        },
+        {
+          "function": "zEntButton_SceneUpdate__Ff",
+          "offset": 108,
+          "opcode": 43,
+          "target_name": "sColorMultiplierSign",
+          "symbol": "sColorMultiplierSign"
+        },
+        {
+          "function": "zEntButton_SceneUpdate__Ff",
+          "offset": 128,
+          "opcode": 49,
+          "target_name": "sColorMultiplier",
+          "symbol": "sColorMultiplier"
+        },
+        {
+          "function": "zEntButton_SceneUpdate__Ff",
+          "offset": 148,
+          "opcode": 57,
+          "target_name": "sRedMultiplier",
+          "symbol": "sRedMultiplier"
+        },
+        {
+          "function": "zEntButton_SceneUpdate__Ff",
+          "offset": 152,
+          "opcode": 57,
+          "target_name": "sGreenMultiplier",
+          "symbol": "sGreenMultiplier"
+        },
+        {
+          "function": "zEntButton_SceneUpdate__Ff",
+          "offset": 160,
+          "opcode": 57,
+          "target_name": "sBlueMultiplier",
+          "symbol": "sBlueMultiplier"
+        },
+        {
+          "function": "zEntButton_Render__FP11_zEntButton",
+          "offset": 80,
+          "opcode": 49,
+          "target_name": "sRedMultiplier",
+          "symbol": "sRedMultiplier"
+        },
+        {
+          "function": "zEntButton_Render__FP11_zEntButton",
+          "offset": 88,
+          "opcode": 49,
+          "target_name": "sGreenMultiplier",
+          "symbol": "sGreenMultiplier"
+        },
+        {
+          "function": "zEntButton_Render__FP11_zEntButton",
+          "offset": 96,
+          "opcode": 49,
+          "target_name": "sBlueMultiplier",
+          "symbol": "sBlueMultiplier"
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Game/zEntDestructObj.cpp",
+      "target_unit": "SB/Game/zEntDestructObj.cpp",
+      "object": "source/zEntDestructObj.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zEntDestructObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase": "zEntDestructObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "zEntDestructObj_DestroyFX__FP15zEntDestructObj": "zEntDestructObj_DestroyFX__FP15zEntDestructObj",
+        "zEntDestructObj_isDestroyed__FP15zEntDestructObj": "zEntDestructObj_isDestroyed__FP15zEntDestructObj",
+        "zEntDestructObj_Reset__FP15zEntDestructObjP6xScene": "zEntDestructObj_Reset__FP15zEntDestructObjP6xScene",
+        "zEntDestructObj_Setup__FP15zEntDestructObj": "zEntDestructObj_Setup__FP15zEntDestructObj",
+        "zEntDestructObj_Load__FP15zEntDestructObjP7xSerial": "zEntDestructObj_Load__FP15zEntDestructObjP7xSerial",
+        "zEntDestructObj_Save__FP15zEntDestructObjP7xSerial": "zEntDestructObj_Save__FP15zEntDestructObjP7xSerial",
+        "zEntDestructObj_GetHit__FP15zEntDestructObjUi": "zEntDestructObj_GetHit__FP15zEntDestructObjUi",
+        "zEntDestructObj_Hit__FP15zEntDestructObjUi": "zEntDestructObj_Hit__FP15zEntDestructObjUi",
+        "zEntDestructObj_Update__FP15zEntDestructObjP6xScenef": "zEntDestructObj_Update__FP15zEntDestructObjP6xScenef",
+        "zEntDestructObj_Move__FP15zEntDestructObjP6xScenefP9xEntFrame": "zEntDestructObj_Move__FP15zEntDestructObjP6xScenefP9xEntFrame",
+        "zEntDestructObj_Init__FP15zEntDestructObjP9xEntAsset": "zEntDestructObj_Init__FP15zEntDestructObjP9xEntAsset",
+        "zEntDestructObj_Init__FPvPv": "zEntDestructObj_Init__FPvPv",
+        "zEntDestructObj_FindFX__Fv": "zEntDestructObj_FindFX__Fv",
+        "SwapModel__29@unnamed@zEntDestructObj_cpp@FP15zEntDestructObjP14xModelInstance": "SwapModel__29@unnamed@zEntDestructObj_cpp@FP15zEntDestructObjP14xModelInstance"
+      },
+      "calls": [
+        {
+          "function": "zEntDestructObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 368,
+          "target_source": "SB/Game/zFX.cpp",
+          "target_function": "zFXPopOn__FR4xEntff",
+          "symbol": "zFXPopOn__FR4xEntff"
+        },
+        {
+          "function": "zEntDestructObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 448,
+          "target_source": "SB/Game/zFX.cpp",
+          "target_function": "zFXPopOff__FR4xEntff",
+          "symbol": "zFXPopOff__FR4xEntff"
+        },
+        {
+          "function": "zEntDestructObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 632,
+          "target_source": "SB/Game/zFX.cpp",
+          "target_function": "zFXPopOn__FR4xEntff",
+          "symbol": "zFXPopOn__FR4xEntff"
+        },
+        {
+          "function": "zEntDestructObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 724,
+          "target_source": "SB/Game/zFX.cpp",
+          "target_function": "zFXPopOff__FR4xEntff",
+          "symbol": "zFXPopOff__FR4xEntff"
+        },
+        {
+          "function": "zEntDestructObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 744,
+          "target_source": "SB/Game/zCollGeom.cpp",
+          "target_function": "zCollGeom_CamEnable__FP4xEnt",
+          "symbol": "zCollGeom_CamEnable__FP4xEnt"
+        },
+        {
+          "function": "zEntDestructObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 760,
+          "target_source": "SB/Game/zCollGeom.cpp",
+          "target_function": "zCollGeom_CamDisable__FP4xEnt",
+          "symbol": "zCollGeom_CamDisable__FP4xEnt"
+        },
+        {
+          "function": "zEntDestructObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 788,
+          "target_source": "SB/Game/zEntDestructObj.cpp",
+          "target_function": "SwapModel__29@unnamed@zEntDestructObj_cpp@FP15zEntDestructObjP14xModelInstance",
+          "symbol": "SwapModel__29@unnamed@zEntDestructObj_cpp@FP15zEntDestructObjP14xModelInstance"
+        },
+        {
+          "function": "zEntDestructObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 832,
+          "target_source": "SB/Game/zEntDestructObj.cpp",
+          "target_function": "zEntDestructObj_DestroyFX__FP15zEntDestructObj",
+          "symbol": "zEntDestructObj_DestroyFX__FP15zEntDestructObj"
+        },
+        {
+          "function": "zEntDestructObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 952,
+          "target_source": "SB/Game/zEntDestructObj.cpp",
+          "target_function": "zEntDestructObj_Reset__FP15zEntDestructObjP6xScene",
+          "symbol": "zEntDestructObj_Reset__FP15zEntDestructObjP6xScene"
+        },
+        {
+          "function": "zEntDestructObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 976,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zEntAnimEvent__FP4zEntUiPCf",
+          "symbol": "zEntAnimEvent__FP4zEntUiPCf"
+        },
+        {
+          "function": "zEntDestructObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1036,
+          "target_source": "SB/Game/zEntDestructObj.cpp",
+          "target_function": "SwapModel__29@unnamed@zEntDestructObj_cpp@FP15zEntDestructObjP14xModelInstance",
+          "symbol": "SwapModel__29@unnamed@zEntDestructObj_cpp@FP15zEntDestructObjP14xModelInstance"
+        },
+        {
+          "function": "zEntDestructObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1064,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseP5xBaseUi"
+        },
+        {
+          "function": "zEntDestructObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1124,
+          "target_source": "SB/Core/x/xUpdateCull.cpp",
+          "target_function": "xUpdateCull_SetCB__FP14xUpdateCullMgrPvPFPvPv_UiPv",
+          "symbol": "xUpdateCull_SetCB__FP14xUpdateCullMgrPvPFPvPv_UiPv"
+        },
+        {
+          "function": "zEntDestructObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1160,
+          "target_source": "SB/Core/x/xUpdateCull.cpp",
+          "target_function": "xUpdateCull_SetCB__FP14xUpdateCullMgrPvPFPvPv_UiPv",
+          "symbol": "xUpdateCull_SetCB__FP14xUpdateCullMgrPvPFPvPv_UiPv"
+        },
+        {
+          "function": "zEntDestructObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1196,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseUi"
+        },
+        {
+          "function": "zEntDestructObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1236,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseUi"
+        },
+        {
+          "function": "zEntDestructObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1276,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseUi"
+        },
+        {
+          "function": "zEntDestructObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1316,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseUi"
+        },
+        {
+          "function": "zEntDestructObj_DestroyFX__FP15zEntDestructObj",
+          "offset": 104,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf",
+          "symbol": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf"
+        },
+        {
+          "function": "zEntDestructObj_DestroyFX__FP15zEntDestructObj",
+          "offset": 344,
+          "target_source": "SB/Game/zRumble.cpp",
+          "target_function": "zRumbleStart__Fi16_tagSDRumbleType",
+          "symbol": "zRumbleStart__Fi16_tagSDRumbleType"
+        },
+        {
+          "function": "zEntDestructObj_Reset__FP15zEntDestructObjP6xScene",
+          "offset": 12,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntReset__FP4xEnt",
+          "symbol": "xEntReset__FP4xEnt"
+        },
+        {
+          "function": "zEntDestructObj_Reset__FP15zEntDestructObjP6xScene",
+          "offset": 196,
+          "target_source": "SB/Game/zEntDestructObj.cpp",
+          "target_function": "SwapModel__29@unnamed@zEntDestructObj_cpp@FP15zEntDestructObjP14xModelInstance",
+          "symbol": "SwapModel__29@unnamed@zEntDestructObj_cpp@FP15zEntDestructObjP14xModelInstance"
+        },
+        {
+          "function": "zEntDestructObj_Setup__FP15zEntDestructObj",
+          "offset": 0,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zEntSetup__FP4zEnt",
+          "symbol": "zEntSetup__FP4zEnt",
+          "opcode": 2
+        },
+        {
+          "function": "zEntDestructObj_Load__FP15zEntDestructObjP7xSerial",
+          "offset": 20,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zEntLoad__FP4zEntP7xSerial",
+          "symbol": "zEntLoad__FP4zEntP7xSerial"
+        },
+        {
+          "function": "zEntDestructObj_Load__FP15zEntDestructObjP7xSerial",
+          "offset": 32,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Read__7xSerialFPUi",
+          "symbol": "Read__7xSerialFPUi"
+        },
+        {
+          "function": "zEntDestructObj_Save__FP15zEntDestructObjP7xSerial",
+          "offset": 20,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zEntSave__FP4zEntP7xSerial",
+          "symbol": "zEntSave__FP4zEntP7xSerial"
+        },
+        {
+          "function": "zEntDestructObj_Save__FP15zEntDestructObjP7xSerial",
+          "offset": 32,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Write__7xSerialFUi",
+          "symbol": "Write__7xSerialFUi"
+        },
+        {
+          "function": "zEntDestructObj_Hit__FP15zEntDestructObjUi",
+          "offset": 64,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_SNDPlayStreamRandom__FUiUi20_tagePlayerStreamSnd20_tagePlayerStreamSndf",
+          "symbol": "zEntPlayer_SNDPlayStreamRandom__FUiUi20_tagePlayerStreamSnd20_tagePlayerStreamSndf"
+        },
+        {
+          "function": "zEntDestructObj_Hit__FP15zEntDestructObjUi",
+          "offset": 96,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_SNDPlayStreamRandom__FUiUi20_tagePlayerStreamSnd20_tagePlayerStreamSndf",
+          "symbol": "zEntPlayer_SNDPlayStreamRandom__FUiUi20_tagePlayerStreamSnd20_tagePlayerStreamSndf"
+        },
+        {
+          "function": "zEntDestructObj_Hit__FP15zEntDestructObjUi",
+          "offset": 128,
+          "target_source": "SB/Game/zEntPlayer.cpp",
+          "target_function": "zEntPlayer_SNDPlayStreamRandom__FUiUi20_tagePlayerStreamSnd20_tagePlayerStreamSndf",
+          "symbol": "zEntPlayer_SNDPlayStreamRandom__FUiUi20_tagePlayerStreamSnd20_tagePlayerStreamSndf"
+        },
+        {
+          "function": "zEntDestructObj_Hit__FP15zEntDestructObjUi",
+          "offset": 140,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent__FP5xBaseUi",
+          "symbol": "zEntEvent__FP5xBaseUi"
+        },
+        {
+          "function": "zEntDestructObj_Update__FP15zEntDestructObjP6xScenef",
+          "offset": 20,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntUpdate__FP4xEntP6xScenef",
+          "symbol": "xEntUpdate__FP4xEntP6xScenef"
+        },
+        {
+          "function": "zEntDestructObj_Update__FP15zEntDestructObjP6xScenef",
+          "offset": 128,
+          "target_source": "SB/Core/x/xParEmitter.cpp",
+          "target_function": "xParEmitterEmitCustom__FP11xParEmitterfP25xParEmitterCustomSettings",
+          "symbol": "xParEmitterEmitCustom__FP11xParEmitterfP25xParEmitterCustomSettings"
+        },
+        {
+          "function": "zEntDestructObj_Update__FP15zEntDestructObjP6xScenef",
+          "offset": 184,
+          "target_source": "SB/Game/zEntDestructObj.cpp",
+          "target_function": "zEntDestructObj_Reset__FP15zEntDestructObjP6xScene",
+          "symbol": "zEntDestructObj_Reset__FP15zEntDestructObjP6xScene"
+        },
+        {
+          "function": "zEntDestructObj_Init__FP15zEntDestructObjP9xEntAsset",
+          "offset": 32,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zEntInit__FP4zEntP9xEntAssetUi",
+          "symbol": "zEntInit__FP4zEntP9xEntAssetUi"
+        },
+        {
+          "function": "zEntDestructObj_Init__FP15zEntDestructObjP9xEntAsset",
+          "offset": 68,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "zEntDestructObj_Init__FP15zEntDestructObjP9xEntAsset",
+          "offset": 108,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "zEntDestructObj_Init__FP15zEntDestructObjP9xEntAsset",
+          "offset": 120,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "zEntDestructObj_Init__FP15zEntDestructObjP9xEntAsset",
+          "offset": 148,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "zEntDestructObj_Init__FP15zEntDestructObjP9xEntAsset",
+          "offset": 188,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "zEntDestructObj_Init__FP15zEntDestructObjP9xEntAsset",
+          "offset": 200,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "zEntDestructObj_Init__FP15zEntDestructObjP9xEntAsset",
+          "offset": 228,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "zEntDestructObj_Init__FP15zEntDestructObjP9xEntAsset",
+          "offset": 268,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "zEntDestructObj_Init__FP15zEntDestructObjP9xEntAsset",
+          "offset": 680,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "zEntDestructObj_Init__FP15zEntDestructObjP9xEntAsset",
+          "offset": 696,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntLoadModel__FP4xEntP8RpAtomic",
+          "symbol": "xEntLoadModel__FP4xEntP8RpAtomic"
+        },
+        {
+          "function": "zEntDestructObj_Init__FP15zEntDestructObjP9xEntAsset",
+          "offset": 888,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "zEntDestructObj_Init__FP15zEntDestructObjP9xEntAsset",
+          "offset": 904,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntLoadModel__FP4xEntP8RpAtomic",
+          "symbol": "xEntLoadModel__FP4xEntP8RpAtomic"
+        },
+        {
+          "function": "zEntDestructObj_Init__FP15zEntDestructObjP9xEntAsset",
+          "offset": 1080,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntReset__FP4xEnt",
+          "symbol": "xEntReset__FP4xEnt"
+        },
+        {
+          "function": "zEntDestructObj_Init__FPvPv",
+          "offset": 0,
+          "target_source": "SB/Game/zEntDestructObj.cpp",
+          "target_function": "zEntDestructObj_Init__FP15zEntDestructObjP9xEntAsset",
+          "symbol": "zEntDestructObj_Init__FP15zEntDestructObjP9xEntAsset",
+          "opcode": 2
+        },
+        {
+          "function": "zEntDestructObj_FindFX__Fv",
+          "offset": 12,
+          "target_source": "SB/Game/zParEmitter.cpp",
+          "target_function": "zParEmitterFind__FPCc",
+          "symbol": "zParEmitterFind__FPCc"
+        },
+        {
+          "function": "zEntDestructObj_FindFX__Fv",
+          "offset": 28,
+          "target_source": "SB/Game/zParEmitter.cpp",
+          "target_function": "zParEmitterFind__FPCc",
+          "symbol": "zParEmitterFind__FPCc"
+        },
+        {
+          "function": "zEntDestructObj_FindFX__Fv",
+          "offset": 44,
+          "target_source": "SB/Game/zParEmitter.cpp",
+          "target_function": "zParEmitterFind__FPCc",
+          "symbol": "zParEmitterFind__FPCc"
+        },
+        {
+          "function": "zEntDestructObj_FindFX__Fv",
+          "offset": 60,
+          "target_source": "SB/Game/zParEmitter.cpp",
+          "target_function": "zParEmitterFind__FPCc",
+          "symbol": "zParEmitterFind__FPCc"
+        },
+        {
+          "function": "zEntDestructObj_FindFX__Fv",
+          "offset": 76,
+          "target_source": "SB/Game/zParEmitter.cpp",
+          "target_function": "zParEmitterFind__FPCc",
+          "symbol": "zParEmitterFind__FPCc"
+        },
+        {
+          "function": "zEntDestructObj_FindFX__Fv",
+          "offset": 92,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "zEntDestructObj_FindFX__Fv",
+          "offset": 104,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "SwapModel__29@unnamed@zEntDestructObj_cpp@FP15zEntDestructObjP14xModelInstance",
+          "offset": 52,
+          "target_source": "SB/Core/x/xModel.cpp",
+          "target_function": "xModelInstanceFree__FP14xModelInstance",
+          "symbol": "xModelInstanceFree__FP14xModelInstance"
+        },
+        {
+          "function": "SwapModel__29@unnamed@zEntDestructObj_cpp@FP15zEntDestructObjP14xModelInstance",
+          "offset": 88,
+          "target_source": "SB/Core/x/xModel.cpp",
+          "target_function": "xModelInstanceFree__FP14xModelInstance",
+          "symbol": "xModelInstanceFree__FP14xModelInstance"
+        },
+        {
+          "function": "SwapModel__29@unnamed@zEntDestructObj_cpp@FP15zEntDestructObjP14xModelInstance",
+          "offset": 292,
+          "target_source": "SB/Core/p2/iCollide.cpp",
+          "target_function": "iBoxForModelLocal__FP4xBoxPC14xModelInstance",
+          "symbol": "iBoxForModelLocal__FP4xBoxPC14xModelInstance"
+        },
+        {
+          "function": "SwapModel__29@unnamed@zEntDestructObj_cpp@FP15zEntDestructObjP14xModelInstance",
+          "offset": 300,
+          "target_source": "SB/Game/zCollGeom.cpp",
+          "target_function": "zCollGeom_EntSetup__FP4xEnt",
+          "symbol": "zCollGeom_EntSetup__FP4xEnt"
+        },
+        {
+          "function": "SwapModel__29@unnamed@zEntDestructObj_cpp@FP15zEntDestructObjP14xModelInstance",
+          "offset": 400,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf",
+          "symbol": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "zEntDestructObj_DestroyFX__FP15zEntDestructObj",
+          "offset": 192,
+          "opcode": 35,
+          "target_name": "sEmitDust",
+          "symbol": "sEmitDust"
+        },
+        {
+          "function": "zEntDestructObj_DestroyFX__FP15zEntDestructObj",
+          "offset": 208,
+          "opcode": 35,
+          "target_name": "sEmitXplo",
+          "symbol": "sEmitXplo"
+        },
+        {
+          "function": "zEntDestructObj_DestroyFX__FP15zEntDestructObj",
+          "offset": 224,
+          "opcode": 35,
+          "target_name": "sEmitWeb",
+          "symbol": "sEmitWeb"
+        },
+        {
+          "function": "zEntDestructObj_FindFX__Fv",
+          "offset": 24,
+          "opcode": 43,
+          "target_name": "sEmitDust",
+          "symbol": "sEmitDust"
+        },
+        {
+          "function": "zEntDestructObj_FindFX__Fv",
+          "offset": 40,
+          "opcode": 43,
+          "target_name": "sEmitXplo",
+          "symbol": "sEmitXplo"
+        },
+        {
+          "function": "zEntDestructObj_FindFX__Fv",
+          "offset": 56,
+          "opcode": 43,
+          "target_name": "sEmitWeb",
+          "symbol": "sEmitWeb"
+        },
+        {
+          "function": "zEntDestructObj_FindFX__Fv",
+          "offset": 72,
+          "opcode": 43,
+          "target_name": "sEmitFire",
+          "symbol": "sEmitFire"
+        },
+        {
+          "function": "zEntDestructObj_FindFX__Fv",
+          "offset": 88,
+          "opcode": 43,
+          "target_name": "sEmitSmoke",
+          "symbol": "sEmitSmoke"
+        },
+        {
+          "function": "zEntDestructObj_FindFX__Fv",
+          "offset": 112,
+          "opcode": 43,
+          "target_name": "sShrapDefault",
+          "symbol": "sShrapDefault"
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Game/zEntSimpleObj.cpp",
+      "target_unit": "SB/Game/zEntSimpleObj.cpp",
+      "object": "source/zEntSimpleObj.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zEntSimpleObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase": "zEntSimpleObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "zEntSimpleObj_Load__FP13zEntSimpleObjP7xSerial": "zEntSimpleObj_Load__FP13zEntSimpleObjP7xSerial",
+        "zEntSimpleObj_Save__FP13zEntSimpleObjP7xSerial": "zEntSimpleObj_Save__FP13zEntSimpleObjP7xSerial",
+        "zEntSimpleObj_Setup__FP13zEntSimpleObj": "zEntSimpleObj_Setup__FP13zEntSimpleObj",
+        "zEntSimpleObj_Update__FP13zEntSimpleObjP6xScenef": "zEntSimpleObj_Update__FP13zEntSimpleObjP6xScenef",
+        "zEntSimpleObj_Move__FP4xEntP6xScenefP9xEntFrame": "zEntSimpleObj_Move__FP4xEntP6xScenefP9xEntFrame",
+        "zEntSimpleObj_Init__FP13zEntSimpleObjP9xEntAssetb": "zEntSimpleObj_Init__FP13zEntSimpleObjP9xEntAssetb",
+        "zEntSimpleObj_Init__FPvPv": "zEntSimpleObj_Init__FPvPv",
+        "zEntTrackPhysics_Init__FPvPv": "zEntTrackPhysics_Init__FPvPv",
+        "zEntSimpleObj_Render__FP4xEnt": "zEntSimpleObj_Render__FP4xEnt",
+        "zEntSimpleObj_MgrCustomRender__Fv": "zEntSimpleObj_MgrCustomRender__Fv",
+        "zEntSimpleObj_MgrCustomUpdate__FP6zScenef": "zEntSimpleObj_MgrCustomUpdate__FP6zScenef",
+        "zEntSimpleObj_MgrUpdateRender__FP7RpWorldf": "zEntSimpleObj_MgrUpdateRender__FP7RpWorldf",
+        "zEntSimpleObj_MgrInit__FPP13zEntSimpleObjUi": "zEntSimpleObj_MgrInit__FPP13zEntSimpleObjUi"
+      },
+      "calls": [
+        {
+          "function": "zEntSimpleObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 352,
+          "target_source": "SB/Game/zFX.cpp",
+          "target_function": "zFXPopOn__FR4xEntff",
+          "symbol": "zFXPopOn__FR4xEntff"
+        },
+        {
+          "function": "zEntSimpleObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 432,
+          "target_source": "SB/Game/zFX.cpp",
+          "target_function": "zFXPopOff__FR4xEntff",
+          "symbol": "zFXPopOff__FR4xEntff"
+        },
+        {
+          "function": "zEntSimpleObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 512,
+          "target_source": "SB/Game/zFX.cpp",
+          "target_function": "zFXPopOn__FR4xEntff",
+          "symbol": "zFXPopOn__FR4xEntff"
+        },
+        {
+          "function": "zEntSimpleObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 580,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntDefaultBoundUpdate__FP4xEntP5xVec3",
+          "symbol": "xEntDefaultBoundUpdate__FP4xEntP5xVec3"
+        },
+        {
+          "function": "zEntSimpleObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 664,
+          "target_source": "SB/Game/zFX.cpp",
+          "target_function": "zFXPopOff__FR4xEntff",
+          "symbol": "zFXPopOff__FR4xEntff"
+        },
+        {
+          "function": "zEntSimpleObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 732,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntDefaultBoundUpdate__FP4xEntP5xVec3",
+          "symbol": "xEntDefaultBoundUpdate__FP4xEntP5xVec3"
+        },
+        {
+          "function": "zEntSimpleObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 752,
+          "target_source": "SB/Game/zCollGeom.cpp",
+          "target_function": "zCollGeom_CamEnable__FP4xEnt",
+          "symbol": "zCollGeom_CamEnable__FP4xEnt"
+        },
+        {
+          "function": "zEntSimpleObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 768,
+          "target_source": "SB/Game/zCollGeom.cpp",
+          "target_function": "zCollGeom_CamDisable__FP4xEnt",
+          "symbol": "zCollGeom_CamDisable__FP4xEnt"
+        },
+        {
+          "function": "zEntSimpleObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 784,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zEntReset__FP4zEnt",
+          "symbol": "zEntReset__FP4zEnt"
+        },
+        {
+          "function": "zEntSimpleObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 892,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntDefaultBoundUpdate__FP4xEntP5xVec3",
+          "symbol": "xEntDefaultBoundUpdate__FP4xEntP5xVec3"
+        },
+        {
+          "function": "zEntSimpleObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 920,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zEntAnimEvent__FP4zEntUiPCf",
+          "symbol": "zEntAnimEvent__FP4zEntUiPCf"
+        },
+        {
+          "function": "zEntSimpleObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 960,
+          "target_source": "SB/Core/x/xSkyDome.cpp",
+          "target_function": "xSkyDome_AddEntity__FP4xEntii",
+          "symbol": "xSkyDome_AddEntity__FP4xEntii"
+        },
+        {
+          "function": "zEntSimpleObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 992,
+          "target_source": "SB/Game/zGoo.cpp",
+          "target_function": "zGooAdd__FP4xEntfi",
+          "symbol": "zGooAdd__FP4xEntfi"
+        },
+        {
+          "function": "zEntSimpleObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1012,
+          "target_source": "SB/Game/zFX.cpp",
+          "target_function": "zFXGooEventSetWarb__FP4xEntPCf",
+          "symbol": "zFXGooEventSetWarb__FP4xEntPCf"
+        },
+        {
+          "function": "zEntSimpleObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1036,
+          "target_source": "SB/Game/zFX.cpp",
+          "target_function": "zFXGooEventSetFreezeDuration__FP4xEntf",
+          "symbol": "zFXGooEventSetFreezeDuration__FP4xEntf"
+        },
+        {
+          "function": "zEntSimpleObjEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 1056,
+          "target_source": "SB/Game/zFX.cpp",
+          "target_function": "zFXGooEventMelt__FP4xEnt",
+          "symbol": "zFXGooEventMelt__FP4xEnt"
+        },
+        {
+          "function": "zEntSimpleObj_Load__FP13zEntSimpleObjP7xSerial",
+          "offset": 0,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zEntLoad__FP4zEntP7xSerial",
+          "symbol": "zEntLoad__FP4zEntP7xSerial",
+          "opcode": 2
+        },
+        {
+          "function": "zEntSimpleObj_Save__FP13zEntSimpleObjP7xSerial",
+          "offset": 0,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zEntSave__FP4zEntP7xSerial",
+          "symbol": "zEntSave__FP4zEntP7xSerial",
+          "opcode": 2
+        },
+        {
+          "function": "zEntSimpleObj_Setup__FP13zEntSimpleObj",
+          "offset": 0,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zEntSetup__FP4zEnt",
+          "symbol": "zEntSetup__FP4zEnt",
+          "opcode": 2
+        },
+        {
+          "function": "zEntSimpleObj_Update__FP13zEntSimpleObjP6xScenef",
+          "offset": 28,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntUpdate__FP4xEntP6xScenef",
+          "symbol": "xEntUpdate__FP4xEntP6xScenef"
+        },
+        {
+          "function": "zEntSimpleObj_Update__FP13zEntSimpleObjP6xScenef",
+          "offset": 76,
+          "target_source": "SB/Core/p2/iAnim.cpp",
+          "target_function": "iAnimDuration__FPv",
+          "symbol": "iAnimDuration__FPv"
+        },
+        {
+          "function": "zEntSimpleObj_Update__FP13zEntSimpleObjP6xScenef",
+          "offset": 136,
+          "target_source": "SB/Core/p2/iAnim.cpp",
+          "target_function": "iAnimEval__FPvfUiP5xVec3P5xQuat",
+          "symbol": "iAnimEval__FPvfUiP5xVec3P5xQuat"
+        },
+        {
+          "function": "zEntSimpleObj_Update__FP13zEntSimpleObjP6xScenef",
+          "offset": 164,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelAnimMatrices__FP8RpAtomicP5xQuatP5xVec3P11RwMatrixTag",
+          "symbol": "iModelAnimMatrices__FP8RpAtomicP5xQuatP5xVec3P11RwMatrixTag"
+        },
+        {
+          "function": "zEntSimpleObj_Init__FP13zEntSimpleObjP9xEntAssetb",
+          "offset": 40,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zEntInit__FP4zEntP9xEntAssetUi",
+          "symbol": "zEntInit__FP4zEntP9xEntAssetUi"
+        },
+        {
+          "function": "zEntSimpleObj_Init__FP13zEntSimpleObjP9xEntAssetb",
+          "offset": 248,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "zEntSimpleObj_Init__FP13zEntSimpleObjP9xEntAssetb",
+          "offset": 372,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimPlaySetState__FP11xAnimSingleP10xAnimStatef",
+          "symbol": "xAnimPlaySetState__FP11xAnimSingleP10xAnimStatef"
+        },
+        {
+          "function": "zEntSimpleObj_Init__FP13zEntSimpleObjP9xEntAssetb",
+          "offset": 424,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "zEntSimpleObj_Init__FP13zEntSimpleObjP9xEntAssetb",
+          "offset": 444,
+          "target_source": "SB/Core/p2/iAnim.cpp",
+          "target_function": "iAnimBoneCount__FPv",
+          "symbol": "iAnimBoneCount__FPv"
+        },
+        {
+          "function": "zEntSimpleObj_Init__FP13zEntSimpleObjP9xEntAssetb",
+          "offset": 464,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelNumBones__FP8RpAtomic",
+          "symbol": "iModelNumBones__FP8RpAtomic"
+        },
+        {
+          "function": "zEntSimpleObj_Init__FP13zEntSimpleObjP9xEntAssetb",
+          "offset": 496,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zEntReset__FP4zEnt",
+          "symbol": "zEntReset__FP4zEnt"
+        },
+        {
+          "function": "zEntSimpleObj_Init__FPvPv",
+          "offset": 0,
+          "target_source": "SB/Game/zEntSimpleObj.cpp",
+          "target_function": "zEntSimpleObj_Init__FP13zEntSimpleObjP9xEntAssetb",
+          "symbol": "zEntSimpleObj_Init__FP13zEntSimpleObjP9xEntAssetb",
+          "opcode": 2
+        },
+        {
+          "function": "zEntTrackPhysics_Init__FPvPv",
+          "offset": 0,
+          "target_source": "SB/Game/zEntSimpleObj.cpp",
+          "target_function": "zEntSimpleObj_Init__FP13zEntSimpleObjP9xEntAssetb",
+          "symbol": "zEntSimpleObj_Init__FP13zEntSimpleObjP9xEntAssetb",
+          "opcode": 2
+        },
+        {
+          "function": "zEntSimpleObj_Render__FP4xEnt",
+          "offset": 56,
+          "target_source": "SB/Core/x/xModel.cpp",
+          "target_function": "xModelRender__FP14xModelInstance",
+          "symbol": "xModelRender__FP14xModelInstance"
+        },
+        {
+          "function": "zEntSimpleObj_MgrCustomRender__Fv",
+          "offset": 60,
+          "target_source": "SB/Core/x/xLightKit.cpp",
+          "target_function": "xLightKit_Enable__FP9xLightKitP7RpWorld",
+          "symbol": "xLightKit_Enable__FP9xLightKitP7RpWorld"
+        },
+        {
+          "function": "zEntSimpleObj_MgrUpdateRender__FP7RpWorldf",
+          "offset": 192,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelSphereCull__FP7xSphere",
+          "symbol": "iModelSphereCull__FP7xSphere"
+        },
+        {
+          "function": "zEntSimpleObj_MgrUpdateRender__FP7RpWorldf",
+          "offset": 428,
+          "target_source": "SB/Game/zGame.cpp",
+          "target_function": "zGameIsPaused__Fv",
+          "symbol": "zGameIsPaused__Fv"
+        },
+        {
+          "function": "zEntSimpleObj_MgrUpdateRender__FP7RpWorldf",
+          "offset": 444,
+          "target_source": "SB/Core/p2/iAnim.cpp",
+          "target_function": "iAnimDuration__FPv",
+          "symbol": "iAnimDuration__FPv"
+        },
+        {
+          "function": "zEntSimpleObj_MgrUpdateRender__FP7RpWorldf",
+          "offset": 504,
+          "target_source": "SB/Core/p2/iAnim.cpp",
+          "target_function": "iAnimEval__FPvfUiP5xVec3P5xQuat",
+          "symbol": "iAnimEval__FPvfUiP5xVec3P5xQuat"
+        },
+        {
+          "function": "zEntSimpleObj_MgrUpdateRender__FP7RpWorldf",
+          "offset": 532,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelAnimMatrices__FP8RpAtomicP5xQuatP5xVec3P11RwMatrixTag",
+          "symbol": "iModelAnimMatrices__FP8RpAtomicP5xQuatP5xVec3P11RwMatrixTag"
+        },
+        {
+          "function": "zEntSimpleObj_MgrUpdateRender__FP7RpWorldf",
+          "offset": 552,
+          "target_source": "SB/Core/x/xLightKit.cpp",
+          "target_function": "xLightKit_Enable__FP9xLightKitP7RpWorld",
+          "symbol": "xLightKit_Enable__FP9xLightKitP7RpWorld"
+        },
+        {
+          "function": "zEntSimpleObj_MgrUpdateRender__FP7RpWorldf",
+          "offset": 596,
+          "target_source": "SB/Core/x/xModel.cpp",
+          "target_function": "xModelRender__FP14xModelInstance",
+          "symbol": "xModelRender__FP14xModelInstance"
+        },
+        {
+          "function": "zEntSimpleObj_MgrUpdateRender__FP7RpWorldf",
+          "offset": 616,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xrand__Fv",
+          "symbol": "xrand__Fv"
+        },
+        {
+          "function": "zEntSimpleObj_MgrUpdateRender__FP7RpWorldf",
+          "offset": 692,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "zEntSimpleObj_MgrUpdateRender__FP7RpWorldf",
+          "offset": 724,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xrand__Fv",
+          "symbol": "xrand__Fv"
+        },
+        {
+          "function": "zEntSimpleObj_MgrUpdateRender__FP7RpWorldf",
+          "offset": 748,
+          "target_source": "SB/Game/zFX.cpp",
+          "target_function": "zFX_SpawnBubbleTrail__FPC5xVec3UiPC5xVec3PC5xVec3",
+          "symbol": "zFX_SpawnBubbleTrail__FPC5xVec3UiPC5xVec3PC5xVec3"
+        },
+        {
+          "function": "zEntSimpleObj_MgrInit__FPP13zEntSimpleObjUi",
+          "offset": 100,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "zEntSimpleObj_MgrInit__FPP13zEntSimpleObjUi",
+          "offset": 420,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "zEntSimpleObj_MgrInit__FPP13zEntSimpleObjUi",
+          "offset": 508,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "zEntSimpleObj_MgrInit__FPP13zEntSimpleObjUi",
+          "offset": 948,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "zEntSimpleObj_MgrInit__FPP13zEntSimpleObjUi",
+          "offset": 1068,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelCull__FP8RpAtomicP11RwMatrixTag",
+          "symbol": "iModelCull__FP8RpAtomicP11RwMatrixTag"
+        },
+        {
+          "function": "zEntSimpleObj_MgrInit__FPP13zEntSimpleObjUi",
+          "offset": 1144,
+          "target_source": "SB/Game/zLOD.cpp",
+          "target_function": "zLOD_Get__FP4xEnt",
+          "symbol": "zLOD_Get__FP4xEnt"
+        },
+        {
+          "function": "zEntSimpleObj_MgrInit__FPP13zEntSimpleObjUi",
+          "offset": 1624,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntUpdate__FP4xEntP6xScenef",
+          "symbol": "xEntUpdate__FP4xEntP6xScenef"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "zEntSimpleObj_Update__FP13zEntSimpleObjP6xScenef",
+          "offset": 112,
+          "opcode": 35,
+          "target_name": "giAnimScratch",
+          "symbol": "giAnimScratch"
+        },
+        {
+          "function": "zEntSimpleObj_MgrCustomRender__Fv",
+          "offset": 16,
+          "opcode": 35,
+          "target_name": "sSimpleCustomCount",
+          "symbol": "sSimpleCustomCount"
+        },
+        {
+          "function": "zEntSimpleObj_MgrCustomRender__Fv",
+          "offset": 40,
+          "opcode": 35,
+          "target_name": "sSimpleCustomList",
+          "symbol": "sSimpleCustomList"
+        },
+        {
+          "function": "zEntSimpleObj_MgrCustomRender__Fv",
+          "offset": 68,
+          "opcode": 35,
+          "target_name": "sSimpleCustomList",
+          "symbol": "sSimpleCustomList"
+        },
+        {
+          "function": "zEntSimpleObj_MgrCustomRender__Fv",
+          "offset": 92,
+          "opcode": 35,
+          "target_name": "sSimpleCustomCount",
+          "symbol": "sSimpleCustomCount"
+        },
+        {
+          "function": "zEntSimpleObj_MgrCustomUpdate__FP6zScenef",
+          "offset": 32,
+          "opcode": 35,
+          "target_name": "sSimpleCustomCount",
+          "symbol": "sSimpleCustomCount"
+        },
+        {
+          "function": "zEntSimpleObj_MgrCustomUpdate__FP6zScenef",
+          "offset": 56,
+          "opcode": 35,
+          "target_name": "sSimpleCustomList",
+          "symbol": "sSimpleCustomList"
+        },
+        {
+          "function": "zEntSimpleObj_MgrCustomUpdate__FP6zScenef",
+          "offset": 104,
+          "opcode": 35,
+          "target_name": "sSimpleCustomCount",
+          "symbol": "sSimpleCustomCount"
+        },
+        {
+          "function": "zEntSimpleObj_MgrUpdateRender__FP7RpWorldf",
+          "offset": 64,
+          "opcode": 35,
+          "target_name": "sMgrCount",
+          "symbol": "sMgrCount",
+          "target_source": "SB/Game/zEntSimpleObj.cpp"
+        },
+        {
+          "function": "zEntSimpleObj_MgrUpdateRender__FP7RpWorldf",
+          "offset": 68,
+          "opcode": 35,
+          "target_name": "sMgrList",
+          "symbol": "sMgrList",
+          "target_source": "SB/Game/zEntSimpleObj.cpp"
+        },
+        {
+          "function": "zEntSimpleObj_MgrUpdateRender__FP7RpWorldf",
+          "offset": 480,
+          "opcode": 35,
+          "target_name": "giAnimScratch",
+          "symbol": "giAnimScratch"
+        },
+        {
+          "function": "zEntSimpleObj_MgrUpdateRender__FP7RpWorldf",
+          "offset": 760,
+          "opcode": 35,
+          "target_name": "sMgrCount",
+          "symbol": "sMgrCount",
+          "target_source": "SB/Game/zEntSimpleObj.cpp"
+        },
+        {
+          "function": "zEntSimpleObj_MgrInit__FPP13zEntSimpleObjUi",
+          "offset": 48,
+          "opcode": 43,
+          "target_name": "sMgrCount",
+          "symbol": "sMgrCount",
+          "target_source": "SB/Game/zEntSimpleObj.cpp"
+        },
+        {
+          "function": "zEntSimpleObj_MgrInit__FPP13zEntSimpleObjUi",
+          "offset": 52,
+          "opcode": 43,
+          "target_name": "sMgrList",
+          "symbol": "sMgrList",
+          "target_source": "SB/Game/zEntSimpleObj.cpp"
+        },
+        {
+          "function": "zEntSimpleObj_MgrInit__FPP13zEntSimpleObjUi",
+          "offset": 56,
+          "opcode": 43,
+          "target_name": "sSimpleCustomCount",
+          "symbol": "sSimpleCustomCount"
+        },
+        {
+          "function": "zEntSimpleObj_MgrInit__FPP13zEntSimpleObjUi",
+          "offset": 64,
+          "opcode": 43,
+          "target_name": "sSimpleCustomList",
+          "symbol": "sSimpleCustomList"
+        },
+        {
+          "function": "zEntSimpleObj_MgrInit__FPP13zEntSimpleObjUi",
+          "offset": 416,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "zEntSimpleObj_MgrInit__FPP13zEntSimpleObjUi",
+          "offset": 496,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "zEntSimpleObj_MgrInit__FPP13zEntSimpleObjUi",
+          "offset": 512,
+          "opcode": 43,
+          "target_name": "sSimpleCustomCount",
+          "symbol": "sSimpleCustomCount"
+        },
+        {
+          "function": "zEntSimpleObj_MgrInit__FPP13zEntSimpleObjUi",
+          "offset": 520,
+          "opcode": 43,
+          "target_name": "sSimpleCustomList",
+          "symbol": "sSimpleCustomList"
+        },
+        {
+          "function": "zEntSimpleObj_MgrInit__FPP13zEntSimpleObjUi",
+          "offset": 560,
+          "opcode": 35,
+          "target_name": "sSimpleCustomList",
+          "symbol": "sSimpleCustomList"
+        },
+        {
+          "function": "zEntSimpleObj_MgrInit__FPP13zEntSimpleObjUi",
+          "offset": 616,
+          "opcode": 35,
+          "target_name": "sSimpleCustomList",
+          "symbol": "sSimpleCustomList"
+        },
+        {
+          "function": "zEntSimpleObj_MgrInit__FPP13zEntSimpleObjUi",
+          "offset": 668,
+          "opcode": 35,
+          "target_name": "sSimpleCustomList",
+          "symbol": "sSimpleCustomList"
+        },
+        {
+          "function": "zEntSimpleObj_MgrInit__FPP13zEntSimpleObjUi",
+          "offset": 736,
+          "opcode": 35,
+          "target_name": "sSimpleCustomList",
+          "symbol": "sSimpleCustomList"
+        },
+        {
+          "function": "zEntSimpleObj_MgrInit__FPP13zEntSimpleObjUi",
+          "offset": 752,
+          "opcode": 35,
+          "target_name": "sSimpleCustomList",
+          "symbol": "sSimpleCustomList"
+        },
+        {
+          "function": "zEntSimpleObj_MgrInit__FPP13zEntSimpleObjUi",
+          "offset": 768,
+          "opcode": 35,
+          "target_name": "sSimpleCustomList",
+          "symbol": "sSimpleCustomList"
+        },
+        {
+          "function": "zEntSimpleObj_MgrInit__FPP13zEntSimpleObjUi",
+          "offset": 780,
+          "opcode": 35,
+          "target_name": "sSimpleCustomList",
+          "symbol": "sSimpleCustomList"
+        },
+        {
+          "function": "zEntSimpleObj_MgrInit__FPP13zEntSimpleObjUi",
+          "offset": 796,
+          "opcode": 35,
+          "target_name": "sSimpleCustomList",
+          "symbol": "sSimpleCustomList"
+        },
+        {
+          "function": "zEntSimpleObj_MgrInit__FPP13zEntSimpleObjUi",
+          "offset": 848,
+          "opcode": 35,
+          "target_name": "sSimpleCustomList",
+          "symbol": "sSimpleCustomList"
+        },
+        {
+          "function": "zEntSimpleObj_MgrInit__FPP13zEntSimpleObjUi",
+          "offset": 896,
+          "opcode": 43,
+          "target_name": "sSimpleCustomCount",
+          "symbol": "sSimpleCustomCount"
+        },
+        {
+          "function": "zEntSimpleObj_MgrInit__FPP13zEntSimpleObjUi",
+          "offset": 900,
+          "opcode": 43,
+          "target_name": "sSimpleCustomList",
+          "symbol": "sSimpleCustomList"
+        },
+        {
+          "function": "zEntSimpleObj_MgrInit__FPP13zEntSimpleObjUi",
+          "offset": 936,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "zEntSimpleObj_MgrInit__FPP13zEntSimpleObjUi",
+          "offset": 952,
+          "opcode": 43,
+          "target_name": "sMgrCount",
+          "symbol": "sMgrCount",
+          "target_source": "SB/Game/zEntSimpleObj.cpp"
+        },
+        {
+          "function": "zEntSimpleObj_MgrInit__FPP13zEntSimpleObjUi",
+          "offset": 956,
+          "opcode": 43,
+          "target_name": "sMgrList",
+          "symbol": "sMgrList",
+          "target_source": "SB/Game/zEntSimpleObj.cpp"
+        },
+        {
+          "function": "zEntSimpleObj_MgrInit__FPP13zEntSimpleObjUi",
+          "offset": 964,
+          "opcode": 35,
+          "target_name": "sMgrList",
+          "symbol": "sMgrList",
+          "target_source": "SB/Game/zEntSimpleObj.cpp"
+        }
+      ]
     }
   ]
 }

@@ -75,12 +75,12 @@ checked, and the standard objdiff parser accepts the result.
 
 | Version | Full code-region bytes | Objdiff code-matched bytes |
 | --- | ---: | ---: |
-| SLUS-20680 | 2,978,560 | 52,656 |
-| SLES-51968 | 2,979,712 | 52,656 |
-| SLES-51970 | 2,976,512 | 52,656 |
+| SLUS-20680 | 2,978,560 | 54,256 |
+| SLES-51968 | 2,979,712 | 54,256 |
+| SLES-51970 | 2,976,512 | 54,256 |
 | SLES-53623 | 2,979,968 | 18,888 |
-| XBOX-US | 1,798,760 | 8,927 |
-| XBOX-EU | 1,798,760 | 8,927 |
+| XBOX-US | 1,798,760 | 9,629 |
+| XBOX-EU | 1,798,760 | 9,629 |
 
 The PS2 [math alignment restoration](PS2_MATH_ALIGNMENT.md) enables complete
 `xEntMotion`, `xPad`, and `xClimate` source comparisons: 34 functions / 20,040
@@ -122,9 +122,9 @@ The narrower function-only baselines currently contain:
 
 | PS2 baseline | Functions | Measured function bytes | Source matches |
 | --- | ---: | ---: | ---: |
-| USA | 5,391 | 2,107,460 | 426 functions / 52,656 bytes |
-| Europe/Australia | 5,392 | 2,108,700 | 426 functions / 52,656 bytes |
-| Germany | 5,394 | 2,105,512 | 426 functions / 52,656 bytes |
+| USA | 5,391 | 2,107,460 | 451 functions / 54,256 bytes |
+| Europe/Australia | 5,392 | 2,108,700 | 451 functions / 54,256 bytes |
+| Germany | 5,394 | 2,105,512 | 451 functions / 54,256 bytes |
 | France (reviewed and corroborated bounds) | 482 | 170,808 | 116 functions / 18,888 bytes |
 
 The `address-anchors.json` registries also recover over 2,500 named data addresses
@@ -325,15 +325,15 @@ Both region registries keep independent executable identities.
 See the parameterized scripts in `tools/platforms/ghidra/`. No Xbox SDK is required
 for this analysis step.
 
-`verified-anonymous-functions.json` promotes 2,460 disjoint extents (616,274
+`verified-anonymous-functions.json` promotes 2,450 disjoint extents (613,980
 bytes) per release after Capstone 5.0.7 re-decodes closed control flow, verifies
 all body bytes are reachable, checks an incoming direct call from another
 closed function, and excludes foreign interior transfers across the candidate
 inventory. Reviewed extents take precedence. CI regenerates this registry from
 the original; the remaining candidates stay excluded. Anonymous identifiers
 establish neither original symbols nor source ownership. Together with the
-90 reviewed extents, measured coverage is 2,550 functions / 633,591 bytes;
-8,927 bytes match source. This is still partial coverage.
+101 reviewed extents, measured coverage is 2,551 functions / 633,601 bytes;
+9,629 bytes match source. This is still partial coverage.
 
 The complete particle-group source now compiles with its real particle dependency
 and a hash-pinned Microsoft static runtime library. Five independently reviewed
@@ -450,3 +450,7 @@ version; see [quick-cull evidence](XBOX_QUICK_CULL.md).
 The PS2 [complete allocator declarations](PS2_RW_ALLOCATORS.md) enable spline,
 INI, update-culling and clump-collision comparisons: 22,568 bytes compared and
 3,032 additional matched bytes per debug region.
+
+Four further complete PS2 gameplay units add 1,600 bytes per debug region;
+see [gameplay object evidence](PS2_GAMEPLAY_OBJECTS.md). Xbox math adds 702 bytes
+per release with a verified genuine runtime callee; see [math evidence](XBOX_MATH.md).

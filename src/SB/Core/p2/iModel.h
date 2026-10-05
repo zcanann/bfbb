@@ -7,6 +7,7 @@ struct xLightKit;
 struct RpAtomic;
 struct xQuat;
 struct xVec3;
+struct xSphere;
 struct xModelTag;
 
 void iModel_SetLightKit(xLightKit* lightKit);
@@ -24,5 +25,8 @@ void iModelResetMaterial(RpAtomic* model);
 signed int iModelCull(RpAtomic* model, RwMatrix* mat);
 signed int iModelCullPlusShadow(RpAtomic* model, RwMatrix* mat, xVec3* shadowVec,
                                signed int* shadowOutside);
+
+unsigned int iModelNumBones(RpAtomic* model);
+signed int iModelSphereCull(xSphere* sphere);
 
 #endif
