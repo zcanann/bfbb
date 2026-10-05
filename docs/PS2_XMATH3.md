@@ -18,12 +18,20 @@ of `g_X3`, `g_Y3`, `g_Z3`, `g_O3`, and `g_I3`. Component offsets stay as implici
 REL addends; the check reconstructs every original instruction and compares
 the entire source body to the original bytes independently.
 
-The initial objdiff score also labeled two functions exact despite unresolved
-runtime math calls. Those are not verified matches: `xQuatToAxisAngle` calls
-an unnamed runtime entry through `xacos`, and `xMat3x3RMulRotY` through `icos`
-and `isin`. Reporting must retain unresolved destination identities rather
-than allow source relocation masking to hide those differences. No complete
-translation-unit or executable source-link claim is made.
+The standard objdiff instruction score is 13 functions / 1,772 bytes. It uses
+the same relocation-comparison policy as GameCube and does not establish raw
+linked equality: `xQuatToAxisAngle` calls an unnamed runtime entry through
+`xacos`, and `xMat3x3RMulRotY` through `icos` and `isin`. The independently
+verified raw subset is 11 functions / 1,344 bytes including initialization.
+No complete translation-unit or executable source-link claim is made.
+
+The target relocation backend accepts these adjacent floating load/store
+pairs only with explicit `lo_opcode` 49 or 57 and a named original data anchor.
+It checks the high-half register, low-half base, component displacement,
+original memory range, and control-flow entry; unknown shapes are rejected.
+The implicit addend is preserved in the reconstructed REL instruction fields.
+Existing profile target bytes and relocation records remain identical in all
+three debug-bearing releases.
 
 Private evidence: `build/ps2math3_154/{raw-proof,init-raw-proof,gc-sections}.json`,
 `raw_verify.py`, `verify_init.py`, the actual full source object and compiler
