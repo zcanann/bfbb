@@ -369,7 +369,7 @@ void zNPCMsg_AreaNotify(zNPCCommon* sender, NPCMsg* msg, F32 radius, S32 filter,
         xVec3 vecDiff;
         xVec3Sub(&vecDiff, xEntGetPos((xEnt*)targetNPC), &checkPos);
 
-        if (FABS(vecDiff.y) > 2.0f)
+        if (xabs(vecDiff.y) > 2.0f)
         {
             continue;
         }
@@ -430,7 +430,7 @@ void zNPCMsg_AreaPlayerStun(F32 stuntime, F32 radius, xVec3* pos)
             xVec3 diff;
             npc->XYZVecToPos(&diff, &from);
 
-            if (FABS(diff.y) > radius)
+            if (xabs(diff.y) > radius)
             {
                 continue;
             }
@@ -494,7 +494,7 @@ void zNPCMsg_AreaNPCExplodeNoRobo(zNPCCommon* who, F32 radius, const xVec3* pos_
         }
         else
         {
-            if (FABS(diff.x) > FABS(diff.z))
+            if (xabs(diff.x) > xabs(diff.z))
             {
                 diff = (diff.x > 0.0f) ? g_X3 : g_NX3;
             }
