@@ -6,7 +6,17 @@
 struct RpMaterial;
 struct RpSector;
 struct RpWorldSector;
-struct RpLight;
+struct RpLight
+{
+    RwObjectHasFrame object;
+    RwReal radius;
+    RwRGBAReal color;
+    RwReal minusCosAngle;
+    RwLinkList WorldSectorsInLight;
+    RwLLLink inWorld;
+    RwUInt16 lightFrame;
+    RwUInt16 pad;
+};
 
 struct RpMaterialList
 {
@@ -41,5 +51,15 @@ struct RpWorld
     RpWorldSector* (*renderCallBack)(RpWorldSector*);
     RxPipeline* pipeline;
 };
+
+extern "C" {
+RpLight* RpLightCreate(RwInt32 type);
+RwBool RpLightDestroy(RpLight* light);
+RpLight* RpLightSetColor(RpLight* light, const RwRGBAReal* color);
+RpLight* RpLightSetRadius(RpLight* light, RwReal radius);
+RpLight* RpLightSetConeAngle(RpLight* light, RwReal angle);
+RpWorld* RpWorldAddLight(RpWorld* world, RpLight* light);
+RpWorld* RpWorldRemoveLight(RpWorld* world, RpLight* light);
+}
 
 #endif
