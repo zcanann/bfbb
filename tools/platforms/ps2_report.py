@@ -49,7 +49,9 @@ def _target_object(functions: list[dict], elf_flags: int) -> bytes:
     strings = bytearray(b"\0")
     for function in functions:
         index = len(sections)
-        sections.append({"name": f".text.{function['low']:08x}", "type": 1,
+        # Match the compiler's code-section name even for a one-function subset.
+        # objdiff also uses section names when pairing named functions.
+        sections.append({"name": ".text", "type": 1,
                          "flags": 6, "address": 0,
                          "data": function["bytes"], "align": 4,
                          "link": 0, "info": 0, "entsize": 0})

@@ -65,3 +65,13 @@ subsets for comparison. The single verified factory constructor currently has
 no automatic objdiff pairing despite equal canonical symbol spellings, so it
 contributes zero; no manual score is assigned. All symbol/split registries remain
 unchanged, and the 15 unconfirmed exact-byte candidates remain excluded.
+
+## Single-function section pairing
+
+Generated target code sections now use the compiler's `.text` name. With only
+one known function in a unit, an address-suffixed section name survived objdiff's
+section merging and prevented pairing with the source `.text` section, despite
+identical canonical symbol names. The xFactory constructor exposes this case:
+normal section naming pairs its existing 120-byte source and target bodies at
+100% code match. No instruction bytes, symbol bounds, relocation policy or
+objdiff scoring settings change.
