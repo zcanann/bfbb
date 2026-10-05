@@ -61,3 +61,8 @@ complete Robo source. All 70 existing TUs compile. The 5,162 non-Robo function
 records are unchanged from verified `7d9c08d96` CI, and all 229 Robo records are
 identical to its original per-region source report. Existing totals remain
 69,392 matched bytes / 557 functions before enabling the two new profiles.
+
+The two subsequently enabled goal units were rebuilt with these declarations:
+all 30 ordered allocated sections in `zNPCGoalCommon` and all 149 in
+`zNPCGoalStd` remain byte-identical. Their additional 4,320 matched bytes are
+therefore preserved as well. Evidence: `build/ps2goals202/comparison.json`.

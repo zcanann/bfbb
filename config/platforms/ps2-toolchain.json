@@ -38040,6 +38040,890 @@
         }
       ],
       "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/x/xModel.cpp",
+      "target_unit": "SB/Core/x/xModel.cpp",
+      "object": "source/xModel.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xModelGetBoneMat__FR7xMat4x3RC14xModelInstanceUi": "xModelGetBoneMat__FR7xMat4x3RC14xModelInstanceUi",
+        "xModelGetBoneLocation__FRC14xModelInstanceUi": "xModelGetBoneLocation__FRC14xModelInstanceUi",
+        "xModelAnimCollRefresh__FRC14xModelInstance": "xModelAnimCollRefresh__FRC14xModelInstance",
+        "xModelAnimCollStart__FR14xModelInstance": "xModelAnimCollStart__FR14xModelInstance",
+        "xModel_SceneExit__FP7RpWorld": "xModel_SceneExit__FP7RpWorld",
+        "xModel_SceneEnter__FP7RpWorld": "xModel_SceneEnter__FP7RpWorld",
+        "xModelSetMaterialAlpha__FP14xModelInstanceUc": "xModelSetMaterialAlpha__FP14xModelInstanceUc",
+        "CameraDestroy__FP8RwCamera": "CameraDestroy__FP8RwCamera",
+        "xModelRender2D__FRC14xModelInstanceRC13basic_rect<f>RC5xVec3RC5xVec3": "xModelRender2D__FRC14xModelInstanceRC13basic_rect<f>RC5xVec3RC5xVec3",
+        "xModelRender__FP14xModelInstance": "xModelRender__FP14xModelInstance",
+        "xModelRenderSingle__FP14xModelInstance": "xModelRenderSingle__FP14xModelInstance",
+        "xModelEval__FP14xModelInstance": "xModelEval__FP14xModelInstance",
+        "xModelEvalSingle__FP14xModelInstance": "xModelEvalSingle__FP14xModelInstance",
+        "xModelUpdate__FP14xModelInstancef": "xModelUpdate__FP14xModelInstancef",
+        "xModelInstanceUpgradeBrotherShared__FP14xModelInstanceUi": "xModelInstanceUpgradeBrotherShared__FP14xModelInstanceUi",
+        "xModelInstanceAttach__FP14xModelInstanceP14xModelInstance": "xModelInstanceAttach__FP14xModelInstanceP14xModelInstance",
+        "xModelInstanceFree__FP14xModelInstance": "xModelInstanceFree__FP14xModelInstance",
+        "xModelInstanceAlloc__FP8RpAtomicPvUsUcPUc": "xModelInstanceAlloc__FP8RpAtomicPvUsUcPUc",
+        "xModelPoolInit__FUiUi": "xModelPoolInit__FUiUi",
+        "xModelInit__Fv": "xModelInit__Fv",
+        "xModelGetPipeFlags__FP8RpAtomic": "xModelGetPipeFlags__FP8RpAtomic"
+      },
+      "calls": [
+        {
+          "function": "xModelGetBoneMat__FR7xMat4x3RC14xModelInstanceUi",
+          "offset": 160,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3",
+          "symbol": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3"
+        },
+        {
+          "function": "xModelAnimCollRefresh__FRC14xModelInstance",
+          "offset": 20,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelVertCount__FP8RpAtomic",
+          "symbol": "iModelVertCount__FP8RpAtomic"
+        },
+        {
+          "function": "xModelAnimCollRefresh__FRC14xModelInstance",
+          "offset": 276,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelVertEval__FP8RpAtomicUiUiP11RwMatrixTagP5xVec3P5xVec3",
+          "symbol": "iModelVertEval__FP8RpAtomicUiUiP11RwMatrixTagP5xVec3P5xVec3"
+        },
+        {
+          "function": "xModelAnimCollStart__FR14xModelInstance",
+          "offset": 44,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelVertCount__FP8RpAtomic",
+          "symbol": "iModelVertCount__FP8RpAtomic"
+        },
+        {
+          "function": "xModelAnimCollStart__FR14xModelInstance",
+          "offset": 76,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xModelSetMaterialAlpha__FP14xModelInstanceUc",
+          "offset": 0,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelSetMaterialAlpha__FP8RpAtomicUc",
+          "symbol": "iModelSetMaterialAlpha__FP8RpAtomicUc",
+          "opcode": 2
+        },
+        {
+          "function": "xModelRender2D__FRC14xModelInstanceRC13basic_rect<f>RC5xVec3RC5xVec3",
+          "offset": 232,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3LookVec__FP7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3LookVec__FP7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xModelRender2D__FRC14xModelInstanceRC13basic_rect<f>RC5xVec3RC5xVec3",
+          "offset": 244,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Transpose__FP7xMat3x3PC7xMat3x3",
+          "symbol": "xMat3x3Transpose__FP7xMat3x3PC7xMat3x3"
+        },
+        {
+          "function": "xModelRender2D__FRC14xModelInstanceRC13basic_rect<f>RC5xVec3RC5xVec3",
+          "offset": 476,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3",
+          "symbol": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3"
+        },
+        {
+          "function": "xModelRender2D__FRC14xModelInstanceRC13basic_rect<f>RC5xVec3RC5xVec3",
+          "offset": 492,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3",
+          "symbol": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3"
+        },
+        {
+          "function": "xModelRender2D__FRC14xModelInstanceRC13basic_rect<f>RC5xVec3RC5xVec3",
+          "offset": 508,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3",
+          "symbol": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3"
+        },
+        {
+          "function": "xModelRender2D__FRC14xModelInstanceRC13basic_rect<f>RC5xVec3RC5xVec3",
+          "offset": 816,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelRender__FP8RpAtomicP11RwMatrixTag",
+          "symbol": "iModelRender__FP8RpAtomicP11RwMatrixTag"
+        },
+        {
+          "function": "xModelRender__FP14xModelInstance",
+          "offset": 36,
+          "target_source": "SB/Core/x/xModelBucket.cpp",
+          "target_function": "xModelBucket_Add__FP14xModelInstance",
+          "symbol": "xModelBucket_Add__FP14xModelInstance"
+        },
+        {
+          "function": "xModelRender__FP14xModelInstance",
+          "offset": 56,
+          "target_source": "SB/Core/x/xModel.cpp",
+          "target_function": "xModelRenderSingle__FP14xModelInstance",
+          "symbol": "xModelRenderSingle__FP14xModelInstance"
+        },
+        {
+          "function": "xModelRenderSingle__FP14xModelInstance",
+          "offset": 356,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelCull__FP8RpAtomicP11RwMatrixTag",
+          "symbol": "iModelCull__FP8RpAtomicP11RwMatrixTag"
+        },
+        {
+          "function": "xModelRenderSingle__FP14xModelInstance",
+          "offset": 440,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelMaterialMul__FP8RpAtomicfff",
+          "symbol": "iModelMaterialMul__FP8RpAtomicfff"
+        },
+        {
+          "function": "xModelRenderSingle__FP14xModelInstance",
+          "offset": 532,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelSetMaterialAlpha__FP8RpAtomicUc",
+          "symbol": "iModelSetMaterialAlpha__FP8RpAtomicUc"
+        },
+        {
+          "function": "xModelRenderSingle__FP14xModelInstance",
+          "offset": 736,
+          "target_source": "SB/Core/x/xMorph.cpp",
+          "target_function": "xMorphRender__FP13xMorphSeqFileP11RwMatrixTagf",
+          "symbol": "xMorphRender__FP13xMorphSeqFileP11RwMatrixTagf"
+        },
+        {
+          "function": "xModelRenderSingle__FP14xModelInstance",
+          "offset": 788,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelRender__FP8RpAtomicP11RwMatrixTag",
+          "symbol": "iModelRender__FP8RpAtomicP11RwMatrixTag"
+        },
+        {
+          "function": "xModelRenderSingle__FP14xModelInstance",
+          "offset": 808,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelResetMaterial__FP8RpAtomic",
+          "symbol": "iModelResetMaterial__FP8RpAtomic"
+        },
+        {
+          "function": "xModelEval__FP14xModelInstance",
+          "offset": 24,
+          "target_source": "SB/Core/x/xModel.cpp",
+          "target_function": "xModelEvalSingle__FP14xModelInstance",
+          "symbol": "xModelEvalSingle__FP14xModelInstance"
+        },
+        {
+          "function": "xModelEvalSingle__FP14xModelInstance",
+          "offset": 60,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimPlayEval__FP9xAnimPlay",
+          "symbol": "xAnimPlayEval__FP9xAnimPlay"
+        },
+        {
+          "function": "xModelEvalSingle__FP14xModelInstance",
+          "offset": 312,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3",
+          "symbol": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3"
+        },
+        {
+          "function": "xModelEvalSingle__FP14xModelInstance",
+          "offset": 376,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3",
+          "symbol": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3"
+        },
+        {
+          "function": "xModelUpdate__FP14xModelInstancef",
+          "offset": 72,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimPlayChooseTransition__FP9xAnimPlay",
+          "symbol": "xAnimPlayChooseTransition__FP9xAnimPlay"
+        },
+        {
+          "function": "xModelUpdate__FP14xModelInstancef",
+          "offset": 84,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimPlayUpdate__FP9xAnimPlayf",
+          "symbol": "xAnimPlayUpdate__FP9xAnimPlayf"
+        },
+        {
+          "function": "xModelInstanceUpgradeBrotherShared__FP14xModelInstanceUi",
+          "offset": 48,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelNumBones__FP8RpAtomic",
+          "symbol": "iModelNumBones__FP8RpAtomic"
+        },
+        {
+          "function": "xModelInstanceUpgradeBrotherShared__FP14xModelInstanceUi",
+          "offset": 80,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xModelInstanceFree__FP14xModelInstance",
+          "offset": 24,
+          "target_source": "SB/Core/x/xModel.cpp",
+          "target_function": "xModelInstanceFree__FP14xModelInstance",
+          "symbol": "xModelInstanceFree__FP14xModelInstance"
+        },
+        {
+          "function": "xModelInstanceFree__FP14xModelInstance",
+          "offset": 180,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimPoolFree__FP9xAnimPlay",
+          "symbol": "xAnimPoolFree__FP9xAnimPlay"
+        },
+        {
+          "function": "xModelInstanceAlloc__FP8RpAtomicPvUsUcPUc",
+          "offset": 64,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelNumBones__FP8RpAtomic",
+          "symbol": "iModelNumBones__FP8RpAtomic"
+        },
+        {
+          "function": "xModelInstanceAlloc__FP8RpAtomicPvUsUcPUc",
+          "offset": 124,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xModelInstanceAlloc__FP8RpAtomicPvUsUcPUc",
+          "offset": 164,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xModelInstanceAlloc__FP8RpAtomicPvUsUcPUc",
+          "offset": 576,
+          "target_source": "SB/Core/x/xModelBucket.cpp",
+          "target_function": "xModelBucket_GetBuckets__FP8RpAtomic",
+          "symbol": "xModelBucket_GetBuckets__FP8RpAtomic"
+        },
+        {
+          "function": "xModelPoolInit__FUiUi",
+          "offset": 80,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xModelInit__Fv",
+          "offset": 8,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelInit__Fv",
+          "symbol": "iModelInit__Fv"
+        },
+        {
+          "function": "xModelInit__Fv",
+          "offset": 160,
+          "target_source": "SB/Core/x/xModel.cpp",
+          "target_function": "CameraDestroy__FP8RwCamera",
+          "symbol": "CameraDestroy__FP8RwCamera"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xModelAnimCollStart__FR14xModelInstance",
+          "offset": 60,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xModel.cpp",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xModel_SceneExit__FP7RpWorld",
+          "offset": 4,
+          "opcode": 35,
+          "target_name": "subcamera",
+          "target_source": "SB/Core/x/xModel.cpp",
+          "symbol": "subcamera"
+        },
+        {
+          "function": "xModel_SceneEnter__FP7RpWorld",
+          "offset": 4,
+          "opcode": 35,
+          "target_name": "subcamera",
+          "target_source": "SB/Core/x/xModel.cpp",
+          "symbol": "subcamera"
+        },
+        {
+          "function": "xModelRender__FP14xModelInstance",
+          "offset": 24,
+          "opcode": 35,
+          "target_name": "xModelBucketEnabled",
+          "target_source": "SB/Core/x/xModel.cpp",
+          "symbol": "xModelBucketEnabled"
+        },
+        {
+          "function": "xModelInstanceUpgradeBrotherShared__FP14xModelInstanceUi",
+          "offset": 56,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xModel.cpp",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xModelInstanceAlloc__FP8RpAtomicPvUsUcPUc",
+          "offset": 92,
+          "opcode": 35,
+          "target_name": "xModelInstStaticAlloc",
+          "target_source": "SB/Core/x/xModel.cpp",
+          "symbol": "xModelInstStaticAlloc"
+        },
+        {
+          "function": "xModelInstanceAlloc__FP8RpAtomicPvUsUcPUc",
+          "offset": 116,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xModel.cpp",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xModelInstanceAlloc__FP8RpAtomicPvUsUcPUc",
+          "offset": 152,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xModel.cpp",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xModelInstanceAlloc__FP8RpAtomicPvUsUcPUc",
+          "offset": 216,
+          "opcode": 35,
+          "target_name": "sxModelPoolList",
+          "target_source": "SB/Core/x/xModel.cpp",
+          "symbol": "sxModelPoolList"
+        },
+        {
+          "function": "xModelInstanceAlloc__FP8RpAtomicPvUsUcPUc",
+          "offset": 624,
+          "opcode": 35,
+          "target_name": "xModelLookupCount",
+          "target_source": "SB/Core/x/xModel.cpp",
+          "symbol": "xModelLookupCount"
+        },
+        {
+          "function": "xModelInstanceAlloc__FP8RpAtomicPvUsUcPUc",
+          "offset": 644,
+          "opcode": 35,
+          "target_name": "xModelLookupList",
+          "target_source": "SB/Core/x/xModel.cpp",
+          "symbol": "xModelLookupList"
+        },
+        {
+          "function": "xModelPoolInit__FUiUi",
+          "offset": 56,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xModel.cpp",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xModelPoolInit__FUiUi",
+          "offset": 600,
+          "opcode": 35,
+          "target_name": "sxModelPoolList",
+          "target_source": "SB/Core/x/xModel.cpp",
+          "symbol": "sxModelPoolList"
+        },
+        {
+          "function": "xModelPoolInit__FUiUi",
+          "offset": 608,
+          "opcode": 9,
+          "target_name": "sxModelPoolList",
+          "target_source": "SB/Core/x/xModel.cpp",
+          "symbol": "sxModelPoolList"
+        },
+        {
+          "function": "xModelInit__Fv",
+          "offset": 16,
+          "opcode": 35,
+          "target_name": "subcamera",
+          "target_source": "SB/Core/x/xModel.cpp",
+          "symbol": "subcamera"
+        },
+        {
+          "function": "xModelInit__Fv",
+          "offset": 24,
+          "opcode": 43,
+          "target_name": "sxModelPoolList",
+          "target_source": "SB/Core/x/xModel.cpp",
+          "symbol": "sxModelPoolList"
+        },
+        {
+          "function": "xModelInit__Fv",
+          "offset": 176,
+          "opcode": 43,
+          "target_name": "subcamera",
+          "target_source": "SB/Core/x/xModel.cpp",
+          "symbol": "subcamera"
+        },
+        {
+          "function": "xModelInit__Fv",
+          "offset": 184,
+          "opcode": 43,
+          "target_name": "xModelPipeNumTables",
+          "target_source": "SB/Core/x/xModel.cpp",
+          "symbol": "xModelPipeNumTables"
+        },
+        {
+          "function": "xModelGetPipeFlags__FP8RpAtomic",
+          "offset": 0,
+          "opcode": 35,
+          "target_name": "xModelLookupCount",
+          "target_source": "SB/Core/x/xModel.cpp",
+          "symbol": "xModelLookupCount"
+        },
+        {
+          "function": "xModelGetPipeFlags__FP8RpAtomic",
+          "offset": 16,
+          "opcode": 35,
+          "target_name": "xModelLookupList",
+          "target_source": "SB/Core/x/xModel.cpp",
+          "symbol": "xModelLookupList"
+        }
+      ],
+      "address_pairs": []
+    },
+    {
+      "source": "src/SB/Core/x/xShadowSimple.cpp",
+      "target_unit": "SB/Core/x/xShadowSimple.cpp",
+      "object": "source/xShadowSimple.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xShadowSimple_Render__Fv": "xShadowSimple_Render__Fv",
+        "xShadowSimple_Add__FP18xShadowSimpleCacheP4xEntff": "xShadowSimple_Add__FP18xShadowSimpleCacheP4xEntff",
+        "xShadowSimple_CacheInit__FP18xShadowSimpleCacheP4xEntUc": "xShadowSimple_CacheInit__FP18xShadowSimpleCacheP4xEntUc",
+        "xShadowSimple_Init__Fv": "xShadowSimple_Init__Fv",
+        "xShadowSimple_AddVerts__FP18xShadowSimpleCache": "xShadowSimple_AddVerts__FP18xShadowSimpleCache",
+        "xShadowSimple_CalcCorners__FP18xShadowSimpleCacheP4xEntff": "xShadowSimple_CalcCorners__FP18xShadowSimpleCacheP4xEntff",
+        "xShadowSimple_SceneCollide__FP18xShadowSimpleCacheP5xVec3f": "xShadowSimple_SceneCollide__FP18xShadowSimpleCacheP5xVec3f",
+        "shadowRayEntCB__FP4xEntPv": "shadowRayEntCB__FP4xEntPv",
+        "shadowRayModelCB__FP14RpIntersectionP19RpCollisionTrianglefPv": "shadowRayModelCB__FP14RpIntersectionP19RpCollisionTrianglefPv",
+        "shadowRayCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv": "shadowRayCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv"
+      },
+      "calls": [
+        {
+          "function": "xShadowSimple_Render__Fv",
+          "offset": 100,
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "target_function": "xShadowSimple_SceneCollide__FP18xShadowSimpleCacheP5xVec3f",
+          "symbol": "xShadowSimple_SceneCollide__FP18xShadowSimpleCacheP5xVec3f"
+        },
+        {
+          "function": "xShadowSimple_Render__Fv",
+          "offset": 204,
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "target_function": "xShadowSimple_CalcCorners__FP18xShadowSimpleCacheP4xEntff",
+          "symbol": "xShadowSimple_CalcCorners__FP18xShadowSimpleCacheP4xEntff"
+        },
+        {
+          "function": "xShadowSimple_Render__Fv",
+          "offset": 212,
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "target_function": "xShadowSimple_AddVerts__FP18xShadowSimpleCache",
+          "symbol": "xShadowSimple_AddVerts__FP18xShadowSimpleCache"
+        },
+        {
+          "function": "xShadowSimple_Add__FP18xShadowSimpleCacheP4xEntff",
+          "offset": 124,
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "target_function": "xShadowSimple_SceneCollide__FP18xShadowSimpleCacheP5xVec3f",
+          "symbol": "xShadowSimple_SceneCollide__FP18xShadowSimpleCacheP5xVec3f"
+        },
+        {
+          "function": "xShadowSimple_Add__FP18xShadowSimpleCacheP4xEntff",
+          "offset": 244,
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "target_function": "xShadowSimple_CalcCorners__FP18xShadowSimpleCacheP4xEntff",
+          "symbol": "xShadowSimple_CalcCorners__FP18xShadowSimpleCacheP4xEntff"
+        },
+        {
+          "function": "xShadowSimple_Add__FP18xShadowSimpleCacheP4xEntff",
+          "offset": 252,
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "target_function": "xShadowSimple_AddVerts__FP18xShadowSimpleCache",
+          "symbol": "xShadowSimple_AddVerts__FP18xShadowSimpleCache"
+        },
+        {
+          "function": "xShadowSimple_Add__FP18xShadowSimpleCacheP4xEntff",
+          "offset": 1048,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xShadowSimple_Add__FP18xShadowSimpleCacheP4xEntff",
+          "offset": 1836,
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "target_function": "xShadowSimple_CalcCorners__FP18xShadowSimpleCacheP4xEntff",
+          "symbol": "xShadowSimple_CalcCorners__FP18xShadowSimpleCacheP4xEntff"
+        },
+        {
+          "function": "xShadowSimple_Add__FP18xShadowSimpleCacheP4xEntff",
+          "offset": 1848,
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "target_function": "xShadowSimple_AddVerts__FP18xShadowSimpleCache",
+          "symbol": "xShadowSimple_AddVerts__FP18xShadowSimpleCache"
+        },
+        {
+          "function": "xShadowSimple_Add__FP18xShadowSimpleCacheP4xEntff",
+          "offset": 2192,
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "target_function": "xShadowSimple_CalcCorners__FP18xShadowSimpleCacheP4xEntff",
+          "symbol": "xShadowSimple_CalcCorners__FP18xShadowSimpleCacheP4xEntff"
+        },
+        {
+          "function": "xShadowSimple_Add__FP18xShadowSimpleCacheP4xEntff",
+          "offset": 2200,
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "target_function": "xShadowSimple_AddVerts__FP18xShadowSimpleCache",
+          "symbol": "xShadowSimple_AddVerts__FP18xShadowSimpleCache"
+        },
+        {
+          "function": "xShadowSimple_CacheInit__FP18xShadowSimpleCacheP4xEntUc",
+          "offset": 164,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTAssetCountByType__FUi",
+          "symbol": "xSTAssetCountByType__FUi"
+        },
+        {
+          "function": "xShadowSimple_CacheInit__FP18xShadowSimpleCacheP4xEntUc",
+          "offset": 204,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAssetByType__FUiiPUi",
+          "symbol": "xSTFindAssetByType__FUiiPUi"
+        },
+        {
+          "function": "xShadowSimple_CacheInit__FP18xShadowSimpleCacheP4xEntUc",
+          "offset": 272,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "xShadowSimple_Init__Fv",
+          "offset": 32,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xShadowSimple_Init__Fv",
+          "offset": 44,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "xShadowSimple_CalcCorners__FP18xShadowSimpleCacheP4xEntff",
+          "offset": 212,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xShadowSimple_SceneCollide__FP18xShadowSimpleCacheP5xVec3f",
+          "offset": 172,
+          "target_source": "SB/Core/x/xClumpColl.cpp",
+          "target_function": "xClumpColl_ForAllIntersections__FP17xClumpCollBSPTreeP14RpIntersectionPFP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv_P19RpCollisionTrianglePv",
+          "symbol": "xClumpColl_ForAllIntersections__FP17xClumpCollBSPTreeP14RpIntersectionPFP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv_P19RpCollisionTrianglePv"
+        },
+        {
+          "function": "xShadowSimple_SceneCollide__FP18xShadowSimpleCacheP5xVec3f",
+          "offset": 292,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullForLine__FP10xQCControlP7xQCDataPC6xLine3",
+          "symbol": "xQuickCullForLine__FP10xQCControlP7xQCDataPC6xLine3"
+        },
+        {
+          "function": "xShadowSimple_SceneCollide__FP18xShadowSimpleCacheP5xVec3f",
+          "offset": 332,
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "target_function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "symbol": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv"
+        },
+        {
+          "function": "xShadowSimple_SceneCollide__FP18xShadowSimpleCacheP5xVec3f",
+          "offset": 364,
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "target_function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "symbol": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv"
+        },
+        {
+          "function": "xShadowSimple_SceneCollide__FP18xShadowSimpleCacheP5xVec3f",
+          "offset": 408,
+          "target_source": "SB/Core/x/xGrid.cpp",
+          "target_function": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "symbol": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv"
+        },
+        {
+          "function": "shadowRayEntCB__FP4xEntPv",
+          "offset": 812,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelNumBones__FP8RpAtomic",
+          "symbol": "iModelNumBones__FP8RpAtomic"
+        },
+        {
+          "function": "shadowRayModelCB__FP14RpIntersectionP19RpCollisionTrianglefPv",
+          "offset": 12,
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "target_function": "shadowRayCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv",
+          "symbol": "shadowRayCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv",
+          "opcode": 2
+        },
+        {
+          "function": "shadowRayCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv",
+          "offset": 160,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xShadowSimple_CacheInit__FP18xShadowSimpleCacheP4xEntUc",
+          "offset": 60,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xShadowSimple_Init__Fv",
+          "offset": 20,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xShadowSimple_Init__Fv",
+          "offset": 92,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xShadowSimple_Render__Fv",
+          "offset": 244,
+          "opcode": 35,
+          "target_name": "sShadVertCount",
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "symbol": "sShadVertCount"
+        },
+        {
+          "function": "xShadowSimple_Render__Fv",
+          "offset": 324,
+          "opcode": 35,
+          "target_name": "sShadVertCount",
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "symbol": "sShadVertCount"
+        },
+        {
+          "function": "xShadowSimple_Render__Fv",
+          "offset": 500,
+          "opcode": 35,
+          "target_name": "sShadVertCount",
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "symbol": "sShadVertCount"
+        },
+        {
+          "function": "xShadowSimple_Render__Fv",
+          "offset": 632,
+          "opcode": 43,
+          "target_name": "sShadVertCount",
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "symbol": "sShadVertCount"
+        },
+        {
+          "function": "xShadowSimple_CacheInit__FP18xShadowSimpleCacheP4xEntUc",
+          "offset": 392,
+          "opcode": 35,
+          "target_name": "sShadRaster",
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "symbol": "sShadRaster"
+        },
+        {
+          "function": "xShadowSimple_Init__Fv",
+          "offset": 68,
+          "opcode": 43,
+          "target_name": "sShadRaster",
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "symbol": "sShadRaster"
+        },
+        {
+          "function": "xShadowSimple_Init__Fv",
+          "offset": 72,
+          "opcode": 43,
+          "target_name": "sShadRaster",
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "symbol": "sShadRaster"
+        },
+        {
+          "function": "xShadowSimple_AddVerts__FP18xShadowSimpleCache",
+          "offset": 32,
+          "opcode": 35,
+          "target_name": "sShadVertCount",
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "symbol": "sShadVertCount"
+        },
+        {
+          "function": "xShadowSimple_AddVerts__FP18xShadowSimpleCache",
+          "offset": 120,
+          "opcode": 35,
+          "target_name": "sShadVertCount",
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "symbol": "sShadVertCount"
+        },
+        {
+          "function": "xShadowSimple_AddVerts__FP18xShadowSimpleCache",
+          "offset": 168,
+          "opcode": 35,
+          "target_name": "sShadVertCount",
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "symbol": "sShadVertCount"
+        },
+        {
+          "function": "xShadowSimple_AddVerts__FP18xShadowSimpleCache",
+          "offset": 216,
+          "opcode": 35,
+          "target_name": "sShadVertCount",
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "symbol": "sShadVertCount"
+        },
+        {
+          "function": "xShadowSimple_AddVerts__FP18xShadowSimpleCache",
+          "offset": 264,
+          "opcode": 35,
+          "target_name": "sShadVertCount",
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "symbol": "sShadVertCount"
+        },
+        {
+          "function": "xShadowSimple_AddVerts__FP18xShadowSimpleCache",
+          "offset": 312,
+          "opcode": 35,
+          "target_name": "sShadVertCount",
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "symbol": "sShadVertCount"
+        },
+        {
+          "function": "xShadowSimple_AddVerts__FP18xShadowSimpleCache",
+          "offset": 360,
+          "opcode": 35,
+          "target_name": "sShadVertCount",
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "symbol": "sShadVertCount"
+        },
+        {
+          "function": "xShadowSimple_AddVerts__FP18xShadowSimpleCache",
+          "offset": 400,
+          "opcode": 35,
+          "target_name": "sShadVertCount",
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "symbol": "sShadVertCount"
+        },
+        {
+          "function": "xShadowSimple_AddVerts__FP18xShadowSimpleCache",
+          "offset": 444,
+          "opcode": 35,
+          "target_name": "sShadVertCount",
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "symbol": "sShadVertCount"
+        },
+        {
+          "function": "xShadowSimple_AddVerts__FP18xShadowSimpleCache",
+          "offset": 488,
+          "opcode": 35,
+          "target_name": "sShadVertCount",
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "symbol": "sShadVertCount"
+        },
+        {
+          "function": "xShadowSimple_AddVerts__FP18xShadowSimpleCache",
+          "offset": 532,
+          "opcode": 35,
+          "target_name": "sShadVertCount",
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "symbol": "sShadVertCount"
+        },
+        {
+          "function": "xShadowSimple_AddVerts__FP18xShadowSimpleCache",
+          "offset": 576,
+          "opcode": 35,
+          "target_name": "sShadVertCount",
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "symbol": "sShadVertCount"
+        },
+        {
+          "function": "xShadowSimple_AddVerts__FP18xShadowSimpleCache",
+          "offset": 620,
+          "opcode": 35,
+          "target_name": "sShadVertCount",
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "symbol": "sShadVertCount"
+        },
+        {
+          "function": "xShadowSimple_AddVerts__FP18xShadowSimpleCache",
+          "offset": 660,
+          "opcode": 35,
+          "target_name": "sShadVertCount",
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "symbol": "sShadVertCount"
+        },
+        {
+          "function": "xShadowSimple_AddVerts__FP18xShadowSimpleCache",
+          "offset": 668,
+          "opcode": 43,
+          "target_name": "sShadVertCount",
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "symbol": "sShadVertCount"
+        },
+        {
+          "function": "shadowRayEntCB__FP4xEntPv",
+          "offset": 876,
+          "opcode": 43,
+          "target_name": "sModelMat",
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "symbol": "sModelMat"
+        },
+        {
+          "function": "shadowRayEntCB__FP4xEntPv",
+          "offset": 900,
+          "opcode": 43,
+          "target_name": "sModelMat",
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "symbol": "sModelMat"
+        },
+        {
+          "function": "shadowRayCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv",
+          "offset": 32,
+          "opcode": 35,
+          "target_name": "sModelMat",
+          "target_source": "SB/Core/x/xShadowSimple.cpp",
+          "symbol": "sModelMat"
+        }
+      ],
+      "address_pairs": []
     }
   ]
 }
