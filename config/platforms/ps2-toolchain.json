@@ -14460,6 +14460,434 @@
       ],
       "gp_relocations": [],
       "address_pairs": []
+    },
+    {
+      "source": "src/SB/Core/x/xAnim.cpp",
+      "target_unit": "SB/Core/x/xAnim.cpp",
+      "object": "source/xAnim.o",
+      "selector": "name_address",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "xAnimPoolFree@00210df0": "xAnimPoolFree__FP9xAnimPlay",
+        "xAnimPoolAlloc@00210e90": "xAnimPoolAlloc__FP8xMemPoolPvP10xAnimTableP14xModelInstance",
+        "xAnimPoolInit@00210ef0": "xAnimPoolInit__FP8xMemPoolUiUiUiUi",
+        "xAnimPoolCB@00211160": "xAnimPoolCB__FP8xMemPoolPv",
+        "xAnimPlayEval@00211290": "xAnimPlayEval__FP9xAnimPlay",
+        "xAnimPlayUpdate@00211740": "xAnimPlayUpdate__FP9xAnimPlayf",
+        "xAnimPlayStartTransition@002117e0": "xAnimPlayStartTransition__FP9xAnimPlayP15xAnimTransition",
+        "xAnimPlayChooseTransition@00211ab0": "xAnimPlayChooseTransition__FP9xAnimPlay",
+        "xAnimPlaySetup@00211c60": "xAnimPlaySetup__FP9xAnimPlayPvP10xAnimTableP14xModelInstance",
+        "SingleUpdate@00211d40": "SingleUpdate__FP11xAnimSinglef",
+        "xAnimPlaySetState@002125d0": "xAnimPlaySetState__FP11xAnimSingleP10xAnimStatef",
+        "EffectSingleStop@002126e0": "EffectSingleStop__FP11xAnimSingle",
+        "EffectSingleLoop@00212840": "EffectSingleLoop__FP11xAnimSingle",
+        "EffectSingleRun@00212980": "EffectSingleRun__FP11xAnimSingle",
+        "EffectSingleDuration@00212b90": "EffectSingleDuration__FP11xAnimSingle",
+        "EffectSingleStart@00212cd0": "EffectSingleStart__FP11xAnimSingle",
+        "xAnimTableGetState@00212f20": "xAnimTableGetState__FP10xAnimTablePCc",
+        "xAnimTableGetStateID@00212f90": "xAnimTableGetStateID__FP10xAnimTableUi",
+        "xAnimTableAddFileID@00212fe0": "xAnimTableAddFileID__FP10xAnimTableP9xAnimFileUiUiUi",
+        "xAnimTableAddFile@00213150": "xAnimTableAddFile__FP10xAnimTableP9xAnimFilePCc",
+        "xAnimTableNewTransition@002131f0": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs",
+        "xAnimTableAddTransition@00213530": "xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCc",
+        "_xAnimTableAddTransition@00213540": "_xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCcPCc",
+        "xAnimTableNewState@00213da0": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v",
+        "xAnimDefaultBeforeEnter@00214010": "xAnimDefaultBeforeEnter__FP9xAnimPlayP10xAnimState",
+        "xAnimTableNew@00214070": "xAnimTableNew__FPCcPP10xAnimTableUi",
+        "xAnimStateNewEffect@002140f0": "xAnimStateNewEffect__FP10xAnimStateUiffPFUiP17xAnimActiveEffectP11xAnimSinglePv_UiUi",
+        "xAnimFileEval@002141c0": "xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf",
+        "xAnimFileSetTime@00214810": "xAnimFileSetTime__FP9xAnimFileff",
+        "xAnimFileNew@002148d0": "xAnimFileNew__FPvPCcUiPP9xAnimFile",
+        "xAnimFileNewBilinear@00214900": "xAnimFileNewBilinear__FPPvPCcUiPP9xAnimFileUiUi",
+        "xAnimTempTransitionInit@00214bd0": "xAnimTempTransitionInit__FUi",
+        "xAnimInit@00214c40": "xAnimInit__Fv",
+        "_xCheckAnimNameInner@00214c70": "_xCheckAnimNameInner__FPCcPCciPcPiPi"
+      },
+      "calls": [
+        {
+          "function": "xAnimPoolFree@00210df0",
+          "offset": 52,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleStop",
+          "symbol": "EffectSingleStop__FP11xAnimSingle"
+        },
+        {
+          "function": "xAnimPoolFree@00210df0",
+          "offset": 80,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleStop",
+          "symbol": "EffectSingleStop__FP11xAnimSingle"
+        },
+        {
+          "function": "xAnimPoolFree@00210df0",
+          "offset": 116,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPoolFree",
+          "symbol": "xMemPoolFree__FP8xMemPoolPv"
+        },
+        {
+          "function": "xAnimPoolAlloc@00210e90",
+          "offset": 32,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPoolAlloc",
+          "symbol": "xMemPoolAlloc__FP8xMemPool"
+        },
+        {
+          "function": "xAnimPoolAlloc@00210e90",
+          "offset": 56,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimPlaySetup",
+          "symbol": "xAnimPlaySetup__FP9xAnimPlayPvP10xAnimTableP14xModelInstance"
+        },
+        {
+          "function": "xAnimPlayEval@00211290",
+          "offset": 156,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimFileEval",
+          "symbol": "xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf"
+        },
+        {
+          "function": "xAnimPlayEval@00211290",
+          "offset": 224,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimFileEval",
+          "symbol": "xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf"
+        },
+        {
+          "function": "xAnimPlayEval@00211290",
+          "offset": 428,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimFileEval",
+          "symbol": "xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf"
+        },
+        {
+          "function": "xAnimPlayEval@00211290",
+          "offset": 496,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimFileEval",
+          "symbol": "xAnimFileEval__FP9xAnimFilefPfUiP5xVec3P5xQuatPf"
+        },
+        {
+          "function": "xAnimPlayUpdate@00211740",
+          "offset": 68,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "SingleUpdate",
+          "symbol": "SingleUpdate__FP11xAnimSinglef"
+        },
+        {
+          "function": "xAnimPlayStartTransition@002117e0",
+          "offset": 140,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleStop",
+          "symbol": "EffectSingleStop__FP11xAnimSingle"
+        },
+        {
+          "function": "xAnimPlayStartTransition@002117e0",
+          "offset": 200,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleStop",
+          "symbol": "EffectSingleStop__FP11xAnimSingle"
+        },
+        {
+          "function": "xAnimPlayStartTransition@002117e0",
+          "offset": 236,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPoolFree",
+          "symbol": "xMemPoolFree__FP8xMemPoolPv"
+        },
+        {
+          "function": "xAnimPlayStartTransition@002117e0",
+          "offset": 380,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPoolFree",
+          "symbol": "xMemPoolFree__FP8xMemPoolPv"
+        },
+        {
+          "function": "xAnimPlayStartTransition@002117e0",
+          "offset": 544,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xAnimPlayStartTransition@002117e0",
+          "offset": 616,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleStart",
+          "symbol": "EffectSingleStart__FP11xAnimSingle"
+        },
+        {
+          "function": "xAnimPlayChooseTransition@00211ab0",
+          "offset": 352,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimPlayStartTransition",
+          "symbol": "xAnimPlayStartTransition__FP9xAnimPlayP15xAnimTransition"
+        },
+        {
+          "function": "xAnimPlaySetup@00211c60",
+          "offset": 204,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimPlaySetState",
+          "symbol": "xAnimPlaySetState__FP11xAnimSingleP10xAnimStatef",
+          "opcode": 2
+        },
+        {
+          "function": "SingleUpdate@00211d40",
+          "offset": 132,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleStart",
+          "symbol": "EffectSingleStart__FP11xAnimSingle"
+        },
+        {
+          "function": "SingleUpdate@00211d40",
+          "offset": 216,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleStart",
+          "symbol": "EffectSingleStart__FP11xAnimSingle"
+        },
+        {
+          "function": "SingleUpdate@00211d40",
+          "offset": 960,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleStop",
+          "symbol": "EffectSingleStop__FP11xAnimSingle"
+        },
+        {
+          "function": "SingleUpdate@00211d40",
+          "offset": 1000,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPoolFree",
+          "symbol": "xMemPoolFree__FP8xMemPoolPv"
+        },
+        {
+          "function": "SingleUpdate@00211d40",
+          "offset": 1052,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPoolFree",
+          "symbol": "xMemPoolFree__FP8xMemPoolPv"
+        },
+        {
+          "function": "SingleUpdate@00211d40",
+          "offset": 1072,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleStop",
+          "symbol": "EffectSingleStop__FP11xAnimSingle"
+        },
+        {
+          "function": "SingleUpdate@00211d40",
+          "offset": 1112,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleStop",
+          "symbol": "EffectSingleStop__FP11xAnimSingle"
+        },
+        {
+          "function": "SingleUpdate@00211d40",
+          "offset": 1176,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleStop",
+          "symbol": "EffectSingleStop__FP11xAnimSingle"
+        },
+        {
+          "function": "SingleUpdate@00211d40",
+          "offset": 1212,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPoolFree",
+          "symbol": "xMemPoolFree__FP8xMemPoolPv"
+        },
+        {
+          "function": "SingleUpdate@00211d40",
+          "offset": 1348,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPoolFree",
+          "symbol": "xMemPoolFree__FP8xMemPoolPv"
+        },
+        {
+          "function": "SingleUpdate@00211d40",
+          "offset": 1512,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "SingleUpdate@00211d40",
+          "offset": 1584,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleStart",
+          "symbol": "EffectSingleStart__FP11xAnimSingle"
+        },
+        {
+          "function": "SingleUpdate@00211d40",
+          "offset": 1756,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleLoop",
+          "symbol": "EffectSingleLoop__FP11xAnimSingle"
+        },
+        {
+          "function": "SingleUpdate@00211d40",
+          "offset": 1808,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleRun",
+          "symbol": "EffectSingleRun__FP11xAnimSingle"
+        },
+        {
+          "function": "SingleUpdate@00211d40",
+          "offset": 1876,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleLoop",
+          "symbol": "EffectSingleLoop__FP11xAnimSingle"
+        },
+        {
+          "function": "SingleUpdate@00211d40",
+          "offset": 1928,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleRun",
+          "symbol": "EffectSingleRun__FP11xAnimSingle"
+        },
+        {
+          "function": "SingleUpdate@00211d40",
+          "offset": 2096,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleDuration",
+          "symbol": "EffectSingleDuration__FP11xAnimSingle"
+        },
+        {
+          "function": "SingleUpdate@00211d40",
+          "offset": 2112,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleDuration",
+          "symbol": "EffectSingleDuration__FP11xAnimSingle"
+        },
+        {
+          "function": "xAnimPlaySetState@002125d0",
+          "offset": 28,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleStop",
+          "symbol": "EffectSingleStop__FP11xAnimSingle"
+        },
+        {
+          "function": "xAnimPlaySetState@002125d0",
+          "offset": 48,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleStop",
+          "symbol": "EffectSingleStop__FP11xAnimSingle"
+        },
+        {
+          "function": "xAnimPlaySetState@002125d0",
+          "offset": 116,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xAnimPlaySetState@002125d0",
+          "offset": 220,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPoolFree",
+          "symbol": "xMemPoolFree__FP8xMemPoolPv"
+        },
+        {
+          "function": "EffectSingleLoop@00212840",
+          "offset": 24,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "EffectSingleRun",
+          "symbol": "EffectSingleRun__FP11xAnimSingle"
+        },
+        {
+          "function": "xAnimTableAddFile@00213150",
+          "offset": 44,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrTokBuffer",
+          "symbol": "xStrTokBuffer__FPCcPCcPv"
+        },
+        {
+          "function": "xAnimTableAddFile@00213150",
+          "offset": 88,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableAddFileID",
+          "symbol": "xAnimTableAddFileID__FP10xAnimTableP9xAnimFileUiUiUi"
+        },
+        {
+          "function": "xAnimTableAddFile@00213150",
+          "offset": 108,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrTokBuffer",
+          "symbol": "xStrTokBuffer__FPCcPCcPv"
+        },
+        {
+          "function": "xAnimTableNewTransition@002131f0",
+          "offset": 752,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "_xAnimTableAddTransition",
+          "symbol": "_xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCcPCc"
+        },
+        {
+          "function": "xAnimTableAddTransition@00213530",
+          "offset": 0,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "_xAnimTableAddTransition",
+          "symbol": "_xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCcPCc",
+          "opcode": 2
+        },
+        {
+          "function": "_xAnimTableAddTransition@00213540",
+          "offset": 196,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrTokBuffer",
+          "symbol": "xStrTokBuffer__FPCcPCcPv"
+        },
+        {
+          "function": "_xAnimTableAddTransition@00213540",
+          "offset": 440,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "_xCheckAnimNameInner",
+          "symbol": "_xCheckAnimNameInner__FPCcPCciPcPiPi"
+        },
+        {
+          "function": "_xAnimTableAddTransition@00213540",
+          "offset": 1508,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrTokBuffer",
+          "symbol": "xStrTokBuffer__FPCcPCcPv"
+        },
+        {
+          "function": "xAnimFileNew@002148d0",
+          "offset": 20,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimFileNewBilinear",
+          "symbol": "xAnimFileNewBilinear__FPPvPCcUiPP9xAnimFileUiUi"
+        },
+        {
+          "function": "xAnimFileNewBilinear@00214900",
+          "offset": 640,
+          "target_source": "SB/Core/p2/iAnim.cpp",
+          "target_function": "iAnimBoneCount",
+          "symbol": "iAnimBoneCount__FPv"
+        },
+        {
+          "function": "_xCheckAnimNameInner@00214c70",
+          "offset": 1216,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "_xCheckAnimNameInner",
+          "symbol": "_xCheckAnimNameInner__FPCcPCciPcPiPi"
+        },
+        {
+          "function": "_xCheckAnimNameInner@00214c70",
+          "offset": 1540,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "_xCheckAnimNameInner",
+          "symbol": "_xCheckAnimNameInner__FPCcPCciPcPiPi"
+        },
+        {
+          "function": "_xCheckAnimNameInner@00214c70",
+          "offset": 1592,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "_xCheckAnimNameInner",
+          "symbol": "_xCheckAnimNameInner__FPCcPCciPcPiPi"
+        }
+      ],
+      "gp_relocations": []
     }
   ]
 }

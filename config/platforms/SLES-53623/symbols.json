@@ -2161,6 +2161,76 @@
       "provenance": "machine-corroborated-explicit-transfers"
     },
     {
+      "name": "xAnimPoolAlloc",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2166416,
+      "size": 96,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimPoolInit",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2166512,
+      "size": 620,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimPoolCB",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2167136,
+      "size": 296,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimPlayEval",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2167440,
+      "size": 1196,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimPlayUpdate",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2168640,
+      "size": 160,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimPlayStartTransition",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2168800,
+      "size": 708,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimPlayChooseTransition",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2169520,
+      "size": 420,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimPlaySetup",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2169952,
+      "size": 212,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "SingleUpdate",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2170176,
+      "size": 2184,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimPlaySetState",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2172368,
+      "size": 264,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "EffectSingleStop",
       "source": "SB/Core/x/xAnim.cpp",
       "address": 2172640,
@@ -2203,11 +2273,123 @@
       "provenance": "machine-corroborated-explicit-transfers"
     },
     {
+      "name": "xAnimTableGetStateID",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2174864,
+      "size": 72,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimTableAddFileID",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2174944,
+      "size": 360,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimTableAddFile",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2175312,
+      "size": 152,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimTableNewTransition",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2175472,
+      "size": 824,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimTableAddTransition",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2176304,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "_xAnimTableAddTransition",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2176320,
+      "size": 2144,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimTableNewState",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2178464,
+      "size": 612,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimDefaultBeforeEnter",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2179088,
+      "size": 92,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "xAnimTableNew",
       "source": "SB/Core/x/xAnim.cpp",
       "address": 2179184,
       "size": 128,
       "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "xAnimStateNewEffect",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2179312,
+      "size": 200,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimFileEval",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2179520,
+      "size": 1616,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimFileSetTime",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2181136,
+      "size": 192,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimFileNew",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2181328,
+      "size": 40,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimFileNewBilinear",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2181376,
+      "size": 708,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimTempTransitionInit",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2182096,
+      "size": 104,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAnimInit",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2182208,
+      "size": 48,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "_xCheckAnimNameInner",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2182256,
+      "size": 1856,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "xCounterReset",
