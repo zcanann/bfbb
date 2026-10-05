@@ -2543,338 +2543,143 @@
       "source": "src/SB/Core/x/xMath3.cpp",
       "target_unit": "SB/Core/x/xMath3.cpp",
       "object": "source/xMath3.o",
+      "selector": "name_address",
       "executable_sha1s": [
         "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
       ],
       "symbols": {
-        "xQuatToMat": "xQuatToMat__FPC5xQuatP7xMat3x3",
-        "xMat4x3Mul": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3",
-        "xMat3x3Tolocal": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
-        "xMat3x3LMulVec": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3",
-        "xMat3x3Mul": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3",
-        "xMat3x3Transpose": "xMat3x3Transpose__FP7xMat3x3PC7xMat3x3",
-        "xMat3x3RMulRotY": "xMat3x3RMulRotY__FP7xMat3x3PC7xMat3x3f",
-        "xMat3x3ScaleC": "xMat3x3ScaleC__FP7xMat3x3fff",
-        "xMat3x3Euler": "xMat3x3Euler__FP7xMat3x3fff",
-        "xMat3x3GetEuler": "xMat3x3GetEuler__FPC7xMat3x3P5xVec3",
-        "xBoxInitBoundCapsule": "xBoxInitBoundCapsule__FP4xBoxPC8xCapsule",
-        "xBoxInitBoundOBB": "xBoxInitBoundOBB__FP4xBoxPC4xBoxPC7xMat4x3"
+        "xQuatDiff@001ee5c0": "xQuatDiff__FP5xQuatPC5xQuatPC5xQuat",
+        "xQuatMul@001ee660": "xQuatMul__FP5xQuatPC5xQuatPC5xQuat",
+        "xQuatSlerp@001ee6f0": "xQuatSlerp__FP5xQuatPC5xQuatPC5xQuatf",
+        "xQuatNormalize@001ee8a0": "xQuatNormalize__FP5xQuatPC5xQuat",
+        "xQuatToAxisAngle@001ee9b0": "xQuatToAxisAngle__FPC5xQuatP5xVec3Pf",
+        "xQuatToMat@001eea10": "xQuatToMat__FPC5xQuatP7xMat3x3",
+        "xQuatFromAxisAngle@001eeac0": "xQuatFromAxisAngle__FP5xQuatPC5xVec3f",
+        "xQuatFromMat@001eeb90": "xQuatFromMat__FP5xQuatPC7xMat3x3",
+        "xMat4x3Mul@001eee10": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3",
+        "xMat4x3Rot@001eeed0": "xMat4x3Rot__FP7xMat4x3PC5xVec3fPC5xVec3",
+        "xMat3x3Tolocal@001ef010": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+        "xMat3x3LMulVec@001ef0e0": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3",
+        "xMat3x3Mul@001ef150": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3",
+        "xMat3x3Transpose@001ef330": "xMat3x3Transpose__FP7xMat3x3PC7xMat3x3",
+        "xMat3x3RMulRotY@001ef3d0": "xMat3x3RMulRotY__FP7xMat3x3PC7xMat3x3f",
+        "xMat3x3ScaleC@001ef520": "xMat3x3ScaleC__FP7xMat3x3fff",
+        "xMat3x3RotZ@001ef550": "xMat3x3RotZ__FP7xMat3x3f",
+        "xMat3x3RotY@001ef5d0": "xMat3x3RotY__FP7xMat3x3f",
+        "xMat3x3RotX@001ef650": "xMat3x3RotX__FP7xMat3x3f",
+        "xMat3x3RotC@001ef6d0": "xMat3x3RotC__FP7xMat3x3ffff",
+        "xMat3x3Euler@001ef800": "xMat3x3Euler__FP7xMat3x3fff",
+        "xMat3x3Euler@001ef900": "xMat3x3Euler__FP7xMat3x3PC5xVec3",
+        "xMat3x3LookVec@001ef910": "xMat3x3LookVec__FP7xMat3x3PC5xVec3",
+        "xMat4x3MoveLocalAt@001efb80": "xMat4x3MoveLocalAt__FP7xMat4x3f",
+        "xMat4x3MoveLocalUp@001efbc0": "xMat4x3MoveLocalUp__FP7xMat4x3f",
+        "xMat4x3MoveLocalRight@001efc00": "xMat4x3MoveLocalRight__FP7xMat4x3f",
+        "xMat3x3GetEuler@001efc40": "xMat3x3GetEuler__FPC7xMat3x3P5xVec3",
+        "xMat3x3Normalize@001efd50": "xMat3x3Normalize__FP7xMat3x3PC7xMat3x3",
+        "xBoxFromCone@001efe10": "xBoxFromCone__FR4xBoxRC5xVec3RC5xVec3fff",
+        "xBoxInitBoundCapsule@001f0190": "xBoxInitBoundCapsule__FP4xBoxPC8xCapsule",
+        "xBoxInitBoundOBB@001f02a0": "xBoxInitBoundOBB__FP4xBoxPC4xBoxPC7xMat4x3",
+        "xPointInBox@001f0570": "xPointInBox__FPC4xBoxPC5xVec3",
+        "xLine3VecDist2@001f0630": "xLine3VecDist2__FPC5xVec3PC5xVec3PC5xVec3P6xIsect",
+        "xMath3Exit@001f0760": "xMath3Exit__Fv",
+        "xMath3Init@001f0770": "xMath3Init__Fv"
       },
       "calls": [
         {
-          "function": "xMat4x3Mul",
+          "function": "xQuatDiff@001ee5c0",
+          "offset": 60,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xQuatMul",
+          "symbol": "xQuatMul__FP5xQuatPC5xQuatPC5xQuat"
+        },
+        {
+          "function": "xQuatMul@001ee660",
+          "offset": 128,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xQuatNormalize",
+          "symbol": "xQuatNormalize__FP5xQuatPC5xQuat",
+          "opcode": 2
+        },
+        {
+          "function": "xQuatSlerp@001ee6f0",
+          "offset": 376,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xQuatNormalize",
+          "symbol": "xQuatNormalize__FP5xQuatPC5xQuat"
+        },
+        {
+          "function": "xMat4x3Mul@001eee10",
           "offset": 144,
           "target_source": "SB/Core/x/xMath3.cpp",
           "target_function": "xMat3x3Mul",
           "symbol": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3"
         },
         {
-          "function": "xMat3x3GetEuler",
+          "function": "xMat4x3Rot@001eeed0",
+          "offset": 48,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3RotC",
+          "symbol": "xMat3x3RotC__FP7xMat3x3ffff"
+        },
+        {
+          "function": "xMat4x3Rot@001eeed0",
+          "offset": 264,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Mul",
+          "symbol": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3"
+        },
+        {
+          "function": "xMat3x3Euler@001ef900",
+          "offset": 8,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Euler@001ef800",
+          "symbol": "xMat3x3Euler__FP7xMat3x3fff",
+          "opcode": 2
+        },
+        {
+          "function": "xMat3x3GetEuler@001efc40",
           "offset": 108,
           "target_source": "SB/Core/x/xMath.cpp",
           "target_function": "xAngleClampFast",
           "symbol": "xAngleClampFast__Ff"
         },
         {
-          "function": "xMat3x3GetEuler",
+          "function": "xMat3x3GetEuler@001efc40",
           "offset": 132,
           "target_source": "SB/Core/x/xMath.cpp",
           "target_function": "xAngleClampFast",
           "symbol": "xAngleClampFast__Ff"
         },
         {
-          "function": "xMat3x3GetEuler",
+          "function": "xMat3x3GetEuler@001efc40",
           "offset": 168,
           "target_source": "SB/Core/x/xMath.cpp",
           "target_function": "xAngleClampFast",
           "symbol": "xAngleClampFast__Ff"
         },
         {
-          "function": "xMat3x3GetEuler",
+          "function": "xMat3x3GetEuler@001efc40",
           "offset": 208,
           "target_source": "SB/Core/x/xMath.cpp",
           "target_function": "xAngleClampFast",
           "symbol": "xAngleClampFast__Ff"
+        },
+        {
+          "function": "xBoxFromCone@001efe10",
+          "offset": 208,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__pl",
+          "symbol": "__pl__5xVec3CFRC5xVec3"
+        },
+        {
+          "function": "xBoxFromCone@001efe10",
+          "offset": 588,
+          "target_source": "SB/Core/x/xVec3.h",
+          "target_function": "__pl",
+          "symbol": "__pl__5xVec3CFRC5xVec3"
         }
       ],
-      "linkage_provenance": [
-        {
-          "function": "xQuatToMat",
-          "registry": "corroborated-functions.json",
-          "france_address": 2026000,
-          "size": 172,
-          "references": [
-            {
-              "version": "SLES-51968",
-              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
-              "source_address": 2025888
-            },
-            {
-              "version": "SLES-51970",
-              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
-              "source_address": 2022528
-            },
-            {
-              "version": "SLUS-20680",
-              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
-              "source_address": 2024640
-            }
-          ]
-        },
-        {
-          "function": "xMat4x3Mul",
-          "registry": "relocation-corroborated-functions.json",
-          "france_address": 2027024,
-          "size": 192,
-          "references": [
-            {
-              "version": "SLUS-20680",
-              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
-              "source_address": 2025664
-            },
-            {
-              "version": "SLES-51968",
-              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
-              "source_address": 2026912
-            },
-            {
-              "version": "SLES-51970",
-              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
-              "source_address": 2023552
-            }
-          ]
-        },
-        {
-          "function": "xMat3x3Tolocal",
-          "registry": "corroborated-functions.json",
-          "france_address": 2027536,
-          "size": 204,
-          "references": [
-            {
-              "version": "SLES-51968",
-              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
-              "source_address": 2027424
-            },
-            {
-              "version": "SLES-51970",
-              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
-              "source_address": 2024064
-            },
-            {
-              "version": "SLUS-20680",
-              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
-              "source_address": 2026176
-            }
-          ]
-        },
-        {
-          "function": "xMat3x3LMulVec",
-          "registry": "corroborated-functions.json",
-          "france_address": 2027744,
-          "size": 112,
-          "references": [
-            {
-              "version": "SLES-51968",
-              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
-              "source_address": 2027632
-            },
-            {
-              "version": "SLES-51970",
-              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
-              "source_address": 2024272
-            },
-            {
-              "version": "SLUS-20680",
-              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
-              "source_address": 2026384
-            }
-          ]
-        },
-        {
-          "function": "xMat3x3Mul",
-          "registry": "corroborated-functions.json",
-          "france_address": 2027856,
-          "size": 476,
-          "references": [
-            {
-              "version": "SLES-51968",
-              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
-              "source_address": 2027744
-            },
-            {
-              "version": "SLES-51970",
-              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
-              "source_address": 2024384
-            },
-            {
-              "version": "SLUS-20680",
-              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
-              "source_address": 2026496
-            }
-          ]
-        },
-        {
-          "function": "xMat3x3Transpose",
-          "registry": "corroborated-functions.json",
-          "france_address": 2028336,
-          "size": 152,
-          "references": [
-            {
-              "version": "SLES-51968",
-              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
-              "source_address": 2028224
-            },
-            {
-              "version": "SLES-51970",
-              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
-              "source_address": 2024864
-            },
-            {
-              "version": "SLUS-20680",
-              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
-              "source_address": 2026976
-            }
-          ]
-        },
-        {
-          "function": "xMat3x3RMulRotY",
-          "registry": "corroborated-functions.json",
-          "france_address": 2028496,
-          "size": 336,
-          "references": [
-            {
-              "version": "SLES-51968",
-              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
-              "source_address": 2028384
-            },
-            {
-              "version": "SLES-51970",
-              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
-              "source_address": 2025024
-            },
-            {
-              "version": "SLUS-20680",
-              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
-              "source_address": 2027136
-            }
-          ]
-        },
-        {
-          "function": "xMat3x3ScaleC",
-          "registry": "corroborated-functions.json",
-          "france_address": 2028832,
-          "size": 44,
-          "references": [
-            {
-              "version": "SLES-51968",
-              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
-              "source_address": 2028720
-            },
-            {
-              "version": "SLES-51970",
-              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
-              "source_address": 2025360
-            },
-            {
-              "version": "SLUS-20680",
-              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
-              "source_address": 2027472
-            }
-          ]
-        },
-        {
-          "function": "xMat3x3Euler",
-          "registry": "corroborated-functions.json",
-          "france_address": 2029568,
-          "size": 256,
-          "references": [
-            {
-              "version": "SLES-51968",
-              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
-              "source_address": 2029456
-            },
-            {
-              "version": "SLES-51970",
-              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
-              "source_address": 2026096
-            },
-            {
-              "version": "SLUS-20680",
-              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
-              "source_address": 2028208
-            }
-          ]
-        },
-        {
-          "function": "xMat3x3GetEuler",
-          "registry": "relocation-corroborated-functions.json",
-          "france_address": 2030656,
-          "size": 264,
-          "references": [
-            {
-              "version": "SLUS-20680",
-              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
-              "source_address": 2029296
-            },
-            {
-              "version": "SLES-51968",
-              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
-              "source_address": 2030544
-            },
-            {
-              "version": "SLES-51970",
-              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
-              "source_address": 2027184
-            }
-          ]
-        },
-        {
-          "function": "xBoxInitBoundCapsule",
-          "registry": "corroborated-functions.json",
-          "france_address": 2032016,
-          "size": 272,
-          "references": [
-            {
-              "version": "SLES-51968",
-              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
-              "source_address": 2031904
-            },
-            {
-              "version": "SLES-51970",
-              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
-              "source_address": 2028544
-            },
-            {
-              "version": "SLUS-20680",
-              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
-              "source_address": 2030656
-            }
-          ]
-        },
-        {
-          "function": "xBoxInitBoundOBB",
-          "registry": "corroborated-functions.json",
-          "france_address": 2032288,
-          "size": 712,
-          "references": [
-            {
-              "version": "SLES-51968",
-              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
-              "source_address": 2032176
-            },
-            {
-              "version": "SLES-51970",
-              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
-              "source_address": 2028816
-            },
-            {
-              "version": "SLUS-20680",
-              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
-              "source_address": 2030928
-            }
-          ]
-        }
-      ]
+      "gp_relocations": []
     },
     {
       "source": "src/SB/Core/x/xutil.cpp",
@@ -12290,7 +12095,7 @@
           "function": "xParCmdRotateAround_Update@001f54e0",
           "offset": 268,
           "target_source": "SB/Core/x/xMath3.cpp",
-          "target_function": "xMat3x3Euler",
+          "target_function": "xMat3x3Euler@001ef800",
           "symbol": "xMat3x3Euler__FP7xMat3x3fff"
         },
         {
@@ -16131,7 +15936,7 @@
           "function": "xEntRotMove@001d8b70",
           "offset": 564,
           "target_source": "SB/Core/x/xMath3.cpp",
-          "target_function": "xMat3x3Euler",
+          "target_function": "xMat3x3Euler@001ef800",
           "symbol": "xMat3x3Euler__FP7xMat3x3fff"
         },
         {

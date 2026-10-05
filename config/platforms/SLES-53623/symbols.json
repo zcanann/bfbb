@@ -1335,6 +1335,41 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xQuatDiff",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2024896,
+      "size": 160,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xQuatMul",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2025056,
+      "size": 136,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xQuatSlerp",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2025200,
+      "size": 420,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xQuatNormalize",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2025632,
+      "size": 264,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xQuatToAxisAngle",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2025904,
+      "size": 92,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "xQuatToMat",
       "source": "SB/Core/x/xMath3.cpp",
       "address": 2026000,
@@ -1342,11 +1377,32 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xQuatFromAxisAngle",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2026176,
+      "size": 200,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xQuatFromMat",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2026384,
+      "size": 640,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "xMat4x3Mul",
       "source": "SB/Core/x/xMath3.cpp",
       "address": 2027024,
       "size": 192,
       "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "xMat4x3Rot",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2027216,
+      "size": 316,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "xMat3x3Tolocal",
@@ -1391,6 +1447,34 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xMat3x3RotZ",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2028880,
+      "size": 128,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xMat3x3RotY",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2029008,
+      "size": 128,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xMat3x3RotX",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2029136,
+      "size": 128,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xMat3x3RotC",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2029264,
+      "size": 296,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "xMat3x3Euler",
       "source": "SB/Core/x/xMath3.cpp",
       "address": 2029568,
@@ -1398,11 +1482,60 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xMat3x3Euler",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2029824,
+      "size": 16,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xMat3x3LookVec",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2029840,
+      "size": 616,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xMat4x3MoveLocalAt",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2030464,
+      "size": 64,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xMat4x3MoveLocalUp",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2030528,
+      "size": 64,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xMat4x3MoveLocalRight",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2030592,
+      "size": 64,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "xMat3x3GetEuler",
       "source": "SB/Core/x/xMath3.cpp",
       "address": 2030656,
       "size": 264,
       "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "xMat3x3Normalize",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2030928,
+      "size": 72,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xBoxFromCone",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2031120,
+      "size": 888,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "xBoxInitBoundCapsule",
@@ -1417,6 +1550,34 @@
       "address": 2032288,
       "size": 712,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xPointInBox",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2033008,
+      "size": 184,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xLine3VecDist2",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2033200,
+      "size": 304,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xMath3Exit",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2033504,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xMath3Init",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2033520,
+      "size": 220,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "xMemPoolFree",
