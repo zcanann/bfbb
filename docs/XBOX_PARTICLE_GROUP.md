@@ -152,3 +152,52 @@ python tools/platform_progress.py report --version XBOX-US \
 Repeat the report for `XBOX-EU`. Local actual-production artifacts and independent
 source/original inverse checks are under `build/xbox172/production` and
 `build/xbox172/validation.json`; no binary artifacts are committed.
+
+
+## Ordinary inline particle helpers
+
+The original Register and KillPar bodies contain the complete existing private
+initialization and particle-list operations, where the previous source emitted
+calls. Xbox now exposes the unchanged AddParP, AddParToDeadList and xParFree
+bodies as ordinary header inlines, and marks the existing file-static
+RegisterInit inline. The real gParDead definition stays in xPar.cpp; its header
+reference is a declaration. xParAlloc stays out of line and retains its existing
+exact source comparison. No artificial caller, compiler flag, storage, or helper
+implementation was introduced.
+
+Both complete production reports retain every compared function and show:
+
+| Function | Original bytes | Before | After |
+| --- | ---: | ---: | ---: |
+| xParGroupRegister | 85 | 52.692307% | 100% |
+| xParGroupKillPar | 137 | 40.166668% | 100% |
+| xParGroupAddPar | 209 | 51.566265% | 72.83132% |
+
+The actual emitted exact bodies belong to group.obj. All 222 bytes reconstruct
+both authenticated originals after only six and two actual PE HIGHLOW fields,
+respectively. Registration's static flag and count are independently selected
+from its unique source A1 and A3 uses; the count is not represented as an alias
+or one-past pointer to the flag. No direct calls remain in either exact body.
+
+This exposed one missing annotation in the existing original registration
+metadata: the ten-byte C7 /0 instruction at function offset 24 stores 1 to the
+already reviewed sParGroupRegTableInit at 0x373f64. Its displacement at offset 26
+is now restored using that anchor. The stored value and all other instruction
+bits are preserved. Both authenticated originals have the same instruction;
+the source has an actual HIGHLOW at the corresponding operand. The strict
+exporter rejected the incomplete old annotation before accepting this corrected
+comparison. No backend or score-rule change was needed. All other original
+records and function bounds remain unchanged; anonymous metadata changes only
+the digest of the reviewed registry.
+
+Matched totals rise from 13,070 / 67 to **13,292 bytes / 69 functions** per
+release. Every other report unit/function, all coverage denominators, and all
+completion fields remain unchanged. The complete group unit remains partial;
+no executable relink is claimed. Sixteen ordered allocated sections across
+GameCube xPar, xParGroup and xParCmd are byte-identical to their prior builds.
+PS2 and GameCube retain their previous non-Xbox definitions.
+
+The normal report commands above reproduce the result. Ignored local evidence
+is under build/xbox238: final-verification.json, original-store-proof.json,
+gc/proof.json, and both production reports with actual PE/MAP/source extents.
+No original or compiler binary is committed.

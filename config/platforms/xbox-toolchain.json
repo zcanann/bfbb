@@ -218,12 +218,18 @@
             "function": "?xParGroupRegister@@YAXPAUxParGroup@@@Z",
             "prefix": "a1"
           }
+        },
+        "sParGroupRegTableCount": {
+          "size": 4,
+          "object": "group.obj",
+          "definition_use": {
+            "function": "?xParGroupRegister@@YAXPAUxParGroup@@@Z",
+            "prefix": "a3"
+          }
         }
       },
       "direct_calls": {
-        "xParGroupRegister(xParGroup*)": [
-          "xParGroupRegisterInit()"
-        ],
+        "xParGroupRegister(xParGroup*)": [],
         "xParGroupUnregister(xParGroup*)": [],
         "xParGroupAnimate(xParGroup*,F32)": [
           "__ftol2",
@@ -231,14 +237,10 @@
         ],
         "xParGroupAddPar(xParGroup*)": [
           "xParAlloc()",
-          "xParGroupAddParP(xParGroup*,xPar*)",
           "xParGroupKillPar(xParGroup*,xPar*)",
           "xParInit(xPar*)"
         ],
-        "xParGroupKillPar(xParGroup*,xPar*)": [
-          "xParFree(xPar*)",
-          "xParGroupAddParToDeadList(xParGroup*,xPar*)"
-        ]
+        "xParGroupKillPar(xParGroup*,xPar*)": []
       },
       "call_symbols": {
         "xParGroupRegisterInit()": {
@@ -275,17 +277,44 @@
           {
             "symbol": "sParGroupRegTableInit",
             "field": "displacement",
-            "prefix": "a1"
+            "prefix": "a1",
+            "addend": 0,
+            "count": 1
+          },
+          {
+            "symbol": "sParGroupRegTable",
+            "field": "immediate",
+            "prefix": "bf",
+            "addend": 0,
+            "count": 1
+          },
+          {
+            "symbol": "sParGroupRegTableInit",
+            "field": "displacement",
+            "prefix": "c705",
+            "addend": 0,
+            "count": 1
+          },
+          {
+            "symbol": "sParGroupRegTableCount",
+            "field": "displacement",
+            "prefix": "a3",
+            "addend": 0,
+            "count": 1
           },
           {
             "symbol": "sParGroupRegTable",
             "field": "displacement",
-            "prefix": "8b348d"
+            "prefix": "8b3c8d",
+            "addend": 0,
+            "count": 1
           },
           {
             "symbol": "sParGroupRegTable",
             "field": "displacement",
-            "prefix": "89148d"
+            "prefix": "89148d",
+            "addend": 0,
+            "count": 1
           }
         ],
         "xParGroupUnregister(xParGroup*)": [
@@ -335,15 +364,34 @@
           {
             "symbol": "sParGroupRegTable",
             "field": "displacement",
-            "prefix": "8b0485"
+            "prefix": "8b0c8d",
+            "addend": 0,
+            "count": 1
           },
           {
             "symbol": "sParGroupRegTable",
             "field": "displacement",
-            "prefix": "8b1495"
+            "prefix": "8b1485",
+            "addend": 0,
+            "count": 1
           }
         ],
-        "xParGroupKillPar(xParGroup*,xPar*)": []
+        "xParGroupKillPar(xParGroup*,xPar*)": [
+          {
+            "symbol": "gParDead",
+            "field": "displacement",
+            "prefix": "8b0d",
+            "addend": 0,
+            "count": 1
+          },
+          {
+            "symbol": "gParDead",
+            "field": "displacement",
+            "prefix": "a3",
+            "addend": 0,
+            "count": 1
+          }
+        ]
       }
     },
     {

@@ -8191,6 +8191,14 @@
           "prefix": "bf"
         },
         {
+          "offset": 26,
+          "instruction_offset": 24,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "sParGroupRegTableInit",
+          "addend": 0
+        },
+        {
           "offset": 35,
           "symbol": "sParGroupRegTableCount",
           "addend": 0,

@@ -33,7 +33,30 @@ struct xPar
 
 void xParMemInit();
 xPar* xParAlloc();
+#if defined(XBOX)
+extern xPar* gParDead;
+inline void xParFree(xPar* par)
+{
+    if (par->m_next != NULL)
+    {
+        par->m_next->m_prev = par->m_prev;
+    }
+    if (par->m_prev != NULL)
+    {
+        par->m_prev->m_next = par->m_next;
+    }
+    xPar* dead = gParDead;
+    if (dead != NULL)
+    {
+        dead->m_prev = par;
+    }
+    par->m_next = gParDead;
+    par->m_prev = NULL;
+    gParDead = par;
+}
+#else
 void xParFree(xPar* par);
+#endif
 void xParInit(xPar* p);
 
 #endif

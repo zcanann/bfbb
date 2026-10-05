@@ -40,9 +40,46 @@ void xParGroupUnregister(xParGroup* ps);
 void xParGroupSetActive(xParGroup* ps, U32 isActive);
 void xParGroupKillAllParticles(xParGroup* ps);
 void xParGroupAnimate(xParGroup* ps, F32 dt);
+#if defined(XBOX)
+inline void xParGroupAddParP(xParGroup* ps, xPar* p)
+{
+    ps->m_alive = 1;
+    ps->m_num_of_particles++;
+
+    p->m_prev = NULL;
+    p->m_next = NULL;
+
+    if (ps->m_root)
+    {
+        p->m_next = ps->m_root;
+        ps->m_root->m_prev = p;
+        ps->m_root = p;
+    }
+    else
+    {
+        ps->m_root = p;
+    }
+}
+#else
 void xParGroupAddParP(xParGroup* ps, xPar* p);
+#endif
 xPar* xParGroupAddPar(xParGroup* ps);
 void xParGroupKillPar(xParGroup* ps, xPar* p);
+#if defined(XBOX)
+inline void xParGroupAddParToDeadList(xParGroup* ps, xPar* p)
+{
+    if (ps->m_dead)
+    {
+        ps->m_dead->m_prev = p;
+    }
+
+    p->m_next = ps->m_dead;
+    p->m_prev = NULL;
+
+    ps->m_dead = p;
+}
+#else
 void xParGroupAddParToDeadList(xParGroup* ps, xPar* p);
+#endif
 
 #endif
