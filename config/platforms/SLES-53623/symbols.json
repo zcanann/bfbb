@@ -278,6 +278,20 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "iAnimDurationSKB",
+      "source": "SB/Core/p2/iAnimSKB.cpp",
+      "address": 1724880,
+      "size": 32,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "iAnimEvalSKB",
+      "source": "SB/Core/p2/iAnimSKB.cpp",
+      "address": 1724912,
+      "size": 1480,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "iEnvStartup",
       "source": "SB/Core/p2/iEnv.cpp",
       "address": 1739264,
@@ -306,6 +320,13 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "iBoxIsectSphere",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1751280,
+      "size": 884,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "iBoxIsectRay",
       "source": "SB/Core/p2/iMath3.cpp",
       "address": 1752176,
@@ -320,6 +341,20 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "iBoxIsectVec",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1753056,
+      "size": 136,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "iBoxVecDist",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1753200,
+      "size": 2568,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "iCylinderIsectVec",
       "source": "SB/Core/p2/iMath3.cpp",
       "address": 1755776,
@@ -327,11 +362,53 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "iSphereBoundVec",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1755904,
+      "size": 316,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "iSphereInitBoundVec",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1756224,
+      "size": 40,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "iSphereIsectSphere",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1756272,
+      "size": 124,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "iSphereIsectRay",
       "source": "SB/Core/p2/iMath3.cpp",
       "address": 1756400,
       "size": 492,
       "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "iSphereIsectVec",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1756896,
+      "size": 100,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "iMath3Exit",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1757008,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "iMath3Init",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1757024,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "FastS16weight4",
@@ -1580,11 +1657,32 @@
       "provenance": "machine-corroborated-explicit-transfers"
     },
     {
+      "name": "xFFXShakeFree",
+      "source": "SB/Core/x/xFFX.cpp",
+      "address": 1945328,
+      "size": 16,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xFFXShakeAlloc",
+      "source": "SB/Core/x/xFFX.cpp",
+      "address": 1945344,
+      "size": 40,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "xFFXShakePoolInit",
       "source": "SB/Core/x/xFFX.cpp",
       "address": 1945392,
       "size": 152,
       "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "xFFXShakeUpdateEnt",
+      "source": "SB/Core/x/xFFX.cpp",
+      "address": 1945552,
+      "size": 348,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "xFFXApply",
@@ -1606,6 +1704,34 @@
       "address": 1946400,
       "size": 104,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xFFXAddEffect",
+      "source": "SB/Core/x/xFFX.cpp",
+      "address": 1946512,
+      "size": 40,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xFFXTurnOff",
+      "source": "SB/Core/x/xFFX.cpp",
+      "address": 1946560,
+      "size": 20,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xFFXTurnOn",
+      "source": "SB/Core/x/xFFX.cpp",
+      "address": 1946592,
+      "size": 16,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xFFXAlloc",
+      "source": "SB/Core/x/xFFX.cpp",
+      "address": 1946608,
+      "size": 40,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "xFFXPoolInit",
@@ -2565,6 +2691,20 @@
       "address": 2076784,
       "size": 40,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xQuickCullInit",
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "address": 2076832,
+      "size": 28,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xQuickCullInit",
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "address": 2076864,
+      "size": 252,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "Discard",
@@ -3838,6 +3978,13 @@
       "source": "SB/Core/x/xClumpColl.cpp",
       "address": 3164544,
       "size": 128,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xGridCheckPosition",
+      "source": "SB/Core/x/xGrid.cpp",
+      "address": 3164672,
+      "size": 1984,
       "provenance": "reviewed-whole-tu-sequence"
     },
     {

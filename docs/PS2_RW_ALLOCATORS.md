@@ -81,3 +81,28 @@ frozen `a6b33530a` integration report, all 5,317 comparable complete function re
 are unchanged. Four newer integration profiles absent from this worktree's profile
 snapshot (camera, scene, combo, and hangable) are explicitly excluded from that local
 comparison; the parent integration runs the final current-profile build.
+
+## Update-cull initializer instruction order
+
+The original PS2 initializer increments both entity counters before marking an
+entity's group-membership byte. Moving the existing flag assignment after those
+two increments restores that sequence without changing loop behavior. Actual
+whole-TU compilation changes only the two adjacent instructions at offsets 352
+and 356; all source relocation records and every other allocated byte remain
+identical. The original loop clears the per-group counter in s2 before scanning
+and tests it after the scan, independently identifying the second increment.
+
+All three debug-region normal comparisons gain xUpdateCull_Init's 1,484 bytes:
+the full seven-function / 3,040-byte unit now matches four / 1,732, with fuzzy
+83.969734%. Every other function record is unchanged. France's already-reviewed
+four-function / 1,420-byte subset remains one / 112 matched and unchanged; its
+initializer has not been independently recovered and is not added to coverage.
+All four actual complete-source objects are byte-identical. An actual GameCube
+compile retains all three ordered allocated sections exactly.
+
+Independent source relocation reconstruction leaves only the unresolved memcpy
+call at initializer offset 660 in each original. The gain is reported with the
+normal project code-matching metric, without claiming raw or whole-unit linkage
+identity. No new runtime identity, profile, compiler flag or scoring change is
+introduced. Private evidence: build/near245/{proof.json,update-cull-diff.json},
+raw/raw-proof.json and gc/proof.json.

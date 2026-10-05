@@ -502,12 +502,12 @@
       "identity_kind": "anonymous"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00019700",
-      "source": null,
+      "name": "xMat4x3Toworld",
+      "canonical_identifier": "xMat4x3Toworld(xVec3*,const xMat4x3*,const xVec3*)",
+      "source": "SB/Core/x/xMath3.cpp",
       "address": 104192,
       "size": 98,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
       "name": null,
@@ -10568,7 +10568,7 @@
     {
       "name": "xParAlloc",
       "canonical_identifier": "xParAlloc()",
-      "source": "SB/Core/x/xPar.cpp",
+      "source": "SB/Core/x/xParGroup.cpp",
       "address": 1350064,
       "size": 37,
       "identity_kind": "reviewed"

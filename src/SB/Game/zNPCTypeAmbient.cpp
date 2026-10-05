@@ -494,7 +494,7 @@ void zNPCJelly::PlayWithAlpha(F32 dt)
     F32 t = NPCC_TmrCycle(&this->tmr_pulseAlpha, dt, 0.5f);
     F32 x = PI * t;
 
-    this->SetAlpha(LERP(MAX(0.0f, MIN((F32)__fabs(isin(x)), 1.0f)), 0.7f, 0.95f));
+    this->SetAlpha(LERP(MAX(0.0f, MIN(xabs(isin(x)), 1.0f)), 0.7f, 0.95f));
 }
 
 void zNPCJelly::SetAlpha(F32 alf)

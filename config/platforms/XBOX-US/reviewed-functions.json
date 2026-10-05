@@ -2849,7 +2849,12 @@
           "addend": 0
         }
       ],
-      "direct_calls": [],
+      "direct_calls": [
+        {
+          "offset": 190,
+          "symbol": "xMat4x3Toworld(xVec3*,const xMat4x3*,const xVec3*)"
+        }
+      ],
       "corroboration": {
         "return_address": 1332022,
         "branches": [],
@@ -4175,7 +4180,20 @@
           "addend": 0
         }
       ],
-      "direct_calls": [],
+      "direct_calls": [
+        {
+          "offset": 24,
+          "symbol": "xMat3x3RotC(xMat3x3*,F32,F32,F32,F32)"
+        },
+        {
+          "offset": 99,
+          "symbol": "xMat4x3Toworld(xVec3*,const xMat4x3*,const xVec3*)"
+        },
+        {
+          "offset": 115,
+          "symbol": "xMat3x3Mul(xMat3x3*,const xMat3x3*,const xMat3x3*)"
+        }
+      ],
       "corroboration": {
         "return_address": 1334833,
         "branches": [],
@@ -4225,7 +4243,16 @@
         "entry_evidence": "Original decoded direct call witnesses and closed CFG; source bytes are not used to choose extents."
       },
       "address_expressions": [],
-      "direct_calls": [],
+      "direct_calls": [
+        {
+          "offset": 19,
+          "symbol": "xMat4x3Toworld(xVec3*,const xMat4x3*,const xVec3*)"
+        },
+        {
+          "offset": 33,
+          "symbol": "xMat3x3Mul(xMat3x3*,const xMat3x3*,const xMat3x3*)"
+        }
+      ],
       "corroboration": {
         "return_address": 1334910,
         "branches": [],
@@ -5084,7 +5111,7 @@
       "name": "xParAlloc",
       "canonical_identifier": "xParAlloc()",
       "display_name": "xPar* xParAlloc()",
-      "source": "SB/Core/x/xPar.cpp",
+      "source": "SB/Core/x/xParGroup.cpp",
       "linkage_name": null,
       "address": 1350064,
       "size": 37,
@@ -5160,7 +5187,8 @@
           "size": 209,
           "sha256": "2985b56cfc4f295a2e2bbc596616c1b4f841a21931594f8cf4a77622ceef8099",
           "description": "Existing reviewed particle-group allocation caller passes the nonnull result directly to xParInit."
-        }
+        },
+        "source_ownership": "The original definition/header TU is unknown. The shared reference definition was in xPar.cpp; the reconstructed Xbox inline definition is in xPar.h. This reporting group uses the actual emitted group.obj body from complete xParGroup.cpp compilation, naturally called by xParGroupAddPar. It does not assert original TU ownership."
       }
     },
     {
@@ -8189,6 +8217,14 @@
           "instruction_offset": 17,
           "field": "immediate",
           "prefix": "bf"
+        },
+        {
+          "offset": 26,
+          "instruction_offset": 24,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "sParGroupRegTableInit",
+          "addend": 0
         },
         {
           "offset": 35,
@@ -14160,6 +14196,106 @@
             "sha256": "42957f9b5e5616f4faf4bd37aa481c46f7625d8a6da9c136fd6d379320ae7033"
           },
           "alternate_entry": 1863864
+        }
+      }
+    },
+    {
+      "name": "xMat4x3Toworld",
+      "canonical_identifier": "xMat4x3Toworld(xVec3*,const xMat4x3*,const xVec3*)",
+      "display_name": "void xMat4x3Toworld(xVec3*,const xMat4x3*,const xVec3*)",
+      "source": "SB/Core/x/xMath3.cpp",
+      "linkage_name": null,
+      "address": 104192,
+      "size": 98,
+      "sha256": "27ddb3c6250082113be5a2cd24d425f518eb4bf5b5f44b6b12071ffd77ec4d77",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 98,
+      "instruction_count": 38,
+      "semantics": {
+        "identity": "Three-component basis-vector transform followed by position addition; all input/basis products precede the first output store, then x/y/z rotated components are stored before x/y/z position additions.",
+        "parameter_locations": {
+          "matrix": "eax",
+          "input_vector": "ecx",
+          "output_vector": "entry esp+4, loaded into edx at+3"
+        },
+        "ordered_stores": [
+          {
+            "offset": 66,
+            "output_field_offset": 0,
+            "expression": "(((m.at.x * v.z) + (m.up.x * v.y)) + (m.right.x * v.x))"
+          },
+          {
+            "offset": 70,
+            "output_field_offset": 4,
+            "expression": "(((m.at.y * v.z) + (m.right.y * v.x)) + (m.up.y * v.y))"
+          },
+          {
+            "offset": 73,
+            "output_field_offset": 8,
+            "expression": "(((m.at.z * v.z) + (m.right.z * v.x)) + (m.up.z * v.y))"
+          },
+          {
+            "offset": 81,
+            "output_field_offset": 0,
+            "expression": "(m.pos.x + (((m.at.x * v.z) + (m.up.x * v.y)) + (m.right.x * v.x)))"
+          },
+          {
+            "offset": 88,
+            "output_field_offset": 4,
+            "expression": "((((m.at.y * v.z) + (m.right.y * v.x)) + (m.up.y * v.y)) + m.pos.y)"
+          },
+          {
+            "offset": 94,
+            "output_field_offset": 8,
+            "expression": "((((m.at.z * v.z) + (m.right.z * v.x)) + (m.up.z * v.y)) + m.pos.z)"
+          }
+        ],
+        "source_comparison": "Actual reconstructed ordinary out-of-line helper is94 bytes. Original additionally loads its output pointer from entry esp+4; source receives EDX. This ABI difference remains compared."
+      },
+      "address_expressions": [],
+      "direct_calls": [],
+      "corroboration": {
+        "source_ownership": "Original definition/header TU unknown. Reconstructed reporting group uses actual emitted xMath3.obj ordinary helper from complete xMath3.cpp; it does not assert original TU ownership.",
+        "method": "Unique complete original body already independently recovered as anon_00019700, complete decoded x87/register/memory dataflow, and three previously reviewed semantic callers. No compiled bytes establish original identity or extent.",
+        "return_address": 104289,
+        "branches": [],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1331949,
+            "target": 104192
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 1334786,
+            "target": 104192
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 1334866,
+            "target": 104192
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 98,
+          "internal_gap_ranges": [],
+          "direct_call_targets": []
+        },
+        "previous_boundary": {
+          "return_address": 104189,
+          "padding_address": 104190,
+          "padding_size": 2,
+          "padding_byte": 204
+        },
+        "next_function_address": 104304,
+        "following_padding": {
+          "address": 104290,
+          "size": 14,
+          "byte": 204
         }
       }
     }

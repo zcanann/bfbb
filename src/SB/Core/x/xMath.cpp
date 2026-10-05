@@ -59,11 +59,14 @@ void xsrand(U32 seed)
     rndseed = seed;
 }
 
+#if !defined(XBOX)
 U32 xrand()
 {
     rndseed = rndseed * 1103515245 + 12345;
     return rndseed;
 }
+
+#endif
 
 F32 xurand()
 {

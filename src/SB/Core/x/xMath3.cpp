@@ -508,6 +508,27 @@ void xMat3x3Mul(xMat3x3* o, const xMat3x3* a, const xMat3x3* b)
         tp = o;
     }
 
+#if defined(XBOX)
+    tp->right.x = a->right.z * b->at.x +
+                  (a->right.x * b->right.x + a->right.y * b->up.x);
+    tp->right.y = a->right.z * b->at.y +
+                  (a->right.x * b->right.y + a->right.y * b->up.y);
+    tp->right.z = a->right.z * b->at.z +
+                  (a->right.x * b->right.z + a->right.y * b->up.z);
+    tp->up.x = a->up.z * b->at.x +
+                  (a->up.x * b->right.x + a->up.y * b->up.x);
+    tp->up.y = a->up.z * b->at.y +
+                  (a->up.x * b->right.y + a->up.y * b->up.y);
+    tp->up.z = a->up.z * b->at.z +
+                  (a->up.x * b->right.z + a->up.y * b->up.z);
+    tp->at.x = a->at.z * b->at.x +
+                  (a->at.x * b->right.x + a->at.y * b->up.x);
+    tp->at.y = a->at.z * b->at.y +
+                  (a->at.x * b->right.y + a->at.y * b->up.y);
+    tp->at.z = a->at.z * b->at.z +
+                  (a->at.x * b->right.z + a->at.y * b->up.z);
+    tp->flags = 0;
+#else
     // Form the middle products, then accumulate the first and third terms.
     F32 out_right_x = a->right.y * b->up.x;
     F32 out_right_y = a->right.y * b->up.y;
@@ -549,6 +570,7 @@ void xMat3x3Mul(xMat3x3* o, const xMat3x3* a, const xMat3x3* b)
     tp->at.x = out_at_x;
     tp->at.y = out_at_y;
     tp->at.z = out_at_z;
+#endif
     if (usetemp != 0)
     {
         xMat3x3Copy(o, tp);
@@ -556,6 +578,7 @@ void xMat3x3Mul(xMat3x3* o, const xMat3x3* a, const xMat3x3* b)
     return;
 }
 
+#if !defined(XBOX)
 void xMat3x3LMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 {
     F32 y = (m->up.x * v->x) + (m->up.y * v->y) + (m->up.z * v->z);
@@ -565,6 +588,7 @@ void xMat3x3LMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
     o->y = y;
     o->z = z;
 }
+#endif
 
 void xMat3x3Tolocal(xVec3* o, const xMat3x3* m, const xVec3* v)
 {
@@ -588,6 +612,20 @@ void xMat4x3Rot(xMat4x3* m, const xVec3* a, F32 t, const xVec3* p)
     xMat4x3Mul(m, &temp, m);
 }
 
+#if defined(XBOX)
+void xMat4x3Toworld(xVec3* o, const xMat4x3* m, const xVec3* v)
+{
+    xMat3x3RMulVec(o, m, v);
+
+    o->x += m->pos.x;
+    o->y += m->pos.y;
+    o->z += m->pos.z;
+}
+#endif
+
+#if defined(XBOX)
+inline
+#endif
 void xMat4x3Mul(xMat4x3* o, const xMat4x3* a, const xMat4x3* b)
 {
     xVec3 v;

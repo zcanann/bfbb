@@ -65,10 +65,12 @@ F32 xJaw_EvalData(void* data, F32 time)
 
     numdata = *(S32*)data;
 
+#if !defined(PS2)
     if (numdata > (U32)0xFFFF)
     {
         swap(data);
     }
+#endif
 
     time *= 60.0f;
     idx = std::floorf(time);

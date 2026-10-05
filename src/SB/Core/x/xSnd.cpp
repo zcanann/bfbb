@@ -18,6 +18,12 @@ xSndGlobals gSnd;
 
 namespace
 {
+#if defined(PS2)
+    enum { STREAM_VOICE_COUNT = 4 };
+#else
+    enum { STREAM_VOICE_COUNT = 6 };
+#endif
+
     class fade_data
     {
         // total size: 0x18
@@ -739,7 +745,7 @@ void xSndStopFade(U32 snd, F32 fade_time)
                 end--;
                 if (it == end)
                 {
-                    return;
+                    break;
                 }
 
                 *it = *end;
@@ -782,7 +788,7 @@ void xSndStopFade(U32 snd, F32 fade_time)
 U8 xSndStreamLock(U32 owner, sound_category kill_cat, bool kill_nonlooping)
 {
     xSndVoiceInfo* begin = gSnd.voice;
-    xSndVoiceInfo* end = begin + 6;
+    xSndVoiceInfo* end = begin + STREAM_VOICE_COUNT;
 
     for (xSndVoiceInfo* v = begin; v != end; v++)
     {
@@ -816,7 +822,11 @@ U8 xSndStreamLock(U32 owner, sound_category kill_cat, bool kill_nonlooping)
         {
             if (v->lock_owner == 0 && v->category == kill_cat)
             {
+#if defined(PS2)
+                iSndStop(v->sndID);
+#else
                 xSndStop(v->sndID);
+#endif
                 v->lock_owner = owner;
                 return 1;
             }
@@ -829,7 +839,11 @@ U8 xSndStreamLock(U32 owner, sound_category kill_cat, bool kill_nonlooping)
         {
             if (v->lock_owner == 0 && !(v->flags & 0x8000))
             {
+#if defined(PS2)
+                iSndStop(v->sndID);
+#else
                 xSndStop(v->sndID);
+#endif
                 v->lock_owner = owner;
                 return 1;
             }
@@ -842,7 +856,7 @@ U8 xSndStreamLock(U32 owner, sound_category kill_cat, bool kill_nonlooping)
 U32 xSndStreamReady(U32 owner)
 {
     xSndVoiceInfo* begin = gSnd.voice;
-    xSndVoiceInfo* end = begin + 6;
+    xSndVoiceInfo* end = begin + STREAM_VOICE_COUNT;
 
     for (xSndVoiceInfo* v = begin; v != end; v++)
     {
@@ -865,7 +879,7 @@ U32 xSndStreamReady(U32 owner)
 void xSndStreamUnlock(U32 owner)
 {
     xSndVoiceInfo* begin = gSnd.voice;
-    xSndVoiceInfo* end = begin + 6;
+    xSndVoiceInfo* end = begin + STREAM_VOICE_COUNT;
 
     for (xSndVoiceInfo* v = begin; v != end; v++)
     {

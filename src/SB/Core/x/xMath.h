@@ -51,8 +51,19 @@ void xMathInit();
 void xMathExit();
 F32 xatof(const char* x);
 void xsrand(U32 seed);
+#if defined(XBOX)
+extern U32 rndseed;
+inline U32 xrand()
+{
+    rndseed = rndseed * 1103515245 + 12345;
+    return rndseed;
+}
+
+F32 xurand();
+#else
 U32 xrand();
 F32 xurand();
+#endif
 U32 xMathSolveQuadratic(F32 a, F32 b, F32 c, F32* x1, F32* x2);
 U32 xMathSolveCubic(F32 a, F32 b, F32 c, F32 d, F32* x1, F32* x2, F32* x3);
 F32 xAngleClamp(F32 a);

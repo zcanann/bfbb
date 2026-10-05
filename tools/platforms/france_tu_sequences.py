@@ -440,6 +440,52 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     for key, value in goals['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
     document['limitations'].append('Common/Standard goal identity uses unique complete sequences in three named originals plus full original vtables/globals. Rooted direct-call witnesses are empty; header interleaves and external table methods remain nonpromoted context. No missing NoManLand class layout or method is inferred.')
+    from platforms.france_grid_sequence import generate_unit as generate_grid
+    grid = generate_grid(originals, registry_dir)
+    document['functions'].extend(grid['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(grid['sequence_proofs'])
+    document['call_neighbors'].extend(grid['call_neighbors'])
+    document['grid_data_proofs'] = grid['data_proofs']
+    for key, value in grid['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Grid adds only xGridCheckPosition. Its eleven previously confirmed neighbors remain unchanged; all twelve original members form a unique sequence. The complete signed-int offs[4][3][2] array and four named calls are independently checked; external entry prefixes remain context only.')
+    from platforms.france_quickcull_sequence import generate_unit as generate_quickcull
+    quickcull = generate_quickcull(originals, registry_dir)
+    document['functions'].extend(quickcull['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(quickcull['sequence_proofs'])
+    document['call_neighbors'].extend(quickcull['call_neighbors'])
+    for key, value in quickcull['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('QuickCull adds only two Init overloads using all eleven original members and nine independently confirmed neighbors. The 28-byte wrapper is exactly six argument loads and a terminal J to the adjacent strictly closed initializer; generic CFG checks remain strict.')
+    from platforms.france_skb_sequence import generate_unit as generate_skb
+    skb = generate_skb(originals, registry_dir)
+    document['functions'].extend(skb['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(skb['sequence_proofs'])
+    document['skb_data_proofs'] = skb['data_proofs']
+    for key, value in skb['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('SKB adds Duration and Eval using the complete four-member sequence and two independently confirmed neighbors. All bodies satisfy the unchanged strict CFG checks; original DWARF and all 96 bytes prove the sole changed slerpPolynomial address.')
+    from platforms.france_ffx_sequence import generate_unit as generate_ffx
+    ffx = generate_ffx(originals, registry_dir)
+    document['functions'].extend(ffx['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(ffx['sequence_proofs'])
+    document['call_neighbors'].extend(ffx['call_neighbors'])
+    for key, value in ffx['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('FFX adds seven members using all fourteen original functions and seven independently confirmed neighbors. Allocator context decodes original JALs from at least two other source units; unchanged opaque math calls remain unmasked and unnamed. Strict CFG checks remain unchanged.')
+    from platforms.france_imath3_sequence import generate_unit as generate_imath3
+    imath3 = generate_imath3(originals, registry_dir)
+    document['functions'].extend(imath3['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(imath3['sequence_proofs'])
+    document['call_neighbors'].extend(imath3['call_neighbors'])
+    for key, value in imath3['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Platform geometry adds nine members using all fifteen original functions and six independently confirmed neighbors. Two opaque runtime calls retain literal unmasked JAL words and identical context only; no new callee identity, extent, or CFG exception is introduced.')
     return document
 
 

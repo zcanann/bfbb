@@ -149,9 +149,9 @@ xUpdateCullMgr* xUpdateCull_Init(void** ent, U32 entCount, xGroup** group, U32 g
             {
                 if (base == ent[k])
                 {
-                    inGroupArray[k] = true;
                     entsInGroups++;
                     entsInThisGroup++;
+                    inGroupArray[k] = true;
                 }
             }
         }

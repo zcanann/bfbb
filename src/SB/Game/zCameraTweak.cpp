@@ -37,11 +37,31 @@ static void zCameraTweak_LookPreCalc(zCamTweakLook* tlook, F32 d, F32 h, F32 pit
     tlook->pitch = pitch;
 }
 
+#if defined(PS2)
+static inline void zCameraTweak_ResetState()
+{
+    sCamTweakCount = 0;
+    sCamTweakPitch[0] = 0.0f;
+    sCamTweakPitch[1] = 0.0f;
+    sCamTweakDistMult[0] = 1.0f;
+    sCamTweakDistMult[1] = 1.0f;
+    sCamTweakTime = 0.1f;
+    sCamTweakLerp = 0.0f;
+    sCamTweakPitchCur = 0.0f;
+    sCamTweakDistMultCur = 1.0f;
+    return;
+}
+#endif
+
 void zCameraTweakGlobal_Init()
 {
     zCameraTweak_LookPreCalc(&zcam_neartweak, zcam_near_d, zcam_near_h, zcam_near_pitch);
     zCameraTweak_LookPreCalc(&zcam_fartweak, zcam_far_d, zcam_far_h, zcam_far_pitch);
+#if defined(PS2)
+    zCameraTweak_ResetState();
+#else
     zCameraTweakGlobal_Reset();
+#endif
 }
 
 void zCameraTweakGlobal_Add(U32 owner, F32 priority, F32 time, F32 pitch, F32 distMult)
@@ -135,6 +155,9 @@ void zCameraTweakGlobal_Remove(U32 owner)
 
 void zCameraTweakGlobal_Reset()
 {
+#if defined(PS2)
+    zCameraTweak_ResetState();
+#else
     sCamTweakCount = 0;
     sCamTweakPitch[0] = 0.0f;
     sCamTweakPitch[1] = 0.0f;
@@ -145,6 +168,7 @@ void zCameraTweakGlobal_Reset()
     sCamTweakPitchCur = 0.0f;
     sCamTweakDistMultCur = 1.0f;
     return;
+#endif
 }
 
 void zCameraTweakGlobal_Update(F32 dt)

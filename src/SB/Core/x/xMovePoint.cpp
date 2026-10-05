@@ -24,7 +24,7 @@ void xMovePointInit(xMovePoint* ent, xMovePointAsset* asset)
     ent->delay = asset->delay;
     ent->spl = NULL;
 
-    if (asset->numPoints != 0)
+    if (asset->numPoints > 0)
     {
         ent->nodes = (xMovePoint**)xMemAllocSize(asset->numPoints * sizeof(xMovePoint*));
     }
@@ -81,7 +81,7 @@ void xMovePointSplineSetup(xMovePoint* m)
     w2 = m->nodes[0];
 
     points[0] = *w0->pos;
-    if (w2->asset->bezIndex > 0)
+    if (w2->asset->bezIndex != 0)
     {
         w3 = w2->nodes[0];
         p1 = *w1->pos;

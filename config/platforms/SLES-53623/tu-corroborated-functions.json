@@ -27,15 +27,20 @@
     "Collision uses two explicitly closed platform leaf-tail callees, six complete callback entries and original DWARF-typed global components; external entry prefixes are not promoted.",
     "Entity verifies one exact pointer-return leaf, original typed arrays and one unnamed immutable interleaved leaf as context only; that context is not assigned source ownership or promoted.",
     "Clump collision and splines retain strict CFG checks; original array descriptors prove two coefficient matrices and observed allocator-array slots without inferring a RenderWare struct layout.",
-    "Common/Standard goal identity uses unique complete sequences in three named originals plus full original vtables/globals. Rooted direct-call witnesses are empty; header interleaves and external table methods remain nonpromoted context. No missing NoManLand class layout or method is inferred."
+    "Common/Standard goal identity uses unique complete sequences in three named originals plus full original vtables/globals. Rooted direct-call witnesses are empty; header interleaves and external table methods remain nonpromoted context. No missing NoManLand class layout or method is inferred.",
+    "Grid adds only xGridCheckPosition. Its eleven previously confirmed neighbors remain unchanged; all twelve original members form a unique sequence. The complete signed-int offs[4][3][2] array and four named calls are independently checked; external entry prefixes remain context only.",
+    "QuickCull adds only two Init overloads using all eleven original members and nine independently confirmed neighbors. The 28-byte wrapper is exactly six argument loads and a terminal J to the adjacent strictly closed initializer; generic CFG checks remain strict.",
+    "SKB adds Duration and Eval using the complete four-member sequence and two independently confirmed neighbors. All bodies satisfy the unchanged strict CFG checks; original DWARF and all 96 bytes prove the sole changed slerpPolynomial address.",
+    "FFX adds seven members using all fourteen original functions and seven independently confirmed neighbors. Allocator context decodes original JALs from at least two other source units; unchanged opaque math calls remain unmasked and unnamed. Strict CFG checks remain unchanged.",
+    "Platform geometry adds nine members using all fifteen original functions and six independently confirmed neighbors. Two opaque runtime calls retain literal unmasked JAL words and identical context only; no new callee identity, extent, or CFG exception is introduced."
   ],
   "counts": {
-    "functions": 305,
-    "code_bytes": 145980,
-    "source_units": 11,
+    "functions": 326,
+    "code_bytes": 154460,
+    "source_units": 16,
     "rooted_direct_call_entries": 129,
-    "closed_return_bodies": 292,
-    "reviewed_tail_wrappers": 1,
+    "closed_return_bodies": 312,
+    "reviewed_tail_wrappers": 2,
     "registered_callback_entries": 26,
     "reviewed_leaf_tail_functions": 11,
     "reviewed_dead_delay_copies": 3,
@@ -49,7 +54,9 @@
     "reviewed_dead_islands": 1,
     "original_vtables": 15,
     "complete_external_table_methods": 11,
-    "header_context_bodies_not_promoted": 2
+    "header_context_bodies_not_promoted": 2,
+    "reviewed_grid_arrays": 1,
+    "reviewed_skb_polynomials": 1
   },
   "sequence_proofs": [
     {
@@ -731,6 +738,285 @@
         "sha256": "008d26890102af179c703d77fae42cb7b3f424a11b8db552383dd8e5313f4061",
         "promoted_as_named_anchor": false,
         "included_in_source_unit": false
+      }
+    },
+    {
+      "version": "SLUS-20680",
+      "source": "SB/Core/x/xGrid.cpp",
+      "source_start": 3163264,
+      "target_start": 3164672,
+      "complete_original_members": 12,
+      "previously_confirmed_members": 11,
+      "sequence_bytes_with_alignment": 5772,
+      "uniqueness": {
+        "matching_addresses": [
+          3164672
+        ],
+        "unchanged_anchor_offset": 1496,
+        "unchanged_anchor_bytes": 1908,
+        "masked_instruction_count": 15
+      },
+      "candidate_uniqueness": {
+        "matching_addresses": [
+          3164672
+        ],
+        "unchanged_anchor_offset": 120,
+        "unchanged_anchor_bytes": 620,
+        "masked_instruction_count": 5
+      }
+    },
+    {
+      "version": "SLES-51968",
+      "source": "SB/Core/x/xGrid.cpp",
+      "source_start": 3164560,
+      "target_start": 3164672,
+      "complete_original_members": 12,
+      "previously_confirmed_members": 11,
+      "sequence_bytes_with_alignment": 5772,
+      "uniqueness": {
+        "matching_addresses": [
+          3164672
+        ],
+        "unchanged_anchor_offset": 1496,
+        "unchanged_anchor_bytes": 1908,
+        "masked_instruction_count": 15
+      },
+      "candidate_uniqueness": {
+        "matching_addresses": [
+          3164672
+        ],
+        "unchanged_anchor_offset": 120,
+        "unchanged_anchor_bytes": 620,
+        "masked_instruction_count": 5
+      }
+    },
+    {
+      "version": "SLES-51970",
+      "source": "SB/Core/x/xGrid.cpp",
+      "source_start": 3161248,
+      "target_start": 3164672,
+      "complete_original_members": 12,
+      "previously_confirmed_members": 11,
+      "sequence_bytes_with_alignment": 5772,
+      "uniqueness": {
+        "matching_addresses": [
+          3164672
+        ],
+        "unchanged_anchor_offset": 1496,
+        "unchanged_anchor_bytes": 1908,
+        "masked_instruction_count": 15
+      },
+      "candidate_uniqueness": {
+        "matching_addresses": [
+          3164672
+        ],
+        "unchanged_anchor_offset": 120,
+        "unchanged_anchor_bytes": 620,
+        "masked_instruction_count": 5
+      }
+    },
+    {
+      "version": "SLUS-20680",
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "source_start": 2073392,
+      "target_start": 2074816,
+      "complete_original_members": 11,
+      "previously_confirmed_members": 9,
+      "sequence_bytes_with_alignment": 2300,
+      "uniqueness": {
+        "matching_addresses": [
+          2074816
+        ],
+        "unchanged_anchor_offset": 1348,
+        "unchanged_anchor_bytes": 520,
+        "masked_instruction_count": 14
+      }
+    },
+    {
+      "version": "SLES-51968",
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "source_start": 2074704,
+      "target_start": 2074816,
+      "complete_original_members": 11,
+      "previously_confirmed_members": 9,
+      "sequence_bytes_with_alignment": 2300,
+      "uniqueness": {
+        "matching_addresses": [
+          2074816
+        ],
+        "unchanged_anchor_offset": 1348,
+        "unchanged_anchor_bytes": 520,
+        "masked_instruction_count": 14
+      }
+    },
+    {
+      "version": "SLES-51970",
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "source_start": 2071360,
+      "target_start": 2074816,
+      "complete_original_members": 11,
+      "previously_confirmed_members": 9,
+      "sequence_bytes_with_alignment": 2300,
+      "uniqueness": {
+        "matching_addresses": [
+          2074816
+        ],
+        "unchanged_anchor_offset": 1348,
+        "unchanged_anchor_bytes": 520,
+        "masked_instruction_count": 14
+      }
+    },
+    {
+      "version": "SLUS-20680",
+      "source": "SB/Core/p2/iAnimSKB.cpp",
+      "source_start": 1721360,
+      "target_start": 1722160,
+      "complete_original_members": 4,
+      "previously_confirmed_members": 2,
+      "sequence_bytes_with_alignment": 4232,
+      "uniqueness": {
+        "matching_addresses": [
+          1722160
+        ],
+        "unchanged_anchor_offset": 0,
+        "unchanged_anchor_bytes": 3260,
+        "masked_instruction_count": 1
+      }
+    },
+    {
+      "version": "SLES-51968",
+      "source": "SB/Core/p2/iAnimSKB.cpp",
+      "source_start": 1722160,
+      "target_start": 1722160,
+      "complete_original_members": 4,
+      "previously_confirmed_members": 2,
+      "sequence_bytes_with_alignment": 4232,
+      "uniqueness": {
+        "matching_addresses": [
+          1722160
+        ],
+        "unchanged_anchor_offset": 0,
+        "unchanged_anchor_bytes": 3260,
+        "masked_instruction_count": 1
+      }
+    },
+    {
+      "version": "SLES-51970",
+      "source": "SB/Core/p2/iAnimSKB.cpp",
+      "source_start": 1718800,
+      "target_start": 1722160,
+      "complete_original_members": 4,
+      "previously_confirmed_members": 2,
+      "sequence_bytes_with_alignment": 4232,
+      "uniqueness": {
+        "matching_addresses": [
+          1722160
+        ],
+        "unchanged_anchor_offset": 0,
+        "unchanged_anchor_bytes": 3260,
+        "masked_instruction_count": 1
+      }
+    },
+    {
+      "version": "SLUS-20680",
+      "source": "SB/Core/x/xFFX.cpp",
+      "source_start": 1943744,
+      "target_start": 1945120,
+      "complete_original_members": 14,
+      "previously_confirmed_members": 7,
+      "sequence_bytes_with_alignment": 1680,
+      "uniqueness": {
+        "matching_addresses": [
+          1945120
+        ],
+        "unchanged_anchor_offset": 980,
+        "unchanged_anchor_bytes": 576,
+        "masked_instruction_count": 5
+      }
+    },
+    {
+      "version": "SLES-51968",
+      "source": "SB/Core/x/xFFX.cpp",
+      "source_start": 1945008,
+      "target_start": 1945120,
+      "complete_original_members": 14,
+      "previously_confirmed_members": 7,
+      "sequence_bytes_with_alignment": 1680,
+      "uniqueness": {
+        "matching_addresses": [
+          1945120
+        ],
+        "unchanged_anchor_offset": 980,
+        "unchanged_anchor_bytes": 576,
+        "masked_instruction_count": 5
+      }
+    },
+    {
+      "version": "SLES-51970",
+      "source": "SB/Core/x/xFFX.cpp",
+      "source_start": 1941648,
+      "target_start": 1945120,
+      "complete_original_members": 14,
+      "previously_confirmed_members": 7,
+      "sequence_bytes_with_alignment": 1680,
+      "uniqueness": {
+        "matching_addresses": [
+          1945120
+        ],
+        "unchanged_anchor_offset": 980,
+        "unchanged_anchor_bytes": 576,
+        "masked_instruction_count": 5
+      }
+    },
+    {
+      "version": "SLUS-20680",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "source_start": 1749696,
+      "target_start": 1750992,
+      "complete_original_members": 15,
+      "previously_confirmed_members": 6,
+      "sequence_bytes_with_alignment": 6040,
+      "uniqueness": {
+        "matching_addresses": [
+          1750992
+        ],
+        "unchanged_anchor_offset": 1608,
+        "unchanged_anchor_bytes": 4012,
+        "masked_instruction_count": 8
+      }
+    },
+    {
+      "version": "SLES-51968",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "source_start": 1750992,
+      "target_start": 1750992,
+      "complete_original_members": 15,
+      "previously_confirmed_members": 6,
+      "sequence_bytes_with_alignment": 6040,
+      "uniqueness": {
+        "matching_addresses": [
+          1750992
+        ],
+        "unchanged_anchor_offset": 1608,
+        "unchanged_anchor_bytes": 4012,
+        "masked_instruction_count": 8
+      }
+    },
+    {
+      "version": "SLES-51970",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "source_start": 1747632,
+      "target_start": 1750992,
+      "complete_original_members": 15,
+      "previously_confirmed_members": 6,
+      "sequence_bytes_with_alignment": 6040,
+      "uniqueness": {
+        "matching_addresses": [
+          1750992
+        ],
+        "unchanged_anchor_offset": 1608,
+        "unchanged_anchor_bytes": 4012,
+        "masked_instruction_count": 8
       }
     }
   ],
@@ -9863,9 +10149,3214 @@
         }
       ],
       "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "reference_address": 1149960,
+      "target_address": 1149960,
+      "reference_name": null,
+      "reference_source": null,
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "25ec01e68f8e49d0b3ee211f0323590052a1fce40879cecdba1a4b1a49f9c655",
+      "target_sha256": "25ec01e68f8e49d0b3ee211f0323590052a1fce40879cecdba1a4b1a49f9c655",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "reference_address": 2033296,
+      "target_address": 2034656,
+      "reference_name": "xMemAlloc",
+      "reference_source": "SB/Core/x/xMemMgr.cpp",
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "bc7ada52c9345012cd2db35dfbff560dccec9bb2ea7bc1f843a04e7a9a50c0c7",
+      "target_sha256": "93b45deb7826095a9d3faecdf7a621d051378f267fed2a2520a17088247eccc6",
+      "data_address_operands": [
+        {
+          "hi_offset": 4,
+          "lo_offset": 20,
+          "opcode": 9,
+          "reference_address": 5671216,
+          "target_address": 5670192,
+          "storage": "zero_fill"
+        }
+      ],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "reference_address": 2075360,
+      "target_address": 2076784,
+      "reference_name": "xQuickCullIsects",
+      "reference_source": "SB/Core/x/xQuickCull.cpp",
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "68bd478d557ff3c16f671e21fc500ece7c22f0417f19dea1211c2bee3bc47e67",
+      "target_sha256": "68bd478d557ff3c16f671e21fc500ece7c22f0417f19dea1211c2bee3bc47e67",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "reference_address": 1149960,
+      "target_address": 1149960,
+      "reference_name": null,
+      "reference_source": null,
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "25ec01e68f8e49d0b3ee211f0323590052a1fce40879cecdba1a4b1a49f9c655",
+      "target_sha256": "25ec01e68f8e49d0b3ee211f0323590052a1fce40879cecdba1a4b1a49f9c655",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "reference_address": 2034544,
+      "target_address": 2034656,
+      "reference_name": "xMemAlloc",
+      "reference_source": "SB/Core/x/xMemMgr.cpp",
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "eb2932a02d5f63718f41346f2744d27135b30f0a6463134a86e4bbdf56bcd1bc",
+      "target_sha256": "93b45deb7826095a9d3faecdf7a621d051378f267fed2a2520a17088247eccc6",
+      "data_address_operands": [
+        {
+          "hi_offset": 4,
+          "lo_offset": 20,
+          "opcode": 9,
+          "reference_address": 5669936,
+          "target_address": 5670192,
+          "storage": "zero_fill"
+        }
+      ],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "reference_address": 2076672,
+      "target_address": 2076784,
+      "reference_name": "xQuickCullIsects",
+      "reference_source": "SB/Core/x/xQuickCull.cpp",
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "68bd478d557ff3c16f671e21fc500ece7c22f0417f19dea1211c2bee3bc47e67",
+      "target_sha256": "68bd478d557ff3c16f671e21fc500ece7c22f0417f19dea1211c2bee3bc47e67",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "reference_address": 1149960,
+      "target_address": 1149960,
+      "reference_name": null,
+      "reference_source": null,
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "25ec01e68f8e49d0b3ee211f0323590052a1fce40879cecdba1a4b1a49f9c655",
+      "target_sha256": "25ec01e68f8e49d0b3ee211f0323590052a1fce40879cecdba1a4b1a49f9c655",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "reference_address": 2031184,
+      "target_address": 2034656,
+      "reference_name": "xMemAlloc",
+      "reference_source": "SB/Core/x/xMemMgr.cpp",
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "cf79affd6a789b2f9e8c95d1f5ede0b68efb61061e201810e42fc19b8925e859",
+      "target_sha256": "93b45deb7826095a9d3faecdf7a621d051378f267fed2a2520a17088247eccc6",
+      "data_address_operands": [
+        {
+          "hi_offset": 4,
+          "lo_offset": 20,
+          "opcode": 9,
+          "reference_address": 5668400,
+          "target_address": 5670192,
+          "storage": "zero_fill"
+        }
+      ],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "reference_address": 2073328,
+      "target_address": 2076784,
+      "reference_name": "xQuickCullIsects",
+      "reference_source": "SB/Core/x/xQuickCull.cpp",
+      "compared_entry_prefix_bytes": 32,
+      "reference_sha256": "68bd478d557ff3c16f671e21fc500ece7c22f0417f19dea1211c2bee3bc47e67",
+      "target_sha256": "68bd478d557ff3c16f671e21fc500ece7c22f0417f19dea1211c2bee3bc47e67",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "reference_address": 2030928,
+      "target_address": 2032288,
+      "reference_name": "xBoxInitBoundOBB",
+      "reference_source": "SB/Core/x/xMath3.cpp",
+      "size": 712,
+      "target_sha256": "3b231b915fa7b89959e425ce64745e8890c2d4f91e480ca85fe33da7ab865e25",
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "reference_address": 2032176,
+      "target_address": 2032288,
+      "reference_name": "xBoxInitBoundOBB",
+      "reference_source": "SB/Core/x/xMath3.cpp",
+      "size": 712,
+      "target_sha256": "3b231b915fa7b89959e425ce64745e8890c2d4f91e480ca85fe33da7ab865e25",
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "reference_address": 2028816,
+      "target_address": 2032288,
+      "reference_name": "xBoxInitBoundOBB",
+      "reference_source": "SB/Core/x/xMath3.cpp",
+      "size": 712,
+      "target_sha256": "3b231b915fa7b89959e425ce64745e8890c2d4f91e480ca85fe33da7ab865e25",
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 1945168,
+      "offset": 28,
+      "opcode": 3,
+      "reference_address": 2033296,
+      "target_address": 2034656,
+      "prior_independent_caller_witnesses": [
+        {
+          "caller": "Setup",
+          "source": "SB/Game/zUI.cpp",
+          "reference_address": 1709824,
+          "target_address": 1710624,
+          "size": 416,
+          "offset": 68,
+          "reference_sha256": "18ecbe6fe9b7c694aab2275ed2f9bf3914855c9ccb9d706629171a6cbed4209c",
+          "target_sha256": "144703b26154b4ffd3a0d6d3e6cdec61ffdb6926bab17ddda7179941a151c77f",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "Setup",
+          "source": "SB/Game/zUI.cpp",
+          "reference_address": 1709824,
+          "target_address": 1710624,
+          "size": 416,
+          "offset": 100,
+          "reference_sha256": "18ecbe6fe9b7c694aab2275ed2f9bf3914855c9ccb9d706629171a6cbed4209c",
+          "target_sha256": "144703b26154b4ffd3a0d6d3e6cdec61ffdb6926bab17ddda7179941a151c77f",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xMemPoolAlloc",
+          "source": "SB/Core/x/xMemMgr.cpp",
+          "reference_address": 2032496,
+          "target_address": 2033856,
+          "size": 148,
+          "offset": 60,
+          "reference_sha256": "126a86b31dbbce758a03a707ed522cc070557c6fcdf95a58a4b7120e8e021724",
+          "target_sha256": "0c1fb0179c9b474c33bc365586fd8468eccb39fa45a144a6c1b7cafee0062e41",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xModelPoolInit",
+          "source": "SB/Core/x/xModel.cpp",
+          "reference_address": 2039840,
+          "target_address": 2041200,
+          "size": 692,
+          "offset": 80,
+          "reference_sha256": "3d33b14485854fbfe25fde3361026ac2af2af012aebc51465c3426dcd4b05ff0",
+          "target_sha256": "3203d5fd1749bef101b39a17b50d1d1145fd7d1285eeef22c93d553c1ad95a4e",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "AllocSpline3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "reference_address": 2141264,
+          "target_address": 2142672,
+          "size": 332,
+          "offset": 68,
+          "reference_sha256": "3596bf16d71a9432245ea221a425d0ab38c549094d7a716522962d721f4ac700",
+          "target_sha256": "783eefbfcebbbf7a2c2dd9fd1b098525e6671710712545d6250fdf1b16eefeb2",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "AllocSpline3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "reference_address": 2141264,
+          "target_address": 2142672,
+          "size": 332,
+          "offset": 168,
+          "reference_sha256": "3596bf16d71a9432245ea221a425d0ab38c549094d7a716522962d721f4ac700",
+          "target_sha256": "783eefbfcebbbf7a2c2dd9fd1b098525e6671710712545d6250fdf1b16eefeb2",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "AllocSpline3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "reference_address": 2141264,
+          "target_address": 2142672,
+          "size": 332,
+          "offset": 236,
+          "reference_sha256": "3596bf16d71a9432245ea221a425d0ab38c549094d7a716522962d721f4ac700",
+          "target_sha256": "783eefbfcebbbf7a2c2dd9fd1b098525e6671710712545d6250fdf1b16eefeb2",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xSurfaceInit",
+          "source": "SB/Core/x/xSurface.cpp",
+          "reference_address": 2158016,
+          "target_address": 2159424,
+          "size": 356,
+          "offset": 36,
+          "reference_sha256": "c0a55014075a61d34933f556487d6e9e9c2754cd5755c504b3c9ce7a1c7935f0",
+          "target_sha256": "da02619323249b4274d4fc7a5006823b7e26694816f487a7d4f96fec013afbdf",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xAnimTableNew",
+          "source": "SB/Core/x/xAnim.cpp",
+          "reference_address": 2177776,
+          "target_address": 2179184,
+          "size": 128,
+          "offset": 40,
+          "reference_sha256": "bdb19d8c5d4ebf165cf4c742ac20503235a1a623793ded6609c253f928d8cc2a",
+          "target_sha256": "da4ae93879dfb81679d570b523e6b6cbd19d9b44e9e41ff92606e9b3b5fcaa5d",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "__ct",
+          "source": "SB/Core/x/xFactory.cpp",
+          "reference_address": 3089120,
+          "target_address": 3090528,
+          "size": 120,
+          "offset": 48,
+          "reference_sha256": "f047dcf05fae6d2231d990c0888c62d65acba83f1896102e5a9dfba799a7fc49",
+          "target_sha256": "c2065c80a9ab6225d65fcab0a053ffcf7228cabdf965f886fbb8b909a51b8335",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xGridInit",
+          "source": "SB/Core/x/xGrid.cpp",
+          "reference_address": 3168400,
+          "target_address": 3169808,
+          "size": 588,
+          "offset": 524,
+          "reference_sha256": "7d61af4d6d45794b53e4b848c723dfafe434bf17a58ce11fc878eb62b7869aaa",
+          "target_sha256": "a00f42e4c385e21fa6bccb0769c77154f0394a69c1dc0ffb6e2b1931c76bb581",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "zGooInit",
+          "source": "SB/Game/zGoo.cpp",
+          "reference_address": 3210624,
+          "target_address": 3212032,
+          "size": 64,
+          "offset": 32,
+          "reference_sha256": "2b12c43647064207c669bc86473624ba336474fac8d6f1937bba64d706fb4166",
+          "target_sha256": "598eb55363e8f04a3b3fd9230e3c1d400b94bd77cd3e51191401f152d2cad1eb",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "Init",
+          "source": "SB/Game/zNPCHazard.cpp",
+          "reference_address": 3930000,
+          "target_address": 3931376,
+          "size": 700,
+          "offset": 580,
+          "reference_sha256": "ef24a597e82b5ee4fd368e0119f56731513f33ae0cc198afefdfccba348c54dc",
+          "target_sha256": "c1ec9211926de77b733e2161bd98f11f6a135fd97aef9ea4a3ee054a48aea5ca",
+          "actual_original_and_target_jal_decoded": true
+        }
+      ],
+      "context_only": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 1945392,
+      "offset": 28,
+      "opcode": 3,
+      "reference_address": 2033296,
+      "target_address": 2034656,
+      "prior_independent_caller_witnesses": [
+        {
+          "caller": "Setup",
+          "source": "SB/Game/zUI.cpp",
+          "reference_address": 1709824,
+          "target_address": 1710624,
+          "size": 416,
+          "offset": 68,
+          "reference_sha256": "18ecbe6fe9b7c694aab2275ed2f9bf3914855c9ccb9d706629171a6cbed4209c",
+          "target_sha256": "144703b26154b4ffd3a0d6d3e6cdec61ffdb6926bab17ddda7179941a151c77f",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "Setup",
+          "source": "SB/Game/zUI.cpp",
+          "reference_address": 1709824,
+          "target_address": 1710624,
+          "size": 416,
+          "offset": 100,
+          "reference_sha256": "18ecbe6fe9b7c694aab2275ed2f9bf3914855c9ccb9d706629171a6cbed4209c",
+          "target_sha256": "144703b26154b4ffd3a0d6d3e6cdec61ffdb6926bab17ddda7179941a151c77f",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xMemPoolAlloc",
+          "source": "SB/Core/x/xMemMgr.cpp",
+          "reference_address": 2032496,
+          "target_address": 2033856,
+          "size": 148,
+          "offset": 60,
+          "reference_sha256": "126a86b31dbbce758a03a707ed522cc070557c6fcdf95a58a4b7120e8e021724",
+          "target_sha256": "0c1fb0179c9b474c33bc365586fd8468eccb39fa45a144a6c1b7cafee0062e41",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xModelPoolInit",
+          "source": "SB/Core/x/xModel.cpp",
+          "reference_address": 2039840,
+          "target_address": 2041200,
+          "size": 692,
+          "offset": 80,
+          "reference_sha256": "3d33b14485854fbfe25fde3361026ac2af2af012aebc51465c3426dcd4b05ff0",
+          "target_sha256": "3203d5fd1749bef101b39a17b50d1d1145fd7d1285eeef22c93d553c1ad95a4e",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "AllocSpline3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "reference_address": 2141264,
+          "target_address": 2142672,
+          "size": 332,
+          "offset": 68,
+          "reference_sha256": "3596bf16d71a9432245ea221a425d0ab38c549094d7a716522962d721f4ac700",
+          "target_sha256": "783eefbfcebbbf7a2c2dd9fd1b098525e6671710712545d6250fdf1b16eefeb2",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "AllocSpline3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "reference_address": 2141264,
+          "target_address": 2142672,
+          "size": 332,
+          "offset": 168,
+          "reference_sha256": "3596bf16d71a9432245ea221a425d0ab38c549094d7a716522962d721f4ac700",
+          "target_sha256": "783eefbfcebbbf7a2c2dd9fd1b098525e6671710712545d6250fdf1b16eefeb2",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "AllocSpline3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "reference_address": 2141264,
+          "target_address": 2142672,
+          "size": 332,
+          "offset": 236,
+          "reference_sha256": "3596bf16d71a9432245ea221a425d0ab38c549094d7a716522962d721f4ac700",
+          "target_sha256": "783eefbfcebbbf7a2c2dd9fd1b098525e6671710712545d6250fdf1b16eefeb2",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xSurfaceInit",
+          "source": "SB/Core/x/xSurface.cpp",
+          "reference_address": 2158016,
+          "target_address": 2159424,
+          "size": 356,
+          "offset": 36,
+          "reference_sha256": "c0a55014075a61d34933f556487d6e9e9c2754cd5755c504b3c9ce7a1c7935f0",
+          "target_sha256": "da02619323249b4274d4fc7a5006823b7e26694816f487a7d4f96fec013afbdf",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xAnimTableNew",
+          "source": "SB/Core/x/xAnim.cpp",
+          "reference_address": 2177776,
+          "target_address": 2179184,
+          "size": 128,
+          "offset": 40,
+          "reference_sha256": "bdb19d8c5d4ebf165cf4c742ac20503235a1a623793ded6609c253f928d8cc2a",
+          "target_sha256": "da4ae93879dfb81679d570b523e6b6cbd19d9b44e9e41ff92606e9b3b5fcaa5d",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "__ct",
+          "source": "SB/Core/x/xFactory.cpp",
+          "reference_address": 3089120,
+          "target_address": 3090528,
+          "size": 120,
+          "offset": 48,
+          "reference_sha256": "f047dcf05fae6d2231d990c0888c62d65acba83f1896102e5a9dfba799a7fc49",
+          "target_sha256": "c2065c80a9ab6225d65fcab0a053ffcf7228cabdf965f886fbb8b909a51b8335",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xGridInit",
+          "source": "SB/Core/x/xGrid.cpp",
+          "reference_address": 3168400,
+          "target_address": 3169808,
+          "size": 588,
+          "offset": 524,
+          "reference_sha256": "7d61af4d6d45794b53e4b848c723dfafe434bf17a58ce11fc878eb62b7869aaa",
+          "target_sha256": "a00f42e4c385e21fa6bccb0769c77154f0394a69c1dc0ffb6e2b1931c76bb581",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "zGooInit",
+          "source": "SB/Game/zGoo.cpp",
+          "reference_address": 3210624,
+          "target_address": 3212032,
+          "size": 64,
+          "offset": 32,
+          "reference_sha256": "2b12c43647064207c669bc86473624ba336474fac8d6f1937bba64d706fb4166",
+          "target_sha256": "598eb55363e8f04a3b3fd9230e3c1d400b94bd77cd3e51191401f152d2cad1eb",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "Init",
+          "source": "SB/Game/zNPCHazard.cpp",
+          "reference_address": 3930000,
+          "target_address": 3931376,
+          "size": 700,
+          "offset": 580,
+          "reference_sha256": "ef24a597e82b5ee4fd368e0119f56731513f33ae0cc198afefdfccba348c54dc",
+          "target_sha256": "c1ec9211926de77b733e2161bd98f11f6a135fd97aef9ea4a3ee054a48aea5ca",
+          "actual_original_and_target_jal_decoded": true
+        }
+      ],
+      "context_only": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 1945552,
+      "offset": 44,
+      "opcode": 3,
+      "reference_address": 1133272,
+      "target_address": 1133272,
+      "opaque_context_prefix_sha256": "2653c72461be04b706ab84c9673feaff3d60cfaf1a727a5f06904bf791d41882",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 1945552,
+      "offset": 60,
+      "opcode": 3,
+      "reference_address": 1132848,
+      "target_address": 1132848,
+      "opaque_context_prefix_sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 1946656,
+      "offset": 20,
+      "opcode": 3,
+      "reference_address": 2033296,
+      "target_address": 2034656,
+      "prior_independent_caller_witnesses": [
+        {
+          "caller": "Setup",
+          "source": "SB/Game/zUI.cpp",
+          "reference_address": 1709824,
+          "target_address": 1710624,
+          "size": 416,
+          "offset": 68,
+          "reference_sha256": "18ecbe6fe9b7c694aab2275ed2f9bf3914855c9ccb9d706629171a6cbed4209c",
+          "target_sha256": "144703b26154b4ffd3a0d6d3e6cdec61ffdb6926bab17ddda7179941a151c77f",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "Setup",
+          "source": "SB/Game/zUI.cpp",
+          "reference_address": 1709824,
+          "target_address": 1710624,
+          "size": 416,
+          "offset": 100,
+          "reference_sha256": "18ecbe6fe9b7c694aab2275ed2f9bf3914855c9ccb9d706629171a6cbed4209c",
+          "target_sha256": "144703b26154b4ffd3a0d6d3e6cdec61ffdb6926bab17ddda7179941a151c77f",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xMemPoolAlloc",
+          "source": "SB/Core/x/xMemMgr.cpp",
+          "reference_address": 2032496,
+          "target_address": 2033856,
+          "size": 148,
+          "offset": 60,
+          "reference_sha256": "126a86b31dbbce758a03a707ed522cc070557c6fcdf95a58a4b7120e8e021724",
+          "target_sha256": "0c1fb0179c9b474c33bc365586fd8468eccb39fa45a144a6c1b7cafee0062e41",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xModelPoolInit",
+          "source": "SB/Core/x/xModel.cpp",
+          "reference_address": 2039840,
+          "target_address": 2041200,
+          "size": 692,
+          "offset": 80,
+          "reference_sha256": "3d33b14485854fbfe25fde3361026ac2af2af012aebc51465c3426dcd4b05ff0",
+          "target_sha256": "3203d5fd1749bef101b39a17b50d1d1145fd7d1285eeef22c93d553c1ad95a4e",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "AllocSpline3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "reference_address": 2141264,
+          "target_address": 2142672,
+          "size": 332,
+          "offset": 68,
+          "reference_sha256": "3596bf16d71a9432245ea221a425d0ab38c549094d7a716522962d721f4ac700",
+          "target_sha256": "783eefbfcebbbf7a2c2dd9fd1b098525e6671710712545d6250fdf1b16eefeb2",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "AllocSpline3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "reference_address": 2141264,
+          "target_address": 2142672,
+          "size": 332,
+          "offset": 168,
+          "reference_sha256": "3596bf16d71a9432245ea221a425d0ab38c549094d7a716522962d721f4ac700",
+          "target_sha256": "783eefbfcebbbf7a2c2dd9fd1b098525e6671710712545d6250fdf1b16eefeb2",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "AllocSpline3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "reference_address": 2141264,
+          "target_address": 2142672,
+          "size": 332,
+          "offset": 236,
+          "reference_sha256": "3596bf16d71a9432245ea221a425d0ab38c549094d7a716522962d721f4ac700",
+          "target_sha256": "783eefbfcebbbf7a2c2dd9fd1b098525e6671710712545d6250fdf1b16eefeb2",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xSurfaceInit",
+          "source": "SB/Core/x/xSurface.cpp",
+          "reference_address": 2158016,
+          "target_address": 2159424,
+          "size": 356,
+          "offset": 36,
+          "reference_sha256": "c0a55014075a61d34933f556487d6e9e9c2754cd5755c504b3c9ce7a1c7935f0",
+          "target_sha256": "da02619323249b4274d4fc7a5006823b7e26694816f487a7d4f96fec013afbdf",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xAnimTableNew",
+          "source": "SB/Core/x/xAnim.cpp",
+          "reference_address": 2177776,
+          "target_address": 2179184,
+          "size": 128,
+          "offset": 40,
+          "reference_sha256": "bdb19d8c5d4ebf165cf4c742ac20503235a1a623793ded6609c253f928d8cc2a",
+          "target_sha256": "da4ae93879dfb81679d570b523e6b6cbd19d9b44e9e41ff92606e9b3b5fcaa5d",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "__ct",
+          "source": "SB/Core/x/xFactory.cpp",
+          "reference_address": 3089120,
+          "target_address": 3090528,
+          "size": 120,
+          "offset": 48,
+          "reference_sha256": "f047dcf05fae6d2231d990c0888c62d65acba83f1896102e5a9dfba799a7fc49",
+          "target_sha256": "c2065c80a9ab6225d65fcab0a053ffcf7228cabdf965f886fbb8b909a51b8335",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xGridInit",
+          "source": "SB/Core/x/xGrid.cpp",
+          "reference_address": 3168400,
+          "target_address": 3169808,
+          "size": 588,
+          "offset": 524,
+          "reference_sha256": "7d61af4d6d45794b53e4b848c723dfafe434bf17a58ce11fc878eb62b7869aaa",
+          "target_sha256": "a00f42e4c385e21fa6bccb0769c77154f0394a69c1dc0ffb6e2b1931c76bb581",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "zGooInit",
+          "source": "SB/Game/zGoo.cpp",
+          "reference_address": 3210624,
+          "target_address": 3212032,
+          "size": 64,
+          "offset": 32,
+          "reference_sha256": "2b12c43647064207c669bc86473624ba336474fac8d6f1937bba64d706fb4166",
+          "target_sha256": "598eb55363e8f04a3b3fd9230e3c1d400b94bd77cd3e51191401f152d2cad1eb",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "Init",
+          "source": "SB/Game/zNPCHazard.cpp",
+          "reference_address": 3930000,
+          "target_address": 3931376,
+          "size": 700,
+          "offset": 580,
+          "reference_sha256": "ef24a597e82b5ee4fd368e0119f56731513f33ae0cc198afefdfccba348c54dc",
+          "target_sha256": "c1ec9211926de77b733e2161bd98f11f6a135fd97aef9ea4a3ee054a48aea5ca",
+          "actual_original_and_target_jal_decoded": true
+        }
+      ],
+      "context_only": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 1945168,
+      "offset": 28,
+      "opcode": 3,
+      "reference_address": 2034544,
+      "target_address": 2034656,
+      "prior_independent_caller_witnesses": [
+        {
+          "caller": "Setup",
+          "source": "SB/Game/zUI.cpp",
+          "reference_address": 1710624,
+          "target_address": 1710624,
+          "size": 416,
+          "offset": 68,
+          "reference_sha256": "d6e29a8b9e16cc1f70732270eaf6fde019ee440436f12b8b98a42e3d0c55bd34",
+          "target_sha256": "144703b26154b4ffd3a0d6d3e6cdec61ffdb6926bab17ddda7179941a151c77f",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "Setup",
+          "source": "SB/Game/zUI.cpp",
+          "reference_address": 1710624,
+          "target_address": 1710624,
+          "size": 416,
+          "offset": 100,
+          "reference_sha256": "d6e29a8b9e16cc1f70732270eaf6fde019ee440436f12b8b98a42e3d0c55bd34",
+          "target_sha256": "144703b26154b4ffd3a0d6d3e6cdec61ffdb6926bab17ddda7179941a151c77f",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xMemPoolAlloc",
+          "source": "SB/Core/x/xMemMgr.cpp",
+          "reference_address": 2033744,
+          "target_address": 2033856,
+          "size": 148,
+          "offset": 60,
+          "reference_sha256": "a8ab179fd50b8ede8719cf87701e7a3511a4feb4c315f148f127cd3a5b99d031",
+          "target_sha256": "0c1fb0179c9b474c33bc365586fd8468eccb39fa45a144a6c1b7cafee0062e41",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xModelPoolInit",
+          "source": "SB/Core/x/xModel.cpp",
+          "reference_address": 2041088,
+          "target_address": 2041200,
+          "size": 692,
+          "offset": 80,
+          "reference_sha256": "4b47c83237122cb2efc5e3f739bac490f0c95572e315c4a5e3f74f435be8df9c",
+          "target_sha256": "3203d5fd1749bef101b39a17b50d1d1145fd7d1285eeef22c93d553c1ad95a4e",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "AllocSpline3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "reference_address": 2142560,
+          "target_address": 2142672,
+          "size": 332,
+          "offset": 68,
+          "reference_sha256": "e4c9a6b75838acc16cc81775f72aa688a4a4d4a3b1684ed1571559484de58044",
+          "target_sha256": "783eefbfcebbbf7a2c2dd9fd1b098525e6671710712545d6250fdf1b16eefeb2",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "AllocSpline3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "reference_address": 2142560,
+          "target_address": 2142672,
+          "size": 332,
+          "offset": 168,
+          "reference_sha256": "e4c9a6b75838acc16cc81775f72aa688a4a4d4a3b1684ed1571559484de58044",
+          "target_sha256": "783eefbfcebbbf7a2c2dd9fd1b098525e6671710712545d6250fdf1b16eefeb2",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "AllocSpline3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "reference_address": 2142560,
+          "target_address": 2142672,
+          "size": 332,
+          "offset": 236,
+          "reference_sha256": "e4c9a6b75838acc16cc81775f72aa688a4a4d4a3b1684ed1571559484de58044",
+          "target_sha256": "783eefbfcebbbf7a2c2dd9fd1b098525e6671710712545d6250fdf1b16eefeb2",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xSurfaceInit",
+          "source": "SB/Core/x/xSurface.cpp",
+          "reference_address": 2159312,
+          "target_address": 2159424,
+          "size": 356,
+          "offset": 36,
+          "reference_sha256": "e30f146dfc7c89fa9d73e70f6b12b402bb1a0ae3250c3f078be0afa23c063ddc",
+          "target_sha256": "da02619323249b4274d4fc7a5006823b7e26694816f487a7d4f96fec013afbdf",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xAnimTableNew",
+          "source": "SB/Core/x/xAnim.cpp",
+          "reference_address": 2179072,
+          "target_address": 2179184,
+          "size": 128,
+          "offset": 40,
+          "reference_sha256": "66494c14282b352dafd652db1bc4eafed4abfde1cdacca899fc4fd3850230bb2",
+          "target_sha256": "da4ae93879dfb81679d570b523e6b6cbd19d9b44e9e41ff92606e9b3b5fcaa5d",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "__ct",
+          "source": "SB/Core/x/xFactory.cpp",
+          "reference_address": 3090416,
+          "target_address": 3090528,
+          "size": 120,
+          "offset": 48,
+          "reference_sha256": "a30ba57fab93cd6ebd9e76037cec081915a3cee6ab47430ff8eeeefc9b1225ed",
+          "target_sha256": "c2065c80a9ab6225d65fcab0a053ffcf7228cabdf965f886fbb8b909a51b8335",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xGridInit",
+          "source": "SB/Core/x/xGrid.cpp",
+          "reference_address": 3169696,
+          "target_address": 3169808,
+          "size": 588,
+          "offset": 524,
+          "reference_sha256": "3914b4e381e912b13b04753b86cfbaa36f5c93274f67898309eb796718a1d775",
+          "target_sha256": "a00f42e4c385e21fa6bccb0769c77154f0394a69c1dc0ffb6e2b1931c76bb581",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "zGooInit",
+          "source": "SB/Game/zGoo.cpp",
+          "reference_address": 3211920,
+          "target_address": 3212032,
+          "size": 64,
+          "offset": 32,
+          "reference_sha256": "640f4c0d88c43b138b4e21b68280866c1616805411dc29f2d4dcb230703b052f",
+          "target_sha256": "598eb55363e8f04a3b3fd9230e3c1d400b94bd77cd3e51191401f152d2cad1eb",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "Init",
+          "source": "SB/Game/zNPCHazard.cpp",
+          "reference_address": 3931264,
+          "target_address": 3931376,
+          "size": 700,
+          "offset": 580,
+          "reference_sha256": "4c60ea5b90fe482c8ca31ff3ef708d6cf88127f61493d45e9aeb93fe14825afa",
+          "target_sha256": "c1ec9211926de77b733e2161bd98f11f6a135fd97aef9ea4a3ee054a48aea5ca",
+          "actual_original_and_target_jal_decoded": true
+        }
+      ],
+      "context_only": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 1945392,
+      "offset": 28,
+      "opcode": 3,
+      "reference_address": 2034544,
+      "target_address": 2034656,
+      "prior_independent_caller_witnesses": [
+        {
+          "caller": "Setup",
+          "source": "SB/Game/zUI.cpp",
+          "reference_address": 1710624,
+          "target_address": 1710624,
+          "size": 416,
+          "offset": 68,
+          "reference_sha256": "d6e29a8b9e16cc1f70732270eaf6fde019ee440436f12b8b98a42e3d0c55bd34",
+          "target_sha256": "144703b26154b4ffd3a0d6d3e6cdec61ffdb6926bab17ddda7179941a151c77f",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "Setup",
+          "source": "SB/Game/zUI.cpp",
+          "reference_address": 1710624,
+          "target_address": 1710624,
+          "size": 416,
+          "offset": 100,
+          "reference_sha256": "d6e29a8b9e16cc1f70732270eaf6fde019ee440436f12b8b98a42e3d0c55bd34",
+          "target_sha256": "144703b26154b4ffd3a0d6d3e6cdec61ffdb6926bab17ddda7179941a151c77f",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xMemPoolAlloc",
+          "source": "SB/Core/x/xMemMgr.cpp",
+          "reference_address": 2033744,
+          "target_address": 2033856,
+          "size": 148,
+          "offset": 60,
+          "reference_sha256": "a8ab179fd50b8ede8719cf87701e7a3511a4feb4c315f148f127cd3a5b99d031",
+          "target_sha256": "0c1fb0179c9b474c33bc365586fd8468eccb39fa45a144a6c1b7cafee0062e41",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xModelPoolInit",
+          "source": "SB/Core/x/xModel.cpp",
+          "reference_address": 2041088,
+          "target_address": 2041200,
+          "size": 692,
+          "offset": 80,
+          "reference_sha256": "4b47c83237122cb2efc5e3f739bac490f0c95572e315c4a5e3f74f435be8df9c",
+          "target_sha256": "3203d5fd1749bef101b39a17b50d1d1145fd7d1285eeef22c93d553c1ad95a4e",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "AllocSpline3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "reference_address": 2142560,
+          "target_address": 2142672,
+          "size": 332,
+          "offset": 68,
+          "reference_sha256": "e4c9a6b75838acc16cc81775f72aa688a4a4d4a3b1684ed1571559484de58044",
+          "target_sha256": "783eefbfcebbbf7a2c2dd9fd1b098525e6671710712545d6250fdf1b16eefeb2",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "AllocSpline3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "reference_address": 2142560,
+          "target_address": 2142672,
+          "size": 332,
+          "offset": 168,
+          "reference_sha256": "e4c9a6b75838acc16cc81775f72aa688a4a4d4a3b1684ed1571559484de58044",
+          "target_sha256": "783eefbfcebbbf7a2c2dd9fd1b098525e6671710712545d6250fdf1b16eefeb2",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "AllocSpline3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "reference_address": 2142560,
+          "target_address": 2142672,
+          "size": 332,
+          "offset": 236,
+          "reference_sha256": "e4c9a6b75838acc16cc81775f72aa688a4a4d4a3b1684ed1571559484de58044",
+          "target_sha256": "783eefbfcebbbf7a2c2dd9fd1b098525e6671710712545d6250fdf1b16eefeb2",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xSurfaceInit",
+          "source": "SB/Core/x/xSurface.cpp",
+          "reference_address": 2159312,
+          "target_address": 2159424,
+          "size": 356,
+          "offset": 36,
+          "reference_sha256": "e30f146dfc7c89fa9d73e70f6b12b402bb1a0ae3250c3f078be0afa23c063ddc",
+          "target_sha256": "da02619323249b4274d4fc7a5006823b7e26694816f487a7d4f96fec013afbdf",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xAnimTableNew",
+          "source": "SB/Core/x/xAnim.cpp",
+          "reference_address": 2179072,
+          "target_address": 2179184,
+          "size": 128,
+          "offset": 40,
+          "reference_sha256": "66494c14282b352dafd652db1bc4eafed4abfde1cdacca899fc4fd3850230bb2",
+          "target_sha256": "da4ae93879dfb81679d570b523e6b6cbd19d9b44e9e41ff92606e9b3b5fcaa5d",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "__ct",
+          "source": "SB/Core/x/xFactory.cpp",
+          "reference_address": 3090416,
+          "target_address": 3090528,
+          "size": 120,
+          "offset": 48,
+          "reference_sha256": "a30ba57fab93cd6ebd9e76037cec081915a3cee6ab47430ff8eeeefc9b1225ed",
+          "target_sha256": "c2065c80a9ab6225d65fcab0a053ffcf7228cabdf965f886fbb8b909a51b8335",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xGridInit",
+          "source": "SB/Core/x/xGrid.cpp",
+          "reference_address": 3169696,
+          "target_address": 3169808,
+          "size": 588,
+          "offset": 524,
+          "reference_sha256": "3914b4e381e912b13b04753b86cfbaa36f5c93274f67898309eb796718a1d775",
+          "target_sha256": "a00f42e4c385e21fa6bccb0769c77154f0394a69c1dc0ffb6e2b1931c76bb581",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "zGooInit",
+          "source": "SB/Game/zGoo.cpp",
+          "reference_address": 3211920,
+          "target_address": 3212032,
+          "size": 64,
+          "offset": 32,
+          "reference_sha256": "640f4c0d88c43b138b4e21b68280866c1616805411dc29f2d4dcb230703b052f",
+          "target_sha256": "598eb55363e8f04a3b3fd9230e3c1d400b94bd77cd3e51191401f152d2cad1eb",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "Init",
+          "source": "SB/Game/zNPCHazard.cpp",
+          "reference_address": 3931264,
+          "target_address": 3931376,
+          "size": 700,
+          "offset": 580,
+          "reference_sha256": "4c60ea5b90fe482c8ca31ff3ef708d6cf88127f61493d45e9aeb93fe14825afa",
+          "target_sha256": "c1ec9211926de77b733e2161bd98f11f6a135fd97aef9ea4a3ee054a48aea5ca",
+          "actual_original_and_target_jal_decoded": true
+        }
+      ],
+      "context_only": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 1945552,
+      "offset": 44,
+      "opcode": 3,
+      "reference_address": 1133272,
+      "target_address": 1133272,
+      "opaque_context_prefix_sha256": "2653c72461be04b706ab84c9673feaff3d60cfaf1a727a5f06904bf791d41882",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 1945552,
+      "offset": 60,
+      "opcode": 3,
+      "reference_address": 1132848,
+      "target_address": 1132848,
+      "opaque_context_prefix_sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 1946656,
+      "offset": 20,
+      "opcode": 3,
+      "reference_address": 2034544,
+      "target_address": 2034656,
+      "prior_independent_caller_witnesses": [
+        {
+          "caller": "Setup",
+          "source": "SB/Game/zUI.cpp",
+          "reference_address": 1710624,
+          "target_address": 1710624,
+          "size": 416,
+          "offset": 68,
+          "reference_sha256": "d6e29a8b9e16cc1f70732270eaf6fde019ee440436f12b8b98a42e3d0c55bd34",
+          "target_sha256": "144703b26154b4ffd3a0d6d3e6cdec61ffdb6926bab17ddda7179941a151c77f",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "Setup",
+          "source": "SB/Game/zUI.cpp",
+          "reference_address": 1710624,
+          "target_address": 1710624,
+          "size": 416,
+          "offset": 100,
+          "reference_sha256": "d6e29a8b9e16cc1f70732270eaf6fde019ee440436f12b8b98a42e3d0c55bd34",
+          "target_sha256": "144703b26154b4ffd3a0d6d3e6cdec61ffdb6926bab17ddda7179941a151c77f",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xMemPoolAlloc",
+          "source": "SB/Core/x/xMemMgr.cpp",
+          "reference_address": 2033744,
+          "target_address": 2033856,
+          "size": 148,
+          "offset": 60,
+          "reference_sha256": "a8ab179fd50b8ede8719cf87701e7a3511a4feb4c315f148f127cd3a5b99d031",
+          "target_sha256": "0c1fb0179c9b474c33bc365586fd8468eccb39fa45a144a6c1b7cafee0062e41",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xModelPoolInit",
+          "source": "SB/Core/x/xModel.cpp",
+          "reference_address": 2041088,
+          "target_address": 2041200,
+          "size": 692,
+          "offset": 80,
+          "reference_sha256": "4b47c83237122cb2efc5e3f739bac490f0c95572e315c4a5e3f74f435be8df9c",
+          "target_sha256": "3203d5fd1749bef101b39a17b50d1d1145fd7d1285eeef22c93d553c1ad95a4e",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "AllocSpline3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "reference_address": 2142560,
+          "target_address": 2142672,
+          "size": 332,
+          "offset": 68,
+          "reference_sha256": "e4c9a6b75838acc16cc81775f72aa688a4a4d4a3b1684ed1571559484de58044",
+          "target_sha256": "783eefbfcebbbf7a2c2dd9fd1b098525e6671710712545d6250fdf1b16eefeb2",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "AllocSpline3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "reference_address": 2142560,
+          "target_address": 2142672,
+          "size": 332,
+          "offset": 168,
+          "reference_sha256": "e4c9a6b75838acc16cc81775f72aa688a4a4d4a3b1684ed1571559484de58044",
+          "target_sha256": "783eefbfcebbbf7a2c2dd9fd1b098525e6671710712545d6250fdf1b16eefeb2",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "AllocSpline3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "reference_address": 2142560,
+          "target_address": 2142672,
+          "size": 332,
+          "offset": 236,
+          "reference_sha256": "e4c9a6b75838acc16cc81775f72aa688a4a4d4a3b1684ed1571559484de58044",
+          "target_sha256": "783eefbfcebbbf7a2c2dd9fd1b098525e6671710712545d6250fdf1b16eefeb2",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xSurfaceInit",
+          "source": "SB/Core/x/xSurface.cpp",
+          "reference_address": 2159312,
+          "target_address": 2159424,
+          "size": 356,
+          "offset": 36,
+          "reference_sha256": "e30f146dfc7c89fa9d73e70f6b12b402bb1a0ae3250c3f078be0afa23c063ddc",
+          "target_sha256": "da02619323249b4274d4fc7a5006823b7e26694816f487a7d4f96fec013afbdf",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xAnimTableNew",
+          "source": "SB/Core/x/xAnim.cpp",
+          "reference_address": 2179072,
+          "target_address": 2179184,
+          "size": 128,
+          "offset": 40,
+          "reference_sha256": "66494c14282b352dafd652db1bc4eafed4abfde1cdacca899fc4fd3850230bb2",
+          "target_sha256": "da4ae93879dfb81679d570b523e6b6cbd19d9b44e9e41ff92606e9b3b5fcaa5d",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "__ct",
+          "source": "SB/Core/x/xFactory.cpp",
+          "reference_address": 3090416,
+          "target_address": 3090528,
+          "size": 120,
+          "offset": 48,
+          "reference_sha256": "a30ba57fab93cd6ebd9e76037cec081915a3cee6ab47430ff8eeeefc9b1225ed",
+          "target_sha256": "c2065c80a9ab6225d65fcab0a053ffcf7228cabdf965f886fbb8b909a51b8335",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xGridInit",
+          "source": "SB/Core/x/xGrid.cpp",
+          "reference_address": 3169696,
+          "target_address": 3169808,
+          "size": 588,
+          "offset": 524,
+          "reference_sha256": "3914b4e381e912b13b04753b86cfbaa36f5c93274f67898309eb796718a1d775",
+          "target_sha256": "a00f42e4c385e21fa6bccb0769c77154f0394a69c1dc0ffb6e2b1931c76bb581",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "zGooInit",
+          "source": "SB/Game/zGoo.cpp",
+          "reference_address": 3211920,
+          "target_address": 3212032,
+          "size": 64,
+          "offset": 32,
+          "reference_sha256": "640f4c0d88c43b138b4e21b68280866c1616805411dc29f2d4dcb230703b052f",
+          "target_sha256": "598eb55363e8f04a3b3fd9230e3c1d400b94bd77cd3e51191401f152d2cad1eb",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "Init",
+          "source": "SB/Game/zNPCHazard.cpp",
+          "reference_address": 3931264,
+          "target_address": 3931376,
+          "size": 700,
+          "offset": 580,
+          "reference_sha256": "4c60ea5b90fe482c8ca31ff3ef708d6cf88127f61493d45e9aeb93fe14825afa",
+          "target_sha256": "c1ec9211926de77b733e2161bd98f11f6a135fd97aef9ea4a3ee054a48aea5ca",
+          "actual_original_and_target_jal_decoded": true
+        }
+      ],
+      "context_only": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 1945168,
+      "offset": 28,
+      "opcode": 3,
+      "reference_address": 2031184,
+      "target_address": 2034656,
+      "prior_independent_caller_witnesses": [
+        {
+          "caller": "Setup",
+          "source": "SB/Game/zUI.cpp",
+          "reference_address": 1707264,
+          "target_address": 1710624,
+          "size": 416,
+          "offset": 68,
+          "reference_sha256": "53ba2a31ab82bf9e056d7cc0087358af32810bdc1d5e0d88835b5bf37c7cba10",
+          "target_sha256": "144703b26154b4ffd3a0d6d3e6cdec61ffdb6926bab17ddda7179941a151c77f",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "Setup",
+          "source": "SB/Game/zUI.cpp",
+          "reference_address": 1707264,
+          "target_address": 1710624,
+          "size": 416,
+          "offset": 100,
+          "reference_sha256": "53ba2a31ab82bf9e056d7cc0087358af32810bdc1d5e0d88835b5bf37c7cba10",
+          "target_sha256": "144703b26154b4ffd3a0d6d3e6cdec61ffdb6926bab17ddda7179941a151c77f",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xMemPoolAlloc",
+          "source": "SB/Core/x/xMemMgr.cpp",
+          "reference_address": 2030384,
+          "target_address": 2033856,
+          "size": 148,
+          "offset": 60,
+          "reference_sha256": "58a91215e4cfaa5f1e1147d9557ccda0d817db392c4fafcc7b5faa318bf2aa98",
+          "target_sha256": "0c1fb0179c9b474c33bc365586fd8468eccb39fa45a144a6c1b7cafee0062e41",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xModelPoolInit",
+          "source": "SB/Core/x/xModel.cpp",
+          "reference_address": 2037728,
+          "target_address": 2041200,
+          "size": 692,
+          "offset": 80,
+          "reference_sha256": "d646345f7bebc4b7557541771104df27050709842c3f4469efcab80a001f5489",
+          "target_sha256": "3203d5fd1749bef101b39a17b50d1d1145fd7d1285eeef22c93d553c1ad95a4e",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "AllocSpline3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "reference_address": 2139216,
+          "target_address": 2142672,
+          "size": 332,
+          "offset": 68,
+          "reference_sha256": "8e0c0265a37063cfdd8457cb18456ad730a77e53398de56f2589130e555b37e2",
+          "target_sha256": "783eefbfcebbbf7a2c2dd9fd1b098525e6671710712545d6250fdf1b16eefeb2",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "AllocSpline3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "reference_address": 2139216,
+          "target_address": 2142672,
+          "size": 332,
+          "offset": 168,
+          "reference_sha256": "8e0c0265a37063cfdd8457cb18456ad730a77e53398de56f2589130e555b37e2",
+          "target_sha256": "783eefbfcebbbf7a2c2dd9fd1b098525e6671710712545d6250fdf1b16eefeb2",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "AllocSpline3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "reference_address": 2139216,
+          "target_address": 2142672,
+          "size": 332,
+          "offset": 236,
+          "reference_sha256": "8e0c0265a37063cfdd8457cb18456ad730a77e53398de56f2589130e555b37e2",
+          "target_sha256": "783eefbfcebbbf7a2c2dd9fd1b098525e6671710712545d6250fdf1b16eefeb2",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xSurfaceInit",
+          "source": "SB/Core/x/xSurface.cpp",
+          "reference_address": 2155968,
+          "target_address": 2159424,
+          "size": 356,
+          "offset": 36,
+          "reference_sha256": "125c2ba74bca95d43ef04cf82974ec755ab641b9727867f6be4f7c98589bb34b",
+          "target_sha256": "da02619323249b4274d4fc7a5006823b7e26694816f487a7d4f96fec013afbdf",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xAnimTableNew",
+          "source": "SB/Core/x/xAnim.cpp",
+          "reference_address": 2175760,
+          "target_address": 2179184,
+          "size": 128,
+          "offset": 40,
+          "reference_sha256": "d073f6fe6ac267e4e0b9bc7df14ecc7fde1e08d94f0ea4e857d47e5d14a45a23",
+          "target_sha256": "da4ae93879dfb81679d570b523e6b6cbd19d9b44e9e41ff92606e9b3b5fcaa5d",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "__ct",
+          "source": "SB/Core/x/xFactory.cpp",
+          "reference_address": 3087104,
+          "target_address": 3090528,
+          "size": 120,
+          "offset": 48,
+          "reference_sha256": "d71fe033133ea249baa6631fe9f00ea28227d1d196a5da98d87cac6f1dab0d98",
+          "target_sha256": "c2065c80a9ab6225d65fcab0a053ffcf7228cabdf965f886fbb8b909a51b8335",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xGridInit",
+          "source": "SB/Core/x/xGrid.cpp",
+          "reference_address": 3166384,
+          "target_address": 3169808,
+          "size": 588,
+          "offset": 524,
+          "reference_sha256": "c17bf59eac1a30300a0ed97a1b37623e824dc6078207c7f7093e4ddcf5ce90eb",
+          "target_sha256": "a00f42e4c385e21fa6bccb0769c77154f0394a69c1dc0ffb6e2b1931c76bb581",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "zGooInit",
+          "source": "SB/Game/zGoo.cpp",
+          "reference_address": 3208608,
+          "target_address": 3212032,
+          "size": 64,
+          "offset": 32,
+          "reference_sha256": "2f8a1cdb12bab08a9430a2afb0ce221e2b5454670016762729ddfaebdb2324ef",
+          "target_sha256": "598eb55363e8f04a3b3fd9230e3c1d400b94bd77cd3e51191401f152d2cad1eb",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "Init",
+          "source": "SB/Game/zNPCHazard.cpp",
+          "reference_address": 3928016,
+          "target_address": 3931376,
+          "size": 700,
+          "offset": 580,
+          "reference_sha256": "0c68224aeb7eb1dce3fa97cb41993010e8fa67dd846bde182c1e5c7e56994532",
+          "target_sha256": "c1ec9211926de77b733e2161bd98f11f6a135fd97aef9ea4a3ee054a48aea5ca",
+          "actual_original_and_target_jal_decoded": true
+        }
+      ],
+      "context_only": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 1945392,
+      "offset": 28,
+      "opcode": 3,
+      "reference_address": 2031184,
+      "target_address": 2034656,
+      "prior_independent_caller_witnesses": [
+        {
+          "caller": "Setup",
+          "source": "SB/Game/zUI.cpp",
+          "reference_address": 1707264,
+          "target_address": 1710624,
+          "size": 416,
+          "offset": 68,
+          "reference_sha256": "53ba2a31ab82bf9e056d7cc0087358af32810bdc1d5e0d88835b5bf37c7cba10",
+          "target_sha256": "144703b26154b4ffd3a0d6d3e6cdec61ffdb6926bab17ddda7179941a151c77f",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "Setup",
+          "source": "SB/Game/zUI.cpp",
+          "reference_address": 1707264,
+          "target_address": 1710624,
+          "size": 416,
+          "offset": 100,
+          "reference_sha256": "53ba2a31ab82bf9e056d7cc0087358af32810bdc1d5e0d88835b5bf37c7cba10",
+          "target_sha256": "144703b26154b4ffd3a0d6d3e6cdec61ffdb6926bab17ddda7179941a151c77f",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xMemPoolAlloc",
+          "source": "SB/Core/x/xMemMgr.cpp",
+          "reference_address": 2030384,
+          "target_address": 2033856,
+          "size": 148,
+          "offset": 60,
+          "reference_sha256": "58a91215e4cfaa5f1e1147d9557ccda0d817db392c4fafcc7b5faa318bf2aa98",
+          "target_sha256": "0c1fb0179c9b474c33bc365586fd8468eccb39fa45a144a6c1b7cafee0062e41",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xModelPoolInit",
+          "source": "SB/Core/x/xModel.cpp",
+          "reference_address": 2037728,
+          "target_address": 2041200,
+          "size": 692,
+          "offset": 80,
+          "reference_sha256": "d646345f7bebc4b7557541771104df27050709842c3f4469efcab80a001f5489",
+          "target_sha256": "3203d5fd1749bef101b39a17b50d1d1145fd7d1285eeef22c93d553c1ad95a4e",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "AllocSpline3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "reference_address": 2139216,
+          "target_address": 2142672,
+          "size": 332,
+          "offset": 68,
+          "reference_sha256": "8e0c0265a37063cfdd8457cb18456ad730a77e53398de56f2589130e555b37e2",
+          "target_sha256": "783eefbfcebbbf7a2c2dd9fd1b098525e6671710712545d6250fdf1b16eefeb2",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "AllocSpline3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "reference_address": 2139216,
+          "target_address": 2142672,
+          "size": 332,
+          "offset": 168,
+          "reference_sha256": "8e0c0265a37063cfdd8457cb18456ad730a77e53398de56f2589130e555b37e2",
+          "target_sha256": "783eefbfcebbbf7a2c2dd9fd1b098525e6671710712545d6250fdf1b16eefeb2",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "AllocSpline3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "reference_address": 2139216,
+          "target_address": 2142672,
+          "size": 332,
+          "offset": 236,
+          "reference_sha256": "8e0c0265a37063cfdd8457cb18456ad730a77e53398de56f2589130e555b37e2",
+          "target_sha256": "783eefbfcebbbf7a2c2dd9fd1b098525e6671710712545d6250fdf1b16eefeb2",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xSurfaceInit",
+          "source": "SB/Core/x/xSurface.cpp",
+          "reference_address": 2155968,
+          "target_address": 2159424,
+          "size": 356,
+          "offset": 36,
+          "reference_sha256": "125c2ba74bca95d43ef04cf82974ec755ab641b9727867f6be4f7c98589bb34b",
+          "target_sha256": "da02619323249b4274d4fc7a5006823b7e26694816f487a7d4f96fec013afbdf",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xAnimTableNew",
+          "source": "SB/Core/x/xAnim.cpp",
+          "reference_address": 2175760,
+          "target_address": 2179184,
+          "size": 128,
+          "offset": 40,
+          "reference_sha256": "d073f6fe6ac267e4e0b9bc7df14ecc7fde1e08d94f0ea4e857d47e5d14a45a23",
+          "target_sha256": "da4ae93879dfb81679d570b523e6b6cbd19d9b44e9e41ff92606e9b3b5fcaa5d",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "__ct",
+          "source": "SB/Core/x/xFactory.cpp",
+          "reference_address": 3087104,
+          "target_address": 3090528,
+          "size": 120,
+          "offset": 48,
+          "reference_sha256": "d71fe033133ea249baa6631fe9f00ea28227d1d196a5da98d87cac6f1dab0d98",
+          "target_sha256": "c2065c80a9ab6225d65fcab0a053ffcf7228cabdf965f886fbb8b909a51b8335",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xGridInit",
+          "source": "SB/Core/x/xGrid.cpp",
+          "reference_address": 3166384,
+          "target_address": 3169808,
+          "size": 588,
+          "offset": 524,
+          "reference_sha256": "c17bf59eac1a30300a0ed97a1b37623e824dc6078207c7f7093e4ddcf5ce90eb",
+          "target_sha256": "a00f42e4c385e21fa6bccb0769c77154f0394a69c1dc0ffb6e2b1931c76bb581",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "zGooInit",
+          "source": "SB/Game/zGoo.cpp",
+          "reference_address": 3208608,
+          "target_address": 3212032,
+          "size": 64,
+          "offset": 32,
+          "reference_sha256": "2f8a1cdb12bab08a9430a2afb0ce221e2b5454670016762729ddfaebdb2324ef",
+          "target_sha256": "598eb55363e8f04a3b3fd9230e3c1d400b94bd77cd3e51191401f152d2cad1eb",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "Init",
+          "source": "SB/Game/zNPCHazard.cpp",
+          "reference_address": 3928016,
+          "target_address": 3931376,
+          "size": 700,
+          "offset": 580,
+          "reference_sha256": "0c68224aeb7eb1dce3fa97cb41993010e8fa67dd846bde182c1e5c7e56994532",
+          "target_sha256": "c1ec9211926de77b733e2161bd98f11f6a135fd97aef9ea4a3ee054a48aea5ca",
+          "actual_original_and_target_jal_decoded": true
+        }
+      ],
+      "context_only": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 1945552,
+      "offset": 44,
+      "opcode": 3,
+      "reference_address": 1133272,
+      "target_address": 1133272,
+      "opaque_context_prefix_sha256": "2653c72461be04b706ab84c9673feaff3d60cfaf1a727a5f06904bf791d41882",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 1945552,
+      "offset": 60,
+      "opcode": 3,
+      "reference_address": 1132848,
+      "target_address": 1132848,
+      "opaque_context_prefix_sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 1946656,
+      "offset": 20,
+      "opcode": 3,
+      "reference_address": 2031184,
+      "target_address": 2034656,
+      "prior_independent_caller_witnesses": [
+        {
+          "caller": "Setup",
+          "source": "SB/Game/zUI.cpp",
+          "reference_address": 1707264,
+          "target_address": 1710624,
+          "size": 416,
+          "offset": 68,
+          "reference_sha256": "53ba2a31ab82bf9e056d7cc0087358af32810bdc1d5e0d88835b5bf37c7cba10",
+          "target_sha256": "144703b26154b4ffd3a0d6d3e6cdec61ffdb6926bab17ddda7179941a151c77f",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "Setup",
+          "source": "SB/Game/zUI.cpp",
+          "reference_address": 1707264,
+          "target_address": 1710624,
+          "size": 416,
+          "offset": 100,
+          "reference_sha256": "53ba2a31ab82bf9e056d7cc0087358af32810bdc1d5e0d88835b5bf37c7cba10",
+          "target_sha256": "144703b26154b4ffd3a0d6d3e6cdec61ffdb6926bab17ddda7179941a151c77f",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xMemPoolAlloc",
+          "source": "SB/Core/x/xMemMgr.cpp",
+          "reference_address": 2030384,
+          "target_address": 2033856,
+          "size": 148,
+          "offset": 60,
+          "reference_sha256": "58a91215e4cfaa5f1e1147d9557ccda0d817db392c4fafcc7b5faa318bf2aa98",
+          "target_sha256": "0c1fb0179c9b474c33bc365586fd8468eccb39fa45a144a6c1b7cafee0062e41",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xModelPoolInit",
+          "source": "SB/Core/x/xModel.cpp",
+          "reference_address": 2037728,
+          "target_address": 2041200,
+          "size": 692,
+          "offset": 80,
+          "reference_sha256": "d646345f7bebc4b7557541771104df27050709842c3f4469efcab80a001f5489",
+          "target_sha256": "3203d5fd1749bef101b39a17b50d1d1145fd7d1285eeef22c93d553c1ad95a4e",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "AllocSpline3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "reference_address": 2139216,
+          "target_address": 2142672,
+          "size": 332,
+          "offset": 68,
+          "reference_sha256": "8e0c0265a37063cfdd8457cb18456ad730a77e53398de56f2589130e555b37e2",
+          "target_sha256": "783eefbfcebbbf7a2c2dd9fd1b098525e6671710712545d6250fdf1b16eefeb2",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "AllocSpline3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "reference_address": 2139216,
+          "target_address": 2142672,
+          "size": 332,
+          "offset": 168,
+          "reference_sha256": "8e0c0265a37063cfdd8457cb18456ad730a77e53398de56f2589130e555b37e2",
+          "target_sha256": "783eefbfcebbbf7a2c2dd9fd1b098525e6671710712545d6250fdf1b16eefeb2",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "AllocSpline3",
+          "source": "SB/Core/x/xSpline.cpp",
+          "reference_address": 2139216,
+          "target_address": 2142672,
+          "size": 332,
+          "offset": 236,
+          "reference_sha256": "8e0c0265a37063cfdd8457cb18456ad730a77e53398de56f2589130e555b37e2",
+          "target_sha256": "783eefbfcebbbf7a2c2dd9fd1b098525e6671710712545d6250fdf1b16eefeb2",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xSurfaceInit",
+          "source": "SB/Core/x/xSurface.cpp",
+          "reference_address": 2155968,
+          "target_address": 2159424,
+          "size": 356,
+          "offset": 36,
+          "reference_sha256": "125c2ba74bca95d43ef04cf82974ec755ab641b9727867f6be4f7c98589bb34b",
+          "target_sha256": "da02619323249b4274d4fc7a5006823b7e26694816f487a7d4f96fec013afbdf",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xAnimTableNew",
+          "source": "SB/Core/x/xAnim.cpp",
+          "reference_address": 2175760,
+          "target_address": 2179184,
+          "size": 128,
+          "offset": 40,
+          "reference_sha256": "d073f6fe6ac267e4e0b9bc7df14ecc7fde1e08d94f0ea4e857d47e5d14a45a23",
+          "target_sha256": "da4ae93879dfb81679d570b523e6b6cbd19d9b44e9e41ff92606e9b3b5fcaa5d",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "__ct",
+          "source": "SB/Core/x/xFactory.cpp",
+          "reference_address": 3087104,
+          "target_address": 3090528,
+          "size": 120,
+          "offset": 48,
+          "reference_sha256": "d71fe033133ea249baa6631fe9f00ea28227d1d196a5da98d87cac6f1dab0d98",
+          "target_sha256": "c2065c80a9ab6225d65fcab0a053ffcf7228cabdf965f886fbb8b909a51b8335",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "xGridInit",
+          "source": "SB/Core/x/xGrid.cpp",
+          "reference_address": 3166384,
+          "target_address": 3169808,
+          "size": 588,
+          "offset": 524,
+          "reference_sha256": "c17bf59eac1a30300a0ed97a1b37623e824dc6078207c7f7093e4ddcf5ce90eb",
+          "target_sha256": "a00f42e4c385e21fa6bccb0769c77154f0394a69c1dc0ffb6e2b1931c76bb581",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "zGooInit",
+          "source": "SB/Game/zGoo.cpp",
+          "reference_address": 3208608,
+          "target_address": 3212032,
+          "size": 64,
+          "offset": 32,
+          "reference_sha256": "2f8a1cdb12bab08a9430a2afb0ce221e2b5454670016762729ddfaebdb2324ef",
+          "target_sha256": "598eb55363e8f04a3b3fd9230e3c1d400b94bd77cd3e51191401f152d2cad1eb",
+          "actual_original_and_target_jal_decoded": true
+        },
+        {
+          "caller": "Init",
+          "source": "SB/Game/zNPCHazard.cpp",
+          "reference_address": 3928016,
+          "target_address": 3931376,
+          "size": 700,
+          "offset": 580,
+          "reference_sha256": "0c68224aeb7eb1dce3fa97cb41993010e8fa67dd846bde182c1e5c7e56994532",
+          "target_sha256": "c1ec9211926de77b733e2161bd98f11f6a135fd97aef9ea4a3ee054a48aea5ca",
+          "actual_original_and_target_jal_decoded": true
+        }
+      ],
+      "context_only": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 1755904,
+      "offset": 108,
+      "opcode": 3,
+      "reference_address": 1149520,
+      "target_address": 1149520,
+      "opaque_context_prefix_sha256": "b11c4bfe9af6ebb2c9f043298f159983de6f70d9d33c4e11dd2158f565a4d55b",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 1755904,
+      "offset": 296,
+      "opcode": 3,
+      "reference_address": 1149520,
+      "target_address": 1149520,
+      "opaque_context_prefix_sha256": "b11c4bfe9af6ebb2c9f043298f159983de6f70d9d33c4e11dd2158f565a4d55b",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 1756400,
+      "offset": 212,
+      "opcode": 3,
+      "reference_address": 2023040,
+      "target_address": 2024400,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 1755904,
+      "offset": 108,
+      "opcode": 3,
+      "reference_address": 1149520,
+      "target_address": 1149520,
+      "opaque_context_prefix_sha256": "b11c4bfe9af6ebb2c9f043298f159983de6f70d9d33c4e11dd2158f565a4d55b",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 1755904,
+      "offset": 296,
+      "opcode": 3,
+      "reference_address": 1149520,
+      "target_address": 1149520,
+      "opaque_context_prefix_sha256": "b11c4bfe9af6ebb2c9f043298f159983de6f70d9d33c4e11dd2158f565a4d55b",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 1756400,
+      "offset": 212,
+      "opcode": 3,
+      "reference_address": 2024288,
+      "target_address": 2024400,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 1755904,
+      "offset": 108,
+      "opcode": 3,
+      "reference_address": 1149520,
+      "target_address": 1149520,
+      "opaque_context_prefix_sha256": "b11c4bfe9af6ebb2c9f043298f159983de6f70d9d33c4e11dd2158f565a4d55b",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 1755904,
+      "offset": 296,
+      "opcode": 3,
+      "reference_address": 1149520,
+      "target_address": 1149520,
+      "opaque_context_prefix_sha256": "b11c4bfe9af6ebb2c9f043298f159983de6f70d9d33c4e11dd2158f565a4d55b",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 1756400,
+      "offset": 212,
+      "opcode": 3,
+      "reference_address": 2020928,
+      "target_address": 2024400,
+      "promoted_as_named_anchor": false
     }
   ],
   "functions": [
+    {
+      "name": "iAnimDurationSKB",
+      "source": "SB/Core/p2/iAnimSKB.cpp",
+      "address": 1724880,
+      "size": 32,
+      "sha256": "a7b51cae7caeadf8ed7cf842af96056c9be918c883181e6808ccdc26d4be1ce6",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1724080,
+          "name": "iAnimDurationSKB",
+          "source": "SB/Core/p2/iAnimSKB.cpp",
+          "linkage_name": "iAnimDurationSKB__FP14iAnimSKBHeader",
+          "reference_sha256": "a7b51cae7caeadf8ed7cf842af96056c9be918c883181e6808ccdc26d4be1ce6",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1724880,
+          "name": "iAnimDurationSKB",
+          "source": "SB/Core/p2/iAnimSKB.cpp",
+          "linkage_name": "iAnimDurationSKB__FP14iAnimSKBHeader",
+          "reference_sha256": "a7b51cae7caeadf8ed7cf842af96056c9be918c883181e6808ccdc26d4be1ce6",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1721520,
+          "name": "iAnimDurationSKB",
+          "source": "SB/Core/p2/iAnimSKB.cpp",
+          "linkage_name": "iAnimDurationSKB__FP14iAnimSKBHeader",
+          "reference_sha256": "a7b51cae7caeadf8ed7cf842af96056c9be918c883181e6808ccdc26d4be1ce6",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1724904
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 0
+        },
+        "previously_confirmed_neighbor_entries": [
+          1722160,
+          1723632
+        ]
+      }
+    },
+    {
+      "name": "iAnimEvalSKB",
+      "source": "SB/Core/p2/iAnimSKB.cpp",
+      "address": 1724912,
+      "size": 1480,
+      "sha256": "8c2d8ba1329c4b1b768f353bd874ebed304d50ad351fc7cc316da0e50239accd",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1724112,
+          "name": "iAnimEvalSKB",
+          "source": "SB/Core/p2/iAnimSKB.cpp",
+          "linkage_name": "iAnimEvalSKB__FP14iAnimSKBHeaderfUiP5xVec3P5xQuat",
+          "reference_sha256": "ecab111be079508633fd7d9edaa5ba67a72be9fda66e694f0e18703471292b0a",
+          "data_address_operands": [
+            {
+              "hi_offset": 504,
+              "lo_offset": 508,
+              "opcode": 9,
+              "reference_address": 4287648,
+              "target_address": 4286624,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1724912,
+          "name": "iAnimEvalSKB",
+          "source": "SB/Core/p2/iAnimSKB.cpp",
+          "linkage_name": "iAnimEvalSKB__FP14iAnimSKBHeaderfUiP5xVec3P5xQuat",
+          "reference_sha256": "fcc150cd1f2ffdf2c4dfc91e00e54bb9958b216a8bcef7128e30c07ed2450b48",
+          "data_address_operands": [
+            {
+              "hi_offset": 504,
+              "lo_offset": 508,
+              "opcode": 9,
+              "reference_address": 4286368,
+              "target_address": 4286624,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1721552,
+          "name": "iAnimEvalSKB",
+          "source": "SB/Core/p2/iAnimSKB.cpp",
+          "linkage_name": "iAnimEvalSKB__FP14iAnimSKBHeaderfUiP5xVec3P5xQuat",
+          "reference_sha256": "c8f7b8ede8f4b553e1aeee3ec4bb53c2ed2ccac4204c177b8983c06786d45974",
+          "data_address_operands": [
+            {
+              "hi_offset": 504,
+              "lo_offset": 508,
+              "opcode": 9,
+              "reference_address": 4284800,
+              "target_address": 4286624,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1726384
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              1724972,
+              1724984
+            ],
+            [
+              1725000,
+              1725016
+            ],
+            [
+              1725020,
+              1725040
+            ],
+            [
+              1725056,
+              1725032
+            ],
+            [
+              1725064,
+              1725080
+            ],
+            [
+              1725080,
+              1725112
+            ],
+            [
+              1725100,
+              1725072
+            ],
+            [
+              1725124,
+              1725136
+            ],
+            [
+              1725140,
+              1725160
+            ],
+            [
+              1725164,
+              1725416
+            ],
+            [
+              1725184,
+              1725392
+            ],
+            [
+              1725396,
+              1725192
+            ],
+            [
+              1725404,
+              1726384
+            ],
+            [
+              1725512,
+              1726368
+            ],
+            [
+              1725744,
+              1725776
+            ],
+            [
+              1725808,
+              1726344
+            ],
+            [
+              1725832,
+              1725976
+            ],
+            [
+              1725852,
+              1726216
+            ],
+            [
+              1725964,
+              1726256
+            ],
+            [
+              1725996,
+              1726096
+            ],
+            [
+              1726012,
+              1726248
+            ],
+            [
+              1726084,
+              1726256
+            ],
+            [
+              1726112,
+              1726232
+            ],
+            [
+              1726208,
+              1726256
+            ],
+            [
+              1726220,
+              1726256
+            ],
+            [
+              1726236,
+              1726256
+            ],
+            [
+              1726372,
+              1725520
+            ]
+          ],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [
+            1725028,
+            1725412,
+            1725972,
+            1726092,
+            1726228,
+            1726244
+          ],
+          "following_zero_alignment": 8
+        },
+        "previously_confirmed_neighbor_entries": [
+          1722160,
+          1723632
+        ]
+      }
+    },
+    {
+      "name": "iBoxIsectSphere",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1751280,
+      "size": 884,
+      "sha256": "0b45537d5d3606eb0857a66d55cb4c5bb9970fe51e6833b480c2af5bcbbeaf3c",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1749984,
+          "name": "iBoxIsectSphere",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iBoxIsectSphere__FPC4xBoxPC7xSphereP6xIsect",
+          "reference_sha256": "374cab96381c14b382bccc8568d3aacf597ef546c03bcf8fb1a1662e53cde0b5",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 832,
+              "opcode": 3,
+              "reference_address": 1751904,
+              "target_address": 1753200
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1751280,
+          "name": "iBoxIsectSphere",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iBoxIsectSphere__FPC4xBoxPC7xSphereP6xIsect",
+          "reference_sha256": "0b45537d5d3606eb0857a66d55cb4c5bb9970fe51e6833b480c2af5bcbbeaf3c",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 832,
+              "opcode": 3,
+              "reference_address": 1753200,
+              "target_address": 1753200
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1747920,
+          "name": "iBoxIsectSphere",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iBoxIsectSphere__FPC4xBoxPC7xSphereP6xIsect",
+          "reference_sha256": "be7399073ded0d758fa3ae99a4c7942e49126d202b6b92585ee7a08c38311790",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 832,
+              "opcode": 3,
+              "reference_address": 1749840,
+              "target_address": 1753200
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1752156
+          ],
+          "direct_or_indirect_calls": [
+            1752112
+          ],
+          "branches": [
+            [
+              1751324,
+              1751392
+            ],
+            [
+              1751336,
+              1751352
+            ],
+            [
+              1751344,
+              1751380
+            ],
+            [
+              1751360,
+              1751372
+            ],
+            [
+              1751380,
+              1751440
+            ],
+            [
+              1751400,
+              1751416
+            ],
+            [
+              1751408,
+              1751436
+            ],
+            [
+              1751420,
+              1751436
+            ],
+            [
+              1751428,
+              1751436
+            ],
+            [
+              1751460,
+              1751480
+            ],
+            [
+              1751468,
+              1752144
+            ],
+            [
+              1751496,
+              1751560
+            ],
+            [
+              1751508,
+              1751524
+            ],
+            [
+              1751516,
+              1751552
+            ],
+            [
+              1751532,
+              1751544
+            ],
+            [
+              1751552,
+              1751608
+            ],
+            [
+              1751568,
+              1751584
+            ],
+            [
+              1751576,
+              1751604
+            ],
+            [
+              1751588,
+              1751604
+            ],
+            [
+              1751596,
+              1751604
+            ],
+            [
+              1751628,
+              1751648
+            ],
+            [
+              1751636,
+              1752144
+            ],
+            [
+              1751664,
+              1751728
+            ],
+            [
+              1751676,
+              1751692
+            ],
+            [
+              1751684,
+              1751720
+            ],
+            [
+              1751700,
+              1751712
+            ],
+            [
+              1751720,
+              1751776
+            ],
+            [
+              1751736,
+              1751752
+            ],
+            [
+              1751744,
+              1751772
+            ],
+            [
+              1751756,
+              1751772
+            ],
+            [
+              1751764,
+              1751772
+            ],
+            [
+              1751800,
+              1751816
+            ],
+            [
+              1751808,
+              1752144
+            ],
+            [
+              1751820,
+              1751912
+            ],
+            [
+              1751836,
+              1751912
+            ],
+            [
+              1751848,
+              1751912
+            ],
+            [
+              1751864,
+              1751912
+            ],
+            [
+              1751876,
+              1751912
+            ],
+            [
+              1751892,
+              1751912
+            ],
+            [
+              1751900,
+              1751920
+            ],
+            [
+              1751936,
+              1752088
+            ],
+            [
+              1752080,
+              1752144
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              1751280,
+              -48
+            ],
+            [
+              1752160,
+              48
+            ]
+          ],
+          "ra_saves": [
+            [
+              1751284,
+              -16
+            ]
+          ],
+          "ra_loads": [
+            [
+              1752144,
+              -16
+            ]
+          ],
+          "unreachable_zero_words": [
+            1751388,
+            1751476,
+            1751644,
+            1751908
+          ],
+          "following_zero_alignment": 12
+        },
+        "previously_confirmed_neighbor_entries": [
+          1750992,
+          1751216,
+          1752176,
+          1752832,
+          1755776,
+          1756400
+        ]
+      }
+    },
+    {
+      "name": "iBoxIsectVec",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1753056,
+      "size": 136,
+      "sha256": "14e9de9c41eb9f93fb7f78a957cbaa2a2d62379d768ca9fbf2303fb1647187f5",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1751760,
+          "name": "iBoxIsectVec",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iBoxIsectVec__FPC4xBoxPC5xVec3P6xIsect",
+          "reference_sha256": "14e9de9c41eb9f93fb7f78a957cbaa2a2d62379d768ca9fbf2303fb1647187f5",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1753056,
+          "name": "iBoxIsectVec",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iBoxIsectVec__FPC4xBoxPC5xVec3P6xIsect",
+          "reference_sha256": "14e9de9c41eb9f93fb7f78a957cbaa2a2d62379d768ca9fbf2303fb1647187f5",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1749696,
+          "name": "iBoxIsectVec",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iBoxIsectVec__FPC4xBoxPC5xVec3P6xIsect",
+          "reference_sha256": "14e9de9c41eb9f93fb7f78a957cbaa2a2d62379d768ca9fbf2303fb1647187f5",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1753184
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              1753068,
+              1753176
+            ],
+            [
+              1753084,
+              1753176
+            ],
+            [
+              1753104,
+              1753176
+            ],
+            [
+              1753120,
+              1753176
+            ],
+            [
+              1753140,
+              1753176
+            ],
+            [
+              1753156,
+              1753176
+            ],
+            [
+              1753164,
+              1753184
+            ]
+          ],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [
+            1753172
+          ],
+          "following_zero_alignment": 8
+        },
+        "previously_confirmed_neighbor_entries": [
+          1750992,
+          1751216,
+          1752176,
+          1752832,
+          1755776,
+          1756400
+        ]
+      }
+    },
+    {
+      "name": "iBoxVecDist",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1753200,
+      "size": 2568,
+      "sha256": "558eb4a2c089fc8fe60bab6b96d508764fad16469e57adfd7d04451cf2578bf8",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1751904,
+          "name": "iBoxVecDist",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iBoxVecDist__FPC4xBoxPC5xVec3P6xIsect",
+          "reference_sha256": "558eb4a2c089fc8fe60bab6b96d508764fad16469e57adfd7d04451cf2578bf8",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1753200,
+          "name": "iBoxVecDist",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iBoxVecDist__FPC4xBoxPC5xVec3P6xIsect",
+          "reference_sha256": "558eb4a2c089fc8fe60bab6b96d508764fad16469e57adfd7d04451cf2578bf8",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1749840,
+          "name": "iBoxVecDist",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iBoxVecDist__FPC4xBoxPC5xVec3P6xIsect",
+          "reference_sha256": "558eb4a2c089fc8fe60bab6b96d508764fad16469e57adfd7d04451cf2578bf8",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1755760
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              1753212,
+              1754064
+            ],
+            [
+              1753232,
+              1753512
+            ],
+            [
+              1753252,
+              1753336
+            ],
+            [
+              1753328,
+              1755720
+            ],
+            [
+              1753344,
+              1753424
+            ],
+            [
+              1753416,
+              1755720
+            ],
+            [
+              1753504,
+              1755720
+            ],
+            [
+              1753520,
+              1753784
+            ],
+            [
+              1753540,
+              1753624
+            ],
+            [
+              1753612,
+              1755720
+            ],
+            [
+              1753632,
+              1753704
+            ],
+            [
+              1753692,
+              1755720
+            ],
+            [
+              1753772,
+              1755720
+            ],
+            [
+              1753796,
+              1753888
+            ],
+            [
+              1753880,
+              1755720
+            ],
+            [
+              1753896,
+              1753976
+            ],
+            [
+              1753968,
+              1755720
+            ],
+            [
+              1754056,
+              1755720
+            ],
+            [
+              1754072,
+              1754864
+            ],
+            [
+              1754092,
+              1754384
+            ],
+            [
+              1754112,
+              1754208
+            ],
+            [
+              1754196,
+              1755720
+            ],
+            [
+              1754216,
+              1754296
+            ],
+            [
+              1754288,
+              1755720
+            ],
+            [
+              1754372,
+              1755720
+            ],
+            [
+              1754392,
+              1754584
+            ],
+            [
+              1754412,
+              1754496
+            ],
+            [
+              1754484,
+              1755720
+            ],
+            [
+              1754504,
+              1755720
+            ],
+            [
+              1754576,
+              1755720
+            ],
+            [
+              1754596,
+              1754688
+            ],
+            [
+              1754680,
+              1755720
+            ],
+            [
+              1754696,
+              1754776
+            ],
+            [
+              1754768,
+              1755720
+            ],
+            [
+              1754852,
+              1755720
+            ],
+            [
+              1754876,
+              1755168
+            ],
+            [
+              1754896,
+              1754992
+            ],
+            [
+              1754980,
+              1755720
+            ],
+            [
+              1755000,
+              1755080
+            ],
+            [
+              1755072,
+              1755720
+            ],
+            [
+              1755160,
+              1755720
+            ],
+            [
+              1755176,
+              1755440
+            ],
+            [
+              1755196,
+              1755280
+            ],
+            [
+              1755268,
+              1755720
+            ],
+            [
+              1755288,
+              1755360
+            ],
+            [
+              1755348,
+              1755720
+            ],
+            [
+              1755428,
+              1755720
+            ],
+            [
+              1755452,
+              1755544
+            ],
+            [
+              1755536,
+              1755720
+            ],
+            [
+              1755552,
+              1755632
+            ],
+            [
+              1755624,
+              1755720
+            ]
+          ],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [
+            1753620,
+            1753700,
+            1753780,
+            1754204,
+            1754380,
+            1754492,
+            1754860,
+            1754988,
+            1755276,
+            1755356,
+            1755436
+          ],
+          "following_zero_alignment": 8
+        },
+        "previously_confirmed_neighbor_entries": [
+          1750992,
+          1751216,
+          1752176,
+          1752832,
+          1755776,
+          1756400
+        ]
+      }
+    },
+    {
+      "name": "iSphereBoundVec",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1755904,
+      "size": 316,
+      "sha256": "7f97375aba3d7bd778c2970755129c38fac16c002c480cc6950703a26c0e6309",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1754608,
+          "name": "iSphereBoundVec",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iSphereBoundVec__FP7xSpherePC7xSpherePC5xVec3",
+          "reference_sha256": "7f97375aba3d7bd778c2970755129c38fac16c002c480cc6950703a26c0e6309",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 108,
+              "opcode": 3,
+              "reference_address": 1149520,
+              "target_address": 1149520,
+              "opaque_context_prefix_sha256": "b11c4bfe9af6ebb2c9f043298f159983de6f70d9d33c4e11dd2158f565a4d55b",
+              "opaque_context_bytes": 64,
+              "no_identity_or_extent_claim": true,
+              "transfer_word_unmasked": true
+            },
+            {
+              "offset": 296,
+              "opcode": 3,
+              "reference_address": 1149520,
+              "target_address": 1149520,
+              "opaque_context_prefix_sha256": "b11c4bfe9af6ebb2c9f043298f159983de6f70d9d33c4e11dd2158f565a4d55b",
+              "opaque_context_bytes": 64,
+              "no_identity_or_extent_claim": true,
+              "transfer_word_unmasked": true
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1755904,
+          "name": "iSphereBoundVec",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iSphereBoundVec__FP7xSpherePC7xSpherePC5xVec3",
+          "reference_sha256": "7f97375aba3d7bd778c2970755129c38fac16c002c480cc6950703a26c0e6309",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 108,
+              "opcode": 3,
+              "reference_address": 1149520,
+              "target_address": 1149520,
+              "opaque_context_prefix_sha256": "b11c4bfe9af6ebb2c9f043298f159983de6f70d9d33c4e11dd2158f565a4d55b",
+              "opaque_context_bytes": 64,
+              "no_identity_or_extent_claim": true,
+              "transfer_word_unmasked": true
+            },
+            {
+              "offset": 296,
+              "opcode": 3,
+              "reference_address": 1149520,
+              "target_address": 1149520,
+              "opaque_context_prefix_sha256": "b11c4bfe9af6ebb2c9f043298f159983de6f70d9d33c4e11dd2158f565a4d55b",
+              "opaque_context_bytes": 64,
+              "no_identity_or_extent_claim": true,
+              "transfer_word_unmasked": true
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1752544,
+          "name": "iSphereBoundVec",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iSphereBoundVec__FP7xSpherePC7xSpherePC5xVec3",
+          "reference_sha256": "7f97375aba3d7bd778c2970755129c38fac16c002c480cc6950703a26c0e6309",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 108,
+              "opcode": 3,
+              "reference_address": 1149520,
+              "target_address": 1149520,
+              "opaque_context_prefix_sha256": "b11c4bfe9af6ebb2c9f043298f159983de6f70d9d33c4e11dd2158f565a4d55b",
+              "opaque_context_bytes": 64,
+              "no_identity_or_extent_claim": true,
+              "transfer_word_unmasked": true
+            },
+            {
+              "offset": 296,
+              "opcode": 3,
+              "reference_address": 1149520,
+              "target_address": 1149520,
+              "opaque_context_prefix_sha256": "b11c4bfe9af6ebb2c9f043298f159983de6f70d9d33c4e11dd2158f565a4d55b",
+              "opaque_context_bytes": 64,
+              "no_identity_or_extent_claim": true,
+              "transfer_word_unmasked": true
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1756212
+          ],
+          "direct_or_indirect_calls": [
+            1756012,
+            1756200
+          ],
+          "branches": [
+            [
+              1755996,
+              1756032
+            ],
+            [
+              1756004,
+              1756024
+            ],
+            [
+              1756024,
+              1756208
+            ],
+            [
+              1756032,
+              1756044
+            ],
+            [
+              1756188,
+              1756208
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              1755904,
+              -32
+            ],
+            [
+              1756216,
+              32
+            ]
+          ],
+          "ra_saves": [
+            [
+              1755912,
+              -32
+            ]
+          ],
+          "ra_loads": [
+            [
+              1756208,
+              -32
+            ]
+          ],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 4
+        },
+        "previously_confirmed_neighbor_entries": [
+          1750992,
+          1751216,
+          1752176,
+          1752832,
+          1755776,
+          1756400
+        ]
+      }
+    },
+    {
+      "name": "iSphereInitBoundVec",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1756224,
+      "size": 40,
+      "sha256": "b822fd7a53c1882c719438c389385c4e2bdcc1d821dd621672c4f361ce7bce30",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1754928,
+          "name": "iSphereInitBoundVec",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iSphereInitBoundVec__FP7xSpherePC5xVec3",
+          "reference_sha256": "b822fd7a53c1882c719438c389385c4e2bdcc1d821dd621672c4f361ce7bce30",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1756224,
+          "name": "iSphereInitBoundVec",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iSphereInitBoundVec__FP7xSpherePC5xVec3",
+          "reference_sha256": "b822fd7a53c1882c719438c389385c4e2bdcc1d821dd621672c4f361ce7bce30",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1752864,
+          "name": "iSphereInitBoundVec",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iSphereInitBoundVec__FP7xSpherePC5xVec3",
+          "reference_sha256": "b822fd7a53c1882c719438c389385c4e2bdcc1d821dd621672c4f361ce7bce30",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1756256
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 8
+        },
+        "previously_confirmed_neighbor_entries": [
+          1750992,
+          1751216,
+          1752176,
+          1752832,
+          1755776,
+          1756400
+        ]
+      }
+    },
+    {
+      "name": "iSphereIsectSphere",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1756272,
+      "size": 124,
+      "sha256": "184e88b47ba43283945bc40cd3a8b54dbf52ff4eacae771c775b1d876e02b676",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1754976,
+          "name": "iSphereIsectSphere",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iSphereIsectSphere__FPC7xSpherePC7xSphereP6xIsect",
+          "reference_sha256": "184e88b47ba43283945bc40cd3a8b54dbf52ff4eacae771c775b1d876e02b676",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1756272,
+          "name": "iSphereIsectSphere",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iSphereIsectSphere__FPC7xSpherePC7xSphereP6xIsect",
+          "reference_sha256": "184e88b47ba43283945bc40cd3a8b54dbf52ff4eacae771c775b1d876e02b676",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1752912,
+          "name": "iSphereIsectSphere",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iSphereIsectSphere__FPC7xSpherePC7xSphereP6xIsect",
+          "reference_sha256": "184e88b47ba43283945bc40cd3a8b54dbf52ff4eacae771c775b1d876e02b676",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1756388
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 4
+        },
+        "previously_confirmed_neighbor_entries": [
+          1750992,
+          1751216,
+          1752176,
+          1752832,
+          1755776,
+          1756400
+        ]
+      }
+    },
+    {
+      "name": "iSphereIsectVec",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1756896,
+      "size": 100,
+      "sha256": "5b9a84694a9b19c955f620dcafdbd3d6604f7192d6b9f5da8becbbea1841d387",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1755600,
+          "name": "iSphereIsectVec",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iSphereIsectVec__FPC7xSpherePC5xVec3P6xIsect",
+          "reference_sha256": "5b9a84694a9b19c955f620dcafdbd3d6604f7192d6b9f5da8becbbea1841d387",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1756896,
+          "name": "iSphereIsectVec",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iSphereIsectVec__FPC7xSpherePC5xVec3P6xIsect",
+          "reference_sha256": "5b9a84694a9b19c955f620dcafdbd3d6604f7192d6b9f5da8becbbea1841d387",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1753536,
+          "name": "iSphereIsectVec",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iSphereIsectVec__FPC7xSpherePC5xVec3P6xIsect",
+          "reference_sha256": "5b9a84694a9b19c955f620dcafdbd3d6604f7192d6b9f5da8becbbea1841d387",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1756988
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 12
+        },
+        "previously_confirmed_neighbor_entries": [
+          1750992,
+          1751216,
+          1752176,
+          1752832,
+          1755776,
+          1756400
+        ]
+      }
+    },
+    {
+      "name": "iMath3Exit",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1757008,
+      "size": 8,
+      "sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1755712,
+          "name": "iMath3Exit",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iMath3Exit__Fv",
+          "reference_sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1757008,
+          "name": "iMath3Exit",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iMath3Exit__Fv",
+          "reference_sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1753648,
+          "name": "iMath3Exit",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iMath3Exit__Fv",
+          "reference_sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1757008
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 8
+        },
+        "previously_confirmed_neighbor_entries": [
+          1750992,
+          1751216,
+          1752176,
+          1752832,
+          1755776,
+          1756400
+        ]
+      }
+    },
+    {
+      "name": "iMath3Init",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1757024,
+      "size": 8,
+      "sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1755728,
+          "name": "iMath3Init",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iMath3Init__Fv",
+          "reference_sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1757024,
+          "name": "iMath3Init",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iMath3Init__Fv",
+          "reference_sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1753664,
+          "name": "iMath3Init",
+          "source": "SB/Core/p2/iMath3.cpp",
+          "linkage_name": "iMath3Init__Fv",
+          "reference_sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1757024
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 8
+        },
+        "previously_confirmed_neighbor_entries": [
+          1750992,
+          1751216,
+          1752176,
+          1752832,
+          1755776,
+          1756400
+        ]
+      }
+    },
     {
       "name": "xSphereHitsVCircle",
       "source": "SB/Core/x/xCollide.cpp",
@@ -38736,6 +42227,636 @@
       }
     },
     {
+      "name": "xFFXShakeFree",
+      "source": "SB/Core/x/xFFX.cpp",
+      "address": 1945328,
+      "size": 16,
+      "sha256": "01b2d9e1b0ceb59ab5801329ba06af840ec5bc4539f0d32632d64a24639155dc",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1943952,
+          "name": "xFFXShakeFree",
+          "source": "SB/Core/x/xFFX.cpp",
+          "linkage_name": "xFFXShakeFree__FP14xFFXShakeState",
+          "reference_sha256": "01b2d9e1b0ceb59ab5801329ba06af840ec5bc4539f0d32632d64a24639155dc",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1945216,
+          "name": "xFFXShakeFree",
+          "source": "SB/Core/x/xFFX.cpp",
+          "linkage_name": "xFFXShakeFree__FP14xFFXShakeState",
+          "reference_sha256": "01b2d9e1b0ceb59ab5801329ba06af840ec5bc4539f0d32632d64a24639155dc",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1941856,
+          "name": "xFFXShakeFree",
+          "source": "SB/Core/x/xFFX.cpp",
+          "linkage_name": "xFFXShakeFree__FP14xFFXShakeState",
+          "reference_sha256": "01b2d9e1b0ceb59ab5801329ba06af840ec5bc4539f0d32632d64a24639155dc",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1945336
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 0
+        },
+        "previously_confirmed_neighbor_entries": [
+          1945120,
+          1945168,
+          1945392,
+          1945904,
+          1945968,
+          1946400,
+          1946656
+        ]
+      }
+    },
+    {
+      "name": "xFFXShakeAlloc",
+      "source": "SB/Core/x/xFFX.cpp",
+      "address": 1945344,
+      "size": 40,
+      "sha256": "1ef9169731383af279b8ac043068bb5abd4e57825e8776ef447e222cf2c58ac4",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1943968,
+          "name": "xFFXShakeAlloc",
+          "source": "SB/Core/x/xFFX.cpp",
+          "linkage_name": "xFFXShakeAlloc__Fv",
+          "reference_sha256": "1ef9169731383af279b8ac043068bb5abd4e57825e8776ef447e222cf2c58ac4",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1945232,
+          "name": "xFFXShakeAlloc",
+          "source": "SB/Core/x/xFFX.cpp",
+          "linkage_name": "xFFXShakeAlloc__Fv",
+          "reference_sha256": "1ef9169731383af279b8ac043068bb5abd4e57825e8776ef447e222cf2c58ac4",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1941872,
+          "name": "xFFXShakeAlloc",
+          "source": "SB/Core/x/xFFX.cpp",
+          "linkage_name": "xFFXShakeAlloc__Fv",
+          "reference_sha256": "1ef9169731383af279b8ac043068bb5abd4e57825e8776ef447e222cf2c58ac4",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1945376
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              1945348,
+              1945368
+            ],
+            [
+              1945356,
+              1945376
+            ]
+          ],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [
+            1945364
+          ],
+          "following_zero_alignment": 8
+        },
+        "previously_confirmed_neighbor_entries": [
+          1945120,
+          1945168,
+          1945392,
+          1945904,
+          1945968,
+          1946400,
+          1946656
+        ]
+      }
+    },
+    {
+      "name": "xFFXShakeUpdateEnt",
+      "source": "SB/Core/x/xFFX.cpp",
+      "address": 1945552,
+      "size": 348,
+      "sha256": "48ae86a15c130aa48cc78f7f4bbd9bb982792796b6e5b8136b52035356220eed",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1944176,
+          "name": "xFFXShakeUpdateEnt",
+          "source": "SB/Core/x/xFFX.cpp",
+          "linkage_name": "xFFXShakeUpdateEnt__FP4xEntP6xScenefPv",
+          "reference_sha256": "48ae86a15c130aa48cc78f7f4bbd9bb982792796b6e5b8136b52035356220eed",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 44,
+              "opcode": 3,
+              "reference_address": 1133272,
+              "target_address": 1133272,
+              "opaque_context_prefix_sha256": "2653c72461be04b706ab84c9673feaff3d60cfaf1a727a5f06904bf791d41882",
+              "opaque_context_bytes": 64,
+              "no_identity_or_extent_claim": true,
+              "transfer_word_unmasked": true
+            },
+            {
+              "offset": 60,
+              "opcode": 3,
+              "reference_address": 1132848,
+              "target_address": 1132848,
+              "opaque_context_prefix_sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+              "opaque_context_bytes": 64,
+              "no_identity_or_extent_claim": true,
+              "transfer_word_unmasked": true
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1945440,
+          "name": "xFFXShakeUpdateEnt",
+          "source": "SB/Core/x/xFFX.cpp",
+          "linkage_name": "xFFXShakeUpdateEnt__FP4xEntP6xScenefPv",
+          "reference_sha256": "48ae86a15c130aa48cc78f7f4bbd9bb982792796b6e5b8136b52035356220eed",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 44,
+              "opcode": 3,
+              "reference_address": 1133272,
+              "target_address": 1133272,
+              "opaque_context_prefix_sha256": "2653c72461be04b706ab84c9673feaff3d60cfaf1a727a5f06904bf791d41882",
+              "opaque_context_bytes": 64,
+              "no_identity_or_extent_claim": true,
+              "transfer_word_unmasked": true
+            },
+            {
+              "offset": 60,
+              "opcode": 3,
+              "reference_address": 1132848,
+              "target_address": 1132848,
+              "opaque_context_prefix_sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+              "opaque_context_bytes": 64,
+              "no_identity_or_extent_claim": true,
+              "transfer_word_unmasked": true
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1942080,
+          "name": "xFFXShakeUpdateEnt",
+          "source": "SB/Core/x/xFFX.cpp",
+          "linkage_name": "xFFXShakeUpdateEnt__FP4xEntP6xScenefPv",
+          "reference_sha256": "48ae86a15c130aa48cc78f7f4bbd9bb982792796b6e5b8136b52035356220eed",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 44,
+              "opcode": 3,
+              "reference_address": 1133272,
+              "target_address": 1133272,
+              "opaque_context_prefix_sha256": "2653c72461be04b706ab84c9673feaff3d60cfaf1a727a5f06904bf791d41882",
+              "opaque_context_bytes": 64,
+              "no_identity_or_extent_claim": true,
+              "transfer_word_unmasked": true
+            },
+            {
+              "offset": 60,
+              "opcode": 3,
+              "reference_address": 1132848,
+              "target_address": 1132848,
+              "opaque_context_prefix_sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+              "opaque_context_bytes": 64,
+              "no_identity_or_extent_claim": true,
+              "transfer_word_unmasked": true
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1945892
+          ],
+          "direct_or_indirect_calls": [
+            1945596,
+            1945612
+          ],
+          "branches": [
+            [
+              1945636,
+              1945656
+            ],
+            [
+              1945644,
+              1945792
+            ],
+            [
+              1945664,
+              1945792
+            ],
+            [
+              1945684,
+              1945792
+            ],
+            [
+              1945696,
+              1945776
+            ],
+            [
+              1945708,
+              1945760
+            ],
+            [
+              1945748,
+              1945776
+            ],
+            [
+              1945768,
+              1945704
+            ],
+            [
+              1945784,
+              1945872
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              1945552,
+              -64
+            ],
+            [
+              1945896,
+              64
+            ]
+          ],
+          "ra_saves": [
+            [
+              1945556,
+              -16
+            ]
+          ],
+          "ra_loads": [
+            [
+              1945872,
+              -16
+            ]
+          ],
+          "unreachable_zero_words": [
+            1945652,
+            1945756
+          ],
+          "following_zero_alignment": 4
+        },
+        "previously_confirmed_neighbor_entries": [
+          1945120,
+          1945168,
+          1945392,
+          1945904,
+          1945968,
+          1946400,
+          1946656
+        ]
+      }
+    },
+    {
+      "name": "xFFXAddEffect",
+      "source": "SB/Core/x/xFFX.cpp",
+      "address": 1946512,
+      "size": 40,
+      "sha256": "2a04a307522fc6debf9285f297b0a4b3c77c1d52f0f83656c78b9f62ae8a85c9",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1945136,
+          "name": "xFFXAddEffect",
+          "source": "SB/Core/x/xFFX.cpp",
+          "linkage_name": "xFFXAddEffect__FP4xEntP4xFFX",
+          "reference_sha256": "2a04a307522fc6debf9285f297b0a4b3c77c1d52f0f83656c78b9f62ae8a85c9",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1946400,
+          "name": "xFFXAddEffect",
+          "source": "SB/Core/x/xFFX.cpp",
+          "linkage_name": "xFFXAddEffect__FP4xEntP4xFFX",
+          "reference_sha256": "2a04a307522fc6debf9285f297b0a4b3c77c1d52f0f83656c78b9f62ae8a85c9",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1943040,
+          "name": "xFFXAddEffect",
+          "source": "SB/Core/x/xFFX.cpp",
+          "linkage_name": "xFFXAddEffect__FP4xEntP4xFFX",
+          "reference_sha256": "2a04a307522fc6debf9285f297b0a4b3c77c1d52f0f83656c78b9f62ae8a85c9",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1946544
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 8
+        },
+        "previously_confirmed_neighbor_entries": [
+          1945120,
+          1945168,
+          1945392,
+          1945904,
+          1945968,
+          1946400,
+          1946656
+        ]
+      }
+    },
+    {
+      "name": "xFFXTurnOff",
+      "source": "SB/Core/x/xFFX.cpp",
+      "address": 1946560,
+      "size": 20,
+      "sha256": "4eed9ce0d7d2fad5fd6296087ecd86039bedbc11d92bc87602f535fb6f960c08",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1945184,
+          "name": "xFFXTurnOff",
+          "source": "SB/Core/x/xFFX.cpp",
+          "linkage_name": "xFFXTurnOff__FP4xFFX",
+          "reference_sha256": "4eed9ce0d7d2fad5fd6296087ecd86039bedbc11d92bc87602f535fb6f960c08",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1946448,
+          "name": "xFFXTurnOff",
+          "source": "SB/Core/x/xFFX.cpp",
+          "linkage_name": "xFFXTurnOff__FP4xFFX",
+          "reference_sha256": "4eed9ce0d7d2fad5fd6296087ecd86039bedbc11d92bc87602f535fb6f960c08",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1943088,
+          "name": "xFFXTurnOff",
+          "source": "SB/Core/x/xFFX.cpp",
+          "linkage_name": "xFFXTurnOff__FP4xFFX",
+          "reference_sha256": "4eed9ce0d7d2fad5fd6296087ecd86039bedbc11d92bc87602f535fb6f960c08",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1946572
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 12
+        },
+        "previously_confirmed_neighbor_entries": [
+          1945120,
+          1945168,
+          1945392,
+          1945904,
+          1945968,
+          1946400,
+          1946656
+        ]
+      }
+    },
+    {
+      "name": "xFFXTurnOn",
+      "source": "SB/Core/x/xFFX.cpp",
+      "address": 1946592,
+      "size": 16,
+      "sha256": "9cdc86f17d3877e674fa9c007523b5aa96095f8d44793485be38fe68c039cf89",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1945216,
+          "name": "xFFXTurnOn",
+          "source": "SB/Core/x/xFFX.cpp",
+          "linkage_name": "xFFXTurnOn__FP4xFFX",
+          "reference_sha256": "9cdc86f17d3877e674fa9c007523b5aa96095f8d44793485be38fe68c039cf89",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1946480,
+          "name": "xFFXTurnOn",
+          "source": "SB/Core/x/xFFX.cpp",
+          "linkage_name": "xFFXTurnOn__FP4xFFX",
+          "reference_sha256": "9cdc86f17d3877e674fa9c007523b5aa96095f8d44793485be38fe68c039cf89",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1943120,
+          "name": "xFFXTurnOn",
+          "source": "SB/Core/x/xFFX.cpp",
+          "linkage_name": "xFFXTurnOn__FP4xFFX",
+          "reference_sha256": "9cdc86f17d3877e674fa9c007523b5aa96095f8d44793485be38fe68c039cf89",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1946600
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 0
+        },
+        "previously_confirmed_neighbor_entries": [
+          1945120,
+          1945168,
+          1945392,
+          1945904,
+          1945968,
+          1946400,
+          1946656
+        ]
+      }
+    },
+    {
+      "name": "xFFXAlloc",
+      "source": "SB/Core/x/xFFX.cpp",
+      "address": 1946608,
+      "size": 40,
+      "sha256": "7771c59eb34e5d841f3e5b487cc0d1460b0b8a02460a23a2d4012ba34356d987",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1945232,
+          "name": "xFFXAlloc",
+          "source": "SB/Core/x/xFFX.cpp",
+          "linkage_name": "xFFXAlloc__Fv",
+          "reference_sha256": "7771c59eb34e5d841f3e5b487cc0d1460b0b8a02460a23a2d4012ba34356d987",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1946496,
+          "name": "xFFXAlloc",
+          "source": "SB/Core/x/xFFX.cpp",
+          "linkage_name": "xFFXAlloc__Fv",
+          "reference_sha256": "7771c59eb34e5d841f3e5b487cc0d1460b0b8a02460a23a2d4012ba34356d987",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1943136,
+          "name": "xFFXAlloc",
+          "source": "SB/Core/x/xFFX.cpp",
+          "linkage_name": "xFFXAlloc__Fv",
+          "reference_sha256": "7771c59eb34e5d841f3e5b487cc0d1460b0b8a02460a23a2d4012ba34356d987",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1946640
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              1946612,
+              1946632
+            ],
+            [
+              1946620,
+              1946640
+            ]
+          ],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [
+            1946628
+          ],
+          "following_zero_alignment": 8
+        },
+        "previously_confirmed_neighbor_entries": [
+          1945120,
+          1945168,
+          1945392,
+          1945904,
+          1945968,
+          1946400,
+          1946656
+        ]
+      }
+    },
+    {
       "name": "xQuatDiff",
       "source": "SB/Core/x/xMath3.cpp",
       "address": 2024896,
@@ -50158,6 +54279,228 @@
         },
         "direct_rooted_call_sites": [
           1625176
+        ]
+      }
+    },
+    {
+      "name": "xQuickCullInit",
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "address": 2076832,
+      "size": 28,
+      "sha256": "5ad7d10ebf7dfcf6be329a1595a029f447eb850f8d49439455b92f576167fbd7",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2075408,
+          "name": "xQuickCullInit",
+          "source": "SB/Core/x/xQuickCull.cpp",
+          "linkage_name": "xQuickCullInit__FP10xQCControlPC4xBox",
+          "reference_sha256": "c64e77d962cb16da0f27a72f3d20e3ed55b8cd3fe932cf244e366a26ab570b99",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 20,
+              "opcode": 2,
+              "reference_address": 2075440,
+              "target_address": 2076864
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2076720,
+          "name": "xQuickCullInit",
+          "source": "SB/Core/x/xQuickCull.cpp",
+          "linkage_name": "xQuickCullInit__FP10xQCControlPC4xBox",
+          "reference_sha256": "03d0ed040c56604025adca0962d6ff77a8fbcaa63d3a154ce39fa4e114f82482",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 20,
+              "opcode": 2,
+              "reference_address": 2076752,
+              "target_address": 2076864
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2073376,
+          "name": "xQuickCullInit",
+          "source": "SB/Core/x/xQuickCull.cpp",
+          "linkage_name": "xQuickCullInit__FP10xQCControlPC4xBox",
+          "reference_sha256": "c2a7c3d62c23f7fd1345d95842a0a7b6eec3e920cf0482d6a62d5d9cb85cee81",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 20,
+              "opcode": 2,
+              "reference_address": 2073408,
+              "target_address": 2076864
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": false,
+          "reasons": [
+            "extent_not_terminal_return_delay",
+            "local_edge_outside_extent",
+            "no_return"
+          ],
+          "returns": [],
+          "direct_or_indirect_calls": [],
+          "branches": [],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 4
+        },
+        "previously_confirmed_neighbor_entries": [
+          2074816,
+          2074864,
+          2074944,
+          2075184,
+          2075568,
+          2076112,
+          2076336,
+          2076656,
+          2076784
+        ],
+        "scoped_terminal_tail": {
+          "method": "Exact six LWC1 words and terminal J with LWC1 delay slot",
+          "tail_instruction_offset": 20,
+          "tail_target": 2076864,
+          "stack_and_return_address_unchanged": true,
+          "argument_loads": [
+            {
+              "offset": 0,
+              "base_register": 5,
+              "float_register": 13,
+              "displacement": 16
+            },
+            {
+              "offset": 4,
+              "base_register": 5,
+              "float_register": 14,
+              "displacement": 20
+            },
+            {
+              "offset": 8,
+              "base_register": 5,
+              "float_register": 15,
+              "displacement": 0
+            },
+            {
+              "offset": 12,
+              "base_register": 5,
+              "float_register": 16,
+              "displacement": 4
+            },
+            {
+              "offset": 16,
+              "base_register": 5,
+              "float_register": 17,
+              "displacement": 8
+            },
+            {
+              "offset": 24,
+              "base_register": 5,
+              "float_register": 12,
+              "displacement": 12
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "xQuickCullInit",
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "address": 2076864,
+      "size": 252,
+      "sha256": "102371bd9ac09f44a1e467d69d518faaf98277e7ab40b58a92db956182de578c",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2075440,
+          "name": "xQuickCullInit",
+          "source": "SB/Core/x/xQuickCull.cpp",
+          "linkage_name": "xQuickCullInit__FP10xQCControlffffff",
+          "reference_sha256": "102371bd9ac09f44a1e467d69d518faaf98277e7ab40b58a92db956182de578c",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2076752,
+          "name": "xQuickCullInit",
+          "source": "SB/Core/x/xQuickCull.cpp",
+          "linkage_name": "xQuickCullInit__FP10xQCControlffffff",
+          "reference_sha256": "102371bd9ac09f44a1e467d69d518faaf98277e7ab40b58a92db956182de578c",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2073408,
+          "name": "xQuickCullInit",
+          "source": "SB/Core/x/xQuickCull.cpp",
+          "linkage_name": "xQuickCullInit__FP10xQCControlffffff",
+          "reference_sha256": "102371bd9ac09f44a1e467d69d518faaf98277e7ab40b58a92db956182de578c",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2077108
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              2076928,
+              2076968
+            ],
+            [
+              2076944,
+              2076968
+            ],
+            [
+              2076960,
+              2076984
+            ]
+          ],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 4
+        },
+        "previously_confirmed_neighbor_entries": [
+          2074816,
+          2074864,
+          2074944,
+          2075184,
+          2075568,
+          2076112,
+          2076336,
+          2076656,
+          2076784
         ]
       }
     },
@@ -80228,6 +84571,594 @@
         },
         "direct_rooted_call_sites": []
       }
+    },
+    {
+      "name": "xGridCheckPosition",
+      "source": "SB/Core/x/xGrid.cpp",
+      "address": 3164672,
+      "size": 1984,
+      "sha256": "59508dbf49a30af3d7344f07203db79cc3d2f18efb684284eade81d76cf858b4",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3163264,
+          "name": "xGridCheckPosition",
+          "source": "SB/Core/x/xGrid.cpp",
+          "linkage_name": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "reference_sha256": "22a279c52cc5167e29972912e4578a25b1d571c98066ed24aeba8a65f9934c8c",
+          "data_address_operands": [
+            {
+              "hi_offset": 732,
+              "lo_offset": 740,
+              "opcode": 9,
+              "reference_address": 5110320,
+              "target_address": 5109296,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 84,
+              "opcode": 3,
+              "reference_address": 3165600,
+              "target_address": 3167008
+            },
+            {
+              "offset": 116,
+              "opcode": 3,
+              "reference_address": 2075360,
+              "target_address": 2076784
+            },
+            {
+              "offset": 964,
+              "opcode": 3,
+              "reference_address": 2075360,
+              "target_address": 2076784
+            },
+            {
+              "offset": 1492,
+              "opcode": 3,
+              "reference_address": 2075360,
+              "target_address": 2076784
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3164560,
+          "name": "xGridCheckPosition",
+          "source": "SB/Core/x/xGrid.cpp",
+          "linkage_name": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "reference_sha256": "001a15ec9a9f756abbd984b2afeb149d63e3009877669ecdade2f097958985c0",
+          "data_address_operands": [
+            {
+              "hi_offset": 732,
+              "lo_offset": 740,
+              "opcode": 9,
+              "reference_address": 5109040,
+              "target_address": 5109296,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 84,
+              "opcode": 3,
+              "reference_address": 3166896,
+              "target_address": 3167008
+            },
+            {
+              "offset": 116,
+              "opcode": 3,
+              "reference_address": 2076672,
+              "target_address": 2076784
+            },
+            {
+              "offset": 964,
+              "opcode": 3,
+              "reference_address": 2076672,
+              "target_address": 2076784
+            },
+            {
+              "offset": 1492,
+              "opcode": 3,
+              "reference_address": 2076672,
+              "target_address": 2076784
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3161248,
+          "name": "xGridCheckPosition",
+          "source": "SB/Core/x/xGrid.cpp",
+          "linkage_name": "xGridCheckPosition__FP5xGridP5xVec3P7xQCDataPFP4xEntPv_iPv",
+          "reference_sha256": "a2b3d9c492e3894873ec505c65800413fa6115c0c8e2b2a4a0a418d24ed2e4a3",
+          "data_address_operands": [
+            {
+              "hi_offset": 732,
+              "lo_offset": 740,
+              "opcode": 9,
+              "reference_address": 5107440,
+              "target_address": 5109296,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 84,
+              "opcode": 3,
+              "reference_address": 3163584,
+              "target_address": 3167008
+            },
+            {
+              "offset": 116,
+              "opcode": 3,
+              "reference_address": 2073328,
+              "target_address": 2076784
+            },
+            {
+              "offset": 964,
+              "opcode": 3,
+              "reference_address": 2073328,
+              "target_address": 2076784
+            },
+            {
+              "offset": 1492,
+              "opcode": 3,
+              "reference_address": 2073328,
+              "target_address": 2076784
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            3166648
+          ],
+          "direct_or_indirect_calls": [
+            3164756,
+            3164788,
+            3164808,
+            3165636,
+            3165656,
+            3166164,
+            3166184
+          ],
+          "branches": [
+            [
+              3164768,
+              3165232
+            ],
+            [
+              3164796,
+              3164984
+            ],
+            [
+              3164816,
+              3164984
+            ],
+            [
+              3164828,
+              3164976
+            ],
+            [
+              3164852,
+              3164960
+            ],
+            [
+              3164864,
+              3164960
+            ],
+            [
+              3164876,
+              3164960
+            ],
+            [
+              3164892,
+              3164944
+            ],
+            [
+              3164932,
+              3164952
+            ],
+            [
+              3164952,
+              3164888
+            ],
+            [
+              3164976,
+              3166608
+            ],
+            [
+              3164988,
+              3165056
+            ],
+            [
+              3165000,
+              3165056
+            ],
+            [
+              3165012,
+              3165032
+            ],
+            [
+              3165020,
+              3165224
+            ],
+            [
+              3165060,
+              3165008
+            ],
+            [
+              3165072,
+              3165216
+            ],
+            [
+              3165096,
+              3165200
+            ],
+            [
+              3165108,
+              3165200
+            ],
+            [
+              3165120,
+              3165200
+            ],
+            [
+              3165132,
+              3165184
+            ],
+            [
+              3165172,
+              3165192
+            ],
+            [
+              3165192,
+              3165128
+            ],
+            [
+              3165224,
+              3164784
+            ],
+            [
+              3165304,
+              3165352
+            ],
+            [
+              3165320,
+              3165336
+            ],
+            [
+              3165328,
+              3165384
+            ],
+            [
+              3165340,
+              3165384
+            ],
+            [
+              3165360,
+              3165376
+            ],
+            [
+              3165368,
+              3165384
+            ],
+            [
+              3165444,
+              3166080
+            ],
+            [
+              3165460,
+              3166080
+            ],
+            [
+              3165480,
+              3166080
+            ],
+            [
+              3165496,
+              3166080
+            ],
+            [
+              3165504,
+              3165520
+            ],
+            [
+              3165512,
+              3165528
+            ],
+            [
+              3165520,
+              3165624
+            ],
+            [
+              3165528,
+              3165544
+            ],
+            [
+              3165536,
+              3165552
+            ],
+            [
+              3165544,
+              3165624
+            ],
+            [
+              3165580,
+              3165600
+            ],
+            [
+              3165588,
+              3165624
+            ],
+            [
+              3165624,
+              3166080
+            ],
+            [
+              3165644,
+              3165832
+            ],
+            [
+              3165664,
+              3165832
+            ],
+            [
+              3165676,
+              3165824
+            ],
+            [
+              3165700,
+              3165808
+            ],
+            [
+              3165712,
+              3165808
+            ],
+            [
+              3165724,
+              3165808
+            ],
+            [
+              3165740,
+              3165792
+            ],
+            [
+              3165780,
+              3165800
+            ],
+            [
+              3165800,
+              3165736
+            ],
+            [
+              3165824,
+              3166608
+            ],
+            [
+              3165836,
+              3165904
+            ],
+            [
+              3165848,
+              3165904
+            ],
+            [
+              3165860,
+              3165880
+            ],
+            [
+              3165868,
+              3166072
+            ],
+            [
+              3165908,
+              3165856
+            ],
+            [
+              3165920,
+              3166064
+            ],
+            [
+              3165944,
+              3166048
+            ],
+            [
+              3165956,
+              3166048
+            ],
+            [
+              3165968,
+              3166048
+            ],
+            [
+              3165980,
+              3166032
+            ],
+            [
+              3166020,
+              3166040
+            ],
+            [
+              3166040,
+              3165976
+            ],
+            [
+              3166072,
+              3165632
+            ],
+            [
+              3166088,
+              3165400
+            ],
+            [
+              3166100,
+              3166120
+            ],
+            [
+              3166108,
+              3166152
+            ],
+            [
+              3166152,
+              3166608
+            ],
+            [
+              3166172,
+              3166360
+            ],
+            [
+              3166192,
+              3166360
+            ],
+            [
+              3166204,
+              3166352
+            ],
+            [
+              3166228,
+              3166336
+            ],
+            [
+              3166240,
+              3166336
+            ],
+            [
+              3166252,
+              3166336
+            ],
+            [
+              3166268,
+              3166320
+            ],
+            [
+              3166308,
+              3166328
+            ],
+            [
+              3166328,
+              3166264
+            ],
+            [
+              3166352,
+              3166608
+            ],
+            [
+              3166364,
+              3166432
+            ],
+            [
+              3166376,
+              3166432
+            ],
+            [
+              3166388,
+              3166408
+            ],
+            [
+              3166396,
+              3166600
+            ],
+            [
+              3166436,
+              3166384
+            ],
+            [
+              3166448,
+              3166592
+            ],
+            [
+              3166472,
+              3166576
+            ],
+            [
+              3166484,
+              3166576
+            ],
+            [
+              3166496,
+              3166576
+            ],
+            [
+              3166508,
+              3166560
+            ],
+            [
+              3166548,
+              3166568
+            ],
+            [
+              3166568,
+              3166504
+            ],
+            [
+              3166600,
+              3166160
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              3164672,
+              -192
+            ],
+            [
+              3166652,
+              192
+            ]
+          ],
+          "ra_saves": [
+            [
+              3164676,
+              -48
+            ]
+          ],
+          "ra_loads": [
+            [
+              3166608,
+              -48
+            ]
+          ],
+          "unreachable_zero_words": [
+            3164940,
+            3165028,
+            3165180,
+            3165348,
+            3165596,
+            3165788,
+            3165876,
+            3166028,
+            3166116,
+            3166316,
+            3166404,
+            3166556
+          ],
+          "following_zero_alignment": 0
+        },
+        "previously_confirmed_neighbor_entries": [
+          3166656,
+          3167008,
+          3167408,
+          3167664,
+          3168048,
+          3168256,
+          3168400,
+          3169504,
+          3169760,
+          3169808,
+          3170400
+        ]
+      }
     }
   ],
   "particle_registration_proofs": [
@@ -91755,6 +96686,136 @@
         }
       ],
       "no_man_land_scope": "Original vtable descriptor and actual entries only; no inferred class layout or missing method."
+    }
+  ],
+  "grid_data_proofs": [
+    {
+      "version": "SLUS-20680",
+      "name": "offs",
+      "reference_address": 5110320,
+      "size": 96,
+      "dimensions": [
+        4,
+        3,
+        2
+      ],
+      "element_fundamental_type": 8,
+      "declaration_die": 8382734,
+      "type_chain": [
+        {
+          "die": 8367146,
+          "subscript_descriptor": "000a00000000000300000008720004ac7f00"
+        },
+        {
+          "die": 8367108,
+          "subscript_descriptor": "000a00000000000200000008720021aa7f00"
+        },
+        {
+          "die": 8366625,
+          "subscript_descriptor": "000a0000000000010000000855000800"
+        }
+      ],
+      "target_address": 5109296,
+      "sha256": "45612568afb3242892bcbe094390e6736dab150c2af7620a056f1c92663b2226"
+    },
+    {
+      "version": "SLES-51968",
+      "name": "offs",
+      "reference_address": 5109040,
+      "size": 96,
+      "dimensions": [
+        4,
+        3,
+        2
+      ],
+      "element_fundamental_type": 8,
+      "declaration_die": 8383192,
+      "type_chain": [
+        {
+          "die": 8367604,
+          "subscript_descriptor": "000a000000000003000000087200cead7f00"
+        },
+        {
+          "die": 8367566,
+          "subscript_descriptor": "000a000000000002000000087200ebab7f00"
+        },
+        {
+          "die": 8367083,
+          "subscript_descriptor": "000a0000000000010000000855000800"
+        }
+      ],
+      "target_address": 5109296,
+      "sha256": "45612568afb3242892bcbe094390e6736dab150c2af7620a056f1c92663b2226"
+    },
+    {
+      "version": "SLES-51970",
+      "name": "offs",
+      "reference_address": 5107440,
+      "size": 96,
+      "dimensions": [
+        4,
+        3,
+        2
+      ],
+      "element_fundamental_type": 8,
+      "declaration_die": 8384038,
+      "type_chain": [
+        {
+          "die": 8368450,
+          "subscript_descriptor": "000a0000000000030000000872001cb17f00"
+        },
+        {
+          "die": 8368412,
+          "subscript_descriptor": "000a00000000000200000008720039af7f00"
+        },
+        {
+          "die": 8367929,
+          "subscript_descriptor": "000a0000000000010000000855000800"
+        }
+      ],
+      "target_address": 5109296,
+      "sha256": "45612568afb3242892bcbe094390e6736dab150c2af7620a056f1c92663b2226"
+    }
+  ],
+  "skb_data_proofs": [
+    {
+      "version": "SLUS-20680",
+      "name": "slerpPolynomial",
+      "reference_address": 4287648,
+      "size": 96,
+      "elements": 24,
+      "element_fundamental_type": 14,
+      "declaration_die": 3530621,
+      "type_die": 3532972,
+      "subscript_descriptor": "000a0000000000170000000855000e00",
+      "target_address": 4286624,
+      "sha256": "9d2693f17cbdcbe309101a9a44057461aa238c0cbbb8a997f12be1ffbed56314"
+    },
+    {
+      "version": "SLES-51968",
+      "name": "slerpPolynomial",
+      "reference_address": 4286368,
+      "size": 96,
+      "elements": 24,
+      "element_fundamental_type": 14,
+      "declaration_die": 3530753,
+      "type_die": 3533104,
+      "subscript_descriptor": "000a0000000000170000000855000e00",
+      "target_address": 4286624,
+      "sha256": "9d2693f17cbdcbe309101a9a44057461aa238c0cbbb8a997f12be1ffbed56314"
+    },
+    {
+      "version": "SLES-51970",
+      "name": "slerpPolynomial",
+      "reference_address": 4284800,
+      "size": 96,
+      "elements": 24,
+      "element_fundamental_type": 14,
+      "declaration_die": 3531599,
+      "type_die": 3533950,
+      "subscript_descriptor": "000a0000000000170000000855000e00",
+      "target_address": 4286624,
+      "sha256": "9d2693f17cbdcbe309101a9a44057461aa238c0cbbb8a997f12be1ffbed56314"
     }
   ]
 }

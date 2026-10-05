@@ -108,10 +108,9 @@
       "host_entry": "tools/platforms/xbox_support/particle_entry.cpp",
       "symbols": {
         "xParMemInit()": "?xParMemInit@@YAXXZ",
-        "xParAlloc()": "?xParAlloc@@YAPAUxPar@@XZ",
         "xParInit(xPar*)": "?xParInit@@YAXPAUxPar@@@Z"
       },
-      "scope": "Three independently reviewed particle leaves from complete source compilation, with six explicit named data-address operands restored from real PE HIGHLOW records; no TU or executable completion claim",
+      "scope": "Two independently reviewed particle leaves from complete source compilation; the header-inline allocator is compared exactly once from its actual real particle-group source emission. No TU or executable completion claim.",
       "globals": {
         "gParPool": {
           "linkage_name": "?gParPool@@3PAUxPar@@A",
@@ -148,20 +147,6 @@
             "field": "displacement",
             "prefix": "890d"
           }
-        ],
-        "xParAlloc()": [
-          {
-            "symbol": "gParDead",
-            "addend": 0,
-            "field": "displacement",
-            "prefix": "a1"
-          },
-          {
-            "symbol": "gParDead",
-            "addend": 0,
-            "field": "displacement",
-            "prefix": "890d"
-          }
         ]
       }
     },
@@ -185,9 +170,10 @@
         "xParGroupUnregister(xParGroup*)": "?xParGroupUnregister@@YAXPAUxParGroup@@@Z",
         "xParGroupAnimate(xParGroup*,F32)": "?xParGroupAnimate@@YAXPAUxParGroup@@M@Z",
         "xParGroupAddPar(xParGroup*)": "?xParGroupAddPar@@YAPAUxPar@@PAUxParGroup@@@Z",
-        "xParGroupKillPar(xParGroup*,xPar*)": "?xParGroupKillPar@@YAXPAUxParGroup@@PAUxPar@@@Z"
+        "xParGroupKillPar(xParGroup*,xPar*)": "?xParGroupKillPar@@YAXPAUxParGroup@@PAUxPar@@@Z",
+        "xParAlloc()": "?xParAlloc@@YAPAUxPar@@XZ"
       },
-      "scope": "Five independently reviewed functions from full xParGroup.cpp and real xPar.cpp dependency compilation; all partial routines retained. CRT support excluded from source coverage.",
+      "scope": "Six independently reviewed functions from complete particle-group source compilation, including the actual group.obj header-inline allocator body. Original allocator definition/header TU is unknown; this reconstructed reporting group does not assert retail TU ownership. No TU or executable completion claim.",
       "globals": {
         "sParGroupRegTable": {
           "linkage_name": "?sParGroupRegTable@@3PAPAUxParGroup@@A",
@@ -218,12 +204,18 @@
             "function": "?xParGroupRegister@@YAXPAUxParGroup@@@Z",
             "prefix": "a1"
           }
+        },
+        "sParGroupRegTableCount": {
+          "size": 4,
+          "object": "group.obj",
+          "definition_use": {
+            "function": "?xParGroupRegister@@YAXPAUxParGroup@@@Z",
+            "prefix": "a3"
+          }
         }
       },
       "direct_calls": {
-        "xParGroupRegister(xParGroup*)": [
-          "xParGroupRegisterInit()"
-        ],
+        "xParGroupRegister(xParGroup*)": [],
         "xParGroupUnregister(xParGroup*)": [],
         "xParGroupAnimate(xParGroup*,F32)": [
           "__ftol2",
@@ -231,14 +223,11 @@
         ],
         "xParGroupAddPar(xParGroup*)": [
           "xParAlloc()",
-          "xParGroupAddParP(xParGroup*,xPar*)",
           "xParGroupKillPar(xParGroup*,xPar*)",
           "xParInit(xPar*)"
         ],
-        "xParGroupKillPar(xParGroup*,xPar*)": [
-          "xParFree(xPar*)",
-          "xParGroupAddParToDeadList(xParGroup*,xPar*)"
-        ]
+        "xParGroupKillPar(xParGroup*,xPar*)": [],
+        "xParAlloc()": []
       },
       "call_symbols": {
         "xParGroupRegisterInit()": {
@@ -251,7 +240,7 @@
         },
         "xParAlloc()": {
           "linkage_name": "?xParAlloc@@YAPAUxPar@@XZ",
-          "object": "particle.obj"
+          "object": "group.obj"
         },
         "xParInit(xPar*)": {
           "linkage_name": "?xParInit@@YAXPAUxPar@@@Z",
@@ -275,17 +264,44 @@
           {
             "symbol": "sParGroupRegTableInit",
             "field": "displacement",
-            "prefix": "a1"
+            "prefix": "a1",
+            "addend": 0,
+            "count": 1
+          },
+          {
+            "symbol": "sParGroupRegTable",
+            "field": "immediate",
+            "prefix": "bf",
+            "addend": 0,
+            "count": 1
+          },
+          {
+            "symbol": "sParGroupRegTableInit",
+            "field": "displacement",
+            "prefix": "c705",
+            "addend": 0,
+            "count": 1
+          },
+          {
+            "symbol": "sParGroupRegTableCount",
+            "field": "displacement",
+            "prefix": "a3",
+            "addend": 0,
+            "count": 1
           },
           {
             "symbol": "sParGroupRegTable",
             "field": "displacement",
-            "prefix": "8b348d"
+            "prefix": "8b3c8d",
+            "addend": 0,
+            "count": 1
           },
           {
             "symbol": "sParGroupRegTable",
             "field": "displacement",
-            "prefix": "89148d"
+            "prefix": "89148d",
+            "addend": 0,
+            "count": 1
           }
         ],
         "xParGroupUnregister(xParGroup*)": [
@@ -333,17 +349,64 @@
         ],
         "xParGroupAddPar(xParGroup*)": [
           {
-            "symbol": "sParGroupRegTable",
+            "symbol": "gParDead",
             "field": "displacement",
-            "prefix": "8b0485"
+            "prefix": "a1",
+            "addend": 0,
+            "count": 1
+          },
+          {
+            "symbol": "gParDead",
+            "field": "displacement",
+            "prefix": "890d",
+            "addend": 0,
+            "count": 1
           },
           {
             "symbol": "sParGroupRegTable",
             "field": "displacement",
-            "prefix": "8b1495"
+            "prefix": "8b0c95",
+            "addend": 0,
+            "count": 1
+          },
+          {
+            "symbol": "sParGroupRegTable",
+            "field": "displacement",
+            "prefix": "8b1485",
+            "addend": 0,
+            "count": 1
           }
         ],
-        "xParGroupKillPar(xParGroup*,xPar*)": []
+        "xParGroupKillPar(xParGroup*,xPar*)": [
+          {
+            "symbol": "gParDead",
+            "field": "displacement",
+            "prefix": "8b0d",
+            "addend": 0,
+            "count": 1
+          },
+          {
+            "symbol": "gParDead",
+            "field": "displacement",
+            "prefix": "a3",
+            "addend": 0,
+            "count": 1
+          }
+        ],
+        "xParAlloc()": [
+          {
+            "symbol": "gParDead",
+            "addend": 0,
+            "field": "displacement",
+            "prefix": "a1"
+          },
+          {
+            "symbol": "gParDead",
+            "addend": 0,
+            "field": "displacement",
+            "prefix": "890d"
+          }
+        ]
       }
     },
     {
@@ -518,7 +581,6 @@
         ],
         "xParCmdRandomVelocityPar_Update(xParCmd*,xParGroup*,F32)": [
           "?xMat3x3Euler@@YAXPAUxMat3x3@@MMM@Z",
-          "?xMat3x3LMulVec@@YAXPAUxVec3@@PBUxMat3x3@@PBU1@@Z",
           "?xurand@@YAMXZ"
         ],
         "xParCmdApplyWind_Update(xParCmd*,xParGroup*,F32)": [],
@@ -532,9 +594,7 @@
           "?xMat3x3GetEuler@@YAXPBUxMat3x3@@PAUxVec3@@@Z",
           "?xMat3x3LookVec@@YAMPAUxMat3x3@@PBUxVec3@@@Z"
         ],
-        "xParCmdTexAnim_Update(xParCmd*,xParGroup*,F32)": [
-          "?xrand@@YAIXZ"
-        ],
+        "xParCmdTexAnim_Update(xParCmd*,xParGroup*,F32)": [],
         "xParCmdCollideFall_Update(xParCmd*,xParGroup*,F32)": [],
         "xParCmdCollideFallSticky_Update(xParCmd*,xParGroup*,F32)": [],
         "xParCmd_DampenSpeed_Update(xParCmd*,xParGroup*,F32)": [],
@@ -553,10 +613,6 @@
         },
         "?xMat3x3Euler@@YAXPAUxMat3x3@@MMM@Z": {
           "linkage_name": "?xMat3x3Euler@@YAXPAUxMat3x3@@MMM@Z",
-          "object": "xMath3.obj"
-        },
-        "?xMat3x3LMulVec@@YAXPAUxVec3@@PBUxMat3x3@@PBU1@@Z": {
-          "linkage_name": "?xMat3x3LMulVec@@YAXPAUxVec3@@PBUxMat3x3@@PBU1@@Z",
           "object": "xMath3.obj"
         },
         "__ftol2": {
@@ -641,6 +697,20 @@
             "prefix": "d81d",
             "addend": 0,
             "count": 2
+          },
+          {
+            "symbol": "rndseed",
+            "field": "displacement",
+            "prefix": "8b35",
+            "addend": 0,
+            "count": 1
+          },
+          {
+            "symbol": "rndseed",
+            "field": "displacement",
+            "prefix": "8935",
+            "addend": 0,
+            "count": 1
           }
         ],
         "xParCmdCollideFall_Update(xParCmd*,xParGroup*,F32)": [
@@ -944,9 +1014,10 @@
         "xQuatMul(xQuat*,const xQuat*,const xQuat*)": "?xQuatMul@@YAXPAUxQuat@@PBU1@1@Z",
         "xQuatDiff(xQuat*,const xQuat*,const xQuat*)": "?xQuatDiff@@YAXPAUxQuat@@PBU1@1@Z",
         "xBoxUnion(xBox&,const xBox&,const xBox&)": "?xBoxUnion@@YAXAAUxBox@@ABU1@1@Z",
-        "xBoxFromCircle(xBox&,const xVec3&,const xVec3&,F32)": "?xBoxFromCircle@@YAXAAUxBox@@ABUxVec3@@1M@Z"
+        "xBoxFromCircle(xBox&,const xVec3&,const xVec3&,F32)": "?xBoxFromCircle@@YAXAAUxBox@@ABUxVec3@@1M@Z",
+        "xMat4x3Toworld(xVec3*,const xMat4x3*,const xVec3*)": "?xMat4x3Toworld@@YAXPAUxVec3@@PBUxMat4x3@@PBU1@@Z"
       },
-      "scope": "Thirty original-reviewed matrix/quaternion/bounds functions compared from complete real xMath3 plus five complete dependencies; nine further source APIs retained by diagnostic entry but unlocated originals remain unassigned. No whole-TU or executable completion claim. Unknown original calls remain raw.",
+      "scope": "Thirty-one independently reviewed original functions from complete xMath3.cpp compilation, including the partial emitted world-transform helper whose original definition/header TU is unknown. All partial functions and actual ABI differences retained; no TU or executable completion claim.",
       "globals": {
         "g_X3": {
           "linkage_name": "?g_X3@@3UxVec3@@B",
@@ -1033,7 +1104,9 @@
         "xMath3Init()": [],
         "xLine3VecDist2(const xVec3*,const xVec3*,const xVec3*,xIsect*)": [],
         "xPointInBox(const xBox*,const xVec3*)": [],
-        "xBoxInitBoundOBB(xBox*,const xBox*,const xMat4x3*)": [],
+        "xBoxInitBoundOBB(xBox*,const xBox*,const xMat4x3*)": [
+          "xMat4x3Toworld(xVec3*,const xMat4x3*,const xVec3*)"
+        ],
         "xBoxInitBoundCapsule(xBox*,const xCapsule*)": [],
         "xBoxFromCone(xBox&,const xVec3&,const xVec3&,F32,F32,F32)": [
           "xBoxFromCircle(xBox&,const xVec3&,const xVec3&,F32)",
@@ -1059,15 +1132,15 @@
         "xMat3x3RMulRotY(xMat3x3*,const xMat3x3*,F32)": [],
         "xMat3x3Transpose(xMat3x3*,const xMat3x3*)": [],
         "xMat3x3Mul(xMat3x3*,const xMat3x3*,const xMat3x3*)": [],
-        "xMat3x3Tolocal(xVec3*,const xMat3x3*,const xVec3*)": [
-          "?xMat3x3LMulVec@@YAXPAUxVec3@@PBUxMat3x3@@PBU1@@Z"
-        ],
+        "xMat3x3Tolocal(xVec3*,const xMat3x3*,const xVec3*)": [],
         "xMat4x3Rot(xMat4x3*,const xVec3*,F32,const xVec3*)": [
           "xMat3x3RotC(xMat3x3*,F32,F32,F32,F32)",
-          "xMat4x3Mul(xMat4x3*,const xMat4x3*,const xMat4x3*)"
+          "xMat4x3Toworld(xVec3*,const xMat4x3*,const xVec3*)",
+          "xMat3x3Mul(xMat3x3*,const xMat3x3*,const xMat3x3*)"
         ],
         "xMat4x3Mul(xMat4x3*,const xMat4x3*,const xMat4x3*)": [
-          "xMat3x3Mul(xMat3x3*,const xMat3x3*,const xMat3x3*)"
+          "xMat3x3Mul(xMat3x3*,const xMat3x3*,const xMat3x3*)",
+          "xMat4x3Toworld(xVec3*,const xMat4x3*,const xVec3*)"
         ],
         "xQuatFromMat(xQuat*,const xMat3x3*)": [],
         "xQuatFromAxisAngle(xQuat*,const xVec3*,F32)": [],
@@ -1089,7 +1162,8 @@
           "xQuatMul(xQuat*,const xQuat*,const xQuat*)"
         ],
         "xBoxUnion(xBox&,const xBox&,const xBox&)": [],
-        "xBoxFromCircle(xBox&,const xVec3&,const xVec3&,F32)": []
+        "xBoxFromCircle(xBox&,const xVec3&,const xVec3&,F32)": [],
+        "xMat4x3Toworld(xVec3*,const xMat4x3*,const xVec3*)": []
       },
       "call_symbols": {
         "xVec3Normalize(xVec3*,const xVec3*)": {
@@ -1103,10 +1177,6 @@
         "?xAngleClampFast@@YAMM@Z": {
           "linkage_name": "?xAngleClampFast@@YAMM@Z",
           "object": "xMath.obj"
-        },
-        "?xMat3x3LMulVec@@YAXPAUxVec3@@PBUxMat3x3@@PBU1@@Z": {
-          "linkage_name": "?xMat3x3LMulVec@@YAXPAUxVec3@@PBUxMat3x3@@PBU1@@Z",
-          "object": "xMath3.obj"
         },
         "?xQuatLength2@@YAMPBUxQuat@@@Z": {
           "linkage_name": "?xQuatLength2@@YAMPBUxQuat@@@Z",
@@ -1122,6 +1192,10 @@
         },
         "?xQuatAdd@@YAXPAUxQuat@@PBU1@1@Z": {
           "linkage_name": "?xQuatAdd@@YAXPAUxQuat@@PBU1@1@Z",
+          "object": "xMath3.obj"
+        },
+        "xMat4x3Toworld(xVec3*,const xMat4x3*,const xVec3*)": {
+          "linkage_name": "?xMat4x3Toworld@@YAXPAUxVec3@@PBUxMat4x3@@PBU1@@Z",
           "object": "xMath3.obj"
         }
       },
@@ -1390,7 +1464,8 @@
             "symbol": "g_I3",
             "field": "immediate",
             "prefix": "be",
-            "addend": 0
+            "addend": 0,
+            "count": 1
           }
         ],
         "xMat4x3Mul(xMat4x3*,const xMat4x3*,const xMat4x3*)": [],
@@ -1531,7 +1606,8 @@
             "addend": 0,
             "count": 3
           }
-        ]
+        ],
+        "xMat4x3Toworld(xVec3*,const xMat4x3*,const xVec3*)": []
       }
     },
     {
@@ -1607,9 +1683,7 @@
         "iSphereBoundVec(xSphere*,const xSphere*,const xVec3*)": [
           "iSphereIsectVec(const xSphere*,const xVec3*,xIsect*)"
         ],
-        "iCylinderIsectVec(const xCylinder*,const xVec3*,xIsect*)": [
-          "?xVec2Dist@@YAMMMMM@Z"
-        ],
+        "iCylinderIsectVec(const xCylinder*,const xVec3*,xIsect*)": [],
         "iBoxVecDist(const xBox*,const xVec3*,xIsect*)": [],
         "iBoxIsectVec(const xBox*,const xVec3*,xIsect*)": [],
         "ClipPlane(F32,F32,F32*,F32*)": [],
@@ -1629,10 +1703,6 @@
         "xMathSolveQuadratic(F32,F32,F32,F32*,F32*)": {
           "linkage_name": "?xMathSolveQuadratic@@YAIMMMPAM0@Z",
           "object": "xMath.obj"
-        },
-        "?xVec2Dist@@YAMMMMM@Z": {
-          "linkage_name": "?xVec2Dist@@YAMMMMM@Z",
-          "object": "iMath3.obj"
         }
       },
       "address_expressions": {
@@ -1777,7 +1847,9 @@
         "xQuickCullForBound(xQCControl*,xQCData*,const xBound*)": [
           "?xQuickCullForBox@@YAXPAUxQCControl@@PAUxQCData@@PBUxBox@@@Z",
           "xQuickCullForOBB(xQCControl*,xQCData*,const xBox*,const xMat4x3*)",
-          "xQuickCullForSphere(xQCControl*,xQCData*,const xSphere*)"
+          "xQuickCullForSphere(xQCControl*,xQCData*,const xSphere*)",
+          "xQuickCullCellForVec(xQCControl*,xQCData*,const xVec3*)",
+          "xQuickCullCellMerge(xQCData*,const xQCData*,const xQCData*)"
         ],
         "xQuickCullCellForVec(xQCControl*,xQCData*,const xVec3*)": [
           "__ftol2"
@@ -1793,7 +1865,9 @@
         ],
         "xQuickCullForOBB(xQCControl*,xQCData*,const xBox*,const xMat4x3*)": [
           "?xQuickCullForBox@@YAXPAUxQCControl@@PAUxQCData@@PBUxBox@@@Z",
-          "xBoxInitBoundOBB(xBox*,const xBox*,const xMat4x3*)"
+          "xBoxInitBoundOBB(xBox*,const xBox*,const xMat4x3*)",
+          "xQuickCullCellForVec(xQCControl*,xQCData*,const xVec3*)",
+          "xQuickCullCellMerge(xQCData*,const xQCData*,const xQCData*)"
         ]
       },
       "call_symbols": {
@@ -2036,12 +2110,15 @@
           "size": 4,
           "object": "xMath.obj",
           "value_hex": "00004040"
+        },
+        "rndseed": {
+          "linkage_name": "?rndseed@@3IA",
+          "size": 4,
+          "object": "xMath.obj"
         }
       },
       "direct_calls": {
-        "xurand()": [
-          "?xrand@@YAIXZ"
-        ],
+        "xurand()": [],
         "xMathSolveQuadratic(F32,F32,F32,F32*,F32*)": [],
         "xMathSolveCubic(F32,F32,F32,F32,F32*,F32*,F32*)": [
           "xatan2(F32,F32)",
@@ -2086,16 +2163,32 @@
       "address_expressions": {
         "xurand()": [
           {
+            "symbol": "rndseed",
+            "field": "displacement",
+            "prefix": "a1",
+            "addend": 0,
+            "count": 1
+          },
+          {
+            "symbol": "rndseed",
+            "field": "displacement",
+            "prefix": "a3",
+            "addend": 0,
+            "count": 1
+          },
+          {
             "symbol": "float:4f800000",
             "field": "displacement",
             "prefix": "d805",
-            "addend": 0
+            "addend": 0,
+            "count": 1
           },
           {
             "symbol": "float:2f800000",
             "field": "displacement",
             "prefix": "d80d",
-            "addend": 0
+            "addend": 0,
+            "count": 1
           }
         ],
         "xMathSolveQuadratic(F32,F32,F32,F32*,F32*)": [

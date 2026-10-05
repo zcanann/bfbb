@@ -1,4 +1,4 @@
-#if defined(XBOX)
+#if defined(XBOX) || defined(PS2)
 #include <iMath3.h>
 #else
 #include "iMath3.h"
@@ -14,6 +14,15 @@ void iMath3Init()
 {
 }
 
+#ifdef PS2
+void iMath3Exit()
+{
+}
+#endif
+
+#if defined(XBOX)
+inline
+#endif
 void iSphereIsectVec(const xSphere* s, const xVec3* v, xIsect* isx)
 {
     xVec3Sub(&isx->norm, v, &s->center);
@@ -724,6 +733,9 @@ void iBoxBoundVec(xBox* o, const xBox* b, const xVec3* v)
     xVec3Init(&o->upper, MAX(v->x, b->upper.x), MAX(v->y, b->upper.y), MAX(v->z, b->upper.z));
 }
 
+#if defined(XBOX)
+inline
+#endif
 F32 xVec2Dist(F32 x1, F32 y1, F32 x2, F32 y2)
 {
     F32 x = x1 - x2;

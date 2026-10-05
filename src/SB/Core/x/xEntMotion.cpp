@@ -277,8 +277,12 @@ void xEntMotionMove(xEntMotion* motion, xScene* sc, F32 dt, xEntFrame* frame)
 
 static void xEntERMove(xEntMotion* motion, xScene* sc, F32 dt, xEntFrame* frame)
 {
+#if defined(PS2)
+    F32 newt = motion->t - motion->er.p;
+#else
     F32 newt = motion->er.p;
     newt = motion->t - newt;
+#endif
 
     if (newt > 0.0f)
     {

@@ -42,6 +42,7 @@ void xParMemInit()
     }
 }
 
+#if !defined(XBOX)
 xPar* xParAlloc()
 {
     xPar* dead = gParDead;
@@ -59,7 +60,9 @@ xPar* xParAlloc()
     dead->m_prev = NULL;
     return dead;
 }
+#endif
 
+#if !defined(XBOX)
 void xParFree(xPar* par)
 {
     if (par->m_next != NULL)
@@ -79,6 +82,7 @@ void xParFree(xPar* par)
     par->m_prev = NULL;
     gParDead = par;
 }
+#endif
 
 void xParInit(xPar* p)
 {

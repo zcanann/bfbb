@@ -152,3 +152,101 @@ python tools/platform_progress.py report --version XBOX-US \
 Repeat the report for `XBOX-EU`. Local actual-production artifacts and independent
 source/original inverse checks are under `build/xbox172/production` and
 `build/xbox172/validation.json`; no binary artifacts are committed.
+
+
+## Ordinary inline particle helpers
+
+The original Register and KillPar bodies contain the complete existing private
+initialization and particle-list operations, where the previous source emitted
+calls. Xbox now exposes the unchanged AddParP, AddParToDeadList and xParFree
+bodies as ordinary header inlines, and marks the existing file-static
+RegisterInit inline. The real gParDead definition stays in xPar.cpp; its header
+reference is a declaration. xParAlloc stays out of line and retains its existing
+exact source comparison. No artificial caller, compiler flag, storage, or helper
+implementation was introduced.
+
+Both complete production reports retain every compared function and show:
+
+| Function | Original bytes | Before | After |
+| --- | ---: | ---: | ---: |
+| xParGroupRegister | 85 | 52.692307% | 100% |
+| xParGroupKillPar | 137 | 40.166668% | 100% |
+| xParGroupAddPar | 209 | 51.566265% | 72.83132% |
+
+The actual emitted exact bodies belong to group.obj. All 222 bytes reconstruct
+both authenticated originals after only six and two actual PE HIGHLOW fields,
+respectively. Registration's static flag and count are independently selected
+from its unique source A1 and A3 uses; the count is not represented as an alias
+or one-past pointer to the flag. No direct calls remain in either exact body.
+
+This exposed one missing annotation in the existing original registration
+metadata: the ten-byte C7 /0 instruction at function offset 24 stores 1 to the
+already reviewed sParGroupRegTableInit at 0x373f64. Its displacement at offset 26
+is now restored using that anchor. The stored value and all other instruction
+bits are preserved. Both authenticated originals have the same instruction;
+the source has an actual HIGHLOW at the corresponding operand. The strict
+exporter rejected the incomplete old annotation before accepting this corrected
+comparison. No backend or score-rule change was needed. All other original
+records and function bounds remain unchanged; anonymous metadata changes only
+the digest of the reviewed registry.
+
+Matched totals rise from 13,070 / 67 to **13,292 bytes / 69 functions** per
+release. Every other report unit/function, all coverage denominators, and all
+completion fields remain unchanged. The complete group unit remains partial;
+no executable relink is claimed. Sixteen ordered allocated sections across
+GameCube xPar, xParGroup and xParCmd are byte-identical to their prior builds.
+PS2 and GameCube retain their previous non-Xbox definitions.
+
+The normal report commands above reproduce the result. Ignored local evidence
+is under build/xbox238: final-verification.json, original-store-proof.json,
+gc/proof.json, and both production reports with actual PE/MAP/source extents.
+No original or compiler binary is committed.
+
+
+## Allocator visibility and reconstructed reporting ownership
+
+A separate unchanged-body inline control recovers the remaining AddPar body.
+The original first allocation is embedded directly in AddPar, while its
+reclamation path calls the independently reviewed 37-byte allocator at
+0x1499b0. An ordinary Xbox header-inline xParAlloc reproduces that same choice:
+the actual complete xParGroup.cpp build naturally emits the 37-byte helper in
+group.obj and calls it once from AddPar. No host-entry call, forced emission,
+additional dependency, compiler flag, or implementation stub was added.
+
+The standalone xPar.cpp link no longer emits that inline helper. Its original
+reviewed source=xPar.cpp assignment came from the shared reference definition,
+not Xbox debug metadata. The original linkage name and original definition/header
+TU remain unknown. Following the existing xatan2 reporting precedent, only the
+allocator's reconstructed reporting group changes to xParGroup.cpp. Explicit
+metadata records the reference definition in xPar.cpp, the reconstructed inline
+body in xPar.h, and actual emitted group.obj owner. This is not a claim about
+original TU ownership.
+
+The profile moves the same canonical xParAlloc() comparison and its existing
+two data operands exactly once from the xPar.cpp report to the
+xParGroup.cpp source build. The strict main-source-object check is unchanged:
+all six compared bodies must actually belong to group.obj. Both original
+registries preserve every one of their 114 reviewed identities, addresses,
+sizes, original-byte hashes, call witnesses and operand proofs. The only
+registry change is that documented reporting source/provenance and its derived
+symbol entry/digest. No backend change was needed.
+
+Both complete reports preserve the old exact allocator and raise AddPar from
+72.83132% to **100% / 209 bytes**. Independently reconstructing both authenticated
+originals from the actual linked source proves all 37 allocator bytes after two
+real PE HIGHLOW operands, and all 209 AddPar bytes after four HIGHLOW operands
+and its three named direct calls. The original and source both keep the single
+reclamation-path allocator call. The first pop/clear sequence is inline in both.
+
+Totals become **13,501 matched bytes / 70 functions** per Xbox release. All
+2,556 known functions remain present exactly once and every other function score
+is unchanged. The original 1,798,760-byte code denominator and completion fields
+are unchanged. Regenerated COFF offsets shift only inside the two affected
+reporting units; original executable addresses do not move. All six reviewed
+functions / 880 bytes in the reconstructed group unit match, but this does not
+establish original TU completeness or a full executable relink. Sixteen ordered
+GameCube allocated sections remain byte-identical.
+
+Ignored evidence is under build/xbox240: header-owner-proof.json,
+final-verification.json, gc/proof.json, and both production PE/MAP/extents/reports.
+The earlier build/xbox238 evidence is preserved separately.

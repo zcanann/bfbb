@@ -30,3 +30,59 @@ retail executable hash and complete progress report remain unchanged.
 
 Private evidence: build/sound172/compile.py, compare.py, type_proof.py,
 type-proof.json and pad-original-types.json.
+
+## Original stream-voice limit
+
+The PS2 stream lock, ready and unlock loops use four voices. All three
+original debug executables calculate their end pointer with `+0x190`; original
+DWARF gives each voice a 100-byte extent. The previous shared six-voice bound
+compiled as `+0x258`. A platform constant now selects four for PS2 and preserves
+six for GameCube, changing exactly these three instruction immediates.
+
+Actual complete-source comparisons in USA, Europe and Germany each improve
+from 15 / 1,388 to 17 / 1,876 code-matched functions / bytes: StreamLock (416)
+and StreamUnlock (72) become standard objdiff matches. StreamReady improves
+81.77273% to 81.818184% and remains unmatched. All other function records are
+unchanged, and all 37 functions / 6,764 bytes remain in the comparison. France's
+existing three-function / 132-byte subset is unchanged (one / 68 matched).
+All four independently compiled PS2 source objects are byte-identical.
+
+Raw relocation reconstruction reproduces both StreamLock (416 bytes) and
+StreamUnlock (72 bytes) in all three debug originals. The original StreamLock
+calls at offsets 264 and 348 directly target `iSndStop__FUi`, owned by the PS2
+platform sound unit, rather than the shared `xSndStop` wrapper. PS2 now selects
+those original callees; GameCube retains its wrapper calls. This changes exactly
+two source call relocation identities, with every allocated section byte and
+all regional standard function records unchanged. The comparison policy is
+unchanged, and no whole sound-unit or executable reconstruction is claimed.
+
+An actual GameCube compile preserves all seven ordered allocated sections.
+Private evidence is in build/sound243: original-stream-limits.json,
+source-delta-proof.json, all-region-proof.json, raw/raw-proof.json and
+GC proof gc/proof.json. No additional layout, flags, profile or backend change
+is involved.
+
+The callee follow-up is independently recorded in build/sound245/proof.json,
+raw/raw-proof.json and gc/proof.json; authenticated original callee identities
+are in build/sound243/lock-call-identities.json. All four actual whole-source
+objects remain byte-identical across PS2 versions, and the GC control preserves
+its seven allocated sections.
+
+## Stop-fade loop exit
+
+When deleting the last matching fader, the original PS2 StopFade branches to the
+loop's existing return block. Replacing the inner return with break preserves
+behavior because the loop is immediately followed by return. Actual source
+compilation changes only the branch displacement at function offset 176, from
+an epilogue jump to that existing exit; all relocation records remain identical.
+
+Each debug-region comparison gains StopFade's 396 bytes, reaching 18 / 2,272
+matched functions / bytes for the unchanged complete 37-function / 6,764-byte
+sound inventory. All other function records and France's existing subset remain
+unchanged. All four compiled whole-source objects are byte-identical, and actual
+GC compilation preserves all seven allocated sections.
+
+This is a standard code match. Raw reconstruction still distinguishes the two
+stop callees and the source xSndGetVol call from the original platform targets;
+no raw396 claim is made. Private evidence: build/near246/proof.json,
+raw/raw-proof.json and gc/proof.json. No profile, header or backend changed.
