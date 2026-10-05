@@ -75,10 +75,10 @@ checked, and the standard objdiff parser accepts the result.
 
 | Version | Full code-region bytes | Objdiff code-matched bytes |
 | --- | ---: | ---: |
-| SLUS-20680 | 2,978,560 | 218,320 |
-| SLES-51968 | 2,979,712 | 218,012 |
-| SLES-51970 | 2,976,512 | 217,908 |
-| SLES-53623 | 2,979,968 | 36,852 |
+| SLUS-20680 | 2,978,560 | 222,280 |
+| SLES-51968 | 2,979,712 | 221,972 |
+| SLES-51970 | 2,976,512 | 221,868 |
+| SLES-53623 | 2,979,968 | 40,504 |
 | XBOX-US | 1,798,760 | 13,694 |
 | XBOX-EU | 1,798,760 | 13,694 |
 
@@ -122,10 +122,10 @@ The narrower function-only baselines currently contain:
 
 | PS2 baseline | Functions | Measured function bytes | Source matches |
 | --- | ---: | ---: | ---: |
-| USA | 5,391 | 2,107,460 | 1,476 functions / 218,320 bytes |
-| Europe/Australia | 5,392 | 2,108,700 | 1,475 functions / 218,012 bytes |
-| Germany | 5,394 | 2,105,512 | 1,474 functions / 217,908 bytes |
-| France (reviewed and corroborated bounds) | 609 | 219,144 | 217 functions / 36,852 bytes |
+| USA | 5,391 | 2,107,460 | 1,485 functions / 222,280 bytes |
+| Europe/Australia | 5,392 | 2,108,700 | 1,484 functions / 221,972 bytes |
+| Germany | 5,394 | 2,105,512 | 1,483 functions / 221,868 bytes |
+| France (reviewed and corroborated bounds) | 618 | 223,328 | 225 functions / 40,504 bytes |
 
 The `address-anchors.json` registries also recover over 2,500 named data addresses
 and 628 function declarations in each debug-bearing version. Addresses do not
@@ -152,8 +152,8 @@ load-range validation. Targets retain the exact original instructions. The `xBas
 other target objects are not relocation-restored link inputs. Code outside those function ranges, remaining data,
 and padding remain unclassified; the whole mixed load segment is not counted as
 code. France is stripped; independently reviewed and machine-corroborated
-extents establish its 609-function, 219,144-byte function-only baseline. Its
-36,852 matched code bytes describe that subset. The published code denominator
+extents establish its 618-function, 223,328-byte function-only baseline. Its
+40,504 matched code bytes describe that subset. The published code denominator
 is the full recovered CPU text region, not this function-only subset.
 
 Both Xbox releases have identical payloads in all 13 sections; their 532 differing
@@ -591,3 +591,5 @@ The [extend/retract expression](PS2_MATH_ALIGNMENT.md) adds 680 exact reconstruc
 [Camera-tweak](PS2_CAMERA_TWEAK.md) now matches all 12 code functions / 1,684 bytes in the three debug PS2 versions, preserving the public Reset function. Four unresolved math-call addresses prevent a raw-link claim. The [complete French FFX comparison](PS2_FRANCE_FFX.md) adds six exact functions / 172 bytes; all eleven matched FFX functions independently reproduce 712 original bytes after relocation.
 
 The [move-point unsigned zero tests](PS2_MOVEPOINT.md) add 620 exact bytes / two functions per debug PS2 version, with independent relocated-byte equality. Eight of the nine original move-point functions now match.
+
+The complete [PS2 platform geometry source comparison](PS2_IMATH3.md) adds eight exact functions / 3,652 bytes in every version; independent relocation reconstruction reproduces all eight original bodies. Its remaining seven functions retain their partial scores. [Jaw evaluation](PS2_MATH.md) adds 308 matched bytes in the three debug versions, bringing that two-function unit to 100% code match while retaining its unresolved runtime call addresses.
