@@ -40788,6 +40788,2098 @@
           "symbol": "g_flg_wonder"
         }
       ]
+    },
+    {
+      "source": "src/SB/Core/x/xFX.cpp",
+      "target_unit": "SB/Core/x/xFX.cpp",
+      "object": "source/xFX.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xFXSceneFinish__Fv": "xFXSceneFinish__Fv",
+        "xFXScenePrepare__Fv": "xFXScenePrepare__Fv",
+        "xFXSceneReset__Fv": "xFXSceneReset__Fv",
+        "xFXSceneSetup__Fv": "xFXSceneSetup__Fv",
+        "xFXSceneInit__Fv": "xFXSceneInit__Fv",
+        "xFXShutdown__Fv": "xFXShutdown__Fv",
+        "xFXStartup__Fv": "xFXStartup__Fv",
+        "xFXAuraRender__Fv": "xFXAuraRender__Fv",
+        "RenderRotatedBillboard__FP5xVec3P13_xFXAuraAngleUiff10iColor_tagUi": "RenderRotatedBillboard__FP5xVec3P13_xFXAuraAngleUiff10iColor_tagUi",
+        "xFXAuraUpdate__Ff": "xFXAuraUpdate__Ff",
+        "xFXAuraAdd__FPvP5xVec3P10iColor_tagf": "xFXAuraAdd__FPvP5xVec3P10iColor_tagf",
+        "xFXRibbonRender__Fv": "xFXRibbonRender__Fv",
+        "xFXRibbonSceneEnter__Fv": "xFXRibbonSceneEnter__Fv",
+        "render_compare__9xFXRibbonCFRC9xFXRibbon": "render_compare__9xFXRibbonCFRC9xFXRibbon",
+        "render_strip__9xFXRibbonFP18RxObjSpace3DVertexQ236tier_queue<Q29xFXRibbon10joint_data>8iteratorUi": "render_strip__9xFXRibbonFP18RxObjSpace3DVertexQ236tier_queue<Q29xFXRibbon10joint_data>8iteratorUi",
+        "eval_joint__9xFXRibbonFRCQ29xFXRibbon10joint_dataR10iColor_tagRf": "eval_joint__9xFXRibbonFRCQ29xFXRibbon10joint_dataR10iColor_tagRf",
+        "refresh_joint__9xFXRibbonFRQ29xFXRibbon10joint_dataRCQ236tier_queue<Q29xFXRibbon10joint_data>8iterator": "refresh_joint__9xFXRibbonFRQ29xFXRibbon10joint_dataRCQ236tier_queue<Q29xFXRibbon10joint_data>8iterator",
+        "get_normal__9xFXRibbonFR5xVec3RC5xVec3f": "get_normal__9xFXRibbonFR5xVec3RC5xVec3f",
+        "set_texture__9xFXRibbonFPCc": "set_texture__9xFXRibbonFPCc",
+        "set_texture__9xFXRibbonFUi": "set_texture__9xFXRibbonFUi",
+        "render__9xFXRibbonFv": "render__9xFXRibbonFv",
+        "update__9xFXRibbonFf": "update__9xFXRibbonFf",
+        "insert__9xFXRibbonFRC5xVec3fffUi": "insert__9xFXRibbonFRC5xVec3fffUi",
+        "insert__9xFXRibbonFRC5xVec3RC5xVec3ffUi": "insert__9xFXRibbonFRC5xVec3RC5xVec3ffUi",
+        "set_curve__9xFXRibbonFPCQ29xFXRibbon10curve_nodeUi": "set_curve__9xFXRibbonFPCQ29xFXRibbon10curve_nodeUi",
+        "refresh_config__9xFXRibbonFv": "refresh_config__9xFXRibbonFv",
+        "set_default_config__9xFXRibbonFv": "set_default_config__9xFXRibbonFv",
+        "init__9xFXRibbonFPCcPCc": "init__9xFXRibbonFPCcPCc",
+        "compare_ribbons__17@unnamed@xFX_cpp@FPCvPCv": "compare_ribbons__17@unnamed@xFX_cpp@FPCvPCv",
+        "xFXShineStart__FPC5xVec3ffffUiPC10iColor_tagPC10iColor_tagfi": "xFXShineStart__FPC5xVec3ffffUiPC10iColor_tagPC10iColor_tagfi",
+        "xFXShineRender__Fv": "xFXShineRender__Fv",
+        "xFXShineUpdate__Ff": "xFXShineUpdate__Ff",
+        "xFXShineInit__Fv": "xFXShineInit__Fv",
+        "xFXStreakUpdate__FUiPC5xVec3PC5xVec3": "xFXStreakUpdate__FUiPC5xVec3PC5xVec3",
+        "xFXStreakStop__FUi": "xFXStreakStop__FUi",
+        "xFXStreakStart__FfffUiPC10iColor_tagPC10iColor_tagi": "xFXStreakStart__FfffUiPC10iColor_tagPC10iColor_tagi",
+        "xFXStreakRender__Fv": "xFXStreakRender__Fv",
+        "xFXStreakUpdate__Ff": "xFXStreakUpdate__Ff",
+        "xFXStreakInit__Fv": "xFXStreakInit__Fv",
+        "xFXFireworksUpdate__Ff": "xFXFireworksUpdate__Ff",
+        "xFXFireworksLaunch__FfPC5xVec3f": "xFXFireworksLaunch__FfPC5xVec3f",
+        "xFXFireworksInit__FPCcPCcPCcPCcPCc": "xFXFireworksInit__FPCcPCcPCcPCcPCc",
+        "xFXRenderProximityFade__FRC14xModelInstanceff": "xFXRenderProximityFade__FRC14xModelInstanceff",
+        "set_vert__17@unnamed@xFX_cpp@FR18RxObjSpace3DVertexRCQ217@unnamed@xFX_cpp@9vert_data": "set_vert__17@unnamed@xFX_cpp@FR18RxObjSpace3DVertexRCQ217@unnamed@xFX_cpp@9vert_data",
+        "lerp__17@unnamed@xFX_cpp@FRQ217@unnamed@xFX_cpp@9vert_datafRCQ217@unnamed@xFX_cpp@9vert_dataRCQ217@unnamed@xFX_cpp@9vert_data": "lerp__17@unnamed@xFX_cpp@FRQ217@unnamed@xFX_cpp@9vert_datafRCQ217@unnamed@xFX_cpp@9vert_dataRCQ217@unnamed@xFX_cpp@9vert_data",
+        "depth_sort__17@unnamed@xFX_cpp@FPUsPCQ217@unnamed@xFX_cpp@8tri_dataUi": "depth_sort__17@unnamed@xFX_cpp@FPUsPCQ217@unnamed@xFX_cpp@8tri_dataUi",
+        "xFXanimUVAtomicSetup__FP8RpAtomic": "xFXanimUVAtomicSetup__FP8RpAtomic",
+        "xFXanimUV2PSetTexture__FP9RwTexture": "xFXanimUV2PSetTexture__FP9RwTexture",
+        "xFXanimUV2PSetAngle__Ff": "xFXanimUV2PSetAngle__Ff",
+        "xFXanimUV2PSetScale__FPC5xVec3": "xFXanimUV2PSetScale__FPC5xVec3",
+        "xFXanimUV2PSetTranslation__FPC5xVec3": "xFXanimUV2PSetTranslation__FPC5xVec3",
+        "xFXanimUVSetAngle__Ff": "xFXanimUVSetAngle__Ff",
+        "xFXanimUVSetScale__FPC5xVec3": "xFXanimUVSetScale__FPC5xVec3",
+        "xFXanimUVSetTranslation__FPC5xVec3": "xFXanimUVSetTranslation__FPC5xVec3",
+        "xFXAtomicEnvMapSetup__FP8RpAtomicUif": "xFXAtomicEnvMapSetup__FP8RpAtomicUif",
+        "xFXShinyRender__FP8RpAtomic": "xFXShinyRender__FP8RpAtomic",
+        "xFXBubbleRender__FP8RpAtomic": "xFXBubbleRender__FP8RpAtomic",
+        "MaterialSetEnvMap2__FP10RpMaterialPv": "MaterialSetEnvMap2__FP10RpMaterialPv",
+        "MaterialSetEnvMap__FP10RpMaterialPv": "MaterialSetEnvMap__FP10RpMaterialPv",
+        "MaterialSetShininess__FP10RpMaterialPv": "MaterialSetShininess__FP10RpMaterialPv",
+        "xFXPreAllocMatFX__FP7RpClump": "xFXPreAllocMatFX__FP7RpClump",
+        "PreAllocMatFX_cb__FP8RpAtomicPv": "PreAllocMatFX_cb__FP8RpAtomicPv",
+        "AtomicDisableMatFX__FP8RpAtomic": "AtomicDisableMatFX__FP8RpAtomic",
+        "MaterialDisableMatFX__FP10RpMaterialPv": "MaterialDisableMatFX__FP10RpMaterialPv",
+        "xFXUpdate__Ff": "xFXUpdate__Ff",
+        "xFX_SceneExit__FP7RpWorld": "xFX_SceneExit__FP7RpWorld",
+        "xFX_SceneEnter__FP7RpWorld": "xFX_SceneEnter__FP7RpWorld",
+        "xFXRingRender__Fv": "xFXRingRender__Fv",
+        "xFXRingUpdate__Ff": "xFXRingUpdate__Ff",
+        "xFXRingCreate__FPC5xVec3PC7xFXRing": "xFXRingCreate__FPC5xVec3PC7xFXRing",
+        "DrawRing__FP7xFXRing": "DrawRing__FP7xFXRing",
+        "xFXInit__Fv": "xFXInit__Fv"
+      },
+      "calls": [
+        {
+          "function": "xFXSceneFinish__Fv",
+          "offset": 4,
+          "target_source": "SB/Core/p2/iFXgoo.cpp",
+          "target_function": "iFXGooSceneExit__Fv",
+          "symbol": "iFXGooSceneExit__Fv",
+          "opcode": 2
+        },
+        {
+          "function": "xFXSceneSetup__Fv",
+          "offset": 16,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "xFXSceneSetup__Fv",
+          "offset": 36,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "xFXSceneSetup__Fv",
+          "offset": 44,
+          "target_source": "SB/Core/p2/iFXgoo.cpp",
+          "target_function": "iFXGooSceneSetup__Fv",
+          "symbol": "iFXGooSceneSetup__Fv"
+        },
+        {
+          "function": "xFXAuraRender__Fv",
+          "offset": 184,
+          "target_source": "SB/Core/x/xFX.cpp",
+          "target_function": "RenderRotatedBillboard__FP5xVec3P13_xFXAuraAngleUiff10iColor_tagUi",
+          "symbol": "RenderRotatedBillboard__FP5xVec3P13_xFXAuraAngleUiff10iColor_tagUi"
+        },
+        {
+          "function": "xFXAuraRender__Fv",
+          "offset": 224,
+          "target_source": "SB/Core/x/xFX.cpp",
+          "target_function": "RenderRotatedBillboard__FP5xVec3P13_xFXAuraAngleUiff10iColor_tagUi",
+          "symbol": "RenderRotatedBillboard__FP5xVec3P13_xFXAuraAngleUiff10iColor_tagUi"
+        },
+        {
+          "function": "xFXAuraRender__Fv",
+          "offset": 348,
+          "target_source": "SB/Game/zEntPickup.cpp",
+          "target_function": "zEntPickup_RenderOne__FP4xEnt",
+          "symbol": "zEntPickup_RenderOne__FP4xEnt"
+        },
+        {
+          "function": "RenderRotatedBillboard__FP5xVec3P13_xFXAuraAngleUiff10iColor_tagUi",
+          "offset": 368,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "xFXRibbonRender__Fv",
+          "offset": 188,
+          "target_source": "SB/Core/x/xFX.cpp",
+          "target_function": "render_compare__9xFXRibbonCFRC9xFXRibbon",
+          "symbol": "render_compare__9xFXRibbonCFRC9xFXRibbon"
+        },
+        {
+          "function": "xFXRibbonRender__Fv",
+          "offset": 248,
+          "target_source": "SB/Core/x/xFX.cpp",
+          "target_function": "render__9xFXRibbonFv",
+          "symbol": "render__9xFXRibbonFv"
+        },
+        {
+          "function": "xFXRibbonSceneEnter__Fv",
+          "offset": 28,
+          "target_source": "SB/Core/x/containers.h",
+          "target_function": "log2_ceil__20tier_queue_allocatorCFUi",
+          "symbol": "log2_ceil__20tier_queue_allocatorCFUi"
+        },
+        {
+          "function": "xFXRibbonSceneEnter__Fv",
+          "offset": 76,
+          "target_source": "SB/Core/x/containers.h",
+          "target_function": "log2_ceil__20tier_queue_allocatorCFUi",
+          "symbol": "log2_ceil__20tier_queue_allocatorCFUi"
+        },
+        {
+          "function": "xFXRibbonSceneEnter__Fv",
+          "offset": 132,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "xFXRibbonSceneEnter__Fv",
+          "offset": 380,
+          "target_source": "SB/Core/x/containers.h",
+          "target_function": "clear__20tier_queue_allocatorFv",
+          "symbol": "clear__20tier_queue_allocatorFv"
+        },
+        {
+          "function": "render_strip__9xFXRibbonFP18RxObjSpace3DVertexQ236tier_queue<Q29xFXRibbon10joint_data>8iteratorUi",
+          "offset": 280,
+          "target_source": "SB/Core/x/xFX.cpp",
+          "target_function": "refresh_joint__9xFXRibbonFRQ29xFXRibbon10joint_dataRCQ236tier_queue<Q29xFXRibbon10joint_data>8iterator",
+          "symbol": "refresh_joint__9xFXRibbonFRQ29xFXRibbon10joint_dataRCQ236tier_queue<Q29xFXRibbon10joint_data>8iterator"
+        },
+        {
+          "function": "render_strip__9xFXRibbonFP18RxObjSpace3DVertexQ236tier_queue<Q29xFXRibbon10joint_data>8iteratorUi",
+          "offset": 332,
+          "target_source": "SB/Core/x/xFX.cpp",
+          "target_function": "eval_joint__9xFXRibbonFRCQ29xFXRibbon10joint_dataR10iColor_tagRf",
+          "symbol": "eval_joint__9xFXRibbonFRCQ29xFXRibbon10joint_dataR10iColor_tagRf"
+        },
+        {
+          "function": "refresh_joint__9xFXRibbonFRQ29xFXRibbon10joint_dataRCQ236tier_queue<Q29xFXRibbon10joint_data>8iterator",
+          "offset": 836,
+          "target_source": "SB/Core/x/xFX.cpp",
+          "target_function": "get_normal__9xFXRibbonFR5xVec3RC5xVec3f",
+          "symbol": "get_normal__9xFXRibbonFR5xVec3RC5xVec3f"
+        },
+        {
+          "function": "set_texture__9xFXRibbonFPCc",
+          "offset": 16,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "set_texture__9xFXRibbonFPCc",
+          "offset": 44,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "set_texture__9xFXRibbonFUi",
+          "offset": 32,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "render__9xFXRibbonFv",
+          "offset": 340,
+          "target_source": "SB/Core/x/xFX.cpp",
+          "target_function": "render_strip__9xFXRibbonFP18RxObjSpace3DVertexQ236tier_queue<Q29xFXRibbon10joint_data>8iteratorUi",
+          "symbol": "render_strip__9xFXRibbonFP18RxObjSpace3DVertexQ236tier_queue<Q29xFXRibbon10joint_data>8iteratorUi"
+        },
+        {
+          "function": "update__9xFXRibbonFf",
+          "offset": 760,
+          "target_source": "SB/Core/x/containers.h",
+          "target_function": "clear__36tier_queue<Q29xFXRibbon10joint_data>Fv",
+          "symbol": "clear__36tier_queue<Q29xFXRibbon10joint_data>Fv"
+        },
+        {
+          "function": "update__9xFXRibbonFf",
+          "offset": 792,
+          "target_source": "SB/Core/x/containers.h",
+          "target_function": "wrap_index__36tier_queue<Q29xFXRibbon10joint_data>CFUi",
+          "symbol": "wrap_index__36tier_queue<Q29xFXRibbon10joint_data>CFUi"
+        },
+        {
+          "function": "update__9xFXRibbonFf",
+          "offset": 808,
+          "target_source": "SB/Core/x/containers.h",
+          "target_function": "mod_block_size__20tier_queue_allocatorCFUi",
+          "symbol": "mod_block_size__20tier_queue_allocatorCFUi"
+        },
+        {
+          "function": "update__9xFXRibbonFf",
+          "offset": 824,
+          "target_source": "SB/Core/x/containers.h",
+          "target_function": "get_block__36tier_queue<Q29xFXRibbon10joint_data>CFUi",
+          "symbol": "get_block__36tier_queue<Q29xFXRibbon10joint_data>CFUi"
+        },
+        {
+          "function": "update__9xFXRibbonFf",
+          "offset": 840,
+          "target_source": "SB/Core/x/containers.h",
+          "target_function": "free_block__20tier_queue_allocatorFUc",
+          "symbol": "free_block__20tier_queue_allocatorFUc"
+        },
+        {
+          "function": "insert__9xFXRibbonFRC5xVec3fffUi",
+          "offset": 88,
+          "target_source": "SB/Core/x/containers.h",
+          "target_function": "clear__36tier_queue<Q29xFXRibbon10joint_data>Fv",
+          "symbol": "clear__36tier_queue<Q29xFXRibbon10joint_data>Fv"
+        },
+        {
+          "function": "insert__9xFXRibbonFRC5xVec3fffUi",
+          "offset": 124,
+          "target_source": "SB/Core/x/containers.h",
+          "target_function": "wrap_index__36tier_queue<Q29xFXRibbon10joint_data>CFUi",
+          "symbol": "wrap_index__36tier_queue<Q29xFXRibbon10joint_data>CFUi"
+        },
+        {
+          "function": "insert__9xFXRibbonFRC5xVec3fffUi",
+          "offset": 140,
+          "target_source": "SB/Core/x/containers.h",
+          "target_function": "mod_block_size__20tier_queue_allocatorCFUi",
+          "symbol": "mod_block_size__20tier_queue_allocatorCFUi"
+        },
+        {
+          "function": "insert__9xFXRibbonFRC5xVec3fffUi",
+          "offset": 156,
+          "target_source": "SB/Core/x/containers.h",
+          "target_function": "get_block__36tier_queue<Q29xFXRibbon10joint_data>CFUi",
+          "symbol": "get_block__36tier_queue<Q29xFXRibbon10joint_data>CFUi"
+        },
+        {
+          "function": "insert__9xFXRibbonFRC5xVec3fffUi",
+          "offset": 172,
+          "target_source": "SB/Core/x/containers.h",
+          "target_function": "free_block__20tier_queue_allocatorFUc",
+          "symbol": "free_block__20tier_queue_allocatorFUc"
+        },
+        {
+          "function": "insert__9xFXRibbonFRC5xVec3fffUi",
+          "offset": 504,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "insert__9xFXRibbonFRC5xVec3RC5xVec3ffUi",
+          "offset": 88,
+          "target_source": "SB/Core/x/containers.h",
+          "target_function": "clear__36tier_queue<Q29xFXRibbon10joint_data>Fv",
+          "symbol": "clear__36tier_queue<Q29xFXRibbon10joint_data>Fv"
+        },
+        {
+          "function": "insert__9xFXRibbonFRC5xVec3RC5xVec3ffUi",
+          "offset": 124,
+          "target_source": "SB/Core/x/containers.h",
+          "target_function": "wrap_index__36tier_queue<Q29xFXRibbon10joint_data>CFUi",
+          "symbol": "wrap_index__36tier_queue<Q29xFXRibbon10joint_data>CFUi"
+        },
+        {
+          "function": "insert__9xFXRibbonFRC5xVec3RC5xVec3ffUi",
+          "offset": 140,
+          "target_source": "SB/Core/x/containers.h",
+          "target_function": "mod_block_size__20tier_queue_allocatorCFUi",
+          "symbol": "mod_block_size__20tier_queue_allocatorCFUi"
+        },
+        {
+          "function": "insert__9xFXRibbonFRC5xVec3RC5xVec3ffUi",
+          "offset": 156,
+          "target_source": "SB/Core/x/containers.h",
+          "target_function": "get_block__36tier_queue<Q29xFXRibbon10joint_data>CFUi",
+          "symbol": "get_block__36tier_queue<Q29xFXRibbon10joint_data>CFUi"
+        },
+        {
+          "function": "insert__9xFXRibbonFRC5xVec3RC5xVec3ffUi",
+          "offset": 172,
+          "target_source": "SB/Core/x/containers.h",
+          "target_function": "free_block__20tier_queue_allocatorFUc",
+          "symbol": "free_block__20tier_queue_allocatorFUc"
+        },
+        {
+          "function": "insert__9xFXRibbonFRC5xVec3RC5xVec3ffUi",
+          "offset": 504,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc__FUiUii",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "compare_ribbons__17@unnamed@xFX_cpp@FPCvPCv",
+          "offset": 60,
+          "target_source": "SB/Core/x/xFX.cpp",
+          "target_function": "render_compare__9xFXRibbonCFRC9xFXRibbon",
+          "symbol": "render_compare__9xFXRibbonCFRC9xFXRibbon"
+        },
+        {
+          "function": "xFXShineRender__Fv",
+          "offset": 372,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Transpose__FP7xMat3x3PC7xMat3x3",
+          "symbol": "xMat3x3Transpose__FP7xMat3x3PC7xMat3x3"
+        },
+        {
+          "function": "xFXShineRender__Fv",
+          "offset": 388,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3LMulVec__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xFXShineUpdate__Ff",
+          "offset": 296,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xFXShineUpdate__Ff",
+          "offset": 340,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xFXShineUpdate__Ff",
+          "offset": 384,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xFXStreakStart__FfffUiPC10iColor_tagPC10iColor_tagi",
+          "offset": 316,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xFXStreakStart__FfffUiPC10iColor_tagPC10iColor_tagi",
+          "offset": 328,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "xFXFireworksUpdate__Ff",
+          "offset": 184,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xFXFireworksUpdate__Ff",
+          "offset": 224,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xFXFireworksUpdate__Ff",
+          "offset": 332,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf",
+          "symbol": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf"
+        },
+        {
+          "function": "xFXFireworksUpdate__Ff",
+          "offset": 492,
+          "target_source": "SB/Core/x/xParEmitter.cpp",
+          "target_function": "xParEmitterEmitCustom__FP11xParEmitterfP25xParEmitterCustomSettings",
+          "symbol": "xParEmitterEmitCustom__FP11xParEmitterfP25xParEmitterCustomSettings"
+        },
+        {
+          "function": "xFXFireworksUpdate__Ff",
+          "offset": 532,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xFXFireworksUpdate__Ff",
+          "offset": 620,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xFXFireworksUpdate__Ff",
+          "offset": 692,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xFXFireworksUpdate__Ff",
+          "offset": 768,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xFXFireworksUpdate__Ff",
+          "offset": 960,
+          "target_source": "SB/Core/x/xParEmitter.cpp",
+          "target_function": "xParEmitterEmitCustom__FP11xParEmitterfP25xParEmitterCustomSettings",
+          "symbol": "xParEmitterEmitCustom__FP11xParEmitterfP25xParEmitterCustomSettings"
+        },
+        {
+          "function": "xFXFireworksUpdate__Ff",
+          "offset": 968,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xFXFireworksUpdate__Ff",
+          "offset": 992,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xFXFireworksUpdate__Ff",
+          "offset": 1032,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xFXFireworksUpdate__Ff",
+          "offset": 1064,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xFXFireworksUpdate__Ff",
+          "offset": 1088,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xFXFireworksUpdate__Ff",
+          "offset": 1112,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xFXFireworksUpdate__Ff",
+          "offset": 1136,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand__Fv",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "xFXFireworksUpdate__Ff",
+          "offset": 1204,
+          "target_source": "SB/Core/x/xScrFx.cpp",
+          "target_function": "xScrFXGlareAdd__FP5xVec3fffffffP8RwRaster",
+          "symbol": "xScrFXGlareAdd__FP5xVec3fffffffP8RwRaster"
+        },
+        {
+          "function": "xFXFireworksUpdate__Ff",
+          "offset": 1280,
+          "target_source": "SB/Game/zRumble.cpp",
+          "target_function": "zRumbleStartDistance__Fiff14_tagRumbleTypef",
+          "symbol": "zRumbleStartDistance__Fiff14_tagRumbleTypef"
+        },
+        {
+          "function": "xFXFireworksUpdate__Ff",
+          "offset": 1364,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf",
+          "symbol": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf"
+        },
+        {
+          "function": "xFXFireworksInit__FPCcPCcPCcPCcPCc",
+          "offset": 36,
+          "target_source": "SB/Game/zParEmitter.cpp",
+          "target_function": "zParEmitterFind__FPCc",
+          "symbol": "zParEmitterFind__FPCc"
+        },
+        {
+          "function": "xFXFireworksInit__FPCcPCcPCcPCcPCc",
+          "offset": 48,
+          "target_source": "SB/Game/zParEmitter.cpp",
+          "target_function": "zParEmitterFind__FPCc",
+          "symbol": "zParEmitterFind__FPCc"
+        },
+        {
+          "function": "xFXFireworksInit__FPCcPCcPCcPCcPCc",
+          "offset": 60,
+          "target_source": "SB/Game/zParEmitter.cpp",
+          "target_function": "zParEmitterFind__FPCc",
+          "symbol": "zParEmitterFind__FPCc"
+        },
+        {
+          "function": "xFXFireworksInit__FPCcPCcPCcPCcPCc",
+          "offset": 72,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xFXFireworksInit__FPCcPCcPCcPCcPCc",
+          "offset": 84,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xFXRenderProximityFade__FRC14xModelInstanceff",
+          "offset": 228,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPushTemp__FUi",
+          "symbol": "xMemPushTemp__FUi"
+        },
+        {
+          "function": "xFXRenderProximityFade__FRC14xModelInstanceff",
+          "offset": 240,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPushTemp__FUi",
+          "symbol": "xMemPushTemp__FUi"
+        },
+        {
+          "function": "xFXRenderProximityFade__FRC14xModelInstanceff",
+          "offset": 272,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelVertEval__FP8RpAtomicUiUiP11RwMatrixTagP5xVec3P5xVec3",
+          "symbol": "iModelVertEval__FP8RpAtomicUiUiP11RwMatrixTagP5xVec3P5xVec3"
+        },
+        {
+          "function": "xFXRenderProximityFade__FRC14xModelInstanceff",
+          "offset": 300,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelNormalEval__FP5xVec3RC8RpAtomicPC11RwMatrixTagUiiPC5xVec3",
+          "symbol": "iModelNormalEval__FP5xVec3RC8RpAtomicPC11RwMatrixTagUiiPC5xVec3"
+        },
+        {
+          "function": "xFXRenderProximityFade__FRC14xModelInstanceff",
+          "offset": 308,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPushTemp__FUi",
+          "symbol": "xMemPushTemp__FUi"
+        },
+        {
+          "function": "xFXRenderProximityFade__FRC14xModelInstanceff",
+          "offset": 320,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPushTemp__FUi",
+          "symbol": "xMemPushTemp__FUi"
+        },
+        {
+          "function": "xFXRenderProximityFade__FRC14xModelInstanceff",
+          "offset": 480,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3",
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xFXRenderProximityFade__FRC14xModelInstanceff",
+          "offset": 1064,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPushTemp__FUi",
+          "symbol": "xMemPushTemp__FUi"
+        },
+        {
+          "function": "xFXRenderProximityFade__FRC14xModelInstanceff",
+          "offset": 1088,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPushTemp__FUi",
+          "symbol": "xMemPushTemp__FUi"
+        },
+        {
+          "function": "xFXRenderProximityFade__FRC14xModelInstanceff",
+          "offset": 2912,
+          "target_source": "SB/Core/x/xFX.cpp",
+          "target_function": "lerp__17@unnamed@xFX_cpp@FRQ217@unnamed@xFX_cpp@9vert_datafRCQ217@unnamed@xFX_cpp@9vert_dataRCQ217@unnamed@xFX_cpp@9vert_data",
+          "symbol": "lerp__17@unnamed@xFX_cpp@FRQ217@unnamed@xFX_cpp@9vert_datafRCQ217@unnamed@xFX_cpp@9vert_dataRCQ217@unnamed@xFX_cpp@9vert_data"
+        },
+        {
+          "function": "xFXRenderProximityFade__FRC14xModelInstanceff",
+          "offset": 2956,
+          "target_source": "SB/Core/x/xFX.cpp",
+          "target_function": "lerp__17@unnamed@xFX_cpp@FRQ217@unnamed@xFX_cpp@9vert_datafRCQ217@unnamed@xFX_cpp@9vert_dataRCQ217@unnamed@xFX_cpp@9vert_data",
+          "symbol": "lerp__17@unnamed@xFX_cpp@FRQ217@unnamed@xFX_cpp@9vert_datafRCQ217@unnamed@xFX_cpp@9vert_dataRCQ217@unnamed@xFX_cpp@9vert_data"
+        },
+        {
+          "function": "xFXRenderProximityFade__FRC14xModelInstanceff",
+          "offset": 3628,
+          "target_source": "SB/Core/x/xFX.cpp",
+          "target_function": "lerp__17@unnamed@xFX_cpp@FRQ217@unnamed@xFX_cpp@9vert_datafRCQ217@unnamed@xFX_cpp@9vert_dataRCQ217@unnamed@xFX_cpp@9vert_data",
+          "symbol": "lerp__17@unnamed@xFX_cpp@FRQ217@unnamed@xFX_cpp@9vert_datafRCQ217@unnamed@xFX_cpp@9vert_dataRCQ217@unnamed@xFX_cpp@9vert_data"
+        },
+        {
+          "function": "xFXRenderProximityFade__FRC14xModelInstanceff",
+          "offset": 3668,
+          "target_source": "SB/Core/x/xFX.cpp",
+          "target_function": "lerp__17@unnamed@xFX_cpp@FRQ217@unnamed@xFX_cpp@9vert_datafRCQ217@unnamed@xFX_cpp@9vert_dataRCQ217@unnamed@xFX_cpp@9vert_data",
+          "symbol": "lerp__17@unnamed@xFX_cpp@FRQ217@unnamed@xFX_cpp@9vert_datafRCQ217@unnamed@xFX_cpp@9vert_dataRCQ217@unnamed@xFX_cpp@9vert_data"
+        },
+        {
+          "function": "xFXRenderProximityFade__FRC14xModelInstanceff",
+          "offset": 3860,
+          "target_source": "SB/Core/x/xFX.cpp",
+          "target_function": "set_vert__17@unnamed@xFX_cpp@FR18RxObjSpace3DVertexRCQ217@unnamed@xFX_cpp@9vert_data",
+          "symbol": "set_vert__17@unnamed@xFX_cpp@FR18RxObjSpace3DVertexRCQ217@unnamed@xFX_cpp@9vert_data"
+        },
+        {
+          "function": "xFXRenderProximityFade__FRC14xModelInstanceff",
+          "offset": 4088,
+          "target_source": "SB/Core/x/xFX.cpp",
+          "target_function": "depth_sort__17@unnamed@xFX_cpp@FPUsPCQ217@unnamed@xFX_cpp@8tri_dataUi",
+          "symbol": "depth_sort__17@unnamed@xFX_cpp@FPUsPCQ217@unnamed@xFX_cpp@8tri_dataUi"
+        },
+        {
+          "function": "xFXRenderProximityFade__FRC14xModelInstanceff",
+          "offset": 4260,
+          "target_source": "SB/Core/x/xFX.cpp",
+          "target_function": "set_vert__17@unnamed@xFX_cpp@FR18RxObjSpace3DVertexRCQ217@unnamed@xFX_cpp@9vert_data",
+          "symbol": "set_vert__17@unnamed@xFX_cpp@FR18RxObjSpace3DVertexRCQ217@unnamed@xFX_cpp@9vert_data"
+        },
+        {
+          "function": "xFXRenderProximityFade__FRC14xModelInstanceff",
+          "offset": 4404,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPopTemp__FPv",
+          "symbol": "xMemPopTemp__FPv"
+        },
+        {
+          "function": "xFXRenderProximityFade__FRC14xModelInstanceff",
+          "offset": 4412,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPopTemp__FPv",
+          "symbol": "xMemPopTemp__FPv"
+        },
+        {
+          "function": "xFXRenderProximityFade__FRC14xModelInstanceff",
+          "offset": 4424,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPopTemp__FPv",
+          "symbol": "xMemPopTemp__FPv"
+        },
+        {
+          "function": "xFXRenderProximityFade__FRC14xModelInstanceff",
+          "offset": 4432,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPopTemp__FPv",
+          "symbol": "xMemPopTemp__FPv"
+        },
+        {
+          "function": "xFXRenderProximityFade__FRC14xModelInstanceff",
+          "offset": 4440,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPopTemp__FPv",
+          "symbol": "xMemPopTemp__FPv"
+        },
+        {
+          "function": "xFXRenderProximityFade__FRC14xModelInstanceff",
+          "offset": 4448,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPopTemp__FPv",
+          "symbol": "xMemPopTemp__FPv"
+        },
+        {
+          "function": "xFXAtomicEnvMapSetup__FP8RpAtomicUif",
+          "offset": 36,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "xFXShinyRender__FP8RpAtomic",
+          "offset": 36,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xFXShinyRender__FP8RpAtomic",
+          "offset": 52,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xFXShinyRender__FP8RpAtomic",
+          "offset": 96,
+          "target_source": "SB/Core/p2/iDraw.cpp",
+          "target_function": "iDrawSetFBMSK__FUi",
+          "symbol": "iDrawSetFBMSK__FUi"
+        },
+        {
+          "function": "xFXShinyRender__FP8RpAtomic",
+          "offset": 108,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelSetMaterialAlpha__FP8RpAtomicUc",
+          "symbol": "iModelSetMaterialAlpha__FP8RpAtomicUc"
+        },
+        {
+          "function": "xFXShinyRender__FP8RpAtomic",
+          "offset": 164,
+          "target_source": "SB/Core/p2/iDraw.cpp",
+          "target_function": "iDrawSetFBMSK__FUi",
+          "symbol": "iDrawSetFBMSK__FUi"
+        },
+        {
+          "function": "xFXShinyRender__FP8RpAtomic",
+          "offset": 176,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelSetMaterialAlpha__FP8RpAtomicUc",
+          "symbol": "iModelSetMaterialAlpha__FP8RpAtomicUc"
+        },
+        {
+          "function": "xFXShinyRender__FP8RpAtomic",
+          "offset": 196,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "xFXShinyRender__FP8RpAtomic",
+          "offset": 332,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelSetMaterialAlpha__FP8RpAtomicUc",
+          "symbol": "iModelSetMaterialAlpha__FP8RpAtomicUc"
+        },
+        {
+          "function": "xFXShinyRender__FP8RpAtomic",
+          "offset": 388,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "xFXBubbleRender__FP8RpAtomic",
+          "offset": 80,
+          "target_source": "SB/Core/p2/iDraw.cpp",
+          "target_function": "iDrawSetFBMSK__FUi",
+          "symbol": "iDrawSetFBMSK__FUi"
+        },
+        {
+          "function": "xFXBubbleRender__FP8RpAtomic",
+          "offset": 92,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelSetMaterialAlpha__FP8RpAtomicUc",
+          "symbol": "iModelSetMaterialAlpha__FP8RpAtomicUc"
+        },
+        {
+          "function": "xFXBubbleRender__FP8RpAtomic",
+          "offset": 168,
+          "target_source": "SB/Core/p2/iDraw.cpp",
+          "target_function": "iDrawSetFBMSK__FUi",
+          "symbol": "iDrawSetFBMSK__FUi"
+        },
+        {
+          "function": "xFXBubbleRender__FP8RpAtomic",
+          "offset": 180,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelSetMaterialAlpha__FP8RpAtomicUc",
+          "symbol": "iModelSetMaterialAlpha__FP8RpAtomicUc"
+        },
+        {
+          "function": "xFXBubbleRender__FP8RpAtomic",
+          "offset": 220,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "xFXBubbleRender__FP8RpAtomic",
+          "offset": 356,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelSetMaterialAlpha__FP8RpAtomicUc",
+          "symbol": "iModelSetMaterialAlpha__FP8RpAtomicUc"
+        },
+        {
+          "function": "xFXBubbleRender__FP8RpAtomic",
+          "offset": 432,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "xFXUpdate__Ff",
+          "offset": 20,
+          "target_source": "SB/Core/x/xFX.cpp",
+          "target_function": "xFXRingUpdate__Ff",
+          "symbol": "xFXRingUpdate__Ff"
+        },
+        {
+          "function": "xFXUpdate__Ff",
+          "offset": 60,
+          "target_source": "SB/Core/x/xFX.cpp",
+          "target_function": "update__9xFXRibbonFf",
+          "symbol": "update__9xFXRibbonFf"
+        },
+        {
+          "function": "xFXUpdate__Ff",
+          "offset": 88,
+          "target_source": "SB/Core/x/xFX.cpp",
+          "target_function": "xFXAuraUpdate__Ff",
+          "symbol": "xFXAuraUpdate__Ff"
+        },
+        {
+          "function": "xFX_SceneEnter__FP7RpWorld",
+          "offset": 64,
+          "target_source": "SB/Game/zSurface.cpp",
+          "target_function": "zSurfaceGetSurface__FUi",
+          "symbol": "zSurfaceGetSurface__FUi"
+        },
+        {
+          "function": "xFX_SceneEnter__FP7RpWorld",
+          "offset": 184,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "xFX_SceneEnter__FP7RpWorld",
+          "offset": 204,
+          "target_source": "SB/Core/x/xFX.cpp",
+          "target_function": "MaterialSetEnvMap__FP10RpMaterialPv",
+          "symbol": "MaterialSetEnvMap__FP10RpMaterialPv"
+        },
+        {
+          "function": "xFX_SceneEnter__FP7RpWorld",
+          "offset": 260,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "xFX_SceneEnter__FP7RpWorld",
+          "offset": 412,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "xFX_SceneEnter__FP7RpWorld",
+          "offset": 428,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "xFX_SceneEnter__FP7RpWorld",
+          "offset": 768,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xFX_SceneEnter__FP7RpWorld",
+          "offset": 796,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xFX_SceneEnter__FP7RpWorld",
+          "offset": 824,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xFX_SceneEnter__FP7RpWorld",
+          "offset": 852,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xFX_SceneEnter__FP7RpWorld",
+          "offset": 880,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xFX_SceneEnter__FP7RpWorld",
+          "offset": 904,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash__FPCc",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "xFX_SceneEnter__FP7RpWorld",
+          "offset": 932,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTAssetName__FUi",
+          "symbol": "xSTAssetName__FUi"
+        },
+        {
+          "function": "xFXRingRender__Fv",
+          "offset": 56,
+          "target_source": "SB/Core/x/xFX.cpp",
+          "target_function": "DrawRing__FP7xFXRing",
+          "symbol": "DrawRing__FP7xFXRing"
+        },
+        {
+          "function": "xFXInit__Fv",
+          "offset": 204,
+          "target_source": "SB/Core/p2/iFX.cpp",
+          "target_function": "iFXanimUVCreatePipe__Fv",
+          "symbol": "iFXanimUVCreatePipe__Fv"
+        },
+        {
+          "function": "xFXInit__Fv",
+          "offset": 228,
+          "target_source": "SB/Core/p2/iFXgoo.cpp",
+          "target_function": "iFXgooCreatePipe__Fv",
+          "symbol": "iFXgooCreatePipe__Fv"
+        },
+        {
+          "function": "xFXInit__Fv",
+          "offset": 256,
+          "target_source": "SB/Core/x/xstransvc.cpp",
+          "target_function": "xSTFindAsset__FUiPUi",
+          "symbol": "xSTFindAsset__FUiPUi"
+        },
+        {
+          "function": "xFXShineInit__Fv",
+          "offset": 40,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xFXStreakInit__Fv",
+          "offset": 40,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xFXFireworksInit__FPCcPCcPCcPCcPCc",
+          "offset": 108,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xFXRenderProximityFade__FRC14xModelInstanceff",
+          "offset": 84,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xFXRenderProximityFade__FRC14xModelInstanceff",
+          "offset": 104,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "xFXInit__Fv",
+          "offset": 284,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xFXSceneFinish__Fv",
+          "offset": 0,
+          "opcode": 43,
+          "target_name": "g_txtr_drawRing",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "g_txtr_drawRing"
+        },
+        {
+          "function": "xFXSceneFinish__Fv",
+          "offset": 8,
+          "opcode": 43,
+          "target_name": "gAuraTex",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "gAuraTex"
+        },
+        {
+          "function": "xFXSceneSetup__Fv",
+          "offset": 24,
+          "opcode": 43,
+          "target_name": "g_txtr_drawRing",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "g_txtr_drawRing"
+        },
+        {
+          "function": "xFXSceneSetup__Fv",
+          "offset": 48,
+          "opcode": 43,
+          "target_name": "gAuraTex",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "gAuraTex"
+        },
+        {
+          "function": "xFXAuraRender__Fv",
+          "offset": 16,
+          "opcode": 35,
+          "target_name": "gAuraTex",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "gAuraTex"
+        },
+        {
+          "function": "xFXAuraRender__Fv",
+          "offset": 140,
+          "opcode": 35,
+          "target_name": "gFrameCount",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "gFrameCount"
+        },
+        {
+          "function": "xFXAuraRender__Fv",
+          "offset": 324,
+          "opcode": 35,
+          "target_name": "gFrameCount",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "gFrameCount"
+        },
+        {
+          "function": "RenderRotatedBillboard__FP5xVec3P13_xFXAuraAngleUiff10iColor_tagUi",
+          "offset": 140,
+          "opcode": 49,
+          "target_name": "sAuraPulse",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "sAuraPulse"
+        },
+        {
+          "function": "xFXAuraUpdate__Ff",
+          "offset": 12,
+          "opcode": 35,
+          "target_name": "gAuraTex",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "gAuraTex"
+        },
+        {
+          "function": "xFXAuraUpdate__Ff",
+          "offset": 40,
+          "opcode": 49,
+          "target_name": "sAuraPulseAng",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "sAuraPulseAng"
+        },
+        {
+          "function": "xFXAuraUpdate__Ff",
+          "offset": 60,
+          "opcode": 57,
+          "target_name": "sAuraPulseAng",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "sAuraPulseAng"
+        },
+        {
+          "function": "xFXAuraUpdate__Ff",
+          "offset": 80,
+          "opcode": 49,
+          "target_name": "sAuraPulseAng",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "sAuraPulseAng"
+        },
+        {
+          "function": "xFXAuraUpdate__Ff",
+          "offset": 108,
+          "opcode": 57,
+          "target_name": "sAuraPulseAng",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "sAuraPulseAng"
+        },
+        {
+          "function": "xFXAuraUpdate__Ff",
+          "offset": 156,
+          "opcode": 49,
+          "target_name": "sAuraPulseAng",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "sAuraPulseAng"
+        },
+        {
+          "function": "xFXAuraUpdate__Ff",
+          "offset": 184,
+          "opcode": 57,
+          "target_name": "sAuraPulse",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "sAuraPulse"
+        },
+        {
+          "function": "xFXAuraUpdate__Ff",
+          "offset": 412,
+          "opcode": 35,
+          "target_name": "gFrameCount",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "gFrameCount"
+        },
+        {
+          "function": "xFXAuraAdd__FPvP5xVec3P10iColor_tagf",
+          "offset": 28,
+          "opcode": 35,
+          "target_name": "gFrameCount",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "gFrameCount"
+        },
+        {
+          "function": "xFXAuraAdd__FPvP5xVec3P10iColor_tagf",
+          "offset": 148,
+          "opcode": 35,
+          "target_name": "gFrameCount",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "gFrameCount"
+        },
+        {
+          "function": "xFXRibbonRender__Fv",
+          "offset": 24,
+          "opcode": 36,
+          "target_name": "ribbons_dirty",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "ribbons_dirty"
+        },
+        {
+          "function": "xFXRibbonRender__Fv",
+          "offset": 36,
+          "opcode": 35,
+          "target_name": "active_ribbons_size",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "active_ribbons_size"
+        },
+        {
+          "function": "xFXRibbonRender__Fv",
+          "offset": 68,
+          "opcode": 40,
+          "target_name": "ribbons_dirty",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "ribbons_dirty"
+        },
+        {
+          "function": "xFXRibbonRender__Fv",
+          "offset": 120,
+          "opcode": 35,
+          "target_name": "active_ribbons_size",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "active_ribbons_size"
+        },
+        {
+          "function": "xFXRibbonRender__Fv",
+          "offset": 256,
+          "opcode": 35,
+          "target_name": "active_ribbons_size",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "active_ribbons_size"
+        },
+        {
+          "function": "xFXRibbonSceneEnter__Fv",
+          "offset": 104,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "xFXRibbonSceneEnter__Fv",
+          "offset": 388,
+          "opcode": 43,
+          "target_name": "active_ribbons_size",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "active_ribbons_size"
+        },
+        {
+          "function": "set_texture__9xFXRibbonFPCc",
+          "offset": 96,
+          "opcode": 40,
+          "target_name": "ribbons_dirty",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "ribbons_dirty"
+        },
+        {
+          "function": "set_texture__9xFXRibbonFUi",
+          "offset": 84,
+          "opcode": 40,
+          "target_name": "ribbons_dirty",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "ribbons_dirty"
+        },
+        {
+          "function": "update__9xFXRibbonFf",
+          "offset": 900,
+          "opcode": 35,
+          "target_name": "active_ribbons_size",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "active_ribbons_size"
+        },
+        {
+          "function": "update__9xFXRibbonFf",
+          "offset": 940,
+          "opcode": 35,
+          "target_name": "active_ribbons_size",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "active_ribbons_size"
+        },
+        {
+          "function": "update__9xFXRibbonFf",
+          "offset": 956,
+          "opcode": 43,
+          "target_name": "active_ribbons_size",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "active_ribbons_size"
+        },
+        {
+          "function": "insert__9xFXRibbonFRC5xVec3fffUi",
+          "offset": 500,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "insert__9xFXRibbonFRC5xVec3fffUi",
+          "offset": 712,
+          "opcode": 35,
+          "target_name": "active_ribbons_size",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "active_ribbons_size"
+        },
+        {
+          "function": "insert__9xFXRibbonFRC5xVec3fffUi",
+          "offset": 748,
+          "opcode": 40,
+          "target_name": "ribbons_dirty",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "ribbons_dirty"
+        },
+        {
+          "function": "insert__9xFXRibbonFRC5xVec3fffUi",
+          "offset": 752,
+          "opcode": 35,
+          "target_name": "active_ribbons_size",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "active_ribbons_size"
+        },
+        {
+          "function": "insert__9xFXRibbonFRC5xVec3fffUi",
+          "offset": 760,
+          "opcode": 43,
+          "target_name": "active_ribbons_size",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "active_ribbons_size"
+        },
+        {
+          "function": "insert__9xFXRibbonFRC5xVec3RC5xVec3ffUi",
+          "offset": 500,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "gActiveHeap"
+        },
+        {
+          "function": "insert__9xFXRibbonFRC5xVec3RC5xVec3ffUi",
+          "offset": 724,
+          "opcode": 35,
+          "target_name": "active_ribbons_size",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "active_ribbons_size"
+        },
+        {
+          "function": "insert__9xFXRibbonFRC5xVec3RC5xVec3ffUi",
+          "offset": 760,
+          "opcode": 40,
+          "target_name": "ribbons_dirty",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "ribbons_dirty"
+        },
+        {
+          "function": "insert__9xFXRibbonFRC5xVec3RC5xVec3ffUi",
+          "offset": 764,
+          "opcode": 35,
+          "target_name": "active_ribbons_size",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "active_ribbons_size"
+        },
+        {
+          "function": "insert__9xFXRibbonFRC5xVec3RC5xVec3ffUi",
+          "offset": 772,
+          "opcode": 43,
+          "target_name": "active_ribbons_size",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "active_ribbons_size"
+        },
+        {
+          "function": "refresh_config__9xFXRibbonFv",
+          "offset": 116,
+          "opcode": 40,
+          "target_name": "ribbons_dirty",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "ribbons_dirty"
+        },
+        {
+          "function": "set_default_config__9xFXRibbonFv",
+          "offset": 144,
+          "opcode": 40,
+          "target_name": "ribbons_dirty",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "ribbons_dirty"
+        },
+        {
+          "function": "init__9xFXRibbonFPCcPCc",
+          "offset": 208,
+          "opcode": 40,
+          "target_name": "ribbons_dirty",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "ribbons_dirty"
+        },
+        {
+          "function": "xFXFireworksUpdate__Ff",
+          "offset": 272,
+          "opcode": 35,
+          "target_name": "sFireworkLaunchSoundID",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "sFireworkLaunchSoundID"
+        },
+        {
+          "function": "xFXFireworksUpdate__Ff",
+          "offset": 488,
+          "opcode": 35,
+          "target_name": "sFireworkTrailEmit",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "sFireworkTrailEmit"
+        },
+        {
+          "function": "xFXFireworksUpdate__Ff",
+          "offset": 536,
+          "opcode": 35,
+          "target_name": "sFirework1Emit",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "sFirework1Emit"
+        },
+        {
+          "function": "xFXFireworksUpdate__Ff",
+          "offset": 564,
+          "opcode": 35,
+          "target_name": "sFirework2Emit",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "sFirework2Emit"
+        },
+        {
+          "function": "xFXFireworksUpdate__Ff",
+          "offset": 1304,
+          "opcode": 35,
+          "target_name": "sFireworkSoundID",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "sFireworkSoundID"
+        },
+        {
+          "function": "xFXFireworksInit__FPCcPCcPCcPCcPCc",
+          "offset": 52,
+          "opcode": 43,
+          "target_name": "sFireworkTrailEmit",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "sFireworkTrailEmit"
+        },
+        {
+          "function": "xFXFireworksInit__FPCcPCcPCcPCcPCc",
+          "offset": 64,
+          "opcode": 43,
+          "target_name": "sFirework1Emit",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "sFirework1Emit"
+        },
+        {
+          "function": "xFXFireworksInit__FPCcPCcPCcPCcPCc",
+          "offset": 76,
+          "opcode": 43,
+          "target_name": "sFirework2Emit",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "sFirework2Emit"
+        },
+        {
+          "function": "xFXFireworksInit__FPCcPCcPCcPCcPCc",
+          "offset": 88,
+          "opcode": 43,
+          "target_name": "sFireworkSoundID",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "sFireworkSoundID"
+        },
+        {
+          "function": "xFXFireworksInit__FPCcPCcPCcPCcPCc",
+          "offset": 96,
+          "opcode": 43,
+          "target_name": "sFireworkLaunchSoundID",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "sFireworkLaunchSoundID"
+        },
+        {
+          "function": "xFXanimUVAtomicSetup__FP8RpAtomic",
+          "offset": 8,
+          "opcode": 35,
+          "target_name": "xFXanimUVPipeline",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "xFXanimUVPipeline"
+        },
+        {
+          "function": "xFXanimUV2PSetTexture__FP9RwTexture",
+          "offset": 4,
+          "opcode": 43,
+          "target_name": "xFXanimUV2PTexture",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "xFXanimUV2PTexture"
+        },
+        {
+          "function": "xFXanimUV2PSetAngle__Ff",
+          "offset": 36,
+          "opcode": 57,
+          "target_name": "xFXanimUV2PRotMat0",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "xFXanimUV2PRotMat0"
+        },
+        {
+          "function": "xFXanimUV2PSetAngle__Ff",
+          "offset": 44,
+          "opcode": 57,
+          "target_name": "xFXanimUV2PRotMat1",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "xFXanimUV2PRotMat1"
+        },
+        {
+          "function": "xFXanimUV2PSetScale__FPC5xVec3",
+          "offset": 4,
+          "opcode": 57,
+          "target_name": "xFXanimUV2PScale",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "xFXanimUV2PScale"
+        },
+        {
+          "function": "xFXanimUV2PSetTranslation__FPC5xVec3",
+          "offset": 4,
+          "opcode": 57,
+          "target_name": "xFXanimUV2PTrans",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "xFXanimUV2PTrans"
+        },
+        {
+          "function": "xFXanimUVSetAngle__Ff",
+          "offset": 36,
+          "opcode": 57,
+          "target_name": "xFXanimUVRotMat0",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "xFXanimUVRotMat0"
+        },
+        {
+          "function": "xFXanimUVSetAngle__Ff",
+          "offset": 44,
+          "opcode": 57,
+          "target_name": "xFXanimUVRotMat1",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "xFXanimUVRotMat1"
+        },
+        {
+          "function": "xFXanimUVSetScale__FPC5xVec3",
+          "offset": 4,
+          "opcode": 57,
+          "target_name": "xFXanimUVScale",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "xFXanimUVScale"
+        },
+        {
+          "function": "xFXanimUVSetTranslation__FPC5xVec3",
+          "offset": 4,
+          "opcode": 57,
+          "target_name": "xFXanimUVTrans",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "xFXanimUVTrans"
+        },
+        {
+          "function": "xFXAtomicEnvMapSetup__FP8RpAtomicUif",
+          "offset": 88,
+          "opcode": 49,
+          "target_name": "EnvMapShininess",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "EnvMapShininess"
+        },
+        {
+          "function": "xFXAtomicEnvMapSetup__FP8RpAtomicUif",
+          "offset": 92,
+          "opcode": 57,
+          "target_name": "EnvMapShininess",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "EnvMapShininess"
+        },
+        {
+          "function": "xFXAtomicEnvMapSetup__FP8RpAtomicUif",
+          "offset": 120,
+          "opcode": 57,
+          "target_name": "EnvMapShininess",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "EnvMapShininess"
+        },
+        {
+          "function": "xFXShinyRender__FP8RpAtomic",
+          "offset": 20,
+          "opcode": 35,
+          "target_name": "sTweaked",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "sTweaked"
+        },
+        {
+          "function": "xFXShinyRender__FP8RpAtomic",
+          "offset": 48,
+          "opcode": 43,
+          "target_name": "sEnvMap",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "sEnvMap"
+        },
+        {
+          "function": "xFXShinyRender__FP8RpAtomic",
+          "offset": 60,
+          "opcode": 43,
+          "target_name": "sFresnelMap",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "sFresnelMap"
+        },
+        {
+          "function": "xFXShinyRender__FP8RpAtomic",
+          "offset": 68,
+          "opcode": 43,
+          "target_name": "sTweaked",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "sTweaked"
+        },
+        {
+          "function": "xFXShinyRender__FP8RpAtomic",
+          "offset": 152,
+          "opcode": 35,
+          "target_name": "gAtomicRenderCallBack",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "gAtomicRenderCallBack"
+        },
+        {
+          "function": "xFXShinyRender__FP8RpAtomic",
+          "offset": 184,
+          "opcode": 35,
+          "target_name": "sFresnelMap",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "sFresnelMap"
+        },
+        {
+          "function": "xFXShinyRender__FP8RpAtomic",
+          "offset": 192,
+          "opcode": 43,
+          "target_name": "gFXSurfaceFlags",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "gFXSurfaceFlags"
+        },
+        {
+          "function": "xFXShinyRender__FP8RpAtomic",
+          "offset": 248,
+          "opcode": 49,
+          "target_name": "EnvMapShininess",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "EnvMapShininess"
+        },
+        {
+          "function": "xFXShinyRender__FP8RpAtomic",
+          "offset": 252,
+          "opcode": 43,
+          "target_name": "EnvMapShininess",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "EnvMapShininess"
+        },
+        {
+          "function": "xFXShinyRender__FP8RpAtomic",
+          "offset": 280,
+          "opcode": 57,
+          "target_name": "EnvMapShininess",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "EnvMapShininess"
+        },
+        {
+          "function": "xFXShinyRender__FP8RpAtomic",
+          "offset": 312,
+          "opcode": 35,
+          "target_name": "gAtomicRenderCallBack",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "gAtomicRenderCallBack"
+        },
+        {
+          "function": "xFXShinyRender__FP8RpAtomic",
+          "offset": 324,
+          "opcode": 43,
+          "target_name": "gFXSurfaceFlags",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "gFXSurfaceFlags"
+        },
+        {
+          "function": "xFXShinyRender__FP8RpAtomic",
+          "offset": 376,
+          "opcode": 35,
+          "target_name": "sEnvMap",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "sEnvMap"
+        },
+        {
+          "function": "xFXShinyRender__FP8RpAtomic",
+          "offset": 392,
+          "opcode": 43,
+          "target_name": "gFXSurfaceFlags",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "gFXSurfaceFlags"
+        },
+        {
+          "function": "xFXShinyRender__FP8RpAtomic",
+          "offset": 444,
+          "opcode": 49,
+          "target_name": "EnvMapShininess",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "EnvMapShininess"
+        },
+        {
+          "function": "xFXShinyRender__FP8RpAtomic",
+          "offset": 448,
+          "opcode": 43,
+          "target_name": "EnvMapShininess",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "EnvMapShininess"
+        },
+        {
+          "function": "xFXShinyRender__FP8RpAtomic",
+          "offset": 480,
+          "opcode": 57,
+          "target_name": "EnvMapShininess",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "EnvMapShininess"
+        },
+        {
+          "function": "xFXShinyRender__FP8RpAtomic",
+          "offset": 512,
+          "opcode": 35,
+          "target_name": "gAtomicRenderCallBack",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "gAtomicRenderCallBack"
+        },
+        {
+          "function": "xFXShinyRender__FP8RpAtomic",
+          "offset": 524,
+          "opcode": 43,
+          "target_name": "gFXSurfaceFlags",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "gFXSurfaceFlags"
+        },
+        {
+          "function": "xFXBubbleRender__FP8RpAtomic",
+          "offset": 40,
+          "opcode": 35,
+          "target_name": "bfx_curr",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "bfx_curr"
+        },
+        {
+          "function": "xFXBubbleRender__FP8RpAtomic",
+          "offset": 44,
+          "opcode": 35,
+          "target_name": "BFX",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "BFX"
+        },
+        {
+          "function": "xFXBubbleRender__FP8RpAtomic",
+          "offset": 152,
+          "opcode": 35,
+          "target_name": "gAtomicRenderCallBack",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "gAtomicRenderCallBack"
+        },
+        {
+          "function": "xFXBubbleRender__FP8RpAtomic",
+          "offset": 208,
+          "opcode": 43,
+          "target_name": "gFXSurfaceFlags",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "gFXSurfaceFlags"
+        },
+        {
+          "function": "xFXBubbleRender__FP8RpAtomic",
+          "offset": 272,
+          "opcode": 49,
+          "target_name": "EnvMapShininess",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "EnvMapShininess"
+        },
+        {
+          "function": "xFXBubbleRender__FP8RpAtomic",
+          "offset": 276,
+          "opcode": 57,
+          "target_name": "EnvMapShininess",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "EnvMapShininess"
+        },
+        {
+          "function": "xFXBubbleRender__FP8RpAtomic",
+          "offset": 304,
+          "opcode": 57,
+          "target_name": "EnvMapShininess",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "EnvMapShininess"
+        },
+        {
+          "function": "xFXBubbleRender__FP8RpAtomic",
+          "offset": 336,
+          "opcode": 35,
+          "target_name": "gAtomicRenderCallBack",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "gAtomicRenderCallBack"
+        },
+        {
+          "function": "xFXBubbleRender__FP8RpAtomic",
+          "offset": 348,
+          "opcode": 43,
+          "target_name": "gFXSurfaceFlags",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "gFXSurfaceFlags"
+        },
+        {
+          "function": "xFXBubbleRender__FP8RpAtomic",
+          "offset": 420,
+          "opcode": 43,
+          "target_name": "gFXSurfaceFlags",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "gFXSurfaceFlags"
+        },
+        {
+          "function": "xFXBubbleRender__FP8RpAtomic",
+          "offset": 480,
+          "opcode": 49,
+          "target_name": "EnvMapShininess",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "EnvMapShininess"
+        },
+        {
+          "function": "xFXBubbleRender__FP8RpAtomic",
+          "offset": 484,
+          "opcode": 57,
+          "target_name": "EnvMapShininess",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "EnvMapShininess"
+        },
+        {
+          "function": "xFXBubbleRender__FP8RpAtomic",
+          "offset": 512,
+          "opcode": 57,
+          "target_name": "EnvMapShininess",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "EnvMapShininess"
+        },
+        {
+          "function": "xFXBubbleRender__FP8RpAtomic",
+          "offset": 544,
+          "opcode": 35,
+          "target_name": "gAtomicRenderCallBack",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "gAtomicRenderCallBack"
+        },
+        {
+          "function": "xFXBubbleRender__FP8RpAtomic",
+          "offset": 556,
+          "opcode": 43,
+          "target_name": "gFXSurfaceFlags",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "gFXSurfaceFlags"
+        },
+        {
+          "function": "MaterialSetEnvMap2__FP10RpMaterialPv",
+          "offset": 80,
+          "opcode": 35,
+          "target_name": "MainLight",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "MainLight"
+        },
+        {
+          "function": "MaterialSetEnvMap2__FP10RpMaterialPv",
+          "offset": 100,
+          "opcode": 49,
+          "target_name": "EnvMapShininess",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "EnvMapShininess"
+        },
+        {
+          "function": "MaterialSetEnvMap__FP10RpMaterialPv",
+          "offset": 60,
+          "opcode": 35,
+          "target_name": "gFXSurfaceFlags",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "gFXSurfaceFlags"
+        },
+        {
+          "function": "MaterialSetEnvMap__FP10RpMaterialPv",
+          "offset": 96,
+          "opcode": 35,
+          "target_name": "MainLight",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "MainLight"
+        },
+        {
+          "function": "MaterialSetEnvMap__FP10RpMaterialPv",
+          "offset": 112,
+          "opcode": 35,
+          "target_name": "MainLight",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "MainLight"
+        },
+        {
+          "function": "MaterialSetShininess__FP10RpMaterialPv",
+          "offset": 40,
+          "opcode": 49,
+          "target_name": "EnvMapShininess",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "EnvMapShininess"
+        },
+        {
+          "function": "xFXUpdate__Ff",
+          "offset": 28,
+          "opcode": 35,
+          "target_name": "active_ribbons_size",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "active_ribbons_size"
+        },
+        {
+          "function": "xFXUpdate__Ff",
+          "offset": 68,
+          "opcode": 35,
+          "target_name": "active_ribbons_size",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "active_ribbons_size"
+        },
+        {
+          "function": "xFX_SceneEnter__FP7RpWorld",
+          "offset": 160,
+          "opcode": 43,
+          "target_name": "gFXSurfaceFlags",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "gFXSurfaceFlags"
+        },
+        {
+          "function": "xFX_SceneEnter__FP7RpWorld",
+          "offset": 308,
+          "opcode": 35,
+          "target_name": "MainLight",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "MainLight"
+        },
+        {
+          "function": "xFX_SceneEnter__FP7RpWorld",
+          "offset": 480,
+          "opcode": 35,
+          "target_name": "gFXSurfaceFlags",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "gFXSurfaceFlags"
+        },
+        {
+          "function": "xFX_SceneEnter__FP7RpWorld",
+          "offset": 508,
+          "opcode": 35,
+          "target_name": "MainLight",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "MainLight"
+        },
+        {
+          "function": "xFX_SceneEnter__FP7RpWorld",
+          "offset": 536,
+          "opcode": 35,
+          "target_name": "MainLight",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "MainLight"
+        },
+        {
+          "function": "xFX_SceneEnter__FP7RpWorld",
+          "offset": 612,
+          "opcode": 35,
+          "target_name": "gAtomicRenderCallBack",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "gAtomicRenderCallBack"
+        },
+        {
+          "function": "xFX_SceneEnter__FP7RpWorld",
+          "offset": 700,
+          "opcode": 43,
+          "target_name": "gAtomicRenderCallBack",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "gAtomicRenderCallBack"
+        },
+        {
+          "function": "DrawRing__FP7xFXRing",
+          "offset": 184,
+          "opcode": 35,
+          "target_name": "g_txtr_drawRing",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "g_txtr_drawRing"
+        },
+        {
+          "function": "DrawRing__FP7xFXRing",
+          "offset": 456,
+          "opcode": 35,
+          "target_name": "Im3DBufferPos",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "Im3DBufferPos"
+        },
+        {
+          "function": "DrawRing__FP7xFXRing",
+          "offset": 512,
+          "opcode": 43,
+          "target_name": "Im3DBufferPos",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "Im3DBufferPos"
+        },
+        {
+          "function": "DrawRing__FP7xFXRing",
+          "offset": 520,
+          "opcode": 35,
+          "target_name": "Im3DBufferPos",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "Im3DBufferPos"
+        },
+        {
+          "function": "DrawRing__FP7xFXRing",
+          "offset": 1736,
+          "opcode": 35,
+          "target_name": "Im3DBufferPos",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "Im3DBufferPos"
+        },
+        {
+          "function": "DrawRing__FP7xFXRing",
+          "offset": 1744,
+          "opcode": 43,
+          "target_name": "Im3DBufferPos",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "Im3DBufferPos"
+        },
+        {
+          "function": "DrawRing__FP7xFXRing",
+          "offset": 1768,
+          "opcode": 35,
+          "target_name": "Im3DBufferPos",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "Im3DBufferPos"
+        },
+        {
+          "function": "DrawRing__FP7xFXRing",
+          "offset": 1816,
+          "opcode": 43,
+          "target_name": "Im3DBufferPos",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "Im3DBufferPos"
+        },
+        {
+          "function": "xFXInit__Fv",
+          "offset": 16,
+          "opcode": 35,
+          "target_name": "xfx_initted",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "xfx_initted"
+        },
+        {
+          "function": "xFXInit__Fv",
+          "offset": 32,
+          "opcode": 43,
+          "target_name": "xfx_initted",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "xfx_initted"
+        },
+        {
+          "function": "xFXInit__Fv",
+          "offset": 180,
+          "opcode": 43,
+          "target_name": "MainLight",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "MainLight"
+        },
+        {
+          "function": "xFXInit__Fv",
+          "offset": 192,
+          "opcode": 35,
+          "target_name": "xFXanimUVPipeline",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "xFXanimUVPipeline"
+        },
+        {
+          "function": "xFXInit__Fv",
+          "offset": 212,
+          "opcode": 43,
+          "target_name": "xFXanimUVPipeline",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "xFXanimUVPipeline"
+        },
+        {
+          "function": "xFXInit__Fv",
+          "offset": 216,
+          "opcode": 35,
+          "target_name": "xFXgooPipeline",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "xFXgooPipeline"
+        },
+        {
+          "function": "xFXInit__Fv",
+          "offset": 236,
+          "opcode": 43,
+          "target_name": "xFXgooPipeline",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "xFXgooPipeline"
+        },
+        {
+          "function": "xFXInit__Fv",
+          "offset": 240,
+          "opcode": 35,
+          "target_name": "gAuraTex",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "gAuraTex"
+        },
+        {
+          "function": "xFXInit__Fv",
+          "offset": 264,
+          "opcode": 43,
+          "target_name": "gAuraTex",
+          "target_source": "SB/Core/x/xFX.cpp",
+          "symbol": "gAuraTex"
+        }
+      ],
+      "address_pairs": []
     }
   ]
 }

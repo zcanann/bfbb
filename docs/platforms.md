@@ -484,3 +484,6 @@ per debug region; see [renderer evidence](PS2_MODEL_SHADOW.md).
 The complete PS2 NPC common source adds 5,212 matched bytes in USA and 4,904
 in Europe/Germany; see [NPC common evidence](PS2_NPC_COMMON.md). Xbox fast
 collision adds 260 bytes; see [curve/collision evidence](XBOX_CURVE_FAST_COLLISION.md).
+
+Complete PS2 effects source comparison adds 3,596 matched bytes per debug
+region; see [effects evidence](PS2_FX.md).
