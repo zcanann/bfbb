@@ -7968,6 +7968,80 @@
           ]
         }
       ]
+    },
+    {
+      "source": "src/SB/Game/zCamMarker.cpp",
+      "target_unit": "SB/Game/zCamMarker.cpp",
+      "object": "source/zCamMarker.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zCamMarkerEventCB__FP5xBaseP5xBaseUiPCfP5xBase": "zCamMarkerEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "zCamMarkerLoad__FP10zCamMarkerP7xSerial": "zCamMarkerLoad__FP10zCamMarkerP7xSerial",
+        "zCamMarkerSave__FP10zCamMarkerP7xSerial": "zCamMarkerSave__FP10zCamMarkerP7xSerial",
+        "zCamMarkerInit__FP5xBaseP9xCamAsset": "zCamMarkerInit__FP5xBaseP9xCamAsset"
+      },
+      "calls": [
+        {
+          "function": "zCamMarkerEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 60,
+          "target_source": "SB/Game/zCamera.cpp",
+          "target_function": "zCameraDoTrans__FP9xCamAssetf",
+          "symbol": "zCameraDoTrans__FP9xCamAssetf"
+        },
+        {
+          "function": "zCamMarkerEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 80,
+          "target_source": "SB/Game/zCamera.cpp",
+          "target_function": "zCameraSetConvers__Fi",
+          "symbol": "zCameraSetConvers__Fi"
+        },
+        {
+          "function": "zCamMarkerEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "offset": 96,
+          "target_source": "SB/Game/zCamera.cpp",
+          "target_function": "zCameraSetConvers__Fi",
+          "symbol": "zCameraSetConvers__Fi"
+        },
+        {
+          "function": "zCamMarkerLoad__FP10zCamMarkerP7xSerial",
+          "offset": 0,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseLoad__FP5xBaseP7xSerial",
+          "symbol": "xBaseLoad__FP5xBaseP7xSerial",
+          "opcode": 2
+        },
+        {
+          "function": "zCamMarkerSave__FP10zCamMarkerP7xSerial",
+          "offset": 0,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseSave__FP5xBaseP7xSerial",
+          "symbol": "xBaseSave__FP5xBaseP7xSerial",
+          "opcode": 2
+        },
+        {
+          "function": "zCamMarkerInit__FP5xBaseP9xCamAsset",
+          "offset": 20,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseInit__FP5xBaseP10xBaseAsset",
+          "symbol": "xBaseInit__FP5xBaseP10xBaseAsset"
+        }
+      ],
+      "gp_relocations": [],
+      "address_pairs": [
+        {
+          "function": "zCamMarkerInit__FP5xBaseP9xCamAsset",
+          "hi_offset": 48,
+          "lo_offset": 52,
+          "target_source": "SB/Game/zCamMarker.cpp",
+          "target_function": "zCamMarkerEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "symbol": "zCamMarkerEventCB__FP5xBaseP5xBaseUiPCfP5xBase"
+        }
+      ]
     }
   ]
 }
