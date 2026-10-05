@@ -27,7 +27,7 @@
     "-inline",
     "deferred"
   ],
-  "scope": "Validated shared-source code comparison profiles for core units, including debug-region math, geometry and streaming consumers; incomplete units and unresolved runtime references remain explicit; France compiles six additional whole source units against all independently verified members currently available, without claiming complete ownership",
+  "scope": "Validated shared-source code comparison profiles for core units, including debug-region math, geometry and streaming consumers; incomplete units and unresolved runtime references remain explicit; France compiles six additional whole source units against all independently verified members currently available, without claiming complete ownership; additional French profiles compare whole source TUs against every currently verified member, retaining incomplete ownership",
   "units": [
     {
       "source": "src/SB/Core/x/xBase.cpp",
@@ -7621,6 +7621,353 @@
         }
       ],
       "address_pairs": []
+    },
+    {
+      "source": "src/SB/Game/zVolume.cpp",
+      "target_unit": "SB/Game/zVolume.cpp",
+      "object": "source/zVolume.o",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "zVolumeSetup": "zVolumeSetup__Fv"
+      },
+      "calls": [
+        {
+          "function": "zVolumeSetup",
+          "offset": 52,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullForEverything",
+          "symbol": "xQuickCullForEverything__FP7xQCData"
+        }
+      ],
+      "linkage_provenance": [
+        {
+          "function": "zVolumeSetup",
+          "registry": "relocation-corroborated-functions.json",
+          "france_address": 1721248,
+          "size": 100,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1720448,
+              "reference_sha256": "3c999e19d6378093c9f8573c997a96804ad09fdbcac27888418afc34bc69febe"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1721248,
+              "reference_sha256": "8fa92cb0dd147b367c245c2ef1f981032492ee98bf513119cf23b287aa29f9f6"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1717888,
+              "reference_sha256": "5af4e3384e1e6818463101fb840512f7acff5444600ac62e7befc352d7a58890"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xDebug.cpp",
+      "target_unit": "SB/Core/x/xDebug.cpp",
+      "object": "source/xDebug.o",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "xprintf": "xprintf__FPCce"
+      },
+      "calls": [],
+      "linkage_provenance": [
+        {
+          "function": "xprintf",
+          "registry": "corroborated-functions.json",
+          "france_address": 1904992,
+          "size": 40,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1904880,
+              "reference_sha256": "9aa72fbf4a48afeabe32241118dfe77812881bbc37a0dd64efcc88544e55093e"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1901520,
+              "reference_sha256": "9aa72fbf4a48afeabe32241118dfe77812881bbc37a0dd64efcc88544e55093e"
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1903616,
+              "reference_sha256": "9aa72fbf4a48afeabe32241118dfe77812881bbc37a0dd64efcc88544e55093e"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xMorph.cpp",
+      "target_unit": "SB/Core/x/xMorph.cpp",
+      "object": "source/xMorph.o",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "xMorphRender": "xMorphRender__FP13xMorphSeqFileP11RwMatrixTagf"
+      },
+      "calls": [],
+      "linkage_provenance": [
+        {
+          "function": "xMorphRender",
+          "registry": "corroborated-functions.json",
+          "france_address": 2042224,
+          "size": 508,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2042112,
+              "reference_sha256": "419e2ff589e7c760b0911047585de240fb4e7a6142a206e8d92dceb16df733e2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xMovePoint.cpp",
+      "target_unit": "SB/Core/x/xMovePoint.cpp",
+      "object": "source/xMovePoint.o",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "xMovePointGetNext": "xMovePointGetNext__FPC10xMovePointPC10xMovePointPP10xMovePointP5xVec3"
+      },
+      "calls": [
+        {
+          "function": "xMovePointGetNext",
+          "offset": 72,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xrand",
+          "symbol": "xrand__Fv"
+        }
+      ],
+      "linkage_provenance": [
+        {
+          "function": "xMovePointGetNext",
+          "registry": "relocation-corroborated-functions.json",
+          "france_address": 2043344,
+          "size": 560,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2041984,
+              "reference_sha256": "1d6a88f72ea883317a9d6d63432ae2050109601a7f6719118b4b8993d14bc14e"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2043232,
+              "reference_sha256": "54e68d463105f7c0534301c9f61e6f93b8ddde457d807563f0f8c6e98f50a6ba"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2039872,
+              "reference_sha256": "cd7df5168f84857258ccbc9faa8f8e590dd33e3ac58c22ac652213323cabae86"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xParMgr.cpp",
+      "target_unit": "SB/Core/x/xParMgr.cpp",
+      "object": "source/xParMgr.o",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "xParMgrUpdate": "xParMgrUpdate__Ff"
+      },
+      "calls": [],
+      "linkage_provenance": [
+        {
+          "function": "xParMgrUpdate",
+          "registry": "corroborated-functions.json",
+          "france_address": 2059520,
+          "size": 116,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2059408,
+              "reference_sha256": "2ac578643a08624991f1bc6e1cc0e93a42cab3f66f33aff9d551f4e090f1042e"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xPartition.cpp",
+      "target_unit": "SB/Core/x/xPartition.cpp",
+      "object": "source/xPartition.o",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "xPartitionSpaceMove": "xPartitionSpaceMove__FP13_tagPartSpaceP13_tagPartSpaceUi",
+        "xPartitionUpdate": "xPartitionUpdate__FP13_tagPartitionPviP5xVec3"
+      },
+      "calls": [
+        {
+          "function": "xPartitionUpdate",
+          "offset": 324,
+          "target_source": "SB/Core/x/xPartition.cpp",
+          "target_function": "xPartitionSpaceMove",
+          "symbol": "xPartitionSpaceMove__FP13_tagPartSpaceP13_tagPartSpaceUi"
+        }
+      ],
+      "linkage_provenance": [
+        {
+          "function": "xPartitionSpaceMove",
+          "registry": "corroborated-functions.json",
+          "france_address": 2059744,
+          "size": 128,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2059632,
+              "reference_sha256": "edb5a74895b0f79e6cfce536bf012a5e336a4d6f34e32c496838b89a00c0be26"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2056272,
+              "reference_sha256": "edb5a74895b0f79e6cfce536bf012a5e336a4d6f34e32c496838b89a00c0be26"
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2058384,
+              "reference_sha256": "edb5a74895b0f79e6cfce536bf012a5e336a4d6f34e32c496838b89a00c0be26"
+            }
+          ]
+        },
+        {
+          "function": "xPartitionUpdate",
+          "registry": "relocation-corroborated-functions.json",
+          "france_address": 2059872,
+          "size": 352,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2058512,
+              "reference_sha256": "0b5a58dbd6e058af499632eb065fb019bd9d0c3d98343c724d150181f8ffe537"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2059760,
+              "reference_sha256": "617576c09b652fd3c28e8c41c0994f47426cb31d8a039ca1905b8da86dc84b03"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2056400,
+              "reference_sha256": "c1754178b947b8829059c0fa98fb502a037127055e1e25d9807dcf97fce6772b"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xBehaveMgr.cpp",
+      "target_unit": "SB/Core/x/xBehaveMgr.cpp",
+      "object": "source/xBehaveMgr.o",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "xBehaveMgr_SceneReset": "xBehaveMgr_SceneReset__Fv"
+      },
+      "calls": [],
+      "linkage_provenance": [
+        {
+          "function": "xBehaveMgr_SceneReset",
+          "registry": "corroborated-functions.json",
+          "france_address": 3088160,
+          "size": 248,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3088048,
+              "reference_sha256": "578f97691664c81ecc215bb832bf56f28e797ee8f855e65e5651eeec8c01f1bd"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3084736,
+              "reference_sha256": "578f97691664c81ecc215bb832bf56f28e797ee8f855e65e5651eeec8c01f1bd"
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3086752,
+              "reference_sha256": "578f97691664c81ecc215bb832bf56f28e797ee8f855e65e5651eeec8c01f1bd"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Game/zCameraTweak.cpp",
+      "target_unit": "SB/Game/zCameraTweak.cpp",
+      "object": "source/zCameraTweak.o",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "zCameraTweakGlobal_Reset": "zCameraTweakGlobal_Reset__Fv"
+      },
+      "calls": [],
+      "linkage_provenance": [
+        {
+          "function": "zCameraTweakGlobal_Reset",
+          "registry": "corroborated-functions.json",
+          "france_address": 3881856,
+          "size": 52,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3881744,
+              "reference_sha256": "4a3724ee2a3a59f1762adb36bd21c595ee3d7521b2337fa137ba8a8709083f93"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3878496,
+              "reference_sha256": "4a3724ee2a3a59f1762adb36bd21c595ee3d7521b2337fa137ba8a8709083f93"
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3880480,
+              "reference_sha256": "4a3724ee2a3a59f1762adb36bd21c595ee3d7521b2337fa137ba8a8709083f93"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
