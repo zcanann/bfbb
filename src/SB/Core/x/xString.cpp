@@ -447,11 +447,13 @@ size_t atox(const substr& s, size_t& read_size)
         }
         else if (c >= 'a' && c <= 'f')
         {
-            digit = c - 'a' + 10;
+            digit = c - 'a';
+            digit += 10;
         }
         else if (c >= 'A' && c <= 'F')
         {
-            digit = c - 'A' + 10;
+            digit = c - 'A';
+            digit += 10;
         }
         else
         {

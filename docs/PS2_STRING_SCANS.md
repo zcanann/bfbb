@@ -1,4 +1,4 @@
-﻿# PS2 character-set scan scopes
+# PS2 character-set scan scopes
 
 The authenticated debug releases describe twelve distinct signed32 `i` locals
 inside `find_char(const substr&, const substr&)`: one for each specialized
@@ -34,3 +34,30 @@ character signedness and every previous exact match are retained.
 
 Private reproducible evidence: `build/near259/{audit.py,alignment.json,proof.json,
 raw-proof.json,gc/proof.json,xbox/proof.json,scoped/<version>/report.json}`.
+
+
+## Hexadecimal digit conversion
+
+Original atox stores an unsigned32 converted digit. For alphabetic characters,
+its 200-byte body subtracts the corresponding letter base and then adds10 in
+a separate instruction. Splitting the existing source assignment into those
+two ordinary statements recovers the original sequence. Bounds, character
+signedness, accumulation and read_size updates are unchanged. No new variable,
+cast, artificial branch or platform macro is introduced.
+
+Exactly four instruction words change, at offsets112/120/144/148. Every other
+allocated section and function record is identical to the preceding scoped-scan
+source. The actual whole-unit report gains200 bytes/one function in each debug
+region. Both atox and find_char now match in the independently expanded French
+12-member comparison as well: all four regions report4 matched functions and
+2,192 of3,948 code bytes. The French metadata recovery is a separate commit;
+this source change does not supply or alter original identities or boundaries.
+
+All200 atox source bytes equal each of the four authenticated originals directly,
+with zero source relocations. All four complete source objects are identical.
+GameCube's two ordered allocated sections and the actual Xbox whole-TU linked
+text's2,617 bytes stay identical. Private proof: build/near261/{proof.json,
+raw-proof.json,gc/proof.json,xbox/proof.json,phased/<version>/report.json,
+french-expanded/report.json}. The French find_char1,648-byte body and complete
+ordered12-entry table also independently replayed in
+build/near259/french-raw-proof.json.
