@@ -75,9 +75,9 @@ checked, and the standard objdiff parser accepts the result.
 
 | Version | Full code-region bytes | Objdiff code-matched bytes |
 | --- | ---: | ---: |
-| SLUS-20680 | 2,978,560 | 178,580 |
-| SLES-51968 | 2,979,712 | 178,272 |
-| SLES-51970 | 2,976,512 | 178,272 |
+| SLUS-20680 | 2,978,560 | 187,684 |
+| SLES-51968 | 2,979,712 | 187,376 |
+| SLES-51970 | 2,976,512 | 187,376 |
 | SLES-53623 | 2,979,968 | 29,500 |
 | XBOX-US | 1,798,760 | 11,936 |
 | XBOX-EU | 1,798,760 | 11,936 |
@@ -122,9 +122,9 @@ The narrower function-only baselines currently contain:
 
 | PS2 baseline | Functions | Measured function bytes | Source matches |
 | --- | ---: | ---: | ---: |
-| USA | 5,391 | 2,107,460 | 1,216 functions / 178,580 bytes |
-| Europe/Australia | 5,392 | 2,108,700 | 1,215 functions / 178,272 bytes |
-| Germany | 5,394 | 2,105,512 | 1,215 functions / 178,272 bytes |
+| USA | 5,391 | 2,107,460 | 1,274 functions / 187,684 bytes |
+| Europe/Australia | 5,392 | 2,108,700 | 1,273 functions / 187,376 bytes |
+| Germany | 5,394 | 2,105,512 | 1,273 functions / 187,376 bytes |
 | France (reviewed and corroborated bounds) | 597 | 214,848 | 175 functions / 29,500 bytes |
 
 The `address-anchors.json` registries also recover over 2,500 named data addresses
@@ -534,3 +534,16 @@ functions remain in the comparison; Germany keeps its distinct goal extents.
 The complete [Patrick comparison](PS2_BOSS_PATRICK_SOURCE.md) adds 8,300 matched bytes /
 35 functions per debug region with only a PS2 render-header include. All 63
 original functions remain represented.
+
+Complete [PS2 Supplement comparison](PS2_SUPPLEMENT_SOURCE.md) adds 3,808 matched
+bytes / 13 functions per debug region. Authenticated version defines select the
+original 50 Hz timing in Europe/Germany; USA retains 60 Hz. The remaining source
+profiles and compiler settings are preserved.
+
+The complete [thrown-object, boulder and shrapnel comparisons](PS2_THROWN_BOULDER_SHRAPNEL_SOURCE.md)
+add 2,752 matched bytes / 24 functions per debug region without source changes.
+All these matches independently reconstruct the original bytes.
+
+The complete [cinematic effects comparison](PS2_CINEMATIC_SOURCE.md) adds 2,544
+matched bytes / 21 functions per debug region using only PS2 include selections.
+All 77 original functions retain their extents and partial scores.
