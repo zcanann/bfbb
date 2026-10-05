@@ -75,9 +75,9 @@ checked, and the standard objdiff parser accepts the result.
 
 | Version | Full code-region bytes | Objdiff code-matched bytes |
 | --- | ---: | ---: |
-| SLUS-20680 | 2,978,560 | 60,280 |
-| SLES-51968 | 2,979,712 | 60,280 |
-| SLES-51970 | 2,976,512 | 60,280 |
+| SLUS-20680 | 2,978,560 | 69,392 |
+| SLES-51968 | 2,979,712 | 69,392 |
+| SLES-51970 | 2,976,512 | 69,392 |
 | SLES-53623 | 2,979,968 | 22,468 |
 | XBOX-US | 1,798,760 | 10,653 |
 | XBOX-EU | 1,798,760 | 10,653 |
@@ -122,9 +122,9 @@ The narrower function-only baselines currently contain:
 
 | PS2 baseline | Functions | Measured function bytes | Source matches |
 | --- | ---: | ---: | ---: |
-| USA | 5,391 | 2,107,460 | 480 functions / 60,280 bytes |
-| Europe/Australia | 5,392 | 2,108,700 | 480 functions / 60,280 bytes |
-| Germany | 5,394 | 2,105,512 | 480 functions / 60,280 bytes |
+| USA | 5,391 | 2,107,460 | 557 functions / 69,392 bytes |
+| Europe/Australia | 5,392 | 2,108,700 | 557 functions / 69,392 bytes |
+| Germany | 5,394 | 2,105,512 | 557 functions / 69,392 bytes |
 | France (reviewed and corroborated bounds) | 520 | 185,308 | 139 functions / 22,468 bytes |
 
 The `address-anchors.json` registries also recover over 2,500 named data addresses
@@ -468,3 +468,6 @@ bytes per debug region; see [frame and rendering evidence](PS2_FRAME_PTANK_PICKU
 
 Xbox `find_char` adds 1,024 matched bytes per release with independently
 verified switch destinations; see [string switch evidence](XBOX_STRING_SWITCH.md).
+
+Complete PS2 Robo goal source comparison adds 9,112 matched bytes per debug
+region; see [Robo evidence](PS2_ROBO_GOALS.md).
