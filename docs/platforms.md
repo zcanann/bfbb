@@ -75,9 +75,9 @@ checked, and the standard objdiff parser accepts the result.
 
 | Version | Full code-region bytes | Objdiff code-matched bytes |
 | --- | ---: | ---: |
-| SLUS-20680 | 2,978,560 | 42,720 |
-| SLES-51968 | 2,979,712 | 42,720 |
-| SLES-51970 | 2,976,512 | 42,720 |
+| SLUS-20680 | 2,978,560 | 44,908 |
+| SLES-51968 | 2,979,712 | 44,908 |
+| SLES-51970 | 2,976,512 | 44,908 |
 | SLES-53623 | 2,979,968 | 15,924 |
 | XBOX-US | 1,798,760 | 3,354 |
 | XBOX-EU | 1,798,760 | 3,354 |
@@ -122,9 +122,9 @@ The narrower function-only baselines currently contain:
 
 | PS2 baseline | Functions | Measured function bytes | Source matches |
 | --- | ---: | ---: | ---: |
-| USA | 5,391 | 2,107,460 | 365 functions / 42,720 bytes |
-| Europe/Australia | 5,392 | 2,108,700 | 365 functions / 42,720 bytes |
-| Germany | 5,394 | 2,105,512 | 365 functions / 42,720 bytes |
+| USA | 5,391 | 2,107,460 | 383 functions / 44,908 bytes |
+| Europe/Australia | 5,392 | 2,108,700 | 383 functions / 44,908 bytes |
+| Germany | 5,394 | 2,105,512 | 383 functions / 44,908 bytes |
 | France (reviewed and corroborated bounds) | 425 | 132,224 | 100 functions / 15,924 bytes |
 
 The `address-anchors.json` registries also recover over 2,500 named data addresses
