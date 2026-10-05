@@ -7,10 +7,15 @@ struct xLightKit;
 struct RpAtomic;
 struct xQuat;
 struct xVec3;
+struct xModelTag;
 
 void iModel_SetLightKit(xLightKit* lightKit);
 void iModelRender(RpAtomic* model, RwMatrix* mat);
 
 void iModelAnimMatrices(RpAtomic* model, xQuat* quat, xVec3* tran, RwMatrix* matrices);
+
+unsigned int iModelVertEval(RpAtomic* model, unsigned int index, unsigned int count,
+                            RwMatrix* mat, xVec3* vert, xVec3* dest);
+void iModelTagEval(RpAtomic* model, const xModelTag* tag, RwMatrix* mat, xVec3* dest);
 
 #endif

@@ -4,7 +4,11 @@
 #include "xMath3.h"
 #include "xVolume.h"
 #include "xPar.h"
+#if defined(PS2)
+#include "xEntTypes.h"
+#else
 #include "xEnt.h"
+#endif
 
 struct xPECircle
 {

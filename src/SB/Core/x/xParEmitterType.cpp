@@ -401,6 +401,9 @@ void xParEmitterEmitVCylEdge(xPar* p, xParEmitterAsset* a, F32 dt)
 
 namespace
 {
+#if defined(PS2)
+    inline
+#endif
     void ocircle_emit(xPar& p, xParEmitterAsset& a, F32 dt, F32 radius);
 }
 
@@ -411,6 +414,9 @@ void xParEmitterEmitOCircleEdge(xPar* p, xParEmitterAsset* a, F32 dt)
 
 namespace
 {
+#if defined(PS2)
+    inline
+#endif
     void ocircle_emit(xPar& p, xParEmitterAsset& a, F32 dt, F32 radius)
     {
         xMat3x3 mat;
@@ -453,6 +459,9 @@ void xParEmitterEmitOCircle(xPar* p, xParEmitterAsset* a, F32 dt)
 
 namespace
 {
+#if defined(PS2)
+    inline
+#endif
     void transform_ent_bone(xVec3& loc, xVec3& vel, const xParEmitterAsset& a,
                             const xMat4x3& mat);
 }
@@ -483,6 +492,9 @@ xMat4x3* xParEmitterTransformEntBone(xVec3& loc, xVec3& vel, const xParEmitterAs
 
 namespace
 {
+#if defined(PS2)
+    inline
+#endif
     void transform_ent_bone(xVec3& loc, xVec3& vel, const xParEmitterAsset& a,
                             const xMat4x3& mat)
     {
@@ -534,6 +546,9 @@ void xParEmitterTransformEntBone(xVec3& loc, xVec3& vel, const xParEmitterAsset&
 
 namespace
 {
+#if defined(PS2)
+    inline
+#endif
     xVec3 get_random_offset(const xPEEntBone& eb, const xMat4x3& mat);
 }
 
@@ -554,6 +569,9 @@ void xParEmitterEmitEntBone(xPar* p, xParEmitterAsset* a, F32 dt, const xMat4x3&
 
 namespace
 {
+#if defined(PS2)
+    inline
+#endif
     xVec3 get_random_offset(const xPEEntBone& eb, const xMat4x3& mat)
     {
         xVec3 off;
@@ -662,6 +680,9 @@ namespace
 
 namespace
 {
+#if defined(PS2)
+    inline
+#endif
     xVec3 get_random_offset(const xBound& b, F32 expand, U32 subtype);
 }
 
@@ -694,6 +715,9 @@ void xParEmitterEmitEntBound(xPar* p, xParEmitterAsset* a, F32 dt, const xEnt* e
 
 namespace
 {
+#if defined(PS2)
+    inline
+#endif
     xVec3 get_random_offset(const xBound& b, F32 expand, U32 subtype)
     {
         xVec3 off;

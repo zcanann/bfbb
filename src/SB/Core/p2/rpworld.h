@@ -25,6 +25,65 @@ struct RpMaterialList
     RwInt32 space;
 };
 
+struct RpClump;
+struct RpGeometry;
+struct RpTriangle;
+struct RpMeshHeader;
+
+struct RpInterpolator
+{
+    signed int flags;
+    signed short startMorphTarget;
+    signed short endMorphTarget;
+    float time;
+    float recipTime;
+    float position;
+};
+
+struct RpMorphTarget
+{
+    RpGeometry* parentGeom;
+    RwSphere boundingSphere;
+    RwV3d* verts;
+    RwV3d* normals;
+};
+
+struct RpGeometry
+{
+    RwObject object;
+    unsigned int flags;
+    unsigned short lockedSinceLastInst;
+    signed short refCount;
+    signed int numTriangles;
+    signed int numVertices;
+    signed int numMorphTargets;
+    signed int numTexCoordSets;
+    RpMaterialList matList;
+    RpTriangle* triangles;
+    RwRGBA* preLitLum;
+    RwTexCoords* texCoords[8];
+    RpMeshHeader* mesh;
+    RwResEntry* repEntry;
+    RpMorphTarget* morphTarget;
+};
+
+struct RpAtomic
+{
+    RwObjectHasFrame object;
+    RwResEntry* repEntry;
+    RpGeometry* geometry;
+    RwSphere boundingSphere;
+    RwSphere worldBoundingSphere;
+    RpClump* clump;
+    RwLLLink inClumpLink;
+    RpAtomic* (*renderCallBack)(RpAtomic*);
+    RpInterpolator interpolator;
+    unsigned short renderFrame;
+    unsigned short pad;
+    RwLinkList llWorldSectorsInAtomic;
+    RxPipeline* pipeline;
+};
+
 enum RpWorldRenderOrder
 {
     rpWORLDRENDERNARENDERORDER = 0,

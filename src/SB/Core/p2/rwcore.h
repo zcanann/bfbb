@@ -14,6 +14,18 @@ struct RwV3d
     RwReal x, y, z;
 };
 
+struct RwSphere
+{
+    RwV3d center;
+    float radius;
+};
+
+struct RwTexCoords
+{
+    float u;
+    float v;
+};
+
 struct RwBBox
 {
     RwV3d sup;
@@ -91,6 +103,7 @@ enum RwOpCombineType
 struct RwCamera;
 struct RwFrame;
 struct RxPipeline;
+struct RwResEntry;
 
 extern "C" {
 RwReal RwV3dNormalize(RwV3d* out, const RwV3d* in);

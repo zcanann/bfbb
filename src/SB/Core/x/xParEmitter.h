@@ -5,7 +5,11 @@
 #include "xModel.h"
 #include "xParEmitterType.h"
 #include "xParGroup.h"
+#if defined(PS2)
+struct xParSys;
+#else
 #include "xParSys.h"
+#endif
 
 enum en_xParEmitterEmitTypes
 {
