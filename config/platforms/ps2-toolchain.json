@@ -7479,6 +7479,148 @@
           "symbol": "zCameraTweak_EventCB__FP5xBaseP5xBaseUiPCfP5xBase"
         }
       ]
+    },
+    {
+      "source": "src/SB/Core/x/xDebug.cpp",
+      "target_unit": "SB/Core/x/xDebug.cpp",
+      "object": "source/xDebug.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xDebugTimestampScreen__Fv": "xDebugTimestampScreen__Fv",
+        "xDebugExit__Fv": "xDebugExit__Fv",
+        "xDebugUpdate__Fv": "xDebugUpdate__Fv",
+        "xDebugInit__Fv": "xDebugInit__Fv",
+        "xDebugModeAdd__FPCcPFv_v": "xDebugModeAdd__FPCcPFv_v",
+        "xprintf__FPCce": "xprintf__FPCce"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/x/xParMgr.cpp",
+      "target_unit": "SB/Core/x/xParMgr.cpp",
+      "object": "source/xParMgr.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xParMgrRender__Fv": "xParMgrRender__Fv",
+        "xParMgrUpdate__Ff": "xParMgrUpdate__Ff",
+        "xParMgrInit__Fv": "xParMgrInit__Fv"
+      },
+      "calls": [
+        {
+          "function": "xParMgrRender__Fv",
+          "offset": 0,
+          "target_source": "SB/Core/p2/iParMgr.cpp",
+          "target_function": "iParMgrRender__Fv",
+          "symbol": "iParMgrRender__Fv",
+          "opcode": 2
+        },
+        {
+          "function": "xParMgrUpdate__Ff",
+          "offset": 8,
+          "target_source": "SB/Core/p2/iParMgr.cpp",
+          "target_function": "iParMgrUpdate__Ff",
+          "symbol": "iParMgrUpdate__Ff"
+        },
+        {
+          "function": "xParMgrInit__Fv",
+          "offset": 20,
+          "target_source": "SB/Core/x/xPar.cpp",
+          "target_function": "xParMemInit__Fv",
+          "symbol": "xParMemInit__Fv"
+        },
+        {
+          "function": "xParMgrInit__Fv",
+          "offset": 28,
+          "target_source": "SB/Core/p2/iParMgr.cpp",
+          "target_function": "iParMgrInit__Fv",
+          "symbol": "iParMgrInit__Fv"
+        },
+        {
+          "function": "xParMgrInit__Fv",
+          "offset": 48,
+          "target_source": "SB/Core/p2/iParMgr.cpp",
+          "target_function": "iParMgrInit__Fv",
+          "symbol": "iParMgrInit__Fv"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xParMgrUpdate__Ff",
+          "offset": 16,
+          "opcode": 35,
+          "target_name": "sFrameCount",
+          "target_source": "SB/Core/x/xParMgr.cpp",
+          "symbol": "sFrameCount"
+        },
+        {
+          "function": "xParMgrUpdate__Ff",
+          "offset": 24,
+          "opcode": 43,
+          "target_name": "sFrameCount",
+          "target_source": "SB/Core/x/xParMgr.cpp",
+          "symbol": "sFrameCount"
+        },
+        {
+          "function": "xParMgrUpdate__Ff",
+          "offset": 28,
+          "opcode": 35,
+          "target_name": "sFrameCount",
+          "target_source": "SB/Core/x/xParMgr.cpp",
+          "symbol": "sFrameCount"
+        },
+        {
+          "function": "xParMgrUpdate__Ff",
+          "offset": 48,
+          "opcode": 43,
+          "target_name": "sFrameCount",
+          "target_source": "SB/Core/x/xParMgr.cpp",
+          "symbol": "sFrameCount"
+        },
+        {
+          "function": "xParMgrUpdate__Ff",
+          "offset": 88,
+          "opcode": 43,
+          "target_name": "sFrameCount",
+          "target_source": "SB/Core/x/xParMgr.cpp",
+          "symbol": "sFrameCount"
+        },
+        {
+          "function": "xParMgrUpdate__Ff",
+          "offset": 100,
+          "opcode": 35,
+          "target_name": "sFrameCount",
+          "target_source": "SB/Core/x/xParMgr.cpp",
+          "symbol": "sFrameCount"
+        },
+        {
+          "function": "xParMgrInit__Fv",
+          "offset": 8,
+          "opcode": 35,
+          "target_name": "sParMgrInit",
+          "target_source": "SB/Core/x/xParMgr.cpp",
+          "symbol": "sParMgrInit"
+        },
+        {
+          "function": "xParMgrInit__Fv",
+          "offset": 44,
+          "opcode": 43,
+          "target_name": "sParMgrInit",
+          "target_source": "SB/Core/x/xParMgr.cpp",
+          "symbol": "sParMgrInit"
+        }
+      ],
+      "address_pairs": []
     }
   ]
 }
