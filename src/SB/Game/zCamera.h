@@ -5,7 +5,11 @@
 #include "zCameraTuning.h"
 #include "zCameraControl.h"
 
+#if defined(PS2)
+#include <math.h>
+#else
 #include <PowerPC_EABI_Support\MSL_C\MSL_Common\cmath>
+#endif
 
 enum WallJumpViewState
 {
