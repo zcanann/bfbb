@@ -32,14 +32,15 @@
     "QuickCull adds only two Init overloads using all eleven original members and nine independently confirmed neighbors. The 28-byte wrapper is exactly six argument loads and a terminal J to the adjacent strictly closed initializer; generic CFG checks remain strict.",
     "SKB adds Duration and Eval using the complete four-member sequence and two independently confirmed neighbors. All bodies satisfy the unchanged strict CFG checks; original DWARF and all 96 bytes prove the sole changed slerpPolynomial address.",
     "FFX adds seven members using all fourteen original functions and seven independently confirmed neighbors. Allocator context decodes original JALs from at least two other source units; unchanged opaque math calls remain unmasked and unnamed. Strict CFG checks remain unchanged.",
-    "Platform geometry adds nine members using all fifteen original functions and six independently confirmed neighbors. Two opaque runtime calls retain literal unmasked JAL words and identical context only; no new callee identity, extent, or CFG exception is introduced."
+    "Platform geometry adds nine members using all fifteen original functions and six independently confirmed neighbors. Two opaque runtime calls retain literal unmasked JAL words and identical context only; no new callee identity, extent, or CFG exception is introduced.",
+    "Strings adds four members from the complete twelve-member sequence, preserving eight prior neighbors. One exact twelve-entry dispatch uses the existing strict recognizer. The sole xatof call is corroborated by a complete six-member original math-tail sequence with three independent neighbors; its literal runtime tail remains unmasked context only, not a new anchor or progress extent."
   ],
   "counts": {
-    "functions": 326,
-    "code_bytes": 154460,
-    "source_units": 16,
+    "functions": 330,
+    "code_bytes": 156936,
+    "source_units": 17,
     "rooted_direct_call_entries": 129,
-    "closed_return_bodies": 312,
+    "closed_return_bodies": 316,
     "reviewed_tail_wrappers": 2,
     "registered_callback_entries": 26,
     "reviewed_leaf_tail_functions": 11,
@@ -56,7 +57,8 @@
     "complete_external_table_methods": 11,
     "header_context_bodies_not_promoted": 2,
     "reviewed_grid_arrays": 1,
-    "reviewed_skb_polynomials": 1
+    "reviewed_skb_polynomials": 1,
+    "reviewed_string_dispatch_tables": 1
   },
   "sequence_proofs": [
     {
@@ -1017,6 +1019,57 @@
         "unchanged_anchor_offset": 1608,
         "unchanged_anchor_bytes": 4012,
         "masked_instruction_count": 8
+      }
+    },
+    {
+      "version": "SLUS-20680",
+      "source": "SB/Core/x/xString.cpp",
+      "source_start": 2153888,
+      "target_start": 2155296,
+      "complete_original_members": 12,
+      "previously_confirmed_members": 8,
+      "sequence_bytes_with_alignment": 3992,
+      "uniqueness": {
+        "matching_addresses": [
+          2155296
+        ],
+        "unchanged_anchor_offset": 56,
+        "unchanged_anchor_bytes": 2504,
+        "masked_instruction_count": 2
+      }
+    },
+    {
+      "version": "SLES-51968",
+      "source": "SB/Core/x/xString.cpp",
+      "source_start": 2155184,
+      "target_start": 2155296,
+      "complete_original_members": 12,
+      "previously_confirmed_members": 8,
+      "sequence_bytes_with_alignment": 3992,
+      "uniqueness": {
+        "matching_addresses": [
+          2155296
+        ],
+        "unchanged_anchor_offset": 56,
+        "unchanged_anchor_bytes": 2504,
+        "masked_instruction_count": 2
+      }
+    },
+    {
+      "version": "SLES-51970",
+      "source": "SB/Core/x/xString.cpp",
+      "source_start": 2151840,
+      "target_start": 2155296,
+      "complete_original_members": 12,
+      "previously_confirmed_members": 8,
+      "sequence_bytes_with_alignment": 3992,
+      "uniqueness": {
+        "matching_addresses": [
+          2155296
+        ],
+        "unchanged_anchor_offset": 56,
+        "unchanged_anchor_bytes": 2504,
+        "masked_instruction_count": 2
       }
     }
   ],
@@ -11900,6 +11953,228 @@
       "opcode": 3,
       "reference_address": 2020928,
       "target_address": 2024400,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 2157456,
+      "offset": 400,
+      "opcode": 3,
+      "reference_address": 2023456,
+      "target_address": 2024816,
+      "math_tail_context": {
+        "members": [
+          {
+            "name": "xurand",
+            "reference_address": 2023312,
+            "address": 2024672,
+            "size": 88,
+            "sha256": "3e323fa3cc1e96c881b5a7d26340b812a5243712128688801a9824d0ed172e6d",
+            "context_only": true
+          },
+          {
+            "name": "xrand",
+            "reference_address": 2023408,
+            "address": 2024768,
+            "size": 32,
+            "sha256": "c6de5ee3ff2914970ab3b0189f378c913c1f367ac2458464eaf4594f15703dd2",
+            "context_only": true
+          },
+          {
+            "name": "xsrand",
+            "reference_address": 2023440,
+            "address": 2024800,
+            "size": 8,
+            "sha256": "512deaf24d1ba4ba69d0ad1e1ce45cc3af9dfb122009df6690f7231c95abac2e",
+            "context_only": true
+          },
+          {
+            "name": "xatof",
+            "reference_address": 2023456,
+            "address": 2024816,
+            "size": 8,
+            "sha256": "a77fad0b4f6fc124dba9e50d5449b42705ec463d7bfccdc267624ef92f22b0d5",
+            "context_only": true,
+            "opaque_destination": 1133496,
+            "opaque_context_bytes": 64,
+            "opaque_context_sha256": "b60fec20624fc96e738dc9872902624651a2e837158de0a6986cccfcf6f4c3d8",
+            "transfer_word_unmasked": true
+          },
+          {
+            "name": "xMathExit",
+            "reference_address": 2023472,
+            "address": 2024832,
+            "size": 24,
+            "sha256": "0ce74090b482743eed98076f9c25742778ffef131fa353fd5c2250c1106f6961",
+            "context_only": true
+          },
+          {
+            "name": "xMathInit",
+            "reference_address": 2023504,
+            "address": 2024864,
+            "size": 32,
+            "sha256": "a1ceb8d61ee98a0e015799dbd1a849f7cec4fd13403dda577aa10fc8ca5c4f41",
+            "context_only": true
+          }
+        ],
+        "uniqueness": {
+          "matching_addresses": [
+            2024672
+          ],
+          "unchanged_anchor_offset": 0,
+          "unchanged_anchor_bytes": 224,
+          "masked_instruction_count": 0
+        },
+        "no_progress_or_new_anchor": true
+      },
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 2157456,
+      "offset": 400,
+      "opcode": 3,
+      "reference_address": 2024704,
+      "target_address": 2024816,
+      "math_tail_context": {
+        "members": [
+          {
+            "name": "xurand",
+            "reference_address": 2024560,
+            "address": 2024672,
+            "size": 88,
+            "sha256": "3e323fa3cc1e96c881b5a7d26340b812a5243712128688801a9824d0ed172e6d",
+            "context_only": true
+          },
+          {
+            "name": "xrand",
+            "reference_address": 2024656,
+            "address": 2024768,
+            "size": 32,
+            "sha256": "c6de5ee3ff2914970ab3b0189f378c913c1f367ac2458464eaf4594f15703dd2",
+            "context_only": true
+          },
+          {
+            "name": "xsrand",
+            "reference_address": 2024688,
+            "address": 2024800,
+            "size": 8,
+            "sha256": "512deaf24d1ba4ba69d0ad1e1ce45cc3af9dfb122009df6690f7231c95abac2e",
+            "context_only": true
+          },
+          {
+            "name": "xatof",
+            "reference_address": 2024704,
+            "address": 2024816,
+            "size": 8,
+            "sha256": "a77fad0b4f6fc124dba9e50d5449b42705ec463d7bfccdc267624ef92f22b0d5",
+            "context_only": true,
+            "opaque_destination": 1133496,
+            "opaque_context_bytes": 64,
+            "opaque_context_sha256": "b60fec20624fc96e738dc9872902624651a2e837158de0a6986cccfcf6f4c3d8",
+            "transfer_word_unmasked": true
+          },
+          {
+            "name": "xMathExit",
+            "reference_address": 2024720,
+            "address": 2024832,
+            "size": 24,
+            "sha256": "0ce74090b482743eed98076f9c25742778ffef131fa353fd5c2250c1106f6961",
+            "context_only": true
+          },
+          {
+            "name": "xMathInit",
+            "reference_address": 2024752,
+            "address": 2024864,
+            "size": 32,
+            "sha256": "a1ceb8d61ee98a0e015799dbd1a849f7cec4fd13403dda577aa10fc8ca5c4f41",
+            "context_only": true
+          }
+        ],
+        "uniqueness": {
+          "matching_addresses": [
+            2024672
+          ],
+          "unchanged_anchor_offset": 0,
+          "unchanged_anchor_bytes": 224,
+          "masked_instruction_count": 0
+        },
+        "no_progress_or_new_anchor": true
+      },
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 2157456,
+      "offset": 400,
+      "opcode": 3,
+      "reference_address": 2021344,
+      "target_address": 2024816,
+      "math_tail_context": {
+        "members": [
+          {
+            "name": "xurand",
+            "reference_address": 2021200,
+            "address": 2024672,
+            "size": 88,
+            "sha256": "3e323fa3cc1e96c881b5a7d26340b812a5243712128688801a9824d0ed172e6d",
+            "context_only": true
+          },
+          {
+            "name": "xrand",
+            "reference_address": 2021296,
+            "address": 2024768,
+            "size": 32,
+            "sha256": "c6de5ee3ff2914970ab3b0189f378c913c1f367ac2458464eaf4594f15703dd2",
+            "context_only": true
+          },
+          {
+            "name": "xsrand",
+            "reference_address": 2021328,
+            "address": 2024800,
+            "size": 8,
+            "sha256": "512deaf24d1ba4ba69d0ad1e1ce45cc3af9dfb122009df6690f7231c95abac2e",
+            "context_only": true
+          },
+          {
+            "name": "xatof",
+            "reference_address": 2021344,
+            "address": 2024816,
+            "size": 8,
+            "sha256": "a77fad0b4f6fc124dba9e50d5449b42705ec463d7bfccdc267624ef92f22b0d5",
+            "context_only": true,
+            "opaque_destination": 1133496,
+            "opaque_context_bytes": 64,
+            "opaque_context_sha256": "b60fec20624fc96e738dc9872902624651a2e837158de0a6986cccfcf6f4c3d8",
+            "transfer_word_unmasked": true
+          },
+          {
+            "name": "xMathExit",
+            "reference_address": 2021360,
+            "address": 2024832,
+            "size": 24,
+            "sha256": "0ce74090b482743eed98076f9c25742778ffef131fa353fd5c2250c1106f6961",
+            "context_only": true
+          },
+          {
+            "name": "xMathInit",
+            "reference_address": 2021392,
+            "address": 2024864,
+            "size": 32,
+            "sha256": "a1ceb8d61ee98a0e015799dbd1a849f7cec4fd13403dda577aa10fc8ca5c4f41",
+            "context_only": true
+          }
+        ],
+        "uniqueness": {
+          "matching_addresses": [
+            2024672
+          ],
+          "unchanged_anchor_offset": 0,
+          "unchanged_anchor_bytes": 224,
+          "masked_instruction_count": 0
+        },
+        "no_progress_or_new_anchor": true
+      },
       "promoted_as_named_anchor": false
     }
   ],
@@ -61534,6 +61809,1260 @@
       }
     },
     {
+      "name": "find_char",
+      "source": "SB/Core/x/xString.cpp",
+      "address": 2155296,
+      "size": 1648,
+      "sha256": "f84246052e2cd6905cc8b7e154e3a15a328ee92437128f3a050a875399fe3af5",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2153888,
+          "name": "find_char",
+          "source": "SB/Core/x/xString.cpp",
+          "linkage_name": "find_char__FRC6substrRC6substr",
+          "reference_sha256": "90a5aa224b95dc0bb56ea4de3a788b8761884f2cf6d64e47a3b3c296591261ed",
+          "data_address_operands": [
+            {
+              "hi_offset": 44,
+              "lo_offset": 52,
+              "opcode": 9,
+              "reference_address": 5215424,
+              "target_address": 5214448,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [],
+          "dispatch_tables": [
+            {
+              "jump_offset": 64,
+              "index_count": 12,
+              "test_offset": 36,
+              "default_offset": 1544,
+              "table_address": 5215424,
+              "table_sha256": "4037a6944d061ba92b4124fd1e106f2a79de9ba657bd46f4d6143b6d4dae120b",
+              "target_offsets": [
+                1632,
+                72,
+                144,
+                232,
+                328,
+                440,
+                560,
+                696,
+                840,
+                1000,
+                1168,
+                1352
+              ]
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2155184,
+          "name": "find_char",
+          "source": "SB/Core/x/xString.cpp",
+          "linkage_name": "find_char__FRC6substrRC6substr",
+          "reference_sha256": "2ca87911531aff72ea9bc4a304bd0edf77767fb461fd12fde924ded396c74324",
+          "data_address_operands": [
+            {
+              "hi_offset": 44,
+              "lo_offset": 52,
+              "opcode": 9,
+              "reference_address": 5214192,
+              "target_address": 5214448,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [],
+          "dispatch_tables": [
+            {
+              "jump_offset": 64,
+              "index_count": 12,
+              "test_offset": 36,
+              "default_offset": 1544,
+              "table_address": 5214192,
+              "table_sha256": "4fdf4717382214e9b85065b33a037ff6da3da7e6fa0d06f1de43650e6ef71661",
+              "target_offsets": [
+                1632,
+                72,
+                144,
+                232,
+                328,
+                440,
+                560,
+                696,
+                840,
+                1000,
+                1168,
+                1352
+              ]
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2151840,
+          "name": "find_char",
+          "source": "SB/Core/x/xString.cpp",
+          "linkage_name": "find_char__FRC6substrRC6substr",
+          "reference_sha256": "34c1d239fc54557b8a75738fc43796ab3cd5bff4d93d368117171b5da3213d5d",
+          "data_address_operands": [
+            {
+              "hi_offset": 44,
+              "lo_offset": 52,
+              "opcode": 9,
+              "reference_address": 5212704,
+              "target_address": 5214448,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [],
+          "dispatch_tables": [
+            {
+              "jump_offset": 64,
+              "index_count": 12,
+              "test_offset": 36,
+              "default_offset": 1544,
+              "table_address": 5212704,
+              "table_sha256": "0d334613f3dce8020bd62b0bfea69322002226311cb05c954b83b9fe9828e222",
+              "target_offsets": [
+                1632,
+                72,
+                144,
+                232,
+                328,
+                440,
+                560,
+                696,
+                840,
+                1000,
+                1168,
+                1352
+              ]
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2156936
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              2155300,
+              2155320
+            ],
+            [
+              2155312,
+              2155328
+            ],
+            [
+              2155320,
+              2156936
+            ],
+            [
+              2155336,
+              2156840
+            ],
+            [
+              2155360,
+              2155368
+            ],
+            [
+              2155360,
+              2155440
+            ],
+            [
+              2155360,
+              2155528
+            ],
+            [
+              2155360,
+              2155624
+            ],
+            [
+              2155360,
+              2155736
+            ],
+            [
+              2155360,
+              2155856
+            ],
+            [
+              2155360,
+              2155992
+            ],
+            [
+              2155360,
+              2156136
+            ],
+            [
+              2155360,
+              2156296
+            ],
+            [
+              2155360,
+              2156464
+            ],
+            [
+              2155360,
+              2156648
+            ],
+            [
+              2155360,
+              2156928
+            ],
+            [
+              2155368,
+              2155408
+            ],
+            [
+              2155384,
+              2155400
+            ],
+            [
+              2155392,
+              2156936
+            ],
+            [
+              2155408,
+              2156928
+            ],
+            [
+              2155420,
+              2155376
+            ],
+            [
+              2155428,
+              2156928
+            ],
+            [
+              2155440,
+              2155496
+            ],
+            [
+              2155456,
+              2155480
+            ],
+            [
+              2155468,
+              2155488
+            ],
+            [
+              2155480,
+              2156936
+            ],
+            [
+              2155496,
+              2156928
+            ],
+            [
+              2155508,
+              2155448
+            ],
+            [
+              2155516,
+              2156928
+            ],
+            [
+              2155528,
+              2155592
+            ],
+            [
+              2155544,
+              2155576
+            ],
+            [
+              2155556,
+              2155576
+            ],
+            [
+              2155568,
+              2155584
+            ],
+            [
+              2155576,
+              2156936
+            ],
+            [
+              2155592,
+              2156928
+            ],
+            [
+              2155604,
+              2155536
+            ],
+            [
+              2155612,
+              2156928
+            ],
+            [
+              2155624,
+              2155704
+            ],
+            [
+              2155640,
+              2155688
+            ],
+            [
+              2155652,
+              2155688
+            ],
+            [
+              2155664,
+              2155688
+            ],
+            [
+              2155676,
+              2155696
+            ],
+            [
+              2155688,
+              2156936
+            ],
+            [
+              2155704,
+              2156928
+            ],
+            [
+              2155716,
+              2155632
+            ],
+            [
+              2155724,
+              2156928
+            ],
+            [
+              2155736,
+              2155824
+            ],
+            [
+              2155752,
+              2155808
+            ],
+            [
+              2155764,
+              2155808
+            ],
+            [
+              2155776,
+              2155808
+            ],
+            [
+              2155788,
+              2155808
+            ],
+            [
+              2155800,
+              2155816
+            ],
+            [
+              2155808,
+              2156936
+            ],
+            [
+              2155824,
+              2156928
+            ],
+            [
+              2155836,
+              2155744
+            ],
+            [
+              2155844,
+              2156928
+            ],
+            [
+              2155856,
+              2155960
+            ],
+            [
+              2155872,
+              2155944
+            ],
+            [
+              2155884,
+              2155944
+            ],
+            [
+              2155896,
+              2155944
+            ],
+            [
+              2155908,
+              2155944
+            ],
+            [
+              2155920,
+              2155944
+            ],
+            [
+              2155932,
+              2155952
+            ],
+            [
+              2155944,
+              2156936
+            ],
+            [
+              2155960,
+              2156928
+            ],
+            [
+              2155972,
+              2155864
+            ],
+            [
+              2155980,
+              2156928
+            ],
+            [
+              2155992,
+              2156104
+            ],
+            [
+              2156008,
+              2156088
+            ],
+            [
+              2156020,
+              2156088
+            ],
+            [
+              2156032,
+              2156088
+            ],
+            [
+              2156044,
+              2156088
+            ],
+            [
+              2156056,
+              2156088
+            ],
+            [
+              2156068,
+              2156088
+            ],
+            [
+              2156080,
+              2156096
+            ],
+            [
+              2156088,
+              2156936
+            ],
+            [
+              2156104,
+              2156928
+            ],
+            [
+              2156116,
+              2156000
+            ],
+            [
+              2156124,
+              2156928
+            ],
+            [
+              2156136,
+              2156264
+            ],
+            [
+              2156152,
+              2156248
+            ],
+            [
+              2156164,
+              2156248
+            ],
+            [
+              2156176,
+              2156248
+            ],
+            [
+              2156188,
+              2156248
+            ],
+            [
+              2156200,
+              2156248
+            ],
+            [
+              2156212,
+              2156248
+            ],
+            [
+              2156224,
+              2156248
+            ],
+            [
+              2156236,
+              2156256
+            ],
+            [
+              2156248,
+              2156936
+            ],
+            [
+              2156264,
+              2156928
+            ],
+            [
+              2156276,
+              2156144
+            ],
+            [
+              2156284,
+              2156928
+            ],
+            [
+              2156296,
+              2156432
+            ],
+            [
+              2156312,
+              2156416
+            ],
+            [
+              2156324,
+              2156416
+            ],
+            [
+              2156336,
+              2156416
+            ],
+            [
+              2156348,
+              2156416
+            ],
+            [
+              2156360,
+              2156416
+            ],
+            [
+              2156372,
+              2156416
+            ],
+            [
+              2156384,
+              2156416
+            ],
+            [
+              2156396,
+              2156416
+            ],
+            [
+              2156408,
+              2156424
+            ],
+            [
+              2156416,
+              2156936
+            ],
+            [
+              2156432,
+              2156928
+            ],
+            [
+              2156444,
+              2156304
+            ],
+            [
+              2156452,
+              2156928
+            ],
+            [
+              2156464,
+              2156616
+            ],
+            [
+              2156480,
+              2156600
+            ],
+            [
+              2156492,
+              2156600
+            ],
+            [
+              2156504,
+              2156600
+            ],
+            [
+              2156516,
+              2156600
+            ],
+            [
+              2156528,
+              2156600
+            ],
+            [
+              2156540,
+              2156600
+            ],
+            [
+              2156552,
+              2156600
+            ],
+            [
+              2156564,
+              2156600
+            ],
+            [
+              2156576,
+              2156600
+            ],
+            [
+              2156588,
+              2156608
+            ],
+            [
+              2156600,
+              2156936
+            ],
+            [
+              2156616,
+              2156928
+            ],
+            [
+              2156628,
+              2156472
+            ],
+            [
+              2156636,
+              2156928
+            ],
+            [
+              2156648,
+              2156808
+            ],
+            [
+              2156664,
+              2156792
+            ],
+            [
+              2156676,
+              2156792
+            ],
+            [
+              2156688,
+              2156792
+            ],
+            [
+              2156700,
+              2156792
+            ],
+            [
+              2156712,
+              2156792
+            ],
+            [
+              2156724,
+              2156792
+            ],
+            [
+              2156736,
+              2156792
+            ],
+            [
+              2156748,
+              2156792
+            ],
+            [
+              2156760,
+              2156792
+            ],
+            [
+              2156772,
+              2156792
+            ],
+            [
+              2156784,
+              2156800
+            ],
+            [
+              2156792,
+              2156936
+            ],
+            [
+              2156808,
+              2156928
+            ],
+            [
+              2156820,
+              2156656
+            ],
+            [
+              2156828,
+              2156928
+            ],
+            [
+              2156840,
+              2156904
+            ],
+            [
+              2156852,
+              2156896
+            ],
+            [
+              2156864,
+              2156880
+            ],
+            [
+              2156872,
+              2156936
+            ],
+            [
+              2156888,
+              2156864
+            ],
+            [
+              2156904,
+              2156928
+            ],
+            [
+              2156916,
+              2156848
+            ]
+          ],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [
+            2155436,
+            2155524,
+            2155620,
+            2155732,
+            2155852,
+            2155988,
+            2156132,
+            2156292,
+            2156460,
+            2156644,
+            2156836
+          ],
+          "following_zero_alignment": 0
+        },
+        "dispatch_tables": [
+          {
+            "jump_offset": 64,
+            "index_count": 12,
+            "test_offset": 36,
+            "default_offset": 1544,
+            "table_address": 5214448,
+            "table_sha256": "6a983b144fdcfb0cd08359edf32a140f3cac899820308f7b477c5271f0f18dbd",
+            "target_offsets": [
+              1632,
+              72,
+              144,
+              232,
+              328,
+              440,
+              560,
+              696,
+              840,
+              1000,
+              1168,
+              1352
+            ]
+          }
+        ],
+        "previously_confirmed_neighbor_entries": [
+          2157152,
+          2157984,
+          2158080,
+          2158336,
+          2158672,
+          2158992,
+          2159088,
+          2159200
+        ]
+      }
+    },
+    {
+      "name": "atox",
+      "source": "SB/Core/x/xString.cpp",
+      "address": 2156944,
+      "size": 200,
+      "sha256": "f16464c0a77120ff61c942a9f22fbf237331f3860ba6665ba4076403309475f2",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2155536,
+          "name": "atox",
+          "source": "SB/Core/x/xString.cpp",
+          "linkage_name": "atox__FRC6substrRUi",
+          "reference_sha256": "f16464c0a77120ff61c942a9f22fbf237331f3860ba6665ba4076403309475f2",
+          "data_address_operands": [],
+          "direct_transfers": [],
+          "dispatch_tables": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2156832,
+          "name": "atox",
+          "source": "SB/Core/x/xString.cpp",
+          "linkage_name": "atox__FRC6substrRUi",
+          "reference_sha256": "f16464c0a77120ff61c942a9f22fbf237331f3860ba6665ba4076403309475f2",
+          "data_address_operands": [],
+          "direct_transfers": [],
+          "dispatch_tables": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2153488,
+          "name": "atox",
+          "source": "SB/Core/x/xString.cpp",
+          "linkage_name": "atox__FRC6substrRUi",
+          "reference_sha256": "f16464c0a77120ff61c942a9f22fbf237331f3860ba6665ba4076403309475f2",
+          "data_address_operands": [],
+          "direct_transfers": [],
+          "dispatch_tables": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2157136
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              2156948,
+              2156968
+            ],
+            [
+              2156956,
+              2157136
+            ],
+            [
+              2156972,
+              2156984
+            ],
+            [
+              2156996,
+              2157136
+            ],
+            [
+              2157016,
+              2157040
+            ],
+            [
+              2157024,
+              2157040
+            ],
+            [
+              2157032,
+              2157096
+            ],
+            [
+              2157044,
+              2157072
+            ],
+            [
+              2157052,
+              2157072
+            ],
+            [
+              2157060,
+              2157096
+            ],
+            [
+              2157076,
+              2157136
+            ],
+            [
+              2157084,
+              2157136
+            ],
+            [
+              2157124,
+              2157008
+            ]
+          ],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [
+            2156964,
+            2157068
+          ],
+          "following_zero_alignment": 8
+        },
+        "dispatch_tables": [],
+        "previously_confirmed_neighbor_entries": [
+          2157152,
+          2157984,
+          2158080,
+          2158336,
+          2158672,
+          2158992,
+          2159088,
+          2159200
+        ]
+      }
+    },
+    {
+      "name": "imemcmp",
+      "source": "SB/Core/x/xString.cpp",
+      "address": 2157344,
+      "size": 104,
+      "sha256": "57116d48a02cdd4e5830beab0acc9db02744a8be37a48479e5e2c63f9937e49c",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2155936,
+          "name": "imemcmp",
+          "source": "SB/Core/x/xString.cpp",
+          "linkage_name": "imemcmp__FPCvPCvUi",
+          "reference_sha256": "57116d48a02cdd4e5830beab0acc9db02744a8be37a48479e5e2c63f9937e49c",
+          "data_address_operands": [],
+          "direct_transfers": [],
+          "dispatch_tables": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2157232,
+          "name": "imemcmp",
+          "source": "SB/Core/x/xString.cpp",
+          "linkage_name": "imemcmp__FPCvPCvUi",
+          "reference_sha256": "57116d48a02cdd4e5830beab0acc9db02744a8be37a48479e5e2c63f9937e49c",
+          "data_address_operands": [],
+          "direct_transfers": [],
+          "dispatch_tables": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2153888,
+          "name": "imemcmp",
+          "source": "SB/Core/x/xString.cpp",
+          "linkage_name": "imemcmp__FPCvPCvUi",
+          "reference_sha256": "57116d48a02cdd4e5830beab0acc9db02744a8be37a48479e5e2c63f9937e49c",
+          "data_address_operands": [],
+          "direct_transfers": [],
+          "dispatch_tables": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2157440
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              2157348,
+              2157432
+            ],
+            [
+              2157392,
+              2157408
+            ],
+            [
+              2157400,
+              2157440
+            ],
+            [
+              2157420,
+              2157360
+            ]
+          ],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 8
+        },
+        "dispatch_tables": [],
+        "previously_confirmed_neighbor_entries": [
+          2157152,
+          2157984,
+          2158080,
+          2158336,
+          2158672,
+          2158992,
+          2159088,
+          2159200
+        ]
+      }
+    },
+    {
+      "name": "xStrParseFloatList",
+      "source": "SB/Core/x/xString.cpp",
+      "address": 2157456,
+      "size": 524,
+      "sha256": "2c32e0aa0993fbc8b54109160b58d96e65b53e9b590c48417b846586c7c8b5ef",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2156048,
+          "name": "xStrParseFloatList",
+          "source": "SB/Core/x/xString.cpp",
+          "linkage_name": "xStrParseFloatList__FPfPCci",
+          "reference_sha256": "7f95405de6655c520e6d50f5d3536e458b0c754858c7e0a8ab9707bd6a27b263",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 400,
+              "opcode": 3,
+              "reference_address": 2023456,
+              "target_address": 2024816
+            }
+          ],
+          "dispatch_tables": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2157344,
+          "name": "xStrParseFloatList",
+          "source": "SB/Core/x/xString.cpp",
+          "linkage_name": "xStrParseFloatList__FPfPCci",
+          "reference_sha256": "f8278a00fa4a65f4897376a8543ab6e5bbcc9a6f117d8aed6f27fcffc73a2809",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 400,
+              "opcode": 3,
+              "reference_address": 2024704,
+              "target_address": 2024816
+            }
+          ],
+          "dispatch_tables": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2154000,
+          "name": "xStrParseFloatList",
+          "source": "SB/Core/x/xString.cpp",
+          "linkage_name": "xStrParseFloatList__FPfPCci",
+          "reference_sha256": "19678ed616315891cbd298cea5217e4524cefedfd26ffaec713fedbcb9d65f2a",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 400,
+              "opcode": 3,
+              "reference_address": 2021344,
+              "target_address": 2024816
+            }
+          ],
+          "dispatch_tables": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2157972
+          ],
+          "direct_or_indirect_calls": [
+            2157856
+          ],
+          "branches": [
+            [
+              2157492,
+              2157512
+            ],
+            [
+              2157500,
+              2157944
+            ],
+            [
+              2157516,
+              2157904
+            ],
+            [
+              2157544,
+              2157528
+            ],
+            [
+              2157552,
+              2157528
+            ],
+            [
+              2157560,
+              2157528
+            ],
+            [
+              2157572,
+              2157528
+            ],
+            [
+              2157580,
+              2157528
+            ],
+            [
+              2157592,
+              2157528
+            ],
+            [
+              2157604,
+              2157528
+            ],
+            [
+              2157620,
+              2157528
+            ],
+            [
+              2157632,
+              2157528
+            ],
+            [
+              2157640,
+              2157656
+            ],
+            [
+              2157648,
+              2157944
+            ],
+            [
+              2157660,
+              2157720
+            ],
+            [
+              2157668,
+              2157688
+            ],
+            [
+              2157692,
+              2157680
+            ],
+            [
+              2157704,
+              2157680
+            ],
+            [
+              2157712,
+              2157728
+            ],
+            [
+              2157740,
+              2157784
+            ],
+            [
+              2157756,
+              2157776
+            ],
+            [
+              2157764,
+              2157776
+            ],
+            [
+              2157792,
+              2157808
+            ],
+            [
+              2157800,
+              2157752
+            ],
+            [
+              2157808,
+              2157752
+            ],
+            [
+              2157816,
+              2157752
+            ],
+            [
+              2157828,
+              2157752
+            ],
+            [
+              2157836,
+              2157856
+            ],
+            [
+              2157844,
+              2157944
+            ],
+            [
+              2157864,
+              2157888
+            ],
+            [
+              2157916,
+              2157936
+            ],
+            [
+              2157924,
+              2157536
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              2157456,
+              -112
+            ],
+            [
+              2157976,
+              112
+            ]
+          ],
+          "ra_saves": [
+            [
+              2157460,
+              -16
+            ]
+          ],
+          "ra_loads": [
+            [
+              2157944,
+              -16
+            ]
+          ],
+          "unreachable_zero_words": [
+            2157508,
+            2157524,
+            2157676,
+            2157748,
+            2157852
+          ],
+          "following_zero_alignment": 4
+        },
+        "dispatch_tables": [],
+        "previously_confirmed_neighbor_entries": [
+          2157152,
+          2157984,
+          2158080,
+          2158336,
+          2158672,
+          2158992,
+          2159088,
+          2159200
+        ]
+      }
+    },
+    {
       "name": "xAnimPoolFree",
       "source": "SB/Core/x/xAnim.cpp",
       "address": 2166256,
@@ -96816,6 +98345,149 @@
       "subscript_descriptor": "000a0000000000170000000855000e00",
       "target_address": 4286624,
       "sha256": "9d2693f17cbdcbe309101a9a44057461aa238c0cbbb8a997f12be1ffbed56314"
+    }
+  ],
+  "string_dispatch_proofs": [
+    {
+      "version": "SLUS-20680",
+      "reference": {
+        "jump_offset": 64,
+        "index_count": 12,
+        "test_offset": 36,
+        "default_offset": 1544,
+        "table_address": 5215424,
+        "table_sha256": "4037a6944d061ba92b4124fd1e106f2a79de9ba657bd46f4d6143b6d4dae120b",
+        "target_offsets": [
+          1632,
+          72,
+          144,
+          232,
+          328,
+          440,
+          560,
+          696,
+          840,
+          1000,
+          1168,
+          1352
+        ]
+      },
+      "target": {
+        "jump_offset": 64,
+        "index_count": 12,
+        "test_offset": 36,
+        "default_offset": 1544,
+        "table_address": 5214448,
+        "table_sha256": "6a983b144fdcfb0cd08359edf32a140f3cac899820308f7b477c5271f0f18dbd",
+        "target_offsets": [
+          1632,
+          72,
+          144,
+          232,
+          328,
+          440,
+          560,
+          696,
+          840,
+          1000,
+          1168,
+          1352
+        ]
+      }
+    },
+    {
+      "version": "SLES-51968",
+      "reference": {
+        "jump_offset": 64,
+        "index_count": 12,
+        "test_offset": 36,
+        "default_offset": 1544,
+        "table_address": 5214192,
+        "table_sha256": "4fdf4717382214e9b85065b33a037ff6da3da7e6fa0d06f1de43650e6ef71661",
+        "target_offsets": [
+          1632,
+          72,
+          144,
+          232,
+          328,
+          440,
+          560,
+          696,
+          840,
+          1000,
+          1168,
+          1352
+        ]
+      },
+      "target": {
+        "jump_offset": 64,
+        "index_count": 12,
+        "test_offset": 36,
+        "default_offset": 1544,
+        "table_address": 5214448,
+        "table_sha256": "6a983b144fdcfb0cd08359edf32a140f3cac899820308f7b477c5271f0f18dbd",
+        "target_offsets": [
+          1632,
+          72,
+          144,
+          232,
+          328,
+          440,
+          560,
+          696,
+          840,
+          1000,
+          1168,
+          1352
+        ]
+      }
+    },
+    {
+      "version": "SLES-51970",
+      "reference": {
+        "jump_offset": 64,
+        "index_count": 12,
+        "test_offset": 36,
+        "default_offset": 1544,
+        "table_address": 5212704,
+        "table_sha256": "0d334613f3dce8020bd62b0bfea69322002226311cb05c954b83b9fe9828e222",
+        "target_offsets": [
+          1632,
+          72,
+          144,
+          232,
+          328,
+          440,
+          560,
+          696,
+          840,
+          1000,
+          1168,
+          1352
+        ]
+      },
+      "target": {
+        "jump_offset": 64,
+        "index_count": 12,
+        "test_offset": 36,
+        "default_offset": 1544,
+        "table_address": 5214448,
+        "table_sha256": "6a983b144fdcfb0cd08359edf32a140f3cac899820308f7b477c5271f0f18dbd",
+        "target_offsets": [
+          1632,
+          72,
+          144,
+          232,
+          328,
+          440,
+          560,
+          696,
+          840,
+          1000,
+          1168,
+          1352
+        ]
+      }
     }
   ]
 }
