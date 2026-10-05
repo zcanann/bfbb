@@ -134,7 +134,14 @@ struct xVec3
 F32 xVec3Normalize(xVec3* o, const xVec3* v);
 F32 xVec3NormalizeFast(xVec3* o, const xVec3* v);
 void xVec3Copy(xVec3* dst, const xVec3* src);
+#if defined(PS2)
+inline F32 xVec3Dot(const xVec3* a, const xVec3* b)
+{
+    return a->x * b->x + a->y * b->y + a->z * b->z;
+}
+#else
 F32 xVec3Dot(const xVec3* a, const xVec3* b);
+#endif
 
 inline xVec3& xVec3::assign(float dt)
 {

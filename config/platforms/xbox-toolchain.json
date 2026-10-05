@@ -59,9 +59,10 @@
       "symbols": {
         "xStrHash(const char*)": "?xStrHash@@YIIPBD@Z",
         "xStrHash(const char*,size_t)": "?xStrHash@@YIIPBDI@Z",
-        "xStrHashCat(U32,const char*)": "?xStrHashCat@@YIIIPBD@Z"
+        "xStrHashCat(U32,const char*)": "?xStrHashCat@@YIIIPBD@Z",
+        "atox(const substr&,size_t&)": "?atox@@YIIABUsubstr@@AAI@Z"
       },
-      "scope": "Three individually reviewed leaf functions from actual full-TU compilation; no TU or executable completion claim"
+      "scope": "Four individually reviewed leaf functions from actual full-TU compilation; no TU or executable completion claim"
     },
     {
       "source": "src/SB/Core/x/xPar.cpp",

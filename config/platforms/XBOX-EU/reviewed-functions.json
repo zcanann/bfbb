@@ -2,7 +2,7 @@
   "schema_version": 1,
   "version": "XBOX-EU",
   "executable_sha1": "3cc6795aad6a51005b4178ca35d76786eb620cab",
-  "scope": "Individually reviewed xString hashes and xPar pool initialization/allocation/particle initialization; other Ghidra candidates remain separate.",
+  "scope": "Individually reviewed xString hashes/hexadecimal parser and xPar particle leaves; other Ghidra candidates remain separate.",
   "coverage_complete": false,
   "source_comparison_available": false,
   "retail_link_verified": false,
@@ -591,6 +591,164 @@
               "argument_register": "ecx"
             }
           ]
+        }
+      }
+    },
+    {
+      "name": "atox",
+      "canonical_identifier": "atox(const substr&,size_t&)",
+      "display_name": "size_t atox(const substr& s, size_t& read_size)",
+      "source": "SB/Core/x/xString.cpp",
+      "linkage_name": null,
+      "address": 1422736,
+      "size": 111,
+      "sha256": "1e9df4ce7f47069f17e803da8edfd0c1c198864f10bf11140f227dc17a025e15",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": false,
+      "retail_link_verified": false,
+      "instruction_bytes": 111,
+      "instruction_count": 49,
+      "observed_calling_convention": {
+        "parameters": [
+          {
+            "name": "s",
+            "location": "eax pointer to {text,size}"
+          },
+          {
+            "name": "read_size",
+            "location": "edx pointer to U32"
+          }
+        ],
+        "return": "eax parsed value",
+        "stack_cleanup": "caller",
+        "saved_registers": [
+          "esi",
+          "edi"
+        ],
+        "convention_name": null,
+        "limitation": "Whole-program register allocation observed in the original; not asserted to be a fixed source-level calling convention."
+      },
+      "semantics": {
+        "identity": "Parse at most eight hexadecimal digits from a bounded substring and write the number consumed through read_size.",
+        "algorithm": "Return zero immediately for a null text pointer; otherwise clamp length to eight, initialize read_size to zero, accept signed char ASCII ranges0-9/a-f/A-F, accumulate value shifted left four plus digit, and stop at length or first invalid byte.",
+        "caller": "The independently decoded caller advances a substring pointer by two, limits its size to eight, passes a stack read_size address, and uses the returned value as an identifier; its alternate path hashes a bounded string.",
+        "platform_difference": "Xbox sign-extends the character and uses signed range branches; shared non-Xbox source keeps its original U8 local."
+      },
+      "corroboration": {
+        "method": "Individual original CFG, hexadecimal digit/length/count data-flow, direct decoded caller arguments and result use, existing independently corroborated anonymous extent, and authenticated equal region payloads. Identity was established before source compilation.",
+        "branches": [
+          {
+            "address": 1422744,
+            "size": 2,
+            "opcode": 117,
+            "target": 1422750
+          },
+          {
+            "address": 1422756,
+            "size": 2,
+            "opcode": 118,
+            "target": 1422763
+          },
+          {
+            "address": 1422771,
+            "size": 2,
+            "opcode": 118,
+            "target": 1422842
+          },
+          {
+            "address": 1422778,
+            "size": 2,
+            "opcode": 124,
+            "target": 1422793
+          },
+          {
+            "address": 1422783,
+            "size": 2,
+            "opcode": 127,
+            "target": 1422793
+          },
+          {
+            "address": 1422791,
+            "size": 2,
+            "opcode": 235,
+            "target": 1422827
+          },
+          {
+            "address": 1422796,
+            "size": 2,
+            "opcode": 124,
+            "target": 1422811
+          },
+          {
+            "address": 1422801,
+            "size": 2,
+            "opcode": 127,
+            "target": 1422811
+          },
+          {
+            "address": 1422809,
+            "size": 2,
+            "opcode": 235,
+            "target": 1422827
+          },
+          {
+            "address": 1422814,
+            "size": 2,
+            "opcode": 124,
+            "target": 1422842
+          },
+          {
+            "address": 1422819,
+            "size": 2,
+            "opcode": 127,
+            "target": 1422842
+          },
+          {
+            "address": 1422840,
+            "size": 2,
+            "opcode": 114,
+            "target": 1422773
+          }
+        ],
+        "return_address": 1422846,
+        "saved_registers": [
+          {
+            "register": "esi",
+            "push_address": 1422736,
+            "pop_address": 1422845
+          },
+          {
+            "register": "edi",
+            "push_address": 1422750,
+            "pop_address": 1422844
+          }
+        ],
+        "recorded_direct_call_count": 1,
+        "reviewed_call_witnesses": [
+          {
+            "address": 1292376,
+            "target": 1422736,
+            "kind": "x86_call_rel32"
+          }
+        ],
+        "previous_boundary": {
+          "return_address": 1422724,
+          "padding_address": 1422725,
+          "padding_size": 11,
+          "padding_byte": 204
+        },
+        "following_padding": {
+          "address": 1422847,
+          "size": 1,
+          "byte": 204
+        },
+        "next_function_address": 1422848,
+        "caller_context": {
+          "address": 1292208,
+          "size": 205,
+          "sha256": "4e908ddd23de93da9f9edd5660197715aa4fcc563721b419805be28794dc5b46",
+          "description": "Hex-prefix substring branch and alternate bounded-hash identifier branch in the actual caller."
         }
       }
     }

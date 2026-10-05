@@ -97,4 +97,9 @@ template <typename T> inline T xUtil_choose(T const* list, S32 size, F32 const* 
     return list[idx];
 }
 
+#if defined(PS2)
+U8 itoBCD(U16 dec);
+U8 itoBCD(U8 dec);
+#endif
+
 #endif

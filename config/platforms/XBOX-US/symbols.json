@@ -11334,12 +11334,12 @@
       "identity_kind": "anonymous"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0015b590",
-      "source": null,
+      "name": "atox",
+      "canonical_identifier": "atox(const substr&,size_t&)",
+      "source": "SB/Core/x/xString.cpp",
       "address": 1422736,
       "size": 111,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
       "name": null,
