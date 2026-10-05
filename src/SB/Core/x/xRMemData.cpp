@@ -56,7 +56,7 @@ RyzMemGrow* RyzMemGrow::Resume(xBase*)
     this->amt = this->amt_last;
     this->ptr = this->ptr_last;
     this->user = this->user_last;
-    this->flg_grow = 0b11;
+    this->flg_grow = 0x3;
     return this;
 }
 

@@ -1,4 +1,5 @@
 #include "xserializer.h"
+#include "xsavegame.h"
 #include "xMemMgr.h"
 #include "xutil.h"
 #include <string.h>

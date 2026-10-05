@@ -2,6 +2,7 @@
 #define XSAVEGAME_H
 
 #include <types.h>
+#include "xsavegame_types.h"
 
 #include "iTime.h"
 #include "isavegame.h"
@@ -14,13 +15,6 @@ struct st_XSAVEGAME_WRITECONTEXT
 {
 };
 
-enum en_SAVEGAME_MODE
-{
-    XSG_MODE_LOAD = 0xa,
-    XSG_MODE_SAVE
-};
-
-struct st_XSAVEGAME_DATA;
 
 struct st_XSAVEGAME_CLIENT
 {

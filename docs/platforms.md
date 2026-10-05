@@ -301,6 +301,23 @@ On Windows, use the same compiler directory without `--wine`.
 python tools/platforms/verify_xbox_reviewed.py
 ```
 
+### Xbox shared-source compile coverage
+
+A native MSVC 7.1 inventory of the 62 core C++ files smaller than 16 KB
+compiles eight complete translation units with the existing Xbox headers:
+`xMath2`, `xString`, `xCurveAsset`, `xordarray`, `xBase`, `xSurface`,
+`xRMemData`, and `xFactory`. The last four became compilable after separating
+save-game API types from platform-dependent save-game storage, using the
+compiler's standard `<new>` header on Xbox, and spelling one binary mask in
+hexadecimal for this older compiler. No Xbox timer or save-game ABI is assumed.
+
+These additional objects are compile coverage, not newly matched code. Actual
+LTCG link attempts still require the real serializer and memory-manager
+implementations: `xSerial::Read_b1`/`Write_b1`, `gActiveHeap`, and allocation
+routines. They are not replaced with stubs. All 224 GameCube game/engine source
+objects compile after the include cleanup, with allocated section bytes and
+sizes identical to the previous build.
+
 ## Next implementation work
 
 - PS2: recover remaining code/data and relocation ownership; expand compilation
