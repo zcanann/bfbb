@@ -157,8 +157,10 @@ jobs:
             build/${{ matrix.version }}/data-extents.json
             build/${{ matrix.version }}/splits.json
             build/${{ matrix.version }}/symbol-candidates.json
+            build/${{ matrix.version }}/verified-anonymous-functions.json
+            build/${{ matrix.version }}/corroborated-functions.json
 
-      - name: Upload reviewed-function objdiff comparison
+      - name: Upload partial-function objdiff comparison
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.version }}_functions

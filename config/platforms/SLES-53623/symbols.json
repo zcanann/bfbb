@@ -1,104 +1,1779 @@
 {
   "schema_version": 1,
   "executable_sha1": "ef675520304c2ce0df9cbfa03222e42fb2e7a09e",
-  "provenance": "Independently reviewed function ranges; see reviewed-functions.json",
+  "provenance": "Manual-reviewed and machine-corroborated function ranges; see reviewed-functions.json and corroborated-functions.json",
   "coverage_complete": false,
   "symbols": [
+    {
+      "name": "zAnimListGetNumUsed",
+      "source": "SB/Game/zAnimList.cpp",
+      "address": 1220176,
+      "size": 88,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "zAnimListGetTable",
+      "source": "SB/Game/zAnimList.cpp",
+      "address": 1220272,
+      "size": 88,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "MatrixSpeed",
+      "source": "SB/Game/zCamera.cpp",
+      "address": 1242128,
+      "size": 360,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "zCutsceneMgrUpdateFX",
+      "source": "SB/Game/zCutsceneMgr.cpp",
+      "address": 1245184,
+      "size": 184,
+      "provenance": "machine-corroborated-static-cfg"
+    },
     {
       "name": "zDispatcher_sceneFinish",
       "source": "SB/Game/zDispatcher.cpp",
       "address": 1252496,
-      "size": 52
+      "size": 52,
+      "provenance": "manual-reviewed"
     },
     {
       "name": "zDispatcher_scenePrepare",
       "source": "SB/Game/zDispatcher.cpp",
       "address": 1252560,
-      "size": 52
+      "size": 52,
+      "provenance": "manual-reviewed"
+    },
+    {
+      "name": "zEGenerator_Reset",
+      "source": "SB/Game/zEGenerator.cpp",
+      "address": 1255600,
+      "size": 252,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "zEntButton_SceneUpdate",
+      "source": "SB/Game/zEntButton.cpp",
+      "address": 1266640,
+      "size": 164,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "zEntPickup_SpawnNRewards",
+      "source": "SB/Game/zEntPickup.cpp",
+      "address": 1278832,
+      "size": 60,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "__apl",
+      "source": "SB/Core/x/xVec3.h",
+      "address": 1375184,
+      "size": 56,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "__pl",
+      "source": "SB/Core/x/xVec3.h",
+      "address": 1403120,
+      "size": 112,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "zEntSimpleObj_MgrCustomUpdate",
+      "source": "SB/Game/zEntSimpleObj.cpp",
+      "address": 1523392,
+      "size": 156,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xMat4x3Toworld",
+      "source": "SB/Core/x/xMath3.h",
+      "address": 1531376,
+      "size": 160,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "update_popper",
+      "source": "SB/Game/zFX.cpp",
+      "address": 1533616,
+      "size": 708,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "__amu",
+      "source": "SB/Core/x/xVec3.h",
+      "address": 1538448,
+      "size": 44,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "zGameScreenTransitionUpdate",
+      "source": "SB/Game/zGame.cpp",
+      "address": 1551824,
+      "size": 68,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "zGameIsPaused",
+      "source": "SB/Game/zGame.cpp",
+      "address": 1557040,
+      "size": 64,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "zGame_HackIsGallery",
+      "source": "SB/Game/zGameExtras.cpp",
+      "address": 1560272,
+      "size": 64,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "zGustUpdateFX",
+      "source": "SB/Game/zGust.cpp",
+      "address": 1568896,
+      "size": 128,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "zLightRemoveLocalEnv",
+      "source": "SB/Game/zLight.cpp",
+      "address": 1574400,
+      "size": 80,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "zLightningShow",
+      "source": "SB/Game/zLightning.cpp",
+      "address": 1580160,
+      "size": 48,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "zLOD_Get",
+      "source": "SB/Game/zLOD.cpp",
+      "address": 1593744,
+      "size": 128,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "zMusicReset",
+      "source": "SB/Game/zMusic.cpp",
+      "address": 1618416,
+      "size": 56,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "zSaveLoad_CardCheckValid",
+      "source": "SB/Game/zSaveLoad.cpp",
+      "address": 1660112,
+      "size": 52,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "zSaveLoad_CardCheck",
+      "source": "SB/Game/zSaveLoad.cpp",
+      "address": 1660672,
+      "size": 148,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "zSceneFindObject",
+      "source": "SB/Game/zScene.cpp",
+      "address": 1667344,
+      "size": 128,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "zSceneObjHashtableAdd",
+      "source": "SB/Game/zScene.cpp",
+      "address": 1667472,
+      "size": 120,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "BaseTypeNeedsUpdate",
+      "source": "SB/Game/zScene.cpp",
+      "address": 1686064,
+      "size": 208,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "Update",
+      "source": "SB/Game/zUI.cpp",
+      "address": 1711040,
+      "size": 168,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "PreUpdate",
+      "source": "SB/Game/zUI.cpp",
+      "address": 1711216,
+      "size": 172,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "_iAnimSKBExtractTranslate",
+      "source": "SB/Core/p2/iAnimSKB.cpp",
+      "address": 1722160,
+      "size": 1464,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "_iAnimSKBAdjustTranslate",
+      "source": "SB/Core/p2/iAnimSKB.cpp",
+      "address": 1723632,
+      "size": 1240,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iEnvStartup",
+      "source": "SB/Core/p2/iEnv.cpp",
+      "address": 1739264,
+      "size": 44,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iLightEnv",
+      "source": "SB/Core/p2/iLight.cpp",
+      "address": 1750096,
+      "size": 92,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iBoxBoundVec",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1750992,
+      "size": 220,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iBoxInitBoundVec",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1751216,
+      "size": 52,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iBoxIsectRay",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1752176,
+      "size": 652,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "ClipPlane",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1752832,
+      "size": 216,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iCylinderIsectVec",
+      "source": "SB/Core/p2/iMath3.cpp",
+      "address": 1755776,
+      "size": 128,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "FastS16weight4",
+      "source": "SB/Core/p2/iMorph.cpp",
+      "address": 1767728,
+      "size": 336,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "FastS16weight2",
+      "source": "SB/Core/p2/iMorph.cpp",
+      "address": 1768064,
+      "size": 272,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "FastS16unpack",
+      "source": "SB/Core/p2/iMorph.cpp",
+      "address": 1768336,
+      "size": 240,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iPadEnable",
+      "source": "SB/Core/p2/iPad.cpp",
+      "address": 1772576,
+      "size": 108,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iSG_is_synccode_realerr",
+      "source": "SB/Core/p2/isavegame.cpp",
+      "address": 1784400,
+      "size": 1304,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iSG_mca_fwrite",
+      "source": "SB/Core/p2/isavegame.cpp",
+      "address": 1786112,
+      "size": 112,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iSG_mca_fread",
+      "source": "SB/Core/p2/isavegame.cpp",
+      "address": 1786224,
+      "size": 104,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iSG_mca_fopen",
+      "source": "SB/Core/p2/isavegame.cpp",
+      "address": 1786336,
+      "size": 112,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iSG_mca_unfmt",
+      "source": "SB/Core/p2/isavegame.cpp",
+      "address": 1786448,
+      "size": 128,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iSG_mca_fmt",
+      "source": "SB/Core/p2/isavegame.cpp",
+      "address": 1786576,
+      "size": 196,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iSG_get_fmoddate",
+      "source": "SB/Core/p2/isavegame.cpp",
+      "address": 1786784,
+      "size": 240,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iSG_isSpaceForFile",
+      "source": "SB/Core/p2/isavegame.cpp",
+      "address": 1787568,
+      "size": 408,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iSG_mc_availDirEnt",
+      "source": "SB/Core/p2/isavegame.cpp",
+      "address": 1787984,
+      "size": 176,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iSG_mc_availclust",
+      "source": "SB/Core/p2/isavegame.cpp",
+      "address": 1788160,
+      "size": 168,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iSG_mc_isPSIIcard",
+      "source": "SB/Core/p2/isavegame.cpp",
+      "address": 1788336,
+      "size": 192,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iSG_mc_isformatted",
+      "source": "SB/Core/p2/isavegame.cpp",
+      "address": 1788528,
+      "size": 180,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iSG_mc_exists",
+      "source": "SB/Core/p2/isavegame.cpp",
+      "address": 1788720,
+      "size": 160,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iSG_mcidx_portslot",
+      "source": "SB/Core/p2/isavegame.cpp",
+      "address": 1788880,
+      "size": 428,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iSG_add_sysicons",
+      "source": "SB/Core/p2/isavegame.cpp",
+      "address": 1789776,
+      "size": 472,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iSGAutoSave_Connect",
+      "source": "SB/Core/p2/isavegame.cpp",
+      "address": 1790928,
+      "size": 192,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iSGReadLeader",
+      "source": "SB/Core/p2/isavegame.cpp",
+      "address": 1792160,
+      "size": 720,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iSGLoadFile",
+      "source": "SB/Core/p2/isavegame.cpp",
+      "address": 1792880,
+      "size": 144,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iSGSaveFile",
+      "source": "SB/Core/p2/isavegame.cpp",
+      "address": 1793024,
+      "size": 808,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iSGFileSize",
+      "source": "SB/Core/p2/isavegame.cpp",
+      "address": 1795264,
+      "size": 80,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iSGTgtHaveRoom",
+      "source": "SB/Core/p2/isavegame.cpp",
+      "address": 1795776,
+      "size": 252,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iSGTgtSetActive",
+      "source": "SB/Core/p2/isavegame.cpp",
+      "address": 1796032,
+      "size": 112,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iSGTgtState",
+      "source": "SB/Core/p2/isavegame.cpp",
+      "address": 1796144,
+      "size": 308,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iSGStartup",
+      "source": "SB/Core/p2/isavegame.cpp",
+      "address": 1797792,
+      "size": 48,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iProfileClear",
+      "source": "SB/Core/p2/iTime.cpp",
+      "address": 1815520,
+      "size": 172,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iTimeDiffSec",
+      "source": "SB/Core/p2/iTime.cpp",
+      "address": 1815728,
+      "size": 76,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iTimeDiffSec",
+      "source": "SB/Core/p2/iTime.cpp",
+      "address": 1815808,
+      "size": 72,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iTimeGet",
+      "source": "SB/Core/p2/iTime.cpp",
+      "address": 1815888,
+      "size": 56,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iTimeExit",
+      "source": "SB/Core/p2/iTime.cpp",
+      "address": 1816048,
+      "size": 40,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iAnimBoneCount",
+      "source": "SB/Core/p2/iAnim.cpp",
+      "address": 1818384,
+      "size": 32,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "sendToIOP2area",
+      "source": "SB/Core/p2/ps2_mpeg/audiodec.c",
+      "address": 1818464,
+      "size": 816,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "startDisplay",
+      "source": "SB/Core/p2/ps2_mpeg/disp.c",
+      "address": 1820960,
+      "size": 72,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "readBufEndGet",
+      "source": "SB/Core/p2/ps2_mpeg/readbuf.c",
+      "address": 1826208,
+      "size": 76,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "readBufBeginGet",
+      "source": "SB/Core/p2/ps2_mpeg/readbuf.c",
+      "address": 1826288,
+      "size": 88,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "readBufEndPut",
+      "source": "SB/Core/p2/ps2_mpeg/readbuf.c",
+      "address": 1826384,
+      "size": 132,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "readBufBeginPut",
+      "source": "SB/Core/p2/ps2_mpeg/readbuf.c",
+      "address": 1826528,
+      "size": 64,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "readBufCreate",
+      "source": "SB/Core/p2/ps2_mpeg/readbuf.c",
+      "address": 1826608,
+      "size": 44,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "viBufFlush",
+      "source": "SB/Core/p2/ps2_mpeg/vibuf.c",
+      "address": 1828160,
+      "size": 80,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "viBufCount",
+      "source": "SB/Core/p2/ps2_mpeg/vibuf.c",
+      "address": 1828240,
+      "size": 68,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "viBufDelete",
+      "source": "SB/Core/p2/ps2_mpeg/vibuf.c",
+      "address": 1828320,
+      "size": 140,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "viBufEndPut",
+      "source": "SB/Core/p2/ps2_mpeg/vibuf.c",
+      "address": 1830496,
+      "size": 92,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "viBufBeginPut",
+      "source": "SB/Core/p2/ps2_mpeg/vibuf.c",
+      "address": 1830592,
+      "size": 248,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "viBufReset",
+      "source": "SB/Core/p2/ps2_mpeg/vibuf.c",
+      "address": 1830848,
+      "size": 404,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "videoDecSetStream",
+      "source": "SB/Core/p2/ps2_mpeg/videodec.c",
+      "address": 1832944,
+      "size": 32,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "voBufCreate",
+      "source": "SB/Core/p2/ps2_mpeg/vobuf.c",
+      "address": 1833648,
+      "size": 312,
+      "provenance": "machine-corroborated-static-cfg"
     },
     {
       "name": "xBaseReset",
       "source": "SB/Core/x/xBase.cpp",
       "address": 1833968,
-      "size": 44
+      "size": 44,
+      "provenance": "manual-reviewed"
     },
     {
       "name": "xBaseLoad",
       "source": "SB/Core/x/xBase.cpp",
       "address": 1834016,
-      "size": 96
+      "size": 96,
+      "provenance": "manual-reviewed"
     },
     {
       "name": "xBaseSave",
       "source": "SB/Core/x/xBase.cpp",
       "address": 1834112,
-      "size": 76
+      "size": 76,
+      "provenance": "manual-reviewed"
     },
     {
       "name": "xBaseSetup",
       "source": "SB/Core/x/xBase.cpp",
       "address": 1834192,
-      "size": 8
+      "size": 8,
+      "provenance": "manual-reviewed"
     },
     {
       "name": "xBaseInit",
       "source": "SB/Core/x/xBase.cpp",
       "address": 1834208,
-      "size": 52
+      "size": 52,
+      "provenance": "manual-reviewed"
+    },
+    {
+      "name": "xCameraMove",
+      "source": "SB/Core/x/xCamera.cpp",
+      "address": 1845616,
+      "size": 216,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xCameraMove",
+      "source": "SB/Core/x/xCamera.cpp",
+      "address": 1845840,
+      "size": 80,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xCameraDoCollisions",
+      "source": "SB/Core/x/xCamera.cpp",
+      "address": 1846464,
+      "size": 76,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xCam_buildbasis",
+      "source": "SB/Core/x/xCamera.cpp",
+      "address": 1855232,
+      "size": 448,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "range_limit",
+      "source": "SB/Core/x/xMath.h",
+      "address": 1856576,
+      "size": 60,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xCollideCalcTri",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1880784,
+      "size": 3336,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xParabolaRecenter",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1891600,
+      "size": 136,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xprintf",
+      "source": "SB/Core/x/xDebug.cpp",
+      "address": 1904992,
+      "size": 40,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xEntInitShadow",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1905040,
+      "size": 72,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xEntValidType",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1905792,
+      "size": 80,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xEntCollideWalls",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1906064,
+      "size": 1076,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xEntCollideCeiling",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1907152,
+      "size": 692,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xEntCollideFloor",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1907856,
+      "size": 1212,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xEntBeginCollide",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1912544,
+      "size": 320,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xEntApplyPhysics",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1913744,
+      "size": 700,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xEntRestorePipeline",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1917664,
+      "size": 80,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xEntRestorePipeline",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1917744,
+      "size": 80,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xEntAddHittableFlag",
+      "source": "SB/Core/x/xEnt.cpp",
+      "address": 1922784,
+      "size": 224,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xEntDriveInit",
+      "source": "SB/Core/x/xEntDrive.cpp",
+      "address": 1930112,
+      "size": 56,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xEntMotionInit",
+      "source": "SB/Core/x/xEntMotion.cpp",
+      "address": 1944144,
+      "size": 744,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xEnvRender",
+      "source": "SB/Core/x/xEnv.cpp",
+      "address": 1944896,
+      "size": 44,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xFFXRotMatchAlloc",
+      "source": "SB/Core/x/xFFX.cpp",
+      "address": 1945120,
+      "size": 40,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xFFXAddEffect",
+      "source": "SB/Core/x/xFFX.cpp",
+      "address": 1946400,
+      "size": 104,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "bound_line",
+      "source": "SB/Core/x/xFont.cpp",
+      "address": 1964176,
+      "size": 292,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "merge_line",
+      "source": "SB/Core/x/xFont.cpp",
+      "address": 1964480,
+      "size": 716,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "trim_line",
+      "source": "SB/Core/x/xFont.cpp",
+      "address": 1965200,
+      "size": 640,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "find_bounds",
+      "source": "SB/Core/x/xFont.cpp",
+      "address": 1983744,
+      "size": 380,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "clear",
+      "source": "SB/Core/x/containers.h",
+      "address": 1987568,
+      "size": 432,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "log2_ceil",
+      "source": "SB/Core/x/containers.h",
+      "address": 1988000,
+      "size": 48,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "render_compare",
+      "source": "SB/Core/x/xFX.cpp",
+      "address": 1988048,
+      "size": 160,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "eval_joint",
+      "source": "SB/Core/x/xFX.cpp",
+      "address": 1989328,
+      "size": 1204,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "get_normal",
+      "source": "SB/Core/x/xFX.cpp",
+      "address": 1991408,
+      "size": 688,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "free_block",
+      "source": "SB/Core/x/containers.h",
+      "address": 1993808,
+      "size": 96,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "clear",
+      "source": "SB/Core/x/containers.h",
+      "address": 1993952,
+      "size": 180,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "refresh_config",
+      "source": "SB/Core/x/xFX.cpp",
+      "address": 1995824,
+      "size": 128,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "set_default_config",
+      "source": "SB/Core/x/xFX.cpp",
+      "address": 1995952,
+      "size": 160,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xFXanimUVAtomicSetup",
+      "source": "SB/Core/x/xFX.cpp",
+      "address": 2009584,
+      "size": 32,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xFXanimUV2PSetAngle",
+      "source": "SB/Core/x/xFX.cpp",
+      "address": 2009632,
+      "size": 68,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xFXanimUVSetAngle",
+      "source": "SB/Core/x/xFX.cpp",
+      "address": 2009776,
+      "size": 68,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xFuncPiece_Eval",
+      "source": "SB/Core/x/xMath.cpp",
+      "address": 2021440,
+      "size": 168,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xDangleClamp",
+      "source": "SB/Core/x/xMath.cpp",
+      "address": 2023152,
+      "size": 132,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xAngleClampFast",
+      "source": "SB/Core/x/xMath.cpp",
+      "address": 2023296,
+      "size": 80,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xAngleClamp",
+      "source": "SB/Core/x/xMath.cpp",
+      "address": 2023376,
+      "size": 76,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xMathSolveQuadratic",
+      "source": "SB/Core/x/xMath.cpp",
+      "address": 2024400,
+      "size": 264,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xurand",
+      "source": "SB/Core/x/xMath.cpp",
+      "address": 2024672,
+      "size": 88,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xrand",
+      "source": "SB/Core/x/xMath.cpp",
+      "address": 2024768,
+      "size": 32,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xMathInit",
+      "source": "SB/Core/x/xMath.cpp",
+      "address": 2024864,
+      "size": 32,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xQuatToMat",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2026000,
+      "size": 172,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xMat3x3Tolocal",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2027536,
+      "size": 204,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xMat3x3LMulVec",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2027744,
+      "size": 112,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xMat3x3Mul",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2027856,
+      "size": 476,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xMat3x3Transpose",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2028336,
+      "size": 152,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xMat3x3RMulRotY",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2028496,
+      "size": 336,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xMat3x3ScaleC",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2028832,
+      "size": 44,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xMat3x3Euler",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2029568,
+      "size": 256,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xBoxInitBoundCapsule",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2032016,
+      "size": 272,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xBoxInitBoundOBB",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2032288,
+      "size": 712,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xMemPoolFree",
+      "source": "SB/Core/x/xMemMgr.cpp",
+      "address": 2033744,
+      "size": 112,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xMemPoolAddElements",
+      "source": "SB/Core/x/xMemMgr.cpp",
+      "address": 2034064,
+      "size": 216,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xMemGetBlockInfo",
+      "source": "SB/Core/x/xMemMgr.cpp",
+      "address": 2035232,
+      "size": 288,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xMemInitHeap",
+      "source": "SB/Core/x/xMemMgr.cpp",
+      "address": 2035520,
+      "size": 268,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xModelInstanceAttach",
+      "source": "SB/Core/x/xModel.cpp",
+      "address": 2040080,
+      "size": 80,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xMorphRender",
+      "source": "SB/Core/x/xMorph.cpp",
+      "address": 2042224,
+      "size": 508,
+      "provenance": "machine-corroborated-static-cfg"
     },
     {
       "name": "XOrdSort",
       "source": "SB/Core/x/xordarray.cpp",
       "address": 2044880,
-      "size": 368
+      "size": 368,
+      "provenance": "manual-reviewed"
     },
     {
       "name": "XOrdLookup",
       "source": "SB/Core/x/xordarray.cpp",
       "address": 2045248,
-      "size": 212
+      "size": 212,
+      "provenance": "manual-reviewed"
     },
     {
       "name": "XOrdRemove",
       "source": "SB/Core/x/xordarray.cpp",
       "address": 2045472,
-      "size": 272
+      "size": 272,
+      "provenance": "manual-reviewed"
     },
     {
       "name": "XOrdInsert",
       "source": "SB/Core/x/xordarray.cpp",
       "address": 2045744,
-      "size": 200
+      "size": 200,
+      "provenance": "manual-reviewed"
     },
     {
       "name": "XOrdAppend",
       "source": "SB/Core/x/xordarray.cpp",
       "address": 2045952,
-      "size": 48
+      "size": 48,
+      "provenance": "manual-reviewed"
     },
     {
       "name": "XOrdDone",
       "source": "SB/Core/x/xordarray.cpp",
       "address": 2046000,
-      "size": 72
+      "size": 72,
+      "provenance": "manual-reviewed"
     },
     {
       "name": "XOrdReset",
       "source": "SB/Core/x/xordarray.cpp",
       "address": 2046080,
-      "size": 8
+      "size": 8,
+      "provenance": "manual-reviewed"
     },
     {
       "name": "XOrdInit",
       "source": "SB/Core/x/xordarray.cpp",
       "address": 2046096,
-      "size": 188
+      "size": 188,
+      "provenance": "manual-reviewed"
+    },
+    {
+      "name": "xParInit",
+      "source": "SB/Core/x/xPar.cpp",
+      "address": 2049872,
+      "size": 128,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xParFree",
+      "source": "SB/Core/x/xPar.cpp",
+      "address": 2050000,
+      "size": 84,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xParAlloc",
+      "source": "SB/Core/x/xPar.cpp",
+      "address": 2050096,
+      "size": 64,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xParMgrUpdate",
+      "source": "SB/Core/x/xParMgr.cpp",
+      "address": 2059520,
+      "size": 116,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xPartitionSpaceMove",
+      "source": "SB/Core/x/xPartition.cpp",
+      "address": 2059744,
+      "size": 128,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "PKR_updateLayerAssets",
+      "source": "SB/Core/x/xpkrsvc.cpp",
+      "address": 2070160,
+      "size": 232,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xQuickCullForEverything",
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "address": 2074816,
+      "size": 44,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xQuickCullCellForVec",
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "address": 2076336,
+      "size": 320,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xQuickCullIsects",
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "address": 2076784,
+      "size": 40,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "Discard",
+      "source": "SB/Core/x/xsavegame.cpp",
+      "address": 2077216,
+      "size": 76,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "IsValid",
+      "source": "SB/Core/x/xsavegame.cpp",
+      "address": 2077504,
+      "size": 88,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xSGWriteData",
+      "source": "SB/Core/x/xsavegame.cpp",
+      "address": 2081408,
+      "size": 336,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xSGAsyncStatus",
+      "source": "SB/Core/x/xsavegame.cpp",
+      "address": 2082192,
+      "size": 340,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xSGTgtHaveRoomStartup",
+      "source": "SB/Core/x/xsavegame.cpp",
+      "address": 2085776,
+      "size": 244,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xSGTgtHaveRoom",
+      "source": "SB/Core/x/xsavegame.cpp",
+      "address": 2086032,
+      "size": 244,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xSGTgtHasGameDir",
+      "source": "SB/Core/x/xsavegame.cpp",
+      "address": 2086288,
+      "size": 108,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xSGTgtIsFormat",
+      "source": "SB/Core/x/xsavegame.cpp",
+      "address": 2086560,
+      "size": 132,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xBoxFromLine",
+      "source": "SB/Core/x/xMath3.h",
+      "address": 2093472,
+      "size": 224,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xSceneForAllEnts",
+      "source": "SB/Core/x/xScene.cpp",
+      "address": 2099264,
+      "size": 152,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xSceneID2Name",
+      "source": "SB/Core/x/xScene.cpp",
+      "address": 2099424,
+      "size": 52,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xSceneResolvID",
+      "source": "SB/Core/x/xScene.cpp",
+      "address": 2099488,
+      "size": 52,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xSceneAddEnt",
+      "source": "SB/Core/x/xScene.cpp",
+      "address": 2099552,
+      "size": 216,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xScrFxIsLetterbox",
+      "source": "SB/Core/x/xScrFx.cpp",
+      "address": 2108464,
+      "size": 36,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xScrFxLetterbox",
+      "source": "SB/Core/x/xScrFx.cpp",
+      "address": 2108800,
+      "size": 80,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xSndIsReady",
+      "source": "SB/Core/x/xSnd.cpp",
+      "address": 2137408,
+      "size": 32,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xSndExit",
+      "source": "SB/Core/x/xSnd.cpp",
+      "address": 2138960,
+      "size": 32,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xSndSetEnvironmentalEffect",
+      "source": "SB/Core/x/xSnd.cpp",
+      "address": 2141760,
+      "size": 68,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "BasisBspline",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2146864,
+      "size": 516,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "ArcLength3",
+      "source": "SB/Core/x/xSpline.cpp",
+      "address": 2147888,
+      "size": 468,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "icompare",
+      "source": "SB/Core/x/xString.cpp",
+      "address": 2157152,
+      "size": 192,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xStrupr",
+      "source": "SB/Core/x/xString.cpp",
+      "address": 2157984,
+      "size": 88,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xStricmp",
+      "source": "SB/Core/x/xString.cpp",
+      "address": 2158080,
+      "size": 256,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xStrTokBuffer",
+      "source": "SB/Core/x/xString.cpp",
+      "address": 2158336,
+      "size": 336,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xStrTok",
+      "source": "SB/Core/x/xString.cpp",
+      "address": 2158672,
+      "size": 320,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xStrHashCat",
+      "source": "SB/Core/x/xString.cpp",
+      "address": 2158992,
+      "size": 88,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xStrHash",
+      "source": "SB/Core/x/xString.cpp",
+      "address": 2159088,
+      "size": 104,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xStrHash",
+      "source": "SB/Core/x/xString.cpp",
+      "address": 2159200,
+      "size": 88,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xSurfaceGetByIdx",
+      "source": "SB/Core/x/xSurface.cpp",
+      "address": 2159296,
+      "size": 40,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "itoBCD",
+      "source": "SB/Core/x/xutil.cpp",
+      "address": 2163488,
+      "size": 96,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "itoBCD",
+      "source": "SB/Core/x/xutil.cpp",
+      "address": 2163584,
+      "size": 96,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "EffectSingleStop",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2172640,
+      "size": 352,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "EffectSingleRun",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2173312,
+      "size": 520,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "EffectSingleDuration",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2173840,
+      "size": 312,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "EffectSingleStart",
+      "source": "SB/Core/x/xAnim.cpp",
+      "address": 2174160,
+      "size": 592,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xGroupGetItemPtr",
+      "source": "SB/Core/x/xGroup.cpp",
+      "address": 2752720,
+      "size": 200,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "zNPCMgr_scenePostSetup",
+      "source": "SB/Game/zNPCMgr.cpp",
+      "address": 2937696,
+      "size": 120,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "RemoveFromFamily",
+      "source": "SB/Game/zNPCTypeTiki.cpp",
+      "address": 3048000,
+      "size": 424,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xBehaveMgr_SceneReset",
+      "source": "SB/Core/x/xBehaveMgr.cpp",
+      "address": 3088160,
+      "size": 248,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xClumpColl_ForAllCapsuleLeafNodeIntersections",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "address": 3158400,
+      "size": 2568,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xClumpColl_ForAllLineLeafNodeIntersections",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "address": 3160976,
+      "size": 2552,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xClumpColl_ForAllBoxLeafNodeIntersections",
+      "source": "SB/Core/x/xClumpColl.cpp",
+      "address": 3163536,
+      "size": 320,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xGridEntIsTooBig",
+      "source": "SB/Core/x/xGrid.cpp",
+      "address": 3166656,
+      "size": 352,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xGridIterFirstCell",
+      "source": "SB/Core/x/xGrid.cpp",
+      "address": 3167008,
+      "size": 400,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xGridGetCell",
+      "source": "SB/Core/x/xGrid.cpp",
+      "address": 3167408,
+      "size": 248,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xGridGetCell",
+      "source": "SB/Core/x/xGrid.cpp",
+      "address": 3167664,
+      "size": 384,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xGridRemove",
+      "source": "SB/Core/x/xGrid.cpp",
+      "address": 3168256,
+      "size": 136,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xGridEmpty",
+      "source": "SB/Core/x/xGrid.cpp",
+      "address": 3169504,
+      "size": 248,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xGridBoundInit",
+      "source": "SB/Core/x/xGrid.cpp",
+      "address": 3170400,
+      "size": 44,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "zGooIs",
+      "source": "SB/Game/zGoo.cpp",
+      "address": 3211616,
+      "size": 204,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xModelBucket_Add",
+      "source": "SB/Core/x/xModelBucket.cpp",
+      "address": 3217552,
+      "size": 716,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xModelBucket_Begin",
+      "source": "SB/Core/x/xModelBucket.cpp",
+      "address": 3218272,
+      "size": 68,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xModelBucket_GetBuckets",
+      "source": "SB/Core/x/xModelBucket.cpp",
+      "address": 3218352,
+      "size": 80,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xModelBucket_PreCountReset",
+      "source": "SB/Core/x/xModelBucket.cpp",
+      "address": 3220608,
+      "size": 40,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "NPCC_TmrCycle",
+      "source": "SB/Game/zNPCSupport.cpp",
+      "address": 3256288,
+      "size": 104,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "IsVisible",
+      "source": "SB/Game/zNPCSupport.cpp",
+      "address": 3266512,
+      "size": 72,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "update_all",
+      "source": "SB/Game/zTextBox.cpp",
+      "address": 3288304,
+      "size": 48,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "set_text",
+      "source": "SB/Game/zTextBox.cpp",
+      "address": 3288992,
+      "size": 88,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "deactivate",
+      "source": "SB/Game/zTextBox.cpp",
+      "address": 3289088,
+      "size": 136,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "activate",
+      "source": "SB/Game/zTextBox.cpp",
+      "address": 3289232,
+      "size": 104,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xUpdateCull_SetCB",
+      "source": "SB/Core/x/xUpdateCull.cpp",
+      "address": 3314720,
+      "size": 112,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xUpdateCull_Swap",
+      "source": "SB/Core/x/xUpdateCull.cpp",
+      "address": 3317408,
+      "size": 164,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xmax3fast",
+      "source": "SB/Core/x/xMathInlines.h",
+      "address": 3381488,
+      "size": 76,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "HISPlayExternalStreamAsync",
+      "source": "SB/Core/p2/his/HISAPI.cpp",
+      "address": 3455888,
+      "size": 84,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "HISJoinStereoVoicesAsync",
+      "source": "SB/Core/p2/his/HISAPI.cpp",
+      "address": 3455984,
+      "size": 60,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "HISResumeVoiceAsync",
+      "source": "SB/Core/p2/his/HISAPI.cpp",
+      "address": 3456048,
+      "size": 56,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "HISPauseVoiceAsync",
+      "source": "SB/Core/p2/his/HISAPI.cpp",
+      "address": 3456112,
+      "size": 56,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "HISStopVoiceAsync",
+      "source": "SB/Core/p2/his/HISAPI.cpp",
+      "address": 3456176,
+      "size": 56,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "HISSetVoicePitchAsync",
+      "source": "SB/Core/p2/his/HISAPI.cpp",
+      "address": 3456240,
+      "size": 60,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "HISSetVoiceVolumeAsync",
+      "source": "SB/Core/p2/his/HISAPI.cpp",
+      "address": 3456304,
+      "size": 64,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "HISPlayStreamAsync",
+      "source": "SB/Core/p2/his/HISAPI.cpp",
+      "address": 3456368,
+      "size": 116,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "HISPlaySoundAsync",
+      "source": "SB/Core/p2/his/HISAPI.cpp",
+      "address": 3456496,
+      "size": 84,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iCSFileClose",
+      "source": "SB/Core/p2/iCutscene.cpp",
+      "address": 3458592,
+      "size": 56,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iCameraSetNearFarClip",
+      "source": "SB/Core/x/iCamera.cpp",
+      "address": 3527216,
+      "size": 64,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iCamGetViewMatrix",
+      "source": "SB/Core/x/iCamera.cpp",
+      "address": 3527280,
+      "size": 156,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "iCameraFrustumPlanes",
+      "source": "SB/Core/x/iCamera.cpp",
+      "address": 3527728,
+      "size": 396,
+      "provenance": "machine-corroborated-static-cfg"
     },
     {
       "name": "xCurveAssetEvaluate",
       "source": "SB/Core/x/xCurveAsset.cpp",
       "address": 3859376,
-      "size": 460
+      "size": 460,
+      "provenance": "manual-reviewed"
+    },
+    {
+      "name": "sort_buckets",
+      "source": "SB/Core/x/xPtankPool.cpp",
+      "address": 3869920,
+      "size": 336,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "zCameraTweakGlobal_Reset",
+      "source": "SB/Game/zCameraTweak.cpp",
+      "address": 3881856,
+      "size": 52,
+      "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xCMprep",
+      "source": "SB/Core/x/xCM.cpp",
+      "address": 4028000,
+      "size": 368,
+      "provenance": "machine-corroborated-static-cfg"
     }
   ]
 }

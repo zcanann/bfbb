@@ -1,6 +1,6 @@
 """Prepare partial PS2 objdiff targets from retail DWARF1 and reviewed extents.
 
-Only explicit function low_pc/high_pc ranges enter code totals. Unclassified
+Only explicit DWARF or independently corroborated function ranges enter code totals. Unclassified
 load-image bytes are recorded separately, never guessed to be code or data.
 Selected shared-source units restore independently verified relocations; other
 objects retain resolved retail instructions. Whole-executable linking is pending.
@@ -128,7 +128,8 @@ def _write_registries(metadata: dict, functions: list[dict], output_dir: Path,
                       data_extents: list[dict] | None = None) -> None:
     """Export symbol names and exhaustive file-backed load splits, without bytes."""
     symbols = [{"name": function["name"], "source": _source_name(function["source"]),
-                "address": function["low"], "size": function["high"] - function["low"]}
+                "address": function["low"], "size": function["high"] - function["low"],
+                **({"provenance": function["provenance"]} if "provenance" in function else {})}
                for function in functions]
     segments = sorted((segment for segment in metadata["segments"]
                        if segment["type"] == 1 and segment["file_size"]),
@@ -205,11 +206,14 @@ def verify_registries(generated_dir: Path, committed_dir: Path) -> None:
 
 def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path | None = None,
                    reviewed_call_targets: Path | None = None,
-                   reviewed_data_anchors: Path | None = None) -> dict:
+                   reviewed_data_anchors: Path | None = None,
+                   corroborated_functions: Path | None = None) -> dict:
     """Write genuine target objects/config, or pending metadata for stripped ELF.
 
     The returned coverage is partial, even for debug-bearing executables. Call
     objdiff report generate -p <output_dir> only when report_ready is true.
+    Optional machine-corroborated bounds are fully regenerated against all four
+    originals alongside the supplied manual registry before any are merged.
     """
     executable, output_dir = Path(executable), Path(output_dir)
     metadata = inspect_elf(executable)
@@ -254,11 +258,52 @@ def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path 
             if hashlib.sha256(binary[offset:offset + size]).hexdigest() != entry["sha256"]:
                 raise ValueError("Reviewed function bytes differ from the original")
             functions.append({"name": entry["name"], "source": entry["source"],
-                              "low": low, "high": low + size})
+                              "low": low, "high": low + size, "provenance": "manual-reviewed"})
             reviewed_count += 1
+    corroborated_count = 0
+    if corroborated_functions is not None:
+        if reviewed_functions is None:
+            raise ValueError("Machine-corroborated bounds require their manual deduplication registry")
+        from .france_corroborated import generate
+        registry_path = Path(corroborated_functions)
+        corroborated = json.loads(registry_path.read_text(encoding="utf-8"))
+        manifest = Path(__file__).resolve().parents[2] / "config/platforms/versions.json"
+        regenerated = generate(manifest, executable.resolve().parent.parent,
+                               registry_path.with_name("symbol-candidates.json"),
+                               Path(reviewed_functions))
+        if regenerated != corroborated:
+            raise ValueError("Machine-corroborated registry differs from regenerated original evidence")
+        if (corroborated["executable_sha1"] != metadata["sha1"] or
+                corroborated.get("coverage_complete") is not False):
+            raise ValueError("Machine-corroborated registry identity or partial scope differs")
+        for entry in corroborated["functions"]:
+            low, size = entry["address"], entry["size"]
+            spans = [segment for segment in loaded if segment["address"] <= low and
+                     low + size <= segment["address"] + segment["file_size"]]
+            if (entry.get("boundary_confirmation") is not True or size <= 0 or low % 4 or size % 4 or
+                    entry.get("confirmation_kind") != "machine-corroborated-static-cfg" or len(spans) != 1):
+                raise ValueError("Invalid machine-corroborated function bounds")
+            offset = spans[0]["offset"] + low - spans[0]["address"]
+            if hashlib.sha256(binary[offset:offset + size]).hexdigest() != entry["sha256"]:
+                raise ValueError("Machine-corroborated function bytes differ from the input original")
+            overlaps = [function for function in functions
+                        if low < function["high"] and function["low"] < low + size]
+            if overlaps:
+                if (len(overlaps) != 1 or overlaps[0]["low"] != low or overlaps[0]["high"] != low + size or
+                        overlaps[0]["name"] != entry["name"] or
+                        _source_name(overlaps[0]["source"]) != _source_name(entry["source"])):
+                    raise ValueError("Machine-corroborated and existing function extents conflict")
+                continue
+            functions.append({"name": entry["name"], "source": entry["source"],
+                              "low": low, "high": low + size,
+                              "provenance": "machine-corroborated-static-cfg"})
+            corroborated_count += 1
     functions.sort(key=lambda f: f["low"])
     if any(right["low"] < left["high"] for left, right in zip(functions, functions[1:])):
-        raise ValueError("Reviewed and debug function extents overlap")
+        raise ValueError("Reviewed, corroborated and debug function extents overlap")
+    if corroborated_functions is not None:
+        (output_dir / "corroborated-functions.json").write_text(
+            json.dumps(regenerated, indent=2) + "\n", encoding="utf-8", newline="\n")
     provenance = "retail DWARF1 function ranges"
     category_id, category_name = "debug_functions", "Debug-backed functions (partial coverage)"
     if reviewed_count:
@@ -268,6 +313,13 @@ def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path 
         category_id, category_name = "known_functions", "Known function bounds (partial coverage)"
         coverage["scope"] = "Known function ranges only; not whole-executable progress"
         coverage["reviewed_function_count"] = reviewed_count
+    if corroborated_count:
+        provenance = "Manual-reviewed and machine-corroborated function ranges; see reviewed-functions.json and corroborated-functions.json"
+        if debug_sections:
+            provenance = "Retail DWARF1 plus manual-reviewed and machine-corroborated function ranges"
+        category_id, category_name = "known_functions", "Known function bounds (partial coverage)"
+        coverage["scope"] = "Known function ranges only; not whole-executable progress"
+        coverage["corroborated_function_count"] = corroborated_count
     data_registry = write_anchors(binary, metadata, functions, output_dir / 'address-anchors.json')
     _write_registries(metadata, functions, output_dir, provenance, data_registry['extents'])
     data_bytes = data_registry['counts']['file_backed_bytes']

@@ -2,8 +2,8 @@
 
 GameCube matching builds remain on `configure.py`. PS2 and Xbox use
 `tools/platform_progress.py` because their executable formats, compilers, and
-relocations differ. This includes verified inputs, analysis infrastructure, and the first real PS2
-source comparison. Whole-program matching coverage and retail source links are
+relocations differ. This includes verified inputs, analysis infrastructure, and compiled PS2/Xbox
+source comparisons. Whole-program matching coverage and retail source links are
 not established yet.
 
 ## Verified originals
@@ -41,6 +41,8 @@ python tools/platform_progress.py extract --iso-dir orig --version SLUS-20680
 python tools/platform_progress.py verify
 python -c "from pathlib import Path; Path('build/tools').mkdir(parents=True, exist_ok=True)"
 python tools/download_tool.py objdiff-cli build/tools/objdiff-cli --tag v3.7.1
+# Required for Xbox boundary validation outside the private image.
+python -m pip install capstone==5.0.7
 python tools/platform_progress.py report
 ```
 
@@ -66,7 +68,7 @@ GameCube's three standard reports and main-only Pages deployment are unchanged.
 | USA | 5,391 | 2,107,460 | 17 functions / 1,616 bytes |
 | Europe/Australia | 5,392 | 2,108,700 | 17 functions / 1,616 bytes |
 | Germany | 5,394 | 2,105,512 | 17 functions / 1,616 bytes |
-| France (reviewed bounds) | 16 | 2,208 | 12 functions / 1,276 bytes |
+| France (reviewed and corroborated bounds) | 253 | 62,236 | 12 functions / 1,276 bytes |
 
 The `address-anchors.json` registries also recover over 2,500 named data addresses
 and 628 function declarations in each debug-bearing version. Addresses do not
@@ -81,8 +83,9 @@ pointer, and array sizes are not inferred. `_rwDMAFlipData` has conflicting
 976-byte and 816-byte declarations and remains unresolved. These are partial
 layout records, with no definition-TU ownership or matched-data claim.
 
-The committed `config/platforms/<version>/symbols.json` files contain names,
-source ownership, addresses, and sizes. Adjacent `splits.json` files partition
+The committed `config/platforms/<version>/symbols.json` files contain addresses
+and sizes, with names and source ownership where established. Anonymous Xbox
+extents explicitly have no original name or source ownership. Adjacent `splits.json` files partition
 every file-backed load range into known functions, explicitly sized data, and
 unclassified gaps. CI
 regenerates and compares these registries before accepting a baseline.
@@ -91,9 +94,9 @@ These counts come from explicit retail DWARF1 function bounds, with overlap and
 load-range validation. Targets retain the exact original instructions. The `xBase` call relocations are restored and verified by inverse reconstruction;
 other target objects are not relocation-restored link inputs. Code outside those function ranges, remaining data,
 and padding remain unclassified; the whole mixed load segment is not counted as
-code. France is stripped; sixteen individually reviewed function extents establish its
-small initial baseline. Its 1,276/2,208 matched bytes describe only these recovered
-functions, never whole-game progress.
+code. France is stripped; sixteen individually reviewed extents and 237
+machine-corroborated extents establish its partial baseline. Its 1,276/62,236
+matched bytes describe only these recovered functions, never whole-game progress.
 
 Both Xbox releases have identical payloads in all 13 sections; their 532 differing
 bytes are in headers/certificates. Each retains its own full-executable hash.
@@ -151,9 +154,14 @@ executable relinking have not been reconstructed.
 France's `symbol-candidates.json` contains 694 unique, aligned full-function byte
 matches (164,824 bytes) against the debug-bearing PS2 releases. 565 have support
 from all three references. These inherited names/ranges need boundary confirmation;
-they are separate from the confirmed symbol registry and excluded from progress.
-Sixteen function extents have since been reviewed independently and recorded in
-`reviewed-functions.json`; only those enter the France baseline. Serializer entry
+unresolved candidates remain separate from the confirmed registry and progress.
+Sixteen extents have been reviewed independently in `reviewed-functions.json`.
+A further 237 extents (60,028 bytes) are in `corroborated-functions.json`: each
+has an authenticated, uniquely occurring named reference body, a direct JAL
+entry witness reached by static control flow from the stripped executable entry,
+and closed local control flow with balanced stack and return-address handling.
+CI regenerates these proofs from the originals; static reachability is not a
+claim that a path executes in game. Both sets enter the partial France baseline. Serializer entry
 and allocator identities used for call relocations are in `reviewed-call-targets.json`.
 France's `reviewed-data-anchors.json` records the `gActiveHeap` address from named
 reference declarations and actual GP-relative accesses. Startup code proves its
@@ -168,12 +176,22 @@ python tools/platforms/france_candidates.py --check
 
 The Xbox analysis uses standard Ghidra x86 analysis seeded at the original entry
 point, with the original sections mapped at their actual addresses. Its candidate
-functions also remain separate from confirmed symbols and reporting denominators.
+functions begin as candidates, separate from confirmed symbols and reporting denominators.
 The initial Ghidra 11.0.1 inventory contains 4,722 candidates covering 1,451,763
 decoded instruction bytes; discontiguous bodies retain their individual ranges.
 Both region registries keep independent executable identities.
 See the parameterized scripts in `tools/platforms/ghidra/`. No Xbox SDK is required
 for this analysis step.
+
+`verified-anonymous-functions.json` promotes 2,515 disjoint extents (627,372
+bytes) per release after Capstone 5.0.7 re-decodes closed control flow, verifies
+all body bytes are reachable, checks an incoming direct call from another
+closed function, and excludes foreign interior transfers across the candidate
+inventory. Reviewed extents take precedence. CI regenerates this registry from
+the original; the remaining candidates stay excluded. Anonymous identifiers
+establish neither original symbols nor source ownership. Together with the
+three reviewed functions, measured coverage is 2,518 functions / 627,523 bytes;
+only 48 bytes match source. This is still partial coverage.
 
 Three hash functions have been independently reviewed in both Xbox releases:
 `xStrHash(const char*)`, its bounded overload, and `xStrHashCat`, totaling 151

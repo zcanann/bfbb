@@ -133,6 +133,12 @@ def report(args, versions: dict) -> None:
             reviewed_data = reviewed.with_name('reviewed-data-anchors.json')
             if version['platform'] == 'ps2' and reviewed_data.is_file():
                 options['reviewed_data_anchors'] = reviewed_data
+            anonymous = reviewed.with_name('verified-anonymous-functions.json')
+            if version['platform'] == 'xbox' and anonymous.is_file():
+                options['anonymous_functions'] = anonymous
+            corroborated = reviewed.with_name('corroborated-functions.json')
+            if version['platform'] == 'ps2' and corroborated.is_file():
+                options['corroborated_functions'] = corroborated
             coverage = backend.prepare_report(path, output, **options)
             status['coverage'] = coverage
             if hasattr(backend, 'verify_registries'):

@@ -55,16 +55,16 @@ def _target_coff(data: bytes, sections: list[dict]) -> bytes:
 def _write_registries(metadata: dict, output_dir: Path, functions: list[dict] | None = None) -> None:
     functions = functions or []
     identity = {"schema_version": 1, "executable_sha1": metadata["sha1"]}
-    symbols = {**identity, "status": "confirmed", "coverage_complete": False,
-               "provenance": "Individually reviewed functions; see reviewed-functions.json; analyzer candidates are separate",
-               "symbols": [{k: f[k] for k in ('name', 'canonical_identifier', 'source', 'address', 'size')}
+    symbols = {**identity, "status": "verified_bounds", "coverage_complete": False,
+               "provenance": "Reviewed identities plus conservatively verified anonymous CFG extents; unresolved analyzer candidates are separate",
+               "symbols": [{k: f[k] for k in ('name', 'canonical_identifier', 'source', 'address', 'size', 'identity_kind')}
                            for f in functions]}
     splits = {**identity, "status": "partial_function_bounds" if functions else "section_only", "symbol_file": "symbols.json",
               "translation_unit_ownership_recovered": False, "relocations_recovered": False,
               "retail_relink_verified": False, "source_build_available": False,
               "publish_matching_report": False,
-              "notes": ["Authenticated executable sections with individually reviewed function extents; incomplete TU splits.",
-                        "Analyzer candidates are in symbol-candidates.json and are not confirmed symbols.",
+              "notes": ["Authenticated sections with reviewed and machine-verified function extents; incomplete TU splits.",
+                        "Only the closed-CFG subset in verified-anonymous-functions.json enters anonymous coverage; other analyzer candidates are excluded.",
                         "Mixed SDK sections and embedded assets require further classification."],
               "sections": [{**section, "classification": _SECTION_KINDS.get(section["name"], ("unclassified", 0))[0]}
                            for section in metadata["sections"]]}
@@ -159,7 +159,8 @@ def verify_registries(generated_dir: Path, committed_dir: Path) -> None:
         candidates_path.read_text(encoding="utf-8"), encoding="utf-8", newline="\n")
 
 
-def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path | None = None) -> dict:
+def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path | None = None,
+                   anonymous_functions: Path | None = None) -> dict:
     """Write target.obj, objdiff.json and coverage.json; return coverage metadata.
 
     Outputs contain original executable bytes and must remain in an ignored
@@ -177,6 +178,7 @@ def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path 
     if len(names) != len(_SECTION_KINDS) or set(names) != set(_SECTION_KINDS):
         raise ValueError("Expected exactly one .text, .rdata and .data XBE section")
 
+    output_dir.mkdir(parents=True, exist_ok=True)
     functions = []
     if reviewed_functions is not None:
         reviewed = json.loads(Path(reviewed_functions).read_text(encoding='utf-8'))
@@ -201,9 +203,30 @@ def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path 
             raw = data[offset:offset + size]
             if hashlib.sha256(raw).hexdigest() != function['sha256']:
                 raise ValueError('Reviewed Xbox function bytes differ')
-            function.update({'bytes': raw, 'symbol': identifier})
+            function.update({'bytes': raw, 'symbol': identifier, 'identity_kind': 'reviewed'})
             functions.append(function)
-        functions.sort(key=lambda f: f['address'])
+    if anonymous_functions is not None:
+        from .xbox_boundaries import generate
+        expected = json.loads(Path(anonymous_functions).read_text(encoding='utf-8'))
+        # Re-decode the actual original and all incoming candidate transfers;
+        # reading a previously generated registry alone is not validation.
+        checked = generate(expected['version'], executable.parent.parent,
+                           Path(anonymous_functions).parent.parent)
+        if checked != expected or checked['executable_sha1'] != metadata['sha1']:
+            raise ValueError('Anonymous Xbox extents differ from current original validation')
+        text = next(s for s in sections if s['name'] == '.text')
+        for entry in checked['functions']:
+            offset = text['raw_offset'] + entry['address'] - text['virtual_address']
+            raw = data[offset:offset + entry['size']]
+            if hashlib.sha256(raw).hexdigest() != entry['sha256']:
+                raise ValueError('Anonymous Xbox bytes changed after boundary validation')
+            functions.append({**entry, 'name': None, 'source': None, 'bytes': raw,
+                              'symbol': entry['canonical_identifier'], 'identity_kind': 'anonymous'})
+        (output_dir / 'verified-anonymous-functions.json').write_text(
+            json.dumps(checked, indent=2) + '\n', encoding='utf-8')
+    functions.sort(key=lambda f: f['address'])
+    if any(a['address'] + a['size'] > b['address'] for a, b in zip(functions, functions[1:])):
+        raise ValueError('Reviewed and anonymous Xbox extents overlap')
     target = _target_coff(data, included)
     coverage = {
         "schema_version": 1,
@@ -219,11 +242,12 @@ def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path 
         "function_boundaries_recovered": bool(functions),
         "known_code_bytes": sum(f["size"] for f in functions),
         "function_count": len(functions),
+        "anonymous_function_count": sum(f["identity_kind"] == "anonymous" for f in functions),
         "relocations_recovered": False,
         "retail_relink_verified": False,
         "coverage_complete": False,
         "publish_matching_report": False,
-        "scope": "Reviewed function bounds plus separate .text/.rdata/.data inventory; not whole-game progress",
+        "scope": "Reviewed identities and verified anonymous bounds plus separate section inventory; not whole-game progress",
         "included_code_section_bytes": sum(
             section["raw_size"] for section in included if section["name"] == ".text"
         ),
@@ -240,9 +264,9 @@ def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path 
             for section in sections if section["name"] not in _SECTION_KINDS
         ],
         "report_limitations": [
-            "No source objects have been compiled or compared.",
+            "Only explicitly profiled source functions can be compared; full executable reconstruction remains pending.",
             "No function symbols are synthesized for the unsplit .text section.",
-            "Only individually reviewed function extents enter code measures; coverage remains incomplete.",
+            "Reviewed identities and machine-verified anonymous extents enter code measures; coverage remains incomplete.",
             "objdiff defaults zero-denominator code/function percentages to100%; this is not measured progress.",
             "Do not publish this diagnostic report as a matching-progress baseline.",
             "Initialized data bytes are inventoried; virtual zero-fill tails are not measured.",
@@ -263,14 +287,17 @@ def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path 
     output_dir.mkdir(parents=True, exist_ok=True)
     groups = defaultdict(list)
     for function in functions:
-        groups[function['source']].append(function)
+        groups[function['source'] or 'unassigned/xbox'].append(function)
     for index, (source, group) in enumerate(sorted(groups.items())):
         name = f'functions-{index:04d}.obj'
         (output_dir / name).write_bytes(function_object(group))
         config['units'].append({'name': source, 'target_path': name,
                                 'metadata': {'complete': False,
-                                             'progress_categories': ['known_functions']}})
-    config['progress_categories'] = [{'id': 'known_functions', 'name': 'Reviewed functions (partial coverage)'}]
+                                             'progress_categories': ['anonymous_functions' if source == 'unassigned/xbox' else 'known_functions']}})
+    config['progress_categories'] = [
+        {'id': 'known_functions', 'name': 'Reviewed identities (partial coverage)'},
+        {'id': 'anonymous_functions', 'name': 'Anonymous code extents (partial coverage)'},
+    ]
     _write_registries(metadata, output_dir, functions)
     (output_dir / "target.obj").write_bytes(target)
     (output_dir / "objdiff.json").write_text(json.dumps(config, indent=2) + "\n", encoding="utf-8")
