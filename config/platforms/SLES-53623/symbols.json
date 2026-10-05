@@ -278,6 +278,20 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "iAnimDurationSKB",
+      "source": "SB/Core/p2/iAnimSKB.cpp",
+      "address": 1724880,
+      "size": 32,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "iAnimEvalSKB",
+      "source": "SB/Core/p2/iAnimSKB.cpp",
+      "address": 1724912,
+      "size": 1480,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "iEnvStartup",
       "source": "SB/Core/p2/iEnv.cpp",
       "address": 1739264,

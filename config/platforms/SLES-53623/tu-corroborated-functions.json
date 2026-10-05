@@ -29,14 +29,15 @@
     "Clump collision and splines retain strict CFG checks; original array descriptors prove two coefficient matrices and observed allocator-array slots without inferring a RenderWare struct layout.",
     "Common/Standard goal identity uses unique complete sequences in three named originals plus full original vtables/globals. Rooted direct-call witnesses are empty; header interleaves and external table methods remain nonpromoted context. No missing NoManLand class layout or method is inferred.",
     "Grid adds only xGridCheckPosition. Its eleven previously confirmed neighbors remain unchanged; all twelve original members form a unique sequence. The complete signed-int offs[4][3][2] array and four named calls are independently checked; external entry prefixes remain context only.",
-    "QuickCull adds only two Init overloads using all eleven original members and nine independently confirmed neighbors. The 28-byte wrapper is exactly six argument loads and a terminal J to the adjacent strictly closed initializer; generic CFG checks remain strict."
+    "QuickCull adds only two Init overloads using all eleven original members and nine independently confirmed neighbors. The 28-byte wrapper is exactly six argument loads and a terminal J to the adjacent strictly closed initializer; generic CFG checks remain strict.",
+    "SKB adds Duration and Eval using the complete four-member sequence and two independently confirmed neighbors. All bodies satisfy the unchanged strict CFG checks; original DWARF and all 96 bytes prove the sole changed slerpPolynomial address."
   ],
   "counts": {
-    "functions": 308,
-    "code_bytes": 148244,
-    "source_units": 13,
+    "functions": 310,
+    "code_bytes": 149756,
+    "source_units": 14,
     "rooted_direct_call_entries": 129,
-    "closed_return_bodies": 294,
+    "closed_return_bodies": 296,
     "reviewed_tail_wrappers": 2,
     "registered_callback_entries": 26,
     "reviewed_leaf_tail_functions": 11,
@@ -52,7 +53,8 @@
     "original_vtables": 15,
     "complete_external_table_methods": 11,
     "header_context_bodies_not_promoted": 2,
-    "reviewed_grid_arrays": 1
+    "reviewed_grid_arrays": 1,
+    "reviewed_skb_polynomials": 1
   },
   "sequence_proofs": [
     {
@@ -860,6 +862,57 @@
         "unchanged_anchor_offset": 1348,
         "unchanged_anchor_bytes": 520,
         "masked_instruction_count": 14
+      }
+    },
+    {
+      "version": "SLUS-20680",
+      "source": "SB/Core/p2/iAnimSKB.cpp",
+      "source_start": 1721360,
+      "target_start": 1722160,
+      "complete_original_members": 4,
+      "previously_confirmed_members": 2,
+      "sequence_bytes_with_alignment": 4232,
+      "uniqueness": {
+        "matching_addresses": [
+          1722160
+        ],
+        "unchanged_anchor_offset": 0,
+        "unchanged_anchor_bytes": 3260,
+        "masked_instruction_count": 1
+      }
+    },
+    {
+      "version": "SLES-51968",
+      "source": "SB/Core/p2/iAnimSKB.cpp",
+      "source_start": 1722160,
+      "target_start": 1722160,
+      "complete_original_members": 4,
+      "previously_confirmed_members": 2,
+      "sequence_bytes_with_alignment": 4232,
+      "uniqueness": {
+        "matching_addresses": [
+          1722160
+        ],
+        "unchanged_anchor_offset": 0,
+        "unchanged_anchor_bytes": 3260,
+        "masked_instruction_count": 1
+      }
+    },
+    {
+      "version": "SLES-51970",
+      "source": "SB/Core/p2/iAnimSKB.cpp",
+      "source_start": 1718800,
+      "target_start": 1722160,
+      "complete_original_members": 4,
+      "previously_confirmed_members": 2,
+      "sequence_bytes_with_alignment": 4232,
+      "uniqueness": {
+        "matching_addresses": [
+          1722160
+        ],
+        "unchanged_anchor_offset": 0,
+        "unchanged_anchor_bytes": 3260,
+        "masked_instruction_count": 1
       }
     }
   ],
@@ -10169,6 +10222,277 @@
     }
   ],
   "functions": [
+    {
+      "name": "iAnimDurationSKB",
+      "source": "SB/Core/p2/iAnimSKB.cpp",
+      "address": 1724880,
+      "size": 32,
+      "sha256": "a7b51cae7caeadf8ed7cf842af96056c9be918c883181e6808ccdc26d4be1ce6",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1724080,
+          "name": "iAnimDurationSKB",
+          "source": "SB/Core/p2/iAnimSKB.cpp",
+          "linkage_name": "iAnimDurationSKB__FP14iAnimSKBHeader",
+          "reference_sha256": "a7b51cae7caeadf8ed7cf842af96056c9be918c883181e6808ccdc26d4be1ce6",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1724880,
+          "name": "iAnimDurationSKB",
+          "source": "SB/Core/p2/iAnimSKB.cpp",
+          "linkage_name": "iAnimDurationSKB__FP14iAnimSKBHeader",
+          "reference_sha256": "a7b51cae7caeadf8ed7cf842af96056c9be918c883181e6808ccdc26d4be1ce6",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1721520,
+          "name": "iAnimDurationSKB",
+          "source": "SB/Core/p2/iAnimSKB.cpp",
+          "linkage_name": "iAnimDurationSKB__FP14iAnimSKBHeader",
+          "reference_sha256": "a7b51cae7caeadf8ed7cf842af96056c9be918c883181e6808ccdc26d4be1ce6",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1724904
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 0
+        },
+        "previously_confirmed_neighbor_entries": [
+          1722160,
+          1723632
+        ]
+      }
+    },
+    {
+      "name": "iAnimEvalSKB",
+      "source": "SB/Core/p2/iAnimSKB.cpp",
+      "address": 1724912,
+      "size": 1480,
+      "sha256": "8c2d8ba1329c4b1b768f353bd874ebed304d50ad351fc7cc316da0e50239accd",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1724112,
+          "name": "iAnimEvalSKB",
+          "source": "SB/Core/p2/iAnimSKB.cpp",
+          "linkage_name": "iAnimEvalSKB__FP14iAnimSKBHeaderfUiP5xVec3P5xQuat",
+          "reference_sha256": "ecab111be079508633fd7d9edaa5ba67a72be9fda66e694f0e18703471292b0a",
+          "data_address_operands": [
+            {
+              "hi_offset": 504,
+              "lo_offset": 508,
+              "opcode": 9,
+              "reference_address": 4287648,
+              "target_address": 4286624,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1724912,
+          "name": "iAnimEvalSKB",
+          "source": "SB/Core/p2/iAnimSKB.cpp",
+          "linkage_name": "iAnimEvalSKB__FP14iAnimSKBHeaderfUiP5xVec3P5xQuat",
+          "reference_sha256": "fcc150cd1f2ffdf2c4dfc91e00e54bb9958b216a8bcef7128e30c07ed2450b48",
+          "data_address_operands": [
+            {
+              "hi_offset": 504,
+              "lo_offset": 508,
+              "opcode": 9,
+              "reference_address": 4286368,
+              "target_address": 4286624,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1721552,
+          "name": "iAnimEvalSKB",
+          "source": "SB/Core/p2/iAnimSKB.cpp",
+          "linkage_name": "iAnimEvalSKB__FP14iAnimSKBHeaderfUiP5xVec3P5xQuat",
+          "reference_sha256": "c8f7b8ede8f4b553e1aeee3ec4bb53c2ed2ccac4204c177b8983c06786d45974",
+          "data_address_operands": [
+            {
+              "hi_offset": 504,
+              "lo_offset": 508,
+              "opcode": 9,
+              "reference_address": 4284800,
+              "target_address": 4286624,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1726384
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              1724972,
+              1724984
+            ],
+            [
+              1725000,
+              1725016
+            ],
+            [
+              1725020,
+              1725040
+            ],
+            [
+              1725056,
+              1725032
+            ],
+            [
+              1725064,
+              1725080
+            ],
+            [
+              1725080,
+              1725112
+            ],
+            [
+              1725100,
+              1725072
+            ],
+            [
+              1725124,
+              1725136
+            ],
+            [
+              1725140,
+              1725160
+            ],
+            [
+              1725164,
+              1725416
+            ],
+            [
+              1725184,
+              1725392
+            ],
+            [
+              1725396,
+              1725192
+            ],
+            [
+              1725404,
+              1726384
+            ],
+            [
+              1725512,
+              1726368
+            ],
+            [
+              1725744,
+              1725776
+            ],
+            [
+              1725808,
+              1726344
+            ],
+            [
+              1725832,
+              1725976
+            ],
+            [
+              1725852,
+              1726216
+            ],
+            [
+              1725964,
+              1726256
+            ],
+            [
+              1725996,
+              1726096
+            ],
+            [
+              1726012,
+              1726248
+            ],
+            [
+              1726084,
+              1726256
+            ],
+            [
+              1726112,
+              1726232
+            ],
+            [
+              1726208,
+              1726256
+            ],
+            [
+              1726220,
+              1726256
+            ],
+            [
+              1726236,
+              1726256
+            ],
+            [
+              1726372,
+              1725520
+            ]
+          ],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [
+            1725028,
+            1725412,
+            1725972,
+            1726092,
+            1726228,
+            1726244
+          ],
+          "following_zero_alignment": 8
+        },
+        "previously_confirmed_neighbor_entries": [
+          1722160,
+          1723632
+        ]
+      }
+    },
     {
       "name": "xSphereHitsVCircle",
       "source": "SB/Core/x/xCollide.cpp",
@@ -92957,6 +93281,47 @@
       ],
       "target_address": 5109296,
       "sha256": "45612568afb3242892bcbe094390e6736dab150c2af7620a056f1c92663b2226"
+    }
+  ],
+  "skb_data_proofs": [
+    {
+      "version": "SLUS-20680",
+      "name": "slerpPolynomial",
+      "reference_address": 4287648,
+      "size": 96,
+      "elements": 24,
+      "element_fundamental_type": 14,
+      "declaration_die": 3530621,
+      "type_die": 3532972,
+      "subscript_descriptor": "000a0000000000170000000855000e00",
+      "target_address": 4286624,
+      "sha256": "9d2693f17cbdcbe309101a9a44057461aa238c0cbbb8a997f12be1ffbed56314"
+    },
+    {
+      "version": "SLES-51968",
+      "name": "slerpPolynomial",
+      "reference_address": 4286368,
+      "size": 96,
+      "elements": 24,
+      "element_fundamental_type": 14,
+      "declaration_die": 3530753,
+      "type_die": 3533104,
+      "subscript_descriptor": "000a0000000000170000000855000e00",
+      "target_address": 4286624,
+      "sha256": "9d2693f17cbdcbe309101a9a44057461aa238c0cbbb8a997f12be1ffbed56314"
+    },
+    {
+      "version": "SLES-51970",
+      "name": "slerpPolynomial",
+      "reference_address": 4284800,
+      "size": 96,
+      "elements": 24,
+      "element_fundamental_type": 14,
+      "declaration_die": 3531599,
+      "type_die": 3533950,
+      "subscript_descriptor": "000a0000000000170000000855000e00",
+      "target_address": 4286624,
+      "sha256": "9d2693f17cbdcbe309101a9a44057461aa238c0cbbb8a997f12be1ffbed56314"
     }
   ]
 }

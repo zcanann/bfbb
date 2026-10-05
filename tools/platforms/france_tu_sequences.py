@@ -459,6 +459,15 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     for key, value in quickcull['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
     document['limitations'].append('QuickCull adds only two Init overloads using all eleven original members and nine independently confirmed neighbors. The 28-byte wrapper is exactly six argument loads and a terminal J to the adjacent strictly closed initializer; generic CFG checks remain strict.')
+    from platforms.france_skb_sequence import generate_unit as generate_skb
+    skb = generate_skb(originals, registry_dir)
+    document['functions'].extend(skb['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(skb['sequence_proofs'])
+    document['skb_data_proofs'] = skb['data_proofs']
+    for key, value in skb['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('SKB adds Duration and Eval using the complete four-member sequence and two independently confirmed neighbors. All bodies satisfy the unchanged strict CFG checks; original DWARF and all 96 bytes prove the sole changed slerpPolynomial address.')
     return document
 
 
