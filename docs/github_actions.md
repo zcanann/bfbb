@@ -61,5 +61,6 @@ push the private build repository's main branch or manually run its image workfl
 ## PS2 and Xbox bootstrap
 
 Six additional jobs verify the private PS2/Xbox executables and upload analysis
-baselines. These are not yet matching source builds or decomp.dev reports. See
+baselines. The four PS2 jobs also compile and compare the shared xBase unit.
+Whole-game coverage and decomp.dev publication remain pending. See
 [platform setup, verified discs, and remaining work](platforms.md).

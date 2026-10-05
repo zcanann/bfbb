@@ -2,9 +2,9 @@
 
 GameCube matching builds remain on `configure.py`. PS2 and Xbox use
 `tools/platform_progress.py` because their executable formats, compilers, and
-relocations differ. This is verified-input and analysis infrastructure; these
-platforms do not yet have reproducible source builds or whole-program matching
-percentages.
+relocations differ. This includes verified inputs, analysis infrastructure, and the first real PS2
+source comparison. Whole-program matching coverage and retail source links are
+not established yet.
 
 ## Verified originals
 
@@ -52,9 +52,8 @@ objects and extraction outputs contain original bytes and stay in ignored direct
 
 The Build workflow has six additional independent platform jobs. Each checks its
 original executable hash, prepares available target objects, runs pinned objdiff
-3.7.1, and uploads `<version>_baseline` with status and coverage metadata. The
-three debug-bearing PS2 releases also upload `<version>_debug_functions` with an
-actual objdiff report. These artifacts are available on staging.
+3.7.1, and uploads `<version>_baseline` with status and coverage metadata. All four PS2 releases also upload `<version>_functions` with an actual objdiff
+report, including the compiled `xBase.cpp` comparison. These artifacts are available on staging.
 
 They are deliberately **not** named `<version>_report` yet. That standard name is
 reserved for reports ready for decomp.dev ingestion. A partial inventory must not
@@ -63,9 +62,16 @@ GameCube's three standard reports and main-only Pages deployment are unchanged.
 
 | PS2 baseline | Functions | Measured function bytes | Source matches |
 | --- | ---: | ---: | ---: |
-| USA | 5,391 | 2,107,460 | 0 |
-| Europe/Australia | 5,392 | 2,108,700 | 0 |
-| Germany | 5,394 | 2,105,512 | 0 |
+| USA | 5,391 | 2,107,460 | 5 functions / 276 bytes |
+| Europe/Australia | 5,392 | 2,108,700 | 5 functions / 276 bytes |
+| Germany | 5,394 | 2,105,512 | 5 functions / 276 bytes |
+| France (reviewed bounds) | 7 | 380 | 5 functions / 276 bytes |
+
+The `address-anchors.json` registries also recover over 2,500 named data addresses
+and 628 function declarations in each debug-bearing version. Addresses do not
+imply object sizes, and declaring source files do not establish definition ownership.
+Function declarations are distinguished from data even when MW encodes them with
+a global-variable tag.
 
 The committed `config/platforms/<version>/symbols.json` files contain names,
 source ownership, addresses, and sizes. Adjacent `splits.json` files partition
@@ -73,10 +79,12 @@ every file-backed load range into known functions and unclassified gaps. CI
 regenerates and compares these registries before accepting a baseline.
 
 These counts come from explicit retail DWARF1 function bounds, with overlap and
-load-range validation. Targets retain the exact original instructions. They are
-not relocation-restored link objects. Code outside those function ranges, data,
+load-range validation. Targets retain the exact original instructions. The `xBase` call relocations are restored and verified by inverse reconstruction;
+other target objects are not relocation-restored link inputs. Code outside those function ranges, data,
 and padding remain unclassified; the whole mixed load segment is not counted as
-code. France is stripped and initially has no discovered function baseline.
+code. France is stripped; seven individually reviewed function extents establish its
+small initial baseline. Its 276/380 matched bytes describe only these recovered
+functions, never whole-game progress.
 
 Both Xbox releases have identical payloads in all 13 sections; their 532 differing
 bytes are in headers/certificates. Each retains its own full-executable hash.
@@ -85,15 +93,45 @@ bytes. Mixed SDK sections require further classification. XBE executable flags
 cannot distinguish code here: `.rdata` and `.data` also have that flag. No fake
 whole-section function is created to make a progress denominator.
 
+## First compiled PS2 unit
+
+The unchanged shared `src/SB/Core/x/xBase.cpp` compiles with the hash-pinned
+`mwcps2-3.0b38-030307` profile under unmodified Wibo 1.2.0. All five functions
+(276 bytes) match all four PS2 releases. Compiler 3.0.1b74 is an independent
+negative control: its Save/Load bodies differ, leaving only three exact functions.
+This establishes a working profile for this TU, not the compiler for every SDK.
+
+`config/platforms/ps2-toolchain.json` records archive/binary hashes, flags, and
+explicit symbol/call mappings. Three `R_MIPS_26` call relocations per version are
+restored only after identifying retail serializer targets independently. Reapplying
+each destination reproduces its original instruction. Source objects are never
+used to infer target bytes. Original code stays private.
+
+To run the source comparison on Linux (or inside WSL), with the private image's paths:
+
+```sh
+python tools/platform_progress.py report --ps2-compilers /ps2-compilers --wibo /usr/local/bin/wibo-ps2
+```
+
+Use local compiler/runtime paths when outside the image. Windows native compiler
+invocation is not the validated runtime; Wibo avoids requiring a separate native
+license configuration. Without these options, the command produces target-only
+baselines. `complete` remains false: `.exceptix`, `.mwcats`, full layout, and retail
+executable relinking have not been reconstructed.
+
 ## Symbol recovery candidates
 
 France's `symbol-candidates.json` contains 694 unique, aligned full-function byte
 matches (164,824 bytes) against the debug-bearing PS2 releases. 565 have support
 from all three references. These inherited names/ranges need boundary confirmation;
 they are separate from the confirmed symbol registry and excluded from progress.
-CI regenerates this metadata using all four authenticated originals:
+Seven function extents have since been reviewed independently and recorded in
+`reviewed-functions.json`; only those enter the France baseline. Serializer entry
+identities used for call relocations are in `reviewed-call-targets.json`.
+CI rechecks reviewed evidence and regenerates candidates using all four authenticated originals:
 
 ```sh
+python tools/platforms/verify_reviewed.py
 python tools/platforms/france_candidates.py --check
 ```
 
@@ -108,8 +146,8 @@ for this analysis step.
 
 ## Next implementation work
 
-- PS2: recover remaining code/data and relocation ownership; establish the exact
-  `mwccps2`/`mwldps2` profile and compile the shared source with platform headers.
+- PS2: recover remaining code/data and relocation ownership; expand compilation
+  beyond xBase and validate toolchain profiles against additional source objects.
   The ELF comment identifies the MW MIPS compiler family, but its `2.4.1.01`
   stamp alone does not establish a particular toolchain distribution.
 - PS2 France: recover independent boundaries from its stripped executable.

@@ -123,25 +123,45 @@ def report(args, versions: dict) -> None:
                   'source_build_verified':False, 'publish_matching_report':False, 'report_status':'pending-function-boundaries'}
         if args.command == 'report':
             backend = importlib.import_module('platforms.' + version['platform'] + '_report')
-            coverage = backend.prepare_report(path, output)
+            options = {}
+            reviewed = ROOT / 'config/platforms' / key / 'reviewed-functions.json'
+            if version['platform'] == 'ps2' and reviewed.is_file():
+                options['reviewed_functions'] = reviewed
+            reviewed_calls = reviewed.with_name('reviewed-call-targets.json')
+            if version['platform'] == 'ps2' and reviewed_calls.is_file():
+                options['reviewed_call_targets'] = reviewed_calls
+            coverage = backend.prepare_report(path, output, **options)
             status['coverage'] = coverage
             if hasattr(backend, 'verify_registries'):
                 backend.verify_registries(output, ROOT / 'config/platforms' / key)
+            compiled = []
+            if version['platform'] == 'ps2' and args.ps2_compilers:
+                from platforms.ps2_source import compile_units
+                if args.wibo is None:
+                    raise ValueError('--wibo is required with --ps2-compilers')
+                compiled = compile_units(output, args.ps2_compilers, args.wibo)
+                status['compiled_units'] = compiled
+                coverage['source_compilation_available'] = bool(compiled)
+                write_json(output / 'coverage.json', coverage)
             if (output / 'objdiff.json').is_file():
                 subprocess.run([str(args.objdiff.resolve()), 'report', 'generate',
                                 '-p', str(output.resolve()), '-o', str((output / 'baseline-report.json').resolve())], check=True)
                 measured = json.loads((output / 'baseline-report.json').read_text())
-                if int(measured.get('measures', {}).get('matched_code', 0)) or int(measured.get('measures', {}).get('complete_code', 0)):
+                if (not compiled and int(measured.get('measures', {}).get('matched_code', 0))) or int(measured.get('measures', {}).get('complete_code', 0)):
                     raise ValueError('Target-only bootstrap unexpectedly reports matched or linked code')
                 status['report_status'] = ('partial-target-only-baseline' if int(measured['measures'].get('total_code', 0)) else 'pending-function-boundaries')
+                if compiled:
+                    status['report_status'] = 'partial-source-comparison'
                 status['publish_matching_report'] = False
                 if int(measured['measures'].get('total_code', 0)):
                     status['measures'] = measured['measures']
         write_json(output / 'progress.json', status)
-        summary = f"{key}: original verified; {status['report_status']}; source build pending"
+        summary = f"{key}: original verified; {status['report_status']}; full executable build pending"
         coverage = status.get('coverage', {})
         if coverage.get('known_code_bytes'):
             summary += f"; {coverage['function_count']:,} recovered functions / {coverage['known_code_bytes']:,} code bytes (partial coverage)"
+        if status.get('compiled_units'):
+            summary += f"; {len(status['compiled_units'])} source TU compiled, {status['measures'].get('matched_code', 0)} code bytes matched"
         print(summary, flush=True)
         if os.environ.get('GITHUB_STEP_SUMMARY'):
             with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as stream:
@@ -158,6 +178,8 @@ def main() -> None:
     source.add_argument('--iso-dir', type=Path, default=ROOT / 'orig')
     parser.add_argument('--orig-dir', type=Path, default=ROOT / 'orig')
     parser.add_argument('--build-dir', type=Path, default=ROOT / 'build')
+    parser.add_argument('--ps2-compilers', type=Path)
+    parser.add_argument('--wibo', type=Path)
     parser.add_argument('--objdiff', type=Path, default=ROOT / 'build/tools' / ('objdiff-cli.exe' if os.name == 'nt' else 'objdiff-cli'))
     args = parser.parse_args()
     try:

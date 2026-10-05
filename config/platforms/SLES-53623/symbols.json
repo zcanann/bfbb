@@ -1,7 +1,50 @@
 {
   "schema_version": 1,
   "executable_sha1": "ef675520304c2ce0df9cbfa03222e42fb2e7a09e",
-  "provenance": "no DWARF1 function ranges available",
+  "provenance": "Independently reviewed function ranges; see reviewed-functions.json",
   "coverage_complete": false,
-  "symbols": []
+  "symbols": [
+    {
+      "name": "zDispatcher_sceneFinish",
+      "source": "SB/Game/zDispatcher.cpp",
+      "address": 1252496,
+      "size": 52
+    },
+    {
+      "name": "zDispatcher_scenePrepare",
+      "source": "SB/Game/zDispatcher.cpp",
+      "address": 1252560,
+      "size": 52
+    },
+    {
+      "name": "xBaseReset",
+      "source": "SB/Core/x/xBase.cpp",
+      "address": 1833968,
+      "size": 44
+    },
+    {
+      "name": "xBaseLoad",
+      "source": "SB/Core/x/xBase.cpp",
+      "address": 1834016,
+      "size": 96
+    },
+    {
+      "name": "xBaseSave",
+      "source": "SB/Core/x/xBase.cpp",
+      "address": 1834112,
+      "size": 76
+    },
+    {
+      "name": "xBaseSetup",
+      "source": "SB/Core/x/xBase.cpp",
+      "address": 1834192,
+      "size": 8
+    },
+    {
+      "name": "xBaseInit",
+      "source": "SB/Core/x/xBase.cpp",
+      "address": 1834208,
+      "size": 52
+    }
+  ]
 }

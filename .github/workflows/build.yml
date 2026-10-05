@@ -118,12 +118,13 @@ jobs:
           mkdir -p build/tools
           python tools/download_tool.py objdiff-cli build/tools/objdiff-cli --tag v3.7.1
 
-      - name: Verify original and generate available target baseline
-        run: python tools/platform_progress.py report --version ${{ matrix.version }}
+      - name: Verify original and compare supported source units
+        run: python tools/platform_progress.py report --version ${{ matrix.version }} --ps2-compilers /ps2-compilers --wibo /usr/local/bin/wibo-ps2
 
       - name: Verify France recovery candidates
         if: matrix.version == 'SLES-53623'
         run: |
+          python tools/platforms/verify_reviewed.py
           python tools/platforms/france_candidates.py --check
           cp config/platforms/SLES-53623/symbol-candidates.json build/SLES-53623/symbol-candidates.json
 
@@ -137,15 +138,17 @@ jobs:
           path: |
             build/${{ matrix.version }}/progress.json
             build/${{ matrix.version }}/coverage.json
+            build/${{ matrix.version }}/relocations.json
             build/${{ matrix.version }}/symbols.json
+            build/${{ matrix.version }}/address-anchors.json
             build/${{ matrix.version }}/splits.json
             build/${{ matrix.version }}/symbol-candidates.json
 
-      - name: Upload debug-backed objdiff baseline
-        if: matrix.version == 'SLUS-20680' || matrix.version == 'SLES-51968' || matrix.version == 'SLES-51970'
+      - name: Upload PS2 objdiff comparison
+        if: startsWith(matrix.version, 'SL')
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.version }}_debug_functions
+          name: ${{ matrix.version }}_functions
           if-no-files-found: error
           path: build/${{ matrix.version }}/baseline-report.json
 

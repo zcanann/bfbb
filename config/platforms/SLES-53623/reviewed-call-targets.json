@@ -1,0 +1,189 @@
+{
+  "schema_version": 1,
+  "version": "SLES-53623",
+  "executable_sha1": "ef675520304c2ce0df9cbfa03222e42fb2e7a09e",
+  "scope": "Independently identified direct-call targets for relocation recovery only; these anchors do not add functions or bytes to progress.",
+  "coverage_complete": false,
+  "eligible_for_progress": false,
+  "anchors": [
+    {
+      "name": "Read_b1",
+      "symbol": "Read_b1__7xSerialFPi",
+      "source": "SB/Core/x/xserializer.cpp",
+      "address": 2113232,
+      "size": 12,
+      "sha256": "bcfb27e3a3ae8a3720cbc9fcf2fbb604377decfda20702a79d3d8d6236b55c28",
+      "identity_confirmation": true,
+      "eligible_for_progress": false,
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "name": "Read_b1",
+          "source": "SB/Core/x/xserializer.cpp",
+          "source_address": 2111824,
+          "size": 12,
+          "reference_sha256": "3dc75367ef91901589b65c3ea156763c7f33abbf9d23385dd53c10368615e4c6",
+          "matching_named_dwarf_ranges": 1,
+          "comparison": "Complete function instructions agree after masking only J/JAL destination fields; all opcode/register/non-address immediate fields remain exact.",
+          "changed_instruction_offsets": [
+            4
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "name": "Read_b1",
+          "source": "SB/Core/x/xserializer.cpp",
+          "source_address": 2113120,
+          "size": 12,
+          "reference_sha256": "66fc09f9d9e2c72e5b0aacd157efb124b1da3e569e87aa34338bb9a440327219",
+          "matching_named_dwarf_ranges": 1,
+          "comparison": "Complete function instructions agree after masking only J/JAL destination fields; all opcode/register/non-address immediate fields remain exact.",
+          "changed_instruction_offsets": [
+            4
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "name": "Read_b1",
+          "source": "SB/Core/x/xserializer.cpp",
+          "source_address": 2109776,
+          "size": 12,
+          "reference_sha256": "98637a245106c1f9de1d617cf073c39fb5bfa17782037599ccdf729b3c658497",
+          "matching_named_dwarf_ranges": 1,
+          "comparison": "Complete function instructions agree after masking only J/JAL destination fields; all opcode/register/non-address immediate fields remain exact.",
+          "changed_instruction_offsets": [
+            4
+          ]
+        }
+      ],
+      "corroboration": {
+        "loaded_image_exact_occurrences": 1,
+        "distinctive_arguments": {
+          "element_size_bytes": 4,
+          "bit_count": -1,
+          "distinguishes_neighbors": "Read_b7/Write_b7 use -7; typed wrappers use count1."
+        },
+        "wrapper_group": {
+          "first_address": 2113136,
+          "wrapper_count": 7,
+          "wrapper_size": 12,
+          "stride": 16,
+          "position": 6,
+          "evidence": "The seven-wrapper sequence, argument immediates, sizes and spacing agree in all three debug-bearing reference versions."
+        },
+        "internal_transfer": {
+          "offset": 4,
+          "kind": "tail_jump",
+          "address": 2113248,
+          "reference_identity": "xSerial::Read(char*, S32, S32)"
+        },
+        "source_equivalent": "return Read((char*)bits, 4, -1);"
+      },
+      "reviewed_uses": [
+        {
+          "function": "xBaseLoad",
+          "function_address": 1834016,
+          "offset": 24,
+          "relocation_type": "R_MIPS_26",
+          "call_address": 1834040
+        }
+      ]
+    },
+    {
+      "name": "Write_b1",
+      "symbol": "Write_b1__7xSerialFi",
+      "source": "SB/Core/x/xserializer.cpp",
+      "address": 2113952,
+      "size": 40,
+      "sha256": "65b47b016e8e0f7b896e1993807f6f3acf92ae581bce3082940cc8667ba7c693",
+      "identity_confirmation": true,
+      "eligible_for_progress": false,
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "name": "Write_b1",
+          "source": "SB/Core/x/xserializer.cpp",
+          "source_address": 2112544,
+          "size": 40,
+          "reference_sha256": "0a68725c9c45f3ff945e3087595238f675520c510b67e2477f2112a3636371c3",
+          "matching_named_dwarf_ranges": 1,
+          "comparison": "Complete function instructions agree after masking only J/JAL destination fields; all opcode/register/non-address immediate fields remain exact.",
+          "changed_instruction_offsets": [
+            20
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "name": "Write_b1",
+          "source": "SB/Core/x/xserializer.cpp",
+          "source_address": 2113840,
+          "size": 40,
+          "reference_sha256": "a8ff215eddc0b503c1685c3089db2ac9eed53a24219ab6000f3a16a863e22d0a",
+          "matching_named_dwarf_ranges": 1,
+          "comparison": "Complete function instructions agree after masking only J/JAL destination fields; all opcode/register/non-address immediate fields remain exact.",
+          "changed_instruction_offsets": [
+            20
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "name": "Write_b1",
+          "source": "SB/Core/x/xserializer.cpp",
+          "source_address": 2110496,
+          "size": 40,
+          "reference_sha256": "b45db7a683c4d9092a7cc453f665b9a6ec3d1e3f13225de8bd08ac78b8134d99",
+          "matching_named_dwarf_ranges": 1,
+          "comparison": "Complete function instructions agree after masking only J/JAL destination fields; all opcode/register/non-address immediate fields remain exact.",
+          "changed_instruction_offsets": [
+            20
+          ]
+        }
+      ],
+      "corroboration": {
+        "loaded_image_exact_occurrences": 1,
+        "distinctive_arguments": {
+          "element_size_bytes": 4,
+          "bit_count": -1,
+          "distinguishes_neighbors": "Read_b7/Write_b7 use -7; typed wrappers use count1."
+        },
+        "wrapper_group": {
+          "first_address": 2113664,
+          "wrapper_count": 7,
+          "wrapper_size": 40,
+          "stride": 48,
+          "position": 6,
+          "evidence": "The seven-wrapper sequence, argument immediates, sizes and spacing agree in all three debug-bearing reference versions."
+        },
+        "internal_transfer": {
+          "offset": 20,
+          "kind": "direct_call",
+          "address": 2114000,
+          "reference_identity": "xSerial::Write(char*, S32, S32)"
+        },
+        "source_equivalent": "return Write((char*)&bits, 4, -1);"
+      },
+      "reviewed_uses": [
+        {
+          "function": "xBaseSave",
+          "function_address": 1834112,
+          "offset": 28,
+          "relocation_type": "R_MIPS_26",
+          "call_address": 1834140
+        },
+        {
+          "function": "xBaseSave",
+          "function_address": 1834112,
+          "offset": 52,
+          "relocation_type": "R_MIPS_26",
+          "call_address": 1834164
+        }
+      ]
+    }
+  ]
+}

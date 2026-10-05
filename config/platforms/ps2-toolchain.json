@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "compiler": {
+    "id": "mwcps2-3.0b38-030307",
+    "archive_url": "https://github.com/decompme/compilers/releases/download/compilers/mwcps2-3.0b38-030307.tar.gz",
+    "archive_sha256": "db3d0606c77d4335d2ad884a1285a4bc3b9e68cdd6161dd46d6e2a2cd3313276",
+    "compiler_sha256": "acf1088553362dddef7eee2d269848b03208e29fd26caa441848e57b6299786a",
+    "linker_sha256": "7bd36d23d9f71da967ef4ba5abfd3efba19cb1b8d825be40ec057e14213470bc"
+  },
+  "runtime": {
+    "id": "wibo-1.2.0-i686",
+    "url": "https://github.com/decompals/wibo/releases/download/1.2.0/wibo-i686",
+    "sha256": "2575d3b0a2f408b2c2b0850db56f1af5d005a138394a6774eba77b6708ecc304"
+  },
+  "flags": [
+    "-c",
+    "-O4,p",
+    "-lang",
+    "c++",
+    "-char",
+    "unsigned",
+    "-nostdinc",
+    "-gccinc",
+    "-DPS2=1"
+  ],
+  "scope": "Validated xBase profile; compiler identity for other units remains unproven",
+  "units": [
+    {
+      "source": "src/SB/Core/x/xBase.cpp",
+      "target_unit": "SB/Core/x/xBase.cpp",
+      "object": "source/xBase.o",
+      "symbols": {
+        "xBaseInit": "xBaseInit__FP5xBaseP10xBaseAsset",
+        "xBaseSetup": "xBaseSetup__FP5xBase",
+        "xBaseSave": "xBaseSave__FP5xBaseP7xSerial",
+        "xBaseLoad": "xBaseLoad__FP5xBaseP7xSerial",
+        "xBaseReset": "xBaseReset__FP5xBaseP10xBaseAsset"
+      },
+      "calls": [
+        {
+          "function": "xBaseSave",
+          "offset": 28,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Write_b1",
+          "symbol": "Write_b1__7xSerialFi"
+        },
+        {
+          "function": "xBaseSave",
+          "offset": 52,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Write_b1",
+          "symbol": "Write_b1__7xSerialFi"
+        },
+        {
+          "function": "xBaseLoad",
+          "offset": 24,
+          "target_source": "SB/Core/x/xserializer.cpp",
+          "target_function": "Read_b1",
+          "symbol": "Read_b1__7xSerialFPi"
+        }
+      ]
+    }
+  ]
+}

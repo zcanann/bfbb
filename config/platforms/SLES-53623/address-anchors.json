@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "executable_sha1": "ef675520304c2ce0df9cbfa03222e42fb2e7a09e",
+  "provenance": "Retail DWARF1 declarations with a single absolute DW_OP_addr location",
+  "coverage_complete": false,
+  "eligible_for_progress": false,
+  "limitations": [
+    "Data entries prove addresses, not sizes or complete object ownership.",
+    "References identify declaring source files, not necessarily the definition owner.",
+    "Function entries without a known extent do not add function bytes or matching progress.",
+    "Zero addresses and declarations outside loaded memory are excluded."
+  ],
+  "counts": {},
+  "skipped_declarations": {},
+  "anchors": []
+}

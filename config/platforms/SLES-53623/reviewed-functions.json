@@ -1,0 +1,660 @@
+{
+  "schema_version": 1,
+  "version": "SLES-53623",
+  "executable_sha1": "ef675520304c2ce0df9cbfa03222e42fb2e7a09e",
+  "provenance": "Individually reviewed function extents in stripped France retail executable; corroborated against three debug-bearing retail versions.",
+  "coverage_complete": false,
+  "source_comparison_available": false,
+  "source_link_verified": false,
+  "scope": "Only the explicitly reviewed dispatcher and xBase function extents; other byte-match candidates remain unconfirmed.",
+  "functions": [
+    {
+      "name": "zDispatcher_sceneFinish",
+      "source": "SB/Game/zDispatcher.cpp",
+      "address": 1252496,
+      "size": 52,
+      "sha256": "5051e880462f0dcf3f0e4a8ceebc371e48c26ef82bb4c7497c309368169bc060",
+      "boundary_confirmation": true,
+      "confirmation_method": "Individual review of France control flow, frame/return boundaries, and exact reference DWARF1 ranges.",
+      "source_signature": "void zDispatcher_sceneFinish()",
+      "source_equivalent": "--g_zdsp_init == 0 conditionally calls memset(&g_zdsp_depot, 0, sizeof(st_ZDISPATCH_DEPOT)); sizeof is 8 in this executable.",
+      "provenance": [
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1252496,
+          "name": "zDispatcher_sceneFinish",
+          "source": "SB/Game/zDispatcher.cpp",
+          "evidence": "Complete named DWARF1 range has identical bytes."
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1252496,
+          "name": "zDispatcher_sceneFinish",
+          "source": "SB/Game/zDispatcher.cpp",
+          "evidence": "Complete named DWARF1 range has identical bytes."
+        },
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1252496,
+          "name": "zDispatcher_sceneFinish",
+          "source": "SB/Game/zDispatcher.cpp",
+          "evidence": "Complete named DWARF1 range has identical bytes."
+        }
+      ],
+      "corroboration": {
+        "direct_entry_call": 1682952,
+        "entry_cfg": {
+          "entry_point": 1048584,
+          "direct_call_chain": [
+            {
+              "call_site": 1049016,
+              "target": 1612864
+            },
+            {
+              "call_site": 1614480,
+              "target": 1599232
+            },
+            {
+              "call_site": 1603928,
+              "target": 1617584
+            },
+            {
+              "call_site": 1617620,
+              "target": 1682368
+            },
+            {
+              "call_site": 1682952,
+              "target": 1252496
+            }
+          ],
+          "method": "Static control-flow traversal from ELF entry, following direct jumps/calls and both conditional paths; post-call continuation is included.",
+          "limitations": "Structural reachability is not runtime execution. Indirect destinations remain unresolved; the chain omits intervening intraprocedural edges."
+        },
+        "stack_frame": {
+          "allocation_address": 1252496,
+          "allocation_bytes": 16,
+          "return_address_save": 1252504,
+          "return_address_restore": 1252536,
+          "return_address_stack_offset": 0,
+          "deallocation_address": 1252544,
+          "deallocation_bytes": 16
+        },
+        "local_control_flow": {
+          "conditional_branch": 1252516,
+          "conditional_target": 1252536,
+          "conditional_delay_slot": "Stores updated initialization count.",
+          "conditional_call": 1252528,
+          "conditional_call_target": 1149960,
+          "return_instruction": 1252540,
+          "end_exclusive": 1252548,
+          "unresolved_indirect_jumps": false,
+          "external_noncall_edges": false
+        },
+        "following_padding": {
+          "address": 1252548,
+          "size": 12,
+          "all_zero": true
+        },
+        "previous_boundary": {
+          "return_instruction": 1252488,
+          "delay_slot": 1252492,
+          "immediately_precedes_entry": true
+        }
+      }
+    },
+    {
+      "name": "zDispatcher_scenePrepare",
+      "source": "SB/Game/zDispatcher.cpp",
+      "address": 1252560,
+      "size": 52,
+      "sha256": "6bb310f999cafccbc8622cb356f28ed4bb6b9dab8188c2fc2fde681e4f968d8e",
+      "boundary_confirmation": true,
+      "confirmation_method": "Individual review of France control flow, frame/return boundaries, and exact reference DWARF1 ranges.",
+      "source_signature": "void zDispatcher_scenePrepare()",
+      "source_equivalent": "g_zdsp_init++ == 0 conditionally calls memset(&g_zdsp_depot, 0, sizeof(st_ZDISPATCH_DEPOT)); sizeof is 8 in this executable.",
+      "provenance": [
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1252560,
+          "name": "zDispatcher_scenePrepare",
+          "source": "SB/Game/zDispatcher.cpp",
+          "evidence": "Complete named DWARF1 range has identical bytes."
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1252560,
+          "name": "zDispatcher_scenePrepare",
+          "source": "SB/Game/zDispatcher.cpp",
+          "evidence": "Complete named DWARF1 range has identical bytes."
+        },
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1252560,
+          "name": "zDispatcher_scenePrepare",
+          "source": "SB/Game/zDispatcher.cpp",
+          "evidence": "Complete named DWARF1 range has identical bytes."
+        }
+      ],
+      "corroboration": {
+        "direct_entry_call": 1684448,
+        "entry_cfg": {
+          "entry_point": 1048584,
+          "direct_call_chain": [
+            {
+              "call_site": 1049016,
+              "target": 1612864
+            },
+            {
+              "call_site": 1614480,
+              "target": 1599232
+            },
+            {
+              "call_site": 1603212,
+              "target": 1617648
+            },
+            {
+              "call_site": 1617708,
+              "target": 1683200
+            },
+            {
+              "call_site": 1684448,
+              "target": 1252560
+            }
+          ],
+          "method": "Static control-flow traversal from ELF entry, following direct jumps/calls and both conditional paths; post-call continuation is included.",
+          "limitations": "Structural reachability is not runtime execution. Indirect destinations remain unresolved; the chain omits intervening intraprocedural edges."
+        },
+        "stack_frame": {
+          "allocation_address": 1252560,
+          "allocation_bytes": 16,
+          "return_address_save": 1252568,
+          "return_address_restore": 1252600,
+          "return_address_stack_offset": 0,
+          "deallocation_address": 1252608,
+          "deallocation_bytes": 16
+        },
+        "local_control_flow": {
+          "conditional_branch": 1252580,
+          "conditional_target": 1252600,
+          "conditional_delay_slot": "Stores updated initialization count.",
+          "conditional_call": 1252592,
+          "conditional_call_target": 1149960,
+          "return_instruction": 1252604,
+          "end_exclusive": 1252612,
+          "unresolved_indirect_jumps": false,
+          "external_noncall_edges": false
+        },
+        "following_padding": {
+          "address": 1252612,
+          "size": 12,
+          "all_zero": true
+        },
+        "previous_boundary": {
+          "reviewed_function": "zDispatcher_sceneFinish",
+          "end_exclusive": 1252548,
+          "zero_padding_to_entry": 12
+        }
+      }
+    },
+    {
+      "name": "xBaseReset",
+      "source": "SB/Core/x/xBase.cpp",
+      "address": 1833968,
+      "size": 44,
+      "sha256": "fe38eecf0463e9ffaae6e03f3c77c6dc4ce3a93ff9181dc34b408974cb62f84f",
+      "boundary_confirmation": true,
+      "confirmation_method": "Individual France instruction/control-flow review, explicit call references, and complete xBase TU layout corroborated by three named DWARF1 reference layouts.",
+      "source_signature": "void xBaseReset(xBase* xb, xBaseAsset* asset)",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1832592,
+          "name": "xBaseReset",
+          "source": "SB/Core/x/xBase.cpp",
+          "reference_sha256": "fe38eecf0463e9ffaae6e03f3c77c6dc4ce3a93ff9181dc34b408974cb62f84f",
+          "evidence": "Complete DWARF1 function range matches except the explicitly listed direct-call target immediates.",
+          "call_target_differences": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1833856,
+          "name": "xBaseReset",
+          "source": "SB/Core/x/xBase.cpp",
+          "reference_sha256": "fe38eecf0463e9ffaae6e03f3c77c6dc4ce3a93ff9181dc34b408974cb62f84f",
+          "evidence": "Complete DWARF1 function range matches except the explicitly listed direct-call target immediates.",
+          "call_target_differences": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1830496,
+          "name": "xBaseReset",
+          "source": "SB/Core/x/xBase.cpp",
+          "reference_sha256": "fe38eecf0463e9ffaae6e03f3c77c6dc4ce3a93ff9181dc34b408974cb62f84f",
+          "evidence": "Complete DWARF1 function range matches except the explicitly listed direct-call target immediates.",
+          "call_target_differences": []
+        }
+      ],
+      "corroboration": {
+        "tu_layout": {
+          "anchor_function": "xBaseReset",
+          "anchor_address": 1833968,
+          "offset_from_anchor": 0,
+          "evidence": "All five names, sizes, relative addresses, ordering, and inter-function padding agree across all three debug reference versions."
+        },
+        "direct_entry_calls": [
+          1918544
+        ],
+        "entry_cfg_callers_verified": true,
+        "terminal_return": {
+          "address": 1834004,
+          "delay_slot": 1834008,
+          "end_exclusive": 1834012
+        },
+        "following_padding": {
+          "address": 1834012,
+          "size": 4,
+          "all_zero": true
+        },
+        "local_control_flow": "Direct conditional branches stay inside the reviewed extent; only calls leave it; the terminal transfer is jr ra."
+      }
+    },
+    {
+      "name": "xBaseLoad",
+      "source": "SB/Core/x/xBase.cpp",
+      "address": 1834016,
+      "size": 96,
+      "sha256": "64b74f5799cc32cc956739387cbfa0c4c03a518a2973d81abfbd5021e01e4929",
+      "boundary_confirmation": true,
+      "confirmation_method": "Individual France instruction/control-flow review, explicit call references, and complete xBase TU layout corroborated by three named DWARF1 reference layouts.",
+      "source_signature": "void xBaseLoad(xBase* ent, xSerial* s)",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1832640,
+          "name": "xBaseLoad",
+          "source": "SB/Core/x/xBase.cpp",
+          "reference_sha256": "b02b1bf41f0860c23c5bc9571ad6a3b51a86ccd0374a84d4d1047b23ce2344ee",
+          "evidence": "Complete DWARF1 function range matches except the explicitly listed direct-call target immediates.",
+          "call_target_differences": [
+            {
+              "offset": 24,
+              "kind": "MIPS JAL target immediate",
+              "reference_target": 2111824,
+              "french_target": 2113232,
+              "reference_target_name": "Read_b1",
+              "reference_target_source": "SB/Core/x/xserializer.cpp"
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1833904,
+          "name": "xBaseLoad",
+          "source": "SB/Core/x/xBase.cpp",
+          "reference_sha256": "71d2893e2509b9b4e6984ef4817378dcaa90d80b6cc024d835a457ba388ccbf9",
+          "evidence": "Complete DWARF1 function range matches except the explicitly listed direct-call target immediates.",
+          "call_target_differences": [
+            {
+              "offset": 24,
+              "kind": "MIPS JAL target immediate",
+              "reference_target": 2113120,
+              "french_target": 2113232,
+              "reference_target_name": "Read_b1",
+              "reference_target_source": "SB/Core/x/xserializer.cpp"
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1830544,
+          "name": "xBaseLoad",
+          "source": "SB/Core/x/xBase.cpp",
+          "reference_sha256": "64cd079eea23b50ca701771454509873fd5890238c80cfe68073ed932faef7bf",
+          "evidence": "Complete DWARF1 function range matches except the explicitly listed direct-call target immediates.",
+          "call_target_differences": [
+            {
+              "offset": 24,
+              "kind": "MIPS JAL target immediate",
+              "reference_target": 2109776,
+              "french_target": 2113232,
+              "reference_target_name": "Read_b1",
+              "reference_target_source": "SB/Core/x/xserializer.cpp"
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "tu_layout": {
+          "anchor_function": "xBaseReset",
+          "anchor_address": 1833968,
+          "offset_from_anchor": 48,
+          "evidence": "All five names, sizes, relative addresses, ordering, and inter-function padding agree across all three debug reference versions."
+        },
+        "direct_entry_calls": [
+          1920084,
+          2747700,
+          2748660
+        ],
+        "entry_cfg_callers_verified": true,
+        "terminal_return": {
+          "address": 1834104,
+          "delay_slot": 1834108,
+          "end_exclusive": 1834112
+        },
+        "following_padding": {
+          "address": 1834112,
+          "size": 0,
+          "all_zero": true
+        },
+        "local_control_flow": "Direct conditional branches stay inside the reviewed extent; only calls leave it; the terminal transfer is jr ra.",
+        "stack_frame": {
+          "allocation_bytes": 48,
+          "allocation_address": 1834016,
+          "return_address_save": 1834020,
+          "return_address_restore": 1834096,
+          "return_address_stack_offset": 16,
+          "deallocation_address": 1834108
+        }
+      }
+    },
+    {
+      "name": "xBaseSave",
+      "source": "SB/Core/x/xBase.cpp",
+      "address": 1834112,
+      "size": 76,
+      "sha256": "cb3e67e3f0ed8b742dd1f6bc03e32e52ff833c831b897f58b9c8c5e9be979d50",
+      "boundary_confirmation": true,
+      "confirmation_method": "Individual France instruction/control-flow review, explicit call references, and complete xBase TU layout corroborated by three named DWARF1 reference layouts.",
+      "source_signature": "void xBaseSave(xBase* ent, xSerial* s)",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1832736,
+          "name": "xBaseSave",
+          "source": "SB/Core/x/xBase.cpp",
+          "reference_sha256": "88b1c6fba42350970a969a5000427b59f02975c6bace9c24887dda62f67d379a",
+          "evidence": "Complete DWARF1 function range matches except the explicitly listed direct-call target immediates.",
+          "call_target_differences": [
+            {
+              "offset": 28,
+              "kind": "MIPS JAL target immediate",
+              "reference_target": 2112544,
+              "french_target": 2113952,
+              "reference_target_name": "Write_b1",
+              "reference_target_source": "SB/Core/x/xserializer.cpp"
+            },
+            {
+              "offset": 52,
+              "kind": "MIPS JAL target immediate",
+              "reference_target": 2112544,
+              "french_target": 2113952,
+              "reference_target_name": "Write_b1",
+              "reference_target_source": "SB/Core/x/xserializer.cpp"
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1834000,
+          "name": "xBaseSave",
+          "source": "SB/Core/x/xBase.cpp",
+          "reference_sha256": "b177a14fe27184fd1ecc9919a6a002b96e6921360647e2d53fc214e3bf90e708",
+          "evidence": "Complete DWARF1 function range matches except the explicitly listed direct-call target immediates.",
+          "call_target_differences": [
+            {
+              "offset": 28,
+              "kind": "MIPS JAL target immediate",
+              "reference_target": 2113840,
+              "french_target": 2113952,
+              "reference_target_name": "Write_b1",
+              "reference_target_source": "SB/Core/x/xserializer.cpp"
+            },
+            {
+              "offset": 52,
+              "kind": "MIPS JAL target immediate",
+              "reference_target": 2113840,
+              "french_target": 2113952,
+              "reference_target_name": "Write_b1",
+              "reference_target_source": "SB/Core/x/xserializer.cpp"
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1830640,
+          "name": "xBaseSave",
+          "source": "SB/Core/x/xBase.cpp",
+          "reference_sha256": "6c0f03e02d38f7abd5c8ceac608e3e617a33d46c5111fd6e6500c1eb8d52d25b",
+          "evidence": "Complete DWARF1 function range matches except the explicitly listed direct-call target immediates.",
+          "call_target_differences": [
+            {
+              "offset": 28,
+              "kind": "MIPS JAL target immediate",
+              "reference_target": 2110496,
+              "french_target": 2113952,
+              "reference_target_name": "Write_b1",
+              "reference_target_source": "SB/Core/x/xserializer.cpp"
+            },
+            {
+              "offset": 52,
+              "kind": "MIPS JAL target immediate",
+              "reference_target": 2110496,
+              "french_target": 2113952,
+              "reference_target_name": "Write_b1",
+              "reference_target_source": "SB/Core/x/xserializer.cpp"
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "tu_layout": {
+          "anchor_function": "xBaseReset",
+          "anchor_address": 1833968,
+          "offset_from_anchor": 144,
+          "evidence": "All five names, sizes, relative addresses, ordering, and inter-function padding agree across all three debug reference versions."
+        },
+        "direct_entry_calls": [
+          1920196,
+          2747780,
+          2748740
+        ],
+        "entry_cfg_callers_verified": true,
+        "terminal_return": {
+          "address": 1834180,
+          "delay_slot": 1834184,
+          "end_exclusive": 1834188
+        },
+        "following_padding": {
+          "address": 1834188,
+          "size": 4,
+          "all_zero": true
+        },
+        "local_control_flow": "Direct conditional branches stay inside the reviewed extent; only calls leave it; the terminal transfer is jr ra.",
+        "stack_frame": {
+          "allocation_bytes": 16,
+          "allocation_address": 1834112,
+          "return_address_save": 1834116,
+          "return_address_restore": 1834176,
+          "return_address_stack_offset": 0,
+          "deallocation_address": 1834184
+        }
+      }
+    },
+    {
+      "name": "xBaseSetup",
+      "source": "SB/Core/x/xBase.cpp",
+      "address": 1834192,
+      "size": 8,
+      "sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1",
+      "boundary_confirmation": true,
+      "confirmation_method": "Individual France instruction/control-flow review, explicit call references, and complete xBase TU layout corroborated by three named DWARF1 reference layouts.",
+      "source_signature": "void xBaseSetup(xBase* xb)",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1832816,
+          "name": "xBaseSetup",
+          "source": "SB/Core/x/xBase.cpp",
+          "reference_sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1",
+          "evidence": "Complete DWARF1 function range matches except the explicitly listed direct-call target immediates.",
+          "call_target_differences": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1834080,
+          "name": "xBaseSetup",
+          "source": "SB/Core/x/xBase.cpp",
+          "reference_sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1",
+          "evidence": "Complete DWARF1 function range matches except the explicitly listed direct-call target immediates.",
+          "call_target_differences": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1830720,
+          "name": "xBaseSetup",
+          "source": "SB/Core/x/xBase.cpp",
+          "reference_sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1",
+          "evidence": "Complete DWARF1 function range matches except the explicitly listed direct-call target immediates.",
+          "call_target_differences": []
+        }
+      ],
+      "corroboration": {
+        "tu_layout": {
+          "anchor_function": "xBaseReset",
+          "anchor_address": 1833968,
+          "offset_from_anchor": 224,
+          "evidence": "All five names, sizes, relative addresses, ordering, and inter-function padding agree across all three debug reference versions."
+        },
+        "direct_entry_calls": [
+          1528892,
+          1920312
+        ],
+        "entry_cfg_callers_verified": false,
+        "terminal_return": {
+          "address": 1834192,
+          "delay_slot": 1834196,
+          "end_exclusive": 1834200
+        },
+        "following_padding": {
+          "address": 1834200,
+          "size": 8,
+          "all_zero": true
+        },
+        "local_control_flow": "Direct conditional branches stay inside the reviewed extent; only calls leave it; the terminal transfer is jr ra.",
+        "short_function_identity": {
+          "not_unique_by_bytes": true,
+          "previous_function": "xBaseSave",
+          "previous_return": 1834180,
+          "previous_delay_slot": 1834184,
+          "separating_zero_bytes": 4,
+          "next_function": "xBaseInit",
+          "next_address": 1834208,
+          "zero_bytes_after_extent": 8,
+          "reason": "Two JAL instructions target this separate eight-byte entry between established Save and Init extents. It is not the return suffix of either neighbor."
+        },
+        "independent_caller": {
+          "name_inferred_from_reference": "zEnvSetup",
+          "source": "SB/Game/zEnv.cpp",
+          "address": 1528880,
+          "size": 60,
+          "sha256": "aaf4aea65a879682a573701ef68bd6ca43b05f229c36d007c6ca0679daa1f28d",
+          "source_signature": "void zEnvSetup(_zEnv* env)",
+          "source_call": "xBaseSetup(env);",
+          "call_site": 1528892,
+          "frame_allocation": 32,
+          "ra_save": 1528884,
+          "ra_restore": 1528924,
+          "return": 1528932,
+          "delay_slot": 1528936,
+          "comparison": "EU reference whole caller differs only in this JAL target and the globals load displacement; USA/Germany additionally relocate the iEnvLightingBasics JAL. All opcode/register/control-flow fields and the 60-byte extent agree.",
+          "entry_cfg_status": "Not reached by the current direct-only entry traversal; indirect callers are unresolved."
+        }
+      }
+    },
+    {
+      "name": "xBaseInit",
+      "source": "SB/Core/x/xBase.cpp",
+      "address": 1834208,
+      "size": 52,
+      "sha256": "440515970559caefe3a5853bb55ee25244f02dbf14b8fc6aafdbbd435f6bcb98",
+      "boundary_confirmation": true,
+      "confirmation_method": "Individual France instruction/control-flow review, explicit call references, and complete xBase TU layout corroborated by three named DWARF1 reference layouts.",
+      "source_signature": "void xBaseInit(xBase* xb, xBaseAsset* asset)",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1832832,
+          "name": "xBaseInit",
+          "source": "SB/Core/x/xBase.cpp",
+          "reference_sha256": "440515970559caefe3a5853bb55ee25244f02dbf14b8fc6aafdbbd435f6bcb98",
+          "evidence": "Complete DWARF1 function range matches except the explicitly listed direct-call target immediates.",
+          "call_target_differences": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1834096,
+          "name": "xBaseInit",
+          "source": "SB/Core/x/xBase.cpp",
+          "reference_sha256": "440515970559caefe3a5853bb55ee25244f02dbf14b8fc6aafdbbd435f6bcb98",
+          "evidence": "Complete DWARF1 function range matches except the explicitly listed direct-call target immediates.",
+          "call_target_differences": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1830736,
+          "name": "xBaseInit",
+          "source": "SB/Core/x/xBase.cpp",
+          "reference_sha256": "440515970559caefe3a5853bb55ee25244f02dbf14b8fc6aafdbbd435f6bcb98",
+          "evidence": "Complete DWARF1 function range matches except the explicitly listed direct-call target immediates.",
+          "call_target_differences": []
+        }
+      ],
+      "corroboration": {
+        "tu_layout": {
+          "anchor_function": "xBaseReset",
+          "anchor_address": 1833968,
+          "offset_from_anchor": 240,
+          "evidence": "All five names, sizes, relative addresses, ordering, and inter-function padding agree across all three debug reference versions."
+        },
+        "direct_entry_calls": [
+          1695984,
+          1922532,
+          2747856
+        ],
+        "entry_cfg_callers_verified": true,
+        "terminal_return": {
+          "address": 1834252,
+          "delay_slot": 1834256,
+          "end_exclusive": 1834260
+        },
+        "following_padding": {
+          "address": 1834260,
+          "size": 12,
+          "all_zero": true
+        },
+        "local_control_flow": "Direct conditional branches stay inside the reviewed extent; only calls leave it; the terminal transfer is jr ra."
+      }
+    }
+  ]
+}
