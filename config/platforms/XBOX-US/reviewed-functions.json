@@ -10198,6 +10198,255 @@
       }
     },
     {
+      "name": "xStrParseFloatList",
+      "canonical_identifier": "xStrParseFloatList(F32*,const char*,S32)",
+      "display_name": "xStrParseFloatList(F32*,const char*,S32)",
+      "source": "SB/Core/x/xString.cpp",
+      "linkage_name": null,
+      "address": 1422368,
+      "size": 234,
+      "sha256": "5d1b9264dce88cf80a114e0988b8e1cbdc12e4b0ae9ef7f0e440a093201dfce7",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 228,
+      "instruction_count": 108,
+      "semantics": {
+        "identity": "Scans the original delimiter set, optional minus sign and numeric/exponent characters; temporarily terminates the token, calls the original floating parser, applies the sign, restores the byte, and advances the output count. EAX supplies the input string; destination and maximum count are stack arguments. Original floating parser target0x1bd1bd remains unnamed and unnormalized.",
+        "entry_evidence": "Original direct-call witnesses from independently verified caller extents, complete decoded original CFG and terminal return. Source bytes are not used to establish original bounds."
+      },
+      "corroboration": {
+        "return_address": 1422601,
+        "branches": [
+          {
+            "address": 1422373,
+            "size": 2,
+            "opcode": 117,
+            "target": 1422377
+          },
+          {
+            "address": 1422392,
+            "size": 2,
+            "opcode": 235,
+            "target": 1422400
+          },
+          {
+            "address": 1422420,
+            "size": 2,
+            "opcode": 116,
+            "target": 1422466
+          },
+          {
+            "address": 1422424,
+            "size": 2,
+            "opcode": 116,
+            "target": 1422466
+          },
+          {
+            "address": 1422428,
+            "size": 2,
+            "opcode": 116,
+            "target": 1422466
+          },
+          {
+            "address": 1422432,
+            "size": 2,
+            "opcode": 116,
+            "target": 1422466
+          },
+          {
+            "address": 1422436,
+            "size": 2,
+            "opcode": 116,
+            "target": 1422466
+          },
+          {
+            "address": 1422440,
+            "size": 2,
+            "opcode": 116,
+            "target": 1422466
+          },
+          {
+            "address": 1422444,
+            "size": 2,
+            "opcode": 116,
+            "target": 1422466
+          },
+          {
+            "address": 1422448,
+            "size": 2,
+            "opcode": 116,
+            "target": 1422466
+          },
+          {
+            "address": 1422452,
+            "size": 2,
+            "opcode": 116,
+            "target": 1422466
+          },
+          {
+            "address": 1422456,
+            "size": 2,
+            "opcode": 116,
+            "target": 1422466
+          },
+          {
+            "address": 1422460,
+            "size": 2,
+            "opcode": 116,
+            "target": 1422466
+          },
+          {
+            "address": 1422464,
+            "size": 2,
+            "opcode": 117,
+            "target": 1422469
+          },
+          {
+            "address": 1422467,
+            "size": 2,
+            "opcode": 235,
+            "target": 1422416
+          },
+          {
+            "address": 1422473,
+            "size": 2,
+            "opcode": 116,
+            "target": 1422595
+          },
+          {
+            "address": 1422477,
+            "size": 2,
+            "opcode": 117,
+            "target": 1422498
+          },
+          {
+            "address": 1422490,
+            "size": 2,
+            "opcode": 116,
+            "target": 1422484
+          },
+          {
+            "address": 1422494,
+            "size": 2,
+            "opcode": 117,
+            "target": 1422500
+          },
+          {
+            "address": 1422496,
+            "size": 2,
+            "opcode": 235,
+            "target": 1422484
+          },
+          {
+            "address": 1422508,
+            "size": 2,
+            "opcode": 124,
+            "target": 1422514
+          },
+          {
+            "address": 1422512,
+            "size": 2,
+            "opcode": 126,
+            "target": 1422530
+          },
+          {
+            "address": 1422516,
+            "size": 2,
+            "opcode": 116,
+            "target": 1422530
+          },
+          {
+            "address": 1422520,
+            "size": 2,
+            "opcode": 116,
+            "target": 1422530
+          },
+          {
+            "address": 1422524,
+            "size": 2,
+            "opcode": 116,
+            "target": 1422530
+          },
+          {
+            "address": 1422528,
+            "size": 2,
+            "opcode": 117,
+            "target": 1422542
+          },
+          {
+            "address": 1422532,
+            "size": 2,
+            "opcode": 124,
+            "target": 1422539
+          },
+          {
+            "address": 1422536,
+            "size": 2,
+            "opcode": 127,
+            "target": 1422539
+          },
+          {
+            "address": 1422540,
+            "size": 2,
+            "opcode": 235,
+            "target": 1422504
+          },
+          {
+            "address": 1422544,
+            "size": 2,
+            "opcode": 116,
+            "target": 1422595
+          },
+          {
+            "address": 1422571,
+            "size": 2,
+            "opcode": 116,
+            "target": 1422580
+          },
+          {
+            "address": 1422578,
+            "size": 2,
+            "opcode": 235,
+            "target": 1422582
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 111274,
+            "target": 1422368
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 451778,
+            "target": 1422368
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 451855,
+            "target": 1422368
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 228,
+          "internal_gap_ranges": [
+            [
+              1422394,
+              1422400
+            ]
+          ],
+          "direct_call_targets": [
+            1823165
+          ]
+        }
+      },
+      "address_expressions": [],
+      "direct_calls": []
+    },
+    {
       "name": "imemcmp",
       "canonical_identifier": "imemcmp(const void*,const void*,size_t)",
       "display_name": "S32 imemcmp(const void* d1, const void* d2, size_t size)",
@@ -10583,6 +10832,305 @@
           "description": "Hex-prefix substring branch and alternate bounded-hash identifier branch in the actual caller."
         }
       }
+    },
+    {
+      "name": "find_char",
+      "canonical_identifier": "find_char(const substr&,const substr&)",
+      "display_name": "find_char(const substr&,const substr&)",
+      "source": "SB/Core/x/xString.cpp",
+      "linkage_name": null,
+      "address": 1422848,
+      "size": 1024,
+      "sha256": "070a7ab127b7858f28fc39ee4587a75f18aff286a539d91da011ae71dd28b257",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 1004,
+      "instruction_count": 348,
+      "semantics": {
+        "identity": "Returns the first character shared by bounded substrings: null checks, a twelve-entry dispatch for set sizes0..11 with byte comparisons unrolled by set length, and a nested scan for larger sets. Original EAX supplies the character-set substring and EDX the searched substring. The original uses byte equality; matching Xbox source uses ordinary char with the same signedness as its char pointer.",
+        "entry_evidence": "Original direct-call witnesses from independently verified caller extents, complete decoded original CFG and terminal return. Source bytes are not used to establish original bounds."
+      },
+      "corroboration": {
+        "return_address": 1423871,
+        "branches": [
+          {
+            "address": 1422903,
+            "size": 2,
+            "opcode": 235,
+            "target": 1422912
+          },
+          {
+            "address": 1422934,
+            "size": 2,
+            "opcode": 127,
+            "target": 1422912
+          },
+          {
+            "address": 1422991,
+            "size": 2,
+            "opcode": 127,
+            "target": 1422960
+          },
+          {
+            "address": 1423050,
+            "size": 2,
+            "opcode": 127,
+            "target": 1423010
+          },
+          {
+            "address": 1423121,
+            "size": 2,
+            "opcode": 127,
+            "target": 1423072
+          },
+          {
+            "address": 1423198,
+            "size": 2,
+            "opcode": 127,
+            "target": 1423140
+          },
+          {
+            "address": 1423284,
+            "size": 2,
+            "opcode": 127,
+            "target": 1423217
+          },
+          {
+            "address": 1423303,
+            "size": 2,
+            "opcode": 235,
+            "target": 1423312
+          },
+          {
+            "address": 1423388,
+            "size": 2,
+            "opcode": 127,
+            "target": 1423312
+          },
+          {
+            "address": 1423493,
+            "size": 2,
+            "opcode": 127,
+            "target": 1423408
+          },
+          {
+            "address": 1423512,
+            "size": 2,
+            "opcode": 235,
+            "target": 1423520
+          },
+          {
+            "address": 1423614,
+            "size": 2,
+            "opcode": 127,
+            "target": 1423520
+          },
+          {
+            "address": 1423736,
+            "size": 2,
+            "opcode": 127,
+            "target": 1423633
+          },
+          {
+            "address": 1423749,
+            "size": 2,
+            "opcode": 126,
+            "target": 1423862
+          },
+          {
+            "address": 1423755,
+            "size": 2,
+            "opcode": 116,
+            "target": 1423862
+          },
+          {
+            "address": 1423759,
+            "size": 2,
+            "opcode": 116,
+            "target": 1423864
+          },
+          {
+            "address": 1423764,
+            "size": 2,
+            "opcode": 116,
+            "target": 1423864
+          },
+          {
+            "address": 1423769,
+            "size": 2,
+            "opcode": 116,
+            "target": 1423864
+          },
+          {
+            "address": 1423774,
+            "size": 2,
+            "opcode": 116,
+            "target": 1423864
+          },
+          {
+            "address": 1423779,
+            "size": 2,
+            "opcode": 116,
+            "target": 1423864
+          },
+          {
+            "address": 1423784,
+            "size": 2,
+            "opcode": 116,
+            "target": 1423864
+          },
+          {
+            "address": 1423789,
+            "size": 2,
+            "opcode": 116,
+            "target": 1423864
+          },
+          {
+            "address": 1423794,
+            "size": 2,
+            "opcode": 116,
+            "target": 1423864
+          },
+          {
+            "address": 1423799,
+            "size": 2,
+            "opcode": 116,
+            "target": 1423864
+          },
+          {
+            "address": 1423804,
+            "size": 2,
+            "opcode": 116,
+            "target": 1423864
+          },
+          {
+            "address": 1423809,
+            "size": 2,
+            "opcode": 116,
+            "target": 1423864
+          },
+          {
+            "address": 1423815,
+            "size": 2,
+            "opcode": 127,
+            "target": 1423751
+          },
+          {
+            "address": 1423828,
+            "size": 2,
+            "opcode": 126,
+            "target": 1423862
+          },
+          {
+            "address": 1423834,
+            "size": 2,
+            "opcode": 116,
+            "target": 1423862
+          },
+          {
+            "address": 1423842,
+            "size": 2,
+            "opcode": 116,
+            "target": 1423856
+          },
+          {
+            "address": 1423846,
+            "size": 2,
+            "opcode": 116,
+            "target": 1423864
+          },
+          {
+            "address": 1423854,
+            "size": 2,
+            "opcode": 117,
+            "target": 1423844
+          },
+          {
+            "address": 1423860,
+            "size": 2,
+            "opcode": 127,
+            "target": 1423830
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1291402,
+            "target": 1422848
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 1294345,
+            "target": 1422848
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 1294571,
+            "target": 1422848
+          }
+        ],
+        "closed_cfg": {
+          "instruction_bytes": 1004,
+          "internal_gap_ranges": [
+            [
+              1422905,
+              1422912
+            ],
+            [
+              1423305,
+              1423312
+            ],
+            [
+              1423514,
+              1423520
+            ]
+          ],
+          "direct_call_targets": [],
+          "switch_table": {
+            "kind": "msvc_esi_u32_12",
+            "symbol": "find_char::switch12"
+          },
+          "switch_tables": [
+            {
+              "kind": "msvc_esi_u32_12",
+              "symbol": "find_char::switch12",
+              "guard_address": 1422874,
+              "dispatch_address": 1422885,
+              "default_address": 1423823,
+              "address": 1423872,
+              "size": 48,
+              "entries": [
+                1423862,
+                1422892,
+                1422942,
+                1422999,
+                1423058,
+                1423129,
+                1423206,
+                1423292,
+                1423396,
+                1423501,
+                1423622,
+                1423744
+              ],
+              "sha256": "8a172b87bbe1cbab47fad3e2be65c346ed3e2f4ed76ffe580716410eda245a2a"
+            }
+          ]
+        }
+      },
+      "address_expressions": [
+        {
+          "symbol": "find_char::switch12",
+          "offset": 40,
+          "instruction_offset": 37,
+          "field": "displacement",
+          "prefix": "ff24b5"
+        }
+      ],
+      "direct_calls": []
     },
     {
       "name": "xVec3Normalize",

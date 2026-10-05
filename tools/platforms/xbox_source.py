@@ -89,13 +89,14 @@ def _map_functions(path: Path) -> list[dict]:
 
 
 def _leaf_extent(text: bytes, text_address: int, entry: int, bound: int,
-                 call_targets: dict[int, str] | None = None) -> dict:
+                 call_targets: dict[int, str] | None = None,
+                 switch_table: dict | None = None) -> dict:
     """Follow actual source CFG; a neighboring MAP symbol is only a rejection bound.
 
     Calls default to rejected; opt-in E8 calls and E9 tail transfers must resolve
     to named MAP entries.
-    Only their fallthrough is followed. Branches must be
-    direct and local. Include interior alignment in the contiguous span, while
+    Only their fallthrough is followed. Branches must be direct and local,
+    except for an explicitly selected and independently checked finite switch. Include interior alignment in the contiguous span, while
     excluding bytes following the last reachable instruction. No target is read.
     """
     from capstone import Cs, CS_ARCH_X86, CS_MODE_32, CS_GRP_CALL, CS_GRP_JUMP, CS_GRP_RET
@@ -107,6 +108,7 @@ def _leaf_extent(text: bytes, text_address: int, entry: int, bound: int,
     decoder.detail = True
     pending, decoded, edges, calls = [entry], {}, [], []
     tail_returns = 0
+    tables = []
     while pending:
         address = pending.pop()
         if address in decoded:
@@ -132,7 +134,15 @@ def _leaf_extent(text: bytes, text_address: int, entry: int, bound: int,
             raise ValueError('Unexpected reachable trap in source leaf')
         if instruction.group(CS_GRP_JUMP):
             if len(instruction.operands) != 1 or instruction.operands[0].type != X86_OP_IMM:
-                raise ValueError('Indirect source branches need explicit recovery')
+                if switch_table is None:
+                    raise ValueError('Indirect source branches need explicit recovery')
+                from .xbox_switch import decode_switch
+                table = decode_switch(text, text_address, entry, bound, instruction, switch_table)
+                tables.append(table)
+                for destination in table['entries']:
+                    pending.append(destination)
+                    edges.append([address, destination])
+                continue
             destination = instruction.operands[0].imm
             if not entry <= destination < bound and instruction.bytes[0] == 0xe9 and destination in (call_targets or {}):
                 calls.append({'offset': address - entry + 1, 'symbol': call_targets[destination], 'opcode': 0xe9})
@@ -150,14 +160,18 @@ def _leaf_extent(text: bytes, text_address: int, entry: int, bound: int,
     if not tail_returns and not any(i.group(CS_GRP_RET) for i in decoded.values()):
         raise ValueError('Source leaf has no reachable return')
     end = max(high for _, high in ranges)
+    from .xbox_switch import validate_switch_cfg
+    validate_switch_cfg(tables, edges, decoded, end, switch_table)
     return {'address': entry, 'size': end - entry,
             'instruction_bytes': sum(high - low for low, high in ranges),
             'internal_gap_ranges': [[left[1], right[0]] for left, right in zip(ranges, ranges[1:])
                                     if left[1] < right[0]],
-            'edges': edges, 'direct_calls': sorted(calls, key=lambda call: call['offset'])}
+            'edges': edges, 'direct_calls': sorted(calls, key=lambda call: call['offset']),
+            **({'switch_tables': tables} if tables else {})}
 
 
-def _extract_functions(executable: Path, map_path: Path, unit: dict) -> tuple[list[dict], list[dict]]:
+def _extract_functions(executable: Path, map_path: Path, unit: dict,
+                       target_switches: dict | None = None) -> tuple[list[dict], list[dict]]:
     text, text_address = _pe_text(executable)
     functions = _map_functions(map_path)
     by_name = {f['name']: f for f in functions}
@@ -178,20 +192,28 @@ def _extract_functions(executable: Path, map_path: Path, unit: dict) -> tuple[li
         call_targets = {}
         for callee in unit.get('direct_calls', {}).get(canonical, []):
             dependency = unit.get('call_symbols', {}).get(callee)
-            linkage = dependency['linkage_name'] if dependency else unit['symbols'][callee]
+            callee_linkage = dependency['linkage_name'] if dependency else unit['symbols'][callee]
             owner = dependency['object'] if dependency else Path(unit['object']).name
-            target = by_name[linkage]
+            target = by_name[callee_linkage]
             if (target['object'].lower() != owner.lower() or
                     target['address'] in call_targets or not text_address <= target['address'] < text_address + len(text)):
                 raise ValueError('Ambiguous or foreign source call target')
             call_targets[target['address']] = callee
-        extent = _leaf_extent(text, text_address, address, bound, call_targets)
+        extent = _leaf_extent(text, text_address, address, bound, call_targets,
+                              unit.get('switch_tables', {}).get(canonical))
+        from .xbox_switch import source_switch_anchors, verify_switch_correspondence
+        if canonical in unit.get('switch_tables', {}):
+            verify_switch_correspondence(extent, (target_switches or {}).get(canonical))
+        switch_anchors = source_switch_anchors(extent.get('switch_tables', []), highlow, bound)
+        if set(anchors) & set(switch_anchors):
+            raise ValueError('Switch table aliases an ordinary data anchor')
+        function_anchors = {**anchors, **switch_anchors}
         offset = address - text_address
         body = text[offset:offset + extent['size']]
         fields = {a - address for a in highlow if address <= a < address + len(body)}
         expressions = discover_source_expressions(body,
-            unit.get('address_expressions', {}).get(canonical, []), anchors, fields)
-        normalized, relocations = normalize(body, expressions, anchors, fields)
+            unit.get('address_expressions', {}).get(canonical, []), function_anchors, fields)
+        normalized, relocations = normalize(body, expressions, function_anchors, fields)
         if extent['direct_calls']:
             from .xbox_calls import normalize_calls
             normalized, call_relocations = normalize_calls(normalized, address, extent['direct_calls'],
@@ -200,7 +222,7 @@ def _extract_functions(executable: Path, map_path: Path, unit: dict) -> tuple[li
         output.append({'symbol': canonical, 'bytes': normalized, 'relocations': relocations})
         evidence.append({**extent, 'canonical_identifier': canonical, 'linkage_name': linkage,
                          'source_object': function['object'], 'sha256': hashlib.sha256(body).hexdigest(),
-                         'address_expressions': expressions, 'source_globals': anchors,
+                         'address_expressions': expressions, 'source_globals': function_anchors,
                          'source_call_targets': {name: at for at, name in call_targets.items()},
                          'normalized_sha256': hashlib.sha256(normalized).hexdigest()})
     return output, evidence
@@ -236,6 +258,16 @@ def compile_units(output: Path, compilers: Path, wine: Path | None = None) -> li
         available[unit['target_unit']].pop('base_path', None)
         (output / unit['comparison_object']).unlink(missing_ok=True)
     config_path.write_text(json.dumps(config, indent=2) + '\n', encoding='utf-8')
+    # The target preparation step regenerates this proof from the authenticated
+    # original, then binds it to its actual comparison object. Never fall back
+    # to profile-supplied or stale case mappings.
+    checked_switches = {}
+    if any(unit.get('switch_tables') for unit in units):
+        checked_switches = json.loads((output / 'switch-tables.json').read_text(encoding='utf-8'))
+        coverage = json.loads((output / 'coverage.json').read_text(encoding='utf-8'))
+        if (checked_switches.get('schema_version') != 1 or
+                checked_switches.get('executable_sha1') != coverage['executable_sha1']):
+            raise ValueError('Switch proof belongs to another target preparation')
     environment = dict(os.environ)
     for key in list(environment):
         if key.upper() in ('CL', '_CL_', 'INCLUDE', 'LIB', 'LIBPATH'):
@@ -313,7 +345,17 @@ def compile_units(output: Path, compilers: Path, wine: Path | None = None) -> li
                          '/SUBSYSTEM:CONSOLE', '/MAP:source.map', '/FIXED:NO', '/OUT:source.exe',
                          source_object.name, *dependency_objects, 'entry.obj', *host_objects, 'fltused.obj', 'msvcrt.lib',
                          *runtime_libraries], 'link-source')
-        functions, evidence = _extract_functions(build / 'source.exe', build / 'source.map', unit)
+        target_switches = None
+        if unit.get('switch_tables'):
+            checked = checked_switches['units'][unit['target_unit']]
+            target_object = output / available[unit['target_unit']]['target_path']
+            if hashlib.sha256(target_object.read_bytes()).hexdigest() != checked['target_object_sha256']:
+                raise ValueError('Switch proof does not identify the current target comparison object')
+            target_switches = checked['functions']
+            if set(target_switches) != set(unit['switch_tables']):
+                raise ValueError('Source and original switch function inventories differ')
+        functions, evidence = _extract_functions(build / 'source.exe', build / 'source.map', unit,
+                                                 target_switches)
         comparison = output / unit['comparison_object']
         comparison.write_bytes(function_object(functions))
         (build / 'function-extents.json').write_text(json.dumps({

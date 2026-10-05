@@ -187,11 +187,14 @@ def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path 
         from .xbox_relocations import verify_original_anchors, normalize
         anchors_path = Path(reviewed_functions).with_name('reviewed-data-anchors.json')
         anchors = {}
-        if anchors_path.is_file():
+        has_switches = any(f.get('corroboration', {}).get('closed_cfg', {}).get('switch_table')
+                           for f in reviewed['functions'])
+        if anchors_path.is_file() or has_switches:
             from .verify_xbox_reviewed import Original
             versions = json.loads((Path(__file__).resolve().parents[2] / 'config/platforms/versions.json').read_text())['versions']
             original = Original(reviewed['version'], versions[reviewed['version']], executable.parent.parent)
-            anchors = verify_original_anchors(anchors_path, original)
+            if anchors_path.is_file():
+                anchors = verify_original_anchors(anchors_path, original)
         call_targets = {f['canonical_identifier']: f['address'] for f in reviewed['functions']
                         if f.get('boundary_confirmation') and f.get('identity_confirmation')}
         identifiers = set()
@@ -213,7 +216,12 @@ def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path 
             raw = data[offset:offset + size]
             if hashlib.sha256(raw).hexdigest() != function['sha256']:
                 raise ValueError('Reviewed Xbox function bytes differ')
-            normalized, relocations = normalize(raw, function.get('address_expressions', []), anchors)
+            from .xbox_switch import original_switch_anchors
+            switch_anchors = (original_switch_anchors(original, function) if has_switches else {})
+            if set(anchors) & set(switch_anchors):
+                raise ValueError('Switch table aliases an ordinary data anchor')
+            function_anchors = {**anchors, **switch_anchors}
+            normalized, relocations = normalize(raw, function.get('address_expressions', []), function_anchors)
             if function.get('direct_calls'):
                 from .xbox_calls import normalize_calls
                 normalized, call_relocations = normalize_calls(normalized, address, function['direct_calls'], call_targets)
@@ -302,11 +310,22 @@ def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path 
     }
     output_dir.mkdir(parents=True, exist_ok=True)
     groups = defaultdict(list)
+    switch_proof = {'schema_version': 1, 'executable_sha1': metadata['sha1'], 'units': {}}
     for function in functions:
         groups[function['source'] or 'unassigned/xbox'].append(function)
     for index, (source, group) in enumerate(sorted(groups.items())):
         name = f'functions-{index:04d}.obj'
-        (output_dir / name).write_bytes(function_object(group))
+        object_bytes = function_object(group)
+        (output_dir / name).write_bytes(object_bytes)
+        from .xbox_switch import switch_signature
+        checked_tables = {f['canonical_identifier']: switch_signature(f['address'],
+            f['corroboration']['closed_cfg']['switch_tables']) for f in group
+            if f.get('corroboration', {}).get('closed_cfg', {}).get('switch_table')}
+        if checked_tables:
+            switch_proof['units'][source] = {
+                'target_object_sha256': hashlib.sha256(object_bytes).hexdigest(),
+                'functions': checked_tables}
+
         config['units'].append({'name': source, 'target_path': name,
                                 'metadata': {'complete': False,
                                              'progress_categories': ['anonymous_functions' if source == 'unassigned/xbox' else 'known_functions']}})
@@ -314,6 +333,7 @@ def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path 
         {'id': 'known_functions', 'name': 'Reviewed identities (partial coverage)'},
         {'id': 'anonymous_functions', 'name': 'Anonymous code extents (partial coverage)'},
     ]
+    (output_dir / 'switch-tables.json').write_text(json.dumps(switch_proof, indent=2) + '\n', encoding='utf-8')
     _write_registries(metadata, output_dir, functions)
     (output_dir / "target.obj").write_bytes(target)
     (output_dir / "objdiff.json").write_text(json.dumps(config, indent=2) + "\n", encoding="utf-8")

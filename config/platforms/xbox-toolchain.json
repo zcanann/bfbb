@@ -32,7 +32,7 @@
   },
   "analysis": {
     "capstone_version": "5.0.7",
-    "method": "Reachable direct CFG bounded by MAP symbols; E8/E9 transfers opt in to named source/dependency/runtime MAP entries; no target lengths used"
+    "method": "Reachable CFG bounded by MAP rejection limits; named E8/E9 transfers and explicitly reviewed finite switch tables with independent original/source case correspondence; no target lengths used"
   },
   "flags": [
     "/nologo",
@@ -65,12 +65,38 @@
         "imemcmp(const void*,const void*,size_t)": "?imemcmp@@YAHPBX0I@Z",
         "xStrTok(char*,const char*,char**)": "?xStrTok@@YAPADPADPBDPAPAD@Z",
         "xStrTokBuffer(const char*,const char*,void*)": "?xStrTokBuffer@@YAPADPBD0PAX@Z",
-        "icompare(const substr&,const substr&)": "?icompare@@YAHABUsubstr@@0@Z"
+        "icompare(const substr&,const substr&)": "?icompare@@YAHABUsubstr@@0@Z",
+        "xStrParseFloatList(F32*,const char*,S32)": "?xStrParseFloatList@@YAHPAMPBDH@Z",
+        "find_char(const substr&,const substr&)": "?find_char@@YAPBDABUsubstr@@0@Z"
       },
-      "scope": "Nine individually reviewed functions from actual full-TU compilation; calls resolve only to reviewed same-TU MAP functions; no TU or executable completion claim",
+      "scope": "Eleven independently reviewed functions from the complete real xString.cpp. find_char case targets are validated independently in both images and required to correspond before comparison. Floating-list parser remains partial with its original runtime destination unnormalized; existing actual host xatof wrapper is excluded from source credit. xStrupr has no reviewed original assignment.",
       "direct_calls": {
         "icompare(const substr&,const substr&)": [
           "imemcmp(const void*,const void*,size_t)"
+        ],
+        "xStrParseFloatList(F32*,const char*,S32)": [
+          "host:xatof(const char*)"
+        ]
+      },
+      "call_symbols": {
+        "host:xatof(const char*)": {
+          "linkage_name": "?xatof@@YAMPBD@Z",
+          "object": "xatof.obj"
+        }
+      },
+      "switch_tables": {
+        "find_char(const substr&,const substr&)": {
+          "kind": "msvc_esi_u32_12",
+          "symbol": "find_char::switch12"
+        }
+      },
+      "address_expressions": {
+        "find_char(const substr&,const substr&)": [
+          {
+            "symbol": "find_char::switch12",
+            "field": "displacement",
+            "prefix": "ff24b5"
+          }
         ]
       }
     },

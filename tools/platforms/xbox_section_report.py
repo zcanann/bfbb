@@ -189,7 +189,11 @@ def export_report(build_dir: Path) -> dict:
                                      for c in calls]
             expected_relocations.sort(key=lambda r: r['offset'])
             require(target_relocations[name] == expected_relocations, 'Target relocations differ from reviewed original expressions')
-            restored = reconstruct(targets[name], [r for r in target_relocations[name] if r.get('type', 6) == 6], anchors)
+            from platforms.xbox_switch import switch_anchors_from_text
+            switch_anchors = switch_anchors_from_text(text, text_base, reviewed.get(name, {}))
+            require(not (set(anchors) & set(switch_anchors)), 'Switch table aliases an ordinary data anchor')
+            function_anchors = {**anchors, **switch_anchors}
+            restored = reconstruct(targets[name], [r for r in target_relocations[name] if r.get('type', 6) == 6], function_anchors)
             if calls:
                 from platforms.xbox_calls import reconstruct_calls, normalize_calls
                 restored = reconstruct_calls(restored, row['address'],

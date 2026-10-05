@@ -145,8 +145,8 @@
       "classification": "unclassified"
     }
   ],
-  "known_code_bytes": 633601,
-  "unclassified_text_bytes": 1165159,
+  "known_code_bytes": 634859,
+  "unclassified_text_bytes": 1163901,
   "text_ranges": [
     {
       "kind": "function",
@@ -15759,7 +15759,18 @@
     {
       "kind": "unclassified",
       "address": 1422366,
-      "size": 242
+      "size": 2
+    },
+    {
+      "kind": "function",
+      "address": 1422368,
+      "size": 234,
+      "canonical_identifier": "xStrParseFloatList(F32*,const char*,S32)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1422602,
+      "size": 6
     },
     {
       "kind": "function",
@@ -15792,7 +15803,18 @@
     {
       "kind": "unclassified",
       "address": 1422847,
-      "size": 1073
+      "size": 1
+    },
+    {
+      "kind": "function",
+      "address": 1422848,
+      "size": 1024,
+      "canonical_identifier": "find_char(const substr&,const substr&)"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1423872,
+      "size": 48
     },
     {
       "kind": "function",

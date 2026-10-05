@@ -83,9 +83,14 @@ def verify_functions(original: Original, document: dict, anchors: dict | None = 
                 f"{label}: invalid or unreviewed function")
         require(original.section(start, size)["name"] == ".text", f"{label}: not in .text")
         original.check_hash(function)
+        from platforms.xbox_switch import original_switch_anchors
+        switch_anchors = original_switch_anchors(original, function)
+        require(not (set(anchors or {}) & set(switch_anchors)),
+                f'{label}: switch table aliases an ordinary data anchor')
+        function_anchors = {**(anchors or {}), **switch_anchors}
         if function.get('address_expressions'):
             from platforms.xbox_relocations import normalize
-            normalize(original.read(start, size), function['address_expressions'], anchors or {})
+            normalize(original.read(start, size), function['address_expressions'], function_anchors)
         if function.get('direct_calls'):
             from platforms.xbox_calls import normalize_calls
             normalize_calls(original.read(start, size), start, function['direct_calls'], call_targets)
@@ -103,7 +108,7 @@ def verify_functions(original: Original, document: dict, anchors: dict | None = 
             # ranges. Only decoded original call destinations are permitted;
             # these placeholders assert no names or source matching.
             actual = _leaf_extent(text, base, start, end,
-                {address: 'original-call' for address in cfg['direct_call_targets']})
+                {address: 'original-call' for address in cfg['direct_call_targets']}, cfg.get('switch_table'))
             require(actual['size'] == size and actual['instruction_bytes'] == cfg['instruction_bytes'] and
                     actual['internal_gap_ranges'] == cfg['internal_gap_ranges'],
                     f'{label}: original closed CFG or extent differs')
