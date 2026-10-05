@@ -111,12 +111,18 @@ struct Firework
     static F32 acc_thrust;
     static F32 acc_gravity;
 
+#if defined(PS2)
+    en_fwstate fwstate : 8;
+    en_fwstyle fwstyle : 8;
+    S32 flg_firework : 16;
+#else
     struct
     {
         en_fwstate fwstate : 8;
         en_fwstyle fwstyle : 8;
         S32 flg_firework : 16; //0x2
     };
+#endif
     F32 tym_lifespan;
     F32 tmr_remain; //0x14?
     xVec3 pos;

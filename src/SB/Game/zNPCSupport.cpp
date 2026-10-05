@@ -2,7 +2,11 @@
 
 #include <types.h>
 #include <xstransvc.h>
+#if defined(PS2)
+#include <rwim3d.h>
+#else
 #include <rtslerp.h>
+#endif
 
 #include "zGlobals.h"
 #include "zNPCHazard.h"
