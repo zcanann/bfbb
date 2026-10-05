@@ -2,7 +2,11 @@
 #define XENV_H
 
 #include "iEnv.h"
+#if defined(PS2)
+struct xLightKit;
+#else
 #include "xLightKit.h"
+#endif
 #include "xBase.h"
 
 struct xEnv
