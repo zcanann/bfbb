@@ -1682,9 +1682,7 @@
         "iSphereBoundVec(xSphere*,const xSphere*,const xVec3*)": [
           "iSphereIsectVec(const xSphere*,const xVec3*,xIsect*)"
         ],
-        "iCylinderIsectVec(const xCylinder*,const xVec3*,xIsect*)": [
-          "?xVec2Dist@@YAMMMMM@Z"
-        ],
+        "iCylinderIsectVec(const xCylinder*,const xVec3*,xIsect*)": [],
         "iBoxVecDist(const xBox*,const xVec3*,xIsect*)": [],
         "iBoxIsectVec(const xBox*,const xVec3*,xIsect*)": [],
         "ClipPlane(F32,F32,F32*,F32*)": [],
@@ -1704,10 +1702,6 @@
         "xMathSolveQuadratic(F32,F32,F32,F32*,F32*)": {
           "linkage_name": "?xMathSolveQuadratic@@YAIMMMPAM0@Z",
           "object": "xMath.obj"
-        },
-        "?xVec2Dist@@YAMMMMM@Z": {
-          "linkage_name": "?xVec2Dist@@YAMMMMM@Z",
-          "object": "iMath3.obj"
         }
       },
       "address_expressions": {

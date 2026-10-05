@@ -76,3 +76,42 @@ python tools/platform_progress.py report --version XBOX-US \
 Repeat for `XBOX-EU`. Local proof and production artifacts are under
 `build/xbox180/final` and `build/xbox180/validation.json`; no binaries are committed. This remains partial function
 comparison, without a whole-TU completion or original-executable relink claim.
+
+
+## Sphere and cylinder helper boundaries
+
+Both originals inline the sphere/point distance work inside `iSphereBoundVec`
+(271 bytes at `0x16b500`) and the two-dimensional distance work inside
+`iCylinderIsectVec` (84 bytes at `0x16b610`): both complete original functions
+have no calls. The previous complete source TU instead called `iSphereIsectVec`
+and `xVec2Dist`, respectively.
+
+The existing definitions in the actual `iMath3.cpp` are now ordinary inline
+functions for Xbox only. Their bodies, declarations, arithmetic and source
+ownership remain unchanged. No new helper, forced emission, compiler option,
+SDK layout or original identity was introduced. Only the obsolete source call
+expectation for the no-longer-emitted `xVec2Dist` was removed from the profile.
+The actual existing 73-byte `iSphereIsectVec` remains emitted by `iMath3.obj` and
+is byte-identical to both originals; no old function or credit is discarded.
+
+| Function | Original bytes | Before | After |
+| --- | ---: | ---: | ---: |
+| iSphereBoundVec | 271 | 61.84694% | 90.591835% |
+| iCylinderIsectVec | 84 | 70.5625% | 99.9375% |
+
+The sphere source remains 269 bytes and partial. The cylinder source is 84
+bytes, with only the two real operand bytes at +18/+21 differing: the FLD/FADD
+operands for center.y and height exchange places. Those differences remain in
+the normal comparison; no operand permutation was attempted to force a match.
+
+Both complete production reports pass. Full code-weighted fuzzy progress rises
+from 1.1352485942393649% to 1.1409510595738175%; exact totals remain
+13,501 bytes / 70 functions. Every other function record, denominator and
+completion field is unchanged except generated COFF offsets. Seven actual
+consumer builds have no other score changes, and all four ordered GameCube
+iMath3 allocated sections remain byte-identical. No full executable link or
+original TU-completion claim is added.
+
+Ignored evidence: `build/xbox254/{compile.py,compare.py,sphere-deltas.json,
+compile-pair.py,compare-pair.py,pair-deltas.json,consumers,pair-consumers,
+gc/proof.json,production,verify_final.py,final-verification.json}`.
