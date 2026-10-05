@@ -79,8 +79,8 @@ checked, and the standard objdiff parser accepts the result.
 | SLES-51968 | 2,979,712 | 60,280 |
 | SLES-51970 | 2,976,512 | 60,280 |
 | SLES-53623 | 2,979,968 | 22,468 |
-| XBOX-US | 1,798,760 | 9,629 |
-| XBOX-EU | 1,798,760 | 9,629 |
+| XBOX-US | 1,798,760 | 10,653 |
+| XBOX-EU | 1,798,760 | 10,653 |
 
 The PS2 [math alignment restoration](PS2_MATH_ALIGNMENT.md) enables complete
 `xEntMotion`, `xPad`, and `xClimate` source comparisons: 34 functions / 20,040
@@ -334,8 +334,8 @@ closed function, and excludes foreign interior transfers across the candidate
 inventory. Reviewed extents take precedence. CI regenerates this registry from
 the original; the remaining candidates stay excluded. Anonymous identifiers
 establish neither original symbols nor source ownership. Together with the
-101 reviewed extents, measured coverage is 2,551 functions / 633,601 bytes;
-9,629 bytes match source. This is still partial coverage.
+103 reviewed extents, measured coverage is 2,553 functions / 634,859 bytes;
+10,653 bytes match source. This is still partial coverage.
 
 The complete particle-group source now compiles with its real particle dependency
 and a hash-pinned Microsoft static runtime library. Five independently reviewed
@@ -465,3 +465,6 @@ see [platform evidence](PS2_PLATFORM.md).
 
 Complete PS2 particle-tank and pickup source comparisons add 3,188 matched
 bytes per debug region; see [frame and rendering evidence](PS2_FRAME_PTANK_PICKUP.md).
+
+Xbox `find_char` adds 1,024 matched bytes per release with independently
+verified switch destinations; see [string switch evidence](XBOX_STRING_SWITCH.md).
