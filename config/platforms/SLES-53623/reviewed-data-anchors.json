@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "version": "SLES-53623",
+  "executable_sha1": "ef675520304c2ce0df9cbfa03222e42fb2e7a09e",
+  "coverage_complete": false,
+  "eligible_for_progress": false,
+  "scope": "One independently reviewed GP data address for relocation recovery; no general DWARF inventory, data matching or definition ownership is claimed.",
+  "anchors": [
+    {
+      "name": "gActiveHeap",
+      "symbol": "gActiveHeap",
+      "address": 5305924,
+      "size": 4,
+      "identity_confirmation": true,
+      "eligible_for_progress": false,
+      "storage": "runtime_zero_fill",
+      "type_evidence": "All three original xordarray DWARF declarations explicitly use fundamental unsigned integer (AT_fund_type=9); the PS2 ABI and actual LW use are 32-bit.",
+      "runtime_zero_fill": {
+        "address": 1048860,
+        "size": 44,
+        "sha256": "9286c3001fdb2b342e5eba14298c286186160de81211283552aaa73c6425bc3d",
+        "lower_bound": 5303808,
+        "upper_bound": 6412928,
+        "lower_pair": [
+          1048860,
+          1048868
+        ],
+        "upper_pair": [
+          1048864,
+          1048872
+        ],
+        "zero_store": 1048876,
+        "comparison": 1048884,
+        "loop_branch": 1048896,
+        "stride_instruction": 1048900,
+        "description": "Startup SQ-zero loop explicitly clears this BSS interval. France stripped PT_LOAD memsz omits it; this records runtime clearing, not an ELF-declared BSS section.",
+        "gp_initialization": {
+          "high_address": 1048904,
+          "low_address": 1048924,
+          "move_address": 1048944
+        }
+      },
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source": "SB/Core/x/xordarray.cpp",
+          "die_offset": 5062113,
+          "name": "gActiveHeap",
+          "address": 5306948,
+          "fundamental_type": 9,
+          "function": "XOrdInit",
+          "function_address": 2044736,
+          "use_offset": 56,
+          "gp": 5334128
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source": "SB/Core/x/xordarray.cpp",
+          "die_offset": 5062571,
+          "name": "gActiveHeap",
+          "address": 5305668,
+          "fundamental_type": 9,
+          "function": "XOrdInit",
+          "function_address": 2045984,
+          "use_offset": 56,
+          "gp": 5332848
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source": "SB/Core/x/xordarray.cpp",
+          "die_offset": 5063417,
+          "name": "gActiveHeap",
+          "address": 5304132,
+          "fundamental_type": 9,
+          "function": "XOrdInit",
+          "function_address": 2042624,
+          "use_offset": 56,
+          "gp": 5331312
+        }
+      ],
+      "reviewed_uses": [
+        {
+          "function": "XOrdInit",
+          "source": "SB/Core/x/xordarray.cpp",
+          "function_address": 2046096,
+          "offset": 56,
+          "relocation_type": "R_MIPS_GPREL16",
+          "opcode": 35,
+          "gp": 5333104
+        }
+      ]
+    }
+  ]
+}

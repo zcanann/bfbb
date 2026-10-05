@@ -3,7 +3,9 @@
 
 #include "xBase.h"
 
+#if !defined(PS2)
 #include <PowerPC_EABI_Support\MSL_C++\MSL_Common\Include\new.h>
+#endif
 
 struct RyzMemGrow
 {

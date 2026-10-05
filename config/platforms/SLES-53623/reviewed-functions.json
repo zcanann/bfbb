@@ -657,6 +657,880 @@
       }
     },
     {
+      "name": "XOrdSort",
+      "source": "SB/Core/x/xordarray.cpp",
+      "address": 2044880,
+      "size": 368,
+      "sha256": "ea8e2135d895602dbb4263d67172de1b08c024ec38f4f9e177a2684414de3740",
+      "boundary_confirmation": true,
+      "confirmation_method": "Complete named-DWARF body correspondence, direct entry callers, closed local branches, return/frame boundaries and the complete eight-function TU adjacency.",
+      "source_signature": "void XOrdSort(st_XORDEREDARRAY* array, XOrdCompareCallback test)",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2043520,
+          "name": "XOrdSort",
+          "source": "SB/Core/x/xordarray.cpp",
+          "reference_sha256": "ea8e2135d895602dbb4263d67172de1b08c024ec38f4f9e177a2684414de3740",
+          "call_target_differences": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2044768,
+          "name": "XOrdSort",
+          "source": "SB/Core/x/xordarray.cpp",
+          "reference_sha256": "ea8e2135d895602dbb4263d67172de1b08c024ec38f4f9e177a2684414de3740",
+          "call_target_differences": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2041408,
+          "name": "XOrdSort",
+          "source": "SB/Core/x/xordarray.cpp",
+          "reference_sha256": "ea8e2135d895602dbb4263d67172de1b08c024ec38f4f9e177a2684414de3740",
+          "call_target_differences": []
+        }
+      ],
+      "corroboration": {
+        "direct_entry_calls": [
+          2065260,
+          2112560,
+          2936432,
+          3986032,
+          3986488
+        ],
+        "terminal_return": {
+          "address": 2045240,
+          "delay_slot": 2045244,
+          "end_exclusive": 2045248
+        },
+        "local_control_flow": "Every conditional branch stays within the reviewed extent. Comparator JALR instructions are returning callbacks, not function exits. Complete body agrees with all three named DWARF references except explicitly named JAL destinations.",
+        "conditional_branches": [
+          {
+            "address": 2044936,
+            "target": 2044968
+          },
+          {
+            "address": 2044960,
+            "target": 2044944
+          },
+          {
+            "address": 2044972,
+            "target": 2045200
+          },
+          {
+            "address": 2045020,
+            "target": 2045184
+          },
+          {
+            "address": 2045064,
+            "target": 2045104
+          },
+          {
+            "address": 2045108,
+            "target": 2045152
+          },
+          {
+            "address": 2045140,
+            "target": 2045072
+          },
+          {
+            "address": 2045172,
+            "target": 2045048
+          },
+          {
+            "address": 2045188,
+            "target": 2044984
+          }
+        ],
+        "comparator_callbacks": [
+          {
+            "address": 2045132,
+            "target_register": 30,
+            "link_register": 31
+          }
+        ],
+        "stack_frame": {
+          "allocation_address": 2044880,
+          "allocation_bytes": 192,
+          "return_address_save": 2044884,
+          "return_address_restore": 2045200,
+          "return_address_stack_offset": 144,
+          "deallocation_address": 2045244
+        }
+      }
+    },
+    {
+      "name": "XOrdLookup",
+      "source": "SB/Core/x/xordarray.cpp",
+      "address": 2045248,
+      "size": 212,
+      "sha256": "2a17a543e6f85119a85cb7ab68ef4712ff37891ba26353cdabcaf1389aef5a4a",
+      "boundary_confirmation": true,
+      "confirmation_method": "Complete named-DWARF body correspondence, direct entry callers, closed local branches, return/frame boundaries and the complete eight-function TU adjacency.",
+      "source_signature": "S32 XOrdLookup(st_XORDEREDARRAY* array, const void* key, XOrdTestCallback test)",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2043888,
+          "name": "XOrdLookup",
+          "source": "SB/Core/x/xordarray.cpp",
+          "reference_sha256": "2a17a543e6f85119a85cb7ab68ef4712ff37891ba26353cdabcaf1389aef5a4a",
+          "call_target_differences": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2045136,
+          "name": "XOrdLookup",
+          "source": "SB/Core/x/xordarray.cpp",
+          "reference_sha256": "2a17a543e6f85119a85cb7ab68ef4712ff37891ba26353cdabcaf1389aef5a4a",
+          "call_target_differences": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2041776,
+          "name": "XOrdLookup",
+          "source": "SB/Core/x/xordarray.cpp",
+          "reference_sha256": "2a17a543e6f85119a85cb7ab68ef4712ff37891ba26353cdabcaf1389aef5a4a",
+          "call_target_differences": []
+        }
+      ],
+      "corroboration": {
+        "direct_entry_calls": [
+          2063604,
+          2067624,
+          2067944,
+          2068460,
+          2068688,
+          2068880,
+          2069312,
+          2069488,
+          2111920,
+          2932952,
+          3089540,
+          3089756,
+          3090292
+        ],
+        "terminal_return": {
+          "address": 2045452,
+          "delay_slot": 2045456,
+          "end_exclusive": 2045460
+        },
+        "local_control_flow": "Every conditional branch stays within the reviewed extent. Comparator JALR instructions are returning callbacks, not function exits. Complete body agrees with all three named DWARF references except explicitly named JAL destinations.",
+        "conditional_branches": [
+          {
+            "address": 2045304,
+            "target": 2045416
+          },
+          {
+            "address": 2045316,
+            "target": 2045332
+          },
+          {
+            "address": 2045356,
+            "target": 2045376
+          },
+          {
+            "address": 2045364,
+            "target": 2045416
+          },
+          {
+            "address": 2045376,
+            "target": 2045392
+          },
+          {
+            "address": 2045384,
+            "target": 2045400
+          },
+          {
+            "address": 2045404,
+            "target": 2045312
+          }
+        ],
+        "comparator_callbacks": [
+          {
+            "address": 2045348,
+            "target_register": 20,
+            "link_register": 31
+          }
+        ],
+        "tu_layout": {
+          "anchor_function": "XOrdSort",
+          "anchor_address": 2044880,
+          "offset_from_anchor": 368,
+          "evidence": "All eight named DWARF functions have the same order, relative positions and exact extents in each reference original."
+        },
+        "stack_frame": {
+          "allocation_address": 2045248,
+          "allocation_bytes": 128,
+          "return_address_save": 2045252,
+          "return_address_restore": 2045420,
+          "return_address_stack_offset": 112,
+          "deallocation_address": 2045456
+        },
+        "following_padding": {
+          "address": 2045460,
+          "size": 12,
+          "all_zero": true
+        }
+      }
+    },
+    {
+      "name": "XOrdRemove",
+      "source": "SB/Core/x/xordarray.cpp",
+      "address": 2045472,
+      "size": 272,
+      "sha256": "861817e9494e38291eed34a244d6de6c490497ed23f0c34b8fcb827f5a890b04",
+      "boundary_confirmation": true,
+      "confirmation_method": "Complete named-DWARF body correspondence, direct entry callers, closed local branches, return/frame boundaries and the complete eight-function TU adjacency.",
+      "source_signature": "void* XOrdRemove(st_XORDEREDARRAY* array, void* elt, S32 index)",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2044112,
+          "name": "XOrdRemove",
+          "source": "SB/Core/x/xordarray.cpp",
+          "reference_sha256": "861817e9494e38291eed34a244d6de6c490497ed23f0c34b8fcb827f5a890b04",
+          "call_target_differences": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2045360,
+          "name": "XOrdRemove",
+          "source": "SB/Core/x/xordarray.cpp",
+          "reference_sha256": "861817e9494e38291eed34a244d6de6c490497ed23f0c34b8fcb827f5a890b04",
+          "call_target_differences": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2042000,
+          "name": "XOrdRemove",
+          "source": "SB/Core/x/xordarray.cpp",
+          "reference_sha256": "861817e9494e38291eed34a244d6de6c490497ed23f0c34b8fcb827f5a890b04",
+          "call_target_differences": []
+        }
+      ],
+      "corroboration": {
+        "direct_entry_calls": [
+          2933580,
+          3087972,
+          3239204,
+          3241008
+        ],
+        "terminal_return": {
+          "address": 2045736,
+          "delay_slot": 2045740,
+          "end_exclusive": 2045744
+        },
+        "local_control_flow": "Every conditional branch stays within the reviewed extent. Comparator JALR instructions are returning callbacks, not function exits. Complete body agrees with all three named DWARF references except explicitly named JAL destinations.",
+        "conditional_branches": [
+          {
+            "address": 2045472,
+            "target": 2045520
+          },
+          {
+            "address": 2045480,
+            "target": 2045496
+          },
+          {
+            "address": 2045488,
+            "target": 2045736
+          },
+          {
+            "address": 2045504,
+            "target": 2045520
+          },
+          {
+            "address": 2045512,
+            "target": 2045736
+          },
+          {
+            "address": 2045520,
+            "target": 2045568
+          },
+          {
+            "address": 2045536,
+            "target": 2045568
+          },
+          {
+            "address": 2045556,
+            "target": 2045640
+          },
+          {
+            "address": 2045568,
+            "target": 2045640
+          },
+          {
+            "address": 2045588,
+            "target": 2045640
+          },
+          {
+            "address": 2045604,
+            "target": 2045624
+          },
+          {
+            "address": 2045612,
+            "target": 2045640
+          },
+          {
+            "address": 2045632,
+            "target": 2045600
+          },
+          {
+            "address": 2045640,
+            "target": 2045656
+          },
+          {
+            "address": 2045648,
+            "target": 2045736
+          },
+          {
+            "address": 2045676,
+            "target": 2045728
+          },
+          {
+            "address": 2045716,
+            "target": 2045688
+          }
+        ],
+        "comparator_callbacks": [],
+        "tu_layout": {
+          "anchor_function": "XOrdSort",
+          "anchor_address": 2044880,
+          "offset_from_anchor": 592,
+          "evidence": "All eight named DWARF functions have the same order, relative positions and exact extents in each reference original."
+        }
+      }
+    },
+    {
+      "name": "XOrdInsert",
+      "source": "SB/Core/x/xordarray.cpp",
+      "address": 2045744,
+      "size": 200,
+      "sha256": "1170f1de4c5feb73fdd51db58033a3f9f8b82b9db11cb27d5badb9957b702a89",
+      "boundary_confirmation": true,
+      "confirmation_method": "Complete named-DWARF body correspondence, direct entry callers, closed local branches, return/frame boundaries and the complete eight-function TU adjacency.",
+      "source_signature": "void XOrdInsert(st_XORDEREDARRAY* array, void* elt, XOrdCompareCallback compare)",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2044384,
+          "name": "XOrdInsert",
+          "source": "SB/Core/x/xordarray.cpp",
+          "reference_sha256": "1170f1de4c5feb73fdd51db58033a3f9f8b82b9db11cb27d5badb9957b702a89",
+          "call_target_differences": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2045632,
+          "name": "XOrdInsert",
+          "source": "SB/Core/x/xordarray.cpp",
+          "reference_sha256": "1170f1de4c5feb73fdd51db58033a3f9f8b82b9db11cb27d5badb9957b702a89",
+          "call_target_differences": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2042272,
+          "name": "XOrdInsert",
+          "source": "SB/Core/x/xordarray.cpp",
+          "reference_sha256": "1170f1de4c5feb73fdd51db58033a3f9f8b82b9db11cb27d5badb9957b702a89",
+          "call_target_differences": []
+        }
+      ],
+      "corroboration": {
+        "direct_entry_calls": [
+          2111964,
+          3090376
+        ],
+        "terminal_return": {
+          "address": 2045936,
+          "delay_slot": 2045940,
+          "end_exclusive": 2045944
+        },
+        "local_control_flow": "Every conditional branch stays within the reviewed extent. Comparator JALR instructions are returning callbacks, not function exits. Complete body agrees with all three named DWARF references except explicitly named JAL destinations.",
+        "conditional_branches": [
+          {
+            "address": 2045792,
+            "target": 2045912
+          },
+          {
+            "address": 2045816,
+            "target": 2045904
+          },
+          {
+            "address": 2045844,
+            "target": 2045872
+          },
+          {
+            "address": 2045864,
+            "target": 2045912
+          },
+          {
+            "address": 2045892,
+            "target": 2045824
+          }
+        ],
+        "comparator_callbacks": [
+          {
+            "address": 2045836,
+            "target_register": 18,
+            "link_register": 31
+          }
+        ],
+        "tu_layout": {
+          "anchor_function": "XOrdSort",
+          "anchor_address": 2044880,
+          "offset_from_anchor": 864,
+          "evidence": "All eight named DWARF functions have the same order, relative positions and exact extents in each reference original."
+        },
+        "stack_frame": {
+          "allocation_address": 2045744,
+          "allocation_bytes": 96,
+          "return_address_save": 2045748,
+          "return_address_restore": 2045912,
+          "return_address_stack_offset": 80,
+          "deallocation_address": 2045940
+        },
+        "following_padding": {
+          "address": 2045944,
+          "size": 8,
+          "all_zero": true
+        }
+      }
+    },
+    {
+      "name": "XOrdAppend",
+      "source": "SB/Core/x/xordarray.cpp",
+      "address": 2045952,
+      "size": 48,
+      "sha256": "c1a2b894c82b29b8bec982f1bb9a25e2a5d935ee6312b233a56abd2a5b805777",
+      "boundary_confirmation": true,
+      "confirmation_method": "Complete named-DWARF body correspondence, direct entry callers, closed local branches, return/frame boundaries and the complete eight-function TU adjacency.",
+      "source_signature": "void XOrdAppend(st_XORDEREDARRAY* array, void* elt)",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2044592,
+          "name": "XOrdAppend",
+          "source": "SB/Core/x/xordarray.cpp",
+          "reference_sha256": "c1a2b894c82b29b8bec982f1bb9a25e2a5d935ee6312b233a56abd2a5b805777",
+          "call_target_differences": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2045840,
+          "name": "XOrdAppend",
+          "source": "SB/Core/x/xordarray.cpp",
+          "reference_sha256": "c1a2b894c82b29b8bec982f1bb9a25e2a5d935ee6312b233a56abd2a5b805777",
+          "call_target_differences": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2042480,
+          "name": "XOrdAppend",
+          "source": "SB/Core/x/xordarray.cpp",
+          "reference_sha256": "c1a2b894c82b29b8bec982f1bb9a25e2a5d935ee6312b233a56abd2a5b805777",
+          "call_target_differences": []
+        }
+      ],
+      "corroboration": {
+        "direct_entry_calls": [
+          2062952,
+          2063540,
+          2063632,
+          2064524,
+          2112516,
+          2932868,
+          2936404,
+          3088072,
+          3239216,
+          3241692,
+          3242332,
+          3242956,
+          3245096,
+          3985996,
+          3986456
+        ],
+        "terminal_return": {
+          "address": 2045992,
+          "delay_slot": 2045996,
+          "end_exclusive": 2046000
+        },
+        "local_control_flow": "Every conditional branch stays within the reviewed extent. Comparator JALR instructions are returning callbacks, not function exits. Complete body agrees with all three named DWARF references except explicitly named JAL destinations.",
+        "conditional_branches": [
+          {
+            "address": 2045964,
+            "target": 2045992
+          }
+        ],
+        "comparator_callbacks": [],
+        "tu_layout": {
+          "anchor_function": "XOrdSort",
+          "anchor_address": 2044880,
+          "offset_from_anchor": 1072,
+          "evidence": "All eight named DWARF functions have the same order, relative positions and exact extents in each reference original."
+        }
+      }
+    },
+    {
+      "name": "XOrdDone",
+      "source": "SB/Core/x/xordarray.cpp",
+      "address": 2046000,
+      "size": 72,
+      "sha256": "18d68b8dd23e05f3792ec227ebdbdd3ffdec5db3267a1f498ab880c7c28d3e29",
+      "boundary_confirmation": true,
+      "confirmation_method": "Complete named-DWARF body correspondence, direct entry callers, closed local branches, return/frame boundaries and the complete eight-function TU adjacency.",
+      "source_signature": "void XOrdDone(st_XORDEREDARRAY* array, S32 wasTempAlloc)",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2044640,
+          "name": "XOrdDone",
+          "source": "SB/Core/x/xordarray.cpp",
+          "reference_sha256": "f4a4933ba03e49a834dd47b5e6d697ac1d6db97931461641fb3b901797bf2f80",
+          "call_target_differences": [
+            {
+              "offset": 32,
+              "kind": "MIPS JAL target immediate",
+              "reference_target": 2033264,
+              "french_target": 2034624,
+              "reference_target_name": "xMemPopTemp",
+              "reference_target_source": "SB/Core/x/xMemMgr.cpp"
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2045888,
+          "name": "XOrdDone",
+          "source": "SB/Core/x/xordarray.cpp",
+          "reference_sha256": "6833d30158cdedc0b66d692671fd97e308f36ac62c807dec7dd9eebd5f605c03",
+          "call_target_differences": [
+            {
+              "offset": 32,
+              "kind": "MIPS JAL target immediate",
+              "reference_target": 2034512,
+              "french_target": 2034624,
+              "reference_target_name": "xMemPopTemp",
+              "reference_target_source": "SB/Core/x/xMemMgr.cpp"
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2042528,
+          "name": "XOrdDone",
+          "source": "SB/Core/x/xordarray.cpp",
+          "reference_sha256": "be646fa0294bf9a881c6f95668477c33d157b90b8de2c4d13714512a1031857d",
+          "call_target_differences": [
+            {
+              "offset": 32,
+              "kind": "MIPS JAL target immediate",
+              "reference_target": 2031152,
+              "french_target": 2034624,
+              "reference_target_name": "xMemPopTemp",
+              "reference_target_source": "SB/Core/x/xMemMgr.cpp"
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "direct_entry_calls": [
+          2073560,
+          2073628,
+          2073640,
+          2073668,
+          2937156,
+          3090468,
+          3244980,
+          3986284,
+          3986972
+        ],
+        "terminal_return": {
+          "address": 2046064,
+          "delay_slot": 2046068,
+          "end_exclusive": 2046072
+        },
+        "local_control_flow": "Every conditional branch stays within the reviewed extent. Comparator JALR instructions are returning callbacks, not function exits. Complete body agrees with all three named DWARF references except explicitly named JAL destinations.",
+        "conditional_branches": [
+          {
+            "address": 2046016,
+            "target": 2046040
+          },
+          {
+            "address": 2046024,
+            "target": 2046040
+          }
+        ],
+        "comparator_callbacks": [],
+        "tu_layout": {
+          "anchor_function": "XOrdSort",
+          "anchor_address": 2044880,
+          "offset_from_anchor": 1120,
+          "evidence": "All eight named DWARF functions have the same order, relative positions and exact extents in each reference original."
+        },
+        "stack_frame": {
+          "allocation_address": 2046000,
+          "allocation_bytes": 32,
+          "return_address_save": 2046004,
+          "return_address_restore": 2046056,
+          "return_address_stack_offset": 16,
+          "deallocation_address": 2046068
+        },
+        "following_padding": {
+          "address": 2046072,
+          "size": 8,
+          "all_zero": true
+        }
+      }
+    },
+    {
+      "name": "XOrdReset",
+      "source": "SB/Core/x/xordarray.cpp",
+      "address": 2046080,
+      "size": 8,
+      "sha256": "00a401d7322de8bde409413190a478e8ae8e5dd9cd0a091b841da38b685b7b27",
+      "boundary_confirmation": true,
+      "confirmation_method": "Complete named-DWARF body correspondence, direct entry callers, closed local branches, return/frame boundaries and the complete eight-function TU adjacency.",
+      "source_signature": "void XOrdReset(st_XORDEREDARRAY* array)",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2044720,
+          "name": "XOrdReset",
+          "source": "SB/Core/x/xordarray.cpp",
+          "reference_sha256": "00a401d7322de8bde409413190a478e8ae8e5dd9cd0a091b841da38b685b7b27",
+          "call_target_differences": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2045968,
+          "name": "XOrdReset",
+          "source": "SB/Core/x/xordarray.cpp",
+          "reference_sha256": "00a401d7322de8bde409413190a478e8ae8e5dd9cd0a091b841da38b685b7b27",
+          "call_target_differences": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2042608,
+          "name": "XOrdReset",
+          "source": "SB/Core/x/xordarray.cpp",
+          "reference_sha256": "00a401d7322de8bde409413190a478e8ae8e5dd9cd0a091b841da38b685b7b27",
+          "call_target_differences": []
+        }
+      ],
+      "corroboration": {
+        "direct_entry_calls": [
+          3241288,
+          3241424,
+          3241648,
+          3242496,
+          3242912,
+          3243552,
+          3244360,
+          3244440
+        ],
+        "terminal_return": {
+          "address": 2046080,
+          "delay_slot": 2046084,
+          "end_exclusive": 2046088
+        },
+        "local_control_flow": "Every conditional branch stays within the reviewed extent. Comparator JALR instructions are returning callbacks, not function exits. Complete body agrees with all three named DWARF references except explicitly named JAL destinations.",
+        "conditional_branches": [],
+        "comparator_callbacks": [],
+        "tu_layout": {
+          "anchor_function": "XOrdSort",
+          "anchor_address": 2044880,
+          "offset_from_anchor": 1200,
+          "evidence": "All eight named DWARF functions have the same order, relative positions and exact extents in each reference original."
+        },
+        "following_padding": {
+          "address": 2046088,
+          "size": 8,
+          "all_zero": true
+        },
+        "short_function_identity": "Eight independent direct JAL targets reach this entry; preceding Done returns before its own eight-byte alignment padding. Reset is JR RA with SW zero,4(a0) in the delay slot, followed by eight bytes of zero padding and the independently identified Init prologue. It is not a return suffix."
+      }
+    },
+    {
+      "name": "XOrdInit",
+      "source": "SB/Core/x/xordarray.cpp",
+      "address": 2046096,
+      "size": 188,
+      "sha256": "ec6dc69c283ea779debf5ef096d257819e1436302735e046560c99506fb6ecca",
+      "boundary_confirmation": true,
+      "confirmation_method": "Complete named-DWARF body correspondence, direct entry callers, closed local branches, return/frame boundaries and the complete eight-function TU adjacency.",
+      "source_signature": "void XOrdInit(st_XORDEREDARRAY* array, S32 size, S32 tempAlloc)",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2044736,
+          "name": "XOrdInit",
+          "source": "SB/Core/x/xordarray.cpp",
+          "reference_sha256": "411d7abd97c946b8a59adf94a6601d7e601bf2aa1bbf565697142792f9a05d22",
+          "call_target_differences": [
+            {
+              "offset": 36,
+              "kind": "MIPS JAL target immediate",
+              "reference_target": 2033280,
+              "french_target": 2034640,
+              "reference_target_name": "xMemPushTemp",
+              "reference_target_source": "SB/Core/x/xMemMgr.cpp"
+            },
+            {
+              "offset": 64,
+              "kind": "MIPS JAL target immediate",
+              "reference_target": 2033296,
+              "french_target": 2034656,
+              "reference_target_name": "xMemAlloc",
+              "reference_target_source": "SB/Core/x/xMemMgr.cpp"
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2045984,
+          "name": "XOrdInit",
+          "source": "SB/Core/x/xordarray.cpp",
+          "reference_sha256": "7e50944c3fcfa52df7415319bfe3ca233dd9b61badae900ec49c31e910278f5a",
+          "call_target_differences": [
+            {
+              "offset": 36,
+              "kind": "MIPS JAL target immediate",
+              "reference_target": 2034528,
+              "french_target": 2034640,
+              "reference_target_name": "xMemPushTemp",
+              "reference_target_source": "SB/Core/x/xMemMgr.cpp"
+            },
+            {
+              "offset": 64,
+              "kind": "MIPS JAL target immediate",
+              "reference_target": 2034544,
+              "french_target": 2034656,
+              "reference_target_name": "xMemAlloc",
+              "reference_target_source": "SB/Core/x/xMemMgr.cpp"
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2042624,
+          "name": "XOrdInit",
+          "source": "SB/Core/x/xordarray.cpp",
+          "reference_sha256": "eeb30857fb092b655d377b7be60b4eb345990e8d71579592f1c4390b563c5a8c",
+          "call_target_differences": [
+            {
+              "offset": 36,
+              "kind": "MIPS JAL target immediate",
+              "reference_target": 2031168,
+              "french_target": 2034640,
+              "reference_target_name": "xMemPushTemp",
+              "reference_target_source": "SB/Core/x/xMemMgr.cpp"
+            },
+            {
+              "offset": 64,
+              "kind": "MIPS JAL target immediate",
+              "reference_target": 2031184,
+              "french_target": 2034656,
+              "reference_target_name": "xMemAlloc",
+              "reference_target_source": "SB/Core/x/xMemMgr.cpp"
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "direct_entry_calls": [
+          2062716,
+          2063528,
+          2072528,
+          2072620,
+          2112244,
+          2935172,
+          2935564,
+          2938160,
+          3088664,
+          3090612,
+          3244736,
+          3244752,
+          3245056,
+          3985940,
+          3986416
+        ],
+        "terminal_return": {
+          "address": 2046276,
+          "delay_slot": 2046280,
+          "end_exclusive": 2046284
+        },
+        "local_control_flow": "Every conditional branch stays within the reviewed extent. Comparator JALR instructions are returning callbacks, not function exits. Complete body agrees with all three named DWARF references except explicitly named JAL destinations.",
+        "conditional_branches": [
+          {
+            "address": 2046112,
+            "target": 2046124
+          },
+          {
+            "address": 2046124,
+            "target": 2046152
+          },
+          {
+            "address": 2046140,
+            "target": 2046176
+          },
+          {
+            "address": 2046236,
+            "target": 2046264
+          },
+          {
+            "address": 2046248,
+            "target": 2046260
+          }
+        ],
+        "comparator_callbacks": [],
+        "tu_layout": {
+          "anchor_function": "XOrdSort",
+          "anchor_address": 2044880,
+          "offset_from_anchor": 1216,
+          "evidence": "All eight named DWARF functions have the same order, relative positions and exact extents in each reference original."
+        },
+        "stack_frame": {
+          "allocation_address": 2046096,
+          "allocation_bytes": 48,
+          "return_address_save": 2046100,
+          "return_address_restore": 2046264,
+          "return_address_stack_offset": 32,
+          "deallocation_address": 2046280
+        },
+        "following_padding": {
+          "address": 2046284,
+          "size": 4,
+          "all_zero": true
+        }
+      }
+    },
+    {
       "name": "xCurveAssetEvaluate",
       "source": "SB/Core/x/xCurveAsset.cpp",
       "address": 3859376,

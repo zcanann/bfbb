@@ -65,8 +65,12 @@
     }
 #define ASM asm
 #else
+// The Xbox compiler predates variadic macro support; these MW layout helpers
+// are not used by Xbox sources.
+#ifndef XBOX
 #define CW_FORCE_BSS(module, ...)
 #define CW_FORCE_STRINGS(module, ...)
+#endif
 #define ASM
 #endif
 

@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "version": "SLES-51968",
+  "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+  "scope": "Independent runtime call-entry identities for relocation recovery only; no new code/data bytes or translation-unit ownership are added to progress.",
+  "coverage_complete": false,
+  "eligible_for_progress": false,
+  "anchors": [
+    {
+      "name": "memset",
+      "symbol": "memset",
+      "source": "runtime/memset",
+      "address": 1149960,
+      "size": 192,
+      "sha256": "09c7829fb0e061976495f53e07fa77cde5f74607c3657deb18319097cf4a51be",
+      "identity_confirmation": true,
+      "eligible_for_progress": false,
+      "extent_interpretation": "Reviewed instruction span authenticates this call entry; no recovered translation unit or progress extent is asserted.",
+      "semantic_review": [
+        "Entry ABI is (a0 destination, a1 byte value, a2 unsigned byte count).",
+        "Short or unaligned destinations use byte stores; aligned ranges replicate a1 low8bits with pcpyh/pcpyld and use32-byte,8-byte,thenbyte stores.",
+        "All paths preserve original destination a0 and return it in v0; zero length reaches return without a store.",
+        "Every direct branch in the reviewed span stays within the span; there are no calls or tail transfers.",
+        "Independent original callers use nonzero fills0x77 and0xcd, distinguishing memset from a zero-only helper."
+      ],
+      "reviewed_callers": [
+        {
+          "function": "iMemInit",
+          "source": "SB/Core/p2/iMemMgr.cpp",
+          "function_address": 1757088,
+          "function_size": 548,
+          "call_address": 1757296,
+          "call_offset": 208,
+          "window_address": 1757264,
+          "window_size": 48,
+          "window_sha256": "3441ef9a5b87b7ed051b75328ad4367f0ede984c0ad4bb860ee4cbaff2384e20",
+          "fill_value": 119,
+          "fill_instruction_address": 1757288,
+          "fill_instruction": 604307575,
+          "argument_evidence": "a0 receives the allocated buffer; a1=0x77 remains live at JAL; delay slot sets a2=memory size minus0x2000."
+        },
+        {
+          "function": "HISRemoteSetParam",
+          "source": "SB/Core/p2/his/HisStubs.cpp",
+          "function_address": 3451328,
+          "function_size": 172,
+          "call_address": 3451376,
+          "call_offset": 48,
+          "window_address": 3451344,
+          "window_size": 48,
+          "window_sha256": "3983a9dc08362865a5c1386a83b71d73b6eca8e6655fe73ec12a339a3ae302d1",
+          "fill_value": 205,
+          "fill_instruction_address": 3451364,
+          "fill_instruction": 604307661,
+          "argument_evidence": "a1=0xcd remains live at JAL; delay slot sets a0 to a stack buffer."
+        }
+      ],
+      "known_dwarf_call_count": 342,
+      "cross_version_corroboration": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "address": 1149960,
+          "size": 192,
+          "sha256": "09c7829fb0e061976495f53e07fa77cde5f74607c3657deb18319097cf4a51be"
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "address": 1149960,
+          "size": 192,
+          "sha256": "09c7829fb0e061976495f53e07fa77cde5f74607c3657deb18319097cf4a51be"
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "address": 1149960,
+          "size": 192,
+          "sha256": "09c7829fb0e061976495f53e07fa77cde5f74607c3657deb18319097cf4a51be"
+        }
+      ]
+    }
+  ]
+}

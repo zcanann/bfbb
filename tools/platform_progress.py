@@ -130,6 +130,9 @@ def report(args, versions: dict) -> None:
             reviewed_calls = reviewed.with_name('reviewed-call-targets.json')
             if version['platform'] == 'ps2' and reviewed_calls.is_file():
                 options['reviewed_call_targets'] = reviewed_calls
+            reviewed_data = reviewed.with_name('reviewed-data-anchors.json')
+            if version['platform'] == 'ps2' and reviewed_data.is_file():
+                options['reviewed_data_anchors'] = reviewed_data
             coverage = backend.prepare_report(path, output, **options)
             status['coverage'] = coverage
             if hasattr(backend, 'verify_registries'):
@@ -140,8 +143,14 @@ def report(args, versions: dict) -> None:
                 if args.wibo is None:
                     raise ValueError('--wibo is required with --ps2-compilers')
                 compiled = compile_units(output, args.ps2_compilers, args.wibo)
+            if version['platform'] == 'xbox' and args.xbox_compilers:
+                from platforms.xbox_source import compile_units
+                compiled = compile_units(output, args.xbox_compilers, args.wine)
+            if compiled:
                 status['compiled_units'] = compiled
-                coverage['source_compilation_available'] = bool(compiled)
+                coverage['source_compilation_available'] = True
+                coverage['source_comparison_available'] = True
+                coverage['status'] = 'partial-source-comparison'
                 write_json(output / 'coverage.json', coverage)
             if (output / 'objdiff.json').is_file():
                 subprocess.run([str(args.objdiff.resolve()), 'report', 'generate',
@@ -180,6 +189,8 @@ def main() -> None:
     parser.add_argument('--build-dir', type=Path, default=ROOT / 'build')
     parser.add_argument('--ps2-compilers', type=Path)
     parser.add_argument('--wibo', type=Path)
+    parser.add_argument('--xbox-compilers', type=Path)
+    parser.add_argument('--wine', type=Path)
     parser.add_argument('--objdiff', type=Path, default=ROOT / 'build/tools' / ('objdiff-cli.exe' if os.name == 'nt' else 'objdiff-cli'))
     args = parser.parse_args()
     try:
@@ -189,7 +200,7 @@ def main() -> None:
             extract(args, versions)
         else:
             report(args, versions)
-    except (ValueError, OSError, subprocess.CalledProcessError) as error:
+    except (ValueError, OSError, RuntimeError, subprocess.CalledProcessError) as error:
         parser.exit(1, f'error: {error}\n')
 
 

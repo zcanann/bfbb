@@ -184,6 +184,393 @@
           "call_address": 1834164
         }
       ]
+    },
+    {
+      "name": "xMemPopTemp",
+      "symbol": "xMemPopTemp__FPv",
+      "source": "SB/Core/x/xMemMgr.cpp",
+      "address": 2034624,
+      "size": 16,
+      "sha256": "2155a6ac88043457946e7d794894204a52541d954b833042e8467e2b6819ab2b",
+      "identity_confirmation": true,
+      "eligible_for_progress": false,
+      "proof_kind": "explicit_allocator_neighborhood",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "name": "xMemPopTemp",
+          "source": "SB/Core/x/xMemMgr.cpp",
+          "source_address": 2033264,
+          "reference_sha256": "a7d59b2b65aebb276187fae12b75de0a36420ab52527eea90519e9d023cad40c",
+          "neighborhood_address": 2033264,
+          "neighborhood_sha256": "a174fb822e518e813ee3f3e677462697fc7d144e3bc0ddeb00dc7f469ca54538",
+          "address_pair_targets": [
+            6011488,
+            6011484,
+            5671216
+          ],
+          "direct_call_target": 2033872,
+          "direct_call_reference_sha256": "d7a85388ec0e1d783d178202778c605bfd688421d661b125fbe7772cd4a34f38",
+          "matching_named_dwarf_neighborhoods": 1
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "name": "xMemPopTemp",
+          "source": "SB/Core/x/xMemMgr.cpp",
+          "source_address": 2034512,
+          "reference_sha256": "025bb9309d1e836ba4aa32020b94b8e1d8c4e168ce88c5df20c7fa5a74370a93",
+          "neighborhood_address": 2034512,
+          "neighborhood_sha256": "1a2405fa47600caf0eeb27f0640be6896e11f93c8dc3116c106e487c562c5208",
+          "address_pair_targets": [
+            6010208,
+            6010204,
+            5669936
+          ],
+          "direct_call_target": 2035120,
+          "direct_call_reference_sha256": "d7a85388ec0e1d783d178202778c605bfd688421d661b125fbe7772cd4a34f38",
+          "matching_named_dwarf_neighborhoods": 1
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "name": "xMemPopTemp",
+          "source": "SB/Core/x/xMemMgr.cpp",
+          "source_address": 2031152,
+          "reference_sha256": "e590bedba490daac555cbf1ff1e0bbafb2143d29e84c4705174e23e532317f14",
+          "neighborhood_address": 2031152,
+          "neighborhood_sha256": "b90b42423738aa75ce46a2ba254d8f4eb7f5ee90599331a5b280f0c6bb2c84b9",
+          "address_pair_targets": [
+            6008672,
+            6008668,
+            5668400
+          ],
+          "direct_call_target": 2031760,
+          "direct_call_reference_sha256": "d7a85388ec0e1d783d178202778c605bfd688421d661b125fbe7772cd4a34f38",
+          "matching_named_dwarf_neighborhoods": 1
+        }
+      ],
+      "corroboration": {
+        "allocator_neighborhood": {
+          "address": 2034624,
+          "size": 360,
+          "sha256": "0daa5509824e791d9307713451b8924e7652d48c98790622e9fdc0636d9eedcc",
+          "members": [
+            {
+              "name": "xMemPopTemp",
+              "offset": 0,
+              "size": 16
+            },
+            {
+              "name": "xMemPushTemp",
+              "offset": 16,
+              "size": 16
+            },
+            {
+              "name": "xMemAlloc",
+              "offset": 32,
+              "size": 328
+            }
+          ],
+          "address_pairs": [
+            {
+              "high_offset": 0,
+              "low_offset": 4,
+              "address": 6010464,
+              "low_opcode": 35
+            },
+            {
+              "high_offset": 16,
+              "low_offset": 20,
+              "address": 6010460,
+              "low_opcode": 35
+            },
+            {
+              "high_offset": 36,
+              "low_offset": 52,
+              "address": 5670192,
+              "low_opcode": 9
+            }
+          ],
+          "direct_call": {
+            "offset": 168,
+            "target": 2035232,
+            "name": "xMemGetBlockInfo",
+            "source": "SB/Core/x/xMemMgr.cpp",
+            "size": 288,
+            "sha256": "d7a85388ec0e1d783d178202778c605bfd688421d661b125fbe7772cd4a34f38"
+          },
+          "explanation": "Pop/Push dispatch through distinct unnamed allocator pointer slots. Their identities come from the uniquely corresponding complete three-function neighborhood, not a guessed slot name. The Alloc JAL destination itself has a complete raw body equal to named xMemGetBlockInfo in all three references."
+        }
+      },
+      "reviewed_uses": [
+        {
+          "function": "XOrdDone",
+          "function_address": 2046000,
+          "offset": 32,
+          "relocation_type": "R_MIPS_26",
+          "call_address": 2046032
+        }
+      ]
+    },
+    {
+      "name": "xMemPushTemp",
+      "symbol": "xMemPushTemp__FUi",
+      "source": "SB/Core/x/xMemMgr.cpp",
+      "address": 2034640,
+      "size": 16,
+      "sha256": "186e65d4f659a8369261d1250257b8634387fa17be8440d422d402bf3fca38bb",
+      "identity_confirmation": true,
+      "eligible_for_progress": false,
+      "proof_kind": "explicit_allocator_neighborhood",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "name": "xMemPushTemp",
+          "source": "SB/Core/x/xMemMgr.cpp",
+          "source_address": 2033280,
+          "reference_sha256": "e4e1d59bbff4d1bb569da868896d18a6c6364c5571e09926db8cd6fe829e681c",
+          "neighborhood_address": 2033264,
+          "neighborhood_sha256": "a174fb822e518e813ee3f3e677462697fc7d144e3bc0ddeb00dc7f469ca54538",
+          "address_pair_targets": [
+            6011488,
+            6011484,
+            5671216
+          ],
+          "direct_call_target": 2033872,
+          "direct_call_reference_sha256": "d7a85388ec0e1d783d178202778c605bfd688421d661b125fbe7772cd4a34f38",
+          "matching_named_dwarf_neighborhoods": 1
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "name": "xMemPushTemp",
+          "source": "SB/Core/x/xMemMgr.cpp",
+          "source_address": 2034528,
+          "reference_sha256": "d65832f676f46dda81b23fb169fd2be61eb1f5af68e86372aa06fcdd0fa2d49f",
+          "neighborhood_address": 2034512,
+          "neighborhood_sha256": "1a2405fa47600caf0eeb27f0640be6896e11f93c8dc3116c106e487c562c5208",
+          "address_pair_targets": [
+            6010208,
+            6010204,
+            5669936
+          ],
+          "direct_call_target": 2035120,
+          "direct_call_reference_sha256": "d7a85388ec0e1d783d178202778c605bfd688421d661b125fbe7772cd4a34f38",
+          "matching_named_dwarf_neighborhoods": 1
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "name": "xMemPushTemp",
+          "source": "SB/Core/x/xMemMgr.cpp",
+          "source_address": 2031168,
+          "reference_sha256": "cb09d95d2283527f5f5bf50ce97784ed2d183a8f52b902571a5c6d0826f10451",
+          "neighborhood_address": 2031152,
+          "neighborhood_sha256": "b90b42423738aa75ce46a2ba254d8f4eb7f5ee90599331a5b280f0c6bb2c84b9",
+          "address_pair_targets": [
+            6008672,
+            6008668,
+            5668400
+          ],
+          "direct_call_target": 2031760,
+          "direct_call_reference_sha256": "d7a85388ec0e1d783d178202778c605bfd688421d661b125fbe7772cd4a34f38",
+          "matching_named_dwarf_neighborhoods": 1
+        }
+      ],
+      "corroboration": {
+        "allocator_neighborhood": {
+          "address": 2034624,
+          "size": 360,
+          "sha256": "0daa5509824e791d9307713451b8924e7652d48c98790622e9fdc0636d9eedcc",
+          "members": [
+            {
+              "name": "xMemPopTemp",
+              "offset": 0,
+              "size": 16
+            },
+            {
+              "name": "xMemPushTemp",
+              "offset": 16,
+              "size": 16
+            },
+            {
+              "name": "xMemAlloc",
+              "offset": 32,
+              "size": 328
+            }
+          ],
+          "address_pairs": [
+            {
+              "high_offset": 0,
+              "low_offset": 4,
+              "address": 6010464,
+              "low_opcode": 35
+            },
+            {
+              "high_offset": 16,
+              "low_offset": 20,
+              "address": 6010460,
+              "low_opcode": 35
+            },
+            {
+              "high_offset": 36,
+              "low_offset": 52,
+              "address": 5670192,
+              "low_opcode": 9
+            }
+          ],
+          "direct_call": {
+            "offset": 168,
+            "target": 2035232,
+            "name": "xMemGetBlockInfo",
+            "source": "SB/Core/x/xMemMgr.cpp",
+            "size": 288,
+            "sha256": "d7a85388ec0e1d783d178202778c605bfd688421d661b125fbe7772cd4a34f38"
+          },
+          "explanation": "Pop/Push dispatch through distinct unnamed allocator pointer slots. Their identities come from the uniquely corresponding complete three-function neighborhood, not a guessed slot name. The Alloc JAL destination itself has a complete raw body equal to named xMemGetBlockInfo in all three references."
+        }
+      },
+      "reviewed_uses": [
+        {
+          "function": "XOrdInit",
+          "function_address": 2046096,
+          "offset": 36,
+          "relocation_type": "R_MIPS_26",
+          "call_address": 2046132
+        }
+      ]
+    },
+    {
+      "name": "xMemAlloc",
+      "symbol": "xMemAlloc__FUiUii",
+      "source": "SB/Core/x/xMemMgr.cpp",
+      "address": 2034656,
+      "size": 328,
+      "sha256": "649cc2801c283086a5fc1dd274b2f125b6a61771d74ee498aeaa7e5f832ca53a",
+      "identity_confirmation": true,
+      "eligible_for_progress": false,
+      "proof_kind": "explicit_allocator_neighborhood",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "name": "xMemAlloc",
+          "source": "SB/Core/x/xMemMgr.cpp",
+          "source_address": 2033296,
+          "reference_sha256": "091d27655434712bdb1c53e50274aaf3abee6b6187deb96e0efea49ab5a360d6",
+          "neighborhood_address": 2033264,
+          "neighborhood_sha256": "a174fb822e518e813ee3f3e677462697fc7d144e3bc0ddeb00dc7f469ca54538",
+          "address_pair_targets": [
+            6011488,
+            6011484,
+            5671216
+          ],
+          "direct_call_target": 2033872,
+          "direct_call_reference_sha256": "d7a85388ec0e1d783d178202778c605bfd688421d661b125fbe7772cd4a34f38",
+          "matching_named_dwarf_neighborhoods": 1
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "name": "xMemAlloc",
+          "source": "SB/Core/x/xMemMgr.cpp",
+          "source_address": 2034544,
+          "reference_sha256": "6ca1b628026fa5344e5cbcbcec0bad61c48fe6e1b8af8f20a027250b45965b8b",
+          "neighborhood_address": 2034512,
+          "neighborhood_sha256": "1a2405fa47600caf0eeb27f0640be6896e11f93c8dc3116c106e487c562c5208",
+          "address_pair_targets": [
+            6010208,
+            6010204,
+            5669936
+          ],
+          "direct_call_target": 2035120,
+          "direct_call_reference_sha256": "d7a85388ec0e1d783d178202778c605bfd688421d661b125fbe7772cd4a34f38",
+          "matching_named_dwarf_neighborhoods": 1
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "name": "xMemAlloc",
+          "source": "SB/Core/x/xMemMgr.cpp",
+          "source_address": 2031184,
+          "reference_sha256": "3ea3101a73333b6117a3aa48400f8f147d289322255fd4b378487b2ba2e8bef1",
+          "neighborhood_address": 2031152,
+          "neighborhood_sha256": "b90b42423738aa75ce46a2ba254d8f4eb7f5ee90599331a5b280f0c6bb2c84b9",
+          "address_pair_targets": [
+            6008672,
+            6008668,
+            5668400
+          ],
+          "direct_call_target": 2031760,
+          "direct_call_reference_sha256": "d7a85388ec0e1d783d178202778c605bfd688421d661b125fbe7772cd4a34f38",
+          "matching_named_dwarf_neighborhoods": 1
+        }
+      ],
+      "corroboration": {
+        "allocator_neighborhood": {
+          "address": 2034624,
+          "size": 360,
+          "sha256": "0daa5509824e791d9307713451b8924e7652d48c98790622e9fdc0636d9eedcc",
+          "members": [
+            {
+              "name": "xMemPopTemp",
+              "offset": 0,
+              "size": 16
+            },
+            {
+              "name": "xMemPushTemp",
+              "offset": 16,
+              "size": 16
+            },
+            {
+              "name": "xMemAlloc",
+              "offset": 32,
+              "size": 328
+            }
+          ],
+          "address_pairs": [
+            {
+              "high_offset": 0,
+              "low_offset": 4,
+              "address": 6010464,
+              "low_opcode": 35
+            },
+            {
+              "high_offset": 16,
+              "low_offset": 20,
+              "address": 6010460,
+              "low_opcode": 35
+            },
+            {
+              "high_offset": 36,
+              "low_offset": 52,
+              "address": 5670192,
+              "low_opcode": 9
+            }
+          ],
+          "direct_call": {
+            "offset": 168,
+            "target": 2035232,
+            "name": "xMemGetBlockInfo",
+            "source": "SB/Core/x/xMemMgr.cpp",
+            "size": 288,
+            "sha256": "d7a85388ec0e1d783d178202778c605bfd688421d661b125fbe7772cd4a34f38"
+          },
+          "explanation": "Pop/Push dispatch through distinct unnamed allocator pointer slots. Their identities come from the uniquely corresponding complete three-function neighborhood, not a guessed slot name. The Alloc JAL destination itself has a complete raw body equal to named xMemGetBlockInfo in all three references."
+        }
+      },
+      "reviewed_uses": [
+        {
+          "function": "XOrdInit",
+          "function_address": 2046096,
+          "offset": 64,
+          "relocation_type": "R_MIPS_26",
+          "call_address": 2046160
+        }
+      ]
     }
   ]
 }

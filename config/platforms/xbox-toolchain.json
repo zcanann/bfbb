@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "compiler": {
+    "id": "msvc7.1-13.10.3077",
+    "identity_status": "Candidate compiler; VC7.0 also reproduces the matched leaf, so original toolchain identity is not established",
+    "archive_url": "https://github.com/OmniBlade/decomp.me/releases/download/msvcwin9x/msvc7.0.tar.gz",
+    "archive_sha256": "49eba7f9f72644f6f872a4176baeac544e8b5dfb2be1f47bb4d439b1136ffeac",
+    "files_sha256": {
+      "Bin/cl.exe": "2ecf86a3edfd3deae498e08298e210e984537ce9e11759930561e43f40bd2515",
+      "Bin/link.exe": "0d5f9712d0da843d787bf4ce4e678abc6b737940996706b2c86101eac9df3e3c",
+      "Bin/lib.exe": "3892c55821f628961ebf177537fdb002f3423166ead89c3aa7bc2ea1419fe1eb",
+      "Bin/c1.dll": "11f452af93f8e686b36b348763b33d32ae2766f1b0c360a447053bf44ec50fcc",
+      "Bin/c1xx.dll": "353f3d5dcd050b876e1c044b99c4bf47958d255f395a4919f406a19921be4dfa",
+      "Bin/c2.dll": "bcd28f39b1798b07989c30a1df471cf87fc20e3802d130901a08f83800e6b81e",
+      "Bin/mspdb71.dll": "85ebd7dcbe1b9fa756f23e5f811d7dfeccdac0de14271f2c18affbf918d8cb79",
+      "Bin/msobj71.dll": "19ce191c44e783e70c762ef13c1e918fc07745c8f64fcfc7b217e73ef667c168",
+      "Bin/msvcr71.dll": "8094af5ee310714caebccaeee7769ffb08048503ba478b879edfef5f1a24fefe",
+      "Bin/msvcp71.dll": "df96156f6a548fd6fe5672918de5ae4509d3c810a57bffd2a91de45a3ed5b23b"
+    },
+    "header_trees_sha256": {
+      "Include": "997e7b542717cd17fba223c6e4adba5fb07264b8f5ee0a0146280f8e81b9c6df"
+    }
+  },
+  "runtime": {
+    "archive_url": "https://downloads.sourceforge.net/project/bzflag/bzedit%20win32/1.6.5/BZEditW32_1.6.5.exe",
+    "archive_sha256": "84d1bda5dbf814742898a2e1c0e4bc793e9bc1fba4b7a93d59a7ef12bd0fd802",
+    "extract_only": [
+      "msvcr71.dll",
+      "msvcp71.dll"
+    ],
+    "recipe": "Winetricks load_vcrun2003; extract DLLs beside compiler, never run installer"
+  },
+  "analysis": {
+    "capstone_version": "5.0.7",
+    "method": "Reachable direct no-call CFG bounded by MAP symbols; no target lengths used"
+  },
+  "flags": [
+    "/nologo",
+    "/c",
+    "/O2",
+    "/Ob1",
+    "/GL",
+    "/Gr",
+    "/DXBOX=1"
+  ],
+  "host_context": {
+    "scope": "Diagnostic reachability entry, real xatof wrapper, host CRT import and standard floating-point marker. Excluded from Xbox code/data coverage.",
+    "entry": "tools/platforms/xbox_support/entry.cpp",
+    "xatof": "tools/platforms/xbox_support/xatof.cpp",
+    "float_marker": "tools/platforms/xbox_support/fltused.c",
+    "imports": "tools/platforms/xbox_support/msvcrt.def"
+  },
+  "units": [
+    {
+      "source": "src/SB/Core/x/xString.cpp",
+      "target_unit": "SB/Core/x/xString.cpp",
+      "object": "source/xString.obj",
+      "comparison_object": "source/xString-functions.obj",
+      "symbols": {
+        "xStrHash(const char*)": "?xStrHash@@YIIPBD@Z",
+        "xStrHash(const char*,size_t)": "?xStrHash@@YIIPBDI@Z",
+        "xStrHashCat(U32,const char*)": "?xStrHashCat@@YIIIPBD@Z"
+      },
+      "scope": "Three individually reviewed leaf functions from actual full-TU compilation; no TU or executable completion claim"
+    }
+  ]
+}

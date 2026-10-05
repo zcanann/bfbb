@@ -23,7 +23,7 @@
     "-gccinc",
     "-DPS2=1"
   ],
-  "scope": "Validated xBase and xordarray profiles; compiler identity for other units remains unproven",
+  "scope": "Validated xBase, xordarray and xRMemData profiles; compiler identity for other units remains unproven",
   "units": [
     {
       "source": "src/SB/Core/x/xBase.cpp",
@@ -101,6 +101,71 @@
         {
           "function": "XOrdInit",
           "offset": 56,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap",
+          "opcode": 35
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Core/x/xRMemData.cpp",
+      "target_unit": "SB/Core/x/xRMemData.cpp",
+      "object": "source/xRMemData.o",
+      "symbols": {
+        "__nw": "__nw__10RyzMemDataFUiiP10RyzMemGrow",
+        "__dl": "__dl__10RyzMemDataFPv",
+        "Init": "Init__10RyzMemGrowFP5xBase",
+        "Resume": "Resume__10RyzMemGrowFP5xBase",
+        "Done": "Done__10RyzMemGrowFv"
+      },
+      "calls": [
+        {
+          "function": "__nw",
+          "offset": 64,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemGrowAlloc",
+          "symbol": "xMemGrowAlloc__FUiUi"
+        },
+        {
+          "function": "__nw",
+          "offset": 84,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc",
+          "symbol": "xMemAlloc__FUiUii"
+        },
+        {
+          "function": "__nw",
+          "offset": 104,
+          "target_source": "runtime/memset",
+          "target_function": "memset",
+          "symbol": "memset"
+        },
+        {
+          "function": "Init",
+          "offset": 68,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc",
+          "symbol": "xMemAlloc__FUiUii"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "__nw",
+          "offset": 68,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap",
+          "opcode": 35
+        },
+        {
+          "function": "__nw",
+          "offset": 80,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap",
+          "opcode": 35
+        },
+        {
+          "function": "Init",
+          "offset": 64,
           "target_name": "gActiveHeap",
           "symbol": "gActiveHeap",
           "opcode": 35

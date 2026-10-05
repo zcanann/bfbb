@@ -102,7 +102,7 @@ jobs:
       contents: read
       packages: read
     container:
-      image: ghcr.io/zcanann/bfbb-build:main
+      image: ${{ startsWith(matrix.version, 'XBOX-') && 'ghcr.io/zcanann/bfbb-build:xbox' || 'ghcr.io/zcanann/bfbb-build:main' }}
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
@@ -118,8 +118,17 @@ jobs:
           mkdir -p build/tools
           python tools/download_tool.py objdiff-cli build/tools/objdiff-cli --tag v3.7.1
 
-      - name: Verify original and compare supported source units
+      - name: Verify original and compare PS2 source units
+        if: startsWith(matrix.version, 'SL')
         run: python tools/platform_progress.py report --version ${{ matrix.version }} --ps2-compilers /ps2-compilers --wibo /usr/local/bin/wibo-ps2
+
+      - name: Verify original and compare Xbox source functions
+        if: startsWith(matrix.version, 'XBOX-')
+        run: python tools/platform_progress.py report --version ${{ matrix.version }} --xbox-compilers /xbox-compilers --wine /usr/lib/wine/wine
+
+      - name: Verify PS2 runtime call evidence
+        if: startsWith(matrix.version, 'SL') && matrix.version != 'SLES-53623'
+        run: python tools/verify_ps2_runtime.py
 
       - name: Verify France recovery candidates
         if: matrix.version == 'SLES-53623'

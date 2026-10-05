@@ -53,8 +53,8 @@ objects and extraction outputs contain original bytes and stay in ignored direct
 The Build workflow has six additional independent platform jobs. Each checks its
 original executable hash, prepares available target objects, runs pinned objdiff
 3.7.1, and uploads `<version>_baseline` with status and coverage metadata. All six releases also upload `<version>_functions` with an actual objdiff
-report. PS2 includes compiled shared-source comparisons; Xbox currently contains
-three independently reviewed target functions. These artifacts are available on staging.
+report. All six include compiled shared-source comparisons against independently
+identified target functions; measured coverage remains partial. These artifacts are available on staging.
 
 They are deliberately **not** named `<version>_report` yet. That standard name is
 reserved for reports ready for decomp.dev ingestion. A partial inventory must not
@@ -63,10 +63,10 @@ GameCube's three standard reports and main-only Pages deployment are unchanged.
 
 | PS2 baseline | Functions | Measured function bytes | Source matches |
 | --- | ---: | ---: | ---: |
-| USA | 5,391 | 2,107,460 | 12 functions / 1,276 bytes |
-| Europe/Australia | 5,392 | 2,108,700 | 12 functions / 1,276 bytes |
-| Germany | 5,394 | 2,105,512 | 12 functions / 1,276 bytes |
-| France (reviewed bounds) | 8 | 840 | 5 functions / 276 bytes |
+| USA | 5,391 | 2,107,460 | 17 functions / 1,616 bytes |
+| Europe/Australia | 5,392 | 2,108,700 | 17 functions / 1,616 bytes |
+| Germany | 5,394 | 2,105,512 | 17 functions / 1,616 bytes |
+| France (reviewed bounds) | 16 | 2,208 | 12 functions / 1,276 bytes |
 
 The `address-anchors.json` registries also recover over 2,500 named data addresses
 and 628 function declarations in each debug-bearing version. Addresses do not
@@ -91,8 +91,8 @@ These counts come from explicit retail DWARF1 function bounds, with overlap and
 load-range validation. Targets retain the exact original instructions. The `xBase` call relocations are restored and verified by inverse reconstruction;
 other target objects are not relocation-restored link inputs. Code outside those function ranges, remaining data,
 and padding remain unclassified; the whole mixed load segment is not counted as
-code. France is stripped; eight individually reviewed function extents establish its
-small initial baseline. Its 276/840 matched bytes describe only these recovered
+code. France is stripped; sixteen individually reviewed function extents establish its
+small initial baseline. Its 1,276/2,208 matched bytes describe only these recovered
 functions, never whole-game progress.
 
 Both Xbox releases have identical payloads in all 13 sections; their 532 differing
@@ -110,10 +110,20 @@ The unchanged shared `src/SB/Core/x/xBase.cpp` compiles with the hash-pinned
 negative control: its Save/Load bodies differ, leaving only three exact functions.
 This establishes a working profile for this TU, not the compiler for every SDK.
 
-The same profile compiles the full shared `xordarray.cpp` for USA, Europe, and
-Germany. Seven of eight functions match (1,000 of 1,368 code bytes). PS2-specific
+The same profile compiles the full shared `xordarray.cpp` for all four releases. Seven of eight functions match (1,000 of 1,368 code bytes). PS2-specific
 MAX expressions and an indexed search loop preserve GameCube's existing build.
 `XOrdSort` remains nonmatching. Its source comparison stays in the report.
+
+`xRMemData.cpp` adds five exact functions (340 bytes) in the three debug-bearing
+releases, using unchanged function bodies. Retail DWARF identifies PS2 `size_t`
+as unsigned int; the corresponding platform typedef and minimal standard header
+fix leave the earlier compiled units byte-identical. The `memset` call target is
+independently identified from its byte-fill semantics and nonzero-value callers;
+its authentication span does not add library-function progress.
+
+```sh
+python tools/verify_ps2_runtime.py
+```
 
 `config/platforms/ps2-toolchain.json` records archive/binary hashes, flags, and
 explicit symbol/call mappings. Three `R_MIPS_26` call relocations per version are
@@ -142,9 +152,13 @@ France's `symbol-candidates.json` contains 694 unique, aligned full-function byt
 matches (164,824 bytes) against the debug-bearing PS2 releases. 565 have support
 from all three references. These inherited names/ranges need boundary confirmation;
 they are separate from the confirmed symbol registry and excluded from progress.
-Eight function extents have since been reviewed independently and recorded in
+Sixteen function extents have since been reviewed independently and recorded in
 `reviewed-functions.json`; only those enter the France baseline. Serializer entry
-identities used for call relocations are in `reviewed-call-targets.json`.
+and allocator identities used for call relocations are in `reviewed-call-targets.json`.
+France's `reviewed-data-anchors.json` records the `gActiveHeap` address from named
+reference declarations and actual GP-relative accesses. Startup code proves its
+runtime-cleared BSS range; the stripped ELF's load header omits that memory, so
+this evidence does not invent an ELF section.
 CI rechecks reviewed evidence and regenerates candidates using all four authenticated originals:
 
 ```sh
@@ -165,8 +179,26 @@ Three hash functions have been independently reviewed in both Xbox releases:
 `xStrHash(const char*)`, its bounded overload, and `xStrHashCat`, totaling 151
 extent bytes. Their CFG, caller arguments, suffix strings, and signed-byte fold
 support their identities. These bounded functions have explicit i386 COFF symbols
-and sizes; they do not promote the remaining analyzer candidates. Source
-comparison and whole-executable linking remain pending in the committed pipeline.
+and sizes; they do not promote the remaining analyzer candidates. The actual full shared `xString.cpp` compiles with a pinned MSVC 7.1 candidate
+profile under Wine, followed by LTCG linking. Its plain hash function matches
+all 48 bytes in both Xbox releases; the other two functions remain nonmatching.
+The same leaf also matches with MSVC 7.0, so exact retail compiler identity is
+not established. Xbox's signed-byte fold is platform-scoped; GameCube retains
+its existing unsigned-byte behavior.
+
+Source boundaries come from reachable decoded control flow in the linked PE,
+starting at the compiler's MAP symbols. Original target sizes are not used to
+truncate source code. A small host link context retains the functions; its entry,
+CRT support and floating-point marker are excluded from code/data coverage.
+No complete TU or retail executable link is claimed. The private `:xbox` image
+contains the pinned compiler/runtime and Capstone 5.0.7; its Wine prefix is
+isolated on Linux storage.
+
+```sh
+python tools/platform_progress.py report --version XBOX-US --xbox-compilers /xbox-compilers --wine /usr/lib/wine/wine
+```
+
+On Windows, use the same compiler directory without `--wine`.
 
 ```sh
 python tools/platforms/verify_xbox_reviewed.py
@@ -175,7 +207,7 @@ python tools/platforms/verify_xbox_reviewed.py
 ## Next implementation work
 
 - PS2: recover remaining code/data and relocation ownership; expand compilation
-  beyond xBase/xordarray and validate toolchain profiles against additional source objects.
+  beyond xBase/xordarray/xRMemData and validate toolchain profiles against additional source objects.
   The ELF comment identifies the MW MIPS compiler family, but its `2.4.1.01`
   stamp alone does not establish a particular toolchain distribution.
 - PS2 France: recover independent boundaries from its stripped executable.

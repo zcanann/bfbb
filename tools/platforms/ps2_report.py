@@ -204,7 +204,8 @@ def verify_registries(generated_dir: Path, committed_dir: Path) -> None:
 
 
 def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path | None = None,
-                   reviewed_call_targets: Path | None = None) -> dict:
+                   reviewed_call_targets: Path | None = None,
+                   reviewed_data_anchors: Path | None = None) -> dict:
     """Write genuine target objects/config, or pending metadata for stripped ELF.
 
     The returned coverage is partial, even for debug-bearing executables. Call
@@ -288,9 +289,30 @@ def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path 
         function["bytes"] = binary[offset:offset + function["high"] - function["low"]]
         groups[_source_name(function["source"])].append(function)
     from .ps2_source import prepare_functions
+    address_anchors = json.loads((output_dir / 'address-anchors.json').read_text(encoding='utf-8'))['anchors']
+    if reviewed_data_anchors is not None:
+        reviewed_data = json.loads(Path(reviewed_data_anchors).read_text(encoding='utf-8'))
+        if reviewed_data['executable_sha1'] != metadata['sha1']:
+            raise ValueError('Reviewed data anchors identify another executable')
+        for anchor in reviewed_data['anchors']:
+            if (not anchor.get('identity_confirmation') or anchor['size'] <= 0 or
+                    anchor['address'] % 4 or anchor['storage'] != 'runtime_zero_fill'):
+                raise ValueError('Unsupported reviewed data anchor')
+            proof = anchor['runtime_zero_fill']
+            if not proof['lower_bound'] <= anchor['address'] < anchor['address'] + anchor['size'] <= proof['upper_bound']:
+                raise ValueError('Reviewed data anchor exceeds runtime-cleared memory')
+            spans = [s for s in loaded if s['address'] <= proof['address'] and
+                     proof['address'] + proof['size'] <= s['address'] + s['file_size']]
+            if len(spans) != 1:
+                raise ValueError('Runtime clearing proof lacks a file-backed owner')
+            offset = spans[0]['offset'] + proof['address'] - spans[0]['address']
+            if hashlib.sha256(binary[offset:offset + proof['size']]).hexdigest() != proof['sha256']:
+                raise ValueError('Runtime clearing proof bytes differ')
+            # The separate proof command checks startup instructions, named
+            # reference declarations and uses; this does not invent an ELF BSS.
+            address_anchors.append({**anchor, 'kind': 'data_address'})
     restored = prepare_functions(functions, binary, loaded, metadata["sha1"], reviewed_call_targets,
-                                 metadata=metadata, address_anchors=json.loads(
-                                     (output_dir / 'address-anchors.json').read_text(encoding='utf-8'))['anchors'])
+                                 metadata=metadata, address_anchors=address_anchors)
     (output_dir / "relocations.json").write_text(json.dumps({
         "executable_sha1": metadata["sha1"], "relocations": restored,
         "scope": "Validated calls only; complete relocation recovery remains pending",

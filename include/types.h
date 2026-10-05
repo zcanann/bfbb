@@ -3,19 +3,31 @@
 
 #include "macros.h"
 
+#ifdef XBOX
+#include <stddef.h>
+#endif
+
 // Note: only include this header inside BFBB-related headers/source code files.
 // Don't include this in any RenderWare, system, bink, etc. files
 
-#if defined(GAMECUBE) || defined(PS2)
+#if defined(GAMECUBE) || defined(PS2) || defined(XBOX)
 typedef signed char S8;
 typedef signed short S16;
 typedef signed int S32;
+#ifdef _MSC_VER
+typedef signed __int64 S64;
+#else
 typedef signed long long S64;
+#endif
 
 typedef unsigned char U8;
 typedef unsigned short U16;
 typedef unsigned int U32;
+#ifdef _MSC_VER
+typedef unsigned __int64 U64;
+#else
 typedef unsigned long long U64;
+#endif
 
 typedef float F32;
 typedef double F64;
@@ -36,10 +48,9 @@ typedef double F64;
 #endif
 #define FALSE 0
 
-// Stub __declspec out for compilers that cannot parse it. CodeWarrior is the
-// one compiler where it is meaningful -- it carries `weak` and the `section`
-// placements for .init/.ctors/.dtors -- so it must NOT be stubbed there.
-#ifndef __MWERKS__
+// Preserve __declspec for CodeWarrior section/weak declarations and native
+// MSVC declarations; stub it only for compilers that cannot parse it.
+#if !defined(__MWERKS__) && !defined(_MSC_VER)
 #define __declspec(x)
 // #define asm
 #endif
@@ -49,12 +60,24 @@ typedef double F64;
 typedef signed char s8;
 typedef signed short s16;
 typedef signed long s32;
+#ifdef _MSC_VER
+typedef signed __int64 s64;
+#else
 typedef signed long long s64;
+#endif
 typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned long u32;
+#if defined(PS2)
+typedef unsigned int size_t;
+#elif !defined(XBOX)
 typedef unsigned long size_t;
+#endif
+#ifdef _MSC_VER
+typedef unsigned __int64 u64;
+#else
 typedef unsigned long long u64;
+#endif
 
 typedef unsigned short ushort;
 typedef unsigned int uint;

@@ -47,6 +47,54 @@
       "size": 52
     },
     {
+      "name": "XOrdSort",
+      "source": "SB/Core/x/xordarray.cpp",
+      "address": 2044880,
+      "size": 368
+    },
+    {
+      "name": "XOrdLookup",
+      "source": "SB/Core/x/xordarray.cpp",
+      "address": 2045248,
+      "size": 212
+    },
+    {
+      "name": "XOrdRemove",
+      "source": "SB/Core/x/xordarray.cpp",
+      "address": 2045472,
+      "size": 272
+    },
+    {
+      "name": "XOrdInsert",
+      "source": "SB/Core/x/xordarray.cpp",
+      "address": 2045744,
+      "size": 200
+    },
+    {
+      "name": "XOrdAppend",
+      "source": "SB/Core/x/xordarray.cpp",
+      "address": 2045952,
+      "size": 48
+    },
+    {
+      "name": "XOrdDone",
+      "source": "SB/Core/x/xordarray.cpp",
+      "address": 2046000,
+      "size": 72
+    },
+    {
+      "name": "XOrdReset",
+      "source": "SB/Core/x/xordarray.cpp",
+      "address": 2046080,
+      "size": 8
+    },
+    {
+      "name": "XOrdInit",
+      "source": "SB/Core/x/xordarray.cpp",
+      "address": 2046096,
+      "size": 188
+    },
+    {
       "name": "xCurveAssetEvaluate",
       "source": "SB/Core/x/xCurveAsset.cpp",
       "address": 3859376,

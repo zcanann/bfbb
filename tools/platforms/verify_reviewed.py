@@ -5,7 +5,8 @@ Run: python tools/platforms/verify_reviewed.py --orig-dir orig
 
 This read-only proof command checks named DWARF1 extents, explicit relocation
 exceptions, recorded direct calls, frame/return/padding evidence, and unique
-serial-callee correspondences. It does not rerun the entry CFG or replace the
+callee correspondences. Explicit allocator address fields and reviewed GP data
+uses also validate against each original; stripped BSS uses startup evidence. It does not rerun the entry CFG or replace the
 individual semantic/boundary review. It never generates progress or symbols.
 """
 from __future__ import annotations
@@ -178,6 +179,194 @@ def corroboration(entry: dict, target: Original) -> None:
         target.transfer(caller["call_site"], start)
 
 
+def pair_address(original: Original, base: int, pair: dict) -> int:
+    high = original.word(base + pair['high_offset'])
+    low = original.word(base + pair['low_offset'])
+    register = (high >> 16) & 31
+    require(high >> 26 == 15 and (high >> 21) & 31 == 0 and register != 0 and
+            low >> 26 == pair['low_opcode'] and pair['low_opcode'] in (9, 35) and
+            (low >> 21) & 31 == register,
+            'Address pair is not the recorded LUI plus ADDIU/LW dependency')
+    if pair['low_opcode'] == 9:
+        require((low >> 16) & 31 == register, 'Address ADDIU changes its base register')
+    immediate = low & 65535
+    return (((high & 65535) << 16) + immediate - (65536 if immediate & 32768 else 0)) & 0xffffffff
+
+
+def memory_contains(original: Original, address: int, size: int) -> bool:
+    return sum(s['type'] == 1 and s['address'] <= address and
+               address + size <= s['address'] + s['memory_size']
+               for s in original.metadata['segments']) == 1
+
+
+def original_gp(original: Original) -> int:
+    sections = [s for s in original.metadata['sections'] if s['name'] == '.reginfo']
+    require(len(sections) == 1 and sections[0]['size'] == 24, 'Missing unique MIPS .reginfo')
+    return struct.unpack_from('<I', original.data, sections[0]['offset'] + 20)[0]
+
+
+def verify_data_anchors(registry: dict, originals: dict, functions: dict) -> tuple[int, int]:
+    """Verify the single reviewed GP address, including stripped startup BSS evidence."""
+    from platforms.dwarf1 import iter_dies
+    target = originals[TARGET]
+    require(registry['version'] == TARGET and registry['executable_sha1'] == target.sha1 and
+            registry['coverage_complete'] is False and registry['eligible_for_progress'] is False,
+            'Reviewed data registry identity/scope differs')
+    require(len(registry['anchors']) == 1, 'Expected the one explicitly reviewed GP anchor')
+    entry = registry['anchors'][0]
+    require(entry['identity_confirmation'] is True and entry['eligible_for_progress'] is False and
+            entry['size'] == 4 and entry['storage'] == 'runtime_zero_fill', 'Data anchor scope/type differs')
+    runtime = entry['runtime_zero_fill']
+    require(sha256(target.read(runtime['address'], runtime['size'])) == runtime['sha256'],
+            'Startup zero-fill bytes differ')
+    bounds = []
+    for key, value in (('lower_pair', 'lower_bound'), ('upper_pair', 'upper_bound')):
+        hi, lo = runtime[key]
+        decoded = pair_address(target, 0, {'high_offset': hi, 'low_offset': lo, 'low_opcode': 9})
+        require(decoded == runtime[value], 'Startup zero-fill bound differs')
+        bounds.append(decoded)
+    # R5900 SQ zero,0(v0); SLTU at,v0,v1; BNE at,zero,store; ADDIU v0,v0,16.
+    require(target.word(runtime['zero_store']) == 0x7c400000 and
+            target.word(runtime['comparison']) == 0x0043082b and
+            target.word(runtime['stride_instruction']) == 0x24420010,
+            'Startup zero-fill store/comparison/stride differs')
+    branch = target.word(runtime['loop_branch'])
+    immediate = branch & 65535
+    require(branch & 0xffff0000 == 0x14200000 and runtime['loop_branch'] + 4 +
+            4 * (immediate - (65536 if immediate & 32768 else 0)) == runtime['zero_store'] and
+            runtime['stride_instruction'] == runtime['loop_branch'] + 4,
+            'Startup zero-fill loop branch differs')
+    require((target.word(runtime['lower_pair'][0]) >> 16) & 31 == 2 and
+            (target.word(runtime['upper_pair'][0]) >> 16) & 31 == 3 and
+            bounds[0] <= entry['address'] and entry['address'] + entry['size'] <= bounds[1],
+            'Reviewed data is outside the startup zero-fill interval')
+    setup = runtime['gp_initialization']
+    require((target.word(setup['high_address']) >> 16) & 31 == 4 and
+            pair_address(target, 0, {'high_offset': setup['high_address'],
+            'low_offset': setup['low_address'], 'low_opcode': 9}) == original_gp(target) and
+            target.word(setup['move_address']) == 0x0080e025,
+            'Startup GP initialization differs from original .reginfo')
+    require(len(entry['reviewed_uses']) == 1, 'Unexpected number of GP witnesses')
+    use = entry['reviewed_uses'][0]
+    owner = functions.get(use['function_address'])
+    require(owner is not None and owner['name'] == use['function'] and owner['source'] == use['source'] and
+            0 <= use['offset'] <= owner['size'] - 4 and use['relocation_type'] == 'R_MIPS_GPREL16',
+            'GP use lacks independently reviewed function ownership')
+    def check_use(original, pc, gp, address):
+        word = original.word(pc)
+        immediate = word & 65535
+        require(word >> 26 == use['opcode'] == 35 and (word >> 21) & 31 == 28 and
+                original_gp(original) == gp and
+                gp + immediate - (65536 if immediate & 32768 else 0) == address,
+                'Actual LW/GP effective address differs')
+        return word
+    target_word = check_use(target, use['function_address'] + use['offset'], use['gp'], entry['address'])
+    for proof in provenance(entry):
+        reference = originals[proof['version']]
+        require(reference.sha1 == proof['executable_sha1'], 'Data reference identity differs')
+        section = next(s for s in reference.metadata['sections'] if s['name'] == '.debug')
+        debug = reference.data[section['offset']:section['offset'] + section['size']]
+        die = next((d for d in iter_dies(debug) if d[0] == proof['die_offset']), None)
+        require(die is not None, 'Data declaration DIE is absent')
+        _, tag, source, attrs = die
+        require(tag in (7, 12) and _source_name(source) == proof['source'] == use['source'] and
+                attrs.get(3) == proof['name'] == entry['name'] and
+                attrs.get(5) == proof['fundamental_type'] == 9 and
+                attrs.get(2) == b'\x03' + struct.pack('<I', proof['address']),
+                'Data declaration name/type/location differs from actual DWARF')
+        function = reference.by_address.get(proof['function_address'])
+        require(function is not None and function['name'] == proof['function'] == owner['name'] and
+                function['source'] == owner['source'] and proof['use_offset'] == use['offset'] and
+                memory_contains(reference, proof['address'], entry['size']),
+                'Data reference function or mapped-memory extent differs')
+        require(check_use(reference, proof['function_address'] + proof['use_offset'], proof['gp'],
+                          proof['address']) == target_word, 'GP use instruction differs across originals')
+    return tuple(bounds)
+
+
+def verify_allocator(anchor: dict, originals: dict, functions: dict, runtime_bounds: tuple) -> None:
+    """Authenticate complete neighboring functions, relocating only explicit address fields."""
+    target = originals[TARGET]
+    verified_body(anchor, target)
+    group = anchor['corroboration']['allocator_neighborhood']
+    base, size = group['address'], group['size']
+    body = target.read(base, size)
+    require(sha256(body) == group['sha256'], 'Allocator neighborhood hash differs')
+    members = group['members']
+    require(members and members[0]['offset'] == 0 and
+            all(a['offset'] + a['size'] == b['offset'] for a, b in zip(members, members[1:])) and
+            members[-1]['offset'] + members[-1]['size'] == size,
+            'Allocator neighborhood contains unowned bytes')
+    member = next((m for m in members if m['name'] == anchor['name']), None)
+    require(member is not None and base + member['offset'] == anchor['address'] and
+            member['size'] == anchor['size'], 'Allocator anchor membership differs')
+    fields = []
+    for pair in group['address_pairs']:
+        require(pair_address(target, base, pair) == pair['address'] and
+                runtime_bounds[0] <= pair['address'] < runtime_bounds[1],
+                'Allocator data pointer is outside the proven runtime interval')
+        fields += [(pair['high_offset'], 0xffff), (pair['low_offset'], 0xffff)]
+    call = group['direct_call']
+    target.transfer(base + call['offset'], call['target'])
+    callee_body = target.read(call['target'], call['size'])
+    require(sha256(callee_body) == call['sha256'], 'Allocator subsidiary callee hash differs')
+    fields.append((call['offset'], 0x3ffffff))
+    require(len({o for o, _ in fields}) == len(fields) and
+            all(0 <= o <= size - 4 and o % 4 == 0 for o, _ in fields), 'Invalid allocator address fields')
+    def normalize(data):
+        words = list(struct.unpack('<' + 'I' * (len(data) // 4), data))
+        for offset, mask in fields:
+            words[offset // 4] &= ~mask
+        return tuple(words)
+    normalized_body = normalize(body)
+    for proof in provenance(anchor):
+        reference, _ = reference_body(anchor, proof, originals)
+        ref_base = proof['neighborhood_address']
+        require(ref_base + member['offset'] == proof['source_address'], 'Reference allocator membership differs')
+        ref_body = reference.read(ref_base, size)
+        require(sha256(ref_body) == proof['neighborhood_sha256'], 'Reference allocator neighborhood hash differs')
+        for m in members:
+            named = reference.by_address.get(ref_base + m['offset'])
+            require(named is not None and named['name'] == m['name'] and named['source'] == anchor['source'] and
+                    named['high'] - named['low'] == m['size'], 'Reference allocator member lacks named DWARF extent')
+        require(len(proof['address_pair_targets']) == len(group['address_pairs']), 'Reference pair count differs')
+        for pair, address in zip(group['address_pairs'], proof['address_pair_targets']):
+            require(pair_address(reference, ref_base, pair) == address and memory_contains(reference, address, 4),
+                    'Reference allocator address pair or mapped memory differs')
+        reference.transfer(ref_base + call['offset'], proof['direct_call_target'])
+        callee = reference.by_address.get(proof['direct_call_target'])
+        require(callee is not None and callee['name'] == call['name'] and callee['source'] == call['source'] and
+                callee['high'] - callee['low'] == call['size'], 'Allocator subsidiary callee lacks named extent')
+        ref_callee = reference.read(callee['low'], call['size'])
+        require(ref_callee == callee_body and sha256(ref_callee) == proof['direct_call_reference_sha256'],
+                'Allocator subsidiary callee complete body differs')
+        # Recover the exact target bytes from the reference by applying only the
+        # decoded relocation fields. No opcode, register or arithmetic bits change.
+        reconstructed = bytearray(ref_body)
+        values = {}
+        for pair in group['address_pairs']:
+            # Signed low halves require the standard high-half carry adjustment.
+            values[pair['high_offset']] = ((pair['address'] + 0x8000) >> 16) & 65535
+            values[pair['low_offset']] = pair['address'] & 65535
+        values[call['offset']] = (call['target'] >> 2) & 0x3ffffff
+        for offset, mask in fields:
+            a = struct.unpack_from('<I', ref_body, offset)[0]
+            b = struct.unpack_from('<I', body, offset)[0]
+            require(a & ~mask == b & ~mask, 'Allocator relocation changes non-address bits')
+            struct.pack_into('<I', reconstructed, offset, (a & ~mask) | values[offset])
+        require(bytes(reconstructed) == body, 'Explicit allocator relocations do not reproduce the complete body')
+        matches = [f['low'] for f in reference.functions
+                   if normalize(reference.read(f['low'], size)) == normalized_body]
+        require(matches == [ref_base] and proof['matching_named_dwarf_neighborhoods'] == 1,
+                'Allocator neighborhood identity is not unique among named DWARF starts')
+    for use in anchor['reviewed_uses']:
+        owner = functions.get(use['function_address'])
+        require(owner is not None and owner['name'] == use['function'] and
+                use['relocation_type'] == 'R_MIPS_26' and 0 <= use['offset'] <= owner['size'] - 4 and
+                use['call_address'] == owner['address'] + use['offset'], 'Allocator call witness lacks ownership')
+        target.transfer(use['call_address'], anchor['address'])
+
+
 def verify(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     versions = json.loads(manifest.read_text(encoding="utf-8"))["versions"]
     originals = {version: Original(version, versions[version], orig_dir) for version in (TARGET, *REFERENCES)}
@@ -223,9 +412,16 @@ def verify(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
                         callee["source"] == anchor["source"] == change["reference_target_source"],
                         f"{entry['name']}: explicit relocation has no independently named callee")
         corroboration(entry, target)
+    data_path = registry_dir / 'reviewed-data-anchors.json'
+    data_registry = json.loads(data_path.read_text(encoding='utf-8')) if data_path.exists() else None
+    runtime_bounds = verify_data_anchors(data_registry, originals, by_address) if data_registry else None
     for anchor in anchors:
         require(anchor["identity_confirmation"] is True and anchor["eligible_for_progress"] is False,
                 f"{anchor['name']}: identity or progress scope differs")
+        if anchor.get('proof_kind') == 'explicit_allocator_neighborhood':
+            require(runtime_bounds is not None, 'Allocator proof needs reviewed runtime memory bounds')
+            verify_allocator(anchor, originals, by_address, runtime_bounds)
+            continue
         body = verified_body(anchor, target)
         occurrences = 0
         for segment in target.loaded:
@@ -265,7 +461,7 @@ def verify(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
                     f"{anchor['name']}: reviewed call site lacks function ownership")
             target.transfer(use["call_address"], anchor["address"])
     return {"originals": len(originals), "reviewed_functions": len(functions),
-            "reviewed_code_bytes": sum(entry["size"] for entry in functions), "call_anchors": len(anchors)}
+            "reviewed_code_bytes": sum(entry["size"] for entry in functions), "call_anchors": len(anchors), "data_anchors": len(data_registry["anchors"]) if data_registry else 0}
 
 
 def main() -> None:
@@ -277,7 +473,7 @@ def main() -> None:
     try:
         result = verify(args.manifest, args.orig_dir, args.registry_dir)
         print(f"Verified {result['originals']} original hashes, {result['reviewed_functions']} reviewed functions "
-              f"({result['reviewed_code_bytes']} bytes), and {result['call_anchors']} independent call anchors; "
+              f"({result['reviewed_code_bytes']} bytes), and {result['call_anchors']} independent call anchors, {result['data_anchors']} data anchors; "
               "no progress or source-link claim.")
     except (OSError, ValueError, KeyError, TypeError, struct.error) as error:
         parser.exit(1, f"error: {error}\n")

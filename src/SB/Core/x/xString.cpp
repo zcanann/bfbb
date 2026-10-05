@@ -1,5 +1,7 @@
 #include "xString.h"
+#ifndef XBOX
 #include "rwplcore.h"
+#endif
 #include "xMath.h"
 
 #include <types.h>
@@ -7,11 +9,19 @@
 U32 xStrHash(const char* str)
 {
     U32 hash = 0;
+#ifdef XBOX
+    char i;
+#else
     U32 i;
+#endif
 
     while (i = *str, i != NULL)
     {
+#ifdef XBOX
+        hash = (char)(i - (i & i >> 1 & 0x20)) + hash * 0x83;
+#else
         hash = (i - (i & (S32)i >> 1 & 0x20) & 0xff) + hash * 0x83;
+#endif
         str++;
     }
 
@@ -22,13 +32,21 @@ U32 xStrHash(const char* str, size_t size)
 {
     U32 hash = 0;
     U32 i = 0;
+#ifdef XBOX
+    char c;
+#else
     U32 c;
+#endif
 
     while (i < size && (c = *str, c != NULL))
     {
         i++;
         str++;
+#ifdef XBOX
+        hash = (char)(c - (c & c >> 1 & 0x20)) + hash * 0x83;
+#else
         hash = (c - (c & (S32)c >> 1 & 0x20) & 0xff) + hash * 0x83;
+#endif
     }
 
     return hash;
@@ -41,12 +59,20 @@ U32 xStrHashCat(U32 prefix, const char* str)
     // match. It is still a live read of an indeterminate value anywhere the
     // parameter is not already in the accumulator's register.
     U32 hash = prefix;
+#ifdef XBOX
+    char i;
+#else
     U32 i;
+#endif
 
     while (i = *str, i != NULL)
     {
         str++;
+#ifdef XBOX
+        hash = (char)(i - (i & i >> 1 & 0x20)) + hash * 0x83;
+#else
         hash = (i - (i & (S32)i >> 1 & 0x20) & 0xff) + hash * 0x83;
+#endif
     }
 
     return hash;
