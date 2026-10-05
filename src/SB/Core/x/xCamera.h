@@ -68,6 +68,7 @@ extern cameraFXTableEntry sCameraFXTable[3];
 extern F32 gCameraLastFov;
 
 struct xScene;
+struct xEnt;
 
 #include "xCamAsset.h"
 

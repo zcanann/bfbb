@@ -310,12 +310,12 @@
       "identity_kind": "anonymous"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00016c30",
-      "source": null,
+      "name": "xBoxUnion",
+      "canonical_identifier": "xBoxUnion(xBox&,const xBox&,const xBox&)",
+      "source": "SB/Core/x/xMath3.cpp",
       "address": 93232,
       "size": 142,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
       "name": null,
@@ -9950,292 +9950,324 @@
       "identity_kind": "anonymous"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00144530",
-      "source": null,
+      "name": "xurand",
+      "canonical_identifier": "xurand()",
+      "source": "SB/Core/x/xMath.cpp",
       "address": 1328432,
       "size": 46,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00144560",
-      "source": null,
+      "name": "xMathSolveQuadratic",
+      "canonical_identifier": "xMathSolveQuadratic(F32,F32,F32,F32*,F32*)",
+      "source": "SB/Core/x/xMath.cpp",
       "address": 1328480,
       "size": 217,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00144640",
-      "source": null,
+      "name": "xMathSolveCubic",
+      "canonical_identifier": "xMathSolveCubic(F32,F32,F32,F32,F32*,F32*,F32*)",
+      "source": "SB/Core/x/xMath.cpp",
       "address": 1328704,
       "size": 654,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_001448d0",
-      "source": null,
+      "name": "xAngleClamp",
+      "canonical_identifier": "xAngleClamp(F32)",
+      "source": "SB/Core/x/xMath.cpp",
       "address": 1329360,
       "size": 35,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00144900",
-      "source": null,
+      "name": "xDangleClamp",
+      "canonical_identifier": "xDangleClamp(F32)",
+      "source": "SB/Core/x/xMath.cpp",
       "address": 1329408,
       "size": 55,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00144940",
-      "source": null,
+      "name": "xAccelMove_end",
+      "canonical_identifier": "xAccelMove(F32&,F32&,F32,F32,F32,F32)",
+      "source": "SB/Core/x/xMath.cpp",
       "address": 1329472,
       "size": 574,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00144b80",
-      "source": null,
+      "name": "xAccelMoveTime",
+      "canonical_identifier": "xAccelMoveTime(F32,F32,F32,F32)",
+      "source": "SB/Core/x/xMath.cpp",
       "address": 1330048,
       "size": 83,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00144be0",
-      "source": null,
+      "name": "xAccelMove_speed",
+      "canonical_identifier": "xAccelMove(F32&,F32&,F32,F32,F32)",
+      "source": "SB/Core/x/xMath.cpp",
       "address": 1330144,
       "size": 225,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00144cd0",
-      "source": null,
+      "name": "xAccelStop",
+      "canonical_identifier": "xAccelStop(F32&,F32&,F32,F32)",
+      "source": "SB/Core/x/xMath.cpp",
       "address": 1330384,
       "size": 227,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00144dc0",
-      "source": null,
+      "name": "xFuncPiece_Eval",
+      "canonical_identifier": "xFuncPiece_Eval(xFuncPiece*,F32,xFuncPiece**)",
+      "source": "SB/Core/x/xMath.cpp",
       "address": 1330624,
       "size": 154,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00144e60",
-      "source": null,
+      "name": "xFuncPiece_ShiftPiece",
+      "canonical_identifier": "xFuncPiece_ShiftPiece(xFuncPiece*,xFuncPiece*,F32)",
+      "source": "SB/Core/x/xMath.cpp",
       "address": 1330784,
       "size": 241,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00144f60",
-      "source": null,
+      "name": "xBoxFromCircle",
+      "canonical_identifier": "xBoxFromCircle(xBox&,const xVec3&,const xVec3&,F32)",
+      "source": "SB/Core/x/xMath3.cpp",
       "address": 1331040,
       "size": 224,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00145040",
-      "source": null,
+      "name": "xMath3Init",
+      "canonical_identifier": "xMath3Init()",
+      "source": "SB/Core/x/xMath3.cpp",
       "address": 1331264,
       "size": 121,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_001450c0",
-      "source": null,
+      "name": "xLine3VecDist2",
+      "canonical_identifier": "xLine3VecDist2(const xVec3*,const xVec3*,const xVec3*,xIsect*)",
+      "source": "SB/Core/x/xMath3.cpp",
       "address": 1331392,
       "size": 264,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_001451d0",
-      "source": null,
+      "name": "xPointInBox",
+      "canonical_identifier": "xPointInBox(const xBox*,const xVec3*)",
+      "source": "SB/Core/x/xMath3.cpp",
       "address": 1331664,
       "size": 84,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00145230",
-      "source": null,
+      "name": "xBoxInitBoundOBB",
+      "canonical_identifier": "xBoxInitBoundOBB(xBox*,const xBox*,const xMat4x3*)",
+      "source": "SB/Core/x/xMath3.cpp",
       "address": 1331760,
       "size": 263,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00145340",
-      "source": null,
+      "name": "xBoxInitBoundCapsule",
+      "canonical_identifier": "xBoxInitBoundCapsule(xBox*,const xCapsule*)",
+      "source": "SB/Core/x/xMath3.cpp",
       "address": 1332032,
       "size": 143,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_001453d0",
-      "source": null,
+      "name": "xBoxFromCone",
+      "canonical_identifier": "xBoxFromCone(xBox&,const xVec3&,const xVec3&,F32,F32,F32)",
+      "source": "SB/Core/x/xMath3.cpp",
       "address": 1332176,
       "size": 223,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_001454e0",
-      "source": null,
+      "name": "xMat3x3Normalize",
+      "canonical_identifier": "xMat3x3Normalize(xMat3x3*,const xMat3x3*)",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 1332400,
+      "size": 38,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xMat3x3GetEuler",
+      "canonical_identifier": "xMat3x3GetEuler(const xMat3x3*,xVec3*)",
+      "source": "SB/Core/x/xMath3.cpp",
       "address": 1332448,
       "size": 338,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00145640",
-      "source": null,
+      "name": "xMat3x3LookVec",
+      "canonical_identifier": "xMat3x3LookVec(xMat3x3*,const xVec3*)",
+      "source": "SB/Core/x/xMath3.cpp",
       "address": 1332800,
       "size": 386,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_001457f0",
-      "source": null,
+      "name": "xMat3x3Euler",
+      "canonical_identifier": "xMat3x3Euler(xMat3x3*,const xVec3*)",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 1333200,
+      "size": 24,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xMat3x3Euler",
+      "canonical_identifier": "xMat3x3Euler(xMat3x3*,F32,F32,F32)",
+      "source": "SB/Core/x/xMath3.cpp",
       "address": 1333232,
       "size": 152,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00145890",
-      "source": null,
+      "name": "xMat3x3RotC",
+      "canonical_identifier": "xMat3x3RotC(xMat3x3*,F32,F32,F32,F32)",
+      "source": "SB/Core/x/xMath3.cpp",
       "address": 1333392,
       "size": 226,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00145980",
-      "source": null,
+      "name": "xMat3x3RotX",
+      "canonical_identifier": "xMat3x3RotX(xMat3x3*,F32)",
+      "source": "SB/Core/x/xMath3.cpp",
       "address": 1333632,
       "size": 52,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_001459c0",
-      "source": null,
+      "name": "xMat3x3RotY",
+      "canonical_identifier": "xMat3x3RotY(xMat3x3*,F32)",
+      "source": "SB/Core/x/xMath3.cpp",
       "address": 1333696,
       "size": 54,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00145a00",
-      "source": null,
+      "name": "xMat3x3RotZ",
+      "canonical_identifier": "xMat3x3RotZ(xMat3x3*,F32)",
+      "source": "SB/Core/x/xMath3.cpp",
       "address": 1333760,
       "size": 52,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00145b50",
-      "source": null,
+      "name": "xMat3x3RMulRotY",
+      "canonical_identifier": "xMat3x3RMulRotY(xMat3x3*,const xMat3x3*,F32)",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 1333824,
+      "size": 263,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xMat3x3Transpose",
+      "canonical_identifier": "xMat3x3Transpose(xMat3x3*,const xMat3x3*)",
+      "source": "SB/Core/x/xMath3.cpp",
       "address": 1334096,
       "size": 101,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00145bc0",
-      "source": null,
+      "name": "xMat3x3Mul",
+      "canonical_identifier": "xMat3x3Mul(xMat3x3*,const xMat3x3*,const xMat3x3*)",
+      "source": "SB/Core/x/xMath3.cpp",
       "address": 1334208,
       "size": 283,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00145ce0",
-      "source": null,
+      "name": "xMat3x3Tolocal",
+      "canonical_identifier": "xMat3x3Tolocal(xVec3*,const xMat3x3*,const xVec3*)",
+      "source": "SB/Core/x/xMath3.cpp",
       "address": 1334496,
       "size": 191,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00145e40",
-      "source": null,
+      "name": "xMat4x3Rot",
+      "canonical_identifier": "xMat4x3Rot(xMat4x3*,const xVec3*,F32,const xVec3*)",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 1334688,
+      "size": 146,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xMat4x3Mul",
+      "canonical_identifier": "xMat4x3Mul(xMat4x3*,const xMat4x3*,const xMat4x3*)",
+      "source": "SB/Core/x/xMath3.cpp",
       "address": 1334848,
       "size": 63,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00145e80",
-      "source": null,
+      "name": "xQuatFromMat",
+      "canonical_identifier": "xQuatFromMat(xQuat*,const xMat3x3*)",
+      "source": "SB/Core/x/xMath3.cpp",
       "address": 1334912,
       "size": 326,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00145fd0",
-      "source": null,
+      "name": "xQuatFromAxisAngle",
+      "canonical_identifier": "xQuatFromAxisAngle(xQuat*,const xVec3*,F32)",
+      "source": "SB/Core/x/xMath3.cpp",
       "address": 1335248,
       "size": 79,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00146020",
-      "source": null,
+      "name": "xQuatToMat",
+      "canonical_identifier": "xQuatToMat(const xQuat*,xMat3x3*)",
+      "source": "SB/Core/x/xMath3.cpp",
       "address": 1335328,
       "size": 205,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_001460f0",
-      "source": null,
+      "name": "xQuatNormalize",
+      "canonical_identifier": "xQuatNormalize(xQuat*,const xQuat*)",
+      "source": "SB/Core/x/xMath3.cpp",
       "address": 1335536,
       "size": 187,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_001461b0",
-      "source": null,
+      "name": "xQuatSlerp",
+      "canonical_identifier": "xQuatSlerp(xQuat*,const xQuat*,const xQuat*,F32)",
+      "source": "SB/Core/x/xMath3.cpp",
       "address": 1335728,
       "size": 309,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_001462f0",
-      "source": null,
+      "name": "xQuatMul",
+      "canonical_identifier": "xQuatMul(xQuat*,const xQuat*,const xQuat*)",
+      "source": "SB/Core/x/xMath3.cpp",
       "address": 1336048,
       "size": 135,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00146380",
-      "source": null,
+      "name": "xQuatDiff",
+      "canonical_identifier": "xQuatDiff(xQuat*,const xQuat*,const xQuat*)",
+      "source": "SB/Core/x/xMath3.cpp",
       "address": 1336192,
       "size": 90,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
       "name": null,
@@ -10894,60 +10926,68 @@
       "identity_kind": "anonymous"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0014fbc0",
-      "source": null,
+      "name": "xQuickCullInit",
+      "canonical_identifier": "xQuickCullInit(xQCControl*,F32,F32,F32,F32,F32,F32)",
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "address": 1374880,
+      "size": 275,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "xQuickCullIsects",
+      "canonical_identifier": "xQuickCullIsects(const xQCData*,const xQCData*)",
+      "source": "SB/Core/x/xQuickCull.cpp",
       "address": 1375168,
       "size": 55,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0014fc00",
-      "source": null,
+      "name": "xQuickCullForBound",
+      "canonical_identifier": "xQuickCullForBound(xQCControl*,xQCData*,const xBound*)",
+      "source": "SB/Core/x/xQuickCull.cpp",
       "address": 1375232,
       "size": 125,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0014fc80",
-      "source": null,
+      "name": "xQuickCullCellForVec",
+      "canonical_identifier": "xQuickCullCellForVec(xQCControl*,xQCData*,const xVec3*)",
+      "source": "SB/Core/x/xQuickCull.cpp",
       "address": 1375360,
       "size": 167,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0014fd30",
-      "source": null,
+      "name": "xQuickCullCellMerge",
+      "canonical_identifier": "xQuickCullCellMerge(xQCData*,const xQCData*,const xQCData*)",
+      "source": "SB/Core/x/xQuickCull.cpp",
       "address": 1375536,
       "size": 99,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0014fda0",
-      "source": null,
+      "name": "xQuickCullForRay",
+      "canonical_identifier": "xQuickCullForRay(xQCControl*,xQCData*,const xRay3*)",
+      "source": "SB/Core/x/xQuickCull.cpp",
       "address": 1375648,
       "size": 240,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0014fe90",
-      "source": null,
+      "name": "xQuickCullForSphere",
+      "canonical_identifier": "xQuickCullForSphere(xQCControl*,xQCData*,const xSphere*)",
+      "source": "SB/Core/x/xQuickCull.cpp",
       "address": 1375888,
       "size": 138,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0014ff20",
-      "source": null,
+      "name": "xQuickCullForOBB",
+      "canonical_identifier": "xQuickCullForOBB(xQCControl*,xQCData*,const xBox*,const xMat4x3*)",
+      "source": "SB/Core/x/xQuickCull.cpp",
       "address": 1376032,
       "size": 68,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
       "name": null,
@@ -11590,12 +11630,12 @@
       "identity_kind": "anonymous"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0015cf00",
-      "source": null,
+      "name": "xVec3Normalize",
+      "canonical_identifier": "xVec3Normalize(xVec3*,const xVec3*)",
+      "source": "SB/Core/x/xVec3.cpp",
       "address": 1429248,
       "size": 163,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
       "name": null,
@@ -12694,76 +12734,92 @@
       "identity_kind": "anonymous"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0016b3b0",
-      "source": null,
+      "name": "iSphereIsectVec",
+      "canonical_identifier": "iSphereIsectVec(const xSphere*,const xVec3*,xIsect*)",
+      "source": "SB/Core/xbox/iMath3.cpp",
+      "address": 1487712,
+      "size": 73,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "iSphereIsectRay",
+      "canonical_identifier": "iSphereIsectRay(const xSphere*,const xRay3*,xIsect*)",
+      "source": "SB/Core/xbox/iMath3.cpp",
       "address": 1487792,
       "size": 332,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0016b500",
-      "source": null,
+      "name": "iSphereBoundVec",
+      "canonical_identifier": "iSphereBoundVec(xSphere*,const xSphere*,const xVec3*)",
+      "source": "SB/Core/xbox/iMath3.cpp",
       "address": 1488128,
       "size": 271,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0016b670",
-      "source": null,
+      "name": "iCylinderIsectVec",
+      "canonical_identifier": "iCylinderIsectVec(const xCylinder*,const xVec3*,xIsect*)",
+      "source": "SB/Core/xbox/iMath3.cpp",
+      "address": 1488400,
+      "size": 84,
+      "identity_kind": "reviewed"
+    },
+    {
+      "name": "iBoxVecDist",
+      "canonical_identifier": "iBoxVecDist(const xBox*,const xVec3*,xIsect*)",
+      "source": "SB/Core/xbox/iMath3.cpp",
       "address": 1488496,
       "size": 1313,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0016bba0",
-      "source": null,
+      "name": "iBoxIsectVec",
+      "canonical_identifier": "iBoxIsectVec(const xBox*,const xVec3*,xIsect*)",
+      "source": "SB/Core/xbox/iMath3.cpp",
       "address": 1489824,
       "size": 91,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0016bc00",
-      "source": null,
+      "name": "ClipPlane",
+      "canonical_identifier": "ClipPlane(F32,F32,F32*,F32*)",
+      "source": "SB/Core/xbox/iMath3.cpp",
       "address": 1489920,
       "size": 150,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0016bca0",
-      "source": null,
+      "name": "ClipBox",
+      "canonical_identifier": "ClipBox(const xVec3*,const xVec3*,const xVec3*,F32*,F32*)",
+      "source": "SB/Core/xbox/iMath3.cpp",
       "address": 1490080,
       "size": 201,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0016bd70",
-      "source": null,
+      "name": "iBoxIsectRay",
+      "canonical_identifier": "iBoxIsectRay(const xBox*,const xRay3*,xIsect*)",
+      "source": "SB/Core/xbox/iMath3.cpp",
       "address": 1490288,
       "size": 330,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0016bec0",
-      "source": null,
+      "name": "iBoxIsectSphere",
+      "canonical_identifier": "iBoxIsectSphere(const xBox*,const xSphere*,xIsect*)",
+      "source": "SB/Core/xbox/iMath3.cpp",
       "address": 1490624,
       "size": 678,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_0016c170",
-      "source": null,
+      "name": "iBoxBoundVec",
+      "canonical_identifier": "iBoxBoundVec(xBox*,const xBox*,const xVec3*)",
+      "source": "SB/Core/xbox/iMath3.cpp",
       "address": 1491312,
       "size": 145,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
       "name": null,
@@ -20340,6 +20396,14 @@
       "address": 1863775,
       "size": 14,
       "identity_kind": "anonymous"
+    },
+    {
+      "name": "_CIfmod",
+      "canonical_identifier": "_CIfmod",
+      "source": "Runtime/MSVC/87fmod.obj",
+      "address": 1863818,
+      "size": 10,
+      "identity_kind": "reviewed"
     },
     {
       "name": null,

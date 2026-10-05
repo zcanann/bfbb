@@ -1,4 +1,13 @@
+#if defined(PS2)
+#include "xGlobals.h"
+#include "xEntTypes.h"
+#include "xModelTypes.h"
+#include "xMemMgr.h"
+#include <rwplcore.h>
+#include <string.h>
+#else
 #include "zGlobals.h"
+#endif
 #include "xUpdateCull.h"
 #include "xGroup.h"
 

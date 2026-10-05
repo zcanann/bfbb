@@ -1,3 +1,6 @@
+#if defined(XBOX)
+#include <iMath.h>
+#else
 #include "iMath.h"
 
 #if defined(XBOX)
@@ -40,4 +43,6 @@ float std::tanf(float x)
 {
     return (float)tan((double)x);
 }
+#endif
+
 #endif

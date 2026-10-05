@@ -1,6 +1,11 @@
 #include "xClumpColl.h"
 
 #include <types.h>
+#if defined(PS2)
+#include <rwplcore.h>
+#include <rwsdk/rtintsec.h>
+#include <math.h>
+#endif
 
 U8 xClumpColl_FilterFlags = 0x04;
 
@@ -698,7 +703,15 @@ static S32 LeafNodeLinePolyIntersect(xClumpCollBSPTriangle* triangles, void* dat
                 RwV3dSubMacro(&vTmp2, collisionTri.vertices[2], collisionTri.vertices[0]);
                 RwV3dCrossProductMacro(&collisionTri.normal, &vTmp, &vTmp2);
                 lengthSq = RwV3dDotProductMacro(&collisionTri.normal, &collisionTri.normal);
+#if defined(PS2)
+                recipLength = sqrtf(lengthSq);
+                if (recipLength > 0.0f)
+                {
+                    recipLength = 1.0f / recipLength;
+                }
+#else
                 recipLength = _rwInvSqrt(lengthSq);
+#endif
                 RwV3dScaleMacro(&collisionTri.normal, &collisionTri.normal, recipLength);
                 if (!cbParam->u.worldCB(cbParam->intersection, NULL, &collisionTri, distance,
                                         cbParam->data))
@@ -786,7 +799,15 @@ static S32 LeafNodeBoxPolyIntersect(xClumpCollBSPTriangle* triangles, void* data
                 RwV3dCrossProductMacro(&collisionTri.normal, &vTmp, &vTmp2);
 
                 F32 lengthSq = RwV3dDotProductMacro(&collisionTri.normal, &collisionTri.normal);
+#if defined(PS2)
+                F32 recipLength = sqrtf(lengthSq);
+                if (recipLength > 0.0f)
+                {
+                    recipLength = 1.0f / recipLength;
+                }
+#else
                 F32 recipLength = _rwInvSqrt(lengthSq);
+#endif
 
                 RwV3dScaleMacro(&collisionTri.normal, &collisionTri.normal, recipLength);
 

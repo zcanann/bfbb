@@ -169,6 +169,230 @@
       "source": "SB/Core/x/xParCmd.cpp",
       "evidence": "Actual read-only float bytes at decoded particle callback load operands.",
       "value_hex": "acc52737"
+    },
+    {
+      "name": "g_I3",
+      "address": 3218936,
+      "size": 64,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath3.cpp",
+      "evidence": "Twelve original component stores establish a 64-byte xMat4x3 identity at 16-byte row spacing. Axis-rotation zero branches copy its first48bytes."
+    },
+    {
+      "name": "xQuatFromMat::nxt",
+      "address": 2650300,
+      "size": 12,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath3.cpp",
+      "evidence": "Two original indexed loads in the largest-diagonal quaternion branch use this actual {1,2,0} cycle table.",
+      "initial_value_hex": "010000000200000000000000"
+    },
+    {
+      "name": "float:3fc90fdb",
+      "address": 2545560,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath3.cpp",
+      "evidence": "Actual decoded component loads and independent scalar bytes.",
+      "value_hex": "db0fc93f"
+    },
+    {
+      "name": "float:bfc90fdb",
+      "address": 2545556,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath3.cpp",
+      "evidence": "Actual decoded component loads and independent scalar bytes.",
+      "value_hex": "db0fc9bf"
+    },
+    {
+      "name": "float:40c90fdb",
+      "address": 2545088,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath3.cpp",
+      "evidence": "Actual decoded component loads and independent scalar bytes.",
+      "value_hex": "db0fc940"
+    },
+    {
+      "name": "float:3f7fbe77",
+      "address": 2545896,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath3.cpp",
+      "evidence": "Actual decoded component loads and independent scalar bytes.",
+      "value_hex": "77be7f3f"
+    },
+    {
+      "name": "float:bf000000",
+      "address": 2545328,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/xbox/iMath3.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "000000bf"
+    },
+    {
+      "name": "float:42fe0000",
+      "address": 2544892,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "0000fe42"
+    },
+    {
+      "name": "float:3d4ccccd",
+      "address": 2545324,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xQuickCull.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "cdcc4c3d"
+    },
+    {
+      "name": "float:40800000",
+      "address": 2545096,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "00008040"
+    },
+    {
+      "name": "float:41100000",
+      "address": 2545460,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "00001041"
+    },
+    {
+      "name": "float:41d80000",
+      "address": 2545868,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "0000d841"
+    },
+    {
+      "name": "float:3d17b426",
+      "address": 2545864,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "26b4173d"
+    },
+    {
+      "name": "float:3e800000",
+      "address": 2545236,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "0000803e"
+    },
+    {
+      "name": "float:358637bd",
+      "address": 2545552,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "bd378635"
+    },
+    {
+      "name": "float:3fd5555560000000",
+      "address": 2545856,
+      "size": 8,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "000000605555d53f"
+    },
+    {
+      "name": "float:beaaaaab",
+      "address": 2545848,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "abaaaabe"
+    },
+    {
+      "name": "float:3fddb3d7",
+      "address": 2545844,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "d7b3dd3f"
+    },
+    {
+      "name": "float:401921fb60000000",
+      "address": 2545568,
+      "size": 8,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "00000060fb211940"
+    },
+    {
+      "name": "float:40490fdb",
+      "address": 2545092,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "db0f4940"
+    },
+    {
+      "name": "float:c0490fdb",
+      "address": 2545084,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "db0f49c0"
+    },
+    {
+      "name": "float:3a83126f",
+      "address": 2544856,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "6f12833a"
+    },
+    {
+      "name": "float:7e967699",
+      "address": 2545208,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "9976967e"
+    },
+    {
+      "name": "float:bf800000",
+      "address": 2544920,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "000080bf"
+    },
+    {
+      "name": "float:b727c5ac",
+      "address": 2545080,
+      "size": 4,
+      "identity_confirmation": true,
+      "source": "SB/Core/x/xMath.cpp",
+      "evidence": "Actual decoded geometry scalar load and independently verified literal bytes.",
+      "value_hex": "acc527b7"
     }
   ],
   "pool_loop": {
@@ -797,6 +1021,660 @@
         ],
         [
           334,
+          "ret",
+          ""
+        ]
+      ]
+    },
+    {
+      "address": 1331264,
+      "size": 121,
+      "sha256": "d7e1b8a4ed24381e21a26fe1870e8e34831d0a88d37ac035ab4fce314094dea0",
+      "instructions": [
+        [
+          0,
+          "mov",
+          "dword ptr [0x311df8], 0x3f800000"
+        ],
+        [
+          10,
+          "mov",
+          "dword ptr [0x311dfc], 0"
+        ],
+        [
+          20,
+          "mov",
+          "dword ptr [0x311e00], 0"
+        ],
+        [
+          30,
+          "mov",
+          "dword ptr [0x311e08], 0"
+        ],
+        [
+          40,
+          "mov",
+          "dword ptr [0x311e0c], 0x3f800000"
+        ],
+        [
+          50,
+          "mov",
+          "dword ptr [0x311e10], 0"
+        ],
+        [
+          60,
+          "mov",
+          "dword ptr [0x311e18], 0"
+        ],
+        [
+          70,
+          "mov",
+          "dword ptr [0x311e1c], 0"
+        ],
+        [
+          80,
+          "mov",
+          "dword ptr [0x311e20], 0x3f800000"
+        ],
+        [
+          90,
+          "mov",
+          "dword ptr [0x311e28], 0"
+        ],
+        [
+          100,
+          "mov",
+          "dword ptr [0x311e2c], 0"
+        ],
+        [
+          110,
+          "mov",
+          "dword ptr [0x311e30], 0"
+        ],
+        [
+          120,
+          "ret",
+          ""
+        ]
+      ]
+    },
+    {
+      "address": 1334912,
+      "size": 326,
+      "sha256": "40911ace6566d759e6b8dd1dbf03dacbc72d027cee11659e09bd8f290254b2c4",
+      "instructions": [
+        [
+          0,
+          "fld",
+          "dword ptr [ecx + 0x14]"
+        ],
+        [
+          3,
+          "fadd",
+          "dword ptr [ecx]"
+        ],
+        [
+          5,
+          "fadd",
+          "dword ptr [ecx + 0x28]"
+        ],
+        [
+          8,
+          "fcom",
+          "dword ptr [0x26d4dc]"
+        ],
+        [
+          14,
+          "fnstsw",
+          "ax"
+        ],
+        [
+          16,
+          "test",
+          "ah, 0x41"
+        ],
+        [
+          19,
+          "jne",
+          "0x145ed1"
+        ],
+        [
+          21,
+          "fadd",
+          "dword ptr [0x26d4e0]"
+        ],
+        [
+          27,
+          "fsqrt",
+          ""
+        ],
+        [
+          29,
+          "fld",
+          "dword ptr [0x26d4e4]"
+        ],
+        [
+          35,
+          "fmul",
+          "st(1)"
+        ],
+        [
+          37,
+          "fstp",
+          "dword ptr [esi + 0xc]"
+        ],
+        [
+          40,
+          "fdivr",
+          "dword ptr [0x26d4e4]"
+        ],
+        [
+          46,
+          "fld",
+          "dword ptr [ecx + 0x24]"
+        ],
+        [
+          49,
+          "fsub",
+          "dword ptr [ecx + 0x18]"
+        ],
+        [
+          52,
+          "fmul",
+          "st(1)"
+        ],
+        [
+          54,
+          "fstp",
+          "dword ptr [esi]"
+        ],
+        [
+          56,
+          "fld",
+          "dword ptr [ecx + 8]"
+        ],
+        [
+          59,
+          "fsub",
+          "dword ptr [ecx + 0x20]"
+        ],
+        [
+          62,
+          "fmul",
+          "st(1)"
+        ],
+        [
+          64,
+          "fstp",
+          "dword ptr [esi + 4]"
+        ],
+        [
+          67,
+          "fld",
+          "dword ptr [ecx + 0x10]"
+        ],
+        [
+          70,
+          "fsub",
+          "dword ptr [ecx + 4]"
+        ],
+        [
+          73,
+          "fmul",
+          "st(1)"
+        ],
+        [
+          75,
+          "fstp",
+          "dword ptr [esi + 8]"
+        ],
+        [
+          78,
+          "fstp",
+          "st(0)"
+        ],
+        [
+          80,
+          "ret",
+          ""
+        ],
+        [
+          81,
+          "fstp",
+          "st(0)"
+        ],
+        [
+          83,
+          "xor",
+          "edx, edx"
+        ],
+        [
+          85,
+          "fld",
+          "dword ptr [ecx + 0x14]"
+        ],
+        [
+          88,
+          "fcomp",
+          "dword ptr [ecx]"
+        ],
+        [
+          90,
+          "fnstsw",
+          "ax"
+        ],
+        [
+          92,
+          "test",
+          "ah, 0x41"
+        ],
+        [
+          95,
+          "jne",
+          "0x145ee6"
+        ],
+        [
+          97,
+          "mov",
+          "edx, 1"
+        ],
+        [
+          102,
+          "fld",
+          "dword ptr [ecx + 0x28]"
+        ],
+        [
+          105,
+          "lea",
+          "eax, [edx + edx*4]"
+        ],
+        [
+          108,
+          "fcomp",
+          "dword ptr [ecx + eax*4]"
+        ],
+        [
+          111,
+          "fnstsw",
+          "ax"
+        ],
+        [
+          113,
+          "test",
+          "ah, 0x41"
+        ],
+        [
+          116,
+          "jne",
+          "0x145efb"
+        ],
+        [
+          118,
+          "mov",
+          "edx, 2"
+        ],
+        [
+          123,
+          "push",
+          "ebx"
+        ],
+        [
+          124,
+          "push",
+          "ebp"
+        ],
+        [
+          125,
+          "push",
+          "edi"
+        ],
+        [
+          126,
+          "mov",
+          "edi, dword ptr [edx*4 + 0x2870bc]"
+        ],
+        [
+          133,
+          "mov",
+          "ebx, dword ptr [edi*4 + 0x2870bc]"
+        ],
+        [
+          140,
+          "lea",
+          "eax, [edx + edx*4]"
+        ],
+        [
+          143,
+          "fld",
+          "dword ptr [ecx + eax*4]"
+        ],
+        [
+          146,
+          "lea",
+          "ebp, [edi + edi*4]"
+        ],
+        [
+          149,
+          "fsub",
+          "dword ptr [ecx + ebp*4]"
+        ],
+        [
+          152,
+          "lea",
+          "eax, [ebx + ebx*4]"
+        ],
+        [
+          155,
+          "fsub",
+          "dword ptr [ecx + eax*4]"
+        ],
+        [
+          158,
+          "fadd",
+          "dword ptr [0x26d4e0]"
+        ],
+        [
+          164,
+          "fsqrt",
+          ""
+        ],
+        [
+          166,
+          "fld",
+          "st(0)"
+        ],
+        [
+          168,
+          "fabs",
+          ""
+        ],
+        [
+          170,
+          "fcomp",
+          "dword ptr [0x26d588]"
+        ],
+        [
+          176,
+          "fnstsw",
+          "ax"
+        ],
+        [
+          178,
+          "test",
+          "ah, 5"
+        ],
+        [
+          181,
+          "jp",
+          "0x145f4e"
+        ],
+        [
+          183,
+          "pop",
+          "edi"
+        ],
+        [
+          184,
+          "fstp",
+          "st(0)"
+        ],
+        [
+          186,
+          "xor",
+          "eax, eax"
+        ],
+        [
+          188,
+          "pop",
+          "ebp"
+        ],
+        [
+          189,
+          "mov",
+          "dword ptr [esi + 0xc], 0x3f800000"
+        ],
+        [
+          196,
+          "mov",
+          "dword ptr [esi], eax"
+        ],
+        [
+          198,
+          "mov",
+          "dword ptr [esi + 4], eax"
+        ],
+        [
+          201,
+          "mov",
+          "dword ptr [esi + 8], eax"
+        ],
+        [
+          204,
+          "pop",
+          "ebx"
+        ],
+        [
+          205,
+          "ret",
+          ""
+        ],
+        [
+          206,
+          "fld",
+          "dword ptr [0x26d4e4]"
+        ],
+        [
+          212,
+          "lea",
+          "eax, [edi + ebx*4]"
+        ],
+        [
+          215,
+          "fmul",
+          "st(1)"
+        ],
+        [
+          217,
+          "lea",
+          "ebp, [ebx + edi*4]"
+        ],
+        [
+          220,
+          "fstp",
+          "dword ptr [esi + edx*4]"
+        ],
+        [
+          223,
+          "fdivr",
+          "dword ptr [0x26d4e4]"
+        ],
+        [
+          229,
+          "fld",
+          "dword ptr [ecx + eax*4]"
+        ],
+        [
+          232,
+          "fsub",
+          "dword ptr [ecx + ebp*4]"
+        ],
+        [
+          235,
+          "lea",
+          "eax, [edx + edi*4]"
+        ],
+        [
+          238,
+          "lea",
+          "ebp, [edi + edx*4]"
+        ],
+        [
+          241,
+          "fmul",
+          "st(1)"
+        ],
+        [
+          243,
+          "fstp",
+          "dword ptr [esi + 0xc]"
+        ],
+        [
+          246,
+          "fld",
+          "dword ptr [ecx + eax*4]"
+        ],
+        [
+          249,
+          "lea",
+          "eax, [edx + ebx*4]"
+        ],
+        [
+          252,
+          "fadd",
+          "dword ptr [ecx + ebp*4]"
+        ],
+        [
+          255,
+          "lea",
+          "edx, [ebx + edx*4]"
+        ],
+        [
+          258,
+          "fmul",
+          "st(1)"
+        ],
+        [
+          260,
+          "fstp",
+          "dword ptr [esi + edi*4]"
+        ],
+        [
+          263,
+          "fld",
+          "dword ptr [ecx + eax*4]"
+        ],
+        [
+          266,
+          "fadd",
+          "dword ptr [ecx + edx*4]"
+        ],
+        [
+          269,
+          "fmul",
+          "st(1)"
+        ],
+        [
+          271,
+          "fstp",
+          "dword ptr [esi + ebx*4]"
+        ],
+        [
+          274,
+          "fstp",
+          "st(0)"
+        ],
+        [
+          276,
+          "fld",
+          "dword ptr [esi + 0xc]"
+        ],
+        [
+          279,
+          "fcomp",
+          "dword ptr [0x26d4dc]"
+        ],
+        [
+          285,
+          "fnstsw",
+          "ax"
+        ],
+        [
+          287,
+          "test",
+          "ah, 5"
+        ],
+        [
+          290,
+          "jp",
+          "0x145fc2"
+        ],
+        [
+          292,
+          "fld",
+          "dword ptr [esi + 0xc]"
+        ],
+        [
+          295,
+          "fchs",
+          ""
+        ],
+        [
+          297,
+          "fstp",
+          "dword ptr [esi + 0xc]"
+        ],
+        [
+          300,
+          "fld",
+          "dword ptr [esi]"
+        ],
+        [
+          302,
+          "fchs",
+          ""
+        ],
+        [
+          304,
+          "fstp",
+          "dword ptr [esi]"
+        ],
+        [
+          306,
+          "fld",
+          "dword ptr [esi + 4]"
+        ],
+        [
+          309,
+          "fchs",
+          ""
+        ],
+        [
+          311,
+          "fstp",
+          "dword ptr [esi + 4]"
+        ],
+        [
+          314,
+          "fld",
+          "dword ptr [esi + 8]"
+        ],
+        [
+          317,
+          "fchs",
+          ""
+        ],
+        [
+          319,
+          "fstp",
+          "dword ptr [esi + 8]"
+        ],
+        [
+          322,
+          "pop",
+          "edi"
+        ],
+        [
+          323,
+          "pop",
+          "ebp"
+        ],
+        [
+          324,
+          "pop",
+          "ebx"
+        ],
+        [
+          325,
           "ret",
           ""
         ]

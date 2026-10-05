@@ -123,6 +123,8 @@ def prepare_functions(functions: list[dict], binary: bytes, segments: list[dict]
     for function in functions:
         key = (_source_name(function['source']), function['name'])
         callees.setdefault(key, set()).add(function['low'])
+        # Address-qualified aliases distinguish independently verified overloads.
+        callees.setdefault((key[0], f"{function['name']}@{function['low']:08x}"), set()).add(function['low'])
         if function['low'] in linkages:
             callees.setdefault((key[0], linkages[function['low']]), set()).add(function['low'])
     if reviewed_targets is not None:

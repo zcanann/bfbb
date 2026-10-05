@@ -7,6 +7,7 @@
 
 #include <rwcore.h>
 
+#ifndef PS2
 inline iColor_tag& iColor_tag::operator=(const iColor_tag& rhs)
 {
     this->r = rhs.r;
@@ -15,6 +16,7 @@ inline iColor_tag& iColor_tag::operator=(const iColor_tag& rhs)
     this->a = rhs.a;
     return *this;
 }
+#endif
 
 struct xfont
 {

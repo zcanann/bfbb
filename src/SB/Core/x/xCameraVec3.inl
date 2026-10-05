@@ -5,7 +5,7 @@ inline F32 xVec3Length(const xVec3* v)
     return xsqrt(v->x * v->x + v->y * v->y + v->z * v->z);
 }
 
-#if !defined(XBOX)
+#if !defined(XBOX) && !defined(PS2)
 inline void xVec3Sub(xVec3* o, const xVec3* a, const xVec3* b)
 {
     o->x = a->x - b->x;
@@ -37,7 +37,7 @@ inline F32 xacos(F32 x)
 }
 #endif
 
-#if !defined(INLINE) && !defined(XBOX)
+#if !defined(INLINE) && !defined(XBOX) && !defined(PS2)
 inline float std::acosf(float x)
 {
     return (float)acos((double)x);

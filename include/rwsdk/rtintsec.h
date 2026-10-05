@@ -1,7 +1,11 @@
 #ifndef RTINTSEC_H
 #define RTINTSEC_H
 
+#if defined(PS2)
+#include <rwcore.h>
+#else
 #include <rwsdk/rwcore.h>
+#endif
 
 #ifdef __cplusplus
 extern "C" {

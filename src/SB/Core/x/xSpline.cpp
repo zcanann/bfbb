@@ -4,14 +4,20 @@
 #include <rwplcore.h>
 #include <xMathInlines.h>
 #include <xMemMgr.h>
+#if defined(PS2)
+#include <string.h>
+#else
 #include <mem.h>
+#endif
 #include <xVec3.h>
 
+#if !defined(PS2)
 // MSL's <cmath> is not reachable from here; the target calls floorf__3stdFf.
 namespace std
 {
     float floorf(float x);
 }
+#endif
 
 static F32 sBasisUniformBspline[4][4];
 static F32 sBasisBezier[4][4] = { { -1.0f, 3.0f, -3.0f, 1.0f },
@@ -157,6 +163,7 @@ F32 ArcLength3(xCoef3* coef, F64 ustart, F64 uend)
            3.0;
 }
 
+#if !defined(PS2)
 // We don't have the implementation provided
 double sqrt(double x)
 {
@@ -185,6 +192,8 @@ double sqrt(double x)
         return INFINITY;
     }
 }
+
+#endif
 
 void EvalCoef3(xCoef3* coef, F32 u, U32 deriv, xVec3* o)
 {

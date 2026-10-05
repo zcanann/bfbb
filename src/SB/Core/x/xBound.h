@@ -3,7 +3,7 @@
 
 #include "xQuickCull.h"
 #include "xMath3.h"
-#if defined(PS2)
+#if defined(PS2) || defined(XBOX)
 struct xCollis;
 #else
 #include "xCollide.h"

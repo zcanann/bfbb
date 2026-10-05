@@ -5,7 +5,11 @@
 #include <rwplcore.h>
 #include <rwcore.h>
 #include <rpworld.h>
+#if defined(PS2)
+#include <rwsdk/rpptank.h>
+#else
 #include <rpptank.h>
+#endif
 
 #include "xMath3.h"
 #include "iColor.h"

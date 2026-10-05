@@ -817,6 +817,160 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xSphereHitsVCircle",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1858896,
+      "size": 296,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSphereHitsVCylinder",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1859200,
+      "size": 352,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xOBBHitsOBB",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1859552,
+      "size": 2768,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSphereHitsBound",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1862320,
+      "size": 796,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSphereHitsCapsule",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1863120,
+      "size": 496,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSweptSphereToNonMoving",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1863616,
+      "size": 424,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSweptSphereToNPC",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1864048,
+      "size": 308,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSweptSphereToStatDyn",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1864368,
+      "size": 372,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSweptSphereToScene",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1864752,
+      "size": 456,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "SweptSphereHitsEntCB",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1865216,
+      "size": 1308,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSweptSphereToModel",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1866528,
+      "size": 980,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "SweptSphereModelCB",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1867520,
+      "size": 260,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSweptSphereToEnv",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1867792,
+      "size": 492,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "SweptSphereLeafNodeCB",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1868288,
+      "size": 164,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "SweptSphereHitsEnvCB",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1868464,
+      "size": 132,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSweptSphereToBox",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1868608,
+      "size": 3084,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSweptSphereToSphere",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1871696,
+      "size": 352,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSweptSphereToTriangle",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1872048,
+      "size": 2536,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSweptSphereGetResults",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1874592,
+      "size": 752,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSweptSpherePrepare",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1875344,
+      "size": 932,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "_rpCollBSPTreeForAllCapsuleLeafNodeIntersections",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1876288,
+      "size": 2400,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xCollisTriHit",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1878688,
+      "size": 2092,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "xCollideCalcTri",
       "source": "SB/Core/x/xCollide.cpp",
       "address": 1880784,
@@ -824,11 +978,95 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xBoxHitsObb",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1884128,
+      "size": 112,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "Mgc_BoxBoxTest",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1884240,
+      "size": 4424,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xBoxHitsSphere",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1888672,
+      "size": 408,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParabolaHitsEnv",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1889088,
+      "size": 824,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xParabolaEnvCB",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1889920,
+      "size": 1672,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "xParabolaRecenter",
       "source": "SB/Core/x/xCollide.cpp",
       "address": 1891600,
       "size": 136,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xSphereHitsModel",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1891744,
+      "size": 1128,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "sphereHitsModelCB",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1892880,
+      "size": 28,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSphereHitsOBB_nu",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1892912,
+      "size": 1508,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSphereHitsBox",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1894432,
+      "size": 416,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSphereHitsSphere",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1894848,
+      "size": 516,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xCollideInit",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1895376,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xCollideGetCollsIdx",
+      "source": "SB/Core/x/xCollide.cpp",
+      "address": 1895392,
+      "size": 380,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "xprintf",
@@ -1335,6 +1573,41 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xQuatDiff",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2024896,
+      "size": 160,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xQuatMul",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2025056,
+      "size": 136,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xQuatSlerp",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2025200,
+      "size": 420,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xQuatNormalize",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2025632,
+      "size": 264,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xQuatToAxisAngle",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2025904,
+      "size": 92,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "xQuatToMat",
       "source": "SB/Core/x/xMath3.cpp",
       "address": 2026000,
@@ -1342,11 +1615,32 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xQuatFromAxisAngle",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2026176,
+      "size": 200,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xQuatFromMat",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2026384,
+      "size": 640,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "xMat4x3Mul",
       "source": "SB/Core/x/xMath3.cpp",
       "address": 2027024,
       "size": 192,
       "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "xMat4x3Rot",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2027216,
+      "size": 316,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "xMat3x3Tolocal",
@@ -1391,6 +1685,34 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xMat3x3RotZ",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2028880,
+      "size": 128,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xMat3x3RotY",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2029008,
+      "size": 128,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xMat3x3RotX",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2029136,
+      "size": 128,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xMat3x3RotC",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2029264,
+      "size": 296,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "xMat3x3Euler",
       "source": "SB/Core/x/xMath3.cpp",
       "address": 2029568,
@@ -1398,11 +1720,60 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xMat3x3Euler",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2029824,
+      "size": 16,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xMat3x3LookVec",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2029840,
+      "size": 616,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xMat4x3MoveLocalAt",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2030464,
+      "size": 64,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xMat4x3MoveLocalUp",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2030528,
+      "size": 64,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xMat4x3MoveLocalRight",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2030592,
+      "size": 64,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "xMat3x3GetEuler",
       "source": "SB/Core/x/xMath3.cpp",
       "address": 2030656,
       "size": 264,
       "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "xMat3x3Normalize",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2030928,
+      "size": 72,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xBoxFromCone",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2031120,
+      "size": 888,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "xBoxInitBoundCapsule",
@@ -1417,6 +1788,34 @@
       "address": 2032288,
       "size": 712,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xPointInBox",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2033008,
+      "size": 184,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xLine3VecDist2",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2033200,
+      "size": 304,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xMath3Exit",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2033504,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xMath3Init",
+      "source": "SB/Core/x/xMath3.cpp",
+      "address": 2033520,
+      "size": 220,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "xMemPoolFree",
