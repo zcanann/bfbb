@@ -10582,12 +10582,12 @@
       "identity_kind": "reviewed"
     },
     {
-      "name": null,
-      "canonical_identifier": "anon_00149a40",
-      "source": null,
+      "name": "xParCmdInit",
+      "canonical_identifier": "xParCmdInit()",
+      "source": "SB/Core/x/xParCmd.cpp",
       "address": 1350208,
       "size": 721,
-      "identity_kind": "anonymous"
+      "identity_kind": "reviewed"
     },
     {
       "name": "xParCmdKillSlow_Update",

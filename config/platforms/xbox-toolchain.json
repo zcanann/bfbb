@@ -465,9 +465,10 @@
         "xParCmd_DampenSpeed_Update(xParCmd*,xParGroup*,F32)": "?xParCmd_DampenSpeed_Update@@YAXPAUxParCmd@@PAUxParGroup@@M@Z",
         "xParCmd_SizeInOut_Update(xParCmd*,xParGroup*,F32)": "?xParCmd_SizeInOut_Update@@YAXPAUxParCmd@@PAUxParGroup@@M@Z",
         "xParCmd_AlphaInOut_Update(xParCmd*,xParGroup*,F32)": "?xParCmd_AlphaInOut_Update@@YAXPAUxParCmd@@PAUxParGroup@@M@Z",
-        "xParCmd_Shaper_Update(xParCmd*,xParGroup*,F32)": "?xParCmd_Shaper_Update@@YAXPAUxParCmd@@PAUxParGroup@@M@Z"
+        "xParCmd_Shaper_Update(xParCmd*,xParGroup*,F32)": "?xParCmd_Shaper_Update@@YAXPAUxParCmd@@PAUxParGroup@@M@Z",
+        "xParCmdInit()": "?xParCmdInit@@YAXXZ"
       },
-      "scope": "All 21 independently bounded nonempty registered callbacks from actual complete xParCmd and five complete math dependencies. Shared empty aliases, initializer and remaining helpers are not assigned fabricated extents; no TU or executable completion claim. Unknown original callee operands remain raw.",
+      "scope": "All 21 previously reviewed nonempty callbacks and the independently bounded complete registration initializer from actual full xParCmd.cpp. Shared empty callback aliases supply address identity only, no separate source credit. Partial TU and executable linkage remain explicit.",
       "globals": {
         "float:00000000": {
           "linkage_name": "__real@00000000",
@@ -604,7 +605,8 @@
         ],
         "xParCmd_Shaper_Update(xParCmd*,xParGroup*,F32)": [
           "__ftol2"
-        ]
+        ],
+        "xParCmdInit()": []
       },
       "call_symbols": {
         "?xurand@@YAMXZ": {
@@ -945,6 +947,145 @@
             "field": "displacement",
             "prefix": "d905",
             "addend": 0
+          }
+        ]
+      },
+      "particle_initializer": {
+        "registrations": [
+          {
+            "slot": 0,
+            "asset_size": 20,
+            "symbol": "xParCmdMove_Update(xParCmd*,xParGroup*,F32)"
+          },
+          {
+            "slot": 1,
+            "asset_size": 20,
+            "symbol": "xParCmdMoveRandom_Update(xParCmd*,xParGroup*,F32)"
+          },
+          {
+            "slot": 2,
+            "asset_size": 20,
+            "symbol": "xParCmdAccelerate_Update(xParCmd*,xParGroup*,F32)"
+          },
+          {
+            "slot": 3,
+            "asset_size": 8,
+            "symbol": "xParCmdVelocityApply_Update(xParCmd*,xParGroup*,F32)"
+          },
+          {
+            "slot": 5,
+            "asset_size": 12,
+            "symbol": null
+          },
+          {
+            "slot": 6,
+            "asset_size": 16,
+            "symbol": "xParCmdKillSlow_Update(xParCmd*,xParGroup*,F32)"
+          },
+          {
+            "slot": 7,
+            "asset_size": 16,
+            "symbol": "xParCmdFollow_Update(xParCmd*,xParGroup*,F32)"
+          },
+          {
+            "slot": 8,
+            "asset_size": 32,
+            "symbol": "xParCmdOrbitPoint_Update(xParCmd*,xParGroup*,F32)"
+          },
+          {
+            "slot": 9,
+            "asset_size": 44,
+            "symbol": "xParCmdOrbitLine_Update(xParCmd*,xParGroup*,F32)"
+          },
+          {
+            "slot": 10,
+            "asset_size": 20,
+            "symbol": "xParCmdMoveRandomPar_Update(xParCmd*,xParGroup*,F32)"
+          },
+          {
+            "slot": 11,
+            "asset_size": 24,
+            "symbol": "xParCmd::shared_empty_callback"
+          },
+          {
+            "slot": 12,
+            "asset_size": 36,
+            "symbol": "xParCmd::shared_empty_callback"
+          },
+          {
+            "slot": 13,
+            "asset_size": 24,
+            "symbol": "xParCmdTexAnim_Update(xParCmd*,xParGroup*,F32)"
+          },
+          {
+            "slot": 15,
+            "asset_size": 20,
+            "symbol": "xParCmdRandomVelocityPar_Update(xParCmd*,xParGroup*,F32)"
+          },
+          {
+            "slot": 18,
+            "asset_size": 12,
+            "symbol": "xParCmdAge_Update(xParCmd*,xParGroup*,F32)"
+          },
+          {
+            "slot": 19,
+            "asset_size": 24,
+            "symbol": "xParCmd::shared_empty_callback"
+          },
+          {
+            "slot": 20,
+            "asset_size": 12,
+            "symbol": "xParCmdApplyWind_Update(xParCmd*,xParGroup*,F32)"
+          },
+          {
+            "slot": 21,
+            "asset_size": 32,
+            "symbol": "xParCmdRotPar_Update(xParCmd*,xParGroup*,F32)"
+          },
+          {
+            "slot": 23,
+            "asset_size": 32,
+            "symbol": "xParCmdRotateAround_Update(xParCmd*,xParGroup*,F32)"
+          },
+          {
+            "slot": 24,
+            "asset_size": 12,
+            "symbol": "xParCmd::shared_empty_callback"
+          },
+          {
+            "slot": 25,
+            "asset_size": 12,
+            "symbol": "xParCmd::shared_empty_callback"
+          },
+          {
+            "slot": 29,
+            "asset_size": 16,
+            "symbol": "xParCmdCollideFall_Update(xParCmd*,xParGroup*,F32)"
+          },
+          {
+            "slot": 30,
+            "asset_size": 48,
+            "symbol": "xParCmd_Shaper_Update(xParCmd*,xParGroup*,F32)"
+          },
+          {
+            "slot": 31,
+            "asset_size": 24,
+            "symbol": "xParCmd_AlphaInOut_Update(xParCmd*,xParGroup*,F32)"
+          },
+          {
+            "slot": 32,
+            "asset_size": 24,
+            "symbol": "xParCmd_SizeInOut_Update(xParCmd*,xParGroup*,F32)"
+          },
+          {
+            "slot": 33,
+            "asset_size": 12,
+            "symbol": "xParCmd_DampenSpeed_Update(xParCmd*,xParGroup*,F32)"
+          },
+          {
+            "slot": 34,
+            "asset_size": 20,
+            "symbol": "xParCmdCollideFallSticky_Update(xParCmd*,xParGroup*,F32)"
           }
         ]
       }

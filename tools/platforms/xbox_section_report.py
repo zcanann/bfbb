@@ -82,9 +82,16 @@ def _coff(path: Path) -> tuple[list[dict], dict[str, bytes], dict[str, list[dict
         entries, previous = [], -4
         for index in range(record['relocation_count']):
             offset, symbol, kind = struct.unpack_from('<IIH', data, record['relocation_offset'] + 10 * index)
-            require(kind in (6, 20) and symbol in (externals if kind == 6 else symbol_names) and
+            require(kind in (6, 20) and symbol in symbol_names and
                     previous + 4 <= offset and offset + 4 <= len(record['bytes']),
                     'Invalid, overlapping or unnamed COFF relocation')
+            if kind == 6 and symbol not in externals:
+                # Defined function pointers are genuine DIR32 records. They
+                # must name the entry exactly; typed original expressions and
+                # inverse byte reconstruction are checked below the reader.
+                require(symbol_names[symbol] in functions and
+                        struct.unpack_from('<I', record['bytes'], offset)[0] == 0,
+                        'Function-address DIR32 has a nonzero addend')
             previous = offset
             entries.append({'offset': offset, 'symbol': symbol_names[symbol],
                             'addend': struct.unpack_from('<I', record['bytes'], offset)[0],
@@ -193,6 +200,11 @@ def export_report(build_dir: Path) -> dict:
             switch_anchors = switch_anchors_from_text(text, text_base, reviewed.get(name, {}))
             require(not (set(anchors) & set(switch_anchors)), 'Switch table aliases an ordinary data anchor')
             function_anchors = {**anchors, **switch_anchors}
+            from platforms.xbox_particle_initializer import original_anchors_from_text as initializer_text_anchors
+            initializer_anchors = initializer_text_anchors(text, text_base, reviewed.get(name, {}),
+                                                          reviewed, splits['sections'])
+            require(not (set(function_anchors) & set(initializer_anchors)), 'Initializer anchor collision')
+            function_anchors.update(initializer_anchors)
             restored = reconstruct(targets[name], [r for r in target_relocations[name] if r.get('type', 6) == 6], function_anchors)
             if calls:
                 from platforms.xbox_calls import reconstruct_calls, normalize_calls

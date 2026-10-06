@@ -14298,6 +14298,1048 @@
           "byte": 204
         }
       }
+    },
+    {
+      "name": "xParCmdInit",
+      "canonical_identifier": "xParCmdInit()",
+      "display_name": "xParCmdInit()",
+      "source": "SB/Core/x/xParCmd.cpp",
+      "linkage_name": null,
+      "address": 1350208,
+      "size": 721,
+      "sha256": "f08121e9ac8b7a19886d0f4284366926552fc80883aff857eca0bf1c0f08dc8c",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": true,
+      "retail_link_verified": false,
+      "instruction_bytes": 721,
+      "instruction_count": 90,
+      "semantics": {
+        "identity": "Complete original registration of 27 typed particle commands into the independently reviewed 35-slot table; all 21 nonempty callback identities predate this initializer comparison. Source matching is independent."
+      },
+      "address_expressions": [
+        {
+          "offset": 20,
+          "instruction_offset": 18,
+          "field": "displacement",
+          "prefix": "8935",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 0
+        },
+        {
+          "offset": 26,
+          "instruction_offset": 24,
+          "field": "displacement",
+          "prefix": "8915",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 40
+        },
+        {
+          "offset": 32,
+          "instruction_offset": 30,
+          "field": "displacement",
+          "prefix": "8935",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 68
+        },
+        {
+          "offset": 43,
+          "instruction_offset": 41,
+          "field": "displacement",
+          "prefix": "8915",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 96
+        },
+        {
+          "offset": 54,
+          "instruction_offset": 52,
+          "field": "displacement",
+          "prefix": "890d",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 4
+        },
+        {
+          "offset": 60,
+          "instruction_offset": 58,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 8
+        },
+        {
+          "offset": 64,
+          "instruction_offset": 58,
+          "field": "immediate",
+          "prefix": "c705c83d3700",
+          "symbol": "xParCmdMove_Update(xParCmd*,xParGroup*,F32)",
+          "addend": 0
+        },
+        {
+          "offset": 70,
+          "instruction_offset": 68,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 12
+        },
+        {
+          "offset": 80,
+          "instruction_offset": 78,
+          "field": "displacement",
+          "prefix": "890d",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 16
+        },
+        {
+          "offset": 86,
+          "instruction_offset": 84,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 20
+        },
+        {
+          "offset": 90,
+          "instruction_offset": 84,
+          "field": "immediate",
+          "prefix": "c705d43d3700",
+          "symbol": "xParCmdMoveRandom_Update(xParCmd*,xParGroup*,F32)",
+          "addend": 0
+        },
+        {
+          "offset": 96,
+          "instruction_offset": 94,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 24
+        },
+        {
+          "offset": 106,
+          "instruction_offset": 104,
+          "field": "displacement",
+          "prefix": "890d",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 28
+        },
+        {
+          "offset": 112,
+          "instruction_offset": 110,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 32
+        },
+        {
+          "offset": 116,
+          "instruction_offset": 110,
+          "field": "immediate",
+          "prefix": "c705e03d3700",
+          "symbol": "xParCmdAccelerate_Update(xParCmd*,xParGroup*,F32)",
+          "addend": 0
+        },
+        {
+          "offset": 122,
+          "instruction_offset": 120,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 36
+        },
+        {
+          "offset": 132,
+          "instruction_offset": 130,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 44
+        },
+        {
+          "offset": 136,
+          "instruction_offset": 130,
+          "field": "immediate",
+          "prefix": "c705ec3d3700",
+          "symbol": "xParCmdVelocityApply_Update(xParCmd*,xParGroup*,F32)",
+          "addend": 0
+        },
+        {
+          "offset": 142,
+          "instruction_offset": 140,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 60
+        },
+        {
+          "offset": 151,
+          "instruction_offset": 150,
+          "field": "displacement",
+          "prefix": "a3",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 64
+        },
+        {
+          "offset": 157,
+          "instruction_offset": 155,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 72
+        },
+        {
+          "offset": 167,
+          "instruction_offset": 165,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 76
+        },
+        {
+          "offset": 177,
+          "instruction_offset": 175,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 80
+        },
+        {
+          "offset": 181,
+          "instruction_offset": 175,
+          "field": "immediate",
+          "prefix": "c705103e3700",
+          "symbol": "xParCmdKillSlow_Update(xParCmd*,xParGroup*,F32)",
+          "addend": 0
+        },
+        {
+          "offset": 187,
+          "instruction_offset": 185,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 84
+        },
+        {
+          "offset": 197,
+          "instruction_offset": 195,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 88
+        },
+        {
+          "offset": 207,
+          "instruction_offset": 205,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 92
+        },
+        {
+          "offset": 211,
+          "instruction_offset": 205,
+          "field": "immediate",
+          "prefix": "c7051c3e3700",
+          "symbol": "xParCmdFollow_Update(xParCmd*,xParGroup*,F32)",
+          "addend": 0
+        },
+        {
+          "offset": 217,
+          "instruction_offset": 215,
+          "field": "displacement",
+          "prefix": "8935",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 100
+        },
+        {
+          "offset": 223,
+          "instruction_offset": 221,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 104
+        },
+        {
+          "offset": 227,
+          "instruction_offset": 221,
+          "field": "immediate",
+          "prefix": "c705283e3700",
+          "symbol": "xParCmdOrbitPoint_Update(xParCmd*,xParGroup*,F32)",
+          "addend": 0
+        },
+        {
+          "offset": 233,
+          "instruction_offset": 231,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 108
+        },
+        {
+          "offset": 243,
+          "instruction_offset": 241,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 112
+        },
+        {
+          "offset": 253,
+          "instruction_offset": 251,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 116
+        },
+        {
+          "offset": 257,
+          "instruction_offset": 251,
+          "field": "immediate",
+          "prefix": "c705343e3700",
+          "symbol": "xParCmdOrbitLine_Update(xParCmd*,xParGroup*,F32)",
+          "addend": 0
+        },
+        {
+          "offset": 263,
+          "instruction_offset": 261,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 120
+        },
+        {
+          "offset": 273,
+          "instruction_offset": 271,
+          "field": "displacement",
+          "prefix": "890d",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 124
+        },
+        {
+          "offset": 279,
+          "instruction_offset": 277,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 128
+        },
+        {
+          "offset": 283,
+          "instruction_offset": 277,
+          "field": "immediate",
+          "prefix": "c705403e3700",
+          "symbol": "xParCmdMoveRandomPar_Update(xParCmd*,xParGroup*,F32)",
+          "addend": 0
+        },
+        {
+          "offset": 289,
+          "instruction_offset": 287,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 132
+        },
+        {
+          "offset": 299,
+          "instruction_offset": 297,
+          "field": "displacement",
+          "prefix": "8915",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 136
+        },
+        {
+          "offset": 305,
+          "instruction_offset": 303,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 140
+        },
+        {
+          "offset": 309,
+          "instruction_offset": 303,
+          "field": "immediate",
+          "prefix": "c7054c3e3700",
+          "symbol": "xParCmd::shared_empty_callback",
+          "addend": 0
+        },
+        {
+          "offset": 314,
+          "instruction_offset": 313,
+          "field": "displacement",
+          "prefix": "a3",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 144
+        },
+        {
+          "offset": 320,
+          "instruction_offset": 318,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 148
+        },
+        {
+          "offset": 330,
+          "instruction_offset": 328,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 152
+        },
+        {
+          "offset": 334,
+          "instruction_offset": 328,
+          "field": "immediate",
+          "prefix": "c705583e3700",
+          "symbol": "xParCmd::shared_empty_callback",
+          "addend": 0
+        },
+        {
+          "offset": 340,
+          "instruction_offset": 338,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 156
+        },
+        {
+          "offset": 350,
+          "instruction_offset": 348,
+          "field": "displacement",
+          "prefix": "8915",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 160
+        },
+        {
+          "offset": 356,
+          "instruction_offset": 354,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 164
+        },
+        {
+          "offset": 360,
+          "instruction_offset": 354,
+          "field": "immediate",
+          "prefix": "c705643e3700",
+          "symbol": "xParCmdTexAnim_Update(xParCmd*,xParGroup*,F32)",
+          "addend": 0
+        },
+        {
+          "offset": 366,
+          "instruction_offset": 364,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 180
+        },
+        {
+          "offset": 376,
+          "instruction_offset": 374,
+          "field": "displacement",
+          "prefix": "890d",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 184
+        },
+        {
+          "offset": 382,
+          "instruction_offset": 380,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 188
+        },
+        {
+          "offset": 386,
+          "instruction_offset": 380,
+          "field": "immediate",
+          "prefix": "c7057c3e3700",
+          "symbol": "xParCmdRandomVelocityPar_Update(xParCmd*,xParGroup*,F32)",
+          "addend": 0
+        },
+        {
+          "offset": 392,
+          "instruction_offset": 390,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 216
+        },
+        {
+          "offset": 401,
+          "instruction_offset": 400,
+          "field": "displacement",
+          "prefix": "a3",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 220
+        },
+        {
+          "offset": 407,
+          "instruction_offset": 405,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 224
+        },
+        {
+          "offset": 411,
+          "instruction_offset": 405,
+          "field": "immediate",
+          "prefix": "c705a03e3700",
+          "symbol": "xParCmdAge_Update(xParCmd*,xParGroup*,F32)",
+          "addend": 0
+        },
+        {
+          "offset": 417,
+          "instruction_offset": 415,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 228
+        },
+        {
+          "offset": 427,
+          "instruction_offset": 425,
+          "field": "displacement",
+          "prefix": "8915",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 232
+        },
+        {
+          "offset": 433,
+          "instruction_offset": 431,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 236
+        },
+        {
+          "offset": 437,
+          "instruction_offset": 431,
+          "field": "immediate",
+          "prefix": "c705ac3e3700",
+          "symbol": "xParCmd::shared_empty_callback",
+          "addend": 0
+        },
+        {
+          "offset": 443,
+          "instruction_offset": 441,
+          "field": "displacement",
+          "prefix": "890d",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 240
+        },
+        {
+          "offset": 448,
+          "instruction_offset": 447,
+          "field": "displacement",
+          "prefix": "a3",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 244
+        },
+        {
+          "offset": 454,
+          "instruction_offset": 452,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 248
+        },
+        {
+          "offset": 458,
+          "instruction_offset": 452,
+          "field": "immediate",
+          "prefix": "c705b83e3700",
+          "symbol": "xParCmdApplyWind_Update(xParCmd*,xParGroup*,F32)",
+          "addend": 0
+        },
+        {
+          "offset": 464,
+          "instruction_offset": 462,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 252
+        },
+        {
+          "offset": 474,
+          "instruction_offset": 472,
+          "field": "displacement",
+          "prefix": "8935",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 256
+        },
+        {
+          "offset": 480,
+          "instruction_offset": 478,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 260
+        },
+        {
+          "offset": 484,
+          "instruction_offset": 478,
+          "field": "immediate",
+          "prefix": "c705c43e3700",
+          "symbol": "xParCmdRotPar_Update(xParCmd*,xParGroup*,F32)",
+          "addend": 0
+        },
+        {
+          "offset": 490,
+          "instruction_offset": 488,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 276
+        },
+        {
+          "offset": 500,
+          "instruction_offset": 498,
+          "field": "displacement",
+          "prefix": "8935",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 280
+        },
+        {
+          "offset": 506,
+          "instruction_offset": 504,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 284
+        },
+        {
+          "offset": 510,
+          "instruction_offset": 504,
+          "field": "immediate",
+          "prefix": "c705dc3e3700",
+          "symbol": "xParCmdRotateAround_Update(xParCmd*,xParGroup*,F32)",
+          "addend": 0
+        },
+        {
+          "offset": 516,
+          "instruction_offset": 514,
+          "field": "displacement",
+          "prefix": "8915",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 288
+        },
+        {
+          "offset": 521,
+          "instruction_offset": 520,
+          "field": "displacement",
+          "prefix": "a3",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 292
+        },
+        {
+          "offset": 527,
+          "instruction_offset": 525,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 296
+        },
+        {
+          "offset": 531,
+          "instruction_offset": 525,
+          "field": "immediate",
+          "prefix": "c705e83e3700",
+          "symbol": "xParCmd::shared_empty_callback",
+          "addend": 0
+        },
+        {
+          "offset": 537,
+          "instruction_offset": 535,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 300
+        },
+        {
+          "offset": 546,
+          "instruction_offset": 545,
+          "field": "displacement",
+          "prefix": "a3",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 304
+        },
+        {
+          "offset": 552,
+          "instruction_offset": 550,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 308
+        },
+        {
+          "offset": 556,
+          "instruction_offset": 550,
+          "field": "immediate",
+          "prefix": "c705f43e3700",
+          "symbol": "xParCmd::shared_empty_callback",
+          "addend": 0
+        },
+        {
+          "offset": 562,
+          "instruction_offset": 560,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 348
+        },
+        {
+          "offset": 572,
+          "instruction_offset": 570,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 352
+        },
+        {
+          "offset": 582,
+          "instruction_offset": 580,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 356
+        },
+        {
+          "offset": 586,
+          "instruction_offset": 580,
+          "field": "immediate",
+          "prefix": "c705243f3700",
+          "symbol": "xParCmdCollideFall_Update(xParCmd*,xParGroup*,F32)",
+          "addend": 0
+        },
+        {
+          "offset": 592,
+          "instruction_offset": 590,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 408
+        },
+        {
+          "offset": 602,
+          "instruction_offset": 600,
+          "field": "displacement",
+          "prefix": "890d",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 412
+        },
+        {
+          "offset": 608,
+          "instruction_offset": 606,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 416
+        },
+        {
+          "offset": 612,
+          "instruction_offset": 606,
+          "field": "immediate",
+          "prefix": "c705603f3700",
+          "symbol": "xParCmdCollideFallSticky_Update(xParCmd*,xParGroup*,F32)",
+          "addend": 0
+        },
+        {
+          "offset": 618,
+          "instruction_offset": 616,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 360
+        },
+        {
+          "offset": 628,
+          "instruction_offset": 626,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 364
+        },
+        {
+          "offset": 638,
+          "instruction_offset": 636,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 368
+        },
+        {
+          "offset": 642,
+          "instruction_offset": 636,
+          "field": "immediate",
+          "prefix": "c705303f3700",
+          "symbol": "xParCmd_Shaper_Update(xParCmd*,xParGroup*,F32)",
+          "addend": 0
+        },
+        {
+          "offset": 648,
+          "instruction_offset": 646,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 372
+        },
+        {
+          "offset": 658,
+          "instruction_offset": 656,
+          "field": "displacement",
+          "prefix": "8915",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 376
+        },
+        {
+          "offset": 664,
+          "instruction_offset": 662,
+          "field": "displacement",
+          "prefix": "8935",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 384
+        },
+        {
+          "offset": 670,
+          "instruction_offset": 668,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 380
+        },
+        {
+          "offset": 674,
+          "instruction_offset": 668,
+          "field": "immediate",
+          "prefix": "c7053c3f3700",
+          "symbol": "xParCmd_AlphaInOut_Update(xParCmd*,xParGroup*,F32)",
+          "addend": 0
+        },
+        {
+          "offset": 680,
+          "instruction_offset": 678,
+          "field": "displacement",
+          "prefix": "8915",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 388
+        },
+        {
+          "offset": 686,
+          "instruction_offset": 684,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 392
+        },
+        {
+          "offset": 690,
+          "instruction_offset": 684,
+          "field": "immediate",
+          "prefix": "c705483f3700",
+          "symbol": "xParCmd_SizeInOut_Update(xParCmd*,xParGroup*,F32)",
+          "addend": 0
+        },
+        {
+          "offset": 696,
+          "instruction_offset": 694,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 396
+        },
+        {
+          "offset": 705,
+          "instruction_offset": 704,
+          "field": "displacement",
+          "prefix": "a3",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 400
+        },
+        {
+          "offset": 711,
+          "instruction_offset": 709,
+          "field": "displacement",
+          "prefix": "c705",
+          "symbol": "xParCmd::sCmdInfo",
+          "addend": 404
+        },
+        {
+          "offset": 715,
+          "instruction_offset": 709,
+          "field": "immediate",
+          "prefix": "c705543f3700",
+          "symbol": "xParCmd_DampenSpeed_Update(xParCmd*,xParGroup*,F32)",
+          "addend": 0
+        }
+      ],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1350928,
+        "branches": [],
+        "saved_registers": [
+          {
+            "register": "esi",
+            "push_address": 1350213,
+            "pop_address": 1350927
+          }
+        ],
+        "reviewed_call_witnesses": [],
+        "particle_initializer": {
+          "table_address": 3620288,
+          "table_size": 420,
+          "registrations": [
+            {
+              "slot": 0,
+              "asset_size": 20,
+              "symbol": "xParCmdMove_Update(xParCmd*,xParGroup*,F32)"
+            },
+            {
+              "slot": 1,
+              "asset_size": 20,
+              "symbol": "xParCmdMoveRandom_Update(xParCmd*,xParGroup*,F32)"
+            },
+            {
+              "slot": 2,
+              "asset_size": 20,
+              "symbol": "xParCmdAccelerate_Update(xParCmd*,xParGroup*,F32)"
+            },
+            {
+              "slot": 3,
+              "asset_size": 8,
+              "symbol": "xParCmdVelocityApply_Update(xParCmd*,xParGroup*,F32)"
+            },
+            {
+              "slot": 5,
+              "asset_size": 12,
+              "symbol": null
+            },
+            {
+              "slot": 6,
+              "asset_size": 16,
+              "symbol": "xParCmdKillSlow_Update(xParCmd*,xParGroup*,F32)"
+            },
+            {
+              "slot": 7,
+              "asset_size": 16,
+              "symbol": "xParCmdFollow_Update(xParCmd*,xParGroup*,F32)"
+            },
+            {
+              "slot": 8,
+              "asset_size": 32,
+              "symbol": "xParCmdOrbitPoint_Update(xParCmd*,xParGroup*,F32)"
+            },
+            {
+              "slot": 9,
+              "asset_size": 44,
+              "symbol": "xParCmdOrbitLine_Update(xParCmd*,xParGroup*,F32)"
+            },
+            {
+              "slot": 10,
+              "asset_size": 20,
+              "symbol": "xParCmdMoveRandomPar_Update(xParCmd*,xParGroup*,F32)"
+            },
+            {
+              "slot": 11,
+              "asset_size": 24,
+              "symbol": "xParCmd::shared_empty_callback"
+            },
+            {
+              "slot": 12,
+              "asset_size": 36,
+              "symbol": "xParCmd::shared_empty_callback"
+            },
+            {
+              "slot": 13,
+              "asset_size": 24,
+              "symbol": "xParCmdTexAnim_Update(xParCmd*,xParGroup*,F32)"
+            },
+            {
+              "slot": 15,
+              "asset_size": 20,
+              "symbol": "xParCmdRandomVelocityPar_Update(xParCmd*,xParGroup*,F32)"
+            },
+            {
+              "slot": 18,
+              "asset_size": 12,
+              "symbol": "xParCmdAge_Update(xParCmd*,xParGroup*,F32)"
+            },
+            {
+              "slot": 19,
+              "asset_size": 24,
+              "symbol": "xParCmd::shared_empty_callback"
+            },
+            {
+              "slot": 20,
+              "asset_size": 12,
+              "symbol": "xParCmdApplyWind_Update(xParCmd*,xParGroup*,F32)"
+            },
+            {
+              "slot": 21,
+              "asset_size": 32,
+              "symbol": "xParCmdRotPar_Update(xParCmd*,xParGroup*,F32)"
+            },
+            {
+              "slot": 23,
+              "asset_size": 32,
+              "symbol": "xParCmdRotateAround_Update(xParCmd*,xParGroup*,F32)"
+            },
+            {
+              "slot": 24,
+              "asset_size": 12,
+              "symbol": "xParCmd::shared_empty_callback"
+            },
+            {
+              "slot": 25,
+              "asset_size": 12,
+              "symbol": "xParCmd::shared_empty_callback"
+            },
+            {
+              "slot": 29,
+              "asset_size": 16,
+              "symbol": "xParCmdCollideFall_Update(xParCmd*,xParGroup*,F32)"
+            },
+            {
+              "slot": 30,
+              "asset_size": 48,
+              "symbol": "xParCmd_Shaper_Update(xParCmd*,xParGroup*,F32)"
+            },
+            {
+              "slot": 31,
+              "asset_size": 24,
+              "symbol": "xParCmd_AlphaInOut_Update(xParCmd*,xParGroup*,F32)"
+            },
+            {
+              "slot": 32,
+              "asset_size": 24,
+              "symbol": "xParCmd_SizeInOut_Update(xParCmd*,xParGroup*,F32)"
+            },
+            {
+              "slot": 33,
+              "asset_size": 12,
+              "symbol": "xParCmd_DampenSpeed_Update(xParCmd*,xParGroup*,F32)"
+            },
+            {
+              "slot": 34,
+              "asset_size": 20,
+              "symbol": "xParCmdCollideFallSticky_Update(xParCmd*,xParGroup*,F32)"
+            }
+          ],
+          "empty_callback": {
+            "address": 773376,
+            "size": 1,
+            "aliases": {
+              "11": "xParCmdScale3rdPolyReg_Update",
+              "12": "xParCmdTex_Update",
+              "19": "xParCmdAlpha3rdPolyReg_Update",
+              "24": "xParCmdSmokeAlpha_Update",
+              "25": "xParCmdScale_Update"
+            }
+          }
+        }
+      }
     }
   ]
 }

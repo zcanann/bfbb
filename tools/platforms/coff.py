@@ -48,7 +48,10 @@ def function_object(functions: list[dict]) -> bytes:
             at = relocation['offset']
             kind = relocation.get('type', 6)
             symbol = relocation['symbol']
-            if kind not in (6, 20) or (kind == 6 and symbol in function_symbols):
+            function_address = relocation.get('target_kind') == 'function'
+            if (kind not in (6, 20) or relocation.get('target_kind') not in (None, 'function') or
+                    function_address and (kind != 6 or relocation['addend'] != 0) or
+                    kind == 6 and symbol in function_symbols and not function_address):
                 raise ValueError('Unsupported COFF relocation or address/function conflict')
             if (not isinstance(at, int) or at < previous + 4 or at + 4 > len(data) or
                     struct.unpack_from('<I', data, at)[0] != relocation['addend']):
