@@ -301,8 +301,12 @@ void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 endx, F32 maxv)
     F32 temp_f28;
 
     temp_f29 = endx - x;
+#if defined(XBOX)
+    if ((F32)xMathAbs(v) < 0.001f || (temp_f29 < 0.0f ? 1 : 0) != (v < 0.0f ? 1 : 0))
+#else
     var_r3 = (F32)xMathAbs(v) < 0.001f || (temp_f29 < 0.0f ? 1 : 0) != (v < 0.0f ? 1 : 0);
     if (var_r3 & 0xff)
+#endif
     {
         var_f31 = 1e38f;
     }

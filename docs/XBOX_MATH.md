@@ -162,3 +162,29 @@ same authenticated original zero/half payloads. This remains a partial match.
 Ignored evidence: `build/xbox266/{compile.py,compare.py,average-only-consumers,
 average-only-production,consumers,production,verify_final.py,
 final-verification.json,gc/proof.json}`. No complete-TU or retail-relink claim.
+
+## End-position acceleration entry condition
+
+The original end-position `xAccelMove` branches directly on the initial
+small-velocity/sign-disagreement condition. The shared reconstruction first
+materialized that boolean into an integer and then tested its low eight bits.
+The condition is already exactly zero or one, so the mask adds no semantics.
+Xbox now uses the unchanged short-circuit condition directly in the `if`;
+non-Xbox source, arithmetic expressions and all downstream stores are unchanged.
+
+This single source control improves 83.72396% to 89.083336%, removing the
+unnecessary boolean-materialization block. The actual complete `xMath.obj`
+body decreases from 581 to 568 bytes versus the original 574. Remaining
+arithmetic, temporary and sign-test-order differences stay visible. No
+expression or register permutation trial was performed.
+
+Both regional production reports preserve every other function record and
+all exact counts, denominator and completion fields apart from generated
+COFF offsets. The actual source literal fields remain the same genuine
+HIGHLOW references with matching original payloads; no profile, metadata or
+backend changes are required. All 33 ordered GameCube consumer sections are
+identical. This is a partial comparison, with no exact-function or relink claim.
+
+Ignored evidence: `build/xbox274/{compile.py,compare.py,consumers,production,
+verify_final.py,final-verification.json,gc/proof.json}`; the original/source
+entry comparison is also preserved in `build/xbox268/inventory-disasm.txt`.
