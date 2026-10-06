@@ -75,10 +75,10 @@ checked, and the standard objdiff parser accepts the result.
 
 | Version | Full code-region bytes | Objdiff code-matched bytes |
 | --- | ---: | ---: |
-| SLUS-20680 | 2,978,560 | 224,800 |
-| SLES-51968 | 2,979,712 | 224,492 |
-| SLES-51970 | 2,976,512 | 224,388 |
-| SLES-53623 | 2,979,968 | 44,316 |
+| SLUS-20680 | 2,978,560 | 226,136 |
+| SLES-51968 | 2,979,712 | 225,828 |
+| SLES-51970 | 2,976,512 | 225,724 |
+| SLES-53623 | 2,979,968 | 44,988 |
 | XBOX-US | 1,798,760 | 14,148 |
 | XBOX-EU | 1,798,760 | 14,148 |
 
@@ -122,10 +122,12 @@ The narrower function-only baselines currently contain:
 
 | PS2 baseline | Functions | Measured function bytes | Source matches |
 | --- | ---: | ---: | ---: |
-| USA | 5,391 | 2,107,460 | 1,490 functions / 224,800 bytes |
-| Europe/Australia | 5,392 | 2,108,700 | 1,489 functions / 224,492 bytes |
-| Germany | 5,394 | 2,105,512 | 1,488 functions / 224,388 bytes |
-| France (reviewed and corroborated bounds) | 641 | 231,248 | 235 functions / 44,316 bytes |
+| USA | 5,391 | 2,107,460 | 1,494 functions / 226,136 bytes |
+| Europe/Australia | 5,392 | 2,108,700 | 1,493 functions / 225,828 bytes |
+| Germany | 5,394 | 2,105,512 | 1,492 functions / 225,724 bytes |
+| France (reviewed and corroborated bounds) | 641 | 231,248 | 237 functions / 44,988 bytes |
+
+The original [PS2 inline atan2 wrapper](PS2_ATAN2_INLINE.md) adds 1,336 matched bytes and four functions per debug version, plus 672 bytes and two functions in France. Every prior exact match remains; the documented SB2 partial-score decrease restores its original clamp calls.
 
 The `address-anchors.json` registries also recover over 2,500 named data addresses
 and 628 function declarations in each debug-bearing version. Addresses do not
@@ -153,7 +155,7 @@ other target objects are not relocation-restored link inputs. Code outside those
 and padding remain unclassified; the whole mixed load segment is not counted as
 code. France is stripped; independently reviewed and machine-corroborated
 extents establish its 641-function, 231,248-byte function-only baseline. Its
-44,316 matched code bytes describe that subset. The published code denominator
+44,988 matched code bytes describe that subset. The published code denominator
 is the full recovered CPU text region, not this function-only subset.
 
 Both Xbox releases have identical payloads in all 13 sections; their 532 differing
@@ -342,6 +344,7 @@ the original; the remaining candidates stay excluded. Anonymous identifiers
 establish neither original symbols nor source ownership. Together with the
 115 reviewed extents, measured coverage is 2,556 functions / 635,415 bytes;
 14,148 bytes match source. This is still partial coverage. The [Xbox memory initializer](XBOX_MEMORY_INITIALIZER.md) adds 103 exact source bytes using an explicitly verified data-only original binding; its recovered runtime allocator remains target-only. The [inline math boundary](XBOX_MATH_INLINE_BOUNDARY.md) adds 388 exact source bytes from Euler and the emitted xatan2 helper without changing the original denominator. The original-backed box-containment return structure adds another 84 bytes, the vector normalizer adds 163 bytes by preserving the original input-field reloads, direct axis-rotation subtraction adds 226 bytes, and ordinary random-generator inlining adds 661 bytes, and unchanged particle-list helper inlining adds 222 bytes. Ordinary allocator inlining adds another 209 bytes while preserving its existing standalone comparison in the actual particle-group source emission; that reporting group is explicitly reconstructed, not original TU ownership. Ordinary quick-cull wrapper inlining adds 193 exact bytes; all eight reviewed QuickCull functions now match, without claiming complete original TU coverage. Literal fixed-axis initialization adds 158 byte-exact X/Y/Z rotation bytes; original acceleration timing lifetime adds another 83 bytes.
+The [scalar Euler reconstruction](XBOX_MATH3.md) restores original roll/pitch product lifetimes, improving 35.16% to 99.65%; four operand bytes remain different. Sphere-bound scaling from the original local normal improves 90.59% to 95.86%. Both changes preserve exact-byte totals.
 The stopping routine now captures old velocity at the original update boundary, improving its partial score
 from 75.53% to 92.69% without changing exact-byte totals. The KillSlow callback gains 164 exact bytes
 by acquiring the particle-list root at the original boundary after command setup.
