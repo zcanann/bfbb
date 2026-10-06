@@ -535,6 +535,14 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     for key, value in scalar_math['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
     document['limitations'].append('Scalar math adds nine members from all eighteen original functions and nine independent neighbors. Only the exact 60-byte EndPoints leaf tail and eight-byte literal xatof J/NOP have scoped boundary rules; generic CFG checks stay unchanged. Opaque runtime transfer words remain unmasked, unnamed context, and the two overloaded acceleration functions retain distinct original linkage identities.')
+    from platforms.france_utility_sequence import generate_unit as generate_utility
+    utility = generate_utility(originals, registry_dir)
+    document['functions'].extend(utility['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(utility['sequence_proofs'])
+    for key, value in utility['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Utility adds eight members from all eleven original functions and three independent neighbors. Its exact seven-entry dispatch is scoped locally; unsigned-byte lookup dataflow bounds twelve observed table reads. Original typed arrays and independently witnessed animation pointer operands corroborate changed addresses. Opaque runtime caller words remain unmasked, and no runtime identity or data extent is promoted.')
     return document
 
 

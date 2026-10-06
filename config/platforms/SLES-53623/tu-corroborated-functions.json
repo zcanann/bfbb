@@ -37,14 +37,15 @@
     "Particle initialization adds one member from the complete four-function sequence. The original 2000-element xPar array descriptor bounds the sole changed pool address inside authentic BSS; no data extent is promoted.",
     "Update culling adds three members from all seven original functions and four independent neighbors. The complete group-accessor/count context and independently reviewed allocator neighborhood corroborate calls and pointer slots; opaque runtime transfer words remain unmasked. No context becomes a new identity or extent.",
     "Bounds adds six members from all nine original functions and three independent neighbors. The complete platform-geometry dependency is independently replayed for external calls; original DWARF proves the 60-byte quick-cull global, with no data extent promotion.",
-    "Scalar math adds nine members from all eighteen original functions and nine independent neighbors. Only the exact 60-byte EndPoints leaf tail and eight-byte literal xatof J/NOP have scoped boundary rules; generic CFG checks stay unchanged. Opaque runtime transfer words remain unmasked, unnamed context, and the two overloaded acceleration functions retain distinct original linkage identities."
+    "Scalar math adds nine members from all eighteen original functions and nine independent neighbors. Only the exact 60-byte EndPoints leaf tail and eight-byte literal xatof J/NOP have scoped boundary rules; generic CFG checks stay unchanged. Opaque runtime transfer words remain unmasked, unnamed context, and the two overloaded acceleration functions retain distinct original linkage identities.",
+    "Utility adds eight members from all eleven original functions and three independent neighbors. Its exact seven-entry dispatch is scoped locally; unsigned-byte lookup dataflow bounds twelve observed table reads. Original typed arrays and independently witnessed animation pointer operands corroborate changed addresses. Opaque runtime caller words remain unmasked, and no runtime identity or data extent is promoted."
   ],
   "counts": {
-    "functions": 349,
-    "code_bytes": 162380,
-    "source_units": 21,
+    "functions": 357,
+    "code_bytes": 164736,
+    "source_units": 22,
     "rooted_direct_call_entries": 129,
-    "closed_return_bodies": 333,
+    "closed_return_bodies": 341,
     "reviewed_tail_wrappers": 2,
     "registered_callback_entries": 26,
     "reviewed_leaf_tail_functions": 11,
@@ -64,7 +65,8 @@
     "reviewed_skb_polynomials": 1,
     "reviewed_string_dispatch_tables": 1,
     "reviewed_particle_pool_arrays": 1,
-    "reviewed_scalar_math_tails": 2
+    "reviewed_scalar_math_tails": 2,
+    "reviewed_utility_dispatches": 1
   },
   "sequence_proofs": [
     {
@@ -1280,6 +1282,1932 @@
         "unchanged_anchor_offset": 2436,
         "unchanged_anchor_bytes": 1372,
         "masked_instruction_count": 3
+      }
+    },
+    {
+      "version": "SLUS-20680",
+      "source": "SB/Core/x/xutil.cpp",
+      "source_start": 2161664,
+      "target_start": 2163072,
+      "complete_original_members": 11,
+      "previously_confirmed_members": 3,
+      "start": 2163072,
+      "span": 2736,
+      "functions": [
+        {
+          "name": "xUtil_wtadjust",
+          "address": 2163072,
+          "size": 280,
+          "already_known": false,
+          "pairs": [],
+          "calls": [],
+          "tables": []
+        },
+        {
+          "name": "xUtil_yesno",
+          "address": 2163360,
+          "size": 120,
+          "already_known": true,
+          "pairs": [],
+          "calls": [
+            {
+              "offset": 72,
+              "opcode": 3,
+              "reference_address": 2023312,
+              "target_address": 2024672
+            }
+          ],
+          "tables": []
+        },
+        {
+          "name": "itoBCD",
+          "address": 2163488,
+          "size": 96,
+          "already_known": true,
+          "pairs": [],
+          "calls": [],
+          "tables": []
+        },
+        {
+          "name": "itoBCD",
+          "address": 2163584,
+          "size": 96,
+          "already_known": true,
+          "pairs": [],
+          "calls": [],
+          "tables": []
+        },
+        {
+          "name": "BCDtoi",
+          "address": 2163680,
+          "size": 52,
+          "already_known": false,
+          "pairs": [
+            {
+              "hi_offset": 8,
+              "lo_offset": 24,
+              "opcode": 9,
+              "reference_address": 5216528,
+              "target_address": 5215552,
+              "storage": "file_backed",
+              "scope": "unchanged complete string literal",
+              "literal_sha256": "4532be67ae090cecbcb788c686c7ae846a6b8a43b11464252d63440b2ca149e4",
+              "literal_size_with_terminator": 3
+            }
+          ],
+          "calls": [
+            {
+              "offset": 20,
+              "opcode": 3,
+              "reference_address": 1160624,
+              "target_address": 1160624,
+              "independent_pointer_context": {
+                "name": "_impure_ptr",
+                "source": "SB/Core/x/xAnim.cpp",
+                "witnesses": [
+                  2170176
+                ],
+                "original_type": {
+                  "declaration_die": 5604390,
+                  "pointer_descriptor": "01e4865500",
+                  "pointee_die": 5605092,
+                  "pointee_name": "_reent",
+                  "pointee_size": 752
+                },
+                "pair": {
+                  "hi_offset": 0,
+                  "lo_offset": 8,
+                  "opcode": 35,
+                  "reference_address": 4214600,
+                  "target_address": 4216008,
+                  "storage": "file_backed"
+                },
+                "no_new_identity_or_extent": true
+              },
+              "opaque_context_sha256": "9dddc489a474e26e59c1c2b54a232f73d311e48c4e7303849597077c6feb0123",
+              "unmasked_no_identity_claim": true
+            },
+            {
+              "offset": 28,
+              "opcode": 3,
+              "reference_address": 1133520,
+              "target_address": 1133520,
+              "opaque_context_sha256": "b03d59a1ddb6558042c143d4831a6881cf84ceced4ba2559d13b81ed23cb23fd",
+              "unmasked_no_identity_claim": true
+            }
+          ],
+          "tables": []
+        },
+        {
+          "name": "strtosjis",
+          "address": 2163744,
+          "size": 552,
+          "already_known": false,
+          "pairs": [
+            {
+              "hi_offset": 376,
+              "lo_offset": 380,
+              "opcode": 9,
+              "reference_address": 5216584,
+              "target_address": 5215608,
+              "storage": "file_backed",
+              "scope": "unchanged complete string literal",
+              "literal_sha256": "621f5d5f91e76898c0737e712424e84fa9bb78d778c8c81ce1b520e5a619b717",
+              "literal_size_with_terminator": 21
+            },
+            {
+              "hi_offset": 416,
+              "lo_offset": 424,
+              "opcode": 9,
+              "reference_address": 4296112,
+              "target_address": 4295088,
+              "storage": "file_backed",
+              "typed_array": {
+                "name": "ascii_k_table",
+                "dimensions": [
+                  33
+                ],
+                "element_type": 6,
+                "size": 66,
+                "declaration_die": 5598310,
+                "type_chain": [
+                  {
+                    "die": 5598766,
+                    "descriptor": "000a0000000000200000000855000600"
+                  }
+                ]
+              }
+            },
+            {
+              "hi_offset": 456,
+              "lo_offset": 460,
+              "opcode": 9,
+              "reference_address": 4296096,
+              "target_address": 4295072,
+              "storage": "file_backed",
+              "typed_array": {
+                "name": "ascii_table",
+                "dimensions": [
+                  3,
+                  2
+                ],
+                "element_type": 6,
+                "size": 12,
+                "declaration_die": 5598269,
+                "type_chain": [
+                  {
+                    "die": 5598946,
+                    "descriptor": "000a000000000002000000087200be6e5500"
+                  },
+                  {
+                    "die": 5598910,
+                    "descriptor": "000a0000000000010000000855000600"
+                  }
+                ]
+              }
+            }
+          ],
+          "calls": [
+            {
+              "offset": 384,
+              "opcode": 3,
+              "reference_address": 1154672,
+              "target_address": 1154672,
+              "opaque_context_sha256": "109c665f4af2c49b8ac5d85d8f32a6c1399cec5b77ee418647d382226505f0f0",
+              "unmasked_no_identity_claim": true
+            },
+            {
+              "offset": 392,
+              "opcode": 3,
+              "reference_address": 1139152,
+              "target_address": 1139152,
+              "independent_pointer_context": {
+                "name": "_impure_ptr",
+                "source": "SB/Core/x/xAnim.cpp",
+                "witnesses": [
+                  2170176
+                ],
+                "original_type": {
+                  "declaration_die": 5604390,
+                  "pointer_descriptor": "01e4865500",
+                  "pointee_die": 5605092,
+                  "pointee_name": "_reent",
+                  "pointee_size": 752
+                },
+                "pair": {
+                  "hi_offset": 8,
+                  "lo_offset": 32,
+                  "opcode": 35,
+                  "reference_address": 4214600,
+                  "target_address": 4216008,
+                  "storage": "file_backed"
+                },
+                "no_new_identity_or_extent": true
+              },
+              "opaque_context_sha256": "683874d17ac8200f47d346d9a14be50146ed0f8d9f919c2b250d6c2a4aa31a6d",
+              "unmasked_no_identity_claim": true
+            }
+          ],
+          "tables": []
+        },
+        {
+          "name": "xUtil_crc_update",
+          "address": 2164304,
+          "size": 484,
+          "already_known": false,
+          "pairs": [
+            {
+              "hi_offset": 72,
+              "lo_offset": 76,
+              "opcode": 9,
+              "reference_address": 6007424,
+              "target_address": 6006400,
+              "storage": "zero_fill",
+              "typed_array": {
+                "name": "g_crc32_table",
+                "dimensions": [
+                  256
+                ],
+                "element_type": 9,
+                "size": 1024,
+                "declaration_die": 5598226,
+                "type_chain": [
+                  {
+                    "die": 5598838,
+                    "descriptor": "000a0000000000ff0000000855000900"
+                  }
+                ]
+              }
+            },
+            {
+              "hi_offset": 392,
+              "lo_offset": 396,
+              "opcode": 9,
+              "reference_address": 6007424,
+              "target_address": 6006400,
+              "storage": "zero_fill",
+              "typed_array": {
+                "name": "g_crc32_table",
+                "dimensions": [
+                  256
+                ],
+                "element_type": 9,
+                "size": 1024,
+                "declaration_die": 5598226,
+                "type_chain": [
+                  {
+                    "die": 5598838,
+                    "descriptor": "000a0000000000ff0000000855000900"
+                  }
+                ]
+              }
+            }
+          ],
+          "calls": [
+            {
+              "offset": 40,
+              "opcode": 3,
+              "reference_address": 2163392,
+              "target_address": 2164800
+            }
+          ],
+          "tables": []
+        },
+        {
+          "name": "xUtil_crc_init",
+          "address": 2164800,
+          "size": 136,
+          "already_known": false,
+          "pairs": [
+            {
+              "hi_offset": 8,
+              "lo_offset": 16,
+              "opcode": 9,
+              "reference_address": 6007424,
+              "target_address": 6006400,
+              "storage": "zero_fill",
+              "typed_array": {
+                "name": "g_crc32_table",
+                "dimensions": [
+                  256
+                ],
+                "element_type": 9,
+                "size": 1024,
+                "declaration_die": 5598226,
+                "type_chain": [
+                  {
+                    "die": 5598838,
+                    "descriptor": "000a0000000000ff0000000855000900"
+                  }
+                ]
+              }
+            }
+          ],
+          "calls": [],
+          "tables": []
+        },
+        {
+          "name": "xUtil_idtag2string",
+          "address": 2164944,
+          "size": 784,
+          "already_known": false,
+          "pairs": [
+            {
+              "hi_offset": 32,
+              "lo_offset": 40,
+              "opcode": 9,
+              "reference_address": 6008448,
+              "target_address": 6007424,
+              "storage": "zero_fill",
+              "typed_array": {
+                "name": "buf",
+                "dimensions": [
+                  6,
+                  10
+                ],
+                "element_type": 1,
+                "size": 60,
+                "declaration_die": 5602094,
+                "type_chain": [
+                  {
+                    "die": 5598614,
+                    "descriptor": "000a000000000005000000087200726d5500"
+                  },
+                  {
+                    "die": 5598578,
+                    "descriptor": "000a0000000000090000000855000100"
+                  }
+                ]
+              }
+            },
+            {
+              "hi_offset": 56,
+              "lo_offset": 64,
+              "opcode": 9,
+              "reference_address": 6008448,
+              "target_address": 6007424,
+              "storage": "zero_fill",
+              "typed_array": {
+                "name": "buf",
+                "dimensions": [
+                  6,
+                  10
+                ],
+                "element_type": 1,
+                "size": 60,
+                "declaration_die": 5602094,
+                "type_chain": [
+                  {
+                    "die": 5598614,
+                    "descriptor": "000a000000000005000000087200726d5500"
+                  },
+                  {
+                    "die": 5598578,
+                    "descriptor": "000a0000000000090000000855000100"
+                  }
+                ]
+              }
+            },
+            {
+              "hi_offset": 136,
+              "lo_offset": 144,
+              "opcode": 9,
+              "reference_address": 5216496,
+              "target_address": 5215520,
+              "storage": "file_backed",
+              "scope": "complete seven-entry bounded dispatch"
+            },
+            {
+              "hi_offset": 172,
+              "lo_offset": 176,
+              "opcode": 9,
+              "reference_address": 5159481,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 168,
+                "address_add_offset": 180,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 216,
+              "lo_offset": 224,
+              "opcode": 9,
+              "reference_address": 5159481,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 220,
+                "address_add_offset": 228,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 264,
+              "lo_offset": 272,
+              "opcode": 9,
+              "reference_address": 5159481,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 268,
+                "address_add_offset": 276,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 312,
+              "lo_offset": 320,
+              "opcode": 9,
+              "reference_address": 5159481,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 316,
+                "address_add_offset": 324,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 372,
+              "lo_offset": 376,
+              "opcode": 9,
+              "reference_address": 5159481,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 368,
+                "address_add_offset": 380,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 416,
+              "lo_offset": 424,
+              "opcode": 9,
+              "reference_address": 5159481,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 420,
+                "address_add_offset": 428,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 464,
+              "lo_offset": 472,
+              "opcode": 9,
+              "reference_address": 5159481,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 468,
+                "address_add_offset": 476,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 512,
+              "lo_offset": 520,
+              "opcode": 9,
+              "reference_address": 5159481,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 516,
+                "address_add_offset": 524,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 576,
+              "lo_offset": 584,
+              "opcode": 9,
+              "reference_address": 5159481,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 588,
+                "address_add_offset": 592,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 628,
+              "lo_offset": 636,
+              "opcode": 9,
+              "reference_address": 5159481,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 632,
+                "address_add_offset": 640,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 676,
+              "lo_offset": 684,
+              "opcode": 9,
+              "reference_address": 5159481,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 680,
+                "address_add_offset": 688,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 724,
+              "lo_offset": 732,
+              "opcode": 9,
+              "reference_address": 5159481,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 728,
+                "address_add_offset": 736,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            }
+          ],
+          "calls": [],
+          "tables": [
+            {
+              "jump_offset": 156,
+              "index_count": 7,
+              "test_offset": 128,
+              "default_offset": 368,
+              "table_address": 5215520,
+              "table_sha256": "cf9173c798f4ec3b02963cca4412acc4c22ef3ba7df25012404849647957ee6c",
+              "target_offsets": [
+                368,
+                368,
+                368,
+                368,
+                168,
+                168,
+                368
+              ]
+            }
+          ]
+        },
+        {
+          "name": "xUtilShutdown",
+          "address": 2165728,
+          "size": 20,
+          "already_known": false,
+          "pairs": [],
+          "calls": [],
+          "tables": []
+        },
+        {
+          "name": "xUtilStartup",
+          "address": 2165760,
+          "size": 48,
+          "already_known": false,
+          "pairs": [],
+          "calls": [
+            {
+              "offset": 24,
+              "opcode": 3,
+              "reference_address": 2163392,
+              "target_address": 2164800
+            }
+          ],
+          "tables": []
+        }
+      ],
+      "uniqueness": {
+        "matching_addresses": [
+          2163072
+        ],
+        "unchanged_anchor_offset": 636,
+        "unchanged_anchor_bytes": 416,
+        "masked_instruction_count": 25
+      }
+    },
+    {
+      "version": "SLES-51968",
+      "source": "SB/Core/x/xutil.cpp",
+      "source_start": 2162960,
+      "target_start": 2163072,
+      "complete_original_members": 11,
+      "previously_confirmed_members": 3,
+      "start": 2163072,
+      "span": 2736,
+      "functions": [
+        {
+          "name": "xUtil_wtadjust",
+          "address": 2163072,
+          "size": 280,
+          "already_known": false,
+          "pairs": [],
+          "calls": [],
+          "tables": []
+        },
+        {
+          "name": "xUtil_yesno",
+          "address": 2163360,
+          "size": 120,
+          "already_known": true,
+          "pairs": [],
+          "calls": [
+            {
+              "offset": 72,
+              "opcode": 3,
+              "reference_address": 2024560,
+              "target_address": 2024672
+            }
+          ],
+          "tables": []
+        },
+        {
+          "name": "itoBCD",
+          "address": 2163488,
+          "size": 96,
+          "already_known": true,
+          "pairs": [],
+          "calls": [],
+          "tables": []
+        },
+        {
+          "name": "itoBCD",
+          "address": 2163584,
+          "size": 96,
+          "already_known": true,
+          "pairs": [],
+          "calls": [],
+          "tables": []
+        },
+        {
+          "name": "BCDtoi",
+          "address": 2163680,
+          "size": 52,
+          "already_known": false,
+          "pairs": [
+            {
+              "hi_offset": 8,
+              "lo_offset": 24,
+              "opcode": 9,
+              "reference_address": 5215296,
+              "target_address": 5215552,
+              "storage": "file_backed",
+              "scope": "unchanged complete string literal",
+              "literal_sha256": "4532be67ae090cecbcb788c686c7ae846a6b8a43b11464252d63440b2ca149e4",
+              "literal_size_with_terminator": 3
+            }
+          ],
+          "calls": [
+            {
+              "offset": 20,
+              "opcode": 3,
+              "reference_address": 1160624,
+              "target_address": 1160624,
+              "independent_pointer_context": {
+                "name": "_impure_ptr",
+                "source": "SB/Core/x/xAnim.cpp",
+                "witnesses": [
+                  2170176
+                ],
+                "original_type": {
+                  "declaration_die": 5604848,
+                  "pointer_descriptor": "01ae885500",
+                  "pointee_die": 5605550,
+                  "pointee_name": "_reent",
+                  "pointee_size": 752
+                },
+                "pair": {
+                  "hi_offset": 0,
+                  "lo_offset": 8,
+                  "opcode": 35,
+                  "reference_address": 4215752,
+                  "target_address": 4216008,
+                  "storage": "file_backed"
+                },
+                "no_new_identity_or_extent": true
+              },
+              "opaque_context_sha256": "9dddc489a474e26e59c1c2b54a232f73d311e48c4e7303849597077c6feb0123",
+              "unmasked_no_identity_claim": true
+            },
+            {
+              "offset": 28,
+              "opcode": 3,
+              "reference_address": 1133520,
+              "target_address": 1133520,
+              "opaque_context_sha256": "b03d59a1ddb6558042c143d4831a6881cf84ceced4ba2559d13b81ed23cb23fd",
+              "unmasked_no_identity_claim": true
+            }
+          ],
+          "tables": []
+        },
+        {
+          "name": "strtosjis",
+          "address": 2163744,
+          "size": 552,
+          "already_known": false,
+          "pairs": [
+            {
+              "hi_offset": 376,
+              "lo_offset": 380,
+              "opcode": 9,
+              "reference_address": 5215352,
+              "target_address": 5215608,
+              "storage": "file_backed",
+              "scope": "unchanged complete string literal",
+              "literal_sha256": "621f5d5f91e76898c0737e712424e84fa9bb78d778c8c81ce1b520e5a619b717",
+              "literal_size_with_terminator": 21
+            },
+            {
+              "hi_offset": 416,
+              "lo_offset": 424,
+              "opcode": 9,
+              "reference_address": 4294832,
+              "target_address": 4295088,
+              "storage": "file_backed",
+              "typed_array": {
+                "name": "ascii_k_table",
+                "dimensions": [
+                  33
+                ],
+                "element_type": 6,
+                "size": 66,
+                "declaration_die": 5598768,
+                "type_chain": [
+                  {
+                    "die": 5599224,
+                    "descriptor": "000a0000000000200000000855000600"
+                  }
+                ]
+              }
+            },
+            {
+              "hi_offset": 456,
+              "lo_offset": 460,
+              "opcode": 9,
+              "reference_address": 4294816,
+              "target_address": 4295072,
+              "storage": "file_backed",
+              "typed_array": {
+                "name": "ascii_table",
+                "dimensions": [
+                  3,
+                  2
+                ],
+                "element_type": 6,
+                "size": 12,
+                "declaration_die": 5598727,
+                "type_chain": [
+                  {
+                    "die": 5599404,
+                    "descriptor": "000a00000000000200000008720088705500"
+                  },
+                  {
+                    "die": 5599368,
+                    "descriptor": "000a0000000000010000000855000600"
+                  }
+                ]
+              }
+            }
+          ],
+          "calls": [
+            {
+              "offset": 384,
+              "opcode": 3,
+              "reference_address": 1154672,
+              "target_address": 1154672,
+              "opaque_context_sha256": "109c665f4af2c49b8ac5d85d8f32a6c1399cec5b77ee418647d382226505f0f0",
+              "unmasked_no_identity_claim": true
+            },
+            {
+              "offset": 392,
+              "opcode": 3,
+              "reference_address": 1139152,
+              "target_address": 1139152,
+              "independent_pointer_context": {
+                "name": "_impure_ptr",
+                "source": "SB/Core/x/xAnim.cpp",
+                "witnesses": [
+                  2170176
+                ],
+                "original_type": {
+                  "declaration_die": 5604848,
+                  "pointer_descriptor": "01ae885500",
+                  "pointee_die": 5605550,
+                  "pointee_name": "_reent",
+                  "pointee_size": 752
+                },
+                "pair": {
+                  "hi_offset": 8,
+                  "lo_offset": 32,
+                  "opcode": 35,
+                  "reference_address": 4215752,
+                  "target_address": 4216008,
+                  "storage": "file_backed"
+                },
+                "no_new_identity_or_extent": true
+              },
+              "opaque_context_sha256": "683874d17ac8200f47d346d9a14be50146ed0f8d9f919c2b250d6c2a4aa31a6d",
+              "unmasked_no_identity_claim": true
+            }
+          ],
+          "tables": []
+        },
+        {
+          "name": "xUtil_crc_update",
+          "address": 2164304,
+          "size": 484,
+          "already_known": false,
+          "pairs": [
+            {
+              "hi_offset": 72,
+              "lo_offset": 76,
+              "opcode": 9,
+              "reference_address": 6006144,
+              "target_address": 6006400,
+              "storage": "zero_fill",
+              "typed_array": {
+                "name": "g_crc32_table",
+                "dimensions": [
+                  256
+                ],
+                "element_type": 9,
+                "size": 1024,
+                "declaration_die": 5598684,
+                "type_chain": [
+                  {
+                    "die": 5599296,
+                    "descriptor": "000a0000000000ff0000000855000900"
+                  }
+                ]
+              }
+            },
+            {
+              "hi_offset": 392,
+              "lo_offset": 396,
+              "opcode": 9,
+              "reference_address": 6006144,
+              "target_address": 6006400,
+              "storage": "zero_fill",
+              "typed_array": {
+                "name": "g_crc32_table",
+                "dimensions": [
+                  256
+                ],
+                "element_type": 9,
+                "size": 1024,
+                "declaration_die": 5598684,
+                "type_chain": [
+                  {
+                    "die": 5599296,
+                    "descriptor": "000a0000000000ff0000000855000900"
+                  }
+                ]
+              }
+            }
+          ],
+          "calls": [
+            {
+              "offset": 40,
+              "opcode": 3,
+              "reference_address": 2164688,
+              "target_address": 2164800
+            }
+          ],
+          "tables": []
+        },
+        {
+          "name": "xUtil_crc_init",
+          "address": 2164800,
+          "size": 136,
+          "already_known": false,
+          "pairs": [
+            {
+              "hi_offset": 8,
+              "lo_offset": 16,
+              "opcode": 9,
+              "reference_address": 6006144,
+              "target_address": 6006400,
+              "storage": "zero_fill",
+              "typed_array": {
+                "name": "g_crc32_table",
+                "dimensions": [
+                  256
+                ],
+                "element_type": 9,
+                "size": 1024,
+                "declaration_die": 5598684,
+                "type_chain": [
+                  {
+                    "die": 5599296,
+                    "descriptor": "000a0000000000ff0000000855000900"
+                  }
+                ]
+              }
+            }
+          ],
+          "calls": [],
+          "tables": []
+        },
+        {
+          "name": "xUtil_idtag2string",
+          "address": 2164944,
+          "size": 784,
+          "already_known": false,
+          "pairs": [
+            {
+              "hi_offset": 32,
+              "lo_offset": 40,
+              "opcode": 9,
+              "reference_address": 6007168,
+              "target_address": 6007424,
+              "storage": "zero_fill",
+              "typed_array": {
+                "name": "buf",
+                "dimensions": [
+                  6,
+                  10
+                ],
+                "element_type": 1,
+                "size": 60,
+                "declaration_die": 5602552,
+                "type_chain": [
+                  {
+                    "die": 5599072,
+                    "descriptor": "000a0000000000050000000872003c6f5500"
+                  },
+                  {
+                    "die": 5599036,
+                    "descriptor": "000a0000000000090000000855000100"
+                  }
+                ]
+              }
+            },
+            {
+              "hi_offset": 56,
+              "lo_offset": 64,
+              "opcode": 9,
+              "reference_address": 6007168,
+              "target_address": 6007424,
+              "storage": "zero_fill",
+              "typed_array": {
+                "name": "buf",
+                "dimensions": [
+                  6,
+                  10
+                ],
+                "element_type": 1,
+                "size": 60,
+                "declaration_die": 5602552,
+                "type_chain": [
+                  {
+                    "die": 5599072,
+                    "descriptor": "000a0000000000050000000872003c6f5500"
+                  },
+                  {
+                    "die": 5599036,
+                    "descriptor": "000a0000000000090000000855000100"
+                  }
+                ]
+              }
+            },
+            {
+              "hi_offset": 136,
+              "lo_offset": 144,
+              "opcode": 9,
+              "reference_address": 5215264,
+              "target_address": 5215520,
+              "storage": "file_backed",
+              "scope": "complete seven-entry bounded dispatch"
+            },
+            {
+              "hi_offset": 172,
+              "lo_offset": 176,
+              "opcode": 9,
+              "reference_address": 5158201,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 168,
+                "address_add_offset": 180,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 216,
+              "lo_offset": 224,
+              "opcode": 9,
+              "reference_address": 5158201,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 220,
+                "address_add_offset": 228,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 264,
+              "lo_offset": 272,
+              "opcode": 9,
+              "reference_address": 5158201,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 268,
+                "address_add_offset": 276,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 312,
+              "lo_offset": 320,
+              "opcode": 9,
+              "reference_address": 5158201,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 316,
+                "address_add_offset": 324,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 372,
+              "lo_offset": 376,
+              "opcode": 9,
+              "reference_address": 5158201,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 368,
+                "address_add_offset": 380,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 416,
+              "lo_offset": 424,
+              "opcode": 9,
+              "reference_address": 5158201,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 420,
+                "address_add_offset": 428,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 464,
+              "lo_offset": 472,
+              "opcode": 9,
+              "reference_address": 5158201,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 468,
+                "address_add_offset": 476,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 512,
+              "lo_offset": 520,
+              "opcode": 9,
+              "reference_address": 5158201,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 516,
+                "address_add_offset": 524,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 576,
+              "lo_offset": 584,
+              "opcode": 9,
+              "reference_address": 5158201,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 588,
+                "address_add_offset": 592,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 628,
+              "lo_offset": 636,
+              "opcode": 9,
+              "reference_address": 5158201,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 632,
+                "address_add_offset": 640,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 676,
+              "lo_offset": 684,
+              "opcode": 9,
+              "reference_address": 5158201,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 680,
+                "address_add_offset": 688,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 724,
+              "lo_offset": 732,
+              "opcode": 9,
+              "reference_address": 5158201,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 728,
+                "address_add_offset": 736,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            }
+          ],
+          "calls": [],
+          "tables": [
+            {
+              "jump_offset": 156,
+              "index_count": 7,
+              "test_offset": 128,
+              "default_offset": 368,
+              "table_address": 5215520,
+              "table_sha256": "cf9173c798f4ec3b02963cca4412acc4c22ef3ba7df25012404849647957ee6c",
+              "target_offsets": [
+                368,
+                368,
+                368,
+                368,
+                168,
+                168,
+                368
+              ]
+            }
+          ]
+        },
+        {
+          "name": "xUtilShutdown",
+          "address": 2165728,
+          "size": 20,
+          "already_known": false,
+          "pairs": [],
+          "calls": [],
+          "tables": []
+        },
+        {
+          "name": "xUtilStartup",
+          "address": 2165760,
+          "size": 48,
+          "already_known": false,
+          "pairs": [],
+          "calls": [
+            {
+              "offset": 24,
+              "opcode": 3,
+              "reference_address": 2164688,
+              "target_address": 2164800
+            }
+          ],
+          "tables": []
+        }
+      ],
+      "uniqueness": {
+        "matching_addresses": [
+          2163072
+        ],
+        "unchanged_anchor_offset": 636,
+        "unchanged_anchor_bytes": 416,
+        "masked_instruction_count": 25
+      }
+    },
+    {
+      "version": "SLES-51970",
+      "source": "SB/Core/x/xutil.cpp",
+      "source_start": 2159648,
+      "target_start": 2163072,
+      "complete_original_members": 11,
+      "previously_confirmed_members": 3,
+      "start": 2163072,
+      "span": 2736,
+      "functions": [
+        {
+          "name": "xUtil_wtadjust",
+          "address": 2163072,
+          "size": 280,
+          "already_known": false,
+          "pairs": [],
+          "calls": [],
+          "tables": []
+        },
+        {
+          "name": "xUtil_yesno",
+          "address": 2163360,
+          "size": 120,
+          "already_known": true,
+          "pairs": [],
+          "calls": [
+            {
+              "offset": 72,
+              "opcode": 3,
+              "reference_address": 2021200,
+              "target_address": 2024672
+            }
+          ],
+          "tables": []
+        },
+        {
+          "name": "itoBCD",
+          "address": 2163488,
+          "size": 96,
+          "already_known": true,
+          "pairs": [],
+          "calls": [],
+          "tables": []
+        },
+        {
+          "name": "itoBCD",
+          "address": 2163584,
+          "size": 96,
+          "already_known": true,
+          "pairs": [],
+          "calls": [],
+          "tables": []
+        },
+        {
+          "name": "BCDtoi",
+          "address": 2163680,
+          "size": 52,
+          "already_known": false,
+          "pairs": [
+            {
+              "hi_offset": 8,
+              "lo_offset": 24,
+              "opcode": 9,
+              "reference_address": 5213696,
+              "target_address": 5215552,
+              "storage": "file_backed",
+              "scope": "unchanged complete string literal",
+              "literal_sha256": "4532be67ae090cecbcb788c686c7ae846a6b8a43b11464252d63440b2ca149e4",
+              "literal_size_with_terminator": 3
+            }
+          ],
+          "calls": [
+            {
+              "offset": 20,
+              "opcode": 3,
+              "reference_address": 1160624,
+              "target_address": 1160624,
+              "independent_pointer_context": {
+                "name": "_impure_ptr",
+                "source": "SB/Core/x/xAnim.cpp",
+                "witnesses": [
+                  2170176
+                ],
+                "original_type": {
+                  "declaration_die": 5605694,
+                  "pointer_descriptor": "01fc8b5500",
+                  "pointee_die": 5606396,
+                  "pointee_name": "_reent",
+                  "pointee_size": 752
+                },
+                "pair": {
+                  "hi_offset": 0,
+                  "lo_offset": 8,
+                  "opcode": 35,
+                  "reference_address": 4212552,
+                  "target_address": 4216008,
+                  "storage": "file_backed"
+                },
+                "no_new_identity_or_extent": true
+              },
+              "opaque_context_sha256": "9dddc489a474e26e59c1c2b54a232f73d311e48c4e7303849597077c6feb0123",
+              "unmasked_no_identity_claim": true
+            },
+            {
+              "offset": 28,
+              "opcode": 3,
+              "reference_address": 1133520,
+              "target_address": 1133520,
+              "opaque_context_sha256": "b03d59a1ddb6558042c143d4831a6881cf84ceced4ba2559d13b81ed23cb23fd",
+              "unmasked_no_identity_claim": true
+            }
+          ],
+          "tables": []
+        },
+        {
+          "name": "strtosjis",
+          "address": 2163744,
+          "size": 552,
+          "already_known": false,
+          "pairs": [
+            {
+              "hi_offset": 376,
+              "lo_offset": 380,
+              "opcode": 9,
+              "reference_address": 5213752,
+              "target_address": 5215608,
+              "storage": "file_backed",
+              "scope": "unchanged complete string literal",
+              "literal_sha256": "621f5d5f91e76898c0737e712424e84fa9bb78d778c8c81ce1b520e5a619b717",
+              "literal_size_with_terminator": 21
+            },
+            {
+              "hi_offset": 416,
+              "lo_offset": 424,
+              "opcode": 9,
+              "reference_address": 4293264,
+              "target_address": 4295088,
+              "storage": "file_backed",
+              "typed_array": {
+                "name": "ascii_k_table",
+                "dimensions": [
+                  33
+                ],
+                "element_type": 6,
+                "size": 66,
+                "declaration_die": 5599614,
+                "type_chain": [
+                  {
+                    "die": 5600070,
+                    "descriptor": "000a0000000000200000000855000600"
+                  }
+                ]
+              }
+            },
+            {
+              "hi_offset": 456,
+              "lo_offset": 460,
+              "opcode": 9,
+              "reference_address": 4293248,
+              "target_address": 4295072,
+              "storage": "file_backed",
+              "typed_array": {
+                "name": "ascii_table",
+                "dimensions": [
+                  3,
+                  2
+                ],
+                "element_type": 6,
+                "size": 12,
+                "declaration_die": 5599573,
+                "type_chain": [
+                  {
+                    "die": 5600250,
+                    "descriptor": "000a000000000002000000087200d6735500"
+                  },
+                  {
+                    "die": 5600214,
+                    "descriptor": "000a0000000000010000000855000600"
+                  }
+                ]
+              }
+            }
+          ],
+          "calls": [
+            {
+              "offset": 384,
+              "opcode": 3,
+              "reference_address": 1154672,
+              "target_address": 1154672,
+              "opaque_context_sha256": "109c665f4af2c49b8ac5d85d8f32a6c1399cec5b77ee418647d382226505f0f0",
+              "unmasked_no_identity_claim": true
+            },
+            {
+              "offset": 392,
+              "opcode": 3,
+              "reference_address": 1139152,
+              "target_address": 1139152,
+              "independent_pointer_context": {
+                "name": "_impure_ptr",
+                "source": "SB/Core/x/xAnim.cpp",
+                "witnesses": [
+                  2170176
+                ],
+                "original_type": {
+                  "declaration_die": 5605694,
+                  "pointer_descriptor": "01fc8b5500",
+                  "pointee_die": 5606396,
+                  "pointee_name": "_reent",
+                  "pointee_size": 752
+                },
+                "pair": {
+                  "hi_offset": 8,
+                  "lo_offset": 32,
+                  "opcode": 35,
+                  "reference_address": 4212552,
+                  "target_address": 4216008,
+                  "storage": "file_backed"
+                },
+                "no_new_identity_or_extent": true
+              },
+              "opaque_context_sha256": "683874d17ac8200f47d346d9a14be50146ed0f8d9f919c2b250d6c2a4aa31a6d",
+              "unmasked_no_identity_claim": true
+            }
+          ],
+          "tables": []
+        },
+        {
+          "name": "xUtil_crc_update",
+          "address": 2164304,
+          "size": 484,
+          "already_known": false,
+          "pairs": [
+            {
+              "hi_offset": 72,
+              "lo_offset": 76,
+              "opcode": 9,
+              "reference_address": 6004608,
+              "target_address": 6006400,
+              "storage": "zero_fill",
+              "typed_array": {
+                "name": "g_crc32_table",
+                "dimensions": [
+                  256
+                ],
+                "element_type": 9,
+                "size": 1024,
+                "declaration_die": 5599530,
+                "type_chain": [
+                  {
+                    "die": 5600142,
+                    "descriptor": "000a0000000000ff0000000855000900"
+                  }
+                ]
+              }
+            },
+            {
+              "hi_offset": 392,
+              "lo_offset": 396,
+              "opcode": 9,
+              "reference_address": 6004608,
+              "target_address": 6006400,
+              "storage": "zero_fill",
+              "typed_array": {
+                "name": "g_crc32_table",
+                "dimensions": [
+                  256
+                ],
+                "element_type": 9,
+                "size": 1024,
+                "declaration_die": 5599530,
+                "type_chain": [
+                  {
+                    "die": 5600142,
+                    "descriptor": "000a0000000000ff0000000855000900"
+                  }
+                ]
+              }
+            }
+          ],
+          "calls": [
+            {
+              "offset": 40,
+              "opcode": 3,
+              "reference_address": 2161376,
+              "target_address": 2164800
+            }
+          ],
+          "tables": []
+        },
+        {
+          "name": "xUtil_crc_init",
+          "address": 2164800,
+          "size": 136,
+          "already_known": false,
+          "pairs": [
+            {
+              "hi_offset": 8,
+              "lo_offset": 16,
+              "opcode": 9,
+              "reference_address": 6004608,
+              "target_address": 6006400,
+              "storage": "zero_fill",
+              "typed_array": {
+                "name": "g_crc32_table",
+                "dimensions": [
+                  256
+                ],
+                "element_type": 9,
+                "size": 1024,
+                "declaration_die": 5599530,
+                "type_chain": [
+                  {
+                    "die": 5600142,
+                    "descriptor": "000a0000000000ff0000000855000900"
+                  }
+                ]
+              }
+            }
+          ],
+          "calls": [],
+          "tables": []
+        },
+        {
+          "name": "xUtil_idtag2string",
+          "address": 2164944,
+          "size": 784,
+          "already_known": false,
+          "pairs": [
+            {
+              "hi_offset": 32,
+              "lo_offset": 40,
+              "opcode": 9,
+              "reference_address": 6005632,
+              "target_address": 6007424,
+              "storage": "zero_fill",
+              "typed_array": {
+                "name": "buf",
+                "dimensions": [
+                  6,
+                  10
+                ],
+                "element_type": 1,
+                "size": 60,
+                "declaration_die": 5603398,
+                "type_chain": [
+                  {
+                    "die": 5599918,
+                    "descriptor": "000a0000000000050000000872008a725500"
+                  },
+                  {
+                    "die": 5599882,
+                    "descriptor": "000a0000000000090000000855000100"
+                  }
+                ]
+              }
+            },
+            {
+              "hi_offset": 56,
+              "lo_offset": 64,
+              "opcode": 9,
+              "reference_address": 6005632,
+              "target_address": 6007424,
+              "storage": "zero_fill",
+              "typed_array": {
+                "name": "buf",
+                "dimensions": [
+                  6,
+                  10
+                ],
+                "element_type": 1,
+                "size": 60,
+                "declaration_die": 5603398,
+                "type_chain": [
+                  {
+                    "die": 5599918,
+                    "descriptor": "000a0000000000050000000872008a725500"
+                  },
+                  {
+                    "die": 5599882,
+                    "descriptor": "000a0000000000090000000855000100"
+                  }
+                ]
+              }
+            },
+            {
+              "hi_offset": 136,
+              "lo_offset": 144,
+              "opcode": 9,
+              "reference_address": 5213664,
+              "target_address": 5215520,
+              "storage": "file_backed",
+              "scope": "complete seven-entry bounded dispatch"
+            },
+            {
+              "hi_offset": 172,
+              "lo_offset": 176,
+              "opcode": 9,
+              "reference_address": 5156665,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 168,
+                "address_add_offset": 180,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 216,
+              "lo_offset": 224,
+              "opcode": 9,
+              "reference_address": 5156665,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 220,
+                "address_add_offset": 228,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 264,
+              "lo_offset": 272,
+              "opcode": 9,
+              "reference_address": 5156665,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 268,
+                "address_add_offset": 276,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 312,
+              "lo_offset": 320,
+              "opcode": 9,
+              "reference_address": 5156665,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 316,
+                "address_add_offset": 324,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 372,
+              "lo_offset": 376,
+              "opcode": 9,
+              "reference_address": 5156665,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 368,
+                "address_add_offset": 380,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 416,
+              "lo_offset": 424,
+              "opcode": 9,
+              "reference_address": 5156665,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 420,
+                "address_add_offset": 428,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 464,
+              "lo_offset": 472,
+              "opcode": 9,
+              "reference_address": 5156665,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 468,
+                "address_add_offset": 476,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 512,
+              "lo_offset": 520,
+              "opcode": 9,
+              "reference_address": 5156665,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 516,
+                "address_add_offset": 524,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 576,
+              "lo_offset": 584,
+              "opcode": 9,
+              "reference_address": 5156665,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 588,
+                "address_add_offset": 592,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 628,
+              "lo_offset": 636,
+              "opcode": 9,
+              "reference_address": 5156665,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 632,
+                "address_add_offset": 640,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 676,
+              "lo_offset": 684,
+              "opcode": 9,
+              "reference_address": 5156665,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 680,
+                "address_add_offset": 688,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 724,
+              "lo_offset": 732,
+              "opcode": 9,
+              "reference_address": 5156665,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 728,
+                "address_add_offset": 736,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            }
+          ],
+          "calls": [],
+          "tables": [
+            {
+              "jump_offset": 156,
+              "index_count": 7,
+              "test_offset": 128,
+              "default_offset": 368,
+              "table_address": 5215520,
+              "table_sha256": "cf9173c798f4ec3b02963cca4412acc4c22ef3ba7df25012404849647957ee6c",
+              "target_offsets": [
+                368,
+                368,
+                368,
+                368,
+                168,
+                168,
+                368
+              ]
+            }
+          ]
+        },
+        {
+          "name": "xUtilShutdown",
+          "address": 2165728,
+          "size": 20,
+          "already_known": false,
+          "pairs": [],
+          "calls": [],
+          "tables": []
+        },
+        {
+          "name": "xUtilStartup",
+          "address": 2165760,
+          "size": 48,
+          "already_known": false,
+          "pairs": [],
+          "calls": [
+            {
+              "offset": 24,
+              "opcode": 3,
+              "reference_address": 2161376,
+              "target_address": 2164800
+            }
+          ],
+          "tables": []
+        }
+      ],
+      "uniqueness": {
+        "matching_addresses": [
+          2163072
+        ],
+        "unchanged_anchor_offset": 636,
+        "unchanged_anchor_bytes": 416,
+        "masked_instruction_count": 25
       }
     }
   ],
@@ -66850,6 +68778,2450 @@
           2158992,
           2159088,
           2159200
+        ]
+      }
+    },
+    {
+      "name": "xUtil_wtadjust",
+      "source": "SB/Core/x/xutil.cpp",
+      "address": 2163072,
+      "size": 280,
+      "sha256": "607757bda84f901bbaeddedcd6518f8c9e0654b1b58bd85b5e91a54c47f096cf",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2161664,
+          "name": "xUtil_wtadjust",
+          "source": "SB/Core/x/xutil.cpp",
+          "linkage_name": "xUtil_wtadjust__FPfif",
+          "reference_sha256": "607757bda84f901bbaeddedcd6518f8c9e0654b1b58bd85b5e91a54c47f096cf",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2162960,
+          "name": "xUtil_wtadjust",
+          "source": "SB/Core/x/xutil.cpp",
+          "linkage_name": "xUtil_wtadjust__FPfif",
+          "reference_sha256": "607757bda84f901bbaeddedcd6518f8c9e0654b1b58bd85b5e91a54c47f096cf",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2159648,
+          "name": "xUtil_wtadjust",
+          "source": "SB/Core/x/xutil.cpp",
+          "linkage_name": "xUtil_wtadjust__FPfif",
+          "reference_sha256": "607757bda84f901bbaeddedcd6518f8c9e0654b1b58bd85b5e91a54c47f096cf",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2163344
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              2163080,
+              2163144
+            ],
+            [
+              2163104,
+              2163120
+            ],
+            [
+              2163136,
+              2163096
+            ],
+            [
+              2163164,
+              2163344
+            ],
+            [
+              2163172,
+              2163296
+            ],
+            [
+              2163288,
+              2163184
+            ],
+            [
+              2163300,
+              2163344
+            ],
+            [
+              2163332,
+              2163312
+            ]
+          ],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 8
+        },
+        "previously_confirmed_neighbor_entries": [
+          2163360,
+          2163488,
+          2163584
+        ]
+      }
+    },
+    {
+      "name": "BCDtoi",
+      "source": "SB/Core/x/xutil.cpp",
+      "address": 2163680,
+      "size": 52,
+      "sha256": "1809c93d337e38591a16de4be2e55a759cd8bb5eda4ce0748c570862b8f16d57",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2162272,
+          "name": "BCDtoi",
+          "source": "SB/Core/x/xutil.cpp",
+          "linkage_name": "BCDtoi__FUc",
+          "reference_sha256": "9a9d1773bf519e2f62b92302111e79dd239e12a9fcaa959b088fd36cc4419f99",
+          "data_address_operands": [
+            {
+              "hi_offset": 8,
+              "lo_offset": 24,
+              "opcode": 9,
+              "reference_address": 5216528,
+              "target_address": 5215552,
+              "storage": "file_backed",
+              "scope": "unchanged complete string literal",
+              "literal_sha256": "4532be67ae090cecbcb788c686c7ae846a6b8a43b11464252d63440b2ca149e4",
+              "literal_size_with_terminator": 3
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 20,
+              "opcode": 3,
+              "reference_address": 1160624,
+              "target_address": 1160624,
+              "independent_pointer_context": {
+                "name": "_impure_ptr",
+                "source": "SB/Core/x/xAnim.cpp",
+                "witnesses": [
+                  2170176
+                ],
+                "original_type": {
+                  "declaration_die": 5604390,
+                  "pointer_descriptor": "01e4865500",
+                  "pointee_die": 5605092,
+                  "pointee_name": "_reent",
+                  "pointee_size": 752
+                },
+                "pair": {
+                  "hi_offset": 0,
+                  "lo_offset": 8,
+                  "opcode": 35,
+                  "reference_address": 4214600,
+                  "target_address": 4216008,
+                  "storage": "file_backed"
+                },
+                "no_new_identity_or_extent": true
+              },
+              "opaque_context_sha256": "9dddc489a474e26e59c1c2b54a232f73d311e48c4e7303849597077c6feb0123",
+              "unmasked_no_identity_claim": true
+            },
+            {
+              "offset": 28,
+              "opcode": 3,
+              "reference_address": 1133520,
+              "target_address": 1133520,
+              "opaque_context_sha256": "b03d59a1ddb6558042c143d4831a6881cf84ceced4ba2559d13b81ed23cb23fd",
+              "unmasked_no_identity_claim": true
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2163568,
+          "name": "BCDtoi",
+          "source": "SB/Core/x/xutil.cpp",
+          "linkage_name": "BCDtoi__FUc",
+          "reference_sha256": "f0bd61faa31104fc20dff7d58e0a602a2760f6aeacaec697cf33ba3ff20686d1",
+          "data_address_operands": [
+            {
+              "hi_offset": 8,
+              "lo_offset": 24,
+              "opcode": 9,
+              "reference_address": 5215296,
+              "target_address": 5215552,
+              "storage": "file_backed",
+              "scope": "unchanged complete string literal",
+              "literal_sha256": "4532be67ae090cecbcb788c686c7ae846a6b8a43b11464252d63440b2ca149e4",
+              "literal_size_with_terminator": 3
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 20,
+              "opcode": 3,
+              "reference_address": 1160624,
+              "target_address": 1160624,
+              "independent_pointer_context": {
+                "name": "_impure_ptr",
+                "source": "SB/Core/x/xAnim.cpp",
+                "witnesses": [
+                  2170176
+                ],
+                "original_type": {
+                  "declaration_die": 5604848,
+                  "pointer_descriptor": "01ae885500",
+                  "pointee_die": 5605550,
+                  "pointee_name": "_reent",
+                  "pointee_size": 752
+                },
+                "pair": {
+                  "hi_offset": 0,
+                  "lo_offset": 8,
+                  "opcode": 35,
+                  "reference_address": 4215752,
+                  "target_address": 4216008,
+                  "storage": "file_backed"
+                },
+                "no_new_identity_or_extent": true
+              },
+              "opaque_context_sha256": "9dddc489a474e26e59c1c2b54a232f73d311e48c4e7303849597077c6feb0123",
+              "unmasked_no_identity_claim": true
+            },
+            {
+              "offset": 28,
+              "opcode": 3,
+              "reference_address": 1133520,
+              "target_address": 1133520,
+              "opaque_context_sha256": "b03d59a1ddb6558042c143d4831a6881cf84ceced4ba2559d13b81ed23cb23fd",
+              "unmasked_no_identity_claim": true
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2160256,
+          "name": "BCDtoi",
+          "source": "SB/Core/x/xutil.cpp",
+          "linkage_name": "BCDtoi__FUc",
+          "reference_sha256": "c8775afd15c3dc66db3d55a4003917ec9107cccc27674c8a1da67d530a921182",
+          "data_address_operands": [
+            {
+              "hi_offset": 8,
+              "lo_offset": 24,
+              "opcode": 9,
+              "reference_address": 5213696,
+              "target_address": 5215552,
+              "storage": "file_backed",
+              "scope": "unchanged complete string literal",
+              "literal_sha256": "4532be67ae090cecbcb788c686c7ae846a6b8a43b11464252d63440b2ca149e4",
+              "literal_size_with_terminator": 3
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 20,
+              "opcode": 3,
+              "reference_address": 1160624,
+              "target_address": 1160624,
+              "independent_pointer_context": {
+                "name": "_impure_ptr",
+                "source": "SB/Core/x/xAnim.cpp",
+                "witnesses": [
+                  2170176
+                ],
+                "original_type": {
+                  "declaration_die": 5605694,
+                  "pointer_descriptor": "01fc8b5500",
+                  "pointee_die": 5606396,
+                  "pointee_name": "_reent",
+                  "pointee_size": 752
+                },
+                "pair": {
+                  "hi_offset": 0,
+                  "lo_offset": 8,
+                  "opcode": 35,
+                  "reference_address": 4212552,
+                  "target_address": 4216008,
+                  "storage": "file_backed"
+                },
+                "no_new_identity_or_extent": true
+              },
+              "opaque_context_sha256": "9dddc489a474e26e59c1c2b54a232f73d311e48c4e7303849597077c6feb0123",
+              "unmasked_no_identity_claim": true
+            },
+            {
+              "offset": 28,
+              "opcode": 3,
+              "reference_address": 1133520,
+              "target_address": 1133520,
+              "opaque_context_sha256": "b03d59a1ddb6558042c143d4831a6881cf84ceced4ba2559d13b81ed23cb23fd",
+              "unmasked_no_identity_claim": true
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2163724
+          ],
+          "direct_or_indirect_calls": [
+            2163700,
+            2163708
+          ],
+          "branches": [],
+          "stack_adjustments": [
+            [
+              2163680,
+              -32
+            ],
+            [
+              2163728,
+              32
+            ]
+          ],
+          "ra_saves": [
+            [
+              2163692,
+              -32
+            ]
+          ],
+          "ra_loads": [
+            [
+              2163716,
+              -32
+            ]
+          ],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 12
+        },
+        "previously_confirmed_neighbor_entries": [
+          2163360,
+          2163488,
+          2163584
+        ]
+      }
+    },
+    {
+      "name": "strtosjis",
+      "source": "SB/Core/x/xutil.cpp",
+      "address": 2163744,
+      "size": 552,
+      "sha256": "dce0ea4368635fa281caa23edcbd5d9a1d3a13064b05e5f6872fb149eb6d5961",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2162336,
+          "name": "strtosjis",
+          "source": "SB/Core/x/xutil.cpp",
+          "linkage_name": "strtosjis__FPUcPUc",
+          "reference_sha256": "7261cfee89c5f4c3002d9ae076c4cc2c834f2f89a81bbcaee814bfbc94bffd77",
+          "data_address_operands": [
+            {
+              "hi_offset": 376,
+              "lo_offset": 380,
+              "opcode": 9,
+              "reference_address": 5216584,
+              "target_address": 5215608,
+              "storage": "file_backed",
+              "scope": "unchanged complete string literal",
+              "literal_sha256": "621f5d5f91e76898c0737e712424e84fa9bb78d778c8c81ce1b520e5a619b717",
+              "literal_size_with_terminator": 21
+            },
+            {
+              "hi_offset": 416,
+              "lo_offset": 424,
+              "opcode": 9,
+              "reference_address": 4296112,
+              "target_address": 4295088,
+              "storage": "file_backed",
+              "typed_array": {
+                "name": "ascii_k_table",
+                "dimensions": [
+                  33
+                ],
+                "element_type": 6,
+                "size": 66,
+                "declaration_die": 5598310,
+                "type_chain": [
+                  {
+                    "die": 5598766,
+                    "descriptor": "000a0000000000200000000855000600"
+                  }
+                ]
+              }
+            },
+            {
+              "hi_offset": 456,
+              "lo_offset": 460,
+              "opcode": 9,
+              "reference_address": 4296096,
+              "target_address": 4295072,
+              "storage": "file_backed",
+              "typed_array": {
+                "name": "ascii_table",
+                "dimensions": [
+                  3,
+                  2
+                ],
+                "element_type": 6,
+                "size": 12,
+                "declaration_die": 5598269,
+                "type_chain": [
+                  {
+                    "die": 5598946,
+                    "descriptor": "000a000000000002000000087200be6e5500"
+                  },
+                  {
+                    "die": 5598910,
+                    "descriptor": "000a0000000000010000000855000600"
+                  }
+                ]
+              }
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 384,
+              "opcode": 3,
+              "reference_address": 1154672,
+              "target_address": 1154672,
+              "opaque_context_sha256": "109c665f4af2c49b8ac5d85d8f32a6c1399cec5b77ee418647d382226505f0f0",
+              "unmasked_no_identity_claim": true
+            },
+            {
+              "offset": 392,
+              "opcode": 3,
+              "reference_address": 1139152,
+              "target_address": 1139152,
+              "independent_pointer_context": {
+                "name": "_impure_ptr",
+                "source": "SB/Core/x/xAnim.cpp",
+                "witnesses": [
+                  2170176
+                ],
+                "original_type": {
+                  "declaration_die": 5604390,
+                  "pointer_descriptor": "01e4865500",
+                  "pointee_die": 5605092,
+                  "pointee_name": "_reent",
+                  "pointee_size": 752
+                },
+                "pair": {
+                  "hi_offset": 8,
+                  "lo_offset": 32,
+                  "opcode": 35,
+                  "reference_address": 4214600,
+                  "target_address": 4216008,
+                  "storage": "file_backed"
+                },
+                "no_new_identity_or_extent": true
+              },
+              "opaque_context_sha256": "683874d17ac8200f47d346d9a14be50146ed0f8d9f919c2b250d6c2a4aa31a6d",
+              "unmasked_no_identity_claim": true
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2163632,
+          "name": "strtosjis",
+          "source": "SB/Core/x/xutil.cpp",
+          "linkage_name": "strtosjis__FPUcPUc",
+          "reference_sha256": "b15bf6abdf83581fbdeed2db1c235a1161b00b6c59de4bbee38fdd02a0044845",
+          "data_address_operands": [
+            {
+              "hi_offset": 376,
+              "lo_offset": 380,
+              "opcode": 9,
+              "reference_address": 5215352,
+              "target_address": 5215608,
+              "storage": "file_backed",
+              "scope": "unchanged complete string literal",
+              "literal_sha256": "621f5d5f91e76898c0737e712424e84fa9bb78d778c8c81ce1b520e5a619b717",
+              "literal_size_with_terminator": 21
+            },
+            {
+              "hi_offset": 416,
+              "lo_offset": 424,
+              "opcode": 9,
+              "reference_address": 4294832,
+              "target_address": 4295088,
+              "storage": "file_backed",
+              "typed_array": {
+                "name": "ascii_k_table",
+                "dimensions": [
+                  33
+                ],
+                "element_type": 6,
+                "size": 66,
+                "declaration_die": 5598768,
+                "type_chain": [
+                  {
+                    "die": 5599224,
+                    "descriptor": "000a0000000000200000000855000600"
+                  }
+                ]
+              }
+            },
+            {
+              "hi_offset": 456,
+              "lo_offset": 460,
+              "opcode": 9,
+              "reference_address": 4294816,
+              "target_address": 4295072,
+              "storage": "file_backed",
+              "typed_array": {
+                "name": "ascii_table",
+                "dimensions": [
+                  3,
+                  2
+                ],
+                "element_type": 6,
+                "size": 12,
+                "declaration_die": 5598727,
+                "type_chain": [
+                  {
+                    "die": 5599404,
+                    "descriptor": "000a00000000000200000008720088705500"
+                  },
+                  {
+                    "die": 5599368,
+                    "descriptor": "000a0000000000010000000855000600"
+                  }
+                ]
+              }
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 384,
+              "opcode": 3,
+              "reference_address": 1154672,
+              "target_address": 1154672,
+              "opaque_context_sha256": "109c665f4af2c49b8ac5d85d8f32a6c1399cec5b77ee418647d382226505f0f0",
+              "unmasked_no_identity_claim": true
+            },
+            {
+              "offset": 392,
+              "opcode": 3,
+              "reference_address": 1139152,
+              "target_address": 1139152,
+              "independent_pointer_context": {
+                "name": "_impure_ptr",
+                "source": "SB/Core/x/xAnim.cpp",
+                "witnesses": [
+                  2170176
+                ],
+                "original_type": {
+                  "declaration_die": 5604848,
+                  "pointer_descriptor": "01ae885500",
+                  "pointee_die": 5605550,
+                  "pointee_name": "_reent",
+                  "pointee_size": 752
+                },
+                "pair": {
+                  "hi_offset": 8,
+                  "lo_offset": 32,
+                  "opcode": 35,
+                  "reference_address": 4215752,
+                  "target_address": 4216008,
+                  "storage": "file_backed"
+                },
+                "no_new_identity_or_extent": true
+              },
+              "opaque_context_sha256": "683874d17ac8200f47d346d9a14be50146ed0f8d9f919c2b250d6c2a4aa31a6d",
+              "unmasked_no_identity_claim": true
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2160320,
+          "name": "strtosjis",
+          "source": "SB/Core/x/xutil.cpp",
+          "linkage_name": "strtosjis__FPUcPUc",
+          "reference_sha256": "eb640418cfc70da13d0ba83eecbd4a13cab47ce63359b9094227f01d28df3295",
+          "data_address_operands": [
+            {
+              "hi_offset": 376,
+              "lo_offset": 380,
+              "opcode": 9,
+              "reference_address": 5213752,
+              "target_address": 5215608,
+              "storage": "file_backed",
+              "scope": "unchanged complete string literal",
+              "literal_sha256": "621f5d5f91e76898c0737e712424e84fa9bb78d778c8c81ce1b520e5a619b717",
+              "literal_size_with_terminator": 21
+            },
+            {
+              "hi_offset": 416,
+              "lo_offset": 424,
+              "opcode": 9,
+              "reference_address": 4293264,
+              "target_address": 4295088,
+              "storage": "file_backed",
+              "typed_array": {
+                "name": "ascii_k_table",
+                "dimensions": [
+                  33
+                ],
+                "element_type": 6,
+                "size": 66,
+                "declaration_die": 5599614,
+                "type_chain": [
+                  {
+                    "die": 5600070,
+                    "descriptor": "000a0000000000200000000855000600"
+                  }
+                ]
+              }
+            },
+            {
+              "hi_offset": 456,
+              "lo_offset": 460,
+              "opcode": 9,
+              "reference_address": 4293248,
+              "target_address": 4295072,
+              "storage": "file_backed",
+              "typed_array": {
+                "name": "ascii_table",
+                "dimensions": [
+                  3,
+                  2
+                ],
+                "element_type": 6,
+                "size": 12,
+                "declaration_die": 5599573,
+                "type_chain": [
+                  {
+                    "die": 5600250,
+                    "descriptor": "000a000000000002000000087200d6735500"
+                  },
+                  {
+                    "die": 5600214,
+                    "descriptor": "000a0000000000010000000855000600"
+                  }
+                ]
+              }
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 384,
+              "opcode": 3,
+              "reference_address": 1154672,
+              "target_address": 1154672,
+              "opaque_context_sha256": "109c665f4af2c49b8ac5d85d8f32a6c1399cec5b77ee418647d382226505f0f0",
+              "unmasked_no_identity_claim": true
+            },
+            {
+              "offset": 392,
+              "opcode": 3,
+              "reference_address": 1139152,
+              "target_address": 1139152,
+              "independent_pointer_context": {
+                "name": "_impure_ptr",
+                "source": "SB/Core/x/xAnim.cpp",
+                "witnesses": [
+                  2170176
+                ],
+                "original_type": {
+                  "declaration_die": 5605694,
+                  "pointer_descriptor": "01fc8b5500",
+                  "pointee_die": 5606396,
+                  "pointee_name": "_reent",
+                  "pointee_size": 752
+                },
+                "pair": {
+                  "hi_offset": 8,
+                  "lo_offset": 32,
+                  "opcode": 35,
+                  "reference_address": 4212552,
+                  "target_address": 4216008,
+                  "storage": "file_backed"
+                },
+                "no_new_identity_or_extent": true
+              },
+              "opaque_context_sha256": "683874d17ac8200f47d346d9a14be50146ed0f8d9f919c2b250d6c2a4aa31a6d",
+              "unmasked_no_identity_claim": true
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2164288
+          ],
+          "direct_or_indirect_calls": [
+            2164128,
+            2164136
+          ],
+          "branches": [
+            [
+              2163864,
+              2163792
+            ],
+            [
+              2163876,
+              2164264
+            ],
+            [
+              2163900,
+              2163928
+            ],
+            [
+              2163912,
+              2163928
+            ],
+            [
+              2163920,
+              2164144
+            ],
+            [
+              2163932,
+              2163960
+            ],
+            [
+              2163940,
+              2163960
+            ],
+            [
+              2163948,
+              2164144
+            ],
+            [
+              2163964,
+              2163992
+            ],
+            [
+              2163972,
+              2163992
+            ],
+            [
+              2163980,
+              2164144
+            ],
+            [
+              2163996,
+              2164024
+            ],
+            [
+              2164004,
+              2164024
+            ],
+            [
+              2164012,
+              2164144
+            ],
+            [
+              2164028,
+              2164056
+            ],
+            [
+              2164036,
+              2164056
+            ],
+            [
+              2164044,
+              2164144
+            ],
+            [
+              2164060,
+              2164088
+            ],
+            [
+              2164068,
+              2164088
+            ],
+            [
+              2164076,
+              2164144
+            ],
+            [
+              2164092,
+              2164120
+            ],
+            [
+              2164100,
+              2164120
+            ],
+            [
+              2164108,
+              2164144
+            ],
+            [
+              2164144,
+              2164192
+            ],
+            [
+              2164180,
+              2164232
+            ],
+            [
+              2164252,
+              2163888
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              2163744,
+              -96
+            ],
+            [
+              2164292,
+              96
+            ]
+          ],
+          "ra_saves": [
+            [
+              2163748,
+              -16
+            ]
+          ],
+          "ra_loads": [
+            [
+              2164264,
+              -16
+            ]
+          ],
+          "unreachable_zero_words": [
+            2163956,
+            2163988,
+            2164020,
+            2164052,
+            2164084,
+            2164116,
+            2164188
+          ],
+          "following_zero_alignment": 8
+        },
+        "previously_confirmed_neighbor_entries": [
+          2163360,
+          2163488,
+          2163584
+        ]
+      }
+    },
+    {
+      "name": "xUtil_crc_update",
+      "source": "SB/Core/x/xutil.cpp",
+      "address": 2164304,
+      "size": 484,
+      "sha256": "ebeb4b442514c6459f91d632e5cc912894187dc0ff26346231658ac514ab88fe",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2162896,
+          "name": "xUtil_crc_update",
+          "source": "SB/Core/x/xutil.cpp",
+          "linkage_name": "xUtil_crc_update__FUiPci",
+          "reference_sha256": "1e31805564b040a1c57aa4112097e10b74a0ad1072b6527c8743ae5eed9271fd",
+          "data_address_operands": [
+            {
+              "hi_offset": 72,
+              "lo_offset": 76,
+              "opcode": 9,
+              "reference_address": 6007424,
+              "target_address": 6006400,
+              "storage": "zero_fill",
+              "typed_array": {
+                "name": "g_crc32_table",
+                "dimensions": [
+                  256
+                ],
+                "element_type": 9,
+                "size": 1024,
+                "declaration_die": 5598226,
+                "type_chain": [
+                  {
+                    "die": 5598838,
+                    "descriptor": "000a0000000000ff0000000855000900"
+                  }
+                ]
+              }
+            },
+            {
+              "hi_offset": 392,
+              "lo_offset": 396,
+              "opcode": 9,
+              "reference_address": 6007424,
+              "target_address": 6006400,
+              "storage": "zero_fill",
+              "typed_array": {
+                "name": "g_crc32_table",
+                "dimensions": [
+                  256
+                ],
+                "element_type": 9,
+                "size": 1024,
+                "declaration_die": 5598226,
+                "type_chain": [
+                  {
+                    "die": 5598838,
+                    "descriptor": "000a0000000000ff0000000855000900"
+                  }
+                ]
+              }
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 40,
+              "opcode": 3,
+              "reference_address": 2163392,
+              "target_address": 2164800
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2164192,
+          "name": "xUtil_crc_update",
+          "source": "SB/Core/x/xutil.cpp",
+          "linkage_name": "xUtil_crc_update__FUiPci",
+          "reference_sha256": "9e01b0227b5d276f222828f6b12fd8ea996311b661d320e77eaea0edb5475e18",
+          "data_address_operands": [
+            {
+              "hi_offset": 72,
+              "lo_offset": 76,
+              "opcode": 9,
+              "reference_address": 6006144,
+              "target_address": 6006400,
+              "storage": "zero_fill",
+              "typed_array": {
+                "name": "g_crc32_table",
+                "dimensions": [
+                  256
+                ],
+                "element_type": 9,
+                "size": 1024,
+                "declaration_die": 5598684,
+                "type_chain": [
+                  {
+                    "die": 5599296,
+                    "descriptor": "000a0000000000ff0000000855000900"
+                  }
+                ]
+              }
+            },
+            {
+              "hi_offset": 392,
+              "lo_offset": 396,
+              "opcode": 9,
+              "reference_address": 6006144,
+              "target_address": 6006400,
+              "storage": "zero_fill",
+              "typed_array": {
+                "name": "g_crc32_table",
+                "dimensions": [
+                  256
+                ],
+                "element_type": 9,
+                "size": 1024,
+                "declaration_die": 5598684,
+                "type_chain": [
+                  {
+                    "die": 5599296,
+                    "descriptor": "000a0000000000ff0000000855000900"
+                  }
+                ]
+              }
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 40,
+              "opcode": 3,
+              "reference_address": 2164688,
+              "target_address": 2164800
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2160880,
+          "name": "xUtil_crc_update",
+          "source": "SB/Core/x/xutil.cpp",
+          "linkage_name": "xUtil_crc_update__FUiPci",
+          "reference_sha256": "45473f6b365331b03ba1cabe6f1436d258b96704da8c20386d7f6fb1469e930d",
+          "data_address_operands": [
+            {
+              "hi_offset": 72,
+              "lo_offset": 76,
+              "opcode": 9,
+              "reference_address": 6004608,
+              "target_address": 6006400,
+              "storage": "zero_fill",
+              "typed_array": {
+                "name": "g_crc32_table",
+                "dimensions": [
+                  256
+                ],
+                "element_type": 9,
+                "size": 1024,
+                "declaration_die": 5599530,
+                "type_chain": [
+                  {
+                    "die": 5600142,
+                    "descriptor": "000a0000000000ff0000000855000900"
+                  }
+                ]
+              }
+            },
+            {
+              "hi_offset": 392,
+              "lo_offset": 396,
+              "opcode": 9,
+              "reference_address": 6004608,
+              "target_address": 6006400,
+              "storage": "zero_fill",
+              "typed_array": {
+                "name": "g_crc32_table",
+                "dimensions": [
+                  256
+                ],
+                "element_type": 9,
+                "size": 1024,
+                "declaration_die": 5599530,
+                "type_chain": [
+                  {
+                    "die": 5600142,
+                    "descriptor": "000a0000000000ff0000000855000900"
+                  }
+                ]
+              }
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 40,
+              "opcode": 3,
+              "reference_address": 2161376,
+              "target_address": 2164800
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2164780
+          ],
+          "direct_or_indirect_calls": [
+            2164344
+          ],
+          "branches": [
+            [
+              2164336,
+              2164352
+            ],
+            [
+              2164356,
+              2164760
+            ],
+            [
+              2164368,
+              2164688
+            ],
+            [
+              2164680,
+              2164384
+            ],
+            [
+              2164692,
+              2164760
+            ],
+            [
+              2164748,
+              2164704
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              2164304,
+              -64
+            ],
+            [
+              2164784,
+              64
+            ]
+          ],
+          "ra_saves": [
+            [
+              2164308,
+              -16
+            ]
+          ],
+          "ra_loads": [
+            [
+              2164764,
+              -16
+            ]
+          ],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 12
+        },
+        "previously_confirmed_neighbor_entries": [
+          2163360,
+          2163488,
+          2163584
+        ]
+      }
+    },
+    {
+      "name": "xUtil_crc_init",
+      "source": "SB/Core/x/xutil.cpp",
+      "address": 2164800,
+      "size": 136,
+      "sha256": "95115d425f6c65dcb35771de4e4ab10b47ec3fc16a1f92b810fd3d53764ae93c",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2163392,
+          "name": "xUtil_crc_init",
+          "source": "SB/Core/x/xutil.cpp",
+          "linkage_name": "xUtil_crc_init__Fv",
+          "reference_sha256": "af038417c64d5453ce9b4d07c029bd8a2f34d655c7a7cb88bad9a28549c9593c",
+          "data_address_operands": [
+            {
+              "hi_offset": 8,
+              "lo_offset": 16,
+              "opcode": 9,
+              "reference_address": 6007424,
+              "target_address": 6006400,
+              "storage": "zero_fill",
+              "typed_array": {
+                "name": "g_crc32_table",
+                "dimensions": [
+                  256
+                ],
+                "element_type": 9,
+                "size": 1024,
+                "declaration_die": 5598226,
+                "type_chain": [
+                  {
+                    "die": 5598838,
+                    "descriptor": "000a0000000000ff0000000855000900"
+                  }
+                ]
+              }
+            }
+          ],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2164688,
+          "name": "xUtil_crc_init",
+          "source": "SB/Core/x/xutil.cpp",
+          "linkage_name": "xUtil_crc_init__Fv",
+          "reference_sha256": "40a144e4983f838621fa47e19bdd52be688b992cfc1228348b34819dbdcd5524",
+          "data_address_operands": [
+            {
+              "hi_offset": 8,
+              "lo_offset": 16,
+              "opcode": 9,
+              "reference_address": 6006144,
+              "target_address": 6006400,
+              "storage": "zero_fill",
+              "typed_array": {
+                "name": "g_crc32_table",
+                "dimensions": [
+                  256
+                ],
+                "element_type": 9,
+                "size": 1024,
+                "declaration_die": 5598684,
+                "type_chain": [
+                  {
+                    "die": 5599296,
+                    "descriptor": "000a0000000000ff0000000855000900"
+                  }
+                ]
+              }
+            }
+          ],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2161376,
+          "name": "xUtil_crc_init",
+          "source": "SB/Core/x/xutil.cpp",
+          "linkage_name": "xUtil_crc_init__Fv",
+          "reference_sha256": "bcc7dfcfd282d9306289b2b612b4e8e10baa35ea5a4c43a2b2c3335776ed2b07",
+          "data_address_operands": [
+            {
+              "hi_offset": 8,
+              "lo_offset": 16,
+              "opcode": 9,
+              "reference_address": 6004608,
+              "target_address": 6006400,
+              "storage": "zero_fill",
+              "typed_array": {
+                "name": "g_crc32_table",
+                "dimensions": [
+                  256
+                ],
+                "element_type": 9,
+                "size": 1024,
+                "declaration_die": 5599530,
+                "type_chain": [
+                  {
+                    "die": 5600142,
+                    "descriptor": "000a0000000000ff0000000855000900"
+                  }
+                ]
+              }
+            }
+          ],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2164928
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              2164804,
+              2164928
+            ],
+            [
+              2164860,
+              2164880
+            ],
+            [
+              2164868,
+              2164888
+            ],
+            [
+              2164896,
+              2164848
+            ],
+            [
+              2164916,
+              2164840
+            ]
+          ],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [
+            2164876
+          ],
+          "following_zero_alignment": 8
+        },
+        "previously_confirmed_neighbor_entries": [
+          2163360,
+          2163488,
+          2163584
+        ]
+      }
+    },
+    {
+      "name": "xUtil_idtag2string",
+      "source": "SB/Core/x/xutil.cpp",
+      "address": 2164944,
+      "size": 784,
+      "sha256": "91f8d8b6466ac267713754bf13f88b8ee7db99268e4cbee0e1102d011c8d84d5",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2163536,
+          "name": "xUtil_idtag2string",
+          "source": "SB/Core/x/xutil.cpp",
+          "linkage_name": "xUtil_idtag2string__FUii",
+          "reference_sha256": "ecb53caf6536fd3974c326ee04be368f401501c51790d12819a54625b8459461",
+          "data_address_operands": [
+            {
+              "hi_offset": 32,
+              "lo_offset": 40,
+              "opcode": 9,
+              "reference_address": 6008448,
+              "target_address": 6007424,
+              "storage": "zero_fill",
+              "typed_array": {
+                "name": "buf",
+                "dimensions": [
+                  6,
+                  10
+                ],
+                "element_type": 1,
+                "size": 60,
+                "declaration_die": 5602094,
+                "type_chain": [
+                  {
+                    "die": 5598614,
+                    "descriptor": "000a000000000005000000087200726d5500"
+                  },
+                  {
+                    "die": 5598578,
+                    "descriptor": "000a0000000000090000000855000100"
+                  }
+                ]
+              }
+            },
+            {
+              "hi_offset": 56,
+              "lo_offset": 64,
+              "opcode": 9,
+              "reference_address": 6008448,
+              "target_address": 6007424,
+              "storage": "zero_fill",
+              "typed_array": {
+                "name": "buf",
+                "dimensions": [
+                  6,
+                  10
+                ],
+                "element_type": 1,
+                "size": 60,
+                "declaration_die": 5602094,
+                "type_chain": [
+                  {
+                    "die": 5598614,
+                    "descriptor": "000a000000000005000000087200726d5500"
+                  },
+                  {
+                    "die": 5598578,
+                    "descriptor": "000a0000000000090000000855000100"
+                  }
+                ]
+              }
+            },
+            {
+              "hi_offset": 136,
+              "lo_offset": 144,
+              "opcode": 9,
+              "reference_address": 5216496,
+              "target_address": 5215520,
+              "storage": "file_backed",
+              "scope": "complete seven-entry bounded dispatch"
+            },
+            {
+              "hi_offset": 172,
+              "lo_offset": 176,
+              "opcode": 9,
+              "reference_address": 5159481,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 168,
+                "address_add_offset": 180,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 216,
+              "lo_offset": 224,
+              "opcode": 9,
+              "reference_address": 5159481,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 220,
+                "address_add_offset": 228,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 264,
+              "lo_offset": 272,
+              "opcode": 9,
+              "reference_address": 5159481,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 268,
+                "address_add_offset": 276,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 312,
+              "lo_offset": 320,
+              "opcode": 9,
+              "reference_address": 5159481,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 316,
+                "address_add_offset": 324,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 372,
+              "lo_offset": 376,
+              "opcode": 9,
+              "reference_address": 5159481,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 368,
+                "address_add_offset": 380,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 416,
+              "lo_offset": 424,
+              "opcode": 9,
+              "reference_address": 5159481,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 420,
+                "address_add_offset": 428,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 464,
+              "lo_offset": 472,
+              "opcode": 9,
+              "reference_address": 5159481,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 468,
+                "address_add_offset": 476,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 512,
+              "lo_offset": 520,
+              "opcode": 9,
+              "reference_address": 5159481,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 516,
+                "address_add_offset": 524,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 576,
+              "lo_offset": 584,
+              "opcode": 9,
+              "reference_address": 5159481,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 588,
+                "address_add_offset": 592,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 628,
+              "lo_offset": 636,
+              "opcode": 9,
+              "reference_address": 5159481,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 632,
+                "address_add_offset": 640,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 676,
+              "lo_offset": 684,
+              "opcode": 9,
+              "reference_address": 5159481,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 680,
+                "address_add_offset": 688,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 724,
+              "lo_offset": 732,
+              "opcode": 9,
+              "reference_address": 5159481,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 728,
+                "address_add_offset": 736,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            }
+          ],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2164832,
+          "name": "xUtil_idtag2string",
+          "source": "SB/Core/x/xutil.cpp",
+          "linkage_name": "xUtil_idtag2string__FUii",
+          "reference_sha256": "7c75f052649edd154c81f7f3ceeabe77c41f56d12af820cb9ff7b360c95c6605",
+          "data_address_operands": [
+            {
+              "hi_offset": 32,
+              "lo_offset": 40,
+              "opcode": 9,
+              "reference_address": 6007168,
+              "target_address": 6007424,
+              "storage": "zero_fill",
+              "typed_array": {
+                "name": "buf",
+                "dimensions": [
+                  6,
+                  10
+                ],
+                "element_type": 1,
+                "size": 60,
+                "declaration_die": 5602552,
+                "type_chain": [
+                  {
+                    "die": 5599072,
+                    "descriptor": "000a0000000000050000000872003c6f5500"
+                  },
+                  {
+                    "die": 5599036,
+                    "descriptor": "000a0000000000090000000855000100"
+                  }
+                ]
+              }
+            },
+            {
+              "hi_offset": 56,
+              "lo_offset": 64,
+              "opcode": 9,
+              "reference_address": 6007168,
+              "target_address": 6007424,
+              "storage": "zero_fill",
+              "typed_array": {
+                "name": "buf",
+                "dimensions": [
+                  6,
+                  10
+                ],
+                "element_type": 1,
+                "size": 60,
+                "declaration_die": 5602552,
+                "type_chain": [
+                  {
+                    "die": 5599072,
+                    "descriptor": "000a0000000000050000000872003c6f5500"
+                  },
+                  {
+                    "die": 5599036,
+                    "descriptor": "000a0000000000090000000855000100"
+                  }
+                ]
+              }
+            },
+            {
+              "hi_offset": 136,
+              "lo_offset": 144,
+              "opcode": 9,
+              "reference_address": 5215264,
+              "target_address": 5215520,
+              "storage": "file_backed",
+              "scope": "complete seven-entry bounded dispatch"
+            },
+            {
+              "hi_offset": 172,
+              "lo_offset": 176,
+              "opcode": 9,
+              "reference_address": 5158201,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 168,
+                "address_add_offset": 180,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 216,
+              "lo_offset": 224,
+              "opcode": 9,
+              "reference_address": 5158201,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 220,
+                "address_add_offset": 228,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 264,
+              "lo_offset": 272,
+              "opcode": 9,
+              "reference_address": 5158201,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 268,
+                "address_add_offset": 276,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 312,
+              "lo_offset": 320,
+              "opcode": 9,
+              "reference_address": 5158201,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 316,
+                "address_add_offset": 324,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 372,
+              "lo_offset": 376,
+              "opcode": 9,
+              "reference_address": 5158201,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 368,
+                "address_add_offset": 380,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 416,
+              "lo_offset": 424,
+              "opcode": 9,
+              "reference_address": 5158201,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 420,
+                "address_add_offset": 428,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 464,
+              "lo_offset": 472,
+              "opcode": 9,
+              "reference_address": 5158201,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 468,
+                "address_add_offset": 476,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 512,
+              "lo_offset": 520,
+              "opcode": 9,
+              "reference_address": 5158201,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 516,
+                "address_add_offset": 524,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 576,
+              "lo_offset": 584,
+              "opcode": 9,
+              "reference_address": 5158201,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 588,
+                "address_add_offset": 592,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 628,
+              "lo_offset": 636,
+              "opcode": 9,
+              "reference_address": 5158201,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 632,
+                "address_add_offset": 640,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 676,
+              "lo_offset": 684,
+              "opcode": 9,
+              "reference_address": 5158201,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 680,
+                "address_add_offset": 688,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 724,
+              "lo_offset": 732,
+              "opcode": 9,
+              "reference_address": 5158201,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 728,
+                "address_add_offset": 736,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            }
+          ],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2161520,
+          "name": "xUtil_idtag2string",
+          "source": "SB/Core/x/xutil.cpp",
+          "linkage_name": "xUtil_idtag2string__FUii",
+          "reference_sha256": "76f146c0052e9081c8e9ae65a6989ff6d6e79944b77d681911ed786ab3d67972",
+          "data_address_operands": [
+            {
+              "hi_offset": 32,
+              "lo_offset": 40,
+              "opcode": 9,
+              "reference_address": 6005632,
+              "target_address": 6007424,
+              "storage": "zero_fill",
+              "typed_array": {
+                "name": "buf",
+                "dimensions": [
+                  6,
+                  10
+                ],
+                "element_type": 1,
+                "size": 60,
+                "declaration_die": 5603398,
+                "type_chain": [
+                  {
+                    "die": 5599918,
+                    "descriptor": "000a0000000000050000000872008a725500"
+                  },
+                  {
+                    "die": 5599882,
+                    "descriptor": "000a0000000000090000000855000100"
+                  }
+                ]
+              }
+            },
+            {
+              "hi_offset": 56,
+              "lo_offset": 64,
+              "opcode": 9,
+              "reference_address": 6005632,
+              "target_address": 6007424,
+              "storage": "zero_fill",
+              "typed_array": {
+                "name": "buf",
+                "dimensions": [
+                  6,
+                  10
+                ],
+                "element_type": 1,
+                "size": 60,
+                "declaration_die": 5603398,
+                "type_chain": [
+                  {
+                    "die": 5599918,
+                    "descriptor": "000a0000000000050000000872008a725500"
+                  },
+                  {
+                    "die": 5599882,
+                    "descriptor": "000a0000000000090000000855000100"
+                  }
+                ]
+              }
+            },
+            {
+              "hi_offset": 136,
+              "lo_offset": 144,
+              "opcode": 9,
+              "reference_address": 5213664,
+              "target_address": 5215520,
+              "storage": "file_backed",
+              "scope": "complete seven-entry bounded dispatch"
+            },
+            {
+              "hi_offset": 172,
+              "lo_offset": 176,
+              "opcode": 9,
+              "reference_address": 5156665,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 168,
+                "address_add_offset": 180,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 216,
+              "lo_offset": 224,
+              "opcode": 9,
+              "reference_address": 5156665,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 220,
+                "address_add_offset": 228,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 264,
+              "lo_offset": 272,
+              "opcode": 9,
+              "reference_address": 5156665,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 268,
+                "address_add_offset": 276,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 312,
+              "lo_offset": 320,
+              "opcode": 9,
+              "reference_address": 5156665,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 316,
+                "address_add_offset": 324,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 372,
+              "lo_offset": 376,
+              "opcode": 9,
+              "reference_address": 5156665,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 368,
+                "address_add_offset": 380,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 416,
+              "lo_offset": 424,
+              "opcode": 9,
+              "reference_address": 5156665,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 420,
+                "address_add_offset": 428,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 464,
+              "lo_offset": 472,
+              "opcode": 9,
+              "reference_address": 5156665,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 468,
+                "address_add_offset": 476,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 512,
+              "lo_offset": 520,
+              "opcode": 9,
+              "reference_address": 5156665,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 516,
+                "address_add_offset": 524,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 576,
+              "lo_offset": 584,
+              "opcode": 9,
+              "reference_address": 5156665,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 588,
+                "address_add_offset": 592,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 628,
+              "lo_offset": 636,
+              "opcode": 9,
+              "reference_address": 5156665,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 632,
+                "address_add_offset": 640,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 676,
+              "lo_offset": 684,
+              "opcode": 9,
+              "reference_address": 5156665,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 680,
+                "address_add_offset": 688,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            },
+            {
+              "hi_offset": 724,
+              "lo_offset": 732,
+              "opcode": 9,
+              "reference_address": 5156665,
+              "target_address": 5158457,
+              "storage": "file_backed",
+              "byte_index": {
+                "index_load_offset": 728,
+                "address_add_offset": 736,
+                "maximum_index": 255,
+                "observed_context_bytes": 256
+              },
+              "observed_table_sha256": "18d8bbbe62a9d3b02204ef690e3c05730bc45c5fc59c77b9dd04718ce3ed979b",
+              "scope": "bounded byte-table context, no runtime identity or data extent promoted"
+            }
+          ],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2165720
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              2164952,
+              2164976
+            ],
+            [
+              2164964,
+              2164992
+            ],
+            [
+              2164980,
+              2165016
+            ],
+            [
+              2165028,
+              2165072
+            ],
+            [
+              2165076,
+              2165312
+            ],
+            [
+              2165100,
+              2165112
+            ],
+            [
+              2165100,
+              2165312
+            ],
+            [
+              2165136,
+              2165152
+            ],
+            [
+              2165144,
+              2165160
+            ],
+            [
+              2165184,
+              2165200
+            ],
+            [
+              2165192,
+              2165208
+            ],
+            [
+              2165232,
+              2165248
+            ],
+            [
+              2165240,
+              2165256
+            ],
+            [
+              2165280,
+              2165296
+            ],
+            [
+              2165288,
+              2165304
+            ],
+            [
+              2165304,
+              2165504
+            ],
+            [
+              2165336,
+              2165352
+            ],
+            [
+              2165344,
+              2165360
+            ],
+            [
+              2165384,
+              2165400
+            ],
+            [
+              2165392,
+              2165408
+            ],
+            [
+              2165432,
+              2165448
+            ],
+            [
+              2165440,
+              2165456
+            ],
+            [
+              2165480,
+              2165496
+            ],
+            [
+              2165488,
+              2165504
+            ],
+            [
+              2165508,
+              2165720
+            ],
+            [
+              2165548,
+              2165564
+            ],
+            [
+              2165556,
+              2165572
+            ],
+            [
+              2165596,
+              2165612
+            ],
+            [
+              2165604,
+              2165620
+            ],
+            [
+              2165644,
+              2165660
+            ],
+            [
+              2165652,
+              2165668
+            ],
+            [
+              2165692,
+              2165708
+            ],
+            [
+              2165700,
+              2165716
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              2164944,
+              -16
+            ],
+            [
+              2165724,
+              16
+            ]
+          ],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [
+            2164988,
+            2165108
+          ],
+          "following_zero_alignment": 0
+        },
+        "previously_confirmed_neighbor_entries": [
+          2163360,
+          2163488,
+          2163584
+        ]
+      }
+    },
+    {
+      "name": "xUtilShutdown",
+      "source": "SB/Core/x/xutil.cpp",
+      "address": 2165728,
+      "size": 20,
+      "sha256": "727eabdb642820ef801343e9bfc0681ef42c27b7aea1f82a6f26e591da34145e",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2164320,
+          "name": "xUtilShutdown",
+          "source": "SB/Core/x/xutil.cpp",
+          "linkage_name": "xUtilShutdown__Fv",
+          "reference_sha256": "727eabdb642820ef801343e9bfc0681ef42c27b7aea1f82a6f26e591da34145e",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2165616,
+          "name": "xUtilShutdown",
+          "source": "SB/Core/x/xutil.cpp",
+          "linkage_name": "xUtilShutdown__Fv",
+          "reference_sha256": "727eabdb642820ef801343e9bfc0681ef42c27b7aea1f82a6f26e591da34145e",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2162304,
+          "name": "xUtilShutdown",
+          "source": "SB/Core/x/xutil.cpp",
+          "linkage_name": "xUtilShutdown__Fv",
+          "reference_sha256": "727eabdb642820ef801343e9bfc0681ef42c27b7aea1f82a6f26e591da34145e",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2165740
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 12
+        },
+        "previously_confirmed_neighbor_entries": [
+          2163360,
+          2163488,
+          2163584
+        ]
+      }
+    },
+    {
+      "name": "xUtilStartup",
+      "source": "SB/Core/x/xutil.cpp",
+      "address": 2165760,
+      "size": 48,
+      "sha256": "f494a0fd6c5dc78e1c7347fd01b2642a7c66e1b1db9428251653baa708025976",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2164352,
+          "name": "xUtilStartup",
+          "source": "SB/Core/x/xutil.cpp",
+          "linkage_name": "xUtilStartup__Fv",
+          "reference_sha256": "7b45ab20d6fdaf76260e27c46915f6c3a6affe15c2ded98945736333e94fc8e8",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 24,
+              "opcode": 3,
+              "reference_address": 2163392,
+              "target_address": 2164800
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2165648,
+          "name": "xUtilStartup",
+          "source": "SB/Core/x/xutil.cpp",
+          "linkage_name": "xUtilStartup__Fv",
+          "reference_sha256": "ffe5f12db2fd0160f48e510fc4aef93537bdcccf331c7d3eb951a59a0768b612",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 24,
+              "opcode": 3,
+              "reference_address": 2164688,
+              "target_address": 2164800
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2162336,
+          "name": "xUtilStartup",
+          "source": "SB/Core/x/xutil.cpp",
+          "linkage_name": "xUtilStartup__Fv",
+          "reference_sha256": "6d54ffe611956e152067dc6d0abf83ab296920bde57baabfb57d43035cdc91a8",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 24,
+              "opcode": 3,
+              "reference_address": 2161376,
+              "target_address": 2164800
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2165800
+          ],
+          "direct_or_indirect_calls": [
+            2165784
+          ],
+          "branches": [
+            [
+              2165776,
+              2165792
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              2165760,
+              -16
+            ],
+            [
+              2165804,
+              16
+            ]
+          ],
+          "ra_saves": [
+            [
+              2165764,
+              -16
+            ]
+          ],
+          "ra_loads": [
+            [
+              2165792,
+              -16
+            ]
+          ],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 0
+        },
+        "previously_confirmed_neighbor_entries": [
+          2163360,
+          2163488,
+          2163584
         ]
       }
     },

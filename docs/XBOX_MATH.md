@@ -235,3 +235,22 @@ identities, literal fields, profiles, source owners and backend rules are
 unchanged. Ignored evidence is under `build/xbox282/{compile.py,compare.py,
 consumers,production,verify_final.py,final-verification.json,gc/proof.json}`.
 The function remains partial; no whole-TU or retail-link claim is added.
+
+## Endpoint integration expression trees
+
+The endpoint `xAccelMove` original computes the clipped-velocity contribution
+as `(diff / a) * diff * 0.5`, including the division before the second multiply.
+Its two ordinary acceleration paths compute `(dv * dt) * 0.5`. The previous
+source multiplied by the half factor first and divided last. Three Xbox-only
+expressions now preserve the decoded original arithmetic order; all branch
+predicates, velocity writes and final displacement logic are unchanged. Other
+platforms retain their former expressions.
+
+Both complete Xbox reports improve this function from **93.697914% to
+95.052086%**. The genuine `xMath.obj` body remains 575 bytes versus 574 original
+bytes, so this is a partial gain, not an exact-match claim. All other function
+scores and the prior **14148 exact bytes / 78 exact functions** remain unchanged,
+as do denominators and completion fields. Seven real consumer builds pass and
+all 33 ordered GameCube allocated sections are byte-identical. No header,
+profile, compiler flag or reporting change is involved. Private disassembly,
+real HIGHLOW/literal checks and full regression evidence are in `build/xbox290/`.

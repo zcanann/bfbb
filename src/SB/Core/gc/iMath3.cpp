@@ -153,7 +153,11 @@ void iSphereBoundVec(xSphere* o, const xSphere* s, const xVec3* v)
 
         scale = (isx.dist - s->r) / (2.0f * isx.dist);
 
+#if defined(XBOX)
+        xVec3SMul(&tp->center, &isx.norm, scale);
+#else
         xVec3SMul(&tp->center, &tp->center, scale);
+#endif
         xVec3Add(&tp->center, &tp->center, &s->center);
 
         tp->r = 0.5f * (isx.dist + s->r);

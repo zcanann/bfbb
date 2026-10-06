@@ -7,6 +7,9 @@
 #include "xMath.h"
 #else
 #include <math.h>
+#if defined(PS2)
+#include "xMath.h"
+#endif
 #endif
 
 #if defined(XBOX)
@@ -17,7 +20,7 @@ inline F32 xfmod(F32 a, F32 b)
 #else
 F32 xfmod(F32 a, F32 b);
 #endif
-#if defined(XBOX)
+#if defined(XBOX) || defined(PS2)
 inline F32 xatan2(F32 y, F32 x)
 {
     return xAngleClampFast(std::atan2f(y, x));
