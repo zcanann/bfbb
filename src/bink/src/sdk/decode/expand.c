@@ -1274,7 +1274,9 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
     READBUNDLE runs;
     HUFF8TABLE huff8_table;
     s16 dct_block[BINK_BLOCK_PIXELS];
-    u8 motion_block[BINK_BLOCK_PIXELS];
+    /* Doubles keep the 8x8 temp aligned for the lfd/stfd row copies. */
+    f64 motion_words[BINK_BLOCK_PIXELS / sizeof(f64)];
+#define motion_block ((u8 PTR4*)motion_words)
     EXPBITS bitstate;
     void (*read_huff8)(READBUNDLE PTR4*, EXPBITS PTR4*, HUFF8TABLE PTR4*);
     u32 row_advance;
@@ -1857,6 +1859,7 @@ static u32 PTR4* ExpandPlane(u8 PTR4* out,
 
     VarBitsGetAlign(bitstate);
     return bitstate.cur;
+#undef motion_block
 }
 
 void ExpandBink(u8 PTR4* yout,
