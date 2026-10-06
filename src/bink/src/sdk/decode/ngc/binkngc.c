@@ -93,19 +93,14 @@ static inline u32 radcntlzw(u32 value)
     return result;
 }
 
-u32 mult64anddiv(u32 multiplicand, u32 multiplier, u32 divisor)
+inline u32 div64(u32 high, u32 low, u32 divisor)
 {
-    u32 hi;
     u32 quotient;
 
-    __asm__("mulhwu %0, %1, %2\n\tmullw %1, %1, %2" : "=&r"(hi), "+r"(multiplicand) : "r"(multiplier));
-
-    /* Fast path for exact power-of-two divisors after the 64-bit multiply. */
+    /* 64-bit numerator, 32-bit divisor helper used by the Bink platform layer. */
     if (RAD_DIV_IS_POWER_OF_TWO(divisor)) {
         u32 clz = radcntlzw(divisor);
-        multiplicand >>= (RAD_DIV_POWER_SHIFT_BASE - clz);
-        hi <<= (clz + 1);
-        return multiplicand | hi;
+        return (low >> (RAD_DIV_POWER_SHIFT_BASE - clz)) | (high << (clz + 1));
     }
 
     {
@@ -114,10 +109,9 @@ u32 mult64anddiv(u32 multiplicand, u32 multiplier, u32 divisor)
 
         quotient = 0;
 
-        /* Estimate the high-word quotient first so the correction loop is small. */
         if (upper != 0) {
-            u32 clz = radcntlzw(hi);
-            u32 est = (hi << clz) / upper;
+            u32 clz = radcntlzw(high);
+            u32 est = (high << clz) / upper;
             s32 adj = RAD_DIV_HIGH_WORD_BITS - (s32)clz;
             s32 sign = adj >> RAD_DIV_SIGN_SHIFT;
             u32 rshift = (u32)(-(s32)adj) & (u32)sign;
@@ -127,22 +121,30 @@ u32 mult64anddiv(u32 multiplicand, u32 multiplier, u32 divisor)
             {
                 u32 prod_hi, prod_lo;
                 __asm__("mulhwu %0, %2, %3\n\tmullw %1, %2, %3" : "=&r"(prod_hi), "=&r"(prod_lo) : "r"(est), "r"(divisor));
-                __asm__("subfc %0, %3, %0\n\tsubfe %1, %2, %1" : "+r"(multiplicand), "+r"(hi) : "r"(prod_hi), "r"(prod_lo));
+                __asm__("subfc %0, %3, %0\n\tsubfe %1, %2, %1" : "+r"(low), "+r"(high) : "r"(prod_hi), "r"(prod_lo));
             }
         }
 
-        while (hi != 0) {
-            u32 step = recip * hi;
+        while (high != 0) {
+            u32 step = recip * high;
             u32 prod_hi, prod_lo;
             __asm__("mulhwu %0, %2, %3\n\tmullw %1, %2, %3" : "=&r"(prod_hi), "=&r"(prod_lo) : "r"(step), "r"(divisor));
-            __asm__("subfc %0, %3, %0\n\tsubfe %1, %2, %1" : "+r"(multiplicand), "+r"(hi) : "r"(prod_hi), "r"(prod_lo));
+            __asm__("subfc %0, %3, %0\n\tsubfe %1, %2, %1" : "+r"(low), "+r"(high) : "r"(prod_hi), "r"(prod_lo));
             quotient += step;
         }
 
-        quotient += multiplicand / divisor;
+        quotient += low / divisor;
     }
 
     return quotient;
+}
+
+u32 mult64anddiv(u32 multiplicand, u32 multiplier, u32 divisor)
+{
+    u32 hi, lo;
+
+    __asm__("mulhwu %0, %2, %3\n\tmullw %1, %2, %3" : "=&r"(hi), "=&r"(lo) : "r"(multiplicand), "r"(multiplier));
+    return div64(hi, lo, divisor);
 }
 
 u32 mult64andshift(u32 left, u32 right, u32 shift)
@@ -192,7 +194,7 @@ u32 RADTimerRead(void)
     return elapsed_ms + (u32)(scaled >> RAD_TIMER_RECIP_SHIFT64);
 }
 
-static inline void radtimebase(RADTimebase PTR4* dest)
+inline void ReadTimeBase(u32 PTR4* dest)
 {
     u32 h1, l, h2;
     /* Read TBU/TBL/TBU until the high word is stable across the low-word read.
@@ -215,7 +217,7 @@ static inline void radtimebase(RADTimebase PTR4* dest)
 void RADCycleTimerStartAddr(u32 PTR4* dest)
 {
     RADTimebase tb;
-    radtimebase(&tb);
+    ReadTimeBase((u32 PTR4*)&tb);
     *dest = tb.low;
 }
 
@@ -223,7 +225,7 @@ u32 RADCycleTimerDeltaAddr(u32 PTR4* dest)
 {
     RADTimebase tb;
     u32 delta;
-    radtimebase(&tb);
+    ReadTimeBase((u32 PTR4*)&tb);
     delta = tb.low - *dest;
     *dest = delta;
     return delta;
@@ -231,19 +233,14 @@ u32 RADCycleTimerDeltaAddr(u32 PTR4* dest)
 
 void RADCycleTimerStartAddr64(u64 PTR4* dest)
 {
-    radtimebase((RADTimebase PTR4*)dest);
+    ReadTimeBase((u32 PTR4*)dest);
 }
 
 void RADCycleTimerDeltaAddr64(u64 PTR4* dest)
 {
     RADTimebase64 now;
-    radtimebase(&now.words);
+    ReadTimeBase((u32 PTR4*)&now.words);
     *dest = now.ticks - *dest;
-}
-
-void ReadTimeBase(u32 PTR4* dest)
-{
-    radtimebase((RADTimebase PTR4*)dest);
 }
 
 static RADMEMALLOC usermalloc = NULL;
@@ -328,50 +325,4 @@ void radaudiofree(void PTR4* ptr) {
     if (useraramfree) {
         useraramfree(ptr);
     }
-}
-
-u32 div64(u32 high, u32 low, u32 divisor)
-{
-    u32 quotient;
-
-    /* 64-bit numerator, 32-bit divisor helper used by the Bink platform layer. */
-    if (RAD_DIV_IS_POWER_OF_TWO(divisor)) {
-        u32 clz = radcntlzw(divisor);
-        return (low >> (RAD_DIV_POWER_SHIFT_BASE - clz)) | (high << (clz + 1));
-    }
-
-    {
-        u32 recip = RAD_DIV_U32_MAX / divisor;
-        u32 upper = RAD_DIV_HIGH_WORD_CEIL(divisor);
-
-        quotient = 0;
-
-        if (upper != 0) {
-            u32 clz = radcntlzw(high);
-            u32 est = (high << clz) / upper;
-            s32 adj = RAD_DIV_HIGH_WORD_BITS - (s32)clz;
-            s32 sign = adj >> RAD_DIV_SIGN_SHIFT;
-            u32 rshift = (u32)(-(s32)adj) & (u32)sign;
-            u32 lshift = (u32)adj & ~(u32)sign;
-            est = (est >> rshift) << lshift;
-            quotient = est;
-            {
-                u32 prod_hi, prod_lo;
-                __asm__("mulhwu %0, %2, %3\n\tmullw %1, %2, %3" : "=&r"(prod_hi), "=&r"(prod_lo) : "r"(est), "r"(divisor));
-                __asm__("subfc %0, %3, %0\n\tsubfe %1, %2, %1" : "+r"(low), "+r"(high) : "r"(prod_hi), "r"(prod_lo));
-            }
-        }
-
-        while (high != 0) {
-            u32 step = recip * high;
-            u32 prod_hi, prod_lo;
-            __asm__("mulhwu %0, %2, %3\n\tmullw %1, %2, %3" : "=&r"(prod_hi), "=&r"(prod_lo) : "r"(step), "r"(divisor));
-            __asm__("subfc %0, %3, %0\n\tsubfe %1, %2, %1" : "+r"(low), "+r"(high) : "r"(prod_hi), "r"(prod_lo));
-            quotient += step;
-        }
-
-        quotient += low / divisor;
-    }
-
-    return quotient;
 }

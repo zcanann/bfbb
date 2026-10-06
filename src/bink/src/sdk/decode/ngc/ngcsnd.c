@@ -170,7 +170,7 @@ struct NGCSoundState
     f32 pan;
     NGCPlayState play_state;
     NGCSoundPauseState paused;
-    s32 lock_index;
+    volatile s32 lock_index;
     u32 play_cursor; /* ARAM write cursor for the next decoded frame */
     u32 pending_end; /* delayed voice end address when the cursor wraps */
     u32 frame_size; /* bytes submitted per Bink audio frame */
@@ -259,6 +259,134 @@ static void NGC_SoundPlay(BINKSND PTR4* snd, u32 index, u32 upload_bytes);
 static void NGC_StarvedClear(BINKSND PTR4* snd);
 static void NGC_SoundVolume(BINKSND PTR4* snd);
 
+inline void MyAXSetVoiceCurrentAddr(NGCSoundState PTR4* state, u32 addr)
+{
+    u32 shift = NGC_ADDRESS_SHIFT(state);
+    AXVPB PTR4* voice = NGC_LEFT_VOICE(state);
+
+    AXSetVoiceCurrentAddr(voice, NGC_AX_ADDR(addr, shift));
+
+    voice = NGC_RIGHT_VOICE(state);
+    if (voice != 0) {
+        AXSetVoiceCurrentAddr(voice, NGC_AX_RIGHT_ADDR(state, addr));
+    }
+}
+
+inline void MyAXSetVoiceLoopAddr(NGCSoundState PTR4* state, u32 addr)
+{
+    u32 shift = NGC_ADDRESS_SHIFT(state);
+    AXVPB PTR4* voice = NGC_LEFT_VOICE(state);
+
+    AXSetVoiceLoopAddr(voice, NGC_AX_ADDR(addr, shift));
+
+    voice = NGC_RIGHT_VOICE(state);
+    if (voice != 0) {
+        AXSetVoiceLoopAddr(voice, NGC_AX_RIGHT_ADDR(state, addr));
+    }
+}
+
+inline void MyAXSetVoiceEndAddr(NGCSoundState PTR4* state, u32 addr)
+{
+    u32 shift = NGC_ADDRESS_SHIFT(state);
+    AXVPB PTR4* voice = NGC_LEFT_VOICE(state);
+
+    AXSetVoiceEndAddr(voice, NGC_AX_END_ADDR(addr, shift));
+
+    voice = NGC_RIGHT_VOICE(state);
+    if (voice != 0) {
+        AXSetVoiceEndAddr(voice, NGC_AX_RIGHT_END_ADDR(state, addr));
+    }
+}
+
+inline void MyAXSetVoiceState(NGCSoundState PTR4* state, u16 voice_state)
+{
+    AXVPB PTR4* voice = NGC_LEFT_VOICE(state);
+
+    if (voice != 0) {
+        AXSetVoiceState(voice, voice_state);
+    }
+
+    voice = NGC_RIGHT_VOICE(state);
+    if (voice != 0) {
+        AXSetVoiceState(voice, voice_state);
+    }
+}
+
+inline u32 get_play_pos(NGCSoundState PTR4* state)
+{
+    AXVPB PTR4* voice = NGC_LEFT_VOICE(state);
+    u32 shift = NGC_ADDRESS_SHIFT(state);
+
+    return NGC_AX_CURRENT_CURSOR(voice, shift);
+}
+
+inline u32 get_end_pos(NGCSoundState PTR4* state)
+{
+    AXVPB PTR4* voice = NGC_LEFT_VOICE(state);
+    u32 shift = NGC_ADDRESS_SHIFT(state);
+
+    return NGC_AX_END_CURSOR(voice, shift);
+}
+
+/* Tasks are laid out by channel, then by lock buffer: [L0, L1, R0, R1]. */
+inline ARQRequest PTR4* get_task(NGCSoundState PTR4* state, u32 channel, u32 lock_index)
+{
+    return NGC_TASK_FOR_LOCK_CHANNEL(state, lock_index, channel);
+}
+
+inline void ConvDataToStereo8(u32 PTR4* src, u16 PTR4* left, u16 PTR4* right, u32 bytes)
+{
+    u32 i;
+    u32 total = bytes;
+    u32 count;
+
+    count = total >> NGC_STEREO8_GROUP_SHIFT;
+
+    for (i = 0; i < count; ++i) {
+        u32 packed_samples = *src++;
+
+        *left++ = (u16)NGC_SAMPLE_LEFT_8_PAIR(packed_samples);
+        *right++ = (u16)NGC_SAMPLE_RIGHT_8_PAIR(packed_samples);
+    }
+
+    count = (total - (count * NGC_STEREO8_GROUP_BYTES)) >> NGC_STEREO8_TAIL_SHIFT;
+    for (i = 0; i < count; ++i) {
+        u16 packed_samples = NGC_SAMPLE_LOAD_STEREO8_TAIL(src);
+        src = NGC_ADVANCE_U32_STEREO8_TAIL(src);
+        NGC_SAMPLE_STORE_8_TAIL(left, packed_samples >> NGC_SAMPLE_BYTE_SHIFT);
+        NGC_SAMPLE_STORE_8_TAIL(right, packed_samples);
+        left = NGC_ADVANCE_U16_8BIT_SAMPLE(left);
+        right = NGC_ADVANCE_U16_8BIT_SAMPLE(right);
+    }
+}
+
+inline void ConvDataToStereo16(u32 PTR4* src, u32 PTR4* left, u32 PTR4* right, u32 bytes)
+{
+    u32 i;
+    u32 total = bytes;
+    u32 count;
+
+    count = total >> NGC_STEREO16_GROUP_SHIFT;
+
+    for (i = 0; i < count; ++i) {
+        u32 first = src[NGC_STEREO16_GROUP_WORD_0];
+        u32 second = src[NGC_STEREO16_GROUP_WORD_1];
+        src += NGC_STEREO16_GROUP_WORDS;
+
+        *left++ = NGC_SAMPLE_LEFT_16_PAIR(first, second);
+        *right++ = NGC_SAMPLE_RIGHT_16_PAIR(first, second);
+    }
+
+    count = (total - (count * NGC_STEREO16_GROUP_BYTES)) >> NGC_STEREO16_TAIL_SHIFT;
+    for (i = 0; i < count; ++i) {
+        u32 packed_samples = *src++;
+        NGC_SAMPLE_STORE_16_TAIL(left, NGC_SAMPLE_HIGH_HALF(packed_samples));
+        NGC_SAMPLE_STORE_16_TAIL(right, packed_samples);
+        left = NGC_ADVANCE_U32_16BIT_SAMPLE(left);
+        right = NGC_ADVANCE_U32_16BIT_SAMPLE(right);
+    }
+}
+
 static void startVoices(u32 task)
 {
     ARQRequest PTR4* arq_task = (ARQRequest PTR4*)task;
@@ -289,13 +417,11 @@ static void NGC_SoundPlay(BINKSND PTR4* snd, u32 index, u32 upload_bytes)
     ARQRequest PTR4* right_task;
 
     state = NGC_SOUND_STATE(snd);
-    play_end = NGC_SOUND_STATE(snd)->play_cursor;
-    play_end += upload_bytes;
-    task = NGC_LEFT_LOCK_TASK(state, index);
+    task = get_task(state, 0, index);
+    play_end = NGC_SOUND_STATE(snd)->play_cursor + upload_bytes;
 
     if (NGC_SOUND_STATE(snd)->voices[1] != 0) {
-        u32 right_index = NGC_RIGHT_LOCK_TASK_INDEX(index);
-        right_task = NGC_TASK(state, right_index);
+        right_task = get_task(state, 1, index);
 
         DCFlushRange((void PTR4*)right_task->source, upload_bytes);
         ARQPostRequest(right_task, 0, ARQ_TYPE_MRAM_TO_ARAM, ARQ_PRIORITY_HIGH,
@@ -308,19 +434,10 @@ static void NGC_SoundPlay(BINKSND PTR4* snd, u32 index, u32 upload_bytes)
                    NGC_SOUND_STATE(snd)->play_cursor, upload_bytes, startVoices);
 
     if (play_end > NGC_SOUND_PLAY_LIMIT(NGC_SOUND_STATE(snd))) {
-        AXVPB PTR4* voice = NGC_LEFT_VOICE(state);
-        u32 shift = NGC_ADDRESS_SHIFT(state);
-
-        if (NGC_AX_CURRENT_CURSOR(voice, shift) > play_end) {
+        if (get_play_pos(state) > play_end) {
             NGC_SOUND_STATE(snd)->pending_end = play_end;
         } else {
-            AXSetVoiceEndAddr(voice, NGC_AX_END_ADDR(play_end, shift));
-
-            voice = NGC_RIGHT_VOICE(state);
-            if (voice != 0) {
-                AXSetVoiceEndAddr(voice, NGC_AX_RIGHT_END_ADDR(state, play_end));
-            }
-
+            MyAXSetVoiceEndAddr(state, play_end);
             play_end = NGC_SOUND_RING_START(NGC_SOUND_STATE(snd));
         }
     }
@@ -599,32 +716,22 @@ static void NGC_SoundShutdown(BINKSND PTR4* snd)
 
 static s32 Lock(BINKSND PTR4* snd, u8 PTR4* PTR4* addr, u32 PTR4* len)
 {
-    NGCSoundState PTR4* state;
     u32 writable_bytes;
     u32 voice_cursor;
     u32 half_size;
     u32 channel_stride;
-    ARQRequest PTR4* tasks;
-    ARQRequest PTR4* task;
-    ARQRequest PTR4* right_task;
-    AXVPB PTR4* voice;
-    u32 shift;
     u8 PTR4* left_buffer;
     u8 PTR4* decode_buffer;
 
     if (NGC_SOUND_HAS_LOCK(NGC_SOUND_STATE(snd))) {
-        state = NGC_SOUND_STATE(snd);
         writable_bytes = NGC_SOUND_STATE(snd)->play_cursor;
-        voice = NGC_LEFT_VOICE(state);
-        shift = NGC_ADDRESS_SHIFT(state);
-        voice_cursor = NGC_AX_CURRENT_CURSOR(voice, shift);
-        tasks = state->tasks;
+        voice_cursor = get_play_pos(NGC_SOUND_STATE(snd));
 
         if (writable_bytes >= voice_cursor) {
-            channel_stride = state->channel_stride;
             writable_bytes = NGC_SOUND_RING_END(NGC_SOUND_STATE(snd)) - writable_bytes;
+            channel_stride = NGC_SOUND_STATE(snd)->channel_stride;
         } else {
-            channel_stride = state->channel_stride;
+            channel_stride = NGC_SOUND_STATE(snd)->channel_stride;
             writable_bytes = (voice_cursor - writable_bytes) - NGC_SOUND_CURSOR_GUARD_BYTES;
         }
 
@@ -636,15 +743,13 @@ static s32 Lock(BINKSND PTR4* snd, u8 PTR4* PTR4* addr, u32 PTR4* len)
         }
 
         /* The lock index selects one half of the MRAM staging buffer. */
-        task = (tasks + NGC_SOUND_STATE(snd)->lock_index);
         left_buffer = NGC_SOUND_LOCK_BUFFER(NGC_SOUND_STATE(snd)->decode_buffer,
                                             NGC_SOUND_STATE(snd)->lock_index, channel_stride);
         writable_bytes = NGC_SOUND_DECODE_BYTES(writable_bytes, snd->chans);
-        task->source = (u32)left_buffer;
+        get_task(NGC_SOUND_STATE(snd), 0, NGC_SOUND_STATE(snd)->lock_index)->source = (u32)left_buffer;
+        get_task(NGC_SOUND_STATE(snd), 1, NGC_SOUND_STATE(snd)->lock_index)->source =
+            (u32)NGC_SOUND_RIGHT_LOCK_BUFFER(left_buffer, NGC_SOUND_STATE(snd)->channel_stride);
         decode_buffer = left_buffer;
-        left_buffer = NGC_SOUND_RIGHT_LOCK_BUFFER(left_buffer, NGC_SOUND_STATE(snd)->channel_stride);
-        right_task = (tasks + NGC_RIGHT_LOCK_TASK_INDEX(NGC_SOUND_STATE(snd)->lock_index));
-        right_task->source = (u32)left_buffer;
 
         if (snd->chans == NGC_SOUND_STEREO_CHANNELS) {
             /* Bink decodes interleaved stereo; AX/ARAM playback uses split left/right channels. */
@@ -662,75 +767,28 @@ static s32 Lock(BINKSND PTR4* snd, u8 PTR4* PTR4* addr, u32 PTR4* len)
 
 static s32 Unlock(BINKSND PTR4* snd, u32 filled_bytes)
 {
-    NGCSoundState PTR4* state;
-    ARQRequest PTR4* task;
     u32 padded_bytes;
 
     if (NGC_SOUND_STATE(snd)->lock_index == NGC_SOUND_NO_LOCK_INDEX) {
         return 0;
     }
 
-    state = NGC_SOUND_STATE(snd);
-    task = NGC_LEFT_LOCK_TASK(state, state->lock_index);
-    NGC_TASK_MARK_BUSY(task);
+    NGC_TASK_MARK_BUSY(get_task(NGC_SOUND_STATE(snd), 0, NGC_SOUND_STATE(snd)->lock_index));
 
     if (NGC_SND(snd)->chans == NGC_SOUND_STEREO_CHANNELS) {
         /* Split the temporary interleaved stereo buffer into the two ARQ upload buffers. */
         u8 PTR4* left_buffer =
-            NGC_TASK_SOURCE(NGC_LEFT_LOCK_TASK(state, state->lock_index));
+            NGC_TASK_SOURCE(get_task(NGC_SOUND_STATE(snd), 0, NGC_SOUND_STATE(snd)->lock_index));
         u8 PTR4* right_buffer =
-            NGC_TASK_SOURCE(NGC_RIGHT_LOCK_TASK(state, NGC_SOUND_STATE(snd)->lock_index));
+            NGC_TASK_SOURCE(get_task(NGC_SOUND_STATE(snd), 1, NGC_SOUND_STATE(snd)->lock_index));
         u8 PTR4* stereo_src = NGC_SOUND_STATE(snd)->stereo_buffer;
 
         if (NGC_SND(snd)->bits == NGC_SOUND_BITS_16) {
-            u32 i;
-            u32 PTR4* src32 = (u32 PTR4*)stereo_src;
-            u32 PTR4* left32 = (u32 PTR4*)left_buffer;
-            u32 PTR4* right32 = (u32 PTR4*)right_buffer;
-            u32 groups = filled_bytes >> NGC_STEREO16_GROUP_SHIFT;
-
-            for (i = 0; i < groups; ++i) {
-                u32 first = src32[NGC_STEREO16_GROUP_WORD_0];
-                u32 second = src32[NGC_STEREO16_GROUP_WORD_1];
-                src32 += NGC_STEREO16_GROUP_WORDS;
-
-                *left32++ = NGC_SAMPLE_LEFT_16_PAIR(first, second);
-                *right32++ = NGC_SAMPLE_RIGHT_16_PAIR(first, second);
-            }
-
-            groups = (filled_bytes - (groups * NGC_STEREO16_GROUP_BYTES)) >> NGC_STEREO16_TAIL_SHIFT;
-            for (i = 0; i < groups; ++i) {
-                u32 stereo_pair = *src32++;
-
-                NGC_SAMPLE_STORE_16_TAIL(left32, NGC_SAMPLE_HIGH_HALF(stereo_pair));
-                NGC_SAMPLE_STORE_16_TAIL(right32, stereo_pair);
-                left32 = NGC_ADVANCE_U32_16BIT_SAMPLE(left32);
-                right32 = NGC_ADVANCE_U32_16BIT_SAMPLE(right32);
-            }
+            ConvDataToStereo16((u32 PTR4*)stereo_src, (u32 PTR4*)left_buffer,
+                               (u32 PTR4*)right_buffer, filled_bytes);
         } else {
-            u32 i;
-            u32 PTR4* src32 = (u32 PTR4*)stereo_src;
-            u16 PTR4* left16 = (u16 PTR4*)left_buffer;
-            u16 PTR4* right16 = (u16 PTR4*)right_buffer;
-            u32 groups = filled_bytes >> NGC_STEREO8_GROUP_SHIFT;
-
-            for (i = 0; i < groups; ++i) {
-                u32 packed_samples = *src32++;
-
-                *left16++ = (u16)NGC_SAMPLE_LEFT_8_PAIR(packed_samples);
-                *right16++ = (u16)NGC_SAMPLE_RIGHT_8_PAIR(packed_samples);
-            }
-
-            groups = (filled_bytes - (groups * NGC_STEREO8_GROUP_BYTES)) >> NGC_STEREO8_TAIL_SHIFT;
-            for (i = 0; i < groups; ++i) {
-                u16 stereo_pair = NGC_SAMPLE_LOAD_STEREO8_TAIL(src32);
-
-                src32 = NGC_ADVANCE_U32_STEREO8_TAIL(src32);
-                NGC_SAMPLE_STORE_8_TAIL(left16, stereo_pair >> NGC_SAMPLE_BYTE_SHIFT);
-                NGC_SAMPLE_STORE_8_TAIL(right16, stereo_pair);
-                left16 = NGC_ADVANCE_U16_8BIT_SAMPLE(left16);
-                right16 = NGC_ADVANCE_U16_8BIT_SAMPLE(right16);
-            }
+            ConvDataToStereo8((u32 PTR4*)stereo_src, (u16 PTR4*)left_buffer,
+                              (u16 PTR4*)right_buffer, filled_bytes);
         }
 
         filled_bytes >>= NGC_SOUND_HALF_BUFFER_SHIFT;
@@ -741,8 +799,7 @@ static s32 Unlock(BINKSND PTR4* snd, u32 filled_bytes)
 
         padded_bytes = NGC_ALIGN_UP(filled_bytes, NGC_SOUND_FRAME_ALIGN_MASK);
         for (i = 0; i < NGC_SND(snd)->chans; ++i) {
-            memset(NGC_TASK_SOURCE_AT(NGC_TASK_FOR_LOCK_CHANNEL(
-                                          state, NGC_SOUND_STATE(snd)->lock_index, i),
+            memset(NGC_TASK_SOURCE_AT(get_task(NGC_SOUND_STATE(snd), i, NGC_SOUND_STATE(snd)->lock_index),
                                       filled_bytes),
                    0, padded_bytes - filled_bytes);
         }
@@ -750,7 +807,7 @@ static s32 Unlock(BINKSND PTR4* snd, u32 filled_bytes)
     }
 
     if (NGC_SOUND_STATE(snd)->play_state == NGC_PLAY_STATE_STOPPED) {
-        NGC_LEFT_LOCK_TASK(state, NGC_SOUND_STATE(snd)->lock_index)->length = filled_bytes;
+        get_task(NGC_SOUND_STATE(snd), 0, NGC_SOUND_STATE(snd)->lock_index)->length = filled_bytes;
         if (NGC_SOUND_STATE(snd)->lock_index == NGC_SOUND_LAST_LOCK_INDEX) {
             NGC_SoundPlay(snd, 0, NGC_LEFT_LOCK_TASK(NGC_SOUND_STATE(snd), 0)->length);
             NGC_SoundPlay(snd, 1, NGC_LEFT_LOCK_TASK(NGC_SOUND_STATE(snd), 1)->length);
@@ -764,69 +821,42 @@ static s32 Unlock(BINKSND PTR4* snd, u32 filled_bytes)
 
 static void NGC_StarvedClear(BINKSND PTR4* snd)
 {
-    u32 poll_count;
+    s32 poll_count;
     u32 lock_side;
-    u32 right_task_index;
     u32 silent_start;
     u32 silent_end;
     NGCSoundState PTR4* state;
-    ARQRequest PTR4* task;
     u8 PTR4* silence_buffer;
-    AXVPB PTR4* voice;
 
     state = NGC_SOUND_STATE(snd);
-    poll_count = 0;
-check_busy:
     /* Wait for one staging half to be free before injecting silence. */
-    lock_side = poll_count & NGC_SOUND_LOCK_INDEX_MASK;
-    task = NGC_LEFT_LOCK_TASK(state, lock_side);
-    if (NGC_TASK_BUSY(task)) {
-        goto busy;
-    }
-    poll_count = lock_side;
-    silent_start = NGC_SOUND_STATE(snd)->play_cursor;
-    silent_end = silent_start + NGC_SOUND_STATE(snd)->frame_size;
-    if (NGC_SND(snd)->chans == NGC_SOUND_STEREO_CHANNELS) {
-        silence_buffer = state->stereo_buffer;
-    } else {
-        silence_buffer = NGC_SOUND_LOCK_BUFFER(NGC_SOUND_STATE(snd)->decode_buffer, poll_count,
-                                               NGC_SOUND_STATE(snd)->channel_stride);
-    }
+    for (poll_count = 0; poll_count <= NGC_SOUND_MAX_BUSY_POLLS; ++poll_count) {
+        lock_side = poll_count & NGC_SOUND_LOCK_INDEX_MASK;
+        if (!NGC_TASK_BUSY(get_task(state, 0, lock_side))) {
+            poll_count = lock_side;
+            silent_start = NGC_SOUND_STATE(snd)->play_cursor;
+            silent_end = silent_start + NGC_SOUND_STATE(snd)->frame_size;
+            if (NGC_SND(snd)->chans == NGC_SOUND_STEREO_CHANNELS) {
+                silence_buffer = NGC_SOUND_STATE(snd)->stereo_buffer;
+            } else {
+                silence_buffer = NGC_SOUND_LOCK_BUFFER(NGC_SOUND_STATE(snd)->decode_buffer, poll_count,
+                                                       NGC_SOUND_STATE(snd)->channel_stride);
+            }
 
-    memset(silence_buffer, 0, NGC_SOUND_STATE(snd)->frame_size);
-    task = NGC_LEFT_LOCK_TASK(state, lock_side);
-    task->source = (u32)silence_buffer;
-    right_task_index = NGC_RIGHT_LOCK_TASK_INDEX(lock_side);
-    NGC_TASK(state, right_task_index)->source = (u32)silence_buffer;
-    NGC_SoundPlay(snd, lock_side, NGC_SOUND_STATE(snd)->frame_size);
+            memset(silence_buffer, 0, NGC_SOUND_STATE(snd)->frame_size);
+            get_task(state, 0, lock_side)->source = (u32)silence_buffer;
+            get_task(state, 1, lock_side)->source = (u32)silence_buffer;
+            NGC_SoundPlay(snd, lock_side, NGC_SOUND_STATE(snd)->frame_size);
 
-    /* Re-anchor playback to the silent frame if AX has already passed it. */
-    voice = NGC_LEFT_VOICE(state);
-    if (NGC_AX_CURRENT_CURSOR(voice, NGC_ADDRESS_SHIFT(state)) > silent_end) {
-        AXSetVoiceCurrentAddr(voice, NGC_AX_ADDR(silent_start, NGC_ADDRESS_SHIFT(state)));
-        voice = NGC_RIGHT_VOICE(state);
-        if (voice != 0) {
-            AXSetVoiceCurrentAddr(voice, NGC_AX_RIGHT_ADDR(state, silent_start));
+            /* Re-anchor playback to the silent frame if AX has already passed it. */
+            if (get_play_pos(state) > silent_end) {
+                MyAXSetVoiceCurrentAddr(state, silent_start);
+            }
+
+            MyAXSetVoiceLoopAddr(state, silent_start);
+            MyAXSetVoiceEndAddr(state, silent_end);
+            return;
         }
-    }
-
-    AXSetVoiceLoopAddr(NGC_LEFT_VOICE(state), NGC_AX_ADDR(silent_start, NGC_ADDRESS_SHIFT(state)));
-    voice = NGC_RIGHT_VOICE(state);
-    if (voice != 0) {
-        AXSetVoiceLoopAddr(voice, NGC_AX_RIGHT_ADDR(state, silent_start));
-    }
-
-    AXSetVoiceEndAddr(NGC_LEFT_VOICE(state), NGC_AX_END_ADDR(silent_end, NGC_ADDRESS_SHIFT(state)));
-    voice = NGC_RIGHT_VOICE(state);
-    if (voice != 0) {
-        AXSetVoiceEndAddr(voice, NGC_AX_RIGHT_END_ADDR(state, silent_end));
-    }
-    return;
-
-busy:
-    ++poll_count;
-    if ((s32)poll_count <= NGC_SOUND_MAX_BUSY_POLLS) {
-        goto check_busy;
     }
 }
 
@@ -834,12 +864,8 @@ static s32 Ready(BINKSND PTR4* snd)
 {
     s32 lock_index;
     u32 now;
-    NGCSoundState PTR4* state;
-    AXVPB PTR4* voice;
-    u32 PTR4* task_owner;
     u32 voice_cursor;
     u32 end_cursor;
-    u32 address_shift;
     u32 buffered_bytes;
 
     lock_index = NGC_SOUND_NO_LOCK_INDEX;
@@ -848,22 +874,15 @@ static s32 Ready(BINKSND PTR4* snd)
         return 0;
     }
 
-    state = NGC_SOUND_STATE(snd);
     now = RADTimerRead();
-    address_shift = NGC_SOUND_STATE(snd)->address_shift;
-    voice = state->voices[0];
-    voice_cursor = NGC_AX_CURRENT_CURSOR(voice, address_shift);
+    voice_cursor = get_play_pos(NGC_SOUND_STATE(snd));
     if (NGC_SOUND_STATE(snd)->play_state == NGC_PLAY_STATE_RUNNING) {
-        end_cursor = NGC_AX_END_CURSOR(voice, address_shift);
+        end_cursor = get_end_pos(NGC_SOUND_STATE(snd));
         buffered_bytes = 0;
         /* A pending wrapped end address becomes valid once playback crosses the wrap. */
         if (voice_cursor < NGC_SOUND_STATE(snd)->pending_end) {
             end_cursor = NGC_SOUND_STATE(snd)->pending_end;
-            AXSetVoiceEndAddr(voice, NGC_AX_END_ADDR(end_cursor, address_shift));
-            voice = NGC_RIGHT_VOICE(state);
-            if (voice != 0) {
-                AXSetVoiceEndAddr(voice, NGC_AX_RIGHT_END_ADDR(state, end_cursor));
-            }
+            MyAXSetVoiceEndAddr(NGC_SOUND_STATE(snd), end_cursor);
             NGC_SOUND_STATE(snd)->pending_end = 0;
             NGC_SOUND_STATE(snd)->play_cursor = (u32)NGC_SOUND_STATE(snd)->audio_buffer;
         }
@@ -892,21 +911,13 @@ check_tasks:
         /* Only offer a lock when the writer is safely ahead of the AX cursor. */
         if (NGC_SOUND_STATE(snd)->play_cursor >= voice_cursor ||
             voice_cursor - NGC_SOUND_STATE(snd)->play_cursor > NGC_SOUND_STATE(snd)->frame_size) {
-            lock_index = 0;
-            task_owner = &state->tasks[0].owner;
-            for (;;) {
-                u32 owner = *task_owner;
-
-                task_owner += NGC_TASK_OWNER_WORD_STRIDE;
-                if (!NGC_TASK_OWNER_BUSY(owner)) {
-                    break;
-                }
-                ++lock_index;
-                if (lock_index > NGC_SOUND_LAST_LOCK_INDEX) {
-                    lock_index = NGC_SOUND_NO_LOCK_INDEX;
-                    break;
+            for (lock_index = 0; lock_index <= NGC_SOUND_LAST_LOCK_INDEX; ++lock_index) {
+                if (!NGC_TASK_BUSY(get_task(NGC_SOUND_STATE(snd), 0, lock_index))) {
+                    goto found_free_lock;
                 }
             }
+            lock_index = NGC_SOUND_NO_LOCK_INDEX;
+        found_free_lock:;
         } else {
             lock_index = NGC_SOUND_NO_LOCK_INDEX;
         }
@@ -1028,129 +1039,3 @@ BINKSNDOPEN BinkOpenNGCSound(u32 param)
     return Open;
 }
 
-void MyAXSetVoiceCurrentAddr(NGCSoundState PTR4* state, u32 addr)
-{
-    u32 shift = NGC_ADDRESS_SHIFT(state);
-    AXVPB PTR4* voice = NGC_LEFT_VOICE(state);
-
-    AXSetVoiceCurrentAddr(voice, NGC_AX_ADDR(addr, shift));
-
-    voice = NGC_RIGHT_VOICE(state);
-    if (voice != 0) {
-        AXSetVoiceCurrentAddr(voice, NGC_AX_RIGHT_ADDR(state, addr));
-    }
-}
-
-void MyAXSetVoiceLoopAddr(NGCSoundState PTR4* state, u32 addr)
-{
-    u32 shift = NGC_ADDRESS_SHIFT(state);
-    AXVPB PTR4* voice = NGC_LEFT_VOICE(state);
-
-    AXSetVoiceLoopAddr(voice, NGC_AX_ADDR(addr, shift));
-
-    voice = NGC_RIGHT_VOICE(state);
-    if (voice != 0) {
-        AXSetVoiceLoopAddr(voice, NGC_AX_RIGHT_ADDR(state, addr));
-    }
-}
-
-void MyAXSetVoiceEndAddr(NGCSoundState PTR4* state, u32 addr)
-{
-    u32 shift = NGC_ADDRESS_SHIFT(state);
-    AXVPB PTR4* voice = NGC_LEFT_VOICE(state);
-
-    AXSetVoiceEndAddr(voice, NGC_AX_END_ADDR(addr, shift));
-
-    voice = NGC_RIGHT_VOICE(state);
-    if (voice != 0) {
-        AXSetVoiceEndAddr(voice, NGC_AX_RIGHT_END_ADDR(state, addr));
-    }
-}
-
-void MyAXSetVoiceState(NGCSoundState PTR4* state, u16 voice_state)
-{
-    AXVPB PTR4* voice = NGC_LEFT_VOICE(state);
-
-    if (voice != 0) {
-        AXSetVoiceState(voice, voice_state);
-    }
-
-    voice = NGC_RIGHT_VOICE(state);
-    if (voice != 0) {
-        AXSetVoiceState(voice, voice_state);
-    }
-}
-
-u32 get_play_pos(NGCSoundState PTR4* state)
-{
-    AXVPB PTR4* voice = NGC_LEFT_VOICE(state);
-    u32 shift = NGC_ADDRESS_SHIFT(state);
-
-    return NGC_AX_CURRENT_CURSOR(voice, shift);
-}
-
-u32 get_end_pos(NGCSoundState PTR4* state)
-{
-    AXVPB PTR4* voice = NGC_LEFT_VOICE(state);
-    u32 shift = NGC_ADDRESS_SHIFT(state);
-
-    return NGC_AX_END_CURSOR(voice, shift);
-}
-
-ARQRequest PTR4* get_task(NGCSoundState PTR4* state, u32 index, u32 side)
-{
-    return NGC_TASK_FOR_INDEX(state, index, side);
-}
-
-void ConvDataToStereo8(u32 PTR4* src, u16 PTR4* left, u16 PTR4* right, u32 bytes)
-{
-    u32 i;
-    u32 total = bytes;
-    u32 count;
-
-    count = total >> NGC_STEREO8_GROUP_SHIFT;
-
-    for (i = 0; i < count; ++i) {
-        u32 packed_samples = *src++;
-
-        *left++ = (u16)NGC_SAMPLE_LEFT_8_PAIR(packed_samples);
-        *right++ = (u16)NGC_SAMPLE_RIGHT_8_PAIR(packed_samples);
-    }
-
-    count = (total - (count * NGC_STEREO8_GROUP_BYTES)) >> NGC_STEREO8_TAIL_SHIFT;
-    for (i = 0; i < count; ++i) {
-        u16 packed_samples = NGC_SAMPLE_LOAD_STEREO8_TAIL(src);
-        src = NGC_ADVANCE_U32_STEREO8_TAIL(src);
-        NGC_SAMPLE_STORE_8_TAIL(left, packed_samples >> NGC_SAMPLE_BYTE_SHIFT);
-        NGC_SAMPLE_STORE_8_TAIL(right, packed_samples);
-        left = NGC_ADVANCE_U16_8BIT_SAMPLE(left);
-        right = NGC_ADVANCE_U16_8BIT_SAMPLE(right);
-    }
-}
-
-void ConvDataToStereo16(u32 PTR4* src, u32 PTR4* left, u32 PTR4* right, u32 bytes)
-{
-    u32 i;
-    u32 total = bytes;
-    u32 count;
-
-    count = total >> NGC_STEREO16_GROUP_SHIFT;
-
-    for (i = 0; i < count; ++i) {
-        u32 first = src[NGC_STEREO16_GROUP_WORD_0];
-        u32 second = src[NGC_STEREO16_GROUP_WORD_1];
-        src += NGC_STEREO16_GROUP_WORDS;
-
-        *left++ = NGC_SAMPLE_LEFT_16_PAIR(first, second);
-        *right++ = NGC_SAMPLE_RIGHT_16_PAIR(first, second);
-    }
-
-    count = (total - (count * NGC_STEREO16_GROUP_BYTES)) >> NGC_STEREO16_TAIL_SHIFT;
-    for (i = 0; i < count; ++i) {
-        u32 packed_samples = *src++;
-        NGC_SAMPLE_STORE_16_TAIL(left, NGC_SAMPLE_HIGH_HALF(packed_samples));
-        NGC_SAMPLE_STORE_16_TAIL(right, packed_samples);
-        left = NGC_ADVANCE_U32_16BIT_SAMPLE(left);
-        right = NGC_ADVANCE_U32_16BIT_SAMPLE(right);
-    }
-}
