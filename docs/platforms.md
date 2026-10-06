@@ -131,6 +131,8 @@ The [complete French utility comparison](PS2_FRANCE_UTILITY.md) adds eight origi
 
 The original [PS2 inline atan2 wrapper](PS2_ATAN2_INLINE.md) adds 1,336 matched bytes and four functions per debug version, plus 672 bytes and two functions in France. Every prior exact match remains; the documented SB2 partial-score decrease restores its original clamp calls.
 
+Restoring the original [PS2 angle-modulo header body](PS2_ANGLE_MODULO_INLINE.md) improves eight partial functions per debug version, including Plankton yaw (48.18% to 91.47%) and SB2 node updates (61.39% to 92.26%). Bungee hanging initialization decreases from 54.99% to 49.72% because this incomplete caller now inlines a helper that remains out of line in the original. That tradeoff stays visible; no previous exact matches are lost and exact totals are unchanged.
+
 The `address-anchors.json` registries also recover over 2,500 named data addresses
 and 628 function declarations in each debug-bearing version. Addresses do not
 imply object sizes, and declaring source files do not establish definition ownership.
