@@ -20,10 +20,16 @@
 #define RwRGBAFromRwRGBARealMacro(_o, _i)                                                          \
     MACRO_START                                                                                    \
     {                                                                                              \
-        (_o)->red = (RwUInt8)(((RwReal)255.0) * (_i)->red + ((RwReal)0.5));                        \
-        (_o)->green = (RwUInt8)(((RwReal)255.0) * (_i)->green + ((RwReal)0.5));                    \
-        (_o)->blue = (RwUInt8)(((RwReal)255.0) * (_i)->blue + ((RwReal)0.5));                      \
-        (_o)->alpha = (RwUInt8)(((RwReal)255.0) * (_i)->alpha + ((RwReal)0.5));                    \
+        RwInt32 quantize;                                                                          \
+                                                                                                   \
+        quantize = (RwInt32)(((RwReal)255.0) * (_i)->red + ((RwReal)0.5));                         \
+        (_o)->red = (RwUInt8)quantize;                                                             \
+        quantize = (RwInt32)(((RwReal)255.0) * (_i)->green + ((RwReal)0.5));                       \
+        (_o)->green = (RwUInt8)quantize;                                                           \
+        quantize = (RwInt32)(((RwReal)255.0) * (_i)->blue + ((RwReal)0.5));                        \
+        (_o)->blue = (RwUInt8)quantize;                                                            \
+        quantize = (RwInt32)(((RwReal)255.0) * (_i)->alpha + ((RwReal)0.5));                       \
+        (_o)->alpha = (RwUInt8)quantize;                                                           \
     }                                                                                              \
     MACRO_STOP
 
@@ -140,11 +146,11 @@ static void ImageResampleGetAvgPixel(const RwImage* _image, RwInt32 _nXStart, Rw
 
 RwImage* RwImageResample(RwImage* dstImage, const RwImage* srcImage)
 {
-    RwInt32 nY;
-    RwInt32 nYPos;
     RwInt32 nX;
+    RwInt32 nY;
     RwInt32 nXPos;
     RwInt32 nXDelta;
+    RwInt32 nYPos;
     RwInt32 nYDelta;
     RwInt32 dstWidth = dstImage->width;
     RwInt32 dstHeight = dstImage->height;
