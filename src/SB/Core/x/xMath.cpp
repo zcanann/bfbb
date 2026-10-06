@@ -302,7 +302,8 @@ void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 endx, F32 maxv)
 
     temp_f29 = endx - x;
 #if defined(XBOX)
-    if ((F32)xMathAbs(v) < 0.001f || (temp_f29 < 0.0f ? 1 : 0) != (v < 0.0f ? 1 : 0))
+    const F32 abs_v = (F32)xMathAbs(v);
+    if (abs_v < 0.001f || (temp_f29 < 0.0f ? 1 : 0) != (v < 0.0f ? 1 : 0))
 #else
     var_r3 = (F32)xMathAbs(v) < 0.001f || (temp_f29 < 0.0f ? 1 : 0) != (v < 0.0f ? 1 : 0);
     if (var_r3 & 0xff)
@@ -339,7 +340,11 @@ void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 endx, F32 maxv)
     }
     else
     {
+#if defined(XBOX)
+        if (abs_v <= maxv)
+#else
         if ((F32)xMathAbs(oldv) <= maxv)
+#endif
         {
             v = range_limit(newv, -maxv, maxv);
             if (oldv != v)

@@ -210,3 +210,28 @@ literal relocation expectations remain valid without a profile change.
 Ignored evidence: `build/xbox276/{compile.py,compare.py,consumers,production,
 verify_final.py,final-verification.json,gc/proof.json}`. This remains a partial
 source comparison with no original TU completion or retail-link claim.
+
+## Reused absolute speed in endpoint acceleration
+
+The original stores its first `abs(v)` result and uses that same value later
+for the old-speed/maximum-speed comparison. The shared source recomputed
+`abs(oldv)` there. Xbox now captures the first result in an ordinary `abs_v`
+local and reuses it for that later comparison. No velocity writes or calls
+intervene on the path reaching this test; other paths that write velocity
+skip the test entirely. Therefore the captured value also preserves behavior
+when the two referenced arguments alias. No arithmetic tree, sign comparison
+or output store is changed, and non-Xbox code is preserved.
+
+The one supported reuse improves 91.265625% to 93.697914%. Source size becomes
+575 bytes versus the original 574, and its genuine local frame is now the
+original eight bytes rather than four. This is an ordinary computed-value
+lifetime, not an explicit stack reference or artificial spill. Remaining
+arithmetic/control differences are still compared normally.
+
+Both complete regional reports preserve every other function record, exact
+count and denominator/completion field apart from generated COFF offsets.
+All 33 ordered GameCube consumer sections remain identical. Existing original
+identities, literal fields, profiles, source owners and backend rules are
+unchanged. Ignored evidence is under `build/xbox282/{compile.py,compare.py,
+consumers,production,verify_final.py,final-verification.json,gc/proof.json}`.
+The function remains partial; no whole-TU or retail-link claim is added.
