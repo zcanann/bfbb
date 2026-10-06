@@ -1944,11 +1944,53 @@
       "provenance": "machine-corroborated-explicit-transfers"
     },
     {
+      "name": "xFuncPiece_ShiftPiece",
+      "source": "SB/Core/x/xMath.cpp",
+      "address": 2021088,
+      "size": 284,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xFuncPiece_EndPoints",
+      "source": "SB/Core/x/xMath.cpp",
+      "address": 2021376,
+      "size": 60,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "xFuncPiece_Eval",
       "source": "SB/Core/x/xMath.cpp",
       "address": 2021440,
       "size": 168,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xAccelStop",
+      "source": "SB/Core/x/xMath.cpp",
+      "address": 2021616,
+      "size": 336,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAccelMove",
+      "source": "SB/Core/x/xMath.cpp",
+      "address": 2021952,
+      "size": 312,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAccelMoveTime",
+      "source": "SB/Core/x/xMath.cpp",
+      "address": 2022272,
+      "size": 120,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xAccelMove",
+      "source": "SB/Core/x/xMath.cpp",
+      "address": 2022400,
+      "size": 744,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "xDangleClamp",
@@ -1998,6 +2040,27 @@
       "address": 2024768,
       "size": 32,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xsrand",
+      "source": "SB/Core/x/xMath.cpp",
+      "address": 2024800,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xatof",
+      "source": "SB/Core/x/xMath.cpp",
+      "address": 2024816,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xMathExit",
+      "source": "SB/Core/x/xMath.cpp",
+      "address": 2024832,
+      "size": 24,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "xMathInit",

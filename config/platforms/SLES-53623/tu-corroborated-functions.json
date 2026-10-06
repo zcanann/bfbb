@@ -36,14 +36,15 @@
     "Strings adds four members from the complete twelve-member sequence, preserving eight prior neighbors. One exact twelve-entry dispatch uses the existing strict recognizer. The sole xatof call is corroborated by a complete six-member original math-tail sequence with three independent neighbors; its literal runtime tail remains unmasked context only, not a new anchor or progress extent.",
     "Particle initialization adds one member from the complete four-function sequence. The original 2000-element xPar array descriptor bounds the sole changed pool address inside authentic BSS; no data extent is promoted.",
     "Update culling adds three members from all seven original functions and four independent neighbors. The complete group-accessor/count context and independently reviewed allocator neighborhood corroborate calls and pointer slots; opaque runtime transfer words remain unmasked. No context becomes a new identity or extent.",
-    "Bounds adds six members from all nine original functions and three independent neighbors. The complete platform-geometry dependency is independently replayed for external calls; original DWARF proves the 60-byte quick-cull global, with no data extent promotion."
+    "Bounds adds six members from all nine original functions and three independent neighbors. The complete platform-geometry dependency is independently replayed for external calls; original DWARF proves the 60-byte quick-cull global, with no data extent promotion.",
+    "Scalar math adds nine members from all eighteen original functions and nine independent neighbors. Only the exact 60-byte EndPoints leaf tail and eight-byte literal xatof J/NOP have scoped boundary rules; generic CFG checks stay unchanged. Opaque runtime transfer words remain unmasked, unnamed context, and the two overloaded acceleration functions retain distinct original linkage identities."
   ],
   "counts": {
-    "functions": 340,
-    "code_bytes": 160484,
-    "source_units": 20,
+    "functions": 349,
+    "code_bytes": 162380,
+    "source_units": 21,
     "rooted_direct_call_entries": 129,
-    "closed_return_bodies": 326,
+    "closed_return_bodies": 333,
     "reviewed_tail_wrappers": 2,
     "registered_callback_entries": 26,
     "reviewed_leaf_tail_functions": 11,
@@ -62,7 +63,8 @@
     "reviewed_grid_arrays": 1,
     "reviewed_skb_polynomials": 1,
     "reviewed_string_dispatch_tables": 1,
-    "reviewed_particle_pool_arrays": 1
+    "reviewed_particle_pool_arrays": 1,
+    "reviewed_scalar_math_tails": 2
   },
   "sequence_proofs": [
     {
@@ -1227,6 +1229,57 @@
         "unchanged_anchor_offset": 568,
         "unchanged_anchor_bytes": 956,
         "masked_instruction_count": 22
+      }
+    },
+    {
+      "version": "SLUS-20680",
+      "source": "SB/Core/x/xMath.cpp",
+      "source_start": 2019728,
+      "target_start": 2021088,
+      "complete_original_members": 18,
+      "previously_confirmed_members": 9,
+      "sequence_bytes_with_alignment": 3808,
+      "uniqueness": {
+        "matching_addresses": [
+          2021088
+        ],
+        "unchanged_anchor_offset": 2436,
+        "unchanged_anchor_bytes": 1372,
+        "masked_instruction_count": 3
+      }
+    },
+    {
+      "version": "SLES-51968",
+      "source": "SB/Core/x/xMath.cpp",
+      "source_start": 2020976,
+      "target_start": 2021088,
+      "complete_original_members": 18,
+      "previously_confirmed_members": 9,
+      "sequence_bytes_with_alignment": 3808,
+      "uniqueness": {
+        "matching_addresses": [
+          2021088
+        ],
+        "unchanged_anchor_offset": 2436,
+        "unchanged_anchor_bytes": 1372,
+        "masked_instruction_count": 3
+      }
+    },
+    {
+      "version": "SLES-51970",
+      "source": "SB/Core/x/xMath.cpp",
+      "source_start": 2017616,
+      "target_start": 2021088,
+      "complete_original_members": 18,
+      "previously_confirmed_members": 9,
+      "sequence_bytes_with_alignment": 3808,
+      "uniqueness": {
+        "matching_addresses": [
+          2021088
+        ],
+        "unchanged_anchor_offset": 2436,
+        "unchanged_anchor_bytes": 1372,
+        "masked_instruction_count": 3
       }
     }
   ],
@@ -13400,6 +13453,501 @@
       "opcode": 3,
       "reference_address": 2073200,
       "target_address": 2076656,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 2022400,
+      "offset": 396,
+      "opcode": 3,
+      "reference_address": 1855200,
+      "target_address": 1856576,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 2023152,
+      "offset": 20,
+      "opcode": 3,
+      "reference_address": 1133296,
+      "target_address": 1133296,
+      "opaque_context_prefix_sha256": "44746446609832a44e7040183a668144eb3c1c25bd165af29e0c1afe66463061",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 2023376,
+      "offset": 20,
+      "opcode": 3,
+      "reference_address": 1133296,
+      "target_address": 1133296,
+      "opaque_context_prefix_sha256": "44746446609832a44e7040183a668144eb3c1c25bd165af29e0c1afe66463061",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 2023456,
+      "offset": 380,
+      "opcode": 3,
+      "reference_address": 1133344,
+      "target_address": 1133344,
+      "opaque_context_prefix_sha256": "7ed89a51426665ff9dd2042bd7a73a09f3f1694d055a7d3820dded1cfea52777",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 2023456,
+      "offset": 412,
+      "opcode": 3,
+      "reference_address": 1133344,
+      "target_address": 1133344,
+      "opaque_context_prefix_sha256": "7ed89a51426665ff9dd2042bd7a73a09f3f1694d055a7d3820dded1cfea52777",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 2023456,
+      "offset": 468,
+      "opcode": 3,
+      "reference_address": 1133344,
+      "target_address": 1133344,
+      "opaque_context_prefix_sha256": "7ed89a51426665ff9dd2042bd7a73a09f3f1694d055a7d3820dded1cfea52777",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 2023456,
+      "offset": 508,
+      "opcode": 3,
+      "reference_address": 1133344,
+      "target_address": 1133344,
+      "opaque_context_prefix_sha256": "7ed89a51426665ff9dd2042bd7a73a09f3f1694d055a7d3820dded1cfea52777",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 2023456,
+      "offset": 588,
+      "opcode": 3,
+      "reference_address": 1133248,
+      "target_address": 1133248,
+      "opaque_context_prefix_sha256": "8dba4b0ee6eec641ada7b1ea27912255c7853ab7ef84c9f9eac1ad3d621f8899",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 2023456,
+      "offset": 684,
+      "opcode": 3,
+      "reference_address": 1132176,
+      "target_address": 1132176,
+      "opaque_context_prefix_sha256": "6816b8754e89da74ae0b9a8f6e37a5c76246d6ff69f86c59001776bb3ef56a73",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 2023456,
+      "offset": 696,
+      "opcode": 3,
+      "reference_address": 1132848,
+      "target_address": 1132848,
+      "opaque_context_prefix_sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 2023456,
+      "offset": 812,
+      "opcode": 3,
+      "reference_address": 1133344,
+      "target_address": 1133344,
+      "opaque_context_prefix_sha256": "7ed89a51426665ff9dd2042bd7a73a09f3f1694d055a7d3820dded1cfea52777",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 2023456,
+      "offset": 844,
+      "opcode": 3,
+      "reference_address": 1133344,
+      "target_address": 1133344,
+      "opaque_context_prefix_sha256": "7ed89a51426665ff9dd2042bd7a73a09f3f1694d055a7d3820dded1cfea52777",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 2024816,
+      "offset": 0,
+      "opcode": 2,
+      "reference_address": 1133496,
+      "target_address": 1133496,
+      "opaque_context_prefix_sha256": "b60fec20624fc96e738dc9872902624651a2e837158de0a6986cccfcf6f4c3d8",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 2022400,
+      "offset": 396,
+      "opcode": 3,
+      "reference_address": 1856464,
+      "target_address": 1856576,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 2023152,
+      "offset": 20,
+      "opcode": 3,
+      "reference_address": 1133296,
+      "target_address": 1133296,
+      "opaque_context_prefix_sha256": "44746446609832a44e7040183a668144eb3c1c25bd165af29e0c1afe66463061",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 2023376,
+      "offset": 20,
+      "opcode": 3,
+      "reference_address": 1133296,
+      "target_address": 1133296,
+      "opaque_context_prefix_sha256": "44746446609832a44e7040183a668144eb3c1c25bd165af29e0c1afe66463061",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 2023456,
+      "offset": 380,
+      "opcode": 3,
+      "reference_address": 1133344,
+      "target_address": 1133344,
+      "opaque_context_prefix_sha256": "7ed89a51426665ff9dd2042bd7a73a09f3f1694d055a7d3820dded1cfea52777",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 2023456,
+      "offset": 412,
+      "opcode": 3,
+      "reference_address": 1133344,
+      "target_address": 1133344,
+      "opaque_context_prefix_sha256": "7ed89a51426665ff9dd2042bd7a73a09f3f1694d055a7d3820dded1cfea52777",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 2023456,
+      "offset": 468,
+      "opcode": 3,
+      "reference_address": 1133344,
+      "target_address": 1133344,
+      "opaque_context_prefix_sha256": "7ed89a51426665ff9dd2042bd7a73a09f3f1694d055a7d3820dded1cfea52777",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 2023456,
+      "offset": 508,
+      "opcode": 3,
+      "reference_address": 1133344,
+      "target_address": 1133344,
+      "opaque_context_prefix_sha256": "7ed89a51426665ff9dd2042bd7a73a09f3f1694d055a7d3820dded1cfea52777",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 2023456,
+      "offset": 588,
+      "opcode": 3,
+      "reference_address": 1133248,
+      "target_address": 1133248,
+      "opaque_context_prefix_sha256": "8dba4b0ee6eec641ada7b1ea27912255c7853ab7ef84c9f9eac1ad3d621f8899",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 2023456,
+      "offset": 684,
+      "opcode": 3,
+      "reference_address": 1132176,
+      "target_address": 1132176,
+      "opaque_context_prefix_sha256": "6816b8754e89da74ae0b9a8f6e37a5c76246d6ff69f86c59001776bb3ef56a73",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 2023456,
+      "offset": 696,
+      "opcode": 3,
+      "reference_address": 1132848,
+      "target_address": 1132848,
+      "opaque_context_prefix_sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 2023456,
+      "offset": 812,
+      "opcode": 3,
+      "reference_address": 1133344,
+      "target_address": 1133344,
+      "opaque_context_prefix_sha256": "7ed89a51426665ff9dd2042bd7a73a09f3f1694d055a7d3820dded1cfea52777",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 2023456,
+      "offset": 844,
+      "opcode": 3,
+      "reference_address": 1133344,
+      "target_address": 1133344,
+      "opaque_context_prefix_sha256": "7ed89a51426665ff9dd2042bd7a73a09f3f1694d055a7d3820dded1cfea52777",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 2024816,
+      "offset": 0,
+      "opcode": 2,
+      "reference_address": 1133496,
+      "target_address": 1133496,
+      "opaque_context_prefix_sha256": "b60fec20624fc96e738dc9872902624651a2e837158de0a6986cccfcf6f4c3d8",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 2022400,
+      "offset": 396,
+      "opcode": 3,
+      "reference_address": 1853104,
+      "target_address": 1856576,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 2023152,
+      "offset": 20,
+      "opcode": 3,
+      "reference_address": 1133296,
+      "target_address": 1133296,
+      "opaque_context_prefix_sha256": "44746446609832a44e7040183a668144eb3c1c25bd165af29e0c1afe66463061",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 2023376,
+      "offset": 20,
+      "opcode": 3,
+      "reference_address": 1133296,
+      "target_address": 1133296,
+      "opaque_context_prefix_sha256": "44746446609832a44e7040183a668144eb3c1c25bd165af29e0c1afe66463061",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 2023456,
+      "offset": 380,
+      "opcode": 3,
+      "reference_address": 1133344,
+      "target_address": 1133344,
+      "opaque_context_prefix_sha256": "7ed89a51426665ff9dd2042bd7a73a09f3f1694d055a7d3820dded1cfea52777",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 2023456,
+      "offset": 412,
+      "opcode": 3,
+      "reference_address": 1133344,
+      "target_address": 1133344,
+      "opaque_context_prefix_sha256": "7ed89a51426665ff9dd2042bd7a73a09f3f1694d055a7d3820dded1cfea52777",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 2023456,
+      "offset": 468,
+      "opcode": 3,
+      "reference_address": 1133344,
+      "target_address": 1133344,
+      "opaque_context_prefix_sha256": "7ed89a51426665ff9dd2042bd7a73a09f3f1694d055a7d3820dded1cfea52777",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 2023456,
+      "offset": 508,
+      "opcode": 3,
+      "reference_address": 1133344,
+      "target_address": 1133344,
+      "opaque_context_prefix_sha256": "7ed89a51426665ff9dd2042bd7a73a09f3f1694d055a7d3820dded1cfea52777",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 2023456,
+      "offset": 588,
+      "opcode": 3,
+      "reference_address": 1133248,
+      "target_address": 1133248,
+      "opaque_context_prefix_sha256": "8dba4b0ee6eec641ada7b1ea27912255c7853ab7ef84c9f9eac1ad3d621f8899",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 2023456,
+      "offset": 684,
+      "opcode": 3,
+      "reference_address": 1132176,
+      "target_address": 1132176,
+      "opaque_context_prefix_sha256": "6816b8754e89da74ae0b9a8f6e37a5c76246d6ff69f86c59001776bb3ef56a73",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 2023456,
+      "offset": 696,
+      "opcode": 3,
+      "reference_address": 1132848,
+      "target_address": 1132848,
+      "opaque_context_prefix_sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 2023456,
+      "offset": 812,
+      "opcode": 3,
+      "reference_address": 1133344,
+      "target_address": 1133344,
+      "opaque_context_prefix_sha256": "7ed89a51426665ff9dd2042bd7a73a09f3f1694d055a7d3820dded1cfea52777",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 2023456,
+      "offset": 844,
+      "opcode": 3,
+      "reference_address": 1133344,
+      "target_address": 1133344,
+      "opaque_context_prefix_sha256": "7ed89a51426665ff9dd2042bd7a73a09f3f1694d055a7d3820dded1cfea52777",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 2024816,
+      "offset": 0,
+      "opcode": 2,
+      "reference_address": 1133496,
+      "target_address": 1133496,
+      "opaque_context_prefix_sha256": "b60fec20624fc96e738dc9872902624651a2e837158de0a6986cccfcf6f4c3d8",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
       "promoted_as_named_anchor": false
     }
   ],
@@ -45343,6 +45891,933 @@
           1945968,
           1946400,
           1946656
+        ]
+      }
+    },
+    {
+      "name": "xFuncPiece_ShiftPiece",
+      "source": "SB/Core/x/xMath.cpp",
+      "address": 2021088,
+      "size": 284,
+      "sha256": "4f1363e859c59cdc283a16b148dffc0799b898d78ffedc1134b57182faf280ba",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2019728,
+          "name": "xFuncPiece_ShiftPiece",
+          "source": "SB/Core/x/xMath.cpp",
+          "linkage_name": "xFuncPiece_ShiftPiece__FP10xFuncPieceP10xFuncPiecef",
+          "reference_sha256": "4f1363e859c59cdc283a16b148dffc0799b898d78ffedc1134b57182faf280ba",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2020976,
+          "name": "xFuncPiece_ShiftPiece",
+          "source": "SB/Core/x/xMath.cpp",
+          "linkage_name": "xFuncPiece_ShiftPiece__FP10xFuncPieceP10xFuncPiecef",
+          "reference_sha256": "4f1363e859c59cdc283a16b148dffc0799b898d78ffedc1134b57182faf280ba",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2017616,
+          "name": "xFuncPiece_ShiftPiece",
+          "source": "SB/Core/x/xMath.cpp",
+          "linkage_name": "xFuncPiece_ShiftPiece__FP10xFuncPieceP10xFuncPiecef",
+          "reference_sha256": "4f1363e859c59cdc283a16b148dffc0799b898d78ffedc1134b57182faf280ba",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2021364
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              2021100,
+              2021136
+            ],
+            [
+              2021128,
+              2021112
+            ],
+            [
+              2021164,
+              2021288
+            ],
+            [
+              2021192,
+              2021256
+            ],
+            [
+              2021248,
+              2021216
+            ],
+            [
+              2021280,
+              2021184
+            ],
+            [
+              2021304,
+              2021352
+            ],
+            [
+              2021344,
+              2021320
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              2021092,
+              -32
+            ],
+            [
+              2021368,
+              32
+            ]
+          ],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 4
+        },
+        "previously_confirmed_neighbor_entries": [
+          2021440,
+          2023152,
+          2023296,
+          2023376,
+          2023456,
+          2024400,
+          2024672,
+          2024768,
+          2024864
+        ]
+      }
+    },
+    {
+      "name": "xFuncPiece_EndPoints",
+      "source": "SB/Core/x/xMath.cpp",
+      "address": 2021376,
+      "size": 60,
+      "sha256": "8aa81adea0cf8b32e12ec7bb99c58f42cbc9905a3c2085a856e728c6bcecc0c2",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2020016,
+          "name": "xFuncPiece_EndPoints",
+          "source": "SB/Core/x/xMath.cpp",
+          "linkage_name": "xFuncPiece_EndPoints__FP10xFuncPieceffff",
+          "reference_sha256": "15f1b989a561a7f53d23f4b6bb0566824c867b0a8634687b3e6548feaba57625",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 52,
+              "opcode": 2,
+              "reference_address": 2019728,
+              "target_address": 2021088
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2021264,
+          "name": "xFuncPiece_EndPoints",
+          "source": "SB/Core/x/xMath.cpp",
+          "linkage_name": "xFuncPiece_EndPoints__FP10xFuncPieceffff",
+          "reference_sha256": "0d4c27552a0b4166a779c53b10d0d0c8e9df7d5e30701d996a0c04987a01ece4",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 52,
+              "opcode": 2,
+              "reference_address": 2020976,
+              "target_address": 2021088
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2017904,
+          "name": "xFuncPiece_EndPoints",
+          "source": "SB/Core/x/xMath.cpp",
+          "linkage_name": "xFuncPiece_EndPoints__FP10xFuncPieceffff",
+          "reference_sha256": "103da4c15c56f4c0a9cf85d98b1cf25ac4b8e6755129a98f142119f45bd8ebed",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 52,
+              "opcode": 2,
+              "reference_address": 2017616,
+              "target_address": 2021088
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "boundary_kind": "reviewed-exact-original-60-byte-leaf-tail",
+          "all14_nontransfer_words_exact": true,
+          "unchanged_sp_ra": true,
+          "terminal_instruction_offset": 52,
+          "tail_target_name": "xFuncPiece_ShiftPiece",
+          "tail_target_address": 2021088,
+          "callee_size": 284,
+          "callee_closed_in_both_originals": true,
+          "following_zero_alignment": 4
+        },
+        "previously_confirmed_neighbor_entries": [
+          2021440,
+          2023152,
+          2023296,
+          2023376,
+          2023456,
+          2024400,
+          2024672,
+          2024768,
+          2024864
+        ]
+      }
+    },
+    {
+      "name": "xAccelStop",
+      "source": "SB/Core/x/xMath.cpp",
+      "address": 2021616,
+      "size": 336,
+      "sha256": "24d0aee9d8586cf7e10a3c8cdf0c1dee1c03ad700767ac4daa0c3f1526867560",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2020256,
+          "name": "xAccelStop",
+          "source": "SB/Core/x/xMath.cpp",
+          "linkage_name": "xAccelStop__FRfRfff",
+          "reference_sha256": "24d0aee9d8586cf7e10a3c8cdf0c1dee1c03ad700767ac4daa0c3f1526867560",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2021504,
+          "name": "xAccelStop",
+          "source": "SB/Core/x/xMath.cpp",
+          "linkage_name": "xAccelStop__FRfRfff",
+          "reference_sha256": "24d0aee9d8586cf7e10a3c8cdf0c1dee1c03ad700767ac4daa0c3f1526867560",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2018144,
+          "name": "xAccelStop",
+          "source": "SB/Core/x/xMath.cpp",
+          "linkage_name": "xAccelStop__FRfRfff",
+          "reference_sha256": "24d0aee9d8586cf7e10a3c8cdf0c1dee1c03ad700767ac4daa0c3f1526867560",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2021944
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              2021648,
+              2021680
+            ],
+            [
+              2021672,
+              2021944
+            ],
+            [
+              2021784,
+              2021840
+            ],
+            [
+              2021828,
+              2021944
+            ],
+            [
+              2021864,
+              2021896
+            ],
+            [
+              2021888,
+              2021936
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              2021616,
+              -16
+            ],
+            [
+              2021948,
+              16
+            ]
+          ],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [
+            2021836
+          ],
+          "following_zero_alignment": 0
+        },
+        "previously_confirmed_neighbor_entries": [
+          2021440,
+          2023152,
+          2023296,
+          2023376,
+          2023456,
+          2024400,
+          2024672,
+          2024768,
+          2024864
+        ]
+      }
+    },
+    {
+      "name": "xAccelMove",
+      "source": "SB/Core/x/xMath.cpp",
+      "address": 2021952,
+      "size": 312,
+      "sha256": "1ec7c666167cc6ec3abaaeca8061c4c910fcb8e9620098777b7c51b7f7e18045",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2020592,
+          "name": "xAccelMove",
+          "source": "SB/Core/x/xMath.cpp",
+          "linkage_name": "xAccelMove__FRfRffff",
+          "reference_sha256": "1ec7c666167cc6ec3abaaeca8061c4c910fcb8e9620098777b7c51b7f7e18045",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2021840,
+          "name": "xAccelMove",
+          "source": "SB/Core/x/xMath.cpp",
+          "linkage_name": "xAccelMove__FRfRffff",
+          "reference_sha256": "1ec7c666167cc6ec3abaaeca8061c4c910fcb8e9620098777b7c51b7f7e18045",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2018480,
+          "name": "xAccelMove",
+          "source": "SB/Core/x/xMath.cpp",
+          "linkage_name": "xAccelMove__FRfRffff",
+          "reference_sha256": "1ec7c666167cc6ec3abaaeca8061c4c910fcb8e9620098777b7c51b7f7e18045",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2022256
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              2021984,
+              2022056
+            ],
+            [
+              2022148,
+              2022208
+            ],
+            [
+              2022196,
+              2022256
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              2021952,
+              -16
+            ],
+            [
+              2022260,
+              16
+            ]
+          ],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [
+            2022204
+          ],
+          "following_zero_alignment": 8
+        },
+        "previously_confirmed_neighbor_entries": [
+          2021440,
+          2023152,
+          2023296,
+          2023376,
+          2023456,
+          2024400,
+          2024672,
+          2024768,
+          2024864
+        ]
+      }
+    },
+    {
+      "name": "xAccelMoveTime",
+      "source": "SB/Core/x/xMath.cpp",
+      "address": 2022272,
+      "size": 120,
+      "sha256": "1b5fa706508aabfe826bcf4e647ca1d4171cf5f87816874c2edc452224931db9",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2020912,
+          "name": "xAccelMoveTime",
+          "source": "SB/Core/x/xMath.cpp",
+          "linkage_name": "xAccelMoveTime__Fffff",
+          "reference_sha256": "1b5fa706508aabfe826bcf4e647ca1d4171cf5f87816874c2edc452224931db9",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2022160,
+          "name": "xAccelMoveTime",
+          "source": "SB/Core/x/xMath.cpp",
+          "linkage_name": "xAccelMoveTime__Fffff",
+          "reference_sha256": "1b5fa706508aabfe826bcf4e647ca1d4171cf5f87816874c2edc452224931db9",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2018800,
+          "name": "xAccelMoveTime",
+          "source": "SB/Core/x/xMath.cpp",
+          "linkage_name": "xAccelMoveTime__Fffff",
+          "reference_sha256": "1b5fa706508aabfe826bcf4e647ca1d4171cf5f87816874c2edc452224931db9",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2022384
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              2022308,
+              2022360
+            ],
+            [
+              2022352,
+              2022376
+            ]
+          ],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 8
+        },
+        "previously_confirmed_neighbor_entries": [
+          2021440,
+          2023152,
+          2023296,
+          2023376,
+          2023456,
+          2024400,
+          2024672,
+          2024768,
+          2024864
+        ]
+      }
+    },
+    {
+      "name": "xAccelMove",
+      "source": "SB/Core/x/xMath.cpp",
+      "address": 2022400,
+      "size": 744,
+      "sha256": "0713595f68d17d759658909c07a1f91b479eaede1a5c58d04e8040999eadbc20",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2021040,
+          "name": "xAccelMove",
+          "source": "SB/Core/x/xMath.cpp",
+          "linkage_name": "xAccelMove__FRfRfffff",
+          "reference_sha256": "d283faeecf7376ec19cc4305324768561cea31cc22c4f7a28403f0ac24616ada",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 396,
+              "opcode": 3,
+              "reference_address": 1855200,
+              "target_address": 1856576
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2022288,
+          "name": "xAccelMove",
+          "source": "SB/Core/x/xMath.cpp",
+          "linkage_name": "xAccelMove__FRfRfffff",
+          "reference_sha256": "b032c28e2f7cf9416e21a982e6c84fa1b5bfe5fcc550d172045ac1bf1d17bb91",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 396,
+              "opcode": 3,
+              "reference_address": 1856464,
+              "target_address": 1856576
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2018928,
+          "name": "xAccelMove",
+          "source": "SB/Core/x/xMath.cpp",
+          "linkage_name": "xAccelMove__FRfRfffff",
+          "reference_sha256": "df2e5eaa1fb32b414123ee8a6cf58c73fe6b554a6b7174b680a2b95f550446b1",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 396,
+              "opcode": 3,
+              "reference_address": 1853104,
+              "target_address": 1856576
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2023136
+          ],
+          "direct_or_indirect_calls": [
+            2022796
+          ],
+          "branches": [
+            [
+              2022492,
+              2022504
+            ],
+            [
+              2022508,
+              2022552
+            ],
+            [
+              2022552,
+              2022584
+            ],
+            [
+              2022572,
+              2022600
+            ],
+            [
+              2022616,
+              2022640
+            ],
+            [
+              2022656,
+              2022680
+            ],
+            [
+              2022720,
+              2022768
+            ],
+            [
+              2022756,
+              2022952
+            ],
+            [
+              2022780,
+              2022880
+            ],
+            [
+              2022808,
+              2022864
+            ],
+            [
+              2022852,
+              2022952
+            ],
+            [
+              2022868,
+              2022952
+            ],
+            [
+              2022900,
+              2022944
+            ],
+            [
+              2022936,
+              2022952
+            ],
+            [
+              2022964,
+              2023048
+            ],
+            [
+              2022992,
+              2023088
+            ],
+            [
+              2023020,
+              2023088
+            ],
+            [
+              2023036,
+              2023088
+            ],
+            [
+              2023068,
+              2023088
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              2022400,
+              -96
+            ],
+            [
+              2023140,
+              96
+            ]
+          ],
+          "ra_saves": [
+            [
+              2022404,
+              -32
+            ]
+          ],
+          "ra_loads": [
+            [
+              2023104,
+              -32
+            ]
+          ],
+          "unreachable_zero_words": [
+            2022580,
+            2022764,
+            2022860,
+            2022876,
+            2023044
+          ],
+          "following_zero_alignment": 8
+        },
+        "previously_confirmed_neighbor_entries": [
+          2021440,
+          2023152,
+          2023296,
+          2023376,
+          2023456,
+          2024400,
+          2024672,
+          2024768,
+          2024864
+        ]
+      }
+    },
+    {
+      "name": "xsrand",
+      "source": "SB/Core/x/xMath.cpp",
+      "address": 2024800,
+      "size": 8,
+      "sha256": "512deaf24d1ba4ba69d0ad1e1ce45cc3af9dfb122009df6690f7231c95abac2e",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2023440,
+          "name": "xsrand",
+          "source": "SB/Core/x/xMath.cpp",
+          "linkage_name": "xsrand__FUi",
+          "reference_sha256": "512deaf24d1ba4ba69d0ad1e1ce45cc3af9dfb122009df6690f7231c95abac2e",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2024688,
+          "name": "xsrand",
+          "source": "SB/Core/x/xMath.cpp",
+          "linkage_name": "xsrand__FUi",
+          "reference_sha256": "512deaf24d1ba4ba69d0ad1e1ce45cc3af9dfb122009df6690f7231c95abac2e",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2021328,
+          "name": "xsrand",
+          "source": "SB/Core/x/xMath.cpp",
+          "linkage_name": "xsrand__FUi",
+          "reference_sha256": "512deaf24d1ba4ba69d0ad1e1ce45cc3af9dfb122009df6690f7231c95abac2e",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2024800
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 8
+        },
+        "previously_confirmed_neighbor_entries": [
+          2021440,
+          2023152,
+          2023296,
+          2023376,
+          2023456,
+          2024400,
+          2024672,
+          2024768,
+          2024864
+        ]
+      }
+    },
+    {
+      "name": "xatof",
+      "source": "SB/Core/x/xMath.cpp",
+      "address": 2024816,
+      "size": 8,
+      "sha256": "a77fad0b4f6fc124dba9e50d5449b42705ec463d7bfccdc267624ef92f22b0d5",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2023456,
+          "name": "xatof",
+          "source": "SB/Core/x/xMath.cpp",
+          "linkage_name": "xatof__FPCc",
+          "reference_sha256": "a77fad0b4f6fc124dba9e50d5449b42705ec463d7bfccdc267624ef92f22b0d5",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 0,
+              "opcode": 2,
+              "reference_address": 1133496,
+              "target_address": 1133496,
+              "opaque_context_prefix_sha256": "b60fec20624fc96e738dc9872902624651a2e837158de0a6986cccfcf6f4c3d8",
+              "opaque_context_bytes": 64,
+              "no_identity_or_extent_claim": true,
+              "transfer_word_unmasked": true
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2024704,
+          "name": "xatof",
+          "source": "SB/Core/x/xMath.cpp",
+          "linkage_name": "xatof__FPCc",
+          "reference_sha256": "a77fad0b4f6fc124dba9e50d5449b42705ec463d7bfccdc267624ef92f22b0d5",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 0,
+              "opcode": 2,
+              "reference_address": 1133496,
+              "target_address": 1133496,
+              "opaque_context_prefix_sha256": "b60fec20624fc96e738dc9872902624651a2e837158de0a6986cccfcf6f4c3d8",
+              "opaque_context_bytes": 64,
+              "no_identity_or_extent_claim": true,
+              "transfer_word_unmasked": true
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2021344,
+          "name": "xatof",
+          "source": "SB/Core/x/xMath.cpp",
+          "linkage_name": "xatof__FPCc",
+          "reference_sha256": "a77fad0b4f6fc124dba9e50d5449b42705ec463d7bfccdc267624ef92f22b0d5",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 0,
+              "opcode": 2,
+              "reference_address": 1133496,
+              "target_address": 1133496,
+              "opaque_context_prefix_sha256": "b60fec20624fc96e738dc9872902624651a2e837158de0a6986cccfcf6f4c3d8",
+              "opaque_context_bytes": 64,
+              "no_identity_or_extent_claim": true,
+              "transfer_word_unmasked": true
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "boundary_kind": "reviewed-literal-original-j-nop-tail",
+          "original_named_extent": 8,
+          "literal_transfer_unmasked": true,
+          "unchanged_sp_ra": true,
+          "opaque_context_sha256": "b60fec20624fc96e738dc9872902624651a2e837158de0a6986cccfcf6f4c3d8",
+          "no_runtime_identity_or_extent_claim": true
+        },
+        "previously_confirmed_neighbor_entries": [
+          2021440,
+          2023152,
+          2023296,
+          2023376,
+          2023456,
+          2024400,
+          2024672,
+          2024768,
+          2024864
+        ]
+      }
+    },
+    {
+      "name": "xMathExit",
+      "source": "SB/Core/x/xMath.cpp",
+      "address": 2024832,
+      "size": 24,
+      "sha256": "0ce74090b482743eed98076f9c25742778ffef131fa353fd5c2250c1106f6961",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2023472,
+          "name": "xMathExit",
+          "source": "SB/Core/x/xMath.cpp",
+          "linkage_name": "xMathExit__Fv",
+          "reference_sha256": "0ce74090b482743eed98076f9c25742778ffef131fa353fd5c2250c1106f6961",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2024720,
+          "name": "xMathExit",
+          "source": "SB/Core/x/xMath.cpp",
+          "linkage_name": "xMathExit__Fv",
+          "reference_sha256": "0ce74090b482743eed98076f9c25742778ffef131fa353fd5c2250c1106f6961",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2021360,
+          "name": "xMathExit",
+          "source": "SB/Core/x/xMath.cpp",
+          "linkage_name": "xMathExit__Fv",
+          "reference_sha256": "0ce74090b482743eed98076f9c25742778ffef131fa353fd5c2250c1106f6961",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2024848
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              2024836,
+              2024848
+            ]
+          ],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 8
+        },
+        "previously_confirmed_neighbor_entries": [
+          2021440,
+          2023152,
+          2023296,
+          2023376,
+          2023456,
+          2024400,
+          2024672,
+          2024768,
+          2024864
         ]
       }
     },
