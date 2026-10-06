@@ -298,3 +298,23 @@ are needed; source-group and original-TU completeness are not claimed.
 
 Ignored evidence: `build/xbox270/{inventory-disasm.txt,compile.py,compare.py,
 consumers,production,verify_final.py,final-verification.json,gc/proof.json}`.
+
+## ApplyWind vector-local reconstruction
+
+The original Xbox ApplyWind reserves a 12-byte local frame, stores its computed
+magnitude at offsets 0 and 8, and reloads those two fields separately through the
+particle loop. The former scalar locals coalesced into one reused argument slot.
+An Xbox-only ordinary `xVec3 wind` local restores the observed field spacing and
+independent loads. Only x/z are initialized and used; there is no artificial y
+write, padding, volatile access or changed arithmetic. The vector type is a
+source inference from that layout, not a recovered Xbox debug declaration.
+PS2 debug locals retain only the particle pointer and do not prove the type.
+
+Both complete Xbox reports improve ApplyWind from **66.40909% to 99.09091%**,
+with a genuine **63-byte `xParCmd.obj` body**, equal to the original extent.
+The remaining operand differences are retained honestly. All other function
+scores, prior **14148 exact bytes / 78 exact functions**, denominators and
+completion fields stay unchanged. Seven actual consumer builds pass; all 33
+ordered GameCube allocated sections remain byte-identical. The other platforms
+keep the prior scalar source. No headers, profiles, compiler flags or reporting
+rules change. Private proof and full reports are under `build/xbox288/`.

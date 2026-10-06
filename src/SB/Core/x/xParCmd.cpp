@@ -358,19 +358,35 @@ void xParCmdApplyWind_Update(xParCmd* c, xParGroup* ps, F32 dt)
     xParCmdApplyWind* cmd = (xParCmdApplyWind*)c->tasset;
 
     // The wind direction is hardcoded to (1, _, 1); only its magnitude is data-driven.
+#if defined(XBOX)
+    xVec3 wind;
+    wind.x = 1.0f;
+    wind.z = 1.0f;
+#else
     F32 wind_x = 1.0f;
     F32 wind_z = 1.0f;
+#endif
     F32 mag = cmd->unknown * dt;
 
+#if defined(XBOX)
+    wind.x *= mag;
+    wind.z *= mag;
+#else
     wind_x *= mag;
     wind_z *= mag;
+#endif
 
     p = ps->m_root;
 
     while (p)
     {
+#if defined(XBOX)
+        p->m_vel.x += wind.x;
+        p->m_vel.z += wind.z;
+#else
         p->m_vel.x += wind_x;
         p->m_vel.z += wind_z;
+#endif
 
         p = p->m_next;
     }
