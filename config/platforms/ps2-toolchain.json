@@ -9008,9 +9008,58 @@
         "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
       ],
       "symbols": {
-        "zCameraTweakGlobal_Reset": "zCameraTweakGlobal_Reset__Fv"
+        "zCameraTweakGlobal_Reset": "zCameraTweakGlobal_Reset__Fv",
+        "zCameraTweak_EventCB": "zCameraTweak_EventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "zCameraTweak_Load": "zCameraTweak_Load__FP12zCameraTweakP7xSerial",
+        "zCameraTweak_Save": "zCameraTweak_Save__FP12zCameraTweakP7xSerial",
+        "zCameraTweak_Init": "zCameraTweak_Init__FR5xBaseR9xDynAssetUi",
+        "zCameraTweakGlobal_GetPitch": "zCameraTweakGlobal_GetPitch__Fv",
+        "zCameraTweakGlobal_GetH": "zCameraTweakGlobal_GetH__Fv",
+        "zCameraTweakGlobal_GetD": "zCameraTweakGlobal_GetD__Fv",
+        "zCameraTweakGlobal_Update": "zCameraTweakGlobal_Update__Ff",
+        "zCameraTweakGlobal_Remove": "zCameraTweakGlobal_Remove__FUi",
+        "zCameraTweakGlobal_Add": "zCameraTweakGlobal_Add__FUiffff",
+        "zCameraTweakGlobal_Init": "zCameraTweakGlobal_Init__Fv"
       },
-      "calls": [],
+      "calls": [
+        {
+          "function": "zCameraTweak_EventCB",
+          "offset": 128,
+          "target_source": "SB/Game/zCameraTweak.cpp",
+          "target_function": "zCameraTweakGlobal_Add",
+          "symbol": "zCameraTweakGlobal_Add__FUiffff"
+        },
+        {
+          "function": "zCameraTweak_EventCB",
+          "offset": 160,
+          "target_source": "SB/Game/zCameraTweak.cpp",
+          "target_function": "zCameraTweakGlobal_Remove",
+          "symbol": "zCameraTweakGlobal_Remove__FUi"
+        },
+        {
+          "function": "zCameraTweak_Load",
+          "offset": 0,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseLoad",
+          "symbol": "xBaseLoad__FP5xBaseP7xSerial",
+          "opcode": 2
+        },
+        {
+          "function": "zCameraTweak_Save",
+          "offset": 0,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseSave",
+          "symbol": "xBaseSave__FP5xBaseP7xSerial",
+          "opcode": 2
+        },
+        {
+          "function": "zCameraTweak_Init",
+          "offset": 20,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseInit",
+          "symbol": "xBaseInit__FP5xBaseP10xBaseAsset"
+        }
+      ],
       "linkage_provenance": [
         {
           "function": "zCameraTweakGlobal_Reset",
@@ -9037,6 +9086,336 @@
               "reference_sha256": "4a3724ee2a3a59f1762adb36bd21c595ee3d7521b2337fa137ba8a8709083f93"
             }
           ]
+        },
+        {
+          "function": "zCameraTweak_EventCB",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3881232,
+          "size": 184,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3879856,
+              "linkage_name": "zCameraTweak_EventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+              "reference_sha256": "61dd24a4846ef921eeef07198aaffe38ec95956435e4db41e3a4ea263387b019"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3881120,
+              "linkage_name": "zCameraTweak_EventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+              "reference_sha256": "3da5b2e7bf8e3c447778adacceca17a9d35143bbb27f389d91e6a964c7558c69"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3877872,
+              "linkage_name": "zCameraTweak_EventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+              "reference_sha256": "88dad2114f08acf6aa83782c00248aab388ceea7f4c52b27426ddcd12c10458c"
+            }
+          ]
+        },
+        {
+          "function": "zCameraTweak_Load",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3881424,
+          "size": 8,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3880048,
+              "linkage_name": "zCameraTweak_Load__FP12zCameraTweakP7xSerial",
+              "reference_sha256": "4fb630e73eea039dd8307d9653ef699bc0c210aecc35499bd0cf9b4c6956c17d"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3881312,
+              "linkage_name": "zCameraTweak_Load__FP12zCameraTweakP7xSerial",
+              "reference_sha256": "2ffb8024234b0d622de07c9c86ba5a69cd863d0aee43fe91603ab1067901b0ff"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3878064,
+              "linkage_name": "zCameraTweak_Load__FP12zCameraTweakP7xSerial",
+              "reference_sha256": "06ea9b946eb1a419e32c7c5506932cc35b82ab496199fa7faf2f93cb1ab5877f"
+            }
+          ]
+        },
+        {
+          "function": "zCameraTweak_Save",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3881440,
+          "size": 8,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3880064,
+              "linkage_name": "zCameraTweak_Save__FP12zCameraTweakP7xSerial",
+              "reference_sha256": "88e17a28713f7eeee80f35437e659284a195b2178e67f0307656c0895dcf5f0c"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3881328,
+              "linkage_name": "zCameraTweak_Save__FP12zCameraTweakP7xSerial",
+              "reference_sha256": "133c5887d2cbd9b788727ca8a1e0ec4d5696f4c5973b3a8729b92ad8478a33b1"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3878080,
+              "linkage_name": "zCameraTweak_Save__FP12zCameraTweakP7xSerial",
+              "reference_sha256": "fa8239d29782a2710907c8475899ea2339258d7e1e1d472eef2fc29f588dd7fb"
+            }
+          ]
+        },
+        {
+          "function": "zCameraTweak_Init",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3881456,
+          "size": 92,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3880080,
+              "linkage_name": "zCameraTweak_Init__FR5xBaseR9xDynAssetUi",
+              "reference_sha256": "d3d3a6473d0a1cb9ae15ae7d611081e3c8c0fcab49ab753f219f3fd17616fc1a"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3881344,
+              "linkage_name": "zCameraTweak_Init__FR5xBaseR9xDynAssetUi",
+              "reference_sha256": "b952a3df697c1fe65de56aed42a10acd43830bfbf5dbeb43ad85c617d9191283"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3878096,
+              "linkage_name": "zCameraTweak_Init__FR5xBaseR9xDynAssetUi",
+              "reference_sha256": "7ebd2c0776e13bbdf8f2f96cee650b13f8924dfc524d898310c8cdbf16dea10d"
+            }
+          ]
+        },
+        {
+          "function": "zCameraTweakGlobal_GetPitch",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3881552,
+          "size": 8,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3880176,
+              "linkage_name": "zCameraTweakGlobal_GetPitch__Fv",
+              "reference_sha256": "244a0a5393d2971542592c49029f4c38b343a2b64aa5bcdeff29a363238531a9"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3881440,
+              "linkage_name": "zCameraTweakGlobal_GetPitch__Fv",
+              "reference_sha256": "244a0a5393d2971542592c49029f4c38b343a2b64aa5bcdeff29a363238531a9"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3878192,
+              "linkage_name": "zCameraTweakGlobal_GetPitch__Fv",
+              "reference_sha256": "244a0a5393d2971542592c49029f4c38b343a2b64aa5bcdeff29a363238531a9"
+            }
+          ]
+        },
+        {
+          "function": "zCameraTweakGlobal_GetH",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3881568,
+          "size": 8,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3880192,
+              "linkage_name": "zCameraTweakGlobal_GetH__Fv",
+              "reference_sha256": "9c10b66673dba2985f1669c99d790c6073c2a34b1ec60a18f0237988c59e7562"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3881456,
+              "linkage_name": "zCameraTweakGlobal_GetH__Fv",
+              "reference_sha256": "9c10b66673dba2985f1669c99d790c6073c2a34b1ec60a18f0237988c59e7562"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3878208,
+              "linkage_name": "zCameraTweakGlobal_GetH__Fv",
+              "reference_sha256": "9c10b66673dba2985f1669c99d790c6073c2a34b1ec60a18f0237988c59e7562"
+            }
+          ]
+        },
+        {
+          "function": "zCameraTweakGlobal_GetD",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3881584,
+          "size": 8,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3880208,
+              "linkage_name": "zCameraTweakGlobal_GetD__Fv",
+              "reference_sha256": "215dcbb4e9368ee1f246b924caf707477108c8935e0e4a7d970b1fd1edc68fb2"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3881472,
+              "linkage_name": "zCameraTweakGlobal_GetD__Fv",
+              "reference_sha256": "215dcbb4e9368ee1f246b924caf707477108c8935e0e4a7d970b1fd1edc68fb2"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3878224,
+              "linkage_name": "zCameraTweakGlobal_GetD__Fv",
+              "reference_sha256": "215dcbb4e9368ee1f246b924caf707477108c8935e0e4a7d970b1fd1edc68fb2"
+            }
+          ]
+        },
+        {
+          "function": "zCameraTweakGlobal_Update",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3881600,
+          "size": 244,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3880224,
+              "linkage_name": "zCameraTweakGlobal_Update__Ff",
+              "reference_sha256": "7da9bd1b2b1865eeb9a06329ff9f611badb36b1e01043547ed8f77c951ede8e2"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3881488,
+              "linkage_name": "zCameraTweakGlobal_Update__Ff",
+              "reference_sha256": "a2bfe4c30e832f573b646a2f3827335e1b5265131aa799d86775bf42fbc707b4"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3878240,
+              "linkage_name": "zCameraTweakGlobal_Update__Ff",
+              "reference_sha256": "d296684f2033c19722f342530a9fd818fc6b686a43aacd5bee0de9857bb8cd8e"
+            }
+          ]
+        },
+        {
+          "function": "zCameraTweakGlobal_Remove",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3881920,
+          "size": 296,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3880544,
+              "linkage_name": "zCameraTweakGlobal_Remove__FUi",
+              "reference_sha256": "e18a4e73cbd362ce8090be797f52e53852f020e3f778b13f77df4336289ce19a"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3881808,
+              "linkage_name": "zCameraTweakGlobal_Remove__FUi",
+              "reference_sha256": "cd55b251c2e996602259f50f6e4e6e2d1c6eb6db5029995caeb1ab4e99a48c6a"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3878560,
+              "linkage_name": "zCameraTweakGlobal_Remove__FUi",
+              "reference_sha256": "a5c4d70284c0593ac65e8a80abbead948b9b4cc8bb4a3686ccecc2e7d9f8b41a"
+            }
+          ]
+        },
+        {
+          "function": "zCameraTweakGlobal_Add",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3882224,
+          "size": 536,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3880848,
+              "linkage_name": "zCameraTweakGlobal_Add__FUiffff",
+              "reference_sha256": "dea288bc8e6df6f806d362fad776762926afd97cbf5a597cd8e97339489b4a5b"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3882112,
+              "linkage_name": "zCameraTweakGlobal_Add__FUiffff",
+              "reference_sha256": "8551150b12fedaf2717ba17a9f58300d469165dd1f658aa09142517c5c607cd6"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3878864,
+              "linkage_name": "zCameraTweakGlobal_Add__FUiffff",
+              "reference_sha256": "e81f83f868630580b74bf238b856ff8186dff24595159f16a39ec91aa24abd6a"
+            }
+          ]
+        },
+        {
+          "function": "zCameraTweakGlobal_Init",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3882768,
+          "size": 240,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3881392,
+              "linkage_name": "zCameraTweakGlobal_Init__Fv",
+              "reference_sha256": "c608850ccf021c381de3bf49da388de5653f4fa98e7a132799313e18020c720e"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3882656,
+              "linkage_name": "zCameraTweakGlobal_Init__Fv",
+              "reference_sha256": "e3ed0da6c61e1e4bb7009413ae5366be0ab53c2e88fab3926a1d39997f8af9eb"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3879408,
+              "linkage_name": "zCameraTweakGlobal_Init__Fv",
+              "reference_sha256": "19215ae559acec7ce1526f241292088e495825c07def8daefbf42b069f9c8e27"
+            }
+          ]
+        }
+      ],
+      "address_pairs": [
+        {
+          "function": "zCameraTweak_Init",
+          "hi_offset": 28,
+          "lo_offset": 36,
+          "interleaved": true,
+          "target_source": "SB/Game/zCameraTweak.cpp",
+          "target_function": "zCameraTweak_EventCB",
+          "symbol": "zCameraTweak_EventCB__FP5xBaseP5xBaseUiPCfP5xBase"
         }
       ]
     },

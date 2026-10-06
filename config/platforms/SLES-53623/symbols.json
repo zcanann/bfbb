@@ -4527,11 +4527,88 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "zCameraTweak_EventCB",
+      "source": "SB/Game/zCameraTweak.cpp",
+      "address": 3881232,
+      "size": 184,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "zCameraTweak_Load",
+      "source": "SB/Game/zCameraTweak.cpp",
+      "address": 3881424,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "zCameraTweak_Save",
+      "source": "SB/Game/zCameraTweak.cpp",
+      "address": 3881440,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "zCameraTweak_Init",
+      "source": "SB/Game/zCameraTweak.cpp",
+      "address": 3881456,
+      "size": 92,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "zCameraTweakGlobal_GetPitch",
+      "source": "SB/Game/zCameraTweak.cpp",
+      "address": 3881552,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "zCameraTweakGlobal_GetH",
+      "source": "SB/Game/zCameraTweak.cpp",
+      "address": 3881568,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "zCameraTweakGlobal_GetD",
+      "source": "SB/Game/zCameraTweak.cpp",
+      "address": 3881584,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "zCameraTweakGlobal_Update",
+      "source": "SB/Game/zCameraTweak.cpp",
+      "address": 3881600,
+      "size": 244,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "zCameraTweakGlobal_Reset",
       "source": "SB/Game/zCameraTweak.cpp",
       "address": 3881856,
       "size": 52,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "zCameraTweakGlobal_Remove",
+      "source": "SB/Game/zCameraTweak.cpp",
+      "address": 3881920,
+      "size": 296,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "zCameraTweakGlobal_Add",
+      "source": "SB/Game/zCameraTweak.cpp",
+      "address": 3882224,
+      "size": 536,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "zCameraTweakGlobal_Init",
+      "source": "SB/Game/zCameraTweak.cpp",
+      "address": 3882768,
+      "size": 240,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "Init",
