@@ -645,7 +645,8 @@ RpAtomic* zFXGooRenderAtomic(class RpAtomic* atomic)
         {
             xVec3 tmp;
             xVec3Sub(&tmp, (xVec3*)&verts[i], &goo->center);
-            F32 c = a * xVec3Length2(&tmp) + b;
+            F32 c = xVec3Length2(&tmp);
+            c = a * c + b;
             c = CLAMP(c, 0.0f, 255.0f);
             bytes[i] = (U8)c;
         }
@@ -1499,7 +1500,6 @@ namespace
                                 const F32* weights, const U32* bone_idx, const U16* idx, U32 count)
     {
         U32 done[2] = { 0, 0 };
-        U32 mask;
         xMat4x3* scratch = (xMat4x3*)giAnimScratch;
 
         for (; count != 0; count--)
@@ -1509,26 +1509,27 @@ namespace
             const xVec3* norm = &normals[vidx];
             U32 bones = bone_idx[vidx];
             const F32* wt = &weights[vidx * 4];
+            U32 nbones;
+            const F32* w;
 
             for (U32 j = 0; j < 4; j++)
             {
                 U32 b = bones >> (j * 8);
                 U32 word = (b >> 5) & 7;
-                mask = 1 << (b & 0x1f);
                 U32 bi = b & 0xff;
-                if (!(mask & done[word]))
+                if (!((1 << (b & 0x1f)) & done[word]))
                 {
                     const xMat4x3* model_bone = &mat[bi];
                     model_bone++;
                     xMat4x3Mul(&scratch[bi], &bone_mats[bi], model_bone);
-                    done[word] |= mask;
+                    done[word] |= 1 << (b & 0x1f);
                 }
             }
 
             xVec3 acc = { 0.0f, 0.0f, 0.0f };
 
-            U32 nbones = bones;
-            const F32* w = wt;
+            w = wt;
+            nbones = bones;
             for (U32 k = 4; *w && k != 0; k--)
             {
                 xVec3 tmp;

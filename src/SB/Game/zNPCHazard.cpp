@@ -1073,20 +1073,8 @@ void NPCHazard::Discard()
 
         Cleanup();
 
-        // Two statements, per the target: subi / stw / lwz / srawi / andc.
-        // The reload of the counter after the store is why `g_cnt_activehaz` is
-        // declared volatile; reading it once into `cnt` keeps the clamp down to
-        // the single load the target has.
-        //
-        // Do not collapse this back into one expression. The previous
-        // single-statement form `g_cnt_activehaz &= ~((g_cnt_activehaz - 1) >> 31);`
-        // scored higher than the naive form but never decremented at all: for any
-        // x >= 1 it folds to x &= 0xFFFFFFFF. The active-hazard count only ever grew.
         g_cnt_activehaz--;
-
-        S32 cnt = g_cnt_activehaz;
-
-        g_cnt_activehaz = cnt & ~(cnt >> 31);
+        g_cnt_activehaz = MAX(0, g_cnt_activehaz);
     }
 }
 

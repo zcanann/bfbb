@@ -416,11 +416,11 @@ static void fcb()
         if ((orig_flags & 0x20) && (orig_flags & 0x4000))
         {
             streams[i].vinf.flags &= ~0x20;
-            dest = streams[i].dest_a;
-            dest *= 2;
-            dest += streams[i].hdr.num_nibbles & 0xFFFF;
+            U32 end = streams[i].dest_a;
+            end *= 2;
+            end += streams[i].hdr.num_nibbles & 0xFFFF;
             AXSetVoiceLoopAddr(streams[i].vinf.voice, zero_point);
-            AXSetVoiceEndAddr(streams[i].vinf.voice, dest - 1);
+            AXSetVoiceEndAddr(streams[i].vinf.voice, end - 1);
             AXSetVoiceLoop(streams[i].vinf.voice, 0);
             AXSetVoiceType(streams[i].vinf.voice, 0);
             streams[i].vinf.flags |= 0x40;
@@ -560,32 +560,33 @@ static void fcb()
         need_update = TRUE;
     }
 
-    for (i = 0; i < 58; i++)
+    for (S32 j = 0; j < 58; j++)
     {
-        if (voices[i].voice == NULL || (voices[i].flags & 0x1))
+        if (voices[j].voice == NULL || (voices[j].flags & 0x1))
         {
             continue;
         }
 
-        if (voices[i].flags & 0x20000)
+        if (voices[j].flags & 0x20000)
         {
-            iSndMyAXFree(&voices[i].voice);
-            voices[i].flags = NULL;
-            voices[i].aid = 0;
+            iSndMyAXFree(&voices[j].voice);
+            voices[j].flags = NULL;
+            voices[j].aid = 0;
         }
         else
         {
-            U32 addr = (voices[i].voice->pb.addr.currentAddressHi << 16) +
-                       voices[i].voice->pb.addr.currentAddressLo;
-            if (voices[i].flags & 0x4 && !voices[i].voice->pb.addr.loopFlag && addr >= zero_point &&
+            U32 addr = voices[j].voice->pb.addr.currentAddressHi;
+            addr <<= 16;
+            addr += voices[j].voice->pb.addr.currentAddressLo;
+            if (voices[j].flags & 0x4 && !voices[j].voice->pb.addr.loopFlag && addr >= zero_point &&
                 addr < zero_end)
             {
-                voices[i].flags &= ~0x4;
-                AXSetVoiceState(voices[i].voice, 0);
-                MIXReleaseChannel(voices[i].voice);
-                iSndMyAXFree(&voices[i].voice);
-                voices[i].flags = NULL;
-                voices[i].aid = 0;
+                voices[j].flags &= ~0x4;
+                AXSetVoiceState(voices[j].voice, 0);
+                MIXReleaseChannel(voices[j].voice);
+                iSndMyAXFree(&voices[j].voice);
+                voices[j].flags = NULL;
+                voices[j].aid = 0;
             }
         }
     }
@@ -1139,7 +1140,7 @@ void iSndUpdate()
 
     for (S32 i = 0; i < 64; i++)
     {
-        U8 done;
+        bool done;
         U32 f;
         xSndVoiceInfo* vp;
         U32 addr;
@@ -1156,16 +1157,13 @@ void iSndUpdate()
             addr = 0;
             if (voices[i - 6].voice != NULL)
             {
-                addr = voices[i - 6].voice->pb.addr.currentAddressHi << 16;
+                addr = voices[i - 6].voice->pb.addr.currentAddressHi;
+                addr <<= 16;
                 addr += voices[i - 6].voice->pb.addr.currentAddressLo;
             }
 
             f = voices[i - 6].flags;
-            done = 0;
-            if ((f & 0x4) && !(f & 0x8) && addr >= zero_point && addr < zero_end)
-            {
-                done = 1;
-            }
+            done = (f & 0x4) && !(f & 0x8) && addr >= zero_point && addr < zero_end;
 
             active = done | (voices[i - 6].voice != NULL);
         }

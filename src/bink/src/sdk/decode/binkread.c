@@ -1770,9 +1770,8 @@ found_playing_track:
                                 if (out_bytes > in_bytes) {
                                     out_bytes = in_bytes;
                                 }
-                                decoded_bytes = out_bytes;
                                 in_bytes -= out_bytes;
-
+                                decoded_bytes = out_bytes;
                                 if (out_bytes > free_bytes) {
                                     free_bytes = decoded_bytes - free_bytes;
                                     bnk->bsnd[playing_index].sndreadpos += free_bytes;
@@ -1871,11 +1870,11 @@ found_playing_track:
                 u32 end;
 
                 end = RADTimerRead();
-                bnk->bio.Working = 0;
                 bnk->timeadecomp += video_start - bnk->startframetime;
                 bnk->timevdecomp += end - video_start;
-                bnk->startblittime = end;
                 bnk->LastFrameNum = bnk->lastdecompframe = bnk->FrameNum;
+                bnk->startblittime = end;
+                bnk->bio.Working = 0;
             }
         }
     }

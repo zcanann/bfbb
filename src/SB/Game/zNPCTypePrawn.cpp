@@ -1288,7 +1288,7 @@ void zNPCPrawn::Render()
     zNPCPrawn::render_debug();
 }
 
-void zNPCPrawn::update_round()
+inline void zNPCPrawn::update_round()
 {
     S32 life = this->life;
     if (life == 0)

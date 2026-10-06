@@ -611,12 +611,18 @@ void iBoxIsectSphere(const xBox* box, const xSphere* p, xIsect* isx)
 #if defined(XBOX)
             if (lo > box->upper.x)
 #else
-            if (center - radius > box->upper.x)
+            const F32 upper = box->upper.x;
+
+            if (center - radius > upper)
 #endif
             {
                 xcode = 5;
             }
+#if defined(XBOX)
             else if (hi > box->upper.x)
+#else
+            else if (hi > upper)
+#endif
             {
                 xcode = 4;
             }
@@ -670,12 +676,18 @@ void iBoxIsectSphere(const xBox* box, const xSphere* p, xIsect* isx)
 #if defined(XBOX)
             if (lo > box->upper.y)
 #else
-            if (center - radius > box->upper.y)
+            const F32 upper = box->upper.y;
+
+            if (center - radius > upper)
 #endif
             {
                 ycode = 5;
             }
+#if defined(XBOX)
             else if (hi > box->upper.y)
+#else
+            else if (hi > upper)
+#endif
             {
                 ycode = 4;
             }
@@ -729,12 +741,18 @@ void iBoxIsectSphere(const xBox* box, const xSphere* p, xIsect* isx)
 #if defined(XBOX)
             if (lo > box->upper.z)
 #else
-            if (center - radius > box->upper.z)
+            const F32 upper = box->upper.z;
+
+            if (center - radius > upper)
 #endif
             {
                 zcode = 5;
             }
+#if defined(XBOX)
             else if (hi > box->upper.z)
+#else
+            else if (hi > upper)
+#endif
             {
                 zcode = 4;
             }
