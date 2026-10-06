@@ -237,7 +237,10 @@ S32 NPCWidget::Lock(const zNPCCommon* npc)
 
 void NPCWidget_ScenePostInit()
 {
-    g_npc_widgets->Init(NPC_WIDGE_TALK);
+    for (S32 i = 0; i < NPC_WIDGE_NOMORE; i++)
+    {
+        g_npc_widgets[i].Init((en_NPC_UI_WIDGETS)i);
+    }
 }
 
 NPCWidget* NPCWidget_Find(en_NPC_UI_WIDGETS which)
@@ -410,6 +413,8 @@ S32 NPCTarget::IsDead()
         }
         break;
     case NPC_TGT_BASE:
+    case NPC_TGT_POS:
+    case NPC_TGT_MVPT:
         break;
     }
 
@@ -1012,12 +1017,12 @@ S32 g_pc_playerInvisible;
 
 S32 NPCC_LampStatus()
 {
-    return g_pc_playerInvisible == 0 ? true : false;
+    return !g_pc_playerInvisible;
 }
 
 U32 NPCC_ForceTalkOk()
 {
-    return globals.player.g.DisableForceConversation == 0;
+    return !globals.player.g.DisableForceConversation;
 }
 
 RwRaster* NPCC_FindRWRaster(const char* txtrname)
@@ -1337,17 +1342,16 @@ void NPCC_Bounce(xVec3* vec_input, xVec3* vec_anti, F32 elastic)
     xVec3SMulBy(vec_input, elastic);
 }
 
-// Two more unreferenced templates the target holds between the one
-// NPCC_ds2_toCam creates and the xMat3x3 NPCC_rotHPB creates; the first is
-// { 0.0f, 0.0f, 1.0f }.
+// An unreferenced { 0.0f, 0.0f, 1.0f } template the target holds between the
+// one NPCC_ds2_toCam creates and NPCC_rotHPB's own xVec3/xMat3x3 templates.
 void __deadstripped_zNPCSupport_cam()
 {
     const xVec3 _2148 = { 0.0f, 0.0f, 1.0f };
-    const char _2149[0x0C] = {};
 }
 
 void NPCC_rotHPB(xMat3x3* mat, F32 heading, F32 pitch, F32 bank)
 {
+    xVec3 axis = {};
     xMat3x3 mat_rot = {};
 
     xMat3x3RotZ(mat, bank);
