@@ -372,7 +372,7 @@ void xMat4x3Tolocal(xVec3* o, const xMat4x3* m, const xVec3* v)
     xMat3x3Tolocal(o, m, o);
 }
 
-#if !defined(XBOX)
+#if !defined(PS2) && !defined(XBOX)
 void xVec3SMul(xVec3* o, const xVec3* v, F32 s)
 {
     o->x = v->x * s;
@@ -381,7 +381,7 @@ void xVec3SMul(xVec3* o, const xVec3* v, F32 s)
 }
 #endif
 
-#if !defined(XBOX)
+#if !defined(PS2) && !defined(XBOX)
 void xVec3Add(xVec3* o, const xVec3* a, const xVec3* b)
 {
     o->x = a->x + b->x;
@@ -404,7 +404,7 @@ F32 xVec3::length2() const
     return this->x * this->x + this->y * this->y + this->z * this->z;
 }
 
-#if !defined(XBOX)
+#if !defined(PS2) && !defined(XBOX)
 xVec3 xVec3::operator*(F32 f) const
 {
     xVec3 temp = *this;
@@ -414,7 +414,7 @@ xVec3 xVec3::operator*(F32 f) const
 }
 #endif
 
-#if !defined(XBOX)
+#if !defined(PS2) && !defined(XBOX)
 xVec3& xVec3::operator*=(F32 f)
 {
     this->x *= f;
@@ -430,7 +430,7 @@ F32 xVec3::length() const
     return xsqrt(this->length2());
 }
 
-#if !defined(XBOX)
+#if !defined(PS2) && !defined(XBOX)
 xVec3 xVec3::operator-(const xVec3& v) const
 {
     xVec3 temp = *this;
@@ -440,7 +440,7 @@ xVec3 xVec3::operator-(const xVec3& v) const
 }
 #endif
 
-#if !defined(XBOX)
+#if !defined(PS2) && !defined(XBOX)
 xVec3& xVec3::operator-=(const xVec3& v)
 {
     this->x -= v.x;

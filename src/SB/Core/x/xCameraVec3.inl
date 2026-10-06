@@ -14,7 +14,7 @@ inline void xVec3Sub(xVec3* o, const xVec3* a, const xVec3* b)
 }
 #endif
 
-#if !defined(XBOX)
+#if !defined(PS2) && !defined(XBOX)
 inline void xVec3Inv(xVec3* o, const xVec3* v)
 {
     o->x = -v->x;

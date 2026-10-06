@@ -878,7 +878,7 @@ void xBoxFromCircle(xBox& box, const xVec3& center, const xVec3& dir, F32 r)
     box.lower = center - ext;
 }
 
-#if !defined(XBOX)
+#if !defined(PS2) && !defined(XBOX)
 void xQuatSMul(xQuat* q, const xQuat* a, F32 t)
 {
     q->s = a->s * t;

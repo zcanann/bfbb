@@ -14,7 +14,7 @@ inline void xVec3Sub(xVec3* o, const xVec3* a, const xVec3* b)
 #else
 void xVec3Sub(xVec3* o, const xVec3* a, const xVec3* b);
 #endif
-#if defined(XBOX)
+#if defined(PS2) || defined(XBOX)
 inline void xVec3Cross(xVec3* o, const xVec3* a, const xVec3* b)
 {
     o->x = a->y * b->z - b->y * a->z;
@@ -24,7 +24,7 @@ inline void xVec3Cross(xVec3* o, const xVec3* a, const xVec3* b)
 #else
 void xVec3Cross(xVec3* o, const xVec3* a, const xVec3* b);
 #endif
-#if defined(XBOX)
+#if defined(PS2) || defined(XBOX)
 inline void xVec3Inv(xVec3* o, const xVec3* v)
 {
     o->x = -v->x;
@@ -34,7 +34,7 @@ inline void xVec3Inv(xVec3* o, const xVec3* v)
 #else
 void xVec3Inv(xVec3* o, const xVec3* v);
 #endif
-#if defined(XBOX)
+#if defined(PS2) || defined(XBOX)
 inline void xVec3Copy(xVec3* o, const xVec3* v)
 {
     *o = *v;
@@ -52,7 +52,7 @@ inline F32 xVec3Length(const xVec3* v)
 }
 #endif
 
-#if defined(XBOX)
+#if defined(PS2) || defined(XBOX)
 inline void xVec3SMul(xVec3* o, const xVec3* v, F32 s)
 {
     o->x = v->x * s;
@@ -62,7 +62,7 @@ inline void xVec3SMul(xVec3* o, const xVec3* v, F32 s)
 #else
 void xVec3SMul(xVec3* o, const xVec3* v, F32 s);
 #endif
-#if defined(XBOX)
+#if defined(PS2) || defined(XBOX)
 inline void xVec3Add(xVec3* o, const xVec3* a, const xVec3* b)
 {
     o->x = a->x + b->x;
@@ -72,7 +72,7 @@ inline void xVec3Add(xVec3* o, const xVec3* a, const xVec3* b)
 #else
 void xVec3Add(xVec3* o, const xVec3* a, const xVec3* b);
 #endif
-#if defined(XBOX)
+#if defined(PS2) || defined(XBOX)
 inline void xVec3Init(xVec3* vec, F32 x, F32 y, F32 z)
 {
     vec->x = x;
@@ -106,7 +106,7 @@ inline F32 xVec3Dist2(const xVec3* vecA, const xVec3* vecB)
     return dx * dx + dy * dy + dz * dz;
 }
 
-#if defined(XBOX)
+#if defined(PS2) || defined(XBOX)
 inline F32 xVec3Length2(const xVec3* vec)
 {
     return vec->x * vec->x + vec->y * vec->y + vec->z * vec->z;
@@ -124,7 +124,7 @@ inline F32 xVec3LengthFast(F32 x, F32 y, F32 z)
 
 F32 xVec3LengthFast(const xVec3* vec);
 
-#if defined(XBOX)
+#if defined(PS2) || defined(XBOX)
 inline void xVec3AddScaled(xVec3* o, const xVec3* v, F32 s)
 {
     o->x += v->x * s;
