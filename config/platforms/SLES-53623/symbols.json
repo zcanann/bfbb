@@ -3281,6 +3281,13 @@
       "provenance": "machine-corroborated-explicit-transfers"
     },
     {
+      "name": "xUtil_wtadjust",
+      "source": "SB/Core/x/xutil.cpp",
+      "address": 2163072,
+      "size": 280,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "xUtil_yesno",
       "source": "SB/Core/x/xutil.cpp",
       "address": 2163360,
@@ -3300,6 +3307,55 @@
       "address": 2163584,
       "size": 96,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "BCDtoi",
+      "source": "SB/Core/x/xutil.cpp",
+      "address": 2163680,
+      "size": 52,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "strtosjis",
+      "source": "SB/Core/x/xutil.cpp",
+      "address": 2163744,
+      "size": 552,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xUtil_crc_update",
+      "source": "SB/Core/x/xutil.cpp",
+      "address": 2164304,
+      "size": 484,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xUtil_crc_init",
+      "source": "SB/Core/x/xutil.cpp",
+      "address": 2164800,
+      "size": 136,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xUtil_idtag2string",
+      "source": "SB/Core/x/xutil.cpp",
+      "address": 2164944,
+      "size": 784,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xUtilShutdown",
+      "source": "SB/Core/x/xutil.cpp",
+      "address": 2165728,
+      "size": 20,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xUtilStartup",
+      "source": "SB/Core/x/xutil.cpp",
+      "address": 2165760,
+      "size": 48,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "xAnimPoolFree",
