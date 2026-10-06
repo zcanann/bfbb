@@ -277,3 +277,24 @@ This completes another reviewed callback, not the original whole TU.
 Ignored reproducible evidence: `build/xbox268/{inventory-disasm.txt,compile.py,
 compare.py,consumers,production,verify_final.py,final-verification.json,
 gc/proof.json}`.
+
+## Age root acquisition
+
+The sibling Age callback provides the same independent entry-order evidence:
+the original reads its command and asset before the group pointer, then reuses
+the command argument's stack slot for the scaled aging rate. The source used
+the opposite acquisition order, while its complete particle loop already
+matched. For Xbox only, the root-pointer initialization now follows `age_rate`.
+There are no intervening calls or writes; field expressions, linked-list walk,
+store order and non-Xbox behavior are unchanged.
+
+This one control raises `xParCmdAge_Update` from 98% to 100%, adding 49 exact
+bytes and one function. The independently closed 49-byte actual `xParCmd.obj`
+body equals both authenticated originals literally, without relocations or any
+normalization. Both full reports preserve every other function record and all
+denominator/completion fields apart from generated COFF offsets. All 33 ordered
+GameCube consumer sections remain identical. No profile or metadata changes
+are needed; source-group and original-TU completeness are not claimed.
+
+Ignored evidence: `build/xbox270/{inventory-disasm.txt,compile.py,compare.py,
+consumers,production,verify_final.py,final-verification.json,gc/proof.json}`.

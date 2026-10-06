@@ -129,8 +129,13 @@ void xParCmdKillSlow_Update(xParCmd* c, xParGroup* ps, F32 dt)
 
 void xParCmdAge_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
+#if !defined(XBOX)
     xPar* p = ps->m_root;
+#endif
     F32 age_rate = ((xParCmdAge*)c->tasset)->unknown * dt;
+#if defined(XBOX)
+    xPar* p = ps->m_root;
+#endif
 
     while (p)
     {
