@@ -182,7 +182,10 @@ def normalize(body: bytes, expressions: list[dict], anchors: dict,
                 'Address operand does not equal its independently named symbol plus addend')
         struct.pack_into('<I', normalized, offset, addend)
         struct.pack_into('<I', inverse, offset, anchor['address'] + struct.unpack_from('<I', normalized, offset)[0])
-        relocations.append({'offset': offset, 'symbol': symbol, 'addend': addend})
+        if anchor.get('kind') == 'function':
+            require(addend == 0, 'Function-address relocation must identify the entry exactly')
+        relocations.append({'offset': offset, 'symbol': symbol, 'addend': addend,
+                            **({'target_kind': 'function'} if anchor.get('kind') == 'function' else {})})
     require(bytes(inverse) == body, 'Address-expression inverse changed original bytes')
     return bytes(normalized), relocations
 

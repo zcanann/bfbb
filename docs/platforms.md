@@ -78,9 +78,9 @@ checked, and the standard objdiff parser accepts the result.
 | SLUS-20680 | 2,978,560 | 226,136 |
 | SLES-51968 | 2,979,712 | 225,828 |
 | SLES-51970 | 2,976,512 | 225,724 |
-| SLES-53623 | 2,979,968 | 45,888 |
-| XBOX-US | 1,798,760 | 14,148 |
-| XBOX-EU | 1,798,760 | 14,148 |
+| SLES-53623 | 2,979,968 | 47,520 |
+| XBOX-US | 1,798,760 | 14,869 |
+| XBOX-EU | 1,798,760 | 14,869 |
 
 The PS2 [math alignment restoration](PS2_MATH_ALIGNMENT.md) enables complete
 `xEntMotion`, `xPad`, and `xClimate` source comparisons: 34 functions / 20,040
@@ -125,7 +125,7 @@ The narrower function-only baselines currently contain:
 | USA | 5,391 | 2,107,460 | 1,494 functions / 226,136 bytes |
 | Europe/Australia | 5,392 | 2,108,700 | 1,493 functions / 225,828 bytes |
 | Germany | 5,394 | 2,105,512 | 1,492 functions / 225,724 bytes |
-| France (reviewed and corroborated bounds) | 649 | 233,604 | 241 functions / 45,888 bytes |
+| France (reviewed and corroborated bounds) | 660 | 235,236 | 252 functions / 47,520 bytes |
 
 The [complete French utility comparison](PS2_FRANCE_UTILITY.md) adds eight original extents / 2,356 bytes and exposes four exact source functions / 900 bytes. All eleven utility functions, including partials, are reported.
 
@@ -158,8 +158,8 @@ load-range validation. Targets retain the exact original instructions. The `xBas
 other target objects are not relocation-restored link inputs. Code outside those function ranges, remaining data,
 and padding remain unclassified; the whole mixed load segment is not counted as
 code. France is stripped; independently reviewed and machine-corroborated
-extents establish its 649-function, 233,604-byte function-only baseline. Its
-45,888 matched code bytes describe that subset. The published code denominator
+extents establish its 660-function, 235,236-byte function-only baseline. Its
+47,520 matched code bytes describe that subset. The published code denominator
 is the full recovered CPU text region, not this function-only subset.
 
 Both Xbox releases have identical payloads in all 13 sections; their 532 differing
@@ -347,7 +347,7 @@ inventory. Reviewed extents take precedence. CI regenerates this registry from
 the original; the remaining candidates stay excluded. Anonymous identifiers
 establish neither original symbols nor source ownership. Together with the
 115 reviewed extents, measured coverage is 2,556 functions / 635,415 bytes;
-14,148 bytes match source. This is still partial coverage. The [Xbox memory initializer](XBOX_MEMORY_INITIALIZER.md) adds 103 exact source bytes using an explicitly verified data-only original binding; its recovered runtime allocator remains target-only. The [inline math boundary](XBOX_MATH_INLINE_BOUNDARY.md) adds 388 exact source bytes from Euler and the emitted xatan2 helper without changing the original denominator. The original-backed box-containment return structure adds another 84 bytes, the vector normalizer adds 163 bytes by preserving the original input-field reloads, direct axis-rotation subtraction adds 226 bytes, and ordinary random-generator inlining adds 661 bytes, and unchanged particle-list helper inlining adds 222 bytes. Ordinary allocator inlining adds another 209 bytes while preserving its existing standalone comparison in the actual particle-group source emission; that reporting group is explicitly reconstructed, not original TU ownership. Ordinary quick-cull wrapper inlining adds 193 exact bytes; all eight reviewed QuickCull functions now match, without claiming complete original TU coverage. Literal fixed-axis initialization adds 158 byte-exact X/Y/Z rotation bytes; original acceleration timing lifetime adds another 83 bytes.
+14,869 bytes match source. This is still partial coverage. The [Xbox memory initializer](XBOX_MEMORY_INITIALIZER.md) adds 103 exact source bytes using an explicitly verified data-only original binding; its recovered runtime allocator remains target-only. The [inline math boundary](XBOX_MATH_INLINE_BOUNDARY.md) adds 388 exact source bytes from Euler and the emitted xatan2 helper without changing the original denominator. The original-backed box-containment return structure adds another 84 bytes, the vector normalizer adds 163 bytes by preserving the original input-field reloads, direct axis-rotation subtraction adds 226 bytes, and ordinary random-generator inlining adds 661 bytes, and unchanged particle-list helper inlining adds 222 bytes. Ordinary allocator inlining adds another 209 bytes while preserving its existing standalone comparison in the actual particle-group source emission; that reporting group is explicitly reconstructed, not original TU ownership. Ordinary quick-cull wrapper inlining adds 193 exact bytes; all eight reviewed QuickCull functions now match, without claiming complete original TU coverage. Literal fixed-axis initialization adds 158 byte-exact X/Y/Z rotation bytes; original acceleration timing lifetime adds another 83 bytes.
 The [scalar Euler reconstruction](XBOX_MATH3.md) restores original roll/pitch product lifetimes, improving 35.16% to 99.65%; four operand bytes remain different. Sphere-bound scaling from the original local normal improves 90.59% to 95.86%. Both changes preserve exact-byte totals.
 The stopping routine now captures old velocity at the original update boundary, improving its partial score
 from 75.53% to 92.69% without changing exact-byte totals. The KillSlow callback gains 164 exact bytes
@@ -615,3 +615,5 @@ The PS2 volume initializer uses its original U16 count directly, adding 224 code
 The original PS2 volume event callback now adds another 316 matched and independently reconstructed bytes per debug version, bringing zVolume to four of five matched functions. Xbox box-sphere intersection improves to 98.82%, and endpoint acceleration to 95.05%; both remain partial comparisons.
 
 [Complete French scalar-math comparison](PS2_FRANCE_SCALAR_MATH.md) adds nine independently corroborated functions / 1,896 known bytes and four standard matches / 212 bytes. All eighteen original members are represented, including the present but unmatched atof wrapper; the full executable denominator remains unchanged.
+
+The [French camera-tweak proof](PS2_FRANCE_CAMERA_TWEAK.md) establishes all 12 original functions and 1,684 matched code bytes; this does not establish complete data or executable linking. The [Xbox particle initializer](XBOX_PARTICLE_INITIALIZER.md) adds 721 exact bytes in each version through ordinary inlining, with all 107 address fields independently reconstructed.

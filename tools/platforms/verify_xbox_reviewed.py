@@ -88,6 +88,11 @@ def verify_functions(original: Original, document: dict, anchors: dict | None = 
         require(not (set(anchors or {}) & set(switch_anchors)),
                 f'{label}: switch table aliases an ordinary data anchor')
         function_anchors = {**(anchors or {}), **switch_anchors}
+        from platforms.xbox_particle_initializer import original_anchors as initializer_original_anchors
+        initializer_anchors = initializer_original_anchors(original, function,
+            {f['canonical_identifier']: f for f in functions})
+        require(not (set(function_anchors) & set(initializer_anchors)), 'Initializer anchor collision')
+        function_anchors.update(initializer_anchors)
         if function.get('address_expressions'):
             from platforms.xbox_relocations import normalize
             normalize(original.read(start, size), function['address_expressions'], function_anchors)

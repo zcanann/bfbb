@@ -221,6 +221,12 @@ def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path 
             if set(anchors) & set(switch_anchors):
                 raise ValueError('Switch table aliases an ordinary data anchor')
             function_anchors = {**anchors, **switch_anchors}
+            from .xbox_particle_initializer import original_anchors as initializer_original_anchors
+            initializer_anchors = initializer_original_anchors(original, function,
+                {f['canonical_identifier']: f for f in reviewed['functions']})
+            if set(function_anchors) & set(initializer_anchors):
+                raise ValueError('Initializer anchor collision')
+            function_anchors.update(initializer_anchors)
             normalized, relocations = normalize(raw, function.get('address_expressions', []), function_anchors)
             if function.get('direct_calls'):
                 from .xbox_calls import normalize_calls

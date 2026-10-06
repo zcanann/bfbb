@@ -14454,7 +14454,7 @@
       "kind": "function",
       "address": 1350208,
       "size": 721,
-      "canonical_identifier": "anon_00149a40"
+      "canonical_identifier": "xParCmdInit()"
     },
     {
       "kind": "unclassified",

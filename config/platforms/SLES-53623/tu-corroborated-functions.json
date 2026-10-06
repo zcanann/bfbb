@@ -38,14 +38,15 @@
     "Update culling adds three members from all seven original functions and four independent neighbors. The complete group-accessor/count context and independently reviewed allocator neighborhood corroborate calls and pointer slots; opaque runtime transfer words remain unmasked. No context becomes a new identity or extent.",
     "Bounds adds six members from all nine original functions and three independent neighbors. The complete platform-geometry dependency is independently replayed for external calls; original DWARF proves the 60-byte quick-cull global, with no data extent promotion.",
     "Scalar math adds nine members from all eighteen original functions and nine independent neighbors. Only the exact 60-byte EndPoints leaf tail and eight-byte literal xatof J/NOP have scoped boundary rules; generic CFG checks stay unchanged. Opaque runtime transfer words remain unmasked, unnamed context, and the two overloaded acceleration functions retain distinct original linkage identities.",
-    "Utility adds eight members from all eleven original functions and three independent neighbors. Its exact seven-entry dispatch is scoped locally; unsigned-byte lookup dataflow bounds twelve observed table reads. Original typed arrays and independently witnessed animation pointer operands corroborate changed addresses. Opaque runtime caller words remain unmasked, and no runtime identity or data extent is promoted."
+    "Utility adds eight members from all eleven original functions and three independent neighbors. Its exact seven-entry dispatch is scoped locally; unsigned-byte lookup dataflow bounds twelve observed table reads. Original typed arrays and independently witnessed animation pointer operands corroborate changed addresses. Opaque runtime caller words remain unmasked, and no runtime identity or data extent is promoted.",
+    "Camera tweak adds eleven members from the complete twelve-function sequence and the existing Reset neighbor. Original member types prove the eight-element state array and two look aggregates. Only exact eight-byte J/NOP wrappers to independently verified, strictly closed base Save/Load functions receive scoped tail handling; opaque runtime calls retain literal unmasked words and identical 64-byte context, with no new identity or extent."
   ],
   "counts": {
-    "functions": 357,
-    "code_bytes": 164736,
-    "source_units": 22,
+    "functions": 368,
+    "code_bytes": 166368,
+    "source_units": 23,
     "rooted_direct_call_entries": 129,
-    "closed_return_bodies": 341,
+    "closed_return_bodies": 350,
     "reviewed_tail_wrappers": 2,
     "registered_callback_entries": 26,
     "reviewed_leaf_tail_functions": 11,
@@ -66,7 +67,8 @@
     "reviewed_string_dispatch_tables": 1,
     "reviewed_particle_pool_arrays": 1,
     "reviewed_scalar_math_tails": 2,
-    "reviewed_utility_dispatches": 1
+    "reviewed_utility_dispatches": 1,
+    "reviewed_camera_tweak_tails": 2
   },
   "sequence_proofs": [
     {
@@ -3208,6 +3210,57 @@
         "unchanged_anchor_offset": 636,
         "unchanged_anchor_bytes": 416,
         "masked_instruction_count": 25
+      }
+    },
+    {
+      "version": "SLUS-20680",
+      "source": "SB/Game/zCameraTweak.cpp",
+      "source_start": 3879856,
+      "target_start": 3881232,
+      "complete_original_members": 12,
+      "previously_confirmed_members": 1,
+      "sequence_bytes_with_alignment": 1776,
+      "uniqueness": {
+        "matching_addresses": [
+          3881232
+        ],
+        "unchanged_anchor_offset": 264,
+        "unchanged_anchor_bytes": 224,
+        "masked_instruction_count": 30
+      }
+    },
+    {
+      "version": "SLES-51968",
+      "source": "SB/Game/zCameraTweak.cpp",
+      "source_start": 3881120,
+      "target_start": 3881232,
+      "complete_original_members": 12,
+      "previously_confirmed_members": 1,
+      "sequence_bytes_with_alignment": 1776,
+      "uniqueness": {
+        "matching_addresses": [
+          3881232
+        ],
+        "unchanged_anchor_offset": 264,
+        "unchanged_anchor_bytes": 224,
+        "masked_instruction_count": 30
+      }
+    },
+    {
+      "version": "SLES-51970",
+      "source": "SB/Game/zCameraTweak.cpp",
+      "source_start": 3877872,
+      "target_start": 3881232,
+      "complete_original_members": 12,
+      "previously_confirmed_members": 1,
+      "sequence_bytes_with_alignment": 1776,
+      "uniqueness": {
+        "matching_addresses": [
+          3881232
+        ],
+        "unchanged_anchor_offset": 264,
+        "unchanged_anchor_bytes": 224,
+        "masked_instruction_count": 30
       }
     }
   ],
@@ -15876,6 +15929,162 @@
       "opaque_context_bytes": 64,
       "no_identity_or_extent_claim": true,
       "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 3881600,
+      "offset": 140,
+      "opcode": 3,
+      "reference_address": 1132176,
+      "target_address": 1132176,
+      "opaque_context_bytes": 64,
+      "opaque_context_sha256": "6816b8754e89da74ae0b9a8f6e37a5c76246d6ff69f86c59001776bb3ef56a73",
+      "caller_word_unmasked": true,
+      "no_identity_or_extent_claim": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 3881600,
+      "offset": 176,
+      "opcode": 3,
+      "reference_address": 1132848,
+      "target_address": 1132848,
+      "opaque_context_bytes": 64,
+      "opaque_context_sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+      "caller_word_unmasked": true,
+      "no_identity_or_extent_claim": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 3882768,
+      "offset": 40,
+      "opcode": 3,
+      "reference_address": 1133080,
+      "target_address": 1133080,
+      "opaque_context_bytes": 64,
+      "opaque_context_sha256": "aabd0b8ce44c7dc291795ec9667267689a455233138c66bfb819a13bc4c429af",
+      "caller_word_unmasked": true,
+      "no_identity_or_extent_claim": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 3882768,
+      "offset": 108,
+      "opcode": 3,
+      "reference_address": 1133080,
+      "target_address": 1133080,
+      "opaque_context_bytes": 64,
+      "opaque_context_sha256": "aabd0b8ce44c7dc291795ec9667267689a455233138c66bfb819a13bc4c429af",
+      "caller_word_unmasked": true,
+      "no_identity_or_extent_claim": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 3881600,
+      "offset": 140,
+      "opcode": 3,
+      "reference_address": 1132176,
+      "target_address": 1132176,
+      "opaque_context_bytes": 64,
+      "opaque_context_sha256": "6816b8754e89da74ae0b9a8f6e37a5c76246d6ff69f86c59001776bb3ef56a73",
+      "caller_word_unmasked": true,
+      "no_identity_or_extent_claim": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 3881600,
+      "offset": 176,
+      "opcode": 3,
+      "reference_address": 1132848,
+      "target_address": 1132848,
+      "opaque_context_bytes": 64,
+      "opaque_context_sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+      "caller_word_unmasked": true,
+      "no_identity_or_extent_claim": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 3882768,
+      "offset": 40,
+      "opcode": 3,
+      "reference_address": 1133080,
+      "target_address": 1133080,
+      "opaque_context_bytes": 64,
+      "opaque_context_sha256": "aabd0b8ce44c7dc291795ec9667267689a455233138c66bfb819a13bc4c429af",
+      "caller_word_unmasked": true,
+      "no_identity_or_extent_claim": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 3882768,
+      "offset": 108,
+      "opcode": 3,
+      "reference_address": 1133080,
+      "target_address": 1133080,
+      "opaque_context_bytes": 64,
+      "opaque_context_sha256": "aabd0b8ce44c7dc291795ec9667267689a455233138c66bfb819a13bc4c429af",
+      "caller_word_unmasked": true,
+      "no_identity_or_extent_claim": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 3881600,
+      "offset": 140,
+      "opcode": 3,
+      "reference_address": 1132176,
+      "target_address": 1132176,
+      "opaque_context_bytes": 64,
+      "opaque_context_sha256": "6816b8754e89da74ae0b9a8f6e37a5c76246d6ff69f86c59001776bb3ef56a73",
+      "caller_word_unmasked": true,
+      "no_identity_or_extent_claim": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 3881600,
+      "offset": 176,
+      "opcode": 3,
+      "reference_address": 1132848,
+      "target_address": 1132848,
+      "opaque_context_bytes": 64,
+      "opaque_context_sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+      "caller_word_unmasked": true,
+      "no_identity_or_extent_claim": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 3882768,
+      "offset": 40,
+      "opcode": 3,
+      "reference_address": 1133080,
+      "target_address": 1133080,
+      "opaque_context_bytes": 64,
+      "opaque_context_sha256": "aabd0b8ce44c7dc291795ec9667267689a455233138c66bfb819a13bc4c429af",
+      "caller_word_unmasked": true,
+      "no_identity_or_extent_claim": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 3882768,
+      "offset": 108,
+      "opcode": 3,
+      "reference_address": 1133080,
+      "target_address": 1133080,
+      "opaque_context_bytes": 64,
+      "opaque_context_sha256": "aabd0b8ce44c7dc291795ec9667267689a455233138c66bfb819a13bc4c429af",
+      "caller_word_unmasked": true,
+      "no_identity_or_extent_claim": true,
       "promoted_as_named_anchor": false
     }
   ],
@@ -95837,6 +96046,1780 @@
           3317408
         ]
       }
+    },
+    {
+      "name": "zCameraTweak_EventCB",
+      "source": "SB/Game/zCameraTweak.cpp",
+      "address": 3881232,
+      "size": 184,
+      "sha256": "fe3160ee7ab395c41a948c0100f61807a849db3632607b7b65e8f81854e6f51e",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3879856,
+          "name": "zCameraTweak_EventCB",
+          "source": "SB/Game/zCameraTweak.cpp",
+          "linkage_name": "zCameraTweak_EventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "reference_sha256": "61dd24a4846ef921eeef07198aaffe38ec95956435e4db41e3a4ea263387b019",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 128,
+              "opcode": 3,
+              "reference_address": 3880848,
+              "target_address": 3882224
+            },
+            {
+              "offset": 160,
+              "opcode": 3,
+              "reference_address": 3880544,
+              "target_address": 3881920
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3881120,
+          "name": "zCameraTweak_EventCB",
+          "source": "SB/Game/zCameraTweak.cpp",
+          "linkage_name": "zCameraTweak_EventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "reference_sha256": "3da5b2e7bf8e3c447778adacceca17a9d35143bbb27f389d91e6a964c7558c69",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 128,
+              "opcode": 3,
+              "reference_address": 3882112,
+              "target_address": 3882224
+            },
+            {
+              "offset": 160,
+              "opcode": 3,
+              "reference_address": 3881808,
+              "target_address": 3881920
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3877872,
+          "name": "zCameraTweak_EventCB",
+          "source": "SB/Game/zCameraTweak.cpp",
+          "linkage_name": "zCameraTweak_EventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+          "reference_sha256": "88dad2114f08acf6aa83782c00248aab388ceea7f4c52b27426ddcd12c10458c",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 128,
+              "opcode": 3,
+              "reference_address": 3878864,
+              "target_address": 3882224
+            },
+            {
+              "offset": 160,
+              "opcode": 3,
+              "reference_address": 3878560,
+              "target_address": 3881920
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            3881408
+          ],
+          "direct_or_indirect_calls": [
+            3881360,
+            3881392
+          ],
+          "branches": [
+            [
+              3881240,
+              3881376
+            ],
+            [
+              3881252,
+              3881320
+            ],
+            [
+              3881260,
+              3881304
+            ],
+            [
+              3881272,
+              3881288
+            ],
+            [
+              3881280,
+              3881400
+            ],
+            [
+              3881296,
+              3881400
+            ],
+            [
+              3881312,
+              3881400
+            ],
+            [
+              3881328,
+              3881400
+            ],
+            [
+              3881368,
+              3881400
+            ],
+            [
+              3881384,
+              3881400
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              3881232,
+              -16
+            ],
+            [
+              3881412,
+              16
+            ]
+          ],
+          "ra_saves": [
+            [
+              3881244,
+              -16
+            ]
+          ],
+          "ra_loads": [
+            [
+              3881400,
+              -16
+            ]
+          ],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 8
+        },
+        "previously_confirmed_neighbor_entries": [
+          3881856
+        ]
+      }
+    },
+    {
+      "name": "zCameraTweak_Load",
+      "source": "SB/Game/zCameraTweak.cpp",
+      "address": 3881424,
+      "size": 8,
+      "sha256": "094b552b461145e424570c551fc0970cc8c53f99f23880f5a199a01576979139",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3880048,
+          "name": "zCameraTweak_Load",
+          "source": "SB/Game/zCameraTweak.cpp",
+          "linkage_name": "zCameraTweak_Load__FP12zCameraTweakP7xSerial",
+          "reference_sha256": "4fb630e73eea039dd8307d9653ef699bc0c210aecc35499bd0cf9b4c6956c17d",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 0,
+              "opcode": 2,
+              "reference_address": 1832640,
+              "target_address": 1834016
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3881312,
+          "name": "zCameraTweak_Load",
+          "source": "SB/Game/zCameraTweak.cpp",
+          "linkage_name": "zCameraTweak_Load__FP12zCameraTweakP7xSerial",
+          "reference_sha256": "2ffb8024234b0d622de07c9c86ba5a69cd863d0aee43fe91603ab1067901b0ff",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 0,
+              "opcode": 2,
+              "reference_address": 1833904,
+              "target_address": 1834016
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3878064,
+          "name": "zCameraTweak_Load",
+          "source": "SB/Game/zCameraTweak.cpp",
+          "linkage_name": "zCameraTweak_Load__FP12zCameraTweakP7xSerial",
+          "reference_sha256": "06ea9b946eb1a419e32c7c5506932cc35b82ab496199fa7faf2f93cb1ab5877f",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 0,
+              "opcode": 2,
+              "reference_address": 1830544,
+              "target_address": 1834016
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "boundary_kind": "reviewed-exact-eight-byte-j-nop-tail",
+          "tail_target_name": "xBaseLoad",
+          "tail_target_address": 1834016,
+          "callee_size": 96,
+          "both_original_callees_closed": true,
+          "unchanged_sp_ra": true
+        },
+        "previously_confirmed_neighbor_entries": [
+          3881856
+        ]
+      }
+    },
+    {
+      "name": "zCameraTweak_Save",
+      "source": "SB/Game/zCameraTweak.cpp",
+      "address": 3881440,
+      "size": 8,
+      "sha256": "27099c5f3a2ede052d917875021e4b7cfbb1c3493c35158399eed0de823a3750",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3880064,
+          "name": "zCameraTweak_Save",
+          "source": "SB/Game/zCameraTweak.cpp",
+          "linkage_name": "zCameraTweak_Save__FP12zCameraTweakP7xSerial",
+          "reference_sha256": "88e17a28713f7eeee80f35437e659284a195b2178e67f0307656c0895dcf5f0c",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 0,
+              "opcode": 2,
+              "reference_address": 1832736,
+              "target_address": 1834112
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3881328,
+          "name": "zCameraTweak_Save",
+          "source": "SB/Game/zCameraTweak.cpp",
+          "linkage_name": "zCameraTweak_Save__FP12zCameraTweakP7xSerial",
+          "reference_sha256": "133c5887d2cbd9b788727ca8a1e0ec4d5696f4c5973b3a8729b92ad8478a33b1",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 0,
+              "opcode": 2,
+              "reference_address": 1834000,
+              "target_address": 1834112
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3878080,
+          "name": "zCameraTweak_Save",
+          "source": "SB/Game/zCameraTweak.cpp",
+          "linkage_name": "zCameraTweak_Save__FP12zCameraTweakP7xSerial",
+          "reference_sha256": "fa8239d29782a2710907c8475899ea2339258d7e1e1d472eef2fc29f588dd7fb",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 0,
+              "opcode": 2,
+              "reference_address": 1830640,
+              "target_address": 1834112
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "boundary_kind": "reviewed-exact-eight-byte-j-nop-tail",
+          "tail_target_name": "xBaseSave",
+          "tail_target_address": 1834112,
+          "callee_size": 76,
+          "both_original_callees_closed": true,
+          "unchanged_sp_ra": true
+        },
+        "previously_confirmed_neighbor_entries": [
+          3881856
+        ]
+      }
+    },
+    {
+      "name": "zCameraTweak_Init",
+      "source": "SB/Game/zCameraTweak.cpp",
+      "address": 3881456,
+      "size": 92,
+      "sha256": "d3f9da3789593a34b17dec488c63d915c7c6af4d349b2eb818a2e2f2dd31ac06",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3880080,
+          "name": "zCameraTweak_Init",
+          "source": "SB/Game/zCameraTweak.cpp",
+          "linkage_name": "zCameraTweak_Init__FR5xBaseR9xDynAssetUi",
+          "reference_sha256": "d3d3a6473d0a1cb9ae15ae7d611081e3c8c0fcab49ab753f219f3fd17616fc1a",
+          "data_address_operands": [
+            {
+              "hi_offset": 28,
+              "lo_offset": 36,
+              "opcode": 9,
+              "reference_address": 3879856,
+              "target_address": 3881232,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 20,
+              "opcode": 3,
+              "reference_address": 1832832,
+              "target_address": 1834208
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3881344,
+          "name": "zCameraTweak_Init",
+          "source": "SB/Game/zCameraTweak.cpp",
+          "linkage_name": "zCameraTweak_Init__FR5xBaseR9xDynAssetUi",
+          "reference_sha256": "b952a3df697c1fe65de56aed42a10acd43830bfbf5dbeb43ad85c617d9191283",
+          "data_address_operands": [
+            {
+              "hi_offset": 28,
+              "lo_offset": 36,
+              "opcode": 9,
+              "reference_address": 3881120,
+              "target_address": 3881232,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 20,
+              "opcode": 3,
+              "reference_address": 1834096,
+              "target_address": 1834208
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3878096,
+          "name": "zCameraTweak_Init",
+          "source": "SB/Game/zCameraTweak.cpp",
+          "linkage_name": "zCameraTweak_Init__FR5xBaseR9xDynAssetUi",
+          "reference_sha256": "7ebd2c0776e13bbdf8f2f96cee650b13f8924dfc524d898310c8cdbf16dea10d",
+          "data_address_operands": [
+            {
+              "hi_offset": 28,
+              "lo_offset": 36,
+              "opcode": 9,
+              "reference_address": 3877872,
+              "target_address": 3881232,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 20,
+              "opcode": 3,
+              "reference_address": 1830736,
+              "target_address": 1834208
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            3881540
+          ],
+          "direct_or_indirect_calls": [
+            3881476
+          ],
+          "branches": [
+            [
+              3881504,
+              3881520
+            ],
+            [
+              3881512,
+              3881528
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              3881456,
+              -48
+            ],
+            [
+              3881544,
+              48
+            ]
+          ],
+          "ra_saves": [
+            [
+              3881460,
+              -16
+            ]
+          ],
+          "ra_loads": [
+            [
+              3881528,
+              -16
+            ]
+          ],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 4
+        },
+        "previously_confirmed_neighbor_entries": [
+          3881856
+        ]
+      }
+    },
+    {
+      "name": "zCameraTweakGlobal_GetPitch",
+      "source": "SB/Game/zCameraTweak.cpp",
+      "address": 3881552,
+      "size": 8,
+      "sha256": "244a0a5393d2971542592c49029f4c38b343a2b64aa5bcdeff29a363238531a9",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3880176,
+          "name": "zCameraTweakGlobal_GetPitch",
+          "source": "SB/Game/zCameraTweak.cpp",
+          "linkage_name": "zCameraTweakGlobal_GetPitch__Fv",
+          "reference_sha256": "244a0a5393d2971542592c49029f4c38b343a2b64aa5bcdeff29a363238531a9",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3881440,
+          "name": "zCameraTweakGlobal_GetPitch",
+          "source": "SB/Game/zCameraTweak.cpp",
+          "linkage_name": "zCameraTweakGlobal_GetPitch__Fv",
+          "reference_sha256": "244a0a5393d2971542592c49029f4c38b343a2b64aa5bcdeff29a363238531a9",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3878192,
+          "name": "zCameraTweakGlobal_GetPitch",
+          "source": "SB/Game/zCameraTweak.cpp",
+          "linkage_name": "zCameraTweakGlobal_GetPitch__Fv",
+          "reference_sha256": "244a0a5393d2971542592c49029f4c38b343a2b64aa5bcdeff29a363238531a9",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            3881552
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 8
+        },
+        "previously_confirmed_neighbor_entries": [
+          3881856
+        ]
+      }
+    },
+    {
+      "name": "zCameraTweakGlobal_GetH",
+      "source": "SB/Game/zCameraTweak.cpp",
+      "address": 3881568,
+      "size": 8,
+      "sha256": "9c10b66673dba2985f1669c99d790c6073c2a34b1ec60a18f0237988c59e7562",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3880192,
+          "name": "zCameraTweakGlobal_GetH",
+          "source": "SB/Game/zCameraTweak.cpp",
+          "linkage_name": "zCameraTweakGlobal_GetH__Fv",
+          "reference_sha256": "9c10b66673dba2985f1669c99d790c6073c2a34b1ec60a18f0237988c59e7562",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3881456,
+          "name": "zCameraTweakGlobal_GetH",
+          "source": "SB/Game/zCameraTweak.cpp",
+          "linkage_name": "zCameraTweakGlobal_GetH__Fv",
+          "reference_sha256": "9c10b66673dba2985f1669c99d790c6073c2a34b1ec60a18f0237988c59e7562",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3878208,
+          "name": "zCameraTweakGlobal_GetH",
+          "source": "SB/Game/zCameraTweak.cpp",
+          "linkage_name": "zCameraTweakGlobal_GetH__Fv",
+          "reference_sha256": "9c10b66673dba2985f1669c99d790c6073c2a34b1ec60a18f0237988c59e7562",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            3881568
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 8
+        },
+        "previously_confirmed_neighbor_entries": [
+          3881856
+        ]
+      }
+    },
+    {
+      "name": "zCameraTweakGlobal_GetD",
+      "source": "SB/Game/zCameraTweak.cpp",
+      "address": 3881584,
+      "size": 8,
+      "sha256": "215dcbb4e9368ee1f246b924caf707477108c8935e0e4a7d970b1fd1edc68fb2",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3880208,
+          "name": "zCameraTweakGlobal_GetD",
+          "source": "SB/Game/zCameraTweak.cpp",
+          "linkage_name": "zCameraTweakGlobal_GetD__Fv",
+          "reference_sha256": "215dcbb4e9368ee1f246b924caf707477108c8935e0e4a7d970b1fd1edc68fb2",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3881472,
+          "name": "zCameraTweakGlobal_GetD",
+          "source": "SB/Game/zCameraTweak.cpp",
+          "linkage_name": "zCameraTweakGlobal_GetD__Fv",
+          "reference_sha256": "215dcbb4e9368ee1f246b924caf707477108c8935e0e4a7d970b1fd1edc68fb2",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3878224,
+          "name": "zCameraTweakGlobal_GetD",
+          "source": "SB/Game/zCameraTweak.cpp",
+          "linkage_name": "zCameraTweakGlobal_GetD__Fv",
+          "reference_sha256": "215dcbb4e9368ee1f246b924caf707477108c8935e0e4a7d970b1fd1edc68fb2",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            3881584
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 8
+        },
+        "previously_confirmed_neighbor_entries": [
+          3881856
+        ]
+      }
+    },
+    {
+      "name": "zCameraTweakGlobal_Update",
+      "source": "SB/Game/zCameraTweak.cpp",
+      "address": 3881600,
+      "size": 244,
+      "sha256": "9387a02ec6d457bc311992f0e26b325fcbc5ae83287982bfc327d058b2c70932",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3880224,
+          "name": "zCameraTweakGlobal_Update",
+          "source": "SB/Game/zCameraTweak.cpp",
+          "linkage_name": "zCameraTweakGlobal_Update__Ff",
+          "reference_sha256": "7da9bd1b2b1865eeb9a06329ff9f611badb36b1e01043547ed8f77c951ede8e2",
+          "data_address_operands": [
+            {
+              "hi_offset": 112,
+              "lo_offset": 120,
+              "opcode": 9,
+              "reference_address": 6186496,
+              "target_address": 6185472,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 124,
+              "lo_offset": 128,
+              "opcode": 9,
+              "reference_address": 6186512,
+              "target_address": 6185488,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 140,
+              "opcode": 3,
+              "reference_address": 1132176,
+              "target_address": 1132176,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "6816b8754e89da74ae0b9a8f6e37a5c76246d6ff69f86c59001776bb3ef56a73",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            },
+            {
+              "offset": 176,
+              "opcode": 3,
+              "reference_address": 1132848,
+              "target_address": 1132848,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3881488,
+          "name": "zCameraTweakGlobal_Update",
+          "source": "SB/Game/zCameraTweak.cpp",
+          "linkage_name": "zCameraTweakGlobal_Update__Ff",
+          "reference_sha256": "a2bfe4c30e832f573b646a2f3827335e1b5265131aa799d86775bf42fbc707b4",
+          "data_address_operands": [
+            {
+              "hi_offset": 112,
+              "lo_offset": 120,
+              "opcode": 9,
+              "reference_address": 6185216,
+              "target_address": 6185472,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 124,
+              "lo_offset": 128,
+              "opcode": 9,
+              "reference_address": 6185232,
+              "target_address": 6185488,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 140,
+              "opcode": 3,
+              "reference_address": 1132176,
+              "target_address": 1132176,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "6816b8754e89da74ae0b9a8f6e37a5c76246d6ff69f86c59001776bb3ef56a73",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            },
+            {
+              "offset": 176,
+              "opcode": 3,
+              "reference_address": 1132848,
+              "target_address": 1132848,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3878240,
+          "name": "zCameraTweakGlobal_Update",
+          "source": "SB/Game/zCameraTweak.cpp",
+          "linkage_name": "zCameraTweakGlobal_Update__Ff",
+          "reference_sha256": "d296684f2033c19722f342530a9fd818fc6b686a43aacd5bee0de9857bb8cd8e",
+          "data_address_operands": [
+            {
+              "hi_offset": 112,
+              "lo_offset": 120,
+              "opcode": 9,
+              "reference_address": 6183680,
+              "target_address": 6185472,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 124,
+              "lo_offset": 128,
+              "opcode": 9,
+              "reference_address": 6183696,
+              "target_address": 6185488,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 140,
+              "opcode": 3,
+              "reference_address": 1132176,
+              "target_address": 1132176,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "6816b8754e89da74ae0b9a8f6e37a5c76246d6ff69f86c59001776bb3ef56a73",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            },
+            {
+              "offset": 176,
+              "opcode": 3,
+              "reference_address": 1132848,
+              "target_address": 1132848,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            3881836
+          ],
+          "direct_or_indirect_calls": [
+            3881740,
+            3881776
+          ],
+          "branches": [
+            [
+              3881636,
+              3881648
+            ],
+            [
+              3881704,
+              3881724
+            ],
+            [
+              3881716,
+              3881732
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              3881600,
+              -32
+            ],
+            [
+              3881840,
+              32
+            ]
+          ],
+          "ra_saves": [
+            [
+              3881604,
+              -16
+            ]
+          ],
+          "ra_loads": [
+            [
+              3881828,
+              -16
+            ]
+          ],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 12
+        },
+        "previously_confirmed_neighbor_entries": [
+          3881856
+        ]
+      }
+    },
+    {
+      "name": "zCameraTweakGlobal_Remove",
+      "source": "SB/Game/zCameraTweak.cpp",
+      "address": 3881920,
+      "size": 296,
+      "sha256": "a7d238710b691c3e91647fa7ee20f225947ae6162792c4605a03e5ba829912be",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3880544,
+          "name": "zCameraTweakGlobal_Remove",
+          "source": "SB/Game/zCameraTweak.cpp",
+          "linkage_name": "zCameraTweakGlobal_Remove__FUi",
+          "reference_sha256": "e18a4e73cbd362ce8090be797f52e53852f020e3f778b13f77df4336289ce19a",
+          "data_address_operands": [
+            {
+              "hi_offset": 16,
+              "lo_offset": 20,
+              "opcode": 9,
+              "reference_address": 6186336,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 52,
+              "lo_offset": 56,
+              "opcode": 49,
+              "reference_address": 6186344,
+              "target_address": 6185320,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 124,
+              "lo_offset": 128,
+              "opcode": 49,
+              "reference_address": 6186368,
+              "target_address": 6185344,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 132,
+              "lo_offset": 136,
+              "opcode": 49,
+              "reference_address": 6186372,
+              "target_address": 6185348,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 176,
+              "lo_offset": 184,
+              "opcode": 9,
+              "reference_address": 6186336,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3881808,
+          "name": "zCameraTweakGlobal_Remove",
+          "source": "SB/Game/zCameraTweak.cpp",
+          "linkage_name": "zCameraTweakGlobal_Remove__FUi",
+          "reference_sha256": "cd55b251c2e996602259f50f6e4e6e2d1c6eb6db5029995caeb1ab4e99a48c6a",
+          "data_address_operands": [
+            {
+              "hi_offset": 16,
+              "lo_offset": 20,
+              "opcode": 9,
+              "reference_address": 6185056,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 52,
+              "lo_offset": 56,
+              "opcode": 49,
+              "reference_address": 6185064,
+              "target_address": 6185320,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 124,
+              "lo_offset": 128,
+              "opcode": 49,
+              "reference_address": 6185088,
+              "target_address": 6185344,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 132,
+              "lo_offset": 136,
+              "opcode": 49,
+              "reference_address": 6185092,
+              "target_address": 6185348,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 176,
+              "lo_offset": 184,
+              "opcode": 9,
+              "reference_address": 6185056,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3878560,
+          "name": "zCameraTweakGlobal_Remove",
+          "source": "SB/Game/zCameraTweak.cpp",
+          "linkage_name": "zCameraTweakGlobal_Remove__FUi",
+          "reference_sha256": "a5c4d70284c0593ac65e8a80abbead948b9b4cc8bb4a3686ccecc2e7d9f8b41a",
+          "data_address_operands": [
+            {
+              "hi_offset": 16,
+              "lo_offset": 20,
+              "opcode": 9,
+              "reference_address": 6183520,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 52,
+              "lo_offset": 56,
+              "opcode": 49,
+              "reference_address": 6183528,
+              "target_address": 6185320,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 124,
+              "lo_offset": 128,
+              "opcode": 49,
+              "reference_address": 6183552,
+              "target_address": 6185344,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 132,
+              "lo_offset": 136,
+              "opcode": 49,
+              "reference_address": 6183556,
+              "target_address": 6185348,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 176,
+              "lo_offset": 184,
+              "opcode": 9,
+              "reference_address": 6183520,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            3882208
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              3881928,
+              3882208
+            ],
+            [
+              3881948,
+              3882192
+            ],
+            [
+              3881956,
+              3882080
+            ],
+            [
+              3882036,
+              3882072
+            ],
+            [
+              3882064,
+              3882080
+            ],
+            [
+              3882088,
+              3882176
+            ],
+            [
+              3882168,
+              3882120
+            ],
+            [
+              3882184,
+              3882208
+            ],
+            [
+              3882200,
+              3881944
+            ]
+          ],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 8
+        },
+        "previously_confirmed_neighbor_entries": [
+          3881856
+        ]
+      }
+    },
+    {
+      "name": "zCameraTweakGlobal_Add",
+      "source": "SB/Game/zCameraTweak.cpp",
+      "address": 3882224,
+      "size": 536,
+      "sha256": "8050e1a370b2a834cc8584c24247655310c1ae46bf98e0a0c5ac1a9f85936fef",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3880848,
+          "name": "zCameraTweakGlobal_Add",
+          "source": "SB/Game/zCameraTweak.cpp",
+          "linkage_name": "zCameraTweakGlobal_Add__FUiffff",
+          "reference_sha256": "dea288bc8e6df6f806d362fad776762926afd97cbf5a597cd8e97339489b4a5b",
+          "data_address_operands": [
+            {
+              "hi_offset": 16,
+              "lo_offset": 20,
+              "opcode": 9,
+              "reference_address": 6186336,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 68,
+              "lo_offset": 72,
+              "opcode": 9,
+              "reference_address": 6186336,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 124,
+              "lo_offset": 132,
+              "opcode": 9,
+              "reference_address": 6186336,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 232,
+              "lo_offset": 240,
+              "opcode": 9,
+              "reference_address": 6186336,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 248,
+              "lo_offset": 256,
+              "opcode": 9,
+              "reference_address": 6186340,
+              "target_address": 6185316,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 316,
+              "lo_offset": 324,
+              "opcode": 9,
+              "reference_address": 6186344,
+              "target_address": 6185320,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 336,
+              "lo_offset": 340,
+              "opcode": 9,
+              "reference_address": 6186348,
+              "target_address": 6185324,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 400,
+              "lo_offset": 404,
+              "opcode": 9,
+              "reference_address": 6186352,
+              "target_address": 6185328,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 432,
+              "lo_offset": 440,
+              "opcode": 49,
+              "reference_address": 6186344,
+              "target_address": 6185320,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 464,
+              "lo_offset": 468,
+              "opcode": 49,
+              "reference_address": 6186348,
+              "target_address": 6185324,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 484,
+              "lo_offset": 488,
+              "opcode": 49,
+              "reference_address": 6186352,
+              "target_address": 6185328,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3882112,
+          "name": "zCameraTweakGlobal_Add",
+          "source": "SB/Game/zCameraTweak.cpp",
+          "linkage_name": "zCameraTweakGlobal_Add__FUiffff",
+          "reference_sha256": "8551150b12fedaf2717ba17a9f58300d469165dd1f658aa09142517c5c607cd6",
+          "data_address_operands": [
+            {
+              "hi_offset": 16,
+              "lo_offset": 20,
+              "opcode": 9,
+              "reference_address": 6185056,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 68,
+              "lo_offset": 72,
+              "opcode": 9,
+              "reference_address": 6185056,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 124,
+              "lo_offset": 132,
+              "opcode": 9,
+              "reference_address": 6185056,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 232,
+              "lo_offset": 240,
+              "opcode": 9,
+              "reference_address": 6185056,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 248,
+              "lo_offset": 256,
+              "opcode": 9,
+              "reference_address": 6185060,
+              "target_address": 6185316,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 316,
+              "lo_offset": 324,
+              "opcode": 9,
+              "reference_address": 6185064,
+              "target_address": 6185320,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 336,
+              "lo_offset": 340,
+              "opcode": 9,
+              "reference_address": 6185068,
+              "target_address": 6185324,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 400,
+              "lo_offset": 404,
+              "opcode": 9,
+              "reference_address": 6185072,
+              "target_address": 6185328,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 432,
+              "lo_offset": 440,
+              "opcode": 49,
+              "reference_address": 6185064,
+              "target_address": 6185320,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 464,
+              "lo_offset": 468,
+              "opcode": 49,
+              "reference_address": 6185068,
+              "target_address": 6185324,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 484,
+              "lo_offset": 488,
+              "opcode": 49,
+              "reference_address": 6185072,
+              "target_address": 6185328,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3878864,
+          "name": "zCameraTweakGlobal_Add",
+          "source": "SB/Game/zCameraTweak.cpp",
+          "linkage_name": "zCameraTweakGlobal_Add__FUiffff",
+          "reference_sha256": "e81f83f868630580b74bf238b856ff8186dff24595159f16a39ec91aa24abd6a",
+          "data_address_operands": [
+            {
+              "hi_offset": 16,
+              "lo_offset": 20,
+              "opcode": 9,
+              "reference_address": 6183520,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 68,
+              "lo_offset": 72,
+              "opcode": 9,
+              "reference_address": 6183520,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 124,
+              "lo_offset": 132,
+              "opcode": 9,
+              "reference_address": 6183520,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 232,
+              "lo_offset": 240,
+              "opcode": 9,
+              "reference_address": 6183520,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 248,
+              "lo_offset": 256,
+              "opcode": 9,
+              "reference_address": 6183524,
+              "target_address": 6185316,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 316,
+              "lo_offset": 324,
+              "opcode": 9,
+              "reference_address": 6183528,
+              "target_address": 6185320,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 336,
+              "lo_offset": 340,
+              "opcode": 9,
+              "reference_address": 6183532,
+              "target_address": 6185324,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 400,
+              "lo_offset": 404,
+              "opcode": 9,
+              "reference_address": 6183536,
+              "target_address": 6185328,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 432,
+              "lo_offset": 440,
+              "opcode": 49,
+              "reference_address": 6183528,
+              "target_address": 6185320,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 464,
+              "lo_offset": 468,
+              "opcode": 49,
+              "reference_address": 6183532,
+              "target_address": 6185324,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 484,
+              "lo_offset": 488,
+              "opcode": 49,
+              "reference_address": 6183536,
+              "target_address": 6185328,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            3882752
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              3882232,
+              3882280
+            ],
+            [
+              3882252,
+              3882752
+            ],
+            [
+              3882268,
+              3882248
+            ],
+            [
+              3882284,
+              3882448
+            ],
+            [
+              3882312,
+              3882324
+            ],
+            [
+              3882328,
+              3882432
+            ],
+            [
+              3882340,
+              3882448
+            ],
+            [
+              3882416,
+              3882368
+            ],
+            [
+              3882424,
+              3882448
+            ],
+            [
+              3882440,
+              3882304
+            ],
+            [
+              3882508,
+              3882524
+            ],
+            [
+              3882516,
+              3882532
+            ],
+            [
+              3882604,
+              3882620
+            ],
+            [
+              3882612,
+              3882624
+            ],
+            [
+              3882648,
+              3882752
+            ]
+          ],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 8
+        },
+        "previously_confirmed_neighbor_entries": [
+          3881856
+        ]
+      }
+    },
+    {
+      "name": "zCameraTweakGlobal_Init",
+      "source": "SB/Game/zCameraTweak.cpp",
+      "address": 3882768,
+      "size": 240,
+      "sha256": "4d73dd07193bf9d66fa5f4fe41f183872c3b60ab507ce83d863de0a050df2196",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3881392,
+          "name": "zCameraTweakGlobal_Init",
+          "source": "SB/Game/zCameraTweak.cpp",
+          "linkage_name": "zCameraTweakGlobal_Init__Fv",
+          "reference_sha256": "c608850ccf021c381de3bf49da388de5653f4fa98e7a132799313e18020c720e",
+          "data_address_operands": [
+            {
+              "hi_offset": 52,
+              "lo_offset": 60,
+              "opcode": 57,
+              "reference_address": 6186504,
+              "target_address": 6185480,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 64,
+              "lo_offset": 72,
+              "opcode": 57,
+              "reference_address": 6186496,
+              "target_address": 6185472,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 104,
+              "lo_offset": 112,
+              "opcode": 57,
+              "reference_address": 6186500,
+              "target_address": 6185476,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 124,
+              "lo_offset": 168,
+              "opcode": 57,
+              "reference_address": 6186520,
+              "target_address": 6185496,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 176,
+              "lo_offset": 184,
+              "opcode": 57,
+              "reference_address": 6186512,
+              "target_address": 6185488,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 192,
+              "lo_offset": 204,
+              "opcode": 57,
+              "reference_address": 6186516,
+              "target_address": 6185492,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 40,
+              "opcode": 3,
+              "reference_address": 1133080,
+              "target_address": 1133080,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "aabd0b8ce44c7dc291795ec9667267689a455233138c66bfb819a13bc4c429af",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            },
+            {
+              "offset": 108,
+              "opcode": 3,
+              "reference_address": 1133080,
+              "target_address": 1133080,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "aabd0b8ce44c7dc291795ec9667267689a455233138c66bfb819a13bc4c429af",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3882656,
+          "name": "zCameraTweakGlobal_Init",
+          "source": "SB/Game/zCameraTweak.cpp",
+          "linkage_name": "zCameraTweakGlobal_Init__Fv",
+          "reference_sha256": "e3ed0da6c61e1e4bb7009413ae5366be0ab53c2e88fab3926a1d39997f8af9eb",
+          "data_address_operands": [
+            {
+              "hi_offset": 52,
+              "lo_offset": 60,
+              "opcode": 57,
+              "reference_address": 6185224,
+              "target_address": 6185480,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 64,
+              "lo_offset": 72,
+              "opcode": 57,
+              "reference_address": 6185216,
+              "target_address": 6185472,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 104,
+              "lo_offset": 112,
+              "opcode": 57,
+              "reference_address": 6185220,
+              "target_address": 6185476,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 124,
+              "lo_offset": 168,
+              "opcode": 57,
+              "reference_address": 6185240,
+              "target_address": 6185496,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 176,
+              "lo_offset": 184,
+              "opcode": 57,
+              "reference_address": 6185232,
+              "target_address": 6185488,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 192,
+              "lo_offset": 204,
+              "opcode": 57,
+              "reference_address": 6185236,
+              "target_address": 6185492,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 40,
+              "opcode": 3,
+              "reference_address": 1133080,
+              "target_address": 1133080,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "aabd0b8ce44c7dc291795ec9667267689a455233138c66bfb819a13bc4c429af",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            },
+            {
+              "offset": 108,
+              "opcode": 3,
+              "reference_address": 1133080,
+              "target_address": 1133080,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "aabd0b8ce44c7dc291795ec9667267689a455233138c66bfb819a13bc4c429af",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3879408,
+          "name": "zCameraTweakGlobal_Init",
+          "source": "SB/Game/zCameraTweak.cpp",
+          "linkage_name": "zCameraTweakGlobal_Init__Fv",
+          "reference_sha256": "19215ae559acec7ce1526f241292088e495825c07def8daefbf42b069f9c8e27",
+          "data_address_operands": [
+            {
+              "hi_offset": 52,
+              "lo_offset": 60,
+              "opcode": 57,
+              "reference_address": 6183688,
+              "target_address": 6185480,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 64,
+              "lo_offset": 72,
+              "opcode": 57,
+              "reference_address": 6183680,
+              "target_address": 6185472,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 104,
+              "lo_offset": 112,
+              "opcode": 57,
+              "reference_address": 6183684,
+              "target_address": 6185476,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 124,
+              "lo_offset": 168,
+              "opcode": 57,
+              "reference_address": 6183704,
+              "target_address": 6185496,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 176,
+              "lo_offset": 184,
+              "opcode": 57,
+              "reference_address": 6183696,
+              "target_address": 6185488,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 192,
+              "lo_offset": 204,
+              "opcode": 57,
+              "reference_address": 6183700,
+              "target_address": 6185492,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 40,
+              "opcode": 3,
+              "reference_address": 1133080,
+              "target_address": 1133080,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "aabd0b8ce44c7dc291795ec9667267689a455233138c66bfb819a13bc4c429af",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            },
+            {
+              "offset": 108,
+              "opcode": 3,
+              "reference_address": 1133080,
+              "target_address": 1133080,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "aabd0b8ce44c7dc291795ec9667267689a455233138c66bfb819a13bc4c429af",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            3883000
+          ],
+          "direct_or_indirect_calls": [
+            3882808,
+            3882876
+          ],
+          "branches": [],
+          "stack_adjustments": [
+            [
+              3882768,
+              -48
+            ],
+            [
+              3883004,
+              48
+            ]
+          ],
+          "ra_saves": [
+            [
+              3882772,
+              -16
+            ]
+          ],
+          "ra_loads": [
+            [
+              3882976,
+              -16
+            ]
+          ],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 0
+        },
+        "previously_confirmed_neighbor_entries": [
+          3881856
+        ]
+      }
     }
   ],
   "particle_registration_proofs": [
@@ -107901,6 +109884,1475 @@
       "reference_address": 5901328,
       "data_extent_promoted": false,
       "target_address": 5903120
+    }
+  ],
+  "camera_tweak_data_proofs": [
+    {
+      "version": "SLUS-20680",
+      "source": "SB/Game/zCameraTweak.cpp",
+      "original_aggregate_layouts": {
+        "zCamTweak": {
+          "die_offset": 12082792,
+          "tag": 2,
+          "size": 20,
+          "members": [
+            {
+              "name": "owner",
+              "offset": 0,
+              "die_offset": 12082822,
+              "location": "040000000007",
+              "type_attributes": {
+                "5": 9
+              }
+            },
+            {
+              "name": "priority",
+              "offset": 4,
+              "die_offset": 12082856,
+              "location": "040400000007",
+              "type_attributes": {
+                "5": 14
+              }
+            },
+            {
+              "name": "time",
+              "offset": 8,
+              "die_offset": 12082893,
+              "location": "040800000007",
+              "type_attributes": {
+                "5": 14
+              }
+            },
+            {
+              "name": "pitch",
+              "offset": 12,
+              "die_offset": 12082926,
+              "location": "040c00000007",
+              "type_attributes": {
+                "5": 14
+              }
+            },
+            {
+              "name": "distMult",
+              "offset": 16,
+              "die_offset": 12082960,
+              "location": "041000000007",
+              "type_attributes": {
+                "5": 14
+              }
+            }
+          ]
+        },
+        "zCamTweakLook": {
+          "die_offset": 12083001,
+          "tag": 2,
+          "size": 12,
+          "members": [
+            {
+              "name": "h",
+              "offset": 0,
+              "die_offset": 12083035,
+              "location": "040000000007",
+              "type_attributes": {
+                "5": 14
+              }
+            },
+            {
+              "name": "dist",
+              "offset": 4,
+              "die_offset": 12083065,
+              "location": "040400000007",
+              "type_attributes": {
+                "5": 14
+              }
+            },
+            {
+              "name": "pitch",
+              "offset": 8,
+              "die_offset": 12083098,
+              "location": "040800000007",
+              "type_attributes": {
+                "5": 14
+              }
+            }
+          ]
+        }
+      },
+      "typed_globals": [
+        {
+          "name": "sCamTweakList",
+          "reference_address": 6186336,
+          "size": 160,
+          "declaration_die": 12080817,
+          "type_die": 12083687,
+          "array_count": 8,
+          "element_size": 20,
+          "descriptor": "000a000000000007000000087200685eb800",
+          "target_address": 6185312
+        },
+        {
+          "name": "zcam_neartweak",
+          "reference_address": 6186496,
+          "size": 12,
+          "declaration_die": 12081229,
+          "type_die": 12083001,
+          "target_address": 6185472
+        },
+        {
+          "name": "zcam_fartweak",
+          "reference_address": 6186512,
+          "size": 12,
+          "declaration_die": 12081273,
+          "type_die": 12083001,
+          "target_address": 6185488
+        }
+      ],
+      "member_operands_and_calls": [
+        {
+          "name": "zCameraTweak_EventCB",
+          "address": 3881232,
+          "size": 184,
+          "pairs": [],
+          "calls": [
+            {
+              "offset": 128,
+              "opcode": 3,
+              "reference_address": 3880848,
+              "target_address": 3882224
+            },
+            {
+              "offset": 160,
+              "opcode": 3,
+              "reference_address": 3880544,
+              "target_address": 3881920
+            }
+          ]
+        },
+        {
+          "name": "zCameraTweak_Load",
+          "address": 3881424,
+          "size": 8,
+          "pairs": [],
+          "calls": [
+            {
+              "offset": 0,
+              "opcode": 2,
+              "reference_address": 1832640,
+              "target_address": 1834016
+            }
+          ]
+        },
+        {
+          "name": "zCameraTweak_Save",
+          "address": 3881440,
+          "size": 8,
+          "pairs": [],
+          "calls": [
+            {
+              "offset": 0,
+              "opcode": 2,
+              "reference_address": 1832736,
+              "target_address": 1834112
+            }
+          ]
+        },
+        {
+          "name": "zCameraTweak_Init",
+          "address": 3881456,
+          "size": 92,
+          "pairs": [
+            {
+              "hi_offset": 28,
+              "lo_offset": 36,
+              "opcode": 9,
+              "reference_address": 3879856,
+              "target_address": 3881232,
+              "storage": "file_backed"
+            }
+          ],
+          "calls": [
+            {
+              "offset": 20,
+              "opcode": 3,
+              "reference_address": 1832832,
+              "target_address": 1834208
+            }
+          ]
+        },
+        {
+          "name": "zCameraTweakGlobal_GetPitch",
+          "address": 3881552,
+          "size": 8,
+          "pairs": [],
+          "calls": []
+        },
+        {
+          "name": "zCameraTweakGlobal_GetH",
+          "address": 3881568,
+          "size": 8,
+          "pairs": [],
+          "calls": []
+        },
+        {
+          "name": "zCameraTweakGlobal_GetD",
+          "address": 3881584,
+          "size": 8,
+          "pairs": [],
+          "calls": []
+        },
+        {
+          "name": "zCameraTweakGlobal_Update",
+          "address": 3881600,
+          "size": 244,
+          "pairs": [
+            {
+              "hi_offset": 112,
+              "lo_offset": 120,
+              "opcode": 9,
+              "reference_address": 6186496,
+              "target_address": 6185472,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 124,
+              "lo_offset": 128,
+              "opcode": 9,
+              "reference_address": 6186512,
+              "target_address": 6185488,
+              "storage": "zero_fill"
+            }
+          ],
+          "calls": [
+            {
+              "offset": 140,
+              "opcode": 3,
+              "reference_address": 1132176,
+              "target_address": 1132176,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "6816b8754e89da74ae0b9a8f6e37a5c76246d6ff69f86c59001776bb3ef56a73",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            },
+            {
+              "offset": 176,
+              "opcode": 3,
+              "reference_address": 1132848,
+              "target_address": 1132848,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            }
+          ]
+        },
+        {
+          "name": "zCameraTweakGlobal_Reset",
+          "address": 3881856,
+          "size": 52,
+          "pairs": [],
+          "calls": []
+        },
+        {
+          "name": "zCameraTweakGlobal_Remove",
+          "address": 3881920,
+          "size": 296,
+          "pairs": [
+            {
+              "hi_offset": 16,
+              "lo_offset": 20,
+              "opcode": 9,
+              "reference_address": 6186336,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 52,
+              "lo_offset": 56,
+              "opcode": 49,
+              "reference_address": 6186344,
+              "target_address": 6185320,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 124,
+              "lo_offset": 128,
+              "opcode": 49,
+              "reference_address": 6186368,
+              "target_address": 6185344,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 132,
+              "lo_offset": 136,
+              "opcode": 49,
+              "reference_address": 6186372,
+              "target_address": 6185348,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 176,
+              "lo_offset": 184,
+              "opcode": 9,
+              "reference_address": 6186336,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            }
+          ],
+          "calls": []
+        },
+        {
+          "name": "zCameraTweakGlobal_Add",
+          "address": 3882224,
+          "size": 536,
+          "pairs": [
+            {
+              "hi_offset": 16,
+              "lo_offset": 20,
+              "opcode": 9,
+              "reference_address": 6186336,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 68,
+              "lo_offset": 72,
+              "opcode": 9,
+              "reference_address": 6186336,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 124,
+              "lo_offset": 132,
+              "opcode": 9,
+              "reference_address": 6186336,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 232,
+              "lo_offset": 240,
+              "opcode": 9,
+              "reference_address": 6186336,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 248,
+              "lo_offset": 256,
+              "opcode": 9,
+              "reference_address": 6186340,
+              "target_address": 6185316,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 316,
+              "lo_offset": 324,
+              "opcode": 9,
+              "reference_address": 6186344,
+              "target_address": 6185320,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 336,
+              "lo_offset": 340,
+              "opcode": 9,
+              "reference_address": 6186348,
+              "target_address": 6185324,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 400,
+              "lo_offset": 404,
+              "opcode": 9,
+              "reference_address": 6186352,
+              "target_address": 6185328,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 432,
+              "lo_offset": 440,
+              "opcode": 49,
+              "reference_address": 6186344,
+              "target_address": 6185320,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 464,
+              "lo_offset": 468,
+              "opcode": 49,
+              "reference_address": 6186348,
+              "target_address": 6185324,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 484,
+              "lo_offset": 488,
+              "opcode": 49,
+              "reference_address": 6186352,
+              "target_address": 6185328,
+              "storage": "zero_fill"
+            }
+          ],
+          "calls": []
+        },
+        {
+          "name": "zCameraTweakGlobal_Init",
+          "address": 3882768,
+          "size": 240,
+          "pairs": [
+            {
+              "hi_offset": 52,
+              "lo_offset": 60,
+              "opcode": 57,
+              "reference_address": 6186504,
+              "target_address": 6185480,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 64,
+              "lo_offset": 72,
+              "opcode": 57,
+              "reference_address": 6186496,
+              "target_address": 6185472,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 104,
+              "lo_offset": 112,
+              "opcode": 57,
+              "reference_address": 6186500,
+              "target_address": 6185476,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 124,
+              "lo_offset": 168,
+              "opcode": 57,
+              "reference_address": 6186520,
+              "target_address": 6185496,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 176,
+              "lo_offset": 184,
+              "opcode": 57,
+              "reference_address": 6186512,
+              "target_address": 6185488,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 192,
+              "lo_offset": 204,
+              "opcode": 57,
+              "reference_address": 6186516,
+              "target_address": 6185492,
+              "storage": "zero_fill"
+            }
+          ],
+          "calls": [
+            {
+              "offset": 40,
+              "opcode": 3,
+              "reference_address": 1133080,
+              "target_address": 1133080,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "aabd0b8ce44c7dc291795ec9667267689a455233138c66bfb819a13bc4c429af",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            },
+            {
+              "offset": 108,
+              "opcode": 3,
+              "reference_address": 1133080,
+              "target_address": 1133080,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "aabd0b8ce44c7dc291795ec9667267689a455233138c66bfb819a13bc4c429af",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            }
+          ]
+        }
+      ],
+      "data_extents_promoted": false
+    },
+    {
+      "version": "SLES-51968",
+      "source": "SB/Game/zCameraTweak.cpp",
+      "original_aggregate_layouts": {
+        "zCamTweak": {
+          "die_offset": 12083250,
+          "tag": 2,
+          "size": 20,
+          "members": [
+            {
+              "name": "owner",
+              "offset": 0,
+              "die_offset": 12083280,
+              "location": "040000000007",
+              "type_attributes": {
+                "5": 9
+              }
+            },
+            {
+              "name": "priority",
+              "offset": 4,
+              "die_offset": 12083314,
+              "location": "040400000007",
+              "type_attributes": {
+                "5": 14
+              }
+            },
+            {
+              "name": "time",
+              "offset": 8,
+              "die_offset": 12083351,
+              "location": "040800000007",
+              "type_attributes": {
+                "5": 14
+              }
+            },
+            {
+              "name": "pitch",
+              "offset": 12,
+              "die_offset": 12083384,
+              "location": "040c00000007",
+              "type_attributes": {
+                "5": 14
+              }
+            },
+            {
+              "name": "distMult",
+              "offset": 16,
+              "die_offset": 12083418,
+              "location": "041000000007",
+              "type_attributes": {
+                "5": 14
+              }
+            }
+          ]
+        },
+        "zCamTweakLook": {
+          "die_offset": 12083459,
+          "tag": 2,
+          "size": 12,
+          "members": [
+            {
+              "name": "h",
+              "offset": 0,
+              "die_offset": 12083493,
+              "location": "040000000007",
+              "type_attributes": {
+                "5": 14
+              }
+            },
+            {
+              "name": "dist",
+              "offset": 4,
+              "die_offset": 12083523,
+              "location": "040400000007",
+              "type_attributes": {
+                "5": 14
+              }
+            },
+            {
+              "name": "pitch",
+              "offset": 8,
+              "die_offset": 12083556,
+              "location": "040800000007",
+              "type_attributes": {
+                "5": 14
+              }
+            }
+          ]
+        }
+      },
+      "typed_globals": [
+        {
+          "name": "sCamTweakList",
+          "reference_address": 6185056,
+          "size": 160,
+          "declaration_die": 12081275,
+          "type_die": 12084145,
+          "array_count": 8,
+          "element_size": 20,
+          "descriptor": "000a0000000000070000000872003260b800",
+          "target_address": 6185312
+        },
+        {
+          "name": "zcam_neartweak",
+          "reference_address": 6185216,
+          "size": 12,
+          "declaration_die": 12081687,
+          "type_die": 12083459,
+          "target_address": 6185472
+        },
+        {
+          "name": "zcam_fartweak",
+          "reference_address": 6185232,
+          "size": 12,
+          "declaration_die": 12081731,
+          "type_die": 12083459,
+          "target_address": 6185488
+        }
+      ],
+      "member_operands_and_calls": [
+        {
+          "name": "zCameraTweak_EventCB",
+          "address": 3881232,
+          "size": 184,
+          "pairs": [],
+          "calls": [
+            {
+              "offset": 128,
+              "opcode": 3,
+              "reference_address": 3882112,
+              "target_address": 3882224
+            },
+            {
+              "offset": 160,
+              "opcode": 3,
+              "reference_address": 3881808,
+              "target_address": 3881920
+            }
+          ]
+        },
+        {
+          "name": "zCameraTweak_Load",
+          "address": 3881424,
+          "size": 8,
+          "pairs": [],
+          "calls": [
+            {
+              "offset": 0,
+              "opcode": 2,
+              "reference_address": 1833904,
+              "target_address": 1834016
+            }
+          ]
+        },
+        {
+          "name": "zCameraTweak_Save",
+          "address": 3881440,
+          "size": 8,
+          "pairs": [],
+          "calls": [
+            {
+              "offset": 0,
+              "opcode": 2,
+              "reference_address": 1834000,
+              "target_address": 1834112
+            }
+          ]
+        },
+        {
+          "name": "zCameraTweak_Init",
+          "address": 3881456,
+          "size": 92,
+          "pairs": [
+            {
+              "hi_offset": 28,
+              "lo_offset": 36,
+              "opcode": 9,
+              "reference_address": 3881120,
+              "target_address": 3881232,
+              "storage": "file_backed"
+            }
+          ],
+          "calls": [
+            {
+              "offset": 20,
+              "opcode": 3,
+              "reference_address": 1834096,
+              "target_address": 1834208
+            }
+          ]
+        },
+        {
+          "name": "zCameraTweakGlobal_GetPitch",
+          "address": 3881552,
+          "size": 8,
+          "pairs": [],
+          "calls": []
+        },
+        {
+          "name": "zCameraTweakGlobal_GetH",
+          "address": 3881568,
+          "size": 8,
+          "pairs": [],
+          "calls": []
+        },
+        {
+          "name": "zCameraTweakGlobal_GetD",
+          "address": 3881584,
+          "size": 8,
+          "pairs": [],
+          "calls": []
+        },
+        {
+          "name": "zCameraTweakGlobal_Update",
+          "address": 3881600,
+          "size": 244,
+          "pairs": [
+            {
+              "hi_offset": 112,
+              "lo_offset": 120,
+              "opcode": 9,
+              "reference_address": 6185216,
+              "target_address": 6185472,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 124,
+              "lo_offset": 128,
+              "opcode": 9,
+              "reference_address": 6185232,
+              "target_address": 6185488,
+              "storage": "zero_fill"
+            }
+          ],
+          "calls": [
+            {
+              "offset": 140,
+              "opcode": 3,
+              "reference_address": 1132176,
+              "target_address": 1132176,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "6816b8754e89da74ae0b9a8f6e37a5c76246d6ff69f86c59001776bb3ef56a73",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            },
+            {
+              "offset": 176,
+              "opcode": 3,
+              "reference_address": 1132848,
+              "target_address": 1132848,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            }
+          ]
+        },
+        {
+          "name": "zCameraTweakGlobal_Reset",
+          "address": 3881856,
+          "size": 52,
+          "pairs": [],
+          "calls": []
+        },
+        {
+          "name": "zCameraTweakGlobal_Remove",
+          "address": 3881920,
+          "size": 296,
+          "pairs": [
+            {
+              "hi_offset": 16,
+              "lo_offset": 20,
+              "opcode": 9,
+              "reference_address": 6185056,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 52,
+              "lo_offset": 56,
+              "opcode": 49,
+              "reference_address": 6185064,
+              "target_address": 6185320,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 124,
+              "lo_offset": 128,
+              "opcode": 49,
+              "reference_address": 6185088,
+              "target_address": 6185344,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 132,
+              "lo_offset": 136,
+              "opcode": 49,
+              "reference_address": 6185092,
+              "target_address": 6185348,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 176,
+              "lo_offset": 184,
+              "opcode": 9,
+              "reference_address": 6185056,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            }
+          ],
+          "calls": []
+        },
+        {
+          "name": "zCameraTweakGlobal_Add",
+          "address": 3882224,
+          "size": 536,
+          "pairs": [
+            {
+              "hi_offset": 16,
+              "lo_offset": 20,
+              "opcode": 9,
+              "reference_address": 6185056,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 68,
+              "lo_offset": 72,
+              "opcode": 9,
+              "reference_address": 6185056,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 124,
+              "lo_offset": 132,
+              "opcode": 9,
+              "reference_address": 6185056,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 232,
+              "lo_offset": 240,
+              "opcode": 9,
+              "reference_address": 6185056,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 248,
+              "lo_offset": 256,
+              "opcode": 9,
+              "reference_address": 6185060,
+              "target_address": 6185316,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 316,
+              "lo_offset": 324,
+              "opcode": 9,
+              "reference_address": 6185064,
+              "target_address": 6185320,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 336,
+              "lo_offset": 340,
+              "opcode": 9,
+              "reference_address": 6185068,
+              "target_address": 6185324,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 400,
+              "lo_offset": 404,
+              "opcode": 9,
+              "reference_address": 6185072,
+              "target_address": 6185328,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 432,
+              "lo_offset": 440,
+              "opcode": 49,
+              "reference_address": 6185064,
+              "target_address": 6185320,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 464,
+              "lo_offset": 468,
+              "opcode": 49,
+              "reference_address": 6185068,
+              "target_address": 6185324,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 484,
+              "lo_offset": 488,
+              "opcode": 49,
+              "reference_address": 6185072,
+              "target_address": 6185328,
+              "storage": "zero_fill"
+            }
+          ],
+          "calls": []
+        },
+        {
+          "name": "zCameraTweakGlobal_Init",
+          "address": 3882768,
+          "size": 240,
+          "pairs": [
+            {
+              "hi_offset": 52,
+              "lo_offset": 60,
+              "opcode": 57,
+              "reference_address": 6185224,
+              "target_address": 6185480,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 64,
+              "lo_offset": 72,
+              "opcode": 57,
+              "reference_address": 6185216,
+              "target_address": 6185472,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 104,
+              "lo_offset": 112,
+              "opcode": 57,
+              "reference_address": 6185220,
+              "target_address": 6185476,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 124,
+              "lo_offset": 168,
+              "opcode": 57,
+              "reference_address": 6185240,
+              "target_address": 6185496,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 176,
+              "lo_offset": 184,
+              "opcode": 57,
+              "reference_address": 6185232,
+              "target_address": 6185488,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 192,
+              "lo_offset": 204,
+              "opcode": 57,
+              "reference_address": 6185236,
+              "target_address": 6185492,
+              "storage": "zero_fill"
+            }
+          ],
+          "calls": [
+            {
+              "offset": 40,
+              "opcode": 3,
+              "reference_address": 1133080,
+              "target_address": 1133080,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "aabd0b8ce44c7dc291795ec9667267689a455233138c66bfb819a13bc4c429af",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            },
+            {
+              "offset": 108,
+              "opcode": 3,
+              "reference_address": 1133080,
+              "target_address": 1133080,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "aabd0b8ce44c7dc291795ec9667267689a455233138c66bfb819a13bc4c429af",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            }
+          ]
+        }
+      ],
+      "data_extents_promoted": false
+    },
+    {
+      "version": "SLES-51970",
+      "source": "SB/Game/zCameraTweak.cpp",
+      "original_aggregate_layouts": {
+        "zCamTweak": {
+          "die_offset": 12084237,
+          "tag": 2,
+          "size": 20,
+          "members": [
+            {
+              "name": "owner",
+              "offset": 0,
+              "die_offset": 12084267,
+              "location": "040000000007",
+              "type_attributes": {
+                "5": 9
+              }
+            },
+            {
+              "name": "priority",
+              "offset": 4,
+              "die_offset": 12084301,
+              "location": "040400000007",
+              "type_attributes": {
+                "5": 14
+              }
+            },
+            {
+              "name": "time",
+              "offset": 8,
+              "die_offset": 12084338,
+              "location": "040800000007",
+              "type_attributes": {
+                "5": 14
+              }
+            },
+            {
+              "name": "pitch",
+              "offset": 12,
+              "die_offset": 12084371,
+              "location": "040c00000007",
+              "type_attributes": {
+                "5": 14
+              }
+            },
+            {
+              "name": "distMult",
+              "offset": 16,
+              "die_offset": 12084405,
+              "location": "041000000007",
+              "type_attributes": {
+                "5": 14
+              }
+            }
+          ]
+        },
+        "zCamTweakLook": {
+          "die_offset": 12084446,
+          "tag": 2,
+          "size": 12,
+          "members": [
+            {
+              "name": "h",
+              "offset": 0,
+              "die_offset": 12084480,
+              "location": "040000000007",
+              "type_attributes": {
+                "5": 14
+              }
+            },
+            {
+              "name": "dist",
+              "offset": 4,
+              "die_offset": 12084510,
+              "location": "040400000007",
+              "type_attributes": {
+                "5": 14
+              }
+            },
+            {
+              "name": "pitch",
+              "offset": 8,
+              "die_offset": 12084543,
+              "location": "040800000007",
+              "type_attributes": {
+                "5": 14
+              }
+            }
+          ]
+        }
+      },
+      "typed_globals": [
+        {
+          "name": "sCamTweakList",
+          "reference_address": 6183520,
+          "size": 160,
+          "declaration_die": 12082262,
+          "type_die": 12085132,
+          "array_count": 8,
+          "element_size": 20,
+          "descriptor": "000a0000000000070000000872000d64b800",
+          "target_address": 6185312
+        },
+        {
+          "name": "zcam_neartweak",
+          "reference_address": 6183680,
+          "size": 12,
+          "declaration_die": 12082674,
+          "type_die": 12084446,
+          "target_address": 6185472
+        },
+        {
+          "name": "zcam_fartweak",
+          "reference_address": 6183696,
+          "size": 12,
+          "declaration_die": 12082718,
+          "type_die": 12084446,
+          "target_address": 6185488
+        }
+      ],
+      "member_operands_and_calls": [
+        {
+          "name": "zCameraTweak_EventCB",
+          "address": 3881232,
+          "size": 184,
+          "pairs": [],
+          "calls": [
+            {
+              "offset": 128,
+              "opcode": 3,
+              "reference_address": 3878864,
+              "target_address": 3882224
+            },
+            {
+              "offset": 160,
+              "opcode": 3,
+              "reference_address": 3878560,
+              "target_address": 3881920
+            }
+          ]
+        },
+        {
+          "name": "zCameraTweak_Load",
+          "address": 3881424,
+          "size": 8,
+          "pairs": [],
+          "calls": [
+            {
+              "offset": 0,
+              "opcode": 2,
+              "reference_address": 1830544,
+              "target_address": 1834016
+            }
+          ]
+        },
+        {
+          "name": "zCameraTweak_Save",
+          "address": 3881440,
+          "size": 8,
+          "pairs": [],
+          "calls": [
+            {
+              "offset": 0,
+              "opcode": 2,
+              "reference_address": 1830640,
+              "target_address": 1834112
+            }
+          ]
+        },
+        {
+          "name": "zCameraTweak_Init",
+          "address": 3881456,
+          "size": 92,
+          "pairs": [
+            {
+              "hi_offset": 28,
+              "lo_offset": 36,
+              "opcode": 9,
+              "reference_address": 3877872,
+              "target_address": 3881232,
+              "storage": "file_backed"
+            }
+          ],
+          "calls": [
+            {
+              "offset": 20,
+              "opcode": 3,
+              "reference_address": 1830736,
+              "target_address": 1834208
+            }
+          ]
+        },
+        {
+          "name": "zCameraTweakGlobal_GetPitch",
+          "address": 3881552,
+          "size": 8,
+          "pairs": [],
+          "calls": []
+        },
+        {
+          "name": "zCameraTweakGlobal_GetH",
+          "address": 3881568,
+          "size": 8,
+          "pairs": [],
+          "calls": []
+        },
+        {
+          "name": "zCameraTweakGlobal_GetD",
+          "address": 3881584,
+          "size": 8,
+          "pairs": [],
+          "calls": []
+        },
+        {
+          "name": "zCameraTweakGlobal_Update",
+          "address": 3881600,
+          "size": 244,
+          "pairs": [
+            {
+              "hi_offset": 112,
+              "lo_offset": 120,
+              "opcode": 9,
+              "reference_address": 6183680,
+              "target_address": 6185472,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 124,
+              "lo_offset": 128,
+              "opcode": 9,
+              "reference_address": 6183696,
+              "target_address": 6185488,
+              "storage": "zero_fill"
+            }
+          ],
+          "calls": [
+            {
+              "offset": 140,
+              "opcode": 3,
+              "reference_address": 1132176,
+              "target_address": 1132176,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "6816b8754e89da74ae0b9a8f6e37a5c76246d6ff69f86c59001776bb3ef56a73",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            },
+            {
+              "offset": 176,
+              "opcode": 3,
+              "reference_address": 1132848,
+              "target_address": 1132848,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            }
+          ]
+        },
+        {
+          "name": "zCameraTweakGlobal_Reset",
+          "address": 3881856,
+          "size": 52,
+          "pairs": [],
+          "calls": []
+        },
+        {
+          "name": "zCameraTweakGlobal_Remove",
+          "address": 3881920,
+          "size": 296,
+          "pairs": [
+            {
+              "hi_offset": 16,
+              "lo_offset": 20,
+              "opcode": 9,
+              "reference_address": 6183520,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 52,
+              "lo_offset": 56,
+              "opcode": 49,
+              "reference_address": 6183528,
+              "target_address": 6185320,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 124,
+              "lo_offset": 128,
+              "opcode": 49,
+              "reference_address": 6183552,
+              "target_address": 6185344,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 132,
+              "lo_offset": 136,
+              "opcode": 49,
+              "reference_address": 6183556,
+              "target_address": 6185348,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 176,
+              "lo_offset": 184,
+              "opcode": 9,
+              "reference_address": 6183520,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            }
+          ],
+          "calls": []
+        },
+        {
+          "name": "zCameraTweakGlobal_Add",
+          "address": 3882224,
+          "size": 536,
+          "pairs": [
+            {
+              "hi_offset": 16,
+              "lo_offset": 20,
+              "opcode": 9,
+              "reference_address": 6183520,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 68,
+              "lo_offset": 72,
+              "opcode": 9,
+              "reference_address": 6183520,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 124,
+              "lo_offset": 132,
+              "opcode": 9,
+              "reference_address": 6183520,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 232,
+              "lo_offset": 240,
+              "opcode": 9,
+              "reference_address": 6183520,
+              "target_address": 6185312,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 248,
+              "lo_offset": 256,
+              "opcode": 9,
+              "reference_address": 6183524,
+              "target_address": 6185316,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 316,
+              "lo_offset": 324,
+              "opcode": 9,
+              "reference_address": 6183528,
+              "target_address": 6185320,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 336,
+              "lo_offset": 340,
+              "opcode": 9,
+              "reference_address": 6183532,
+              "target_address": 6185324,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 400,
+              "lo_offset": 404,
+              "opcode": 9,
+              "reference_address": 6183536,
+              "target_address": 6185328,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 432,
+              "lo_offset": 440,
+              "opcode": 49,
+              "reference_address": 6183528,
+              "target_address": 6185320,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 464,
+              "lo_offset": 468,
+              "opcode": 49,
+              "reference_address": 6183532,
+              "target_address": 6185324,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 484,
+              "lo_offset": 488,
+              "opcode": 49,
+              "reference_address": 6183536,
+              "target_address": 6185328,
+              "storage": "zero_fill"
+            }
+          ],
+          "calls": []
+        },
+        {
+          "name": "zCameraTweakGlobal_Init",
+          "address": 3882768,
+          "size": 240,
+          "pairs": [
+            {
+              "hi_offset": 52,
+              "lo_offset": 60,
+              "opcode": 57,
+              "reference_address": 6183688,
+              "target_address": 6185480,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 64,
+              "lo_offset": 72,
+              "opcode": 57,
+              "reference_address": 6183680,
+              "target_address": 6185472,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 104,
+              "lo_offset": 112,
+              "opcode": 57,
+              "reference_address": 6183684,
+              "target_address": 6185476,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 124,
+              "lo_offset": 168,
+              "opcode": 57,
+              "reference_address": 6183704,
+              "target_address": 6185496,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 176,
+              "lo_offset": 184,
+              "opcode": 57,
+              "reference_address": 6183696,
+              "target_address": 6185488,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 192,
+              "lo_offset": 204,
+              "opcode": 57,
+              "reference_address": 6183700,
+              "target_address": 6185492,
+              "storage": "zero_fill"
+            }
+          ],
+          "calls": [
+            {
+              "offset": 40,
+              "opcode": 3,
+              "reference_address": 1133080,
+              "target_address": 1133080,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "aabd0b8ce44c7dc291795ec9667267689a455233138c66bfb819a13bc4c429af",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            },
+            {
+              "offset": 108,
+              "opcode": 3,
+              "reference_address": 1133080,
+              "target_address": 1133080,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "aabd0b8ce44c7dc291795ec9667267689a455233138c66bfb819a13bc4c429af",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            }
+          ]
+        }
+      ],
+      "data_extents_promoted": false
     }
   ]
 }

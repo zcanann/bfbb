@@ -543,6 +543,16 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     for key, value in utility['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
     document['limitations'].append('Utility adds eight members from all eleven original functions and three independent neighbors. Its exact seven-entry dispatch is scoped locally; unsigned-byte lookup dataflow bounds twelve observed table reads. Original typed arrays and independently witnessed animation pointer operands corroborate changed addresses. Opaque runtime caller words remain unmasked, and no runtime identity or data extent is promoted.')
+    from platforms.france_camera_tweak_sequence import generate_unit as generate_camera_tweak
+    camera_tweak = generate_camera_tweak(originals, registry_dir)
+    document['functions'].extend(camera_tweak['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(camera_tweak['sequence_proofs'])
+    document['call_neighbors'].extend(camera_tweak['call_neighbors'])
+    document['camera_tweak_data_proofs'] = camera_tweak['data_proofs']
+    for key, value in camera_tweak['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Camera tweak adds eleven members from the complete twelve-function sequence and the existing Reset neighbor. Original member types prove the eight-element state array and two look aggregates. Only exact eight-byte J/NOP wrappers to independently verified, strictly closed base Save/Load functions receive scoped tail handling; opaque runtime calls retain literal unmasked words and identical 64-byte context, with no new identity or extent.')
     return document
 
 

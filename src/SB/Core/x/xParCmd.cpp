@@ -57,6 +57,9 @@ void xParCmdInit()
                     xParCmd_DampenSpeed_Update);
 }
 
+#if defined(XBOX)
+inline
+#endif
 void xParCmdRegister(U32 parType, U32 size, xParCmdUpdateFunc func)
 {
     sCmdInfo[parType].type = parType;

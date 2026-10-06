@@ -183,6 +183,8 @@ def _extract_functions(executable: Path, map_path: Path, unit: dict,
     from .xbox_relocations import pe_provenance, source_globals, normalize, discover_source_expressions
     sections, highlow = pe_provenance(executable)
     anchors = source_globals(map_path, unit, sections, executable)
+    from .xbox_particle_initializer import source_anchors as initializer_source_anchors, INITIALIZER
+    initializer_anchors, initializer_expressions = initializer_source_anchors(executable, map_path, unit)
     from .xbox_external_data import verify_map, expressions as external_expressions
     if bool(unit.get('original_data_bindings')) != bool(original_data):
         raise ValueError('Original data bindings lack authenticated target preparation')
@@ -218,8 +220,14 @@ def _extract_functions(executable: Path, map_path: Path, unit: dict,
         offset = address - text_address
         body = text[offset:offset + extent['size']]
         fields = {a - address for a in highlow if address <= a < address + len(body)}
-        expressions = discover_source_expressions(body,
-            unit.get('address_expressions', {}).get(canonical, []), function_anchors, fields)
+        if canonical == INITIALIZER and unit.get('particle_initializer'):
+            if set(function_anchors) & set(initializer_anchors):
+                raise ValueError('Initializer anchors alias ordinary data/switch anchors')
+            function_anchors = {**function_anchors, **initializer_anchors}
+            expressions = initializer_expressions
+        else:
+            expressions = discover_source_expressions(body,
+                unit.get('address_expressions', {}).get(canonical, []), function_anchors, fields)
         normalized, relocations = normalize(body, expressions, function_anchors, fields)
         if original_data:
             if set(function_anchors) & set(external_anchors):
@@ -339,6 +347,12 @@ def compile_units(output: Path, compilers: Path, wine: Path | None = None) -> li
         includes.append('/I' + tool_path(compiler / 'Include'))
         run('cl.exe', [*profile['flags'], *includes, '/Fo' + source_object.name,
                        tool_path(ROOT / unit['source'])], 'compile-source')
+        if unit.get('particle_initializer'):
+            # Symbol/relocation provenance only. This non-LTCG object is never
+            # linked or scored; production objects/flags remain unchanged.
+            run('cl.exe', [*[flag for flag in profile['flags'] if flag != '/GL'], *includes,
+                           '/Foinitializer-symbols.obj', tool_path(ROOT / unit['source'])],
+                'compile-initializer-symbol-evidence')
         dependency_objects, dependency_records = [], []
         for index, dependency in enumerate(unit.get('source_dependencies', [])):
             dependency_object = dependency['object']
@@ -404,6 +418,12 @@ def compile_units(output: Path, compilers: Path, wine: Path | None = None) -> li
                         'comparison_object_sha256': hashlib.sha256(comparison.read_bytes()).hexdigest(),
                         'compared_function_count': len(functions), 'source_link_verified': False,
                         'complete_translation_unit': False, 'host_support_excluded': True,
+                        **({'initializer_symbol_evidence': {
+                            'object': str((source_object.parent / 'initializer-symbols.obj').relative_to(output)),
+                            'sha256': hashlib.sha256((build / 'initializer-symbols.obj').read_bytes()).hexdigest(),
+                            'command_label': 'compile-initializer-symbol-evidence',
+                            'scope': 'Same whole TU with pinned compiler; only /GL omitted. Named storage/relocation evidence only; never linked or scored.'}}
+                           if unit.get('particle_initializer') else {}),
                         **({'original_data_bindings': original_data, 'bound_storage_bytes_credited': 0,
                             'original_data_provenance': 'Fixed original addresses; no PE HIGHLOW; undefined-symbol and decoded-memory-operand proof'}
                            if original_data else {}),
