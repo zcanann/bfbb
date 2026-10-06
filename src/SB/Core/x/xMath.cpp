@@ -323,8 +323,13 @@ void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 endx, F32 maxv)
     {
         a *= -1.0f;
     }
+#if defined(XBOX)
+    oldv = v;
+    dv = a * dt;
+#else
     dv = a * dt;
     oldv = v;
+#endif
     newv = oldv + dv;
 
     if ((F32)xMathAbs(newv) <= maxv)

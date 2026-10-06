@@ -188,3 +188,25 @@ identical. This is a partial comparison, with no exact-function or relink claim.
 Ignored evidence: `build/xbox274/{compile.py,compare.py,consumers,production,
 verify_final.py,final-verification.json,gc/proof.json}`; the original/source
 entry comparison is also preserved in `build/xbox268/inventory-disasm.txt`.
+
+## End-position old-velocity acquisition
+
+A separate original instruction boundary loads the old velocity before
+computing and spilling `dv = a * dt`. The prior source did those two assignments
+in reverse order, forcing a spill/reload before forming the new velocity.
+For Xbox only, the existing `oldv = v` now precedes `dv = a * dt`. There are no
+intervening calls or writes to the referenced velocity, and all expressions,
+branch predicates, output stores and non-Xbox ordering remain unchanged.
+
+This single acquisition correction improves the endpoint routine from
+89.083336% to 91.265625%; actual source size falls from 568 to 565 bytes versus
+the original 574. It does not resolve the remaining arithmetic and temporary
+choices, which stay visible in the normal comparison. Every other function
+record, exact count and denominator/completion field is unchanged apart from
+generated COFF offsets. Both regional production reports pass, and all 33
+ordered GameCube consumer sections remain byte-identical. Existing genuine
+literal relocation expectations remain valid without a profile change.
+
+Ignored evidence: `build/xbox276/{compile.py,compare.py,consumers,production,
+verify_final.py,final-verification.json,gc/proof.json}`. This remains a partial
+source comparison with no original TU completion or retail-link claim.
