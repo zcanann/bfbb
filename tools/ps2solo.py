@@ -65,6 +65,7 @@ def main() -> int:
     ap.add_argument('--all', action='store_true', help='list matching functions / lines too')
     ap.add_argument('--keep', action='store_true', help='keep the temporary directory')
     ap.add_argument('--inline', default=None, help='override the profile -inline value (e.g. auto,deferred,bottomup)')
+    ap.add_argument('--flag', action='append', default=[], help='extra compiler argument appended to the profile flags; repeatable (e.g. --flag=-str --flag=reuse,pool,readonly)')
     args = ap.parse_args()
 
     base = baseline(args.version, args.orig_dir, args.rebase)
@@ -90,12 +91,12 @@ def main() -> int:
         script = ('import sys; from pathlib import Path; sys.path.insert(0, "tools"); '
                   'import platforms.ps2_source as ps; p = ps.load_profile(); '
                   'f = list(p["flags"]); i = f.index("-inline"); '
-                  'f[i + 1] = f[i + 1] if sys.argv[4] == "-" else sys.argv[4]; p["flags"] = f; ps.load_profile = lambda: p; '
+                  'f[i + 1] = f[i + 1] if sys.argv[4] == "-" else sys.argv[4]; f += sys.argv[5:]; p["flags"] = f; [u.pop("inline", None) for u in p["units"] if sys.argv[4] != "-"]; ps.load_profile = lambda: p; '
                   'r = ps.compile_units(Path(sys.argv[1]), Path(sys.argv[2]), Path(sys.argv[3])); '
                   'sys.exit(0 if r else 3)')
         env = dict(os.environ, MSYS_NO_PATHCONV='1')
         proc = subprocess.run(['wsl.exe', '-d', 'Ubuntu', '--cd', wsl_path(ROOT), 'python3', '-c', script,
-                               wsl_path(tmp), args.compilers, args.wibo, args.inline or '-'],
+                               wsl_path(tmp), args.compilers, args.wibo, args.inline or '-', *args.flag],
                               capture_output=True, text=True, env=env)
         if proc.returncode != 0:
             print('COMPILE FAILED (%d)' % proc.returncode)

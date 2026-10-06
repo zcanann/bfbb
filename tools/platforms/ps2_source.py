@@ -333,7 +333,11 @@ def compile_units(output: Path, compilers: Path, wibo: Path) -> list[dict]:
         target = output / unit['object']
         target.parent.mkdir(parents=True, exist_ok=True)
         target.unlink(missing_ok=True)
-        command = [str(wibo.resolve()), '-C', str(ROOT), str(compiler.resolve()), *profile['flags'],
+        flags = list(profile['flags'])
+        if 'inline' in unit:
+            # A unit-level inlining mode where the original evidently differed.
+            flags[flags.index('-inline') + 1] = unit['inline']
+        command = [str(wibo.resolve()), '-C', str(ROOT), str(compiler.resolve()), *flags,
                    '-D' + define + '=1']
         for include in ('include', 'src/SB/Core/p2', 'src/SB/Core/x', 'src/SB/Game'):
             command.extend(['-i', str(ROOT / include)])
