@@ -47,11 +47,17 @@ void zVolumeInit()
 
     nvols = xSTAssetCountByType('VOLU');
 
+#if defined(PS2)
+    if (nvols)
+    {
+        vols = (zVolume*)xMemAllocSize(nvols * sizeof(zVolume));
+#else
     U32 count = nvols;
 
     if (count)
     {
         vols = (zVolume*)xMemAllocSize(count * sizeof(zVolume));
+#endif
 
         for (i = 0; i < nvols; i++)
         {
