@@ -21,6 +21,7 @@ inline float std::expf(float x)
 }
 #endif
 
+#if !defined(PS2)
 inline F32 xrmod(F32 ang)
 {
     F32 frac = 0.15915494f * ang;
@@ -36,6 +37,7 @@ inline F32 xrmod(F32 ang)
 
     return ang;
 }
+#endif
 
 inline xVec3& xVec3::operator/=(F32 f)
 {

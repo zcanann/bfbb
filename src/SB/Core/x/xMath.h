@@ -99,7 +99,25 @@ F32 xSCurve(F32 t, F32 softness);
 F32 xSCurve(F32 t);
 void xsqrtfast(F32& dst, F32 num);
 
+#if defined(PS2)
+inline F32 xrmod(F32 ang)
+{
+    F32 frac = 0.15915494f * ang;
+
+    if (frac < 0.0f)
+    {
+        return (frac - std::ceilf(frac) + 1.0f) * 6.2831855f;
+    }
+    else if (frac >= 1.0f)
+    {
+        return (frac - std::floorf(frac)) * 6.2831855f;
+    }
+
+    return ang;
+}
+#else
 F32 xrmod(F32 ang);
+#endif
 
 template <class T> T range_limit(T v, T minv, T maxv);
 
