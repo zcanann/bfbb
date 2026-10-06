@@ -337,3 +337,28 @@ All four ordered GameCube iMath3 allocated sections remain byte-identical.
 Ignored evidence: `build/xbox284/{bounds-disasm.txt,compile.py,compare.py,
 input-owner-only-consumers,consumers,production,verify_final.py,
 final-verification.json,gc/proof.json}`. No whole-TU or retail-relink claim.
+
+## Scalar Euler product ownership
+
+The Xbox scalar Euler reconstruction now follows the original x87 expression
+trees. The right vector reuses `sin(roll) * sin(pitch)` and the up vector reuses
+`cos(roll) * sin(pitch)`; the prior source instead shared yaw/pitch products.
+The original computes the second product only after writing the right vector,
+and uses direct subtraction for `right.z` and `up.x`. The Xbox branch restores
+those ordinary expressions and lifetimes. Other platforms retain their prior
+source, and the six trigonometric operations and matrix write order are unchanged.
+
+Both full Xbox reports improve scalar Euler from **35.157894% to 99.649124%**.
+The actual `xMath3.obj` body is now **152 bytes**, equal to the original extent.
+Four x87 operand bytes in the first component's sum remain different; all other
+148 bytes agree without relocation normalization. Writing the observed sum order
+explicitly is compiler-neutral, so no further operand controls were pursued.
+This remains a partial function comparison, not an exact match or completed TU.
+
+All other function records across seven real consumer builds remain unchanged.
+Both full reports preserve **14148 exact bytes / 78 exact functions**, all prior
+units, denominators and completion fields. Seven GameCube consumers retain all
+33 ordered allocated sections byte-for-byte. No profile, compiler flag, runtime
+anchor, report rule or SDK layout changed. Private evidence is in
+`build/xbox286/`: original/final disassemblies, `verify_final.py`, production
+reports, and the GC section comparison.

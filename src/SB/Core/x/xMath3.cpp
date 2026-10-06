@@ -319,6 +319,17 @@ void xMat3x3Euler(xMat3x3* m, F32 yaw, F32 pitch, F32 roll)
     F32 icp = icos(pitch);
     F32 isr = isin(roll);
     F32 icr = icos(roll);
+#if defined(XBOX)
+    F32 is_prod = isr * isp;
+
+    m->right.x = (is_prod * isy) + (icy * icr);
+    m->right.y = icp * isr;
+    m->right.z = (is_prod * icy) - (isy * icr);
+    F32 ic_prod = icr * isp;
+    m->up.x = (ic_prod * isy) - (icy * isr);
+    m->up.y = icp * icr;
+    m->up.z = (isy * isr) + (ic_prod * icy);
+#else
     F32 is_prod = icy * isp;
     F32 ic_prod = isy * isp;
 
@@ -328,6 +339,7 @@ void xMat3x3Euler(xMat3x3* m, F32 yaw, F32 pitch, F32 roll)
     m->up.x = (-icy * isr) + (icr * ic_prod);
     m->up.y = icp * icr;
     m->up.z = (isy * isr) + (icr * is_prod);
+#endif
     m->at.x = isy * icp;
     m->at.y = -isp;
     m->at.z = icy * icp;
