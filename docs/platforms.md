@@ -78,7 +78,7 @@ checked, and the standard objdiff parser accepts the result.
 | SLUS-20680 | 2,978,560 | 224,484 |
 | SLES-51968 | 2,979,712 | 224,176 |
 | SLES-51970 | 2,976,512 | 224,072 |
-| SLES-53623 | 2,979,968 | 42,484 |
+| SLES-53623 | 2,979,968 | 44,104 |
 | XBOX-US | 1,798,760 | 14,148 |
 | XBOX-EU | 1,798,760 | 14,148 |
 
@@ -125,7 +125,7 @@ The narrower function-only baselines currently contain:
 | USA | 5,391 | 2,107,460 | 1,489 functions / 224,484 bytes |
 | Europe/Australia | 5,392 | 2,108,700 | 1,488 functions / 224,176 bytes |
 | Germany | 5,394 | 2,105,512 | 1,487 functions / 224,072 bytes |
-| France (reviewed and corroborated bounds) | 622 | 225,804 | 228 functions / 42,484 bytes |
+| France (reviewed and corroborated bounds) | 632 | 229,352 | 231 functions / 44,104 bytes |
 
 The `address-anchors.json` registries also recover over 2,500 named data addresses
 and 628 function declarations in each debug-bearing version. Addresses do not
@@ -152,8 +152,8 @@ load-range validation. Targets retain the exact original instructions. The `xBas
 other target objects are not relocation-restored link inputs. Code outside those function ranges, remaining data,
 and padding remain unclassified; the whole mixed load segment is not counted as
 code. France is stripped; independently reviewed and machine-corroborated
-extents establish its 622-function, 225,804-byte function-only baseline. Its
-42,484 matched code bytes describe that subset. The published code denominator
+extents establish its 632-function, 229,352-byte function-only baseline. Its
+44,104 matched code bytes describe that subset. The published code denominator
 is the full recovered CPU text region, not this function-only subset.
 
 Both Xbox releases have identical payloads in all 13 sections; their 532 differing
@@ -602,3 +602,5 @@ Original debug-scope [string scan counters and staged hexadecimal conversion](PS
 The original PS2 signed angle-clamp return flow adds one 132-byte standard code match per version. Its runtime call destination remains unresolved, so this does not add a raw-byte reconstruction or retail-link claim. Xbox speed-limited acceleration improves from 92.24% to 98.12% through the original arithmetic order; its remaining spill difference stays unmatched.
 
 The PS2 volume initializer uses its original U16 count directly, adding 224 code-matched and independently reconstructed bytes per debug release. The existing French volume subset is unchanged. Xbox particle aging adds another 49 literal byte-matched bytes through the original root-acquisition order.
+
+[French bounds, particle initialization, and update-culling coverage](PS2_FRANCE_BOUNDS_CULL.md) adds ten independently corroborated functions / 3,548 known bytes. The three new update-cull comparisons add 1,620 standard matched bytes; all prior function scores and full executable denominators remain unchanged. The other newly covered bodies retain their measured partial scores.
