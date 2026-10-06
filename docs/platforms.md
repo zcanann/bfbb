@@ -78,7 +78,7 @@ checked, and the standard objdiff parser accepts the result.
 | SLUS-20680 | 2,978,560 | 226,136 |
 | SLES-51968 | 2,979,712 | 225,828 |
 | SLES-51970 | 2,976,512 | 225,724 |
-| SLES-53623 | 2,979,968 | 44,988 |
+| SLES-53623 | 2,979,968 | 45,888 |
 | XBOX-US | 1,798,760 | 14,148 |
 | XBOX-EU | 1,798,760 | 14,148 |
 
@@ -125,7 +125,9 @@ The narrower function-only baselines currently contain:
 | USA | 5,391 | 2,107,460 | 1,494 functions / 226,136 bytes |
 | Europe/Australia | 5,392 | 2,108,700 | 1,493 functions / 225,828 bytes |
 | Germany | 5,394 | 2,105,512 | 1,492 functions / 225,724 bytes |
-| France (reviewed and corroborated bounds) | 641 | 231,248 | 237 functions / 44,988 bytes |
+| France (reviewed and corroborated bounds) | 649 | 233,604 | 241 functions / 45,888 bytes |
+
+The [complete French utility comparison](PS2_FRANCE_UTILITY.md) adds eight original extents / 2,356 bytes and exposes four exact source functions / 900 bytes. All eleven utility functions, including partials, are reported.
 
 The original [PS2 inline atan2 wrapper](PS2_ATAN2_INLINE.md) adds 1,336 matched bytes and four functions per debug version, plus 672 bytes and two functions in France. Every prior exact match remains; the documented SB2 partial-score decrease restores its original clamp calls.
 
@@ -154,8 +156,8 @@ load-range validation. Targets retain the exact original instructions. The `xBas
 other target objects are not relocation-restored link inputs. Code outside those function ranges, remaining data,
 and padding remain unclassified; the whole mixed load segment is not counted as
 code. France is stripped; independently reviewed and machine-corroborated
-extents establish its 641-function, 231,248-byte function-only baseline. Its
-44,988 matched code bytes describe that subset. The published code denominator
+extents establish its 649-function, 233,604-byte function-only baseline. Its
+45,888 matched code bytes describe that subset. The published code denominator
 is the full recovered CPU text region, not this function-only subset.
 
 Both Xbox releases have identical payloads in all 13 sections; their 532 differing
@@ -608,6 +610,6 @@ The PS2 volume initializer uses its original U16 count directly, adding 224 code
 
 [French bounds, particle initialization, and update-culling coverage](PS2_FRANCE_BOUNDS_CULL.md) adds ten independently corroborated functions / 3,548 known bytes. The three new update-cull comparisons add 1,620 standard matched bytes; all prior function scores and full executable denominators remain unchanged. The other newly covered bodies retain their measured partial scores.
 
-The original PS2 volume event callback now adds another 316 matched and independently reconstructed bytes per debug version, bringing zVolume to four of five matched functions. Xbox box-sphere intersection improves to 98.82%, and endpoint acceleration to 93.70%; both remain partial comparisons.
+The original PS2 volume event callback now adds another 316 matched and independently reconstructed bytes per debug version, bringing zVolume to four of five matched functions. Xbox box-sphere intersection improves to 98.82%, and endpoint acceleration to 95.05%; both remain partial comparisons.
 
 [Complete French scalar-math comparison](PS2_FRANCE_SCALAR_MATH.md) adds nine independently corroborated functions / 1,896 known bytes and four standard matches / 212 bytes. All eighteen original members are represented, including the present but unmatched atof wrapper; the full executable denominator remains unchanged.
