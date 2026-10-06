@@ -263,7 +263,11 @@ F32 xDangleClamp(F32 a)
 
     if (rem < -PI)
     {
+#if defined(PS2)
+        rem += rad360;
+#else
         return rem + rad360;
+#endif
     }
 
     return rem;

@@ -50,3 +50,32 @@ or raw540-byte claim. Original instruction windows and whole-body comparison
 are preserved under build/near255/jaw-alignment.json; final regional reports,
 raw/raw-proof.json, gc/proof.json and proof.json are under build/near257.
 No compiler, flags, shared headers, profiles or scoring changes accompany it.
+
+
+## Signed angle clamp return flow
+
+The original 132-byte xDangleClamp subtracts a full turn and returns early for
+positive overflow, but adds a turn and falls through to the final return for
+negative overflow. The PS2 source now updates the existing remainder in that
+last branch instead of returning a separate expression. Comparisons, constants,
+arithmetic and the xfmod call are unchanged. GameCube and Xbox keep their
+previous branch through the platform conditional.
+
+All four actual whole-source builds improve DangleClamp from 98.030304 to 100
+percent under standard objdiff, adding 132 code bytes and one function each.
+The three debug profiles retain all 18 functions and now match 9 / 748 bytes;
+the existing French nine-member profile matches 5 / 536 bytes. Every other
+function record is unchanged. Only instruction words at offsets 92 and 108
+change; every other allocated section and every relocation record is identical.
+All four compiled source objects are identical.
+
+The remaining raw difference is the unresolved xfmod call field at offset 20,
+whose original destination is 1133296 in all four releases. All other 128 bytes
+match the original directly. This is a standard code-match gain, without a
+raw reconstruction or retail-link claim. Actual GameCube compilation preserves
+all three ordered allocated sections. The pinned Xbox compiler produces the
+same nonblank preprocessed lines before and after the PS2-only change.
+
+Private evidence is under build/near265: proof.json, baseline and return regional
+reports, alignment.json, gc/proof.json and xbox/proof.json. No compiler, flags,
+shared declarations, target metadata or scoring changes accompany this fix.
