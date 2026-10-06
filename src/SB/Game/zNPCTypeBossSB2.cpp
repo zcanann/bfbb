@@ -129,9 +129,9 @@ namespace
         void init(u32 values, const void* curve, u32 nodes, const char*, const char**,
                   const tweak_callback*, void*);
 
-        void eval_linear(F32 t, F32* value);
+        inline void eval_linear(F32 t, F32* value);
         void find_active_node(F32 t);
-        void eval_smooth(F32 t, F32* value);
+        inline void eval_smooth(F32 t, F32* value);
         F32 clamp_t(F32 t) const;
         F32 end_t() const;
         inode* get_node(u32 index) const;
@@ -3205,11 +3205,13 @@ namespace
 
     void response_curve::find_active_node(F32 t)
     {
-        u32 stride = values * sizeof(F32) + sizeof(node);
+        U32 stride = values * sizeof(F32) + sizeof(node);
         U8* it = (U8*)curve + stride * active_node;
 
         while (true)
         {
+            inode& next = *(inode*)(it + stride);
+
             if (t < ((inode*)it)->t)
             {
                 it -= stride;
@@ -3217,7 +3219,7 @@ namespace
                 continue;
             }
 
-            if (t > ((inode*)(it + stride))->t)
+            if (t > next.t)
             {
                 it += stride;
                 active_node++;

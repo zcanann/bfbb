@@ -1614,8 +1614,8 @@ static U32 LandFastCheck(xAnimTransition*, xAnimSingle*, void*)
 
 static U32 LandNoTrackWalkCheck(xAnimTransition*, xAnimSingle*, void*)
 {
-    return globals.player.JumpState == 0 && globals.player.Speed == 1 &&
-           !globals.player.SlideTrackLand;
+    return globals.player.JumpState == 0 && (globals.player.Speed == 1 &&
+           !globals.player.SlideTrackLand);
 }
 
 static U32 LandSlipIdleCheck(xAnimTransition*, xAnimSingle*, void*)
@@ -1630,20 +1630,20 @@ static U32 LandSlipRunCheck(xAnimTransition*, xAnimSingle*, void*)
 
 static U32 LandNoTrackFastCheck(xAnimTransition*, xAnimSingle*, void*)
 {
-    return globals.player.JumpState == 0 && globals.player.Speed >= 2 &&
-           !globals.player.SlideTrackLand;
+    return globals.player.JumpState == 0 && (globals.player.Speed >= 2 &&
+           !globals.player.SlideTrackLand);
 }
 
 static U32 LandNoTrackSlipRunCheck(xAnimTransition*, xAnimSingle*, void*)
 {
-    return globals.player.JumpState == 0 && globals.player.Speed >= 1 &&
-           !globals.player.SlideTrackLand && surfSlickRatio;
+    return globals.player.JumpState == 0 && (globals.player.Speed >= 1 &&
+           !globals.player.SlideTrackLand) && surfSlickRatio;
 }
 
 static U32 LandNoTrackSlipIdleCheck(xAnimTransition*, xAnimSingle*, void*)
 {
-    return globals.player.JumpState == 0 && globals.player.Speed == 0 &&
-           !globals.player.SlideTrackLand && surfSlickRatio;
+    return globals.player.JumpState == 0 && (globals.player.Speed == 0 &&
+           !globals.player.SlideTrackLand) && surfSlickRatio;
 }
 
 static U32 LandCallback(xAnimTransition*, xAnimSingle*, void*)
@@ -1940,7 +1940,11 @@ static U32 GooDeathCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
     globals.player.DamageTimer = 10.0f;
     zGooStopTide();
     sPlayerDiedLastTime = 1;
+#if !defined(PS2)
+    // All PS2 builds return straight after setting sPlayerDiedLastTime; the
+    // control lock-out on goo death only exists in the GameCube build.
     zEntPlayerControlOff(CONTROL_OWNER_GLOBAL);
+#endif
     return false;
 }
 
@@ -2008,31 +2012,31 @@ static U32 Defeated01Check(xAnimTransition* tran, xAnimSingle* anim, void* param
 {
     // it seems like this is a useless but necessary function call
     zGameExtras_CheatFlags();
-    return globals.player.Health == 0 && player_dead_anim % tran->UserFlags == 0;
+    return !globals.player.Health && player_dead_anim % tran->UserFlags == 0;
 }
 
 static U32 Defeated02Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     zGameExtras_CheatFlags();
-    return globals.player.Health == 0 && player_dead_anim % tran->UserFlags + 1 == 2;
+    return !globals.player.Health && player_dead_anim % tran->UserFlags + 1 == 2;
 }
 
 static U32 Defeated03Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     zGameExtras_CheatFlags();
-    return globals.player.Health == 0 && player_dead_anim % tran->UserFlags + 1 == 3;
+    return !globals.player.Health && player_dead_anim % tran->UserFlags + 1 == 3;
 }
 
 static U32 Defeated04Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     zGameExtras_CheatFlags();
-    return globals.player.Health == 0 && player_dead_anim % tran->UserFlags + 1 == 4;
+    return !globals.player.Health && player_dead_anim % tran->UserFlags + 1 == 4;
 }
 
 static U32 Defeated05Check(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     zGameExtras_CheatFlags();
-    return globals.player.Health == 0 && player_dead_anim % tran->UserFlags + 1 == 5;
+    return !globals.player.Health && player_dead_anim % tran->UserFlags + 1 == 5;
 }
 
 // Equivalent: sda relocation meme
@@ -2195,8 +2199,8 @@ static U32 SpatulaGrabStopCB(xAnimTransition*, xAnimSingle*, void* data)
 
 static U32 LCopterCheck(xAnimTransition*, xAnimSingle*, void*)
 {
-    return (globals.player.JumpState && sLassoInfo->canCopter && !globals.player.ControlOff &&
-            (globals.pad0->pressed & XPAD_BUTTON_X));
+    return (globals.player.JumpState && sLassoInfo->canCopter && (!globals.player.ControlOff &&
+            (globals.pad0->pressed & XPAD_BUTTON_X)));
 }
 
 // Equivalent: sda relocation scheduling
@@ -2525,12 +2529,12 @@ static U32 TongueDblSpinCB(xAnimTransition*, xAnimSingle* anim, void*)
 
 static U32 FallCheck(xAnimTransition*, xAnimSingle* anim, void*)
 {
-    return !((anim && anim->State &&
-              (strcmp(anim->State->Name, "LCopter01") == 0 ||
-               strcmp(anim->State->Name, "LCopterHeadUp01") == 0)) &&
-             (globals.player.ControlOff == 0 && (globals.pad0->on & XPAD_BUTTON_X) &&
-              sLassoInfo->copterTime > 0.0f)) &&
-           globals.player.JumpState != 0 && globals.player.JumpState != 1;
+    return !(anim && anim->State &&
+             (strcmp(anim->State->Name, "LCopter01") == 0 ||
+              strcmp(anim->State->Name, "LCopterHeadUp01") == 0) &&
+             (!globals.player.ControlOff && (globals.pad0->on & XPAD_BUTTON_X)) &&
+             sLassoInfo->copterTime > 0.0f) &&
+           !(globals.player.JumpState == 0 || globals.player.JumpState == 1);
 }
 
 static U32 BoulderRollMoveCheck(xAnimTransition*, xAnimSingle*, void*)
@@ -2737,12 +2741,12 @@ static U32 NoslideTrackCB(xAnimTransition*, xAnimSingle*, void*)
 
 static U32 NoslideTrackCheck(xAnimTransition*, xAnimSingle*, void*)
 {
-    return (globals.player.SlideTrackSliding & 1) == 0 && globals.player.JumpState == 0;
+    return !(globals.player.SlideTrackSliding & 1) && globals.player.JumpState == 0;
 }
 
 static U32 TrackFallCheck(xAnimTransition*, xAnimSingle*, void*)
 {
-    return (globals.player.SlideTrackSliding & 1) == 0 && globals.player.JumpState != 0;
+    return !(globals.player.SlideTrackSliding & 1) && globals.player.JumpState != 0;
 }
 
 static U32 TrackFallCB(xAnimTransition*, xAnimSingle*, void*)
@@ -2754,8 +2758,8 @@ static U32 TrackFallCB(xAnimTransition*, xAnimSingle*, void*)
 
 static U32 TrackPrefallJumpCheck(xAnimTransition*, xAnimSingle*, void*)
 {
-    return globals.player.CanJump && !globals.player.ControlOff &&
-           globals.pad0->pressed & XPAD_BUTTON_X && tslide_inair_tmr != 0.0f &&
+    return globals.player.CanJump && (!globals.player.ControlOff &&
+           globals.pad0->pressed & XPAD_BUTTON_X) && tslide_inair_tmr != 0.0f &&
            tslide_inair_tmr < 0.25f;
 }
 
@@ -3258,32 +3262,32 @@ static U32 LassoReyankCheck(xAnimTransition*, xAnimSingle*, void*)
 
 static U32 LassoFailIdleSlipCheck(xAnimTransition* tran, xAnimSingle* anim, void* data)
 {
-    return !sLassoInfo->target && IdleSlipCheck(tran, anim, data);
+    return sLassoInfo->target == NULL && IdleSlipCheck(tran, anim, data);
 }
 
 static U32 LassoFailIdleCheck(xAnimTransition* tran, xAnimSingle* anim, void* data)
 {
-    return !sLassoInfo->target && IdleCheck(tran, anim, data);
+    return sLassoInfo->target == NULL && IdleCheck(tran, anim, data);
 }
 
 static U32 LassoFailWalkCheck(xAnimTransition* tran, xAnimSingle* anim, void* data)
 {
-    return !sLassoInfo->target && WalkCheck(tran, anim, data);
+    return sLassoInfo->target == NULL && WalkCheck(tran, anim, data);
 }
 
 static U32 LassoFailRunCheck(xAnimTransition* tran, xAnimSingle* anim, void* data)
 {
-    return !sLassoInfo->target && RunAnyCheck(tran, anim, data);
+    return sLassoInfo->target == NULL && RunAnyCheck(tran, anim, data);
 }
 
 static U32 LassoFailRunOutOfWorldCheck(xAnimTransition* tran, xAnimSingle* anim, void* data)
 {
-    return !sLassoInfo->target && RunOutOfWorldCheck(tran, anim, data);
+    return sLassoInfo->target == NULL && RunOutOfWorldCheck(tran, anim, data);
 }
 
 static U32 LassoFailRunSlipCheck(xAnimTransition* tran, xAnimSingle* anim, void* data)
 {
-    return !sLassoInfo->target && RunSlipCheck(tran, anim, data);
+    return sLassoInfo->target == NULL && RunSlipCheck(tran, anim, data);
 }
 
 // Equivalent: sda relocation scheduling
@@ -3514,7 +3518,7 @@ static U32 LassoSwingReleaseCheck(xAnimTransition*, xAnimSingle*, void*)
 {
     return (!globals.player.ControlOff && (globals.pad0->pressed & XPAD_BUTTON_X) &&
             sSwingTimeElapsed > 0.5f) ||
-           sLassoInfo->swingTarget == NULL || !(sLassoInfo->swingTarget->flags & 1);
+           !sLassoInfo->swingTarget || !(sLassoInfo->swingTarget->flags & 1);
 }
 
 static U32 LassoSwingBeginCB(xAnimTransition*, xAnimSingle*, void* object)
@@ -7941,9 +7945,7 @@ static void zEntPlayerUpdateModelSB()
 
 void zEntPlayerUpdateModel()
 {
-    zPlayerGlobals* pg = &globals.player;
-
-    if (pg->ent.model == pg->model_spongebob)
+    if (globals.player.ent.model == globals.player.model_spongebob)
     {
         zEntPlayerUpdateModelSB();
     }
@@ -8628,13 +8630,11 @@ void zEntPlayer_GiveHealth(S32 quantity)
         return;
     }
 
-    U32 sum = globals.player.Health + quantity;
-    U32 maxHealth = globals.player.MaxHealth;
-    globals.player.Health = sum;
+    globals.player.Health += quantity;
 
-    if (sum > maxHealth)
+    if (globals.player.Health > globals.player.MaxHealth)
     {
-        globals.player.Health = maxHealth;
+        globals.player.Health = globals.player.MaxHealth;
     }
 }
 

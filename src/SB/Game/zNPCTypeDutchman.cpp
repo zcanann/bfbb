@@ -2787,7 +2787,7 @@ namespace
     }
 
     RxObjSpace3DVertex* render_beam(RxObjSpace3DVertex* vert, const zNPCDutchman::beam_info& beam,
-                                    unsigned long which, U8 alpha)
+                                    size_t which, U8 alpha)
     {
         const xVec3& start_loc = beam.start_loc;
         const xVec3& end_loc = beam.end[which].loc;

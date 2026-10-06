@@ -722,6 +722,8 @@ S32 zNPCCommon::NPCMessage(NPCMsg* mail)
         }
         break;
     }
+    case NPC_MID_DAMAGE:
+        break;
     case NPC_MID_RESPAWN:
     {
         xVec3Copy(xEntGetPos(this), &mail->spawning.pos_spawn);
@@ -738,8 +740,6 @@ S32 zNPCCommon::NPCMessage(NPCMsg* mail)
         mail->spawning.spawnSuccess = 1;
         break;
     }
-    case NPC_MID_DAMAGE:
-        break;
     case NPC_MID_DEV_ANIMCYCLE:
         if (this->psy_instinct && this->psy_instinct->HasGoal(NPC_GOAL_DEVANIMSPIN))
         {

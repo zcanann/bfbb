@@ -1010,10 +1010,10 @@ U32 zNPCRobot::AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal)
 
     switch (gid)
     {
-    case NPC_GOAL_IDLE:
-    case NPC_GOAL_WAITING:
     case NPC_GOAL_NOMANLAND:
     case NPC_GOAL_LIMBO:
+    case NPC_GOAL_IDLE:
+    case NPC_GOAL_WAITING:
     case NPC_GOAL_ALERT:
         if (gspot == NPC_GSPOT_START)
         {
@@ -1037,9 +1037,9 @@ U32 zNPCRobot::AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal)
         idx = 3;
         break;
     case NPC_GOAL_WANDER:
-    case NPC_GOAL_EVADE:
-    case NPC_GOAL_GOHOME:
     case NPC_GOAL_CHASE:
+    case NPC_GOAL_GOHOME:
+    case NPC_GOAL_EVADE:
         idx = 3;
         break;
     case NPC_GOAL_FIDGET:
@@ -1572,13 +1572,13 @@ S32 zNPCRobot::IsDying()
     {
     case NPC_GOAL_DAMAGE:
     case NPC_GOAL_KNOCK:
-    case NPC_GOAL_R54:
     case NPC_GOAL_BASHED:
     case NPC_GOAL_R56:
+    case NPC_GOAL_R54:
         dying = 2;
         break;
-    case NPC_GOAL_LIMBO:
     case NPC_GOAL_AFTERLIFE:
+    case NPC_GOAL_LIMBO:
         dying = 1;
         break;
     }
@@ -4735,8 +4735,8 @@ void zNPCTubelet::LassoNotify(en_LASSO_EVENT event)
     case LASS_EVNT_BEGIN:
         tubestat = TUBE_STAT_LASSO;
         break;
-    case LASS_EVNT_ENDED:
     case LASS_EVNT_ABORT:
+    case LASS_EVNT_ENDED:
         if ((lass->stage == LASS_STAT_PENDING || lass->stage == LASS_STAT_DONE) &&
             tubestat == TUBE_STAT_LASSO && hitpoints >= 1)
         {
@@ -5041,8 +5041,8 @@ void zNPCTubeSlave::SelfSetup()
 
 U32 zNPCTubeSlave::AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal)
 {
-    U32 hashid = 0;
     S32 idx = -1;
+    U32 da_anim = 0;
 
     switch (gid)
     {
@@ -5065,16 +5065,16 @@ U32 zNPCTubeSlave::AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal)
         idx = 3;
         break;
     default:
-        hashid = zNPCRobot::AnimPick(gid, gspot, rawgoal);
+        da_anim = zNPCRobot::AnimPick(gid, gspot, rawgoal);
         break;
     }
 
     if (idx >= 0)
     {
-        hashid = g_hash_roboanim[idx];
+        da_anim = g_hash_roboanim[idx];
     }
 
-    return hashid;
+    return da_anim;
 }
 
 void zNPCTubeSlave::SetMaster(zNPCTubelet* pete, en_tubespot spot)

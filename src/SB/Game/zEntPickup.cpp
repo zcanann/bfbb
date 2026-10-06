@@ -17,6 +17,9 @@
 #include "xstransvc.h"
 #include "iAnim.h"
 #include "iModel.h"
+#if defined(PS2)
+#include "xLightKit.h"
+#endif
 
 #include <string.h>
 #include <stdio.h>
@@ -186,6 +189,12 @@ static _tagKeyShake sKeyShake[4] = {};
 static zEntPickup* rewardPickups[REWARD_TYPE_COUNT][REWARD_PICKUP_COUNT];
 static RewardList sRewards[REWARD_COUNT];
 static zLODTable sRewardLOD[REWARD_TYPE_COUNT];
+#if defined(PS2)
+static RpLight* sPickupDirectionalLight;
+static RpLight* sPickupAmbientLight;
+static xLightKit sPickupLightKit;
+static xLightKitLight sPickupLightKitLight[2];
+#endif
 static xEntFrame gPickupFrame;
 static xEntCollis gPickupCollis;
 static zEntPickup* sSpatulaAlreadyGiven = NULL;
@@ -257,6 +266,35 @@ U32 isRewardPickup(zEntPickup* ent)
 
 void zEntPickup_Startup()
 {
+#if defined(PS2)
+    static RwRGBAReal black = { 0.0f, 0.0f, 0.0f, 0.0f };
+    static RwRGBAReal white = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+    if (sPickupDirectionalLight == NULL)
+    {
+        sPickupDirectionalLight = RpLightCreate(rpLIGHTDIRECTIONAL);
+        RpLightSetColor(sPickupDirectionalLight, &black);
+        RwFrame* frame = RwFrameCreate();
+        RpLightSetFrame(sPickupDirectionalLight, frame);
+
+        sPickupAmbientLight = RpLightCreate(rpLIGHTAMBIENT);
+        RpLightSetColor(sPickupAmbientLight, &white);
+
+        sPickupLightKit.tagID = 'TIKL';
+        sPickupLightKit.groupID = 0;
+        sPickupLightKit.lightCount = 2;
+        sPickupLightKit.lightList = sPickupLightKitLight;
+
+        sPickupLightKit.lightList[0].type = 1;
+        sPickupLightKit.lightList[0].color = white;
+        sPickupLightKit.lightList[0].platLight = sPickupAmbientLight;
+
+        sPickupLightKit.lightList[1].type = 2;
+        sPickupLightKit.lightList[1].color = black;
+        sPickupLightKit.lightList[1].platLight = sPickupDirectionalLight;
+        memcpy(sPickupLightKit.lightList[1].matrix, &g_I3, sizeof(g_I3));
+    }
+#endif
 }
 
 void zEntPickupInit(void* ent, void* asset)

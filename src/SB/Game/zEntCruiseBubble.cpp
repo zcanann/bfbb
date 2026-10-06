@@ -46,6 +46,28 @@ bool xSphereHitsBound(const xSphere& o, const xBound& b);
 void xQuickCullForSphere(xQCData* q, const xSphere* s);
 void xCameraRotate(xCamera* cam, const xVec3& at, F32 roll, F32 time, F32 accel, F32 decl);
 
+// basic_rect helpers are header inlines in retail (PS2 inlines them into show_hud;
+// GC emits them weak); they belong in xMath2.h.
+template <class T> inline basic_rect<T>& basic_rect<T>::set_size(T w, T h)
+{
+    this->w = w;
+    this->h = h;
+    return *this;
+}
+
+template <class T> inline basic_rect<T>& basic_rect<T>::set_size(T s)
+{
+    this->h = s;
+    this->w = s;
+    return *this;
+}
+
+template <class T> inline void basic_rect<T>::center(T x, T y)
+{
+    this->x = x - 0.5f * this->w;
+    this->y = y - 0.5f * this->h;
+}
+
 // These structs were used in deadstripped functions.
 // This function is here to force the symbols to be linked.
 //
@@ -4348,25 +4370,6 @@ void xQuickCullForSphere(xQCData* q, const xSphere* s)
     xQuickCullForSphere(&xqc_def_ctrl, q, s);
 }
 
-template <class T> basic_rect<T>& basic_rect<T>::set_size(T w, T h)
-{
-    this->w = w;
-    this->h = h;
-    return *this;
-}
-
-template <class T> basic_rect<T>& basic_rect<T>::set_size(T s)
-{
-    this->h = s;
-    this->w = s;
-    return *this;
-}
-
-template <class T> void basic_rect<T>::center(T x, T y)
-{
-    this->x = x - 0.5f * this->w;
-    this->y = y - 0.5f * this->h;
-}
 
 namespace auto_tweak
 {
