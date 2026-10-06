@@ -250,3 +250,30 @@ GameCube allocated sections remain byte-identical.
 Ignored evidence is under build/xbox240: header-owner-proof.json,
 final-verification.json, gc/proof.json, and both production PE/MAP/extents/reports.
 The earlier build/xbox238 evidence is preserved separately.
+
+## KillSlow root acquisition
+
+The original `xParCmdKillSlow_Update` first reads its command, computes the
+speed threshold and tests `kill_less_than`, then acquires the group's root
+pointer for the two particle loops. The shared source acquired that pointer
+before reading the command. Both loop bodies already matched the original;
+the differing entry order also changed the reused stack argument slot.
+
+For Xbox only, the existing root-pointer initialization now follows the speed
+threshold calculation. No intervening calls or writes occur, and predicates,
+loop bodies, field stores and non-Xbox ordering are unchanged. This single
+original-supported control improves 93.53125% to 100%.
+
+Both complete production reports add 164 exact bytes and one function, reaching
+14,099 bytes / 77 functions from this branch's prior baseline. The actual
+164-byte source extent is independently closed and owned by `xParCmd.obj`.
+Every byte equals both authenticated originals directly: no calls, address
+expressions, HIGHLOW fields or normalization are involved. All other function
+records and all denominator/completion fields are unchanged apart from generated
+COFF offsets. All 33 ordered GameCube consumer sections remain byte-identical.
+No profile, original metadata, compiler settings or backend changes are needed.
+This completes another reviewed callback, not the original whole TU.
+
+Ignored reproducible evidence: `build/xbox268/{inventory-disasm.txt,compile.py,
+compare.py,consumers,production,verify_final.py,final-verification.json,
+gc/proof.json}`.
