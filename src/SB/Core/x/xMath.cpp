@@ -263,7 +263,11 @@ F32 xDangleClamp(F32 a)
 
     if (rem < -PI)
     {
+#if defined(PS2)
+        rem += rad360;
+#else
         return rem + rad360;
+#endif
     }
 
     return rem;
@@ -423,8 +427,13 @@ void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 endx, F32 maxv)
 F32 xAccelMoveTime(F32 dx, F32 a, F32, F32 maxv)
 {
     float time = a;
+#if defined(XBOX)
+    dx *= 0.5f;
+    float atime = maxv / time;
+#else
     float atime = maxv / time;
     dx *= 0.5f;
+#endif
     float adist = 0.5f * time * atime * atime;
 
     dx = (adist < dx) ? xsqrt(2.0f * dx / time) : (atime + (dx - adist) / maxv);
@@ -470,11 +479,19 @@ void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 maxv)
     dv = a * dt;
     if ((F32)xMathAbs(diff) < (F32)xMathAbs(dv))
     {
+#ifdef XBOX
+        x += (v * dt) + ((diff / a) * diff * 0.5f);
+#else
         x += (v * dt) + ((0.5f * diff * diff) / a);
+#endif
         v = maxv;
         return;
     }
+#ifdef XBOX
+    x += (0.5f * dv + v) * dt;
+#else
     x += (dt * (0.5f * a * dt)) + (v * dt);
+#endif
     v += dv;
 }
 
@@ -486,10 +503,16 @@ void xAccelStop(F32& x, F32& v, F32 a, F32 dt)
     S32 var_r0;
     S32 var_r5;
 
+#ifdef XBOX
+    if (!(v >= -0.00001f) || !(v <= 0.00001f))
+    {
+        if (v < 0.0f)
+#else
     oldv = v;
     if (!(oldv >= -0.00001f) || !(oldv <= 0.00001f))
     {
         if (oldv < 0.0f)
+#endif
         {
             if (a > 0.0f)
             {
@@ -502,6 +525,9 @@ void xAccelStop(F32& x, F32& v, F32 a, F32 dt)
         }
 
         a = -a;
+#ifdef XBOX
+        oldv = v;
+#endif
         v += a * dt;
 
         if (v < 0.0f)

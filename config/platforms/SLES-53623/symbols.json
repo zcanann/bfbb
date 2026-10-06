@@ -3071,11 +3071,39 @@
       "provenance": "reviewed-whole-tu-sequence"
     },
     {
+      "name": "find_char",
+      "source": "SB/Core/x/xString.cpp",
+      "address": 2155296,
+      "size": 1648,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "atox",
+      "source": "SB/Core/x/xString.cpp",
+      "address": 2156944,
+      "size": 200,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "icompare",
       "source": "SB/Core/x/xString.cpp",
       "address": 2157152,
       "size": 192,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "imemcmp",
+      "source": "SB/Core/x/xString.cpp",
+      "address": 2157344,
+      "size": 104,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xStrParseFloatList",
+      "source": "SB/Core/x/xString.cpp",
+      "address": 2157456,
+      "size": 524,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "xStrupr",

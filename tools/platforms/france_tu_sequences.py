@@ -486,6 +486,16 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     for key, value in imath3['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
     document['limitations'].append('Platform geometry adds nine members using all fifteen original functions and six independently confirmed neighbors. Two opaque runtime calls retain literal unmasked JAL words and identical context only; no new callee identity, extent, or CFG exception is introduced.')
+    from platforms.france_string_sequence import generate_unit as generate_strings
+    strings = generate_strings(originals, registry_dir)
+    document['functions'].extend(strings['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(strings['sequence_proofs'])
+    document['call_neighbors'].extend(strings['call_neighbors'])
+    document['string_dispatch_proofs'] = strings['data_proofs']
+    for key, value in strings['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Strings adds four members from the complete twelve-member sequence, preserving eight prior neighbors. One exact twelve-entry dispatch uses the existing strict recognizer. The sole xatof call is corroborated by a complete six-member original math-tail sequence with three independent neighbors; its literal runtime tail remains unmasked context only, not a new anchor or progress extent.')
     return document
 
 

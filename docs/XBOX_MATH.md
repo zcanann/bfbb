@@ -71,3 +71,94 @@ python tools/platform_progress.py report --version XBOX-US \
 Repeat for `XBOX-EU`. Local production artifacts and source/original inverse
 checks are in `build/xbox184/final` and `build/xbox184/validation.json`.
 This is partial function comparison, with no complete-TU or retail-relink claim.
+
+
+## Acceleration timing lifetime
+
+The original 83-byte `xAccelMoveTime` starts by halving the requested distance,
+then computes reciprocal acceleration and acceleration time/distance. Keeping
+that half-distance live lets the generated code reuse dead argument slots and
+avoid a local stack frame. The former source calculated acceleration time
+first, producing 96 bytes and an 8-byte frame.
+
+For Xbox only, the existing `dx *= 0.5f` statement now precedes the existing
+`atime = maxv / time` calculation. Every arithmetic tree, branch predicate,
+parameter and return expression is unchanged. This was one control grounded in
+the original first operation, with no additional locals, compiler flags or
+permutation search. Non-Xbox source order remains unchanged.
+
+Both complete reports improve the function from 36.076923% to 100%. Its actual
+83-byte source extent is independently decoded and owned by `xMath.obj`.
+All original bytes reconstruct in both authenticated executables after only
+three actual PE HIGHLOW fields at +6, +12 and +40 are assigned the reviewed
+constant addresses. Actual source/original 0.5 and 1.0 payloads are identical;
+there are no calls or other ignored fields.
+
+The totals become 13,935 exact bytes / 76 functions. Every other function record,
+all denominator/completion fields and all 33 ordered GameCube consumer sections
+remain unchanged apart from generated COFF offsets. Full code-weighted fuzzy
+progress rises from 1.1555546631813025% to 1.1585042592313592%. No profile,
+original metadata, source ownership or backend changes were needed.
+
+Ignored reproducible evidence: `build/xbox262/{residual-disasm.txt,compile.py,
+compare.py,deltas.json,gc/proof.json,production,verify_final.py,
+final-verification.json}`. Full executable relinking remains pending.
+
+## Stopping velocity capture
+
+The original 227-byte `xAccelStop` reads the referenced velocity directly for
+its initial epsilon and sign tests. It captures the old velocity only after
+choosing acceleration's sign, immediately before writing the new velocity.
+The former source captured it at entry, introducing a four-byte stack slot
+and repeated reloads in its 234-byte output.
+
+For Xbox only, the initial tests now read `v` and the existing `oldv = v`
+assignment moves immediately before the velocity update. There are no writes
+to either referenced argument between these reads, including when `x` aliases
+`v`. Predicates, arithmetic trees, subsequent store order and non-Xbox code
+remain unchanged. This single lifetime correction produces 225 bytes owned
+by the actual complete `xMath.obj`; its initial code through the new-velocity
+store has the original instruction structure. Post-update sign-test order and
+division association still differ and remain visible in the normal comparison.
+
+Both complete reports improve only this function, from 75.52564% to 92.69231%.
+Exact totals remain 13,935 bytes / 76 functions; full code-weighted fuzzy
+progress rises from 1.1585042592313592% to 1.160670659468189%. Every other
+function record and every denominator/completion field is unchanged apart
+from generated COFF offsets. All 33 ordered GameCube consumer sections are
+byte-identical. The profile updates only the actual source literal-operand
+expectations: each field is a real PE HIGHLOW relocation to the same verified
+constant payload. Original metadata, ownership and report rules are unchanged.
+
+Ignored reproducible evidence: `build/xbox264/{accel-disasm.txt,compile.py,
+compare.py,consumers,production,verify_final.py,final-verification.json,
+gc/proof.json}`. This is a partial match, not a byte-exact or retail-link claim.
+
+## Speed-limited acceleration expressions
+
+The original speed-limited `xAccelMove` uses average velocity for its unclamped
+step: `(0.5f * dv + v) * dt`, reusing the velocity change already computed for
+the limit test. The prior shared source separately formed acceleration distance
+and `v * dt`. The original clamped step computes `diff / a`, multiplies that by
+`diff`, then multiplies by 0.5; the prior shared expression multiplied first
+and divided last. These are actual decoded floating-point operation sequences,
+not a search through algebraic variants.
+
+Two Xbox-only expressions now follow those original sequences. Branch tests,
+velocity/position store order and non-Xbox expressions are unchanged. The
+average-velocity correction alone improves 92.23529% to 95.05882%; restoring
+the independently visible division order raises the result to 98.117645%.
+The actual complete source emits 223 bytes versus the original 225. It
+coalesces a duplicate velocity-change spill present in the original; that
+remaining difference is retained rather than adding an artificial temporary.
+
+Both complete reports retain 13,935 exact bytes / 76 functions. All other
+function records, denominator/completion fields and 33 ordered GameCube
+consumer sections are unchanged apart from generated COFF offsets. No
+profile, original metadata, source ownership or backend change is required.
+Actual source constant fields remain genuine PE HIGHLOW relocations to the
+same authenticated original zero/half payloads. This remains a partial match.
+
+Ignored evidence: `build/xbox266/{compile.py,compare.py,average-only-consumers,
+average-only-production,consumers,production,verify_final.py,
+final-verification.json,gc/proof.json}`. No complete-TU or retail-relink claim.

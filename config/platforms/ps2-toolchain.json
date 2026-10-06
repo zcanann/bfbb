@@ -2103,8 +2103,14 @@
       "executable_sha1s": [
         "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
       ],
+      "calls": [],
+      "selector": "name_address",
       "symbols": {
+        "find_char@0020e320": "find_char__FRC6substrRC6substr",
+        "atox@0020e990": "atox__FRC6substrRUi",
         "icompare@0020ea60": "icompare__FRC6substrRC6substr",
+        "imemcmp@0020eb20": "imemcmp__FPCvPCvUi",
+        "xStrParseFloatList@0020eb90": "xStrParseFloatList__FPfPCci",
         "xStrupr@0020eda0": "xStrupr__FPc",
         "xStricmp@0020ee00": "xStricmp__FPCcPCc",
         "xStrTokBuffer@0020ef00": "xStrTokBuffer__FPCcPCcPv",
@@ -2113,194 +2119,545 @@
         "xStrHash@0020f1f0": "xStrHash__FPCcUi",
         "xStrHash@0020f260": "xStrHash__FPCc"
       },
-      "calls": [],
       "linkage_provenance": [
         {
+          "function": "find_char@0020e320",
+          "france_address": 2155296,
+          "size": 1648,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2153888,
+              "name": "find_char",
+              "source": "SB/Core/x/xString.cpp",
+              "linkage_name": "find_char__FRC6substrRC6substr",
+              "reference_sha256": "90a5aa224b95dc0bb56ea4de3a788b8761884f2cf6d64e47a3b3c296591261ed",
+              "data_address_operands": [
+                {
+                  "hi_offset": 44,
+                  "lo_offset": 52,
+                  "opcode": 9,
+                  "reference_address": 5215424,
+                  "target_address": 5214448,
+                  "storage": "file_backed"
+                }
+              ],
+              "direct_transfers": [],
+              "dispatch_tables": [
+                {
+                  "jump_offset": 64,
+                  "index_count": 12,
+                  "test_offset": 36,
+                  "default_offset": 1544,
+                  "table_address": 5215424,
+                  "table_sha256": "4037a6944d061ba92b4124fd1e106f2a79de9ba657bd46f4d6143b6d4dae120b",
+                  "target_offsets": [
+                    1632,
+                    72,
+                    144,
+                    232,
+                    328,
+                    440,
+                    560,
+                    696,
+                    840,
+                    1000,
+                    1168,
+                    1352
+                  ]
+                }
+              ]
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2155184,
+              "name": "find_char",
+              "source": "SB/Core/x/xString.cpp",
+              "linkage_name": "find_char__FRC6substrRC6substr",
+              "reference_sha256": "2ca87911531aff72ea9bc4a304bd0edf77767fb461fd12fde924ded396c74324",
+              "data_address_operands": [
+                {
+                  "hi_offset": 44,
+                  "lo_offset": 52,
+                  "opcode": 9,
+                  "reference_address": 5214192,
+                  "target_address": 5214448,
+                  "storage": "file_backed"
+                }
+              ],
+              "direct_transfers": [],
+              "dispatch_tables": [
+                {
+                  "jump_offset": 64,
+                  "index_count": 12,
+                  "test_offset": 36,
+                  "default_offset": 1544,
+                  "table_address": 5214192,
+                  "table_sha256": "4fdf4717382214e9b85065b33a037ff6da3da7e6fa0d06f1de43650e6ef71661",
+                  "target_offsets": [
+                    1632,
+                    72,
+                    144,
+                    232,
+                    328,
+                    440,
+                    560,
+                    696,
+                    840,
+                    1000,
+                    1168,
+                    1352
+                  ]
+                }
+              ]
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2151840,
+              "name": "find_char",
+              "source": "SB/Core/x/xString.cpp",
+              "linkage_name": "find_char__FRC6substrRC6substr",
+              "reference_sha256": "34c1d239fc54557b8a75738fc43796ab3cd5bff4d93d368117171b5da3213d5d",
+              "data_address_operands": [
+                {
+                  "hi_offset": 44,
+                  "lo_offset": 52,
+                  "opcode": 9,
+                  "reference_address": 5212704,
+                  "target_address": 5214448,
+                  "storage": "file_backed"
+                }
+              ],
+              "direct_transfers": [],
+              "dispatch_tables": [
+                {
+                  "jump_offset": 64,
+                  "index_count": 12,
+                  "test_offset": 36,
+                  "default_offset": 1544,
+                  "table_address": 5212704,
+                  "table_sha256": "0d334613f3dce8020bd62b0bfea69322002226311cb05c954b83b9fe9828e222",
+                  "target_offsets": [
+                    1632,
+                    72,
+                    144,
+                    232,
+                    328,
+                    440,
+                    560,
+                    696,
+                    840,
+                    1000,
+                    1168,
+                    1352
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "function": "atox@0020e990",
+          "france_address": 2156944,
+          "size": 200,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2155536,
+              "name": "atox",
+              "source": "SB/Core/x/xString.cpp",
+              "linkage_name": "atox__FRC6substrRUi",
+              "reference_sha256": "f16464c0a77120ff61c942a9f22fbf237331f3860ba6665ba4076403309475f2",
+              "data_address_operands": [],
+              "direct_transfers": [],
+              "dispatch_tables": []
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2156832,
+              "name": "atox",
+              "source": "SB/Core/x/xString.cpp",
+              "linkage_name": "atox__FRC6substrRUi",
+              "reference_sha256": "f16464c0a77120ff61c942a9f22fbf237331f3860ba6665ba4076403309475f2",
+              "data_address_operands": [],
+              "direct_transfers": [],
+              "dispatch_tables": []
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2153488,
+              "name": "atox",
+              "source": "SB/Core/x/xString.cpp",
+              "linkage_name": "atox__FRC6substrRUi",
+              "reference_sha256": "f16464c0a77120ff61c942a9f22fbf237331f3860ba6665ba4076403309475f2",
+              "data_address_operands": [],
+              "direct_transfers": [],
+              "dispatch_tables": []
+            }
+          ]
+        },
+        {
           "function": "icompare@0020ea60",
-          "registry": "corroborated-functions.json",
           "france_address": 2157152,
           "size": 192,
           "references": [
             {
               "version": "SLES-51968",
+              "source_address": 2157040,
+              "name": "icompare",
+              "source": "SB/Core/x/xString.cpp",
               "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
-              "source_address": 2157040
+              "reference_sha256": "4c52d8648579c45471aad2ced6e49e6399b7b4d81d9dd2c3fa52896ae043cbe6"
+            },
+            {
+              "version": "SLES-51970",
+              "source_address": 2153696,
+              "name": "icompare",
+              "source": "SB/Core/x/xString.cpp",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "reference_sha256": "4c52d8648579c45471aad2ced6e49e6399b7b4d81d9dd2c3fa52896ae043cbe6"
+            },
+            {
+              "version": "SLUS-20680",
+              "source_address": 2155744,
+              "name": "icompare",
+              "source": "SB/Core/x/xString.cpp",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "reference_sha256": "4c52d8648579c45471aad2ced6e49e6399b7b4d81d9dd2c3fa52896ae043cbe6"
+            }
+          ]
+        },
+        {
+          "function": "imemcmp@0020eb20",
+          "france_address": 2157344,
+          "size": 104,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2155936,
+              "name": "imemcmp",
+              "source": "SB/Core/x/xString.cpp",
+              "linkage_name": "imemcmp__FPCvPCvUi",
+              "reference_sha256": "57116d48a02cdd4e5830beab0acc9db02744a8be37a48479e5e2c63f9937e49c",
+              "data_address_operands": [],
+              "direct_transfers": [],
+              "dispatch_tables": []
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2157232,
+              "name": "imemcmp",
+              "source": "SB/Core/x/xString.cpp",
+              "linkage_name": "imemcmp__FPCvPCvUi",
+              "reference_sha256": "57116d48a02cdd4e5830beab0acc9db02744a8be37a48479e5e2c63f9937e49c",
+              "data_address_operands": [],
+              "direct_transfers": [],
+              "dispatch_tables": []
             },
             {
               "version": "SLES-51970",
               "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
-              "source_address": 2153696
-            },
+              "source_address": 2153888,
+              "name": "imemcmp",
+              "source": "SB/Core/x/xString.cpp",
+              "linkage_name": "imemcmp__FPCvPCvUi",
+              "reference_sha256": "57116d48a02cdd4e5830beab0acc9db02744a8be37a48479e5e2c63f9937e49c",
+              "data_address_operands": [],
+              "direct_transfers": [],
+              "dispatch_tables": []
+            }
+          ]
+        },
+        {
+          "function": "xStrParseFloatList@0020eb90",
+          "france_address": 2157456,
+          "size": 524,
+          "references": [
             {
               "version": "SLUS-20680",
               "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
-              "source_address": 2155744
+              "source_address": 2156048,
+              "name": "xStrParseFloatList",
+              "source": "SB/Core/x/xString.cpp",
+              "linkage_name": "xStrParseFloatList__FPfPCci",
+              "reference_sha256": "7f95405de6655c520e6d50f5d3536e458b0c754858c7e0a8ab9707bd6a27b263",
+              "data_address_operands": [],
+              "direct_transfers": [
+                {
+                  "offset": 400,
+                  "opcode": 3,
+                  "reference_address": 2023456,
+                  "target_address": 2024816
+                }
+              ],
+              "dispatch_tables": []
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2157344,
+              "name": "xStrParseFloatList",
+              "source": "SB/Core/x/xString.cpp",
+              "linkage_name": "xStrParseFloatList__FPfPCci",
+              "reference_sha256": "f8278a00fa4a65f4897376a8543ab6e5bbcc9a6f117d8aed6f27fcffc73a2809",
+              "data_address_operands": [],
+              "direct_transfers": [
+                {
+                  "offset": 400,
+                  "opcode": 3,
+                  "reference_address": 2024704,
+                  "target_address": 2024816
+                }
+              ],
+              "dispatch_tables": []
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2154000,
+              "name": "xStrParseFloatList",
+              "source": "SB/Core/x/xString.cpp",
+              "linkage_name": "xStrParseFloatList__FPfPCci",
+              "reference_sha256": "19678ed616315891cbd298cea5217e4524cefedfd26ffaec713fedbcb9d65f2a",
+              "data_address_operands": [],
+              "direct_transfers": [
+                {
+                  "offset": 400,
+                  "opcode": 3,
+                  "reference_address": 2021344,
+                  "target_address": 2024816
+                }
+              ],
+              "dispatch_tables": []
             }
           ]
         },
         {
           "function": "xStrupr@0020eda0",
-          "registry": "corroborated-functions.json",
           "france_address": 2157984,
           "size": 88,
           "references": [
             {
               "version": "SLES-51968",
+              "source_address": 2157872,
+              "name": "xStrupr",
+              "source": "SB/Core/x/xString.cpp",
               "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
-              "source_address": 2157872
+              "reference_sha256": "e93603fdf945d84527e89530090c4a5b5063f9e4055e3829c46c079240ebe3d6"
             },
             {
               "version": "SLES-51970",
+              "source_address": 2154528,
+              "name": "xStrupr",
+              "source": "SB/Core/x/xString.cpp",
               "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
-              "source_address": 2154528
+              "reference_sha256": "e93603fdf945d84527e89530090c4a5b5063f9e4055e3829c46c079240ebe3d6"
             },
             {
               "version": "SLUS-20680",
+              "source_address": 2156576,
+              "name": "xStrupr",
+              "source": "SB/Core/x/xString.cpp",
               "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
-              "source_address": 2156576
+              "reference_sha256": "e93603fdf945d84527e89530090c4a5b5063f9e4055e3829c46c079240ebe3d6"
             }
           ]
         },
         {
           "function": "xStricmp@0020ee00",
-          "registry": "corroborated-functions.json",
           "france_address": 2158080,
           "size": 256,
           "references": [
             {
               "version": "SLES-51968",
+              "source_address": 2157968,
+              "name": "xStricmp",
+              "source": "SB/Core/x/xString.cpp",
               "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
-              "source_address": 2157968
+              "reference_sha256": "af1c65dc6f4146beaf90bd1740329fcbee7e0e72d2e101389bb0cd11548341dc"
             },
             {
               "version": "SLES-51970",
+              "source_address": 2154624,
+              "name": "xStricmp",
+              "source": "SB/Core/x/xString.cpp",
               "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
-              "source_address": 2154624
+              "reference_sha256": "af1c65dc6f4146beaf90bd1740329fcbee7e0e72d2e101389bb0cd11548341dc"
             },
             {
               "version": "SLUS-20680",
+              "source_address": 2156672,
+              "name": "xStricmp",
+              "source": "SB/Core/x/xString.cpp",
               "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
-              "source_address": 2156672
+              "reference_sha256": "af1c65dc6f4146beaf90bd1740329fcbee7e0e72d2e101389bb0cd11548341dc"
             }
           ]
         },
         {
           "function": "xStrTokBuffer@0020ef00",
-          "registry": "corroborated-functions.json",
           "france_address": 2158336,
           "size": 336,
           "references": [
             {
               "version": "SLES-51968",
+              "source_address": 2158224,
+              "name": "xStrTokBuffer",
+              "source": "SB/Core/x/xString.cpp",
               "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
-              "source_address": 2158224
+              "reference_sha256": "9331679b4050c1cf4efe1d03a8eed0052d8779cf8c475725c1117c37c7056b3e"
             },
             {
               "version": "SLES-51970",
+              "source_address": 2154880,
+              "name": "xStrTokBuffer",
+              "source": "SB/Core/x/xString.cpp",
               "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
-              "source_address": 2154880
+              "reference_sha256": "9331679b4050c1cf4efe1d03a8eed0052d8779cf8c475725c1117c37c7056b3e"
             },
             {
               "version": "SLUS-20680",
+              "source_address": 2156928,
+              "name": "xStrTokBuffer",
+              "source": "SB/Core/x/xString.cpp",
               "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
-              "source_address": 2156928
+              "reference_sha256": "9331679b4050c1cf4efe1d03a8eed0052d8779cf8c475725c1117c37c7056b3e"
             }
           ]
         },
         {
           "function": "xStrTok@0020f050",
-          "registry": "corroborated-functions.json",
           "france_address": 2158672,
           "size": 320,
           "references": [
             {
               "version": "SLES-51968",
+              "source_address": 2158560,
+              "name": "xStrTok",
+              "source": "SB/Core/x/xString.cpp",
               "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
-              "source_address": 2158560
+              "reference_sha256": "f19069ecd685cafacab55fe5c657cb51cc888dcaa02590a29436b64b18a44358"
             },
             {
               "version": "SLES-51970",
+              "source_address": 2155216,
+              "name": "xStrTok",
+              "source": "SB/Core/x/xString.cpp",
               "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
-              "source_address": 2155216
+              "reference_sha256": "f19069ecd685cafacab55fe5c657cb51cc888dcaa02590a29436b64b18a44358"
             },
             {
               "version": "SLUS-20680",
+              "source_address": 2157264,
+              "name": "xStrTok",
+              "source": "SB/Core/x/xString.cpp",
               "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
-              "source_address": 2157264
+              "reference_sha256": "f19069ecd685cafacab55fe5c657cb51cc888dcaa02590a29436b64b18a44358"
             }
           ]
         },
         {
           "function": "xStrHashCat@0020f190",
-          "registry": "corroborated-functions.json",
           "france_address": 2158992,
           "size": 88,
           "references": [
             {
               "version": "SLES-51968",
+              "source_address": 2158880,
+              "name": "xStrHashCat",
+              "source": "SB/Core/x/xString.cpp",
               "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
-              "source_address": 2158880
+              "reference_sha256": "854ee776e8f51ba703dc9962a6ba28fc467b43d49a138a56292734d53389f169"
             },
             {
               "version": "SLES-51970",
+              "source_address": 2155536,
+              "name": "xStrHashCat",
+              "source": "SB/Core/x/xString.cpp",
               "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
-              "source_address": 2155536
+              "reference_sha256": "854ee776e8f51ba703dc9962a6ba28fc467b43d49a138a56292734d53389f169"
             },
             {
               "version": "SLUS-20680",
+              "source_address": 2157584,
+              "name": "xStrHashCat",
+              "source": "SB/Core/x/xString.cpp",
               "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
-              "source_address": 2157584
+              "reference_sha256": "854ee776e8f51ba703dc9962a6ba28fc467b43d49a138a56292734d53389f169"
             }
           ]
         },
         {
           "function": "xStrHash@0020f1f0",
-          "registry": "corroborated-functions.json",
           "france_address": 2159088,
           "size": 104,
           "references": [
             {
               "version": "SLES-51968",
+              "source_address": 2158976,
+              "name": "xStrHash",
+              "source": "SB/Core/x/xString.cpp",
               "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
-              "source_address": 2158976
+              "reference_sha256": "2a23062085b71b74b08fcf3b0242971be9834ba514b6e257936a792991bb35db"
             },
             {
               "version": "SLES-51970",
+              "source_address": 2155632,
+              "name": "xStrHash",
+              "source": "SB/Core/x/xString.cpp",
               "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
-              "source_address": 2155632
+              "reference_sha256": "2a23062085b71b74b08fcf3b0242971be9834ba514b6e257936a792991bb35db"
             },
             {
               "version": "SLUS-20680",
+              "source_address": 2157680,
+              "name": "xStrHash",
+              "source": "SB/Core/x/xString.cpp",
               "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
-              "source_address": 2157680
+              "reference_sha256": "2a23062085b71b74b08fcf3b0242971be9834ba514b6e257936a792991bb35db"
             }
           ]
         },
         {
           "function": "xStrHash@0020f260",
-          "registry": "corroborated-functions.json",
           "france_address": 2159200,
           "size": 88,
           "references": [
             {
               "version": "SLES-51968",
+              "source_address": 2159088,
+              "name": "xStrHash",
+              "source": "SB/Core/x/xString.cpp",
               "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
-              "source_address": 2159088
+              "reference_sha256": "dc03db1f4a8cf0289a18ba42dae1aac81bc21a6157edd778e4b593ac202bdcd0"
             },
             {
               "version": "SLES-51970",
+              "source_address": 2155744,
+              "name": "xStrHash",
+              "source": "SB/Core/x/xString.cpp",
               "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
-              "source_address": 2155744
+              "reference_sha256": "dc03db1f4a8cf0289a18ba42dae1aac81bc21a6157edd778e4b593ac202bdcd0"
             },
             {
               "version": "SLUS-20680",
+              "source_address": 2157792,
+              "name": "xStrHash",
+              "source": "SB/Core/x/xString.cpp",
               "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
-              "source_address": 2157792
+              "reference_sha256": "dc03db1f4a8cf0289a18ba42dae1aac81bc21a6157edd778e4b593ac202bdcd0"
             }
           ]
         }
-      ],
-      "selector": "name_address"
+      ]
     },
     {
       "source": "src/SB/Core/x/xMath.cpp",

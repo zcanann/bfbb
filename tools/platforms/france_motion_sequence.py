@@ -11,12 +11,12 @@ DISPATCHES = {'xEntMotionDebugDraw': ((0x48, 6),),
 DIAMONDS = (0xdc, 0x4b8, 0x530, 0x6b0, 0x85c)
 
 
-def dispatches(original, address, size, name):
+def dispatches(original, address, size, name, *, specifications=None):
     body = original.read(address, size)
     code = words(body)
     flow = ControlFlow({address + i * 4: w for i, w in enumerate(code)})
     proven = []
-    for offset, count in DISPATCHES.get(name, ()):
+    for offset, count in (DISPATCHES.get(name, ()) if specifications is None else specifications):
         jr, load, add, low, shift = (code[(offset - n) // 4] for n in (0, 4, 8, 12, 16))
         index, base = jr >> 21 & 31, low >> 21 & 31
         require(index not in (0, 31) and base not in (0, index, 31) and jr == index << 21 | 8,
