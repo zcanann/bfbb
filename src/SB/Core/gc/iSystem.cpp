@@ -781,7 +781,7 @@ static char* dlFgets(char* buffer, S32 maxLen, void* fptr)
             i++;
             buffer[i] = '\0';
             i -= numBytesRead;
-            dlFseek(fp, i, 1);
+            dlFseek(fptr, i, 1);
             return buffer;
         }
         if (buffer[i] == '\r')

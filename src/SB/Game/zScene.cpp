@@ -726,22 +726,23 @@ static void PipeAddStuffCB(RpAtomic* data, U32 pipeFlags, U32)
 
 static void PipeForAllSceneModels(void (*pipeCB)(RpAtomic* data, U32 pipeFlags, U32 subObjects))
 {
-    // The per-model mask scope preserves the retail model register.
-    // Remaining mismatch: the mask and inner table index use swapped registers.
+    // Declaration order decides the register ranks: the sub-object counters
+    // must precede k, which must precede model and the remaining-bits mask.
     S32 i, j;
     S32 numModels = xSTAssetCountByType('MODL');
+    U32 numSubObjects, currSubObjBits;
+    S32 k;
+    RpAtomic* model;
+    U32 remainSubObjBits;
+    RpAtomic* tempmodel;
+    st_PKR_ASSET_TOCINFO ainfo;
 
     for (i = 0; i < numModels; i++)
     {
-        U32 remainSubObjBits;
-        RpAtomic* model = (RpAtomic*)xSTFindAssetByType('MODL', i, NULL);
+        model = (RpAtomic*)xSTFindAssetByType('MODL', i, NULL);
 
         if (model)
         {
-            st_PKR_ASSET_TOCINFO ainfo;
-            U32 numSubObjects, currSubObjBits;
-            RpAtomic* tempmodel;
-
             xSTGetAssetInfoByType('MODL', i, &ainfo);
 
             numSubObjects = 0;
@@ -757,7 +758,7 @@ static void PipeForAllSceneModels(void (*pipeCB)(RpAtomic* data, U32 pipeFlags, 
 
             for (j = 0; j < xModelPipeNumTables; j++)
             {
-                for (S32 k = 0; k < xModelPipeCount[j]; k++)
+                for (k = 0; k < xModelPipeCount[j]; k++)
                 {
                     if (ainfo.aid == xModelPipeData[j][k].ModelHashID)
                     {
