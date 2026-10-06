@@ -388,6 +388,7 @@ rwsdk/src/baframe.c
 rwsdk/src/baimage.c
 rwsdk/src/baimras.c
 rwsdk/src/baraster.c
+rwsdk/src/baresamp.c
 rwsdk/src/basync.c
 rwsdk/src/batextur.c
 rwsdk/src/batypehf.c
