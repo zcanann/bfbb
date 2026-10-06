@@ -810,6 +810,27 @@
       "provenance": "manual-reviewed"
     },
     {
+      "name": "xBoundDraw",
+      "source": "SB/Core/x/xBound.cpp",
+      "address": 1837712,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xVecHitsBound",
+      "source": "SB/Core/x/xBound.cpp",
+      "address": 1837728,
+      "size": 276,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xSphereHitsBound",
+      "source": "SB/Core/x/xBound.cpp",
+      "address": 1838016,
+      "size": 132,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "xRayHitsBound",
       "source": "SB/Core/x/xBound.cpp",
       "address": 1838160,
@@ -824,11 +845,32 @@
       "provenance": "machine-corroborated-explicit-transfers"
     },
     {
+      "name": "xBoundHitsBound",
+      "source": "SB/Core/x/xBound.cpp",
+      "address": 1839328,
+      "size": 400,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xBoundGetSphere",
+      "source": "SB/Core/x/xBound.cpp",
+      "address": 1839728,
+      "size": 600,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "xBoundGetBox",
       "source": "SB/Core/x/xBound.cpp",
       "address": 1840336,
       "size": 236,
       "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "xBoundUpdate",
+      "source": "SB/Core/x/xBound.cpp",
+      "address": 1840576,
+      "size": 436,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "xCameraRotate",
@@ -2369,6 +2411,13 @@
       "address": 2050096,
       "size": 64,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xParMemInit",
+      "source": "SB/Core/x/xPar.cpp",
+      "address": 2050160,
+      "size": 76,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "xParCmd_Shaper_Update",
@@ -4196,6 +4245,27 @@
       "address": 3314832,
       "size": 940,
       "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "xUpdateCull_Init",
+      "source": "SB/Core/x/xUpdateCull.cpp",
+      "address": 3315776,
+      "size": 1484,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xUpdateCull_DistanceSquaredCB",
+      "source": "SB/Core/x/xUpdateCull.cpp",
+      "address": 3317264,
+      "size": 128,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xUpdateCull_AlwaysTrueCB",
+      "source": "SB/Core/x/xUpdateCull.cpp",
+      "address": 3317392,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "xUpdateCull_Swap",

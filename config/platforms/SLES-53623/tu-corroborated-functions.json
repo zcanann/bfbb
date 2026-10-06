@@ -33,14 +33,17 @@
     "SKB adds Duration and Eval using the complete four-member sequence and two independently confirmed neighbors. All bodies satisfy the unchanged strict CFG checks; original DWARF and all 96 bytes prove the sole changed slerpPolynomial address.",
     "FFX adds seven members using all fourteen original functions and seven independently confirmed neighbors. Allocator context decodes original JALs from at least two other source units; unchanged opaque math calls remain unmasked and unnamed. Strict CFG checks remain unchanged.",
     "Platform geometry adds nine members using all fifteen original functions and six independently confirmed neighbors. Two opaque runtime calls retain literal unmasked JAL words and identical context only; no new callee identity, extent, or CFG exception is introduced.",
-    "Strings adds four members from the complete twelve-member sequence, preserving eight prior neighbors. One exact twelve-entry dispatch uses the existing strict recognizer. The sole xatof call is corroborated by a complete six-member original math-tail sequence with three independent neighbors; its literal runtime tail remains unmasked context only, not a new anchor or progress extent."
+    "Strings adds four members from the complete twelve-member sequence, preserving eight prior neighbors. One exact twelve-entry dispatch uses the existing strict recognizer. The sole xatof call is corroborated by a complete six-member original math-tail sequence with three independent neighbors; its literal runtime tail remains unmasked context only, not a new anchor or progress extent.",
+    "Particle initialization adds one member from the complete four-function sequence. The original 2000-element xPar array descriptor bounds the sole changed pool address inside authentic BSS; no data extent is promoted.",
+    "Update culling adds three members from all seven original functions and four independent neighbors. The complete group-accessor/count context and independently reviewed allocator neighborhood corroborate calls and pointer slots; opaque runtime transfer words remain unmasked. No context becomes a new identity or extent.",
+    "Bounds adds six members from all nine original functions and three independent neighbors. The complete platform-geometry dependency is independently replayed for external calls; original DWARF proves the 60-byte quick-cull global, with no data extent promotion."
   ],
   "counts": {
-    "functions": 330,
-    "code_bytes": 156936,
-    "source_units": 17,
+    "functions": 340,
+    "code_bytes": 160484,
+    "source_units": 20,
     "rooted_direct_call_entries": 129,
-    "closed_return_bodies": 316,
+    "closed_return_bodies": 326,
     "reviewed_tail_wrappers": 2,
     "registered_callback_entries": 26,
     "reviewed_leaf_tail_functions": 11,
@@ -58,7 +61,8 @@
     "header_context_bodies_not_promoted": 2,
     "reviewed_grid_arrays": 1,
     "reviewed_skb_polynomials": 1,
-    "reviewed_string_dispatch_tables": 1
+    "reviewed_string_dispatch_tables": 1,
+    "reviewed_particle_pool_arrays": 1
   },
   "sequence_proofs": [
     {
@@ -1070,6 +1074,159 @@
         "unchanged_anchor_offset": 56,
         "unchanged_anchor_bytes": 2504,
         "masked_instruction_count": 2
+      }
+    },
+    {
+      "version": "SLUS-20680",
+      "source": "SB/Core/x/xPar.cpp",
+      "source_start": 2048512,
+      "target_start": 2049872,
+      "complete_original_members": 4,
+      "previously_confirmed_members": 3,
+      "sequence_bytes_with_alignment": 364,
+      "uniqueness": {
+        "matching_addresses": [
+          2049872
+        ],
+        "unchanged_anchor_offset": 0,
+        "unchanged_anchor_bytes": 296,
+        "masked_instruction_count": 1
+      }
+    },
+    {
+      "version": "SLES-51968",
+      "source": "SB/Core/x/xPar.cpp",
+      "source_start": 2049760,
+      "target_start": 2049872,
+      "complete_original_members": 4,
+      "previously_confirmed_members": 3,
+      "sequence_bytes_with_alignment": 364,
+      "uniqueness": {
+        "matching_addresses": [
+          2049872
+        ],
+        "unchanged_anchor_offset": 0,
+        "unchanged_anchor_bytes": 296,
+        "masked_instruction_count": 1
+      }
+    },
+    {
+      "version": "SLES-51970",
+      "source": "SB/Core/x/xPar.cpp",
+      "source_start": 2046400,
+      "target_start": 2049872,
+      "complete_original_members": 4,
+      "previously_confirmed_members": 3,
+      "sequence_bytes_with_alignment": 364,
+      "uniqueness": {
+        "matching_addresses": [
+          2049872
+        ],
+        "unchanged_anchor_offset": 0,
+        "unchanged_anchor_bytes": 296,
+        "masked_instruction_count": 1
+      }
+    },
+    {
+      "version": "SLUS-20680",
+      "source": "SB/Core/x/xUpdateCull.cpp",
+      "source_start": 3313120,
+      "target_start": 3314512,
+      "complete_original_members": 7,
+      "previously_confirmed_members": 4,
+      "sequence_bytes_with_alignment": 3060,
+      "uniqueness": {
+        "matching_addresses": [
+          3314512
+        ],
+        "unchanged_anchor_offset": 2052,
+        "unchanged_anchor_bytes": 468,
+        "masked_instruction_count": 15
+      }
+    },
+    {
+      "version": "SLES-51968",
+      "source": "SB/Core/x/xUpdateCull.cpp",
+      "source_start": 3314400,
+      "target_start": 3314512,
+      "complete_original_members": 7,
+      "previously_confirmed_members": 4,
+      "sequence_bytes_with_alignment": 3060,
+      "uniqueness": {
+        "matching_addresses": [
+          3314512
+        ],
+        "unchanged_anchor_offset": 2052,
+        "unchanged_anchor_bytes": 468,
+        "masked_instruction_count": 15
+      }
+    },
+    {
+      "version": "SLES-51970",
+      "source": "SB/Core/x/xUpdateCull.cpp",
+      "source_start": 3311152,
+      "target_start": 3314512,
+      "complete_original_members": 7,
+      "previously_confirmed_members": 4,
+      "sequence_bytes_with_alignment": 3060,
+      "uniqueness": {
+        "matching_addresses": [
+          3314512
+        ],
+        "unchanged_anchor_offset": 2052,
+        "unchanged_anchor_bytes": 468,
+        "masked_instruction_count": 15
+      }
+    },
+    {
+      "version": "SLUS-20680",
+      "source": "SB/Core/x/xBound.cpp",
+      "source_start": 1836336,
+      "target_start": 1837712,
+      "complete_original_members": 9,
+      "previously_confirmed_members": 3,
+      "sequence_bytes_with_alignment": 3300,
+      "uniqueness": {
+        "matching_addresses": [
+          1837712
+        ],
+        "unchanged_anchor_offset": 568,
+        "unchanged_anchor_bytes": 956,
+        "masked_instruction_count": 22
+      }
+    },
+    {
+      "version": "SLES-51968",
+      "source": "SB/Core/x/xBound.cpp",
+      "source_start": 1837600,
+      "target_start": 1837712,
+      "complete_original_members": 9,
+      "previously_confirmed_members": 3,
+      "sequence_bytes_with_alignment": 3300,
+      "uniqueness": {
+        "matching_addresses": [
+          1837712
+        ],
+        "unchanged_anchor_offset": 568,
+        "unchanged_anchor_bytes": 956,
+        "masked_instruction_count": 22
+      }
+    },
+    {
+      "version": "SLES-51970",
+      "source": "SB/Core/x/xBound.cpp",
+      "source_start": 1834240,
+      "target_start": 1837712,
+      "complete_original_members": 9,
+      "previously_confirmed_members": 3,
+      "sequence_bytes_with_alignment": 3300,
+      "uniqueness": {
+        "matching_addresses": [
+          1837712
+        ],
+        "unchanged_anchor_offset": 568,
+        "unchanged_anchor_bytes": 956,
+        "masked_instruction_count": 22
       }
     }
   ],
@@ -12176,6 +12333,1074 @@
         "no_progress_or_new_anchor": true
       },
       "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 3315776,
+      "offset": 240,
+      "opcode": 3,
+      "reference_address": 1149960,
+      "target_address": 1149960,
+      "opaque_context_prefix_sha256": "0c36391b9572b52c77a7870d104a3c4fbd11d6cf740bec5c0b42f84f66f36421",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 3315776,
+      "offset": 276,
+      "opcode": 3,
+      "reference_address": 2751520,
+      "target_address": 2752928,
+      "group_count_context": {
+        "previous_named_neighbor": "xGroupGetItemPtr",
+        "reference_start": 2751312,
+        "target_start": 2752720,
+        "sequence_bytes": 220,
+        "reference_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+        "target_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+        "uniqueness": {
+          "matching_addresses": [
+            2752720
+          ],
+          "unchanged_anchor_offset": 92,
+          "unchanged_anchor_bytes": 128,
+          "masked_instruction_count": 1
+        },
+        "checked_direct_call": {
+          "offset": 88,
+          "opcode": 3,
+          "reference_address": 1667344,
+          "target_address": 1667344
+        },
+        "no_progress_or_new_anchor": true
+      },
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 3315776,
+      "offset": 308,
+      "opcode": 3,
+      "reference_address": 2751312,
+      "target_address": 2752720,
+      "group_count_context": {
+        "previous_named_neighbor": "xGroupGetItemPtr",
+        "reference_start": 2751312,
+        "target_start": 2752720,
+        "sequence_bytes": 220,
+        "reference_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+        "target_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+        "uniqueness": {
+          "matching_addresses": [
+            2752720
+          ],
+          "unchanged_anchor_offset": 92,
+          "unchanged_anchor_bytes": 128,
+          "masked_instruction_count": 1
+        },
+        "checked_direct_call": {
+          "offset": 88,
+          "opcode": 3,
+          "reference_address": 1667344,
+          "target_address": 1667344
+        },
+        "no_progress_or_new_anchor": true
+      },
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 3315776,
+      "offset": 532,
+      "opcode": 3,
+      "reference_address": 2033296,
+      "target_address": 2034656,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 3315776,
+      "offset": 608,
+      "opcode": 3,
+      "reference_address": 1149960,
+      "target_address": 1149960,
+      "opaque_context_prefix_sha256": "0c36391b9572b52c77a7870d104a3c4fbd11d6cf740bec5c0b42f84f66f36421",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 3315776,
+      "offset": 660,
+      "opcode": 3,
+      "reference_address": 1149520,
+      "target_address": 1149520,
+      "opaque_context_prefix_sha256": "b11c4bfe9af6ebb2c9f043298f159983de6f70d9d33c4e11dd2158f565a4d55b",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 3315776,
+      "offset": 716,
+      "opcode": 3,
+      "reference_address": 2751520,
+      "target_address": 2752928,
+      "group_count_context": {
+        "previous_named_neighbor": "xGroupGetItemPtr",
+        "reference_start": 2751312,
+        "target_start": 2752720,
+        "sequence_bytes": 220,
+        "reference_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+        "target_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+        "uniqueness": {
+          "matching_addresses": [
+            2752720
+          ],
+          "unchanged_anchor_offset": 92,
+          "unchanged_anchor_bytes": 128,
+          "masked_instruction_count": 1
+        },
+        "checked_direct_call": {
+          "offset": 88,
+          "opcode": 3,
+          "reference_address": 1667344,
+          "target_address": 1667344
+        },
+        "no_progress_or_new_anchor": true
+      },
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 3315776,
+      "offset": 752,
+      "opcode": 3,
+      "reference_address": 2751312,
+      "target_address": 2752720,
+      "group_count_context": {
+        "previous_named_neighbor": "xGroupGetItemPtr",
+        "reference_start": 2751312,
+        "target_start": 2752720,
+        "sequence_bytes": 220,
+        "reference_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+        "target_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+        "uniqueness": {
+          "matching_addresses": [
+            2752720
+          ],
+          "unchanged_anchor_offset": 92,
+          "unchanged_anchor_bytes": 128,
+          "masked_instruction_count": 1
+        },
+        "checked_direct_call": {
+          "offset": 88,
+          "opcode": 3,
+          "reference_address": 1667344,
+          "target_address": 1667344
+        },
+        "no_progress_or_new_anchor": true
+      },
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 3315776,
+      "offset": 240,
+      "opcode": 3,
+      "reference_address": 1149960,
+      "target_address": 1149960,
+      "opaque_context_prefix_sha256": "0c36391b9572b52c77a7870d104a3c4fbd11d6cf740bec5c0b42f84f66f36421",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 3315776,
+      "offset": 276,
+      "opcode": 3,
+      "reference_address": 2752816,
+      "target_address": 2752928,
+      "group_count_context": {
+        "previous_named_neighbor": "xGroupGetItemPtr",
+        "reference_start": 2752608,
+        "target_start": 2752720,
+        "sequence_bytes": 220,
+        "reference_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+        "target_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+        "uniqueness": {
+          "matching_addresses": [
+            2752720
+          ],
+          "unchanged_anchor_offset": 92,
+          "unchanged_anchor_bytes": 128,
+          "masked_instruction_count": 1
+        },
+        "checked_direct_call": {
+          "offset": 88,
+          "opcode": 3,
+          "reference_address": 1667344,
+          "target_address": 1667344
+        },
+        "no_progress_or_new_anchor": true
+      },
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 3315776,
+      "offset": 308,
+      "opcode": 3,
+      "reference_address": 2752608,
+      "target_address": 2752720,
+      "group_count_context": {
+        "previous_named_neighbor": "xGroupGetItemPtr",
+        "reference_start": 2752608,
+        "target_start": 2752720,
+        "sequence_bytes": 220,
+        "reference_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+        "target_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+        "uniqueness": {
+          "matching_addresses": [
+            2752720
+          ],
+          "unchanged_anchor_offset": 92,
+          "unchanged_anchor_bytes": 128,
+          "masked_instruction_count": 1
+        },
+        "checked_direct_call": {
+          "offset": 88,
+          "opcode": 3,
+          "reference_address": 1667344,
+          "target_address": 1667344
+        },
+        "no_progress_or_new_anchor": true
+      },
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 3315776,
+      "offset": 532,
+      "opcode": 3,
+      "reference_address": 2034544,
+      "target_address": 2034656,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 3315776,
+      "offset": 608,
+      "opcode": 3,
+      "reference_address": 1149960,
+      "target_address": 1149960,
+      "opaque_context_prefix_sha256": "0c36391b9572b52c77a7870d104a3c4fbd11d6cf740bec5c0b42f84f66f36421",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 3315776,
+      "offset": 660,
+      "opcode": 3,
+      "reference_address": 1149520,
+      "target_address": 1149520,
+      "opaque_context_prefix_sha256": "b11c4bfe9af6ebb2c9f043298f159983de6f70d9d33c4e11dd2158f565a4d55b",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 3315776,
+      "offset": 716,
+      "opcode": 3,
+      "reference_address": 2752816,
+      "target_address": 2752928,
+      "group_count_context": {
+        "previous_named_neighbor": "xGroupGetItemPtr",
+        "reference_start": 2752608,
+        "target_start": 2752720,
+        "sequence_bytes": 220,
+        "reference_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+        "target_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+        "uniqueness": {
+          "matching_addresses": [
+            2752720
+          ],
+          "unchanged_anchor_offset": 92,
+          "unchanged_anchor_bytes": 128,
+          "masked_instruction_count": 1
+        },
+        "checked_direct_call": {
+          "offset": 88,
+          "opcode": 3,
+          "reference_address": 1667344,
+          "target_address": 1667344
+        },
+        "no_progress_or_new_anchor": true
+      },
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 3315776,
+      "offset": 752,
+      "opcode": 3,
+      "reference_address": 2752608,
+      "target_address": 2752720,
+      "group_count_context": {
+        "previous_named_neighbor": "xGroupGetItemPtr",
+        "reference_start": 2752608,
+        "target_start": 2752720,
+        "sequence_bytes": 220,
+        "reference_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+        "target_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+        "uniqueness": {
+          "matching_addresses": [
+            2752720
+          ],
+          "unchanged_anchor_offset": 92,
+          "unchanged_anchor_bytes": 128,
+          "masked_instruction_count": 1
+        },
+        "checked_direct_call": {
+          "offset": 88,
+          "opcode": 3,
+          "reference_address": 1667344,
+          "target_address": 1667344
+        },
+        "no_progress_or_new_anchor": true
+      },
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 3315776,
+      "offset": 240,
+      "opcode": 3,
+      "reference_address": 1149960,
+      "target_address": 1149960,
+      "opaque_context_prefix_sha256": "0c36391b9572b52c77a7870d104a3c4fbd11d6cf740bec5c0b42f84f66f36421",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 3315776,
+      "offset": 276,
+      "opcode": 3,
+      "reference_address": 2749504,
+      "target_address": 2752928,
+      "group_count_context": {
+        "previous_named_neighbor": "xGroupGetItemPtr",
+        "reference_start": 2749296,
+        "target_start": 2752720,
+        "sequence_bytes": 220,
+        "reference_sha256": "f69e2518a82702d4b903006494bf5071481c89e6a8a7dad433c236a935577f1d",
+        "target_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+        "uniqueness": {
+          "matching_addresses": [
+            2752720
+          ],
+          "unchanged_anchor_offset": 92,
+          "unchanged_anchor_bytes": 128,
+          "masked_instruction_count": 1
+        },
+        "checked_direct_call": {
+          "offset": 88,
+          "opcode": 3,
+          "reference_address": 1663984,
+          "target_address": 1667344
+        },
+        "no_progress_or_new_anchor": true
+      },
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 3315776,
+      "offset": 308,
+      "opcode": 3,
+      "reference_address": 2749296,
+      "target_address": 2752720,
+      "group_count_context": {
+        "previous_named_neighbor": "xGroupGetItemPtr",
+        "reference_start": 2749296,
+        "target_start": 2752720,
+        "sequence_bytes": 220,
+        "reference_sha256": "f69e2518a82702d4b903006494bf5071481c89e6a8a7dad433c236a935577f1d",
+        "target_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+        "uniqueness": {
+          "matching_addresses": [
+            2752720
+          ],
+          "unchanged_anchor_offset": 92,
+          "unchanged_anchor_bytes": 128,
+          "masked_instruction_count": 1
+        },
+        "checked_direct_call": {
+          "offset": 88,
+          "opcode": 3,
+          "reference_address": 1663984,
+          "target_address": 1667344
+        },
+        "no_progress_or_new_anchor": true
+      },
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 3315776,
+      "offset": 532,
+      "opcode": 3,
+      "reference_address": 2031184,
+      "target_address": 2034656,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 3315776,
+      "offset": 608,
+      "opcode": 3,
+      "reference_address": 1149960,
+      "target_address": 1149960,
+      "opaque_context_prefix_sha256": "0c36391b9572b52c77a7870d104a3c4fbd11d6cf740bec5c0b42f84f66f36421",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 3315776,
+      "offset": 660,
+      "opcode": 3,
+      "reference_address": 1149520,
+      "target_address": 1149520,
+      "opaque_context_prefix_sha256": "b11c4bfe9af6ebb2c9f043298f159983de6f70d9d33c4e11dd2158f565a4d55b",
+      "opaque_context_bytes": 64,
+      "no_identity_or_extent_claim": true,
+      "transfer_word_unmasked": true,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 3315776,
+      "offset": 716,
+      "opcode": 3,
+      "reference_address": 2749504,
+      "target_address": 2752928,
+      "group_count_context": {
+        "previous_named_neighbor": "xGroupGetItemPtr",
+        "reference_start": 2749296,
+        "target_start": 2752720,
+        "sequence_bytes": 220,
+        "reference_sha256": "f69e2518a82702d4b903006494bf5071481c89e6a8a7dad433c236a935577f1d",
+        "target_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+        "uniqueness": {
+          "matching_addresses": [
+            2752720
+          ],
+          "unchanged_anchor_offset": 92,
+          "unchanged_anchor_bytes": 128,
+          "masked_instruction_count": 1
+        },
+        "checked_direct_call": {
+          "offset": 88,
+          "opcode": 3,
+          "reference_address": 1663984,
+          "target_address": 1667344
+        },
+        "no_progress_or_new_anchor": true
+      },
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 3315776,
+      "offset": 752,
+      "opcode": 3,
+      "reference_address": 2749296,
+      "target_address": 2752720,
+      "group_count_context": {
+        "previous_named_neighbor": "xGroupGetItemPtr",
+        "reference_start": 2749296,
+        "target_start": 2752720,
+        "sequence_bytes": 220,
+        "reference_sha256": "f69e2518a82702d4b903006494bf5071481c89e6a8a7dad433c236a935577f1d",
+        "target_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+        "uniqueness": {
+          "matching_addresses": [
+            2752720
+          ],
+          "unchanged_anchor_offset": 92,
+          "unchanged_anchor_bytes": 128,
+          "masked_instruction_count": 1
+        },
+        "checked_direct_call": {
+          "offset": 88,
+          "opcode": 3,
+          "reference_address": 1663984,
+          "target_address": 1667344
+        },
+        "no_progress_or_new_anchor": true
+      },
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 1837728,
+      "offset": 48,
+      "opcode": 3,
+      "reference_address": 1755600,
+      "target_address": 1756896,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 1837728,
+      "offset": 132,
+      "opcode": 3,
+      "reference_address": 2026176,
+      "target_address": 2027536,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 1837728,
+      "offset": 148,
+      "opcode": 3,
+      "reference_address": 1751760,
+      "target_address": 1753056,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 1837728,
+      "offset": 188,
+      "opcode": 3,
+      "reference_address": 1751760,
+      "target_address": 1753056,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 1838016,
+      "offset": 72,
+      "opcode": 3,
+      "reference_address": 1893472,
+      "target_address": 1894848,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 1838016,
+      "offset": 92,
+      "opcode": 3,
+      "reference_address": 1891536,
+      "target_address": 1892912,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 1838016,
+      "offset": 112,
+      "opcode": 3,
+      "reference_address": 1893056,
+      "target_address": 1894432,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 1838160,
+      "offset": 40,
+      "opcode": 3,
+      "reference_address": 1755104,
+      "target_address": 1756400,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 1838160,
+      "offset": 116,
+      "opcode": 3,
+      "reference_address": 1750880,
+      "target_address": 1752176,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 1838368,
+      "offset": 868,
+      "opcode": 3,
+      "reference_address": 2026176,
+      "target_address": 2027536,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 1838368,
+      "offset": 884,
+      "opcode": 3,
+      "reference_address": 2026176,
+      "target_address": 2027536,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 1838368,
+      "offset": 924,
+      "opcode": 3,
+      "reference_address": 1750880,
+      "target_address": 1752176,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 1839328,
+      "offset": 28,
+      "opcode": 3,
+      "reference_address": 2075360,
+      "target_address": 2076784,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 1839328,
+      "offset": 256,
+      "opcode": 3,
+      "reference_address": 1893472,
+      "target_address": 1894848,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 1839328,
+      "offset": 284,
+      "opcode": 3,
+      "reference_address": 1891536,
+      "target_address": 1892912,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 1839328,
+      "offset": 312,
+      "opcode": 3,
+      "reference_address": 1893056,
+      "target_address": 1894432,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 1839328,
+      "offset": 336,
+      "opcode": 3,
+      "reference_address": 1887296,
+      "target_address": 1888672,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 1839328,
+      "offset": 364,
+      "opcode": 3,
+      "reference_address": 1882752,
+      "target_address": 1884128,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 1840336,
+      "offset": 212,
+      "opcode": 3,
+      "reference_address": 2030928,
+      "target_address": 2032288,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 1840576,
+      "offset": 416,
+      "opcode": 3,
+      "reference_address": 2075232,
+      "target_address": 2076656,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 1837728,
+      "offset": 48,
+      "opcode": 3,
+      "reference_address": 1756896,
+      "target_address": 1756896,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 1837728,
+      "offset": 132,
+      "opcode": 3,
+      "reference_address": 2027424,
+      "target_address": 2027536,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 1837728,
+      "offset": 148,
+      "opcode": 3,
+      "reference_address": 1753056,
+      "target_address": 1753056,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 1837728,
+      "offset": 188,
+      "opcode": 3,
+      "reference_address": 1753056,
+      "target_address": 1753056,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 1838016,
+      "offset": 72,
+      "opcode": 3,
+      "reference_address": 1894736,
+      "target_address": 1894848,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 1838016,
+      "offset": 92,
+      "opcode": 3,
+      "reference_address": 1892800,
+      "target_address": 1892912,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 1838016,
+      "offset": 112,
+      "opcode": 3,
+      "reference_address": 1894320,
+      "target_address": 1894432,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 1838160,
+      "offset": 40,
+      "opcode": 3,
+      "reference_address": 1756400,
+      "target_address": 1756400,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 1838160,
+      "offset": 116,
+      "opcode": 3,
+      "reference_address": 1752176,
+      "target_address": 1752176,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 1838368,
+      "offset": 868,
+      "opcode": 3,
+      "reference_address": 2027424,
+      "target_address": 2027536,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 1838368,
+      "offset": 884,
+      "opcode": 3,
+      "reference_address": 2027424,
+      "target_address": 2027536,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 1838368,
+      "offset": 924,
+      "opcode": 3,
+      "reference_address": 1752176,
+      "target_address": 1752176,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 1839328,
+      "offset": 28,
+      "opcode": 3,
+      "reference_address": 2076672,
+      "target_address": 2076784,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 1839328,
+      "offset": 256,
+      "opcode": 3,
+      "reference_address": 1894736,
+      "target_address": 1894848,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 1839328,
+      "offset": 284,
+      "opcode": 3,
+      "reference_address": 1892800,
+      "target_address": 1892912,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 1839328,
+      "offset": 312,
+      "opcode": 3,
+      "reference_address": 1894320,
+      "target_address": 1894432,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 1839328,
+      "offset": 336,
+      "opcode": 3,
+      "reference_address": 1888560,
+      "target_address": 1888672,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 1839328,
+      "offset": 364,
+      "opcode": 3,
+      "reference_address": 1884016,
+      "target_address": 1884128,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 1840336,
+      "offset": 212,
+      "opcode": 3,
+      "reference_address": 2032176,
+      "target_address": 2032288,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 1840576,
+      "offset": 416,
+      "opcode": 3,
+      "reference_address": 2076544,
+      "target_address": 2076656,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 1837728,
+      "offset": 48,
+      "opcode": 3,
+      "reference_address": 1753536,
+      "target_address": 1756896,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 1837728,
+      "offset": 132,
+      "opcode": 3,
+      "reference_address": 2024064,
+      "target_address": 2027536,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 1837728,
+      "offset": 148,
+      "opcode": 3,
+      "reference_address": 1749696,
+      "target_address": 1753056,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 1837728,
+      "offset": 188,
+      "opcode": 3,
+      "reference_address": 1749696,
+      "target_address": 1753056,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 1838016,
+      "offset": 72,
+      "opcode": 3,
+      "reference_address": 1891376,
+      "target_address": 1894848,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 1838016,
+      "offset": 92,
+      "opcode": 3,
+      "reference_address": 1889440,
+      "target_address": 1892912,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 1838016,
+      "offset": 112,
+      "opcode": 3,
+      "reference_address": 1890960,
+      "target_address": 1894432,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 1838160,
+      "offset": 40,
+      "opcode": 3,
+      "reference_address": 1753040,
+      "target_address": 1756400,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 1838160,
+      "offset": 116,
+      "opcode": 3,
+      "reference_address": 1748816,
+      "target_address": 1752176,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 1838368,
+      "offset": 868,
+      "opcode": 3,
+      "reference_address": 2024064,
+      "target_address": 2027536,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 1838368,
+      "offset": 884,
+      "opcode": 3,
+      "reference_address": 2024064,
+      "target_address": 2027536,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 1838368,
+      "offset": 924,
+      "opcode": 3,
+      "reference_address": 1748816,
+      "target_address": 1752176,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 1839328,
+      "offset": 28,
+      "opcode": 3,
+      "reference_address": 2073328,
+      "target_address": 2076784,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 1839328,
+      "offset": 256,
+      "opcode": 3,
+      "reference_address": 1891376,
+      "target_address": 1894848,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 1839328,
+      "offset": 284,
+      "opcode": 3,
+      "reference_address": 1889440,
+      "target_address": 1892912,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 1839328,
+      "offset": 312,
+      "opcode": 3,
+      "reference_address": 1890960,
+      "target_address": 1894432,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 1839328,
+      "offset": 336,
+      "opcode": 3,
+      "reference_address": 1885200,
+      "target_address": 1888672,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 1839328,
+      "offset": 364,
+      "opcode": 3,
+      "reference_address": 1880656,
+      "target_address": 1884128,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 1840336,
+      "offset": 212,
+      "opcode": 3,
+      "reference_address": 2028816,
+      "target_address": 2032288,
+      "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 1840576,
+      "offset": 416,
+      "opcode": 3,
+      "reference_address": 2073200,
+      "target_address": 2076656,
+      "promoted_as_named_anchor": false
     }
   ],
   "functions": [
@@ -13629,6 +14854,996 @@
           1752832,
           1755776,
           1756400
+        ]
+      }
+    },
+    {
+      "name": "xBoundDraw",
+      "source": "SB/Core/x/xBound.cpp",
+      "address": 1837712,
+      "size": 8,
+      "sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1836336,
+          "name": "xBoundDraw",
+          "source": "SB/Core/x/xBound.cpp",
+          "linkage_name": "xBoundDraw__FPC6xBound",
+          "reference_sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1837600,
+          "name": "xBoundDraw",
+          "source": "SB/Core/x/xBound.cpp",
+          "linkage_name": "xBoundDraw__FPC6xBound",
+          "reference_sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1834240,
+          "name": "xBoundDraw",
+          "source": "SB/Core/x/xBound.cpp",
+          "linkage_name": "xBoundDraw__FPC6xBound",
+          "reference_sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1837712
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 8
+        },
+        "previously_confirmed_neighbor_entries": [
+          1838160,
+          1838368,
+          1840336
+        ]
+      }
+    },
+    {
+      "name": "xVecHitsBound",
+      "source": "SB/Core/x/xBound.cpp",
+      "address": 1837728,
+      "size": 276,
+      "sha256": "7647153316dcca94dc095ad07de0ea811a128792657ab888349a02fd70c77b3e",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1836352,
+          "name": "xVecHitsBound",
+          "source": "SB/Core/x/xBound.cpp",
+          "linkage_name": "xVecHitsBound__FPC5xVec3PC6xBoundP7xCollis",
+          "reference_sha256": "66ce78b0128a3a591467f6cbfd742c94022b1e8793402766275a901e8c82fb65",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 48,
+              "opcode": 3,
+              "reference_address": 1755600,
+              "target_address": 1756896
+            },
+            {
+              "offset": 132,
+              "opcode": 3,
+              "reference_address": 2026176,
+              "target_address": 2027536
+            },
+            {
+              "offset": 148,
+              "opcode": 3,
+              "reference_address": 1751760,
+              "target_address": 1753056
+            },
+            {
+              "offset": 188,
+              "opcode": 3,
+              "reference_address": 1751760,
+              "target_address": 1753056
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1837616,
+          "name": "xVecHitsBound",
+          "source": "SB/Core/x/xBound.cpp",
+          "linkage_name": "xVecHitsBound__FPC5xVec3PC6xBoundP7xCollis",
+          "reference_sha256": "0969b37d86b65747f9e50038345e8f956795b63e9ad3f19dbb6da7d847a897c6",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 48,
+              "opcode": 3,
+              "reference_address": 1756896,
+              "target_address": 1756896
+            },
+            {
+              "offset": 132,
+              "opcode": 3,
+              "reference_address": 2027424,
+              "target_address": 2027536
+            },
+            {
+              "offset": 148,
+              "opcode": 3,
+              "reference_address": 1753056,
+              "target_address": 1753056
+            },
+            {
+              "offset": 188,
+              "opcode": 3,
+              "reference_address": 1753056,
+              "target_address": 1753056
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1834256,
+          "name": "xVecHitsBound",
+          "source": "SB/Core/x/xBound.cpp",
+          "linkage_name": "xVecHitsBound__FPC5xVec3PC6xBoundP7xCollis",
+          "reference_sha256": "49dab2157b631414d81f9312fe401979398097d282ee8bf29fcd7301674b46d9",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 48,
+              "opcode": 3,
+              "reference_address": 1753536,
+              "target_address": 1756896
+            },
+            {
+              "offset": 132,
+              "opcode": 3,
+              "reference_address": 2024064,
+              "target_address": 2027536
+            },
+            {
+              "offset": 148,
+              "opcode": 3,
+              "reference_address": 1749696,
+              "target_address": 1753056
+            },
+            {
+              "offset": 188,
+              "opcode": 3,
+              "reference_address": 1749696,
+              "target_address": 1753056
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1837996
+          ],
+          "direct_or_indirect_calls": [
+            1837776,
+            1837860,
+            1837876,
+            1837916
+          ],
+          "branches": [
+            [
+              1837760,
+              1837792
+            ],
+            [
+              1837784,
+              1837928
+            ],
+            [
+              1837796,
+              1837896
+            ],
+            [
+              1837884,
+              1837928
+            ],
+            [
+              1837900,
+              1837928
+            ],
+            [
+              1837944,
+              1837968
+            ],
+            [
+              1837960,
+              1837984
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              1837728,
+              -112
+            ],
+            [
+              1838000,
+              112
+            ]
+          ],
+          "ra_saves": [
+            [
+              1837736,
+              -80
+            ]
+          ],
+          "ra_loads": [
+            [
+              1837984,
+              -80
+            ]
+          ],
+          "unreachable_zero_words": [
+            1837892
+          ],
+          "following_zero_alignment": 12
+        },
+        "previously_confirmed_neighbor_entries": [
+          1838160,
+          1838368,
+          1840336
+        ]
+      }
+    },
+    {
+      "name": "xSphereHitsBound",
+      "source": "SB/Core/x/xBound.cpp",
+      "address": 1838016,
+      "size": 132,
+      "sha256": "067cd9b5d8a325d27eb3e5cd6d69b395ead8f7e2e3534c1407d5b2ac729e59e4",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1836640,
+          "name": "xSphereHitsBound",
+          "source": "SB/Core/x/xBound.cpp",
+          "linkage_name": "xSphereHitsBound__FPC7xSpherePC6xBoundP7xCollis",
+          "reference_sha256": "18fd77cbf6186e9ccbb76b5d8a05a48f345540a6ef876ec5c5fb5213d65c7eb2",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 72,
+              "opcode": 3,
+              "reference_address": 1893472,
+              "target_address": 1894848
+            },
+            {
+              "offset": 92,
+              "opcode": 3,
+              "reference_address": 1891536,
+              "target_address": 1892912
+            },
+            {
+              "offset": 112,
+              "opcode": 3,
+              "reference_address": 1893056,
+              "target_address": 1894432
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1837904,
+          "name": "xSphereHitsBound",
+          "source": "SB/Core/x/xBound.cpp",
+          "linkage_name": "xSphereHitsBound__FPC7xSpherePC6xBoundP7xCollis",
+          "reference_sha256": "d2d717f468598085d85709a6633c4ffbb4010a1b600bbbbfd9c8348eb1c265bf",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 72,
+              "opcode": 3,
+              "reference_address": 1894736,
+              "target_address": 1894848
+            },
+            {
+              "offset": 92,
+              "opcode": 3,
+              "reference_address": 1892800,
+              "target_address": 1892912
+            },
+            {
+              "offset": 112,
+              "opcode": 3,
+              "reference_address": 1894320,
+              "target_address": 1894432
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1834544,
+          "name": "xSphereHitsBound",
+          "source": "SB/Core/x/xBound.cpp",
+          "linkage_name": "xSphereHitsBound__FPC7xSpherePC6xBoundP7xCollis",
+          "reference_sha256": "f008c79256241f29eefc13e226b6b108a9502f0b6517612c25c758230b375108",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 72,
+              "opcode": 3,
+              "reference_address": 1891376,
+              "target_address": 1894848
+            },
+            {
+              "offset": 92,
+              "opcode": 3,
+              "reference_address": 1889440,
+              "target_address": 1892912
+            },
+            {
+              "offset": 112,
+              "opcode": 3,
+              "reference_address": 1890960,
+              "target_address": 1894432
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1838140
+          ],
+          "direct_or_indirect_calls": [
+            1838088,
+            1838108,
+            1838128
+          ],
+          "branches": [
+            [
+              1838036,
+              1838136
+            ],
+            [
+              1838048,
+              1838128
+            ],
+            [
+              1838056,
+              1838104
+            ],
+            [
+              1838068,
+              1838088
+            ],
+            [
+              1838076,
+              1838136
+            ],
+            [
+              1838096,
+              1838136
+            ],
+            [
+              1838116,
+              1838136
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              1838016,
+              -16
+            ],
+            [
+              1838144,
+              16
+            ]
+          ],
+          "ra_saves": [
+            [
+              1838024,
+              -16
+            ]
+          ],
+          "ra_loads": [
+            [
+              1838136,
+              -16
+            ]
+          ],
+          "unreachable_zero_words": [
+            1838084,
+            1838124
+          ],
+          "following_zero_alignment": 12
+        },
+        "previously_confirmed_neighbor_entries": [
+          1838160,
+          1838368,
+          1840336
+        ]
+      }
+    },
+    {
+      "name": "xBoundHitsBound",
+      "source": "SB/Core/x/xBound.cpp",
+      "address": 1839328,
+      "size": 400,
+      "sha256": "a759c58a93c66ab7f3b5251db2a75ffa9a52344bbbc57ad7f7d671972665da9c",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1837952,
+          "name": "xBoundHitsBound",
+          "source": "SB/Core/x/xBound.cpp",
+          "linkage_name": "xBoundHitsBound__FPC6xBoundPC6xBoundP7xCollis",
+          "reference_sha256": "6c3ff89a3a22487d828564f43f783c7c3735476f48d4c6e9760f6d8907c7a23a",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 28,
+              "opcode": 3,
+              "reference_address": 2075360,
+              "target_address": 2076784
+            },
+            {
+              "offset": 256,
+              "opcode": 3,
+              "reference_address": 1893472,
+              "target_address": 1894848
+            },
+            {
+              "offset": 284,
+              "opcode": 3,
+              "reference_address": 1891536,
+              "target_address": 1892912
+            },
+            {
+              "offset": 312,
+              "opcode": 3,
+              "reference_address": 1893056,
+              "target_address": 1894432
+            },
+            {
+              "offset": 336,
+              "opcode": 3,
+              "reference_address": 1887296,
+              "target_address": 1888672
+            },
+            {
+              "offset": 364,
+              "opcode": 3,
+              "reference_address": 1882752,
+              "target_address": 1884128
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1839216,
+          "name": "xBoundHitsBound",
+          "source": "SB/Core/x/xBound.cpp",
+          "linkage_name": "xBoundHitsBound__FPC6xBoundPC6xBoundP7xCollis",
+          "reference_sha256": "f36585315333fce966fb1b318d42418ec9d6e825d4b4ac9ae3455b34d0251c57",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 28,
+              "opcode": 3,
+              "reference_address": 2076672,
+              "target_address": 2076784
+            },
+            {
+              "offset": 256,
+              "opcode": 3,
+              "reference_address": 1894736,
+              "target_address": 1894848
+            },
+            {
+              "offset": 284,
+              "opcode": 3,
+              "reference_address": 1892800,
+              "target_address": 1892912
+            },
+            {
+              "offset": 312,
+              "opcode": 3,
+              "reference_address": 1894320,
+              "target_address": 1894432
+            },
+            {
+              "offset": 336,
+              "opcode": 3,
+              "reference_address": 1888560,
+              "target_address": 1888672
+            },
+            {
+              "offset": 364,
+              "opcode": 3,
+              "reference_address": 1884016,
+              "target_address": 1884128
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1835856,
+          "name": "xBoundHitsBound",
+          "source": "SB/Core/x/xBound.cpp",
+          "linkage_name": "xBoundHitsBound__FPC6xBoundPC6xBoundP7xCollis",
+          "reference_sha256": "40f6cef3d8f48832e7940fe7982c06d4c9061a4bf04ef0573c8e177099b08612",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 28,
+              "opcode": 3,
+              "reference_address": 2073328,
+              "target_address": 2076784
+            },
+            {
+              "offset": 256,
+              "opcode": 3,
+              "reference_address": 1891376,
+              "target_address": 1894848
+            },
+            {
+              "offset": 284,
+              "opcode": 3,
+              "reference_address": 1889440,
+              "target_address": 1892912
+            },
+            {
+              "offset": 312,
+              "opcode": 3,
+              "reference_address": 1890960,
+              "target_address": 1894432
+            },
+            {
+              "offset": 336,
+              "opcode": 3,
+              "reference_address": 1885200,
+              "target_address": 1888672
+            },
+            {
+              "offset": 364,
+              "opcode": 3,
+              "reference_address": 1880656,
+              "target_address": 1884128
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1839720
+          ],
+          "direct_or_indirect_calls": [
+            1839356,
+            1839584,
+            1839612,
+            1839640,
+            1839664,
+            1839692
+          ],
+          "branches": [
+            [
+              1839364,
+              1839392
+            ],
+            [
+              1839384,
+              1839704
+            ],
+            [
+              1839412,
+              1839704
+            ],
+            [
+              1839420,
+              1839704
+            ],
+            [
+              1839432,
+              1839704
+            ],
+            [
+              1839440,
+              1839704
+            ],
+            [
+              1839452,
+              1839704
+            ],
+            [
+              1839460,
+              1839704
+            ],
+            [
+              1839472,
+              1839704
+            ],
+            [
+              1839480,
+              1839704
+            ],
+            [
+              1839492,
+              1839704
+            ],
+            [
+              1839500,
+              1839704
+            ],
+            [
+              1839512,
+              1839704
+            ],
+            [
+              1839520,
+              1839680
+            ],
+            [
+              1839532,
+              1839656
+            ],
+            [
+              1839540,
+              1839632
+            ],
+            [
+              1839552,
+              1839600
+            ],
+            [
+              1839560,
+              1839576
+            ],
+            [
+              1839568,
+              1839704
+            ],
+            [
+              1839592,
+              1839704
+            ],
+            [
+              1839620,
+              1839704
+            ],
+            [
+              1839648,
+              1839704
+            ],
+            [
+              1839672,
+              1839704
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              1839328,
+              -64
+            ],
+            [
+              1839724,
+              64
+            ]
+          ],
+          "ra_saves": [
+            [
+              1839332,
+              -16
+            ]
+          ],
+          "ra_loads": [
+            [
+              1839704,
+              -16
+            ]
+          ],
+          "unreachable_zero_words": [
+            1839628
+          ],
+          "following_zero_alignment": 0
+        },
+        "previously_confirmed_neighbor_entries": [
+          1838160,
+          1838368,
+          1840336
+        ]
+      }
+    },
+    {
+      "name": "xBoundGetSphere",
+      "source": "SB/Core/x/xBound.cpp",
+      "address": 1839728,
+      "size": 600,
+      "sha256": "2a3a3a651456071ad3050996a5809321461e42827b2f1df4a209465b265e349d",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1838352,
+          "name": "xBoundGetSphere",
+          "source": "SB/Core/x/xBound.cpp",
+          "linkage_name": "xBoundGetSphere__FR7xSphereRC6xBound",
+          "reference_sha256": "2a3a3a651456071ad3050996a5809321461e42827b2f1df4a209465b265e349d",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1839616,
+          "name": "xBoundGetSphere",
+          "source": "SB/Core/x/xBound.cpp",
+          "linkage_name": "xBoundGetSphere__FR7xSphereRC6xBound",
+          "reference_sha256": "2a3a3a651456071ad3050996a5809321461e42827b2f1df4a209465b265e349d",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1836256,
+          "name": "xBoundGetSphere",
+          "source": "SB/Core/x/xBound.cpp",
+          "linkage_name": "xBoundGetSphere__FR7xSphereRC6xBound",
+          "reference_sha256": "2a3a3a651456071ad3050996a5809321461e42827b2f1df4a209465b265e349d",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1840320
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              1839736,
+              1840320
+            ],
+            [
+              1839748,
+              1839992
+            ],
+            [
+              1839756,
+              1839824
+            ],
+            [
+              1839768,
+              1839784
+            ],
+            [
+              1839776,
+              1840320
+            ],
+            [
+              1839812,
+              1840320
+            ],
+            [
+              1839984,
+              1840320
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              1839740,
+              -80
+            ],
+            [
+              1840324,
+              80
+            ]
+          ],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [
+            1839820
+          ],
+          "following_zero_alignment": 8
+        },
+        "previously_confirmed_neighbor_entries": [
+          1838160,
+          1838368,
+          1840336
+        ]
+      }
+    },
+    {
+      "name": "xBoundUpdate",
+      "source": "SB/Core/x/xBound.cpp",
+      "address": 1840576,
+      "size": 436,
+      "sha256": "e62d2636f6480c33269c823ce1bdbbca58263ca20c6fdc781ed9ca64b29cb7c8",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1839200,
+          "name": "xBoundUpdate",
+          "source": "SB/Core/x/xBound.cpp",
+          "linkage_name": "xBoundUpdate__FP6xBound",
+          "reference_sha256": "8ea056c87cc557a53fddcd9870730605fcf8c315b56ab93732bb8ff9d6b5639b",
+          "data_address_operands": [
+            {
+              "hi_offset": 408,
+              "lo_offset": 420,
+              "opcode": 9,
+              "reference_address": 5904144,
+              "target_address": 5903120,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 416,
+              "opcode": 3,
+              "reference_address": 2075232,
+              "target_address": 2076656
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1840464,
+          "name": "xBoundUpdate",
+          "source": "SB/Core/x/xBound.cpp",
+          "linkage_name": "xBoundUpdate__FP6xBound",
+          "reference_sha256": "9498e8d2d1a1d0a64e6b33d516e1b13f4f36aa64ffd1365e43e5cf8d8f46b2f4",
+          "data_address_operands": [
+            {
+              "hi_offset": 408,
+              "lo_offset": 420,
+              "opcode": 9,
+              "reference_address": 5902864,
+              "target_address": 5903120,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 416,
+              "opcode": 3,
+              "reference_address": 2076544,
+              "target_address": 2076656
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1837104,
+          "name": "xBoundUpdate",
+          "source": "SB/Core/x/xBound.cpp",
+          "linkage_name": "xBoundUpdate__FP6xBound",
+          "reference_sha256": "67534b0d0fd30bbab3f857040a6770c0b417f945cb74f4a36f84c358a98f90c6",
+          "data_address_operands": [
+            {
+              "hi_offset": 408,
+              "lo_offset": 420,
+              "opcode": 9,
+              "reference_address": 5901328,
+              "target_address": 5903120,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 416,
+              "opcode": 3,
+              "reference_address": 2073200,
+              "target_address": 2076656
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1841004
+          ],
+          "direct_or_indirect_calls": [
+            1840992
+          ],
+          "branches": [
+            [
+              1840596,
+              1840704
+            ],
+            [
+              1840696,
+              1840976
+            ],
+            [
+              1840708,
+              1840976
+            ],
+            [
+              1840980,
+              1841000
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              1840576,
+              -16
+            ],
+            [
+              1841008,
+              16
+            ]
+          ],
+          "ra_saves": [
+            [
+              1840584,
+              -16
+            ]
+          ],
+          "ra_loads": [
+            [
+              1841000,
+              -16
+            ]
+          ],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 12
+        },
+        "previously_confirmed_neighbor_entries": [
+          1838160,
+          1838368,
+          1840336
         ]
       }
     },
@@ -48698,6 +50913,107 @@
         },
         "direct_rooted_call_sites": [
           1814928
+        ]
+      }
+    },
+    {
+      "name": "xParMemInit",
+      "source": "SB/Core/x/xPar.cpp",
+      "address": 2050160,
+      "size": 76,
+      "sha256": "80879e075338e7588c37fa2ce02f2420acaa634bc78dc14d9e700a9b46e38f3f",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2048800,
+          "name": "xParMemInit",
+          "source": "SB/Core/x/xPar.cpp",
+          "linkage_name": "xParMemInit__Fv",
+          "reference_sha256": "109ef05330b8e10585302e4a775a0573daef8a90828f683bac72a4a8c8a3d611",
+          "data_address_operands": [
+            {
+              "hi_offset": 0,
+              "lo_offset": 8,
+              "opcode": 9,
+              "reference_address": 5673872,
+              "target_address": 5672848,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2050048,
+          "name": "xParMemInit",
+          "source": "SB/Core/x/xPar.cpp",
+          "linkage_name": "xParMemInit__Fv",
+          "reference_sha256": "a7d8659ab1c0d169619b6d1c255e1935ed68a965c978a0816511f48169e23e8d",
+          "data_address_operands": [
+            {
+              "hi_offset": 0,
+              "lo_offset": 8,
+              "opcode": 9,
+              "reference_address": 5672592,
+              "target_address": 5672848,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2046688,
+          "name": "xParMemInit",
+          "source": "SB/Core/x/xPar.cpp",
+          "linkage_name": "xParMemInit__Fv",
+          "reference_sha256": "01b305fd54746ad213abc62d35aab72e51aaee0fc003ffddbdc80de0bf3e075a",
+          "data_address_operands": [
+            {
+              "hi_offset": 0,
+              "lo_offset": 8,
+              "opcode": 9,
+              "reference_address": 5671056,
+              "target_address": 5672848,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2050228
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              2050188,
+              2050208
+            ],
+            [
+              2050220,
+              2050176
+            ]
+          ],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 4
+        },
+        "previously_confirmed_neighbor_entries": [
+          2049872,
+          2050000,
+          2050096
         ]
       }
     },
@@ -86688,6 +89004,992 @@
           3170400
         ]
       }
+    },
+    {
+      "name": "xUpdateCull_Init",
+      "source": "SB/Core/x/xUpdateCull.cpp",
+      "address": 3315776,
+      "size": 1484,
+      "sha256": "453a4f4b243e4d840b07424321f376bfc62bf2174a6172b8184aa51f3a36d2a2",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3314384,
+          "name": "xUpdateCull_Init",
+          "source": "SB/Core/x/xUpdateCull.cpp",
+          "linkage_name": "xUpdateCull_Init__FPPvUiPP6xGroupUi",
+          "reference_sha256": "27816500bde60117ad6c8869853930663cd788965c9597e2a50f598950c30cbd",
+          "data_address_operands": [
+            {
+              "hi_offset": 72,
+              "lo_offset": 76,
+              "opcode": 35,
+              "reference_address": 6011484,
+              "target_address": 6010460,
+              "storage": "zero_fill",
+              "scope": "Independently reviewed allocator-neighborhood slot; no name or extent promoted"
+            },
+            {
+              "hi_offset": 200,
+              "lo_offset": 216,
+              "opcode": 35,
+              "reference_address": 6011484,
+              "target_address": 6010460,
+              "storage": "zero_fill",
+              "scope": "Independently reviewed allocator-neighborhood slot; no name or extent promoted"
+            },
+            {
+              "hi_offset": 780,
+              "lo_offset": 784,
+              "opcode": 9,
+              "reference_address": 3316000,
+              "target_address": 3317392,
+              "storage": "file_backed",
+              "scope": "Complete-sequence original AlwaysTrue callback entry"
+            },
+            {
+              "hi_offset": 1248,
+              "lo_offset": 1256,
+              "opcode": 9,
+              "reference_address": 3316000,
+              "target_address": 3317392,
+              "storage": "file_backed",
+              "scope": "Complete-sequence original AlwaysTrue callback entry"
+            },
+            {
+              "hi_offset": 1384,
+              "lo_offset": 1388,
+              "opcode": 9,
+              "reference_address": 6011488,
+              "target_address": 6010464,
+              "storage": "zero_fill",
+              "scope": "Independently reviewed allocator-neighborhood slot; no name or extent promoted"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 240,
+              "opcode": 3,
+              "reference_address": 1149960,
+              "target_address": 1149960,
+              "opaque_context_prefix_sha256": "0c36391b9572b52c77a7870d104a3c4fbd11d6cf740bec5c0b42f84f66f36421",
+              "opaque_context_bytes": 64,
+              "no_identity_or_extent_claim": true,
+              "transfer_word_unmasked": true
+            },
+            {
+              "offset": 276,
+              "opcode": 3,
+              "reference_address": 2751520,
+              "target_address": 2752928,
+              "group_count_context": {
+                "previous_named_neighbor": "xGroupGetItemPtr",
+                "reference_start": 2751312,
+                "target_start": 2752720,
+                "sequence_bytes": 220,
+                "reference_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+                "target_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+                "uniqueness": {
+                  "matching_addresses": [
+                    2752720
+                  ],
+                  "unchanged_anchor_offset": 92,
+                  "unchanged_anchor_bytes": 128,
+                  "masked_instruction_count": 1
+                },
+                "checked_direct_call": {
+                  "offset": 88,
+                  "opcode": 3,
+                  "reference_address": 1667344,
+                  "target_address": 1667344
+                },
+                "no_progress_or_new_anchor": true
+              }
+            },
+            {
+              "offset": 308,
+              "opcode": 3,
+              "reference_address": 2751312,
+              "target_address": 2752720,
+              "group_count_context": {
+                "previous_named_neighbor": "xGroupGetItemPtr",
+                "reference_start": 2751312,
+                "target_start": 2752720,
+                "sequence_bytes": 220,
+                "reference_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+                "target_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+                "uniqueness": {
+                  "matching_addresses": [
+                    2752720
+                  ],
+                  "unchanged_anchor_offset": 92,
+                  "unchanged_anchor_bytes": 128,
+                  "masked_instruction_count": 1
+                },
+                "checked_direct_call": {
+                  "offset": 88,
+                  "opcode": 3,
+                  "reference_address": 1667344,
+                  "target_address": 1667344
+                },
+                "no_progress_or_new_anchor": true
+              }
+            },
+            {
+              "offset": 532,
+              "opcode": 3,
+              "reference_address": 2033296,
+              "target_address": 2034656
+            },
+            {
+              "offset": 608,
+              "opcode": 3,
+              "reference_address": 1149960,
+              "target_address": 1149960,
+              "opaque_context_prefix_sha256": "0c36391b9572b52c77a7870d104a3c4fbd11d6cf740bec5c0b42f84f66f36421",
+              "opaque_context_bytes": 64,
+              "no_identity_or_extent_claim": true,
+              "transfer_word_unmasked": true
+            },
+            {
+              "offset": 660,
+              "opcode": 3,
+              "reference_address": 1149520,
+              "target_address": 1149520,
+              "opaque_context_prefix_sha256": "b11c4bfe9af6ebb2c9f043298f159983de6f70d9d33c4e11dd2158f565a4d55b",
+              "opaque_context_bytes": 64,
+              "no_identity_or_extent_claim": true,
+              "transfer_word_unmasked": true
+            },
+            {
+              "offset": 716,
+              "opcode": 3,
+              "reference_address": 2751520,
+              "target_address": 2752928,
+              "group_count_context": {
+                "previous_named_neighbor": "xGroupGetItemPtr",
+                "reference_start": 2751312,
+                "target_start": 2752720,
+                "sequence_bytes": 220,
+                "reference_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+                "target_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+                "uniqueness": {
+                  "matching_addresses": [
+                    2752720
+                  ],
+                  "unchanged_anchor_offset": 92,
+                  "unchanged_anchor_bytes": 128,
+                  "masked_instruction_count": 1
+                },
+                "checked_direct_call": {
+                  "offset": 88,
+                  "opcode": 3,
+                  "reference_address": 1667344,
+                  "target_address": 1667344
+                },
+                "no_progress_or_new_anchor": true
+              }
+            },
+            {
+              "offset": 752,
+              "opcode": 3,
+              "reference_address": 2751312,
+              "target_address": 2752720,
+              "group_count_context": {
+                "previous_named_neighbor": "xGroupGetItemPtr",
+                "reference_start": 2751312,
+                "target_start": 2752720,
+                "sequence_bytes": 220,
+                "reference_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+                "target_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+                "uniqueness": {
+                  "matching_addresses": [
+                    2752720
+                  ],
+                  "unchanged_anchor_offset": 92,
+                  "unchanged_anchor_bytes": 128,
+                  "masked_instruction_count": 1
+                },
+                "checked_direct_call": {
+                  "offset": 88,
+                  "opcode": 3,
+                  "reference_address": 1667344,
+                  "target_address": 1667344
+                },
+                "no_progress_or_new_anchor": true
+              }
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3315664,
+          "name": "xUpdateCull_Init",
+          "source": "SB/Core/x/xUpdateCull.cpp",
+          "linkage_name": "xUpdateCull_Init__FPPvUiPP6xGroupUi",
+          "reference_sha256": "bc77228de1adb4bcb2ffac9e3cf882721c258fc657882bddd31685706c7d987a",
+          "data_address_operands": [
+            {
+              "hi_offset": 72,
+              "lo_offset": 76,
+              "opcode": 35,
+              "reference_address": 6010204,
+              "target_address": 6010460,
+              "storage": "zero_fill",
+              "scope": "Independently reviewed allocator-neighborhood slot; no name or extent promoted"
+            },
+            {
+              "hi_offset": 200,
+              "lo_offset": 216,
+              "opcode": 35,
+              "reference_address": 6010204,
+              "target_address": 6010460,
+              "storage": "zero_fill",
+              "scope": "Independently reviewed allocator-neighborhood slot; no name or extent promoted"
+            },
+            {
+              "hi_offset": 780,
+              "lo_offset": 784,
+              "opcode": 9,
+              "reference_address": 3317280,
+              "target_address": 3317392,
+              "storage": "file_backed",
+              "scope": "Complete-sequence original AlwaysTrue callback entry"
+            },
+            {
+              "hi_offset": 1248,
+              "lo_offset": 1256,
+              "opcode": 9,
+              "reference_address": 3317280,
+              "target_address": 3317392,
+              "storage": "file_backed",
+              "scope": "Complete-sequence original AlwaysTrue callback entry"
+            },
+            {
+              "hi_offset": 1384,
+              "lo_offset": 1388,
+              "opcode": 9,
+              "reference_address": 6010208,
+              "target_address": 6010464,
+              "storage": "zero_fill",
+              "scope": "Independently reviewed allocator-neighborhood slot; no name or extent promoted"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 240,
+              "opcode": 3,
+              "reference_address": 1149960,
+              "target_address": 1149960,
+              "opaque_context_prefix_sha256": "0c36391b9572b52c77a7870d104a3c4fbd11d6cf740bec5c0b42f84f66f36421",
+              "opaque_context_bytes": 64,
+              "no_identity_or_extent_claim": true,
+              "transfer_word_unmasked": true
+            },
+            {
+              "offset": 276,
+              "opcode": 3,
+              "reference_address": 2752816,
+              "target_address": 2752928,
+              "group_count_context": {
+                "previous_named_neighbor": "xGroupGetItemPtr",
+                "reference_start": 2752608,
+                "target_start": 2752720,
+                "sequence_bytes": 220,
+                "reference_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+                "target_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+                "uniqueness": {
+                  "matching_addresses": [
+                    2752720
+                  ],
+                  "unchanged_anchor_offset": 92,
+                  "unchanged_anchor_bytes": 128,
+                  "masked_instruction_count": 1
+                },
+                "checked_direct_call": {
+                  "offset": 88,
+                  "opcode": 3,
+                  "reference_address": 1667344,
+                  "target_address": 1667344
+                },
+                "no_progress_or_new_anchor": true
+              }
+            },
+            {
+              "offset": 308,
+              "opcode": 3,
+              "reference_address": 2752608,
+              "target_address": 2752720,
+              "group_count_context": {
+                "previous_named_neighbor": "xGroupGetItemPtr",
+                "reference_start": 2752608,
+                "target_start": 2752720,
+                "sequence_bytes": 220,
+                "reference_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+                "target_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+                "uniqueness": {
+                  "matching_addresses": [
+                    2752720
+                  ],
+                  "unchanged_anchor_offset": 92,
+                  "unchanged_anchor_bytes": 128,
+                  "masked_instruction_count": 1
+                },
+                "checked_direct_call": {
+                  "offset": 88,
+                  "opcode": 3,
+                  "reference_address": 1667344,
+                  "target_address": 1667344
+                },
+                "no_progress_or_new_anchor": true
+              }
+            },
+            {
+              "offset": 532,
+              "opcode": 3,
+              "reference_address": 2034544,
+              "target_address": 2034656
+            },
+            {
+              "offset": 608,
+              "opcode": 3,
+              "reference_address": 1149960,
+              "target_address": 1149960,
+              "opaque_context_prefix_sha256": "0c36391b9572b52c77a7870d104a3c4fbd11d6cf740bec5c0b42f84f66f36421",
+              "opaque_context_bytes": 64,
+              "no_identity_or_extent_claim": true,
+              "transfer_word_unmasked": true
+            },
+            {
+              "offset": 660,
+              "opcode": 3,
+              "reference_address": 1149520,
+              "target_address": 1149520,
+              "opaque_context_prefix_sha256": "b11c4bfe9af6ebb2c9f043298f159983de6f70d9d33c4e11dd2158f565a4d55b",
+              "opaque_context_bytes": 64,
+              "no_identity_or_extent_claim": true,
+              "transfer_word_unmasked": true
+            },
+            {
+              "offset": 716,
+              "opcode": 3,
+              "reference_address": 2752816,
+              "target_address": 2752928,
+              "group_count_context": {
+                "previous_named_neighbor": "xGroupGetItemPtr",
+                "reference_start": 2752608,
+                "target_start": 2752720,
+                "sequence_bytes": 220,
+                "reference_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+                "target_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+                "uniqueness": {
+                  "matching_addresses": [
+                    2752720
+                  ],
+                  "unchanged_anchor_offset": 92,
+                  "unchanged_anchor_bytes": 128,
+                  "masked_instruction_count": 1
+                },
+                "checked_direct_call": {
+                  "offset": 88,
+                  "opcode": 3,
+                  "reference_address": 1667344,
+                  "target_address": 1667344
+                },
+                "no_progress_or_new_anchor": true
+              }
+            },
+            {
+              "offset": 752,
+              "opcode": 3,
+              "reference_address": 2752608,
+              "target_address": 2752720,
+              "group_count_context": {
+                "previous_named_neighbor": "xGroupGetItemPtr",
+                "reference_start": 2752608,
+                "target_start": 2752720,
+                "sequence_bytes": 220,
+                "reference_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+                "target_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+                "uniqueness": {
+                  "matching_addresses": [
+                    2752720
+                  ],
+                  "unchanged_anchor_offset": 92,
+                  "unchanged_anchor_bytes": 128,
+                  "masked_instruction_count": 1
+                },
+                "checked_direct_call": {
+                  "offset": 88,
+                  "opcode": 3,
+                  "reference_address": 1667344,
+                  "target_address": 1667344
+                },
+                "no_progress_or_new_anchor": true
+              }
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3312416,
+          "name": "xUpdateCull_Init",
+          "source": "SB/Core/x/xUpdateCull.cpp",
+          "linkage_name": "xUpdateCull_Init__FPPvUiPP6xGroupUi",
+          "reference_sha256": "ff576e4d962534d8ea293ac05ecaa4a7ff355a52aeafa87cc8f4f7fe2e1b37f1",
+          "data_address_operands": [
+            {
+              "hi_offset": 72,
+              "lo_offset": 76,
+              "opcode": 35,
+              "reference_address": 6008668,
+              "target_address": 6010460,
+              "storage": "zero_fill",
+              "scope": "Independently reviewed allocator-neighborhood slot; no name or extent promoted"
+            },
+            {
+              "hi_offset": 200,
+              "lo_offset": 216,
+              "opcode": 35,
+              "reference_address": 6008668,
+              "target_address": 6010460,
+              "storage": "zero_fill",
+              "scope": "Independently reviewed allocator-neighborhood slot; no name or extent promoted"
+            },
+            {
+              "hi_offset": 780,
+              "lo_offset": 784,
+              "opcode": 9,
+              "reference_address": 3314032,
+              "target_address": 3317392,
+              "storage": "file_backed",
+              "scope": "Complete-sequence original AlwaysTrue callback entry"
+            },
+            {
+              "hi_offset": 1248,
+              "lo_offset": 1256,
+              "opcode": 9,
+              "reference_address": 3314032,
+              "target_address": 3317392,
+              "storage": "file_backed",
+              "scope": "Complete-sequence original AlwaysTrue callback entry"
+            },
+            {
+              "hi_offset": 1384,
+              "lo_offset": 1388,
+              "opcode": 9,
+              "reference_address": 6008672,
+              "target_address": 6010464,
+              "storage": "zero_fill",
+              "scope": "Independently reviewed allocator-neighborhood slot; no name or extent promoted"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 240,
+              "opcode": 3,
+              "reference_address": 1149960,
+              "target_address": 1149960,
+              "opaque_context_prefix_sha256": "0c36391b9572b52c77a7870d104a3c4fbd11d6cf740bec5c0b42f84f66f36421",
+              "opaque_context_bytes": 64,
+              "no_identity_or_extent_claim": true,
+              "transfer_word_unmasked": true
+            },
+            {
+              "offset": 276,
+              "opcode": 3,
+              "reference_address": 2749504,
+              "target_address": 2752928,
+              "group_count_context": {
+                "previous_named_neighbor": "xGroupGetItemPtr",
+                "reference_start": 2749296,
+                "target_start": 2752720,
+                "sequence_bytes": 220,
+                "reference_sha256": "f69e2518a82702d4b903006494bf5071481c89e6a8a7dad433c236a935577f1d",
+                "target_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+                "uniqueness": {
+                  "matching_addresses": [
+                    2752720
+                  ],
+                  "unchanged_anchor_offset": 92,
+                  "unchanged_anchor_bytes": 128,
+                  "masked_instruction_count": 1
+                },
+                "checked_direct_call": {
+                  "offset": 88,
+                  "opcode": 3,
+                  "reference_address": 1663984,
+                  "target_address": 1667344
+                },
+                "no_progress_or_new_anchor": true
+              }
+            },
+            {
+              "offset": 308,
+              "opcode": 3,
+              "reference_address": 2749296,
+              "target_address": 2752720,
+              "group_count_context": {
+                "previous_named_neighbor": "xGroupGetItemPtr",
+                "reference_start": 2749296,
+                "target_start": 2752720,
+                "sequence_bytes": 220,
+                "reference_sha256": "f69e2518a82702d4b903006494bf5071481c89e6a8a7dad433c236a935577f1d",
+                "target_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+                "uniqueness": {
+                  "matching_addresses": [
+                    2752720
+                  ],
+                  "unchanged_anchor_offset": 92,
+                  "unchanged_anchor_bytes": 128,
+                  "masked_instruction_count": 1
+                },
+                "checked_direct_call": {
+                  "offset": 88,
+                  "opcode": 3,
+                  "reference_address": 1663984,
+                  "target_address": 1667344
+                },
+                "no_progress_or_new_anchor": true
+              }
+            },
+            {
+              "offset": 532,
+              "opcode": 3,
+              "reference_address": 2031184,
+              "target_address": 2034656
+            },
+            {
+              "offset": 608,
+              "opcode": 3,
+              "reference_address": 1149960,
+              "target_address": 1149960,
+              "opaque_context_prefix_sha256": "0c36391b9572b52c77a7870d104a3c4fbd11d6cf740bec5c0b42f84f66f36421",
+              "opaque_context_bytes": 64,
+              "no_identity_or_extent_claim": true,
+              "transfer_word_unmasked": true
+            },
+            {
+              "offset": 660,
+              "opcode": 3,
+              "reference_address": 1149520,
+              "target_address": 1149520,
+              "opaque_context_prefix_sha256": "b11c4bfe9af6ebb2c9f043298f159983de6f70d9d33c4e11dd2158f565a4d55b",
+              "opaque_context_bytes": 64,
+              "no_identity_or_extent_claim": true,
+              "transfer_word_unmasked": true
+            },
+            {
+              "offset": 716,
+              "opcode": 3,
+              "reference_address": 2749504,
+              "target_address": 2752928,
+              "group_count_context": {
+                "previous_named_neighbor": "xGroupGetItemPtr",
+                "reference_start": 2749296,
+                "target_start": 2752720,
+                "sequence_bytes": 220,
+                "reference_sha256": "f69e2518a82702d4b903006494bf5071481c89e6a8a7dad433c236a935577f1d",
+                "target_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+                "uniqueness": {
+                  "matching_addresses": [
+                    2752720
+                  ],
+                  "unchanged_anchor_offset": 92,
+                  "unchanged_anchor_bytes": 128,
+                  "masked_instruction_count": 1
+                },
+                "checked_direct_call": {
+                  "offset": 88,
+                  "opcode": 3,
+                  "reference_address": 1663984,
+                  "target_address": 1667344
+                },
+                "no_progress_or_new_anchor": true
+              }
+            },
+            {
+              "offset": 752,
+              "opcode": 3,
+              "reference_address": 2749296,
+              "target_address": 2752720,
+              "group_count_context": {
+                "previous_named_neighbor": "xGroupGetItemPtr",
+                "reference_start": 2749296,
+                "target_start": 2752720,
+                "sequence_bytes": 220,
+                "reference_sha256": "f69e2518a82702d4b903006494bf5071481c89e6a8a7dad433c236a935577f1d",
+                "target_sha256": "d6ced0b319dd560afa4ed27a4be8230ba489c7a27a02573b37fd856685cac8c9",
+                "uniqueness": {
+                  "matching_addresses": [
+                    2752720
+                  ],
+                  "unchanged_anchor_offset": 92,
+                  "unchanged_anchor_bytes": 128,
+                  "masked_instruction_count": 1
+                },
+                "checked_direct_call": {
+                  "offset": 88,
+                  "opcode": 3,
+                  "reference_address": 1663984,
+                  "target_address": 1667344
+                },
+                "no_progress_or_new_anchor": true
+              }
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            3317252
+          ],
+          "direct_or_indirect_calls": [
+            3315856,
+            3315996,
+            3316016,
+            3316052,
+            3316084,
+            3316308,
+            3316384,
+            3316436,
+            3316492,
+            3316528,
+            3317172,
+            3317196
+          ],
+          "branches": [
+            [
+              3315840,
+              3315968
+            ],
+            [
+              3315872,
+              3315968
+            ],
+            [
+              3315904,
+              3315936
+            ],
+            [
+              3315956,
+              3315888
+            ],
+            [
+              3316032,
+              3316208
+            ],
+            [
+              3316068,
+              3316168
+            ],
+            [
+              3316096,
+              3316152
+            ],
+            [
+              3316116,
+              3316136
+            ],
+            [
+              3316144,
+              3316112
+            ],
+            [
+              3316160,
+              3316080
+            ],
+            [
+              3316168,
+              3316184
+            ],
+            [
+              3316196,
+              3316048
+            ],
+            [
+              3316216,
+              3316264
+            ],
+            [
+              3316232,
+              3316248
+            ],
+            [
+              3316256,
+              3316224
+            ],
+            [
+              3316348,
+              3316368
+            ],
+            [
+              3316360,
+              3316372
+            ],
+            [
+              3316460,
+              3317000
+            ],
+            [
+              3316508,
+              3316840
+            ],
+            [
+              3316540,
+              3316824
+            ],
+            [
+              3316572,
+              3316800
+            ],
+            [
+              3316668,
+              3316760
+            ],
+            [
+              3316692,
+              3316744
+            ],
+            [
+              3316712,
+              3316728
+            ],
+            [
+              3316752,
+              3316680
+            ],
+            [
+              3316760,
+              3316784
+            ],
+            [
+              3316812,
+              3316568
+            ],
+            [
+              3316832,
+              3316520
+            ],
+            [
+              3316840,
+              3316952
+            ],
+            [
+              3316988,
+              3316480
+            ],
+            [
+              3317008,
+              3317160
+            ],
+            [
+              3317048,
+              3317144
+            ],
+            [
+              3317152,
+              3317040
+            ],
+            [
+              3317184,
+              3317208
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              3315776,
+              -272
+            ],
+            [
+              3317256,
+              272
+            ]
+          ],
+          "ra_saves": [
+            [
+              3315780,
+              -128
+            ]
+          ],
+          "ra_loads": [
+            [
+              3317212,
+              -128
+            ]
+          ],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 4
+        },
+        "previously_confirmed_neighbor_entries": [
+          3314512,
+          3314720,
+          3314832,
+          3317408
+        ]
+      }
+    },
+    {
+      "name": "xUpdateCull_DistanceSquaredCB",
+      "source": "SB/Core/x/xUpdateCull.cpp",
+      "address": 3317264,
+      "size": 128,
+      "sha256": "efcdea83b8571f9ed1f778bd8bcd51a00e8a3f8a6f84cb1e0e816f43d0223fba",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3315872,
+          "name": "xUpdateCull_DistanceSquaredCB",
+          "source": "SB/Core/x/xUpdateCull.cpp",
+          "linkage_name": "xUpdateCull_DistanceSquaredCB__FPvPv",
+          "reference_sha256": "efcdea83b8571f9ed1f778bd8bcd51a00e8a3f8a6f84cb1e0e816f43d0223fba",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3317152,
+          "name": "xUpdateCull_DistanceSquaredCB",
+          "source": "SB/Core/x/xUpdateCull.cpp",
+          "linkage_name": "xUpdateCull_DistanceSquaredCB__FPvPv",
+          "reference_sha256": "efcdea83b8571f9ed1f778bd8bcd51a00e8a3f8a6f84cb1e0e816f43d0223fba",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3313904,
+          "name": "xUpdateCull_DistanceSquaredCB",
+          "source": "SB/Core/x/xUpdateCull.cpp",
+          "linkage_name": "xUpdateCull_DistanceSquaredCB__FPvPv",
+          "reference_sha256": "efcdea83b8571f9ed1f778bd8bcd51a00e8a3f8a6f84cb1e0e816f43d0223fba",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            3317384
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              3317272,
+              3317288
+            ],
+            [
+              3317280,
+              3317384
+            ],
+            [
+              3317364,
+              3317376
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              3317276,
+              -16
+            ],
+            [
+              3317388,
+              16
+            ]
+          ],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 0
+        },
+        "previously_confirmed_neighbor_entries": [
+          3314512,
+          3314720,
+          3314832,
+          3317408
+        ]
+      }
+    },
+    {
+      "name": "xUpdateCull_AlwaysTrueCB",
+      "source": "SB/Core/x/xUpdateCull.cpp",
+      "address": 3317392,
+      "size": 8,
+      "sha256": "5ce5ad86d452c4d2422bd63e15223d5d6b3dfb77f224a88c1f476e9fb34e359d",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3316000,
+          "name": "xUpdateCull_AlwaysTrueCB",
+          "source": "SB/Core/x/xUpdateCull.cpp",
+          "linkage_name": "xUpdateCull_AlwaysTrueCB__FPvPv",
+          "reference_sha256": "5ce5ad86d452c4d2422bd63e15223d5d6b3dfb77f224a88c1f476e9fb34e359d",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3317280,
+          "name": "xUpdateCull_AlwaysTrueCB",
+          "source": "SB/Core/x/xUpdateCull.cpp",
+          "linkage_name": "xUpdateCull_AlwaysTrueCB__FPvPv",
+          "reference_sha256": "5ce5ad86d452c4d2422bd63e15223d5d6b3dfb77f224a88c1f476e9fb34e359d",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3314032,
+          "name": "xUpdateCull_AlwaysTrueCB",
+          "source": "SB/Core/x/xUpdateCull.cpp",
+          "linkage_name": "xUpdateCull_AlwaysTrueCB__FPvPv",
+          "reference_sha256": "5ce5ad86d452c4d2422bd63e15223d5d6b3dfb77f224a88c1f476e9fb34e359d",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            3317392
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 8
+        },
+        "previously_confirmed_neighbor_entries": [
+          3314512,
+          3314720,
+          3314832,
+          3317408
+        ]
+      }
     }
   ],
   "particle_registration_proofs": [
@@ -98488,6 +101790,270 @@
           1352
         ]
       }
+    }
+  ],
+  "par_data_proofs": [
+    {
+      "version": "SLUS-20680",
+      "name": "gParPool",
+      "reference_address": 5673872,
+      "declaration_die": 5071095,
+      "type_die": 5072175,
+      "element_die": 5071174,
+      "subscript_descriptor": "000a0000000000cf07000008720046614d00",
+      "elements": 2000,
+      "element_bytes": 96,
+      "size": 192000,
+      "context_only": true,
+      "data_extent_promoted": false,
+      "target_address": 5672848
+    },
+    {
+      "version": "SLES-51968",
+      "name": "gParPool",
+      "reference_address": 5672592,
+      "declaration_die": 5071553,
+      "type_die": 5072633,
+      "element_die": 5071632,
+      "subscript_descriptor": "000a0000000000cf07000008720010634d00",
+      "elements": 2000,
+      "element_bytes": 96,
+      "size": 192000,
+      "context_only": true,
+      "data_extent_promoted": false,
+      "target_address": 5672848
+    },
+    {
+      "version": "SLES-51970",
+      "name": "gParPool",
+      "reference_address": 5671056,
+      "declaration_die": 5072399,
+      "type_die": 5073479,
+      "element_die": 5072478,
+      "subscript_descriptor": "000a0000000000cf0700000872005e664d00",
+      "elements": 2000,
+      "element_bytes": 96,
+      "size": 192000,
+      "context_only": true,
+      "data_extent_promoted": false,
+      "target_address": 5672848
+    }
+  ],
+  "update_cull_data_proofs": [
+    {
+      "version": "SLUS-20680",
+      "function_address": 3315776,
+      "hi_offset": 72,
+      "lo_offset": 76,
+      "opcode": 35,
+      "reference_address": 6011484,
+      "target_address": 6010460,
+      "storage": "zero_fill",
+      "scope": "Independently reviewed allocator-neighborhood slot; no name or extent promoted",
+      "data_extent_promoted": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 3315776,
+      "hi_offset": 200,
+      "lo_offset": 216,
+      "opcode": 35,
+      "reference_address": 6011484,
+      "target_address": 6010460,
+      "storage": "zero_fill",
+      "scope": "Independently reviewed allocator-neighborhood slot; no name or extent promoted",
+      "data_extent_promoted": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 3315776,
+      "hi_offset": 780,
+      "lo_offset": 784,
+      "opcode": 9,
+      "reference_address": 3316000,
+      "target_address": 3317392,
+      "storage": "file_backed",
+      "scope": "Complete-sequence original AlwaysTrue callback entry",
+      "data_extent_promoted": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 3315776,
+      "hi_offset": 1248,
+      "lo_offset": 1256,
+      "opcode": 9,
+      "reference_address": 3316000,
+      "target_address": 3317392,
+      "storage": "file_backed",
+      "scope": "Complete-sequence original AlwaysTrue callback entry",
+      "data_extent_promoted": false
+    },
+    {
+      "version": "SLUS-20680",
+      "function_address": 3315776,
+      "hi_offset": 1384,
+      "lo_offset": 1388,
+      "opcode": 9,
+      "reference_address": 6011488,
+      "target_address": 6010464,
+      "storage": "zero_fill",
+      "scope": "Independently reviewed allocator-neighborhood slot; no name or extent promoted",
+      "data_extent_promoted": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 3315776,
+      "hi_offset": 72,
+      "lo_offset": 76,
+      "opcode": 35,
+      "reference_address": 6010204,
+      "target_address": 6010460,
+      "storage": "zero_fill",
+      "scope": "Independently reviewed allocator-neighborhood slot; no name or extent promoted",
+      "data_extent_promoted": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 3315776,
+      "hi_offset": 200,
+      "lo_offset": 216,
+      "opcode": 35,
+      "reference_address": 6010204,
+      "target_address": 6010460,
+      "storage": "zero_fill",
+      "scope": "Independently reviewed allocator-neighborhood slot; no name or extent promoted",
+      "data_extent_promoted": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 3315776,
+      "hi_offset": 780,
+      "lo_offset": 784,
+      "opcode": 9,
+      "reference_address": 3317280,
+      "target_address": 3317392,
+      "storage": "file_backed",
+      "scope": "Complete-sequence original AlwaysTrue callback entry",
+      "data_extent_promoted": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 3315776,
+      "hi_offset": 1248,
+      "lo_offset": 1256,
+      "opcode": 9,
+      "reference_address": 3317280,
+      "target_address": 3317392,
+      "storage": "file_backed",
+      "scope": "Complete-sequence original AlwaysTrue callback entry",
+      "data_extent_promoted": false
+    },
+    {
+      "version": "SLES-51968",
+      "function_address": 3315776,
+      "hi_offset": 1384,
+      "lo_offset": 1388,
+      "opcode": 9,
+      "reference_address": 6010208,
+      "target_address": 6010464,
+      "storage": "zero_fill",
+      "scope": "Independently reviewed allocator-neighborhood slot; no name or extent promoted",
+      "data_extent_promoted": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 3315776,
+      "hi_offset": 72,
+      "lo_offset": 76,
+      "opcode": 35,
+      "reference_address": 6008668,
+      "target_address": 6010460,
+      "storage": "zero_fill",
+      "scope": "Independently reviewed allocator-neighborhood slot; no name or extent promoted",
+      "data_extent_promoted": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 3315776,
+      "hi_offset": 200,
+      "lo_offset": 216,
+      "opcode": 35,
+      "reference_address": 6008668,
+      "target_address": 6010460,
+      "storage": "zero_fill",
+      "scope": "Independently reviewed allocator-neighborhood slot; no name or extent promoted",
+      "data_extent_promoted": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 3315776,
+      "hi_offset": 780,
+      "lo_offset": 784,
+      "opcode": 9,
+      "reference_address": 3314032,
+      "target_address": 3317392,
+      "storage": "file_backed",
+      "scope": "Complete-sequence original AlwaysTrue callback entry",
+      "data_extent_promoted": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 3315776,
+      "hi_offset": 1248,
+      "lo_offset": 1256,
+      "opcode": 9,
+      "reference_address": 3314032,
+      "target_address": 3317392,
+      "storage": "file_backed",
+      "scope": "Complete-sequence original AlwaysTrue callback entry",
+      "data_extent_promoted": false
+    },
+    {
+      "version": "SLES-51970",
+      "function_address": 3315776,
+      "hi_offset": 1384,
+      "lo_offset": 1388,
+      "opcode": 9,
+      "reference_address": 6008672,
+      "target_address": 6010464,
+      "storage": "zero_fill",
+      "scope": "Independently reviewed allocator-neighborhood slot; no name or extent promoted",
+      "data_extent_promoted": false
+    }
+  ],
+  "bound_data_proofs": [
+    {
+      "version": "SLUS-20680",
+      "name": "xqc_def_ctrl",
+      "declaration_die": 4213346,
+      "type_die": 4219997,
+      "type": "xQCControl",
+      "size": 60,
+      "reference_address": 5904144,
+      "data_extent_promoted": false,
+      "target_address": 5903120
+    },
+    {
+      "version": "SLES-51968",
+      "name": "xqc_def_ctrl",
+      "declaration_die": 4213804,
+      "type_die": 4220296,
+      "type": "xQCControl",
+      "size": 60,
+      "reference_address": 5902864,
+      "data_extent_promoted": false,
+      "target_address": 5903120
+    },
+    {
+      "version": "SLES-51970",
+      "name": "xqc_def_ctrl",
+      "declaration_die": 4214650,
+      "type_die": 4221142,
+      "type": "xQCControl",
+      "size": 60,
+      "reference_address": 5901328,
+      "data_extent_promoted": false,
+      "target_address": 5903120
     }
   ]
 }

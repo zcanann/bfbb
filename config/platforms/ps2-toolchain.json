@@ -1853,7 +1853,8 @@
       "symbols": {
         "xParInit": "xParInit__FP4xPar",
         "xParFree": "xParFree__FP4xPar",
-        "xParAlloc": "xParAlloc__Fv"
+        "xParAlloc": "xParAlloc__Fv",
+        "xParMemInit": "xParMemInit__Fv"
       },
       "calls": [],
       "linkage_provenance": [
@@ -1923,6 +1924,34 @@
               "version": "SLUS-20680",
               "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
               "source_address": 2048736
+            }
+          ]
+        },
+        {
+          "function": "xParMemInit",
+          "france_address": 2050160,
+          "size": 76,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2048800,
+              "linkage_name": "xParMemInit__Fv",
+              "reference_sha256": "109ef05330b8e10585302e4a775a0573daef8a90828f683bac72a4a8c8a3d611"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2050048,
+              "linkage_name": "xParMemInit__Fv",
+              "reference_sha256": "a7d8659ab1c0d169619b6d1c255e1935ed68a965c978a0816511f48169e23e8d"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2046688,
+              "linkage_name": "xParMemInit__Fv",
+              "reference_sha256": "01b305fd54746ad213abc62d35aab72e51aaee0fc003ffddbdc80de0bf3e075a"
             }
           ]
         }
@@ -4114,7 +4143,13 @@
       "symbols": {
         "xRayHitsBound": "xRayHitsBound__FPC5xRay3PC6xBoundP7xCollis",
         "xBoundOBBIsectRay": "xBoundOBBIsectRay__FPC4xBoxPC7xMat4x3PC5xRay3P6xIsect",
-        "xBoundGetBox": "xBoundGetBox__FR4xBoxRC6xBound"
+        "xBoundGetBox": "xBoundGetBox__FR4xBoxRC6xBound",
+        "xBoundDraw": "xBoundDraw__FPC6xBound",
+        "xVecHitsBound": "xVecHitsBound__FPC5xVec3PC6xBoundP7xCollis",
+        "xSphereHitsBound": "xSphereHitsBound__FPC7xSpherePC6xBoundP7xCollis",
+        "xBoundHitsBound": "xBoundHitsBound__FPC6xBoundPC6xBoundP7xCollis",
+        "xBoundGetSphere": "xBoundGetSphere__FR7xSphereRC6xBound",
+        "xBoundUpdate": "xBoundUpdate__FP6xBound"
       },
       "calls": [
         {
@@ -4165,6 +4200,104 @@
           "target_source": "SB/Core/x/xMath3.cpp",
           "target_function": "xBoxInitBoundOBB",
           "symbol": "xBoxInitBoundOBB__FP4xBoxPC4xBoxPC7xMat4x3"
+        },
+        {
+          "function": "xVecHitsBound",
+          "offset": 48,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iSphereIsectVec",
+          "symbol": "iSphereIsectVec__FPC7xSpherePC5xVec3P6xIsect"
+        },
+        {
+          "function": "xVecHitsBound",
+          "offset": 132,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Tolocal",
+          "symbol": "xMat3x3Tolocal__FP5xVec3PC7xMat3x3PC5xVec3"
+        },
+        {
+          "function": "xVecHitsBound",
+          "offset": 148,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iBoxIsectVec",
+          "symbol": "iBoxIsectVec__FPC4xBoxPC5xVec3P6xIsect"
+        },
+        {
+          "function": "xVecHitsBound",
+          "offset": 188,
+          "target_source": "SB/Core/p2/iMath3.cpp",
+          "target_function": "iBoxIsectVec",
+          "symbol": "iBoxIsectVec__FPC4xBoxPC5xVec3P6xIsect"
+        },
+        {
+          "function": "xSphereHitsBound",
+          "offset": 72,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xSphereHitsSphere",
+          "symbol": "xSphereHitsSphere__FPC7xSpherePC7xSphereP7xCollis"
+        },
+        {
+          "function": "xSphereHitsBound",
+          "offset": 92,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xSphereHitsOBB_nu",
+          "symbol": "xSphereHitsOBB_nu__FPC7xSpherePC4xBoxPC7xMat4x3P7xCollis"
+        },
+        {
+          "function": "xSphereHitsBound",
+          "offset": 112,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xSphereHitsBox",
+          "symbol": "xSphereHitsBox__FPC7xSpherePC4xBoxP7xCollis"
+        },
+        {
+          "function": "xBoundHitsBound",
+          "offset": 28,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullIsects",
+          "symbol": "xQuickCullIsects__FPC7xQCDataPC7xQCData"
+        },
+        {
+          "function": "xBoundHitsBound",
+          "offset": 256,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xSphereHitsSphere",
+          "symbol": "xSphereHitsSphere__FPC7xSpherePC7xSphereP7xCollis"
+        },
+        {
+          "function": "xBoundHitsBound",
+          "offset": 284,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xSphereHitsOBB_nu",
+          "symbol": "xSphereHitsOBB_nu__FPC7xSpherePC4xBoxPC7xMat4x3P7xCollis"
+        },
+        {
+          "function": "xBoundHitsBound",
+          "offset": 312,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xSphereHitsBox",
+          "symbol": "xSphereHitsBox__FPC7xSpherePC4xBoxP7xCollis"
+        },
+        {
+          "function": "xBoundHitsBound",
+          "offset": 336,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xBoxHitsSphere",
+          "symbol": "xBoxHitsSphere__FPC4xBoxPC7xSphereP7xCollis"
+        },
+        {
+          "function": "xBoundHitsBound",
+          "offset": 364,
+          "target_source": "SB/Core/x/xCollide.cpp",
+          "target_function": "xBoxHitsObb",
+          "symbol": "xBoxHitsObb__FPC4xBoxPC4xBoxPC7xMat4x3P7xCollis"
+        },
+        {
+          "function": "xBoundUpdate",
+          "offset": 416,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullForBound",
+          "symbol": "xQuickCullForBound__FP10xQCControlP7xQCDataPC6xBound"
         }
       ],
       "linkage_provenance": [
@@ -4234,6 +4367,180 @@
               "version": "SLES-51970",
               "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
               "source_address": 1836864
+            }
+          ]
+        },
+        {
+          "function": "xBoundDraw",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 1837712,
+          "size": 8,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1836336,
+              "linkage_name": "xBoundDraw__FPC6xBound",
+              "reference_sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1837600,
+              "linkage_name": "xBoundDraw__FPC6xBound",
+              "reference_sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1834240,
+              "linkage_name": "xBoundDraw__FPC6xBound",
+              "reference_sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1"
+            }
+          ]
+        },
+        {
+          "function": "xVecHitsBound",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 1837728,
+          "size": 276,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1836352,
+              "linkage_name": "xVecHitsBound__FPC5xVec3PC6xBoundP7xCollis",
+              "reference_sha256": "66ce78b0128a3a591467f6cbfd742c94022b1e8793402766275a901e8c82fb65"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1837616,
+              "linkage_name": "xVecHitsBound__FPC5xVec3PC6xBoundP7xCollis",
+              "reference_sha256": "0969b37d86b65747f9e50038345e8f956795b63e9ad3f19dbb6da7d847a897c6"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1834256,
+              "linkage_name": "xVecHitsBound__FPC5xVec3PC6xBoundP7xCollis",
+              "reference_sha256": "49dab2157b631414d81f9312fe401979398097d282ee8bf29fcd7301674b46d9"
+            }
+          ]
+        },
+        {
+          "function": "xSphereHitsBound",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 1838016,
+          "size": 132,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1836640,
+              "linkage_name": "xSphereHitsBound__FPC7xSpherePC6xBoundP7xCollis",
+              "reference_sha256": "18fd77cbf6186e9ccbb76b5d8a05a48f345540a6ef876ec5c5fb5213d65c7eb2"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1837904,
+              "linkage_name": "xSphereHitsBound__FPC7xSpherePC6xBoundP7xCollis",
+              "reference_sha256": "d2d717f468598085d85709a6633c4ffbb4010a1b600bbbbfd9c8348eb1c265bf"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1834544,
+              "linkage_name": "xSphereHitsBound__FPC7xSpherePC6xBoundP7xCollis",
+              "reference_sha256": "f008c79256241f29eefc13e226b6b108a9502f0b6517612c25c758230b375108"
+            }
+          ]
+        },
+        {
+          "function": "xBoundHitsBound",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 1839328,
+          "size": 400,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1837952,
+              "linkage_name": "xBoundHitsBound__FPC6xBoundPC6xBoundP7xCollis",
+              "reference_sha256": "6c3ff89a3a22487d828564f43f783c7c3735476f48d4c6e9760f6d8907c7a23a"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1839216,
+              "linkage_name": "xBoundHitsBound__FPC6xBoundPC6xBoundP7xCollis",
+              "reference_sha256": "f36585315333fce966fb1b318d42418ec9d6e825d4b4ac9ae3455b34d0251c57"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1835856,
+              "linkage_name": "xBoundHitsBound__FPC6xBoundPC6xBoundP7xCollis",
+              "reference_sha256": "40f6cef3d8f48832e7940fe7982c06d4c9061a4bf04ef0573c8e177099b08612"
+            }
+          ]
+        },
+        {
+          "function": "xBoundGetSphere",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 1839728,
+          "size": 600,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1838352,
+              "linkage_name": "xBoundGetSphere__FR7xSphereRC6xBound",
+              "reference_sha256": "2a3a3a651456071ad3050996a5809321461e42827b2f1df4a209465b265e349d"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1839616,
+              "linkage_name": "xBoundGetSphere__FR7xSphereRC6xBound",
+              "reference_sha256": "2a3a3a651456071ad3050996a5809321461e42827b2f1df4a209465b265e349d"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1836256,
+              "linkage_name": "xBoundGetSphere__FR7xSphereRC6xBound",
+              "reference_sha256": "2a3a3a651456071ad3050996a5809321461e42827b2f1df4a209465b265e349d"
+            }
+          ]
+        },
+        {
+          "function": "xBoundUpdate",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 1840576,
+          "size": 436,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1839200,
+              "linkage_name": "xBoundUpdate__FP6xBound",
+              "reference_sha256": "8ea056c87cc557a53fddcd9870730605fcf8c315b56ab93732bb8ff9d6b5639b"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1840464,
+              "linkage_name": "xBoundUpdate__FP6xBound",
+              "reference_sha256": "9498e8d2d1a1d0a64e6b33d516e1b13f4f36aa64ffd1365e43e5cf8d8f46b2f4"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1837104,
+              "linkage_name": "xBoundUpdate__FP6xBound",
+              "reference_sha256": "67534b0d0fd30bbab3f857040a6770c0b417f945cb74f4a36f84c358a98f90c6"
             }
           ]
         }
@@ -186284,7 +186591,10 @@
         "xUpdateCull_Reset": "xUpdateCull_Reset__FP14xUpdateCullMgr",
         "xUpdateCull_SetCB": "xUpdateCull_SetCB__FP14xUpdateCullMgrPvPFPvPv_UiPv",
         "xUpdateCull_Update": "xUpdateCull_Update__FP14xUpdateCullMgrUi",
-        "xUpdateCull_Swap": "xUpdateCull_Swap__FP14xUpdateCullMgrUiUi"
+        "xUpdateCull_Swap": "xUpdateCull_Swap__FP14xUpdateCullMgrUiUi",
+        "xUpdateCull_Init": "xUpdateCull_Init__FPPvUiPP6xGroupUi",
+        "xUpdateCull_DistanceSquaredCB": "xUpdateCull_DistanceSquaredCB__FPvPv",
+        "xUpdateCull_AlwaysTrueCB": "xUpdateCull_AlwaysTrueCB__FPvPv"
       },
       "calls": [
         {
@@ -186321,6 +186631,27 @@
           "target_source": "SB/Core/x/xUpdateCull.cpp",
           "target_function": "xUpdateCull_Swap",
           "symbol": "xUpdateCull_Swap__FP14xUpdateCullMgrUiUi"
+        },
+        {
+          "function": "xUpdateCull_Init",
+          "offset": 308,
+          "target_source": "SB/Core/x/xGroup.cpp",
+          "target_function": "xGroupGetItemPtr",
+          "symbol": "xGroupGetItemPtr__FP6xGroupUi"
+        },
+        {
+          "function": "xUpdateCull_Init",
+          "offset": 752,
+          "target_source": "SB/Core/x/xGroup.cpp",
+          "target_function": "xGroupGetItemPtr",
+          "symbol": "xGroupGetItemPtr__FP6xGroupUi"
+        },
+        {
+          "function": "xUpdateCull_Init",
+          "offset": 532,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc",
+          "symbol": "xMemAlloc__FUiUii"
         }
       ],
       "linkage_provenance": [
@@ -186427,6 +186758,121 @@
               "reference_sha256": "db20593eb54829259b5ef2d25ef6ff3333b285d0b8012338f67219d6fae58645"
             }
           ]
+        },
+        {
+          "function": "xUpdateCull_Init",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3315776,
+          "size": 1484,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3314384,
+              "linkage_name": "xUpdateCull_Init__FPPvUiPP6xGroupUi",
+              "reference_sha256": "27816500bde60117ad6c8869853930663cd788965c9597e2a50f598950c30cbd"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3315664,
+              "linkage_name": "xUpdateCull_Init__FPPvUiPP6xGroupUi",
+              "reference_sha256": "bc77228de1adb4bcb2ffac9e3cf882721c258fc657882bddd31685706c7d987a"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3312416,
+              "linkage_name": "xUpdateCull_Init__FPPvUiPP6xGroupUi",
+              "reference_sha256": "ff576e4d962534d8ea293ac05ecaa4a7ff355a52aeafa87cc8f4f7fe2e1b37f1"
+            }
+          ]
+        },
+        {
+          "function": "xUpdateCull_DistanceSquaredCB",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3317264,
+          "size": 128,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3315872,
+              "linkage_name": "xUpdateCull_DistanceSquaredCB__FPvPv",
+              "reference_sha256": "efcdea83b8571f9ed1f778bd8bcd51a00e8a3f8a6f84cb1e0e816f43d0223fba"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3317152,
+              "linkage_name": "xUpdateCull_DistanceSquaredCB__FPvPv",
+              "reference_sha256": "efcdea83b8571f9ed1f778bd8bcd51a00e8a3f8a6f84cb1e0e816f43d0223fba"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3313904,
+              "linkage_name": "xUpdateCull_DistanceSquaredCB__FPvPv",
+              "reference_sha256": "efcdea83b8571f9ed1f778bd8bcd51a00e8a3f8a6f84cb1e0e816f43d0223fba"
+            }
+          ]
+        },
+        {
+          "function": "xUpdateCull_AlwaysTrueCB",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3317392,
+          "size": 8,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3316000,
+              "linkage_name": "xUpdateCull_AlwaysTrueCB__FPvPv",
+              "reference_sha256": "5ce5ad86d452c4d2422bd63e15223d5d6b3dfb77f224a88c1f476e9fb34e359d"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3317280,
+              "linkage_name": "xUpdateCull_AlwaysTrueCB__FPvPv",
+              "reference_sha256": "5ce5ad86d452c4d2422bd63e15223d5d6b3dfb77f224a88c1f476e9fb34e359d"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3314032,
+              "linkage_name": "xUpdateCull_AlwaysTrueCB__FPvPv",
+              "reference_sha256": "5ce5ad86d452c4d2422bd63e15223d5d6b3dfb77f224a88c1f476e9fb34e359d"
+            }
+          ]
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xUpdateCull_Init",
+          "offset": 492,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap"
+        }
+      ],
+      "address_pairs": [
+        {
+          "function": "xUpdateCull_Init",
+          "hi_offset": 780,
+          "lo_offset": 784,
+          "target_source": "SB/Core/x/xUpdateCull.cpp",
+          "target_function": "xUpdateCull_AlwaysTrueCB",
+          "symbol": "xUpdateCull_AlwaysTrueCB__FPvPv"
+        },
+        {
+          "function": "xUpdateCull_Init",
+          "hi_offset": 1248,
+          "lo_offset": 1256,
+          "target_source": "SB/Core/x/xUpdateCull.cpp",
+          "target_function": "xUpdateCull_AlwaysTrueCB",
+          "symbol": "xUpdateCull_AlwaysTrueCB__FPvPv",
+          "interleaved": true
         }
       ]
     },
