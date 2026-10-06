@@ -309,3 +309,31 @@ This remains a partial source comparison, not a raw-exact or retail-link claim.
 Ignored reproducible evidence: `build/xbox272/{boxsphere-disasm.txt,
 residual.json,compile.py,compare.py,consumers,production,verify_final.py,
 final-verification.json,gc/proof.json}`.
+
+## Sphere-bound scaling input
+
+After its alias-safe output selection, original `iSphereBoundVec` copies the
+intersection normal into the selected center, then scales from the original
+stack normal at offsets 0x3c/0x40/0x44. The shared source instead scaled by
+rereading the selected output center. Xbox now passes `&isx.norm` as the input
+to the same `xVec3SMul` call. The initial copy, scale expression, alias-safe
+temporary, additions, radius calculation and all stores remain unchanged.
+No intervening operation writes the local normal; both inputs contain the same
+values after the retained copy. Non-Xbox code remains unchanged.
+
+This one input-ownership correction raises 90.591835% to 95.85714%. The actual
+complete `iMath3.obj` source body is 275 bytes versus the original 271. Its
+remaining difference is the register save/destination copy around the initial
+three-word vector assignment. A bounded ordinary `memcpy` control for that
+copy generated identical code and was discarded; no further variants were
+tried. This remains a partial match, not a byte-exact function claim.
+
+Both complete regional reports preserve all other function records, exact
+counts and denominator/completion fields apart from generated COFF offsets.
+The existing zero/half literal fields remain genuine PE HIGHLOW relocations
+with authenticated payloads, and no profile/metadata/backend edits are needed.
+All four ordered GameCube iMath3 allocated sections remain byte-identical.
+
+Ignored evidence: `build/xbox284/{bounds-disasm.txt,compile.py,compare.py,
+input-owner-only-consumers,consumers,production,verify_final.py,
+final-verification.json,gc/proof.json}`. No whole-TU or retail-relink claim.
