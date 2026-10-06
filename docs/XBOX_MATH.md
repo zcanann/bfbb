@@ -103,3 +103,33 @@ original metadata, source ownership or backend changes were needed.
 Ignored reproducible evidence: `build/xbox262/{residual-disasm.txt,compile.py,
 compare.py,deltas.json,gc/proof.json,production,verify_final.py,
 final-verification.json}`. Full executable relinking remains pending.
+
+## Stopping velocity capture
+
+The original 227-byte `xAccelStop` reads the referenced velocity directly for
+its initial epsilon and sign tests. It captures the old velocity only after
+choosing acceleration's sign, immediately before writing the new velocity.
+The former source captured it at entry, introducing a four-byte stack slot
+and repeated reloads in its 234-byte output.
+
+For Xbox only, the initial tests now read `v` and the existing `oldv = v`
+assignment moves immediately before the velocity update. There are no writes
+to either referenced argument between these reads, including when `x` aliases
+`v`. Predicates, arithmetic trees, subsequent store order and non-Xbox code
+remain unchanged. This single lifetime correction produces 225 bytes owned
+by the actual complete `xMath.obj`; its initial code through the new-velocity
+store has the original instruction structure. Post-update sign-test order and
+division association still differ and remain visible in the normal comparison.
+
+Both complete reports improve only this function, from 75.52564% to 92.69231%.
+Exact totals remain 13,935 bytes / 76 functions; full code-weighted fuzzy
+progress rises from 1.1585042592313592% to 1.160670659468189%. Every other
+function record and every denominator/completion field is unchanged apart
+from generated COFF offsets. All 33 ordered GameCube consumer sections are
+byte-identical. The profile updates only the actual source literal-operand
+expectations: each field is a real PE HIGHLOW relocation to the same verified
+constant payload. Original metadata, ownership and report rules are unchanged.
+
+Ignored reproducible evidence: `build/xbox264/{accel-disasm.txt,compile.py,
+compare.py,consumers,production,verify_final.py,final-verification.json,
+gc/proof.json}`. This is a partial match, not a byte-exact or retail-link claim.

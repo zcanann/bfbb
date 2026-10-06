@@ -2396,26 +2396,29 @@
             "symbol": "float:b727c5ac",
             "field": "displacement",
             "prefix": "d81d",
-            "addend": 0
+            "addend": 0,
+            "count": 2
           },
           {
             "symbol": "float:3727c5ac",
             "field": "displacement",
             "prefix": "d81d",
-            "addend": 0
+            "addend": 0,
+            "count": 2
           },
           {
             "symbol": "float:00000000",
             "field": "displacement",
             "prefix": "d81d",
             "addend": 0,
-            "count": 3
+            "count": 2
           },
           {
             "symbol": "float:00000000",
             "field": "displacement",
             "prefix": "d815",
-            "addend": 0
+            "addend": 0,
+            "count": 2
           },
           {
             "symbol": "float:3f000000",
@@ -2423,18 +2426,6 @@
             "prefix": "d80d",
             "addend": 0,
             "count": 2
-          },
-          {
-            "symbol": "float:b727c5ac",
-            "field": "displacement",
-            "prefix": "d815",
-            "addend": 0
-          },
-          {
-            "symbol": "float:3727c5ac",
-            "field": "displacement",
-            "prefix": "d815",
-            "addend": 0
           }
         ],
         "xFuncPiece_Eval(xFuncPiece*,F32,xFuncPiece**)": [

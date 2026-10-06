@@ -491,10 +491,16 @@ void xAccelStop(F32& x, F32& v, F32 a, F32 dt)
     S32 var_r0;
     S32 var_r5;
 
+#ifdef XBOX
+    if (!(v >= -0.00001f) || !(v <= 0.00001f))
+    {
+        if (v < 0.0f)
+#else
     oldv = v;
     if (!(oldv >= -0.00001f) || !(oldv <= 0.00001f))
     {
         if (oldv < 0.0f)
+#endif
         {
             if (a > 0.0f)
             {
@@ -507,6 +513,9 @@ void xAccelStop(F32& x, F32& v, F32 a, F32 dt)
         }
 
         a = -a;
+#ifdef XBOX
+        oldv = v;
+#endif
         v += a * dt;
 
         if (v < 0.0f)
