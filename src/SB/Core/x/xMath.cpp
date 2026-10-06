@@ -336,7 +336,11 @@ void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 endx, F32 maxv)
     if ((F32)xMathAbs(newv) <= maxv)
     {
         v = newv;
+#if defined(XBOX)
+        var_f0 = (dv * dt) * 0.5f;
+#else
         var_f0 = 0.5f * dv * dt;
+#endif
     }
     else
     {
@@ -350,7 +354,11 @@ void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 endx, F32 maxv)
             if (oldv != v)
             {
                 temp_f1_2 = v - oldv;
+#if defined(XBOX)
+                var_f0 = (temp_f1_2 / a) * temp_f1_2 * 0.5f;
+#else
                 var_f0 = (0.5f * temp_f1_2 * temp_f1_2) / a;
+#endif
             }
             else
             {
@@ -378,7 +386,11 @@ void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 endx, F32 maxv)
             if (var_r0_2 != var_r3_2)
             {
                 v = newv;
+#if defined(XBOX)
+                var_f0 = (dv * dt) * 0.5f;
+#else
                 var_f0 = 0.5f * dv * dt;
+#endif
             }
             else
             {
