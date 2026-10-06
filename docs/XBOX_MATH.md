@@ -133,3 +133,32 @@ constant payload. Original metadata, ownership and report rules are unchanged.
 Ignored reproducible evidence: `build/xbox264/{accel-disasm.txt,compile.py,
 compare.py,consumers,production,verify_final.py,final-verification.json,
 gc/proof.json}`. This is a partial match, not a byte-exact or retail-link claim.
+
+## Speed-limited acceleration expressions
+
+The original speed-limited `xAccelMove` uses average velocity for its unclamped
+step: `(0.5f * dv + v) * dt`, reusing the velocity change already computed for
+the limit test. The prior shared source separately formed acceleration distance
+and `v * dt`. The original clamped step computes `diff / a`, multiplies that by
+`diff`, then multiplies by 0.5; the prior shared expression multiplied first
+and divided last. These are actual decoded floating-point operation sequences,
+not a search through algebraic variants.
+
+Two Xbox-only expressions now follow those original sequences. Branch tests,
+velocity/position store order and non-Xbox expressions are unchanged. The
+average-velocity correction alone improves 92.23529% to 95.05882%; restoring
+the independently visible division order raises the result to 98.117645%.
+The actual complete source emits 223 bytes versus the original 225. It
+coalesces a duplicate velocity-change spill present in the original; that
+remaining difference is retained rather than adding an artificial temporary.
+
+Both complete reports retain 13,935 exact bytes / 76 functions. All other
+function records, denominator/completion fields and 33 ordered GameCube
+consumer sections are unchanged apart from generated COFF offsets. No
+profile, original metadata, source ownership or backend change is required.
+Actual source constant fields remain genuine PE HIGHLOW relocations to the
+same authenticated original zero/half payloads. This remains a partial match.
+
+Ignored evidence: `build/xbox266/{compile.py,compare.py,average-only-consumers,
+average-only-production,consumers,production,verify_final.py,
+final-verification.json,gc/proof.json}`. No complete-TU or retail-relink claim.

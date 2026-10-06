@@ -479,11 +479,19 @@ void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 maxv)
     dv = a * dt;
     if ((F32)xMathAbs(diff) < (F32)xMathAbs(dv))
     {
+#ifdef XBOX
+        x += (v * dt) + ((diff / a) * diff * 0.5f);
+#else
         x += (v * dt) + ((0.5f * diff * diff) / a);
+#endif
         v = maxv;
         return;
     }
+#ifdef XBOX
+    x += (0.5f * dv + v) * dt;
+#else
     x += (dt * (0.5f * a * dt)) + (v * dt);
+#endif
     v += dv;
 }
 
