@@ -75,9 +75,9 @@ checked, and the standard objdiff parser accepts the result.
 
 | Version | Full code-region bytes | Objdiff code-matched bytes |
 | --- | ---: | ---: |
-| SLUS-20680 | 2,978,560 | 224,484 |
-| SLES-51968 | 2,979,712 | 224,176 |
-| SLES-51970 | 2,976,512 | 224,072 |
+| SLUS-20680 | 2,978,560 | 224,800 |
+| SLES-51968 | 2,979,712 | 224,492 |
+| SLES-51970 | 2,976,512 | 224,388 |
 | SLES-53623 | 2,979,968 | 44,104 |
 | XBOX-US | 1,798,760 | 14,148 |
 | XBOX-EU | 1,798,760 | 14,148 |
@@ -122,9 +122,9 @@ The narrower function-only baselines currently contain:
 
 | PS2 baseline | Functions | Measured function bytes | Source matches |
 | --- | ---: | ---: | ---: |
-| USA | 5,391 | 2,107,460 | 1,489 functions / 224,484 bytes |
-| Europe/Australia | 5,392 | 2,108,700 | 1,488 functions / 224,176 bytes |
-| Germany | 5,394 | 2,105,512 | 1,487 functions / 224,072 bytes |
+| USA | 5,391 | 2,107,460 | 1,490 functions / 224,800 bytes |
+| Europe/Australia | 5,392 | 2,108,700 | 1,489 functions / 224,492 bytes |
+| Germany | 5,394 | 2,105,512 | 1,488 functions / 224,388 bytes |
 | France (reviewed and corroborated bounds) | 632 | 229,352 | 231 functions / 44,104 bytes |
 
 The `address-anchors.json` registries also recover over 2,500 named data addresses
@@ -604,3 +604,5 @@ The original PS2 signed angle-clamp return flow adds one 132-byte standard code 
 The PS2 volume initializer uses its original U16 count directly, adding 224 code-matched and independently reconstructed bytes per debug release. The existing French volume subset is unchanged. Xbox particle aging adds another 49 literal byte-matched bytes through the original root-acquisition order.
 
 [French bounds, particle initialization, and update-culling coverage](PS2_FRANCE_BOUNDS_CULL.md) adds ten independently corroborated functions / 3,548 known bytes. The three new update-cull comparisons add 1,620 standard matched bytes; all prior function scores and full executable denominators remain unchanged. The other newly covered bodies retain their measured partial scores.
+
+The original PS2 volume event callback now adds another 316 matched and independently reconstructed bytes per debug version, bringing zVolume to four of five matched functions. Xbox box-sphere intersection improves to 98.82%, and endpoint acceleration to 89.08%; both remain partial comparisons.
