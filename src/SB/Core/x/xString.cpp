@@ -292,7 +292,7 @@ S32 xStrParseFloatList(F32* dest, const char* strbuf, S32 max)
         return 0;
     }
 
-    for (index = 0; *str != '\0' && index < max; index++)
+    for (index = 0; *str && index < max; index++)
     {
         while (*str == '\t' || *str == ' ' || *str == '[' || *str == ']' || *str == '{' ||
                *str == '}' || *str == '(' || *str == ')' || *str == '+' || *str == ',' ||

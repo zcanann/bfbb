@@ -56,8 +56,33 @@ this source change does not supply or alter original identities or boundaries.
 All200 atox source bytes equal each of the four authenticated originals directly,
 with zero source relocations. All four complete source objects are identical.
 GameCube's two ordered allocated sections and the actual Xbox whole-TU linked
-text's2,617 bytes stay identical. Private proof: build/near261/{proof.json,
+text's 2,617 bytes stay identical. Private proof: build/near261/{proof.json,
 raw-proof.json,gc/proof.json,xbox/proof.json,phased/<version>/report.json,
 french-expanded/report.json}. The French find_char1,648-byte body and complete
 ordered12-entry table also independently replayed in
 build/near259/french-raw-proof.json.
+
+
+## Float-list loop truth conversion
+
+The original outer FloatList loop materializes the current character's truth
+value with SLTU followed by XORI before its exit branch. Using the character
+directly in the ordinary C++ loop condition recovers this conversion boundary;
+the explicit comparison with zero had collapsed it to BEQZ. Both conditions
+are equivalent for every character value. No parser stores, delimiters, limits,
+helper calls, signedness or other source expressions change.
+
+All four complete-source comparisons improve FloatList from 96.45038 to 98.43511
+percent. The source grows from 524 to 532 bytes because the independently remaining
+whitespace-loop NOPs are still present; the original is 524 bytes. The null-input
+guard also still tests a different equivalent register. These differences remain
+visible, and no new exact function or byte credit is claimed. String totals stay
+4 matched functions / 2,192 bytes, with all other function records unchanged.
+
+Every other allocated section and every relocation record stays identical;
+all four source objects are byte-identical. The actual GameCube object's two allocated
+sections and the actual Xbox whole-TU linked text's 2,617 bytes are unchanged.
+The French comparison uses the independently reviewed 12-member target from
+string254. Private evidence: build/near263/{alignment.json,proof.json,
+gc/proof.json,xbox/proof.json,truth/<version>/report.json,
+french-expanded/report.json}. No additional source variants were retained.
