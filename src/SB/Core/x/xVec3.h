@@ -151,7 +151,7 @@ inline xVec3& xVec3::assign(float dt)
 // Retail has these as weak header inlines (xBound/xCollide own the copies).
 // zParPTank opts in so its emitted copies form the inline group that the
 // snow_particle_data assignment joins, as in the retail object.
-#if defined(XVEC3_SCALE_ADD_INLINE) || defined(XBOX)
+#if defined(XVEC3_SCALE_ADD_INLINE) || defined(PS2) || defined(XBOX)
 inline xVec3 xVec3::operator*(F32 f) const
 {
     xVec3 temp = *this;
@@ -194,7 +194,7 @@ static inline void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 }
 #endif
 
-#if defined(XBOX)
+#if defined(PS2) || defined(XBOX)
 inline xVec3 xVec3::operator+(const xVec3& v) const
 {
     xVec3 vec = *this;

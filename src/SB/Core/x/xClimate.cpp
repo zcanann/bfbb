@@ -183,7 +183,7 @@ void xClimateUpdate(_tagClimate* climate, F32 seconds)
     UpdateWind(climate, seconds);
 }
 
-#if !defined(XBOX)
+#if !defined(PS2) && !defined(XBOX)
 void xVec3Init(xVec3* vec, F32 x, F32 y, F32 z)
 {
     vec->x = x;
@@ -192,14 +192,14 @@ void xVec3Init(xVec3* vec, F32 x, F32 y, F32 z)
 }
 #endif
 
-#if !defined(XBOX)
+#if !defined(PS2) && !defined(XBOX)
 void xMat3x3Identity(xMat3x3* matrix)
 {
     xMat3x3Copy(matrix, &g_I3);
 }
 #endif
 
-#if !defined(XBOX)
+#if !defined(PS2) && !defined(XBOX)
 void xMat3x3Copy(xMat3x3* m1, const xMat3x3* m2)
 {
     memcpy(m1, m2, sizeof(xMat3x3));

@@ -10,7 +10,7 @@ inline void xMat4x3Copy(xMat4x3* o, const xMat4x3* m)
     memcpy(o, m, sizeof(xMat4x3));
 }
 
-#if !defined(XBOX)
+#if !defined(PS2) && !defined(XBOX)
 inline void xQuatConj(xQuat* o, const xQuat* q)
 {
     o->s = q->s;

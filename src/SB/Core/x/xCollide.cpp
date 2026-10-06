@@ -2577,7 +2577,7 @@ bool xSphereHitsVCircle(const xVec3& sc, F32 sr, const xVec3& cc, F32 cr)
     return !(xzdist2 > SQR(max_xzdist));
 }
 
-#if !defined(XBOX)
+#if !defined(PS2) && !defined(XBOX)
 void xVec3AddScaled(xVec3* o, const xVec3* v, F32 s)
 {
     o->x += v->x * s;
@@ -2586,7 +2586,7 @@ void xVec3AddScaled(xVec3* o, const xVec3* v, F32 s)
 }
 #endif
 
-#if !defined(XBOX)
+#if !defined(PS2) && !defined(XBOX)
 void xVec3Cross(xVec3* o, const xVec3* a, const xVec3* b)
 {
     o->x = a->y * b->z - b->y * a->z;
@@ -2595,7 +2595,7 @@ void xVec3Cross(xVec3* o, const xVec3* a, const xVec3* b)
 }
 #endif
 
-#if !defined(XBOX)
+#if !defined(PS2) && !defined(XBOX)
 F32 xVec3Length2(const xVec3* vec)
 {
     return vec->x * vec->x + vec->y * vec->y + vec->z * vec->z;
@@ -2673,7 +2673,7 @@ bool xModelAnimCollDirty(const xModelInstance& cm)
 }
 
 // Make these into inline definitions somewhere appropriate later
-#if !defined(XBOX)
+#if !defined(PS2) && !defined(XBOX)
 xVec3 xVec3::operator+(const xVec3& v) const
 {
     xVec3 vec = *this;
@@ -2682,7 +2682,7 @@ xVec3 xVec3::operator+(const xVec3& v) const
 }
 #endif
 
-#if !defined(XBOX)
+#if !defined(PS2) && !defined(XBOX)
 xVec3& xVec3::operator+=(const xVec3& v)
 {
     x += v.x;

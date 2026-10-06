@@ -25,7 +25,9 @@
     "-Cpp_exceptions",
     "off",
     "-inline",
-    "deferred"
+    "auto,deferred,bottomup",
+    "-str",
+    "reuse,pool,readonly"
   ],
   "scope": "Validated shared-source code comparison profiles for core units, including debug-region math, geometry and streaming consumers; incomplete units and unresolved runtime references remain explicit; France compiles six additional whole source units against all independently verified members currently available, without claiming complete ownership; additional French profiles compare whole source TUs against every currently verified member, retaining incomplete ownership",
   "units": [
@@ -3912,7 +3914,8 @@
           "target_name": "g_serinit",
           "symbol": "g_serinit"
         }
-      ]
+      ],
+      "inline": "deferred"
     },
     {
       "source": "src/SB/Core/x/xBound.cpp",
@@ -7097,7 +7100,8 @@
           "lo_offset": 152,
           "interleaved": true
         }
-      ]
+      ],
+      "inline": "deferred"
     },
     {
       "source": "src/SB/Game/zVolume.cpp",
@@ -8031,7 +8035,8 @@
           "symbol": "g_straninit"
         }
       ],
-      "address_pairs": []
+      "address_pairs": [],
+      "inline": "deferred"
     },
     {
       "source": "src/SB/Game/zCameraTweak.cpp",
@@ -11270,7 +11275,8 @@
           "symbol": "XST_lock_next__Fv"
         }
       ],
-      "gp_relocations": []
+      "gp_relocations": [],
+      "inline": "deferred"
     },
     {
       "source": "src/SB/Core/x/xParEmitterType.cpp",
@@ -14907,7 +14913,8 @@
           "symbol": "dbg_num"
         }
       ],
-      "address_pairs": []
+      "address_pairs": [],
+      "inline": "deferred"
     },
     {
       "source": "src/SB/Core/x/xPad.cpp",
@@ -17732,7 +17739,8 @@
           "symbol": "xAngleClamp__Ff"
         }
       ],
-      "gp_relocations": []
+      "gp_relocations": [],
+      "inline": "deferred"
     },
     {
       "source": "src/SB/Core/x/xScene.cpp",
@@ -26239,7 +26247,8 @@
           "symbol": "gActiveHeap"
         }
       ],
-      "address_pairs": []
+      "address_pairs": [],
+      "inline": "deferred"
     },
     {
       "source": "src/SB/Core/x/xDecal.cpp",

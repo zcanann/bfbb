@@ -268,14 +268,7 @@ void zNPCTiki_Timestep(xScene* xscn, F32 dt)
     zNPCTiki_ReparentOrphans();
     timeSinceLastExplode += dt;
 
-    if (-1.0f > g_tmr_talkytiki - dt)
-    {
-        g_tmr_talkytiki = -1.0f;
-    }
-    else
-    {
-        g_tmr_talkytiki -= dt;
-    }
+    g_tmr_talkytiki = MAX(-1.0f, g_tmr_talkytiki - dt);
 }
 
 void zNPCTiki_ReparentOrphans()

@@ -169,7 +169,7 @@ void xQuatAdd(xQuat* q, const xQuat* a, const xQuat* b);
 void xQuatCopy(xQuat*, const xQuat*);
 void xQuatFlip(xQuat* o1, const xQuat* o2);
 F32 xQuatDot(const xQuat* a, const xQuat* b);
-#if defined(XBOX)
+#if defined(PS2) || defined(XBOX)
 inline void xMat3x3Copy(xMat3x3* o, const xMat3x3* m)
 {
     *o = *m;
@@ -183,7 +183,7 @@ void xMat4x3Identity(xMat4x3* m);
 void xMat4x3Tolocal(xVec3* o, const xMat4x3* m, const xVec3* v);
 void xMat4x3OrthoInv(xMat4x3* o, const xMat4x3* m);
 F32 xQuatGetAngle(const xQuat* q);
-#if defined(XBOX)
+#if defined(PS2) || defined(XBOX)
 inline void xQuatConj(xQuat* o, const xQuat* q)
 {
     o->s = q->s;
@@ -209,7 +209,7 @@ inline void xBoxFromSphere(xBox& box, const xSphere& o)
 #else
 void xBoxFromSphere(xBox& box, const xSphere& o);
 #endif
-#if defined(XBOX)
+#if defined(PS2) || defined(XBOX)
 inline void xMat3x3Identity(xMat3x3* matrix)
 {
     xMat3x3Copy(matrix, &g_I3);
@@ -288,7 +288,7 @@ inline F32 xQuatDot(const xQuat* a, const xQuat* b)
     return xVec3Dot(&a->v, &b->v) + a->s * b->s;
 }
 
-#if defined(XBOX)
+#if defined(PS2) || defined(XBOX)
 inline void xQuatSMul(xQuat* q, const xQuat* a, F32 t)
 {
     q->s = a->s * t;
