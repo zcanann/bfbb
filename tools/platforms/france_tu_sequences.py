@@ -496,6 +496,45 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     for key, value in strings['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
     document['limitations'].append('Strings adds four members from the complete twelve-member sequence, preserving eight prior neighbors. One exact twelve-entry dispatch uses the existing strict recognizer. The sole xatof call is corroborated by a complete six-member original math-tail sequence with three independent neighbors; its literal runtime tail remains unmasked context only, not a new anchor or progress extent.')
+    from platforms.france_par_sequence import generate_unit as generate_par
+    addition = generate_par(originals, registry_dir)
+    document['functions'].extend(addition['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(addition['sequence_proofs'])
+    document['call_neighbors'].extend(addition['call_neighbors'])
+    document['par_data_proofs'] = addition['data_proofs']
+    for key, value in addition['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Particle initialization adds one member from the complete four-function sequence. The original 2000-element xPar array descriptor bounds the sole changed pool address inside authentic BSS; no data extent is promoted.')
+    from platforms.france_update_cull_sequence import generate_unit as generate_update_cull
+    addition = generate_update_cull(originals, registry_dir)
+    document['functions'].extend(addition['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(addition['sequence_proofs'])
+    document['call_neighbors'].extend(addition['call_neighbors'])
+    document['update_cull_data_proofs'] = addition['data_proofs']
+    for key, value in addition['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Update culling adds three members from all seven original functions and four independent neighbors. The complete group-accessor/count context and independently reviewed allocator neighborhood corroborate calls and pointer slots; opaque runtime transfer words remain unmasked. No context becomes a new identity or extent.')
+    from platforms.france_bound_sequence import generate_unit as generate_bound
+    addition = generate_bound(originals, registry_dir)
+    document['functions'].extend(addition['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(addition['sequence_proofs'])
+    document['call_neighbors'].extend(addition['call_neighbors'])
+    document['bound_data_proofs'] = addition['data_proofs']
+    for key, value in addition['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Bounds adds six members from all nine original functions and three independent neighbors. The complete platform-geometry dependency is independently replayed for external calls; original DWARF proves the 60-byte quick-cull global, with no data extent promotion.')
+    from platforms.france_scalar_math_sequence import generate_unit as generate_scalar_math
+    scalar_math = generate_scalar_math(originals, registry_dir)
+    document['functions'].extend(scalar_math['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(scalar_math['sequence_proofs'])
+    document['call_neighbors'].extend(scalar_math['call_neighbors'])
+    for key, value in scalar_math['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Scalar math adds nine members from all eighteen original functions and nine independent neighbors. Only the exact 60-byte EndPoints leaf tail and eight-byte literal xatof J/NOP have scoped boundary rules; generic CFG checks stay unchanged. Opaque runtime transfer words remain unmasked, unnamed context, and the two overloaded acceleration functions retain distinct original linkage identities.')
     return document
 
 

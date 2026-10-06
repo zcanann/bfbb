@@ -567,13 +567,27 @@ void iBoxIsectRay(const xBox* b, const xRay3* r, xIsect* isx)
 void iBoxIsectSphere(const xBox* box, const xSphere* p, xIsect* isx)
 {
     U32 xcode, ycode, zcode;
+#if defined(XBOX)
+    const F32& radius = p->r;
+#else
     F32 center = p->center.x;
     const F32 radius = p->r;
+#endif
     {
+#if defined(XBOX)
+        const F32& center = p->center.x;
+        const F32& lower = box->lower.x;
+        const F32 lo = center - radius;
+#else
         const F32 lower = box->lower.x;
+#endif
         const F32 hi = center + radius;
 
+#if defined(XBOX)
+        if (lo < lower)
+#else
         if (center - radius < lower)
+#endif
         {
             if (hi < lower)
             {
@@ -590,7 +604,11 @@ void iBoxIsectSphere(const xBox* box, const xSphere* p, xIsect* isx)
         }
         else
         {
+#if defined(XBOX)
+            if (lo > box->upper.x)
+#else
             if (center - radius > box->upper.x)
+#endif
             {
                 xcode = 5;
             }
@@ -611,12 +629,24 @@ void iBoxIsectSphere(const xBox* box, const xSphere* p, xIsect* isx)
         return;
     }
 
+#if !defined(XBOX)
     center = p->center.y;
+#endif
     {
+#if defined(XBOX)
+        const F32& center = p->center.y;
+        const F32& lower = box->lower.y;
+        const F32 lo = center - radius;
+#else
         const F32 lower = box->lower.y;
+#endif
         const F32 hi = center + radius;
 
+#if defined(XBOX)
+        if (lo < lower)
+#else
         if (center - radius < lower)
+#endif
         {
             if (hi < lower)
             {
@@ -633,7 +663,11 @@ void iBoxIsectSphere(const xBox* box, const xSphere* p, xIsect* isx)
         }
         else
         {
+#if defined(XBOX)
+            if (lo > box->upper.y)
+#else
             if (center - radius > box->upper.y)
+#endif
             {
                 ycode = 5;
             }
@@ -654,12 +688,24 @@ void iBoxIsectSphere(const xBox* box, const xSphere* p, xIsect* isx)
         return;
     }
 
+#if !defined(XBOX)
     center = p->center.z;
+#endif
     {
+#if defined(XBOX)
+        const F32& center = p->center.z;
+        const F32& lower = box->lower.z;
+        const F32 lo = center - radius;
+#else
         const F32 lower = box->lower.z;
+#endif
         const F32 hi = center + radius;
 
+#if defined(XBOX)
+        if (lo < lower)
+#else
         if (center - radius < lower)
+#endif
         {
             if (hi < lower)
             {
@@ -676,7 +722,11 @@ void iBoxIsectSphere(const xBox* box, const xSphere* p, xIsect* isx)
         }
         else
         {
+#if defined(XBOX)
+            if (lo > box->upper.z)
+#else
             if (center - radius > box->upper.z)
+#endif
             {
                 zcode = 5;
             }

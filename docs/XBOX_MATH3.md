@@ -275,3 +275,37 @@ deltas.json,gc/proof.json,production,verify_final.py,final-verification.json}`.
 The final verifier reads both actual production PEs, both originals and the
 prior linked constant values. No complete original TU or executable link claim
 is added.
+
+## Box-sphere interval acquisition
+
+The original `iBoxIsectSphere` reads the sphere radius and box lower fields at
+their classification uses. Each axis computes its lower sphere extent before
+its upper extent. The shared source had GameCube-oriented snapshots of radius
+and lower bounds, and computed the upper extent first. Xbox consequently
+spilled those snapshots and generated 719 bytes instead of the original 678.
+
+For Xbox, ordinary const references now name the existing radius, per-axis
+center and lower-bound fields, while an explicit lower extent precedes the
+existing upper extent. These aliases introduce no storage or qualifiers on
+the original objects. Every classification case, comparison, helper call and
+output store remains unchanged. No input writes or calls intervene during
+axis classification, including possible overlap with the output. The later
+post-helper radius access remains a direct field read as before. Non-Xbox
+preprocessed source is unchanged.
+
+This one coherent acquisition change improves 84.04036% to 98.81615%. The
+actual complete source's `iMath3.obj` function now has the original 678-byte
+size and 223-instruction mnemonic sequence. Its frame decreases from 28 to
+24 bytes; the original uses 20. Remaining stack-slot choices and two
+commutative load orders remain visible, with no further permutations attempted.
+
+Both complete regional reports preserve all other function records, exact
+counts and denominator/completion fields apart from generated COFF offsets.
+The existing two named calls and four actual PE HIGHLOW literal fields remain
+validated; no profile, original metadata or backend edits are needed. All four
+ordered allocated sections of the actual GameCube iMath3 object are identical.
+This remains a partial source comparison, not a raw-exact or retail-link claim.
+
+Ignored reproducible evidence: `build/xbox272/{boxsphere-disasm.txt,
+residual.json,compile.py,compare.py,consumers,production,verify_final.py,
+final-verification.json,gc/proof.json}`.

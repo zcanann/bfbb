@@ -162,3 +162,76 @@ same authenticated original zero/half payloads. This remains a partial match.
 Ignored evidence: `build/xbox266/{compile.py,compare.py,average-only-consumers,
 average-only-production,consumers,production,verify_final.py,
 final-verification.json,gc/proof.json}`. No complete-TU or retail-relink claim.
+
+## End-position acceleration entry condition
+
+The original end-position `xAccelMove` branches directly on the initial
+small-velocity/sign-disagreement condition. The shared reconstruction first
+materialized that boolean into an integer and then tested its low eight bits.
+The condition is already exactly zero or one, so the mask adds no semantics.
+Xbox now uses the unchanged short-circuit condition directly in the `if`;
+non-Xbox source, arithmetic expressions and all downstream stores are unchanged.
+
+This single source control improves 83.72396% to 89.083336%, removing the
+unnecessary boolean-materialization block. The actual complete `xMath.obj`
+body decreases from 581 to 568 bytes versus the original 574. Remaining
+arithmetic, temporary and sign-test-order differences stay visible. No
+expression or register permutation trial was performed.
+
+Both regional production reports preserve every other function record and
+all exact counts, denominator and completion fields apart from generated
+COFF offsets. The actual source literal fields remain the same genuine
+HIGHLOW references with matching original payloads; no profile, metadata or
+backend changes are required. All 33 ordered GameCube consumer sections are
+identical. This is a partial comparison, with no exact-function or relink claim.
+
+Ignored evidence: `build/xbox274/{compile.py,compare.py,consumers,production,
+verify_final.py,final-verification.json,gc/proof.json}`; the original/source
+entry comparison is also preserved in `build/xbox268/inventory-disasm.txt`.
+
+## End-position old-velocity acquisition
+
+A separate original instruction boundary loads the old velocity before
+computing and spilling `dv = a * dt`. The prior source did those two assignments
+in reverse order, forcing a spill/reload before forming the new velocity.
+For Xbox only, the existing `oldv = v` now precedes `dv = a * dt`. There are no
+intervening calls or writes to the referenced velocity, and all expressions,
+branch predicates, output stores and non-Xbox ordering remain unchanged.
+
+This single acquisition correction improves the endpoint routine from
+89.083336% to 91.265625%; actual source size falls from 568 to 565 bytes versus
+the original 574. It does not resolve the remaining arithmetic and temporary
+choices, which stay visible in the normal comparison. Every other function
+record, exact count and denominator/completion field is unchanged apart from
+generated COFF offsets. Both regional production reports pass, and all 33
+ordered GameCube consumer sections remain byte-identical. Existing genuine
+literal relocation expectations remain valid without a profile change.
+
+Ignored evidence: `build/xbox276/{compile.py,compare.py,consumers,production,
+verify_final.py,final-verification.json,gc/proof.json}`. This remains a partial
+source comparison with no original TU completion or retail-link claim.
+
+## Reused absolute speed in endpoint acceleration
+
+The original stores its first `abs(v)` result and uses that same value later
+for the old-speed/maximum-speed comparison. The shared source recomputed
+`abs(oldv)` there. Xbox now captures the first result in an ordinary `abs_v`
+local and reuses it for that later comparison. No velocity writes or calls
+intervene on the path reaching this test; other paths that write velocity
+skip the test entirely. Therefore the captured value also preserves behavior
+when the two referenced arguments alias. No arithmetic tree, sign comparison
+or output store is changed, and non-Xbox code is preserved.
+
+The one supported reuse improves 91.265625% to 93.697914%. Source size becomes
+575 bytes versus the original 574, and its genuine local frame is now the
+original eight bytes rather than four. This is an ordinary computed-value
+lifetime, not an explicit stack reference or artificial spill. Remaining
+arithmetic/control differences are still compared normally.
+
+Both complete regional reports preserve every other function record, exact
+count and denominator/completion field apart from generated COFF offsets.
+All 33 ordered GameCube consumer sections remain identical. Existing original
+identities, literal fields, profiles, source owners and backend rules are
+unchanged. Ignored evidence is under `build/xbox282/{compile.py,compare.py,
+consumers,production,verify_final.py,final-verification.json,gc/proof.json}`.
+The function remains partial; no whole-TU or retail-link claim is added.
