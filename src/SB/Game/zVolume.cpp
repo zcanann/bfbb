@@ -214,6 +214,43 @@ S32 zVolumeEventCB(xBase*, xBase* to, U32 toEvent, const F32*, xBase*)
         vol->Reset();
         break;
     }
+#if defined(PS2)
+    case eEventOccludeOn:
+    {
+        if (gOccludeCount == 10)
+        {
+            return 1;
+        }
+
+        for (i = 0; i < gOccludeCount; i++)
+        {
+            if (gOccludeList[i] == vol)
+            {
+                return 1;
+            }
+        }
+
+        gOccludeList[gOccludeCount] = vol;
+        gOccludeCount++;
+
+        break;
+    }
+    case eEventOccludeOff:
+    {
+        for (i = 0; i < gOccludeCount; i++)
+        {
+            if (gOccludeList[i] == vol)
+            {
+                gOccludeList[gOccludeCount] = gOccludeList[gOccludeCount - 1];
+                gOccludeCount--;
+
+                return 1;
+            }
+        }
+
+        break;
+    }
+#else
     case eEventOccludeOn:
     {
         S32 count = gOccludeCount;
@@ -253,6 +290,7 @@ S32 zVolumeEventCB(xBase*, xBase* to, U32 toEvent, const F32*, xBase*)
 
         break;
     }
+#endif
     }
 
     return 1;

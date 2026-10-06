@@ -39,3 +39,29 @@ currently compiles this TU. This is an initializer match, not whole-unit complet
 Private evidence: build/near267/{proof.json,original-proof.json,raw/raw-proof.json,
 gc/proof.json,baseline/<version>/report.json,direct/<version>/report.json}.
 No compiler, shared header, target metadata or scoring changes accompany the fix.
+
+
+## Occlusion event count ownership
+
+The original callback's only locals are `vol` and signed `i`; the original
+`gOccludeCount` is an unqualified signed integer. The PS2 event cases now use
+that global directly instead of the separate count captures needed by the
+existing GameCube volatile implementation. This recovers the original count
+and list-cursor lifetimes in both event cases. Array indices, including the
+original removal store, loop bounds, increments, returns and calls are unchanged.
+Explicit PS2 case blocks preserve the existing non-PS2 implementation verbatim.
+
+All three whole-source comparisons improve the 316-byte callback from 98.67088
+to 100 percent, adding 316 bytes and one function per debug region. Applying its
+actual source relocations to independently named original calls and data recovers
+all 316 bytes exactly in each original, with no unresolved fields. The complete
+five-member unit now matches four functions / 668 bytes; occlusion precalculation
+remains partial. Every other function record and allocated section is unchanged.
+All four full-source objects are identical, and the existing French Setup report
+remains exactly unchanged at one function / 100 bytes. Actual GameCube compilation
+preserves all five ordered allocated sections. No shared headers or metadata change.
+
+Evidence: build/near271/{proof.json,original-proof.json,raw/raw-proof.json,
+gc/proof.json,final/<version>/report.json}. The unrelated xUtil_yesno structured
+return control was instruction-identical and rejected; its private negative
+result is recorded under build/near269/findings.json.
