@@ -33,8 +33,10 @@ extern "C" int sprintf(char*, const char*, ...);
 #include "iFile.h"
 #include "zScene.h"
 #include "zGameState.h"
+#if !defined(PS2)
 #include <dolphin/card.h>
 #include <dolphin/os.h>
+#endif
 // from zAssetTypes.h - see the note above
 void zAssetStartup();
 void zAssetShutdown();
@@ -972,13 +974,17 @@ void zMainFirstScreen(S32 mode)
     vbl = 3 * MAIN_VBLANKS_PER_SECOND;
     while (--vbl)
     {
+#if !defined(PS2)
         iTRCDisk::CheckDVDAndResetState();
+#endif
         iVSync();
     }
 
     iCameraDestroy(cam);
 }
 
+#if !defined(PS2)
+// GameCube memory-card (CARD/OS) startup check; the PS2 version is not recovered.
 void zMainMemCardSpaceQuery()
 {
     S32 bytesNeeded = 0;
@@ -1230,6 +1236,7 @@ void zMainMemCardSpaceQuery()
         RwFree(workArea);
     }
 }
+#endif
 
 static void zMainMemCardQueryPost(S32 needed, S32 available, S32 neededFiles, S32 unk0)
 {

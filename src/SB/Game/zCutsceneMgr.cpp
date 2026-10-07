@@ -302,7 +302,9 @@ void zCutsceneMgrFinishLoad(xBase* to)
         iFileAsyncService();
         xSndUpdate();
         iCSLoadStep(t->csn);
+#if !defined(PS2)
         iTRCDisk::CheckDVDAndResetState();
+#endif
         if (t->csn->Ready)
         {
             zCutsceneMgrPlayStart(t);

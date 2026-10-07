@@ -6,6 +6,9 @@
 
 #include "iSystem.h"
 #include "iMemMgr.h"
+#if defined(PS2)
+#include <stdlib.h>
+#endif
 
 xMemInfo_tag gMemInfo;
 xMemHeap_tag gxHeap[3];

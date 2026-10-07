@@ -362,6 +362,21 @@ struct RwCamera
 #define RwCameraGetCurrentCamera() ((RwCamera*)RWSRCGLOBAL(curCamera))
 #define RwCameraGetFrame(_camera) ((RwFrame*)rwObjectGetParent((_camera)))
 #define RwCameraGetViewWindow(_camera) (&((_camera)->viewWindow))
+#define RwCameraGetNearClipPlane(_camera) ((_camera)->nearPlane)
+#define RwCameraSetRaster(_camera, _raster) (((_camera)->frameBuffer = (_raster)), (_camera))
+#define RwCameraGetRaster(_camera) ((_camera)->frameBuffer)
+#define RwCameraSetZRaster(_camera, _raster) (((_camera)->zBuffer = (_raster)), (_camera))
+#define RwCameraGetZRaster(_camera) ((_camera)->zBuffer)
+#define RwCameraSetFogDistance(_camera, _distance) (((_camera)->fogPlane = (_distance)), (_camera))
+#define RwCameraGetViewMatrix(_camera) (&((_camera)->viewMatrix))
+#define RwCameraSetFrame(_camera, _frame) (_rwObjectHasFrameSetFrame((_camera), (_frame)), (_camera))
+
+extern "C" {
+RwBool RpSkySuspend(void);
+RwBool RpSkyResume(void);
+RwFrame* RwFrameOrthoNormalize(RwFrame* frame);
+RwFrame* RwFrameUpdateObjects(RwFrame* frame);
+}
 
 #define RwV3dSubMacro(o, a, b)                                                                     \
     MACRO_START                                                                                    \
@@ -402,6 +417,7 @@ RwCamera* RwCameraCreate(void);
 RwCamera* RwCameraEndUpdate(RwCamera* camera);
 RwCamera* RwCameraBeginUpdate(RwCamera* camera);
 RwCamera* RwCameraClear(RwCamera* camera, RwRGBA* colour, RwInt32 clearMode);
+RwCamera* RwCameraShowRaster(RwCamera* camera, void* pDev, RwUInt32 flags);
 RwCamera* RwCameraSetViewWindow(RwCamera* camera, const RwV2d* viewWindow);
 RwCamera* RwCameraSetProjection(RwCamera* camera, RwCameraProjection projection);
 RwCamera* RwCameraSetNearClipPlane(RwCamera* camera, RwReal nearClip);
@@ -428,6 +444,21 @@ RwMatrix* RwMatrixInvert(RwMatrix* matrixOut, const RwMatrix* matrixIn);
 // RenderWare SDK matrix assignment macro.
 #define RwMatrixCopyMacro(_target, _source) (*(_target) = *(_source))
 
+#define rwMATRIXINTERNALIDENTITY 0x00020000
+#define rwMatrixSetFlags(m, flagsbit) ((m)->flags = (flagsbit))
+#define rwMatrixGetFlags(m) ((m)->flags)
+#define RwMatrixSetIdentityMacro(m)                                                                \
+    MACRO_START                                                                                    \
+    {                                                                                              \
+        (m)->right.x = (m)->up.y = (m)->at.z = (RwReal)((1.0));                                    \
+        (m)->right.y = (m)->right.z = (m)->up.x = (RwReal)((0.0));                                 \
+        (m)->up.z = (m)->at.x = (m)->at.y = (RwReal)((0.0));                                       \
+        (m)->pos.x = (m)->pos.y = (m)->pos.z = (RwReal)((0.0));                                    \
+        rwMatrixSetFlags((m), rwMatrixGetFlags(m) | (rwMATRIXINTERNALIDENTITY | 0x00000003));      \
+    }                                                                                              \
+    MACRO_STOP
+#define RwMatrixSetIdentity(m) RwMatrixSetIdentityMacro(m)
+
 // RenderWare SDK matrix classifications and geometry API.
 enum RwMatrixType
 {
@@ -445,5 +476,55 @@ RwV3d* RwV3dTransformPoints(RwV3d* pointsOut, const RwV3d* pointsIn, RwInt32 num
 }
 
 #define RwFrameGetMatrix(_f) (&(_f)->modelling)
+
+// RenderWare SDK image and raster accessors.
+struct RwImage
+{
+    RwInt32 flags;
+    RwInt32 width;
+    RwInt32 height;
+    RwInt32 depth;
+    RwInt32 stride;
+    RwUInt8* cpPixels;
+    RwRGBA* palette;
+};
+
+#define RwRasterGetWidth(_raster) ((_raster)->width)
+#define RwRasterGetHeight(_raster) ((_raster)->height)
+#define RwImageGetPixelsMacro(_image) ((_image)->cpPixels)
+#define RwImageGetPixels(_image) RwImageGetPixelsMacro(_image)
+
+extern "C" {
+RwImage* RwImageCreate(RwInt32 width, RwInt32 height, RwInt32 depth);
+RwBool RwImageDestroy(RwImage* image);
+RwImage* RwImageAllocatePixels(RwImage* image);
+RwImage* RwImageSetFromRaster(RwImage* image, RwRaster* raster);
+}
+
+#define rwTEXTUREFILTERMODEMASK 0x000000FF
+#define RwTextureSetFilterModeMacro(_tex, _filtering)                                                  (((_tex)->filterAddressing = ((_tex)->filterAddressing & ~rwTEXTUREFILTERMODEMASK) |                                            (((RwUInt32)(_filtering)) & rwTEXTUREFILTERMODEMASK)),                 (_tex))
+#define RwTextureSetFilterMode(_tex, _filtering) RwTextureSetFilterModeMacro(_tex, _filtering)
+
+// RenderWare SDK texture dictionary API.
+struct RwStream;
+typedef RwTexture* (*RwTextureCallBack)(RwTexture* texture, void* pData);
+#define RwTextureAddRefMacro(_tex) (((_tex)->refCount++), (_tex))
+#define RwTextureAddRef(_tex) RwTextureAddRefMacro(_tex)
+
+extern "C" {
+RwTexDictionary* RwTexDictionaryStreamRead(RwStream* stream);
+RwBool RwTexDictionaryDestroy(RwTexDictionary* dict);
+const RwTexDictionary* RwTexDictionaryForAllTextures(const RwTexDictionary* dict,
+                                                     RwTextureCallBack fpCallBack, void* pData);
+RwTexture* RwTexDictionaryRemoveTexture(RwTexture* texture);
+}
+
+// RenderWare SDK vector and matrix helpers.
+#define RwV3dIncrementScaledMacro(o, a, s)                                                             MACRO_START                                                                                        {                                                                                                      (o)->x += (((a)->x) * ((s)));                                                                      (o)->y += (((a)->y) * ((s)));                                                                      (o)->z += (((a)->z) * ((s)));                                                                  }                                                                                                  MACRO_STOP
+
+extern "C" {
+RwReal RwV3dLength(const RwV3d* in);
+RwMatrix* RwMatrixTranslate(RwMatrix* matrix, const RwV3d* translation, RwOpCombineType combineOp);
+}
 
 #endif

@@ -2,6 +2,9 @@
 #include <string.h>
 
 #include "iTime.h"
+#if defined(PS2)
+#include "iSystem.h"
+#endif
 
 #include "xString.h"
 #include "xSnd.h"

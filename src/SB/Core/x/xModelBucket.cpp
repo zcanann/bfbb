@@ -8,8 +8,13 @@
 #include "zGlobals.h"
 
 #include <types.h>
+#if defined(PS2)
+#include <stdlib.h>
+#include <rwim3d.h>
+#else
 #include <PowerPC_EABI_Support\MSL_C\MSL_Common\stdlib.h>
 #include <rwsdk\driver\gcn\dlrendst.h>
+#endif
 
 static RpWorld* sBucketDummyWorld;
 static RwCamera* sBucketDummyCamera;
@@ -421,6 +426,11 @@ void xModelBucket_RenderAlphaBegin()
     }
 }
 
+#if defined(PS2)
+// Sky2 GS FRAME/TEST register update; its body is not recovered yet.
+unsigned char PS2_MaskFrameBuffer_AlphaCompare(unsigned int mask, unsigned char alphaCompare);
+#endif
+
 void xModelBucket_RenderAlphaLayer(S32 maxLayer)
 {
     U32 pipeMask, curPipeFlags, lastPipeFlags;
@@ -513,6 +523,7 @@ void xModelBucket_RenderAlphaLayer(S32 maxLayer)
                     RwRenderStateSet(rwRENDERSTATECULLMODE, (void*)rwCULLMODECULLNONE);
                 }
             }
+#if !defined(PS2)
             if (xorPipeFlags & 0xFF000000)
             {
                 if (curPipeFlags >> 24)
@@ -527,6 +538,7 @@ void xModelBucket_RenderAlphaLayer(S32 maxLayer)
                     _rwDlRenderStateSetZCompLoc(TRUE);
                 }
             }
+#endif
             if (xorPipeFlags & 0x10000)
             {
                 if (curPipeFlags & 0x10000)
@@ -552,10 +564,17 @@ void xModelBucket_RenderAlphaLayer(S32 maxLayer)
         }
         else if ((curPipeFlags & 0xC) == 0x8)
         {
+#if defined(PS2)
+            U8 oldAlphaCompare = PS2_MaskFrameBuffer_AlphaCompare(0xFFFFFFFF, 1);
+            xModelRenderSingle(minst);
+            PS2_MaskFrameBuffer_AlphaCompare(0, oldAlphaCompare);
+            xModelRenderSingle(minst);
+#else
             iDrawSetFBMSK(0xFFFFFFFF);
             xModelRenderSingle(minst);
             iDrawSetFBMSK(0);
             xModelRenderSingle(minst);
+#endif
         }
         else
         {
@@ -591,11 +610,13 @@ void xModelBucket_RenderAlphaLayer(S32 maxLayer)
         {
             RwRenderStateSet(rwRENDERSTATECULLMODE, (void*)rwCULLMODECULLNONE);
         }
+#if !defined(PS2)
         if (lastPipeFlags & 0xFF000000)
         {
             RwGameCubeSetAlphaCompare(GX_GEQUAL, 1, GX_AOP_AND, GX_ALWAYS, 0);
             _rwDlRenderStateSetZCompLoc(TRUE);
         }
+#endif
         if (lastPipeFlags & 0x10000)
         {
             xglobals->fog.type = oldfogtype;

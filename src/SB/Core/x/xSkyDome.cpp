@@ -2,6 +2,9 @@
 
 #include "xEvent.h"
 #include "iModel.h"
+#if defined(PS2)
+#include <rwplcore.h>
+#endif
 
 struct SkyDomeInfo
 {

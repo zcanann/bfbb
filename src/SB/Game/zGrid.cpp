@@ -6,7 +6,11 @@
 
 #include "xVec3.h"
 #include <types.h>
+#if defined(PS2)
+#include <math.h>
+#else
 #include <PowerPC_EABI_Support\MSL_C\MSL_Common\cmath>
+#endif
 
 xGrid colls_grid;
 xGrid colls_oso_grid;

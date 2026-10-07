@@ -30,12 +30,21 @@
 #include "xSkyDome.h"
 #include "xTRC.h"
 #include "xUtil.h"
+#include "xstransvc.h"
 
 #include <types.h>
 
 #include <stdio.h>
+#if defined(PS2)
+#include <rwim2d.h>
+#include <rwim3d.h>
+#endif
 
-#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+#if defined(VERSION_SLES_51968) || defined(VERSION_SLES_51970)
+enum { GAME_SCREEN_HEIGHT = 512, GAME_VBLANKS_PER_SECOND = 50 };
+#elif defined(PS2)
+enum { GAME_SCREEN_HEIGHT = 448, GAME_VBLANKS_PER_SECOND = 60 };
+#elif defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
 enum { GAME_SCREEN_HEIGHT = 528, GAME_VBLANKS_PER_SECOND = 50 };
 #else
 enum { GAME_SCREEN_HEIGHT = 480, GAME_VBLANKS_PER_SECOND = 60 };
@@ -638,10 +647,12 @@ void zGameLoop()
         xPadNormalizeAnalog(*globals.pad0, globals.player.g.AnalogMin, globals.player.g.AnalogMax);
 
         gGameWhereAmI = eGameWhere_LoopTRCCheck;
+#if !defined(PS2)
         if (iTRCDisk::CheckDVDAndResetState())
         {
             zMusicNotify(7);
         }
+#endif
 
         globals.update_dt = sTimeElapsed;
 
@@ -856,6 +867,39 @@ static void zGame_HackDrawCard(F32 x, F32 y, F32 w, F32 h, RwRaster* rast)
     RwIm2DVertex quad[4];
     F32 screenZ = RwIm2DGetNearScreenZ();
 
+#if defined(PS2)
+    RwIm2DVertexSetScreenX(&quad[0], x);
+    RwIm2DVertexSetScreenY(&quad[0], y);
+    RwIm2DVertexSetScreenZ(&quad[0], screenZ);
+    RwIm2DVertexSetIntRGBA(&quad[0], 255, 255, 255, 255);
+    RwIm2DVertexSetRecipCameraZ(&quad[0], 1.0f / 6.0f);
+    RwIm2DVertexSetU(&quad[0], 0.0f, 1.0f / 6.0f);
+    RwIm2DVertexSetV(&quad[0], 0.0f, 1.0f / 6.0f);
+
+    RwIm2DVertexSetScreenX(&quad[1], x);
+    RwIm2DVertexSetScreenY(&quad[1], y + h);
+    RwIm2DVertexSetScreenZ(&quad[1], screenZ);
+    RwIm2DVertexSetIntRGBA(&quad[1], 255, 255, 255, 255);
+    RwIm2DVertexSetRecipCameraZ(&quad[1], 1.0f / 6.0f);
+    RwIm2DVertexSetU(&quad[1], 0.0f, 1.0f / 6.0f);
+    RwIm2DVertexSetV(&quad[1], 1.0f, 1.0f / 6.0f);
+
+    RwIm2DVertexSetScreenX(&quad[2], x + w);
+    RwIm2DVertexSetScreenY(&quad[2], y);
+    RwIm2DVertexSetScreenZ(&quad[2], screenZ);
+    RwIm2DVertexSetIntRGBA(&quad[2], 255, 255, 255, 255);
+    RwIm2DVertexSetRecipCameraZ(&quad[2], 1.0f / 6.0f);
+    RwIm2DVertexSetU(&quad[2], 1.0f, 1.0f / 6.0f);
+    RwIm2DVertexSetV(&quad[2], 0.0f, 1.0f / 6.0f);
+
+    RwIm2DVertexSetScreenX(&quad[3], x + w);
+    RwIm2DVertexSetScreenY(&quad[3], y + h);
+    RwIm2DVertexSetScreenZ(&quad[3], screenZ);
+    RwIm2DVertexSetIntRGBA(&quad[3], 255, 255, 255, 255);
+    RwIm2DVertexSetRecipCameraZ(&quad[3], 1.0f / 6.0f);
+    RwIm2DVertexSetU(&quad[3], 1.0f, 1.0f / 6.0f);
+    RwIm2DVertexSetV(&quad[3], 1.0f, 1.0f / 6.0f);
+#else
     quad[0].x = x;
     quad[0].y = y;
     quad[0].z = screenZ;
@@ -895,6 +939,7 @@ static void zGame_HackDrawCard(F32 x, F32 y, F32 w, F32 h, RwRaster* rast)
     quad[3].emissiveColor.alpha = 255;
     quad[3].u = 1.0f;
     quad[3].v = 1.0f;
+#endif
 
     RwRenderStateSet(rwRENDERSTATESHADEMODE, (void*)rwSHADEMODEFLAT);
     RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)rwBLENDSRCALPHA);
@@ -1318,7 +1363,12 @@ void zGameScreenTransitionUpdate(F32 percentComplete, char* msg, U8* rgba)
 {
     RwTexture* tex;
     RwRaster* ras;
+#if defined(PS2)
+    F32 recipCamZ;
+    RwIm2DVertex vx[4];
+#else
     rwGameCube2DVertex vx[4];
+#endif
 
     gGameWhereAmI = eGameWhere_TransitionUpdate;
 
@@ -1341,12 +1391,16 @@ void zGameScreenTransitionUpdate(F32 percentComplete, char* msg, U8* rgba)
 
     gGameWhereAmI = eGameWhere_TransitionPadUpdate;
     xPadUpdate(globals.currentActivePad, sTimeElapsed);
+#if !defined(PS2)
     xDrawBegin();
+#endif
 
     if (sGameScreenTransCam != NULL)
     {
         gGameWhereAmI = eGameWhere_TransitionTRCCheck;
+#if !defined(PS2)
         iTRCDisk::CheckDVDAndResetState();
+#endif
 
         gGameWhereAmI = eGameWhere_TransitionCameraClear;
         RwCameraClear(sGameScreenTransCam, &back_col, 3);
@@ -1358,7 +1412,11 @@ void zGameScreenTransitionUpdate(F32 percentComplete, char* msg, U8* rgba)
         tex = (RwTexture*)xSTFindAsset(bgID, NULL);
         if ((tex != NULL) && (ras = (RwRaster*)tex->raster, ras != NULL))
         {
+#if defined(PS2)
+            recipCamZ = 1.0f / RwCameraGetNearClipPlane(sGameScreenTransCam);
+#else
             RwRenderStateSet(rwRENDERSTATETEXTURERASTER, (void*)0);
+#endif
             RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)2);
             RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)1);
             RwRenderStateSet(rwRENDERSTATEZTESTENABLE, (void*)0);
@@ -1367,6 +1425,39 @@ void zGameScreenTransitionUpdate(F32 percentComplete, char* msg, U8* rgba)
 
             F32 z = RwIm2DGetFarScreenZ();
 
+#if defined(PS2)
+            RwIm2DVertexSetScreenX(&vx[0], 0.0f);
+            RwIm2DVertexSetScreenY(&vx[0], 0.0f);
+            RwIm2DVertexSetScreenZ(&vx[0], z);
+            RwIm2DVertexSetIntRGBA(&vx[0], bgr, bgb, bgg, bga);
+            RwIm2DVertexSetRecipCameraZ(&vx[0], recipCamZ);
+            RwIm2DVertexSetU(&vx[0], bgu1, recipCamZ);
+            RwIm2DVertexSetV(&vx[0], bgv1, recipCamZ);
+
+            RwIm2DVertexSetScreenX(&vx[1], 0.0f);
+            RwIm2DVertexSetScreenY(&vx[1], (F32)GAME_SCREEN_HEIGHT);
+            RwIm2DVertexSetScreenZ(&vx[1], z);
+            RwIm2DVertexSetIntRGBA(&vx[1], bgr, bgb, bgg, bga);
+            RwIm2DVertexSetRecipCameraZ(&vx[1], recipCamZ);
+            RwIm2DVertexSetU(&vx[1], bgu1, recipCamZ);
+            RwIm2DVertexSetV(&vx[1], bgv2, recipCamZ);
+
+            RwIm2DVertexSetScreenX(&vx[2], 640.0f);
+            RwIm2DVertexSetScreenY(&vx[2], 0.0f);
+            RwIm2DVertexSetScreenZ(&vx[2], z);
+            RwIm2DVertexSetIntRGBA(&vx[2], bgr, bgb, bgg, bga);
+            RwIm2DVertexSetRecipCameraZ(&vx[2], recipCamZ);
+            RwIm2DVertexSetU(&vx[2], bgu2, recipCamZ);
+            RwIm2DVertexSetV(&vx[2], bgv1, recipCamZ);
+
+            RwIm2DVertexSetScreenX(&vx[3], 640.0f);
+            RwIm2DVertexSetScreenY(&vx[3], (F32)GAME_SCREEN_HEIGHT);
+            RwIm2DVertexSetScreenZ(&vx[3], z);
+            RwIm2DVertexSetIntRGBA(&vx[3], bgr, bgb, bgg, bga);
+            RwIm2DVertexSetRecipCameraZ(&vx[3], recipCamZ);
+            RwIm2DVertexSetU(&vx[3], bgu2, recipCamZ);
+            RwIm2DVertexSetV(&vx[3], bgv2, recipCamZ);
+#else
             vx[0].x = 0.0f;
             vx[0].y = 0.0f;
             vx[0].z = z;
@@ -1406,6 +1497,7 @@ void zGameScreenTransitionUpdate(F32 percentComplete, char* msg, U8* rgba)
             vx[3].emissiveColor.alpha = bga;
             vx[3].u = bgu2;
             vx[3].v = bgv2;
+#endif
 
             RwIm2DRenderPrimitive(rwPRIMTYPETRISTRIP, &vx[0], 4);
             RwRenderStateSet(rwRENDERSTATEZTESTENABLE, (void*)1);
@@ -1450,7 +1542,9 @@ void zGameScreenTransitionUpdate(F32 percentComplete, char* msg, U8* rgba)
     zFX_SpawnBubbleWall();
 
     gGameWhereAmI = eGameWhere_TransitionDrawEnd;
+#if !defined(PS2)
     xDrawEnd();
+#endif
 
     if (sGameScreenTransCam != NULL)
     {
@@ -1540,4 +1634,6 @@ void zGameStats_Init()
 {
 }
 
+#if !defined(PS2)
 #include "zGameDrawHelpers.h"
+#endif

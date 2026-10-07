@@ -1,6 +1,11 @@
 #include "zRenderState.h"
 
+#if defined(PS2)
+#include <rwplcore.h>
+#include <rwim3d.h>
+#else
 #include "rwsdk/rwplcore.h"
+#endif
 
 #include "iCamera.h"
 

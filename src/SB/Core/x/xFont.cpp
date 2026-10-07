@@ -14,7 +14,13 @@
 
 #include <string.h>
 #include <stdio.h>
+#if defined(PS2)
+#include <stdlib.h>
+#include <rwim2d.h>
+#include <rwim3d.h>
+#else
 #include <PowerPC_EABI_Support\MSL_C\MSL_Common\strtoul.h>
+#endif
 
 #if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
 #define FONT_SCREEN_HEIGHT 528.0f
@@ -472,6 +478,7 @@ namespace
 // their implementation-header group is emitted after this file's functions.
 #include "xFontHelpers.h"
 
+#if !defined(PS2)
 rwGameCube2DVertex& rwGameCube2DVertex::operator=(const rwGameCube2DVertex& rhs)
 {
     this->x = rhs.x;
@@ -488,6 +495,7 @@ rwGameCube2DVertex& rwGameCube2DVertex::operator=(const rwGameCube2DVertex& rhs)
 
     return *this;
 }
+#endif
 
 namespace
 {

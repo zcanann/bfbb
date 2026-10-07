@@ -112,10 +112,12 @@ S32 xSGDone(st_XSAVEGAME_DATA* xsgdata)
     return result;
 }
 
+#if !defined(PS2)
 S32 xSGCheckForCorruptFiles(st_XSAVEGAME_DATA* xsgdata, char files[][64])
 {
     return iSGCheckForCorruptFiles(xsgdata->isgsess, files);
 }
+#endif
 
 S32 xSGTgtCount(st_XSAVEGAME_DATA* xsgdata, S32* max)
 {

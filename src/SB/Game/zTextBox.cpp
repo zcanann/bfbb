@@ -7,6 +7,10 @@
 #include "xTextAsset.h"
 
 #include <string.h>
+#if defined(PS2)
+#include <rwim2d.h>
+#include <rwim3d.h>
+#endif
 
 iColor_tag convert(const ztextbox::asset_type::color_type& color);
 

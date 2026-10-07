@@ -2,7 +2,11 @@
 #include "xHud.h"
 #include "xString.h"
 
+#if defined(PS2)
+#include <new.h>
+#else
 #include <PowerPC_EABI_Support\MSL_C++\MSL_Common\Include\new.h>
+#endif
 #include <types.h>
 
 xAnimTable* XHUD_AnimTable_Idle()

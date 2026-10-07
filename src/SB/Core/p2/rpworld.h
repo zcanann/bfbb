@@ -224,16 +224,43 @@ RpWorld* RpWorldAddCamera(RpWorld* world, RwCamera* camera);
 RpWorld* RpWorldRemoveCamera(RpWorld* world, RwCamera* camera);
 RpWorld* RpWorldAddLight(RpWorld* world, RpLight* light);
 RpWorld* RpWorldRemoveLight(RpWorld* world, RpLight* light);
+RpWorld* RwCameraGetWorld(const RwCamera* camera);
 }
 
 extern "C" {
 RpAtomic* RpAtomicSetFrame(RpAtomic* atomic, RwFrame* frame);
 RpMaterial* RpMaterialSetTexture(RpMaterial* material, RwTexture* texture);
+RwInt32 RpClumpGetNumAtomics(RpClump* clump);
+RwBool RpAtomicDestroy(RpAtomic* atomic);
+RpAtomic* RpAtomicStreamRead(struct RwStream* stream);
+const RpAtomic* RpAtomicStreamWrite(const RpAtomic* atomic, struct RwStream* stream);
 }
 
 #define RpAtomicRenderMacro(_atomic) ((_atomic)->renderCallBack(_atomic))
 #define RpAtomicRender(_atomic) RpAtomicRenderMacro(_atomic)
 
 #define RpAtomicGetGeometryMacro(_atomic) ((_atomic)->geometry)
+
+#define RpAtomicGetClumpMacro(_atomic) ((_atomic)->clump)
+#define RpAtomicGetClump(_atomic) RpAtomicGetClumpMacro(_atomic)
+
+// RenderWare SDK bounding-sphere accessor.
+enum RpInterpolatorFlag
+{
+    rpINTERPOLATORDIRTYINSTANCE = 0x01,
+    rpINTERPOLATORDIRTYSPHERE = 0x02,
+    rpINTERPOLATORNOFRAMEDIRTY = 0x04,
+    rpINTERPOLATORFLAGFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+
+extern "C" void _rpAtomicResyncInterpolatedSphere(RpAtomic* atomic);
+
+#define RpAtomicGetBoundingSphereMacro(_atomic)                                                        ((((_atomic)->interpolator.flags & rpINTERPOLATORDIRTYSPHERE) ?                                      _rpAtomicResyncInterpolatedSphere(_atomic),                                                        0 : 0),                                                                                           &((_atomic)->boundingSphere))
+#define RpAtomicGetBoundingSphere(_atomic) RpAtomicGetBoundingSphereMacro(_atomic)
+
+// RenderWare SDK world/clump stream and clump membership API.
+extern "C" {
+RpWorld* RpWorldStreamRead(RwStream* stream);
+}
 
 #endif

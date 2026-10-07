@@ -19,6 +19,10 @@
 #include "xTRC.h"
 #include "xutil.h"
 
+#if defined(PS2)
+#define strcmpi stricmp
+#endif
+
 #if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
 #define SAVE_LOAD_FRAME_TIME (1.0f / 50.0f)
 #else
@@ -179,7 +183,9 @@ void zSaveLoad_Tick()
     sTimeElapsed = iTimeDiffSec(sTimeLast, sTimeCurrent);
     sTimeLast = sTimeCurrent;
     xPadUpdate(globals.currentActivePad, time_elapsed);
+#if !defined(PS2)
     iTRCDisk::CheckDVDAndResetState();
+#endif
     xDrawBegin();
     xParMgrUpdate(time_elapsed);
     zSceneUpdate(time_elapsed);
@@ -749,6 +755,7 @@ S32 zSaveLoad_ErrorFormatCardYankedPrompt(S32 cardNumber)
     return 6;
 }
 
+#if !defined(PS2)
 S32 zSaveLoad_CardCheckSingle(S32 num)
 {
     st_XSAVEGAME_DATA* ldinst = xSGInit(XSG_MODE_LOAD);
@@ -793,6 +800,38 @@ S32 zSaveLoad_CardCheckSingle(S32 num)
     }
     return -1;
 }
+#else
+// PS2 has no wrong-device memory card state.
+S32 zSaveLoad_CardCheckSingle(S32 num)
+{
+    st_XSAVEGAME_DATA* ldinst = xSGInit(XSG_MODE_LOAD);
+    S32 tgtmax;
+
+    switch (xSGTgtCount(ldinst, &tgtmax))
+    {
+    case 2:
+        xSGDone(ldinst);
+        return 1;
+    case 1:
+    {
+        int tgtslot = xSGTgtPhysSlotIdx(ldinst, 0);
+        xSGDone(ldinst);
+        if (tgtslot == num)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    case 0:
+        xSGDone(ldinst);
+        return 0;
+    }
+    return -1;
+}
+#endif
 
 S32 zSaveLoad_CardCheckFormattedSingle(S32 num)
 {
@@ -1658,6 +1697,7 @@ U8 zSaveLoadGetPreAutoSave()
 void zSaveLoadPreAutoSave(bool onOff)
 {
     preAutoSaving = onOff;
+#if !defined(PS2)
     if (onOff)
     {
         ResetButton::DisableReset();
@@ -1666,8 +1706,10 @@ void zSaveLoadPreAutoSave(bool onOff)
     {
         ResetButton::EnableReset();
     }
+#endif
 }
 
+#if !defined(PS2)
 void zSaveLoadAutoSaveUpdate()
 {
     xBase* sendTo;
@@ -1714,6 +1756,7 @@ void zSaveLoadAutoSaveUpdate()
         }
     }
 }
+#endif
 
 S32 zSaveLoad_DoAutoSave()
 {

@@ -4,6 +4,9 @@
 #include "xSnd.h"
 #include "zFMV.h"
 #include "zGameState.h"
+#if defined(PS2)
+#include <rwcore.h>
+#endif
 
 zFMVFile zFMVFileTable[] = {
     { eFMVFile_PromoFOP, "FMV\\FOP" }, // Fairly Odd Parents
@@ -32,7 +35,10 @@ U32 zFMVPlay(char* filename, U32 buttons, F32 time, bool skippable, bool lockCon
         filename++;
     }
 
-#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+#if defined(PS2)
+    sprintf(fullname, "%s%s", filename, ".pss");
+    RpSkySuspend();
+#elif defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
     sprintf(fullname, "%s%s", filename, ".bkp");
 #else
     sprintf(fullname, "%s%s", filename, ".bik");
@@ -43,6 +49,9 @@ U32 zFMVPlay(char* filename, U32 buttons, F32 time, bool skippable, bool lockCon
     ret = iFMVPlay(fullname, buttons, time, skippable, lockController);
     zGameSetOstrich(old);
     xSndResume();
+#if defined(PS2)
+    RpSkyResume();
+#endif
 
     return ret;
 }

@@ -20,7 +20,13 @@
 
 #include <types.h>
 #include <string.h>
+#if defined(PS2)
+#include <math.h>
+#include <rwplcore.h>
+#define FABS(x) xabs(x)
+#else
 #include <PowerPC_EABI_Support\MSL_C\MSL_Common\cmath>
+#endif
 
 struct xCutsceneMphFrame
 {
@@ -56,7 +62,9 @@ void xShadowCameraUpdate(void* model, void (*renderCB)(void*), xVec3* center, F3
 xCutscene sActiveCutscene;
 U32 sCutTocCount;
 xCutsceneInfo* sCutTocInfo;
+#if !defined(PS2)
 extern RwGlobals* RwEngineInstance;
+#endif
 static xModelInstance sCutsceneFakeModel[8];
 
 void xCutscene_Init(void* toc)

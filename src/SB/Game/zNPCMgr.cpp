@@ -1,3 +1,6 @@
+#if defined(PS2)
+#include "xEnt.h"
+#endif
 #include "zNPCMgr.h"
 
 #include "xLightKit.h"

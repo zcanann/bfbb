@@ -66,7 +66,11 @@
 #include "xNPCBasic.h"
 #include "xString.h"
 #include "xstransvc.h"
+#if defined(PS2)
+#include "xpkrsvc_api.h"
+#else
 #include "xpkrsvc.h"
+#endif
 #include "xDynAsset.h"
 #include "xParSys.h"
 #include "xParEmitter.h"
@@ -102,6 +106,9 @@
 
 #include <string.h>
 #include <stdio.h>
+#if defined(PS2)
+#include <rwim3d.h>
+#endif
 
 // Declared in zAssetTypes.h. That header is deliberately not included here: it
 // pulls in zNPCTypeBossPlankton.h -> xLaserBolt.h (`xVec3 temp = { 0, 0, 0 };`)
@@ -1203,7 +1210,9 @@ void zSceneExit(S32 beginReload)
     xSndStopAll(~SND_CAT_UI);
     xSndUpdate();
     iSndWaitForDeadSounds();
+#if !defined(PS2)
     iSndSceneExit();
+#endif
     xSFXEnvironmentalStreamSceneExit();
     iSndSuspendCD(1);
     iFuncProfileDump();

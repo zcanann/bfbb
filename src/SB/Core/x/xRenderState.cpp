@@ -1,4 +1,7 @@
 #include "xRenderState.h"
+#if defined(PS2)
+#include <rwim3d.h>
+#endif
 
 static int sBlendTable[11] =
 {

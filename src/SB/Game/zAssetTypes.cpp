@@ -13,6 +13,9 @@
 #include <stdio.h>
 #include <rwcore.h>
 #include <rpworld.h>
+#if defined(PS2)
+#include <rwplcore.h>
+#endif
 
 static void* Curve_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsize);
 static void* ATBL_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsize);
@@ -21,7 +24,9 @@ static void* RWTX_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32
 static void* Model_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsize);
 static void* BSP_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsize);
 static void* JSP_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsize);
+#if !defined(PS2)
 static void* SndInfoRead(void*, unsigned int, void*, unsigned int, unsigned int*);
+#endif
 static void Model_Unload(void*, U32);
 static void BSP_Unload(void*, U32);
 static void JSP_Unload(void*, U32);
@@ -76,7 +81,11 @@ static st_PACKER_ASSETTYPE assetTypeHandlers[78] = {
     { 'GRUP' },
     { 'MPHT' },
     { 'SFX ' },
+#if defined(PS2)
+    { 'SNDI' },
+#else
     { 'SNDI', 0, 0, SndInfoRead, NULL, NULL, NULL, NULL, NULL, NULL },
+#endif
     { 'HANG' },
     { 'SIMP' },
     { 'BUTN' },
@@ -782,6 +791,7 @@ static void MovePoint_Unload(void* userdata, U32 b)
     xMovePointSplineDestroy((xMovePoint*)userdata);
 }
 
+#if !defined(PS2)
 static void* SndInfoRead(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsize)
 {
     void* __dest = RWSRCGLOBAL(memoryFuncs.rwmalloc(insize));
@@ -805,3 +815,4 @@ static void* SndInfoRead(void* param_1, U32 param_2, void* indata, U32 insize, U
 
     return __dest;
 }
+#endif
