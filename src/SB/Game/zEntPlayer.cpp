@@ -1,5 +1,8 @@
-// Retail resolves these vector helpers externally and has no local templates.
+// GameCube retail resolves these vector helpers externally and has no local
+// templates; PS2 retail expands them inline.
+#if !defined(PS2)
 #define XVEC3_DEFER_AGGREGATE_HELPERS
+#endif
 
 // Retail called the 9-argument xVec3* xSndPlay3D out of line from this TU (see
 // zEntPlayerDriveUpdate), so opt out of zEnt.h's inline definition of it.
@@ -1383,7 +1386,7 @@ static void InvReset()
     globals.player.Inv_Spatula = globals.player.g.InitialSpatulaCount;
     globals.player.Inv_PatsSock_Total = 0;
 
-    if (globals.player.g.InitialShinyCount > SHINY_MAX)
+    if (globals.player.Inv_Shiny > SHINY_MAX)
     {
         globals.player.Inv_Shiny = SHINY_MAX;
     }
@@ -2177,6 +2180,9 @@ static U32 SpatulaGrabStopCB(xAnimTransition*, xAnimSingle*, void* data)
                 {
                     zEntEvent(sendTo, eEventVisible);
                 }
+#if defined(PS2)
+                zGameStall();
+#endif
             }
 
             sendTo = zSceneFindObject(xStrHash("SAVING GAME ICON UI"));
@@ -2379,8 +2385,8 @@ static U32 WallJumpLandFlightCallback(xAnimTransition* tran, xAnimSingle* anim, 
 
 static U32 JumpCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
-    return (globals.player.CanJump && !globals.player.ControlOff &&
-            (globals.pad0->pressed & XPAD_BUTTON_X));
+    return globals.player.CanJump &&
+           (!globals.player.ControlOff && globals.pad0->pressed & XPAD_BUTTON_X);
 }
 
 static void zEntPlayerJumpAddDriver(xEnt* ent);
@@ -3630,41 +3636,24 @@ static U32 LassoSwingReleaseCB(xAnimTransition* tran, xAnimSingle* anim, void* o
 
 static U32 StunBubbleTrail(xAnimSingle* single)
 {
-    U8 ret = 0;
     xAnimState* astate = single->State;
-    if ((strcmp(astate->Name, "StunFall") == 0) ||
-        ((strcmp(astate->Name, "StunJump") == 0) && (single->Time >= 0.6f) && (single->Time <= 1.0f)))
-    {
-        ret = 1;
-    }
-    return ret;
+    return !strcmp(astate->Name, "StunFall") ||
+           (!strcmp(astate->Name, "StunJump") && (single->Time >= 0.6f && single->Time <= 1.0f));
 }
 
 static U32 BubbleBashContrails(xAnimSingle* single)
 {
-    U8 ret = 0;
     xAnimState* astate = single->State;
-    if (((strcmp(astate->Name, "BbashStart01") == 0) && (single->Time >= 0.3f)) ||
-        (strcmp(astate->Name, "BbashAttack01") == 0) ||
-        (strcmp(astate->Name, "BbashMiss01") == 0) && (single->Time <= 0.125f))
-    {
-        ret = 1;
-    }
-    return ret;
+    return (!strcmp(astate->Name, "BbashStart01") && single->Time >= 0.3f) ||
+           !strcmp(astate->Name, "BbashAttack01") ||
+           (!strcmp(astate->Name, "BbashMiss01") && single->Time <= 0.125f);
 }
 
 static U32 BubbleBounceContrails(xAnimSingle* single)
 {
-    U8 ret = 0;
     xAnimState* astate = single->State;
-    if (
-
-        ((strcmp(astate->Name, "BbounceStart01") == 0) && (single->Time >= 0.9f)) ||
-        (strcmp(astate->Name, "BbounceAttack01") == 0))
-    {
-        ret = 1;
-    }
-    return ret;
+    return (!strcmp(astate->Name, "BbounceStart01") && single->Time >= 0.9f) ||
+           !strcmp(astate->Name, "BbounceAttack01");
 }
 
 static U32 StunStartFallCB(xAnimTransition*, xAnimSingle*, void*);
@@ -4923,9 +4912,9 @@ static S32 zEntPlayerKnockToSafety(xEnt* ent)
     }
     else
     {
-        diffZ = floor_safe_vec.z - ent->model->Mat->pos.z;
         diffX = floor_safe_vec.x - ent->model->Mat->pos.x;
         diffY = floor_safe_vec.y - ent->model->Mat->pos.y;
+        diffZ = floor_safe_vec.z - ent->model->Mat->pos.z;
         velXZ = xsqrt(diffX * diffX + diffZ * diffZ);
         if (diffY < -3.0f || diffY > 5.0f || velXZ > 9.0f)
         {
@@ -4972,78 +4961,74 @@ static xEnt* zEntPlayer_FindGrabEnt(xEnt* ent, zScene* zsc, S32* failed)
 
     for (i = 0; i < zsc->num_ents; i++)
     {
-        xEnt* e = (xEnt*)zsc->ents[i];
+        xEnt* grabent = (xEnt*)zsc->ents[i];
 
-        if (!(e->baseFlags & 0x20))
+        if (!(grabent->baseFlags & 0x20))
         {
             continue;
         }
 
-        if (!(e->flags & 0x1))
+        if (!(grabent->flags & 0x1))
         {
             continue;
         }
 
-        if (!e->model)
+        if (!grabent->model)
         {
             continue;
         }
 
-        if (!(e->chkby & 0x10))
+        if (!(grabent->chkby & 0x10))
         {
             continue;
         }
 
-        if (e->baseType != 0x2f)
+        if (grabent->baseType != 0x2f)
         {
-            dx = e->model->Mat->pos.x - ent->model->Mat->pos.x;
-            dy = e->model->Mat->pos.y - ent->model->Mat->pos.y;
-            dz = e->model->Mat->pos.z - ent->model->Mat->pos.z;
+            dx = grabent->model->Mat->pos.x - ent->model->Mat->pos.x;
+            dy = grabent->model->Mat->pos.y - ent->model->Mat->pos.y;
+            dz = grabent->model->Mat->pos.z - ent->model->Mat->pos.z;
         }
         else
         {
-            xEntBoulder* boul = (xEntBoulder*)e;
+            xEntBoulder* boul = (xEntBoulder*)grabent;
 
             dy = (boul->bound.sph.center.y - boul->bound.sph.r) - ent->model->Mat->pos.y;
             dx = boul->bound.sph.center.x - ent->model->Mat->pos.x;
             dz = boul->bound.sph.center.z - ent->model->Mat->pos.z;
         }
 
-        F32 dist2 = dx * dx + dz * dz;
-
-        if (dist2 >= globals.player.carry.maxDist * globals.player.carry.maxDist ||
+        if (dx * dx + dz * dz >= globals.player.carry.maxDist * globals.player.carry.maxDist ||
             dy >= globals.player.carry.maxHeight || dy <= globals.player.carry.minHeight ||
-            dist2 <= globals.player.carry.minDist * globals.player.carry.minDist)
+            dx * dx + dz * dz <= globals.player.carry.minDist * globals.player.carry.minDist)
         {
             continue;
         }
 
-        F32 dist = xsqrt(dist2);
-
-        if ((dx * ent->model->Mat->at.x + dz * ent->model->Mat->at.z) / dist <
+        if ((dx * ent->model->Mat->at.x + dz * ent->model->Mat->at.z) / xsqrt(dx * dx + dz * dz) <
             globals.player.carry.maxCosAngle)
         {
             continue;
         }
 
-        if (e->model->Scale.x)
+        if (grabent->model->Scale.x)
         {
             continue;
         }
 
-        if (zThrown_IsStacked(e))
+        if (zThrown_IsStacked(grabent))
         {
             continue;
         }
 
-        if (e->baseType == 0x2b && !((zNPCCommon*)e)->SetCarryState(zNPCCARRY_ATTEMPTPICKUP))
+        if (grabent->baseType == 0x2b && !((zNPCCommon*)grabent)->SetCarryState(zNPCCARRY_ATTEMPTPICKUP))
         {
             continue;
         }
 
-        if (!((e->moreFlags & 0x8) || e->baseType == 0x2b) ||
-            !(e->baseType == 0xb || e->baseType == 0x2b || e->baseType == 0x2f ||
-              e->baseType == 0x1b))
+        if (!((grabent->moreFlags & 0x8) || grabent->baseType == 0x2b) ||
+            !(grabent->baseType == 0xb || grabent->baseType == 0x2b || grabent->baseType == 0x2f ||
+              grabent->baseType == 0x1b))
         {
             if (failed)
             {
@@ -5057,7 +5042,7 @@ static xEnt* zEntPlayer_FindGrabEnt(xEnt* ent, zScene* zsc, S32* failed)
                 *failed = 0;
             }
 
-            return e;
+            return grabent;
         }
     }
 
@@ -7604,8 +7589,7 @@ void zEntPlayer_ShadowModelEnable()
         globals.player.sb_models[10]->Flags = globals.player.sb_models[10]->Flags | 1;
         globals.player.sb_models[11]->Flags = globals.player.sb_models[11]->Flags | 1;
         globals.player.sb_models[12]->Flags = globals.player.sb_models[12]->Flags | 1;
-        globals.player.sb_models[13]->Flags =
-            globals.player.sb_models[13]->Flags | globals.player.sb_models[5]->Flags & 1;
+        globals.player.sb_models[13]->Flags |= globals.player.sb_models[5]->Flags & 1;
         globals.player.sb_models[0]->Flags &= 0xfffe;
         globals.player.sb_models[1]->Flags &= 0xfffe;
         globals.player.sb_models[2]->Flags &= 0xfffe;
@@ -7624,8 +7608,7 @@ void zEntPlayer_ShadowModelDisable()
         globals.player.sb_models[0]->Flags = globals.player.sb_models[0]->Flags | 1;
         globals.player.sb_models[1]->Flags = globals.player.sb_models[1]->Flags | 1;
         globals.player.sb_models[2]->Flags = globals.player.sb_models[2]->Flags | 1;
-        globals.player.sb_models[5]->Flags =
-            globals.player.sb_models[5]->Flags | globals.player.sb_models[13]->Flags & 1;
+        globals.player.sb_models[5]->Flags |= globals.player.sb_models[13]->Flags & 1;
         globals.player.sb_models[10]->Flags &= 0xfffe;
         globals.player.sb_models[11]->Flags &= 0xfffe;
         globals.player.sb_models[12]->Flags &= 0xfffe;
@@ -7998,16 +7981,16 @@ static void zEntPlayerCheckHelmetPop()
 
 static void zEntPlayerCheckShoePop()
 {
-    xEnt& ent = globals.player.ent;
     xModelInstance** mlist;
     S32 i;
     S32 bone;
 
     if (globals.player.IsBubbleBouncing != 0)
     {
+        xEnt& ent = globals.player.ent;
+        mlist = globals.player.sb_models;
         S32 bone_index[2] = { 38, 42 };
-        xModelInstance* model_index[2] = { globals.player.sb_models[8],
-                                           globals.player.sb_models[9] };
+        xModelInstance* model_index[2] = { mlist[8], mlist[9] };
 
         for (i = 0; i < 2; i++)
         {
@@ -9029,29 +9012,31 @@ static void zEntPlayerJumpUpdate(xEnt* ent, xScene* sc, F32 dt)
     }
 }
 
-static void zEntPlayerEGenUpdate(xEnt* ent, xScene* sc, F32 dt)
+static void zEntPlayerEGenUpdate(xEnt* p, xScene* sc, F32)
 {
+    xCollis* earc_coll = &globals.player.earc_coll;
     U32 i;
+    zEGenerator* eg;
     xIsect isx;
-    F32 rad;
+    F32 ra;
 
-    globals.player.earc_coll.flags &= ~0x1;
+    earc_coll->flags &= ~0x1;
 
     for (i = 0; i < ((zScene*)sc)->baseCount[eBaseTypeEGenerator]; i++)
     {
-        zEGenerator* egen = (zEGenerator*)((zScene*)sc)->baseList[eBaseTypeEGenerator] + i;
+        eg = (zEGenerator*)((zScene*)sc)->baseList[eBaseTypeEGenerator] + i;
 
-        if (egen->flags & 0x1)
+        if (eg->flags & 0x1)
         {
-            xLine3VecDist2(&egen->src_pos, &egen->dst_pos, &ent->bound.sph.center, &isx);
+            xLine3VecDist2(&eg->src_pos, &eg->dst_pos, &p->bound.sph.center, &isx);
 
-            rad = ent->bound.sph.r;
+            ra = p->bound.sph.r;
 
-            if (isx.dist < rad * rad + 0.1f * (2.0f * rad) + 0.1f * 0.1f)
+            if (isx.dist < ra * ra + 0.1f * (2.0f * ra) + 0.1f * 0.1f)
             {
-                globals.player.earc_coll.flags |= 0x1;
+                earc_coll->flags |= 0x1;
 
-                if (zEntPlayer_Damage(egen, 1, NULL))
+                if (zEntPlayer_Damage(eg, 1, NULL))
                 {
                     if (globals.player.Health)
                     {
@@ -10542,7 +10527,7 @@ static void PlayerHitAnimInit(xModelInstance* model, xAnimTransition* tran, U32*
 {
     *index = 0;
     xAnimState* state = model->Anim->Table->StateList;
-    while ((state != NULL) && (*index < 8))
+    while (state && *index < 8)
     {
         if (strncmp(state->Name, "Hit0", 4) == 0)
         {
@@ -10875,7 +10860,14 @@ void zEntPlayerReset(xEnt* ent)
     sTimeToRetarget = 0.0f;
 
     void* lane = xSTFindAsset(xStrHash("bowling_lane"), NULL);
-    sBowlingLaneRast = lane ? *(RwRaster**)lane : NULL;
+    if (lane)
+    {
+        sBowlingLaneRast = *(RwRaster**)lane;
+    }
+    else
+    {
+        sBowlingLaneRast = NULL;
+    }
 
     if (globals.sceneCur->sceneID == 'PG12')
     {
@@ -14093,6 +14085,33 @@ static void zEntPlayer_UpdateVelocityBlur()
     }
 }
 
+#if defined(PS2)
+// PS2 retail tests the sign bits as integers (and 0x80000000 on each pair of
+// words) where the GameCube build compares each component against 0.0f.
+static void dampen_velocity(xVec3& v1, const xVec3& v2, F32 f)
+{
+    xVec3 old = v1;
+
+    v1.x -= f * (v1.x * v2.x);
+    v1.y -= f * (v1.y * v2.y);
+    v1.z -= f * (v1.z * v2.z);
+
+    if ((*(U32*)&v1.x & 0x80000000) != (*(U32*)&old.x & 0x80000000))
+    {
+        v1.x = 0.0f;
+    }
+
+    if ((*(U32*)&v1.y & 0x80000000) != (*(U32*)&old.y & 0x80000000))
+    {
+        v1.y = 0.0f;
+    }
+
+    if ((*(U32*)&v1.z & 0x80000000) != (*(U32*)&old.z & 0x80000000))
+    {
+        v1.z = 0.0f;
+    }
+}
+#else
 static void dampen_velocity(xVec3& v1, const xVec3& v2, F32 f)
 {
     F32 f0 = v1.x * v2.x;
@@ -14139,6 +14158,7 @@ static void dampen_velocity(xVec3& v1, const xVec3& v2, F32 f)
         v1.z = 0.0f;
     }
 }
+#endif
 
 static void player_sound_hop_load(U32 hopid, S32 hip_or_hop)
 {
