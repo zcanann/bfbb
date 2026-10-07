@@ -41,4 +41,7 @@ float logf(float x);
 }
 #endif
 
+// MSL math.h single-precision absolute-value macro (the R5900 abs.s intrinsic).
+#define FABS(x) __s_abs((float)(x))
+
 #endif

@@ -527,4 +527,12 @@ RwReal RwV3dLength(const RwV3d* in);
 RwMatrix* RwMatrixTranslate(RwMatrix* matrix, const RwV3d* translation, RwOpCombineType combineOp);
 }
 
+// RenderWare frame hierarchy API used by the PS2 model layer.
+typedef RwFrame* (*RwFrameCallBack)(RwFrame* frame, void* data);
+extern "C" {
+RwFrame* RwFrameForAllChildren(RwFrame* frame, RwFrameCallBack callBack, void* data);
+RwFrame* RwFrameGetRoot(const RwFrame* frame);
+RwBool RwFrameDestroyHierarchy(RwFrame* frame);
+}
+
 #endif

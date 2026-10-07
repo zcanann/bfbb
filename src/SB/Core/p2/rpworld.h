@@ -263,4 +263,34 @@ extern "C" {
 RpWorld* RpWorldStreamRead(RwStream* stream);
 }
 
+// Clump layout agrees with all three debug PS2 originals.
+struct RpClump
+{
+    RwObject object;
+    RwLinkList atomicList;
+    RwLinkList lightList;
+    RwLinkList cameraList;
+    RwLLLink inWorldLink;
+    RpClump* (*callback)(RpClump* clump, void* data);
+};
+
+extern "C" {
+RpClump* RpClumpStreamRead(RwStream* stream);
+RwBool RpClumpDestroy(RpClump* clump);
+}
+
+// RenderWare geometry flags.
+enum RpGeometryFlag
+{
+    rpGEOMETRYTRISTRIP = 0x00000001,
+    rpGEOMETRYPOSITIONS = 0x00000002,
+    rpGEOMETRYTEXTURED = 0x00000004,
+    rpGEOMETRYPRELIT = 0x00000008,
+    rpGEOMETRYNORMALS = 0x00000010,
+    rpGEOMETRYLIGHT = 0x00000020,
+    rpGEOMETRYMODULATEMATERIALCOLOR = 0x00000040,
+    rpGEOMETRYTEXTURED2 = 0x00000080,
+    rpGEOMETRYFLAGFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+
 #endif

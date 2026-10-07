@@ -210115,6 +210115,106 @@
         "zEventName__FUi": "zEventName__FUi"
       },
       "calls": []
+    },
+    {
+      "source": "src/SB/Core/p2/iCollide.cpp",
+      "target_unit": "SB/Core/p2/iCollide.cpp",
+      "object": "source/iCollide.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "FindNearestPointOnLine__FP5xVec3P5xVec3P5xVec3P5xVec3": "FindNearestPointOnLine__FP5xVec3P5xVec3P5xVec3P5xVec3",
+        "PointWithinTriangle__FP5xVec3PP5xVec3P5xVec3": "PointWithinTriangle__FP5xVec3PP5xVec3P5xVec3",
+        "iBoxForModelLocal__FP4xBoxPC14xModelInstance": "iBoxForModelLocal__FP4xBoxPC14xModelInstance",
+        "iBoxForModel__FP4xBoxPC14xModelInstance": "iBoxForModel__FP4xBoxPC14xModelInstance",
+        "iCollideInit__FP6xScene": "iCollideInit__FP6xScene",
+        "iRayHitsEnv__FPC5xRay3PC4xEnvP7xCollis": "iRayHitsEnv__FPC5xRay3PC4xEnvP7xCollis",
+        "iRayHitsModel__FPC5xRay3PC14xModelInstanceP7xCollis": "iRayHitsModel__FPC5xRay3PC14xModelInstanceP7xCollis",
+        "iSphereForModel__FP7xSpherePC14xModelInstance": "iSphereForModel__FP7xSpherePC14xModelInstance",
+        "iSphereHitsEnv3__FPC7xSpherePC4xEnvP7xCollisUcf": "iSphereHitsEnv3__FPC7xSpherePC4xEnvP7xCollisUcf",
+        "iSphereHitsEnv4__FPC7xSpherePC4xEnvPC7xMat3x3P7xCollis": "iSphereHitsEnv4__FPC7xSpherePC4xEnvPC7xMat3x3P7xCollis",
+        "iSphereHitsEnv__FPC7xSpherePC4xEnvP7xCollis": "iSphereHitsEnv__FPC7xSpherePC4xEnvP7xCollis",
+        "iSphereHitsModel3__FPC7xSpherePC14xModelInstanceP7xCollisUcf": "iSphereHitsModel3__FPC7xSpherePC14xModelInstanceP7xCollisUcf",
+        "properSphereIsectTri__FPC5xVec3fP5xVec3PfP19RpCollisionTriangle": "properSphereIsectTri__FPC5xVec3fP5xVec3PfP19RpCollisionTriangle",
+        "rayHitsEnvBackwardCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv": "rayHitsEnvBackwardCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv",
+        "rayHitsEnvCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv": "rayHitsEnvCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv",
+        "rayHitsModelBackwardCB__FP14RpIntersectionP19RpCollisionTrianglefPv": "rayHitsModelBackwardCB__FP14RpIntersectionP19RpCollisionTrianglefPv",
+        "rayHitsModelCB__FP14RpIntersectionP19RpCollisionTrianglefPv": "rayHitsModelCB__FP14RpIntersectionP19RpCollisionTrianglefPv",
+        "sphereHitsEnv3CB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv": "sphereHitsEnv3CB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv",
+        "sphereHitsEnv4CB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv": "sphereHitsEnv4CB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv",
+        "sphereHitsEnvCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv": "sphereHitsEnvCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv",
+        "sphereHitsModel3CB__FP14RpIntersectionP19RpCollisionTrianglefPv": "sphereHitsModel3CB__FP14RpIntersectionP19RpCollisionTrianglefPv"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/p2/iModel.cpp",
+      "target_unit": "SB/Core/p2/iModel.cpp",
+      "object": "source/iModel.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "FindAtomicCallback__FP8RpAtomicPv": "FindAtomicCallback__FP8RpAtomicPv",
+        "GetChildFrameHierarchy__FP7RwFramePv": "GetChildFrameHierarchy__FP7RwFramePv",
+        "NextAtomicCallback__FP8RpAtomicPv": "NextAtomicCallback__FP8RpAtomicPv",
+        "iModelAnimMatrices__FP8RpAtomicP5xQuatP5xVec3P11RwMatrixTag": "iModelAnimMatrices__FP8RpAtomicP5xQuatP5xVec3P11RwMatrixTag",
+        "iModelCullPlusShadow__FP8RpAtomicP11RwMatrixTagP5xVec3Pi": "iModelCullPlusShadow__FP8RpAtomicP11RwMatrixTagP5xVec3Pi",
+        "iModelCull__FP8RpAtomicP11RwMatrixTag": "iModelCull__FP8RpAtomicP11RwMatrixTag",
+        "iModelFileNew__FPvUi": "iModelFileNew__FPvUi",
+        "iModelFile_RWMultiAtomic__FP8RpAtomic": "iModelFile_RWMultiAtomic__FP8RpAtomic",
+        "iModelInit__Fv": "iModelInit__Fv",
+        "iModelMaterialMulCB__FP10RpMaterialPv": "iModelMaterialMulCB__FP10RpMaterialPv",
+        "iModelMaterialMul__FP8RpAtomicfff": "iModelMaterialMul__FP8RpAtomicfff",
+        "iModelNormalEval__FP5xVec3RC8RpAtomicPC11RwMatrixTagUiiPC5xVec3": "iModelNormalEval__FP5xVec3RC8RpAtomicPC11RwMatrixTagUiiPC5xVec3",
+        "iModelNumBones__FP8RpAtomic": "iModelNumBones__FP8RpAtomic",
+        "iModelRender__FP8RpAtomicP11RwMatrixTag": "iModelRender__FP8RpAtomicP11RwMatrixTag",
+        "iModelResetMaterial__FP8RpAtomic": "iModelResetMaterial__FP8RpAtomic",
+        "iModelSetMaterialAlpha__FP8RpAtomicUc": "iModelSetMaterialAlpha__FP8RpAtomicUc",
+        "iModelSetMaterialTextureCB__FP10RpMaterialPv": "iModelSetMaterialTextureCB__FP10RpMaterialPv",
+        "iModelSetMaterialTexture__FP8RpAtomicPv": "iModelSetMaterialTexture__FP8RpAtomicPv",
+        "iModelSphereCull__FP7xSphere": "iModelSphereCull__FP7xSphere",
+        "iModelStreamRead__FP8RwStream": "iModelStreamRead__FP8RwStream",
+        "iModelTagEval__FP8RpAtomicPC19xModelTagWithNormalP11RwMatrixTagP5xVec3P5xVec3": "iModelTagEval__FP8RpAtomicPC19xModelTagWithNormalP11RwMatrixTagP5xVec3P5xVec3",
+        "iModelTagEval__FP8RpAtomicPC9xModelTagP11RwMatrixTagP5xVec3": "iModelTagEval__FP8RpAtomicPC9xModelTagP11RwMatrixTagP5xVec3",
+        "iModelTagInternal__FP9xModelTagP8RpAtomicfffi": "iModelTagInternal__FP9xModelTagP8RpAtomicfffi",
+        "iModelTagSetup__FP19xModelTagWithNormalP8RpAtomicfff": "iModelTagSetup__FP19xModelTagWithNormalP8RpAtomicfff",
+        "iModelTagSetup__FP9xModelTagP8RpAtomicfff": "iModelTagSetup__FP9xModelTagP8RpAtomicfff",
+        "iModelTagUserData__FP9xModelTagP8RpAtomicfffi": "iModelTagUserData__FP9xModelTagP8RpAtomicfffi",
+        "iModelUnload__FP8RpAtomic": "iModelUnload__FP8RpAtomic",
+        "iModelVertCount__FP8RpAtomic": "iModelVertCount__FP8RpAtomic",
+        "iModelVertEval__FP8RpAtomicUiUiP11RwMatrixTagP5xVec3P5xVec3": "iModelVertEval__FP8RpAtomicUiUiP11RwMatrixTagP5xVec3P5xVec3",
+        "iModel_SetLightKit__FP9xLightKit": "iModel_SetLightKit__FP9xLightKit"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/p2/iAnimSKB.cpp",
+      "target_unit": "SB/Core/p2/iAnimSKB.cpp",
+      "object": "source/iAnimSKB.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "_iAnimSKBAdjustTranslate__FP14iAnimSKBHeaderUiPfPf": "_iAnimSKBAdjustTranslate__FP14iAnimSKBHeaderUiPfPf",
+        "_iAnimSKBExtractTranslate__FP14iAnimSKBHeaderUiP5xVec3i": "_iAnimSKBExtractTranslate__FP14iAnimSKBHeaderUiP5xVec3i",
+        "iAnimDurationSKB__FP14iAnimSKBHeader": "iAnimDurationSKB__FP14iAnimSKBHeader",
+        "iAnimEvalSKB__FP14iAnimSKBHeaderfUiP5xVec3P5xQuat": "iAnimEvalSKB__FP14iAnimSKBHeaderfUiP5xVec3P5xQuat"
+      },
+      "calls": [],
+      "gp_relocations": []
     }
   ]
 }

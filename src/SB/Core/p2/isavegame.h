@@ -102,4 +102,7 @@ U8 iSGIsGameCorrupt(st_ISGSESSION* sess, S32 index);
 U8 iSGCheckForGameFiles(S32 mcPort);
 U8 iSGCheckMemoryCard(st_ISGSESSION* isgdata, S32 index);
 
+// PS2 memory cards have no wrong-device state; shared callers see no such card.
+#define iSGCheckForWrongDevice() (-1)
+
 #endif

@@ -40,4 +40,7 @@ signed int iModelSphereCull(xSphere* sphere);
 RpAtomic* iModelFileNew(void* buffer, unsigned int size);
 void iModelUnload(RpAtomic* userdata);
 
+// Defined in iModelBucketPDS.cpp; the PS2 model layer builds its fast pipelines first.
+void iModelInitFastPipes();
+
 #endif
