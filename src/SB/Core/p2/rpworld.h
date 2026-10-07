@@ -224,16 +224,73 @@ RpWorld* RpWorldAddCamera(RpWorld* world, RwCamera* camera);
 RpWorld* RpWorldRemoveCamera(RpWorld* world, RwCamera* camera);
 RpWorld* RpWorldAddLight(RpWorld* world, RpLight* light);
 RpWorld* RpWorldRemoveLight(RpWorld* world, RpLight* light);
+RpWorld* RwCameraGetWorld(const RwCamera* camera);
 }
 
 extern "C" {
 RpAtomic* RpAtomicSetFrame(RpAtomic* atomic, RwFrame* frame);
 RpMaterial* RpMaterialSetTexture(RpMaterial* material, RwTexture* texture);
+RwInt32 RpClumpGetNumAtomics(RpClump* clump);
+RwBool RpAtomicDestroy(RpAtomic* atomic);
+RpAtomic* RpAtomicStreamRead(struct RwStream* stream);
+const RpAtomic* RpAtomicStreamWrite(const RpAtomic* atomic, struct RwStream* stream);
 }
 
 #define RpAtomicRenderMacro(_atomic) ((_atomic)->renderCallBack(_atomic))
 #define RpAtomicRender(_atomic) RpAtomicRenderMacro(_atomic)
 
 #define RpAtomicGetGeometryMacro(_atomic) ((_atomic)->geometry)
+
+#define RpAtomicGetClumpMacro(_atomic) ((_atomic)->clump)
+#define RpAtomicGetClump(_atomic) RpAtomicGetClumpMacro(_atomic)
+
+// RenderWare SDK bounding-sphere accessor.
+enum RpInterpolatorFlag
+{
+    rpINTERPOLATORDIRTYINSTANCE = 0x01,
+    rpINTERPOLATORDIRTYSPHERE = 0x02,
+    rpINTERPOLATORNOFRAMEDIRTY = 0x04,
+    rpINTERPOLATORFLAGFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+
+extern "C" void _rpAtomicResyncInterpolatedSphere(RpAtomic* atomic);
+
+#define RpAtomicGetBoundingSphereMacro(_atomic)                                                        ((((_atomic)->interpolator.flags & rpINTERPOLATORDIRTYSPHERE) ?                                      _rpAtomicResyncInterpolatedSphere(_atomic),                                                        0 : 0),                                                                                           &((_atomic)->boundingSphere))
+#define RpAtomicGetBoundingSphere(_atomic) RpAtomicGetBoundingSphereMacro(_atomic)
+
+// RenderWare SDK world/clump stream and clump membership API.
+extern "C" {
+RpWorld* RpWorldStreamRead(RwStream* stream);
+}
+
+// Clump layout agrees with all three debug PS2 originals.
+struct RpClump
+{
+    RwObject object;
+    RwLinkList atomicList;
+    RwLinkList lightList;
+    RwLinkList cameraList;
+    RwLLLink inWorldLink;
+    RpClump* (*callback)(RpClump* clump, void* data);
+};
+
+extern "C" {
+RpClump* RpClumpStreamRead(RwStream* stream);
+RwBool RpClumpDestroy(RpClump* clump);
+}
+
+// RenderWare geometry flags.
+enum RpGeometryFlag
+{
+    rpGEOMETRYTRISTRIP = 0x00000001,
+    rpGEOMETRYPOSITIONS = 0x00000002,
+    rpGEOMETRYTEXTURED = 0x00000004,
+    rpGEOMETRYPRELIT = 0x00000008,
+    rpGEOMETRYNORMALS = 0x00000010,
+    rpGEOMETRYLIGHT = 0x00000020,
+    rpGEOMETRYMODULATEMATERIALCOLOR = 0x00000040,
+    rpGEOMETRYTEXTURED2 = 0x00000080,
+    rpGEOMETRYFLAGFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
 
 #endif

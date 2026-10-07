@@ -271,4 +271,104 @@ extern RwUInt32 ourGlobals[4096];
 #define RwCalloc(_n, _s) ((RWSRCGLOBAL(memoryFuncs).rwcalloc)((_n), (_s)))
 #define RwRealloc(_p, _s) ((RWSRCGLOBAL(memoryFuncs).rwrealloc)((_p), (_s)))
 
+// RenderWare SDK stream, chunk and error declarations, from include/rwsdk/rwplcore.h.
+enum RwCorePluginID
+{
+    rwID_NAOBJECT = 0x00,
+    rwID_STRUCT = 0x01,
+    rwID_STRING = 0x02,
+    rwID_EXTENSION = 0x03,
+    rwID_CAMERA = 0x05,
+    rwID_TEXTURE = 0x06,
+    rwID_MATERIAL = 0x07,
+    rwID_MATLIST = 0x08,
+    rwID_ATOMICSECT = 0x09,
+    rwID_PLANESECT = 0x0A,
+    rwID_WORLD = 0x0B,
+    rwID_SPLINE = 0x0C,
+    rwID_MATRIX = 0x0D,
+    rwID_FRAMELIST = 0x0E,
+    rwID_GEOMETRY = 0x0F,
+    rwID_CLUMP = 0x10,
+    rwID_LIGHT = 0x12,
+    rwID_UNICODESTRING = 0x13,
+    rwID_ATOMIC = 0x14,
+    rwID_TEXTURENATIVE = 0x15,
+    rwID_TEXDICTIONARY = 0x16,
+    rwID_ANIMDATABASE = 0x17,
+    rwID_IMAGE = 0x18,
+    rwID_SKINANIMATION = 0x19,
+    rwID_GEOMETRYLIST = 0x1A,
+    rwID_HANIMANIMATION = 0x1B,
+    rwID_TEAM = 0x1C,
+    rwID_CROWD = 0x1D,
+    rwID_DMORPHANIMATION = 0x1E,
+    rwID_RIGHTTORENDER = 0x1f,
+    rwID_MTEFFECTNATIVE = 0x20,
+    rwID_MTEFFECTDICT = 0x21,
+    rwID_TEAMDICTIONARY = 0x22,
+    rwID_PITEXDICTIONARY = 0x23,
+    rwID_TOC = 0x24,
+    rwID_PRTSTDGLOBALDATA = 0x25,
+    rwID_ALTPIPE = 0x26,
+    rwID_PIPEDS = 0x27,
+    rwID_PATCHMESH = 0x28,
+    rwID_COREPLUGINIDMAX = 0x29,
+    rwCOREPLUGINIDFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+typedef enum RwCorePluginID RwCorePluginID;
+
+enum RwStreamType
+{
+    rwNASTREAM = 0,
+    rwSTREAMFILE,
+    rwSTREAMFILENAME,
+    rwSTREAMMEMORY,
+    rwSTREAMCUSTOM,
+    rwSTREAMTYPEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+typedef enum RwStreamType RwStreamType;
+
+enum RwStreamAccessType
+{
+    rwNASTREAMACCESS = 0,
+    rwSTREAMREAD,
+    rwSTREAMWRITE,
+    rwSTREAMAPPEND,
+    rwSTREAMACCESSTYPEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+typedef enum RwStreamAccessType RwStreamAccessType;
+
+struct RwMemory
+{
+    RwUInt8* start;
+    RwUInt32 length;
+};
+
+struct RwStream;
+
+struct RwError
+{
+    RwInt32 pluginID;
+    RwInt32 errorCode;
+};
+
+struct RwChunkHeaderInfo
+{
+    RwUInt32 type;
+    RwUInt32 length;
+    RwUInt32 version;
+    RwUInt32 buildNum;
+    RwBool isComplex;
+};
+
+extern "C" {
+RwStream* RwStreamOpen(RwStreamType type, RwStreamAccessType accessType, const void* pData);
+RwBool RwStreamClose(RwStream* stream, void* pData);
+RwBool RwStreamFindChunk(RwStream* stream, RwUInt32 type, RwUInt32* lengthOut, RwUInt32* versionOut);
+RwStream* RwStreamReadChunkHeaderInfo(RwStream* stream, RwChunkHeaderInfo* chunkHeaderInfo);
+void* RwMemNative32(void* mem, RwUInt32 size);
+RwError* RwErrorGet(RwError* code);
+}
+
 #endif

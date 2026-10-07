@@ -1,8 +1,13 @@
 #define XVEC3_SCALE_ADD_INLINE
 #include "zParPTank.h"
 
+#if defined(PS2)
+#include <math.h>
+#include <rwsdk/rpptank.h>
+#else
 #include <PowerPC_EABI_Support\MSL_C\MSL_Common\cmath>
 #include <rpptank.h>
+#endif
 #include <types.h>
 
 #include "iColor.h"
@@ -19,8 +24,12 @@
 
 #include "zGame.h"
 #include "zGlobals.h"
+#if defined(PS2)
+#include <rwim3d.h>
+#endif
 
-#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78) || defined(VERSION_SLES_51968) || \
+    defined(VERSION_SLES_51970)
 #define PARTICLE_FRAME_RATE 50.0f
 #else
 #define PARTICLE_FRAME_RATE 60.0f

@@ -12,7 +12,7 @@
 #endif
 #endif
 
-#if defined(XBOX)
+#if defined(XBOX) || defined(PS2)
 inline F32 xfmod(F32 a, F32 b)
 {
     return std::fmodf(a, b);
@@ -36,7 +36,7 @@ inline F32 xasin(F32 x)
 #else
 F32 xasin(F32 x);
 #endif
-#if defined(XBOX)
+#if defined(XBOX) || defined(PS2)
 inline F32 xacos(F32 x)
 {
     return std::acosf(x);
@@ -44,7 +44,14 @@ inline F32 xacos(F32 x)
 #else
 F32 xacos(F32 x);
 #endif
+#if defined(PS2)
+inline F32 xexp(F32 x)
+{
+    return std::expf(x);
+}
+#else
 F32 xexp(F32 x);
+#endif
 
 inline F32 SQ(F32 x)
 {

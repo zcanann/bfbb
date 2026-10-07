@@ -1523,9 +1523,11 @@ void xBoulderGenerator_GenBoulder(xBoulderGenerator* bg)
     BoulderGen_GiveBirth(bg, i);
 }
 
+#if !defined(PS2)
 WEAK F32 xVec3LengthFast(const xVec3* v)
 {
     F32 len;
     xsqrtfast(len, SQR(v->x) + SQR(v->y) + SQR(v->z));
     return len;
 }
+#endif

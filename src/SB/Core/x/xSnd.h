@@ -97,7 +97,19 @@ struct _xSndDelayed
 
 // sound_queue calls these; two-phase lookup needs them declared first.
 void xSndStop(U32 snd);
+#if defined(PS2)
+inline bool xSndIsPlayingByHandle(U32 sndID)
+{
+    return iSndIsPlayingByHandle(sndID);
+}
+
+inline U32 xSndIsPlaying(U32 assetID)
+{
+    return iSndIsPlaying(assetID);
+}
+#else
 bool xSndIsPlayingByHandle(U32 sndID);
+#endif
 
 template <S32 N> struct sound_queue
 {

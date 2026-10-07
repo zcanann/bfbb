@@ -50,15 +50,15 @@ namespace
             {
                 switch (model.BoneCount)
                 {
+                case 0:
+                {
+                    break;
+                }
                 case 1:
                 {
                     ac.flags |= 0x1;
                     ac.old_mat = mat;
                     ac.new_mat = g_I3;
-                    break;
-                }
-                case 0:
-                {
                     break;
                 }
                 default:
@@ -197,14 +197,14 @@ static const char* __deadstripped2()
 
 static void xEntAddShadowRecFlag(xEnt* ent)
 {
-    switch (ent->baseType - 6)
+    switch (ent->baseType)
     {
-    case eBaseTypeUnknown:
-    case eBaseTypeEnv:
-    case eBaseTypePendulum:
-    case eBaseTypeVFX:
-    case eBaseTypeLight:
-    case eBaseTypeEGenerator:
+    case eBaseTypePlatform:
+    case eBaseTypeButton:
+    case eBaseTypeDestructObj:
+    case eBaseTypeStatic:
+    case eBaseTypeNPC:
+    case eBaseTypeBoulder:
     {
         if (ent->model->PipeFlags & 0x0000ff00)
         {
@@ -212,42 +212,6 @@ static void xEntAddShadowRecFlag(xEnt* ent)
         }
         break;
     }
-    case eBaseTypeTrigger:
-    case eBaseTypeVillain:
-    case eBaseTypePlayer:
-    case eBaseTypePickup:
-    case eBaseTypePlatform:
-    case eBaseTypeCamera:
-    case eBaseTypeDoor:
-    case eBaseTypeSavePoint:
-    case eBaseTypeItem:
-    case eBaseTypeStatic:
-    case eBaseTypeDynamic:
-    case eBaseTypeMovePoint:
-    case eBaseTypeTimer:
-    case eBaseTypeBubble:
-    case eBaseTypePortal:
-    case eBaseTypeGroup:
-    case eBaseTypeSFX:
-    case eBaseTypeFFX:
-    case eBaseTypeCounter:
-    case eBaseTypeHangable:
-    case eBaseTypeButton:
-    case eBaseTypeProjectile:
-    case eBaseTypeSurface:
-    case eBaseTypeDestructObj:
-    case eBaseTypeGust:
-    case eBaseTypeVolume:
-    case eBaseTypeDispatcher:
-    case eBaseTypeCond:
-    case eBaseTypeUI:
-    case eBaseTypeUIFont:
-    case eBaseTypeProjectileType:
-    case eBaseTypeLobMaster:
-    case eBaseTypeFog:
-    case eBaseTypeParticleEmitter:
-    case eBaseTypeParticleSystem:
-    case eBaseTypeCutsceneMgr:
     default:
     {
         ent->baseFlags &= 0xffef;
@@ -763,6 +727,11 @@ void xEntSetupPipeline(xModelInstance* model)
 }
 
 static S32 setMaterialTextureRestore;
+#if defined(PS2)
+// rppds.h
+extern "C" RxPipeline* RpPDSGetPipe(RwUInt32 pipeID);
+#endif
+
 S32 sSetPipeline;
 static RxPipeline* oldPipe;
 
@@ -840,7 +809,20 @@ void xEntSetupPipeline(xSurface* surf, RpAtomic* model)
             if (sSetPipeline)
             {
                 oldPipe = model->pipeline;
+#if defined(PS2)
+                // Leave atomics on any other custom PDS pipeline alone.
+                if (oldPipe != NULL && oldPipe != RpPDSGetPipe(0x2) &&
+                    oldPipe != RpPDSGetPipe(0x10002))
+                {
+                    sSetPipeline = 0;
+                }
+                else
+                {
+                    xFXanimUVAtomicSetup(model);
+                }
+#else
                 xFXanimUVAtomicSetup(model);
+#endif
             }
         }
     }
@@ -1244,8 +1226,6 @@ void xEntCollide(xEnt* ent, xScene* sc, F32 dt)
             xEntCollCheckEnv(ent, sc);
         }
 
-        xCollis* coll = &ent->collis->colls[0];
-
         if (ent->collis->chk & 0x2E)
         {
             F32 h_dot_n;
@@ -1259,8 +1239,9 @@ void xEntCollide(xEnt* ent, xScene* sc, F32 dt)
                 h_dot_n = 0.7f;
             }
 
-            if (ent->pflags & 0x80 && coll->flags & 0x1)
+            if (ent->pflags & 0x80 && ent->collis->colls[0].flags & 0x1)
             {
+                xCollis* coll = &ent->collis->colls[0];
                 F32 depen_len = xVec3Dot(&coll->hdng, &coll->norm);
 
                 if (depen_len > 0.0f)
@@ -1537,10 +1518,11 @@ xEnt* xEntCollCheckOneEntNoDepen(xEnt* ent, xScene* sc, void* data)
 
     if (coll->flags & 0x1)
     {
+        xBound* bptr = &p->bound;
+
         if (modl_coll)
         {
             xBound tmp;
-            xBound* bptr; // unused
             U8 ncolls;
             xVec3 *upper, *lower;
             U8 idx;
@@ -1595,12 +1577,12 @@ xEnt* xEntCollCheckOneEntNoDepen(xEnt* ent, xScene* sc, void* data)
             p->collis->idx++;
 
             if (ent->pflags & 0x20 && ent->bound.type == XBOUND_TYPE_SPHERE &&
-                p->bound.type == XBOUND_TYPE_SPHERE && coll->hdng.y < -0.866025f)
+                bptr->type == XBOUND_TYPE_SPHERE && coll->hdng.y < -0.866025f)
             {
-                F32 rsum = p->bound.sph.r + ent->bound.sph.r;
-                F32 dx = p->bound.sph.center.x - ent->bound.sph.center.x;
-                F32 dy = p->bound.sph.center.y - ent->bound.sph.center.y;
-                F32 dz = p->bound.sph.center.z - ent->bound.sph.center.z;
+                F32 rsum = bptr->sph.r + ent->bound.sph.r;
+                F32 dx = bptr->sph.center.x - ent->bound.sph.center.x;
+                F32 dy = bptr->sph.center.y - ent->bound.sph.center.y;
+                F32 dz = bptr->sph.center.z - ent->bound.sph.center.z;
 
                 F32 hsqr = SQR(rsum) - (SQR(dx) + SQR(dz));
 

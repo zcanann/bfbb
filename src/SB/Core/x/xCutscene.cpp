@@ -20,7 +20,13 @@
 
 #include <types.h>
 #include <string.h>
+#if defined(PS2)
+#include <math.h>
+#include <rwplcore.h>
+#define FABS(x) xabs(x)
+#else
 #include <PowerPC_EABI_Support\MSL_C\MSL_Common\cmath>
+#endif
 
 struct xCutsceneMphFrame
 {
@@ -56,7 +62,9 @@ void xShadowCameraUpdate(void* model, void (*renderCB)(void*), xVec3* center, F3
 xCutscene sActiveCutscene;
 U32 sCutTocCount;
 xCutsceneInfo* sCutTocInfo;
+#if !defined(PS2)
 extern RwGlobals* RwEngineInstance;
+#endif
 static xModelInstance sCutsceneFakeModel[8];
 
 void xCutscene_Init(void* toc)
@@ -638,12 +646,14 @@ static void JDeltaEval(RpAtomic* model, void* deltaModel, void* deltaAnim, F32 t
     RpGeometryUnlock(model->geometry);
 }
 
+#if !defined(PS2)
 void xVec3Lerp(xVec3* out, const xVec3* a, const xVec3* b, float alpha)
 {
     out->x = a->x + (b->x - a->x) * alpha;
     out->y = a->y + (b->y - a->y) * alpha;
     out->z = a->z + (b->z - a->z) * alpha;
 }
+#endif
 
 void CutsceneShadowRender(CutsceneShadowModel* smod)
 {

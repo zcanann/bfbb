@@ -1740,7 +1740,7 @@ U8 zNPCNewsFish::say(say_enum s, S32 flags)
     return 1;
 }
 
-S32 zNPCNewsFish::say(const say_enum* s, unsigned long size, S32 flags, S32 max_say)
+S32 zNPCNewsFish::say(const say_enum* s, size_t size, S32 flags, S32 max_say)
 {
     if (size == 0)
     {

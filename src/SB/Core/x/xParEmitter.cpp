@@ -10,7 +10,12 @@
 #include <zGlobals.h>
 #include <xDebug.h>
 #include <xEvent.h>
+#if defined(PS2)
+#include <xParSys.h>
+#include <math.h>
+#else
 #include <PowerPC_EABI_Support\MSL_C\MSL_Common\cmath>
+#endif
 
 static xParEmitterAsset sSaveEmmiterSettings;
 static xParEmitterPropsAsset sSaveEmmiterPropSettings;
@@ -804,7 +809,9 @@ void xParEmitterDestroy()
     xDebugRemoveTweak("Particle Emitters");
 }
 
+#if !defined(PS2)
 inline xPar* xParEmitterEmit(xParEmitter* pe, F32 dt)
 {
     return xParEmitterEmit(pe, dt, dt);
 }
+#endif

@@ -12,6 +12,8 @@ void exit(int status);
 int abs(int value);
 int rand(void);
 int atoi(const char* string);
+void* malloc(size_t size);
+void free(void* pointer);
 
 double atof(const char* string);
 void qsort(void* base, size_t count, size_t size, int (*compare)(const void*, const void*));

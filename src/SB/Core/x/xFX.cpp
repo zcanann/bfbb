@@ -53,6 +53,13 @@ static U32 xfx_initted = 0;
 
 static void LightResetFrame(RpLight* light);
 
+#if defined(PS2)
+// iFXgoo.cpp (PS2 goo pipeline)
+RxPipeline* iFXgooCreatePipe();
+void iFXGooSceneSetup();
+void iFXGooSceneExit();
+#endif
+
 void xFXInit()
 {
     if (!xfx_initted)
@@ -79,6 +86,12 @@ void xFXInit()
         }
 
         xFXanimUVCreate();
+#if defined(PS2)
+        if (xFXgooPipeline == NULL)
+        {
+            xFXgooPipeline = iFXgooCreatePipe();
+        }
+#endif
         xFXAuraInit();
     }
 }
@@ -884,15 +897,11 @@ void xFXanimUV2PSetTexture(RwTexture* texture)
 
 RpAtomic* xFXanimUVAtomicSetup(RpAtomic* atomic)
 {
-    if (atomic == 0)
+    if (atomic && xFXanimUVPipeline)
     {
-        return atomic;
+        atomic->pipeline = xFXanimUVPipeline;
     }
-    if (xFXanimUVPipeline == 0)
-    {
-        return atomic;
-    }
-    atomic->pipeline = xFXanimUVPipeline;
+
     return atomic;
 }
 
@@ -1546,7 +1555,7 @@ void xFXFireworksInit(const char* fireworksTrailEmitter, const char* fireworksEm
     sFireworkSoundID = xStrHash(fireworksSound);
     sFireworkLaunchSoundID = xStrHash(fireworksLaunchSound);
     memset(sFirework, 0, sizeof(sFirework));
-    for (U32 i = 0; i < FIREWORK_COUNT; ++i)
+    for (S32 i = 0; i < FIREWORK_COUNT; ++i)
     {
         sFirework[i].state = 0;
     }
@@ -1931,10 +1940,11 @@ void xFXStreakStop(U32 id)
 
     xFXStreak* s = &sStreakList[id];
 
-    // The `& 1` is redundant -- `(x == 0)` is already 0 or 1 -- but the target
-    // narrows the comparison to a single bit (`extrwi. 1,26` off the `cntlzw`),
-    // which only this spelling reproduces. `!s->flags` gives `cmplwi/beqlr`.
-    if ((s->flags == 0) & 1)
+    // The `& 1` is redundant -- `!x` is already 0 or 1 -- but both targets keep it:
+    // GameCube narrows the test to a single bit (`extrwi. 1,26` off the `cntlzw`) and
+    // PS2 computes `!x` as sltu/xori before testing. Plain `!s->flags` gives
+    // `cmplwi/beqlr` on GameCube; `(s->flags == 0) & 1` gives xor/sltiu on PS2.
+    if (!s->flags & 1)
     {
         return;
     }
@@ -2494,7 +2504,7 @@ void xFXRibbon::render()
 void xFXRibbon::set_raster(RwRaster* rast)
 {
     this->raster = rast;
-    if (activated <= 0)
+    if (!activated)
     {
         return;
     }
@@ -3192,6 +3202,9 @@ void xFXSceneSetup()
 {
     DrawRingSetup();
     xFXAuraSetup();
+#if defined(PS2)
+    iFXGooSceneSetup();
+#endif
 }
 
 void xFXSceneReset()
@@ -3206,8 +3219,12 @@ void xFXSceneFinish()
 {
     DrawRingSceneExit();
     gAuraTex = NULL;
+#if defined(PS2)
+    iFXGooSceneExit();
+#endif
 }
 
+#if !defined(PS2)
 void xParInterp::set(F32 value1, F32 value2, F32 freq, U32 interp)
 {
     this->val[0] = value1;
@@ -3223,6 +3240,7 @@ void xParInterp::set(F32 value1, F32 value2, F32 freq, U32 interp)
     }
     this->interp = interp;
 }
+#endif
 
 void xFXRibbon::debug_init(const char*, const char*)
 {

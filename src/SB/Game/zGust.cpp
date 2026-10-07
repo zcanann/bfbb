@@ -5,6 +5,9 @@
 #include "xString.h"
 #include "xVec3.h"
 #include "xVec3Inlines.h"
+#if defined(PS2)
+#include "xScene.h"
+#endif
 
 #include "zGust.h"
 #include "zParEmitter.h"

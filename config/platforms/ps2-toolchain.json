@@ -207688,6 +207688,2533 @@
           ]
         }
       ]
+    },
+    {
+      "source": "src/SB/Core/x/xFont.cpp",
+      "target_unit": "SB/Core/x/xFont.cpp",
+      "object": "source/xFont.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "bound_line__Q28xtextbox6layoutFRQ28xtextbox8jot_line": "bound_line__Q28xtextbox6layoutFRQ28xtextbox8jot_line",
+        "bounds__5xfontCFPCc": "bounds__5xfontCFPCc",
+        "bounds__5xfontCFPCcUifRUi": "bounds__5xfontCFPCcUifRUi",
+        "calc__Q28xtextbox6layoutFRC8xtextboxUi": "calc__Q28xtextbox6layoutFRC8xtextboxUi",
+        "changed__Q28xtextbox6layoutFRC8xtextbox": "changed__Q28xtextbox6layoutFRC8xtextbox",
+        "clear__Q28xtextbox6layoutFv": "clear__Q28xtextbox6layoutFv",
+        "clear_layout_cache__8xtextboxFv": "clear_layout_cache__8xtextboxFv",
+        "find_bounds__19@unnamed@xFont_cpp@FPC10iColor_tagRC13basic_rect<i>i": "find_bounds__19@unnamed@xFont_cpp@FPC10iColor_tagRC13basic_rect<i>i",
+        "find_entry__8xtextboxFRCQ28xtextbox14tag_entry_listRC6substr": "find_entry__8xtextboxFRCQ28xtextbox14tag_entry_listRC6substr",
+        "find_format_tag__8xtextboxFRC6substrRi": "find_format_tag__8xtextboxFRC6substrRi",
+        "fit_line__Q28xtextbox6layoutFv": "fit_line__Q28xtextbox6layoutFv",
+        "init__5xfontFv": "init__5xfontFv",
+        "init_font_data__19@unnamed@xFont_cpp@FRQ219@unnamed@xFont_cpp@9font_data": "init_font_data__19@unnamed@xFont_cpp@FRQ219@unnamed@xFont_cpp@9font_data",
+        "init_model_cache__19@unnamed@xFont_cpp@Fv": "init_model_cache__19@unnamed@xFont_cpp@Fv",
+        "irender__5xfontCFPCcUiff": "irender__5xfontCFPCcUiff",
+        "irender__5xfontCFPCcff": "irender__5xfontCFPCcff",
+        "load_model__19@unnamed@xFont_cpp@FUi": "load_model__19@unnamed@xFont_cpp@FUi",
+        "load_model_args__19@unnamed@xFont_cpp@FRQ219@unnamed@xFont_cpp@10model_argsRC6substr": "load_model_args__19@unnamed@xFont_cpp@FRQ219@unnamed@xFont_cpp@10model_argsRC6substr",
+        "load_tex_args__19@unnamed@xFont_cpp@FRQ219@unnamed@xFont_cpp@8tex_argsRC6substr": "load_tex_args__19@unnamed@xFont_cpp@FRQ219@unnamed@xFont_cpp@8tex_argsRC6substr",
+        "merge_line__Q28xtextbox6layoutFRQ28xtextbox8jot_line": "merge_line__Q28xtextbox6layoutFRQ28xtextbox8jot_line",
+        "parse_next_tag_jot__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxPCcUi": "parse_next_tag_jot__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxPCcUi",
+        "parse_next_text_jot__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxPCcUi": "parse_next_text_jot__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxPCcUi",
+        "parse_split_tag__19@unnamed@xFont_cpp@FRQ28xtextbox9split_tag": "parse_split_tag__19@unnamed@xFont_cpp@FRQ28xtextbox9split_tag",
+        "parse_tag_alpha__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "parse_tag_alpha__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "parse_tag_blue__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "parse_tag_blue__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "parse_tag_color__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "parse_tag_color__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "parse_tag_font__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "parse_tag_font__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "parse_tag_green__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "parse_tag_green__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "parse_tag_height__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "parse_tag_height__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "parse_tag_insert__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "parse_tag_insert__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "parse_tag_insert_hash__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "parse_tag_insert_hash__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "parse_tag_left_indent__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "parse_tag_left_indent__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "parse_tag_model__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "parse_tag_model__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "parse_tag_newline__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "parse_tag_newline__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "parse_tag_open_curly__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "parse_tag_open_curly__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "parse_tag_page_break__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "parse_tag_page_break__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "parse_tag_pop__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "parse_tag_pop__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "parse_tag_red__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "parse_tag_red__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "parse_tag_right_indent__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "parse_tag_right_indent__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "parse_tag_tab__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "parse_tag_tab__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "parse_tag_tab_stop__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "parse_tag_tab_stop__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "parse_tag_tex__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "parse_tag_tex__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "parse_tag_timer__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "parse_tag_timer__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "parse_tag_width__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "parse_tag_width__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "parse_tag_word_break__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "parse_tag_word_break__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "parse_tag_wrap__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "parse_tag_wrap__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "parse_tag_xjustify__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "parse_tag_xjustify__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "parse_tag_xspace__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "parse_tag_xspace__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "parse_tag_yjustify__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "parse_tag_yjustify__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "parse_tag_yspace__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "parse_tag_yspace__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "read_list__8xtextboxFRCQ28xtextbox9tag_entryPfUi": "read_list__8xtextboxFRCQ28xtextbox9tag_entryPfUi",
+        "read_list__8xtextboxFRCQ28xtextbox9tag_entryPiUi": "read_list__8xtextboxFRCQ28xtextbox9tag_entryPiUi",
+        "read_tag__8xtextboxFRC6substr": "read_tag__8xtextboxFRC6substr",
+        "refresh__Q28xtextbox6layoutFRC8xtextboxb": "refresh__Q28xtextbox6layoutFRC8xtextboxb",
+        "refresh_end__Q28xtextbox6layoutFRC8xtextbox": "refresh_end__Q28xtextbox6layoutFRC8xtextbox",
+        "register_tags__8xtextboxFPCQ28xtextbox8tag_typeUi": "register_tags__8xtextboxFPCQ28xtextbox8tag_typeUi",
+        "render__8xtextboxCFRQ28xtextbox6layoutii": "render__8xtextboxCFRQ28xtextbox6layoutii",
+        "render__Q28xtextbox6layoutFRC8xtextboxii": "render__Q28xtextbox6layoutFRC8xtextboxii",
+        "render_fill_rect__FRC13basic_rect<f>10iColor_tag": "render_fill_rect__FRC13basic_rect<f>10iColor_tag",
+        "render_tag_model__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotRC8xtextboxff": "render_tag_model__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotRC8xtextboxff",
+        "render_tag_tex__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotRC8xtextboxff": "render_tag_tex__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotRC8xtextboxff",
+        "reset_font_spacing__19@unnamed@xFont_cpp@FRQ219@unnamed@xFont_cpp@10font_asset": "reset_font_spacing__19@unnamed@xFont_cpp@FRQ219@unnamed@xFont_cpp@10font_asset",
+        "reset_tag_all__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "reset_tag_all__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "reset_tag_alpha__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "reset_tag_alpha__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "reset_tag_blue__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "reset_tag_blue__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "reset_tag_color__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "reset_tag_color__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "reset_tag_font__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "reset_tag_font__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "reset_tag_green__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "reset_tag_green__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "reset_tag_height__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "reset_tag_height__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "reset_tag_left_indent__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "reset_tag_left_indent__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "reset_tag_model__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "reset_tag_model__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "reset_tag_red__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "reset_tag_red__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "reset_tag_right_indent__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "reset_tag_right_indent__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "reset_tag_tab_stop__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "reset_tag_tab_stop__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "reset_tag_tex__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "reset_tag_tex__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "reset_tag_width__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "reset_tag_width__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "reset_tag_wrap__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "reset_tag_wrap__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "reset_tag_xjustify__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "reset_tag_xjustify__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "reset_tag_xspace__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "reset_tag_xspace__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "reset_tag_yjustify__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "reset_tag_yjustify__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "reset_tag_yspace__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "reset_tag_yspace__19@unnamed@xFont_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "restore_render_state__5xfontFv": "restore_render_state__5xfontFv",
+        "set_rect_vert__19@unnamed@xFont_cpp@FR13RwSky2DVertexfff10iColor_tagf": "set_rect_vert__19@unnamed@xFont_cpp@FR13RwSky2DVertexfff10iColor_tagf",
+        "set_render_state__5xfontFP8RwRaster": "set_render_state__5xfontFP8RwRaster",
+        "set_text__8xtextboxFPCc": "set_text__8xtextboxFPCc",
+        "set_text__8xtextboxFPPCcPCUiUi": "set_text__8xtextboxFPPCcPCUiUi",
+        "set_text__8xtextboxFPPCcUi": "set_text__8xtextboxFPPCcUi",
+        "start_layout__19@unnamed@xFont_cpp@FRC8xtextbox": "start_layout__19@unnamed@xFont_cpp@FRC8xtextbox",
+        "start_render__5xfontCFv": "start_render__5xfontCFv",
+        "stop_render__5xfontCFv": "stop_render__5xfontCFv",
+        "temp_layout__8xtextboxCFb": "temp_layout__8xtextboxCFb",
+        "tex_render__19@unnamed@xFont_cpp@FRC13basic_rect<f>RC13basic_rect<f>RC13basic_rect<f>10iColor_tag": "tex_render__19@unnamed@xFont_cpp@FRC13basic_rect<f>RC13basic_rect<f>RC13basic_rect<f>10iColor_tag",
+        "text_render__8xtextboxFRCQ28xtextbox3jotRC8xtextboxff": "text_render__8xtextboxFRCQ28xtextbox3jotRC8xtextboxff",
+        "trim_line__Q28xtextbox6layoutFRQ28xtextbox8jot_line": "trim_line__Q28xtextbox6layoutFRQ28xtextbox8jot_line",
+        "update_tag_alpha__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox": "update_tag_alpha__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox",
+        "update_tag_blue__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox": "update_tag_blue__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox",
+        "update_tag_color__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox": "update_tag_color__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox",
+        "update_tag_font__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox": "update_tag_font__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox",
+        "update_tag_green__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox": "update_tag_green__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox",
+        "update_tag_height__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox": "update_tag_height__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox",
+        "update_tag_left_indent__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox": "update_tag_left_indent__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox",
+        "update_tag_red__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox": "update_tag_red__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox",
+        "update_tag_reset_all__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox": "update_tag_reset_all__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox",
+        "update_tag_reset_alpha__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox": "update_tag_reset_alpha__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox",
+        "update_tag_reset_blue__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox": "update_tag_reset_blue__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox",
+        "update_tag_reset_color__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox": "update_tag_reset_color__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox",
+        "update_tag_reset_font__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox": "update_tag_reset_font__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox",
+        "update_tag_reset_green__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox": "update_tag_reset_green__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox",
+        "update_tag_reset_height__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox": "update_tag_reset_height__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox",
+        "update_tag_reset_left_indent__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox": "update_tag_reset_left_indent__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox",
+        "update_tag_reset_red__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox": "update_tag_reset_red__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox",
+        "update_tag_reset_right_indent__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox": "update_tag_reset_right_indent__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox",
+        "update_tag_reset_tab_stop__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox": "update_tag_reset_tab_stop__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox",
+        "update_tag_reset_width__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox": "update_tag_reset_width__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox",
+        "update_tag_reset_wrap__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox": "update_tag_reset_wrap__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox",
+        "update_tag_reset_xjustify__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox": "update_tag_reset_xjustify__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox",
+        "update_tag_reset_xspace__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox": "update_tag_reset_xspace__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox",
+        "update_tag_reset_yjustify__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox": "update_tag_reset_yjustify__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox",
+        "update_tag_reset_yspace__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox": "update_tag_reset_yspace__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox",
+        "update_tag_right_indent__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox": "update_tag_right_indent__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox",
+        "update_tag_tab_stop__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox": "update_tag_tab_stop__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox",
+        "update_tag_width__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox": "update_tag_width__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox",
+        "update_tag_wrap__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox": "update_tag_wrap__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox",
+        "update_tag_xjustify__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox": "update_tag_xjustify__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox",
+        "update_tag_xspace__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox": "update_tag_xspace__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox",
+        "update_tag_yjustify__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox": "update_tag_yjustify__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox",
+        "update_tag_yspace__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox": "update_tag_yspace__19@unnamed@xFont_cpp@FRCQ28xtextbox3jotR8xtextboxRC8xtextbox",
+        "yextent__8xtextboxCFfRiRCQ28xtextbox6layoutii": "yextent__8xtextboxCFfRiRCQ28xtextbox6layoutii",
+        "yextent__Q28xtextbox6layoutCFfRiii": "yextent__Q28xtextbox6layoutCFfRiii"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/x/xShadow.cpp",
+      "target_unit": "SB/Core/x/xShadow.cpp",
+      "object": "source/xShadow.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "CmpShadowMgr__FPCvPCv": "CmpShadowMgr__FPCvPCv",
+        "DrawAlphaBox__FP5xVec3iUc": "DrawAlphaBox__FP5xVec3iUc",
+        "Im2DRenderQuad__Ffffffff": "Im2DRenderQuad__Ffffffff",
+        "SetupShadow__Fv": "SetupShadow__Fv",
+        "ShadowCameraDestroy__FP8RwCamera": "ShadowCameraDestroy__FP8RwCamera",
+        "ShadowCameraSetSpherePersp__FP8RwCameraP5RwV3df": "ShadowCameraSetSpherePersp__FP8RwCameraP5RwV3df",
+        "ShadowCameraUpdate__FP8RwCameraPvPFPv_vP5xVec3fi": "ShadowCameraUpdate__FP8RwCameraPvPFPv_vP5xVec3fi",
+        "ShadowInsideBoxAdjust__FP5xVec3": "ShadowInsideBoxAdjust__FP5xVec3",
+        "ShadowRenderTriangleCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv": "ShadowRenderTriangleCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv",
+        "ShadowRender__FP8RwCameraP8RwRasterP14RpIntersectionff": "ShadowRender__FP8RwCameraP8RwRasterP14RpIntersectionff",
+        "modelRenderCB__FPv": "modelRenderCB__FPv",
+        "shadowCacheEntityCB__FP4xEntPv": "shadowCacheEntityCB__FP4xEntPv",
+        "shadowCacheEnvCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv": "shadowCacheEnvCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv",
+        "shadowCacheLeafCB__FiiPv": "shadowCacheLeafCB__FiiPv",
+        "xShadowCameraUpdate__FPvPFPv_vP5xVec3fi": "xShadowCameraUpdate__FPvPFPv_vP5xVec3fi",
+        "xShadowInit__Fv": "xShadowInit__Fv",
+        "xShadowManager_Add__FP4xEnt": "xShadowManager_Add__FP4xEnt",
+        "xShadowManager_Init__Fi": "xShadowManager_Init__Fi",
+        "xShadowManager_Remove__FP4xEnt": "xShadowManager_Remove__FP4xEnt",
+        "xShadowManager_Render__Fv": "xShadowManager_Render__Fv",
+        "xShadowManager_Reset__Fv": "xShadowManager_Reset__Fv",
+        "xShadowReceiveShadowFastPS2__FP4xEntfiP11RwMatrixTagP8RwRaster": "xShadowReceiveShadowFastPS2__FP4xEntfiP11RwMatrixTagP8RwRaster",
+        "xShadowReceiveShadowSetup__FP4xEnt": "xShadowReceiveShadowSetup__FP4xEnt",
+        "xShadowReceiveShadow__FP4xEntfiP11RwMatrixTagP8RwRaster": "xShadowReceiveShadow__FP4xEntfiP11RwMatrixTagP8RwRaster",
+        "xShadowRenderWorld__FP5xVec3ff": "xShadowRenderWorld__FP5xVec3ff",
+        "xShadowRender__FP4xEntf": "xShadowRender__FP4xEntf",
+        "xShadowSetLight__FP5xVec3P5xVec3f": "xShadowSetLight__FP5xVec3P5xVec3f",
+        "xShadowSetVolume__FP8RwCameraP5xVec3f": "xShadowSetVolume__FP8RwCameraP5xVec3f",
+        "xShadowSetWorld__FP7RpWorld": "xShadowSetWorld__FP7RpWorld",
+        "xShadowVertical_DrawCache__FP12xShadowCacheffiP11RwMatrixTagP8RwRaster": "xShadowVertical_DrawCache__FP12xShadowCacheffiP11RwMatrixTagP8RwRaster",
+        "xShadowVertical_FillCache__FP12xShadowCacheP5xVec3fff": "xShadowVertical_FillCache__FP12xShadowCacheP5xVec3fff",
+        "xShadow_ListAdd__FP4xEnt": "xShadow_ListAdd__FP4xEnt",
+        "xShadow_PickByRayCast__FP10xShadowMgr": "xShadow_PickByRayCast__FP10xShadowMgr",
+        "xShadow_PickEntForNPC__FP10xShadowMgr": "xShadow_PickEntForNPC__FP10xShadowMgr"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zSaveLoad.cpp",
+      "target_unit": "SB/Game/zSaveLoad.cpp",
+      "object": "source/zSaveLoad.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597"
+      ],
+      "symbols": {
+        "BuildIt__FPci": "BuildIt__FPci",
+        "CardtoTgt__Fi": "CardtoTgt__Fi",
+        "format__Fii": "format__Fii",
+        "xSGT_LoadLoadCB__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii": "xSGT_LoadLoadCB__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii",
+        "xSGT_LoadPrefsCB__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii": "xSGT_LoadPrefsCB__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii",
+        "xSGT_SaveInfoCB__FPvP17st_XSAVEGAME_DATAPiPi": "xSGT_SaveInfoCB__FPvP17st_XSAVEGAME_DATAPiPi",
+        "xSGT_SaveInfoPrefsCB__FPvP17st_XSAVEGAME_DATAPiPi": "xSGT_SaveInfoPrefsCB__FPvP17st_XSAVEGAME_DATAPiPi",
+        "xSGT_SaveProcCB__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT": "xSGT_SaveProcCB__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT",
+        "xSGT_SaveProcPrefsCB__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT": "xSGT_SaveProcPrefsCB__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT",
+        "zSaveLoadAutoSaveUpdate__Fv": "zSaveLoadAutoSaveUpdate__Fv",
+        "zSaveLoadGetAutoSaveCard__Fv": "zSaveLoadGetAutoSaveCard__Fv",
+        "zSaveLoadGetPreAutoSave__Fv": "zSaveLoadGetPreAutoSave__Fv",
+        "zSaveLoadPreAutoSave__Fb": "zSaveLoadPreAutoSave__Fb",
+        "zSaveLoad_BuildName__FPci": "zSaveLoad_BuildName__FPci",
+        "zSaveLoad_CardCheckFormattedSingle__Fi": "zSaveLoad_CardCheckFormattedSingle__Fi",
+        "zSaveLoad_CardCheckFormatted__Fii": "zSaveLoad_CardCheckFormatted__Fii",
+        "zSaveLoad_CardCheckGamesSingle__Fi": "zSaveLoad_CardCheckGamesSingle__Fi",
+        "zSaveLoad_CardCheckGames__Fii": "zSaveLoad_CardCheckGames__Fii",
+        "zSaveLoad_CardCheckSingle__Fi": "zSaveLoad_CardCheckSingle__Fi",
+        "zSaveLoad_CardCheckSlotEmpty_hasGame__Fii": "zSaveLoad_CardCheckSlotEmpty_hasGame__Fii",
+        "zSaveLoad_CardCheckSlotEmpty_hasGame_doCheck__FP17st_XSAVEGAME_DATAii": "zSaveLoad_CardCheckSlotEmpty_hasGame_doCheck__FP17st_XSAVEGAME_DATAii",
+        "zSaveLoad_CardCheckSlotOverwrite__Fii": "zSaveLoad_CardCheckSlotOverwrite__Fii",
+        "zSaveLoad_CardCheckSpaceSingle__Fi": "zSaveLoad_CardCheckSpaceSingle__Fi",
+        "zSaveLoad_CardCheckSpaceSingle_doCheck__FP17st_XSAVEGAME_DATAi": "zSaveLoad_CardCheckSpaceSingle_doCheck__FP17st_XSAVEGAME_DATAi",
+        "zSaveLoad_CardCheckSpace__Fii": "zSaveLoad_CardCheckSpace__Fii",
+        "zSaveLoad_CardCheckValid__Fii": "zSaveLoad_CardCheckValid__Fii",
+        "zSaveLoad_CardCheck__Fii": "zSaveLoad_CardCheck__Fii",
+        "zSaveLoad_CardPick__Fi": "zSaveLoad_CardPick__Fi",
+        "zSaveLoad_CardPrompt__Fi": "zSaveLoad_CardPrompt__Fi",
+        "zSaveLoad_DispatchCB__FUiPCf": "zSaveLoad_DispatchCB__FUiPCf",
+        "zSaveLoad_DoAutoSave__Fv": "zSaveLoad_DoAutoSave__Fv",
+        "zSaveLoad_GameSelect__Fi": "zSaveLoad_GameSelect__Fi",
+        "zSaveLoad_LoadGame__Fv": "zSaveLoad_LoadGame__Fv",
+        "zSaveLoad_LoadLoop__Fv": "zSaveLoad_LoadLoop__Fv",
+        "zSaveLoad_SaveGame__Fv": "zSaveLoad_SaveGame__Fv",
+        "zSaveLoad_SaveLoop__Fv": "zSaveLoad_SaveLoop__Fv",
+        "zSaveLoad_Tick__Fv": "zSaveLoad_Tick__Fv",
+        "zSaveLoad_getMCAccessType__Fv": "zSaveLoad_getMCAccessType__Fv",
+        "zSaveLoad_getMCavailable__Fv": "zSaveLoad_getMCavailable__Fv",
+        "zSaveLoad_getMCneeded__Fv": "zSaveLoad_getMCneeded__Fv",
+        "zSaveLoad_getcard__Fv": "zSaveLoad_getcard__Fv",
+        "zSaveLoad_getgame__Fv": "zSaveLoad_getgame__Fv",
+        "zSaveLoad_slotIsEmpty__FUi": "zSaveLoad_slotIsEmpty__FUi",
+        "zUpdateThumbIcon__Fv": "zUpdateThumbIcon__Fv"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zSaveLoad.cpp",
+      "target_unit": "SB/Game/zSaveLoad.cpp",
+      "object": "source/zSaveLoad.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "BuildIt__FPci": "BuildIt__FPci",
+        "CardtoTgt__Fi": "CardtoTgt__Fi",
+        "IsValidName__FPc": "IsValidName__FPc",
+        "format__Fii": "format__Fii",
+        "xSGT_LoadLoadCB__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii": "xSGT_LoadLoadCB__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii",
+        "xSGT_LoadPrefsCB__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii": "xSGT_LoadPrefsCB__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii",
+        "xSGT_SaveInfoCB__FPvP17st_XSAVEGAME_DATAPiPi": "xSGT_SaveInfoCB__FPvP17st_XSAVEGAME_DATAPiPi",
+        "xSGT_SaveInfoPrefsCB__FPvP17st_XSAVEGAME_DATAPiPi": "xSGT_SaveInfoPrefsCB__FPvP17st_XSAVEGAME_DATAPiPi",
+        "xSGT_SaveProcCB__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT": "xSGT_SaveProcCB__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT",
+        "xSGT_SaveProcPrefsCB__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT": "xSGT_SaveProcPrefsCB__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT",
+        "zSaveLoadAutoSaveUpdate__Fv": "zSaveLoadAutoSaveUpdate__Fv",
+        "zSaveLoadGetAutoSaveCard__Fv": "zSaveLoadGetAutoSaveCard__Fv",
+        "zSaveLoadGetPreAutoSave__Fv": "zSaveLoadGetPreAutoSave__Fv",
+        "zSaveLoadPreAutoSave__Fb": "zSaveLoadPreAutoSave__Fb",
+        "zSaveLoad_BuildName__FPci": "zSaveLoad_BuildName__FPci",
+        "zSaveLoad_CardCheckFormattedSingle__Fi": "zSaveLoad_CardCheckFormattedSingle__Fi",
+        "zSaveLoad_CardCheckFormatted__Fii": "zSaveLoad_CardCheckFormatted__Fii",
+        "zSaveLoad_CardCheckGamesSingle__Fi": "zSaveLoad_CardCheckGamesSingle__Fi",
+        "zSaveLoad_CardCheckGames__Fii": "zSaveLoad_CardCheckGames__Fii",
+        "zSaveLoad_CardCheckSingle__Fi": "zSaveLoad_CardCheckSingle__Fi",
+        "zSaveLoad_CardCheckSlotEmpty_hasGame__Fii": "zSaveLoad_CardCheckSlotEmpty_hasGame__Fii",
+        "zSaveLoad_CardCheckSlotEmpty_hasGame_doCheck__FP17st_XSAVEGAME_DATAii": "zSaveLoad_CardCheckSlotEmpty_hasGame_doCheck__FP17st_XSAVEGAME_DATAii",
+        "zSaveLoad_CardCheckSlotOverwrite__Fii": "zSaveLoad_CardCheckSlotOverwrite__Fii",
+        "zSaveLoad_CardCheckSpaceSingle__Fi": "zSaveLoad_CardCheckSpaceSingle__Fi",
+        "zSaveLoad_CardCheckSpaceSingle_doCheck__FP17st_XSAVEGAME_DATAi": "zSaveLoad_CardCheckSpaceSingle_doCheck__FP17st_XSAVEGAME_DATAi",
+        "zSaveLoad_CardCheckSpace__Fii": "zSaveLoad_CardCheckSpace__Fii",
+        "zSaveLoad_CardCheckValid__Fii": "zSaveLoad_CardCheckValid__Fii",
+        "zSaveLoad_CardCheck__Fii": "zSaveLoad_CardCheck__Fii",
+        "zSaveLoad_CardPick__Fi": "zSaveLoad_CardPick__Fi",
+        "zSaveLoad_CardPrompt__Fi": "zSaveLoad_CardPrompt__Fi",
+        "zSaveLoad_DispatchCB__FUiPCf": "zSaveLoad_DispatchCB__FUiPCf",
+        "zSaveLoad_DoAutoSave__Fv": "zSaveLoad_DoAutoSave__Fv",
+        "zSaveLoad_GameSelect__Fi": "zSaveLoad_GameSelect__Fi",
+        "zSaveLoad_LoadGame__Fv": "zSaveLoad_LoadGame__Fv",
+        "zSaveLoad_LoadLoop__Fv": "zSaveLoad_LoadLoop__Fv",
+        "zSaveLoad_SaveGame__Fv": "zSaveLoad_SaveGame__Fv",
+        "zSaveLoad_SaveLoop__Fv": "zSaveLoad_SaveLoop__Fv",
+        "zSaveLoad_Tick__Fv": "zSaveLoad_Tick__Fv",
+        "zSaveLoad_getMCAccessType__Fv": "zSaveLoad_getMCAccessType__Fv",
+        "zSaveLoad_getMCavailable__Fv": "zSaveLoad_getMCavailable__Fv",
+        "zSaveLoad_getMCneeded__Fv": "zSaveLoad_getMCneeded__Fv",
+        "zSaveLoad_getcard__Fv": "zSaveLoad_getcard__Fv",
+        "zSaveLoad_getgame__Fv": "zSaveLoad_getgame__Fv",
+        "zSaveLoad_slotIsEmpty__FUi": "zSaveLoad_slotIsEmpty__FUi",
+        "zUpdateThumbIcon__Fv": "zUpdateThumbIcon__Fv"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/x/xpkrsvc.cpp",
+      "target_unit": "SB/Core/x/xpkrsvc.cpp",
+      "object": "source/xpkrsvc.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "LOD_r_ADBG__FP14st_HIPLOADDATAP19st_PACKER_READ_DATAP19st_PACKER_ATOC_NODE": "LOD_r_ADBG__FP14st_HIPLOADDATAP19st_PACKER_READ_DATAP19st_PACKER_ATOC_NODE",
+        "LOD_r_AHDR__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA": "LOD_r_AHDR__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA",
+        "LOD_r_ATOC__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA": "LOD_r_ATOC__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA",
+        "LOD_r_DICT__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA": "LOD_r_DICT__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA",
+        "LOD_r_LHDR__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA": "LOD_r_LHDR__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA",
+        "LOD_r_LTOC__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA": "LOD_r_LTOC__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA",
+        "LOD_r_PACK__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA": "LOD_r_PACK__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA",
+        "LOD_r_PLAT__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA": "LOD_r_PLAT__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA",
+        "LOD_r_PVER__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA": "LOD_r_PVER__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA",
+        "LOD_r_STRM__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA": "LOD_r_STRM__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA",
+        "OrdComp_R_Asset__FPvPv": "OrdComp_R_Asset__FPvPv",
+        "OrdTest_R_AssetID__FPCvPv": "OrdTest_R_AssetID__FPCvPv",
+        "PKRAssetIDFromInst__FPv": "PKRAssetIDFromInst__FPv",
+        "PKRGetReadFuncs__Fi": "PKRGetReadFuncs__Fi",
+        "PKRLoadStep__Fi": "PKRLoadStep__Fi",
+        "PKRShutdown__Fv": "PKRShutdown__Fv",
+        "PKRStartup__Fv": "PKRStartup__Fv",
+        "PKR_AssetByType__FP19st_PACKER_READ_DATAUiiPUi": "PKR_AssetByType__FP19st_PACKER_READ_DATAUiiPUi",
+        "PKR_AssetCount__FP19st_PACKER_READ_DATAUi": "PKR_AssetCount__FP19st_PACKER_READ_DATAUi",
+        "PKR_AssetName__FP19st_PACKER_READ_DATAUi": "PKR_AssetName__FP19st_PACKER_READ_DATAUi",
+        "PKR_Disconnect__FP19st_PACKER_READ_DATA": "PKR_Disconnect__FP19st_PACKER_READ_DATA",
+        "PKR_FRIEND_assetIsGameDup__FUiPC19st_PACKER_READ_DATAiUiUiPc": "PKR_FRIEND_assetIsGameDup__FUiPC19st_PACKER_READ_DATAiUiUiPc",
+        "PKR_FindAsset__FP19st_PACKER_READ_DATAUi": "PKR_FindAsset__FP19st_PACKER_READ_DATAUi",
+        "PKR_GetAssetInfoByType__FP19st_PACKER_READ_DATAUiiP20st_PKR_ASSET_TOCINFO": "PKR_GetAssetInfoByType__FP19st_PACKER_READ_DATAUiiP20st_PKR_ASSET_TOCINFO",
+        "PKR_GetAssetInfo__FP19st_PACKER_READ_DATAUiP20st_PKR_ASSET_TOCINFO": "PKR_GetAssetInfo__FP19st_PACKER_READ_DATAUiP20st_PKR_ASSET_TOCINFO",
+        "PKR_GetAssetSize__FP19st_PACKER_READ_DATAUi": "PKR_GetAssetSize__FP19st_PACKER_READ_DATAUi",
+        "PKR_GetBaseSector__FP19st_PACKER_READ_DATA": "PKR_GetBaseSector__FP19st_PACKER_READ_DATA",
+        "PKR_IsAssetReady__FP19st_PACKER_READ_DATAUi": "PKR_IsAssetReady__FP19st_PACKER_READ_DATAUi",
+        "PKR_LayerMemRelease__FP19st_PACKER_READ_DATAP19st_PACKER_LTOC_NODE": "PKR_LayerMemRelease__FP19st_PACKER_READ_DATAP19st_PACKER_LTOC_NODE",
+        "PKR_LayerMemReserve__FP19st_PACKER_READ_DATAP19st_PACKER_LTOC_NODE": "PKR_LayerMemReserve__FP19st_PACKER_READ_DATAP19st_PACKER_LTOC_NODE",
+        "PKR_LoadAsset__FP19st_PACKER_READ_DATAUiPCcPv": "PKR_LoadAsset__FP19st_PACKER_READ_DATAUiPCcPv",
+        "PKR_LoadLayer__FP19st_PACKER_READ_DATA13en_LAYER_TYPE": "PKR_LoadLayer__FP19st_PACKER_READ_DATA13en_LAYER_TYPE",
+        "PKR_LoadStep_Async__Fv": "PKR_LoadStep_Async__Fv",
+        "PKR_PkgHasAsset__FP19st_PACKER_READ_DATAUi": "PKR_PkgHasAsset__FP19st_PACKER_READ_DATAUi",
+        "PKR_ReadDone__FP19st_PACKER_READ_DATA": "PKR_ReadDone__FP19st_PACKER_READ_DATA",
+        "PKR_ReadInit__FPvPcUiPiP19st_PACKER_ASSETTYPE": "PKR_ReadInit__FPvPcUiPiP19st_PACKER_ASSETTYPE",
+        "PKR_SetActive__FP19st_PACKER_READ_DATA13en_LAYER_TYPE": "PKR_SetActive__FP19st_PACKER_READ_DATA13en_LAYER_TYPE",
+        "PKR_bld_typecnt__FP19st_PACKER_READ_DATA": "PKR_bld_typecnt__FP19st_PACKER_READ_DATA",
+        "PKR_findNextLayerToLoad__FPP19st_PACKER_READ_DATAPP19st_PACKER_LTOC_NODE": "PKR_findNextLayerToLoad__FPP19st_PACKER_READ_DATAPP19st_PACKER_LTOC_NODE",
+        "PKR_getPackTimestamp__FP19st_PACKER_READ_DATA": "PKR_getPackTimestamp__FP19st_PACKER_READ_DATA",
+        "PKR_getmem__FUiiUiiiPPc": "PKR_getmem__FUiiUiiiPPc",
+        "PKR_parse_TOC__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA": "PKR_parse_TOC__FP14st_HIPLOADDATAP19st_PACKER_READ_DATA",
+        "PKR_relmem__FUiiPvUii": "PKR_relmem__FUiiPvUii",
+        "PKR_specialGet_loadbuf__FP19st_PACKER_READ_DATAii": "PKR_specialGet_loadbuf__FP19st_PACKER_READ_DATAii",
+        "PKR_special_loadbuf_killed__FP10RwResEntry": "PKR_special_loadbuf_killed__FP10RwResEntry",
+        "PKR_type2typeref__FUiP19st_PACKER_ASSETTYPE": "PKR_type2typeref__FUiP19st_PACKER_ASSETTYPE",
+        "PKR_updateLayerAssets__FP19st_PACKER_LTOC_NODE": "PKR_updateLayerAssets__FP19st_PACKER_LTOC_NODE",
+        "PKR_xformLayerAssets__FP19st_PACKER_LTOC_NODE": "PKR_xformLayerAssets__FP19st_PACKER_LTOC_NODE",
+        "PKR_xform_asset__FP19st_PACKER_ATOC_NODEi": "PKR_xform_asset__FP19st_PACKER_ATOC_NODEi",
+        "ValidatePlatform__FP14st_HIPLOADDATAP19st_PACKER_READ_DATAiPcPcPcPc": "ValidatePlatform__FP14st_HIPLOADDATAP19st_PACKER_READ_DATAiPcPcPcPc"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/x/xsavegame.cpp",
+      "target_unit": "SB/Core/x/xsavegame.cpp",
+      "object": "source/xsavegame.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "ASG_ISG_changed__FPv10en_CHGCODE": "ASG_ISG_changed__FPv10en_CHGCODE",
+        "Discard__11XSGAutoDataFv": "Discard__11XSGAutoDataFv",
+        "IsValid__11XSGAutoDataFv": "IsValid__11XSGAutoDataFv",
+        "SetCache__11XSGAutoDataFiii": "SetCache__11XSGAutoDataFiii",
+        "xSGAddLoadClient__FP17st_XSAVEGAME_DATAUiPvPFPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii_i": "xSGAddLoadClient__FP17st_XSAVEGAME_DATAUiPvPFPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii_i",
+        "xSGAddSaveClient__FP17st_XSAVEGAME_DATAUiPvPFPvP17st_XSAVEGAME_DATAPiPi_iPFPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT_i": "xSGAddSaveClient__FP17st_XSAVEGAME_DATAUiPvPFPvP17st_XSAVEGAME_DATAPiPi_iPFPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT_i",
+        "xSGAsyncStatus__FP17st_XSAVEGAME_DATAiP14en_XSG_WHYFAILPc": "xSGAsyncStatus__FP17st_XSAVEGAME_DATAiP14en_XSG_WHYFAILPc",
+        "xSGAutoSave_GetCache__Fv": "xSGAutoSave_GetCache__Fv",
+        "xSGCheckMemoryCard__FP17st_XSAVEGAME_DATAi": "xSGCheckMemoryCard__FP17st_XSAVEGAME_DATAi",
+        "xSGDone__FP17st_XSAVEGAME_DATA": "xSGDone__FP17st_XSAVEGAME_DATA",
+        "xSGGameIsEmpty__FP17st_XSAVEGAME_DATAi": "xSGGameIsEmpty__FP17st_XSAVEGAME_DATAi",
+        "xSGGameLabel__FP17st_XSAVEGAME_DATAi": "xSGGameLabel__FP17st_XSAVEGAME_DATAi",
+        "xSGGameModDate__FP17st_XSAVEGAME_DATAi": "xSGGameModDate__FP17st_XSAVEGAME_DATAi",
+        "xSGGameProgress__FP17st_XSAVEGAME_DATAi": "xSGGameProgress__FP17st_XSAVEGAME_DATAi",
+        "xSGGameSet__FP17st_XSAVEGAME_DATAi": "xSGGameSet__FP17st_XSAVEGAME_DATAi",
+        "xSGGameSize__FP17st_XSAVEGAME_DATAi": "xSGGameSize__FP17st_XSAVEGAME_DATAi",
+        "xSGGameThumbIndex__FP17st_XSAVEGAME_DATAi": "xSGGameThumbIndex__FP17st_XSAVEGAME_DATAi",
+        "xSGInit__F16en_SAVEGAME_MODE": "xSGInit__F16en_SAVEGAME_MODE",
+        "xSGProcess__FP17st_XSAVEGAME_DATA": "xSGProcess__FP17st_XSAVEGAME_DATA",
+        "xSGReadData__FP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTPUii": "xSGReadData__FP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTPUii",
+        "xSGReadData__FP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTPci": "xSGReadData__FP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTPci",
+        "xSGReadData__FP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTPcii": "xSGReadData__FP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTPcii",
+        "xSGReadData__FP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTPfi": "xSGReadData__FP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTPfi",
+        "xSGReadData__FP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTPii": "xSGReadData__FP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTPii",
+        "xSGSetup__FP17st_XSAVEGAME_DATA": "xSGSetup__FP17st_XSAVEGAME_DATA",
+        "xSGSetup__FP17st_XSAVEGAME_DATAiPcili": "xSGSetup__FP17st_XSAVEGAME_DATAiPcili",
+        "xSGShutdown__Fv": "xSGShutdown__Fv",
+        "xSGStartup__Fv": "xSGStartup__Fv",
+        "xSGTgtCount__FP17st_XSAVEGAME_DATAPi": "xSGTgtCount__FP17st_XSAVEGAME_DATAPi",
+        "xSGTgtFormatTgt__FP17st_XSAVEGAME_DATAiPi": "xSGTgtFormatTgt__FP17st_XSAVEGAME_DATAiPi",
+        "xSGTgtHasGameDir__FP17st_XSAVEGAME_DATAi": "xSGTgtHasGameDir__FP17st_XSAVEGAME_DATAi",
+        "xSGTgtHaveRoomStartup__FP17st_XSAVEGAME_DATAiiiPiPiPi": "xSGTgtHaveRoomStartup__FP17st_XSAVEGAME_DATAiiiPiPiPi",
+        "xSGTgtHaveRoom__FP17st_XSAVEGAME_DATAiiiPiPiPi": "xSGTgtHaveRoom__FP17st_XSAVEGAME_DATAiiiPiPiPi",
+        "xSGTgtIsFormat__FP17st_XSAVEGAME_DATAiPi": "xSGTgtIsFormat__FP17st_XSAVEGAME_DATAiPi",
+        "xSGTgtPhysSlotIdx__FP17st_XSAVEGAME_DATAi": "xSGTgtPhysSlotIdx__FP17st_XSAVEGAME_DATAi",
+        "xSGTgtSelect__FP17st_XSAVEGAME_DATAi": "xSGTgtSelect__FP17st_XSAVEGAME_DATAi",
+        "xSGWrapup__FP17st_XSAVEGAME_DATA": "xSGWrapup__FP17st_XSAVEGAME_DATA",
+        "xSGWriteData__FP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXTPUii": "xSGWriteData__FP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXTPUii",
+        "xSGWriteData__FP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXTPci": "xSGWriteData__FP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXTPci",
+        "xSGWriteData__FP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXTPcii": "xSGWriteData__FP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXTPcii",
+        "xSGWriteData__FP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXTPfi": "xSGWriteData__FP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXTPfi",
+        "xSGWriteData__FP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXTPii": "xSGWriteData__FP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXTPii",
+        "xSGWriteStrLen__FPCc": "xSGWriteStrLen__FPCc",
+        "xSG_cb_ISGChange__FPv10en_CHGCODE": "xSG_cb_ISGChange__FPv10en_CHGCODE",
+        "xSG_cb_leader_load__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii": "xSG_cb_leader_load__FPvP17st_XSAVEGAME_DATAP24st_XSAVEGAME_READCONTEXTUii",
+        "xSG_cb_leader_svinfo__FPvP17st_XSAVEGAME_DATAPiPi": "xSG_cb_leader_svinfo__FPvP17st_XSAVEGAME_DATAPiPi",
+        "xSG_cb_leader_svproc__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT": "xSG_cb_leader_svproc__FPvP17st_XSAVEGAME_DATAP25st_XSAVEGAME_WRITECONTEXT",
+        "xSG_grab_leaders__FP17st_XSAVEGAME_DATA": "xSG_grab_leaders__FP17st_XSAVEGAME_DATA",
+        "xSG_ld_findcltblk__FP17st_XSAVEGAME_DATA": "xSG_ld_findcltblk__FP17st_XSAVEGAME_DATA",
+        "xSG_ld_flipload__FP17st_XSAVEGAME_DATA": "xSG_ld_flipload__FP17st_XSAVEGAME_DATA",
+        "xSG_ld_readhead__FP17st_XSAVEGAME_DATA": "xSG_ld_readhead__FP17st_XSAVEGAME_DATA",
+        "xSG_smem_blkclose__FP17st_XSAVEGAME_DATA": "xSG_smem_blkclose__FP17st_XSAVEGAME_DATA",
+        "xSG_smem_cltclose__FP17st_XSAVEGAME_DATAP19st_XSAVEGAME_CLIENT": "xSG_smem_cltclose__FP17st_XSAVEGAME_DATAP19st_XSAVEGAME_CLIENT",
+        "xSG_sv_commit__FP17st_XSAVEGAME_DATA": "xSG_sv_commit__FP17st_XSAVEGAME_DATA",
+        "xSG_sv_flipinfo__FP17st_XSAVEGAME_DATA": "xSG_sv_flipinfo__FP17st_XSAVEGAME_DATA",
+        "xSG_sv_flipproc__FP17st_XSAVEGAME_DATA": "xSG_sv_flipproc__FP17st_XSAVEGAME_DATA",
+        "xSG_sv_prepdest__FP17st_XSAVEGAME_DATA": "xSG_sv_prepdest__FP17st_XSAVEGAME_DATA"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zEnt.cpp",
+      "target_unit": "SB/Game/zEnt.cpp",
+      "object": "source/zEnt.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xEnt_AnimTable_AutoEventSmall__Fv": "xEnt_AnimTable_AutoEventSmall__Fv",
+        "zEntAnimEvent_AutoAnim__FP4zEntUiPCf": "zEntAnimEvent_AutoAnim__FP4zEntUiPCf",
+        "zEntAnimEvent__FP4zEntUiPCf": "zEntAnimEvent__FP4zEntUiPCf",
+        "zEntEventAllOfType__FUiUi": "zEntEventAllOfType__FUiUi",
+        "zEntEventAll__FP5xBaseUiUiPf": "zEntEventAll__FP5xBaseUiUiPf",
+        "zEntGetModelParams__FUiPUi": "zEntGetModelParams__FUiPUi",
+        "zEntGetShadowParams__FP4xEntP5xVec3PfQ210xEntShadow11radius_enum": "zEntGetShadowParams__FP4xEntP5xVec3PfQ210xEntShadow11radius_enum",
+        "zEntInit__FP4zEntP9xEntAssetUi": "zEntInit__FP4zEntP9xEntAssetUi",
+        "zEntLoad__FP4zEntP7xSerial": "zEntLoad__FP4zEntP7xSerial",
+        "zEntParseModelInfo__FP4xEntUi": "zEntParseModelInfo__FP4xEntUi",
+        "zEntRecurseModelInfo__FPvP4xEnt": "zEntRecurseModelInfo__FPvP4xEnt",
+        "zEntReset__FP4zEnt": "zEntReset__FP4zEnt",
+        "zEntSave__FP4zEntP7xSerial": "zEntSave__FP4zEntP7xSerial",
+        "zEntSetup__FP4zEnt": "zEntSetup__FP4zEnt",
+        "zEntUpdate__FP4zEntP6zScenef": "zEntUpdate__FP4zEntP6zScenef",
+        "zParamGetFloatList__FP16xModelAssetParamUiPCciPfPf": "zParamGetFloatList__FP16xModelAssetParamUiPCciPfPf",
+        "zParamGetFloatList__FP16xModelAssetParamUiPciPfPf": "zParamGetFloatList__FP16xModelAssetParamUiPciPfPf",
+        "zParamGetFloat__FP16xModelAssetParamUiPCcf": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
+        "zParamGetFloat__FP16xModelAssetParamUiPcf": "zParamGetFloat__FP16xModelAssetParamUiPcf",
+        "zParamGetInt__FP16xModelAssetParamUiPCci": "zParamGetInt__FP16xModelAssetParamUiPCci",
+        "zParamGetInt__FP16xModelAssetParamUiPci": "zParamGetInt__FP16xModelAssetParamUiPci",
+        "zParamGetVector__FP16xModelAssetParamUiPCc5xVec3P5xVec3": "zParamGetVector__FP16xModelAssetParamUiPCc5xVec3P5xVec3",
+        "zParamGetVector__FP16xModelAssetParamUiPc5xVec3P5xVec3": "zParamGetVector__FP16xModelAssetParamUiPc5xVec3P5xVec3"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zGameExtras.cpp",
+      "target_unit": "SB/Game/zGameExtras.cpp",
+      "object": "source/zGameExtras.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "EGG_check_ExtrasFlags__FP7EGGItem": "EGG_check_ExtrasFlags__FP7EGGItem",
+        "GEC_cb_AddShiny__Fv": "GEC_cb_AddShiny__Fv",
+        "GEC_cb_AddSpatulas__Fv": "GEC_cb_AddSpatulas__Fv",
+        "GEC_cb_BigPlank__Fv": "GEC_cb_BigPlank__Fv",
+        "GEC_cb_BubbleBowl__Fv": "GEC_cb_BubbleBowl__Fv",
+        "GEC_cb_ChaChing__Fv": "GEC_cb_ChaChing__Fv",
+        "GEC_cb_CruiseBubble__Fv": "GEC_cb_CruiseBubble__Fv",
+        "GEC_cb_CruiseControl__Fv": "GEC_cb_CruiseControl__Fv",
+        "GEC_cb_DogTrix__Fv": "GEC_cb_DogTrix__Fv",
+        "GEC_cb_ExpertMode__Fv": "GEC_cb_ExpertMode__Fv",
+        "GEC_cb_Medics__Fv": "GEC_cb_Medics__Fv",
+        "GEC_cb_MonsterGallery__Fv": "GEC_cb_MonsterGallery__Fv",
+        "GEC_cb_NoPantsMode__Fv": "GEC_cb_NoPantsMode__Fv",
+        "GEC_cb_PanHandle__Fv": "GEC_cb_PanHandle__Fv",
+        "GEC_cb_RestoreHealth__Fv": "GEC_cb_RestoreHealth__Fv",
+        "GEC_cb_RichPeep__Fv": "GEC_cb_RichPeep__Fv",
+        "GEC_cb_ShrapBobMode__Fv": "GEC_cb_ShrapBobMode__Fv",
+        "GEC_cb_SmallCostars__Fv": "GEC_cb_SmallCostars__Fv",
+        "GEC_cb_SmallPeep__Fv": "GEC_cb_SmallPeep__Fv",
+        "GEC_cb_SwapCCLR__Fv": "GEC_cb_SwapCCLR__Fv",
+        "GEC_cb_SwapCCUD__Fv": "GEC_cb_SwapCCUD__Fv",
+        "GEC_cb_UnlockArtTheatre__Fv": "GEC_cb_UnlockArtTheatre__Fv",
+        "zGameCheats__Ff": "zGameCheats__Ff",
+        "zGameExtras_CheatFlags__Fv": "zGameExtras_CheatFlags__Fv",
+        "zGameExtras_ExtrasFlags__Fv": "zGameExtras_ExtrasFlags__Fv",
+        "zGameExtras_Load__FP7xSerial": "zGameExtras_Load__FP7xSerial",
+        "zGameExtras_MoDay__FPiPi": "zGameExtras_MoDay__FPiPi",
+        "zGameExtras_NewGameReset__Fv": "zGameExtras_NewGameReset__Fv",
+        "zGameExtras_Save__FP7xSerial": "zGameExtras_Save__FP7xSerial",
+        "zGameExtras_SceneExit__Fv": "zGameExtras_SceneExit__Fv",
+        "zGameExtras_SceneInit__Fv": "zGameExtras_SceneInit__Fv",
+        "zGameExtras_SceneReset__Fv": "zGameExtras_SceneReset__Fv",
+        "zGameExtras_SceneUpdate__Ff": "zGameExtras_SceneUpdate__Ff",
+        "zGame_HackGalleryInit__Fv": "zGame_HackGalleryInit__Fv",
+        "zGame_HackIsGallery__Fv": "zGame_HackIsGallery__Fv"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/x/xParEmitter.cpp",
+      "target_unit": "SB/Core/x/xParEmitter.cpp",
+      "object": "source/xParEmitter.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xParEmitterDestroy__Fv": "xParEmitterDestroy__Fv",
+        "xParEmitterEmitCustom__FP11xParEmitterfP25xParEmitterCustomSettings": "xParEmitterEmitCustom__FP11xParEmitterfP25xParEmitterCustomSettings",
+        "xParEmitterEmitSetTexIdxs__FP4xParPC7xParSys": "xParEmitterEmitSetTexIdxs__FP4xParPC7xParSys",
+        "xParEmitterEmit__FP11xParEmitterff": "xParEmitterEmit__FP11xParEmitterff",
+        "xParEmitterEventCB__FP5xBaseP5xBaseUiPCfP5xBase": "xParEmitterEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "xParEmitterInit__FP5xBaseP16xParEmitterAsset": "xParEmitterInit__FP5xBaseP16xParEmitterAsset",
+        "xParEmitterInit__FPvPv": "xParEmitterInit__FPvPv",
+        "xParEmitterSetup__FP11xParEmitter": "xParEmitterSetup__FP11xParEmitter",
+        "xParEmitterUpdate__FP5xBaseP6xScenef": "xParEmitterUpdate__FP5xBaseP6xScenef",
+        "xParInterpCompute__FiP10xParInterpfif": "xParInterpCompute__FiP10xParInterpfif",
+        "xParInterpConvertInterpMode__FP10xParInterp": "xParInterpConvertInterpMode__FP10xParInterp"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/x/xCM.cpp",
+      "target_unit": "SB/Core/x/xCM.cpp",
+      "object": "source/xCM.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xCMprep__FP12xCreditsData": "xCMprep__FP12xCreditsData",
+        "xCMrender__FfP12xCreditsData": "xCMrender__FfP12xCreditsData",
+        "xCMrender__Fv": "xCMrender__Fv",
+        "xCMstart__FP12xCreditsDatafP5xBase": "xCMstart__FP12xCreditsDatafP5xBase",
+        "xCMstop__Fv": "xCMstop__Fv",
+        "xCMupdate__Ff": "xCMupdate__Ff"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/x/xHud.cpp",
+      "target_unit": "SB/Core/x/xHud.cpp",
+      "object": "source/xHud.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "__ct__Q24xhud6widgetFRCQ24xhud5asset": "__ct__Q24xhud6widgetFRCQ24xhud5asset",
+        "accelerate_motive_update__4xhudFRQ24xhud6widgetRQ24xhud6motivef": "accelerate_motive_update__4xhudFRQ24xhud6widgetRQ24xhud6motivef",
+        "add_motive__Q24xhud6widgetFRCQ24xhud6motive": "add_motive__Q24xhud6widgetFRCQ24xhud6motive",
+        "cb_dispatch__Q24xhud6widgetFP5xBaseP5xBaseUiPCfP5xBase": "cb_dispatch__Q24xhud6widgetFP5xBaseP5xBaseUiPCfP5xBase",
+        "clear_motives__Q24xhud6widgetFPFRQ24xhud6widgetRQ24xhud6motivef_bPv": "clear_motives__Q24xhud6widgetFPFRQ24xhud6widgetRQ24xhud6motivef_bPv",
+        "delay_motive_update__4xhudFRQ24xhud6widgetRQ24xhud6motivef": "delay_motive_update__4xhudFRQ24xhud6widgetRQ24xhud6motivef",
+        "destroy__4xhudFv": "destroy__4xhudFv",
+        "destruct__Q24xhud6widgetFv": "destruct__Q24xhud6widgetFv",
+        "for_each<PFRQ24xhud6widget_v>__Q24xhud18@unnamed@xHud_cpp@FUcUiPFRQ24xhud6widget_v_v": "for_each<PFRQ24xhud6widget_v>__Q24xhud18@unnamed@xHud_cpp@FUcUiPFRQ24xhud6widget_v_v",
+        "for_each<Q34xhud18@unnamed@xHud_cpp@14functor_update>__Q24xhud18@unnamed@xHud_cpp@FUcUiQ34xhud18@unnamed@xHud_cpp@14functor_update_v": "for_each<Q34xhud18@unnamed@xHud_cpp@14functor_update>__Q24xhud18@unnamed@xHud_cpp@FUcUiQ34xhud18@unnamed@xHud_cpp@14functor_update_v",
+        "for_each<Q34xhud18@unnamed@xHud_cpp@15functor_disable>__Q24xhud18@unnamed@xHud_cpp@FUcUiQ34xhud18@unnamed@xHud_cpp@15functor_disable_v": "for_each<Q34xhud18@unnamed@xHud_cpp@15functor_disable>__Q24xhud18@unnamed@xHud_cpp@FUcUiQ34xhud18@unnamed@xHud_cpp@15functor_disable_v",
+        "fp_render__Q24xhud18@unnamed@xHud_cpp@FRQ24xhud6widget": "fp_render__Q24xhud18@unnamed@xHud_cpp@FRQ24xhud6widget",
+        "fp_setup__Q24xhud18@unnamed@xHud_cpp@FRQ24xhud6widget": "fp_setup__Q24xhud18@unnamed@xHud_cpp@FRQ24xhud6widget",
+        "hide__Q24xhud6widgetFv": "hide__Q24xhud6widgetFv",
+        "init__4xhudFv": "init__4xhudFv",
+        "init_base__Q24xhud6widgetFR5xBaseRC10xBaseAssetUi": "init_base__Q24xhud6widgetFR5xBaseRC10xBaseAssetUi",
+        "is__Q24xhud6widgetCFUi": "is__Q24xhud6widgetCFUi",
+        "linear_motive_update__4xhudFRQ24xhud6widgetRQ24xhud6motivef": "linear_motive_update__4xhudFRQ24xhud6widgetRQ24xhud6motivef",
+        "load_model__4xhudFUi": "load_model__4xhudFUi",
+        "presetup__Q24xhud6widgetFv": "presetup__Q24xhud6widgetFv",
+        "render__4xhudFv": "render__4xhudFv",
+        "render_model__4xhudFR14xModelInstanceRCQ24xhud14render_context": "render_model__4xhudFR14xModelInstanceRCQ24xhud14render_context",
+        "setup__4xhudFv": "setup__4xhudFv",
+        "shake_motive_update__4xhudFRQ24xhud6widgetRQ24xhud6motivef": "shake_motive_update__4xhudFRQ24xhud6widgetRQ24xhud6motivef",
+        "show__Q24xhud6widgetFv": "show__Q24xhud6widgetFv",
+        "type__Q24xhud6widgetCFv": "type__Q24xhud6widgetCFv",
+        "update__4xhudFf": "update__4xhudFf",
+        "updater__Q24xhud6widgetFf": "updater__Q24xhud6widgetFf"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zTextBox.cpp",
+      "target_unit": "SB/Game/zTextBox.cpp",
+      "object": "source/zTextBox.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "activate__8ztextboxFv": "activate__8ztextboxFv",
+        "add_text__8ztextboxFPCc": "add_text__8ztextboxFPCc",
+        "cb_dispatch__22@unnamed@zTextBox_cpp@FP5xBaseP5xBaseUiPCfP5xBase": "cb_dispatch__22@unnamed@zTextBox_cpp@FP5xBaseP5xBaseUiPCfP5xBase",
+        "clear_text__8ztextboxFv": "clear_text__8ztextboxFv",
+        "deactivate__8ztextboxFv": "deactivate__8ztextboxFv",
+        "get_text__8ztextboxCFPcUi": "get_text__8ztextboxCFPcUi",
+        "init__8ztextboxFv": "init__8ztextboxFv",
+        "init_textbox__22@unnamed@zTextBox_cpp@FR8ztextbox": "init_textbox__22@unnamed@zTextBox_cpp@FR8ztextbox",
+        "load__8ztextboxFR5xBaseR9xDynAssetUi": "load__8ztextboxFR5xBaseR9xDynAssetUi",
+        "load__8ztextboxFRCQ28ztextbox10asset_type": "load__8ztextboxFRCQ28ztextbox10asset_type",
+        "parse_tag_blahblah__22@unnamed@zTextBox_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "parse_tag_blahblah__22@unnamed@zTextBox_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "refresh__8ztextboxFv": "refresh__8ztextboxFv",
+        "render_all__8ztextboxFv": "render_all__8ztextboxFv",
+        "render_backdrop__8ztextboxFv": "render_backdrop__8ztextboxFv",
+        "render_bk_fill__22@unnamed@zTextBox_cpp@FRC8ztextbox": "render_bk_fill__22@unnamed@zTextBox_cpp@FRC8ztextbox",
+        "render_bk_tex_scale__22@unnamed@zTextBox_cpp@FRC8ztextbox": "render_bk_tex_scale__22@unnamed@zTextBox_cpp@FRC8ztextbox",
+        "render_bk_tex_wrap__22@unnamed@zTextBox_cpp@FRC8ztextbox": "render_bk_tex_wrap__22@unnamed@zTextBox_cpp@FRC8ztextbox",
+        "reset__8ztextboxFv": "reset__8ztextboxFv",
+        "set_text__8ztextboxFPCc": "set_text__8ztextboxFPCc",
+        "set_text__8ztextboxFUi": "set_text__8ztextboxFUi",
+        "update_all__8ztextboxFR6xScenef": "update_all__8ztextboxFR6xScenef"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zVar.cpp",
+      "target_unit": "SB/Game/zVar.cpp",
+      "object": "source/zVar.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "find_var__18@unnamed@zVar_cpp@FRC6substr": "find_var__18@unnamed@zVar_cpp@FRC6substr",
+        "parse_tag_var__18@unnamed@zVar_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag": "parse_tag_var__18@unnamed@zVar_cpp@FRQ28xtextbox3jotRC8xtextboxRC8xtextboxRCQ28xtextbox9split_tag",
+        "var_init__Fv": "var_init__Fv",
+        "var_text_ActivePad__18@unnamed@zVar_cpp@Fv": "var_text_ActivePad__18@unnamed@zVar_cpp@Fv",
+        "var_text_BadCardAvailable__18@unnamed@zVar_cpp@Fv": "var_text_BadCardAvailable__18@unnamed@zVar_cpp@Fv",
+        "var_text_BadCardNeeded__18@unnamed@zVar_cpp@Fv": "var_text_BadCardNeeded__18@unnamed@zVar_cpp@Fv",
+        "var_text_BadCard__18@unnamed@zVar_cpp@Fv": "var_text_BadCard__18@unnamed@zVar_cpp@Fv",
+        "var_text_CorruptFileName__18@unnamed@zVar_cpp@Fv": "var_text_CorruptFileName__18@unnamed@zVar_cpp@Fv",
+        "var_text_CurrentArea__18@unnamed@zVar_cpp@Fv": "var_text_CurrentArea__18@unnamed@zVar_cpp@Fv",
+        "var_text_CurrentDate__18@unnamed@zVar_cpp@Fv": "var_text_CurrentDate__18@unnamed@zVar_cpp@Fv",
+        "var_text_CurrentLevelCollectable__18@unnamed@zVar_cpp@Fv": "var_text_CurrentLevelCollectable__18@unnamed@zVar_cpp@Fv",
+        "var_text_CurrentLevelPatsSocks__18@unnamed@zVar_cpp@Fv": "var_text_CurrentLevelPatsSocks__18@unnamed@zVar_cpp@Fv",
+        "var_text_CurrentScene__18@unnamed@zVar_cpp@Fv": "var_text_CurrentScene__18@unnamed@zVar_cpp@Fv",
+        "var_text_CurrentTime__18@unnamed@zVar_cpp@Fv": "var_text_CurrentTime__18@unnamed@zVar_cpp@Fv",
+        "var_text_GameSlot0__18@unnamed@zVar_cpp@Fv": "var_text_GameSlot0__18@unnamed@zVar_cpp@Fv",
+        "var_text_GameSlot1__18@unnamed@zVar_cpp@Fv": "var_text_GameSlot1__18@unnamed@zVar_cpp@Fv",
+        "var_text_GameSlot2__18@unnamed@zVar_cpp@Fv": "var_text_GameSlot2__18@unnamed@zVar_cpp@Fv",
+        "var_text_GameSlot3__18@unnamed@zVar_cpp@Fv": "var_text_GameSlot3__18@unnamed@zVar_cpp@Fv",
+        "var_text_GameSlot4__18@unnamed@zVar_cpp@Fv": "var_text_GameSlot4__18@unnamed@zVar_cpp@Fv",
+        "var_text_GameSlot5__18@unnamed@zVar_cpp@Fv": "var_text_GameSlot5__18@unnamed@zVar_cpp@Fv",
+        "var_text_GameSlot6__18@unnamed@zVar_cpp@Fv": "var_text_GameSlot6__18@unnamed@zVar_cpp@Fv",
+        "var_text_GameSlot7__18@unnamed@zVar_cpp@Fv": "var_text_GameSlot7__18@unnamed@zVar_cpp@Fv",
+        "var_text_MCAccessType__18@unnamed@zVar_cpp@Fv": "var_text_MCAccessType__18@unnamed@zVar_cpp@Fv",
+        "var_text_MCAutoSaveCard__18@unnamed@zVar_cpp@Fv": "var_text_MCAutoSaveCard__18@unnamed@zVar_cpp@Fv",
+        "var_text_MCName__18@unnamed@zVar_cpp@Fv": "var_text_MCName__18@unnamed@zVar_cpp@Fv",
+        "var_text_MCPS2MaxSpace__18@unnamed@zVar_cpp@Fv": "var_text_MCPS2MaxSpace__18@unnamed@zVar_cpp@Fv",
+        "var_text_MCPS2MinSpace__18@unnamed@zVar_cpp@Fv": "var_text_MCPS2MinSpace__18@unnamed@zVar_cpp@Fv",
+        "var_text_MCSelectedCard__18@unnamed@zVar_cpp@Fv": "var_text_MCSelectedCard__18@unnamed@zVar_cpp@Fv",
+        "var_text_MCSelectedGame__18@unnamed@zVar_cpp@Fv": "var_text_MCSelectedGame__18@unnamed@zVar_cpp@Fv",
+        "var_text_PlayerHeShe__18@unnamed@zVar_cpp@Fv": "var_text_PlayerHeShe__18@unnamed@zVar_cpp@Fv",
+        "var_text_PlayerName__18@unnamed@zVar_cpp@Fv": "var_text_PlayerName__18@unnamed@zVar_cpp@Fv",
+        "var_text_PlayerPosition__18@unnamed@zVar_cpp@Fv": "var_text_PlayerPosition__18@unnamed@zVar_cpp@Fv",
+        "var_text_SelectedArea__18@unnamed@zVar_cpp@Fv": "var_text_SelectedArea__18@unnamed@zVar_cpp@Fv",
+        "var_text_ShinyCountText__18@unnamed@zVar_cpp@Fv": "var_text_ShinyCountText__18@unnamed@zVar_cpp@Fv",
+        "var_text_ShinyCount__18@unnamed@zVar_cpp@Fv": "var_text_ShinyCount__18@unnamed@zVar_cpp@Fv",
+        "var_text_SoundFXVolume__18@unnamed@zVar_cpp@Fv": "var_text_SoundFXVolume__18@unnamed@zVar_cpp@Fv",
+        "var_text_SoundMusicVolume__18@unnamed@zVar_cpp@Fv": "var_text_SoundMusicVolume__18@unnamed@zVar_cpp@Fv",
+        "var_text_SpaceAvailableString__18@unnamed@zVar_cpp@Fv": "var_text_SpaceAvailableString__18@unnamed@zVar_cpp@Fv",
+        "var_text_SpaceAvailable__18@unnamed@zVar_cpp@Fv": "var_text_SpaceAvailable__18@unnamed@zVar_cpp@Fv",
+        "var_text_SpaceNeeded__18@unnamed@zVar_cpp@Fv": "var_text_SpaceNeeded__18@unnamed@zVar_cpp@Fv",
+        "var_text_TotalPatsSocks__18@unnamed@zVar_cpp@Fv": "var_text_TotalPatsSocks__18@unnamed@zVar_cpp@Fv",
+        "zVarEntryCB_CounterValue__FPv": "zVarEntryCB_CounterValue__FPv",
+        "zVarEntryCB_CurrentLevelPSocks__FPv": "zVarEntryCB_CurrentLevelPSocks__FPv",
+        "zVarEntryCB_CurrentLevelPickup__FPv": "zVarEntryCB_CurrentLevelPickup__FPv",
+        "zVarEntryCB_CurrentRoom__FPv": "zVarEntryCB_CurrentRoom__FPv",
+        "zVarEntryCB_CurrentSceneLetter__FPv": "zVarEntryCB_CurrentSceneLetter__FPv",
+        "zVarEntryCB_Date__FPv": "zVarEntryCB_Date__FPv",
+        "zVarEntryCB_Hour__FPv": "zVarEntryCB_Hour__FPv",
+        "zVarEntryCB_IsEnabled__FPv": "zVarEntryCB_IsEnabled__FPv",
+        "zVarEntryCB_IsVisible__FPv": "zVarEntryCB_IsVisible__FPv",
+        "zVarEntryCB_MCAvailable__FPv": "zVarEntryCB_MCAvailable__FPv",
+        "zVarEntryCB_Minute__FPv": "zVarEntryCB_Minute__FPv",
+        "zVarEntryCB_Shinies__FPv": "zVarEntryCB_Shinies__FPv",
+        "zVarEntryCB_SndFXVol__FPv": "zVarEntryCB_SndFXVol__FPv",
+        "zVarEntryCB_SndMode__FPv": "zVarEntryCB_SndMode__FPv",
+        "zVarEntryCB_SndMusicVol__FPv": "zVarEntryCB_SndMusicVol__FPv",
+        "zVarEntryCB_Spatulas__FPv": "zVarEntryCB_Spatulas__FPv",
+        "zVarEntryCB_TotalPSocks__FPv": "zVarEntryCB_TotalPSocks__FPv",
+        "zVarEntryCB_VibrationOn__FPv": "zVarEntryCB_VibrationOn__FPv",
+        "zVarGameSlotInfo__18@unnamed@zVar_cpp@FiPcUi": "zVarGameSlotInfo__18@unnamed@zVar_cpp@FiPcUi",
+        "zVarInit__FP9zVarEntry": "zVarInit__FP9zVarEntry",
+        "zVarNewGame__Fv": "zVarNewGame__Fv"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zAssetTypes.cpp",
+      "target_unit": "SB/Game/zAssetTypes.cpp",
+      "object": "source/zAssetTypes.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "ATBL_Read__FPvUiPvUiPUi": "ATBL_Read__FPvUiPvUiPUi",
+        "Anim_Unload__FPvUi": "Anim_Unload__FPvUi",
+        "BSP_Read__FPvUiPvUiPUi": "BSP_Read__FPvUiPvUiPUi",
+        "BSP_Unload__FPvUi": "BSP_Unload__FPvUi",
+        "Curve_Read__FPvUiPvUiPUi": "Curve_Read__FPvUiPvUiPUi",
+        "FindAssetCB__FUiPc": "FindAssetCB__FUiPc",
+        "FootstepHackSceneEnter__Fv": "FootstepHackSceneEnter__Fv",
+        "JSP_Read__FPvUiPvUiPUi": "JSP_Read__FPvUiPvUiPUi",
+        "JSP_Unload__FPvUi": "JSP_Unload__FPvUi",
+        "LightKit_Unload__FPvUi": "LightKit_Unload__FPvUi",
+        "Model_Read__FPvUiPvUiPUi": "Model_Read__FPvUiPvUiPUi",
+        "Model_Unload__FPvUi": "Model_Unload__FPvUi",
+        "MovePoint_Unload__FPvUi": "MovePoint_Unload__FPvUi",
+        "RWTX_Read__FPvUiPvUiPUi": "RWTX_Read__FPvUiPvUiPUi",
+        "TexCB__FP9RwTexturePv": "TexCB__FP9RwTexturePv",
+        "TextureRW3_Unload__FPvUi": "TextureRW3_Unload__FPvUi",
+        "dummyEffectCB__FUiP17xAnimActiveEffectP11xAnimSinglePv": "dummyEffectCB__FUiP17xAnimActiveEffectP11xAnimSinglePv",
+        "jsp_shadow_hack_atomic_cb__FP8RpAtomicPv": "jsp_shadow_hack_atomic_cb__FP8RpAtomicPv",
+        "soundEffectCB__FUiP17xAnimActiveEffectP11xAnimSinglePv": "soundEffectCB__FUiP17xAnimActiveEffectP11xAnimSinglePv",
+        "zAssetShutdown__Fv": "zAssetShutdown__Fv",
+        "zAssetStartup__Fv": "zAssetStartup__Fv"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zMusic.cpp",
+      "target_unit": "SB/Game/zMusic.cpp",
+      "object": "source/zMusic.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "getCurrLevelMusicEnum__Fv": "getCurrLevelMusicEnum__Fv",
+        "zMusicDo__Fi": "zMusicDo__Fi",
+        "zMusicInit__Fv": "zMusicInit__Fv",
+        "zMusicKill__Fv": "zMusicKill__Fv",
+        "zMusicNotifyEvent__FPCfP5xBase": "zMusicNotifyEvent__FPCfP5xBase",
+        "zMusicNotify__Fi": "zMusicNotify__Fi",
+        "zMusicPause__Fv": "zMusicPause__Fv",
+        "zMusicRefreshVolume__Fv": "zMusicRefreshVolume__Fv",
+        "zMusicReset__Fv": "zMusicReset__Fv",
+        "zMusicSetVolume__Fff": "zMusicSetVolume__Fff",
+        "zMusicUnpause__Fi": "zMusicUnpause__Fi",
+        "zMusicUpdate__Ff": "zMusicUpdate__Ff"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zUIFont.cpp",
+      "target_unit": "SB/Game/zUIFont.cpp",
+      "object": "source/zUIFont.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zUIFontEventCB__FP5xBaseP5xBaseUiPCfP5xBase": "zUIFontEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "zUIFontInit__Fv": "zUIFontInit__Fv",
+        "zUIFont_Init__FP7zUIFontP9xEntAsset": "zUIFont_Init__FP7zUIFontP9xEntAsset",
+        "zUIFont_Init__FPvPv": "zUIFont_Init__FPvPv",
+        "zUIFont_Load__FP7zUIFontP7xSerial": "zUIFont_Load__FP7zUIFontP7xSerial",
+        "zUIFont_PreUpdate__FP7zUIFontP6xScenef": "zUIFont_PreUpdate__FP7zUIFontP6xScenef",
+        "zUIFont_Render__FP4xEnt": "zUIFont_Render__FP4xEnt",
+        "zUIFont_Save__FP7zUIFontP7xSerial": "zUIFont_Save__FP7zUIFontP7xSerial",
+        "zUIFont_Update__FP7zUIFontP6xScenef": "zUIFont_Update__FP7zUIFontP6xScenef"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zGrid.cpp",
+      "target_unit": "SB/Game/zGrid.cpp",
+      "object": "source/zGrid.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "hack_flag_shadows__FP6zScene": "hack_flag_shadows__FP6zScene",
+        "zGridExit__FP6zScene": "zGridExit__FP6zScene",
+        "zGridInit__FP6zScene": "zGridInit__FP6zScene",
+        "zGridReset__FP6zScene": "zGridReset__FP6zScene",
+        "zGridUpdateEnt__FP4xEnt": "zGridUpdateEnt__FP4xEnt"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zMenu.cpp",
+      "target_unit": "SB/Game/zMenu.cpp",
+      "object": "source/zMenu.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zMenuCardCheckStartup__FPiPiPi": "zMenuCardCheckStartup__FPiPiPi",
+        "zMenuExit__Fv": "zMenuExit__Fv",
+        "zMenuGetBadCard__Fv": "zMenuGetBadCard__Fv",
+        "zMenuInit__FUi": "zMenuInit__FUi",
+        "zMenuIsFirstBoot__Fv": "zMenuIsFirstBoot__Fv",
+        "zMenuLoop__Fv": "zMenuLoop__Fv",
+        "zMenuRunning__Fv": "zMenuRunning__Fv",
+        "zMenuSetup__Fv": "zMenuSetup__Fv",
+        "zMenuUpdateMode__Fv": "zMenuUpdateMode__Fv"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zNPCMgr.cpp",
+      "target_unit": "SB/Game/zNPCMgr.cpp",
+      "object": "source/zNPCMgr.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "CreateNPC__7zNPCMgrFP9xEntAsset": "CreateNPC__7zNPCMgrFP9xEntAsset",
+        "NPCTypeForModel__7zNPCMgrFUiUi": "NPCTypeForModel__7zNPCMgrFUiUi",
+        "SceneFinish__7zNPCMgrFv": "SceneFinish__7zNPCMgrFv",
+        "ScenePostParticleRender__7zNPCMgrFv": "ScenePostParticleRender__7zNPCMgrFv",
+        "ScenePostRender__7zNPCMgrFv": "ScenePostRender__7zNPCMgrFv",
+        "Shutdown__7zNPCMgrFv": "Shutdown__7zNPCMgrFv",
+        "zNPCMgrSelf__Fv": "zNPCMgrSelf__Fv",
+        "zNPCMgr_GetNPCList__Fv": "zNPCMgr_GetNPCList__Fv",
+        "zNPCMgr_OrdComp_npcid__FPvPv": "zNPCMgr_OrdComp_npcid__FPvPv",
+        "zNPCMgr_OrdTest_npcid__FPCvPv": "zNPCMgr_OrdTest_npcid__FPCvPv",
+        "zNPCMgr_Shutdown__Fv": "zNPCMgr_Shutdown__Fv",
+        "zNPCMgr_Startup__Fv": "zNPCMgr_Startup__Fv",
+        "zNPCMgr_createNPCInst__FiP9xEntAsset": "zNPCMgr_createNPCInst__FiP9xEntAsset",
+        "zNPCMgr_sceneFinish__Fv": "zNPCMgr_sceneFinish__Fv",
+        "zNPCMgr_scenePostInit__Fv": "zNPCMgr_scenePostInit__Fv",
+        "zNPCMgr_scenePostParticleRender__Fv": "zNPCMgr_scenePostParticleRender__Fv",
+        "zNPCMgr_scenePostRender__Fv": "zNPCMgr_scenePostRender__Fv",
+        "zNPCMgr_scenePostSetup__Fv": "zNPCMgr_scenePostSetup__Fv",
+        "zNPCMgr_scenePrepare__Fi": "zNPCMgr_scenePrepare__Fi",
+        "zNPCMgr_sceneReset__Fv": "zNPCMgr_sceneReset__Fv",
+        "zNPCMgr_sceneTimestep__FP6xScenef": "zNPCMgr_sceneTimestep__FP6xScenef"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zHud.cpp",
+      "target_unit": "SB/Game/zHud.cpp",
+      "object": "source/zHud.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "destroy__4zhudFv": "destroy__4zhudFv",
+        "hide__4zhudFv": "hide__4zhudFv",
+        "hide_widget__Q24zhud18@unnamed@zHud_cpp@FRQ24xhud6widgetRQ24xhud6motive": "hide_widget__Q24zhud18@unnamed@zHud_cpp@FRQ24xhud6widgetRQ24xhud6motive",
+        "init__4zhudFv": "init__4zhudFv",
+        "render__4zhudFv": "render__4zhudFv",
+        "setup__4zhudFv": "setup__4zhudFv",
+        "show__4zhudFv": "show__4zhudFv",
+        "update__4zhudFf": "update__4zhudFf"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zLOD.cpp",
+      "target_unit": "SB/Game/zLOD.cpp",
+      "object": "source/zLOD.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "AddToLODList__FP14xModelInstance": "AddToLODList__FP14xModelInstance",
+        "AddToLODList__FP4xEntP6xScenePv": "AddToLODList__FP4xEntP6xScenePv",
+        "zLOD_Get__FP4xEnt": "zLOD_Get__FP4xEnt",
+        "zLOD_Setup__Fv": "zLOD_Setup__Fv",
+        "zLOD_Update__FUi": "zLOD_Update__FUi",
+        "zLOD_UseCustomTable__FP4xEntP9zLODTable": "zLOD_UseCustomTable__FP4xEntP9zLODTable"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/x/xMemMgr.cpp",
+      "target_unit": "SB/Core/x/xMemMgr.cpp",
+      "object": "source/xMemMgr.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xMemAlloc__FUiUii": "xMemAlloc__FUiUii",
+        "xMemDebug_SoakLog__FPCc": "xMemDebug_SoakLog__FPCc",
+        "xMemExit__Fv": "xMemExit__Fv",
+        "xMemGetBase__Fv": "xMemGetBase__Fv",
+        "xMemGetBlockInfo__FP12xMemHeap_tagUiiP15xMemBlkInfo_tag": "xMemGetBlockInfo__FP12xMemHeap_tagUiiP15xMemBlkInfo_tag",
+        "xMemGrowAlloc__FUiUi": "xMemGrowAlloc__FUiUi",
+        "xMemInitHeap__FP12xMemHeap_tagUiUiUi": "xMemInitHeap__FP12xMemHeap_tagUiUiUi",
+        "xMemInit__Fv": "xMemInit__Fv",
+        "xMemPoolAddElements__FP8xMemPoolPvUi": "xMemPoolAddElements__FP8xMemPoolPvUi",
+        "xMemPoolAlloc__FP8xMemPool": "xMemPoolAlloc__FP8xMemPool",
+        "xMemPoolFree__FP8xMemPoolPv": "xMemPoolFree__FP8xMemPoolPv",
+        "xMemPoolSetup__FP8xMemPoolPvUiUiPFP8xMemPoolPv_vUiUiUi": "xMemPoolSetup__FP8xMemPoolPvUiUiPFP8xMemPoolPv_vUiUiUi",
+        "xMemPopBase__Fi": "xMemPopBase__Fi",
+        "xMemPopTemp__FPv": "xMemPopTemp__FPv",
+        "xMemPushBase__Fv": "xMemPushBase__Fv",
+        "xMemPushTemp__FUi": "xMemPushTemp__FUi",
+        "xMemRegisterBaseNotifyFunc__FPFv_v": "xMemRegisterBaseNotifyFunc__FPFv_v"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zLight.cpp",
+      "target_unit": "SB/Game/zLight.cpp",
+      "object": "source/zLight.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zLightAddLocalEnv__Fv": "zLightAddLocalEnv__Fv",
+        "zLightAddLocal__FP4xEnt": "zLightAddLocal__FP4xEnt",
+        "zLightDestroyAll__Fv": "zLightDestroyAll__Fv",
+        "zLightEventCB__FP5xBaseP5xBaseUiPCfP5xBase": "zLightEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "zLightInit__FP5xBaseP11zLightAsset": "zLightInit__FP5xBaseP11zLightAsset",
+        "zLightInit__FPvPv": "zLightInit__FPvPv",
+        "zLightLoad__FP7_zLightP7xSerial": "zLightLoad__FP7_zLightP7xSerial",
+        "zLightOn__FP7_zLighti": "zLightOn__FP7_zLighti",
+        "zLightRemoveLocalEnv__Fv": "zLightRemoveLocalEnv__Fv",
+        "zLightResetAll__FP4xEnv": "zLightResetAll__FP4xEnv",
+        "zLightResolveLinks__Fv": "zLightResolveLinks__Fv",
+        "zLightSave__FP7_zLightP7xSerial": "zLightSave__FP7_zLightP7xSerial",
+        "zLightSetVolume__FP7zVolume": "zLightSetVolume__FP7zVolume",
+        "zLightUpdate__FP5xBaseP6xScenef": "zLightUpdate__FP5xBaseP6xScenef"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zNPCGoalDuplotron.cpp",
+      "target_unit": "SB/Game/zNPCGoalDuplotron.cpp",
+      "object": "source/zNPCGoalDuplotron.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "Enter__17zNPCGoalDuploLiveFfPv": "Enter__17zNPCGoalDuploLiveFfPv",
+        "GOALCreate_Duplotron__FiP10RyzMemGrowPv": "GOALCreate_Duplotron__FiP10RyzMemGrowPv",
+        "NPCMessage__17zNPCGoalDuploLiveFP6NPCMsg": "NPCMessage__17zNPCGoalDuploLiveFP6NPCMsg",
+        "Process__17zNPCGoalDuploLiveFP11en_trantypefPvP6xScene": "Process__17zNPCGoalDuploLiveFP11en_trantypefPvP6xScene",
+        "SDS_Countdown__17zNPCGoalDuploLiveFf": "SDS_Countdown__17zNPCGoalDuploLiveFf",
+        "SDS_StartExplode__17zNPCGoalDuploLiveFv": "SDS_StartExplode__17zNPCGoalDuploLiveFv"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zLightEffect.cpp",
+      "target_unit": "SB/Game/zLightEffect.cpp",
+      "object": "source/zLightEffect.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "EffectFlicker__FP7_zLightfff": "EffectFlicker__FP7_zLightfff",
+        "zLightEffectCauldron__FP7_zLightf": "zLightEffectCauldron__FP7_zLightf",
+        "zLightEffectDimFast__FP7_zLightf": "zLightEffectDimFast__FP7_zLightf",
+        "zLightEffectDimSlow__FP7_zLightf": "zLightEffectDimSlow__FP7_zLightf",
+        "zLightEffectDim__FP7_zLightf": "zLightEffectDim__FP7_zLightf",
+        "zLightEffectFlickerErratic__FP7_zLightf": "zLightEffectFlickerErratic__FP7_zLightf",
+        "zLightEffectFlickerSlow__FP7_zLightf": "zLightEffectFlickerSlow__FP7_zLightf",
+        "zLightEffectFlicker__FP7_zLightf": "zLightEffectFlicker__FP7_zLightf",
+        "zLightEffectHalfDimFast__FP7_zLightf": "zLightEffectHalfDimFast__FP7_zLightf",
+        "zLightEffectHalfDimSlow__FP7_zLightf": "zLightEffectHalfDimSlow__FP7_zLightf",
+        "zLightEffectHalfDim__FP7_zLightf": "zLightEffectHalfDim__FP7_zLightf",
+        "zLightEffectInitCauldron__FP7_zLight": "zLightEffectInitCauldron__FP7_zLight",
+        "zLightEffectInitDim__FP7_zLight": "zLightEffectInitDim__FP7_zLight",
+        "zLightEffectInitFlicker__FP7_zLight": "zLightEffectInitFlicker__FP7_zLight",
+        "zLightEffectInitHalfDim__FP7_zLight": "zLightEffectInitHalfDim__FP7_zLight",
+        "zLightEffectInitRandomCol__FP7_zLight": "zLightEffectInitRandomCol__FP7_zLight",
+        "zLightEffectInitStrobe__FP7_zLight": "zLightEffectInitStrobe__FP7_zLight",
+        "zLightEffectRandomColFast__FP7_zLightf": "zLightEffectRandomColFast__FP7_zLightf",
+        "zLightEffectRandomColSlow__FP7_zLightf": "zLightEffectRandomColSlow__FP7_zLightf",
+        "zLightEffectRandomCol__FP7_zLightf": "zLightEffectRandomCol__FP7_zLightf",
+        "zLightEffectStrobeFast__FP7_zLightf": "zLightEffectStrobeFast__FP7_zLightf",
+        "zLightEffectStrobeSlow__FP7_zLightf": "zLightEffectStrobeSlow__FP7_zLightf",
+        "zLightEffectStrobe__FP7_zLightf": "zLightEffectStrobe__FP7_zLightf"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/x/xHudFontMeter.cpp",
+      "target_unit": "SB/Core/x/xHudFontMeter.cpp",
+      "object": "source/xHudFontMeter.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "destroy__Q24xhud17font_meter_widgetFv": "destroy__Q24xhud17font_meter_widgetFv",
+        "is__Q24xhud17font_meter_widgetCFUi": "is__Q24xhud17font_meter_widgetCFUi",
+        "load__Q24xhud17font_meter_widgetFR5xBaseR9xDynAssetUi": "load__Q24xhud17font_meter_widgetFR5xBaseR9xDynAssetUi",
+        "render__Q24xhud17font_meter_widgetFv": "render__Q24xhud17font_meter_widgetFv",
+        "type__Q24xhud17font_meter_widgetCFv": "type__Q24xhud17font_meter_widgetCFv",
+        "update__Q24xhud17font_meter_widgetFf": "update__Q24xhud17font_meter_widgetFf"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zNPCSndTable.cpp",
+      "target_unit": "SB/Game/zNPCSndTable.cpp",
+      "object": "source/zNPCSndTable.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "NPCS_Shutdown__Fv": "NPCS_Shutdown__Fv",
+        "NPCS_SndFindProps__F12en_NPC_SOUND": "NPCS_SndFindProps__F12en_NPC_SOUND",
+        "NPCS_SndOkToPlay__F12en_NPC_SOUND": "NPCS_SndOkToPlay__F12en_NPC_SOUND",
+        "NPCS_SndPickSimilar__F12en_NPC_SOUNDP10NPCSndTraxP10NPCSndTrax": "NPCS_SndPickSimilar__F12en_NPC_SOUNDP10NPCSndTraxP10NPCSndTrax",
+        "NPCS_SndTablePrepare__FP10NPCSndTrax": "NPCS_SndTablePrepare__FP10NPCSndTrax",
+        "NPCS_SndTimersReset__Fv": "NPCS_SndTimersReset__Fv",
+        "NPCS_SndTimersUpdate__Ff": "NPCS_SndTimersUpdate__Ff",
+        "NPCS_SndTypeFromHash__FUiP10NPCSndTraxP10NPCSndTrax": "NPCS_SndTypeFromHash__FUiP10NPCSndTraxP10NPCSndTrax",
+        "NPCS_SndTypePlayed__F12en_NPC_SOUNDf": "NPCS_SndTypePlayed__F12en_NPC_SOUNDf",
+        "NPCS_Startup__Fv": "NPCS_Startup__Fv"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zPendulum.cpp",
+      "target_unit": "SB/Game/zPendulum.cpp",
+      "object": "source/zPendulum.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zPendulumEventCB__FP5xBaseP5xBaseUiPCfP5xBase": "zPendulumEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "zPendulumTranslate__FP4xEntP5xVec3P7xMat4x3": "zPendulumTranslate__FP4xEntP5xVec3P7xMat4x3",
+        "zPendulum_Init__FP10_zPendulumP9xEntAsset": "zPendulum_Init__FP10_zPendulumP9xEntAsset",
+        "zPendulum_Init__FPvPv": "zPendulum_Init__FPvPv",
+        "zPendulum_Load__FP10_zPendulumP7xSerial": "zPendulum_Load__FP10_zPendulumP7xSerial",
+        "zPendulum_Move__FP10_zPendulumP6xScenefP9xEntFrame": "zPendulum_Move__FP10_zPendulumP6xScenefP9xEntFrame",
+        "zPendulum_Reset__FP10_zPendulumP6xScene": "zPendulum_Reset__FP10_zPendulumP6xScene",
+        "zPendulum_Save__FP10_zPendulumP7xSerial": "zPendulum_Save__FP10_zPendulumP7xSerial",
+        "zPendulum_Setup__FP10_zPendulumP6xScene": "zPendulum_Setup__FP10_zPendulumP6xScene",
+        "zPendulum_Update__FP10_zPendulumP6xScenef": "zPendulum_Update__FP10_zPendulumP6xScenef"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zBusStop.cpp",
+      "target_unit": "SB/Game/zBusStop.cpp",
+      "object": "source/zBusStop.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zBusStopEventCB__FP5xBaseP5xBaseUiPCfP5xBase": "zBusStopEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "zBusStop_Init__FP8zBusStopP13busstop_asset": "zBusStop_Init__FP8zBusStopP13busstop_asset",
+        "zBusStop_Init__FR5xBaseR9xDynAssetUi": "zBusStop_Init__FR5xBaseR9xDynAssetUi",
+        "zBusStop_Setup__FP8zBusStop": "zBusStop_Setup__FP8zBusStop",
+        "zBusStop_Update__FP5xBaseP6xScenef": "zBusStop_Update__FP5xBaseP6xScenef"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zRumble.cpp",
+      "target_unit": "SB/Game/zRumble.cpp",
+      "object": "source/zRumble.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zPadAddRumble__F14_tagRumbleTypefiUi": "zPadAddRumble__F14_tagRumbleTypefiUi",
+        "zRumbleStartDistance__Fiff14_tagRumbleTypef": "zRumbleStartDistance__Fiff14_tagRumbleTypef",
+        "zRumbleStart__F16_tagSDRumbleType": "zRumbleStart__F16_tagSDRumbleType",
+        "zRumbleStart__F16_tagSDRumbleTypeP4xEnt": "zRumbleStart__F16_tagSDRumbleTypeP4xEnt",
+        "zRumbleStart__Fi16_tagSDRumbleType": "zRumbleStart__Fi16_tagSDRumbleType",
+        "zRumbleStart__Fi16_tagSDRumbleTypeP4xEnt": "zRumbleStart__Fi16_tagSDRumbleTypeP4xEnt"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zAnimList.cpp",
+      "target_unit": "SB/Game/zAnimList.cpp",
+      "object": "source/zAnimList.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "AlwaysConditional__FP15xAnimTransitionP11xAnimSinglePv": "AlwaysConditional__FP15xAnimTransitionP11xAnimSinglePv",
+        "zAnimListExit__Fv": "zAnimListExit__Fv",
+        "zAnimListGetNumUsed__FUi": "zAnimListGetNumUsed__FUi",
+        "zAnimListGetTable__FUi": "zAnimListGetTable__FUi",
+        "zAnimListInit__Fv": "zAnimListInit__Fv"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zRenderState.cpp",
+      "target_unit": "SB/Game/zRenderState.cpp",
+      "object": "source/zRenderState.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zRenderStateCurrent__Fv": "zRenderStateCurrent__Fv",
+        "zRenderStateInit__Fv": "zRenderStateInit__Fv",
+        "zRenderState__F14_SDRenderState": "zRenderState__F14_SDRenderState"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zNPCTypeBoss.cpp",
+      "target_unit": "SB/Game/zNPCTypeBoss.cpp",
+      "object": "source/zNPCTypeBoss.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "Setup__8zNPCBossFv": "Setup__8zNPCBossFv",
+        "ZNPC_AnimTable_BossSBobbyArm__Fv": "ZNPC_AnimTable_BossSBobbyArm__Fv",
+        "ZNPC_Boss_Shutdown__Fv": "ZNPC_Boss_Shutdown__Fv",
+        "ZNPC_Boss_Startup__Fv": "ZNPC_Boss_Startup__Fv",
+        "ZNPC_Create_Boss__FiP10RyzMemGrowPv": "ZNPC_Create_Boss__FiP10RyzMemGrowPv",
+        "ZNPC_Destroy_Boss__FP12xFactoryInst": "ZNPC_Destroy_Boss__FP12xFactoryInst",
+        "zNPCBoss_SceneFinish__Fv": "zNPCBoss_SceneFinish__Fv",
+        "zNPCBoss_ScenePrepare__Fv": "zNPCBoss_ScenePrepare__Fv"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zEnv.cpp",
+      "target_unit": "SB/Game/zEnv.cpp",
+      "object": "source/zEnv.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zEnvEventCB__FP5xBaseP5xBaseUiPCfP5xBase": "zEnvEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "zEnvInit__FP5_zEnvP9xEnvAsset": "zEnvInit__FP5_zEnvP9xEnvAsset",
+        "zEnvInit__FPvPv": "zEnvInit__FPvPv",
+        "zEnvLoad__FP5_zEnvP7xSerial": "zEnvLoad__FP5_zEnvP7xSerial",
+        "zEnvRender__FP4xEnv": "zEnvRender__FP4xEnv",
+        "zEnvSave__FP5_zEnvP7xSerial": "zEnvSave__FP5_zEnvP7xSerial",
+        "zEnvSetup__FP5_zEnv": "zEnvSetup__FP5_zEnv",
+        "zEnvStartingCamera__FP5_zEnv": "zEnvStartingCamera__FP5_zEnv"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/x/xHudModel.cpp",
+      "target_unit": "SB/Core/x/xHudModel.cpp",
+      "object": "source/xHudModel.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "XHUD_AnimTable_Idle__Fv": "XHUD_AnimTable_Idle__Fv",
+        "destroy__Q24xhud12model_widgetFv": "destroy__Q24xhud12model_widgetFv",
+        "is__Q24xhud12model_widgetCFUi": "is__Q24xhud12model_widgetCFUi",
+        "load__Q24xhud12model_widgetFR5xBaseR9xDynAssetUi": "load__Q24xhud12model_widgetFR5xBaseR9xDynAssetUi",
+        "render__Q24xhud12model_widgetFv": "render__Q24xhud12model_widgetFv",
+        "type__Q24xhud12model_widgetCFv": "type__Q24xhud12model_widgetCFv",
+        "update__Q24xhud12model_widgetFf": "update__Q24xhud12model_widgetFf"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zMovePoint.cpp",
+      "target_unit": "SB/Game/zMovePoint.cpp",
+      "object": "source/zMovePoint.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zMovePointEventCB__FP5xBaseP5xBaseUiPCfP5xBase": "zMovePointEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "zMovePointGetDelay__FPC10zMovePoint": "zMovePointGetDelay__FPC10zMovePoint",
+        "zMovePointGetNext__FPC10zMovePointPC10zMovePointPP10zMovePointP5xVec3": "zMovePointGetNext__FPC10zMovePointPC10zMovePointPP10zMovePointP5xVec3",
+        "zMovePointGetPos__FPC10zMovePoint": "zMovePointGetPos__FPC10zMovePoint",
+        "zMovePointInit__FP10zMovePointP15xMovePointAsset": "zMovePointInit__FP10zMovePointP15xMovePointAsset",
+        "zMovePointLoad__FP10zMovePointP7xSerial": "zMovePointLoad__FP10zMovePointP7xSerial",
+        "zMovePointSave__FP10zMovePointP7xSerial": "zMovePointSave__FP10zMovePointP7xSerial",
+        "zMovePointSetup__FP10zMovePointP6zScene": "zMovePointSetup__FP10zMovePointP6zScene",
+        "zMovePoint_From_xAssetID__FUi": "zMovePoint_From_xAssetID__FUi",
+        "zMovePoint_GetInst__Fi": "zMovePoint_GetInst__Fi",
+        "zMovePoint_GetMemPool__Fi": "zMovePoint_GetMemPool__Fi"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zCameraFly.cpp",
+      "target_unit": "SB/Game/zCameraFly.cpp",
+      "object": "source/zCameraFly.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zCameraFlyEventCB__FP5xBaseP5xBaseUiPCfP5xBase": "zCameraFlyEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "zCameraFlyProcessStopEvent__Fv": "zCameraFlyProcessStopEvent__Fv",
+        "zCameraFly_Init__FR5xBaseR9xDynAssetUi": "zCameraFly_Init__FR5xBaseR9xDynAssetUi",
+        "zCameraFly_Load__FP10zCameraFlyP7xSerial": "zCameraFly_Load__FP10zCameraFlyP7xSerial",
+        "zCameraFly_Save__FP10zCameraFlyP7xSerial": "zCameraFly_Save__FP10zCameraFlyP7xSerial",
+        "zCameraFly_Setup__FP10zCameraFly": "zCameraFly_Setup__FP10zCameraFly",
+        "zCameraFly_Update__FP5xBaseP6xScenef": "zCameraFly_Update__FP5xBaseP6xScenef"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zNPCTypes.cpp",
+      "target_unit": "SB/Game/zNPCTypes.cpp",
+      "object": "source/zNPCTypes.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zNPCTypes_RegisterTypes__FP8xFactory": "zNPCTypes_RegisterTypes__FP8xFactory",
+        "zNPCTypes_ShutdownTypes__Fv": "zNPCTypes_ShutdownTypes__Fv",
+        "zNPCTypes_StartupTypes__Fv": "zNPCTypes_StartupTypes__Fv"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zParEmitter.cpp",
+      "target_unit": "SB/Game/zParEmitter.cpp",
+      "object": "source/zParEmitter.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zParEmitterFind__FPCc": "zParEmitterFind__FPCc",
+        "zParEmitterFind__FUi": "zParEmitterFind__FUi"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zFeet.cpp",
+      "target_unit": "SB/Game/zFeet.cpp",
+      "object": "source/zFeet.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zFeetGetIDs__Fv": "zFeetGetIDs__Fv"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zNPCGoals.cpp",
+      "target_unit": "SB/Game/zNPCGoals.cpp",
+      "object": "source/zNPCGoals.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zNPCGoals_RegisterTypes__FP8xFactory": "zNPCGoals_RegisterTypes__FP8xFactory"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Game/zScene.cpp",
+      "target_unit": "SB/Game/zScene.cpp",
+      "object": "source/zScene.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zSceneSpawnRandomBubbles__Fv": "zSceneSpawnRandomBubbles__Fv",
+        "zScene_ScreenAdjustMode__Fv": "zScene_ScreenAdjustMode__Fv",
+        "zSceneSetOldScreenAdj__Fv": "zSceneSetOldScreenAdj__Fv",
+        "zSceneEnableScreenAdj__FUi": "zSceneEnableScreenAdj__FUi",
+        "zSceneEnableVisited__FP6zScene": "zSceneEnableVisited__FP6zScene",
+        "zSceneCardCheckStartup_set__Fiii": "zSceneCardCheckStartup_set__Fiii",
+        "zScene_UpdateFlyToInterface__Ff": "zScene_UpdateFlyToInterface__Ff",
+        "zSceneCalcProgress__Fv": "zSceneCalcProgress__Fv",
+        "zSceneGetAreaname__FUi": "zSceneGetAreaname__FUi",
+        "zSceneGetLevelPrefix__FUi": "zSceneGetLevelPrefix__FUi",
+        "zSceneGetLevelIndex__Fv": "zSceneGetLevelIndex__Fv",
+        "zSceneGetLevelName__FUi": "zSceneGetLevelName__FUi",
+        "zSceneMemLvlChkCB__Fv": "zSceneMemLvlChkCB__Fv",
+        "zSceneForAllBase__FPFP5xBaseP6zScenePv_P5xBaseiPv": "zSceneForAllBase__FPFP5xBaseP6zScenePv_P5xBaseiPv",
+        "zSceneGetName__FP5xBase": "zSceneGetName__FP5xBase",
+        "zSceneGetName__FUi": "zSceneGetName__FUi",
+        "zSceneGetObject__Fii": "zSceneGetObject__Fii",
+        "zSceneFindObject__FUi": "zSceneFindObject__FUi",
+        "zSceneObjHashtableAdd__FUiP5xBase": "zSceneObjHashtableAdd__FUiP5xBase",
+        "zSceneRender__Fv": "zSceneRender__Fv",
+        "zSceneRenderPostFX__Fv": "zSceneRenderPostFX__Fv",
+        "zSceneRenderPreFX__Fv": "zSceneRenderPreFX__Fv",
+        "zSceneUpdate__Ff": "zSceneUpdate__Ff",
+        "zSceneSetup_serialTraverseCB__FUiP7xSerial": "zSceneSetup_serialTraverseCB__FUiP7xSerial",
+        "zSceneSetup__Fv": "zSceneSetup__Fv",
+        "DeactivateCB__FP5xBase": "DeactivateCB__FP5xBase",
+        "ActivateCB__FP5xBase": "ActivateCB__FP5xBase",
+        "zSceneReset__Fv": "zSceneReset__Fv",
+        "zSceneLoad__FP6zSceneP7xSerial": "zSceneLoad__FP6zSceneP7xSerial",
+        "zSceneSave__FP6zSceneP7xSerial": "zSceneSave__FP6zSceneP7xSerial",
+        "zSceneSwitch__FP8_zPortali": "zSceneSwitch__FP8_zPortali",
+        "zSceneUpdateSFXWidgets__Fv": "zSceneUpdateSFXWidgets__Fv",
+        "zSceneExit__Fi": "zSceneExit__Fi",
+        "zSceneInit__FUii": "zSceneInit__FUii",
+        "BaseTypeNeedsUpdate__FUc": "BaseTypeNeedsUpdate__FUc",
+        "PipeForAllSceneModels__FPFP8RpAtomicUiUi_v": "PipeForAllSceneModels__FPFP8RpAtomicUiUi_v",
+        "PipeAddStuffCB__FP8RpAtomicUiUi": "PipeAddStuffCB__FP8RpAtomicUiUi",
+        "PipeCountStuffCB__FP8RpAtomicUiUi": "PipeCountStuffCB__FP8RpAtomicUiUi",
+        "zSceneInitFunc_Dispatcher__FP6zSceneP24zSceneObjectInstanceDescUi": "zSceneInitFunc_Dispatcher__FP6zSceneP24zSceneObjectInstanceDescUi",
+        "zSceneInitFunc_LobMaster__FP6zSceneP24zSceneObjectInstanceDescUi": "zSceneInitFunc_LobMaster__FP6zSceneP24zSceneObjectInstanceDescUi",
+        "zSceneInitFunc_Volume__FP6zSceneP24zSceneObjectInstanceDescUi": "zSceneInitFunc_Volume__FP6zSceneP24zSceneObjectInstanceDescUi",
+        "zSceneInitFunc_Gust__FP6zSceneP24zSceneObjectInstanceDescUi": "zSceneInitFunc_Gust__FP6zSceneP24zSceneObjectInstanceDescUi",
+        "zSceneInitFunc_Surface__FP6zSceneP24zSceneObjectInstanceDescUi": "zSceneInitFunc_Surface__FP6zSceneP24zSceneObjectInstanceDescUi",
+        "zSceneInitFunc_Camera__FP6zSceneP24zSceneObjectInstanceDescUi": "zSceneInitFunc_Camera__FP6zSceneP24zSceneObjectInstanceDescUi",
+        "zSceneInitFunc_Player__FP6zSceneP24zSceneObjectInstanceDescUi": "zSceneInitFunc_Player__FP6zSceneP24zSceneObjectInstanceDescUi",
+        "zSceneInitFunc_SBNPC__FP6zSceneP24zSceneObjectInstanceDescUi": "zSceneInitFunc_SBNPC__FP6zSceneP24zSceneObjectInstanceDescUi",
+        "zSceneInitFunc_MovePoint__FP6zSceneP24zSceneObjectInstanceDescUi": "zSceneInitFunc_MovePoint__FP6zSceneP24zSceneObjectInstanceDescUi",
+        "zSceneInitFunc_Default__FP6zSceneP24zSceneObjectInstanceDescUi": "zSceneInitFunc_Default__FP6zSceneP24zSceneObjectInstanceDescUi",
+        "zSceneInitFunc_DefaultEnt__FP6zSceneP24zSceneObjectInstanceDescUi": "zSceneInitFunc_DefaultEnt__FP6zSceneP24zSceneObjectInstanceDescUi",
+        "init_dynamic_type__20@unnamed@zScene_cpp@FR6zSceneUiRCQ220@unnamed@zScene_cpp@17dynamic_type_data": "init_dynamic_type__20@unnamed@zScene_cpp@FR6zSceneUiRCQ220@unnamed@zScene_cpp@17dynamic_type_data"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Game/zMain.cpp",
+      "target_unit": "SB/Game/zMain.cpp",
+      "object": "source/zMain.o",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597"
+      ],
+      "symbols": {
+        "zMainLoadFontHIP": "zMainLoadFontHIP__Fv",
+        "zMainMemCardSpaceQuery": "zMainMemCardSpaceQuery__Fv",
+        "zMainFirstScreen": "zMainFirstScreen__Fi",
+        "zMainReadINI": "zMainReadINI__Fv",
+        "zMainLoop": "zMainLoop__Fv",
+        "zMainMemLvlChkCB": "zMainMemLvlChkCB__Fv",
+        "zMainParseINIGlobals": "zMainParseINIGlobals__FP8xIniFile",
+        "zMainOutputMgrSetup": "zMainOutputMgrSetup__Fv",
+        "main": "main"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Game/zMain.cpp",
+      "target_unit": "SB/Game/zMain.cpp",
+      "object": "source/zMain.o",
+      "executable_sha1s": [
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zMainLoadFontHIP": "zMainLoadFontHIP__Fv",
+        "zMainMemCardSpaceQuery": "zMainMemCardSpaceQuery__Fv",
+        "zMainFirstScreen": "zMainFirstScreen__Fi",
+        "zMainReadINI": "zMainReadINI__Fv",
+        "zMainLoop": "zMainLoop__Fv",
+        "zMainShowProgressBar": "zMainShowProgressBar__Fv",
+        "zMainMemLvlChkCB": "zMainMemLvlChkCB__Fv",
+        "zMainParseINIGlobals": "zMainParseINIGlobals__FP8xIniFile",
+        "zMainOutputMgrSetup": "zMainOutputMgrSetup__Fv",
+        "main": "main"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Game/zLightning.cpp",
+      "target_unit": "SB/Game/zLightning.cpp",
+      "object": "source/zLightning.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zLightningModifyEndpoints__FP10zLightningP5xVec3P5xVec3": "zLightningModifyEndpoints__FP10zLightningP5xVec3P5xVec3",
+        "zLightningKill__FP10zLightning": "zLightningKill__FP10zLightning",
+        "zLightningShow__FP10zLightningi": "zLightningShow__FP10zLightningi",
+        "zLightningRender__Fv": "zLightningRender__Fv",
+        "RenderLightning__FP10zLightning": "RenderLightning__FP10zLightning",
+        "zLightningFunc_Render__FP10zLightning": "zLightningFunc_Render__FP10zLightning",
+        "zLightningUpdate__Ff": "zLightningUpdate__Ff",
+        "UpdateLightning__FP10zLightningf": "UpdateLightning__FP10zLightningf",
+        "zLightningAdd__FP16_tagLightningAdd": "zLightningAdd__FP16_tagLightningAdd",
+        "zLightningInit__Fv": "zLightningInit__Fv",
+        "lightningTweakStart__FRC10tweak_info": "lightningTweakStart__FRC10tweak_info",
+        "lightningTweakChangeType__FRC10tweak_info": "lightningTweakChangeType__FRC10tweak_info"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Game/zGame.cpp",
+      "target_unit": "SB/Game/zGame.cpp",
+      "object": "source/zGame.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zGameSetupPlayer__Fv": "zGameSetupPlayer__Fv",
+        "zGameScreenTransitionEnd__Fv": "zGameScreenTransitionEnd__Fv",
+        "zGameScreenTransitionUpdate__FfPcPUc": "zGameScreenTransitionUpdate__FfPcPUc",
+        "zGameScreenTransitionUpdate__FfPc": "zGameScreenTransitionUpdate__FfPc",
+        "zGameScreenTransitionBegin__Fv": "zGameScreenTransitionBegin__Fv",
+        "zGameUpdateMode__Fv": "zGameUpdateMode__Fv",
+        "zGame_HackPostPortalAutoSaveDraw__Fv": "zGame_HackPostPortalAutoSaveDraw__Fv",
+        "zGame_HackDrawCard__FffffP8RwRaster": "zGame_HackDrawCard__FffffP8RwRaster",
+        "zGameStall__Fv": "zGameStall__Fv",
+        "zGamePauseIfPossible__Fv": "zGamePauseIfPossible__Fv",
+        "zGameIsPaused__Fv": "zGameIsPaused__Fv",
+        "zGameLoop__Fv": "zGameLoop__Fv",
+        "zGameSetup__Fv": "zGameSetup__Fv",
+        "zGameExit__Fv": "zGameExit__Fv",
+        "zGameInit__FUi": "zGameInit__FUi",
+        "PickNextSoak__Fv": "PickNextSoak__Fv"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Game/zParPTank.cpp",
+      "target_unit": "SB/Game/zParPTank.cpp",
+      "object": "source/zParPTank.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zParPTankConvertEmitRate__FP11xParEmitterf": "zParPTankConvertEmitRate__FP11xParEmitterf",
+        "zParPTankRender__Fv": "zParPTankRender__Fv",
+        "zParPTankUpdate__Ff": "zParPTankUpdate__Ff",
+        "zParPTankExit__Fv": "zParPTankExit__Fv",
+        "zParPTankSceneExit__Fv": "zParPTankSceneExit__Fv",
+        "zParPTankSceneEnter__Fv": "zParPTankSceneEnter__Fv",
+        "zParPTankInit__Fv": "zParPTankInit__Fv",
+        "zParPTankSteamUpdate__FP9zParPTankf": "zParPTankSteamUpdate__FP9zParPTankf",
+        "zParPTankSteamCreate__FP9zParPTankUiPFP9zParPTankf_v": "zParPTankSteamCreate__FP9zParPTankUiPFP9zParPTankf_v",
+        "zParPTankSpawnSnow__FP5xVec3P5xVec3Ui": "zParPTankSpawnSnow__FP5xVec3P5xVec3Ui",
+        "zParPTankSnowUpdate__FP9zParPTankf": "zParPTankSnowUpdate__FP9zParPTankf",
+        "zParPTankSpawnMenuBubbles__FP5xVec3P5xVec3Ui": "zParPTankSpawnMenuBubbles__FP5xVec3P5xVec3Ui",
+        "zParPTankBubblesAvailable__Fv": "zParPTankBubblesAvailable__Fv",
+        "zParPTankSpawnBubbles__FP5xVec3P5xVec3Uif": "zParPTankSpawnBubbles__FP5xVec3P5xVec3Uif",
+        "zParPTankSpawnBubbles__FP5xVec3P5xVec3UifP9zParPTank": "zParPTankSpawnBubbles__FP5xVec3P5xVec3UifP9zParPTank",
+        "zParPTankBubbleUpdate__FP9zParPTankf": "zParPTankBubbleUpdate__FP9zParPTankf",
+        "zParPTankMenuBubbleCreate__FP9zParPTankUiPFP9zParPTankf_v": "zParPTankMenuBubbleCreate__FP9zParPTankUiPFP9zParPTankf_v",
+        "zParPTankBubbleCreate__FP9zParPTankUiPFP9zParPTankf_v": "zParPTankBubbleCreate__FP9zParPTankUiPFP9zParPTankf_v",
+        "zParPTankSpawnSparkles__FP5xVec3Ui": "zParPTankSpawnSparkles__FP5xVec3Ui",
+        "zParPTankSparkleUpdate__FP9zParPTankf": "zParPTankSparkleUpdate__FP9zParPTankf",
+        "zParPTankSparkleCreate__FP9zParPTankUiPFP9zParPTankf_v": "zParPTankSparkleCreate__FP9zParPTankUiPFP9zParPTankf_v"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Core/x/xCutscene.cpp",
+      "target_unit": "SB/Core/x/xCutscene.cpp",
+      "object": "source/xCutscene.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xCutscene_Render__FP9xCutscenePP4xEntPiPf": "xCutscene_Render__FP9xCutscenePP4xEntPiPf",
+        "CutsceneShadowRender__FP19CutsceneShadowModel": "CutsceneShadowRender__FP19CutsceneShadowModel",
+        "JDeltaEval__FP8RpAtomicPvPvf": "JDeltaEval__FP8RpAtomicPvPvf",
+        "xcsCalcAnimMatrices__FP11RwMatrixTagP8RpAtomicP16xCutsceneAnimHdrfUi": "xcsCalcAnimMatrices__FP11RwMatrixTagP8RpAtomicP16xCutsceneAnimHdrfUi",
+        "xCutscene_SetCamera__FP9xCutsceneP7xCamera": "xCutscene_SetCamera__FP9xCutsceneP7xCamera",
+        "xCutscene_SetSpeed__FP9xCutscenef": "xCutscene_SetSpeed__FP9xCutscenef",
+        "xCutscene_Update__FP9xCutscenef": "xCutscene_Update__FP9xCutscenef",
+        "xCutscene_LoadStart__FP9xCutscene": "xCutscene_LoadStart__FP9xCutscene",
+        "xCutscene_Destroy__FP9xCutscene": "xCutscene_Destroy__FP9xCutscene",
+        "xCutscene_Create__FUi": "xCutscene_Create__FUi",
+        "xCutscene_Init__FPv": "xCutscene_Init__FPv"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Game/zEntTeleportBox.cpp",
+      "target_unit": "SB/Game/zEntTeleportBox.cpp",
+      "object": "source/zEntTeleportBox.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zEntTeleportBoxEventCB__FP5xBaseP5xBaseUiPCfP5xBase": "zEntTeleportBoxEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "zEntTeleportBox_playerIn__Fv": "zEntTeleportBox_playerIn__Fv",
+        "zEntTeleportBox_Load__FP16_zEntTeleportBoxP7xSerial": "zEntTeleportBox_Load__FP16_zEntTeleportBoxP7xSerial",
+        "zEntTeleportBox_Save__FP16_zEntTeleportBoxP7xSerial": "zEntTeleportBox_Save__FP16_zEntTeleportBoxP7xSerial",
+        "zEntTeleportBox_Update__FP4xEntP6xScenef": "zEntTeleportBox_Update__FP4xEntP6xScenef",
+        "zEntTeleportBox_Setup__FP16_zEntTeleportBox": "zEntTeleportBox_Setup__FP16_zEntTeleportBox",
+        "zEntTeleportBox_InitAll__Fv": "zEntTeleportBox_InitAll__Fv",
+        "zEntTeleportBox_Init__FP16_zEntTeleportBoxP14teleport_asset": "zEntTeleportBox_Init__FP16_zEntTeleportBoxP14teleport_asset",
+        "zEntTeleportBox_Init__FR5xBaseR9xDynAssetUi": "zEntTeleportBox_Init__FR5xBaseR9xDynAssetUi",
+        "JumpOutEffectJOAnimCB__FUiP17xAnimActiveEffectP11xAnimSinglePv": "JumpOutEffectJOAnimCB__FUiP17xAnimActiveEffectP11xAnimSinglePv",
+        "JumpOutEffectPlrEjectCB__FUiP17xAnimActiveEffectP11xAnimSinglePv": "JumpOutEffectPlrEjectCB__FUiP17xAnimActiveEffectP11xAnimSinglePv",
+        "JumpOutEffectPlrVisibleCB__FUiP17xAnimActiveEffectP11xAnimSinglePv": "JumpOutEffectPlrVisibleCB__FUiP17xAnimActiveEffectP11xAnimSinglePv",
+        "CtoOEffectTboxEnableCB__FUiP17xAnimActiveEffectP11xAnimSinglePv": "CtoOEffectTboxEnableCB__FUiP17xAnimActiveEffectP11xAnimSinglePv",
+        "JumpInEffectJIAnimCB__FUiP17xAnimActiveEffectP11xAnimSinglePv": "JumpInEffectJIAnimCB__FUiP17xAnimActiveEffectP11xAnimSinglePv",
+        "JumpInEffectPlrTeleportCB__FUiP17xAnimActiveEffectP11xAnimSinglePv": "JumpInEffectPlrTeleportCB__FUiP17xAnimActiveEffectP11xAnimSinglePv",
+        "JumpInEffectPlrInvisibleCB__FUiP17xAnimActiveEffectP11xAnimSinglePv": "JumpInEffectPlrInvisibleCB__FUiP17xAnimActiveEffectP11xAnimSinglePv",
+        "CtoOCB__FP15xAnimTransitionP11xAnimSinglePv": "CtoOCB__FP15xAnimTransitionP11xAnimSinglePv",
+        "CtoOCheck__FP15xAnimTransitionP11xAnimSinglePv": "CtoOCheck__FP15xAnimTransitionP11xAnimSinglePv",
+        "JOtoOCB__FP15xAnimTransitionP11xAnimSinglePv": "JOtoOCB__FP15xAnimTransitionP11xAnimSinglePv",
+        "JOtoOCheck__FP15xAnimTransitionP11xAnimSinglePv": "JOtoOCheck__FP15xAnimTransitionP11xAnimSinglePv",
+        "JItoOCB__FP15xAnimTransitionP11xAnimSinglePv": "JItoOCB__FP15xAnimTransitionP11xAnimSinglePv",
+        "JItoOCheck__FP15xAnimTransitionP11xAnimSinglePv": "JItoOCheck__FP15xAnimTransitionP11xAnimSinglePv",
+        "JumpOutCB__FP15xAnimTransitionP11xAnimSinglePv": "JumpOutCB__FP15xAnimTransitionP11xAnimSinglePv",
+        "JumpOutCheck__FP15xAnimTransitionP11xAnimSinglePv": "JumpOutCheck__FP15xAnimTransitionP11xAnimSinglePv",
+        "JumpInCB__FP15xAnimTransitionP11xAnimSinglePv": "JumpInCB__FP15xAnimTransitionP11xAnimSinglePv",
+        "JumpInCheck__FP15xAnimTransitionP11xAnimSinglePv": "JumpInCheck__FP15xAnimTransitionP11xAnimSinglePv",
+        "OpenCheck__FP15xAnimTransitionP11xAnimSinglePv": "OpenCheck__FP15xAnimTransitionP11xAnimSinglePv"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Game/zSurface.cpp",
+      "target_unit": "SB/Game/zSurface.cpp",
+      "object": "source/zSurface.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zSurfaceGetDefault__Fv": "zSurfaceGetDefault__Fv",
+        "zSurfaceGetName__FiPc": "zSurfaceGetName__FiPc",
+        "zSurfaceEventCB__FP5xBaseP5xBaseUiPCfP5xBase": "zSurfaceEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "zSurfaceUpdate__FP5xBaseP6xScenef": "zSurfaceUpdate__FP5xBaseP6xScenef",
+        "zSurfaceSetup__FP8xSurface": "zSurfaceSetup__FP8xSurface",
+        "zSurfaceLoad__FP8xSurfaceP7xSerial": "zSurfaceLoad__FP8xSurfaceP7xSerial",
+        "zSurfaceSave__FP8xSurfaceP7xSerial": "zSurfaceSave__FP8xSurfaceP7xSerial",
+        "zSurfaceGetDamping__FPC8xSurfacef": "zSurfaceGetDamping__FPC8xSurfacef",
+        "zSurfaceGetSlickness__FPC8xSurface": "zSurfaceGetSlickness__FPC8xSurface",
+        "zSurfaceGetOutOfBoundsDelay__FRC8xSurface": "zSurfaceGetOutOfBoundsDelay__FRC8xSurface",
+        "zSurfaceGetFriction__FPC8xSurface": "zSurfaceGetFriction__FPC8xSurface",
+        "zSurfaceGetStandOn__FPC8xSurface": "zSurfaceGetStandOn__FPC8xSurface",
+        "zSurfaceGetSticky__FPC8xSurface": "zSurfaceGetSticky__FPC8xSurface",
+        "zSurfaceGetDamagePassthrough__FPC8xSurface": "zSurfaceGetDamagePassthrough__FPC8xSurface",
+        "zSurfaceGetDamageType__FPC8xSurface": "zSurfaceGetDamageType__FPC8xSurface",
+        "zSurfaceGetMatchOrient__FPC8xSurface": "zSurfaceGetMatchOrient__FPC8xSurface",
+        "zSurfaceGetSlideStopAngle__FPC8xSurface": "zSurfaceGetSlideStopAngle__FPC8xSurface",
+        "zSurfaceGetSlideStartAngle__FPC8xSurface": "zSurfaceGetSlideStartAngle__FPC8xSurface",
+        "zSurfaceOutOfBounds__FRC8xSurface": "zSurfaceOutOfBounds__FRC8xSurface",
+        "zSurfaceGetStep__FPC8xSurface": "zSurfaceGetStep__FPC8xSurface",
+        "zSurfaceGetSlide__FPC8xSurface": "zSurfaceGetSlide__FPC8xSurface",
+        "zSurfaceGetSurface__FPC7xCollis": "zSurfaceGetSurface__FPC7xCollis",
+        "zSurfaceGetSurface__FUi": "zSurfaceGetSurface__FUi",
+        "zSurfaceExit__Fv": "zSurfaceExit__Fv",
+        "zSurfaceRegisterMapper__FUi": "zSurfaceRegisterMapper__FUi",
+        "zSurfaceInit__Fv": "zSurfaceInit__Fv"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Core/x/xModelBucket.cpp",
+      "target_unit": "SB/Core/x/xModelBucket.cpp",
+      "object": "source/xModelBucket.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xModelBucket_PreAllocModelPipe__FP8RpAtomic": "xModelBucket_PreAllocModelPipe__FP8RpAtomic",
+        "xModelBucket_Deinit__Fv": "xModelBucket_Deinit__Fv",
+        "xModelBucket_RenderAlphaEnd__Fv": "xModelBucket_RenderAlphaEnd__Fv",
+        "xModelBucket_RenderAlphaLayer__Fi": "xModelBucket_RenderAlphaLayer__Fi",
+        "xModelBucket_RenderAlphaBegin__Fv": "xModelBucket_RenderAlphaBegin__Fv",
+        "PS2_MaskFrameBuffer_AlphaCompare__FUiUc": "PS2_MaskFrameBuffer_AlphaCompare__FUiUc",
+        "xModelBucket_RenderOpaque__Fv": "xModelBucket_RenderOpaque__Fv",
+        "xModelBucket_Add__FP14xModelInstance": "xModelBucket_Add__FP14xModelInstance",
+        "xModelBucket_Begin__Fv": "xModelBucket_Begin__Fv",
+        "xModelBucket_GetBuckets__FP8RpAtomic": "xModelBucket_GetBuckets__FP8RpAtomic",
+        "xModelBucket_Init__Fv": "xModelBucket_Init__Fv",
+        "xModelBucket_InsertBucket__FP8RpAtomicUiUi": "xModelBucket_InsertBucket__FP8RpAtomicUiUi",
+        "FullAtomicDupe__FP8RpAtomiciPP8RpAtomic": "FullAtomicDupe__FP8RpAtomiciPP8RpAtomic",
+        "xModelBucket_PreCountAlloc__Fi": "xModelBucket_PreCountAlloc__Fi",
+        "xModelBucket_PreCountBucket__FP8RpAtomicUiUi": "xModelBucket_PreCountBucket__FP8RpAtomicUiUi",
+        "xModelBucket_PreCountReset__Fv": "xModelBucket_PreCountReset__Fv",
+        "CmpAlphaBucket__FPCvPCv": "CmpAlphaBucket__FPCvPCv"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Game/zDispatcher.cpp",
+      "target_unit": "SB/Game/zDispatcher.cpp",
+      "object": "source/zDispatcher.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "ZDSP_elcb_event__FP5xBaseP5xBaseUiPCfP5xBase": "ZDSP_elcb_event__FP5xBaseP5xBaseUiPCfP5xBase",
+        "ZDSP_doCommand__FP17st_ZDISPATCH_DATAP20st_ZDISPATCH_CONTEXT": "ZDSP_doCommand__FP17st_ZDISPATCH_DATAP20st_ZDISPATCH_CONTEXT",
+        "zDispatcher_Load__FP17st_ZDISPATCH_DATAP7xSerial": "zDispatcher_Load__FP17st_ZDISPATCH_DATAP7xSerial",
+        "zDispatcher_Save__FP17st_ZDISPATCH_DATAP7xSerial": "zDispatcher_Save__FP17st_ZDISPATCH_DATAP7xSerial",
+        "zDispatcher_InitDep__FP17st_ZDISPATCH_DATAP6zScene": "zDispatcher_InitDep__FP17st_ZDISPATCH_DATAP6zScene",
+        "zDispatcher_Init__FP17st_ZDISPATCH_DATAP10xBaseAsset": "zDispatcher_Init__FP17st_ZDISPATCH_DATAP10xBaseAsset",
+        "zDispatcher_getInst__FP17st_ZDISPATCH_DATAi": "zDispatcher_getInst__FP17st_ZDISPATCH_DATAi",
+        "zDispatcher_memPool__Fi": "zDispatcher_memPool__Fi",
+        "zDispatcher_sceneFinish__Fv": "zDispatcher_sceneFinish__Fv",
+        "zDispatcher_scenePrepare__Fv": "zDispatcher_scenePrepare__Fv",
+        "zDispatcher_Shutdown__Fv": "zDispatcher_Shutdown__Fv",
+        "zDispatcher_Startup__Fv": "zDispatcher_Startup__Fv"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Game/zNPCGlyph.cpp",
+      "target_unit": "SB/Game/zNPCGlyph.cpp",
+      "object": "source/zNPCGlyph.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "Timestep__8NPCGlyphFf": "Timestep__8NPCGlyphFf",
+        "RotAddDelta__8NPCGlyphFP7xMat3x3": "RotAddDelta__8NPCGlyphFP7xMat3x3",
+        "VelSet_Shiny__8NPCGlyphFv": "VelSet_Shiny__8NPCGlyphFv",
+        "RotSet__8NPCGlyphFP5xVec3i": "RotSet__8NPCGlyphFP5xVec3i",
+        "ScaleSet__8NPCGlyphFP5xVec3": "ScaleSet__8NPCGlyphFP5xVec3",
+        "PosSet__8NPCGlyphFP5xVec3": "PosSet__8NPCGlyphFP5xVec3",
+        "Discard__8NPCGlyphFv": "Discard__8NPCGlyphFv",
+        "Enable__8NPCGlyphFi": "Enable__8NPCGlyphFi",
+        "GLYF_Acquire__F11en_npcglyph": "GLYF_Acquire__F11en_npcglyph",
+        "zNPCCommon_Glyphs_RenderAll__Fi": "zNPCCommon_Glyphs_RenderAll__Fi",
+        "zNPCGlyph_TypeToList__F11en_npcglyphPP8NPCGlyph": "zNPCGlyph_TypeToList__F11en_npcglyphPP8NPCGlyph",
+        "zNPCGlyph_Timestep__Ff": "zNPCGlyph_Timestep__Ff",
+        "zNPCGlyph_ScenePostInit__Fv": "zNPCGlyph_ScenePostInit__Fv",
+        "zNPCGlyph_SceneReset__Fv": "zNPCGlyph_SceneReset__Fv",
+        "zNPCGlyph_SceneFinish__Fv": "zNPCGlyph_SceneFinish__Fv",
+        "zNPCGlyph_ScenePrepare__Fv": "zNPCGlyph_ScenePrepare__Fv",
+        "zNPCGlyph_Shutdown__Fv": "zNPCGlyph_Shutdown__Fv",
+        "zNPCGlyph_Startup__Fv": "zNPCGlyph_Startup__Fv"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Core/x/iCamera.cpp",
+      "target_unit": "SB/Core/x/iCamera.cpp",
+      "object": "source/iCamera.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "iCameraSetFogRenderStates__Fv": "iCameraSetFogRenderStates__Fv",
+        "iCameraUpdateFog__FP8RwCameral": "iCameraUpdateFog__FP8RwCameral",
+        "iCameraSetFogParams__FP10iFogParamsf": "iCameraSetFogParams__FP10iFogParamsf",
+        "iCameraSetNearFarClip__Fff": "iCameraSetNearFarClip__Fff",
+        "iCamGetViewMatrix__FP8RwCameraP7xMat4x3": "iCamGetViewMatrix__FP8RwCameraP7xMat4x3",
+        "iCameraAssignEnv__FP8RwCameraP4iEnv": "iCameraAssignEnv__FP8RwCameraP4iEnv",
+        "iCameraSetFOV__FP8RwCameraf": "iCameraSetFOV__FP8RwCameraf",
+        "iCameraUpdatePos__FP8RwCameraP7xMat4x3": "iCameraUpdatePos__FP8RwCameraP7xMat4x3",
+        "iCameraFrustumPlanes__FP8RwCameraP5xVec4": "iCameraFrustumPlanes__FP8RwCameraP5xVec4",
+        "iCameraShowRaster__FP8RwCamera": "iCameraShowRaster__FP8RwCamera",
+        "iCameraEnd__FP8RwCamera": "iCameraEnd__FP8RwCamera",
+        "iCameraBegin__FP8RwCamerai": "iCameraBegin__FP8RwCamerai",
+        "iCameraDestroy__FP8RwCamera": "iCameraDestroy__FP8RwCamera",
+        "iCameraCreate__Fiii": "iCameraCreate__Fiii"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Core/x/xParSys.cpp",
+      "target_unit": "SB/Core/x/xParSys.cpp",
+      "object": "source/xParSys.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xParSysRender__FP5xBase": "xParSysRender__FP5xBase",
+        "xParGroupUpdateR__FP7xParSysP9xParGroupf": "xParGroupUpdateR__FP7xParSysP9xParGroupf",
+        "xParSysUpdate__FP5xBaseP6xScenef": "xParSysUpdate__FP5xBaseP6xScenef",
+        "xParSysEventCB__FP5xBaseP5xBaseUiPCfP5xBase": "xParSysEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "xParSysExit__FP7xParSys": "xParSysExit__FP7xParSys",
+        "xParSysSetup__FP7xParSys": "xParSysSetup__FP7xParSys",
+        "xParSysInit__FP5xBaseP12xParSysAsset": "xParSysInit__FP5xBaseP12xParSysAsset",
+        "xParSysInit__FPvPv": "xParSysInit__FPvPv",
+        "render_par_sprite__FPvP9xParGroup": "render_par_sprite__FPvP9xParGroup",
+        "par_sprite_update__FR7xParSysR9xParGroup": "par_sprite_update__FR7xParSysR9xParGroup"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Game/zEGenerator.cpp",
+      "target_unit": "SB/Game/zEGenerator.cpp",
+      "object": "source/zEGenerator.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zEGeneratorEventCB__FP5xBaseP5xBaseUiPCfP5xBase": "zEGeneratorEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "zEGenerator_TurnOn__FP11zEGenerator": "zEGenerator_TurnOn__FP11zEGenerator",
+        "zEGenerator_Render__FP11zEGenerator": "zEGenerator_Render__FP11zEGenerator",
+        "zEGenerator_Update__FP11zEGeneratorP6xScenef": "zEGenerator_Update__FP11zEGeneratorP6xScenef",
+        "zEGenerator_Move__FP11zEGeneratorP6xScenef": "zEGenerator_Move__FP11zEGeneratorP6xScenef",
+        "zEGenerator_Reset__FP11zEGeneratorP6xScene": "zEGenerator_Reset__FP11zEGeneratorP6xScene",
+        "zEGenerator_Load__FP11zEGeneratorP7xSerial": "zEGenerator_Load__FP11zEGeneratorP7xSerial",
+        "zEGenerator_Save__FP11zEGeneratorP7xSerial": "zEGenerator_Save__FP11zEGeneratorP7xSerial",
+        "zEGenerator_Setup__FP11zEGeneratorP6xScene": "zEGenerator_Setup__FP11zEGeneratorP6xScene",
+        "zEGenerator_Init__FP11zEGeneratorP9xEntAsset": "zEGenerator_Init__FP11zEGeneratorP9xEntAsset",
+        "zEGenerator_Init__FPvPv": "zEGenerator_Init__FPvPv"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Game/zCutsceneMgr.cpp",
+      "target_unit": "SB/Game/zCutsceneMgr.cpp",
+      "object": "source/zCutsceneMgr.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "check_hide_entities__Fv": "check_hide_entities__Fv",
+        "zCutsceneMgrUpdate__FP5xBaseP6xScenef": "zCutsceneMgrUpdate__FP5xBaseP6xScenef",
+        "zCutsceneMgrUpdateFX__FP12zCutsceneMgrf": "zCutsceneMgrUpdateFX__FP12zCutsceneMgrf",
+        "zCutsceneMgrFinishExit__FP5xBase": "zCutsceneMgrFinishExit__FP5xBase",
+        "zCutsceneMgrFinishLoad__FP5xBase": "zCutsceneMgrFinishLoad__FP5xBase",
+        "zCutsceneMgrEventCB__FP5xBaseP5xBaseUiPCfP5xBase": "zCutsceneMgrEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "zCutsceneMgrPlayStart__FP12zCutsceneMgr": "zCutsceneMgrPlayStart__FP12zCutsceneMgr",
+        "zCutSceneNamesTable_clearAll__Fv": "zCutSceneNamesTable_clearAll__Fv",
+        "HackAlphaCB__FP8RpAtomicPv": "HackAlphaCB__FP8RpAtomicPv",
+        "HackAlphaSetMaterialAlphaCB__FP10RpMaterialPv": "HackAlphaSetMaterialAlphaCB__FP10RpMaterialPv",
+        "HackBoundCB__FP8RpAtomicPv": "HackBoundCB__FP8RpAtomicPv",
+        "zCutsceneMgrLoad__FP12zCutsceneMgrP7xSerial": "zCutsceneMgrLoad__FP12zCutsceneMgrP7xSerial",
+        "zCutsceneMgrSave__FP12zCutsceneMgrP7xSerial": "zCutsceneMgrSave__FP12zCutsceneMgrP7xSerial",
+        "zCutsceneMgrInit__FPvPv": "zCutsceneMgrInit__FPvPv"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Core/x/xTRC.cpp",
+      "target_unit": "SB/Core/x/xTRC.cpp",
+      "object": "source/xTRC.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "RenderText__FPCcb": "RenderText__FPCcb",
+        "render_mem_card_no_space__Fiiib": "render_mem_card_no_space__Fiiib",
+        "xTRCPad__Fi12_tagTRCState": "xTRCPad__Fi12_tagTRCState",
+        "DisplayMessage__F12_tagTRCState": "DisplayMessage__F12_tagTRCState",
+        "xTRCReset__Fv": "xTRCReset__Fv",
+        "xTRCRender__Fv": "xTRCRender__Fv",
+        "render_message__FPCc": "render_message__FPCc",
+        "pad_message_valid__Fv": "pad_message_valid__Fv",
+        "xTRCInit__Fv": "xTRCInit__Fv"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Game/zParCmd.cpp",
+      "target_unit": "SB/Game/zParCmd.cpp",
+      "object": "source/zParCmd.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xParCmdCustom_Update__FP7xParCmdP9xParGroupf": "xParCmdCustom_Update__FP7xParCmdP9xParGroupf",
+        "xParCmdApplyCamMat_Update__FP7xParCmdP9xParGroupf": "xParCmdApplyCamMat_Update__FP7xParCmdP9xParGroupf",
+        "xParCmdCustom_Grass_Update__FP7xParCmdP9xParGroupf": "xParCmdCustom_Grass_Update__FP7xParCmdP9xParGroupf",
+        "xParCmdJet_Update__FP7xParCmdP9xParGroupf": "xParCmdJet_Update__FP7xParCmdP9xParGroupf",
+        "xParCmdDamagePlayer_Update__FP7xParCmdP9xParGroupf": "xParCmdDamagePlayer_Update__FP7xParCmdP9xParGroupf",
+        "xParCmdAnimalMagentism_Update__FP7xParCmdP9xParGroupf": "xParCmdAnimalMagentism_Update__FP7xParCmdP9xParGroupf",
+        "xParCmdPlayerCollision_Update__FP7xParCmdP9xParGroupf": "xParCmdPlayerCollision_Update__FP7xParCmdP9xParGroupf",
+        "xParCmdClipVolumes_Update__FP7xParCmdP9xParGroupf": "xParCmdClipVolumes_Update__FP7xParCmdP9xParGroupf",
+        "xParCmdKillDistance_Update__FP7xParCmdP9xParGroupf": "xParCmdKillDistance_Update__FP7xParCmdP9xParGroupf",
+        "zParCmdFindClipVolumes__Fv": "zParCmdFindClipVolumes__Fv",
+        "zParCmdInit__Fv": "zParCmdInit__Fv"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Core/x/xSFX.cpp",
+      "target_unit": "SB/Core/x/xSFX.cpp",
+      "object": "source/xSFX.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xSFXPlay__FP4xSFX": "xSFXPlay__FP4xSFX",
+        "xSFXEventCB__FP5xBaseP5xBaseUiPCfP5xBase": "xSFXEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "xSFXLoad__FP4xSFXP7xSerial": "xSFXLoad__FP4xSFXP7xSerial",
+        "xSFXSave__FP4xSFXP7xSerial": "xSFXSave__FP4xSFXP7xSerial",
+        "xSFXInit__FPvPv": "xSFXInit__FPvPv",
+        "xSFXUpdateEnvironmentalStreamSounds__FP4xSFXUi": "xSFXUpdateEnvironmentalStreamSounds__FP4xSFXUi",
+        "xSFXEnvironmentalStreamSceneExit__Fv": "xSFXEnvironmentalStreamSceneExit__Fv"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Core/x/xNPCBasic.cpp",
+      "target_unit": "SB/Core/x/xNPCBasic.cpp",
+      "object": "source/xNPCBasic.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "NPC_entwrap_render__FP4xEnt": "NPC_entwrap_render__FP4xEnt",
+        "NPC_entwrap_event__FP5xBaseP5xBaseUiPCfP5xBase": "NPC_entwrap_event__FP5xBaseP5xBaseUiPCfP5xBase",
+        "NPC_entwrap_move__FP4xEntP6xScenefP9xEntFrame": "NPC_entwrap_move__FP4xEntP6xScenefP9xEntFrame",
+        "NPC_entwrap_bupdate__FP4xEntP5xVec3": "NPC_entwrap_bupdate__FP4xEntP5xVec3",
+        "NPC_entwrap_update__FP4xEntP6xScenef": "NPC_entwrap_update__FP4xEntP6xScenef",
+        "NPC_entwrap_reset__FP4xEnt": "NPC_entwrap_reset__FP4xEnt",
+        "NPC_entwrap_setup__FP4xEnt": "NPC_entwrap_setup__FP4xEnt",
+        "NewTime__9xNPCBasicFP6xScenef": "NewTime__9xNPCBasicFP6xScenef",
+        "CollideReview__9xNPCBasicFv": "CollideReview__9xNPCBasicFv",
+        "Process__9xNPCBasicFP6xScenef": "Process__9xNPCBasicFP6xScenef",
+        "NPC_spdBasedColFreq__FP9xNPCBasicf": "NPC_spdBasedColFreq__FP9xNPCBasicf",
+        "NPC_alwaysUseSphere__FP4xEntP5xVec3": "NPC_alwaysUseSphere__FP4xEntP5xVec3",
+        "Reset__9xNPCBasicFv": "Reset__9xNPCBasicFv",
+        "Init__9xNPCBasicFP9xEntAsset": "Init__9xNPCBasicFP9xEntAsset"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Game/zGust.cpp",
+      "target_unit": "SB/Game/zGust.cpp",
+      "object": "source/zGust.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zGustUpdateFX__Ff": "zGustUpdateFX__Ff",
+        "UpdateGustFX__FP5zGustf": "UpdateGustFX__FP5zGustf",
+        "zGustEventCB__FP5xBaseP5xBaseUiPCfP5xBase": "zGustEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "zGustLoad__FP5zGustP7xSerial": "zGustLoad__FP5zGustP7xSerial",
+        "zGustSave__FP5zGustP7xSerial": "zGustSave__FP5zGustP7xSerial",
+        "zGustUpdateEnt__FP4xEntP6xScenefPv": "zGustUpdateEnt__FP4xEntP6xScenefPv",
+        "zGustGetGust__FUs": "zGustGetGust__FUs",
+        "zGustSetup__Fv": "zGustSetup__Fv",
+        "zGustInit__Fv": "zGustInit__Fv"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Core/x/xHudText.cpp",
+      "target_unit": "SB/Core/x/xHudText.cpp",
+      "object": "source/xHudText.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "render__Q24xhud11text_widgetFv": "render__Q24xhud11text_widgetFv",
+        "update__Q24xhud11text_widgetFf": "update__Q24xhud11text_widgetFf",
+        "is__Q24xhud11text_widgetCFUi": "is__Q24xhud11text_widgetCFUi",
+        "type__Q24xhud11text_widgetCFv": "type__Q24xhud11text_widgetCFv",
+        "destroy__Q24xhud11text_widgetFv": "destroy__Q24xhud11text_widgetFv",
+        "setup__Q24xhud11text_widgetFv": "setup__Q24xhud11text_widgetFv",
+        "load__Q24xhud11text_widgetFR5xBaseR9xDynAssetUi": "load__Q24xhud11text_widgetFR5xBaseR9xDynAssetUi"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Game/zTaskBox.cpp",
+      "target_unit": "SB/Game/zTaskBox.cpp",
+      "object": "source/zTaskBox.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "cb_dispatch__8ztaskboxFP5xBaseP5xBaseUiPCfP5xBase": "cb_dispatch__8ztaskboxFP5xBaseP5xBaseUiPCfP5xBase",
+        "on_talk_stop__8ztaskboxFQ28ztalkbox11answer_enum": "on_talk_stop__8ztaskboxFQ28ztalkbox11answer_enum",
+        "set_state__8ztaskboxFQ28ztaskbox10state_enum": "set_state__8ztaskboxFQ28ztaskbox10state_enum",
+        "load__8ztaskboxFR5xBaseR9xDynAssetUi": "load__8ztaskboxFR5xBaseR9xDynAssetUi",
+        "init__8ztaskboxFv": "init__8ztaskboxFv",
+        "set_callback__8ztaskboxFPQ28ztaskbox8callback": "set_callback__8ztaskboxFPQ28ztaskbox8callback",
+        "stop_talk__8ztaskboxFv": "stop_talk__8ztaskboxFv",
+        "start_talk__8ztaskboxFP10zNPCCommon": "start_talk__8ztaskboxFP10zNPCCommon",
+        "write__8ztaskboxFR7xSerial": "write__8ztaskboxFR7xSerial",
+        "read__8ztaskboxFR7xSerial": "read__8ztaskboxFR7xSerial",
+        "load__8ztaskboxFRCQ28ztaskbox10asset_type": "load__8ztaskboxFRCQ28ztaskbox10asset_type",
+        "on_start__Q28ztaskbox13talk_callbackFv": "on_start__Q28ztaskbox13talk_callbackFv",
+        "on_stop__Q28ztaskbox13talk_callbackFv": "on_stop__Q28ztaskbox13talk_callbackFv",
+        "on_answer__Q28ztaskbox13talk_callbackFQ28ztalkbox11answer_enum": "on_answer__Q28ztaskbox13talk_callbackFQ28ztalkbox11answer_enum"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Core/x/xHudMeter.cpp",
+      "target_unit": "SB/Core/x/xHudMeter.cpp",
+      "object": "source/xHudMeter.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "updater__Q24xhud12meter_widgetFf": "updater__Q24xhud12meter_widgetFf",
+        "is__Q24xhud12meter_widgetCFUi": "is__Q24xhud12meter_widgetCFUi",
+        "type__Q24xhud12meter_widgetCFv": "type__Q24xhud12meter_widgetCFv",
+        "destruct__Q24xhud12meter_widgetFv": "destruct__Q24xhud12meter_widgetFv",
+        "__ct__Q24xhud12meter_widgetFRCQ24xhud11meter_asset": "__ct__Q24xhud12meter_widgetFRCQ24xhud11meter_asset",
+        "set_value_immediate__Q24xhud12meter_widgetFf": "set_value_immediate__Q24xhud12meter_widgetFf",
+        "set_value__Q24xhud12meter_widgetFf": "set_value__Q24xhud12meter_widgetFf"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Game/zNPCGoalSubBoss.cpp",
+      "target_unit": "SB/Game/zNPCGoalSubBoss.cpp",
+      "object": "source/zNPCGoalSubBoss.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "GOALCreate_SubBoss__FiP10RyzMemGrowPv": "GOALCreate_SubBoss__FiP10RyzMemGrowPv"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Core/x/xHudUnitMeter.cpp",
+      "target_unit": "SB/Core/x/xHudUnitMeter.cpp",
+      "object": "source/xHudUnitMeter.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "render__Q24xhud17unit_meter_widgetFv": "render__Q24xhud17unit_meter_widgetFv",
+        "update__Q24xhud17unit_meter_widgetFf": "update__Q24xhud17unit_meter_widgetFf",
+        "setup__Q24xhud17unit_meter_widgetFv": "setup__Q24xhud17unit_meter_widgetFv",
+        "is__Q24xhud17unit_meter_widgetCFUi": "is__Q24xhud17unit_meter_widgetCFUi",
+        "type__Q24xhud17unit_meter_widgetCFv": "type__Q24xhud17unit_meter_widgetCFv",
+        "destroy__Q24xhud17unit_meter_widgetFv": "destroy__Q24xhud17unit_meter_widgetFv",
+        "__ct__Q24xhud17unit_meter_widgetFRCQ24xhud16unit_meter_asset": "__ct__Q24xhud17unit_meter_widgetFRCQ24xhud16unit_meter_asset",
+        "load__Q24xhud17unit_meter_widgetFR5xBaseR9xDynAssetUi": "load__Q24xhud17unit_meter_widgetFR5xBaseR9xDynAssetUi"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Game/zTaxi.cpp",
+      "target_unit": "SB/Game/zTaxi.cpp",
+      "object": "source/zTaxi.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zTaxiEventCB__FP5xBaseP5xBaseUiPCfP5xBase": "zTaxiEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "zTaxi_Load__FP5zTaxiP7xSerial": "zTaxi_Load__FP5zTaxiP7xSerial",
+        "zTaxi_Save__FP5zTaxiP7xSerial": "zTaxi_Save__FP5zTaxiP7xSerial",
+        "zTaxi_Update__FP5xBaseP6xScenef": "zTaxi_Update__FP5xBaseP6xScenef",
+        "zTaxi_Setup__FP5zTaxi": "zTaxi_Setup__FP5zTaxi",
+        "zTaxi_Init__FP5zTaxiP10taxi_asset": "zTaxi_Init__FP5zTaxiP10taxi_asset",
+        "zTaxi_Init__FR5xBaseR9xDynAssetUi": "zTaxi_Init__FR5xBaseR9xDynAssetUi"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Game/zNPCGoalScript.cpp",
+      "target_unit": "SB/Game/zNPCGoalScript.cpp",
+      "object": "source/zNPCGoalScript.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "NPCMessage__14zNPCGoalScriptFP6NPCMsg": "NPCMessage__14zNPCGoalScriptFP6NPCMsg",
+        "SysEvent__14zNPCGoalScriptFP5xBaseP5xBaseUiPCfP5xBasePi": "SysEvent__14zNPCGoalScriptFP5xBaseP5xBaseUiPCfP5xBasePi",
+        "Exit__14zNPCGoalScriptFfPv": "Exit__14zNPCGoalScriptFfPv",
+        "Enter__14zNPCGoalScriptFfPv": "Enter__14zNPCGoalScriptFfPv",
+        "GOALCreate_Script__FiP10RyzMemGrowPv": "GOALCreate_Script__FiP10RyzMemGrowPv"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Game/zGoo.cpp",
+      "target_unit": "SB/Game/zGoo.cpp",
+      "object": "source/zGoo.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zGooMeltFinished__FP8RpAtomic": "zGooMeltFinished__FP8RpAtomic",
+        "zGooStopTide__Fv": "zGooStopTide__Fv",
+        "zGooCollsEnd__Fv": "zGooCollsEnd__Fv",
+        "zGooCollsBegin__Fv": "zGooCollsBegin__Fv",
+        "zGooIs__FP4xEntRfUi": "zGooIs__FP4xEntRfUi",
+        "zGooAdd__FP4xEntfi": "zGooAdd__FP4xEntfi",
+        "zGooExit__Fv": "zGooExit__Fv",
+        "zGooInit__Fi": "zGooInit__Fi"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Core/x/xTimer.cpp",
+      "target_unit": "SB/Core/x/xTimer.cpp",
+      "object": "source/xTimer.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xTimerUpdate__FP5xBaseP6xScenef": "xTimerUpdate__FP5xBaseP6xScenef",
+        "xTimerEventCB__FP5xBaseP5xBaseUiPCfP5xBase": "xTimerEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "xTimerLoad__FP6xTimerP7xSerial": "xTimerLoad__FP6xTimerP7xSerial",
+        "xTimerSave__FP6xTimerP7xSerial": "xTimerSave__FP6xTimerP7xSerial",
+        "xTimer_ObjIDIsPauseTimer__FUi": "xTimer_ObjIDIsPauseTimer__FUi",
+        "xTimerInit__FPvPv": "xTimerInit__FPvPv"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Game/zGameState.cpp",
+      "target_unit": "SB/Game/zGameState.cpp",
+      "object": "source/zGameState.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zGameModeSwitch__F9eGameMode": "zGameModeSwitch__F9eGameMode",
+        "zGameStateSwitch__Fi": "zGameStateSwitch__Fi",
+        "zGameStateSwitchEvent__Fi": "zGameStateSwitchEvent__Fi",
+        "zGameSetOstrich__F12_GameOstrich": "zGameSetOstrich__F12_GameOstrich",
+        "zGameGetOstrich__Fv": "zGameGetOstrich__Fv",
+        "zGameModeGet__Fv": "zGameModeGet__Fv",
+        "zGameStateGet__Fv": "zGameStateGet__Fv"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Game/zCollGeom.cpp",
+      "target_unit": "SB/Game/zCollGeom.cpp",
+      "object": "source/zCollGeom.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zCollGeom_CamDisable__FP4xEnt": "zCollGeom_CamDisable__FP4xEnt",
+        "zCollGeom_CamEnable__FP4xEnt": "zCollGeom_CamEnable__FP4xEnt",
+        "zCollGeom_Init__Fv": "zCollGeom_Init__Fv",
+        "zCollGeom_EntSetup__FP4xEnt": "zCollGeom_EntSetup__FP4xEnt"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Game/zNPCTypeTest.cpp",
+      "target_unit": "SB/Game/zNPCTypeTest.cpp",
+      "object": "source/zNPCTypeTest.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "AnimPick__8zNPCTestFi16en_NPC_GOAL_SPOTP5xGoal": "AnimPick__8zNPCTestFi16en_NPC_GOAL_SPOTP5xGoal",
+        "SelfSetup__8zNPCTestFv": "SelfSetup__8zNPCTestFv",
+        "Process__8zNPCTestFP6xScenef": "Process__8zNPCTestFP6xScenef",
+        "Reset__8zNPCTestFv": "Reset__8zNPCTestFv",
+        "ZNPC_AnimTable_Test__Fv": "ZNPC_AnimTable_Test__Fv",
+        "ZNPC_Destroy_Test__FP12xFactoryInst": "ZNPC_Destroy_Test__FP12xFactoryInst",
+        "ZNPC_Create_Test__FiP10RyzMemGrowPv": "ZNPC_Create_Test__FiP10RyzMemGrowPv",
+        "ZNPC_Test_Shutdown__Fv": "ZNPC_Test_Shutdown__Fv",
+        "ZNPC_Test_Startup__Fv": "ZNPC_Test_Startup__Fv"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Game/zScript.cpp",
+      "target_unit": "SB/Game/zScript.cpp",
+      "object": "source/zScript.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zScriptUpdate__FP5xBaseP6xScenef": "zScriptUpdate__FP5xBaseP6xScenef",
+        "zScriptExecuteEvents__FP8_zScriptff": "zScriptExecuteEvents__FP8_zScriptff",
+        "zScriptEventCB__FP5xBaseP5xBaseUiPCfP5xBase": "zScriptEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "zScriptLoad__FP8_zScriptP7xSerial": "zScriptLoad__FP8_zScriptP7xSerial",
+        "zScriptSave__FP8_zScriptP7xSerial": "zScriptSave__FP8_zScriptP7xSerial",
+        "zScriptInit__FPvPv": "zScriptInit__FPvPv"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Core/x/xSkyDome.cpp",
+      "target_unit": "SB/Core/x/xSkyDome.cpp",
+      "object": "source/xSkyDome.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xSkyDome_Render__Fv": "xSkyDome_Render__Fv",
+        "xSkyDome_AddEntity__FP4xEntii": "xSkyDome_AddEntity__FP4xEntii",
+        "xSkyDome_Setup__Fv": "xSkyDome_Setup__Fv",
+        "xSkyDome_EmptyRender__FP4xEnt": "xSkyDome_EmptyRender__FP4xEnt"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Game/zActionLine.cpp",
+      "target_unit": "SB/Game/zActionLine.cpp",
+      "object": "source/zActionLine.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zActionLineRender__Fv": "zActionLineRender__Fv",
+        "RenderActionLine__FP14_tagActionLine": "RenderActionLine__FP14_tagActionLine",
+        "zActionLineUpdate__Ff": "zActionLineUpdate__Ff",
+        "zActionLineInit__Fv": "zActionLineInit__Fv"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Game/zNPCTypeSubBoss.cpp",
+      "target_unit": "SB/Game/zNPCTypeSubBoss.cpp",
+      "object": "source/zNPCTypeSubBoss.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "Setup__11zNPCSubBossFv": "Setup__11zNPCSubBossFv",
+        "ZNPC_Destroy_SubBoss__FP12xFactoryInst": "ZNPC_Destroy_SubBoss__FP12xFactoryInst",
+        "ZNPC_Create_SubBoss__FiP10RyzMemGrowPv": "ZNPC_Create_SubBoss__FiP10RyzMemGrowPv",
+        "zNPCSubBoss_SceneFinish__Fv": "zNPCSubBoss_SceneFinish__Fv",
+        "zNPCSubBoss_ScenePrepare__Fv": "zNPCSubBoss_ScenePrepare__Fv",
+        "ZNPC_SubBoss_Shutdown__Fv": "ZNPC_SubBoss_Shutdown__Fv",
+        "ZNPC_SubBoss_Startup__Fv": "ZNPC_SubBoss_Startup__Fv"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Game/zFMV.cpp",
+      "target_unit": "SB/Game/zFMV.cpp",
+      "object": "source/zFMV.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zFMVFileGetName__F8eFMVFile": "zFMVFileGetName__F8eFMVFile",
+        "zFMVPlay__FPcUifbb": "zFMVPlay__FPcUifbb"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Game/zPickupTable.cpp",
+      "target_unit": "SB/Game/zPickupTable.cpp",
+      "object": "source/zPickupTable.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zPickupTableInit__Fv": "zPickupTableInit__Fv"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Game/zPortal.cpp",
+      "target_unit": "SB/Game/zPortal.cpp",
+      "object": "source/zPortal.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zPortalEventCB__FP5xBaseP5xBaseUiPCfP5xBase": "zPortalEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "zPortalLoad__FP8_zPortalP7xSerial": "zPortalLoad__FP8_zPortalP7xSerial",
+        "zPortalSave__FP8_zPortalP7xSerial": "zPortalSave__FP8_zPortalP7xSerial",
+        "zPortalInit__FPvPv": "zPortalInit__FPvPv"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Core/x/xRenderState.cpp",
+      "target_unit": "SB/Core/x/xRenderState.cpp",
+      "object": "source/xRenderState.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "xRenderStateSetDstBlendMode__Fi": "xRenderStateSetDstBlendMode__Fi",
+        "xRenderStateSetSrcBlendMode__Fi": "xRenderStateSetSrcBlendMode__Fi",
+        "xRenderStateSetTexture__FP9RwTexture": "xRenderStateSetTexture__FP9RwTexture"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Game/zEvent.cpp",
+      "target_unit": "SB/Game/zEvent.cpp",
+      "object": "source/zEvent.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "zEventName__FUi": "zEventName__FUi"
+      },
+      "calls": []
+    },
+    {
+      "source": "src/SB/Core/p2/iCollide.cpp",
+      "target_unit": "SB/Core/p2/iCollide.cpp",
+      "object": "source/iCollide.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "FindNearestPointOnLine__FP5xVec3P5xVec3P5xVec3P5xVec3": "FindNearestPointOnLine__FP5xVec3P5xVec3P5xVec3P5xVec3",
+        "PointWithinTriangle__FP5xVec3PP5xVec3P5xVec3": "PointWithinTriangle__FP5xVec3PP5xVec3P5xVec3",
+        "iBoxForModelLocal__FP4xBoxPC14xModelInstance": "iBoxForModelLocal__FP4xBoxPC14xModelInstance",
+        "iBoxForModel__FP4xBoxPC14xModelInstance": "iBoxForModel__FP4xBoxPC14xModelInstance",
+        "iCollideInit__FP6xScene": "iCollideInit__FP6xScene",
+        "iRayHitsEnv__FPC5xRay3PC4xEnvP7xCollis": "iRayHitsEnv__FPC5xRay3PC4xEnvP7xCollis",
+        "iRayHitsModel__FPC5xRay3PC14xModelInstanceP7xCollis": "iRayHitsModel__FPC5xRay3PC14xModelInstanceP7xCollis",
+        "iSphereForModel__FP7xSpherePC14xModelInstance": "iSphereForModel__FP7xSpherePC14xModelInstance",
+        "iSphereHitsEnv3__FPC7xSpherePC4xEnvP7xCollisUcf": "iSphereHitsEnv3__FPC7xSpherePC4xEnvP7xCollisUcf",
+        "iSphereHitsEnv4__FPC7xSpherePC4xEnvPC7xMat3x3P7xCollis": "iSphereHitsEnv4__FPC7xSpherePC4xEnvPC7xMat3x3P7xCollis",
+        "iSphereHitsEnv__FPC7xSpherePC4xEnvP7xCollis": "iSphereHitsEnv__FPC7xSpherePC4xEnvP7xCollis",
+        "iSphereHitsModel3__FPC7xSpherePC14xModelInstanceP7xCollisUcf": "iSphereHitsModel3__FPC7xSpherePC14xModelInstanceP7xCollisUcf",
+        "properSphereIsectTri__FPC5xVec3fP5xVec3PfP19RpCollisionTriangle": "properSphereIsectTri__FPC5xVec3fP5xVec3PfP19RpCollisionTriangle",
+        "rayHitsEnvBackwardCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv": "rayHitsEnvBackwardCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv",
+        "rayHitsEnvCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv": "rayHitsEnvCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv",
+        "rayHitsModelBackwardCB__FP14RpIntersectionP19RpCollisionTrianglefPv": "rayHitsModelBackwardCB__FP14RpIntersectionP19RpCollisionTrianglefPv",
+        "rayHitsModelCB__FP14RpIntersectionP19RpCollisionTrianglefPv": "rayHitsModelCB__FP14RpIntersectionP19RpCollisionTrianglefPv",
+        "sphereHitsEnv3CB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv": "sphereHitsEnv3CB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv",
+        "sphereHitsEnv4CB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv": "sphereHitsEnv4CB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv",
+        "sphereHitsEnvCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv": "sphereHitsEnvCB__FP14RpIntersectionP13RpWorldSectorP19RpCollisionTrianglefPv",
+        "sphereHitsModel3CB__FP14RpIntersectionP19RpCollisionTrianglefPv": "sphereHitsModel3CB__FP14RpIntersectionP19RpCollisionTrianglefPv"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/p2/iModel.cpp",
+      "target_unit": "SB/Core/p2/iModel.cpp",
+      "object": "source/iModel.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "FindAtomicCallback__FP8RpAtomicPv": "FindAtomicCallback__FP8RpAtomicPv",
+        "GetChildFrameHierarchy__FP7RwFramePv": "GetChildFrameHierarchy__FP7RwFramePv",
+        "NextAtomicCallback__FP8RpAtomicPv": "NextAtomicCallback__FP8RpAtomicPv",
+        "iModelAnimMatrices__FP8RpAtomicP5xQuatP5xVec3P11RwMatrixTag": "iModelAnimMatrices__FP8RpAtomicP5xQuatP5xVec3P11RwMatrixTag",
+        "iModelCullPlusShadow__FP8RpAtomicP11RwMatrixTagP5xVec3Pi": "iModelCullPlusShadow__FP8RpAtomicP11RwMatrixTagP5xVec3Pi",
+        "iModelCull__FP8RpAtomicP11RwMatrixTag": "iModelCull__FP8RpAtomicP11RwMatrixTag",
+        "iModelFileNew__FPvUi": "iModelFileNew__FPvUi",
+        "iModelFile_RWMultiAtomic__FP8RpAtomic": "iModelFile_RWMultiAtomic__FP8RpAtomic",
+        "iModelInit__Fv": "iModelInit__Fv",
+        "iModelMaterialMulCB__FP10RpMaterialPv": "iModelMaterialMulCB__FP10RpMaterialPv",
+        "iModelMaterialMul__FP8RpAtomicfff": "iModelMaterialMul__FP8RpAtomicfff",
+        "iModelNormalEval__FP5xVec3RC8RpAtomicPC11RwMatrixTagUiiPC5xVec3": "iModelNormalEval__FP5xVec3RC8RpAtomicPC11RwMatrixTagUiiPC5xVec3",
+        "iModelNumBones__FP8RpAtomic": "iModelNumBones__FP8RpAtomic",
+        "iModelRender__FP8RpAtomicP11RwMatrixTag": "iModelRender__FP8RpAtomicP11RwMatrixTag",
+        "iModelResetMaterial__FP8RpAtomic": "iModelResetMaterial__FP8RpAtomic",
+        "iModelSetMaterialAlpha__FP8RpAtomicUc": "iModelSetMaterialAlpha__FP8RpAtomicUc",
+        "iModelSetMaterialTextureCB__FP10RpMaterialPv": "iModelSetMaterialTextureCB__FP10RpMaterialPv",
+        "iModelSetMaterialTexture__FP8RpAtomicPv": "iModelSetMaterialTexture__FP8RpAtomicPv",
+        "iModelSphereCull__FP7xSphere": "iModelSphereCull__FP7xSphere",
+        "iModelStreamRead__FP8RwStream": "iModelStreamRead__FP8RwStream",
+        "iModelTagEval__FP8RpAtomicPC19xModelTagWithNormalP11RwMatrixTagP5xVec3P5xVec3": "iModelTagEval__FP8RpAtomicPC19xModelTagWithNormalP11RwMatrixTagP5xVec3P5xVec3",
+        "iModelTagEval__FP8RpAtomicPC9xModelTagP11RwMatrixTagP5xVec3": "iModelTagEval__FP8RpAtomicPC9xModelTagP11RwMatrixTagP5xVec3",
+        "iModelTagInternal__FP9xModelTagP8RpAtomicfffi": "iModelTagInternal__FP9xModelTagP8RpAtomicfffi",
+        "iModelTagSetup__FP19xModelTagWithNormalP8RpAtomicfff": "iModelTagSetup__FP19xModelTagWithNormalP8RpAtomicfff",
+        "iModelTagSetup__FP9xModelTagP8RpAtomicfff": "iModelTagSetup__FP9xModelTagP8RpAtomicfff",
+        "iModelTagUserData__FP9xModelTagP8RpAtomicfffi": "iModelTagUserData__FP9xModelTagP8RpAtomicfffi",
+        "iModelUnload__FP8RpAtomic": "iModelUnload__FP8RpAtomic",
+        "iModelVertCount__FP8RpAtomic": "iModelVertCount__FP8RpAtomic",
+        "iModelVertEval__FP8RpAtomicUiUiP11RwMatrixTagP5xVec3P5xVec3": "iModelVertEval__FP8RpAtomicUiUiP11RwMatrixTagP5xVec3P5xVec3",
+        "iModel_SetLightKit__FP9xLightKit": "iModel_SetLightKit__FP9xLightKit"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/p2/iAnimSKB.cpp",
+      "target_unit": "SB/Core/p2/iAnimSKB.cpp",
+      "object": "source/iAnimSKB.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "_iAnimSKBAdjustTranslate__FP14iAnimSKBHeaderUiPfPf": "_iAnimSKBAdjustTranslate__FP14iAnimSKBHeaderUiPfPf",
+        "_iAnimSKBExtractTranslate__FP14iAnimSKBHeaderUiP5xVec3i": "_iAnimSKBExtractTranslate__FP14iAnimSKBHeaderUiP5xVec3i",
+        "iAnimDurationSKB__FP14iAnimSKBHeader": "iAnimDurationSKB__FP14iAnimSKBHeader",
+        "iAnimEvalSKB__FP14iAnimSKBHeaderfUiP5xVec3P5xQuat": "iAnimEvalSKB__FP14iAnimSKBHeaderfUiP5xVec3P5xQuat"
+      },
+      "calls": [],
+      "gp_relocations": []
     }
   ]
 }

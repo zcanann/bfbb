@@ -37,4 +37,10 @@ signed int iModelCullPlusShadow(RpAtomic* model, RwMatrix* mat, xVec3* shadowVec
 unsigned int iModelNumBones(RpAtomic* model);
 signed int iModelSphereCull(xSphere* sphere);
 
+RpAtomic* iModelFileNew(void* buffer, unsigned int size);
+void iModelUnload(RpAtomic* userdata);
+
+// Defined in iModelBucketPDS.cpp; the PS2 model layer builds its fast pipelines first.
+void iModelInitFastPipes();
+
 #endif

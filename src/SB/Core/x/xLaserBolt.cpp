@@ -143,10 +143,16 @@ void xLaserBoltEmitter::update(F32 dt)
     {
         bolt& b = *it;
 
+#if defined(PS2)
+        // PS2 DWARF has no snapshot local: collided and prev_dist read b.dist directly.
+        bool collided = b.dist >= b.hit_dist;
+        F32 prev_dist = b.dist;
+#else
         // Keep the comparison snapshot separate from the saved F32 value (retail fmr).
         F64 dist = b.dist;
         bool collided = dist >= b.hit_dist;
         F32 prev_dist = dist;
+#endif
 
         update(b, dt);
 

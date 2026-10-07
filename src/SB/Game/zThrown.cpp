@@ -840,7 +840,7 @@ void zThrown_LaunchVel(xEnt* ent, xVec3* vel)
 void zThrown_LaunchDir(xEnt* ent, xVec3* dir)
 {
     ThrowableStats* stats;
-    xVec3 vel;
+    xVec3 tempVel;
 
     globals.player.carry.flyingToTarget = NULL;
 
@@ -859,12 +859,11 @@ void zThrown_LaunchDir(xEnt* ent, xVec3* dir)
         stats = zThrowableModels;
     }
 
-    F32 speedXZ = stats->launch->throwSpeedXZ;
-    vel.x = speedXZ * dir->x;
-    vel.y = stats->launch->throwSpeedY;
-    vel.z = speedXZ * dir->z;
+    tempVel.x = stats->launch->throwSpeedXZ * dir->x;
+    tempVel.y = stats->launch->throwSpeedY;
+    tempVel.z = stats->launch->throwSpeedXZ * dir->z;
 
-    zThrown_LaunchVel(ent, &vel);
+    zThrown_LaunchVel(ent, &tempVel);
 }
 
 S32 zThrown_LaunchPos(xEnt* ent, xVec3* pos, xVec3* dir)

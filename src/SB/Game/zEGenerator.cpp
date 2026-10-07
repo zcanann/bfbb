@@ -6,6 +6,7 @@
 #include "zCollGeom.h"
 #include "zGlobals.h"
 #include "zThrown.h"
+#include "xstransvc.h"
 
 #include <types.h>
 

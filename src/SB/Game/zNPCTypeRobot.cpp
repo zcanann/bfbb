@@ -6334,11 +6334,13 @@ void UVAModelInfo::Clear()
     memset(this, 0, sizeof(UVAModelInfo));
 }
 
+#if !defined(PS2)
 void UVAModelInfo::UVVelSet(float x, float y)
 {
     offset_vel.x = x;
     offset_vel.y = y;
 }
+#endif
 
 zNPCLassoInfo* zNPCRobot::PRIV_GetLassoData()
 {

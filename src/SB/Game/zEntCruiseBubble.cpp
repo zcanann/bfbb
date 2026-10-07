@@ -3110,7 +3110,7 @@ namespace cruise_bubble
             m->up.assign(0.0f, 1.0f, 0.0f);
         }
 
-        void cruise_bubble::state_player_aim::face_camera(F32 dt)
+        inline void cruise_bubble::state_player_aim::face_camera(F32 dt)
         {
             xMat4x3* mat = &globals.camera.mat;
 
@@ -3227,7 +3227,7 @@ namespace cruise_bubble
             this->move();
         }
 
-        void cruise_bubble::state_missle_appear::move()
+        inline void cruise_bubble::state_missle_appear::move()
         {
             xMat4x3& mat = *cruise_bubble::get_missle_mat();
             xVec3 euler;
@@ -3425,7 +3425,7 @@ namespace cruise_bubble
             return true;
         }
 
-        U8 cruise_bubble::state_missle_fly::collide()
+        inline U8 cruise_bubble::state_missle_fly::collide()
         {
             xVec3* hit_norm = &shared.hit_norm;
             xVec3* hit_loc = &shared.hit_loc;
@@ -3503,7 +3503,7 @@ namespace cruise_bubble
             mat->pos += mat->at * move;
         }
 
-        void cruise_bubble::state_missle_fly::update_turn(F32 dt)
+        inline void cruise_bubble::state_missle_fly::update_turn(F32 dt)
         {
             xVec2& sp = shared.sp;
             xVec2& last_sp = shared.last_sp;
@@ -3697,7 +3697,7 @@ namespace cruise_bubble
             }
         }
 
-        void cruise_bubble::state_missle_explode::apply_damage(F32 radius)
+        inline void cruise_bubble::state_missle_explode::apply_damage(F32 radius)
         {
             xBound bound;
 
@@ -3850,7 +3850,7 @@ namespace cruise_bubble
             }
         }
 
-        void cruise_bubble::state_camera_aim::collide_inward()
+        inline void cruise_bubble::state_camera_aim::collide_inward()
         {
             zGlobals& g = globals;
             xSweptSphere sws;
@@ -4063,7 +4063,7 @@ namespace cruise_bubble
             return STATE_CAMERA_ATTACH;
         }
 
-        void cruise_bubble::state_camera_attach::lock_targets()
+        inline void cruise_bubble::state_camera_attach::lock_targets()
         {
             cb_lock_targets targets;
             xBound bound;
@@ -4341,6 +4341,7 @@ WEAK F32 xSCurve(F32 val, F32 s)
     return -(0.5f * s - val) / t;
 }
 
+#if !defined(PS2)
 WEAK F32 xSCurve(float val)
 {
     if (val <= 0.5f)
@@ -4350,6 +4351,7 @@ WEAK F32 xSCurve(float val)
     F32 a = (1.0f - val);
     return (1.0f - (2.0f * a * a));
 }
+#endif
 
 // The following belong in shared headers (the target emits them as weak, per-TU
 // symbols out of a header). They are defined here because this agent may not
@@ -4360,15 +4362,19 @@ xTriggerAsset* zEntTriggerAsset(const zEntTrigger& trig)
     return (xTriggerAsset*)(trig.asset + 1);
 }
 
+#if !defined(PS2)
 void NPCHazard::MarkForRecycle()
 {
     this->flg_hazard |= 4;
 }
+#endif
 
+#if !defined(PS2)
 void xQuickCullForSphere(xQCData* q, const xSphere* s)
 {
     xQuickCullForSphere(&xqc_def_ctrl, q, s);
 }
+#endif
 
 
 namespace auto_tweak
@@ -4394,8 +4400,7 @@ namespace auto_tweak
     inline void load_param<xVec3, S32>(xVec3& value, S32, S32, S32, xModelAssetParam* ap, U32 apsize,
                                 const char* name)
     {
-        xVec3 def = value;
-        zParamGetVector(ap, apsize, name, def, &value);
+        zParamGetVector(ap, apsize, name, value, &value);
     }
 
     template <>

@@ -1,7 +1,11 @@
 #include "zLight.h"
 #include "zLightEffect.h"
 #include "zGlobals.h"
+#if defined(PS2)
+#include <rwplcore.h>
+#else
 #include "../rwsdk/rwplcore.h"
+#endif
 #include "xShadow.h"
 #include "xPartition.h"
 #include "xString.h"

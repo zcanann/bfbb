@@ -240,17 +240,16 @@ static void zCameraConversUpdate(xCamera* cam, F32 dt)
     }
     else
     {
-        F32 ease1 = EaseInOut(1.0f - (zcam_tmr / zcam_ttm));
-        F32 ease2 = EaseInOut(1.0f - (zcam_tmr - dt) / zcam_ttm);
-        F32 t = (ease2 - ease1) / (1.0f - ease1);
+        F32 s = EaseInOut(1.0f - (zcam_tmr / zcam_ttm));
+        s = (EaseInOut(1.0f - (zcam_tmr - dt) / zcam_ttm) - s) / (1.0f - s);
 
-        xQuat tOld;
-        xQuat tNew;
-        xQuatFromMat(&tOld, &cam->mat);
-        xQuatSlerp(&tNew, &tOld, &zcam_quat, t);
-        xQuatToMat(&tNew, &cam->mat);
-        xVec3Lerp(&cam->mat.pos, &cam->mat.pos, &zcam_dest->pos, t);
-        zcam_fovcurr = zcam_fovcurr * (1.0f - t) + (zcam_fovdest * t);
+        xQuat a;
+        xQuat c;
+        xQuatFromMat(&a, &cam->mat);
+        xQuatSlerp(&c, &a, &zcam_quat, s);
+        xQuatToMat(&c, &cam->mat);
+        xVec3Lerp(&cam->mat.pos, &cam->mat.pos, &zcam_dest->pos, s);
+        zcam_fovcurr = zcam_fovcurr * (1.0f - s) + (zcam_fovdest * s);
     }
 
     zcam_tmr = zcam_tmr - dt;
@@ -594,14 +593,7 @@ static void zCameraFreeLookSetGoals(xCamera* cam, F32 pitch_s, F32& dgoal, F32& 
                             zcam_playervel->y * zcam_playervel->y +
                             zcam_playervel->z * zcam_playervel->z);
 
-            bool lenValid = false;
-            if (zcam_playervel != NULL)
-            {
-                if (len)
-                {
-                    lenValid = true;
-                }
-            }
+            bool lenValid = zcam_playervel && len;
 
             if (lenValid)
             {
@@ -1371,12 +1363,12 @@ U32 zCamera_FlyOnly()
 {
     switch (globals.sceneCur->sceneID)
     {
-    case 'PG12':
-    case 'KF05':
-    case 'DB02':
     case 'SM02':
     case 'SM03':
     case 'SM04':
+    case 'DB02':
+    case 'KF05':
+    case 'PG12':
         return 1;
     default:
         return 0;

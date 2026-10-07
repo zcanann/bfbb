@@ -163,8 +163,25 @@ RwRaster* NPCC_FindRWRaster(RwTexture* txtr);
 void zNPC_SNDInit();
 S32 NPCC_LampStatus();
 F32 NPCC_TmrCycle(F32* tmr, F32 dt, F32 interval);
+#if defined(PS2)
+inline xVec3* NPCC_rightDir(xEnt* ent)
+{
+    return (xVec3*)&ent->model->Mat->right;
+}
+
+inline xVec3* NPCC_faceDir(xEnt* ent)
+{
+    return (xVec3*)&ent->model->Mat->at;
+}
+
+inline xVec3* NPCC_upDir(xEnt* ent)
+{
+    return (xVec3*)&ent->model->Mat->up;
+}
+#else
 xVec3* NPCC_rightDir(xEnt* ent);
 xVec3* NPCC_faceDir(xEnt* ent);
+#endif
 void NPCC_ang_toXZDir(F32 angle, xVec3* dir);
 F32 NPCC_dir_toXZAng(const xVec3* dir);
 F32 NPCC_aimVary(xVec3* dir_aim, xVec3* pos_src, xVec3* pos_tgt, F32 dst_vary, S32 flg_vary,

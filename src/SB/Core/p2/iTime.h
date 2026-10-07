@@ -15,5 +15,6 @@ void iTimeGameAdvance(F32 elapsed);
 void iTimeSetGame(F32 time);
 void iProfileClear(U32 sceneID);
 void iFuncProfileDump();
+void iFuncProfileParse(char* elfPath, S32 profile);
 
 #endif

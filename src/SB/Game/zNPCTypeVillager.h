@@ -350,7 +350,7 @@ struct zNPCNewsFish : zNPCVillager
     void SpeakStop(); // 0xAC zNPCNewsFish
 
     void TalkOnScreen(S32 talkOnScreen);
-    S32 say(say_enum const*, unsigned long, S32, S32);
+    S32 say(say_enum const*, size_t, S32, S32);
     U8 say(say_enum s, S32 flags);
     say_data* get_said(zNPCNewsFish::say_enum say)
     {

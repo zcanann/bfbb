@@ -1206,10 +1206,12 @@ __declspec(weak) grid_index& grid_index::operator=(const grid_index& other)
     return *this;
 }
 
+#if !defined(PS2)
 void xEntEnable(xEnt* ent)
 {
     xBaseEnable(ent);
 }
+#endif
 
 // Emit the concrete callback specialization, then its weak index helper.
 #define XGRID_BOUND_CALLBACK cb_ray_hits_ent

@@ -3591,9 +3591,9 @@ S32 zNPCGoalDutchmanPostFlame::Exit(F32 dt, void* updCtxt)
 
 S32 zNPCGoalDutchmanPostFlame::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
 {
-    U32 id = owner.AnimCurState()->ID;
+    xAnimState* anim = owner.AnimCurState();
 
-    if (id == g_hash_subbanim[1])
+    if (anim->ID == g_hash_subbanim[1])
     {
         owner.update_round();
 
@@ -3713,9 +3713,9 @@ S32 zNPCGoalDutchmanDamage::Exit(F32 dt, void* updCtxt)
 
 S32 zNPCGoalDutchmanDamage::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
 {
-    U32 id = owner.AnimCurState()->ID;
+    xAnimState* anim = owner.AnimCurState();
 
-    if (id == g_hash_subbanim[19])
+    if (anim->ID == g_hash_subbanim[19])
     {
         owner.LassoSyncAnims(LASS_ANIM_GRAB);
     }
@@ -3812,8 +3812,7 @@ namespace auto_tweak
     inline void load_param<xVec3, S32>(xVec3& value, S32, S32, S32, xModelAssetParam* ap, U32 apsize,
                                 const char* name)
     {
-        xVec3 def = value;
-        zParamGetVector(ap, apsize, name, def, &value);
+        zParamGetVector(ap, apsize, name, value, &value);
     }
 
     template <>

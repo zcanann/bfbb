@@ -9,10 +9,12 @@ inline xVec3& xVec3::invert()
     return *this;
 }
 
+#if !defined(PS2)
 inline F32 xexp(F32 x)
 {
     return std::expf(x);
 }
+#endif
 
 #if !defined(INLINE) && !defined(PS2)
 inline float std::expf(float x)
@@ -39,6 +41,7 @@ inline F32 xrmod(F32 ang)
 }
 #endif
 
+#if !defined(PS2)
 inline xVec3& xVec3::operator/=(F32 f)
 {
     F32 f2 = 1.0f / f;
@@ -49,12 +52,14 @@ inline xVec3& xVec3::operator/=(F32 f)
 
     return *this;
 }
+#endif
 
 inline xVec3& xVec3::right_normalize()
 {
     return this->safe_normalize(xVec3::m_UnitAxisX);
 }
 
+#if !defined(PS2)
 inline xVec3& xVec3::safe_normalize(const xVec3& val)
 {
     F32 len = this->length2();
@@ -68,6 +73,7 @@ inline xVec3& xVec3::safe_normalize(const xVec3& val)
         return (*this *= 1.0f / xsqrt(len));
     }
 }
+#endif
 
 #if !defined(XBOX)
 template <>

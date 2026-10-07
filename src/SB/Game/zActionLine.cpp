@@ -1,5 +1,8 @@
 #include <types.h>
 #include <rwcore.h>
+#if defined(PS2)
+#include <rwim3d.h>
+#endif
 
 #include "xstransvc.h"
 #include "xString.h"

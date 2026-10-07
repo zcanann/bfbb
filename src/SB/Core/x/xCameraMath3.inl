@@ -1,5 +1,6 @@
 // TU-private definitions preserve the retail xCamera inline section.
 
+#if !defined(PS2)
 inline void xMat4x3Identity(xMat4x3* m)
 {
     xMat4x3Copy(m, &g_I3);
@@ -9,6 +10,7 @@ inline void xMat4x3Copy(xMat4x3* o, const xMat4x3* m)
 {
     memcpy(o, m, sizeof(xMat4x3));
 }
+#endif
 
 #if !defined(PS2) && !defined(XBOX)
 inline void xQuatConj(xQuat* o, const xQuat* q)
@@ -19,6 +21,7 @@ inline void xQuatConj(xQuat* o, const xQuat* q)
 }
 #endif
 
+#if !defined(PS2)
 inline void xMat3x3LookAt(xMat3x3* m, const xVec3* pos, const xVec3* at)
 {
     xVec3 v;
@@ -26,6 +29,7 @@ inline void xMat3x3LookAt(xMat3x3* m, const xVec3* pos, const xVec3* at)
     xVec3Sub(&v, at, pos);
     xMat3x3LookVec(m, &v);
 }
+#endif
 
 static inline void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 {

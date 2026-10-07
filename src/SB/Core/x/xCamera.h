@@ -189,7 +189,16 @@ struct xBinaryCamera
     void stop();
     void update(F32 dt);
     void add_tweaks(char const*);
+#if defined(PS2)
+    void set_targets(xVec3 const& par_1, xVec3 const& par_2, F32 par_3)
+    {
+        this->s1 = (xVec3*)(&par_1);
+        this->s2 = (xVec3*)(&par_2);
+        this->s2_radius = par_3;
+    }
+#else
     void set_targets(xVec3 const& par_1, xVec3 const& par_2, F32 par_3);
+#endif
     void render_debug();
 };
 
@@ -203,7 +212,16 @@ void xCameraBegin(xCamera* cam, S32);
 void xCameraEnd(xCamera* cam, F32 seconds, S32 update_scrn_fx);
 void xCameraShowRaster(xCamera* cam);
 F32 xCameraGetFOV(const xCamera* cam);
+#if defined(PS2)
+inline void xCameraSetFOV(xCamera* cam, F32 fov)
+{
+    cam->fov = fov;
+
+    iCameraSetFOV(cam->lo_cam, fov);
+}
+#else
 void xCameraSetFOV(xCamera* cam, F32 fov);
+#endif
 void xCameraMove(xCamera* cam, U32 flags, F32 dgoal, F32 hgoal, F32 pgoal, F32 tm, F32 tm_acc,
                  F32 tm_dec);
 void xCameraMove(xCamera* cam, const xVec3& loc);

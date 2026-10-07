@@ -1037,7 +1037,7 @@ RpCollBSPTree* _rpCollBSPTreeForAllCapsuleLeafNodeIntersections(
     RwLine lineStack[33];
     RwLine currLine;
 
-    currNode.type = (tree->branchNodes ? 1 : 0) + 1;
+    currNode.type = tree->branchNodes ? 2 : 1;
     currNode.index = 0;
     currLine = *line;
     nStack = 0;
@@ -2287,7 +2287,11 @@ S32 xSweptSphereToScene(xSweptSphere* sws, xScene* sc, xEnt* mover, U8 collType)
     xVec3Sub(&ray.dir, &sws->end, &sws->start);
     ray.max_t = xVec3Length(&ray.dir);
 
+#if defined(PS2)
+    F32 one_len = 1.0f / ray.max_t;
+#else
     F32 one_len = 1.0f / MAX(ray.max_t, 0.00001f);
+#endif
     xVec3SMul(&ray.dir, &ray.dir, one_len);
 
     ray.flags = XRAY3_USE_MAX;
@@ -2318,7 +2322,11 @@ S32 xSweptSphereToStatDyn(xSweptSphere* sws, xScene* sc, xEnt* mover, U8 collTyp
     xVec3Sub(&ray.dir, &sws->end, &sws->start);
     ray.max_t = xVec3Length(&ray.dir);
 
+#if defined(PS2)
+    F32 one_len = 1.0f / ray.max_t;
+#else
     F32 one_len = 1.0f / MAX(ray.max_t, 0.00001f);
+#endif
     xVec3SMul(&ray.dir, &ray.dir, one_len);
 
     ray.flags = XRAY3_USE_MAX;
@@ -2348,7 +2356,11 @@ S32 xSweptSphereToNPC(xSweptSphere* sws, xScene* sc, xEnt* mover, U8 collType)
     xVec3Sub(&ray.dir, &sws->end, &sws->start);
     ray.max_t = xVec3Length(&ray.dir);
 
+#if defined(PS2)
+    F32 one_len = 1.0f / ray.max_t;
+#else
     F32 one_len = 1.0f / MAX(ray.max_t, 0.00001f);
+#endif
     xVec3SMul(&ray.dir, &ray.dir, one_len);
 
     ray.flags = XRAY3_USE_MAX;
@@ -2379,7 +2391,11 @@ S32 xSweptSphereToNonMoving(xSweptSphere* sws, xScene* sc, xEnt* mover, U8 collT
     xVec3Sub(&ray.dir, &sws->end, &sws->start);
     ray.max_t = xVec3Length(&ray.dir);
 
+#if defined(PS2)
+    F32 one_len = 1.0f / ray.max_t;
+#else
     F32 one_len = 1.0f / MAX(ray.max_t, 0.00001f);
+#endif
     xVec3SMul(&ray.dir, &ray.dir, one_len);
 
     ray.flags = (XRAY3_USE_MAX);
@@ -2706,24 +2722,31 @@ xVec3& xVec3::set_abs()
     return *this;
 }
 
+#if !defined(PS2)
 F32 xVec3::dot(const xVec3& v) const
 {
     return x * v.x + y * v.y + z * v.z;
 }
+#endif
 
+#if !defined(PS2)
 xVec3& xVec3::normalize()
 {
     *this /= length();
     return *this;
 }
+#endif
 
+#if !defined(PS2)
 xVec3 xVec3::operator/(F32 f) const
 {
     xVec3 vec = *this;
     vec /= f;
     return vec;
 }
+#endif
 
+#if !defined(PS2)
 void xQuickCullForRay(xQCData* q, const xRay3* r)
 {
     xQuickCullForRay(&xqc_def_ctrl, q, r);
@@ -2733,6 +2756,7 @@ void xQuickCullForBox(xQCData* q, const xBox* box)
 {
     xQuickCullForBox(&xqc_def_ctrl, q, box);
 }
+#endif
 
 bool xSphereHitsCapsule(const xVec3& center, F32 radius, const xVec3& v1, const xVec3& v2,
                         F32 width)
@@ -2755,6 +2779,7 @@ bool xSphereHitsCapsule(const xVec3& center, F32 radius, const xVec3& v1, const 
     return ((r1 >= 0.0f && r1 <= 1.0f) || (r2 >= 0.0f && r2 <= 1.0f));
 }
 
+#if !defined(PS2)
 F32 xVec2::length2() const
 {
     return x * x + y * y;
@@ -2773,3 +2798,4 @@ xVec2& xVec2::operator-=(const xVec2& v)
     y -= v.y;
     return *this;
 }
+#endif

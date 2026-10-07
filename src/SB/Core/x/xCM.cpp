@@ -1,3 +1,8 @@
+#if defined(PS2)
+#include <rwcore.h>
+#include <rwim2d.h>
+#include <rwim3d.h>
+#endif
 #include "xCM.h"
 #include "xEvent.h"
 #include "xFont.h"

@@ -97,7 +97,9 @@ struct RewardList
 // in any header the original TU could have seen from here.
 void zParPTankSpawnSparkles(xVec3* pos, U32 count);
 S32 zParPTankConvertEmitRate(xParEmitter* pe, F32 dt);
+#if !defined(PS2)
 WEAK F32 xVec3DistFast(const xVec3* a, const xVec3* b);
+#endif
 S32 zEntPlayer_InBossBattle();
 
 zParEmitter* gEmitShinySparkles = NULL;
@@ -2361,6 +2363,7 @@ void zEntPickup_RewardPostSetup()
     }
 }
 
+#if !defined(PS2)
 WEAK F32 xVec3DistFast(const xVec3* a, const xVec3* b)
 {
     F32 dx = a->x - b->x;
@@ -2380,3 +2383,4 @@ WEAK void xMat3x3MulRotC(xMat3x3* o, xMat3x3* m, F32 _x, F32 _y, F32 _z, F32 t)
     xMat3x3RotC(&var_38, _x, _y, _z, t);
     xMat3x3Mul(o, m, &var_38);
 }
+#endif

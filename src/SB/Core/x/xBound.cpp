@@ -358,6 +358,7 @@ void xBoundDraw(const xBound* b)
     }
 }
 
+#if !defined(PS2)
 void xQuickCullForBound(xQCData* q, const xBound* b)
 {
     xQuickCullForBound(&xqc_def_ctrl, q, b);
@@ -371,6 +372,7 @@ void xMat4x3Tolocal(xVec3* o, const xMat4x3* m, const xVec3* v)
 
     xMat3x3Tolocal(o, m, o);
 }
+#endif
 
 #if !defined(PS2) && !defined(XBOX)
 void xVec3SMul(xVec3* o, const xVec3* v, F32 s)
@@ -390,6 +392,7 @@ void xVec3Add(xVec3* o, const xVec3* a, const xVec3* b)
 }
 #endif
 
+#if !defined(PS2)
 xVec3& xVec3::assign(F32 x, F32 y, F32 z)
 {
     this->x = x;
@@ -403,6 +406,7 @@ F32 xVec3::length2() const
 {
     return this->x * this->x + this->y * this->y + this->z * this->z;
 }
+#endif
 
 #if !defined(PS2) && !defined(XBOX)
 xVec3 xVec3::operator*(F32 f) const
@@ -425,10 +429,12 @@ xVec3& xVec3::operator*=(F32 f)
 }
 #endif
 
+#if !defined(PS2)
 F32 xVec3::length() const
 {
     return xsqrt(this->length2());
 }
+#endif
 
 #if !defined(PS2) && !defined(XBOX)
 xVec3 xVec3::operator-(const xVec3& v) const

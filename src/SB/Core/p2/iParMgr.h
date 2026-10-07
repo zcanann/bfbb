@@ -36,4 +36,13 @@ void iParMgrInit();
 void iParMgrUpdate(F32 elapsedTime);
 void iParMgrRender();
 
+struct xParGroup;
+void iParMgrRenderParSys_Streak(void* data, xParGroup* ps);
+void iParMgrRenderParSys_QuadStreak(void* data, xParGroup* ps);
+void iParMgrRenderParSys_InvStreak(void* data, xParGroup* ps);
+void iParMgrRenderParSys_Flat(void* data, xParGroup* ps);
+void iParMgrRenderParSys_Static(void* data, xParGroup* ps);
+void iParMgrRenderParSys_Ground(void* data, xParGroup* ps);
+void iParMgrRenderParSys_Sprite(void* data, xParGroup* ps);
+
 #endif

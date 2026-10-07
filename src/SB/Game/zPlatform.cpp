@@ -1,6 +1,8 @@
-// Expanding xSndPlay3D here adds a 0.25f .sdata2 literal that retail does not
-// have; it shifts this unit's pool. See zEnt.h.
+// Expanding xSndPlay3D here adds a 0.25f .sdata2 literal that GameCube retail
+// does not have; it shifts this unit's pool. See zEnt.h. PS2 retail expands it.
+#ifndef PS2
 #define XSNDPLAY3D_OUT_OF_LINE
+#endif
 
 #include "zPlatform.h"
 #include "zEnt.h"
@@ -62,7 +64,7 @@ void zPlatform_Init(zPlatform* plat, xEntAsset* asset)
     plat->passet = passet;
     plat->subType = passet->type;
 
-    if (plat->linkCount) {
+    if (plat->linkCount > 0) {
         plat->link = (xLinkAsset*)(emasset + 1);
     } else {
         plat->link = NULL;
@@ -1135,7 +1137,7 @@ void zPlatform_Dismount(zPlatform* plat)
 static void zPlatformTranslate(xEnt* xent, xVec3* dpos, xMat4x3* dmat)
 {
     zPlatform* plat = (zPlatform*)xent;
-    xEntDefaultTranslate(xent, dpos, dmat);
+    xEntDefaultTranslate(plat, dpos, dmat);
     xEntMotionTranslate(&plat->motion, dpos, dmat);
 }
 
@@ -1416,6 +1418,8 @@ S32 zPlatformEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xB
         break;
     case eEventCameraCollideOff:
         zCollGeom_CamDisable(plat);
+        break;
+    case eEventBreak:
         break;
     case eEventAnimPlay:
     case eEventAnimPlayLoop:

@@ -59,7 +59,11 @@ typedef double F64;
 
 typedef signed char s8;
 typedef signed short s16;
+#if defined(PS2)
+typedef signed int s32;
+#else
 typedef signed long s32;
+#endif
 #ifdef _MSC_VER
 typedef signed __int64 s64;
 #else
@@ -67,7 +71,11 @@ typedef signed long long s64;
 #endif
 typedef unsigned char u8;
 typedef unsigned short u16;
+#if defined(PS2)
+typedef unsigned int u32;
+#else
 typedef unsigned long u32;
+#endif
 #if defined(PS2)
 typedef unsigned int size_t;
 #elif !defined(XBOX)

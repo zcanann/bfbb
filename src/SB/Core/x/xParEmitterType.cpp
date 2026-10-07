@@ -498,7 +498,9 @@ namespace
     void transform_ent_bone(xVec3& loc, xVec3& vel, const xParEmitterAsset& a,
                             const xMat4x3& mat)
     {
-        if (a.e_entbone.flags & 0x1)
+        const xPEEntBone& eb = a.e_entbone;
+
+        if (eb.flags & 0x1)
         {
             xMat3x3RMulVec(&vel, &mat, &a.vel);
         }
@@ -507,33 +509,33 @@ namespace
             vel = a.vel;
         }
 
-        if (a.e_entbone.flags & 0x2)
+        if (eb.flags & 0x2)
         {
-            if (a.e_entbone.flags & 0x4)
+            if (eb.flags & 0x4)
             {
-                xVec3 flat = { a.e_entbone.offset.x, 0.0f, a.e_entbone.offset.z };
+                xVec3 flat = { eb.offset.x, 0.0f, eb.offset.z };
 
                 xMat4x3Toworld(&loc, &mat, &flat);
-                loc.y = a.e_entbone.offset.y;
+                loc.y = eb.offset.y;
             }
             else
             {
-                xMat4x3Toworld(&loc, &mat, &a.e_entbone.offset);
+                xMat4x3Toworld(&loc, &mat, &eb.offset);
             }
         }
         else
         {
-            loc = mat.pos + a.e_entbone.offset;
+            loc = mat.pos + eb.offset;
 
-            if (a.e_entbone.flags & 0x4)
+            if (eb.flags & 0x4)
             {
-                loc.y = a.e_entbone.offset.y;
+                loc.y = eb.offset.y;
             }
         }
 
-        if (a.e_entbone.flags & 0x4)
+        if (eb.flags & 0x4)
         {
-            loc.y = a.e_entbone.offset.y;
+            loc.y = eb.offset.y;
         }
     }
 }
@@ -840,6 +842,7 @@ namespace
 // (.text:0x8011A7E4/0x8011A848/0x8011A87C), in this order. The target's own
 // call graph shows operator* calling operator*= and operator+ calling
 // operator+=, which is the xBound.cpp idiom.
+#if !defined(PS2)
 xVec3 xVec3::operator*(const xVec3& v) const
 {
     xVec3 temp = *this;
@@ -861,3 +864,4 @@ xVec3 xVec3::operator+(F32 f) const
     temp += f;
     return temp;
 }
+#endif

@@ -29,6 +29,7 @@
 #include "zCamera.h"
 #include "zGrid.h"
 
+
 extern const char bossSandyStrings[];
 
 // Indices into g_strz_bossanim / g_hash_bossanim (see zNPCTypeBoss.cpp).  These
@@ -270,7 +271,7 @@ U32 HeadIsCarried(xAnimTransition*, xAnimSingle*, void*)
 
 U32 HeadNotCarried(xAnimTransition*, xAnimSingle*, void*)
 {
-    return !(globals.player.carry.grabbed == sSandyPtr->headBoulder);
+    return globals.player.carry.grabbed != sSandyPtr->headBoulder;
 }
 
 U32 HeadIsShocked(xAnimTransition*, xAnimSingle*, void*)
@@ -2558,13 +2559,13 @@ static S32 idleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32, void*)
     {
         if (length > 12.0f) // 12.0
         {
-            *trantype = GOAL_TRAN_SET;
             nextgoal = 'NGB3';
+            *trantype = GOAL_TRAN_SET;
         }
         else
         {
-            *trantype = GOAL_TRAN_SET;
             nextgoal = 'NGB4';
+            *trantype = GOAL_TRAN_SET;
         }
     }
 
@@ -2598,18 +2599,18 @@ static S32 tauntCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
     {
         if (globals.player.ControlOff)
         {
-            *trantype = GOAL_TRAN_SET;
             nextgoal = 'NGB1';
+            *trantype = GOAL_TRAN_SET;
         }
         else if (length > 12.0f) // 12.0
         {
-            *trantype = GOAL_TRAN_SET;
             nextgoal = 'NGB3';
+            *trantype = GOAL_TRAN_SET;
         }
         else
         {
-            *trantype = GOAL_TRAN_SET;
             nextgoal = 'NGB4';
+            *trantype = GOAL_TRAN_SET;
         }
     }
 
@@ -2661,43 +2662,43 @@ static S32 chaseCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
 
     if (globals.player.ControlOff)
     {
-        *trantype = GOAL_TRAN_SET;
         nextgoal = 'NGB1';
+        *trantype = GOAL_TRAN_SET;
     }
     else if (chase->timeInGoal > 0.30000001192092896f)
     {
         if (length < 12.0f)
         {
-            *trantype = GOAL_TRAN_SET;
             nextgoal = 'NGB4';
+            *trantype = GOAL_TRAN_SET;
         }
         else if (sChaseTimer > 2.5f)
         {
             if (sandy->round != 1 && sNumAttacks == 1)
             {
-                *trantype = GOAL_TRAN_SET;
                 nextgoal = 'NGB:';
+                *trantype = GOAL_TRAN_SET;
             }
             else if (sNumAttacks == 0)
             {
-                *trantype = GOAL_TRAN_SET;
                 nextgoal = 'NGB6';
+                *trantype = GOAL_TRAN_SET;
             }
             else if (sandy->round == 1 && sNumAttacks >= 1)
             {
-                *trantype = GOAL_TRAN_SET;
                 nextgoal = 'NGB7';
+                *trantype = GOAL_TRAN_SET;
             }
             else if (sandy->round != 1 && sNumAttacks >= 2)
             {
-                *trantype = GOAL_TRAN_SET;
                 nextgoal = 'NGB7';
+                *trantype = GOAL_TRAN_SET;
             }
         }
         else if (sandy->round == 1 && sNumAttacks == 1 && ringDistSq < 9.0f)
         {
-            *trantype = GOAL_TRAN_SET;
             nextgoal = 'NGB7';
+            *trantype = GOAL_TRAN_SET;
         }
     }
 
@@ -2709,8 +2710,7 @@ static S32 meleeCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
     zNPCGoalBossSandyMelee* melee = (zNPCGoalBossSandyMelee*)rawgoal;
     zNPCBSandy* sandy = (zNPCBSandy*)melee->psyche->clt_owner;
     S32 nextgoal = 0;
-    U32 idx;
-    U32 numHints;
+    U32 numWarnings;
     xVec3 tempVector;
     F32 length;
 
@@ -2724,8 +2724,8 @@ static S32 meleeCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
     {
         if (globals.player.ControlOff)
         {
-            *trantype = GOAL_TRAN_SET;
             nextgoal = 'NGB1';
+            *trantype = GOAL_TRAN_SET;
         }
         else if (sandy->bossFlags & 0x2)
         {
@@ -2735,8 +2735,8 @@ static S32 meleeCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
         }
         else if (length > 12.0f)
         {
-            *trantype = GOAL_TRAN_SET;
             nextgoal = 'NGB3';
+            *trantype = GOAL_TRAN_SET;
         }
         else
         {
@@ -2748,27 +2748,23 @@ static S32 meleeCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
 
     if (nextgoal == 'NGB2')
     {
-        numHints = sandy->nfFlags & 0x3;
+        numWarnings = sandy->nfFlags & 0x3;
 
-        if (numHints < 3 || (xrand() & 0x300) == 0)
+        if (numWarnings < 3 || (xrand() & 0x300) == 0)
         {
-            idx = 2;
-            if (numHints < 3)
-            {
-                idx = numHints;
-            }
+            numWarnings = (numWarnings < 3) ? numWarnings : 2;
 
             if (sandy->round == 2)
             {
-                sandy->newsfish->SpeakStart(sNFSoundValue[idx + 9], 0, 0xFFFFFFFF);
+                sandy->newsfish->SpeakStart(sNFSoundValue[numWarnings + 9], 0, 0xFFFFFFFF);
             }
             else
             {
-                sandy->newsfish->SpeakStart(sNFSoundValue[idx], 0, 0xFFFFFFFF);
+                sandy->newsfish->SpeakStart(sNFSoundValue[numWarnings], 0, 0xFFFFFFFF);
             }
 
             sandy->nfFlags &= ~0x3;
-            sandy->nfFlags |= idx + 1;
+            sandy->nfFlags |= numWarnings + 1;
         }
     }
 
@@ -2785,8 +2781,8 @@ static S32 noHeadCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
     {
         if (sandy->AnimTimeRemain(NULL) < 1.7000000476837158f * dt) // 1.7
         {
-            *trantype = GOAL_TRAN_SET;
             nextgoal = 'NGB1';
+            *trantype = GOAL_TRAN_SET;
         }
     }
 
@@ -2820,24 +2816,24 @@ static S32 elbowDropCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, voi
     {
         if (globals.player.ControlOff)
         {
-            *trantype = GOAL_TRAN_SET;
             nextgoal = 'NGB1';
+            *trantype = GOAL_TRAN_SET;
         }
         else if (sandy->bossFlags & 2)
         {
             sandy->bossFlags &= ~2; // clear bit 2
-            *trantype = GOAL_TRAN_SET;
             nextgoal = 'NGB2';
+            *trantype = GOAL_TRAN_SET;
         }
         else if (length < 12.0f) // 12.0
         {
-            *trantype = GOAL_TRAN_SET;
             nextgoal = 'NGB4';
+            *trantype = GOAL_TRAN_SET;
         }
         else
         {
-            *trantype = GOAL_TRAN_SET;
             nextgoal = 'NGB3';
+            *trantype = GOAL_TRAN_SET;
         }
     }
 
@@ -2856,13 +2852,13 @@ static S32 leapCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
         {
             if (sandy->bossFlags & 2)
             {
-                *trantype = GOAL_TRAN_SET;
                 nextgoal = 'NGB9';
+                *trantype = GOAL_TRAN_SET;
             }
             else
             {
-                *trantype = GOAL_TRAN_SET;
                 nextgoal = 'NGB8';
+                *trantype = GOAL_TRAN_SET;
             }
         }
     }
@@ -2880,8 +2876,8 @@ static S32 sitCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
     {
         xSndPlay3D(xStrHash("B101_SC_headoff1"), 2.31f, 0.0f, 0x0, 0x0, sandy, 30.0f, SND_CAT_GAME,
                    0.0f);
-        *trantype = GOAL_TRAN_SET;
         nextgoal = 'NGB5';
+        *trantype = GOAL_TRAN_SET;
     }
     else if (sit->sitFlags & 0x1)
     {
@@ -3253,7 +3249,6 @@ S32 zNPCGoalBossSandyNoHead::Process(en_trantype* trantype, F32 dt, void* updCtx
 {
     zNPCBSandy* sandy = (zNPCBSandy*)psyche->clt_owner;
     U32 numHints;
-    U32 hintsGiven;
     xVec3 newAt;
     F32 lerpFactor;
     xMat4x3 boneMat;
@@ -3285,15 +3280,11 @@ S32 zNPCGoalBossSandyNoHead::Process(en_trantype* trantype, F32 dt, void* updCtx
 
             if ((sandy->nfFlags & 0x4) == 0 && (sandy->round == 2 || sandy->round == 3))
             {
-                hintsGiven = (sandy->nfFlags >> 3) & 3;
+                numHints = (sandy->nfFlags & 0x18) >> 3;
 
-                if (hintsGiven < 3 || (xrand() & 0x300) == 0)
+                if (numHints < 3 || (xrand() & 0x300) == 0)
                 {
-                    numHints = 2;
-                    if (hintsGiven < 3)
-                    {
-                        numHints = hintsGiven;
-                    }
+                    numHints = (numHints < 3) ? numHints : 2;
 
                     if (sandy->round == 2)
                     {
@@ -3787,7 +3778,6 @@ S32 zNPCGoalBossSandyLeap::Exit(F32 dt, void* updCtxt)
 S32 zNPCGoalBossSandySit::Enter(F32 dt, void* updCtxt)
 {
     zNPCBSandy* sandy = (zNPCBSandy*)psyche->clt_owner;
-    U32 idx;
     U32 numHints;
 
     timeInGoal = 0.0f;
@@ -3797,20 +3787,16 @@ S32 zNPCGoalBossSandySit::Enter(F32 dt, void* updCtxt)
 
     if ((sandy->nfFlags & 0x4) == 0 && sandy->round == 1)
     {
-        numHints = (sandy->nfFlags >> 3) & 3;
+        numHints = (sandy->nfFlags & 0x18) >> 3;
 
         if (numHints < 3 || (xrand() & 0x300) == 0)
         {
-            idx = 2;
-            if (numHints < 3)
-            {
-                idx = numHints;
-            }
+            numHints = (numHints < 3) ? numHints : 2;
 
-            sandy->newsfish->SpeakStart(sNFSoundValue[idx + 3], 0, 0xFFFFFFFF);
+            sandy->newsfish->SpeakStart(sNFSoundValue[numHints + 3], 0, 0xFFFFFFFF);
 
             sandy->nfFlags &= ~0x18;
-            sandy->nfFlags |= (idx + 1) * 8;
+            sandy->nfFlags |= (numHints + 1) * 8;
         }
     }
 
@@ -3819,14 +3805,14 @@ S32 zNPCGoalBossSandySit::Enter(F32 dt, void* updCtxt)
 
 S32 zNPCGoalBossSandySit::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
 {
-    RwMatrix* bmat;
     zNPCBSandy* sandy = (zNPCBSandy*)psyche->clt_owner;
-    S32 inRing;
-    S32 numSpins;
-    S32 numHints;
     F32 popFactor;
+    S32 numSpins;
+    xVec3* pos;
+    S32 inRing;
     xVec3 boulderCenter;
     xVec3 shrapVel;
+    S32 numHints;
 
     timeInGoal += dt;
 
@@ -3959,10 +3945,9 @@ S32 zNPCGoalBossSandySit::Process(en_trantype* trantype, F32 dt, void* updCtxt, 
                    0.0f);
         zEntEvent(sandy, sandy, eEventNPCHPDecremented);
 
-        bmat = sandy->headBoulder->model->Mat;
+        pos = (xVec3*)&sandy->headBoulder->model->Mat->pos;
 
-        inRing =
-            bmat->pos.x > -3.0f && bmat->pos.x < 3.0f && bmat->pos.z > -3.0f && bmat->pos.z < 3.0f;
+        inRing = pos->x > -3.0f && pos->x < 3.0f && pos->z > -3.0f && pos->z < 3.0f;
 
         if (inRing || (sandy->hitPoints == 6 && (sandy->hangingScoreboard->flags & 0x1)))
         {
@@ -3987,9 +3972,9 @@ S32 zNPCGoalBossSandySit::Process(en_trantype* trantype, F32 dt, void* updCtxt, 
 
         if (!inRing)
         {
-            if (bmat->pos.x > bmat->pos.z)
+            if (pos->x > pos->z)
             {
-                if (bmat->pos.x < -bmat->pos.z)
+                if (pos->x < -pos->z)
                 {
                     sandy->lightRigShrap->initCB(sandy->lightRigShrap, sandy->lightRig[2]->model,
                                                  NULL, NULL);
@@ -4002,7 +3987,7 @@ S32 zNPCGoalBossSandySit::Process(en_trantype* trantype, F32 dt, void* updCtxt, 
             }
             else
             {
-                if (bmat->pos.x < -bmat->pos.z)
+                if (pos->x < -pos->z)
                 {
                     sandy->lightRigShrap->initCB(sandy->lightRigShrap, sandy->lightRig[0]->model,
                                                  NULL, NULL);
@@ -4529,9 +4514,11 @@ void xBinaryCamera::add_tweaks(char const*)
 {
 }
 
+#if !defined(PS2)
 void xBinaryCamera::set_targets(xVec3 const& par_1, xVec3 const& par_2, F32 par_3)
 {
     this->s1 = (xVec3*)(&par_1);
     this->s2 = (xVec3*)(&par_2);
     this->s2_radius = par_3;
 }
+#endif

@@ -9,6 +9,9 @@
 #include "zGlobals.h"
 
 #include <string.h>
+#if defined(PS2)
+#include <rwim3d.h>
+#endif
 
 RwCamera* globalCamera;
 static RwCamera* sMainGameCamera;
@@ -116,7 +119,9 @@ void iCameraEnd(RwCamera* cam)
 {
     iScrFxCameraEndScene(cam);
     RwCameraEndUpdate(cam);
+#if !defined(PS2)
     iScrFxPostCameraEnd(cam);
+#endif
 }
 
 void iCameraShowRaster(RwCamera* cam)

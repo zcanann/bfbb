@@ -30,7 +30,7 @@ inline void __deadstripped_xCamera_quat(xQuat& dest, const xQuat& source)
     dest = source;
 }
 
-#if !defined(XBOX)
+#if !defined(XBOX) && !defined(PS2)
 inline F32 xacos(F32 x)
 {
     return std::acosf(x);
@@ -44,9 +44,11 @@ inline float std::acosf(float x)
 }
 #endif
 
+#if !defined(PS2)
 inline void xVec3AddTo(xVec3* o, const xVec3* v)
 {
     o->x += v->x;
     o->y += v->y;
     o->z += v->z;
 }
+#endif

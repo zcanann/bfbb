@@ -1,7 +1,11 @@
 #include "xShadow.h"
 
 #include "rpworld.h"
+#if defined(PS2)
+#include <rwsdk/rpcollbsptree.h>
+#else
 #include "rpcollbsptree.h"
+#endif
 
 #include "xMath.h"
 #include "xMathInlines.h"
@@ -19,7 +23,17 @@
 #include "zGlobals.h"
 
 #include <types.h>
+#if defined(PS2)
+#include <stdlib.h>
+#include <rwplcore.h>
+#include <rwim2d.h>
+#include <rwim3d.h>
+#include "iParMgr.h"
+#include "xJSP.h"
+#include "xClumpColl.h"
+#else
 #include <PowerPC_EABI_Support\MSL_C\MSL_Common\stdlib.h>
+#endif
 #include <string.h>
 
 RwRGBAReal ShadowLightColor = { 1.0f, 1.0f, 1.0f, 1.0f };
@@ -73,14 +87,18 @@ void xShadowRenderWorld(xVec3* center, F32 radius, F32 max_dist);
 void xShadowRender(xVec3* center, F32 radius, F32 max_dist);
 void xShadow_ListAdd(xEnt* ent);
 void xShadowManager_Add(xEnt* ent);
+#if !defined(PS2)
 static void GCSaveFrameBuffer();
+#endif
 static RwCamera* ShadowCameraSetSpherePersp(RwCamera* camera, RwV3d* center, F32 radius);
 int Im2DRenderQuad(float x1, float y1, float x2, float y2, float z, float recipCamZ, float uvOffset);
 
 static RwCamera* ShadowCameraUpdate(RwCamera* shadowCamera, void* model, void (*renderCB)(void*),
                                     xVec3* center, F32 radius, S32 shadowMode);
 static void InvertRaster(RwCamera* shadowCamera);
+#if !defined(PS2)
 static void GCRestoreFrameBuffer();
+#endif
 
 static void xShadow_PickByRayCast(xShadowMgr* mgr);
 static void xShadow_PickEntForNPC(xShadowMgr* mgr);
@@ -95,7 +113,9 @@ void __deadstripped_xShadow_draw(const xVec3* center, F32 radius, U32 flags)
 void xShadowInit()
 {
     xShadowCameraCreate();
+#if !defined(PS2)
     gc_saveraster = RwRasterCreate(256, 256, 32, 0x504);
+#endif
     shadow_ent_count = 0;
     ShadowLight = RpLightCreate(1);
     RpLightSetColor(ShadowLight, &ShadowLightColor);
@@ -763,7 +783,9 @@ static RwCamera* ShadowCameraUpdate(RwCamera* shadowCamera, void* model, void (*
         RwCameraEndUpdate(camera);
     }
 
+#if !defined(PS2)
     GCSaveFrameBuffer();
+#endif
 
     shadowCamera->frameBuffer->width--;
     shadowCamera->frameBuffer->height--;
@@ -793,7 +815,9 @@ static RwCamera* ShadowCameraUpdate(RwCamera* shadowCamera, void* model, void (*
         RwRenderStateSet(rwRENDERSTATEZTESTENABLE, (void*)1);
 
         RwCameraEndUpdate(shadowCamera);
+#if !defined(PS2)
         RwGameCubeCameraTextureFlush(shadowCamera->frameBuffer, 0);
+#endif
     }
 
     if (camera != NULL)
@@ -802,7 +826,9 @@ static RwCamera* ShadowCameraUpdate(RwCamera* shadowCamera, void* model, void (*
         iCameraFrustumPlanes(camera, globals.camera.frustplane);
     }
 
+#if !defined(PS2)
     GCRestoreFrameBuffer();
+#endif
     RwRenderStateSet(rwRENDERSTATEFOGENABLE, (void*)fogstate);
 
     return shadowCamera;
@@ -979,6 +1005,7 @@ static S32 ShadowRender(RwCamera* shadowCamera, RwRaster* shadowRast, RpIntersec
     return 1;
 }
 
+#if !defined(PS2)
 void GCSaveFrameBuffer()
 {
     RwGameCubeCameraTextureFlush(gc_saveraster, 0);
@@ -1003,6 +1030,7 @@ static void GCRestoreFrameBuffer()
     RwRenderStateSet(rwRENDERSTATESRCBLEND,     (void*)5);
     RwRenderStateSet(rwRENDERSTATEDESTBLEND,    (void*)6);
 }
+#endif
 
 static RwCamera* ShadowCameraCreatePersp(S32 param)
 {

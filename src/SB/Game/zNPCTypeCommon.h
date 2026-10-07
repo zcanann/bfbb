@@ -402,7 +402,14 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
     {
         return xEntGetCenter(this);
     }
+#if defined(PS2)
+    xVec3* Pos()
+    {
+        return (xVec3*)&model->Mat->pos;
+    }
+#else
     xVec3* Pos();
+#endif
     RwMatrix* BoneMat(S32 unk) const
     {
         return &this->model->Mat[unk];
@@ -416,9 +423,40 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
     {
         XZVecToPos(unk1, xEntGetPos(&globals.player.ent), unk2);
     }
+#if defined(PS2)
+    F32 XZDstSqToPlayer(xVec3* dir, F32* dy)
+    {
+        return XZDstSqToPos(xEntGetPos(&globals.player.ent), dir, dy);
+    }
+    F32 XZDstSqToPos(const xVec3* pos, xVec3* dir, F32* dy)
+    {
+        xVec3 tmp;
+
+        if (!dir)
+        {
+            dir = &tmp;
+        }
+
+        XZVecToPos(dir, pos, dy);
+
+        return xVec3Length2(dir);
+    }
+    void XZVecToPos(xVec3* dir, const xVec3* pos, F32* dy)
+    {
+        xVec3Sub(dir, pos, Pos());
+
+        if (dy)
+        {
+            *dy = dir->y;
+        }
+
+        dir->y = 0.0f;
+    }
+#else
     F32 XZDstSqToPlayer(xVec3* unk1, F32* unk2);
     F32 XZDstSqToPos(const xVec3* unk1, xVec3* unk2, F32* unk3);
     void XZVecToPos(xVec3* unk1, const xVec3* unk2, F32* unk3);
+#endif
     void XYZVecToPos(xVec3* dest, xVec3* unk2)
     {
         xVec3Sub(dest, unk2, Pos());

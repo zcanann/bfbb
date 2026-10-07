@@ -222,7 +222,9 @@ namespace
         U32 event_mask; //Offset 08d40
         query_enum query; //Offset 08d44
         void reset_type(); //Offset 08d48
+#if !defined(PS2)
         wait_context& operator=(const wait_context& rhs); //Offset 08d4c
+#endif
     };
 
     struct trigger_pair

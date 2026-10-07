@@ -314,6 +314,7 @@ namespace
 
         shared.auto_wait = *c;
     }
+#if !defined(PS2)
     wait_context& wait_context::operator=(const wait_context& rhs)
     {
         *(U16*)&type = *(const U16*)&rhs.type;
@@ -323,6 +324,7 @@ namespace
         query = rhs.query;
         return *this;
     }
+#endif
     static void reset_tag_auto_wait(xtextbox::jot& j, const xtextbox&, const xtextbox& ctb,
                                     const xtextbox::split_tag&)
     {
@@ -691,14 +693,8 @@ namespace
     static void parse_tag_allow_quit(xtextbox::jot& j, const xtextbox&, const xtextbox&,
                                      const xtextbox::split_tag& ti)
     {
-        U8 c = 0;
-
-        if (ti.action.size != 1 || ti.action.text[0] != '=' || read_bool(ti.value, 1) != 0)
-        {
-            c = 1;
-        }
-
-        *(U8*)&j.context = c;
+        U8& c = *(U8*)&j.context;
+        c = ti.action.size != 1 || *ti.action.text != '=' || read_bool(ti.value, true);
     }
 
     static void reset_tag_allow_quit(xtextbox::jot& j, const xtextbox&, const xtextbox& ctb,
@@ -816,17 +812,8 @@ namespace
     static void parse_tag_trap(xtextbox::jot& j, const xtextbox& ctb, const xtextbox& tb,
                                const xtextbox::split_tag& ti)
     {
-        U8 c = false;
-
-        if (ti.action.size == 1 && *ti.action.text == '=' && !read_bool(ti.value, true))
-        {
-        }
-        else
-        {
-            c = true;
-        }
-
-        *(U8*)&j.context = c;
+        U8& c = *(U8*)&j.context;
+        c = ti.action.size != 1 || *ti.action.text != '=' || read_bool(ti.value, true);
     }
 
     static void reset_tag_trap(xtextbox::jot& j, const xtextbox&, const xtextbox& ctb,
@@ -927,11 +914,10 @@ namespace
 
         switch (talk.asset->audio_effect)
         {
-        case 0:
-
-            break;
         case 1:
             zMusicSetVolume(music_fade, music_fade_delay);
+            break;
+        case 0:
             break;
         }
 
@@ -946,11 +932,10 @@ namespace
         {
             switch (shared.active->asset->audio_effect)
             {
-            case 0:
-
-                break;
             case 1:
                 zMusicSetVolume(1.0f, music_fade_delay);
+                break;
+            case 0:
                 break;
             }
         }
@@ -1274,7 +1259,7 @@ void ztalkbox::load(const asset_type& tasset)
     baseType = eBaseTypeTalkBox;
     asset = &tasset;
     eventFunc = cb_dispatch;
-    if (linkCount != 0)
+    if (linkCount > 0)
     {
         link = (xLinkAsset*)(&tasset + 1);
     }
@@ -1492,7 +1477,7 @@ void ztalkbox::stop_talk()
 }
 namespace
 {
-    static void stop()
+    static inline void stop()
     {
         if (!shared.state)
         {

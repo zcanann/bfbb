@@ -3,7 +3,11 @@
 #include "xMathInlines.h"
 #include "xDebug.h"
 
+#if defined(PS2)
+#include <new.h>
+#else
 #include <PowerPC_EABI_Support/MSL_C++/MSL_Common/Include/new.h>
+#endif
 #include <math.h>
 #include <types.h>
 
@@ -20,7 +24,7 @@ namespace std
 }
 #endif
 
-#if !defined(XBOX)
+#if !defined(XBOX) && !defined(PS2)
 inline F32 xfmod(F32 a, F32 b)
 {
     return std::fmodf(a, b);

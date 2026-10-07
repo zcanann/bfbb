@@ -242,7 +242,7 @@ namespace oob_state
             bool stupid = !idiot_levels[0].triggered;
             idiot_levels[0].triggered = true;
 
-            for (S32 i = 1; i < 6; i++)
+            for (U32 i = 1; i < 6; i++)
             {
                 if (scene == idiot_levels[i].scene)
                 {
@@ -942,7 +942,7 @@ U8 oob_state::update(xScene& scene, F32 dt)
 
 bool oob_state::IsPlayerInControl()
 {
-    return oob_state::shared.control == 0;
+    return !oob_state::shared.control;
 }
 
 F32 oob_state::oob_timer()

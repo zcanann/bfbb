@@ -61,6 +61,7 @@ typedef void (*tweak_change_cb)(tweak_info&);
 #define SOUND_WAVE_RING 10
 
 
+
 namespace
 {
     struct tweak_group
@@ -622,8 +623,8 @@ void lightning_ring::refresh()
                 return;
             }
 
-            arcs_size++;
             i += points - 1;
+            arcs_size++;
         }
     }
 }
@@ -1994,8 +1995,8 @@ void zNPCKingJelly::Damage(en_NPC_DAMAGE_TYPE damtype, xBase*, const xVec3*)
     switch (damtype)
     {
     case DMGTYP_SIDE:
-    case DMGTYP_BOULDER:
     case DMGTYP_BUBBOWL:
+    case DMGTYP_BOULDER:
         if (state == 'NGM5' &&
             (this->shockstate == SS_RELEASE 
             || this->shockstate == SS_COOL_DOWN 
@@ -2006,7 +2007,7 @@ void zNPCKingJelly::Damage(en_NPC_DAMAGE_TYPE damtype, xBase*, const xVec3*)
         break;
     
     case DMGTYP_CRUISEBUBBLE:
-        if (!(state == 'NGM6') && !(state == 'NGM7') )
+        if (state != 'NGM6' && state != 'NGM7')
         {
             set_life(this->life - 1);
         }
@@ -2095,7 +2096,7 @@ void zNPCKingJelly::set_life(S32 life)
     
     this->life = range_limit<S32>(life, 0, tweak.max_life);
     S32 state = this->psy_instinct->GIDOfActive();
-    if (!(state == 'NGM6') && !(state == 'NGM7') && !(this->life >= oldlife))
+    if (state != 'NGM6' && state != 'NGM7' && this->life < oldlife)
     {
         this->psy_instinct->GoalSet('NGM6', GOAL_STAT_PROCESS);
         start_blink();
@@ -2174,7 +2175,7 @@ void zNPCKingJelly::disable_child(zNPCKingJelly::child_data& child)
 
 void zNPCKingJelly::enable_child(zNPCKingJelly::child_data& child)
 {
-    if (child.active == false)
+    if (!child.active)
     {
         child.active = true;
     }
@@ -2246,9 +2247,9 @@ void zNPCKingJelly::taunt()
 {
     switch (psy_instinct->GIDOfActive())
     {
-    case NPC_GOAL_KJTAUNT:
     case NPC_GOAL_KJDAMAGE:
     case NPC_GOAL_KJDEATH:
+    case NPC_GOAL_KJTAUNT:
         return;
     }
 
@@ -2348,10 +2349,11 @@ namespace
 
 xVec3 zNPCKingJelly::get_away() const
 {
+    xEnt& player = globals.player.ent;
     xVec3 dir;
 
-    dir.x = globals.player.ent.bound.sph.center.x - bound.sph.center.x;
-    dir.z = globals.player.ent.bound.sph.center.z - bound.sph.center.z;
+    dir.x = player.bound.sph.center.x - bound.sph.center.x;
+    dir.z = player.bound.sph.center.z - bound.sph.center.z;
     dir.y = 0.0f;
 
     F32 dist2 = dir.x * dir.x + dir.z * dir.z;
@@ -2848,7 +2850,7 @@ void zNPCKingJelly::update_rings(F32 dt)
         {
             ring.update(dt);
 
-            if (!ring.property.color.a)
+            if (ring.property.color.a <= 0)
             {
                 ring.destroy();
             }
@@ -3119,11 +3121,11 @@ void zNPCKingJelly::end_charge()
 
     for (S32 i = 0; i < 7; i++)
     {
-        if (tentacle_lightning[i] != NULL)
+        zLightning*& l = tentacle_lightning[i];
+        if (l != NULL)
         {
-            tentacle_lightning[i]->flags &= ~0x10;
-            tentacle_lightning[i]->time_left = tentacle_lightning[i]->time_total =
-                tweak.interval.release;
+            l->flags &= ~0x10;
+            l->time_left = l->time_total = tweak.interval.release;
         }
     }
 }
@@ -3451,17 +3453,17 @@ S32 zNPCGoalKJBored::Process(en_trantype* trantype, float dt, void* updCtxt, xSc
     zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
 
     xAnimState* anim = kj.AnimCurState();
-    bool playing = false;
-    for (S32 i = 0; i < 2; i++)
+    U8 found = false;
+    for (U32 i = 0; i < 2; i++)
     {
         if (anim->ID == g_hash_subbanim[bored_anims[i]])
         {
-            playing = true;
+            found = true;
             break;
         }
     }
 
-    if (!playing || dt > kj.AnimTimeRemain(NULL))
+    if (!found || dt > kj.AnimTimeRemain(NULL))
     {
         *trantype = GOAL_TRAN_SET;
         return NPC_GOAL_KJSHOCKGROUND;

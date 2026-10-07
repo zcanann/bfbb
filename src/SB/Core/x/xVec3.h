@@ -143,6 +143,94 @@ inline F32 xVec3Dot(const xVec3* a, const xVec3* b)
 F32 xVec3Dot(const xVec3* a, const xVec3* b);
 #endif
 
+#if defined(PS2)
+#include "xMathInlines.h"
+
+inline xVec3& xVec3::assign(F32 x, F32 y, F32 z)
+{
+    this->x = x;
+    this->y = y;
+    this->z = z;
+
+    return *this;
+}
+
+inline F32 xVec3::length2() const
+{
+    return this->x * this->x + this->y * this->y + this->z * this->z;
+}
+
+inline F32 xVec3::length() const
+{
+    return xsqrt(this->length2());
+}
+
+inline F32 xVec3::dot(const xVec3& v) const
+{
+    return x * v.x + y * v.y + z * v.z;
+}
+
+inline xVec3& xVec3::operator/=(F32 f)
+{
+    F32 f2 = 1.0f / f;
+
+    this->x *= f2;
+    this->y *= f2;
+    this->z *= f2;
+
+    return *this;
+}
+
+inline xVec3& xVec3::normalize()
+{
+    *this /= length();
+    return *this;
+}
+
+inline xVec3 xVec3::operator*(const xVec3& v) const
+{
+    xVec3 temp = *this;
+    temp *= v;
+    return temp;
+}
+
+inline xVec3& xVec3::operator*=(const xVec3& v)
+{
+    x *= v.x;
+    y *= v.y;
+    z *= v.z;
+    return *this;
+}
+
+inline xVec3 xVec3::operator+(F32 f) const
+{
+    xVec3 temp = *this;
+    temp += f;
+    return temp;
+}
+
+inline xVec3 xVec3::operator/(F32 f) const
+{
+    xVec3 vec = *this;
+    vec /= f;
+    return vec;
+}
+
+inline xVec3& xVec3::safe_normalize(const xVec3& val)
+{
+    F32 len = this->length2();
+
+    if (len < 0.000099999997f)
+    {
+        return (*this = val);
+    }
+    else
+    {
+        return (*this *= 1.0f / xsqrt(len));
+    }
+}
+#endif
+
 inline xVec3& xVec3::assign(float dt)
 {
     return assign(dt, dt, dt);

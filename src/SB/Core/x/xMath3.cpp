@@ -55,6 +55,13 @@ void xMath3Init()
     g_I3.pos.z = g_O3.z;
 }
 
+#if defined(PS2)
+void xMath3Exit()
+{
+    iMath3Exit();
+}
+#endif
+
 void xLine3VecDist2(const xVec3* p1, const xVec3* p2, const xVec3* v, xIsect* isx)
 {
     xVec3 ldir;
@@ -103,18 +110,9 @@ S32 xPointInBox(const xBox* b, const xVec3* p)
     }
     return 0;
 #else
-    S32 ret = 0;
-    if ((p->x >= b->lower.x) && (p->x <= b->upper.x))
-    {
-        if ((p->y >= b->lower.y) && (p->y <= b->upper.y))
-        {
-            if ((p->z >= b->lower.z) && (p->z <= b->upper.z))
-            {
-                ret = 1;
-            }
-        }
-    }
-    return (char)ret;
+    return ((p->x >= b->lower.x) && (p->x <= b->upper.x)) &&
+           ((p->y >= b->lower.y) && (p->y <= b->upper.y)) &&
+           ((p->z >= b->lower.z) && (p->z <= b->upper.z));
 #endif
 }
 
@@ -330,8 +328,8 @@ void xMat3x3Euler(xMat3x3* m, F32 yaw, F32 pitch, F32 roll)
     m->up.y = icp * icr;
     m->up.z = (isy * isr) + (ic_prod * icy);
 #else
-    F32 is_prod = icy * isp;
     F32 ic_prod = isy * isp;
+    F32 is_prod = icy * isp;
 
     m->right.x = (icy * icr) + (isr * ic_prod);
     m->right.y = icp * isr;
@@ -532,7 +530,7 @@ void xMat3x3Mul(xMat3x3* o, const xMat3x3* a, const xMat3x3* b)
         tp = o;
     }
 
-#if defined(XBOX)
+#if defined(XBOX) || defined(PS2)
     tp->right.x = a->right.z * b->at.x +
                   (a->right.x * b->right.x + a->right.y * b->up.x);
     tp->right.y = a->right.z * b->at.y +
@@ -791,8 +789,8 @@ F32 xQuatNormalize(xQuat* o, const xQuat* q)
 
 void xQuatSlerp(xQuat* o, const xQuat* a, const xQuat* b, F32 t)
 {
-    F32 temp_s;
-    F32 temp_t;
+    F32 asph;
+    F32 bsph;
     F32 one_sintheta;
     F32 abdot;
 
@@ -812,19 +810,19 @@ void xQuatSlerp(xQuat* o, const xQuat* a, const xQuat* b, F32 t)
     }
     if (abdot >= 0.999f)
     {
-        temp_t = 1.0f - t;
-        temp_s = t;
+        asph = 1.0f - t;
+        bsph = t;
     }
     else
     {
         abdot = xacos(abdot);
         one_sintheta = 1.0f / isin(abdot);
-        temp_t = one_sintheta * isin((1.0f - t) * abdot);
-        temp_s = one_sintheta * isin(t * abdot);
+        asph = one_sintheta * isin((1.0f - t) * abdot);
+        bsph = one_sintheta * isin(t * abdot);
     }
 
-    xQuatSMul(&qp1, a, temp_t);
-    xQuatSMul(&qp2, b, temp_s);
+    xQuatSMul(&qp1, a, asph);
+    xQuatSMul(&qp2, b, bsph);
     xQuatAdd(o, &qp1, &qp2);
     xQuatNormalize(o, o);
     return;

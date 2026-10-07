@@ -3,8 +3,12 @@
 
 #include <types.h>
 #include "xpkrsvc_api.h"
+#if defined(PS2)
+#include <time.h>
+#else
 #include <dolphin/os/OSTime.h>
 #include "PowerPC_EABI_Support\MSL_C\MSL_Common\time.h"
+#endif
 
 #include "xhipio.h"
 #include "xordarray.h"

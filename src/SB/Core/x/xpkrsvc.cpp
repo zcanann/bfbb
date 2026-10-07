@@ -37,7 +37,11 @@ static st_PACKER_READ_FUNCS g_pkr_read_funcmap_original = { 1,
                                                             PKR_ReadDone,
                                                             PKR_LoadLayer,
                                                             PKR_GetAssetSize,
+#if defined(PS2)
+                                                            (void* (*)(st_PACKER_READ_DATA*, U32, char*, void*))PKR_LoadAsset,
+#else
                                                             PKR_LoadAsset,
+#endif
                                                             PKR_AssetByType,
                                                             PKR_AssetCount,
                                                             PKR_IsAssetReady,

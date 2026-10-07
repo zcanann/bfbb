@@ -29,6 +29,7 @@
 #include <rwim3d.h>
 #endif
 
+
 // zEntPlayerDyingInGoo() is DEFINED as S32 in zEntPlayer.cpp and declared U8 here.
 // That looks like something to clean up and is not: retail had the same split, and
 // both halves are load-bearing.
@@ -358,6 +359,7 @@ void zNPCBPatrick::Init(xEntAsset* asset)
         class xEnt * ent; // r19
         class RwTexture * tempTexture; // r2
     */
+    S32 i;
 
     zNPCCommon::Init(asset);
 
@@ -368,7 +370,7 @@ void zNPCBPatrick::Init(xEntAsset* asset)
     Pat_ResetGlobalStuff();
     this->boundList = (xEnt**)xMemAlloc(gActiveHeap, 4 * sizeof(xEnt*), 0);
 
-    for (S32 i = 0; i < 4; i++)
+    for (i = 0; i < 4; i++)
     {
         this->boundList[i] = (xEnt*)xMemAlloc(gActiveHeap, sizeof(xEnt), 0);
         xEnt* ent = this->boundList[i];
@@ -427,7 +429,7 @@ void zNPCBPatrick::Init(xEntAsset* asset)
         this->iceWaveRaster = NULL;
     }
 
-    for (S32 i = 0; i < 37; i++)
+    for (i = 0; i < 37; i++)
     {
         sNFComment[i].soundID = xStrHash(sNFComment[i].soundName);
     }
@@ -716,11 +718,11 @@ void zNPCBPatrick::Reset()
     this->currGlob = 0;
     this->splatTimer = 0.0f;
 
-    for (i = 0; i < 4; i++)
+    for (i = 0; i < 8; i++)
     {
-        for (S32 j = 0; j < 6; j++)
+        for (S32 j = 0; j < 3; j++)
         {
-            bossPatBox* bx = &this->box[2 * i][j];
+            bossPatBox* bx = &this->box[i][j];
 
             bx->velocity = 0.0f;
             bx->flags = 0;
@@ -2190,7 +2192,9 @@ void zNPCBPatrick::gotoRound(S32 num)
 
 void zNPCBPatrick::hiddenByCutscene()
 {
-    for (S32 i = 0; i < 2; i++)
+    S32 i;
+
+    for (i = 0; i < 2; i++)
     {
         this->underwear[i]->state = this->underwear[i]->state & ~0x3F | 1;
         zEntEvent(this->underwear[i], eEventCollision_Visible_On);
@@ -2205,11 +2209,11 @@ void zNPCBPatrick::hiddenByCutscene()
         gCurrentPlayer = eCurrentPlayerSpongeBob;
         globals.player.lassoInfo.swingTarget = NULL;
 
-        for (S32 i = 0; i < 4; i++)
+        for (i = 0; i < 8; i++)
         {
-            for (S32 j = 0; j < 6; j++)
+            for (S32 j = 0; j < 3; j++)
             {
-                bossPatBox* bx = &this->box[2 * i][j];
+                bossPatBox* bx = &this->box[i][j];
                 bx->velocity = 0.0f;
                 bx->flags = 0;
                 bx->pos = 20.0f + bx->minY;
@@ -2236,11 +2240,11 @@ void zNPCBPatrick::hiddenByCutscene()
         globals.player.lassoInfo.swingTarget = NULL;
         zEntEvent(this->safeGroundPortal, eEventTeleportPlayer);
 
-        for (S32 i = 0; i < 4; i++)
+        for (i = 0; i < 8; i++)
         {
-            for (S32 j = 0; j < 6; j++)
+            for (S32 j = 0; j < 3; j++)
             {
-                bossPatBox* bx = &this->box[2 * i][j];
+                bossPatBox* bx = &this->box[i][j];
                 bx->velocity = 0.0f;
                 bx->flags = 0;
                 bx->pos = 20.0f + bx->minY;
@@ -2382,7 +2386,7 @@ void zNPCBPatrick::bossPatBoxUpdate(bossPatBox* bx, F32 dt)
 {
     if (bx->flags & 1)
     {
-        bx->velocity = -(10.0f * dt - bx->velocity);
+        bx->velocity -= 10.0f * dt;
         bx->pos = bx->velocity * dt + bx->pos;
 
         if (bx->pos < this->gooHeight)
@@ -2476,8 +2480,8 @@ static S32 idleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
 
     if (pat->bossFlags & 2)
     {
-        *trantype = GOAL_TRAN_SET;
         nextgoal = NPC_GOAL_BOSSPATTAUNT;
+        *trantype = GOAL_TRAN_SET;
     }
     else if (idle->timeInGoal > 0.75f && idle->timeInGoal > 2.0f)
     {
@@ -2674,8 +2678,8 @@ static S32 spinCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
     {
         pat->hitPoints--;
         zEntEvent(pat, pat, eEventNPCHPDecremented);
-        *trantype = GOAL_TRAN_SET;
         nextgoal = NPC_GOAL_BOSSPATHIT;
+        *trantype = GOAL_TRAN_SET;
 
         if (!(pat->nfFlags & 0x800))
         {
@@ -2748,7 +2752,7 @@ static S32 Pat_FaceTarget(zNPCBPatrick* pat, const xVec3* target, F32 turn_rate,
     xVec3Sub(&newAt, target, (xVec3*)&pat->model->Mat->pos);
 
     newAt.y = 0.0f;
-    F32 a = xVec3Normalize(&newAt, &newAt);
+    xVec3Normalize(&newAt, &newAt);
 
     F32 currRot = xatan2(pat->model->Mat->at.x, pat->model->Mat->at.z);
     F32 desireRot = xatan2(newAt.x, newAt.z);
@@ -3391,6 +3395,7 @@ S32 zNPCGoalBossPatSpin::Enter(F32 dt, void* updCtxt)
         float b; // r5
     */
 
+    zNPCBPatrick* pat;
     xVec3 offset;
     xVec3 back;
     xVec3 center;
@@ -3403,7 +3408,7 @@ S32 zNPCGoalBossPatSpin::Enter(F32 dt, void* updCtxt)
     F32 a;
     F32 b;
 
-    zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
+    pat = (zNPCBPatrick*)this->GetOwner();
 
     this->stage = 0;
 

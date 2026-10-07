@@ -135,11 +135,32 @@ struct xEntShadow
 
 extern S32 xent_entent;
 
+#if defined(PS2)
+inline xMat4x3* xEntGetFrame(const xEnt* ent)
+{
+    return xModelGetFrame(ent->model);
+}
+#else
 xMat4x3* xEntGetFrame(const xEnt* ent);
+#endif
+#if defined(PS2)
+inline void xEntEnable(xEnt* ent)
+{
+    xBaseEnable(ent);
+}
+#else
 void xEntEnable(xEnt* ent);
+#endif
 xVec3* xEntGetCenter(const xEnt* ent);
 xVec3* xEntGetPos(const xEnt* ent);
+#if defined(PS2)
+inline U32 xEntIsVisible(const xEnt* ent)
+{
+    return (ent->flags & 0x81) == 0x1;
+}
+#else
 U32 xEntIsVisible(const xEnt* ent);
+#endif
 void xEntHide(xEnt* ent);
 void xEntShow(xEnt* ent);
 void xEntInitShadow(xEnt& ent, xEntShadow& shadow);
