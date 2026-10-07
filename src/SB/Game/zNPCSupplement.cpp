@@ -693,20 +693,17 @@ void NPCC_BurstBubble(en_npcburst burst, xVec3* pos_base)
 
 void NPCC_MakeASplash(const xVec3* pos, F32 radius)
 {
-    F32 rad_splash = radius;
+    F32 rad_splash;
     F32 tym_splash = 0.35f;
 
-    if (rad_splash < 0.0f)
+    if (radius < 0.0f)
     {
         rad_splash = 1.5f;
     }
     else
     {
-        tym_splash = LERP(CLAMP((rad_splash - 1.5f) / 8.5f, 0.0f, 1.0f), 0.25f, 1.15f);
-        if (1.5f > rad_splash)
-        {
-            rad_splash = 1.5f;
-        }
+        tym_splash = LERP(CLAMP((radius - 1.5f) / 8.5f, 0.0f, 1.0f), 0.25f, 1.15f);
+        rad_splash = MAX(1.5f, radius);
     }
 
     NPCHazard* haz = HAZ_Acquire();
@@ -916,15 +913,14 @@ void NPARMgmt::UpdateAndRender(F32 param_1)
 void NPARParmOilBub::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos, const xVec3* vel) const
 {
     F32 fac_rand = (xurand() * 0.5f + 0.5f);
-    F32 samecalc = tym_lifespan * fac_rand;
     par->fac_abuse  = fac_rand;
+    F32 samecalc = tym_lifespan * fac_rand;
     par->tmr_remain = samecalc;
     par->tym_exist  = samecalc;
     par->pos = *pos;
     par->vel = (vel != NULL) ? *vel : g_O3;
-    F32 uVar2 = siz_base[0];
-    par->xy_size[0] = uVar2;
-    par->xy_size[1] = uVar2;
+    par->xy_size[0] = siz_base[0];
+    par->xy_size[1] = siz_base[0];
     par->color = colr_base;
     par->uv_tl[0] = 0.0;
     par->uv_tl[1] = 0.0;
@@ -1278,7 +1274,6 @@ static void NPAR_TubeSpiralMagic(RwRGBA* color, int unused, F32 pam)
     if (g_isSpecialDay & 0b010000000)
     {
         *color = colr_pinkRyanz;
-        return;
     }
 }
 
@@ -1286,10 +1281,10 @@ static void NPAR_TubeSpiralMagic(RwRGBA* color, int unused, F32 pam)
 void NPARParmTubeConfetti::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos, const xVec3* vel) const
 {
     F32 fac_rand = 0.5f * xurand() + 0.5f;
-
     par->fac_abuse = fac_rand;
-    par->tmr_remain = tym_lifespan * fac_rand;
-    par->tym_exist  = tym_lifespan * fac_rand;
+    F32 samecalc = tym_lifespan * fac_rand;
+    par->tmr_remain = samecalc;
+    par->tym_exist = samecalc;
     par->pos = *pos;
     par->vel = *vel;
     par->xy_size[0] = siz_base[0];
@@ -1444,9 +1439,9 @@ void NPAR_Upd_TubeConfetti(NPARMgmt* mgmt, F32 dt)
 void NPARParmGloveDust::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos, const xVec3* vel) const
 {
     F32 fac_rand = xurand() * 0.5f + 0.5f;
+    par->fac_abuse = fac_rand;
     F32 samecalc = tym_lifespan * fac_rand;
 
-    par->fac_abuse = fac_rand;
     par->tmr_remain = samecalc;
     par->tym_exist = samecalc;
 
@@ -1606,10 +1601,10 @@ void NPAR_Upd_MonsoonRain(NPARMgmt* mgmt, F32 dt)
 void NPARParmSleepyZeez::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos, const xVec3* vel) const
 {
     F32 fac_rand = 0.5f * xurand() + 0.5f;
-
     par->fac_abuse = fac_rand;
-    par->tmr_remain = tym_lifespan * fac_rand;
-    par->tym_exist  = tym_lifespan * fac_rand;
+    F32 samecalc = tym_lifespan * fac_rand;
+    par->tmr_remain = samecalc;
+    par->tym_exist = samecalc;
     par->pos = *pos;
     par->vel = *vel;
     par->xy_size[0] = siz_base[0];
@@ -1623,7 +1618,7 @@ void NPARParmSleepyZeez::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3*
 
     if (pmod == 0)
     {
-        F32 samecalc = 2.0f * (justTheRand - 0.5f );
+        F32 samecalc = 2.0f * (justTheRand - 0.5f);
         S32 idx_cell = samecalc * num_uvcell[1];
         par->uv_tl[0] = idx_cell * du;
         par->uv_tl[1] = (row_uvstart + (int)(samecalc * num_uvcell[0])) * dv;
@@ -1750,9 +1745,9 @@ void NPAR_Upd_SleepyZeez(NPARMgmt* mgmt, F32 dt)
 void NPARParmChuckSplash::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos, const xVec3* vel) const
 {
     F32 fac_rand = xurand() * 0.5f + 0.5f;
+    par->fac_abuse = fac_rand;
     F32 samecalc = tym_lifespan * fac_rand;
 
-    par->fac_abuse = fac_rand;
     par->tmr_remain = samecalc;
     par->tym_exist = samecalc;
 
@@ -1885,9 +1880,9 @@ void NPAR_Upd_ChuckSplash(NPARMgmt* mgmt, F32 dt)
 void NPARParmVisSplash::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos, const xVec3* vel) const
 {
     F32 fac_rand = xurand() * 0.5f + 0.5f;
+    par->fac_abuse = fac_rand;
     F32 samecalc = tym_lifespan * fac_rand;
 
-    par->fac_abuse = fac_rand;
     par->tmr_remain = samecalc;
     par->tym_exist = samecalc;
 
@@ -1994,10 +1989,10 @@ void NPAR_Upd_VisSplash(NPARMgmt* mgmt, F32 dt)
 void NPARParmTarTarGunk::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos, const xVec3* vel) const
 {
     F32 fac_rand = 0.5f * xurand() + 0.5f;
-
     par->fac_abuse = fac_rand;
-    par->tmr_remain = tym_lifespan * fac_rand;
-    par->tym_exist  = tym_lifespan * fac_rand;
+    F32 samecalc = tym_lifespan * fac_rand;
+    par->tmr_remain = samecalc;
+    par->tym_exist = samecalc;
     par->pos = *pos;
     par->vel = *vel;
     par->xy_size[0] = siz_base[0];
@@ -2138,9 +2133,9 @@ void NPAR_Upd_TarTarGunk(NPARMgmt* mgmt, F32 dt)
 void NPARParmDogBreath::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos, const xVec3* vel) const
 {
     F32 fac_rand = xurand() * 0.5f + 0.5f;
+    par->fac_abuse = fac_rand;
     F32 samecalc = tym_lifespan * fac_rand;
 
-    par->fac_abuse = fac_rand;
     par->tmr_remain = samecalc;
     par->tym_exist = samecalc;
 
@@ -2246,10 +2241,10 @@ void NPAR_Upd_DogBreath(NPARMgmt* mgmt, F32 dt)
 void NPARParmFahrwerkz::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos, const xVec3* vel) const
 {
     F32 fac_rand = 0.5f * xurand() + 0.5f;
-    
     par->fac_abuse = fac_rand;
-    par->tmr_remain = tym_lifespan * fac_rand;
-    par->tym_exist  = tym_lifespan * fac_rand;
+    F32 samecalc = tym_lifespan * fac_rand;
+    par->tmr_remain = samecalc;
+    par->tym_exist = samecalc;
     par->pos = *pos;
     par->vel = *vel;
     par->xy_size[0] = siz_base[0];
@@ -2427,7 +2422,8 @@ void NPAR_EmitTubeSpiral(const xVec3* pos, const xVec3* vel, F32 lifespan)
     if ((mgmt != NULL) && (par = mgmt->NextAvail(), par != NULL))
     {
         en_nparmode pmod = NPAR_MODE_SPIRALNORM;
-        g_parm_tubespiral[pmod].ConfigPar(par, pmod, pos, vel, lifespan);
+        const NPARParmTubeSpiral* npparm = &g_parm_tubespiral[pmod];
+        npparm->ConfigPar(par, pmod, pos, vel, lifespan);
     }
 }
 
@@ -2439,7 +2435,8 @@ void NPAR_EmitTubeSpiralCin(const xVec3* pos, const xVec3* vel, float lifespan)
     if ((mgmt != NULL) && (par = mgmt->NextAvail(), par != NULL))
     {
         en_nparmode pmod = NPAR_MODE_SPIRALCINE;
-        g_parm_tubespiral[pmod].ConfigPar(par, pmod, pos, vel, lifespan);
+        const NPARParmTubeSpiral* npparm = &g_parm_tubespiral[pmod];
+        npparm->ConfigPar(par, pmod, pos, vel, lifespan);
     }
 }
 
@@ -2603,7 +2600,7 @@ void NPAR_EmitFireworks(en_nparmode pmod, const xVec3* pos, const xVec3* vel)
 
 static void NPCC_ShadowCacheReset()
 {
-    for (int i = 0; i < sizeof(g_shadCachesInUseFlags) / sizeof(S8); i++)
+    for (int i = 0; i < 16; i++)
     {
         g_shadCachesInUseFlags[i] = 0;
     }
