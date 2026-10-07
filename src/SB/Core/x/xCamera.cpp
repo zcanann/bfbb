@@ -951,16 +951,10 @@ static void xCameraFXInit()
 {
     memset(sCameraFX, 0, sizeof(sCameraFX));
 
-    sCameraFX[0].flags = 0;
-    sCameraFX[1].flags = 0;
-    sCameraFX[2].flags = 0;
-    sCameraFX[3].flags = 0;
-    sCameraFX[4].flags = 0;
-    sCameraFX[5].flags = 0;
-    sCameraFX[6].flags = 0;
-    sCameraFX[7].flags = 0;
-    sCameraFX[8].flags = 0;
-    sCameraFX[9].flags = 0;
+    for (S32 i = 0; i < 10; i++)
+    {
+        sCameraFX[i].flags = 0;
+    }
 }
 
 cameraFX* xCameraFXAlloc()
@@ -968,7 +962,7 @@ cameraFX* xCameraFXAlloc()
     S32 i;
     cameraFX* f;
 
-    for (i = 0; i < sizeof(sCameraFX) / sizeof(cameraFX); i++)
+    for (i = 0; i < 10; i++)
     {
         f = &sCameraFX[i];
 
@@ -1219,7 +1213,7 @@ void xCameraDoCollisions(S32 do_collis, S32 owner)
     xcam_collis_owner_disable &= ~(1 << owner);
     xcam_collis_owner_disable |= !do_collis << owner;
 
-    xcam_do_collis = (xcam_collis_owner_disable == 0);
+    xcam_do_collis = !xcam_collis_owner_disable;
 }
 
 void xCameraMove(xCamera* cam, U32 flags, F32 dgoal, F32 hgoal, F32 pgoal, F32 tm, F32 tm_acc,
@@ -1321,7 +1315,7 @@ void xCameraFOV(xCamera* cam, F32 fov, F32 maxSpeed, F32 dt)
 
 void xCameraLook(xCamera* cam, U32 flags, const xQuat* orn_goal, F32 tm, F32 tm_acc, F32 tm_dec)
 {
-    F32 s; // unused
+    F32 s;
 
     cam->flags = (cam->flags & ~0xF80) | (flags & 0xF80);
     cam->orn_goal = *orn_goal;
@@ -1342,9 +1336,11 @@ void xCameraLook(xCamera* cam, U32 flags, const xQuat* orn_goal, F32 tm, F32 tm_
         cam->ltm_dec = tm_dec;
         cam->ltmr = tm;
 
+        s = 1.0f / (tm - 0.5f * (tm_acc - tm_dec));
+
         xQuatDiff(&cam->orn_diff, &cam->orn_cur, orn_goal);
 
-        cam->orn_epv = 1.0f / (tm - 0.5f * (tm_acc - tm_dec)) * xQuatGetAngle(&cam->orn_diff);
+        cam->orn_epv = s * xQuatGetAngle(&cam->orn_diff);
     }
 }
 

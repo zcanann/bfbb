@@ -1037,7 +1037,7 @@ RpCollBSPTree* _rpCollBSPTreeForAllCapsuleLeafNodeIntersections(
     RwLine lineStack[33];
     RwLine currLine;
 
-    currNode.type = (tree->branchNodes ? 1 : 0) + 1;
+    currNode.type = tree->branchNodes ? 2 : 1;
     currNode.index = 0;
     currLine = *line;
     nStack = 0;
@@ -2287,7 +2287,11 @@ S32 xSweptSphereToScene(xSweptSphere* sws, xScene* sc, xEnt* mover, U8 collType)
     xVec3Sub(&ray.dir, &sws->end, &sws->start);
     ray.max_t = xVec3Length(&ray.dir);
 
+#if defined(PS2)
+    F32 one_len = 1.0f / ray.max_t;
+#else
     F32 one_len = 1.0f / MAX(ray.max_t, 0.00001f);
+#endif
     xVec3SMul(&ray.dir, &ray.dir, one_len);
 
     ray.flags = XRAY3_USE_MAX;
@@ -2318,7 +2322,11 @@ S32 xSweptSphereToStatDyn(xSweptSphere* sws, xScene* sc, xEnt* mover, U8 collTyp
     xVec3Sub(&ray.dir, &sws->end, &sws->start);
     ray.max_t = xVec3Length(&ray.dir);
 
+#if defined(PS2)
+    F32 one_len = 1.0f / ray.max_t;
+#else
     F32 one_len = 1.0f / MAX(ray.max_t, 0.00001f);
+#endif
     xVec3SMul(&ray.dir, &ray.dir, one_len);
 
     ray.flags = XRAY3_USE_MAX;
@@ -2348,7 +2356,11 @@ S32 xSweptSphereToNPC(xSweptSphere* sws, xScene* sc, xEnt* mover, U8 collType)
     xVec3Sub(&ray.dir, &sws->end, &sws->start);
     ray.max_t = xVec3Length(&ray.dir);
 
+#if defined(PS2)
+    F32 one_len = 1.0f / ray.max_t;
+#else
     F32 one_len = 1.0f / MAX(ray.max_t, 0.00001f);
+#endif
     xVec3SMul(&ray.dir, &ray.dir, one_len);
 
     ray.flags = XRAY3_USE_MAX;
@@ -2379,7 +2391,11 @@ S32 xSweptSphereToNonMoving(xSweptSphere* sws, xScene* sc, xEnt* mover, U8 collT
     xVec3Sub(&ray.dir, &sws->end, &sws->start);
     ray.max_t = xVec3Length(&ray.dir);
 
+#if defined(PS2)
+    F32 one_len = 1.0f / ray.max_t;
+#else
     F32 one_len = 1.0f / MAX(ray.max_t, 0.00001f);
+#endif
     xVec3SMul(&ray.dir, &ray.dir, one_len);
 
     ray.flags = (XRAY3_USE_MAX);
