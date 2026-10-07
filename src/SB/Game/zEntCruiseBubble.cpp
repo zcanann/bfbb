@@ -4341,6 +4341,7 @@ WEAK F32 xSCurve(F32 val, F32 s)
     return -(0.5f * s - val) / t;
 }
 
+#if !defined(PS2)
 WEAK F32 xSCurve(float val)
 {
     if (val <= 0.5f)
@@ -4350,6 +4351,7 @@ WEAK F32 xSCurve(float val)
     F32 a = (1.0f - val);
     return (1.0f - (2.0f * a * a));
 }
+#endif
 
 // The following belong in shared headers (the target emits them as weak, per-TU
 // symbols out of a header). They are defined here because this agent may not
@@ -4360,15 +4362,19 @@ xTriggerAsset* zEntTriggerAsset(const zEntTrigger& trig)
     return (xTriggerAsset*)(trig.asset + 1);
 }
 
+#if !defined(PS2)
 void NPCHazard::MarkForRecycle()
 {
     this->flg_hazard |= 4;
 }
+#endif
 
+#if !defined(PS2)
 void xQuickCullForSphere(xQCData* q, const xSphere* s)
 {
     xQuickCullForSphere(&xqc_def_ctrl, q, s);
 }
+#endif
 
 
 namespace auto_tweak

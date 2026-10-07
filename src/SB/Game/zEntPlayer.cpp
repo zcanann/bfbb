@@ -14392,6 +14392,7 @@ S32 zEntPlayerDyingInGoo()
 
 // TODO: Move these to their headers
 
+#if !defined(PS2)
 WEAK void xVec3ScaleC(xVec3* o, const xVec3* v, F32 x, F32 y, F32 z)
 {
     o->x = v->x * x;
@@ -14406,7 +14407,9 @@ WEAK void xMat3x3SMul(xMat3x3* o, const xMat3x3* m, F32 s)
     xVec3SMul(&o->at, &m->at, s);
     o->flags = 0;
 }
+#endif
 
+#if !defined(PS2)
 WEAK U32 xSndIsPlaying(U32 assetID)
 {
     return iSndIsPlaying(assetID);
@@ -14416,6 +14419,7 @@ WEAK bool xSndIsPlayingByHandle(U32 sndID)
 {
     return iSndIsPlayingByHandle(sndID);
 }
+#endif
 
 WEAK S32 zNPCTiki::IsHealthy()
 {
@@ -14435,6 +14439,7 @@ WEAK void zCameraTranslate(xCamera* cam, xVec3* pos)
 // owned by different SDKs, and neither can be made an alias of the other
 // without dragging RenderWare into xMath3.h or vice versa. Casting at the
 // boundary is what retail did, and it costs nothing at runtime.
+#if !defined(PS2)
 WEAK xVec3* NPCC_rightDir(xEnt* ent)
 {
     return (xVec3*)&ent->model->Mat->right;
@@ -14449,6 +14454,7 @@ WEAK xVec3* NPCC_upDir(xEnt* ent)
 {
     return (xVec3*)&ent->model->Mat->up;
 }
+#endif
 
 WEAK S32 zNPCCommon::SetCarryState(en_NPC_CARRY_STATE)
 {
@@ -14460,6 +14466,7 @@ WEAK S32 zNPCCommon::CanRope()
     return flg_vuln & 0x1000000;
 }
 
+#if !defined(PS2)
 WEAK F32 zNPCCommon::XZDstSqToPlayer(xVec3* dir, F32* dy)
 {
     return XZDstSqToPos(xEntGetPos(&globals.player.ent), dir, dy);
@@ -14495,3 +14502,4 @@ WEAK xVec3* zNPCCommon::Pos()
 {
     return (xVec3*)&model->Mat->pos;
 }
+#endif

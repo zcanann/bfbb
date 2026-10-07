@@ -314,6 +314,7 @@ namespace
 
         shared.auto_wait = *c;
     }
+#if !defined(PS2)
     wait_context& wait_context::operator=(const wait_context& rhs)
     {
         *(U16*)&type = *(const U16*)&rhs.type;
@@ -323,6 +324,7 @@ namespace
         query = rhs.query;
         return *this;
     }
+#endif
     static void reset_tag_auto_wait(xtextbox::jot& j, const xtextbox&, const xtextbox& ctb,
                                     const xtextbox::split_tag&)
     {

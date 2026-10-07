@@ -842,6 +842,7 @@ namespace
 // (.text:0x8011A7E4/0x8011A848/0x8011A87C), in this order. The target's own
 // call graph shows operator* calling operator*= and operator+ calling
 // operator+=, which is the xBound.cpp idiom.
+#if !defined(PS2)
 xVec3 xVec3::operator*(const xVec3& v) const
 {
     xVec3 temp = *this;
@@ -863,3 +864,4 @@ xVec3 xVec3::operator+(F32 f) const
     temp += f;
     return temp;
 }
+#endif

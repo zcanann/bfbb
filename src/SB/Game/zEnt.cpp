@@ -928,6 +928,7 @@ void zEntGetShadowParams(xEnt* ent, xVec3* center, F32* radius, xEntShadow::radi
     }
 }
 
+#if !defined(PS2)
 void xModelAnimCollStop(xModelInstance& m)
 {
     m.Flags = m.Flags & 0xe7ff;
@@ -937,14 +938,19 @@ xMat4x3* xEntGetFrame(const xEnt* ent)
 {
     return xModelGetFrame(ent->model);
 }
+#endif
 
+#if !defined(PS2)
 void xSndPlay3D(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, const xVec3* pos, F32 radius,
                 sound_category category, F32 delay)
 {
     xSndPlay3D(id, vol, pitch, priority, flags, pos, radius / 4.0f, radius, category, delay);
 }
+#endif
 
+#if !defined(PS2)
 S32 xNPCBasic::SelfType() const
 {
     return myNPCType;
 };
+#endif

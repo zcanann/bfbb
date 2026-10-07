@@ -185,6 +185,29 @@ xPar* xParEmitterEmitSetTexIdxs(xPar* p, const xParSys* ps);
 xPar* xParEmitterEmit(xParEmitter* pe, F32 emit_dt, F32 par_dt);
 void xParEmitterUpdate(xBase* to, xScene*, F32 dt);
 void xParEmitterDestroy();
+#if defined(PS2)
+inline xPar* xParEmitterEmit(xParEmitter* pe, F32 dt)
+{
+    return xParEmitterEmit(pe, dt, dt);
+}
+
+inline void xParInterp::set(F32 value1, F32 value2, F32 freq, U32 interp)
+{
+    this->val[0] = value1;
+    this->val[1] = value2;
+    this->freq = freq;
+    if (freq != 0.0f)
+    {
+        this->oofreq = 1.0f / freq;
+    }
+    else
+    {
+        this->oofreq = 0.0f;
+    }
+    this->interp = interp;
+}
+#else
 xPar* xParEmitterEmit(xParEmitter* pe, F32 dt);
+#endif
 
 #endif

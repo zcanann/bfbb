@@ -96,16 +96,20 @@ U8 xOBBHitsOBB(const xBox& a, const xMat4x3& amat, const xBox& b, const xMat4x3&
 zNPCB_SB2* zNPCB_SB2::_singleton;
 
 // These discarded inline copies contribute the retail floating-point literals.
+#if !defined(PS2)
 inline F32 xVec3::length() const
 {
     return xsqrt(this->length2());
 }
+#endif
 
+#if !defined(PS2)
 inline xVec3& xVec3::normalize()
 {
     *this /= length();
     return *this;
 }
+#endif
 
 namespace
 {

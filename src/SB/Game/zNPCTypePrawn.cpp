@@ -55,16 +55,20 @@ U32 xSndPlay3DFade(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, const xV
                    F32 innerRadius, F32 outerRadius, sound_category category, F32 fade, F32 delay);
 
 // Retail emits these inline vector helpers here; the linker keeps their earlier copies.
+#if !defined(PS2)
 inline F32 xVec3::length() const
 {
     return xsqrt(length2());
 }
+#endif
 
+#if !defined(PS2)
 inline xVec3& xVec3::normalize()
 {
     *this /= length();
     return *this;
 }
+#endif
 
 namespace
 {

@@ -148,6 +148,41 @@ F32 xVec2Dist(F32 x1, F32 y1, F32 x2, F32 y2);
 F32 xVec2Dot(const xVec2* a, const xVec2* b);
 void xVec2Init(xVec2* v, F32 _x, F32 _y);
 
+#if defined(PS2)
+#include "xMathInlines.h"
+
+inline xVec2& xVec2::assign(F32 x, F32 y)
+{
+    this->x = x;
+    this->y = y;
+    return *this;
+}
+
+inline F32 xVec2::length2() const
+{
+    return x * x + y * y;
+}
+
+inline F32 xVec2::length() const
+{
+    return xsqrt(length2());
+}
+
+inline xVec2 xVec2::operator-(const xVec2& v) const
+{
+    xVec2 vec = *this;
+    vec -= v;
+    return vec;
+}
+
+inline xVec2& xVec2::operator-=(const xVec2& v)
+{
+    x -= v.x;
+    y -= v.y;
+    return *this;
+}
+#endif
+
 template <class T> basic_rect<T>& basic_rect<T>::contract(T s)
 {
     return expand(-s);

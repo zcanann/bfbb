@@ -60,12 +60,38 @@ inline void xQuickCullForLine(xQCData* q, const xLine3* ln)
 }
 
 void xQuickCullForRay(xQCControl* ctrl, xQCData* q, const xRay3* r);
+#if !defined(PS2)
 void xQuickCullForRay(xQCData* q, const xRay3* r);
+#endif
 void xQuickCullForSphere(xQCControl* ctrl, xQCData* q, const xSphere* s);
 void xQuickCullForBox(xQCControl* ctrl, xQCData* q, const xBox* box);
+#if !defined(PS2)
 void xQuickCullForBox(xQCData* q, const xBox* box);
+#endif
 void xQuickCullForOBB(xQCControl* ctrl, xQCData* q, const xBox* b, const xMat4x3* m);
 void xQuickCullForEverything(xQCData* q);
+#if defined(PS2)
+inline void xQuickCullForRay(xQCData* q, const xRay3* r)
+{
+    xQuickCullForRay(&xqc_def_ctrl, q, r);
+}
+
+inline void xQuickCullForSphere(xQCData* q, const xSphere* s)
+{
+    xQuickCullForSphere(&xqc_def_ctrl, q, s);
+}
+
+inline void xQuickCullForBox(xQCData* q, const xBox* box)
+{
+    xQuickCullForBox(&xqc_def_ctrl, q, box);
+}
+
+inline void xQuickCullForBound(xQCData* q, const xBound* b)
+{
+    xQuickCullForBound(&xqc_def_ctrl, q, b);
+}
+#else
 void xQuickCullForBound(xQCData* q, const xBound* b);
+#endif
 
 #endif

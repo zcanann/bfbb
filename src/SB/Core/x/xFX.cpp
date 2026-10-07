@@ -3224,6 +3224,7 @@ void xFXSceneFinish()
 #endif
 }
 
+#if !defined(PS2)
 void xParInterp::set(F32 value1, F32 value2, F32 freq, U32 interp)
 {
     this->val[0] = value1;
@@ -3239,6 +3240,7 @@ void xParInterp::set(F32 value1, F32 value2, F32 freq, U32 interp)
     }
     this->interp = interp;
 }
+#endif
 
 void xFXRibbon::debug_init(const char*, const char*)
 {

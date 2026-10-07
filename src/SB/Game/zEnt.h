@@ -57,7 +57,9 @@ void zEntInit(zEnt* ent, xEntAsset* asset, U32 type);
 // Weak functions retail emitted into zEnt.o. The name says x-layer, but the
 // body is in zEnt.cpp, so this header is where the declaration belongs.
 // (xEntGetFrame used to be re-declared here as well; xEnt.h already had it.)
+#if !defined(PS2)
 WEAK void xModelAnimCollStop(xModelInstance& m);
+#endif
 // Retail inlined this into some callers and not others, so neither choice is
 // right for every TU. Callers that expand it (zFX, zEntTeleportBox) gain 12
 // exact functions between them. Two TUs must NOT expand it and define
@@ -65,7 +67,7 @@ WEAK void xModelAnimCollStop(xModelInstance& m);
 // below at a position its object layout depends on, and zEntDestructObj.cpp,
 // where expanding it adds a .sdata2 literal that shifts the unit's pool and
 // costs four functions. Both are Matching units, so both must stay exact.
-#ifdef XSNDPLAY3D_OUT_OF_LINE
+#if defined(XSNDPLAY3D_OUT_OF_LINE) && !defined(PS2)
 void xSndPlay3D(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, const xVec3* pos, F32 radius,
                 sound_category category, F32 delay);
 #else

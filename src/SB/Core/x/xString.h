@@ -12,6 +12,14 @@ struct substr
     static substr create(const char* text, size_t size);
 };
 
+#if defined(PS2)
+inline substr substr::create(const char* text, size_t size)
+{
+    substr s = { text, size };
+    return s;
+}
+#endif
+
 // substr constructor
 #define SUBSTR(str) (str), (sizeof((str)) - 1)
 

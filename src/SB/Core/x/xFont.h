@@ -186,8 +186,17 @@ struct xtextbox
     static size_t read_list(const tag_entry& e, S32* v, size_t vsize);
     static void clear_layout_cache();
     static void register_tags(const tag_type* tag, size_t count);
+#if defined(PS2)
+    static tag_type* find_format_tag(const substr& s, S32& index);
+    static tag_type* find_format_tag(const substr& s)
+    {
+        S32 index;
+        return find_format_tag(s, index);
+    }
+#else
     static tag_type* find_format_tag(const substr& s);
     static tag_type* find_format_tag(const substr& s, S32& index);
+#endif
     static xtextbox create();
     static xtextbox create(const xfont& font, const basic_rect<F32>& bounds, U32 flags,
                            F32 line_space, F32 tab_stop, F32 left_indent, F32 right_indent)
@@ -256,7 +265,14 @@ struct xtextbox::layout
     void render(const xtextbox& ctb, S32 begin_jot, S32 end_jot);
     F32 yextent(F32 max, S32& size, S32 begin_jot, S32 end_jot) const;
     bool changed(const xtextbox& ctb);
+#if defined(PS2)
+    size_t jots_size() const
+    {
+        return _jots_size;
+    }
+#else
     size_t jots_size() const;
+#endif
 
     jot* jots() const
     {

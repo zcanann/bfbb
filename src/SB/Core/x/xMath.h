@@ -7,7 +7,14 @@
 
 #define MAX(a, b) (((a) > (b)) ? (a) : (b))
 #define MIN(a, b) (((a) < (b)) ? (a) : (b))
+#if defined(PS2)
+inline F32 xabs(F32 v)
+{
+    return iabs(v);
+}
+#else
 #define xabs(x) iabs(x)
+#endif
 
 #define xeq(a, b, e) (xabs((a) - (b)) <= (e))
 #define xfeq0(x) (((x) >= -1e-5f) && ((x) <= 1e-5f))
@@ -96,7 +103,19 @@ F32 xFuncPiece_Eval(xFuncPiece* func, F32 param, xFuncPiece** iterator);
 void xFuncPiece_EndPoints(xFuncPiece* func, F32 pi, F32 pf, F32 fi, F32 ff);
 void xFuncPiece_ShiftPiece(xFuncPiece* shift, xFuncPiece* func, F32 newZero);
 F32 xSCurve(F32 t, F32 softness);
+#if defined(PS2)
+inline F32 xSCurve(F32 t)
+{
+    if (t <= 0.5f)
+    {
+        return (2.0f * t * t);
+    }
+    F32 a = (1.0f - t);
+    return (1.0f - (2.0f * a * a));
+}
+#else
 F32 xSCurve(F32 t);
+#endif
 void xsqrtfast(F32& dst, F32 num);
 
 #if defined(PS2)

@@ -47,8 +47,8 @@ struct RwLine
 union RwSplitBits
 {
     RwReal nReal;
-    RwInt32 nInt;
-    RwUInt32 nUInt;
+    volatile RwInt32 nInt;
+    volatile RwUInt32 nUInt;
 };
 
 struct RwSphere

@@ -435,10 +435,12 @@ inline xVec2& xVec2::operator/=(F32 f)
     return *this;
 }
 
+#if !defined(PS2)
 inline F32 xVec2::length() const
 {
     return xsqrt(length2());
 }
+#endif
 
 inline F32 normalize_analog(S32 v, S32 v_min, S32 v_max, S32 dead_center, S32 dead_min,
                             S32 dead_max)

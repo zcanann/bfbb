@@ -21,7 +21,15 @@ struct UVAModelInfo
 
     void Hemorrage();
     void Clear();
+#if defined(PS2)
+    void UVVelSet(float x, float y)
+    {
+        offset_vel.x = x;
+        offset_vel.y = y;
+    }
+#else
     void UVVelSet(float, float);
+#endif
     S32 GetUV(RwTexCoords*& coords, S32& numVertices, RpAtomic* model) const;
     S32 CloneUV(RwTexCoords*& coords, S32& numVertices, RpAtomic* model) const;
     void SetColor(iColor_tag);
@@ -265,7 +273,14 @@ struct NPCHazard
     void FreeModel();
     void SetNPCOwner(zNPCCommon* owner);
     void Start(const xVec3* pos, F32 tym);
+#if defined(PS2)
+    void MarkForRecycle()
+    {
+        this->flg_hazard |= 4;
+    }
+#else
     void MarkForRecycle();
+#endif
     void Kill();
     void Cleanup();
     void WipeIt();

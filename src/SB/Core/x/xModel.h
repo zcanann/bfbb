@@ -116,4 +116,11 @@ inline xMat4x3* xModelGetFrame(xModelInstance* modelInst)
     return (xMat4x3*)modelInst->Mat;
 }
 
+#if defined(PS2)
+inline void xModelAnimCollStop(xModelInstance& m)
+{
+    m.Flags = m.Flags & 0xe7ff;
+}
+#endif
+
 #endif

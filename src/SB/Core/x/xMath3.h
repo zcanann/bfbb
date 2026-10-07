@@ -6,6 +6,9 @@
 #include "xVec3.h"
 #include "xVec3Inlines.h"
 #include "xIsect.h"
+#if defined(PS2)
+#include <string.h>
+#endif
 
 // Size: 0x30
 #ifndef XVEC3_MATMUL_INLINE
@@ -169,7 +172,12 @@ void xQuatAdd(xQuat* q, const xQuat* a, const xQuat* b);
 void xQuatCopy(xQuat*, const xQuat*);
 void xQuatFlip(xQuat* o1, const xQuat* o2);
 F32 xQuatDot(const xQuat* a, const xQuat* b);
-#if defined(PS2) || defined(XBOX)
+#if defined(PS2)
+inline void xMat3x3Copy(xMat3x3* o, const xMat3x3* m)
+{
+    memcpy(o, m, sizeof(xMat3x3));
+}
+#elif defined(XBOX)
 inline void xMat3x3Copy(xMat3x3* o, const xMat3x3* m)
 {
     *o = *m;
@@ -177,10 +185,35 @@ inline void xMat3x3Copy(xMat3x3* o, const xMat3x3* m)
 #else
 void xMat3x3Copy(xMat3x3* o, const xMat3x3* m);
 #endif
+#if defined(PS2)
+inline void xMat4x3Copy(xMat4x3* o, const xMat4x3* m)
+{
+    memcpy(o, m, sizeof(xMat4x3));
+}
+#else
 void xMat4x3Copy(xMat4x3* o, const xMat4x3* m);
+#endif
 void xMat3x3MulRotC(xMat3x3* o, xMat3x3* m, F32 _x, F32 _y, F32 _z, F32 t);
+#if defined(PS2)
+inline void xMat4x3Identity(xMat4x3* m)
+{
+    xMat4x3Copy(m, &g_I3);
+}
+#else
 void xMat4x3Identity(xMat4x3* m);
+#endif
+#if defined(PS2)
+inline void xMat4x3Tolocal(xVec3* o, const xMat4x3* m, const xVec3* v)
+{
+    o->x = v->x - m->pos.x;
+    o->y = v->y - m->pos.y;
+    o->z = v->z - m->pos.z;
+
+    xMat3x3Tolocal(o, m, o);
+}
+#else
 void xMat4x3Tolocal(xVec3* o, const xMat4x3* m, const xVec3* v);
+#endif
 void xMat4x3OrthoInv(xMat4x3* o, const xMat4x3* m);
 F32 xQuatGetAngle(const xQuat* q);
 #if defined(PS2) || defined(XBOX)
@@ -193,7 +226,17 @@ inline void xQuatConj(xQuat* o, const xQuat* q)
 #else
 void xQuatConj(xQuat* o, const xQuat* q);
 #endif
+#if defined(PS2)
+inline void xMat3x3LookAt(xMat3x3* m, const xVec3* pos, const xVec3* at)
+{
+    xVec3 v;
+
+    xVec3Sub(&v, at, pos);
+    xMat3x3LookVec(m, &v);
+}
+#else
 void xMat3x3LookAt(xMat3x3* m, const xVec3* pos, const xVec3* at);
+#endif
 F32 xMat3x3LookVec3(xMat3x3& m, const xVec3& at);
 void xMat3x3Scale(xMat3x3* m, const xVec3* s);
 void xBoxFromLine(xBox& box, const xLine3& line);
@@ -217,7 +260,24 @@ inline void xMat3x3Identity(xMat3x3* matrix)
 #else
 void xMat3x3Identity(xMat3x3* matrix);
 #endif
+#if defined(PS2)
+inline void xMat3x3SMul(xMat3x3* o, const xMat3x3* m, F32 s)
+{
+    xVec3SMul(&o->right, &m->right, s);
+    xVec3SMul(&o->up, &m->up, s);
+    xVec3SMul(&o->at, &m->at, s);
+    o->flags = 0;
+}
+
+inline void xMat3x3MulRotC(xMat3x3* o, xMat3x3* m, F32 _x, F32 _y, F32 _z, F32 t)
+{
+    xMat3x3 var_38;
+    xMat3x3RotC(&var_38, _x, _y, _z, t);
+    xMat3x3Mul(o, m, &var_38);
+}
+#else
 void xMat3x3SMul(xMat3x3*, const xMat3x3*, F32);
+#endif
 
 inline void xRotCopy(xRot* o, const xRot* r)
 {

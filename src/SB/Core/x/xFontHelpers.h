@@ -5,11 +5,13 @@
 // the helper code group and aggregate initializer order consistent with retail.
 // These are out-of-line definitions; do not include this from another TU.
 
+#if !defined(PS2)
 substr substr::create(const char* text, size_t size)
 {
     substr s = { text, size };
     return s;
 }
+#endif
 
 size_t rskip_ws(substr& s)
 {
@@ -96,16 +98,20 @@ size_t trim_ws(const char*& text, size_t& size)
     return rskip_ws(text, size);
 }
 
+#if !defined(PS2)
 xtextbox::tag_type* xtextbox::find_format_tag(const substr& s)
 {
     S32 index;
     return find_format_tag(s, index);
 }
+#endif
 
+#if !defined(PS2)
 size_t xtextbox::layout::jots_size() const
 {
     return _jots_size;
 }
+#endif
 
 xtextbox xtextbox::create()
 {

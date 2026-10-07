@@ -809,7 +809,9 @@ void xParEmitterDestroy()
     xDebugRemoveTweak("Particle Emitters");
 }
 
+#if !defined(PS2)
 inline xPar* xParEmitterEmit(xParEmitter* pe, F32 dt)
 {
     return xParEmitterEmit(pe, dt, dt);
 }
+#endif

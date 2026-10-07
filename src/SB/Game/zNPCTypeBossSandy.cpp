@@ -4514,9 +4514,11 @@ void xBinaryCamera::add_tweaks(char const*)
 {
 }
 
+#if !defined(PS2)
 void xBinaryCamera::set_targets(xVec3 const& par_1, xVec3 const& par_2, F32 par_3)
 {
     this->s1 = (xVec3*)(&par_1);
     this->s2 = (xVec3*)(&par_2);
     this->s2_radius = par_3;
 }
+#endif

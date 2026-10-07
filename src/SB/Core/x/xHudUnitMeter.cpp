@@ -24,7 +24,7 @@ namespace std
 }
 #endif
 
-#if !defined(XBOX)
+#if !defined(XBOX) && !defined(PS2)
 inline F32 xfmod(F32 a, F32 b)
 {
     return std::fmodf(a, b);

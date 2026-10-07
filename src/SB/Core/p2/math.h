@@ -21,6 +21,10 @@ float expf(float value);
 double atan(double value);
 double log(double value);
 double fmod(double x, double y);
+float fmodf(float x, float y);
+float sinf(float x);
+float cosf(float x);
+float tanf(float x);
 
 #ifdef __cplusplus
 }
@@ -38,6 +42,7 @@ using ::asinf;
 using ::expf;
 float atan(float x);
 float logf(float x);
+using ::fmodf;
 }
 #endif
 

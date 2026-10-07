@@ -3893,9 +3893,11 @@ template <> inline basic_rect<F32>& basic_rect<F32>::scale(F32 s)
     return scale(s, s, s, s);
 }
 
+#if !defined(PS2)
 xVec2& xVec2::assign(F32 x, F32 y)
 {
     this->x = x;
     this->y = y;
     return *this;
 }
+#endif

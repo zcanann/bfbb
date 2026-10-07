@@ -646,12 +646,14 @@ static void JDeltaEval(RpAtomic* model, void* deltaModel, void* deltaAnim, F32 t
     RpGeometryUnlock(model->geometry);
 }
 
+#if !defined(PS2)
 void xVec3Lerp(xVec3* out, const xVec3* a, const xVec3* b, float alpha)
 {
     out->x = a->x + (b->x - a->x) * alpha;
     out->y = a->y + (b->y - a->y) * alpha;
     out->z = a->z + (b->z - a->z) * alpha;
 }
+#endif
 
 void CutsceneShadowRender(CutsceneShadowModel* smod)
 {
