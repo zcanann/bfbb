@@ -5,6 +5,7 @@
 #include <rwplcore.h>
 #include <rwsdk/rtintsec.h>
 #include <math.h>
+#include "xMemMgr.h"
 #endif
 
 U8 xClumpColl_FilterFlags = 0x04;
@@ -71,9 +72,122 @@ xClumpCollBSPTree* xClumpColl_StaticBufferInit(void* data, U32)
     return tree;
 }
 
+#if defined(PS2)
+// PS2 RenderWare resource, mesh and PS2All instance declarations
+// (rwcore.h, rpworld.h, bapipew.h, ps2all.h).
+struct RpMesh
+{
+    RxVertexIndex* indices;
+    RwUInt32 numIndices;
+    RpMaterial* material;
+};
+
+struct RpMeshHeader
+{
+    RwUInt32 flags;
+    RwUInt16 numMeshes;
+    RwUInt16 serialNum;
+    RwUInt32 totalIndicesInMesh;
+    RwUInt32 firstMeshOffset;
+};
+
+struct RwResEntry
+{
+    RwLLLink link;
+    RwInt32 size;
+    void* owner;
+    RwResEntry** ownerRef;
+    void (*destroyNotify)(RwResEntry* resEntry);
+};
+
+struct rwPS2AllResEntryHeader
+{
+    RwInt32 refCnt;
+    RwInt32 clrCnt;
+    __int128* data;
+};
+
+extern RwInt32 rwPip2GeometryOffset;
+extern RwInt32 rwPip2AtomicOffset;
+
+extern "C" RwMeshCache** _rpMeshCacheCreate(RwMeshCache** cacheHandle, RwUInt32 numMeshes);
+
+#define RWPIP2GEOMETRYMESHCACHE(_geometry)                                                           ((RwMeshCache**)(((RwUInt8*)(_geometry)) + rwPip2GeometryOffset))
+#define RWPIP2ATOMICMESHCACHE(_atomic)                                                               ((RwMeshCache**)(((RwUInt8*)(_atomic)) + rwPip2AtomicOffset))
+
+#define rpGeometryGetMeshCache(_geometry, _numMeshes)                                                (*(((*RWPIP2GEOMETRYMESHCACHE(_geometry)) &&                                                         ((*RWPIP2GEOMETRYMESHCACHE(_geometry))->lengthOfMeshesArray == (_numMeshes))) ?                     RWPIP2GEOMETRYMESHCACHE(_geometry) :                                                             _rpMeshCacheCreate(RWPIP2GEOMETRYMESHCACHE(_geometry), (_numMeshes))))
+#define rpAtomicGetMeshCache(_atomic, _numMeshes)                                                    (*(((*RWPIP2ATOMICMESHCACHE(_atomic)) &&                                                             ((*RWPIP2ATOMICMESHCACHE(_atomic))->lengthOfMeshesArray == (_numMeshes))) ?                         RWPIP2ATOMICMESHCACHE(_atomic) :                                                                 _rpMeshCacheCreate(RWPIP2ATOMICMESHCACHE(_atomic), (_numMeshes))))
+
+static RpAtomic* AddAtomicCB(RpAtomic* atomic, void* data)
+{
+    TempAtomicList** tmpList = (TempAtomicList**)data;
+
+    (*tmpList)->atomic = atomic;
+    (*tmpList)->geom = atomic->geometry;
+    (*tmpList)->meshHeader = (*tmpList)->geom->mesh;
+
+    if ((*tmpList)->geom->numMorphTargets != 1)
+    {
+        (*tmpList)->meshCache = rpAtomicGetMeshCache(atomic, (*tmpList)->meshHeader->numMeshes);
+    }
+    else
+    {
+        (*tmpList)->meshCache =
+            rpGeometryGetMeshCache((*tmpList)->geom, (*tmpList)->meshHeader->numMeshes);
+    }
+
+    (*tmpList)--;
+
+    return atomic;
+}
+#endif
+
 void xClumpColl_InstancePointers(xClumpCollBSPTree* tree, RpClump* clump)
 {
-    return;
+#if defined(PS2)
+    S32 i;
+    S32 numAtom;
+    TempAtomicList* atomicList;
+    TempAtomicList* iterList;
+    TempAtomicList* alist;
+    S32 vertIndex;
+    S32 numMeshes;
+    S32 meshIndex;
+    RpMesh* mesh;
+
+    numAtom = RpClumpGetNumAtomics(clump);
+    atomicList = (TempAtomicList*)xMemPushTemp(numAtom * sizeof(TempAtomicList));
+    iterList = atomicList + (numAtom - 1);
+    RpClumpForAllAtomics(clump, AddAtomicCB, &iterList);
+
+    for (i = 0; i < tree->numTriangles; i++)
+    {
+        alist = &atomicList[tree->triangles[i].v.i.atomIndex];
+        vertIndex = tree->triangles[i].v.i.meshVertIndex;
+        numMeshes = alist->meshHeader->numMeshes;
+        mesh = (RpMesh*)((RwUInt8*)(alist->meshHeader + 1) + alist->meshHeader->firstMeshOffset);
+        meshIndex = 0;
+
+        while (numMeshes--)
+        {
+            if (vertIndex < mesh->numIndices)
+            {
+                break;
+            }
+
+            vertIndex -= mesh->numIndices;
+            meshIndex++;
+            mesh++;
+        }
+
+        tree->triangles[i].v.p =
+            (RwV3d*)((RwUInt8*)&((rwPS2AllResEntryHeader*)(alist->meshCache->meshes[meshIndex] + 1))
+                         ->data[(vertIndex / 66) * 120 + 2] +
+                     (vertIndex % 66) * sizeof(RwV3d));
+    }
+
+    xMemPopTemp(atomicList);
+#endif
 }
 
 xClumpCollBSPTree*
@@ -724,6 +838,18 @@ static S32 LeafNodeLinePolyIntersect(xClumpCollBSPTriangle* triangles, void* dat
     return 1;
 }
 
+#if defined(PS2)
+static RwBool FastIntersectSphereTriangle(RwSphere* sphere, RwV3d* v0, RwV3d* v1, RwV3d* v2,
+                                          RwV3d* normal, RwReal* distance, RwV3d* vc);
+
+#define SphereMin(_a, _b) (((_a) < (_b)) ? (_a) : (_b))
+#define SphereMax(_a, _b) (((_a) > (_b)) ? (_a) : (_b))
+
+// Reject the triangle when it lies wholly beyond the sphere along one axis, otherwise
+// record its vertices relative to the sphere centre.
+#define SphereAxisReject(_axis)                                                                        if (testSphere->sphere->center._axis + testSphere->sphere->radius <=                                       SphereMin(SphereMin(v0->_axis, v1->_axis), v2->_axis) ||                                       SphereMax(SphereMax(v0->_axis, v1->_axis), v2->_axis) <=                                               testSphere->sphere->center._axis - testSphere->sphere->radius)                             {                                                                                                      continue;                                                                                      }                                                                                                  vc[0]._axis = v0->_axis - testSphere->sphere->center._axis;                                        vc[1]._axis = v1->_axis - testSphere->sphere->center._axis;                                        vc[2]._axis = v2->_axis - testSphere->sphere->center._axis
+#endif
+
 static S32 LeafNodeSpherePolyIntersect(xClumpCollBSPTriangle* triangles, void* data)
 {
     PolyTestParam* isData = (PolyTestParam*)data;
@@ -747,8 +873,19 @@ static S32 LeafNodeSpherePolyIntersect(xClumpCollBSPTriangle* triangles, void* d
                 v1 = &triangles->v.p[1];
                 v2 = &triangles->v.p[2];
             }
+#if defined(PS2)
+            RwV3d vc[3];
+
+            SphereAxisReject(x);
+            SphereAxisReject(y);
+            SphereAxisReject(z);
+
+            if (FastIntersectSphereTriangle(testSphere->sphere, v0, v1, v2, &collisionTri.normal,
+                                            &distance, vc))
+#else
             if (RtIntersectionSphereTriangle(testSphere->sphere, v0, v1, v2, &collisionTri.normal,
                                              &distance))
+#endif
             {
                 collisionTri.point = *v0;
                 collisionTri.index = (RwInt32)triangles;
@@ -801,10 +938,7 @@ static S32 LeafNodeBoxPolyIntersect(xClumpCollBSPTriangle* triangles, void* data
                 F32 lengthSq = RwV3dDotProductMacro(&collisionTri.normal, &collisionTri.normal);
 #if defined(PS2)
                 F32 recipLength = sqrtf(lengthSq);
-                if (recipLength > 0.0f)
-                {
-                    recipLength = 1.0f / recipLength;
-                }
+                recipLength = (recipLength > 0.0f) ? 1.0f / recipLength : recipLength;
 #else
                 F32 recipLength = _rwInvSqrt(lengthSq);
 #endif
@@ -908,3 +1042,136 @@ xClumpCollBSPTree* xClumpColl_ForAllIntersections(xClumpCollBSPTree* tree,
 
     return NULL;
 }
+
+#if defined(PS2)
+static RwBool FastIntersectSphereTriangle(RwSphere* sphere, RwV3d* v0, RwV3d* v1, RwV3d* v2,
+                                          RwV3d* normal, RwReal* distance, RwV3d* vc)
+{
+    RwReal nDotN;
+    RwReal distToPlane;
+    RwReal sphereRadiusSquared;
+    RwReal length2;
+    RwReal factor;
+    RwV3d vAtoB;
+    RwV3d vN;
+    RwV3d vTmp;
+    RwV3d vTmp2;
+
+    // Triangle plane
+    RwV3dSubMacro(&vAtoB, v1, v0);
+    RwV3dSubMacro(&vN, v2, v0);
+    RwV3dCrossProductMacro(normal, &vAtoB, &vN);
+
+    nDotN = RwV3dDotProductMacro(normal, normal);
+    if (nDotN <= 0.0f)
+    {
+        return FALSE;
+    }
+
+    factor = sqrtf(nDotN);
+    factor = (factor > 0.0f) ? 1.0f / factor : factor;
+    RwV3dScaleMacro(normal, normal, factor);
+
+    distToPlane = RwV3dDotProductMacro(&vc[0], normal);
+    if (distToPlane < -sphere->radius || distToPlane > sphere->radius)
+    {
+        return FALSE;
+    }
+
+    *distance = -distToPlane;
+
+    // Is any vertex inside the sphere?
+    sphereRadiusSquared = sphere->radius * sphere->radius;
+
+    vTmp.x = RwV3dDotProductMacro(&vc[0], &vc[0]);
+    if (vTmp.x <= sphereRadiusSquared)
+    {
+        return TRUE;
+    }
+
+    vTmp.y = RwV3dDotProductMacro(&vc[1], &vc[1]);
+    if (vTmp.y <= sphereRadiusSquared)
+    {
+        return TRUE;
+    }
+
+    vTmp.z = RwV3dDotProductMacro(&vc[2], &vc[2]);
+    if (vTmp.z <= sphereRadiusSquared)
+    {
+        return TRUE;
+    }
+
+    // Reject if the sphere lies beyond the closest vertex
+    if (vTmp.x < vTmp.y)
+    {
+        if (vTmp.z < vTmp.x)
+        {
+            if (RwV3dDotProductMacro(&vc[2], &vc[0]) > vTmp.z &&
+                RwV3dDotProductMacro(&vc[2], &vc[1]) > vTmp.z)
+            {
+                return FALSE;
+            }
+        }
+        else
+        {
+            if (RwV3dDotProductMacro(&vc[0], &vc[1]) > vTmp.x &&
+                RwV3dDotProductMacro(&vc[0], &vc[2]) > vTmp.x)
+            {
+                return FALSE;
+            }
+        }
+    }
+    else
+    {
+        if (vTmp.z < vTmp.y)
+        {
+            if (RwV3dDotProductMacro(&vc[2], &vc[0]) > vTmp.z &&
+                RwV3dDotProductMacro(&vc[2], &vc[1]) > vTmp.z)
+            {
+                return FALSE;
+            }
+        }
+        else
+        {
+            if (RwV3dDotProductMacro(&vc[1], &vc[0]) > vTmp.y &&
+                RwV3dDotProductMacro(&vc[1], &vc[2]) > vTmp.y)
+            {
+                return FALSE;
+            }
+        }
+    }
+
+    // Reject if the sphere lies beyond any edge
+    RwV3dSubMacro(&vTmp2, &vc[1], &vc[0]);
+    factor = RwV3dDotProductMacro(&vTmp2, &vc[0]) / RwV3dDotProductMacro(&vTmp2, &vTmp2);
+    RwV3dScaleMacro(&vTmp, &vTmp2, factor);
+    RwV3dSubMacro(&vTmp, &vc[0], &vTmp);
+    length2 = RwV3dDotProductMacro(&vTmp, &vTmp);
+    if (length2 > sphereRadiusSquared && length2 < RwV3dDotProductMacro(&vTmp, &vc[2]))
+    {
+        return FALSE;
+    }
+
+    RwV3dSubMacro(&vTmp2, &vc[2], &vc[1]);
+    factor = RwV3dDotProductMacro(&vTmp2, &vc[1]) / RwV3dDotProductMacro(&vTmp2, &vTmp2);
+    RwV3dScaleMacro(&vTmp, &vTmp2, factor);
+    RwV3dSubMacro(&vTmp, &vc[1], &vTmp);
+    length2 = RwV3dDotProductMacro(&vTmp, &vTmp);
+    if (length2 > sphereRadiusSquared && length2 < RwV3dDotProductMacro(&vTmp, &vc[0]))
+    {
+        return FALSE;
+    }
+
+    RwV3dSubMacro(&vTmp2, &vc[0], &vc[2]);
+    factor = RwV3dDotProductMacro(&vTmp2, &vc[2]) / RwV3dDotProductMacro(&vTmp2, &vTmp2);
+    RwV3dScaleMacro(&vTmp, &vTmp2, factor);
+    RwV3dSubMacro(&vTmp, &vc[2], &vTmp);
+    length2 = RwV3dDotProductMacro(&vTmp, &vTmp);
+    if (length2 > sphereRadiusSquared && length2 < RwV3dDotProductMacro(&vTmp, &vc[1]))
+    {
+        return FALSE;
+    }
+
+    return TRUE;
+}
+#endif

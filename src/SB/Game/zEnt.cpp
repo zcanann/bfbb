@@ -772,7 +772,7 @@ char* zParamGetString(xModelAssetParam* param, U32 size, char* tok, char* def)
 {
     U32 hash = xStrHash(tok);
 
-    while (param != NULL && size != 0)
+    while (param && size)
     {
         if (param->HashID == hash)
         {
@@ -781,7 +781,7 @@ char* zParamGetString(xModelAssetParam* param, U32 size, char* tok, char* def)
 
         // S32 i = param->WordLength * 4;
         size -= param->WordLength * 4 + 8;
-        param = (xModelAssetParam*)((char*)param + (param->WordLength * 4 + 8));
+        param = (xModelAssetParam*)((char*)param + param->WordLength * 4 + 8);
     }
     return def;
 }
@@ -794,11 +794,7 @@ S32 zParamGetInt(xModelAssetParam* param, U32 size, const char* tok, S32 def)
 S32 zParamGetInt(xModelAssetParam* param, U32 size, char* tok, S32 def)
 {
     char* str = zParamGetString(param, size, tok, NULL);
-    if (str != NULL)
-    {
-        return atoi(str);
-    }
-    return def;
+    return str ? atoi(str) : def;
 }
 
 F32 zParamGetFloat(xModelAssetParam* param, U32 size, const char* tok, F32 def)
@@ -809,11 +805,7 @@ F32 zParamGetFloat(xModelAssetParam* param, U32 size, const char* tok, F32 def)
 F32 zParamGetFloat(xModelAssetParam* param, U32 size, char* tok, F32 def)
 {
     char* str = zParamGetString(param, size, tok, NULL);
-    if (str != NULL)
-    {
-        return xatof(str);
-    }
-    return def;
+    return str ? xatof(str) : def;
 }
 
 S32 zParamGetFloatList(xModelAssetParam* param, U32 size, const char* tok, S32 count, F32* def,

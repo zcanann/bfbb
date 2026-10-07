@@ -60,14 +60,12 @@ static bool _xSingleCompare(char ch, const char* str)
 
 static bool _xCharIn(char ch, const char* str)
 {
-    while (*str != '\0')
+    for (S32 i = 0; str[i] != '\0'; i++)
     {
-        if (ch == *str)
+        if (ch == str[i])
         {
             return true;
         }
-
-        str++;
     }
 
     return false;
@@ -933,8 +931,8 @@ void _xAnimTableAddTransition(xAnimTable* table, xAnimTransition* tran, const ch
                             memcpy(duplicatedTransition, tran, sizeof(xAnimTransition));
                             tran = duplicatedTransition;
                         }
-                        tran->Dest = sp;
                         substTransitionList[substTransitionCount++] = tran;
+                        tran->Dest = sp;
                     }
                     if (tran->Dest != state)
                     {
@@ -1346,7 +1344,7 @@ static void EffectSingleLoop(xAnimSingle* single)
     }
 
     xAnimEffect* effect = single->State->Effects;
-    while (effect != NULL && effect->StartTime < 0.0f)
+    while (effect && effect->StartTime < 0.0f)
     {
         effect = effect->Next;
     }

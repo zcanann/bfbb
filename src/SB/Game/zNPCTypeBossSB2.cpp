@@ -134,7 +134,7 @@ namespace
         inline void eval_smooth(F32 t, F32* value);
         F32 clamp_t(F32 t) const;
         F32 end_t() const;
-        inode* get_node(u32 index) const;
+        inode* get_node(size_t index) const;
         F32 start_t() const;
     };
 
@@ -188,7 +188,7 @@ namespace
 
     static char* sound_asset_names[10][4];
     static U32 sound_asset_ids[10][4];
-    static S32 sound_asset_names_size[10];
+    static U32 sound_asset_names_size[10];
     static sound_data_type sound_data[10];
 
     struct sound_property
@@ -489,7 +489,7 @@ namespace
     {
         memset(sound_asset_names_size, 0, sizeof(sound_asset_names_size));
 
-        for (S32 i = 0; i < 12; i++)
+        for (U32 i = 0; i < 12; i++)
         {
             const sound_asset& asset = sound_assets[i];
             if (asset.name == NULL)
@@ -497,7 +497,7 @@ namespace
                 continue;
             }
 
-            S32& total = sound_asset_names_size[asset.group];
+            U32& total = sound_asset_names_size[asset.group];
             sound_asset_names[asset.group][total] = asset.name;
             sound_asset_ids[asset.group][total] = i;
             total++;
@@ -853,6 +853,8 @@ namespace
 
     void tweak_group::register_tweaks(bool init, xModelAssetParam* ap, U32 apsize, const char*)
     {
+        xVec3 V0 = { 0.0f, 0.0f, 0.0f };
+
         if (init)
         {
             accel = 2.0f;
@@ -1934,11 +1936,11 @@ void zNPCB_SB2::reset_speed()
 
 zNPCB_SB2::platform_data* zNPCB_SB2::player_platform()
 {
-    xEntCollis* collis = globals.player.ent.collis;
+    xCollis& coll = globals.player.ent.collis->colls[0];
 
     xEnt* ent;
 
-    if (!(collis->colls->flags & 1) || (ent = (xEnt*)collis->colls->optr) == NULL ||
+    if (!(coll.flags & 1) || (ent = (xEnt*)coll.optr) == NULL ||
         ent->baseType != eBaseTypePlatform)
     {
         return NULL;
@@ -3310,7 +3312,7 @@ namespace
         return get_node(nodes - 1)->t;
     }
 
-    inode* response_curve::get_node(u32 index) const
+    inode* response_curve::get_node(size_t index) const
     {
         return (inode*)((U8*)curve + index * (sizeof(node) + values * sizeof(F32)));
     }
@@ -4238,8 +4240,7 @@ namespace auto_tweak
     inline void load_param<xVec3, S32>(xVec3& value, S32, S32, S32, xModelAssetParam* ap, U32 apsize,
                                 const char* name)
     {
-        xVec3 def = value;
-        zParamGetVector(ap, apsize, name, def, &value);
+        zParamGetVector(ap, apsize, name, value, &value);
     }
 
     template <>

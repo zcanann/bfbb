@@ -220,6 +220,10 @@ void zShrapnel_SetShrapnelAssetInitCB(zShrapnelAsset* sasset)
 void zShrapnel_SceneInit(zScene* sc)
 {
     S32 i;
+    S32 numShrapnel;
+    S32 j;
+    zShrapnelAsset* sa;
+    zFragAsset* fa;
 
     sFirstActiveFrag.next = NULL;
     sFragPool[0].type = eFragInactive;
@@ -243,31 +247,30 @@ void zShrapnel_SceneInit(zScene* sc)
 
     sCinModel = (RpAtomic*)xSTFindAsset(xStrHash("frag_generic_wrench"), NULL);
 
-    S32 count = xSTAssetCountByType('SHRP');
-    for (i = 0; i < count; i++)
+    numShrapnel = xSTAssetCountByType('SHRP');
+    for (i = 0; i < numShrapnel; i++)
     {
-        zShrapnelAsset* sasset = (zShrapnelAsset*)xSTFindAssetByType('SHRP', i, NULL);
-        zShrapnel_SetShrapnelAssetInitCB(sasset);
+        sa = (zShrapnelAsset*)xSTFindAssetByType('SHRP', i, NULL);
+        zShrapnel_SetShrapnelAssetInitCB(sa);
 
-        S32 j;
-        zFragAsset* fasset = (zFragAsset*)(sasset + 1);
-        for (j = 0; j < sasset->fassetCount; j++)
+        fa = (zFragAsset*)(sa + 1);
+        for (j = 0; j < sa->fassetCount; j++)
         {
-            switch (fasset->type)
+            switch (fa->type)
             {
             case eFragProjectile:
-                zShrapnel_ProjectileSceneInit((zFragProjectileAsset*)fasset);
-                fasset = (zFragAsset*)((zFragProjectileAsset*)fasset + 1);
+                zShrapnel_ProjectileSceneInit((zFragProjectileAsset*)fa);
+                fa = (zFragAsset*)((zFragProjectileAsset*)fa + 1);
                 break;
             case eFragParticle:
-                zShrapnel_ParticleSceneInit((zFragParticleAsset*)fasset);
-                fasset = (zFragAsset*)((zFragParticleAsset*)fasset + 1);
+                zShrapnel_ParticleSceneInit((zFragParticleAsset*)fa);
+                fa = (zFragAsset*)((zFragParticleAsset*)fa + 1);
                 break;
             case eFragSound:
-                fasset = (zFragAsset*)((zFragSoundAsset*)fasset + 1);
+                fa = (zFragAsset*)((zFragSoundAsset*)fa + 1);
                 break;
             case eFragLightning:
-                fasset = (zFragAsset*)((zFragLightningAsset*)fasset + 1);
+                fa = (zFragAsset*)((zFragLightningAsset*)fa + 1);
                 break;
             }
         }
@@ -349,23 +352,22 @@ void zShrapnel_Render()
 void zShrapnel_DefaultInit(zShrapnelAsset* shrap, xModelInstance* parent, xVec3* initVel,
                            void (*cb)(zFrag*, zFragAsset*))
 {
+    zShrapnelParentList* plist;
+    zFrag* frag;
+    zFragAsset* fasset;
+    S32 i;
+    S32 j;
+    S32 k;
+
     if (shrap == NULL || parent == NULL || parent->Mat == NULL)
     {
         return;
     }
 
-    zShrapnelParentList* curr;
-    zShrapnelParentList* plist;
-    zFrag* frag;
-    zFragAsset* fasset;
-    S32 i;
-
     plist = (zShrapnelParentList*)xMemPushTemp(shrap->fassetCount * sizeof(zShrapnelParentList));
     fasset = (zFragAsset*)(shrap + 1);
-    curr = plist;
-    i = 0;
 
-    while (i < shrap->fassetCount)
+    for (i = 0; i < shrap->fassetCount; i++)
     {
         frag = zFrag_Alloc(fasset->type);
         if (frag == NULL)
@@ -373,37 +375,35 @@ void zShrapnel_DefaultInit(zShrapnelAsset* shrap, xModelInstance* parent, xVec3*
             break;
         }
 
-        for (S32 k = 0; k < 2; k++)
+        for (j = 0; j < 2; j++)
         {
-            if (fasset->parentID[k] == 0)
+            if (fasset->parentID[j] == 0)
             {
-                frag->parent[k] = parent;
+                frag->parent[j] = parent;
             }
             else
             {
-                S32 j = 0;
-                while (j < i)
+                for (k = 0; k < i; k++)
                 {
-                    if (fasset->parentID[k] == plist[j].parentID)
+                    if (fasset->parentID[j] == plist[k].parentID)
                     {
                         break;
                     }
-                    j++;
                 }
-                frag->parent[k] = plist[j].parentModel;
+                frag->parent[j] = plist[k].parentModel;
             }
         }
 
         zFrag_DefaultInit(frag, fasset);
 
-        curr->parentID = fasset->id;
+        plist[i].parentID = fasset->id;
         if (frag->type == eFragInactive)
         {
-            curr->parentModel = parent;
+            plist[i].parentModel = parent;
         }
         else if (fasset->type == eFragProjectile)
         {
-            curr->parentModel = frag->info.projectile.model;
+            plist[i].parentModel = frag->info.projectile.model;
             if (initVel != NULL)
             {
                 xVec3AddTo(&frag->info.projectile.path.initVel, initVel);
@@ -411,7 +411,7 @@ void zShrapnel_DefaultInit(zShrapnelAsset* shrap, xModelInstance* parent, xVec3*
         }
         else
         {
-            curr->parentModel = frag->parent[0];
+            plist[i].parentModel = frag->parent[0];
         }
 
         if (cb != NULL)
@@ -434,9 +434,6 @@ void zShrapnel_DefaultInit(zShrapnelAsset* shrap, xModelInstance* parent, xVec3*
             fasset = (zFragAsset*)((zFragLightningAsset*)fasset + 1);
             break;
         }
-
-        curr++;
-        i++;
     }
 
     xMemPopTemp(plist);
@@ -479,25 +476,24 @@ void zShrapnel_CinematicInit(zShrapnelAsset* shrap, RpAtomic* cinModel, RwMatrix
     if (model == NULL)
     {
         zFrag_Free(frag);
+        return;
     }
-    else
+
+    model->Data = sCinModel;
+    xMat3x3Copy((xMat4x3*)model->Mat, &g_I3);
+    xVec3Copy((xVec3*)&model->Mat->pos, (xVec3*)&animMat->pos);
+
+    for (i = 1; i < model->BoneCount; i++)
     {
-        model->Data = sCinModel;
-        xMat3x3Copy((xMat4x3*)model->Mat, &g_I3);
-        xVec3Copy((xVec3*)&model->Mat->pos, (xVec3*)&animMat->pos);
-
-        for (i = 1; i < model->BoneCount; i++)
-        {
-            xMat4x3Copy((xMat4x3*)model->Mat + i, (xMat4x3*)animMat + i);
-        }
-
-        sCinCB = cb;
-        sCinFrag = frag;
-        shrap->initCB(shrap, model, initVel, CinFragCB);
-        sCinCB = NULL;
-        sCinFrag = NULL;
-        sCinProj.modelFile = NULL;
+        xMat4x3Copy((xMat4x3*)model->Mat + i, (xMat4x3*)animMat + i);
     }
+
+    sCinCB = cb;
+    sCinFrag = frag;
+    shrap->initCB(shrap, model, initVel, CinFragCB);
+    sCinCB = NULL;
+    sCinFrag = NULL;
+    sCinProj.modelFile = NULL;
 }
 
 void zFragLoc_Setup(zFragLocation* loc, xModelInstance* parent)
@@ -629,7 +625,7 @@ void zFragLoc_InitDir(zFragLocation* loc, xVec3* vec, xModelInstance* parent)
     }
     case eFragLocTag:
         iModelTagEval(parent->Data, &loc->info.tag, parent->Mat, vec);
-        break;
+        return;
     }
 }
 
@@ -660,6 +656,7 @@ void zFrag_DefaultInit(zFrag* frag, zFragAsset* fasset)
         if (frag->info.projectile.model == NULL)
         {
             zFrag_Free(frag);
+            return;
         }
         else if (frag->info.projectile.model != NULL)
         {
@@ -725,6 +722,9 @@ void zFrag_DefaultInit(zFrag* frag, zFragAsset* fasset)
         }
         break;
     }
+    case eFragInactive:
+    case eFragGroup:
+    case eFragShrapnel:
     case eFragShockwave:
         break;
     }
@@ -803,113 +803,108 @@ void zFrag_ParticleManager(F32 dt)
 void zFrag_ProjectileCollData(zFrag* frag)
 {
     xCollis colls;
+    zFragProjectile* proj = &frag->info.projectile;
 
-    frag->info.projectile.tColl = 1e38f;
-    frag->info.projectile.path.initPos.y -=
-        frag->info.projectile.model->Data->boundingSphere.radius *
-        frag->info.projectile.parentScale;
-    xParabolaHitsEnv(&frag->info.projectile.path, globals.sceneCur->env, &colls);
+    proj->tColl = 1e38f;
+    proj->path.initPos.y -= proj->model->Data->boundingSphere.radius * proj->parentScale;
+    xParabolaHitsEnv(&proj->path, globals.sceneCur->env, &colls);
 
     if ((colls.flags & 1) != 0)
     {
-        frag->info.projectile.tColl = colls.dist;
-        xVec3Copy(&frag->info.projectile.N, &colls.norm);
+        proj->tColl = colls.dist;
+        xVec3Copy(&proj->N, &colls.norm);
     }
     else
     {
-        frag->info.projectile.tColl = 1e38f;
+        proj->tColl = 1e38f;
     }
-    frag->info.projectile.path.initPos.y +=
-        frag->info.projectile.model->Data->boundingSphere.radius *
-        frag->info.projectile.parentScale;
+    proj->path.initPos.y += proj->model->Data->boundingSphere.radius * proj->parentScale;
 }
 
-void zFrag_ProjectileSetupPath(zFrag* frag, zFragProjectileAsset* passet)
+inline void zFrag_ProjectileSetupPath(zFrag* frag, zFragProjectileAsset* passet)
 {
     xVec3 tmpVec;
+    zFragProjectile* proj = &frag->info.projectile;
 
     zFragLoc_Setup(&passet->launch, frag->parent[0]);
-    zFragLoc_InitMat(&passet->launch, (xMat4x3*)frag->info.projectile.model->Mat, frag->parent[0]);
-    xVec3Copy(&frag->info.projectile.path.initPos, (xVec3*)&frag->info.projectile.model->Mat->pos);
-    frag->info.projectile.t = 0.0f;
-    frag->info.projectile.parentScale =
-        xVec3Length((xVec3*)&frag->info.projectile.model->Mat->right);
+    zFragLoc_InitMat(&passet->launch, (xMat4x3*)proj->model->Mat, frag->parent[0]);
+    xVec3Copy(&proj->path.initPos, (xVec3*)&proj->model->Mat->pos);
+    proj->t = 0.0f;
+    proj->parentScale = xVec3Length((xVec3*)&proj->model->Mat->right);
 
-    F32 scale = frag->info.projectile.parentScale;
+    F32 scale = proj->parentScale;
     if (scale > 1.0001f || (scale < 0.9999f && !(scale < 0.0001f && scale > -0.0001f)))
     {
-        xVec3SMulBy((xVec3*)&frag->info.projectile.model->Mat->right, 1.0f / scale);
-        xVec3SMulBy((xVec3*)&frag->info.projectile.model->Mat->up,
-                    1.0f / frag->info.projectile.parentScale);
-        xVec3SMulBy((xVec3*)&frag->info.projectile.model->Mat->at,
-                    1.0f / frag->info.projectile.parentScale);
+        xVec3SMulBy((xVec3*)&proj->model->Mat->right, 1.0f / scale);
+        xVec3SMulBy((xVec3*)&proj->model->Mat->up, 1.0f / proj->parentScale);
+        xVec3SMulBy((xVec3*)&proj->model->Mat->at, 1.0f / proj->parentScale);
     }
     else
     {
-        frag->info.projectile.parentScale = 1.0f;
+        proj->parentScale = 1.0f;
     }
 
     if (passet->flags & 8)
     {
         zFragLoc_Setup(&passet->vel, frag->parent[0]);
-        zFragLoc_InitDir(&passet->vel, &frag->info.projectile.path.initVel, frag->parent[0]);
+        zFragLoc_InitDir(&passet->vel, &proj->path.initVel, frag->parent[0]);
     }
     else
     {
-        xVec3Sub(&frag->info.projectile.path.initVel,
-                 (xVec3*)&frag->info.projectile.model->Mat->pos,
+        xVec3Sub(&proj->path.initVel,
+                 (xVec3*)&proj->model->Mat->pos,
                  (xVec3*)&frag->parent[0]->Mat->pos);
-        xVec3SMulBy(&frag->info.projectile.path.initVel, 0.25f);
-        if (frag->info.projectile.path.initVel.y < 0.0f)
+        xVec3SMulBy(&proj->path.initVel, 0.25f);
+        if (proj->path.initVel.y < 0.0f)
         {
-            frag->info.projectile.path.initVel.y = 0.0f;
+            proj->path.initVel.y = 0.0f;
         }
-        frag->info.projectile.path.initVel.y += 3.0f * xurand() + 4.0f;
-        frag->info.projectile.path.initVel.x += 6.0f * xurand() - 3.0f;
-        frag->info.projectile.path.initVel.z += 6.0f * xurand() - 3.0f;
+        proj->path.initVel.y += 3.0f * xurand() + 4.0f;
+        proj->path.initVel.x += 6.0f * xurand() - 3.0f;
+        proj->path.initVel.z += 6.0f * xurand() - 3.0f;
     }
 
-    if (frag->info.projectile.fasset->flags & 0x20)
+    if (proj->fasset->flags & 0x20)
     {
-        xVec3Copy(&frag->info.projectile.axis, &frag->info.projectile.path.initVel);
-        F32 len2 = xVec3Length2(&frag->info.projectile.axis);
+        xVec3Copy(&proj->axis, &proj->path.initVel);
+        F32 len2 = xVec3Length2(&proj->axis);
         if (len2 > 1e-5f)
         {
-            xVec3SMulBy(&frag->info.projectile.axis, 1.0f / xsqrt(len2));
+            xVec3SMulBy(&proj->axis, 1.0f / xsqrt(len2));
         }
-        else if (frag->info.projectile.path.gravity < 0.0f)
+        else if (proj->path.gravity < 0.0f)
         {
-            xVec3Init(&frag->info.projectile.axis, 0.0f, 1.0f, 0.0f);
+            xVec3Init(&proj->axis, 0.0f, 1.0f, 0.0f);
         }
         else
         {
-            xVec3Init(&frag->info.projectile.axis, 0.0f, -1.0f, 0.0f);
+            xVec3Init(&proj->axis, 0.0f, -1.0f, 0.0f);
         }
-        xVec3Inv(&tmpVec, &frag->info.projectile.axis);
-        xMat3x3LookVec((xMat3x3*)frag->info.projectile.model->Mat, &tmpVec);
+        xVec3Inv(&tmpVec, &proj->axis);
+        xMat3x3LookVec((xMat3x3*)proj->model->Mat, &tmpVec);
     }
     else
     {
-        if (frag->info.projectile.path.initVel.x < 0.01f &&
-            frag->info.projectile.path.initVel.x > -0.01f &&
-            frag->info.projectile.path.initVel.z < 0.01f &&
-            frag->info.projectile.path.initVel.z > -0.01f)
+        if (proj->path.initVel.x < 0.01f &&
+            proj->path.initVel.x > -0.01f &&
+            proj->path.initVel.z < 0.01f &&
+            proj->path.initVel.z > -0.01f)
         {
-            xVec3Init(&frag->info.projectile.axis, 1.0f, 0.0f, 0.0f);
-            frag->info.projectile.angVel = 5.0f;
+            xVec3Init(&proj->axis, 1.0f, 0.0f, 0.0f);
+            proj->angVel = 5.0f;
         }
         else
         {
-            xVec3Init(&frag->info.projectile.axis, frag->info.projectile.path.initVel.z, 0.0f,
-                      -frag->info.projectile.path.initVel.x);
-            frag->info.projectile.angVel =
-                3.0f * xVec3Normalize(&frag->info.projectile.axis, &frag->info.projectile.axis) +
+            xVec3Init(&proj->axis, proj->path.initVel.z, 0.0f,
+                      -proj->path.initVel.x);
+            proj->angVel =
+                3.0f * xVec3Normalize(&proj->axis, &proj->axis) +
                 4.0f;
         }
-        frag->info.projectile.angVel *= 0.5f + xurand();
+        proj->angVel *= 0.5f + xurand();
     }
 
-    frag->info.projectile.path.gravity = passet->gravity;
+    proj->path.gravity = passet->gravity;
 }
 
 void zFrag_DefaultProjectileUpdate(zFrag* frag, F32 param_2)
@@ -974,6 +969,10 @@ void zFrag_DeleteProjectile(zFrag* frag)
 
 void zFrag_ProjectileManager(F32 dt)
 {
+    zFrag* frag;
+    zFragProjectile* proj;
+    zFrag* next;
+    S32 killed;
     xVec3 tanVel;
     xVec3 oldPos;
     xMat3x3 spin;
@@ -982,11 +981,11 @@ void zFrag_ProjectileManager(F32 dt)
     F32 percent;
     xVec3 uVar1;
 
-    zFrag* frag = sProjectileList.next;
+    frag = sProjectileList.next;
 
     while (frag != NULL)
     {
-        zFrag* next = frag->next;
+        next = frag->next;
 
         frag->lifetime -= dt;
         frag->alivetime += dt;
@@ -997,123 +996,125 @@ void zFrag_ProjectileManager(F32 dt)
         }
         else
         {
-            frag->info.projectile.t = frag->info.projectile.t + dt;
-            S32 killed = FALSE;
+            proj = &frag->info.projectile;
 
-            if ((frag->info.projectile.fasset->flags & 1) != 0)
+            proj->t = proj->t + dt;
+            killed = FALSE;
+
+            if ((proj->fasset->flags & 1) != 0)
             {
-                if (frag->info.projectile.t > frag->info.projectile.tColl)
+                if (proj->t > proj->tColl)
                 {
-                    frag->info.projectile.numBounces++;
+                    proj->numBounces++;
 
-                    if (frag->info.projectile.fasset->maxBounces >= 0 &&
-                        frag->info.projectile.numBounces > frag->info.projectile.fasset->maxBounces)
+                    if (proj->fasset->maxBounces >= 0 &&
+                        proj->numBounces > proj->fasset->maxBounces)
                     {
-                        xVec3Init(&frag->info.projectile.path.initVel, 0.0f, 0.0f, 0.0f);
+                        xVec3Init(&proj->path.initVel, 0.0f, 0.0f, 0.0f);
                         zFrag_DeleteProjectile(frag);
                         killed = TRUE;
                     }
                     else
                     {
-                        xParabolaRecenter(&frag->info.projectile.path, frag->info.projectile.tColl);
+                        xParabolaRecenter(&proj->path, proj->tColl);
 
                         percent =
-                            xVec3Dot(&frag->info.projectile.N, &frag->info.projectile.path.initVel);
-                        xVec3AddScaled(&frag->info.projectile.path.initVel,
-                                       &frag->info.projectile.N,
-                                       -(1.0f + frag->info.projectile.fasset->bounce) * percent);
-                        xVec3AddScaled(&frag->info.projectile.path.initPos,
-                                       &frag->info.projectile.path.initVel,
-                                       frag->info.projectile.t - frag->info.projectile.tColl);
-                        frag->info.projectile.path.minTime = 0.0f;
-                        frag->info.projectile.path.maxTime = frag->lifetime;
+                            xVec3Dot(&proj->N, &proj->path.initVel);
+                        xVec3AddScaled(&proj->path.initVel,
+                                       &proj->N,
+                                       -(1.0f + proj->fasset->bounce) * percent);
+                        xVec3AddScaled(&proj->path.initPos,
+                                       &proj->path.initVel,
+                                       proj->t - proj->tColl);
+                        proj->path.minTime = 0.0f;
+                        proj->path.maxTime = frag->lifetime;
 
-                        if ((frag->info.projectile.fasset->flags & 0x20) == 0)
+                        if ((proj->fasset->flags & 0x20) == 0)
                         {
-                            xVec3Cross(&frag->info.projectile.axis, &frag->info.projectile.N,
-                                       &frag->info.projectile.path.initVel);
-                            xVec3Normalize(&frag->info.projectile.axis,
-                                           &frag->info.projectile.axis);
-                            xVec3Copy(&tanVel, &frag->info.projectile.path.initVel);
-                            xVec3AddScaled(&tanVel, &frag->info.projectile.N,
-                                           percent * frag->info.projectile.fasset->bounce);
+                            xVec3Cross(&proj->axis, &proj->N,
+                                       &proj->path.initVel);
+                            xVec3Normalize(&proj->axis,
+                                           &proj->axis);
+                            xVec3Copy(&tanVel, &proj->path.initVel);
+                            xVec3AddScaled(&tanVel, &proj->N,
+                                           percent * proj->fasset->bounce);
                             percent = xVec3Length(&tanVel);
 
-                            frag->info.projectile.angVel =
+                            proj->angVel =
                                 (percent /
-                                 (frag->info.projectile.model->Data->boundingSphere.radius *
-                                  frag->info.projectile.parentScale));
+                                 (proj->model->Data->boundingSphere.radius *
+                                  proj->parentScale));
                         }
                         zFrag_ProjectileCollData(frag);
-                        frag->info.projectile.t = 0.0f;
+                        proj->t = 0.0f;
                     }
                 }
-                else if (frag->info.projectile.t > frag->info.projectile.path.maxTime)
+                else if (proj->t > proj->path.maxTime)
                 {
-                    frag->info.projectile.path.minTime = frag->info.projectile.path.maxTime;
-                    frag->info.projectile.path.maxTime += 1.0f;
+                    proj->path.minTime = proj->path.maxTime;
+                    proj->path.maxTime += 1.0f;
                     zFrag_ProjectileCollData(frag);
                 }
             }
 
             if (!killed)
             {
-                zFragProjectileAsset* proj = frag->info.projectile.fasset;
-                F32 minScale = proj->minScale;
+                zFragProjectileAsset* passet = proj->fasset;
+                F32 minScale = passet->minScale;
 
-                if (minScale != proj->maxScale || proj->scaleCurve != NULL)
+                if (minScale != passet->maxScale || passet->scaleCurve != NULL)
                 {
                     F32 totalTime = frag->alivetime / (frag->lifetime + frag->alivetime);
-                    F32 newScale = totalTime * (proj->maxScale - minScale) + minScale;
+                    F32 newScale = totalTime * (passet->maxScale - minScale) + minScale;
 
-                    if (proj->scaleCurve != NULL)
+                    if (passet->scaleCurve != NULL)
                     {
-                        if ((proj->flags & 4) != 0)
+                        if ((passet->flags & 4) != 0)
                         {
-                            newScale *= xCurveAssetEvaluate(proj->scaleCurve, totalTime);
+                            newScale *= xCurveAssetEvaluate(passet->scaleCurve, totalTime);
                         }
                         else
                         {
-                            newScale *= xCurveAssetEvaluate(proj->scaleCurve, frag->alivetime);
+                            newScale *= xCurveAssetEvaluate(passet->scaleCurve, frag->alivetime);
                         }
                     }
-                    frag->info.projectile.scale = newScale;
+                    proj->scale = newScale;
                 }
 
-                xVec3Copy(&oldPos, (xVec3*)&frag->info.projectile.model->Mat->pos);
-                xVec3Copy((xVec3*)&frag->info.projectile.model->Mat->pos,
-                          &frag->info.projectile.path.initPos);
-                xVec3AddScaled((xVec3*)&frag->info.projectile.model->Mat->pos,
-                               &frag->info.projectile.path.initVel, frag->info.projectile.t);
-                frag->info.projectile.model->Mat->pos.y -=
-                    frag->info.projectile.t *
-                    ((0.5f * frag->info.projectile.path.gravity) * frag->info.projectile.t);
+                xVec3Copy(&oldPos, (xVec3*)&proj->model->Mat->pos);
+                xVec3Copy((xVec3*)&proj->model->Mat->pos,
+                          &proj->path.initPos);
+                xVec3AddScaled((xVec3*)&proj->model->Mat->pos,
+                               &proj->path.initVel, proj->t);
+                proj->model->Mat->pos.y -=
+                    proj->t *
+                    ((0.5f * proj->path.gravity) * proj->t);
 
-                if ((frag->info.projectile.fasset->flags & 0x20) != 0)
+                if ((proj->fasset->flags & 0x20) != 0)
                 {
-                    xVec3Sub(&back, (xVec3*)&frag->info.projectile.model->Mat->pos, &oldPos);
+                    xVec3Sub(&back, (xVec3*)&proj->model->Mat->pos, &oldPos);
                     percent = xVec3Length2(&back);
 
                     if (percent > 1e-5f)
                     {
                         percent = xsqrt(percent);
-                        xVec3SMul((xVec3*)&frag->info.projectile.axis, &back, 1.0f / percent);
+                        xVec3SMul((xVec3*)&proj->axis, &back, 1.0f / percent);
                     }
 
-                    xVec3Inv(&newAxis, (xVec3*)&frag->info.projectile.axis);
-                    xMat3x3LookVec((xMat3x3*)frag->info.projectile.model->Mat, &newAxis);
+                    xVec3Inv(&newAxis, (xVec3*)&proj->axis);
+                    xMat3x3LookVec((xMat3x3*)proj->model->Mat, &newAxis);
                 }
                 else
                 {
-                    xMat3x3Rot(&spin, &frag->info.projectile.axis,
-                               dt * frag->info.projectile.angVel);
-                    xMat3x3Mul((xMat3x3*)frag->info.projectile.model->Mat,
-                               (xMat3x3*)frag->info.projectile.model->Mat, &spin);
+                    xMat3x3Rot(&spin, &proj->axis,
+                               dt * proj->angVel);
+                    xMat3x3Mul((xMat3x3*)proj->model->Mat,
+                               (xMat3x3*)proj->model->Mat, &spin);
                 }
 
-                if ((frag->info.projectile.fasset->flags & 2) != 0)
+                if ((proj->fasset->flags & 2) != 0)
                 {
-                    xParabolaEvalVel(&frag->info.projectile.path, &uVar1, frag->info.projectile.t);
+                    xParabolaEvalVel(&proj->path, &uVar1, proj->t);
 
                     U32 numBubbles = 0.2f * xVec3LengthFast(&uVar1);
                     if (numBubbles < 1)
@@ -1121,7 +1122,7 @@ void zFrag_ProjectileManager(F32 dt)
                         numBubbles = 1;
                     }
 
-                    zFX_SpawnBubbleTrail((xVec3*)&frag->info.projectile.model->Mat->pos,
+                    zFX_SpawnBubbleTrail((xVec3*)&proj->model->Mat->pos,
                                          numBubbles);
                 }
             }
@@ -1228,16 +1229,16 @@ F64 __deadstripped_zShrapnel_double()
 
 void zFrag_DefaultSoundUpdate(zFrag* frag, F32 param_2)
 {
-    zFragSoundAsset* sasset = frag->info.sound.fasset;
+    zFragSound* sound = &frag->info.sound;
+    zFragSoundAsset* sasset = sound->fasset;
 
     if (sasset->delay > 0.0001f)
     {
-        zFragLoc_InitVec(&sasset->source, &frag->info.sound.location, frag->parent[0]);
+        zFragLoc_InitVec(&sasset->source, &sound->location, frag->parent[0]);
     }
 
-    frag->info.sound.soundID =
-        xSndPlay3D(sasset->assetID, 0.77f * sasset->volume, 0.0f, 0, 0, &frag->info.sound.location,
-                   sasset->innerRadius, sasset->outerRadius, SND_CAT_GAME, 0.0f);
+    sound->soundID = xSndPlay3D(sasset->assetID, 0.77f * sasset->volume, 0.0f, 0, 0, &sound->location,
+                                sasset->innerRadius, sasset->outerRadius, SND_CAT_GAME, 0.0f);
 
     if (frag->prev != NULL)
     {
@@ -1270,15 +1271,16 @@ void zFrag_SoundManager(F32 dt)
     while (frag != NULL)
     {
         zFrag* next = frag->next;
+        zFragSound* sound = &frag->info.sound;
 
         frag->lifetime -= dt;
         frag->alivetime += dt;
 
         if (frag->lifetime < 0.0f)
         {
-            if (frag->info.sound.soundID != 0)
+            if (sound->soundID != 0)
             {
-                xSndStop(frag->info.sound.soundID);
+                xSndStop(sound->soundID);
             }
             zFrag_Free(frag);
         }
@@ -1292,7 +1294,9 @@ void zFrag_ProjectileRenderer()
 
     for (zFrag* frag = sProjectileList.next; frag != NULL; frag = frag->next)
     {
-        if (frag->info.projectile.model != NULL && !(frag->info.projectile.fasset->flags & 0x40))
+        zFragProjectile* proj = &frag->info.projectile;
+
+        if (frag->info.projectile.model != NULL && !(proj->fasset->flags & 0x40))
         {
             F32 scale = frag->info.projectile.scale * frag->info.projectile.parentScale;
             frag->info.projectile.model->Scale.z = scale;
@@ -1317,44 +1321,42 @@ static void zShrapnel_DestructObjInit(zShrapnelAsset* shrap, xModelInstance* par
 {
     xVec3 center;
     xVec3 offset;
-    xVec3 tmpVec;
-    xMat4x3 mat;
+    xVec3 back;
+    xMat4x3 orientation;
     zFrag* frag;
-    zFragProjectileAsset* passet;
+    zFragProjectile* proj;
+    zFragProjectileAsset* fasset;
     S32 i;
-    S32 count;
+    S32 numFrags;
 
     if (shrap == NULL || parent == NULL)
     {
         return;
     }
 
-    xMat4x3Copy(&mat, (xMat4x3*)parent->Mat);
-    F32 scale = xVec3Length(&mat.right);
-    F32 inv = 1.0f / scale;
-    xVec3SMulBy(&mat.right, inv);
-    xVec3SMulBy(&mat.up, inv);
-    xVec3SMulBy(&mat.at, inv);
+    xMat4x3Copy(&orientation, (xMat4x3*)parent->Mat);
+    F32 scale = xVec3Length(&orientation.right);
+    F32 invScale = 1.0f / scale;
+    xVec3SMulBy(&orientation.right, invScale);
+    xVec3SMulBy(&orientation.up, invScale);
+    xVec3SMulBy(&orientation.at, invScale);
 
-    xMat3x3RMulVec(&center, (xMat3x3*)&mat, (xVec3*)&parent->Data->boundingSphere.center);
+    xMat3x3RMulVec(&center, (xMat3x3*)&orientation, (xVec3*)&parent->Data->boundingSphere.center);
     xVec3SMulBy(&center, scale);
-    xVec3AddTo(&center, &mat.pos);
+    xVec3AddTo(&center, &orientation.pos);
 
-    F32 radius2;
-    F32 radius = 0.75f * (parent->Data->boundingSphere.radius * scale);
-
-    radius2 = radius * radius;
-    count = (S32)(radius * radius2);
-    if (count < 3)
+    F32 rad = 0.75f * (parent->Data->boundingSphere.radius * scale);
+    numFrags = (S32)(rad * (rad * rad));
+    if (numFrags < 3)
     {
-        count = 3;
+        numFrags = 3;
     }
-    if (count > 10)
+    if (numFrags > 10)
     {
-        count = 10;
+        numFrags = 10;
     }
 
-    for (i = 0; i < count; i++)
+    for (i = 0; i < numFrags; i++)
     {
         S32 idx = (S32)(shrap->fassetCount * xurand());
         if (idx >= shrap->fassetCount)
@@ -1362,101 +1364,102 @@ static void zShrapnel_DestructObjInit(zShrapnelAsset* shrap, xModelInstance* par
             idx = shrap->fassetCount - 1;
         }
 
-        passet = (zFragProjectileAsset*)(shrap + 1) + idx;
-        frag = zFrag_Alloc(passet->type);
+        fasset = (zFragProjectileAsset*)(shrap + 1) + idx;
+        frag = zFrag_Alloc(fasset->type);
         if (frag == NULL)
         {
             return;
         }
 
         frag->alivetime = 0.0f;
-        frag->lifetime = passet->lifetime;
-        frag->delay = passet->delay;
-        frag->info.projectile.fasset = passet;
+        frag->lifetime = fasset->lifetime;
+        frag->delay = fasset->delay;
+        frag->info.projectile.fasset = fasset;
         frag->update = zFrag_DefaultProjectileUpdate;
+        proj = &frag->info.projectile;
 
-        if (passet->modelFile != NULL)
+        if (fasset->modelFile != NULL)
         {
-            frag->info.projectile.model = xModelInstanceAlloc(passet->modelFile, NULL, 0, 0, NULL);
+            proj->model = xModelInstanceAlloc(fasset->modelFile, NULL, 0, 0, NULL);
         }
         else
         {
-            frag->info.projectile.model = NULL;
+            proj->model = NULL;
         }
 
-        if (frag->info.projectile.model == NULL)
+        if (proj->model == NULL)
         {
             zFrag_Free(frag);
         }
-        else if (frag->info.projectile.model != NULL)
+        else if (proj->model != NULL)
         {
-            offset.x = radius * (2.0f * xurand() - 1.0f);
-            offset.y = (2.0f * xurand() - 1.0f) * xsqrt(radius2 - offset.x * offset.x);
+            offset.x = rad * (2.0f * xurand() - 1.0f);
+            offset.y = (2.0f * xurand() - 1.0f) * xsqrt(rad * rad - offset.x * offset.x);
             offset.z = (2.0f * xurand() - 1.0f) *
-                       xsqrt((radius2 - offset.x * offset.x) - offset.y * offset.y);
+                       xsqrt((rad * rad - offset.x * offset.x) - offset.y * offset.y);
 
-            frag->info.projectile.parentScale = 1.0f;
-            xMat3x3Copy((xMat4x3*)frag->info.projectile.model->Mat, &mat);
-            xVec3Copy((xVec3*)&frag->info.projectile.model->Mat->pos, &center);
-            xVec3AddTo((xVec3*)&frag->info.projectile.model->Mat->pos, &offset);
-            xVec3Copy(&frag->info.projectile.path.initPos,
-                      (xVec3*)&frag->info.projectile.model->Mat->pos);
-            frag->info.projectile.t = 0.0f;
+            proj->parentScale = 1.0f;
+            xMat3x3Copy((xMat4x3*)proj->model->Mat, &orientation);
+            xVec3Copy((xVec3*)&proj->model->Mat->pos, &center);
+            xVec3AddTo((xVec3*)&proj->model->Mat->pos, &offset);
+            xVec3Copy(&proj->path.initPos,
+                      (xVec3*)&proj->model->Mat->pos);
+            proj->t = 0.0f;
 
-            xVec3Sub(&frag->info.projectile.path.initVel,
-                     (xVec3*)&frag->info.projectile.model->Mat->pos, (xVec3*)&parent->Mat->pos);
-            xVec3SMulBy(&frag->info.projectile.path.initVel, 0.25f);
-            if (frag->info.projectile.path.initVel.y < 0.0f)
+            xVec3Sub(&proj->path.initVel,
+                     (xVec3*)&proj->model->Mat->pos, (xVec3*)&parent->Mat->pos);
+            xVec3SMulBy(&proj->path.initVel, 0.25f);
+            if (proj->path.initVel.y < 0.0f)
             {
-                frag->info.projectile.path.initVel.y = 0.0f;
+                proj->path.initVel.y = 0.0f;
             }
-            frag->info.projectile.path.initVel.y += 2.0f * xurand() + 4.0f;
-            frag->info.projectile.path.initVel.x += 2.0f * xurand() - 1.0f;
-            frag->info.projectile.path.initVel.z += 2.0f * xurand() - 1.0f;
+            proj->path.initVel.y += 2.0f * xurand() + 4.0f;
+            proj->path.initVel.x += 2.0f * xurand() - 1.0f;
+            proj->path.initVel.z += 2.0f * xurand() - 1.0f;
 
-            if (frag->info.projectile.fasset->flags & 0x20)
+            if (proj->fasset->flags & 0x20)
             {
-                xVec3Copy(&frag->info.projectile.axis, &frag->info.projectile.path.initVel);
-                F32 len2 = xVec3Length2(&frag->info.projectile.axis);
+                xVec3Copy(&proj->axis, &proj->path.initVel);
+                F32 len2 = xVec3Length2(&proj->axis);
                 if (len2 > 1e-5f)
                 {
-                    xVec3SMulBy(&frag->info.projectile.axis, 1.0f / xsqrt(len2));
+                    xVec3SMulBy(&proj->axis, 1.0f / xsqrt(len2));
                 }
-                else if (frag->info.projectile.path.gravity < 0.0f)
+                else if (proj->path.gravity < 0.0f)
                 {
-                    xVec3Init(&frag->info.projectile.axis, 0.0f, 1.0f, 0.0f);
+                    xVec3Init(&proj->axis, 0.0f, 1.0f, 0.0f);
                 }
                 else
                 {
-                    xVec3Init(&frag->info.projectile.axis, 0.0f, -1.0f, 0.0f);
+                    xVec3Init(&proj->axis, 0.0f, -1.0f, 0.0f);
                 }
-                xVec3Inv(&tmpVec, &frag->info.projectile.axis);
-                xMat3x3LookVec((xMat3x3*)frag->info.projectile.model->Mat, &tmpVec);
+                xVec3Inv(&back, &proj->axis);
+                xMat3x3LookVec((xMat3x3*)proj->model->Mat, &back);
             }
             else
             {
-                if (frag->info.projectile.path.initVel.x < 0.01f &&
-                    frag->info.projectile.path.initVel.x > -0.01f &&
-                    frag->info.projectile.path.initVel.z < 0.01f &&
-                    frag->info.projectile.path.initVel.z > -0.01f)
+                if (proj->path.initVel.x < 0.01f &&
+                    proj->path.initVel.x > -0.01f &&
+                    proj->path.initVel.z < 0.01f &&
+                    proj->path.initVel.z > -0.01f)
                 {
-                    xVec3Init(&frag->info.projectile.axis, 1.0f, 0.0f, 0.0f);
-                    frag->info.projectile.angVel = 5.0f;
+                    xVec3Init(&proj->axis, 1.0f, 0.0f, 0.0f);
+                    proj->angVel = 5.0f;
                 }
                 else
                 {
-                    xVec3Init(&frag->info.projectile.axis, frag->info.projectile.path.initVel.z,
-                              0.0f, -frag->info.projectile.path.initVel.x);
-                    frag->info.projectile.angVel =
-                        3.0f * xVec3Normalize(&frag->info.projectile.axis,
-                                              &frag->info.projectile.axis) +
+                    xVec3Init(&proj->axis, proj->path.initVel.z,
+                              0.0f, -proj->path.initVel.x);
+                    proj->angVel =
+                        3.0f * xVec3Normalize(&proj->axis,
+                                              &proj->axis) +
                         4.0f;
                 }
             }
 
-            frag->info.projectile.angVel *= 0.5f + xurand();
-            frag->info.projectile.path.gravity = passet->gravity;
-            frag->info.projectile.numBounces = 0;
+            proj->angVel *= 0.5f + xurand();
+            proj->path.gravity = fasset->gravity;
+            proj->numBounces = 0;
         }
     }
 }
@@ -1576,7 +1579,7 @@ static void zShrapnel_BB03FloorInit(zShrapnelAsset* shrap, xModelInstance* paren
                 F32 r = xurand();
                 frag->info.projectile.axis.x = r;
                 frag->info.projectile.axis.y = 0.0f;
-                frag->info.projectile.axis.z = xsqrt(-(r * r - 1.0f));
+                frag->info.projectile.axis.z = xsqrt(1.0f - r * r);
                 frag->info.projectile.angVel = 1.5f * xurand();
                 frag->info.projectile.path.gravity = 10.0f;
                 frag->info.projectile.numBounces = 0;
@@ -1589,9 +1592,11 @@ static void BB03FloorChildCB(zFrag* frag, zFragAsset* fasset)
 {
     if (frag->type == eFragProjectile)
     {
-        frag->info.projectile.path.initVel.x = 4.0f * (xurand() - 0.5f);
-        frag->info.projectile.path.initVel.y = 2.0f * (1.0f + xurand());
-        frag->info.projectile.path.initVel.z = 4.0f * (xurand() - 0.5f);
+        zFragProjectile* proj = &frag->info.projectile;
+
+        proj->path.initVel.x = 4.0f * (xurand() - 0.5f);
+        proj->path.initVel.y = 2.0f * (1.0f + xurand());
+        proj->path.initVel.z = 4.0f * (xurand() - 0.5f);
     }
 }
 
@@ -1604,20 +1609,18 @@ static void zShrapnel_BB03FloorChildInit(zShrapnelAsset* shrap, xModelInstance* 
 static void zShrapnel_GlobalRobotInit(zShrapnelAsset* shrap, xModelInstance* parent, xVec3* initVel,
                                       void (*cb)(zFrag*, zFragAsset*))
 {
-    zShrapnelParentList* curr;
     zShrapnelParentList* plist;
     zFrag* frag;
     zFragAsset* fasset;
     S32 i;
-    xVec3 pos;
+    xVec3 spawn;
 
     plist = (zShrapnelParentList*)xMemPushTemp(shrap->fassetCount * sizeof(zShrapnelParentList));
-    xVec3Copy(&pos, (xVec3*)&parent->Mat->pos);
-    pos.y += 0.5f;
-    zFX_SpawnBubbleHit(&pos, 0x50);
+    xVec3Copy(&spawn, (xVec3*)&parent->Mat->pos);
+    spawn.y += 0.5f;
+    zFX_SpawnBubbleHit(&spawn, 0x50);
 
     fasset = (zFragAsset*)(shrap + 1);
-    curr = plist;
     i = 0;
 
     while (i < shrap->fassetCount)
@@ -1651,14 +1654,14 @@ static void zShrapnel_GlobalRobotInit(zShrapnelAsset* shrap, xModelInstance* par
 
         zFrag_DefaultInit(frag, fasset);
 
-        curr->parentID = fasset->id;
+        plist[i].parentID = fasset->id;
         if (frag->type == eFragInactive)
         {
-            curr->parentModel = parent;
+            plist[i].parentModel = parent;
         }
         else if (fasset->type == eFragProjectile)
         {
-            curr->parentModel = frag->info.projectile.model;
+            plist[i].parentModel = frag->info.projectile.model;
             frag->info.projectile.fasset->flags |= 2;
             frag->info.projectile.path.initVel.x *= 3.5f;
             frag->info.projectile.path.initVel.y += 2.0f;
@@ -1666,7 +1669,7 @@ static void zShrapnel_GlobalRobotInit(zShrapnelAsset* shrap, xModelInstance* par
         }
         else
         {
-            curr->parentModel = frag->parent[0];
+            plist[i].parentModel = frag->parent[0];
         }
 
         switch (fasset->type)
@@ -1685,7 +1688,6 @@ static void zShrapnel_GlobalRobotInit(zShrapnelAsset* shrap, xModelInstance* par
             break;
         }
 
-        curr++;
         i++;
     }
 
@@ -1695,20 +1697,18 @@ static void zShrapnel_GlobalRobotInit(zShrapnelAsset* shrap, xModelInstance* par
 static void zShrapnel_SpongebobInit(zShrapnelAsset* shrap, xModelInstance* parent, xVec3* initVel,
                                     void (*cb)(zFrag*, zFragAsset*))
 {
-    zShrapnelParentList* curr;
     zShrapnelParentList* plist;
     zFrag* frag;
     zFragAsset* fasset;
     S32 i;
-    xVec3 pos;
+    xVec3 spawn;
 
     plist = (zShrapnelParentList*)xMemPushTemp(shrap->fassetCount * sizeof(zShrapnelParentList));
-    xVec3Copy(&pos, (xVec3*)&parent->Mat->pos);
-    pos.y += 0.5f;
-    zFX_SpawnBubbleHit(&pos, 0x50);
+    xVec3Copy(&spawn, (xVec3*)&parent->Mat->pos);
+    spawn.y += 0.5f;
+    zFX_SpawnBubbleHit(&spawn, 0x50);
 
     fasset = (zFragAsset*)(shrap + 1);
-    curr = plist;
     i = 0;
 
     while (i < shrap->fassetCount)
@@ -1742,14 +1742,14 @@ static void zShrapnel_SpongebobInit(zShrapnelAsset* shrap, xModelInstance* paren
 
         zFrag_DefaultInit(frag, fasset);
 
-        curr->parentID = fasset->id;
+        plist[i].parentID = fasset->id;
         if (frag->type == eFragInactive)
         {
-            curr->parentModel = parent;
+            plist[i].parentModel = parent;
         }
         else if (fasset->type == eFragProjectile)
         {
-            curr->parentModel = frag->info.projectile.model;
+            plist[i].parentModel = frag->info.projectile.model;
             if (initVel != NULL)
             {
                 xVec3AddTo(&frag->info.projectile.path.initVel, initVel);
@@ -1762,7 +1762,7 @@ static void zShrapnel_SpongebobInit(zShrapnelAsset* shrap, xModelInstance* paren
         }
         else
         {
-            curr->parentModel = frag->parent[0];
+            plist[i].parentModel = frag->parent[0];
         }
 
         switch (fasset->type)
@@ -1781,7 +1781,6 @@ static void zShrapnel_SpongebobInit(zShrapnelAsset* shrap, xModelInstance* paren
             break;
         }
 
-        curr++;
         i++;
     }
 

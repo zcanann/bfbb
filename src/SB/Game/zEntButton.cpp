@@ -13,8 +13,8 @@
 static F32 sRedMultiplier = 1.0f;
 static F32 sGreenMultiplier = 1.0f;
 static F32 sBlueMultiplier = 1.0f;
-static volatile F32 sColorMultiplier = 1.0f;
-static volatile S32 sColorMultiplierSign = 1;
+static F32 sColorMultiplier = 1.0f;
+static S32 sColorMultiplierSign = 1;
 
 static S32 zEntButtonEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* b3);
 
@@ -218,6 +218,8 @@ void zEntButton_Update(_zEntButton* ent, xScene* sc, F32 dt)
         case 1:
             xEntMotionRun(&ent->motion);
             break;
+        case 2:
+            break;
         case 3:
             xEntMotionStop(&ent->motion);
             break;
@@ -344,17 +346,24 @@ void zEntButton_Hold(_zEntButton* ent, U32 mask)
     {
         switch (ent->bound.type)
         {
+        case XBOUND_TYPE_SPHERE:
+        case XBOUND_TYPE_BOX:
         case XBOUND_TYPE_CYL:
             break;
         case XBOUND_TYPE_OBB:
-            xVec3 vec;
-            xMat4x3Tolocal(&vec, ent->bound.mat, (xVec3*)&globals.player.ent.model->Mat->pos);
-            vec.y = 0.0f;
-            if (!xPointInBox(&ent->bound.box.box, &vec))
+        {
+            xVec3* player = (xVec3*)&globals.player.ent.model->Mat->pos;
+            xBound* bound = &ent->bound;
+            xVec3 lv;
+
+            xMat4x3Tolocal(&lv, bound->mat, player);
+            lv.y = 0.0f;
+            if (!xPointInBox(&bound->box.box, &lv))
             {
                 return;
             }
             break;
+        }
         }
     }
 

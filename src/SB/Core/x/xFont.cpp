@@ -413,11 +413,10 @@ namespace
 
     void start_tex_render(U32 font_id)
     {
-        font_data& fd = active_fonts[font_id];
-
         rcz = 1.0f / RwCameraGetNearClipPlane(RwCameraGetCurrentCamera());
         nsz = RwIm2DGetNearScreenZ();
 
+        font_data& fd = active_fonts[font_id];
         xfont::set_render_state(fd.raster);
     }
 
@@ -3754,12 +3753,12 @@ namespace
     }
 } // namespace
 
-template <> basic_rect<F32>& basic_rect<F32>::scale(F32 x, F32 y)
+template <> inline basic_rect<F32>& basic_rect<F32>::scale(F32 x, F32 y)
 {
     return scale(x, y, x, y);
 }
 
-template <> basic_rect<F32>& basic_rect<F32>::scale(F32 x, F32 y, F32 w, F32 h)
+template <> inline basic_rect<F32>& basic_rect<F32>::scale(F32 x, F32 y, F32 w, F32 h)
 {
     this->x *= x;
     this->y *= y;
@@ -3768,7 +3767,7 @@ template <> basic_rect<F32>& basic_rect<F32>::scale(F32 x, F32 y, F32 w, F32 h)
     return *this;
 }
 
-template <> basic_rect<F32>& basic_rect<F32>::assign(F32 x, F32 y, F32 w, F32 h)
+template <> inline basic_rect<F32>& basic_rect<F32>::assign(F32 x, F32 y, F32 w, F32 h)
 {
     this->x = x;
     this->y = y;
@@ -3777,12 +3776,12 @@ template <> basic_rect<F32>& basic_rect<F32>::assign(F32 x, F32 y, F32 w, F32 h)
     return *this;
 }
 
-template <> bool basic_rect<F32>::empty() const
+template <> inline bool basic_rect<F32>::empty() const
 {
     return (w <= 0.0f || h <= 0.0f);
 }
 
-template <> void basic_rect<F32>::clip(basic_rect<F32>& a, basic_rect<F32>& b) const
+template <> inline void basic_rect<F32>::clip(basic_rect<F32>& a, basic_rect<F32>& b) const
 {
     F32 bwaw = b.w / a.w;
     F32 bwah = b.h / a.h;
@@ -3828,7 +3827,7 @@ template <> void basic_rect<F32>::clip(basic_rect<F32>& a, basic_rect<F32>& b) c
     }
 }
 
-template <> basic_rect<F32>& basic_rect<F32>::operator|=(const basic_rect<F32>& other)
+template <> inline basic_rect<F32>& basic_rect<F32>::operator|=(const basic_rect<F32>& other)
 {
     F32 x1, y1, x2, y2;
     F32 _x1, _y1, _x2, _y2;
@@ -3861,7 +3860,7 @@ template <> basic_rect<F32>& basic_rect<F32>::operator|=(const basic_rect<F32>& 
     return *this;
 }
 
-template <> void basic_rect<F32>::set_bounds(F32 x1, F32 y1, F32 x2, F32 y2)
+template <> inline void basic_rect<F32>::set_bounds(F32 x1, F32 y1, F32 x2, F32 y2)
 {
     x = x1;
     w = x2 - x1;
@@ -3869,7 +3868,7 @@ template <> void basic_rect<F32>::set_bounds(F32 x1, F32 y1, F32 x2, F32 y2)
     h = y2 - y1;
 }
 
-template <> void basic_rect<F32>::get_bounds(F32& x1, F32& y1, F32& x2, F32& y2) const
+template <> inline void basic_rect<F32>::get_bounds(F32& x1, F32& y1, F32& x2, F32& y2) const
 {
     F32 tx = x;
     F32 ty = y;
@@ -3882,14 +3881,14 @@ template <> void basic_rect<F32>::get_bounds(F32& x1, F32& y1, F32& x2, F32& y2)
     y2 = by;
 }
 
-template <> basic_rect<F32>& basic_rect<F32>::move(F32 x, F32 y)
+template <> inline basic_rect<F32>& basic_rect<F32>::move(F32 x, F32 y)
 {
     this->x += x;
     this->y += y;
     return *this;
 }
 
-template <> basic_rect<F32>& basic_rect<F32>::scale(F32 s)
+template <> inline basic_rect<F32>& basic_rect<F32>::scale(F32 s)
 {
     return scale(s, s, s, s);
 }

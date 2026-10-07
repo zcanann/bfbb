@@ -313,6 +313,9 @@ namespace
     {
         U32 count, type;
         S32 dyn_size, i, cnt;
+        U32 asset_size;
+        xDynAsset* a;
+        xBase* b;
 
         s.baseList[d.type] = NULL;
 
@@ -332,10 +335,6 @@ namespace
 
         for (i = 0, cnt = 0; i < (S32)count; i++)
         {
-            U32 asset_size;
-            xDynAsset* a;
-            xBase* b;
-
             a = (xDynAsset*)xSTFindAssetByType('DYNA', i, &asset_size);
 
             if (a && a->type == type)
@@ -559,9 +558,9 @@ static U32 zSceneInitFunc_Player(zScene* s, zSceneObjectInstanceDesc* desc, U32 
 
             asset = (xEntAsset*)xSTFindAssetByType('PLYR', idx, NULL);
 
-            globals.player.ent.id = asset->id;
+            b->id = asset->id;
 
-            zSceneObjHashtableAdd(asset->id, b);
+            zSceneObjHashtableAdd(b->id, b);
 
             base_idx++;
         }
@@ -3380,13 +3379,14 @@ static S32 zSceneObjHashtableUsage()
 
 static void zSceneObjHashtableAdd(U32 id, xBase* base)
 {
-    S32 k, chkd;
+    S32 chkd, k;
+    IDBasePair* idbp = NULL;
 
     chkd = id & (scobj_size - 1);
 
     for (k = 0; k < scobj_size; k++)
     {
-        IDBasePair* idbp = &scobj_idbps[chkd];
+        idbp = &scobj_idbps[chkd];
 
         if (idbp->id == 0)
         {
@@ -3407,7 +3407,7 @@ static void zSceneObjHashtableAdd(U32 id, xBase* base)
 
 static xBase* zSceneObjHashtableGet(U32 id)
 {
-    S32 k, chkd;
+    S32 chkd, k;
 
     chkd = id & (scobj_size - 1);
 
@@ -3557,7 +3557,7 @@ const char* zSceneGetLevelName(U32 sceneID)
     char c1 = (sceneID >> 24) & 0xFF;
     char c2 = (sceneID >> 16) & 0xFF;
 
-    for (S32 i = 0; i < sizeof(sLevelTable) / sizeof(sLevelTable[0]); i++)
+    for (S32 i = 0; i < (S32)(sizeof(sLevelTable) / sizeof(sLevelTable[0])); i++)
     {
         if (c1 == sLevelTable[i].prefix[0] && c2 == sLevelTable[i].prefix[1])
         {

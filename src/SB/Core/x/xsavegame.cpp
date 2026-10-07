@@ -1166,13 +1166,13 @@ void xSG_cb_ISGChange(void*, en_CHGCODE what)
     XSGAutoData* asg = xSGAutoSave_GetCache();
     switch (what)
     {
-    case ISG_CHG_NONE:
-        break;
     case ISG_CHG_TARGET:
         asg->MarkInvalid();
         break;
     case ISG_CHG_GAMELIST:
         asg->MarkInvalid();
+        break;
+    case ISG_CHG_NONE:
         break;
     }
 }
@@ -1469,13 +1469,13 @@ void ASG_ISG_changed(void*, en_CHGCODE what)
     XSGAutoData* asg = xSGAutoSave_GetCache();
     switch (what)
     {
-    case ISG_CHG_NONE:
-        break;
     case ISG_CHG_TARGET:
         asg->MarkInvalid();
         break;
     case ISG_CHG_GAMELIST:
         asg->MarkInvalid();
+        break;
+    case ISG_CHG_NONE:
         break;
     }
 }
