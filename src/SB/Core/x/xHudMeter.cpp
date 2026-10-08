@@ -112,21 +112,14 @@ void xhud::meter_widget::destruct()
 
 U32 xhud::meter_widget::type() const
 {
-    static U32 myid = xStrHash(res.type_name());
+    static U32 myid = xStrHash(meter_asset::type_name());
 
     return myid;
 }
 
 bool xhud::meter_widget::is(U32 id) const
 {
-    bool isTheWidget = false;
-
-    if (id == xhud::meter_widget::type() || xhud::widget::is(id))
-    {
-        isTheWidget = true;
-    }
-
-    return isTheWidget;
+    return id == xhud::meter_widget::type() || xhud::widget::is(id);
 }
 
 void xhud::meter_widget::updater(F32 dt)

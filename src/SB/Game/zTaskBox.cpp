@@ -23,7 +23,7 @@ void ztaskbox::load(const ztaskbox::asset_type& a)
     this->baseType = eBaseTypeTaskBox;
     this->asset = &a;
     this->eventFunc = cb_dispatch;
-    if (this->linkCount != 0)
+    if (this->linkCount > 0)
     {
         this->link = (xLinkAsset*)(&a + 1);
     }
@@ -47,10 +47,9 @@ void ztaskbox::load(const ztaskbox::asset_type& a)
 
 void ztaskbox::read(xSerial& s)
 {
-    U8 data[4];
-    data[0] = (U8)this->state;
-    s.Read(data);
-    set_state((ztaskbox::state_enum)data[0]);
+    U8 state = (U8)this->state;
+    s.Read(&state);
+    set_state((ztaskbox::state_enum)state);
 }
 
 void ztaskbox::write(xSerial& s)
@@ -82,7 +81,7 @@ void ztaskbox::start_talk(zNPCCommon* npc)
             ztalkbox* talkbox = (ztalkbox*)zSceneFindObject(asset->talk_box);
             if (talkbox != NULL)
             {
-                const char* text = current->get_text(asset->stages[state]);
+                const char* text = get_text(asset->stages[state]);
                 if (text != NULL)
                 {
                     shared = this;

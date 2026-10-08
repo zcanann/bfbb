@@ -110,8 +110,7 @@ void xNPCBasic::Reset()
 void NPC_alwaysUseSphere(xEnt* ent, xVec3* value)
 {
     xNPCBasic* npc = (xNPCBasic*)ent;
-    const xVec3 vec = { 0, 0, 0 };
-    xVec3 bndcent = vec;
+    xVec3 bndcent = { 0, 0, 0 };
 
     xVec3Copy(&bndcent, xEntGetPos(npc));
     bndcent.y += 0.75f;
