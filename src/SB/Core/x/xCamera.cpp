@@ -1455,7 +1455,7 @@ void xCameraRotate(xCamera* cam, const xVec3& v, F32 roll, F32 time, F32 accel, 
     cam->yaw_epv = cam->pitch_epv = cam->roll_epv = 0.0f;
 }
 
-#if !defined(XBOX)
+#if !defined(XBOX) && !defined(PS2)
 F32 xasin(F32 x)
 {
     return std::asinf(x);

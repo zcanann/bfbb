@@ -117,9 +117,11 @@ void SUBB_InitEffects()
     g_parf_holder.custom_flags = 0x100;
 }
 
+#if !defined(PS2)
 zNPCSubBoss::zNPCSubBoss(S32 myType) : zNPCCommon(myType)
 {
 }
+#endif
 
 U8 zNPCSubBoss::ColChkFlags() const
 {

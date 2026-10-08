@@ -28,7 +28,7 @@ inline F32 xatan2(F32 y, F32 x)
 #else
 F32 xatan2(F32 y, F32 x);
 #endif
-#if defined(XBOX)
+#if defined(XBOX) || defined(PS2)
 inline F32 xasin(F32 x)
 {
     return std::asinf(x);
