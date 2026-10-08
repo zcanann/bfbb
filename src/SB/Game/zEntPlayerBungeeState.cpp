@@ -288,8 +288,9 @@ namespace bungee_state
         }
         static void render_player(bool fade)
         {
-            xShadowRender(&globals.player.ent, 100.0f);
-            xEntRender(&globals.player.ent);
+            xEnt& ent = globals.player.ent;
+            xShadowRender(&ent, 100.0f);
+            xEntRender(&ent);
 
             if (fade)
             {
@@ -341,25 +342,26 @@ namespace bungee_state
 
         static bool find_drop_off()
         {
-            S32 idx = -1;
-            F32 closest = SQR(shared.hook->asset->detach.dist);
+            S32 near_index = -1;
+            F32 near_dist2 = shared.hook->asset->detach.dist;
+            near_dist2 *= near_dist2;
             for (S32 i = 0; i < shared.drop_cache_size; ++i)
             {
-                xVec3 d = shared.drop_marker_cache[i]->pos - shared.hook_loc;
-                F32 len2 = d.length2();
-                if (len2 >= closest)
+                xVec3 dloc = shared.drop_marker_cache[i]->pos - shared.hook_loc;
+                F32 len2 = dloc.length2();
+                if (len2 >= near_dist2)
                 {
                     continue;
                 }
-                idx = i;
-                closest = len2;
+                near_index = i;
+                near_dist2 = len2;
             }
 
-            if (idx != -1)
+            if (near_index != -1)
             {
-                shared.drop_loc = shared.drop_marker_cache[idx]->pos;
-                shared.drop_set_view_angle = shared.drop_cache[idx]->set_view_angle;
-                shared.drop_view_angle = shared.drop_cache[idx]->view_angle;
+                shared.drop_loc = shared.drop_marker_cache[near_index]->pos;
+                shared.drop_set_view_angle = shared.drop_cache[near_index]->set_view_angle;
+                shared.drop_view_angle = shared.drop_cache[near_index]->view_angle;
                 return true;
             }
             return false;
@@ -611,32 +613,37 @@ namespace bungee_state
 
             F32 spring_velocity(F32 x, F32 v, F32 e, F32 k, F32 g, F32 xc) const
             {
-                F32 ret = e - spring_potential_energy(x, k, g, xc);
-                if (ret <= 0.0f)
+                F32 ek = e - spring_potential_energy(x, k, g, xc);
+                if (ek <= 0.0f)
                 {
                     return 0.0f;
                 }
-                ret = xsqrt(2.0f * ret);
+                F32 vout = xsqrt(2.0f * ek);
 
+#ifdef PS2
+                U32 aa = (*(U32*)&v & 0x80000000) | (*(U32*)&vout & (*(U32*)&v | 0x7fffffff));
+                vout = *(F32*)&aa;
+#else
                 if (v < 0.0f)
                 {
-                    if (ret > 0.0f)
+                    if (vout > 0.0f)
                     {
-                        return -ret;
+                        return -vout;
                     }
                 }
                 else
                 {
-                    if (ret < 0.0f)
+                    if (vout < 0.0f)
                     {
-                        return -ret;
+                        return -vout;
                     }
                 }
-                return ret;
+#endif
+                return vout;
             }
             F32 spring_potential_energy(F32 x, F32 k, F32 g, F32 xc) const
             {
-                return -(g * -(0.5f * xc - x) - spring_potential_energy(x, k));
+                return spring_potential_energy(x, k) - g * (x - 0.5f * xc);
             }
             F32 spring_potential_energy(F32 x, F32 k) const
             {
@@ -648,7 +655,7 @@ namespace bungee_state
             }
             F32 find_spring_min(F32 min_dist, F32 max_dist, F32 gravity, F32 damp) const
             {
-                F32 e = xexp(-PI * damp * xsqrt(-(damp * damp - 1.0f)));
+                F32 e = xexp(-PI * damp * xsqrt(1.0f - damp * damp));
                 return (2.0f * min_dist + max_dist * (e - 1.0f)) / (1.0f + e);
             }
 
@@ -786,7 +793,7 @@ namespace bungee_state
                 dVar1 = isin(dVar11);
                 dVar11 = icos(dVar11);
                 dVar9 = dVar2 - dVar5;
-                dVar8 = -(dVar9 * dVar6 - dVar3) / dVar7;
+                dVar8 = (dVar3 - dVar9 * dVar6) / dVar7;
                 dVar10 = dVar8 * dVar6 - dVar9 * dVar7;
                 dVar2 = xexp(dVar6 * dVar4);
 
@@ -1174,8 +1181,9 @@ namespace bungee_state
             }
             bool hit_boundary(xVec3& norm, xVec3& depen, const xVec3& v) const
             {
-                S32 hits = clip_nearest(norm.x, depen.x, v.x, -h.horizontal.max_dist,
-                                        h.horizontal.max_dist);
+                S32 hits = 0;
+                hits += clip_nearest(norm.x, depen.x, v.x, -h.horizontal.max_dist,
+                                     h.horizontal.max_dist);
                 hits +=
                     clip_nearest(norm.y, depen.y, v.y, h.vertical.max_dist, h.vertical.min_dist);
                 hits += clip_nearest(norm.z, depen.z, v.z, -h.horizontal.max_dist,
@@ -1472,6 +1480,20 @@ namespace bungee_state
                     interpolate_camera_loc(goal, dt);
 
                     const xVec3 dv = cam_dir - v;
+#ifdef PS2
+                    if ((*(const U32*)&dv.x & 0x80000000) != (*(const U32*)&vel.x & 0x80000000))
+                    {
+                        cam_dir.x = v.x;
+                    }
+                    if ((*(const U32*)&dv.y & 0x80000000) != (*(const U32*)&vel.y & 0x80000000))
+                    {
+                        cam_dir.y = v.y;
+                    }
+                    if ((*(const U32*)&dv.z & 0x80000000) != (*(const U32*)&vel.z & 0x80000000))
+                    {
+                        cam_dir.z = v.z;
+                    }
+#else
                     if (((dv.x < 0.0f) ? 1 : 0) != ((vel.x < 0.0f) ? 1 : 0))
                     {
                         cam_dir.x = v.x;
@@ -1484,6 +1506,7 @@ namespace bungee_state
                     {
                         cam_dir.z = v.z;
                     }
+#endif
                 }
 
                 xCameraMove(&globals.camera, local_to_world(cam_loc));
@@ -1724,8 +1747,14 @@ namespace bungee_state
             }
             virtual state_enum update(xScene& s, F32& dt)
             {
+#ifdef PS2
+                // PS2 detaches with Square; GameCube detaches with B (mapped to Triangle).
+                if (globals.pad0->pressed & XPAD_BUTTON_SQUARE && !dying && !detaching &&
+                    find_drop_off())
+#else
                 if (globals.pad0->pressed & XPAD_BUTTON_TRIANGLE && !dying && !detaching &&
                     find_drop_off())
+#endif
                 {
                     start_detaching();
                 }
@@ -1928,22 +1957,22 @@ namespace bungee_state
         U32 check_anim_hit_to_dive(xAnimTransition*, xAnimSingle*, void*)
         {
             shared.anim_state &= ~0x40;
-            return shared.anim_state & 0x2 && (shared.anim_state & 0x80) == 0;
+            return shared.anim_state & 0x2 && !(shared.anim_state & 0x80);
         }
         U32 check_anim_hit_to_top(xAnimTransition*, xAnimSingle*, void*)
         {
             shared.anim_state &= ~0x40;
-            return shared.anim_state & 0x8 && (shared.anim_state & 0x80) == 0;
+            return shared.anim_state & 0x8 && !(shared.anim_state & 0x80);
         }
         U32 check_anim_hit_to_bottom(xAnimTransition*, xAnimSingle*, void*)
         {
             shared.anim_state &= ~0x40;
-            return shared.anim_state & 0x20 && (shared.anim_state & 0x80) == 0;
+            return shared.anim_state & 0x20 && !(shared.anim_state & 0x80);
         }
         U32 check_anim_hit_to_cycle(xAnimTransition*, xAnimSingle*, void*)
         {
             shared.anim_state &= ~0x40;
-            return (shared.anim_state & 0x2a) == 0 && (shared.anim_state & 0x80) == 0;
+            return !(shared.anim_state & 0x2a) && !(shared.anim_state & 0x80);
         }
         U32 check_anim_hit_to_death(xAnimTransition*, xAnimSingle*, void*)
         {
@@ -2048,7 +2077,7 @@ namespace bungee_state
             float vel = (1.0f - fixed.hook_fade_alpha) / fixed.hook_fade_time;
             if (shared.flags & 0x40)
             {
-                hook->Alpha = -(vel * dt - hook->Alpha);
+                hook->Alpha -= vel * dt;
                 if (hook->Alpha <= fixed.hook_fade_alpha)
                 {
                     hook->Alpha = fixed.hook_fade_alpha;
@@ -2057,7 +2086,7 @@ namespace bungee_state
             }
             else
             {
-                hook->Alpha = vel * dt + hook->Alpha;
+                hook->Alpha += vel * dt;
                 if (hook->Alpha >= 1.0f)
                 {
                     hook->Alpha = 1.0f;
@@ -2082,8 +2111,8 @@ namespace bungee_state
                           strcmp(anim_name, "JumpApex01") || strcmp(anim_name, "DJumpStart01") ||
                           strcmp(anim_name, "DJumpLift01") || strcmp(anim_name, "Fall01") ||
                           strcmp(anim_name, "FallHigh01")) &&
-                         globals.player.cheat_mode == 0 &&
-                         (globals.player.ControlOff & ~0x4000) == 0;
+                         !globals.player.cheat_mode &&
+                         !(globals.player.ControlOff & ~0x4000);
 
             shared.hook = NULL;
             if (found)
@@ -2174,7 +2203,7 @@ namespace bungee_state
         xBaseInit(&data, &asset);
         hook_type& hook = (hook_type&)data;
         hook.asset = (hook_asset*)&asset;
-        if (hook.linkCount != 0)
+        if (hook.linkCount > 0)
         {
             hook.link = (xLinkAsset*)(hook.asset + 1);
         }
@@ -2513,13 +2542,13 @@ namespace bungee_state
 
         fade_hook_update(dt);
 
-        F32 last_delay = shared.dismount_delay;
+        F32 prev_dismount_delay = shared.dismount_delay;
         shared.dismount_delay -= dt;
         if (shared.dismount_delay > 0.0f)
         {
             return false;
         }
-        if (last_delay > 0.0f)
+        if (prev_dismount_delay > 0.0f)
         {
             xCameraDoCollisions(1, CO_BUNGEE);
         }
@@ -2534,18 +2563,18 @@ namespace bungee_state
 
         while (1)
         {
-            state_enum next = shared.state->update(*sc, dt);
-            if (next == shared.state->type)
+            state_enum newtype = shared.state->update(*sc, dt);
+            if (newtype == shared.state->type)
             {
                 break;
             }
-            if (next == STATE_INVALID)
+            if (newtype == STATE_INVALID)
             {
                 stop();
                 break;
             }
             shared.state->stop();
-            shared.state = shared.states[next];
+            shared.state = shared.states[newtype];
             shared.state->start();
         }
 

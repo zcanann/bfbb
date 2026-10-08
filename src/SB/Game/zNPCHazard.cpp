@@ -1306,12 +1306,12 @@ void NPCHazard::Render()
     case NPC_HAZ_MONCLOUD:
         if (this->mdl_hazard != NULL)
         {
-            F32 alpha = 1.0f;
-            F32 ds2 = NPCC_ds2_toCam(&this->pos_hazard, NULL);
+            F32 alf_maxClamped = 1.0f;
+            F32 ds2_cam = NPCC_ds2_toCam(&this->pos_hazard, NULL);
             F32 pam;
             RwRaster* rast;
 
-            if (ds2 >= SQ(4.0f))
+            if (ds2_cam >= SQ(4.0f))
             {
                 xVec3 dir_plyr = *xEntGetPos(&globals.player.ent) - globals.camera.mat.pos;
                 dir_plyr.normalize();
@@ -1319,23 +1319,24 @@ void NPCHazard::Render()
                 xVec3 dir_haz = this->pos_hazard - globals.camera.mat.pos;
                 dir_haz.normalize();
 
-                F32 dotter = xVec3Dot(&dir_haz, &dir_plyr);
-                if (dotter > 0.86f)
+                F32 dot = xVec3Dot(&dir_haz, &dir_plyr);
+                if (dot > 0.86f)
                 {
-                    alpha = SMOOTH(CLAMP(1.0f - (dotter - 0.86f) / (1.0f - 0.86f), 0.0f, 1.0f),
-                                   0.7f, 1.0f);
+                    F32 rat = (dot - 0.86f) / (1.0f - 0.86f);
+                    rat = CLAMP(1.0f - rat, 0.0f, 1.0f);
+                    alf_maxClamped = SMOOTH(rat, 0.7f, alf_maxClamped);
                 }
             }
 
-            if (ds2 < SQ(4.0f))
+            if (ds2_cam < SQ(4.0f))
             {
-                alpha = 0.7f;
+                alf_maxClamped = 0.7f;
             }
-            else if (ds2 < SQ(6.0f))
+            else if (ds2_cam < SQ(6.0f))
             {
-                F32 num = ds2 - SQ(4.0f);
+                F32 amt_tran = ds2_cam - SQ(4.0f);
 
-                alpha = SMOOTH(num / (SQ(6.0f) - SQ(4.0f)), 0.7f, alpha);
+                alf_maxClamped = SMOOTH(amt_tran / (SQ(6.0f) - SQ(4.0f)), 0.7f, alf_maxClamped);
             }
 
             if (this->pam_interp < 0.15f)
@@ -1351,7 +1352,7 @@ void NPCHazard::Render()
                 pam = (1.0f - this->pam_interp) / (1.0f - 0.85f);
             }
 
-            this->SetAlpha(SMOOTH(pam, 0.0f, alpha));
+            this->SetAlpha(SMOOTH(pam, 0.0f, alf_maxClamped));
             xVec3SMul(&this->mdl_hazard->Scale, &scale,
                       2.0f * ball->rad_cur);
 
@@ -1370,25 +1371,27 @@ void NPCHazard::Render()
                 break;
             }
 
-            F32 ds2_cam = NPCC_ds2_toCam(&this->pos_hazard, NULL);
-            if (ds2_cam < SQ(20.0f))
             {
-                F32 rat_sq = 1.0f - ds2_cam / SQ(20.0f);
-                F32 alf_shadow = CLAMP(0.3f + rat_sq, 0.0f, 1.0f);
-
-                mat.right = *(xVec3*)this->Right();
-                mat.at = g_NY3;
-                mat.up = *(xVec3*)this->At();
-                mat.pos = this->pos_hazard;
-
-                static S32 skipfill = 0;
-
-                NPCC_RenderProjTexture(rast, alf_shadow, &mat, 1.2f, 10.0f, this->shadowCache,
-                                       !skipfill, NULL);
-
-                if (skipfill++ > 12)
+                F32 ds2_cam = NPCC_ds2_toCam(&this->pos_hazard, NULL);
+                if (ds2_cam < SQ(20.0f))
                 {
-                    skipfill = 0;
+                    F32 rat_sq = 1.0f - ds2_cam / SQ(20.0f);
+                    F32 alf_shadow = CLAMP(0.3f + rat_sq, 0.0f, 1.0f);
+
+                    mat.right = *(xVec3*)this->Right();
+                    mat.at = g_NY3;
+                    mat.up = *(xVec3*)this->At();
+                    mat.pos = this->pos_hazard;
+
+                    static S32 skipfill = 0;
+
+                    NPCC_RenderProjTexture(rast, alf_shadow, &mat, 1.2f, 10.0f, this->shadowCache,
+                                           !skipfill, NULL);
+
+                    if (skipfill++ > 12)
+                    {
+                        skipfill = 0;
+                    }
                 }
             }
         }
@@ -1754,32 +1757,32 @@ S32 NPCHazard::ColTestSphere(const xBound* bnd_tgt, F32 rad)
 
 S32 NPCHazard::ColTestCyl(const xBound* bnd_tgt, F32 rad, F32 hyt)
 {
-    S32 hit = 1;
-    // `delta` is const because the scheduler otherwise treats the stores that
+    S32 inrange = 1;
+    // `diff` is const because the scheduler otherwise treats the stores that
     // fill it as possibly aliasing the 0.5f literal load, and refuses to hoist
     // that load above them the way the retail code does.
-    const xVec3 delta = bnd_tgt->cyl.center - this->pos_hazard;
-    F32 hyt_top = 0.5f * hyt;
-    F32 rad_sum = rad + bnd_tgt->cyl.r;
-    F32 hyt_bot;
+    const xVec3 diff = bnd_tgt->cyl.center - this->pos_hazard;
+    F32 upper = 0.5f * hyt;
+    F32 rad_eff = rad + bnd_tgt->cyl.r;
+    F32 lower;
 
-    hyt_top = hyt + hyt_top;
-    hyt_bot = hyt_top - hyt;
+    upper = hyt + upper;
+    lower = upper - hyt;
 
-    if (delta.y > hyt_top)
+    if (diff.y > upper)
     {
-        hit = 0;
+        inrange = 0;
     }
-    else if (delta.y < hyt_bot)
+    else if (diff.y < lower)
     {
-        hit = 0;
+        inrange = 0;
     }
-    else if (xVec3Length2(&delta) > SQ(rad_sum))
+    else if (xVec3Length2(&diff) > SQ(rad_eff))
     {
-        hit = 0;
+        inrange = 0;
     }
 
-    return hit;
+    return inrange;
 }
 
 S32 NPCHazard::ColPlyrSphere(F32 rad)
@@ -2722,28 +2725,10 @@ void NPCHazard::TarTarSplash(const xVec3* dir_norm)
         xVec3 vel_emit;
         vel_emit = up;
 
-        F32 direction;
-        if (xrand() & 0x800000)
-        {
-            direction = 1.0f;
-        }
-        else
-        {
-            direction = -1.0f;
-        }
-
-        vel_emit += at * direction * (0.4f * (2.0f * (xurand() - 0.5f)) + 0.25f);
-
-        if (xrand() & 0x800000)
-        {
-            direction = 1.0f;
-        }
-        else
-        {
-            direction = -1.0f;
-        }
-
-        vel_emit += rt * direction * (0.4f * (2.0f * (xurand() - 0.5f)) + 0.25f);
+        vel_emit += at * ((xrand() & 0x800000) ? 1.0f : -1.0f) *
+                    (0.4f * (2.0f * (xurand() - 0.5f)) + 0.25f);
+        vel_emit += rt * ((xrand() & 0x800000) ? 1.0f : -1.0f) *
+                    (0.4f * (2.0f * (xurand() - 0.5f)) + 0.25f);
         vel_emit.normalize();
         vel_emit *= 15.0f;
 
@@ -2784,13 +2769,12 @@ void NPCHazard::Upd_ChuckBomb(F32 dt)
         {
             xParabolaEvalPos(parab, &this->pos_hazard, parab->maxTime);
             ReconChuck();
-            return;
         }
         else
         {
             ReconChuck();
-            return;
         }
+        return;
     }
 
     if (this->flg_hazard & 0x8)
@@ -2966,28 +2950,10 @@ void NPCHazard::WaterSplash(const xVec3* dir_norm)
         xVec3 vel_emit;
         vel_emit = up * (0.5f * xurand() + 1.5f);
 
-        F32 direction;
-        if (xrand() & 0x800000)
-        {
-            direction = 1.0f;
-        }
-        else
-        {
-            direction = -1.0f;
-        }
-
-        vel_emit += at * direction * (0.5f * (2.0f * (xurand() - 0.5f)) + 1.0f);
-
-        if (xrand() & 0x800000)
-        {
-            direction = 1.0f;
-        }
-        else
-        {
-            direction = -1.0f;
-        }
-
-        vel_emit += rt * direction * (0.5f * (2.0f * (xurand() - 0.5f)) + 1.0f);
+        vel_emit += at * ((xrand() & 0x800000) ? 1.0f : -1.0f) *
+                    (0.5f * (2.0f * (xurand() - 0.5f)) + 1.0f);
+        vel_emit += rt * ((xrand() & 0x800000) ? 1.0f : -1.0f) *
+                    (0.5f * (2.0f * (xurand() - 0.5f)) + 1.0f);
         vel_emit.normalize();
         vel_emit *= 10.0f;
 
@@ -2997,31 +2963,12 @@ void NPCHazard::WaterSplash(const xVec3* dir_norm)
     for (S32 i = 0; i < 8; i++)
     {
         xVec3 vel_emit;
-        xurand();
-        vel_emit = up * 1.0f;
+        vel_emit = up * (0.0f * xurand() + 1.0f);
 
-        F32 direction;
-        if (xrand() & 0x800000)
-        {
-            direction = 1.0f;
-        }
-        else
-        {
-            direction = -1.0f;
-        }
-
-        vel_emit += at * direction * (0.75f * (2.0f * (xurand() - 0.5f)) + 0.75f);
-
-        if (xrand() & 0x800000)
-        {
-            direction = 1.0f;
-        }
-        else
-        {
-            direction = -1.0f;
-        }
-
-        vel_emit += rt * direction * (0.75f * (2.0f * (xurand() - 0.5f)) + 0.75f);
+        vel_emit += at * ((xrand() & 0x800000) ? 1.0f : -1.0f) *
+                    (0.75f * (2.0f * (xurand() - 0.5f)) + 0.75f);
+        vel_emit += rt * ((xrand() & 0x800000) ? 1.0f : -1.0f) *
+                    (0.75f * (2.0f * (xurand() - 0.5f)) + 0.75f);
         vel_emit.normalize();
         vel_emit *= 7.0f;
 
@@ -3153,19 +3100,17 @@ void NPCHazard::Upd_BoneFlight(F32 dt)
             if (!(this->flg_hazard & 0x40000))
             {
                 ReconArfBone();
-                return;
             }
             else
             {
                 MarkForRecycle();
-                return;
             }
         }
         else
         {
             MarkForRecycle();
-            return;
         }
+        return;
     }
 
     if (this->flg_hazard & 0x8)
@@ -3406,28 +3351,10 @@ void NPCHazard::OilSplash(const xVec3* dir_norm)
         xVec3 vel_emit;
         vel_emit = up;
 
-        F32 direction;
-        if (xrand() & 0x800000)
-        {
-            direction = 1.0f;
-        }
-        else
-        {
-            direction = -1.0f;
-        }
-
-        vel_emit += at * direction * (0.4f * (2.0f * (xurand() - 0.5f)) + 0.25f);
-
-        if (xrand() & 0x800000)
-        {
-            direction = 1.0f;
-        }
-        else
-        {
-            direction = -1.0f;
-        }
-
-        vel_emit += rt * direction * (0.4f * (2.0f * (xurand() - 0.5f)) + 0.25f);
+        vel_emit += at * ((xrand() & 0x800000) ? 1.0f : -1.0f) *
+                    (0.4f * (2.0f * (xurand() - 0.5f)) + 0.25f);
+        vel_emit += rt * ((xrand() & 0x800000) ? 1.0f : -1.0f) *
+                    (0.4f * (2.0f * (xurand() - 0.5f)) + 0.25f);
         vel_emit.normalize();
         vel_emit *= 15.0f;
 
@@ -3621,27 +3548,28 @@ void NPCHazard::Upd_OilGlob(F32 dt)
 
 void NPCHazard::Upd_MonCloud(F32 dt)
 {
-    xVec3 dir_flat;
-    xVec3 dir_delta;
+    HAZCloud* cloud = &this->custdata.cloud;
     F32 ds2_owner;
-    zNPCCommon* npc_owner = this->npc_owner;
+    xVec3 dir_owner;
+    zNPCCommon* npc = this->npc_owner;
+    xVec3 vel;
 
-    if (npc_owner != NULL)
+    if (npc != NULL)
     {
-        ds2_owner = npc_owner->XZDstSqToPos(&this->pos_hazard, &dir_flat, NULL);
+        ds2_owner = npc->XZDstSqToPos(&this->pos_hazard, &dir_owner, NULL);
         if (ds2_owner < 1e-05f)
         {
-            xVec3Copy(&dir_flat, NPCC_rightDir(npc_owner));
+            xVec3Copy(&dir_owner, NPCC_rightDir(npc));
             ds2_owner = 1.0f;
         }
 
-        F32 ds2_home = NPCC_DstSq(&this->custdata.cloud.pos_home, &this->pos_hazard, NULL);
+        F32 ds2_home = NPCC_DstSq(&cloud->pos_home, &this->pos_hazard, NULL);
 
-        if (!npc_owner->IsHealthy() || ds2_home > SQ(this->custdata.cloud.rad_maxRange))
+        if (!npc->IsHealthy() || ds2_home > SQ(cloud->rad_maxRange))
         {
             this->tmr_remain = MIN(this->tmr_remain, 1.0f);
         }
-        else if (!xEntIsVisible(npc_owner) || globals.cmgr != NULL)
+        else if (!xEntIsVisible(npc) || globals.cmgr != NULL)
         {
             this->tmr_remain = -1.0f;
             this->MarkForRecycle();
@@ -3658,81 +3586,79 @@ void NPCHazard::Upd_MonCloud(F32 dt)
         this->tmr_remain = MIN(this->tmr_remain, 1.0f);
     }
 
-    xEnt* plyr = &globals.player.ent;
+    xVec3Sub(&vel, xEntGetPos(&globals.player.ent), &this->pos_hazard);
+    vel.y += 4.0f;
 
-    xVec3Sub(&dir_delta, xEntGetPos(plyr), &this->pos_hazard);
-    dir_delta.y += 4.0f;
-
-    F32 dst_plyr = xVec3Length(&dir_delta);
+    F32 dst_plyr = xVec3Length(&vel);
 
     if (!(ds2_owner < 0.0f) && ds2_owner < 2.0f)
     {
-        xVec3SMul(&dir_delta, &dir_flat,
-                  (dt * this->custdata.cloud.spd_cloud) * (1.0f / xsqrt(ds2_owner)));
-        xVec3AddTo(&this->pos_hazard, &dir_delta);
+        xVec3SMul(&vel, &dir_owner,
+                  (dt * cloud->spd_cloud) * (1.0f / xsqrt(ds2_owner)));
+        xVec3AddTo(&this->pos_hazard, &vel);
     }
     else if (dst_plyr > 0.1f)
     {
-        xVec3SMulBy(&dir_delta, (dt * this->custdata.cloud.spd_cloud) / dst_plyr);
-        xVec3AddTo(&this->pos_hazard, &dir_delta);
+        xVec3SMulBy(&vel, (dt * cloud->spd_cloud) / dst_plyr);
+        xVec3AddTo(&this->pos_hazard, &vel);
     }
     else
     {
         F32 slowit = 0.75f * dt;
 
-        dir_delta.x = dir_delta.x * slowit;
-        dir_delta.z = dir_delta.z * slowit;
-        xVec3AddTo(&this->pos_hazard, &dir_delta);
+        vel.x = vel.x * slowit;
+        vel.z = vel.z * slowit;
+        xVec3AddTo(&this->pos_hazard, &vel);
     }
 
-    F32 tym_used = this->tym_lifespan - this->tmr_remain;
-    F32 rad_span = this->custdata.cloud.rad_max - this->custdata.cloud.rad_min;
+    F32 diff = cloud->rad_max - cloud->rad_min;
+    F32 tym_alive = this->tym_lifespan - this->tmr_remain;
 
-    if (tym_used < 0.25f)
+    if (tym_alive < 0.25f)
     {
-        this->custdata.cloud.rad_cur = 4.0f * (tym_used * rad_span);
+        cloud->rad_cur = 4.0f * (tym_alive * diff);
     }
     else if (this->tmr_remain > 0.25f)
     {
-        this->custdata.cloud.rad_cur = this->custdata.cloud.rad_max;
+        cloud->rad_cur = cloud->rad_max;
     }
     else
     {
-        this->custdata.cloud.rad_cur = 4.0f * (this->tmr_remain * rad_span);
+        cloud->rad_cur = 4.0f * (this->tmr_remain * diff);
     }
 
     if ((this->flg_hazard & 0x2000) && !(globals.player.DamageTimer > 0.0f) &&
-        this->ColPlyrSphere(this->custdata.cloud.rad_cur))
+        this->ColPlyrSphere(cloud->rad_cur))
     {
         this->HurtThePlayer();
     }
 
-    xVec3Sub(&dir_delta, xEntGetPos(plyr), &this->pos_hazard);
+    xVec3Sub(&vel, xEntGetPos(&globals.player.ent), &this->pos_hazard);
 
-    F32 ds2_plyr = SQ(dir_delta.x) + SQ(dir_delta.z);
+    dst_plyr = SQ(vel.x) + SQ(vel.z);
 
-    if (ds2_plyr > 1.0f && this->custdata.cloud.zap_lytnin == NULL)
+    if (dst_plyr > 1.0f && cloud->zap_lytnin == NULL)
     {
-        this->custdata.cloud.tmr_dozap = 0.0f;
+        cloud->tmr_dozap = 0.0f;
     }
-    else if (xabs(dir_delta.y) > 10.0f)
+    else if (xabs(vel.y) > 10.0f)
     {
-        this->custdata.cloud.tmr_dozap = 0.0f;
+        cloud->tmr_dozap = 0.0f;
     }
     else
     {
-        this->custdata.cloud.tmr_dozap = this->custdata.cloud.tmr_dozap + dt;
+        cloud->tmr_dozap = cloud->tmr_dozap + dt;
     }
 
     static S32 showLightning = 1;
 
-    if (this->custdata.cloud.zap_lytnin == NULL && ds2_plyr > 2.0f && ds2_owner > 2.0f)
+    if (cloud->zap_lytnin == NULL && dst_plyr > 2.0f && ds2_owner > 2.0f)
     {
         F32 rate_zap = 1.0f;
 
         if ((S32)((this->tym_lifespan - this->tmr_remain) * rate_zap) & 1)
         {
-            if (this->custdata.cloud.zap_warnin == NULL)
+            if (cloud->zap_warnin == NULL)
             {
                 static xCollis colrec;
                 _tagLightningAdd lyt;
@@ -3740,78 +3666,117 @@ void NPCHazard::Upd_MonCloud(F32 dt)
                 memset(&colrec, 0, sizeof(colrec));
                 this->npc_owner->SndPlayRandom(NPC_STYP_LIGHTNING);
 
-                xVec3Copy(&this->custdata.cloud.pos_warnin, &this->pos_hazard);
-                this->custdata.cloud.pos_warnin.y = this->custdata.cloud.pos_warnin.y - 7.0f;
-                this->custdata.cloud.pos_warnin.x =
-                    this->custdata.cloud.rad_cur * (2.0f * (xurand() - 0.5f)) +
-                    this->custdata.cloud.pos_warnin.x;
-                this->custdata.cloud.pos_warnin.z =
-                    this->custdata.cloud.rad_cur * (2.0f * (xurand() - 0.5f)) +
-                    this->custdata.cloud.pos_warnin.z;
+                xVec3Copy(&cloud->pos_warnin, &this->pos_hazard);
+                cloud->pos_warnin.y = cloud->pos_warnin.y - 7.0f;
+                cloud->pos_warnin.x =
+                    cloud->rad_cur * (2.0f * (xurand() - 0.5f)) +
+                    cloud->pos_warnin.x;
+                cloud->pos_warnin.z =
+                    cloud->rad_cur * (2.0f * (xurand() - 0.5f)) +
+                    cloud->pos_warnin.z;
 
-                if (!NPCC_HaveLOSToPos(&this->pos_hazard, &this->custdata.cloud.pos_warnin,
+                if (!NPCC_HaveLOSToPos(&this->pos_hazard, &cloud->pos_warnin,
                                        10.0f, NULL, &colrec))
                 {
-                    this->custdata.cloud.pos_warnin.y =
-                        this->custdata.cloud.pos_warnin.y + (7.0f - colrec.dist);
+                    cloud->pos_warnin.y =
+                        cloud->pos_warnin.y + (7.0f - colrec.dist);
                 }
 
                 NPCC_MakeLightningInfo(NPC_LYT_CLOUDWARN, &lyt);
                 lyt.start = &this->pos_hazard;
-                lyt.end = &this->custdata.cloud.pos_warnin;
+                lyt.end = &cloud->pos_warnin;
                 lyt.time = 1.5f;
 
                 if (showLightning)
                 {
-                    this->custdata.cloud.zap_warnin = zLightningAdd(&lyt);
+                    cloud->zap_warnin = zLightningAdd(&lyt);
                 }
             }
             else
             {
-                zLightningModifyEndpoints(this->custdata.cloud.zap_warnin, &this->pos_hazard,
-                                          &this->custdata.cloud.pos_warnin);
-                xVec3Copy(&g_parf_zapwarn.pos, &this->custdata.cloud.pos_warnin);
+                zLightningModifyEndpoints(cloud->zap_warnin, &this->pos_hazard,
+                                          &cloud->pos_warnin);
+                xVec3Copy(&g_parf_zapwarn.pos, &cloud->pos_warnin);
                 xParEmitterEmitCustom(g_pemit_zapwarn, dt, &g_parf_zapwarn);
             }
         }
-        else if (this->custdata.cloud.zap_warnin != NULL)
+        else if (cloud->zap_warnin != NULL)
         {
-            zLightningKill(this->custdata.cloud.zap_warnin);
-            this->custdata.cloud.zap_warnin = NULL;
-            xVec3Copy(&this->custdata.cloud.pos_warnin, &g_O3);
+            zLightningKill(cloud->zap_warnin);
+            cloud->zap_warnin = NULL;
+            xVec3Copy(&cloud->pos_warnin, &g_O3);
         }
     }
-    else if (this->custdata.cloud.zap_lytnin == NULL)
+    else if (cloud->zap_lytnin == NULL)
     {
-        if (this->custdata.cloud.zap_warnin != NULL)
+        if (cloud->zap_warnin != NULL)
         {
-            zLightningKill(this->custdata.cloud.zap_warnin);
-            this->custdata.cloud.zap_warnin = NULL;
-            xVec3Copy(&this->custdata.cloud.pos_warnin, &g_O3);
+            zLightningKill(cloud->zap_warnin);
+            cloud->zap_warnin = NULL;
+            xVec3Copy(&cloud->pos_warnin, &g_O3);
         }
     }
 
-    if (this->custdata.cloud.tmr_dozap > 1.0f && this->custdata.cloud.zap_lytnin != NULL)
+    S32 emit_particles_and_cripple_framerate = 0;
+    if (emit_particles_and_cripple_framerate)
     {
-        if (this->custdata.cloud.tmr_dozap > 1.25f)
+        xVec3 pos_emit = this->pos_hazard;
+
+        g_parf_zaprain.pos = pos_emit;
+        g_parf_zaprain.pos.y -= 1.0f;
+        g_parf_zaprain.pos.y -= xurand();
+        g_parf_zaprain.pos.x += cloud->rad_cur * (2.0f * (xurand() - 0.5f));
+        g_parf_zaprain.pos.z += cloud->rad_cur * (2.0f * (xurand() - 0.5f));
+        xParEmitterEmitCustom(g_pemit_zaprain, dt, &g_parf_zaprain);
+
+        g_parf_zaprain.pos = pos_emit;
+        g_parf_zaprain.pos.y -= 2.0f;
+        g_parf_zaprain.pos.y -= xurand();
+        g_parf_zaprain.pos.x += cloud->rad_cur * (2.0f * (xurand() - 0.5f));
+        g_parf_zaprain.pos.z += cloud->rad_cur * (2.0f * (xurand() - 0.5f));
+        xParEmitterEmitCustom(g_pemit_zaprain, dt, &g_parf_zaprain);
+
+        g_parf_zaprain.pos = pos_emit;
+        g_parf_zaprain.pos.y -= 3.0f;
+        g_parf_zaprain.pos.y -= xurand();
+        g_parf_zaprain.pos.x += cloud->rad_cur * (2.0f * (xurand() - 0.5f));
+        g_parf_zaprain.pos.z += cloud->rad_cur * (2.0f * (xurand() - 0.5f));
+        xParEmitterEmitCustom(g_pemit_zaprain, dt, &g_parf_zaprain);
+    }
+
+    if (cloud->tmr_dozap > 1.0f && cloud->zap_lytnin != NULL)
+    {
+        if (cloud->tmr_dozap > 1.25f)
         {
-            zLightningKill(this->custdata.cloud.zap_lytnin);
-            this->custdata.cloud.zap_lytnin = NULL;
-            this->custdata.cloud.tmr_dozap = 0.0f;
+            zLightningKill(cloud->zap_lytnin);
+            cloud->zap_lytnin = NULL;
+            cloud->tmr_dozap = 0.0f;
+        }
+        else if (emit_particles_and_cripple_framerate)
+        {
+            xVec3 pos_emit = this->pos_hazard;
+
+            g_parf_zapwarn.pos = pos_emit;
+            g_parf_zapwarn.pos.y -= 1.0f;
+            xParEmitterEmitCustom(g_pemit_zapwarn, dt, &g_parf_zapwarn);
+            g_parf_zapwarn.pos.y -= 1.0f;
+            xParEmitterEmitCustom(g_pemit_zapwarn, dt, &g_parf_zapwarn);
+            g_parf_zapwarn.pos.y -= 1.0f;
+            xParEmitterEmitCustom(g_pemit_zapwarn, dt, &g_parf_zapwarn);
         }
     }
-    else if (this->custdata.cloud.tmr_dozap > 1.0f && ds2_owner > 2.0f)
+    else if (cloud->tmr_dozap > 1.0f && ds2_owner > 2.0f)
     {
         _tagLightningAdd lyt;
 
         NPCC_MakeLightningInfo(NPC_LYT_CLOUDZAP, &lyt);
         lyt.start = &this->pos_hazard;
-        lyt.end = xEntGetPos(plyr);
+        lyt.end = xEntGetPos(&globals.player.ent);
         lyt.time = 1.5f;
 
         if (showLightning)
         {
-            this->custdata.cloud.zap_lytnin = zLightningAdd(&lyt);
+            cloud->zap_lytnin = zLightningAdd(&lyt);
         }
 
         this->HurtThePlayer();

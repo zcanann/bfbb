@@ -825,20 +825,15 @@ void NPAR_Timestep(F32 dt)
     S32 isPawzd = zGameIsPaused();
     S32 isCine = (globals.cmgr != NULL) && (((xCutsceneMgr*)(globals.cmgr))->csn != NULL);
     NPAR_CheckSpecials();
-    NPARMgmt* mgr;
-    for (S32 i = 0; i < 12; i++, mgr++)
+    for (S32 i = 0; i < 12; i++)
     {
-        mgr = &g_npar_mgmt[i];
-        if (1 <= mgr->cnt_active)
-        {
-            if (!isPawzd || ((mgr->flg_npar & 1)))
-            {
-                if (!isCine || ((mgr->flg_npar & 2)))
-                {
-                    mgr->UpdateAndRender(dt);
-                }
-            }
-        }
+        if (g_npar_mgmt[i].cnt_active < 1)
+            continue;
+        if (isPawzd && !(g_npar_mgmt[i].flg_npar & 1))
+            continue;
+        if (isCine && !(g_npar_mgmt[i].flg_npar & 2))
+            continue;
+        g_npar_mgmt[i].UpdateAndRender(dt);
     }
 }
 
