@@ -1808,7 +1808,11 @@ static void set_alpha_blend(xModelInstance* model)
 
 void zEntPickup_Render(zEntPickup* plist, U32 pcount)
 {
+#if defined(PS2)
+    xLightKit_Enable(&sPickupLightKit, globals.currWorld);
+#else
     xLightKit_Enable(NULL, globals.currWorld);
+#endif
 
     for (U32 i = 0; i < pcount; plist++, i++)
     {
@@ -1829,11 +1833,17 @@ void zEntPickup_Render(zEntPickup* plist, U32 pcount)
             }
         }
     }
+
+#if defined(PS2)
+    xLightKit_Enable(NULL, globals.currWorld);
+#endif
 }
 
 // equivalent: float load scheduling
 void zEntPickup_RenderOne(xEnt* ent)
 {
+    zEntPickup* pickup = (zEntPickup*)ent;
+
     if (ent->baseType != eBaseTypePickup)
     {
         return;
@@ -1849,7 +1859,6 @@ void zEntPickup_RenderOne(xEnt* ent)
         return;
     }
 
-    zEntPickup* pickup = (zEntPickup*)ent;
     RpAtomic* imodel = pickup->model->Data;
     RwMatrix* mat = ent->model->Mat;
     S32 shadowResult;
@@ -1861,7 +1870,7 @@ void zEntPickup_RenderOne(xEnt* ent)
     shadVec.y = ent->model->Mat->pos.y - 10.0f;
     shadVec.z = ent->model->Mat->pos.z;
 
-    if (iModelCullPlusShadow(imodel, ent->model->Mat, &shadVec, &shadowResult))
+    if (iModelCullPlusShadow(imodel, mat, &shadVec, &shadowResult))
     {
         return;
     }

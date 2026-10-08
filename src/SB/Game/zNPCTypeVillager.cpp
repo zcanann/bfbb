@@ -400,18 +400,20 @@ U8 zNPCVillager::ColPenFlags() const
 U8 zNPCVillager::PhysicsFlags() const
 {
     S32 flags = 0;
-    S32 pflags = 0;
     if (flg_move & 0x6)
     {
         flags |= 3;
     }
-    pflags = flags * -5;
     if (flg_move & 0x2)
     {
-        pflags = flags |= 4;
+        flags |= 4;
+    }
+    else
+    {
+        flags *= -5;
     }
 
-    return pflags;
+    return flags;
 }
 
 void zNPCVillager::Init(xEntAsset* asset)
@@ -432,10 +434,9 @@ void zNPCVillager::Reset()
         this->psy_instinct->GoalSet(NPC_GOAL_IDLE, 1);
     }
 
-    cfg = this->cfg_npc;
-    if (cfg->dst_castShadow < 0.0f)
+    if (this->cfg_npc->dst_castShadow < 0.0f)
     {
-        cfg->dst_castShadow = 0.25f;
+        this->cfg_npc->dst_castShadow = 0.25f;
     }
 
     cfg = this->cfg_npc;
@@ -522,12 +523,12 @@ void zNPCVillager::ChkCheatSize()
         }
         break;
 
+    case NPC_TYPE_VILLAGER:
     case NPC_TYPE_FISH:
     case NPC_TYPE_FISH_MALE:
     case NPC_TYPE_FISH_FEMALE:
     case NPC_TYPE_FISH_ELDER:
     case NPC_TYPE_FISH_ELDESS:
-    case NPC_TYPE_VILLAGER:
         if ((cheats & 0x40000) != 0)
         {
             this->cfg_npc->scl_model.assign(0.7f);
@@ -554,9 +555,11 @@ void zNPCVillager::ChkCheatSize()
         }
         break;
 
-    case NPC_TYPE_GARY:
-    case NPC_TYPE_SANDYBIKINI:
     case NPC_TYPE_MERMANCHAIR:
+    case NPC_TYPE_SANDYBIKINI:
+    case NPC_TYPE_BALLOONBOY:
+    case NPC_TYPE_FISH_BOY:
+    case NPC_TYPE_FISH_GIRL:
         break;
     }
 }
@@ -602,10 +605,10 @@ U32 zNPCVillager::AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* goal)
 
     switch (gid)
     {
-    case NPC_GOAL_IDLE:
-    case NPC_GOAL_WAITING:
     case NPC_GOAL_NOMANLAND:
     case NPC_GOAL_LIMBO:
+    case NPC_GOAL_IDLE:
+    case NPC_GOAL_WAITING:
     {
         S32 superfolk = !strcmp("zNPCSuperFriend", this->model->Anim->Table->Name);
         static S32 choices[4] = { 1, 0x11, 0x12, 0x13 };
@@ -919,22 +922,22 @@ void zNPCVillager::AddTalking(xPsyche* psy,
 {
     xGoal* goal;
     goal = psy->AddGoal(NPC_GOAL_PLAYERNEAR, NULL);
-    if (eval_plyrnear)
+    if (eval_plyrnear != NULL)
     {
         goal->SetCallbacks(eval_plyrnear, NULL, NULL, NULL);
     }
     goal = psy->AddGoal(NPC_GOAL_TALK, NULL);
-    if (eval_talking)
+    if (eval_talking != NULL)
     {
         goal->SetCallbacks(eval_talking, NULL, NULL, NULL);
     }
     goal = psy->AddGoal(NPC_GOAL_CHATTER, NULL);
-    if (eval_chatter)
+    if (eval_chatter != NULL)
     {
         goal->SetCallbacks(eval_chatter, NULL, NULL, NULL);
     }
     goal = psy->AddGoal(NPC_GOAL_SPEAK, NULL);
-    if (eval_speak)
+    if (eval_speak != NULL)
     {
         goal->SetCallbacks(eval_speak, NULL, NULL, NULL);
     }
@@ -946,6 +949,7 @@ void zNPCVillager::FindMyConverse()
     if ((gCurrentPlayer == eCurrentPlayerSpongeBob) && (nass->taskWidgetPrime != 0))
     {
         this->converse = (ztaskbox*)zSceneFindObject(nass->taskWidgetPrime);
+#if !defined(PS2)
         if (this->converse == NULL)
         {
             this->converse = (ztaskbox*)zSceneFindObject((((U8*)&nass->taskWidgetPrime)[3] << 24) |
@@ -953,10 +957,12 @@ void zNPCVillager::FindMyConverse()
                                                          (((U8*)&nass->taskWidgetPrime)[1] << 8) |
                                                          ((U8*)&nass->taskWidgetPrime)[0]);
         }
+#endif
     }
     else if ((gCurrentPlayer != eCurrentPlayerSpongeBob) && (nass->taskWidgetSecond != 0))
     {
         this->converse = (ztaskbox*)zSceneFindObject(nass->taskWidgetSecond);
+#if !defined(PS2)
         if (this->converse == NULL)
         {
             this->converse = (ztaskbox*)zSceneFindObject((((U8*)&nass->taskWidgetSecond)[3] << 24) |
@@ -964,6 +970,7 @@ void zNPCVillager::FindMyConverse()
                                                          (((U8*)&nass->taskWidgetSecond)[1] << 8) |
                                                          ((U8*)&nass->taskWidgetSecond)[0]);
         }
+#endif
     }
     else
     {
@@ -1357,8 +1364,8 @@ U32 zNPCMerManChair::AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal)
 
     switch (gid)
     {
-    case NPC_GOAL_FIDGET:
     case NPC_GOAL_IDLE:
+    case NPC_GOAL_FIDGET:
     case NPC_GOAL_HURT:
     case NPC_GOAL_PLAYERNEAR:
         if (flg_mermanchair & 1)
@@ -1374,7 +1381,7 @@ U32 zNPCMerManChair::AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal)
     case NPC_GOAL_TALK:
     case NPC_GOAL_CHATTER:
     case NPC_GOAL_SPEAK:
-        superfolk = (strcmp("zNPCSuperFriend", model->Anim->Table->Name) == 0);
+        superfolk = !strcmp("zNPCSuperFriend", model->Anim->Table->Name);
 
         if (flg_mermanchair & 1)
         {
