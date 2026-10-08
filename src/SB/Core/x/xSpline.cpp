@@ -110,6 +110,54 @@ void Interpolate_Bspline(xVec3* data, xVec3* control, F32* knots, U32 nodata)
 }
 
 // Implementation of Composite Simpson's 1/3 Rule to calculate arc length
+#ifdef PS2
+// The R5900 FPU is single precision; retail PS2 evaluates this entirely in
+// floats (ArcLength3__FP6xCoef3ff, float locals per DWARF).
+static F32 ArcLength3(xCoef3* coef, F32 ustart, F32 uend)
+{
+    U32 i;
+    F32 E;
+    F32 D;
+    F32 C;
+    F32 B;
+    F32 A;
+    F32 h;
+    F32 sum;
+    F32 u;
+
+    E = 9.0f * (coef->x.a[0] * coef->x.a[0] + coef->y.a[0] * coef->y.a[0] +
+                coef->z.a[0] * coef->z.a[0]);
+    D = 12.0f * (coef->x.a[0] * coef->x.a[1] + coef->y.a[0] * coef->y.a[1] +
+                 coef->z.a[0] * coef->z.a[1]);
+    C = 6.0f * (coef->x.a[0] * coef->x.a[2] + coef->y.a[0] * coef->y.a[2] +
+                coef->z.a[0] * coef->z.a[2]) +
+        4.0f * (coef->x.a[1] * coef->x.a[1] + coef->y.a[1] * coef->y.a[1] +
+                coef->z.a[1] * coef->z.a[1]);
+    B = 4.0f * (coef->x.a[1] * coef->x.a[2] + coef->y.a[1] * coef->y.a[2] +
+                coef->z.a[1] * coef->z.a[2]);
+    A = coef->x.a[2] * coef->x.a[2] + coef->y.a[2] * coef->y.a[2] + coef->z.a[2] * coef->z.a[2];
+    h = (uend - ustart) / 50.0f;
+    sum = 0.0f;
+    u = ustart + h;
+
+    for (i = 2; i <= 50; i += 1)
+    {
+        if (!(i & 1))
+        {
+            sum = sum + 4.0f * sqrtf(A + u * (B + u * (C + u * (D + E * u))));
+        }
+        else
+        {
+            sum = sum + 2.0f * sqrtf(A + u * (B + u * (C + u * (D + E * u))));
+        }
+        u = u + h;
+    }
+
+    return (h * (sum + sqrtf(A + ustart * (B + ustart * (C + ustart * (D + E * ustart)))) +
+                 sqrtf(A + uend * (B + uend * (C + uend * (D + E * uend)))))) /
+           3.0f;
+}
+#else
 F32 ArcLength3(xCoef3* coef, F64 ustart, F64 uend)
 {
     U32 i;
@@ -162,6 +210,7 @@ F32 ArcLength3(xCoef3* coef, F64 ustart, F64 uend)
                  sqrt(A + uend * (B + uend * (C + uend * (D + E * uend)))))) /
            3.0;
 }
+#endif
 
 #if !defined(PS2)
 // We don't have the implementation provided
