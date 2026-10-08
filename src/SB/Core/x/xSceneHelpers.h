@@ -17,6 +17,9 @@ template <> U16 range_limit<U16>(U16 v, U16 minv, U16 maxv)
     return v;
 }
 
+#if defined(PS2)
+inline
+#endif
 void xBoxFromRay(xBox& box, const xRay3& ray)
 {
     xLine3 line;

@@ -33,7 +33,9 @@ struct xSpline3
 
 void Tridiag_Solve(F32* a, F32* b, F32* c, xVec3* d, xVec3* x, S32 n);
 void Interpolate_Bspline(xVec3* data, xVec3* control, F32* knots, U32 nodata);
+#ifndef PS2
 F32 ArcLength3(class xCoef3* coef, F64 ustart, F64 uend);
+#endif
 void EvalCoef3(xCoef3* coef, F32 u, U32 deriv, xVec3* o);
 void BasisToCoef3(xCoef3* coef, F32 (*N)[4], xVec3* v1, xVec3* v2, xVec3* v3, xVec3* v4);
 void CoefToUnity3(xCoef3* coef1, xCoef3* coef2, F32 f1, F32 f2);
